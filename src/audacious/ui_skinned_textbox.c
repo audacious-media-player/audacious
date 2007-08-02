@@ -273,7 +273,8 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
             priv->offset = 0;
             gtk_widget_set_size_request(widget, textbox->width, textbox->height);
             gtk_widget_queue_draw(GTK_WIDGET(textbox));
-        }
+        } else if (priv->resize_width == 0)
+            textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
     }
 }
 
