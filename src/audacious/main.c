@@ -261,6 +261,10 @@ const gchar *chardet_detector_presets[] = {
     "Chinese",
     "Korean",
     "Russian",
+    "Greek",
+    "Hebrew",
+    "Turkish",
+    "Arabic",
 #ifdef HAVE_UDET
     "Universal"
 #endif
