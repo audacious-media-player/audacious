@@ -203,7 +203,7 @@ static const char *is_win_charset2(const unsigned char *txt, int len){
   fprintf(stderr,"End.    Win: %lf, Koi: %lf, Alt: %lf\n",winestat,koiestat,altestat);
   fprintf(stderr,"Final.  Win: %lf, Koi: %lf, Alt: %lf\n",calculate(winsstat,winstat,winestat),calculate(koisstat,koistat,koiestat),calculate(altsstat,altstat,altestat));
 #endif
-  if ((calculate(altsstat,altstat,altestat)>calculate(koisstat,koistat,koiestat))&&(calculate(altsstat,altstat,altestat)>calculate(winsstat,winstat,winestat))) "CP866";
+  if ((calculate(altsstat,altstat,altestat)>calculate(koisstat,koistat,koiestat))&&(calculate(altsstat,altstat,altestat)>calculate(winsstat,winstat,winestat))) return "CP866";
   if (calculate(koisstat,koistat,koiestat)>calculate(winsstat,winstat,winestat)) return "KOI8-R";
   return "CP1251";
 }
