@@ -163,8 +163,8 @@ BmpConfig bmp_default_config = {
     TRUE,                       /* close dialog on open */
     TRUE,                       /* close dialog on add */
     0.0,                        /* equalizer preamp */
-    {0, 0, 0, 0, 0,             /* equalizer bands */
-     0, 0, 0, 0, 0},
+    {0.0, 0.0, 0.0, 0.0, 0.0,             /* equalizer bands */
+     0.0, 0.0, 0.0, 0.0, 0.0},
     NULL,                       /* skin */
     NULL,                       /* output plugin */
     NULL,                       /* file selector path */
@@ -175,6 +175,7 @@ BmpConfig bmp_default_config = {
     NULL,                       /* enabled general plugins */
     NULL,                       /* enabled visualization plugins */
     NULL,                       /* enabled effect plugins */
+    NULL,                       /* enabled discovery plugins */
     NULL,                       /* equalizer preset default file */
     NULL,                       /* equalizer preset extension */
     NULL,                       /* URL history */
@@ -203,8 +204,8 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* resume playback on startup */
     -1,                         /* resume playback on startup time */
     TRUE,                       /* show seperators in pl */
-    NULL,
-    NULL,
+    NULL,           /* chardet_detector */
+    NULL,           /* chardet_fallback */
     3000,           /* audio buffer size */
     FALSE,          /* whether or not to postpone format detection on initial add */
     TRUE,           /* show filepopup for tuple */
