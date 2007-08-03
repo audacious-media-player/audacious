@@ -389,9 +389,10 @@ if test "x$enable_one_plugin_dir" = "xyes"; then
     GENERAL_PLUGIN_DIR=Plugins
     VISUALIZATION_PLUGIN_DIR=Plugins
     CONTAINER_PLUGIN_DIR=Plugins
-    TRANSPORTR_PLUGIN_DIR=Plugins
+    TRANSPORT_PLUGIN_DIR=Plugins
+    DISCOVERY_PLUGIN_DIR=Plugins
 else
-    pluginsubs="\\\"Output\\\",\\\"Input\\\",\\\"Effect\\\",\\\"General\\\",\\\"Visualization\\\",\\\"Container\\\",\\\"Transport\\\""
+    pluginsubs="\\\"Output\\\",\\\"Input\\\",\\\"Effect\\\",\\\"General\\\",\\\"Visualization\\\",\\\"Container\\\",\\\"Transport\\\",\\\"Discovery\\\""
     INPUT_PLUGIN_DIR=Input
     OUTPUT_PLUGIN_DIR=Output
     EFFECT_PLUGIN_DIR=Effect
@@ -399,6 +400,7 @@ else
     VISUALIZATION_PLUGIN_DIR=Visualization
     CONTAINER_PLUGIN_DIR=Container
     TRANSPORT_PLUGIN_DIR=Transport
+    DISCOVERY_PLUGIN_DIR=Discovery
 fi
 
 AC_SUBST(INPUT_PLUGIN_DIR)

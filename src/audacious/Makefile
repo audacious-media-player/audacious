@@ -66,6 +66,7 @@ SOURCES = \
 	auddrct.c \
 	build_stamp.c \
 	configdb.c \
+	discovery.c \
 	dnd.c \
 	dock.c \
 	effect.c \

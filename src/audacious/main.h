@@ -84,7 +84,7 @@ struct _BmpConfig {
     gchar *playlist_path;
     gchar *playlist_font, *mainwin_font;
     gchar *disabled_iplugins;
-    gchar *enabled_gplugins, *enabled_vplugins, *enabled_eplugins;
+    gchar *enabled_gplugins, *enabled_vplugins, *enabled_eplugins, *enabled_dplugins ;
     gchar *eqpreset_default_file, *eqpreset_extension;
     GList *url_history;
     gint timer_mode;

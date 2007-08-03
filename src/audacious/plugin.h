@@ -46,6 +46,7 @@
 #define EFFECT_PLUGIN(x)  ((EffectPlugin *)(x))
 #define GENERAL_PLUGIN(x) ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)     ((VisPlugin *)(x))
+#define DISCOVERY_PLUGIN(x)     ((DiscoveryPlugin *)(x))
 
 #define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
 
@@ -78,7 +79,7 @@ typedef struct _OutputPlugin  OutputPlugin;
 typedef struct _EffectPlugin  EffectPlugin;
 typedef struct _GeneralPlugin GeneralPlugin;
 typedef struct _VisPlugin     VisPlugin;
-
+typedef struct _DiscoveryPlugin DiscoveryPlugin;
 typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
@@ -102,15 +103,16 @@ typedef struct {
     EffectPlugin **ep_list;
     GeneralPlugin **gp_list;
     VisPlugin **vp_list;
+    DiscoveryPlugin **dp_list;
 } PluginHeader;
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
-#define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list) \
+#define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list, dp_list) \
 	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
 		(gchar *)#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
-		vp_list }; \
+		vp_list,dp_list }; \
 	G_MODULE_EXPORT PluginHeader *get_plugin_info(void) { \
 		return &_pluginInfo; \
 	} \
@@ -278,6 +280,17 @@ struct _VisPlugin {
     void (*render_freq) (gint16 freq_data[2][256]);
 };
 
+struct _DiscoveryPlugin {
+    gpointer handle;
+    gchar *filename;
+    gchar *description;
+ 
+    void (*init) (void);
+    void (*cleanup) (void);
+    void (*about) (void);
+    void (*configure) (void);
+    gchar *(*get_devices);  
+};
 
 G_BEGIN_DECLS
 
