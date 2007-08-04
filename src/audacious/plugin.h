@@ -108,11 +108,10 @@ typedef struct {
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
-#define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list, dp_list) \
+#define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
-		(gchar *)#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
-		vp_list,dp_list }; \
+		(gchar *)#name, init, fini, __VA_ARGS__ }; \
 	G_MODULE_EXPORT PluginHeader *get_plugin_info(void) { \
 		return &_pluginInfo; \
 	} \
