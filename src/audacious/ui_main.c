@@ -857,41 +857,6 @@ mainwin_mouse_button_release(GtkWidget * widget,
     return FALSE;
 }
 
-static gboolean
-mainwin_motion(GtkWidget * widget,
-               GdkEventMotion * event,
-               gpointer callback_data)
-{
-    int x, y;
-    GdkModifierType state;
-
-    /* If it's a hint, we had to query X, so override the
-     * information we we're given... it's probably useless... --nenolod
-     */
-    if (event->is_hint != FALSE)
-    {
-        gdk_window_get_pointer(GDK_WINDOW(mainwin->window), &x, &y, &state);
-
-        event->x = x;
-        event->y = y;
-        event->state = state;
-    }
-    else
-    {
-        x = event->x;
-        y = event->y;
-        state = event->state;
-    }
-    if (cfg.doublesize) {
-        event->x /= 2;
-        event->y /= 2;
-    }
-
-    gdk_flush();
-
-    return FALSE;
-}
-
 void
 mainwin_scrolled(GtkWidget *widget, GdkEventScroll *event,
     gpointer callback_data)
@@ -2704,8 +2669,6 @@ mainwin_create_window(void)
                      G_CALLBACK(mainwin_scrolled), NULL);
     g_signal_connect(mainwin, "button_release_event",
                      G_CALLBACK(mainwin_mouse_button_release), NULL);
-    g_signal_connect(mainwin, "motion_notify_event",
-                     G_CALLBACK(mainwin_motion), NULL);
     g_signal_connect(mainwin, "configure_event",
                      G_CALLBACK(mainwin_configure), NULL);
 
