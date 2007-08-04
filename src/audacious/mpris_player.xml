@@ -35,60 +35,49 @@
         <method name="Play">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
+        <method name="Repeat">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" direction="in" />
+        </method>
         <method name="Quit">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
         <method name="Disconnect">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
-        <method name="Repeat">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-            <arg type="b" direction="in" />
-        </method>
-
         <method name="GetStatus">
             <arg type="i" direction="out" />
         </method>
-
         <method name="GetMetadata">
             <arg type="a{sv}" direction="out" />
         </method>
-
         <method name="GetCaps">
             <arg type="i" direction="out" />
         </method>
-
         <method name="VolumeSet">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" />
         </method>
-
         <method name="VolumeGet">
             <arg type="i" direction="out" />
         </method>
-
         <method name="PositionSet">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" />
         </method>
-
         <method name="PositionGet">
             <arg type="i" direction="out" />
         </method>
 
-        <signal name="CapsChange">
-            <arg type="i" />
-        </signal>
-
         <signal name="TrackChange">
             <arg type="a{sv}" />
         </signal>
-
         <signal name="StatusChange">
             <arg type="i" />
         </signal>
-
-        <signal name="Disconnected">
+        <signal name="CapsChange">
+            <arg type="i" />
         </signal>
+		<signal name="Disconnected" />
     </interface>
 </node>

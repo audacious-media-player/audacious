@@ -51,10 +51,13 @@ gboolean mpris_player_prev(MprisPlayer *obj, GError **error);
 gboolean mpris_player_pause(MprisPlayer *obj, GError **error);
 gboolean mpris_player_stop(MprisPlayer *obj, GError **error);
 gboolean mpris_player_play(MprisPlayer *obj, GError **error);
-gboolean mpris_player_quit(MprisPlayer *obj, GError **error);
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error);
+gboolean mpris_player_quit(MprisPlayer *obj, GError **error);
+gboolean mpris_player_disconnect(MprisPlayer *obj, GError **error);
 gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
                                  GError **error);
+gboolean mpris_player_get_metadata(MprisTrackList *obj, gint pos,
+                                   GHashTable *metadata, GError **error);
 gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
                                  GError **error);
 gboolean mpris_player_volume_set(MprisPlayer *obj, gint vol, GError **error);
@@ -64,21 +67,23 @@ gboolean mpris_player_position_set(MprisPlayer *obj, gint pos, GError **error);
 gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
                                    GError **error);
 enum {
-    CAPS_CHANGE_SIG,
     TRACK_CHANGE_SIG,
     STATUS_CHANGE_SIG,
+    CAPS_CHANGE_SIG,
+    DISCONNECTED,
     LAST_SIG
 };
-gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error);
 gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error);
 gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error);
+gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error);
+gboolean mpris_player_emit_disconnected(MprisPlayer *obj, GError **error);
 
 // MPRIS /TrackList
 gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
                                       GHashTable *metadata, GError **error);
 gboolean mpris_tracklist_get_current_track(MprisTrackList *obj, gint *pos,
                                            GError **error);
-gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *pos,
+gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *length,
                                     GError **error);
 gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
                                    gboolean play, GError **error);

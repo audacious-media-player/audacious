@@ -30,4 +30,15 @@
 #define AUDACIOUS_DBUS_PATH_MPRIS_PLAYER    "/Player"
 #define AUDACIOUS_DBUS_PATH_MPRIS_TRACKLIST "/TrackList"
 
+#define NONE                  = 0
+#define CAN_GO_NEXT           = 1 << 0
+#define CAN_GO_PREV           = 1 << 1
+#define CAN_PAUSE             = 1 << 2
+#define CAN_PLAY              = 1 << 3
+#define CAN_SEEK              = 1 << 4
+#define CAN_RESTORE_CONTEXT   = 1 << 5
+#define CAN_PROVIDE_METADATA  = 1 << 6
+#define PROVIDES_TIMING       = 1 << 7
+
+
 #endif // !_AUDDBUS_H
