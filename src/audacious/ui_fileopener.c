@@ -279,7 +279,9 @@ static void filebrowser_add_files_classic(gchar ** files,
 
 
     while (files[ctr] != NULL) {
-        playlist_add(playlist, files[ctr++]);
+        gchar *filename = g_filename_to_uri((const gchar *) files[ctr++], NULL, NULL);
+        playlist_add(playlist, filename);
+        g_free(filename);
     }
     playlistwin_update_list(playlist);
 
