@@ -840,16 +840,6 @@ mainwin_mouse_button_release(GtkWidget * widget,
                              GdkEventButton * event,
                              gpointer callback_data)
 {
-    gdk_pointer_ungrab(GDK_CURRENT_TIME);
-
-    /*
-     * The gdk_flush() is just for making sure that the pointer really
-     * gets ungrabbed before calling any button callbacks
-     *
-     */
-
-    gdk_flush();
-
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
         dock_move_release(GTK_WINDOW(mainwin));
     }
@@ -888,9 +878,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
                            GdkEventButton * event,
                            gpointer callback_data)
 {
-
-    gboolean grab = TRUE;
-
     if (cfg.doublesize) {
         /*
          * A hack to make doublesize transparent to callbacks.
@@ -920,7 +907,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
             ui_manager_popup_menu_show(GTK_MENU(mainwin_playback_menu),
                                     event->x_root,
                                     event->y_root, 3, event->time);
-            grab = FALSE;
         } else {
             /*
              * Pop up the main menu a few pixels down.
@@ -934,15 +920,8 @@ mainwin_mouse_button_press(GtkWidget * widget,
             ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
                                     event->x_root,
                                     event->y_root, 3, event->time);
-            grab = FALSE;
         }
     }
-
-    if (grab)
-        gdk_pointer_grab(mainwin->window, FALSE,
-                         GDK_BUTTON_MOTION_MASK |
-                         GDK_BUTTON_RELEASE_MASK,
-                         GDK_WINDOW(GDK_NONE), NULL, GDK_CURRENT_TIME);
 
     return FALSE;
 }

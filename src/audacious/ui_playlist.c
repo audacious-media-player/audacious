@@ -416,9 +416,7 @@ playlistwin_release(GtkWidget * widget,
     if (event->button == 3)
         return;
 
-    gdk_pointer_ungrab(GDK_CURRENT_TIME);
     playlistwin_resizing = FALSE;
-    gdk_flush();
 
     if (dock_is_moving(GTK_WINDOW(playlistwin)))
        dock_move_release(GTK_WINDOW(playlistwin));
@@ -1007,7 +1005,6 @@ playlistwin_press(GtkWidget * widget,
                   GdkEventButton * event,
                   gpointer callback_data)
 {
-    gboolean grab = TRUE;
     gint xpos, ypos;
     GtkRequisition req;
     Playlist *playlist = playlist_get_active();
@@ -1038,7 +1035,6 @@ playlistwin_press(GtkWidget * widget,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
                    event->time);
-        grab = FALSE;
     }
     else if (event->button == 1 && REGION_L(41, 66, 29, 11)) {
         /* SUB button menu */
@@ -1048,7 +1044,6 @@ playlistwin_press(GtkWidget * widget,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
                    event->time);
-        grab = FALSE;
     }
     else if (event->button == 1 && REGION_L(70, 95, 29, 11)) {
         /* SEL button menu */
@@ -1058,7 +1053,6 @@ playlistwin_press(GtkWidget * widget,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
                    event->time);
-        grab = FALSE;
     }
     else if (event->button == 1 && REGION_L(99, 124, 29, 11)) {
         /* MISC button menu */
@@ -1068,7 +1062,6 @@ playlistwin_press(GtkWidget * widget,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
                    event->time);
-        grab = FALSE;
     }
     else if (event->button == 1 && REGION_R(46, 23, 29, 11)) {
         /* LIST button menu */
@@ -1078,7 +1071,6 @@ playlistwin_press(GtkWidget * widget,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
                    event->time);
-        grab = FALSE;
     }
     else if (event->button == 1 && REGION_R(82, 54, 15, 9)) {
         if (cfg.timer_mode == TIMER_ELAPSED)
@@ -1116,7 +1108,6 @@ playlistwin_press(GtkWidget * widget,
          */
         ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
-        grab = FALSE;
     }
     else if (event->button == 1 && (event->state & GDK_MOD1_MASK))
     {
@@ -1129,16 +1120,7 @@ playlistwin_press(GtkWidget * widget,
             idx = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
             playlist_queue_position(playlist, idx);
         }
-
-        grab = FALSE;
     }
-
-    if (grab)
-        gdk_pointer_grab(playlistwin->window, FALSE,
-                         GDK_BUTTON_MOTION_MASK | GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK, NULL, NULL,
-                         GDK_CURRENT_TIME);
 
     return FALSE;
 }

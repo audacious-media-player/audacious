@@ -247,8 +247,6 @@ gboolean
 equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
                    gpointer callback_data)
 {
-    gboolean grab = TRUE;
-
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         (cfg.easy_move || cfg.equalizer_shaded || event->y < 14)) {
          equalizerwin_raise();
@@ -268,13 +266,7 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
          */
        ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
-        grab = FALSE;
     }
-
-    if (grab)
-        gdk_pointer_grab(GDK_WINDOW(equalizerwin->window), FALSE,
-                         GDK_BUTTON_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-                         NULL, NULL, GDK_CURRENT_TIME);
 
     return FALSE;
 }
@@ -283,9 +275,6 @@ static gboolean
 equalizerwin_release(GtkWidget * widget,
                      GdkEventButton * event, gpointer callback_data)
 {
-    gdk_pointer_ungrab(GDK_CURRENT_TIME);
-    gdk_flush();
-
     if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
         dock_move_release(GTK_WINDOW(equalizerwin));
     }
