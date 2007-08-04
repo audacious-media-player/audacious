@@ -296,7 +296,6 @@ static gboolean ui_skinned_playlist_slider_button_press(GtkWidget *widget, GdkEv
         }
         gtk_widget_queue_draw(widget);
     }
-
     return TRUE;
 }
 

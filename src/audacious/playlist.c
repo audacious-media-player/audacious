@@ -1175,9 +1175,8 @@ playlist_next(Playlist *playlist)
 
     if (restart_playing)
         playback_initiate();
-    else {
-        playlistwin_update_list(playlist);
-    }
+
+    playlistwin_update_list(playlist);
 }
 
 void
@@ -1411,7 +1410,7 @@ playlist_set_position(Playlist *playlist, guint pos)
         /* Shuffling and this is our first manual jump. */
         playlist_position_before_jump = playlist->position;
     }
-		
+
     playlist->position = node->data;
     PLAYLIST_UNLOCK(playlist->mutex);
     playlist_check_pos_current(playlist);
@@ -1443,7 +1442,7 @@ playlist_eof_reached(Playlist *playlist)
         playlist->position = playlist_position_before_jump;
         playlist_position_before_jump = NULL;
     }
-		
+
     plist_pos_list = find_playlist_position_list(playlist);
 
     if (cfg.no_playlist_advance) {
