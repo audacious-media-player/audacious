@@ -250,11 +250,9 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     if (header->magic != PLUGIN_MAGIC)
         return plugin2_dispose(module, "plugin <%s> discarded, invalid module magic", filename);
 
-#if 0
     if (header->api_version != __AUDACIOUS_PLUGIN_API__)
         return plugin2_dispose(module, "plugin <%s> discarded, wanting API version %d, we implement API version %d",
                                filename, header->api_version, __AUDACIOUS_PLUGIN_API__);
-#endif
 
     if (header->init)
         header->init();
