@@ -39,11 +39,12 @@ filebrowser_add_files(GtkFileChooser * browser,
     Playlist *playlist = playlist_get_active();
 
     for (cur = files; cur; cur = g_slist_next(cur)) {
+        gchar *filename = g_filename_to_uri((const gchar *) cur->data, NULL, NULL);
 
         if (vfs_file_test(cur->data, G_FILE_TEST_IS_DIR)) {
-            playlist_add_dir(playlist, (const gchar *) cur->data);
+            playlist_add_dir(playlist, filename ? filename : (const gchar *) cur->data);
         } else {
-            playlist_add(playlist, (const gchar *) cur->data);
+            playlist_add(playlist, filename ? filename : (const gchar *) cur->data);
         }       
 
         if (++ctr == 20) {
@@ -51,6 +52,8 @@ filebrowser_add_files(GtkFileChooser * browser,
             ctr = 0;
             while (gtk_events_pending() ) gtk_main_iteration();
         }
+
+        g_free(filename);
     } 
 
     playlistwin_update_list(playlist);
@@ -75,7 +78,7 @@ action_button_cb(GtkWidget *widget, gpointer data)
     play_button =
         GPOINTER_TO_INT(g_object_get_data(data, "play-button"));
 
-    files = gtk_file_chooser_get_uris(GTK_FILE_CHOOSER(chooser));
+    files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(chooser));
     if (!files) return;
 
     if (play_button)
