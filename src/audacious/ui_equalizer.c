@@ -385,12 +385,22 @@ equalizerwin_read_presets(const gchar * basename)
     gint i, p = 0;
     EqualizerPreset *preset;
 
+    /* START mod: add check for the default presets locate in system path ({prefix}/share/audacious)
+       by Massimo Cavalleri (submax) */
+
     filename = g_build_filename(bmp_paths[BMP_PATH_USER_DIR], basename, NULL);
 
     if ((rcfile = bmp_rcfile_open(filename)) == NULL) {
         g_free(filename);
-        return NULL;
+        // DATA_DIR = "{prefix}/share/audacious" ; example is "/usr/share/audacious"
+        filename = g_build_filename(DATA_DIR, basename, NULL);
+        if ((rcfile = bmp_rcfile_open(filename)) == NULL) {
+           g_free(filename);
+           return NULL;
+        }
     }
+
+    // END mod
 
     g_free(filename);
 

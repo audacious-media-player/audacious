@@ -51,7 +51,7 @@
 #define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
-#define __AUDACIOUS_PLUGIN_API__ 3
+#define __AUDACIOUS_PLUGIN_API__ 4
 #define __AUDACIOUS_INPUT_PLUGIN_API__ 4
 
 typedef enum {
@@ -108,15 +108,32 @@ typedef struct {
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
-#define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list, dp_list) \
+#define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
-		(gchar *)#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
-		vp_list,dp_list }; \
+		(gchar *)#name, init, fini, NULL, __VA_ARGS__ }; \
 	G_MODULE_EXPORT PluginHeader *get_plugin_info(void) { \
 		return &_pluginInfo; \
 	} \
 	G_END_DECLS
+
+#define SIMPLE_INPUT_PLUGIN(name, ip_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, ip_list)
+
+#define SIMPLE_OUTPUT_PLUGIN(name, op_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, op_list)
+
+#define SIMPLE_EFFECT_PLUGIN(name, ep_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, ep_list)
+
+#define SIMPLE_GENERAL_PLUGIN(name, gp_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, gp_list)
+
+#define SIMPLE_VISUAL_PLUGIN(name, vp_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, vp_list)
+
+#define SIMPLE_DISCOVER_PLUGIN(name, dp_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, dp_list)
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
