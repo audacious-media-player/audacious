@@ -71,7 +71,6 @@ static GMutex *resize_mutex = NULL;
 GtkWidget *playlistwin_list = NULL;
 GtkWidget *playlistwin_shade, *playlistwin_close;
 
-static GdkPixmap *playlistwin_bg;
 static GdkBitmap *playlistwin_mask = NULL;
 
 static gboolean playlistwin_hint_flag = FALSE;
@@ -681,8 +680,6 @@ playlistwin_resize(gint width, gint height)
     ui_skinned_button_move_relative(playlistwin_sscroll_up, dx, dy);
     ui_skinned_button_move_relative(playlistwin_sscroll_down, dx, dy);
 
-    g_object_unref(playlistwin_bg);
-    playlistwin_bg = gdk_pixmap_new(playlistwin->window, width, height, -1);
     playlistwin_set_mask();
 
     GList *iter;
