@@ -53,6 +53,7 @@ static const gchar *credit_text[] = {
     N_("Audacious core developers:"),
     "George Averill",
     "Daniel Barkalow",
+    "Christian Birchinger",
     "Daniel Bradshaw",
     "Adam Cecile",
     "Michael Färber",
@@ -91,7 +92,7 @@ static const gchar *credit_text[] = {
     NULL,
 
     N_("Patch authors:"),
-    "Christian Birchinger",
+    "Massimo Cavalleri",
     "Laszlo Dvornik",
     "Ralf Ertzinger",
     "Mike Frysinger",
