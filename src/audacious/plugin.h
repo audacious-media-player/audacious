@@ -117,6 +117,24 @@ typedef struct {
 	} \
 	G_END_DECLS
 
+#define SIMPLE_INPUT_PLUGIN(name, ip_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, ip_list)
+
+#define SIMPLE_OUTPUT_PLUGIN(name, op_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, op_list)
+
+#define SIMPLE_EFFECT_PLUGIN(name, ep_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, ep_list)
+
+#define SIMPLE_GENERAL_PLUGIN(name, gp_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, gp_list)
+
+#define SIMPLE_VISUAL_PLUGIN(name, vp_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, vp_list)
+
+#define SIMPLE_DISCOVER_PLUGIN(name, dp_list) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, dp_list)
+
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
 struct _Plugin {
