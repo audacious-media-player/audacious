@@ -172,7 +172,7 @@ static int ab_position_b = -1;
 
 static PlaybackInfo playback_info = { NULL, 0, 0, 0 };
 
-
+static void mainwin_refresh_visible(void);
 static gint mainwin_idle_func(gpointer data);
 
 static void set_timer_mode_menu_cb(TimerMode mode);
@@ -262,78 +262,17 @@ mainwin_set_shade_menu_cb(gboolean shaded)
     cfg.player_shaded = shaded;
 
     mainwin_set_shape_mask();
-
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(mainwin),
                    MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1));
-
-        gtk_widget_show(mainwin_svis);
-        ui_svis_clear_data(mainwin_svis);
-        if (cfg.vis_type != VIS_OFF)
-            ui_svis_set_visible(mainwin_svis, TRUE);
-        else
-            ui_svis_set_visible(mainwin_svis, FALSE);
-
-        gtk_widget_show(mainwin_srew);
-        gtk_widget_show(mainwin_splay);
-        gtk_widget_show(mainwin_spause);
-        gtk_widget_show(mainwin_sstop);
-        gtk_widget_show(mainwin_sfwd);
-        gtk_widget_show(mainwin_seject);
-
-        ui_skinned_textbox_set_scroll(mainwin_info, FALSE);
-        if (playback_get_playing())
-    {
-            gtk_widget_show(mainwin_sposition);
-            gtk_widget_show(mainwin_stime_min);
-            gtk_widget_show(mainwin_stime_sec);
-    }
-    else
-    {
-            gtk_widget_hide(mainwin_sposition);
-            gtk_widget_hide(mainwin_stime_min);
-            gtk_widget_hide(mainwin_stime_sec);
-    }
-
-    }
-    else {
-    gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
-                     bmp_active_skin->properties.mainwin_height;
+    } else {
+        gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
+                       bmp_active_skin->properties.mainwin_height;
 
         dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * (cfg.doublesize + 1));
-
-        gtk_widget_hide(mainwin_svis);
-        ui_svis_clear_data(mainwin_svis);
-
-        gtk_widget_show(mainwin_vis);
-        if (cfg.vis_type != VIS_OFF)
-            ui_vis_set_visible(mainwin_vis, TRUE);
-        else
-            ui_vis_set_visible(mainwin_vis, FALSE);
-
-        gtk_widget_hide(mainwin_srew);
-        gtk_widget_hide(mainwin_splay);
-        gtk_widget_hide(mainwin_spause);
-        gtk_widget_hide(mainwin_sstop);
-        gtk_widget_hide(mainwin_sfwd);
-        gtk_widget_hide(mainwin_seject);
-
-        gtk_widget_hide(mainwin_stime_min);
-        gtk_widget_hide(mainwin_stime_sec);
-        gtk_widget_hide(mainwin_sposition);
-
-        if (playback_get_playing()) {
-            gtk_widget_show(mainwin_minus_num);
-            gtk_widget_show(mainwin_10min_num);
-            gtk_widget_show(mainwin_min_num);
-            gtk_widget_show(mainwin_10sec_num);
-            gtk_widget_show(mainwin_sec_num);
-            gtk_widget_show(mainwin_position);
-        }
-
-        ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     }
 
+    mainwin_refresh_visible();
     ui_skinned_set_push_button_data(mainwin_shade, 0, cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18);
 }
 
@@ -581,35 +520,88 @@ mainwin_set_song_title(const gchar * title)
     gtk_window_set_title(GTK_WINDOW(mainwin), mainwin_title_text);
 }
 
+static void
+mainwin_refresh_visible(void)
+{
+    if (!bmp_active_skin)
+        return;
+
+    gtk_widget_show_all(mainwin);
+
+    if (!bmp_active_skin->properties.mainwin_text_visible)
+        gtk_widget_hide(mainwin_info);
+
+    if (!bmp_active_skin->properties.mainwin_vis_visible)
+        gtk_widget_hide(mainwin_vis);
+
+    if (!bmp_active_skin->properties.mainwin_menurow_visible)
+        gtk_widget_hide(mainwin_menurow);
+
+    if (bmp_active_skin->properties.mainwin_othertext) {
+        gtk_widget_hide(mainwin_rate_text);
+        gtk_widget_hide(mainwin_freq_text);
+        gtk_widget_hide(mainwin_monostereo);
+
+        if (!bmp_active_skin->properties.mainwin_othertext_visible)
+            gtk_widget_hide(mainwin_othertext);
+    } else {
+        gtk_widget_hide(mainwin_othertext);
+    }
+
+    if (!bmp_active_skin->properties.mainwin_vis_visible)
+        gtk_widget_hide(mainwin_vis);
+
+    if (!playback_get_playing()) {
+        gtk_widget_hide(mainwin_minus_num);
+        gtk_widget_hide(mainwin_10min_num);
+        gtk_widget_hide(mainwin_min_num);
+        gtk_widget_hide(mainwin_10sec_num);
+        gtk_widget_hide(mainwin_sec_num);
+
+        gtk_widget_hide(mainwin_stime_min);
+        gtk_widget_hide(mainwin_stime_sec);
+
+        gtk_widget_hide(mainwin_position);
+        gtk_widget_hide(mainwin_sposition);
+    }
+
+    if (cfg.player_shaded) {
+        ui_svis_clear_data(mainwin_svis);
+        if (cfg.vis_type != VIS_OFF)
+            ui_svis_set_visible(mainwin_svis, TRUE);
+        else
+            ui_svis_set_visible(mainwin_svis, FALSE);
+
+        ui_skinned_textbox_set_scroll(mainwin_info, FALSE);
+        if (!playback_get_playing()) {
+            gtk_widget_hide(mainwin_sposition);
+            gtk_widget_hide(mainwin_stime_min);
+            gtk_widget_hide(mainwin_stime_sec);
+        }
+    } else {
+        gtk_widget_hide(mainwin_srew);
+        gtk_widget_hide(mainwin_splay);
+        gtk_widget_hide(mainwin_spause);
+        gtk_widget_hide(mainwin_sstop);
+        gtk_widget_hide(mainwin_sfwd);
+        gtk_widget_hide(mainwin_seject);
+        gtk_widget_hide(mainwin_stime_min);
+        gtk_widget_hide(mainwin_stime_sec);
+        gtk_widget_hide(mainwin_svis);
+        gtk_widget_hide(mainwin_sposition);
+        ui_vis_clear_data(mainwin_vis);
+        if (cfg.vis_type != VIS_OFF)
+            ui_vis_set_visible(mainwin_vis, TRUE);
+        else
+            ui_vis_set_visible(mainwin_vis, FALSE);
+
+        ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
+    }
+}
+
 void
 mainwin_refresh_hints(void)
 {
-    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
-    == TRUE)
-    {
-    gtk_widget_hide(mainwin_rate_text);
-    gtk_widget_hide(mainwin_freq_text);
-    gtk_widget_hide(mainwin_monostereo);
-
-    if (bmp_active_skin->properties.mainwin_othertext_visible)
-        gtk_widget_show(mainwin_othertext);
-    else
-        if (GTK_WIDGET_VISIBLE(mainwin_othertext))
-            gtk_widget_hide(mainwin_othertext);
-    }
-    else
-    {
-    gtk_widget_show(mainwin_rate_text);
-    gtk_widget_show(mainwin_freq_text);
-    gtk_widget_show(mainwin_monostereo);
-    gtk_widget_hide(mainwin_othertext);
-    }
-
-    if (bmp_active_skin->properties.mainwin_vis_visible)
-        gtk_widget_show(mainwin_vis);
-    else
-        gtk_widget_hide(mainwin_vis);
-
     /* positioning and size attributes */
     if (bmp_active_skin->properties.mainwin_vis_x && bmp_active_skin->properties.mainwin_vis_y)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
@@ -723,12 +715,7 @@ mainwin_refresh_hints(void)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_close), cfg.player_shaded ? 264 : bmp_active_skin->properties.mainwin_close_x,
         cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
 
-    /* visibility attributes */
-    if (bmp_active_skin->properties.mainwin_menurow_visible)
-        gtk_widget_show(mainwin_menurow);
-    else
-        gtk_widget_hide(mainwin_menurow);
-
+    mainwin_refresh_visible();
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
@@ -787,8 +774,7 @@ mainwin_set_song_info(gint bitrate,
     if (!playback_get_paused() && mainwin_playstatus != NULL)
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
-    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
-    == TRUE)
+    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext)
     {
         if (bitrate != -1)
             text = g_strdup_printf("%d kbps, %0.1f kHz, %s",
@@ -801,12 +787,6 @@ mainwin_set_song_info(gint bitrate,
             (n_channels > 1) ? _("stereo") : _("mono"));
 
         ui_skinned_textbox_set_text(mainwin_othertext, text);
-
-        gtk_widget_hide(mainwin_monostereo);
-    }
-    else
-    {
-        gtk_widget_show(mainwin_monostereo);
     }
 
     title = playlist_get_info_text(playlist);
@@ -838,20 +818,7 @@ mainwin_clear_song_info(void)
     if (mainwin_playstatus != NULL)
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_STOP);
 
-    /* hide playback time */
-    gtk_widget_hide(mainwin_minus_num);
-    gtk_widget_hide(mainwin_10min_num);
-    gtk_widget_hide(mainwin_min_num);
-    gtk_widget_hide(mainwin_10sec_num);
-    gtk_widget_hide(mainwin_sec_num);
-
-    gtk_widget_hide(mainwin_stime_min);
-    gtk_widget_hide(mainwin_stime_sec);
-
-    gtk_widget_hide(mainwin_position);
-    gtk_widget_hide(mainwin_sposition);
-
-    gtk_widget_hide(mainwin_othertext);
+    mainwin_refresh_visible();
 
     playlistwin_hide_timer();
     ui_vis_clear_data(mainwin_vis);
@@ -1465,8 +1432,8 @@ void
 mainwin_stop_pushed(void)
 {
     ip_data.stop = TRUE;
-    mainwin_clear_song_info();
     playback_stop();
+    mainwin_clear_song_info();
     ab_position_a = ab_position_b = -1;
     ip_data.stop = FALSE;
 }
@@ -1780,42 +1747,7 @@ mainwin_real_show(void)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
     gtk_window_present(GTK_WINDOW(mainwin));
-    gtk_widget_show_all(mainwin);
-
-    if (!bmp_active_skin->properties.mainwin_text_visible)
-        gtk_widget_hide(mainwin_info);
-
-    if (!cfg.player_shaded) {
-        gtk_widget_hide(mainwin_srew);
-        gtk_widget_hide(mainwin_splay);
-        gtk_widget_hide(mainwin_spause);
-        gtk_widget_hide(mainwin_sstop);
-        gtk_widget_hide(mainwin_sfwd);
-        gtk_widget_hide(mainwin_seject);
-        gtk_widget_hide(mainwin_stime_min);
-        gtk_widget_hide(mainwin_stime_sec);
-        gtk_widget_hide(mainwin_svis);
-    }
-
-    gtk_widget_hide(mainwin_minus_num);
-    gtk_widget_hide(mainwin_10min_num);
-    gtk_widget_hide(mainwin_min_num);
-    gtk_widget_hide(mainwin_10sec_num);
-    gtk_widget_hide(mainwin_sec_num);
-    gtk_widget_hide(mainwin_othertext);
-
-    gtk_widget_hide(mainwin_position);
-    gtk_widget_hide(mainwin_sposition);
-
-    if (bmp_active_skin->properties.mainwin_vis_visible)
-        gtk_widget_show(mainwin_vis);
-    else
-        gtk_widget_hide(mainwin_vis);
-
-    if (bmp_active_skin->properties.mainwin_menurow_visible)
-        gtk_widget_show(mainwin_menurow);
-    else
-        gtk_widget_hide(mainwin_menurow);
+    mainwin_refresh_hints();
 }
 
 void
