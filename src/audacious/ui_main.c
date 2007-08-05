@@ -53,7 +53,6 @@
   #include <regex.h>
 #endif
 
-#include "widgets/widgetcore.h"
 #include "ui_main.h"
 #include "icons-stock.h"
 
@@ -81,6 +80,7 @@
 #include "util.h"
 #include "visualization.h"
 
+#include "skin.h"
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_textbox.h"

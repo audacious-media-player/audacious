@@ -2,7 +2,7 @@ include ../../mk/rules.mk
 include ../../mk/init.mk
 include ../../mk/objective.mk
 
-SUBDIRS = $(INTL_OBJECTIVE) widgets glade images ui
+SUBDIRS = $(INTL_OBJECTIVE) glade images ui
 
 OBJECTIVE_BINS = audacious
 
@@ -17,8 +17,7 @@ LDADD = \
 	$(MOWGLI_LIBS) \
 	$(LIBMCS_LIBS) \
 	$(LIBGLADE_LIBS) \
-	$(REGEX_LIBS) \
-	./widgets/libwidgets.a
+	$(REGEX_LIBS)
 
 CFLAGS += \
 	$(MOWGLI_CFLAGS) \
@@ -97,6 +96,7 @@ SOURCES = \
 	signals.c \
 	strings.c \
 	titlestring.c \
+	skin.c \
 	ui_about.c \
 	ui_albumart.c \
 	ui_credits.c \
@@ -137,7 +137,7 @@ SOURCES = \
 	visualization.c \
 	xconvert.c
 
-LIBDEP = widgets/libwidgets.a ../libguess/libguess.a
+LIBDEP = ../libguess/libguess.a
 
 ifdef USE_DBUS
 SOURCES += dbus.c

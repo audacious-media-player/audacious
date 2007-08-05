@@ -21,7 +21,7 @@
  * along with this program;  If not, see <http://www.gnu.org/licenses>.
  */
 
-#include "widgets/widgetcore.h"
+#include "skin.h"
 #include "ui_skinned_equalizer_slider.h"
 #include "util.h"
 #include "ui_equalizer.h"

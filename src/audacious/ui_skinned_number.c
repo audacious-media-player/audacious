@@ -24,7 +24,6 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#include "widgets/widgetcore.h"
 #include "ui_skinned_number.h"
 #include "main.h"
 #include "util.h"

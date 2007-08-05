@@ -35,8 +35,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "widgetcore.h"
-
+#include "skin.h"
 #include "ui_equalizer.h"
 #include "main.h"
 #include "ui_playlist.h"

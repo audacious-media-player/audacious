@@ -27,7 +27,6 @@
 #define AUD_MAIN_H
 
 #ifdef _AUDACIOUS_CORE
-# include "widgets/widgetcore.h"
 # include "ui_main.h"
 #endif
 

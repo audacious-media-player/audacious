@@ -55,6 +55,7 @@
 #  include "audctrl.h"
 #endif
 
+#include "skin.h"
 #include "auddrct.h"
 #include "dnd.h"
 #include "effect.h"

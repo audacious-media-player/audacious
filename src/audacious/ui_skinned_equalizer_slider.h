@@ -25,6 +25,7 @@
 #define UISKINNEDEQUALIZER_SLIDER_H
 
 #include <gtk/gtk.h>
+#include "skin.h"
 
 #ifdef __cplusplus
 extern "C" {

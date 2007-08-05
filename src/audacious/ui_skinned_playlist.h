@@ -28,6 +28,7 @@
 #define UISKINNEDPLAYLIST_H
 
 #include <gtk/gtk.h>
+#include "skin.h"
 
 #ifdef __cplusplus
 extern "C" {

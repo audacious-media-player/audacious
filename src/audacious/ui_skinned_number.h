@@ -21,9 +21,8 @@
 #ifndef UISKINNEDNUMBER_H
 #define UISKINNEDNUMBER_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
+#include "skin.h"
 
 #ifdef __cplusplus
 extern "C" {

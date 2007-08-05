@@ -29,8 +29,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "widgets/widgetcore.h"
-
 #define EQUALIZER_DOUBLESIZE     (cfg.doublesize && cfg.eq_doublesize_linked)
 #define EQUALIZER_HEIGHT         ((cfg.equalizer_shaded ? 14 : 116) * (EQUALIZER_DOUBLESIZE + 1))
 #define EQUALIZER_WIDTH          (275 * (EQUALIZER_DOUBLESIZE + 1))

@@ -37,7 +37,7 @@
 #include <string.h>
 
 #include "platform/smartinclude.h"
-#include "widgets/widgetcore.h"
+#include "skin.h"
 #include "dock.h"
 #include "hints.h"
 #include "input.h"

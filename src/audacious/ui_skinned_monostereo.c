@@ -24,7 +24,7 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#include "widgets/widgetcore.h"
+#include "skin.h"
 #include "ui_skinned_monostereo.h"
 #include "main.h"
 #include "util.h"

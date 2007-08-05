@@ -54,6 +54,7 @@
 #include "ui_skinned_playstatus.h"
 #include "util.h"
 #include "visualization.h"
+#include "skin.h"
 
 #include "playback.h"
 #include "playback_evlisteners.h"

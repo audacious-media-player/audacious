@@ -43,7 +43,6 @@
 #include "ui_main.h"
 #include "util.h"
 #include "visualization.h"
-#include "widgets/widgetcore.h"
 #include "ui_skinned_playstatus.h"
 #include "hook.h"
 

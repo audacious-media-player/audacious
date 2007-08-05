@@ -49,7 +49,6 @@
 #include "visualization.h"
 
 #include "main.h"
-#include "widgets/widgetcore.h"
 #include "ui_skinned_textbox.h"
 #include "strings.h"
 #include "util.h"

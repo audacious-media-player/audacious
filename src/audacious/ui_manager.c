@@ -29,8 +29,6 @@
 /* TODO ui_main.h is only included because ui_manager.c needs the values of
    TimerMode enum; move that enum elsewhere so we can get rid of this include */
 #include "ui_main.h"
-/* we need this to define values of visualization radio-actions */
-#include "widgets/widgetcore.h"
 
 #include "icons-stock.h"
 

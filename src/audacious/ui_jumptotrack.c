@@ -53,7 +53,6 @@
   #include <regex.h>
 #endif
 
-#include "widgets/widgetcore.h"
 #include "ui_main.h"
 #include "icons-stock.h"
 

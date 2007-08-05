@@ -26,7 +26,6 @@
 #include <glib.h>
 
 #include "ui_main.h"
-#include "widgets/widgetcore.h"
 #include "playlist.h"
 
 #define PLAYLISTWIN_FRAME_TOP_HEIGHT    20

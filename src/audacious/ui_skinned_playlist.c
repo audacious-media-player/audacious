@@ -39,7 +39,7 @@
  */
 
 
-#include "widgets/widgetcore.h"
+#include "skin.h"
 #include "ui_skinned_playlist.h"
 #include "main.h"
 #include "util.h"

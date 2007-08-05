@@ -19,7 +19,7 @@
  */
 
 #include "platform/smartinclude.h"
-#include "widgets/widgetcore.h"
+#include "skin.h"
 
 #include <gtk/gtkmain.h>
 #include <glib-object.h>

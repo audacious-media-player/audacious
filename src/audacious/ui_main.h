@@ -25,7 +25,6 @@
 
 #include <gtk/gtk.h>
 
-#include "widgets/widgetcore.h"
 #include "ui_vis.h"
 #include "ui_svis.h"
 

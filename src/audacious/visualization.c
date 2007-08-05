@@ -36,7 +36,6 @@
 #include "playback.h"
 #include "plugin.h"
 #include "ui_preferences.h"
-#include "widgets/widgetcore.h"
 
 VisPluginData vp_data = {
     NULL,

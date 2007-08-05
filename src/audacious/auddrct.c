@@ -31,7 +31,7 @@
 #include "ui_jumptotrack.h"
 #include "auddrct.h"
 #include "playlist.h"
-
+#include "skin.h"
 
 /* player */
 

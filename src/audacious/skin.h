@@ -23,10 +23,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef _WIDGETCORE_H_
-#error Please do not include me directly! Use widgetcore.h instead!
-#endif
-
 #ifndef SKIN_H
 #define SKIN_H
 
