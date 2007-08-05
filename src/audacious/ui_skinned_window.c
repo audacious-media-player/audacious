@@ -102,6 +102,18 @@ ui_skinned_window_motion_notify_event(GtkWidget *widget,
     return FALSE;
 }
 
+static gboolean ui_skinned_window_focus_in(GtkWidget *widget, GdkEventFocus *focus) {
+    gboolean val = GTK_WIDGET_CLASS (parent)->focus_in_event (widget, focus);
+    gtk_widget_queue_draw(widget);
+    return val;
+}
+
+static gboolean ui_skinned_window_focus_out(GtkWidget *widget, GdkEventFocus *focus) {
+    gboolean val = GTK_WIDGET_CLASS (parent)->focus_out_event (widget, focus);
+    gtk_widget_queue_draw(widget);
+    return val;
+}
+
 static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *event) {
     SkinnedWindow *window = SKINNED_WINDOW(widget);
 
@@ -187,6 +199,8 @@ ui_skinned_window_class_init(SkinnedWindowClass *klass)
     widget_class->configure_event = ui_skinned_window_configure;
     widget_class->motion_notify_event = ui_skinned_window_motion_notify_event;
     widget_class->expose_event = ui_skinned_window_expose;
+    widget_class->focus_in_event = ui_skinned_window_focus_in;
+    widget_class->focus_out_event = ui_skinned_window_focus_out;
 }
 
 void
