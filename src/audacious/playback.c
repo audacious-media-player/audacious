@@ -180,8 +180,17 @@ void
 playback_stop(void)
 {
     InputPlayback *playback;
+    
+    /* this is not very nice, but stop MUST NOT be called until
+       a playback item is created in playback_monitor_thread;
+       we need one to call plugin->stop , otherwise plugins will
+       handle multiple resources for each plugin->play_file without
+       disposing of the previous; this leads to segfault and ui freezes
+       -- giacomo */
+    while ((playback = get_current_input_playback()) == NULL)
+      g_usleep( 20000 );
 
-    if (ip_data.playing && (playback = get_current_input_playback()) != NULL)
+    if (ip_data.playing)
     {
         if (playback_get_paused() == TRUE)
         {
