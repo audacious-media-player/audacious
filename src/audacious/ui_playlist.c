@@ -275,10 +275,10 @@ playlistwin_update_list(Playlist *playlist)
     /* this can happen early on. just bail gracefully. */
     g_return_if_fail(playlistwin_list);
 
-    gtk_widget_queue_draw(playlistwin_list);
-    gtk_widget_queue_draw(playlistwin_slider);
     playlistwin_update_info(playlist);
     playlistwin_update_sinfo(playlist);
+    gtk_widget_queue_draw(playlistwin_list);
+    gtk_widget_queue_draw(playlistwin_slider);
 }
 
 static void
