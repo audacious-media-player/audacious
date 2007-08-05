@@ -661,7 +661,6 @@ playlistwin_resize(gint width, gint height)
     ui_skinned_playlist_slider_move_relative(playlistwin_slider, dx);
     ui_skinned_playlist_slider_resize_relative(playlistwin_slider, dy);
 
-    ui_skinned_textbox_resize_relative(playlistwin_sinfo, dx);
     playlistwin_update_sinfo(playlist_get_active());
 
     ui_skinned_button_move_relative(playlistwin_shade, dx, 0);
@@ -680,6 +679,8 @@ playlistwin_resize(gint width, gint height)
 
     playlistwin_set_mask();
 
+    gtk_widget_set_size_request(playlistwin_sinfo, playlistwin_get_width() - 35,
+                                bmp_active_skin->properties.textbox_bitmap_font_height);
     GList *iter;
     for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
          GtkFixedChild *child_data = (GtkFixedChild *) iter->data;

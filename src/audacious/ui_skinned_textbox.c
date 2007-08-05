@@ -64,7 +64,6 @@ struct _UiSkinnedTextboxPrivate {
     GdkPixmap        *pixmap;
     gboolean         scroll_allowed, scroll_enabled;
     gint             scroll_dummy;
-    gint             resize_width;
     gint             move_x, move_y;
 };
 
@@ -165,7 +164,6 @@ static void ui_skinned_textbox_class_init(UiSkinnedTextboxClass *klass) {
 
 static void ui_skinned_textbox_init(UiSkinnedTextbox *textbox) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
-    priv->resize_width = 0;
     priv->move_x = 0;
     priv->move_y = 0;
 }
@@ -265,16 +263,12 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
     textbox->y = widget->allocation.y/(priv->double_size ? 2 : 1);
 
     if (textbox->width != widget->allocation.width/(priv->double_size ? 2 : 1)) {
-        if (textbox->width + priv->resize_width == widget->allocation.width/(priv->double_size ? 2 : 1)) {
-            textbox->width += priv->resize_width;
-            priv->resize_width = 0;
+            textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
             if (priv->pixmap_text) g_free(priv->pixmap_text);
             priv->pixmap_text = NULL;
             priv->offset = 0;
             gtk_widget_set_size_request(widget, textbox->width, textbox->height);
             gtk_widget_queue_draw(GTK_WIDGET(textbox));
-        } else if (priv->resize_width == 0)
-            textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
     }
 }
 
@@ -435,10 +429,6 @@ static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
 static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
-    if (priv->resize_width)
-        gtk_widget_set_size_request(GTK_WIDGET(textbox),
-                                   (textbox->width+priv->resize_width)*(1+priv->double_size),
-                                   (textbox->height)*(1+priv->double_size));
     if (priv->move_x || priv->move_y)
         gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x+priv->move_x, textbox->y+priv->move_y);
 
@@ -889,9 +879,4 @@ void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(widget);
     priv->move_x += x;
     priv->move_y += y;
-}
-
-void ui_skinned_textbox_resize_relative(GtkWidget *widget, gint w) {
-    UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(widget);
-    priv->resize_width += w;
 }
