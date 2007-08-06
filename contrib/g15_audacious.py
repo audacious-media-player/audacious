@@ -10,6 +10,7 @@ TODO:
 - Every second update should skip the D-Bus calls. They are the biggest CPU drain.
   (I also only use a half-second update interval for the scroller. Feel free to 
    turn it off and use a 1-second interval.
+- Wipe and redraw the entire screen at songchange. I'm not sure why yet, but some songs can cause mess-ups.
 - Clean up this quick hack of a script.
 
 Notes for people hacking this script:
@@ -33,6 +34,11 @@ ICN_PLAY = (
 "0111000" +
 "0110000" +
 "0100000" )
+
+# 3x5 "Characters" (Icon glyphs sized to match the Small font)
+CHAR_S_NOTE = "011010010110110"
+CHAR_S_HALFTONE = "101010101010101"
+CHAR_S_CROSS = "000010111010000"
 
 # I prefer no icon when it's playing, so overwrite the play icon with a blank.
 ICN_PLAY = '0' * ICON_DIMS[0] * ICON_DIMS[1]
@@ -108,6 +114,11 @@ try:
 			# Title
 			msg_handle.write('PB 0 9 160 14 0 1 1\n') # Wipe away any remnants of the old title that wouldn't be overwritten.
 			msg_handle.write('TO 0 9 0 0 "%s"\n' % titleString)
+
+			# Uncomment to place a note in the gap where the scroller wraps around
+			#notePos = (len(titleString) - scrollPivot - 1) * 4
+			#if len(titleString) > 40 and notePos <= 156:
+			#	msg_handle.write('PO %d 9 3 5 "%s"\n' % (notePos, CHAR_S_NOTE))
 
 			# Volume bar
 			msg_handle.write('DB 29 28 159 29 1 %d 100 1\n' % ((volume[0] + volume[1])/2))
