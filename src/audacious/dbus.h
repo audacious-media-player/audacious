@@ -24,7 +24,7 @@
 #define AUDACIOUS_DBUS_SERVICE      "org.atheme.audacious"
 #define AUDACIOUS_DBUS_PATH         "/org/atheme/audacious"
 #define AUDACIOUS_DBUS_INTERFACE    "org.atheme.audacious"
-#define AUDACIOUS_DBUS_SERVICE_MPRIS    "org.freedesktop.MediaPlayer"
+#define AUDACIOUS_DBUS_SERVICE_MPRIS    "org.mpris.audacious"
 #define AUDACIOUS_DBUS_PATH_MPRIS_ROOT      "/"
 #define AUDACIOUS_DBUS_PATH_MPRIS_PLAYER    "/Player"
 #define AUDACIOUS_DBUS_PATH_MPRIS_TRACKLIST "/TrackList"
