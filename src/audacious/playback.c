@@ -181,14 +181,8 @@ playback_stop(void)
 {
     InputPlayback *playback;
     
-    /* this is not very nice, but stop MUST NOT be called until
-       a playback item is created in playback_monitor_thread;
-       we need one to call plugin->stop , otherwise plugins will
-       handle multiple resources for each plugin->play_file without
-       disposing of the previous; this leads to segfault and ui freezes
-       -- giacomo */
-    while ((playback = get_current_input_playback()) == NULL)
-      g_usleep( 20000 );
+    if ((playback = get_current_input_playback()) == NULL)
+        return;
 
     if (ip_data.playing)
     {
@@ -246,21 +240,9 @@ run_no_output_plugin_dialog(void)
 static gpointer
 playback_monitor_thread(gpointer data)
 {
-    PlaylistEntry *entry = (PlaylistEntry *) data;
-    InputPlayback *playback;
+    InputPlayback *playback = (InputPlayback *) data;
 
-    playback = g_new0(InputPlayback, 1);
-    
-    entry->decoder->output = &psuedo_output_plugin;
-
-    playback->plugin = entry->decoder;
-    playback->output = &psuedo_output_plugin;
-    playback->filename = g_strdup(entry->filename);
-    playback->thread = g_thread_self();
-    
-    set_current_input_playback(playback);
-
-    entry->decoder->play_file(playback);
+    playback->plugin->play_file(playback);
 
     if (!playback->error && ip_data.playing)
         playback_eof();
@@ -307,7 +289,19 @@ playback_play_file(PlaylistEntry *entry)
     }
 
     ip_data.playing = TRUE;
-    g_thread_create(playback_monitor_thread, entry, TRUE, NULL);
+
+    playback = g_new0(InputPlayback, 1);
+    
+    entry->decoder->output = &psuedo_output_plugin;
+
+    playback->plugin = entry->decoder;
+    playback->output = &psuedo_output_plugin;
+    playback->filename = g_strdup(entry->filename);
+    playback->thread = g_thread_self();
+    
+    set_current_input_playback(playback);
+
+    g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
 
     return TRUE;
 }
