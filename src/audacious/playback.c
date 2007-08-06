@@ -257,6 +257,8 @@ playback_monitor_thread(gpointer data)
 gboolean
 playback_play_file(PlaylistEntry *entry)
 {
+    InputPlayback *playback;
+
     g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
