@@ -50,6 +50,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "ui_manager.h"
+#include "ui_fileinfopopup.h"
 
 #include "debug.h"
 static PangoFontDescription *playlist_list_font = NULL;
@@ -90,7 +91,12 @@ static gboolean ui_skinned_playlist_expose         (GtkWidget *widget, GdkEventE
 static gboolean ui_skinned_playlist_button_press   (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_playlist_button_release (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_playlist_motion_notify  (GtkWidget *widget, GdkEventMotion *event);
+static gboolean ui_skinned_playlist_leave_notify   (GtkWidget *widget, GdkEventCrossing *event);
 static void ui_skinned_playlist_redraw             (UiSkinnedPlaylist *playlist);
+static gboolean ui_skinned_playlist_popup_show     (gpointer data);
+static void ui_skinned_playlist_popup_hide         (GtkWidget *widget);
+static void ui_skinned_playlist_popup_timer_start  (GtkWidget *widget);
+static void ui_skinned_playlist_popup_timer_stop   (GtkWidget *widget);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint playlist_signals[LAST_SIGNAL] = { 0 };
@@ -134,6 +140,7 @@ static void ui_skinned_playlist_class_init(UiSkinnedPlaylistClass *klass) {
     widget_class->button_press_event = ui_skinned_playlist_button_press;
     widget_class->button_release_event = ui_skinned_playlist_button_release;
     widget_class->motion_notify_event = ui_skinned_playlist_motion_notify;
+    widget_class->leave_notify_event = ui_skinned_playlist_leave_notify;
 
     klass->redraw = ui_skinned_playlist_redraw;
 
@@ -154,6 +161,14 @@ static void ui_skinned_playlist_init(UiSkinnedPlaylist *playlist) {
     playlist->prev_min = -1;
     playlist->prev_max = -1;
     playlist->tooltips = TRUE;
+
+    g_object_set_data(G_OBJECT(playlist), "timer_id", GINT_TO_POINTER(0));
+    g_object_set_data(G_OBJECT(playlist), "timer_active", GINT_TO_POINTER(0));
+
+    GtkWidget *popup = audacious_fileinfopopup_create();
+    g_object_set_data(G_OBJECT(playlist), "popup", popup);
+    g_object_set_data(G_OBJECT(playlist), "popup_active", GINT_TO_POINTER(0));
+    g_object_set_data(G_OBJECT(playlist), "popup_position", GINT_TO_POINTER(-1));
 }
 
 GtkWidget* ui_skinned_playlist_new(GtkWidget *fixed, gint x, gint y, gint w, gint h) {
@@ -204,7 +219,7 @@ static void ui_skinned_playlist_realize(GtkWidget *widget) {
     attributes.window_type = GDK_WINDOW_CHILD;
     attributes.event_mask = gtk_widget_get_events(widget);
     attributes.event_mask |= GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | 
-                             GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK;
+                             GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK;
     attributes.visual = gtk_widget_get_visual(widget);
     attributes.colormap = gtk_widget_get_colormap(widget);
 
@@ -906,8 +921,26 @@ static gboolean ui_skinned_playlist_motion_notify(GtkWidget *widget, GdkEventMot
             playlistwin_update_list(playlist_get_active());
         }
         priv->drag_pos = nr;
+    } else {
+        gint pos = ui_skinned_playlist_get_position(widget, event->x, event->y);
+        gint cur_pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "popup_position"));
+        if (pos != cur_pos) {
+            g_object_set_data(G_OBJECT(widget), "popup_position", GINT_TO_POINTER(pos));
+            ui_skinned_playlist_popup_hide(widget);
+            ui_skinned_playlist_popup_timer_stop(widget);
+            if (pos != -1)
+                ui_skinned_playlist_popup_timer_start(widget);
+        }
     }
+
     return TRUE;
+}
+
+static gboolean ui_skinned_playlist_leave_notify(GtkWidget *widget, GdkEventCrossing *event) {
+    ui_skinned_playlist_popup_hide(widget);
+    ui_skinned_playlist_popup_timer_stop(widget);
+
+    return FALSE;
 }
 
 static void ui_skinned_playlist_redraw(UiSkinnedPlaylist *playlist) {
@@ -971,4 +1004,50 @@ void ui_skinned_playlist_resize_relative(GtkWidget *widget, gint w, gint h) {
     UiSkinnedPlaylistPrivate *priv = UI_SKINNED_PLAYLIST_GET_PRIVATE(widget);
     priv->resize_width += w;
     priv->resize_height += h;
+}
+
+static gboolean ui_skinned_playlist_popup_show(gpointer data) {
+    GtkWidget *widget = data;
+    gint pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "popup_position"));
+
+    if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "timer_active")) == 1 && pos != -1) {
+        TitleInput *tuple;
+        Playlist *pl_active = playlist_get_active();
+        GtkWidget *popup = g_object_get_data(G_OBJECT(widget), "popup");
+
+        tuple = playlist_get_tuple(pl_active, pos);
+        if ((tuple == NULL) || (tuple->length < 1)) {
+           gchar *title = playlist_get_songtitle(pl_active, pos);
+           audacious_fileinfopopup_show_from_title(popup, title);
+           g_free(title);
+        } else {
+           audacious_fileinfopopup_show_from_tuple(popup , tuple);
+        }
+        g_object_set_data(G_OBJECT(widget), "popup_active" , GINT_TO_POINTER(1));
+    }
+
+    ui_skinned_playlist_popup_timer_stop(widget);
+    return FALSE;
+}
+
+static void ui_skinned_playlist_popup_hide(GtkWidget *widget) {
+    if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "popup_active")) == 1) {
+        GtkWidget *popup = g_object_get_data(G_OBJECT(widget), "popup");
+        g_object_set_data(G_OBJECT(widget), "popup_active", GINT_TO_POINTER(0));
+        audacious_fileinfopopup_hide(popup, NULL);
+    }
+}
+
+static void ui_skinned_playlist_popup_timer_start(GtkWidget *widget) {
+    gint timer_id = g_timeout_add(cfg.filepopup_delay*100, ui_skinned_playlist_popup_show, widget);
+    g_object_set_data(G_OBJECT(widget), "timer_id", GINT_TO_POINTER(timer_id));
+    g_object_set_data(G_OBJECT(widget), "timer_active", GINT_TO_POINTER(1));
+}
+
+static void ui_skinned_playlist_popup_timer_stop(GtkWidget *widget) {
+    if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "timer_active")) == 1)
+        g_source_remove(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "timer_id")));
+
+    g_object_set_data(G_OBJECT(widget), "timer_id", GINT_TO_POINTER(0));
+    g_object_set_data(G_OBJECT(widget), "timer_active", GINT_TO_POINTER(0));
 }

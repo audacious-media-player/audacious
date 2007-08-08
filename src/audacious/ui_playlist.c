@@ -50,7 +50,6 @@
 #include "strings.h"
 #include "ui_equalizer.h"
 #include "ui_fileopener.h"
-#include "ui_fileinfopopup.h"
 #include "ui_main.h"
 #include "ui_manager.h"
 #include "util.h"
@@ -75,9 +74,6 @@ static GdkBitmap *playlistwin_mask = NULL;
 
 static gboolean playlistwin_hint_flag = FALSE;
 
-static GtkWidget *playlistwin_infopopup = NULL;
-static guint playlistwin_infopopup_sid = 0;
-
 static GtkWidget *playlistwin_slider = NULL;
 static GtkWidget *playlistwin_time_min, *playlistwin_time_sec;
 static GtkWidget *playlistwin_info, *playlistwin_sinfo;
@@ -90,8 +86,6 @@ void playlistwin_select_search_cbt_cb( GtkWidget *called_cbt ,
                                               gpointer other_cbt );
 static gboolean playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
                                                  gpointer searchdlg_win );
-
-static gboolean playlistwin_fileinfopopup_probe(gpointer * filepopup_win);
 
 static gboolean playlistwin_resizing = FALSE;
 static gint playlistwin_resize_x, playlistwin_resize_y;
@@ -1597,8 +1591,6 @@ playlistwin_create(void)
     playlistwin_create_widgets();
     playlistwin_update_info(playlist_get_active());
 
-    playlistwin_infopopup = audacious_fileinfopopup_create();
-
     gtk_window_add_accel_group(GTK_WINDOW(playlistwin), ui_manager_get_accel_group());
 }
 
@@ -1616,10 +1608,6 @@ playlistwin_show(void)
 
     playlistwin_set_toprow(0);
     playlist_check_pos_current(playlist_get_active());
-
-    if ( playlistwin_infopopup_sid == 0 )
-      playlistwin_infopopup_sid = g_timeout_add(
-        50 , (GSourceFunc)playlistwin_fileinfopopup_probe , playlistwin_infopopup );
 
     gtk_widget_show_all(playlistwin);
     if (!cfg.playlist_shaded)
@@ -1639,13 +1627,6 @@ playlistwin_hide(void)
     cfg.playlist_visible = FALSE;
     UI_SKINNED_BUTTON(mainwin_pl)->inside = FALSE;
     gtk_widget_queue_draw(mainwin_pl);
-
-    /* no point in probing for playlistwin_infopopup trigger when the playlistwin is hidden */
-    if ( playlistwin_infopopup_sid != 0 )
-    {
-      g_source_remove( playlistwin_infopopup_sid );
-      playlistwin_infopopup_sid = 0;
-    }
 
     if ( cfg.player_visible )
     {
@@ -1974,75 +1955,4 @@ playlistwin_select_search_kp_cb(GtkWidget *entry, GdkEventKey *event,
         default:
             return FALSE;
     }
-}
-
-
-/* fileinfopopup callback for playlistwin */
-static gboolean
-playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
-{
-    gint x, y, pos;
-    TitleInput *tuple;
-    static gint prev_x = 0, prev_y = 0, ctr = 0, prev_pos = -1;
-    static gint shaded_pos = -1, shaded_prev_pos = -1;
-    gboolean skip = FALSE;
-    GdkWindow *win;
-    Playlist *playlist = playlist_get_active();
-
-    win = gdk_window_at_pointer(NULL, NULL);
-    gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
-    pos = ui_skinned_playlist_get_position(playlistwin_list, x - 12, y - 20);
-
-    if (win == NULL
-        || cfg.show_filepopup_for_tuple == FALSE
-        || UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips == FALSE
-        || pos != prev_pos
-        || win != playlistwin_list->window)
-    {
-        prev_pos = pos;
-        ctr = 0;
-        audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-        return TRUE;
-    }
-
-    if (prev_x == x && prev_y == y)
-        ctr++;
-    else
-    {
-        ctr = 0;
-        prev_x = x;
-        prev_y = y;
-        audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-        return TRUE;
-    }
-
-    if (playlistwin_is_shaded())
-    {
-        shaded_pos = playlist_get_position(playlist);
-        if (shaded_prev_pos != shaded_pos)
-            skip = TRUE;
-    }
-
-    if (ctr >= cfg.filepopup_delay && (skip == TRUE || GTK_WIDGET_VISIBLE(GTK_WIDGET(filepopup_win)) != TRUE)) {
-        if (pos == -1 && !playlistwin_is_shaded())
-        {
-            audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-            return TRUE;
-        }
-        /* shaded mode */
-        else
-        {
-            tuple = playlist_get_tuple(playlist, shaded_pos);
-            audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-            audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
-            shaded_prev_pos = shaded_pos;
-        }
-
-        prev_pos = pos;
-
-        tuple = playlist_get_tuple(playlist, pos);
-        audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
-    }
-
-    return TRUE;
 }
