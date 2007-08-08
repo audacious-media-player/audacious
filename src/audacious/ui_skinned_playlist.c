@@ -160,7 +160,6 @@ static void ui_skinned_playlist_init(UiSkinnedPlaylist *playlist) {
     playlist->prev_selected = -1;
     playlist->prev_min = -1;
     playlist->prev_max = -1;
-    playlist->tooltips = TRUE;
 
     g_object_set_data(G_OBJECT(playlist), "timer_id", GINT_TO_POINTER(0));
     g_object_set_data(G_OBJECT(playlist), "timer_active", GINT_TO_POINTER(0));
@@ -812,7 +811,6 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
     if (nr == -1)
         return FALSE;
 
-    pl->tooltips = FALSE;
     if (event->button == 3) {
         GList* selection = playlist_get_selected(playlist);
         if (g_list_find(selection, GINT_TO_POINTER(nr)) == NULL) {
@@ -873,7 +871,6 @@ static gboolean ui_skinned_playlist_button_release(GtkWidget *widget, GdkEventBu
         priv->dragging = FALSE;
         priv->auto_drag_down = FALSE;
         priv->auto_drag_up = FALSE;
-        UI_SKINNED_PLAYLIST(widget)->tooltips = TRUE;
         gtk_widget_queue_draw(widget);
     }
     return TRUE;
