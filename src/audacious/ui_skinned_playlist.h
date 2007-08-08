@@ -48,7 +48,6 @@ struct _UiSkinnedPlaylist {
     gint        first;
     gint        num_visible;
     gint        prev_selected, prev_min, prev_max;
-    gboolean    tooltips;
     gboolean    drag_motion;
     gint        drag_motion_x, drag_motion_y;
     gint        fheight;
