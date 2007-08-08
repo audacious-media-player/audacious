@@ -860,6 +860,8 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
         priv->dragging = TRUE;
     }
     playlistwin_update_list(playlist);
+    ui_skinned_playlist_popup_hide(widget);
+    ui_skinned_playlist_popup_timer_stop(widget);
 
     return TRUE;
 }
@@ -873,6 +875,9 @@ static gboolean ui_skinned_playlist_button_release(GtkWidget *widget, GdkEventBu
         priv->auto_drag_up = FALSE;
         gtk_widget_queue_draw(widget);
     }
+
+    ui_skinned_playlist_popup_hide(widget);
+    ui_skinned_playlist_popup_timer_stop(widget);
     return TRUE;
 }
 
