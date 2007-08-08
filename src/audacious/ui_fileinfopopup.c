@@ -470,9 +470,9 @@ audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
         filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_artist", "");
         filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_album", "");
         filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_genre", "");
-        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_track", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_tracknum", "");
         filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_year", "");
-        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_length", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_tracklen", "");
 
         gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
     }
