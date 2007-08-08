@@ -144,7 +144,7 @@ SOURCES += dbus.c
 CFLAGS += -I../libaudclient
 DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 OBJECTIVE_LIBS_NOINST += $(DBUS_BINDINGS)
-LIBDEP += ../libaudclient/libaudclient.so
+LIBDEP += ../libaudclient/libaudclient$(SHARED_SUFFIX)
 LDADD += -L../libaudclient -laudclient
 endif
 

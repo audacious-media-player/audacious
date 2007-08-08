@@ -175,31 +175,53 @@ gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
 
 // MPRIS /Player
 gboolean mpris_player_next(MprisPlayer *obj, GError **error) {
-    return audacious_rc_advance(obj, error);
+	playlist_next(playlist_get_active());
+    return TRUE;
 }
 gboolean mpris_player_prev(MprisPlayer *obj, GError **error) {
-    return audacious_rc_reverse(obj, error);
+	playlist_prev(playlist_get_active());
+    return TRUE;
 }
 gboolean mpris_player_pause(MprisPlayer *obj, GError **error) {
-    return audacious_rc_pause(obj, error);
+	playback_pause();
+    return TRUE;
 }
 gboolean mpris_player_stop(MprisPlayer *obj, GError **error) {
-    return audacious_rc_stop(obj, error);
+	ip_data.stop = TRUE;
+    playback_stop();
+    ip_data.stop = FALSE;
+    mainwin_clear_song_info();
+    return TRUE;
 }
 gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
-    return audacious_rc_play(obj, error);
-}
-gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
-    return audacious_rc_quit(obj, error);
+	if (playback_get_paused())
+        playback_pause();
+    else if (playlist_get_length(playlist_get_active()))
+        playback_initiate();
+    else
+        mainwin_eject_pushed();
+    return TRUE;
 }
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
     mainwin_repeat_pushed(rpt);
     mainwin_set_noplaylistadvance(rpt);
     return TRUE;
 }
+gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
+	// TODO: emit disconnected signal
+	mainwin_quit_cb();
+    return TRUE;
+}
+gboolean mpris_player_disconnect(MprisPlayer *obj, GError **error) {
+	return FALSE;
+}
 gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
                                  GError **error) {
     return FALSE;
+}
+gboolean mpris_player_get_metadata(MprisTrackList *obj, gint pos,
+                                   GHashTable *metadata, GError **error) {
+	return FALSE;
 }
 gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
                                  GError **error) {
@@ -236,6 +258,11 @@ gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error) {
     return TRUE;
 }
 
+gboolean mpris_player_emit_disconnected(MprisPlayer *obj, GError **error) {
+	g_signal_emit(obj, signals[DISCONNECTED], 0, NULL);
+	return TRUE;
+}
+
 // MPRIS /TrackList
 gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
                                       GHashTable *metadata, GError **error) {
@@ -243,11 +270,13 @@ gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
 }
 gboolean mpris_tracklist_get_current_track(MprisTrackList *obj, gint *pos,
                                            GError **error) {
-    return audacious_rc_position(obj, pos, error);
+	*pos = playlist_get_position(playlist_get_active());
+    return TRUE;
 }
-gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *pos,
+gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *length,
                                     GError **error) {
-    return FALSE;
+	*length = playlist_get_length(playlist_get_active());
+    return TRUE;
 }
 gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
                                    gboolean play, GError **error) {
@@ -261,7 +290,8 @@ gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
 }
 gboolean mpris_tracklist_del_track(MprisTrackList *obj, gint pos,
                                    GError **error) {
-    return FALSE;
+	playlist_delete_index(playlist_get_active(), pos);
+    return TRUE;
 }
 gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
                               GError **error) {
@@ -269,7 +299,8 @@ gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
 }
 gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
                                 GError **error) {
-    return FALSE;
+	mainwin_shuffle_pushed(!cfg.shuffle);
+    return TRUE;
 }
 
 // Audacious General Information
