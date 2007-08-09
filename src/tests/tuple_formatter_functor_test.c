@@ -49,6 +49,22 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
+    tstr = tuple_formatter_process_string(tuple, "%{audacious-version}");
+    if (g_str_has_prefix(tstr, "audacious") == FALSE)
+    {
+        g_print("fail 2: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${(true):%{audacious-version}}");
+    if (g_str_has_prefix(tstr, "audacious") == FALSE)
+    {
+        g_print("fail 3: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
     mowgli_object_unref(tuple);
 
     return EXIT_SUCCESS;

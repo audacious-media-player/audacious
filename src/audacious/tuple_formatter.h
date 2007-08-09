@@ -29,7 +29,11 @@
 gchar *tuple_formatter_process_string(Tuple *tuple, const gchar *string);
 void tuple_formatter_register_expression(const gchar *keyword,
         gboolean (*func)(Tuple *tuple, const gchar *argument));
+void tuple_formatter_register_function(const gchar *keyword,
+        gchar *(*func)(Tuple *tuple, gchar **argument));
 gchar *tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
+    const gchar *argument);
+gchar *tuple_formatter_process_function(Tuple *tuple, const gchar *expression,
     const gchar *argument);
 gchar *tuple_formatter_process_construct(Tuple *tuple, const gchar *string);
 

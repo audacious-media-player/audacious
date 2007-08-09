@@ -21,6 +21,7 @@
 #include <glib.h>
 #include <mowgli.h>
 
+#include "config.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
 
@@ -44,9 +45,10 @@
  *   - ${==field,field:expr}: evaluates expr if both fields are the same
  *   - ${!=field,field:expr}: evaluates expr if both fields are not the same
  *   - ${(empty)?field:expr}: evaluates expr if field is empty or does not exist
+ *   - %{function:args,arg2,...}: runs function and inserts the result.
  *
  * everything else is treated as raw text.
- * additionally, plugins can add additional instructions!
+ * additionally, plugins can add additional instructions and functions!
  */
 
 typedef struct {
@@ -73,9 +75,9 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     for (iter = string; *iter != '\0'; iter++)
     {
         /* if it's raw text, just copy the byte */
-        if (*iter != '$')
+        if (*iter != '$' && *iter != '%')
             g_string_append_c(ctx->str, *iter);
-        else if (*(iter + 1) == '{')
+        else if (*iter == '$' && *(iter + 1) == '{')
         {
             GString *expression = g_string_new("");
             GString *argument = g_string_new("");
@@ -91,7 +93,7 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                     continue;
                 }
 
-                if (g_str_has_prefix(iter, "${") == TRUE)
+                if (g_str_has_prefix(iter, "${") == TRUE || g_str_has_prefix(iter, "%{") == TRUE)
                 {
                     if (sel == argument)
                     {
@@ -119,6 +121,62 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             }
 
             result = tuple_formatter_process_expr(tuple, expression->str, argument->len ? argument->str : NULL);
+            if (result != NULL)
+            {
+                g_string_append(ctx->str, result);
+                g_free(result);
+            }
+
+            g_string_free(expression, TRUE);
+            g_string_free(argument, TRUE);
+
+            if (*iter == '\0')
+                break;
+        }
+        else if (*iter == '%' && *(iter + 1) == '{')
+        {
+            GString *expression = g_string_new("");
+            GString *argument = g_string_new("");
+            GString *sel = expression;
+            gchar *result;
+            gint level = 0;
+
+            for (iter += 2; *iter != '\0'; iter++)
+            {
+                if (*iter == ':')
+                {
+                    sel = argument;
+                    continue;
+                }
+
+                if (g_str_has_prefix(iter, "${") == TRUE || g_str_has_prefix(iter, "%{") == TRUE)
+                {
+                    if (sel == argument)
+                    {
+                        g_string_append_c(sel, *iter);
+                        level++;
+                    }
+                }
+                else if (*iter == '}' && (sel == argument && --level > 0))
+                    g_string_append_c(sel, *iter);
+                else if (*iter == '}' && ((sel != argument) || (sel == argument && level <= 0)))
+                {
+                    if (sel == argument)
+                        iter++;
+                    break;
+                }
+                else
+                    g_string_append_c(sel, *iter);
+            }
+
+            if (expression->len == 0)
+            {
+                g_string_free(expression, TRUE);
+                g_string_free(argument, TRUE);
+                continue;
+            }
+
+            result = tuple_formatter_process_function(tuple, expression->str, argument->len ? argument->str : NULL);
             if (result != NULL)
             {
                 g_string_append(ctx->str, result);
@@ -196,6 +254,56 @@ tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
     return NULL;
 }
 
+static GList *tuple_formatter_func_list = NULL;
+
+typedef struct {
+    const gchar *name;
+    gchar *(*func)(Tuple *tuple, gchar **args);
+} TupleFormatterFunction;
+
+/* processes a function */
+gchar *
+tuple_formatter_process_function(Tuple *tuple, const gchar *expression, 
+    const gchar *argument)
+{
+    TupleFormatterFunction *expr = NULL;
+    GList *iter;
+
+    g_return_val_if_fail(tuple != NULL, NULL);
+    g_return_val_if_fail(expression != NULL, NULL);
+
+    for (iter = tuple_formatter_func_list; iter != NULL; iter = iter->next)
+    {
+        TupleFormatterFunction *tmp = (TupleFormatterFunction *) iter->data;
+
+        if (g_str_has_prefix(expression, tmp->name) == TRUE)
+        {
+            expr = tmp;
+            expression += strlen(tmp->name);
+        }
+    }
+
+    if (expr != NULL)
+    {
+        gchar **args;
+        gchar *ret;
+
+        if (argument)
+            args = g_strsplit(argument, ",", 10);
+        else
+            args = NULL;
+
+        ret = expr->func(tuple, args);
+
+        if (args)
+            g_strfreev(args);
+
+        return ret;
+    }
+
+    return NULL;
+}
+
 /* registers a formatter */
 void
 tuple_formatter_register_expression(const gchar *keyword,
@@ -211,6 +319,23 @@ tuple_formatter_register_expression(const gchar *keyword,
     expr->func = func;
 
     tuple_formatter_expr_list = g_list_append(tuple_formatter_expr_list, expr);
+}
+
+/* registers a function */
+void
+tuple_formatter_register_function(const gchar *keyword,
+	gchar *(*func)(Tuple *tuple, gchar **argument))
+{
+    TupleFormatterFunction *expr;
+
+    g_return_if_fail(keyword != NULL);
+    g_return_if_fail(func != NULL);
+
+    expr = g_new0(TupleFormatterFunction, 1);
+    expr->name = keyword;
+    expr->func = func;
+
+    tuple_formatter_func_list = g_list_append(tuple_formatter_func_list, expr);
 }
 
 /* builtin-keyword: ${?arg}, returns TRUE if <arg> exists. */
@@ -292,6 +417,13 @@ tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
     return ret;
 }
 
+/* builtin function: %{audacious-version} */
+static gchar *
+tuple_formatter_function_version(Tuple *tuple, gchar **args)
+{
+    return g_strdup(PACKAGE_NAME " " PACKAGE_VERSION);
+}
+
 /* processes a string containing instructions. does initialization phases
    if not already done */
 gchar *
@@ -305,6 +437,8 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         tuple_formatter_register_expression("==", tuple_formatter_expression_match);
         tuple_formatter_register_expression("!=", tuple_formatter_expression_nonmatch);
         tuple_formatter_register_expression("(empty)?", tuple_formatter_expression_empty);
+
+        tuple_formatter_register_function("audacious-version", tuple_formatter_function_version);
         initialized = TRUE;
     }
 
