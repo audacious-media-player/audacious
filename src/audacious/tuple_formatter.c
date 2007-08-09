@@ -43,6 +43,7 @@
  *                      tuple as integer value of "value"
  *   - ${==field,field:expr}: evaluates expr if both fields are the same
  *   - ${!=field,field:expr}: evaluates expr if both fields are not the same
+ *   - ${(empty)?field:expr}: evaluates expr if field is empty or does not exist
  *
  * everything else is treated as raw text.
  * additionally, plugins can add additional instructions!
@@ -264,6 +265,33 @@ tuple_formatter_expression_nonmatch(Tuple *tuple, const gchar *expression)
     return tuple_formatter_expression_match(tuple, expression) ^ 1;
 }
 
+/* builtin-keyword: ${empty?}. returns TRUE if <arg> is empty. */
+static gboolean
+tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
+{
+    gboolean ret = TRUE;
+    const gchar *iter;
+    TupleValueType type = tuple_get_value_type(tuple, expression);
+
+    if (type == TUPLE_UNKNOWN)
+        return TRUE;
+
+    if (type == TUPLE_INT && tuple_get_int(tuple, expression) != 0)
+        return FALSE;
+
+    iter = tuple_get_string(tuple, expression);
+
+    while (ret && *iter != '\0')
+    {
+        if (*iter == ' ')
+            iter++;
+        else
+            ret = FALSE;
+    }
+
+    return ret;
+}
+
 /* processes a string containing instructions. does initialization phases
    if not already done */
 gchar *
@@ -276,6 +304,7 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         tuple_formatter_register_expression("?", tuple_formatter_expression_exists);
         tuple_formatter_register_expression("==", tuple_formatter_expression_match);
         tuple_formatter_register_expression("!=", tuple_formatter_expression_nonmatch);
+        tuple_formatter_register_expression("(empty)?", tuple_formatter_expression_empty);
         initialized = TRUE;
     }
 
