@@ -50,7 +50,7 @@
 
 typedef struct {
     Tuple *tuple;
-    GString str;
+    GString *str;
 } TupleFormatterContext;
 
 /* processes a construct, e.g. "${?artist:artist is defined}" would
@@ -66,51 +66,74 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     g_return_val_if_fail(string != NULL, NULL);
 
     ctx = g_new0(TupleFormatterContext, 1);
+    ctx->str = g_string_new("");
 
+    /* parsers are ugly */
     for (iter = string; *iter != '\0'; iter++)
     {
         /* if it's raw text, just copy the byte */
         if (*iter != '$')
-            g_string_append_c(&ctx->str, *iter);
+            g_string_append_c(ctx->str, *iter);
         else if (*(iter + 1) == '{')
         {
-            GString expression = {};
-            GString argument = {};
-            GString *sel = &expression;
+            GString *expression = g_string_new("");
+            GString *argument = g_string_new("");
+            GString *sel = expression;
             gchar *result;
+            gint level = 0;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
-                switch(*iter)
+                if (*iter == ':')
                 {
-                case '}':
-                    break;
-                case ':':
-                    sel = &argument;
-                    break;
-                default:
+                    sel = argument;
+                    continue;
+                }
+
+                if (g_str_has_prefix(iter, "${") == TRUE)
+                {
+                    if (sel == argument)
+                    {
+                        g_string_append_c(sel, *iter);
+                        level++;
+                    }
+                }
+                else if (*iter == '}' && (sel == argument && --level != 0))
                     g_string_append_c(sel, *iter);
+                else if (*iter == '}' && ((sel != argument) || (sel == argument && level == 0)))
+                {
+                    if (sel == argument)
+                        iter++;
                     break;
                 }
+                else
+                    g_string_append_c(sel, *iter);
             }
 
-            if (expression.len == 0)
+            if (expression->len == 0)
+            {
+                g_string_free(expression, TRUE);
+                g_string_free(argument, TRUE);
                 continue;
+            }
 
-            result = tuple_formatter_process_expr(tuple, expression.str, argument.len ? argument.str : NULL);
+            result = tuple_formatter_process_expr(tuple, expression->str, argument->len ? argument->str : NULL);
             if (result != NULL)
             {
-                g_string_append(&ctx->str, result);
+                g_string_append(ctx->str, result);
                 g_free(result);
             }
 
-            g_free(expression.str);
-            g_free(argument.str);
+            g_string_free(expression, TRUE);
+            g_string_free(argument, TRUE);
+
+            if (*iter == '\0')
+                break;
         }
     }
 
-    out = g_strdup(ctx->str.str);
-    g_free(ctx->str.str);
+    out = g_strdup(ctx->str->str);
+    g_string_free(ctx->str, TRUE);
     g_free(ctx);
 
     return out;
@@ -138,7 +161,7 @@ tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
     {
         TupleFormatterExpression *tmp = (TupleFormatterExpression *) iter->data;
 
-        if (g_str_has_prefix(tmp->name, expression) == TRUE)
+        if (g_str_has_prefix(expression, tmp->name) == TRUE)
         {
             expr = tmp;
             expression += strlen(tmp->name);
@@ -209,5 +232,5 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         initialized = TRUE;
     }
 
-    return tuple_formatter_process_string(tuple, string);
+    return tuple_formatter_process_construct(tuple, string);
 }
