@@ -42,7 +42,7 @@ static mowgli_object_class_t tuple_klass;
 
 /* iterative destructor of tuple values. */
 static void
-tuple_value_destroy(mowgli_dictionary_elem_t *delem, void *privdata)
+tuple_value_destroy(mowgli_dictionary_elem_t *delem, gpointer privdata)
 {
     TupleValue *value = (TupleValue *) delem->data;
 
@@ -53,8 +53,10 @@ tuple_value_destroy(mowgli_dictionary_elem_t *delem, void *privdata)
 }
 
 static void
-tuple_destroy(Tuple *tuple)
+tuple_destroy(gpointer data)
 {
+    Tuple *tuple = (Tuple *) data;
+
     mowgli_dictionary_destroy(tuple->dict, tuple_value_destroy, NULL);
     mowgli_heap_free(tuple_heap, tuple);
 }
@@ -159,8 +161,8 @@ tuple_get_string(Tuple *tuple, const gchar *field)
 {
     TupleValue *value;
 
-    g_return_if_fail(tuple != NULL, NULL);
-    g_return_if_fail(field != NULL, NULL);
+    g_return_val_if_fail(tuple != NULL, NULL);
+    g_return_val_if_fail(field != NULL, NULL);
 
     if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
         return NULL;
@@ -176,14 +178,14 @@ tuple_get_int(Tuple *tuple, const gchar *field)
 {
     TupleValue *value;
 
-    g_return_if_fail(tuple != NULL, 0);
-    g_return_if_fail(field != NULL, 0);
+    g_return_val_if_fail(tuple != NULL, 0);
+    g_return_val_if_fail(field != NULL, 0);
 
     if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
-        return NULL;
+        return 0;
 
     if (value->type != TUPLE_INT)
-        mowgli_throw_exception_val(audacious.tuple.invalid_type_request, NULL);
+        mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
 
     return value->value.integer;
 }
