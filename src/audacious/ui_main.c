@@ -523,7 +523,7 @@ mainwin_set_song_title(const gchar * title)
 static void
 mainwin_refresh_visible(void)
 {
-    if (!bmp_active_skin)
+    if (!bmp_active_skin || !cfg.player_visible)
         return;
 
     gtk_widget_show_all(mainwin);
