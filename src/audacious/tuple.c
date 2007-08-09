@@ -66,8 +66,8 @@ tuple_new(void)
 
     if (tuple_heap == NULL)
     {
-        tuple_heap = mowgli_heap_create(sizeof(Tuple), 256);
-        tuple_value_heap = mowgli_heap_create(sizeof(TupleValue), 512);
+        tuple_heap = mowgli_heap_create(sizeof(Tuple), 256, BH_NOW);
+        tuple_value_heap = mowgli_heap_create(sizeof(TupleValue), 512, BH_NOW);
         mowgli_object_class_init(&tuple_klass, "audacious.tuple", tuple_destroy, FALSE);
     }
 
