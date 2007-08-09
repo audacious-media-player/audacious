@@ -90,5 +90,7 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
+    mowgli_object_unref(tuple);
+
     return EXIT_SUCCESS;
 }
