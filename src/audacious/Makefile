@@ -52,6 +52,7 @@ HEADERS = \
 	plugin.h \
 	strings.h \
 	titlestring.h \
+	tuple.h \
 	ui_fileinfopopup.h \
 	ui_lastfm.h\
 	ui_preferences.h \
@@ -96,6 +97,7 @@ SOURCES = \
 	signals.c \
 	strings.c \
 	titlestring.c \
+	tuple.c \
 	skin.c \
 	ui_about.c \
 	ui_albumart.c \
