@@ -98,6 +98,7 @@ SOURCES = \
 	strings.c \
 	titlestring.c \
 	tuple.c \
+	tuple_formatter.c \
 	skin.c \
 	ui_about.c \
 	ui_albumart.c \
