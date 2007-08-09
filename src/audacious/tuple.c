@@ -40,10 +40,22 @@ static mowgli_heap_t *tuple_heap = NULL;
 static mowgli_heap_t *tuple_value_heap = NULL;
 static mowgli_object_class_t tuple_klass;
 
+/* iterative destructor of tuple values. */
+static void
+tuple_value_destroy(mowgli_dictionary_elem_t *delem, void *privdata)
+{
+    TupleValue *value = (TupleValue *) delem->data;
+
+    if (value->type == TUPLE_STRING)
+        g_free(value->value.string);
+
+    mowgli_heap_free(tuple_value_heap, value);
+}
+
 static void
 tuple_destroy(Tuple *tuple)
 {
-    mowgli_dictionary_destroy(tuple->dict);
+    mowgli_dictionary_destroy(tuple->dict, tuple_value_destroy, NULL);
     mowgli_heap_free(tuple_heap, tuple);
 }
 
@@ -133,8 +145,8 @@ tuple_get_value_type(Tuple *tuple, const gchar *field)
 {
     TupleValue *value;
 
-    g_return_if_fail(tuple != NULL);
-    g_return_if_fail(field != NULL);
+    g_return_val_if_fail(tuple != NULL, TUPLE_UNKNOWN);
+    g_return_val_if_fail(field != NULL, TUPLE_UNKNOWN);
 
     if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
         return TUPLE_UNKNOWN;
@@ -147,8 +159,8 @@ tuple_get_string(Tuple *tuple, const gchar *field)
 {
     TupleValue *value;
 
-    g_return_if_fail(tuple != NULL);
-    g_return_if_fail(field != NULL);
+    g_return_if_fail(tuple != NULL, NULL);
+    g_return_if_fail(field != NULL, NULL);
 
     if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
         return NULL;
@@ -164,8 +176,8 @@ tuple_get_int(Tuple *tuple, const gchar *field)
 {
     TupleValue *value;
 
-    g_return_if_fail(tuple != NULL);
-    g_return_if_fail(field != NULL);
+    g_return_if_fail(tuple != NULL, 0);
+    g_return_if_fail(field != NULL, 0);
 
     if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
         return NULL;
