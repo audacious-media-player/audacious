@@ -98,9 +98,9 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         level++;
                     }
                 }
-                else if (*iter == '}' && (sel == argument && --level != 0))
+                else if (*iter == '}' && (sel == argument && --level > 0))
                     g_string_append_c(sel, *iter);
-                else if (*iter == '}' && ((sel != argument) || (sel == argument && level == 0)))
+                else if (*iter == '}' && ((sel != argument) || (sel == argument && level <= 0)))
                 {
                     if (sel == argument)
                         iter++;
@@ -219,6 +219,51 @@ tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
     return (tuple_get_value_type(tuple, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
 }
 
+/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match. */
+static gboolean
+tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
+{
+    gchar **args = g_strsplit(expression, ",", 2);
+    gchar *arg1, *arg2;
+    gint ret;
+
+    if (tuple_get_value_type(tuple, args[0]) == TUPLE_UNKNOWN)
+    {
+        g_strfreev(args);
+        return FALSE;
+    }
+
+    if (tuple_get_value_type(tuple, args[1]) == TUPLE_UNKNOWN)
+    {
+        g_strfreev(args);
+        return FALSE;
+    }
+
+    if (tuple_get_value_type(tuple, args[0]) == TUPLE_STRING)
+        arg1 = g_strdup(tuple_get_string(tuple, args[0]));
+    else
+        arg1 = g_strdup_printf("%d", tuple_get_int(tuple, args[0]));
+
+    if (tuple_get_value_type(tuple, args[1]) == TUPLE_STRING)
+        arg2 = g_strdup(tuple_get_string(tuple, args[1]));
+    else
+        arg2 = g_strdup_printf("%d", tuple_get_int(tuple, args[1]));
+
+    ret = g_ascii_strcasecmp(arg1, arg2);
+    g_free(arg1);
+    g_free(arg2);
+    g_strfreev(args);
+
+    return ret ? FALSE : TRUE;
+}
+
+/* builtin-keyword: ${!=arg1,arg2}. returns TRUE if <arg1> and <arg2> don't match. */
+static gboolean
+tuple_formatter_expression_nonmatch(Tuple *tuple, const gchar *expression)
+{
+    return tuple_formatter_expression_match(tuple, expression) ^ 1;
+}
+
 /* processes a string containing instructions. does initialization phases
    if not already done */
 gchar *
@@ -229,6 +274,8 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
     if (initialized == FALSE)
     {
         tuple_formatter_register_expression("?", tuple_formatter_expression_exists);
+        tuple_formatter_register_expression("==", tuple_formatter_expression_match);
+        tuple_formatter_register_expression("!=", tuple_formatter_expression_nonmatch);
         initialized = TRUE;
     }
 

@@ -58,5 +58,37 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
+    tstr = tuple_formatter_process_string(tuple, "${==splork,splork:fields given matched}");
+    if (g_ascii_strcasecmp(tstr, "fields given matched"))
+    {
+        g_print("fail 4: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${==splork,splork:${splork}}");
+    if (g_ascii_strcasecmp(tstr, "moo"))
+    {
+        g_print("fail 5: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${!=splork,splorkerz:fields did not match}");
+    if (g_ascii_strcasecmp(tstr, "fields did not match"))
+    {
+        g_print("fail 6: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${!=splork,splorkerz:${splorkerz}}");
+    if (g_ascii_strcasecmp(tstr, "42"))
+    {
+        g_print("fail 7: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
     return EXIT_SUCCESS;
 }
