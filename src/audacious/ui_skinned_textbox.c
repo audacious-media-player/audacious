@@ -849,7 +849,7 @@ static void textbox_handle_special_char(gchar *c, gint * x, gint * y) {
     }
 
     const gchar *change[] = {"Ą", "A", "Ę", "E", "Ć", "C", "Ł", "L", "Ó", "O", "Ś", "S", "Ż", "Z", "Ź", "Z",
-                             "Ü", "U", NULL};
+                             "Ń", "N", "Ü", "U", NULL};
     int i;
     for (i = 0; change[i]; i+=2) {
          if (!strncmp(c, change[i], strlen(change[i]))) {

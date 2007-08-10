@@ -59,12 +59,12 @@ static const gchar *credit_text[] = {
     "Michael Färber",
     "Troels Bang Jensen",
     "Giacomo Lozito",
+    "Tomasz Moń",
     "William Pitcock",
     "Derek Pomery",
     "Jonathan Schleifer",
     "Tony Vroon",
     "Yoshiki Yazawa",
-    "Tomasz Moń",
     NULL,
 
     N_("Graphics:"),
