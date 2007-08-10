@@ -1609,7 +1609,6 @@ playlistwin_show(void)
     gtk_widget_show_all(playlistwin);
     if (!cfg.playlist_shaded)
         gtk_widget_hide(playlistwin_sinfo);
-    ui_skinned_textbox_set_text(playlistwin_info, " ");
     gtk_window_present(GTK_WINDOW(playlistwin));
 }
 
