@@ -86,7 +86,7 @@ tuple_new(void)
 Tuple *
 tuple_new_from_filename(gchar *filename)
 {
-    gchar *scratch, *ext;
+    gchar *scratch, *ext, *realfn;
     Tuple *tuple;
 
     g_return_val_if_fail(filename != NULL, NULL);
@@ -94,21 +94,25 @@ tuple_new_from_filename(gchar *filename)
     tuple = tuple_new();
     
     g_return_val_if_fail(tuple != NULL, NULL);
-        
-    scratch = g_path_get_basename(filename);
+
+    realfn = g_filename_from_uri(filename, NULL, NULL);
+
+    scratch = g_path_get_basename(realfn ? realfn : filename);
     tuple_associate_string(tuple, "file-name", scratch);
     g_free(scratch);
 
-    scratch = g_path_get_dirname(filename);
+    scratch = g_path_get_dirname(realfn ? realfn : filename);
     tuple_associate_string(tuple, "file-path", scratch);
     g_free(scratch);
-    
+
+    g_free(realfn); realfn = NULL;
+
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
         tuple_associate_string(tuple, "file-ext", scratch);
     }
-    
+
     return tuple;
 }        
 
