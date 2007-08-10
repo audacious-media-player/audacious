@@ -26,6 +26,9 @@
 #include "actions-playlist.h"
 #include "actions-equalizer.h"
 
+/* this header contains prototypes for plugin-available menu functions */
+#include "ui_plugin_menu.h"
+
 /* TODO ui_main.h is only included because ui_manager.c needs the values of
    TimerMode enum; move that enum elsewhere so we can get rid of this include */
 #include "ui_main.h"
@@ -33,7 +36,8 @@
 #include "icons-stock.h"
 
 
-static GtkUIManager *ui_manager;
+static GtkUIManager *ui_manager = NULL;
+static gboolean menu_created = FALSE;
 
 
 /* toggle action entries */
@@ -396,6 +400,8 @@ static GtkActionEntry action_entries_others[] = {
         { "lastfm", NULL, N_("Last.fm radio"), "<Alt>L",
           N_("Play Last.fm radio"), G_CALLBACK(action_lastfm) },
 
+   { "plugins", NULL , N_("Plugins") },
+
 	{ "preferences", GTK_STOCK_PREFERENCES , N_("Preferences"), "<Ctrl>P",
 	  N_("Open preferences window"), G_CALLBACK(action_preferences) },
 
@@ -625,6 +631,29 @@ ui_manager_init ( void )
 }
 
 
+static void
+ui_manager_create_menus_init_pmenu( gchar * path )
+{
+  GtkWidget *plugins_menu, *plugins_menu_item, *plugins_dummy_item;
+  GList *plugins_menu_children = NULL;
+  gchar *path_dummy = g_strjoin( NULL , path , "/plugins-menu-dummy" , NULL );
+  /* remove the dummy item placed in plugins-menu as a workaround */
+  plugins_dummy_item = gtk_ui_manager_get_widget( ui_manager , path_dummy );
+  if ( plugins_dummy_item )
+    gtk_widget_destroy( plugins_dummy_item );
+  /* take note of the initial count of items in the "empty" plugins-menu */
+  plugins_menu_item = gtk_ui_manager_get_widget( ui_manager , path );
+  plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+  plugins_menu_children = gtk_container_get_children( GTK_CONTAINER(plugins_menu) );
+  g_object_set_data( G_OBJECT(plugins_menu) , "ic" , GINT_TO_POINTER(g_list_length(plugins_menu_children)) );
+  g_list_free( plugins_menu_children );
+  /* last, hide the plugins-menu by default */
+  gtk_widget_hide( plugins_menu_item );
+  g_free( path_dummy );
+  return;
+}
+
+
 void
 ui_manager_create_menus ( void )
 {
@@ -648,6 +677,9 @@ ui_manager_create_menus ( void )
   mainwin_view_menu = ui_manager_get_popup_menu( ui_manager , "/mainwin-menus/main-menu/view" );
   mainwin_general_menu = ui_manager_get_popup_menu( ui_manager , "/mainwin-menus/main-menu" );
 
+  /* initialize plugins-menu for mainwin-menus */
+  ui_manager_create_menus_init_pmenu( "/mainwin-menus/main-menu/plugins-menu" );
+
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/playlist.ui" , &gerr );
 
   if ( gerr != NULL )
@@ -665,6 +697,9 @@ ui_manager_create_menus ( void )
   playlistwin_plsort_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/misc-menu");
   playlistwin_pllist_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/playlist-menu");
 
+  /* initialize plugins-menu for playlist-menus */
+  ui_manager_create_menus_init_pmenu( "/playlist-menus/playlist-menu/plugins-menu" );
+
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/equalizer.ui" , &gerr );
 
   if ( gerr != NULL )
@@ -675,6 +710,8 @@ ui_manager_create_menus ( void )
   }
 
   equalizerwin_presets_menu = ui_manager_get_popup_menu(ui_manager, "/equalizer-menus/preset-menu");
+
+  menu_created = TRUE;
 
   return;
 }
@@ -727,4 +764,97 @@ ui_manager_popup_menu_show ( GtkMenu * menu , gint x , gint y , guint button , g
 
   gtk_menu_popup( menu , NULL , NULL ,
     (GtkMenuPositionFunc) menu_popup_pos_func , pos , button , time );
+}
+
+
+
+/******************************/
+/* plugin-available functions */
+
+
+gint
+audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
+{
+  if ( menu_created )
+  {
+    switch (menu_id)
+    {
+      case AUDACIOUS_MENU_MAIN:
+      {
+        GtkWidget *plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+          "/mainwin-menus/main-menu/plugins-menu" );
+        GtkWidget *plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+        gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
+        gtk_widget_show( plugins_menu_item );
+        return 0;
+      }
+
+      case AUDACIOUS_MENU_PLAYLIST:
+      {
+        GtkWidget *plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+          "/playlist-menus/playlist-menu/plugins-menu" );
+        GtkWidget *plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+        gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
+        gtk_widget_show( plugins_menu_item );
+        return 0;
+      }
+
+      default:
+        return -1;
+    }
+  }
+  else
+    return -1;
+}
+
+
+gint
+audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
+{
+  if ( menu_created )
+  {
+    GtkWidget *plugins_menu = NULL;
+    GtkWidget *plugins_menu_item = NULL;
+    GList *plugins_menu_children = NULL;
+
+    switch (menu_id)
+    {
+      case AUDACIOUS_MENU_MAIN:
+      {
+        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+          "/mainwin-menus/main-menu/plugins-menu" );
+        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+        gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
+        break;
+      }
+
+      case AUDACIOUS_MENU_PLAYLIST:
+      {
+        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+          "/playlist-menus/playlist-menu/plugins-menu" );
+        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+        gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
+        break;
+      }
+
+      default:
+        return -1;
+    }
+
+    if ( plugins_menu )
+    {
+      /* check the current number of items in plugins-menu against its initial count
+         of items; if these are equal, it means that the menu is "empty", so hide it */
+      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu),"ic"));
+      plugins_menu_children = gtk_container_get_children( GTK_CONTAINER(plugins_menu) );
+      if ( ic == g_list_length(plugins_menu_children) )
+        gtk_widget_hide( plugins_menu_item );
+      g_list_free( plugins_menu_children );
+      return 0;
+    }
+    else
+      return -1;
+  }
+  else
+    return -1;
 }

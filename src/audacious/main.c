@@ -1193,6 +1193,16 @@ main(gint argc, gchar ** argv)
     init_dbus();
 #endif
     mowgli_init();
+
+    if (options.headless != 1)
+    {
+      /* UIManager
+         NOTE: this needs to be called before plugin init, cause
+         plugin init functions may want to add custom menu entries */ 
+      ui_manager_init();
+      ui_manager_create_menus();
+    }
+
     plugin_system_init();
 
     /* Initialize the playlist system. */
@@ -1206,10 +1216,6 @@ main(gint argc, gchar ** argv)
         bmp_set_default_icon();
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
-
-        /* uimanager */
-        ui_manager_init();
-        ui_manager_create_menus();
 
         if (!init_skins(cfg.skin)) {
             run_load_skin_error_dialog(cfg.skin);

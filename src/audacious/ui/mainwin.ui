@@ -128,6 +128,10 @@
 				<menuitem action="view easy move" />
 			</menu>
 			<separator />
+			<menu action="plugins" name="plugins-menu">
+			   <menuitem action="dummy" name="plugins-menu-dummy" />
+			</menu>
+			<separator />
 			<menuitem action="preferences" />
 			<menuitem action="quit" />
 		</menu>

@@ -55,6 +55,7 @@ HEADERS = \
 	tuple_formatter.h \
 	ui_fileinfopopup.h \
 	ui_lastfm.h\
+	ui_plugin_menu.h \
 	ui_preferences.h \
 	util.h \
 	vfs.h \
