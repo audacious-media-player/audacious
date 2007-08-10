@@ -28,7 +28,6 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include "titlestring.h"
 #include "ui_fileinfopopup.h"
 #include "main.h"
 #include "ui_main.h"

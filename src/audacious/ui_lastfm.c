@@ -18,7 +18,6 @@ track_data;
 
 last_fm *login_data=NULL;
 Playlist *current_playlist=NULL;
-TitleInput *info = NULL;
 GtkWidget *lastfm_url_entry, *lastfm_label,*artist_label,*title_label,*album_label, *gui_window=NULL;
 
 gpointer open_url(gpointer url)

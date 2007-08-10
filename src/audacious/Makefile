@@ -51,7 +51,6 @@ HEADERS = \
 	playlist_container.h \
 	plugin.h \
 	strings.h \
-	titlestring.h \
 	tuple.h \
 	tuple_formatter.h \
 	ui_fileinfopopup.h \
@@ -97,7 +96,6 @@ SOURCES = \
 	rcfile.c \
 	signals.c \
 	strings.c \
-	titlestring.c \
 	tuple.c \
 	tuple_formatter.c \
 	skin.c \

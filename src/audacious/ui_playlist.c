@@ -570,27 +570,23 @@ playlistwin_select_search(void)
       {
          gint matched_entries_num = 0;
          /* create a TitleInput tuple with user search data */
-         TitleInput *tuple = g_malloc(sizeof(TitleInput));
+         Tuple *tuple = tuple_new();
          gchar *searchdata = NULL;
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_title) );
-         tuple->track_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         tuple_associate_string(tuple, "title", searchdata);
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_album) );
-         tuple->album_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         tuple_associate_string(tuple, "album", searchdata);
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_performer) );
-         tuple->performer = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         tuple_associate_string(tuple, "artist", searchdata);
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_file_name) );
-         tuple->file_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         tuple_associate_string(tuple, "file-name", searchdata);
          /* check if previous selection should be cleared before searching */
          if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_clearprevsel)) == TRUE )
              playlistwin_select_none();
          /* now send this tuple to the real search function */
          matched_entries_num = playlist_select_search( playlist , tuple , 0 );
          /* we do not need the tuple and its data anymore */
-         if ( tuple->track_name != NULL ) g_free( tuple->track_name );
-         if ( tuple->album_name != NULL )  g_free( tuple->album_name );
-         if ( tuple->performer != NULL ) g_free( tuple->performer );
-         if ( tuple->file_name != NULL ) g_free( tuple->file_name );
-         g_free( tuple );
+         mowgli_object_unref(tuple);
          playlistwin_update_list(playlist_get_active());
          /* check if a new playlist should be created after searching */
          if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_newplaylist)) == TRUE )

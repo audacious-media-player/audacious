@@ -36,8 +36,10 @@
 #define BMP_PLUGIN_H
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include "audacious/vfs.h"
-#include "audacious/titlestring.h"
+#include "audacious/tuple.h"
+#include "audacious/tuple_formatter.h"
 #include "audacious/eventqueue.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
@@ -252,8 +254,8 @@ struct _InputPlugin {
     OutputPlugin *output; /* deprecated */
 
     /* Added in Audacious 1.1.0 */
-    TitleInput *(*get_song_tuple) (gchar * filename);
-    void (*set_song_tuple) (TitleInput * tuple);
+    Tuple *(*get_song_tuple) (gchar * filename);
+    void (*set_song_tuple) (Tuple * tuple);
     void (*set_status_buffering) (gboolean status);
 
     /* Added in Audacious 1.3.0 */
@@ -262,7 +264,7 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.4.0 */
     void (*mseek) (InputPlayback * playback, gulong millisecond);
-    TitleInput *(*probe_for_tuple)(gchar *uri, VFSFile *fd);
+    Tuple *(*probe_for_tuple)(gchar *uri, VFSFile *fd);
 };
 
 struct _GeneralPlugin {

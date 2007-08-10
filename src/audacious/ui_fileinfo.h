@@ -19,11 +19,11 @@
 #ifndef _UI_FILEINFO_H_
 #define _UI_FILEINFO_H_
 
-#include "titlestring.h"
+#include "tuple.h"
 #include <glib.h>
 
 void create_fileinfo_window(void);
-void fileinfo_show_for_tuple(TitleInput *tuple);
+void fileinfo_show_for_tuple(Tuple *tuple);
 gchar* fileinfo_recursive_get_image(const gchar* path, const gchar* file_name, gint depth);
 void fileinfo_show_for_path(gchar *path);
 

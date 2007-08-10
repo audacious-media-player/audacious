@@ -41,7 +41,7 @@ struct _InputPluginData {
 };
 
 typedef struct {
-    TitleInput *tuple;
+    Tuple *tuple;
     InputPlugin *ip;
 } ProbeResult;
 
@@ -53,7 +53,7 @@ InputVisType input_get_vis_type();
 void free_vis_data(void);
 
 ProbeResult *input_check_file(const gchar * filename, gboolean show_warning);
-TitleInput *input_get_song_tuple(const gchar * filename);
+Tuple *input_get_song_tuple(const gchar * filename);
 
 void input_play(gchar * filename);
 void input_stop(void);
