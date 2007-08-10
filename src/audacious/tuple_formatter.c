@@ -77,7 +77,7 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
         /* if it's raw text, just copy the byte */
         if (*iter != '$' && *iter != '%')
             g_string_append_c(ctx->str, *iter);
-        else if (*iter == '$' && *(iter + 1) == '{')
+        else if (g_str_has_prefix(iter, "${") == TRUE)
         {
             GString *expression = g_string_new("");
             GString *argument = g_string_new("");
@@ -133,7 +133,7 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             if (*iter == '\0')
                 break;
         }
-        else if (*iter == '%' && *(iter + 1) == '{')
+        else if (g_str_has_prefix(iter, "%{") == TRUE)
         {
             GString *expression = g_string_new("");
             GString *argument = g_string_new("");
