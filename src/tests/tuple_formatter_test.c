@@ -122,6 +122,14 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
+    tstr = tuple_formatter_process_string(tuple, "${?splork:${splork} - }${?splork:${splork} - }${splork}");
+    if (g_ascii_strcasecmp(tstr, "moo - moo - moo"))
+    {
+        g_print("fail 12: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
     mowgli_object_unref(tuple);
 
     return EXIT_SUCCESS;
