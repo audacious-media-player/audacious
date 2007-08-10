@@ -51,8 +51,8 @@
 #define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
-#define __AUDACIOUS_PLUGIN_API__ 4
-#define __AUDACIOUS_INPUT_PLUGIN_API__ 4
+#define __AUDACIOUS_PLUGIN_API__ 5
+#define __AUDACIOUS_INPUT_PLUGIN_API__ 5
 
 typedef enum {
     FMT_U8,
