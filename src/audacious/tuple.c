@@ -83,6 +83,35 @@ tuple_new(void)
     return tuple;
 }
 
+Tuple *
+tuple_new_from_filename(gchar *filename)
+{
+    gchar *scratch, *ext;
+    Tuple *tuple;
+
+    g_return_val_if_fail(filename != NULL, NULL);
+
+    tuple = tuple_new();
+    
+    g_return_val_if_fail(tuple != NULL, NULL);
+        
+    scratch = g_path_get_basename(filename);
+    tuple_associate_string(tuple, "file-name", scratch);
+    g_free(scratch);
+
+    scratch = g_path_get_dirname(filename);
+    tuple_associate_string(tuple, "file-path", scratch);
+    g_free(scratch);
+    
+    ext = strrchr(filename, '.');
+    if (ext != NULL) {
+        ++ext;
+        tuple_associate_string(tuple, "file-ext", scratch);
+    }
+    
+    return tuple;
+}        
+
 gboolean
 tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string)
 {
