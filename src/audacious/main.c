@@ -629,7 +629,7 @@ bmp_config_load(void)
         cfg.mainwin_font = g_strdup(MAINWIN_DEFAULT_FONT);
 
     if (!cfg.gentitle_format)
-        cfg.gentitle_format = g_strdup("%{?artist:${artist} - }${?album:${album} - }${title}");
+        cfg.gentitle_format = g_strdup("${?artist:${artist} - }${?album:${album} - }${title}");
 
     if (!cfg.outputplugin) {
     gint iter;
