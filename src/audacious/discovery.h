@@ -32,6 +32,15 @@ struct _DiscoveryPluginData {
     GList *enabled_list;
 };
 
+GList * discovery_devices;
+typedef struct _discovery_device_t discovery_device_t;
+struct _discovery_device_t {
+    gchar *device_name;     /*some kind of description*/
+    gchar *device_address;  /*some kind of device ID*/
+    GList *device_playlist; /*contains all the songs on the device*/
+};
+
+
 GList *get_discovery_list(void);
 GList *get_discovery_enabled_list(void);
 void enable_discovery_plugin(gint i, gboolean enable);
