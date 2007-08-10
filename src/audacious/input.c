@@ -39,7 +39,8 @@
 #include "playback.h"
 #include "pluginenum.h"
 #include "strings.h"
-#include "titlestring.h"
+#include "tuple.h"
+#include "tuple_formatter.h"
 #include "ui_main.h"
 #include "util.h"
 #include "visualization.h"
@@ -414,7 +415,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     {
         if (ip->probe_for_tuple != NULL)
         {
-            TitleInput *tuple = ip->probe_for_tuple(filename_proxy, fd);
+            Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
             if (tuple != NULL)
             {
@@ -424,7 +425,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                pr->tuple->mtime = input_get_mtime(filename_proxy);
+                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -492,7 +493,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
         if (fd && ip->probe_for_tuple != NULL)
         {
-            TitleInput *tuple = ip->probe_for_tuple(filename_proxy, fd);
+            Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
             if (tuple != NULL)
             {
@@ -502,7 +503,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                pr->tuple->mtime = input_get_mtime(filename_proxy);
+                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -569,7 +570,7 @@ void
 input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 {
     InputPlugin *ip = NULL;
-    BmpTitleInput *input;
+    Tuple *tuple;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
     ProbeResult *pr;
@@ -595,38 +596,42 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
         g_free(tmp);
     }
     else {
-        input = bmp_title_input_new();
+        tuple = tuple_new();
 
         tmp = g_strdup(filename);
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
-        input->file_name = g_path_get_basename(tmp);
-        input->file_ext = ext ? ext + 1 : NULL;
-        input->file_path = g_path_get_dirname(tmp);
+        tuple_associate_string(tuple, "file-name", g_path_get_basename(tmp));
 
-        if ((tmp = xmms_get_titlestring(xmms_get_gentitle_format(), input))) {
+        if (ext)
+            tuple_associate_string(tuple, "file-ext", ext + 1);
+
+        tuple_associate_string(tuple, "file-path", g_path_get_dirname(tmp));
+
+        tmp = tuple_formatter_process_string(tuple, cfg.gentitle_format);
+        if (tmp != NULL && *tmp != '\0') {
             (*title) = str_to_utf8(tmp);
             g_free(tmp);
         }
         else {
-            (*title) = filename_to_utf8(input->file_name);
+            (*title) = filename_to_utf8(tuple_get_string(tuple, "file-name"));
         }
 
         (*length) = -1;
 
-        bmp_title_input_free(input);
-        input = NULL;
+        mowgli_object_unref(tuple);
+        tuple = NULL;
     }
 
     g_free(filename_proxy);
 }
 
-TitleInput *
+Tuple *
 input_get_song_tuple(const gchar * filename)
 {
     InputPlugin *ip = NULL;
-    TitleInput *input;
+    Tuple *input;
     gchar *ext = NULL;
     gchar *filename_proxy;
     ProbeResult *pr;
@@ -649,16 +654,23 @@ input_get_song_tuple(const gchar * filename)
         input = ip->get_song_tuple(filename_proxy);
     else
     {
-        input = bmp_title_input_new();
+        gchar *tmp;
 
-        ext = strrchr(filename, '.');
+        input = tuple_new();
 
-        input->track_name = NULL;
-        input->length = -1;
-        input_get_song_info(filename, &input->track_name, &input->length);
-        input->file_name = g_path_get_basename(filename);
-        input->file_ext = ( ( ext != NULL ) ? g_strdup(ext + 1) : NULL );
-        input->file_path = g_path_get_dirname(filename);
+        tmp = g_strdup(filename);
+        if ((ext = strrchr(tmp, '.')))
+            *ext = '\0';
+
+        tuple_associate_string(input, "file-name", g_path_get_basename(tmp));
+
+        if (ext)
+            tuple_associate_string(input, "file-ext", ext + 1);
+
+        tuple_associate_string(input, "file-path", g_path_get_dirname(tmp));
+        tuple_associate_int(input, "length", -1);
+
+        g_free(tmp);
     }
 
     g_free(filename_proxy);

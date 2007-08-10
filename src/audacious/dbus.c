@@ -37,7 +37,7 @@
 #include "ui_playlist.h"
 #include "ui_preferences.h"
 #include "memorypool.h"
-#include "titlestring.h"
+#include "tuple.h"
 #include "ui_jumptotrack.h"
 #include "strings.h"
 
@@ -528,59 +528,26 @@ gboolean audacious_rc_song_frames(RemoteObject *obj, guint pos, int *length,
 
 gboolean audacious_rc_song_tuple(RemoteObject *obj, guint pos, gchar *field,
                                  GValue *value, GError **error) {
-    TitleInput *tuple;
+    Tuple *tuple;
     tuple = playlist_get_tuple(playlist_get_active(), pos);
     if (!tuple) {
         return FALSE;
     } else {
-        if (!strcasecmp(field, "performer")) {
+        TupleValueType type = tuple_get_value_type(tuple, field);
+
+        switch(type)
+        {
+        case TUPLE_STRING:
             g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->performer);
-        } else if (!strcasecmp(field, "album_name")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->album_name);
-        } else if (!strcasecmp(field, "track_name")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->track_name);
-        } else if (!strcasecmp(field, "track_number")) {
+            g_value_set_string(value, tuple_get_string(tuple, field));
+            break;
+        case TUPLE_INT:
             g_value_init(value, G_TYPE_INT);
-            g_value_set_int(value, tuple->track_number);
-        } else if (!strcasecmp(field, "year")) {
-            g_value_init(value, G_TYPE_INT);
-            g_value_set_int(value, tuple->year);
-        } else if (!strcasecmp(field, "date")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->date);
-        } else if (!strcasecmp(field, "genre")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->genre);
-        } else if (!strcasecmp(field, "comment")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->comment);
-        } else if (!strcasecmp(field, "file_name")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->file_name);
-        } else if (!strcasecmp(field, "file_ext")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, g_strdup(tuple->file_ext));
-        } else if (!strcasecmp(field, "file_path")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->file_path);
-        } else if (!strcasecmp(field, "length")) {
-            g_value_init(value, G_TYPE_INT);
-            g_value_set_int(value, tuple->length);
-        } else if (!strcasecmp(field, "album_name")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->album_name);
-        } else if (!strcasecmp(field, "formatter")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->formatter);
-        } else if (!strcasecmp(field, "custom")) {
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple->custom);
-        } else if (!strcasecmp(field, "mtime")) {
-            g_value_init(value, G_TYPE_INT);
-            g_value_set_int(value, tuple->mtime);
+            g_value_set_int(value, tuple_get_int(tuple, field));
+            break;
+        default:
+            return FALSE;
+            break;
         }
     }
     return TRUE;

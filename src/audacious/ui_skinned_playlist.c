@@ -1013,12 +1013,12 @@ static gboolean ui_skinned_playlist_popup_show(gpointer data) {
     gint pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "popup_position"));
 
     if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "timer_active")) == 1 && pos != -1) {
-        TitleInput *tuple;
+        Tuple *tuple;
         Playlist *pl_active = playlist_get_active();
         GtkWidget *popup = g_object_get_data(G_OBJECT(widget), "popup");
 
         tuple = playlist_get_tuple(pl_active, pos);
-        if ((tuple == NULL) || (tuple->length < 1)) {
+        if ((tuple == NULL) || (tuple_get_int(tuple, "length") < 1)) {
            gchar *title = playlist_get_songtitle(pl_active, pos);
            audacious_fileinfopopup_show_from_title(popup, title);
            g_free(title);

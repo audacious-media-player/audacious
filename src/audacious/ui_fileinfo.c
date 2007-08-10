@@ -51,7 +51,7 @@
 #include "main.h"
 #include "util.h"
 #include "dnd.h"
-#include "titlestring.h"
+#include "tuple.h"
 
 #include "playlist.h"
 
@@ -171,7 +171,7 @@ create_fileinfo_window(void)
 }
 
 void
-fileinfo_show_for_tuple(TitleInput *tuple)
+fileinfo_show_for_tuple(Tuple *tuple)
 {
 	gchar *tmp = NULL;
 
@@ -180,31 +180,26 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 
 	gtk_widget_realize(fileinfo_win);
 
-	if (tuple->track_name)
-		fileinfo_entry_set_text("entry_title", tuple->track_name);
-	if (tuple->performer)
-		fileinfo_entry_set_text("entry_artist", tuple->performer);
-	if (tuple->album_name)
-		fileinfo_entry_set_text("entry_album", tuple->album_name);
-	if (tuple->comment)
-		fileinfo_entry_set_text("entry_comment", tuple->comment);
-	if (tuple->genre)
-		fileinfo_entry_set_text("entry_genre", tuple->genre);
+	fileinfo_entry_set_text("entry_title", tuple_get_string(tuple, "title"));
+	fileinfo_entry_set_text("entry_artist", tuple_get_string(tuple, "artist"));
+	fileinfo_entry_set_text("entry_album", tuple_get_string(tuple, "album"));
+	fileinfo_entry_set_text("entry_comment", tuple_get_string(tuple, "comment"));
+	fileinfo_entry_set_text("entry_genre", tuple_get_string(tuple, "genre"));
 
-	tmp = g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name);
+	tmp = g_strdup_printf("%s/%s", tuple_get_string(tuple, "file-path"), tuple_get_string(tuple, "file-name"));
 	if(tmp){
 		fileinfo_entry_set_text_free("entry_location", str_to_utf8(tmp));
 		g_free(tmp);
 		tmp = NULL;
 	}
 
-	if (tuple->year != 0)
-		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple->year));
+	if (tuple_get_int(tuple, "year"))
+		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple_get_int(tuple, "year")));
 
-	if (tuple->track_number != 0)
-		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
+	if (tuple_get_int(tuple, "track-number"))
+		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple_get_int(tuple, "track-number")));
 
-	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
+	tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, "file-path"), tuple_get_string(tuple, "file-name"), 0);
 	
 	if(tmp)
 	{
@@ -218,13 +213,12 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 void
 fileinfo_show_for_path(gchar *path)
 {
-	TitleInput *tuple = input_get_song_tuple(path);
+	Tuple *tuple = input_get_song_tuple(path);
 
 	if (tuple == NULL)
 		return input_file_info_box(path);
 
 	fileinfo_show_for_tuple(tuple);
 
-	bmp_title_input_free(tuple);
-	tuple = NULL;
+	mowgli_object_unref(tuple);
 }

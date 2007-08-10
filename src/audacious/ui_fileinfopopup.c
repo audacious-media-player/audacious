@@ -32,7 +32,6 @@
 #include "playlist.h"
 #include "playback.h"
 #include "strings.h"
-#include "titlestring.h"
 #include "ui_fileinfopopup.h"
 #include "ui_fileinfo.h"
 
@@ -330,13 +329,14 @@ audacious_fileinfopupup_update_data(GtkWidget *filepopup_win,
 
 void
 audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
-                                        TitleInput *tuple)
+                                        Tuple *tuple)
 {
     gchar *tmp = NULL;
     gint x, y, x_off = 3, y_off = 3, h, w;
     gchar *length_string, *year_string, *track_string;
     gchar *last_artwork;
     const static gchar default_artwork[] = DATA_DIR "/images/audio.png";
+    gint length;
 
     last_artwork =
         g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
@@ -349,64 +349,66 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
         tmp = NULL;
         g_object_set_data(G_OBJECT(filepopup_win), "file", NULL);
     }
-    if (tuple->file_path && tuple->file_name)
+    if (tuple_get_string(tuple, "file-path") && tuple_get_string(tuple, "file-name"))
         g_object_set_data(G_OBJECT(filepopup_win), "file",
-                          g_build_filename(tuple->file_path, tuple->file_name,
+                          g_build_filename(tuple_get_string(tuple, "file-path"), 
+                                           tuple_get_string(tuple, "file-name"),
                                            NULL));
 
     gtk_widget_realize(filepopup_win);
 
-    if (tuple->track_name != NULL)
+    if (tuple_get_string(tuple, "title"))
     {
         gchar *markup =
             g_markup_printf_escaped("<span style=\"italic\">%s</span>", _("Title"));
         gtk_label_set_markup(GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win), "header_title")), markup);
         g_free(markup);
-        filepopup_entry_set_text(filepopup_win, "label_title", tuple->track_name);
+        filepopup_entry_set_text(filepopup_win, "label_title", tuple_get_string(tuple, "title"));
     }
     else
     {
         /* display filename if track_name is not available */
         gchar *markup =
             g_markup_printf_escaped("<span style=\"italic\">%s</span>", _("Filename"));
-        gchar *utf_filename = filename_to_utf8(tuple->file_name);
+        gchar *utf_filename = filename_to_utf8(tuple_get_string(tuple, "file-name"));
         gtk_label_set_markup(GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win), "header_title")), markup);
         g_free(markup);
         filepopup_entry_set_text(filepopup_win, "label_title", utf_filename);
         g_free(utf_filename);
     }
 
-    audacious_fileinfopupup_update_data(filepopup_win, tuple->performer,
+    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, "artist"),
                                         "label_artist", "header_artist");
-    audacious_fileinfopupup_update_data(filepopup_win, tuple->album_name,
+    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, "album"),
                                         "label_album", "header_album");
-    audacious_fileinfopupup_update_data(filepopup_win, tuple->genre,
+    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, "genre"),
                                         "label_genre", "header_genre");
 
-    length_string = (tuple->length > 0) ?
-        g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60) : NULL;
+    length = tuple_get_int(tuple, "length");
+    length_string = (length > 0) ?
+        g_strdup_printf("%d:%02d", length / 60000, (length / 1000) % 60) : NULL;
     audacious_fileinfopupup_update_data(filepopup_win, length_string,
                                         "label_tracklen", "header_tracklen");
     g_free(length_string);
 
-    if ( tuple->length > 0 )
-      g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(tuple->length) );
+    if ( length > 0 )
+      g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(length) );
     else
       g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
 
-    year_string = (tuple->year == 0) ? NULL : g_strdup_printf("%d", tuple->year);
+    year_string = (tuple_get_int(tuple, "year") == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, "year"));
     audacious_fileinfopupup_update_data(filepopup_win, year_string,
                                         "label_year", "header_year");
     g_free(year_string);
 
-    track_string = (tuple->track_number == 0) ? NULL : g_strdup_printf("%d", tuple->track_number);
+    track_string = (tuple_get_int(tuple, "track-number") == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, "track-number"));
     audacious_fileinfopupup_update_data(filepopup_win, track_string,
                                         "label_tracknum", "header_tracknum");
     g_free(track_string);
     
-    if (tuple->file_path && tuple->file_name)
+    if (tuple_get_string(tuple, "file-name") && tuple_get_string(tuple, "file-path"))
     {
-        tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
+        tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, "file-path"), tuple_get_string(tuple, "file-name"), 0);
         if (tmp) { // picture found
             if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
                 filepopup_entry_set_image(filepopup_win, "image_artwork", tmp);
@@ -450,10 +452,10 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
 void
 audacious_fileinfopopup_show_from_title(GtkWidget *filepopup_win, gchar *title)
 {
-    TitleInput * tuple = bmp_title_input_new();
-    tuple->track_name = g_strdup(title);
+    Tuple * tuple = tuple_new();
+    tuple_associate_string(tuple, "title", title);
     audacious_fileinfopopup_show_from_tuple(filepopup_win, tuple);
-    bmp_title_input_free(tuple);
+    mowgli_object_unref(tuple);
     return;
 }
 

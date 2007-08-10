@@ -21,7 +21,7 @@
 #ifndef _UI_FILEINFOPOPUP_H_
 #define _UI_FILEINFOPOPUP_H_
 
-#include "audacious/titlestring.h"
+#include "audacious/tuple.h"
 #include <gtk/gtk.h>
 
 /* create/destroy */
@@ -29,7 +29,7 @@ GtkWidget* audacious_fileinfopopup_create(void);
 void audacious_fileinfopopup_destroy(GtkWidget* fileinfopopup_win);
 
 /* show/hide */
-void audacious_fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, TitleInput *tuple);
+void audacious_fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, Tuple *tuple);
 void audacious_fileinfopopup_show_from_title(GtkWidget *fileinfopopup_win, gchar *title);
 void audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused);
 

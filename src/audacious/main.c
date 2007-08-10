@@ -246,12 +246,12 @@ typedef struct bmp_cfg_strent_t {
 } bmp_cfg_strent;
 
 const gchar *bmp_titlestring_presets[] = {
-    "%t",
-    "%{p:%p - %}%t",
-    "%{p:%p - %}%{a:%a - %}%t",
-    "%{p:%p - %}%{a:%a - %}%{n:%n. %}%t",
-    "%{p:%p %}%{a:[ %a ] %}%{p:- %}%{n:%n. %}%{t:%t%}",
-    "%{a:%a - %}%t"
+    "${title}",
+    "${?artist:${artist} - }${title}",
+    "${?artist:${artist} - }${?album:${album} - }${title}",
+    "${?artist:${artist} - }${?album:${album} - }${?track-number:${track-number}. }${title}",
+    "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }${?track-number:${track-number}. }${title}",
+    "${?album:${album} - }${title}"
 };
 
 const guint n_titlestring_presets = G_N_ELEMENTS(bmp_titlestring_presets);
@@ -629,7 +629,7 @@ bmp_config_load(void)
         cfg.mainwin_font = g_strdup(MAINWIN_DEFAULT_FONT);
 
     if (!cfg.gentitle_format)
-        cfg.gentitle_format = g_strdup("%{p:%p - %}%{a:%a - %}%t");
+        cfg.gentitle_format = g_strdup("%{?artist:${artist} - }${?album:${album} - }${title}");
 
     if (!cfg.outputplugin) {
     gint iter;

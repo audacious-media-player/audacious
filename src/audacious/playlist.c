@@ -176,7 +176,7 @@ playlist_entry_free(PlaylistEntry * entry)
         return;
 
     if (entry->tuple != NULL) {
-        bmp_title_input_free(entry->tuple);
+        mowgli_object_unref(entry->tuple);
         entry->tuple = NULL;
     }
 
@@ -192,23 +192,21 @@ playlist_entry_free(PlaylistEntry * entry)
 static gboolean
 playlist_entry_get_info(PlaylistEntry * entry)
 {
-    TitleInput *tuple = NULL;
+    Tuple *tuple = NULL;
     ProbeResult *pr = NULL;
     time_t modtime;
+    const gchar *formatter;
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
-    if (entry->tuple == NULL || entry->tuple->mtime > 0 || entry->tuple->mtime == -1)
+    if (entry->tuple == NULL || tuple_get_int(entry->tuple, "mtime") > 0 || tuple_get_int(entry->tuple, "mtime") == -1)
         modtime = playlist_get_mtime(entry->filename);
     else
         modtime = 0;  /* URI -nenolod */
 
     if (str_has_prefix_nocase(entry->filename, "http:") &&
         g_thread_self() != playlist_get_info_thread)
-    {
-        g_print("attempting to retrieve remote info not in background thread!\n");
         return FALSE;
-    }
 
     if (entry->decoder == NULL)
     {
@@ -219,10 +217,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     /* renew tuple if file mtime is newer than tuple mtime. */
     if(entry->tuple){
-        if(entry->tuple->mtime == modtime)
+        if(tuple_get_int(entry->tuple, "mtime") == modtime)
             return TRUE;
         else {
-            bmp_title_input_free(entry->tuple);
+            mowgli_object_unref(entry->tuple);
             entry->tuple = NULL;
         }
     }
@@ -236,11 +234,12 @@ playlist_entry_get_info(PlaylistEntry * entry)
         return FALSE;
 
     /* attach mtime */
-    tuple->mtime = modtime;
+    tuple_associate_int(tuple, "mtime", modtime);
 
     /* entry is still around */
-    entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
-    entry->length = tuple->length;
+    formatter = tuple_get_string(tuple, "formatter");
+    entry->title = tuple_formatter_process_string(tuple, formatter ? formatter : cfg.gentitle_format);
+    entry->length = tuple_get_int(tuple, "length");
     entry->tuple = tuple;
 
     g_free(pr);
@@ -638,7 +637,7 @@ static void
 __playlist_ins_with_info_tuple(Playlist * playlist,
 			       const gchar * filename,
 			       gint pos,
-			       TitleInput *tuple,
+			       Tuple *tuple,
 			       InputPlugin * dec)
 {
     PlaylistEntry *entry;
@@ -646,7 +645,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
 
-    entry = playlist_entry_new(filename, tuple ? tuple->track_name : NULL, tuple ? tuple->length : -1, dec);
+    entry = playlist_entry_new(filename, tuple ? tuple_get_string(tuple, "title") : NULL, tuple ? tuple_get_int(tuple, "length") : -1, dec);
     if(!playlist->tail)
         playlist->tail = g_list_last(playlist->entries);
 
@@ -674,12 +673,13 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 
     PLAYLIST_UNLOCK( playlist->mutex );
     if (tuple != NULL) {
-        entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
-        entry->length = tuple->length;
+        const gchar *formatter = tuple_get_string(tuple, "formatter");
+        entry->title = tuple_formatter_process_string(tuple, formatter ? formatter : cfg.gentitle_format);
+        entry->length = tuple_get_int(tuple, "length");
         entry->tuple = tuple;
     }
 
-    if(tuple != NULL && tuple->mtime == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
+    if(tuple != NULL && tuple_get_int(tuple, "mtime") == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
         g_mutex_lock(mutex_scan);
         playlist_get_info_scan_active = TRUE;
         g_mutex_unlock(mutex_scan);
@@ -695,7 +695,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     VFSFile *file;
     ProbeResult *pr = NULL;
     InputPlugin *dec = NULL;
-    TitleInput *tuple = NULL;
+    Tuple *tuple = NULL;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
@@ -1049,12 +1049,10 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         playlist->position->title = g_strdup(title);
         playlist->position->length = length;
 
-        // overwrite tuple->track_name, mainly for streaming. it may incur side effects. --yaz
-        if(playlist->position->tuple && length == -1){
-            if(playlist->position->tuple->track_name){
-                g_free(playlist->position->tuple->track_name);
-            }
-            playlist->position->tuple->track_name = g_strdup(title);
+        // overwrite tuple::title, mainly for streaming. it may incur side effects. --yaz
+        if(playlist->position->tuple && tuple_get_int(playlist->position->tuple, "length") == -1){
+            tuple_disassociate(playlist->position->tuple, "title");
+            tuple_associate_string(playlist->position->tuple, "title", title);
         }
     }
 
@@ -1685,7 +1683,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 			     const gchar * filename_p,
 			     const gchar * playlist_name, 
 			     gint pos,
-			     TitleInput *tuple)
+			     Tuple *tuple)
 {
     gchar *filename;
     gchar *tmp, *path;
@@ -1829,6 +1827,7 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
     gchar *title = NULL;
     PlaylistEntry *entry;
     GList *node;
+    time_t mtime;
 
     if (!playlist)
         return NULL;
@@ -1842,9 +1841,14 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
 
     entry = node->data;
 
+    if (entry->tuple)
+        mtime = tuple_get_int(entry->tuple, "mtime");
+    else
+        mtime = 0;
+
     /* FIXME: simplify this logic */
     if ((entry->title == NULL && entry->length == -1) ||
-        (entry->tuple && entry->tuple->mtime != 0 && (entry->tuple->mtime == -1 || entry->tuple->mtime != playlist_get_mtime(entry->filename))))
+        (entry->tuple && mtime != 0 && (mtime == -1 || mtime != playlist_get_mtime(entry->filename))))
     {
         if (playlist_entry_get_info(entry))
             title = entry->title;
@@ -1866,12 +1870,13 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
     return str_to_utf8(title);
 }
 
-TitleInput *
+Tuple *
 playlist_get_tuple(Playlist *playlist, guint pos)
 {
     PlaylistEntry *entry;
-    TitleInput *tuple = NULL;
+    Tuple *tuple = NULL;
     GList *node;
+    time_t mtime;
 
     if (!playlist)
         return NULL;
@@ -1884,9 +1889,14 @@ playlist_get_tuple(Playlist *playlist, guint pos)
 
     tuple = entry->tuple;
 
+    if (tuple)
+        mtime = tuple_get_int(tuple, "mtime");
+    else
+        mtime = 0;
+
     // if no tuple or tuple with old mtime, get new one.
     if (tuple == NULL || 
-        (entry->tuple && entry->tuple->mtime != 0 && (entry->tuple->mtime == -1 || entry->tuple->mtime != playlist_get_mtime(entry->filename))))
+        (entry->tuple && mtime != 0 && (mtime == -1 || mtime != playlist_get_mtime(entry->filename))))
     {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
@@ -1901,6 +1911,7 @@ playlist_get_songtime(Playlist *playlist, guint pos)
     gint song_time = -1;
     PlaylistEntry *entry;
     GList *node;
+    time_t mtime;
 
     if (!playlist)
         return -1;
@@ -1910,8 +1921,14 @@ playlist_get_songtime(Playlist *playlist, guint pos)
     }
 
     entry = node->data;
+
+    if (entry->tuple)
+        mtime = tuple_get_int(entry->tuple, "mtime");
+    else
+        mtime = 0;
+
     if (entry->tuple == NULL ||
-        (entry->tuple->mtime != 0 && (entry->tuple->mtime == -1 || entry->tuple->mtime != playlist_get_mtime(entry->filename)))) {
+        (mtime != 0 && (mtime == -1 || mtime != playlist_get_mtime(entry->filename)))) {
 
         if (playlist_entry_get_info(entry))
             song_time = entry->length;
@@ -1927,6 +1944,9 @@ static gint
 playlist_compare_track(PlaylistEntry * a,
 		       PlaylistEntry * b)
 {
+    gint tracknumber_a;
+    gint tracknumber_b;
+
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
@@ -1935,11 +1955,16 @@ playlist_compare_track(PlaylistEntry * a,
     if(!b->tuple)
         playlist_entry_get_info(b);
 
-    g_return_val_if_fail(a->tuple != NULL, 0);
-    g_return_val_if_fail(b->tuple != NULL, 0);
+    if (a->tuple == NULL)
+        return 0;
+    if (b->tuple == NULL)
+        return 0;
 
-    return (a->tuple->track_number && b->tuple->track_number ?
-	    a->tuple->track_number - b->tuple->track_number : 0);
+    tracknumber_a = tuple_get_int(a->tuple, "track-number");
+    tracknumber_b = tuple_get_int(b->tuple, "track-number");
+
+    return (tracknumber_a && tracknumber_b ?
+	    tracknumber_a - tracknumber_b : 0);
 }
 
 static gint
@@ -1986,10 +2011,10 @@ playlist_compare_title(PlaylistEntry * a,
     if(!b->tuple)
         playlist_entry_get_info(b);
 
-    if (a->tuple != NULL && a->tuple->track_name != NULL)
-        a_title = a->tuple->track_name;
-    if (b->tuple != NULL && b->tuple->track_name != NULL)
-        b_title = b->tuple->track_name;
+    if (a->tuple != NULL)
+        a_title = tuple_get_string(a->tuple, "title");
+    if (b->tuple != NULL)
+        b_title = tuple_get_string(b->tuple, "title");
 
     if (a_title != NULL && b_title != NULL)
         return strcasecmp(a_title, b_title);
@@ -2030,14 +2055,14 @@ playlist_compare_artist(PlaylistEntry * a,
     if (b->tuple != NULL)
         playlist_entry_get_info(b);
 
-    if (a->tuple != NULL && a->tuple->performer != NULL) {
-        a_artist = a->tuple->performer;
+    if (a->tuple != NULL) {
+        a_artist = tuple_get_string(a->tuple, "artist");
         if (str_has_prefix_nocase(a_artist, "the "))
             a_artist += 4;
     }
 
-    if (b->tuple != NULL && b->tuple->performer != NULL) {
-        b_artist = b->tuple->performer;
+    if (b->tuple != NULL) {
+        b_artist = tuple_get_string(b->tuple, "artist");
         if (str_has_prefix_nocase(b_artist, "the "))
             b_artist += 4;
     }
@@ -2377,8 +2402,9 @@ playlist_fileinfo(Playlist *playlist, guint pos)
     gchar *path = NULL;
     GList *node;
     PlaylistEntry *entry = NULL;
-    TitleInput *tuple = NULL;
+    Tuple *tuple = NULL;
     ProbeResult *pr = NULL;
+    time_t mtime;
 
     PLAYLIST_LOCK(playlist->mutex);
 
@@ -2391,9 +2417,14 @@ playlist_fileinfo(Playlist *playlist, guint pos)
 
     PLAYLIST_UNLOCK(playlist->mutex);
 
+    if (entry->tuple)
+        mtime = tuple_get_int(entry->tuple, "mtime");
+    else
+        mtime = 0;
+
     /* No tuple? Try to set this entry up properly. --nenolod */
-    if (entry->tuple == NULL || entry->tuple->mtime == -1 ||
-        entry->tuple->mtime == 0 || entry->tuple->mtime != playlist_get_mtime(entry->filename))
+    if (entry->tuple == NULL || mtime == -1 ||
+        mtime == 0 || mtime != playlist_get_mtime(entry->filename))
     {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
@@ -2431,7 +2462,7 @@ void
 playlist_fileinfo_current(Playlist *playlist)
 {
     gchar *path = NULL;
-    TitleInput *tuple = NULL;
+    Tuple *tuple = NULL;
 
     PLAYLIST_LOCK(playlist->mutex);
 
@@ -2497,7 +2528,7 @@ playlist_get_info_func(gpointer arg)
                 entry = node->data;
 
                 if(playlist->attribute & PLAYLIST_STATIC ||
-                   (entry->tuple && entry->tuple->length > -1 && entry->tuple->mtime != -1)) {
+                   (entry->tuple && tuple_get_int(entry->tuple, "length") > -1 && tuple_get_int(entry->tuple, "mtime") != -1)) {
                     update_playlistwin = TRUE;
                     continue;
                 }
@@ -2539,7 +2570,7 @@ playlist_get_info_func(gpointer arg)
                  entry = node->data;
 
                  if(playlist->attribute & PLAYLIST_STATIC ||
-                    (entry->tuple && entry->tuple->length > -1 && entry->tuple->mtime != -1)) {
+                   (entry->tuple && tuple_get_int(entry->tuple, "length") > -1 && tuple_get_int(entry->tuple, "mtime") != -1)) {
                     update_playlistwin = TRUE;
                     continue;
                  }
@@ -2861,7 +2892,7 @@ playlist_recalc_total_time(Playlist *playlist)
 }
 
 gint
-playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
+playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
 {
     GList *entry_list = NULL, *found_list = NULL, *sel_list = NULL;
     gboolean is_first_search = TRUE;
@@ -2875,10 +2906,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
 
     PLAYLIST_LOCK(playlist->mutex);
 
-    if ( tuple->track_name != NULL )
+    if ( tuple_get_string(tuple, "title") != NULL )
     {
         /* match by track_name */
-        const gchar *regex_pattern = tuple->track_name;
+        const gchar *regex_pattern = tuple_get_string(tuple, "title");
         regex_t regex;
     #if defined(USE_REGEX_PCRE)
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
@@ -2891,9 +2922,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             else entry_list = found_list; /* use found_list */
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
+                const gchar *track_name = tuple_get_string( tuple, "title" );
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( entry->tuple->track_name != NULL ) &&
-                   ( regexec( &regex , entry->tuple->track_name , 0 , NULL , 0 ) == 0 ) )
+                if ( ( entry->tuple != NULL ) && ( track_name != NULL ) &&
+                   ( regexec( &regex , track_name , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
                 }
@@ -2905,10 +2937,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         is_first_search = FALSE;
     }
 
-    if ( tuple->album_name != NULL )
+    if ( tuple_get_string(tuple, "album") != NULL )
     {
         /* match by album_name */
-        const gchar *regex_pattern = tuple->album_name;
+        const gchar *regex_pattern = tuple_get_string(tuple, "album");
         regex_t regex;
     #if defined(USE_REGEX_PCRE)
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
@@ -2921,9 +2953,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             else entry_list = found_list; /* use found_list */
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
+                const gchar *album_name = tuple_get_string( tuple, "album" );
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( entry->tuple->album_name != NULL ) &&
-                   ( regexec( &regex , entry->tuple->album_name , 0 , NULL , 0 ) == 0 ) )
+                if ( ( entry->tuple != NULL ) && ( album_name != NULL ) &&
+                   ( regexec( &regex , album_name , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
                 }
@@ -2935,10 +2968,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         is_first_search = FALSE;
     }
 
-    if ( tuple->performer != NULL )
+    if ( tuple_get_string(tuple, "artist") != NULL )
     {
         /* match by performer */
-        const gchar *regex_pattern = tuple->performer;
+        const gchar *regex_pattern = tuple_get_string(tuple, "artist");
         regex_t regex;
     #if defined(USE_REGEX_PCRE)
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
@@ -2951,9 +2984,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             else entry_list = found_list; /* use found_list */
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
+                const gchar *performer = tuple_get_string( tuple, "performer" );
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( entry->tuple->performer != NULL ) &&
-                   ( regexec( &regex , entry->tuple->performer , 0 , NULL , 0 ) == 0 ) )
+                if ( ( entry->tuple != NULL ) && ( performer != NULL ) &&
+                   ( regexec( &regex , performer , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
                 }
@@ -2965,10 +2999,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         is_first_search = FALSE;
     }
 
-    if ( tuple->file_name != NULL )
+    if ( tuple_get_string(tuple, "file-name") != NULL )
     {
         /* match by file_name */
-        const gchar *regex_pattern = tuple->file_name;
+        const gchar *regex_pattern = tuple_get_string(tuple, "file-name");
         regex_t regex;
     #if defined(USE_REGEX_PCRE)
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
@@ -2981,9 +3015,10 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             else entry_list = found_list; /* use found_list */
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
+                const gchar *file_name = tuple_get_string( tuple, "file-name" );
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( entry->tuple->file_name != NULL ) &&
-                   ( regexec( &regex , entry->tuple->file_name , 0 , NULL , 0 ) == 0 ) )
+                if ( ( entry->tuple != NULL ) && ( file_name != NULL ) &&
+                   ( regexec( &regex , file_name , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
                 }
@@ -3109,7 +3144,7 @@ playlist_read_info_selection(Playlist *playlist)
 
 	/* invalidate mtime to reread */
 	if (entry->tuple != NULL)
-	    entry->tuple->mtime = -1; /* -1 denotes "non-initialized". now 0 is for stream etc. yaz */
+            tuple_associate_int(entry->tuple, "mtime", -1); /* -1 denotes "non-initialized". now 0 is for stream etc. yaz */
 
         if (!playlist_entry_get_info(entry)) {
             if (g_list_index(playlist->entries, entry) == -1)

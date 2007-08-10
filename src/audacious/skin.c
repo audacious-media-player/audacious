@@ -173,6 +173,11 @@ bmp_active_skin_load(const gchar * path)
 
     playlistwin_update_list(playlist_get_active());
 
+    SkinPixmap *pixmap;
+    pixmap = &bmp_active_skin->pixmaps[SKIN_POSBAR];
+    /* last 59 pixels of SKIN_POSBAR are knobs (normal and selected) */
+    gtk_widget_set_size_request(mainwin_position, pixmap->width - 59, pixmap->height);
+
     return TRUE;
 }
 

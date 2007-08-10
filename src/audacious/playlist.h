@@ -36,7 +36,8 @@
 
 #include <mowgli.h>
 #include <glib.h>
-#include "audacious/titlestring.h"
+#include "audacious/tuple.h"
+#include "audacious/tuple_formatter.h"
 #include "input.h"
 
 G_BEGIN_DECLS
@@ -71,7 +72,7 @@ typedef struct _PlaylistEntry {
     gint length;
     gboolean selected;
     InputPlugin *decoder;
-    TitleInput *tuple;		/* cached entry tuple, if available */
+    Tuple *tuple;		/* cached entry tuple, if available */
 } PlaylistEntry;
 
 #define PLAYLIST(x)  ((Playlist *)(x))
@@ -187,7 +188,7 @@ const gchar *playlist_get_filename_to_play(Playlist *playlist);
 
 gchar *playlist_get_filename(Playlist *playlist, guint pos);
 gchar *playlist_get_songtitle(Playlist *playlist, guint pos);
-TitleInput *playlist_get_tuple(Playlist *playlist, guint pos);
+Tuple *playlist_get_tuple(Playlist *playlist, guint pos);
 gint playlist_get_songtime(Playlist *playlist, guint pos);
 
 GList *playlist_get_selected(Playlist *playlist);
@@ -198,7 +199,7 @@ void playlist_get_total_time(Playlist *playlist, gulong * total_time, gulong * s
                              gboolean * total_more,
                              gboolean * selection_more);
 
-gint playlist_select_search(Playlist *playlist, TitleInput *tuple, gint action);
+gint playlist_select_search(Playlist *playlist, Tuple *tuple, gint action);
 void playlist_select_all(Playlist *playlist, gboolean set);
 void playlist_select_range(Playlist *playlist, gint min, gint max, gboolean sel);
 void playlist_select_invert_all(Playlist *playlist);
@@ -232,7 +233,7 @@ extern void playlist_load_ins_file(Playlist *playlist, const gchar * filename,
 
 extern void playlist_load_ins_file_tuple(Playlist *playlist, const gchar * filename_p,
 					 const gchar * playlist_name, gint pos,
-					 TitleInput *tuple);
+					 Tuple *tuple);
 
 Playlist *playlist_get_active(void);
 
