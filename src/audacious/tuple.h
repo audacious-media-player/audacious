@@ -34,6 +34,7 @@ typedef enum {
 } TupleValueType;
 
 Tuple *tuple_new(void);
+Tuple *tuple_new_from_filename(gchar *filename);
 gboolean tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string);
 gboolean tuple_associate_int(Tuple *tuple, const gchar *field, gint integer);
 void tuple_disassociate(Tuple *tuple, const gchar *field);
