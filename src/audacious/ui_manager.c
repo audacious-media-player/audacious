@@ -699,6 +699,7 @@ ui_manager_create_menus ( void )
 
   /* initialize plugins-menu for playlist-menus */
   ui_manager_create_menus_init_pmenu( "/playlist-menus/playlist-menu/plugins-menu" );
+  ui_manager_create_menus_init_pmenu( "/playlist-menus/playlist-rightclick-menu/plugins-menu" );
 
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/equalizer.ui" , &gerr );
 
@@ -777,31 +778,44 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
 {
   if ( menu_created )
   {
+    GtkWidget *plugins_menu = NULL;
+    GtkWidget *plugins_menu_item = NULL;
+
     switch (menu_id)
     {
       case AUDACIOUS_MENU_MAIN:
-      {
-        GtkWidget *plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
           "/mainwin-menus/main-menu/plugins-menu" );
-        GtkWidget *plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-        gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
-        gtk_widget_show( plugins_menu_item );
-        return 0;
-      }
+        break;
 
       case AUDACIOUS_MENU_PLAYLIST:
-      {
-        GtkWidget *plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
           "/playlist-menus/playlist-menu/plugins-menu" );
-        GtkWidget *plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-        gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
-        gtk_widget_show( plugins_menu_item );
-        return 0;
-      }
+        break;
+
+      case AUDACIOUS_MENU_PLAYLIST_RCLICK:
+        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+          "/playlist-menus/playlist-menu/plugins-menu" );
+        break;
 
       default:
         return -1;
     }
+
+    if ( plugins_menu_item )
+    {
+      plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+      if ( plugins_menu )
+      {
+        gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
+        gtk_widget_show( plugins_menu_item );
+        return 0; /* success */
+      }
+      else
+        return -1;
+    }
+    else
+      return -1;
   }
   else
     return -1;
@@ -820,37 +834,42 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
     switch (menu_id)
     {
       case AUDACIOUS_MENU_MAIN:
-      {
         plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
           "/mainwin-menus/main-menu/plugins-menu" );
-        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-        gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
         break;
-      }
 
       case AUDACIOUS_MENU_PLAYLIST:
-      {
         plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
           "/playlist-menus/playlist-menu/plugins-menu" );
-        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-        gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
         break;
-      }
+
+      case AUDACIOUS_MENU_PLAYLIST_RCLICK:
+        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
+          "/playlist-menus/playlist-menu/plugins-menu" );
+        break;
 
       default:
         return -1;
     }
 
-    if ( plugins_menu )
+    if ( plugins_menu_item )
     {
-      /* check the current number of items in plugins-menu against its initial count
-         of items; if these are equal, it means that the menu is "empty", so hide it */
-      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu),"ic"));
-      plugins_menu_children = gtk_container_get_children( GTK_CONTAINER(plugins_menu) );
-      if ( ic == g_list_length(plugins_menu_children) )
-        gtk_widget_hide( plugins_menu_item );
-      g_list_free( plugins_menu_children );
-      return 0;
+      plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+      if ( plugins_menu )
+      {
+        /* remove the plugin-added entry */
+        gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
+        /* check the current number of items in plugins-menu against its initial count
+           of items; if these are equal, it means that the menu is "empty", so hide it */
+        gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu),"ic"));
+        plugins_menu_children = gtk_container_get_children( GTK_CONTAINER(plugins_menu) );
+        if ( ic == g_list_length(plugins_menu_children) )
+          gtk_widget_hide( plugins_menu_item );
+        g_list_free( plugins_menu_children );
+        return 0; /* success */
+      }
+      else
+        return -1;
     }
     else
       return -1;
