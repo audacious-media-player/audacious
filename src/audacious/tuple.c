@@ -84,7 +84,7 @@ tuple_new(void)
 }
 
 Tuple *
-tuple_new_from_filename(gchar *filename)
+tuple_new_from_filename(const gchar *filename)
 {
     gchar *scratch, *ext, *realfn;
     Tuple *tuple;
