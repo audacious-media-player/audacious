@@ -1594,6 +1594,7 @@ playlistwin_create(void)
 void
 playlistwin_show(void)
 {
+    gtk_window_move(GTK_WINDOW(playlistwin), cfg.playlist_x, cfg.playlist_y);
     GtkAction *action = gtk_action_group_get_action(
       toggleaction_group_others , "show playlist editor" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , TRUE );

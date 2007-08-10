@@ -79,6 +79,26 @@ ui_skinned_window_configure(GtkWidget *widget,
     if (widget_class->configure_event != NULL)
         widget_class->configure_event(widget, event);
 
+    if (!GTK_WIDGET_VISIBLE(widget))
+        return FALSE;
+
+    switch(window->type) {
+        case WINDOW_MAIN:
+            if (cfg.show_wm_decorations)
+                gdk_window_get_root_origin(widget->window, &cfg.player_x, &cfg.player_y);
+            else
+                gdk_window_get_deskrelative_origin(widget->window, &cfg.player_x, &cfg.player_y);
+            break;
+        case WINDOW_EQ:
+            cfg.equalizer_x = event->x;
+            cfg.equalizer_y = event->y;
+            break;
+        case WINDOW_PLAYLIST:
+            cfg.playlist_x = event->x;
+            cfg.playlist_y = event->y;
+            break;
+    }
+
     window->x = event->x;
     window->y = event->y;
 

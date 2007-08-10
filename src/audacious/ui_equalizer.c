@@ -309,19 +309,6 @@ equalizerwin_keypress(GtkWidget * widget,
     return FALSE;
 }
 
-static gboolean
-equalizerwin_configure(GtkWidget * window,
-                       GdkEventConfigure * event,
-                       gpointer data)
-{
-    if (!GTK_WIDGET_VISIBLE(window))
-        return FALSE;
-
-    cfg.equalizer_x = event->x;
-    cfg.equalizer_y = event->y;
-    return FALSE;
-}
-
 static void
 equalizerwin_close_cb(void)
 {
@@ -572,8 +559,6 @@ equalizerwin_create_window(void)
                      G_CALLBACK(equalizerwin_press), NULL);
     g_signal_connect(equalizerwin, "button_release_event",
                      G_CALLBACK(equalizerwin_release), NULL);
-    g_signal_connect(equalizerwin, "configure_event",
-                     G_CALLBACK(equalizerwin_configure), NULL);
     g_signal_connect(equalizerwin, "key_press_event",
                      G_CALLBACK(equalizerwin_keypress), NULL);
 }

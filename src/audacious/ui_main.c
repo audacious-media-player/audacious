@@ -1107,23 +1107,6 @@ mainwin_jump_to_time(void)
     gtk_widget_grab_default(jump);
 }
 
-static gboolean
-mainwin_configure(GtkWidget * window,
-                  GdkEventConfigure * event,
-                  gpointer data)
-{
-    if (!GTK_WIDGET_VISIBLE(window))
-        return FALSE;
-
-    if (cfg.show_wm_decorations)
-        gdk_window_get_root_origin(window->window,
-                                   &cfg.player_x, &cfg.player_y);
-    else
-        gdk_window_get_deskrelative_origin(window->window,
-                                           &cfg.player_x, &cfg.player_y);
-    return FALSE;
-}
-
 /*
  * Rewritten 09/13/06:
  *
@@ -2648,8 +2631,6 @@ mainwin_create_window(void)
                      G_CALLBACK(mainwin_scrolled), NULL);
     g_signal_connect(mainwin, "button_release_event",
                      G_CALLBACK(mainwin_mouse_button_release), NULL);
-    g_signal_connect(mainwin, "configure_event",
-                     G_CALLBACK(mainwin_configure), NULL);
 
     bmp_drag_dest_set(mainwin);
 
