@@ -795,7 +795,7 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
 
       case AUDACIOUS_MENU_PLAYLIST_RCLICK:
         plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/playlist-menus/playlist-menu/plugins-menu" );
+          "/playlist-menus/playlist-rightclick-menu/plugins-menu" );
         break;
 
       default:
@@ -845,7 +845,7 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
 
       case AUDACIOUS_MENU_PLAYLIST_RCLICK:
         plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/playlist-menus/playlist-menu/plugins-menu" );
+          "/playlist-menus/playlist-rightclick-menu/plugins-menu" );
         break;
 
       default:
