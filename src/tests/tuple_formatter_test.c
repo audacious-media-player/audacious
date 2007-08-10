@@ -106,7 +106,7 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
-    tstr = tuple_formatter_process_string(tuple, "${splork:${splork} - }${splork}");
+    tstr = tuple_formatter_process_string(tuple, "${?splork:${splork} - }${splork}");
     if (g_ascii_strcasecmp(tstr, "moo - moo"))
     {
         g_print("fail 10: '%s'\n", tstr);
