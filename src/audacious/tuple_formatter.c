@@ -64,6 +64,7 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     TupleFormatterContext *ctx;
     const gchar *iter;
     gchar *out;
+    gint level = 0;
 
     g_return_val_if_fail(tuple != NULL, NULL);
     g_return_val_if_fail(string != NULL, NULL);
@@ -75,20 +76,24 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     for (iter = string; *iter != '\0'; iter++)
     {
         /* if it's raw text, just copy the byte */
-        if (*iter != '$' && *iter != '%')
+        if (*iter != '$' && *iter != '%' && (*iter != '}' || (*iter == '}' && level > 0)))
+        {
+            level--;
             g_string_append_c(ctx->str, *iter);
+        }
         else if (g_str_has_prefix(iter, "${") == TRUE)
         {
             GString *expression = g_string_new("");
             GString *argument = g_string_new("");
             GString *sel = expression;
             gchar *result;
-            gint level = 0;
+            gboolean rewind = FALSE;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
                 if (*iter == ':')
                 {
+		    level++;
                     sel = argument;
                     continue;
                 }
@@ -101,14 +106,18 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         level++;
                     }
                 }
-                else if (*iter == '}' && (sel == argument && --level > 0))
-                    g_string_append_c(sel, *iter);
-                else if (*iter == '}' && ((sel != argument) || (sel == argument && level <= 0)))
+                else if (*iter == '}' && (sel == argument))
                 {
-                    if (sel == argument)
+                    level--;
+                    if (level + 1 > 0)
+                    {
                         iter++;
-                    break;
+                        rewind = *(iter - 1) == '}' && *iter != '}';
+                        break;
+                    }
                 }
+                else if (*iter == '}' && ((sel != argument)))
+                    break;
                 else
                     g_string_append_c(sel, *iter);
             }
@@ -132,6 +141,9 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
             if (*iter == '\0')
                 break;
+
+            if (rewind)
+                iter--;
         }
         else if (g_str_has_prefix(iter, "%{") == TRUE)
         {
@@ -139,12 +151,13 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             GString *argument = g_string_new("");
             GString *sel = expression;
             gchar *result;
-            gint level = 0;
+            gboolean rewind = FALSE;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
                 if (*iter == ':')
                 {
+		    level++;
                     sel = argument;
                     continue;
                 }
@@ -157,14 +170,18 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         level++;
                     }
                 }
-                else if (*iter == '}' && (sel == argument && --level > 0))
-                    g_string_append_c(sel, *iter);
-                else if (*iter == '}' && ((sel != argument) || (sel == argument && level <= 0)))
+                else if (*iter == '}' && (sel == argument))
                 {
-                    if (sel == argument)
+                    level--;
+                    if (level + 1 > 0)
+                    {
                         iter++;
-                    break;
+                        rewind = *(iter - 1) == '}' && *iter != '}';
+                        break;
+                    }
                 }
+                else if (*iter == '}' && ((sel != argument)))
+                    break;
                 else
                     g_string_append_c(sel, *iter);
             }
@@ -188,6 +205,9 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
             if (*iter == '\0')
                 break;
+
+            if (rewind)
+                iter--;
         }
     }
 
