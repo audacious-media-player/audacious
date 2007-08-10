@@ -53,6 +53,7 @@ HEADERS = \
 	strings.h \
 	titlestring.h \
 	tuple.h \
+	tuple_formatter.h \
 	ui_fileinfopopup.h \
 	ui_lastfm.h\
 	ui_preferences.h \
