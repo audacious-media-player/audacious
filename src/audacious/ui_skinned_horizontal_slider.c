@@ -219,6 +219,11 @@ static void ui_skinned_horizontal_slider_size_allocate(GtkWidget *widget, GtkAll
     widget->allocation = *allocation;
     widget->allocation.x *= (1+priv->double_size);
     widget->allocation.y *= (1+priv->double_size);
+    if (priv->knob_height == priv->height)
+        priv->knob_height = allocation->height;
+    priv->width = allocation->width;
+    priv->height = allocation->height;
+
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
