@@ -25,6 +25,14 @@
 #include "tuple.h"
 #include "tuple_formatter.h"
 
+#define _DEBUG
+
+#ifdef _DEBUG
+# define _TRACE(fmt, ...) g_print("[tuple-fmt] %s(%d) " fmt "\n", __FILE__, __LINE__, __VA_ARGS__);
+#else
+# define _TRACE(fmt, ...)
+#endif
+
 /*
  * the tuple formatter:
  *
@@ -71,6 +79,8 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
     ctx = g_new0(TupleFormatterContext, 1);
     ctx->str = g_string_new("");
+
+    _TRACE("parsing <%s>", string);
 
     /* parsers are ugly */
     for (iter = string; *iter != '\0'; iter++)
@@ -228,6 +238,8 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     out = g_strdup(ctx->str->str);
     g_string_free(ctx->str, TRUE);
     g_free(ctx);
+
+    _TRACE("parsed <%s> as <%s>", string, out);
 
     return out;
 }
