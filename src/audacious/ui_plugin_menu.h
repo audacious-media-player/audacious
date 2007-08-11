@@ -28,8 +28,9 @@
 #include <gtk/gtk.h>
 
 
-#define AUDACIOUS_MENU_MAIN        0
-#define AUDACIOUS_MENU_PLAYLIST    1
+#define AUDACIOUS_MENU_MAIN             0
+#define AUDACIOUS_MENU_PLAYLIST         1
+#define AUDACIOUS_MENU_PLAYLIST_RCLICK  2
 
 gint audacious_menu_plugin_item_add( gint , GtkWidget * );
 gint audacious_menu_plugin_item_remove( gint , GtkWidget * );

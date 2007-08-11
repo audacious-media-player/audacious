@@ -61,6 +61,27 @@
 
 static int song_info_timeout_source = 0;
 
+
+static gint
+playback_set_pb_ready(InputPlayback *playback)
+{
+    g_mutex_lock(playback->pb_ready_mutex);
+    playback->pb_ready_val = 1;
+    g_cond_signal(playback->pb_ready_cond);
+    g_mutex_unlock(playback->pb_ready_mutex);
+    return 0;
+}
+
+static gint
+playback_wait_for_pb_ready(InputPlayback *playback)
+{
+    g_mutex_lock(playback->pb_ready_mutex);
+    while (playback->pb_ready_val != 1)
+        g_cond_wait(playback->pb_ready_cond, playback->pb_ready_mutex);
+    g_mutex_unlock(playback->pb_ready_mutex);
+    return 0;
+}
+
 void
 playback_eof(void)
 {
@@ -186,6 +207,10 @@ playback_stop(void)
 
     if (ip_data.playing)
     {
+        /* wait for plugin to signal it has reached
+           the 'playback safe state' before stopping */
+        playback_wait_for_pb_ready(playback);
+
         if (playback_get_paused() == TRUE)
         {
             if (get_written_time() > 0)
@@ -193,7 +218,7 @@ playback_stop(void)
             playback_pause();
         }
 
-        ip_data.playing = FALSE; 
+        ip_data.playing = FALSE;
 
         if (playback->plugin->stop)
             playback->plugin->stop(playback);
@@ -204,9 +229,14 @@ playback_stop(void)
         free_vis_data();
         ip_data.paused = FALSE;
 
-	g_free(playback->filename);
-	g_free(playback);
-	set_current_input_playback(NULL);
+        if (playback->pb_ready_mutex)
+            g_mutex_free(playback->pb_ready_mutex);
+        if (playback->pb_ready_cond)
+            g_cond_free(playback->pb_ready_cond);
+
+        g_free(playback->filename);
+        g_free(playback);
+        set_current_input_playback(NULL);
     }
 
     ip_data.buffering = FALSE;
@@ -244,6 +274,10 @@ playback_monitor_thread(gpointer data)
     InputPlayback *playback = (InputPlayback *) data;
 
     playback->plugin->play_file(playback);
+
+    /* if play_file has not reached the 'safe state' before returning (an error
+       occurred), set the playback ready value to 1 now, to allow for proper stop */
+    playback_set_pb_ready(playback);
 
     if (!playback->error && ip_data.playing)
         playback_eof();
@@ -301,6 +335,10 @@ playback_play_file(PlaylistEntry *entry)
     playback->output = &psuedo_output_plugin;
     playback->filename = g_strdup(entry->filename);
     playback->thread = g_thread_self();
+    playback->pb_ready_mutex = g_mutex_new();
+    playback->pb_ready_cond = g_cond_new();
+    playback->pb_ready_val = 0;
+    playback->set_pb_ready = playback_set_pb_ready;
     
     set_current_input_playback(playback);
 

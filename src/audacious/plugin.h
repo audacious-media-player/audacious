@@ -214,6 +214,11 @@ struct _InputPlayback {
     gboolean eof;
 
     GThread *thread;
+    
+    GMutex *pb_ready_mutex;
+    GCond *pb_ready_cond;
+    gint pb_ready_val;    
+    gint (*set_pb_ready) (InputPlayback*);
 };
 
 struct _InputPlugin {
