@@ -86,10 +86,13 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     for (iter = string; *iter != '\0'; iter++)
     {
         /* if it's raw text, just copy the byte */
-        if (*iter != '$' && *iter != '%' && (*iter != '}' || (*iter == '}' && level > 0)))
+        if (*iter != '$' && *iter != '%' && *iter != '}' )
+        {
+            g_string_append_c(ctx->str, *iter);
+        }
+        else if (*iter == '}' && level > 0)
         {
             level--;
-            g_string_append_c(ctx->str, *iter);
         }
         else if (g_str_has_prefix(iter, "${") == TRUE)
         {
@@ -97,13 +100,12 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             GString *argument = g_string_new("");
             GString *sel = expression;
             gchar *result;
-            gboolean rewind = FALSE;
+            level++;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
                 if (*iter == ':')
                 {
-		    level++;
                     if (sel != argument)
                     {
                         sel = argument;
@@ -125,13 +127,10 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                 else if (*iter == '}' && (sel == argument))
                 {
                     level--;
-                    if (level + 1 > 0)
-                    {
-                        iter++;
-                        rewind = *(iter - 1) == '}' && *iter != '}';
-                        break;
-                    }
-                    g_string_append_c(sel, *iter);
+                    if (level == 0)
+                      break;
+                    else
+                      g_string_append_c(sel, *iter);
                 }
                 else if (*iter == '}' && ((sel != argument)))
                     break;
@@ -158,9 +157,6 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
             if (*iter == '\0')
                 break;
-
-            if (rewind)
-                iter--;
         }
         else if (g_str_has_prefix(iter, "%{") == TRUE)
         {
@@ -168,13 +164,12 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             GString *argument = g_string_new("");
             GString *sel = expression;
             gchar *result;
-            gboolean rewind = FALSE;
+            level++;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
                 if (*iter == ':')
                 {
-		    level++;
                     if (sel != argument)
                     {
                         sel = argument;
@@ -196,12 +191,9 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                 else if (*iter == '}' && (sel == argument))
                 {
                     level--;
-                    if (level + 1 > 0)
-                    {
-                        iter++;
-                        rewind = *(iter - 1) == '}' && *iter != '}';
-                        break;
-                    }
+                    if (level == 0)
+                      break;
+                    else
                     g_string_append_c(sel, *iter);
                 }
                 else if (*iter == '}' && ((sel != argument)))
@@ -229,9 +221,6 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
             if (*iter == '\0')
                 break;
-
-            if (rewind)
-                iter--;
         }
     }
 
