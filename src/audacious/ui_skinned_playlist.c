@@ -923,7 +923,7 @@ static gboolean ui_skinned_playlist_motion_notify(GtkWidget *widget, GdkEventMot
             playlistwin_update_list(playlist_get_active());
         }
         priv->drag_pos = nr;
-    } else {
+    } else if (cfg.show_filepopup_for_tuple) {
         gint pos = ui_skinned_playlist_get_position(widget, event->x, event->y);
         gint cur_pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "popup_position"));
         if (pos != cur_pos) {
