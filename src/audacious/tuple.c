@@ -123,10 +123,12 @@ tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string)
 
     g_return_val_if_fail(tuple != NULL, FALSE);
     g_return_val_if_fail(field != NULL, FALSE);
-    g_return_val_if_fail(string != NULL, FALSE);
 
     if (mowgli_dictionary_find(tuple->dict, field))
         tuple_disassociate(tuple, field);
+
+    if (string == NULL)
+        return TRUE;
 
     value = mowgli_heap_alloc(tuple_value_heap);
     value->type = TUPLE_STRING;
