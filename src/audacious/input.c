@@ -609,7 +609,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 
         tuple_associate_string(tuple, "file-path", g_path_get_dirname(tmp));
 
-        tmp = tuple_formatter_process_string(tuple, cfg.gentitle_format);
+        tmp = tuple_formatter_process_string(tuple, get_gentitle_format());
         if (tmp != NULL && *tmp != '\0') {
             (*title) = str_to_utf8(tmp);
             g_free(tmp);

@@ -239,7 +239,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
     /* entry is still around */
     formatter = tuple_get_string(tuple, "formatter");
     entry->title = tuple_formatter_process_string(tuple, formatter ?
-                                                  formatter : xmms_get_gentitle_format());
+                                                  formatter : get_gentitle_format());
     entry->length = tuple_get_int(tuple, "length");
     entry->tuple = tuple;
 
@@ -676,7 +676,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     if (tuple != NULL) {
         const gchar *formatter = tuple_get_string(tuple, "formatter");
         entry->title = tuple_formatter_process_string(tuple, formatter ?
-                                                      formatter : xmms_get_gentitle_format());
+                                                      formatter : get_gentitle_format());
         entry->length = tuple_get_int(tuple, "length");
         entry->tuple = tuple;
     }

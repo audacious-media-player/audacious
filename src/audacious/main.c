@@ -453,7 +453,7 @@ dump_version(void)
 }
 
 const gchar *
-xmms_get_gentitle_format(void)
+get_gentitle_format(void)
 {
     guint titlestring_preset = cfg.titlestring_preset;
 
