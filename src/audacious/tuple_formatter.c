@@ -121,6 +121,7 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         rewind = *(iter - 1) == '}' && *iter != '}';
                         break;
                     }
+                    g_string_append_c(sel, *iter);
                 }
                 else if (*iter == '}' && ((sel != argument)))
                     break;
@@ -164,7 +165,13 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                 if (*iter == ':')
                 {
 		    level++;
-                    sel = argument;
+                    if (sel != argument)
+                    {
+                        sel = argument;
+                        continue;
+                    }
+                    else
+                        g_string_append_c(sel, *iter);
                     continue;
                 }
 
@@ -185,6 +192,7 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         rewind = *(iter - 1) == '}' && *iter != '}';
                         break;
                     }
+                    g_string_append_c(sel, *iter);
                 }
                 else if (*iter == '}' && ((sel != argument)))
                     break;
