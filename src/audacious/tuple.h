@@ -41,5 +41,6 @@ void tuple_disassociate(Tuple *tuple, const gchar *field);
 TupleValueType tuple_get_value_type(Tuple *tuple, const gchar *field);
 const gchar *tuple_get_string(Tuple *tuple, const gchar *field);
 int tuple_get_int(Tuple *tuple, const gchar *field);
+#define tuple_free(x) mowgli_object_unref(x);
 
 #endif
