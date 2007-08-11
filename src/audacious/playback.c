@@ -224,7 +224,10 @@ playback_stop(void)
             playback->plugin->stop(playback);
 
         if (playback->thread != NULL)
+        {
             g_thread_join(playback->thread);
+            playback->thread = NULL;
+        }
 
         free_vis_data();
         ip_data.paused = FALSE;
