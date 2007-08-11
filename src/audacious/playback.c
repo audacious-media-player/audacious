@@ -334,7 +334,6 @@ playback_play_file(PlaylistEntry *entry)
     playback->plugin = entry->decoder;
     playback->output = &psuedo_output_plugin;
     playback->filename = g_strdup(entry->filename);
-    playback->thread = g_thread_self();
     playback->pb_ready_mutex = g_mutex_new();
     playback->pb_ready_cond = g_cond_new();
     playback->pb_ready_val = 0;
@@ -342,7 +341,7 @@ playback_play_file(PlaylistEntry *entry)
     
     set_current_input_playback(playback);
 
-    g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
+    playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
 
     return TRUE;
 }
