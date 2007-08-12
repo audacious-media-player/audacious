@@ -414,6 +414,9 @@ static gchar *pl_candidates[] = {
 
 GCond *cond_scan;
 GMutex *mutex_scan;
+#ifdef USE_DBUS
+MprisPlayer *mpris;
+#endif
 
 static GSList *
 get_feature_list(void)

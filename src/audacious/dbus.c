@@ -136,6 +136,15 @@ void mpris_player_init(MprisPlayer *object) {
     dbus_g_connection_register_g_object(dbus_conn,
                                         AUDACIOUS_DBUS_PATH_MPRIS_PLAYER,
                                         G_OBJECT(object));
+
+	// Add signals
+	DBusGProxy *proxy = object->proxy;
+	dbus_g_proxy_add_signal(proxy, "StatusChange",
+			G_TYPE_INT, G_TYPE_INVALID);
+	dbus_g_proxy_add_signal(proxy, "CapsChange",
+			G_TYPE_INT, G_TYPE_INVALID);
+	dbus_g_proxy_add_signal(proxy, "TrackChange",
+			DBUS_TYPE_G_STRING_VALUE_HASHTABLE, G_TYPE_INVALID);
 }
 
 void mpris_tracklist_init(MprisTrackList *object) {
@@ -161,7 +170,7 @@ void init_dbus() {
     g_type_init();
     g_object_new(audacious_rc_get_type(), NULL);
     g_object_new(mpris_root_get_type(), NULL);
-    g_object_new(mpris_player_get_type(), NULL);
+    mpris = g_object_new(mpris_player_get_type(), NULL);
     g_object_new(mpris_tracklist_get_type(), NULL);
     g_message("D-Bus support has been activated");
 }
@@ -272,11 +281,11 @@ gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
     // check paused before playing because playback_get_playing() is true when
     // paused as well as when playing
     if (playback_get_paused())
-        *status = 1;
+        *status = MPRIS_STATUS_PAUSE;
     else if (playback_get_playing())
-        *status = 0;
+        *status = MPRIS_STATUS_PLAY;
     else
-        *status = 2;
+        *status = MPRIS_STATUS_STOP;
     return TRUE;
 }
 gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
@@ -364,21 +373,38 @@ gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
     return TRUE;
 }
 // MPRIS /Player signals
-gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error) {
-    static GQuark quark;
-    if (!quark)
-        quark = g_quark_from_static_string("CapsChange");
-    g_signal_emit(obj, signals[CAPS_CHANGE_SIG], quark, "capabilities changed");
+gboolean mpris_emit_caps_change(MprisPlayer *obj) {
+    g_signal_emit(obj, signals[CAPS_CHANGE_SIG], 0, 0);
     return TRUE;
 }
 
-gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error) {
-    g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, "track changed");
+gboolean mpris_emit_track_change(MprisPlayer *obj) {
+	GHashTable *metadata;
+    Tuple *tuple = NULL;
+    GValue *value;
+    Playlist *active;
+
+    active = playlist_get_active();
+    gint pos = playlist_get_position(active);
+    tuple = playlist_get_tuple(active, pos);
+
+    metadata = mpris_metadata_from_tuple(tuple);
+
+    if (metadata != NULL) {
+		// Song URI
+		value = g_new0(GValue, 1);
+		g_value_init(value, G_TYPE_STRING);
+		g_value_set_string(value, playlist_get_filename(active, pos));
+
+		g_hash_table_insert(metadata, "URI", value);
+	}
+
+    g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     return TRUE;
 }
 
-gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error) {
-    g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, "status changed");
+gboolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status) {
+    g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, status);
     return TRUE;
 }
 

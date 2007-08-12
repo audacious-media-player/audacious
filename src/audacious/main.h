@@ -30,6 +30,10 @@
 # include "ui_main.h"
 #endif
 
+#ifdef USE_DBUS
+#include "dbus-service.h"
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -174,6 +178,9 @@ void report_error(const gchar *error_message, ...);
 
 extern GCond *cond_scan;
 extern GMutex *mutex_scan;
+#ifdef USE_DBUS
+extern MprisPlayer *mpris;
+#endif
 
 G_END_DECLS
 

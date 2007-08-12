@@ -108,7 +108,7 @@ playback_get_time(void)
     if (playback->error)
         return -2;
     if (!playback->playing || 
-	(playback->eof && !playback->output->buffer_playing()))
+    (playback->eof && !playback->output->buffer_playing()))
         return -1;
     return playback->output->output_time();
 }
@@ -191,10 +191,17 @@ playback_pause(void)
 
     g_return_if_fail(mainwin_playstatus != NULL);
 
-    if (ip_data.paused)
+    if (ip_data.paused) {
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
-    else
+#ifdef USE_DBUS
+        mpris_emit_status_change(mpris, MPRIS_STATUS_PAUSE);
+#endif
+    } else {
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+#ifdef USE_DBUS
+        mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
+#endif
+    }
 }
 
 void
@@ -240,6 +247,9 @@ playback_stop(void)
         g_free(playback->filename);
         g_free(playback);
         set_current_input_playback(NULL);
+#ifdef USE_DBUS
+        mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
+#endif
     }
 
     ip_data.buffering = FALSE;
@@ -345,6 +355,9 @@ playback_play_file(PlaylistEntry *entry)
     set_current_input_playback(playback);
 
     playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
+#ifdef USE_DBUS
+    mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
+#endif
 
     return TRUE;
 }

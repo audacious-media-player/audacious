@@ -52,6 +52,13 @@ enum {
     MPRIS_CAPS_PROVIDES_TIMING          = 1 << 6,
 };
 
+// Status
+typedef enum {
+	MPRIS_STATUS_PLAY = 0,
+	MPRIS_STATUS_PAUSE,
+	MPRIS_STATUS_STOP
+} PlaybackStatus;
+
 // MPRIS /
 gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
                              GError **error);
@@ -81,9 +88,10 @@ enum {
     CAPS_CHANGE_SIG,
     LAST_SIG
 };
-gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error);
-gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error);
-gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error);
+
+gboolean mpris_emit_track_change(MprisPlayer *obj);
+gboolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status);
+gboolean mpris_emit_caps_change(MprisPlayer *obj);
 
 // MPRIS /TrackList
 gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
