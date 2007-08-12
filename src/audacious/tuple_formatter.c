@@ -380,35 +380,63 @@ tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
     return (tuple_get_value_type(tuple, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
 }
 
-/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match. */
+/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> (a tuple field) and <arg2> (a tuple field) match. */
 static gboolean
 tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
 {
     gchar **args = g_strsplit(expression, ",", 2);
-    gchar *arg1, *arg2;
+    gchar *arg1 = NULL, *arg2 = NULL;
     gint ret;
 
-    if (tuple_get_value_type(tuple, args[0]) == TUPLE_UNKNOWN)
+    if (args[0][0] == '\"') /* check if arg1 is "raw text" */
+    {
+        if ( strlen(args[0]) > 1 )
+        {
+            args[0][strlen(args[0]) - 1] = '\0';
+            arg1 = g_strdup(&(args[0][1]));
+            args[0][strlen(args[0]) - 1] = '\"';
+        }
+        else /* bad formatted arg */
+            return FALSE;
+    }
+    else if (tuple_get_value_type(tuple, args[0]) == TUPLE_UNKNOWN)
+    {
+        g_strfreev(args);
+        return FALSE;
+    }
+    
+    if (args[1][0] == '\"') /* check if arg2 is "raw text" */
+    {
+        if ( strlen(args[1]) > 1 )
+        {
+            args[1][strlen(args[1]) - 1] = '\0';
+            arg2 = g_strdup(&(args[1][1]));
+            args[1][strlen(args[1]) - 1] = '\"';
+        }
+        else /* bad formatted arg */
+            return FALSE;
+    }
+    else if (tuple_get_value_type(tuple, args[1]) == TUPLE_UNKNOWN)
     {
         g_strfreev(args);
         return FALSE;
     }
 
-    if (tuple_get_value_type(tuple, args[1]) == TUPLE_UNKNOWN)
+    if (!arg1) /* if arg1 is not "raw text", get the tuple value */
     {
-        g_strfreev(args);
-        return FALSE;
+        if (tuple_get_value_type(tuple, args[0]) == TUPLE_STRING)
+            arg1 = g_strdup(tuple_get_string(tuple, args[0]));
+        else
+            arg1 = g_strdup_printf("%d", tuple_get_int(tuple, args[0]));
     }
 
-    if (tuple_get_value_type(tuple, args[0]) == TUPLE_STRING)
-        arg1 = g_strdup(tuple_get_string(tuple, args[0]));
-    else
-        arg1 = g_strdup_printf("%d", tuple_get_int(tuple, args[0]));
-
-    if (tuple_get_value_type(tuple, args[1]) == TUPLE_STRING)
-        arg2 = g_strdup(tuple_get_string(tuple, args[1]));
-    else
-        arg2 = g_strdup_printf("%d", tuple_get_int(tuple, args[1]));
+    if (!arg2) /* if arg2 is not "raw text", get the tuple value */
+    {
+        if (tuple_get_value_type(tuple, args[1]) == TUPLE_STRING)
+            arg2 = g_strdup(tuple_get_string(tuple, args[1]));
+        else
+            arg2 = g_strdup_printf("%d", tuple_get_int(tuple, args[1]));
+    }
 
     ret = g_ascii_strcasecmp(arg1, arg2);
     g_free(arg1);
