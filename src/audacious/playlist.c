@@ -921,7 +921,10 @@ playlist_add_dir(Playlist * playlist, const gchar * directory)
 guint
 playlist_add_url(Playlist * playlist, const gchar * url)
 {
-    return playlist_ins_url(playlist, url, -1);
+    guint entries;
+    entries = playlist_ins_url(playlist, url, -1);
+//    printf("playlist_add_url: entries = %d\n", entries);
+    return entries;
 }
 
 guint
@@ -967,19 +970,17 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
                     gint pos)
 {
     gchar *tmp;
-    gint i = 1, entries = 0;
-    gboolean first = TRUE;
-    guint firstpos = 0;
-    gboolean success = FALSE;
+    gint entries = 0;
     gchar *decoded = NULL;
 
     g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(string != NULL, 0);
 
-    playlistwin_update_list(playlist);
+//    playlistwin_update_list(playlist); // is this necessary? --yaz
 
     while (*string) {
         GList *node;
+        guint i = 0;
         tmp = strchr(string, '\n');
         if (tmp) {
             if (*(tmp - 1) == '\r')
@@ -996,8 +997,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
             if (is_playlist_name(decoded)) {
                 i = playlist_load_ins(playlist, decoded, pos);
             }
-            else {
-                success = playlist_ins(playlist, decoded, pos);
+            else if (playlist_ins(playlist, decoded, pos)) {
                 i = 1;
             }
         }
@@ -1009,11 +1009,6 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
         PLAYLIST_UNLOCK(playlist->mutex);
 
         entries += i;
-
-        if (first) {
-            first = FALSE;
-            firstpos = pos;
-        }
 
         if (pos >= 0)
             pos += i;
@@ -1603,14 +1598,14 @@ playlist_save(Playlist * playlist, const gchar * filename)
 gboolean
 playlist_load(Playlist * playlist, const gchar * filename)
 {
-    gboolean ret = FALSE;
+    guint ret = 0;
     g_return_val_if_fail(playlist != NULL, FALSE);
 
     playlist->loading_playlist = TRUE;
     ret = playlist_load_ins(playlist, filename, -1);
     playlist->loading_playlist = FALSE;
 
-    return ret;
+    return ret ? TRUE : FALSE;
 }
 
 void
@@ -1753,7 +1748,8 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 {
     PlaylistContainer *plc;
     gchar *ext;
-
+    gint old_len, new_len;
+    
     g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(filename != NULL, 0);
 
@@ -1763,12 +1759,14 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     g_return_val_if_fail(plc != NULL, 0);
     g_return_val_if_fail(plc->plc_read != NULL, 0);
 
+    old_len = playlist_get_length(playlist);
     plc->plc_read(filename, pos);
+    new_len = playlist_get_length(playlist);
 
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
 
-    return 1;
+    return new_len - old_len;
 }
 
 GList *
