@@ -36,6 +36,7 @@ CFLAGS += \
 HEADERS = \
 	auddrct.h \
 	configdb.h \
+	custom_uri.h \
 	dbus.h \
 	discovery.h \
 	eventqueue.h \
@@ -68,6 +69,7 @@ SOURCES = \
 	auddrct.c \
 	build_stamp.c \
 	configdb.c \
+	custom_uri.c \
 	discovery.c \
 	dnd.c \
 	dock.c \

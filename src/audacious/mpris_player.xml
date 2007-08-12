@@ -42,9 +42,6 @@
         <method name="Quit">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
-        <method name="Disconnect">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
         <method name="GetStatus">
             <arg type="i" direction="out" />
         </method>
@@ -78,6 +75,5 @@
         <signal name="CapsChange">
             <arg type="i" />
         </signal>
-		<signal name="Disconnected" />
     </interface>
 </node>

@@ -369,6 +369,26 @@ input_check_file(const gchar * filename, gboolean show_warning)
     if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
         *tmp = '\0';
 
+    /* Check for plugins with custom URI:// strings */
+    /* cue:// cdda:// tone:// tact:// */
+    if ((ip = uri_get_plugin(filename)) != NULL &&
+        input_is_enabled(ip->filename) == TRUE)
+    {
+        if (ip->is_our_file != NULL)
+            ret = ip->is_our_file(filename_proxy);
+        else
+            ret = 0;
+        if (ret > 0)
+        {
+            g_free(filename_proxy);
+            pr = g_new0(ProbeResult, 1);
+            pr->ip = ip;
+            return pr;
+        }
+        g_free(filename_proxy);
+        return NULL;
+    }
+
     /* CD-Audio uses cdda:// dummy paths, no filedescriptor handling for it */
     /* also cuesheet uses cue:// */
     if (!g_strncasecmp(filename, "cdda://", 7) ||
@@ -609,7 +629,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 
         tuple_associate_string(tuple, "file-path", g_path_get_dirname(tmp));
 
-        tmp = tuple_formatter_process_string(tuple, cfg.gentitle_format);
+        tmp = tuple_formatter_process_string(tuple, get_gentitle_format());
         if (tmp != NULL && *tmp != '\0') {
             (*title) = str_to_utf8(tmp);
             g_free(tmp);

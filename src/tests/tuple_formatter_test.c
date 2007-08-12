@@ -130,6 +130,56 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
+    tuple_associate_string(tuple, "sheep", "");
+
+    tstr = tuple_formatter_process_string(tuple, "${?splork:${splork} - }${?sheep:${sheep} - }${splork}");
+    if (g_ascii_strcasecmp(tstr, "moo -  - moo"))
+    {
+        g_print("fail 13: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${?splork:${splork} - }${?sheep:${sheep} - }${splork}");
+    if (g_ascii_strcasecmp(tstr, "moo -  - moo"))
+    {
+        g_print("fail 14: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${==splork,\"moo\":const text field matches}");
+    if (g_ascii_strcasecmp(tstr, "const text field matches"))
+    {
+        g_print("fail 15: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${==\"moo\",\"moo\":const text fields match}");
+    if (g_ascii_strcasecmp(tstr, "const text fields match"))
+    {
+        g_print("fail 16: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${!=splork,\"muu\":const text field doesn't match}");
+    if (g_ascii_strcasecmp(tstr, "const text field doesn't match"))
+    {
+        g_print("fail 17: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
+    tstr = tuple_formatter_process_string(tuple, "${!=\"moo\",\"muu\":const text fields do not match}");
+    if (g_ascii_strcasecmp(tstr, "const text fields do not match"))
+    {
+        g_print("fail 18: '%s'\n", tstr);
+        return EXIT_FAILURE;
+    }
+    g_free(tstr);
+
     mowgli_object_unref(tuple);
 
     return EXIT_SUCCESS;

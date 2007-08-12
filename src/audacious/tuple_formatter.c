@@ -25,6 +25,14 @@
 #include "tuple.h"
 #include "tuple_formatter.h"
 
+#define _DEBUG
+
+#ifdef _DEBUG
+# define _TRACE(fmt, ...) g_print("[tuple-fmt] %s(%d) " fmt "\n", __FILE__, __LINE__, __VA_ARGS__);
+#else
+# define _TRACE(fmt, ...)
+#endif
+
 /*
  * the tuple formatter:
  *
@@ -72,14 +80,19 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
     ctx = g_new0(TupleFormatterContext, 1);
     ctx->str = g_string_new("");
 
+    _TRACE("parsing <%s>", string);
+
     /* parsers are ugly */
     for (iter = string; *iter != '\0'; iter++)
     {
         /* if it's raw text, just copy the byte */
-        if (*iter != '$' && *iter != '%' && (*iter != '}' || (*iter == '}' && level > 0)))
+        if (*iter != '$' && *iter != '%' && *iter != '}' )
+        {
+            g_string_append_c(ctx->str, *iter);
+        }
+        else if (*iter == '}' && level > 0)
         {
             level--;
-            g_string_append_c(ctx->str, *iter);
         }
         else if (g_str_has_prefix(iter, "${") == TRUE)
         {
@@ -87,13 +100,12 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             GString *argument = g_string_new("");
             GString *sel = expression;
             gchar *result;
-            gboolean rewind = FALSE;
+            level++;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
                 if (*iter == ':')
                 {
-		    level++;
                     if (sel != argument)
                     {
                         sel = argument;
@@ -115,12 +127,10 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                 else if (*iter == '}' && (sel == argument))
                 {
                     level--;
-                    if (level + 1 > 0)
-                    {
-                        iter++;
-                        rewind = *(iter - 1) == '}' && *iter != '}';
-                        break;
-                    }
+                    if (level == 0)
+                      break;
+                    else
+                      g_string_append_c(sel, *iter);
                 }
                 else if (*iter == '}' && ((sel != argument)))
                     break;
@@ -147,9 +157,6 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
             if (*iter == '\0')
                 break;
-
-            if (rewind)
-                iter--;
         }
         else if (g_str_has_prefix(iter, "%{") == TRUE)
         {
@@ -157,14 +164,19 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
             GString *argument = g_string_new("");
             GString *sel = expression;
             gchar *result;
-            gboolean rewind = FALSE;
+            level++;
 
             for (iter += 2; *iter != '\0'; iter++)
             {
                 if (*iter == ':')
                 {
-		    level++;
-                    sel = argument;
+                    if (sel != argument)
+                    {
+                        sel = argument;
+                        continue;
+                    }
+                    else
+                        g_string_append_c(sel, *iter);
                     continue;
                 }
 
@@ -179,12 +191,10 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                 else if (*iter == '}' && (sel == argument))
                 {
                     level--;
-                    if (level + 1 > 0)
-                    {
-                        iter++;
-                        rewind = *(iter - 1) == '}' && *iter != '}';
-                        break;
-                    }
+                    if (level == 0)
+                      break;
+                    else
+                    g_string_append_c(sel, *iter);
                 }
                 else if (*iter == '}' && ((sel != argument)))
                     break;
@@ -211,15 +221,14 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
 
             if (*iter == '\0')
                 break;
-
-            if (rewind)
-                iter--;
         }
     }
 
     out = g_strdup(ctx->str->str);
     g_string_free(ctx->str, TRUE);
     g_free(ctx);
+
+    _TRACE("parsed <%s> as <%s>", string, out);
 
     return out;
 }
@@ -371,35 +380,64 @@ tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
     return (tuple_get_value_type(tuple, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
 }
 
-/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match. */
+/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match.
+   <arg1> and <arg2> can also be raw text, which should be enclosed in "double quotes". */
 static gboolean
 tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
 {
     gchar **args = g_strsplit(expression, ",", 2);
-    gchar *arg1, *arg2;
+    gchar *arg1 = NULL, *arg2 = NULL;
     gint ret;
 
-    if (tuple_get_value_type(tuple, args[0]) == TUPLE_UNKNOWN)
+    if (args[0][0] == '\"') /* check if arg1 is "raw text" */
+    {
+        if ( strlen(args[0]) > 1 )
+        {
+            args[0][strlen(args[0]) - 1] = '\0';
+            arg1 = g_strdup(&(args[0][1]));
+            args[0][strlen(args[0]) - 1] = '\"';
+        }
+        else /* bad formatted arg */
+            return FALSE;
+    }
+    else if (tuple_get_value_type(tuple, args[0]) == TUPLE_UNKNOWN)
+    {
+        g_strfreev(args);
+        return FALSE;
+    }
+    
+    if (args[1][0] == '\"') /* check if arg2 is "raw text" */
+    {
+        if ( strlen(args[1]) > 1 )
+        {
+            args[1][strlen(args[1]) - 1] = '\0';
+            arg2 = g_strdup(&(args[1][1]));
+            args[1][strlen(args[1]) - 1] = '\"';
+        }
+        else /* bad formatted arg */
+            return FALSE;
+    }
+    else if (tuple_get_value_type(tuple, args[1]) == TUPLE_UNKNOWN)
     {
         g_strfreev(args);
         return FALSE;
     }
 
-    if (tuple_get_value_type(tuple, args[1]) == TUPLE_UNKNOWN)
+    if (!arg1) /* if arg1 is not "raw text", get the tuple value */
     {
-        g_strfreev(args);
-        return FALSE;
+        if (tuple_get_value_type(tuple, args[0]) == TUPLE_STRING)
+            arg1 = g_strdup(tuple_get_string(tuple, args[0]));
+        else
+            arg1 = g_strdup_printf("%d", tuple_get_int(tuple, args[0]));
     }
 
-    if (tuple_get_value_type(tuple, args[0]) == TUPLE_STRING)
-        arg1 = g_strdup(tuple_get_string(tuple, args[0]));
-    else
-        arg1 = g_strdup_printf("%d", tuple_get_int(tuple, args[0]));
-
-    if (tuple_get_value_type(tuple, args[1]) == TUPLE_STRING)
-        arg2 = g_strdup(tuple_get_string(tuple, args[1]));
-    else
-        arg2 = g_strdup_printf("%d", tuple_get_int(tuple, args[1]));
+    if (!arg2) /* if arg2 is not "raw text", get the tuple value */
+    {
+        if (tuple_get_value_type(tuple, args[1]) == TUPLE_STRING)
+            arg2 = g_strdup(tuple_get_string(tuple, args[1]));
+        else
+            arg2 = g_strdup_printf("%d", tuple_get_int(tuple, args[1]));
+    }
 
     ret = g_ascii_strcasecmp(arg1, arg2);
     g_free(arg1);
@@ -409,7 +447,8 @@ tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
     return ret ? FALSE : TRUE;
 }
 
-/* builtin-keyword: ${!=arg1,arg2}. returns TRUE if <arg1> and <arg2> don't match. */
+/* builtin-keyword: ${!=arg1,arg2}. returns TRUE if <arg1> and <arg2> don't match.
+   <arg1> and <arg2> can also be raw text, which should be enclosed in "double quotes". */
 static gboolean
 tuple_formatter_expression_nonmatch(Tuple *tuple, const gchar *expression)
 {

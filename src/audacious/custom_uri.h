@@ -1,6 +1,6 @@
 /*
  * Audacious
- * Copyright (c) 2006-2007 Audacious team
+ * Copyright (c) 2007 William Pitcock
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,29 +18,19 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_TUPLE_H__
-#define __AUDACIOUS_TUPLE_H__
-
 #include <glib.h>
 #include <mowgli.h>
 
-struct _Tuple;
-typedef struct _Tuple Tuple;
+#include <audacious/plugin.h>
 
-typedef enum {
-    TUPLE_STRING,
-    TUPLE_INT,
-    TUPLE_UNKNOWN
-} TupleValueType;
+#ifndef __AUDACIOUS_CUSTOM_URI_H__
+#define __AUDACIOUS_CUSTOM_URI_H__
 
-Tuple *tuple_new(void);
-Tuple *tuple_new_from_filename(const gchar *filename);
-gboolean tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string);
-gboolean tuple_associate_int(Tuple *tuple, const gchar *field, gint integer);
-void tuple_disassociate(Tuple *tuple, const gchar *field);
-TupleValueType tuple_get_value_type(Tuple *tuple, const gchar *field);
-const gchar *tuple_get_string(Tuple *tuple, const gchar *field);
-int tuple_get_int(Tuple *tuple, const gchar *field);
-#define tuple_free(x) mowgli_object_unref(x);
+G_BEGIN_DECLS
+
+InputPlugin *uri_get_plugin(const gchar *filename);
+void uri_set_plugin(const gchar *uri, InputPlugin *ip);
+
+G_END_DECLS
 
 #endif
