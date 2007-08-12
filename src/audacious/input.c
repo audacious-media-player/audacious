@@ -391,6 +391,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     /* CD-Audio uses cdda:// dummy paths, no filedescriptor handling for it */
     /* also cuesheet uses cue:// */
+/*
     if (!g_strncasecmp(filename, "cue://", 6)) {
         for (node = get_input_list(); node != NULL; node = g_list_next(node))
         {
@@ -412,7 +413,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         g_free(filename_proxy);
         return NULL;
     }
-
+*/
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
     g_free(tmp_uri);
 
