@@ -380,7 +380,8 @@ tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
     return (tuple_get_value_type(tuple, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
 }
 
-/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> (a tuple field) and <arg2> (a tuple field) match. */
+/* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match.
+   <arg1> and <arg2> can also be raw text, which should be enclosed in "double quotes". */
 static gboolean
 tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
 {
@@ -446,7 +447,8 @@ tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
     return ret ? FALSE : TRUE;
 }
 
-/* builtin-keyword: ${!=arg1,arg2}. returns TRUE if <arg1> and <arg2> don't match. */
+/* builtin-keyword: ${!=arg1,arg2}. returns TRUE if <arg1> and <arg2> don't match.
+   <arg1> and <arg2> can also be raw text, which should be enclosed in "double quotes". */
 static gboolean
 tuple_formatter_expression_nonmatch(Tuple *tuple, const gchar *expression)
 {
