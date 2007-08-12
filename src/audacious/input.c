@@ -391,8 +391,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     /* CD-Audio uses cdda:// dummy paths, no filedescriptor handling for it */
     /* also cuesheet uses cue:// */
-    if (!g_strncasecmp(filename, "cdda://", 7) ||
-        !g_strncasecmp(filename, "cue://", 6)) {
+    if (!g_strncasecmp(filename, "cue://", 6)) {
         for (node = get_input_list(); node != NULL; node = g_list_next(node))
         {
             ip = INPUT_PLUGIN(node->data);
