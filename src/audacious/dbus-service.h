@@ -53,7 +53,6 @@ gboolean mpris_player_stop(MprisPlayer *obj, GError **error);
 gboolean mpris_player_play(MprisPlayer *obj, GError **error);
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error);
 gboolean mpris_player_quit(MprisPlayer *obj, GError **error);
-gboolean mpris_player_disconnect(MprisPlayer *obj, GError **error);
 gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
                                  GError **error);
 gboolean mpris_player_get_metadata(MprisTrackList *obj, gint pos,
@@ -70,13 +69,11 @@ enum {
     TRACK_CHANGE_SIG,
     STATUS_CHANGE_SIG,
     CAPS_CHANGE_SIG,
-    DISCONNECTED,
     LAST_SIG
 };
 gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error);
 gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error);
 gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error);
-gboolean mpris_player_emit_disconnected(MprisPlayer *obj, GError **error);
 
 // MPRIS /TrackList
 gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,

@@ -208,12 +208,8 @@ gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
     return TRUE;
 }
 gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
-	// TODO: emit disconnected signal
 	mainwin_quit_cb();
     return TRUE;
-}
-gboolean mpris_player_disconnect(MprisPlayer *obj, GError **error) {
-	return FALSE;
 }
 gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
                                  GError **error) {
@@ -256,11 +252,6 @@ gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error) {
 gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error) {
     g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, "status changed");
     return TRUE;
-}
-
-gboolean mpris_player_emit_disconnected(MprisPlayer *obj, GError **error) {
-	g_signal_emit(obj, signals[DISCONNECTED], 0, NULL);
-	return TRUE;
 }
 
 // MPRIS /TrackList
