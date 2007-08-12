@@ -329,5 +329,6 @@ gboolean plugin_set_errortext(const gchar * text);
 G_END_DECLS
 
 #include "audacious/mime.h"
+#include "audacious/custom_uri.h"
 
 #endif
