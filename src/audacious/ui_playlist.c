@@ -1275,6 +1275,10 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_Escape:
         mainwin_minimize_cb();
         break;
+    case GDK_Tab:
+        if (event->state & GDK_CONTROL_MASK)
+            gtk_window_present(GTK_WINDOW(mainwin));
+        break;
     default:
         return FALSE;
     }

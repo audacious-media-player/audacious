@@ -981,6 +981,10 @@ mainwin_keypress(GtkWidget * grab_widget,
     case GDK_Escape:
         mainwin_minimize_cb();
         break;
+    case GDK_Tab:
+        if (event->state & GDK_CONTROL_MASK)
+            gtk_window_present(GTK_WINDOW(equalizerwin));
+        break;
     default:
         return FALSE;
     }
