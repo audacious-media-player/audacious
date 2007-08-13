@@ -520,12 +520,8 @@ playlist_delete_index(Playlist *playlist, guint pos)
 
     playlistwin_update_list(playlist);
     if (restart_playing) {
-        if (playlist->position) {
-#ifdef USE_DBUS
-            mpris_emit_track_change(mpris);
-#endif
+        if (playlist->position)
             playback_initiate();
-        }
         else {
             mainwin_clear_song_info();
         }
@@ -562,12 +558,8 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     playlistwin_update_list(playlist);
 
     if (restart_playing) {
-        if (playlist->position) {
-#ifdef USE_DBUS
-            mpris_emit_track_change(mpris);
-#endif
+        if (playlist->position)
             playback_initiate();
-        }
         else {
             mainwin_clear_song_info();
         }
@@ -606,12 +598,8 @@ playlist_delete(Playlist * playlist, gboolean crop)
     playlist_recalc_total_time(playlist);
 
     if (restart_playing) {
-        if (playlist->position) {
-#ifdef USE_DBUS
-            mpris_emit_track_change(mpris);
-#endif
+        if (playlist->position)
             playback_initiate();
-        }
         else {
             mainwin_clear_song_info();
         }
@@ -1177,12 +1165,8 @@ playlist_next(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist->mutex);
     playlist_check_pos_current(playlist);
 
-    if (restart_playing) {
-#ifdef USE_DBUS
-        mpris_emit_track_change(mpris);
-#endif
+    if (restart_playing)
         playback_initiate();
-    }
 
     playlistwin_update_list(playlist);
 }
@@ -1241,14 +1225,10 @@ playlist_prev(Playlist *playlist)
 
     playlist_check_pos_current(playlist);
 
-    if (restart_playing) {
-#ifdef USE_DBUS
-        mpris_emit_track_change(mpris);
-#endif
+    if (restart_playing)
         playback_initiate();
-    } else {
+    else
         playlistwin_update_list(playlist);
-    }
 }
 
 void
@@ -1426,14 +1406,10 @@ playlist_set_position(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist->mutex);
     playlist_check_pos_current(playlist);
 
-    if (restart_playing) {
-#ifdef USE_DBUS
-        mpris_emit_track_change(mpris);
-#endif
+    if (restart_playing)
         playback_initiate();
-    } else {
+    else
         playlistwin_update_list(playlist);
-    }
 }
 
 void
@@ -1498,9 +1474,6 @@ playlist_eof_reached(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_check_pos_current(playlist);
-#ifdef USE_DBUS
-    mpris_emit_track_change(mpris);
-#endif
     playback_initiate();
     playlistwin_update_list(playlist);
 }

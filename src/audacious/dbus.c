@@ -209,7 +209,7 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
 
     value = tuple_value_to_gvalue(tuple, "title");
     if (value != NULL) {
-        g_hash_table_insert(md, "name", value);
+        g_hash_table_insert(md, "title", value);
     }
 
     value = tuple_value_to_gvalue(tuple, "artist");
