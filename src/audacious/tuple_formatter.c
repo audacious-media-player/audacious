@@ -509,3 +509,22 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 
     return tuple_formatter_process_construct(tuple, string);
 }
+
+/* wrapper function for making title string. it falls back to filename
+ * if process_string returns NULL or a blank string. */
+gchar *
+tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
+{
+    gchar *rv;
+
+    g_return_val_if_fail(tuple != NULL, NULL);
+
+    rv = tuple_formatter_process_construct(tuple, string);
+
+    if(!rv || !strcmp(rv, "")) {
+        g_free(rv);
+        rv = g_strdup(tuple_get_string(tuple, "file-name"));
+    }
+
+    return rv;
+}
