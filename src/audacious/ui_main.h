@@ -42,8 +42,6 @@
 
 #define MAINWIN_DEFAULT_FONT     "Sans Bold 9"
 
-#define CDDA_DUMMY_PATH          "cdda://default"
-
 
 typedef enum {
     TIMER_ELAPSED,
@@ -67,10 +65,7 @@ enum {
     MAINWIN_GENERAL_FOCUSPLWIN,
 
     MAINWIN_GENERAL_SHOWEQWIN,
-    MAINWIN_GENERAL_PLAYCD,
     MAINWIN_GENERAL_EXIT,
-
-    MAINWIN_GENERAL_ADDCD,
 
     MAINWIN_GENERAL_PREV,
     MAINWIN_GENERAL_PLAY,
@@ -121,10 +116,6 @@ extern GtkWidget *mainwin_position, *mainwin_sposition;
 
 void mainwin_create(void);
 void read_volume(gint when);
-void play_medium(void);
-void add_medium(void);
-
-void draw_main_window(gboolean);
 
 void mainwin_quit_cb(void);
 void mainwin_lock_info_text(const gchar * text);

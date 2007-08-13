@@ -68,7 +68,6 @@ void action_play_location(void);
 void action_playback_next(void);
 void action_playback_pause(void);
 void action_playback_play(void);
-void action_playback_playcd(void);
 void action_playback_previous(void);
 void action_playback_stop(void);
 void action_preferences(void);

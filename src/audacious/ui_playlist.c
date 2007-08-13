@@ -1831,12 +1831,6 @@ action_playlist_add_files(void)
 }
 
 void
-action_playlist_add_cd(void)
-{
-    add_medium();
-}
-
-void
 action_playlist_add_url(void)
 {
     mainwin_show_add_url_window();

@@ -14,7 +14,6 @@
 			<separator />
 			<menuitem action="play file" />
 			<menuitem action="play location" />
-			<menuitem action="playback play cd" />
 			<menuitem action="lastfm" />
         		<separator />
 			<menu action="visualization">

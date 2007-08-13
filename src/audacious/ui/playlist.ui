@@ -17,7 +17,6 @@
 		</menu>
 
 		<menu action="dummy" name="add-menu">
-			<menuitem action="playlist add cd" />
 			<menuitem action="playlist add url" />
 			<menuitem action="playlist add files" />
 		</menu>

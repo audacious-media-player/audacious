@@ -95,7 +95,7 @@ const gchar *application_name = N_("Audacious");
 struct _BmpCmdLineOpt {
     gchar **filenames;
     gint session;
-    gboolean play, stop, pause, fwd, rew, play_pause, playcd, show_jump_box;
+    gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
     gboolean enqueue, mainwin, remote, activate;
     gboolean load_skins;
     gboolean headless;
@@ -1004,9 +1004,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->activate)
             audacious_remote_activate(session);
-
-        if (options->playcd)
-            play_medium();
     } else {
         if (options->rew)
             audacious_drct_playlist_prev();
@@ -1038,9 +1035,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->activate)
             audacious_drct_activate();
-
-        if (options->playcd)
-            play_medium();
     }
 
     if(remote) {
