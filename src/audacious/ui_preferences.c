@@ -80,6 +80,12 @@ enum PluginViewCols {
     PLUGIN_VIEW_N_COLS
 };
 
+enum PluginViewType {
+    PLUGIN_VIEW_TYPE_INPUT,
+    PLUGIN_VIEW_TYPE_GENERAL,
+    PLUGIN_VIEW_TYPE_VIS,
+    PLUGIN_VIEW_TYPE_EFFECT
+};
 
 typedef struct {
     const gchar *icon_path;
@@ -1173,6 +1179,35 @@ on_proxy_pass_changed(GtkEntry * entry,
     bmp_cfg_db_close(db);
 
     g_free(ret);
+}
+
+static void
+plugin_treeview_row_activate(GtkTreeView *treeview)
+{
+    GtkTreeSelection *selection;
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+
+    selection = gtk_tree_view_get_selection(treeview);
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+
+    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
+        case PLUGIN_VIEW_TYPE_INPUT:
+            input_configure(id);
+            break;
+        case PLUGIN_VIEW_TYPE_GENERAL:
+            general_configure(id);
+            break;
+        case PLUGIN_VIEW_TYPE_VIS:
+            vis_configure(id);
+            break;
+        case PLUGIN_VIEW_TYPE_EFFECT:
+            effect_configure(id);
+            break;
+    }
 }
 
 static void
@@ -2445,6 +2480,10 @@ create_prefs_window(void)
 
     widget = glade_xml_get_widget(xml, "input_plugin_view");
     widget2 = glade_xml_get_widget(xml, "input_plugin_prefs");
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_INPUT));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_row_activate),
+                     NULL);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
                      G_CALLBACK(input_plugin_enable_prefs),
                      widget2);
@@ -2483,11 +2522,16 @@ create_prefs_window(void)
     /* plugin->general page */
 
     widget = glade_xml_get_widget(xml, "general_plugin_view");
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_GENERAL));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_row_activate),
+                     NULL);
 
     widget2 = glade_xml_get_widget(xml, "general_plugin_prefs");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
                      G_CALLBACK(general_plugin_enable_prefs),
                      widget2);
+
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
                              G_CALLBACK(general_plugin_open_prefs),
                              widget);
@@ -2506,6 +2550,10 @@ create_prefs_window(void)
     widget = glade_xml_get_widget(xml, "vis_plugin_view");
     widget2 = glade_xml_get_widget(xml, "vis_plugin_prefs");
 
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_VIS));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_row_activate),
+                     NULL);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
                              G_CALLBACK(vis_plugin_open_prefs),
                              widget);
@@ -2526,6 +2574,10 @@ create_prefs_window(void)
     widget = glade_xml_get_widget(xml, "effect_plugin_view");
     widget2 = glade_xml_get_widget(xml, "effect_plugin_prefs");
 
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_EFFECT));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_row_activate),
+                     NULL);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
                              G_CALLBACK(effect_plugin_open_prefs),
                              widget);
