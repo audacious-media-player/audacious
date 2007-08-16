@@ -1085,15 +1085,7 @@ playlistwin_press(GtkWidget * widget,
             dock_move_release(GTK_WINDOW(playlistwin));
         return TRUE;
     }
-    else if (event->button == 3 &&
-               (event->y >= cfg.playlist_height - 29 &&
-                event->y < cfg.playlist_height - 11 &&
-                ((event->x >= 12 && event->x < 37) ||
-                 (event->x >= 41 && event->x < 66) ||
-                 (event->x >= 70 && event->x < 95) ||
-                 (event->x >= 99 && event->x < 124) ||
-                 (event->x >= playlistwin_get_width() - 46 &&
-                  event->x < playlistwin_get_width() - 23)))) {
+    else if (event->button == 3) {
         /*
          * Pop up the main menu a few pixels down to avoid
          * anything to be selected initially.
