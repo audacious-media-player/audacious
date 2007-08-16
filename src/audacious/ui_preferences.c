@@ -193,23 +193,6 @@ prefswin_set_category(gint index)
 
 
 static void
-input_plugin_open_prefs(GtkTreeView * treeview,
-                        gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    input_configure(id);
-}
-
-static void
 input_plugin_open_info(GtkTreeView * treeview,
                        gpointer data)
 {
@@ -238,23 +221,6 @@ output_plugin_open_info(GtkComboBox * cbox,
                         gpointer data)
 {
     output_about(gtk_combo_box_get_active(cbox));
-}
-
-static void
-general_plugin_open_prefs(GtkTreeView * treeview,
-                          gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    general_configure(id);
 }
 
 static void
@@ -1182,7 +1148,7 @@ on_proxy_pass_changed(GtkEntry * entry,
 }
 
 static void
-plugin_treeview_row_activate(GtkTreeView *treeview)
+plugin_treeview_open_prefs(GtkTreeView *treeview)
 {
     GtkTreeSelection *selection;
     GtkTreeModel *model;
@@ -1314,24 +1280,6 @@ output_plugin_enable_prefs(GtkComboBox * cbox, GtkButton * button)
 }
 
 static void
-vis_plugin_open_prefs(GtkTreeView * treeview,
-                          gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    vis_configure(id);
-}
-
-
-static void
 vis_plugin_open_info(GtkTreeView * treeview,
 			 gpointer data)
 {
@@ -1347,24 +1295,6 @@ vis_plugin_open_info(GtkTreeView * treeview,
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
     vis_about(id);
 }
-
-static void
-effect_plugin_open_prefs(GtkTreeView * treeview,
-                          gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    effect_configure(id);
-}
-
 
 static void
 effect_plugin_open_info(GtkTreeView * treeview,
@@ -2364,14 +2294,14 @@ create_prefs_window(void)
     widget2 = glade_xml_get_widget(xml, "input_plugin_prefs");
     g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_INPUT));
     g_signal_connect(G_OBJECT(widget), "row-activated",
-                     G_CALLBACK(plugin_treeview_row_activate),
+                     G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
                      G_CALLBACK(plugin_treeview_enable_prefs),
                      widget2);
 
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(input_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
     widget2 = glade_xml_get_widget(xml, "input_plugin_info");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
@@ -2406,7 +2336,7 @@ create_prefs_window(void)
     widget = glade_xml_get_widget(xml, "general_plugin_view");
     g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_GENERAL));
     g_signal_connect(G_OBJECT(widget), "row-activated",
-                     G_CALLBACK(plugin_treeview_row_activate),
+                     G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
 
     widget2 = glade_xml_get_widget(xml, "general_plugin_prefs");
@@ -2415,7 +2345,7 @@ create_prefs_window(void)
                      widget2);
 
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(general_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
 
     widget2 = glade_xml_get_widget(xml, "general_plugin_info");
@@ -2434,10 +2364,10 @@ create_prefs_window(void)
 
     g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_VIS));
     g_signal_connect(G_OBJECT(widget), "row-activated",
-                     G_CALLBACK(plugin_treeview_row_activate),
+                     G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(vis_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
                      G_CALLBACK(plugin_treeview_enable_prefs), widget2);
@@ -2458,10 +2388,10 @@ create_prefs_window(void)
 
     g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_EFFECT));
     g_signal_connect(G_OBJECT(widget), "row-activated",
-                     G_CALLBACK(plugin_treeview_row_activate),
+                     G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(effect_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
                      G_CALLBACK(plugin_treeview_enable_prefs), widget2);
