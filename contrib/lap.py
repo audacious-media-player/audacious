@@ -41,6 +41,10 @@ locate_command = ['locate', '-i']
 import fnmatch, optparse, os, subprocess
 from dbus import Bus, DBusException
 
+# Support audtool as a fallback but don't depend on it
+try: import subprocess
+except ImportError: pass
+
 # Use readline if available but don't depend on it
 try: import readline
 except ImportError: pass
@@ -70,10 +74,17 @@ def makeMenu(results, strip_path=True):
 
 def addTrack(path, play=False):
 	try:
+		file_url = 'file://' + path
 		mp = bus.get_object('org.freedesktop.MediaPlayer', '/TrackList')
-		mp.AddTrack('file://' + path, play)
+		mp.AddTrack(file_url, play)
 	except DBusException:
-		print "ERROR: Unable to contact media player."
+		try:
+			if subprocess.call(['audtool','playlist-addurl',file_url]):
+				print "ERROR: audtool fallback returned an error for: %s" % file_url
+			else:
+				os.system('audtool playlist-jump `audtool playlist-length`; audtool playback-play')
+		except OSError:
+			print "ERROR: Unable to call audtool as a fallback for: %s" % file_url
 
 def parseChoice(inString):
 	try:
