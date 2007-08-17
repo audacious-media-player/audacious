@@ -519,7 +519,7 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 
     g_return_val_if_fail(tuple != NULL, NULL);
 
-    rv = tuple_formatter_process_construct(tuple, string);
+    rv = tuple_formatter_process_string(tuple, string);
 
     if(!rv || !strcmp(rv, "")) {
         g_free(rv);
