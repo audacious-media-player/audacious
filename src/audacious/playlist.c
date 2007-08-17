@@ -2504,6 +2504,14 @@ playlist_get_info_is_going(void)
     return result;
 }
 
+static gboolean
+playlist_request_win_update(gpointer unused)
+{
+    Playlist *playlist = playlist_get_active();
+    playlistwin_update_list(playlist);
+    return FALSE; /* to be called only once */
+}
+
 static gpointer
 playlist_get_info_func(gpointer arg)
 {
@@ -2600,7 +2608,9 @@ playlist_get_info_func(gpointer arg)
         }
 
         if (update_playlistwin) {
-            playlistwin_update_list(playlist);
+            /* we are in a different thread, so we can't do UI updates directly;
+               instead, schedule a playlist update in the main loop --giacomo */
+            g_idle_add_full(G_PRIORITY_HIGH_IDLE, playlist_request_win_update, NULL, NULL);
             update_playlistwin = FALSE;
         }
 
