@@ -126,9 +126,10 @@ distclean: clean
 	@if [ -f Makefile.in ]; then \
 		rm -f Makefile; \
 	fi
-	@if [ -f mk/rules.mk ]; then \
+	@if [ -f mk/rules.mk.in ]; then \
 		rm -f mk/rules.mk; \
 	fi
+	rm -f config.log config.status
 
 build: depend
 	$(MAKE) build-prehook
