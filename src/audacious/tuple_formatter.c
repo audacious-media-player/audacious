@@ -124,16 +124,19 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         level++;
                     }
                 }
-                else if (*iter == '}' && (sel == argument))
+                else if (*iter == '}')
                 {
                     level--;
-                    if (level == 0)
-                      break;
+                    if (sel == argument)
+                    {
+                        if (level == 0)
+                            break;
+                        else
+                            g_string_append_c(sel, *iter);
+                    }
                     else
-                      g_string_append_c(sel, *iter);
+                        break;
                 }
-                else if (*iter == '}' && ((sel != argument)))
-                    break;
                 else
                     g_string_append_c(sel, *iter);
             }
@@ -188,16 +191,19 @@ tuple_formatter_process_construct(Tuple *tuple, const gchar *string)
                         level++;
                     }
                 }
-                else if (*iter == '}' && (sel == argument))
+                else if (*iter == '}')
                 {
                     level--;
-                    if (level == 0)
-                      break;
+                    if (sel == argument)
+                    {
+                        if (level == 0)
+                            break;
+                        else
+                            g_string_append_c(sel, *iter);
+                    }
                     else
-                    g_string_append_c(sel, *iter);
+                        break;
                 }
-                else if (*iter == '}' && ((sel != argument)))
-                    break;
                 else
                     g_string_append_c(sel, *iter);
             }
