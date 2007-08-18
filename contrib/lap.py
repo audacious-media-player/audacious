@@ -81,7 +81,7 @@ def addTrack(path, play=False):
 		try:
 			if subprocess.call(['audtool','playlist-addurl',file_url]):
 				print "ERROR: audtool fallback returned an error for: %s" % file_url
-			else:
+			elif play:
 				os.system('audtool playlist-jump `audtool playlist-length`; audtool playback-play')
 		except OSError:
 			print "ERROR: Unable to call audtool as a fallback for: %s" % file_url
