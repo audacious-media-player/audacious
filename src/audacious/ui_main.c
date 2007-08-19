@@ -436,17 +436,6 @@ mainwin_quit_cb(void)
 }
 
 gboolean
-mainwin_num_clicked(GtkWidget *widget, GdkEventButton *event)
-{
-    if (event->button == 1) {
-        change_timer_mode();
-    } else if (event->button == 3)
-        return FALSE;
-
-    return TRUE;
-}
-
-gboolean
 mainwin_vis_cb(GtkWidget *widget, GdkEventButton *event)
 {
     if (event->button == 1) {
@@ -2114,6 +2103,17 @@ set_timer_mode_menu_cb(TimerMode mode)
     cfg.timer_mode = mode;
 }
 
+gboolean
+change_timer_mode_cb(GtkWidget *widget, GdkEventButton *event)
+{
+    if (event->button == 1) {
+        change_timer_mode();
+    } else if (event->button == 3)
+        return FALSE;
+
+    return TRUE;
+}
+
 void change_timer_mode(void) {
     if (cfg.timer_mode == TIMER_ELAPSED)
         set_timer_mode(TIMER_REMAINING);
@@ -2449,19 +2449,19 @@ mainwin_create_widgets(void)
     mainwin_playstatus = ui_skinned_playstatus_new(SKINNED_WINDOW(mainwin)->fixed, 24, 28);
 
     mainwin_minus_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 36, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_minus_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
+    g_signal_connect(mainwin_minus_num, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     mainwin_10min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 48, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_10min_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
+    g_signal_connect(mainwin_10min_num, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     mainwin_min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 60, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_min_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
+    g_signal_connect(mainwin_min_num, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     mainwin_10sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 78, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_10sec_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
+    g_signal_connect(mainwin_10sec_num, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     mainwin_sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 90, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_sec_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
+    g_signal_connect(mainwin_sec_num, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     mainwin_about = ui_skinned_button_new();
     ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, 247, 83, 20, 25);
@@ -2486,10 +2486,10 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_sposition, "release", G_CALLBACK(mainwin_spos_release_cb), NULL);
 
     mainwin_stime_min = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 130, 4, 15, FALSE, SKIN_TEXT);
-    g_signal_connect(mainwin_stime_min, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_stime_min, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     mainwin_stime_sec = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 147, 4, 10, FALSE, SKIN_TEXT);
-    g_signal_connect(mainwin_stime_sec, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_stime_sec, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     err = gtk_message_dialog_new(GTK_WINDOW(mainwin), GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_MODAL,
                                  GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("Error in Audacious."));

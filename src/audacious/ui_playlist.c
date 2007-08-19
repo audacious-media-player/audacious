@@ -1062,12 +1062,6 @@ playlistwin_press(GtkWidget * widget,
                    event->button,
                    event->time);
     }
-    else if (event->button == 1 && REGION_R(82, 54, 15, 9)) {
-        if (cfg.timer_mode == TIMER_ELAPSED)
-            cfg.timer_mode = TIMER_REMAINING;
-        else
-            cfg.timer_mode = TIMER_ELAPSED;
-    }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              (cfg.easy_move || event->y < 14))
     {
@@ -1414,11 +1408,13 @@ playlistwin_create_widgets(void)
     playlistwin_time_min = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 82,
                        cfg.playlist_height - 15, 15, FALSE, SKIN_TEXT);
+    g_signal_connect(playlistwin_time_min, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     /* track time (second) */
     playlistwin_time_sec = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 64,
                        cfg.playlist_height - 15, 10, FALSE, SKIN_TEXT);
+    g_signal_connect(playlistwin_time_sec, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     /* playlist information (current track length / total track length) */
     playlistwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
