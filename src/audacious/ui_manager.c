@@ -797,7 +797,6 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
   {
     GtkWidget *plugins_menu = NULL;
     GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
-
     if ( plugins_menu_item )
     {
       gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
@@ -816,11 +815,8 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
       g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(++ic) );
       return 0; /* success */
     }
-    else
-      return -1;
   }
-  else
-    return -1;
+  return -1; /* failure */
 }
 
 
@@ -831,7 +827,6 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
   {
     GtkWidget *plugins_menu = NULL;
     GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
-
     if ( plugins_menu_item )
     {
       gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
@@ -851,15 +846,8 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
           }
           return 0; /* success */
         }
-        else
-          return -1;
       }
-      else
-        return -1;
     }
-    else
-      return -1;
   }
-  else
-    return -1;
+  return -1; /* failure */
 }
