@@ -629,12 +629,14 @@ ui_manager_init ( void )
 static void
 ui_manager_create_menus_init_pmenu( gchar * path )
 {
-  GtkWidget *plugins_menu_item;
-  plugins_menu_item = gtk_ui_manager_get_widget( ui_manager , path );
-  /* initially set count of items under plugins_menu_item to 0 */
-  g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(0) );
-  /* and since it's 0, hide the plugins_menu_item */
-  gtk_widget_hide( plugins_menu_item );
+  GtkWidget *plugins_menu_item = gtk_ui_manager_get_widget( ui_manager , path );
+  if ( plugins_menu_item )
+  {
+    /* initially set count of items under plugins_menu_item to 0 */
+    g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(0) );
+    /* and since it's 0, hide the plugins_menu_item */
+    gtk_widget_hide( plugins_menu_item );
+  }
   return;
 }
 
@@ -684,6 +686,10 @@ ui_manager_create_menus ( void )
 
   /* initialize plugins-menu for playlist-menus */
   ui_manager_create_menus_init_pmenu( "/playlist-menus/playlist-menu/plugins-menu" );
+  ui_manager_create_menus_init_pmenu( "/playlist-menus/add-menu/plugins-menu" );
+  ui_manager_create_menus_init_pmenu( "/playlist-menus/del-menu/plugins-menu" );
+  ui_manager_create_menus_init_pmenu( "/playlist-menus/select-menu/plugins-menu" );
+  ui_manager_create_menus_init_pmenu( "/playlist-menus/misc-menu/plugins-menu" );
   ui_manager_create_menus_init_pmenu( "/playlist-menus/playlist-rightclick-menu/plugins-menu" );
 
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/equalizer.ui" , &gerr );
@@ -757,6 +763,32 @@ ui_manager_popup_menu_show ( GtkMenu * menu , gint x , gint y , guint button , g
 /******************************/
 /* plugin-available functions */
 
+#define _MP_GWID(y) gtk_ui_manager_get_widget( ui_manager , y )
+
+static GtkWidget*
+audacious_menu_plugin_menuwid( menu_id )
+{
+  switch (menu_id)
+  {
+    case AUDACIOUS_MENU_MAIN:
+      return _MP_GWID("/mainwin-menus/main-menu/plugins-menu");
+    case AUDACIOUS_MENU_PLAYLIST:
+      return _MP_GWID("/playlist-menus/playlist-menu/plugins-menu");
+    case AUDACIOUS_MENU_PLAYLIST_RCLICK:
+      return _MP_GWID("/playlist-menus/playlist-rightclick-menu/plugins-menu");
+    case AUDACIOUS_MENU_PLAYLIST_ADD:
+      return _MP_GWID("/playlist-menus/add-menu/plugins-menu");
+    case AUDACIOUS_MENU_PLAYLIST_REMOVE:
+      return _MP_GWID("/playlist-menus/del-menu/plugins-menu");
+    case AUDACIOUS_MENU_PLAYLIST_SELECT:
+      return _MP_GWID("/playlist-menus/select-menu/plugins-menu");
+    case AUDACIOUS_MENU_PLAYLIST_MISC:
+      return _MP_GWID("/playlist-menus/misc-menu/plugins-menu");
+    default:
+      return NULL;
+  }
+}
+
 
 gint
 audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
@@ -764,28 +796,7 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
   if ( menu_created )
   {
     GtkWidget *plugins_menu = NULL;
-    GtkWidget *plugins_menu_item = NULL;
-
-    switch (menu_id)
-    {
-      case AUDACIOUS_MENU_MAIN:
-        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/mainwin-menus/main-menu/plugins-menu" );
-        break;
-
-      case AUDACIOUS_MENU_PLAYLIST:
-        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/playlist-menus/playlist-menu/plugins-menu" );
-        break;
-
-      case AUDACIOUS_MENU_PLAYLIST_RCLICK:
-        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/playlist-menus/playlist-rightclick-menu/plugins-menu" );
-        break;
-
-      default:
-        return -1;
-    }
+    GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
 
     if ( plugins_menu_item )
     {
@@ -819,28 +830,7 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
   if ( menu_created )
   {
     GtkWidget *plugins_menu = NULL;
-    GtkWidget *plugins_menu_item = NULL;
-
-    switch (menu_id)
-    {
-      case AUDACIOUS_MENU_MAIN:
-        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/mainwin-menus/main-menu/plugins-menu" );
-        break;
-
-      case AUDACIOUS_MENU_PLAYLIST:
-        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/playlist-menus/playlist-menu/plugins-menu" );
-        break;
-
-      case AUDACIOUS_MENU_PLAYLIST_RCLICK:
-        plugins_menu_item = gtk_ui_manager_get_widget( ui_manager ,
-          "/playlist-menus/playlist-rightclick-menu/plugins-menu" );
-        break;
-
-      default:
-        return -1;
-    }
+    GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
 
     if ( plugins_menu_item )
     {

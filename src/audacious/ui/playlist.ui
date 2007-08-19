@@ -17,6 +17,8 @@
 		<menu action="dummy" name="add-menu">
 			<menuitem action="playlist add url" />
 			<menuitem action="playlist add files" />
+			<separator />
+			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="del-menu">
@@ -32,6 +34,8 @@
 			<menuitem action="playlist remove all" />
 			<menuitem action="playlist remove unselected" />
 			<menuitem action="playlist remove selected" />
+			<separator />
+			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="select-menu">
@@ -41,6 +45,8 @@
 			<separator />
 			<menuitem action="playlist select none" />
 			<menuitem action="playlist select all" />
+			<separator />
+			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="misc-menu">
@@ -65,6 +71,8 @@
 				<menuitem action="playlist sort selected by track number" />
 				<menuitem action="playlist sort selected by playlist entry" />
 			</menu>
+			<separator />
+			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="playlist-menu">
