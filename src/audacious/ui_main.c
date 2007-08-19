@@ -2119,7 +2119,8 @@ void change_timer_mode(void) {
         set_timer_mode(TIMER_REMAINING);
     else
         set_timer_mode(TIMER_ELAPSED);
-    mainwin_update_song_info();
+    if (playback_get_playing())
+        mainwin_update_song_info();
 }
 
 static void
