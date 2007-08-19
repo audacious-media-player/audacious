@@ -11,9 +11,7 @@
 			<separator />
 			<menuitem action="queue toggle" />
 			<separator />
-			<menu action="plugins" name="plugins-menu">
-			   <menuitem action="dummy" name="plugins-menu-dummy" />
-			</menu>
+			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="add-menu">
@@ -81,10 +79,8 @@
 			<menuitem action="playlist save default" />
 			<separator />
 			<menuitem action="playlist manager" />
-         <separator />
-			<menu action="plugins" name="plugins-menu">
-			   <menuitem action="dummy" name="plugins-menu-dummy" />
-			</menu>
+			<separator />
+			<menuitem action="plugins-menu" />
 			<separator />
 			<menuitem action="playlist refresh" />
 			<separator />

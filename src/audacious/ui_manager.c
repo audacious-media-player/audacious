@@ -375,6 +375,8 @@ static GtkActionEntry action_entries_others[] = {
 
 	{ "dummy", NULL, "dummy" },
 
+	{ "plugins-menu", NULL, N_("Plugins") },
+
 	{ "current track info", AUD_STOCK_INFO , N_("View Track Details"), "I",
 	  N_("View track details"), G_CALLBACK(action_current_track_info) },
 
@@ -627,22 +629,12 @@ ui_manager_init ( void )
 static void
 ui_manager_create_menus_init_pmenu( gchar * path )
 {
-  GtkWidget *plugins_menu, *plugins_menu_item, *plugins_dummy_item;
-  GList *plugins_menu_children = NULL;
-  gchar *path_dummy = g_strjoin( NULL , path , "/plugins-menu-dummy" , NULL );
-  /* remove the dummy item placed in plugins-menu as a workaround */
-  plugins_dummy_item = gtk_ui_manager_get_widget( ui_manager , path_dummy );
-  if ( plugins_dummy_item )
-    gtk_widget_destroy( plugins_dummy_item );
-  /* take note of the initial count of items in the "empty" plugins-menu */
+  GtkWidget *plugins_menu_item;
   plugins_menu_item = gtk_ui_manager_get_widget( ui_manager , path );
-  plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-  plugins_menu_children = gtk_container_get_children( GTK_CONTAINER(plugins_menu) );
-  g_object_set_data( G_OBJECT(plugins_menu) , "ic" , GINT_TO_POINTER(g_list_length(plugins_menu_children)) );
-  g_list_free( plugins_menu_children );
-  /* last, hide the plugins-menu by default */
+  /* initially set count of items under plugins_menu_item to 0 */
+  g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(0) );
+  /* and since it's 0, hide the plugins_menu_item */
   gtk_widget_hide( plugins_menu_item );
-  g_free( path_dummy );
   return;
 }
 
@@ -797,15 +789,21 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
 
     if ( plugins_menu_item )
     {
-      plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-      if ( plugins_menu )
+      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
+      if ( ic == 0 ) /* no items under plugins_menu_item, create the submenu */
       {
-        gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
-        gtk_widget_show( plugins_menu_item );
-        return 0; /* success */
+        plugins_menu = gtk_menu_new();
+        gtk_menu_item_set_submenu( GTK_MENU_ITEM(plugins_menu_item), plugins_menu );
       }
-      else
-        return -1;
+      else /* items available under plugins_menu_item, pick the existing submenu */
+      {
+        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+        if ( !plugins_menu ) return -1;
+      }
+      gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
+      gtk_widget_show( plugins_menu_item );
+      g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(++ic) );
+      return 0; /* success */
     }
     else
       return -1;
@@ -822,7 +820,6 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
   {
     GtkWidget *plugins_menu = NULL;
     GtkWidget *plugins_menu_item = NULL;
-    GList *plugins_menu_children = NULL;
 
     switch (menu_id)
     {
@@ -847,19 +844,25 @@ audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
 
     if ( plugins_menu_item )
     {
-      plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-      if ( plugins_menu )
+      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
+      if ( ic > 0 )
       {
-        /* remove the plugin-added entry */
-        gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
-        /* check the current number of items in plugins-menu against its initial count
-           of items; if these are equal, it means that the menu is "empty", so hide it */
-        gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu),"ic"));
-        plugins_menu_children = gtk_container_get_children( GTK_CONTAINER(plugins_menu) );
-        if ( ic == g_list_length(plugins_menu_children) )
-          gtk_widget_hide( plugins_menu_item );
-        g_list_free( plugins_menu_children );
-        return 0; /* success */
+        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+        if ( plugins_menu )
+        {
+          /* remove the plugin-added entry */
+          gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
+          g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(--ic) );
+          if ( ic == 0 ) /* if the menu is empty now, destroy it */
+          {
+            gtk_menu_item_remove_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+            gtk_widget_destroy( plugins_menu );
+            gtk_widget_hide( plugins_menu_item );
+          }
+          return 0; /* success */
+        }
+        else
+          return -1;
       }
       else
         return -1;
