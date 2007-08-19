@@ -999,8 +999,6 @@ playlistwin_press(GtkWidget * widget,
 {
     gint xpos, ypos;
     GtkRequisition req;
-    Playlist *playlist = playlist_get_active();
-    gint idx = 0;
 
     gtk_window_get_position(GTK_WINDOW(playlistwin), &xpos, &ypos);
 
@@ -1092,18 +1090,6 @@ playlistwin_press(GtkWidget * widget,
          */
         ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
-    }
-    else if (event->button == 1 && (event->state & GDK_MOD1_MASK))
-    {
-        GList *node;
-
-        node = playlist_get_selected(playlist);
-
-        if (node != NULL)
-        {
-            idx = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
-            playlist_queue_position(playlist, idx);
-        }
     }
 
     return FALSE;

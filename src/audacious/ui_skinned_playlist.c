@@ -821,6 +821,9 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
         if (!(event->state & GDK_CONTROL_MASK))
             playlist_select_all(playlist, FALSE);
 
+        if ((event->state & GDK_MOD1_MASK))
+            playlist_queue_position(playlist, nr);
+
         if (event->state & GDK_SHIFT_MASK && pl->prev_selected != -1) {
             playlist_select_range(playlist, pl->prev_selected, nr, TRUE);
             pl->prev_min = pl->prev_selected;
