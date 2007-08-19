@@ -533,6 +533,7 @@ void ui_skinned_set_push_button_data(GtkWidget *button, gint nx, gint ny, gint p
     if (ny > -1) priv->ny = ny;
     if (px > -1) priv->px = px;
     if (py > -1) priv->py = py;
+    gtk_widget_queue_draw(button);
 }
 
 void ui_skinned_button_set_skin_index(GtkWidget *button, SkinPixmapId si) {
