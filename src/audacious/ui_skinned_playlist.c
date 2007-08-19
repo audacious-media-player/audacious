@@ -799,11 +799,6 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
     UiSkinnedPlaylist *pl = UI_SKINNED_PLAYLIST (widget);
     UiSkinnedPlaylistPrivate *priv = UI_SKINNED_PLAYLIST_GET_PRIVATE(widget);
 
-    if (event->button == 3) {
-        ui_manager_popup_menu_show(GTK_MENU(playlistwin_popup_menu),
-                                   event->x_root, event->y_root + 5,
-                                   event->button, event->time);
-    }
     gint nr;
     Playlist *playlist = playlist_get_active();
 
@@ -812,6 +807,9 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
         return FALSE;
 
     if (event->button == 3) {
+        ui_manager_popup_menu_show(GTK_MENU(playlistwin_popup_menu),
+                                   event->x_root, event->y_root + 5,
+                                   event->button, event->time);
         GList* selection = playlist_get_selected(playlist);
         if (g_list_find(selection, GINT_TO_POINTER(nr)) == NULL) {
             playlist_select_all(playlist, FALSE);
