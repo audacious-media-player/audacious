@@ -92,7 +92,7 @@ audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
     GtkWidget *progressbar =
         g_object_get_data(G_OBJECT(filepopup_win), "progressbar");
     gchar *tooltip_file = g_object_get_data(G_OBJECT(filepopup_win), "file");
-    gchar *current_file;
+    gchar *current_file_u, *current_file;
     Playlist *pl;
     gint length =
         GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win), "length"));
@@ -105,9 +105,9 @@ audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
 
     pos = playlist_get_position(pl);
 
-    current_file = playlist_get_filename(pl , pos);
-
-    g_return_val_if_fail(current_file != NULL, FALSE);
+    current_file_u = playlist_get_filename(pl , pos);
+    g_return_val_if_fail(current_file_u != NULL, FALSE);
+    current_file = g_filename_from_uri(current_file_u, NULL, NULL);
 
     if (playback_get_playing() && length != -1 &&
         current_file != NULL && tooltip_file != NULL &&
@@ -133,6 +133,7 @@ audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
             gtk_widget_hide(progressbar);
     }
 
+    g_free( current_file );
     return TRUE;
 }
 
