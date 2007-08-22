@@ -80,6 +80,12 @@ enum PluginViewCols {
     PLUGIN_VIEW_N_COLS
 };
 
+enum PluginViewType {
+    PLUGIN_VIEW_TYPE_INPUT,
+    PLUGIN_VIEW_TYPE_GENERAL,
+    PLUGIN_VIEW_TYPE_VIS,
+    PLUGIN_VIEW_TYPE_EFFECT
+};
 
 typedef struct {
     const gchar *icon_path;
@@ -185,41 +191,6 @@ prefswin_set_category(gint index)
     gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), index);
 }
 
-
-static void
-input_plugin_open_prefs(GtkTreeView * treeview,
-                        gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    input_configure(id);
-}
-
-static void
-input_plugin_open_info(GtkTreeView * treeview,
-                       gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    input_about(id);
-}
-
 static void
 output_plugin_open_prefs(GtkComboBox * cbox,
                          gpointer data)
@@ -232,40 +203,6 @@ output_plugin_open_info(GtkComboBox * cbox,
                         gpointer data)
 {
     output_about(gtk_combo_box_get_active(cbox));
-}
-
-static void
-general_plugin_open_prefs(GtkTreeView * treeview,
-                          gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    general_configure(id);
-}
-
-static void
-general_plugin_open_info(GtkTreeView * treeview,
-			 gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-	return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    general_about(id);
 }
 
 static void
@@ -1176,8 +1113,65 @@ on_proxy_pass_changed(GtkEntry * entry,
 }
 
 static void
-input_plugin_enable_prefs(GtkTreeView * treeview,
-                          GtkButton * button)
+plugin_treeview_open_prefs(GtkTreeView *treeview)
+{
+    GtkTreeSelection *selection;
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+
+    selection = gtk_tree_view_get_selection(treeview);
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+
+    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
+        case PLUGIN_VIEW_TYPE_INPUT:
+            input_configure(id);
+            break;
+        case PLUGIN_VIEW_TYPE_GENERAL:
+            general_configure(id);
+            break;
+        case PLUGIN_VIEW_TYPE_VIS:
+            vis_configure(id);
+            break;
+        case PLUGIN_VIEW_TYPE_EFFECT:
+            effect_configure(id);
+            break;
+    }
+}
+
+static void
+plugin_treeview_open_info(GtkTreeView *treeview)
+{
+    GtkTreeSelection *selection;
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+
+    selection = gtk_tree_view_get_selection(treeview);
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+
+    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
+        case PLUGIN_VIEW_TYPE_INPUT:
+            input_about(id);
+            break;
+        case PLUGIN_VIEW_TYPE_GENERAL:
+            general_about(id);
+            break;
+        case PLUGIN_VIEW_TYPE_VIS:
+            vis_about(id);
+            break;
+        case PLUGIN_VIEW_TYPE_EFFECT:
+            effect_about(id);
+            break;
+    }
+}
+
+static void
+plugin_treeview_enable_prefs(GtkTreeView * treeview, GtkButton * button)
 {
     GtkTreeSelection *selection;
     GtkTreeModel *model;
@@ -1192,7 +1186,22 @@ input_plugin_enable_prefs(GtkTreeView * treeview,
 
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
 
-    plist = get_input_list();
+    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
+        case PLUGIN_VIEW_TYPE_INPUT:
+            plist = get_input_list();
+            break;
+        case PLUGIN_VIEW_TYPE_GENERAL:
+            plist = get_general_list();
+            break;
+        case PLUGIN_VIEW_TYPE_VIS:
+            plist = get_vis_list();
+            break;
+        case PLUGIN_VIEW_TYPE_EFFECT:
+            plist = get_effect_list();
+            break;
+        default:
+            return;
+    }
     plist = g_list_nth(plist, id);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button),
@@ -1200,8 +1209,7 @@ input_plugin_enable_prefs(GtkTreeView * treeview,
 }
 
 static void
-input_plugin_enable_info(GtkTreeView * treeview,
-                         GtkButton * button)
+plugin_treeview_enable_info(GtkTreeView * treeview, GtkButton * button)
 {
     GtkTreeSelection *selection;
     GtkTreeModel *model;
@@ -1215,7 +1223,22 @@ input_plugin_enable_info(GtkTreeView * treeview,
 
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
 
-    plist = get_input_list();
+    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
+        case PLUGIN_VIEW_TYPE_INPUT:
+            plist = get_input_list();
+            break;
+        case PLUGIN_VIEW_TYPE_GENERAL:
+            plist = get_general_list();
+            break;
+        case PLUGIN_VIEW_TYPE_VIS:
+            plist = get_vis_list();
+            break;
+        case PLUGIN_VIEW_TYPE_EFFECT:
+            plist = get_effect_list();
+            break;
+        default:
+            return;
+    }
     plist = g_list_nth(plist, id);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button),
@@ -1248,222 +1271,6 @@ output_plugin_enable_prefs(GtkComboBox * cbox, GtkButton * button)
 
     gtk_widget_set_sensitive(GTK_WIDGET(button),
                              OUTPUT_PLUGIN(plist->data)->configure != NULL);
-}
-
-
-static void
-general_plugin_enable_info(GtkTreeView * treeview,
-                           GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GList *plist;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-
-    plist = get_general_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             GENERAL_PLUGIN(plist->data)->about != NULL);
-}
-
-static void
-general_plugin_enable_prefs(GtkTreeView * treeview,
-                            GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GList *plist;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-
-    plist = get_general_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             GENERAL_PLUGIN(plist->data)->configure != NULL);
-}
-
-
-
-static void
-vis_plugin_enable_prefs(GtkTreeView * treeview,
-                            GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GList *plist;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-
-    plist = get_vis_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             VIS_PLUGIN(plist->data)->configure != NULL);
-}
-
-static void
-vis_plugin_enable_info(GtkTreeView * treeview,
-                           GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GList *plist;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-
-    plist = get_vis_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             VIS_PLUGIN(plist->data)->about != NULL);
-}
-
-static void
-vis_plugin_open_prefs(GtkTreeView * treeview,
-                          gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    vis_configure(id);
-}
-
-
-static void
-vis_plugin_open_info(GtkTreeView * treeview,
-			 gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-	return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    vis_about(id);
-}
-
-
-
-
-
-
-static void
-effect_plugin_enable_prefs(GtkTreeView * treeview,
-                            GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GList *plist;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-
-    plist = get_effect_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             EFFECT_PLUGIN(plist->data)->configure != NULL);
-}
-
-static void
-effect_plugin_enable_info(GtkTreeView * treeview,
-                           GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GList *plist;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-
-    plist = get_effect_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             EFFECT_PLUGIN(plist->data)->about != NULL);
-}
-
-static void
-effect_plugin_open_prefs(GtkTreeView * treeview,
-                          gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    effect_configure(id);
-}
-
-
-static void
-effect_plugin_open_info(GtkTreeView * treeview,
-			 gpointer data)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    gint id;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-	return;
-
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
-    effect_about(id);
 }
 
 static void
@@ -2445,19 +2252,23 @@ create_prefs_window(void)
 
     widget = glade_xml_get_widget(xml, "input_plugin_view");
     widget2 = glade_xml_get_widget(xml, "input_plugin_prefs");
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_INPUT));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_open_prefs),
+                     NULL);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(input_plugin_enable_prefs),
+                     G_CALLBACK(plugin_treeview_enable_prefs),
                      widget2);
 
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(input_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
     widget2 = glade_xml_get_widget(xml, "input_plugin_info");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(input_plugin_enable_info),
+                     G_CALLBACK(plugin_treeview_enable_info),
                      widget2);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(input_plugin_open_info),
+                             G_CALLBACK(plugin_treeview_open_info),
                              widget);
 
     /* plugin->output page */
@@ -2483,21 +2294,26 @@ create_prefs_window(void)
     /* plugin->general page */
 
     widget = glade_xml_get_widget(xml, "general_plugin_view");
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_GENERAL));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_open_prefs),
+                     NULL);
 
     widget2 = glade_xml_get_widget(xml, "general_plugin_prefs");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(general_plugin_enable_prefs),
+                     G_CALLBACK(plugin_treeview_enable_prefs),
                      widget2);
+
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(general_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
 
     widget2 = glade_xml_get_widget(xml, "general_plugin_info");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(general_plugin_enable_info),
+                     G_CALLBACK(plugin_treeview_enable_info),
                      widget2);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(general_plugin_open_info),
+                             G_CALLBACK(plugin_treeview_open_info),
                              widget);
 
 
@@ -2506,18 +2322,22 @@ create_prefs_window(void)
     widget = glade_xml_get_widget(xml, "vis_plugin_view");
     widget2 = glade_xml_get_widget(xml, "vis_plugin_prefs");
 
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_VIS));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_open_prefs),
+                     NULL);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(vis_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(vis_plugin_enable_prefs), widget2);
+                     G_CALLBACK(plugin_treeview_enable_prefs), widget2);
 
 
     widget2 = glade_xml_get_widget(xml, "vis_plugin_info");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(vis_plugin_enable_info), widget2);
+                     G_CALLBACK(plugin_treeview_enable_info), widget2);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(vis_plugin_open_info),
+                             G_CALLBACK(plugin_treeview_open_info),
                              widget);
 
 
@@ -2526,18 +2346,22 @@ create_prefs_window(void)
     widget = glade_xml_get_widget(xml, "effect_plugin_view");
     widget2 = glade_xml_get_widget(xml, "effect_plugin_prefs");
 
+    g_object_set_data(G_OBJECT(widget), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_EFFECT));
+    g_signal_connect(G_OBJECT(widget), "row-activated",
+                     G_CALLBACK(plugin_treeview_open_prefs),
+                     NULL);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(effect_plugin_open_prefs),
+                             G_CALLBACK(plugin_treeview_open_prefs),
                              widget);
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(effect_plugin_enable_prefs), widget2);
+                     G_CALLBACK(plugin_treeview_enable_prefs), widget2);
 
 
     widget2 = glade_xml_get_widget(xml, "effect_plugin_info");
     g_signal_connect(G_OBJECT(widget), "cursor-changed",
-                     G_CALLBACK(effect_plugin_enable_info), widget2);
+                     G_CALLBACK(plugin_treeview_enable_info), widget2);
     g_signal_connect_swapped(G_OBJECT(widget2), "clicked",
-                             G_CALLBACK(effect_plugin_open_info),
+                             G_CALLBACK(plugin_treeview_open_info),
                              widget);
 
     /* playlist page */

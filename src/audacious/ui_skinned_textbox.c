@@ -353,7 +353,9 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
 
     if (event->type == GDK_BUTTON_PRESS) {
         textbox = UI_SKINNED_TEXTBOX(widget);
-        if (event->button == 1) {
+        if (event->button == 3 && !g_signal_has_handler_pending(widget, textbox_signals[RIGHT_CLICKED], 0, TRUE))
+            return FALSE;
+        else if (event->button == 1) {
             if (priv->scroll_allowed) {
                 if ((priv->pixmap_width > textbox->width) && priv->is_scrollable) {
                     priv->is_dragging = TRUE;
