@@ -999,8 +999,6 @@ playlistwin_press(GtkWidget * widget,
 {
     gint xpos, ypos;
     GtkRequisition req;
-    Playlist *playlist = playlist_get_active();
-    gint idx = 0;
 
     gtk_window_get_position(GTK_WINDOW(playlistwin), &xpos, &ypos);
 
@@ -1064,12 +1062,6 @@ playlistwin_press(GtkWidget * widget,
                    event->button,
                    event->time);
     }
-    else if (event->button == 1 && REGION_R(82, 54, 15, 9)) {
-        if (cfg.timer_mode == TIMER_ELAPSED)
-            cfg.timer_mode = TIMER_REMAINING;
-        else
-            cfg.timer_mode = TIMER_ELAPSED;
-    }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              (cfg.easy_move || event->y < 14))
     {
@@ -1093,18 +1085,6 @@ playlistwin_press(GtkWidget * widget,
         ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
     }
-    else if (event->button == 1 && (event->state & GDK_MOD1_MASK))
-    {
-        GList *node;
-
-        node = playlist_get_selected(playlist);
-
-        if (node != NULL)
-        {
-            idx = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
-            playlist_queue_position(playlist, idx);
-        }
-    }
 
     return FALSE;
 }
@@ -1116,14 +1096,17 @@ playlistwin_delete(GtkWidget * w, gpointer data)
     return TRUE;
 }
 
-static void
+static gboolean
 playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
                                      gboolean up, guint state)
 {
     Playlist *playlist = playlist_get_active();
+    if ((!(pl->prev_selected || pl->first) && up) ||
+       ((pl->prev_selected >= playlist_get_length(playlist) - 1) && !up))
+         return FALSE;
 
     if ((state & GDK_MOD1_MASK) && (state & GDK_SHIFT_MASK))
-        return;
+        return FALSE;
     if (!(state & GDK_MOD1_MASK))
         playlist_select_all(playlist, FALSE);
 
@@ -1145,7 +1128,7 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
         pl->first = MAX(pl->first, pl->prev_max -
                            pl->num_visible + 1);
         playlist_select_range(playlist, pl->prev_min, pl->prev_max, TRUE);
-        return;
+        return TRUE;
     }
     else if (state & GDK_MOD1_MASK) {
         if (up)
@@ -1156,7 +1139,7 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
             pl->first = pl->prev_min;
         else if (pl->prev_max >= (pl->first + pl->num_visible))
             pl->first = pl->prev_max - pl->num_visible + 1;
-        return;
+        return TRUE;
     }
     else if (up)
         pl->prev_selected--;
@@ -1173,6 +1156,8 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
 
     playlist_select_range(playlist, pl->prev_selected, pl->prev_selected, TRUE);
     pl->prev_min = -1;
+
+    return TRUE;
 }
 
 /* FIXME: Handle the keys through menu */
@@ -1193,11 +1178,10 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_KP_Down:
     case GDK_Up:
     case GDK_Down:
-        playlistwin_keypress_up_down_handler(UI_SKINNED_PLAYLIST(playlistwin_list),
-                                             keyval == GDK_Up
-                                             || keyval == GDK_KP_Up,
-                                             event->state);
-        refresh = TRUE;
+        refresh = playlistwin_keypress_up_down_handler(UI_SKINNED_PLAYLIST(playlistwin_list),
+                                                       keyval == GDK_Up
+                                                       || keyval == GDK_KP_Up,
+                                                       event->state);
         break;
     case GDK_Page_Up:
         playlistwin_scroll(-UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible);
@@ -1428,11 +1412,13 @@ playlistwin_create_widgets(void)
     playlistwin_time_min = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 82,
                        cfg.playlist_height - 15, 15, FALSE, SKIN_TEXT);
+    g_signal_connect(playlistwin_time_min, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     /* track time (second) */
     playlistwin_time_sec = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 64,
                        cfg.playlist_height - 15, 10, FALSE, SKIN_TEXT);
+    g_signal_connect(playlistwin_time_sec, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
     /* playlist information (current track length / total track length) */
     playlistwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,

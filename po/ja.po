@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-07-29 17:21+0200\n"
-"PO-Revision-Date: 2007-06-03 22:33+0900\n"
+"PO-Revision-Date: 2007-08-07 14:14+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -491,61 +491,56 @@ msgid "Enter location to play:"
 msgstr "演奏する位置の入力:"
 
 #: src/audacious/ui_main.c:1659
-#, fuzzy, c-format
+#, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "移動先: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
 #: src/audacious/ui_main.c:1691
 #, c-format
 msgid "Volume: %d%%"
-msgstr ""
+msgstr "音量: %d%%"
 
 #: src/audacious/ui_main.c:1722
 #, c-format
 msgid "Balance: %d%% left"
-msgstr ""
+msgstr "バランス: %d%% 左"
 
 #: src/audacious/ui_main.c:1726
 msgid "Balance: center"
-msgstr ""
+msgstr "バランス: 中央"
 
 #: src/audacious/ui_main.c:1730
 #, c-format
 msgid "Balance: %d%% right"
-msgstr ""
+msgstr "バランス: %d%% 右"
 
 #: src/audacious/ui_main.c:2118
 msgid "Options Menu"
-msgstr ""
+msgstr "オプションメニュー"
 
 #: src/audacious/ui_main.c:2122
-#, fuzzy
 msgid "Disable 'Always On Top'"
-msgstr "常に最前面に配置する"
+msgstr "「常に最前面に配置」無効"
 
 #: src/audacious/ui_main.c:2124
-#, fuzzy
 msgid "Enable 'Always On Top'"
-msgstr "常に最前面に配置する"
+msgstr "「常に最前面に配置」有効"
 
 #: src/audacious/ui_main.c:2127
 msgid "File Info Box"
-msgstr ""
+msgstr "ファイル情報ボックス"
 
 #: src/audacious/ui_main.c:2131
-#, fuzzy
 msgid "Disable 'Doublesize'"
-msgstr "ダブルサイズ"
+msgstr "「ダブルサイズ」無効"
 
 #: src/audacious/ui_main.c:2133
-#, fuzzy
 msgid "Enable 'Doublesize'"
-msgstr "ダブルサイズ"
+msgstr "「ダブルサイズ」有効"
 
 #: src/audacious/ui_main.c:2136
-#, fuzzy
 msgid "Visualization Menu"
-msgstr "視覚化モード"
+msgstr "視覚化メニュー"
 
 #: src/audacious/ui_main.c:2184
 msgid ""
@@ -1114,12 +1109,11 @@ msgstr "CD の演奏"
 
 #: src/audacious/ui_manager.c:398
 msgid "Last.fm radio"
-msgstr ""
+msgstr "Last.fm ラジオ"
 
 #: src/audacious/ui_manager.c:399
-#, fuzzy
 msgid "Play Last.fm radio"
-msgstr "場所を演奏"
+msgstr "Last.fm ラジオを演奏"
 
 #: src/audacious/ui_manager.c:401
 msgid "Preferences"
@@ -1423,14 +1417,12 @@ msgstr ""
 "わからない場合は, 単純に検索しようとしているものの文字を入力します."
 
 #: src/audacious/ui_playlist.c:513
-#, fuzzy
 msgid "Title: "
-msgstr "タイトル"
+msgstr "タイトル: "
 
 #: src/audacious/ui_playlist.c:520
-#, fuzzy
 msgid "Album: "
-msgstr "アルバム名"
+msgstr "アルバム名: "
 
 #: src/audacious/ui_playlist.c:527
 msgid "Artist: "
@@ -1474,13 +1466,12 @@ msgstr ""
 "%s のファイルの種類が不明です.\n"
 
 #: src/audacious/ui_playlist.c:965
-#, fuzzy
 msgid "Save as Static Playlist"
-msgstr "プレイリストの保存"
+msgstr "スタティックプレイリストとして保存"
 
 #: src/audacious/ui_playlist.c:972
 msgid "Use Relative Path"
-msgstr ""
+msgstr "相対パスを使う"
 
 #: src/audacious/ui_playlist.c:994
 msgid "Load Playlist"
@@ -1531,9 +1522,8 @@ msgid "_Filter:"
 msgstr "フィルタ(_F):"
 
 #: src/audacious/ui_jumptotrack.c:597
-#, fuzzy
 msgid "Close on Jump"
-msgstr "開いたらダイアログを閉じる"
+msgstr "ジャンプしたらダイアログを閉じる"
 
 #: src/audacious/playback.c:223
 msgid ""
@@ -1668,9 +1658,8 @@ msgid "Select main player window font:"
 msgstr "メインウィンドウで使用するフォントの選択"
 
 #: src/audacious/glade/prefswin.glade:1045
-#, fuzzy
 msgid "Select playlist font:"
-msgstr "メインウィンドウで使用するフォントの選択"
+msgstr "プレイリスで使用するフォントの選択"
 
 #: src/audacious/glade/prefswin.glade:1091
 msgid ""
@@ -1947,7 +1936,6 @@ msgid "Current output plugin:"
 msgstr "現在の出力プラグイン:"
 
 #: src/audacious/glade/prefswin.glade:3541
-#, fuzzy
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1955,9 +1943,11 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
-"<span size=\"small\">オーディオストリームのプレバッファするための十分な時間を"
-"ミリ秒で指定します. 音飛びがあるなら, この値を増やします. しかし, 高い値は "
-"Audacious のパフォーマンスを悪くすることに注意してください.</span>"
+"<span size=\"small\">オーディオストリームをプレバッファするための十分な時間を"
+"ミリ秒で指定します.\n"
+"音飛びがあるならこの値を増やします.\n"
+"しかし, 高い値は Audacious のパフォーマンスを悪くすることに注意してください."
+"</span>"
 
 #: src/audacious/glade/prefswin.glade:3571
 msgid "Buffer size:"
@@ -2049,7 +2039,6 @@ msgid "Sampling Rate [Hz]:"
 msgstr "サンプリングレート [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
-#, fuzzy
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"

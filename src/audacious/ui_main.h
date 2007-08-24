@@ -177,6 +177,7 @@ void mainwin_drag_data_received(GtkWidget * widget,
                                 gpointer user_data);
 
 void mainwin_setup_menus(void);
+gboolean change_timer_mode_cb(GtkWidget *widget, GdkEventButton *event);
 
 void mainwin_jump_to_file(void);
 void mainwin_jump_to_time(void);
@@ -189,6 +190,5 @@ void mainwin_show_visibility_warning(void);
 void playback_get_sample_params(gint * bitrate,
                                 gint * frequency,
                                 gint * numchannels);
-
 
 #endif
