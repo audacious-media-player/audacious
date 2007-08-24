@@ -1096,14 +1096,17 @@ playlistwin_delete(GtkWidget * w, gpointer data)
     return TRUE;
 }
 
-static void
+static gboolean
 playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
                                      gboolean up, guint state)
 {
     Playlist *playlist = playlist_get_active();
+    if ((!(pl->prev_selected || pl->first) && up) ||
+       ((pl->prev_selected >= playlist_get_length(playlist) - 1) && !up))
+         return FALSE;
 
     if ((state & GDK_MOD1_MASK) && (state & GDK_SHIFT_MASK))
-        return;
+        return FALSE;
     if (!(state & GDK_MOD1_MASK))
         playlist_select_all(playlist, FALSE);
 
@@ -1125,7 +1128,7 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
         pl->first = MAX(pl->first, pl->prev_max -
                            pl->num_visible + 1);
         playlist_select_range(playlist, pl->prev_min, pl->prev_max, TRUE);
-        return;
+        return TRUE;
     }
     else if (state & GDK_MOD1_MASK) {
         if (up)
@@ -1136,7 +1139,7 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
             pl->first = pl->prev_min;
         else if (pl->prev_max >= (pl->first + pl->num_visible))
             pl->first = pl->prev_max - pl->num_visible + 1;
-        return;
+        return TRUE;
     }
     else if (up)
         pl->prev_selected--;
@@ -1153,6 +1156,8 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
 
     playlist_select_range(playlist, pl->prev_selected, pl->prev_selected, TRUE);
     pl->prev_min = -1;
+
+    return TRUE;
 }
 
 /* FIXME: Handle the keys through menu */
@@ -1173,11 +1178,10 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_KP_Down:
     case GDK_Up:
     case GDK_Down:
-        playlistwin_keypress_up_down_handler(UI_SKINNED_PLAYLIST(playlistwin_list),
-                                             keyval == GDK_Up
-                                             || keyval == GDK_KP_Up,
-                                             event->state);
-        refresh = TRUE;
+        refresh = playlistwin_keypress_up_down_handler(UI_SKINNED_PLAYLIST(playlistwin_list),
+                                                       keyval == GDK_Up
+                                                       || keyval == GDK_KP_Up,
+                                                       event->state);
         break;
     case GDK_Page_Up:
         playlistwin_scroll(-UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible);
