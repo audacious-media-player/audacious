@@ -101,8 +101,8 @@ PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.6.0],
 
 dnl Check for libmowgli.
 
-PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.3],
-    [ADD_PC_REQUIRES([libmowgli >= 0.3])],
+PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.4],
+    [ADD_PC_REQUIRES([libmowgli >= 0.4])],
     [AC_MSG_ERROR([Cannot find libmowgli: try http://www.atheme-project.org/projects/mowgli.shtml])]
 )
 
