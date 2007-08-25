@@ -1739,6 +1739,7 @@ static guint
 playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 {
     PlaylistContainer *plc;
+    GList *old_iter;
     gchar *ext;
     gint old_len, new_len;
     
@@ -1752,7 +1753,16 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     g_return_val_if_fail(plc->plc_read != NULL, 0);
 
     old_len = playlist_get_length(playlist);
-    plc->plc_read(filename, pos);
+    /* make sure it adds files to the right playlist */
+    if (playlist != playlist_get_active()) {
+        old_iter = playlists_iter;
+        playlists_iter = g_list_find(playlists, playlist);
+        if (!playlists_iter) playlists_iter = playlists;
+        plc->plc_read(filename, pos);
+        playlists_iter = old_iter;
+    } else {
+        plc->plc_read(filename, pos);
+    }
     new_len = playlist_get_length(playlist);
 
     playlist_generate_shuffle_list(playlist);
