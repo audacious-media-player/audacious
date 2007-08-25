@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-07-29 17:21+0200\n"
+"POT-Creation-Date: 2007-08-25 12:38+0200\n"
 "PO-Revision-Date: 2007-03-07 03:21+0100\n"
 "Last-Translator: Andrej Herceg <herceg.andrej@zoznam.sk>\n"
 "Language-Team: Default (i18n-default@i18n.atheme.org)\n"
@@ -30,20 +30,20 @@ msgstr ""
 "\n"
 "Nepodarilo sa otvoriť glade súbor %s. Skontrolujte prosím Vašu inštaláciu.\n"
 
-#: src/audacious/input.c:646
+#: src/audacious/input.c:718
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: src/audacious/input.c:662
+#: src/audacious/input.c:734
 msgid "Filename:"
 msgstr "Názov súboru:"
 
-#: src/audacious/input.c:681
+#: src/audacious/input.c:753
 msgid "No input plugin recognized this file"
 msgstr "Súbor nebol rozoznaný žiadnym vstupným modulom"
 
-#: src/audacious/input.c:683
+#: src/audacious/input.c:755
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Vstupný modul: %s"
@@ -53,81 +53,81 @@ msgstr "Vstupný modul: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Nepodarilo sa vytvoriť log súbor (%s)!\n"
 
-#: src/audacious/main.c:89 src/audacious/main.c:91 src/audacious/ui_main.c:627
-#: src/audacious/ui_main.c:2836
+#: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:502
+#: src/audacious/ui_main.c:2514
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:466
+#: src/audacious/main.c:475
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodarilo sa vytvoriť adresár (%s): %s\n"
 
-#: src/audacious/main.c:878
+#: src/audacious/main.c:887
 msgid "Select which Audacious session ID to use"
 msgstr "Vybrať Audacious sedenie"
 
-#: src/audacious/main.c:879
+#: src/audacious/main.c:888
 msgid "Skip backwards in playlist"
 msgstr "Vrátiť sa na predchádzajúcu skladbu"
 
-#: src/audacious/main.c:880
+#: src/audacious/main.c:889
 msgid "Start playing current playlist"
 msgstr "Začať prehrávať aktuálny zoznam"
 
-#: src/audacious/main.c:881
+#: src/audacious/main.c:890
 msgid "Pause current song"
 msgstr "Pozastaviť prehrávanú skladbu"
 
-#: src/audacious/main.c:882
+#: src/audacious/main.c:891
 msgid "Stop current song"
 msgstr "Zastaviť prehrávanú skladbu"
 
-#: src/audacious/main.c:883
+#: src/audacious/main.c:892
 msgid "Pause if playing, play otherwise"
 msgstr "Pri prehrávaní pozastaviť, inak prehrať"
 
-#: src/audacious/main.c:884
+#: src/audacious/main.c:893
 msgid "Skip forward in playlist"
 msgstr "Prejsť na nasledujúcu skladbu"
 
-#: src/audacious/main.c:885
+#: src/audacious/main.c:894
 msgid "Display Jump to File dialog"
 msgstr "Zobraziť dialóg \"Presun na súbor\""
 
-#: src/audacious/main.c:886
+#: src/audacious/main.c:895
 msgid "Don't clear the playlist"
 msgstr "Nevymazať zoznam skladieb"
 
-#: src/audacious/main.c:887
+#: src/audacious/main.c:896
 msgid "Add new files to a temporary playlist"
 msgstr "Pridať súbory do dočasného zoznamu skladieb"
 
-#: src/audacious/main.c:888
+#: src/audacious/main.c:897
 msgid "Display the main window"
 msgstr "Zobraziť hlavné okno"
 
-#: src/audacious/main.c:889
+#: src/audacious/main.c:898
 msgid "Display all open Audacious windows"
 msgstr "Zobraziť všetky otvorené okná Audacious"
 
-#: src/audacious/main.c:890
+#: src/audacious/main.c:899
 msgid "Enable headless operation"
 msgstr "Povoliť ovládanie bez okna"
 
-#: src/audacious/main.c:891
+#: src/audacious/main.c:900
 msgid "Print all errors and warnings to stdout"
 msgstr "Všetky chyby a upozornenia posielať na štandardný výstup"
 
-#: src/audacious/main.c:892
+#: src/audacious/main.c:901
 msgid "Show version and builtin features"
 msgstr "Zobraziť verziu a zabudované funkcie"
 
-#: src/audacious/main.c:893
+#: src/audacious/main.c:902
 msgid "FILE..."
 msgstr "SÚBOR..."
 
-#: src/audacious/main.c:1058
+#: src/audacious/main.c:1061
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -140,7 +140,7 @@ msgstr ""
 "Skontrolujte či je skin '%s' používateľný a či je štandardný skin "
 "nainštalovaný v '%s'\n"
 
-#: src/audacious/main.c:1116
+#: src/audacious/main.c:1119
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -153,11 +153,11 @@ msgstr ""
 "Ak máte Linux s podporou libc5 a nainštalovali ste Glib & GTK+ predtým ako\n"
 "ste inštalovali LinuxThreads budete musieť Glib & GTK+ skompilovať znovu.\n"
 
-#: src/audacious/main.c:1147
+#: src/audacious/main.c:1150
 msgid "- play multimedia files"
 msgstr "- prehrať multimediálne súbory"
 
-#: src/audacious/main.c:1154
+#: src/audacious/main.c:1157
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -166,7 +166,7 @@ msgstr ""
 "%s: %s\n"
 "Ak chcete viac informácií vyskúšajte \"%s --help\".\n"
 
-#: src/audacious/main.c:1164
+#: src/audacious/main.c:1167
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Nepodarilo sa otvoriť displej, končím.\n"
@@ -203,7 +203,7 @@ msgid ""
 "Expect unusable crash reports.\n"
 msgstr ""
 
-#: src/audacious/strings.c:171
+#: src/audacious/strings.c:170
 msgid "  (invalid UTF-8)"
 msgstr "  (neplatné UTF-8)"
 
@@ -218,12 +218,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2007 vývojový tím Audacious"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:350
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
 msgid "About Audacious"
 msgstr "O Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:393
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
 msgid "Credits"
 msgstr "Zásluhy"
 
@@ -244,215 +244,215 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Vývojári jadra Audacious"
 
-#: src/audacious/ui_credits.c:69
+#: src/audacious/ui_credits.c:70
 msgid "Graphics:"
 msgstr "Grafika:"
 
-#: src/audacious/ui_credits.c:74
+#: src/audacious/ui_credits.c:75
 msgid "Default skin:"
 msgstr "Štandardný skin:"
 
-#: src/audacious/ui_credits.c:79
+#: src/audacious/ui_credits.c:80
 msgid "Plugin development:"
 msgstr "Vývoj zásuvných modulov:"
 
-#: src/audacious/ui_credits.c:93
+#: src/audacious/ui_credits.c:94
 msgid "Patch authors:"
 msgstr "Autori záplat:"
 
-#: src/audacious/ui_credits.c:113
+#: src/audacious/ui_credits.c:114
 msgid "0.1.x developers:"
 msgstr "Vývojári verzie 0.1.x:"
 
-#: src/audacious/ui_credits.c:119
+#: src/audacious/ui_credits.c:120
 msgid "BMP Developers:"
 msgstr "Vývojári Audacious:"
 
-#: src/audacious/ui_credits.c:151
+#: src/audacious/ui_credits.c:152
 msgid "Brazilian Portuguese:"
 msgstr "Brazílska portugalčina:"
 
-#: src/audacious/ui_credits.c:154
+#: src/audacious/ui_credits.c:155
 msgid "Breton:"
 msgstr "Bretónčina:"
 
-#: src/audacious/ui_credits.c:157
+#: src/audacious/ui_credits.c:158
 msgid "Bulgarian:"
 msgstr "Bulharčina:"
 
-#: src/audacious/ui_credits.c:160
+#: src/audacious/ui_credits.c:161
 #, fuzzy
 msgid "Catalan:"
 msgstr "Taliančina:"
 
-#: src/audacious/ui_credits.c:163
+#: src/audacious/ui_credits.c:164
 msgid "Croatian:"
 msgstr "Chorvátčina:"
 
-#: src/audacious/ui_credits.c:166
+#: src/audacious/ui_credits.c:167
 msgid "Czech:"
 msgstr "Čeština:"
 
-#: src/audacious/ui_credits.c:169
+#: src/audacious/ui_credits.c:170
 msgid "Dutch:"
 msgstr "Holandčina:"
 
-#: src/audacious/ui_credits.c:173
+#: src/audacious/ui_credits.c:174
 msgid "Finnish:"
 msgstr "Fínčina:"
 
-#: src/audacious/ui_credits.c:176
+#: src/audacious/ui_credits.c:177
 msgid "French:"
 msgstr "Francúzščina:"
 
-#: src/audacious/ui_credits.c:179
+#: src/audacious/ui_credits.c:180
 msgid "German:"
 msgstr "Nemčina:"
 
-#: src/audacious/ui_credits.c:184
+#: src/audacious/ui_credits.c:185
 msgid "Georgian:"
 msgstr "Gruzínčina:"
 
-#: src/audacious/ui_credits.c:187
+#: src/audacious/ui_credits.c:188
 msgid "Greek:"
 msgstr "Gréčtina:"
 
-#: src/audacious/ui_credits.c:192
+#: src/audacious/ui_credits.c:193
 msgid "Hindi:"
 msgstr "Hindčina:"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Hungarian:"
 msgstr "Maďarčina:"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Italian:"
 msgstr "Taliančina:"
 
-#: src/audacious/ui_credits.c:202
+#: src/audacious/ui_credits.c:203
 msgid "Japanese:"
 msgstr "Japončina:"
 
-#: src/audacious/ui_credits.c:205
+#: src/audacious/ui_credits.c:206
 msgid "Korean:"
 msgstr "Kórejčina:"
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:209
 msgid "Lithuanian:"
 msgstr "Litovčina:"
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:212
 msgid "Macedonian:"
 msgstr "Rumunčina:"
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:215
 msgid "Polish:"
 msgstr "Poľština:"
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:218
 msgid "Romanian:"
 msgstr "Rumunčina:"
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:221
 msgid "Russian:"
 msgstr "Ruština:"
 
-#: src/audacious/ui_credits.c:223
+#: src/audacious/ui_credits.c:224
 msgid "Serbian (Latin):"
 msgstr "Srbščina (latinka):"
 
-#: src/audacious/ui_credits.c:226
+#: src/audacious/ui_credits.c:227
 msgid "Serbian (Cyrillic):"
 msgstr "Srbščina (cyrilika):"
 
-#: src/audacious/ui_credits.c:229
+#: src/audacious/ui_credits.c:230
 msgid "Simplified Chinese:"
 msgstr "Zjednodušená čínština:"
 
-#: src/audacious/ui_credits.c:232
+#: src/audacious/ui_credits.c:233
 msgid "Slovak:"
 msgstr "Slovenčina:"
 
-#: src/audacious/ui_credits.c:235
+#: src/audacious/ui_credits.c:236
 msgid "Spanish:"
 msgstr "Španielčina:"
 
-#: src/audacious/ui_credits.c:238
+#: src/audacious/ui_credits.c:239
 msgid "Swedish:"
 msgstr "Švédčina:"
 
-#: src/audacious/ui_credits.c:241
+#: src/audacious/ui_credits.c:242
 msgid "Traditional Chinese:"
 msgstr "Tradičná čínština:"
 
-#: src/audacious/ui_credits.c:244
+#: src/audacious/ui_credits.c:245
 msgid "Turkish:"
 msgstr "Turečtina:"
 
-#: src/audacious/ui_credits.c:248
+#: src/audacious/ui_credits.c:249
 msgid "Ukrainian:"
 msgstr "Rumunčina:"
 
-#: src/audacious/ui_credits.c:251
+#: src/audacious/ui_credits.c:252
 msgid "Welsh:"
 msgstr "Welsčina:"
 
-#: src/audacious/ui_credits.c:397
+#: src/audacious/ui_credits.c:398
 msgid "Translators"
 msgstr "Prekladatelia"
 
-#: src/audacious/ui_equalizer.c:635
+#: src/audacious/ui_equalizer.c:535
 msgid "Audacious Equalizer"
 msgstr "Ekvalizér"
 
-#: src/audacious/ui_equalizer.c:1279
+#: src/audacious/ui_equalizer.c:1169
 msgid "Presets"
 msgstr "Predvoľby"
 
-#: src/audacious/ui_main.c:625
+#: src/audacious/ui_main.c:500
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:840
+#: src/audacious/ui_main.c:755
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:858 src/audacious/ui_main.c:862
+#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
 msgid "stereo"
 msgstr "stereo"
 
-#: src/audacious/ui_main.c:858 src/audacious/ui_main.c:862
+#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
 msgid "mono"
 msgstr "mono"
 
-#: src/audacious/ui_main.c:1199 src/audacious/ui_manager.c:419
-#: src/audacious/ui_manager.c:420
+#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:418
+#: src/audacious/ui_manager.c:419
 msgid "Jump to Time"
 msgstr "Presun na čas"
 
-#: src/audacious/ui_main.c:1220
+#: src/audacious/ui_main.c:1053
 msgid "minutes:seconds"
 msgstr "minúty:sekundy"
 
-#: src/audacious/ui_main.c:1230
+#: src/audacious/ui_main.c:1063
 msgid "Track length:"
 msgstr "Dĺžka skladby:"
 
-#: src/audacious/ui_main.c:1394
+#: src/audacious/ui_main.c:1200
 msgid "Audacious - visibility warning"
 msgstr ""
 
-#: src/audacious/ui_main.c:1396
+#: src/audacious/ui_main.c:1202
 #, fuzzy
 msgid "Show main player window"
 msgstr "Vyberte font použitý v hlavnom okne:"
 
-#: src/audacious/ui_main.c:1397
+#: src/audacious/ui_main.c:1203
 msgid "Ignore"
 msgstr ""
 
-#: src/audacious/ui_main.c:1401
+#: src/audacious/ui_main.c:1207
 msgid ""
 "Audacious has been started with all of its windows hidden.\n"
 "You may want to show the player window again to control Audacious; "
@@ -460,82 +460,72 @@ msgid ""
 "(such as the statusicon plugin)."
 msgstr ""
 
-#: src/audacious/ui_main.c:1407
+#: src/audacious/ui_main.c:1213
 msgid "Always ignore, show/hide is controlled remotely"
 msgstr ""
 
-#: src/audacious/ui_main.c:1425
+#: src/audacious/ui_main.c:1231
 msgid "Enter location to play:"
 msgstr "Zadajte adresu, s ktorej sa má prehrávať"
 
-#: src/audacious/ui_main.c:1659
+#: src/audacious/ui_main.c:1465
 #, fuzzy, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "PRESUN NA: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1691
+#: src/audacious/ui_main.c:1497
 #, c-format
 msgid "Volume: %d%%"
 msgstr ""
 
-#: src/audacious/ui_main.c:1722
+#: src/audacious/ui_main.c:1528
 #, c-format
 msgid "Balance: %d%% left"
 msgstr ""
 
-#: src/audacious/ui_main.c:1726
+#: src/audacious/ui_main.c:1532
 msgid "Balance: center"
 msgstr ""
 
-#: src/audacious/ui_main.c:1730
+#: src/audacious/ui_main.c:1536
 #, c-format
 msgid "Balance: %d%% right"
 msgstr ""
 
-#: src/audacious/ui_main.c:2118
+#: src/audacious/ui_main.c:1879
 msgid "Options Menu"
 msgstr ""
 
-#: src/audacious/ui_main.c:2122
+#: src/audacious/ui_main.c:1883
 #, fuzzy
 msgid "Disable 'Always On Top'"
 msgstr "Vždy navrchu"
 
-#: src/audacious/ui_main.c:2124
+#: src/audacious/ui_main.c:1885
 #, fuzzy
 msgid "Enable 'Always On Top'"
 msgstr "Vždy navrchu"
 
-#: src/audacious/ui_main.c:2127
+#: src/audacious/ui_main.c:1888
 msgid "File Info Box"
 msgstr ""
 
-#: src/audacious/ui_main.c:2131
+#: src/audacious/ui_main.c:1892
 #, fuzzy
 msgid "Disable 'Doublesize'"
 msgstr "Dvojitá veľkosť"
 
-#: src/audacious/ui_main.c:2133
+#: src/audacious/ui_main.c:1894
 #, fuzzy
 msgid "Enable 'Doublesize'"
 msgstr "Dvojitá veľkosť"
 
-#: src/audacious/ui_main.c:2136
+#: src/audacious/ui_main.c:1897
 #, fuzzy
 msgid "Visualization Menu"
 msgstr "Typ zobrazenia"
 
-#: src/audacious/ui_main.c:2184
-msgid ""
-"<b><big>No playable CD found.</big></b>\n"
-"\n"
-"No CD inserted, or inserted CD is not an audio CD.\n"
-msgstr ""
-"<b><big>CD nie je možné prehrávať.</big></b>\n"
-"\n"
-"V mechanike nie je CD, alebo vložené CD nie je audio CD.\n"
-
-#: src/audacious/ui_main.c:2201
+#: src/audacious/ui_main.c:1945
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -551,516 +541,513 @@ msgstr ""
 "2. či žiadne iné programy neblokujú zvukovú kartu.\n"
 "3. či je vaša zvuková karta správne nakonfigurovaná.\n"
 
-#: src/audacious/ui_main.c:2359
+#: src/audacious/ui_main.c:2025
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "HLASITOSŤ: %d%%"
 
-#: src/audacious/ui_main.c:2362
+#: src/audacious/ui_main.c:2028
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "VYVÁŽENIE: %d%% VĽAVO"
 
-#: src/audacious/ui_main.c:2365
+#: src/audacious/ui_main.c:2031
 msgid "BALANCE: CENTER"
 msgstr "VYVÁŽENIE: STRED"
 
-#: src/audacious/ui_main.c:2367
+#: src/audacious/ui_main.c:2033
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "VYVÁŽENIE: %d%% VPRAVO"
 
-#: src/audacious/ui_main.c:2818
+#: src/audacious/ui_main.c:2496
 msgid "Error in Audacious."
 msgstr "Chyba v Audacious."
 
-#: src/audacious/ui_manager.c:45 src/audacious/ui_manager.c:46
+#: src/audacious/ui_manager.c:47 src/audacious/ui_manager.c:48
 msgid "Autoscroll Songname"
 msgstr "Automatický posun názvu skladby"
 
-#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
+#: src/audacious/ui_manager.c:50 src/audacious/ui_manager.c:51
 msgid "Stop after Current Song"
 msgstr "Zastaviť po skončení aktuálnej skladby"
 
-#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
+#: src/audacious/ui_manager.c:53 src/audacious/ui_manager.c:54
 msgid "Peaks"
 msgstr "Vrcholy"
 
-#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
+#: src/audacious/ui_manager.c:56 src/audacious/ui_manager.c:57
 msgid "Repeat"
 msgstr "Opakovať"
 
-#: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
+#: src/audacious/ui_manager.c:59 src/audacious/ui_manager.c:60
 msgid "Shuffle"
 msgstr "Náhodné poradie"
 
-#: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
+#: src/audacious/ui_manager.c:62 src/audacious/ui_manager.c:63
 msgid "No Playlist Advance"
 msgstr "Neprehrávať ďalšiu skladbu zo zoznamu"
 
-#: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
+#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
 msgid "Show Player"
 msgstr "Zobraziť prehrávač"
 
-#: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
+#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
 msgid "Show Playlist Editor"
 msgstr "Zobraziť editor zoznamu skladieb"
 
-#: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
+#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
 msgid "Show Equalizer"
 msgstr "Zobraziť ekvalizér"
 
-#: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
+#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
 msgid "Always on Top"
 msgstr "Vždy navrchu"
 
-#: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
+#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
 msgid "Put on All Workspaces"
 msgstr "Zobrazovať na všetkých plochách"
 
-#: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
+#: src/audacious/ui_manager.c:80 src/audacious/ui_manager.c:81
 msgid "Roll up Player"
 msgstr "Zrolovať prehrávač"
 
-#: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
+#: src/audacious/ui_manager.c:83 src/audacious/ui_manager.c:84
 msgid "Roll up Playlist Editor"
 msgstr "Zrolovať editor playlistu"
 
-#: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
+#: src/audacious/ui_manager.c:86 src/audacious/ui_manager.c:87
 msgid "Roll up Equalizer"
 msgstr "Zrolovať ekvalizér"
 
-#: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
+#: src/audacious/ui_manager.c:89 src/audacious/ui_manager.c:90
 msgid "DoubleSize"
 msgstr "Dvojitá veľkosť"
 
-#: src/audacious/ui_manager.c:90 src/audacious/ui_manager.c:91
+#: src/audacious/ui_manager.c:92 src/audacious/ui_manager.c:93
 msgid "Easy Move"
 msgstr "Jednoduchý presun"
 
-#: src/audacious/ui_manager.c:99
+#: src/audacious/ui_manager.c:101
 msgid "Analyzer"
 msgstr "Analyzátor"
 
-#: src/audacious/ui_manager.c:100
+#: src/audacious/ui_manager.c:102
 msgid "Scope"
 msgstr "Osciloskop"
 
-#: src/audacious/ui_manager.c:101
+#: src/audacious/ui_manager.c:103
 msgid "Voiceprint"
 msgstr "Frekvenčné spektrum"
 
-#: src/audacious/ui_manager.c:102
+#: src/audacious/ui_manager.c:104
 msgid "Off"
 msgstr "Žiadne"
 
-#: src/audacious/ui_manager.c:106 src/audacious/ui_manager.c:123
-#: src/audacious/ui_manager.c:129
+#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:125
+#: src/audacious/ui_manager.c:131
 msgid "Normal"
 msgstr "Normálny"
 
-#: src/audacious/ui_manager.c:107 src/audacious/ui_manager.c:124
+#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
 msgid "Fire"
 msgstr "Oheň"
 
-#: src/audacious/ui_manager.c:108
+#: src/audacious/ui_manager.c:110
 msgid "Vertical Lines"
 msgstr "Vertikálne čiary"
 
-#: src/audacious/ui_manager.c:112
+#: src/audacious/ui_manager.c:114
 msgid "Lines"
 msgstr "Čiary"
 
-#: src/audacious/ui_manager.c:113
+#: src/audacious/ui_manager.c:115
 msgid "Bars"
 msgstr "Obdĺžniky"
 
-#: src/audacious/ui_manager.c:117
+#: src/audacious/ui_manager.c:119
 msgid "Dot Scope"
 msgstr "Bodový osciloskop"
 
-#: src/audacious/ui_manager.c:118
+#: src/audacious/ui_manager.c:120
 msgid "Line Scope"
 msgstr "Čiarový osciloskop"
 
-#: src/audacious/ui_manager.c:119
+#: src/audacious/ui_manager.c:121
 msgid "Solid Scope"
 msgstr "Vyplnený osciloskop"
 
-#: src/audacious/ui_manager.c:125
+#: src/audacious/ui_manager.c:127
 msgid "Ice"
 msgstr "Ľad"
 
-#: src/audacious/ui_manager.c:130
+#: src/audacious/ui_manager.c:132
 msgid "Smooth"
 msgstr "Plynulý"
 
-#: src/audacious/ui_manager.c:134
+#: src/audacious/ui_manager.c:136
 msgid "Full (~50 fps)"
 msgstr "Plná (~50 fps)"
 
-#: src/audacious/ui_manager.c:135
+#: src/audacious/ui_manager.c:137
 msgid "Half (~25 fps)"
 msgstr "Polovičná (~25 fps)"
 
-#: src/audacious/ui_manager.c:136
+#: src/audacious/ui_manager.c:138
 msgid "Quarter (~13 fps)"
 msgstr "Štvrtinová (~13 fps)"
 
-#: src/audacious/ui_manager.c:137
+#: src/audacious/ui_manager.c:139
 msgid "Eighth (~6 fps)"
 msgstr "Osminová (~6 fps)"
 
-#: src/audacious/ui_manager.c:141 src/audacious/ui_manager.c:149
+#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
 msgid "Slowest"
 msgstr "Najpomalšie"
 
-#: src/audacious/ui_manager.c:142 src/audacious/ui_manager.c:150
+#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
 msgid "Slow"
 msgstr "Pomaly"
 
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
+#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
 msgid "Medium"
 msgstr "Stredne"
 
-#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
+#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
 msgid "Fast"
 msgstr "Rýchlo"
 
-#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
+#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
 msgid "Fastest"
 msgstr "Najrýchlejšie"
 
-#: src/audacious/ui_manager.c:157
+#: src/audacious/ui_manager.c:159
 msgid "Time Elapsed"
 msgstr "Ubehnutý čas"
 
-#: src/audacious/ui_manager.c:158
+#: src/audacious/ui_manager.c:160
 msgid "Time Remaining"
 msgstr "Zostávajúci čas"
 
-#: src/audacious/ui_manager.c:167
+#: src/audacious/ui_manager.c:169
 msgid "Playback"
 msgstr "Prehrávanie"
 
-#: src/audacious/ui_manager.c:169 src/audacious/ui_manager.c:170
+#: src/audacious/ui_manager.c:171 src/audacious/ui_manager.c:172
 msgid "Play"
 msgstr "Prehrať"
 
-#: src/audacious/ui_manager.c:172 src/audacious/ui_manager.c:173
+#: src/audacious/ui_manager.c:174 src/audacious/ui_manager.c:175
 msgid "Pause"
 msgstr "Pozastaviť"
 
-#: src/audacious/ui_manager.c:175 src/audacious/ui_manager.c:176
+#: src/audacious/ui_manager.c:177 src/audacious/ui_manager.c:178
 msgid "Stop"
 msgstr "Zastaviť"
 
-#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:179
+#: src/audacious/ui_manager.c:180 src/audacious/ui_manager.c:181
 msgid "Previous"
 msgstr "Predchádzajúca"
 
-#: src/audacious/ui_manager.c:181 src/audacious/ui_manager.c:182
+#: src/audacious/ui_manager.c:183 src/audacious/ui_manager.c:184
 msgid "Next"
 msgstr "Ďalšia"
 
-#: src/audacious/ui_manager.c:187
+#: src/audacious/ui_manager.c:189
 msgid "Visualization"
 msgstr "Vizualizácia"
 
-#: src/audacious/ui_manager.c:188
+#: src/audacious/ui_manager.c:190
 msgid "Visualization Mode"
 msgstr "Typ zobrazenia"
 
-#: src/audacious/ui_manager.c:189
+#: src/audacious/ui_manager.c:191
 msgid "Analyzer Mode"
 msgstr "Typ analyzátoru"
 
-#: src/audacious/ui_manager.c:190
+#: src/audacious/ui_manager.c:192
 msgid "Scope Mode"
 msgstr "Typ osciloskopu"
 
-#: src/audacious/ui_manager.c:191
+#: src/audacious/ui_manager.c:193
 msgid "Voiceprint Mode"
 msgstr "Typ frekvenčného spektra"
 
-#: src/audacious/ui_manager.c:192
+#: src/audacious/ui_manager.c:194
 msgid "WindowShade VU Mode"
 msgstr "Typ vizualizácie pri zrolovanom okne"
 
-#: src/audacious/ui_manager.c:193
+#: src/audacious/ui_manager.c:195
 msgid "Refresh Rate"
 msgstr "Rýchlosť obnovovania"
 
-#: src/audacious/ui_manager.c:194
+#: src/audacious/ui_manager.c:196
 msgid "Analyzer Falloff"
 msgstr "Klesanie stĺpcov"
 
-#: src/audacious/ui_manager.c:195
+#: src/audacious/ui_manager.c:197
 msgid "Peaks Falloff"
 msgstr "Klesanie vrcholov"
 
-#: src/audacious/ui_manager.c:200 src/audacious/ui_preferences.c:108
+#: src/audacious/ui_manager.c:202 src/audacious/ui_preferences.c:115
 #: src/audacious/ui_playlist_manager.c:290
 #: src/audacious/glade/prefswin.glade:2494
 msgid "Playlist"
 msgstr "Zoznam skladieb"
 
-#: src/audacious/ui_manager.c:202 src/audacious/ui_manager.c:203
+#: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
 msgid "New Playlist"
 msgstr "Nový zoznam skladieb"
 
-#: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
+#: src/audacious/ui_manager.c:207 src/audacious/ui_manager.c:208
 msgid "Select Next Playlist"
 msgstr "Vybrať nasledujúci zoznam skladieb"
 
-#: src/audacious/ui_manager.c:208 src/audacious/ui_manager.c:209
+#: src/audacious/ui_manager.c:210 src/audacious/ui_manager.c:211
 msgid "Select Previous Playlist"
 msgstr "Vybrať predchádzajúci zoznam skladieb"
 
-#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:212
+#: src/audacious/ui_manager.c:213 src/audacious/ui_manager.c:214
 msgid "Delete Playlist"
 msgstr "Zmazať zoznam skladieb"
 
-#: src/audacious/ui_manager.c:214
+#: src/audacious/ui_manager.c:216
 msgid "Load List"
 msgstr "Načítať zoznam skladieb"
 
-#: src/audacious/ui_manager.c:215
+#: src/audacious/ui_manager.c:217
 msgid "Loads a playlist file into the selected playlist."
 msgstr "Pridať zoznam súborov do vybraného zoznamu."
 
-#: src/audacious/ui_manager.c:217
+#: src/audacious/ui_manager.c:219
 msgid "Save List"
 msgstr "Uložiť zoznam"
 
-#: src/audacious/ui_manager.c:218
+#: src/audacious/ui_manager.c:220
 msgid "Saves the selected playlist."
 msgstr "Uloží vybraný zoznam skladieb."
 
-#: src/audacious/ui_manager.c:220
+#: src/audacious/ui_manager.c:222
 msgid "Save Default List"
 msgstr "Uložiť štandardný zoznam"
 
-#: src/audacious/ui_manager.c:221
+#: src/audacious/ui_manager.c:223
 msgid "Saves the selected playlist to the default location."
 msgstr "Uloží vybraný zoznam skladieb na štandardné miesto."
 
-#: src/audacious/ui_manager.c:224
+#: src/audacious/ui_manager.c:226
 msgid "Refresh List"
 msgstr "Obnoviť zoznam"
 
-#: src/audacious/ui_manager.c:225
+#: src/audacious/ui_manager.c:227
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr "Obnovuje metadáta patriace k skladbe zo zoznamu."
 
-#: src/audacious/ui_manager.c:228
+#: src/audacious/ui_manager.c:230
 msgid "List Manager"
 msgstr "Správca zoznamov"
 
-#: src/audacious/ui_manager.c:229
+#: src/audacious/ui_manager.c:231
 msgid "Opens the playlist manager."
 msgstr "Otvoriť správcu zoznamov skladieb."
 
-#: src/audacious/ui_manager.c:235
+#: src/audacious/ui_manager.c:237
 msgid "View"
 msgstr "Zobrazenia"
 
-#: src/audacious/ui_manager.c:239
-msgid "Add CD..."
-msgstr "Pridať CD..."
-
-#: src/audacious/ui_manager.c:240
-msgid "Adds a CD to the playlist."
-msgstr "Pridá CD do zoznamu skladieb."
-
-#: src/audacious/ui_manager.c:243
+#: src/audacious/ui_manager.c:241
 msgid "Add Internet Address..."
 msgstr "Pridať internetovú adresu..."
 
-#: src/audacious/ui_manager.c:244
+#: src/audacious/ui_manager.c:242
 msgid "Adds a remote track to the playlist."
 msgstr "Do zoznamu skladieb pridá vzdialenú stopu."
 
-#: src/audacious/ui_manager.c:247
+#: src/audacious/ui_manager.c:245
 msgid "Add Files..."
 msgstr "Pridať súbory..."
 
-#: src/audacious/ui_manager.c:248
+#: src/audacious/ui_manager.c:246
 msgid "Adds files to the playlist."
 msgstr "Do zoznamu skladieb pridá súbory."
 
-#: src/audacious/ui_manager.c:253
+#: src/audacious/ui_manager.c:251
 msgid "Search and Select"
 msgstr "Hľadanie a výber"
 
-#: src/audacious/ui_manager.c:254
+#: src/audacious/ui_manager.c:252
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr "Prehľadá zoznam skladieb a vyberie skladby podľa zadaných kritérií."
 
-#: src/audacious/ui_manager.c:257
+#: src/audacious/ui_manager.c:255
 msgid "Invert Selection"
 msgstr "Invertovať výber"
 
-#: src/audacious/ui_manager.c:258
+#: src/audacious/ui_manager.c:256
 msgid "Inverts the selected and unselected entries."
 msgstr "Zamení vybrané a nevybrané položky"
 
-#: src/audacious/ui_manager.c:261
+#: src/audacious/ui_manager.c:259
 msgid "Select All"
 msgstr "Vybrať všetko"
 
-#: src/audacious/ui_manager.c:262
+#: src/audacious/ui_manager.c:260
 msgid "Selects all of the playlist entries."
 msgstr "Vyberie všetky skladby v zozname"
 
-#: src/audacious/ui_manager.c:265
+#: src/audacious/ui_manager.c:263
 msgid "Select None"
 msgstr "Zrušiť výber"
 
-#: src/audacious/ui_manager.c:266
+#: src/audacious/ui_manager.c:264
 msgid "Deselects all of the playlist entries."
 msgstr "Zruší výber skladieb zoznamu."
 
-#: src/audacious/ui_manager.c:271
+#: src/audacious/ui_manager.c:269
 msgid "Clear Queue"
 msgstr "Vyprázdniť frontu"
 
-#: src/audacious/ui_manager.c:272
+#: src/audacious/ui_manager.c:270
 msgid "Clears the queue associated with this playlist."
 msgstr "Vyprázdni frontu spojenú s týmto zoznamom skladieb."
 
-#: src/audacious/ui_manager.c:275
+#: src/audacious/ui_manager.c:273
 msgid "Remove Unavailable Files"
 msgstr "Odstrániť nedostupné súbory"
 
-#: src/audacious/ui_manager.c:276
+#: src/audacious/ui_manager.c:274
 msgid "Removes unavailable files from the playlist."
 msgstr "Zo zoznamu skladieb odstráni nedostupné súbory."
 
-#: src/audacious/ui_manager.c:279
+#: src/audacious/ui_manager.c:277
 msgid "Remove Duplicates"
 msgstr "Odstrániť duplikáty"
 
-#: src/audacious/ui_manager.c:281 src/audacious/ui_manager.c:317
-#: src/audacious/ui_manager.c:347
+#: src/audacious/ui_manager.c:279 src/audacious/ui_manager.c:315
+#: src/audacious/ui_manager.c:345
 msgid "By Title"
 msgstr "Podľa názvu"
 
-#: src/audacious/ui_manager.c:282
+#: src/audacious/ui_manager.c:280
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "Zo zoznamu skladieb odstráni skladby s rovnakými názvami."
 
-#: src/audacious/ui_manager.c:285 src/audacious/ui_manager.c:325
-#: src/audacious/ui_manager.c:355
+#: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
+#: src/audacious/ui_manager.c:353
 msgid "By Filename"
 msgstr "Podľa mena súboru"
 
-#: src/audacious/ui_manager.c:286
+#: src/audacious/ui_manager.c:284
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "Zo zoznamu skladieb odstráni skladby s rovnakými menami súboru."
 
-#: src/audacious/ui_manager.c:289 src/audacious/ui_manager.c:329
-#: src/audacious/ui_manager.c:359
+#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:327
+#: src/audacious/ui_manager.c:357
 msgid "By Path + Filename"
 msgstr "Podľa cesty a mena súboru"
 
-#: src/audacious/ui_manager.c:290
+#: src/audacious/ui_manager.c:288
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "Zo zoznamu skladieb odstráni skladby s rovnakou cestou + menom súboru."
 
-#: src/audacious/ui_manager.c:293
+#: src/audacious/ui_manager.c:291
 msgid "Remove All"
 msgstr "Odstrániť všetky"
 
-#: src/audacious/ui_manager.c:294
+#: src/audacious/ui_manager.c:292
 msgid "Removes all entries from the playlist."
 msgstr "Zo zoznamu odstráni všetky skladby."
 
-#: src/audacious/ui_manager.c:297
+#: src/audacious/ui_manager.c:295
 msgid "Remove Unselected"
 msgstr "Odstrániť neoznačené"
 
-#: src/audacious/ui_manager.c:298
+#: src/audacious/ui_manager.c:296
 msgid "Remove unselected entries from the playlist."
 msgstr "Zo zoznamu odstráni neoznačené skladby."
 
-#: src/audacious/ui_manager.c:301
+#: src/audacious/ui_manager.c:299
 msgid "Remove Selected"
 msgstr "Odstrániť označené"
 
-#: src/audacious/ui_manager.c:302
+#: src/audacious/ui_manager.c:300
 msgid "Remove selected entries from the playlist."
 msgstr "Zo zoznamu odstráni označené skladby."
 
-#: src/audacious/ui_manager.c:307
+#: src/audacious/ui_manager.c:305
 msgid "Randomize List"
 msgstr "Premiešať zoznam"
 
-#: src/audacious/ui_manager.c:308
+#: src/audacious/ui_manager.c:306
 msgid "Randomizes the playlist."
 msgstr "Zoradí skladby v zozname v náhodnom poradí."
 
-#: src/audacious/ui_manager.c:311
+#: src/audacious/ui_manager.c:309
 msgid "Reverse List"
 msgstr "Obrátiť poradie"
 
-#: src/audacious/ui_manager.c:312
+#: src/audacious/ui_manager.c:310
 msgid "Reverses the playlist."
 msgstr "Obráti poradie skladieb v zozname."
 
-#: src/audacious/ui_manager.c:315
+#: src/audacious/ui_manager.c:313
 msgid "Sort List"
 msgstr "Triediť zoznam"
 
-#: src/audacious/ui_manager.c:318 src/audacious/ui_manager.c:348
+#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:346
 msgid "Sorts the list by title."
 msgstr "Zoradí skladby v zozname podľa názvu."
 
-#: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
+#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
 msgid "By Artist"
 msgstr "Podľa umelca"
 
-#: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
+#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
 msgid "Sorts the list by artist."
 msgstr "Zoradí skladby v zozname podľa umelca."
 
-#: src/audacious/ui_manager.c:326 src/audacious/ui_manager.c:356
+#: src/audacious/ui_manager.c:324 src/audacious/ui_manager.c:354
 msgid "Sorts the list by filename."
 msgstr "Zoradí skladby v zozname podľa mena súboru."
 
-#: src/audacious/ui_manager.c:330 src/audacious/ui_manager.c:360
+#: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
 msgid "Sorts the list by full pathname."
 msgstr "Zoradí skladby v zozname podľa celej cesty."
 
-#: src/audacious/ui_manager.c:333 src/audacious/ui_manager.c:363
+#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
 msgid "By Date"
 msgstr "Podľa dátumu"
 
-#: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
+#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
 msgid "Sorts the list by modification time."
 msgstr "Zoradí skladby v zozname podľa dátumu poslednej úpravy súboru."
 
-#: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
+#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
 msgid "By Track Number"
 msgstr "Podľa čísla stopy"
 
-#: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
+#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
 msgid "Sorts the list by track number."
 msgstr "Zoradí skladby v zozname podľa čísla stopy."
 
-#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:371
+#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
 msgid "By Playlist Entry"
 msgstr "Podľa položiek v zozname"
 
-#: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
+#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
 msgid "Sorts the list by playlist entry."
 msgstr "Zoradí skladby v zozname podľa položiek v zozname."
 
-#: src/audacious/ui_manager.c:345
+#: src/audacious/ui_manager.c:343
 msgid "Sort Selected"
 msgstr "Triediť výber"
+
+#: src/audacious/ui_manager.c:378 src/audacious/ui_manager.c:398
+#: src/audacious/ui_preferences.c:116 src/audacious/glade/prefswin.glade:693
+msgid "Plugins"
+msgstr "Moduly"
 
 #: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
 msgid "View Track Details"
@@ -1086,258 +1073,247 @@ msgstr "Prehrať z adresy"
 msgid "Play media from the selected location"
 msgstr "Prehrať súbor z vybranej adresy"
 
-#: src/audacious/ui_manager.c:395 src/audacious/ui_manager.c:396
-msgid "Play CD"
-msgstr "Prehrať CD"
-
-#: src/audacious/ui_manager.c:398
+#: src/audacious/ui_manager.c:395
 msgid "Last.fm radio"
 msgstr ""
 
-#: src/audacious/ui_manager.c:399
+#: src/audacious/ui_manager.c:396
 #, fuzzy
 msgid "Play Last.fm radio"
 msgstr "Prehrať z adresy"
 
-#: src/audacious/ui_manager.c:401
+#: src/audacious/ui_manager.c:400
 msgid "Preferences"
 msgstr "Nastavenia"
 
-#: src/audacious/ui_manager.c:402
+#: src/audacious/ui_manager.c:401
 msgid "Open preferences window"
 msgstr "Otvoriť okno s nastaveniami"
 
-#: src/audacious/ui_manager.c:404
+#: src/audacious/ui_manager.c:403
 msgid "_Quit"
 msgstr "_Koniec"
 
-#: src/audacious/ui_manager.c:405
+#: src/audacious/ui_manager.c:404
 msgid "Quit Audacious"
 msgstr "Ukončiť Audacious"
 
-#: src/audacious/ui_manager.c:407 src/audacious/ui_manager.c:408
+#: src/audacious/ui_manager.c:406 src/audacious/ui_manager.c:407
 msgid "Set A-B"
 msgstr "Nastaviť A-B"
 
-#: src/audacious/ui_manager.c:410 src/audacious/ui_manager.c:411
+#: src/audacious/ui_manager.c:409 src/audacious/ui_manager.c:410
 msgid "Clear A-B"
 msgstr "Odstrániť A-B"
 
-#: src/audacious/ui_manager.c:413 src/audacious/ui_manager.c:414
+#: src/audacious/ui_manager.c:412 src/audacious/ui_manager.c:413
 msgid "Jump to Playlist Start"
 msgstr "Presun na začiatok playlistu"
 
-#: src/audacious/ui_manager.c:416 src/audacious/ui_manager.c:417
+#: src/audacious/ui_manager.c:415 src/audacious/ui_manager.c:416
 msgid "Jump to File"
 msgstr "Presun na súbor"
 
-#: src/audacious/ui_manager.c:422
+#: src/audacious/ui_manager.c:421
 msgid "Queue Toggle"
 msgstr "Prepnúť frontu"
 
-#: src/audacious/ui_manager.c:423
+#: src/audacious/ui_manager.c:422
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr "Povolí/zakáže položku vo fronte zoznamu skladieb."
 
-#: src/audacious/ui_manager.c:430
+#: src/audacious/ui_manager.c:429
 msgid "Load"
 msgstr "Načítať"
 
-#: src/audacious/ui_manager.c:431
+#: src/audacious/ui_manager.c:430
 msgid "Import"
 msgstr "Importovať"
 
-#: src/audacious/ui_manager.c:432
+#: src/audacious/ui_manager.c:431
 msgid "Save"
 msgstr "Uložiť"
 
-#: src/audacious/ui_manager.c:433
+#: src/audacious/ui_manager.c:432
 msgid "Delete"
 msgstr "Vymazať"
 
-#: src/audacious/ui_manager.c:435 src/audacious/ui_manager.c:456
-#: src/audacious/ui_manager.c:471
+#: src/audacious/ui_manager.c:434 src/audacious/ui_manager.c:455
+#: src/audacious/ui_manager.c:470
 msgid "Preset"
 msgstr "Predvoľba"
 
-#: src/audacious/ui_manager.c:436
+#: src/audacious/ui_manager.c:435
 msgid "Load preset"
 msgstr "Načítať predvoľbu"
 
-#: src/audacious/ui_manager.c:438 src/audacious/ui_manager.c:459
-#: src/audacious/ui_manager.c:474
+#: src/audacious/ui_manager.c:437 src/audacious/ui_manager.c:458
+#: src/audacious/ui_manager.c:473
 msgid "Auto-load preset"
 msgstr "Súborová predvoľba"
 
-#: src/audacious/ui_manager.c:439
+#: src/audacious/ui_manager.c:438
 msgid "Load auto-load preset"
 msgstr "Načítať súborovú predvoľbu"
 
-#: src/audacious/ui_manager.c:441 src/audacious/ui_manager.c:462
+#: src/audacious/ui_manager.c:440 src/audacious/ui_manager.c:461
 msgid "Default"
 msgstr "Štandardnú"
 
-#: src/audacious/ui_manager.c:442
+#: src/audacious/ui_manager.c:441
 msgid "Load default preset into equalizer"
 msgstr "Načítať štandardnú predvoľbu do ekvalizéru"
 
-#: src/audacious/ui_manager.c:444
+#: src/audacious/ui_manager.c:443
 msgid "Zero"
 msgstr "Vynulovať"
 
-#: src/audacious/ui_manager.c:445
+#: src/audacious/ui_manager.c:444
 msgid "Set equalizer preset levels to zero"
 msgstr "Vynulovať predvolby ekvalizéru"
 
-#: src/audacious/ui_manager.c:447
+#: src/audacious/ui_manager.c:446
 msgid "From file"
 msgstr "Zo súboru"
 
-#: src/audacious/ui_manager.c:448
+#: src/audacious/ui_manager.c:447
 msgid "Load preset from file"
 msgstr "Načítať predvoľbu zo súboru"
 
-#: src/audacious/ui_manager.c:450
+#: src/audacious/ui_manager.c:449
 msgid "From WinAMP EQF file"
 msgstr "Zo súboru WinAMP EQF"
 
-#: src/audacious/ui_manager.c:451
+#: src/audacious/ui_manager.c:450
 msgid "Load preset from WinAMP EQF file"
 msgstr "Načítať predvolbu zo súboru WinAMP EQF"
 
-#: src/audacious/ui_manager.c:453
+#: src/audacious/ui_manager.c:452
 msgid "WinAMP Presets"
 msgstr "Predvoľby WinAMP"
 
-#: src/audacious/ui_manager.c:454
+#: src/audacious/ui_manager.c:453
 msgid "Import WinAMP presets"
 msgstr "Importovať predvoľby WinAMP"
 
-#: src/audacious/ui_manager.c:457
+#: src/audacious/ui_manager.c:456
 msgid "Save preset"
 msgstr "Uložiť predvoľby"
 
-#: src/audacious/ui_manager.c:460
+#: src/audacious/ui_manager.c:459
 msgid "Save auto-load preset"
 msgstr "Uložiť súborovú predvoľbu"
 
-#: src/audacious/ui_manager.c:463
+#: src/audacious/ui_manager.c:462
 msgid "Save default preset"
 msgstr "Uložiť štandardnú predvoľbu"
 
-#: src/audacious/ui_manager.c:465
+#: src/audacious/ui_manager.c:464
 msgid "To file"
 msgstr "Do súboru"
 
-#: src/audacious/ui_manager.c:466
+#: src/audacious/ui_manager.c:465
 msgid "Save preset to file"
 msgstr "Uložiť predvoľbu do súboru"
 
-#: src/audacious/ui_manager.c:468
+#: src/audacious/ui_manager.c:467
 msgid "To WinAMP EQF file"
 msgstr "Do súboru WinAMP EQF"
 
-#: src/audacious/ui_manager.c:469
+#: src/audacious/ui_manager.c:468
 msgid "Save preset to WinAMP EQF file"
 msgstr "Uložiť predvoľbu do súboru WinAMP EQF"
 
-#: src/audacious/ui_manager.c:472
+#: src/audacious/ui_manager.c:471
 msgid "Delete preset"
 msgstr "Vymazať predvoľbu"
 
-#: src/audacious/ui_manager.c:475
+#: src/audacious/ui_manager.c:474
 msgid "Delete auto-load preset"
 msgstr "Vymazať súborovú predvoľbu"
 
-#: src/audacious/ui_preferences.c:103 src/audacious/glade/prefswin.glade:1363
+#: src/audacious/ui_preferences.c:110 src/audacious/glade/prefswin.glade:1363
 msgid "Appearance"
 msgstr "Vzhľad"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:111
 msgid "Audio"
 msgstr "Zvuk"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:112
 msgid "Connectivity"
 msgstr "Pripojenie"
 
-#: src/audacious/ui_preferences.c:106 src/audacious/glade/prefswin.glade:2862
+#: src/audacious/ui_preferences.c:113 src/audacious/glade/prefswin.glade:2862
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: src/audacious/ui_preferences.c:107 src/audacious/glade/prefswin.glade:1642
+#: src/audacious/ui_preferences.c:114 src/audacious/glade/prefswin.glade:1642
 msgid "Mouse"
 msgstr "Myš"
 
-#: src/audacious/ui_preferences.c:109 src/audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "Moduly"
-
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:255
+#: src/audacious/ui_preferences.c:122 src/audacious/ui_fileinfopopup.c:255
 msgid "Artist"
 msgstr "Umelec"
 
-#: src/audacious/ui_preferences.c:116 src/audacious/ui_fileinfopopup.c:258
-#: src/audacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:258
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:252
-#: src/audacious/ui_fileinfopopup.c:362
+#: src/audacious/ui_preferences.c:124 src/audacious/ui_fileinfopopup.c:252
+#: src/audacious/ui_fileinfopopup.c:364
 msgid "Title"
 msgstr "Názov"
 
-#: src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:125
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: src/audacious/ui_preferences.c:119 src/audacious/ui_fileinfopopup.c:261
-#: src/audacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:126 src/audacious/ui_fileinfopopup.c:261
 msgid "Genre"
 msgstr "Žáner"
 
-#: src/audacious/ui_preferences.c:120 src/audacious/ui_preferences.c:488
-#: src/audacious/ui_preferences.c:576 src/audacious/ui_preferences.c:665
-#: src/audacious/ui_preferences.c:761 src/audacious/ui_fileinfopopup.c:371
+#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:426
+#: src/audacious/ui_preferences.c:514 src/audacious/ui_preferences.c:603
+#: src/audacious/ui_preferences.c:699 src/audacious/ui_fileinfopopup.c:373
 msgid "Filename"
 msgstr "Názov súboru"
 
-#: src/audacious/ui_preferences.c:121
+#: src/audacious/ui_preferences.c:128
 msgid "Filepath"
 msgstr "Cesta k súboru"
 
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:387
+#: src/audacious/ui_preferences.c:129
 msgid "Date"
 msgstr "Dátum"
 
-#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:264
-#: src/audacious/titlestring.c:388
+#: src/audacious/ui_preferences.c:130 src/audacious/ui_fileinfopopup.c:264
 msgid "Year"
 msgstr "Rok"
 
-#: src/audacious/ui_preferences.c:124 src/audacious/titlestring.c:389
+#: src/audacious/ui_preferences.c:131
 msgid "Comment"
 msgstr "Komentár"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:152
 msgid "localhost"
 msgstr "localhost"
 
-#: src/audacious/ui_preferences.c:458 src/audacious/ui_preferences.c:545
-#: src/audacious/ui_preferences.c:634 src/audacious/ui_preferences.c:730
+#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
+#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
 msgid "Enabled"
 msgstr "Povolené"
 
-#: src/audacious/ui_preferences.c:474 src/audacious/ui_preferences.c:561
-#: src/audacious/ui_preferences.c:650 src/audacious/ui_preferences.c:746
+#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
 msgid "Description"
 msgstr "Popis"
 
-#: src/audacious/ui_preferences.c:1878
+#: src/audacious/ui_preferences.c:1684
 msgid "Category"
 msgstr "Kategória"
 
-#: src/audacious/ui_preferences.c:2425
+#: src/audacious/ui_preferences.c:2231
 msgid "Preferences Window"
 msgstr "Okno nastavení"
 
@@ -1361,35 +1337,35 @@ msgstr "Číslo stopy"
 msgid "Track Length"
 msgstr "Dĺžka stopy"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:134
 msgid "Open Files"
 msgstr "Otvoriť súbory"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:134
 msgid "Add Files"
 msgstr "Pridať súbory"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:136
 msgid "Close dialog on Open"
 msgstr "Zatvoriť okno po otvorení"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:136
 msgid "Close dialog on Add"
 msgstr "Zatvoriť okno po pridaní"
 
-#: src/audacious/ui_fileopener.c:358
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Prehrať súbory"
 
-#: src/audacious/ui_fileopener.c:360
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Načítať súbory"
 
-#: src/audacious/ui_playlist.c:497
+#: src/audacious/ui_playlist.c:476
 msgid "Search entries in active playlist"
 msgstr "Vyhľadať skladby v aktívnom zozname skladieb"
 
-#: src/audacious/ui_playlist.c:505
+#: src/audacious/ui_playlist.c:484
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1401,47 +1377,47 @@ msgstr ""
 "regulárnym výrazom nerozumiete, jednoducho zadajte časť textu, ktorý chcete "
 "vyhľadať."
 
-#: src/audacious/ui_playlist.c:513
+#: src/audacious/ui_playlist.c:492
 #, fuzzy
 msgid "Title: "
 msgstr "Názov"
 
-#: src/audacious/ui_playlist.c:520
+#: src/audacious/ui_playlist.c:499
 #, fuzzy
 msgid "Album: "
 msgstr "Album"
 
-#: src/audacious/ui_playlist.c:527
+#: src/audacious/ui_playlist.c:506
 msgid "Artist: "
 msgstr "Umelec:"
 
-#: src/audacious/ui_playlist.c:534
+#: src/audacious/ui_playlist.c:513
 msgid "Filename: "
 msgstr "Názov súboru:"
 
-#: src/audacious/ui_playlist.c:542
+#: src/audacious/ui_playlist.c:521
 msgid "Clear previous selection before searching"
 msgstr "Pred hľadaným vymazať predchádzajúci výber"
 
-#: src/audacious/ui_playlist.c:545
+#: src/audacious/ui_playlist.c:524
 msgid "Automatically toggle queue for matching entries"
 msgstr "Zhodujúce sa položky pridať/odstrániť do fronty"
 
-#: src/audacious/ui_playlist.c:548
+#: src/audacious/ui_playlist.c:527
 msgid "Create a new playlist with matching entries"
 msgstr "Zo zhodujúcich sa položiek vytvoriť nový zoznam skladieb"
 
-#: src/audacious/ui_playlist.c:805
+#: src/audacious/ui_playlist.c:747
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Nepodarilo sa uložiť playlist \"%s\": %s"
 
-#: src/audacious/ui_playlist.c:827
+#: src/audacious/ui_playlist.c:769
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s už existuje. Pokračovať?"
 
-#: src/audacious/ui_playlist.c:842
+#: src/audacious/ui_playlist.c:784
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1452,24 +1428,24 @@ msgstr ""
 "\n"
 "Neznámy typ súboru '%s'.\n"
 
-#: src/audacious/ui_playlist.c:965
+#: src/audacious/ui_playlist.c:907
 #, fuzzy
 msgid "Save as Static Playlist"
 msgstr "Uložiť zoznam skladieb"
 
-#: src/audacious/ui_playlist.c:972
+#: src/audacious/ui_playlist.c:914
 msgid "Use Relative Path"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:994
+#: src/audacious/ui_playlist.c:936
 msgid "Load Playlist"
 msgstr "Načítať zoznam skladieb"
 
-#: src/audacious/ui_playlist.c:1007
+#: src/audacious/ui_playlist.c:949
 msgid "Save Playlist"
 msgstr "Uložiť zoznam skladieb"
 
-#: src/audacious/ui_playlist.c:1701
+#: src/audacious/ui_playlist.c:1500
 msgid "Audacious Playlist Editor"
 msgstr "Editor zoznamu skladieb"
 
@@ -1489,66 +1465,38 @@ msgstr "Položky"
 msgid "_Rename"
 msgstr "_Premenovať"
 
-#: src/audacious/ui_jumptotrack.c:141
+#: src/audacious/ui_jumptotrack.c:140
 msgid "Un_queue"
 msgstr "Odo_brať z fronty"
 
-#: src/audacious/ui_jumptotrack.c:143 src/audacious/ui_jumptotrack.c:606
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
 msgid "_Queue"
 msgstr "_Fronta"
 
-#: src/audacious/ui_jumptotrack.c:521
+#: src/audacious/ui_jumptotrack.c:520
 msgid "Jump to Track"
 msgstr "Presun na stopu"
 
-#: src/audacious/ui_jumptotrack.c:562
+#: src/audacious/ui_jumptotrack.c:561
 msgid "Filter: "
 msgstr "Filter: "
 
-#: src/audacious/ui_jumptotrack.c:563
+#: src/audacious/ui_jumptotrack.c:562
 msgid "_Filter:"
 msgstr "_Filter: "
 
-#: src/audacious/ui_jumptotrack.c:597
+#: src/audacious/ui_jumptotrack.c:596
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Zatvoriť okno po otvorení"
 
-#: src/audacious/playback.c:223
+#: src/audacious/playback.c:274
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
 "<b><big>Nebol zvolený žiadny výstupný modul.<big><b>\n"
 "Nemáte zvolený výstupný modul."
-
-#: src/audacious/titlestring.c:379
-msgid "Performer/Artist"
-msgstr "Interpret/Umelec"
-
-#: src/audacious/titlestring.c:382
-msgid "File name"
-msgstr "Názov súboru"
-
-#: src/audacious/titlestring.c:383
-msgid "File path"
-msgstr "Cesta k súboru"
-
-#: src/audacious/titlestring.c:384
-msgid "File extension"
-msgstr "Prípona súboru"
-
-#: src/audacious/titlestring.c:385
-msgid "Track name"
-msgstr "Názov stopy"
-
-#: src/audacious/titlestring.c:386
-msgid "Track number"
-msgstr "Číslo stopy"
-
-#: src/audacious/titlestring.c:449
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: Zobraziť \"...\" len ak nechýba %n"
 
 #: src/audacious/glade/fileinfo.glade:8
 msgid "Track Information"
@@ -2039,15 +1987,6 @@ msgstr ""
 msgid "Converter Type:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4392
-msgid ""
-"SRC_SINC_BEST_QUALITY\n"
-"SRC_SINC_MEDIUM_QUALITY\n"
-"SRC_SINC_FASTEST\n"
-"SRC_ZERO_ORDER_HOLD\n"
-"SRC_LINEAR"
-msgstr ""
-
 #: src/audacious/glade/prefswin.glade:4593
 #, fuzzy
 msgid "Reload Plugins"
@@ -2125,6 +2064,45 @@ msgstr "Zelená"
 #: src/audacious/glade/prefswin.glade:5324
 msgid "Blue"
 msgstr "Modrá"
+
+#~ msgid ""
+#~ "<b><big>No playable CD found.</big></b>\n"
+#~ "\n"
+#~ "No CD inserted, or inserted CD is not an audio CD.\n"
+#~ msgstr ""
+#~ "<b><big>CD nie je možné prehrávať.</big></b>\n"
+#~ "\n"
+#~ "V mechanike nie je CD, alebo vložené CD nie je audio CD.\n"
+
+#~ msgid "Add CD..."
+#~ msgstr "Pridať CD..."
+
+#~ msgid "Adds a CD to the playlist."
+#~ msgstr "Pridá CD do zoznamu skladieb."
+
+#~ msgid "Play CD"
+#~ msgstr "Prehrať CD"
+
+#~ msgid "Performer/Artist"
+#~ msgstr "Interpret/Umelec"
+
+#~ msgid "File name"
+#~ msgstr "Názov súboru"
+
+#~ msgid "File path"
+#~ msgstr "Cesta k súboru"
+
+#~ msgid "File extension"
+#~ msgstr "Prípona súboru"
+
+#~ msgid "Track name"
+#~ msgstr "Názov stopy"
+
+#~ msgid "Track number"
+#~ msgstr "Číslo stopy"
+
+#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
+#~ msgstr "%{n:...%}: Zobraziť \"...\" len ak nechýba %n"
 
 #~ msgid ""
 #~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"

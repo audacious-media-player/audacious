@@ -23,7 +23,6 @@ src/audacious/ui_playlist_manager.c
 src/audacious/ui_jumptotrack.c
 src/audacious/util.c
 src/audacious/playback.c
-src/audacious/titlestring.c
 
 # Glade files.
 src/audacious/glade/fileinfo.glade

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-07-29 17:21+0200\n"
+"POT-Creation-Date: 2007-08-25 12:38+0200\n"
 "PO-Revision-Date: 2006-12-23 21:24+0200\n"
 "Last-Translator: Daniel Patriche <m4st3rth0r@yahoo.com>\n"
 "Language-Team: Romanian <m4st3rth0r@yahoo.com>\n"
@@ -27,20 +27,20 @@ msgstr ""
 "\n"
 "Nu s-a putut deschide fisierul glade (%s). Verificati instalarea.\n"
 
-#: src/audacious/input.c:646
+#: src/audacious/input.c:718
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: src/audacious/input.c:662
+#: src/audacious/input.c:734
 msgid "Filename:"
 msgstr "Fisier"
 
-#: src/audacious/input.c:681
+#: src/audacious/input.c:753
 msgid "No input plugin recognized this file"
 msgstr "Nici un plugin de intrare nu a recunoscut acest fisier"
 
-#: src/audacious/input.c:683
+#: src/audacious/input.c:755
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Plugin de intrare: %s"
@@ -50,85 +50,85 @@ msgstr "Plugin de intrare: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Nu s-a pautut crea fisierul de log (%s)!\n"
 
-#: src/audacious/main.c:89 src/audacious/main.c:91 src/audacious/ui_main.c:627
-#: src/audacious/ui_main.c:2836
+#: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:502
+#: src/audacious/ui_main.c:2514
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:466
+#: src/audacious/main.c:475
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nu s-a putut crea directorul (%s): %s"
 
-#: src/audacious/main.c:878
+#: src/audacious/main.c:887
 #, fuzzy
 msgid "Select which Audacious session ID to use"
 msgstr "Alege sesiunea Audacious/BMP/XMMS (Implicit: 0)"
 
-#: src/audacious/main.c:879
+#: src/audacious/main.c:888
 msgid "Skip backwards in playlist"
 msgstr "Sari inapoi in playlist"
 
-#: src/audacious/main.c:880
+#: src/audacious/main.c:889
 msgid "Start playing current playlist"
 msgstr "Incepe redarea playlist-ului curent"
 
-#: src/audacious/main.c:881
+#: src/audacious/main.c:890
 msgid "Pause current song"
 msgstr "Pauza melodia curenta"
 
-#: src/audacious/main.c:882
+#: src/audacious/main.c:891
 msgid "Stop current song"
 msgstr "Opreste melodia curenta"
 
-#: src/audacious/main.c:883
+#: src/audacious/main.c:892
 msgid "Pause if playing, play otherwise"
 msgstr "Pauza daca se reda, redare altfel"
 
-#: src/audacious/main.c:884
+#: src/audacious/main.c:893
 msgid "Skip forward in playlist"
 msgstr "Sari inainte in playlist"
 
-#: src/audacious/main.c:885
+#: src/audacious/main.c:894
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Arata dialogul Sari la fisier"
 
-#: src/audacious/main.c:886
+#: src/audacious/main.c:895
 msgid "Don't clear the playlist"
 msgstr "Nu curata playlist-ul"
 
-#: src/audacious/main.c:887
+#: src/audacious/main.c:896
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Adauga fisiere la playlist"
 
-#: src/audacious/main.c:888
+#: src/audacious/main.c:897
 #, fuzzy
 msgid "Display the main window"
 msgstr "Arata fereastra principala"
 
-#: src/audacious/main.c:889
+#: src/audacious/main.c:898
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:890
+#: src/audacious/main.c:899
 msgid "Enable headless operation"
 msgstr ""
 
-#: src/audacious/main.c:891
+#: src/audacious/main.c:900
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:892
+#: src/audacious/main.c:901
 msgid "Show version and builtin features"
 msgstr ""
 
-#: src/audacious/main.c:893
+#: src/audacious/main.c:902
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:1058
+#: src/audacious/main.c:1061
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -141,7 +141,7 @@ msgstr ""
 "Verificati ca skin-ul '%s' este folosibil si ca skin-ul default este "
 "instalat la '%s'\n"
 
-#: src/audacious/main.c:1116
+#: src/audacious/main.c:1119
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -155,18 +155,18 @@ msgstr ""
 "de\n"
 "a instala LinuxThreads trebuie sa recompilezi Glib & GTK+.\n"
 
-#: src/audacious/main.c:1147
+#: src/audacious/main.c:1150
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1154
+#: src/audacious/main.c:1157
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1164
+#: src/audacious/main.c:1167
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious: Nu s-a putut deschide display-ul, iesire.\n"
@@ -203,7 +203,7 @@ msgid ""
 "Expect unusable crash reports.\n"
 msgstr ""
 
-#: src/audacious/strings.c:171
+#: src/audacious/strings.c:170
 msgid "  (invalid UTF-8)"
 msgstr " (UTF-8 invalid)"
 
@@ -219,12 +219,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2006 Echipa de dezvoltare Audacious \n"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:350
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
 msgid "About Audacious"
 msgstr "Despre Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:393
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
 msgid "Credits"
 msgstr "Credite"
 
@@ -245,217 +245,217 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Developerii de baza Audacious"
 
-#: src/audacious/ui_credits.c:69
+#: src/audacious/ui_credits.c:70
 msgid "Graphics:"
 msgstr "Grafica"
 
-#: src/audacious/ui_credits.c:74
+#: src/audacious/ui_credits.c:75
 msgid "Default skin:"
 msgstr "Skin-ul implicit"
 
-#: src/audacious/ui_credits.c:79
+#: src/audacious/ui_credits.c:80
 msgid "Plugin development:"
 msgstr "Dezvoltarea pluginurilor"
 
-#: src/audacious/ui_credits.c:93
+#: src/audacious/ui_credits.c:94
 msgid "Patch authors:"
 msgstr "Autorii modificarilor"
 
-#: src/audacious/ui_credits.c:113
+#: src/audacious/ui_credits.c:114
 msgid "0.1.x developers:"
 msgstr "Dezvoltatorii versiunii 0.1.x"
 
-#: src/audacious/ui_credits.c:119
+#: src/audacious/ui_credits.c:120
 msgid "BMP Developers:"
 msgstr "Dezvoltatorii BMP"
 
-#: src/audacious/ui_credits.c:151
+#: src/audacious/ui_credits.c:152
 msgid "Brazilian Portuguese:"
 msgstr "Braziliana Portugheza"
 
-#: src/audacious/ui_credits.c:154
+#: src/audacious/ui_credits.c:155
 msgid "Breton:"
 msgstr "Bretona"
 
-#: src/audacious/ui_credits.c:157
+#: src/audacious/ui_credits.c:158
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Ungara"
 
-#: src/audacious/ui_credits.c:160
+#: src/audacious/ui_credits.c:161
 #, fuzzy
 msgid "Catalan:"
 msgstr "Italiana"
 
-#: src/audacious/ui_credits.c:163
+#: src/audacious/ui_credits.c:164
 #, fuzzy
 msgid "Croatian:"
 msgstr "Romana"
 
-#: src/audacious/ui_credits.c:166
+#: src/audacious/ui_credits.c:167
 msgid "Czech:"
 msgstr "Ceha"
 
-#: src/audacious/ui_credits.c:169
+#: src/audacious/ui_credits.c:170
 msgid "Dutch:"
 msgstr "Olandeza"
 
-#: src/audacious/ui_credits.c:173
+#: src/audacious/ui_credits.c:174
 msgid "Finnish:"
 msgstr "Finlandeza"
 
-#: src/audacious/ui_credits.c:176
+#: src/audacious/ui_credits.c:177
 msgid "French:"
 msgstr "Franceza"
 
-#: src/audacious/ui_credits.c:179
+#: src/audacious/ui_credits.c:180
 msgid "German:"
 msgstr "Germana"
 
-#: src/audacious/ui_credits.c:184
+#: src/audacious/ui_credits.c:185
 #, fuzzy
 msgid "Georgian:"
 msgstr "Georgiana"
 
-#: src/audacious/ui_credits.c:187
+#: src/audacious/ui_credits.c:188
 msgid "Greek:"
 msgstr "Greaca"
 
-#: src/audacious/ui_credits.c:192
+#: src/audacious/ui_credits.c:193
 msgid "Hindi:"
 msgstr "Hindi"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Hungarian:"
 msgstr "Ungara"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Italian:"
 msgstr "Italiana"
 
-#: src/audacious/ui_credits.c:202
+#: src/audacious/ui_credits.c:203
 msgid "Japanese:"
 msgstr "Japoneza"
 
-#: src/audacious/ui_credits.c:205
+#: src/audacious/ui_credits.c:206
 msgid "Korean:"
 msgstr "Koreana"
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:209
 msgid "Lithuanian:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:212
 msgid "Macedonian:"
 msgstr "Macedona"
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:215
 msgid "Polish:"
 msgstr "Poloneza"
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:218
 msgid "Romanian:"
 msgstr "Romana"
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:221
 msgid "Russian:"
 msgstr "Rusa"
 
-#: src/audacious/ui_credits.c:223
+#: src/audacious/ui_credits.c:224
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:226
+#: src/audacious/ui_credits.c:227
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:229
+#: src/audacious/ui_credits.c:230
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:232
+#: src/audacious/ui_credits.c:233
 msgid "Slovak:"
 msgstr "Slovaca"
 
-#: src/audacious/ui_credits.c:235
+#: src/audacious/ui_credits.c:236
 msgid "Spanish:"
 msgstr "Spaniola"
 
-#: src/audacious/ui_credits.c:238
+#: src/audacious/ui_credits.c:239
 msgid "Swedish:"
 msgstr "Suedeza"
 
-#: src/audacious/ui_credits.c:241
+#: src/audacious/ui_credits.c:242
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:244
+#: src/audacious/ui_credits.c:245
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:248
+#: src/audacious/ui_credits.c:249
 msgid "Ukrainian:"
 msgstr "Ucraineana"
 
-#: src/audacious/ui_credits.c:251
+#: src/audacious/ui_credits.c:252
 msgid "Welsh:"
 msgstr "Tara Galilor"
 
-#: src/audacious/ui_credits.c:397
+#: src/audacious/ui_credits.c:398
 msgid "Translators"
 msgstr "Translatori"
 
-#: src/audacious/ui_equalizer.c:635
+#: src/audacious/ui_equalizer.c:535
 msgid "Audacious Equalizer"
 msgstr "Egalizator Audacious"
 
-#: src/audacious/ui_equalizer.c:1279
+#: src/audacious/ui_equalizer.c:1169
 msgid "Presets"
 msgstr "Preseturi"
 
-#: src/audacious/ui_main.c:625
+#: src/audacious/ui_main.c:500
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:840
+#: src/audacious/ui_main.c:755
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:858 src/audacious/ui_main.c:862
+#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
 msgid "stereo"
 msgstr "stereo"
 
-#: src/audacious/ui_main.c:858 src/audacious/ui_main.c:862
+#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
 msgid "mono"
 msgstr "mono"
 
-#: src/audacious/ui_main.c:1199 src/audacious/ui_manager.c:419
-#: src/audacious/ui_manager.c:420
+#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:418
+#: src/audacious/ui_manager.c:419
 msgid "Jump to Time"
 msgstr "Sari la Timp"
 
-#: src/audacious/ui_main.c:1220
+#: src/audacious/ui_main.c:1053
 msgid "minutes:seconds"
 msgstr "minute:secunde"
 
-#: src/audacious/ui_main.c:1230
+#: src/audacious/ui_main.c:1063
 msgid "Track length:"
 msgstr "Marimea track-ului"
 
-#: src/audacious/ui_main.c:1394
+#: src/audacious/ui_main.c:1200
 msgid "Audacious - visibility warning"
 msgstr ""
 
-#: src/audacious/ui_main.c:1396
+#: src/audacious/ui_main.c:1202
 msgid "Show main player window"
 msgstr ""
 
-#: src/audacious/ui_main.c:1397
+#: src/audacious/ui_main.c:1203
 msgid "Ignore"
 msgstr ""
 
-#: src/audacious/ui_main.c:1401
+#: src/audacious/ui_main.c:1207
 msgid ""
 "Audacious has been started with all of its windows hidden.\n"
 "You may want to show the player window again to control Audacious; "
@@ -463,82 +463,72 @@ msgid ""
 "(such as the statusicon plugin)."
 msgstr ""
 
-#: src/audacious/ui_main.c:1407
+#: src/audacious/ui_main.c:1213
 msgid "Always ignore, show/hide is controlled remotely"
 msgstr ""
 
-#: src/audacious/ui_main.c:1425
+#: src/audacious/ui_main.c:1231
 msgid "Enter location to play:"
 msgstr "Introdu locatia pentru redare: "
 
-#: src/audacious/ui_main.c:1659
+#: src/audacious/ui_main.c:1465
 #, fuzzy, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "SEEK LA: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1691
+#: src/audacious/ui_main.c:1497
 #, c-format
 msgid "Volume: %d%%"
 msgstr ""
 
-#: src/audacious/ui_main.c:1722
+#: src/audacious/ui_main.c:1528
 #, c-format
 msgid "Balance: %d%% left"
 msgstr ""
 
-#: src/audacious/ui_main.c:1726
+#: src/audacious/ui_main.c:1532
 msgid "Balance: center"
 msgstr ""
 
-#: src/audacious/ui_main.c:1730
+#: src/audacious/ui_main.c:1536
 #, c-format
 msgid "Balance: %d%% right"
 msgstr ""
 
-#: src/audacious/ui_main.c:2118
+#: src/audacious/ui_main.c:1879
 msgid "Options Menu"
 msgstr ""
 
-#: src/audacious/ui_main.c:2122
+#: src/audacious/ui_main.c:1883
 #, fuzzy
 msgid "Disable 'Always On Top'"
 msgstr "/Mereu Deasupra"
 
-#: src/audacious/ui_main.c:2124
+#: src/audacious/ui_main.c:1885
 #, fuzzy
 msgid "Enable 'Always On Top'"
 msgstr "/Mereu Deasupra"
 
-#: src/audacious/ui_main.c:2127
+#: src/audacious/ui_main.c:1888
 msgid "File Info Box"
 msgstr ""
 
-#: src/audacious/ui_main.c:2131
+#: src/audacious/ui_main.c:1892
 #, fuzzy
 msgid "Disable 'Doublesize'"
 msgstr "/Marime Dubla"
 
-#: src/audacious/ui_main.c:2133
+#: src/audacious/ui_main.c:1894
 #, fuzzy
 msgid "Enable 'Doublesize'"
 msgstr "/Marime Dubla"
 
-#: src/audacious/ui_main.c:2136
+#: src/audacious/ui_main.c:1897
 #, fuzzy
 msgid "Visualization Menu"
 msgstr "/Modul de Vizualizare"
 
-#: src/audacious/ui_main.c:2184
-msgid ""
-"<b><big>No playable CD found.</big></b>\n"
-"\n"
-"No CD inserted, or inserted CD is not an audio CD.\n"
-msgstr ""
-"<b><big>Nu a fost gasit nici un CD ce poate fi redat.</big></b>\n"
-"\n"
-"Nici un CD inserat, sau CD-ul inserat nu este audio.\n"
-
-#: src/audacious/ui_main.c:2201
+#: src/audacious/ui_main.c:1945
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -554,570 +544,567 @@ msgstr ""
 "2. Nici un alt program nu blocheaza placa de sunet.\n"
 "3. Placa de sunet este configurata corect.\n"
 
-#: src/audacious/ui_main.c:2359
+#: src/audacious/ui_main.c:2025
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "VOLUM: %d%%"
 
-#: src/audacious/ui_main.c:2362
+#: src/audacious/ui_main.c:2028
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANS: %d%% STANGA"
 
-#: src/audacious/ui_main.c:2365
+#: src/audacious/ui_main.c:2031
 msgid "BALANCE: CENTER"
 msgstr "BALANS: CENTRU"
 
-#: src/audacious/ui_main.c:2367
+#: src/audacious/ui_main.c:2033
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANS: %d%% DREAPTA"
 
-#: src/audacious/ui_main.c:2818
+#: src/audacious/ui_main.c:2496
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_manager.c:45 src/audacious/ui_manager.c:46
+#: src/audacious/ui_manager.c:47 src/audacious/ui_manager.c:48
 #, fuzzy
 msgid "Autoscroll Songname"
 msgstr "/Autoscroll al Numelui Fisierului"
 
-#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
+#: src/audacious/ui_manager.c:50 src/audacious/ui_manager.c:51
 #, fuzzy
 msgid "Stop after Current Song"
 msgstr "/Opreste dupa Melodia Curenta"
 
-#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
+#: src/audacious/ui_manager.c:53 src/audacious/ui_manager.c:54
 msgid "Peaks"
 msgstr ""
 
-#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
+#: src/audacious/ui_manager.c:56 src/audacious/ui_manager.c:57
 #, fuzzy
 msgid "Repeat"
 msgstr "/Repeta"
 
-#: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
+#: src/audacious/ui_manager.c:59 src/audacious/ui_manager.c:60
 #, fuzzy
 msgid "Shuffle"
 msgstr "/Amesteca"
 
-#: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
+#: src/audacious/ui_manager.c:62 src/audacious/ui_manager.c:63
 #, fuzzy
 msgid "No Playlist Advance"
 msgstr "/Nu avansa in Playlist"
 
-#: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
+#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
 #, fuzzy
 msgid "Show Player"
 msgstr "/Arata player"
 
-#: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
+#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
 #, fuzzy
 msgid "Show Playlist Editor"
 msgstr "/Arata Editorul de Playlist"
 
-#: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
+#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
 #, fuzzy
 msgid "Show Equalizer"
 msgstr "/Arata Egalizatorul"
 
-#: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
+#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
 #, fuzzy
 msgid "Always on Top"
 msgstr "/Mereu Deasupra"
 
-#: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
+#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
 #, fuzzy
 msgid "Put on All Workspaces"
 msgstr "/Pune pe Toate Spatiile de Lucru"
 
-#: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
+#: src/audacious/ui_manager.c:80 src/audacious/ui_manager.c:81
 #, fuzzy
 msgid "Roll up Player"
 msgstr "/Arata player"
 
-#: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
+#: src/audacious/ui_manager.c:83 src/audacious/ui_manager.c:84
 #, fuzzy
 msgid "Roll up Playlist Editor"
 msgstr "/Arata Editorul de Playlist"
 
-#: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
+#: src/audacious/ui_manager.c:86 src/audacious/ui_manager.c:87
 #, fuzzy
 msgid "Roll up Equalizer"
 msgstr "Egalizator"
 
-#: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
+#: src/audacious/ui_manager.c:89 src/audacious/ui_manager.c:90
 #, fuzzy
 msgid "DoubleSize"
 msgstr "/Marime Dubla"
 
-#: src/audacious/ui_manager.c:90 src/audacious/ui_manager.c:91
+#: src/audacious/ui_manager.c:92 src/audacious/ui_manager.c:93
 #, fuzzy
 msgid "Easy Move"
 msgstr "/Mutare usoara"
 
-#: src/audacious/ui_manager.c:99
+#: src/audacious/ui_manager.c:101
 #, fuzzy
 msgid "Analyzer"
 msgstr "/Modul Analizatorului"
 
-#: src/audacious/ui_manager.c:100
+#: src/audacious/ui_manager.c:102
 #, fuzzy
 msgid "Scope"
 msgstr "/Modul Scope"
 
-#: src/audacious/ui_manager.c:101
+#: src/audacious/ui_manager.c:103
 #, fuzzy
 msgid "Voiceprint"
 msgstr "/Modul Analizatorului/Foc"
 
-#: src/audacious/ui_manager.c:102
+#: src/audacious/ui_manager.c:104
 msgid "Off"
 msgstr ""
 
-#: src/audacious/ui_manager.c:106 src/audacious/ui_manager.c:123
-#: src/audacious/ui_manager.c:129
+#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:125
+#: src/audacious/ui_manager.c:131
 msgid "Normal"
 msgstr ""
 
-#: src/audacious/ui_manager.c:107 src/audacious/ui_manager.c:124
+#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
 msgid "Fire"
 msgstr ""
 
-#: src/audacious/ui_manager.c:108
+#: src/audacious/ui_manager.c:110
 #, fuzzy
 msgid "Vertical Lines"
 msgstr "/Modul Analizatorului/Linii Verticale"
 
-#: src/audacious/ui_manager.c:112
+#: src/audacious/ui_manager.c:114
 #, fuzzy
 msgid "Lines"
 msgstr "linii"
 
-#: src/audacious/ui_manager.c:113
+#: src/audacious/ui_manager.c:115
 msgid "Bars"
 msgstr ""
 
-#: src/audacious/ui_manager.c:117
+#: src/audacious/ui_manager.c:119
 #, fuzzy
 msgid "Dot Scope"
 msgstr "/Modul Scope/Puncte"
 
-#: src/audacious/ui_manager.c:118
+#: src/audacious/ui_manager.c:120
 #, fuzzy
 msgid "Line Scope"
 msgstr "/Modul Scope/Linii"
 
-#: src/audacious/ui_manager.c:119
+#: src/audacious/ui_manager.c:121
 #, fuzzy
 msgid "Solid Scope"
 msgstr "/Modul Scope/Solid"
 
-#: src/audacious/ui_manager.c:125
+#: src/audacious/ui_manager.c:127
 msgid "Ice"
 msgstr ""
 
-#: src/audacious/ui_manager.c:130
+#: src/audacious/ui_manager.c:132
 #, fuzzy
 msgid "Smooth"
 msgstr "mono"
 
-#: src/audacious/ui_manager.c:134
+#: src/audacious/ui_manager.c:136
 #, fuzzy
 msgid "Full (~50 fps)"
 msgstr "/Rata de Refresh/Maxim (~50 fps)"
 
-#: src/audacious/ui_manager.c:135
+#: src/audacious/ui_manager.c:137
 #, fuzzy
 msgid "Half (~25 fps)"
 msgstr "/Rata de Refresh/Jumatate (~25 fps)"
 
-#: src/audacious/ui_manager.c:136
+#: src/audacious/ui_manager.c:138
 #, fuzzy
 msgid "Quarter (~13 fps)"
 msgstr "/Rata de Refresh/Sfert (~13 fps)"
 
-#: src/audacious/ui_manager.c:137
+#: src/audacious/ui_manager.c:139
 #, fuzzy
 msgid "Eighth (~6 fps)"
 msgstr "/Rata de Refresh/Optime (~6 fps)"
 
-#: src/audacious/ui_manager.c:141 src/audacious/ui_manager.c:149
+#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
 msgid "Slowest"
 msgstr ""
 
-#: src/audacious/ui_manager.c:142 src/audacious/ui_manager.c:150
+#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
 msgid "Slow"
 msgstr ""
 
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
+#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
 msgid "Medium"
 msgstr ""
 
-#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
+#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
 msgid "Fast"
 msgstr ""
 
-#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
+#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
 msgid "Fastest"
 msgstr ""
 
-#: src/audacious/ui_manager.c:157
+#: src/audacious/ui_manager.c:159
 #, fuzzy
 msgid "Time Elapsed"
 msgstr "/Timpul Trecut"
 
-#: src/audacious/ui_manager.c:158
+#: src/audacious/ui_manager.c:160
 #, fuzzy
 msgid "Time Remaining"
 msgstr "/Timpul Ramas"
 
-#: src/audacious/ui_manager.c:167
+#: src/audacious/ui_manager.c:169
 #, fuzzy
 msgid "Playback"
 msgstr "/_Redare"
 
-#: src/audacious/ui_manager.c:169 src/audacious/ui_manager.c:170
+#: src/audacious/ui_manager.c:171 src/audacious/ui_manager.c:172
 #, fuzzy
 msgid "Play"
 msgstr "/Reda"
 
-#: src/audacious/ui_manager.c:172 src/audacious/ui_manager.c:173
+#: src/audacious/ui_manager.c:174 src/audacious/ui_manager.c:175
 #, fuzzy
 msgid "Pause"
 msgstr "/Pauza"
 
-#: src/audacious/ui_manager.c:175 src/audacious/ui_manager.c:176
+#: src/audacious/ui_manager.c:177 src/audacious/ui_manager.c:178
 #, fuzzy
 msgid "Stop"
 msgstr "/Stop"
 
-#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:179
+#: src/audacious/ui_manager.c:180 src/audacious/ui_manager.c:181
 #, fuzzy
 msgid "Previous"
 msgstr "/Anterioara"
 
-#: src/audacious/ui_manager.c:181 src/audacious/ui_manager.c:182
+#: src/audacious/ui_manager.c:183 src/audacious/ui_manager.c:184
 #, fuzzy
 msgid "Next"
 msgstr "/Urmatoarea"
 
-#: src/audacious/ui_manager.c:187
+#: src/audacious/ui_manager.c:189
 #, fuzzy
 msgid "Visualization"
 msgstr "/V_uzualizare"
 
-#: src/audacious/ui_manager.c:188
+#: src/audacious/ui_manager.c:190
 #, fuzzy
 msgid "Visualization Mode"
 msgstr "/Modul de Vizualizare"
 
-#: src/audacious/ui_manager.c:189
+#: src/audacious/ui_manager.c:191
 #, fuzzy
 msgid "Analyzer Mode"
 msgstr "/Modul Analizatorului/Foc"
 
-#: src/audacious/ui_manager.c:190
+#: src/audacious/ui_manager.c:192
 #, fuzzy
 msgid "Scope Mode"
 msgstr "/Modul Scope"
 
-#: src/audacious/ui_manager.c:191
+#: src/audacious/ui_manager.c:193
 #, fuzzy
 msgid "Voiceprint Mode"
 msgstr "/Modul Analizatorului/Foc"
 
-#: src/audacious/ui_manager.c:192
+#: src/audacious/ui_manager.c:194
 #, fuzzy
 msgid "WindowShade VU Mode"
 msgstr "/Modul WindowShade VU"
 
-#: src/audacious/ui_manager.c:193
+#: src/audacious/ui_manager.c:195
 #, fuzzy
 msgid "Refresh Rate"
 msgstr "/Rata de Refresh"
 
-#: src/audacious/ui_manager.c:194
+#: src/audacious/ui_manager.c:196
 #, fuzzy
 msgid "Analyzer Falloff"
 msgstr "/Retragere Analizator"
 
-#: src/audacious/ui_manager.c:195
+#: src/audacious/ui_manager.c:197
 #, fuzzy
 msgid "Peaks Falloff"
 msgstr "/Retragere Varfuri"
 
-#: src/audacious/ui_manager.c:200 src/audacious/ui_preferences.c:108
+#: src/audacious/ui_manager.c:202 src/audacious/ui_preferences.c:115
 #: src/audacious/ui_playlist_manager.c:290
 #: src/audacious/glade/prefswin.glade:2494
 msgid "Playlist"
 msgstr "Playlist"
 
-#: src/audacious/ui_manager.c:202 src/audacious/ui_manager.c:203
+#: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
 #, fuzzy
 msgid "New Playlist"
 msgstr "/Playlist Nou"
 
-#: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
+#: src/audacious/ui_manager.c:207 src/audacious/ui_manager.c:208
 #, fuzzy
 msgid "Select Next Playlist"
 msgstr "/Selecteaza Urmatorul Playlist"
 
-#: src/audacious/ui_manager.c:208 src/audacious/ui_manager.c:209
+#: src/audacious/ui_manager.c:210 src/audacious/ui_manager.c:211
 #, fuzzy
 msgid "Select Previous Playlist"
 msgstr "/Selecteaza Playlist-ul Anterior"
 
-#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:212
+#: src/audacious/ui_manager.c:213 src/audacious/ui_manager.c:214
 #, fuzzy
 msgid "Delete Playlist"
 msgstr "/Selecteaza Urmatorul Playlist"
 
-#: src/audacious/ui_manager.c:214
+#: src/audacious/ui_manager.c:216
 #, fuzzy
 msgid "Load List"
 msgstr "Incarca fisiere"
 
-#: src/audacious/ui_manager.c:215
+#: src/audacious/ui_manager.c:217
 msgid "Loads a playlist file into the selected playlist."
 msgstr "Incarca un fisier playlist in playlist-ul selectat"
 
-#: src/audacious/ui_manager.c:217
+#: src/audacious/ui_manager.c:219
 msgid "Save List"
 msgstr "Salveaza Lista"
 
-#: src/audacious/ui_manager.c:218
+#: src/audacious/ui_manager.c:220
 msgid "Saves the selected playlist."
 msgstr "Salveaza playlist-ul selectat"
 
-#: src/audacious/ui_manager.c:220
+#: src/audacious/ui_manager.c:222
 msgid "Save Default List"
 msgstr "Salveaza Lista Implicita"
 
-#: src/audacious/ui_manager.c:221
+#: src/audacious/ui_manager.c:223
 msgid "Saves the selected playlist to the default location."
 msgstr "Salveaza playlist-ul selectat in locatia implicita"
 
-#: src/audacious/ui_manager.c:224
+#: src/audacious/ui_manager.c:226
 msgid "Refresh List"
 msgstr "Reimprospateaza Lista"
 
-#: src/audacious/ui_manager.c:225
+#: src/audacious/ui_manager.c:227
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr "Reimprospateaza metadata asociata cu o intrare din playlist"
 
-#: src/audacious/ui_manager.c:228
+#: src/audacious/ui_manager.c:230
 msgid "List Manager"
 msgstr ""
 
-#: src/audacious/ui_manager.c:229
+#: src/audacious/ui_manager.c:231
 #, fuzzy
 msgid "Opens the playlist manager."
 msgstr "Inverseaza ordinea track-urilor din playlist"
 
-#: src/audacious/ui_manager.c:235
+#: src/audacious/ui_manager.c:237
 #, fuzzy
 msgid "View"
 msgstr "/_Vizualizeaza"
 
-#: src/audacious/ui_manager.c:239
-msgid "Add CD..."
-msgstr "Adauga CD..."
-
-#: src/audacious/ui_manager.c:240
-msgid "Adds a CD to the playlist."
-msgstr "Adauga un CD la playlist"
-
-#: src/audacious/ui_manager.c:243
+#: src/audacious/ui_manager.c:241
 msgid "Add Internet Address..."
 msgstr "Adauga Adresa Internet..."
 
-#: src/audacious/ui_manager.c:244
+#: src/audacious/ui_manager.c:242
 msgid "Adds a remote track to the playlist."
 msgstr "Adauga un Track remote in playlist"
 
-#: src/audacious/ui_manager.c:247
+#: src/audacious/ui_manager.c:245
 msgid "Add Files..."
 msgstr "Adauga Fisiere..."
 
-#: src/audacious/ui_manager.c:248
+#: src/audacious/ui_manager.c:246
 msgid "Adds files to the playlist."
 msgstr "Adauga fisiere la playlist"
 
-#: src/audacious/ui_manager.c:253
+#: src/audacious/ui_manager.c:251
 msgid "Search and Select"
 msgstr "Cauta si Selecteaza"
 
-#: src/audacious/ui_manager.c:254
+#: src/audacious/ui_manager.c:252
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr ""
 "Cauta in playlist si selecteaza intrarile bazate pe un anumit criteriu."
 
-#: src/audacious/ui_manager.c:257
+#: src/audacious/ui_manager.c:255
 msgid "Invert Selection"
 msgstr "Inverseaza Selectia"
 
-#: src/audacious/ui_manager.c:258
+#: src/audacious/ui_manager.c:256
 msgid "Inverts the selected and unselected entries."
 msgstr "Inverseaza intrarile selectate si neselctate"
 
-#: src/audacious/ui_manager.c:261
+#: src/audacious/ui_manager.c:259
 msgid "Select All"
 msgstr "Selecteaza Tot"
 
-#: src/audacious/ui_manager.c:262
+#: src/audacious/ui_manager.c:260
 msgid "Selects all of the playlist entries."
 msgstr "Selecteaza toate intrarile din playlist"
 
-#: src/audacious/ui_manager.c:265
+#: src/audacious/ui_manager.c:263
 msgid "Select None"
 msgstr "Deselecteaza"
 
-#: src/audacious/ui_manager.c:266
+#: src/audacious/ui_manager.c:264
 msgid "Deselects all of the playlist entries."
 msgstr "Deslecteaza toate intrarile din playlist"
 
-#: src/audacious/ui_manager.c:271
+#: src/audacious/ui_manager.c:269
 msgid "Clear Queue"
 msgstr "Curata Coada"
 
-#: src/audacious/ui_manager.c:272
+#: src/audacious/ui_manager.c:270
 msgid "Clears the queue associated with this playlist."
 msgstr "Sterge toate intarile din coada asociata cu acest playlist"
 
-#: src/audacious/ui_manager.c:275
+#: src/audacious/ui_manager.c:273
 msgid "Remove Unavailable Files"
 msgstr "Sterge Fisierele Nedisponibile"
 
-#: src/audacious/ui_manager.c:276
+#: src/audacious/ui_manager.c:274
 msgid "Removes unavailable files from the playlist."
 msgstr "Sterge fisierele nedisponibile din playlist"
 
-#: src/audacious/ui_manager.c:279
+#: src/audacious/ui_manager.c:277
 msgid "Remove Duplicates"
 msgstr "Sterge Dublurile"
 
-#: src/audacious/ui_manager.c:281 src/audacious/ui_manager.c:317
-#: src/audacious/ui_manager.c:347
+#: src/audacious/ui_manager.c:279 src/audacious/ui_manager.c:315
+#: src/audacious/ui_manager.c:345
 msgid "By Title"
 msgstr "Dupa Titlu"
 
-#: src/audacious/ui_manager.c:282
+#: src/audacious/ui_manager.c:280
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "Sterge dublurile din playlist dupa titlu"
 
-#: src/audacious/ui_manager.c:285 src/audacious/ui_manager.c:325
-#: src/audacious/ui_manager.c:355
+#: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
+#: src/audacious/ui_manager.c:353
 msgid "By Filename"
 msgstr "Dupa Fisier"
 
-#: src/audacious/ui_manager.c:286
+#: src/audacious/ui_manager.c:284
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "Sterge dublurile din playlist dupa fisier"
 
-#: src/audacious/ui_manager.c:289 src/audacious/ui_manager.c:329
-#: src/audacious/ui_manager.c:359
+#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:327
+#: src/audacious/ui_manager.c:357
 msgid "By Path + Filename"
 msgstr "Dupa cale + nume de fisier"
 
-#: src/audacious/ui_manager.c:290
+#: src/audacious/ui_manager.c:288
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "Sterge dublurile din playlist dupa calea completa"
 
-#: src/audacious/ui_manager.c:293
+#: src/audacious/ui_manager.c:291
 msgid "Remove All"
 msgstr "Sterge tot"
 
-#: src/audacious/ui_manager.c:294
+#: src/audacious/ui_manager.c:292
 msgid "Removes all entries from the playlist."
 msgstr "Sterge toate intrarile din playlisat"
 
-#: src/audacious/ui_manager.c:297
+#: src/audacious/ui_manager.c:295
 msgid "Remove Unselected"
 msgstr "Sterge intrarile neselctate"
 
-#: src/audacious/ui_manager.c:298
+#: src/audacious/ui_manager.c:296
 msgid "Remove unselected entries from the playlist."
 msgstr "Sterge intrarile neselctate din playlist"
 
-#: src/audacious/ui_manager.c:301
+#: src/audacious/ui_manager.c:299
 msgid "Remove Selected"
 msgstr "Sterge intrarile selectate"
 
-#: src/audacious/ui_manager.c:302
+#: src/audacious/ui_manager.c:300
 msgid "Remove selected entries from the playlist."
 msgstr "Sterge intrarile selectate din playlist"
 
-#: src/audacious/ui_manager.c:307
+#: src/audacious/ui_manager.c:305
 msgid "Randomize List"
 msgstr "La intamplare"
 
-#: src/audacious/ui_manager.c:308
+#: src/audacious/ui_manager.c:306
 msgid "Randomizes the playlist."
 msgstr "Pune track-urile din playlist la intamplare"
 
-#: src/audacious/ui_manager.c:311
+#: src/audacious/ui_manager.c:309
 msgid "Reverse List"
 msgstr "Inverseaza Lista"
 
-#: src/audacious/ui_manager.c:312
+#: src/audacious/ui_manager.c:310
 msgid "Reverses the playlist."
 msgstr "Inverseaza ordinea track-urilor din playlist"
 
-#: src/audacious/ui_manager.c:315
+#: src/audacious/ui_manager.c:313
 msgid "Sort List"
 msgstr "Sorteaza Lista"
 
-#: src/audacious/ui_manager.c:318 src/audacious/ui_manager.c:348
+#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:346
 msgid "Sorts the list by title."
 msgstr "Sotrteaza lista dupa titlu"
 
-#: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
+#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
 msgid "By Artist"
 msgstr "Dupa artist"
 
-#: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
+#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
 msgid "Sorts the list by artist."
 msgstr "Sorteaza lista dupa artist"
 
-#: src/audacious/ui_manager.c:326 src/audacious/ui_manager.c:356
+#: src/audacious/ui_manager.c:324 src/audacious/ui_manager.c:354
 msgid "Sorts the list by filename."
 msgstr "Sorteaza lista dupa fisier"
 
-#: src/audacious/ui_manager.c:330 src/audacious/ui_manager.c:360
+#: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
 msgid "Sorts the list by full pathname."
 msgstr "Sorteaza lista dupa calea completa"
 
-#: src/audacious/ui_manager.c:333 src/audacious/ui_manager.c:363
+#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
 msgid "By Date"
 msgstr "Dupa data"
 
-#: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
+#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
 msgid "Sorts the list by modification time."
 msgstr "Sorteaza lista dupa data modificarii"
 
-#: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
+#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
 msgid "By Track Number"
 msgstr "Dupa numarul Trackului"
 
-#: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
+#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
 msgid "Sorts the list by track number."
 msgstr "Sorteaza lista dupa numarul Trackului"
 
-#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:371
+#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
 msgid "By Playlist Entry"
 msgstr "Dupa intrarea in Playlist"
 
-#: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
+#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
 msgid "Sorts the list by playlist entry."
 msgstr "Sorteaza dupa intrarea in playlist"
 
-#: src/audacious/ui_manager.c:345
+#: src/audacious/ui_manager.c:343
 msgid "Sort Selected"
 msgstr "Sorteaza Track-urile selectate"
+
+#: src/audacious/ui_manager.c:378 src/audacious/ui_manager.c:398
+#: src/audacious/ui_preferences.c:116 src/audacious/glade/prefswin.glade:693
+msgid "Plugins"
+msgstr "Plugin-uri"
 
 #: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
 msgid "View Track Details"
@@ -1147,289 +1134,277 @@ msgstr "/Reda Locatia"
 msgid "Play media from the selected location"
 msgstr ""
 
-#: src/audacious/ui_manager.c:395 src/audacious/ui_manager.c:396
-#, fuzzy
-msgid "Play CD"
-msgstr "/Reda CD"
-
-#: src/audacious/ui_manager.c:398
+#: src/audacious/ui_manager.c:395
 msgid "Last.fm radio"
 msgstr ""
 
-#: src/audacious/ui_manager.c:399
+#: src/audacious/ui_manager.c:396
 #, fuzzy
 msgid "Play Last.fm radio"
 msgstr "/Reda Locatia"
 
-#: src/audacious/ui_manager.c:401
+#: src/audacious/ui_manager.c:400
 #, fuzzy
 msgid "Preferences"
 msgstr "/Preferinte"
 
-#: src/audacious/ui_manager.c:402
+#: src/audacious/ui_manager.c:401
 #, fuzzy
 msgid "Open preferences window"
 msgstr "Fereastra de Preferinte"
 
-#: src/audacious/ui_manager.c:404
+#: src/audacious/ui_manager.c:403
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Iesire"
 
-#: src/audacious/ui_manager.c:405
+#: src/audacious/ui_manager.c:404
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "Despre Audacious"
 
-#: src/audacious/ui_manager.c:407 src/audacious/ui_manager.c:408
+#: src/audacious/ui_manager.c:406 src/audacious/ui_manager.c:407
 #, fuzzy
 msgid "Set A-B"
 msgstr "/Seteaza A-B"
 
-#: src/audacious/ui_manager.c:410 src/audacious/ui_manager.c:411
+#: src/audacious/ui_manager.c:409 src/audacious/ui_manager.c:410
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/Anuleaza A-B"
 
-#: src/audacious/ui_manager.c:413 src/audacious/ui_manager.c:414
+#: src/audacious/ui_manager.c:412 src/audacious/ui_manager.c:413
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/Sari la inceputul Playlist-ului"
 
-#: src/audacious/ui_manager.c:416 src/audacious/ui_manager.c:417
+#: src/audacious/ui_manager.c:415 src/audacious/ui_manager.c:416
 #, fuzzy
 msgid "Jump to File"
 msgstr "/Sari la Fisier"
 
-#: src/audacious/ui_manager.c:422
+#: src/audacious/ui_manager.c:421
 msgid "Queue Toggle"
 msgstr "Schimba Coada"
 
-#: src/audacious/ui_manager.c:423
+#: src/audacious/ui_manager.c:422
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr "Activeaza/Dezactiveaza intrarile din coada playlist-ului"
 
-#: src/audacious/ui_manager.c:430
+#: src/audacious/ui_manager.c:429
 #, fuzzy
 msgid "Load"
 msgstr "/Incarca"
 
-#: src/audacious/ui_manager.c:431
+#: src/audacious/ui_manager.c:430
 #, fuzzy
 msgid "Import"
 msgstr "/Importa"
 
-#: src/audacious/ui_manager.c:432
+#: src/audacious/ui_manager.c:431
 #, fuzzy
 msgid "Save"
 msgstr "/Salveaza"
 
-#: src/audacious/ui_manager.c:433
+#: src/audacious/ui_manager.c:432
 #, fuzzy
 msgid "Delete"
 msgstr "/Sterge"
 
-#: src/audacious/ui_manager.c:435 src/audacious/ui_manager.c:456
-#: src/audacious/ui_manager.c:471
+#: src/audacious/ui_manager.c:434 src/audacious/ui_manager.c:455
+#: src/audacious/ui_manager.c:470
 msgid "Preset"
 msgstr "Preset"
 
-#: src/audacious/ui_manager.c:436
+#: src/audacious/ui_manager.c:435
 msgid "Load preset"
 msgstr "Incarca preset"
 
-#: src/audacious/ui_manager.c:438 src/audacious/ui_manager.c:459
-#: src/audacious/ui_manager.c:474
+#: src/audacious/ui_manager.c:437 src/audacious/ui_manager.c:458
+#: src/audacious/ui_manager.c:473
 #, fuzzy
 msgid "Auto-load preset"
 msgstr "/Incarca/Auto-incarca preset"
 
-#: src/audacious/ui_manager.c:439
+#: src/audacious/ui_manager.c:438
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/Incarca/Auto-incarca preset"
 
-#: src/audacious/ui_manager.c:441 src/audacious/ui_manager.c:462
+#: src/audacious/ui_manager.c:440 src/audacious/ui_manager.c:461
 #, fuzzy
 msgid "Default"
 msgstr "Skin-ul implicit"
 
-#: src/audacious/ui_manager.c:442
+#: src/audacious/ui_manager.c:441
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: src/audacious/ui_manager.c:444
+#: src/audacious/ui_manager.c:443
 #, fuzzy
 msgid "Zero"
 msgstr "stereo"
 
-#: src/audacious/ui_manager.c:445
+#: src/audacious/ui_manager.c:444
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "Salveaza preset egalizator"
 
-#: src/audacious/ui_manager.c:447
+#: src/audacious/ui_manager.c:446
 #, fuzzy
 msgid "From file"
 msgstr "/Incarca/Din fisier"
 
-#: src/audacious/ui_manager.c:448
+#: src/audacious/ui_manager.c:447
 #, fuzzy
 msgid "Load preset from file"
 msgstr "Incarca preset"
 
-#: src/audacious/ui_manager.c:450
+#: src/audacious/ui_manager.c:449
 #, fuzzy
 msgid "From WinAMP EQF file"
 msgstr "/Incarca/Din fisier Winamp EQF"
 
-#: src/audacious/ui_manager.c:451
+#: src/audacious/ui_manager.c:450
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/Incarca/Din fisier Winamp EQF"
 
-#: src/audacious/ui_manager.c:453
+#: src/audacious/ui_manager.c:452
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "/Importa/Preseturi Winamp"
 
-#: src/audacious/ui_manager.c:454
+#: src/audacious/ui_manager.c:453
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/Importa/Preseturi Winamp"
 
-#: src/audacious/ui_manager.c:457
+#: src/audacious/ui_manager.c:456
 msgid "Save preset"
 msgstr "Salveaza preset"
 
-#: src/audacious/ui_manager.c:460
+#: src/audacious/ui_manager.c:459
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/Salveaza/Auto-incarca preset"
 
-#: src/audacious/ui_manager.c:463
+#: src/audacious/ui_manager.c:462
 #, fuzzy
 msgid "Save default preset"
 msgstr "Salveaza auto-preset"
 
-#: src/audacious/ui_manager.c:465
+#: src/audacious/ui_manager.c:464
 #, fuzzy
 msgid "To file"
 msgstr "Incarca fisiere"
 
-#: src/audacious/ui_manager.c:466
+#: src/audacious/ui_manager.c:465
 #, fuzzy
 msgid "Save preset to file"
 msgstr "Salveaza preset"
 
-#: src/audacious/ui_manager.c:468
+#: src/audacious/ui_manager.c:467
 #, fuzzy
 msgid "To WinAMP EQF file"
 msgstr "/Salveaza/In fisier Wianamp EQF"
 
-#: src/audacious/ui_manager.c:469
+#: src/audacious/ui_manager.c:468
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/Salveaza/In fisier Wianamp EQF"
 
-#: src/audacious/ui_manager.c:472
+#: src/audacious/ui_manager.c:471
 msgid "Delete preset"
 msgstr "Sterge preset"
 
-#: src/audacious/ui_manager.c:475
+#: src/audacious/ui_manager.c:474
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/Sterge/Auto-incarca preset"
 
-#: src/audacious/ui_preferences.c:103 src/audacious/glade/prefswin.glade:1363
+#: src/audacious/ui_preferences.c:110 src/audacious/glade/prefswin.glade:1363
 msgid "Appearance"
 msgstr "Aparenta"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:111
 msgid "Audio"
 msgstr "Audoi"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:112
 msgid "Connectivity"
 msgstr "Conectivitate"
 
-#: src/audacious/ui_preferences.c:106 src/audacious/glade/prefswin.glade:2862
+#: src/audacious/ui_preferences.c:113 src/audacious/glade/prefswin.glade:2862
 msgid "Equalizer"
 msgstr "Egalizator"
 
-#: src/audacious/ui_preferences.c:107 src/audacious/glade/prefswin.glade:1642
+#: src/audacious/ui_preferences.c:114 src/audacious/glade/prefswin.glade:1642
 msgid "Mouse"
 msgstr "Mouse"
 
-#: src/audacious/ui_preferences.c:109 src/audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "Plugin-uri"
-
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:255
+#: src/audacious/ui_preferences.c:122 src/audacious/ui_fileinfopopup.c:255
 msgid "Artist"
 msgstr "Artist"
 
-#: src/audacious/ui_preferences.c:116 src/audacious/ui_fileinfopopup.c:258
-#: src/audacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:258
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:252
-#: src/audacious/ui_fileinfopopup.c:362
+#: src/audacious/ui_preferences.c:124 src/audacious/ui_fileinfopopup.c:252
+#: src/audacious/ui_fileinfopopup.c:364
 msgid "Title"
 msgstr "Titlu"
 
-#: src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:125
 msgid "Tracknumber"
 msgstr "Numarul Track-ului"
 
-#: src/audacious/ui_preferences.c:119 src/audacious/ui_fileinfopopup.c:261
-#: src/audacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:126 src/audacious/ui_fileinfopopup.c:261
 msgid "Genre"
 msgstr "Genul"
 
-#: src/audacious/ui_preferences.c:120 src/audacious/ui_preferences.c:488
-#: src/audacious/ui_preferences.c:576 src/audacious/ui_preferences.c:665
-#: src/audacious/ui_preferences.c:761 src/audacious/ui_fileinfopopup.c:371
+#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:426
+#: src/audacious/ui_preferences.c:514 src/audacious/ui_preferences.c:603
+#: src/audacious/ui_preferences.c:699 src/audacious/ui_fileinfopopup.c:373
 msgid "Filename"
 msgstr "Fisier"
 
-#: src/audacious/ui_preferences.c:121
+#: src/audacious/ui_preferences.c:128
 msgid "Filepath"
 msgstr "Calea spre fisier"
 
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:387
+#: src/audacious/ui_preferences.c:129
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:264
-#: src/audacious/titlestring.c:388
+#: src/audacious/ui_preferences.c:130 src/audacious/ui_fileinfopopup.c:264
 msgid "Year"
 msgstr "Anul"
 
-#: src/audacious/ui_preferences.c:124 src/audacious/titlestring.c:389
+#: src/audacious/ui_preferences.c:131
 msgid "Comment"
 msgstr "Comentariu"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:152
 msgid "localhost"
 msgstr "localhost"
 
-#: src/audacious/ui_preferences.c:458 src/audacious/ui_preferences.c:545
-#: src/audacious/ui_preferences.c:634 src/audacious/ui_preferences.c:730
+#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
+#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
 msgid "Enabled"
 msgstr "Activat"
 
-#: src/audacious/ui_preferences.c:474 src/audacious/ui_preferences.c:561
-#: src/audacious/ui_preferences.c:650 src/audacious/ui_preferences.c:746
+#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
 msgid "Description"
 msgstr "Descriere"
 
-#: src/audacious/ui_preferences.c:1878
+#: src/audacious/ui_preferences.c:1684
 msgid "Category"
 msgstr "Categorie"
 
-#: src/audacious/ui_preferences.c:2425
+#: src/audacious/ui_preferences.c:2231
 msgid "Preferences Window"
 msgstr "Fereastra de Preferinte"
 
@@ -1455,36 +1430,36 @@ msgstr "Numarul Trackului"
 msgid "Track Length"
 msgstr "Marimea track-ului"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:134
 msgid "Open Files"
 msgstr "Deschide Fisiere"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:134
 msgid "Add Files"
 msgstr "Adauga Fisiere"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:136
 msgid "Close dialog on Open"
 msgstr "Inchide dialogul la deschidere"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:136
 msgid "Close dialog on Add"
 msgstr "Inchide dialogul la adougare"
 
-#: src/audacious/ui_fileopener.c:358
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Reda fisiere"
 
-#: src/audacious/ui_fileopener.c:360
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Incarca fisiere"
 
-#: src/audacious/ui_playlist.c:497
+#: src/audacious/ui_playlist.c:476
 #, fuzzy
 msgid "Search entries in active playlist"
 msgstr "Sterge toate intrarile din playlisat"
 
-#: src/audacious/ui_playlist.c:505
+#: src/audacious/ui_playlist.c:484
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1496,47 +1471,47 @@ msgstr ""
 "folositi expresii regulate, introduceti portiunea de litere la ce cautati."
 "for."
 
-#: src/audacious/ui_playlist.c:513
+#: src/audacious/ui_playlist.c:492
 #, fuzzy
 msgid "Title: "
 msgstr "Titlu"
 
-#: src/audacious/ui_playlist.c:520
+#: src/audacious/ui_playlist.c:499
 #, fuzzy
 msgid "Album: "
 msgstr "Album"
 
-#: src/audacious/ui_playlist.c:527
+#: src/audacious/ui_playlist.c:506
 msgid "Artist: "
 msgstr "Artist"
 
-#: src/audacious/ui_playlist.c:534
+#: src/audacious/ui_playlist.c:513
 msgid "Filename: "
 msgstr "Fisier"
 
-#: src/audacious/ui_playlist.c:542
+#: src/audacious/ui_playlist.c:521
 msgid "Clear previous selection before searching"
 msgstr "Sterge selectia anterioara inainte de a cauta"
 
-#: src/audacious/ui_playlist.c:545
+#: src/audacious/ui_playlist.c:524
 msgid "Automatically toggle queue for matching entries"
 msgstr "Schimba automat coada pentru intari care se potrivesc"
 
-#: src/audacious/ui_playlist.c:548
+#: src/audacious/ui_playlist.c:527
 msgid "Create a new playlist with matching entries"
 msgstr "Creeaza un nou playlist pentru intrarile care se potrivesc"
 
-#: src/audacious/ui_playlist.c:805
+#: src/audacious/ui_playlist.c:747
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Eroare la scrierea playlist-ului \"%s\": %s"
 
-#: src/audacious/ui_playlist.c:827
+#: src/audacious/ui_playlist.c:769
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s exista deja. Continuam?"
 
-#: src/audacious/ui_playlist.c:842
+#: src/audacious/ui_playlist.c:784
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1547,24 +1522,24 @@ msgstr ""
 "\n"
 "Tipul fisierului necunoscut pentru: '%s'.\n"
 
-#: src/audacious/ui_playlist.c:965
+#: src/audacious/ui_playlist.c:907
 #, fuzzy
 msgid "Save as Static Playlist"
 msgstr "Salveaza Playlist"
 
-#: src/audacious/ui_playlist.c:972
+#: src/audacious/ui_playlist.c:914
 msgid "Use Relative Path"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:994
+#: src/audacious/ui_playlist.c:936
 msgid "Load Playlist"
 msgstr "Incarca Playlist"
 
-#: src/audacious/ui_playlist.c:1007
+#: src/audacious/ui_playlist.c:949
 msgid "Save Playlist"
 msgstr "Salveaza Playlist"
 
-#: src/audacious/ui_playlist.c:1701
+#: src/audacious/ui_playlist.c:1500
 msgid "Audacious Playlist Editor"
 msgstr "Editor Playlist Audacious"
 
@@ -1587,67 +1562,39 @@ msgstr ""
 msgid "_Rename"
 msgstr "Fisier"
 
-#: src/audacious/ui_jumptotrack.c:141
+#: src/audacious/ui_jumptotrack.c:140
 msgid "Un_queue"
 msgstr "Scoate din coada"
 
-#: src/audacious/ui_jumptotrack.c:143 src/audacious/ui_jumptotrack.c:606
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
 msgid "_Queue"
 msgstr "Adauga in coada"
 
-#: src/audacious/ui_jumptotrack.c:521
+#: src/audacious/ui_jumptotrack.c:520
 msgid "Jump to Track"
 msgstr "Sari la Track"
 
-#: src/audacious/ui_jumptotrack.c:562
+#: src/audacious/ui_jumptotrack.c:561
 msgid "Filter: "
 msgstr "Filtru: "
 
-#: src/audacious/ui_jumptotrack.c:563
+#: src/audacious/ui_jumptotrack.c:562
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filtru: "
 
-#: src/audacious/ui_jumptotrack.c:597
+#: src/audacious/ui_jumptotrack.c:596
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Inchide dialogul la deschidere"
 
-#: src/audacious/playback.c:223
+#: src/audacious/playback.c:274
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
 "<b><big>Nici un plugin de iesire selectat</big></b>\n"
 "Nu ati ales nici un plugin de iesire."
-
-#: src/audacious/titlestring.c:379
-msgid "Performer/Artist"
-msgstr "Cantaret/Artist"
-
-#: src/audacious/titlestring.c:382
-msgid "File name"
-msgstr "Fisier"
-
-#: src/audacious/titlestring.c:383
-msgid "File path"
-msgstr "Calea fisierului"
-
-#: src/audacious/titlestring.c:384
-msgid "File extension"
-msgstr "Extensia fisierului"
-
-#: src/audacious/titlestring.c:385
-msgid "Track name"
-msgstr "Numele Trackului"
-
-#: src/audacious/titlestring.c:386
-msgid "Track number"
-msgstr "Numarul Trackului"
-
-#: src/audacious/titlestring.c:449
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: Arata \"...\" numai daca elementul %n este prezent"
 
 #: src/audacious/glade/fileinfo.glade:8
 msgid "Track Information"
@@ -2128,15 +2075,6 @@ msgstr ""
 msgid "Converter Type:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4392
-msgid ""
-"SRC_SINC_BEST_QUALITY\n"
-"SRC_SINC_MEDIUM_QUALITY\n"
-"SRC_SINC_FASTEST\n"
-"SRC_ZERO_ORDER_HOLD\n"
-"SRC_LINEAR"
-msgstr ""
-
 #: src/audacious/glade/prefswin.glade:4593
 #, fuzzy
 msgid "Reload Plugins"
@@ -2216,6 +2154,46 @@ msgstr "Greaca"
 #: src/audacious/glade/prefswin.glade:5324
 msgid "Blue"
 msgstr ""
+
+#~ msgid ""
+#~ "<b><big>No playable CD found.</big></b>\n"
+#~ "\n"
+#~ "No CD inserted, or inserted CD is not an audio CD.\n"
+#~ msgstr ""
+#~ "<b><big>Nu a fost gasit nici un CD ce poate fi redat.</big></b>\n"
+#~ "\n"
+#~ "Nici un CD inserat, sau CD-ul inserat nu este audio.\n"
+
+#~ msgid "Add CD..."
+#~ msgstr "Adauga CD..."
+
+#~ msgid "Adds a CD to the playlist."
+#~ msgstr "Adauga un CD la playlist"
+
+#, fuzzy
+#~ msgid "Play CD"
+#~ msgstr "/Reda CD"
+
+#~ msgid "Performer/Artist"
+#~ msgstr "Cantaret/Artist"
+
+#~ msgid "File name"
+#~ msgstr "Fisier"
+
+#~ msgid "File path"
+#~ msgstr "Calea fisierului"
+
+#~ msgid "File extension"
+#~ msgstr "Extensia fisierului"
+
+#~ msgid "Track name"
+#~ msgstr "Numele Trackului"
+
+#~ msgid "Track number"
+#~ msgstr "Numarul Trackului"
+
+#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
+#~ msgstr "%{n:...%}: Arata \"...\" numai daca elementul %n este prezent"
 
 #~ msgid ""
 #~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
