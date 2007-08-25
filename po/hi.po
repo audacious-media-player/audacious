@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 12:38+0200\n"
+"POT-Creation-Date: 2007-08-25 15:34+0200\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -24,10 +24,609 @@ msgid ""
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
 
-#: src/audacious/input.c:718
-#, c-format
-msgid "audacious: %s"
+#: src/audacious/glade/fileinfo.glade:8
+#, fuzzy
+msgid "Track Information"
+msgstr "ट्रैक गेन:"
+
+#: src/audacious/glade/fileinfo.glade:81
+#, fuzzy
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:139
+#, fuzzy
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:197
+#, fuzzy
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:255
+#, fuzzy
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:313
+#, fuzzy
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:392
+#, fuzzy
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:441
+#, fuzzy
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:499
+#, fuzzy
+msgid "<span size=\"small\">Location</span>"
+msgstr "<span size=\"xx-large\"><b>माउस</b></span>"
+
+#: src/audacious/glade/prefswin.glade:8
+#, fuzzy
+msgid "Audacious Preferences"
+msgstr "BMP की वरीयतायें"
+
+#: src/audacious/glade/prefswin.glade:115
+#, fuzzy
+msgid "_Decoder list:"
+msgstr "कूटवाचक"
+
+#: src/audacious/glade/prefswin.glade:219
+#, fuzzy
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+
+#: src/audacious/glade/prefswin.glade:261
+msgid "_General plugin list:"
+msgstr "सामान्य प्लग-इनों की सूची (_G):"
+
+#: src/audacious/glade/prefswin.glade:365
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+
+#: src/audacious/glade/prefswin.glade:407
+msgid "_Visualization plugin list:"
+msgstr "काल्पनिक प्लग-इनों की सूची (_V):"
+
+#: src/audacious/glade/prefswin.glade:511
+msgid "<b>Visualization</b>"
+msgstr "<b>कल्पना</b>"
+
+#: src/audacious/glade/prefswin.glade:553
+msgid "_Effect plugin list:"
+msgstr "प्रभावों के प्लग-इन की सूची (_E):"
+
+#: src/audacious/glade/prefswin.glade:657
+msgid "<b>Effects</b>"
+msgstr "<b>सभी प्रभाव</b>"
+
+#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
+#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
+msgid "Plugins"
+msgstr "प्लग-इन्स"
+
+#: src/audacious/glade/prefswin.glade:746
+msgid "<b>_Skin</b>"
+msgstr "<b>स्किन (_S)</b>"
+
+#: src/audacious/glade/prefswin.glade:799
+#, fuzzy
+msgid "Refresh skin list"
+msgstr "/ताजा करने की दर"
+
+#: src/audacious/glade/prefswin.glade:893
+msgid "<b>_Fonts</b>"
+msgstr "<b>फ़ॉन्टस (_F)</b>"
+
+#: src/audacious/glade/prefswin.glade:948
+msgid "_Player:"
+msgstr "प्लेयर (_P):"
+
+#: src/audacious/glade/prefswin.glade:991
+msgid "_Playlist:"
+msgstr "प्लेसूची (_P):"
+
+#: src/audacious/glade/prefswin.glade:1023
+msgid "Select main player window font:"
+msgstr "मुख्य प्लेयर खिड़की फ़ॉन्ट का चयन:"
+
+#: src/audacious/glade/prefswin.glade:1045
+#, fuzzy
+msgid "Select playlist font:"
+msgstr "मुख्य प्लेयर खिड़की फ़ॉन्ट का चयन:"
+
+#: src/audacious/glade/prefswin.glade:1091
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
 msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1093
+#, fuzzy
+msgid "Use Bitmap fonts if available"
+msgstr "स्टीरियो (यदि उपलब्ध है)"
+
+#: src/audacious/glade/prefswin.glade:1127
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>विविध (_M)</b>"
+
+#: src/audacious/glade/prefswin.glade:1175
+msgid "Show track numbers in playlist"
+msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
+
+#: src/audacious/glade/prefswin.glade:1210
+#, fuzzy
+msgid "Show separators in playlist"
+msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
+
+#: src/audacious/glade/prefswin.glade:1245
+msgid "Use custom cursors"
+msgstr "कस्टम कर्सरों का उपयोग करें"
+
+#: src/audacious/glade/prefswin.glade:1279
+#: src/audacious/glade/prefswin.glade:1290
+msgid "This enables the window manager to show decorations for windows."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1281
+msgid "Show window manager decoration"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1289
+msgid "Show window manager decorations"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1319
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1321
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1363 src/audacious/ui_preferences.c:110
+msgid "Appearance"
+msgstr "वेश-भूषा"
+
+#: src/audacious/glade/prefswin.glade:1410
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>माउस व्हील</b>"
+
+#: src/audacious/glade/prefswin.glade:1458
+#, fuzzy
+msgid "Changes volume by"
+msgstr "वाल्यूम को माउस व्हील तक परिवर्तित करती है"
+
+#: src/audacious/glade/prefswin.glade:1486
+msgid "percent"
+msgstr "प्रतिशत"
+
+#: src/audacious/glade/prefswin.glade:1514
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "माउस प्लेसूची को इतने दर से स्क्रोल करता है"
+
+#: src/audacious/glade/prefswin.glade:1567
+msgid "lines"
+msgstr "पंक्तियां"
+
+#: src/audacious/glade/prefswin.glade:1642 src/audacious/ui_preferences.c:114
+msgid "Mouse"
+msgstr "माउस"
+
+#: src/audacious/glade/prefswin.glade:1689
+msgid "<b>Filename</b>"
+msgstr "<b>संचिकानाम</b>"
+
+#: src/audacious/glade/prefswin.glade:1729
+msgid "Convert underscores to blanks"
+msgstr "अण्डरस्कोरों को रिक्त स्थान में बदलना"
+
+#: src/audacious/glade/prefswin.glade:1764
+msgid "Convert %20 to blanks"
+msgstr "%20 को रिक्त स्थान में बदलना"
+
+#: src/audacious/glade/prefswin.glade:1799
+msgid "Convert backslash '\\' to forward slash '/'"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1833
+msgid "<b>Metadata</b>"
+msgstr "<b>मेटाडाटा</b>"
+
+#: src/audacious/glade/prefswin.glade:1872
+msgid "Load metadata (tag information) from music files."
+msgstr "संगीत संचिकाओं से मेटाडाटा (टैग सूचना) लाएँ।"
+
+#: src/audacious/glade/prefswin.glade:1874
+msgid "Load metadata from playlists and files"
+msgstr "प्लेसूचियों और संचिकाओं से मेटा डाटा को लाएँ"
+
+#: src/audacious/glade/prefswin.glade:1912
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+"जब इस फ़ाइल को प्लेसूची में जोड़ा जा रहा हो या इसे खोला जा रहा हो तो मेटाडाटा को लोड "
+"करें"
+
+#: src/audacious/glade/prefswin.glade:1914
+msgid "On load"
+msgstr "लाने पर"
+
+#: src/audacious/glade/prefswin.glade:1934
+#, fuzzy
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr ""
+"जब इस फ़ाइल को प्लेसूची में जोड़ा जा रहा हो या इसे खोला जा रहा हो तो मेटाडाटा को लोड "
+"करें"
+
+#: src/audacious/glade/prefswin.glade:1936
+msgid "On display"
+msgstr "डिस्प्ले करने पर"
+
+#: src/audacious/glade/prefswin.glade:1966
+msgid "Fallback character encodings:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:1994
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2035
+msgid "Auto character encoding detector for:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2091
+#, fuzzy
+msgid "<b>File Dialog</b>"
+msgstr "<b>संचिकानाम</b>"
+
+#: src/audacious/glade/prefswin.glade:2130
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2132
+msgid "Always refresh directory when opening file dialog"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2166
+#, fuzzy
+msgid "<b>Song Display</b>"
+msgstr "<b>गीत को दिखाना</b>"
+
+#: src/audacious/glade/prefswin.glade:2214
+msgid "Title format:"
+msgstr "शीर्षक का प्रारूप:"
+
+#: src/audacious/glade/prefswin.glade:2242
+msgid "Custom string:"
+msgstr "कस्टम स्ट्रींग:"
+
+#: src/audacious/glade/prefswin.glade:2293
+#, fuzzy
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ARTIST - ALBUM - TRACK. TITLE\n"
+"ARTIST [ ALBUM ] - TRACK. TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"शीर्षक\n"
+"कलाकार - शीर्षक\n"
+"कलाकार - एल्बम  - शीर्षक\n"
+"एल्बम - शीर्षक\n"
+"कस्टम"
+
+#: src/audacious/glade/prefswin.glade:2315
+msgid "Show information about titlestring format"
+msgstr "शीर्षकस्ट्रिंग प्रारूप के बारे में सूचना दिखाएँ"
+
+#: src/audacious/glade/prefswin.glade:2365
+#, fuzzy
+msgid "<b>Popup Information</b>"
+msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+
+#: src/audacious/glade/prefswin.glade:2416
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2418
+msgid "Show popup information for playlist entries"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2445
+msgid "Edit settings for popup information"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
+#: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
+msgid "Playlist"
+msgstr "प्लेसूची"
+
+#: src/audacious/glade/prefswin.glade:2553
+msgid "<b>Presets</b>"
+msgstr "<b>प्रीसेट्स</b>"
+
+#: src/audacious/glade/prefswin.glade:2653
+msgid "Directory preset file:"
+msgstr "निर्देशिका प्रीसेट संचिका:"
+
+#: src/audacious/glade/prefswin.glade:2681
+msgid "File preset extension:"
+msgstr "संचिका प्रीसेट उपनाम:"
+
+#: src/audacious/glade/prefswin.glade:2729
+msgid "Available _Presets:"
+msgstr "उपलब्ध प्रीसेट (_P):"
+
+#: src/audacious/glade/prefswin.glade:2862 src/audacious/ui_preferences.c:113
+msgid "Equalizer"
+msgstr "ईक्यूलाईजर"
+
+#: src/audacious/glade/prefswin.glade:2909
+#, fuzzy
+msgid "<b>Proxy Configuration</b>"
+msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+
+#: src/audacious/glade/prefswin.glade:2967
+msgid "Enable proxy usage"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2998
+msgid "Proxy hostname:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3026
+#, fuzzy
+msgid "Proxy port:"
+msgstr "प्रोक्सी"
+
+#: src/audacious/glade/prefswin.glade:3120
+#, fuzzy
+msgid "Use authentication with proxy"
+msgstr "प्रमाणीकरण का उपयोग"
+
+#: src/audacious/glade/prefswin.glade:3151
+#, fuzzy
+msgid "Proxy username:"
+msgstr "उपयोगकर्ता का नाम:"
+
+#: src/audacious/glade/prefswin.glade:3179
+#, fuzzy
+msgid "Proxy password:"
+msgstr "कूटशब्द:"
+
+#: src/audacious/glade/prefswin.glade:3295
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3419
+#, fuzzy
+msgid "<b>Audio System</b>"
+msgstr "<b>प्रीसेट्स</b>"
+
+#: src/audacious/glade/prefswin.glade:3473
+#, fuzzy
+msgid "Current output plugin:"
+msgstr "वर्तमान आउटपुट प्लग-इन (_C):"
+
+#: src/audacious/glade/prefswin.glade:3541
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping.\n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3571
+#, fuzzy
+msgid "Buffer size:"
+msgstr "बफ़र का आकार (केबी):"
+
+#: src/audacious/glade/prefswin.glade:3695
+#, fuzzy
+msgid "Output Plugin Preferences"
+msgstr "ओएसएस आउटपुट प्लग-इन"
+
+#: src/audacious/glade/prefswin.glade:3770
+#, fuzzy
+msgid "Output Plugin Information"
+msgstr "ईएसडी आउटपुट प्लग-इन संरचना"
+
+#: src/audacious/glade/prefswin.glade:3822
+#, fuzzy
+msgid "<b>Format Detection</b>"
+msgstr "स्वचालित पहचान"
+
+#: src/audacious/glade/prefswin.glade:3861
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3863
+msgid "Detect file formats on demand, instead of immediately."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3897
+msgid ""
+"When checked, Audacious will detect file formats based by extension. This is "
+"slightly slower than detection on demand, but still provides a minimal level "
+"of format detection."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3899
+msgid "Detect file formats by extension."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3933
+msgid "<b>Playback</b>"
+msgstr "<b>प्लेबैक</b>"
+
+#: src/audacious/glade/prefswin.glade:3972
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:3974
+msgid "Continue playback on startup"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4008
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "जब एक गीत का चलना समाप्त हो जायें, तो अपने-आप अगले की ओर ना बढ़ें।"
+
+#: src/audacious/glade/prefswin.glade:4010
+msgid "Don't advance in the playlist"
+msgstr "प्लेसूची में आगे नहीं बढ़ें"
+
+#: src/audacious/glade/prefswin.glade:4045
+msgid "Pause between songs"
+msgstr "गीतों के मध्य ठहरें"
+
+#: src/audacious/glade/prefswin.glade:4083
+msgid "Pause for"
+msgstr "के लिए ठहरें"
+
+#: src/audacious/glade/prefswin.glade:4129
+msgid "seconds"
+msgstr "सेकेन्डस"
+
+#: src/audacious/glade/prefswin.glade:4175
+#, fuzzy
+msgid "<b>Sampling Rate Converter</b>"
+msgstr "सैम्पल की दर:"
+
+#: src/audacious/glade/prefswin.glade:4215
+#, fuzzy
+msgid "Enable Sampling Rate Converter"
+msgstr "सैम्पल की दर:"
+
+#: src/audacious/glade/prefswin.glade:4264
+#, fuzzy
+msgid "Sampling Rate [Hz]:"
+msgstr "सैम्पल की दर:"
+
+#: src/audacious/glade/prefswin.glade:4334
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4364
+msgid "Converter Type:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4593
+#, fuzzy
+msgid "Reload Plugins"
+msgstr "प्लग-इन्स"
+
+#: src/audacious/glade/prefswin.glade:4654
+#, fuzzy
+msgid "Popup Information Settings"
+msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+
+#: src/audacious/glade/prefswin.glade:4678
+#, fuzzy
+msgid "<b>Cover image retrieve</b>"
+msgstr "स्वचालित पहचान"
+
+#: src/audacious/glade/prefswin.glade:4703
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4758
+#, fuzzy
+msgid "Include:"
+msgstr "ईन्डी"
+
+#: src/audacious/glade/prefswin.glade:4786
+msgid "Exclude:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4855
+msgid "Recursively search for cover"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4893
+msgid "Search depth: "
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4959
+msgid "Use per-file cover"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4979
+#, fuzzy
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>विविध (_M)</b>"
+
+#: src/audacious/glade/prefswin.glade:5017
+msgid "Show Progress bar for the current track"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:5055
+msgid "Delay until filepopup comes up: "
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:5149
+msgid "Color Adjustment"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:5172
+msgid ""
+"Audacious allows you to alter the color balance of the skinned UI. The "
+"sliders below will allow you to do this."
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:5268
+msgid "Red"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:5296
+#, fuzzy
+msgid "Green"
+msgstr "ग्रीक:"
+
+#: src/audacious/glade/prefswin.glade:5324
+#, fuzzy
+msgid "Blue"
+msgstr "ब्लू"
+
+#: src/audacious/input.c:718
+#, fuzzy, c-format
+msgid "audacious: %s"
+msgstr "सीडी आडियो प्लग-इन"
 
 #: src/audacious/input.c:734
 msgid "Filename:"
@@ -168,6 +767,12 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "BMP: डिसप्ले को खोलने में असमर्थ, बाहर निकल रहा है।"
+
+#: src/audacious/playback.c:274
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
 
 #: src/audacious/signals.c:49
 msgid ""
@@ -418,6 +1023,150 @@ msgstr "/ईक्यूलाईजर को रोल-अप करें"
 #: src/audacious/ui_equalizer.c:1169
 msgid "Presets"
 msgstr "सभी प्रीसेट"
+
+#: src/audacious/ui_fileinfo.c:158
+#, fuzzy
+msgid "Track Information Window"
+msgstr "ट्रैक गेन:"
+
+#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
+#: src/audacious/ui_preferences.c:124
+msgid "Title"
+msgstr "शीर्षक"
+
+#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:122
+msgid "Artist"
+msgstr "कलाकार"
+
+#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:123
+msgid "Album"
+msgstr "एल्बम"
+
+#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:126
+msgid "Genre"
+msgstr "प्रकार"
+
+#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:130
+msgid "Year"
+msgstr "वर्ष"
+
+#: src/audacious/ui_fileinfopopup.c:267
+#, fuzzy
+msgid "Track Number"
+msgstr "ट्रैक की संख्या"
+
+#: src/audacious/ui_fileinfopopup.c:271
+#, fuzzy
+msgid "Track Length"
+msgstr "ट्रैक की लंबाई:"
+
+#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:426 src/audacious/ui_preferences.c:514
+#: src/audacious/ui_preferences.c:603 src/audacious/ui_preferences.c:699
+msgid "Filename"
+msgstr "संचिकानाम"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Open Files"
+msgstr "संचिकाओं को खोलें"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Add Files"
+msgstr "संचिकाओं को जोड़ें"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Open"
+msgstr "खोलने पर बन्द संवाद"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Add"
+msgstr "जोड़ने पर बन्द संवाद"
+
+#: src/audacious/ui_fileopener.c:363
+#, fuzzy
+msgid "Play files"
+msgstr "/चलायें"
+
+#: src/audacious/ui_fileopener.c:365
+#, fuzzy
+msgid "Load files"
+msgstr "/लायें/संचिका से"
+
+#: src/audacious/ui_jumptotrack.c:140
+#, fuzzy
+msgid "Un_queue"
+msgstr "कतार"
+
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
+#, fuzzy
+msgid "_Queue"
+msgstr "कतार"
+
+#: src/audacious/ui_jumptotrack.c:520
+msgid "Jump to Track"
+msgstr "ट्रैक पर जाएँ"
+
+#: src/audacious/ui_jumptotrack.c:561
+msgid "Filter: "
+msgstr "फ़िल्टर: "
+
+#: src/audacious/ui_jumptotrack.c:562
+#, fuzzy
+msgid "_Filter:"
+msgstr "फ़िल्टर: "
+
+#: src/audacious/ui_jumptotrack.c:596
+#, fuzzy
+msgid "Close on Jump"
+msgstr "खोलने पर बन्द संवाद"
+
+#: src/audacious/ui_lastfm.c:117
+msgid ""
+"<b><big>Couldn't find your lastfm login data.</big></b>\n"
+"\n"
+"Check if your Scrobbler's plugin login settings are configured properly.\n"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:238
+#, fuzzy
+msgid "Audacious last.fm radio tuner"
+msgstr "/प्लेसूची संपादक दिखाएँ"
+
+#: src/audacious/ui_lastfm.c:239
+#, fuzzy
+msgid "Station:"
+msgstr "इटैलियन:"
+
+#: src/audacious/ui_lastfm.c:257
+msgid "Love"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:258
+msgid "Ban"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:259
+msgid "Skip"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:260
+msgid "Tune in"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:262
+msgid "Neighbours' radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:263
+msgid "Personal radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:337
+msgid ""
+"<b><big>The lastfm radio plugin could not be found.</big></b>\n"
+"\n"
+"Check if the AudioScrobbler plugin was compiled in\n"
+msgstr ""
 
 #: src/audacious/ui_main.c:500
 #, c-format
@@ -853,12 +1602,6 @@ msgstr "/विश्लेषक फ़ॉलऑफ़"
 msgid "Peaks Falloff"
 msgstr "/शिखर फ़ॉलऑफ़"
 
-#: src/audacious/ui_manager.c:202 src/audacious/ui_preferences.c:115
-#: src/audacious/ui_playlist_manager.c:290
-#: src/audacious/glade/prefswin.glade:2494
-msgid "Playlist"
-msgstr "प्लेसूची"
-
 #: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
 #, fuzzy
 msgid "New Playlist"
@@ -905,8 +1648,9 @@ msgid "Save Default List"
 msgstr "/सुरक्षित/डिफ़ाल्ट"
 
 #: src/audacious/ui_manager.c:223
+#, fuzzy
 msgid "Saves the selected playlist to the default location."
-msgstr ""
+msgstr "प्लेसूची फ़ॉन्ट का चयन:"
 
 #: src/audacious/ui_manager.c:226
 #, fuzzy
@@ -918,8 +1662,9 @@ msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
 
 #: src/audacious/ui_manager.c:230
+#, fuzzy
 msgid "List Manager"
-msgstr ""
+msgstr "/कोई अग्रिम प्लेसूची नहीं"
 
 #: src/audacious/ui_manager.c:231
 #, fuzzy
@@ -937,8 +1682,9 @@ msgid "Add Internet Address..."
 msgstr "/इन्टरनेट पते को जोड़ें..."
 
 #: src/audacious/ui_manager.c:242
+#, fuzzy
 msgid "Adds a remote track to the playlist."
-msgstr ""
+msgstr "प्लेसूची को साफ़ नहीं करना"
 
 #: src/audacious/ui_manager.c:245
 #, fuzzy
@@ -967,16 +1713,18 @@ msgid "Invert Selection"
 msgstr "/चयन को उलटा करें"
 
 #: src/audacious/ui_manager.c:256
+#, fuzzy
 msgid "Inverts the selected and unselected entries."
-msgstr ""
+msgstr "प्लेसूची फ़ॉन्ट का चयन:"
 
 #: src/audacious/ui_manager.c:259
 msgid "Select All"
 msgstr "सभी का चयन करें"
 
 #: src/audacious/ui_manager.c:260
+#, fuzzy
 msgid "Selects all of the playlist entries."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/शीर्षक द्वारा"
 
 #: src/audacious/ui_manager.c:263
 #, fuzzy
@@ -984,8 +1732,9 @@ msgid "Select None"
 msgstr "/कुछ नहीं चयन करें"
 
 #: src/audacious/ui_manager.c:264
+#, fuzzy
 msgid "Deselects all of the playlist entries."
-msgstr ""
+msgstr "प्लेसूची को साफ़ नहीं करना"
 
 #: src/audacious/ui_manager.c:269
 #, fuzzy
@@ -993,8 +1742,9 @@ msgid "Clear Queue"
 msgstr "/कतार को साफ़ करें"
 
 #: src/audacious/ui_manager.c:270
+#, fuzzy
 msgid "Clears the queue associated with this playlist."
-msgstr ""
+msgstr "प्लेसूची फ़ॉन्ट का चयन:"
 
 #: src/audacious/ui_manager.c:273
 #, fuzzy
@@ -1018,8 +1768,9 @@ msgid "By Title"
 msgstr "शीर्षक"
 
 #: src/audacious/ui_manager.c:280
+#, fuzzy
 msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
 #: src/audacious/ui_manager.c:353
@@ -1039,8 +1790,9 @@ msgid "By Path + Filename"
 msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:288
+#, fuzzy
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:291
 #, fuzzy
@@ -1048,8 +1800,9 @@ msgid "Remove All"
 msgstr "/सभी को हटाएँ"
 
 #: src/audacious/ui_manager.c:292
+#, fuzzy
 msgid "Removes all entries from the playlist."
-msgstr ""
+msgstr "/अनुपलब्ध संचिकाओं को हटाएँ"
 
 #: src/audacious/ui_manager.c:295
 #, fuzzy
@@ -1057,8 +1810,9 @@ msgid "Remove Unselected"
 msgstr "/अचयनित को हटाएँ"
 
 #: src/audacious/ui_manager.c:296
+#, fuzzy
 msgid "Remove unselected entries from the playlist."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:299
 #, fuzzy
@@ -1066,8 +1820,9 @@ msgid "Remove Selected"
 msgstr "/चयनित को हटाएँ"
 
 #: src/audacious/ui_manager.c:300
+#, fuzzy
 msgid "Remove selected entries from the playlist."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:305
 #, fuzzy
@@ -1115,8 +1870,9 @@ msgid "Sorts the list by filename."
 msgstr "/सूची को क्रमानुसार लगायें/संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
+#, fuzzy
 msgid "Sorts the list by full pathname."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/संचिकानामों द्वारा"
 
 #: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
 #, fuzzy
@@ -1124,8 +1880,9 @@ msgid "By Date"
 msgstr "दिनांक"
 
 #: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
+#, fuzzy
 msgid "Sorts the list by modification time."
-msgstr ""
+msgstr "/सूची को क्रमानुसार लगायें/शीर्षक द्वारा"
 
 #: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
 #, fuzzy
@@ -1151,11 +1908,6 @@ msgstr "/सूची को क्रमानुसार लगायें/�
 #, fuzzy
 msgid "Sort Selected"
 msgstr "/चयन को क्रमानुसार लगायें"
-
-#: src/audacious/ui_manager.c:378 src/audacious/ui_manager.c:398
-#: src/audacious/ui_preferences.c:116 src/audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "प्लग-इन्स"
 
 #: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
 #, fuzzy
@@ -1187,8 +1939,9 @@ msgid "Play media from the selected location"
 msgstr ""
 
 #: src/audacious/ui_manager.c:395
+#, fuzzy
 msgid "Last.fm radio"
-msgstr ""
+msgstr "स्थान:"
 
 #: src/audacious/ui_manager.c:396
 #, fuzzy
@@ -1289,8 +2042,9 @@ msgid "Default"
 msgstr "डिफ़ाल्ट"
 
 #: src/audacious/ui_manager.c:441
+#, fuzzy
 msgid "Load default preset into equalizer"
-msgstr ""
+msgstr "आटो-प्रीसेट को सुरक्षित करना"
 
 #: src/audacious/ui_manager.c:443
 #, fuzzy
@@ -1374,140 +2128,6 @@ msgstr "प्रीसेट को हटाना"
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/मिटायें/आटो-लोड प्रीसेट"
-
-#: src/audacious/ui_preferences.c:110 src/audacious/glade/prefswin.glade:1363
-msgid "Appearance"
-msgstr "वेश-भूषा"
-
-#: src/audacious/ui_preferences.c:111
-#, fuzzy
-msgid "Audio"
-msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
-
-#: src/audacious/ui_preferences.c:112
-msgid "Connectivity"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:113 src/audacious/glade/prefswin.glade:2862
-msgid "Equalizer"
-msgstr "ईक्यूलाईजर"
-
-#: src/audacious/ui_preferences.c:114 src/audacious/glade/prefswin.glade:1642
-msgid "Mouse"
-msgstr "माउस"
-
-#: src/audacious/ui_preferences.c:122 src/audacious/ui_fileinfopopup.c:255
-msgid "Artist"
-msgstr "कलाकार"
-
-#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:258
-msgid "Album"
-msgstr "एल्बम"
-
-#: src/audacious/ui_preferences.c:124 src/audacious/ui_fileinfopopup.c:252
-#: src/audacious/ui_fileinfopopup.c:364
-msgid "Title"
-msgstr "शीर्षक"
-
-#: src/audacious/ui_preferences.c:125
-msgid "Tracknumber"
-msgstr "ट्रैकसंख्या"
-
-#: src/audacious/ui_preferences.c:126 src/audacious/ui_fileinfopopup.c:261
-msgid "Genre"
-msgstr "प्रकार"
-
-#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:426
-#: src/audacious/ui_preferences.c:514 src/audacious/ui_preferences.c:603
-#: src/audacious/ui_preferences.c:699 src/audacious/ui_fileinfopopup.c:373
-msgid "Filename"
-msgstr "संचिकानाम"
-
-#: src/audacious/ui_preferences.c:128
-msgid "Filepath"
-msgstr "संचिकापथ"
-
-#: src/audacious/ui_preferences.c:129
-msgid "Date"
-msgstr "दिनांक"
-
-#: src/audacious/ui_preferences.c:130 src/audacious/ui_fileinfopopup.c:264
-msgid "Year"
-msgstr "वर्ष"
-
-#: src/audacious/ui_preferences.c:131
-msgid "Comment"
-msgstr "टिप्पणी"
-
-#: src/audacious/ui_preferences.c:152
-msgid "localhost"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
-#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
-msgid "Enabled"
-msgstr "सक्रिय किया गया"
-
-#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
-#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
-msgid "Description"
-msgstr "विवरण"
-
-#: src/audacious/ui_preferences.c:1684
-msgid "Category"
-msgstr "वर्ग"
-
-#: src/audacious/ui_preferences.c:2231
-msgid "Preferences Window"
-msgstr "वरीयताऐं खिड़की"
-
-#: src/audacious/ui_skinselector.c:178
-msgid "Archived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_skinselector.c:183
-msgid "Unarchived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_fileinfo.c:158
-msgid "Track Information Window"
-msgstr ""
-
-#: src/audacious/ui_fileinfopopup.c:267
-#, fuzzy
-msgid "Track Number"
-msgstr "ट्रैक की संख्या"
-
-#: src/audacious/ui_fileinfopopup.c:271
-#, fuzzy
-msgid "Track Length"
-msgstr "ट्रैक की लंबाई:"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Open Files"
-msgstr "संचिकाओं को खोलें"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Add Files"
-msgstr "संचिकाओं को जोड़ें"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Open"
-msgstr "खोलने पर बन्द संवाद"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Add"
-msgstr "जोड़ने पर बन्द संवाद"
-
-#: src/audacious/ui_fileopener.c:363
-#, fuzzy
-msgid "Play files"
-msgstr "/चलायें"
-
-#: src/audacious/ui_fileopener.c:365
-#, fuzzy
-msgid "Load files"
-msgstr "/लायें/संचिका से"
 
 #: src/audacious/ui_playlist.c:476
 #, fuzzy
@@ -1596,11 +2216,6 @@ msgstr "प्लेसूची को सुरक्षित करना"
 msgid "Audacious Playlist Editor"
 msgstr "/प्लेसूची संपादक दिखाएँ"
 
-#: src/audacious/ui_urlopener.c:88
-#, fuzzy
-msgid "Add/Open URL Dialog"
-msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
-
 #: src/audacious/ui_playlist_manager.c:255
 #, fuzzy
 msgid "Playlist Manager"
@@ -1615,616 +2230,109 @@ msgstr ""
 msgid "_Rename"
 msgstr "संचिकानाम"
 
-#: src/audacious/ui_jumptotrack.c:140
+#: src/audacious/ui_preferences.c:111
 #, fuzzy
-msgid "Un_queue"
-msgstr "कतार"
+msgid "Audio"
+msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
-#, fuzzy
-msgid "_Queue"
-msgstr "कतार"
-
-#: src/audacious/ui_jumptotrack.c:520
-msgid "Jump to Track"
-msgstr "ट्रैक पर जाएँ"
-
-#: src/audacious/ui_jumptotrack.c:561
-msgid "Filter: "
-msgstr "फ़िल्टर: "
-
-#: src/audacious/ui_jumptotrack.c:562
-#, fuzzy
-msgid "_Filter:"
-msgstr "फ़िल्टर: "
-
-#: src/audacious/ui_jumptotrack.c:596
-#, fuzzy
-msgid "Close on Jump"
-msgstr "खोलने पर बन्द संवाद"
-
-#: src/audacious/playback.c:274
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
+#: src/audacious/ui_preferences.c:112
+msgid "Connectivity"
 msgstr ""
 
-#: src/audacious/glade/fileinfo.glade:8
-#, fuzzy
-msgid "Track Information"
-msgstr "ट्रैक गेन:"
+#: src/audacious/ui_preferences.c:125
+msgid "Tracknumber"
+msgstr "ट्रैकसंख्या"
 
-#: src/audacious/glade/fileinfo.glade:81
-#, fuzzy
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+#: src/audacious/ui_preferences.c:128
+msgid "Filepath"
+msgstr "संचिकापथ"
 
-#: src/audacious/glade/fileinfo.glade:139
-#, fuzzy
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+#: src/audacious/ui_preferences.c:129
+msgid "Date"
+msgstr "दिनांक"
 
-#: src/audacious/glade/fileinfo.glade:197
-#, fuzzy
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+#: src/audacious/ui_preferences.c:131
+msgid "Comment"
+msgstr "टिप्पणी"
 
-#: src/audacious/glade/fileinfo.glade:255
-#, fuzzy
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:313
-#, fuzzy
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:392
-#, fuzzy
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:441
-#, fuzzy
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:499
-#, fuzzy
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"xx-large\"><b>माउस</b></span>"
-
-#: src/audacious/glade/prefswin.glade:8
-#, fuzzy
-msgid "Audacious Preferences"
-msgstr "BMP की वरीयतायें"
-
-#: src/audacious/glade/prefswin.glade:115
-#, fuzzy
-msgid "_Decoder list:"
-msgstr "कूटवाचक"
-
-#: src/audacious/glade/prefswin.glade:219
-#, fuzzy
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
-
-#: src/audacious/glade/prefswin.glade:261
-msgid "_General plugin list:"
-msgstr "सामान्य प्लग-इनों की सूची (_G):"
-
-#: src/audacious/glade/prefswin.glade:365
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
-
-#: src/audacious/glade/prefswin.glade:407
-msgid "_Visualization plugin list:"
-msgstr "काल्पनिक प्लग-इनों की सूची (_V):"
-
-#: src/audacious/glade/prefswin.glade:511
-msgid "<b>Visualization</b>"
-msgstr "<b>कल्पना</b>"
-
-#: src/audacious/glade/prefswin.glade:553
-msgid "_Effect plugin list:"
-msgstr "प्रभावों के प्लग-इन की सूची (_E):"
-
-#: src/audacious/glade/prefswin.glade:657
-msgid "<b>Effects</b>"
-msgstr "<b>सभी प्रभाव</b>"
-
-#: src/audacious/glade/prefswin.glade:746
-msgid "<b>_Skin</b>"
-msgstr "<b>स्किन (_S)</b>"
-
-#: src/audacious/glade/prefswin.glade:799
-#, fuzzy
-msgid "Refresh skin list"
-msgstr "/ताजा करने की दर"
-
-#: src/audacious/glade/prefswin.glade:893
-msgid "<b>_Fonts</b>"
-msgstr "<b>फ़ॉन्टस (_F)</b>"
-
-#: src/audacious/glade/prefswin.glade:948
-msgid "_Player:"
-msgstr "प्लेयर (_P):"
-
-#: src/audacious/glade/prefswin.glade:991
-msgid "_Playlist:"
-msgstr "प्लेसूची (_P):"
-
-#: src/audacious/glade/prefswin.glade:1023
-msgid "Select main player window font:"
-msgstr "मुख्य प्लेयर खिड़की फ़ॉन्ट का चयन:"
-
-#: src/audacious/glade/prefswin.glade:1045
-#, fuzzy
-msgid "Select playlist font:"
-msgstr "मुख्य प्लेयर खिड़की फ़ॉन्ट का चयन:"
-
-#: src/audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
+#: src/audacious/ui_preferences.c:152
+msgid "localhost"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1093
+#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
+#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
+msgid "Enabled"
+msgstr "सक्रिय किया गया"
+
+#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
+msgid "Description"
+msgstr "विवरण"
+
+#: src/audacious/ui_preferences.c:1684
+msgid "Category"
+msgstr "वर्ग"
+
+#: src/audacious/ui_preferences.c:2231
+msgid "Preferences Window"
+msgstr "वरीयताऐं खिड़की"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "PREAMP"
+msgstr "प्रीऐम्प"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "60HZ"
+msgstr "६० हर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "170HZ"
+msgstr "१७० हर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "310HZ"
+msgstr "३१० हर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "600HZ"
+msgstr "६०० हर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "1KHZ"
+msgstr "१ किलोहर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "3KHZ"
+msgstr "३ किलोहर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "6KHZ"
+msgstr "६ किलोहर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "12KHZ"
+msgstr "१२ किलोहर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "14KHZ"
+msgstr "१४ किलोहर्टज"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "16KHZ"
+msgstr "१६ किलोहर्टज"
+
+#: src/audacious/ui_skinselector.c:178
+msgid "Archived Winamp 2.x skin"
+msgstr ""
+
+#: src/audacious/ui_skinselector.c:183
+msgid "Unarchived Winamp 2.x skin"
+msgstr ""
+
+#: src/audacious/ui_urlopener.c:88
 #, fuzzy
-msgid "Use Bitmap fonts if available"
-msgstr "स्टीरियो (यदि उपलब्ध है)"
-
-#: src/audacious/glade/prefswin.glade:1127
-msgid "<b>_Miscellaneous</b>"
-msgstr "<b>विविध (_M)</b>"
-
-#: src/audacious/glade/prefswin.glade:1175
-msgid "Show track numbers in playlist"
-msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
-
-#: src/audacious/glade/prefswin.glade:1210
-#, fuzzy
-msgid "Show separators in playlist"
-msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
-
-#: src/audacious/glade/prefswin.glade:1245
-msgid "Use custom cursors"
-msgstr "कस्टम कर्सरों का उपयोग करें"
-
-#: src/audacious/glade/prefswin.glade:1279
-#: src/audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1281
-msgid "Show window manager decoration"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1289
-msgid "Show window manager decorations"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1321
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1410
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>माउस व्हील</b>"
-
-#: src/audacious/glade/prefswin.glade:1458
-#, fuzzy
-msgid "Changes volume by"
-msgstr "वाल्यूम को माउस व्हील तक परिवर्तित करती है"
-
-#: src/audacious/glade/prefswin.glade:1486
-msgid "percent"
-msgstr "प्रतिशत"
-
-#: src/audacious/glade/prefswin.glade:1514
-#, fuzzy
-msgid "Scrolls playlist by"
-msgstr "माउस प्लेसूची को इतने दर से स्क्रोल करता है"
-
-#: src/audacious/glade/prefswin.glade:1567
-msgid "lines"
-msgstr "पंक्तियां"
-
-#: src/audacious/glade/prefswin.glade:1689
-msgid "<b>Filename</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: src/audacious/glade/prefswin.glade:1729
-msgid "Convert underscores to blanks"
-msgstr "अण्डरस्कोरों को रिक्त स्थान में बदलना"
-
-#: src/audacious/glade/prefswin.glade:1764
-msgid "Convert %20 to blanks"
-msgstr "%20 को रिक्त स्थान में बदलना"
-
-#: src/audacious/glade/prefswin.glade:1799
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1833
-msgid "<b>Metadata</b>"
-msgstr "<b>मेटाडाटा</b>"
-
-#: src/audacious/glade/prefswin.glade:1872
-msgid "Load metadata (tag information) from music files."
-msgstr "संगीत संचिकाओं से मेटाडाटा (टैग सूचना) लाएँ।"
-
-#: src/audacious/glade/prefswin.glade:1874
-msgid "Load metadata from playlists and files"
-msgstr "प्लेसूचियों और संचिकाओं से मेटा डाटा को लाएँ"
-
-#: src/audacious/glade/prefswin.glade:1912
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"जब इस फ़ाइल को प्लेसूची में जोड़ा जा रहा हो या इसे खोला जा रहा हो तो मेटाडाटा को लोड "
-"करें"
-
-#: src/audacious/glade/prefswin.glade:1914
-msgid "On load"
-msgstr "लाने पर"
-
-#: src/audacious/glade/prefswin.glade:1934
-#, fuzzy
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr ""
-"जब इस फ़ाइल को प्लेसूची में जोड़ा जा रहा हो या इसे खोला जा रहा हो तो मेटाडाटा को लोड "
-"करें"
-
-#: src/audacious/glade/prefswin.glade:1936
-msgid "On display"
-msgstr "डिस्प्ले करने पर"
-
-#: src/audacious/glade/prefswin.glade:1966
-msgid "Fallback character encodings:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1994
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2035
-msgid "Auto character encoding detector for:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2091
-#, fuzzy
-msgid "<b>File Dialog</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: src/audacious/glade/prefswin.glade:2130
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2132
-msgid "Always refresh directory when opening file dialog"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2166
-#, fuzzy
-msgid "<b>Song Display</b>"
-msgstr "<b>गीत को दिखाना</b>"
-
-#: src/audacious/glade/prefswin.glade:2214
-msgid "Title format:"
-msgstr "शीर्षक का प्रारूप:"
-
-#: src/audacious/glade/prefswin.glade:2242
-msgid "Custom string:"
-msgstr "कस्टम स्ट्रींग:"
-
-#: src/audacious/glade/prefswin.glade:2293
-#, fuzzy
-msgid ""
-"TITLE\n"
-"ARTIST - TITLE\n"
-"ARTIST - ALBUM - TITLE\n"
-"ARTIST - ALBUM - TRACK. TITLE\n"
-"ARTIST [ ALBUM ] - TRACK. TITLE\n"
-"ALBUM - TITLE\n"
-"Custom"
-msgstr ""
-"शीर्षक\n"
-"कलाकार - शीर्षक\n"
-"कलाकार - एल्बम  - शीर्षक\n"
-"एल्बम - शीर्षक\n"
-"कस्टम"
-
-#: src/audacious/glade/prefswin.glade:2315
-msgid "Show information about titlestring format"
-msgstr "शीर्षकस्ट्रिंग प्रारूप के बारे में सूचना दिखाएँ"
-
-#: src/audacious/glade/prefswin.glade:2365
-#, fuzzy
-msgid "<b>Popup Information</b>"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
-
-#: src/audacious/glade/prefswin.glade:2416
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2418
-msgid "Show popup information for playlist entries"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2445
-msgid "Edit settings for popup information"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2553
-msgid "<b>Presets</b>"
-msgstr "<b>प्रीसेट्स</b>"
-
-#: src/audacious/glade/prefswin.glade:2653
-msgid "Directory preset file:"
-msgstr "निर्देशिका प्रीसेट संचिका:"
-
-#: src/audacious/glade/prefswin.glade:2681
-msgid "File preset extension:"
-msgstr "संचिका प्रीसेट उपनाम:"
-
-#: src/audacious/glade/prefswin.glade:2729
-msgid "Available _Presets:"
-msgstr "उपलब्ध प्रीसेट (_P):"
-
-#: src/audacious/glade/prefswin.glade:2909
-#, fuzzy
-msgid "<b>Proxy Configuration</b>"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
-
-#: src/audacious/glade/prefswin.glade:2967
-msgid "Enable proxy usage"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2998
-msgid "Proxy hostname:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3026
-#, fuzzy
-msgid "Proxy port:"
-msgstr "प्रोक्सी"
-
-#: src/audacious/glade/prefswin.glade:3120
-#, fuzzy
-msgid "Use authentication with proxy"
-msgstr "प्रमाणीकरण का उपयोग"
-
-#: src/audacious/glade/prefswin.glade:3151
-#, fuzzy
-msgid "Proxy username:"
-msgstr "उपयोगकर्ता का नाम:"
-
-#: src/audacious/glade/prefswin.glade:3179
-#, fuzzy
-msgid "Proxy password:"
-msgstr "कूटशब्द:"
-
-#: src/audacious/glade/prefswin.glade:3295
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3419
-#, fuzzy
-msgid "<b>Audio System</b>"
-msgstr "<b>प्रीसेट्स</b>"
-
-#: src/audacious/glade/prefswin.glade:3473
-#, fuzzy
-msgid "Current output plugin:"
-msgstr "वर्तमान आउटपुट प्लग-इन (_C):"
-
-#: src/audacious/glade/prefswin.glade:3541
-msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping.\n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3571
-#, fuzzy
-msgid "Buffer size:"
-msgstr "बफ़र का आकार (केबी):"
-
-#: src/audacious/glade/prefswin.glade:3695
-#, fuzzy
-msgid "Output Plugin Preferences"
-msgstr "ओएसएस आउटपुट प्लग-इन"
-
-#: src/audacious/glade/prefswin.glade:3770
-#, fuzzy
-msgid "Output Plugin Information"
-msgstr "ईएसडी आउटपुट प्लग-इन संरचना"
-
-#: src/audacious/glade/prefswin.glade:3822
-#, fuzzy
-msgid "<b>Format Detection</b>"
-msgstr "स्वचालित पहचान"
-
-#: src/audacious/glade/prefswin.glade:3861
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3863
-msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3897
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3899
-msgid "Detect file formats by extension."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3933
-msgid "<b>Playback</b>"
-msgstr "<b>प्लेबैक</b>"
-
-#: src/audacious/glade/prefswin.glade:3972
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3974
-msgid "Continue playback on startup"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4008
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "जब एक गीत का चलना समाप्त हो जायें, तो अपने-आप अगले की ओर ना बढ़ें।"
-
-#: src/audacious/glade/prefswin.glade:4010
-msgid "Don't advance in the playlist"
-msgstr "प्लेसूची में आगे नहीं बढ़ें"
-
-#: src/audacious/glade/prefswin.glade:4045
-msgid "Pause between songs"
-msgstr "गीतों के मध्य ठहरें"
-
-#: src/audacious/glade/prefswin.glade:4083
-msgid "Pause for"
-msgstr "के लिए ठहरें"
-
-#: src/audacious/glade/prefswin.glade:4129
-msgid "seconds"
-msgstr "सेकेन्डस"
-
-#: src/audacious/glade/prefswin.glade:4175
-#, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "सैम्पल की दर:"
-
-#: src/audacious/glade/prefswin.glade:4215
-#, fuzzy
-msgid "Enable Sampling Rate Converter"
-msgstr "सैम्पल की दर:"
-
-#: src/audacious/glade/prefswin.glade:4264
-#, fuzzy
-msgid "Sampling Rate [Hz]:"
-msgstr "सैम्पल की दर:"
-
-#: src/audacious/glade/prefswin.glade:4334
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
-msgid "Reload Plugins"
-msgstr "प्लग-इन्स"
-
-#: src/audacious/glade/prefswin.glade:4654
-#, fuzzy
-msgid "Popup Information Settings"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
-
-#: src/audacious/glade/prefswin.glade:4678
-#, fuzzy
-msgid "<b>Cover image retrieve</b>"
-msgstr "स्वचालित पहचान"
-
-#: src/audacious/glade/prefswin.glade:4703
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4758
-#, fuzzy
-msgid "Include:"
-msgstr "ईन्डी"
-
-#: src/audacious/glade/prefswin.glade:4786
-msgid "Exclude:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4855
-msgid "Recursively search for cover"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4893
-msgid "Search depth: "
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4959
-msgid "Use per-file cover"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4979
-#, fuzzy
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>विविध (_M)</b>"
-
-#: src/audacious/glade/prefswin.glade:5017
-msgid "Show Progress bar for the current track"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:5055
-msgid "Delay until filepopup comes up: "
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:5149
-msgid "Color Adjustment"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:5172
-msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:5268
-msgid "Red"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:5296
-#, fuzzy
-msgid "Green"
-msgstr "ग्रीक:"
-
-#: src/audacious/glade/prefswin.glade:5324
-#, fuzzy
-msgid "Blue"
-msgstr "ब्लू"
+msgid "Add/Open URL Dialog"
+msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
 
 #~ msgid ""
 #~ "<b><big>No playable CD found.</big></b>\n"
@@ -2238,10 +2346,6 @@ msgstr "ब्लू"
 #, fuzzy
 #~ msgid "Add CD..."
 #~ msgstr "/सीडी को जोड़ें..."
-
-#, fuzzy
-#~ msgid "Adds a CD to the playlist."
-#~ msgstr "प्लेसूची को साफ़ नहीं करना"
 
 #, fuzzy
 #~ msgid "Play CD"
@@ -2298,39 +2402,6 @@ msgstr "ब्लू"
 #, fuzzy
 #~ msgid "Album name: "
 #~ msgstr "एल्बम"
-
-#~ msgid "PREAMP"
-#~ msgstr "प्रीऐम्प"
-
-#~ msgid "60HZ"
-#~ msgstr "६० हर्टज"
-
-#~ msgid "170HZ"
-#~ msgstr "१७० हर्टज"
-
-#~ msgid "310HZ"
-#~ msgstr "३१० हर्टज"
-
-#~ msgid "600HZ"
-#~ msgstr "६०० हर्टज"
-
-#~ msgid "1KHZ"
-#~ msgstr "१ किलोहर्टज"
-
-#~ msgid "3KHZ"
-#~ msgstr "३ किलोहर्टज"
-
-#~ msgid "6KHZ"
-#~ msgstr "६ किलोहर्टज"
-
-#~ msgid "12KHZ"
-#~ msgstr "१२ किलोहर्टज"
-
-#~ msgid "14KHZ"
-#~ msgstr "१४ किलोहर्टज"
-
-#~ msgid "16KHZ"
-#~ msgstr "१६ किलोहर्टज"
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
@@ -4659,10 +4730,6 @@ msgstr "ब्लू"
 #, fuzzy
 #~ msgid " error"
 #~ msgstr "टेरर"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "सीडी आडियो प्लग-इन"
 
 #, fuzzy
 #~ msgid "Cannot initialize SDL!\n"

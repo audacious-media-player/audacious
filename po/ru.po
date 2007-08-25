@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 12:38+0200\n"
+"POT-Creation-Date: 2007-08-25 15:34+0200\n"
 "PO-Revision-Date: 2007-04-12 21:52+0300\n"
 "Last-Translator: Alexander Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
@@ -28,6 +28,603 @@ msgstr ""
 "<b><big>Невозможно создать %s.</big></b>\n"
 "\n"
 "Невозможно открыть файл glade (%s). Пожалуйста, проверьте систему.\n"
+
+#: src/audacious/glade/fileinfo.glade:8
+msgid "Track Information"
+msgstr "Информация о дорожке"
+
+#: src/audacious/glade/fileinfo.glade:81
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\"><b>Название</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:139
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\"><b>Исполнитель</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:197
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\"><b>Альбом</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:255
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\"><b>Коментарии</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:313
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\"><b>Стиль</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:392
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\"><b>Год</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:441
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\"><b>Номер дорожки</b></span>"
+
+#: src/audacious/glade/fileinfo.glade:499
+msgid "<span size=\"small\">Location</span>"
+msgstr "<span size=\"small\"><b>Расположение</b></span>"
+
+#: src/audacious/glade/prefswin.glade:8
+msgid "Audacious Preferences"
+msgstr "Настройки Audacious"
+
+#: src/audacious/glade/prefswin.glade:115
+msgid "_Decoder list:"
+msgstr "Список модулей _декодеров:"
+
+#: src/audacious/glade/prefswin.glade:219
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>Декодеры</b></span>"
+
+#: src/audacious/glade/prefswin.glade:261
+msgid "_General plugin list:"
+msgstr "Список модулей _общего назначения:"
+
+#: src/audacious/glade/prefswin.glade:365
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Общие</b></span>"
+
+#: src/audacious/glade/prefswin.glade:407
+msgid "_Visualization plugin list:"
+msgstr "Список модулей _визуализации:"
+
+#: src/audacious/glade/prefswin.glade:511
+msgid "<b>Visualization</b>"
+msgstr "<b>Визуализация</b>"
+
+#: src/audacious/glade/prefswin.glade:553
+msgid "_Effect plugin list:"
+msgstr "Список модулей _эффектов:"
+
+#: src/audacious/glade/prefswin.glade:657
+msgid "<b>Effects</b>"
+msgstr "<b>Эффекты</b>"
+
+#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
+#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
+msgid "Plugins"
+msgstr "Модули"
+
+#: src/audacious/glade/prefswin.glade:746
+msgid "<b>_Skin</b>"
+msgstr "<b>_Тема</b>"
+
+#: src/audacious/glade/prefswin.glade:799
+msgid "Refresh skin list"
+msgstr "Обновить список тем"
+
+#: src/audacious/glade/prefswin.glade:893
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Шрифты</b>"
+
+#: src/audacious/glade/prefswin.glade:948
+msgid "_Player:"
+msgstr "_Главное окно:"
+
+#: src/audacious/glade/prefswin.glade:991
+msgid "_Playlist:"
+msgstr "_Список воспроизведения:"
+
+#: src/audacious/glade/prefswin.glade:1023
+msgid "Select main player window font:"
+msgstr "Выбор шрифта для главного окна"
+
+#: src/audacious/glade/prefswin.glade:1045
+#, fuzzy
+msgid "Select playlist font:"
+msgstr "Выбор шрифта для главного окна"
+
+#: src/audacious/glade/prefswin.glade:1091
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
+"Использовать растровые шрифты, если возможно. Растровые шрифты не "
+"поддерживают Юникод."
+
+#: src/audacious/glade/prefswin.glade:1093
+msgid "Use Bitmap fonts if available"
+msgstr "Использовать растровые шрифты, если возможно"
+
+#: src/audacious/glade/prefswin.glade:1127
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Разное</b>"
+
+#: src/audacious/glade/prefswin.glade:1175
+msgid "Show track numbers in playlist"
+msgstr "Показывать номера песен в списке воспроизведения"
+
+#: src/audacious/glade/prefswin.glade:1210
+msgid "Show separators in playlist"
+msgstr "Показывать разделители в списке воспроизведения"
+
+#: src/audacious/glade/prefswin.glade:1245
+msgid "Use custom cursors"
+msgstr "Использовать курсоры, установленные темой"
+
+#: src/audacious/glade/prefswin.glade:1279
+#: src/audacious/glade/prefswin.glade:1290
+msgid "This enables the window manager to show decorations for windows."
+msgstr "Это позволяет оконному менеджеру показывать свои заголовки окон."
+
+#: src/audacious/glade/prefswin.glade:1281
+msgid "Show window manager decoration"
+msgstr "Показывать заголовок менеджера окон"
+
+#: src/audacious/glade/prefswin.glade:1289
+msgid "Show window manager decorations"
+msgstr "Показывать заголовки менеджера окон"
+
+#: src/audacious/glade/prefswin.glade:1319
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr ""
+"Это включает диалоги выбора файлов в стиле XMMS/GTK-1. Это окно выбора "
+"Audacious отображает самостоятельно, и оно работает быстрее, чем стандартное "
+"окно GTK2 (но к сожалению не такое удобное)."
+
+#: src/audacious/glade/prefswin.glade:1321
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr "Использовать окно выбора файлов в стиле XMMS, вместо стандартного"
+
+#: src/audacious/glade/prefswin.glade:1363 src/audacious/ui_preferences.c:110
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: src/audacious/glade/prefswin.glade:1410
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Колесо мыши</b>"
+
+#: src/audacious/glade/prefswin.glade:1458
+msgid "Changes volume by"
+msgstr "Изменяет громкость на"
+
+#: src/audacious/glade/prefswin.glade:1486
+msgid "percent"
+msgstr "процентов"
+
+#: src/audacious/glade/prefswin.glade:1514
+msgid "Scrolls playlist by"
+msgstr "Прокручивает список воспроизведения на"
+
+#: src/audacious/glade/prefswin.glade:1567
+msgid "lines"
+msgstr "строк"
+
+#: src/audacious/glade/prefswin.glade:1642 src/audacious/ui_preferences.c:114
+msgid "Mouse"
+msgstr "Мышь"
+
+#: src/audacious/glade/prefswin.glade:1689
+msgid "<b>Filename</b>"
+msgstr "<b>Название файла</b>"
+
+#: src/audacious/glade/prefswin.glade:1729
+msgid "Convert underscores to blanks"
+msgstr "Преобразовывать подчёркивание в пробел"
+
+#: src/audacious/glade/prefswin.glade:1764
+msgid "Convert %20 to blanks"
+msgstr "Преобразовывать %20 в пробел"
+
+#: src/audacious/glade/prefswin.glade:1799
+msgid "Convert backslash '\\' to forward slash '/'"
+msgstr "Преобразовывать обратный слэш '\\' в прямой слэш '/'"
+
+#: src/audacious/glade/prefswin.glade:1833
+msgid "<b>Metadata</b>"
+msgstr "<b>Информация о песне и исполнителе</b>"
+
+#: src/audacious/glade/prefswin.glade:1872
+msgid "Load metadata (tag information) from music files."
+msgstr ""
+"Загружать информацию о песне и исполнителе (информационный тэг) из "
+"музыкальных файлов."
+
+#: src/audacious/glade/prefswin.glade:1874
+msgid "Load metadata from playlists and files"
+msgstr "Загружать информацию о песнях из файлов и списков воспроизведения"
+
+#: src/audacious/glade/prefswin.glade:1912
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+"Загружать метаданные при добавлении файла в список воспроизведения или при "
+"открытии"
+
+#: src/audacious/glade/prefswin.glade:1914
+msgid "On load"
+msgstr "При открытии"
+
+#: src/audacious/glade/prefswin.glade:1934
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr ""
+"Загружать метаданные по необходимости при отображении файла в списке "
+"воспроизведения"
+
+#: src/audacious/glade/prefswin.glade:1936
+msgid "On display"
+msgstr "При отображении"
+
+#: src/audacious/glade/prefswin.glade:1966
+msgid "Fallback character encodings:"
+msgstr "Кодировка по умолчанию:"
+
+#: src/audacious/glade/prefswin.glade:1994
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+"Список кодировок, используемых при отображении метаданных. Если "
+"автоматическое определение кодировки отключено или не сработает, то для "
+"преобразования метаданных в UTF-8 будут использованы кодировки из этого "
+"списка."
+
+#: src/audacious/glade/prefswin.glade:2035
+msgid "Auto character encoding detector for:"
+msgstr "Автоматическое определение кодировки для:"
+
+#: src/audacious/glade/prefswin.glade:2091
+msgid "<b>File Dialog</b>"
+msgstr "<b>Окно выбора файла</b>"
+
+#: src/audacious/glade/prefswin.glade:2130
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+"Всегда обновлять окно выбора файлов (это замедлит открытие окна для больших "
+"каталогов; при использовании Gnome VFS обновление происходит автоматически)."
+
+#: src/audacious/glade/prefswin.glade:2132
+msgid "Always refresh directory when opening file dialog"
+msgstr "Всевгда обновлять каталог при открытии окна выбора файлов"
+
+#: src/audacious/glade/prefswin.glade:2166
+msgid "<b>Song Display</b>"
+msgstr "<b>Отображение Названий</b>"
+
+#: src/audacious/glade/prefswin.glade:2214
+msgid "Title format:"
+msgstr "Формат названия:"
+
+#: src/audacious/glade/prefswin.glade:2242
+msgid "Custom string:"
+msgstr "Особый:"
+
+#: src/audacious/glade/prefswin.glade:2293
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ARTIST - ALBUM - TRACK. TITLE\n"
+"ARTIST [ ALBUM ] - TRACK. TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"Название\n"
+"Исполнитель - Название\n"
+"Исполнитель - Альбом - Название\n"
+"Исполнитель - Альбом - Дорожка. Название\n"
+"Исполнитель [ Альбом ] - Дорожка. Название\n"
+"Альбом - Название\n"
+"Особый"
+
+#: src/audacious/glade/prefswin.glade:2315
+msgid "Show information about titlestring format"
+msgstr "Показать информацию о формате названия"
+
+#: src/audacious/glade/prefswin.glade:2365
+msgid "<b>Popup Information</b>"
+msgstr "<b>Всплывающее информационное окно</b>"
+
+#: src/audacious/glade/prefswin.glade:2416
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"Включает показ всплывающего окна с информацией о выбранной песне. Окно "
+"содержит название песни, название альбома, стиль, год, номер дорожки, "
+"длительность песни и обложку альбома."
+
+#: src/audacious/glade/prefswin.glade:2418
+msgid "Show popup information for playlist entries"
+msgstr "Показывать всплывающее информационное окно для песен в списке"
+
+#: src/audacious/glade/prefswin.glade:2445
+msgid "Edit settings for popup information"
+msgstr "Изменить настройки всплывающего информационного окна"
+
+#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
+#: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
+msgid "Playlist"
+msgstr "Список воспроизведения"
+
+#: src/audacious/glade/prefswin.glade:2553
+msgid "<b>Presets</b>"
+msgstr "<b>Предустановки</b>"
+
+#: src/audacious/glade/prefswin.glade:2653
+msgid "Directory preset file:"
+msgstr "Файл каталога предустановок:"
+
+#: src/audacious/glade/prefswin.glade:2681
+msgid "File preset extension:"
+msgstr "Файл расширений для предустановок:"
+
+#: src/audacious/glade/prefswin.glade:2729
+msgid "Available _Presets:"
+msgstr "Доступные _предустановки:"
+
+#: src/audacious/glade/prefswin.glade:2862 src/audacious/ui_preferences.c:113
+msgid "Equalizer"
+msgstr "Эквалайзер"
+
+#: src/audacious/glade/prefswin.glade:2909
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Настройка Прокси</b>"
+
+#: src/audacious/glade/prefswin.glade:2967
+msgid "Enable proxy usage"
+msgstr "Использовать прокси"
+
+#: src/audacious/glade/prefswin.glade:2998
+msgid "Proxy hostname:"
+msgstr "Прокси сервер:"
+
+#: src/audacious/glade/prefswin.glade:3026
+msgid "Proxy port:"
+msgstr "Прокси порт:"
+
+#: src/audacious/glade/prefswin.glade:3120
+msgid "Use authentication with proxy"
+msgstr "Использовать авторизацию на прокси"
+
+#: src/audacious/glade/prefswin.glade:3151
+msgid "Proxy username:"
+msgstr "Имя пользователя прокси:"
+
+#: src/audacious/glade/prefswin.glade:3179
+msgid "Proxy password:"
+msgstr "Пароль прокси:"
+
+#: src/audacious/glade/prefswin.glade:3295
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">Изменение этих настроек потребует перезапуск Audacious."
+"</span>"
+
+#: src/audacious/glade/prefswin.glade:3419
+msgid "<b>Audio System</b>"
+msgstr "<b>Звуковая Система</b>"
+
+#: src/audacious/glade/prefswin.glade:3473
+msgid "Current output plugin:"
+msgstr "Текущий модуль вывода звука:"
+
+#: src/audacious/glade/prefswin.glade:3541
+#, fuzzy
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping.\n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+"<span size=\"small\">Это время предварительной буферизации звуковых потоков, "
+"в миллисекундах.\n"
+"Увеличьте это значение, если при проигрывании звук прерывается. \n"
+"Учтите, что при слишком больших значениях Audacious будет работать медленно."
+"</span>"
+
+#: src/audacious/glade/prefswin.glade:3571
+msgid "Buffer size:"
+msgstr "Размер буфера:"
+
+#: src/audacious/glade/prefswin.glade:3695
+msgid "Output Plugin Preferences"
+msgstr "Настройки модуля вывода звука"
+
+#: src/audacious/glade/prefswin.glade:3770
+msgid "Output Plugin Information"
+msgstr "Информация о модуле вывода звука"
+
+#: src/audacious/glade/prefswin.glade:3822
+msgid "<b>Format Detection</b>"
+msgstr "<b>Распознавание файлов</b>"
+
+#: src/audacious/glade/prefswin.glade:3861
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"Если включено, то Audacious будет определять формат файла только когда "
+"потребуется. Это ускорит работу проигрывателя, но может внести беспорядок в "
+"список воспроизведения."
+
+#: src/audacious/glade/prefswin.glade:3863
+msgid "Detect file formats on demand, instead of immediately."
+msgstr "Определять формат файлов не сразу, а при необходимости."
+
+#: src/audacious/glade/prefswin.glade:3897
+msgid ""
+"When checked, Audacious will detect file formats based by extension. This is "
+"slightly slower than detection on demand, but still provides a minimal level "
+"of format detection."
+msgstr ""
+"Если включено, то Audacious будет определять формат файла по расширению. Это "
+"немного медленнее, чем распознавание при необходимости, но предоставляет "
+"минимальный уровень распознавания файлов."
+
+#: src/audacious/glade/prefswin.glade:3899
+msgid "Detect file formats by extension."
+msgstr "Определять формат файлов по расширению."
+
+#: src/audacious/glade/prefswin.glade:3933
+msgid "<b>Playback</b>"
+msgstr "<b>Воспроизведение</b>"
+
+#: src/audacious/glade/prefswin.glade:3972
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+"При запуске Audacious, автоматически продолжать проигрывание с момента "
+"остановки."
+
+#: src/audacious/glade/prefswin.glade:3974
+msgid "Continue playback on startup"
+msgstr "Продолжать проигрывание при запуске"
+
+#: src/audacious/glade/prefswin.glade:4008
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr ""
+"При завершении проигрывания песни не передвигаться автоматически на "
+"следующую."
+
+#: src/audacious/glade/prefswin.glade:4010
+msgid "Don't advance in the playlist"
+msgstr "Не продвигаться по списку воспроизведения"
+
+#: src/audacious/glade/prefswin.glade:4045
+msgid "Pause between songs"
+msgstr "Пауза между песнями"
+
+#: src/audacious/glade/prefswin.glade:4083
+msgid "Pause for"
+msgstr "Приостанавливать на"
+
+#: src/audacious/glade/prefswin.glade:4129
+msgid "seconds"
+msgstr "секунд"
+
+#: src/audacious/glade/prefswin.glade:4175
+msgid "<b>Sampling Rate Converter</b>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4215
+msgid "Enable Sampling Rate Converter"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4264
+msgid "Sampling Rate [Hz]:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4334
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4364
+msgid "Converter Type:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4593
+#, fuzzy
+msgid "Reload Plugins"
+msgstr "Модули"
+
+#: src/audacious/glade/prefswin.glade:4654
+msgid "Popup Information Settings"
+msgstr "Настройки всплывающей информации"
+
+#: src/audacious/glade/prefswin.glade:4678
+msgid "<b>Cover image retrieve</b>"
+msgstr "<b>Поиск обложки альбома</b>"
+
+#: src/audacious/glade/prefswin.glade:4703
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"При поиске обложки альбома, Audacious ищет определенные слова в именах "
+"файлов. Вы можете указать эти слова ниже, разделив их запятыми."
+
+#: src/audacious/glade/prefswin.glade:4758
+msgid "Include:"
+msgstr "Включая:"
+
+#: src/audacious/glade/prefswin.glade:4786
+msgid "Exclude:"
+msgstr "Исключая:"
+
+#: src/audacious/glade/prefswin.glade:4855
+msgid "Recursively search for cover"
+msgstr "Искать обложку во вложенных каталогах"
+
+#: src/audacious/glade/prefswin.glade:4893
+msgid "Search depth: "
+msgstr "Глубина поиска: "
+
+#: src/audacious/glade/prefswin.glade:4959
+msgid "Use per-file cover"
+msgstr "Искать изображение для каждого файла"
+
+#: src/audacious/glade/prefswin.glade:4979
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>Разное</b>"
+
+#: src/audacious/glade/prefswin.glade:5017
+msgid "Show Progress bar for the current track"
+msgstr "Показывать полосу завершения для проигрываемой записи"
+
+#: src/audacious/glade/prefswin.glade:5055
+msgid "Delay until filepopup comes up: "
+msgstr "Задержка при появлении всплывающей информации: "
+
+#: src/audacious/glade/prefswin.glade:5149
+msgid "Color Adjustment"
+msgstr "Настройка цвета"
+
+#: src/audacious/glade/prefswin.glade:5172
+msgid ""
+"Audacious allows you to alter the color balance of the skinned UI. The "
+"sliders below will allow you to do this."
+msgstr ""
+"Audacious позволяет вам изменить цветовой баланс пользовательского "
+"интерфейса. Ползунки внизу позволят вам сделать это."
+
+#: src/audacious/glade/prefswin.glade:5268
+msgid "Red"
+msgstr "Красный"
+
+#: src/audacious/glade/prefswin.glade:5296
+msgid "Green"
+msgstr "Зелёный"
+
+#: src/audacious/glade/prefswin.glade:5324
+msgid "Blue"
+msgstr "Синий"
 
 #: src/audacious/input.c:718
 #, c-format
@@ -170,6 +767,14 @@ msgstr ""
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Невозможно открыть экран, выходим.\n"
+
+#: src/audacious/playback.c:274
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+"<b><big>Не выбран модуль вывода звука.</big></b>\n"
+"Вы не выбрали модуль вывода звука."
 
 #: src/audacious/signals.c:49
 msgid ""
@@ -408,6 +1013,142 @@ msgstr "Эквалайзер Audacious"
 #: src/audacious/ui_equalizer.c:1169
 msgid "Presets"
 msgstr "Предустановки"
+
+#: src/audacious/ui_fileinfo.c:158
+msgid "Track Information Window"
+msgstr "Окно информации о дорожке"
+
+#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
+#: src/audacious/ui_preferences.c:124
+msgid "Title"
+msgstr "Название"
+
+#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:122
+msgid "Artist"
+msgstr "Исполнитель"
+
+#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:123
+msgid "Album"
+msgstr "Альбом"
+
+#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:126
+msgid "Genre"
+msgstr "Стиль"
+
+#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:130
+msgid "Year"
+msgstr "Год"
+
+#: src/audacious/ui_fileinfopopup.c:267
+msgid "Track Number"
+msgstr "Номер дорожки"
+
+#: src/audacious/ui_fileinfopopup.c:271
+msgid "Track Length"
+msgstr "Длительность"
+
+#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:426 src/audacious/ui_preferences.c:514
+#: src/audacious/ui_preferences.c:603 src/audacious/ui_preferences.c:699
+msgid "Filename"
+msgstr "Имя файла"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Open Files"
+msgstr "Открыть файлы"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Add Files"
+msgstr "Добавление файлов"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Open"
+msgstr "Закрыть окно при Открытии"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Add"
+msgstr "Закрыть окно при Добавлении"
+
+#: src/audacious/ui_fileopener.c:363
+msgid "Play files"
+msgstr "Воспроизвести файлы"
+
+#: src/audacious/ui_fileopener.c:365
+msgid "Load files"
+msgstr "Загрузить файлы"
+
+#: src/audacious/ui_jumptotrack.c:140
+msgid "Un_queue"
+msgstr "_Убрать из очереди"
+
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
+msgid "_Queue"
+msgstr "_В очередь"
+
+#: src/audacious/ui_jumptotrack.c:520
+msgid "Jump to Track"
+msgstr "Перескочить на дорожку"
+
+#: src/audacious/ui_jumptotrack.c:561
+msgid "Filter: "
+msgstr "Фильтр: "
+
+#: src/audacious/ui_jumptotrack.c:562
+msgid "_Filter:"
+msgstr "_Фильтр:"
+
+#: src/audacious/ui_jumptotrack.c:596
+#, fuzzy
+msgid "Close on Jump"
+msgstr "Закрыть окно при Открытии"
+
+#: src/audacious/ui_lastfm.c:117
+msgid ""
+"<b><big>Couldn't find your lastfm login data.</big></b>\n"
+"\n"
+"Check if your Scrobbler's plugin login settings are configured properly.\n"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:238
+#, fuzzy
+msgid "Audacious last.fm radio tuner"
+msgstr "Список воспроизведения Audacious"
+
+#: src/audacious/ui_lastfm.c:239
+#, fuzzy
+msgid "Station:"
+msgstr "Итальянский:"
+
+#: src/audacious/ui_lastfm.c:257
+msgid "Love"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:258
+msgid "Ban"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:259
+msgid "Skip"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:260
+msgid "Tune in"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:262
+msgid "Neighbours' radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:263
+msgid "Personal radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:337
+msgid ""
+"<b><big>The lastfm radio plugin could not be found.</big></b>\n"
+"\n"
+"Check if the AudioScrobbler plugin was compiled in\n"
+msgstr ""
 
 #: src/audacious/ui_main.c:500
 #, c-format
@@ -789,12 +1530,6 @@ msgstr "Падение анализатора"
 msgid "Peaks Falloff"
 msgstr "Падение пиков"
 
-#: src/audacious/ui_manager.c:202 src/audacious/ui_preferences.c:115
-#: src/audacious/ui_playlist_manager.c:290
-#: src/audacious/glade/prefswin.glade:2494
-msgid "Playlist"
-msgstr "Список воспроизведения"
-
 #: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
 msgid "New Playlist"
 msgstr "Новый список"
@@ -1046,11 +1781,6 @@ msgstr "Сортирует список по названию в списке."
 msgid "Sort Selected"
 msgstr "Сортировать выбранные"
 
-#: src/audacious/ui_manager.c:378 src/audacious/ui_manager.c:398
-#: src/audacious/ui_preferences.c:116 src/audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "Модули"
-
 #: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
 msgid "View Track Details"
 msgstr "Информация о дорожке"
@@ -1076,8 +1806,9 @@ msgid "Play media from the selected location"
 msgstr "Воспроизвести запись с указанного адреса"
 
 #: src/audacious/ui_manager.c:395
+#, fuzzy
 msgid "Last.fm radio"
-msgstr ""
+msgstr "Открыть адрес"
 
 #: src/audacious/ui_manager.c:396
 #, fuzzy
@@ -1234,135 +1965,6 @@ msgstr "Удалить предустановку"
 msgid "Delete auto-load preset"
 msgstr "Удалить автозагружаемую предустановку"
 
-#: src/audacious/ui_preferences.c:110 src/audacious/glade/prefswin.glade:1363
-msgid "Appearance"
-msgstr "Внешний вид"
-
-#: src/audacious/ui_preferences.c:111
-msgid "Audio"
-msgstr "Звук"
-
-#: src/audacious/ui_preferences.c:112
-msgid "Connectivity"
-msgstr "Сеть"
-
-#: src/audacious/ui_preferences.c:113 src/audacious/glade/prefswin.glade:2862
-msgid "Equalizer"
-msgstr "Эквалайзер"
-
-#: src/audacious/ui_preferences.c:114 src/audacious/glade/prefswin.glade:1642
-msgid "Mouse"
-msgstr "Мышь"
-
-#: src/audacious/ui_preferences.c:122 src/audacious/ui_fileinfopopup.c:255
-msgid "Artist"
-msgstr "Исполнитель"
-
-#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:258
-msgid "Album"
-msgstr "Альбом"
-
-#: src/audacious/ui_preferences.c:124 src/audacious/ui_fileinfopopup.c:252
-#: src/audacious/ui_fileinfopopup.c:364
-msgid "Title"
-msgstr "Название"
-
-#: src/audacious/ui_preferences.c:125
-msgid "Tracknumber"
-msgstr "Номер дорожки"
-
-#: src/audacious/ui_preferences.c:126 src/audacious/ui_fileinfopopup.c:261
-msgid "Genre"
-msgstr "Стиль"
-
-#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:426
-#: src/audacious/ui_preferences.c:514 src/audacious/ui_preferences.c:603
-#: src/audacious/ui_preferences.c:699 src/audacious/ui_fileinfopopup.c:373
-msgid "Filename"
-msgstr "Имя файла"
-
-#: src/audacious/ui_preferences.c:128
-msgid "Filepath"
-msgstr "Путь к файлу"
-
-#: src/audacious/ui_preferences.c:129
-msgid "Date"
-msgstr "Дата"
-
-#: src/audacious/ui_preferences.c:130 src/audacious/ui_fileinfopopup.c:264
-msgid "Year"
-msgstr "Год"
-
-#: src/audacious/ui_preferences.c:131
-msgid "Comment"
-msgstr "Комментарий"
-
-#: src/audacious/ui_preferences.c:152
-msgid "localhost"
-msgstr "localhost"
-
-#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
-#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
-msgid "Enabled"
-msgstr "Включен"
-
-#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
-#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
-msgid "Description"
-msgstr "Описание"
-
-#: src/audacious/ui_preferences.c:1684
-msgid "Category"
-msgstr "Категория"
-
-#: src/audacious/ui_preferences.c:2231
-msgid "Preferences Window"
-msgstr "Окно настроек"
-
-#: src/audacious/ui_skinselector.c:178
-msgid "Archived Winamp 2.x skin"
-msgstr "Упакованная тема Winamp 2.x"
-
-#: src/audacious/ui_skinselector.c:183
-msgid "Unarchived Winamp 2.x skin"
-msgstr "Неупакованная тема Winamp 2.x"
-
-#: src/audacious/ui_fileinfo.c:158
-msgid "Track Information Window"
-msgstr "Окно информации о дорожке"
-
-#: src/audacious/ui_fileinfopopup.c:267
-msgid "Track Number"
-msgstr "Номер дорожки"
-
-#: src/audacious/ui_fileinfopopup.c:271
-msgid "Track Length"
-msgstr "Длительность"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Open Files"
-msgstr "Открыть файлы"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Add Files"
-msgstr "Добавление файлов"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Open"
-msgstr "Закрыть окно при Открытии"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Add"
-msgstr "Закрыть окно при Добавлении"
-
-#: src/audacious/ui_fileopener.c:363
-msgid "Play files"
-msgstr "Воспроизвести файлы"
-
-#: src/audacious/ui_fileopener.c:365
-msgid "Load files"
-msgstr "Загрузить файлы"
-
 #: src/audacious/ui_playlist.c:476
 msgid "Search entries in active playlist"
 msgstr "Поиск элементов в текущем списке"
@@ -1451,10 +2053,6 @@ msgstr "Сохранение списка воспроизведения"
 msgid "Audacious Playlist Editor"
 msgstr "Список воспроизведения Audacious"
 
-#: src/audacious/ui_urlopener.c:88
-msgid "Add/Open URL Dialog"
-msgstr "Добавить/Открыть URL"
-
 #: src/audacious/ui_playlist_manager.c:255
 msgid "Playlist Manager"
 msgstr "Управление списками"
@@ -1467,613 +2065,107 @@ msgstr "Элементов"
 msgid "_Rename"
 msgstr "_Переименовать"
 
-#: src/audacious/ui_jumptotrack.c:140
-msgid "Un_queue"
-msgstr "_Убрать из очереди"
-
-#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
-msgid "_Queue"
-msgstr "_В очередь"
-
-#: src/audacious/ui_jumptotrack.c:520
-msgid "Jump to Track"
-msgstr "Перескочить на дорожку"
-
-#: src/audacious/ui_jumptotrack.c:561
-msgid "Filter: "
-msgstr "Фильтр: "
-
-#: src/audacious/ui_jumptotrack.c:562
-msgid "_Filter:"
-msgstr "_Фильтр:"
-
-#: src/audacious/ui_jumptotrack.c:596
-#, fuzzy
-msgid "Close on Jump"
-msgstr "Закрыть окно при Открытии"
-
-#: src/audacious/playback.c:274
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
-msgstr ""
-"<b><big>Не выбран модуль вывода звука.</big></b>\n"
-"Вы не выбрали модуль вывода звука."
-
-#: src/audacious/glade/fileinfo.glade:8
-msgid "Track Information"
-msgstr "Информация о дорожке"
-
-#: src/audacious/glade/fileinfo.glade:81
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\"><b>Название</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:139
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\"><b>Исполнитель</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:197
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\"><b>Альбом</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:255
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\"><b>Коментарии</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:313
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\"><b>Стиль</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:392
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\"><b>Год</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:441
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\"><b>Номер дорожки</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:499
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"small\"><b>Расположение</b></span>"
-
-#: src/audacious/glade/prefswin.glade:8
-msgid "Audacious Preferences"
-msgstr "Настройки Audacious"
-
-#: src/audacious/glade/prefswin.glade:115
-msgid "_Decoder list:"
-msgstr "Список модулей _декодеров:"
-
-#: src/audacious/glade/prefswin.glade:219
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Декодеры</b></span>"
-
-#: src/audacious/glade/prefswin.glade:261
-msgid "_General plugin list:"
-msgstr "Список модулей _общего назначения:"
-
-#: src/audacious/glade/prefswin.glade:365
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>Общие</b></span>"
-
-#: src/audacious/glade/prefswin.glade:407
-msgid "_Visualization plugin list:"
-msgstr "Список модулей _визуализации:"
-
-#: src/audacious/glade/prefswin.glade:511
-msgid "<b>Visualization</b>"
-msgstr "<b>Визуализация</b>"
-
-#: src/audacious/glade/prefswin.glade:553
-msgid "_Effect plugin list:"
-msgstr "Список модулей _эффектов:"
-
-#: src/audacious/glade/prefswin.glade:657
-msgid "<b>Effects</b>"
-msgstr "<b>Эффекты</b>"
-
-#: src/audacious/glade/prefswin.glade:746
-msgid "<b>_Skin</b>"
-msgstr "<b>_Тема</b>"
-
-#: src/audacious/glade/prefswin.glade:799
-msgid "Refresh skin list"
-msgstr "Обновить список тем"
-
-#: src/audacious/glade/prefswin.glade:893
-msgid "<b>_Fonts</b>"
-msgstr "<b>_Шрифты</b>"
-
-#: src/audacious/glade/prefswin.glade:948
-msgid "_Player:"
-msgstr "_Главное окно:"
-
-#: src/audacious/glade/prefswin.glade:991
-msgid "_Playlist:"
-msgstr "_Список воспроизведения:"
-
-#: src/audacious/glade/prefswin.glade:1023
-msgid "Select main player window font:"
-msgstr "Выбор шрифта для главного окна"
-
-#: src/audacious/glade/prefswin.glade:1045
-#, fuzzy
-msgid "Select playlist font:"
-msgstr "Выбор шрифта для главного окна"
-
-#: src/audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-"Использовать растровые шрифты, если возможно. Растровые шрифты не "
-"поддерживают Юникод."
-
-#: src/audacious/glade/prefswin.glade:1093
-msgid "Use Bitmap fonts if available"
-msgstr "Использовать растровые шрифты, если возможно"
-
-#: src/audacious/glade/prefswin.glade:1127
-msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_Разное</b>"
-
-#: src/audacious/glade/prefswin.glade:1175
-msgid "Show track numbers in playlist"
-msgstr "Показывать номера песен в списке воспроизведения"
-
-#: src/audacious/glade/prefswin.glade:1210
-msgid "Show separators in playlist"
-msgstr "Показывать разделители в списке воспроизведения"
-
-#: src/audacious/glade/prefswin.glade:1245
-msgid "Use custom cursors"
-msgstr "Использовать курсоры, установленные темой"
-
-#: src/audacious/glade/prefswin.glade:1279
-#: src/audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
-msgstr "Это позволяет оконному менеджеру показывать свои заголовки окон."
-
-#: src/audacious/glade/prefswin.glade:1281
-msgid "Show window manager decoration"
-msgstr "Показывать заголовок менеджера окон"
-
-#: src/audacious/glade/prefswin.glade:1289
-msgid "Show window manager decorations"
-msgstr "Показывать заголовки менеджера окон"
-
-#: src/audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-"Это включает диалоги выбора файлов в стиле XMMS/GTK-1. Это окно выбора "
-"Audacious отображает самостоятельно, и оно работает быстрее, чем стандартное "
-"окно GTK2 (но к сожалению не такое удобное)."
-
-#: src/audacious/glade/prefswin.glade:1321
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "Использовать окно выбора файлов в стиле XMMS, вместо стандартного"
-
-#: src/audacious/glade/prefswin.glade:1410
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>Колесо мыши</b>"
-
-#: src/audacious/glade/prefswin.glade:1458
-msgid "Changes volume by"
-msgstr "Изменяет громкость на"
-
-#: src/audacious/glade/prefswin.glade:1486
-msgid "percent"
-msgstr "процентов"
-
-#: src/audacious/glade/prefswin.glade:1514
-msgid "Scrolls playlist by"
-msgstr "Прокручивает список воспроизведения на"
-
-#: src/audacious/glade/prefswin.glade:1567
-msgid "lines"
-msgstr "строк"
-
-#: src/audacious/glade/prefswin.glade:1689
-msgid "<b>Filename</b>"
-msgstr "<b>Название файла</b>"
-
-#: src/audacious/glade/prefswin.glade:1729
-msgid "Convert underscores to blanks"
-msgstr "Преобразовывать подчёркивание в пробел"
-
-#: src/audacious/glade/prefswin.glade:1764
-msgid "Convert %20 to blanks"
-msgstr "Преобразовывать %20 в пробел"
-
-#: src/audacious/glade/prefswin.glade:1799
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr "Преобразовывать обратный слэш '\\' в прямой слэш '/'"
-
-#: src/audacious/glade/prefswin.glade:1833
-msgid "<b>Metadata</b>"
-msgstr "<b>Информация о песне и исполнителе</b>"
-
-#: src/audacious/glade/prefswin.glade:1872
-msgid "Load metadata (tag information) from music files."
-msgstr ""
-"Загружать информацию о песне и исполнителе (информационный тэг) из "
-"музыкальных файлов."
-
-#: src/audacious/glade/prefswin.glade:1874
-msgid "Load metadata from playlists and files"
-msgstr "Загружать информацию о песнях из файлов и списков воспроизведения"
-
-#: src/audacious/glade/prefswin.glade:1912
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Загружать метаданные при добавлении файла в список воспроизведения или при "
-"открытии"
-
-#: src/audacious/glade/prefswin.glade:1914
-msgid "On load"
-msgstr "При открытии"
-
-#: src/audacious/glade/prefswin.glade:1934
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr ""
-"Загружать метаданные по необходимости при отображении файла в списке "
-"воспроизведения"
-
-#: src/audacious/glade/prefswin.glade:1936
-msgid "On display"
-msgstr "При отображении"
-
-#: src/audacious/glade/prefswin.glade:1966
-msgid "Fallback character encodings:"
-msgstr "Кодировка по умолчанию:"
-
-#: src/audacious/glade/prefswin.glade:1994
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"Список кодировок, используемых при отображении метаданных. Если "
-"автоматическое определение кодировки отключено или не сработает, то для "
-"преобразования метаданных в UTF-8 будут использованы кодировки из этого "
-"списка."
-
-#: src/audacious/glade/prefswin.glade:2035
-msgid "Auto character encoding detector for:"
-msgstr "Автоматическое определение кодировки для:"
-
-#: src/audacious/glade/prefswin.glade:2091
-msgid "<b>File Dialog</b>"
-msgstr "<b>Окно выбора файла</b>"
-
-#: src/audacious/glade/prefswin.glade:2130
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-"Всегда обновлять окно выбора файлов (это замедлит открытие окна для больших "
-"каталогов; при использовании Gnome VFS обновление происходит автоматически)."
-
-#: src/audacious/glade/prefswin.glade:2132
-msgid "Always refresh directory when opening file dialog"
-msgstr "Всевгда обновлять каталог при открытии окна выбора файлов"
-
-#: src/audacious/glade/prefswin.glade:2166
-msgid "<b>Song Display</b>"
-msgstr "<b>Отображение Названий</b>"
-
-#: src/audacious/glade/prefswin.glade:2214
-msgid "Title format:"
-msgstr "Формат названия:"
-
-#: src/audacious/glade/prefswin.glade:2242
-msgid "Custom string:"
-msgstr "Особый:"
-
-#: src/audacious/glade/prefswin.glade:2293
-msgid ""
-"TITLE\n"
-"ARTIST - TITLE\n"
-"ARTIST - ALBUM - TITLE\n"
-"ARTIST - ALBUM - TRACK. TITLE\n"
-"ARTIST [ ALBUM ] - TRACK. TITLE\n"
-"ALBUM - TITLE\n"
-"Custom"
-msgstr ""
-"Название\n"
-"Исполнитель - Название\n"
-"Исполнитель - Альбом - Название\n"
-"Исполнитель - Альбом - Дорожка. Название\n"
-"Исполнитель [ Альбом ] - Дорожка. Название\n"
-"Альбом - Название\n"
-"Особый"
-
-#: src/audacious/glade/prefswin.glade:2315
-msgid "Show information about titlestring format"
-msgstr "Показать информацию о формате названия"
-
-#: src/audacious/glade/prefswin.glade:2365
-msgid "<b>Popup Information</b>"
-msgstr "<b>Всплывающее информационное окно</b>"
-
-#: src/audacious/glade/prefswin.glade:2416
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-"Включает показ всплывающего окна с информацией о выбранной песне. Окно "
-"содержит название песни, название альбома, стиль, год, номер дорожки, "
-"длительность песни и обложку альбома."
-
-#: src/audacious/glade/prefswin.glade:2418
-msgid "Show popup information for playlist entries"
-msgstr "Показывать всплывающее информационное окно для песен в списке"
-
-#: src/audacious/glade/prefswin.glade:2445
-msgid "Edit settings for popup information"
-msgstr "Изменить настройки всплывающего информационного окна"
-
-#: src/audacious/glade/prefswin.glade:2553
-msgid "<b>Presets</b>"
-msgstr "<b>Предустановки</b>"
-
-#: src/audacious/glade/prefswin.glade:2653
-msgid "Directory preset file:"
-msgstr "Файл каталога предустановок:"
-
-#: src/audacious/glade/prefswin.glade:2681
-msgid "File preset extension:"
-msgstr "Файл расширений для предустановок:"
-
-#: src/audacious/glade/prefswin.glade:2729
-msgid "Available _Presets:"
-msgstr "Доступные _предустановки:"
-
-#: src/audacious/glade/prefswin.glade:2909
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Настройка Прокси</b>"
-
-#: src/audacious/glade/prefswin.glade:2967
-msgid "Enable proxy usage"
-msgstr "Использовать прокси"
-
-#: src/audacious/glade/prefswin.glade:2998
-msgid "Proxy hostname:"
-msgstr "Прокси сервер:"
-
-#: src/audacious/glade/prefswin.glade:3026
-msgid "Proxy port:"
-msgstr "Прокси порт:"
-
-#: src/audacious/glade/prefswin.glade:3120
-msgid "Use authentication with proxy"
-msgstr "Использовать авторизацию на прокси"
-
-#: src/audacious/glade/prefswin.glade:3151
-msgid "Proxy username:"
-msgstr "Имя пользователя прокси:"
-
-#: src/audacious/glade/prefswin.glade:3179
-msgid "Proxy password:"
-msgstr "Пароль прокси:"
-
-#: src/audacious/glade/prefswin.glade:3295
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Изменение этих настроек потребует перезапуск Audacious."
-"</span>"
-
-#: src/audacious/glade/prefswin.glade:3419
-msgid "<b>Audio System</b>"
-msgstr "<b>Звуковая Система</b>"
-
-#: src/audacious/glade/prefswin.glade:3473
-msgid "Current output plugin:"
-msgstr "Текущий модуль вывода звука:"
-
-#: src/audacious/glade/prefswin.glade:3541
-#, fuzzy
-msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping.\n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
-msgstr ""
-"<span size=\"small\">Это время предварительной буферизации звуковых потоков, "
-"в миллисекундах.\n"
-"Увеличьте это значение, если при проигрывании звук прерывается. \n"
-"Учтите, что при слишком больших значениях Audacious будет работать медленно."
-"</span>"
-
-#: src/audacious/glade/prefswin.glade:3571
-msgid "Buffer size:"
-msgstr "Размер буфера:"
-
-#: src/audacious/glade/prefswin.glade:3695
-msgid "Output Plugin Preferences"
-msgstr "Настройки модуля вывода звука"
-
-#: src/audacious/glade/prefswin.glade:3770
-msgid "Output Plugin Information"
-msgstr "Информация о модуле вывода звука"
-
-#: src/audacious/glade/prefswin.glade:3822
-msgid "<b>Format Detection</b>"
-msgstr "<b>Распознавание файлов</b>"
-
-#: src/audacious/glade/prefswin.glade:3861
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-"Если включено, то Audacious будет определять формат файла только когда "
-"потребуется. Это ускорит работу проигрывателя, но может внести беспорядок в "
-"список воспроизведения."
-
-#: src/audacious/glade/prefswin.glade:3863
-msgid "Detect file formats on demand, instead of immediately."
-msgstr "Определять формат файлов не сразу, а при необходимости."
-
-#: src/audacious/glade/prefswin.glade:3897
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
-"Если включено, то Audacious будет определять формат файла по расширению. Это "
-"немного медленнее, чем распознавание при необходимости, но предоставляет "
-"минимальный уровень распознавания файлов."
-
-#: src/audacious/glade/prefswin.glade:3899
-msgid "Detect file formats by extension."
-msgstr "Определять формат файлов по расширению."
-
-#: src/audacious/glade/prefswin.glade:3933
-msgid "<b>Playback</b>"
-msgstr "<b>Воспроизведение</b>"
-
-#: src/audacious/glade/prefswin.glade:3972
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-"При запуске Audacious, автоматически продолжать проигрывание с момента "
-"остановки."
-
-#: src/audacious/glade/prefswin.glade:3974
-msgid "Continue playback on startup"
-msgstr "Продолжать проигрывание при запуске"
-
-#: src/audacious/glade/prefswin.glade:4008
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
-"При завершении проигрывания песни не передвигаться автоматически на "
-"следующую."
-
-#: src/audacious/glade/prefswin.glade:4010
-msgid "Don't advance in the playlist"
-msgstr "Не продвигаться по списку воспроизведения"
-
-#: src/audacious/glade/prefswin.glade:4045
-msgid "Pause between songs"
-msgstr "Пауза между песнями"
-
-#: src/audacious/glade/prefswin.glade:4083
-msgid "Pause for"
-msgstr "Приостанавливать на"
-
-#: src/audacious/glade/prefswin.glade:4129
-msgid "seconds"
-msgstr "секунд"
-
-#: src/audacious/glade/prefswin.glade:4175
-msgid "<b>Sampling Rate Converter</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4215
-msgid "Enable Sampling Rate Converter"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4264
-msgid "Sampling Rate [Hz]:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4334
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
-msgid "Reload Plugins"
-msgstr "Модули"
-
-#: src/audacious/glade/prefswin.glade:4654
-msgid "Popup Information Settings"
-msgstr "Настройки всплывающей информации"
-
-#: src/audacious/glade/prefswin.glade:4678
-msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Поиск обложки альбома</b>"
-
-#: src/audacious/glade/prefswin.glade:4703
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-"При поиске обложки альбома, Audacious ищет определенные слова в именах "
-"файлов. Вы можете указать эти слова ниже, разделив их запятыми."
-
-#: src/audacious/glade/prefswin.glade:4758
-msgid "Include:"
-msgstr "Включая:"
-
-#: src/audacious/glade/prefswin.glade:4786
-msgid "Exclude:"
-msgstr "Исключая:"
-
-#: src/audacious/glade/prefswin.glade:4855
-msgid "Recursively search for cover"
-msgstr "Искать обложку во вложенных каталогах"
-
-#: src/audacious/glade/prefswin.glade:4893
-msgid "Search depth: "
-msgstr "Глубина поиска: "
-
-#: src/audacious/glade/prefswin.glade:4959
-msgid "Use per-file cover"
-msgstr "Искать изображение для каждого файла"
-
-#: src/audacious/glade/prefswin.glade:4979
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>Разное</b>"
-
-#: src/audacious/glade/prefswin.glade:5017
-msgid "Show Progress bar for the current track"
-msgstr "Показывать полосу завершения для проигрываемой записи"
-
-#: src/audacious/glade/prefswin.glade:5055
-msgid "Delay until filepopup comes up: "
-msgstr "Задержка при появлении всплывающей информации: "
-
-#: src/audacious/glade/prefswin.glade:5149
-msgid "Color Adjustment"
-msgstr "Настройка цвета"
-
-#: src/audacious/glade/prefswin.glade:5172
-msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
-msgstr ""
-"Audacious позволяет вам изменить цветовой баланс пользовательского "
-"интерфейса. Ползунки внизу позволят вам сделать это."
-
-#: src/audacious/glade/prefswin.glade:5268
-msgid "Red"
-msgstr "Красный"
-
-#: src/audacious/glade/prefswin.glade:5296
-msgid "Green"
-msgstr "Зелёный"
-
-#: src/audacious/glade/prefswin.glade:5324
-msgid "Blue"
-msgstr "Синий"
+#: src/audacious/ui_preferences.c:111
+msgid "Audio"
+msgstr "Звук"
+
+#: src/audacious/ui_preferences.c:112
+msgid "Connectivity"
+msgstr "Сеть"
+
+#: src/audacious/ui_preferences.c:125
+msgid "Tracknumber"
+msgstr "Номер дорожки"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Filepath"
+msgstr "Путь к файлу"
+
+#: src/audacious/ui_preferences.c:129
+msgid "Date"
+msgstr "Дата"
+
+#: src/audacious/ui_preferences.c:131
+msgid "Comment"
+msgstr "Комментарий"
+
+#: src/audacious/ui_preferences.c:152
+msgid "localhost"
+msgstr "localhost"
+
+#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
+#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
+msgid "Enabled"
+msgstr "Включен"
+
+#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
+msgid "Description"
+msgstr "Описание"
+
+#: src/audacious/ui_preferences.c:1684
+msgid "Category"
+msgstr "Категория"
+
+#: src/audacious/ui_preferences.c:2231
+msgid "Preferences Window"
+msgstr "Окно настроек"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "PREAMP"
+msgstr "ПРЕДУСИЛЕНИЕ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "60HZ"
+msgstr "60 Гц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "170HZ"
+msgstr "170 Гц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "310HZ"
+msgstr "310 Гц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "600HZ"
+msgstr "600 Гц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "1KHZ"
+msgstr "1 кГц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "3KHZ"
+msgstr "3 кГц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "6KHZ"
+msgstr "6 кГц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "12KHZ"
+msgstr "12 кГц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "14KHZ"
+msgstr "14 кГц"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "16KHZ"
+msgstr "16 кГц"
+
+#: src/audacious/ui_skinselector.c:178
+msgid "Archived Winamp 2.x skin"
+msgstr "Упакованная тема Winamp 2.x"
+
+#: src/audacious/ui_skinselector.c:183
+msgid "Unarchived Winamp 2.x skin"
+msgstr "Неупакованная тема Winamp 2.x"
+
+#: src/audacious/ui_urlopener.c:88
+msgid "Add/Open URL Dialog"
+msgstr "Добавить/Открыть URL"
 
 #~ msgid ""
 #~ "<b><big>No playable CD found.</big></b>\n"
@@ -2147,39 +2239,6 @@ msgstr "Синий"
 
 #~ msgid "Album name: "
 #~ msgstr "Альбом: "
-
-#~ msgid "PREAMP"
-#~ msgstr "ПРЕДУСИЛЕНИЕ"
-
-#~ msgid "60HZ"
-#~ msgstr "60 Гц"
-
-#~ msgid "170HZ"
-#~ msgstr "170 Гц"
-
-#~ msgid "310HZ"
-#~ msgstr "310 Гц"
-
-#~ msgid "600HZ"
-#~ msgstr "600 Гц"
-
-#~ msgid "1KHZ"
-#~ msgstr "1 кГц"
-
-#~ msgid "3KHZ"
-#~ msgstr "3 кГц"
-
-#~ msgid "6KHZ"
-#~ msgstr "6 кГц"
-
-#~ msgid "12KHZ"
-#~ msgstr "12 кГц"
-
-#~ msgid "14KHZ"
-#~ msgstr "14 кГц"
-
-#~ msgid "16KHZ"
-#~ msgstr "16 кГц"
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"

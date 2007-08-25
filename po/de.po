@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 12:38+0200\n"
+"POT-Creation-Date: 2007-08-25 15:34+0200\n"
 "PO-Revision-Date: 2007-01-05 21:15+0100\n"
 "Last-Translator: Michael Hanselmann\n"
 "Language-Team: german <psic4t@netbands.de>\n"
@@ -23,6 +23,601 @@ msgstr ""
 "\n"
 "Konnte die Glade-Datei nicht öffnen (%s). Bitte die Installation "
 "überprüfen.\n"
+
+#: src/audacious/glade/fileinfo.glade:8
+msgid "Track Information"
+msgstr "Titel-Information"
+
+#: src/audacious/glade/fileinfo.glade:81
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">Titel</span>"
+
+#: src/audacious/glade/fileinfo.glade:139
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">Künstler</span>"
+
+#: src/audacious/glade/fileinfo.glade:197
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">Album</span>"
+
+#: src/audacious/glade/fileinfo.glade:255
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">Kommentar</span>"
+
+#: src/audacious/glade/fileinfo.glade:313
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">Genre</span>"
+
+#: src/audacious/glade/fileinfo.glade:392
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">Jahr</span>"
+
+#: src/audacious/glade/fileinfo.glade:441
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">Titelnummer</span>"
+
+#: src/audacious/glade/fileinfo.glade:499
+msgid "<span size=\"small\">Location</span>"
+msgstr "<span size=\"small\">Ort</span>"
+
+#: src/audacious/glade/prefswin.glade:8
+msgid "Audacious Preferences"
+msgstr "Audacious-Einstellungen"
+
+#: src/audacious/glade/prefswin.glade:115
+msgid "_Decoder list:"
+msgstr "_Dekoderliste:"
+
+#: src/audacious/glade/prefswin.glade:219
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>Dekoder</b></span>"
+
+#: src/audacious/glade/prefswin.glade:261
+msgid "_General plugin list:"
+msgstr "_Allgemeine-Plugin-Liste:"
+
+#: src/audacious/glade/prefswin.glade:365
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Allgemein</b></span>"
+
+#: src/audacious/glade/prefswin.glade:407
+msgid "_Visualization plugin list:"
+msgstr "_Visualisierungs-Plugin-Liste:"
+
+#: src/audacious/glade/prefswin.glade:511
+msgid "<b>Visualization</b>"
+msgstr "<b>Visualisierungsmodus</b>"
+
+#: src/audacious/glade/prefswin.glade:553
+msgid "_Effect plugin list:"
+msgstr "_Effekt-Plugin-Liste:"
+
+#: src/audacious/glade/prefswin.glade:657
+msgid "<b>Effects</b>"
+msgstr "<b>Effekte</b>"
+
+#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
+#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
+msgid "Plugins"
+msgstr "Plugins"
+
+#: src/audacious/glade/prefswin.glade:746
+msgid "<b>_Skin</b>"
+msgstr "<b>_Skin</b>"
+
+#: src/audacious/glade/prefswin.glade:799
+msgid "Refresh skin list"
+msgstr "Skin-Liste erneuern"
+
+#: src/audacious/glade/prefswin.glade:893
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Schriftarten</b>"
+
+#: src/audacious/glade/prefswin.glade:948
+msgid "_Player:"
+msgstr "_Player:"
+
+#: src/audacious/glade/prefswin.glade:991
+msgid "_Playlist:"
+msgstr "_Wiedergabeliste:"
+
+#: src/audacious/glade/prefswin.glade:1023
+msgid "Select main player window font:"
+msgstr "Schriftart für Hauptfenster wählen:"
+
+#: src/audacious/glade/prefswin.glade:1045
+msgid "Select playlist font:"
+msgstr "Schriftart für Playlist wählen:"
+
+#: src/audacious/glade/prefswin.glade:1091
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
+"Bitmap-Schriftarten benutzen, sofern vorhanden. Bitmap-Schriften "
+"unterstützen kein Unicode."
+
+#: src/audacious/glade/prefswin.glade:1093
+msgid "Use Bitmap fonts if available"
+msgstr "Bitmap-Schriften benützen (falls verfügbar)"
+
+#: src/audacious/glade/prefswin.glade:1127
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Verschiedenes</b>"
+
+#: src/audacious/glade/prefswin.glade:1175
+msgid "Show track numbers in playlist"
+msgstr "Nummern in der Wiedergabeliste zeigen"
+
+#: src/audacious/glade/prefswin.glade:1210
+msgid "Show separators in playlist"
+msgstr "Trennstriche in Wiedergabeliste zeigen"
+
+#: src/audacious/glade/prefswin.glade:1245
+msgid "Use custom cursors"
+msgstr "Benutzerdefinierte Mauszeiger benutzen"
+
+#: src/audacious/glade/prefswin.glade:1279
+#: src/audacious/glade/prefswin.glade:1290
+msgid "This enables the window manager to show decorations for windows."
+msgstr "Hiermit werden Window-Manager-Dekorationen für die Fenster aktiviert."
+
+#: src/audacious/glade/prefswin.glade:1281
+msgid "Show window manager decoration"
+msgstr "Window-Manager-Dekoration anzeigen"
+
+#: src/audacious/glade/prefswin.glade:1289
+msgid "Show window manager decorations"
+msgstr "Window-Manager-Dekorationen anzeigen"
+
+#: src/audacious/glade/prefswin.glade:1319
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr ""
+"XMMS/GTK1-artigen Dateiauswahldialog aktivieren. Dieser wird von Audacious "
+"zur Verfügung gestellt und ist schneller als derjenige von GTK2, dafür aber "
+"nicht so benutzerfreundlich."
+
+#: src/audacious/glade/prefswin.glade:1321
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr "Benutze XMMS-mäßige Dateiauswahl statt der standardmäßigen"
+
+#: src/audacious/glade/prefswin.glade:1363 src/audacious/ui_preferences.c:110
+msgid "Appearance"
+msgstr "Aussehen"
+
+#: src/audacious/glade/prefswin.glade:1410
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Mausrad</b>"
+
+#: src/audacious/glade/prefswin.glade:1458
+msgid "Changes volume by"
+msgstr "Lautstärke verändern um"
+
+#: src/audacious/glade/prefswin.glade:1486
+msgid "percent"
+msgstr "Prozent"
+
+#: src/audacious/glade/prefswin.glade:1514
+msgid "Scrolls playlist by"
+msgstr "Wiedergabeliste bewegen um"
+
+#: src/audacious/glade/prefswin.glade:1567
+msgid "lines"
+msgstr "Zeilen"
+
+#: src/audacious/glade/prefswin.glade:1642 src/audacious/ui_preferences.c:114
+msgid "Mouse"
+msgstr "Maus"
+
+#: src/audacious/glade/prefswin.glade:1689
+msgid "<b>Filename</b>"
+msgstr "<b>Dateiname</b>"
+
+#: src/audacious/glade/prefswin.glade:1729
+msgid "Convert underscores to blanks"
+msgstr "Unterstriche in Leerzeichen umwandeln"
+
+#: src/audacious/glade/prefswin.glade:1764
+msgid "Convert %20 to blanks"
+msgstr "%20 in Leerzeichen umwandeln"
+
+#: src/audacious/glade/prefswin.glade:1799
+msgid "Convert backslash '\\' to forward slash '/'"
+msgstr "Umgekehrten Schrägstrich (\\) in normalen Schrägstrich (/) umwandeln"
+
+#: src/audacious/glade/prefswin.glade:1833
+msgid "<b>Metadata</b>"
+msgstr "<b>Metadaten</b>"
+
+#: src/audacious/glade/prefswin.glade:1872
+msgid "Load metadata (tag information) from music files."
+msgstr "Metadaten (Tag-Informationen) aus Dateien lesen"
+
+#: src/audacious/glade/prefswin.glade:1874
+msgid "Load metadata from playlists and files"
+msgstr "Metadaten aus Wiedergabelisten und Dateien lesen"
+
+#: src/audacious/glade/prefswin.glade:1912
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+"Metadaten laden, wenn eine Datei zur Wiedergabeliste hinzugefügt oder "
+"geöffnet wird"
+
+#: src/audacious/glade/prefswin.glade:1914
+msgid "On load"
+msgstr "Beim Laden"
+
+#: src/audacious/glade/prefswin.glade:1934
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Metadaten laden, wenn eine Datei in der Wiedergabeliste angezeigt wird"
+
+#: src/audacious/glade/prefswin.glade:1936
+msgid "On display"
+msgstr "Bei Anzeige"
+
+#: src/audacious/glade/prefswin.glade:1966
+msgid "Fallback character encodings:"
+msgstr "Alternative Zeichensätze:"
+
+#: src/audacious/glade/prefswin.glade:1994
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+"Alternativ für Metadaten verwendete Zeichensätze. Wenn die automatische "
+"Erkennung des Zeichensatzes fehlgeschlagen oder deaktiviert ist, werden die "
+"nachfolgend aufgelisteten Zeichensätze ausprobiert. Nach diesen wird dann "
+"noch einmal probiert, von diesen Zeichensätzen nach UTF-8 zu dekodieren."
+
+#: src/audacious/glade/prefswin.glade:2035
+msgid "Auto character encoding detector for:"
+msgstr "Automatische Zeichensatzerkennung für:"
+
+#: src/audacious/glade/prefswin.glade:2091
+msgid "<b>File Dialog</b>"
+msgstr "<b>Datei-Dialog</b>"
+
+#: src/audacious/glade/prefswin.glade:2130
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+"Dateidialog immer aktualisieren (dies wird das Öffnen des Dialogs mit großen "
+"Verzeichnissen langsamer machen, und Gnome VFS sollte das automatisch machen)"
+
+#: src/audacious/glade/prefswin.glade:2132
+msgid "Always refresh directory when opening file dialog"
+msgstr "Verzeichnis beim Öffnen von Dateidialogen immer aktualisieren"
+
+#: src/audacious/glade/prefswin.glade:2166
+msgid "<b>Song Display</b>"
+msgstr "<b>Titelanzeige</b>"
+
+#: src/audacious/glade/prefswin.glade:2214
+msgid "Title format:"
+msgstr "Titelformat:"
+
+#: src/audacious/glade/prefswin.glade:2242
+msgid "Custom string:"
+msgstr "Eigene Zeichenkette:"
+
+#: src/audacious/glade/prefswin.glade:2293
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ARTIST - ALBUM - TRACK. TITLE\n"
+"ARTIST [ ALBUM ] - TRACK. TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"TITEL\n"
+"KÜNSTLER - TITEL\n"
+"KÜNSTLER - ALBUM - TITEL\n"
+"KÜNSTLER - ALBUM - TRACK. TITEL\n"
+"KÜNSTLER [ ALBUM ] - TRACK. TITEL\n"
+"ALBUM - TITEL\n"
+"Eigene"
+
+#: src/audacious/glade/prefswin.glade:2315
+msgid "Show information about titlestring format"
+msgstr "Informationen über das Format der Titelzeile anzeigen"
+
+#: src/audacious/glade/prefswin.glade:2365
+msgid "<b>Popup Information</b>"
+msgstr "<b>Popup-Information</b>"
+
+#: src/audacious/glade/prefswin.glade:2416
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"Schaltet die Popup-Informationen ein und aus. Diese werden angezeigt, wenn "
+"mit der Maus über einen Wiedergabelisteneintrag gefahren wird. Gezeigt "
+"werden Titel, Album, Genre, Publikationsjahr, Titelnummer, Titellänge und "
+"Cover-Bild."
+
+#: src/audacious/glade/prefswin.glade:2418
+msgid "Show popup information for playlist entries"
+msgstr "Popup-Informationen für Widergabelisteneinträge anzeigen"
+
+#: src/audacious/glade/prefswin.glade:2445
+msgid "Edit settings for popup information"
+msgstr "Einstellungen für Popup-Informationen bearbeiten"
+
+#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
+#: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
+msgid "Playlist"
+msgstr "Wiedergabeliste"
+
+#: src/audacious/glade/prefswin.glade:2553
+msgid "<b>Presets</b>"
+msgstr "<b>Equalizer-Voreinstellungen</b>"
+
+#: src/audacious/glade/prefswin.glade:2653
+msgid "Directory preset file:"
+msgstr "Verzeichnis für Equalizer-Voreinstellungs-Dateien:"
+
+#: src/audacious/glade/prefswin.glade:2681
+msgid "File preset extension:"
+msgstr "Endung von Equalizer-Voreinstellungs-Dateien:"
+
+#: src/audacious/glade/prefswin.glade:2729
+msgid "Available _Presets:"
+msgstr "Verfügbare Equalizer-_Voreinstellungen:"
+
+#: src/audacious/glade/prefswin.glade:2862 src/audacious/ui_preferences.c:113
+msgid "Equalizer"
+msgstr "Equalizer"
+
+#: src/audacious/glade/prefswin.glade:2909
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Proxy-Konfiguration</b>"
+
+#: src/audacious/glade/prefswin.glade:2967
+msgid "Enable proxy usage"
+msgstr "Proxy aktivieren"
+
+#: src/audacious/glade/prefswin.glade:2998
+msgid "Proxy hostname:"
+msgstr "Proxy-Host:"
+
+#: src/audacious/glade/prefswin.glade:3026
+msgid "Proxy port:"
+msgstr "Proxy-Port:"
+
+#: src/audacious/glade/prefswin.glade:3120
+msgid "Use authentication with proxy"
+msgstr "Benutze Authentisierung mit Proxy"
+
+#: src/audacious/glade/prefswin.glade:3151
+msgid "Proxy username:"
+msgstr "Benutzername für Proxy:"
+
+#: src/audacious/glade/prefswin.glade:3179
+msgid "Proxy password:"
+msgstr "Passwort für Proxy:"
+
+#: src/audacious/glade/prefswin.glade:3295
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">Das Ändern dieser Einstellungen benötigt einen Neustart "
+"von Audacious.</span>"
+
+#: src/audacious/glade/prefswin.glade:3419
+msgid "<b>Audio System</b>"
+msgstr "<b>Audio-System:</b>"
+
+#: src/audacious/glade/prefswin.glade:3473
+msgid "Current output plugin:"
+msgstr "Aktives Ausgabe-Plugin"
+
+#: src/audacious/glade/prefswin.glade:3541
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping.\n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+"<span size=\"small\">Dies ist die Grösse des Puffers für Audio-Streams, "
+"angegeben in Millisekunden.\n"
+"Dieser Wert sollte erhöht werden, wenn Unterbrechungen im Ton festgestellt "
+"werden.\n"
+"Hohe Werte können jedoch dazu führen, dass Audacious langsamer läuft.</span>"
+
+#: src/audacious/glade/prefswin.glade:3571
+msgid "Buffer size:"
+msgstr "Puffergrösse:"
+
+#: src/audacious/glade/prefswin.glade:3695
+msgid "Output Plugin Preferences"
+msgstr "Ausgabe-Plugin-Einstellungen"
+
+#: src/audacious/glade/prefswin.glade:3770
+msgid "Output Plugin Information"
+msgstr "Ausgabe-Plugin-Information"
+
+#: src/audacious/glade/prefswin.glade:3822
+msgid "<b>Format Detection</b>"
+msgstr "<b>Formaterkennung</b>"
+
+#: src/audacious/glade/prefswin.glade:3861
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"Falls aktiviert, wird Audacious Dateiformate nur bei Bedarf ermitteln. Dies "
+"kann zu einer unordentlichen Wiedergabeliste führen, bringt gleichzeitig "
+"aber eine beträchtliche Geschwindigkeitserhöhung."
+
+#: src/audacious/glade/prefswin.glade:3863
+msgid "Detect file formats on demand, instead of immediately."
+msgstr "Dateiformate nicht sofort ermitteln, sondern nur bei Bedarf."
+
+#: src/audacious/glade/prefswin.glade:3897
+msgid ""
+"When checked, Audacious will detect file formats based by extension. This is "
+"slightly slower than detection on demand, but still provides a minimal level "
+"of format detection."
+msgstr ""
+"Falls aktiviert, wird Audacious das Dateiformat anhand der Dateierweiterung "
+"erkennen. Dies ist etwas langsamer als die Erkennung bei Bedarf, garantiert "
+"aber trotzdem einen minimalen Grad an Format-Erkennung."
+
+#: src/audacious/glade/prefswin.glade:3899
+msgid "Detect file formats by extension."
+msgstr "Dateiformat an Dateiendung erkennen"
+
+#: src/audacious/glade/prefswin.glade:3933
+msgid "<b>Playback</b>"
+msgstr "<b>Wiedergabe</b>"
+
+#: src/audacious/glade/prefswin.glade:3972
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+"Mit der Wiedergabe am letzten Ort starten, wenn Audacious gestartet wird."
+
+#: src/audacious/glade/prefswin.glade:3974
+msgid "Continue playback on startup"
+msgstr "Wiedergabe am Start fortführen"
+
+#: src/audacious/glade/prefswin.glade:4008
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr ""
+"Nicht automatisch mit dem nächsten Titel fortfahren, wenn ein Titel zuende "
+"gespielt wurde."
+
+#: src/audacious/glade/prefswin.glade:4010
+msgid "Don't advance in the playlist"
+msgstr "Nicht in der Wiedergabeliste weitergehen"
+
+#: src/audacious/glade/prefswin.glade:4045
+msgid "Pause between songs"
+msgstr "Zwischen Titeln unterbrechen"
+
+#: src/audacious/glade/prefswin.glade:4083
+msgid "Pause for"
+msgstr "Unterbrechen für"
+
+#: src/audacious/glade/prefswin.glade:4129
+msgid "seconds"
+msgstr "Sekunden"
+
+#: src/audacious/glade/prefswin.glade:4175
+msgid "<b>Sampling Rate Converter</b>"
+msgstr "<b>Abtastfrequenz:</b>"
+
+#: src/audacious/glade/prefswin.glade:4215
+msgid "Enable Sampling Rate Converter"
+msgstr "Aktiviere Abtastfrequenz-Umwandler"
+
+#: src/audacious/glade/prefswin.glade:4264
+msgid "Sampling Rate [Hz]:"
+msgstr "Abtastfrequenz [Hz]:"
+
+#: src/audacious/glade/prefswin.glade:4334
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+"<span size=\"small\">Alle Streams werden in diese Abtastfrequenz "
+"umgewandelt.\n"
+"Sie sollte die maximal unterstützte Abtastfrequenz der\n"
+"Soundkarte oder des Ausgabe-Plugins sein.</span>"
+
+#: src/audacious/glade/prefswin.glade:4364
+msgid "Converter Type:"
+msgstr "Umwandlungsart:"
+
+#: src/audacious/glade/prefswin.glade:4593
+msgid "Reload Plugins"
+msgstr "Plugins neu einlesen"
+
+#: src/audacious/glade/prefswin.glade:4654
+msgid "Popup Information Settings"
+msgstr "Popup-Informations-Einstellungen"
+
+#: src/audacious/glade/prefswin.glade:4678
+msgid "<b>Cover image retrieve</b>"
+msgstr "<b>Cover-Bild finden</b>"
+
+#: src/audacious/glade/prefswin.glade:4703
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"Wenn Audacious das Titelbild sucht, sucht es nach bestimmten Worten im "
+"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch "
+"Beistriche getrennt."
+
+#: src/audacious/glade/prefswin.glade:4758
+msgid "Include:"
+msgstr "Einschließen:"
+
+#: src/audacious/glade/prefswin.glade:4786
+msgid "Exclude:"
+msgstr "Ausschließen:"
+
+#: src/audacious/glade/prefswin.glade:4855
+msgid "Recursively search for cover"
+msgstr "Rekursiv nach dem Titelbild suchen"
+
+#: src/audacious/glade/prefswin.glade:4893
+msgid "Search depth: "
+msgstr "Suchtiefe:"
+
+#: src/audacious/glade/prefswin.glade:4959
+msgid "Use per-file cover"
+msgstr "Pro-Datei-Titelbild benutzen"
+
+#: src/audacious/glade/prefswin.glade:4979
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>Verschiedenes</b>"
+
+#: src/audacious/glade/prefswin.glade:5017
+msgid "Show Progress bar for the current track"
+msgstr "Zeige Fortschrittsbalken für den aktuellen Titel"
+
+#: src/audacious/glade/prefswin.glade:5055
+msgid "Delay until filepopup comes up: "
+msgstr "Verzögerung bis zum Erscheinen des Popups: "
+
+#: src/audacious/glade/prefswin.glade:5149
+msgid "Color Adjustment"
+msgstr "Farbanpassung"
+
+#: src/audacious/glade/prefswin.glade:5172
+msgid ""
+"Audacious allows you to alter the color balance of the skinned UI. The "
+"sliders below will allow you to do this."
+msgstr ""
+"Audacious erlaubt es, die Farbe der Oberfläche mit der Schiebeleiste unten "
+"zu ändern."
+
+#: src/audacious/glade/prefswin.glade:5268
+msgid "Red"
+msgstr "Rot"
+
+#: src/audacious/glade/prefswin.glade:5296
+msgid "Green"
+msgstr "Grün"
+
+#: src/audacious/glade/prefswin.glade:5324
+msgid "Blue"
+msgstr "Blau"
 
 #: src/audacious/input.c:718
 #, c-format
@@ -176,6 +771,14 @@ msgstr ""
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Kann Display nicht öffnen, beende.\n"
+
+#: src/audacious/playback.c:274
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+"<b><big>Kein Ausgabe-Plugin gewählt.</big></b>\n"
+"Sie haben kein Ausgabe-Plugin ausgewählt."
 
 #: src/audacious/signals.c:49
 msgid ""
@@ -431,6 +1034,141 @@ msgstr "Audacious-Equalizer"
 #: src/audacious/ui_equalizer.c:1169
 msgid "Presets"
 msgstr "Equalizer-Voreinstellungen"
+
+#: src/audacious/ui_fileinfo.c:158
+msgid "Track Information Window"
+msgstr "Titel-Informationsfenster"
+
+#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
+#: src/audacious/ui_preferences.c:124
+msgid "Title"
+msgstr "Titel"
+
+#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:122
+msgid "Artist"
+msgstr "Künstler"
+
+#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:123
+msgid "Album"
+msgstr "Album"
+
+#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:126
+msgid "Genre"
+msgstr "Genre"
+
+#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:130
+msgid "Year"
+msgstr "Jahr"
+
+#: src/audacious/ui_fileinfopopup.c:267
+msgid "Track Number"
+msgstr "Titelnummer"
+
+#: src/audacious/ui_fileinfopopup.c:271
+msgid "Track Length"
+msgstr "Titellänge:"
+
+#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:426 src/audacious/ui_preferences.c:514
+#: src/audacious/ui_preferences.c:603 src/audacious/ui_preferences.c:699
+msgid "Filename"
+msgstr "Dateiname"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Open Files"
+msgstr "Dateien öffnen"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Add Files"
+msgstr "Dateien hinzufügen"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Open"
+msgstr "Dialog nach dem Öffnen schließen"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Add"
+msgstr "Dialog nach dem Hinzufügen schließen"
+
+#: src/audacious/ui_fileopener.c:363
+msgid "Play files"
+msgstr "Dateien wiedergeben"
+
+#: src/audacious/ui_fileopener.c:365
+msgid "Load files"
+msgstr "Dateien laden"
+
+#: src/audacious/ui_jumptotrack.c:140
+msgid "Un_queue"
+msgstr "Aus _Queue entfernen"
+
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
+msgid "_Queue"
+msgstr "Zu _Queue hinzufügen"
+
+#: src/audacious/ui_jumptotrack.c:520
+msgid "Jump to Track"
+msgstr "Zu Titel springen"
+
+#: src/audacious/ui_jumptotrack.c:561
+msgid "Filter: "
+msgstr "Filter: "
+
+#: src/audacious/ui_jumptotrack.c:562
+msgid "_Filter:"
+msgstr "_Filter: "
+
+#: src/audacious/ui_jumptotrack.c:596
+msgid "Close on Jump"
+msgstr "Dialog nach dem Öffnen schließen"
+
+#: src/audacious/ui_lastfm.c:117
+msgid ""
+"<b><big>Couldn't find your lastfm login data.</big></b>\n"
+"\n"
+"Check if your Scrobbler's plugin login settings are configured properly.\n"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:238
+#, fuzzy
+msgid "Audacious last.fm radio tuner"
+msgstr "Audacious-Wiedergabelisteneditor"
+
+#: src/audacious/ui_lastfm.c:239
+#, fuzzy
+msgid "Station:"
+msgstr "Italienisch:"
+
+#: src/audacious/ui_lastfm.c:257
+msgid "Love"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:258
+msgid "Ban"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:259
+msgid "Skip"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:260
+msgid "Tune in"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:262
+msgid "Neighbours' radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:263
+msgid "Personal radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:337
+msgid ""
+"<b><big>The lastfm radio plugin could not be found.</big></b>\n"
+"\n"
+"Check if the AudioScrobbler plugin was compiled in\n"
+msgstr ""
 
 #: src/audacious/ui_main.c:500
 #, c-format
@@ -811,12 +1549,6 @@ msgstr "Analyzer-Falloff"
 msgid "Peaks Falloff"
 msgstr "Spitzen-Falloff"
 
-#: src/audacious/ui_manager.c:202 src/audacious/ui_preferences.c:115
-#: src/audacious/ui_playlist_manager.c:290
-#: src/audacious/glade/prefswin.glade:2494
-msgid "Playlist"
-msgstr "Wiedergabeliste"
-
 #: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
 msgid "New Playlist"
 msgstr "Neue Wiedergabeliste"
@@ -1074,11 +1806,6 @@ msgstr "Wiedergabeliste nach Wiedergabelisteneintrag sortieren"
 msgid "Sort Selected"
 msgstr "Auswahl sortieren"
 
-#: src/audacious/ui_manager.c:378 src/audacious/ui_manager.c:398
-#: src/audacious/ui_preferences.c:116 src/audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "Plugins"
-
 #: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
 msgid "View Track Details"
 msgstr "Titel-Details anzeigen"
@@ -1262,136 +1989,6 @@ msgstr "Equalizer-Voreinstellung löschen"
 msgid "Delete auto-load preset"
 msgstr "Automatisch geladene Equalizer-Voreinstellung löschen"
 
-#: src/audacious/ui_preferences.c:110 src/audacious/glade/prefswin.glade:1363
-msgid "Appearance"
-msgstr "Aussehen"
-
-#: src/audacious/ui_preferences.c:111
-msgid "Audio"
-msgstr "Audio"
-
-#: src/audacious/ui_preferences.c:112
-msgid "Connectivity"
-msgstr "Verbindung"
-
-#: src/audacious/ui_preferences.c:113 src/audacious/glade/prefswin.glade:2862
-msgid "Equalizer"
-msgstr "Equalizer"
-
-#: src/audacious/ui_preferences.c:114 src/audacious/glade/prefswin.glade:1642
-msgid "Mouse"
-msgstr "Maus"
-
-#: src/audacious/ui_preferences.c:122 src/audacious/ui_fileinfopopup.c:255
-msgid "Artist"
-msgstr "Künstler"
-
-#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:258
-msgid "Album"
-msgstr "Album"
-
-#: src/audacious/ui_preferences.c:124 src/audacious/ui_fileinfopopup.c:252
-#: src/audacious/ui_fileinfopopup.c:364
-msgid "Title"
-msgstr "Titel"
-
-#: src/audacious/ui_preferences.c:125
-msgid "Tracknumber"
-msgstr "Titelnummer"
-
-#: src/audacious/ui_preferences.c:126 src/audacious/ui_fileinfopopup.c:261
-msgid "Genre"
-msgstr "Genre"
-
-#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:426
-#: src/audacious/ui_preferences.c:514 src/audacious/ui_preferences.c:603
-#: src/audacious/ui_preferences.c:699 src/audacious/ui_fileinfopopup.c:373
-msgid "Filename"
-msgstr "Dateiname"
-
-#: src/audacious/ui_preferences.c:128
-msgid "Filepath"
-msgstr "Dateipfad"
-
-#: src/audacious/ui_preferences.c:129
-msgid "Date"
-msgstr "Datum"
-
-#: src/audacious/ui_preferences.c:130 src/audacious/ui_fileinfopopup.c:264
-msgid "Year"
-msgstr "Jahr"
-
-#: src/audacious/ui_preferences.c:131
-msgid "Comment"
-msgstr "Kommentar"
-
-#: src/audacious/ui_preferences.c:152
-msgid "localhost"
-msgstr "localhost"
-
-#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
-#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
-msgid "Enabled"
-msgstr "Aktiviert"
-
-#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
-#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
-msgid "Description"
-msgstr "Beschreibung"
-
-#: src/audacious/ui_preferences.c:1684
-msgid "Category"
-msgstr "Kategorie"
-
-#  load the interface
-#: src/audacious/ui_preferences.c:2231
-msgid "Preferences Window"
-msgstr "Einstellungsfenster"
-
-#: src/audacious/ui_skinselector.c:178
-msgid "Archived Winamp 2.x skin"
-msgstr "Archivierter Winamp 2.x-Skin"
-
-#: src/audacious/ui_skinselector.c:183
-msgid "Unarchived Winamp 2.x skin"
-msgstr "Nichtarchivierter Winamp 2.x-Skin"
-
-#: src/audacious/ui_fileinfo.c:158
-msgid "Track Information Window"
-msgstr "Titel-Informationsfenster"
-
-#: src/audacious/ui_fileinfopopup.c:267
-msgid "Track Number"
-msgstr "Titelnummer"
-
-#: src/audacious/ui_fileinfopopup.c:271
-msgid "Track Length"
-msgstr "Titellänge:"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Open Files"
-msgstr "Dateien öffnen"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Add Files"
-msgstr "Dateien hinzufügen"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Open"
-msgstr "Dialog nach dem Öffnen schließen"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Add"
-msgstr "Dialog nach dem Hinzufügen schließen"
-
-#: src/audacious/ui_fileopener.c:363
-msgid "Play files"
-msgstr "Dateien wiedergeben"
-
-#: src/audacious/ui_fileopener.c:365
-msgid "Load files"
-msgstr "Dateien laden"
-
 #: src/audacious/ui_playlist.c:476
 msgid "Search entries in active playlist"
 msgstr "Einträge in der aktiven Wiedergabeliste suchen"
@@ -1478,10 +2075,6 @@ msgstr "Wiedergabeliste speichern"
 msgid "Audacious Playlist Editor"
 msgstr "Audacious-Wiedergabelisteneditor"
 
-#: src/audacious/ui_urlopener.c:88
-msgid "Add/Open URL Dialog"
-msgstr "«URL hinzufügen/öffnen»-Fenster"
-
 #: src/audacious/ui_playlist_manager.c:255
 msgid "Playlist Manager"
 msgstr "Wiedergabelistenverwaltung"
@@ -1494,610 +2087,108 @@ msgstr "Einträge"
 msgid "_Rename"
 msgstr "_Umbenennen"
 
-#: src/audacious/ui_jumptotrack.c:140
-msgid "Un_queue"
-msgstr "Aus _Queue entfernen"
-
-#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
-msgid "_Queue"
-msgstr "Zu _Queue hinzufügen"
-
-#: src/audacious/ui_jumptotrack.c:520
-msgid "Jump to Track"
-msgstr "Zu Titel springen"
-
-#: src/audacious/ui_jumptotrack.c:561
-msgid "Filter: "
-msgstr "Filter: "
-
-#: src/audacious/ui_jumptotrack.c:562
-msgid "_Filter:"
-msgstr "_Filter: "
-
-#: src/audacious/ui_jumptotrack.c:596
-msgid "Close on Jump"
-msgstr "Dialog nach dem Öffnen schließen"
-
-#: src/audacious/playback.c:274
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
-msgstr ""
-"<b><big>Kein Ausgabe-Plugin gewählt.</big></b>\n"
-"Sie haben kein Ausgabe-Plugin ausgewählt."
-
-#: src/audacious/glade/fileinfo.glade:8
-msgid "Track Information"
-msgstr "Titel-Information"
-
-#: src/audacious/glade/fileinfo.glade:81
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Titel</span>"
-
-#: src/audacious/glade/fileinfo.glade:139
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Künstler</span>"
-
-#: src/audacious/glade/fileinfo.glade:197
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Album</span>"
-
-#: src/audacious/glade/fileinfo.glade:255
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Kommentar</span>"
-
-#: src/audacious/glade/fileinfo.glade:313
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Genre</span>"
-
-#: src/audacious/glade/fileinfo.glade:392
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Jahr</span>"
-
-#: src/audacious/glade/fileinfo.glade:441
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Titelnummer</span>"
-
-#: src/audacious/glade/fileinfo.glade:499
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"small\">Ort</span>"
-
-#: src/audacious/glade/prefswin.glade:8
-msgid "Audacious Preferences"
-msgstr "Audacious-Einstellungen"
-
-#: src/audacious/glade/prefswin.glade:115
-msgid "_Decoder list:"
-msgstr "_Dekoderliste:"
-
-#: src/audacious/glade/prefswin.glade:219
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Dekoder</b></span>"
-
-#: src/audacious/glade/prefswin.glade:261
-msgid "_General plugin list:"
-msgstr "_Allgemeine-Plugin-Liste:"
-
-#: src/audacious/glade/prefswin.glade:365
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>Allgemein</b></span>"
-
-#: src/audacious/glade/prefswin.glade:407
-msgid "_Visualization plugin list:"
-msgstr "_Visualisierungs-Plugin-Liste:"
-
-#: src/audacious/glade/prefswin.glade:511
-msgid "<b>Visualization</b>"
-msgstr "<b>Visualisierungsmodus</b>"
-
-#: src/audacious/glade/prefswin.glade:553
-msgid "_Effect plugin list:"
-msgstr "_Effekt-Plugin-Liste:"
-
-#: src/audacious/glade/prefswin.glade:657
-msgid "<b>Effects</b>"
-msgstr "<b>Effekte</b>"
-
-#: src/audacious/glade/prefswin.glade:746
-msgid "<b>_Skin</b>"
-msgstr "<b>_Skin</b>"
-
-#: src/audacious/glade/prefswin.glade:799
-msgid "Refresh skin list"
-msgstr "Skin-Liste erneuern"
-
-#: src/audacious/glade/prefswin.glade:893
-msgid "<b>_Fonts</b>"
-msgstr "<b>_Schriftarten</b>"
-
-#: src/audacious/glade/prefswin.glade:948
-msgid "_Player:"
-msgstr "_Player:"
-
-#: src/audacious/glade/prefswin.glade:991
-msgid "_Playlist:"
-msgstr "_Wiedergabeliste:"
-
-#: src/audacious/glade/prefswin.glade:1023
-msgid "Select main player window font:"
-msgstr "Schriftart für Hauptfenster wählen:"
-
-#: src/audacious/glade/prefswin.glade:1045
-msgid "Select playlist font:"
-msgstr "Schriftart für Playlist wählen:"
-
-#: src/audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-"Bitmap-Schriftarten benutzen, sofern vorhanden. Bitmap-Schriften "
-"unterstützen kein Unicode."
-
-#: src/audacious/glade/prefswin.glade:1093
-msgid "Use Bitmap fonts if available"
-msgstr "Bitmap-Schriften benützen (falls verfügbar)"
-
-#: src/audacious/glade/prefswin.glade:1127
-msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_Verschiedenes</b>"
-
-#: src/audacious/glade/prefswin.glade:1175
-msgid "Show track numbers in playlist"
-msgstr "Nummern in der Wiedergabeliste zeigen"
-
-#: src/audacious/glade/prefswin.glade:1210
-msgid "Show separators in playlist"
-msgstr "Trennstriche in Wiedergabeliste zeigen"
-
-#: src/audacious/glade/prefswin.glade:1245
-msgid "Use custom cursors"
-msgstr "Benutzerdefinierte Mauszeiger benutzen"
-
-#: src/audacious/glade/prefswin.glade:1279
-#: src/audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
-msgstr "Hiermit werden Window-Manager-Dekorationen für die Fenster aktiviert."
-
-#: src/audacious/glade/prefswin.glade:1281
-msgid "Show window manager decoration"
-msgstr "Window-Manager-Dekoration anzeigen"
-
-#: src/audacious/glade/prefswin.glade:1289
-msgid "Show window manager decorations"
-msgstr "Window-Manager-Dekorationen anzeigen"
-
-#: src/audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-"XMMS/GTK1-artigen Dateiauswahldialog aktivieren. Dieser wird von Audacious "
-"zur Verfügung gestellt und ist schneller als derjenige von GTK2, dafür aber "
-"nicht so benutzerfreundlich."
-
-#: src/audacious/glade/prefswin.glade:1321
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "Benutze XMMS-mäßige Dateiauswahl statt der standardmäßigen"
-
-#: src/audacious/glade/prefswin.glade:1410
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>Mausrad</b>"
-
-#: src/audacious/glade/prefswin.glade:1458
-msgid "Changes volume by"
-msgstr "Lautstärke verändern um"
-
-#: src/audacious/glade/prefswin.glade:1486
-msgid "percent"
-msgstr "Prozent"
-
-#: src/audacious/glade/prefswin.glade:1514
-msgid "Scrolls playlist by"
-msgstr "Wiedergabeliste bewegen um"
-
-#: src/audacious/glade/prefswin.glade:1567
-msgid "lines"
-msgstr "Zeilen"
-
-#: src/audacious/glade/prefswin.glade:1689
-msgid "<b>Filename</b>"
-msgstr "<b>Dateiname</b>"
-
-#: src/audacious/glade/prefswin.glade:1729
-msgid "Convert underscores to blanks"
-msgstr "Unterstriche in Leerzeichen umwandeln"
-
-#: src/audacious/glade/prefswin.glade:1764
-msgid "Convert %20 to blanks"
-msgstr "%20 in Leerzeichen umwandeln"
-
-#: src/audacious/glade/prefswin.glade:1799
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr "Umgekehrten Schrägstrich (\\) in normalen Schrägstrich (/) umwandeln"
-
-#: src/audacious/glade/prefswin.glade:1833
-msgid "<b>Metadata</b>"
-msgstr "<b>Metadaten</b>"
-
-#: src/audacious/glade/prefswin.glade:1872
-msgid "Load metadata (tag information) from music files."
-msgstr "Metadaten (Tag-Informationen) aus Dateien lesen"
-
-#: src/audacious/glade/prefswin.glade:1874
-msgid "Load metadata from playlists and files"
-msgstr "Metadaten aus Wiedergabelisten und Dateien lesen"
-
-#: src/audacious/glade/prefswin.glade:1912
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Metadaten laden, wenn eine Datei zur Wiedergabeliste hinzugefügt oder "
-"geöffnet wird"
-
-#: src/audacious/glade/prefswin.glade:1914
-msgid "On load"
-msgstr "Beim Laden"
-
-#: src/audacious/glade/prefswin.glade:1934
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Metadaten laden, wenn eine Datei in der Wiedergabeliste angezeigt wird"
-
-#: src/audacious/glade/prefswin.glade:1936
-msgid "On display"
-msgstr "Bei Anzeige"
-
-#: src/audacious/glade/prefswin.glade:1966
-msgid "Fallback character encodings:"
-msgstr "Alternative Zeichensätze:"
-
-#: src/audacious/glade/prefswin.glade:1994
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"Alternativ für Metadaten verwendete Zeichensätze. Wenn die automatische "
-"Erkennung des Zeichensatzes fehlgeschlagen oder deaktiviert ist, werden die "
-"nachfolgend aufgelisteten Zeichensätze ausprobiert. Nach diesen wird dann "
-"noch einmal probiert, von diesen Zeichensätzen nach UTF-8 zu dekodieren."
-
-#: src/audacious/glade/prefswin.glade:2035
-msgid "Auto character encoding detector for:"
-msgstr "Automatische Zeichensatzerkennung für:"
-
-#: src/audacious/glade/prefswin.glade:2091
-msgid "<b>File Dialog</b>"
-msgstr "<b>Datei-Dialog</b>"
-
-#: src/audacious/glade/prefswin.glade:2130
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-"Dateidialog immer aktualisieren (dies wird das Öffnen des Dialogs mit großen "
-"Verzeichnissen langsamer machen, und Gnome VFS sollte das automatisch machen)"
-
-#: src/audacious/glade/prefswin.glade:2132
-msgid "Always refresh directory when opening file dialog"
-msgstr "Verzeichnis beim Öffnen von Dateidialogen immer aktualisieren"
-
-#: src/audacious/glade/prefswin.glade:2166
-msgid "<b>Song Display</b>"
-msgstr "<b>Titelanzeige</b>"
-
-#: src/audacious/glade/prefswin.glade:2214
-msgid "Title format:"
-msgstr "Titelformat:"
-
-#: src/audacious/glade/prefswin.glade:2242
-msgid "Custom string:"
-msgstr "Eigene Zeichenkette:"
-
-#: src/audacious/glade/prefswin.glade:2293
-msgid ""
-"TITLE\n"
-"ARTIST - TITLE\n"
-"ARTIST - ALBUM - TITLE\n"
-"ARTIST - ALBUM - TRACK. TITLE\n"
-"ARTIST [ ALBUM ] - TRACK. TITLE\n"
-"ALBUM - TITLE\n"
-"Custom"
-msgstr ""
-"TITEL\n"
-"KÜNSTLER - TITEL\n"
-"KÜNSTLER - ALBUM - TITEL\n"
-"KÜNSTLER - ALBUM - TRACK. TITEL\n"
-"KÜNSTLER [ ALBUM ] - TRACK. TITEL\n"
-"ALBUM - TITEL\n"
-"Eigene"
-
-#: src/audacious/glade/prefswin.glade:2315
-msgid "Show information about titlestring format"
-msgstr "Informationen über das Format der Titelzeile anzeigen"
-
-#: src/audacious/glade/prefswin.glade:2365
-msgid "<b>Popup Information</b>"
-msgstr "<b>Popup-Information</b>"
-
-#: src/audacious/glade/prefswin.glade:2416
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-"Schaltet die Popup-Informationen ein und aus. Diese werden angezeigt, wenn "
-"mit der Maus über einen Wiedergabelisteneintrag gefahren wird. Gezeigt "
-"werden Titel, Album, Genre, Publikationsjahr, Titelnummer, Titellänge und "
-"Cover-Bild."
-
-#: src/audacious/glade/prefswin.glade:2418
-msgid "Show popup information for playlist entries"
-msgstr "Popup-Informationen für Widergabelisteneinträge anzeigen"
-
-#: src/audacious/glade/prefswin.glade:2445
-msgid "Edit settings for popup information"
-msgstr "Einstellungen für Popup-Informationen bearbeiten"
-
-#: src/audacious/glade/prefswin.glade:2553
-msgid "<b>Presets</b>"
-msgstr "<b>Equalizer-Voreinstellungen</b>"
-
-#: src/audacious/glade/prefswin.glade:2653
-msgid "Directory preset file:"
-msgstr "Verzeichnis für Equalizer-Voreinstellungs-Dateien:"
-
-#: src/audacious/glade/prefswin.glade:2681
-msgid "File preset extension:"
-msgstr "Endung von Equalizer-Voreinstellungs-Dateien:"
-
-#: src/audacious/glade/prefswin.glade:2729
-msgid "Available _Presets:"
-msgstr "Verfügbare Equalizer-_Voreinstellungen:"
-
-#: src/audacious/glade/prefswin.glade:2909
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Proxy-Konfiguration</b>"
-
-#: src/audacious/glade/prefswin.glade:2967
-msgid "Enable proxy usage"
-msgstr "Proxy aktivieren"
-
-#: src/audacious/glade/prefswin.glade:2998
-msgid "Proxy hostname:"
-msgstr "Proxy-Host:"
-
-#: src/audacious/glade/prefswin.glade:3026
-msgid "Proxy port:"
-msgstr "Proxy-Port:"
-
-#: src/audacious/glade/prefswin.glade:3120
-msgid "Use authentication with proxy"
-msgstr "Benutze Authentisierung mit Proxy"
-
-#: src/audacious/glade/prefswin.glade:3151
-msgid "Proxy username:"
-msgstr "Benutzername für Proxy:"
-
-#: src/audacious/glade/prefswin.glade:3179
-msgid "Proxy password:"
-msgstr "Passwort für Proxy:"
-
-#: src/audacious/glade/prefswin.glade:3295
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Das Ändern dieser Einstellungen benötigt einen Neustart "
-"von Audacious.</span>"
-
-#: src/audacious/glade/prefswin.glade:3419
-msgid "<b>Audio System</b>"
-msgstr "<b>Audio-System:</b>"
-
-#: src/audacious/glade/prefswin.glade:3473
-msgid "Current output plugin:"
-msgstr "Aktives Ausgabe-Plugin"
-
-#: src/audacious/glade/prefswin.glade:3541
-msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping.\n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
-msgstr ""
-"<span size=\"small\">Dies ist die Grösse des Puffers für Audio-Streams, "
-"angegeben in Millisekunden.\n"
-"Dieser Wert sollte erhöht werden, wenn Unterbrechungen im Ton festgestellt "
-"werden.\n"
-"Hohe Werte können jedoch dazu führen, dass Audacious langsamer läuft.</span>"
-
-#: src/audacious/glade/prefswin.glade:3571
-msgid "Buffer size:"
-msgstr "Puffergrösse:"
-
-#: src/audacious/glade/prefswin.glade:3695
-msgid "Output Plugin Preferences"
-msgstr "Ausgabe-Plugin-Einstellungen"
-
-#: src/audacious/glade/prefswin.glade:3770
-msgid "Output Plugin Information"
-msgstr "Ausgabe-Plugin-Information"
-
-#: src/audacious/glade/prefswin.glade:3822
-msgid "<b>Format Detection</b>"
-msgstr "<b>Formaterkennung</b>"
-
-#: src/audacious/glade/prefswin.glade:3861
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-"Falls aktiviert, wird Audacious Dateiformate nur bei Bedarf ermitteln. Dies "
-"kann zu einer unordentlichen Wiedergabeliste führen, bringt gleichzeitig "
-"aber eine beträchtliche Geschwindigkeitserhöhung."
-
-#: src/audacious/glade/prefswin.glade:3863
-msgid "Detect file formats on demand, instead of immediately."
-msgstr "Dateiformate nicht sofort ermitteln, sondern nur bei Bedarf."
-
-#: src/audacious/glade/prefswin.glade:3897
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
-"Falls aktiviert, wird Audacious das Dateiformat anhand der Dateierweiterung "
-"erkennen. Dies ist etwas langsamer als die Erkennung bei Bedarf, garantiert "
-"aber trotzdem einen minimalen Grad an Format-Erkennung."
-
-#: src/audacious/glade/prefswin.glade:3899
-msgid "Detect file formats by extension."
-msgstr "Dateiformat an Dateiendung erkennen"
-
-#: src/audacious/glade/prefswin.glade:3933
-msgid "<b>Playback</b>"
-msgstr "<b>Wiedergabe</b>"
-
-#: src/audacious/glade/prefswin.glade:3972
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-"Mit der Wiedergabe am letzten Ort starten, wenn Audacious gestartet wird."
-
-#: src/audacious/glade/prefswin.glade:3974
-msgid "Continue playback on startup"
-msgstr "Wiedergabe am Start fortführen"
-
-#: src/audacious/glade/prefswin.glade:4008
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
-"Nicht automatisch mit dem nächsten Titel fortfahren, wenn ein Titel zuende "
-"gespielt wurde."
-
-#: src/audacious/glade/prefswin.glade:4010
-msgid "Don't advance in the playlist"
-msgstr "Nicht in der Wiedergabeliste weitergehen"
-
-#: src/audacious/glade/prefswin.glade:4045
-msgid "Pause between songs"
-msgstr "Zwischen Titeln unterbrechen"
-
-#: src/audacious/glade/prefswin.glade:4083
-msgid "Pause for"
-msgstr "Unterbrechen für"
-
-#: src/audacious/glade/prefswin.glade:4129
-msgid "seconds"
-msgstr "Sekunden"
-
-#: src/audacious/glade/prefswin.glade:4175
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "<b>Abtastfrequenz:</b>"
-
-#: src/audacious/glade/prefswin.glade:4215
-msgid "Enable Sampling Rate Converter"
-msgstr "Aktiviere Abtastfrequenz-Umwandler"
-
-#: src/audacious/glade/prefswin.glade:4264
-msgid "Sampling Rate [Hz]:"
-msgstr "Abtastfrequenz [Hz]:"
-
-#: src/audacious/glade/prefswin.glade:4334
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-"<span size=\"small\">Alle Streams werden in diese Abtastfrequenz "
-"umgewandelt.\n"
-"Sie sollte die maximal unterstützte Abtastfrequenz der\n"
-"Soundkarte oder des Ausgabe-Plugins sein.</span>"
-
-#: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr "Umwandlungsart:"
-
-#: src/audacious/glade/prefswin.glade:4593
-msgid "Reload Plugins"
-msgstr "Plugins neu einlesen"
-
-#: src/audacious/glade/prefswin.glade:4654
-msgid "Popup Information Settings"
-msgstr "Popup-Informations-Einstellungen"
-
-#: src/audacious/glade/prefswin.glade:4678
-msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Cover-Bild finden</b>"
-
-#: src/audacious/glade/prefswin.glade:4703
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-"Wenn Audacious das Titelbild sucht, sucht es nach bestimmten Worten im "
-"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch "
-"Beistriche getrennt."
-
-#: src/audacious/glade/prefswin.glade:4758
-msgid "Include:"
-msgstr "Einschließen:"
-
-#: src/audacious/glade/prefswin.glade:4786
-msgid "Exclude:"
-msgstr "Ausschließen:"
-
-#: src/audacious/glade/prefswin.glade:4855
-msgid "Recursively search for cover"
-msgstr "Rekursiv nach dem Titelbild suchen"
-
-#: src/audacious/glade/prefswin.glade:4893
-msgid "Search depth: "
-msgstr "Suchtiefe:"
-
-#: src/audacious/glade/prefswin.glade:4959
-msgid "Use per-file cover"
-msgstr "Pro-Datei-Titelbild benutzen"
-
-#: src/audacious/glade/prefswin.glade:4979
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>Verschiedenes</b>"
-
-#: src/audacious/glade/prefswin.glade:5017
-msgid "Show Progress bar for the current track"
-msgstr "Zeige Fortschrittsbalken für den aktuellen Titel"
-
-#: src/audacious/glade/prefswin.glade:5055
-msgid "Delay until filepopup comes up: "
-msgstr "Verzögerung bis zum Erscheinen des Popups: "
-
-#: src/audacious/glade/prefswin.glade:5149
-msgid "Color Adjustment"
-msgstr "Farbanpassung"
-
-#: src/audacious/glade/prefswin.glade:5172
-msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
-msgstr ""
-"Audacious erlaubt es, die Farbe der Oberfläche mit der Schiebeleiste unten "
-"zu ändern."
-
-#: src/audacious/glade/prefswin.glade:5268
-msgid "Red"
-msgstr "Rot"
-
-#: src/audacious/glade/prefswin.glade:5296
-msgid "Green"
-msgstr "Grün"
-
-#: src/audacious/glade/prefswin.glade:5324
-msgid "Blue"
-msgstr "Blau"
+#: src/audacious/ui_preferences.c:111
+msgid "Audio"
+msgstr "Audio"
+
+#: src/audacious/ui_preferences.c:112
+msgid "Connectivity"
+msgstr "Verbindung"
+
+#: src/audacious/ui_preferences.c:125
+msgid "Tracknumber"
+msgstr "Titelnummer"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Filepath"
+msgstr "Dateipfad"
+
+#: src/audacious/ui_preferences.c:129
+msgid "Date"
+msgstr "Datum"
+
+#: src/audacious/ui_preferences.c:131
+msgid "Comment"
+msgstr "Kommentar"
+
+#: src/audacious/ui_preferences.c:152
+msgid "localhost"
+msgstr "localhost"
+
+#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
+#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/audacious/ui_preferences.c:1684
+msgid "Category"
+msgstr "Kategorie"
+
+#  load the interface
+#: src/audacious/ui_preferences.c:2231
+msgid "Preferences Window"
+msgstr "Einstellungsfenster"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "PREAMP"
+msgstr "PREAMP"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "60HZ"
+msgstr "60HZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "170HZ"
+msgstr "170HZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "310HZ"
+msgstr "310HZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "600HZ"
+msgstr "600HZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "1KHZ"
+msgstr "1KHZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "3KHZ"
+msgstr "3KHZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "6KHZ"
+msgstr "6KHZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "12KHZ"
+msgstr "12KHZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "14KHZ"
+msgstr "14KHZ"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "16KHZ"
+msgstr "16KHZ"
+
+#: src/audacious/ui_skinselector.c:178
+msgid "Archived Winamp 2.x skin"
+msgstr "Archivierter Winamp 2.x-Skin"
+
+#: src/audacious/ui_skinselector.c:183
+msgid "Unarchived Winamp 2.x skin"
+msgstr "Nichtarchivierter Winamp 2.x-Skin"
+
+#: src/audacious/ui_urlopener.c:88
+msgid "Add/Open URL Dialog"
+msgstr "«URL hinzufügen/öffnen»-Fenster"
 
 #~ msgid ""
 #~ "<b><big>No playable CD found.</big></b>\n"
@@ -2173,39 +2264,6 @@ msgstr "Blau"
 
 #~ msgid "Album name: "
 #~ msgstr "Albumname: "
-
-#~ msgid "PREAMP"
-#~ msgstr "PREAMP"
-
-#~ msgid "60HZ"
-#~ msgstr "60HZ"
-
-#~ msgid "170HZ"
-#~ msgstr "170HZ"
-
-#~ msgid "310HZ"
-#~ msgstr "310HZ"
-
-#~ msgid "600HZ"
-#~ msgstr "600HZ"
-
-#~ msgid "1KHZ"
-#~ msgstr "1KHZ"
-
-#~ msgid "3KHZ"
-#~ msgstr "3KHZ"
-
-#~ msgid "6KHZ"
-#~ msgstr "6KHZ"
-
-#~ msgid "12KHZ"
-#~ msgstr "12KHZ"
-
-#~ msgid "14KHZ"
-#~ msgstr "14KHZ"
-
-#~ msgid "16KHZ"
-#~ msgstr "16KHZ"
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
