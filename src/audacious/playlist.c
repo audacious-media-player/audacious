@@ -1574,7 +1574,8 @@ playlist_save(Playlist * playlist, const gchar * filename)
 
     ext = strrchr(filename, '.') + 1;
 
-    playlist_set_current_name(playlist, filename);
+    if (!playlist->title || !playlist->title[0])
+        playlist_set_current_name(playlist, filename);
 
     if ((plc = playlist_container_find(ext)) == NULL)
         return FALSE;
