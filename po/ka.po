@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.35\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-07-29 17:21+0200\n"
+"POT-Creation-Date: 2007-08-25 15:34+0200\n"
 "PO-Revision-Date: 2005-10-14 13:54+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <giomac@gmail.com>\n"
@@ -25,1667 +25,6 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
-
-#: src/audacious/input.c:646
-#, c-format
-msgid "audacious: %s"
-msgstr ""
-
-#: src/audacious/input.c:662
-msgid "Filename:"
-msgstr "ფაილის სახელი:"
-
-#: src/audacious/input.c:681
-msgid "No input plugin recognized this file"
-msgstr "ამ ფაილისთვის საჭირო შემყვანი პლაგინი ამოუცნობია"
-
-#: src/audacious/input.c:683
-#, c-format
-msgid "Input plugin: %s"
-msgstr "შემყვანი პლაგინი: %s"
-
-#: src/audacious/logger.c:124
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr "შეუძლებელია ჟურნალის ფაილის შექმნა (%s)!\n"
-
-#: src/audacious/main.c:89 src/audacious/main.c:91 src/audacious/ui_main.c:627
-#: src/audacious/ui_main.c:2836
-msgid "Audacious"
-msgstr ""
-
-#: src/audacious/main.c:466
-#, fuzzy, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "(%s) დირექტორიის შექმნა შეუძლებელია : %s"
-
-#: src/audacious/main.c:878
-#, fuzzy
-msgid "Select which Audacious session ID to use"
-msgstr "BMP/XMMS სესიის არჩევა (ნაგულისხმევი: 0)"
-
-#: src/audacious/main.c:879
-msgid "Skip backwards in playlist"
-msgstr "რეპერტუარში უკან გადასვლა"
-
-#: src/audacious/main.c:880
-msgid "Start playing current playlist"
-msgstr "მიმდინარე რეპერტუარის დაკვრა"
-
-#: src/audacious/main.c:881
-msgid "Pause current song"
-msgstr "მიმდინარე სიმღერის დაპაუზება"
-
-#: src/audacious/main.c:882
-msgid "Stop current song"
-msgstr "მიმდინარე სიმღერის გაჩერება"
-
-#: src/audacious/main.c:883
-msgid "Pause if playing, play otherwise"
-msgstr "დააპაუზება თუ უკრავს, თუ არა - დაკვრა"
-
-#: src/audacious/main.c:884
-msgid "Skip forward in playlist"
-msgstr "რეპერტუარში წინ გადახტომა"
-
-#: src/audacious/main.c:885
-#, fuzzy
-msgid "Display Jump to File dialog"
-msgstr "/ფაილზე გადასვლა"
-
-#: src/audacious/main.c:886
-msgid "Don't clear the playlist"
-msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#: src/audacious/main.c:887
-#, fuzzy
-msgid "Add new files to a temporary playlist"
-msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#: src/audacious/main.c:888
-#, fuzzy
-msgid "Display the main window"
-msgstr "ძირითადი ფანჯრის ჩვენება"
-
-#: src/audacious/main.c:889
-msgid "Display all open Audacious windows"
-msgstr ""
-
-#: src/audacious/main.c:890
-msgid "Enable headless operation"
-msgstr ""
-
-#: src/audacious/main.c:891
-msgid "Print all errors and warnings to stdout"
-msgstr ""
-
-#: src/audacious/main.c:892
-msgid "Show version and builtin features"
-msgstr ""
-
-#: src/audacious/main.c:893
-msgid "FILE..."
-msgstr ""
-
-#: src/audacious/main.c:1058
-#, c-format
-msgid ""
-"<b><big>Unable to load skin.</big></b>\n"
-"\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
-msgstr ""
-"<b><big>გარსის გახსნა შეუძლებელია.</big></b>\n"
-"\n"
-"გადაამოწმეთ, რომ გარსი '%s'-თან თავსებადია და ნაგულისხმევი გარსი სწორად არის "
-"დაყენებული '%s'-სთან\n"
-
-#: src/audacious/main.c:1116
-msgid ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-msgstr ""
-
-#: src/audacious/main.c:1147
-msgid "- play multimedia files"
-msgstr ""
-
-#: src/audacious/main.c:1154
-#, c-format
-msgid ""
-"%s: %s\n"
-"Try `%s --help' for more information.\n"
-msgstr ""
-
-#: src/audacious/main.c:1164
-#, fuzzy, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr "BMP: შეუძლებელია ეკრანის გახსნა, გამოვდივარ."
-
-#: src/audacious/signals.c:49
-msgid ""
-"\n"
-"Audacious has caught signal 11 (SIGSEGV).\n"
-"\n"
-"We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal "
-"circumstances.\n"
-"Your current configuration has been saved and should not be damaged.\n"
-"\n"
-"You can help improve the quality of Audacious by filing a bug at http://bugs-"
-"meta.atheme.org\n"
-"Please include the entire text of this message and a description of what you "
-"were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug "
-"report:\n"
-"\n"
-msgstr ""
-
-#: src/audacious/signals.c:80
-msgid ""
-"\n"
-"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
-"product.\n"
-msgstr ""
-
-#: src/audacious/signals.c:266
-msgid ""
-"Your signaling implementation is broken.\n"
-"Expect unusable crash reports.\n"
-msgstr ""
-
-#: src/audacious/strings.c:171
-msgid "  (invalid UTF-8)"
-msgstr "  (არასწორი UTF-8)"
-
-#: src/audacious/ui_about.c:46
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"XMMS-ზე დაფუძნებული მედია დამკვრელი\n"
-"\n"
-"საავტორო უფლებები (C) 2003-2004 BMP Development Team\n"
-
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:350
-#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
-#, fuzzy
-msgid "About Audacious"
-msgstr "MPEG აუდიო-პლაგინის შესახებ"
-
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:393
-msgid "Credits"
-msgstr "მადლობები"
-
-#: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"The future of UNIX multimedia.\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team\n"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"XMMS-ზე დაფუძნებული მედია დამკვრელი\n"
-"\n"
-"საავტორო უფლებები (C) 2003-2004 BMP Development Team\n"
-
-#: src/audacious/ui_credits.c:53
-#, fuzzy
-msgid "Audacious core developers:"
-msgstr "BMP-ის თვისებები"
-
-#: src/audacious/ui_credits.c:69
-msgid "Graphics:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:74
-msgid "Default skin:"
-msgstr "ნაგულისხმევი გარსი:"
-
-#: src/audacious/ui_credits.c:79
-msgid "Plugin development:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:93
-msgid "Patch authors:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:113
-#, fuzzy
-msgid "0.1.x developers:"
-msgstr "შემქმნელები:"
-
-#: src/audacious/ui_credits.c:119
-#, fuzzy
-msgid "BMP Developers:"
-msgstr "შემქმნელები:"
-
-#: src/audacious/ui_credits.c:151
-msgid "Brazilian Portuguese:"
-msgstr "ბრაზილიური პორტუგალიური:"
-
-#: src/audacious/ui_credits.c:154
-msgid "Breton:"
-msgstr "ბრეტონული:"
-
-#: src/audacious/ui_credits.c:157
-#, fuzzy
-msgid "Bulgarian:"
-msgstr "უნგრული:"
-
-#: src/audacious/ui_credits.c:160
-#, fuzzy
-msgid "Catalan:"
-msgstr "იტალიური:"
-
-#: src/audacious/ui_credits.c:163
-#, fuzzy
-msgid "Croatian:"
-msgstr "მდებარეობა:"
-
-#: src/audacious/ui_credits.c:166
-msgid "Czech:"
-msgstr "ჩეხური:"
-
-#: src/audacious/ui_credits.c:169
-msgid "Dutch:"
-msgstr "ჰოლანდიური:"
-
-#: src/audacious/ui_credits.c:173
-#, fuzzy
-msgid "Finnish:"
-msgstr "ესპანური:"
-
-#: src/audacious/ui_credits.c:176
-msgid "French:"
-msgstr "ფრანგული:"
-
-#: src/audacious/ui_credits.c:179
-msgid "German:"
-msgstr "გერმანული"
-
-#: src/audacious/ui_credits.c:184
-#, fuzzy
-msgid "Georgian:"
-msgstr "გერმანული"
-
-#: src/audacious/ui_credits.c:187
-msgid "Greek:"
-msgstr "ბერძნული:"
-
-#: src/audacious/ui_credits.c:192
-msgid "Hindi:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:195
-msgid "Hungarian:"
-msgstr "უნგრული:"
-
-#: src/audacious/ui_credits.c:198
-msgid "Italian:"
-msgstr "იტალიური:"
-
-#: src/audacious/ui_credits.c:202
-msgid "Japanese:"
-msgstr "იაპონური:"
-
-#: src/audacious/ui_credits.c:205
-msgid "Korean:"
-msgstr "კორეული:"
-
-#: src/audacious/ui_credits.c:208
-msgid "Lithuanian:"
-msgstr "ლიტვური:"
-
-#: src/audacious/ui_credits.c:211
-msgid "Macedonian:"
-msgstr "მაკედონიური:"
-
-#: src/audacious/ui_credits.c:214
-msgid "Polish:"
-msgstr "პოლონური:"
-
-#: src/audacious/ui_credits.c:217
-msgid "Romanian:"
-msgstr "რუმინული:"
-
-#: src/audacious/ui_credits.c:220
-msgid "Russian:"
-msgstr "რუსული:"
-
-#: src/audacious/ui_credits.c:223
-msgid "Serbian (Latin):"
-msgstr ""
-
-#: src/audacious/ui_credits.c:226
-msgid "Serbian (Cyrillic):"
-msgstr ""
-
-#: src/audacious/ui_credits.c:229
-msgid "Simplified Chinese:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:232
-msgid "Slovak:"
-msgstr "სლოვაკური:"
-
-#: src/audacious/ui_credits.c:235
-msgid "Spanish:"
-msgstr "ესპანური:"
-
-#: src/audacious/ui_credits.c:238
-msgid "Swedish:"
-msgstr "შვედური:"
-
-#: src/audacious/ui_credits.c:241
-#, fuzzy
-msgid "Traditional Chinese:"
-msgstr "დამატებითი დახმარება:"
-
-#: src/audacious/ui_credits.c:244
-msgid "Turkish:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:248
-#, fuzzy
-msgid "Ukrainian:"
-msgstr "რუმინული:"
-
-#: src/audacious/ui_credits.c:251
-msgid "Welsh:"
-msgstr "უელსური:"
-
-#: src/audacious/ui_credits.c:397
-msgid "Translators"
-msgstr "მთარგმნელები"
-
-#: src/audacious/ui_equalizer.c:635
-#, fuzzy
-msgid "Audacious Equalizer"
-msgstr "/ეკვალაიზერის აკეცვა"
-
-#: src/audacious/ui_equalizer.c:1279
-msgid "Presets"
-msgstr ""
-
-#: src/audacious/ui_main.c:625
-#, c-format
-msgid "%s - Audacious"
-msgstr ""
-
-#: src/audacious/ui_main.c:840
-msgid "VBR"
-msgstr "VBR"
-
-#: src/audacious/ui_main.c:858 src/audacious/ui_main.c:862
-#, fuzzy
-msgid "stereo"
-msgstr "სტერეო"
-
-#: src/audacious/ui_main.c:858 src/audacious/ui_main.c:862
-#, fuzzy
-msgid "mono"
-msgstr "მონო"
-
-#: src/audacious/ui_main.c:1199 src/audacious/ui_manager.c:419
-#: src/audacious/ui_manager.c:420
-msgid "Jump to Time"
-msgstr "დროზე გადასვლა"
-
-#: src/audacious/ui_main.c:1220
-msgid "minutes:seconds"
-msgstr "წუთები:წამები"
-
-#: src/audacious/ui_main.c:1230
-msgid "Track length:"
-msgstr "ჩანაწერის სიგრძე:"
-
-#: src/audacious/ui_main.c:1394
-msgid "Audacious - visibility warning"
-msgstr ""
-
-#: src/audacious/ui_main.c:1396
-#, fuzzy
-msgid "Show main player window"
-msgstr "დამკვრელის მთავარი ფანჯრის შრიფტი:"
-
-#: src/audacious/ui_main.c:1397
-#, fuzzy
-msgid "Ignore"
-msgstr "არ არის"
-
-#: src/audacious/ui_main.c:1401
-msgid ""
-"Audacious has been started with all of its windows hidden.\n"
-"You may want to show the player window again to control Audacious; "
-"otherwise, you'll have to control it remotely via audtool or enabled plugins "
-"(such as the statusicon plugin)."
-msgstr ""
-
-#: src/audacious/ui_main.c:1407
-msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
-
-#: src/audacious/ui_main.c:1425
-msgid "Enter location to play:"
-msgstr ""
-
-#: src/audacious/ui_main.c:1659
-#, fuzzy, c-format
-msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr "გადასვლა: %d:%-2.2d/%d:%-2.2d (%d%%)"
-
-#: src/audacious/ui_main.c:1691
-#, c-format
-msgid "Volume: %d%%"
-msgstr ""
-
-#: src/audacious/ui_main.c:1722
-#, c-format
-msgid "Balance: %d%% left"
-msgstr ""
-
-#: src/audacious/ui_main.c:1726
-msgid "Balance: center"
-msgstr ""
-
-#: src/audacious/ui_main.c:1730
-#, c-format
-msgid "Balance: %d%% right"
-msgstr ""
-
-#: src/audacious/ui_main.c:2118
-#, fuzzy
-msgid "Options Menu"
-msgstr "პარამეტრები"
-
-#: src/audacious/ui_main.c:2122
-#, fuzzy
-msgid "Disable 'Always On Top'"
-msgstr "/ყოველთვის ზემოდან"
-
-#: src/audacious/ui_main.c:2124
-#, fuzzy
-msgid "Enable 'Always On Top'"
-msgstr "/ყოველთვის ზემოდან"
-
-#: src/audacious/ui_main.c:2127
-#, fuzzy
-msgid "File Info Box"
-msgstr "ინფორმაცის ფაილის შესახებ"
-
-#: src/audacious/ui_main.c:2131
-msgid "Disable 'Doublesize'"
-msgstr ""
-
-#: src/audacious/ui_main.c:2133
-msgid "Enable 'Doublesize'"
-msgstr ""
-
-#: src/audacious/ui_main.c:2136
-#, fuzzy
-msgid "Visualization Menu"
-msgstr "/ვიზუალიზაციის რეჟიმი"
-
-#: src/audacious/ui_main.c:2184
-msgid ""
-"<b><big>No playable CD found.</big></b>\n"
-"\n"
-"No CD inserted, or inserted CD is not an audio CD.\n"
-msgstr ""
-"<b><big>დასაკრავი CD ნაპოვნი არ არის.</big></b>\n"
-"\n"
-"CD ჩადებული არ არის, ან ჩადებული CD არ არის აუდიო CD.\n"
-
-#: src/audacious/ui_main.c:2201
-msgid ""
-"<b><big>Couldn't open audio.</big></b>\n"
-"\n"
-"Please check that:\n"
-"1. You have the correct output plugin selected.\n"
-"2. No other programs is blocking the soundcard.\n"
-"3. Your soundcard is configured properly.\n"
-msgstr ""
-
-#: src/audacious/ui_main.c:2359
-#, c-format
-msgid "VOLUME: %d%%"
-msgstr "ხმა: %d%%"
-
-#: src/audacious/ui_main.c:2362
-#, c-format
-msgid "BALANCE: %d%% LEFT"
-msgstr "ბალანსი: %d%% მარცხნივ"
-
-#: src/audacious/ui_main.c:2365
-msgid "BALANCE: CENTER"
-msgstr "ბალანსი: ცენტრი"
-
-#: src/audacious/ui_main.c:2367
-#, c-format
-msgid "BALANCE: %d%% RIGHT"
-msgstr "ბალანსი: %d%% მარჯვნივ"
-
-#: src/audacious/ui_main.c:2818
-#, fuzzy
-msgid "Error in Audacious."
-msgstr "MPEG აუდიო-პლაგინის შესახებ"
-
-#: src/audacious/ui_manager.c:45 src/audacious/ui_manager.c:46
-#, fuzzy
-msgid "Autoscroll Songname"
-msgstr "/სიმღერის სახელის თვითგადახვევა"
-
-#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
-#, fuzzy
-msgid "Stop after Current Song"
-msgstr "მიმდინარე სიმღერის გაჩერება"
-
-#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
-#, fuzzy
-msgid "Peaks"
-msgstr "პრანკსი"
-
-#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
-#, fuzzy
-msgid "Repeat"
-msgstr "/გამეორება"
-
-#: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
-#, fuzzy
-msgid "Shuffle"
-msgstr "/არეულად"
-
-#: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
-#, fuzzy
-msgid "No Playlist Advance"
-msgstr "/რეპერტუარის ჩვენება"
-
-#: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
-#, fuzzy
-msgid "Show Player"
-msgstr "/რეპერტუარის ჩვენება"
-
-#: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
-#, fuzzy
-msgid "Show Playlist Editor"
-msgstr "/რეპერტუარის ჩვენება"
-
-#: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
-#, fuzzy
-msgid "Show Equalizer"
-msgstr "/ეკვალაიზერის ჩენება"
-
-#: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
-#, fuzzy
-msgid "Always on Top"
-msgstr "/ყოველთვის ზემოდან"
-
-#: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
-#, fuzzy
-msgid "Put on All Workspaces"
-msgstr "/ყველა სამუშაო მაგიდაზე ჩვენება"
-
-#: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
-#, fuzzy
-msgid "Roll up Player"
-msgstr "/დამკვრელის აკეცვა"
-
-#: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
-#, fuzzy
-msgid "Roll up Playlist Editor"
-msgstr "/რეპერტუარის აკეცვა"
-
-#: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
-#, fuzzy
-msgid "Roll up Equalizer"
-msgstr "/ეკვალაიზერის აკეცვა"
-
-#: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
-msgid "DoubleSize"
-msgstr ""
-
-#: src/audacious/ui_manager.c:90 src/audacious/ui_manager.c:91
-msgid "Easy Move"
-msgstr ""
-
-#: src/audacious/ui_manager.c:99
-#, fuzzy
-msgid "Analyzer"
-msgstr "/ანალიზატორის რეჟიმი"
-
-#: src/audacious/ui_manager.c:100
-#, fuzzy
-msgid "Scope"
-msgstr "/ოსცილოგრაფის რეჟიმი"
-
-#: src/audacious/ui_manager.c:101
-#, fuzzy
-msgid "Voiceprint"
-msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
-
-#: src/audacious/ui_manager.c:102
-msgid "Off"
-msgstr ""
-
-#: src/audacious/ui_manager.c:106 src/audacious/ui_manager.c:123
-#: src/audacious/ui_manager.c:129
-#, fuzzy
-msgid "Normal"
-msgstr "ID3 ფორმატი:"
-
-#: src/audacious/ui_manager.c:107 src/audacious/ui_manager.c:124
-#, fuzzy
-msgid "Fire"
-msgstr "სატირა"
-
-#: src/audacious/ui_manager.c:108
-#, fuzzy
-msgid "Vertical Lines"
-msgstr "/ანალიზატორის რეჟიმი/ვერტილაკური ხაზები"
-
-#: src/audacious/ui_manager.c:112
-#, fuzzy
-msgid "Lines"
-msgstr "სტრიქონი"
-
-#: src/audacious/ui_manager.c:113
-#, fuzzy
-msgid "Bars"
-msgstr "ბასი"
-
-#: src/audacious/ui_manager.c:117
-#, fuzzy
-msgid "Dot Scope"
-msgstr "/ოსცილოგრაფის რეჟიმი/წერტილოვანი"
-
-#: src/audacious/ui_manager.c:118
-#, fuzzy
-msgid "Line Scope"
-msgstr "/ოსცილოგრაფის რეჟიმი/ზოლები"
-
-#: src/audacious/ui_manager.c:119
-#, fuzzy
-msgid "Solid Scope"
-msgstr "/ოსცილოგრაფის რეჟიმი/შევსებული"
-
-#: src/audacious/ui_manager.c:125
-msgid "Ice"
-msgstr ""
-
-#: src/audacious/ui_manager.c:130
-#, fuzzy
-msgid "Smooth"
-msgstr "მონო"
-
-#: src/audacious/ui_manager.c:134
-#, fuzzy
-msgid "Full (~50 fps)"
-msgstr "/განახლების სიხშირე/სრული (~50 კადრი/წმ)"
-
-#: src/audacious/ui_manager.c:135
-#, fuzzy
-msgid "Half (~25 fps)"
-msgstr "/განახლების სიხშირე/ნახევარი (~25 კადრი/წმ)"
-
-#: src/audacious/ui_manager.c:136
-#, fuzzy
-msgid "Quarter (~13 fps)"
-msgstr "/განახლების სიხშირე/მეოთხედი (~13 კადრი/წმ)"
-
-#: src/audacious/ui_manager.c:137
-#, fuzzy
-msgid "Eighth (~6 fps)"
-msgstr "/განახლების სიხშირე/მერვედი (~6 კადრი/წმ)"
-
-#: src/audacious/ui_manager.c:141 src/audacious/ui_manager.c:149
-msgid "Slowest"
-msgstr ""
-
-#: src/audacious/ui_manager.c:142 src/audacious/ui_manager.c:150
-#, fuzzy
-msgid "Slow"
-msgstr "ნელი როკი"
-
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
-msgid "Medium"
-msgstr ""
-
-#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
-msgid "Fast"
-msgstr ""
-
-#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
-msgid "Fastest"
-msgstr ""
-
-#: src/audacious/ui_manager.c:157
-#, fuzzy
-msgid "Time Elapsed"
-msgstr "/გასული დრო"
-
-#: src/audacious/ui_manager.c:158
-#, fuzzy
-msgid "Time Remaining"
-msgstr "/დარჩენილი დრო"
-
-#: src/audacious/ui_manager.c:167
-#, fuzzy
-msgid "Playback"
-msgstr "/დაკვრა"
-
-#: src/audacious/ui_manager.c:169 src/audacious/ui_manager.c:170
-#, fuzzy
-msgid "Play"
-msgstr "/დაკვრა"
-
-#: src/audacious/ui_manager.c:172 src/audacious/ui_manager.c:173
-#, fuzzy
-msgid "Pause"
-msgstr "/პაუზა"
-
-#: src/audacious/ui_manager.c:175 src/audacious/ui_manager.c:176
-#, fuzzy
-msgid "Stop"
-msgstr "/გაჩერება"
-
-#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:179
-#, fuzzy
-msgid "Previous"
-msgstr "/წინა"
-
-#: src/audacious/ui_manager.c:181 src/audacious/ui_manager.c:182
-#, fuzzy
-msgid "Next"
-msgstr "/შემდეგი"
-
-#: src/audacious/ui_manager.c:187
-#, fuzzy
-msgid "Visualization"
-msgstr "/ვიზუალიზაციის რეჟიმი"
-
-#: src/audacious/ui_manager.c:188
-#, fuzzy
-msgid "Visualization Mode"
-msgstr "/ვიზუალიზაციის რეჟიმი"
-
-#: src/audacious/ui_manager.c:189
-#, fuzzy
-msgid "Analyzer Mode"
-msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
-
-#: src/audacious/ui_manager.c:190
-#, fuzzy
-msgid "Scope Mode"
-msgstr "/ოსცილოგრაფის რეჟიმი"
-
-#: src/audacious/ui_manager.c:191
-#, fuzzy
-msgid "Voiceprint Mode"
-msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
-
-#: src/audacious/ui_manager.c:192
-msgid "WindowShade VU Mode"
-msgstr ""
-
-#: src/audacious/ui_manager.c:193
-#, fuzzy
-msgid "Refresh Rate"
-msgstr "/განახლების სიხშირე"
-
-#: src/audacious/ui_manager.c:194
-#, fuzzy
-msgid "Analyzer Falloff"
-msgstr "/ანალიზატორის ვარდნა"
-
-#: src/audacious/ui_manager.c:195
-#, fuzzy
-msgid "Peaks Falloff"
-msgstr "/პიკების ვარდნა"
-
-#: src/audacious/ui_manager.c:200 src/audacious/ui_preferences.c:108
-#: src/audacious/ui_playlist_manager.c:290
-#: src/audacious/glade/prefswin.glade:2494
-msgid "Playlist"
-msgstr "რეპერტუარი"
-
-#: src/audacious/ui_manager.c:202 src/audacious/ui_manager.c:203
-#, fuzzy
-msgid "New Playlist"
-msgstr "რეპერტუარის შენახვა"
-
-#: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
-#, fuzzy
-msgid "Select Next Playlist"
-msgstr "რეპერტუარის შრიფტი"
-
-#: src/audacious/ui_manager.c:208 src/audacious/ui_manager.c:209
-#, fuzzy
-msgid "Select Previous Playlist"
-msgstr "/მონიშნულის დალაგება/სათაურის მიხედვით"
-
-#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:212
-#, fuzzy
-msgid "Delete Playlist"
-msgstr "რეპერტუარის შრიფტი"
-
-#: src/audacious/ui_manager.c:214
-#, fuzzy
-msgid "Load List"
-msgstr "/სიის ჩატვირთვა"
-
-#: src/audacious/ui_manager.c:215
-msgid "Loads a playlist file into the selected playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:217
-#, fuzzy
-msgid "Save List"
-msgstr "/სიის შენახვა"
-
-#: src/audacious/ui_manager.c:218
-#, fuzzy
-msgid "Saves the selected playlist."
-msgstr "რეპერტუარის შრიფტი"
-
-#: src/audacious/ui_manager.c:220
-#, fuzzy
-msgid "Save Default List"
-msgstr "/შენახვა/ნაგულისხმევი"
-
-#: src/audacious/ui_manager.c:221
-msgid "Saves the selected playlist to the default location."
-msgstr ""
-
-#: src/audacious/ui_manager.c:224
-#, fuzzy
-msgid "Refresh List"
-msgstr "/განახლების სიხშირე"
-
-#: src/audacious/ui_manager.c:225
-msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
-
-#: src/audacious/ui_manager.c:228
-msgid "List Manager"
-msgstr ""
-
-#: src/audacious/ui_manager.c:229
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#: src/audacious/ui_manager.c:235
-#, fuzzy
-msgid "View"
-msgstr "/_ხედი"
-
-#: src/audacious/ui_manager.c:239
-#, fuzzy
-msgid "Add CD..."
-msgstr "/CD-ის დამატება..."
-
-#: src/audacious/ui_manager.c:240
-#, fuzzy
-msgid "Adds a CD to the playlist."
-msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#: src/audacious/ui_manager.c:243
-#, fuzzy
-msgid "Add Internet Address..."
-msgstr "/ინტერნეტ-მისამართის დამატება..."
-
-#: src/audacious/ui_manager.c:244
-msgid "Adds a remote track to the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:247
-#, fuzzy
-msgid "Add Files..."
-msgstr "/ფაილების დამატება..."
-
-#: src/audacious/ui_manager.c:248
-#, fuzzy
-msgid "Adds files to the playlist."
-msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#: src/audacious/ui_manager.c:253
-#, fuzzy
-msgid "Search and Select"
-msgstr "/მონიშნულის დალაგება"
-
-#: src/audacious/ui_manager.c:254
-msgid ""
-"Searches the playlist and selects playlist entries based on specific "
-"criteria."
-msgstr ""
-
-#: src/audacious/ui_manager.c:257
-#, fuzzy
-msgid "Invert Selection"
-msgstr "/არჩეულის ინვერსია"
-
-#: src/audacious/ui_manager.c:258
-msgid "Inverts the selected and unselected entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:261
-msgid "Select All"
-msgstr "ყველას მონიშვნა"
-
-#: src/audacious/ui_manager.c:262
-msgid "Selects all of the playlist entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:265
-#, fuzzy
-msgid "Select None"
-msgstr "/მონიშვნის მოხსნა"
-
-#: src/audacious/ui_manager.c:266
-msgid "Deselects all of the playlist entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:271
-#, fuzzy
-msgid "Clear Queue"
-msgstr "/რიგის გაწმენდა"
-
-#: src/audacious/ui_manager.c:272
-msgid "Clears the queue associated with this playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:275
-#, fuzzy
-msgid "Remove Unavailable Files"
-msgstr "/მოუწვდომელი ფაილების ამოღება"
-
-#: src/audacious/ui_manager.c:276
-#, fuzzy
-msgid "Removes unavailable files from the playlist."
-msgstr "/მოუწვდომელი ფაილების ამოღება"
-
-#: src/audacious/ui_manager.c:279
-#, fuzzy
-msgid "Remove Duplicates"
-msgstr "/მონიშნული ფაილების ამოღება"
-
-#: src/audacious/ui_manager.c:281 src/audacious/ui_manager.c:317
-#: src/audacious/ui_manager.c:347
-#, fuzzy
-msgid "By Title"
-msgstr "სათაური"
-
-#: src/audacious/ui_manager.c:282
-msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
-
-#: src/audacious/ui_manager.c:285 src/audacious/ui_manager.c:325
-#: src/audacious/ui_manager.c:355
-#, fuzzy
-msgid "By Filename"
-msgstr "ფაილის სახელი"
-
-#: src/audacious/ui_manager.c:286
-#, fuzzy
-msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
-
-#: src/audacious/ui_manager.c:289 src/audacious/ui_manager.c:329
-#: src/audacious/ui_manager.c:359
-#, fuzzy
-msgid "By Path + Filename"
-msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
-
-#: src/audacious/ui_manager.c:290
-msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
-
-#: src/audacious/ui_manager.c:293
-#, fuzzy
-msgid "Remove All"
-msgstr "/ყველა ფაილის ამოღება"
-
-#: src/audacious/ui_manager.c:294
-msgid "Removes all entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:297
-#, fuzzy
-msgid "Remove Unselected"
-msgstr "/მოუნიშნავი ფაილების დალაგება"
-
-#: src/audacious/ui_manager.c:298
-msgid "Remove unselected entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:301
-#, fuzzy
-msgid "Remove Selected"
-msgstr "/მონიშნული ფაილების ამოღება"
-
-#: src/audacious/ui_manager.c:302
-msgid "Remove selected entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:307
-#, fuzzy
-msgid "Randomize List"
-msgstr "/სიის არევა"
-
-#: src/audacious/ui_manager.c:308
-#, fuzzy
-msgid "Randomizes the playlist."
-msgstr "/სიის არევა"
-
-#: src/audacious/ui_manager.c:311
-#, fuzzy
-msgid "Reverse List"
-msgstr "/სიის რევერსირება"
-
-#: src/audacious/ui_manager.c:312
-#, fuzzy
-msgid "Reverses the playlist."
-msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#: src/audacious/ui_manager.c:315
-#, fuzzy
-msgid "Sort List"
-msgstr "/სიის დალაგება"
-
-#: src/audacious/ui_manager.c:318 src/audacious/ui_manager.c:348
-#, fuzzy
-msgid "Sorts the list by title."
-msgstr "/სიის დალაგება/სათაურის მიხედვით"
-
-#: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
-#, fuzzy
-msgid "By Artist"
-msgstr "შემსრულებელი"
-
-#: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
-#, fuzzy
-msgid "Sorts the list by artist."
-msgstr "/სიის დალაგება/სათაურის მიხედვით"
-
-#: src/audacious/ui_manager.c:326 src/audacious/ui_manager.c:356
-#, fuzzy
-msgid "Sorts the list by filename."
-msgstr "/სიის დალაგება/ფაილის სახელის მიხედვით"
-
-#: src/audacious/ui_manager.c:330 src/audacious/ui_manager.c:360
-msgid "Sorts the list by full pathname."
-msgstr ""
-
-#: src/audacious/ui_manager.c:333 src/audacious/ui_manager.c:363
-#, fuzzy
-msgid "By Date"
-msgstr "თარიღი"
-
-#: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
-msgid "Sorts the list by modification time."
-msgstr ""
-
-#: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
-#, fuzzy
-msgid "By Track Number"
-msgstr "ჩანაწერის ნომერი"
-
-#: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
-#, fuzzy
-msgid "Sorts the list by track number."
-msgstr "/სიის დალაგება/თარიღის მიხედვით"
-
-#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:371
-#, fuzzy
-msgid "By Playlist Entry"
-msgstr "BMP რეპერტუარი"
-
-#: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
-#, fuzzy
-msgid "Sorts the list by playlist entry."
-msgstr "/სიის დალაგება/სათაურის მიხედვით"
-
-#: src/audacious/ui_manager.c:345
-#, fuzzy
-msgid "Sort Selected"
-msgstr "/მონიშნულის დალაგება"
-
-#: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
-#, fuzzy
-msgid "View Track Details"
-msgstr "/ჩანაწერის დეტალები"
-
-#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
-#, fuzzy
-msgid "View track details"
-msgstr "/ჩანაწერის დეტალები"
-
-#: src/audacious/ui_manager.c:389
-#, fuzzy
-msgid "Play File"
-msgstr "/დაკვრა"
-
-#: src/audacious/ui_manager.c:390
-#, fuzzy
-msgid "Load and play a file"
-msgstr "/ჩატვირთვა/ფაილიდან"
-
-#: src/audacious/ui_manager.c:392
-#, fuzzy
-msgid "Play Location"
-msgstr "მდებარეობა:"
-
-#: src/audacious/ui_manager.c:393
-msgid "Play media from the selected location"
-msgstr ""
-
-#: src/audacious/ui_manager.c:395 src/audacious/ui_manager.c:396
-#, fuzzy
-msgid "Play CD"
-msgstr "/დაკვრა"
-
-#: src/audacious/ui_manager.c:398
-msgid "Last.fm radio"
-msgstr ""
-
-#: src/audacious/ui_manager.c:399
-#, fuzzy
-msgid "Play Last.fm radio"
-msgstr "მდებარეობა:"
-
-#: src/audacious/ui_manager.c:401
-#, fuzzy
-msgid "Preferences"
-msgstr "/თვისებები"
-
-#: src/audacious/ui_manager.c:402
-#, fuzzy
-msgid "Open preferences window"
-msgstr "თვისებების ფანჯარა"
-
-#: src/audacious/ui_manager.c:404
-#, fuzzy
-msgid "_Quit"
-msgstr "/_გასვლა"
-
-#: src/audacious/ui_manager.c:405
-#, fuzzy
-msgid "Quit Audacious"
-msgstr "MPEG აუდიო-პლაგინის შესახებ"
-
-#: src/audacious/ui_manager.c:407 src/audacious/ui_manager.c:408
-#, fuzzy
-msgid "Set A-B"
-msgstr "/ყველას მონიშვნა"
-
-#: src/audacious/ui_manager.c:410 src/audacious/ui_manager.c:411
-#, fuzzy
-msgid "Clear A-B"
-msgstr "/რიგის გაწმენდა"
-
-#: src/audacious/ui_manager.c:413 src/audacious/ui_manager.c:414
-#, fuzzy
-msgid "Jump to Playlist Start"
-msgstr "/რეპერტუარის დასაწისში გადასვლა"
-
-#: src/audacious/ui_manager.c:416 src/audacious/ui_manager.c:417
-#, fuzzy
-msgid "Jump to File"
-msgstr "/ფაილზე გადასვლა"
-
-#: src/audacious/ui_manager.c:422
-#, fuzzy
-msgid "Queue Toggle"
-msgstr "/რიგში ჩაყენება"
-
-#: src/audacious/ui_manager.c:423
-msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
-
-#: src/audacious/ui_manager.c:430
-#, fuzzy
-msgid "Load"
-msgstr "/ჩატვირთვა"
-
-#: src/audacious/ui_manager.c:431
-#, fuzzy
-msgid "Import"
-msgstr "/იმპორტი"
-
-#: src/audacious/ui_manager.c:432
-#, fuzzy
-msgid "Save"
-msgstr "/შენახვა"
-
-#: src/audacious/ui_manager.c:433
-#, fuzzy
-msgid "Delete"
-msgstr "/წაშლა"
-
-#: src/audacious/ui_manager.c:435 src/audacious/ui_manager.c:456
-#: src/audacious/ui_manager.c:471
-msgid "Preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:436
-msgid "Load preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:438 src/audacious/ui_manager.c:459
-#: src/audacious/ui_manager.c:474
-#, fuzzy
-msgid "Auto-load preset"
-msgstr "/ჩატვირთვა/ავტომატური"
-
-#: src/audacious/ui_manager.c:439
-#, fuzzy
-msgid "Load auto-load preset"
-msgstr "/ჩატვირთვა/ავტომატური"
-
-#: src/audacious/ui_manager.c:441 src/audacious/ui_manager.c:462
-msgid "Default"
-msgstr "ნაგულისხმევი"
-
-#: src/audacious/ui_manager.c:442
-msgid "Load default preset into equalizer"
-msgstr ""
-
-#: src/audacious/ui_manager.c:444
-#, fuzzy
-msgid "Zero"
-msgstr "რეტრო"
-
-#: src/audacious/ui_manager.c:445
-msgid "Set equalizer preset levels to zero"
-msgstr ""
-
-#: src/audacious/ui_manager.c:447
-#, fuzzy
-msgid "From file"
-msgstr "/ჩატვირთვა/ფაილიდან"
-
-#: src/audacious/ui_manager.c:448
-#, fuzzy
-msgid "Load preset from file"
-msgstr "/ჩატვირთვა/ფაილიდან"
-
-#: src/audacious/ui_manager.c:450
-#, fuzzy
-msgid "From WinAMP EQF file"
-msgstr "/ჩატვირთვა/WinAMP-ის EQF ფაილიდან"
-
-#: src/audacious/ui_manager.c:451
-#, fuzzy
-msgid "Load preset from WinAMP EQF file"
-msgstr "/ჩატვირთვა/WinAMP-ის EQF ფაილიდან"
-
-#: src/audacious/ui_manager.c:453
-msgid "WinAMP Presets"
-msgstr ""
-
-#: src/audacious/ui_manager.c:454
-msgid "Import WinAMP presets"
-msgstr ""
-
-#: src/audacious/ui_manager.c:457
-msgid "Save preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:460
-#, fuzzy
-msgid "Save auto-load preset"
-msgstr "/შენახვა/ავტომატური"
-
-#: src/audacious/ui_manager.c:463
-#, fuzzy
-msgid "Save default preset"
-msgstr "/შენახვა/ნაგულისხმევი"
-
-#: src/audacious/ui_manager.c:465
-#, fuzzy
-msgid "To file"
-msgstr "/ჩატვირთვა/ფაილიდან"
-
-#: src/audacious/ui_manager.c:466
-#, fuzzy
-msgid "Save preset to file"
-msgstr "ნაკადის დისკზე შენახვა"
-
-#: src/audacious/ui_manager.c:468
-#, fuzzy
-msgid "To WinAMP EQF file"
-msgstr "/შენახვა/WinAMP-ის EQF ფაილში"
-
-#: src/audacious/ui_manager.c:469
-#, fuzzy
-msgid "Save preset to WinAMP EQF file"
-msgstr "/შენახვა/WinAMP-ის EQF ფაილში"
-
-#: src/audacious/ui_manager.c:472
-msgid "Delete preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:475
-#, fuzzy
-msgid "Delete auto-load preset"
-msgstr "/ჩატვირთვა/ავტომატური"
-
-#: src/audacious/ui_preferences.c:103 src/audacious/glade/prefswin.glade:1363
-msgid "Appearance"
-msgstr "იერსახე"
-
-#: src/audacious/ui_preferences.c:104
-#, fuzzy
-msgid "Audio"
-msgstr "MPEG აუდიო-პლაგინის შესახებ"
-
-#: src/audacious/ui_preferences.c:105
-msgid "Connectivity"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:106 src/audacious/glade/prefswin.glade:2862
-msgid "Equalizer"
-msgstr "ეკვალაიზერი"
-
-#: src/audacious/ui_preferences.c:107 src/audacious/glade/prefswin.glade:1642
-msgid "Mouse"
-msgstr "თაგუნა"
-
-#: src/audacious/ui_preferences.c:109 src/audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "პლაგინები"
-
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:255
-msgid "Artist"
-msgstr "შემსრულებელი"
-
-#: src/audacious/ui_preferences.c:116 src/audacious/ui_fileinfopopup.c:258
-#: src/audacious/titlestring.c:380
-msgid "Album"
-msgstr "ალბომი"
-
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:252
-#: src/audacious/ui_fileinfopopup.c:362
-msgid "Title"
-msgstr "სათაური"
-
-#: src/audacious/ui_preferences.c:118
-msgid "Tracknumber"
-msgstr "ჩანაწერის ნომერი"
-
-#: src/audacious/ui_preferences.c:119 src/audacious/ui_fileinfopopup.c:261
-#: src/audacious/titlestring.c:381
-msgid "Genre"
-msgstr "ჟანრი"
-
-#: src/audacious/ui_preferences.c:120 src/audacious/ui_preferences.c:488
-#: src/audacious/ui_preferences.c:576 src/audacious/ui_preferences.c:665
-#: src/audacious/ui_preferences.c:761 src/audacious/ui_fileinfopopup.c:371
-msgid "Filename"
-msgstr "ფაილის სახელი"
-
-#: src/audacious/ui_preferences.c:121
-msgid "Filepath"
-msgstr "ფაილის გეზი"
-
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:387
-msgid "Date"
-msgstr "თარიღი"
-
-#: src/audacious/ui_preferences.c:123 src/audacious/ui_fileinfopopup.c:264
-#: src/audacious/titlestring.c:388
-msgid "Year"
-msgstr "წელი"
-
-#: src/audacious/ui_preferences.c:124 src/audacious/titlestring.c:389
-msgid "Comment"
-msgstr "კომენტარი"
-
-#: src/audacious/ui_preferences.c:145
-msgid "localhost"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:458 src/audacious/ui_preferences.c:545
-#: src/audacious/ui_preferences.c:634 src/audacious/ui_preferences.c:730
-msgid "Enabled"
-msgstr "ჩართვა"
-
-#: src/audacious/ui_preferences.c:474 src/audacious/ui_preferences.c:561
-#: src/audacious/ui_preferences.c:650 src/audacious/ui_preferences.c:746
-msgid "Description"
-msgstr "განმარტება"
-
-#: src/audacious/ui_preferences.c:1878
-msgid "Category"
-msgstr "კატეგორია"
-
-#: src/audacious/ui_preferences.c:2425
-msgid "Preferences Window"
-msgstr "თვისებების ფანჯარა"
-
-#: src/audacious/ui_skinselector.c:178
-msgid "Archived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_skinselector.c:183
-msgid "Unarchived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_fileinfo.c:158
-msgid "Track Information Window"
-msgstr ""
-
-#: src/audacious/ui_fileinfopopup.c:267
-#, fuzzy
-msgid "Track Number"
-msgstr "ჩანაწერის ნომერი"
-
-#: src/audacious/ui_fileinfopopup.c:271
-#, fuzzy
-msgid "Track Length"
-msgstr "ჩანაწერის სიგრძე:"
-
-#: src/audacious/ui_fileopener.c:131
-msgid "Open Files"
-msgstr "ფაილების გახსნა"
-
-#: src/audacious/ui_fileopener.c:131
-msgid "Add Files"
-msgstr "ფაილების დამატება"
-
-#: src/audacious/ui_fileopener.c:133
-msgid "Close dialog on Open"
-msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
-
-#: src/audacious/ui_fileopener.c:133
-msgid "Close dialog on Add"
-msgstr "დამატების შემდეგ დიალოგის დაკეტვა"
-
-#: src/audacious/ui_fileopener.c:358
-#, fuzzy
-msgid "Play files"
-msgstr "/დაკვრა"
-
-#: src/audacious/ui_fileopener.c:360
-#, fuzzy
-msgid "Load files"
-msgstr "/ჩატვირთვა/ფაილიდან"
-
-#: src/audacious/ui_playlist.c:497
-#, fuzzy
-msgid "Search entries in active playlist"
-msgstr "რეპერტუარში ჩანაწერების ნომრების ჩვენება"
-
-#: src/audacious/ui_playlist.c:505
-msgid ""
-"Select entries in playlist by filling one or more fields. Fields use regular "
-"expressions syntax, case-insensitive. If you don't know how regular "
-"expressions work, simply insert a literal portion of what you're searching "
-"for."
-msgstr ""
-
-#: src/audacious/ui_playlist.c:513
-#, fuzzy
-msgid "Title: "
-msgstr "სათაური:"
-
-#: src/audacious/ui_playlist.c:520
-#, fuzzy
-msgid "Album: "
-msgstr "ალბომი:"
-
-#: src/audacious/ui_playlist.c:527
-#, fuzzy
-msgid "Artist: "
-msgstr "შემსრულებელი:"
-
-#: src/audacious/ui_playlist.c:534
-#, fuzzy
-msgid "Filename: "
-msgstr "ფაილის სახელი:"
-
-#: src/audacious/ui_playlist.c:542
-msgid "Clear previous selection before searching"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:545
-msgid "Automatically toggle queue for matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:548
-msgid "Create a new playlist with matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:805
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "შეცდომა \"%s\" რეპერტუარის შენახვისას: %s"
-
-#: src/audacious/ui_playlist.c:827
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr "%s უკვე არსებობს. გავაგრძელო?"
-
-#: src/audacious/ui_playlist.c:842
-#, fuzzy, c-format
-msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr "რეპერტუარის შენახვა შეუძლებელია! ფაილის ტიპი %s უცნობია"
-
-#: src/audacious/ui_playlist.c:965
-#, fuzzy
-msgid "Save as Static Playlist"
-msgstr "რეპერტუარის შენახვა"
-
-#: src/audacious/ui_playlist.c:972
-msgid "Use Relative Path"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:994
-#, fuzzy
-msgid "Load Playlist"
-msgstr "რეპერტუარის ჩატვირთვა"
-
-#: src/audacious/ui_playlist.c:1007
-#, fuzzy
-msgid "Save Playlist"
-msgstr "რეპერტუარის შენახვა"
-
-#: src/audacious/ui_playlist.c:1701
-#, fuzzy
-msgid "Audacious Playlist Editor"
-msgstr "/რეპერტუარის ჩვენება"
-
-#: src/audacious/ui_urlopener.c:88
-#, fuzzy
-msgid "Add/Open URL Dialog"
-msgstr "ფაილების დამატების/გახსნის დიალოგი"
-
-#: src/audacious/ui_playlist_manager.c:255
-#, fuzzy
-msgid "Playlist Manager"
-msgstr "/რეპერტუარის ჩვენება"
-
-#: src/audacious/ui_playlist_manager.c:294
-msgid "Entries"
-msgstr ""
-
-#: src/audacious/ui_playlist_manager.c:306
-#, fuzzy
-msgid "_Rename"
-msgstr "ფაილის სახელი"
-
-#: src/audacious/ui_jumptotrack.c:141
-#, fuzzy
-msgid "Un_queue"
-msgstr "რიგში ჩაყენება"
-
-#: src/audacious/ui_jumptotrack.c:143 src/audacious/ui_jumptotrack.c:606
-#, fuzzy
-msgid "_Queue"
-msgstr "რიგში ჩაყენება"
-
-#: src/audacious/ui_jumptotrack.c:521
-msgid "Jump to Track"
-msgstr "ჩანაწერზე გადასვლა"
-
-#: src/audacious/ui_jumptotrack.c:562
-msgid "Filter: "
-msgstr "ფილტრი: "
-
-#: src/audacious/ui_jumptotrack.c:563
-#, fuzzy
-msgid "_Filter:"
-msgstr "ფილტრი: "
-
-#: src/audacious/ui_jumptotrack.c:597
-#, fuzzy
-msgid "Close on Jump"
-msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
-
-#: src/audacious/playback.c:223
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
-msgstr ""
-
-#: src/audacious/titlestring.c:379
-msgid "Performer/Artist"
-msgstr "შემსრულებელი"
-
-#: src/audacious/titlestring.c:382
-msgid "File name"
-msgstr "ფაილის სახელი"
-
-#: src/audacious/titlestring.c:383
-msgid "File path"
-msgstr "ფაილის მდებარეობა"
-
-#: src/audacious/titlestring.c:384
-msgid "File extension"
-msgstr "ფაილის გაფართოება"
-
-#: src/audacious/titlestring.c:385
-msgid "Track name"
-msgstr "ჩანაწერის სახელი"
-
-#: src/audacious/titlestring.c:386
-msgid "Track number"
-msgstr "ჩანაწერის ნომერი"
-
-#: src/audacious/titlestring.c:449
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: \"...\"-ის ჩვენება, მხოლოდ თუ ელემენტი %n არსებობს"
 
 #: src/audacious/glade/fileinfo.glade:8
 #, fuzzy
@@ -1771,6 +110,11 @@ msgstr "_ეფექტების პლაგინების სია:"
 msgid "<b>Effects</b>"
 msgstr "<b>ეფექტები</b>"
 
+#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
+#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
+msgid "Plugins"
+msgstr "პლაგინები"
+
 #: src/audacious/glade/prefswin.glade:746
 msgid "<b>_Skin</b>"
 msgstr "<b>_გარსი</b>"
@@ -1853,6 +197,10 @@ msgstr ""
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr ""
 
+#: src/audacious/glade/prefswin.glade:1363 src/audacious/ui_preferences.c:110
+msgid "Appearance"
+msgstr "იერსახე"
+
 #: src/audacious/glade/prefswin.glade:1410
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>თაგუნას ბზრიალა</b>"
@@ -1874,6 +222,10 @@ msgstr "ბზრიალა აბრუნებს რეპერტუა�
 #: src/audacious/glade/prefswin.glade:1567
 msgid "lines"
 msgstr "სტრიქონი"
+
+#: src/audacious/glade/prefswin.glade:1642 src/audacious/ui_preferences.c:114
+msgid "Mouse"
+msgstr "თაგუნა"
 
 #: src/audacious/glade/prefswin.glade:1689
 msgid "<b>Filename</b>"
@@ -2005,6 +357,11 @@ msgstr ""
 msgid "Edit settings for popup information"
 msgstr ""
 
+#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
+#: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
+msgid "Playlist"
+msgstr "რეპერტუარი"
+
 #: src/audacious/glade/prefswin.glade:2553
 msgid "<b>Presets</b>"
 msgstr ""
@@ -2020,6 +377,10 @@ msgstr ""
 #: src/audacious/glade/prefswin.glade:2729
 msgid "Available _Presets:"
 msgstr ""
+
+#: src/audacious/glade/prefswin.glade:2862 src/audacious/ui_preferences.c:113
+msgid "Equalizer"
+msgstr "ეკვალაიზერი"
 
 #: src/audacious/glade/prefswin.glade:2909
 #, fuzzy
@@ -2180,15 +541,6 @@ msgstr ""
 msgid "Converter Type:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4392
-msgid ""
-"SRC_SINC_BEST_QUALITY\n"
-"SRC_SINC_MEDIUM_QUALITY\n"
-"SRC_SINC_FASTEST\n"
-"SRC_ZERO_ORDER_HOLD\n"
-"SRC_LINEAR"
-msgstr ""
-
 #: src/audacious/glade/prefswin.glade:4593
 #, fuzzy
 msgid "Reload Plugins"
@@ -2269,6 +621,1742 @@ msgstr "ბერძნული:"
 msgid "Blue"
 msgstr "ბლუზი"
 
+#: src/audacious/input.c:718
+#, fuzzy, c-format
+msgid "audacious: %s"
+msgstr "აუდიო-CD-ს პლაგინი"
+
+#: src/audacious/input.c:734
+msgid "Filename:"
+msgstr "ფაილის სახელი:"
+
+#: src/audacious/input.c:753
+msgid "No input plugin recognized this file"
+msgstr "ამ ფაილისთვის საჭირო შემყვანი პლაგინი ამოუცნობია"
+
+#: src/audacious/input.c:755
+#, c-format
+msgid "Input plugin: %s"
+msgstr "შემყვანი პლაგინი: %s"
+
+#: src/audacious/logger.c:124
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "შეუძლებელია ჟურნალის ფაილის შექმნა (%s)!\n"
+
+#: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:502
+#: src/audacious/ui_main.c:2514
+msgid "Audacious"
+msgstr ""
+
+#: src/audacious/main.c:475
+#, fuzzy, c-format
+msgid "Could not create directory (%s): %s\n"
+msgstr "(%s) დირექტორიის შექმნა შეუძლებელია : %s"
+
+#: src/audacious/main.c:887
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "BMP/XMMS სესიის არჩევა (ნაგულისხმევი: 0)"
+
+#: src/audacious/main.c:888
+msgid "Skip backwards in playlist"
+msgstr "რეპერტუარში უკან გადასვლა"
+
+#: src/audacious/main.c:889
+msgid "Start playing current playlist"
+msgstr "მიმდინარე რეპერტუარის დაკვრა"
+
+#: src/audacious/main.c:890
+msgid "Pause current song"
+msgstr "მიმდინარე სიმღერის დაპაუზება"
+
+#: src/audacious/main.c:891
+msgid "Stop current song"
+msgstr "მიმდინარე სიმღერის გაჩერება"
+
+#: src/audacious/main.c:892
+msgid "Pause if playing, play otherwise"
+msgstr "დააპაუზება თუ უკრავს, თუ არა - დაკვრა"
+
+#: src/audacious/main.c:893
+msgid "Skip forward in playlist"
+msgstr "რეპერტუარში წინ გადახტომა"
+
+#: src/audacious/main.c:894
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/ფაილზე გადასვლა"
+
+#: src/audacious/main.c:895
+msgid "Don't clear the playlist"
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/main.c:896
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/main.c:897
+#, fuzzy
+msgid "Display the main window"
+msgstr "ძირითადი ფანჯრის ჩვენება"
+
+#: src/audacious/main.c:898
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:899
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:900
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:901
+msgid "Show version and builtin features"
+msgstr ""
+
+#: src/audacious/main.c:902
+msgid "FILE..."
+msgstr ""
+
+#: src/audacious/main.c:1061
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>გარსის გახსნა შეუძლებელია.</big></b>\n"
+"\n"
+"გადაამოწმეთ, რომ გარსი '%s'-თან თავსებადია და ნაგულისხმევი გარსი სწორად არის "
+"დაყენებული '%s'-სთან\n"
+
+#: src/audacious/main.c:1119
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+
+#: src/audacious/main.c:1150
+msgid "- play multimedia files"
+msgstr ""
+
+#: src/audacious/main.c:1157
+#, c-format
+msgid ""
+"%s: %s\n"
+"Try `%s --help' for more information.\n"
+msgstr ""
+
+#: src/audacious/main.c:1167
+#, fuzzy, c-format
+msgid "%s: Unable to open display, exiting.\n"
+msgstr "BMP: შეუძლებელია ეკრანის გახსნა, გამოვდივარ."
+
+#: src/audacious/playback.c:274
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+
+#: src/audacious/signals.c:49
+msgid ""
+"\n"
+"Audacious has caught signal 11 (SIGSEGV).\n"
+"\n"
+"We apologize for the inconvenience, but Audacious has crashed.\n"
+"This is a bug in the program, and should never happen under normal "
+"circumstances.\n"
+"Your current configuration has been saved and should not be damaged.\n"
+"\n"
+"You can help improve the quality of Audacious by filing a bug at http://bugs-"
+"meta.atheme.org\n"
+"Please include the entire text of this message and a description of what you "
+"were doing when\n"
+"this crash occured in order to quickly expedite the handling of your bug "
+"report:\n"
+"\n"
+msgstr ""
+
+#: src/audacious/signals.c:80
+msgid ""
+"\n"
+"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
+"product.\n"
+msgstr ""
+
+#: src/audacious/signals.c:266
+msgid ""
+"Your signaling implementation is broken.\n"
+"Expect unusable crash reports.\n"
+msgstr ""
+
+#: src/audacious/strings.c:170
+msgid "  (invalid UTF-8)"
+msgstr "  (არასწორი UTF-8)"
+
+#: src/audacious/ui_about.c:46
+#, fuzzy, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"XMMS-ზე დაფუძნებული მედია დამკვრელი\n"
+"\n"
+"საავტორო უფლებები (C) 2003-2004 BMP Development Team\n"
+
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
+#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
+#, fuzzy
+msgid "About Audacious"
+msgstr "MPEG აუდიო-პლაგინის შესახებ"
+
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
+msgid "Credits"
+msgstr "მადლობები"
+
+#: src/audacious/ui_credits.c:47
+#, fuzzy, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"The future of UNIX multimedia.\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"XMMS-ზე დაფუძნებული მედია დამკვრელი\n"
+"\n"
+"საავტორო უფლებები (C) 2003-2004 BMP Development Team\n"
+
+#: src/audacious/ui_credits.c:53
+#, fuzzy
+msgid "Audacious core developers:"
+msgstr "BMP-ის თვისებები"
+
+#: src/audacious/ui_credits.c:70
+msgid "Graphics:"
+msgstr ""
+
+#: src/audacious/ui_credits.c:75
+msgid "Default skin:"
+msgstr "ნაგულისხმევი გარსი:"
+
+#: src/audacious/ui_credits.c:80
+msgid "Plugin development:"
+msgstr ""
+
+#: src/audacious/ui_credits.c:94
+msgid "Patch authors:"
+msgstr ""
+
+#: src/audacious/ui_credits.c:114
+#, fuzzy
+msgid "0.1.x developers:"
+msgstr "შემქმნელები:"
+
+#: src/audacious/ui_credits.c:120
+#, fuzzy
+msgid "BMP Developers:"
+msgstr "შემქმნელები:"
+
+#: src/audacious/ui_credits.c:152
+msgid "Brazilian Portuguese:"
+msgstr "ბრაზილიური პორტუგალიური:"
+
+#: src/audacious/ui_credits.c:155
+msgid "Breton:"
+msgstr "ბრეტონული:"
+
+#: src/audacious/ui_credits.c:158
+#, fuzzy
+msgid "Bulgarian:"
+msgstr "უნგრული:"
+
+#: src/audacious/ui_credits.c:161
+#, fuzzy
+msgid "Catalan:"
+msgstr "იტალიური:"
+
+#: src/audacious/ui_credits.c:164
+#, fuzzy
+msgid "Croatian:"
+msgstr "მდებარეობა:"
+
+#: src/audacious/ui_credits.c:167
+msgid "Czech:"
+msgstr "ჩეხური:"
+
+#: src/audacious/ui_credits.c:170
+msgid "Dutch:"
+msgstr "ჰოლანდიური:"
+
+#: src/audacious/ui_credits.c:174
+#, fuzzy
+msgid "Finnish:"
+msgstr "ესპანური:"
+
+#: src/audacious/ui_credits.c:177
+msgid "French:"
+msgstr "ფრანგული:"
+
+#: src/audacious/ui_credits.c:180
+msgid "German:"
+msgstr "გერმანული"
+
+#: src/audacious/ui_credits.c:185
+#, fuzzy
+msgid "Georgian:"
+msgstr "გერმანული"
+
+#: src/audacious/ui_credits.c:188
+msgid "Greek:"
+msgstr "ბერძნული:"
+
+#: src/audacious/ui_credits.c:193
+msgid "Hindi:"
+msgstr ""
+
+#: src/audacious/ui_credits.c:196
+msgid "Hungarian:"
+msgstr "უნგრული:"
+
+#: src/audacious/ui_credits.c:199
+msgid "Italian:"
+msgstr "იტალიური:"
+
+#: src/audacious/ui_credits.c:203
+msgid "Japanese:"
+msgstr "იაპონური:"
+
+#: src/audacious/ui_credits.c:206
+msgid "Korean:"
+msgstr "კორეული:"
+
+#: src/audacious/ui_credits.c:209
+msgid "Lithuanian:"
+msgstr "ლიტვური:"
+
+#: src/audacious/ui_credits.c:212
+msgid "Macedonian:"
+msgstr "მაკედონიური:"
+
+#: src/audacious/ui_credits.c:215
+msgid "Polish:"
+msgstr "პოლონური:"
+
+#: src/audacious/ui_credits.c:218
+msgid "Romanian:"
+msgstr "რუმინული:"
+
+#: src/audacious/ui_credits.c:221
+msgid "Russian:"
+msgstr "რუსული:"
+
+#: src/audacious/ui_credits.c:224
+msgid "Serbian (Latin):"
+msgstr ""
+
+#: src/audacious/ui_credits.c:227
+msgid "Serbian (Cyrillic):"
+msgstr ""
+
+#: src/audacious/ui_credits.c:230
+msgid "Simplified Chinese:"
+msgstr ""
+
+#: src/audacious/ui_credits.c:233
+msgid "Slovak:"
+msgstr "სლოვაკური:"
+
+#: src/audacious/ui_credits.c:236
+msgid "Spanish:"
+msgstr "ესპანური:"
+
+#: src/audacious/ui_credits.c:239
+msgid "Swedish:"
+msgstr "შვედური:"
+
+#: src/audacious/ui_credits.c:242
+#, fuzzy
+msgid "Traditional Chinese:"
+msgstr "დამატებითი დახმარება:"
+
+#: src/audacious/ui_credits.c:245
+msgid "Turkish:"
+msgstr ""
+
+#: src/audacious/ui_credits.c:249
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "რუმინული:"
+
+#: src/audacious/ui_credits.c:252
+msgid "Welsh:"
+msgstr "უელსური:"
+
+#: src/audacious/ui_credits.c:398
+msgid "Translators"
+msgstr "მთარგმნელები"
+
+#: src/audacious/ui_equalizer.c:535
+#, fuzzy
+msgid "Audacious Equalizer"
+msgstr "/ეკვალაიზერის აკეცვა"
+
+#: src/audacious/ui_equalizer.c:1169
+msgid "Presets"
+msgstr ""
+
+#: src/audacious/ui_fileinfo.c:158
+#, fuzzy
+msgid "Track Information Window"
+msgstr "ჩანაწერის დონე:"
+
+#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
+#: src/audacious/ui_preferences.c:124
+msgid "Title"
+msgstr "სათაური"
+
+#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:122
+msgid "Artist"
+msgstr "შემსრულებელი"
+
+#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:123
+msgid "Album"
+msgstr "ალბომი"
+
+#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:126
+msgid "Genre"
+msgstr "ჟანრი"
+
+#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:130
+msgid "Year"
+msgstr "წელი"
+
+#: src/audacious/ui_fileinfopopup.c:267
+#, fuzzy
+msgid "Track Number"
+msgstr "ჩანაწერის ნომერი"
+
+#: src/audacious/ui_fileinfopopup.c:271
+#, fuzzy
+msgid "Track Length"
+msgstr "ჩანაწერის სიგრძე:"
+
+#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:426 src/audacious/ui_preferences.c:514
+#: src/audacious/ui_preferences.c:603 src/audacious/ui_preferences.c:699
+msgid "Filename"
+msgstr "ფაილის სახელი"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Open Files"
+msgstr "ფაილების გახსნა"
+
+#: src/audacious/ui_fileopener.c:134
+msgid "Add Files"
+msgstr "ფაილების დამატება"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Open"
+msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Close dialog on Add"
+msgstr "დამატების შემდეგ დიალოგის დაკეტვა"
+
+#: src/audacious/ui_fileopener.c:363
+#, fuzzy
+msgid "Play files"
+msgstr "/დაკვრა"
+
+#: src/audacious/ui_fileopener.c:365
+#, fuzzy
+msgid "Load files"
+msgstr "/ჩატვირთვა/ფაილიდან"
+
+#: src/audacious/ui_jumptotrack.c:140
+#, fuzzy
+msgid "Un_queue"
+msgstr "რიგში ჩაყენება"
+
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
+#, fuzzy
+msgid "_Queue"
+msgstr "რიგში ჩაყენება"
+
+#: src/audacious/ui_jumptotrack.c:520
+msgid "Jump to Track"
+msgstr "ჩანაწერზე გადასვლა"
+
+#: src/audacious/ui_jumptotrack.c:561
+msgid "Filter: "
+msgstr "ფილტრი: "
+
+#: src/audacious/ui_jumptotrack.c:562
+#, fuzzy
+msgid "_Filter:"
+msgstr "ფილტრი: "
+
+#: src/audacious/ui_jumptotrack.c:596
+#, fuzzy
+msgid "Close on Jump"
+msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
+
+#: src/audacious/ui_lastfm.c:117
+msgid ""
+"<b><big>Couldn't find your lastfm login data.</big></b>\n"
+"\n"
+"Check if your Scrobbler's plugin login settings are configured properly.\n"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:238
+#, fuzzy
+msgid "Audacious last.fm radio tuner"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_lastfm.c:239
+#, fuzzy
+msgid "Station:"
+msgstr "იტალიური:"
+
+#: src/audacious/ui_lastfm.c:257
+msgid "Love"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:258
+msgid "Ban"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:259
+msgid "Skip"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:260
+msgid "Tune in"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:262
+msgid "Neighbours' radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:263
+msgid "Personal radio"
+msgstr ""
+
+#: src/audacious/ui_lastfm.c:337
+msgid ""
+"<b><big>The lastfm radio plugin could not be found.</big></b>\n"
+"\n"
+"Check if the AudioScrobbler plugin was compiled in\n"
+msgstr ""
+
+#: src/audacious/ui_main.c:500
+#, c-format
+msgid "%s - Audacious"
+msgstr ""
+
+#: src/audacious/ui_main.c:755
+msgid "VBR"
+msgstr "VBR"
+
+#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
+#, fuzzy
+msgid "stereo"
+msgstr "სტერეო"
+
+#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
+#, fuzzy
+msgid "mono"
+msgstr "მონო"
+
+#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:418
+#: src/audacious/ui_manager.c:419
+msgid "Jump to Time"
+msgstr "დროზე გადასვლა"
+
+#: src/audacious/ui_main.c:1053
+msgid "minutes:seconds"
+msgstr "წუთები:წამები"
+
+#: src/audacious/ui_main.c:1063
+msgid "Track length:"
+msgstr "ჩანაწერის სიგრძე:"
+
+#: src/audacious/ui_main.c:1200
+msgid "Audacious - visibility warning"
+msgstr ""
+
+#: src/audacious/ui_main.c:1202
+#, fuzzy
+msgid "Show main player window"
+msgstr "დამკვრელის მთავარი ფანჯრის შრიფტი:"
+
+#: src/audacious/ui_main.c:1203
+#, fuzzy
+msgid "Ignore"
+msgstr "არ არის"
+
+#: src/audacious/ui_main.c:1207
+msgid ""
+"Audacious has been started with all of its windows hidden.\n"
+"You may want to show the player window again to control Audacious; "
+"otherwise, you'll have to control it remotely via audtool or enabled plugins "
+"(such as the statusicon plugin)."
+msgstr ""
+
+#: src/audacious/ui_main.c:1213
+msgid "Always ignore, show/hide is controlled remotely"
+msgstr ""
+
+#: src/audacious/ui_main.c:1231
+msgid "Enter location to play:"
+msgstr ""
+
+#: src/audacious/ui_main.c:1465
+#, fuzzy, c-format
+msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "გადასვლა: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: src/audacious/ui_main.c:1497
+#, c-format
+msgid "Volume: %d%%"
+msgstr ""
+
+#: src/audacious/ui_main.c:1528
+#, c-format
+msgid "Balance: %d%% left"
+msgstr ""
+
+#: src/audacious/ui_main.c:1532
+msgid "Balance: center"
+msgstr ""
+
+#: src/audacious/ui_main.c:1536
+#, c-format
+msgid "Balance: %d%% right"
+msgstr ""
+
+#: src/audacious/ui_main.c:1879
+#, fuzzy
+msgid "Options Menu"
+msgstr "პარამეტრები"
+
+#: src/audacious/ui_main.c:1883
+#, fuzzy
+msgid "Disable 'Always On Top'"
+msgstr "/ყოველთვის ზემოდან"
+
+#: src/audacious/ui_main.c:1885
+#, fuzzy
+msgid "Enable 'Always On Top'"
+msgstr "/ყოველთვის ზემოდან"
+
+#: src/audacious/ui_main.c:1888
+#, fuzzy
+msgid "File Info Box"
+msgstr "ინფორმაცის ფაილის შესახებ"
+
+#: src/audacious/ui_main.c:1892
+msgid "Disable 'Doublesize'"
+msgstr ""
+
+#: src/audacious/ui_main.c:1894
+msgid "Enable 'Doublesize'"
+msgstr ""
+
+#: src/audacious/ui_main.c:1897
+#, fuzzy
+msgid "Visualization Menu"
+msgstr "/ვიზუალიზაციის რეჟიმი"
+
+#: src/audacious/ui_main.c:1945
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+
+#: src/audacious/ui_main.c:2025
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "ხმა: %d%%"
+
+#: src/audacious/ui_main.c:2028
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "ბალანსი: %d%% მარცხნივ"
+
+#: src/audacious/ui_main.c:2031
+msgid "BALANCE: CENTER"
+msgstr "ბალანსი: ცენტრი"
+
+#: src/audacious/ui_main.c:2033
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "ბალანსი: %d%% მარჯვნივ"
+
+#: src/audacious/ui_main.c:2496
+#, fuzzy
+msgid "Error in Audacious."
+msgstr "MPEG აუდიო-პლაგინის შესახებ"
+
+#: src/audacious/ui_manager.c:47 src/audacious/ui_manager.c:48
+#, fuzzy
+msgid "Autoscroll Songname"
+msgstr "/სიმღერის სახელის თვითგადახვევა"
+
+#: src/audacious/ui_manager.c:50 src/audacious/ui_manager.c:51
+#, fuzzy
+msgid "Stop after Current Song"
+msgstr "მიმდინარე სიმღერის გაჩერება"
+
+#: src/audacious/ui_manager.c:53 src/audacious/ui_manager.c:54
+#, fuzzy
+msgid "Peaks"
+msgstr "პრანკსი"
+
+#: src/audacious/ui_manager.c:56 src/audacious/ui_manager.c:57
+#, fuzzy
+msgid "Repeat"
+msgstr "/გამეორება"
+
+#: src/audacious/ui_manager.c:59 src/audacious/ui_manager.c:60
+#, fuzzy
+msgid "Shuffle"
+msgstr "/არეულად"
+
+#: src/audacious/ui_manager.c:62 src/audacious/ui_manager.c:63
+#, fuzzy
+msgid "No Playlist Advance"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
+#, fuzzy
+msgid "Show Player"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
+#, fuzzy
+msgid "Show Playlist Editor"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
+#, fuzzy
+msgid "Show Equalizer"
+msgstr "/ეკვალაიზერის ჩენება"
+
+#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
+#, fuzzy
+msgid "Always on Top"
+msgstr "/ყოველთვის ზემოდან"
+
+#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
+#, fuzzy
+msgid "Put on All Workspaces"
+msgstr "/ყველა სამუშაო მაგიდაზე ჩვენება"
+
+#: src/audacious/ui_manager.c:80 src/audacious/ui_manager.c:81
+#, fuzzy
+msgid "Roll up Player"
+msgstr "/დამკვრელის აკეცვა"
+
+#: src/audacious/ui_manager.c:83 src/audacious/ui_manager.c:84
+#, fuzzy
+msgid "Roll up Playlist Editor"
+msgstr "/რეპერტუარის აკეცვა"
+
+#: src/audacious/ui_manager.c:86 src/audacious/ui_manager.c:87
+#, fuzzy
+msgid "Roll up Equalizer"
+msgstr "/ეკვალაიზერის აკეცვა"
+
+#: src/audacious/ui_manager.c:89 src/audacious/ui_manager.c:90
+msgid "DoubleSize"
+msgstr ""
+
+#: src/audacious/ui_manager.c:92 src/audacious/ui_manager.c:93
+msgid "Easy Move"
+msgstr ""
+
+#: src/audacious/ui_manager.c:101
+#, fuzzy
+msgid "Analyzer"
+msgstr "/ანალიზატორის რეჟიმი"
+
+#: src/audacious/ui_manager.c:102
+#, fuzzy
+msgid "Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი"
+
+#: src/audacious/ui_manager.c:103
+#, fuzzy
+msgid "Voiceprint"
+msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
+
+#: src/audacious/ui_manager.c:104
+msgid "Off"
+msgstr ""
+
+#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:125
+#: src/audacious/ui_manager.c:131
+#, fuzzy
+msgid "Normal"
+msgstr "ID3 ფორმატი:"
+
+#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
+#, fuzzy
+msgid "Fire"
+msgstr "სატირა"
+
+#: src/audacious/ui_manager.c:110
+#, fuzzy
+msgid "Vertical Lines"
+msgstr "/ანალიზატორის რეჟიმი/ვერტილაკური ხაზები"
+
+#: src/audacious/ui_manager.c:114
+#, fuzzy
+msgid "Lines"
+msgstr "სტრიქონი"
+
+#: src/audacious/ui_manager.c:115
+#, fuzzy
+msgid "Bars"
+msgstr "ბასი"
+
+#: src/audacious/ui_manager.c:119
+#, fuzzy
+msgid "Dot Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი/წერტილოვანი"
+
+#: src/audacious/ui_manager.c:120
+#, fuzzy
+msgid "Line Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი/ზოლები"
+
+#: src/audacious/ui_manager.c:121
+#, fuzzy
+msgid "Solid Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი/შევსებული"
+
+#: src/audacious/ui_manager.c:127
+msgid "Ice"
+msgstr ""
+
+#: src/audacious/ui_manager.c:132
+#, fuzzy
+msgid "Smooth"
+msgstr "მონო"
+
+#: src/audacious/ui_manager.c:136
+#, fuzzy
+msgid "Full (~50 fps)"
+msgstr "/განახლების სიხშირე/სრული (~50 კადრი/წმ)"
+
+#: src/audacious/ui_manager.c:137
+#, fuzzy
+msgid "Half (~25 fps)"
+msgstr "/განახლების სიხშირე/ნახევარი (~25 კადრი/წმ)"
+
+#: src/audacious/ui_manager.c:138
+#, fuzzy
+msgid "Quarter (~13 fps)"
+msgstr "/განახლების სიხშირე/მეოთხედი (~13 კადრი/წმ)"
+
+#: src/audacious/ui_manager.c:139
+#, fuzzy
+msgid "Eighth (~6 fps)"
+msgstr "/განახლების სიხშირე/მერვედი (~6 კადრი/წმ)"
+
+#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
+#, fuzzy
+msgid "Slowest"
+msgstr "ნელი როკი"
+
+#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
+#, fuzzy
+msgid "Slow"
+msgstr "ნელი როკი"
+
+#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
+msgid "Medium"
+msgstr ""
+
+#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
+msgid "Fast"
+msgstr ""
+
+#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
+msgid "Fastest"
+msgstr ""
+
+#: src/audacious/ui_manager.c:159
+#, fuzzy
+msgid "Time Elapsed"
+msgstr "/გასული დრო"
+
+#: src/audacious/ui_manager.c:160
+#, fuzzy
+msgid "Time Remaining"
+msgstr "/დარჩენილი დრო"
+
+#: src/audacious/ui_manager.c:169
+#, fuzzy
+msgid "Playback"
+msgstr "/დაკვრა"
+
+#: src/audacious/ui_manager.c:171 src/audacious/ui_manager.c:172
+#, fuzzy
+msgid "Play"
+msgstr "/დაკვრა"
+
+#: src/audacious/ui_manager.c:174 src/audacious/ui_manager.c:175
+#, fuzzy
+msgid "Pause"
+msgstr "/პაუზა"
+
+#: src/audacious/ui_manager.c:177 src/audacious/ui_manager.c:178
+#, fuzzy
+msgid "Stop"
+msgstr "/გაჩერება"
+
+#: src/audacious/ui_manager.c:180 src/audacious/ui_manager.c:181
+#, fuzzy
+msgid "Previous"
+msgstr "/წინა"
+
+#: src/audacious/ui_manager.c:183 src/audacious/ui_manager.c:184
+#, fuzzy
+msgid "Next"
+msgstr "/შემდეგი"
+
+#: src/audacious/ui_manager.c:189
+#, fuzzy
+msgid "Visualization"
+msgstr "/ვიზუალიზაციის რეჟიმი"
+
+#: src/audacious/ui_manager.c:190
+#, fuzzy
+msgid "Visualization Mode"
+msgstr "/ვიზუალიზაციის რეჟიმი"
+
+#: src/audacious/ui_manager.c:191
+#, fuzzy
+msgid "Analyzer Mode"
+msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
+
+#: src/audacious/ui_manager.c:192
+#, fuzzy
+msgid "Scope Mode"
+msgstr "/ოსცილოგრაფის რეჟიმი"
+
+#: src/audacious/ui_manager.c:193
+#, fuzzy
+msgid "Voiceprint Mode"
+msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
+
+#: src/audacious/ui_manager.c:194
+msgid "WindowShade VU Mode"
+msgstr ""
+
+#: src/audacious/ui_manager.c:195
+#, fuzzy
+msgid "Refresh Rate"
+msgstr "/განახლების სიხშირე"
+
+#: src/audacious/ui_manager.c:196
+#, fuzzy
+msgid "Analyzer Falloff"
+msgstr "/ანალიზატორის ვარდნა"
+
+#: src/audacious/ui_manager.c:197
+#, fuzzy
+msgid "Peaks Falloff"
+msgstr "/პიკების ვარდნა"
+
+#: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
+#, fuzzy
+msgid "New Playlist"
+msgstr "რეპერტუარის შენახვა"
+
+#: src/audacious/ui_manager.c:207 src/audacious/ui_manager.c:208
+#, fuzzy
+msgid "Select Next Playlist"
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:210 src/audacious/ui_manager.c:211
+#, fuzzy
+msgid "Select Previous Playlist"
+msgstr "/მონიშნულის დალაგება/სათაურის მიხედვით"
+
+#: src/audacious/ui_manager.c:213 src/audacious/ui_manager.c:214
+#, fuzzy
+msgid "Delete Playlist"
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:216
+#, fuzzy
+msgid "Load List"
+msgstr "/სიის ჩატვირთვა"
+
+#: src/audacious/ui_manager.c:217
+#, fuzzy
+msgid "Loads a playlist file into the selected playlist."
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:219
+#, fuzzy
+msgid "Save List"
+msgstr "/სიის შენახვა"
+
+#: src/audacious/ui_manager.c:220
+#, fuzzy
+msgid "Saves the selected playlist."
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:222
+#, fuzzy
+msgid "Save Default List"
+msgstr "/შენახვა/ნაგულისხმევი"
+
+#: src/audacious/ui_manager.c:223
+#, fuzzy
+msgid "Saves the selected playlist to the default location."
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:226
+#, fuzzy
+msgid "Refresh List"
+msgstr "/განახლების სიხშირე"
+
+#: src/audacious/ui_manager.c:227
+msgid "Refreshes metadata associated with a playlist entry."
+msgstr ""
+
+#: src/audacious/ui_manager.c:230
+#, fuzzy
+msgid "List Manager"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_manager.c:231
+#, fuzzy
+msgid "Opens the playlist manager."
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/ui_manager.c:237
+#, fuzzy
+msgid "View"
+msgstr "/_ხედი"
+
+#: src/audacious/ui_manager.c:241
+#, fuzzy
+msgid "Add Internet Address..."
+msgstr "/ინტერნეტ-მისამართის დამატება..."
+
+#: src/audacious/ui_manager.c:242
+#, fuzzy
+msgid "Adds a remote track to the playlist."
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/ui_manager.c:245
+#, fuzzy
+msgid "Add Files..."
+msgstr "/ფაილების დამატება..."
+
+#: src/audacious/ui_manager.c:246
+#, fuzzy
+msgid "Adds files to the playlist."
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/ui_manager.c:251
+#, fuzzy
+msgid "Search and Select"
+msgstr "/მონიშნულის დალაგება"
+
+#: src/audacious/ui_manager.c:252
+msgid ""
+"Searches the playlist and selects playlist entries based on specific "
+"criteria."
+msgstr ""
+
+#: src/audacious/ui_manager.c:255
+#, fuzzy
+msgid "Invert Selection"
+msgstr "/არჩეულის ინვერსია"
+
+#: src/audacious/ui_manager.c:256
+#, fuzzy
+msgid "Inverts the selected and unselected entries."
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:259
+msgid "Select All"
+msgstr "ყველას მონიშვნა"
+
+#: src/audacious/ui_manager.c:260
+#, fuzzy
+msgid "Selects all of the playlist entries."
+msgstr "/სიის დალაგება/სათაურის მიხედვით"
+
+#: src/audacious/ui_manager.c:263
+#, fuzzy
+msgid "Select None"
+msgstr "/მონიშვნის მოხსნა"
+
+#: src/audacious/ui_manager.c:264
+#, fuzzy
+msgid "Deselects all of the playlist entries."
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/ui_manager.c:269
+#, fuzzy
+msgid "Clear Queue"
+msgstr "/რიგის გაწმენდა"
+
+#: src/audacious/ui_manager.c:270
+#, fuzzy
+msgid "Clears the queue associated with this playlist."
+msgstr "რეპერტუარის შრიფტი"
+
+#: src/audacious/ui_manager.c:273
+#, fuzzy
+msgid "Remove Unavailable Files"
+msgstr "/მოუწვდომელი ფაილების ამოღება"
+
+#: src/audacious/ui_manager.c:274
+#, fuzzy
+msgid "Removes unavailable files from the playlist."
+msgstr "/მოუწვდომელი ფაილების ამოღება"
+
+#: src/audacious/ui_manager.c:277
+#, fuzzy
+msgid "Remove Duplicates"
+msgstr "/მონიშნული ფაილების ამოღება"
+
+#: src/audacious/ui_manager.c:279 src/audacious/ui_manager.c:315
+#: src/audacious/ui_manager.c:345
+#, fuzzy
+msgid "By Title"
+msgstr "სათაური"
+
+#: src/audacious/ui_manager.c:280
+#, fuzzy
+msgid "Removes duplicate entries from the playlist by title."
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
+#: src/audacious/ui_manager.c:353
+#, fuzzy
+msgid "By Filename"
+msgstr "ფაილის სახელი"
+
+#: src/audacious/ui_manager.c:284
+#, fuzzy
+msgid "Removes duplicate entries from the playlist by filename."
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:327
+#: src/audacious/ui_manager.c:357
+#, fuzzy
+msgid "By Path + Filename"
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:288
+#, fuzzy
+msgid "Removes duplicate entries from the playlist by their full path."
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:291
+#, fuzzy
+msgid "Remove All"
+msgstr "/ყველა ფაილის ამოღება"
+
+#: src/audacious/ui_manager.c:292
+#, fuzzy
+msgid "Removes all entries from the playlist."
+msgstr "/მოუწვდომელი ფაილების ამოღება"
+
+#: src/audacious/ui_manager.c:295
+#, fuzzy
+msgid "Remove Unselected"
+msgstr "/მოუნიშნავი ფაილების დალაგება"
+
+#: src/audacious/ui_manager.c:296
+#, fuzzy
+msgid "Remove unselected entries from the playlist."
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:299
+#, fuzzy
+msgid "Remove Selected"
+msgstr "/მონიშნული ფაილების ამოღება"
+
+#: src/audacious/ui_manager.c:300
+#, fuzzy
+msgid "Remove selected entries from the playlist."
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:305
+#, fuzzy
+msgid "Randomize List"
+msgstr "/სიის არევა"
+
+#: src/audacious/ui_manager.c:306
+#, fuzzy
+msgid "Randomizes the playlist."
+msgstr "/სიის არევა"
+
+#: src/audacious/ui_manager.c:309
+#, fuzzy
+msgid "Reverse List"
+msgstr "/სიის რევერსირება"
+
+#: src/audacious/ui_manager.c:310
+#, fuzzy
+msgid "Reverses the playlist."
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/ui_manager.c:313
+#, fuzzy
+msgid "Sort List"
+msgstr "/სიის დალაგება"
+
+#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:346
+#, fuzzy
+msgid "Sorts the list by title."
+msgstr "/სიის დალაგება/სათაურის მიხედვით"
+
+#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
+#, fuzzy
+msgid "By Artist"
+msgstr "შემსრულებელი"
+
+#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
+#, fuzzy
+msgid "Sorts the list by artist."
+msgstr "/სიის დალაგება/სათაურის მიხედვით"
+
+#: src/audacious/ui_manager.c:324 src/audacious/ui_manager.c:354
+#, fuzzy
+msgid "Sorts the list by filename."
+msgstr "/სიის დალაგება/ფაილის სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
+#, fuzzy
+msgid "Sorts the list by full pathname."
+msgstr "/სიის დალაგება/ფაილის სახელის მიხედვით"
+
+#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
+#, fuzzy
+msgid "By Date"
+msgstr "თარიღი"
+
+#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
+#, fuzzy
+msgid "Sorts the list by modification time."
+msgstr "/სიის დალაგება/სათაურის მიხედვით"
+
+#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
+#, fuzzy
+msgid "By Track Number"
+msgstr "ჩანაწერის ნომერი"
+
+#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
+#, fuzzy
+msgid "Sorts the list by track number."
+msgstr "/სიის დალაგება/თარიღის მიხედვით"
+
+#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
+#, fuzzy
+msgid "By Playlist Entry"
+msgstr "BMP რეპერტუარი"
+
+#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
+#, fuzzy
+msgid "Sorts the list by playlist entry."
+msgstr "/სიის დალაგება/სათაურის მიხედვით"
+
+#: src/audacious/ui_manager.c:343
+#, fuzzy
+msgid "Sort Selected"
+msgstr "/მონიშნულის დალაგება"
+
+#: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
+#, fuzzy
+msgid "View Track Details"
+msgstr "/ჩანაწერის დეტალები"
+
+#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
+#, fuzzy
+msgid "View track details"
+msgstr "/ჩანაწერის დეტალები"
+
+#: src/audacious/ui_manager.c:389
+#, fuzzy
+msgid "Play File"
+msgstr "/დაკვრა"
+
+#: src/audacious/ui_manager.c:390
+#, fuzzy
+msgid "Load and play a file"
+msgstr "/ჩატვირთვა/ფაილიდან"
+
+#: src/audacious/ui_manager.c:392
+#, fuzzy
+msgid "Play Location"
+msgstr "მდებარეობა:"
+
+#: src/audacious/ui_manager.c:393
+msgid "Play media from the selected location"
+msgstr ""
+
+#: src/audacious/ui_manager.c:395
+#, fuzzy
+msgid "Last.fm radio"
+msgstr "მდებარეობა:"
+
+#: src/audacious/ui_manager.c:396
+#, fuzzy
+msgid "Play Last.fm radio"
+msgstr "მდებარეობა:"
+
+#: src/audacious/ui_manager.c:400
+#, fuzzy
+msgid "Preferences"
+msgstr "/თვისებები"
+
+#: src/audacious/ui_manager.c:401
+#, fuzzy
+msgid "Open preferences window"
+msgstr "თვისებების ფანჯარა"
+
+#: src/audacious/ui_manager.c:403
+#, fuzzy
+msgid "_Quit"
+msgstr "/_გასვლა"
+
+#: src/audacious/ui_manager.c:404
+#, fuzzy
+msgid "Quit Audacious"
+msgstr "MPEG აუდიო-პლაგინის შესახებ"
+
+#: src/audacious/ui_manager.c:406 src/audacious/ui_manager.c:407
+#, fuzzy
+msgid "Set A-B"
+msgstr "/ყველას მონიშვნა"
+
+#: src/audacious/ui_manager.c:409 src/audacious/ui_manager.c:410
+#, fuzzy
+msgid "Clear A-B"
+msgstr "/რიგის გაწმენდა"
+
+#: src/audacious/ui_manager.c:412 src/audacious/ui_manager.c:413
+#, fuzzy
+msgid "Jump to Playlist Start"
+msgstr "/რეპერტუარის დასაწისში გადასვლა"
+
+#: src/audacious/ui_manager.c:415 src/audacious/ui_manager.c:416
+#, fuzzy
+msgid "Jump to File"
+msgstr "/ფაილზე გადასვლა"
+
+#: src/audacious/ui_manager.c:421
+#, fuzzy
+msgid "Queue Toggle"
+msgstr "/რიგში ჩაყენება"
+
+#: src/audacious/ui_manager.c:422
+msgid "Enables/disables the entry in the playlist's queue."
+msgstr ""
+
+#: src/audacious/ui_manager.c:429
+#, fuzzy
+msgid "Load"
+msgstr "/ჩატვირთვა"
+
+#: src/audacious/ui_manager.c:430
+#, fuzzy
+msgid "Import"
+msgstr "/იმპორტი"
+
+#: src/audacious/ui_manager.c:431
+#, fuzzy
+msgid "Save"
+msgstr "/შენახვა"
+
+#: src/audacious/ui_manager.c:432
+#, fuzzy
+msgid "Delete"
+msgstr "/წაშლა"
+
+#: src/audacious/ui_manager.c:434 src/audacious/ui_manager.c:455
+#: src/audacious/ui_manager.c:470
+#, fuzzy
+msgid "Preset"
+msgstr "პორტი:"
+
+#: src/audacious/ui_manager.c:435
+#, fuzzy
+msgid "Load preset"
+msgstr "/ჩატვირთვა/ავტომატური"
+
+#: src/audacious/ui_manager.c:437 src/audacious/ui_manager.c:458
+#: src/audacious/ui_manager.c:473
+#, fuzzy
+msgid "Auto-load preset"
+msgstr "/ჩატვირთვა/ავტომატური"
+
+#: src/audacious/ui_manager.c:438
+#, fuzzy
+msgid "Load auto-load preset"
+msgstr "/ჩატვირთვა/ავტომატური"
+
+#: src/audacious/ui_manager.c:440 src/audacious/ui_manager.c:461
+msgid "Default"
+msgstr "ნაგულისხმევი"
+
+#: src/audacious/ui_manager.c:441
+#, fuzzy
+msgid "Load default preset into equalizer"
+msgstr "/შენახვა/ნაგულისხმევი"
+
+#: src/audacious/ui_manager.c:443
+#, fuzzy
+msgid "Zero"
+msgstr "რეტრო"
+
+#: src/audacious/ui_manager.c:444
+msgid "Set equalizer preset levels to zero"
+msgstr ""
+
+#: src/audacious/ui_manager.c:446
+#, fuzzy
+msgid "From file"
+msgstr "/ჩატვირთვა/ფაილიდან"
+
+#: src/audacious/ui_manager.c:447
+#, fuzzy
+msgid "Load preset from file"
+msgstr "/ჩატვირთვა/ფაილიდან"
+
+#: src/audacious/ui_manager.c:449
+#, fuzzy
+msgid "From WinAMP EQF file"
+msgstr "/ჩატვირთვა/WinAMP-ის EQF ფაილიდან"
+
+#: src/audacious/ui_manager.c:450
+#, fuzzy
+msgid "Load preset from WinAMP EQF file"
+msgstr "/ჩატვირთვა/WinAMP-ის EQF ფაილიდან"
+
+#: src/audacious/ui_manager.c:452
+msgid "WinAMP Presets"
+msgstr ""
+
+#: src/audacious/ui_manager.c:453
+msgid "Import WinAMP presets"
+msgstr ""
+
+#: src/audacious/ui_manager.c:456
+#, fuzzy
+msgid "Save preset"
+msgstr "/შენახვა/ნაგულისხმევი"
+
+#: src/audacious/ui_manager.c:459
+#, fuzzy
+msgid "Save auto-load preset"
+msgstr "/შენახვა/ავტომატური"
+
+#: src/audacious/ui_manager.c:462
+#, fuzzy
+msgid "Save default preset"
+msgstr "/შენახვა/ნაგულისხმევი"
+
+#: src/audacious/ui_manager.c:464
+#, fuzzy
+msgid "To file"
+msgstr "/ჩატვირთვა/ფაილიდან"
+
+#: src/audacious/ui_manager.c:465
+#, fuzzy
+msgid "Save preset to file"
+msgstr "ნაკადის დისკზე შენახვა"
+
+#: src/audacious/ui_manager.c:467
+#, fuzzy
+msgid "To WinAMP EQF file"
+msgstr "/შენახვა/WinAMP-ის EQF ფაილში"
+
+#: src/audacious/ui_manager.c:468
+#, fuzzy
+msgid "Save preset to WinAMP EQF file"
+msgstr "/შენახვა/WinAMP-ის EQF ფაილში"
+
+#: src/audacious/ui_manager.c:471
+#, fuzzy
+msgid "Delete preset"
+msgstr "/ჩატვირთვა/ავტომატური"
+
+#: src/audacious/ui_manager.c:474
+#, fuzzy
+msgid "Delete auto-load preset"
+msgstr "/ჩატვირთვა/ავტომატური"
+
+#: src/audacious/ui_playlist.c:476
+#, fuzzy
+msgid "Search entries in active playlist"
+msgstr "რეპერტუარში ჩანაწერების ნომრების ჩვენება"
+
+#: src/audacious/ui_playlist.c:484
+msgid ""
+"Select entries in playlist by filling one or more fields. Fields use regular "
+"expressions syntax, case-insensitive. If you don't know how regular "
+"expressions work, simply insert a literal portion of what you're searching "
+"for."
+msgstr ""
+
+#: src/audacious/ui_playlist.c:492
+#, fuzzy
+msgid "Title: "
+msgstr "სათაური:"
+
+#: src/audacious/ui_playlist.c:499
+#, fuzzy
+msgid "Album: "
+msgstr "ალბომი:"
+
+#: src/audacious/ui_playlist.c:506
+#, fuzzy
+msgid "Artist: "
+msgstr "შემსრულებელი:"
+
+#: src/audacious/ui_playlist.c:513
+#, fuzzy
+msgid "Filename: "
+msgstr "ფაილის სახელი:"
+
+#: src/audacious/ui_playlist.c:521
+msgid "Clear previous selection before searching"
+msgstr ""
+
+#: src/audacious/ui_playlist.c:524
+msgid "Automatically toggle queue for matching entries"
+msgstr ""
+
+#: src/audacious/ui_playlist.c:527
+msgid "Create a new playlist with matching entries"
+msgstr ""
+
+#: src/audacious/ui_playlist.c:747
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "შეცდომა \"%s\" რეპერტუარის შენახვისას: %s"
+
+#: src/audacious/ui_playlist.c:769
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s უკვე არსებობს. გავაგრძელო?"
+
+#: src/audacious/ui_playlist.c:784
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr "რეპერტუარის შენახვა შეუძლებელია! ფაილის ტიპი %s უცნობია"
+
+#: src/audacious/ui_playlist.c:907
+#, fuzzy
+msgid "Save as Static Playlist"
+msgstr "რეპერტუარის შენახვა"
+
+#: src/audacious/ui_playlist.c:914
+msgid "Use Relative Path"
+msgstr ""
+
+#: src/audacious/ui_playlist.c:936
+#, fuzzy
+msgid "Load Playlist"
+msgstr "რეპერტუარის ჩატვირთვა"
+
+#: src/audacious/ui_playlist.c:949
+#, fuzzy
+msgid "Save Playlist"
+msgstr "რეპერტუარის შენახვა"
+
+#: src/audacious/ui_playlist.c:1500
+#, fuzzy
+msgid "Audacious Playlist Editor"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_playlist_manager.c:255
+#, fuzzy
+msgid "Playlist Manager"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: src/audacious/ui_playlist_manager.c:294
+msgid "Entries"
+msgstr ""
+
+#: src/audacious/ui_playlist_manager.c:306
+#, fuzzy
+msgid "_Rename"
+msgstr "ფაილის სახელი"
+
+#: src/audacious/ui_preferences.c:111
+#, fuzzy
+msgid "Audio"
+msgstr "MPEG აუდიო-პლაგინის შესახებ"
+
+#: src/audacious/ui_preferences.c:112
+msgid "Connectivity"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:125
+msgid "Tracknumber"
+msgstr "ჩანაწერის ნომერი"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Filepath"
+msgstr "ფაილის გეზი"
+
+#: src/audacious/ui_preferences.c:129
+msgid "Date"
+msgstr "თარიღი"
+
+#: src/audacious/ui_preferences.c:131
+msgid "Comment"
+msgstr "კომენტარი"
+
+#: src/audacious/ui_preferences.c:152
+msgid "localhost"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
+#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
+msgid "Enabled"
+msgstr "ჩართვა"
+
+#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
+msgid "Description"
+msgstr "განმარტება"
+
+#: src/audacious/ui_preferences.c:1684
+msgid "Category"
+msgstr "კატეგორია"
+
+#: src/audacious/ui_preferences.c:2231
+msgid "Preferences Window"
+msgstr "თვისებების ფანჯარა"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "PREAMP"
+msgstr "გაძლიერება"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "60HZ"
+msgstr "60ჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:386
+msgid "170HZ"
+msgstr "170ჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "310HZ"
+msgstr "310ჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "600HZ"
+msgstr "600ჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:387
+msgid "1KHZ"
+msgstr "1კჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "3KHZ"
+msgstr "3კჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "6KHZ"
+msgstr "6კჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:388
+msgid "12KHZ"
+msgstr "12კჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "14KHZ"
+msgstr "14კჰც"
+
+#: src/audacious/ui_skinned_equalizer_slider.c:389
+msgid "16KHZ"
+msgstr "16კჰც"
+
+#: src/audacious/ui_skinselector.c:178
+msgid "Archived Winamp 2.x skin"
+msgstr ""
+
+#: src/audacious/ui_skinselector.c:183
+msgid "Unarchived Winamp 2.x skin"
+msgstr ""
+
+#: src/audacious/ui_urlopener.c:88
+#, fuzzy
+msgid "Add/Open URL Dialog"
+msgstr "ფაილების დამატების/გახსნის დიალოგი"
+
+#~ msgid ""
+#~ "<b><big>No playable CD found.</big></b>\n"
+#~ "\n"
+#~ "No CD inserted, or inserted CD is not an audio CD.\n"
+#~ msgstr ""
+#~ "<b><big>დასაკრავი CD ნაპოვნი არ არის.</big></b>\n"
+#~ "\n"
+#~ "CD ჩადებული არ არის, ან ჩადებული CD არ არის აუდიო CD.\n"
+
+#, fuzzy
+#~ msgid "Add CD..."
+#~ msgstr "/CD-ის დამატება..."
+
+#, fuzzy
+#~ msgid "Play CD"
+#~ msgstr "/დაკვრა"
+
+#~ msgid "Performer/Artist"
+#~ msgstr "შემსრულებელი"
+
+#~ msgid "File name"
+#~ msgstr "ფაილის სახელი"
+
+#~ msgid "File path"
+#~ msgstr "ფაილის მდებარეობა"
+
+#~ msgid "File extension"
+#~ msgstr "ფაილის გაფართოება"
+
+#~ msgid "Track name"
+#~ msgstr "ჩანაწერის სახელი"
+
+#~ msgid "Track number"
+#~ msgstr "ჩანაწერის ნომერი"
+
+#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
+#~ msgstr "%{n:...%}: \"...\"-ის ჩვენება, მხოლოდ თუ ელემენტი %n არსებობს"
+
 #, fuzzy
 #~ msgid ""
 #~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -2293,39 +2381,6 @@ msgstr "ბლუზი"
 #, fuzzy
 #~ msgid "Album name: "
 #~ msgstr "ალბომი"
-
-#~ msgid "PREAMP"
-#~ msgstr "გაძლიერება"
-
-#~ msgid "60HZ"
-#~ msgstr "60ჰც"
-
-#~ msgid "170HZ"
-#~ msgstr "170ჰც"
-
-#~ msgid "310HZ"
-#~ msgstr "310ჰც"
-
-#~ msgid "600HZ"
-#~ msgstr "600ჰც"
-
-#~ msgid "1KHZ"
-#~ msgstr "1კჰც"
-
-#~ msgid "3KHZ"
-#~ msgstr "3კჰც"
-
-#~ msgid "6KHZ"
-#~ msgstr "6კჰც"
-
-#~ msgid "12KHZ"
-#~ msgstr "12კჰც"
-
-#~ msgid "14KHZ"
-#~ msgstr "14კჰც"
-
-#~ msgid "16KHZ"
-#~ msgstr "16კჰც"
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
@@ -3749,10 +3804,6 @@ msgstr "ბლუზი"
 #~ msgstr "სონატა"
 
 #, fuzzy
-#~ msgid "Port"
-#~ msgstr "პორტი:"
-
-#, fuzzy
 #~ msgid "Client name"
 #~ msgstr "ფაილის სახელი"
 
@@ -3990,10 +4041,6 @@ msgstr "ბლუზი"
 #, fuzzy
 #~ msgid " error"
 #~ msgstr "ტერორი"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "აუდიო-CD-ს პლაგინი"
 
 #, fuzzy
 #~ msgid "Cannot initialize SDL!\n"

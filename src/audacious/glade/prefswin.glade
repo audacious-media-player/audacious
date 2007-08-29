@@ -4389,7 +4389,7 @@ the sound card or output plugin.&lt;/span&gt;</property>
 			      <child>
 				<widget class="GtkComboBox" id="src_converter_type">
 				  <property name="visible">True</property>
-				  <property name="items" translatable="yes">SRC_SINC_BEST_QUALITY
+				  <property name="items" translatable="no">SRC_SINC_BEST_QUALITY
 SRC_SINC_MEDIUM_QUALITY
 SRC_SINC_FASTEST
 SRC_ZERO_ORDER_HOLD

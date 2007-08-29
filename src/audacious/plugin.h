@@ -313,7 +313,7 @@ struct _DiscoveryPlugin {
     void (*cleanup) (void);
     void (*about) (void);
     void (*configure) (void);
-    gchar *(*get_devices);  
+    GList *(*get_devices);  
 };
 
 G_BEGIN_DECLS

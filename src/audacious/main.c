@@ -485,6 +485,7 @@ bmp_make_user_dir(void)
     make_directory(bmp_paths[BMP_PATH_USER_PLUGIN_DIR], mode755);
     make_directory(bmp_paths[BMP_PATH_USER_SKIN_DIR], mode755);
     make_directory(bmp_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
+    make_directory(bmp_paths[BMP_PATH_PLAYLISTS_DIR], mode755);
 }
 
 static void
@@ -525,6 +526,9 @@ bmp_init_paths()
 
     bmp_paths[BMP_PATH_SKIN_THUMB_DIR] =
         g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
+
+    bmp_paths[BMP_PATH_PLAYLISTS_DIR] =
+        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "playlists", NULL);
 
     bmp_paths[BMP_PATH_CONFIG_FILE] =
         g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "config", NULL);
