@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-08-25 15:34+0200\n"
-"PO-Revision-Date: 2007-08-07 14:14+0900\n"
+"PO-Revision-Date: 2007-08-30 09:35+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1118,40 +1118,41 @@ msgid ""
 "\n"
 "Check if your Scrobbler's plugin login settings are configured properly.\n"
 msgstr ""
+"<b><big>lastfm ログインデータが見つかりませんでした.</big></b>\n"
+"\n"
+"Scrobbler プラグインのログイン設定が正しくなされているか確認してください.\n"
 
 #: src/audacious/ui_lastfm.c:238
-#, fuzzy
 msgid "Audacious last.fm radio tuner"
-msgstr "Audacious プレイリストエディタ"
+msgstr "Audacious last.fm ラジオチューナ"
 
 #: src/audacious/ui_lastfm.c:239
-#, fuzzy
 msgid "Station:"
-msgstr "イタリア語:"
+msgstr "ステーション:"
 
 #: src/audacious/ui_lastfm.c:257
 msgid "Love"
-msgstr ""
+msgstr "好き"
 
 #: src/audacious/ui_lastfm.c:258
 msgid "Ban"
-msgstr ""
+msgstr "嫌い"
 
 #: src/audacious/ui_lastfm.c:259
 msgid "Skip"
-msgstr ""
+msgstr "スキップ"
 
 #: src/audacious/ui_lastfm.c:260
 msgid "Tune in"
-msgstr ""
+msgstr "ラジオをかける"
 
 #: src/audacious/ui_lastfm.c:262
 msgid "Neighbours' radio"
-msgstr ""
+msgstr "ご近所のラジオ"
 
 #: src/audacious/ui_lastfm.c:263
 msgid "Personal radio"
-msgstr ""
+msgstr "パーソナルラジオ"
 
 #: src/audacious/ui_lastfm.c:337
 msgid ""
@@ -1159,6 +1160,9 @@ msgid ""
 "\n"
 "Check if the AudioScrobbler plugin was compiled in\n"
 msgstr ""
+"<b><big>lastfm ラジオプラグインが見つかりませんでした.</big></b>\n"
+"\n"
+"AudioScrobbler プラグインがコンパイルされているか確認してください\n"
 
 #: src/audacious/ui_main.c:500
 #, c-format
