@@ -23,19 +23,6 @@
 
 #include "tuple.h"
 
-struct _Tuple {
-    mowgli_object_t parent;
-    mowgli_dictionary_t *dict;
-};
-
-typedef struct {
-    TupleValueType type;
-    union {
-        gchar *string;
-        gint integer;
-    } value;
-} TupleValue;
-
 static mowgli_heap_t *tuple_heap = NULL;
 static mowgli_heap_t *tuple_value_heap = NULL;
 static mowgli_object_class_t tuple_klass;
@@ -124,8 +111,8 @@ tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string)
     g_return_val_if_fail(tuple != NULL, FALSE);
     g_return_val_if_fail(field != NULL, FALSE);
 
-    if (mowgli_dictionary_find(tuple->dict, field))
-        tuple_disassociate(tuple, field);
+    if ((value = mowgli_dictionary_delete(tuple->dict, field)))
+        tuple_disassociate_now(value);
 
     if (string == NULL)
         return TRUE;
@@ -147,8 +134,8 @@ tuple_associate_int(Tuple *tuple, const gchar *field, gint integer)
     g_return_val_if_fail(tuple != NULL, FALSE);
     g_return_val_if_fail(field != NULL, FALSE);
 
-    if (mowgli_dictionary_find(tuple->dict, field))
-        tuple_disassociate(tuple, field);
+    if ((value = mowgli_dictionary_delete(tuple->dict, field)))
+        tuple_disassociate_now(value);
 
     value = mowgli_heap_alloc(tuple_value_heap);
     value->type = TUPLE_INT;
@@ -157,6 +144,15 @@ tuple_associate_int(Tuple *tuple, const gchar *field, gint integer)
     mowgli_dictionary_add(tuple->dict, field, value);
 
     return TRUE;
+}
+
+void
+tuple_disassociate_now(TupleValue *value)
+{
+    if (value->type == TUPLE_STRING)
+        g_free(value->value.string);
+
+    mowgli_heap_free(tuple_value_heap, value);
 }
 
 void
@@ -170,11 +166,8 @@ tuple_disassociate(Tuple *tuple, const gchar *field)
     /* why _delete()? because _delete() returns the dictnode's data on success */
     if ((value = mowgli_dictionary_delete(tuple->dict, field)) == NULL)
         return;
-
-    if (value->type == TUPLE_STRING)
-        g_free(value->value.string);
-
-    mowgli_heap_free(tuple_value_heap, value);
+    
+    tuple_disassociate_now(value);
 }
 
 TupleValueType
