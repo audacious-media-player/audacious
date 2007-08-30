@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.1.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 15:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:34+0200\n"
 "PO-Revision-Date: 2006-07-18 20:56+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg2002@freemail.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -665,75 +665,75 @@ msgstr "Audacious"
 msgid "Could not create directory (%s): %s\n"
 msgstr "Δεν ήταν δυνατή η δημιουργία του καταλόγου (%s): %s"
 
-#: src/audacious/main.c:887
+#: src/audacious/main.c:891
 #, fuzzy
 msgid "Select which Audacious session ID to use"
 msgstr "Επιλογή συνεδρίας Audacious/BMP/XMMS (Προκαθορισμένη: 0)"
 
-#: src/audacious/main.c:888
+#: src/audacious/main.c:892
 msgid "Skip backwards in playlist"
 msgstr "Μετάβαση πίσω στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:889
+#: src/audacious/main.c:893
 msgid "Start playing current playlist"
 msgstr "Έναρξη αναπαραγωγής της τρέχουσας λίστας"
 
-#: src/audacious/main.c:890
+#: src/audacious/main.c:894
 msgid "Pause current song"
 msgstr "Παύση τρέχοντος κομματιού"
 
-#: src/audacious/main.c:891
+#: src/audacious/main.c:895
 msgid "Stop current song"
 msgstr "Σταμάτημα τρέχοντος κομματιού"
 
-#: src/audacious/main.c:892
+#: src/audacious/main.c:896
 msgid "Pause if playing, play otherwise"
 msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
-#: src/audacious/main.c:893
+#: src/audacious/main.c:897
 msgid "Skip forward in playlist"
 msgstr "Μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:894
+#: src/audacious/main.c:898
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Μετάβαση σε αρχείο"
 
-#: src/audacious/main.c:895
+#: src/audacious/main.c:899
 msgid "Don't clear the playlist"
 msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
 
-#: src/audacious/main.c:896
+#: src/audacious/main.c:900
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
 
-#: src/audacious/main.c:897
+#: src/audacious/main.c:901
 #, fuzzy
 msgid "Display the main window"
 msgstr "Εμφάνιση του κυρίως παραθύρου"
 
-#: src/audacious/main.c:898
+#: src/audacious/main.c:902
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:899
+#: src/audacious/main.c:903
 msgid "Enable headless operation"
 msgstr ""
 
-#: src/audacious/main.c:900
+#: src/audacious/main.c:904
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:901
+#: src/audacious/main.c:905
 msgid "Show version and builtin features"
 msgstr ""
 
-#: src/audacious/main.c:902
+#: src/audacious/main.c:906
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:1061
+#: src/audacious/main.c:1065
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -746,7 +746,7 @@ msgstr ""
 "Ελέγξτε ότι το skin στο '%s' είναι έγκυρο και ότι το προκαθορισμένο skin "
 "είναι σωστά εγκατεστημένο στο '%s'\n"
 
-#: src/audacious/main.c:1119
+#: src/audacious/main.c:1123
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -760,18 +760,18 @@ msgstr ""
 "you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 
-#: src/audacious/main.c:1150
+#: src/audacious/main.c:1154
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1157
+#: src/audacious/main.c:1161
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1167
+#: src/audacious/main.c:1171
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious: Αδύνατο το άνοιγμα της οθόνης, έξοδος.\n"
@@ -832,12 +832,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005 Η ομάδα ανάπτυξης του Audacious\n"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
 msgid "About Audacious"
 msgstr "Περί Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
 msgid "Credits"
 msgstr "Μνεία"
 
@@ -858,165 +858,165 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Βασικοί συντελεστές του Audacious:"
 
-#: src/audacious/ui_credits.c:70
+#: src/audacious/ui_credits.c:71
 msgid "Graphics:"
 msgstr "Γραφικά:"
 
-#: src/audacious/ui_credits.c:75
+#: src/audacious/ui_credits.c:76
 msgid "Default skin:"
 msgstr "Προκαθορισμένο skin:"
 
-#: src/audacious/ui_credits.c:80
+#: src/audacious/ui_credits.c:81
 msgid "Plugin development:"
 msgstr "Ανάπτυξη πρόσθετων:"
 
-#: src/audacious/ui_credits.c:94
+#: src/audacious/ui_credits.c:96
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:114
+#: src/audacious/ui_credits.c:116
 msgid "0.1.x developers:"
 msgstr "Δημιουργοί για το 0.1.x:"
 
-#: src/audacious/ui_credits.c:120
+#: src/audacious/ui_credits.c:122
 msgid "BMP Developers:"
 msgstr "Δημιουργοί BMP:"
 
-#: src/audacious/ui_credits.c:152
+#: src/audacious/ui_credits.c:154
 msgid "Brazilian Portuguese:"
 msgstr "Πορτογαλικά Βραζιλίας:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:157
 msgid "Breton:"
 msgstr "Breton:"
 
-#: src/audacious/ui_credits.c:158
+#: src/audacious/ui_credits.c:160
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Ουγγρική:"
 
-#: src/audacious/ui_credits.c:161
+#: src/audacious/ui_credits.c:163
 #, fuzzy
 msgid "Catalan:"
 msgstr "Ιταλικά:"
 
-#: src/audacious/ui_credits.c:164
+#: src/audacious/ui_credits.c:166
 #, fuzzy
 msgid "Croatian:"
 msgstr "Τοποθεσία:"
 
-#: src/audacious/ui_credits.c:167
+#: src/audacious/ui_credits.c:169
 msgid "Czech:"
 msgstr "Τσέχικα:"
 
-#: src/audacious/ui_credits.c:170
+#: src/audacious/ui_credits.c:172
 msgid "Dutch:"
 msgstr "Ολλανδική:"
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:176
 msgid "Finnish:"
 msgstr "Φινλανδικά:"
 
-#: src/audacious/ui_credits.c:177
+#: src/audacious/ui_credits.c:179
 msgid "French:"
 msgstr "Γαλλικά:"
 
-#: src/audacious/ui_credits.c:180
+#: src/audacious/ui_credits.c:182
 msgid "German:"
 msgstr "Γερμανικά:"
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:187
 #, fuzzy
 msgid "Georgian:"
 msgstr "Γεωργιανά:"
 
-#: src/audacious/ui_credits.c:188
+#: src/audacious/ui_credits.c:190
 msgid "Greek:"
 msgstr "Ελληνικά:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:195
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/ui_credits.c:198
 msgid "Hungarian:"
 msgstr "Ουγγρική:"
 
-#: src/audacious/ui_credits.c:199
+#: src/audacious/ui_credits.c:201
 msgid "Italian:"
 msgstr "Ιταλικά:"
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:205
 msgid "Japanese:"
 msgstr "Ιαπωνικά:"
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:208
 msgid "Korean:"
 msgstr "Κορεάτικα:"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:211
 msgid "Lithuanian:"
 msgstr "Λιθουανικά:"
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/ui_credits.c:214
 msgid "Macedonian:"
 msgstr "Σλαβομακεδονική:"
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/ui_credits.c:217
 msgid "Polish:"
 msgstr "Πολωνική:"
 
-#: src/audacious/ui_credits.c:218
+#: src/audacious/ui_credits.c:220
 msgid "Romanian:"
 msgstr "Ρουμανικά:"
 
-#: src/audacious/ui_credits.c:221
+#: src/audacious/ui_credits.c:224
 msgid "Russian:"
 msgstr "Ρώσικα:"
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:227
 #, fuzzy
 msgid "Serbian (Latin):"
 msgstr "Κυριλλική (MacCyrillic)"
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:230
 #, fuzzy
 msgid "Serbian (Cyrillic):"
 msgstr "Κυριλλική (MacCyrillic)"
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:233
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:236
 msgid "Slovak:"
 msgstr "Σλοβακική:"
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:239
 msgid "Spanish:"
 msgstr "Ισπανικά:"
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:242
 msgid "Swedish:"
 msgstr "Σουηδικά:"
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:245
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:248
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:249
+#: src/audacious/ui_credits.c:252
 msgid "Ukrainian:"
 msgstr "Ουκρανικά:"
 
-#: src/audacious/ui_credits.c:252
+#: src/audacious/ui_credits.c:255
 msgid "Welsh:"
 msgstr "Ουαλλική:"
 
-#: src/audacious/ui_credits.c:398
+#: src/audacious/ui_credits.c:401
 msgid "Translators"
 msgstr "Μεταφραστές"
 
@@ -1123,6 +1123,21 @@ msgstr "Φίλτρο:"
 msgid "Close on Jump"
 msgstr "Κλείσιμο παραθύρου διαλόγου κατά το άνοιγμα"
 
+#: src/audacious/ui_lastfm.c:90
+#, fuzzy, c-format
+msgid "<b>Artist:</b> %s"
+msgstr "Καλλιτέχνης"
+
+#: src/audacious/ui_lastfm.c:98
+#, fuzzy, c-format
+msgid "<b>Title:</b> %s"
+msgstr "<b>Τίτλος:</b>"
+
+#: src/audacious/ui_lastfm.c:102
+#, fuzzy, c-format
+msgid "<b>Album:</b> %s"
+msgstr "<b>Άλμπουμ:</b>"
+
 #: src/audacious/ui_lastfm.c:117
 msgid ""
 "<b><big>Couldn't find your lastfm login data.</big></b>\n"
@@ -1139,6 +1154,21 @@ msgstr "Επεξεργαστής λίστας αναπαραγωγής"
 #, fuzzy
 msgid "Station:"
 msgstr "Ιταλικά:"
+
+#: src/audacious/ui_lastfm.c:245
+#, fuzzy
+msgid "<b>Artist:</b>"
+msgstr "Καλλιτέχνης"
+
+#: src/audacious/ui_lastfm.c:249
+#, fuzzy
+msgid "<b>Title:</b>"
+msgstr "<b>Τίτλος:</b>"
+
+#: src/audacious/ui_lastfm.c:253
+#, fuzzy
+msgid "<b>Album:</b>"
+msgstr "<b>Άλμπουμ:</b>"
 
 #: src/audacious/ui_lastfm.c:257
 msgid "Love"
@@ -2529,18 +2559,6 @@ msgstr "Παράθυρο διαλόγου προσθήκης/ανοίγματο�
 #, fuzzy
 #~ msgid "Artist Popup"
 #~ msgstr "Καλλιτέχνης"
-
-#, fuzzy
-#~ msgid "<i>Title</i>"
-#~ msgstr "<b>Τίτλος:</b>"
-
-#, fuzzy
-#~ msgid "<i>Artist</i>"
-#~ msgstr "Καλλιτέχνης"
-
-#, fuzzy
-#~ msgid "<i>Album</i>"
-#~ msgstr "<b>Άλμπουμ:</b>"
 
 #, fuzzy
 #~ msgid "<i>Genre</i>"

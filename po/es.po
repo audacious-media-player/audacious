@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 15:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:34+0200\n"
 "PO-Revision-Date: 2006-09-30 16:57+0000\n"
 "Last-Translator: Gustavo D. Vranjes <gvranjes@nerdshack.com>\n"
 "Language-Team:  <es@li.org>\n"
@@ -678,75 +678,75 @@ msgstr "Audacious"
 msgid "Could not create directory (%s): %s\n"
 msgstr "No se pudo crear el directorio «%s»: %s"
 
-#: src/audacious/main.c:887
+#: src/audacious/main.c:891
 #, fuzzy
 msgid "Select which Audacious session ID to use"
 msgstr "Seleccionar la sesión de Audacious/BMP/XMMS (Por defecto: 0)"
 
-#: src/audacious/main.c:888
+#: src/audacious/main.c:892
 msgid "Skip backwards in playlist"
 msgstr "Saltar hacia atrás en la lista de reproducción"
 
-#: src/audacious/main.c:889
+#: src/audacious/main.c:893
 msgid "Start playing current playlist"
 msgstr "Empezar la reproducción de la lista de reproducción actual"
 
-#: src/audacious/main.c:890
+#: src/audacious/main.c:894
 msgid "Pause current song"
 msgstr "Pausar la canción actual"
 
-#: src/audacious/main.c:891
+#: src/audacious/main.c:895
 msgid "Stop current song"
 msgstr "Parar la canción actual"
 
-#: src/audacious/main.c:892
+#: src/audacious/main.c:896
 msgid "Pause if playing, play otherwise"
 msgstr "Pausar si se está reproduciendo, o reproducir"
 
-#: src/audacious/main.c:893
+#: src/audacious/main.c:897
 msgid "Skip forward in playlist"
 msgstr "Saltar hacia adelante en la lista de reproducción"
 
-#: src/audacious/main.c:894
+#: src/audacious/main.c:898
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Saltar al archivo"
 
-#: src/audacious/main.c:895
+#: src/audacious/main.c:899
 msgid "Don't clear the playlist"
 msgstr "No limpiar la lista de reproducción"
 
-#: src/audacious/main.c:896
+#: src/audacious/main.c:900
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "No limpiar la lista de reproducción"
 
-#: src/audacious/main.c:897
+#: src/audacious/main.c:901
 #, fuzzy
 msgid "Display the main window"
 msgstr "Mostrar la ventana principal"
 
-#: src/audacious/main.c:898
+#: src/audacious/main.c:902
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:899
+#: src/audacious/main.c:903
 msgid "Enable headless operation"
 msgstr ""
 
-#: src/audacious/main.c:900
+#: src/audacious/main.c:904
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:901
+#: src/audacious/main.c:905
 msgid "Show version and builtin features"
 msgstr ""
 
-#: src/audacious/main.c:902
+#: src/audacious/main.c:906
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:1061
+#: src/audacious/main.c:1065
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -759,7 +759,7 @@ msgstr ""
 "Por favor, comprueba que la piel «%s» sea válida y que la piel por defecto "
 "esté instalada correctamente en «%s»\n"
 
-#: src/audacious/main.c:1119
+#: src/audacious/main.c:1123
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -772,18 +772,18 @@ msgstr ""
 "Si está en un sistema linux basado en libc5 e instaló Glib & GTK+ antes de "
 "instalar LinuxThreads, necesita recompilar GLIB y GTK+\n"
 
-#: src/audacious/main.c:1150
+#: src/audacious/main.c:1154
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1157
+#: src/audacious/main.c:1161
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1167
+#: src/audacious/main.c:1171
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "Audacious: No se pudo abrir la pantalla, abortando\n"
@@ -844,12 +844,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2006 Equipo de Desarrollo de Audacious \n"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
 msgid "About Audacious"
 msgstr "Acerca de Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
 msgid "Credits"
 msgstr "Créditos:"
 
@@ -870,165 +870,165 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Desarrolladores del núcleo de Audacious:"
 
-#: src/audacious/ui_credits.c:70
+#: src/audacious/ui_credits.c:71
 msgid "Graphics:"
 msgstr "Gráficos:"
 
-#: src/audacious/ui_credits.c:75
+#: src/audacious/ui_credits.c:76
 msgid "Default skin:"
 msgstr "Piel por defecto:"
 
-#: src/audacious/ui_credits.c:80
+#: src/audacious/ui_credits.c:81
 msgid "Plugin development:"
 msgstr "Desarrollo de complementos:"
 
-#: src/audacious/ui_credits.c:94
+#: src/audacious/ui_credits.c:96
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:114
+#: src/audacious/ui_credits.c:116
 msgid "0.1.x developers:"
 msgstr "Desarrolladores 0.1.x:"
 
-#: src/audacious/ui_credits.c:120
+#: src/audacious/ui_credits.c:122
 msgid "BMP Developers:"
 msgstr "Desarrolladores BMP:"
 
-#: src/audacious/ui_credits.c:152
+#: src/audacious/ui_credits.c:154
 msgid "Brazilian Portuguese:"
 msgstr "Brazilian Portuguese:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:157
 msgid "Breton:"
 msgstr "Bretón:"
 
-#: src/audacious/ui_credits.c:158
+#: src/audacious/ui_credits.c:160
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Húngaro:"
 
-#: src/audacious/ui_credits.c:161
+#: src/audacious/ui_credits.c:163
 #, fuzzy
 msgid "Catalan:"
 msgstr "Italiano:"
 
-#: src/audacious/ui_credits.c:164
+#: src/audacious/ui_credits.c:166
 #, fuzzy
 msgid "Croatian:"
 msgstr "Lugar:"
 
-#: src/audacious/ui_credits.c:167
+#: src/audacious/ui_credits.c:169
 msgid "Czech:"
 msgstr "Checo:"
 
-#: src/audacious/ui_credits.c:170
+#: src/audacious/ui_credits.c:172
 msgid "Dutch:"
 msgstr "Holandés:"
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:176
 msgid "Finnish:"
 msgstr "Finlandeses:"
 
-#: src/audacious/ui_credits.c:177
+#: src/audacious/ui_credits.c:179
 msgid "French:"
 msgstr "Francés:"
 
-#: src/audacious/ui_credits.c:180
+#: src/audacious/ui_credits.c:182
 msgid "German:"
 msgstr "Alemán:"
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:187
 #, fuzzy
 msgid "Georgian:"
 msgstr "Georgianos: "
 
-#: src/audacious/ui_credits.c:188
+#: src/audacious/ui_credits.c:190
 msgid "Greek:"
 msgstr "Griego:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:195
 msgid "Hindi:"
 msgstr "Hindúes:"
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/ui_credits.c:198
 msgid "Hungarian:"
 msgstr "Húngaro:"
 
-#: src/audacious/ui_credits.c:199
+#: src/audacious/ui_credits.c:201
 msgid "Italian:"
 msgstr "Italiano:"
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:205
 msgid "Japanese:"
 msgstr "Japonés:"
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:208
 msgid "Korean:"
 msgstr "Coreano:"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:211
 msgid "Lithuanian:"
 msgstr "Lituano:"
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/ui_credits.c:214
 msgid "Macedonian:"
 msgstr "Macedonio:"
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/ui_credits.c:217
 msgid "Polish:"
 msgstr "Polaco:"
 
-#: src/audacious/ui_credits.c:218
+#: src/audacious/ui_credits.c:220
 msgid "Romanian:"
 msgstr "Rumano:"
 
-#: src/audacious/ui_credits.c:221
+#: src/audacious/ui_credits.c:224
 msgid "Russian:"
 msgstr "Ruso:"
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:227
 #, fuzzy
 msgid "Serbian (Latin):"
 msgstr "Cyrillic (MacCyrillic)"
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:230
 #, fuzzy
 msgid "Serbian (Cyrillic):"
 msgstr "Cyrillic (MacCyrillic)"
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:233
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:236
 msgid "Slovak:"
 msgstr "Eslovaco:"
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:239
 msgid "Spanish:"
 msgstr "Español:"
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:242
 msgid "Swedish:"
 msgstr "Sueco:"
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:245
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:248
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:249
+#: src/audacious/ui_credits.c:252
 msgid "Ukrainian:"
 msgstr "Ucranianos:"
 
-#: src/audacious/ui_credits.c:252
+#: src/audacious/ui_credits.c:255
 msgid "Welsh:"
 msgstr "Galés:"
 
-#: src/audacious/ui_credits.c:398
+#: src/audacious/ui_credits.c:401
 msgid "Translators"
 msgstr "Traductores"
 
@@ -1134,6 +1134,21 @@ msgstr "filtro:"
 msgid "Close on Jump"
 msgstr "Cerrar diálogo al abrir"
 
+#: src/audacious/ui_lastfm.c:90
+#, fuzzy, c-format
+msgid "<b>Artist:</b> %s"
+msgstr "Artista"
+
+#: src/audacious/ui_lastfm.c:98
+#, fuzzy, c-format
+msgid "<b>Title:</b> %s"
+msgstr "<b>Nombre de archivo</b>"
+
+#: src/audacious/ui_lastfm.c:102
+#, fuzzy, c-format
+msgid "<b>Album:</b> %s"
+msgstr "Álbum:"
+
 #: src/audacious/ui_lastfm.c:117
 msgid ""
 "<b><big>Couldn't find your lastfm login data.</big></b>\n"
@@ -1150,6 +1165,21 @@ msgstr "Editor de listas de reproducción de Audacious"
 #, fuzzy
 msgid "Station:"
 msgstr "Italiano:"
+
+#: src/audacious/ui_lastfm.c:245
+#, fuzzy
+msgid "<b>Artist:</b>"
+msgstr "Artista"
+
+#: src/audacious/ui_lastfm.c:249
+#, fuzzy
+msgid "<b>Title:</b>"
+msgstr "<b>Nombre de archivo</b>"
+
+#: src/audacious/ui_lastfm.c:253
+#, fuzzy
+msgid "<b>Album:</b>"
+msgstr "<b>Nombre de archivo</b>"
 
 #: src/audacious/ui_lastfm.c:257
 msgid "Love"
@@ -2534,10 +2564,6 @@ msgstr "Añadir/Abrir diálogo de selección de archivos..."
 
 #, fuzzy
 #~ msgid "Artist Popup"
-#~ msgstr "Artista"
-
-#, fuzzy
-#~ msgid "<i>Artist</i>"
 #~ msgstr "Artista"
 
 #, fuzzy

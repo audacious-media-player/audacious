@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 15:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:34+0200\n"
 "PO-Revision-Date: 2007-01-31 00:46+0800\n"
 "Last-Translator: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
 "Language-Team: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
@@ -642,75 +642,75 @@ msgstr "Audacious"
 msgid "Could not create directory (%s): %s\n"
 msgstr "無法建立目錄 (%s)：%s\n"
 
-#: src/audacious/main.c:887
+#: src/audacious/main.c:891
 #, fuzzy
 msgid "Select which Audacious session ID to use"
 msgstr "請選擇 Audacious/BMP/XMMS 作業階段 (預設：0)"
 
-#: src/audacious/main.c:888
+#: src/audacious/main.c:892
 msgid "Skip backwards in playlist"
 msgstr "跳至播放清單開頭"
 
-#: src/audacious/main.c:889
+#: src/audacious/main.c:893
 msgid "Start playing current playlist"
 msgstr "開始播放目前的播放清單"
 
-#: src/audacious/main.c:890
+#: src/audacious/main.c:894
 msgid "Pause current song"
 msgstr "暫停目前的歌曲"
 
-#: src/audacious/main.c:891
+#: src/audacious/main.c:895
 msgid "Stop current song"
 msgstr "停止目前的歌曲"
 
-#: src/audacious/main.c:892
+#: src/audacious/main.c:896
 msgid "Pause if playing, play otherwise"
 msgstr "播放/暫停"
 
-#: src/audacious/main.c:893
+#: src/audacious/main.c:897
 msgid "Skip forward in playlist"
 msgstr "跳至播放清單結尾"
 
-#: src/audacious/main.c:894
+#: src/audacious/main.c:898
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "顯示跳至檔案對話框"
 
-#: src/audacious/main.c:895
+#: src/audacious/main.c:899
 msgid "Don't clear the playlist"
 msgstr "不要清除此播放清單"
 
-#: src/audacious/main.c:896
+#: src/audacious/main.c:900
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "加入檔案至播放清單。"
 
-#: src/audacious/main.c:897
+#: src/audacious/main.c:901
 #, fuzzy
 msgid "Display the main window"
 msgstr "顯示主視窗"
 
-#: src/audacious/main.c:898
+#: src/audacious/main.c:902
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:899
+#: src/audacious/main.c:903
 msgid "Enable headless operation"
 msgstr ""
 
-#: src/audacious/main.c:900
+#: src/audacious/main.c:904
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:901
+#: src/audacious/main.c:905
 msgid "Show version and builtin features"
 msgstr ""
 
-#: src/audacious/main.c:902
+#: src/audacious/main.c:906
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:1061
+#: src/audacious/main.c:1065
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -722,7 +722,7 @@ msgstr ""
 "\n"
 "請確認位於 '%s' 的面板是可用的，且預設面板被正確地安裝於 '%s'\n"
 
-#: src/audacious/main.c:1119
+#: src/audacious/main.c:1123
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -735,18 +735,18 @@ msgstr ""
 "如果您使用基於 libc5 的 linux 系統且已安裝 Glib 與 GTK+。\n"
 "在安裝 LinuxThreads 前，您必須重新編譯 Glib 與 GTK+。\n"
 
-#: src/audacious/main.c:1150
+#: src/audacious/main.c:1154
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1157
+#: src/audacious/main.c:1161
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1167
+#: src/audacious/main.c:1171
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious：無法顯示，正在結束。\n"
@@ -806,12 +806,12 @@ msgstr ""
 "\n"
 "版權所有 (C) 2005-2007 Audacious 開發團隊"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
 msgid "About Audacious"
 msgstr "關於 Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
 msgid "Credits"
 msgstr "工作人員"
 
@@ -832,161 +832,161 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Audacious 主要開發人員："
 
-#: src/audacious/ui_credits.c:70
+#: src/audacious/ui_credits.c:71
 msgid "Graphics:"
 msgstr "美工："
 
-#: src/audacious/ui_credits.c:75
+#: src/audacious/ui_credits.c:76
 msgid "Default skin:"
 msgstr "預設面板："
 
-#: src/audacious/ui_credits.c:80
+#: src/audacious/ui_credits.c:81
 msgid "Plugin development:"
 msgstr "插件開發："
 
-#: src/audacious/ui_credits.c:94
+#: src/audacious/ui_credits.c:96
 msgid "Patch authors:"
 msgstr "修正檔作者："
 
-#: src/audacious/ui_credits.c:114
+#: src/audacious/ui_credits.c:116
 msgid "0.1.x developers:"
 msgstr "0.1.x 開發人員："
 
-#: src/audacious/ui_credits.c:120
+#: src/audacious/ui_credits.c:122
 msgid "BMP Developers:"
 msgstr "BMP 開發人員："
 
-#: src/audacious/ui_credits.c:152
+#: src/audacious/ui_credits.c:154
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙語："
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:157
 msgid "Breton:"
 msgstr "布列塔尼語："
 
-#: src/audacious/ui_credits.c:158
+#: src/audacious/ui_credits.c:160
 msgid "Bulgarian:"
 msgstr "保加利亞語："
 
-#: src/audacious/ui_credits.c:161
+#: src/audacious/ui_credits.c:163
 #, fuzzy
 msgid "Catalan:"
 msgstr "義大利語："
 
-#: src/audacious/ui_credits.c:164
+#: src/audacious/ui_credits.c:166
 #, fuzzy
 msgid "Croatian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/ui_credits.c:167
+#: src/audacious/ui_credits.c:169
 msgid "Czech:"
 msgstr "捷克語："
 
-#: src/audacious/ui_credits.c:170
+#: src/audacious/ui_credits.c:172
 msgid "Dutch:"
 msgstr "荷蘭語："
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:176
 msgid "Finnish:"
 msgstr "芬蘭語："
 
-#: src/audacious/ui_credits.c:177
+#: src/audacious/ui_credits.c:179
 msgid "French:"
 msgstr "法語："
 
-#: src/audacious/ui_credits.c:180
+#: src/audacious/ui_credits.c:182
 msgid "German:"
 msgstr "德語："
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:187
 msgid "Georgian:"
 msgstr "喬治亞語："
 
-#: src/audacious/ui_credits.c:188
+#: src/audacious/ui_credits.c:190
 msgid "Greek:"
 msgstr "希臘語："
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:195
 msgid "Hindi:"
 msgstr "北印度語："
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/ui_credits.c:198
 msgid "Hungarian:"
 msgstr "匈牙利語："
 
-#: src/audacious/ui_credits.c:199
+#: src/audacious/ui_credits.c:201
 msgid "Italian:"
 msgstr "義大利語："
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:205
 msgid "Japanese:"
 msgstr "日語："
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:208
 msgid "Korean:"
 msgstr "韓語："
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:211
 msgid "Lithuanian:"
 msgstr "立陶宛語："
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/ui_credits.c:214
 msgid "Macedonian:"
 msgstr "馬其頓語："
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/ui_credits.c:217
 msgid "Polish:"
 msgstr "波蘭語："
 
-#: src/audacious/ui_credits.c:218
+#: src/audacious/ui_credits.c:220
 msgid "Romanian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/ui_credits.c:221
+#: src/audacious/ui_credits.c:224
 msgid "Russian:"
 msgstr "俄語："
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:227
 msgid "Serbian (Latin):"
 msgstr "塞爾維亞 (拉丁語)："
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:230
 msgid "Serbian (Cyrillic):"
 msgstr "塞爾維亞 (斯拉夫語)："
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:233
 msgid "Simplified Chinese:"
 msgstr "簡體中文："
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:236
 msgid "Slovak:"
 msgstr "斯洛伐克語："
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:239
 msgid "Spanish:"
 msgstr "西班牙語："
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:242
 msgid "Swedish:"
 msgstr "瑞典語："
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:245
 msgid "Traditional Chinese:"
 msgstr "正體中文："
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:248
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:249
+#: src/audacious/ui_credits.c:252
 msgid "Ukrainian:"
 msgstr "烏克蘭語："
 
-#: src/audacious/ui_credits.c:252
+#: src/audacious/ui_credits.c:255
 msgid "Welsh:"
 msgstr "威爾斯語："
 
-#: src/audacious/ui_credits.c:398
+#: src/audacious/ui_credits.c:401
 msgid "Translators"
 msgstr "翻譯人員"
 
@@ -1088,6 +1088,21 @@ msgstr "濾波器 (_F)："
 msgid "Close on Jump"
 msgstr "開啟後關閉對話框"
 
+#: src/audacious/ui_lastfm.c:90
+#, fuzzy, c-format
+msgid "<b>Artist:</b> %s"
+msgstr "<i>藝人</i>"
+
+#: src/audacious/ui_lastfm.c:98
+#, fuzzy, c-format
+msgid "<b>Title:</b> %s"
+msgstr "<i>標題</i>"
+
+#: src/audacious/ui_lastfm.c:102
+#, fuzzy, c-format
+msgid "<b>Album:</b> %s"
+msgstr "<i>專輯</i>"
+
 #: src/audacious/ui_lastfm.c:117
 msgid ""
 "<b><big>Couldn't find your lastfm login data.</big></b>\n"
@@ -1104,6 +1119,21 @@ msgstr "Audacious 播放清單編輯器"
 #, fuzzy
 msgid "Station:"
 msgstr "義大利語："
+
+#: src/audacious/ui_lastfm.c:245
+#, fuzzy
+msgid "<b>Artist:</b>"
+msgstr "<i>藝人</i>"
+
+#: src/audacious/ui_lastfm.c:249
+#, fuzzy
+msgid "<b>Title:</b>"
+msgstr "<i>標題</i>"
+
+#: src/audacious/ui_lastfm.c:253
+#, fuzzy
+msgid "<b>Album:</b>"
+msgstr "<i>專輯</i>"
 
 #: src/audacious/ui_lastfm.c:257
 msgid "Love"
@@ -2344,15 +2374,6 @@ msgstr "加入/開啟網址對話框"
 
 #~ msgid "Artist Popup"
 #~ msgstr "藝人彈出訊息"
-
-#~ msgid "<i>Title</i>"
-#~ msgstr "<i>標題</i>"
-
-#~ msgid "<i>Artist</i>"
-#~ msgstr "<i>藝人</i>"
-
-#~ msgid "<i>Album</i>"
-#~ msgstr "<i>專輯</i>"
 
 #~ msgid "<i>Genre</i>"
 #~ msgstr "<i>樂曲種類</i>"

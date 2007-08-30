@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.35\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-25 15:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:34+0200\n"
 "PO-Revision-Date: 2005-10-14 13:54+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <giomac@gmail.com>\n"
@@ -654,75 +654,75 @@ msgstr ""
 msgid "Could not create directory (%s): %s\n"
 msgstr "(%s) დირექტორიის შექმნა შეუძლებელია : %s"
 
-#: src/audacious/main.c:887
+#: src/audacious/main.c:891
 #, fuzzy
 msgid "Select which Audacious session ID to use"
 msgstr "BMP/XMMS სესიის არჩევა (ნაგულისხმევი: 0)"
 
-#: src/audacious/main.c:888
+#: src/audacious/main.c:892
 msgid "Skip backwards in playlist"
 msgstr "რეპერტუარში უკან გადასვლა"
 
-#: src/audacious/main.c:889
+#: src/audacious/main.c:893
 msgid "Start playing current playlist"
 msgstr "მიმდინარე რეპერტუარის დაკვრა"
 
-#: src/audacious/main.c:890
+#: src/audacious/main.c:894
 msgid "Pause current song"
 msgstr "მიმდინარე სიმღერის დაპაუზება"
 
-#: src/audacious/main.c:891
+#: src/audacious/main.c:895
 msgid "Stop current song"
 msgstr "მიმდინარე სიმღერის გაჩერება"
 
-#: src/audacious/main.c:892
+#: src/audacious/main.c:896
 msgid "Pause if playing, play otherwise"
 msgstr "დააპაუზება თუ უკრავს, თუ არა - დაკვრა"
 
-#: src/audacious/main.c:893
+#: src/audacious/main.c:897
 msgid "Skip forward in playlist"
 msgstr "რეპერტუარში წინ გადახტომა"
 
-#: src/audacious/main.c:894
+#: src/audacious/main.c:898
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/ფაილზე გადასვლა"
 
-#: src/audacious/main.c:895
+#: src/audacious/main.c:899
 msgid "Don't clear the playlist"
 msgstr "რეპერტუარის გაწმენდის გარეშე"
 
-#: src/audacious/main.c:896
+#: src/audacious/main.c:900
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "რეპერტუარის გაწმენდის გარეშე"
 
-#: src/audacious/main.c:897
+#: src/audacious/main.c:901
 #, fuzzy
 msgid "Display the main window"
 msgstr "ძირითადი ფანჯრის ჩვენება"
 
-#: src/audacious/main.c:898
+#: src/audacious/main.c:902
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:899
+#: src/audacious/main.c:903
 msgid "Enable headless operation"
 msgstr ""
 
-#: src/audacious/main.c:900
+#: src/audacious/main.c:904
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:901
+#: src/audacious/main.c:905
 msgid "Show version and builtin features"
 msgstr ""
 
-#: src/audacious/main.c:902
+#: src/audacious/main.c:906
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:1061
+#: src/audacious/main.c:1065
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -735,7 +735,7 @@ msgstr ""
 "გადაამოწმეთ, რომ გარსი '%s'-თან თავსებადია და ნაგულისხმევი გარსი სწორად არის "
 "დაყენებული '%s'-სთან\n"
 
-#: src/audacious/main.c:1119
+#: src/audacious/main.c:1123
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -744,18 +744,18 @@ msgid ""
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
 
-#: src/audacious/main.c:1150
+#: src/audacious/main.c:1154
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1157
+#: src/audacious/main.c:1161
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1167
+#: src/audacious/main.c:1171
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "BMP: შეუძლებელია ეკრანის გახსნა, გამოვდივარ."
@@ -814,13 +814,13 @@ msgstr ""
 "\n"
 "საავტორო უფლებები (C) 2003-2004 BMP Development Team\n"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:351
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
 #, fuzzy
 msgid "About Audacious"
 msgstr "MPEG აუდიო-პლაგინის შესახებ"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:394
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
 msgid "Credits"
 msgstr "მადლობები"
 
@@ -842,168 +842,168 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "BMP-ის თვისებები"
 
-#: src/audacious/ui_credits.c:70
+#: src/audacious/ui_credits.c:71
 msgid "Graphics:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:75
+#: src/audacious/ui_credits.c:76
 msgid "Default skin:"
 msgstr "ნაგულისხმევი გარსი:"
 
-#: src/audacious/ui_credits.c:80
+#: src/audacious/ui_credits.c:81
 msgid "Plugin development:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:94
+#: src/audacious/ui_credits.c:96
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:114
+#: src/audacious/ui_credits.c:116
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "შემქმნელები:"
 
-#: src/audacious/ui_credits.c:120
+#: src/audacious/ui_credits.c:122
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "შემქმნელები:"
 
-#: src/audacious/ui_credits.c:152
+#: src/audacious/ui_credits.c:154
 msgid "Brazilian Portuguese:"
 msgstr "ბრაზილიური პორტუგალიური:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:157
 msgid "Breton:"
 msgstr "ბრეტონული:"
 
-#: src/audacious/ui_credits.c:158
+#: src/audacious/ui_credits.c:160
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "უნგრული:"
 
-#: src/audacious/ui_credits.c:161
+#: src/audacious/ui_credits.c:163
 #, fuzzy
 msgid "Catalan:"
 msgstr "იტალიური:"
 
-#: src/audacious/ui_credits.c:164
+#: src/audacious/ui_credits.c:166
 #, fuzzy
 msgid "Croatian:"
 msgstr "მდებარეობა:"
 
-#: src/audacious/ui_credits.c:167
+#: src/audacious/ui_credits.c:169
 msgid "Czech:"
 msgstr "ჩეხური:"
 
-#: src/audacious/ui_credits.c:170
+#: src/audacious/ui_credits.c:172
 msgid "Dutch:"
 msgstr "ჰოლანდიური:"
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:176
 #, fuzzy
 msgid "Finnish:"
 msgstr "ესპანური:"
 
-#: src/audacious/ui_credits.c:177
+#: src/audacious/ui_credits.c:179
 msgid "French:"
 msgstr "ფრანგული:"
 
-#: src/audacious/ui_credits.c:180
+#: src/audacious/ui_credits.c:182
 msgid "German:"
 msgstr "გერმანული"
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:187
 #, fuzzy
 msgid "Georgian:"
 msgstr "გერმანული"
 
-#: src/audacious/ui_credits.c:188
+#: src/audacious/ui_credits.c:190
 msgid "Greek:"
 msgstr "ბერძნული:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:195
 msgid "Hindi:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/ui_credits.c:198
 msgid "Hungarian:"
 msgstr "უნგრული:"
 
-#: src/audacious/ui_credits.c:199
+#: src/audacious/ui_credits.c:201
 msgid "Italian:"
 msgstr "იტალიური:"
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:205
 msgid "Japanese:"
 msgstr "იაპონური:"
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:208
 msgid "Korean:"
 msgstr "კორეული:"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:211
 msgid "Lithuanian:"
 msgstr "ლიტვური:"
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/ui_credits.c:214
 msgid "Macedonian:"
 msgstr "მაკედონიური:"
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/ui_credits.c:217
 msgid "Polish:"
 msgstr "პოლონური:"
 
-#: src/audacious/ui_credits.c:218
+#: src/audacious/ui_credits.c:220
 msgid "Romanian:"
 msgstr "რუმინული:"
 
-#: src/audacious/ui_credits.c:221
+#: src/audacious/ui_credits.c:224
 msgid "Russian:"
 msgstr "რუსული:"
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:227
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:230
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:233
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:236
 msgid "Slovak:"
 msgstr "სლოვაკური:"
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:239
 msgid "Spanish:"
 msgstr "ესპანური:"
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:242
 msgid "Swedish:"
 msgstr "შვედური:"
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:245
 #, fuzzy
 msgid "Traditional Chinese:"
 msgstr "დამატებითი დახმარება:"
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:248
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:249
+#: src/audacious/ui_credits.c:252
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "რუმინული:"
 
-#: src/audacious/ui_credits.c:252
+#: src/audacious/ui_credits.c:255
 msgid "Welsh:"
 msgstr "უელსური:"
 
-#: src/audacious/ui_credits.c:398
+#: src/audacious/ui_credits.c:401
 msgid "Translators"
 msgstr "მთარგმნელები"
 
@@ -1112,6 +1112,21 @@ msgstr "ფილტრი: "
 msgid "Close on Jump"
 msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
 
+#: src/audacious/ui_lastfm.c:90
+#, fuzzy, c-format
+msgid "<b>Artist:</b> %s"
+msgstr "შემსრულებელი"
+
+#: src/audacious/ui_lastfm.c:98
+#, fuzzy, c-format
+msgid "<b>Title:</b> %s"
+msgstr "<b>ფაილის სახელი</b>"
+
+#: src/audacious/ui_lastfm.c:102
+#, fuzzy, c-format
+msgid "<b>Album:</b> %s"
+msgstr "<b>ფაილის სახელი</b>"
+
 #: src/audacious/ui_lastfm.c:117
 msgid ""
 "<b><big>Couldn't find your lastfm login data.</big></b>\n"
@@ -1128,6 +1143,21 @@ msgstr "/რეპერტუარის ჩვენება"
 #, fuzzy
 msgid "Station:"
 msgstr "იტალიური:"
+
+#: src/audacious/ui_lastfm.c:245
+#, fuzzy
+msgid "<b>Artist:</b>"
+msgstr "შემსრულებელი"
+
+#: src/audacious/ui_lastfm.c:249
+#, fuzzy
+msgid "<b>Title:</b>"
+msgstr "<b>ფაილის სახელი</b>"
+
+#: src/audacious/ui_lastfm.c:253
+#, fuzzy
+msgid "<b>Album:</b>"
+msgstr "<b>ფაილის სახელი</b>"
 
 #: src/audacious/ui_lastfm.c:257
 msgid "Love"
@@ -2485,18 +2515,6 @@ msgstr "ფაილების დამატების/გახსნი�
 #, fuzzy
 #~ msgid "Artist Popup"
 #~ msgstr "შემსრულებელი"
-
-#, fuzzy
-#~ msgid "<i>Title</i>"
-#~ msgstr "<b>ფაილის სახელი</b>"
-
-#, fuzzy
-#~ msgid "<i>Artist</i>"
-#~ msgstr "შემსრულებელი"
-
-#, fuzzy
-#~ msgid "<i>Album</i>"
-#~ msgstr "<b>ფაილის სახელი</b>"
 
 #, fuzzy
 #~ msgid "<i>Genre</i>"
