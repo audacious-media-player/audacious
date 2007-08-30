@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:40+0200\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -1116,6 +1116,10 @@ msgstr "Filtruoti:"
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Atvėrus, užverti dialogą"
+
+#: src/audacious/ui_lastfm.c:65
+msgid "Not last.fm stream"
+msgstr ""
 
 #: src/audacious/ui_lastfm.c:90
 #, fuzzy, c-format

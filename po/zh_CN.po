@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:40+0200\n"
 "PO-Revision-Date: 2007-04-18 20:00+0700\n"
 "Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -1083,6 +1083,10 @@ msgstr "过滤(_F): "
 #, fuzzy
 msgid "Close on Jump"
 msgstr "打开后关闭对话框"
+
+#: src/audacious/ui_lastfm.c:65
+msgid "Not last.fm stream"
+msgstr ""
 
 #: src/audacious/ui_lastfm.c:90
 #, fuzzy, c-format

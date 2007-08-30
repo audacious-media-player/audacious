@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.35\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:40+0200\n"
 "PO-Revision-Date: 2005-10-14 13:54+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <giomac@gmail.com>\n"
@@ -1111,6 +1111,10 @@ msgstr "ფილტრი: "
 #, fuzzy
 msgid "Close on Jump"
 msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
+
+#: src/audacious/ui_lastfm.c:65
+msgid "Not last.fm stream"
+msgstr ""
 
 #: src/audacious/ui_lastfm.c:90
 #, fuzzy, c-format

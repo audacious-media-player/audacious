@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:40+0200\n"
 "PO-Revision-Date: 2004-11-15 13:42-0200\n"
 "Last-Translator: Philipi Pinto <philipi@gmx.net>\n"
 "Language-Team: Portuguese/Brazil\n"
@@ -1121,6 +1121,10 @@ msgstr "Filtro:"
 #, fuzzy
 msgid "Close on Jump"
 msgstr "/Fechar"
+
+#: src/audacious/ui_lastfm.c:65
+msgid "Not last.fm stream"
+msgstr ""
 
 #: src/audacious/ui_lastfm.c:90
 #, fuzzy, c-format

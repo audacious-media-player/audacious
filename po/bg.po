@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:40+0200\n"
 "PO-Revision-Date: 2007-01-13 12:01+0200\n"
 "Last-Translator: Andrew Ivanov <aa.ivanov@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -1106,6 +1106,10 @@ msgstr "_Филтър:"
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Затваряне при отваряне на файл"
+
+#: src/audacious/ui_lastfm.c:65
+msgid "Not last.fm stream"
+msgstr ""
 
 #: src/audacious/ui_lastfm.c:90
 #, fuzzy, c-format

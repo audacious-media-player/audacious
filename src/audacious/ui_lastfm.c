@@ -62,7 +62,7 @@ static void change_track_data_cb(gpointer track, gpointer unused)
         return ;
     if(g_strrstr(tr,"last.fm")==NULL) 
     {
-        gtk_entry_set_text(GTK_ENTRY(lastfm_url_entry),"Not last.fm stream");
+        gtk_entry_set_text(GTK_ENTRY(lastfm_url_entry), _("Not last.fm stream"));
         return;
     }
 

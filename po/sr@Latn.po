@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:34+0200\n"
+"POT-Creation-Date: 2007-08-30 17:40+0200\n"
 "PO-Revision-Date: 2007-07-31 14:31+0200\n"
 "Last-Translator: Strahinja Kustudić <kustudic@gmail.com>\n"
 "Language-Team:  Serbian Latin <kustodian@gmail.com>\n"
@@ -1110,6 +1110,10 @@ msgstr "_Filter:"
 #: src/audacious/ui_jumptotrack.c:596
 msgid "Close on Jump"
 msgstr "Zatvori posle skoka"
+
+#: src/audacious/ui_lastfm.c:65
+msgid "Not last.fm stream"
+msgstr ""
 
 #: src/audacious/ui_lastfm.c:90
 #, fuzzy, c-format
