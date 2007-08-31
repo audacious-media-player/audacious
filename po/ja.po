@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-08-30 17:40+0200\n"
-"PO-Revision-Date: 2007-08-30 09:35+0900\n"
+"PO-Revision-Date: 2007-08-31 10:33+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1114,22 +1114,22 @@ msgstr "ジャンプしたらダイアログを閉じる"
 
 #: src/audacious/ui_lastfm.c:65
 msgid "Not last.fm stream"
-msgstr ""
+msgstr "last.fm ストリームではありません"
 
 #: src/audacious/ui_lastfm.c:90
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Artist:</b> %s"
-msgstr "<b>プリセット</b>"
+msgstr "<b>アーティスト:</b>"
 
 #: src/audacious/ui_lastfm.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Title:</b> %s"
-msgstr "<b>ファイル名</b>"
+msgstr "<b>タイトル:</b>"
 
 #: src/audacious/ui_lastfm.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Album:</b> %s"
-msgstr "アルバム名: "
+msgstr "<b>アルバム:</b> %s"
 
 #: src/audacious/ui_lastfm.c:117
 msgid ""
@@ -1150,19 +1150,16 @@ msgid "Station:"
 msgstr "ステーション:"
 
 #: src/audacious/ui_lastfm.c:245
-#, fuzzy
 msgid "<b>Artist:</b>"
-msgstr "<b>プリセット</b>"
+msgstr "<b>アーティスト:</b>"
 
 #: src/audacious/ui_lastfm.c:249
-#, fuzzy
 msgid "<b>Title:</b>"
-msgstr "<b>ファイル名</b>"
+msgstr "<b>タイトル:</b>"
 
 #: src/audacious/ui_lastfm.c:253
-#, fuzzy
 msgid "<b>Album:</b>"
-msgstr "<b>ファイル名</b>"
+msgstr "<b>アルバム:</b>"
 
 #: src/audacious/ui_lastfm.c:257
 msgid "Love"
