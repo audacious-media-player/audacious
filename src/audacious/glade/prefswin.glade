@@ -4361,7 +4361,7 @@ the sound card or output plugin.&lt;/span&gt;</property>
 			      <child>
 				<widget class="GtkLabel" id="label94">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Converter Type:</property>
+				  <property name="label" translatable="yes">Interpolation Engine:</property>
 				  <property name="use_underline">False</property>
 				  <property name="use_markup">False</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -4389,11 +4389,11 @@ the sound card or output plugin.&lt;/span&gt;</property>
 			      <child>
 				<widget class="GtkComboBox" id="src_converter_type">
 				  <property name="visible">True</property>
-				  <property name="items" translatable="no">SRC_SINC_BEST_QUALITY
-SRC_SINC_MEDIUM_QUALITY
-SRC_SINC_FASTEST
-SRC_ZERO_ORDER_HOLD
-SRC_LINEAR</property>
+				  <property name="items" translatable="no">Best Sinc Interpolation
+Medium Sinc Interpolation
+Fastest Sinc Interpolation
+ZOH Interpolation
+Linear Interpolation</property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
 				  <signal name="realize" handler="on_src_converter_type_realize" after="yes" last_modification_time="Fri, 16 Feb 2007 13:16:11 GMT"/>
