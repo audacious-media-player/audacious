@@ -375,7 +375,7 @@ static GtkActionEntry action_entries_others[] = {
 
 	{ "dummy", NULL, "dummy" },
 
-	{ "plugins-menu", NULL, N_("Plugins") },
+	{ "plugins-menu", NULL, N_("Plugin Services") },
 
 	{ "current track info", AUD_STOCK_INFO , N_("View Track Details"), "I",
 	  N_("View track details"), G_CALLBACK(action_current_track_info) },
