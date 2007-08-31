@@ -25,7 +25,7 @@
 #include "tuple.h"
 #include "tuple_formatter.h"
 
-#define _DEBUG
+//#define _DEBUG
 
 #ifdef _DEBUG
 # define _TRACE(fmt, ...) g_print("[tuple-fmt] %s(%d) " fmt "\n", __FILE__, __LINE__, __VA_ARGS__);

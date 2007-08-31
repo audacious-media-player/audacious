@@ -24,8 +24,11 @@
 #include <glib.h>
 #include <mowgli.h>
 
-struct _Tuple;
-typedef struct _Tuple Tuple;
+typedef struct _Tuple {
+    mowgli_object_t parent;
+    mowgli_dictionary_t *dict;
+} Tuple;
+
 
 typedef enum {
     TUPLE_STRING,
@@ -33,11 +36,20 @@ typedef enum {
     TUPLE_UNKNOWN
 } TupleValueType;
 
+typedef struct {
+    TupleValueType type;
+    union {
+        gchar *string;
+        gint integer;
+    } value;
+} TupleValue;
+
 Tuple *tuple_new(void);
 Tuple *tuple_new_from_filename(const gchar *filename);
 gboolean tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string);
 gboolean tuple_associate_int(Tuple *tuple, const gchar *field, gint integer);
 void tuple_disassociate(Tuple *tuple, const gchar *field);
+void tuple_disassociate_now(TupleValue *value);
 TupleValueType tuple_get_value_type(Tuple *tuple, const gchar *field);
 const gchar *tuple_get_string(Tuple *tuple, const gchar *field);
 int tuple_get_int(Tuple *tuple, const gchar *field);

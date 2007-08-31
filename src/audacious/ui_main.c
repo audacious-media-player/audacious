@@ -2739,6 +2739,7 @@ action_playback_repeat( GtkToggleAction * action )
 {
   cfg.repeat = gtk_toggle_action_get_active( action );
   UI_SKINNED_BUTTON(mainwin_repeat)->inside = cfg.repeat;
+  gtk_widget_queue_draw(mainwin_repeat);
 }
 
 void
@@ -2747,6 +2748,7 @@ action_playback_shuffle( GtkToggleAction * action )
   cfg.shuffle = gtk_toggle_action_get_active( action );
   playlist_set_shuffle(cfg.shuffle);
   UI_SKINNED_BUTTON(mainwin_shuffle)->inside = cfg.shuffle;
+  gtk_widget_queue_draw(mainwin_shuffle);
 }
 
 void
