@@ -1119,12 +1119,12 @@ msgstr "last.fm ストリームではありません"
 #: src/audacious/ui_lastfm.c:90
 #, c-format
 msgid "<b>Artist:</b> %s"
-msgstr "<b>アーティスト:</b>"
+msgstr "<b>アーティスト: %s</b>"
 
 #: src/audacious/ui_lastfm.c:98
 #, c-format
 msgid "<b>Title:</b> %s"
-msgstr "<b>タイトル:</b>"
+msgstr "<b>タイトル: %s</b>"
 
 #: src/audacious/ui_lastfm.c:102
 #, c-format
