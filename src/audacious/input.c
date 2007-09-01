@@ -445,7 +445,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
+                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -523,7 +523,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
+                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -622,12 +622,12 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
-        tuple_associate_string(tuple, "file-name", g_path_get_basename(tmp));
+        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, g_path_get_basename(tmp));
 
         if (ext)
-            tuple_associate_string(tuple, "file-ext", ext + 1);
+            tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, ext + 1);
 
-        tuple_associate_string(tuple, "file-path", g_path_get_dirname(tmp));
+        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, g_path_get_dirname(tmp));
 
         tmp = tuple_formatter_process_string(tuple, get_gentitle_format());
         if (tmp != NULL && *tmp != '\0') {
@@ -635,7 +635,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
             g_free(tmp);
         }
         else {
-            (*title) = filename_to_utf8(tuple_get_string(tuple, "file-name"));
+            (*title) = filename_to_utf8(tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
         }
 
         (*length) = -1;
@@ -682,13 +682,13 @@ input_get_song_tuple(const gchar * filename)
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
-        tuple_associate_string(input, "file-name", g_path_get_basename(tmp));
+        tuple_associate_string(input, FIELD_FILE_NAME, NULL, g_path_get_basename(tmp));
 
         if (ext)
-            tuple_associate_string(input, "file-ext", ext + 1);
+            tuple_associate_string(input, FIELD_FILE_EXT, NULL, ext + 1);
 
-        tuple_associate_string(input, "file-path", g_path_get_dirname(tmp));
-        tuple_associate_int(input, "length", -1);
+        tuple_associate_string(input, FIELD_FILE_PATH, NULL, g_path_get_dirname(tmp));
+        tuple_associate_int(input, FIELD_LENGTH, NULL, -1);
 
         g_free(tmp);
     }
