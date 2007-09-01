@@ -130,24 +130,43 @@ tuple_new_from_filename(const gchar *filename)
     return tuple;
 }        
 
+
+static gboolean
+tuple_associate_data(const gchar **tfield, TupleValue **value, Tuple *tuple, const gint nfield, const gchar *field)
+{
+    g_return_val_if_fail(tuple != NULL, FALSE);
+    g_return_val_if_fail(nfield < FIELD_LAST, FALSE);
+
+    if (nfield < 0)
+        *tfield = field;
+    else {
+        *tfield = tuple_fields[nfield];
+        tuple->values[nfield] = NULL;
+    }
+    
+    if ((*value = mowgli_dictionary_delete(tuple->dict, *tfield)))
+        tuple_disassociate_now(*value);
+
+    return TRUE;
+}
+
+static void
+tuple_associate_data2(Tuple *tuple, const gint nfield, const gchar *field, TupleValue *value)
+{
+    mowgli_dictionary_add(tuple->dict, field, value);
+
+    if (nfield >= 0)
+        tuple->values[nfield] = value;
+}
+
 gboolean
 tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
 {
     TupleValue *value;
     const gchar *tfield;
 
-    g_return_val_if_fail(tuple != NULL, FALSE);
-    g_return_val_if_fail(nfield < FIELD_LAST, FALSE);
-
-    if (nfield < 0)
-        tfield = field;
-    else {
-        tfield = tuple_fields[nfield];
-        tuple->values[nfield] = NULL;
-    }
-    
-    if ((value = mowgli_dictionary_delete(tuple->dict, tfield)))
-        tuple_disassociate_now(value);
+    if (!tuple_associate_data(&tfield, &value, tuple, nfield, field))
+        return FALSE;
 
     if (string == NULL)
         return TRUE;
@@ -156,11 +175,7 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
     value->type = TUPLE_STRING;
     value->value.string = g_strdup(string);
 
-    mowgli_dictionary_add(tuple->dict, tfield, value);
-
-    if (nfield >= 0)
-        tuple->values[nfield] = value;
-
+    tuple_associate_data2(tuple, nfield, tfield, value);
     return TRUE;
 }
 
@@ -169,29 +184,15 @@ tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint in
 {
     TupleValue *value;
     const gchar *tfield;
-
-    g_return_val_if_fail(tuple != NULL, FALSE);
-    g_return_val_if_fail(nfield < FIELD_LAST, FALSE);
-
-    if (nfield < 0)
-        tfield = field;
-    else {
-        tfield = tuple_fields[nfield];
-        tuple->values[nfield] = NULL;
-    }
     
-    if ((value = mowgli_dictionary_delete(tuple->dict, tfield)))
-        tuple_disassociate_now(value);
+    if (!tuple_associate_data(&tfield, &value, tuple, nfield, field))
+        return FALSE;
 
     value = mowgli_heap_alloc(tuple_value_heap);
     value->type = TUPLE_INT;
     value->value.integer = integer;
 
-    mowgli_dictionary_add(tuple->dict, tfield, value);
-    
-    if (nfield >= 0)
-        tuple->values[nfield] = value;
-
+    tuple_associate_data2(tuple, nfield, tfield, value);
     return TRUE;
 }
 
