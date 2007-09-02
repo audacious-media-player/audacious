@@ -61,8 +61,6 @@ void input_pause(void);
 gint input_get_time(void);
 void input_set_eq(gint on, gfloat preamp, gfloat * bands);
 void input_seek(gint time);
-void input_get_song_info(const gchar * filename, gchar ** title,
-                         gint * length);
 
 guchar *input_get_vis(gint time);
 void input_update_vis_plugin(gint time);
