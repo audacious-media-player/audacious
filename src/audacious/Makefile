@@ -144,6 +144,7 @@ SOURCES = \
 	vfs_buffered_file.c \
 	vfs_common.c \
 	visualization.c \
+	sync-menu.c \
 	xconvert.c
 
 LIBDEP = ../libguess/libguess.a
