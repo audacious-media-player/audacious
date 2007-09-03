@@ -47,12 +47,6 @@ filebrowser_add_files(GtkFileChooser * browser,
             playlist_add(playlist, filename ? filename : (const gchar *) cur->data);
         }       
 
-        if (++ctr == 20) {
-            playlistwin_update_list(playlist);
-            ctr = 0;
-            while (gtk_events_pending() ) gtk_main_iteration();
-        }
-
         g_free(filename);
     } 
 
