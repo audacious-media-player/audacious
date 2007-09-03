@@ -375,6 +375,10 @@ static GtkActionEntry action_entries_others[] = {
 
 	{ "dummy", NULL, "dummy" },
 
+        /* XXX Carbon support */
+        { "file", NULL, N_("File") },
+        { "help", NULL, N_("Help") },
+
 	{ "plugins-menu", NULL, N_("Plugin Services") },
 
 	{ "current track info", AUD_STOCK_INFO , N_("View Track Details"), "I",
@@ -625,6 +629,9 @@ ui_manager_init ( void )
   return;
 }
 
+#ifdef GDK_WINDOWING_QUARTZ
+static GtkWidget *carbon_menubar;
+#endif
 
 static void
 ui_manager_create_menus_init_pmenu( gchar * path )
@@ -666,6 +673,19 @@ ui_manager_create_menus ( void )
 
   /* initialize plugins-menu for mainwin-menus */
   ui_manager_create_menus_init_pmenu( "/mainwin-menus/main-menu/plugins-menu" );
+
+#ifdef GDK_WINDOWING_QUARTZ
+  gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/carbon-menubar.ui" , &gerr );
+
+  if ( gerr != NULL )
+  {
+    g_critical( "Error creating UI<ui/carbon-menubar.ui>: %s" , gerr->message );
+    g_error_free( gerr );
+    return;
+  }
+
+  carbon_menubar = ui_manager_get_popup_menu( ui_manager , "/carbon-menubar/main-menu" );
+#endif
 
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/playlist.ui" , &gerr );
 
