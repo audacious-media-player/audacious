@@ -35,6 +35,7 @@
 
 #include "icons-stock.h"
 
+#include "sync-menu.h"
 
 static GtkUIManager *ui_manager = NULL;
 static gboolean menu_created = FALSE;
@@ -685,6 +686,7 @@ ui_manager_create_menus ( void )
   }
 
   carbon_menubar = ui_manager_get_popup_menu( ui_manager , "/carbon-menubar/main-menu" );
+  sync_menu_takeover_menu(GTK_MENU_SHELL(carbon_menubar));
 #endif
 
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/playlist.ui" , &gerr );
