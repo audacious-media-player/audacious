@@ -186,7 +186,7 @@ AC_MSG_CHECKING([if you are running Apple-GCC])
 case "$target" in
 	*-apple-*)
 		AC_MSG_RESULT([yes, sorry you poor bastard])
-		LDFLAGS="$LDFLAGS -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,CoreServices"
+		LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices -framework Carbon"
 		;;
 	*)
 		AC_MSG_RESULT([no])
