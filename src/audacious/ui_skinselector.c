@@ -316,9 +316,6 @@ skin_view_update(GtkTreeView * treeview, GtkWidget * refresh_button)
             iter_current_skin = iter;
             have_current_skin = TRUE;
         }
-
-        while (gtk_events_pending())
-            gtk_main_iteration();
     }
 
     if (have_current_skin) {
