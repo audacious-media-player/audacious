@@ -1,19 +1,25 @@
-# Brazilian portuguese translation of Beep Media Player.
-# Copyright (C) 2004 Philipi Pinto <philipi@gmx.net>, 2004.
-# This file is distributed under the same license as Beep Media Player.
-# 
-# 
+# translation of es.po to 
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# Spanish translation for BMP
+# Copyright (C) 2004, Francisco Javier F. Serrador <serrador@cvs.gnome.org>
+# This file is distributed under the same license as the BMP package.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
+# Gustavo D. Vranjes <gvranjes@nerdshack.com>, 2006.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: BMP 0.9.7\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:40+0200\n"
-"PO-Revision-Date: 2004-11-15 13:42-0200\n"
-"Last-Translator: Philipi Pinto <philipi@gmx.net>\n"
-"Language-Team: Portuguese/Brazil\n"
+"POT-Creation-Date: 2007-07-29 17:21+0200\n"
+"PO-Revision-Date: 2007-09-04 13:09-0300\n"
+"Last-Translator: \n"
+"Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.2\n"
 
 #: src/audacious/glade.c:45
 #, c-format
@@ -22,70 +28,1647 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>Erro ao criar %s.</big></b>\n"
+"\n"
+"Erro ao abrir arquivo (%s). Por favor, verifique sua instalação.\n"
+
+#: src/audacious/input.c:646
+#, c-format
+msgid "audacious: %s"
+msgstr "audacious: %s"
+
+#: src/audacious/input.c:662
+msgid "Filename:"
+msgstr "Nome do Arquivo:"
+
+#: src/audacious/input.c:681
+msgid "No input plugin recognized this file"
+msgstr "Nenhum plugin de entrada reconheceu este arquivo"
+
+#: src/audacious/input.c:683
+#, c-format
+msgid "Input plugin: %s"
+msgstr "Plugin de entrada: %s"
+
+#: src/audacious/logger.c:124
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Erro ao criar arquivo de log (%s)\n"
+
+#: src/audacious/main.c:89
+#: src/audacious/main.c:91
+#: src/audacious/ui_main.c:627
+#: src/audacious/ui_main.c:2836
+msgid "Audacious"
+msgstr "Audacious"
+
+#: src/audacious/main.c:466
+#, c-format
+msgid "Could not create directory (%s): %s\n"
+msgstr "Erro ao criar o diretório (%s): %s\n"
+
+#: src/audacious/main.c:878
+msgid "Select which Audacious session ID to use"
+msgstr "Selecionar com o Audacious a sessão ID que será utilizada"
+
+#: src/audacious/main.c:879
+msgid "Skip backwards in playlist"
+msgstr "Voltar na lista de reprodução"
+
+#: src/audacious/main.c:880
+msgid "Start playing current playlist"
+msgstr "Reproduzir lista de reprodução atual"
+
+#: src/audacious/main.c:881
+msgid "Pause current song"
+msgstr "Pausar arquivo atual"
+
+#: src/audacious/main.c:882
+msgid "Stop current song"
+msgstr "Parar arquivo atual"
+
+#: src/audacious/main.c:883
+msgid "Pause if playing, play otherwise"
+msgstr "Pausar ou reproduzir"
+
+#: src/audacious/main.c:884
+msgid "Skip forward in playlist"
+msgstr "Próxima na lista de reprodução"
+
+#: src/audacious/main.c:885
+msgid "Display Jump to File dialog"
+msgstr "Mostrar caixa de diálogo de Ir para o Arquivo"
+
+#: src/audacious/main.c:886
+msgid "Don't clear the playlist"
+msgstr "Não limpar lista de reprodução"
+
+#: src/audacious/main.c:887
+msgid "Add new files to a temporary playlist"
+msgstr "Adicionar novos arquivos à lista de reprodução temporária"
+
+#: src/audacious/main.c:888
+msgid "Display the main window"
+msgstr "Mostrar janela principal"
+
+#: src/audacious/main.c:889
+msgid "Display all open Audacious windows"
+msgstr "Mostrar janelas abertas do Audacious"
+
+#: src/audacious/main.c:890
+msgid "Enable headless operation"
+msgstr "Ativar operação manual"
+
+#: src/audacious/main.c:891
+msgid "Print all errors and warnings to stdout"
+msgstr "Imprimir todos os erros e avisos para desligar"
+
+#: src/audacious/main.c:892
+msgid "Show version and builtin features"
+msgstr "Mostrar versão e novidades"
+
+#: src/audacious/main.c:893
+msgid "FILE..."
+msgstr "ARQUIVO..."
+
+#: src/audacious/main.c:1058
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at '%s'\n"
+msgstr ""
+"<b><big>Não foi possível carregar a skin</big></b>\n"
+"\n"
+"Por favor, cheque se a skin «%s» é válida e se está instalada corretamente em «%s»\n"
+
+#: src/audacious/main.c:1116
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"Sinto muito, seu sistema não suporta módulos.\n"
+"\n"
+"Se você está em um sistema linux baseado em libc5 e instalou Glib & GTK+ antes de instalar LinuxThreads, você necessita recompilar GLIB e GTK+\n"
+
+#: src/audacious/main.c:1147
+msgid "- play multimedia files"
+msgstr "- reproduzir arquivos multimídia"
+
+#: src/audacious/main.c:1154
+#, c-format
+msgid ""
+"%s: %s\n"
+"Try `%s --help' for more information.\n"
+msgstr ""
+"%s: %s\n"
+"Tente `%s --ajuda' para mais informações.\n"
+
+#: src/audacious/main.c:1164
+#, c-format
+msgid "%s: Unable to open display, exiting.\n"
+msgstr "%s: Erro ao abrir exibidor, abortando.\n"
+
+#: src/audacious/signals.c:49
+msgid ""
+"\n"
+"Audacious has caught signal 11 (SIGSEGV).\n"
+"\n"
+"We apologize for the inconvenience, but Audacious has crashed.\n"
+"This is a bug in the program, and should never happen under normal circumstances.\n"
+"Your current configuration has been saved and should not be damaged.\n"
+"\n"
+"You can help improve the quality of Audacious by filing a bug at http://bugs-meta.atheme.org\n"
+"Please include the entire text of this message and a description of what you were doing when\n"
+"this crash occured in order to quickly expedite the handling of your bug report:\n"
+"\n"
+msgstr ""
+"\n"
+"Audacious travou o sinal 11 (SIGSEGV).\n"
+"\n"
+"Desculpe-nos pela inconviniência, mas o Audacious deixou de funcionar.\n"
+"Este é um erro do programa, mas não deve ocorrer um cincunstâncias normais.\n"
+"Sua configuração atual foi salva e não deve ser danificada.\n"
+"\n"
+"Você pode ajudar relatando o erro em http://bugs-meta.atheme.org\n"
+"Por favor, inclua na mensagem o que você estava fazendo quando ocorreu o erro\n"
+"Este erro pode ser rapidamente arrumado se você relatá-lo:\n"
+"\n"
+
+#: src/audacious/signals.c:80
+msgid ""
+"\n"
+"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious product.\n"
+msgstr ""
+"\n"
+"Bugs no Audacious podem ser reportados em http://bugs-meta.atheme.org.\n"
+
+#: src/audacious/signals.c:266
+msgid ""
+"Your signaling implementation is broken.\n"
+"Expect unusable crash reports.\n"
+msgstr ""
+"Your signaling implementation is broken.\n"
+"Expect unusable crash reports.\n"
+
+#: src/audacious/strings.c:171
+msgid "  (invalid UTF-8)"
+msgstr "  (UTF-8 inválido)"
+
+#: src/audacious/ui_about.c:46
+#, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+
+#: src/audacious/ui_about.c:125
+#: src/audacious/ui_credits.c:350
+#: src/audacious/ui_manager.c:386
+#: src/audacious/ui_manager.c:387
+msgid "About Audacious"
+msgstr "Sobre o Audacious"
+
+#: src/audacious/ui_about.c:174
+#: src/audacious/ui_credits.c:393
+msgid "Credits"
+msgstr "Créditos"
+
+#: src/audacious/ui_credits.c:47
+#, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"The future of UNIX multimedia.\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"O futuro multimídia do UNIX.\n"
+"\n"
+"Copyright (C) 2005-2006 Equipq de Desenvolvimento do Audacious \n"
+
+#: src/audacious/ui_credits.c:53
+msgid "Audacious core developers:"
+msgstr "Desenvolvedores do núcleo do Audacious:"
+
+#: src/audacious/ui_credits.c:69
+msgid "Graphics:"
+msgstr "Gráficos:"
+
+#: src/audacious/ui_credits.c:74
+msgid "Default skin:"
+msgstr "Skin padrão:"
+
+#: src/audacious/ui_credits.c:79
+msgid "Plugin development:"
+msgstr "Desenvolvedores dos plugins:"
+
+#: src/audacious/ui_credits.c:93
+msgid "Patch authors:"
+msgstr "Autores de atualizações:"
+
+#: src/audacious/ui_credits.c:113
+msgid "0.1.x developers:"
+msgstr "Desenvolvedores do 0.1.x:"
+
+#: src/audacious/ui_credits.c:119
+msgid "BMP Developers:"
+msgstr "Desenvolvedores do BMP:"
+
+#: src/audacious/ui_credits.c:151
+msgid "Brazilian Portuguese:"
+msgstr "Português do Brasil:"
+
+#: src/audacious/ui_credits.c:154
+msgid "Breton:"
+msgstr "Breton:"
+
+#: src/audacious/ui_credits.c:157
+msgid "Bulgarian:"
+msgstr "Búlgaro:"
+
+#: src/audacious/ui_credits.c:160
+msgid "Catalan:"
+msgstr "Catalão:"
+
+#: src/audacious/ui_credits.c:163
+msgid "Croatian:"
+msgstr "Croata:"
+
+#: src/audacious/ui_credits.c:166
+msgid "Czech:"
+msgstr "Checo:"
+
+#: src/audacious/ui_credits.c:169
+msgid "Dutch:"
+msgstr "Holandês:"
+
+#: src/audacious/ui_credits.c:173
+msgid "Finnish:"
+msgstr "Finlândes:"
+
+#: src/audacious/ui_credits.c:176
+msgid "French:"
+msgstr "Francês:"
+
+#: src/audacious/ui_credits.c:179
+msgid "German:"
+msgstr "Alemão:"
+
+#: src/audacious/ui_credits.c:184
+msgid "Georgian:"
+msgstr "Georgiano: "
+
+#: src/audacious/ui_credits.c:187
+msgid "Greek:"
+msgstr "Grego:"
+
+#: src/audacious/ui_credits.c:192
+msgid "Hindi:"
+msgstr "Hindú:"
+
+#: src/audacious/ui_credits.c:195
+msgid "Hungarian:"
+msgstr "Húngaro:"
+
+#: src/audacious/ui_credits.c:198
+msgid "Italian:"
+msgstr "Italiano:"
+
+#: src/audacious/ui_credits.c:202
+msgid "Japanese:"
+msgstr "Japonês:"
+
+#: src/audacious/ui_credits.c:205
+msgid "Korean:"
+msgstr "Coreano:"
+
+#: src/audacious/ui_credits.c:208
+msgid "Lithuanian:"
+msgstr "Lítuano:"
+
+#: src/audacious/ui_credits.c:211
+msgid "Macedonian:"
+msgstr "Macedônio:"
+
+#: src/audacious/ui_credits.c:214
+msgid "Polish:"
+msgstr "Polonês:"
+
+#: src/audacious/ui_credits.c:217
+msgid "Romanian:"
+msgstr "Romeno:"
+
+#: src/audacious/ui_credits.c:220
+msgid "Russian:"
+msgstr "Russo:"
+
+#: src/audacious/ui_credits.c:223
+msgid "Serbian (Latin):"
+msgstr "Sérvio (Latino):"
+
+#: src/audacious/ui_credits.c:226
+msgid "Serbian (Cyrillic):"
+msgstr "Sérvio (Cyrillic):"
+
+#: src/audacious/ui_credits.c:229
+msgid "Simplified Chinese:"
+msgstr "Chinês Simplificado"
+
+#: src/audacious/ui_credits.c:232
+msgid "Slovak:"
+msgstr "Eslovaco:"
+
+#: src/audacious/ui_credits.c:235
+msgid "Spanish:"
+msgstr "Espanhol:"
+
+#: src/audacious/ui_credits.c:238
+msgid "Swedish:"
+msgstr "Sueco:"
+
+#: src/audacious/ui_credits.c:241
+msgid "Traditional Chinese:"
+msgstr "Chinês Tradicional:"
+
+#: src/audacious/ui_credits.c:244
+msgid "Turkish:"
+msgstr "Turco:"
+
+#: src/audacious/ui_credits.c:248
+msgid "Ukrainian:"
+msgstr "Ucraniano:"
+
+#: src/audacious/ui_credits.c:251
+msgid "Welsh:"
+msgstr "Galês:"
+
+#: src/audacious/ui_credits.c:397
+msgid "Translators"
+msgstr "Tradutores"
+
+#: src/audacious/ui_equalizer.c:635
+msgid "Audacious Equalizer"
+msgstr "Equalizador do Audacious"
+
+#: src/audacious/ui_equalizer.c:1279
+msgid "Presets"
+msgstr "Pré-regulagem"
+
+#: src/audacious/ui_main.c:625
+#, c-format
+msgid "%s - Audacious"
+msgstr "%s - Audacious"
+
+#: src/audacious/ui_main.c:840
+msgid "VBR"
+msgstr "VBR"
+
+#: src/audacious/ui_main.c:858
+#: src/audacious/ui_main.c:862
+msgid "stereo"
+msgstr "estéreo"
+
+#: src/audacious/ui_main.c:858
+#: src/audacious/ui_main.c:862
+msgid "mono"
+msgstr "mono"
+
+#: src/audacious/ui_main.c:1199
+#: src/audacious/ui_manager.c:419
+#: src/audacious/ui_manager.c:420
+msgid "Jump to Time"
+msgstr "Avançar Tempo até"
+
+#: src/audacious/ui_main.c:1220
+msgid "minutes:seconds"
+msgstr "minutos:segundos"
+
+#: src/audacious/ui_main.c:1230
+msgid "Track length:"
+msgstr "Duração do arquivo:"
+
+#: src/audacious/ui_main.c:1394
+msgid "Audacious - visibility warning"
+msgstr "Audacious - Exibição de avisos"
+
+#: src/audacious/ui_main.c:1396
+msgid "Show main player window"
+msgstr "Mostrar janela principal do reprodutor:"
+
+#: src/audacious/ui_main.c:1397
+msgid "Ignore"
+msgstr "Ignorar"
+
+#: src/audacious/ui_main.c:1401
+msgid ""
+"Audacious has been started with all of its windows hidden.\n"
+"You may want to show the player window again to control Audacious; otherwise, you'll have to control it remotely via audtool or enabled plugins (such as the statusicon plugin)."
+msgstr "Audacious está sendo iniciado com todas as janelas escondidas. Você deve esperar a janela principal ser exibida para ter total controle sobre o Audacious; entretando você pode controlá-lo remotamente via audtool ou ativando plugins (como o plugin na barra de status)."
+
+#: src/audacious/ui_main.c:1407
+msgid "Always ignore, show/hide is controlled remotely"
+msgstr "Ignorar sempre, mostrar/esconder é remotamente controlado"
+
+#: src/audacious/ui_main.c:1425
+msgid "Enter location to play:"
+msgstr "Insira a URL:"
+
+#: src/audacious/ui_main.c:1659
+#, c-format
+msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "Buscar por: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: src/audacious/ui_main.c:1691
+#, c-format
+msgid "Volume: %d%%"
+msgstr "Volume: %d%%"
+
+#: src/audacious/ui_main.c:1722
+#, c-format
+msgid "Balance: %d%% left"
+msgstr "Balanço: %d%% esquerda"
+
+#: src/audacious/ui_main.c:1726
+msgid "Balance: center"
+msgstr "Balanço: centro"
+
+#: src/audacious/ui_main.c:1730
+#, c-format
+msgid "Balance: %d%% right"
+msgstr "Balanço: %d%% direita"
+
+#: src/audacious/ui_main.c:2118
+msgid "Options Menu"
+msgstr "Opções:"
+
+#: src/audacious/ui_main.c:2122
+msgid "Disable 'Always On Top'"
+msgstr "Desativar \"Sempre no Topo\""
+
+#: src/audacious/ui_main.c:2124
+msgid "Enable 'Always On Top'"
+msgstr "Ativar \"Sempre no Topo\""
+
+#: src/audacious/ui_main.c:2127
+msgid "File Info Box"
+msgstr "Informações do Arquivo"
+
+#: src/audacious/ui_main.c:2131
+msgid "Disable 'Doublesize'"
+msgstr "Desativar \"Tamanho Duplo\""
+
+#: src/audacious/ui_main.c:2133
+msgid "Enable 'Doublesize'"
+msgstr "Ativar \"Tamanho Duplo\""
+
+#: src/audacious/ui_main.c:2136
+msgid "Visualization Menu"
+msgstr "Menu de Visualização"
+
+#: src/audacious/ui_main.c:2184
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>CD de áudio não encontrado</big></b>\n"
+"\n"
+"Nenhum CD foi inserido, ou o CD não é de áudio\n"
+
+#: src/audacious/ui_main.c:2201
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>Erro ao abrir o áudio</big></b>\n"
+"\n"
+"Por favor, cheque isto:\n"
+"1. Plugin de saída selecionado corretamente\n"
+"2. Nenhum programa está bloqueando a placa de som\n"
+"3. A placa de som está configurada corretamente\n"
+
+#: src/audacious/ui_main.c:2359
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "VOLUME: %d%%"
+
+#: src/audacious/ui_main.c:2362
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "BALANÇO: %d%% ESQUERDO"
+
+#: src/audacious/ui_main.c:2365
+msgid "BALANCE: CENTER"
+msgstr "BALANÇO: CENTRO"
+
+#: src/audacious/ui_main.c:2367
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "BALANÇO: %d%% DIREITO"
+
+#: src/audacious/ui_main.c:2818
+msgid "Error in Audacious."
+msgstr "Erro no Audacious"
+
+#: src/audacious/ui_manager.c:45
+#: src/audacious/ui_manager.c:46
+msgid "Autoscroll Songname"
+msgstr "Auto-rolar Nome do Arquivo"
+
+#: src/audacious/ui_manager.c:48
+#: src/audacious/ui_manager.c:49
+msgid "Stop after Current Song"
+msgstr "Parar após Arquivo Atual"
+
+#: src/audacious/ui_manager.c:51
+#: src/audacious/ui_manager.c:52
+msgid "Peaks"
+msgstr "Picos"
+
+#: src/audacious/ui_manager.c:54
+#: src/audacious/ui_manager.c:55
+msgid "Repeat"
+msgstr "Repetir"
+
+#: src/audacious/ui_manager.c:57
+#: src/audacious/ui_manager.c:58
+msgid "Shuffle"
+msgstr "Aleatório"
+
+#: src/audacious/ui_manager.c:60
+#: src/audacious/ui_manager.c:61
+msgid "No Playlist Advance"
+msgstr "Não avançar Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:63
+#: src/audacious/ui_manager.c:64
+msgid "Show Player"
+msgstr "Mostrar Reprodutor"
+
+#: src/audacious/ui_manager.c:66
+#: src/audacious/ui_manager.c:67
+msgid "Show Playlist Editor"
+msgstr "Mostrar Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:69
+#: src/audacious/ui_manager.c:70
+msgid "Show Equalizer"
+msgstr "Mostrar Equalizador"
+
+#: src/audacious/ui_manager.c:72
+#: src/audacious/ui_manager.c:73
+msgid "Always on Top"
+msgstr "Sempre no Topo"
+
+#: src/audacious/ui_manager.c:75
+#: src/audacious/ui_manager.c:76
+msgid "Put on All Workspaces"
+msgstr "Exibir em todas as Áreas de Trabalho"
+
+#: src/audacious/ui_manager.c:78
+#: src/audacious/ui_manager.c:79
+msgid "Roll up Player"
+msgstr "Encolher Reprodutor"
+
+#: src/audacious/ui_manager.c:81
+#: src/audacious/ui_manager.c:82
+msgid "Roll up Playlist Editor"
+msgstr "Encolher Editor de Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:84
+#: src/audacious/ui_manager.c:85
+msgid "Roll up Equalizer"
+msgstr "Encolher Equalizador"
+
+#: src/audacious/ui_manager.c:87
+#: src/audacious/ui_manager.c:88
+msgid "DoubleSize"
+msgstr "Tamanho Duplo"
+
+#: src/audacious/ui_manager.c:90
+#: src/audacious/ui_manager.c:91
+msgid "Easy Move"
+msgstr "Movimentação Fácil"
+
+#: src/audacious/ui_manager.c:99
+msgid "Analyzer"
+msgstr "Analizador"
+
+#: src/audacious/ui_manager.c:100
+msgid "Scope"
+msgstr "Osciloscópio"
+
+#: src/audacious/ui_manager.c:101
+msgid "Voiceprint"
+msgstr "Impressão de Voz"
+
+#: src/audacious/ui_manager.c:102
+msgid "Off"
+msgstr "Desligado"
+
+#: src/audacious/ui_manager.c:106
+#: src/audacious/ui_manager.c:123
+#: src/audacious/ui_manager.c:129
+msgid "Normal"
+msgstr "Normal"
+
+#: src/audacious/ui_manager.c:107
+#: src/audacious/ui_manager.c:124
+msgid "Fire"
+msgstr "Fogo"
+
+#: src/audacious/ui_manager.c:108
+msgid "Vertical Lines"
+msgstr "Linhas Verticais"
+
+#: src/audacious/ui_manager.c:112
+msgid "Lines"
+msgstr "Linhas"
+
+#: src/audacious/ui_manager.c:113
+msgid "Bars"
+msgstr "Barras"
+
+#: src/audacious/ui_manager.c:117
+msgid "Dot Scope"
+msgstr "Osciloscópio Pontos"
+
+#: src/audacious/ui_manager.c:118
+msgid "Line Scope"
+msgstr "Osciloscópio Linhas"
+
+#: src/audacious/ui_manager.c:119
+msgid "Solid Scope"
+msgstr "Osciloscópio Sólido"
+
+#: src/audacious/ui_manager.c:125
+msgid "Ice"
+msgstr "Gelo"
+
+#: src/audacious/ui_manager.c:130
+msgid "Smooth"
+msgstr "Suave"
+
+#: src/audacious/ui_manager.c:134
+msgid "Full (~50 fps)"
+msgstr "Completa (~50 fps)"
+
+#: src/audacious/ui_manager.c:135
+msgid "Half (~25 fps)"
+msgstr "Média (~25 fps)"
+
+#: src/audacious/ui_manager.c:136
+msgid "Quarter (~13 fps)"
+msgstr "Um quarto (~13 fps)"
+
+#: src/audacious/ui_manager.c:137
+msgid "Eighth (~6 fps)"
+msgstr "Um oitavo (~6 fps)"
+
+#: src/audacious/ui_manager.c:141
+#: src/audacious/ui_manager.c:149
+msgid "Slowest"
+msgstr "Muito lento"
+
+#: src/audacious/ui_manager.c:142
+#: src/audacious/ui_manager.c:150
+msgid "Slow"
+msgstr "Lento"
+
+#: src/audacious/ui_manager.c:143
+#: src/audacious/ui_manager.c:151
+msgid "Medium"
+msgstr "Médio"
+
+#: src/audacious/ui_manager.c:144
+#: src/audacious/ui_manager.c:152
+msgid "Fast"
+msgstr "Rápido"
+
+#: src/audacious/ui_manager.c:145
+#: src/audacious/ui_manager.c:153
+msgid "Fastest"
+msgstr "Muito rápido"
+
+#: src/audacious/ui_manager.c:157
+msgid "Time Elapsed"
+msgstr "Tempo Decorrido"
+
+#: src/audacious/ui_manager.c:158
+msgid "Time Remaining"
+msgstr "Tempo Restante"
+
+#: src/audacious/ui_manager.c:167
+msgid "Playback"
+msgstr "Reproduzir"
+
+#: src/audacious/ui_manager.c:169
+#: src/audacious/ui_manager.c:170
+msgid "Play"
+msgstr "Reproduzir"
+
+#: src/audacious/ui_manager.c:172
+#: src/audacious/ui_manager.c:173
+msgid "Pause"
+msgstr "Pausar"
+
+#: src/audacious/ui_manager.c:175
+#: src/audacious/ui_manager.c:176
+msgid "Stop"
+msgstr "Parar"
+
+#: src/audacious/ui_manager.c:178
+#: src/audacious/ui_manager.c:179
+msgid "Previous"
+msgstr "Anterior"
+
+#: src/audacious/ui_manager.c:181
+#: src/audacious/ui_manager.c:182
+msgid "Next"
+msgstr "Próximo"
+
+#: src/audacious/ui_manager.c:187
+msgid "Visualization"
+msgstr "Visualização"
+
+#: src/audacious/ui_manager.c:188
+msgid "Visualization Mode"
+msgstr "Modos de Visualização"
+
+#: src/audacious/ui_manager.c:189
+msgid "Analyzer Mode"
+msgstr "Modo Analizador"
+
+#: src/audacious/ui_manager.c:190
+msgid "Scope Mode"
+msgstr "Modo Osciloscópio"
+
+#: src/audacious/ui_manager.c:191
+msgid "Voiceprint Mode"
+msgstr "Modo de Impressão de Voz"
+
+#: src/audacious/ui_manager.c:192
+msgid "WindowShade VU Mode"
+msgstr "Sombreamento da Janela"
+
+#: src/audacious/ui_manager.c:193
+msgid "Refresh Rate"
+msgstr "Taxa de Amostragem"
+
+#: src/audacious/ui_manager.c:194
+msgid "Analyzer Falloff"
+msgstr "Queda do Analizador"
+
+#: src/audacious/ui_manager.c:195
+msgid "Peaks Falloff"
+msgstr "Queda dos Picos"
+
+#: src/audacious/ui_manager.c:200
+#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_playlist_manager.c:290
+#: src/audacious/glade/prefswin.glade:2494
+msgid "Playlist"
+msgstr "Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:202
+#: src/audacious/ui_manager.c:203
+msgid "New Playlist"
+msgstr "Nova Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:205
+#: src/audacious/ui_manager.c:206
+msgid "Select Next Playlist"
+msgstr "Selecionar Próxima Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:208
+#: src/audacious/ui_manager.c:209
+msgid "Select Previous Playlist"
+msgstr "Selecionar Lista de Reprodução Anterior"
+
+#: src/audacious/ui_manager.c:211
+#: src/audacious/ui_manager.c:212
+msgid "Delete Playlist"
+msgstr "Limpar Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:214
+msgid "Load List"
+msgstr "Carregar Lista"
+
+#: src/audacious/ui_manager.c:215
+msgid "Loads a playlist file into the selected playlist."
+msgstr "Carregar arquivo da lista de reprodução em lista de reprodução selecionada."
+
+#: src/audacious/ui_manager.c:217
+msgid "Save List"
+msgstr "Salvar Lista"
+
+#: src/audacious/ui_manager.c:218
+msgid "Saves the selected playlist."
+msgstr "Salvar lista de reprodução selecionada."
+
+#: src/audacious/ui_manager.c:220
+msgid "Save Default List"
+msgstr "Salvar Lista Padrão"
+
+#: src/audacious/ui_manager.c:221
+msgid "Saves the selected playlist to the default location."
+msgstr "Salvar lista de reprodução selecionadas para o local padrão."
+
+#: src/audacious/ui_manager.c:224
+msgid "Refresh List"
+msgstr "Atualizar Lista"
+
+#: src/audacious/ui_manager.c:225
+msgid "Refreshes metadata associated with a playlist entry."
+msgstr "Atualizar TAGs associando com as entradas na lista de reprodução."
+
+#: src/audacious/ui_manager.c:228
+msgid "List Manager"
+msgstr "Editor de Listas"
+
+#: src/audacious/ui_manager.c:229
+msgid "Opens the playlist manager."
+msgstr "Abrir editor da lista de reprodução"
+
+#: src/audacious/ui_manager.c:235
+msgid "View"
+msgstr "Visualizar"
+
+#: src/audacious/ui_manager.c:239
+msgid "Add CD..."
+msgstr "Adicionar CD..."
+
+#: src/audacious/ui_manager.c:240
+msgid "Adds a CD to the playlist."
+msgstr "Adicionar CD à lista de reprodução"
+
+#: src/audacious/ui_manager.c:243
+msgid "Add Internet Address..."
+msgstr "Adicionar URL..."
+
+#: src/audacious/ui_manager.c:244
+msgid "Adds a remote track to the playlist."
+msgstr "Adicionar arquivo remoto à lista de teprodução."
+
+#: src/audacious/ui_manager.c:247
+msgid "Add Files..."
+msgstr "Adicionar Arquivos..."
+
+#: src/audacious/ui_manager.c:248
+msgid "Adds files to the playlist."
+msgstr "Adicionar arquivos à lista de reprodução."
+
+#: src/audacious/ui_manager.c:253
+msgid "Search and Select"
+msgstr "Procurar e Selecionar"
+
+#: src/audacious/ui_manager.c:254
+msgid "Searches the playlist and selects playlist entries based on specific criteria."
+msgstr "Procurar lista de reprodução e selecionar entradas baseado em um critério específico."
+
+#: src/audacious/ui_manager.c:257
+msgid "Invert Selection"
+msgstr "Inverter Seleção"
+
+#: src/audacious/ui_manager.c:258
+msgid "Inverts the selected and unselected entries."
+msgstr "Inverter entradas selecionadas e não-selecionadas."
+
+#: src/audacious/ui_manager.c:261
+msgid "Select All"
+msgstr "Selecionar Todos"
+
+#: src/audacious/ui_manager.c:262
+msgid "Selects all of the playlist entries."
+msgstr "Selecionar todas as entradas da lista de reprodução."
+
+#: src/audacious/ui_manager.c:265
+msgid "Select None"
+msgstr "Deselecionar Todos"
+
+#: src/audacious/ui_manager.c:266
+msgid "Deselects all of the playlist entries."
+msgstr "Deselecionar todas as entradas da lista de reprodução."
+
+#: src/audacious/ui_manager.c:271
+msgid "Clear Queue"
+msgstr "Limpar fila"
+
+#: src/audacious/ui_manager.c:272
+msgid "Clears the queue associated with this playlist."
+msgstr "Limpar fila associada com esta lista de reprodução."
+
+#: src/audacious/ui_manager.c:275
+msgid "Remove Unavailable Files"
+msgstr "Remover Arquivos Indisponíveis"
+
+#: src/audacious/ui_manager.c:276
+msgid "Removes unavailable files from the playlist."
+msgstr "Remove arquivos indisponíveis da lista de reprodução."
+
+#: src/audacious/ui_manager.c:279
+msgid "Remove Duplicates"
+msgstr "Remover Duplicados"
+
+#: src/audacious/ui_manager.c:281
+#: src/audacious/ui_manager.c:317
+#: src/audacious/ui_manager.c:347
+msgid "By Title"
+msgstr "Por Título"
+
+#: src/audacious/ui_manager.c:282
+msgid "Removes duplicate entries from the playlist by title."
+msgstr "Remover entradas duplicadas da lista de reprodução por título."
+
+#: src/audacious/ui_manager.c:285
+#: src/audacious/ui_manager.c:325
+#: src/audacious/ui_manager.c:355
+msgid "By Filename"
+msgstr "Por Nome do Arquivo"
+
+#: src/audacious/ui_manager.c:286
+msgid "Removes duplicate entries from the playlist by filename."
+msgstr "Remover entradas duplicadas na lista de reprodução por nome do arquivo."
+
+#: src/audacious/ui_manager.c:289
+#: src/audacious/ui_manager.c:329
+#: src/audacious/ui_manager.c:359
+msgid "By Path + Filename"
+msgstr "Por Destino + Nome do Arquivo"
+
+#: src/audacious/ui_manager.c:290
+msgid "Removes duplicate entries from the playlist by their full path."
+msgstr "Remover entradas duplicadas da lista de reprodução pele caminho completo."
+
+#: src/audacious/ui_manager.c:293
+msgid "Remove All"
+msgstr "Remover Todos"
+
+#: src/audacious/ui_manager.c:294
+msgid "Removes all entries from the playlist."
+msgstr "Remover todas as entradas da lista de reprodução."
+
+#: src/audacious/ui_manager.c:297
+msgid "Remove Unselected"
+msgstr "Remover Não-selecionados"
+
+#: src/audacious/ui_manager.c:298
+msgid "Remove unselected entries from the playlist."
+msgstr "Remover entradas não-selecionadas da lista de reprodução."
+
+#: src/audacious/ui_manager.c:301
+msgid "Remove Selected"
+msgstr "Remover Selecionado"
+
+#: src/audacious/ui_manager.c:302
+msgid "Remove selected entries from the playlist."
+msgstr "Remove entradas selecionadas da lista de reprodução."
+
+#: src/audacious/ui_manager.c:307
+msgid "Randomize List"
+msgstr "Embaralhar lista"
+
+#: src/audacious/ui_manager.c:308
+msgid "Randomizes the playlist."
+msgstr "Embaralhar lista de reprodução."
+
+#: src/audacious/ui_manager.c:311
+msgid "Reverse List"
+msgstr "Inverter Lista"
+
+#: src/audacious/ui_manager.c:312
+msgid "Reverses the playlist."
+msgstr "Reverter lista de reprodução."
+
+#: src/audacious/ui_manager.c:315
+msgid "Sort List"
+msgstr "Organizar Lista"
+
+#: src/audacious/ui_manager.c:318
+#: src/audacious/ui_manager.c:348
+msgid "Sorts the list by title."
+msgstr "Organiza lista por título."
+
+#: src/audacious/ui_manager.c:321
+#: src/audacious/ui_manager.c:351
+msgid "By Artist"
+msgstr "Por Artista"
+
+#: src/audacious/ui_manager.c:322
+#: src/audacious/ui_manager.c:352
+msgid "Sorts the list by artist."
+msgstr "Organiza lista por Artista."
+
+#: src/audacious/ui_manager.c:326
+#: src/audacious/ui_manager.c:356
+msgid "Sorts the list by filename."
+msgstr "Organiza lista por nome do arquivo."
+
+#: src/audacious/ui_manager.c:330
+#: src/audacious/ui_manager.c:360
+msgid "Sorts the list by full pathname."
+msgstr "Organiza lista por caminho completo do arquivo"
+
+#: src/audacious/ui_manager.c:333
+#: src/audacious/ui_manager.c:363
+msgid "By Date"
+msgstr "Por Data"
+
+#: src/audacious/ui_manager.c:334
+#: src/audacious/ui_manager.c:364
+msgid "Sorts the list by modification time."
+msgstr "Organizar lista por hora de modificação."
+
+#: src/audacious/ui_manager.c:337
+#: src/audacious/ui_manager.c:367
+msgid "By Track Number"
+msgstr "Por Número do Arquivo"
+
+#: src/audacious/ui_manager.c:338
+#: src/audacious/ui_manager.c:368
+msgid "Sorts the list by track number."
+msgstr "Organiza lista por número do arquivo."
+
+#: src/audacious/ui_manager.c:341
+#: src/audacious/ui_manager.c:371
+msgid "By Playlist Entry"
+msgstr "Por entrada na Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:342
+#: src/audacious/ui_manager.c:372
+msgid "Sorts the list by playlist entry."
+msgstr "Organiza lista por entrada na lista de reprodução."
+
+#: src/audacious/ui_manager.c:345
+msgid "Sort Selected"
+msgstr "Organizar Seleção"
+
+#: src/audacious/ui_manager.c:380
+#: src/audacious/ui_manager.c:383
+msgid "View Track Details"
+msgstr "Visualizar Detalhes do Arquivo"
+
+#: src/audacious/ui_manager.c:381
+#: src/audacious/ui_manager.c:384
+msgid "View track details"
+msgstr "Visualizar detalhes do arquivo"
+
+#: src/audacious/ui_manager.c:389
+msgid "Play File"
+msgstr "Reproduzir Arquivo"
+
+#: src/audacious/ui_manager.c:390
+msgid "Load and play a file"
+msgstr "Carregar e reproduzir arquivos"
+
+#: src/audacious/ui_manager.c:392
+msgid "Play Location"
+msgstr "Reproduzir URL"
+
+#: src/audacious/ui_manager.c:393
+msgid "Play media from the selected location"
+msgstr "Reproduzir mídia de um local selecionado"
+
+#: src/audacious/ui_manager.c:395
+#: src/audacious/ui_manager.c:396
+msgid "Play CD"
+msgstr "Reproduzir CD"
+
+#: src/audacious/ui_manager.c:398
+msgid "Last.fm radio"
+msgstr "Last.fm rádio"
+
+#: src/audacious/ui_manager.c:399
+msgid "Play Last.fm radio"
+msgstr "Reproduzir rádio do Last.fm"
+
+#: src/audacious/ui_manager.c:401
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/audacious/ui_manager.c:402
+msgid "Open preferences window"
+msgstr "Janela de preferências"
+
+#: src/audacious/ui_manager.c:404
+msgid "_Quit"
+msgstr "_Sair"
+
+#: src/audacious/ui_manager.c:405
+msgid "Quit Audacious"
+msgstr "Sair do Audacious"
+
+#: src/audacious/ui_manager.c:407
+#: src/audacious/ui_manager.c:408
+msgid "Set A-B"
+msgstr "Selecionar tudo"
+
+#: src/audacious/ui_manager.c:410
+#: src/audacious/ui_manager.c:411
+msgid "Clear A-B"
+msgstr "Limpar tudo"
+
+#: src/audacious/ui_manager.c:413
+#: src/audacious/ui_manager.c:414
+msgid "Jump to Playlist Start"
+msgstr "Voltar ao Início da Lista de Reprodução"
+
+#: src/audacious/ui_manager.c:416
+#: src/audacious/ui_manager.c:417
+msgid "Jump to File"
+msgstr "Ir para o Arquivo"
+
+#: src/audacious/ui_manager.c:422
+msgid "Queue Toggle"
+msgstr "Inserir na fila"
+
+#: src/audacious/ui_manager.c:423
+msgid "Enables/disables the entry in the playlist's queue."
+msgstr "Ativa/desativa entradas para a fila da lista de reprodução."
+
+#: src/audacious/ui_manager.c:430
+msgid "Load"
+msgstr "Carregar"
+
+#: src/audacious/ui_manager.c:431
+msgid "Import"
+msgstr "Importar"
+
+#: src/audacious/ui_manager.c:432
+msgid "Save"
+msgstr "Salvar"
+
+#: src/audacious/ui_manager.c:433
+msgid "Delete"
+msgstr "Apagar"
+
+#: src/audacious/ui_manager.c:435
+#: src/audacious/ui_manager.c:456
+#: src/audacious/ui_manager.c:471
+msgid "Preset"
+msgstr "Pré-regulagem"
+
+#: src/audacious/ui_manager.c:436
+msgid "Load preset"
+msgstr "Carregar pré-regulagem"
+
+#: src/audacious/ui_manager.c:438
+#: src/audacious/ui_manager.c:459
+#: src/audacious/ui_manager.c:474
+msgid "Auto-load preset"
+msgstr "Auto-carregar Pré-regulagem"
+
+#: src/audacious/ui_manager.c:439
+msgid "Load auto-load preset"
+msgstr "Carregar pré-regulagem automática"
+
+#: src/audacious/ui_manager.c:441
+#: src/audacious/ui_manager.c:462
+msgid "Default"
+msgstr "Padrão"
+
+#: src/audacious/ui_manager.c:442
+msgid "Load default preset into equalizer"
+msgstr "Carregar pré-regulagem padrão no Equalizador"
+
+#: src/audacious/ui_manager.c:444
+msgid "Zero"
+msgstr "Padrão"
+
+#: src/audacious/ui_manager.c:445
+msgid "Set equalizer preset levels to zero"
+msgstr "Mudar equalizador para pré-regulagem zero"
+
+#: src/audacious/ui_manager.c:447
+msgid "From file"
+msgstr "Do arquivo"
+
+#: src/audacious/ui_manager.c:448
+msgid "Load preset from file"
+msgstr "Carregar pré-regulagem do arquivo"
+
+#: src/audacious/ui_manager.c:450
+msgid "From WinAMP EQF file"
+msgstr "De um arquivo EQF do WinAMP"
+
+#: src/audacious/ui_manager.c:451
+msgid "Load preset from WinAMP EQF file"
+msgstr "Carregar pré-regulagem de um arquivo EQF do WinAMP"
+
+#: src/audacious/ui_manager.c:453
+msgid "WinAMP Presets"
+msgstr "Pré-regulagem do WinAMP"
+
+#: src/audacious/ui_manager.c:454
+msgid "Import WinAMP presets"
+msgstr "Importar pré-regulagem do WinAMP"
+
+#: src/audacious/ui_manager.c:457
+msgid "Save preset"
+msgstr "Salvar preset"
+
+#: src/audacious/ui_manager.c:460
+msgid "Save auto-load preset"
+msgstr "Salvar pré-regulagem automática"
+
+#: src/audacious/ui_manager.c:463
+msgid "Save default preset"
+msgstr "Salvar pré-regulagem padrão"
+
+#: src/audacious/ui_manager.c:465
+msgid "To file"
+msgstr "Para o arquivo"
+
+#: src/audacious/ui_manager.c:466
+msgid "Save preset to file"
+msgstr "Salvar pré-regulagem para o arquivo"
+
+#: src/audacious/ui_manager.c:468
+msgid "To WinAMP EQF file"
+msgstr "Para EQF do WinAMP"
+
+#: src/audacious/ui_manager.c:469
+msgid "Save preset to WinAMP EQF file"
+msgstr "Salvar pré-regulagem para EQF do WinAMP"
+
+#: src/audacious/ui_manager.c:472
+msgid "Delete preset"
+msgstr "Apagar preset"
+
+#: src/audacious/ui_manager.c:475
+msgid "Delete auto-load preset"
+msgstr "Apagar pré-regulagem automática"
+
+#: src/audacious/ui_preferences.c:103
+#: src/audacious/glade/prefswin.glade:1363
+msgid "Appearance"
+msgstr "Aparência"
+
+#: src/audacious/ui_preferences.c:104
+msgid "Audio"
+msgstr "Áudio"
+
+#: src/audacious/ui_preferences.c:105
+msgid "Connectivity"
+msgstr "Conectividade"
+
+#: src/audacious/ui_preferences.c:106
+#: src/audacious/glade/prefswin.glade:2862
+msgid "Equalizer"
+msgstr "Equalizador"
+
+#: src/audacious/ui_preferences.c:107
+#: src/audacious/glade/prefswin.glade:1642
+msgid "Mouse"
+msgstr "Mouse"
+
+#: src/audacious/ui_preferences.c:109
+#: src/audacious/glade/prefswin.glade:693
+msgid "Plugins"
+msgstr "Plugins"
+
+#: src/audacious/ui_preferences.c:115
+#: src/audacious/ui_fileinfopopup.c:255
+msgid "Artist"
+msgstr "Artista"
+
+#: src/audacious/ui_preferences.c:116
+#: src/audacious/ui_fileinfopopup.c:258
+#: src/audacious/titlestring.c:380
+msgid "Album"
+msgstr "Álbum"
+
+#: src/audacious/ui_preferences.c:117
+#: src/audacious/ui_fileinfopopup.c:252
+#: src/audacious/ui_fileinfopopup.c:362
+msgid "Title"
+msgstr "Título"
+
+#: src/audacious/ui_preferences.c:118
+msgid "Tracknumber"
+msgstr "Número do arquivo"
+
+#: src/audacious/ui_preferences.c:119
+#: src/audacious/ui_fileinfopopup.c:261
+#: src/audacious/titlestring.c:381
+msgid "Genre"
+msgstr "Gênero"
+
+#: src/audacious/ui_preferences.c:120
+#: src/audacious/ui_preferences.c:488
+#: src/audacious/ui_preferences.c:576
+#: src/audacious/ui_preferences.c:665
+#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_fileinfopopup.c:371
+msgid "Filename"
+msgstr "Nome do arquivo"
+
+#: src/audacious/ui_preferences.c:121
+msgid "Filepath"
+msgstr "Caminho do arquivo"
+
+#: src/audacious/ui_preferences.c:122
+#: src/audacious/titlestring.c:387
+msgid "Date"
+msgstr "Data"
+
+#: src/audacious/ui_preferences.c:123
+#: src/audacious/ui_fileinfopopup.c:264
+#: src/audacious/titlestring.c:388
+msgid "Year"
+msgstr "Ano"
+
+#: src/audacious/ui_preferences.c:124
+#: src/audacious/titlestring.c:389
+msgid "Comment"
+msgstr "Comentário"
+
+#: src/audacious/ui_preferences.c:145
+msgid "localhost"
+msgstr "localhost"
+
+#: src/audacious/ui_preferences.c:458
+#: src/audacious/ui_preferences.c:545
+#: src/audacious/ui_preferences.c:634
+#: src/audacious/ui_preferences.c:730
+msgid "Enabled"
+msgstr "Ativado"
+
+#: src/audacious/ui_preferences.c:474
+#: src/audacious/ui_preferences.c:561
+#: src/audacious/ui_preferences.c:650
+#: src/audacious/ui_preferences.c:746
+msgid "Description"
+msgstr "Descrição"
+
+#: src/audacious/ui_preferences.c:1878
+msgid "Category"
+msgstr "Categoria"
+
+#: src/audacious/ui_preferences.c:2425
+msgid "Preferences Window"
+msgstr "Janela de Preferências"
+
+#: src/audacious/ui_skinselector.c:178
+msgid "Archived Winamp 2.x skin"
+msgstr "Skin do Winamp 2.x compactada"
+
+#: src/audacious/ui_skinselector.c:183
+msgid "Unarchived Winamp 2.x skin"
+msgstr "Skin do Winamp 2.x descompactada"
+
+#: src/audacious/ui_fileinfo.c:158
+msgid "Track Information Window"
+msgstr "Janela de informações do Arquivo"
+
+#: src/audacious/ui_fileinfopopup.c:267
+msgid "Track Number"
+msgstr "Número do Arquivo"
+
+#: src/audacious/ui_fileinfopopup.c:271
+msgid "Track Length"
+msgstr "Duração do arquivo:"
+
+#: src/audacious/ui_fileopener.c:131
+msgid "Open Files"
+msgstr "Abrir Arquivos"
+
+#: src/audacious/ui_fileopener.c:131
+msgid "Add Files"
+msgstr "Adicionar Arquivos..."
+
+#: src/audacious/ui_fileopener.c:133
+msgid "Close dialog on Open"
+msgstr "Fechar janela ao abrir"
+
+#: src/audacious/ui_fileopener.c:133
+msgid "Close dialog on Add"
+msgstr "Fechar janela ao adicionar"
+
+#: src/audacious/ui_fileopener.c:358
+msgid "Play files"
+msgstr "Reproduzir arquivos"
+
+#: src/audacious/ui_fileopener.c:360
+msgid "Load files"
+msgstr "Carregar arquivos"
+
+#: src/audacious/ui_playlist.c:497
+msgid "Search entries in active playlist"
+msgstr "Buscar entradas na lista de reprodução ativa"
+
+#: src/audacious/ui_playlist.c:505
+msgid "Select entries in playlist by filling one or more fields. Fields use regular expressions syntax, case-insensitive. If you don't know how regular expressions work, simply insert a literal portion of what you're searching for."
+msgstr "Selecionar entradas da lista de reprodução por um ou mais campos. Campos com expressões comuns. Se você não sabe editar as expressões, simplismente insira uma palavra no campo de busca."
+
+#: src/audacious/ui_playlist.c:513
+msgid "Title: "
+msgstr "Título:"
+
+#: src/audacious/ui_playlist.c:520
+msgid "Album: "
+msgstr "Álbum:"
+
+#: src/audacious/ui_playlist.c:527
+msgid "Artist: "
+msgstr "Artista:"
+
+#: src/audacious/ui_playlist.c:534
+msgid "Filename: "
+msgstr "Nome do arquivo:"
+
+#: src/audacious/ui_playlist.c:542
+msgid "Clear previous selection before searching"
+msgstr "Limpar seleção anterior antes de procurar"
+
+#: src/audacious/ui_playlist.c:545
+msgid "Automatically toggle queue for matching entries"
+msgstr "Colocar novas entradas automaticamente na fila"
+
+#: src/audacious/ui_playlist.c:548
+msgid "Create a new playlist with matching entries"
+msgstr "Criar nova lista de reprodução com entradas combinadas"
+
+#: src/audacious/ui_playlist.c:805
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "Erro ao escrever lista de reprodução \"%s\": %s"
+
+#: src/audacious/ui_playlist.c:827
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s já existe. Continuar?"
+
+#: src/audacious/ui_playlist.c:842
+#, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr ""
+"<b><big>Erro ao salvar lista de reprodução. </big></b>\n"
+"\n"
+"Tipo de arquivo desconhecido para '%s'.\n"
+
+#: src/audacious/ui_playlist.c:965
+msgid "Save as Static Playlist"
+msgstr "Salvar Lista de Reprodução Estática"
+
+#: src/audacious/ui_playlist.c:972
+msgid "Use Relative Path"
+msgstr "Utilizar caminho relativo"
+
+#: src/audacious/ui_playlist.c:994
+msgid "Load Playlist"
+msgstr "Carregar Lista de Reprodução"
+
+#: src/audacious/ui_playlist.c:1007
+msgid "Save Playlist"
+msgstr "Salvar Lista de Reprodução"
+
+#: src/audacious/ui_playlist.c:1701
+msgid "Audacious Playlist Editor"
+msgstr "Editor Listas de Reprodução do Audacious"
+
+#: src/audacious/ui_urlopener.c:88
+msgid "Add/Open URL Dialog"
+msgstr "Adicionar/Abrir URL..."
+
+#: src/audacious/ui_playlist_manager.c:255
+msgid "Playlist Manager"
+msgstr "Editor de Lista de Reprodução"
+
+#: src/audacious/ui_playlist_manager.c:294
+msgid "Entries"
+msgstr "Entradas"
+
+#: src/audacious/ui_playlist_manager.c:306
+msgid "_Rename"
+msgstr "_Renomear"
+
+#: src/audacious/ui_jumptotrack.c:141
+msgid "Un_queue"
+msgstr "_Desinfileirar"
+
+#: src/audacious/ui_jumptotrack.c:143
+#: src/audacious/ui_jumptotrack.c:606
+msgid "_Queue"
+msgstr "_Enfileirar"
+
+#: src/audacious/ui_jumptotrack.c:521
+msgid "Jump to Track"
+msgstr "Ir para o Arquivo"
+
+#: src/audacious/ui_jumptotrack.c:562
+msgid "Filter: "
+msgstr "Filtro:"
+
+#: src/audacious/ui_jumptotrack.c:563
+msgid "_Filter:"
+msgstr "_Filtro:"
+
+#: src/audacious/ui_jumptotrack.c:597
+msgid "Close on Jump"
+msgstr "Fechar janela ao abrir"
+
+#: src/audacious/playback.c:223
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+"<b><big>Não há nenhum plugin de saída selecionado.</big></b>\n"
+"Você não selecionou nenhum plugin de saída..."
+
+#: src/audacious/titlestring.c:379
+msgid "Performer/Artist"
+msgstr "Intérprete/Artista"
+
+#: src/audacious/titlestring.c:382
+msgid "File name"
+msgstr "Nome do arquivo"
+
+#: src/audacious/titlestring.c:383
+msgid "File path"
+msgstr "Caminho do arquivo"
+
+#: src/audacious/titlestring.c:384
+msgid "File extension"
+msgstr "Extenção do arquivo"
+
+#: src/audacious/titlestring.c:385
+msgid "Track name"
+msgstr "Nome do arquivo"
+
+#: src/audacious/titlestring.c:386
+msgid "Track number"
+msgstr "Número do arquivo"
+
+#: src/audacious/titlestring.c:449
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Exibir «...» somente se aparecer o elemento %n"
 
 #: src/audacious/glade/fileinfo.glade:8
-#, fuzzy
 msgid "Track Information"
-msgstr "Ganho da faixa:"
+msgstr "Informações do arquivo"
 
 #: src/audacious/glade/fileinfo.glade:81
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>Mídia</b></span>"
+msgstr "<span size=\"small\">Título</span>"
 
 #: src/audacious/glade/fileinfo.glade:139
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>Saída</b></span>"
+msgstr "<span size=\"medium\"><b>Artista</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:197
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>Saída</b></span>"
+msgstr "<span size=\"medium\"><b>Álbum</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:255
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>Geral</b></span>"
+msgstr "<span size=\"medium\"><b>Comentário</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:313
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>Geral</b></span>"
+msgstr "<span size=\"medium\"><b>Gênero</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:392
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Mídia</b></span>"
+msgstr "<span size=\"medium\"><b>Ano</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:441
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Geral</b></span>"
+msgstr "<span size=\"medium\"><b>Número do Arquivo</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:499
-#, fuzzy
 msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"medium\"><b>Local</b></span>"
 
 #: src/audacious/glade/prefswin.glade:8
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "Preferências do BMP"
+msgstr "Preferências do Audacious"
 
 #: src/audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "Decodificador"
+msgstr "_Lista de decodificadores:"
 
 #: src/audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Geral</b></span>"
+msgstr "<span size=\"medium\"><b>Decodificadores</b></span>"
 
 #: src/audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
-msgstr "_Lista de plugins gerais:"
+msgstr "Lista de plugins _gerais:"
 
 #: src/audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
@@ -93,7 +1676,7 @@ msgstr "<span size=\"medium\"><b>Geral</b></span>"
 
 #: src/audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
-msgstr "_Lista de plugins de visualização:"
+msgstr "Lista de _plugins de visualização:"
 
 #: src/audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
@@ -101,25 +1684,19 @@ msgstr "<b>Visualização</b>"
 
 #: src/audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
-msgstr "_Lista de plugins de efeitos:"
+msgstr "Lista de plugins de  _efeitos:"
 
 #: src/audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
 msgstr "<b>Efeitos</b>"
 
-#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
-#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
-msgid "Plugins"
-msgstr "Plugins"
-
 #: src/audacious/glade/prefswin.glade:746
 msgid "<b>_Skin</b>"
-msgstr "<b>_Skin</b>"
+msgstr "<b>_Skins</b>"
 
 #: src/audacious/glade/prefswin.glade:799
-#, fuzzy
 msgid "Refresh skin list"
-msgstr "/Taxa de atualização"
+msgstr "Atualizar lista de skins"
 
 #: src/audacious/glade/prefswin.glade:893
 msgid "<b>_Fonts</b>"
@@ -127,102 +1704,84 @@ msgstr "<b>_Fontes</b>"
 
 #: src/audacious/glade/prefswin.glade:948
 msgid "_Player:"
-msgstr "_Tocador:"
+msgstr "_Reprodutor:"
 
 #: src/audacious/glade/prefswin.glade:991
 msgid "_Playlist:"
-msgstr "_Lista de reprodução:"
+msgstr "_Lista de Reprodução:"
 
 #: src/audacious/glade/prefswin.glade:1023
 msgid "Select main player window font:"
-msgstr "Selecione a fonte da janela principal:"
+msgstr "Selecione a fonte para a janela principal:"
 
 #: src/audacious/glade/prefswin.glade:1045
-#, fuzzy
 msgid "Select playlist font:"
-msgstr "Selecione a fonte da janela principal:"
+msgstr "Selecionar fonte da lista de reprodução:"
 
 #: src/audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
+msgid "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."
+msgstr "Utilizar fontes Bitmap se estiver disponível. As fontes Bitmap não suportam códigos Unicode."
 
 #: src/audacious/glade/prefswin.glade:1093
-#, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "Estéreo (se disponível)"
+msgstr "Utilizar fontes Bitmap se estiver disponível"
 
 #: src/audacious/glade/prefswin.glade:1127
 msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_Outras configurações</b>"
+msgstr "<b>_Vários</b>"
 
 #: src/audacious/glade/prefswin.glade:1175
 msgid "Show track numbers in playlist"
-msgstr "Mostrar o número das faixas na lista"
+msgstr "Mostrar números dos arquivos na lista de reprodução"
 
 #: src/audacious/glade/prefswin.glade:1210
-#, fuzzy
 msgid "Show separators in playlist"
-msgstr "Mostrar o número das faixas na lista"
+msgstr "Mostrar separadores na lista de reprodução"
 
 #: src/audacious/glade/prefswin.glade:1245
 msgid "Use custom cursors"
-msgstr "Usar cursores próprios"
+msgstr "Utilizar cursores personalizados"
 
 #: src/audacious/glade/prefswin.glade:1279
 #: src/audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
+msgstr "Ativa a exibição de decoração de janelas do gerenciador de janelas."
 
 #: src/audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
-msgstr ""
+msgstr "Mostrar decoração de janelas do gerenciador de janelas"
 
 #: src/audacious/glade/prefswin.glade:1289
 msgid "Show window manager decorations"
-msgstr ""
+msgstr "Mostrar decoração de janelas do gerenciador de janelas"
 
 #: src/audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
+msgid "This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."
+msgstr "Isto ativa estilo XMMS/GTK1 nas caixas de diálogos dos arquivos. Este seletor do Audacious é mais rápido que o seletor GTK2 padrão (mas também mais feio e difícil para o usuário comum)."
 
 #: src/audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1363 src/audacious/ui_preferences.c:110
-msgid "Appearance"
-msgstr "Aparência"
+msgstr "Utilizar estilo XMMS para janela de abertura de arquivos"
 
 #: src/audacious/glade/prefswin.glade:1410
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Roda do mouse</b>"
 
 #: src/audacious/glade/prefswin.glade:1458
-#, fuzzy
 msgid "Changes volume by"
-msgstr "A roda do mouse muda o volume em"
+msgstr "Mudar volume em"
 
 #: src/audacious/glade/prefswin.glade:1486
 msgid "percent"
-msgstr "percentagem"
+msgstr "porcento"
 
 #: src/audacious/glade/prefswin.glade:1514
-#, fuzzy
 msgid "Scrolls playlist by"
-msgstr "O mouse rola a lista por"
+msgstr "Rolar lista de reprodução por"
 
 #: src/audacious/glade/prefswin.glade:1567
 msgid "lines"
 msgstr "linhas"
-
-#: src/audacious/glade/prefswin.glade:1642 src/audacious/ui_preferences.c:114
-msgid "Mouse"
-msgstr "Mouse"
 
 #: src/audacious/glade/prefswin.glade:1689
 msgid "<b>Filename</b>"
@@ -230,7 +1789,7 @@ msgstr "<b>Nome do arquivo</b>"
 
 #: src/audacious/glade/prefswin.glade:1729
 msgid "Convert underscores to blanks"
-msgstr "Converter o caractere sublinhado em espaço"
+msgstr "Converter _  em espaços em branco"
 
 #: src/audacious/glade/prefswin.glade:1764
 msgid "Convert %20 to blanks"
@@ -238,72 +1797,63 @@ msgstr "Converter %20 em espaços"
 
 #: src/audacious/glade/prefswin.glade:1799
 msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
+msgstr "Converter '\\' em '/'"
 
 #: src/audacious/glade/prefswin.glade:1833
 msgid "<b>Metadata</b>"
-msgstr "<b>Metadados</b>"
+msgstr "<b>TAGs</b>"
 
 #: src/audacious/glade/prefswin.glade:1872
 msgid "Load metadata (tag information) from music files."
-msgstr "Carregar metadados (etiquetas de informação) dos arquivos de música"
+msgstr "Carregar informações de TAG dos arquivos."
 
 #: src/audacious/glade/prefswin.glade:1874
 msgid "Load metadata from playlists and files"
-msgstr "Carregar metadados de listas e arquivos"
+msgstr "Carregar TAGs das listas de reprodução e dos arquivos"
 
 #: src/audacious/glade/prefswin.glade:1912
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr "Carregar metadados ao adicionar o arquivo à lista ou ao abrí-lo"
+msgstr "Carregar TAGs ao adicionar arquivo à lista de reprodução ou abrí-lo"
 
 #: src/audacious/glade/prefswin.glade:1914
 msgid "On load"
-msgstr "No carregamento"
+msgstr "Ao carregar"
 
 #: src/audacious/glade/prefswin.glade:1934
-#, fuzzy
 msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Carregar metadados ao adicionar o arquivo à lista ou ao abrí-lo"
+msgstr "Carregar TAGs quando exibir arquivo na lista de reprodução"
 
 #: src/audacious/glade/prefswin.glade:1936
 msgid "On display"
-msgstr "Ao mostrar"
+msgstr "Ao exibir"
 
 #: src/audacious/glade/prefswin.glade:1966
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Códigos de caracteres de arquivos:"
 
 #: src/audacious/glade/prefswin.glade:1994
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
+msgid "List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr "Lista de códigos de caracteres usada para a conversão de TAGs dos arquivos. Caso o detector automático seja desativado ou falhe, os códigos serão tratados como informações codificadas de TAG, e assim se tentará a conversão dos cógidos para UTF-8."
 
 #: src/audacious/glade/prefswin.glade:2035
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Detector automático de caracteres codificados para:"
 
 #: src/audacious/glade/prefswin.glade:2091
-#, fuzzy
 msgid "<b>File Dialog</b>"
-msgstr "<b>Nome do arquivo</b>"
+msgstr "<b>Caixa de Diálogo do Arquivo</b>"
 
 #: src/audacious/glade/prefswin.glade:2130
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
+msgid "Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."
+msgstr "Sempre atualizar a caixa de diálogo do arquivo (isto tornará a abertura da caixa de diálogo mais lenta em diretórios grandes)."
 
 #: src/audacious/glade/prefswin.glade:2132
 msgid "Always refresh directory when opening file dialog"
-msgstr ""
+msgstr "Sempre atualizar o diretório quando abrir caixa de diálogo do arquivo"
 
 #: src/audacious/glade/prefswin.glade:2166
-#, fuzzy
 msgid "<b>Song Display</b>"
-msgstr "<b>Exibição de músicas</b>"
+msgstr "<b>Exibição do Arquivo</b>"
 
 #: src/audacious/glade/prefswin.glade:2214
 msgid "Title format:"
@@ -311,10 +1861,9 @@ msgstr "Formato do título:"
 
 #: src/audacious/glade/prefswin.glade:2242
 msgid "Custom string:"
-msgstr "Personalizar a descrição:"
+msgstr "Campo personalizado:"
 
 #: src/audacious/glade/prefswin.glade:2293
-#, fuzzy
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -327,205 +1876,171 @@ msgstr ""
 "TÍTULO\n"
 "ARTISTA - TÍTULO\n"
 "ARTISTA - ÁLBUM - TÍTULO\n"
+"ARTISTA - ÁLBUM - NÚMERO. TÍTULO\n"
+"ARTISTA [ ÁLBUM ] - NÚMERO. TÍTULO\n"
 "ÁLBUM - TÍTULO\n"
-"Personalizada"
+"Personalizado"
 
 #: src/audacious/glade/prefswin.glade:2315
 msgid "Show information about titlestring format"
-msgstr "Mostrar informações sobre o formato da string"
+msgstr "Mostrar informações sobre o formato do título"
 
 #: src/audacious/glade/prefswin.glade:2365
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "Configuração do Plugin de áudio MPEG"
+msgstr "<b>Informações Popup</b>"
 
 #: src/audacious/glade/prefswin.glade:2416
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
+msgid "Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."
+msgstr "Ativa a exibição de informações de arquivos da lista de reprodução em janela popup. A janela mostra o título, número, álbum, gênero, ano, duração e arte do arquivo selecionado."
 
 #: src/audacious/glade/prefswin.glade:2418
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Exibir informações popup para os arquivos da lista de reprodução"
 
 #: src/audacious/glade/prefswin.glade:2445
 msgid "Edit settings for popup information"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
-#: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
-msgid "Playlist"
-msgstr "Lista de reprodução"
+msgstr "Editar valores para informações popup"
 
 #: src/audacious/glade/prefswin.glade:2553
 msgid "<b>Presets</b>"
-msgstr "<b>Presets</b>"
+msgstr "<b>Pré-regulagem</b>"
 
 #: src/audacious/glade/prefswin.glade:2653
 msgid "Directory preset file:"
-msgstr "Diretório de arquivos preset:"
+msgstr "Diretório de arquivos de pré-regulagem:"
 
 #: src/audacious/glade/prefswin.glade:2681
 msgid "File preset extension:"
-msgstr "Extensão de arquivos preset:"
+msgstr "Extenção de arquivos de pré-regulagem:"
 
 #: src/audacious/glade/prefswin.glade:2729
 msgid "Available _Presets:"
-msgstr "Presets _Disponíveis:"
-
-#: src/audacious/glade/prefswin.glade:2862 src/audacious/ui_preferences.c:113
-msgid "Equalizer"
-msgstr "Equalizador"
+msgstr "_Pré-regulagens disponíveis:"
 
 #: src/audacious/glade/prefswin.glade:2909
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "Configuração do Plugin de áudio MPEG"
+msgstr "<b>Configuração do Proxy</b>"
 
 #: src/audacious/glade/prefswin.glade:2967
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Ativar o uso do proxy"
 
 #: src/audacious/glade/prefswin.glade:2998
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Endereço do proxy:"
 
 #: src/audacious/glade/prefswin.glade:3026
-#, fuzzy
 msgid "Proxy port:"
-msgstr "Proxy:"
+msgstr "Porta do proxy:"
 
 #: src/audacious/glade/prefswin.glade:3120
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Usar autenticação"
+msgstr "Usar autenticação do proxy"
 
 #: src/audacious/glade/prefswin.glade:3151
-#, fuzzy
 msgid "Proxy username:"
-msgstr "Nome do usuário:"
+msgstr "Nome de usuário do proxy:"
 
 #: src/audacious/glade/prefswin.glade:3179
-#, fuzzy
 msgid "Proxy password:"
-msgstr "Senha:"
+msgstr "Senha de proxy:"
 
 #: src/audacious/glade/prefswin.glade:3295
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
+msgid "<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"
+msgstr "<span size=\"small\">Em caso de mudança desses campos, o Audacious deve ser reiniciado</span>"
 
 #: src/audacious/glade/prefswin.glade:3419
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Presets</b>"
+msgstr "<b>Sistema de Áudio</b>"
 
 #: src/audacious/glade/prefswin.glade:3473
-#, fuzzy
 msgid "Current output plugin:"
-msgstr "_Plugin de saída atual:"
+msgstr "Saída de plugin atual:"
 
 #: src/audacious/glade/prefswin.glade:3541
 msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
+"<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\n"
 "Increase this value if you are experiencing audio skipping.\n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
+"Please note however, that high values will result in Audacious performing poorly.</span>"
 msgstr ""
+"<span size=\"small\">Esta é a quantidade de tempo de armazenamento de áudio, em milisegundos.\n"
+"Valores muito altos podem resultar em baixa performace do Audacious.</span>"
 
 #: src/audacious/glade/prefswin.glade:3571
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Tamanho do buffer (kb):"
+msgstr "Tamanho de armazenamento:"
 
 #: src/audacious/glade/prefswin.glade:3695
-#, fuzzy
 msgid "Output Plugin Preferences"
-msgstr "Plugin de saída OSS"
+msgstr "Preferências dos Plugins de Saída"
 
 #: src/audacious/glade/prefswin.glade:3770
-#, fuzzy
 msgid "Output Plugin Information"
-msgstr "Configuração do Plugin de saída ESD"
+msgstr "Informações de Plugin de Saída"
 
 #: src/audacious/glade/prefswin.glade:3822
-#, fuzzy
 msgid "<b>Format Detection</b>"
-msgstr "Detecção automática"
+msgstr "<b>Detecção de Formato</b>"
 
 #: src/audacious/glade/prefswin.glade:3861
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
+msgid "When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."
+msgstr "Quando ativado, o Audacious detectará os formatos durante a busca. Isto pode resultar em uma lista de reprodução desorganizada, porém pode executar mais rapidamente a operação."
 
 #: src/audacious/glade/prefswin.glade:3863
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Detectar formatos de arquivo ao tentar reproduzir, em vez de imediatamente."
 
 #: src/audacious/glade/prefswin.glade:3897
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
+msgid "When checked, Audacious will detect file formats based by extension. This is slightly slower than detection on demand, but still provides a minimal level of format detection."
+msgstr "Quando ativado, o Audacious detectará os formatos durante a busca. Isto pode resultar em uma lista de reprodução desorganizada, porém pode executar mais rapidamente a operação."
 
 #: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats by extension."
-msgstr ""
+msgstr "Detectar formatos dos arquivos por extenção"
 
 #: src/audacious/glade/prefswin.glade:3933
 msgid "<b>Playback</b>"
-msgstr "<b>Lista de reprodução</b>"
+msgstr "<b>Reprodução</b>"
 
 #: src/audacious/glade/prefswin.glade:3972
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
+msgid "When Audacious starts, automatically begin playing from the point where we stopped before."
+msgstr "Quando o Audacious iniciar, recomeçar a reproduzir o arquivo do ponto que paramos."
 
 #: src/audacious/glade/prefswin.glade:3974
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Continuar reprodução ao iniciar"
 
 #: src/audacious/glade/prefswin.glade:4008
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "Quando uma música terminar não avançar automaticamente para a próxima"
+msgstr "Quando acabar a reprodução de um arquivo, não tocar o próximo automaticamente."
 
 #: src/audacious/glade/prefswin.glade:4010
 msgid "Don't advance in the playlist"
-msgstr "Não avançar na lista"
+msgstr "Não avançar na lista de reprodução"
 
 #: src/audacious/glade/prefswin.glade:4045
 msgid "Pause between songs"
-msgstr "Pausa entre músicas"
+msgstr "Pausa entre os arquivos de"
 
 #: src/audacious/glade/prefswin.glade:4083
 msgid "Pause for"
-msgstr "Pausar por"
+msgstr "Pausa de"
 
 #: src/audacious/glade/prefswin.glade:4129
 msgid "seconds"
 msgstr "segundos"
 
 #: src/audacious/glade/prefswin.glade:4175
-#, fuzzy
 msgid "<b>Sampling Rate Converter</b>"
-msgstr "Taxa de amostragem:"
+msgstr "<b>Conversor de Taxa de Amostragem</b>"
 
 #: src/audacious/glade/prefswin.glade:4215
-#, fuzzy
 msgid "Enable Sampling Rate Converter"
-msgstr "Taxa de amostragem:"
+msgstr "Ativar Conversor de Taxa de Amostragem"
 
 #: src/audacious/glade/prefswin.glade:4264
-#, fuzzy
 msgid "Sampling Rate [Hz]:"
-msgstr "Taxa de amostragem:"
+msgstr "Taxa de Amostragem [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
 msgid ""
@@ -533,1913 +2048,142 @@ msgid ""
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
+"<span size=\"small\">Todos os streams serão convertidos em taxa de amostragem simples.\n"
+"Isto deve ser o máximo de taxa de amostragem suportado\n"
+"pela placa de som ou pelo plugin de saída.</span>"
 
 #: src/audacious/glade/prefswin.glade:4364
 msgid "Converter Type:"
+msgstr "Converter Caracteres:"
+
+#: src/audacious/glade/prefswin.glade:4392
+msgid ""
+"SRC_SINC_BEST_QUALITY\n"
+"SRC_SINC_MEDIUM_QUALITY\n"
+"SRC_SINC_FASTEST\n"
+"SRC_ZERO_ORDER_HOLD\n"
+"SRC_LINEAR"
 msgstr ""
+"SRC_SINC_QUALIDADE_MÁXIMA\n"
+"SRC_SINC_QUALIDADE_MÉDIA\n"
+"SRC_SINC_MUITO RÁPIDO\n"
+"SRC_ZERO_ORDER_HOLD\n"
+"SRC_LINEAR"
 
 #: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
 msgid "Reload Plugins"
-msgstr "/Recarregar skin"
+msgstr "Atualizar Plugins"
 
 #: src/audacious/glade/prefswin.glade:4654
-#, fuzzy
 msgid "Popup Information Settings"
-msgstr "Configuração do Plugin de áudio MPEG"
+msgstr "Configuração de informações de popup"
 
 #: src/audacious/glade/prefswin.glade:4678
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "Detecção automática"
+msgstr "<b>Recuperar imagem de capa</b>"
 
 #: src/audacious/glade/prefswin.glade:4703
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
+msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
+msgstr "Quando procura capa para o Álbum, o Audacious também procura palavras com o nome do arquivo. Você pode especificar estas palavras na lista abaixo, separadas por vírgulas."
 
 #: src/audacious/glade/prefswin.glade:4758
-#, fuzzy
 msgid "Include:"
-msgstr "Indie"
+msgstr "Incluir:"
 
 #: src/audacious/glade/prefswin.glade:4786
 msgid "Exclude:"
-msgstr ""
+msgstr "Excluir:"
 
 #: src/audacious/glade/prefswin.glade:4855
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Busca recursiva de capa"
 
 #: src/audacious/glade/prefswin.glade:4893
 msgid "Search depth: "
-msgstr ""
+msgstr "Profundidade de busca:"
 
 #: src/audacious/glade/prefswin.glade:4959
 msgid "Use per-file cover"
-msgstr ""
+msgstr "Utilizar capa por aquivo"
 
 #: src/audacious/glade/prefswin.glade:4979
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Outras configurações</b>"
+msgstr "<b>_Vários</b>"
 
 #: src/audacious/glade/prefswin.glade:5017
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "Mostrar Barra de Progresso para o arquivo atual"
 
 #: src/audacious/glade/prefswin.glade:5055
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "Atraso na janela popup do arquivo em:"
 
 #: src/audacious/glade/prefswin.glade:5149
 msgid "Color Adjustment"
-msgstr ""
+msgstr "Ajuste de Cor"
 
 #: src/audacious/glade/prefswin.glade:5172
-msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
-msgstr ""
+msgid "Audacious allows you to alter the color balance of the skinned UI. The sliders below will allow you to do this."
+msgstr "Audacious permite você alterar o balanço de cores dos skins. As barras abaixo permitem você configurar esta opção."
 
 #: src/audacious/glade/prefswin.glade:5268
 msgid "Red"
-msgstr ""
+msgstr "Vermelho"
 
 #: src/audacious/glade/prefswin.glade:5296
-#, fuzzy
 msgid "Green"
-msgstr "Gênero:"
+msgstr "Verde"
 
 #: src/audacious/glade/prefswin.glade:5324
-#, fuzzy
 msgid "Blue"
-msgstr "Blues"
+msgstr "Azul"
 
-#: src/audacious/input.c:718
-#, fuzzy, c-format
-msgid "audacious: %s"
-msgstr "Plugin CD de áudio"
-
-#: src/audacious/input.c:734
-msgid "Filename:"
-msgstr "Nome do arquivo:"
-
-#: src/audacious/input.c:753
-msgid "No input plugin recognized this file"
-msgstr "Nenhum plugin de entrada reconheceu este arquivo"
-
-#: src/audacious/input.c:755
-#, c-format
-msgid "Input plugin: %s"
-msgstr "Plugin de entrada: %s"
-
-#: src/audacious/logger.c:124
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr "Não foi possível criar o arquivo de log (%s)!\n"
-
-#: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:502
-#: src/audacious/ui_main.c:2514
-msgid "Audacious"
-msgstr ""
-
-#: src/audacious/main.c:475
-#, fuzzy, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "Não foi possível criar o diretório (%s): %s"
-
-#: src/audacious/main.c:891
-#, fuzzy
-msgid "Select which Audacious session ID to use"
-msgstr "Selecione uma sessão BMP/XMMS (Padrão: 0)"
-
-#: src/audacious/main.c:892
-msgid "Skip backwards in playlist"
-msgstr "Avançar em sentido inverso na lista de reprodução"
-
-#: src/audacious/main.c:893
-msgid "Start playing current playlist"
-msgstr "Começar a tocar a lista de reprodução atual"
-
-#: src/audacious/main.c:894
-msgid "Pause current song"
-msgstr "Pausar a reprodução"
-
-#: src/audacious/main.c:895
-msgid "Stop current song"
-msgstr "Parar a reprodução"
-
-#: src/audacious/main.c:896
-msgid "Pause if playing, play otherwise"
-msgstr "Pausar ou tocar"
-
-#: src/audacious/main.c:897
-msgid "Skip forward in playlist"
-msgstr "Avançar na lista de reprodução"
-
-#: src/audacious/main.c:898
-#, fuzzy
-msgid "Display Jump to File dialog"
-msgstr "/Ir para o arquivo"
-
-#: src/audacious/main.c:899
-msgid "Don't clear the playlist"
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/main.c:900
-#, fuzzy
-msgid "Add new files to a temporary playlist"
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/main.c:901
-#, fuzzy
-msgid "Display the main window"
-msgstr "Mostrar a janela principal"
-
-#: src/audacious/main.c:902
-msgid "Display all open Audacious windows"
-msgstr ""
-
-#: src/audacious/main.c:903
-msgid "Enable headless operation"
-msgstr ""
-
-#: src/audacious/main.c:904
-msgid "Print all errors and warnings to stdout"
-msgstr ""
-
-#: src/audacious/main.c:905
-msgid "Show version and builtin features"
-msgstr ""
-
-#: src/audacious/main.c:906
-msgid "FILE..."
-msgstr ""
-
-#: src/audacious/main.c:1065
-#, c-format
-msgid ""
-"<b><big>Unable to load skin.</big></b>\n"
-"\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
-msgstr ""
-"<b><big>Não foi possível carregar a skin.</big></b>\n"
-"\n"
-"Verifique se a skin em '%s'·é compatível e se a skin padrão está instalada "
-"em '%s'\n"
-
-#: src/audacious/main.c:1123
-msgid ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-msgstr ""
-"Desculpe, sua plataforma não suporta threads\n"
-"\n"
-"Se você usa um sistema Linux baseado em libc5 e instalou a Glib e GTK+ \n"
-"antes de instalar LinuxThreads você precisa recompilar a Glib e o GTK+.\n"
-
-#: src/audacious/main.c:1154
-msgid "- play multimedia files"
-msgstr ""
-
-#: src/audacious/main.c:1161
-#, c-format
-msgid ""
-"%s: %s\n"
-"Try `%s --help' for more information.\n"
-msgstr ""
-
-#: src/audacious/main.c:1171
-#, fuzzy, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr "BMP: Incapaz de abrir display, saindo."
-
-#: src/audacious/playback.c:274
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
-msgstr ""
-
-#: src/audacious/signals.c:49
-msgid ""
-"\n"
-"Audacious has caught signal 11 (SIGSEGV).\n"
-"\n"
-"We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal "
-"circumstances.\n"
-"Your current configuration has been saved and should not be damaged.\n"
-"\n"
-"You can help improve the quality of Audacious by filing a bug at http://bugs-"
-"meta.atheme.org\n"
-"Please include the entire text of this message and a description of what you "
-"were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug "
-"report:\n"
-"\n"
-msgstr ""
-
-#: src/audacious/signals.c:80
-msgid ""
-"\n"
-"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
-"product.\n"
-msgstr ""
-
-#: src/audacious/signals.c:266
-msgid ""
-"Your signaling implementation is broken.\n"
-"Expect unusable crash reports.\n"
-msgstr ""
-
-#: src/audacious/strings.c:170
-msgid "  (invalid UTF-8)"
-msgstr "  (caracteres UTF-8 inválidos)"
-
-#: src/audacious/ui_about.c:46
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"Um reprodutor de mídia baseado no XMMS\n"
-"\n"
-"Copyright (C) 2003-2004 BMP Development Team\n"
-
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
-#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
-#, fuzzy
-msgid "About Audacious"
-msgstr "Sobre o Plugin de áudio MPEG"
-
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
-msgid "Credits"
-msgstr "Créditos"
-
-#: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"The future of UNIX multimedia.\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team\n"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"Um reprodutor de mídia baseado no XMMS\n"
-"\n"
-"Copyright (C) 2003-2004 BMP Development Team\n"
-
-#: src/audacious/ui_credits.c:53
-#, fuzzy
-msgid "Audacious core developers:"
-msgstr "Preferências do BMP"
-
-#: src/audacious/ui_credits.c:71
-msgid "Graphics:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:76
-msgid "Default skin:"
-msgstr "Skin padrão:"
-
-#: src/audacious/ui_credits.c:81
-msgid "Plugin development:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:96
-msgid "Patch authors:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:116
-#, fuzzy
-msgid "0.1.x developers:"
-msgstr "Desenvolvedores:"
-
-#: src/audacious/ui_credits.c:122
-#, fuzzy
-msgid "BMP Developers:"
-msgstr "Desenvolvedores:"
-
-#: src/audacious/ui_credits.c:154
-msgid "Brazilian Portuguese:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:157
-msgid "Breton:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:160
-#, fuzzy
-msgid "Bulgarian:"
-msgstr "Utilização de buffer:"
-
-#: src/audacious/ui_credits.c:163
-#, fuzzy
-msgid "Catalan:"
-msgstr "Lituano:"
-
-#: src/audacious/ui_credits.c:166
-#, fuzzy
-msgid "Croatian:"
-msgstr "Local"
-
-#: src/audacious/ui_credits.c:169
-#, fuzzy
-msgid "Czech:"
-msgstr "Francês:"
-
-#: src/audacious/ui_credits.c:172
-#, fuzzy
-msgid "Dutch:"
-msgstr "Dueto"
-
-#: src/audacious/ui_credits.c:176
-#, fuzzy
-msgid "Finnish:"
-msgstr "Espanhol:"
-
-#: src/audacious/ui_credits.c:179
-msgid "French:"
-msgstr "Francês:"
-
-#: src/audacious/ui_credits.c:182
-msgid "German:"
-msgstr "Alemão:"
-
-#: src/audacious/ui_credits.c:187
-#, fuzzy
-msgid "Georgian:"
-msgstr "Alemão:"
-
-#: src/audacious/ui_credits.c:190
-#, fuzzy
-msgid "Greek:"
-msgstr "Gênero:"
-
-#: src/audacious/ui_credits.c:195
-msgid "Hindi:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:198
-#, fuzzy
-msgid "Hungarian:"
-msgstr "Utilização de buffer:"
-
-#: src/audacious/ui_credits.c:201
-#, fuzzy
-msgid "Italian:"
-msgstr "Lituano:"
-
-#: src/audacious/ui_credits.c:205
-msgid "Japanese:"
-msgstr "Japonês:"
-
-#: src/audacious/ui_credits.c:208
-msgid "Korean:"
-msgstr "Coreano:"
-
-#: src/audacious/ui_credits.c:211
-msgid "Lithuanian:"
-msgstr "Lituano:"
-
-#: src/audacious/ui_credits.c:214
-#, fuzzy
-msgid "Macedonian:"
-msgstr "Alemão:"
-
-#: src/audacious/ui_credits.c:217
-msgid "Polish:"
-msgstr "Polonês:"
-
-#: src/audacious/ui_credits.c:220
-#, fuzzy
-msgid "Romanian:"
-msgstr "Lituano:"
-
-#: src/audacious/ui_credits.c:224
-msgid "Russian:"
-msgstr "Russo:"
-
-#: src/audacious/ui_credits.c:227
-msgid "Serbian (Latin):"
-msgstr ""
-
-#: src/audacious/ui_credits.c:230
-msgid "Serbian (Cyrillic):"
-msgstr ""
-
-#: src/audacious/ui_credits.c:233
-msgid "Simplified Chinese:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:236
-msgid "Slovak:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:239
-msgid "Spanish:"
-msgstr "Espanhol:"
-
-#: src/audacious/ui_credits.c:242
-msgid "Swedish:"
-msgstr "Sueco:"
-
-#: src/audacious/ui_credits.c:245
-#, fuzzy
-msgid "Traditional Chinese:"
-msgstr "Com ajuda adicional de:"
-
-#: src/audacious/ui_credits.c:248
-msgid "Turkish:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:252
-#, fuzzy
-msgid "Ukrainian:"
-msgstr "Organização:"
-
-#: src/audacious/ui_credits.c:255
-msgid "Welsh:"
-msgstr "Galês:"
-
-#: src/audacious/ui_credits.c:401
-msgid "Translators"
-msgstr "Tradutores"
-
-#: src/audacious/ui_equalizer.c:535
-#, fuzzy
-msgid "Audacious Equalizer"
-msgstr "Equalizador"
-
-#: src/audacious/ui_equalizer.c:1169
-msgid "Presets"
-msgstr "Presets"
-
-#: src/audacious/ui_fileinfo.c:158
-#, fuzzy
-msgid "Track Information Window"
-msgstr "Ganho da faixa:"
-
-#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
-#: src/audacious/ui_preferences.c:124
-msgid "Title"
-msgstr "Título"
-
-#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:122
-msgid "Artist"
-msgstr "Artista"
-
-#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:123
-msgid "Album"
-msgstr "Álbum"
-
-#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:126
-msgid "Genre"
-msgstr "Gênero"
-
-#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:130
-msgid "Year"
-msgstr "Ano"
-
-#: src/audacious/ui_fileinfopopup.c:267
-#, fuzzy
-msgid "Track Number"
-msgstr "Número da faixa"
-
-#: src/audacious/ui_fileinfopopup.c:271
-#, fuzzy
-msgid "Track Length"
-msgstr "Duração da faixa:"
-
-#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:127
-#: src/audacious/ui_preferences.c:426 src/audacious/ui_preferences.c:514
-#: src/audacious/ui_preferences.c:603 src/audacious/ui_preferences.c:699
-msgid "Filename"
-msgstr "Nome do arquivo"
-
-#: src/audacious/ui_fileopener.c:134
-#, fuzzy
-msgid "Open Files"
-msgstr "/Remover arquivos"
-
-#: src/audacious/ui_fileopener.c:134
-msgid "Add Files"
-msgstr "Adicionar arquivos"
-
-#: src/audacious/ui_fileopener.c:136
-#, fuzzy
-msgid "Close dialog on Open"
-msgstr "/Fechar"
-
-#: src/audacious/ui_fileopener.c:136
-msgid "Close dialog on Add"
-msgstr ""
-
-#: src/audacious/ui_fileopener.c:363
-#, fuzzy
-msgid "Play files"
-msgstr "Tocar arquivos"
-
-#: src/audacious/ui_fileopener.c:365
-#, fuzzy
-msgid "Load files"
-msgstr "/Carregar/Do arquivo"
-
-#: src/audacious/ui_jumptotrack.c:140
-#, fuzzy
-msgid "Un_queue"
-msgstr "Fila"
-
-#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:605
-#, fuzzy
-msgid "_Queue"
-msgstr "Fila"
-
-#: src/audacious/ui_jumptotrack.c:520
-msgid "Jump to Track"
-msgstr "Ir para a faixa"
-
-#: src/audacious/ui_jumptotrack.c:561
-msgid "Filter: "
-msgstr "Filtro:"
-
-#: src/audacious/ui_jumptotrack.c:562
-#, fuzzy
-msgid "_Filter:"
-msgstr "Filtro:"
-
-#: src/audacious/ui_jumptotrack.c:596
-#, fuzzy
-msgid "Close on Jump"
-msgstr "/Fechar"
-
-#: src/audacious/ui_lastfm.c:65
-msgid "Not last.fm stream"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:90
-#, fuzzy, c-format
-msgid "<b>Artist:</b> %s"
-msgstr "Artista"
-
-#: src/audacious/ui_lastfm.c:98
-#, fuzzy, c-format
-msgid "<b>Title:</b> %s"
-msgstr "<b>Nome do arquivo</b>"
-
-#: src/audacious/ui_lastfm.c:102
-#, fuzzy, c-format
-msgid "<b>Album:</b> %s"
-msgstr "<b>Nome do arquivo</b>"
-
-#: src/audacious/ui_lastfm.c:117
-msgid ""
-"<b><big>Couldn't find your lastfm login data.</big></b>\n"
-"\n"
-"Check if your Scrobbler's plugin login settings are configured properly.\n"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:238
-#, fuzzy
-msgid "Audacious last.fm radio tuner"
-msgstr "/Mostrar Lista de reprodução"
-
-#: src/audacious/ui_lastfm.c:239
-#, fuzzy
-msgid "Station:"
-msgstr "Lituano:"
-
-#: src/audacious/ui_lastfm.c:245
-#, fuzzy
-msgid "<b>Artist:</b>"
-msgstr "Artista"
-
-#: src/audacious/ui_lastfm.c:249
-#, fuzzy
-msgid "<b>Title:</b>"
-msgstr "<b>Nome do arquivo</b>"
-
-#: src/audacious/ui_lastfm.c:253
-#, fuzzy
-msgid "<b>Album:</b>"
-msgstr "<b>Nome do arquivo</b>"
-
-#: src/audacious/ui_lastfm.c:257
-msgid "Love"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:258
-msgid "Ban"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:259
-msgid "Skip"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:260
-msgid "Tune in"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:262
-msgid "Neighbours' radio"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:263
-msgid "Personal radio"
-msgstr ""
-
-#: src/audacious/ui_lastfm.c:337
-msgid ""
-"<b><big>The lastfm radio plugin could not be found.</big></b>\n"
-"\n"
-"Check if the AudioScrobbler plugin was compiled in\n"
-msgstr ""
-
-#: src/audacious/ui_main.c:500
-#, c-format
-msgid "%s - Audacious"
-msgstr ""
-
-#: src/audacious/ui_main.c:755
-msgid "VBR"
-msgstr "VBR"
-
-#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
-#, fuzzy
-msgid "stereo"
-msgstr "Estéreo"
-
-#: src/audacious/ui_main.c:772 src/audacious/ui_main.c:776
-#, fuzzy
-msgid "mono"
-msgstr "Monofônico"
-
-#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:418
-#: src/audacious/ui_manager.c:419
-msgid "Jump to Time"
-msgstr "Ir para tempo"
-
-#: src/audacious/ui_main.c:1053
-msgid "minutes:seconds"
-msgstr "minutos:segundos"
-
-#: src/audacious/ui_main.c:1063
-msgid "Track length:"
-msgstr "Duração da faixa:"
-
-#: src/audacious/ui_main.c:1200
-msgid "Audacious - visibility warning"
-msgstr ""
-
-#: src/audacious/ui_main.c:1202
-#, fuzzy
-msgid "Show main player window"
-msgstr "Selecione a fonte da janela principal:"
-
-#: src/audacious/ui_main.c:1203
-#, fuzzy
-msgid "Ignore"
-msgstr "Nenhum"
-
-#: src/audacious/ui_main.c:1207
-msgid ""
-"Audacious has been started with all of its windows hidden.\n"
-"You may want to show the player window again to control Audacious; "
-"otherwise, you'll have to control it remotely via audtool or enabled plugins "
-"(such as the statusicon plugin)."
-msgstr ""
-
-#: src/audacious/ui_main.c:1213
-msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
-
-#: src/audacious/ui_main.c:1231
-msgid "Enter location to play:"
-msgstr ""
-
-#: src/audacious/ui_main.c:1465
-#, fuzzy, c-format
-msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr "PROCURAR POR: %d:%-2.2d/%d:%-2.2d (%d%%)"
-
-#: src/audacious/ui_main.c:1497
-#, c-format
-msgid "Volume: %d%%"
-msgstr ""
-
-#: src/audacious/ui_main.c:1528
-#, c-format
-msgid "Balance: %d%% left"
-msgstr ""
-
-#: src/audacious/ui_main.c:1532
-msgid "Balance: center"
-msgstr ""
-
-#: src/audacious/ui_main.c:1536
-#, c-format
-msgid "Balance: %d%% right"
-msgstr ""
-
-#: src/audacious/ui_main.c:1879
-#, fuzzy
-msgid "Options Menu"
-msgstr "Opções"
-
-#: src/audacious/ui_main.c:1883
-#, fuzzy
-msgid "Disable 'Always On Top'"
-msgstr "/Sempre no topo"
-
-#: src/audacious/ui_main.c:1885
-#, fuzzy
-msgid "Enable 'Always On Top'"
-msgstr "/Sempre no topo"
-
-#: src/audacious/ui_main.c:1888
-#, fuzzy
-msgid "File Info Box"
-msgstr "Informações do Arquivo"
-
-#: src/audacious/ui_main.c:1892
-#, fuzzy
-msgid "Disable 'Doublesize'"
-msgstr "/Tamanho duplo"
-
-#: src/audacious/ui_main.c:1894
-#, fuzzy
-msgid "Enable 'Doublesize'"
-msgstr "/Tamanho duplo"
-
-#: src/audacious/ui_main.c:1897
-#, fuzzy
-msgid "Visualization Menu"
-msgstr "/Modo de visualização"
-
-#: src/audacious/ui_main.c:1945
-msgid ""
-"<b><big>Couldn't open audio.</big></b>\n"
-"\n"
-"Please check that:\n"
-"1. You have the correct output plugin selected.\n"
-"2. No other programs is blocking the soundcard.\n"
-"3. Your soundcard is configured properly.\n"
-msgstr ""
-"<b><big>Não foi possível abrir a saída de áudio</big></b>\n"
-"\n"
-"Por favor verifique:\n"
-"1. Se você selecionou o plugin de saída correto.\n"
-"2. Se não há outro programa bloqueando a placa de som.\n"
-"3. Se a sua placa de som está configurada corretamente.\n"
-
-#: src/audacious/ui_main.c:2025
-#, c-format
-msgid "VOLUME: %d%%"
-msgstr "VOLUME: %d%%"
-
-#: src/audacious/ui_main.c:2028
-#, c-format
-msgid "BALANCE: %d%% LEFT"
-msgstr "BALANÇO: %d%% ESQUERDA"
-
-#: src/audacious/ui_main.c:2031
-msgid "BALANCE: CENTER"
-msgstr "BALANÇO: CENTRO"
-
-#: src/audacious/ui_main.c:2033
-#, c-format
-msgid "BALANCE: %d%% RIGHT"
-msgstr "BALANÇO: %d%% DIREITA"
-
-#: src/audacious/ui_main.c:2496
-#, fuzzy
-msgid "Error in Audacious."
-msgstr "Sobre o Plugin de áudio MPEG"
-
-#: src/audacious/ui_manager.c:47 src/audacious/ui_manager.c:48
-#, fuzzy
-msgid "Autoscroll Songname"
-msgstr "/Autorolar o nome da música"
-
-#: src/audacious/ui_manager.c:50 src/audacious/ui_manager.c:51
-#, fuzzy
-msgid "Stop after Current Song"
-msgstr "Parar a reprodução"
-
-#: src/audacious/ui_manager.c:53 src/audacious/ui_manager.c:54
-#, fuzzy
-msgid "Peaks"
-msgstr "Pranks"
-
-#: src/audacious/ui_manager.c:56 src/audacious/ui_manager.c:57
-#, fuzzy
-msgid "Repeat"
-msgstr "/Repetir"
-
-#: src/audacious/ui_manager.c:59 src/audacious/ui_manager.c:60
-#, fuzzy
-msgid "Shuffle"
-msgstr "/Misturar"
-
-#: src/audacious/ui_manager.c:62 src/audacious/ui_manager.c:63
-#, fuzzy
-msgid "No Playlist Advance"
-msgstr "/Não avançar na lista de reprodução"
-
-#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
-#, fuzzy
-msgid "Show Player"
-msgstr "/Mostrar Lista de reprodução"
-
-#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
-#, fuzzy
-msgid "Show Playlist Editor"
-msgstr "/Mostrar Lista de reprodução"
-
-#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
-#, fuzzy
-msgid "Show Equalizer"
-msgstr "Equalizador"
-
-#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
-#, fuzzy
-msgid "Always on Top"
-msgstr "/Sempre no topo"
-
-#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
-msgid "Put on All Workspaces"
-msgstr ""
-
-#: src/audacious/ui_manager.c:80 src/audacious/ui_manager.c:81
-#, fuzzy
-msgid "Roll up Player"
-msgstr "Equalizador"
-
-#: src/audacious/ui_manager.c:83 src/audacious/ui_manager.c:84
-#, fuzzy
-msgid "Roll up Playlist Editor"
-msgstr "/Focar Lista de reprodução"
-
-#: src/audacious/ui_manager.c:86 src/audacious/ui_manager.c:87
-#, fuzzy
-msgid "Roll up Equalizer"
-msgstr "Equalizador"
-
-#: src/audacious/ui_manager.c:89 src/audacious/ui_manager.c:90
-#, fuzzy
-msgid "DoubleSize"
-msgstr "/Tamanho duplo"
-
-#: src/audacious/ui_manager.c:92 src/audacious/ui_manager.c:93
-#, fuzzy
-msgid "Easy Move"
-msgstr "/Movimento fácil"
-
-#: src/audacious/ui_manager.c:101
-#, fuzzy
-msgid "Analyzer"
-msgstr "/Modo Barras verticais"
-
-#: src/audacious/ui_manager.c:102
-#, fuzzy
-msgid "Scope"
-msgstr "/Modo Ondas"
-
-#: src/audacious/ui_manager.c:103
-#, fuzzy
-msgid "Voiceprint"
-msgstr "/Modo Barras verticais/Chamas"
-
-#: src/audacious/ui_manager.c:104
-msgid "Off"
-msgstr ""
-
-#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:125
-#: src/audacious/ui_manager.c:131
-#, fuzzy
-msgid "Normal"
-msgstr "Formato ID3:"
-
-#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
-#, fuzzy
-msgid "Fire"
-msgstr "Sátira"
-
-#: src/audacious/ui_manager.c:110
-#, fuzzy
-msgid "Vertical Lines"
-msgstr "/Modo Barras verticais/Linhas verticais"
-
-#: src/audacious/ui_manager.c:114
-#, fuzzy
-msgid "Lines"
-msgstr "linhas"
-
-#: src/audacious/ui_manager.c:115
-#, fuzzy
-msgid "Bars"
-msgstr "Bass"
-
-#: src/audacious/ui_manager.c:119
-#, fuzzy
-msgid "Dot Scope"
-msgstr "/Modo Ondas/Ondas em pontos"
-
-#: src/audacious/ui_manager.c:120
-#, fuzzy
-msgid "Line Scope"
-msgstr "/Modo Ondas/Ondas em linhas"
-
-#: src/audacious/ui_manager.c:121
-#, fuzzy
-msgid "Solid Scope"
-msgstr "/Modo Ondas/Ondas sólidas"
-
-#: src/audacious/ui_manager.c:127
-msgid "Ice"
-msgstr ""
-
-#: src/audacious/ui_manager.c:132
-#, fuzzy
-msgid "Smooth"
-msgstr "Monofônico"
-
-#: src/audacious/ui_manager.c:136
-#, fuzzy
-msgid "Full (~50 fps)"
-msgstr "/Taxa de atualização/Máxima (~50 fps)"
-
-#: src/audacious/ui_manager.c:137
-#, fuzzy
-msgid "Half (~25 fps)"
-msgstr "/Taxa de atualização/Metade (~25 fps)"
-
-#: src/audacious/ui_manager.c:138
-#, fuzzy
-msgid "Quarter (~13 fps)"
-msgstr "/Taxa de atualização/Um quarto (~13 fps)"
-
-#: src/audacious/ui_manager.c:139
-#, fuzzy
-msgid "Eighth (~6 fps)"
-msgstr "/Taxa de atualização/Um oitavo (~6 fps)"
-
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
-#, fuzzy
-msgid "Slowest"
-msgstr "Showtunes"
-
-#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
-#, fuzzy
-msgid "Slow"
-msgstr "Slow Jam"
-
-#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
-msgid "Medium"
-msgstr ""
-
-#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
-msgid "Fast"
-msgstr ""
-
-#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
-msgid "Fastest"
-msgstr ""
-
-#: src/audacious/ui_manager.c:159
-#, fuzzy
-msgid "Time Elapsed"
-msgstr "/Tempo decorrido"
-
-#: src/audacious/ui_manager.c:160
-#, fuzzy
-msgid "Time Remaining"
-msgstr "/Tempo restante"
-
-#: src/audacious/ui_manager.c:169
-#, fuzzy
-msgid "Playback"
-msgstr "/Reprodução"
-
-#: src/audacious/ui_manager.c:171 src/audacious/ui_manager.c:172
-#, fuzzy
-msgid "Play"
-msgstr "/Tocar"
-
-#: src/audacious/ui_manager.c:174 src/audacious/ui_manager.c:175
-#, fuzzy
-msgid "Pause"
-msgstr "/Pausar"
-
-#: src/audacious/ui_manager.c:177 src/audacious/ui_manager.c:178
-#, fuzzy
-msgid "Stop"
-msgstr "/Parar"
-
-#: src/audacious/ui_manager.c:180 src/audacious/ui_manager.c:181
-#, fuzzy
-msgid "Previous"
-msgstr "/Anterior"
-
-#: src/audacious/ui_manager.c:183 src/audacious/ui_manager.c:184
-#, fuzzy
-msgid "Next"
-msgstr "/Próxima"
-
-#: src/audacious/ui_manager.c:189
-#, fuzzy
-msgid "Visualization"
-msgstr "/Modo de visualização"
-
-#: src/audacious/ui_manager.c:190
-#, fuzzy
-msgid "Visualization Mode"
-msgstr "/Modo de visualização"
-
-#: src/audacious/ui_manager.c:191
-#, fuzzy
-msgid "Analyzer Mode"
-msgstr "/Modo Barras verticais/Chamas"
-
-#: src/audacious/ui_manager.c:192
-#, fuzzy
-msgid "Scope Mode"
-msgstr "/Modo Ondas"
-
-#: src/audacious/ui_manager.c:193
-#, fuzzy
-msgid "Voiceprint Mode"
-msgstr "/Modo Barras verticais/Chamas"
-
-#: src/audacious/ui_manager.c:194
-#, fuzzy
-msgid "WindowShade VU Mode"
-msgstr "/Estilo de sombreamento da janela"
-
-#: src/audacious/ui_manager.c:195
-#, fuzzy
-msgid "Refresh Rate"
-msgstr "/Taxa de atualização"
-
-#: src/audacious/ui_manager.c:196
-#, fuzzy
-msgid "Analyzer Falloff"
-msgstr "/Velocidade de queda (Barras)"
-
-#: src/audacious/ui_manager.c:197
-#, fuzzy
-msgid "Peaks Falloff"
-msgstr "/Velocidade de queda (picos)"
-
-#: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
-#, fuzzy
-msgid "New Playlist"
-msgstr "/Lista de reprodução"
-
-#: src/audacious/ui_manager.c:207 src/audacious/ui_manager.c:208
-#, fuzzy
-msgid "Select Next Playlist"
-msgstr "Selecione a fonte da lista de reprodução:"
-
-#: src/audacious/ui_manager.c:210 src/audacious/ui_manager.c:211
-#, fuzzy
-msgid "Select Previous Playlist"
-msgstr "/Ordenar a seleção/Por título"
-
-#: src/audacious/ui_manager.c:213 src/audacious/ui_manager.c:214
-#, fuzzy
-msgid "Delete Playlist"
-msgstr "Selecione a fonte da lista de reprodução:"
-
-#: src/audacious/ui_manager.c:216
-#, fuzzy
-msgid "Load List"
-msgstr "/Ordenar a lista"
-
-#: src/audacious/ui_manager.c:217
-#, fuzzy
-msgid "Loads a playlist file into the selected playlist."
-msgstr "Carregar metadados ao mostrar o arquivo na lista"
-
-#: src/audacious/ui_manager.c:219
-#, fuzzy
-msgid "Save List"
-msgstr "/Nova lista"
-
-#: src/audacious/ui_manager.c:220
-#, fuzzy
-msgid "Saves the selected playlist."
-msgstr "Selecione a fonte da lista de reprodução:"
-
-#: src/audacious/ui_manager.c:222
-#, fuzzy
-msgid "Save Default List"
-msgstr "/Salvar/Padrão"
-
-#: src/audacious/ui_manager.c:223
-#, fuzzy
-msgid "Saves the selected playlist to the default location."
-msgstr "Selecione a fonte da lista de reprodução:"
-
-#: src/audacious/ui_manager.c:226
-#, fuzzy
-msgid "Refresh List"
-msgstr "/Taxa de atualização"
-
-#: src/audacious/ui_manager.c:227
-msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
-
-#: src/audacious/ui_manager.c:230
-#, fuzzy
-msgid "List Manager"
-msgstr "/Não avançar na lista de reprodução"
-
-#: src/audacious/ui_manager.c:231
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/ui_manager.c:237
-msgid "View"
-msgstr ""
-
-#: src/audacious/ui_manager.c:241
-#, fuzzy
-msgid "Add Internet Address..."
-msgstr "/Adicionar/Endereço na Internet"
-
-#: src/audacious/ui_manager.c:242
-#, fuzzy
-msgid "Adds a remote track to the playlist."
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/ui_manager.c:245
-#, fuzzy
-msgid "Add Files..."
-msgstr "/Adicionar/Arquivos..."
-
-#: src/audacious/ui_manager.c:246
-#, fuzzy
-msgid "Adds files to the playlist."
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/ui_manager.c:251
-#, fuzzy
-msgid "Search and Select"
-msgstr "/Ordenar a seleção"
-
-#: src/audacious/ui_manager.c:252
-msgid ""
-"Searches the playlist and selects playlist entries based on specific "
-"criteria."
-msgstr ""
-
-#: src/audacious/ui_manager.c:255
-#, fuzzy
-msgid "Invert Selection"
-msgstr "/Ordenar a seleção"
-
-#: src/audacious/ui_manager.c:256
-#, fuzzy
-msgid "Inverts the selected and unselected entries."
-msgstr "Selecione a fonte da lista de reprodução:"
-
-#: src/audacious/ui_manager.c:259
-msgid "Select All"
-msgstr "Selecionar tudo"
-
-#: src/audacious/ui_manager.c:260
-#, fuzzy
-msgid "Selects all of the playlist entries."
-msgstr "/Ordenar a lista/Por título"
-
-#: src/audacious/ui_manager.c:263
-#, fuzzy
-msgid "Select None"
-msgstr "/Ordenar a seleção"
-
-#: src/audacious/ui_manager.c:264
-#, fuzzy
-msgid "Deselects all of the playlist entries."
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/ui_manager.c:269
-#, fuzzy
-msgid "Clear Queue"
-msgstr "/Limpar a fila"
-
-#: src/audacious/ui_manager.c:270
-#, fuzzy
-msgid "Clears the queue associated with this playlist."
-msgstr "Selecione a fonte da lista de reprodução:"
-
-#: src/audacious/ui_manager.c:273
-#, fuzzy
-msgid "Remove Unavailable Files"
-msgstr "/Remover arquivos indisponíveis"
-
-#: src/audacious/ui_manager.c:274
-#, fuzzy
-msgid "Removes unavailable files from the playlist."
-msgstr "/Remover arquivos indisponíveis"
-
-#: src/audacious/ui_manager.c:277
-#, fuzzy
-msgid "Remove Duplicates"
-msgstr "/Remover a seleção"
-
-#: src/audacious/ui_manager.c:279 src/audacious/ui_manager.c:315
-#: src/audacious/ui_manager.c:345
-#, fuzzy
-msgid "By Title"
-msgstr "Título"
-
-#: src/audacious/ui_manager.c:280
-#, fuzzy
-msgid "Removes duplicate entries from the playlist by title."
-msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
-
-#: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
-#: src/audacious/ui_manager.c:353
-#, fuzzy
-msgid "By Filename"
-msgstr "Nome do arquivo"
-
-#: src/audacious/ui_manager.c:284
-#, fuzzy
-msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
-
-#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:327
-#: src/audacious/ui_manager.c:357
-#, fuzzy
-msgid "By Path + Filename"
-msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
-
-#: src/audacious/ui_manager.c:288
-#, fuzzy
-msgid "Removes duplicate entries from the playlist by their full path."
-msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
-
-#: src/audacious/ui_manager.c:291
-#, fuzzy
-msgid "Remove All"
-msgstr "/Remover a seleção"
-
-#: src/audacious/ui_manager.c:292
-#, fuzzy
-msgid "Removes all entries from the playlist."
-msgstr "/Remover arquivos indisponíveis"
-
-#: src/audacious/ui_manager.c:295
-#, fuzzy
-msgid "Remove Unselected"
-msgstr "/Remover a seleção"
-
-#: src/audacious/ui_manager.c:296
-#, fuzzy
-msgid "Remove unselected entries from the playlist."
-msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
-
-#: src/audacious/ui_manager.c:299
-#, fuzzy
-msgid "Remove Selected"
-msgstr "/Remover a seleção"
-
-#: src/audacious/ui_manager.c:300
-#, fuzzy
-msgid "Remove selected entries from the playlist."
-msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
-
-#: src/audacious/ui_manager.c:305
-#, fuzzy
-msgid "Randomize List"
-msgstr "/Misturar aleatoriamente"
-
-#: src/audacious/ui_manager.c:306
-#, fuzzy
-msgid "Randomizes the playlist."
-msgstr "/Misturar aleatoriamente"
-
-#: src/audacious/ui_manager.c:309
-#, fuzzy
-msgid "Reverse List"
-msgstr "/Inverter a lista"
-
-#: src/audacious/ui_manager.c:310
-#, fuzzy
-msgid "Reverses the playlist."
-msgstr "Não limpar a lista de reprodução"
-
-#: src/audacious/ui_manager.c:313
-#, fuzzy
-msgid "Sort List"
-msgstr "/Ordenar a lista"
-
-#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:346
-#, fuzzy
-msgid "Sorts the list by title."
-msgstr "/Ordenar a lista/Por título"
-
-#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
-#, fuzzy
-msgid "By Artist"
-msgstr "Artista"
-
-#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
-#, fuzzy
-msgid "Sorts the list by artist."
-msgstr "/Ordenar a lista/Por título"
-
-#: src/audacious/ui_manager.c:324 src/audacious/ui_manager.c:354
-#, fuzzy
-msgid "Sorts the list by filename."
-msgstr "/Ordenar a lista/Pelo nome do arquivo"
-
-#: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
-#, fuzzy
-msgid "Sorts the list by full pathname."
-msgstr "/Ordenar a lista/Pelo nome do arquivo"
-
-#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
-#, fuzzy
-msgid "By Date"
-msgstr "Data"
-
-#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
-#, fuzzy
-msgid "Sorts the list by modification time."
-msgstr "/Ordenar a lista/Por título"
-
-#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
-#, fuzzy
-msgid "By Track Number"
-msgstr "Número da faixa"
-
-#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
-#, fuzzy
-msgid "Sorts the list by track number."
-msgstr "/Ordenar a lista/Por data"
-
-#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
-#, fuzzy
-msgid "By Playlist Entry"
-msgstr "Lista de reprodução BMP"
-
-#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
-#, fuzzy
-msgid "Sorts the list by playlist entry."
-msgstr "/Ordenar a lista/Por título"
-
-#: src/audacious/ui_manager.c:343
-#, fuzzy
-msgid "Sort Selected"
-msgstr "/Ordenar a seleção"
-
-#: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
-#, fuzzy
-msgid "View Track Details"
-msgstr "/Ver detalhes da faixa"
-
-#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
-#, fuzzy
-msgid "View track details"
-msgstr "/Ver detalhes da faixa"
-
-#: src/audacious/ui_manager.c:389
-#, fuzzy
-msgid "Play File"
-msgstr "Tocar arquivos"
-
-#: src/audacious/ui_manager.c:390
-#, fuzzy
-msgid "Load and play a file"
-msgstr "Carregar metadados de listas e arquivos"
-
-#: src/audacious/ui_manager.c:392
-#, fuzzy
-msgid "Play Location"
-msgstr "Local"
-
-#: src/audacious/ui_manager.c:393
-msgid "Play media from the selected location"
-msgstr ""
-
-#: src/audacious/ui_manager.c:395
-#, fuzzy
-msgid "Last.fm radio"
-msgstr "Local"
-
-#: src/audacious/ui_manager.c:396
-#, fuzzy
-msgid "Play Last.fm radio"
-msgstr "Local"
-
-#: src/audacious/ui_manager.c:400
-#, fuzzy
-msgid "Preferences"
-msgstr "/Preferências"
-
-#: src/audacious/ui_manager.c:401
-#, fuzzy
-msgid "Open preferences window"
-msgstr "Janela de preferências"
-
-#: src/audacious/ui_manager.c:403
-#, fuzzy
-msgid "_Quit"
-msgstr "/_Fechar"
-
-#: src/audacious/ui_manager.c:404
-#, fuzzy
-msgid "Quit Audacious"
-msgstr "Sobre o Plugin de áudio MPEG"
-
-#: src/audacious/ui_manager.c:406 src/audacious/ui_manager.c:407
-#, fuzzy
-msgid "Set A-B"
-msgstr "Selecionar tudo"
-
-#: src/audacious/ui_manager.c:409 src/audacious/ui_manager.c:410
-#, fuzzy
-msgid "Clear A-B"
-msgstr "/Limpar a fila"
-
-#: src/audacious/ui_manager.c:412 src/audacious/ui_manager.c:413
-#, fuzzy
-msgid "Jump to Playlist Start"
-msgstr "/Ir para o início da lista de reprodução"
-
-#: src/audacious/ui_manager.c:415 src/audacious/ui_manager.c:416
-#, fuzzy
-msgid "Jump to File"
-msgstr "/Ir para o arquivo"
-
-#: src/audacious/ui_manager.c:421
-#, fuzzy
-msgid "Queue Toggle"
-msgstr "/Enfileirar"
-
-#: src/audacious/ui_manager.c:422
-msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
-
-#: src/audacious/ui_manager.c:429
-msgid "Load"
-msgstr "Carregar"
-
-#: src/audacious/ui_manager.c:430
-msgid "Import"
-msgstr "Importar"
-
-#: src/audacious/ui_manager.c:431
-#, fuzzy
-msgid "Save"
-msgstr "/Salvar"
-
-#: src/audacious/ui_manager.c:432
-#, fuzzy
-msgid "Delete"
-msgstr "/Excluir"
-
-#: src/audacious/ui_manager.c:434 src/audacious/ui_manager.c:455
-#: src/audacious/ui_manager.c:470
-msgid "Preset"
-msgstr "Preset"
-
-#: src/audacious/ui_manager.c:435
-msgid "Load preset"
-msgstr "Carregar preset"
-
-#: src/audacious/ui_manager.c:437 src/audacious/ui_manager.c:458
-#: src/audacious/ui_manager.c:473
-msgid "Auto-load preset"
-msgstr "Auto-carregar preset"
-
-#: src/audacious/ui_manager.c:438
-#, fuzzy
-msgid "Load auto-load preset"
-msgstr "/Carregar/Auto-preset"
-
-#: src/audacious/ui_manager.c:440 src/audacious/ui_manager.c:461
-msgid "Default"
-msgstr "Padrão"
-
-#: src/audacious/ui_manager.c:441
-#, fuzzy
-msgid "Load default preset into equalizer"
-msgstr "Salvar auto-preset"
-
-#: src/audacious/ui_manager.c:443
-msgid "Zero"
-msgstr "Zero"
-
-#: src/audacious/ui_manager.c:444
-#, fuzzy
-msgid "Set equalizer preset levels to zero"
-msgstr "Salvar preset do equalizador"
-
-#: src/audacious/ui_manager.c:446
-#, fuzzy
-msgid "From file"
-msgstr "/Carregar/Do arquivo"
-
-#: src/audacious/ui_manager.c:447
-#, fuzzy
-msgid "Load preset from file"
-msgstr "Carregar preset"
-
-#: src/audacious/ui_manager.c:449
-msgid "From WinAMP EQF file"
-msgstr "À partir de arquivo WinAMP EQF"
-
-#: src/audacious/ui_manager.c:450
-#, fuzzy
-msgid "Load preset from WinAMP EQF file"
-msgstr "/Carregar/À partir de arquivo EQF do Winamp"
-
-#: src/audacious/ui_manager.c:452
-#, fuzzy
-msgid "WinAMP Presets"
-msgstr "Presets WinAMP"
-
-#: src/audacious/ui_manager.c:453
-#, fuzzy
-msgid "Import WinAMP presets"
-msgstr "/Importar/Presets WinAMP"
-
-#: src/audacious/ui_manager.c:456
-msgid "Save preset"
-msgstr "Salvar preset"
-
-#: src/audacious/ui_manager.c:459
-#, fuzzy
-msgid "Save auto-load preset"
-msgstr "Salvar/Auto-preset"
-
-#: src/audacious/ui_manager.c:462
-#, fuzzy
-msgid "Save default preset"
-msgstr "Salvar auto-preset"
-
-#: src/audacious/ui_manager.c:464
-msgid "To file"
-msgstr "Em arquivo"
-
-#: src/audacious/ui_manager.c:465
-#, fuzzy
-msgid "Save preset to file"
-msgstr "Salvar preset"
-
-#: src/audacious/ui_manager.c:467
-msgid "To WinAMP EQF file"
-msgstr "Em arquivo WinAMP EQF"
-
-#: src/audacious/ui_manager.c:468
-#, fuzzy
-msgid "Save preset to WinAMP EQF file"
-msgstr "/Salvar/Como arquivo EQF do WinAMP"
-
-#: src/audacious/ui_manager.c:471
-msgid "Delete preset"
-msgstr "Excluir preset"
-
-#: src/audacious/ui_manager.c:474
-#, fuzzy
-msgid "Delete auto-load preset"
-msgstr "/Excluir/Auto-preset"
-
-#: src/audacious/ui_playlist.c:476
-#, fuzzy
-msgid "Search entries in active playlist"
-msgstr "Mostrar o número das faixas na lista"
-
-#: src/audacious/ui_playlist.c:484
-msgid ""
-"Select entries in playlist by filling one or more fields. Fields use regular "
-"expressions syntax, case-insensitive. If you don't know how regular "
-"expressions work, simply insert a literal portion of what you're searching "
-"for."
-msgstr ""
-
-#: src/audacious/ui_playlist.c:492
-#, fuzzy
-msgid "Title: "
-msgstr "Título:"
-
-#: src/audacious/ui_playlist.c:499
-#, fuzzy
-msgid "Album: "
-msgstr "Álbum:"
-
-#: src/audacious/ui_playlist.c:506
-#, fuzzy
-msgid "Artist: "
-msgstr "Artista:"
-
-#: src/audacious/ui_playlist.c:513
-#, fuzzy
-msgid "Filename: "
-msgstr "Nome do arquivo:"
-
-#: src/audacious/ui_playlist.c:521
-msgid "Clear previous selection before searching"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:524
-msgid "Automatically toggle queue for matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:527
-msgid "Create a new playlist with matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:747
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "Erro ao escrever a lista de reprodução \"%s\": %s"
-
-#: src/audacious/ui_playlist.c:769
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr "%s já existe. Deseja continuar?"
-
-#: src/audacious/ui_playlist.c:784
-#, fuzzy, c-format
-msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr "Incapaz de salvar a lista! Este tipo de arquivo não é conhecido: %s"
-
-#: src/audacious/ui_playlist.c:907
-#, fuzzy
-msgid "Save as Static Playlist"
-msgstr "Salvar lista de reprodução"
-
-#: src/audacious/ui_playlist.c:914
-msgid "Use Relative Path"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:936
-#, fuzzy
-msgid "Load Playlist"
-msgstr "Carregar lista de reprodução"
-
-#: src/audacious/ui_playlist.c:949
-#, fuzzy
-msgid "Save Playlist"
-msgstr "Salvar lista de reprodução"
-
-#: src/audacious/ui_playlist.c:1500
-#, fuzzy
-msgid "Audacious Playlist Editor"
-msgstr "/Mostrar Lista de reprodução"
-
-#: src/audacious/ui_playlist_manager.c:255
-#, fuzzy
-msgid "Playlist Manager"
-msgstr "/Não avançar na lista de reprodução"
-
-#: src/audacious/ui_playlist_manager.c:294
-msgid "Entries"
-msgstr ""
-
-#: src/audacious/ui_playlist_manager.c:306
-#, fuzzy
-msgid "_Rename"
-msgstr "Nome do arquivo"
-
-#: src/audacious/ui_preferences.c:111
-#, fuzzy
-msgid "Audio"
-msgstr "Sobre o Plugin de áudio MPEG"
-
-#: src/audacious/ui_preferences.c:112
-msgid "Connectivity"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:125
-msgid "Tracknumber"
-msgstr "Número da faixa"
-
-#: src/audacious/ui_preferences.c:128
-msgid "Filepath"
-msgstr "Endereço do arquivo"
-
-#: src/audacious/ui_preferences.c:129
-msgid "Date"
-msgstr "Data"
-
-#: src/audacious/ui_preferences.c:131
-msgid "Comment"
-msgstr "Comentário"
-
-#: src/audacious/ui_preferences.c:152
-msgid "localhost"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:396 src/audacious/ui_preferences.c:483
-#: src/audacious/ui_preferences.c:572 src/audacious/ui_preferences.c:668
-msgid "Enabled"
-msgstr "Habilitado"
-
-#: src/audacious/ui_preferences.c:412 src/audacious/ui_preferences.c:499
-#: src/audacious/ui_preferences.c:588 src/audacious/ui_preferences.c:684
-msgid "Description"
-msgstr "Descrição"
-
-#: src/audacious/ui_preferences.c:1684
-msgid "Category"
-msgstr "Categoria"
-
-#: src/audacious/ui_preferences.c:2231
-msgid "Preferences Window"
-msgstr "Janela de preferências"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:386
-msgid "PREAMP"
-msgstr "PREAMP"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:386
-msgid "60HZ"
-msgstr "60HZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:386
-msgid "170HZ"
-msgstr "170HZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:387
-msgid "310HZ"
-msgstr "310HZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:387
-msgid "600HZ"
-msgstr "600HZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:387
-msgid "1KHZ"
-msgstr "1KHZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:388
-msgid "3KHZ"
-msgstr "3KHZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:388
-msgid "6KHZ"
-msgstr "6KHZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:388
-msgid "12KHZ"
-msgstr "12KHZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:389
-msgid "14KHZ"
-msgstr "14KHZ"
-
-#: src/audacious/ui_skinned_equalizer_slider.c:389
-msgid "16KHZ"
-msgstr "16KHZ"
-
-#: src/audacious/ui_skinselector.c:178
-msgid "Archived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_skinselector.c:183
-msgid "Unarchived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_urlopener.c:88
-#, fuzzy
-msgid "Add/Open URL Dialog"
-msgstr "Adicionar arquivos"
-
-#~ msgid ""
-#~ "<b><big>No playable CD found.</big></b>\n"
-#~ "\n"
-#~ "No CD inserted, or inserted CD is not an audio CD.\n"
-#~ msgstr ""
-#~ "<b><big>Nenhum CD capaz de ser reproduzido foi encontrado.</big></b>\n"
-#~ "\n"
-#~ "Não foi inserido um CD ou o CD inserido não é de áudio.\n"
-
-#, fuzzy
-#~ msgid "Add CD..."
-#~ msgstr "/Adicionar/Arquivos..."
-
-#, fuzzy
-#~ msgid "Play CD"
-#~ msgstr "/Tocar CD"
-
-#~ msgid "Performer/Artist"
-#~ msgstr "Intérprete/Artista"
-
-#~ msgid "File name"
-#~ msgstr "Nome do arquivo"
-
-#~ msgid "File path"
-#~ msgstr "Endereço do arquivo"
-
-#~ msgid "File extension"
-#~ msgstr "Extensão do arquivo"
-
-#~ msgid "Track name"
-#~ msgstr "Nome da faixa"
-
-#~ msgid "Track number"
-#~ msgstr "Número da faixa"
-
-#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
-#~ msgstr ""
-#~ "%{n:...%}: Mostrar \"...\" somente se o elemento %n estiver presente"
-
-#, fuzzy
 #~ msgid ""
 #~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 #~ "Please use GTK+ %s or newer.\n"
 #~ msgstr ""
-#~ "Desculpe, sua versão do GTK+ (%d.%d.%d) não funciona com o BMP\n"
-#~ "Por favor, utilize a versão %s do GTK+ou mais nova.\n"
-
+#~ "Lo siento, su versión de GTK (%d.%d.%d) no funciona con Audacious.\n"
+#~ "Por favor, use GTK+ %s o más nuevo.\n"
 #~ msgid "OPTIONS MENU"
-#~ msgstr "MENU DE OPÇÕES"
-
+#~ msgstr "MENÚ DE OPCIONES"
 #~ msgid "DISABLE ALWAYS ON TOP"
-#~ msgstr "DESABILITAR SEMPRE NO TOPO"
-
+#~ msgstr "DESACTIVAR «SIEMPRE ENCIMA»"
 #~ msgid "ENABLE ALWAYS ON TOP"
-#~ msgstr "HABILITAR SEMPRE NO TOPO"
-
+#~ msgstr "ACTIVAR «SIEMPRE ENCIMA»"
 #~ msgid "FILE INFO BOX"
-#~ msgstr "CAIXA DE INFORMAÇÕES DE ARQUIVO"
-
-#~ msgid "DISABLE DOUBLESIZE"
-#~ msgstr "DESBILITAR TAMANHO DUPLO"
-
-#~ msgid "ENABLE DOUBLESIZE"
-#~ msgstr "HABILITAR TAMANHO DUPLO"
-
+#~ msgstr "INFORMACIÓN DEL ARCHIVO"
 #~ msgid "VISUALIZATION MENU"
-#~ msgstr "MENU DE VISUALIZAÇÃO"
+#~ msgstr "MENÚ DE VISUALIZACIÓN"
 
 #, fuzzy
 #~ msgid "Track name: "
-#~ msgstr "Nome das faixas:"
+#~ msgstr "Nombres de las pistas:"
 
 #, fuzzy
 #~ msgid "Album name: "
-#~ msgstr "Álbum"
-
+#~ msgstr "Modo de Álbum"
+#~ msgid "PREAMP"
+#~ msgstr "PREAMP"
+#~ msgid "60HZ"
+#~ msgstr "60HZ"
+#~ msgid "170HZ"
+#~ msgstr "170HZ"
+#~ msgid "310HZ"
+#~ msgstr "310HZ"
+#~ msgid "600HZ"
+#~ msgstr "600HZ"
+#~ msgid "1KHZ"
+#~ msgstr "1KHZ"
+#~ msgid "3KHZ"
+#~ msgstr "3KHZ"
+#~ msgid "6KHZ"
+#~ msgstr "6KHZ"
+#~ msgid "12KHZ"
+#~ msgstr "12KHZ"
+#~ msgid "14KHZ"
+#~ msgstr "14KHZ"
+#~ msgid "16KHZ"
+#~ msgstr "16KHZ"
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
 #~ "\n"
@@ -2447,17 +2191,15 @@ msgstr "Adicionar arquivos"
 #~ "1. they are accessible.\n"
 #~ "2. you have enabled the media plugins required."
 #~ msgstr ""
-#~ "<b><big>Não foi possível reproduzir os arquivos</big></b>\n"
+#~ "<b><big>No es posible reproducir los archivos</big></b>\n"
 #~ "\n"
-#~ "Os seguintes arquivos não puderam ser reproduzidos. Por favor verifique:\n"
-#~ "1. Se eles são acessíveis.\n"
-#~ "2. Se você habilitou o plugin de saída correto."
-
+#~ "No se pudieron reproducir los archivos. Por favor, comprueba que:\n"
+#~ "1. Se tenga acceso de lectura\n"
+#~ "2. Los complementos necesarios estén activados"
 #~ msgid "Don't show this warning anymore"
-#~ msgstr "Não mostrar mais esta mensagem"
-
+#~ msgstr "No mostrar más esta advertencia"
 #~ msgid "Show more _details"
-#~ msgstr "Mostrar mais _detalhes"
+#~ msgstr "Ver más _detalles"
 
 #, fuzzy
 #~ msgid ""
@@ -2469,1494 +2211,1472 @@ msgstr "Adicionar arquivos"
 #~ "\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Sinal SIGSEGV recebido\n"
+#~ "Se recibió SIGSEGV\n"
 #~ "\n"
-#~ "Isto pode ser um bug no BMP. Se você não sabe porque isto aconteceu, "
-#~ "mande-nos um e-mail em beepmp-devel@lists.sourceforge.net\n"
+#~ "Esto podría ser un fallo en Audacious. Si no sabe cómo ocurrió esto,\n"
+#~ "envíe un correo-e a http://bugs.nenolod.net/\n"
 #~ "\n"
-
-#, fuzzy
+#~ msgid ""
+#~ "Enables playlist transparency. This is not recommended for slower "
+#~ "machines as it requires some CPU time to create and cache the pixmaps "
+#~ "used for the transparency."
+#~ msgstr ""
+#~ "Activa transparencia en la lista de canciones. No se recomienda para "
+#~ "máquinas lentas dado que requiere tiempo de CPU para crear y cachear los "
+#~ "pixmaps utilizados para la transparencia."
 #~ msgid "Enable playlist transparency"
-#~ msgstr "Habilitar ReplayGain"
-
+#~ msgstr "Activar transparencia de lista de canciones"
 #~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: a opção `%s' é ambígüa\n"
-
+#~ msgstr "%s: la opción `%s' es ambigua\n"
 #~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: a opção `--%s' não permite argumentos\n"
-
+#~ msgstr "%s: la opción `--%s' no permite un argumento\n"
 #~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: a opção `%c%s' não permite argumentos\n"
-
+#~ msgstr "%s: la opción `%c%s' no permite un argumento\n"
 #~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: a opção `%s' requer um argumento\n"
-
+#~ msgstr "%s: la opción `%s' necesita un argumento\n"
 #~ msgid "%s: unrecognized option `--%s'\n"
-#~ msgstr "%s: opção não conhecida `--%s'\n"
-
+#~ msgstr "%s: opción `--%s' desconocida\n"
 #~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: opção não conhecida `%c%s'\n"
-
+#~ msgstr "%s: opción `%c%s' desconocida\n"
 #~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: opção ilegal -- %c\n"
-
+#~ msgstr "%s: opción -- %c ilegal\n"
 #~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: opção inválida -- %c\n"
-
+#~ msgstr "%s: opción -- %c inválida\n"
 #~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: a opção requer um argumento -- %c\n"
-
+#~ msgstr "%s: la opción necesita un argumento -- %c\n"
 #~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: a opção `-W %s' é ambígüa\n"
-
+#~ msgstr "%s: la opción `-W %s' es ambigua\n"
 #~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: a opção `-W %s' não permite argumentos\n"
-
-#, fuzzy
+#~ msgstr "%s: la opción `-W %s' no permite un argumento\n"
 #~ msgid ""
 #~ "Usage: audacious [options] [files] ...\n"
 #~ "\n"
 #~ "Options:\n"
 #~ "--------\n"
 #~ msgstr ""
-#~ "Uso: beep-media-player [opções] [arquivos] ...\n"
+#~ "Uso: Audacious [opciones] [archivos] ...\n"
 #~ "\n"
-#~ "Opções:\n"
+#~ "Opciones:\n"
 #~ "--------\n"
-
 #~ msgid "Display this text and exit"
-#~ msgstr "Mostrar este texto e sair"
-
-#, fuzzy
+#~ msgstr "Mostrar este texto y salir"
 #~ msgid "Activate Audacious"
-#~ msgstr "Sobre o Plugin de áudio MPEG"
-
+#~ msgstr "Activar Audacious"
 #~ msgid "Previous session ID"
-#~ msgstr "Usar a identidade da sessão anterior"
-
+#~ msgstr "ID de sesión previa"
+#~ msgid "Headless operation [experimental]"
+#~ msgstr "Operación sin cabecera [experimental]"
+#~ msgid "Disable error/warning interception (logging)"
+#~ msgstr "Desactivar intercepción de errores/advertencias (logging)"
 #~ msgid "Print version number and exit\n"
-#~ msgstr "Exibe o número de versão e sai\n"
-
-#, fuzzy
+#~ msgstr "Imprimir el número de versión y salir.\n"
 #~ msgid "Add/Open Files dialog"
-#~ msgstr "Adicionar arquivos"
-
+#~ msgstr "Añadir/Abrir diálogo de selección de archivos..."
+#~ msgid "Close Dialog on Add"
+#~ msgstr "Cerrar diálogo al añadir"
 #~ msgid "Deselect All"
-#~ msgstr "Desselecionar tudo"
+#~ msgstr "Deseleccionar todo"
 
 #, fuzzy
 #~ msgid "Artist Popup"
 #~ msgstr "Artista"
 
 #, fuzzy
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<b>Nome do arquivo</b>"
-
-#, fuzzy
-#~ msgid "<i>Year</i>"
-#~ msgstr "<b>Nome do arquivo</b>"
+#~ msgid "<i>Artist</i>"
+#~ msgstr "Artista"
 
 #, fuzzy
 #~ msgid "<i>Track Number</i>"
-#~ msgstr "Número da faixa"
+#~ msgstr "Número de pista"
 
 #, fuzzy
 #~ msgid "<i>Track Length</i>"
-#~ msgstr "Duração da faixa:"
-
+#~ msgstr "Longitud de pista:"
+#~ msgid "label65"
+#~ msgstr "label65"
+#~ msgid "label76"
+#~ msgstr "label76"
 #~ msgid "/View Track Details"
-#~ msgstr "/Ver detalhes da faixa"
-
+#~ msgstr "/Ver detalles de pista"
 #~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Modo de visualização/Barras verticais"
-
+#~ msgstr "/Modo de visualización/Analizador"
 #~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Modo de visualização/Ondas"
+#~ msgstr "/Modo de visualización/Osciloscopio"
 
 #, fuzzy
 #~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "/Modo de visualização/Ondas"
-
+#~ msgstr "/Modo de visualización/Osciloscopio"
 #~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Modo de visualização/Desligado"
-
+#~ msgstr "/Modo de visualización/Apagado"
 #~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Modo Barras verticais/Normal"
-
+#~ msgstr "/Modo del analizador/Normal"
 #~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Modo Barras verticais/Linhas"
-
+#~ msgstr "/Modo del analizador/Líneas"
 #~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Modo Barras verticais/Barras"
-
+#~ msgstr "/Modo del analizador/Barras"
 #~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Modo Barras verticais/Picos"
+#~ msgstr "/Modo del analizador/Picos"
+#~ msgid "/Scope Mode/Dot Scope"
+#~ msgstr "/Modo del osciloscopio/Puntos"
 
 #, fuzzy
 #~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Modo Barras verticais/Normal"
-
+#~ msgstr "/Modo del analizador/Normal"
 #~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/Estilo de sombreamento da janela/Normal"
-
+#~ msgstr "/Modo de sombreado de ventana/Normal"
 #~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/Estilo de sombreamento da janela/Suave"
-
+#~ msgstr "/Modo de sombreado de ventana/Suave"
 #~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Velocidade de queda (Barras)/Mais baixa"
-
+#~ msgstr "/Caída del analizador/Lentísima"
 #~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Velocidade de queda (Barras)/Baixa"
-
+#~ msgstr "/Caída del analizador/Lenta"
 #~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Velocidade de queda (Barras)/Média"
-
+#~ msgstr "/Caída del analizador/Media"
 #~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Velocidade de queda (Barras)/Alta"
-
+#~ msgstr "/Caída del analizador/Rápida"
 #~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Velocidade de queda (Barras)/Mais alta"
-
+#~ msgstr "/Caída del analizador/Rapidísima"
 #~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Velocidade de queda (picos)/Mais baixa"
-
+#~ msgstr "/Caída de los picos/Lentísima"
 #~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Velocidade de queda (picos)/Baixa"
-
+#~ msgstr "/Caída de los picos/Lenta"
 #~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Velocidade de queda (picos)/Média"
-
+#~ msgstr "/Caída de los picos/Media"
 #~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Velocidade de queda (picos)/Alta"
-
+#~ msgstr "/Caída de los picos/Rápida"
 #~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Velocidade de queda (picos)/Mais alta"
-
-#~ msgid "/Pause"
-#~ msgstr "/Pausar"
-
+#~ msgstr "/Caída de los picos/Rapidísima"
 #~ msgid "/-"
 #~ msgstr "/-"
-
 #~ msgid "/Jump to Time"
-#~ msgstr "/Ir para tempo"
-
-#, fuzzy
+#~ msgstr "/Saltar al tiempo"
 #~ msgid "/About Audacious"
-#~ msgstr "Sobre o Plugin de áudio MPEG"
-
-#, fuzzy
+#~ msgstr "/Acerca de Audacious"
 #~ msgid "/Files..."
-#~ msgstr "/Adicionar/Arquivos..."
-
-#, fuzzy
+#~ msgstr "/Archivos..."
 #~ msgid "/Internet location..."
-#~ msgstr "/Adicionar/Local na Internet..."
+#~ msgstr "/Dirección de internet..."
 
 #, fuzzy
 #~ msgid "New List"
-#~ msgstr "/Nova lista"
+#~ msgstr "/Lista nueva"
 
 #, fuzzy
 #~ msgid "Creates a new playlist."
-#~ msgstr "Mostrar o número das faixas na lista"
+#~ msgstr "Mostrar separadores en la lista de canciones"
 
 #, fuzzy
 #~ msgid "Displays track information."
-#~ msgstr "Ganho da faixa:"
-
+#~ msgstr "Ganancia de pista:"
 #~ msgid "Chinese:"
-#~ msgstr "Chinês:"
-
-#~ msgid "/Load"
-#~ msgstr "/Carregar"
-
+#~ msgstr "Chino:"
 #~ msgid "/Load/Preset"
-#~ msgstr "/Carregar/Preset"
-
+#~ msgstr "/Cargar/Preconfigurado"
 #~ msgid "/Load/Default"
-#~ msgstr "/Carregar/Padrão"
-
+#~ msgstr "/Cargar/Predeterminado"
 #~ msgid "/Load/Zero"
-#~ msgstr "/Carregar/Zero"
-
-#~ msgid "/Import"
-#~ msgstr "/Importar"
-
+#~ msgstr "/Cargar/Cero"
 #~ msgid "/Save"
-#~ msgstr "/Salvar"
-
+#~ msgstr "/Guardar"
 #~ msgid "/Save/Preset"
-#~ msgstr "/Salvar/Preset"
-
+#~ msgstr "/Guardar/Preconfigurado"
 #~ msgid "/Save/Default"
-#~ msgstr "/Salvar/Padrão"
-
+#~ msgstr "/Guardar/Predeterminado"
 #~ msgid "/Save/To file"
-#~ msgstr "/Salvar/No arquivo"
-
-#~ msgid "/Delete"
-#~ msgstr "/Excluir"
-
+#~ msgstr "/Guardar/En archivo"
 #~ msgid "/Delete/Preset"
-#~ msgstr "/Excluir/Preset"
-
+#~ msgstr "/Borrar/Preconfigurado"
 #~ msgid "Load auto-preset"
-#~ msgstr "Carregar auto-preset"
-
+#~ msgstr "Cargar auto-preconfigurado"
 #~ msgid "Load equalizer preset"
-#~ msgstr "Carregar preset do equalizador"
-
+#~ msgstr "Cargar preconfigurado del ecualizador"
 #~ msgid "Delete auto-preset"
-#~ msgstr "Excluir auto-preset"
-
-#, fuzzy
+#~ msgstr "Borrar auto-preconfigurado"
+#~ msgid "/Show Popup Info"
+#~ msgstr "Mostrar Información Popup"
 #~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Ordenar a lista/Por título"
-
-#, fuzzy
+#~ msgstr "/Eliminar los Duplicados/Por Título"
 #~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Ordenar a lista/Pelo nome do arquivo"
-
+#~ msgstr "/Eliminar los Duplicados/Por Nombre de Archivo"
 #~ msgid "/Update View"
-#~ msgstr "/Atualizar a visão"
-
-#, fuzzy
+#~ msgstr "/Actualizar vista"
 #~ msgid "/Select All"
-#~ msgstr "Selecionar tudo"
-
+#~ msgstr "/Seleccionar todo"
 #~ msgid "/Sort List/By Date"
-#~ msgstr "/Ordenar a lista/Por data"
-
+#~ msgstr "/Ordenar lista/Por Fecha"
 #~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Ordenar a seleção/Por título"
-
-#, fuzzy
+#~ msgstr "/Ordenar selección/Por título"
 #~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Ordenar a seleção/Por título"
-
+#~ msgstr "Ordenar Selección/ Por Artista"
 #~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Ordenar a seleção/Pelo nome do arquivo"
-
+#~ msgstr "/Ordenar selección/Por nombre de archivo"
 #~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Ordenar a seleção/Pelo endereço e nome do arquivo"
-
+#~ msgstr "/Ordenar selección/Por ruta + nombre de archivo"
 #~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Ordenar a seleção/Por data"
-
-#, fuzzy
+#~ msgstr "/Ordenar selección/Por fecha"
 #~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Ordenar a seleção/Por data"
-
-#, fuzzy
+#~ msgstr "Ordenar Selección/Por Número de Pista"
 #~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Ordenar a seleção/Por título"
+#~ msgstr "Ordenar Selección/Por Entrada en Lista de Reproducción"
 
 #, fuzzy
 #~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Outras configurações</b>"
-
-#, fuzzy
+#~ msgstr "<b>_Varios</b>"
+#~ msgid "AudioCompress "
+#~ msgstr "AudioCompress "
+#~ msgid ""
+#~ "\n"
+#~ "(c)2003 trikuare studios(http://trikuare.cx)\n"
+#~ "Ported to Audacious by Tony Vroon (chainsaw@gentoo.org)\n"
+#~ "\n"
+#~ "Simple dynamic range compressor for transparently\n"
+#~ "keeping the volume level more or less consistent"
+#~ msgstr ""
+#~ "\n"
+#~ "(c)2003 trikuare studios(http://trikuare.cx)\n"
+#~ "Adaptado a Audacious por Tony Vroon (chainsaw@gentoo.org)\n"
+#~ "\n"
+#~ "Compresor de rano dinámico Simple para mantener transparentemente\n"
+#~ "el nivel del volumen más o menos consistent"
 #~ msgid "About AudioCompress"
-#~ msgstr "Sobre o Plugin de áudio MPEG"
-
+#~ msgstr "Acerca de AudioCompress"
 #~ msgid "Ok"
-#~ msgstr "Ok"
-
-#, fuzzy
+#~ msgstr "Aceptar"
+#~ msgid ""
+#~ "Extra Stereo Plugin\n"
+#~ "\n"
+#~ "By Johan Levin 1999."
+#~ msgstr ""
+#~ "Complemento de Estéreo Extra\n"
+#~ "\n"
+#~ "Por Johan Levin 1999."
+#~ msgid "Extra Stereo Plugin %s"
+#~ msgstr "Complemento de Estéreo Extra %s"
 #~ msgid "About Extra Stereo Plugin"
-#~ msgstr "Sobre o Plugin ESounD"
-
-#, fuzzy
+#~ msgstr "Acerca del Complemento de Estéreo Extra"
+#~ msgid "Configure Extra Stereo"
+#~ msgstr "Configurar Estéreo Extra"
 #~ msgid "Effect intensity:"
-#~ msgstr "_Lista de plugins de efeitos:"
-
-#, fuzzy
+#~ msgstr "Intensidad del efecto:"
 #~ msgid "Cancel"
-#~ msgstr "Dance"
-
-#, fuzzy
+#~ msgstr "Cancelar"
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
 #~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "Sobre o Plugin ESounD"
-
-#, fuzzy
+#~ msgstr "Acerca del complemento LIRC de Audacious"
 #~ msgid "LIRC Plugin "
-#~ msgstr "Plugins"
-
-#, fuzzy
+#~ msgstr "Complemento LIRC"
+#~ msgid ""
+#~ "\n"
+#~ "A simple plugin that lets you control\n"
+#~ "Audacious using the LIRC remote control daemon\n"
+#~ "\n"
+#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
+#~ "from the XMMS LIRC plugin by:\n"
+#~ "Carl van Schaik <carl@leg.uct.ac.za>\n"
+#~ "Christoph Bartelmus <xmms@bartelmus.de>\n"
+#~ "You can get LIRC information at:\n"
+#~ "http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
+#~ msgstr ""
+#~ "\n"
+#~ "Un complemento simple que le permite controlar\n"
+#~ "a Audacious usando el demonio de control remoto LIRC\n"
+#~ "\n"
+#~ "Adaptado para uso de Audacious por Tony Vroon <chainsaw@gentoo.org>\n"
+#~ "del complemento XMMS LIRC hecho:\n"
+#~ "por Carl van Schaik <carl@leg.uct.ac.za>\n"
+#~ "Christoph Bartelmus <xmms@bartelmus.de>\n"
+#~ "Puede obtener información de LIRC en:\n"
+#~ "http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
 #~ msgid "Close"
-#~ msgstr "/Fechar"
-
-#, fuzzy
+#~ msgstr "Cerrar"
 #~ msgid "LIRC Plugin"
-#~ msgstr "Plugins"
-
+#~ msgstr "Complemento LIRC"
+#~ msgid "%s: could not init LIRC support\n"
+#~ msgstr "%s: no puedo iniciar soporte LIRC\n"
+#~ msgid ""
+#~ "%s: could not read LIRC config file\n"
+#~ "%s: please read the documentation of LIRC\n"
+#~ "%s: how to create a proper config file\n"
+#~ msgstr ""
+#~ "%s: no puedo leer archivo de configuración LIRC\n"
+#~ "%s: favor de leer en la documentación de LIRC\n"
+#~ "%s: cómo crear un archivo de configuración adecuado\n"
+#~ msgid "%s: unknown command \"%s\"\n"
+#~ msgstr "%s: comando desconocido \"%s\"\n"
+#~ msgid "%s: disconnected from LIRC\n"
+#~ msgstr "%s: desconectado de LIRC\n"
+#~ msgid "<b>Scrobbler Preferences</b>"
+#~ msgstr "<b> Preferencias del Scrobbler</b>"
 #~ msgid "Username:"
-#~ msgstr "Nome do usuário:"
-
+#~ msgstr "Usuario:"
 #~ msgid "Password:"
-#~ msgstr "Senha:"
-
-#, fuzzy
+#~ msgstr "Contraseña:"
 #~ msgid "About Scrobbler Plugin"
-#~ msgstr "Sobre o Plugin ESounD"
-
-#, fuzzy
+#~ msgstr "Acerca del complemento Scrobbler"
 #~ msgid "Scrobbler Plugin"
-#~ msgstr "Plugins"
-
-#, fuzzy
+#~ msgstr "Complemento Scrobbler"
+#~ msgid "Song Change %s"
+#~ msgstr "Cambio de canción %s"
 #~ msgid "Commands"
-#~ msgstr "Comentário"
-
-#, fuzzy
+#~ msgstr "Comandos"
+#~ msgid "Command to run when Audacious starts a new song."
+#~ msgstr "Comando a ejecutar cuando Audacious comienza una nueva canción."
 #~ msgid "Command:"
-#~ msgstr "Comentário:"
-
-#, fuzzy
+#~ msgstr "Comando:"
+#~ msgid "Command to run toward the end of a song."
+#~ msgstr "Comando  a ejecutar hacia el final de una canción"
 #~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr "Carregar metadados ao mostrar o arquivo na lista"
-
-#, fuzzy
+#~ msgstr ""
+#~ "Comando  a ejecutar Audacious alcanza el final de la lista de canciones."
+#~ msgid ""
+#~ "You can use the following format strings which\n"
+#~ "will be substituted before calling the command\n"
+#~ "(not all are useful for the end-of-playlist command).\n"
+#~ "\n"
+#~ "%%F: Frequency (in hertz)\n"
+#~ "%%c: Number of channels\n"
+#~ "%%f: filename (full path)\n"
+#~ "%%l: length (in milliseconds)\n"
+#~ "%%n or %%s: Song name\n"
+#~ "%%r: Rate (in bits per second)\n"
+#~ "%%t: Playlist position (%%02d)\n"
+#~ "%%p: Currently playing (1 or 0)"
+#~ msgstr ""
+#~ "puede usar las sguintes cadenas de formato las cuales\n"
+#~ "serán sustituidas antes de ejecutar el comando\n"
+#~ "(No todas son útiles para el comando del final de la lista de "
+#~ "canciones).\n"
+#~ "\n"
+#~ "%%F: Frecuencia (en hertz)\n"
+#~ "%%c: Número de canales\n"
+#~ "%%f: nombre de archivo (path completo)\n"
+#~ "%%l: largo (en milisegundos)\n"
+#~ "%%n o %%s: nombre de la canción\n"
+#~ "%%r: Tasa (en bits por segundo)\n"
+#~ "%%t: Posicion de la lista(%%02d)\n"
+#~ "%%p: En ejecución actual (1 o 0)"
+#~ msgid ""
+#~ "<span size='small'>Parameters passed to the shell should be encapsulated "
+#~ "in quotes. Doing otherwise is a security risk.</span>"
+#~ msgstr ""
+#~ "<span size='small'>Los Parámetros pasados al shell deben ser encapsulados "
+#~ "entre comillas. Hacerlo de otra manera es crear un riesgo de seguridad</"
+#~ "span>"
 #~ msgid "About "
-#~ msgstr "Sobre o BMP"
-
-#, fuzzy
+#~ msgstr "Acerca de "
+#~ msgid ""
+#~ "\n"
+#~ "Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n"
+#~ "\n"
+#~ "This plugin is released under the terms and conditions of the GNU LGPL.\n"
+#~ "See http://www.gnu.org/licenses/lgpl.html for details.\n"
+#~ "\n"
+#~ "This plugin uses the AdPlug library, which is copyright (C) Simon Peter, "
+#~ "et al.\n"
+#~ "Linked AdPlug library version: "
+#~ msgstr ""
+#~ "\n"
+#~ "Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n"
+#~ "\n"
+#~ "Éste complemento se libera bajo los términos de la GNU LGPL.\n"
+#~ "Vea http://www.gnu.org/licenses/lgpl.html para más detalles.\n"
+#~ "\n"
+#~ "TÉste complemento usa la biblioteca AdPlug que es copyright (C) de Simon "
+#~ "Peter, et al.\n"
+#~ "Versión de biblioteca AdPlug linkeada: "
+#~ msgid "AMIDI-Plug %s (MIDI Player)"
+#~ msgstr "AMIDI-Plug %s (MIDI Player)"
 #~ msgid "AMIDI-Plug - warning"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
-#, fuzzy
+#~ msgstr "AMIDI-Plug - advertencia"
+#~ msgid ""
+#~ "No sequencer backend has been selected!\n"
+#~ "Please configure AMIDI-Plug before playing."
+#~ msgstr ""
+#~ "No se seleccionó respaldo del secuenciador!\n"
+#~ "Favor de configurar el complemento AMIDI antes de ejecutar."
 #~ msgid "AMIDI-Plug - select file"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
-#, fuzzy
+#~ msgstr "AMIDI-Plug - seleccione archivo"
 #~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
+#~ msgstr "Configuración del complemento ModPlug"
+#~ msgid "AMIDI-Plug message"
+#~ msgstr "AMIDI-Plug mensaje"
+#~ msgid "Please stop the player before changing AMIDI-Plug settings."
+#~ msgstr ""
+#~ "Favor de detener la ejecución antes de cambiar los valores de.AMIDI-Plug."
 #~ msgid "Name:"
-#~ msgstr "Nome:"
-
-#, fuzzy
+#~ msgstr "Nombre:"
 #~ msgid " MIDI Info "
-#~ msgstr "Informação do CD"
-
-#, fuzzy
+#~ msgstr "Información MIDI"
 #~ msgid "Length (msec):"
-#~ msgstr "Duração:"
-
-#, fuzzy
+#~ msgstr "Largo (msec):"
 #~ msgid "Num of Tracks:"
-#~ msgstr "Ir para a faixa"
-
+#~ msgstr "Número de pistas:"
+#~ msgid "variable"
+#~ msgstr "variable"
+#~ msgid "BPM:"
+#~ msgstr "BPM:"
+#~ msgid "BPM (wavg):"
+#~ msgstr "BPM (wavg):"
+#~ msgid "Time Div:"
+#~ msgstr "Div de Tiempo:"
 #~ msgid "CD Audio Plugin"
-#~ msgstr "Plugin CD de áudio"
-
+#~ msgstr "Complemento para CD's de audio"
 #~ msgid "CD Audio Track %02u"
-#~ msgstr "Faixa de CD de áudio %02u"
-
+#~ msgstr "Pista de CD de Audio %02u"
 #~ msgid "(unknown)"
-#~ msgstr "(desconhecido)"
-
+#~ msgstr "(desconocido)"
 #~ msgid "Drive %d"
-#~ msgstr "Drive·%d"
-
+#~ msgstr "Unidad %d"
 #~ msgid ""
 #~ "Failed to open device %s\n"
 #~ "Error: %s\n"
 #~ "\n"
 #~ msgstr ""
-#~ "Falha ao abrir o dispositivo %s\n"
-#~ "Erro:·%s\n"
+#~ "Fallo al abrir el dispositivo «%s»: %s\n"
 #~ "\n"
-
 #~ msgid ""
 #~ "Failed to read \"Table of Contents\"\n"
 #~ "Maybe no disc in the drive?\n"
 #~ "\n"
 #~ msgstr ""
-#~ "Falha ao abrir a \"Tabela de Conteúdo\"\n"
-#~ "Provavelmente não há disco no drive\n"
+#~ "Error leyendo la Tabla de Contenidos\n"
+#~ "Es posible que no haya ningún disco en la unidad\n"
 #~ "\n"
-
 #~ msgid ""
 #~ "Device %s OK.\n"
 #~ "Disc has %d tracks"
 #~ msgstr ""
-#~ "Dispositivo %s OK \n"
-#~ "O disco tem %d faixas"
-
+#~ "Accesso correcto al dispositivo %s\n"
+#~ "El disco tiene %d pistas"
 #~ msgid " (%d data tracks)"
-#~ msgstr " (%d faixas de dados)"
-
+#~ msgstr " (%d pistas de datos)"
 #~ msgid ""
 #~ "\n"
 #~ "Total length: %d:%d\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Duração total: %d:%d\n"
-
+#~ "Longitud total: %d:%d\n"
 #~ msgid ""
 #~ "Digital audio extraction not tested as the disc has no audio tracks\n"
 #~ msgstr ""
-#~ "Extração de áudio digital não testada, já que o disco não contém faixas "
-#~ "de áudio\n"
-
+#~ "La extracción de audio digital no se comprobó. El disco no tiene pistas "
+#~ "de audio\n"
 #~ msgid ""
 #~ "Digital audio extraction test: OK\n"
 #~ "\n"
 #~ msgstr ""
-#~ "Teste de extração de áudio digital: OK\n"
+#~ "Pasó correctamente la prueba de extracción de audio digital\n"
 #~ "\n"
-
 #~ msgid ""
 #~ "Digital audio extraction test failed: %s\n"
 #~ "\n"
 #~ msgstr ""
-#~ "O teste de extração de áudio digital falhou: %s\n"
+#~ "Fallo en la prueba de extracción de audio digital: %s\n"
 #~ "\n"
-
 #~ msgid ""
 #~ "Failed to check directory %s\n"
 #~ "Error: %s"
 #~ msgstr ""
-#~ "Falha ao checar o diretório %s\n"
-#~ "Erro: %s"
-
+#~ "Fallo al comprobar el directorio %s\n"
+#~ "Error: %s"
 #~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Erro: %s existe, mas não é um diretório"
-
+#~ msgstr "Error: %s existe, pero no es un directorio"
 #~ msgid "Directory %s OK."
-#~ msgstr "Diretório %s OK"
-
+#~ msgstr "El directorio «%s» es válido"
 #~ msgid "Device:"
 #~ msgstr "Dispositivo:"
-
 #~ msgid "_Device:"
 #~ msgstr "_Dispositivo:"
-
 #~ msgid "Dir_ectory:"
-#~ msgstr "Dir_etório"
-
+#~ msgstr "D_irectorio:"
 #~ msgid "Play mode:"
-#~ msgstr "Modo de reprodução:"
-
+#~ msgstr "Modo de reproducción:"
 #~ msgid "Analog"
 #~ msgstr "Analógico"
-
 #~ msgid "Digital audio extraction"
-#~ msgstr "Extração de áudio digital"
-
+#~ msgstr "Extracción de audio digital"
 #~ msgid "Volume control:"
-#~ msgstr "Controle de volume:"
-
+#~ msgstr "Control de volumen:"
 #~ msgid "No mixer"
-#~ msgstr "Sem controle de volume"
-
+#~ msgstr "Sin mezclador"
 #~ msgid "CDROM drive"
-#~ msgstr "Volume do Drive de CD-ROM"
-
+#~ msgstr "Unidad CD-ROM"
 #~ msgid "OSS mixer"
-#~ msgstr "Volume do OSS"
-
+#~ msgstr "Mezclador OSS"
 #~ msgid "Check drive..."
-#~ msgstr "Checar o drive..."
-
+#~ msgstr "Comprobar unidad..."
 #~ msgid "Remove drive"
-#~ msgstr "Remover o drive"
-
+#~ msgstr "Eliminar unidad"
 #~ msgid "CD Audio Player Configuration"
-#~ msgstr "Configuração de Reprodução de CD de áudio"
-
+#~ msgstr "Configuración del reproductor de CD Audio"
 #~ msgid "Add drive"
-#~ msgstr "Adicionar um drive"
-
+#~ msgstr "Añadir unidad"
 #~ msgid "Device"
 #~ msgstr "Dispositivo"
-
 #~ msgid "CDDB:"
 #~ msgstr "CDDB:"
-
 #~ msgid "Use CDDB"
 #~ msgstr "Usar CDDB"
-
 #~ msgid "Get server list"
-#~ msgstr "Baixar lista de servidores"
-
+#~ msgstr "Obtener lista de servidores"
 #~ msgid "Show network window"
-#~ msgstr "Mostrar a janela de rede"
-
+#~ msgstr "Mostrar la ventana de red"
 #~ msgid "CDDB server:"
-#~ msgstr "Servidor do CDDB:"
-
+#~ msgstr "Servidor CDDB:"
 #~ msgid "CD Index:"
-#~ msgstr "CD Index:"
-
+#~ msgstr "Índice del CD:"
 #~ msgid "Use CD Index"
-#~ msgstr "Usar CD Index"
-
+#~ msgstr "Usar índice del CD"
 #~ msgid "CD Index server:"
-#~ msgstr "Servidor de CD Index:"
-
+#~ msgstr "Servidor de índice del CD:"
 #~ msgid "Override generic titles"
-#~ msgstr "Modificar títulos genéricos"
-
+#~ msgstr "Sustituir títulos genéricos"
 #~ msgid "Name format:"
-#~ msgstr "Formato do nome:"
-
+#~ msgstr "Formato del nombre:"
 #~ msgid "CD Info"
-#~ msgstr "Informação do CD"
-
-#, fuzzy
+#~ msgstr "Información sobre el CD"
+#~ msgid "About the Console Music Decoder"
+#~ msgstr "Acerca del Decodoficador de Música de Consola"
+#~ msgid ""
+#~ "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
+#~ "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
+#~ "        Shay Green <hotpop.com@blargg>"
+#~ msgstr ""
+#~ "Motor del decodificador de música de consola basado en Game_Music_Emu "
+#~ "0.3.0.\n"
+#~ "Implementado en Audacious  por: William Pitcock <nenolod@nenolod.net>, \n"
+#~ "        Shay Green <hotpop.com@blargg>"
+#~ msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
+#~ msgstr "Módulos decodificadores SPC, VGM, NSF/NSFE, GBS, y GYM "
+#~ msgid "Arabic (IBM-864)"
+#~ msgstr "Arabic (IBM-864)"
+#~ msgid "Arabic (ISO-8859-6)"
+#~ msgstr "Arabic (ISO-8859-6)"
+#~ msgid "Arabic (Windows-1256)"
+#~ msgstr "Arabic (Windows-1256)"
+#~ msgid "Baltic (ISO-8859-13)"
+#~ msgstr "Baltic (ISO-8859-13)"
+#~ msgid "Baltic (ISO-8859-4)"
+#~ msgstr "Baltic (ISO-8859-4)"
+#~ msgid "Baltic (Windows-1257)"
+#~ msgstr "Baltic (Windows-1257)"
+#~ msgid "Celtic (ISO-8859-14)"
+#~ msgstr "Celtic (ISO-8859-14)"
+#~ msgid "Central European (IBM-852)"
+#~ msgstr "Central European (IBM-852)"
+#~ msgid "Central European (ISO-8859-2)"
+#~ msgstr "Central European (ISO-8859-2)"
+#~ msgid "Central European (Windows-1250)"
+#~ msgstr "Central European (Windows-1250)"
+#~ msgid "Chinese Simplified (GB18030)"
+#~ msgstr "Chinese Simplified (GB18030)"
+#~ msgid "Chinese Simplified (GB2312)"
+#~ msgstr "Chinese Simplified (GB2312)"
+#~ msgid "Chinese Traditional (Big5)"
+#~ msgstr "Chinese Traditional (Big5)"
+#~ msgid "Chinese Traditional (Big5-HKSCS)"
+#~ msgstr "Chinese Traditional (Big5-HKSCS)"
+#~ msgid "Cyrillic (IBM-855)"
+#~ msgstr "Cyrillic (IBM-855)"
+#~ msgid "Cyrillic (ISO-8859-5)"
+#~ msgstr "Cyrillic (ISO-8859-5)"
+#~ msgid "Cyrillic (ISO-IR-111)"
+#~ msgstr "Cyrillic (ISO-IR-111)"
+#~ msgid "Cyrillic (KOI8-R)"
+#~ msgstr "Cyrillic (KOI8-R)"
+#~ msgid "Cyrillic (Windows-1251)"
+#~ msgstr "Cyrillic (Windows-1251)"
+#~ msgid "Cyrillic/Russian (CP-866)"
+#~ msgstr "Cyrillic/Russian (CP-866)"
+#~ msgid "Cyrillic/Ukrainian (KOI8-U)"
+#~ msgstr "Cyrillic/Ukrainian (KOI8-U)"
+#~ msgid "English (US-ASCII)"
+#~ msgstr "English (US-ASCII)"
+#~ msgid "Greek (ISO-8859-7)"
+#~ msgstr "Greek (ISO-8859-7)"
+#~ msgid "Greek (Windows-1253)"
+#~ msgstr "Greek (Windows-1253)"
+#~ msgid "Hebrew (IBM-862)"
+#~ msgstr "Hebrew (IBM-862)"
+#~ msgid "Hebrew (Windows-1255)"
+#~ msgstr "Hebrew (Windows-1255)"
 #~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japonês:"
-
-#, fuzzy
+#~ msgstr "Japanese (EUC-JP)"
+#~ msgid "Japanese (ISO-2022-JP)"
+#~ msgstr "Japanese (ISO-2022-JP)"
+#~ msgid "Japanese (Shift_JIS)"
+#~ msgstr "Japanese (Shift_JIS)"
+#~ msgid "Korean (EUC-KR)"
+#~ msgstr "Korean (EUC-KR)"
+#~ msgid "Nordic (ISO-8859-10)"
+#~ msgstr "Nordic (ISO-8859-10)"
+#~ msgid "South European (ISO-8859-3)"
+#~ msgstr "South European (ISO-8859-3)"
+#~ msgid "Thai (TIS-620)"
+#~ msgstr "Thai (TIS-620)"
+#~ msgid "Turkish (IBM-857)"
+#~ msgstr "Turkish (IBM-857)"
+#~ msgid "Turkish (ISO-8859-9)"
+#~ msgstr "Turkish (ISO-8859-9)"
+#~ msgid "Turkish (Windows-1254)"
+#~ msgstr "Turkish (Windows-1254)"
+#~ msgid "Unicode (UTF-7)"
+#~ msgstr "Unicode (UTF-7)"
 #~ msgid "Unicode (UTF-8)"
-#~ msgstr "  (caracteres UTF-8 inválidos)"
-
-#, fuzzy
+#~ msgstr "Unicode (UTF-8)"
+#~ msgid "Unicode (UTF-16BE)"
+#~ msgstr "Unicode (UTF-16BE)"
+#~ msgid "Unicode (UTF-16LE)"
+#~ msgstr "Unicode (UTF-16LE)"
+#~ msgid "Unicode (UTF-32BE)"
+#~ msgstr "Unicode (UTF-32BE)"
+#~ msgid "Unicode (UTF-32LE)"
+#~ msgstr "Unicode (UTF-32LE)"
+#~ msgid "Vietnamese (VISCII)"
+#~ msgstr "Vietnamese (VISCII)"
+#~ msgid "Vietnamese (Windows-1258)"
+#~ msgstr "Vietnamese (Windows-1258)"
+#~ msgid "Visual Hebrew (ISO-8859-8)"
+#~ msgstr "Visual Hebrew (ISO-8859-8)"
+#~ msgid "Western (IBM-850)"
+#~ msgstr "Western (IBM-850)"
+#~ msgid "Western (ISO-8859-1)"
+#~ msgstr "Western (ISO-8859-1)"
+#~ msgid "Western (ISO-8859-15)"
+#~ msgstr "Western (ISO-8859-15)"
+#~ msgid "Western (Windows-1252)"
+#~ msgstr "Western (Windows-1252)"
+#~ msgid "Arabic (IBM-864-I)"
+#~ msgstr "Arabic (IBM-864-I)"
+#~ msgid "Arabic (ISO-8859-6-E)"
+#~ msgstr "Arabic (ISO-8859-6-E)"
+#~ msgid "Arabic (ISO-8859-6-I)"
+#~ msgstr "Arabic (ISO-8859-6-I)"
+#~ msgid "Arabic (MacArabic)"
+#~ msgstr "Arabic (MacArabic)"
+#~ msgid "Armenian (ARMSCII-8)"
+#~ msgstr "Armenian (ARMSCII-8)"
+#~ msgid "Central European (MacCE)"
+#~ msgstr "Central European (MacCE)"
+#~ msgid "Chinese Simplified (GBK)"
+#~ msgstr "Chinese Simplified (GBK)"
+#~ msgid "Chinese Simplified (HZ)"
+#~ msgstr "Chinese Simplified (HZ)"
+#~ msgid "Chinese Traditional (EUC-TW)"
+#~ msgstr "Chinese Traditional (EUC-TW)"
+#~ msgid "Croatian (MacCroatian)"
+#~ msgstr "Croatian (MacCroatian)"
+#~ msgid "Cyrillic/Ukrainian (MacUkrainian)"
+#~ msgstr "Cyrillic/Ukrainian (MacUkrainian)"
+#~ msgid "Farsi (MacFarsi)"
+#~ msgstr "Farsi (MacFarsi)"
+#~ msgid "Greek (MacGreek)"
+#~ msgstr "Greek (MacGreek)"
+#~ msgid "Gujarati (MacGujarati)"
+#~ msgstr "Gujarati (MacGujarati)"
+#~ msgid "Gurmukhi (MacGurmukhi)"
+#~ msgstr "Gurmukhi (MacGurmukhi)"
+#~ msgid "Hebrew (ISO-8859-8-E)"
+#~ msgstr "Hebrew (ISO-8859-8-E)"
+#~ msgid "Hebrew (ISO-8859-8-I)"
+#~ msgstr "Hebrew (ISO-8859-8-I)"
+#~ msgid "Hebrew (MacHebrew)"
+#~ msgstr "Hebrew (MacHebrew)"
+#~ msgid "Hindi (MacDevanagari)"
+#~ msgstr "Hindi (MacDevanagari)"
+#~ msgid "Icelandic (MacIcelandic)"
+#~ msgstr "Icelandic (MacIcelandic)"
+#~ msgid "Korean (JOHAB)"
+#~ msgstr "Korean (JOHAB)"
 #~ msgid "Korean (UHC)"
-#~ msgstr "Coreano:"
-
+#~ msgstr "Korean (UHC)"
+#~ msgid "Romanian (MacRomanian)"
+#~ msgstr "Romanian (MacRomanian)"
+#~ msgid "Turkish (MacTurkish)"
+#~ msgstr "Turkish (MacTurkish)"
+#~ msgid "User Defined"
+#~ msgstr "Definido por el usuario"
+#~ msgid "Vietnamese (TCVN)"
+#~ msgstr "Vietnamese (TCVN)"
+#~ msgid "Vietnamese (VPS)"
+#~ msgstr "Vietnamese (VPS)"
+#~ msgid "Western (MacRoman)"
+#~ msgstr "Western (MacRoman)"
 #~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Selecione o diretório onde você quer salvar streams MPEG:"
-
-#, fuzzy
+#~ msgstr "Seleccione el directorio donde desea almacenar los flujos MPEG:"
 #~ msgid "Flac Configuration"
-#~ msgstr "Configuração de Reprodução de CD de áudio"
-
+#~ msgstr "Configuración Flac"
+#~ msgid "Tag Handling"
+#~ msgstr "Manejo de Marcas"
+#~ msgid "Convert character set from :"
+#~ msgstr "Convertir conjunto de caracteres desde:"
+#~ msgid "to :"
+#~ msgstr "a:"
 #~ msgid "ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
+#~ msgstr "Repetición de ganancia"
 #~ msgid "Enable ReplayGain processing"
-#~ msgstr "Habilitar ReplayGain"
-
-#, fuzzy
+#~ msgstr "Activar proceso de ReplayGain"
 #~ msgid "Preamp:"
-#~ msgstr "Dream"
-
-#, fuzzy
+#~ msgstr "Preamplificación:"
+#~ msgid "0 dB"
+#~ msgstr "0 dB"
 #~ msgid "6dB hard limiting"
-#~ msgstr "Habilitar impulso de 6 dB + Hard Limiting"
-
-#, fuzzy
+#~ msgstr "Limitación de 6dB por hard"
 #~ msgid "Resolution"
-#~ msgstr "Resolução:"
-
-#, fuzzy
+#~ msgstr "Resolución"
 #~ msgid "Without ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
+#~ msgstr "Sin ReplayGain"
+#~ msgid "Dither 24bps to 16bps"
+#~ msgstr "Difuminar 24bps a 16bps"
 #~ msgid "With ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
+#~ msgstr "Con ReplayGain"
 #~ msgid "Enable dithering"
-#~ msgstr "Habilitado"
-
-#, fuzzy
+#~ msgstr "Activar difuminado"
+#~ msgid "Noise shaping"
+#~ msgstr "Forma del ruido"
+#~ msgid "high"
+#~ msgstr "alto"
+#~ msgid "Dither to"
+#~ msgstr "Difuminar a"
 #~ msgid "16 bps"
-#~ msgstr "16 bit"
-
+#~ msgstr "16 bps"
+#~ msgid "24 bps"
+#~ msgstr "24 bps"
+#~ msgid "Output"
+#~ msgstr "Salida"
+#~ msgid "Buffering:"
+#~ msgstr "Buffering:"
 #~ msgid "Buffer size (kb):"
-#~ msgstr "Tamanho do buffer (kb):"
-
+#~ msgstr "Tamaño del búfer (Kib):"
 #~ msgid "Pre-buffer (percent):"
-#~ msgstr "Pré-buffer (percentagem):"
-
+#~ msgstr "Pre-búfer (porcentaje):"
 #~ msgid "Save stream to disk:"
-#~ msgstr "Salvar stream no disco:"
-
+#~ msgstr "Guardar el flujo en el disco:"
 #~ msgid "Save stream to disk"
-#~ msgstr "Salvar stream no disco"
-
+#~ msgstr "Guardar el flujo en el disco"
 #~ msgid "Path:"
-#~ msgstr "Endereço:"
-
+#~ msgstr "Ruta:"
 #~ msgid "Browse"
-#~ msgstr "Navegar"
-
+#~ msgstr "Examinar"
 #~ msgid "SHOUT/Icecast:"
 #~ msgstr "SHOUT/Icecast:"
-
 #~ msgid "Enable SHOUT/Icecast title streaming"
-#~ msgstr "Permitir streaming SHOUT/Icecast"
-
+#~ msgstr "Activar streaming de título SHOUT/Icecast"
 #~ msgid "Enable Icecast Metadata UDP Channel"
-#~ msgstr "Permitir Icecast Metadata UDP Channel"
-
+#~ msgstr "Habilitar el Canal UDP de Metadatos"
 #~ msgid "Streaming"
-#~ msgstr "Streaming"
-
-#, fuzzy
+#~ msgstr "Flujo"
 #~ msgid "About Flac Plugin"
-#~ msgstr "Sobre o Plugin ESounD"
-
+#~ msgstr "Acerca del complemento Flac"
+#~ msgid ""
+#~ "Flac Plugin by Josh Coalson\n"
+#~ "contributions by\n"
+#~ "......\n"
+#~ "......\n"
+#~ "and\n"
+#~ "Daisuke Shimamura\n"
+#~ "Visit http://flac.sourceforge.net/"
+#~ msgstr ""
+#~ "Complemento Flac por Josh Coalson\n"
+#~ "contribuciones de\n"
+#~ "......\n"
+#~ "......\n"
+#~ "y\n"
+#~ "Daisuke Shimamura\n"
+#~ "Visite http://flac.sourceforge.net/"
 #~ msgid "Classic Rock"
-#~ msgstr "Rock Clássico"
-
+#~ msgstr "Rock clásico"
 #~ msgid "Country"
 #~ msgstr "Country"
-
 #~ msgid "Dance"
 #~ msgstr "Dance"
-
 #~ msgid "Disco"
 #~ msgstr "Disco"
-
 #~ msgid "Funk"
 #~ msgstr "Funk"
-
 #~ msgid "Grunge"
 #~ msgstr "Grunge"
-
 #~ msgid "Hip-Hop"
 #~ msgstr "Hip-Hop"
-
 #~ msgid "Jazz"
 #~ msgstr "Jazz"
-
 #~ msgid "Metal"
 #~ msgstr "Metal"
-
 #~ msgid "New Age"
-#~ msgstr "New Age"
-
+#~ msgstr "New age"
 #~ msgid "Oldies"
-#~ msgstr "Antigas"
-
+#~ msgstr "Antiguos"
 #~ msgid "Other"
-#~ msgstr "Outro"
-
+#~ msgstr "Otro"
 #~ msgid "Pop"
 #~ msgstr "Pop"
-
 #~ msgid "R&B"
 #~ msgstr "R&B"
-
 #~ msgid "Rap"
 #~ msgstr "Rap"
-
 #~ msgid "Reggae"
 #~ msgstr "Reggae"
-
 #~ msgid "Rock"
 #~ msgstr "Rock"
-
 #~ msgid "Techno"
 #~ msgstr "Techno"
-
 #~ msgid "Industrial"
 #~ msgstr "Industrial"
-
 #~ msgid "Alternative"
-#~ msgstr "Alternative"
-
+#~ msgstr "Alternativa"
 #~ msgid "Ska"
 #~ msgstr "Ska"
-
 #~ msgid "Death Metal"
 #~ msgstr "Death Metal"
-
 #~ msgid "Soundtrack"
-#~ msgstr "Faixa sonora"
-
+#~ msgstr "Banda Sonora"
 #~ msgid "Euro-Techno"
 #~ msgstr "Euro-Techno"
-
 #~ msgid "Ambient"
-#~ msgstr "Ambiente"
-
+#~ msgstr "Ambient"
 #~ msgid "Trip-Hop"
 #~ msgstr "Trip-Hop"
-
 #~ msgid "Vocal"
 #~ msgstr "Vocal"
-
 #~ msgid "Jazz+Funk"
 #~ msgstr "Jazz+Funk"
-
 #~ msgid "Fusion"
-#~ msgstr "Fusion"
-
+#~ msgstr "Fusión"
 #~ msgid "Trance"
 #~ msgstr "Trance"
-
 #~ msgid "Classical"
-#~ msgstr "Clássico"
-
+#~ msgstr "Clásica"
 #~ msgid "Instrumental"
 #~ msgstr "Instrumental"
-
 #~ msgid "Acid"
 #~ msgstr "Acid"
-
 #~ msgid "House"
 #~ msgstr "House"
-
 #~ msgid "Game"
-#~ msgstr "Game"
-
+#~ msgstr "Juego"
 #~ msgid "Sound Clip"
-#~ msgstr "Sound Clip"
-
+#~ msgstr "Clip de sonido"
 #~ msgid "Gospel"
 #~ msgstr "Gospel"
-
 #~ msgid "Noise"
-#~ msgstr "Noise"
-
+#~ msgstr "Ruido"
+#~ msgid "Alt"
+#~ msgstr "Alt"
 #~ msgid "Soul"
 #~ msgstr "Soul"
-
 #~ msgid "Punk"
 #~ msgstr "Punk"
-
 #~ msgid "Space"
-#~ msgstr "Space"
-
+#~ msgstr "Espacio"
 #~ msgid "Meditative"
-#~ msgstr "Meditative"
-
+#~ msgstr "Meditativa"
 #~ msgid "Instrumental Pop"
-#~ msgstr "Pop Instrumental"
-
+#~ msgstr "Pop instrumental"
 #~ msgid "Instrumental Rock"
-#~ msgstr "Rock Instrumental"
-
+#~ msgstr "Rock instrumental"
 #~ msgid "Ethnic"
-#~ msgstr "Étnico"
-
+#~ msgstr "Étnica"
 #~ msgid "Gothic"
-#~ msgstr "Gótico"
-
+#~ msgstr "Gótica"
 #~ msgid "Darkwave"
 #~ msgstr "Darkwave"
-
 #~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Industrial"
-
+#~ msgstr "Tecno-industrial"
 #~ msgid "Electronic"
-#~ msgstr "Eletrônico"
-
+#~ msgstr "Electrónica"
 #~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk"
-
+#~ msgstr "Pop-folk"
 #~ msgid "Eurodance"
 #~ msgstr "Eurodance"
-
 #~ msgid "Dream"
 #~ msgstr "Dream"
-
 #~ msgid "Southern Rock"
-#~ msgstr "Southern Rock"
-
+#~ msgstr "Rock sureño"
 #~ msgid "Comedy"
-#~ msgstr "Comedy"
-
+#~ msgstr "Comedia"
 #~ msgid "Cult"
-#~ msgstr "Cult"
-
+#~ msgstr "Culto"
 #~ msgid "Gangsta Rap"
 #~ msgstr "Gangsta Rap"
-
 #~ msgid "Top 40"
-#~ msgstr "Top 40"
-
+#~ msgstr "Primeros 40"
 #~ msgid "Christian Rap"
-#~ msgstr "Rap Cristão"
-
+#~ msgstr "Rap cristiano"
 #~ msgid "Pop/Funk"
 #~ msgstr "Pop/Funk"
-
 #~ msgid "Jungle"
 #~ msgstr "Jungle"
-
 #~ msgid "Native American"
-#~ msgstr "Native American"
-
+#~ msgstr "Nativa americana"
 #~ msgid "Cabaret"
 #~ msgstr "Cabaret"
-
 #~ msgid "New Wave"
-#~ msgstr "New Wave"
-
+#~ msgstr "New wave"
 #~ msgid "Psychedelic"
-#~ msgstr "Psicodélico"
-
+#~ msgstr "Psicodélica"
 #~ msgid "Rave"
 #~ msgstr "Rave"
-
 #~ msgid "Trailer"
 #~ msgstr "Trailer"
-
 #~ msgid "Lo-Fi"
 #~ msgstr "Lo-Fi"
-
 #~ msgid "Tribal"
 #~ msgstr "Tribal"
-
 #~ msgid "Acid Punk"
 #~ msgstr "Acid Punk"
-
 #~ msgid "Acid Jazz"
-#~ msgstr "Acid Jazz"
-
+#~ msgstr "Jazz ácido"
 #~ msgid "Polka"
 #~ msgstr "Polka"
-
-#~ msgid "Retro"
-#~ msgstr "Retro"
-
 #~ msgid "Musical"
 #~ msgstr "Musical"
-
 #~ msgid "Rock & Roll"
 #~ msgstr "Rock & Roll"
-
 #~ msgid "Hard Rock"
 #~ msgstr "Hard Rock"
-
 #~ msgid "Folk"
-#~ msgstr "Folk"
-
+#~ msgstr "Folclore"
 #~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock"
-
+#~ msgstr "Folclore/Rock"
 #~ msgid "National Folk"
-#~ msgstr "National Folk"
-
+#~ msgstr "Folklore nacional"
 #~ msgid "Swing"
 #~ msgstr "Swing"
-
 #~ msgid "Fast-Fusion"
 #~ msgstr "Fast-Fusion"
-
 #~ msgid "Bebob"
 #~ msgstr "Bebob"
-
 #~ msgid "Latin"
-#~ msgstr "Latin"
-
+#~ msgstr "Latín"
 #~ msgid "Revival"
 #~ msgstr "Revival"
-
 #~ msgid "Celtic"
 #~ msgstr "Celta"
-
 #~ msgid "Bluegrass"
 #~ msgstr "Bluegrass"
-
 #~ msgid "Avantgarde"
-#~ msgstr "Vanguarda"
-
+#~ msgstr "Avantgarde"
 #~ msgid "Gothic Rock"
-#~ msgstr "Rock Gótico"
-
+#~ msgstr "Rock gótico"
 #~ msgid "Progressive Rock"
-#~ msgstr "Rock Progressivo"
-
+#~ msgstr "Rock progresivo"
 #~ msgid "Psychedelic Rock"
 #~ msgstr "Rock Psicodélico"
-
 #~ msgid "Symphonic Rock"
-#~ msgstr "Rock Sinfônico"
-
+#~ msgstr "Rock sinfónico"
 #~ msgid "Slow Rock"
-#~ msgstr "Slow Rock"
-
+#~ msgstr "Rock lento"
 #~ msgid "Big Band"
 #~ msgstr "Big Band"
-
 #~ msgid "Chorus"
 #~ msgstr "Coral"
-
 #~ msgid "Easy Listening"
-#~ msgstr "Easy Listening"
-
+#~ msgstr "Escucha fácil"
 #~ msgid "Acoustic"
-#~ msgstr "Acústico"
-
+#~ msgstr "Acústica"
 #~ msgid "Humour"
-#~ msgstr "Humour"
-
+#~ msgstr "Humor"
 #~ msgid "Speech"
 #~ msgstr "Discurso"
-
 #~ msgid "Chanson"
-#~ msgstr "Cansão"
-
+#~ msgstr "Chanson"
 #~ msgid "Opera"
-#~ msgstr "Ópera"
-
+#~ msgstr "Opera"
 #~ msgid "Chamber Music"
-#~ msgstr "Música de câmara"
-
+#~ msgstr "Música de cámara"
 #~ msgid "Sonata"
 #~ msgstr "Sonata"
-
 #~ msgid "Symphony"
-#~ msgstr "Sinfonia"
-
+#~ msgstr "Sinfonía"
 #~ msgid "Booty Bass"
 #~ msgstr "Booty Bass"
-
 #~ msgid "Primus"
 #~ msgstr "Primus"
-
 #~ msgid "Porn Groove"
 #~ msgstr "Porn Groove"
-
+#~ msgid "Slow Jam"
+#~ msgstr "Slow Jam"
 #~ msgid "Club"
 #~ msgstr "Club"
-
 #~ msgid "Tango"
 #~ msgstr "Tango"
-
 #~ msgid "Samba"
 #~ msgstr "Samba"
-
 #~ msgid "Folklore"
-#~ msgstr "Folklore"
-
+#~ msgstr "Folclore"
 #~ msgid "Ballad"
 #~ msgstr "Balada"
-
 #~ msgid "Power Ballad"
 #~ msgstr "Power Ballad"
-
 #~ msgid "Rhythmic Soul"
-#~ msgstr "Rhythmic Soul"
-
+#~ msgstr "Soul rítmico"
 #~ msgid "Freestyle"
-#~ msgstr "Freestyle"
-
+#~ msgstr "Estilo libre"
 #~ msgid "Duet"
 #~ msgstr "Dueto"
-
 #~ msgid "Punk Rock"
-#~ msgstr "Punk Rock"
-
+#~ msgstr "Rock Punk"
 #~ msgid "Drum Solo"
-#~ msgstr "Solo de bateria"
-
+#~ msgstr "Solo de batería"
 #~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
+#~ msgstr "A cappella"
 #~ msgid "Euro-House"
 #~ msgstr "Euro-House"
-
 #~ msgid "Dance Hall"
 #~ msgstr "Dance Hall"
-
 #~ msgid "Goa"
 #~ msgstr "Goa"
-
 #~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
+#~ msgstr "Bajo y batería"
 #~ msgid "Club-House"
 #~ msgstr "Club-House"
-
 #~ msgid "Hardcore"
 #~ msgstr "Hardcore"
-
 #~ msgid "Terror"
 #~ msgstr "Terror"
-
 #~ msgid "Indie"
 #~ msgstr "Indie"
-
 #~ msgid "BritPop"
 #~ msgstr "BritPop"
-
 #~ msgid "Negerpunk"
 #~ msgstr "Negerpunk"
-
 #~ msgid "Polsk Punk"
 #~ msgstr "Polsk Punk"
-
 #~ msgid "Beat"
 #~ msgstr "Beat"
-
 #~ msgid "Christian Gangsta Rap"
-#~ msgstr "Gangsta Rap Cristão"
-
+#~ msgstr "Christian Gangsta Rap"
 #~ msgid "Heavy Metal"
 #~ msgstr "Heavy Metal"
-
 #~ msgid "Black Metal"
 #~ msgstr "Black Metal"
-
 #~ msgid "Crossover"
 #~ msgstr "Crossover"
-
 #~ msgid "Contemporary Christian"
-#~ msgstr "Cristão Contemporâneo"
-
+#~ msgstr "Cristiana contemporánea"
 #~ msgid "Christian Rock"
-#~ msgstr "Rock Cristão"
-
+#~ msgstr "Rock cristiano"
 #~ msgid "Merengue"
 #~ msgstr "Merengue"
-
 #~ msgid "Salsa"
 #~ msgstr "Salsa"
-
 #~ msgid "Thrash Metal"
 #~ msgstr "Thrash Metal"
-
 #~ msgid "Anime"
 #~ msgstr "Anime"
-
 #~ msgid "JPop"
 #~ msgstr "JPop"
-
 #~ msgid "Synthpop"
 #~ msgstr "Synthpop"
-
-#, fuzzy
 #~ msgid "Samplerate: %d Hz"
-#~ msgstr "Taxa de amostragem:"
-
-#, fuzzy
+#~ msgstr "Tasa de muestreo:%d Hz"
 #~ msgid "Channels: %d"
-#~ msgstr "Canais:"
-
-#, fuzzy
+#~ msgstr "Canales:%d"
+#~ msgid "Bits/Sample: %d"
+#~ msgstr "Bits/Tasa de muestreo: %d"
+#~ msgid "Blocksize: %d"
+#~ msgstr "Tamaño de block: %d"
+#~ msgid ""
+#~ "Blocksize: variable\n"
+#~ "  min/max: %d/%d"
+#~ msgstr ""
+#~ "Tamaño de block: variable\n"
+#~ "  min/max: %d/%d"
 #~ msgid ""
 #~ "Samples: %llu\n"
 #~ "Length: %d:%.2d"
 #~ msgstr ""
-#~ "\n"
-#~ "Duração total: %d:%d\n"
-
-#, fuzzy
+#~ "Muestras: %llu\n"
+#~ "Tamaño: %d:%.2d"
 #~ msgid "Filesize: %ld B"
-#~ msgstr "Tamanho do arquivo:"
-
-#, fuzzy
+#~ msgstr "Tamaño del archivo:%ld B"
+#~ msgid ""
+#~ "Avg. bitrate: %.1f kb/s\n"
+#~ "Compression ratio: %.1f%%"
+#~ msgstr ""
+#~ "Bitrate medio: %.1f kb/s\n"
+#~ "Tasa de compresión: %.1f%%"
 #~ msgid "Tag:"
-#~ msgstr "Tango"
-
+#~ msgstr "Marca:"
 #~ msgid "Comment:"
-#~ msgstr "Comentário:"
-
+#~ msgstr "Comentario:"
 #~ msgid "Date:"
-#~ msgstr "Data:"
-
+#~ msgstr "Fecha:"
 #~ msgid "Track number:"
-#~ msgstr "Número da faixa:"
-
+#~ msgstr "Número de pista:"
 #~ msgid "Genre:"
-#~ msgstr "Gênero:"
-
-#, fuzzy
+#~ msgstr "Género:"
 #~ msgid "Remove Tag"
-#~ msgstr "/Remover a seleção"
-
-#, fuzzy
+#~ msgstr "Remover Marca"
 #~ msgid "FLAC Info:"
-#~ msgstr "Informação do CD"
-
-#, fuzzy
-#~ msgid "File Info - %s"
-#~ msgstr "Informações do Arquivo"
-
+#~ msgstr "Información sobre Flac:"
 #~ msgid "Error"
-#~ msgstr "Erro"
-
+#~ msgstr "Error"
 #~ msgid "LOOKING UP %s"
-#~ msgstr "Procurando %s"
-
+#~ msgstr "BUSCANDO A %s"
 #~ msgid "Couldn't look up host %s"
-#~ msgstr "Não foi possível encontrar o host %s"
-
+#~ msgstr "No se pudo ubicar al servidor %s"
 #~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "CONECTANDO A %s:%d"
-
+#~ msgstr "CONECTANDO A %s: %d"
 #~ msgid "Couldn't connect to host %s"
-#~ msgstr "Não foi possível conectar ao host %s"
-
+#~ msgstr "No se pudo conectar al servidor %s"
 #~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "CONECTADO: ESPERANDO RESPOSTA"
-
+#~ msgstr "CONECTADO: ESPERANDO RESPUESTA"
 #~ msgid ""
 #~ "Couldn't connect to host %s\n"
 #~ "Server reported: %s"
 #~ msgstr ""
-#~ "Não foi possível conectar ao host %s\n"
-#~ "O servidor retornou: %s"
-
+#~ "No se pudo conectar al servidor %s\n"
+#~ "El servidor reportó: %s"
 #~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "PRÉ-BUFFERING: %dKB/%dKB"
-
-#, fuzzy
+#~ msgstr "PRE-BUFFERING: %dKB/%dKB"
 #~ msgid "FLAC Audio Plugin"
-#~ msgstr "Plugin CD de áudio"
-
-#, fuzzy
+#~ msgstr "Complemento para audio FLAC"
 #~ msgid "ModPlug Configuration"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
+#~ msgstr "Configuración del complemento ModPlug"
 #~ msgid "16 bit"
-#~ msgstr "16 bit"
-
+#~ msgstr "16 bits"
 #~ msgid "8 bit"
-#~ msgstr "8 bit"
-
-#, fuzzy
+#~ msgstr "8 bits"
 #~ msgid "Channels"
-#~ msgstr "Canais:"
-
+#~ msgstr "Canales"
 #~ msgid "Stereo"
 #~ msgstr "Estéreo"
-
-#, fuzzy
+#~ msgid "Mono (downmix)"
+#~ msgstr "Mono (downmix)"
 #~ msgid "48 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
+#~ msgstr "48 kHz"
 #~ msgid "44 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
+#~ msgstr "44 kHz"
 #~ msgid "22 kHz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
+#~ msgstr "22 kHz"
 #~ msgid "11 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
+#~ msgstr "11 kHz"
 #~ msgid "Resampling"
-#~ msgstr "Streaming"
-
-#, fuzzy
+#~ msgstr "Re-muestreo"
+#~ msgid "Nearest (fastest)"
+#~ msgstr "Más cercano (el más rápido)"
+#~ msgid "Linear (fast)"
+#~ msgstr "Lineal (rápido)"
+#~ msgid "Spline (good quality)"
+#~ msgstr "Spline (buena calidad)"
+#~ msgid "8-tap Fir (extremely high quality)"
+#~ msgstr "8-tap Fir (calidad extremadamente alta)"
 #~ msgid "Quality"
-#~ msgstr "/_Fechar"
-
-#, fuzzy
+#~ msgstr "Calidad"
 #~ msgid "General"
-#~ msgstr "Gênero"
-
-#, fuzzy
+#~ msgstr "General"
+#~ msgid "Use Filename as Song Title"
+#~ msgstr "Use nombre del archivo como título de canción"
 #~ msgid "Fast Playlist Info"
-#~ msgstr "Carregar lista de reprodução"
-
-#, fuzzy
+#~ msgstr "Información de lista de reproducción rápida"
+#~ msgid "Noise Reduction"
+#~ msgstr "Reducción de ruido"
+#~ msgid "Play Amiga MOD"
+#~ msgstr "Ejecutar Amiga MOD"
 #~ msgid "Reverb"
-#~ msgstr "Servidor"
-
-#, fuzzy
+#~ msgstr "Reverberador"
 #~ msgid "Enable"
-#~ msgstr "Habilitado"
-
-#, fuzzy
+#~ msgstr "Activar"
 #~ msgid "Depth"
-#~ msgstr "Dueto"
-
-#, fuzzy
+#~ msgstr "Profundidad"
+#~ msgid "Delay"
+#~ msgstr "Retraso"
+#~ msgid "Bass Boost"
+#~ msgstr "Refuerzo de graves"
 #~ msgid "Amount"
-#~ msgstr "Sobre o BMP"
-
-#, fuzzy
+#~ msgstr "Cantidad"
 #~ msgid "Range"
-#~ msgstr "Rave"
-
-#, fuzzy
+#~ msgstr "Rango"
+#~ msgid "Surround"
+#~ msgstr "Surround"
 #~ msgid "Preamp"
-#~ msgstr "Dream"
-
-#, fuzzy
+#~ msgstr "Preamplificación"
+#~ msgid ""
+#~ "Note:  Setting the preamp too high may cause\n"
+#~ "clipping / distortion!"
+#~ msgstr ""
+#~ "Nota: establecer la preamplificación muy alta puede causar\n"
+#~ "recorte / distorsión!"
+#~ msgid "Looping"
+#~ msgstr "Looping"
+#~ msgid "Loop"
+#~ msgstr "Loop"
+#~ msgid "time(s)"
+#~ msgstr "tiempo(s)"
+#~ msgid "Loop forever"
+#~ msgstr "Loop para siempre"
 #~ msgid "Effects"
-#~ msgstr "<b>Efeitos</b>"
-
-#, fuzzy
+#~ msgstr "Efectos"
+#~ msgid "OK"
+#~ msgstr "OK"
 #~ msgid "MOD Info"
-#~ msgstr "Informação do CD"
-
-#, fuzzy
+#~ msgstr "Información sobre MOD"
+#~ msgid ""
+#~ "Filename:\n"
+#~ "Title:\n"
+#~ "Type:\n"
+#~ "Length:\n"
+#~ "Speed:\n"
+#~ "Tempo:\n"
+#~ "Samples:\n"
+#~ "Instruments:\n"
+#~ "Patterns:\n"
+#~ "Channels:"
+#~ msgstr ""
+#~ "Nombre del archivo:\n"
+#~ "Título:\n"
+#~ "Tipo:\n"
+#~ "Tamaño:\n"
+#~ "Velocidad:\n"
+#~ "Tempo:\n"
+#~ "Muestras:\n"
+#~ "Instrumentos:\n"
+#~ "Esquemas:\n"
+#~ "Canales:"
 #~ msgid "Samples"
-#~ msgstr "Salsa"
-
-#, fuzzy
+#~ msgstr "Muestras"
 #~ msgid "Instruments"
-#~ msgstr "Instrumental"
-
-#, fuzzy
+#~ msgstr "Instrumentos"
+#~ msgid "Message"
+#~ msgstr "Mensaje"
+#~ msgid "Modplug Input Plugin for Audacious ver"
+#~ msgstr "Complemento de entrada Modplug para Audacious ver"
+#~ msgid ""
+#~ "\n"
+#~ "Modplug sound engine written by Olivier Lapicque.\n"
+#~ "XMMS interface for Modplug by Kenton Varda.\n"
+#~ "(c)2000 Olivier Lapicque and Kenton Varda.\n"
+#~ "Updates and Maintainance by Konstanty Bialkowski.\n"
+#~ "Ported to BMP by Theofilos Intzoglou."
+#~ msgstr ""
+#~ "\n"
+#~ "Motor de sonido Modplug escrito por Olivier Lapicque.\n"
+#~ "XMMS interface para Modplug por Kenton Varda.\n"
+#~ "(c)2000 Olivier Lapicque y Kenton Varda.\n"
+#~ "Updates y Mantenimiento por Konstanty Bialkowski.\n"
+#~ "Escrito para BMP por Theofilos Intzoglou."
 #~ msgid "About Modplug"
-#~ msgstr "Sobre o Plugin ESounD"
-
+#~ msgstr "Acerca Modplug"
+#~ msgid "Couldn't find pixmap file: %s"
+#~ msgstr "No puedo encontrar archivo de pixmap: %s"
+#~ msgid "Error loading pixmap file: %s"
+#~ msgstr "Error cargando archivo de pixmap: %s"
 #~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
+#~ msgstr "Configuración del complemento MPEG Audio"
 #~ msgid "Resolution:"
-#~ msgstr "Resolução:"
-
+#~ msgstr "Resolución:"
 #~ msgid "Channels:"
-#~ msgstr "Canais:"
-
+#~ msgstr "Canales:"
 #~ msgid "Stereo (if available)"
-#~ msgstr "Estéreo (se disponível)"
-
+#~ msgstr "Estéreo (si está disponible)"
 #~ msgid "Mono"
-#~ msgstr "Monofônico"
-
+#~ msgstr "Mono"
 #~ msgid "Down sample:"
-#~ msgstr "Taxa de amostragem:"
-
+#~ msgstr "Reducción de muestreo:"
 #~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
+#~ msgstr "1:1 (44 khz)"
 #~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
+#~ msgstr "1:2 (22 khz)"
 #~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
+#~ msgstr "1:4 (11 khz)"
 #~ msgid "Decoder"
 #~ msgstr "Decodificador"
-
 #~ msgid "ID3 Tags:"
 #~ msgstr "Etiquetas ID3:"
-
 #~ msgid "Disable ID3V2 tags"
-#~ msgstr "Desabilitar etiquetas ID3V2"
-
+#~ msgstr "Deshabilitar etiquetas ID3V2"
 #~ msgid "ID3 format:"
 #~ msgstr "Formato ID3:"
-
 #~ msgid "Joint stereo"
-#~ msgstr "Junção estéreo (Joint stereo)"
-
+#~ msgstr "Estéreo junto"
 #~ msgid "Dual channel"
-#~ msgstr "Canal duplo"
-
+#~ msgstr "Canal dual"
 #~ msgid "Single channel"
-#~ msgstr "Canal simples"
-
+#~ msgstr "Canal único"
 #~ msgid "%d KBit/s"
 #~ msgstr "%d KBit/s"
-
 #~ msgid "%ld Hz"
 #~ msgstr "%ld Hz"
-
 #~ msgid "None"
-#~ msgstr "Nenhum"
-
+#~ msgstr "Ninguno"
 #~ msgid "50/15 ms"
 #~ msgstr "50/15 ms"
-
 #~ msgid "CCIT J.17"
 #~ msgstr "CCIT J.17"
-
 #~ msgid "No"
-#~ msgstr "Não"
-
+#~ msgstr "No"
 #~ msgid "Yes"
-#~ msgstr "Sim"
-
+#~ msgstr "Sí"
 #~ msgid " MPEG Info "
-#~ msgstr " Informação MPEG"
-
+#~ msgstr " MPEG Info "
 #~ msgid "MPEG Level:"
-#~ msgstr "Nível MPEG:"
-
+#~ msgstr "Nivel MPEG:"
 #~ msgid "Bit rate:"
-#~ msgstr "Qualidade (bit rate):"
-
+#~ msgstr "Tasa de bits:"
 #~ msgid "Sample rate:"
-#~ msgstr "Taxa de amostragem:"
-
+#~ msgstr "Tasa de muestreo:"
 #~ msgid "File size:"
-#~ msgstr "Tamanho do arquivo:"
-
-#, fuzzy
+#~ msgstr "Tamaño del archivo:"
 #~ msgid "Mode:"
-#~ msgstr "Decodificador:"
-
+#~ msgstr "Modo:"
 #~ msgid "Error Protection:"
-#~ msgstr "Proteção de erro:"
-
+#~ msgstr "Protección contra errores:"
 #~ msgid "Copyright:"
 #~ msgstr "Copyright:"
-
 #~ msgid "Original:"
 #~ msgstr "Original:"
-
 #~ msgid "Emphasis:"
-#~ msgstr "Ênfase:"
-
+#~ msgstr "Énfasis:"
 #~ msgid " ID3 Tag "
-#~ msgstr " Etiqueta ID3 "
-
+#~ msgstr "Etiqueta ID3"
 #~ msgid "Year:"
-#~ msgstr "Ano:"
-
+#~ msgstr "Año:"
 #~ msgid "N/A"
-#~ msgstr "Não disponível"
-
+#~ msgstr "No disponible"
 #~ msgid "%s"
 #~ msgstr "%s"
-
 #~ msgid "%lu Bytes"
 #~ msgstr "%lu Bytes"
-
-#, fuzzy
 #~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Não foi possível conectar ao host %s"
-
-#, fuzzy
+#~ msgstr "No se puede conectar al host %s:%d"
 #~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "PRÉ-BUFFERING: %dKB/%dKB"
-
+#~ msgstr "PRE-BUFFERING: %zuKB/%zuKB"
 #~ msgid "AlternRock"
-#~ msgstr "AlternRock"
-
+#~ msgstr "Rock alternativo"
 #~ msgid "About MPEG Audio Plugin"
-#~ msgstr "Sobre o Plugin de áudio MPEG"
-
+#~ msgstr "Acerca del complemento MPEG Audio"
+#~ msgid ""
+#~ "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, "
+#~ "derived from:\n"
+#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+#~ "Derived partially from mpg123 0.59s.mc3 as well.\n"
+#~ "Based on the original XMMS plugin."
+#~ msgstr ""
+#~ "Motor de decodificador de Audacious por William Pitcock <nenolod@nenolod."
+#~ "net>, derivado de:\n"
+#~ "motor decodificador mpg123 por Michael Hipp <mh@mpg123.de>\n"
+#~ "Derivedo parcialmente de mpg123 0.59s.mc3 también.\n"
+#~ "Basado en el complemento original XMMS."
 #~ msgid "MPEG Audio Plugin"
-#~ msgstr "Plugin de áudio MPEG"
-
-#, fuzzy
+#~ msgstr "Complemento MPEG Audio"
 #~ msgid "TiMidity Configuration"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
-#, fuzzy
+#~ msgstr "Configuración TiMidity "
 #~ msgid "11000 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
+#~ msgstr "11000 Hz"
 #~ msgid "22000 Hz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
+#~ msgstr "22000 Hz"
 #~ msgid "44100 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
+#~ msgstr "44100 Hz"
 #~ msgid "Sample Width"
-#~ msgstr "Taxa de amostragem:"
-
-#, fuzzy
+#~ msgstr "Banda de muestreo"
 #~ msgid "TiMidity Configuration File"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
-#, fuzzy
+#~ msgstr "Archivo de configuración TiMidity"
+#~ msgid "TiMidity Player %s"
+#~ msgstr "TiMidity Player %s"
+#~ msgid ""
+#~ "TiMidity Plugin\n"
+#~ "http://libtimidity.sourceforge.net\n"
+#~ "by Konstantin Korikov"
+#~ msgstr ""
+#~ "Complemento TiMidity\n"
+#~ "http://libtimidity.sourceforge.net\n"
+#~ "por Konstantin Korikov"
 #~ msgid "TiMidity Plugin %s"
-#~ msgstr "Plugin de entrada: %s"
-
-#, fuzzy
+#~ msgstr "Complemento TiMidity: %s"
 #~ msgid "Couldn't load MIDI file"
-#~ msgstr "Não foi possível encontrar o host %s"
-
+#~ msgstr "No puedo cargar archivo MIDI"
+#~ msgid "About Tone Generator"
+#~ msgstr "Acerca del Generador de Tonos"
+#~ msgid ""
+#~ "Sinus tone generator by Haavard Kvaalen <havardk@xmms.org>\n"
+#~ "Modified by Daniel J. Peng <danielpeng@bigfoot.com>\n"
+#~ "\n"
+#~ "To use it, add a URL: tone://frequency1;frequency2;frequency3;...\n"
+#~ "e.g. tone://2000;2005 to play a 2000Hz tone and a 2005Hz tone"
+#~ msgstr ""
+#~ "Generador de tonos sinoidal por Haavard Kvaalen <havardk@xmms.org>\n"
+#~ "Modificado por Daniel J. Peng <danielpeng@bigfoot.com>\n"
+#~ "\n"
+#~ "para usarlo, añadir una URL: tone://frecuencia1;frecuencia2;"
+#~ "frecuencia3;...\n"
+#~ "p.ej.: tone://2000;2005 para ejecutar un tono de 2000Hz y uno de 2005Hz."
+#~ msgid "Tone Generator: "
+#~ msgstr "Generador de Tonos"
+#~ msgid "Tone Generator %s"
+#~ msgstr "Generador de Tonos %s"
 #~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr "Selecione o diretório onde você quer gravar as streams Ogg Vorbis:"
-
+#~ msgstr ""
+#~ "Seleccione el directorio donde desea almacenar los flujos Ogg Vorbis:"
 #~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Configuração do Plugin de áudio Ogg Vorbis"
-
+#~ msgstr "Configuración del complemento Ogg Vorbis"
 #~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Etiquetas Ogg Vorbis:"
-
+#~ msgstr "Etiquetas Ogg Vorbis"
 #~ msgid "ReplayGain Settings:"
-#~ msgstr "Ajustes de ReplayGain:"
-
+#~ msgstr "Configuraciones de repetición de ganancia:"
 #~ msgid "Enable Clipping Prevention"
-#~ msgstr "Habilitar a prevenção de clipping"
-
+#~ msgstr "Activar prevención de sujeción"
 #~ msgid "Enable ReplayGain"
-#~ msgstr "Habilitar ReplayGain"
-
+#~ msgstr "Activar repetición de ganancia"
 #~ msgid "ReplayGain Type:"
-#~ msgstr "Tipo de ReplayGain:"
-
+#~ msgstr "Tipo de repetición de ganancia"
 #~ msgid "use Track Gain/Peak"
-#~ msgstr "Usar Ganho/Pico da faixa"
-
+#~ msgstr "usar ganancia de pista/pico"
 #~ msgid "use Album Gain/Peak"
-#~ msgstr "Usar Ganho/Pico do álbum"
-
+#~ msgstr "usar ganancia de álbum/pico"
 #~ msgid "Enable 6dB Boost + Hard Limiting"
-#~ msgstr "Habilitar impulso de 6 dB + Hard Limiting"
-
+#~ msgstr "Activar refuerzo de 6dB + limitación dura"
 #~ msgid ""
 #~ "An error occured:\n"
 #~ "%s"
 #~ msgstr ""
-#~ "Um erro ocorreu:\n"
+#~ "Ocurrió un error:\n"
 #~ "%s"
-
 #~ msgid "Error!"
-#~ msgstr "Erro!"
-
+#~ msgstr "¡Error!"
 #~ msgid "Failed to modify tag (open)"
-#~ msgstr "Falha ao modificar a etiqueta (abrir)"
-
+#~ msgstr "Fallo al abrir la etiqueta. No se pudo modificar."
 #~ msgid "Failed to modify tag (close)"
-#~ msgstr "Falha ao modificar a etiqueta (fechar)"
-
+#~ msgstr "Fallo al cerrar la etiqueta. No se pudo modificar"
 #~ msgid "Failed to modify tag"
-#~ msgstr "Falha ao modificar a etiqueta"
-
+#~ msgstr "No se pudo modificar la etiqueta"
 #~ msgid " Ogg Vorbis Tag "
-#~ msgstr " Etiqueta Ogg Vorbis "
-
+#~ msgstr "Etiqueta Ogg Vorbis"
 #~ msgid "Description:"
-#~ msgstr "Descrição:"
-
+#~ msgstr "Descripción:"
 #~ msgid "Version:"
-#~ msgstr "Versão:"
-
+#~ msgstr "Versión:"
 #~ msgid "ISRC number:"
 #~ msgstr "Número ISRC:"
-
 #~ msgid "Organization:"
-#~ msgstr "Organização:"
-
+#~ msgstr "Organización:"
 #~ msgid " Ogg Vorbis ReplayGain "
-#~ msgstr " ReplayGain Ogg Vorbis "
-
+#~ msgstr " Ogg Vorbis ReplayGain "
 #~ msgid "Track peak:"
-#~ msgstr "Pico da faixa:"
-
+#~ msgstr "Pico de pista:"
 #~ msgid "Album gain:"
-#~ msgstr "Ganho do álbum:"
-
+#~ msgstr "Ganancia de álbum:"
 #~ msgid "Album peak:"
-#~ msgstr "Pico do álbum:"
-
+#~ msgstr "Pico de álbum:"
 #~ msgid " Ogg Vorbis Info "
-#~ msgstr " Informação Ogg Vorbis "
-
+#~ msgstr "Info Ogg Vorbis"
 #~ msgid "Length:"
-#~ msgstr "Duração:"
-
+#~ msgstr "Largo:"
 #~ msgid "%d KBit/s (nominal)"
 #~ msgstr "%d KBit/s (nominal)"
-
 #~ msgid "%d Hz"
 #~ msgstr "%d Hz"
-
 #~ msgid "%d"
 #~ msgstr "%d"
-
 #~ msgid "%d:%.2d"
 #~ msgstr "%d:%.2d"
-
 #~ msgid "%d Bytes"
 #~ msgstr "%d Bytes"
-
 #~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Plugin de áudio Ogg Vorbis"
-
+#~ msgstr "Complemento Ogg Vorbis Audio"
 #~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "Sobre o Plugin de áudio Ogg Vorbis"
-
+#~ msgstr "Acerca del complemento Ogg Vorbis Audio"
 #~ msgid ""
 #~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
 #~ "\n"
@@ -3973,22 +3693,22 @@ msgstr "Adicionar arquivos"
 #~ "\n"
 #~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
 #~ msgstr ""
-#~ "Ogg Vorbis Plugin pela Fundação Xiph.org \n"
+#~ "Complemento de Ogg Vorbis por Xiphophorus\n"
 #~ "\n"
 #~ "Código original por\n"
 #~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contribuições por\n"
+#~ "Contribuciones de\n"
 #~ "Chris Montgomery <monty@xiph.org>\n"
 #~ "Peter Alm <peter@xmms.org>\n"
 #~ "Michael Smith <msmith@labyrinth.edu.au>\n"
 #~ "Jack Moffitt <jack@icecast.org>\n"
 #~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
+#~ "Håvard Kvålen <havardk@xmms.org>\n"
 #~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
 #~ "\n"
-#~ "Visite o site da Fundação Xiph.org em http://www.xiph.org/\n"
-
-#, fuzzy
+#~ "Visita Xiphophorus en http://www.xiph.org/\n"
+#~ msgid "About sndfile WAV support"
+#~ msgstr "Acerca del soporte sndfile WAV"
 #~ msgid ""
 #~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 #~ "from the xmms_sndfile plugin which is:\n"
@@ -4010,37 +3730,38 @@ msgstr "Adicionar arquivos"
 #~ "51 Franklin Street, Fifth Floor, \n"
 #~ "Boston, MA  02110-1301  USA"
 #~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
+#~ "Adaptado para el uso de Audacious por  Tony Vroon <chainsaw@gentoo.org>\n"
+#~ "del complemento xmms_sndfile el cua esl:\n"
+#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 #~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
+#~ "Éste programa es software libre ; usted puede redistribuirlo y/o "
+#~ "modificarlo\n"
+#~ "bajo los término de la Licencia General Pública GNU publicada por  the\n"
+#~ "Free Software Foundation ; la versión 2 de la licencia, o \n"
+#~ "(a su opción) cualquier otra versión. \n"
+#~ " \n"
+#~ "Éste programa se distribuye con el deseo que sea útil, \n"
+#~ "pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de \n"
+#~ "MERCANTIBILIDAD O AJUSTE  PARA UN PROPÓSITO PARTICULAR.  \n"
+#~ "Vea la Licencia General Pública GNU para más detalles. \n"
 #~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
+#~ "Usted debe haber recibido una copia de la Licencia General Pública GNU \n"
+#~ "con éste programa, si no escriba a \n"
+#~ "the Free Software Foundation, Inc., \n"
+#~ "51 Franklin Street, Fifth Floor, \n"
+#~ "Boston, MA  02110-1301  USA"
+#~ msgid "sndfile WAV plugin"
+#~ msgstr "Complemento sndfile WAV"
 #~ msgid "WAV Audio Plugin"
-#~ msgstr "Plugin de áudio WAV"
-
-#, fuzzy
+#~ msgstr "Complemento de audio WAV"
+#~ msgid "WMA Player %s"
+#~ msgstr "WMA Player %s"
 #~ msgid "About %s"
-#~ msgstr "Sobre o BMP"
-
-#~ msgid "OSS Output Plugin"
-#~ msgstr "Plugin de saída OSS"
-
+#~ msgstr "Acerca de %s"
+#~ msgid " Close "
+#~ msgstr "Cerrar"
 #~ msgid "About OSS Driver"
-#~ msgstr "Sobre o driver OSS"
-
-#, fuzzy
+#~ msgstr "Acerca del controlador OSS"
 #~ msgid ""
 #~ "Audacious OSS Driver\n"
 #~ "\n"
@@ -4060,60 +3781,48 @@ msgstr "Adicionar arquivos"
 #~ "1301,\n"
 #~ "USA."
 #~ msgstr ""
-#~ "XMMS OSS Driver\n"
+#~ "Audacious OSS Controlador\n"
 #~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
+#~ "Éste programa es software libre ; usted puede redistribuirlo y/o "
+#~ "modificarlo\n"
+#~ "bajo los término de la Licencia General Pública GNU publicada por  the\n"
+#~ "Free Software Foundation ; la versión 2 de la licencia, o \n"
+#~ "(a su opción) cualquier otra versión. \n"
+#~ " \n"
+#~ "Éste programa se distribuye con el deseo que sea útil, \n"
+#~ "pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de \n"
+#~ "MERCANTIBILIDAD O AJUSTE  PARA UN PROPÓSITO PARTICULAR.  \n"
+#~ "Vea la Licencia General Pública GNU para más detalles. \n"
 #~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
+#~ "Usted debe haber recibido una copia de la Licencia General Pública GNU \n"
+#~ "con éste programa, si no escriba a \n"
+#~ "the Free Software Foundation, Inc., \n"
+#~ "51 Franklin Street, Fifth Floor, \n"
+#~ "Boston, MA  02110-1301  USA"
 #~ msgid "Default (%s)"
-#~ msgstr "Padrão (%s)"
-
+#~ msgstr "Predeterminado (%s)"
 #~ msgid "OSS Driver configuration"
-#~ msgstr "Configuração do Driver OSS"
-
+#~ msgstr "Configuración del controlador OSS"
 #~ msgid "Audio device:"
-#~ msgstr "Dispositivo de áudio:"
-
+#~ msgstr "Dispositivo de audio:"
 #~ msgid "Use alternate device:"
 #~ msgstr "Usar dispositivo alternativo:"
-
 #~ msgid "Mixer device:"
-#~ msgstr "Dispositivo de controle de volume:"
-
+#~ msgstr "Dispositivo mezclador"
 #~ msgid "Devices"
 #~ msgstr "Dispositivos"
-
 #~ msgid "Buffer size (ms):"
-#~ msgstr "Tamanho do buffer (ms)"
-
+#~ msgstr "Tamaño del búfer (ms):"
 #~ msgid "Buffering"
-#~ msgstr "Controle de buffer"
-
+#~ msgstr "Buffering"
 #~ msgid "Mixer Settings:"
-#~ msgstr "Ajustes de Volume"
-
+#~ msgstr "Configuraciones del mezclador:"
 #~ msgid "Volume controls Master not PCM"
-#~ msgstr "Volume controla Master, não PCM"
-
+#~ msgstr "El volumen controla al Maestro no al PCM"
 #~ msgid "Mixer"
-#~ msgstr "Controlador de Volume"
-
+#~ msgstr "Mezclador"
 #~ msgid "About ALSA Driver"
-#~ msgstr "Sobre o Driver ALSA"
-
-#, fuzzy
+#~ msgstr "Acerca del controlador ALSA"
 #~ msgid ""
 #~ "Audacious ALSA Driver\n"
 #~ "\n"
@@ -4134,77 +3843,65 @@ msgstr "Adicionar arquivos"
 #~ "USA.\n"
 #~ "Author: Matthieu Sozeau (mattam@altern.org)"
 #~ msgstr ""
-#~ "XMMS ALSA Driver\n"
+#~ "Audacious ALSA Controlador\n"
 #~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
+#~ "Éste programa es software libre ; usted puede redistribuirlo y/o "
+#~ "modificarlo\n"
+#~ "bajo los término de la Licencia General Pública GNU publicada por  the\n"
+#~ "Free Software Foundation ; la versión 2 de la licencia, o \n"
+#~ "(a su opción) cualquier otra versión. \n"
+#~ " \n"
+#~ "Éste programa se distribuye con el deseo que sea útil, \n"
+#~ "pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de \n"
+#~ "MERCANTIBILIDAD O AJUSTE  PARA UN PROPÓSITO PARTICULAR.  \n"
+#~ "Vea la Licencia General Pública GNU para más detalles. \n"
 #~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-
+#~ "Usted debe haber recibido una copia de la Licencia General Pública GNU \n"
+#~ "con éste programa, si no escriba a \n"
+#~ "the Free Software Foundation, Inc., \n"
+#~ "51 Franklin Street, Fifth Floor, \n"
+#~ "Boston, MA  02110-1301  USA Autor: Matthieu Sozeau (mattam@altern.org)"
 #~ msgid "ALSA %s output plugin"
-#~ msgstr "Plugin de saída ALSA %s"
-
+#~ msgstr "Complemento de salida ALSA «%s»"
 #~ msgid "Unknown soundcard"
-#~ msgstr "Placa de som desconhecida"
-
+#~ msgstr "Tarjeta de sonido desconocida"
 #~ msgid "Default PCM device (%s)"
-#~ msgstr "Dispositivo PCM padrão (%s)"
-
+#~ msgstr "Dispositivo PCM predeterminado (%s)"
 #~ msgid "ALSA Driver configuration"
-#~ msgstr "Configuração do Driver ALSA"
-
+#~ msgstr "Configuración del controlador ALSA"
 #~ msgid "Mixer:"
-#~ msgstr "Controlador de volume:"
-
+#~ msgstr "Mezclador:"
 #~ msgid "Use software volume control"
-#~ msgstr "Usar controle de volume por software"
-
+#~ msgstr "Usar control de volumen por software"
 #~ msgid "Mixer card:"
-#~ msgstr "Mixer card:"
-
+#~ msgstr "Dispositivo mezclador:"
 #~ msgid "Device settings"
-#~ msgstr "Ajustes do dispositivo"
-
-#, fuzzy
+#~ msgstr "Configuraciones del dipositivo"
 #~ msgid "Soundcard:"
-#~ msgstr "Faixa sonora"
-
+#~ msgstr "Tarjeta de sonido:"
 #~ msgid "Buffer time (ms):"
-#~ msgstr "Tempo do buffer (ms):"
-
+#~ msgstr "Tiempo del búfer (ms):"
 #~ msgid "Period time (ms):"
-#~ msgstr "Período de tempo (ms):"
-
+#~ msgstr "Perídodo del búfer (ms):"
 #~ msgid "Advanced settings"
-#~ msgstr "Configurações avançadas"
-
-#, fuzzy
+#~ msgstr "Opciones avanzadas"
 #~ msgid "aRts Driver configuration"
-#~ msgstr "Configuração do Driver OSS"
-
-#, fuzzy
+#~ msgstr "Configuración del Controlador aRts"
+#~ msgid "Disk Writer Plugin %s"
+#~ msgstr "Complemento de escritura a disco %s"
+#~ msgid ""
+#~ "You cannot use the Disk Writer plugin\n"
+#~ "when you're running in realtime mode."
+#~ msgstr ""
+#~ "No puede usar el complemento de escritura a disco\n"
+#~ "cuando está el programa ejecutando en modo de tiempo real."
 #~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Selecione o diretório onde você quer salvar streams MPEG:"
-
-#, fuzzy
+#~ msgstr ""
+#~ "Seleccione el directorio donde desea almacenar los archivos de salida:"
 #~ msgid "Disk Writer Configuration"
-#~ msgstr "Configuração do Driver OSS"
-
+#~ msgstr "Configuración del Complemento de escritura a disco"
 #~ msgid "About ESounD Plugin"
-#~ msgstr "Sobre o Plugin ESounD"
-
-#, fuzzy
+#~ msgstr "Acerca del Complemento ESounD"
 #~ msgid ""
 #~ "Audacious ESounD Plugin\n"
 #~ "\n"
@@ -4224,647 +3921,88 @@ msgstr "Adicionar arquivos"
 #~ "1301,\n"
 #~ "USA."
 #~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
+#~ "Audacious ESounD Complemento\n"
 #~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
+#~ "Éste programa es software libre ; usted puede redistribuirlo y/o "
+#~ "modificarlo\n"
+#~ "bajo los término de la Licencia General Pública GNU publicada por  the\n"
+#~ "Free Software Foundation ; la versión 2 de la licencia, o \n"
+#~ "(a su opción) cualquier otra versión. \n"
+#~ " \n"
+#~ "Éste programa se distribuye con el deseo que sea útil, \n"
+#~ "pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de \n"
+#~ "MERCANTIBILIDAD O AJUSTE  PARA UN PROPÓSITO PARTICULAR.  \n"
+#~ "Vea la Licencia General Pública GNU para más detalles. \n"
 #~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
+#~ "Usted debe haber recibido una copia de la Licencia General Pública GNU \n"
+#~ "con éste programa, si no escriba a \n"
+#~ "the Free Software Foundation, Inc., \n"
+#~ "51 Franklin Street, Fifth Floor, \n"
+#~ "Boston, MA  02110-1301  USA "
 #~ msgid "Host:"
 #~ msgstr "Host:"
-
 #~ msgid "Use remote host"
-#~ msgstr "Usar host remoto"
-
+#~ msgstr "Usar servidor remoto"
 #~ msgid "Volume controls OSS mixer"
-#~ msgstr "Volume controla o volume do OSS"
-
+#~ msgstr "El volumen controla al mezclador OSS"
 #~ msgid "Port:"
-#~ msgstr "Porta:"
-
+#~ msgstr "Puerto:"
 #~ msgid "Server"
 #~ msgstr "Servidor"
-
 #~ msgid "eSound Output Plugin"
-#~ msgstr "Plugin de saída eSound"
-
-#, fuzzy
+#~ msgstr "Complemento de salida eSound"
 #~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "Plugin de saída eSound"
-
-#, fuzzy
+#~ msgstr "Acerca del Complemento de Salida JACK 0.15"
+#~ msgid ""
+#~ "XMMS jack Driver 0.15\n"
+#~ "\n"
+#~ "xmms-jack.sf.net\n"
+#~ "Chris Morgan<cmorgan@alum.wpi.edu>\n"
+#~ "\n"
+#~ "Audacious port by\n"
+#~ "Giacomo Lozito from develia.org"
+#~ msgstr ""
+#~ "XMMS jack Controlador 0.15\n"
+#~ "\n"
+#~ "xmms-jack.sf.net\n"
+#~ "Chris Morgan<cmorgan@alum.wpi.edu>\n"
+#~ "\n"
+#~ "Adaptación a Audacious por\n"
+#~ "Giacomo Lozito de develia.org"
 #~ msgid "About the Sun Driver"
-#~ msgstr "Sobre o driver OSS"
-
-#, fuzzy
+#~ msgstr "Acerca del Controlador Sun"
+#~ msgid ""
+#~ "XMMS BSD Sun Driver\n"
+#~ "\n"
+#~ "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
+#~ "Maintainer: <vedge at csoft.org>.\n"
+#~ msgstr ""
+#~ "Controlador Sun XMMS BSD\n"
+#~ "\n"
+#~ "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
+#~ "Maintainer: <vedge at csoft.org>.\n"
 #~ msgid "Audio control device:"
-#~ msgstr "Dispositivo de áudio:"
-
-#, fuzzy
+#~ msgstr "Dispositivo de control de audio:"
 #~ msgid "Volume controls device:"
-#~ msgstr "Controle de volume:"
-
-#, fuzzy
+#~ msgstr "Dispositivos de control de volumen:"
+#~ msgid "XMMS uses mixer exclusively."
+#~ msgstr "XMMS usa el mezclador exclusivamente."
+#~ msgid "Status"
+#~ msgstr "Estado"
 #~ msgid "Sun driver configuration"
-#~ msgstr "Configuração do Driver OSS"
-
+#~ msgstr "Configuración del controlador Sun"
+#~ msgid "BSD Sun Driver %s"
+#~ msgstr "Controlador Sun BSD %s"
 #~ msgid "/Toggle Decorations"
-#~ msgstr "/Alternar Decorações"
-
+#~ msgstr "/Intercambiar decoración"
 #~ msgid "/Close"
-#~ msgstr "/Fechar"
-
+#~ msgstr "/Cerrar"
 #~ msgid "Blur scope"
-#~ msgstr "Blur scope"
-
+#~ msgstr "Osciloscopio borroso"
 #~ msgid "Blur Scope: Color selection"
-#~ msgstr "Blur Scope: Seleção de cor"
-
-#~ msgid "Options:"
-#~ msgstr "Opções:"
-
-#, fuzzy
+#~ msgstr "Seleccionar color del osciloscopio borroso"
+#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+#~ msgstr "SE HA DESACTIVADO EL TAMAÑO DOBLE"
 #~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>Lista de reprodução</b>"
+#~ msgstr "<b> _Transparencia</b>"
 
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "Configuração do Plugin de áudio MPEG"
-
-#, fuzzy
-#~ msgid "Song Change Configuration"
-#~ msgstr "Configuração de Reprodução de CD de áudio"
-
-#, fuzzy
-#~ msgid "Song Metadata"
-#~ msgstr "Sonata"
-
-#, fuzzy
-#~ msgid "Port"
-#~ msgstr "Porta:"
-
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "Nome do arquivo"
-
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "Nome da faixa"
-
-#, fuzzy
-#~ msgid "ALSA output ports"
-#~ msgstr "Plugin de saída ALSA %s"
-
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "Ajustes de Volume"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Converter etiquetas não-UTF8 em UTF8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "Codificação ID3:"
-
-#, fuzzy
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Converter etiquetas não-UTF8 em UTF8"
-
-#, fuzzy
-#~ msgid "Vorbis encoding:"
-#~ msgstr "Codificação ID3:"
-
-#, fuzzy
-#~ msgid "%d Kb/s"
-#~ msgstr "%d KBit/s"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Nome do arquivo</b>"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>Visualização</b>"
-
-#, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "Qualidade (bit rate):"
-
-#, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "Canais:"
-
-#, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>Nome do arquivo</b>"
-
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Nome do arquivo</b>"
-
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "Informação do CD"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>_Fontes</b>"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Lista de reprodução</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "Tango"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#, fuzzy
-#~ msgid "Michael Marineau"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Plugins</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Lista de plugins de mídia"
-
-#, fuzzy
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "A mudança foi realizada no arquivo de configuraçãodo BMP, mas não vai "
-#~ "surtir nenhumefeito até que a próxima música seja tocada!\n"
-#~ "\n"
-#~ "Opcionalmente você pode parar e reiniciar a reprodução para que a mudança "
-#~ "surta efeito."
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Aparência</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Mouse</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Lista de reprodução</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Equalizador</b></span>"
-
-#~ msgid "Use proxy"
-#~ msgstr "Usar proxy"
-
-#~ msgid "Frames:"
-#~ msgstr "Quadros:"
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Variável,\n"
-#~ "Bit rate média:·%d·KBit/s"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Impossível escrever no arquivo:·%s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Não foi possível salvar a etiqueta!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Não foi possível abrir o arquivo: %s"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Impossível truncar o arquivo:·%s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Não foi possível remover a etiqueta!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Sem etiqueta para remover!"
-
-#, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "Sobre o Plugin de áudio MPEG"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "Plugin de áudio MPEG"
-
-#~ msgid "Content"
-#~ msgstr "Conteúdo"
-
-#~ msgid "Extension"
-#~ msgstr "Extensão"
-
-#~ msgid "Extension and content"
-#~ msgstr "Extensão e conteúdo"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid " Enable"
-#~ msgstr "Habilitado"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "Sobre o Plugin ESounD"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Configurações avançadas"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Configurações avançadas"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Configurações avançadas"
-
-#, fuzzy
-#~ msgid "Configure"
-#~ msgstr "Configurar equalizador"
-
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "Crossover"
-
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "Crossover"
-
-#, fuzzy
-#~ msgid "Custom (ms):"
-#~ msgstr "Personalizar a descrição:"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Controle de volume:"
-
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "Tamanho do buffer (ms)"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Tamanho do buffer (ms)"
-
-#, fuzzy
-#~ msgid "Plugin compatibility options"
-#~ msgstr "Modo de compatibilidade com o XMMS"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Descrição:"
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Fechar"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Data:"
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Repetir"
-
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Plugins"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Controle de volume:"
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Controle de volume:"
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "Do arquivo"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "/Plugins de visualização"
-
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "/Plugins de visualização"
-
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "Plugins"
-
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "Habilitado"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Versão:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Terror"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Não foi possível abrir gnome-vfs.\n"
-
-#~ msgid "Developers:"
-#~ msgstr "Desenvolvedores:"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "DESABILITAR SEMPRE NO TOPO (NÃO DISPONÍVEL)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "HABILITAR SEMPRE NO TOPO (NÃO DISPONÍVEL)"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "Taxa de amostragem:"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Usar autenticação"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "Dir_etório"
-
-#~ msgid "Add Folders"
-#~ msgstr "Adicionar pastas"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Adicionar/Pastas..."
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "Decodificação otimizada por 3DNow!"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "Decodificação otimizada por MMX"
-
-#~ msgid "FPU decoder"
-#~ msgstr "Decodificador FPU"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "núcleo de decoficação mpg123  por Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin por Equipe XMMS"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Configurações avançadas:"
-
-#, fuzzy
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "Tempo do buffer (ms):"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Modo Mmap"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Gráficos e homepage:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "Equalizador BMP"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Beep Media Player"
-
-#~ msgid "/About BMP"
-#~ msgstr "/Sobre o BMP"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#, fuzzy
-#~ msgid "Add Internet Address"
-#~ msgstr "/Adicionar/Endereço na Internet"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Danicel Liviu Cristian"
-#~ msgstr "Danicel Liviu Cristian"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Vlad Gerasimov"
-
-#~ msgid "/5 seconds REW"
-#~ msgstr "/Volta 5 segundos"
-
-#~ msgid "/5 seconds FFWD"
-#~ msgstr "/Avança 5 segundos"
-
-#~ msgid "/Add"
-#~ msgstr "/Adicionar"
-
-#~ msgid "/_Options"
-#~ msgstr "/_Opções"
-
-#~ msgid "/Show Graphical EQ"
-#~ msgstr "/Mostrar Equalizador gráfico"
-
-#~ msgid "/Show on all desktops"
-#~ msgstr "/Mostrar em todas as áreas de trabalho"
-
-#~ msgid "/WindowShade Mode"
-#~ msgstr "/Modo de sombreamento da janela"
-
-#~ msgid "/Playlist WindowShade Mode"
-#~ msgstr "/Modo de sombreamento da Lista de reprodução"
-
-#~ msgid "/Equalizer WindowShade Mode"
-#~ msgstr "/Modo de sombreamento do Equalizador"
-
-#~ msgid "Jump to:"
-#~ msgstr "Ir para:"
-
-#~ msgid "Jump"
-#~ msgstr "Ir"
-
-#~ msgid "Add URL"
-#~ msgstr "Adicionar URL"
-
-#~ msgid "/By extension"
-#~ msgstr "/Por extensão"
-
-#~ msgid "/Close Window"
-#~ msgstr "/Fechar janela"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "/Ordenar por título"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "Ordenar pelo nome do arquivo"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/Ordenar por data"
-
-#~ msgid "Failed to delete \"%s\": %s."
-#~ msgstr "Falha ao excluir \"%s\": %s."
-
-#~ msgid "%d of %d files successfully deleted."
-#~ msgstr "%d de %d arquivos excluídos com sucesso."
-
-#~ msgid "XMMS: Files deleted"
-#~ msgstr "XMMS: arquivos excluídos"
-
-#~ msgid "Really delete %d files?"
-#~ msgstr "Deseja realmente excluir os arquivos %d?"
-
-#~ msgid "Really delete: \"%s\"?"
-#~ msgstr "Deseja realmente excluir o arquivo \"%s\"?"
-
-#~ msgid "Smooth title scrolling in main window"
-#~ msgstr "Rolagem suave de título na janela principal"
