@@ -19,28 +19,13 @@
  */
 
 /*
- * What's this?
- * ------------
- * Nothing really. A prototype / pseudo-C for an improved Tuple formatting
- * system, where the format string is "compiled" into a tree structure,
- * which can then be traversed fast while "evaluating". This file does
- * not represent anything but some of my (ccr) ideas for the concept.
- *
- * The basic ideas are: 
- * 1) compiled structure for faster traversing
- * 2) sub-expression removal / constant elimination
- * 3) indexes and/or hashes for tuple entries for faster access
- * 4) avoid expensive memory re-allocation
- *
- * and possibly 5) caching of certain things
- *
- *
  * TODO:
  * - implement definitions (${=foo,"baz"} ${=foo,1234})
  * - implement functions
  * - implement handling of external expressions
  * - error handling issues?
  * - evaluation context: how local variables should REALLY work?
+ * - global context needed (?)
  */
 
 #include "config.h"
@@ -56,14 +41,14 @@ void tuple_error(const char *fmt, ...)
   va_start(ap, fmt);
   vfprintf(stderr, fmt, ap);
   va_end(ap);
-  exit(5);
+//  exit(5);
 }
 
 
 static void tuple_evalctx_free_var(TupleEvalVar *var)
 {
   assert(var != NULL);
-  
+  var->fieldidx = -1;
   g_free(var->defval);
   g_free(var->name);
   g_free(var);
@@ -87,22 +72,19 @@ TupleEvalContext * tuple_evalctx_new(void)
 }
 
 
-/* "Reset" the evaluation context, clean up locally set variables,
- * but leave globals.
+/* "Reset" the evaluation context, clean up temporary variables.
  */
 void tuple_evalctx_reset(TupleEvalContext *ctx)
 {
   gint i;
   
-  /* Free local variables */
   for (i = 0; i < ctx->nvariables; i++)
     if (ctx->variables[i]) {
-      ctx->variables[i]->dictref = NULL;
+      ctx->variables[i]->fieldref = NULL;
 
-      if (ctx->variables[i]->islocal)
+      if (ctx->variables[i]->istemp)
         tuple_evalctx_free_var(ctx->variables[i]);
     }
-  
 }
 
 
@@ -133,15 +115,24 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 }
 
 
-gint tuple_evalctx_add_var(TupleEvalContext *ctx, gchar *name, gboolean islocal, gint type)
+gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type)
 {
-  gint i;
+  gint i, ref = -1;
   TupleEvalVar * tmp = g_new0(TupleEvalVar, 1);
 
   tmp->name = g_strdup(name);
-  tmp->islocal = islocal;
+  tmp->istemp = istemp;
   tmp->type = type;
-  
+  tmp->fieldidx = ref;
+
+  /* Find fieldidx, if any */
+  if (type == VAR_FIELD) {
+    for (i = 0; i < FIELD_LAST && ref < 0; i++)
+      if (strcmp(tuple_fields[i], name) == 0) ref = i;
+
+    tmp->fieldidx = ref;
+  }
+
   /* Find a free slot */
   for (i = 0; i < ctx->nvariables; i++)
   if (!ctx->variables[i]) {
@@ -379,7 +370,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
                   /* Integer */
                 }
                 
-                tuple_error("definitions not yet supported!\n");
+                tuple_error("Definitions are not yet supported!\n");
                 goto ret_error;
               } else
                 goto ret_error;
@@ -543,17 +534,25 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
 }
 
 
-/* Evaluate tuple in given TupleEval expression in given
- * context and return resulting string.
+/* Fetch a reference to a tuple field for given variable by fieldidx or dict.
+ * Return pointer to field, NULL if not available.
  */
-static TupleValue * tf_get_dictref(TupleEvalVar *var, Tuple *tuple)
+static TupleValue * tf_get_fieldref(TupleEvalVar *var, Tuple *tuple)
 {
-  if (var->type == VAR_FIELD && var->dictref == NULL)
-    var->dictref = mowgli_dictionary_retrieve(tuple->dict, var->name);
+  if (var->type == VAR_FIELD && var->fieldref == NULL) {
+    if (var->fieldidx < 0)
+      var->fieldref = mowgli_dictionary_retrieve(tuple->dict, var->name);
+    else
+      var->fieldref = tuple->values[var->fieldidx];
+  }
 
-  return var->dictref;
+  return var->fieldref;
 }
 
+
+/* Fetch string or int value of given variable, whatever type it might be.
+ * Return VAR_* type for the variable.
+ */
 static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tuple *tuple)
 {
   TupleValueType type = TUPLE_UNKNOWN;
@@ -562,12 +561,12 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
     case VAR_DEF: *tmps = var->defval; type = TUPLE_STRING; break;
     case VAR_CONST: *tmps = var->name; type = TUPLE_STRING; break;
     case VAR_FIELD:
-      if (tf_get_dictref(var, tuple)) {
-        if (var->dictref->type == TUPLE_STRING)
-          *tmps = var->dictref->value.string;
+      if (tf_get_fieldref(var, tuple)) {
+        if (var->fieldref->type == TUPLE_STRING)
+          *tmps = var->fieldref->value.string;
         else
-          *tmpi = var->dictref->value.integer;
-        type = var->dictref->type;
+          *tmpi = var->fieldref->value.integer;
+        type = var->fieldref->type;
       }
       break;
     default:
@@ -579,6 +578,9 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
 }
 
 
+/* Evaluate tuple in given TupleEval expression in given
+ * context and return resulting string.
+ */
 static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple, gchar **res, size_t *resmax, size_t *reslen)
 {
   TupleEvalNode *curr = expr;
@@ -609,14 +611,14 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             break;
           
           case VAR_FIELD:
-            if (tf_get_dictref(var0, tuple)) {
-              switch (var0->dictref->type) {
+            if (tf_get_fieldref(var0, tuple)) {
+              switch (var0->fieldref->type) {
                 case TUPLE_STRING:
-                  str = var0->dictref->value.string;
+                  str = var0->fieldref->value.string;
                   break;
           
                 case TUPLE_INT:
-                  snprintf(tmps, sizeof(tmps), "%d", var0->dictref->value.integer);
+                  snprintf(tmps, sizeof(tmps), "%d", var0->fieldref->value.integer);
                   str = tmps;
                   break;
                 
@@ -669,17 +671,16 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
       case OP_IS_EMPTY:
         var0 = ctx->variables[curr->var[0]];
 
-        if (var0->dictref == NULL)
-          var0->dictref = mowgli_dictionary_retrieve(tuple->dict, var0->name);
+        if (tf_get_fieldref(var0, tuple)) {
 
-        switch (var0->dictref->type) {
+        switch (var0->fieldref->type) {
           case TUPLE_INT:
-            result = (var0->dictref->value.integer == 0);
+            result = (var0->fieldref->value.integer == 0);
             break;
         
           case TUPLE_STRING:
             result = TRUE;
-            tmps2 = var0->dictref->value.string;
+            tmps2 = var0->fieldref->value.string;
           
             while (result && *tmps2 != '\0') {
               if (*tmps2 == ' ')
@@ -692,6 +693,8 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
           default:
             result = TRUE;
         }
+        } else
+          result = TRUE;
         
         if (result) {
           if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
@@ -739,10 +742,7 @@ gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *t
   
   if (!expr) return NULL;
   
-  if (!tuple_formatter_eval_do(ctx, expr, tuple, &res, &resmax, &reslen)) {
-    g_free(res);
-    return NULL;
-  }
+  tuple_formatter_eval_do(ctx, expr, tuple, &res, &resmax, &reslen);
   
   return res;
 }

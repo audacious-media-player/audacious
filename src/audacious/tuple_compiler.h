@@ -55,7 +55,7 @@ enum {
     VAR_CONST,
     VAR_DEF
 };
-    
+
 
 /* Caching structure for deterministic functions
  */
@@ -68,10 +68,12 @@ typedef struct {
 
 typedef struct {
     gchar *name;
-    gboolean islocal;		/* Local? true = will be cleaned with tuple_evalctx_reset() */
-    gint type;			/* Type of this "variable", see VAR_* */
-    gchar *defval;
-    TupleValue *dictref;	/* Cached tuple value ref */
+    gboolean istemp;		/* Scope of variable - TRUE = temporary */
+    gint type;			/* Type of variable, see VAR_* */
+    gchar *defval;		/* Defined value ${=foo,bar} */
+
+    gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
+    TupleValue *fieldref;	/* Cached tuple field ref */
 } TupleEvalVar;
 
 
@@ -95,7 +97,7 @@ typedef struct {
 TupleEvalContext * tuple_evalctx_new(void);
 void tuple_evalctx_reset(TupleEvalContext *ctx);
 void tuple_evalctx_free(TupleEvalContext *ctx);
-gint tuple_evalctx_add_var(TupleEvalContext *ctx, gchar *name, gboolean islocal, gint type);
+gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type);
 
 void tuple_evalnode_free(TupleEvalNode *expr);
 

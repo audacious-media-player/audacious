@@ -445,7 +445,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
+                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -523,7 +523,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
+                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -586,6 +586,7 @@ input_set_eq(gint on, gfloat preamp, gfloat * bands)
         playback->plugin->set_eq(on, preamp, bands);
 }
 
+
 Tuple *
 input_get_song_tuple(const gchar * filename)
 {
@@ -621,13 +622,13 @@ input_get_song_tuple(const gchar * filename)
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
-        tuple_associate_string(input, "file-name", g_path_get_basename(tmp));
+        tuple_associate_string(input, FIELD_FILE_NAME, NULL, g_path_get_basename(tmp));
 
         if (ext)
-            tuple_associate_string(input, "file-ext", ext + 1);
+            tuple_associate_string(input, FIELD_FILE_EXT, NULL, ext + 1);
 
-        tuple_associate_string(input, "file-path", g_path_get_dirname(tmp));
-        tuple_associate_int(input, "length", -1);
+        tuple_associate_string(input, FIELD_FILE_PATH, NULL, g_path_get_dirname(tmp));
+        tuple_associate_int(input, FIELD_LENGTH, NULL, -1);
 
         g_free(tmp);
     }

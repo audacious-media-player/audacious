@@ -23,6 +23,33 @@
 
 #include "tuple.h"
 
+
+const gchar *tuple_fields[FIELD_LAST] = {
+    "artist",
+    "title",
+    "album",
+    "comment",
+    "genre",
+
+    "track",
+    "track-number",
+    "length",
+    "year",
+    "quality",
+
+    "codec",
+    "file-name",
+    "file-path",
+    "file-ext",
+    "song-artist",
+
+    "mtime",
+    "formatter",
+    "performer",
+    "copyright",
+};
+
+
 static mowgli_heap_t *tuple_heap = NULL;
 static mowgli_heap_t *tuple_value_heap = NULL;
 static mowgli_object_class_t tuple_klass;
@@ -55,7 +82,7 @@ tuple_new(void)
 
     if (tuple_heap == NULL)
     {
-        tuple_heap = mowgli_heap_create(sizeof(Tuple), 256, BH_NOW);
+        tuple_heap = mowgli_heap_create(sizeof(Tuple), 32, BH_NOW);
         tuple_value_heap = mowgli_heap_create(sizeof(TupleValue), 512, BH_NOW);
         mowgli_object_class_init(&tuple_klass, "audacious.tuple", tuple_destroy, FALSE);
     }
@@ -85,11 +112,11 @@ tuple_new_from_filename(const gchar *filename)
     realfn = g_filename_from_uri(filename, NULL, NULL);
 
     scratch = g_path_get_basename(realfn ? realfn : filename);
-    tuple_associate_string(tuple, "file-name", scratch);
+    tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, scratch);
     g_free(scratch);
 
     scratch = g_path_get_dirname(realfn ? realfn : filename);
-    tuple_associate_string(tuple, "file-path", scratch);
+    tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, scratch);
     g_free(scratch);
 
     g_free(realfn); realfn = NULL;
@@ -97,22 +124,49 @@ tuple_new_from_filename(const gchar *filename)
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
-        tuple_associate_string(tuple, "file-ext", scratch);
+        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, scratch);
     }
 
     return tuple;
 }        
 
+
+static gboolean
+tuple_associate_data(const gchar **tfield, TupleValue **value, Tuple *tuple, const gint nfield, const gchar *field)
+{
+    g_return_val_if_fail(tuple != NULL, FALSE);
+    g_return_val_if_fail(nfield < FIELD_LAST, FALSE);
+
+    if (nfield < 0)
+        *tfield = field;
+    else {
+        *tfield = tuple_fields[nfield];
+        tuple->values[nfield] = NULL;
+    }
+    
+    if ((*value = mowgli_dictionary_delete(tuple->dict, *tfield)))
+        tuple_disassociate_now(*value);
+
+    return TRUE;
+}
+
+static void
+tuple_associate_data2(Tuple *tuple, const gint nfield, const gchar *field, TupleValue *value)
+{
+    mowgli_dictionary_add(tuple->dict, field, value);
+
+    if (nfield >= 0)
+        tuple->values[nfield] = value;
+}
+
 gboolean
-tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string)
+tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
 {
     TupleValue *value;
+    const gchar *tfield;
 
-    g_return_val_if_fail(tuple != NULL, FALSE);
-    g_return_val_if_fail(field != NULL, FALSE);
-
-    if ((value = mowgli_dictionary_delete(tuple->dict, field)))
-        tuple_disassociate_now(value);
+    if (!tuple_associate_data(&tfield, &value, tuple, nfield, field))
+        return FALSE;
 
     if (string == NULL)
         return TRUE;
@@ -121,28 +175,24 @@ tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string)
     value->type = TUPLE_STRING;
     value->value.string = g_strdup(string);
 
-    mowgli_dictionary_add(tuple->dict, field, value);
-
+    tuple_associate_data2(tuple, nfield, tfield, value);
     return TRUE;
 }
 
 gboolean
-tuple_associate_int(Tuple *tuple, const gchar *field, gint integer)
+tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer)
 {
     TupleValue *value;
-
-    g_return_val_if_fail(tuple != NULL, FALSE);
-    g_return_val_if_fail(field != NULL, FALSE);
-
-    if ((value = mowgli_dictionary_delete(tuple->dict, field)))
-        tuple_disassociate_now(value);
+    const gchar *tfield;
+    
+    if (!tuple_associate_data(&tfield, &value, tuple, nfield, field))
+        return FALSE;
 
     value = mowgli_heap_alloc(tuple_value_heap);
     value->type = TUPLE_INT;
     value->value.integer = integer;
 
-    mowgli_dictionary_add(tuple->dict, field, value);
-
+    tuple_associate_data2(tuple, nfield, tfield, value);
     return TRUE;
 }
 
@@ -156,44 +206,64 @@ tuple_disassociate_now(TupleValue *value)
 }
 
 void
-tuple_disassociate(Tuple *tuple, const gchar *field)
+tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field)
 {
     TupleValue *value;
+    const gchar *tfield;
 
     g_return_if_fail(tuple != NULL);
-    g_return_if_fail(field != NULL);
+    g_return_if_fail(nfield < FIELD_LAST);
+
+    if (nfield < 0)
+        tfield = field;
+    else {
+        tfield = tuple_fields[nfield];
+        tuple->values[nfield] = NULL;
+    }
 
     /* why _delete()? because _delete() returns the dictnode's data on success */
-    if ((value = mowgli_dictionary_delete(tuple->dict, field)) == NULL)
+    if ((value = mowgli_dictionary_delete(tuple->dict, tfield)) == NULL)
         return;
-    
+
     tuple_disassociate_now(value);
 }
 
 TupleValueType
-tuple_get_value_type(Tuple *tuple, const gchar *field)
+tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field)
 {
     TupleValue *value;
 
     g_return_val_if_fail(tuple != NULL, TUPLE_UNKNOWN);
-    g_return_val_if_fail(field != NULL, TUPLE_UNKNOWN);
+    g_return_val_if_fail(nfield < FIELD_LAST, TUPLE_UNKNOWN);
+    
+    if (nfield < 0) {
+        if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) != NULL)
+            return value->type;
+    } else {
+        if (tuple->values[nfield])
+            return tuple->values[nfield]->type;
+    }
 
-    if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
-        return TUPLE_UNKNOWN;
-
-    return value->type;
+    return TUPLE_UNKNOWN;
 }
 
 const gchar *
-tuple_get_string(Tuple *tuple, const gchar *field)
+tuple_get_string(Tuple *tuple, const gint nfield, const gchar *field)
 {
     TupleValue *value;
 
     g_return_val_if_fail(tuple != NULL, NULL);
-    g_return_val_if_fail(field != NULL, NULL);
+    g_return_val_if_fail(nfield < FIELD_LAST, NULL);
 
-    if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
-        return NULL;
+    if (nfield < 0) {
+        if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
+            return NULL;
+    } else {
+        if (tuple->values[nfield])
+            value = tuple->values[nfield];
+        else
+            return NULL;
+    }
 
     if (value->type != TUPLE_STRING)
         mowgli_throw_exception_val(audacious.tuple.invalid_type_request, NULL);
@@ -201,16 +271,23 @@ tuple_get_string(Tuple *tuple, const gchar *field)
     return value->value.string;
 }
 
-int
-tuple_get_int(Tuple *tuple, const gchar *field)
+gint
+tuple_get_int(Tuple *tuple, const gint nfield, const gchar *field)
 {
     TupleValue *value;
 
     g_return_val_if_fail(tuple != NULL, 0);
-    g_return_val_if_fail(field != NULL, 0);
+    g_return_val_if_fail(nfield < FIELD_LAST, 0);
 
-    if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
-        return 0;
+    if (nfield < 0) {
+        if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) == NULL)
+            return 0;
+    } else {
+        if (tuple->values[nfield])
+            value = tuple->values[nfield];
+        else
+            return 0;
+    }
 
     if (value->type != TUPLE_INT)
         mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);

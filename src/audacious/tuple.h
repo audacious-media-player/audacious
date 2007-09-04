@@ -24,11 +24,36 @@
 #include <glib.h>
 #include <mowgli.h>
 
-typedef struct _Tuple {
-    mowgli_object_t parent;
-    mowgli_dictionary_t *dict;
-} Tuple;
 
+enum {
+    FIELD_ARTIST = 0,
+    FIELD_TITLE,
+    FIELD_ALBUM,
+    FIELD_COMMENT,
+    FIELD_GENRE,
+
+    FIELD_TRACK,
+    FIELD_TRACK_NUMBER,
+    FIELD_LENGTH,
+    FIELD_YEAR,
+    FIELD_QUALITY,
+
+    FIELD_CODEC,
+    FIELD_FILE_NAME,
+    FIELD_FILE_PATH,
+    FIELD_FILE_EXT,
+    FIELD_SONG_ARTIST,
+
+    FIELD_MTIME,
+    FIELD_FORMATTER,
+    FIELD_PERFORMER,
+    FIELD_COPYRIGHT,
+
+    /* special field, must always be last */
+    FIELD_LAST
+};
+
+extern const gchar *tuple_fields[FIELD_LAST];
 
 typedef enum {
     TUPLE_STRING,
@@ -44,15 +69,22 @@ typedef struct {
     } value;
 } TupleValue;
 
+typedef struct _Tuple {
+    mowgli_object_t parent;
+    mowgli_dictionary_t *dict;
+    TupleValue *values[FIELD_LAST];
+} Tuple;
+
+
 Tuple *tuple_new(void);
 Tuple *tuple_new_from_filename(const gchar *filename);
-gboolean tuple_associate_string(Tuple *tuple, const gchar *field, const gchar *string);
-gboolean tuple_associate_int(Tuple *tuple, const gchar *field, gint integer);
-void tuple_disassociate(Tuple *tuple, const gchar *field);
+gboolean tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string);
+gboolean tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer);
+void tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field);
 void tuple_disassociate_now(TupleValue *value);
-TupleValueType tuple_get_value_type(Tuple *tuple, const gchar *field);
-const gchar *tuple_get_string(Tuple *tuple, const gchar *field);
-int tuple_get_int(Tuple *tuple, const gchar *field);
+TupleValueType tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field);
+const gchar *tuple_get_string(Tuple *tuple, const gint nfield, const gchar *field);
+gint tuple_get_int(Tuple *tuple, const gint nfield, const gchar *field);
 #define tuple_free(x) mowgli_object_unref(x);
 
 #endif
