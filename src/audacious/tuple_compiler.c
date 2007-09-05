@@ -25,7 +25,7 @@
  * - implement handling of external expressions
  * - error handling issues?
  * - evaluation context: how local variables should REALLY work?
- * - global context needed (?)
+ *   currently there is just a single context, is a "global" context needed?
  */
 
 #include "config.h"
@@ -412,6 +412,19 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
           case '(': c++;
             if (!strncmp(c, "empty)?", 7)) {
               c += 7;
+              literal = FALSE;
+              if (tc_get_item(&c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
+                c++;
+                tmp = tuple_evalnode_new();
+                tmp->opcode = OP_EXISTS;
+                if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
+                  tuple_error("Invalid variable '%s' in '%s'.\n", tmps1, expr);
+                  goto ret_error;
+                }
+                tmp->children = tuple_compiler_pass1(level, ctx, &c);
+                tuple_evalnode_insert(&res, tmp);
+              } else
+                goto ret_error;
             } else
               goto ext_expression;
             break;
@@ -499,7 +512,6 @@ ret_error:
 static TupleEvalNode *tuple_compiler_pass2(gboolean *changed, TupleEvalContext *ctx, TupleEvalNode *expr)
 {
   TupleEvalNode *curr = expr, *res = NULL;
-  *changed = FALSE;
   assert(ctx != NULL);
   assert(expr != NULL);
   
@@ -660,11 +672,13 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             case OP_LTEQ:       result = (resulti <= 0); break;
             case OP_GT:         result = (resulti >  0); break;
             case OP_GTEQ:       result = (resulti >= 0); break;
-            default: result = FALSE;
+            default:		result = FALSE;
           }
             
           if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
             return FALSE;
+        } else {
+          /* FIXME?! Warn that types are not same? */
         }
         break;
       
@@ -673,7 +687,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
 
         if (tf_get_fieldref(var0, tuple)) {
 
-        switch (var0->fieldref->type) {
+          switch (var0->fieldref->type) {
           case TUPLE_INT:
             result = (var0->fieldref->value.integer == 0);
             break;
@@ -692,14 +706,12 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
 
           default:
             result = TRUE;
-        }
+          }
         } else
           result = TRUE;
         
-        if (result) {
-          if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
-            return FALSE;
-        }
+        if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
+          return FALSE;
         break;
       
       default:
