@@ -48,6 +48,7 @@ enum {
     FIELD_FORMATTER,
     FIELD_PERFORMER,
     FIELD_COPYRIGHT,
+    FIELD_DATE,
 
     /* special field, must always be last */
     FIELD_LAST

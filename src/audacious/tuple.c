@@ -47,6 +47,7 @@ const gchar *tuple_fields[FIELD_LAST] = {
     "formatter",
     "performer",
     "copyright",
+    "date",
 };
 
 
