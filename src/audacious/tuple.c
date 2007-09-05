@@ -132,16 +132,22 @@ tuple_new_from_filename(const gchar *filename)
 
 
 static gboolean
-tuple_associate_data(const gchar **tfield, TupleValue **value, Tuple *tuple, const gint nfield, const gchar *field)
+tuple_associate_data(const gchar **tfield, TupleValue **value, Tuple *tuple, gint *nfield, const gchar *field)
 {
     g_return_val_if_fail(tuple != NULL, FALSE);
-    g_return_val_if_fail(nfield < FIELD_LAST, FALSE);
+    g_return_val_if_fail(*nfield < FIELD_LAST, FALSE);
 
-    if (nfield < 0)
+    /* Check for known fields */
+    if (*nfield < 0) {
+        gint i;
         *tfield = field;
-    else {
-        *tfield = tuple_fields[nfield];
-        tuple->values[nfield] = NULL;
+        for (i = 0; i < FIELD_LAST && *nfield < 0; i++)
+            if (!strcmp(field, tuple_fields[i])) *nfield = i;
+    }
+
+    if (*nfield >= 0) {
+        *tfield = tuple_fields[*nfield];
+        tuple->values[*nfield] = NULL;
     }
     
     if ((*value = mowgli_dictionary_delete(tuple->dict, *tfield)))
@@ -164,8 +170,9 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
 {
     TupleValue *value;
     const gchar *tfield;
+    gint ifield = nfield;
 
-    if (!tuple_associate_data(&tfield, &value, tuple, nfield, field))
+    if (!tuple_associate_data(&tfield, &value, tuple, &ifield, field))
         return FALSE;
 
     if (string == NULL)
@@ -175,7 +182,7 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
     value->type = TUPLE_STRING;
     value->value.string = g_strdup(string);
 
-    tuple_associate_data2(tuple, nfield, tfield, value);
+    tuple_associate_data2(tuple, ifield, tfield, value);
     return TRUE;
 }
 
@@ -184,15 +191,16 @@ tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint in
 {
     TupleValue *value;
     const gchar *tfield;
+    gint ifield = nfield;
     
-    if (!tuple_associate_data(&tfield, &value, tuple, nfield, field))
+    if (!tuple_associate_data(&tfield, &value, tuple, &ifield, field))
         return FALSE;
 
     value = mowgli_heap_alloc(tuple_value_heap);
     value->type = TUPLE_INT;
     value->value.integer = integer;
 
-    tuple_associate_data2(tuple, nfield, tfield, value);
+    tuple_associate_data2(tuple, ifield, tfield, value);
     return TRUE;
 }
 
