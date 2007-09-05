@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:40+0200\n"
+"POT-Creation-Date: 2007-09-05 19:18+0200\n"
 "PO-Revision-Date: 2007-01-31 00:46+0800\n"
 "Last-Translator: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
 "Language-Team: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
@@ -101,8 +101,8 @@ msgstr "特效插件清單 (_E)："
 msgid "<b>Effects</b>"
 msgstr "<b>特效</b>"
 
-#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
-#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
+#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:403
+#: src/audacious/ui_preferences.c:116
 msgid "Plugins"
 msgstr "插件"
 
@@ -348,7 +348,7 @@ msgstr "顯示清單項目的彈出資訊"
 msgid "Edit settings for popup information"
 msgstr "編輯彈出式資訊的設定"
 
-#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
+#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:203
 #: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
 msgid "Playlist"
 msgstr "播放清單"
@@ -527,7 +527,7 @@ msgid ""
 msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
+msgid "Interpolation Engine:"
 msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4593
@@ -609,20 +609,20 @@ msgstr "綠"
 msgid "Blue"
 msgstr "藍"
 
-#: src/audacious/input.c:718
+#: src/audacious/input.c:657
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious：%s"
 
-#: src/audacious/input.c:734
+#: src/audacious/input.c:673
 msgid "Filename:"
 msgstr "檔案名稱："
 
-#: src/audacious/input.c:753
+#: src/audacious/input.c:692
 msgid "No input plugin recognized this file"
 msgstr "沒有輸入插件適用此檔"
 
-#: src/audacious/input.c:755
+#: src/audacious/input.c:694
 #, c-format
 msgid "Input plugin: %s"
 msgstr "輸入插件：%s"
@@ -806,12 +806,12 @@ msgstr ""
 "\n"
 "版權所有 (C) 2005-2007 Audacious 開發團隊"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
-#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:355
+#: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
 msgstr "關於 Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:398
 msgid "Credits"
 msgstr "工作人員"
 
@@ -860,133 +860,133 @@ msgstr "BMP 開發人員："
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙語："
 
-#: src/audacious/ui_credits.c:157
+#: src/audacious/ui_credits.c:158
 msgid "Breton:"
 msgstr "布列塔尼語："
 
-#: src/audacious/ui_credits.c:160
+#: src/audacious/ui_credits.c:161
 msgid "Bulgarian:"
 msgstr "保加利亞語："
 
-#: src/audacious/ui_credits.c:163
+#: src/audacious/ui_credits.c:164
 #, fuzzy
 msgid "Catalan:"
 msgstr "義大利語："
 
-#: src/audacious/ui_credits.c:166
+#: src/audacious/ui_credits.c:167
 #, fuzzy
 msgid "Croatian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/ui_credits.c:169
+#: src/audacious/ui_credits.c:170
 msgid "Czech:"
 msgstr "捷克語："
 
-#: src/audacious/ui_credits.c:172
+#: src/audacious/ui_credits.c:173
 msgid "Dutch:"
 msgstr "荷蘭語："
 
-#: src/audacious/ui_credits.c:176
+#: src/audacious/ui_credits.c:177
 msgid "Finnish:"
 msgstr "芬蘭語："
 
-#: src/audacious/ui_credits.c:179
+#: src/audacious/ui_credits.c:180
 msgid "French:"
 msgstr "法語："
 
-#: src/audacious/ui_credits.c:182
+#: src/audacious/ui_credits.c:183
 msgid "German:"
 msgstr "德語："
 
-#: src/audacious/ui_credits.c:187
+#: src/audacious/ui_credits.c:188
 msgid "Georgian:"
 msgstr "喬治亞語："
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:191
 msgid "Greek:"
 msgstr "希臘語："
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Hindi:"
 msgstr "北印度語："
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Hungarian:"
 msgstr "匈牙利語："
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:202
 msgid "Italian:"
 msgstr "義大利語："
 
-#: src/audacious/ui_credits.c:205
+#: src/audacious/ui_credits.c:206
 msgid "Japanese:"
 msgstr "日語："
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:209
 msgid "Korean:"
 msgstr "韓語："
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:212
 msgid "Lithuanian:"
 msgstr "立陶宛語："
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:215
 msgid "Macedonian:"
 msgstr "馬其頓語："
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:218
 msgid "Polish:"
 msgstr "波蘭語："
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:221
 msgid "Romanian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:225
 msgid "Russian:"
 msgstr "俄語："
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:228
 msgid "Serbian (Latin):"
 msgstr "塞爾維亞 (拉丁語)："
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:231
 msgid "Serbian (Cyrillic):"
 msgstr "塞爾維亞 (斯拉夫語)："
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:234
 msgid "Simplified Chinese:"
 msgstr "簡體中文："
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:237
 msgid "Slovak:"
 msgstr "斯洛伐克語："
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:240
 msgid "Spanish:"
 msgstr "西班牙語："
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:243
 msgid "Swedish:"
 msgstr "瑞典語："
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:246
 msgid "Traditional Chinese:"
 msgstr "正體中文："
 
-#: src/audacious/ui_credits.c:248
+#: src/audacious/ui_credits.c:249
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:252
+#: src/audacious/ui_credits.c:253
 msgid "Ukrainian:"
 msgstr "烏克蘭語："
 
-#: src/audacious/ui_credits.c:255
+#: src/audacious/ui_credits.c:256
 msgid "Welsh:"
 msgstr "威爾斯語："
 
-#: src/audacious/ui_credits.c:401
+#: src/audacious/ui_credits.c:402
 msgid "Translators"
 msgstr "翻譯人員"
 
@@ -1039,27 +1039,27 @@ msgstr "音軌長度："
 msgid "Filename"
 msgstr "檔案名稱"
 
-#: src/audacious/ui_fileopener.c:134
+#: src/audacious/ui_fileopener.c:128
 msgid "Open Files"
 msgstr "開啟檔案"
 
-#: src/audacious/ui_fileopener.c:134
+#: src/audacious/ui_fileopener.c:128
 msgid "Add Files"
 msgstr "加入檔案"
 
-#: src/audacious/ui_fileopener.c:136
+#: src/audacious/ui_fileopener.c:130
 msgid "Close dialog on Open"
 msgstr "開啟後關閉對話框"
 
-#: src/audacious/ui_fileopener.c:136
+#: src/audacious/ui_fileopener.c:130
 msgid "Close dialog on Add"
 msgstr "加入後關閉對話框"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:357
 msgid "Play files"
 msgstr "播放檔案"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:359
 msgid "Load files"
 msgstr "載入檔案"
 
@@ -1187,8 +1187,8 @@ msgstr "立體聲"
 msgid "mono"
 msgstr "單聲道"
 
-#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:418
-#: src/audacious/ui_manager.c:419
+#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:423
+#: src/audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "跳至時刻"
 
@@ -1326,661 +1326,675 @@ msgstr "平衡：%d%% 右"
 msgid "Error in Audacious."
 msgstr "Audacious 發生錯誤。"
 
-#: src/audacious/ui_manager.c:47 src/audacious/ui_manager.c:48
+#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
 msgid "Autoscroll Songname"
 msgstr "自動捲動歌曲名稱"
 
-#: src/audacious/ui_manager.c:50 src/audacious/ui_manager.c:51
+#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
 msgid "Stop after Current Song"
 msgstr "播完目前的歌曲後停止"
 
-#: src/audacious/ui_manager.c:53 src/audacious/ui_manager.c:54
+#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
 msgid "Peaks"
 msgstr "波峰"
 
-#: src/audacious/ui_manager.c:56 src/audacious/ui_manager.c:57
+#: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
 msgid "Repeat"
 msgstr "重複"
 
-#: src/audacious/ui_manager.c:59 src/audacious/ui_manager.c:60
+#: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
 msgid "Shuffle"
 msgstr "隨機"
 
-#: src/audacious/ui_manager.c:62 src/audacious/ui_manager.c:63
+#: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
 msgid "No Playlist Advance"
 msgstr "不使用播放清單進階項目"
 
-#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
+#: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
 msgid "Show Player"
 msgstr "顯示播放器"
 
-#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
+#: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
 msgid "Show Playlist Editor"
 msgstr "顯示播放清單編輯器"
 
-#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
+#: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
 msgid "Show Equalizer"
 msgstr "顯示等化器"
 
-#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
+#: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
 msgid "Always on Top"
 msgstr "最上層顯示"
 
-#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
+#: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
 msgid "Put on All Workspaces"
 msgstr "置於所有工作區"
 
-#: src/audacious/ui_manager.c:80 src/audacious/ui_manager.c:81
+#: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
 msgid "Roll up Player"
 msgstr "捲起播放器"
 
-#: src/audacious/ui_manager.c:83 src/audacious/ui_manager.c:84
+#: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
 msgid "Roll up Playlist Editor"
 msgstr "捲起播放清單編輯器"
 
-#: src/audacious/ui_manager.c:86 src/audacious/ui_manager.c:87
+#: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
 msgid "Roll up Equalizer"
 msgstr "捲起等化器"
 
-#: src/audacious/ui_manager.c:89 src/audacious/ui_manager.c:90
+#: src/audacious/ui_manager.c:90 src/audacious/ui_manager.c:91
 msgid "DoubleSize"
 msgstr "雙倍大小"
 
-#: src/audacious/ui_manager.c:92 src/audacious/ui_manager.c:93
+#: src/audacious/ui_manager.c:93 src/audacious/ui_manager.c:94
 msgid "Easy Move"
 msgstr "隨意移動"
 
-#: src/audacious/ui_manager.c:101
+#: src/audacious/ui_manager.c:102
 msgid "Analyzer"
 msgstr "分析器模式"
 
-#: src/audacious/ui_manager.c:102
+#: src/audacious/ui_manager.c:103
 msgid "Scope"
 msgstr "範圍模式"
 
-#: src/audacious/ui_manager.c:103
+#: src/audacious/ui_manager.c:104
 msgid "Voiceprint"
 msgstr "聲波紋模式"
 
-#: src/audacious/ui_manager.c:104
+#: src/audacious/ui_manager.c:105
 msgid "Off"
 msgstr "關閉"
 
-#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:125
-#: src/audacious/ui_manager.c:131
+#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
+#: src/audacious/ui_manager.c:132
 msgid "Normal"
 msgstr "一般"
 
-#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
+#: src/audacious/ui_manager.c:110 src/audacious/ui_manager.c:127
 msgid "Fire"
 msgstr "火焰"
 
-#: src/audacious/ui_manager.c:110
+#: src/audacious/ui_manager.c:111
 msgid "Vertical Lines"
 msgstr "垂直線"
 
-#: src/audacious/ui_manager.c:114
+#: src/audacious/ui_manager.c:115
 msgid "Lines"
 msgstr "線"
 
-#: src/audacious/ui_manager.c:115
+#: src/audacious/ui_manager.c:116
 msgid "Bars"
 msgstr "長條"
 
-#: src/audacious/ui_manager.c:119
+#: src/audacious/ui_manager.c:120
 msgid "Dot Scope"
 msgstr "點狀範圍"
 
-#: src/audacious/ui_manager.c:120
+#: src/audacious/ui_manager.c:121
 msgid "Line Scope"
 msgstr "線狀範圍"
 
-#: src/audacious/ui_manager.c:121
+#: src/audacious/ui_manager.c:122
 msgid "Solid Scope"
 msgstr "密實範圍"
 
-#: src/audacious/ui_manager.c:127
+#: src/audacious/ui_manager.c:128
 msgid "Ice"
 msgstr "寒冰"
 
-#: src/audacious/ui_manager.c:132
+#: src/audacious/ui_manager.c:133
 msgid "Smooth"
 msgstr "平滑"
 
-#: src/audacious/ui_manager.c:136
+#: src/audacious/ui_manager.c:137
 msgid "Full (~50 fps)"
 msgstr "全速 (約 50 fps)"
 
-#: src/audacious/ui_manager.c:137
+#: src/audacious/ui_manager.c:138
 msgid "Half (~25 fps)"
 msgstr "半速 (約 25 fps)"
 
-#: src/audacious/ui_manager.c:138
+#: src/audacious/ui_manager.c:139
 msgid "Quarter (~13 fps)"
 msgstr "四分之一 (約 13 fps)"
 
-#: src/audacious/ui_manager.c:139
+#: src/audacious/ui_manager.c:140
 msgid "Eighth (~6 fps)"
 msgstr "八分之一 (約 6 fps)"
 
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
+#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
 msgid "Slowest"
 msgstr "最慢速"
 
-#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
+#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
 msgid "Slow"
 msgstr "慢速"
 
-#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
+#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
 msgid "Medium"
 msgstr "中等"
 
-#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
+#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
 msgid "Fast"
 msgstr "快速"
 
-#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
+#: src/audacious/ui_manager.c:148 src/audacious/ui_manager.c:156
 msgid "Fastest"
 msgstr "最快速"
 
-#: src/audacious/ui_manager.c:159
+#: src/audacious/ui_manager.c:160
 msgid "Time Elapsed"
 msgstr "經過時間"
 
-#: src/audacious/ui_manager.c:160
+#: src/audacious/ui_manager.c:161
 msgid "Time Remaining"
 msgstr "剩餘時間"
 
-#: src/audacious/ui_manager.c:169
+#: src/audacious/ui_manager.c:170
 msgid "Playback"
 msgstr "播放"
 
-#: src/audacious/ui_manager.c:171 src/audacious/ui_manager.c:172
+#: src/audacious/ui_manager.c:172 src/audacious/ui_manager.c:173
 msgid "Play"
 msgstr "播放"
 
-#: src/audacious/ui_manager.c:174 src/audacious/ui_manager.c:175
+#: src/audacious/ui_manager.c:175 src/audacious/ui_manager.c:176
 msgid "Pause"
 msgstr "暫停"
 
-#: src/audacious/ui_manager.c:177 src/audacious/ui_manager.c:178
+#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:179
 msgid "Stop"
 msgstr "停止"
 
-#: src/audacious/ui_manager.c:180 src/audacious/ui_manager.c:181
+#: src/audacious/ui_manager.c:181 src/audacious/ui_manager.c:182
 msgid "Previous"
 msgstr "上一首"
 
-#: src/audacious/ui_manager.c:183 src/audacious/ui_manager.c:184
+#: src/audacious/ui_manager.c:184 src/audacious/ui_manager.c:185
 msgid "Next"
 msgstr "下一首"
 
-#: src/audacious/ui_manager.c:189
+#: src/audacious/ui_manager.c:190
 msgid "Visualization"
 msgstr "視覺化效果"
 
-#: src/audacious/ui_manager.c:190
+#: src/audacious/ui_manager.c:191
 msgid "Visualization Mode"
 msgstr "視覺化模式"
 
-#: src/audacious/ui_manager.c:191
+#: src/audacious/ui_manager.c:192
 msgid "Analyzer Mode"
 msgstr "分析器模式"
 
-#: src/audacious/ui_manager.c:192
+#: src/audacious/ui_manager.c:193
 msgid "Scope Mode"
 msgstr "範圍模式"
 
-#: src/audacious/ui_manager.c:193
+#: src/audacious/ui_manager.c:194
 msgid "Voiceprint Mode"
 msgstr "聲波紋模式"
 
-#: src/audacious/ui_manager.c:194
+#: src/audacious/ui_manager.c:195
 msgid "WindowShade VU Mode"
 msgstr "視窗陰影 VU 模式"
 
-#: src/audacious/ui_manager.c:195
+#: src/audacious/ui_manager.c:196
 msgid "Refresh Rate"
 msgstr "重新整理頻率"
 
-#: src/audacious/ui_manager.c:196
+#: src/audacious/ui_manager.c:197
 msgid "Analyzer Falloff"
 msgstr "分析器下降速度"
 
-#: src/audacious/ui_manager.c:197
+#: src/audacious/ui_manager.c:198
 msgid "Peaks Falloff"
 msgstr "波峰下降速度"
 
-#: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
+#: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
 msgid "New Playlist"
 msgstr "新增播放清單"
 
-#: src/audacious/ui_manager.c:207 src/audacious/ui_manager.c:208
+#: src/audacious/ui_manager.c:208 src/audacious/ui_manager.c:209
 msgid "Select Next Playlist"
 msgstr "選擇下個播放清單"
 
-#: src/audacious/ui_manager.c:210 src/audacious/ui_manager.c:211
+#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:212
 msgid "Select Previous Playlist"
 msgstr "選擇上個播放清單"
 
-#: src/audacious/ui_manager.c:213 src/audacious/ui_manager.c:214
+#: src/audacious/ui_manager.c:214 src/audacious/ui_manager.c:215
 msgid "Delete Playlist"
 msgstr "選擇下個播放清單"
 
-#: src/audacious/ui_manager.c:216
+#: src/audacious/ui_manager.c:217
 msgid "Load List"
 msgstr "載入清單"
 
-#: src/audacious/ui_manager.c:217
+#: src/audacious/ui_manager.c:218
 msgid "Loads a playlist file into the selected playlist."
 msgstr "載入一個播放清單至所選清單中。"
 
-#: src/audacious/ui_manager.c:219
+#: src/audacious/ui_manager.c:220
 msgid "Save List"
 msgstr "儲存清單"
 
-#: src/audacious/ui_manager.c:220
+#: src/audacious/ui_manager.c:221
 msgid "Saves the selected playlist."
 msgstr "儲存所選播放清單"
 
-#: src/audacious/ui_manager.c:222
+#: src/audacious/ui_manager.c:223
 msgid "Save Default List"
 msgstr "儲存預設清單"
 
-#: src/audacious/ui_manager.c:223
+#: src/audacious/ui_manager.c:224
 msgid "Saves the selected playlist to the default location."
 msgstr "將所選播放清單存至預設位置。"
 
-#: src/audacious/ui_manager.c:226
+#: src/audacious/ui_manager.c:227
 msgid "Refresh List"
 msgstr "重新整理清單"
 
-#: src/audacious/ui_manager.c:227
+#: src/audacious/ui_manager.c:228
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr "重新整理和清單項目相關聯的資訊"
 
-#: src/audacious/ui_manager.c:230
+#: src/audacious/ui_manager.c:231
 msgid "List Manager"
 msgstr "播放清單管理員"
 
-#: src/audacious/ui_manager.c:231
+#: src/audacious/ui_manager.c:232
 msgid "Opens the playlist manager."
 msgstr "開啟播放清單管理員。"
 
-#: src/audacious/ui_manager.c:237
+#: src/audacious/ui_manager.c:238
 msgid "View"
 msgstr "檢視"
 
-#: src/audacious/ui_manager.c:241
+#: src/audacious/ui_manager.c:242
 msgid "Add Internet Address..."
 msgstr "加入網路位址..."
 
-#: src/audacious/ui_manager.c:242
+#: src/audacious/ui_manager.c:243
 msgid "Adds a remote track to the playlist."
 msgstr "加入遠端音軌至播放清單。"
 
-#: src/audacious/ui_manager.c:245
+#: src/audacious/ui_manager.c:246
 msgid "Add Files..."
 msgstr "加入檔案..."
 
-#: src/audacious/ui_manager.c:246
+#: src/audacious/ui_manager.c:247
 msgid "Adds files to the playlist."
 msgstr "加入檔案至播放清單。"
 
-#: src/audacious/ui_manager.c:251
+#: src/audacious/ui_manager.c:252
 msgid "Search and Select"
 msgstr "搜尋並選取"
 
-#: src/audacious/ui_manager.c:252
+#: src/audacious/ui_manager.c:253
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr "在播放清單中搜尋，並依指定的規則選取清單項目。"
 
-#: src/audacious/ui_manager.c:255
+#: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
 msgstr "反向選取"
 
-#: src/audacious/ui_manager.c:256
+#: src/audacious/ui_manager.c:257
 msgid "Inverts the selected and unselected entries."
 msgstr "反向已選和未選的項目。"
 
-#: src/audacious/ui_manager.c:259
+#: src/audacious/ui_manager.c:260
 msgid "Select All"
 msgstr "全選"
 
-#: src/audacious/ui_manager.c:260
+#: src/audacious/ui_manager.c:261
 msgid "Selects all of the playlist entries."
 msgstr "選取全部清單項目。"
 
-#: src/audacious/ui_manager.c:263
+#: src/audacious/ui_manager.c:264
 msgid "Select None"
 msgstr "取消選取"
 
-#: src/audacious/ui_manager.c:264
+#: src/audacious/ui_manager.c:265
 msgid "Deselects all of the playlist entries."
 msgstr "取消全部清單項目的選取"
 
-#: src/audacious/ui_manager.c:269
+#: src/audacious/ui_manager.c:270
 msgid "Clear Queue"
 msgstr "清除佇列"
 
-#: src/audacious/ui_manager.c:270
+#: src/audacious/ui_manager.c:271
 msgid "Clears the queue associated with this playlist."
 msgstr "清除和此播放清單相關聯的佇列。"
 
-#: src/audacious/ui_manager.c:273
+#: src/audacious/ui_manager.c:274
 msgid "Remove Unavailable Files"
 msgstr "移除無法使用的檔案"
 
-#: src/audacious/ui_manager.c:274
+#: src/audacious/ui_manager.c:275
 msgid "Removes unavailable files from the playlist."
 msgstr "移除清單中無法使用的檔案。"
 
-#: src/audacious/ui_manager.c:277
+#: src/audacious/ui_manager.c:278
 msgid "Remove Duplicates"
 msgstr "移除重複的項目"
 
-#: src/audacious/ui_manager.c:279 src/audacious/ui_manager.c:315
-#: src/audacious/ui_manager.c:345
+#: src/audacious/ui_manager.c:280 src/audacious/ui_manager.c:316
+#: src/audacious/ui_manager.c:346
 msgid "By Title"
 msgstr "依標題"
 
-#: src/audacious/ui_manager.c:280
+#: src/audacious/ui_manager.c:281
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "依標題移除清單中重複的項目。"
 
-#: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
-#: src/audacious/ui_manager.c:353
+#: src/audacious/ui_manager.c:284 src/audacious/ui_manager.c:324
+#: src/audacious/ui_manager.c:354
 msgid "By Filename"
 msgstr "依檔名"
 
-#: src/audacious/ui_manager.c:284
+#: src/audacious/ui_manager.c:285
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "依檔名移除清單中重複的項目。"
 
-#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:327
-#: src/audacious/ui_manager.c:357
+#: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:328
+#: src/audacious/ui_manager.c:358
 msgid "By Path + Filename"
 msgstr "依路徑 + 檔名"
 
-#: src/audacious/ui_manager.c:288
+#: src/audacious/ui_manager.c:289
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "依完整路徑移除清單中重複的項目。"
 
-#: src/audacious/ui_manager.c:291
+#: src/audacious/ui_manager.c:292
 msgid "Remove All"
 msgstr "全部移除"
 
-#: src/audacious/ui_manager.c:292
+#: src/audacious/ui_manager.c:293
 msgid "Removes all entries from the playlist."
 msgstr "移除全部的清單項目。"
 
-#: src/audacious/ui_manager.c:295
+#: src/audacious/ui_manager.c:296
 msgid "Remove Unselected"
 msgstr "移除未選取的"
 
-#: src/audacious/ui_manager.c:296
+#: src/audacious/ui_manager.c:297
 msgid "Remove unselected entries from the playlist."
 msgstr "移除清單中未選取的項目。"
 
-#: src/audacious/ui_manager.c:299
+#: src/audacious/ui_manager.c:300
 msgid "Remove Selected"
 msgstr "移除選取的"
 
-#: src/audacious/ui_manager.c:300
+#: src/audacious/ui_manager.c:301
 msgid "Remove selected entries from the playlist."
 msgstr "移除清單中選取的項目。"
 
-#: src/audacious/ui_manager.c:305
+#: src/audacious/ui_manager.c:306
 msgid "Randomize List"
 msgstr "隨機清單"
 
-#: src/audacious/ui_manager.c:306
+#: src/audacious/ui_manager.c:307
 msgid "Randomizes the playlist."
 msgstr "隨機排序播放清單。"
 
-#: src/audacious/ui_manager.c:309
+#: src/audacious/ui_manager.c:310
 msgid "Reverse List"
 msgstr "反轉清單"
 
-#: src/audacious/ui_manager.c:310
+#: src/audacious/ui_manager.c:311
 msgid "Reverses the playlist."
 msgstr "反轉播放清單。"
 
-#: src/audacious/ui_manager.c:313
+#: src/audacious/ui_manager.c:314
 msgid "Sort List"
 msgstr "排序清單"
 
-#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:346
+#: src/audacious/ui_manager.c:317 src/audacious/ui_manager.c:347
 msgid "Sorts the list by title."
 msgstr "依標題排序清單。"
 
-#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
+#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
 msgid "By Artist"
 msgstr "依藝人"
 
-#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
+#: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
 msgid "Sorts the list by artist."
 msgstr "依藝人排序清單。"
 
-#: src/audacious/ui_manager.c:324 src/audacious/ui_manager.c:354
+#: src/audacious/ui_manager.c:325 src/audacious/ui_manager.c:355
 msgid "Sorts the list by filename."
 msgstr "依檔名排序清單。"
 
-#: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
+#: src/audacious/ui_manager.c:329 src/audacious/ui_manager.c:359
 msgid "Sorts the list by full pathname."
 msgstr "依完整路徑排序清單。"
 
-#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
+#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
 msgid "By Date"
 msgstr "依日期"
 
-#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
+#: src/audacious/ui_manager.c:333 src/audacious/ui_manager.c:363
 msgid "Sorts the list by modification time."
 msgstr "依修改時間排序清單。"
 
-#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
+#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
 msgid "By Track Number"
 msgstr "依音軌編號"
 
-#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
+#: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
 msgid "Sorts the list by track number."
 msgstr "依音軌編號排序清單。"
 
-#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
+#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
 msgid "By Playlist Entry"
 msgstr "依清單項目"
 
-#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
+#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:371
 msgid "Sorts the list by playlist entry."
 msgstr "依清單項目排序清單。"
 
-#: src/audacious/ui_manager.c:343
+#: src/audacious/ui_manager.c:344
 msgid "Sort Selected"
 msgstr "排序選取的項目"
 
-#: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
+#: src/audacious/ui_manager.c:380
+#, fuzzy
+msgid "File"
+msgstr "火焰"
+
+#: src/audacious/ui_manager.c:381
+msgid "Help"
+msgstr ""
+
+#: src/audacious/ui_manager.c:383
+#, fuzzy
+msgid "Plugin Services"
+msgstr "插件"
+
+#: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 msgid "View Track Details"
 msgstr "檢視音軌細節"
 
-#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
+#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:389
 msgid "View track details"
 msgstr "檢視音軌細節"
 
-#: src/audacious/ui_manager.c:389
+#: src/audacious/ui_manager.c:394
 msgid "Play File"
 msgstr "播放檔案"
 
-#: src/audacious/ui_manager.c:390
+#: src/audacious/ui_manager.c:395
 msgid "Load and play a file"
 msgstr "載入並播放檔案"
 
-#: src/audacious/ui_manager.c:392
+#: src/audacious/ui_manager.c:397
 msgid "Play Location"
 msgstr "播放位置"
 
-#: src/audacious/ui_manager.c:393
+#: src/audacious/ui_manager.c:398
 msgid "Play media from the selected location"
 msgstr "從選取的位置播放媒體"
 
-#: src/audacious/ui_manager.c:395
+#: src/audacious/ui_manager.c:400
 #, fuzzy
 msgid "Last.fm radio"
 msgstr "播放位置"
 
-#: src/audacious/ui_manager.c:396
+#: src/audacious/ui_manager.c:401
 #, fuzzy
 msgid "Play Last.fm radio"
 msgstr "播放位置"
 
-#: src/audacious/ui_manager.c:400
+#: src/audacious/ui_manager.c:405
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: src/audacious/ui_manager.c:401
+#: src/audacious/ui_manager.c:406
 msgid "Open preferences window"
 msgstr "開啟偏好設定視窗"
 
-#: src/audacious/ui_manager.c:403
+#: src/audacious/ui_manager.c:408
 msgid "_Quit"
 msgstr "結束 (_Q)"
 
-#: src/audacious/ui_manager.c:404
+#: src/audacious/ui_manager.c:409
 msgid "Quit Audacious"
 msgstr "結束 Audacious"
 
-#: src/audacious/ui_manager.c:406 src/audacious/ui_manager.c:407
+#: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
 msgid "Set A-B"
 msgstr "設定播放區段"
 
-#: src/audacious/ui_manager.c:409 src/audacious/ui_manager.c:410
+#: src/audacious/ui_manager.c:414 src/audacious/ui_manager.c:415
 msgid "Clear A-B"
 msgstr "清除播放區段"
 
-#: src/audacious/ui_manager.c:412 src/audacious/ui_manager.c:413
+#: src/audacious/ui_manager.c:417 src/audacious/ui_manager.c:418
 msgid "Jump to Playlist Start"
 msgstr "跳至播放清單開頭"
 
-#: src/audacious/ui_manager.c:415 src/audacious/ui_manager.c:416
+#: src/audacious/ui_manager.c:420 src/audacious/ui_manager.c:421
 msgid "Jump to File"
 msgstr "跳至檔案"
 
-#: src/audacious/ui_manager.c:421
+#: src/audacious/ui_manager.c:426
 msgid "Queue Toggle"
 msgstr "佇列切換"
 
-#: src/audacious/ui_manager.c:422
+#: src/audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr "啟用/停用清單佇列中的項目。"
 
-#: src/audacious/ui_manager.c:429
+#: src/audacious/ui_manager.c:434
 msgid "Load"
 msgstr "載入"
 
-#: src/audacious/ui_manager.c:430
+#: src/audacious/ui_manager.c:435
 msgid "Import"
 msgstr "匯入"
 
-#: src/audacious/ui_manager.c:431
+#: src/audacious/ui_manager.c:436
 msgid "Save"
 msgstr "儲存"
 
-#: src/audacious/ui_manager.c:432
+#: src/audacious/ui_manager.c:437
 msgid "Delete"
 msgstr "刪除"
 
-#: src/audacious/ui_manager.c:434 src/audacious/ui_manager.c:455
-#: src/audacious/ui_manager.c:470
+#: src/audacious/ui_manager.c:439 src/audacious/ui_manager.c:460
+#: src/audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "設定組合"
 
-#: src/audacious/ui_manager.c:435
+#: src/audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "載入設定組合"
 
-#: src/audacious/ui_manager.c:437 src/audacious/ui_manager.c:458
-#: src/audacious/ui_manager.c:473
+#: src/audacious/ui_manager.c:442 src/audacious/ui_manager.c:463
+#: src/audacious/ui_manager.c:478
 msgid "Auto-load preset"
 msgstr "自動載入設定組合"
 
-#: src/audacious/ui_manager.c:438
+#: src/audacious/ui_manager.c:443
 msgid "Load auto-load preset"
 msgstr "載入自動設定組合"
 
-#: src/audacious/ui_manager.c:440 src/audacious/ui_manager.c:461
+#: src/audacious/ui_manager.c:445 src/audacious/ui_manager.c:466
 msgid "Default"
 msgstr "預設的設定組合"
 
-#: src/audacious/ui_manager.c:441
+#: src/audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr "載入預設的設定組合至等化器"
 
-#: src/audacious/ui_manager.c:443
+#: src/audacious/ui_manager.c:448
 msgid "Zero"
 msgstr "零值"
 
-#: src/audacious/ui_manager.c:444
+#: src/audacious/ui_manager.c:449
 msgid "Set equalizer preset levels to zero"
 msgstr "將等化器設定組合設定為零值"
 
-#: src/audacious/ui_manager.c:446
+#: src/audacious/ui_manager.c:451
 msgid "From file"
 msgstr "從檔案"
 
-#: src/audacious/ui_manager.c:447
+#: src/audacious/ui_manager.c:452
 msgid "Load preset from file"
 msgstr "從檔案載入設定組合"
 
-#: src/audacious/ui_manager.c:449
+#: src/audacious/ui_manager.c:454
 msgid "From WinAMP EQF file"
 msgstr "從 WinAMP EQF 檔案"
 
-#: src/audacious/ui_manager.c:450
+#: src/audacious/ui_manager.c:455
 msgid "Load preset from WinAMP EQF file"
 msgstr "從 WinAMP EQF 檔案載入設定組合"
 
-#: src/audacious/ui_manager.c:452
+#: src/audacious/ui_manager.c:457
 msgid "WinAMP Presets"
 msgstr "WinAMP 設定組合"
 
-#: src/audacious/ui_manager.c:453
+#: src/audacious/ui_manager.c:458
 msgid "Import WinAMP presets"
 msgstr "匯入 WinAMP 設定組合"
 
-#: src/audacious/ui_manager.c:456
+#: src/audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "儲存設定組合"
 
-#: src/audacious/ui_manager.c:459
+#: src/audacious/ui_manager.c:464
 msgid "Save auto-load preset"
 msgstr "儲存自動載入設定組合"
 
-#: src/audacious/ui_manager.c:462
+#: src/audacious/ui_manager.c:467
 msgid "Save default preset"
 msgstr "存為預設的設定組合"
 
-#: src/audacious/ui_manager.c:464
+#: src/audacious/ui_manager.c:469
 msgid "To file"
 msgstr "至檔案"
 
-#: src/audacious/ui_manager.c:465
+#: src/audacious/ui_manager.c:470
 msgid "Save preset to file"
 msgstr "儲存設定組合至檔案"
 
-#: src/audacious/ui_manager.c:467
+#: src/audacious/ui_manager.c:472
 msgid "To WinAMP EQF file"
 msgstr "至 WinAMP EQF 檔案"
 
-#: src/audacious/ui_manager.c:468
+#: src/audacious/ui_manager.c:473
 msgid "Save preset to WinAMP EQF file"
 msgstr "儲存設定組合至 WinAMP EQF 檔案"
 
-#: src/audacious/ui_manager.c:471
+#: src/audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "刪除設定組合"
 
-#: src/audacious/ui_manager.c:474
+#: src/audacious/ui_manager.c:479
 msgid "Delete auto-load preset"
 msgstr "刪除自動載入設定組合"
 
