@@ -521,7 +521,9 @@ plugin_system_init(void)
         disabled = g_strsplit(cfg.disabled_iplugins, ":", 0);
 
         while (disabled[i]) {
-            INPUT_PLUGIN(plugin_get_plugin(disabled[i]))->enabled = FALSE;
+            Plugin *plugintmp = plugin_get_plugin(disabled[i]);
+            if (plugintmp)
+                INPUT_PLUGIN(plugintmp)->enabled = FALSE;
             i++;
         }
 
