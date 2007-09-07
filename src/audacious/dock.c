@@ -470,8 +470,8 @@ dock_move_press(GList * window_list, GtkWindow * w,
 
     gtk_window_present(w);
 
-    gtk_object_set_data(GTK_OBJECT(w), "move_offset_x", GINT_TO_POINTER(event->x));
-    gtk_object_set_data(GTK_OBJECT(w), "move_offset_y", GINT_TO_POINTER(event->y));
+    gtk_object_set_data(GTK_OBJECT(w), "move_offset_x", GINT_TO_POINTER((gint) event->x));
+    gtk_object_set_data(GTK_OBJECT(w), "move_offset_y", GINT_TO_POINTER((gint) event->y));
     if (move_list)
         gtk_object_set_data(GTK_OBJECT(w), "docked_list",
                             get_docked_list(NULL, window_list, w, 0, 0));
