@@ -159,6 +159,8 @@ LIBDEP += ../libaudclient/libaudclient$(SHARED_SUFFIX)
 LDADD += -L../libaudclient -laudclient
 endif
 
+LIBADD += $(LDADD)
+
 depend-prehook: $(DBUS_BINDINGS)
 
 build_stamp.c: 
