@@ -31,8 +31,6 @@
 # define SHARED_SUFFIX G_MODULE_SUFFIX
 #endif
 
-#include "pluginenum.h"
-
 #include <glib.h>
 #include <gmodule.h>
 #include <glib/gprintf.h>
@@ -51,14 +49,18 @@
 #include "output.h"
 #include "visualization.h"
 #include "discovery.h"
+
+#include "pluginenum.h"
+
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
     NULL
 };
 
-GHashTable *plugin_matrix = NULL;
 GList *lowlevel_list = NULL;
 extern GList *vfs_transports;
+
+mowgli_dictionary_t *plugin_dict = NULL;
 
 static gint
 inputlist_compare_func(gconstpointer a, gconstpointer b)
@@ -123,45 +125,46 @@ discoverylist_compare_func(gconstpointer a, gconstpointer b)
 static gboolean
 plugin_is_duplicate(const gchar * filename)
 {
-    GList *l;
-    const gchar *basename = g_basename(filename);
+    gchar *base_filename = g_path_get_basename(filename);
 
-    /* FIXME: messy stuff */
+    if (mowgli_dictionary_retrieve(plugin_dict, base_filename) != NULL)
+    {
+        g_free(base_filename);
+        return TRUE;
+    }
 
-    for (l = ip_data.input_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(INPUT_PLUGIN(l->data)->filename)))
-            return TRUE;
-
-    for (l = op_data.output_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(OUTPUT_PLUGIN(l->data)->filename)))
-            return TRUE;
-
-    for (l = ep_data.effect_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(EFFECT_PLUGIN(l->data)->filename)))
-            return TRUE;
-
-    for (l = gp_data.general_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(GENERAL_PLUGIN(l->data)->filename)))
-            return TRUE;
-
-    for (l = vp_data.vis_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(VIS_PLUGIN(l->data)->filename)))
-            return TRUE;
-
-    for (l = lowlevel_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(LOWLEVEL_PLUGIN(l->data)->filename)))
-            return TRUE;
-
-    for (l = dp_data.discovery_list; l; l = g_list_next(l))
-        if (!strcmp(basename, g_basename(DISCOVERY_PLUGIN(l->data)->filename)))
-            return TRUE;
+    g_free(base_filename);
 
     return FALSE;
 }
 
+gboolean
+plugin_is_enabled(const gchar *filename)
+{
+    Plugin *plugin = mowgli_dictionary_retrieve(plugin_dict, filename);
 
-#define PLUGIN_GET_INFO(x) ((PluginGetInfoFunc)(x))()
-typedef Plugin * (*PluginGetInfoFunc) (void);
+    if (!plugin)
+        return FALSE;
+
+    return plugin->enabled;
+}
+
+void
+plugin_set_enabled(const gchar *filename, gboolean enabled)
+{
+    Plugin *plugin = mowgli_dictionary_retrieve(plugin_dict, filename);
+
+    if (!plugin)
+        return;
+
+    plugin->enabled = enabled;
+}
+
+Plugin *
+plugin_get_plugin(const gchar *filename)
+{
+    return mowgli_dictionary_retrieve(plugin_dict, filename);
+}
 
 static void
 input_plugin_init(Plugin * plugin)
@@ -180,8 +183,11 @@ input_plugin_init(Plugin * plugin)
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
     
-    g_hash_table_replace(plugin_matrix, g_path_get_basename(p->filename),
-                         GINT_TO_POINTER(1));
+    p->enabled = TRUE;
+
+    /* XXX: we need something better than p->filename if plugins
+       will eventually provide multiple plugins --nenolod */
+    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
 
 static void
@@ -189,6 +195,8 @@ output_plugin_init(Plugin * plugin)
 {
     OutputPlugin *p = OUTPUT_PLUGIN(plugin);
     op_data.output_list = g_list_append(op_data.output_list, p);    
+
+    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
 
 static void
@@ -196,6 +204,8 @@ effect_plugin_init(Plugin * plugin)
 {
     EffectPlugin *p = EFFECT_PLUGIN(plugin);
     ep_data.effect_list = g_list_append(ep_data.effect_list, p);
+
+    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
 
 static void
@@ -203,6 +213,8 @@ general_plugin_init(Plugin * plugin)
 {
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
     gp_data.general_list = g_list_append(gp_data.general_list, p);
+
+    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
 
 static void
@@ -211,6 +223,8 @@ vis_plugin_init(Plugin * plugin)
     VisPlugin *p = VIS_PLUGIN(plugin);
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
+
+    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
 
 static void
@@ -218,6 +232,8 @@ discovery_plugin_init(Plugin * plugin)
 {
     DiscoveryPlugin *p = DISCOVERY_PLUGIN(plugin);
     dp_data.discovery_list = g_list_append(dp_data.discovery_list, p);
+
+    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
 
 /*******************************************************************/
@@ -245,7 +261,6 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     GeneralPlugin **gp_iter;
     VisPlugin **vp_iter;
     DiscoveryPlugin **dp_iter;
-
 
     if (header->magic != PLUGIN_MAGIC)
         return plugin2_dispose(module, "plugin <%s> discarded, invalid module magic", filename);
@@ -406,8 +421,7 @@ plugin_system_init(void)
         return;
     }
 
-    plugin_matrix = g_hash_table_new_full(g_str_hash, g_str_equal, g_free,
-                                          NULL);
+    plugin_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
 
 #ifndef DISABLE_USER_PLUGIN_DIR
     scan_plugins(bmp_paths[BMP_PATH_USER_PLUGIN_DIR]);
@@ -505,9 +519,9 @@ plugin_system_init(void)
 
     if (cfg.disabled_iplugins) {
         disabled = g_strsplit(cfg.disabled_iplugins, ":", 0);
+
         while (disabled[i]) {
-            g_hash_table_replace(plugin_matrix, disabled[i],
-                                 GINT_TO_POINTER(FALSE));
+            INPUT_PLUGIN(plugin_get_plugin(disabled))->enabled = FALSE;
             i++;
         }
 
@@ -684,5 +698,5 @@ plugin_system_cleanup(void)
         vfs_transports = NULL;
     }
 
-    g_hash_table_destroy( plugin_matrix );
+    mowgli_dictionary_destroy(plugin_dict, NULL, NULL);
 }

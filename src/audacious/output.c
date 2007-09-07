@@ -63,6 +63,7 @@ OutputPlugin psuedo_output_plugin = {
     NULL,
     NULL,
     NULL,
+    TRUE,
     output_get_volume,
     output_set_volume,
     output_open_audio,

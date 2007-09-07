@@ -334,7 +334,7 @@ playback_play_file(PlaylistEntry *entry)
         }
     }
 
-    if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
+    if (!entry->decoder || !entry->decoder->enabled)
     {
         set_current_input_playback(NULL);
 

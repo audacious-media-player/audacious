@@ -124,20 +124,22 @@ enable_vis_plugin(gint i, gboolean enable)
         return;
     vp = node->data;
 
-    if (enable && !g_list_find(vp_data.enabled_list, vp)) {
+    if (enable && !vp->enabled) {
         vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
         if (vp->init)
             vp->init();
         if (playback_get_playing() && vp->playback_start)
             vp->playback_start();
     }
-    else if (!enable && g_list_find(vp_data.enabled_list, vp)) {
+    else if (!enable && vp->enabled) {
         vp_data.enabled_list = g_list_remove(vp_data.enabled_list, vp);
         if (playback_get_playing() && vp->playback_stop)
             vp->playback_stop();
         if (vp->cleanup)
             vp->cleanup();
     }
+
+    vp->enabled = enable;
 }
 
 gboolean
@@ -189,6 +191,7 @@ vis_enable_from_stringified_list(gchar * list)
                     vp->init();
                 if (playback_get_playing() && vp->playback_start)
                     vp->playback_start();
+                vp->enabled = TRUE;
             }
             g_free(base);
         }

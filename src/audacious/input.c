@@ -32,6 +32,8 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#include <mowgli.h>
+
 #include "fft.h"
 #include "input.h"
 #include "main.h"
@@ -93,46 +95,34 @@ get_input_list(void)
     return ip_data.input_list;
 }
 
-
-gboolean
-input_is_enabled(const gchar * filename)
-{
-    gchar *basename = g_path_get_basename(filename);
-    gint enabled;
-
-    enabled = GPOINTER_TO_INT(g_hash_table_lookup(plugin_matrix, basename));
-    g_free(basename);
-
-    return enabled;
-}
-
-static void
-disabled_iplugins_foreach_func(const gchar * name,
-                               gboolean enabled,
-                               GString * list)
-{
-    g_return_if_fail(list != NULL);
-
-    if (enabled)
-        return;
-
-    if (list->len > 0)
-        g_string_append(list, ":");
-
-    g_string_append(list, name);
-}
-
+/*
+ * TODO: move this to utility as something like
+ *   plugin_generate_list(GList *plugin_list, gboolean enabled_state)
+ *
+ *   -nenolod
+ */
 gchar *
 input_stringify_disabled_list(void)
 {
-    GString *disabled_list;
+    GList *node;
+    GString *list = g_string_new("");
 
-    disabled_list = g_string_new("");
-    g_hash_table_foreach(plugin_matrix,
-                         (GHFunc) disabled_iplugins_foreach_func,
-                         disabled_list);
+    MOWGLI_ITER_FOREACH(node, ip_data.input_list)
+    {
+        Plugin *plugin = (Plugin *) node->data;
+        gchar *filename = g_path_get_basename(plugin->filename);
 
-    return g_string_free(disabled_list, FALSE);
+        if (plugin->enabled)
+            continue;
+
+        if (list->len > 0)
+            g_string_append(list, ":");
+
+        g_string_append(list, filename);
+        g_free(filename);
+    }
+
+    return g_string_free(list, FALSE);
 }
 
 void
@@ -371,8 +361,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */
-    if ((ip = uri_get_plugin(filename)) != NULL &&
-        input_is_enabled(ip->filename) == TRUE)
+    if ((ip = uri_get_plugin(filename)) != NULL && ip->enabled)
     {
         if (ip->is_our_file != NULL)
             ret = ip->is_our_file(filename_proxy);
@@ -396,7 +385,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         for (node = get_input_list(); node != NULL; node = g_list_next(node))
         {
             ip = INPUT_PLUGIN(node->data);
-            if (!ip || !input_is_enabled(ip->filename))
+            if (!ip || !ip->enabled)
                 continue;
             if (ip->is_our_file != NULL)
                 ret = ip->is_our_file(filename_proxy);
@@ -430,8 +419,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                         !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
 
     mimetype = vfs_get_metadata(fd, "content-type");
-    if ((ip = mime_get_plugin(mimetype)) != NULL &&
-	input_is_enabled(ip->filename) == TRUE)
+    if ((ip = mime_get_plugin(mimetype)) != NULL && ip->enabled)
     {
         if (ip->probe_for_tuple != NULL)
         {
@@ -486,7 +474,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     {
         ip = INPUT_PLUGIN(node->data);
 
-        if (!ip || !input_is_enabled(ip->filename))
+        if (!ip || !ip->enabled)
             continue;
 
         vfs_rewind(fd);
@@ -764,7 +752,7 @@ input_scan_dir(const gchar * path)
         if (!ip->scan_dir)
             continue;
 
-        if (!input_is_enabled(ip->filename))
+        if (!ip->enabled)
             continue;
 
         if ((result = ip->scan_dir(path_proxy)))

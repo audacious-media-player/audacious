@@ -76,6 +76,7 @@ static EffectPlugin pseudo_effect_plugin = {
     NULL,
     NULL,
     NULL,
+    TRUE,
     effect_do_mod_samples,
     effect_do_query_format
 };
@@ -137,13 +138,14 @@ enable_effect_plugin(int i, gboolean enable)
     if (!node || !(node->data))
         return;
     ep = node->data;
+    ep->enabled = enable;
 
-    if (enable && !g_list_find(ep_data.enabled_list, ep)) {
+    if (enable && !ep->enabled) {
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
         if (ep->init)
             ep->init();
     }
-    else if (!enable && g_list_find(ep_data.enabled_list, ep)) {
+    else if (!enable && ep->enabled) {
         ep_data.enabled_list = g_list_remove(ep_data.enabled_list, ep);
         if (ep->cleanup)
             ep->cleanup();
@@ -207,6 +209,7 @@ effect_enable_from_stringified_list(const gchar * list)
                                               data)->filename);
             if (!strcmp(plugins[i], base)) {
                 ep = node->data;
+                ep->enabled = TRUE;
                 ep_data.enabled_list =
                     g_list_append(ep_data.enabled_list, ep);
                 if (ep->init)
