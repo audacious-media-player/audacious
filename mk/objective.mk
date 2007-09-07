@@ -209,6 +209,16 @@ build: depend
 	fi;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+pch:
+	@for i in *.h; do \
+		if [ $(SHOW_CFLAGS) -eq 1 ]; then	\
+			printf "%10s     %-20s (%s)\n" "CC [HDR]" $$i "${CFLAGS}";	\
+		else \
+			printf "%10s     %-20s\n" "CC [HDR]" $$i;	\
+		fi; \
+		$(CC) $(CFLAGS) -c $$i -o $$i.gch; \
+	done
+
 $(OBJECTIVE_LIBS): $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
