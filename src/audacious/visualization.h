@@ -41,8 +41,6 @@ GList *get_vis_list(void);
 GList *get_vis_enabled_list(void);
 void enable_vis_plugin(gint i, gboolean enable);
 void vis_disable_plugin(VisPlugin * vp);
-void vis_about(gint i);
-void vis_configure(gint i);
 void vis_playback_start(void);
 void vis_playback_stop(void);
 gboolean vis_enabled(gint i);

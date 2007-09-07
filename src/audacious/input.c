@@ -861,23 +861,3 @@ input_set_status_buffering(gboolean status)
 
     ui_skinned_playstatus_set_buffering(mainwin_playstatus, ip_data.buffering);
 }
-
-void
-input_about(gint index)
-{
-    InputPlugin *ip;
-
-    ip = g_list_nth(ip_data.input_list, index)->data;
-    if (ip && ip->about)
-        ip->about();
-}
-
-void
-input_configure(gint index)
-{
-    InputPlugin *ip;
-
-    ip = g_list_nth(ip_data.input_list, index)->data;
-    if (ip && ip->configure)
-        ip->configure();
-}

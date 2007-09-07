@@ -105,31 +105,6 @@ get_effect_enabled_list(void)
 }
 
 void
-effect_about(int i)
-{
-    EffectPlugin *effect;
-    GList *node = g_list_nth(ep_data.effect_list, i);
-    if (node) {
-        effect = node->data;
-        if (effect && effect->about)
-            effect->about();
-    }
-}
-
-void
-effect_configure(int i)
-{
-    GList *node = g_list_nth(ep_data.effect_list, i);
-    EffectPlugin *effect;
-    if (node) {
-        effect = node->data;
-        if (effect && effect->configure)
-            effect->configure();
-    }
-}
-
-
-void
 enable_effect_plugin(int i, gboolean enable)
 {
     GList *node = g_list_nth(ep_data.effect_list, i);

@@ -53,29 +53,6 @@ get_discovery_plugin(gint i)
     return DISCOVERY_PLUGIN(node->data);
 }
 
-
-void
-discovery_about(gint i)
-{
-    DiscoveryPlugin *plugin = get_discovery_plugin(i);
-
-    if (!plugin || !plugin->about)
-        return;
-
-    plugin->about();
-}
-
-void
-discovery_configure(gint i)
-{
-    DiscoveryPlugin *plugin = get_discovery_plugin(i);
-
-    if (!plugin || !plugin->configure)
-        return;
-
-    plugin->configure();
-}
-
 void
 enable_discovery_plugin(gint i, gboolean enable)
 {
