@@ -152,6 +152,7 @@ static const gchar *credit_text[] = {
 
 static const gchar *translators[] = {
     N_("Brazilian Portuguese:"),
+    "Fábio Antunes",
     "Philipi Pinto",
     NULL,
     N_("Breton:"),
