@@ -86,6 +86,16 @@ typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
+#define PLUGIN_COMMON_FIELDS		\
+    gpointer handle;			\
+    gchar *filename;			\
+    gchar *description;			\
+    void (*init) (void);		\
+    void (*cleanup) (void);		\
+    void (*about) (void);		\
+    void (*configure) (void);		\
+	
+
 /*
  * The v2 Module header.
  *
@@ -140,9 +150,7 @@ typedef struct {
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
 struct _Plugin {
-    gpointer handle;
-    gchar *filename;
-    gchar *description;
+    PLUGIN_COMMON_FIELDS
 };
 
 /*
@@ -150,27 +158,16 @@ struct _Plugin {
  * VFSContainers and the like.
  *
  * They are not GUI visible at this time.
+ *
+ * XXX: Is this still in use in 1.4? --nenolod
  */
 struct _LowlevelPlugin {
-    gpointer handle;
-    gchar *filename;
-
-    gchar *description;
-
-    void (*init) (void);
-    void (*cleanup) (void);
+    PLUGIN_COMMON_FIELDS
 };
 
 struct _OutputPlugin {
-    gpointer handle;
-    gchar *filename;
+    PLUGIN_COMMON_FIELDS
 
-    gchar *description;
-
-    void (*init) (void);
-    void (*cleanup) (void);
-    void (*about) (void);
-    void (*configure) (void);
     void (*get_volume) (gint * l, gint * r);
     void (*set_volume) (gint l, gint r);
 
@@ -189,15 +186,7 @@ struct _OutputPlugin {
 };
 
 struct _EffectPlugin {
-    gpointer handle;
-    gchar *filename;
-
-    gchar *description;
-
-    void (*init) (void);
-    void (*cleanup) (void);
-    void (*about) (void);
-    void (*configure) (void);
+    PLUGIN_COMMON_FIELDS
 
     gint (*mod_samples) (gpointer * data, gint length, AFormat fmt, gint srate, gint nch);
     void (*query_format) (AFormat * fmt, gint * rate, gint * nch);
@@ -222,14 +211,7 @@ struct _InputPlayback {
 };
 
 struct _InputPlugin {
-    gpointer handle;
-    gchar *filename;
-
-    gchar *description;
-
-    void (*init) (void);
-    void (*about) (void);
-    void (*configure) (void);
+    PLUGIN_COMMON_FIELDS
 
     gint (*is_our_file) (gchar * filename);
     GList *(*scan_dir) (gchar * dirname);
@@ -245,8 +227,6 @@ struct _InputPlugin {
 
     gint (*get_volume) (gint * l, gint * r);
     gint (*set_volume) (gint l, gint r);
-
-    void (*cleanup) (void);
 
     InputVisType (*get_vis_type) (void);
     void (*add_vis_pcm) (gint time, AFormat fmt, gint nch, gint length, gpointer ptr);
@@ -273,30 +253,15 @@ struct _InputPlugin {
 };
 
 struct _GeneralPlugin {
-    gpointer handle;
-    gchar *filename;
-
-    gchar *description;
-
-    void (*init) (void);
-    void (*about) (void);
-    void (*configure) (void);
-    void (*cleanup) (void);
+    PLUGIN_COMMON_FIELDS
 };
 
 struct _VisPlugin {
-    gpointer handle;
-    gchar *filename;
-
-    gchar *description;
+    PLUGIN_COMMON_FIELDS
 
     gint num_pcm_chs_wanted;
     gint num_freq_chs_wanted;
 
-    void (*init) (void);
-    void (*cleanup) (void);
-    void (*about) (void);
-    void (*configure) (void);
     void (*disable_plugin) (struct _VisPlugin *);
     void (*playback_start) (void);
     void (*playback_stop) (void);
@@ -305,16 +270,13 @@ struct _VisPlugin {
 };
 
 struct _DiscoveryPlugin {
-    gpointer handle;
-    gchar *filename;
-    gchar *description;
- 
-    void (*init) (void);
-    void (*cleanup) (void);
-    void (*about) (void);
-    void (*configure) (void);
+    PLUGIN_COMMON_FIELDS
+
     GList *(*get_devices);  
 };
+
+/* undefine the macro -- struct Plugin should be used instead. */
+#undef PLUGIN_COMMON_FIELDS
 
 G_BEGIN_DECLS
 
