@@ -128,7 +128,7 @@ gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gbool
   /* Find fieldidx, if any */
   if (type == VAR_FIELD) {
     for (i = 0; i < FIELD_LAST && ref < 0; i++)
-      if (strcmp(tuple_fields[i], name) == 0) ref = i;
+      if (strcmp(tuple_fields[i].name, name) == 0) ref = i;
 
     tmp->fieldidx = ref;
   }

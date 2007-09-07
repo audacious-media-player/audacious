@@ -54,13 +54,18 @@ enum {
     FIELD_LAST
 };
 
-extern const gchar *tuple_fields[FIELD_LAST];
-
 typedef enum {
     TUPLE_STRING,
     TUPLE_INT,
     TUPLE_UNKNOWN
 } TupleValueType;
+
+typedef struct {
+    gchar *name;
+    TupleValueType type;
+} TupleBasicType;
+
+extern const TupleBasicType tuple_fields[FIELD_LAST];
 
 typedef struct {
     TupleValueType type;

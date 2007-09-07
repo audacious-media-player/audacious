@@ -23,31 +23,30 @@
 
 #include "tuple.h"
 
+const TupleBasicType tuple_fields[FIELD_LAST] = {
+    { "artist",         TUPLE_STRING },
+    { "title",          TUPLE_STRING },
+    { "album",          TUPLE_STRING },
+    { "comment",        TUPLE_STRING },
+    { "genre",          TUPLE_STRING },
 
-const gchar *tuple_fields[FIELD_LAST] = {
-    "artist",
-    "title",
-    "album",
-    "comment",
-    "genre",
+    { "track",          TUPLE_STRING },
+    { "track-number",   TUPLE_INT },
+    { "length",         TUPLE_INT },
+    { "year",           TUPLE_INT },
+    { "quality",	TUPLE_STRING },
 
-    "track",
-    "track-number",
-    "length",
-    "year",
-    "quality",
+    { "codec",          TUPLE_STRING },
+    { "file-name",      TUPLE_STRING },
+    { "file-path",      TUPLE_STRING },
+    { "file-ext",       TUPLE_STRING },
+    { "song-artist",    TUPLE_STRING },
 
-    "codec",
-    "file-name",
-    "file-path",
-    "file-ext",
-    "song-artist",
-
-    "mtime",
-    "formatter",
-    "performer",
-    "copyright",
-    "date",
+    { "mtime",          TUPLE_INT },
+    { "formatter",      TUPLE_STRING },
+    { "performer",      TUPLE_STRING },
+    { "copyright",      TUPLE_STRING },
+    { "date",           TUPLE_STRING },
 };
 
 
@@ -61,8 +60,9 @@ tuple_value_destroy(mowgli_dictionary_elem_t *delem, gpointer privdata)
 {
     TupleValue *value = (TupleValue *) delem->data;
 
-    if (value->type == TUPLE_STRING)
+    if (value->type == TUPLE_STRING) {
         g_free(value->value.string);
+    }
 
     mowgli_heap_free(tuple_value_heap, value);
 }
@@ -91,6 +91,7 @@ tuple_new(void)
     /* FIXME: use mowgli_object_bless_from_class() in mowgli 0.4
        when it is released --nenolod */
     tuple = mowgli_heap_alloc(tuple_heap);
+    memset(tuple, 0, sizeof(Tuple));
     mowgli_object_init(mowgli_object(tuple), NULL, &tuple_klass, NULL);
 
     tuple->dict = mowgli_dictionary_create(g_ascii_strcasecmp);
@@ -120,7 +121,7 @@ tuple_new_from_filename(const gchar *filename)
     tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, scratch);
     g_free(scratch);
 
-    g_free(realfn); realfn = NULL;
+    g_free(realfn);
 
     ext = strrchr(filename, '.');
     if (ext != NULL) {
@@ -131,59 +132,74 @@ tuple_new_from_filename(const gchar *filename)
     return tuple;
 }        
 
-
-static gboolean
-tuple_associate_data(const gchar **tfield, TupleValue **value, Tuple *tuple, gint *nfield, const gchar *field)
+static TupleValue *
+tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype)
 {
-    g_return_val_if_fail(tuple != NULL, FALSE);
-    g_return_val_if_fail(*nfield < FIELD_LAST, FALSE);
+    const gchar *tfield = field;
+    gint nfield = cnfield;
+    TupleValue *value = NULL;
+    
+    g_return_val_if_fail(tuple != NULL, NULL);
+    g_return_val_if_fail(cnfield < FIELD_LAST, NULL);
 
     /* Check for known fields */
-    if (*nfield < 0) {
+    if (nfield < 0) {
         gint i;
-        *tfield = field;
-        for (i = 0; i < FIELD_LAST && *nfield < 0; i++)
-            if (!strcmp(field, tuple_fields[i])) *nfield = i;
+        for (i = 0; i < FIELD_LAST && nfield < 0; i++)
+            if (!strcmp(field, tuple_fields[i].name))
+                nfield = i;
+        
+        if (nfield >= 0) {
+            fprintf(stderr, "WARNING! FIELD_* not used for '%s'!\n", field);
+        }
     }
 
-    if (*nfield >= 0) {
-        *tfield = tuple_fields[*nfield];
-        tuple->values[*nfield] = NULL;
+    /* Check if field was known */
+    if (nfield >= 0) {
+        tfield = tuple_fields[nfield].name;
+        value = tuple->values[nfield];
+        
+        if (ftype != tuple_fields[nfield].type) {
+            /* FIXME! Convert values perhaps .. or not? */
+            fprintf(stderr, "Invalid type for [%s](%d->%d), %d != %d\n", tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
+            //mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
+            return NULL;
+        }
+    } else {
+        value = mowgli_dictionary_retrieve(tuple->dict, tfield);
+    }
+
+    if (value != NULL) {
+        /* Value exists, just delete old associated data */
+        if (value->type == TUPLE_STRING) {
+            g_free(value->value.string);
+            value->value.string = NULL;
+        }
+    } else {
+        /* Allocate a new value */
+        value = mowgli_heap_alloc(tuple_value_heap);
+        value->type = ftype;
+        mowgli_dictionary_add(tuple->dict, tfield, value);
+        if (nfield >= 0)
+            tuple->values[nfield] = value;
     }
     
-    if ((*value = mowgli_dictionary_delete(tuple->dict, *tfield)))
-        tuple_disassociate_now(*value);
-
-    return TRUE;
-}
-
-static void
-tuple_associate_data2(Tuple *tuple, const gint nfield, const gchar *field, TupleValue *value)
-{
-    mowgli_dictionary_add(tuple->dict, field, value);
-
-    if (nfield >= 0)
-        tuple->values[nfield] = value;
+    return value;
 }
 
 gboolean
 tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
 {
     TupleValue *value;
-    const gchar *tfield;
-    gint ifield = nfield;
 
-    if (!tuple_associate_data(&tfield, &value, tuple, &ifield, field))
+    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
         return FALSE;
 
     if (string == NULL)
-        return TRUE;
+        value->value.string = NULL;
+    else
+        value->value.string = g_strdup(string);
 
-    value = mowgli_heap_alloc(tuple_value_heap);
-    value->type = TUPLE_STRING;
-    value->value.string = g_strdup(string);
-
-    tuple_associate_data2(tuple, ifield, tfield, value);
     return TRUE;
 }
 
@@ -191,27 +207,12 @@ gboolean
 tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer)
 {
     TupleValue *value;
-    const gchar *tfield;
-    gint ifield = nfield;
     
-    if (!tuple_associate_data(&tfield, &value, tuple, &ifield, field))
+    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_INT)) == NULL)
         return FALSE;
 
-    value = mowgli_heap_alloc(tuple_value_heap);
-    value->type = TUPLE_INT;
     value->value.integer = integer;
-
-    tuple_associate_data2(tuple, ifield, tfield, value);
     return TRUE;
-}
-
-void
-tuple_disassociate_now(TupleValue *value)
-{
-    if (value->type == TUPLE_STRING)
-        g_free(value->value.string);
-
-    mowgli_heap_free(tuple_value_heap, value);
 }
 
 void
@@ -226,15 +227,21 @@ tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field)
     if (nfield < 0)
         tfield = field;
     else {
-        tfield = tuple_fields[nfield];
+        tfield = tuple_fields[nfield].name;
         tuple->values[nfield] = NULL;
     }
 
     /* why _delete()? because _delete() returns the dictnode's data on success */
     if ((value = mowgli_dictionary_delete(tuple->dict, tfield)) == NULL)
         return;
+    
+    /* Free associated data */
+    if (value->type == TUPLE_STRING) {
+        g_free(value->value.string);
+        value->value.string = NULL;
+    }
 
-    tuple_disassociate_now(value);
+    mowgli_heap_free(tuple_value_heap, value);
 }
 
 TupleValueType
