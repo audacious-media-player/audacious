@@ -1,5 +1,6 @@
 include ../../mk/rules.mk
 include ../../mk/init.mk
+include ../../mk/objective.mk
 
 SUBDIRS = $(INTL_OBJECTIVE) glade images ui
 
@@ -196,5 +197,3 @@ dbus-client-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications
-
-include ../../mk/objective.mk
