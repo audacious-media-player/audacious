@@ -120,16 +120,18 @@ static Category categories[] = {
 static gint n_categories = G_N_ELEMENTS(categories);
 
 static TitleFieldTag title_field_tags[] = {
-    { N_("Artist")     , "%p" },
-    { N_("Album")      , "%a" },
-    { N_("Title")      , "%t" },
-    { N_("Tracknumber"), "%n" },
-    { N_("Genre")      , "%g" },
-    { N_("Filename")   , "%f" },
-    { N_("Filepath")   , "%F" },
-    { N_("Date")       , "%d" },
-    { N_("Year")       , "%y" },
-    { N_("Comment")    , "%c" }
+    { N_("Artist")     , "${artist}" },
+    { N_("Album")      , "${album}" },
+    { N_("Title")      , "${title}" },
+    { N_("Tracknumber"), "${track-number}" },
+    { N_("Genre")      , "${genre}" },
+    { N_("Filename")   , "${file-name}" },
+    { N_("Filepath")   , "${file-path}" },
+    { N_("Date")       , "${date}" },
+    { N_("Year")       , "${year}" },
+    { N_("Comment")    , "${comment}" },
+    { N_("Codec")      , "${codec}" },
+    { N_("Quality")    , "${quality}" },
 };
 
 typedef struct {
