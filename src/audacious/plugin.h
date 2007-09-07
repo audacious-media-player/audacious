@@ -94,6 +94,7 @@ typedef struct _InputPlayback InputPlayback;
     void (*cleanup) (void);		\
     void (*about) (void);		\
     void (*configure) (void);		\
+    gboolean enabled;
 	
 
 /*
