@@ -178,16 +178,16 @@ void init_dbus() {
 GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     GValue *val;
     TupleValueType type;
-    type = tuple_get_value_type(tuple, key);
+    type = tuple_get_value_type(tuple, -1, key);
     if (type == TUPLE_STRING) {
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_STRING);
-        g_value_set_string(val, tuple_get_string(tuple, key));
+        g_value_set_string(val, tuple_get_string(tuple, -1, key));
         return val;
     } else if (type == TUPLE_INT) {
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_INT);
-        g_value_set_int(val, tuple_get_int(tuple, key));
+        g_value_set_int(val, tuple_get_int(tuple, -1, key));
         return val;
     }
     return NULL;
@@ -709,17 +709,17 @@ gboolean audacious_rc_song_tuple(RemoteObject *obj, guint pos, gchar *field,
     if (!tuple) {
         return FALSE;
     } else {
-        TupleValueType type = tuple_get_value_type(tuple, field);
+        TupleValueType type = tuple_get_value_type(tuple, -1, field);
 
         switch(type)
         {
         case TUPLE_STRING:
             g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple_get_string(tuple, field));
+            g_value_set_string(value, tuple_get_string(tuple, -1, field));
             break;
         case TUPLE_INT:
             g_value_init(value, G_TYPE_INT);
-            g_value_set_int(value, tuple_get_int(tuple, field));
+            g_value_set_int(value, tuple_get_int(tuple, -1, field));
             break;
         default:
             return FALSE;

@@ -180,26 +180,32 @@ fileinfo_show_for_tuple(Tuple *tuple)
 
 	gtk_widget_realize(fileinfo_win);
 
-	fileinfo_entry_set_text("entry_title", tuple_get_string(tuple, "title"));
-	fileinfo_entry_set_text("entry_artist", tuple_get_string(tuple, "artist"));
-	fileinfo_entry_set_text("entry_album", tuple_get_string(tuple, "album"));
-	fileinfo_entry_set_text("entry_comment", tuple_get_string(tuple, "comment"));
-	fileinfo_entry_set_text("entry_genre", tuple_get_string(tuple, "genre"));
+	fileinfo_entry_set_text("entry_title", tuple_get_string(tuple, FIELD_TITLE, NULL));
+	fileinfo_entry_set_text("entry_artist", tuple_get_string(tuple, FIELD_ARTIST, NULL));
+	fileinfo_entry_set_text("entry_album", tuple_get_string(tuple, FIELD_ALBUM, NULL));
+	fileinfo_entry_set_text("entry_comment", tuple_get_string(tuple, FIELD_COMMENT, NULL));
+	fileinfo_entry_set_text("entry_genre", tuple_get_string(tuple, FIELD_GENRE, NULL));
 
-	tmp = g_strdup_printf("%s/%s", tuple_get_string(tuple, "file-path"), tuple_get_string(tuple, "file-name"));
+	tmp = g_strdup_printf("%s/%s",
+		tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
+		tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
 	if(tmp){
 		fileinfo_entry_set_text_free("entry_location", str_to_utf8(tmp));
 		g_free(tmp);
 		tmp = NULL;
 	}
 
-	if (tuple_get_int(tuple, "year"))
-		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple_get_int(tuple, "year")));
+	if (tuple_get_int(tuple, FIELD_YEAR, NULL))
+		fileinfo_entry_set_text_free("entry_year",
+			g_strdup_printf("%d", tuple_get_int(tuple, FIELD_YEAR, NULL)));
 
-	if (tuple_get_int(tuple, "track-number"))
-		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple_get_int(tuple, "track-number")));
+	if (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL))
+		fileinfo_entry_set_text_free("entry_track",
+			g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL)));
 
-	tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, "file-path"), tuple_get_string(tuple, "file-name"), 0);
+	tmp = fileinfo_recursive_get_image(
+		tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
+		tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
 	
 	if(tmp)
 	{
