@@ -875,27 +875,16 @@ plugin_treeview_open_prefs(GtkTreeView *treeview)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    gint id;
+    Plugin *plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
-    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
-        case PLUGIN_VIEW_TYPE_INPUT:
-            input_configure(id);
-            break;
-        case PLUGIN_VIEW_TYPE_GENERAL:
-            general_configure(id);
-            break;
-        case PLUGIN_VIEW_TYPE_VIS:
-            vis_configure(id);
-            break;
-        case PLUGIN_VIEW_TYPE_EFFECT:
-            effect_configure(id);
-            break;
-    }
+    g_return_if_fail(plugin != NULL);
+
+    plugin->configure();
 }
 
 static void
@@ -904,27 +893,16 @@ plugin_treeview_open_info(GtkTreeView *treeview)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    gint id;
+    Plugin *plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
-    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
-        case PLUGIN_VIEW_TYPE_INPUT:
-            input_about(id);
-            break;
-        case PLUGIN_VIEW_TYPE_GENERAL:
-            general_about(id);
-            break;
-        case PLUGIN_VIEW_TYPE_VIS:
-            vis_about(id);
-            break;
-        case PLUGIN_VIEW_TYPE_EFFECT:
-            effect_about(id);
-            break;
-    }
+    g_return_if_fail(plugin != NULL);
+
+    plugin->about();
 }
 
 static void
@@ -933,36 +911,17 @@ plugin_treeview_enable_prefs(GtkTreeView * treeview, GtkButton * button)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-
-    GList *plist;
-    gint id;
+    Plugin *plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
-    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
-        case PLUGIN_VIEW_TYPE_INPUT:
-            plist = get_input_list();
-            break;
-        case PLUGIN_VIEW_TYPE_GENERAL:
-            plist = get_general_list();
-            break;
-        case PLUGIN_VIEW_TYPE_VIS:
-            plist = get_vis_list();
-            break;
-        case PLUGIN_VIEW_TYPE_EFFECT:
-            plist = get_effect_list();
-            break;
-        default:
-            return;
-    }
-    plist = g_list_nth(plist, id);
+    g_return_if_fail(plugin != NULL);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             INPUT_PLUGIN(plist->data)->configure != NULL);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->configure != NULL);
 }
 
 static void
@@ -971,35 +930,17 @@ plugin_treeview_enable_info(GtkTreeView * treeview, GtkButton * button)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    GList *plist;
-    gint id;
+    Plugin *plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_ID, &id, -1);
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
-    switch(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "plugin_type"))) {
-        case PLUGIN_VIEW_TYPE_INPUT:
-            plist = get_input_list();
-            break;
-        case PLUGIN_VIEW_TYPE_GENERAL:
-            plist = get_general_list();
-            break;
-        case PLUGIN_VIEW_TYPE_VIS:
-            plist = get_vis_list();
-            break;
-        case PLUGIN_VIEW_TYPE_EFFECT:
-            plist = get_effect_list();
-            break;
-        default:
-            return;
-    }
-    plist = g_list_nth(plist, id);
+    g_return_if_fail(plugin != NULL);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             INPUT_PLUGIN(plist->data)->about != NULL);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->about != NULL);
 }
 
 

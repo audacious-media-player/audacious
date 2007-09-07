@@ -65,9 +65,6 @@ void input_seek(gint time);
 guchar *input_get_vis(gint time);
 void input_update_vis_plugin(gint time);
 
-void input_about(gint index);
-void input_configure(gint index);
-
 void input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length,
                        gpointer ptr);
 InputVisType input_get_vis_type();

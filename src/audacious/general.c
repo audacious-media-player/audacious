@@ -53,29 +53,6 @@ get_general_plugin(gint i)
     return GENERAL_PLUGIN(node->data);
 }
 
-
-void
-general_about(gint i)
-{
-    GeneralPlugin *plugin = get_general_plugin(i);
-
-    if (!plugin || !plugin->about)
-        return;
-
-    plugin->about();
-}
-
-void
-general_configure(gint i)
-{
-    GeneralPlugin *plugin = get_general_plugin(i);
-
-    if (!plugin || !plugin->configure)
-        return;
-
-    plugin->configure();
-}
-
 void
 enable_general_plugin(gint i, gboolean enable)
 {

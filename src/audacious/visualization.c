@@ -63,24 +63,6 @@ vis_disable_plugin(VisPlugin * vp)
 }
 
 void
-vis_about(gint i)
-{
-    GList *node = g_list_nth(vp_data.vis_list, i);
-
-    if (node && node->data && VIS_PLUGIN(node->data)->about)
-        VIS_PLUGIN(node->data)->about();
-}
-
-void
-vis_configure(gint i)
-{
-    GList *node = g_list_nth(vp_data.vis_list, i);
-
-    if (node && node->data && VIS_PLUGIN(node->data)->configure)
-        VIS_PLUGIN(node->data)->configure();
-}
-
-void
 vis_playback_start(void)
 {
     GList *node;

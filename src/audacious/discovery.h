@@ -44,8 +44,6 @@ struct _discovery_device_t {
 GList *get_discovery_list(void);
 GList *get_discovery_enabled_list(void);
 void enable_discovery_plugin(gint i, gboolean enable);
-void discovery_about(gint i);
-void discovery_configure(gint i);
 gboolean discovery_enabled(gint i);
 gchar *discovery_stringify_enabled_list(void);
 void discovery_enable_from_stringified_list(const gchar * list);
