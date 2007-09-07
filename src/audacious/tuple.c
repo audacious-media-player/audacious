@@ -102,7 +102,6 @@ tuple_new(void)
     tuple->dict = mowgli_dictionary_create(g_ascii_strcasecmp);
 
     TUPLE_UNLOCK_WRITE();
-    
     return tuple;
 }
 
@@ -220,7 +219,6 @@ tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint in
     TupleValue *value;
     
     TUPLE_LOCK_WRITE();
-    
     if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_INT)) == NULL)
         return FALSE;
 
@@ -240,7 +238,6 @@ tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field)
     g_return_if_fail(nfield < FIELD_LAST);
 
     TUPLE_LOCK_WRITE();
-
     if (nfield < 0)
         tfield = field;
     else {
@@ -261,7 +258,6 @@ tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field)
     }
 
     mowgli_heap_free(tuple_value_heap, value);
-
     TUPLE_UNLOCK_WRITE();
 }
 
@@ -274,7 +270,6 @@ tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field)
     g_return_val_if_fail(nfield < FIELD_LAST, TUPLE_UNKNOWN);
 
     TUPLE_LOCK_READ();
-            
     if (nfield < 0) {
         TupleValue *value;
         if ((value = mowgli_dictionary_retrieve(tuple->dict, field)) != NULL)
@@ -285,7 +280,6 @@ tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field)
     }
     
     TUPLE_UNLOCK_READ();
-
     return type;
 }
 
