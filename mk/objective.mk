@@ -241,7 +241,7 @@ $(OBJECTIVE_LIBS_NOINST): $(OBJECTS)
 		$(AR) cr $@ $(OBJECTS); \
 	fi
 
-$(OBJECTIVE_BINS): $(OBJECTS)
+$(OBJECTIVE_BINS): $(SOURCES) $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
