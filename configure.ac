@@ -40,11 +40,7 @@ AC_PROG_CXX
 AC_ISC_POSIX
 AC_C_BIGENDIAN
 
-dnl If we have GCC, build pre-compiled headers to speed compilation times.
-PCH=""
 test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -Wall -pipe"
-test x"$GCC" = x"yes" && PCH="pch"
-AC_SUBST(PCH)
 
 dnl Check for assembler
 
@@ -144,6 +140,16 @@ if test "x$enable_ipv6" = xyes; then
 fi
 AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = xyes)
 AC_SUBST(USE_IPV6)
+
+dnl PCH support
+dnl ========================
+AC_ARG_ENABLE(pch,
+	[  --enable-pch                   use GCC precompiled headers (experimental) (default=no)],
+			enable_pch=$enableval, enable_pch=no)
+if test "x$enable_pch" = xyes; then
+   PCH="pch"
+fi
+AC_SUBST(PCH)
 
 dnl rpath stuff
 dnl ========================
