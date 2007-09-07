@@ -77,6 +77,7 @@ enum PluginViewCols {
     PLUGIN_VIEW_COL_DESC,
     PLUGIN_VIEW_COL_FILENAME,
     PLUGIN_VIEW_COL_ID,
+    PLUGIN_VIEW_COL_PLUGIN_PTR,
     PLUGIN_VIEW_N_COLS
 };
 
@@ -214,7 +215,6 @@ input_plugin_toggle(GtkCellRendererToggle * cell,
     GtkTreeIter iter;
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     gint pluginnr;
-    gchar *filename, *basename;
     Plugin *plugin;
     /*GList *diplist, *tmplist; */
 
@@ -222,14 +222,8 @@ input_plugin_toggle(GtkCellRendererToggle * cell,
     gtk_tree_model_get_iter(model, &iter, path);
     gtk_tree_model_get(model, &iter,
                        PLUGIN_VIEW_COL_ID, &pluginnr,
-                       PLUGIN_VIEW_COL_FILENAME, &filename,
+		       PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin,
                        -1);
-
-    basename = g_path_get_basename(filename);
-    g_free(filename);
-
-    /* get our plugin */
-    plugin = plugin_get_plugin(basename);
 
     /* do something with the value */
     plugin->enabled ^= 1;
@@ -240,7 +234,6 @@ input_plugin_toggle(GtkCellRendererToggle * cell,
 
     /* clean up */
     gtk_tree_path_free(path);
-    g_free(basename);
 }
 
 
@@ -389,7 +382,7 @@ on_plugin_view_realize(GtkTreeView * treeview,
 
     store = gtk_list_store_new(PLUGIN_VIEW_N_COLS,
                                G_TYPE_BOOLEAN, G_TYPE_STRING,
-                               G_TYPE_STRING, G_TYPE_INT);
+                               G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER);
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Enabled"));
@@ -446,7 +439,8 @@ on_plugin_view_realize(GtkTreeView * treeview,
                            PLUGIN_VIEW_COL_ACTIVE, plugin->enabled,
                            PLUGIN_VIEW_COL_DESC, description[0],
                            PLUGIN_VIEW_COL_FILENAME, description[1],
-                           PLUGIN_VIEW_COL_ID, id++, -1);
+                           PLUGIN_VIEW_COL_ID, id++,
+			   PLUGIN_VIEW_COL_PLUGIN_PTR, plugin, -1);
 
         g_free(description[1]);
         g_free(description[0]);
