@@ -85,7 +85,7 @@ clean:
 		done; \
 	fi
 	$(MAKE) clean-posthook
-	rm -f *.o *.lo *.so *.a *.sl .depend-done .depend
+	rm -f *.o *.lo *.so *.a *.sl *.h.gch .depend-done .depend
 	touch .depend
 	@if [ "x$(OBJECTIVE_BINS)" != "x" ]; then \
 		for i in $(OBJECTIVE_BINS); do \
