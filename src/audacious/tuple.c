@@ -119,6 +119,7 @@ tuple_new(void)
     /* FIXME: use mowgli_object_bless_from_class() in mowgli 0.4
        when it is released --nenolod */
     tuple = mowgli_heap_alloc(tuple_heap);
+    memset(tuple, 0, sizeof(Tuple));
     mowgli_object_init(mowgli_object(tuple), NULL, &tuple_klass, NULL);
 
     tuple->dict = mowgli_dictionary_create(g_ascii_strcasecmp);
