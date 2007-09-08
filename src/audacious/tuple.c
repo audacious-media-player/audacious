@@ -49,6 +49,10 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "date",           TUPLE_STRING },
 };
 
+static mowgli_heap_t *tuple_heap = NULL;
+static mowgli_heap_t *tuple_value_heap = NULL;
+static mowgli_object_class_t tuple_klass;
+
 
 #define TUPLE_LOCKING
 //#define TUPLE_DEBUG
@@ -138,11 +142,11 @@ tuple_new_from_filename(const gchar *filename)
     realfn = g_filename_from_uri(filename, NULL, NULL);
 
     scratch = g_path_get_basename(realfn ? realfn : filename);
-    tuple_associate_string(tuple, "file-name", scratch);
+    tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, scratch);
     g_free(scratch);
 
     scratch = g_path_get_dirname(realfn ? realfn : filename);
-    tuple_associate_string(tuple, "file-path", scratch);
+    tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, scratch);
     g_free(scratch);
 
     g_free(realfn); realfn = NULL;
@@ -150,7 +154,7 @@ tuple_new_from_filename(const gchar *filename)
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
-        tuple_associate_string(tuple, "file-ext", scratch);
+        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, scratch);
     }
 
     return tuple;
@@ -294,7 +298,7 @@ tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field)
             type = value->type;
     } else {
         if (tuple->values[nfield])
-            value = tuple->values[nfield]->type;
+            type = tuple->values[nfield]->type;
     }
     
     TUPLE_UNLOCK_READ();
