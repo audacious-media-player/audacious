@@ -84,6 +84,7 @@ static const gchar *credit_text[] = {
     "Daniel Barkalow",
     "Michael Färber",
     "Shay Green",
+    "Matti Hämäläinen",
     "Giacomo Lozito",
     "Cristi Măgherușan",
     "William Pitcock",
@@ -91,7 +92,6 @@ static const gchar *credit_text[] = {
     "Jonathan Schleifer",
     "Tony Vroon",
     "Yoshiki Yazawa",
-    "Matti Hämäläinen",
     NULL,
 
     N_("Patch authors:"),
