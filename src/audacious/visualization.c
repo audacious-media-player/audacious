@@ -124,14 +124,6 @@ enable_vis_plugin(gint i, gboolean enable)
     vp->enabled = enable;
 }
 
-gboolean
-vis_enabled(gint i)
-{
-    return (g_list_find
-            (vp_data.enabled_list,
-             g_list_nth(vp_data.vis_list, i)->data) != NULL);
-}
-
 gchar *
 vis_stringify_enabled_list(void)
 {

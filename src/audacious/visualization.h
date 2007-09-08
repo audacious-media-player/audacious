@@ -43,7 +43,6 @@ void enable_vis_plugin(gint i, gboolean enable);
 void vis_disable_plugin(VisPlugin * vp);
 void vis_playback_start(void);
 void vis_playback_stop(void);
-gboolean vis_enabled(gint i);
 gchar *vis_stringify_enabled_list(void);
 void vis_enable_from_stringified_list(gchar * list);
 void vis_send_data(gint16 pcm_data[2][512], gint nch, gint length);
