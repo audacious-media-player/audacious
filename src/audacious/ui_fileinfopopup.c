@@ -350,42 +350,42 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
         tmp = NULL;
         g_object_set_data(G_OBJECT(filepopup_win), "file", NULL);
     }
-    if (tuple_get_string(tuple, "file-path") && tuple_get_string(tuple, "file-name"))
+    if (tuple_get_string(tuple, FIELD_FILE_PATH, NULL) && tuple_get_string(tuple, FIELD_FILE_NAME, NULL))
         g_object_set_data(G_OBJECT(filepopup_win), "file",
-                          g_build_filename(tuple_get_string(tuple, "file-path"), 
-                                           tuple_get_string(tuple, "file-name"),
+                          g_build_filename(tuple_get_string(tuple, FIELD_FILE_PATH, NULL), 
+                                           tuple_get_string(tuple, FIELD_FILE_NAME, NULL),
                                            NULL));
 
     gtk_widget_realize(filepopup_win);
 
-    if (tuple_get_string(tuple, "title"))
+    if (tuple_get_string(tuple, FIELD_TITLE, NULL))
     {
         gchar *markup =
             g_markup_printf_escaped("<span style=\"italic\">%s</span>", _("Title"));
         gtk_label_set_markup(GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win), "header_title")), markup);
         g_free(markup);
-        filepopup_entry_set_text(filepopup_win, "label_title", tuple_get_string(tuple, "title"));
+        filepopup_entry_set_text(filepopup_win, "label_title", tuple_get_string(tuple, FIELD_TITLE, NULL));
     }
     else
     {
         /* display filename if track_name is not available */
         gchar *markup =
             g_markup_printf_escaped("<span style=\"italic\">%s</span>", _("Filename"));
-        gchar *utf_filename = filename_to_utf8(tuple_get_string(tuple, "file-name"));
+        gchar *utf_filename = filename_to_utf8(tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
         gtk_label_set_markup(GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win), "header_title")), markup);
         g_free(markup);
         filepopup_entry_set_text(filepopup_win, "label_title", utf_filename);
         g_free(utf_filename);
     }
 
-    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, "artist"),
+    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ARTIST, NULL),
                                         "label_artist", "header_artist");
-    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, "album"),
+    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ALBUM, NULL),
                                         "label_album", "header_album");
-    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, "genre"),
+    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_GENRE, NULL),
                                         "label_genre", "header_genre");
 
-    length = tuple_get_int(tuple, "length");
+    length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
     length_string = (length > 0) ?
         g_strdup_printf("%d:%02d", length / 60000, (length / 1000) % 60) : NULL;
     audacious_fileinfopupup_update_data(filepopup_win, length_string,
@@ -397,19 +397,18 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     else
       g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
 
-    year_string = (tuple_get_int(tuple, "year") == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, "year"));
+    year_string = (tuple_get_int(tuple, FIELD_YEAR, NULL) == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, FIELD_YEAR, NULL));
     audacious_fileinfopupup_update_data(filepopup_win, year_string,
                                         "label_year", "header_year");
     g_free(year_string);
 
-    track_string = (tuple_get_int(tuple, "track-number") == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, "track-number"));
+    track_string = (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL) == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL));
     audacious_fileinfopupup_update_data(filepopup_win, track_string,
                                         "label_tracknum", "header_tracknum");
     g_free(track_string);
     
-    if (tuple_get_string(tuple, "file-name") && tuple_get_string(tuple, "file-path"))
-    {
-        tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, "file-path"), tuple_get_string(tuple, "file-name"), 0);
+    if (tuple_get_string(tuple, FIELD_FILE_NAME, NULL) && tuple_get_string(tuple, FIELD_FILE_PATH, NULL)) {
+        tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, FIELD_FILE_PATH, NULL), tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
         if (tmp) { // picture found
             if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
                 filepopup_entry_set_image(filepopup_win, "image_artwork", tmp);
@@ -454,7 +453,7 @@ void
 audacious_fileinfopopup_show_from_title(GtkWidget *filepopup_win, gchar *title)
 {
     Tuple * tuple = tuple_new();
-    tuple_associate_string(tuple, "title", title);
+    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
     audacious_fileinfopopup_show_from_tuple(filepopup_win, tuple);
     mowgli_object_unref(tuple);
     return;
