@@ -43,7 +43,7 @@ enum {
 };
 
 
-static const gchar *bmp_brief =
+static const gchar *audacious_brief =
     N_("<big><b>Audacious %s</b></big>\n"
        "The future of UNIX multimedia.\n"
        "\n"
@@ -91,6 +91,7 @@ static const gchar *credit_text[] = {
     "Jonathan Schleifer",
     "Tony Vroon",
     "Yoshiki Yazawa",
+    "Matti Hämäläinen",
     NULL,
 
     N_("Patch authors:"),
@@ -383,7 +384,7 @@ show_credits_window(void)
     g_object_unref(logo_pixbuf);
 
     label = gtk_label_new(NULL);
-    text = g_strdup_printf(_(bmp_brief), VERSION);
+    text = g_strdup_printf(_(audacious_brief), VERSION);
     gtk_label_set_markup(GTK_LABEL(label), text);
     gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
     g_free(text);
