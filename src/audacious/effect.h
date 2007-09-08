@@ -38,7 +38,6 @@ struct _EffectPluginData {
 GList *get_effect_list(void);
 GList *get_effect_enabled_list(void);
 void enable_effect_plugin(gint i, gboolean enable);
-gboolean effect_enabled(gint i);
 gchar *effect_stringify_enabled_list(void);
 void effect_enable_from_stringified_list(const gchar * list);
 

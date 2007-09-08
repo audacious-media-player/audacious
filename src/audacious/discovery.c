@@ -75,13 +75,6 @@ enable_discovery_plugin(gint i, gboolean enable)
     plugin->enabled = enable;
 }
 
-gboolean
-discovery_enabled(gint i)
-{
-    return (g_list_find(dp_data.enabled_list,
-                        get_discovery_plugin(i)) != NULL);
-}
-
 gchar *
 discovery_stringify_enabled_list(void)
 {

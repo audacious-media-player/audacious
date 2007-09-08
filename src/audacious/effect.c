@@ -133,15 +133,6 @@ get_effect_list(void)
     return ep_data.effect_list;
 }
 
-gboolean
-effect_enabled(int i)
-{
-    return (g_list_find
-            (ep_data.enabled_list,
-             (EffectPlugin *) g_list_nth(ep_data.effect_list,
-                                         i)->data) ? TRUE : FALSE);
-}
-
 gchar *
 effect_stringify_enabled_list(void)
 {
