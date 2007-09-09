@@ -290,14 +290,14 @@ void ui_skinned_playlist_move_up(UiSkinnedPlaylist * pl) {
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     if ((list = playlist->entries) == NULL) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
     if (PLAYLIST_ENTRY(list->data)->selected) {
         /* We are at the top */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
     while (list) {
@@ -305,7 +305,7 @@ void ui_skinned_playlist_move_up(UiSkinnedPlaylist * pl) {
             glist_moveup(list);
         list = g_list_next(list);
     }
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     if (pl->prev_selected != -1)
         pl->prev_selected--;
     if (pl->prev_min != -1)
@@ -321,16 +321,16 @@ void ui_skinned_playlist_move_down(UiSkinnedPlaylist * pl) {
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if (!(list = g_list_last(playlist->entries))) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     if (PLAYLIST_ENTRY(list->data)->selected) {
         /* We are at the bottom */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
@@ -340,7 +340,7 @@ void ui_skinned_playlist_move_down(UiSkinnedPlaylist * pl) {
         list = g_list_previous(list);
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     if (pl->prev_selected != -1)
         pl->prev_selected++;
@@ -484,7 +484,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
     pl->first = CLAMP(pl->first, 0, max_first);
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     list = playlist->entries;
     list = g_list_nth(list, pl->first);
 
@@ -763,7 +763,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     gdk_gc_set_clip_origin(gc, 0, 0);
     gdk_gc_set_clip_rectangle(gc, NULL);
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     gdk_draw_drawable(widget->window, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
 
