@@ -207,7 +207,7 @@ playlist_manager_cb_lv_btpress ( GtkWidget *lv , GdkEventButton *event )
         GtkWidget *pmenu = (GtkWidget*)g_object_get_data( G_OBJECT(lv) , "menu" );
         gtk_menu_popup( GTK_MENU(pmenu) , NULL , NULL , NULL , NULL ,
                         (event != NULL) ? event->button : 0,
-                        gdk_event_get_time((GdkEvent*)event));
+                        event->time);
         return TRUE;
     }
 
