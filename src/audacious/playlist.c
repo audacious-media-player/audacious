@@ -180,12 +180,8 @@ playlist_entry_free(PlaylistEntry * entry)
         entry->tuple = NULL;
     }
 
-    if (entry->filename != NULL)
-        g_free(entry->filename);
-
-    if (entry->title != NULL)
-        g_free(entry->title);
-
+    g_free(entry->filename);
+    g_free(entry->title);
     mowgli_heap_free(playlist_entry_heap, entry);
 }
 
