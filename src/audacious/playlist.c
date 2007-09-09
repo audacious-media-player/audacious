@@ -2519,6 +2519,19 @@ playlist_get_info_is_going(void)
 
 
 static gboolean
+playlist_get_info_scanning(void)
+{
+    gboolean result;
+
+    g_mutex_lock(mutex_scan);
+    result = playlist_get_info_scan_active;
+    g_mutex_unlock(mutex_scan);
+
+    return result;
+}
+
+
+static gboolean
 playlist_request_win_update(gpointer unused)
 {
     Playlist *playlist = playlist_get_active();
@@ -2539,7 +2552,7 @@ playlist_get_info_func(gpointer arg)
 
         // on_load
         if (cfg.use_pl_metadata && cfg.get_info_on_load &&
-            playlist_get_info_scan_active) {
+            playlist_get_info_scanning()) {
 
             for (node = playlist->entries; node; node = g_list_next(node)) {
                 entry = node->data;
@@ -2627,7 +2640,7 @@ playlist_get_info_func(gpointer arg)
             update_playlistwin = FALSE;
         }
 
-        if (playlist_get_info_scan_active) {
+        if (playlist_get_info_scanning()) {
             continue;
         }
 
@@ -3245,6 +3258,9 @@ playlist_new(void)
 void
 playlist_free(Playlist *playlist)
 {
+    if (!playlist)
+        return;
+    
     g_mutex_free( playlist->mutex );
     g_free( playlist );
 }
