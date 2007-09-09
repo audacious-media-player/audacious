@@ -894,7 +894,7 @@ GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix) {
  * Return value: A GTK widget handle for the message box.
  **/
 GtkWidget *
-xmms_show_message(const gchar * title, const gchar * text,
+audacious_info_dialog(const gchar * title, const gchar * text,
                   const gchar * button_text, gboolean modal,
                   GtkSignalFunc button_action, gpointer action_data)
 {
