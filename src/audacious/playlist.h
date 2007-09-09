@@ -223,8 +223,8 @@ Playlist *playlist_new_from_selected(void);
 PlaylistFormat playlist_format_get_from_name(const gchar * filename);
 gboolean is_playlist_name(const gchar * filename);
 
-#define PLAYLIST_LOCK(m)    g_mutex_lock(m)
-#define PLAYLIST_UNLOCK(m)  g_mutex_unlock(m)
+#define PLAYLIST_LOCK(pl)    g_mutex_lock(pl->mutex)
+#define PLAYLIST_UNLOCK(pl)  g_mutex_unlock(pl->mutex)
 
 G_LOCK_EXTERN(playlists);
 

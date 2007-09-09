@@ -413,7 +413,7 @@ play_queued(Playlist *playlist)
 void
 playlist_clear_only(Playlist *playlist)
 {
-    PLAYLIST_LOCK( playlist->mutex );
+    PLAYLIST_LOCK(playlist);
 
     g_list_foreach(playlist->entries, (GFunc) playlist_entry_free, NULL);
     g_list_free(playlist->entries);
@@ -422,7 +422,7 @@ playlist_clear_only(Playlist *playlist)
     playlist->tail = NULL;
     playlist->attribute = PLAYLIST_PLAIN;
 
-    PLAYLIST_UNLOCK( playlist->mutex );
+    PLAYLIST_UNLOCK(playlist);
 }
 
 void
@@ -459,11 +459,11 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
         *set_info_text = TRUE;
 
         if (playback_get_playing()) {
-            PLAYLIST_UNLOCK(playlist->mutex);
+            PLAYLIST_UNLOCK(playlist);
             ip_data.stop = TRUE;
             playback_stop();
             ip_data.stop = FALSE;
-            PLAYLIST_LOCK(playlist->mutex);
+            PLAYLIST_LOCK(playlist);
             *restart_playing = TRUE;
         }
 
@@ -505,18 +505,18 @@ playlist_delete_index(Playlist *playlist, guint pos)
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     node = g_list_nth(playlist->entries, pos);
 
     if (!node) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     playlist_delete_node(playlist, node, &set_info_text, &restart_playing);
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
 
@@ -538,7 +538,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     GList *node, *fnode;
     gboolean set_info_text = FALSE, restart_playing = FALSE;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (fnode = filenames; fnode; fnode = g_list_next(fnode)) {
         node = playlist->entries;
@@ -554,7 +554,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
         }
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
     playlistwin_update_list(playlist);
@@ -579,7 +579,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
 
     g_return_if_fail(playlist != NULL);
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     node = playlist->entries;
 
@@ -595,7 +595,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
         node = next_node;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
 
@@ -621,11 +621,11 @@ __playlist_ins_with_info(Playlist * playlist,
 {
     g_return_if_fail(filename != NULL);
 
-    PLAYLIST_LOCK( playlist->mutex );
+    PLAYLIST_LOCK(playlist);
     playlist->entries = g_list_insert(playlist->entries,
                              playlist_entry_new(filename, title, len, dec),
                              pos);
-    PLAYLIST_UNLOCK( playlist->mutex );
+    PLAYLIST_UNLOCK(playlist);
 
     g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
@@ -649,7 +649,8 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     if(!playlist->tail)
         playlist->tail = g_list_last(playlist->entries);
 
-    PLAYLIST_LOCK( playlist->mutex );
+    PLAYLIST_LOCK(playlist);
+    
     if(pos == -1) { // the common case
         GList *element;
         element = g_list_alloc();
@@ -671,7 +672,8 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         playlist->entries = g_list_insert(playlist->entries, entry, pos);
     }
 
-    PLAYLIST_UNLOCK( playlist->mutex );
+    PLAYLIST_UNLOCK(playlist);
+    
     if (tuple != NULL) {
         const gchar *formatter = tuple_get_string(tuple, "formatter");
         entry->title = tuple_formatter_make_title_string(tuple, formatter ?
@@ -1003,9 +1005,9 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
 
         g_free(decoded);
 
-        PLAYLIST_LOCK(playlist->mutex);
+        PLAYLIST_LOCK(playlist);
         node = g_list_nth(playlist->entries, pos);
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
 
         entries += i;
 
@@ -1097,23 +1099,23 @@ playlist_check_pos_current(Playlist *playlist)
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     if (!playlist->position || !playlistwin_list) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     pos = g_list_index(playlist->entries, playlist->position);
 
     if (playlistwin_item_visible(pos)) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     bottom = MAX(0, playlist_get_length(playlist) -
                  UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible);
     row = CLAMP(pos - UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible / 2, 0, bottom);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlistwin_set_toprow(row);
     g_cond_signal(cond_scan);
 }
@@ -1126,7 +1128,7 @@ playlist_next(Playlist *playlist)
     if (!playlist_get_length(playlist))
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
     {
@@ -1137,17 +1139,17 @@ playlist_next(Playlist *playlist)
     plist_pos_list = find_playlist_position_list(playlist);
 
     if (!cfg.repeat && !g_list_next(plist_pos_list) && playlist->queue == NULL) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     if (playback_get_playing()) {
         /* We need to stop before changing playlist_position */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         ip_data.stop = TRUE;
         playback_stop();
         ip_data.stop = FALSE;
-        PLAYLIST_LOCK(playlist->mutex);
+        PLAYLIST_LOCK(playlist);
         restart_playing = TRUE;
     }
 
@@ -1164,7 +1166,7 @@ playlist_next(Playlist *playlist)
         else
             playlist->position = playlist->entries->data;
     }
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_check_pos_current(playlist);
 
     if (restart_playing)
@@ -1182,7 +1184,7 @@ playlist_prev(Playlist *playlist)
     if (!playlist_get_length(playlist))
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
     {
@@ -1193,17 +1195,17 @@ playlist_prev(Playlist *playlist)
     plist_pos_list = find_playlist_position_list(playlist);
 
     if (!cfg.repeat && !g_list_previous(plist_pos_list)) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     if (playback_get_playing()) {
         /* We need to stop before changing playlist_position */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         ip_data.stop = TRUE;
         playback_stop();
         ip_data.stop = FALSE;
-        PLAYLIST_LOCK(playlist->mutex);
+        PLAYLIST_LOCK(playlist);
         restart_playing = TRUE;
     }
 
@@ -1223,7 +1225,7 @@ playlist_prev(Playlist *playlist)
             playlist->position = node->data;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_check_pos_current(playlist);
 
@@ -1239,7 +1241,7 @@ playlist_queue(Playlist *playlist)
     GList *list = playlist_get_selected(playlist);
     GList *it = list;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
     {
@@ -1265,7 +1267,7 @@ playlist_queue(Playlist *playlist)
 
     playlist->queue = g_list_concat(playlist->queue, list);
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
     playlistwin_update_list(playlist);
@@ -1277,7 +1279,7 @@ playlist_queue_position(Playlist *playlist, guint pos)
     GList *tmp;
     PlaylistEntry *entry;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
     {
@@ -1292,7 +1294,7 @@ playlist_queue_position(Playlist *playlist, guint pos)
     }
     else
         playlist->queue = g_list_append(playlist->queue, entry);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
     playlistwin_update_list(playlist);
@@ -1304,10 +1306,10 @@ playlist_is_position_queued(Playlist *playlist, guint pos)
     PlaylistEntry *entry;
     GList *tmp;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     entry = g_list_nth_data(playlist->entries, pos);
     tmp = g_list_find(playlist->queue, entry);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return tmp != NULL;
 }
@@ -1318,10 +1320,10 @@ playlist_get_queue_position_number(Playlist *playlist, guint pos)
     PlaylistEntry *entry;
     gint tmp;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     entry = g_list_nth_data(playlist->entries, pos);
     tmp = g_list_index(playlist->queue, entry);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return tmp;
 }
@@ -1332,10 +1334,10 @@ playlist_get_queue_qposition_number(Playlist *playlist, guint pos)
     PlaylistEntry *entry;
     gint tmp;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     entry = g_list_nth_data(playlist->queue, pos);
     tmp = g_list_index(playlist->entries, entry);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return tmp;
 }
@@ -1343,10 +1345,10 @@ playlist_get_queue_qposition_number(Playlist *playlist, guint pos)
 void
 playlist_clear_queue(Playlist *playlist)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     g_list_free(playlist->queue);
     playlist->queue = NULL;
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
     playlistwin_update_list(playlist);
@@ -1357,10 +1359,10 @@ playlist_queue_remove(Playlist *playlist, guint pos)
 {
     void *entry;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     entry = g_list_nth_data(playlist->entries, pos);
     playlist->queue = g_list_remove(playlist->queue, entry);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlistwin_update_list(playlist);
 }
@@ -1380,21 +1382,21 @@ playlist_set_position(Playlist *playlist, guint pos)
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     node = g_list_nth(playlist->entries, pos);
     if (!node) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     if (playback_get_playing()) {
         /* We need to stop before changing playlist_position */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         ip_data.stop = TRUE;
         playback_stop();
         ip_data.stop = FALSE;
-        PLAYLIST_LOCK(playlist->mutex);
+        PLAYLIST_LOCK(playlist);
         restart_playing = TRUE;
     }
 
@@ -1405,7 +1407,7 @@ playlist_set_position(Playlist *playlist, guint pos)
     }
 
     playlist->position = node->data;
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_check_pos_current(playlist);
 
     if (restart_playing)
@@ -1427,7 +1429,7 @@ playlist_eof_reached(Playlist *playlist)
 
     hook_call("playback end", playlist->position);
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     
     if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
     {
@@ -1438,7 +1440,7 @@ playlist_eof_reached(Playlist *playlist)
     plist_pos_list = find_playlist_position_list(playlist);
 
     if (cfg.no_playlist_advance) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         mainwin_clear_song_info();
         if (cfg.repeat)
             playback_initiate();
@@ -1446,7 +1448,7 @@ playlist_eof_reached(Playlist *playlist)
     }
 
     if (cfg.stopaftersong) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         mainwin_clear_song_info();
         mainwin_set_stopaftersong(FALSE);
         return;
@@ -1464,7 +1466,7 @@ playlist_eof_reached(Playlist *playlist)
             playlist->position = playlist->entries->data;
 
         if (!cfg.repeat) {
-            PLAYLIST_UNLOCK(playlist->mutex);
+            PLAYLIST_UNLOCK(playlist);
 	    hook_call("playlist end reached", playlist->position);
             mainwin_clear_song_info();
             return;
@@ -1473,7 +1475,7 @@ playlist_eof_reached(Playlist *playlist)
     else
         playlist->position = g_list_next(plist_pos_list)->data;
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_check_pos_current(playlist);
     playback_initiate();
@@ -1485,9 +1487,9 @@ playlist_queue_get_length(Playlist *playlist)
 {
     gint length;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     length = g_list_length(playlist->queue);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return length;
 }
@@ -1505,9 +1507,9 @@ playlist_get_info_text(Playlist *playlist)
 
     g_return_val_if_fail(playlist != NULL, NULL);
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     if (!playlist->position) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return NULL;
     }
 
@@ -1543,7 +1545,7 @@ playlist_get_info_text(Playlist *playlist)
     else
         length = g_strdup("");
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     text = convert_title_text(g_strconcat(numbers, title, length, NULL));
 
@@ -1798,9 +1800,9 @@ playlist_get_position(Playlist *playlist)
 {
     gint pos;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     pos = playlist_get_position_nolock(playlist);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return pos;
 }
@@ -1815,16 +1817,16 @@ playlist_get_filename(Playlist *playlist, guint pos)
     if (!playlist)
         return NULL;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     node = g_list_nth(playlist->entries, pos);
     if (!node) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return NULL;
     }
     entry = node->data;
 
     filename = g_strdup(entry->filename);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return filename;
 }
@@ -1840,10 +1842,10 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
     if (!playlist)
         return NULL;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if (!(node = g_list_nth(playlist->entries, pos))) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return NULL;
     }
 
@@ -1865,7 +1867,7 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
         title = entry->title;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     if (!title) {
         gchar *realfn = NULL;
@@ -2195,11 +2197,11 @@ void
 playlist_sort(Playlist *playlist, PlaylistSortType type)
 {
     playlist_remove_dead_files(playlist);
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     playlist->entries =
         g_list_sort(playlist->entries,
                     (GCompareFunc) playlist_compare_func_table[type]);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 static GList *
@@ -2254,19 +2256,19 @@ playlist_sort_selected_generic(GList * list, GCompareFunc cmpfunc)
 void
 playlist_sort_selected(Playlist *playlist, PlaylistSortType type)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     playlist->entries = playlist_sort_selected_generic(playlist->entries, (GCompareFunc)
                                                        playlist_compare_func_table
                                                        [type]);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 void
 playlist_reverse(Playlist *playlist)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     playlist->entries = g_list_reverse(playlist->entries);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 static GList *
@@ -2316,9 +2318,9 @@ playlist_shuffle_list(Playlist *playlist, GList * list)
 void
 playlist_random(Playlist *playlist)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     playlist->entries = playlist_shuffle_list(playlist, playlist->entries);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 GList *
@@ -2327,13 +2329,13 @@ playlist_get_selected(Playlist *playlist)
     GList *node, *list = NULL;
     gint i = 0;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     for (node = playlist->entries; node; node = g_list_next(node), i++) {
         PlaylistEntry *entry = node->data;
         if (entry->selected)
             list = g_list_prepend(list, GINT_TO_POINTER(i));
     }
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     return g_list_reverse(list);
 }
 
@@ -2343,11 +2345,11 @@ playlist_clear_selected(Playlist *playlist)
     GList *node = NULL;
     gint i = 0;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     for (node = playlist->entries; node; node = g_list_next(node), i++) {
         PLAYLIST_ENTRY(node->data)->selected = FALSE;
     }
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
     playlist_manager_update();
 }
@@ -2358,13 +2360,13 @@ playlist_get_num_selected(Playlist *playlist)
     GList *node;
     gint num = 0;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     for (node = playlist->entries; node; node = g_list_next(node)) {
         PlaylistEntry *entry = node->data;
         if (entry->selected)
             num++;
     }
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     return num;
 }
 
@@ -2372,9 +2374,9 @@ playlist_get_num_selected(Playlist *playlist)
 static void
 playlist_generate_shuffle_list(Playlist *playlist)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     playlist_generate_shuffle_list_nolock(playlist);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 static void
@@ -2414,7 +2416,7 @@ playlist_fileinfo(Playlist *playlist, guint pos)
     ProbeResult *pr = NULL;
     time_t mtime;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((node = g_list_nth(playlist->entries, pos)))
     {
@@ -2423,7 +2425,7 @@ playlist_fileinfo(Playlist *playlist, guint pos)
         path = g_strdup(entry->filename);
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     if (entry->tuple)
         mtime = tuple_get_int(entry->tuple, "mtime");
@@ -2472,7 +2474,7 @@ playlist_fileinfo_current(Playlist *playlist)
     gchar *path = NULL;
     Tuple *tuple = NULL;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if (playlist->entries && playlist->position)
     {
@@ -2482,7 +2484,7 @@ playlist_fileinfo_current(Playlist *playlist)
         tuple = playlist->position->tuple;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     if (tuple != NULL)
     {
@@ -2691,7 +2693,7 @@ playlist_remove_dead_files(Playlist *playlist)
 {
     GList *node, *next_node;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (node = playlist->entries; node; node = next_node) {
         PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
@@ -2726,7 +2728,7 @@ playlist_remove_dead_files(Playlist *playlist)
         playlist->entries = g_list_delete_link(playlist->entries, node);
     }
    
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
@@ -2816,7 +2818,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
         break;
     }
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (node = playlist->entries; node; node = next_node) {
         PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
@@ -2861,7 +2863,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
         }
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
@@ -2876,12 +2878,12 @@ playlist_get_total_time(Playlist * playlist,
                         gboolean * total_more,
                         gboolean * selection_more)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     *total_time = playlist->pl_total_time;
     *selection_time = playlist->pl_selection_time;
     *total_more = playlist->pl_total_more;
     *selection_more = playlist->pl_selection_more;
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 
@@ -2918,9 +2920,9 @@ playlist_recalc_total_time_nolock(Playlist *playlist)
 static void
 playlist_recalc_total_time(Playlist *playlist)
 {
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     playlist_recalc_total_time_nolock(playlist);
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 gint
@@ -2936,7 +2938,7 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
     onig_set_default_syntax( ONIG_SYNTAX_POSIX_BASIC );
     #endif
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ( tuple_get_string(tuple, "title") != NULL )
     {
@@ -3074,7 +3076,7 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
 
     g_list_free( found_list );
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
 
     return num_of_entries_found;
@@ -3085,14 +3087,14 @@ playlist_select_all(Playlist *playlist, gboolean set)
 {
     GList *list;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (list = playlist->entries; list; list = g_list_next(list)) {
         PlaylistEntry *entry = list->data;
         entry->selected = set;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
 }
 
@@ -3101,14 +3103,14 @@ playlist_select_invert_all(Playlist *playlist)
 {
     GList *list;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (list = playlist->entries; list; list = g_list_next(list)) {
         PlaylistEntry *entry = list->data;
         entry->selected = !entry->selected;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
 }
 
@@ -3118,7 +3120,7 @@ playlist_select_invert(Playlist *playlist, guint pos)
     GList *list;
     gboolean invert_ok = FALSE;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((list = g_list_nth(playlist->entries, pos))) {
         PlaylistEntry *entry = list->data;
@@ -3126,7 +3128,7 @@ playlist_select_invert(Playlist *playlist, guint pos)
         invert_ok = TRUE;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
 
     return invert_ok;
@@ -3142,7 +3144,7 @@ playlist_select_range(Playlist *playlist, gint min_pos, gint max_pos, gboolean s
     if (min_pos > max_pos)
         SWAP(min_pos, max_pos);
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     list = g_list_nth(playlist->entries, min_pos);
     for (i = min_pos; i <= max_pos && list; i++) {
@@ -3151,7 +3153,7 @@ playlist_select_range(Playlist *playlist, gint min_pos, gint max_pos, gboolean s
         list = g_list_next(list);
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
 }
@@ -3162,7 +3164,7 @@ playlist_read_info_selection(Playlist *playlist)
     GList *node;
     gboolean retval = FALSE;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (node = playlist->entries; node; node = g_list_next(node)) {
         PlaylistEntry *entry = node->data;
@@ -3185,7 +3187,7 @@ playlist_read_info_selection(Playlist *playlist)
         }
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
@@ -3198,7 +3200,7 @@ playlist_read_info(Playlist *playlist, guint pos)
 {
     GList *node;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if ((node = g_list_nth(playlist->entries, pos))) {
         PlaylistEntry *entry = node->data;
@@ -3207,7 +3209,7 @@ playlist_read_info(Playlist *playlist, guint pos)
         playlist_entry_get_info(entry);
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
@@ -3232,14 +3234,14 @@ playlist_set_shuffle(gboolean shuffle)
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     playlist_position_before_jump = NULL;
 
     cfg.shuffle = shuffle;
     playlist_generate_shuffle_list_nolock(playlist);
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 }
 
 Playlist *
@@ -3274,7 +3276,7 @@ playlist_new_from_selected(void)
 
     playlist_add_playlist( newpl );
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     while ( list != NULL )
     {
@@ -3284,7 +3286,7 @@ playlist_new_from_selected(void)
         list = g_list_next(list);
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(newpl);
     playlistwin_update_list(playlist);
@@ -3300,7 +3302,7 @@ playlist_get_filename_to_play(Playlist *playlist)
     if (!playlist)
         return NULL;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if (!playlist->position) {
         if (cfg.shuffle)
@@ -3311,7 +3313,7 @@ playlist_get_filename_to_play(Playlist *playlist)
 
     filename = playlist->position->filename;
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return filename;
 }
@@ -3322,7 +3324,7 @@ playlist_get_entry_to_play(Playlist *playlist)
     if (!playlist)
         return NULL;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if (!playlist->position) {
         if (cfg.shuffle)
@@ -3331,7 +3333,7 @@ playlist_get_entry_to_play(Playlist *playlist)
             playlist->position = playlist->entries->data;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     return playlist->position;
 }
