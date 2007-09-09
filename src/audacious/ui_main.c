@@ -406,6 +406,8 @@ mainwin_quit_cb(void)
 {
     GList *playlists = NULL, *playlists_top = NULL;
 
+    playlist_stop_get_info_thread();
+
     gtk_widget_hide(equalizerwin);
     gtk_widget_hide(playlistwin);
     gtk_widget_hide(mainwin);
@@ -417,7 +419,6 @@ mainwin_quit_cb(void)
 
     plugin_system_cleanup();
 
-    playlist_stop_get_info_thread();
 
     /* free and clear each playlist */
     playlists = playlist_get_playlists();

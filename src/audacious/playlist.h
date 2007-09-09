@@ -126,6 +126,7 @@ void playlist_select_next(void);
 void playlist_select_prev(void);
 GList * playlist_get_playlists(void);
 
+void playlist_clear_only(Playlist *playlist);
 void playlist_clear(Playlist *playlist);
 void playlist_delete(Playlist *playlist, gboolean crop);
 

@@ -45,11 +45,11 @@
 #include <sys/errno.h>
 
 #if defined(USE_REGEX_ONIGURUMA)
-  #include <onigposix.h>
+#  include <onigposix.h>
 #elif defined(USE_REGEX_PCRE)
-  #include <pcreposix.h>
+#  include <pcreposix.h>
 #else
-  #include <regex.h>
+#  include <regex.h>
 #endif
 
 #include "input.h"
@@ -102,11 +102,11 @@ static GList *playlists_iter;
  * January 7, 2006, William Pitcock <nenolod@nenolod.net>
  */
 
-G_LOCK_DEFINE(playlist_get_info_going);
 
 //static gchar *playlist_current_name = NULL;
 
 static gboolean playlist_get_info_scan_active = FALSE;
+GStaticRWLock playlist_get_info_rwlock = G_STATIC_RW_LOCK_INIT;
 static gboolean playlist_get_info_going = FALSE;
 static GThread *playlist_get_info_thread;
 
@@ -411,11 +411,8 @@ play_queued(Playlist *playlist)
 }
 
 void
-playlist_clear(Playlist *playlist)
+playlist_clear_only(Playlist *playlist)
 {
-    if (!playlist)
-        return;
-
     PLAYLIST_LOCK( playlist->mutex );
 
     g_list_foreach(playlist->entries, (GFunc) playlist_entry_free, NULL);
@@ -426,7 +423,15 @@ playlist_clear(Playlist *playlist)
     playlist->attribute = PLAYLIST_PLAIN;
 
     PLAYLIST_UNLOCK( playlist->mutex );
+}
 
+void
+playlist_clear(Playlist *playlist)
+{
+    if (!playlist)
+        return;
+
+    playlist_clear_only(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
@@ -2505,12 +2510,13 @@ playlist_get_info_is_going(void)
 {
     gboolean result;
 
-    G_LOCK(playlist_get_info_going);
+    g_static_rw_lock_reader_lock(&playlist_get_info_rwlock);
     result = playlist_get_info_going;
-    G_UNLOCK(playlist_get_info_going);
+    g_static_rw_lock_reader_unlock(&playlist_get_info_rwlock);
 
     return result;
 }
+
 
 static gboolean
 playlist_request_win_update(gpointer unused)
@@ -2519,6 +2525,7 @@ playlist_request_win_update(gpointer unused)
     playlistwin_update_list(playlist);
     return FALSE; /* to be called only once */
 }
+
 
 static gpointer
 playlist_get_info_func(gpointer arg)
@@ -2531,8 +2538,7 @@ playlist_get_info_func(gpointer arg)
         Playlist *playlist = playlist_get_active();
 
         // on_load
-        if (cfg.use_pl_metadata &&
-            cfg.get_info_on_load &&
+        if (cfg.use_pl_metadata && cfg.get_info_on_load &&
             playlist_get_info_scan_active) {
 
             for (node = playlist->entries; node; node = g_list_next(node)) {
@@ -2599,9 +2605,8 @@ playlist_get_info_func(gpointer arg)
                 }
             }
         } // on_demand
-        else if (cfg.get_info_on_demand && 
-			(!cfg.playlist_visible || cfg.playlist_shaded
-                	 || !cfg.use_pl_metadata))
+        else if (cfg.get_info_on_demand &&
+                 (!cfg.playlist_visible || cfg.playlist_shaded || !cfg.use_pl_metadata))
         {
             g_mutex_lock(mutex_scan);
             playlist_get_info_scan_active = FALSE;
@@ -2639,9 +2644,9 @@ playlist_get_info_func(gpointer arg)
 void
 playlist_start_get_info_thread(void)
 {
-    G_LOCK(playlist_get_info_going);
+    g_static_rw_lock_writer_lock(&playlist_get_info_rwlock);
     playlist_get_info_going = TRUE;
-    G_UNLOCK(playlist_get_info_going);
+    g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
 
     playlist_get_info_thread = g_thread_create(playlist_get_info_func,
                                                NULL, TRUE, NULL);
@@ -2650,9 +2655,9 @@ playlist_start_get_info_thread(void)
 void
 playlist_stop_get_info_thread(void)
 {
-    G_LOCK(playlist_get_info_going);
+    g_static_rw_lock_writer_lock(&playlist_get_info_rwlock);
     playlist_get_info_going = FALSE;
-    G_UNLOCK(playlist_get_info_going);
+    g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
 
     g_cond_broadcast(cond_scan);
     g_thread_join(playlist_get_info_thread);
@@ -2664,6 +2669,7 @@ playlist_start_get_info_scan(void)
     g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
     g_mutex_unlock(mutex_scan);
+
     g_cond_signal(cond_scan);
 }
 
@@ -3241,7 +3247,6 @@ playlist_free(Playlist *playlist)
 {
     g_mutex_free( playlist->mutex );
     g_free( playlist );
-    return;
 }
 
 Playlist *
