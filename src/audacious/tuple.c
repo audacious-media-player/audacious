@@ -258,7 +258,7 @@ tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field)
     const gchar *tfield;
 
     g_return_if_fail(tuple != NULL);
-    g_return_if_fail(nfield < FIELD_LAST && field == NULL);
+    g_return_if_fail(nfield < FIELD_LAST);
 
     TUPLE_LOCK_WRITE();
     if (nfield < 0)
@@ -290,7 +290,7 @@ tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field)
     TupleValueType type = TUPLE_UNKNOWN;
 
     g_return_val_if_fail(tuple != NULL, TUPLE_UNKNOWN);
-    g_return_val_if_fail(nfield < FIELD_LAST && field == NULL, TUPLE_UNKNOWN);
+    g_return_val_if_fail(nfield < FIELD_LAST, TUPLE_UNKNOWN);
 
     TUPLE_LOCK_READ();
     if (nfield < 0) {
@@ -312,7 +312,7 @@ tuple_get_string(Tuple *tuple, const gint nfield, const gchar *field)
     TupleValue *value;
 
     g_return_val_if_fail(tuple != NULL, NULL);
-    g_return_val_if_fail(nfield < FIELD_LAST && field == NULL, NULL);
+    g_return_val_if_fail(nfield < FIELD_LAST, NULL);
 
     TUPLE_LOCK_READ();
     if (nfield < 0)
@@ -338,7 +338,7 @@ tuple_get_int(Tuple *tuple, const gint nfield, const gchar *field)
     TupleValue *value;
 
     g_return_val_if_fail(tuple != NULL, 0);
-    g_return_val_if_fail(nfield < FIELD_LAST && field == NULL, 0);
+    g_return_val_if_fail(nfield < FIELD_LAST, 0);
 
     TUPLE_LOCK_READ();
     if (nfield < 0)
