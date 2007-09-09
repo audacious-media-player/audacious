@@ -103,8 +103,5 @@ void tuple_evalnode_free(TupleEvalNode *expr);
 
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple);
-/*
-gchar *tuple_formatter_make_title_string(Tuple *tuple, const gchar *string);
-*/
 
 #endif
