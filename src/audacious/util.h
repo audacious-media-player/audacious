@@ -91,15 +91,14 @@ typedef struct {
 
 GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in, gint width, gint height);
 
-/* XMMS names */
-
-#define bmp_info_dialog(title, text, button_text, model, button_action, action_data) \
-  xmms_show_message(title, text, button_text, model, button_action, action_data)
-
-GtkWidget *xmms_show_message(const gchar * title, const gchar * text,
+GtkWidget *audacious_info_dialog(const gchar * title, const gchar * text,
                              const gchar * button_text, gboolean modal,
                              GtkSignalFunc button_action,
                              gpointer action_data);
+
+/* FIXME! Remove this completely -ccr */
+#define xmms_check_realtime_priority(N) FALSE
+
 
 GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
 
