@@ -1019,7 +1019,7 @@ static gboolean ui_skinned_playlist_popup_show(gpointer data) {
         GtkWidget *popup = g_object_get_data(G_OBJECT(widget), "popup");
 
         tuple = playlist_get_tuple(pl_active, pos);
-        if ((tuple == NULL) || (tuple_get_int(tuple, "length") < 1)) {
+        if ((tuple == NULL) || (tuple_get_int(tuple, FIELD_LENGTH, NULL) < 1)) {
            gchar *title = playlist_get_songtitle(pl_active, pos);
            audacious_fileinfopopup_show_from_title(popup, title);
            g_free(title);
