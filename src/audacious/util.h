@@ -96,18 +96,10 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
 #define bmp_info_dialog(title, text, button_text, model, button_action, action_data) \
   xmms_show_message(title, text, button_text, model, button_action, action_data)
 
-#define bmp_usleep(usec) \
-  xmms_usleep(usec)
-
-#define bmp_check_realtime_priority() \
-  xmms_check_realtime_priority()
-
 GtkWidget *xmms_show_message(const gchar * title, const gchar * text,
                              const gchar * button_text, gboolean modal,
                              GtkSignalFunc button_action,
                              gpointer action_data);
-gboolean xmms_check_realtime_priority(void);
-void xmms_usleep(gint usec);
 
 GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
 
