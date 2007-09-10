@@ -1568,6 +1568,7 @@ gboolean
 playlist_save(Playlist * playlist, const gchar * filename)
 {
     PlaylistContainer *plc = NULL;
+    GList *old_iter;
     gchar *ext;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
@@ -1584,7 +1585,16 @@ playlist_save(Playlist * playlist, const gchar * filename)
     if (plc->plc_write == NULL)
         return FALSE;
 
-    plc->plc_write(filename, 0);
+    /* Save the right playlist to disk */
+    if (playlist != playlist_get_active()) {
+        old_iter = playlists_iter;
+        playlists_iter = g_list_find(playlists, playlist);
+        if(!playlists_iter) playlists_iter = old_iter;
+        plc->plc_write(filename, 0);
+        playlists_iter = old_iter;
+    } else {
+        plc->plc_write(filename, 0);
+    }
 
     return TRUE;
 }
