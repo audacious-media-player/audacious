@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-09-05 19:18+0200\n"
-"PO-Revision-Date: 2007-09-04 20:46+0900\n"
+"PO-Revision-Date: 2007-09-10 09:20+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -544,7 +544,7 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4364
 msgid "Interpolation Engine:"
-msgstr ""
+msgstr "インターポレーションエンジン:"
 
 #: src/audacious/glade/prefswin.glade:4593
 msgid "Reload Plugins"
@@ -1823,18 +1823,16 @@ msgid "Sort Selected"
 msgstr "選択範囲のソート"
 
 #: src/audacious/ui_manager.c:380
-#, fuzzy
 msgid "File"
-msgstr "ファイア"
+msgstr "ファイル"
 
 #: src/audacious/ui_manager.c:381
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: src/audacious/ui_manager.c:383
-#, fuzzy
 msgid "Plugin Services"
-msgstr "プラグイン"
+msgstr "プラグインサービス"
 
 #: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 msgid "View Track Details"
