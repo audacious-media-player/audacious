@@ -1,11 +1,10 @@
 include ../../mk/rules.mk
 include ../../mk/init.mk
+include ../../mk/objective.mk
 
 SUBDIRS = $(INTL_OBJECTIVE) glade images ui
 
 OBJECTIVE_BINS = audacious
-
-include ../../mk/objective.mk
 
 LDFLAGS += $(AUDLDFLAGS)
 
@@ -187,6 +186,10 @@ desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
 build-prehook: $(PCH)
+
+audacious: $(OBJECTS) $(LIBDEP)
+	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
+	@printf "%10s     %-20s\n" LINK $@
 
 dbus-server-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_rc objects.xml > $@
