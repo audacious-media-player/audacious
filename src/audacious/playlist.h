@@ -214,8 +214,13 @@ void playlist_set_shuffle(gboolean shuffle);
 void playlist_clear_selected(Playlist *playlist);
 
 GList *get_playlist_nth(Playlist *playlist, guint);
-gboolean playlist_set_current_name(Playlist *playlist, const gchar * filename);
+
+gboolean playlist_set_current_name(Playlist *playlist, const gchar * title);
 const gchar *playlist_get_current_name(Playlist *playlist);
+
+gboolean playlist_filename_set(Playlist *playlist, const gchar * filename);
+gchar *playlist_filename_get(Playlist *playlist);
+
 Playlist *playlist_new(void);
 void playlist_free(Playlist *playlist);
 Playlist *playlist_new_from_selected(void);
@@ -237,6 +242,8 @@ extern void playlist_load_ins_file_tuple(Playlist *playlist, const gchar * filen
 					 Tuple *tuple);
 
 Playlist *playlist_get_active(void);
+
+gboolean playlist_playlists_equal(Playlist *p1, Playlist *p2);
 
 G_END_DECLS
 

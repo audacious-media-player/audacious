@@ -279,8 +279,10 @@ playlist_add_playlist(Playlist *playlist)
 void
 playlist_remove_playlist(Playlist *playlist)
 {
+    gboolean active;
+    active = (playlist && playlist == playlist_get_active());
     /* users suppose playback will be stopped on removing playlist */
-    if (playback_get_playing()) {
+    if (active && playback_get_playing()) {
         ip_data.stop = TRUE;
         playback_stop();
         ip_data.stop = FALSE;
@@ -291,11 +293,11 @@ playlist_remove_playlist(Playlist *playlist)
     if (g_list_length(playlists) < 2) {
         playlist_clear(playlist);
         playlist_set_current_name(playlist, NULL);
+        playlist_filename_set(playlist, NULL);
         return;
     }
 
-    if (playlist == playlist_get_active())
-        playlist_select_next();
+    if (active) playlist_select_next();
 
     /* upon removal, a playlist should be cleared and freed */
     playlists = g_list_remove(playlists, playlist);
@@ -361,20 +363,48 @@ playlist_get_current_name(Playlist *playlist)
     return playlist->title;
 }
 
-/* filename is real filename here. --yaz */
+/* This function now sets the playlist title, not the playlist filename.
+ * See playlist_filename_set */
 gboolean
-playlist_set_current_name(Playlist *playlist, const gchar * filename)
+playlist_set_current_name(Playlist *playlist, const gchar * title)
 {
-    if (playlist->title)
-        g_free(playlist->title);
+    gchar *oldtitle;
+    oldtitle = playlist->title;
 
-    if (!filename) {
+    if (!title) {
         playlist->title = NULL;
+        if(oldtitle) g_free(oldtitle);
         return FALSE;
     }
 
-    playlist->title = filename_to_utf8(filename);
+    playlist->title = str_to_utf8(title);
+    if(oldtitle) g_free(oldtitle);
     return TRUE;
+}
+
+/* Setting the filename allows the original playlist to be modified later */
+gboolean
+playlist_filename_set(Playlist *playlist, const gchar * filename)
+{
+    gchar *old;
+    old = playlist->filename;
+
+    if(!filename) {
+        playlist->filename = NULL;
+        if(old) g_free(old);
+        return FALSE;
+    }
+
+    playlist->filename = filename_to_utf8(filename);
+    if(old) g_free(old);
+    return TRUE;
+}
+
+gchar *
+playlist_filename_get(Playlist *playlist)
+{
+    if(!playlist->filename) return NULL;
+    return g_filename_from_utf8(playlist->filename, -1, NULL, NULL, NULL);
 }
 
 static GList *
@@ -1574,6 +1604,7 @@ gboolean
 playlist_save(Playlist * playlist, const gchar * filename)
 {
     PlaylistContainer *plc = NULL;
+    GList *old_iter;
     gchar *ext;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
@@ -1581,16 +1612,22 @@ playlist_save(Playlist * playlist, const gchar * filename)
 
     ext = strrchr(filename, '.') + 1;
 
-    if (!playlist->title || !playlist->title[0])
-        playlist_set_current_name(playlist, filename);
-
     if ((plc = playlist_container_find(ext)) == NULL)
         return FALSE;
 
     if (plc->plc_write == NULL)
         return FALSE;
 
-    plc->plc_write(filename, 0);
+    /* Save the right playlist to disk */
+    if (playlist != playlist_get_active()) {
+        old_iter = playlists_iter;
+        playlists_iter = g_list_find(playlists, playlist);
+        if(!playlists_iter) playlists_iter = old_iter;
+        plc->plc_write(filename, 0);
+        playlists_iter = old_iter;
+    } else {
+        plc->plc_write(filename, 0);
+    }
 
     return TRUE;
 }
@@ -1602,6 +1639,10 @@ playlist_load(Playlist * playlist, const gchar * filename)
     g_return_val_if_fail(playlist != NULL, FALSE);
 
     playlist->loading_playlist = TRUE;
+    if(!playlist_get_length(playlist)) {
+        /* Loading new playlist */
+        playlist_filename_set(playlist, filename);
+    }
     ret = playlist_load_ins(playlist, filename, -1);
     playlist->loading_playlist = FALSE;
 
@@ -1765,7 +1806,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     if (playlist != playlist_get_active()) {
         old_iter = playlists_iter;
         playlists_iter = g_list_find(playlists, playlist);
-        if (!playlists_iter) playlists_iter = playlists;
+        if (!playlists_iter) playlists_iter = old_iter;
         plc->plc_read(filename, pos);
         playlists_iter = old_iter;
     } else {
@@ -3249,8 +3290,8 @@ playlist_new(void)
     Playlist *playlist = g_new0(Playlist, 1);
     playlist->mutex = g_mutex_new();
     playlist->loading_playlist = FALSE;
-
-    playlist_set_current_name(playlist, NULL);
+    playlist->title = NULL;
+    playlist->filename = NULL;
     playlist_clear(playlist);
 
     return playlist;
@@ -3335,4 +3376,24 @@ playlist_get_entry_to_play(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     return playlist->position;
+}
+
+gboolean
+playlist_playlists_equal(Playlist *p1, Playlist *p2)
+{
+    GList *l1, *l2;
+    PlaylistEntry *e1, *e2;
+    if (!p1 || !p2) return FALSE;
+    l1 = p1->entries;
+    l2 = p2->entries;
+    do {
+        if (!l1 && !l2) break;
+        if (!l1 || !l2) return FALSE; /* different length */
+        e1 = (PlaylistEntry *) l1->data;
+        e2 = (PlaylistEntry *) l2->data;
+        if (strcmp(e1->filename, e2->filename) != 0) return FALSE;
+        l1 = l1->next;
+        l2 = l2->next;
+    } while(1);
+    return TRUE;
 }
