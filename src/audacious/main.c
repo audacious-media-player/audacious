@@ -676,6 +676,120 @@ bmp_config_load(void)
         cfg.get_info_on_demand = TRUE;
 }
 
+static gboolean
+save_extra_playlist(const gchar * path, const gchar * basename,
+        gpointer savedlist)
+{
+    GList *playlists, *iter;
+    GList **saved;
+    Playlist *playlist;
+    int found;
+    gchar *filename;
+
+    playlists = playlist_get_playlists();
+    saved = (GList **) savedlist;
+
+    found = 0;
+    for (iter = playlists; iter; iter = iter->next) {
+        playlist = (Playlist *) iter->data;
+        if (g_list_find(*saved, playlist)) continue;
+        filename = playlist_filename_get(playlist);
+        if (!filename) continue;
+        if (strcmp(filename, path) == 0) {
+            /* Save playlist */
+            playlist_save(playlist, path);
+            *saved = g_list_prepend(*saved, playlist);
+            found = 1;
+            g_free(filename);
+            break;
+        }
+        g_free(filename);
+    }
+
+    if(!found) {
+        /* Remove playlist */
+        unlink(path);
+    }
+
+    return FALSE; /* process other playlists */
+}
+
+static void
+save_other_playlists(GList *saved)
+{
+    GList *playlists, *iter;
+    Playlist *playlist;
+    gchar *pos, *ext, *basename, *filename, *newbasename;
+    int i, num, isdigits;
+
+    playlists = playlist_get_playlists();
+    for(iter = playlists; iter; iter = iter->next) {
+        playlist = (Playlist *) iter->data;
+        if (g_list_find(saved, playlist)) continue;
+        filename = playlist_filename_get(playlist);
+        if (!filename || !filename[0]
+                || g_file_test(filename, G_FILE_TEST_IS_DIR)) {
+            /* default basename */
+#ifdef HAVE_XSPF_PLAYLIST
+            basename = g_strdup("playlist_01.xspf");
+#else
+            basename = g_strdup("playlist_01.m3u");
+#endif
+        } else {
+            basename = g_path_get_basename(filename);
+        }
+        g_free(filename);
+        if ((pos = strrchr(basename, '.'))) {
+            *pos = '\0';
+        }
+#ifdef HAVE_XSPF_PLAYLIST
+        ext = ".xspf";
+#else
+        ext = ".m3u";
+#endif
+        num = -1;
+        if ((pos = strrchr(basename, '_'))) {
+            isdigits = 0;
+            for (i=1; pos[i]; i++) {
+                if (!g_ascii_isdigit(pos[i])) {
+                    isdigits = 0;
+                    break;
+                }
+                isdigits = 1;
+            }
+            if (isdigits) {
+                num = atoi(pos+1) + 1;
+                *pos = '\0';
+            }
+        }
+        /* attempt to generate unique filename */
+        filename = NULL;
+        do {
+            g_free(filename);
+            if (num < 0) {
+                /* try saving without number first */
+                newbasename = g_strdup_printf("%s%s", basename, ext);
+                num = 1;
+            } else {
+                newbasename = g_strdup_printf("%s_%02d%s", basename, num, ext);
+                num++;
+                if (num < 0) {
+                    g_warning("Playlist number in filename overflowed."
+                            " Not saving playlist.\n");
+                    goto cleanup;
+                }
+            }
+            filename = g_build_filename(bmp_paths[BMP_PATH_PLAYLISTS_DIR],
+                    newbasename, NULL);
+            g_free(newbasename);
+        } while (g_file_test(filename, G_FILE_TEST_EXISTS));
+
+        playlist_save(playlist, filename);
+cleanup:
+        g_free(filename);
+        g_free(basename);
+    }
+}
 
 void
 bmp_config_save(void)
@@ -684,6 +798,7 @@ bmp_config_save(void)
     gchar *str;
     gint i, cur_pb_time;
     ConfigDb *db;
+    GList *saved;
     Playlist *playlist = playlist_get_active();
 
     cfg.disabled_iplugins = input_stringify_disabled_list();
@@ -820,6 +935,16 @@ bmp_config_save(void)
     bmp_cfg_db_close(db);
 
     playlist_save(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+
+    /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
+    saved = NULL;
+    if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
+            &saved, NULL)) {
+        g_warning("Could not save extra playlists\n");
+    }
+
+    /* Save other playlists to PLAYLISTS_DIR */
+    save_other_playlists(saved);
 }
 
 static void
