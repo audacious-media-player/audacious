@@ -1108,6 +1108,35 @@ aud_headless_iteration(gpointer unused)
     return TRUE;
 }
 
+static gboolean
+load_extra_playlist(const gchar * path, const gchar * basename,
+        gpointer def)
+{
+    const gchar *title;
+    Playlist *playlist;
+    Playlist *deflist;
+
+    deflist = (Playlist *)def;
+    playlist = playlist_new();
+    if (!playlist) {
+        g_warning("Couldn't create new playlist\n");
+        return FALSE;
+    }
+
+    playlist_add_playlist(playlist);
+    playlist_load(playlist, path);
+
+    title = playlist_get_current_name(playlist);
+
+    if (playlist_playlists_equal(playlist, deflist)) {
+        /* same as default playlist */
+        playlist_remove_playlist(playlist);
+        playlist_filename_set(deflist, path);
+    }
+
+    return FALSE; /* keep loading other playlists */
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
@@ -1230,6 +1259,12 @@ main(gint argc, gchar ** argv)
     playlist = playlist_get_active();
     playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(playlist, cfg.playlist_position);
+
+    /* Load extra playlists */
+    if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
+            playlist, NULL)) {
+        g_warning("Could not load extra playlists\n");
+    }
 
     /* this needs to be called after all 3 windows are created and
      * input plugins are setup'ed 
