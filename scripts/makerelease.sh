@@ -45,6 +45,7 @@ echo
 echo "Building root: $RELEASENAME/"
 hg archive $RELEASENAME
 cd $RELEASENAME
+sh autogen.sh
 rm -rf autogen.sh autom4te.cache
 
 # Run application specific instructions here.
