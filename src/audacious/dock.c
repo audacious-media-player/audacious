@@ -224,7 +224,6 @@ docked_list_move(GList * list, gint x, gint y)
     for (node = list; node; node = g_list_next(node)) {
         dw = node->data;
         gtk_window_move(dw->w, x + dw->offset_x, y + dw->offset_y);
-        gdk_flush();
     }
 }
 
@@ -471,7 +470,8 @@ dock_move_press(GList * window_list, GtkWindow * w,
         return;
 
     gtk_window_present(w);
-    gdk_window_get_pointer(GTK_WIDGET(w)->window, &mx, &my, NULL);
+    mx = event->x;
+    my = event->y;
     gtk_object_set_data(GTK_OBJECT(w), "move_offset_x", GINT_TO_POINTER(mx));
     gtk_object_set_data(GTK_OBJECT(w), "move_offset_y", GINT_TO_POINTER(my));
     if (move_list)
@@ -490,11 +490,9 @@ dock_move_press(GList * window_list, GtkWindow * w,
 void
 dock_move_motion(GtkWindow * w, GdkEventMotion * event)
 {
-    gint offset_x, offset_y, win_x, win_y, x, y, mx, my;
+    gint offset_x, offset_y, win_x, win_y, x, y;
     GList *dlist;
     GList *window_list;
-
-    gdk_flush();
 
     if (!gtk_object_get_data(GTK_OBJECT(w), "is_moving"))
         return;
@@ -508,10 +506,8 @@ dock_move_motion(GtkWindow * w, GdkEventMotion * event)
 
     gtk_window_get_position(w, &win_x, &win_y);
 
-    gdk_window_get_pointer(NULL, &mx, &my, NULL);
-
-    x = mx - offset_x;
-    y = my - offset_y;
+    x = event->x_root - offset_x;
+    y = event->y_root - offset_y;
 
     calc_snap_offset(dlist, window_list, x, y, &offset_x, &offset_y);
     x += offset_x;

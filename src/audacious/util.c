@@ -894,7 +894,7 @@ GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix) {
  * Return value: A GTK widget handle for the message box.
  **/
 GtkWidget *
-xmms_show_message(const gchar * title, const gchar * text,
+audacious_info_dialog(const gchar * title, const gchar * text,
                   const gchar * button_text, gboolean modal,
                   GtkSignalFunc button_action, gpointer action_data)
 {
@@ -970,28 +970,3 @@ audacious_get_localdir(void)
   return datadir;
 }
 
-
-/**
- * xmms_check_realtime_priority:
- *
- * Legacy function included for compatibility with XMMS.
- *
- * Return value: FALSE
- **/
-gboolean
-xmms_check_realtime_priority(void)
-{
-    return FALSE;
-}
-
-/**
- * xmms_usleep:
- * @usec: The amount of microseconds to sleep.
- *
- * Legacy function included for compatibility with XMMS.
- **/
-void
-xmms_usleep(gint usec)
-{
-    g_usleep(usec);
-}
