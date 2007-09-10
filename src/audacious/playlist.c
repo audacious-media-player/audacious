@@ -3315,3 +3315,23 @@ playlist_get_entry_to_play(Playlist *playlist)
 
     return playlist->position;
 }
+
+gboolean
+playlist_playlists_equal(Playlist *p1, Playlist *p2)
+{
+    GList *l1, *l2;
+    PlaylistEntry *e1, *e2;
+    if (!p1 || !p2) return FALSE;
+    l1 = p1->entries;
+    l2 = p2->entries;
+    do {
+        if (!l1 && !l2) break;
+        if (!l1 || !l2) return FALSE; /* different length */
+        e1 = (PlaylistEntry *) l1->data;
+        e2 = (PlaylistEntry *) l2->data;
+        if (strcmp(e1->filename, e2->filename) != 0) return FALSE;
+        l1 = l1->next;
+        l2 = l2->next;
+    } while(1);
+    return TRUE;
+}

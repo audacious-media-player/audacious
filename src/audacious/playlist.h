@@ -237,6 +237,8 @@ extern void playlist_load_ins_file_tuple(Playlist *playlist, const gchar * filen
 
 Playlist *playlist_get_active(void);
 
+gboolean playlist_playlists_equal(Playlist *p1, Playlist *p2);
+
 G_END_DECLS
 
 #endif
