@@ -828,6 +828,7 @@ playlistwin_save_playlist(const gchar * filename)
 static void
 playlistwin_load_playlist(const gchar * filename)
 {
+    const gchar *title;
     Playlist *playlist = playlist_get_active();
 
     g_return_if_fail(filename != NULL);
@@ -838,7 +839,9 @@ playlistwin_load_playlist(const gchar * filename)
     mainwin_clear_song_info();
 
     playlist_load(playlist, filename);
-    playlist_set_current_name(playlist, filename);
+    title = playlist_get_current_name(playlist);
+    if(!title || !title[0])
+        playlist_set_current_name(playlist, filename);
 }
 
 static gchar *
