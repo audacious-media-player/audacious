@@ -1799,7 +1799,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     if (playlist != playlist_get_active()) {
         old_iter = playlists_iter;
         playlists_iter = g_list_find(playlists, playlist);
-        if (!playlists_iter) playlists_iter = playlists;
+        if (!playlists_iter) playlists_iter = old_iter;
         plc->plc_read(filename, pos);
         playlists_iter = old_iter;
     } else {
