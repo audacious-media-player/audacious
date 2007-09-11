@@ -96,10 +96,6 @@ GtkWidget *audacious_info_dialog(const gchar * title, const gchar * text,
                              GtkSignalFunc button_action,
                              gpointer action_data);
 
-/* FIXME! Remove this completely -ccr */
-#define xmms_check_realtime_priority(N) FALSE
-
-
 GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
 
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
