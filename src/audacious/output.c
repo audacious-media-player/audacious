@@ -432,7 +432,6 @@ produce_audio(gint time,        /* position             */
     guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
     int caneq = (fmt == FMT_S16_NE || fmt == myorder);
     OutputPlugin *op = get_current_output_plugin();
-    EffectPlugin *ep = get_current_effect_plugin();
     int writeoffs;
     AFormat new_format;
     gint new_rate;
@@ -500,32 +499,26 @@ produce_audio(gint time,        /* position             */
     input_add_vis_pcm(time, fmt, nch, length, ptr);
 
     /* do effect plugin(s) */
-    if (effects_enabled() && ep && ep->query_format) {
-        new_format = op_state.fmt;
-        new_rate = op_state.rate;
-        new_nch = op_state.nch;
+    new_format = op_state.fmt;
+    new_rate = op_state.rate;
+    new_nch = op_state.nch;
 
-        ep->query_format(&new_format, &new_rate, &new_nch);
+    effect_do_query_format(&new_format, &new_rate, &new_nch);
 
-        if (new_format != op_state.fmt ||
-            new_rate != op_state.rate ||
-            new_nch != op_state.nch) {
-            /*
-             * The effect plugin changes the stream format. Reopen the
-             * audio device.
-             */
-            if (0 == output_open_audio(new_format, new_rate, new_nch)) {
-                /*
-                 * Fatal error.
-                 */
-                return;
-            }
-        }
+    if (new_format != op_state.fmt ||
+        new_rate != op_state.rate ||
+        new_nch != op_state.nch)
+    {
+        /*
+         * The effect plugin changes the stream format. Reopen the
+         * audio device.
+         */
+        if (!output_open_audio(new_format, new_rate, new_nch))
+            return;
     }
 
-    if (effects_enabled() && ep && ep->mod_samples)
-        length = ep->mod_samples(&ptr, length, op_state.fmt,
-                op_state.rate, op_state.nch);
+    length = effect_do_mod_samples(&ptr, length, op_state.fmt, op_state.rate, 
+        op_state.nch);
 
     writeoffs = 0;
     while (writeoffs < length)
@@ -538,14 +531,15 @@ produce_audio(gint time,        /* position             */
         if (writable == 0)
             return;
 
-        while (op->buffer_free() < writable) { /* wait output buf */
+        while (op->buffer_free() < writable)   /* wait output buf */
+        {
             if (going && !*going)              /* thread stopped? */
                 return;                        /* so finish */
 
-                if (ip_data.stop)              /* has a stop been requested? */
+            if (ip_data.stop)                  /* has a stop been requested? */
                 return;                        /* yes, so finish */
 
-                g_usleep(10000);               /* else sleep for retry */
+            g_usleep(10000);                   /* else sleep for retry */
         }
 
         if (ip_data.stop)

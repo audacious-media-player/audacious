@@ -35,7 +35,7 @@ EffectPluginData ep_data = {
     NULL
 };
 
-static gint
+gint
 effect_do_mod_samples(gpointer * data, gint length,
                       AFormat fmt, gint srate, gint nch)
 {
@@ -53,7 +53,7 @@ effect_do_mod_samples(gpointer * data, gint length,
     return length;
 }
 
-static void
+void
 effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
 {
     GList *l = ep_data.enabled_list;
@@ -66,36 +66,6 @@ effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
         }
         l = g_list_next(l);
     }
-}
-
-static EffectPlugin pseudo_effect_plugin = {
-    NULL,
-    NULL,
-    "XMMS Multiple Effects Support",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    TRUE,
-    effect_do_mod_samples,
-    effect_do_query_format
-};
-
-/* get_current_effect_plugin() and effects_enabled() are still to be used by 
- * output plugins as they were when we only supported one effects plugin at
- * a time. We now had a pseudo-effects-plugin that chains all the enabled
- * plugins. -- Jakdaw */
-
-EffectPlugin *
-get_current_effect_plugin(void)
-{
-    return &pseudo_effect_plugin;
-}
-
-gboolean
-effects_enabled(void)
-{
-    return TRUE;
 }
 
 GList *
