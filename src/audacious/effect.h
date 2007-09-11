@@ -27,6 +27,7 @@
 #define EFFECT_H
 
 #include <glib.h>
+#include "audacious/output.h"
 
 typedef struct _EffectPluginData EffectPluginData;
 
