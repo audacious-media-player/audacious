@@ -87,15 +87,15 @@ AC_ARG_ENABLE(user-plugin-dir,
 
 dnl Check for GTK/GLib/GThread/Pango
 
-PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.6.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0, gtk+-2.0 >= 2.6.0])],
+PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.10.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
+    [ADD_PC_REQUIRES([glib-2.0 >= 2.10.0, gtk+-2.0 >= 2.6.0])],
     [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
 )
 
 dnl Check for GLib.
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.6.0],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0])],
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.10.0],
+    [ADD_PC_REQUIRES([glib-2.0 >= 2.10.0])],
     [AC_MSG_ERROR([Cannot find glib2])]
 )
 
