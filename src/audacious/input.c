@@ -128,10 +128,16 @@ input_stringify_disabled_list(void)
 void
 free_vis_data(void)
 {
+    GList *iter;
+
     G_LOCK(vis_mutex);
-    g_list_foreach(vis_list, (GFunc) g_free, NULL);
+
+    MOWGLI_ITER_FOREACH(iter, vis_list)
+        g_slice_free(VisNode, iter->data);
+
     g_list_free(vis_list);
     vis_list = NULL;
+
     G_UNLOCK(vis_mutex);
 }
 
@@ -262,7 +268,7 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
         max /= 2;
     max = CLAMP(max, 0, 512);
 
-    vis_node = g_new0(VisNode, 1);
+    vis_node = g_slice_new0(VisNode);
     vis_node->time = time;
     vis_node->nch = nch;
     vis_node->length = max;
@@ -370,7 +376,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         if (ret > 0)
         {
             g_free(filename_proxy);
-            pr = g_new0(ProbeResult, 1);
+            pr = g_slice_new0(ProbeResult, 1);
             pr->ip = ip;
             return pr;
         }
