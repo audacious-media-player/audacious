@@ -379,32 +379,11 @@ tuple_formatter_register_function(const gchar *keyword,
     tuple_formatter_func_list = g_list_append(tuple_formatter_func_list, expr);
 }
 
-/* builtin-keyword: ${?arg}, returns TRUE if <arg> exists and is not empty. */
+/* builtin-keyword: ${?arg}, returns TRUE if <arg> exists. */
 static gboolean
 tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
 {
-    gboolean ret = FALSE;
-    TupleValueType type = tuple_get_value_type(tuple, -1, expression);
-    const gchar *iter;
-
-    if (type == TUPLE_UNKNOWN)
-        return FALSE;
-
-    /* TBD: check if zero? --nenolod */
-    if (type == TUPLE_INT)
-        return TRUE;
-
-    iter = tuple_get_string(tuple, -1, expression);
-
-    while (ret && *iter != '\0')
-    {
-        if (*iter == ' ')
-            iter++;
-        else
-            ret = TRUE;
-    }
-
-    return ret;
+    return (tuple_get_value_type(tuple, -1, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
 }
 
 /* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match.
