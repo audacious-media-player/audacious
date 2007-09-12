@@ -465,10 +465,12 @@ tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
     if (type == TUPLE_UNKNOWN)
         return TRUE;
 
-    if (type == TUPLE_INT && tuple_get_int(tuple, -1, expression) != 0)
-        return FALSE;
+    if (type == TUPLE_INT)
+        return (tuple_get_int(tuple, -1, expression) == 0);
 
     iter = tuple_get_string(tuple, -1, expression);
+    if (!iter)
+        return TRUE;
 
     while (ret && *iter != '\0')
     {
