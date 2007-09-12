@@ -376,7 +376,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         if (ret > 0)
         {
             g_free(filename_proxy);
-            pr = g_slice_new0(ProbeResult, 1);
+            pr = g_new0(ProbeResult, 1);
             pr->ip = ip;
             return pr;
         }
@@ -384,31 +384,6 @@ input_check_file(const gchar * filename, gboolean show_warning)
         return NULL;
     }
 
-    /* CD-Audio uses cdda:// dummy paths, no filedescriptor handling for it */
-    /* also cuesheet uses cue:// */
-/*
-    if (!g_strncasecmp(filename, "cue://", 6)) {
-        for (node = get_input_list(); node != NULL; node = g_list_next(node))
-        {
-            ip = INPUT_PLUGIN(node->data);
-            if (!ip || !ip->enabled)
-                continue;
-            if (ip->is_our_file != NULL)
-                ret = ip->is_our_file(filename_proxy);
-            else
-                ret = 0;
-            if (ret > 0)
-            {
-                g_free(filename_proxy);
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-                return pr;
-            }
-        }
-        g_free(filename_proxy);
-        return NULL;
-    }
-*/
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
     g_free(tmp_uri);
 
