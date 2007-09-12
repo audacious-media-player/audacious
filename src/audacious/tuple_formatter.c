@@ -379,13 +379,6 @@ tuple_formatter_register_function(const gchar *keyword,
     tuple_formatter_func_list = g_list_append(tuple_formatter_func_list, expr);
 }
 
-/* builtin-keyword: ${?arg}, returns TRUE if <arg> exists. */
-static gboolean
-tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
-{
-    return (tuple_get_value_type(tuple, -1, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
-}
-
 /* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match.
    <arg1> and <arg2> can also be raw text, which should be enclosed in "double quotes". */
 static gboolean
@@ -461,7 +454,7 @@ tuple_formatter_expression_nonmatch(Tuple *tuple, const gchar *expression)
     return tuple_formatter_expression_match(tuple, expression) ^ 1;
 }
 
-/* builtin-keyword: ${empty?}. returns TRUE if <arg> is empty. */
+/* builtin-keyword: ${(empty)?}. returns TRUE if <arg> is empty. */
 static gboolean
 tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
 {
@@ -486,6 +479,13 @@ tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
     }
 
     return ret;
+}
+
+/* builtin-keyword: ${?arg}, returns TRUE if <arg> exists. */
+static gboolean
+tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
+{
+    return !tuple_formatter_expression_empty(tuple, expression);
 }
 
 /* builtin function: %{audacious-version} */
