@@ -248,7 +248,7 @@ playback_stop(void)
             g_cond_free(playback->pb_ready_cond);
 
         g_free(playback->filename);
-        g_free(playback);
+        g_slice_free(InputPlayback, playback);
         set_current_input_playback(NULL);
 #ifdef USE_DBUS
         mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
@@ -343,7 +343,7 @@ playback_play_file(PlaylistEntry *entry)
 
     ip_data.playing = TRUE;
 
-    playback = g_new0(InputPlayback, 1);
+    playback = g_slice_new0(InputPlayback);
     
     entry->decoder->output = &psuedo_output_plugin;
 

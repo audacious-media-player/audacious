@@ -455,7 +455,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     plw_w = playlistwin_get_width();
     plw_h = playlistwin_get_height();
 
-    playlist_rect = g_new0(GdkRectangle, 1);
+    playlist_rect = g_slice_new0(GdkRectangle);
 
     playlist_rect->x = 0;
     playlist_rect->y = 0;
@@ -769,7 +769,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
     g_object_unref(obj);
     g_object_unref(gc);
-    g_free(playlist_rect);
+    g_slice_free(GdkRectangle, playlist_rect);
 
     return FALSE;
 }
