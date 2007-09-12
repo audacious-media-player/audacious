@@ -29,5 +29,5 @@ echo "[audacious] Generating src/audacious/build_stamp.c for tip $TIP."
 cat << _EOF_ > src/audacious/build_stamp.c
 /* Generated automatically by makepackage. Any changes made here will be lost. */
 #include <glib.h>
-const gchar *svnstamp = "$TIP";
+const gchar *svn_stamp = "$TIP";
 _EOF_
