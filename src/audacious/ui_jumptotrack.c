@@ -345,7 +345,7 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 
     playlist = playlist_get_active();
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (playlist_glist = playlist->entries; playlist_glist;
          playlist_glist = g_list_next(playlist_glist))
@@ -401,7 +401,7 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         g_free(title); title = NULL;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     /* attach the model again to the treeview */
     gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , GTK_TREE_MODEL(store) );
@@ -446,7 +446,7 @@ ui_jump_to_track_fill(gpointer treeview)
 
     playlist = playlist_get_active();
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     for (playlist_glist = playlist->entries; playlist_glist;
          playlist_glist = g_list_next(playlist_glist)) {
@@ -476,7 +476,7 @@ ui_jump_to_track_fill(gpointer treeview)
         }
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     /* attach liststore to treeview */
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(jtf_store));

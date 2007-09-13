@@ -158,6 +158,8 @@ LIBDEP += ../libaudclient/libaudclient$(SHARED_SUFFIX)
 LDADD += -L../libaudclient -laudclient
 endif
 
+LIBADD += $(LDADD)
+
 depend-prehook: $(DBUS_BINDINGS)
 
 build_stamp.c: 
@@ -183,8 +185,10 @@ OBJECTS = ${SOURCES:.c=.o}
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
+build-prehook: $(PCH)
+
 audacious: $(OBJECTS) $(LIBDEP)
-	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
+	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
 	@printf "%10s     %-20s\n" LINK $@
 
 dbus-server-bindings.h: $(DBUS_BINDINGS_SOURCES)
@@ -199,3 +203,4 @@ dbus-client-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications
+

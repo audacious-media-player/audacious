@@ -85,7 +85,7 @@ clean:
 		done; \
 	fi
 	$(MAKE) clean-posthook
-	rm -f *.o *.lo *.so *.a *.sl .depend-done .depend
+	rm -f *.o *.lo *.so *.a *.sl *.h.gch .depend-done .depend
 	touch .depend
 	@if [ "x$(OBJECTIVE_BINS)" != "x" ]; then \
 		for i in $(OBJECTIVE_BINS); do \
@@ -209,6 +209,16 @@ build: depend
 	fi;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+pch:
+	@for i in *.h; do \
+		if [ $(SHOW_CFLAGS) -eq 1 ]; then	\
+			printf "%10s     %-20s (%s)\n" "CC [HDR]" $$i "${CFLAGS}";	\
+		else \
+			printf "%10s     %-20s\n" "CC [HDR]" $$i;	\
+		fi; \
+		$(CC) $(CFLAGS) -c $$i -o $$i.gch; \
+	done
+
 $(OBJECTIVE_LIBS): $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
@@ -231,7 +241,7 @@ $(OBJECTIVE_LIBS_NOINST): $(OBJECTS)
 		$(AR) cr $@ $(OBJECTS); \
 	fi
 
-$(OBJECTIVE_BINS): $(OBJECTS)
+$(OBJECTIVE_BINS): $(SOURCES) $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \

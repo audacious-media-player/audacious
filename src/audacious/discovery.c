@@ -53,35 +53,6 @@ get_discovery_plugin(gint i)
     return DISCOVERY_PLUGIN(node->data);
 }
 
-
-void
-discovery_about(gint i)
-{
-    DiscoveryPlugin *plugin = get_discovery_plugin(i);
-
-    if (!plugin || !plugin->about)
-        return;
-
-    plugin->about();
-}
-
-void
-discovery_configure(gint i)
-{
-    DiscoveryPlugin *plugin = get_discovery_plugin(i);
-
-    if (!plugin || !plugin->configure)
-        return;
-
-    plugin->configure();
-}
-
-static gboolean
-discovery_plugin_is_enabled(DiscoveryPlugin * plugin)
-{
-    return (g_list_find(get_discovery_enabled_list(), plugin) != NULL);
-}
-
 void
 enable_discovery_plugin(gint i, gboolean enable)
 {
@@ -90,23 +61,18 @@ enable_discovery_plugin(gint i, gboolean enable)
     if (!plugin)
         return;
 
-    if (enable && !discovery_plugin_is_enabled(plugin)) {
+    if (enable && !plugin->enabled) {
         dp_data.enabled_list = g_list_append(dp_data.enabled_list, plugin);
         if (plugin->init)
             plugin->init();
     }
-    else if (!enable && discovery_plugin_is_enabled(plugin)) {
+    else if (!enable && plugin->enabled) {
         dp_data.enabled_list = g_list_remove(dp_data.enabled_list, plugin);
         if (plugin->cleanup)
             plugin->cleanup();
     }
-}
 
-gboolean
-discovery_enabled(gint i)
-{
-    return (g_list_find(dp_data.enabled_list,
-                        get_discovery_plugin(i)) != NULL);
+    plugin->enabled = enable;
 }
 
 gchar *
@@ -158,6 +124,8 @@ discovery_enable_from_stringified_list(const gchar * list_str)
                                                       plugin);
                 if (plugin->init)
                     plugin->init();
+
+                plugin->enabled = TRUE;
             }
 
             g_free(base);

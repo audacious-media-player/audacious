@@ -32,6 +32,8 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#include <mowgli.h>
+
 #include "fft.h"
 #include "input.h"
 #include "main.h"
@@ -93,55 +95,49 @@ get_input_list(void)
     return ip_data.input_list;
 }
 
-
-gboolean
-input_is_enabled(const gchar * filename)
-{
-    gchar *basename = g_path_get_basename(filename);
-    gint enabled;
-
-    enabled = GPOINTER_TO_INT(g_hash_table_lookup(plugin_matrix, basename));
-    g_free(basename);
-
-    return enabled;
-}
-
-static void
-disabled_iplugins_foreach_func(const gchar * name,
-                               gboolean enabled,
-                               GString * list)
-{
-    g_return_if_fail(list != NULL);
-
-    if (enabled)
-        return;
-
-    if (list->len > 0)
-        g_string_append(list, ":");
-
-    g_string_append(list, name);
-}
-
+/*
+ * TODO: move this to utility as something like
+ *   plugin_generate_list(GList *plugin_list, gboolean enabled_state)
+ *
+ *   -nenolod
+ */
 gchar *
 input_stringify_disabled_list(void)
 {
-    GString *disabled_list;
+    GList *node;
+    GString *list = g_string_new("");
 
-    disabled_list = g_string_new("");
-    g_hash_table_foreach(plugin_matrix,
-                         (GHFunc) disabled_iplugins_foreach_func,
-                         disabled_list);
+    MOWGLI_ITER_FOREACH(node, ip_data.input_list)
+    {
+        Plugin *plugin = (Plugin *) node->data;
+        gchar *filename = g_path_get_basename(plugin->filename);
 
-    return g_string_free(disabled_list, FALSE);
+        if (plugin->enabled)
+            continue;
+
+        if (list->len > 0)
+            g_string_append(list, ":");
+
+        g_string_append(list, filename);
+        g_free(filename);
+    }
+
+    return g_string_free(list, FALSE);
 }
 
 void
 free_vis_data(void)
 {
+    GList *iter;
+
     G_LOCK(vis_mutex);
-    g_list_foreach(vis_list, (GFunc) g_free, NULL);
+
+    MOWGLI_ITER_FOREACH(iter, vis_list)
+        g_slice_free(VisNode, iter->data);
+
     g_list_free(vis_list);
     vis_list = NULL;
+
     G_UNLOCK(vis_mutex);
 }
 
@@ -272,7 +268,7 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
         max /= 2;
     max = CLAMP(max, 0, 512);
 
-    vis_node = g_new0(VisNode, 1);
+    vis_node = g_slice_new0(VisNode);
     vis_node->time = time;
     vis_node->nch = nch;
     vis_node->length = max;
@@ -371,8 +367,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */
-    if ((ip = uri_get_plugin(filename)) != NULL &&
-        input_is_enabled(ip->filename) == TRUE)
+    if ((ip = uri_get_plugin(filename)) != NULL && ip->enabled)
     {
         if (ip->is_our_file != NULL)
             ret = ip->is_our_file(filename_proxy);
@@ -389,31 +384,6 @@ input_check_file(const gchar * filename, gboolean show_warning)
         return NULL;
     }
 
-    /* CD-Audio uses cdda:// dummy paths, no filedescriptor handling for it */
-    /* also cuesheet uses cue:// */
-/*
-    if (!g_strncasecmp(filename, "cue://", 6)) {
-        for (node = get_input_list(); node != NULL; node = g_list_next(node))
-        {
-            ip = INPUT_PLUGIN(node->data);
-            if (!ip || !input_is_enabled(ip->filename))
-                continue;
-            if (ip->is_our_file != NULL)
-                ret = ip->is_our_file(filename_proxy);
-            else
-                ret = 0;
-            if (ret > 0)
-            {
-                g_free(filename_proxy);
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-                return pr;
-            }
-        }
-        g_free(filename_proxy);
-        return NULL;
-    }
-*/
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
     g_free(tmp_uri);
 
@@ -430,8 +400,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                         !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
 
     mimetype = vfs_get_metadata(fd, "content-type");
-    if ((ip = mime_get_plugin(mimetype)) != NULL &&
-	input_is_enabled(ip->filename) == TRUE)
+    if ((ip = mime_get_plugin(mimetype)) != NULL && ip->enabled)
     {
         if (ip->probe_for_tuple != NULL)
         {
@@ -445,7 +414,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
+                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -486,7 +455,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     {
         ip = INPUT_PLUGIN(node->data);
 
-        if (!ip || !input_is_enabled(ip->filename))
+        if (!ip || !ip->enabled)
             continue;
 
         vfs_rewind(fd);
@@ -523,7 +492,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, "mtime", input_get_mtime(filename_proxy));
+                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
 
                 return pr;
             }
@@ -586,6 +555,7 @@ input_set_eq(gint on, gfloat preamp, gfloat * bands)
         playback->plugin->set_eq(on, preamp, bands);
 }
 
+
 Tuple *
 input_get_song_tuple(const gchar * filename)
 {
@@ -621,13 +591,13 @@ input_get_song_tuple(const gchar * filename)
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
-        tuple_associate_string(input, "file-name", g_path_get_basename(tmp));
+        tuple_associate_string(input, FIELD_FILE_NAME, NULL, g_path_get_basename(tmp));
 
         if (ext)
-            tuple_associate_string(input, "file-ext", ext + 1);
+            tuple_associate_string(input, FIELD_FILE_EXT, NULL, ext + 1);
 
-        tuple_associate_string(input, "file-path", g_path_get_dirname(tmp));
-        tuple_associate_int(input, "length", -1);
+        tuple_associate_string(input, FIELD_FILE_PATH, NULL, g_path_get_dirname(tmp));
+        tuple_associate_int(input, FIELD_LENGTH, NULL, -1);
 
         g_free(tmp);
     }
@@ -764,7 +734,7 @@ input_scan_dir(const gchar * path)
         if (!ip->scan_dir)
             continue;
 
-        if (!input_is_enabled(ip->filename))
+        if (!ip->enabled)
             continue;
 
         if ((result = ip->scan_dir(path_proxy)))
@@ -872,24 +842,4 @@ input_set_status_buffering(gboolean status)
         UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status = STATUS_PLAY;
 
     ui_skinned_playstatus_set_buffering(mainwin_playstatus, ip_data.buffering);
-}
-
-void
-input_about(gint index)
-{
-    InputPlugin *ip;
-
-    ip = g_list_nth(ip_data.input_list, index)->data;
-    if (ip && ip->about)
-        ip->about();
-}
-
-void
-input_configure(gint index)
-{
-    InputPlugin *ip;
-
-    ip = g_list_nth(ip_data.input_list, index)->data;
-    if (ip && ip->configure)
-        ip->configure();
 }

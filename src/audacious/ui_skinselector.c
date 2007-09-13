@@ -168,7 +168,7 @@ skinlist_add(const gchar * filename)
 
     g_return_if_fail(filename != NULL);
 
-    node = g_new0(SkinNode, 1);
+    node = g_slice_new0(SkinNode);
     node->path = g_strdup(filename);
 
     basename = g_path_get_basename(filename);
@@ -232,7 +232,7 @@ skin_free_func(gpointer data)
     g_return_if_fail(data != NULL);
     g_free(SKIN_NODE(data)->name);
     g_free(SKIN_NODE(data)->path);
-    g_free(data);
+    g_slice_free(SkinNode, data);
 }
 
 

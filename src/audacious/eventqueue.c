@@ -27,7 +27,7 @@ static gboolean eventqueue_handle(gpointer udata)
     hook_call(hq->name, hq->user_data);
 
     g_free(hq->name);
-    g_free(hq);
+    g_slice_free(HookCallQueue, hq);
 
     return FALSE;
 }
@@ -39,7 +39,7 @@ void event_queue(const gchar *name, gpointer user_data)
     g_return_if_fail(name != NULL);
     g_return_if_fail(user_data != NULL);
 
-    hq = g_new0(HookCallQueue, 1);
+    hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);
     hq->user_data = user_data;
 

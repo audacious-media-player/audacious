@@ -53,35 +53,6 @@ get_general_plugin(gint i)
     return GENERAL_PLUGIN(node->data);
 }
 
-
-void
-general_about(gint i)
-{
-    GeneralPlugin *plugin = get_general_plugin(i);
-
-    if (!plugin || !plugin->about)
-        return;
-
-    plugin->about();
-}
-
-void
-general_configure(gint i)
-{
-    GeneralPlugin *plugin = get_general_plugin(i);
-
-    if (!plugin || !plugin->configure)
-        return;
-
-    plugin->configure();
-}
-
-static gboolean
-general_plugin_is_enabled(GeneralPlugin * plugin)
-{
-    return (g_list_find(get_general_enabled_list(), plugin) != NULL);
-}
-
 void
 enable_general_plugin(gint i, gboolean enable)
 {
@@ -90,23 +61,18 @@ enable_general_plugin(gint i, gboolean enable)
     if (!plugin)
         return;
 
-    if (enable && !general_plugin_is_enabled(plugin)) {
+    if (enable && !plugin->enabled) {
         gp_data.enabled_list = g_list_append(gp_data.enabled_list, plugin);
         if (plugin->init)
             plugin->init();
     }
-    else if (!enable && general_plugin_is_enabled(plugin)) {
+    else if (!enable && plugin->enabled) {
         gp_data.enabled_list = g_list_remove(gp_data.enabled_list, plugin);
         if (plugin->cleanup)
             plugin->cleanup();
     }
-}
 
-gboolean
-general_enabled(gint i)
-{
-    return (g_list_find(gp_data.enabled_list,
-                        get_general_plugin(i)) != NULL);
+    plugin->enabled = enable;
 }
 
 gchar *
@@ -154,6 +120,8 @@ general_enable_from_stringified_list(const gchar * list_str)
 
             if (!strcmp(*str, base)) {
                 plugin = GENERAL_PLUGIN(node->data);
+                plugin->enabled = TRUE;
+
                 gp_data.enabled_list = g_list_append(gp_data.enabled_list,
                                                       plugin);
                 if (plugin->init)

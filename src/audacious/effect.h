@@ -27,6 +27,7 @@
 #define EFFECT_H
 
 #include <glib.h>
+#include "audacious/output.h"
 
 typedef struct _EffectPluginData EffectPluginData;
 
@@ -36,13 +37,13 @@ struct _EffectPluginData {
 };
 
 GList *get_effect_list(void);
-void effect_about(gint i);
-void effect_configure(gint i);
 GList *get_effect_enabled_list(void);
 void enable_effect_plugin(gint i, gboolean enable);
-gboolean effect_enabled(gint i);
 gchar *effect_stringify_enabled_list(void);
 void effect_enable_from_stringified_list(const gchar * list);
+gint effect_do_mod_samples(gpointer * data, gint length, AFormat fmt, 
+	gint srate, gint nch);
+void effect_do_query_format(AFormat * fmt, gint * rate, gint * nch);
 
 extern EffectPluginData ep_data;
 

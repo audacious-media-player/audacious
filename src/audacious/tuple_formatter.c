@@ -271,15 +271,15 @@ tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
     /* ${artist} */
     if (expr == NULL && argument == NULL)
     {
-        TupleValueType type = tuple_get_value_type(tuple, expression);
+        TupleValueType type = tuple_get_value_type(tuple, -1, expression);
 
         switch(type)
         {
         case TUPLE_STRING:
-             return g_strdup(tuple_get_string(tuple, expression));
+             return g_strdup(tuple_get_string(tuple, -1, expression));
              break;
         case TUPLE_INT:
-             return g_strdup_printf("%d", tuple_get_int(tuple, expression));
+             return g_strdup_printf("%d", tuple_get_int(tuple, -1, expression));
              break;
         case TUPLE_UNKNOWN:
         default:
@@ -379,13 +379,6 @@ tuple_formatter_register_function(const gchar *keyword,
     tuple_formatter_func_list = g_list_append(tuple_formatter_func_list, expr);
 }
 
-/* builtin-keyword: ${?arg}, returns TRUE if <arg> exists. */
-static gboolean
-tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
-{
-    return (tuple_get_value_type(tuple, expression) != TUPLE_UNKNOWN) ? TRUE : FALSE;
-}
-
 /* builtin-keyword: ${==arg1,arg2}, returns TRUE if <arg1> and <arg2> match.
    <arg1> and <arg2> can also be raw text, which should be enclosed in "double quotes". */
 static gboolean
@@ -406,7 +399,7 @@ tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
         else /* bad formatted arg */
             return FALSE;
     }
-    else if (tuple_get_value_type(tuple, args[0]) == TUPLE_UNKNOWN)
+    else if (tuple_get_value_type(tuple, -1, args[0]) == TUPLE_UNKNOWN)
     {
         g_strfreev(args);
         return FALSE;
@@ -423,7 +416,7 @@ tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
         else /* bad formatted arg */
             return FALSE;
     }
-    else if (tuple_get_value_type(tuple, args[1]) == TUPLE_UNKNOWN)
+    else if (tuple_get_value_type(tuple, -1, args[1]) == TUPLE_UNKNOWN)
     {
         g_strfreev(args);
         return FALSE;
@@ -431,18 +424,18 @@ tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
 
     if (!arg1) /* if arg1 is not "raw text", get the tuple value */
     {
-        if (tuple_get_value_type(tuple, args[0]) == TUPLE_STRING)
-            arg1 = g_strdup(tuple_get_string(tuple, args[0]));
+        if (tuple_get_value_type(tuple, -1, args[0]) == TUPLE_STRING)
+            arg1 = g_strdup(tuple_get_string(tuple, -1, args[0]));
         else
-            arg1 = g_strdup_printf("%d", tuple_get_int(tuple, args[0]));
+            arg1 = g_strdup_printf("%d", tuple_get_int(tuple, -1, args[0]));
     }
 
     if (!arg2) /* if arg2 is not "raw text", get the tuple value */
     {
-        if (tuple_get_value_type(tuple, args[1]) == TUPLE_STRING)
-            arg2 = g_strdup(tuple_get_string(tuple, args[1]));
+        if (tuple_get_value_type(tuple, -1, args[1]) == TUPLE_STRING)
+            arg2 = g_strdup(tuple_get_string(tuple, -1, args[1]));
         else
-            arg2 = g_strdup_printf("%d", tuple_get_int(tuple, args[1]));
+            arg2 = g_strdup_printf("%d", tuple_get_int(tuple, -1, args[1]));
     }
 
     ret = g_ascii_strcasecmp(arg1, arg2);
@@ -461,21 +454,23 @@ tuple_formatter_expression_nonmatch(Tuple *tuple, const gchar *expression)
     return tuple_formatter_expression_match(tuple, expression) ^ 1;
 }
 
-/* builtin-keyword: ${empty?}. returns TRUE if <arg> is empty. */
+/* builtin-keyword: ${(empty)?}. returns TRUE if <arg> is empty. */
 static gboolean
 tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
 {
     gboolean ret = TRUE;
     const gchar *iter;
-    TupleValueType type = tuple_get_value_type(tuple, expression);
+    TupleValueType type = tuple_get_value_type(tuple, -1, expression);
 
     if (type == TUPLE_UNKNOWN)
         return TRUE;
 
-    if (type == TUPLE_INT && tuple_get_int(tuple, expression) != 0)
-        return FALSE;
+    if (type == TUPLE_INT)
+        return (tuple_get_int(tuple, -1, expression) == 0);
 
-    iter = tuple_get_string(tuple, expression);
+    iter = tuple_get_string(tuple, -1, expression);
+    if (!iter)
+        return TRUE;
 
     while (ret && *iter != '\0')
     {
@@ -486,6 +481,13 @@ tuple_formatter_expression_empty(Tuple *tuple, const gchar *expression)
     }
 
     return ret;
+}
+
+/* builtin-keyword: ${?arg}, returns TRUE if <arg> exists. */
+static gboolean
+tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
+{
+    return !tuple_formatter_expression_empty(tuple, expression);
 }
 
 /* builtin function: %{audacious-version} */
@@ -529,7 +531,7 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 
     if(!rv || !strcmp(rv, "")) {
         g_free(rv);
-        rv = g_strdup(tuple_get_string(tuple, "file-name"));
+        rv = g_strdup(tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
     }
 
     return rv;

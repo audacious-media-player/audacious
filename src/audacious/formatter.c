@@ -40,7 +40,7 @@
 Formatter *
 formatter_new(void)
 {
-    Formatter *formatter = g_new0(Formatter, 1);
+    Formatter *formatter = g_slice_new0(Formatter);
 
     formatter_associate(formatter, '%', "%");
     return formatter;
@@ -60,7 +60,8 @@ formatter_destroy(Formatter * formatter)
     for (i = 0; i < 256; i++)
         if (formatter->values[i])
             g_free(formatter->values[i]);
-    g_free(formatter);
+
+    g_slice_free(Formatter, formatter);
 }
 
 /**

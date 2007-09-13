@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-08-30 17:40+0200\n"
+"POT-Creation-Date: 2007-09-05 19:18+0200\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -106,8 +106,8 @@ msgstr "Effektinsticksmoduler"
 msgid "<b>Effects</b>"
 msgstr "Förinställningar"
 
-#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:378
-#: src/audacious/ui_manager.c:398 src/audacious/ui_preferences.c:116
+#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_manager.c:403
+#: src/audacious/ui_preferences.c:116
 #, fuzzy
 msgid "Plugins"
 msgstr "Insticksmoduler"
@@ -367,7 +367,7 @@ msgstr ""
 msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:202
+#: src/audacious/glade/prefswin.glade:2494 src/audacious/ui_manager.c:203
 #: src/audacious/ui_playlist_manager.c:290 src/audacious/ui_preferences.c:115
 #, fuzzy
 msgid "Playlist"
@@ -555,8 +555,9 @@ msgid ""
 msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr ""
+#, fuzzy
+msgid "Interpolation Engine:"
+msgstr "Använd autentisering"
 
 #: src/audacious/glade/prefswin.glade:4593
 #, fuzzy
@@ -638,20 +639,20 @@ msgstr "Genre"
 msgid "Blue"
 msgstr "Blues"
 
-#: src/audacious/input.c:718
+#: src/audacious/input.c:657
 #, fuzzy, c-format
 msgid "audacious: %s"
 msgstr "CD-ljudinsticksmodul"
 
-#: src/audacious/input.c:734
+#: src/audacious/input.c:673
 msgid "Filename:"
 msgstr "Filnamn:"
 
-#: src/audacious/input.c:753
+#: src/audacious/input.c:692
 msgid "No input plugin recognized this file"
 msgstr "Ingen insticksmodul kände igen den här filen"
 
-#: src/audacious/input.c:755
+#: src/audacious/input.c:694
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Insticksmodul: %s"
@@ -828,13 +829,13 @@ msgid ""
 "Copyright (C) 2005-2007 Audacious Development Team"
 msgstr ""
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:354
-#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:387
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:355
+#: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 #, fuzzy
 msgid "About Audacious"
 msgstr "Om MPEG-ljudinsticksmodulen"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:397
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:398
 msgid "Credits"
 msgstr ""
 
@@ -884,144 +885,144 @@ msgstr "Avkodare:"
 msgid "Brazilian Portuguese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:157
+#: src/audacious/ui_credits.c:158
 msgid "Breton:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:160
+#: src/audacious/ui_credits.c:161
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Buffrande:"
 
-#: src/audacious/ui_credits.c:163
+#: src/audacious/ui_credits.c:164
 #, fuzzy
 msgid "Catalan:"
 msgstr "Plats:"
 
-#: src/audacious/ui_credits.c:166
+#: src/audacious/ui_credits.c:167
 #, fuzzy
 msgid "Croatian:"
 msgstr "Plats:"
 
-#: src/audacious/ui_credits.c:169
+#: src/audacious/ui_credits.c:170
 msgid "Czech:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:172
+#: src/audacious/ui_credits.c:173
 #, fuzzy
 msgid "Dutch:"
 msgstr "/Koppla loss"
 
-#: src/audacious/ui_credits.c:176
+#: src/audacious/ui_credits.c:177
 msgid "Finnish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:179
+#: src/audacious/ui_credits.c:180
 msgid "French:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:182
+#: src/audacious/ui_credits.c:183
 #, fuzzy
 msgid "German:"
 msgstr "Genre"
 
-#: src/audacious/ui_credits.c:187
+#: src/audacious/ui_credits.c:188
 #, fuzzy
 msgid "Georgian:"
 msgstr "Genre"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:191
 #, fuzzy
 msgid "Greek:"
 msgstr "Genre"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Hindi:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 #, fuzzy
 msgid "Hungarian:"
 msgstr "Buffrande:"
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:202
 #, fuzzy
 msgid "Italian:"
 msgstr "Plats:"
 
-#: src/audacious/ui_credits.c:205
+#: src/audacious/ui_credits.c:206
 msgid "Japanese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:209
 #, fuzzy
 msgid "Korean:"
 msgstr "Genre"
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:212
 msgid "Lithuanian:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:215
 #, fuzzy
 msgid "Macedonian:"
 msgstr "Genre"
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:218
 msgid "Polish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:221
 #, fuzzy
 msgid "Romanian:"
 msgstr "Plats:"
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:225
 msgid "Russian:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:228
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:231
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:234
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:237
 msgid "Slovak:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:240
 msgid "Spanish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:243
 msgid "Swedish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:246
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:248
+#: src/audacious/ui_credits.c:249
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:252
+#: src/audacious/ui_credits.c:253
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "Organisation:"
 
-#: src/audacious/ui_credits.c:255
+#: src/audacious/ui_credits.c:256
 msgid "Welsh:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:401
+#: src/audacious/ui_credits.c:402
 msgid "Translators"
 msgstr ""
 
@@ -1077,31 +1078,31 @@ msgstr "Spårlängd:"
 msgid "Filename"
 msgstr "Filnamn"
 
-#: src/audacious/ui_fileopener.c:134
+#: src/audacious/ui_fileopener.c:128
 #, fuzzy
 msgid "Open Files"
 msgstr "/Ta borta icke valda"
 
-#: src/audacious/ui_fileopener.c:134
+#: src/audacious/ui_fileopener.c:128
 #, fuzzy
 msgid "Add Files"
 msgstr "/Lägg till filer..."
 
-#: src/audacious/ui_fileopener.c:136
+#: src/audacious/ui_fileopener.c:130
 #, fuzzy
 msgid "Close dialog on Open"
 msgstr "Stäng"
 
-#: src/audacious/ui_fileopener.c:136
+#: src/audacious/ui_fileopener.c:130
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:357
 #, fuzzy
 msgid "Play files"
 msgstr "bmp: Spela filer"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:359
 #, fuzzy
 msgid "Load files"
 msgstr "bmp: Ladda filer"
@@ -1236,8 +1237,8 @@ msgstr "Stereo"
 msgid "mono"
 msgstr "Mono"
 
-#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:418
-#: src/audacious/ui_manager.c:419
+#: src/audacious/ui_main.c:1032 src/audacious/ui_manager.c:423
+#: src/audacious/ui_manager.c:424
 #, fuzzy
 msgid "Jump to Time"
 msgstr "/Hoppa till tiden"
@@ -1379,803 +1380,817 @@ msgstr "BALANS: %d%% HÖGER"
 msgid "Error in Audacious."
 msgstr "Om MPEG-ljudinsticksmodulen"
 
-#: src/audacious/ui_manager.c:47 src/audacious/ui_manager.c:48
+#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
 #, fuzzy
 msgid "Autoscroll Songname"
 msgstr "/Scrolla automatiskt till sångnamn"
 
-#: src/audacious/ui_manager.c:50 src/audacious/ui_manager.c:51
+#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
 #, fuzzy
 msgid "Stop after Current Song"
 msgstr "Stoppa nuvarande sång"
 
-#: src/audacious/ui_manager.c:53 src/audacious/ui_manager.c:54
+#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
 #, fuzzy
 msgid "Peaks"
 msgstr "Skämt"
 
-#: src/audacious/ui_manager.c:56 src/audacious/ui_manager.c:57
+#: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
 #, fuzzy
 msgid "Repeat"
 msgstr "/Repetera"
 
-#: src/audacious/ui_manager.c:59 src/audacious/ui_manager.c:60
+#: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
 #, fuzzy
 msgid "Shuffle"
 msgstr "/Blanda"
 
-#: src/audacious/ui_manager.c:62 src/audacious/ui_manager.c:63
+#: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
 #, fuzzy
 msgid "No Playlist Advance"
 msgstr "/Fortsätt ej i spellista"
 
-#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
+#: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
 #, fuzzy
 msgid "Show Player"
 msgstr "/Visa spellistredigeraren"
 
-#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
+#: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
 #, fuzzy
 msgid "Show Playlist Editor"
 msgstr "/Visa spellistredigeraren"
 
-#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
+#: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
 #, fuzzy
 msgid "Show Equalizer"
 msgstr "BMP Equalizer"
 
-#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
+#: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
 #, fuzzy
 msgid "Always on Top"
 msgstr "/Alltid högst upp"
 
-#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
+#: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
 msgid "Put on All Workspaces"
 msgstr ""
 
-#: src/audacious/ui_manager.c:80 src/audacious/ui_manager.c:81
+#: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
 #, fuzzy
 msgid "Roll up Player"
 msgstr "/Konfigurera equalizer"
 
-#: src/audacious/ui_manager.c:83 src/audacious/ui_manager.c:84
+#: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
 #, fuzzy
 msgid "Roll up Playlist Editor"
 msgstr "/Fokusera spellistsredigeraren"
 
-#: src/audacious/ui_manager.c:86 src/audacious/ui_manager.c:87
+#: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
 #, fuzzy
 msgid "Roll up Equalizer"
 msgstr "/Konfigurera equalizer"
 
-#: src/audacious/ui_manager.c:89 src/audacious/ui_manager.c:90
+#: src/audacious/ui_manager.c:90 src/audacious/ui_manager.c:91
 #, fuzzy
 msgid "DoubleSize"
 msgstr "/Dubbel storlek"
 
-#: src/audacious/ui_manager.c:92 src/audacious/ui_manager.c:93
+#: src/audacious/ui_manager.c:93 src/audacious/ui_manager.c:94
 #, fuzzy
 msgid "Easy Move"
 msgstr "/Lätt flyttning"
 
-#: src/audacious/ui_manager.c:101
+#: src/audacious/ui_manager.c:102
 #, fuzzy
 msgid "Analyzer"
 msgstr "/Analyseringsläge"
 
-#: src/audacious/ui_manager.c:102
+#: src/audacious/ui_manager.c:103
 #, fuzzy
 msgid "Scope"
 msgstr "/Scopeläge"
 
-#: src/audacious/ui_manager.c:103
+#: src/audacious/ui_manager.c:104
 #, fuzzy
 msgid "Voiceprint"
 msgstr "/Analyseringsläge/Eld"
 
-#: src/audacious/ui_manager.c:104
+#: src/audacious/ui_manager.c:105
 msgid "Off"
 msgstr ""
 
-#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:125
-#: src/audacious/ui_manager.c:131
+#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
+#: src/audacious/ui_manager.c:132
 #, fuzzy
 msgid "Normal"
 msgstr "ID3-format:"
 
-#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
+#: src/audacious/ui_manager.c:110 src/audacious/ui_manager.c:127
 #, fuzzy
 msgid "Fire"
 msgstr "Satir"
 
-#: src/audacious/ui_manager.c:110
+#: src/audacious/ui_manager.c:111
 #, fuzzy
 msgid "Vertical Lines"
 msgstr "/Analyseringsläge/Vertikala linjer"
 
-#: src/audacious/ui_manager.c:114
+#: src/audacious/ui_manager.c:115
 #, fuzzy
 msgid "Lines"
 msgstr "Oldies"
 
-#: src/audacious/ui_manager.c:115
+#: src/audacious/ui_manager.c:116
 #, fuzzy
 msgid "Bars"
 msgstr "Bass"
 
-#: src/audacious/ui_manager.c:119
+#: src/audacious/ui_manager.c:120
 #, fuzzy
 msgid "Dot Scope"
 msgstr "/Scopeläge/Punkt"
 
-#: src/audacious/ui_manager.c:120
+#: src/audacious/ui_manager.c:121
 #, fuzzy
 msgid "Line Scope"
 msgstr "/Scopeläge/Linje"
 
-#: src/audacious/ui_manager.c:121
+#: src/audacious/ui_manager.c:122
 #, fuzzy
 msgid "Solid Scope"
 msgstr "/Scopeläge/Solid"
 
-#: src/audacious/ui_manager.c:127
+#: src/audacious/ui_manager.c:128
 msgid "Ice"
 msgstr ""
 
-#: src/audacious/ui_manager.c:132
+#: src/audacious/ui_manager.c:133
 #, fuzzy
 msgid "Smooth"
 msgstr "Mono"
 
-#: src/audacious/ui_manager.c:136
+#: src/audacious/ui_manager.c:137
 #, fuzzy
 msgid "Full (~50 fps)"
 msgstr "/Uppdateringsfrekvens/Max (~50 fps)"
 
-#: src/audacious/ui_manager.c:137
+#: src/audacious/ui_manager.c:138
 #, fuzzy
 msgid "Half (~25 fps)"
 msgstr "/Uppdateringsfrekvens/Hög (~25 fps)"
 
-#: src/audacious/ui_manager.c:138
+#: src/audacious/ui_manager.c:139
 #, fuzzy
 msgid "Quarter (~13 fps)"
 msgstr "/Uppdateringsfrekvens/Mediuml (~13 fps)"
 
-#: src/audacious/ui_manager.c:139
+#: src/audacious/ui_manager.c:140
 #, fuzzy
 msgid "Eighth (~6 fps)"
 msgstr "/Uppdateringsfrekvens/Låg (~6 fps)"
 
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
+#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
 #, fuzzy
 msgid "Slowest"
 msgstr "Showtunes"
 
-#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
+#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
 #, fuzzy
 msgid "Slow"
 msgstr "Slow Jam"
 
-#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
+#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
 msgid "Medium"
 msgstr ""
 
-#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
+#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
 msgid "Fast"
 msgstr ""
 
-#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
+#: src/audacious/ui_manager.c:148 src/audacious/ui_manager.c:156
 msgid "Fastest"
 msgstr ""
 
-#: src/audacious/ui_manager.c:159
+#: src/audacious/ui_manager.c:160
 #, fuzzy
 msgid "Time Elapsed"
 msgstr "/Tid förfluten"
 
-#: src/audacious/ui_manager.c:160
+#: src/audacious/ui_manager.c:161
 #, fuzzy
 msgid "Time Remaining"
 msgstr "/Tid kvarvarande"
 
-#: src/audacious/ui_manager.c:169
+#: src/audacious/ui_manager.c:170
 #, fuzzy
 msgid "Playback"
 msgstr "/Kontroll"
 
-#: src/audacious/ui_manager.c:171 src/audacious/ui_manager.c:172
+#: src/audacious/ui_manager.c:172 src/audacious/ui_manager.c:173
 #, fuzzy
 msgid "Play"
 msgstr "/Spela"
 
-#: src/audacious/ui_manager.c:174 src/audacious/ui_manager.c:175
+#: src/audacious/ui_manager.c:175 src/audacious/ui_manager.c:176
 #, fuzzy
 msgid "Pause"
 msgstr "/Paus"
 
-#: src/audacious/ui_manager.c:177 src/audacious/ui_manager.c:178
+#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:179
 #, fuzzy
 msgid "Stop"
 msgstr "/Stopp"
 
-#: src/audacious/ui_manager.c:180 src/audacious/ui_manager.c:181
+#: src/audacious/ui_manager.c:181 src/audacious/ui_manager.c:182
 #, fuzzy
 msgid "Previous"
 msgstr "/Föregående"
 
-#: src/audacious/ui_manager.c:183 src/audacious/ui_manager.c:184
+#: src/audacious/ui_manager.c:184 src/audacious/ui_manager.c:185
 #, fuzzy
 msgid "Next"
 msgstr "/Nästa"
 
-#: src/audacious/ui_manager.c:189
+#: src/audacious/ui_manager.c:190
 #, fuzzy
 msgid "Visualization"
 msgstr "/Visualiseringsläge"
 
-#: src/audacious/ui_manager.c:190
+#: src/audacious/ui_manager.c:191
 #, fuzzy
 msgid "Visualization Mode"
 msgstr "/Visualiseringsläge"
 
-#: src/audacious/ui_manager.c:191
+#: src/audacious/ui_manager.c:192
 #, fuzzy
 msgid "Analyzer Mode"
 msgstr "/Analyseringsläge/Eld"
 
-#: src/audacious/ui_manager.c:192
+#: src/audacious/ui_manager.c:193
 #, fuzzy
 msgid "Scope Mode"
 msgstr "/Scopeläge"
 
-#: src/audacious/ui_manager.c:193
+#: src/audacious/ui_manager.c:194
 #, fuzzy
 msgid "Voiceprint Mode"
 msgstr "/Analyseringsläge/Eld"
 
-#: src/audacious/ui_manager.c:194
+#: src/audacious/ui_manager.c:195
 #, fuzzy
 msgid "WindowShade VU Mode"
 msgstr "/Fönsterskuggningsläge"
 
-#: src/audacious/ui_manager.c:195
+#: src/audacious/ui_manager.c:196
 #, fuzzy
 msgid "Refresh Rate"
 msgstr "/Uppdateringsfrekvens"
 
-#: src/audacious/ui_manager.c:196
+#: src/audacious/ui_manager.c:197
 #, fuzzy
 msgid "Analyzer Falloff"
 msgstr "/Analyserarras"
 
-#: src/audacious/ui_manager.c:197
+#: src/audacious/ui_manager.c:198
 #, fuzzy
 msgid "Peaks Falloff"
 msgstr "/Toppras"
 
-#: src/audacious/ui_manager.c:204 src/audacious/ui_manager.c:205
+#: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
 #, fuzzy
 msgid "New Playlist"
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:207 src/audacious/ui_manager.c:208
+#: src/audacious/ui_manager.c:208 src/audacious/ui_manager.c:209
 #, fuzzy
 msgid "Select Next Playlist"
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:210 src/audacious/ui_manager.c:211
+#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:212
 #, fuzzy
 msgid "Select Previous Playlist"
 msgstr "/Sortera valda/Genom titel"
 
-#: src/audacious/ui_manager.c:213 src/audacious/ui_manager.c:214
+#: src/audacious/ui_manager.c:214 src/audacious/ui_manager.c:215
 #, fuzzy
 msgid "Delete Playlist"
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:216
+#: src/audacious/ui_manager.c:217
 #, fuzzy
 msgid "Load List"
 msgstr "/Sortera l ista"
 
-#: src/audacious/ui_manager.c:217
+#: src/audacious/ui_manager.c:218
 #, fuzzy
 msgid "Loads a playlist file into the selected playlist."
 msgstr "Läs sångtitel och längd när sång visas i spellistan"
 
-#: src/audacious/ui_manager.c:219
+#: src/audacious/ui_manager.c:220
 #, fuzzy
 msgid "Save List"
 msgstr "/Ny lista"
 
-#: src/audacious/ui_manager.c:220
+#: src/audacious/ui_manager.c:221
 #, fuzzy
 msgid "Saves the selected playlist."
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:222
+#: src/audacious/ui_manager.c:223
 #, fuzzy
 msgid "Save Default List"
 msgstr "/Spara/förinställning"
 
-#: src/audacious/ui_manager.c:223
+#: src/audacious/ui_manager.c:224
 #, fuzzy
 msgid "Saves the selected playlist to the default location."
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:226
+#: src/audacious/ui_manager.c:227
 #, fuzzy
 msgid "Refresh List"
 msgstr "/Uppdateringsfrekvens"
 
-#: src/audacious/ui_manager.c:227
+#: src/audacious/ui_manager.c:228
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
 
-#: src/audacious/ui_manager.c:230
+#: src/audacious/ui_manager.c:231
 #, fuzzy
 msgid "List Manager"
 msgstr "/Fortsätt ej i spellista"
 
-#: src/audacious/ui_manager.c:231
+#: src/audacious/ui_manager.c:232
 #, fuzzy
 msgid "Opens the playlist manager."
 msgstr "Rensa inte spellistan"
 
-#: src/audacious/ui_manager.c:237
+#: src/audacious/ui_manager.c:238
 msgid "View"
 msgstr ""
 
-#: src/audacious/ui_manager.c:241
+#: src/audacious/ui_manager.c:242
 #, fuzzy
 msgid "Add Internet Address..."
 msgstr "/Lägg till mappar..."
 
-#: src/audacious/ui_manager.c:242
+#: src/audacious/ui_manager.c:243
 #, fuzzy
 msgid "Adds a remote track to the playlist."
 msgstr "Spara spellista"
 
-#: src/audacious/ui_manager.c:245
+#: src/audacious/ui_manager.c:246
 #, fuzzy
 msgid "Add Files..."
 msgstr "/Lägg till filer..."
 
-#: src/audacious/ui_manager.c:246
+#: src/audacious/ui_manager.c:247
 #, fuzzy
 msgid "Adds files to the playlist."
 msgstr "Kunde ej skriva spellista!"
 
-#: src/audacious/ui_manager.c:251
+#: src/audacious/ui_manager.c:252
 #, fuzzy
 msgid "Search and Select"
 msgstr "/Sortera valda"
 
-#: src/audacious/ui_manager.c:252
+#: src/audacious/ui_manager.c:253
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr ""
 
-#: src/audacious/ui_manager.c:255
+#: src/audacious/ui_manager.c:256
 #, fuzzy
 msgid "Invert Selection"
 msgstr "/Sortera valda"
 
-#: src/audacious/ui_manager.c:256
+#: src/audacious/ui_manager.c:257
 #, fuzzy
 msgid "Inverts the selected and unselected entries."
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:259
+#: src/audacious/ui_manager.c:260
 #, fuzzy
 msgid "Select All"
 msgstr "/Sortera valda"
 
-#: src/audacious/ui_manager.c:260
+#: src/audacious/ui_manager.c:261
 #, fuzzy
 msgid "Selects all of the playlist entries."
 msgstr "Välj typsnitt för spellistan:"
 
-#: src/audacious/ui_manager.c:263
+#: src/audacious/ui_manager.c:264
 #, fuzzy
 msgid "Select None"
 msgstr "/Sortera valda"
 
-#: src/audacious/ui_manager.c:264
+#: src/audacious/ui_manager.c:265
 #, fuzzy
 msgid "Deselects all of the playlist entries."
 msgstr "Välj typsnitt för spellistan:"
 
-#: src/audacious/ui_manager.c:269
+#: src/audacious/ui_manager.c:270
 #, fuzzy
 msgid "Clear Queue"
 msgstr "/Rensa kön"
 
-#: src/audacious/ui_manager.c:270
+#: src/audacious/ui_manager.c:271
 #, fuzzy
 msgid "Clears the queue associated with this playlist."
 msgstr "/Ny spellista"
 
-#: src/audacious/ui_manager.c:273
+#: src/audacious/ui_manager.c:274
 #, fuzzy
 msgid "Remove Unavailable Files"
 msgstr "/Radera otillgängliga filer"
 
-#: src/audacious/ui_manager.c:274
+#: src/audacious/ui_manager.c:275
 #, fuzzy
 msgid "Removes unavailable files from the playlist."
 msgstr "/Radera otillgängliga filer"
 
-#: src/audacious/ui_manager.c:277
+#: src/audacious/ui_manager.c:278
 #, fuzzy
 msgid "Remove Duplicates"
 msgstr "/Ta bort valda"
 
-#: src/audacious/ui_manager.c:279 src/audacious/ui_manager.c:315
-#: src/audacious/ui_manager.c:345
+#: src/audacious/ui_manager.c:280 src/audacious/ui_manager.c:316
+#: src/audacious/ui_manager.c:346
 #, fuzzy
 msgid "By Title"
 msgstr "Titel"
 
-#: src/audacious/ui_manager.c:280
+#: src/audacious/ui_manager.c:281
 #, fuzzy
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "/Sortera l ista/Genom sökväg + filnamn"
 
-#: src/audacious/ui_manager.c:283 src/audacious/ui_manager.c:323
-#: src/audacious/ui_manager.c:353
+#: src/audacious/ui_manager.c:284 src/audacious/ui_manager.c:324
+#: src/audacious/ui_manager.c:354
 #, fuzzy
 msgid "By Filename"
 msgstr "Filnamn"
 
-#: src/audacious/ui_manager.c:284
+#: src/audacious/ui_manager.c:285
 #, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "/Sortera l ista/Genom sökväg + filnamn"
 
-#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:327
-#: src/audacious/ui_manager.c:357
+#: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:328
+#: src/audacious/ui_manager.c:358
 #, fuzzy
 msgid "By Path + Filename"
 msgstr "/Sortera l ista/Genom sökväg + filnamn"
 
-#: src/audacious/ui_manager.c:288
+#: src/audacious/ui_manager.c:289
 #, fuzzy
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "/Sortera l ista/Genom sökväg + filnamn"
 
-#: src/audacious/ui_manager.c:291
+#: src/audacious/ui_manager.c:292
 #, fuzzy
 msgid "Remove All"
 msgstr "/Ta bort"
 
-#: src/audacious/ui_manager.c:292
+#: src/audacious/ui_manager.c:293
 #, fuzzy
 msgid "Removes all entries from the playlist."
 msgstr "/Radera otillgängliga filer"
 
-#: src/audacious/ui_manager.c:295
+#: src/audacious/ui_manager.c:296
 #, fuzzy
 msgid "Remove Unselected"
 msgstr "/Ta bort valda"
 
-#: src/audacious/ui_manager.c:296
+#: src/audacious/ui_manager.c:297
 #, fuzzy
 msgid "Remove unselected entries from the playlist."
 msgstr "/Sortera l ista/Genom sökväg + filnamn"
 
-#: src/audacious/ui_manager.c:299
+#: src/audacious/ui_manager.c:300
 #, fuzzy
 msgid "Remove Selected"
 msgstr "/Ta bort valda"
 
-#: src/audacious/ui_manager.c:300
+#: src/audacious/ui_manager.c:301
 #, fuzzy
 msgid "Remove selected entries from the playlist."
 msgstr "/Sortera l ista/Genom sökväg + filnamn"
 
-#: src/audacious/ui_manager.c:305
+#: src/audacious/ui_manager.c:306
 #, fuzzy
 msgid "Randomize List"
 msgstr "/Blanda lista"
 
-#: src/audacious/ui_manager.c:306
+#: src/audacious/ui_manager.c:307
 #, fuzzy
 msgid "Randomizes the playlist."
 msgstr "/Blanda lista"
 
-#: src/audacious/ui_manager.c:309
+#: src/audacious/ui_manager.c:310
 #, fuzzy
 msgid "Reverse List"
 msgstr "/Vänd på lista"
 
-#: src/audacious/ui_manager.c:310
+#: src/audacious/ui_manager.c:311
 #, fuzzy
 msgid "Reverses the playlist."
 msgstr "Rensa inte spellistan"
 
-#: src/audacious/ui_manager.c:313
+#: src/audacious/ui_manager.c:314
 #, fuzzy
 msgid "Sort List"
 msgstr "/Sortera l ista"
 
-#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:346
+#: src/audacious/ui_manager.c:317 src/audacious/ui_manager.c:347
 #, fuzzy
 msgid "Sorts the list by title."
 msgstr "/Sortera l ista/Genom titel"
 
-#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
+#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
 #, fuzzy
 msgid "By Artist"
 msgstr "Artist:"
 
-#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
+#: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
 #, fuzzy
 msgid "Sorts the list by artist."
 msgstr "/Sortera l ista/Genom titel"
 
-#: src/audacious/ui_manager.c:324 src/audacious/ui_manager.c:354
+#: src/audacious/ui_manager.c:325 src/audacious/ui_manager.c:355
 #, fuzzy
 msgid "Sorts the list by filename."
 msgstr "/Sortera l ista/Genom filnamn"
 
-#: src/audacious/ui_manager.c:328 src/audacious/ui_manager.c:358
+#: src/audacious/ui_manager.c:329 src/audacious/ui_manager.c:359
 #, fuzzy
 msgid "Sorts the list by full pathname."
 msgstr "/Sortera l ista/Genom filnamn"
 
-#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
+#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
 #, fuzzy
 msgid "By Date"
 msgstr "Datum"
 
-#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
+#: src/audacious/ui_manager.c:333 src/audacious/ui_manager.c:363
 #, fuzzy
 msgid "Sorts the list by modification time."
 msgstr "/Sortera l ista/Genom titel"
 
-#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
+#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
 #, fuzzy
 msgid "By Track Number"
 msgstr "Spårnummer"
 
-#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
+#: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
 #, fuzzy
 msgid "Sorts the list by track number."
 msgstr "/Sortera l ista/Genom datum"
 
-#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
+#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
 #, fuzzy
 msgid "By Playlist Entry"
 msgstr "BMP-spellistredigerare"
 
-#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
+#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:371
 #, fuzzy
 msgid "Sorts the list by playlist entry."
 msgstr "/Sortera l ista/Genom titel"
 
-#: src/audacious/ui_manager.c:343
+#: src/audacious/ui_manager.c:344
 #, fuzzy
 msgid "Sort Selected"
 msgstr "/Sortera valda"
 
-#: src/audacious/ui_manager.c:380 src/audacious/ui_manager.c:383
+#: src/audacious/ui_manager.c:380
+#, fuzzy
+msgid "File"
+msgstr "Satir"
+
+#: src/audacious/ui_manager.c:381
+msgid "Help"
+msgstr ""
+
+#: src/audacious/ui_manager.c:383
+#, fuzzy
+msgid "Plugin Services"
+msgstr "Insticksmoduler"
+
+#: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 #, fuzzy
 msgid "View Track Details"
 msgstr "/Visa spårdetaljer"
 
-#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
+#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:389
 #, fuzzy
 msgid "View track details"
 msgstr "/Visa spårdetaljer"
 
-#: src/audacious/ui_manager.c:389
+#: src/audacious/ui_manager.c:394
 #, fuzzy
 msgid "Play File"
 msgstr "bmp: Spela filer"
 
-#: src/audacious/ui_manager.c:390
+#: src/audacious/ui_manager.c:395
 #, fuzzy
 msgid "Load and play a file"
 msgstr "Använd metadata i spellistor"
 
-#: src/audacious/ui_manager.c:392
+#: src/audacious/ui_manager.c:397
 #, fuzzy
 msgid "Play Location"
 msgstr "Plats:"
 
-#: src/audacious/ui_manager.c:393
+#: src/audacious/ui_manager.c:398
 msgid "Play media from the selected location"
 msgstr ""
 
-#: src/audacious/ui_manager.c:395
+#: src/audacious/ui_manager.c:400
 #, fuzzy
 msgid "Last.fm radio"
 msgstr "Plats:"
 
-#: src/audacious/ui_manager.c:396
+#: src/audacious/ui_manager.c:401
 #, fuzzy
 msgid "Play Last.fm radio"
 msgstr "Plats:"
 
-#: src/audacious/ui_manager.c:400
+#: src/audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/Inställningar"
 
-#: src/audacious/ui_manager.c:401
+#: src/audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "/Inställningar"
 
-#: src/audacious/ui_manager.c:403
+#: src/audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Avsluta"
 
-#: src/audacious/ui_manager.c:404
+#: src/audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "Om MPEG-ljudinsticksmodulen"
 
-#: src/audacious/ui_manager.c:406 src/audacious/ui_manager.c:407
+#: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "/Rensa kön"
 
-#: src/audacious/ui_manager.c:409 src/audacious/ui_manager.c:410
+#: src/audacious/ui_manager.c:414 src/audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/Rensa kön"
 
-#: src/audacious/ui_manager.c:412 src/audacious/ui_manager.c:413
+#: src/audacious/ui_manager.c:417 src/audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/Hoppa till spellistans start"
 
-#: src/audacious/ui_manager.c:415 src/audacious/ui_manager.c:416
+#: src/audacious/ui_manager.c:420 src/audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/Hoppa till fil"
 
-#: src/audacious/ui_manager.c:421
+#: src/audacious/ui_manager.c:426
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/Kö-växel"
 
-#: src/audacious/ui_manager.c:422
+#: src/audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: src/audacious/ui_manager.c:429
+#: src/audacious/ui_manager.c:434
 msgid "Load"
 msgstr "laddning"
 
-#: src/audacious/ui_manager.c:430
+#: src/audacious/ui_manager.c:435
 #, fuzzy
 msgid "Import"
 msgstr "/Importera"
 
-#: src/audacious/ui_manager.c:431
+#: src/audacious/ui_manager.c:436
 #, fuzzy
 msgid "Save"
 msgstr "/Spara"
 
-#: src/audacious/ui_manager.c:432
+#: src/audacious/ui_manager.c:437
 msgid "Delete"
 msgstr "Radera"
 
-#: src/audacious/ui_manager.c:434 src/audacious/ui_manager.c:455
-#: src/audacious/ui_manager.c:470
+#: src/audacious/ui_manager.c:439 src/audacious/ui_manager.c:460
+#: src/audacious/ui_manager.c:475
 #, fuzzy
 msgid "Preset"
 msgstr "Förinställningar"
 
-#: src/audacious/ui_manager.c:435
+#: src/audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "Ladda inställningar"
 
-#: src/audacious/ui_manager.c:437 src/audacious/ui_manager.c:458
-#: src/audacious/ui_manager.c:473
+#: src/audacious/ui_manager.c:442 src/audacious/ui_manager.c:463
+#: src/audacious/ui_manager.c:478
 #, fuzzy
 msgid "Auto-load preset"
 msgstr "/Spara/ladda automatiskt inställning"
 
-#: src/audacious/ui_manager.c:438
+#: src/audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/Ladda/Ladda automatiskt inställning"
 
-#: src/audacious/ui_manager.c:440 src/audacious/ui_manager.c:461
+#: src/audacious/ui_manager.c:445 src/audacious/ui_manager.c:466
 msgid "Default"
 msgstr "Förinställt"
 
-#: src/audacious/ui_manager.c:441
+#: src/audacious/ui_manager.c:446
 #, fuzzy
 msgid "Load default preset into equalizer"
 msgstr "Spara automatisk inställning"
 
-#: src/audacious/ui_manager.c:443
+#: src/audacious/ui_manager.c:448
 #, fuzzy
 msgid "Zero"
 msgstr "Retro"
 
-#: src/audacious/ui_manager.c:444
+#: src/audacious/ui_manager.c:449
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "Spara qualizer-inställningar"
 
-#: src/audacious/ui_manager.c:446
+#: src/audacious/ui_manager.c:451
 #, fuzzy
 msgid "From file"
 msgstr "/Ladda/från fil"
 
-#: src/audacious/ui_manager.c:447
+#: src/audacious/ui_manager.c:452
 #, fuzzy
 msgid "Load preset from file"
 msgstr "Ladda inställningar"
 
-#: src/audacious/ui_manager.c:449
+#: src/audacious/ui_manager.c:454
 #, fuzzy
 msgid "From WinAMP EQF file"
 msgstr "/Ladda/från WinAMP EQF-fil"
 
-#: src/audacious/ui_manager.c:450
+#: src/audacious/ui_manager.c:455
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/Ladda/från WinAMP EQF-fil"
 
-#: src/audacious/ui_manager.c:452
+#: src/audacious/ui_manager.c:457
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "/Importera/WinAMP-inställningar"
 
-#: src/audacious/ui_manager.c:453
+#: src/audacious/ui_manager.c:458
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/Importera/WinAMP-inställningar"
 
-#: src/audacious/ui_manager.c:456
+#: src/audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "Spara inställningar"
 
-#: src/audacious/ui_manager.c:459
+#: src/audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/Spara/ladda automatiskt inställning"
 
-#: src/audacious/ui_manager.c:462
+#: src/audacious/ui_manager.c:467
 #, fuzzy
 msgid "Save default preset"
 msgstr "Spara automatisk inställning"
 
-#: src/audacious/ui_manager.c:464
+#: src/audacious/ui_manager.c:469
 #, fuzzy
 msgid "To file"
 msgstr "/Spara/till fil"
 
-#: src/audacious/ui_manager.c:465
+#: src/audacious/ui_manager.c:470
 #, fuzzy
 msgid "Save preset to file"
 msgstr "Spara inställningar"
 
-#: src/audacious/ui_manager.c:467
+#: src/audacious/ui_manager.c:472
 #, fuzzy
 msgid "To WinAMP EQF file"
 msgstr "Sauver/dans un fichier EQF de Winamp"
 
-#: src/audacious/ui_manager.c:468
+#: src/audacious/ui_manager.c:473
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "Sauver/dans un fichier EQF de Winamp"
 
-#: src/audacious/ui_manager.c:471
+#: src/audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "Radera förinställningar"
 
-#: src/audacious/ui_manager.c:474
+#: src/audacious/ui_manager.c:479
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/Radera/automatiskt laddat preset"
@@ -4609,10 +4624,6 @@ msgstr "/Lägg till filer..."
 #, fuzzy
 #~ msgid "Downsample:"
 #~ msgstr "Ner sampla:"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Använd autentisering"
 
 #~ msgid "%s - BMP"
 #~ msgstr "%s - BMP"

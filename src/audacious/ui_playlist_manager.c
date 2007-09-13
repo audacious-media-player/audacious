@@ -60,12 +60,12 @@ playlist_manager_populate ( GtkListStore * store )
         gchar *pl_name = NULL;
         Playlist *playlist = (Playlist*)playlists->data;
 
-        PLAYLIST_LOCK(playlist->mutex);
+        PLAYLIST_LOCK(playlist);
         /* for each playlist, pick name and number of entries */
         pl_name = (gchar*)playlist_get_current_name( playlist );
         for (entries = playlist->entries; entries; entries = g_list_next(entries))
             entriesnum++;
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
 
         gtk_list_store_append( store , &iter );
         gtk_list_store_set( store, &iter,
@@ -207,7 +207,7 @@ playlist_manager_cb_lv_btpress ( GtkWidget *lv , GdkEventButton *event )
         GtkWidget *pmenu = (GtkWidget*)g_object_get_data( G_OBJECT(lv) , "menu" );
         gtk_menu_popup( GTK_MENU(pmenu) , NULL , NULL , NULL , NULL ,
                         (event != NULL) ? event->button : 0,
-                        gdk_event_get_time((GdkEvent*)event));
+                        event->time);
         return TRUE;
     }
 

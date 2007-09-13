@@ -35,7 +35,7 @@ EffectPluginData ep_data = {
     NULL
 };
 
-static gint
+gint
 effect_do_mod_samples(gpointer * data, gint length,
                       AFormat fmt, gint srate, gint nch)
 {
@@ -53,7 +53,7 @@ effect_do_mod_samples(gpointer * data, gint length,
     return length;
 }
 
-static void
+void
 effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
 {
     GList *l = ep_data.enabled_list;
@@ -68,65 +68,11 @@ effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
     }
 }
 
-static EffectPlugin pseudo_effect_plugin = {
-    NULL,
-    NULL,
-    "XMMS Multiple Effects Support",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    effect_do_mod_samples,
-    effect_do_query_format
-};
-
-/* get_current_effect_plugin() and effects_enabled() are still to be used by 
- * output plugins as they were when we only supported one effects plugin at
- * a time. We now had a pseudo-effects-plugin that chains all the enabled
- * plugins. -- Jakdaw */
-
-EffectPlugin *
-get_current_effect_plugin(void)
-{
-    return &pseudo_effect_plugin;
-}
-
-gboolean
-effects_enabled(void)
-{
-    return TRUE;
-}
-
 GList *
 get_effect_enabled_list(void)
 {
     return ep_data.enabled_list;
 }
-
-void
-effect_about(int i)
-{
-    EffectPlugin *effect;
-    GList *node = g_list_nth(ep_data.effect_list, i);
-    if (node) {
-        effect = node->data;
-        if (effect && effect->about)
-            effect->about();
-    }
-}
-
-void
-effect_configure(int i)
-{
-    GList *node = g_list_nth(ep_data.effect_list, i);
-    EffectPlugin *effect;
-    if (node) {
-        effect = node->data;
-        if (effect && effect->configure)
-            effect->configure();
-    }
-}
-
 
 void
 enable_effect_plugin(int i, gboolean enable)
@@ -137,13 +83,14 @@ enable_effect_plugin(int i, gboolean enable)
     if (!node || !(node->data))
         return;
     ep = node->data;
+    ep->enabled = enable;
 
-    if (enable && !g_list_find(ep_data.enabled_list, ep)) {
+    if (enable && !ep->enabled) {
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
         if (ep->init)
             ep->init();
     }
-    else if (!enable && g_list_find(ep_data.enabled_list, ep)) {
+    else if (!enable && ep->enabled) {
         ep_data.enabled_list = g_list_remove(ep_data.enabled_list, ep);
         if (ep->cleanup)
             ep->cleanup();
@@ -154,15 +101,6 @@ GList *
 get_effect_list(void)
 {
     return ep_data.effect_list;
-}
-
-gboolean
-effect_enabled(int i)
-{
-    return (g_list_find
-            (ep_data.enabled_list,
-             (EffectPlugin *) g_list_nth(ep_data.effect_list,
-                                         i)->data) ? TRUE : FALSE);
 }
 
 gchar *
@@ -207,6 +145,7 @@ effect_enable_from_stringified_list(const gchar * list)
                                               data)->filename);
             if (!strcmp(plugins[i], base)) {
                 ep = node->data;
+                ep->enabled = TRUE;
                 ep_data.enabled_list =
                     g_list_append(ep_data.enabled_list, ep);
                 if (ep->init)

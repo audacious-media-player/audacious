@@ -53,6 +53,7 @@
 #include "ui_main.h"
 #include "ui_manager.h"
 #include "util.h"
+#include "config.h"
 
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
@@ -573,13 +574,13 @@ playlistwin_select_search(void)
          Tuple *tuple = tuple_new();
          gchar *searchdata = NULL;
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_title) );
-         tuple_associate_string(tuple, "title", searchdata);
+         tuple_associate_string(tuple, FIELD_TITLE, NULL, searchdata);
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_album) );
-         tuple_associate_string(tuple, "album", searchdata);
+         tuple_associate_string(tuple, FIELD_ALBUM, NULL, searchdata);
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_performer) );
-         tuple_associate_string(tuple, "artist", searchdata);
+         tuple_associate_string(tuple, FIELD_ARTIST, NULL, searchdata);
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_file_name) );
-         tuple_associate_string(tuple, "file-name", searchdata);
+         tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, searchdata);
          /* check if previous selection should be cleared before searching */
          if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_clearprevsel)) == TRUE )
              playlistwin_select_none();
@@ -827,6 +828,7 @@ playlistwin_save_playlist(const gchar * filename)
 static void
 playlistwin_load_playlist(const gchar * filename)
 {
+    const gchar *title;
     Playlist *playlist = playlist_get_active();
 
     g_return_if_fail(filename != NULL);
@@ -837,7 +839,9 @@ playlistwin_load_playlist(const gchar * filename)
     mainwin_clear_song_info();
 
     playlist_load(playlist, filename);
-    playlist_set_current_name(playlist, filename);
+    title = playlist_get_current_name(playlist);
+    if(!title || !title[0])
+        playlist_set_current_name(playlist, filename);
 }
 
 static gchar *
@@ -949,12 +953,16 @@ playlistwin_select_playlist_to_save(const gchar * default_filename)
         playlist_file_selection_save(_("Save Playlist"), default_filename);
 
     if (filename) {
-        /* Default to xspf if no filename has extension */
+        /* Default extension */
         basename = g_path_get_basename(filename);
         dot = strrchr(basename, '.');
         if( dot == NULL || dot == basename) {
             gchar *oldname = filename;
+#ifdef HAVE_XSPF_PLAYLIST
             filename = g_strconcat(oldname, ".xspf", NULL);
+#else
+            filename = g_strconcat(oldname, ".m3u", NULL);
+#endif
             g_free(oldname);
         }
         g_free(basename);

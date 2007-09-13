@@ -65,9 +65,6 @@ void input_seek(gint time);
 guchar *input_get_vis(gint time);
 void input_update_vis_plugin(gint time);
 
-void input_about(gint index);
-void input_configure(gint index);
-
 void input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length,
                        gpointer ptr);
 InputVisType input_get_vis_type();
@@ -81,8 +78,6 @@ void input_get_volume(gint * l, gint * r);
 void input_set_volume(gint l, gint r);
 void input_file_info_box(const gchar * filename);
 
-gboolean input_is_disabled(const gchar * filename);
-gboolean input_is_enabled(const gchar * filename);
 gchar *input_stringify_disabled_list(void);
 
 extern InputPluginData ip_data;

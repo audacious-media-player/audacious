@@ -290,14 +290,14 @@ void ui_skinned_playlist_move_up(UiSkinnedPlaylist * pl) {
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     if ((list = playlist->entries) == NULL) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
     if (PLAYLIST_ENTRY(list->data)->selected) {
         /* We are at the top */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
     while (list) {
@@ -305,7 +305,7 @@ void ui_skinned_playlist_move_up(UiSkinnedPlaylist * pl) {
             glist_moveup(list);
         list = g_list_next(list);
     }
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
     if (pl->prev_selected != -1)
         pl->prev_selected--;
     if (pl->prev_min != -1)
@@ -321,16 +321,16 @@ void ui_skinned_playlist_move_down(UiSkinnedPlaylist * pl) {
     if (!playlist)
         return;
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
 
     if (!(list = g_list_last(playlist->entries))) {
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
     if (PLAYLIST_ENTRY(list->data)->selected) {
         /* We are at the bottom */
-        PLAYLIST_UNLOCK(playlist->mutex);
+        PLAYLIST_UNLOCK(playlist);
         return;
     }
 
@@ -340,7 +340,7 @@ void ui_skinned_playlist_move_down(UiSkinnedPlaylist * pl) {
         list = g_list_previous(list);
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     if (pl->prev_selected != -1)
         pl->prev_selected++;
@@ -455,7 +455,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     plw_w = playlistwin_get_width();
     plw_h = playlistwin_get_height();
 
-    playlist_rect = g_new0(GdkRectangle, 1);
+    playlist_rect = g_slice_new0(GdkRectangle);
 
     playlist_rect->x = 0;
     playlist_rect->y = 0;
@@ -484,7 +484,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
     pl->first = CLAMP(pl->first, 0, max_first);
 
-    PLAYLIST_LOCK(playlist->mutex);
+    PLAYLIST_LOCK(playlist);
     list = playlist->entries;
     list = g_list_nth(list, pl->first);
 
@@ -763,13 +763,13 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     gdk_gc_set_clip_origin(gc, 0, 0);
     gdk_gc_set_clip_rectangle(gc, NULL);
 
-    PLAYLIST_UNLOCK(playlist->mutex);
+    PLAYLIST_UNLOCK(playlist);
 
     gdk_draw_drawable(widget->window, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
 
     g_object_unref(obj);
     g_object_unref(gc);
-    g_free(playlist_rect);
+    g_slice_free(GdkRectangle, playlist_rect);
 
     return FALSE;
 }
@@ -1019,7 +1019,7 @@ static gboolean ui_skinned_playlist_popup_show(gpointer data) {
         GtkWidget *popup = g_object_get_data(G_OBJECT(widget), "popup");
 
         tuple = playlist_get_tuple(pl_active, pos);
-        if ((tuple == NULL) || (tuple_get_int(tuple, "length") < 1)) {
+        if ((tuple == NULL) || (tuple_get_int(tuple, FIELD_LENGTH, NULL) < 1)) {
            gchar *title = playlist_get_songtitle(pl_active, pos);
            audacious_fileinfopopup_show_from_title(popup, title);
            g_free(title);

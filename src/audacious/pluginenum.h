@@ -36,4 +36,8 @@ void plugin_system_cleanup(void);
 extern const gchar *plugin_dir_list[];
 extern GHashTable *plugin_matrix;
 
+gboolean plugin_is_enabled(const gchar *filename);
+void plugin_set_enabled(const gchar *filename, gboolean enabled);
+Plugin *plugin_get_plugin(const gchar *filename);
+
 #endif
