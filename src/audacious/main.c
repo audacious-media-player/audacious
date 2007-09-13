@@ -832,6 +832,52 @@ bmp_set_default_icon(void)
     g_object_unref(icon);
 }
 
+#ifdef GDK_WINDOWING_QUARTZ
+static void
+set_dock_icon(void)
+{
+    GdkPixbuf *icon, *pixbuf;
+    CGColorSpaceRef colorspace;
+    CGDataProviderRef data_provider;
+    CGImageRef image;
+    gpointer data;
+    gint rowstride, pixbuf_width, pixbuf_height;
+    gboolean has_alpha;
+
+    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_player_xpm);
+    pixbuf = gdk_pixbuf_scale_simple(icon, 128, 128, GDK_INTERP_BILINEAR);
+
+    data = gdk_pixbuf_get_pixels(pixbuf);
+    pixbuf_width = gdk_pixbuf_get_width(pixbuf);
+    pixbuf_height = gdk_pixbuf_get_height(pixbuf);
+    rowstride = gdk_pixbuf_get_rowstride(pixbuf);
+    has_alpha = gdk_pixbuf_get_has_alpha(pixbuf);
+
+    /* create the colourspace for the CGImage. */
+    colorspace = CGColorSpaceCreateDeviceRGB();
+    data_provider = CGDataProviderCreateWithData(NULL, data, pixbuf_height * rowstride, NULL);
+    image = CGImageCreate(pixbuf_width, pixbuf_height, 8,
+	has_alpha ? 32 : 24, rowstride, colorspace,
+	has_alpha ? kCGImageAlphaLast : 0,
+	data_provider, NULL, FALSE,
+	kCGRenderingIntentDefault);
+
+    /* release the colourspace and data provider, we have what we want. */
+    CGDataProviderRelease(data_provider);
+    CGColorSpaceRelease(colorspace);
+
+    /* set the dock tile images */
+    SetApplicationDockTileImage(image);
+
+#if 0
+    /* and release */
+    CGImageRelease(image);
+    g_object_unref(icon);
+    g_object_unref(pixbuf);
+#endif
+}
+#endif
+
 static void
 register_aud_stock_icons(void)
 {
@@ -1215,6 +1261,9 @@ main(gint argc, gchar ** argv)
         register_aud_stock_icons();
 
         bmp_set_default_icon();
+#ifdef GDK_WINDOWING_QUARTZ
+        set_dock_icon();
+#endif
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
