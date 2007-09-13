@@ -28,3 +28,7 @@
 #endif
 
 #include <gdk/gdkkeysyms.h>
+
+#ifdef GDK_WINDOWING_QUARTZ
+# include <Carbon/Carbon.h>
+#endif
