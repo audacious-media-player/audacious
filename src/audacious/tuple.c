@@ -65,7 +65,6 @@ static GStaticRWLock tuple_rwlock = G_STATIC_RW_LOCK_INIT;
 #    define TUPLE_UNLOCK_WRITE(XX) { TUPDEB("UNLOCK_WRITE"); g_static_rw_lock_writer_unlock(&tuple_rwlock); }
 #    define TUPLE_LOCK_READ(XX)    { TUPDEB("LOCK_READ"); g_static_rw_lock_reader_lock(&tuple_rwlock); }
 #    define TUPLE_UNLOCK_READ(XX)  { TUPDEB("UNLOCK_READ"); g_static_rw_lock_reader_unlock(&tuple_rwlock); }
-#    undef TUPDEP
 #  else
 #    define TUPLE_LOCK_WRITE(XX) g_static_rw_lock_writer_lock(&tuple_rwlock)
 #    define TUPLE_UNLOCK_WRITE(XX) g_static_rw_lock_writer_unlock(&tuple_rwlock)
