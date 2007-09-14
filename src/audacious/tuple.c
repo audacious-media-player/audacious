@@ -94,9 +94,21 @@ static void
 tuple_destroy(gpointer data)
 {
     Tuple *tuple = (Tuple *) data;
+    gint i;
 
     TUPLE_LOCK_WRITE();
     mowgli_dictionary_destroy(tuple->dict, tuple_value_destroy, NULL);
+
+    for (i = 0; i < FIELD_LAST; i++)
+        if (tuple->values[i]) {
+            TupleValue *value = tuple->values[i];
+            
+            if (value->type == TUPLE_STRING)
+                g_free(value->value.string);
+            
+            mowgli_heap_free(tuple_value_heap, value);
+        }
+    
     mowgli_heap_free(tuple_heap, tuple);
     TUPLE_UNLOCK_WRITE();
 }
