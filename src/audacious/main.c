@@ -938,6 +938,7 @@ bmp_config_save(void)
 
     /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
     saved = NULL;
+    saved = g_list_prepend(saved, playlist); /* don't save default again */
     if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
             &saved, NULL)) {
         g_warning("Could not save extra playlists\n");
@@ -1298,12 +1299,6 @@ load_extra_playlist(const gchar * path, const gchar * basename,
     playlist_load(playlist, path);
 
     title = playlist_get_current_name(playlist);
-
-    if (playlist_playlists_equal(playlist, deflist)) {
-        /* same as default playlist */
-        playlist_remove_playlist(playlist);
-        playlist_filename_set(deflist, path);
-    }
 
     return FALSE; /* keep loading other playlists */
 }
