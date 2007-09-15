@@ -970,9 +970,25 @@ mainwin_keypress(GtkWidget * grab_widget,
         mainwin_minimize_cb();
         break;
     case GDK_Tab:
+	// FIXME
         if (event->state & GDK_CONTROL_MASK)
             gtk_window_present(GTK_WINDOW(equalizerwin));
         break;
+    case GDK_c:
+	if (event->state & GDK_CONTROL_MASK) {
+	    Playlist *playlist = playlist_get_active();
+	    gint pos = playlist_get_position(playlist);
+	    gchar *title = playlist_get_songtitle(playlist, pos);
+
+	    if (title != NULL) {
+		GtkClipboard *clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+		gtk_clipboard_set_text(clip, title, -1);
+		gtk_clipboard_store(clip);
+	    }
+
+	    return TRUE;
+	}
+	return FALSE;
     default:
         return FALSE;
     }
