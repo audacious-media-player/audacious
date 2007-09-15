@@ -970,9 +970,8 @@ mainwin_keypress(GtkWidget * grab_widget,
         mainwin_minimize_cb();
         break;
     case GDK_Tab:
-	// FIXME
         if (event->state & GDK_CONTROL_MASK)
-            gtk_window_present(GTK_WINDOW(equalizerwin));
+	    equalizerwin_real_show();
         break;
     case GDK_c:
 	if (event->state & GDK_CONTROL_MASK) {
