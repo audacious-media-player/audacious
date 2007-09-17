@@ -188,11 +188,9 @@ dbus-server-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_player mpris_player.xml >> $@
-	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 dbus-client-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-client --prefix=audacious_rc objects.xml > $@
-	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications
 
