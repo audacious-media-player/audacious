@@ -1,24 +1,26 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ../../buildsys.mk
 
 skindir = $(pkgdatadir)/Skins/TinyPlayer
-OBJECTIVE_DATA = \
-	balance.png:$(skindir)		\
-	cbuttons.png:$(skindir)		\
-	eq_ex.png:$(skindir)		\
-	eqmain.png:$(skindir)		\
-	main.png:$(skindir)		\
-	monoster.png:$(skindir)		\
-	nums_ex.png:$(skindir)		\
-	playpaus.png:$(skindir)		\
-	pledit.png:$(skindir)		\
-	posbar.png:$(skindir)		\
-	shufrep.png:$(skindir)		\
-	text.png:$(skindir)		\
-	titlebar.png:$(skindir)		\
-	volume.png:$(skindir)		\
-	pledit.txt:$(skindir)		\
-	viscolor.txt:$(skindir)		\
-	skin.hints:$(skindir)
 
-include ../../mk/objective.mk
+install-extra:
+	y="*.png *.txt *.hints"; \
+	for i in $$y; do \
+	        ${INSTALL_STATUS}; \
+		if ${MKDIR_P} ${DESTDIR}${skindir} && ${INSTALL} -m 644 $$i ${DESTDIR}${skindir}/$$i; then \
+			${INSTALL_OK}; \
+		else \
+			${INSTALL_FAILED}; \
+		fi; \
+	done
+
+uninstall-extra:
+	y="*.png *.txt *.hints"; \
+	for i in $$y; do \
+		if [ -f ${DESTDIR}${skindir}/$$i ]; then \
+			if rm -f ${DESTDIR}${skindir}/$$i; then \
+				${DELETE_OK}; \
+			else \
+				${DELETE_FAILED}; \
+			fi \
+		fi; \
+	done

@@ -1,14 +1,6 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+STATIC_LIB_NOINST = libguess.a
 
-OBJECTIVE_LIBS_NOINST = libguess.a
-OBJECTIVE_SONAME_SUFFIX = 0.2.0
-
-LDFLAGS += -Wl,-export-dynamic
-
-CFLAGS += $(PICFLAGS)
-
-SOURCES = \
+SRCS = \
 	guess.c \
 	arabic_impl.c \
 	cjk_impl.c \
@@ -17,6 +9,4 @@ SOURCES = \
 	russian_impl.c \
 	turkish_impl.c
 
-OBJECTS = ${SOURCES:.c=.o}
-
-include ../../mk/objective.mk
+include ../../buildsys.mk

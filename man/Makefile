@@ -1,7 +1,3 @@
-include ../mk/rules.mk
-include ../mk/init.mk
-include ../mk/objective.mk
+MAN = audacious.1 audtool.1
 
-OBJECTIVE_DATA =	\
-	audtool.1:$(man1dir) \
-	audacious.1:$(man1dir)
+include ../buildsys.mk

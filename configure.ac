@@ -158,36 +158,25 @@ AC_ARG_ENABLE(rpath,
 			enable_rpath=$enableval, enable_rpath=yes)
 
 if test "x$enable_rpath" = xyes; then
-    RPATH_VAL="-Wl,-rpath=\${libdir}"
+    case "$target" in
+    *-apple-*)
+        ;;
+    *)
+        RPATH_VAL="-Wl,-rpath=\${libdir}"
+        ;;
+    esac
 fi
+
+AC_SUBST(RPATH_VAL)
 
 dnl plugin stuff
 dnl ========================
 
 dnl Ok, first we find out what flags we need to use.
-AC_MSG_CHECKING([for what extension and flags to use for plugin compilation])
-case "$target" in
-	*-apple-*)
-		AC_MSG_RESULT([Mac OS X: -fPIC -bundle -fno-common -flat_namespace -undefined suppress, .dylib])
-		PICFLAGS="-fPIC -DPIC"
-		PICLDFLAGS="-fPIC -DPIC -bundle -fno-common -flat_namespace -undefined suppress"
-		LIBLDFLAGS="-dynamiclib -flat_namespace -undefined suppress"
-		AUDLDFLAGS=""
-		SHARED_SUFFIX=".dylib"
-		;;
-	*)
-		AC_MSG_RESULT([libdl-compatible: -fPIC -DPIC -shared, .so])
-		PICFLAGS="-fPIC -DPIC"
-		PICLDFLAGS="-fPIC -DPIC -shared"
-		LIBLDFLAGS="-fPIC -DPIC -shared"
-		AUDLDFLAGS="-Wl,-export-dynamic $RPATH_VAL"
-		SHARED_SUFFIX=".so"
-		;;
-esac
-AC_SUBST(PICFLAGS)
-AC_SUBST(PICLDFLAGS)
-AC_SUBST(LIBLDFLAGS)
-AC_SUBST(AUDLDFLAGS)
+AM_SHARED_LIB
+
+dnl XXX
+SHARED_SUFFIX=$PLUGIN_SUFFIX
 AC_SUBST(SHARED_SUFFIX)
 AC_DEFINE_UNQUOTED(SHARED_SUFFIX, "${SHARED_SUFFIX}",
 	[Define the shared module suffix extension on your platform.])
@@ -202,11 +191,6 @@ case "$target" in
 		AC_MSG_RESULT([no])
 		;;
 esac
-
-dnl libguess always compiled in
-dnl ========================
-SUBDIR_GUESS="libguess"
-CHARDET_LIBS="../libguess/libguess.a"
 
 dnl chardet support
 dnl ========================
@@ -462,7 +446,8 @@ AC_SUBST(plugindir)
 AC_CONFIG_FILES([
 	audacious.pc
 	audclient.pc
-	mk/rules.mk
+	buildsys.mk
+	extra.mk
 	man/audtool.1
 	man/audacious.1
 	src/audacious/audacious.desktop

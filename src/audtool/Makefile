@@ -1,11 +1,19 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-include ../../mk/objective.mk
+include ../../extra.mk
 
-OBJECTIVE_BINS = audtool
+PROG = audtool
 
-LDFLAGS += $(AUDLDFLAGS)
-LDADD = \
+SRCS =	 			\
+	audtool_main.c			\
+	audtool_handlers_general.c	\
+	audtool_handlers_playback.c	\
+	audtool_handlers_playlist.c	\
+	audtool_handlers_playqueue.c	\
+	audtool_handlers_vitals.c	\
+	audtool_report.c
+
+include ../../buildsys.mk
+
+LIBS += \
 	$(DBUS_LIBS) \
 	-L../libaudclient -laudclient \
 	$(GTK_LIBS)      \
@@ -22,17 +30,4 @@ CFLAGS += \
 	-I.. -I../..   \
 	-I../intl
 
-SOURCES =	 			\
-	audtool_main.c			\
-	audtool_handlers_general.c	\
-	audtool_handlers_playback.c	\
-	audtool_handlers_playlist.c	\
-	audtool_handlers_playqueue.c	\
-	audtool_handlers_vitals.c	\
-	audtool_report.c
-
-OBJECTS = ${SOURCES:.c=.o}
-
-audtool: $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
-	@printf "%10s     %-20s\n" LINK $@
+CPPFLAGS += $(CFLAGS)

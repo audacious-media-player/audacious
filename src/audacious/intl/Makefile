@@ -1,22 +1,4 @@
-include ../../../mk/rules.mk
-include ../../../mk/init.mk
-
-localedir = $(datadir)/locale
-gettextsrcdir = $(datadir)/gettext/intl
-aliaspath = $(localedir)
-
-OBJECTIVE_LIBS_NOINST = libintl.a
-
-DEFS += -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
-	-DLIBDIR=\"$(libdir)\" -DIN_LIBINTL \
-	-DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"$(libdir)\" -DINSTALLPREFIX=\"$(libdir)\" -DNO_XMALLOC \
-	-Dset_relocation_prefix=libintl_set_relocation_prefix \
-	-Drelocate=libintl_relocate \
-	-DDEPENDS_ON_LIBICONV=1
-
-CFLAGS += $(PICFLAGS) -I../../.. -I../.. -I. $(DEFS)
-
-SOURCES = \
+SRCS = \
   bindtextdom.c \
   dcgettext.c \
   dgettext.c \
@@ -41,6 +23,20 @@ SOURCES = \
   os2compat.c \
   intl-compat.c  
 
-OBJECTS = ${SOURCES:.c=.o}
+STATIC_LIB_NOINST = libintl.a
 
-include ../../../mk/objective.mk
+include ../../../buildsys.mk
+include ../../../extra.mk
+
+localedir = $(datadir)/locale
+gettextsrcdir = $(datadir)/gettext/intl
+aliaspath = $(localedir)
+
+DEFS += -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
+	-DLIBDIR=\"$(libdir)\" -DIN_LIBINTL \
+	-DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"$(libdir)\" -DINSTALLPREFIX=\"$(libdir)\" -DNO_XMALLOC \
+	-Dset_relocation_prefix=libintl_set_relocation_prefix \
+	-Drelocate=libintl_relocate \
+	-DDEPENDS_ON_LIBICONV=1
+
+CPPFLAGS += -I../../.. -I../.. -I. $(DEFS)

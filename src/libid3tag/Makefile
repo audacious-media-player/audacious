@@ -1,21 +1,10 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ../../extra.mk
 
-OBJECTIVE_LIBS = libaudid3tag$(SHARED_SUFFIX)
+LIB = ${LIB_PREFIX}audid3tag${LIB_SUFFIX}
 
-PICLDFLAGS = $(LIBLDFLAGS)
+INCLUDES = id3tag.h
 
-LIBDIR = $(plugindir)
-
-LIBADD += $(GLIB_LIBS)
-
-CFLAGS += $(PICFLAGS) \
-	-I.. \
-	$(GLIB_CFLAGS) -Wall
-
-HEADERS = id3tag.h
-
-SOURCES = \
+SRCS = \
 	compat.c \
 	debug.c \
 	file.c \
@@ -34,6 +23,11 @@ SOURCES = \
 	utf16.c \
 	util.c
 
-OBJECTS = ${SOURCES:.c=.o}
+include ../../buildsys.mk
 
-include ../../mk/objective.mk
+CPPFLAGS += -I.. $(GLIB_CFLAGS)
+CFLAGS += $(LIB_CFLAGS)
+
+LIBS += $(GLIB_LIBS)
+
+LIBDIR = $(plugindir)

@@ -1,12 +1,27 @@
-include ../../../mk/rules.mk
-include ../../../mk/init.mk
+include ../../../buildsys.mk
 
 gladexmldir = $(pkgdatadir)/ui
 
-OBJECTIVE_DATA = \
-	carbon-menubar.ui:$(gladexmldir) \
-	mainwin.ui:$(gladexmldir) \
-	playlist.ui:$(gladexmldir) \
-	equalizer.ui:$(gladexmldir)
+install-extra:
+	y="*.ui"; \
+	for i in $$y; do \
+		${INSTALL_STATUS}; \
+		if ${MKDIR_P} ${DESTDIR}${gladexmldir} && ${INSTALL} -m 644 $$i ${DESTDIR}${gladexmldir}/$$i; then \
+			${INSTALL_OK}; \
+		else \
+			${INSTALL_FAILED}; \
+		fi; \
+	done
 
-include ../../../mk/objective.mk
+uninstall-extra:
+	y="*.ui"; \
+	for i in $$y; do \
+		if [ -f ${DESTDIR}${gladexmldir}/$$i ]; then \
+			if rm -f ${DESTDIR}${gladexmldir}/$$i; then \
+				${DELETE_OK}; \
+			else \
+				${DELETE_FAILED}; \
+			fi \
+		fi; \
+	done;
+
