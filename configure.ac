@@ -188,9 +188,12 @@ case "$target" in
 		LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices -framework Carbon"
 		;;
 	*)
+		EXPORTDYN="-Wl,-export-dynamic"
 		AC_MSG_RESULT([no])
 		;;
 esac
+
+AC_SUBST(EXPORTDYN)
 
 dnl chardet support
 dnl ========================

@@ -136,6 +136,8 @@ DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 LIBS += -L../libaudclient -laudclient
 endif
 
+LDFLAGS += ${EXPORTDYN}
+
 depend-hook: $(DBUS_BINDINGS)
 
 CPPFLAGS += -DHAVE_CONFIG_H \
