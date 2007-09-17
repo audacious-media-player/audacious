@@ -61,6 +61,7 @@ includedir = @includedir@
 includesubdir ?= ${PACKAGE}
 mandir = @mandir@
 mansubdir ?= man1
+pkgdatadir = ${datadir}/${PACKAGE}
 
 OBJS1 = ${SRCS:.c=.o}
 OBJS2 = ${OBJS1:.cc=.o}
