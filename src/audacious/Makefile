@@ -130,6 +130,12 @@ include ../../buildsys.mk
 
 LIBADD += $(LDADD)
 
+ifdef USE_DBUS	
+CPPFLAGS += -I../libaudclient
+DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
+LIBS += -L../libaudclient -laudclient
+endif
+
 depend-hook: $(DBUS_BINDINGS)
 
 CPPFLAGS += -DHAVE_CONFIG_H \
@@ -156,12 +162,6 @@ LIBS += \
 	$(LIBMCS_LIBS) \
 	$(LIBGLADE_LIBS) \
 	$(REGEX_LIBS)
-
-ifdef USE_DBUS	
-CPPFLAGS += -I../libaudclient
-DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
-LIBS += -L../libaudclient -laudclient
-endif
 
 build_stamp.c: 
 	if [ -d ../../.hg ]; then \
