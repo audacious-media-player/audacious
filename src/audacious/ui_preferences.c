@@ -1156,6 +1156,18 @@ on_continue_playback_on_startup_realize(GtkToggleButton * button, gpointer data)
 }
 
 static void
+on_software_volume_control_toggled(GtkToggleButton * button, gpointer data)
+{
+    cfg.software_volume_control = gtk_toggle_button_get_active(button);
+}
+
+static void
+on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.software_volume_control);
+}
+
+static void
 on_continue_playback_on_startup_toggled(GtkToggleButton * button, gpointer data)
 {
     cfg.resume_playback_on_startup = gtk_toggle_button_get_active(button);
@@ -1890,6 +1902,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_filepopup_for_tuple_settings_clicked)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_realize)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_toggled)
+    FUNC_MAP_ENTRY(on_software_volume_control_realize)
+    FUNC_MAP_ENTRY(on_software_volume_control_toggled)
 
     /* Filepopup settings */
     FUNC_MAP_ENTRY(on_filepopup_settings_ok_clicked)
