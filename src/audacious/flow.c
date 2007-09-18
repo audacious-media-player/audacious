@@ -37,7 +37,7 @@ flow_destructor(Flow *flow)
     g_slice_free(Flow, flow);    
 }
 
-void flow_execute(Flow *flow, gpointer data, gsize len, AFormat fmt, 
+void flow_execute(Flow *flow, gint time, gpointer data, gsize len, AFormat fmt, 
      gint srate, gint channels)
 {
     FlowElement *element;
@@ -46,6 +46,7 @@ void flow_execute(Flow *flow, gpointer data, gsize len, AFormat fmt,
     g_return_if_fail(flow != NULL);
     g_return_if_fail(data != NULL);
 
+    context.time = time;
     context.data = data;
     context.len = len;
     context.fmt = fmt;

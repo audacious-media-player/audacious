@@ -506,7 +506,7 @@ produce_audio(gint time,        /* position             */
     /* do vis plugin(s) */
     input_add_vis_pcm(time, fmt, nch, length, ptr);
 
-    flow_execute(postproc_flow, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+    flow_execute(postproc_flow, time, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 
     writeoffs = 0;
     while (writeoffs < length)
