@@ -98,6 +98,9 @@ flow_link_element(Flow *flow, FlowFunction func)
         flow->tail->next = element;
     
     flow->tail = element;        
+
+    if (!flow->head)
+        flow->head = element;
 }
 
 /* TBD: unlink all elements of func, or just the first --nenolod */
@@ -116,6 +119,12 @@ flow_unlink_element(Flow *flow, FlowFunction func)
                 iter->next->prev = iter->prev;
 
             iter->prev->next = iter->next;
+
+            if (flow->tail == iter)
+                flow->tail = iter->prev;
+
+            if (flow->head == iter)
+                flow->head = iter->next;
 
             g_slice_free(FlowElement, iter);
         }
