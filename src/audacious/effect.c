@@ -187,7 +187,7 @@ effect_flow(FlowContext *context)
         context->channels = new_nch;
     }
 
-    context->length = effect_do_mod_samples(&context->data, context->length,
+    context->len = effect_do_mod_samples(&context->data, context->len,
         context->fmt, context->srate, context->channels);
 }
 
