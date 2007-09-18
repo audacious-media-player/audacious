@@ -82,7 +82,6 @@ typedef struct _Tuple {
     mowgli_object_t parent;
     mowgli_dictionary_t *dict;
     TupleValue *values[FIELD_LAST];
-    gint *subtunes;	/* Temporary field for delivering subtune numbers */
 } Tuple;
 
 
