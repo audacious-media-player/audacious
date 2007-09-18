@@ -37,6 +37,7 @@
 #include "configdb.h"
 
 #include "effect.h"
+#include "volumecontrol.h"
 
 #include <math.h>
 
@@ -171,7 +172,10 @@ output_get_volume(gint * l, gint * r)
     if (!op_data.current_output_plugin->get_volume)
         return;
 
-    op_data.current_output_plugin->get_volume(l, r);
+    if (cfg.software_volume_control)
+        volumecontrol_get_volume_state(l, r);
+    else
+        op_data.current_output_plugin->get_volume(l, r);
 }
 
 void
@@ -183,7 +187,10 @@ output_set_volume(gint l, gint r)
     if (!op_data.current_output_plugin->set_volume)
         return;
 
-    op_data.current_output_plugin->set_volume(l, r);
+    if (cfg.software_volume_control)
+        volumecontrol_set_volume_state(l, r);
+    else
+        op_data.current_output_plugin->set_volume(l, r);
 }
 
 void
@@ -519,6 +526,9 @@ produce_audio(gint time,        /* position             */
 
     length = effect_do_mod_samples(&ptr, length, op_state.fmt, op_state.rate, 
         op_state.nch);
+
+    if (cfg.software_volume_control)
+        volumecontrol_pad_audio(ptr, length, op_state.fmt, op_state.nch);
 
     writeoffs = 0;
     while (writeoffs < length)
