@@ -57,27 +57,21 @@ OutputPluginState op_state = {
 };
 
 OutputPlugin psuedo_output_plugin = {
-    NULL,
-    NULL,
-    "XMMS reverse compatibility output plugin",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    TRUE,
-    output_get_volume,
-    output_set_volume,
-    output_open_audio,
-    output_write_audio,
-    output_close_audio,
+    .description = "XMMS reverse compatibility output plugin",
+    .get_volume = output_get_volume,
+    .set_volume = output_set_volume,
 
-    output_flush,
-    output_pause,
-    output_buffer_free,
-    output_buffer_playing,
-    get_output_time,
-    get_written_time,
-    NULL
+    .open_audio = output_open_audio,
+    .write_audio = output_write_audio,
+    .close_audio = output_close_audio,
+
+    .flush = output_flush,
+    .pause = output_pause,
+
+    .buffer_free = output_buffer_free,
+    .buffer_playing = output_buffer_playing,
+    .output_time = get_output_time,
+    .written_time = get_written_time,
 };
 
 OutputPlugin *
