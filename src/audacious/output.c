@@ -444,6 +444,7 @@ produce_audio(gint time,        /* position             */
     if (postproc_flow == NULL)
     {
         postproc_flow = flow_new();
+        flow_link_element(postproc_flow, effect_flow);
         flow_link_element(postproc_flow, volumecontrol_flow);
     }
 

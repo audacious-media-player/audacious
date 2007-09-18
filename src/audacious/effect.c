@@ -157,3 +157,37 @@ effect_enable_from_stringified_list(const gchar * list)
     }
     g_strfreev(plugins);
 }
+
+void
+effect_flow(FlowContext *context)
+{
+    AFormat new_format;
+    gint new_rate;
+    gint new_nch;
+
+    new_format = context->fmt;
+    new_rate = context->srate;
+    new_nch = context->channels;
+
+    effect_do_query_format(&new_format, &new_rate, &new_nch);
+
+    if (new_format != context->fmt ||
+        new_rate != context->srate ||
+        new_nch != context->channels)
+    {
+        /*
+         * The effect plugin changes the stream format. Reopen the
+         * audio device.
+         */
+        if (!output_open_audio(new_format, new_rate, new_nch))
+            return;
+
+        context->fmt = new_format;
+        context->srate = new_rate;
+        context->channels = new_nch;
+    }
+
+    context->length = effect_do_mod_samples(&context->data, context->length,
+        context->fmt, context->srate, context->channels);
+}
+
