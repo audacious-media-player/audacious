@@ -101,7 +101,7 @@ iir_flow(FlowContext *context)
     static int init = 0;
     int swapped = 0;
     guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
-    int caneq = (fmt == FMT_S16_NE || fmt == myorder);
+    int caneq = (context->fmt == FMT_S16_NE || context->fmt == myorder);
 
     if (!caneq && cfg.equalizer_active) {         /* wrong byte order */
         byteswap(context->len, context->data);    /* so convert */
