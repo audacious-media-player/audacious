@@ -160,3 +160,12 @@ volumecontrol_set_volume_state(gint l, gint r)
     vc_state_.left = l;
     vc_state_.right = r;
 }
+
+void
+volumecontrol_flow(FlowContext *context)
+{
+    if (!cfg.software_volume_control)
+        return;
+
+    volumecontrol_pad_audio(context->data, context->len, context->fmt, context->channels);
+}

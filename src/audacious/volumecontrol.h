@@ -20,6 +20,8 @@
 
 #include <glib.h>
 
+#include "flow.h"
+
 #ifndef __VOLUMECONTROL_H__
 #define __VOLUMECONTROL_H__
 
@@ -27,5 +29,6 @@ void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt,
     gint channels);
 void volumecontrol_get_volume_state(gint *l, gint *r);
 void volumecontrol_set_volume_state(gint l, gint r);
+void volumecontrol_flow(FlowContext *context);
 
 #endif

@@ -36,6 +36,8 @@
 #include "playlist.h"
 #include "configdb.h"
 
+#include "flow.h"
+
 #include "effect.h"
 #include "volumecontrol.h"
 
@@ -428,6 +430,7 @@ produce_audio(gint time,        /* position             */
               int *going        /* 0 when time to stop  */
               )
 {
+    static Flow *postproc_flow = NULL;
     static int init = 0;
     int swapped = 0;
     guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
@@ -437,6 +440,12 @@ produce_audio(gint time,        /* position             */
     AFormat new_format;
     gint new_rate;
     gint new_nch;
+
+    if (postproc_flow == NULL)
+    {
+        postproc_flow = flow_new();
+        flow_link_element(postproc_flow, volumecontrol_flow);
+    }
 
 #ifdef USE_SRC
     if(src_state != NULL&&length > 0)
@@ -521,8 +530,7 @@ produce_audio(gint time,        /* position             */
     length = effect_do_mod_samples(&ptr, length, op_state.fmt, op_state.rate, 
         op_state.nch);
 
-    if (cfg.software_volume_control)
-        volumecontrol_pad_audio(ptr, length, op_state.fmt, op_state.nch);
+    flow_execute(postproc_flow, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 
     writeoffs = 0;
     while (writeoffs < length)
