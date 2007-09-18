@@ -20,6 +20,8 @@
  */
 
 #include <math.h>
+
+#include "main.h"
 #include "iir.h"
 
 /* Coefficients */
@@ -82,3 +84,42 @@ __inline__ int round_trick(float floatvalue_to_round)
   return rounded_value;
 }
 #endif
+
+static void
+byteswap(size_t size,
+         gint16 * buf)
+{
+    gint16 *it;
+    size &= ~1;                  /* must be multiple of 2  */
+    for (it = buf; it < buf + size / 2; ++it)
+        *(guint16 *) it = GUINT16_SWAP_LE_BE(*(guint16 *) it);
+}
+
+void
+iir_flow(FlowContext *context)
+{
+    static int init = 0;
+    int swapped = 0;
+    guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
+    int caneq = (fmt == FMT_S16_NE || fmt == myorder);
+
+    if (!caneq && cfg.equalizer_active) {         /* wrong byte order */
+        byteswap(context->len, context->data);    /* so convert */
+        ++swapped;
+        ++caneq;
+    }                                        /* can eq now, mark swapd */
+    else if (caneq && !cfg.equalizer_active) /* right order but no eq */
+        caneq = 0;                           /* so don't eq */
+
+    if (caneq) {                /* if eq enab */
+        if (!init) {            /* if first run */
+            init_iir();         /* then init eq */
+            ++init;
+        }
+
+        iir(&context->data, context->len, context->channels);
+
+        if (swapped)                               /* if was swapped */
+            byteswap(context->len, context->data); /* swap back for output */
+    }
+}

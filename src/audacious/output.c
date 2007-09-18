@@ -204,17 +204,6 @@ output_set_eq(gboolean active, gfloat pre, gfloat * bands)
     }
 }
 
-/* this should be in BYTES, NOT gint16s */
-static void
-byteswap(size_t size,
-         gint16 * buf)
-{
-    gint16 *it;
-    size &= ~1;                  /* must be multiple of 2  */
-    for (it = buf; it < buf + size / 2; ++it)
-        *(guint16 *) it = GUINT16_SWAP_LE_BE(*(guint16 *) it);
-}
-
 /* called by input plugin to peek at the output plugin's write progress */
 gint
 get_written_time(void)
@@ -432,16 +421,13 @@ produce_audio(gint time,        /* position             */
               )
 {
     static Flow *postproc_flow = NULL;
-    static int init = 0;
-    int swapped = 0;
-    guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
-    int caneq = (fmt == FMT_S16_NE || fmt == myorder);
     OutputPlugin *op = get_current_output_plugin();
     int writeoffs;
 
     if (postproc_flow == NULL)
     {
         postproc_flow = flow_new();
+        flow_link_element(postproc_flow, iir_flow);
         flow_link_element(postproc_flow, effect_flow);
         flow_link_element(postproc_flow, vis_flow);
         flow_link_element(postproc_flow, volumecontrol_flow);
@@ -484,26 +470,6 @@ produce_audio(gint time,        /* position             */
           }
       }
 #endif
-
-    if (!caneq && cfg.equalizer_active) {    /* wrong byte order */
-        byteswap(length, ptr);               /* so convert */
-        ++swapped;
-        ++caneq;
-    }                                        /* can eq now, mark swapd */
-    else if (caneq && !cfg.equalizer_active) /* right order but no eq */
-        caneq = 0;                           /* so don't eq */
-
-    if (caneq) {                /* if eq enab */
-        if (!init) {            /* if first run */
-            init_iir();         /* then init eq */
-            ++init;
-        }
-
-        iir(&ptr, length, nch);
-
-        if (swapped)               /* if was swapped */
-            byteswap(length, ptr); /* swap back for output */
-    }                           
 
     flow_execute(postproc_flow, time, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 
