@@ -1,6 +1,10 @@
 include ../../extra.mk
 
 LIB = ${LIB_PREFIX}audid3tag${LIB_SUFFIX}
+LIB_MAJOR = 1
+LIB_MINOR = 0
+
+LIBDIR = $(plugindir)
 
 INCLUDES = id3tag.h
 
@@ -29,5 +33,3 @@ CPPFLAGS += -I.. $(GLIB_CFLAGS)
 CFLAGS += $(LIB_CFLAGS)
 
 LIBS += $(GLIB_LIBS)
-
-LIBDIR = $(plugindir)
