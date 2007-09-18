@@ -14,6 +14,7 @@ INCLUDES = \
 	discovery.h \
 	dbus-service.h \
 	eventqueue.h \
+	flow.h \
 	formatter.h \
 	rcfile.h \
 	i18n.h \
