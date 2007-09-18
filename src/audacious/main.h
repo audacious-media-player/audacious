@@ -131,6 +131,7 @@ struct _BmpConfig {
     gboolean filepopup_showprogressbar;
     gboolean close_jtf_dialog;
     gboolean twoway_scroll;
+    gboolean software_volume_control;
 };
 
 typedef struct _BmpConfig BmpConfig;
