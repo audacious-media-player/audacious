@@ -883,6 +883,7 @@ plugin_treeview_open_prefs(GtkTreeView *treeview)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
+    g_return_if_fail(plugin->configure != NULL);
 
     plugin->configure();
 }
