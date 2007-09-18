@@ -40,6 +40,7 @@
 
 #include "effect.h"
 #include "volumecontrol.h"
+#include "visualization.h"
 
 #include <math.h>
 
@@ -442,6 +443,7 @@ produce_audio(gint time,        /* position             */
     {
         postproc_flow = flow_new();
         flow_link_element(postproc_flow, effect_flow);
+        flow_link_element(postproc_flow, vis_flow);
         flow_link_element(postproc_flow, volumecontrol_flow);
     }
 
@@ -502,9 +504,6 @@ produce_audio(gint time,        /* position             */
         if (swapped)               /* if was swapped */
             byteswap(length, ptr); /* swap back for output */
     }                           
-
-    /* do vis plugin(s) */
-    input_add_vis_pcm(time, fmt, nch, length, ptr);
 
     flow_execute(postproc_flow, time, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 

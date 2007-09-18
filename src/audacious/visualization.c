@@ -446,3 +446,10 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
     else
         ui_vis_timeout_func(mainwin_vis, intern_vis_data);
 }
+
+void
+vis_flow(FlowContext *context)
+{
+    input_add_vis_pcm(context->time, context->fmt, context->channels,
+        context->len, context->data);
+}
