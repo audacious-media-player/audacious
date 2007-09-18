@@ -51,6 +51,7 @@ SRCS = \
 	effect.c \
 	eventqueue.c \
 	fft.c \
+	flow.c \
 	formatter.c \
 	general.c \
 	glade.c \
