@@ -117,6 +117,7 @@ SRCS = \
 	vfs_buffered_file.c \
 	vfs_common.c \
 	visualization.c \
+	volumecontrol.c \
 	sync-menu.c \
 	xconvert.c
 
