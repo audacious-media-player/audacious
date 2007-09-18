@@ -668,48 +668,81 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 			       InputPlugin * dec)
 {
     PlaylistEntry *entry;
+    gint subtunes_num = 0, i = 0;
 
     g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
 
-    entry = playlist_entry_new(filename,
-        tuple ? tuple_get_string(tuple, FIELD_TITLE, NULL) : NULL,
-        tuple ? tuple_get_int(tuple, FIELD_LENGTH, NULL) : -1, dec);
-    
-    if(!playlist->tail)
-        playlist->tail = g_list_last(playlist->entries);
-
-    PLAYLIST_LOCK(playlist);
-    
-    if(pos == -1) { // the common case
-        GList *element;
-        element = g_list_alloc();
-        element->data = entry;
-        element->prev = playlist->tail; // NULL is allowed here.
-        element->next = NULL;
-
-        if(!playlist->entries) { // this is the first element
-            playlist->entries = element;
-            playlist->tail = element;
-        }
-        else { // the rests
-            g_return_if_fail(playlist->tail != NULL);
-            playlist->tail->next = element;
-            playlist->tail = element;
+    if (tuple != NULL)
+    {
+        subtunes_num = tuple_get_int(tuple, FIELD_SUBSONG_NUM, NULL);
+        if ( subtunes_num > 0 )
+        {
+            i = 1;
+            tuple_free(tuple); /* will be replaced by subtune tuples */
         }
     }
-    else {
-        playlist->entries = g_list_insert(playlist->entries, entry, pos);
-    }
 
-    PLAYLIST_UNLOCK(playlist);
-    
-    if (tuple != NULL) {
-        const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
-        entry->title = tuple_formatter_make_title_string(tuple, formatter ?
-                                                      formatter : get_gentitle_format());
-        entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-        entry->tuple = tuple;
+    for ( ; i <= subtunes_num ; i++ )
+    {
+        gchar *filename_entry;
+        if ( subtunes_num > 0 )
+        {
+            GString *tmpstr = g_string_new(filename);
+            g_string_append_printf(tmpstr, "?%i", i);
+            filename_entry = tmpstr->str;
+            g_string_free(tmpstr, FALSE);
+
+            /* we're dealing with subtune, let's ask again tuple information
+               to plugin, by passing the ?subsong suffix; this way we may get
+               specific subtune information in the tuple, if available */
+            tuple = dec->get_song_tuple(filename_entry);
+        }
+        else
+        {
+            filename_entry = g_strdup(filename);
+        }
+
+        entry = playlist_entry_new(filename_entry,
+            tuple ? tuple_get_string(tuple, FIELD_TITLE, NULL) : NULL,
+            tuple ? tuple_get_int(tuple, FIELD_LENGTH, NULL) : -1, dec);
+        g_free(filename_entry);
+
+        if(!playlist->tail)
+            playlist->tail = g_list_last(playlist->entries);
+
+        PLAYLIST_LOCK(playlist);
+
+        if ((pos == -1) && (i < 2)) { // the common case
+            GList *element;
+            element = g_list_alloc();
+            element->data = entry;
+            element->prev = playlist->tail; // NULL is allowed here.
+            element->next = NULL;
+
+            if(!playlist->entries) { // this is the first element
+                playlist->entries = element;
+                playlist->tail = element;
+            }
+            else { // the rests
+                g_return_if_fail(playlist->tail != NULL);
+                playlist->tail->next = element;
+                playlist->tail = element;
+            }
+        }
+        else {
+            playlist->entries = g_list_insert(playlist->entries, entry, pos);
+        }
+
+        PLAYLIST_UNLOCK(playlist);
+
+        if (tuple != NULL) {
+            const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
+            entry->title = tuple_formatter_make_title_string(tuple, formatter ?
+                                                          formatter : get_gentitle_format());
+            entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
+            entry->tuple = tuple;
+        }
     }
 
     if(tuple != NULL && tuple_get_int(tuple, FIELD_MTIME, NULL) == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
