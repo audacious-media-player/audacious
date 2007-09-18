@@ -47,6 +47,9 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "performer",      TUPLE_STRING },
     { "copyright",      TUPLE_STRING },
     { "date",           TUPLE_STRING },
+
+    { "subsong-id",     TUPLE_INT },
+    { "subsong-num",    TUPLE_INT },
 };
 
 static mowgli_heap_t *tuple_heap = NULL;
