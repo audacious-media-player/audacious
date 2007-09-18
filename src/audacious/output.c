@@ -437,9 +437,6 @@ produce_audio(gint time,        /* position             */
     int caneq = (fmt == FMT_S16_NE || fmt == myorder);
     OutputPlugin *op = get_current_output_plugin();
     int writeoffs;
-    AFormat new_format;
-    gint new_rate;
-    gint new_nch;
 
     if (postproc_flow == NULL)
     {
@@ -508,28 +505,6 @@ produce_audio(gint time,        /* position             */
 
     /* do vis plugin(s) */
     input_add_vis_pcm(time, fmt, nch, length, ptr);
-
-    /* do effect plugin(s) */
-    new_format = op_state.fmt;
-    new_rate = op_state.rate;
-    new_nch = op_state.nch;
-
-    effect_do_query_format(&new_format, &new_rate, &new_nch);
-
-    if (new_format != op_state.fmt ||
-        new_rate != op_state.rate ||
-        new_nch != op_state.nch)
-    {
-        /*
-         * The effect plugin changes the stream format. Reopen the
-         * audio device.
-         */
-        if (!output_open_audio(new_format, new_rate, new_nch))
-            return;
-    }
-
-    length = effect_do_mod_samples(&ptr, length, op_state.fmt, op_state.rate, 
-        op_state.nch);
 
     flow_execute(postproc_flow, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 
