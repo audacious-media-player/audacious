@@ -100,6 +100,8 @@ tuple_destroy(gpointer data)
     gint i;
 
     TUPLE_LOCK_WRITE();
+    g_free(tuple->subtunes);
+    
     mowgli_dictionary_destroy(tuple->dict, tuple_value_destroy, NULL);
 
     for (i = 0; i < FIELD_LAST; i++)
