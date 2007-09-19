@@ -83,7 +83,7 @@ all: subdirs depend ${OBJS} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOIN
 subdirs:
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} || exit 1; \
+		${MAKE} ${MFLAGS} || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -187,7 +187,7 @@ ${EXT_DEPS}: subdirs
 install: ${LIB} ${STATIC_LIB} ${PLUGIN} ${PROG} install-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} install || exit 1; \
+		${MAKE} ${MFLAGS} install || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -259,7 +259,7 @@ install-extra:
 uninstall: uninstall-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} uninstall || exit 1; \
+		${MAKE} ${MFLAGS} uninstall || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -340,7 +340,7 @@ uninstall-extra:
 clean:
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} clean || exit 1; \
+		${MAKE} ${MFLAGS} clean || exit 1; \
 		${DIR_LEAVE}; \
 	done
 	
@@ -357,7 +357,7 @@ clean:
 distclean: clean
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} distclean || exit 1; \
+		${MAKE} ${MFLAGS} distclean || exit 1; \
 		${DIR_LEAVE}; \
 	done
 	
