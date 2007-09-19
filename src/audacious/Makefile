@@ -160,7 +160,7 @@ include ../../buildsys.mk
 LDFLAGS += ${EXPORTDYN}
 LIBS += ${LDADD}
 
-ifdef USE_DBUS	
+ifdef USE_DBUS
 CPPFLAGS += -I../libaudclient
 DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 LIBS += -L../libaudclient -laudclient
