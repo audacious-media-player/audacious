@@ -1,4 +1,4 @@
-SUBDIRS = libguess audacious libid3tag
+SUBDIRS = libguess audacious libid3tag libaudclient
 
 ifdef USE_DBUS
 SUBDIRS += libaudclient audtool
