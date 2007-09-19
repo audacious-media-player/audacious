@@ -676,17 +676,17 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     if (tuple != NULL)
     {
         subtunes_num = tuple_get_int(tuple, FIELD_SUBSONG_NUM, NULL);
-        if ( subtunes_num > 0 )
+        if (subtunes_num > 0)
         {
             i = 1;
             tuple_free(tuple); /* will be replaced by subtune tuples */
         }
     }
 
-    for ( ; i <= subtunes_num ; i++ )
+    for (; i <= subtunes_num; i++)
     {
         gchar *filename_entry;
-        if ( subtunes_num > 0 )
+        if (subtunes_num > 0)
         {
             filename_entry = g_strdup_printf("%s?%d", filename, i);
             /* we're dealing with subtune, let's ask again tuple information
@@ -695,10 +695,9 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
             tuple = dec->get_song_tuple(filename_entry);
         }
         else
-        {
             filename_entry = g_strdup(filename);
-        }
-
+        
+        
         entry = playlist_entry_new(filename_entry,
             tuple ? tuple_get_string(tuple, FIELD_TITLE, NULL) : NULL,
             tuple ? tuple_get_int(tuple, FIELD_LENGTH, NULL) : -1, dec);
