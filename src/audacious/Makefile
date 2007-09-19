@@ -1,3 +1,5 @@
+include ../../extra.mk
+
 SUBDIRS = ${INTL_OBJECTIVE}
 
 PROG = audacious
@@ -82,6 +84,10 @@ SRCS = auddrct.c			\
        sync-menu.c			\
        xconvert.c
 
+ifdef USE_DBUS
+SRCS += dbus.c
+endif
+
 INCLUDES = auddrct.h		\
 	   configdb.h		\
 	   custom_uri.h		\
@@ -150,11 +156,6 @@ DATA = glade/fileinfo.glade			\
        ui/carbon-menubar.ui
 
 include ../../buildsys.mk
-include ../../extra.mk
-
-ifdef USE_DBUS
-SRCS += dbus.c
-endif
 
 LDFLAGS += ${EXPORTDYN}
 LIBS += ${LDADD}
