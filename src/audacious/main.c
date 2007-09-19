@@ -224,7 +224,8 @@ BmpConfig bmp_default_config = {
     FALSE,          /* internal: whether or not to terminate */
     TRUE,           /* whether show progress bar in filepopup or not */
     TRUE,           /* close jtf dialog on jump */
-    TRUE,          /* use back and forth scroll */
+    TRUE,           /* use back and forth scroll */
+    FALSE,          /* use software volume control */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -332,6 +333,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"filepopup_showprogressbar", &cfg.filepopup_showprogressbar, TRUE},
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
     {"twoway_scroll", &cfg.twoway_scroll, TRUE},
+    {"software_volume_control", &cfg.software_volume_control, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -938,6 +940,7 @@ bmp_config_save(void)
 
     /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
     saved = NULL;
+    saved = g_list_prepend(saved, playlist); /* don't save default again */
     if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
             &saved, NULL)) {
         g_warning("Could not save extra playlists\n");
@@ -1298,12 +1301,6 @@ load_extra_playlist(const gchar * path, const gchar * basename,
     playlist_load(playlist, path);
 
     title = playlist_get_current_name(playlist);
-
-    if (playlist_playlists_equal(playlist, deflist)) {
-        /* same as default playlist */
-        playlist_remove_playlist(playlist);
-        playlist_filename_set(deflist, path);
-    }
 
     return FALSE; /* keep loading other playlists */
 }

@@ -36,7 +36,11 @@
 #include "playlist.h"
 #include "configdb.h"
 
+#include "flow.h"
+
 #include "effect.h"
+#include "volumecontrol.h"
+#include "visualization.h"
 
 #include <math.h>
 
@@ -56,27 +60,21 @@ OutputPluginState op_state = {
 };
 
 OutputPlugin psuedo_output_plugin = {
-    NULL,
-    NULL,
-    "XMMS reverse compatibility output plugin",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    TRUE,
-    output_get_volume,
-    output_set_volume,
-    output_open_audio,
-    output_write_audio,
-    output_close_audio,
+    .description = "XMMS reverse compatibility output plugin",
+    .get_volume = output_get_volume,
+    .set_volume = output_set_volume,
 
-    output_flush,
-    output_pause,
-    output_buffer_free,
-    output_buffer_playing,
-    get_output_time,
-    get_written_time,
-    NULL
+    .open_audio = output_open_audio,
+    .write_audio = output_write_audio,
+    .close_audio = output_close_audio,
+
+    .flush = output_flush,
+    .pause = output_pause,
+
+    .buffer_free = output_buffer_free,
+    .buffer_playing = output_buffer_playing,
+    .output_time = get_output_time,
+    .written_time = get_written_time,
 };
 
 OutputPlugin *
@@ -171,7 +169,10 @@ output_get_volume(gint * l, gint * r)
     if (!op_data.current_output_plugin->get_volume)
         return;
 
-    op_data.current_output_plugin->get_volume(l, r);
+    if (cfg.software_volume_control)
+        volumecontrol_get_volume_state(l, r);
+    else
+        op_data.current_output_plugin->get_volume(l, r);
 }
 
 void
@@ -183,7 +184,10 @@ output_set_volume(gint l, gint r)
     if (!op_data.current_output_plugin->set_volume)
         return;
 
-    op_data.current_output_plugin->set_volume(l, r);
+    if (cfg.software_volume_control)
+        volumecontrol_set_volume_state(l, r);
+    else
+        op_data.current_output_plugin->set_volume(l, r);
 }
 
 void
@@ -198,17 +202,6 @@ output_set_eq(gboolean active, gfloat pre, gfloat * bands)
         set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
         set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
     }
-}
-
-/* this should be in BYTES, NOT gint16s */
-static void
-byteswap(size_t size,
-         gint16 * buf)
-{
-    gint16 *it;
-    size &= ~1;                  /* must be multiple of 2  */
-    for (it = buf; it < buf + size / 2; ++it)
-        *(guint16 *) it = GUINT16_SWAP_LE_BE(*(guint16 *) it);
 }
 
 /* called by input plugin to peek at the output plugin's write progress */
@@ -427,15 +420,18 @@ produce_audio(gint time,        /* position             */
               int *going        /* 0 when time to stop  */
               )
 {
-    static int init = 0;
-    int swapped = 0;
-    guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
-    int caneq = (fmt == FMT_S16_NE || fmt == myorder);
+    static Flow *postproc_flow = NULL;
     OutputPlugin *op = get_current_output_plugin();
     int writeoffs;
-    AFormat new_format;
-    gint new_rate;
-    gint new_nch;
+
+    if (postproc_flow == NULL)
+    {
+        postproc_flow = flow_new();
+        flow_link_element(postproc_flow, iir_flow);
+        flow_link_element(postproc_flow, effect_flow);
+        flow_link_element(postproc_flow, vis_flow);
+        flow_link_element(postproc_flow, volumecontrol_flow);
+    }
 
 #ifdef USE_SRC
     if(src_state != NULL&&length > 0)
@@ -475,50 +471,7 @@ produce_audio(gint time,        /* position             */
       }
 #endif
 
-    if (!caneq && cfg.equalizer_active) {    /* wrong byte order */
-        byteswap(length, ptr);               /* so convert */
-        ++swapped;
-        ++caneq;
-    }                                        /* can eq now, mark swapd */
-    else if (caneq && !cfg.equalizer_active) /* right order but no eq */
-        caneq = 0;                           /* so don't eq */
-
-    if (caneq) {                /* if eq enab */
-        if (!init) {            /* if first run */
-            init_iir();         /* then init eq */
-            ++init;
-        }
-
-        iir(&ptr, length, nch);
-
-        if (swapped)               /* if was swapped */
-            byteswap(length, ptr); /* swap back for output */
-    }                           
-
-    /* do vis plugin(s) */
-    input_add_vis_pcm(time, fmt, nch, length, ptr);
-
-    /* do effect plugin(s) */
-    new_format = op_state.fmt;
-    new_rate = op_state.rate;
-    new_nch = op_state.nch;
-
-    effect_do_query_format(&new_format, &new_rate, &new_nch);
-
-    if (new_format != op_state.fmt ||
-        new_rate != op_state.rate ||
-        new_nch != op_state.nch)
-    {
-        /*
-         * The effect plugin changes the stream format. Reopen the
-         * audio device.
-         */
-        if (!output_open_audio(new_format, new_rate, new_nch))
-            return;
-    }
-
-    length = effect_do_mod_samples(&ptr, length, op_state.fmt, op_state.rate, 
-        op_state.nch);
+    flow_execute(postproc_flow, time, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 
     writeoffs = 0;
     while (writeoffs < length)

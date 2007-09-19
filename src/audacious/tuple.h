@@ -50,6 +50,9 @@ enum {
     FIELD_COPYRIGHT,
     FIELD_DATE,
 
+    FIELD_SUBSONG_ID,
+    FIELD_SUBSONG_NUM,
+
     /* special field, must always be last */
     FIELD_LAST
 };

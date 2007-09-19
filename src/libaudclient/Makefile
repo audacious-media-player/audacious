@@ -1,20 +1,26 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ../../extra.mk
 
-PICLDFLAGS = $(LIBLDFLAGS)
+LIB = ${LIB_PREFIX}audclient${LIB_SUFFIX}
+LIB_MAJOR = 1
+LIB_MINOR = 0
 
-OBJECTIVE_LIBS = libaudclient$(SHARED_SUFFIX)
-OBJECTIVE_SONAME_SUFFIX = 1
-LIBAUDACIOUS_SUFFIX = 1.0.0
+SRCS = audctrl.c
 
-LIBADD = \
-	$(GTK_LIBS) \
+INCLUDES = audctrl.h
+
+include ../../buildsys.mk
+
+depend-hook:
+	cd ../audacious; make dbus-client-bindings.h
+
+LIBS += \
+	$(GLIB_LIBS) \
 	$(DBUS_LIBS) \
 	$(MOWGLI_LIBS) \
 	$(GCONF_LIBS) \
 	$(LIBMCS_LIBS)
 
-CFLAGS += $(PICFLAGS) \
+CFLAGS += $(LIB_CFLAGS) \
 	$(MOWGLI_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(GCONF_CFLAGS) \
@@ -24,19 +30,4 @@ CFLAGS += $(PICFLAGS) \
 	-I.. -I../.. \
 	-I../intl
 
-SOURCES = \
-	audctrl.c
-
-OBJECTS = ${SOURCES:.c=.o}
-
-HEADERS = \
-	audctrl.h
-
-include ../../mk/objective.mk
-
-install-posthook:
-	@mv ${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX).$(LIBAUDACIOUS_SUFFIX)
-	@ln -sf libaudclient$(SHARED_SUFFIX).$(LIBAUDACIOUS_SUFFIX) \
-		${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX).1
-	@ln -sf libaudclient$(SHARED_SUFFIX).1 \
-		${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX)
+CPPFLAGS = ${CFLAGS}

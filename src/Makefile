@@ -1,9 +1,8 @@
 .SILENT:
 
-include ../mk/rules.mk
-include ../mk/init.mk
+include ../extra.mk
 
-SUBDIRS = $(SUBDIR_GUESS)
+SUBDIRS = libguess
 
 ifdef USE_DBUS
 SUBDIRS += libaudclient audtool
@@ -11,9 +10,5 @@ endif
 
 SUBDIRS += audacious libid3tag
 
-include ../mk/objective.mk
+include ../buildsys.mk
 
-ifdef USE_DBUS
-depend-prehook:
-	@cd audacious; $(MAKE) $@ || exit; cd ..;
-endif

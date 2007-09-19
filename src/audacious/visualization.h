@@ -26,7 +26,7 @@
 #define VISUALIZATION_H
 
 #include <glib.h>
-
+#include "flow.h"
 #include "plugin.h"
 
 typedef struct _VisPluginData VisPluginData;
@@ -46,6 +46,7 @@ void vis_playback_stop(void);
 gchar *vis_stringify_enabled_list(void);
 void vis_enable_from_stringified_list(gchar * list);
 void vis_send_data(gint16 pcm_data[2][512], gint nch, gint length);
+void vis_flow(FlowContext *context);
 
 extern VisPluginData vp_data;
 

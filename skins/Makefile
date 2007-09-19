@@ -1,9 +1,4 @@
-.SILENT:
-
-include ../mk/rules.mk
-include ../mk/init.mk
+include ../buildsys.mk
 
 SUBDIRS = Default Classic TinyPlayer Osmosis Ivory
-
-include ../mk/objective.mk
 

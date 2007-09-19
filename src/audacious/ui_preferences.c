@@ -585,6 +585,7 @@ on_mainwin_font_button_font_set(GtkFontButton * button,
     cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
 
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_othertext, cfg.mainwin_use_xfont, cfg.mainwin_font);
 }
 
 static void
@@ -602,6 +603,7 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
     gboolean useit = gtk_toggle_button_get_active(button);
     cfg.mainwin_use_xfont = useit != FALSE ? FALSE : TRUE;
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_othertext, cfg.mainwin_use_xfont, cfg.mainwin_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);
 
     if (cfg.playlist_shaded) {
@@ -883,6 +885,7 @@ plugin_treeview_open_prefs(GtkTreeView *treeview)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
+    g_return_if_fail(plugin->configure != NULL);
 
     plugin->configure();
 }
@@ -1153,6 +1156,18 @@ static void
 on_continue_playback_on_startup_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.resume_playback_on_startup);
+}
+
+static void
+on_software_volume_control_toggled(GtkToggleButton * button, gpointer data)
+{
+    cfg.software_volume_control = gtk_toggle_button_get_active(button);
+}
+
+static void
+on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.software_volume_control);
 }
 
 static void
@@ -1890,6 +1905,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_filepopup_for_tuple_settings_clicked)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_realize)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_toggled)
+    FUNC_MAP_ENTRY(on_software_volume_control_realize)
+    FUNC_MAP_ENTRY(on_software_volume_control_toggled)
 
     /* Filepopup settings */
     FUNC_MAP_ENTRY(on_filepopup_settings_ok_clicked)

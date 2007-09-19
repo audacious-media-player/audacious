@@ -23,6 +23,7 @@
 
 #include <glib.h>
 #include "main.h"
+#include "flow.h"
 #include "iir_cfs.h"
 
 /*
@@ -78,6 +79,8 @@ extern double timex;
 extern int count;
 extern unsigned int blength;
 #endif
+
+void iir_flow(FlowContext *context);
 
 #endif /* #define IIR_H */
 

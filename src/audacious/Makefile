@@ -1,39 +1,12 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-include ../../mk/objective.mk
+include ../../extra.mk
 
 SUBDIRS = $(INTL_OBJECTIVE) glade images ui
 
-OBJECTIVE_BINS = audacious
+PROG = audacious
 
 LDFLAGS += $(AUDLDFLAGS)
 
-LDADD = \
-	$(LIBINTL) \
-	$(samplerate_LIBS) \
-	$(CHARDET_LIBS) \
-	$(GTK_LIBS) \
-	$(DBUS_LIBS) \
-	$(MOWGLI_LIBS) \
-	$(LIBMCS_LIBS) \
-	$(LIBGLADE_LIBS) \
-	$(REGEX_LIBS)
-
-CFLAGS += \
-	$(MOWGLI_CFLAGS) \
-	$(GTK_CFLAGS) \
-	$(LIBGLADE_CFLAGS) \
-	$(BEEP_DEFINES) \
-	$(ARCH_DEFINES) \
-	$(DBUS_CFLAGS) \
-	$(samplerate_CFLAGS) \
-	$(REGEX_CFLAGS) \
-	$(LIBMCS_CFLAGS) \
-	-D_AUDACIOUS_CORE \
-	-I.. -I../.. \
-	-I./intl
-
-HEADERS = \
+INCLUDES = \
 	auddrct.h \
 	configdb.h \
 	custom_uri.h \
@@ -41,6 +14,7 @@ HEADERS = \
 	discovery.h \
 	dbus-service.h \
 	eventqueue.h \
+	flow.h \
 	formatter.h \
 	rcfile.h \
 	i18n.h \
@@ -67,7 +41,7 @@ HEADERS = \
 	vfs_buffered_file.h \
 	xconvert.h
 
-SOURCES = \
+SRCS = \
 	auddrct.c \
 	build_stamp.c \
 	configdb.c \
@@ -78,6 +52,7 @@ SOURCES = \
 	effect.c \
 	eventqueue.c \
 	fft.c \
+	flow.c \
 	formatter.c \
 	general.c \
 	glade.c \
@@ -144,32 +119,62 @@ SOURCES = \
 	vfs_buffered_file.c \
 	vfs_common.c \
 	visualization.c \
+	volumecontrol.c \
 	sync-menu.c \
 	xconvert.c
 
+ifdef USE_DBUS
+SRCS += dbus.c
+endif
+
 LIBDEP = ../libguess/libguess.a
 
-ifdef USE_DBUS
-SOURCES += dbus.c
-CFLAGS += -I../libaudclient
-DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
-OBJECTIVE_LIBS_NOINST += $(DBUS_BINDINGS)
-LIBDEP += ../libaudclient/libaudclient$(SHARED_SUFFIX)
-LDADD += -L../libaudclient -laudclient
-endif
+include ../../buildsys.mk
 
 LIBADD += $(LDADD)
 
-depend-prehook: $(DBUS_BINDINGS)
+ifdef USE_DBUS	
+CPPFLAGS += -I../libaudclient
+DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
+LIBS += -L../libaudclient -laudclient
+endif
+
+LDFLAGS += ${EXPORTDYN}
+
+depend-hook: $(DBUS_BINDINGS)
+
+CPPFLAGS += -DHAVE_CONFIG_H \
+	$(MOWGLI_CFLAGS) \
+	$(GTK_CFLAGS) \
+	$(LIBGLADE_CFLAGS) \
+	$(BEEP_DEFINES) \
+	$(ARCH_DEFINES) \
+	$(DBUS_CFLAGS) \
+	$(samplerate_CFLAGS) \
+	$(REGEX_CFLAGS) \
+	$(LIBMCS_CFLAGS) \
+	-D_AUDACIOUS_CORE \
+	-I.. -I../.. \
+	-I./intl
+
+LIBS += \
+	$(LIBINTL) \
+	$(samplerate_LIBS) \
+	../libguess/libguess.a \
+	$(GTK_LIBS) \
+	$(DBUS_LIBS) \
+	$(MOWGLI_LIBS) \
+	$(LIBMCS_LIBS) \
+	$(LIBGLADE_LIBS) \
+	$(REGEX_LIBS)
 
 build_stamp.c: 
 	if [ -d ../../.hg ]; then \
 		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
 		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
-		printf "%10s     %-20s\n" STAMP "build_stamp.c"; \
 	fi
 
-clean-prehook:
+clean-hook:
 	if [ -d ../../.hg ]; then \
 		rm -f build_stamp.c; \
 	fi
@@ -180,27 +185,17 @@ DBUS_BINDINGS_SOURCES = \
 	mpris_tracklist.xml \
 	mpris_player.xml
 
-OBJECTS = ${SOURCES:.c=.o}
-
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
-
-build-prehook: $(PCH)
-
-audacious: $(OBJECTS) $(LIBDEP)
-	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
-	@printf "%10s     %-20s\n" LINK $@
 
 dbus-server-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_rc objects.xml > $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_player mpris_player.xml >> $@
-	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 dbus-client-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-client --prefix=audacious_rc objects.xml > $@
-	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications
 

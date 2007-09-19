@@ -47,6 +47,9 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "performer",      TUPLE_STRING },
     { "copyright",      TUPLE_STRING },
     { "date",           TUPLE_STRING },
+
+    { "subsong-id",     TUPLE_INT },
+    { "subsong-num",    TUPLE_INT },
 };
 
 static mowgli_heap_t *tuple_heap = NULL;
@@ -94,9 +97,21 @@ static void
 tuple_destroy(gpointer data)
 {
     Tuple *tuple = (Tuple *) data;
+    gint i;
 
     TUPLE_LOCK_WRITE();
     mowgli_dictionary_destroy(tuple->dict, tuple_value_destroy, NULL);
+
+    for (i = 0; i < FIELD_LAST; i++)
+        if (tuple->values[i]) {
+            TupleValue *value = tuple->values[i];
+            
+            if (value->type == TUPLE_STRING)
+                g_free(value->value.string);
+            
+            mowgli_heap_free(tuple_value_heap, value);
+        }
+    
     mowgli_heap_free(tuple_heap, tuple);
     TUPLE_UNLOCK_WRITE();
 }
@@ -110,8 +125,8 @@ tuple_new(void)
     
     if (tuple_heap == NULL)
     {
-        tuple_heap = mowgli_heap_create(sizeof(Tuple), 256, BH_NOW);
-        tuple_value_heap = mowgli_heap_create(sizeof(TupleValue), 512, BH_NOW);
+        tuple_heap = mowgli_heap_create(sizeof(Tuple), 512, BH_NOW);
+        tuple_value_heap = mowgli_heap_create(sizeof(TupleValue), 1024, BH_NOW);
         mowgli_object_class_init(&tuple_klass, "audacious.tuple", tuple_destroy, FALSE);
     }
 

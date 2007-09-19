@@ -288,7 +288,7 @@ equalizerwin_keypress(GtkWidget * widget,
                       gpointer data)
 {
     if (event->keyval == GDK_Tab && event->state & GDK_CONTROL_MASK) {
-        gtk_window_present(GTK_WINDOW(playlistwin));
+	playlistwin_show();
         return TRUE;
     }
 
