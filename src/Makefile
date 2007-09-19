@@ -1,14 +1,8 @@
-.SILENT:
-
-include ../extra.mk
-
-SUBDIRS = libguess
+SUBDIRS = libguess audacious libid3tag
 
 ifdef USE_DBUS
 SUBDIRS += libaudclient audtool
 endif
 
-SUBDIRS += audacious libid3tag
-
 include ../buildsys.mk
-
+include ../extra.mk
