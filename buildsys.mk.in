@@ -70,6 +70,10 @@ OBJS4 = ${OBJS3:.d=.o}
 OBJS5 = ${OBJS4:.erl=.beam}
 OBJS += ${OBJS5:.m=.o}
 
+ifneq ($(strip $(prefix)),)
+	RPATH = -Wl,-rpath=${libdir}
+endif
+
 .SILENT:
 .SUFFIXES: .beam .c .cc .cxx .d .erl .m
 .PHONY: all subdirs depend install uninstall clean distclean
@@ -100,7 +104,7 @@ depend: depend-hook
 
 ${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS}
 	${LINK_STATUS}
-	if ${LD} -o $@ ${OBJS} ${LDFLAGS} ${LIBS}; then \
+	if ${LD} -o $@ ${OBJS} ${LDFLAGS} ${LIBS} ${RPATH}; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
