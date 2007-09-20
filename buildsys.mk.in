@@ -70,6 +70,10 @@ OBJS4 = ${OBJS3:.d=.o}
 OBJS5 = ${OBJS4:.erl=.beam}
 OBJS += ${OBJS5:.m=.o}
 
+ifneq ($(strip $(prefix)),)
+	RPATH = -Wl,-rpath=${libdir}
+endif
+
 .SILENT:
 .SUFFIXES: .beam .c .cc .cxx .d .erl .m
 .PHONY: all subdirs depend install uninstall clean distclean
@@ -79,7 +83,7 @@ all: subdirs depend ${OBJS} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOIN
 subdirs:
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} || exit 1; \
+		${MAKE} ${MFLAGS} || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -100,7 +104,7 @@ depend: depend-hook
 
 ${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS}
 	${LINK_STATUS}
-	if ${LD} -o $@ ${OBJS} ${LDFLAGS} ${LIBS}; then \
+	if ${LD} -o $@ ${OBJS} ${LDFLAGS} ${LIBS} ${RPATH}; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
@@ -183,7 +187,7 @@ ${EXT_DEPS}: subdirs
 install: ${LIB} ${STATIC_LIB} ${PLUGIN} ${PROG} install-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} install || exit 1; \
+		${MAKE} ${MFLAGS} install || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -216,7 +220,7 @@ install: ${LIB} ${STATIC_LIB} ${PLUGIN} ${PROG} install-extra
 
 	for i in ${DATA}; do \
 		${INSTALL_STATUS}; \
-		if ${MKDIR_P} ${DESTDIR}${datadir} && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
+		if ${MKDIR_P} $$(dirname ${DESTDIR}${datadir}/${PACKAGE}/$$i) && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
 			${INSTALL_OK}; \
 		else \
 			${INSTALL_FAILED}; \
@@ -255,7 +259,7 @@ install-extra:
 uninstall: uninstall-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} uninstall || exit 1; \
+		${MAKE} ${MFLAGS} uninstall || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -336,7 +340,7 @@ uninstall-extra:
 clean:
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} clean || exit 1; \
+		${MAKE} ${MFLAGS} clean || exit 1; \
 		${DIR_LEAVE}; \
 	done
 	
@@ -353,7 +357,7 @@ clean:
 distclean: clean
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} distclean || exit 1; \
+		${MAKE} ${MFLAGS} distclean || exit 1; \
 		${DIR_LEAVE}; \
 	done
 	

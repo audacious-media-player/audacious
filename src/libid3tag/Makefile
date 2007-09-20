@@ -1,35 +1,32 @@
-include ../../extra.mk
-
 LIB = ${LIB_PREFIX}audid3tag${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-LIBDIR = $(plugindir)
+LIBDIR = ${plugindir}
 
 INCLUDES = id3tag.h
 
-SRCS = \
-	compat.c \
-	debug.c \
-	file.c \
-	frametype.c \
-	latin1.c \
-	render.c \
-	ucs4.c \
-	utf8.c \
-	version.c \
-	crc.c \
-	field.c \
-	frame.c \
-	genre.c \
-	parse.c \
-	tag.c \
-	utf16.c \
-	util.c
+SRCS = compat.c		\
+       debug.c		\
+       file.c		\
+       frametype.c	\
+       latin1.c		\
+       render.c		\
+       ucs4.c		\
+       utf8.c		\
+       version.c	\
+       crc.c		\
+       field.c		\
+       frame.c		\
+       genre.c		\
+       parse.c		\
+       tag.c		\
+       utf16.c		\
+       util.c
 
 include ../../buildsys.mk
+include ../../extra.mk
 
-CPPFLAGS += -I.. $(GLIB_CFLAGS)
-CFLAGS += $(LIB_CFLAGS)
-
-LIBS += $(GLIB_LIBS)
+CPPFLAGS += ${LIB_CPPFLAGS} -I.. ${GLIB_CFLAGS}
+CFLAGS += ${LIB_CFLAGS}
+LIBS += ${GLIB_LIBS}
