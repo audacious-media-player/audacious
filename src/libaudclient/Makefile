@@ -10,7 +10,7 @@ include ../../buildsys.mk
 include ../../extra.mk
 
 pre-depend:
-	cd ../audacious; make dbus-client-bindings.h
+	cd ../audacious; ${MAKE} ${MFLAGS} dbus-client-bindings.h
 
 CPPFLAGS = ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../.. -I../intl
 CFLAGS += ${LIB_CFLAGS}		\
