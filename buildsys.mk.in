@@ -82,7 +82,7 @@ subdirs:
 		${DIR_LEAVE}; \
 	done
 
-depend: pre-depend
+depend: pre-depend ${SRCS}
 	regen=0; \
 	for i in ${SRCS}; do [ $$i -nt .deps ] && regen=1; done; \
 	if [ $$regen = 1 ]; then \
