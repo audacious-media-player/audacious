@@ -155,6 +155,8 @@ DATA = glade/fileinfo.glade			\
        ui/playlist.ui				\
        ui/carbon-menubar.ui
 
+CLEAN = build_stamp.c
+
 include ../../buildsys.mk
 
 LDFLAGS += ${EXPORTDYN}
@@ -166,7 +168,7 @@ DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 LIBS += -L../libaudclient -laudclient
 endif
 
-pre-depend: ${DBUS_BINDINGS}
+pre-depend: build_stamp.c ${DBUS_BINDINGS}
 
 CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${MOWGLI_CFLAGS}		\
@@ -196,11 +198,6 @@ build_stamp.c:
 	if [ -d ../../.hg ]; then \
 		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
 		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
-	fi
-
-clean-hook:
-	if [ -d ../../.hg ]; then \
-		rm -f build_stamp.c; \
 	fi
 
 DBUS_BINDINGS_SOURCES = objects.xml		\
