@@ -9,7 +9,7 @@ INCLUDES = audctrl.h
 include ../../buildsys.mk
 include ../../extra.mk
 
-depend-hook:
+pre-depend:
 	cd ../audacious; make dbus-client-bindings.h
 
 CPPFLAGS = ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../.. -I../intl

@@ -166,7 +166,7 @@ DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 LIBS += -L../libaudclient -laudclient
 endif
 
-depend-hook: ${DBUS_BINDINGS}
+pre-depend: ${DBUS_BINDINGS}
 
 CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${MOWGLI_CFLAGS}		\
