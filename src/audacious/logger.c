@@ -57,6 +57,7 @@ G_LOCK_DEFINE_STATIC(bmp_log_file);
 static LogHandler log_handlers[] = {
     {NULL, LOG_ALL_LEVELS, 0},
     {"Glib", LOG_ALL_LEVELS, 0},
+    {"GThread", LOG_ALL_LEVELS, 0},
     {"Gtk", LOG_ALL_LEVELS, 0}
 };
 
