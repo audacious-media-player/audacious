@@ -46,6 +46,7 @@ PLUGIN_LDFLAGS = @PLUGIN_LDFLAGS@
 PLUGIN_SUFFIX = @PLUGIN_SUFFIX@
 INSTALL_LIB = @INSTALL_LIB@
 UNINSTALL_LIB = @UNINSTALL_LIB@
+CLEAN_LIB = @CLEAN_LIB@
 LN_S = @LN_S@
 MKDIR_P = mkdir -p
 INSTALL = @INSTALL@
@@ -339,7 +340,7 @@ clean:
 		${DIR_LEAVE}; \
 	done
 	
-	for i in ${OBJS} ${CLEAN} .deps *~; do \
+	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} .deps *~; do \
 		if [ -f $$i -o -d $$i ]; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
