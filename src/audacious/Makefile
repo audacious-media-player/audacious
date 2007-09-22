@@ -50,7 +50,6 @@ SRCS = auddrct.c			\
        ui_fileinfopopup.c		\
        ui_fileopener.c			\
        ui_jumptotrack.c			\
-       ui_lastfm.c			\
        ui_main.c			\
        ui_main_evlisteners.c		\
        ui_manager.c			\
@@ -113,7 +112,6 @@ INCLUDES = auddrct.h		\
 	   tuple_formatter.h	\
 	   tuple_compiler.h	\
 	   ui_fileinfopopup.h	\
-	   ui_lastfm.h		\
 	   ui_plugin_menu.h	\
 	   ui_preferences.h	\
 	   util.h		\

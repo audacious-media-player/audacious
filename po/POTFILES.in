@@ -17,7 +17,6 @@ src/audacious/ui_fileinfo.c
 src/audacious/ui_fileinfopopup.c
 src/audacious/ui_fileopener.c
 src/audacious/ui_jumptotrack.c
-src/audacious/ui_lastfm.c
 src/audacious/ui_main.c
 src/audacious/ui_manager.c
 src/audacious/ui_playlist.c

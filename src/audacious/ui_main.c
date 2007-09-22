@@ -73,7 +73,6 @@
 #include "ui_preferences.h"
 #include "ui_skinselector.h"
 #include "ui_urlopener.h"
-#include "ui_lastfm.h"
 #include "strings.h"
 #include "util.h"
 #include "visualization.h"
@@ -1783,9 +1782,6 @@ mainwin_general_menu_callback(gpointer data,
     case MAINWIN_GENERAL_PLAYLOCATION:
         mainwin_show_add_url_window();
         break;
-    case MAINWIN_GENERAL_LASTFM:
-        action_lastfm();
-        break;
     case MAINWIN_GENERAL_FILEINFO:
         playlist_fileinfo_current(playlist);
         break;
@@ -2977,12 +2973,6 @@ void
 action_jump_to_file( void )
 {
     ui_jump_to_track();
-}
-
-void
-action_lastfm( void )
-{
-    ui_lastfm();
 }
 
 void
