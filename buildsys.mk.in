@@ -124,7 +124,7 @@ ${PLUGIN} ${PLUGIN_NONST}: ${EXT_DEPS} ${OBJS}
 
 ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 	${LINK_STATUS}
-	if ${AR} cq $@ ${OBJS}; then \
+	if ${AR} cr $@ ${OBJS}; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
