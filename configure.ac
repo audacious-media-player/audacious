@@ -181,6 +181,13 @@ AC_SUBST(SHARED_SUFFIX)
 AC_DEFINE_UNQUOTED(SHARED_SUFFIX, "${SHARED_SUFFIX}",
 	[Define the shared module suffix extension on your platform.])
 
+# Use -rpath?
+AC_ARG_ENABLE(rpath,
+	      [  --enable-rpath	   enable use of -rpath on ELF systems (default=yes)], [enable_rpath=$enableval], [enable_rpath=no])
+if test "x$enable_rpath" = "xyes"; then
+	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && LDFLAGS="$LDFLAGS -Wl,-rpath $libdir"
+fi
+
 AC_MSG_CHECKING([if you are running Apple-GCC])
 case "$target" in
 	*-apple-*)
