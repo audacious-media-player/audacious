@@ -98,7 +98,7 @@ depend: pre-depend ${SRCS}
 
 pre-depend:
 
-${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS}
+${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS} ${LIB_DEPS}
 	${LINK_STATUS}
 	if ${LD} -o $@ ${OBJS} ${LDFLAGS} ${LIBS}; then \
 		${LINK_OK}; \

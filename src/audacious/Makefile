@@ -157,6 +157,8 @@ DATA = glade/fileinfo.glade			\
 
 CLEAN = build_stamp.c
 
+LIB_DEPS += ../libguess/libguess.a
+
 include ../../buildsys.mk
 
 LDFLAGS += ${EXPORTDYN}
