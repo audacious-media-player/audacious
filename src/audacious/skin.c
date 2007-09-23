@@ -620,6 +620,9 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     skin->properties.mainwin_close_x = 264;
     skin->properties.mainwin_close_y = 3;
 
+    if (path_p == NULL)
+        return;
+
     filename = find_file_recursively(path_p, "skin.hints");
 
     if (filename == NULL)
