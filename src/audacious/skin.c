@@ -367,6 +367,9 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
          basenames[i] = NULL;
     }
 
+    if (filename == NULL)
+        return FALSE;
+
     if (!(gpm = pixmap_new_from_file(filename))) {
         g_warning("loading of %s failed", filename);
         g_free(filename);
@@ -1402,7 +1405,7 @@ skin_load_cursor(Skin * skin, const gchar * dirname)
     gdk_cursor_unref(cursor_gdk);
 }
 
-static void
+static gboolean
 skin_load_pixmaps(Skin * skin, const gchar * path)
 {
     GdkPixmap *text_pm;
@@ -1427,7 +1430,7 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     inifile = open_ini_file(filename);
 
     if (!inifile)
-        return;
+        return FALSE;
 
     skin->colors[SKIN_PLEDIT_NORMAL] =
         skin_load_color(inifile, "Text", "Normal", "#2499ff");
@@ -1449,6 +1452,8 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     skin_mask_create(skin, path, SKIN_MASK_EQ_SHADE, equalizerwin->window);
 
     skin_load_viscolor(skin, path, "viscolor.txt");
+
+    return TRUE;
 }
 
 static gboolean
@@ -1477,7 +1482,9 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         /* Parse the hints for this skin. */
         skin_parse_hints(skin, NULL);
 
-        skin_load_pixmaps(skin, path);
+        if (!skin_load_pixmaps(skin, path))
+            return FALSE;
+
         skin_load_cursor(skin, path);
 
         return TRUE;
@@ -1491,7 +1498,13 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     /* Parse the hints for this skin. */
     skin_parse_hints(skin, cpath);
 
-    skin_load_pixmaps(skin, cpath);
+    if (!skin_load_pixmaps(skin, cpath))
+    {
+        del_directory(cpath);
+        g_free(cpath);
+        return FALSE;
+    }
+
     skin_load_cursor(skin, cpath);
 
     del_directory(cpath);
