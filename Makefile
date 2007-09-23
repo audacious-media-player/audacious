@@ -85,7 +85,25 @@ DATA = Skins/Classic/balance.png	\
        Skins/TinyPlayer/text.png	\
        Skins/TinyPlayer/titlebar.png	\
        Skins/TinyPlayer/viscolor.txt	\
-       Skins/TinyPlayer/volume.png
+       Skins/TinyPlayer/volume.png	\
+       Skins/Refugee/balance.png	\
+       Skins/Refugee/cbuttons.png	\
+       Skins/Refugee/eq_ex.png		\
+       Skins/Refugee/eqmain.png		\
+       Skins/Refugee/main.png		\
+       Skins/Refugee/monoster.png	\
+       Skins/Refugee/nums_ex.png	\
+       Skins/Refugee/playpaus.png	\
+       Skins/Refugee/pledit.png		\
+       Skins/Refugee/pledit.txt		\
+       Skins/Refugee/posbar.png		\
+       Skins/Refugee/shufrep.png	\
+       Skins/Refugee/skin.hints		\
+       Skins/Refugee/text.png		\
+       Skins/Refugee/titlebar.png	\
+       Skins/Refugee/viscolor.txt	\
+       Skins/Refugee/volume.png
+
 DISTCLEAN = extra.mk
 
 include buildsys.mk
