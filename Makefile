@@ -86,7 +86,6 @@ DATA = Skins/Classic/balance.png	\
        Skins/TinyPlayer/titlebar.png	\
        Skins/TinyPlayer/viscolor.txt	\
        Skins/TinyPlayer/volume.png	\
-       Skins/Refugee/balance.png	\
        Skins/Refugee/cbuttons.png	\
        Skins/Refugee/eq_ex.png		\
        Skins/Refugee/eqmain.png		\
