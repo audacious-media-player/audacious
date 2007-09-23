@@ -309,14 +309,6 @@ pixmap_new_from_file(const gchar * filename)
     width = gdk_pixbuf_get_width(pixbuf);
     height = gdk_pixbuf_get_height(pixbuf);
 
-    /* create the windows if they haven't been created yet, needed for bootstrapping */
-    if (mainwin == NULL)
-    {
-        mainwin_create();
-        equalizerwin_create();
-        playlistwin_create();
-    }
-
     if (!(pixmap = gdk_pixmap_new(mainwin->window, width, height,
                                   gdk_rgb_get_visual()->depth))) {
         g_object_unref(pixbuf);
@@ -516,6 +508,14 @@ gboolean
 init_skins(const gchar * path)
 {
     bmp_active_skin = skin_new();
+
+    /* create the windows if they haven't been created yet, needed for bootstrapping */
+    if (mainwin == NULL)
+    {
+        mainwin_create();
+        equalizerwin_create();
+        playlistwin_create();
+    }
 
     if (!bmp_active_skin_load(path)) {
         /* FIXME: Oddly, g_message() causes a crash if path is NULL on
@@ -1392,9 +1392,13 @@ skin_load_cursor(Skin * skin, const gchar * dirname)
     else
         cursor_gdk = gdk_cursor_new(GDK_LEFT_PTR);
 
-    gdk_window_set_cursor(mainwin->window, cursor_gdk);
-    gdk_window_set_cursor(playlistwin->window, cursor_gdk);
-    gdk_window_set_cursor(equalizerwin->window, cursor_gdk);
+    if (mainwin && playlistwin && equalizerwin)
+    {
+        gdk_window_set_cursor(mainwin->window, cursor_gdk);
+        gdk_window_set_cursor(playlistwin->window, cursor_gdk);
+        gdk_window_set_cursor(equalizerwin->window, cursor_gdk);
+    }
+
     gdk_cursor_unref(cursor_gdk);
 }
 
@@ -1421,6 +1425,9 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
 
     filename = find_file_recursively(path, "pledit.txt");
     inifile = open_ini_file(filename);
+
+    if (!inifile)
+        return;
 
     skin->colors[SKIN_PLEDIT_NORMAL] =
         skin_load_color(inifile, "Text", "Normal", "#2499ff");
