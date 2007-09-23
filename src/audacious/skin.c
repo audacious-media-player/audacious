@@ -512,6 +512,8 @@ init_skins(const gchar * path)
 {
     bmp_active_skin = skin_new();
 
+    skin_parse_hints(bmp_active_skin, NULL);
+
     /* create the windows if they haven't been created yet, needed for bootstrapping */
     if (mainwin == NULL)
     {
