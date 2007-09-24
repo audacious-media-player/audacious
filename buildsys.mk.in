@@ -366,7 +366,7 @@ distclean: clean
 		${DIR_LEAVE}; \
 	done
 	
-	for i in ${PROG} ${PROG_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST}  ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN}; do \
+	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST}  ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
