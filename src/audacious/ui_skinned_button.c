@@ -28,7 +28,6 @@ enum {
     PRESSED,
     RELEASED,
     CLICKED,
-    RIGHT_CLICKED,
     DOUBLED,
     REDRAW,
     LAST_SIGNAL
@@ -128,7 +127,6 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
     klass->pressed = button_pressed;
     klass->released = button_released;
     klass->clicked = NULL;
-    klass->right_clicked = NULL;
     klass->doubled = ui_skinned_button_toggle_doublesize;
     klass->redraw = ui_skinned_button_redraw;
 
@@ -145,11 +143,6 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
     button_signals[CLICKED] = 
         g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                       G_STRUCT_OFFSET (UiSkinnedButtonClass, clicked), NULL, NULL,
-                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
-
-    button_signals[RIGHT_CLICKED] = 
-        g_signal_new ("right-clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedButtonClass, right_clicked), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     button_signals[DOUBLED] = 
@@ -455,6 +448,11 @@ static gboolean ui_skinned_button_button_press(GtkWidget *widget, GdkEventButton
 
         if (event->button == 1)
             ui_skinned_button_pressed (button);
+        else if (event->button == 3) {
+            event->x = event->x + button->x;
+            event->y = event->y + button->y;
+            return FALSE;
+        }
     }
 
     return TRUE;
@@ -465,10 +463,7 @@ static gboolean ui_skinned_button_button_release(GtkWidget *widget, GdkEventButt
     if (event->button == 1) {
             button = UI_SKINNED_BUTTON(widget);
             ui_skinned_button_released(button);
-    } else if (event->button == 3) {
-            g_signal_emit(widget, button_signals[RIGHT_CLICKED], 0);
     }
-
     return TRUE;
 }
 

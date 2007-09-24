@@ -295,21 +295,25 @@ static gboolean ui_skinned_horizontal_slider_button_press(GtkWidget *widget, Gdk
 
     if (event->type == GDK_BUTTON_PRESS) {
         if (event->button == 1) {
-        gint x;
+            gint x;
 
-        x = event->x - (priv->knob_width / (priv->double_size ? 1 : 2));
-        hs->pressed = TRUE;
+            x = event->x - (priv->knob_width / (priv->double_size ? 1 : 2));
+            hs->pressed = TRUE;
 
-        priv->position = x/(1+priv->double_size);
-        if (priv->position < priv->min)
-                    priv->position = priv->min;
-                if (priv->position > priv->max)
-                    priv->position = priv->max;
-                if (priv->frame_cb)
-                    priv->frame = priv->frame_cb(priv->position);
+            priv->position = x/(1+priv->double_size);
+            if (priv->position < priv->min)
+                priv->position = priv->min;
+            if (priv->position > priv->max)
+                priv->position = priv->max;
+            if (priv->frame_cb)
+                priv->frame = priv->frame_cb(priv->position);
 
-        g_signal_emit_by_name(widget, "motion", priv->position);
-        gtk_widget_queue_draw(widget);
+            g_signal_emit_by_name(widget, "motion", priv->position);
+            gtk_widget_queue_draw(widget);
+        } else if (event->button == 3) {
+            event->x = event->x + hs->x;
+            event->y = event->y + hs->y;
+            return FALSE;
         }
     }
     return TRUE;

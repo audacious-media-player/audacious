@@ -73,7 +73,6 @@
 #include "ui_preferences.h"
 #include "ui_skinselector.h"
 #include "ui_urlopener.h"
-#include "ui_lastfm.h"
 #include "strings.h"
 #include "util.h"
 #include "visualization.h"
@@ -366,17 +365,6 @@ mainwin_menubtn_cb(void)
 {
     gint x, y;
     gtk_window_get_position(GTK_WINDOW(mainwin), &x, &y);
-    ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
-                            x + 6 * (1 + cfg.doublesize),
-                            y + MAINWIN_SHADED_HEIGHT * (1 + cfg.doublesize),
-                            1, GDK_CURRENT_TIME);
-}
-
-static void
-mainwin_about_cb(void)
-{
-    gint x, y;
-    gdk_window_get_pointer(NULL, &x, &y, NULL);
     ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
                             x + 6 * (1 + cfg.doublesize),
                             y + MAINWIN_SHADED_HEIGHT * (1 + cfg.doublesize),
@@ -861,6 +849,16 @@ mainwin_scrolled(GtkWidget *widget, GdkEventScroll *event,
 }
 
 static gboolean
+mainwin_widget_contained(GdkEventButton *event, int x, int y, int w, int h)
+{
+    if ((event->x > x && event->y > y) &&
+        (event->x < x+w && event->y < y+h))
+    return TRUE;
+
+    return FALSE;
+}
+
+static gboolean
 mainwin_mouse_button_press(GtkWidget * widget,
                            GdkEventButton * event,
                            gpointer callback_data)
@@ -888,7 +886,21 @@ mainwin_mouse_button_press(GtkWidget * widget,
     }
 
     if (event->button == 3) {
-        if ( (event->y > 70) && (event->x < 128) )
+        /* Pop up playback menu if right clicked over playback-control widgets,
+         * otherwise popup general menu
+         */
+        if (mainwin_widget_contained(event, bmp_active_skin->properties.mainwin_position_x,
+                                     bmp_active_skin->properties.mainwin_position_y, 248, 10) ||
+            mainwin_widget_contained(event, bmp_active_skin->properties.mainwin_previous_x,
+                                     bmp_active_skin->properties.mainwin_previous_y, 23, 18) ||
+            mainwin_widget_contained(event, bmp_active_skin->properties.mainwin_play_x,
+                                     bmp_active_skin->properties.mainwin_play_y, 23, 18) ||
+            mainwin_widget_contained(event, bmp_active_skin->properties.mainwin_pause_x,
+                                     bmp_active_skin->properties.mainwin_pause_y, 23, 18) ||
+            mainwin_widget_contained(event, bmp_active_skin->properties.mainwin_stop_x,
+                                     bmp_active_skin->properties.mainwin_stop_y, 23, 18) ||
+            mainwin_widget_contained(event, bmp_active_skin->properties.mainwin_next_x,
+                                     bmp_active_skin->properties.mainwin_next_y, 23, 18))
         {
 
             ui_manager_popup_menu_show(GTK_MENU(mainwin_playback_menu),
@@ -1783,9 +1795,6 @@ mainwin_general_menu_callback(gpointer data,
     case MAINWIN_GENERAL_PLAYLOCATION:
         mainwin_show_add_url_window();
         break;
-    case MAINWIN_GENERAL_LASTFM:
-        action_lastfm();
-        break;
     case MAINWIN_GENERAL_FILEINFO:
         playlist_fileinfo_current(playlist);
         break;
@@ -2481,7 +2490,6 @@ mainwin_create_widgets(void)
     mainwin_about = ui_skinned_button_new();
     ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, 247, 83, 20, 25);
     g_signal_connect(mainwin_about, "clicked", show_about_window, NULL);
-    g_signal_connect(mainwin_about, "right-clicked", mainwin_about_cb, NULL );
 
     mainwin_vis = ui_vis_new(SKINNED_WINDOW(mainwin)->fixed, 24, 43, 76);
     g_signal_connect(mainwin_vis, "button-press-event", G_CALLBACK(mainwin_vis_cb), NULL);
@@ -2977,12 +2985,6 @@ void
 action_jump_to_file( void )
 {
     ui_jump_to_track();
-}
-
-void
-action_lastfm( void )
-{
-    ui_lastfm();
 }
 
 void

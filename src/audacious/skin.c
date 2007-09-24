@@ -309,14 +309,6 @@ pixmap_new_from_file(const gchar * filename)
     width = gdk_pixbuf_get_width(pixbuf);
     height = gdk_pixbuf_get_height(pixbuf);
 
-    /* create the windows if they haven't been created yet, needed for bootstrapping */
-    if (mainwin == NULL)
-    {
-        mainwin_create();
-        equalizerwin_create();
-        playlistwin_create();
-    }
-
     if (!(pixmap = gdk_pixmap_new(mainwin->window, width, height,
                                   gdk_rgb_get_visual()->depth))) {
         g_object_unref(pixbuf);
@@ -374,6 +366,9 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
          g_free(basenames[i]);
          basenames[i] = NULL;
     }
+
+    if (filename == NULL)
+        return FALSE;
 
     if (!(gpm = pixmap_new_from_file(filename))) {
         g_warning("loading of %s failed", filename);
@@ -517,6 +512,16 @@ init_skins(const gchar * path)
 {
     bmp_active_skin = skin_new();
 
+    skin_parse_hints(bmp_active_skin, NULL);
+
+    /* create the windows if they haven't been created yet, needed for bootstrapping */
+    if (mainwin == NULL)
+    {
+        mainwin_create();
+        equalizerwin_create();
+        playlistwin_create();
+    }
+
     if (!bmp_active_skin_load(path)) {
         /* FIXME: Oddly, g_message() causes a crash if path is NULL on
          * Solaris (see bug #165) */
@@ -616,6 +621,9 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     skin->properties.mainwin_shade_y = 3;
     skin->properties.mainwin_close_x = 264;
     skin->properties.mainwin_close_y = 3;
+
+    if (path_p == NULL)
+        return;
 
     filename = find_file_recursively(path_p, "skin.hints");
 
@@ -1392,13 +1400,17 @@ skin_load_cursor(Skin * skin, const gchar * dirname)
     else
         cursor_gdk = gdk_cursor_new(GDK_LEFT_PTR);
 
-    gdk_window_set_cursor(mainwin->window, cursor_gdk);
-    gdk_window_set_cursor(playlistwin->window, cursor_gdk);
-    gdk_window_set_cursor(equalizerwin->window, cursor_gdk);
+    if (mainwin && playlistwin && equalizerwin)
+    {
+        gdk_window_set_cursor(mainwin->window, cursor_gdk);
+        gdk_window_set_cursor(playlistwin->window, cursor_gdk);
+        gdk_window_set_cursor(equalizerwin->window, cursor_gdk);
+    }
+
     gdk_cursor_unref(cursor_gdk);
 }
 
-static void
+static gboolean
 skin_load_pixmaps(Skin * skin, const gchar * path)
 {
     GdkPixmap *text_pm;
@@ -1422,6 +1434,9 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     filename = find_file_recursively(path, "pledit.txt");
     inifile = open_ini_file(filename);
 
+    if (!inifile)
+        return FALSE;
+
     skin->colors[SKIN_PLEDIT_NORMAL] =
         skin_load_color(inifile, "Text", "Normal", "#2499ff");
     skin->colors[SKIN_PLEDIT_CURRENT] =
@@ -1442,6 +1457,8 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     skin_mask_create(skin, path, SKIN_MASK_EQ_SHADE, equalizerwin->window);
 
     skin_load_viscolor(skin, path, "viscolor.txt");
+
+    return TRUE;
 }
 
 static gboolean
@@ -1470,7 +1487,9 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         /* Parse the hints for this skin. */
         skin_parse_hints(skin, NULL);
 
-        skin_load_pixmaps(skin, path);
+        if (!skin_load_pixmaps(skin, path))
+            return FALSE;
+
         skin_load_cursor(skin, path);
 
         return TRUE;
@@ -1484,7 +1503,13 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     /* Parse the hints for this skin. */
     skin_parse_hints(skin, cpath);
 
-    skin_load_pixmaps(skin, cpath);
+    if (!skin_load_pixmaps(skin, cpath))
+    {
+        del_directory(cpath);
+        g_free(cpath);
+        return FALSE;
+    }
+
     skin_load_cursor(skin, cpath);
 
     del_directory(cpath);

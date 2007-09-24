@@ -34,6 +34,7 @@ AC_DEFUN([AM_SHARED_LIB], [
 			PLUGIN_SUFFIX='.impl'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib'
+			CLEAN_LIB=''
 			;;
 		*-apple-*)
 			AC_MSG_RESULT(Mac OS X)
@@ -48,6 +49,7 @@ AC_DEFUN([AM_SHARED_LIB], [
 			PLUGIN_SUFFIX='.impl'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib'
+			CLEAN_LIB=''
 			;;
 		*-sun-* | *-openbsd-* | *-mirbsd-*)
 			AC_MSG_RESULT(Solaris)
@@ -62,20 +64,22 @@ AC_DEFUN([AM_SHARED_LIB], [
 			PLUGIN_SUFFIX='.so'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR} ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}'
+			CLEAN_LIB=''
 			;;
 		*-*-mingw32)
 			AC_MSG_RESULT(MinGW32)
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS=''
-			LIB_LDFLAGS='-shared'
-			LIB_PREFIX=''
+			LIB_LDFLAGS='-shared -Wl,--out-implib,${LIB}.a'
+			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dll'
 			PLUGIN_CPPFLAGS=''
 			PLUGIN_CFLAGS=''
 			PLUGIN_LDFLAGS=''
 			PLUGIN_SUFFIX='.dll'
-			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i'
-			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i'
+			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${bindir}/$$i && ${INSTALL} -m 755 $$i.a ${DESTDIR}${libdir}/$$i.a'
+			UNINSTALL_LIB='rm -f ${DESTDIR}${bindir}/$$i ${DESTDIR}${libdir}/$$i.a'
+			CLEAN_LIB='${LIB}.a'
 			;;
 		*)
 			AC_MSG_RESULT(POSIX)
@@ -90,6 +94,7 @@ AC_DEFUN([AM_SHARED_LIB], [
 			PLUGIN_SUFFIX='.so'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
+			CLEAN_LIB=''
 			;;
 	esac
 
@@ -104,4 +109,5 @@ AC_DEFUN([AM_SHARED_LIB], [
 	AC_SUBST(PLUGIN_SUFFIX)
 	AC_SUBST(INSTALL_LIB)
 	AC_SUBST(UNINSTALL_LIB)
+	AC_SUBST(CLEAN_LIB)
 ])

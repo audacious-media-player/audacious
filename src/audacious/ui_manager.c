@@ -397,10 +397,7 @@ static GtkActionEntry action_entries_others[] = {
 	{ "play location", GTK_STOCK_NETWORK , N_("Play Location"), "<Ctrl>L",
 	  N_("Play media from the selected location"), G_CALLBACK(action_play_location) },
 
-        { "lastfm", NULL, N_("Last.fm radio"), "<Alt>L",
-          N_("Play Last.fm radio"), G_CALLBACK(action_lastfm) },
-
-        { "plugins", NULL , N_("Plugins") },
+    { "plugins", NULL , N_("Plugin services") },
 
 	{ "preferences", GTK_STOCK_PREFERENCES , N_("Preferences"), "<Ctrl>P",
 	  N_("Open preferences window"), G_CALLBACK(action_preferences) },

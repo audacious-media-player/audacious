@@ -14,8 +14,7 @@
 			<separator />
 			<menuitem action="play file" />
 			<menuitem action="play location" />
-			<menuitem action="lastfm" />
-        		<separator />
+        	<separator />
 			<menu action="visualization">
 				<menu action="vismode">
 					<menuitem action="vismode analyzer" />
