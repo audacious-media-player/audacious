@@ -141,8 +141,6 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 		${LINK_FAILED}; \
 	fi
 
-${EXT_DEPS}: subdirs
-
 .c.o:
 	${COMPILE_STATUS}
 	if ${CC} ${CFLAGS} ${CPPFLAGS} -c -o $@ $<; then \
