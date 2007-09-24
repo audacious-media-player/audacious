@@ -88,8 +88,8 @@ subdirs:
 
 depend: pre-depend ${SRCS}
 	regen=0; \
-	for i in ${SRCS}; do [ $$i -nt .deps ] && regen=1; done; \
-	if [ x"$$regen" = x"1" ]; then \
+	for i in ${SRCS}; do test $$i -nt .deps && regen=1; done; \
+	if test x"$$regen" = x"1"; then \
 		error=0; \
 		${DEPEND_STATUS}; \
 		rm -f .deps; \
@@ -100,7 +100,7 @@ depend: pre-depend ${SRCS}
 				;; \
 			esac; \
 		done; \
-		if [ x"$$error" = x"0" ]; then \
+		if test x"$$error" = x"0"; then \
 			${DEPEND_OK}; \
 		else \
 			${DEPEND_FAILED}; \
@@ -159,7 +159,7 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 
 .d.o:
 	${COMPILE_STATUS}
-	if [ x"$(basename ${DC})" = x"dmd" ]; then \
+	if test x"$(basename ${DC})" = x"dmd"; then \
 		if ${DC} ${DFLAGS} -c -of$@ $<; then \
 			${COMPILE_OK}; \
 		else \
@@ -269,7 +269,7 @@ uninstall: uninstall-extra
 	done
 
 	for i in ${LIB}; do \
-		if [ -f ${DESTDIR}${libdir}/$$i ]; then \
+		if test -f ${DESTDIR}${libdir}/$$i; then \
 			if ${UNINSTALL_LIB}; then \
 				${DELETE_OK}; \
 			else \
@@ -279,7 +279,7 @@ uninstall: uninstall-extra
 	done
 
 	for i in ${STATIC_LIB}; do \
-		if [ -f ${DESTDIR}${libdir}/$$i ]; then \
+		if test -f ${DESTDIR}${libdir}/$$i; then \
 			if rm -f ${DESTDIR}${libdir}/$$i; then \
 				${DELETE_OK}; \
 			else \
@@ -289,7 +289,7 @@ uninstall: uninstall-extra
 	done
 
 	for i in ${PLUGIN}; do \
-		if [ -f ${DESTDIR}${libdir}/${plugindir}/$$i ]; then \
+		if test -f ${DESTDIR}${libdir}/${plugindir}/$$i; then \
 			if rm -f ${DESTDIR}${libdir}/${plugindir}/$$i; then \
 				${DELETE_OK}; \
 			else \
@@ -300,7 +300,7 @@ uninstall: uninstall-extra
 	-rmdir ${DESTDIR}${libdir}/${plugindir} >/dev/null 2>&1
 
 	for i in ${DATA}; do \
-		if [ -f ${DESTDIR}${datadir}/${PACKAGE}/$$i ]; then \
+		if test -f ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
 			if rm -f ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
 				${DELETE_OK}; \
 			else \
@@ -310,7 +310,7 @@ uninstall: uninstall-extra
 	done
 
 	for i in ${PROG}; do \
-		if [ -f ${DESTDIR}${bindir}/$$i ]; then \
+		if test -f ${DESTDIR}${bindir}/$$i; then \
 			if rm -f ${DESTDIR}${bindir}/$$i; then \
 				${DELETE_OK}; \
 			else \
@@ -320,7 +320,7 @@ uninstall: uninstall-extra
 	done
 
 	for i in ${INCLUDES}; do \
-		if [ -f ${DESTDIR}${includedir}/${includesubdir}/$$i ]; then \
+		if test -f ${DESTDIR}${includedir}/${includesubdir}/$$i; then \
 			if rm -f ${DESTDIR}${includedir}/${includesubdir}/$$i; then \
 				${DELETE_OK}; \
 			else \
@@ -331,7 +331,7 @@ uninstall: uninstall-extra
 	-rmdir ${DESTDIR}${includedir}/${includesubdir} >/dev/null 2>&1
 
 	for i in ${MAN}; do \
-		if [ -f ${DESTDIR}${mandir}/${mansubdir}/$$i ]; then \
+		if test -f ${DESTDIR}${mandir}/${mansubdir}/$$i; then \
 			if rm -f ${DESTDIR}${mandir}/${mansubdir}/$$i; then \
 				${DELETE_OK}; \
 			else \
@@ -350,7 +350,7 @@ clean:
 	done
 	
 	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} .deps *~; do \
-		if [ -f $$i -o -d $$i ]; then \
+		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
 			else \
@@ -367,7 +367,7 @@ distclean: clean
 	done
 	
 	for i in ${PROG} ${PROG_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST}  ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN}; do \
-		if [ -f $$i -o -d $$i ]; then \
+		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
 			else \
