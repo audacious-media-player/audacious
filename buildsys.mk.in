@@ -76,7 +76,7 @@ OBJS += ${OBJS5:.m=.o}
 
 all:
 	for i in subdirs depend ${OBJS} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
-		${MAKE} ${MFLAGS} $$i; \
+		${MAKE} ${MFLAGS} $$i || exit 1; \
 	done
 
 subdirs:
