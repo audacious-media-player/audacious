@@ -89,7 +89,7 @@ subdirs:
 depend: pre-depend ${SRCS}
 	regen=0; \
 	for i in ${SRCS}; do [ $$i -nt .deps ] && regen=1; done; \
-	if [ $$regen = 1 ]; then \
+	if [ x"$$regen" = x"1" ]; then \
 		error=0; \
 		${DEPEND_STATUS}; \
 		rm -f .deps; \
@@ -100,7 +100,7 @@ depend: pre-depend ${SRCS}
 				;; \
 			esac; \
 		done; \
-		if [ $$error = 0 ]; then \
+		if [ x"$$error" = x"0" ]; then \
 			${DEPEND_OK}; \
 		else \
 			${DEPEND_FAILED}; \
@@ -161,7 +161,7 @@ ${EXT_DEPS}: subdirs
 
 .d.o:
 	${COMPILE_STATUS}
-	if test x"$(basename ${DC})" = x"dmd"; then \
+	if [ x"$(basename ${DC})" = x"dmd" ]; then \
 		if ${DC} ${DFLAGS} -c -of$@ $<; then \
 			${COMPILE_OK}; \
 		else \
