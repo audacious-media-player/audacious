@@ -1599,7 +1599,7 @@ msgstr "Vorherige Wiedergabeliste wählen"
 
 #: src/audacious/ui_manager.c:214 src/audacious/ui_manager.c:215
 msgid "Delete Playlist"
-msgstr " Wiedergabeliste löschen"
+msgstr "Wiedergabeliste löschen"
 
 #: src/audacious/ui_manager.c:217
 msgid "Load List"
