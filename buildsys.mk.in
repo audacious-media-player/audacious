@@ -74,7 +74,10 @@ OBJS += ${OBJS5:.m=.o}
 .SUFFIXES: .beam .c .cc .cxx .d .erl .m
 .PHONY: all subdirs depend install uninstall clean distclean
 
-all: subdirs depend ${OBJS} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}
+all:
+	for i in subdirs depend ${OBJS} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
+		${MAKE} ${MFLAGS} $$i; \
+	done
 
 subdirs:
 	for i in ${SUBDIRS}; do \
@@ -87,18 +90,21 @@ depend: pre-depend ${SRCS}
 	regen=0; \
 	for i in ${SRCS}; do [ $$i -nt .deps ] && regen=1; done; \
 	if [ $$regen = 1 ]; then \
+		error=0; \
 		${DEPEND_STATUS}; \
 		rm -f .deps; \
 		for i in ${SRCS}; do \
 			case $${i##*.} in \
 			c|cc|cxx|m) \
-				if ${CPP} ${CPPFLAGS} -M $$i >>.deps; then \
-					${DEPEND_OK}; \
-				else \
-					${DEPEND_FAILED}; \
-				fi; \
+				${CPP} ${CPPFLAGS} -M $$i >>.deps || error=1; \
+				;; \
 			esac; \
 		done; \
+		if [ $$error = 0 ]; then \
+			${DEPEND_OK}; \
+		else \
+			${DEPEND_FAILED}; \
+		fi; \
 	fi
 
 pre-depend:
