@@ -75,7 +75,7 @@ OBJS += ${OBJS5:.m=.o}
 .PHONY: all subdirs depend install uninstall clean distclean
 
 all:
-	for i in subdirs depend ${OBJS} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
+	for i in subdirs depend ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
 		${MAKE} ${MFLAGS} $$i || exit 1; \
 	done
 
