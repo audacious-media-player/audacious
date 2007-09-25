@@ -47,17 +47,18 @@ enum
 };
 
 
-static void
+static GtkTreeIter
 playlist_manager_populate ( GtkListStore * store )
 {
     GList *playlists = NULL;
     Playlist *active, *iter_playlist, *next_playlist;
-    GtkTreeIter iter, insert, next;
-    gboolean valid;
+    GtkTreeIter iter, insert, next, active_iter;
+    gboolean valid, have_active_iter;
 
     active = playlist_get_active();
     playlists = playlist_get_playlists();
     valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(store) , &iter );
+    have_active_iter = FALSE;
     while ( playlists != NULL )
     {
         GList *entries = NULL;
@@ -118,6 +119,11 @@ store_set:
                             PLLIST_TEXT_WEIGHT , playlist == active ?
                                 PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL ,
                             -1 );
+        if ( !have_active_iter && playlist == active )
+        {
+            active_iter = insert;
+            have_active_iter = TRUE;
+        }
 
 next_playlist:
         playlists = g_list_next(playlists);
@@ -131,6 +137,11 @@ next_playlist:
         gtk_list_store_remove( store , &iter );
         iter = next;
     }
+
+    if ( !have_active_iter )
+        gtk_tree_model_get_iter_first( GTK_TREE_MODEL(store) , &active_iter );
+
+    return active_iter;
 }
 
 
@@ -336,6 +347,8 @@ playlist_manager_ui_show ( void )
     GtkWidget *playman_bbar_hbbox;
     GtkWidget *playman_bbar_bt_new, *playman_bbar_bt_del, *playman_bbar_bt_close;
     GdkGeometry playman_win_hints;
+    GtkTreeIter active_iter;
+    GtkTreePath *active_path;
 
     if ( playman_win != NULL )
     {
@@ -371,11 +384,11 @@ playlist_manager_ui_show ( void )
        */
     pl_store = gtk_list_store_new( PLLIST_NUMCOLS ,
             G_TYPE_STRING , G_TYPE_UINT , G_TYPE_POINTER , PANGO_TYPE_WEIGHT );
-    playlist_manager_populate( pl_store );
+    active_iter = playlist_manager_populate( pl_store );
 
     playman_pl_lv_frame = gtk_frame_new( NULL );
     playman_pl_lv = gtk_tree_view_new_with_model( GTK_TREE_MODEL(pl_store) );
-    g_object_unref( pl_store );
+
     g_object_set_data( G_OBJECT(playman_win) , "lv" , playman_pl_lv );
     g_object_set_data( G_OBJECT(playman_pl_lv) , "opt1" , GINT_TO_POINTER(0) );
     playman_pl_lv_textrndr_entriesnum = gtk_cell_renderer_text_new(); /* uneditable */
@@ -441,6 +454,17 @@ playlist_manager_ui_show ( void )
                               G_CALLBACK(playlist_manager_cb_del) , playman_pl_lv );
     g_signal_connect_swapped( G_OBJECT(playman_bbar_bt_close) , "clicked" ,
                               G_CALLBACK(gtk_widget_destroy) , playman_win );
+
+    /* have active playlist selected and scrolled to */
+    active_path = gtk_tree_model_get_path( GTK_TREE_MODEL(pl_store) ,
+            &active_iter );
+    gtk_tree_view_set_cursor( GTK_TREE_VIEW(playman_pl_lv) ,
+            active_path , NULL , FALSE );
+    gtk_tree_view_scroll_to_cell( GTK_TREE_VIEW(playman_pl_lv) ,
+            active_path , NULL , TRUE , 0.5 , 0.0 );
+    gtk_tree_path_free( active_path );
+
+    g_object_unref( pl_store );
 
     gtk_widget_show_all( playman_win );
 }
