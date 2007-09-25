@@ -150,24 +150,6 @@ if test "x$enable_pch" = xyes; then
 fi
 AC_SUBST(PCH)
 
-dnl rpath stuff
-dnl ========================
-AC_ARG_ENABLE(rpath,
-	[  --disable-rpath                disable hardcoded rpath (default=enabled)],
-			enable_rpath=$enableval, enable_rpath=yes)
-
-if test "x$enable_rpath" = xyes; then
-    case "$target" in
-    *-apple-*)
-        ;;
-    *)
-        RPATH_VAL="-Wl,-rpath=\${libdir}"
-        ;;
-    esac
-fi
-
-AC_SUBST(RPATH_VAL)
-
 dnl plugin stuff
 dnl ========================
 
@@ -179,13 +161,6 @@ SHARED_SUFFIX=$PLUGIN_SUFFIX
 AC_SUBST(SHARED_SUFFIX)
 AC_DEFINE_UNQUOTED(SHARED_SUFFIX, "${SHARED_SUFFIX}",
 	[Define the shared module suffix extension on your platform.])
-
-# Use -rpath?
-AC_ARG_ENABLE(rpath,
-	      [  --enable-rpath	   enable use of -rpath on ELF systems (default=yes)], [enable_rpath=$enableval], [enable_rpath=no])
-if test "x$enable_rpath" = "xyes"; then
-	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && LDFLAGS="$LDFLAGS -Wl,-rpath $libdir"
-fi
 
 AC_MSG_CHECKING([if you are running Apple-GCC])
 case "$target" in
@@ -447,6 +422,13 @@ AM_PATH_XML2(2.0.0, , [
 
 if test "$have_xspf" = "yes"; then
        AC_DEFINE(HAVE_XSPF_PLAYLIST, 1, [Define if XSPF playlists are available.])
+fi
+
+# Use -rpath?
+AC_ARG_ENABLE(rpath,
+	      [  --enable-rpath	   enable use of -rpath on ELF systems (default=yes)], [enable_rpath=$enableval], [enable_rpath=no])
+if test "x$enable_rpath" = "xyes"; then
+	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && LDFLAGS="$LDFLAGS -Wl,-rpath $libdir"
 fi
 
 AC_SUBST(beepdir)

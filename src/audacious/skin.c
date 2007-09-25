@@ -1473,11 +1473,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     if (!g_file_test(path, G_FILE_TEST_IS_REGULAR | G_FILE_TEST_IS_DIR))
         return FALSE;
    
-    if (!force) {
-        if (skin->path)
-            if (!strcmp(skin->path, path))
-                return FALSE;
-    }
+    if (!force && skin->path && !strcmp(skin->path, path))
+	return FALSE;
       
     skin_current_num++;
 
