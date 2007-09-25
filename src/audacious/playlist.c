@@ -328,6 +328,7 @@ playlist_select_next(void)
         playlists_iter = playlists;
 
     playlistwin_update_list(playlist_get_active());
+    playlist_manager_update();
 }
 
 void
@@ -342,6 +343,7 @@ playlist_select_prev(void)
         playlists_iter = playlists;
 
     playlistwin_update_list(playlist_get_active());
+    playlist_manager_update();
 }
 
 void
@@ -353,6 +355,7 @@ playlist_select_playlist(Playlist *playlist)
         playlists_iter = playlists;
 
     playlistwin_update_list(playlist);
+    playlist_manager_update();
 }
 
 /* *********************** playlist code ********************** */
@@ -374,11 +377,13 @@ playlist_set_current_name(Playlist *playlist, const gchar * title)
     if (!title) {
         playlist->title = NULL;
         if(oldtitle) g_free(oldtitle);
+        playlist_manager_update();
         return FALSE;
     }
 
     playlist->title = str_to_utf8(title);
     if(oldtitle) g_free(oldtitle);
+    playlist_manager_update();
     return TRUE;
 }
 
@@ -789,6 +794,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
         __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
         playlist_generate_shuffle_list(playlist);
         playlistwin_update_list(playlist);
+        playlist_manager_update();
         return TRUE;
     }
 
@@ -1231,6 +1237,7 @@ playlist_next(Playlist *playlist)
         playback_initiate();
 
     playlistwin_update_list(playlist);
+    playlist_manager_update();
 }
 
 void
@@ -1291,6 +1298,8 @@ playlist_prev(Playlist *playlist)
         playback_initiate();
     else
         playlistwin_update_list(playlist);
+
+    playlist_manager_update();
 }
 
 void
@@ -1844,6 +1853,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
+    playlist_manager_update();
 
     return new_len - old_len;
 }
@@ -3358,6 +3368,7 @@ playlist_new_from_selected(void)
 
     playlist_recalc_total_time(newpl);
     playlistwin_update_list(playlist);
+    playlist_manager_update();
 
     return newpl;
 }
