@@ -112,6 +112,8 @@ tuple_destroy(gpointer data)
             mowgli_heap_free(tuple_value_heap, value);
         }
     
+    g_free(tuple->subtunes);
+    
     mowgli_heap_free(tuple_heap, tuple);
     TUPLE_UNLOCK_WRITE();
 }

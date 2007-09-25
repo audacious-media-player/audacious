@@ -82,6 +82,8 @@ typedef struct _Tuple {
     mowgli_object_t parent;
     mowgli_dictionary_t *dict;
     TupleValue *values[FIELD_LAST];
+    gint nsubtunes;
+    gint *subtunes;
 } Tuple;
 
 
