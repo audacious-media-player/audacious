@@ -205,16 +205,15 @@ playlist_entry_get_info(PlaylistEntry * entry)
         g_thread_self() != playlist_get_info_thread)
         return FALSE;
 
-    if (entry->decoder == NULL)
-    {
+    if (entry->decoder == NULL) {
         pr = input_check_file(entry->filename, FALSE);
         if (pr)
-           entry->decoder = pr->ip;
+            entry->decoder = pr->ip;
     }
 
     /* renew tuple if file mtime is newer than tuple mtime. */
-    if(entry->tuple){
-        if(tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == modtime)
+    if (entry->tuple){
+        if (tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == modtime)
             return TRUE;
         else {
             mowgli_object_unref(entry->tuple);
@@ -371,18 +370,17 @@ playlist_get_current_name(Playlist *playlist)
 gboolean
 playlist_set_current_name(Playlist *playlist, const gchar * title)
 {
-    gchar *oldtitle;
-    oldtitle = playlist->title;
+    gchar *oldtitle = playlist->title;
 
     if (!title) {
         playlist->title = NULL;
-        if(oldtitle) g_free(oldtitle);
+        g_free(oldtitle);
         playlist_manager_update();
         return FALSE;
     }
 
     playlist->title = str_to_utf8(title);
-    if(oldtitle) g_free(oldtitle);
+    g_free(oldtitle);
     playlist_manager_update();
     return TRUE;
 }
@@ -394,21 +392,21 @@ playlist_filename_set(Playlist *playlist, const gchar * filename)
     gchar *old;
     old = playlist->filename;
 
-    if(!filename) {
+    if (!filename) {
         playlist->filename = NULL;
-        if(old) g_free(old);
+        g_free(old);
         return FALSE;
     }
 
     playlist->filename = filename_to_utf8(filename);
-    if(old) g_free(old);
+    g_free(old);
     return TRUE;
 }
 
 gchar *
 playlist_filename_get(Playlist *playlist)
 {
-    if(!playlist->filename) return NULL;
+    if (!playlist->filename) return NULL;
     return g_filename_from_utf8(playlist->filename, -1, NULL, NULL, NULL);
 }
 
@@ -435,7 +433,7 @@ play_queued(Playlist *playlist)
 {
     GList *tmp = playlist->queue;
 
-    REQUIRE_LOCK( playlist->mutex );
+    REQUIRE_LOCK(playlist->mutex);
 
     playlist->position = playlist->queue->data;
     playlist->queue = g_list_remove_link(playlist->queue, playlist->queue);
@@ -556,9 +554,8 @@ playlist_delete_index(Playlist *playlist, guint pos)
     if (restart_playing) {
         if (playlist->position)
             playback_initiate();
-        else {
+        else
             mainwin_clear_song_info();
-        }
     }
 
     playlist_manager_update();
@@ -594,9 +591,8 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     if (restart_playing) {
         if (playlist->position)
             playback_initiate();
-        else {
+        else
             mainwin_clear_song_info();
-        }
     }
 
     playlist_manager_update();
@@ -634,9 +630,8 @@ playlist_delete(Playlist * playlist, gboolean crop)
     if (restart_playing) {
         if (playlist->position)
             playback_initiate();
-        else {
+        else
             mainwin_clear_song_info();
-        }
     }
 
     playlistwin_update_list(playlist);
@@ -674,33 +669,30 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 {
     PlaylistEntry *entry;
     Tuple *main_tuple = NULL;
-    gint subtunes_num = 0, i = 0;
+    gint nsubtunes = 0, i = 0;
 
     g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
 
-    if (tuple != NULL)
-    {
-        subtunes_num = tuple->nsubtunes;
-        if (subtunes_num > 0)
-        {
+    if (tuple != NULL) {
+        nsubtunes = tuple->nsubtunes;
+        if (nsubtunes > 0) {
             main_tuple = tuple;
             i = 1;
         }
     }
 
-    for (; i <= subtunes_num; i++)
-    {
+    for (; i <= nsubtunes; i++) {
         gchar *filename_entry;
-        if (subtunes_num > 0)
-        {
+        
+        if (nsubtunes > 0) {
             filename_entry = g_strdup_printf("%s?%d", filename, main_tuple->subtunes[i]);
-            /* we're dealing with subtune, let's ask again tuple information
-               to plugin, by passing the ?subsong suffix; this way we may get
-               specific subtune information in the tuple, if available */
+            /* We're dealing with subtune, let's ask again tuple information
+             * to plugin, by passing the ?subtune suffix; this way we get
+             * specific subtune information in the tuple, if available.
+             */
             tuple = dec->get_song_tuple(filename_entry);
-        }
-        else
+        } else
             filename_entry = g_strdup(filename);
         
         
@@ -724,14 +716,12 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
             if(!playlist->entries) { // this is the first element
                 playlist->entries = element;
                 playlist->tail = element;
-            }
-            else { // the rests
+            } else { // the rests
                 g_return_if_fail(playlist->tail != NULL);
                 playlist->tail->next = element;
                 playlist->tail = element;
             }
-        }
-        else {
+        } else {
             playlist->entries = g_list_insert(playlist->entries, entry, pos);
         }
 
@@ -739,8 +729,8 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 
         if (tuple != NULL) {
             const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
-            entry->title = tuple_formatter_make_title_string(tuple, formatter ?
-                                                          formatter : get_gentitle_format());
+            entry->title = tuple_formatter_make_title_string(tuple,
+                formatter ? formatter : get_gentitle_format());
             entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
             entry->tuple = tuple;
         }
@@ -749,7 +739,8 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     if (main_tuple)
         tuple_free(main_tuple);
 
-    if(tuple != NULL && tuple_get_int(tuple, FIELD_MTIME, NULL) == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
+    if (tuple != NULL && tuple_get_int(tuple, FIELD_MTIME, NULL) == -1) {
+        // kick the scanner thread only if mtime = -1 (uninitialized)
         g_mutex_lock(mutex_scan);
         playlist_get_info_scan_active = TRUE;
         g_mutex_unlock(mutex_scan);
@@ -780,21 +771,20 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     if (playlist->loading_playlist == TRUE || cfg.playlist_detect == TRUE)
 	dec = NULL;
     else if (!str_has_prefix_nocase(filename, "http://") && 
-	     !str_has_prefix_nocase(filename, "https://"))
-    {
+	     !str_has_prefix_nocase(filename, "https://")) {
         pr = input_check_file(filename, TRUE);
 
-        if (pr)
-        {
+        if (pr) {
             dec = pr->ip;
             tuple = pr->tuple;
         }
-
         g_free(pr);
     }
 
-    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL) || (playlist->loading_playlist == FALSE && !is_playlist_name(filename) && str_has_prefix_nocase(filename, "http")))
-    {
+    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE ||
+       (playlist->loading_playlist == FALSE && dec != NULL) ||
+       (playlist->loading_playlist == FALSE && !is_playlist_name(filename) &&
+       str_has_prefix_nocase(filename, "http"))) {
         __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
         playlist_generate_shuffle_list(playlist);
         playlistwin_update_list(playlist);
@@ -816,7 +806,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     if (!vfs_file_test(filename, G_FILE_TEST_IS_REGULAR))
         return FALSE;
 
-    if (!(file = vfs_fopen(filename, "rb")))
+    if ((file = vfs_fopen(filename, "rb")) == NULL)
         return FALSE;
 
     r = vfs_fread(buf, 1, sizeof(buf), file);
@@ -852,8 +842,7 @@ devino_new(dev_t device,
 {
     DeviceInode *devino = g_new0(DeviceInode, 1);
 
-    if (devino)
-    {
+    if (devino) {
         devino->dev = device;
         devino->ino = inode;
     }
@@ -1116,7 +1105,7 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         playlist->position->length = length;
 
         // overwrite tuple::title, mainly for streaming. it may incur side effects. --yaz
-        if(playlist->position->tuple && tuple_get_int(playlist->position->tuple, FIELD_LENGTH, NULL) == -1){
+        if (playlist->position->tuple && tuple_get_int(playlist->position->tuple, FIELD_LENGTH, NULL) == -1){
             tuple_disassociate(playlist->position->tuple, FIELD_TITLE, NULL);
             tuple_associate_string(playlist->position->tuple, FIELD_TITLE, NULL, title);
         }
@@ -1155,7 +1144,7 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
 
     mainwin_set_song_info(rate, freq, nch);
 
-    if ( playlist->position )
+    if (playlist->position)
         hook_call( "playlist set info" , playlist->position );
 }
 
@@ -1193,13 +1182,13 @@ playlist_next(Playlist *playlist)
 {
     GList *plist_pos_list;
     gboolean restart_playing = FALSE;
+    
     if (!playlist_get_length(playlist))
         return;
 
     PLAYLIST_LOCK(playlist);
 
-    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
-    {
+    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL) {
         playlist->position = playlist_position_before_jump;
         playlist_position_before_jump = NULL;
     }
@@ -1234,7 +1223,9 @@ playlist_next(Playlist *playlist)
         else
             playlist->position = playlist->entries->data;
     }
+    
     PLAYLIST_UNLOCK(playlist);
+    
     playlist_check_pos_current(playlist);
 
     if (restart_playing)
@@ -1255,8 +1246,7 @@ playlist_prev(Playlist *playlist)
 
     PLAYLIST_LOCK(playlist);
 
-    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
-    {
+    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL) {
         playlist->position = playlist_position_before_jump;
         playlist_position_before_jump = NULL;
     }
@@ -1314,8 +1304,7 @@ playlist_queue(Playlist *playlist)
 
     PLAYLIST_LOCK(playlist);
 
-    if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
-    {
+    if ((cfg.shuffle) && (playlist_position_before_jump == NULL)) {
         /* Shuffling and this is our first manual jump. */
         playlist_position_before_jump = playlist->position;
     }
@@ -1590,13 +1579,11 @@ playlist_get_info_text(Playlist *playlist)
         title = str_to_utf8(playlist->position->title);
     }
     else {
-        gchar *realfn = NULL;
-        gchar *basename = NULL;
-        realfn = g_filename_from_uri(playlist->position->filename, NULL, NULL);
-        basename = g_path_get_basename(realfn ? realfn : playlist->position->filename);
+        gchar *realfn = g_filename_from_uri(playlist->position->filename, NULL, NULL);
+        gchar *basename = g_path_get_basename(realfn ? realfn : playlist->position->filename);
         title = filename_to_utf8(basename);
-        g_free(realfn); realfn = NULL;
-        g_free(basename); basename = NULL;
+        g_free(realfn);
+        g_free(basename);
     }
 
     /*
@@ -1706,7 +1693,7 @@ playlist_load_ins_file(Playlist *playlist,
 
     filename = g_strchug(g_strdup(filename_p));
 
-    if(cfg.convert_slash)
+    if (cfg.convert_slash)
         while ((tmp = strchr(filename, '\\')) != NULL)
             *tmp = '/';
 
@@ -1774,7 +1761,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 
     filename = g_strchug(g_strdup(filename_p));
 
-    if(cfg.convert_slash)
+    if (cfg.convert_slash)
         while ((tmp = strchr(filename, '\\')) != NULL)
             *tmp = '/';
 
@@ -2009,9 +1996,8 @@ playlist_get_songtime(Playlist *playlist, guint pos)
     if (!playlist)
         return -1;
 
-    if (!(node = g_list_nth(playlist->entries, pos))) {
+    if (!(node = g_list_nth(playlist->entries, pos)))
         return -1;
-    }
 
     entry = node->data;
 
@@ -2025,10 +2011,8 @@ playlist_get_songtime(Playlist *playlist, guint pos)
 
         if (playlist_entry_get_info(entry))
             song_time = entry->length;
-    }
-    else {
+    } else
         song_time = entry->length;
-    }
 
     return song_time;
 }
