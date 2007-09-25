@@ -42,6 +42,7 @@ enum
     PLLIST_COL_NAME = 0,
     PLLIST_COL_ENTRIESNUM,
     PLLIST_COL_PLPOINTER,
+    PLLIST_TEXT_WEIGHT,
     PLLIST_NUMCOLS
 };
 
@@ -50,8 +51,10 @@ static void
 playlist_manager_populate ( GtkListStore * store )
 {
     GList *playlists = NULL;
+    Playlist *active;
     GtkTreeIter iter;
 
+    active = playlist_get_active();
     playlists = playlist_get_playlists();
     while ( playlists != NULL )
     {
@@ -71,7 +74,10 @@ playlist_manager_populate ( GtkListStore * store )
         gtk_list_store_set( store, &iter,
                             PLLIST_COL_NAME , pl_name ,
                             PLLIST_COL_ENTRIESNUM , entriesnum ,
-                            PLLIST_COL_PLPOINTER , playlist , -1 );
+                            PLLIST_COL_PLPOINTER , playlist ,
+                            PLLIST_TEXT_WEIGHT , playlist == active ?
+                                PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL ,
+                            -1 );
         playlists = g_list_next(playlists);
     }
     return;
@@ -101,7 +107,9 @@ playlist_manager_cb_new ( gpointer listview )
     gtk_list_store_set( store, &iter,
                         PLLIST_COL_NAME , pl_name ,
                         PLLIST_COL_ENTRIESNUM , 0 ,
-                        PLLIST_COL_PLPOINTER , newpl , -1 );
+                        PLLIST_COL_PLPOINTER , newpl ,
+                        PLLIST_TEXT_WEIGHT , PANGO_WEIGHT_NORMAL ,
+                        -1 );
 
     ENABLE_MANAGER_UPDATE();
 
@@ -115,11 +123,16 @@ playlist_manager_cb_del ( gpointer listview )
     GtkTreeSelection *listsel = gtk_tree_view_get_selection( GTK_TREE_VIEW(listview) );
     GtkTreeModel *store;
     GtkTreeIter iter;
+    Playlist *active;
+    gboolean was_active;
 
     if ( gtk_tree_selection_get_selected( listsel , &store , &iter ) == TRUE )
     {
         Playlist *playlist = NULL;
         gtk_tree_model_get( store, &iter, PLLIST_COL_PLPOINTER , &playlist , -1 );
+
+        active = playlist_get_active();
+        was_active = ( playlist == active );
 
         if ( gtk_tree_model_iter_n_children( store , NULL ) < 2 )
         {
@@ -135,6 +148,20 @@ playlist_manager_cb_del ( gpointer listview )
             playlist_remove_playlist( playlist );
             ENABLE_MANAGER_UPDATE();
         }
+
+        if ( was_active && gtk_tree_model_get_iter_first( store , &iter ) )
+        {
+            /* update bolded playlist */
+            active = playlist_get_active();
+            do {
+                gtk_tree_model_get( store , &iter ,
+                        PLLIST_COL_PLPOINTER , &playlist , -1 );
+                gtk_list_store_set( GTK_LIST_STORE(store) , &iter ,
+                        PLLIST_TEXT_WEIGHT , playlist == active ?
+                            PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL ,
+                       -1 );
+            } while ( gtk_tree_model_iter_next( store , &iter ) );
+        }
     }
 
     return;
@@ -142,18 +169,34 @@ playlist_manager_cb_del ( gpointer listview )
 
 
 static void
-playlist_manager_cb_lv_dclick ( GtkTreeView * lv , GtkTreePath * path ,
+playlist_manager_cb_lv_dclick ( GtkTreeView * listview , GtkTreePath * path ,
                                 GtkTreeViewColumn * col , gpointer userdata )
 {
     GtkTreeModel *store;
     GtkTreeIter iter;
+    Playlist *playlist = NULL, *active;
 
-    store = gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );
+    store = gtk_tree_view_get_model( GTK_TREE_VIEW(listview) );
     if ( gtk_tree_model_get_iter( store , &iter , path ) == TRUE )
     {
-        Playlist *playlist = NULL;
         gtk_tree_model_get( store , &iter , PLLIST_COL_PLPOINTER , &playlist , -1 );
+        DISABLE_MANAGER_UPDATE();
         playlist_select_playlist( playlist );
+        ENABLE_MANAGER_UPDATE();
+    }
+
+    if ( gtk_tree_model_get_iter_first( store , &iter ) )
+    {
+        /* update bolded playlist */
+        active = playlist_get_active();
+        do {
+            gtk_tree_model_get( store , &iter ,
+                    PLLIST_COL_PLPOINTER , &playlist , -1 );
+            gtk_list_store_set( GTK_LIST_STORE(store) , &iter ,
+                    PLLIST_TEXT_WEIGHT , playlist == active ?
+                        PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL ,
+                   -1 );
+        } while ( gtk_tree_model_iter_next( store , &iter ) );
     }
 
     return;
@@ -181,17 +224,19 @@ playlist_manager_cb_lv_pmenu_rename ( GtkMenuItem *menuitem , gpointer lv )
 
 static void
 playlist_manager_cb_lv_name_edited ( GtkCellRendererText *cell , gchar *path_string ,
-                                     gchar *new_text , gpointer lv )
+                                     gchar *new_text , gpointer listview )
 {
     /* this is currently used to change playlist names */
-    GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );
+    GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(listview) );
     GtkTreeIter iter;
 
     if ( gtk_tree_model_get_iter_from_string( store , &iter , path_string ) == TRUE )
     {
         Playlist *playlist = NULL;
         gtk_tree_model_get( GTK_TREE_MODEL(store), &iter, PLLIST_COL_PLPOINTER , &playlist , -1 );
+        DISABLE_MANAGER_UPDATE();
         playlist_set_current_name( playlist , new_text );
+        ENABLE_MANAGER_UPDATE();
         gtk_list_store_set( GTK_LIST_STORE(store), &iter, PLLIST_COL_NAME , new_text , -1 );
     }
     /* set the renderer uneditable again */
@@ -271,9 +316,11 @@ playlist_manager_ui_show ( void )
        G_TYPE_STRING -> playlist name
        G_TYPE_UINT -> number of entries in playlist
        G_TYPE_POINTER -> playlist pointer (Playlist*)
+       PANGO_TYPE_WEIGHT -> font weight
        ----------------------------------------------
        */
-    pl_store = gtk_list_store_new( PLLIST_NUMCOLS , G_TYPE_STRING , G_TYPE_UINT , G_TYPE_POINTER );
+    pl_store = gtk_list_store_new( PLLIST_NUMCOLS ,
+            G_TYPE_STRING , G_TYPE_UINT , G_TYPE_POINTER , PANGO_TYPE_WEIGHT );
     playlist_manager_populate( pl_store );
 
     playman_pl_lv_frame = gtk_frame_new( NULL );
@@ -283,15 +330,23 @@ playlist_manager_ui_show ( void )
     g_object_set_data( G_OBJECT(playman_pl_lv) , "opt1" , GINT_TO_POINTER(0) );
     playman_pl_lv_textrndr_entriesnum = gtk_cell_renderer_text_new(); /* uneditable */
     playman_pl_lv_textrndr_name = gtk_cell_renderer_text_new(); /* can become editable */
+    g_object_set( G_OBJECT(playman_pl_lv_textrndr_entriesnum) , "weight-set" , TRUE , NULL );
+    g_object_set( G_OBJECT(playman_pl_lv_textrndr_name) , "weight-set" , TRUE , NULL );
     g_signal_connect( G_OBJECT(playman_pl_lv_textrndr_name) , "edited" ,
                       G_CALLBACK(playlist_manager_cb_lv_name_edited) , playman_pl_lv );
     g_object_set_data( G_OBJECT(playman_pl_lv) , "rn" , playman_pl_lv_textrndr_name );
     playman_pl_lv_col_name = gtk_tree_view_column_new_with_attributes(
-                                                                      _("Playlist") , playman_pl_lv_textrndr_name , "text" , PLLIST_COL_NAME , NULL );
+            _("Playlist") , playman_pl_lv_textrndr_name ,
+            "text" , PLLIST_COL_NAME ,
+            "weight", PLLIST_TEXT_WEIGHT ,
+            NULL );
     gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(playman_pl_lv_col_name) , TRUE );
     gtk_tree_view_append_column( GTK_TREE_VIEW(playman_pl_lv), playman_pl_lv_col_name );
     playman_pl_lv_col_entriesnum = gtk_tree_view_column_new_with_attributes(
-                                                                            _("Entries") , playman_pl_lv_textrndr_entriesnum , "text" , PLLIST_COL_ENTRIESNUM , NULL );
+            _("Entries") , playman_pl_lv_textrndr_entriesnum ,
+            "text" , PLLIST_COL_ENTRIESNUM ,
+            "weight", PLLIST_TEXT_WEIGHT ,
+            NULL );
     gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(playman_pl_lv_col_entriesnum) , FALSE );
     gtk_tree_view_append_column( GTK_TREE_VIEW(playman_pl_lv), playman_pl_lv_col_entriesnum );
     playman_pl_lv_sw = gtk_scrolled_window_new( NULL , NULL );
