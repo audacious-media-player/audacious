@@ -2047,6 +2047,19 @@ playlist_compare_track(PlaylistEntry * a,
 	    tracknumber_a - tracknumber_b : 0);
 }
 
+static void
+playlist_get_entry_title(PlaylistEntry * e, const gchar ** title)
+{
+    if (e->title)
+        *title = e->title;
+    else {
+        if (strrchr(e->filename, '/'))
+            *title = strrchr(e->filename, '/') + 1;
+        else
+            *title = e->filename;
+    }
+}
+
 static gint
 playlist_compare_playlist(PlaylistEntry * a,
 		          PlaylistEntry * b)
@@ -2055,24 +2068,9 @@ playlist_compare_playlist(PlaylistEntry * a,
 
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
-
-    if (a->title != NULL)
-        a_title = a->title;
-    else {
-        if (strrchr(a->filename, '/'))
-            a_title = strrchr(a->filename, '/') + 1;
-        else
-            a_title = a->filename;
-    }
-
-    if (b->title != NULL)
-        b_title = b->title;
-    else {
-        if (strrchr(a->filename, '/'))
-            b_title = strrchr(b->filename, '/') + 1;
-        else
-            b_title = b->filename;
-    }
+    
+    playlist_get_entry_title(a, &a_title);
+    playlist_get_entry_title(b, &b_title);
 
     return strcasecmp(a_title, b_title);
 }
@@ -2086,9 +2084,9 @@ playlist_compare_title(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if(!a->tuple)
+    if (a->tuple == NULL)
         playlist_entry_get_info(a);
-    if(!b->tuple)
+    if (b->tuple == NULL)
         playlist_entry_get_info(b);
 
     if (a->tuple != NULL)
@@ -2099,23 +2097,8 @@ playlist_compare_title(PlaylistEntry * a,
     if (a_title != NULL && b_title != NULL)
         return strcasecmp(a_title, b_title);
 
-    if (a->title != NULL)
-        a_title = a->title;
-    else {
-        if (strrchr(a->filename, '/'))
-            a_title = strrchr(a->filename, '/') + 1;
-        else
-            a_title = a->filename;
-    }
-
-    if (b->title != NULL)
-        b_title = b->title;
-    else {
-        if (strrchr(a->filename, '/'))
-            b_title = strrchr(b->filename, '/') + 1;
-        else
-            b_title = b->filename;
-    }
+    playlist_get_entry_title(a, &a_title);
+    playlist_get_entry_title(b, &b_title);
 
     return strcasecmp(a_title, b_title);
 }
@@ -2818,23 +2801,8 @@ playlist_dupscmp_title(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (a->title)
-        a_title = a->title;
-    else {
-        if (strrchr(a->filename, '/'))
-            a_title = strrchr(a->filename, '/') + 1;
-        else
-            a_title = a->filename;
-    }
-
-    if (b->title)
-        b_title = b->title;
-    else {
-        if (strrchr(a->filename, '/'))
-            b_title = strrchr(b->filename, '/') + 1;
-        else
-            b_title = b->filename;
-    }
+    playlist_get_entry_title(a, &a_title);
+    playlist_get_entry_title(b, &b_title);
 
     return strcmp(a_title, b_title);
 }
