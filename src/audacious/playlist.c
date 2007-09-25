@@ -670,6 +670,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     PlaylistEntry *entry;
     Tuple *main_tuple = NULL;
     gint nsubtunes = 0, i = 0;
+    gboolean add_flag = TRUE;
 
     g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
@@ -682,7 +683,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         }
     }
 
-    for (; i <= nsubtunes; i++) {
+    for (; add_flag && i <= nsubtunes; i++) {
         gchar *filename_entry;
         
         if (nsubtunes > 0) {
@@ -701,7 +702,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
             tuple ? tuple_get_int(tuple, FIELD_LENGTH, NULL) : -1, dec);
         g_free(filename_entry);
 
-        if(!playlist->tail)
+        if (!playlist->tail)
             playlist->tail = g_list_last(playlist->entries);
 
         PLAYLIST_LOCK(playlist);
@@ -717,9 +718,11 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
                 playlist->entries = element;
                 playlist->tail = element;
             } else { // the rests
-                g_return_if_fail(playlist->tail != NULL);
-                playlist->tail->next = element;
-                playlist->tail = element;
+                if (playlist->tail != NULL) {
+                    playlist->tail->next = element;
+                    playlist->tail = element;
+                } else
+                    add_flag = FALSE;
             }
         } else {
             playlist->entries = g_list_insert(playlist->entries, entry, pos);
