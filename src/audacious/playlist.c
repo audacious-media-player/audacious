@@ -687,7 +687,9 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         gchar *filename_entry;
         
         if (nsubtunes > 0) {
-            filename_entry = g_strdup_printf("%s?%d", filename, main_tuple->subtunes[i]);
+            filename_entry = g_strdup_printf("%s?%d", filename,
+                main_tuple->subtunes ? main_tuple->subtunes[i] : i);
+            
             /* We're dealing with subtune, let's ask again tuple information
              * to plugin, by passing the ?subtune suffix; this way we get
              * specific subtune information in the tuple, if available.
