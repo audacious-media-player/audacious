@@ -51,11 +51,13 @@ static void
 playlist_manager_populate ( GtkListStore * store )
 {
     GList *playlists = NULL;
-    Playlist *active;
-    GtkTreeIter iter;
+    Playlist *active, *iter_playlist, *next_playlist;
+    GtkTreeIter iter, insert, next;
+    gboolean valid;
 
     active = playlist_get_active();
     playlists = playlist_get_playlists();
+    valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(store) , &iter );
     while ( playlists != NULL )
     {
         GList *entries = NULL;
@@ -70,17 +72,65 @@ playlist_manager_populate ( GtkListStore * store )
             entriesnum++;
         PLAYLIST_UNLOCK(playlist);
 
-        gtk_list_store_append( store , &iter );
-        gtk_list_store_set( store, &iter,
+        /* update the tree model conservatively */
+
+        if ( !valid )
+        {
+            /* append */
+            gtk_list_store_append( store , &insert );
+            goto store_set;
+        }
+
+        gtk_tree_model_get( GTK_TREE_MODEL(store) , &iter ,
+                PLLIST_PLPOINTER , &iter_playlist , -1 );
+
+        if ( playlist == iter_playlist )
+        {
+            /* already have - just update */
+            insert = iter;
+            valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(store) , &iter );
+            goto store_set;
+        }
+
+        /* handle movement/deletion/insertion of single elements */
+        if ( gtk_tree_model_iter_next( GTK_TREE_MODEL(store) , &next ) )
+        {
+            gtk_tree_model_get( GTK_TREE_MODEL(store) , &next ,
+                    PLLIST_PLPOINTER , &next_playlist , -1 );
+            if ( playlist == next_playlist )
+            {
+                /* remove */
+                gtk_list_store_remove( store , &iter );
+                iter = next;
+                valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(store), &iter);
+                goto next_playlist;
+            }
+        }
+
+        /* insert */
+        gtk_list_store_insert_before( store , &insert , &iter );
+
+store_set:
+        gtk_list_store_set( store, &insert,
                             PLLIST_COL_NAME , pl_name ,
                             PLLIST_COL_ENTRIESNUM , entriesnum ,
                             PLLIST_PLPOINTER , playlist ,
                             PLLIST_TEXT_WEIGHT , playlist == active ?
                                 PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL ,
                             -1 );
+
+next_playlist:
         playlists = g_list_next(playlists);
     }
-    return;
+
+    while (valid)
+    {
+        /* remove any other elements */
+        next = iter;
+        valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(store) , &next );
+        gtk_list_store_remove( store , &iter );
+        iter = next;
+    }
 }
 
 
@@ -411,8 +461,6 @@ playlist_manager_update ( void )
         if ( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(lv),"opt1")) == 0 )
         {
             GtkListStore *store = (GtkListStore*)gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );
-            /* TODO: this re-populates everything... there's definitely room for optimization */
-            gtk_list_store_clear( store );
             playlist_manager_populate( store );
         }
         return;
