@@ -40,7 +40,7 @@ void playlist_container_unregister(PlaylistContainer *plc)
 	registered_plcs = g_list_remove(registered_plcs, plc);
 }
 
-PlaylistContainer *playlist_container_find(char *ext)
+PlaylistContainer *playlist_container_find(gchar *ext)
 {
 	GList *node;
 	PlaylistContainer *plc;
@@ -58,9 +58,9 @@ PlaylistContainer *playlist_container_find(char *ext)
 	return NULL;
 }
 
-void playlist_container_read(char *filename, gint pos)
+void playlist_container_read(gchar *filename, gint pos)
 {
-	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
+	gchar *ext = strrchr(filename, '.') + 1;	/* optimization: skip past the dot -nenolod */
 	PlaylistContainer *plc = playlist_container_find(ext);
 
 	if (plc->plc_read == NULL)
@@ -69,9 +69,9 @@ void playlist_container_read(char *filename, gint pos)
 	plc->plc_read(filename, pos);
 }
 
-void playlist_container_write(char *filename, gint pos)
+void playlist_container_write(gchar *filename, gint pos)
 {
-	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
+	gchar *ext = strrchr(filename, '.') + 1;	/* optimization: skip past the dot -nenolod */
 	PlaylistContainer *plc = playlist_container_find(ext);
 
 	if (plc->plc_write == NULL)
@@ -80,9 +80,9 @@ void playlist_container_write(char *filename, gint pos)
 	plc->plc_write(filename, pos);
 }
 
-gboolean is_playlist_name(char *filename)
+gboolean is_playlist_name(gchar *filename)
 {
-	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
+	gchar *ext = strrchr(filename, '.') + 1;	/* optimization: skip past the dot -nenolod */
 	PlaylistContainer *plc = playlist_container_find(ext);
 
 	if (plc != NULL)
