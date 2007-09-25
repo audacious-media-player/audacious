@@ -308,7 +308,7 @@ archive_decompress(const gchar * filename)
         return NULL;
     }
 #else
-    tmpdir = g_strdup_printf("%s/audacious.%ld", g_get_tmp_dir(), rand());
+    tmpdir = g_strdup_printf("%s/audacious.%ld", g_get_tmp_dir(), (long) rand());
     make_directory(tmpdir, mode755);
 #endif
 
