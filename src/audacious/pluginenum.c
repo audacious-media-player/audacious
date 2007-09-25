@@ -492,7 +492,7 @@ plugin_system_init(void)
          * prefix.  We will only see one plugin with the same
          * basename, so this is usually what the user want.
          */
-        if (!strcmp(g_basename(cfg.outputplugin), g_basename(op->filename)))
+        if (cfg.outputplugin && !strcmp(g_basename(cfg.outputplugin), g_basename(op->filename)))
             op_data.current_output_plugin = op;
         if (op->init)
             op->init();
