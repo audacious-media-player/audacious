@@ -35,7 +35,6 @@ filebrowser_add_files(GtkFileChooser * browser,
 {
     GSList *cur;
     gchar *ptr;
-    guint ctr = 0;
     Playlist *playlist = playlist_get_active();
 
     for (cur = files; cur; cur = g_slist_next(cur)) {
