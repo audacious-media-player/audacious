@@ -91,17 +91,17 @@ depend: pre-depend ${SRCS}
 	regen=0; \
 	for i in ${SRCS}; do test $$i -nt .deps && regen=1; done; \
 	if test x"$$regen" = x"1"; then \
-		error=0; \
+		list=""; \
 		${DEPEND_STATUS}; \
 		rm -f .deps; \
 		for i in ${SRCS}; do \
 			case $${i##*.} in \
 			c|cc|cxx|m) \
-				${CPP} ${CPPFLAGS} -M $$i >>.deps || error=1; \
+				list="$$list $$i"; \
 				;; \
 			esac; \
 		done; \
-		if test x"$$error" = x"0"; then \
+		if ${CPP} ${CPPFLAGS} -M $$list >.deps; then \
 			${DEPEND_OK}; \
 		else \
 			${DEPEND_FAILED}; \
