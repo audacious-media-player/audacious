@@ -101,7 +101,8 @@ DATA = Skins/Classic/balance.png	\
        Skins/Refugee/text.png		\
        Skins/Refugee/titlebar.png	\
        Skins/Refugee/viscolor.txt	\
-       Skins/Refugee/volume.png
+       Skins/Refugee/volume.png		\
+       applications/audacious.desktop
 
 DISTCLEAN = extra.mk
 

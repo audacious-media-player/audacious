@@ -1,3 +1,4 @@
+
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT([audacious], [1.4.0], [bugs+audacious@atheme.org])
 AC_PREREQ([2.59])
@@ -441,7 +442,7 @@ AC_CONFIG_FILES([
 	extra.mk
 	man/audtool.1
 	man/audacious.1
-	src/audacious/audacious.desktop
+	applications/audacious.desktop
 	po/Makefile.in
 ])
 
