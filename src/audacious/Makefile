@@ -2,7 +2,7 @@ include ../../extra.mk
 
 SUBDIRS = ${INTL_OBJECTIVE}
 
-PROG = audacious
+PROG = audacious${PROG_SUFFIX}
 SRCS = auddrct.c			\
        build_stamp.c			\
        configdb.c			\
@@ -154,8 +154,6 @@ DATA = glade/fileinfo.glade			\
        ui/carbon-menubar.ui
 
 CLEAN = build_stamp.c
-
-LIB_DEPS += ../libguess/libguess.a
 
 include ../../buildsys.mk
 
