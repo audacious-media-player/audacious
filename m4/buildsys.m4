@@ -66,7 +66,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}'
 			CLEAN_LIB=''
 			;;
-		*-*-cygwin | *-*-ming32)
+		*-*-cygwin | *-*-mingw32)
 			AC_MSG_RESULT(Win32)
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS=''
