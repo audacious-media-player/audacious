@@ -38,7 +38,6 @@
  */
 
 #include "libguess.h"
-#define NULL ((void *)0)
 
 /* take precedence if scores are same. you can customize the order as: */
 /* ORDER_** &highest, &second, ... &lowest */
