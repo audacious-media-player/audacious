@@ -154,7 +154,7 @@ dnl plugin stuff
 dnl ========================
 
 dnl Ok, first we find out what flags we need to use.
-AM_SHARED_LIB
+BUILDSYS_SHARED_LIB
 
 dnl XXX
 SHARED_SUFFIX=$PLUGIN_SUFFIX
