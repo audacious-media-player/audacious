@@ -29,4 +29,4 @@ include ../../extra.mk
 
 CPPFLAGS += ${LIB_CPPFLAGS} -I.. ${GLIB_CFLAGS}
 CFLAGS += ${LIB_CFLAGS}
-LIBS += ${GLIB_LIBS}
+LIBS += ../audacious/vfs.o -lz ${GLIB_LIBS}
