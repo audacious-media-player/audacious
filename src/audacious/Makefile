@@ -217,7 +217,7 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
 
 install-extra:
-	if test x"${PROG_NEED_IMPLIB}" = x"yes"; then \
+	if test x"${PROG_IMLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			${INSTALL_STATUS}; \
 			if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 lib$$i.a ${DESTDIR}${libdir}/lib$$i.a; then \
@@ -229,7 +229,7 @@ install-extra:
 	fi
 
 uninstall-extra:
-	if test x"${PROG_NEED_IMPLIB}" = x"yes"; then \
+	if test x"${PROG_IMLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			if test -f ${DESTDIR}${libdir}/lib$$i.a; then \
 				if rm -f ${DESTDIR}${libdir}/lib$$i.a; then
