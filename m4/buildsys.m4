@@ -18,6 +18,25 @@ dnl ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 dnl POSSIBILITY OF SUCH DAMAGE.
 dnl
 
+AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
+	AC_MSG_CHECKING(wether we need an implib)
+	case "$target" in
+		*-*-cygwin | *-*-mingw32)
+			AC_MSG_RESULT(yes)
+			PROG_IMPLIB_NEEDED=1
+			PROG_IMPLIB_LDFLAGS='-Wl,-export-all-symbols,--out-implib,lib${PROG}.a'
+			;;
+		*)
+			AC_MSG_RESULT(no)
+			PROG_IMPLIB_NEEDED=0
+			PROG_IMPLIB_LDFLAGS=''
+			;;
+	esac
+	
+	AC_SUBST(PROG_IMPLIB_NEEDED)
+	AC_SUBST(PROG_IMPLIB_LDFLAGS)
+])
+
 AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	AC_MSG_CHECKING(for shared library system)
 	case "$target" in
