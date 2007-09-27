@@ -155,6 +155,7 @@ dnl plugin stuff
 dnl ========================
 
 dnl Ok, first we find out what flags we need to use.
+BUILDSYS_PROG_IMPLIB
 BUILDSYS_SHARED_LIB
 
 dnl XXX
@@ -427,7 +428,7 @@ fi
 
 # Use -rpath?
 AC_ARG_ENABLE(rpath,
-	      [  --enable-rpath	   enable use of -rpath on ELF systems (default=yes)], [enable_rpath=$enableval], [enable_rpath=no])
+	      [  --enable-rpath	   enable use of -rpath on ELF systems (default=no)], [enable_rpath=$enableval], [enable_rpath=no])
 if test "x$enable_rpath" = "xyes"; then
 	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && LDFLAGS="$LDFLAGS -Wl,-rpath $libdir"
 fi
