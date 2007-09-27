@@ -155,7 +155,6 @@ dnl plugin stuff
 dnl ========================
 
 dnl Ok, first we find out what flags we need to use.
-BUILDSYS_PROG_IMPLIB
 BUILDSYS_SHARED_LIB
 
 dnl XXX
