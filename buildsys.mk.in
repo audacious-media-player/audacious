@@ -35,6 +35,7 @@ ERLCFLAGS = @ERLCFLAGS@
 OBJCFLAGS = @OBJCFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
+PROG_IMPLIB_LDFLAGS = @PROG_IMPLIB_LDFLAGS@
 PROG_SUFFIX = @EXEEXT@
 LIB_CPPFLAGS = @LIB_CPPFLAGS@
 LIB_CFLAGS = @LIB_CFLAGS@
@@ -93,7 +94,6 @@ depend: pre-depend ${SRCS}
 	if test x"$$regen" = x"1"; then \
 		list=""; \
 		${DEPEND_STATUS}; \
-		rm -f .deps; \
 		for i in ${SRCS}; do \
 			case $${i##*.} in \
 			c|cc|cxx|m) \
@@ -101,10 +101,12 @@ depend: pre-depend ${SRCS}
 				;; \
 			esac; \
 		done; \
-		if ${CPP} ${CPPFLAGS} -M $$list >.deps; then \
-			${DEPEND_OK}; \
-		else \
-			${DEPEND_FAILED}; \
+		if test x"$$list" != "x"; then \
+			if ${CPP} ${CPPFLAGS} -M $$list >.deps; then \
+				${DEPEND_OK}; \
+			else \
+				${DEPEND_FAILED}; \
+			fi; \
 		fi; \
 	fi
 
@@ -367,7 +369,7 @@ distclean: clean
 		${DIR_LEAVE}; \
 	done
 	
-	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST}  ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN} *~; do \
+	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN} *~; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
