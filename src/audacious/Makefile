@@ -219,8 +219,9 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 install-extra:
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
+			i="lib$$i.a" \
 			${INSTALL_STATUS}; \
-			if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 lib$$i.a ${DESTDIR}${libdir}/lib$$i.a; then \
+			if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 $$i ${DESTDIR}${libdir}/$$i; then \
 				${INSTALL_OK}; \
 			else \
 				${INSTALL_FAILED}; \
@@ -231,8 +232,9 @@ install-extra:
 uninstall-extra:
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
-			if test -f ${DESTDIR}${libdir}/lib$$i.a; then \
-				if rm -f ${DESTDIR}${libdir}/lib$$i.a; then
+			i="lib$$i.a" \
+			if test -f ${DESTDIR}${libdir}/$$i; then \
+				if rm -f ${DESTDIR}${libdir}/$$i; then
 					${DELETE_OK}; \
 				else \
 					${DELETE_FAILED}; \
