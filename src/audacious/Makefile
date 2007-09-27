@@ -217,15 +217,7 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
 
 install-extra:
-	for i in audacious.desktop; do \
-		${INSTALL_STATUS}; \
-		if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 $$i ${DESTDIR}${datadir}/applications/$$i; then \
-			${INSTALL_OK}; \
-		else \
-			${INSTALL_FAILED}; \
-		fi \
-	done
-	if test x"${PROG_NEED_IMPLIB}" = x"1"; then \
+	if test x"${PROG_NEED_IMPLIB}" = x"yes"; then \
 		for i in ${LIB}; do \
 			${INSTALL_STATUS}; \
 			if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 $$i ${DESTDIR}${libdir}/$$i; then \

@@ -29,4 +29,4 @@ include ../../extra.mk
 
 CPPFLAGS += ${LIB_CPPFLAGS} -I.. ${GLIB_CFLAGS}
 CFLAGS += ${LIB_CFLAGS}
-LIBS += -lz ${GLIB_LIBS}
+LIBS += ${IMPLIB_LIBS} ${GLIB_LIBS} -lz

@@ -157,6 +157,12 @@ dnl ========================
 dnl Ok, first we find out what flags we need to use.
 BUILDSYS_PROG_IMPLIB
 BUILDSYS_SHARED_LIB
+if test x"$PROG_IMPLIB_NEEDED" = x"yes"; then
+	IMPLIB_LIBS='-L../audacious -laudacious.exe'
+else
+	IMPLIB_LIBS=''
+fi
+AC_SUBST(IMPLIB_LIBS)
 
 dnl XXX
 SHARED_SUFFIX=$PLUGIN_SUFFIX
