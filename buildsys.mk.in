@@ -75,7 +75,7 @@ OBJS += ${OBJS5:.m=.o}
 
 .SILENT:
 .SUFFIXES: .beam .c .cc .cxx .d .erl .m
-.PHONY: all subdirs depend install uninstall clean distclean
+.PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean
 
 all:
 	for i in subdirs depend ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
