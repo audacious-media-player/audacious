@@ -234,7 +234,7 @@ uninstall-extra:
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \
 			if test -f ${DESTDIR}${libdir}/$$i; then \
-				if rm -f ${DESTDIR}${libdir}/$$i; then
+				if rm -f ${DESTDIR}${libdir}/$$i; then \
 					${DELETE_OK}; \
 				else \
 					${DELETE_FAILED}; \
