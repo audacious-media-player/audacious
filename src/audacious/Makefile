@@ -154,6 +154,7 @@ DATA = glade/fileinfo.glade			\
        ui/carbon-menubar.ui
 
 CLEAN = build_stamp.c
+EXT_DEPS += ../libguess/libguess.a
 
 include ../../buildsys.mk
 
