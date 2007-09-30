@@ -111,7 +111,7 @@ include buildsys.mk
 install-extra:
 	for i in audacious.pc audclient.pc; do \
 	        ${INSTALL_STATUS}; \
-		if ${MKDIR_P} ${DESTDIR}${libdir}/pkgconfig && ${INSTALL} -m 644 $$i ${DESTDIR}${libdir}/pkgconfig/$$i; then \
+		if ${MKDIR_P} ${DESTDIR}${datadir}/pkgconfig && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/pkgconfig/$$i; then \
 			${INSTALL_OK}; \
 		else \
 			${INSTALL_FAILED}; \
@@ -120,8 +120,8 @@ install-extra:
 
 uninstall-extra:
 	for i in audacious.pc audclient.pc; do \
-		if [ -f ${DESTDIR}${libdir}/pkgconfig/$$i ]; then \
-			if rm -f ${DESTDIR}${libdir}/pkgconfig/$$i; then \
+		if [ -f ${DESTDIR}${datadir}/pkgconfig/$$i ]; then \
+			if rm -f ${DESTDIR}${datadir}/pkgconfig/$$i; then \
 				${DELETE_OK}; \
 			else \
 				${DELETE_FAILED}; \
