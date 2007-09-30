@@ -117,6 +117,14 @@ install-extra:
 			${INSTALL_FAILED}; \
 		fi; \
 	done
+	for i in audacious.desktop; do \
+		${INSTALL_STATUS}; \
+		if ${MKDIR_P} ${DESTDIR}${datadir}/applications && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/applications/$$i; then \
+			${INSTALL_OK}; \
+		else \
+			${INSTALL_FAILED}; \
+		fi \
+	done
 
 uninstall-extra:
 	for i in audacious.pc audclient.pc; do \
@@ -127,4 +135,13 @@ uninstall-extra:
 				${DELETE_FAILED}; \
 			fi \
 		fi; \
+	done
+	for i in audacious.desktop; do \
+		if test -f ${DESTDIR}${datadir}/applications/$$i; then \
+			if rm -f ${DESTDIR}${datadir}/applications/$$i; then \
+				${DELETE_OK}; \
+			else \
+				${DELETE_FAILED}; \
+			fi \
+		fi \
 	done
