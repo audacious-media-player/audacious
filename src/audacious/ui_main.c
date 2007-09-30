@@ -134,10 +134,11 @@ static GtkWidget *mainwin_play, *mainwin_pause, *mainwin_stop;
 static GtkWidget *mainwin_shuffle, *mainwin_repeat;
 GtkWidget *mainwin_eq, *mainwin_pl;
 
-GtkWidget *mainwin_info, *mainwin_othertext;
+GtkWidget *mainwin_info;
 GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
-static GtkWidget *mainwin_rate_text, *mainwin_freq_text;
+static GtkWidget *mainwin_rate_text, *mainwin_freq_text,
+    *mainwin_othertext;
 
 GtkWidget *mainwin_playstatus;
 
@@ -2446,7 +2447,6 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
 
     mainwin_othertext = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 112, 43, 153, 1, SKIN_TEXT);
-    ui_skinned_textbox_set_xfont(mainwin_othertext, cfg.mainwin_use_xfont, cfg.mainwin_font);
 
     mainwin_rate_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 111, 43, 15, 0, SKIN_TEXT);
 

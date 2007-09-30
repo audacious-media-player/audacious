@@ -153,12 +153,10 @@ DATA = glade/fileinfo.glade			\
        ui/playlist.ui				\
        ui/carbon-menubar.ui
 
-CLEAN = build_stamp.c
+CLEAN = build_stamp.c libaudacious.exe.a
+EXT_DEPS = ../libguess/libguess.a
 
 include ../../buildsys.mk
-
-LDFLAGS += ${EXPORTDYN}
-LIBS += ${LDADD}
 
 ifdef USE_DBUS
 CPPFLAGS += -I../libaudclient
@@ -182,7 +180,8 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    -I.. -I../..		\
 	    -I./intl
 
-LIBS += ${LIBINTL}		\
+LIBS += ${LDADD}		\
+	${LIBINTL}		\
 	${samplerate_LIBS}	\
 	../libguess/libguess.a	\
 	${GTK_LIBS}		\
@@ -191,6 +190,8 @@ LIBS += ${LIBINTL}		\
 	${LIBMCS_LIBS}		\
 	${LIBGLADE_LIBS}	\
 	${REGEX_LIBS}
+
+LDFLAGS += ${EXPORTDYN} ${PROG_IMPLIB_LDFLAGS}
 
 build_stamp.c: 
 	if [ -d ../../.hg ]; then \
@@ -215,4 +216,29 @@ dbus-server-bindings.h: ${DBUS_BINDINGS_SOURCES}
 dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
 
-OBJECTIVE_DATA = audacious.desktop:${datadir}/applications
+install-extra:
+	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
+		for i in ${PROG}; do \
+			i="lib$$i.a"; \
+			${INSTALL_STATUS}; \
+			if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 $$i ${DESTDIR}${libdir}/$$i; then \
+				${INSTALL_OK}; \
+			else \
+				${INSTALL_FAILED}; \
+			fi \
+		done \
+	fi
+
+uninstall-extra:
+	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
+		for i in ${PROG}; do \
+			i="lib$$i.a"; \
+			if test -f ${DESTDIR}${libdir}/$$i; then \
+				if rm -f ${DESTDIR}${libdir}/$$i; then \
+					${DELETE_OK}; \
+				else \
+					${DELETE_FAILED}; \
+				fi \
+			fi \
+		done \
+	fi

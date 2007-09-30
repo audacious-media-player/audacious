@@ -155,7 +155,14 @@ dnl plugin stuff
 dnl ========================
 
 dnl Ok, first we find out what flags we need to use.
+BUILDSYS_PROG_IMPLIB
 BUILDSYS_SHARED_LIB
+if test x"$PROG_IMPLIB_NEEDED" = x"yes"; then
+	IMPLIB_LIBS='-L../audacious -laudacious.exe'
+else
+	IMPLIB_LIBS=''
+fi
+AC_SUBST(IMPLIB_LIBS)
 
 dnl XXX
 SHARED_SUFFIX=$PLUGIN_SUFFIX
@@ -391,6 +398,11 @@ AC_SUBST(CONTAINER_PLUGIN_DIR)
 AC_SUBST(TRANSPORT_PLUGIN_DIR)
 AC_SUBST(pluginsubs)
 
+dnl setup rpath if prefix or exec-prefix is specified
+if test "$prefix" != "NONE" || test "$exec_prefix" != "NONE" ; then
+	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && RPATH="-Wl,-rpath $libdir"
+fi
+
 dnl XXX Work around some autoconf bugs.
 if test "$prefix" = "NONE"; then
         prefix="${ac_default_prefix}"
@@ -425,11 +437,11 @@ if test "$have_xspf" = "yes"; then
        AC_DEFINE(HAVE_XSPF_PLAYLIST, 1, [Define if XSPF playlists are available.])
 fi
 
-# Use -rpath?
+dnl disable rpath
 AC_ARG_ENABLE(rpath,
-	      [  --enable-rpath	   enable use of -rpath on ELF systems (default=yes)], [enable_rpath=$enableval], [enable_rpath=no])
+	      [  --disable-rpath	  force to disable -rpath. (-rpath is required and automatically appended when --prefix or --exec-prefix is specified on ELF systems.)], [enable_rpath=$enableval], [enable_rpath=yes])
 if test "x$enable_rpath" = "xyes"; then
-	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && LDFLAGS="$LDFLAGS -Wl,-rpath $libdir"
+	LDFLAGS="$LDFLAGS $RPATH"
 fi
 
 AC_SUBST(beepdir)

@@ -99,7 +99,7 @@ extern gboolean mainwin_focus;
 
 extern GtkWidget *mainwin_jtf;
 extern GtkWidget *mainwin_eq, *mainwin_pl;
-extern GtkWidget *mainwin_info, *mainwin_othertext;
+extern GtkWidget *mainwin_info;
 
 extern GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 

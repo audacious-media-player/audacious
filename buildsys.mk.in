@@ -35,6 +35,8 @@ ERLCFLAGS = @ERLCFLAGS@
 OBJCFLAGS = @OBJCFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
+PROG_IMPLIB_NEEDED = @PROG_IMPLIB_NEEDED@
+PROG_IMPLIB_LDFLAGS = @PROG_IMPLIB_LDFLAGS@
 PROG_SUFFIX = @EXEEXT@
 LIB_CPPFLAGS = @LIB_CPPFLAGS@
 LIB_CFLAGS = @LIB_CFLAGS@
@@ -73,7 +75,7 @@ OBJS += ${OBJS5:.m=.o}
 
 .SILENT:
 .SUFFIXES: .beam .c .cc .cxx .d .erl .m
-.PHONY: all subdirs depend install uninstall clean distclean
+.PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean
 
 all:
 	for i in subdirs depend ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
@@ -93,7 +95,6 @@ depend: pre-depend ${SRCS}
 	if test x"$$regen" = x"1"; then \
 		list=""; \
 		${DEPEND_STATUS}; \
-		rm -f .deps; \
 		for i in ${SRCS}; do \
 			case $${i##*.} in \
 			c|cc|cxx|m) \
@@ -101,10 +102,12 @@ depend: pre-depend ${SRCS}
 				;; \
 			esac; \
 		done; \
-		if ${CPP} ${CPPFLAGS} -M $$list >.deps; then \
-			${DEPEND_OK}; \
-		else \
-			${DEPEND_FAILED}; \
+		if test x"$$list" != "x"; then \
+			if ${CPP} ${CPPFLAGS} -M $$list >.deps; then \
+				${DEPEND_OK}; \
+			else \
+				${DEPEND_FAILED}; \
+			fi; \
 		fi; \
 	fi
 
@@ -208,7 +211,7 @@ install: ${LIB} ${STATIC_LIB} ${PLUGIN} ${PROG} install-extra
 
 	for i in ${STATIC_LIB}; do \
 		${INSTALL_STATUS}; \
-		if ${MKDIR_P} ${DESTDIR}${libdir} && ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i; then \
+		if ${MKDIR_P} ${DESTDIR}${libdir} && ${INSTALL} -m 644 $$i ${DESTDIR}${libdir}/$$i; then \
 			${INSTALL_OK}; \
 		else \
 			${INSTALL_FAILED}; \
