@@ -284,11 +284,6 @@ G_BEGIN_DECLS
 /* So that input plugins can get the title formatting information */
 G_CONST_RETURN gchar * get_gentitle_format(void);
 
-/* So that output plugins can communicate with effect plugins */
-EffectPlugin *get_current_effect_plugin(void);
-gboolean effects_enabled(void);
-gboolean plugin_set_errortext(const gchar * text);
-
 G_END_DECLS
 
 #include "audacious/mime.h"
