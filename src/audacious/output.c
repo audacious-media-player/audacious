@@ -492,7 +492,9 @@ produce_audio(gint time,        /* position             */
             if (ip_data.stop)                  /* has a stop been requested? */
                 return;                        /* yes, so finish */
 
-            g_usleep(10000);                   /* else sleep for retry */
+            /* else sleep for retry */
+            g_print("sleeping for %d msec\n", (cfg.output_buffer_size / 2) * 1000);
+            g_usleep((cfg.output_buffer_size / 2) * 1000);
         }
 
         if (ip_data.stop)
