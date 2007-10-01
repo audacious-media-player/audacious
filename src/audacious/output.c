@@ -493,7 +493,6 @@ produce_audio(gint time,        /* position             */
                 return;                        /* yes, so finish */
 
             /* else sleep for retry */
-            g_print("sleeping for %d msec\n", (cfg.output_buffer_size / 2) * 1000);
             g_usleep((cfg.output_buffer_size / 2) * 1000);
         }
 
