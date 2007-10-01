@@ -164,7 +164,6 @@ void mainwin_general_menu_callback(gpointer cb_data,
                                    guint action,
                                    GtkWidget * widget);
 
-void mainwin_attach_idle_func(void);
 gboolean mainwin_update_song_info(void);
 void mainwin_drag_data_received(GtkWidget * widget,
                                 GdkDragContext * context,

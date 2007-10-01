@@ -1471,7 +1471,6 @@ main(gint argc, gchar ** argv)
         hint_set_always(cfg.always_on_top);
 
         playlist_start_get_info_thread();
-        mainwin_attach_idle_func();
 
         has_x11_connection = TRUE;
 

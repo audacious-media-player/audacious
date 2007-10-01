@@ -1292,6 +1292,8 @@ mainwin_rev_pushed(void)
 
     seek_initial_pos = ui_skinned_horizontal_slider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_REV;
+    mainwin_timeout_id = g_timeout_add(MAINWIN_UPDATE_INTERVAL,
+        (GSourceFunc) mainwin_idle_func, NULL);
 }
 
 void
@@ -1320,14 +1322,20 @@ mainwin_rev_release(void)
     }
 
     seek_state = MAINWIN_SEEK_NIL;
+
+    g_source_remove(mainwin_timeout_id);
+    mainwin_timeout_id = 0;
 }
 
 void
 mainwin_fwd_pushed(void)
 {
     g_get_current_time(&cb_time);
+
     seek_initial_pos = ui_skinned_horizontal_slider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_FWD;
+    mainwin_timeout_id = g_timeout_add(MAINWIN_UPDATE_INTERVAL,
+        (GSourceFunc) mainwin_idle_func, NULL);
 }
 
 void
@@ -1356,6 +1364,9 @@ mainwin_fwd_release(void)
     }
 
     seek_state = MAINWIN_SEEK_NIL;
+
+    g_source_remove(mainwin_timeout_id);
+    mainwin_timeout_id = 0;
 }
 
 void
@@ -2484,13 +2495,6 @@ mainwin_create(void)
     gtk_window_add_accel_group( GTK_WINDOW(mainwin) , ui_manager_get_accel_group() );
 
     mainwin_create_widgets();
-}
-
-void
-mainwin_attach_idle_func(void)
-{
-    mainwin_timeout_id = g_timeout_add(MAINWIN_UPDATE_INTERVAL,
-                                       mainwin_idle_func, NULL);
 }
 
 gboolean
