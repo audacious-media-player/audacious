@@ -59,8 +59,20 @@
 #include "playback.h"
 #include "playback_evlisteners.h"
 
-static int song_info_timeout_source = 0;
+static gint song_info_timeout_source = 0;
+static gint update_vis_timeout_source = 0;
 
+/* XXX: there has to be a better way than polling here! */
+static gboolean
+playback_update_vis_func(gpointer unused)
+{
+    if (!playback_get_playing())
+        return FALSE;
+
+    input_update_vis(playback_get_time());
+
+    return TRUE;
+}
 
 static gint
 playback_set_pb_ready(InputPlayback *playback)
@@ -152,6 +164,9 @@ playback_initiate(void)
     /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
     song_info_timeout_source = g_timeout_add(1000,
         (GSourceFunc) mainwin_update_song_info, NULL);
+
+    update_vis_timeout_source = g_timeout_add(10,
+        (GSourceFunc) playback_update_vis_func, NULL);
 
     if (cfg.player_shaded) {
         gtk_widget_show(mainwin_stime_min);

@@ -2666,9 +2666,6 @@ mainwin_idle_func(gpointer data)
 {
     static gint count = 0;
 
-    if (playback_get_playing())  
-        input_update_vis(playback_get_time());    
-
     GDK_THREADS_ENTER();
 
     if (!count) {

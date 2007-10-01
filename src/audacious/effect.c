@@ -83,7 +83,6 @@ enable_effect_plugin(int i, gboolean enable)
     if (!node || !(node->data))
         return;
     ep = node->data;
-    ep->enabled = enable;
 
     if (enable && !ep->enabled) {
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
@@ -95,6 +94,8 @@ enable_effect_plugin(int i, gboolean enable)
         if (ep->cleanup)
             ep->cleanup();
     }
+
+    ep->enabled = enable;
 }
 
 GList *
