@@ -1445,7 +1445,7 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
-        read_volume(VOLSET_STARTUP);
+        ui_main_set_initial_volume();
 
         /* FIXME: delayed, because it deals directly with the plugin
          * interface to set menu items */

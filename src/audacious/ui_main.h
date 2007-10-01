@@ -114,7 +114,7 @@ extern GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 extern GtkWidget *mainwin_position, *mainwin_sposition;
 
 void mainwin_create(void);
-void read_volume(gint when);
+void ui_main_set_initial_volume(void);
 
 void mainwin_quit_cb(void);
 void mainwin_lock_info_text(const gchar * text);

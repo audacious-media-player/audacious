@@ -1537,7 +1537,6 @@ mainwin_adjust_volume_release(void)
 {
     mainwin_release_info_text();
     setting_volume = FALSE;
-    read_volume(VOLUME_ADJUSTED);
 }
 
 void
@@ -1571,7 +1570,6 @@ mainwin_adjust_balance_release(void)
 {
     mainwin_release_info_text();
     setting_volume = FALSE;
-    read_volume(VOLUME_ADJUSTED);
 }
 
 void
@@ -1633,7 +1631,6 @@ mainwin_set_volume_diff(gint diff)
     setting_volume = FALSE;
     mainwin_set_volume_slider(vol);
     equalizerwin_set_volume_slider(vol);
-    read_volume(VOLUME_SET);
 }
 
 void
@@ -1645,7 +1642,6 @@ mainwin_set_balance_diff(gint diff)
     setting_volume = FALSE;
     mainwin_set_balance_slider(b);
     equalizerwin_set_balance_slider(b);
-    read_volume(VOLUME_SET);
 }
 
 void
@@ -1984,113 +1980,27 @@ run_no_output_device_dialog(gpointer hook_data, gpointer user_data)
 }
 
 void
-read_volume(gint when)
+ui_main_set_initial_volume(void)
 {
-    static gint pvl = 0, pvr = 0;
-    static gint times = VOLSET_DISP_TIMES;
-    static gboolean changing = FALSE;
-
     gint vl, vr, b, v;
 
     input_get_volume(&vl, &vr);
 
-    switch (when) {
-    case VOLSET_STARTUP:
-        vl = CLAMP(vl, 0, 100);
-        vr = CLAMP(vr, 0, 100);
-        pvl = vl;
-        pvr = vr;
-        v = MAX(vl, vr);
-        if (vl > vr)
-            b = (gint) rint(((gdouble) vr / vl) * 100) - 100;
-        else if (vl < vr)
-            b = 100 - (gint) rint(((gdouble) vl / vr) * 100);
-        else
-            b = 0;
+    vl = CLAMP(vl, 0, 100);
+    vr = CLAMP(vr, 0, 100);
+    v = MAX(vl, vr);
+    if (vl > vr)
+        b = (gint) rint(((gdouble) vr / vl) * 100) - 100;
+    else if (vl < vr)
+        b = 100 - (gint) rint(((gdouble) vl / vr) * 100);
+    else
+        b = 0;
 
-        balance = b;
-        mainwin_set_volume_slider(v);
-        equalizerwin_set_volume_slider(v);
-        mainwin_set_balance_slider(b);
-        equalizerwin_set_balance_slider(b);
-        return;
-
-    case VOLSET_UPDATE:
-        if (vl == -1 || vr == -1)
-            return;
-
-        if (setting_volume) {
-            pvl = vl;
-            pvr = vr;
-            return;
-        }
-
-        if (pvr == vr && pvl == vl && changing) {
-            if (times < VOLSET_DISP_TIMES)
-                times++;
-            else {
-                mainwin_release_info_text();
-                changing = FALSE;
-            }
-        }
-        else if (pvr != vr || pvl != vl) {
-            gchar *tmp;
-
-            v = MAX(vl, vr);
-            if (vl > vr)
-                b = (gint) rint(((gdouble) vr / vl) * 100) - 100;
-            else if (vl < vr)
-                b = 100 - (gint) rint(((gdouble) vl / vr) * 100);
-            else
-                b = 0;
-
-            if (MAX(vl, vr) != MAX(pvl, pvr))
-                tmp = g_strdup_printf(_("VOLUME: %d%%"), v);
-            else {
-                if (vl > vr) {
-                    tmp = g_strdup_printf(_("BALANCE: %d%% LEFT"), -b);
-                }
-                else if (vr == vl)
-                    tmp = g_strdup_printf(_("BALANCE: CENTER"));
-                else {          /* (vl < vr) */
-                    tmp = g_strdup_printf(_("BALANCE: %d%% RIGHT"), b);
-                }
-            }
-            mainwin_lock_info_text(tmp);
-            g_free(tmp);
-
-            pvr = vr;
-            pvl = vl;
-            times = 0;
-            changing = TRUE;
-            mainwin_set_volume_slider(v);
-            equalizerwin_set_volume_slider(v);
-
-            /* Don't change the balance slider if the volume has been
-             * set to zero.  The balance can be anything, and our best
-             * guess is what is was before. */
-            if (v > 0) {
-                balance = b;
-                mainwin_set_balance_slider(b);
-                equalizerwin_set_balance_slider(b);
-            }
-        }
-        break;
-
-    case VOLUME_ADJUSTED:
-        pvl = vl;
-        pvr = vr;
-        break;
-
-    case VOLUME_SET:
-        times = 0;
-        changing = TRUE;
-        pvl = vl;
-        pvr = vr;
-        break;
-    }
+    mainwin_set_volume_slider(v);
+    equalizerwin_set_volume_slider(v);
+    mainwin_set_balance_slider(b);
+    equalizerwin_set_balance_slider(b);
 }
-
 
 /* TODO: HAL! */
 gboolean
@@ -2664,16 +2574,7 @@ mainwin_update_song_info(void)
 static gboolean
 mainwin_idle_func(gpointer data)
 {
-    static gint count = 0;
-
     GDK_THREADS_ENTER();
-
-    if (!count) {
-        read_volume(VOLSET_UPDATE);
-        count = 10;
-    }
-    else
-        count--;
 
     /* tristate buttons seek */
     if ( seek_state != MAINWIN_SEEK_NIL )
