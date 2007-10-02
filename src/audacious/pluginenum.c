@@ -57,6 +57,35 @@ const gchar *plugin_dir_list[] = {
     NULL
 };
 
+/*****************************************************************/
+
+static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
+    .vfs_fopen = vfs_fopen,
+    .vfs_fclose = vfs_fclose,
+    .vfs_dup = vfs_dup,
+    .vfs_fread = vfs_fread,
+    .vfs_fwrite = vfs_fwrite,
+    .vfs_getc = vfs_getc,
+    .vfs_ungetc = vfs_ungetc,
+    .vfs_fgets = vfs_fgets,
+    .vfs_fseek = vfs_fseek,
+    .vfs_rewind = vfs_rewind,
+    .vfs_ftell = vfs_ftell,
+    .vfs_feof = vfs_feof,
+    .vfs_file_test = vfs_file_test,
+    .vfs_is_writeable = vfs_is_writeable,
+    .vfs_truncate = vfs_truncate,
+    .vfs_fsize = vfs_fsize,
+    .vfs_get_metadata = vfs_get_metadata,
+    .vfs_fprintf = vfs_fprintf,
+    .vfs_register_transport = vfs_register_transport,
+    .vfs_file_get_contents = vfs_file_get_contents,
+    .vfs_is_remote = vfs_is_remote,
+    .vfs_is_streaming = vfs_is_streaming,
+}
+
+/*****************************************************************/
+
 GList *lowlevel_list = NULL;
 extern GList *vfs_transports;
 
@@ -371,11 +400,11 @@ add_plugin(const gchar * filename)
     /* v2 plugin loading */
     if (g_module_symbol(module, "get_plugin_info", &func))
     {
-        PluginHeader *(*header_func_p)() = func;
+        PluginHeader *(*header_func_p)(struct _AudaciousFuncTableV1 *) = func;
         PluginHeader *header;
 
         /* this should never happen. */
-        g_return_if_fail((header = header_func_p()) != NULL);
+        g_return_if_fail((header = header_func_p(&_aud_papi_v1)) != NULL);
 
         plugin2_process(header, module, filename);
         return;

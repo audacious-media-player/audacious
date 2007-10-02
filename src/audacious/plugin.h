@@ -121,11 +121,87 @@ typedef struct {
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
+/* define the public API here */
+/* add new functions to the bottom of this list!!!! --nenolod */
+struct _AudaciousFuncVTable1 {
+
+    /* VFS */
+    VFSFile *(*vfs_fopen)(const gchar *uri, const gchar *mode);
+    gint (*vfs_fclose)(VFSFile *fd);
+    VFSFile *(*vfs_dup)(VFSFile *in);
+    size_t (*vfs_fread)(gpointer ptr,
+                 size_t size,
+                 size_t nmemb,
+                 VFSFile * file);
+    size_t (*vfs_fwrite)(gconstpointer ptr,
+                  size_t size,
+                  size_t nmemb,
+                  VFSFile *file);
+
+    gint (*vfs_getc)(VFSFile *stream);
+    gint (*vfs_ungetc)(gint c,
+                       VFSFile *stream);
+    gchar *(*vfs_fgets)(gchar *s,
+                        gint n,
+                        VFSFile *stream);
+
+    gint (*vfs_fseek)(VFSFile * file,
+                      glong offset,
+                      gint whence);
+    void (*vfs_rewind)(VFSFile * file);
+    glong (*vfs_ftell)(VFSFile * file);
+    gboolean (*vfs_feof)(VFSFile * file);
+
+    gboolean (*vfs_file_test)(const gchar * path,
+                              GFileTest test);
+
+    gboolean (*vfs_is_writeable)(const gchar * path);
+    gboolean (*vfs_truncate)(VFSFile * file, glong length);
+    off_t (*vfs_fsize)(VFSFile * file);
+    gchar *(*vfs_get_metadata)(VFSFile * file, const gchar * field);
+
+    int (*vfs_fprintf)(VFSFile *stream, gchar const *format, ...)
+        __attribute__ ((__format__ (__printf__, 2, 3)));
+
+    gboolean (*vfs_register_transport)(VFSConstructor *vtable);
+    void (*vfs_file_get_contents)(const gchar *filename, gchar **buf, gsize *size);
+    gboolean (*vfs_is_remote)(const gchar * path);
+    gboolean (*vfs_is_streaming)(VFSFile *file);
+
+};
+
+/* Convenience macros for accessing the public API. */
+/*	public name			vtable mapping      */
+#define aud_vfs_fopen			_audvt->vfs_fopen
+#define aud_vfs_fclose			_audvt->vfs_fclose
+#define aud_vfs_dup			_audvt->vfs_dup
+#define aud_vfs_fread			_audvt->vfs_fread
+#define aud_vfs_fwrite			_audvt->vfs_fwrite
+#define aud_vfs_getc			_audvt->vfs_getc
+#define aud_vfs_ungetc			_audvt->vfs_ungetc
+#define aud_vfs_fgets			_audvt->vfs_fgets
+#define aud_vfs_fseek			_audvt->vfs_fseek
+#define aud_vfs_rewind			_audvt->vfs_rewind
+#define aud_vfs_ftell			_audvt->vfs_ftell
+#define aud_vfs_feof			_audvt->vfs_feof
+#define aud_vfs_file_test		_audvt->vfs_file_test
+#define aud_vfs_is_writeable		_audvt->vfs_is_writeable
+#define aud_vfs_truncate		_audvt->vfs_truncate
+#define aud_vfs_fsize			_audvt->vfs_fsize
+#define aud_vfs_get_metadata		_audvt->vfs_get_metadata
+#define aud_vfs_fprintf			_audvt->vfs_fprintf
+#define aud_vfs_register_transport	_audvt->vfs_register_transport
+#define aud_vfs_file_get_contents	_audvt->vfs_file_get_contents
+#define aud_vfs_is_remote		_audvt->vfs_is_remote
+#define aud_vfs_is_streaming		_audvt->vfs_is_streaming
+
 #define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
 		(gchar *)#name, init, fini, NULL, __VA_ARGS__ }; \
-	G_MODULE_EXPORT PluginHeader *get_plugin_info(void) { \
+	static struct _AudaciousFuncVTable1 *_audvt = NULL; \
+	G_MODULE_EXPORT PluginHeader *get_plugin_info(struct _AudaciousFuncVTable1 *_vt) { \
+		_audvt = _vt; \
 		return &_pluginInfo; \
 	} \
 	G_END_DECLS
