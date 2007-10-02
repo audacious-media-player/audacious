@@ -82,7 +82,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .vfs_file_get_contents = vfs_file_get_contents,
     .vfs_is_remote = vfs_is_remote,
     .vfs_is_streaming = vfs_is_streaming,
-}
+};
 
 /*****************************************************************/
 

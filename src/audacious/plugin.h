@@ -123,7 +123,7 @@ typedef struct {
 
 /* define the public API here */
 /* add new functions to the bottom of this list!!!! --nenolod */
-struct _AudaciousFuncVTable1 {
+struct _AudaciousFuncTableV1 {
 
     /* VFS */
     VFSFile *(*vfs_fopen)(const gchar *uri, const gchar *mode);
