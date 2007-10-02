@@ -168,6 +168,9 @@ struct _AudaciousFuncTableV1 {
     gboolean (*vfs_is_remote)(const gchar * path);
     gboolean (*vfs_is_streaming)(VFSFile *file);
 
+    /* VFS Buffer */
+    VFSFile *(*vfs_buffer_new)(gpointer data, gsize size);
+    VFSFile *(*vfs_buffer_new_from_string)(gchar *str);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -194,6 +197,10 @@ struct _AudaciousFuncTableV1 {
 #define aud_vfs_file_get_contents	_audvt->vfs_file_get_contents
 #define aud_vfs_is_remote		_audvt->vfs_is_remote
 #define aud_vfs_is_streaming		_audvt->vfs_is_streaming
+
+#define aud_vfs_buffer_new		_audvt->vfs_buffer_new
+#define aud_vfs_buffer_new_from_string	_audvt->vfs_buffer_new_from_string
+
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \

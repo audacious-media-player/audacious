@@ -52,6 +52,8 @@
 
 #include "pluginenum.h"
 
+#include "vfs_buffer.h"
+
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
     NULL
@@ -82,6 +84,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .vfs_file_get_contents = vfs_file_get_contents,
     .vfs_is_remote = vfs_is_remote,
     .vfs_is_streaming = vfs_is_streaming,
+
+    .vfs_buffer_new = vfs_buffer_new,
+    .vfs_buffer_new_from_string = vfs_buffer_new_from_string,
 };
 
 /*****************************************************************/
