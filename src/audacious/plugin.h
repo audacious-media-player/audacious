@@ -171,6 +171,11 @@ struct _AudaciousFuncTableV1 {
     /* VFS Buffer */
     VFSFile *(*vfs_buffer_new)(gpointer data, gsize size);
     VFSFile *(*vfs_buffer_new_from_string)(gchar *str);
+
+    /* VFS Buffered File */
+    VFSFile *(*vfs_buffered_file_new_from_uri)(const gchar *uri);
+    VFSFile *(*vfs_buffered_file_release_live_fd)(VFSFile *fd);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -201,6 +206,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_vfs_buffer_new		_audvt->vfs_buffer_new
 #define aud_vfs_buffer_new_from_string	_audvt->vfs_buffer_new_from_string
 
+#define aud_vfs_buffered_file_new_from_uri	_audvt->vfs_buffered_file_new_from_uri
+#define aud_vfs_buffered_file_release_live_fd	_audvt->vfs_buffered_file_release_live_fd
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \
