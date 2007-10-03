@@ -290,7 +290,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
 
 /* for multi-file plugins :( */
-extern struct _AudaciousFuncVTable1 *_audvt;
+extern struct _AudaciousFuncTableV1 *_audvt;
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \
