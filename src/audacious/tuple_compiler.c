@@ -511,7 +511,8 @@ ret_error:
 
 static TupleEvalNode *tuple_compiler_pass2(gboolean *changed, TupleEvalContext *ctx, TupleEvalNode *expr)
 {
-  TupleEvalNode *curr = expr, *res = NULL;
+  /* TupleEvalNode *curr = expr; */
+  TupleEvalNode *res = NULL;
   assert(ctx != NULL);
   assert(expr != NULL);
   
