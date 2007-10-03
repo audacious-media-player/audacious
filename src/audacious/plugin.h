@@ -296,7 +296,7 @@ extern struct _AudaciousFuncTableV1 *_audvt;
 	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
 		(gchar *)#name, init, fini, NULL, __VA_ARGS__ }; \
-	struct _AudaciousFuncVTable1 *_audvt = NULL; \
+	struct _AudaciousFuncTableV1 *_audvt = NULL; \
 	G_MODULE_EXPORT PluginHeader *get_plugin_info(struct _AudaciousFuncVTable1 *_vt) { \
 		_audvt = _vt; \
 		return &_pluginInfo; \
