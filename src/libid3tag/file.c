@@ -197,6 +197,7 @@ int add_filetag(struct id3_file *file, struct filetag const *filetag)
  * NAME:	del_filetag()
  * DESCRIPTION:	delete a file tag entry
  */
+/*
 static
 void del_filetag(struct id3_file *file, unsigned int index)
 {
@@ -209,6 +210,7 @@ void del_filetag(struct id3_file *file, unsigned int index)
 
   --file->ntags;
 }
+*/
 
 /*
  * NAME:	add_tag()
