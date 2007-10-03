@@ -41,6 +41,7 @@
 #include "audacious/tuple.h"
 #include "audacious/tuple_formatter.h"
 #include "audacious/eventqueue.h"
+#include "audacious/configdb.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -176,6 +177,56 @@ struct _AudaciousFuncTableV1 {
     VFSFile *(*vfs_buffered_file_new_from_uri)(const gchar *uri);
     VFSFile *(*vfs_buffered_file_release_live_fd)(VFSFile *fd);
 
+    /* ConfigDb */
+    ConfigDb *(*cfg_db_open)(void);
+    void (*cfg_db_close)(ConfigDb *db);
+
+    gboolean (*cfg_db_get_string)(ConfigDb *db,
+                                  const gchar *section,
+                                  const gchar *key,
+                                  gchar **value);
+    gboolean (*cfg_db_get_int)(ConfigDb *db,
+                               const gchar *section,
+                               const gchar *key,
+                               gint *value);
+    gboolean (*cfg_db_get_bool)(ConfigDb *db,
+                                const gchar *section,
+                                const gchar *key,
+                                gboolean *value);
+    gboolean (*cfg_db_get_float)(ConfigDb *db,
+                                 const gchar *section,
+                                 const gchar *key,
+                                 gfloat *value);
+    gboolean (*cfg_db_get_double)(ConfigDb *db,
+                                  const gchar *section,
+                                  const gchar *key,
+                                  gdouble *value);
+
+    void (*cfg_db_set_string)(ConfigDb *db,
+                              const gchar *section,
+                              const gchar *key,
+                              const gchar *value);
+    void (*cfg_db_set_int)(ConfigDb *db,
+                           const gchar *section,
+                           const gchar *key,
+                           gint value);
+    void (*cfg_db_set_bool)(ConfigDb *db,
+                            const gchar *section,
+                            const gchar *key,
+                            gboolean value);
+    void (*cfg_db_set_float)(ConfigDb *db,
+                             const gchar *section,
+                             const gchar *key,
+                             gfloat value);
+    void (*cfg_db_set_double)(ConfigDb *db,
+                              const gchar *section,
+                              const gchar *key,
+                              gdouble value);
+
+    void (*cfg_db_unset_key)(ConfigDb *db,
+                             const gchar *section,
+                             const gchar *key);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -208,6 +259,35 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_vfs_buffered_file_new_from_uri	_audvt->vfs_buffered_file_new_from_uri
 #define aud_vfs_buffered_file_release_live_fd	_audvt->vfs_buffered_file_release_live_fd
+
+/* XXX: deprecation warnings */
+#define bmp_cfg_db_open			_audvt->cfg_db_open
+#define bmp_cfg_db_close		_audvt->cfg_db_close
+#define bmp_cfg_db_set_string		_audvt->cfg_db_set_string
+#define bmp_cfg_db_set_int		_audvt->cfg_db_set_int
+#define bmp_cfg_db_set_bool		_audvt->cfg_db_set_bool
+#define bmp_cfg_db_set_float		_audvt->cfg_db_set_float
+#define bmp_cfg_db_set_double		_audvt->cfg_db_set_double
+#define bmp_cfg_db_get_string		_audvt->cfg_db_get_string
+#define bmp_cfg_db_get_int		_audvt->cfg_db_get_int
+#define bmp_cfg_db_get_bool		_audvt->cfg_db_get_bool
+#define bmp_cfg_db_get_float		_audvt->cfg_db_get_float
+#define bmp_cfg_db_get_double		_audvt->cfg_db_get_double
+#define bmp_cfg_db_unset_key		_audvt->cfg_db_unset_key
+
+#define aud_cfg_db_open			_audvt->cfg_db_open
+#define aud_cfg_db_close		_audvt->cfg_db_close
+#define aud_cfg_db_set_string		_audvt->cfg_db_set_string
+#define aud_cfg_db_set_int		_audvt->cfg_db_set_int
+#define aud_cfg_db_set_bool		_audvt->cfg_db_set_bool
+#define aud_cfg_db_set_float		_audvt->cfg_db_set_float
+#define aud_cfg_db_set_double		_audvt->cfg_db_set_double
+#define aud_cfg_db_get_string		_audvt->cfg_db_get_string
+#define aud_cfg_db_get_int		_audvt->cfg_db_get_int
+#define aud_cfg_db_get_bool		_audvt->cfg_db_get_bool
+#define aud_cfg_db_get_float		_audvt->cfg_db_get_float
+#define aud_cfg_db_get_double		_audvt->cfg_db_get_double
+#define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \

@@ -91,6 +91,23 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .vfs_buffered_file_new_from_uri = vfs_buffered_file_new_from_uri,
     .vfs_buffered_file_release_live_fd = vfs_buffered_file_release_live_fd,
+
+    .cfg_db_open = cfg_db_open,
+    .cfg_db_close = cfg_db_close,
+
+    .cfg_db_get_string = cfg_db_get_string,
+    .cfg_db_get_int = cfg_db_get_int,
+    .cfg_db_get_bool = cfg_db_get_bool,
+    .cfg_db_get_float = cfg_db_get_float,
+    .cfg_db_get_double = cfg_db_get_double,
+
+    .cfg_db_set_string = cfg_db_set_string,
+    .cfg_db_set_int = cfg_db_set_int,
+    .cfg_db_set_bool = cfg_db_set_bool,
+    .cfg_db_set_float = cfg_db_set_float,
+    .cfg_db_set_double = cfg_db_set_double,
+
+    .cfg_db_unset_key = cfg_db_unset_key,
 };
 
 /*****************************************************************/
