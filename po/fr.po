@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-09-13 17:37+0200\n"
-"PO-Revision-Date: 2007-09-14 19:51+0100\n"
+"PO-Revision-Date: 2007-09-30 17:44+0100\n"
 "Last-Translator: stanislas zeller <skogkatt@orange.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgstr "<span size=\"small\">Année</span>"
 
 #: src/audacious/glade/fileinfo.glade:441
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Nombre de Piste</span>"
+msgstr "<span size=\"small\">Piste</span>"
 
 #: src/audacious/glade/fileinfo.glade:499
 msgid "<span size=\"small\">Location</span>"
@@ -139,11 +139,11 @@ msgstr "Choisir la police:"
 
 #: src/audacious/glade/prefswin.glade:1091
 msgid "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."
-msgstr "Utiliser des polices Bitmap si disponibles. Les polices Bitmap ne suportent pas les caractères Unicode."
+msgstr "Utiliser les polices Bitmap si disponibles. Les polices Bitmap ne supportent pas les caractères Unicode."
 
 #: src/audacious/glade/prefswin.glade:1093
 msgid "Use Bitmap fonts if available"
-msgstr "Utiliser les polices Bitmaps si disponible"
+msgstr "Utiliser les polices Bitmap si disponibles"
 
 #: src/audacious/glade/prefswin.glade:1127
 msgid "<b>_Miscellaneous</b>"
@@ -242,7 +242,7 @@ msgstr "Charger les méta-données des listes et fichiers"
 
 #: src/audacious/glade/prefswin.glade:1912
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr "Charger les méta-données quand un fichier est ajouté à la playlist, ou ouvert."
+msgstr "Charger les méta-données quand un fichier est ajouté à la liste d'écoute, ou ouvert."
 
 #: src/audacious/glade/prefswin.glade:1914
 msgid "On load"
@@ -250,7 +250,7 @@ msgstr "Au chargement"
 
 #: src/audacious/glade/prefswin.glade:1934
 msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Charger les méta-données sur demande quand le fichier s'affiche dans la playlist."
+msgstr "Charger les méta-données sur demande quand le fichier s'affiche dans la liste d'écoute."
 
 #: src/audacious/glade/prefswin.glade:1936
 msgid "On display"
@@ -426,7 +426,7 @@ msgstr "<b>Détection du Format</b>"
 
 #: src/audacious/glade/prefswin.glade:3861
 msgid "When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."
-msgstr "Si coché, Audacious détectera les formats de fichier sur demande. Ceci peut avoir pour résultat une playlist bordélique, mais avec une rapidité d'affichage accrue."
+msgstr "Si coché, Audacious détectera les formats de fichier sur demande. Ceci peut avoir pour résultat une liste d'écoute incohérente, mais avec une rapidité d'affichage accrue."
 
 #: src/audacious/glade/prefswin.glade:3863
 msgid "Detect file formats on demand, instead of immediately."
@@ -639,7 +639,7 @@ msgstr "Ne vide pas la liste d'écoute"
 
 #: src/audacious/main.c:1071
 msgid "Add new files to a temporary playlist"
-msgstr "Ajouter de nouveaux fichiers à la playlist"
+msgstr "Ajouter de nouveaux fichiers à la liste d'écoute"
 
 #: src/audacious/main.c:1072
 msgid "Display the main window"
@@ -1546,22 +1546,22 @@ msgstr "Effet Retombée Crêtes"
 #: src/audacious/ui_manager.c:205
 #: src/audacious/ui_manager.c:206
 msgid "New Playlist"
-msgstr "Nouvelle Playlist"
+msgstr "Nouvelle Liste d'Ecoute"
 
 #: src/audacious/ui_manager.c:208
 #: src/audacious/ui_manager.c:209
 msgid "Select Next Playlist"
-msgstr "Sélectionner la Prochaine Playlist"
+msgstr "Sélectionner la Prochaine Liste d'Ecoute"
 
 #: src/audacious/ui_manager.c:211
 #: src/audacious/ui_manager.c:212
 msgid "Select Previous Playlist"
-msgstr "Sélectionner la Playlist Précédente"
+msgstr "Sélectionner la Liste d'Ecoute Précédente"
 
 #: src/audacious/ui_manager.c:214
 #: src/audacious/ui_manager.c:215
 msgid "Delete Playlist"
-msgstr "Effacer la Playlist"
+msgstr "Effacer la Liste d'Ecoute"
 
 #: src/audacious/ui_manager.c:217
 msgid "Load List"
@@ -1569,7 +1569,7 @@ msgstr "Charger"
 
 #: src/audacious/ui_manager.c:218
 msgid "Loads a playlist file into the selected playlist."
-msgstr "Charger une playlist dans la playlist sélectionnée"
+msgstr "Charger une liste d'écoute dans la liste d'écoute sélectionnée"
 
 #: src/audacious/ui_manager.c:220
 msgid "Save List"
@@ -1585,7 +1585,7 @@ msgstr "Sauver la Liste par Défaut"
 
 #: src/audacious/ui_manager.c:224
 msgid "Saves the selected playlist to the default location."
-msgstr "Sauver la playlist sélectionnées vers l'emplacement par défaut."
+msgstr "Sauver la liste d'écoute sélectionnées vers l'emplacement par défaut."
 
 #: src/audacious/ui_manager.c:227
 msgid "Refresh List"
@@ -1593,7 +1593,7 @@ msgstr "Rafraichir"
 
 #: src/audacious/ui_manager.c:228
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr "Rafraichir les méta-données associées avec la playlist"
+msgstr "Rafraichir les méta-données associées avec la liste d'écoute"
 
 #: src/audacious/ui_manager.c:231
 msgid "List Manager"
@@ -1601,7 +1601,7 @@ msgstr "Gestionnaire de Listes"
 
 #: src/audacious/ui_manager.c:232
 msgid "Opens the playlist manager."
-msgstr "Ouvrir le gestionnaire de playlist."
+msgstr "Ouvrir le gestionnaire de liste d'écoute."
 
 #: src/audacious/ui_manager.c:238
 msgid "View"
@@ -1613,7 +1613,7 @@ msgstr "Ajouter une adresse Internet..."
 
 #: src/audacious/ui_manager.c:243
 msgid "Adds a remote track to the playlist."
-msgstr "Ajouter une piste aléatoire à la playlist"
+msgstr "Ajouter une piste aléatoire à la liste d'écoute"
 
 #: src/audacious/ui_manager.c:246
 msgid "Add Files..."
@@ -1621,7 +1621,7 @@ msgstr "Ajouter des fichiers..."
 
 #: src/audacious/ui_manager.c:247
 msgid "Adds files to the playlist."
-msgstr "Ajouter des fichiers à la playlist."
+msgstr "Ajouter des fichiers à la liste d'écoute."
 
 #: src/audacious/ui_manager.c:252
 msgid "Search and Select"
@@ -1629,7 +1629,7 @@ msgstr "Chercher et Sélectionner"
 
 #: src/audacious/ui_manager.c:253
 msgid "Searches the playlist and selects playlist entries based on specific criteria."
-msgstr "Chercher et sélectionner les entrées de la playlist basées sur des critères spécifiques."
+msgstr "Chercher et sélectionner les entrées de la liste d'écoute basées sur des critères spécifiques."
 
 #: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
@@ -1645,7 +1645,7 @@ msgstr "Tous"
 
 #: src/audacious/ui_manager.c:261
 msgid "Selects all of the playlist entries."
-msgstr "Sélectionner toutes les playlists."
+msgstr "Sélectionner toutes les listes d'écoute."
 
 #: src/audacious/ui_manager.c:264
 msgid "Select None"
@@ -1653,7 +1653,7 @@ msgstr "Ne Rien Sélectionner"
 
 #: src/audacious/ui_manager.c:265
 msgid "Deselects all of the playlist entries."
-msgstr "Désélectionner toutes les playlists"
+msgstr "Désélectionner toutes les listes d'écoute"
 
 #: src/audacious/ui_manager.c:270
 msgid "Clear Queue"
@@ -1661,7 +1661,7 @@ msgstr "Vider la File"
 
 #: src/audacious/ui_manager.c:271
 msgid "Clears the queue associated with this playlist."
-msgstr "Effacer la queue associée avec cette playlist."
+msgstr "Effacer la queue associée avec cette liste d'écoute."
 
 #: src/audacious/ui_manager.c:274
 msgid "Remove Unavailable Files"
@@ -1683,7 +1683,7 @@ msgstr "Par Titre"
 
 #: src/audacious/ui_manager.c:281
 msgid "Removes duplicate entries from the playlist by title."
-msgstr "Enlever les entrées dupliquées de la playlist par titre."
+msgstr "Enlever les entrées dupliquées de la liste d'écoute par titre."
 
 #: src/audacious/ui_manager.c:284
 #: src/audacious/ui_manager.c:324
@@ -1703,7 +1703,7 @@ msgstr "Par Chemin + Nom de Fichier"
 
 #: src/audacious/ui_manager.c:289
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr "Enlever les entrées dupliquées de la playlist par emplacement."
+msgstr "Enlever les entrées dupliquées de la liste d'écoute par emplacement."
 
 #: src/audacious/ui_manager.c:292
 msgid "Remove All"
@@ -1711,7 +1711,7 @@ msgstr "Tout Supprimer"
 
 #: src/audacious/ui_manager.c:293
 msgid "Removes all entries from the playlist."
-msgstr "Enlever toutes les entrées de la playlist."
+msgstr "Enlever toutes les entrées de la liste d'écoute."
 
 #: src/audacious/ui_manager.c:296
 msgid "Remove Unselected"
@@ -1719,7 +1719,7 @@ msgstr "Supprimer Non-sélectionnées"
 
 #: src/audacious/ui_manager.c:297
 msgid "Remove unselected entries from the playlist."
-msgstr "Enlever les entrées non-sélectionnées de la playlist."
+msgstr "Enlever les entrées non-sélectionnées de la liste d'écoute."
 
 #: src/audacious/ui_manager.c:300
 msgid "Remove Selected"
@@ -1727,7 +1727,7 @@ msgstr "Supprimer Sélectionnées"
 
 #: src/audacious/ui_manager.c:301
 msgid "Remove selected entries from the playlist."
-msgstr "Enlever les entrées sélectionnées de la playlist."
+msgstr "Enlever les entrées sélectionnées de la liste d'écoute."
 
 #: src/audacious/ui_manager.c:306
 msgid "Randomize List"
@@ -1735,7 +1735,7 @@ msgstr "Mélanger la Liste"
 
 #: src/audacious/ui_manager.c:307
 msgid "Randomizes the playlist."
-msgstr "Mélanger la playlist"
+msgstr "Mélanger la liste d'écoute"
 
 #: src/audacious/ui_manager.c:310
 msgid "Reverse List"
@@ -1743,7 +1743,7 @@ msgstr "Inverser la Liste"
 
 #: src/audacious/ui_manager.c:311
 msgid "Reverses the playlist."
-msgstr "Renverser la playlist."
+msgstr "Renverser la liste d'écoute."
 
 #: src/audacious/ui_manager.c:314
 msgid "Sort List"
@@ -1797,12 +1797,12 @@ msgstr "Trier la Liste par numéro de piste"
 #: src/audacious/ui_manager.c:340
 #: src/audacious/ui_manager.c:370
 msgid "By Playlist Entry"
-msgstr "Trier la Liste par entrée de la playlist"
+msgstr "Trier la Liste par entrée de la liste d'écoute"
 
 #: src/audacious/ui_manager.c:341
 #: src/audacious/ui_manager.c:371
 msgid "Sorts the list by playlist entry."
-msgstr "Trier la Liste par entrée de la playlist."
+msgstr "Trier la Liste par entrée de la liste d'écoute."
 
 #: src/audacious/ui_manager.c:344
 msgid "Sort Selected"
@@ -1896,7 +1896,7 @@ msgstr "Basculer dans la file"
 
 #: src/audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr "Activer/Désactiver l'entrée dans la file de la playlist."
+msgstr "Activer/Désactiver l'entrée dans la file de la liste d'écoute."
 
 #: src/audacious/ui_manager.c:434
 msgid "Load"
@@ -2013,11 +2013,11 @@ msgstr "Effacer le pré-réglage chargé auto."
 
 #: src/audacious/ui_playlist.c:477
 msgid "Search entries in active playlist"
-msgstr "Chercher les entrées dans la playlist active"
+msgstr "Chercher les entrées dans la liste d'écoute active"
 
 #: src/audacious/ui_playlist.c:485
 msgid "Select entries in playlist by filling one or more fields. Fields use regular expressions syntax, case-insensitive. If you don't know how regular expressions work, simply insert a literal portion of what you're searching for."
-msgstr "Sélectionner les entrées dans la playlist en fichant un ou plusieurs champs. Les champs utilise des syntaxes d'expressions régulières, des cases insensitives. Si vous ne connaissez pas comment fonctionne des expressions régulières, insérer simplement une portion littérale de ce que vous cherchez."
+msgstr "Sélectionner les entrées dans la liste d'écoute en fichant un ou plusieurs champs. Les champs utilise des syntaxes d'expressions régulières, des cases insensitives. Si vous ne connaissez pas comment fonctionne des expressions régulières, insérer simplement une portion littérale de ce que vous cherchez."
 
 #: src/audacious/ui_playlist.c:493
 msgid "Title: "
@@ -2045,7 +2045,7 @@ msgstr ""
 
 #: src/audacious/ui_playlist.c:528
 msgid "Create a new playlist with matching entries"
-msgstr "Créer une nouvelle playlist avec des entrées assorties"
+msgstr "Créer une nouvelle liste d'écoute avec des entrées assorties"
 
 #: src/audacious/ui_playlist.c:748
 #, c-format
@@ -2090,7 +2090,7 @@ msgstr "Éditeur de liste d'écoute"
 
 #: src/audacious/ui_playlist_manager.c:255
 msgid "Playlist Manager"
-msgstr "/Gestionnaire de Playlist"
+msgstr "/Gestionnaire de liste d'écoute"
 
 #: src/audacious/ui_playlist_manager.c:294
 msgid "Entries"
