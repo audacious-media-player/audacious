@@ -706,12 +706,12 @@ on_proxy_use_realize(GtkToggleButton * button,
     ConfigDb *db;
     gboolean ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_bool(db, NULL, "use_proxy", &ret) != FALSE)
+    if (cfg_db_get_bool(db, NULL, "use_proxy", &ret) != FALSE)
         gtk_toggle_button_set_active(button, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -721,9 +721,9 @@ on_proxy_use_toggled(GtkToggleButton * button,
     ConfigDb *db;
     gboolean ret = gtk_toggle_button_get_active(button);
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_bool(db, NULL, "use_proxy", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_bool(db, NULL, "use_proxy", ret);
+    cfg_db_close(db);
 }
 
 static void
@@ -733,12 +733,12 @@ on_proxy_auth_realize(GtkToggleButton * button,
     ConfigDb *db;
     gboolean ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &ret) != FALSE)
+    if (cfg_db_get_bool(db, NULL, "proxy_use_auth", &ret) != FALSE)
         gtk_toggle_button_set_active(button, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -748,9 +748,9 @@ on_proxy_auth_toggled(GtkToggleButton * button,
     ConfigDb *db;
     gboolean ret = gtk_toggle_button_get_active(button);
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_bool(db, NULL, "proxy_use_auth", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_bool(db, NULL, "proxy_use_auth", ret);
+    cfg_db_close(db);
 }
 
 static void
@@ -760,12 +760,12 @@ on_proxy_host_realize(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_string(db, NULL, "proxy_host", &ret) != FALSE)
+    if (cfg_db_get_string(db, NULL, "proxy_host", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -775,9 +775,9 @@ on_proxy_host_changed(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_string(db, NULL, "proxy_host", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_string(db, NULL, "proxy_host", ret);
+    cfg_db_close(db);
 
     g_free(ret);
 }
@@ -789,12 +789,12 @@ on_proxy_port_realize(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_string(db, NULL, "proxy_port", &ret) != FALSE)
+    if (cfg_db_get_string(db, NULL, "proxy_port", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -804,9 +804,9 @@ on_proxy_port_changed(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_string(db, NULL, "proxy_port", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_string(db, NULL, "proxy_port", ret);
+    cfg_db_close(db);
 
     g_free(ret);
 }
@@ -818,12 +818,12 @@ on_proxy_user_realize(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_string(db, NULL, "proxy_user", &ret) != FALSE)
+    if (cfg_db_get_string(db, NULL, "proxy_user", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -833,9 +833,9 @@ on_proxy_user_changed(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_string(db, NULL, "proxy_user", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_string(db, NULL, "proxy_user", ret);
+    cfg_db_close(db);
 
     g_free(ret);
 }
@@ -847,12 +847,12 @@ on_proxy_pass_realize(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_string(db, NULL, "proxy_pass", &ret) != FALSE)
+    if (cfg_db_get_string(db, NULL, "proxy_pass", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -862,9 +862,9 @@ on_proxy_pass_changed(GtkEntry * entry,
     ConfigDb *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_string(db, NULL, "proxy_pass", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_string(db, NULL, "proxy_pass", ret);
+    cfg_db_close(db);
 
     g_free(ret);
 }
@@ -1022,12 +1022,12 @@ on_enable_src_realize(GtkToggleButton * button,
     ConfigDb *db;
     gboolean ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_bool(db, NULL, "enable_src", &ret) != FALSE)
+    if (cfg_db_get_bool(db, NULL, "enable_src", &ret) != FALSE)
         gtk_toggle_button_set_active(button, ret);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 #else
     gtk_toggle_button_set_active(button, FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
@@ -1041,9 +1041,9 @@ on_enable_src_toggled(GtkToggleButton * button,
     ConfigDb *db;
     gboolean ret = gtk_toggle_button_get_active(button);
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_bool(db, NULL, "enable_src", ret);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_bool(db, NULL, "enable_src", ret);
+    cfg_db_close(db);
 }
 
 static void
@@ -1054,12 +1054,12 @@ on_src_rate_realize(GtkSpinButton * button,
     ConfigDb *db;
     gint value;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_int(db, NULL, "src_rate", &value) != FALSE)
+    if (cfg_db_get_int(db, NULL, "src_rate", &value) != FALSE)
         gtk_spin_button_set_value(button, (gdouble)value);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 #else
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 #endif
@@ -1072,9 +1072,9 @@ on_src_rate_value_changed(GtkSpinButton * button,
     ConfigDb *db;
     gint value = gtk_spin_button_get_value_as_int(button);
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_int(db, NULL, "src_rate", value);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_int(db, NULL, "src_rate", value);
+    cfg_db_close(db);
 }
 
 static void
@@ -1085,14 +1085,14 @@ on_src_converter_type_realize(GtkComboBox * box,
     ConfigDb *db;
     gint value;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_int(db, NULL, "src_type", &value) != FALSE)
+    if (cfg_db_get_int(db, NULL, "src_type", &value) != FALSE)
         gtk_combo_box_set_active(box, value);
     else
         gtk_combo_box_set_active(box, 0);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 #else
     gtk_widget_set_sensitive(GTK_WIDGET(box), FALSE);
 #endif
@@ -1105,9 +1105,9 @@ on_src_converter_type_changed(GtkComboBox * box,
     ConfigDb *db;
     gint value = gtk_combo_box_get_active(box);
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_int(db, NULL, "src_type", value);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_int(db, NULL, "src_type", value);
+    cfg_db_close(db);
 }
 
 static void
@@ -1475,9 +1475,9 @@ on_skin_view_drag_data_received(GtkWidget * widget,
         widget2 = glade_xml_get_widget(xml, "skin_refresh_button");
 	skin_view_update(GTK_TREE_VIEW(widget), GTK_WIDGET(widget2));
         /* Change skin name in the config file */
-        db = bmp_cfg_db_open();
-        bmp_cfg_db_set_string(db, NULL, "skin", path);
-        bmp_cfg_db_close(db);
+        db = cfg_db_open();
+        cfg_db_set_string(db, NULL, "skin", path);
+        cfg_db_close(db);
     }
 			   			   
 }
@@ -1491,9 +1491,9 @@ on_chardet_detector_cbox_changed(GtkComboBox * combobox, gpointer data)
     position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
     cfg.chardet_detector = (char *)chardet_detector_presets[position];
 
-    db = bmp_cfg_db_open();
-    bmp_cfg_db_set_string(db, NULL, "chardet_detector", cfg.chardet_detector);
-    bmp_cfg_db_close(db);
+    db = cfg_db_open();
+    cfg_db_set_string(db, NULL, "chardet_detector", cfg.chardet_detector);
+    cfg_db_close(db);
     if (data != NULL)
         gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
 }
@@ -1509,8 +1509,8 @@ on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
         gtk_combo_box_append_text(combobox, chardet_detector_presets[i]);
     }
 
-    db = bmp_cfg_db_open();
-    if(bmp_cfg_db_get_string(db, NULL, "chardet_detector", &ret) != FALSE) {
+    db = cfg_db_open();
+    if(cfg_db_get_string(db, NULL, "chardet_detector", &ret) != FALSE) {
         for(i=0; i<n_chardet_detector_presets; i++) {
             if(!strcmp(chardet_detector_presets[i], ret)) {
                 cfg.chardet_detector = (char *)chardet_detector_presets[i];
@@ -1518,7 +1518,7 @@ on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
             }
         }
     }
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 
 #ifdef USE_CHARDET
     gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
@@ -1542,9 +1542,9 @@ on_chardet_fallback_realize(GtkEntry *entry, gpointer data)
     ConfigDb *db;
     gchar *ret = NULL;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
-    if (bmp_cfg_db_get_string(db, NULL, "chardet_fallback", &ret) != FALSE) {
+    if (cfg_db_get_string(db, NULL, "chardet_fallback", &ret) != FALSE) {
         if(cfg.chardet_fallback)
             g_free(cfg.chardet_fallback);
 
@@ -1556,7 +1556,7 @@ on_chardet_fallback_realize(GtkEntry *entry, gpointer data)
         gtk_entry_set_text(entry, cfg.chardet_fallback);
     }
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void
@@ -1575,14 +1575,14 @@ on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
     else
         cfg.chardet_fallback = ret;
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
     if(cfg.chardet_fallback == NULL || !strcmp(cfg.chardet_fallback, ""))
-        bmp_cfg_db_set_string(db, NULL, "chardet_fallback", "None");
+        cfg_db_set_string(db, NULL, "chardet_fallback", "None");
     else
-        bmp_cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);
+        cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 }
 
 static void

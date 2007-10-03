@@ -37,7 +37,7 @@ struct _ConfigDb
 
 
 ConfigDb *
-bmp_cfg_db_open()
+cfg_db_open()
 {
     ConfigDb *db;
 
@@ -55,14 +55,14 @@ bmp_cfg_db_open()
 }
 
 void
-bmp_cfg_db_close(ConfigDb * db)
+cfg_db_close(ConfigDb * db)
 {
     mcs_destroy(db->handle);
     g_free(db);
 }
 
 gboolean
-bmp_cfg_db_get_string(ConfigDb * db,
+cfg_db_get_string(ConfigDb * db,
                       const gchar * section,
                       const gchar * key,
                       gchar ** value)
@@ -74,7 +74,7 @@ bmp_cfg_db_get_string(ConfigDb * db,
 }
 
 gboolean
-bmp_cfg_db_get_int(ConfigDb * db,
+cfg_db_get_int(ConfigDb * db,
                    const gchar * section, const gchar * key, gint * value)
 {
     if (!section)
@@ -84,7 +84,7 @@ bmp_cfg_db_get_int(ConfigDb * db,
 }
 
 gboolean
-bmp_cfg_db_get_bool(ConfigDb * db,
+cfg_db_get_bool(ConfigDb * db,
                     const gchar * section,
                     const gchar * key,
                     gboolean * value)
@@ -96,7 +96,7 @@ bmp_cfg_db_get_bool(ConfigDb * db,
 }
 
 gboolean
-bmp_cfg_db_get_float(ConfigDb * db,
+cfg_db_get_float(ConfigDb * db,
                      const gchar * section,
                      const gchar * key,
                      gfloat * value)
@@ -108,7 +108,7 @@ bmp_cfg_db_get_float(ConfigDb * db,
 }
 
 gboolean
-bmp_cfg_db_get_double(ConfigDb * db,
+cfg_db_get_double(ConfigDb * db,
                       const gchar * section,
                       const gchar * key,
                       gdouble * value)
@@ -120,7 +120,7 @@ bmp_cfg_db_get_double(ConfigDb * db,
 }
 
 void
-bmp_cfg_db_set_string(ConfigDb * db,
+cfg_db_set_string(ConfigDb * db,
                       const gchar * section,
                       const gchar * key,
                       const gchar * value)
@@ -132,7 +132,7 @@ bmp_cfg_db_set_string(ConfigDb * db,
 }
 
 void
-bmp_cfg_db_set_int(ConfigDb * db,
+cfg_db_set_int(ConfigDb * db,
                    const gchar * section,
                    const gchar * key,
                    gint value)
@@ -144,7 +144,7 @@ bmp_cfg_db_set_int(ConfigDb * db,
 }
 
 void
-bmp_cfg_db_set_bool(ConfigDb * db,
+cfg_db_set_bool(ConfigDb * db,
                     const gchar * section,
                     const gchar * key,
                     gboolean value)
@@ -156,7 +156,7 @@ bmp_cfg_db_set_bool(ConfigDb * db,
 }
 
 void
-bmp_cfg_db_set_float(ConfigDb * db,
+cfg_db_set_float(ConfigDb * db,
                      const gchar * section,
                      const gchar * key,
                      gfloat value)
@@ -168,7 +168,7 @@ bmp_cfg_db_set_float(ConfigDb * db,
 }
 
 void
-bmp_cfg_db_set_double(ConfigDb * db,
+cfg_db_set_double(ConfigDb * db,
                       const gchar * section,
                       const gchar * key,
                       gdouble value)
@@ -180,7 +180,7 @@ bmp_cfg_db_set_double(ConfigDb * db,
 }
 
 void
-bmp_cfg_db_unset_key(ConfigDb * db,
+cfg_db_unset_key(ConfigDb * db,
                      const gchar * section,
                      const gchar * key)
 {

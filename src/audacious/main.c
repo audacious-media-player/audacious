@@ -579,46 +579,46 @@ bmp_config_load(void)
 
     memcpy(&cfg, &bmp_default_config, sizeof(BmpConfig));
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
     for (i = 0; i < ncfgbent; ++i) {
-        bmp_cfg_db_get_bool(db, NULL,
+        cfg_db_get_bool(db, NULL,
                             bmp_boolents[i].be_vname,
                             bmp_boolents[i].be_vloc);
     }
 
     for (i = 0; i < ncfgient; ++i) {
-        bmp_cfg_db_get_int(db, NULL,
+        cfg_db_get_int(db, NULL,
                            bmp_numents[i].ie_vname,
                            bmp_numents[i].ie_vloc);
     }
 
     for (i = 0; i < ncfgsent; ++i) {
-        bmp_cfg_db_get_string(db, NULL,
+        cfg_db_get_string(db, NULL,
                               bmp_strents[i].se_vname,
                               bmp_strents[i].se_vloc);
     }
 
     /* Preset */
-    bmp_cfg_db_get_float(db, NULL, "equalizer_preamp", &cfg.equalizer_preamp);
+    cfg_db_get_float(db, NULL, "equalizer_preamp", &cfg.equalizer_preamp);
     for (i = 0; i < 10; i++) {
         gchar eqtext[18];
 
         g_snprintf(eqtext, sizeof(eqtext), "equalizer_band%d", i);
-        bmp_cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
+        cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
     }
 
     /* History */
-    if (bmp_cfg_db_get_int(db, NULL, "url_history_length", &length)) {
+    if (cfg_db_get_int(db, NULL, "url_history_length", &length)) {
         for (i = 1; i <= length; i++) {
             gchar str[19], *tmp;
 
             g_snprintf(str, sizeof(str), "url_history%d", i);
-            if (bmp_cfg_db_get_string(db, NULL, str, &tmp))
+            if (cfg_db_get_string(db, NULL, str, &tmp))
                 cfg.url_history = g_list_append(cfg.url_history, tmp);
         }
     }
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 
 
     if (cfg.playlist_font && strlen(cfg.playlist_font) == 0) {
@@ -806,23 +806,23 @@ bmp_config_save(void)
     cfg.disabled_iplugins = input_stringify_disabled_list();
 
 
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
 
     for (i = 0; i < ncfgbent; ++i)
         if (bmp_boolents[i].be_wrt)
-            bmp_cfg_db_set_bool(db, NULL,
+            cfg_db_set_bool(db, NULL,
                                 bmp_boolents[i].be_vname,
                                 *bmp_boolents[i].be_vloc);
 
     for (i = 0; i < ncfgient; ++i)
         if (bmp_numents[i].ie_wrt)
-            bmp_cfg_db_set_int(db, NULL,
+            cfg_db_set_int(db, NULL,
                                bmp_numents[i].ie_vname,
                                *bmp_numents[i].ie_vloc);
 
     /* This is a bit lame .. it'll end up being written twice,
      * could do with being done a bit neater.  -larne   */
-    bmp_cfg_db_set_int(db, NULL, "playlist_position",
+    cfg_db_set_int(db, NULL, "playlist_position",
                        playlist_get_position(playlist));
 
     /* FIXME: we're looking up SkinnedWindow::x &c ourselves here.
@@ -831,98 +831,98 @@ bmp_config_save(void)
     if ( SKINNED_WINDOW(playlistwin)->x != -1 &&
          SKINNED_WINDOW(playlistwin)->y != -1 )
     {
-        bmp_cfg_db_set_int(db, NULL, "playlist_x",
+        cfg_db_set_int(db, NULL, "playlist_x",
                            SKINNED_WINDOW(playlistwin)->x);
-        bmp_cfg_db_set_int(db, NULL, "playlist_y",
+        cfg_db_set_int(db, NULL, "playlist_y",
                            SKINNED_WINDOW(playlistwin)->y);
     }
     
     if ( SKINNED_WINDOW(mainwin)->x != -1 &&
          SKINNED_WINDOW(mainwin)->y != -1 )
     {
-        bmp_cfg_db_set_int(db, NULL, "player_x",
+        cfg_db_set_int(db, NULL, "player_x",
                            SKINNED_WINDOW(mainwin)->x);
-        bmp_cfg_db_set_int(db, NULL, "player_y",
+        cfg_db_set_int(db, NULL, "player_y",
                            SKINNED_WINDOW(mainwin)->y);
     }
 
     if ( SKINNED_WINDOW(equalizerwin)->x != -1 &&
          SKINNED_WINDOW(equalizerwin)->y != -1 )
     {
-        bmp_cfg_db_set_int(db, NULL, "equalizer_x",
+        cfg_db_set_int(db, NULL, "equalizer_x",
                            SKINNED_WINDOW(equalizerwin)->x);
-        bmp_cfg_db_set_int(db, NULL, "equalizer_y",
+        cfg_db_set_int(db, NULL, "equalizer_y",
                            SKINNED_WINDOW(equalizerwin)->y);
     }
 
-    bmp_cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
+    cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
             cfg.mainwin_use_xfont);
 
     for (i = 0; i < ncfgsent; ++i) {
         if (bmp_strents[i].se_wrt)
-            bmp_cfg_db_set_string(db, NULL,
+            cfg_db_set_string(db, NULL,
                                   bmp_strents[i].se_vname,
                                   *bmp_strents[i].se_vloc);
     }
 
-    bmp_cfg_db_set_float(db, NULL, "equalizer_preamp", cfg.equalizer_preamp);
+    cfg_db_set_float(db, NULL, "equalizer_preamp", cfg.equalizer_preamp);
 
     for (i = 0; i < 10; i++) {
         str = g_strdup_printf("equalizer_band%d", i);
-        bmp_cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
+        cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
         g_free(str);
     }
 
     if (bmp_active_skin != NULL)
     {
         if (bmp_active_skin->path)
-            bmp_cfg_db_set_string(db, NULL, "skin", bmp_active_skin->path);
+            cfg_db_set_string(db, NULL, "skin", bmp_active_skin->path);
         else
-            bmp_cfg_db_unset_key(db, NULL, "skin");
+            cfg_db_unset_key(db, NULL, "skin");
     }
 
     if (get_current_output_plugin())
-        bmp_cfg_db_set_string(db, NULL, "output_plugin",
+        cfg_db_set_string(db, NULL, "output_plugin",
                               get_current_output_plugin()->filename);
     else
-        bmp_cfg_db_unset_key(db, NULL, "output_plugin");
+        cfg_db_unset_key(db, NULL, "output_plugin");
 
     str = general_stringify_enabled_list();
     if (str) {
-        bmp_cfg_db_set_string(db, NULL, "enabled_gplugins", str);
+        cfg_db_set_string(db, NULL, "enabled_gplugins", str);
         g_free(str);
     }
     else
-        bmp_cfg_db_unset_key(db, NULL, "enabled_gplugins");
+        cfg_db_unset_key(db, NULL, "enabled_gplugins");
 
     str = vis_stringify_enabled_list();
     if (str) {
-        bmp_cfg_db_set_string(db, NULL, "enabled_vplugins", str);
+        cfg_db_set_string(db, NULL, "enabled_vplugins", str);
         g_free(str);
     }
     else
-        bmp_cfg_db_unset_key(db, NULL, "enabled_vplugins");
+        cfg_db_unset_key(db, NULL, "enabled_vplugins");
 
     str = effect_stringify_enabled_list();
     if (str) {
-        bmp_cfg_db_set_string(db, NULL, "enabled_eplugins", str);
+        cfg_db_set_string(db, NULL, "enabled_eplugins", str);
         g_free(str);
     }
     else
-        bmp_cfg_db_unset_key(db, NULL, "enabled_eplugins");
+        cfg_db_unset_key(db, NULL, "enabled_eplugins");
 
     if (cfg.filesel_path)
-        bmp_cfg_db_set_string(db, NULL, "filesel_path", cfg.filesel_path);
+        cfg_db_set_string(db, NULL, "filesel_path", cfg.filesel_path);
 
     if (cfg.playlist_path)
-        bmp_cfg_db_set_string(db, NULL, "playlist_path", cfg.playlist_path);
+        cfg_db_set_string(db, NULL, "playlist_path", cfg.playlist_path);
 
-    bmp_cfg_db_set_int(db, NULL, "url_history_length",
+    cfg_db_set_int(db, NULL, "url_history_length",
                        g_list_length(cfg.url_history));
 
     for (node = cfg.url_history, i = 1; node; node = g_list_next(node), i++) {
         str = g_strdup_printf("url_history%d", i);
-        bmp_cfg_db_set_string(db, NULL, str, node->data);
+        cfg_db_set_string(db, NULL, str, node->data);
         g_free(str);
     }
 
@@ -931,10 +931,10 @@ bmp_config_save(void)
     } else
         cur_pb_time = -1;
     cfg.resume_playback_on_startup_time = cur_pb_time;
-    bmp_cfg_db_set_int(db, NULL, "resume_playback_on_startup_time",
+    cfg_db_set_int(db, NULL, "resume_playback_on_startup_time",
                cfg.resume_playback_on_startup_time);
 
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
 
     playlist_save(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
 

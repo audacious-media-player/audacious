@@ -261,12 +261,12 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     ConfigDb *db;
     gboolean src_enabled;
     gint src_rate, src_type;
-    db = bmp_cfg_db_open();
+    db = cfg_db_open();
     
-    if (bmp_cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
+    if (cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
       src_enabled = FALSE;
 
-    if (bmp_cfg_db_get_int(db, NULL, "src_rate", &src_rate) == FALSE)
+    if (cfg_db_get_int(db, NULL, "src_rate", &src_rate) == FALSE)
       overSamplingFs = 48000;
     else
       overSamplingFs = src_rate;
@@ -275,12 +275,12 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     if (rate == overSamplingFs)
       src_enabled = FALSE;
 
-    if (bmp_cfg_db_get_int(db, NULL, "src_type", &src_type) == FALSE)
+    if (cfg_db_get_int(db, NULL, "src_type", &src_type) == FALSE)
       converter_type = SRC_SINC_BEST_QUALITY;
     else
       converter_type = src_type;
     
-    bmp_cfg_db_close(db);
+    cfg_db_close(db);
     
     freeSRC();
     
