@@ -523,10 +523,10 @@ init_skins(const gchar * path)
     }
 
     if (!bmp_active_skin_load(path)) {
-        /* FIXME: Oddly, g_message() causes a crash if path is NULL on
-         * Solaris (see bug #165) */
-        if (path) 
+        if (path != NULL)
             g_message("Unable to load skin (%s), trying default...", path);
+        else
+            g_message("Skin not defined: trying default...");
 
         /* can't load configured skin, retry with default */
         if (!bmp_active_skin_load(BMP_DEFAULT_SKIN_PATH)) {
