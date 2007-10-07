@@ -253,7 +253,7 @@ struct _AudaciousFuncTableV1 {
     const gchar *(*tuple_get_string)(Tuple *tuple,
                                      const gint nfield,
                                      const gchar *field);
-    gint tuple_get_int(Tuple *tuple,
+    gint (*tuple_get_int)(Tuple *tuple,
                        const gint nfield,
                        const gchar *field);
 
