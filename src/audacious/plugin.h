@@ -42,6 +42,8 @@
 #include "audacious/tuple_formatter.h"
 #include "audacious/eventqueue.h"
 #include "audacious/configdb.h"
+#include "audacious/mime.h"
+#include "audacious/custom_uri.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -268,6 +270,14 @@ struct _AudaciousFuncTableV1 {
            const gchar *argument);
     gchar *(*tuple_formatter_process_construct)(Tuple *tuple, const gchar *string);
 
+    /* MIME types */
+    InputPlugin *(*mime_get_plugin)(const gchar *mimetype);
+    void (*mime_set_plugin)(const gchar *mimetype, InputPlugin *ip);
+
+    /* Custom URI registry */
+    InputPlugin *(*uri_get_plugin)(const gchar *filename);
+    void (*uri_set_plugin)(const gchar *uri, InputPlugin *ip);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -348,6 +358,12 @@ struct _AudaciousFuncTableV1 {
 #define aud_tuple_formatter_process_expr		_audvt->tuple_formatter_process_expr
 #define aud_tuple_formatter_process_function		_audvt->tuple_formatter_process_function
 #define aud_tuple_formatter_process_construct		_audvt->tuple_formatter_process_construct
+
+#define aud_mime_get_plugin		_audvt->mime_get_plugin
+#define aud_mime_set_plugin		_audvt->mime_set_plugin
+
+#define aud_uri_get_plugin		_audvt->uri_get_plugin
+#define aud_uri_set_plugin		_audvt->uri_set_plugin
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
@@ -531,8 +547,5 @@ G_BEGIN_DECLS
 G_CONST_RETURN gchar * get_gentitle_format(void);
 
 G_END_DECLS
-
-#include "audacious/mime.h"
-#include "audacious/custom_uri.h"
 
 #endif

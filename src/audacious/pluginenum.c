@@ -125,6 +125,12 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .tuple_formatter_register_function = tuple_formatter_register_function,
     .tuple_formatter_register_expression = tuple_formatter_register_expression,
     .tuple_formatter_make_title_string = tuple_formatter_make_title_string,
+
+    .mime_get_plugin = mime_get_plugin,
+    .mime_set_plugin = mime_set_plugin,
+
+    .uri_get_plugin = uri_get_plugin,
+    .uri_set_plugin = uri_set_plugin,
 };
 
 /*****************************************************************/
