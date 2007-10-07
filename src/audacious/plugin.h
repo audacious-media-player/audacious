@@ -257,6 +257,19 @@ struct _AudaciousFuncTableV1 {
                        const gint nfield,
                        const gchar *field);
 
+    /* tuple formatter API */
+    gchar *(*tuple_formatter_process_string)(Tuple *tuple, const gchar *string);
+    gchar *(*tuple_formatter_make_title_string)(Tuple *tuple, const gchar *string);
+    void (*tuple_formatter_register_expression)(const gchar *keyword,
+           gboolean (*func)(Tuple *tuple, const gchar *argument));
+    void (*tuple_formatter_register_function)(const gchar *keyword,
+           gchar *(*func)(Tuple *tuple, gchar **argument));
+    gchar *(*tuple_formatter_process_expr)(Tuple *tuple, const gchar *expression,
+           const gchar *argument);
+    gchar *(*tuple_formatter_process_function)(Tuple *tuple, const gchar *expression,
+           const gchar *argument);
+    gchar *(*tuple_formatter_process_construct)(Tuple *tuple, const gchar *string);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -329,6 +342,14 @@ struct _AudaciousFuncTableV1 {
 #define aud_tuple_get_string		_audvt->tuple_get_string
 #define aud_tuple_get_int		_audvt->tuple_get_int
 #define aud_tuple_free			mowgli_object_unref
+
+#define aud_tuple_formatter_process_string		_audvt->tuple_formatter_process_string
+#define aud_tuple_formatter_make_title_string		_audvt->tuple_formatter_make_title_string
+#define aud_tuple_formatter_register_expression		_audvt->tuple_formatter_register_expression
+#define aud_tuple_formatter_register_function		_audvt->tuple_formatter_register_function
+#define aud_tuple_formatter_process_expr		_audvt->tuple_formatter_process_expr
+#define aud_tuple_formatter_process_function		_audvt->tuple_formatter_process_function
+#define aud_tuple_formatter_process_construct		_audvt->tuple_formatter_process_construct
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;

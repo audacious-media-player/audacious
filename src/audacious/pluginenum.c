@@ -118,6 +118,14 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .tuple_get_value_type = tuple_get_value_type,
     .tuple_get_string = tuple_get_string,
     .tuple_get_int = tuple_get_int,
+
+    .tuple_formatter_process_string = tuple_formatter_process_string,
+    .tuple_formatter_process_function = tuple_formatter_process_function,
+    .tuple_formatter_process_construct = tuple_formatter_process_construct,
+    .tuple_formatter_process_expr = tuple_formatter_process_expr,
+    .tuple_formatter_register_function = tuple_formatter_register_function,
+    .tuple_formatter_register_expression = tuple_formatter_register_expression,
+    .tuple_formatter_make_title_string = tuple_formatter_make_title_string,
 };
 
 /*****************************************************************/
