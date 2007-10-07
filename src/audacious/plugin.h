@@ -446,6 +446,15 @@ struct _InputPlayback {
     GMutex *pb_change_mutex;
     GCond *pb_change_cond;
     void (*set_pb_change)(InputPlayback *self);
+
+    gint nch;
+    gint rate;
+    gint freq;
+    gint length;
+    gchar *title;
+    
+    void (*set_params) (InputPlayback *, gchar * title, gint length, gint rate, gint freq, gint nch);
+    void (*set_title) (InputPlayback *, gchar * text);
 };
 
 struct _InputPlugin {

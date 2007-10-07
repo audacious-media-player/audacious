@@ -102,6 +102,28 @@ playback_set_pb_change(InputPlayback *playback)
     g_mutex_unlock(playback->pb_change_mutex);
 }
 
+static void
+playback_set_pb_params(InputPlayback *playback, gchar *title,
+    gint length, gint rate, gint freq, gint nch)
+{
+    playback->title = g_strdup(title);
+    playback->length = length;
+    playback->rate = rate;
+    playback->freq = freq;
+    playback->nch = nch;
+
+    /* XXX: this can be removed/merged here someday */
+    playback->plugin->set_info(title, length, rate, freq, nch);
+}
+
+static void
+playback_set_pb_title(InputPlayback *playback, gchar *title)
+{
+    playback->title = g_strdup(title);
+
+    playback->plugin->set_info_text(title);
+}
+
 void
 playback_eof(void)
 {
@@ -388,6 +410,8 @@ playback_play_file(PlaylistEntry *entry)
     /* init vtable functors */
     playback->set_pb_ready = playback_set_pb_ready;
     playback->set_pb_change = playback_set_pb_change;
+    playback->set_params = playback_set_pb_params;
+    playback->set_title = playback_set_pb_title;
     
     set_current_input_playback(playback);
 
