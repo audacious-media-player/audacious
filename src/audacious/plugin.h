@@ -244,8 +244,6 @@ struct _AudaciousFuncTableV1 {
                                const gint nfield,
                                const gchar *field);
 
-    void (*tuple_disassociate_now)(TupleValue *value);
-
     TupleValueType (*tuple_get_value_type)(Tuple *tuple,
                                            const gint nfield,
                                            const gchar *field);
