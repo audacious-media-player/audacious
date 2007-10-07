@@ -398,7 +398,8 @@ mainwin_quit_cb(void)
     gtk_widget_hide(playlistwin);
     gtk_widget_hide(mainwin);
 
-    g_source_remove(mainwin_timeout_id);
+    if (mainwin_timeout_id)
+        g_source_remove(mainwin_timeout_id);
 
     bmp_config_save();
     gtk_accel_map_save(bmp_paths[BMP_PATH_ACCEL_FILE]);
