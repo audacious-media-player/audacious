@@ -94,6 +94,14 @@ playback_wait_for_pb_ready(InputPlayback *playback)
     return 0;
 }
 
+static void
+playback_set_pb_change(InputPlayback *playback)
+{
+    g_mutex_lock(playback->pb_change_mutex);
+    g_cond_signal(playback->pb_change_cond);
+    g_mutex_unlock(playback->pb_change_mutex);
+}
+
 void
 playback_eof(void)
 {
@@ -245,6 +253,11 @@ playback_stop(void)
 
         ip_data.playing = FALSE;
 
+        /* TODO: i'm unsure if this will work. we might have to
+           signal the change in stop() (e.g. in the plugins
+           directly.) --nenolod */
+        playback->set_pb_change(playback);
+
         if (playback->plugin->stop)
             playback->plugin->stop(playback);
 
@@ -368,7 +381,13 @@ playback_play_file(PlaylistEntry *entry)
     playback->pb_ready_mutex = g_mutex_new();
     playback->pb_ready_cond = g_cond_new();
     playback->pb_ready_val = 0;
+
+    playback->pb_change_mutex = g_mutex_new();
+    playback->pb_change_cond = g_cond_new();
+
+    /* init vtable functors */
     playback->set_pb_ready = playback_set_pb_ready;
+    playback->set_pb_change = playback_set_pb_change;
     
     set_current_input_playback(playback);
 
@@ -415,6 +434,7 @@ playback_seek(gint time)
     }
     
     playback->plugin->seek(playback, time);
+    playback->set_pb_change(playback);
     free_vis_data();
     
     if (restore_pause)

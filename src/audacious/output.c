@@ -412,17 +412,19 @@ output_buffer_playing(void)
 
 /* called by input plugin when data is ready */
 void
-produce_audio(gint time,        /* position             */
-              AFormat fmt,      /* output format        */
-              gint nch,         /* channels             */
-              gint length,      /* length of sample     */
-              gpointer ptr,     /* data                 */
-              int *going        /* 0 when time to stop  */
+produce_audio(gint unused,	 /* will become InputPlayback soon */
+              AFormat fmt,       /* output format        */
+              gint nch,          /* channels             */
+              gint length,       /* length of sample     */
+              gpointer ptr,      /* data                 */
+              int *going         /* 0 when time to stop  */
               )
 {
     static Flow *postproc_flow = NULL;
-    OutputPlugin *op = get_current_output_plugin();
-    int writeoffs;
+    InputPlayback *playback = get_current_input_playback();
+    OutputPlugin *op = playback->output;
+    gint writeoffs;
+    gint time = playback->output->written_time();
 
     if (postproc_flow == NULL)
     {
@@ -486,6 +488,11 @@ produce_audio(gint time,        /* position             */
 
         while (op->buffer_free() < writable)   /* wait output buf */
         {
+            GTimeVal pb_abs_time;
+
+            g_get_current_time(&pb_abs_time);
+            g_time_val_add(&pb_abs_time, (cfg.output_buffer_size / 2) * 1000);
+
             if (going && !*going)              /* thread stopped? */
                 return;                        /* so finish */
 
@@ -493,7 +500,9 @@ produce_audio(gint time,        /* position             */
                 return;                        /* yes, so finish */
 
             /* else sleep for retry */
-            g_usleep((cfg.output_buffer_size / 2) * 1000);
+            g_mutex_lock(playback->pb_change_mutex);
+            g_cond_timed_wait(playback->pb_change_cond, playback->pb_change_mutex, &pb_abs_time);
+            g_mutex_unlock(playback->pb_change_mutex);
         }
 
         if (ip_data.stop)

@@ -382,6 +382,10 @@ struct _InputPlayback {
     GCond *pb_ready_cond;
     gint pb_ready_val;    
     gint (*set_pb_ready) (InputPlayback*);
+
+    GMutex *pb_change_mutex;
+    GCond *pb_change_cond;
+    void (*set_pb_change)(InputPlayback *self);
 };
 
 struct _InputPlugin {
