@@ -45,7 +45,7 @@ enum {
 
 static const gchar *audacious_brief =
     N_("<big><b>Audacious %s</b></big>\n"
-       "The future of UNIX multimedia.\n"
+       "A skinned multimedia player for many platforms.\n"
        "\n"
        "Copyright (C) 2005-2007 Audacious Development Team\n");
 
