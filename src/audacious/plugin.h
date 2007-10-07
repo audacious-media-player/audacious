@@ -334,8 +334,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_tuple_new_from_filename	_audvt->tuple_new_from_filename
 #define aud_tuple_associate_string	_audvt->tuple_associate_string
 #define aud_tuple_associate_int		_audvt->tuple_associate_int
-#define aud_tuple_dissociate		_audvt->tuple_dissociate
-#define aud_tuple_dissociate_now	_audvt->tuple_dissociate_now
+#define aud_tuple_disassociate		_audvt->tuple_disassociate
+#define aud_tuple_disassociate_now	_audvt->tuple_disassociate_now
 #define aud_tuple_get_value_type	_audvt->tuple_get_value_type
 #define aud_tuple_get_string		_audvt->tuple_get_string
 #define aud_tuple_get_int		_audvt->tuple_get_int
