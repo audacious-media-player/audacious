@@ -108,6 +108,16 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .cfg_db_set_double = cfg_db_set_double,
 
     .cfg_db_unset_key = cfg_db_unset_key,
+
+    .tuple_new = tuple_new,
+    .tuple_new_from_filename = tuple_new_from_filename,
+    .tuple_associate_string = tuple_associate_string,
+    .tuple_associate_int = tuple_associate_int,
+    .tuple_dissociate = tuple_dissociate
+    .tuple_dissociate_now = tuple_dissociate_now,
+    .tuple_get_value_type = tuple_get_value_type,
+    .tuple_get_string = tuple_get_string,
+    .tuple_get_int = tuple_get_int,
 };
 
 /*****************************************************************/

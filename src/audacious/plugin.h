@@ -227,6 +227,36 @@ struct _AudaciousFuncTableV1 {
                              const gchar *section,
                              const gchar *key);
 
+    /* Tuple manipulation API */
+    Tuple *(*tuple_new)(void);
+    Tuple *(*tuple_new_from_filename)(const gchar *filename);
+
+    gboolean (*tuple_associate_string)(Tuple *tuple,
+                                       const gint nfield,
+                                       const gchar *field,
+                                       const gchar *string);
+    gboolean (*tuple_associate_int)(Tuple *tuple,
+                                    const gint nfield,
+                                    const gchar *field,
+                                    gint integer);
+
+    void (*tuple_disassociate)(Tuple *tuple,
+                               const gint nfield,
+                               const gchar *field);
+
+    void (*tuple_disassociate_now)(TupleValue *value);
+
+    TupleValueType (*tuple_get_value_type)(Tuple *tuple,
+                                           const gint nfield,
+                                           const gchar *field);
+
+    const gchar *(*tuple_get_string)(Tuple *tuple,
+                                     const gint nfield,
+                                     const gchar *field);
+    gint tuple_get_int(Tuple *tuple,
+                       const gint nfield,
+                       const gchar *field);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -288,6 +318,17 @@ struct _AudaciousFuncTableV1 {
 #define aud_cfg_db_get_float		_audvt->cfg_db_get_float
 #define aud_cfg_db_get_double		_audvt->cfg_db_get_double
 #define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
+
+#define aud_tuple_new			_audvt->tuple_new
+#define aud_tuple_new_from_filename	_audvt->tuple_new_from_filename
+#define aud_tuple_associate_string	_audvt->tuple_associate_string
+#define aud_tuple_associate_int		_audvt->tuple_associate_int
+#define aud_tuple_dissociate		_audvt->tuple_dissociate
+#define aud_tuple_dissociate_now	_audvt->tuple_dissociate_now
+#define aud_tuple_get_value_type	_audvt->tuple_get_value_type
+#define aud_tuple_get_string		_audvt->tuple_get_string
+#define aud_tuple_get_int		_audvt->tuple_get_int
+#define aud_tuple_free			mowgli_object_unref
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
