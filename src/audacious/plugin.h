@@ -42,8 +42,6 @@
 #include "audacious/tuple_formatter.h"
 #include "audacious/eventqueue.h"
 #include "audacious/configdb.h"
-#include "audacious/mime.h"
-#include "audacious/custom_uri.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -88,6 +86,9 @@ typedef struct _DiscoveryPlugin DiscoveryPlugin;
 typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
+
+#include "audacious/mime.h"
+#include "audacious/custom_uri.h"
 
 #define PLUGIN_COMMON_FIELDS		\
     gpointer handle;			\
