@@ -355,6 +355,34 @@ playback_monitor_thread(gpointer data)
     return NULL;
 }
 
+InputPlayback *
+playback_new(void)
+{
+    playback = g_slice_new0(InputPlayback);
+
+    playback->pb_ready_mutex = g_mutex_new();
+    playback->pb_ready_cond = g_cond_new();
+    playback->pb_ready_val = 0;
+
+    playback->pb_change_mutex = g_mutex_new();
+    playback->pb_change_cond = g_cond_new();
+
+    /* init vtable functors */
+    playback->set_pb_ready = playback_set_pb_ready;
+    playback->set_pb_change = playback_set_pb_change;
+    playback->set_params = playback_set_pb_params;
+    playback->set_title = playback_set_pb_title;
+    playback->pass_audio = output_pass_audio;
+
+    return playback;
+}
+
+void
+playback_run(InputPlayback *playback)
+{
+    playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
+}
+
 gboolean
 playback_play_file(PlaylistEntry *entry)
 {
@@ -393,30 +421,18 @@ playback_play_file(PlaylistEntry *entry)
 
     ip_data.playing = TRUE;
 
-    playback = g_slice_new0(InputPlayback);
+    playback = playback_new();
     
     entry->decoder->output = &psuedo_output_plugin;
 
     playback->plugin = entry->decoder;
-    playback->output = &psuedo_output_plugin;
     playback->filename = g_strdup(entry->filename);
-    playback->pb_ready_mutex = g_mutex_new();
-    playback->pb_ready_cond = g_cond_new();
-    playback->pb_ready_val = 0;
-
-    playback->pb_change_mutex = g_mutex_new();
-    playback->pb_change_cond = g_cond_new();
-
-    /* init vtable functors */
-    playback->set_pb_ready = playback_set_pb_ready;
-    playback->set_pb_change = playback_set_pb_change;
-    playback->set_params = playback_set_pb_params;
-    playback->set_title = playback_set_pb_title;
-    playback->pass_audio = output_pass_audio;
+    playback->output = &psuedo_output_plugin;
     
     set_current_input_playback(playback);
 
-    playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
+    playback_run(playback);
+
 #ifdef USE_DBUS
     mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
 #endif

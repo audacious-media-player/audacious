@@ -26,6 +26,7 @@
 #include <glib.h>
 
 #include "playlist.h"
+#include "plugin.h"
 
 gint playback_get_time(void);
 void playback_initiate(void);
@@ -38,5 +39,7 @@ void playback_seek(gint time);
 void playback_seek_relative(gint offset);
 void playback_eof(void);
 void playback_error(void);
+InputPlayback *playback_new(void);
+void playback_run(InputPlayback *);
 
 #endif
