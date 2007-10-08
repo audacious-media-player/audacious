@@ -412,7 +412,7 @@ output_buffer_playing(void)
 
 /* called by input plugin when data is ready */
 void
-produce_audio(gint unused,	 /* will become InputPlayback soon */
+output_pass_audio(InputPlayback *playback,
               AFormat fmt,       /* output format        */
               gint nch,          /* channels             */
               gint length,       /* length of sample     */
@@ -421,7 +421,6 @@ produce_audio(gint unused,	 /* will become InputPlayback soon */
               )
 {
     static Flow *postproc_flow = NULL;
-    InputPlayback *playback = get_current_input_playback();
     OutputPlugin *op = playback->output;
     gint writeoffs;
     gint time = playback->output->written_time();

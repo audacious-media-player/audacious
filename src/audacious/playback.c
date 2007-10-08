@@ -412,6 +412,7 @@ playback_play_file(PlaylistEntry *entry)
     playback->set_pb_change = playback_set_pb_change;
     playback->set_params = playback_set_pb_params;
     playback->set_title = playback_set_pb_title;
+    playback->pass_audio = output_pass_audio;
     
     set_current_input_playback(playback);
 

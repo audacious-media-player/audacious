@@ -472,6 +472,8 @@ struct _InputPlayback {
     
     void (*set_params) (InputPlayback *, gchar * title, gint length, gint rate, gint freq, gint nch);
     void (*set_title) (InputPlayback *, gchar * text);
+
+    void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 };
 
 struct _InputPlugin {

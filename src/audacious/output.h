@@ -62,7 +62,7 @@ void output_pause(gshort);
 gint output_buffer_free(void);
 gint output_buffer_playing(void);
 
-void produce_audio(gint, AFormat, gint, gint, gpointer, int *);
+void output_pass_audio(InputPlayback *, AFormat, gint, gint, gpointer, int *);
 
 gint get_written_time(void);
 gint get_output_time(void);
