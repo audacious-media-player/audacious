@@ -358,7 +358,7 @@ playback_monitor_thread(gpointer data)
 InputPlayback *
 playback_new(void)
 {
-    playback = g_slice_new0(InputPlayback);
+    InputPlayback *playback = (InputPlayback *) g_slice_new0(InputPlayback);
 
     playback->pb_ready_mutex = g_mutex_new();
     playback->pb_ready_cond = g_cond_new();
