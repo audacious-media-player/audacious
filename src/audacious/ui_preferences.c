@@ -1820,6 +1820,21 @@ on_reload_plugins_clicked(GtkButton * button, gpointer data)
     plugin_system_init();
 }
 
+static void
+on_twoway_scroller_realize(GtkToggleButton * button,
+                                    gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.twoway_scroll);
+}
+
+static void
+on_twoway_scroller_toggled(GtkToggleButton * button,
+                                    gpointer data)
+{
+    cfg.twoway_scroll = gtk_toggle_button_get_active(button);
+    //XXX need to redraw textbox? --yaz
+}
+
 /* FIXME: complete the map */
 FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_input_plugin_view_realize)
@@ -1917,6 +1932,10 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     /* show window manager decorations */
     FUNC_MAP_ENTRY(on_show_wm_decorations_toggled)
     FUNC_MAP_ENTRY(on_show_wm_decorations_realize)
+
+    /* two-way scroller */
+    FUNC_MAP_ENTRY(on_twoway_scroller_toggled)
+    FUNC_MAP_ENTRY(on_twoway_scroller_realize)
 
     /* colorize */
     FUNC_MAP_ENTRY(on_colorize_button_clicked)
