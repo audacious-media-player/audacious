@@ -37,17 +37,18 @@ flow_destructor(Flow *flow)
     g_slice_free(Flow, flow);    
 }
 
-void flow_execute(Flow *flow, gint time, gpointer data, gsize len, AFormat fmt, 
+gsize
+flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt, 
      gint srate, gint channels)
 {
     FlowElement *element;
     FlowContext context = {};
 
-    g_return_if_fail(flow != NULL);
-    g_return_if_fail(data != NULL);
+    g_return_val_if_fail(flow != NULL, 0);
+    g_return_val_if_fail(data != NULL, 0);
 
     context.time = time;
-    context.data = data;
+    context.data = *data;
     context.len = len;
     context.fmt = fmt;
     context.srate = srate;
@@ -61,6 +62,10 @@ void flow_execute(Flow *flow, gint time, gpointer data, gsize len, AFormat fmt,
         if (context.error)
             break;
     }
+
+    *data = context.data;
+
+    return context.len;
 }
 
 Flow *

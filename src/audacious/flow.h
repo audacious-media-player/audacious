@@ -50,7 +50,7 @@ typedef struct {
     FlowElement *head, *tail;
 } Flow;
 
-void flow_execute(Flow *flow, gint time, gpointer data, gsize len, AFormat fmt, 
+gsize flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt, 
      gint srate, gint channels);
 
 Flow *flow_new(void);

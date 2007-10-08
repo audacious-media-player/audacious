@@ -473,7 +473,7 @@ produce_audio(gint unused,	 /* will become InputPlayback soon */
       }
 #endif
 
-    flow_execute(postproc_flow, time, ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+    length = flow_execute(postproc_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
 
     writeoffs = 0;
     while (writeoffs < length)
