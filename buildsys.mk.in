@@ -391,21 +391,21 @@ CYAN = \e[0;36m
 
 KILL = \e[K
 
-DIR_ENTER = printf "$(KILL)$(CYAN)Entering directory $(BOLD)$$i$(CYAN).$(NORM)\n"; cd $$i || exit 1
-DIR_LEAVE = printf "$(KILL)$(CYAN)Leaving directory $(BOLD)$$i$(CYAN).$(NORM)\n"; cd .. || exit 1
-DEPEND_STATUS = printf "$(KILL)$(BROWN)Generating dependencies...$(NORM)\r"
-DEPEND_OK = printf "$(KILL)$(GREEN)Successfully generated dependencies.$(NORM)\n"
-DEPEND_FAILED = printf "$(KILL)$(RED)Failed to generate dependencies!$(NORM)\n"; exit 1
-COMPILE_STATUS = printf "$(KILL)$(BROWN)Compiling $(BOLD)$<$(BROWN)...$(NORM)\r"
-COMPILE_OK = printf "$(KILL)$(GREEN)Successfully compiled $(BOLD)$<$(GREEN).$(NORM)\n"
-COMPILE_FAILED = printf "$(KILL)$(RED)Failed to compile $(BOLD)$<$(RED)!$(NORM)\n"; exit 1
-LINK_STATUS = printf "$(KILL)$(BROWN)Linking $(BOLD)$@$(BROWN)...$(NORM)\r"
-LINK_OK = printf "$(KILL)$(GREEN)Successfully linked $(BOLD)$@$(GREEN).$(NORM)\n"
-LINK_FAILED = printf "$(KILL)$(RED)Failed to link $(BOLD)$@$(RED)!$(NORM)\n"; exit 1
-INSTALL_STATUS = printf "$(KILL)$(BROWN)Installing $(BOLD)$$i$(BROWN)...$(NORM)\r"
-INSTALL_OK = printf "$(KILL)$(GREEN)Successfully installed $(BOLD)$$i$(GREEN).$(NORM)\n"
-INSTALL_FAILED = printf "$(KILL)$(RED)Failed to install $(BOLD)$$i$(RED)!$(NORM)\n"; exit 1
-DELETE_OK = printf "$(KILL)$(BLUE)Deleted $(BOLD)$$i$(BLUE).$(NORM)\n"
-DELETE_FAILED = printf "$(KILL)$(RED)Failed to delete $(BOLD)$$i$(RED)!$(NORM)\n"; exit 1
+DIR_ENTER = printf "${KILL}${CYAN}Entering directory ${BOLD}$$i${CYAN}.${NORM}\n"; cd $$i || exit 1
+DIR_LEAVE = printf "${KILL}${CYAN}Leaving directory ${BOLD}$$i${CYAN}.${NORM}\n"; cd .. || exit 1
+DEPEND_STATUS = printf "${KILL}${BROWN}Generating dependencies...${NORM}\r"
+DEPEND_OK = printf "${KILL}${GREEN}Successfully generated dependencies.${NORM}\n"
+DEPEND_FAILED = printf "${KILL}${RED}Failed to generate dependencies!${NORM}\n"; exit 1
+COMPILE_STATUS = printf "${KILL}${BROWN}Compiling ${BOLD}$<${BROWN}...${NORM}\r"
+COMPILE_OK = printf "${KILL}${GREEN}Successfully compiled ${BOLD}$<${GREEN}.${NORM}\n"
+COMPILE_FAILED = printf "${KILL}${RED}Failed to compile ${BOLD}$<${RED}!${NORM}\n"; exit 1
+LINK_STATUS = printf "${KILL}${BROWN}Linking ${BOLD}$@${BROWN}...${NORM}\r"
+LINK_OK = printf "${KILL}${GREEN}Successfully linked ${BOLD}$@${GREEN}.${NORM}\n"
+LINK_FAILED = printf "${KILL}${RED}Failed to link ${BOLD}$@${RED}!${NORM}\n"; exit 1
+INSTALL_STATUS = printf "${KILL}${BROWN}Installing ${BOLD}$$i${BROWN}...${NORM}\r"
+INSTALL_OK = printf "${KILL}${GREEN}Successfully installed ${BOLD}$$i${GREEN}.${NORM}\n"
+INSTALL_FAILED = printf "${KILL}${RED}Failed to install ${BOLD}$$i${RED}!${NORM}\n"; exit 1
+DELETE_OK = printf "${KILL}${BLUE}Deleted ${BOLD}$$i${BLUE}.${NORM}\n"
+DELETE_FAILED = printf "${KILL}${RED}Failed to delete ${BOLD}$$i${RED}!${NORM}\n"; exit 1
 
 -include .deps
