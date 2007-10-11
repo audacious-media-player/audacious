@@ -155,6 +155,21 @@ playback_get_time(void)
     return playback->output->output_time();
 }
 
+gint
+playback_get_length(void)
+{
+    InputPlayback *playback;
+    g_return_val_if_fail(playback_get_playing(), -1);
+    playback = get_current_input_playback();
+
+    if (playback && playback->plugin->get_song_tuple) {
+        Tuple *tuple = playback->plugin->get_song_tuple(playback->filename);
+        if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
+            return tuple_get_value_type(tuple, FIELD_LENGTH, NULL);
+    }
+    return -1;
+}
+
 void
 playback_initiate(void)
 {

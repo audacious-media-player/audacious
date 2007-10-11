@@ -2511,7 +2511,10 @@ mainwin_update_song_info(void)
     if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
         playback_seek(ab_position_a/1000);
 
-    length = playlist_get_current_length(playlist_get_active());
+    length = playback_get_length();
+    if (length == -1 && cfg.timer_mode == TIMER_REMAINING)
+        cfg.timer_mode = TIMER_ELAPSED;
+
     playlistwin_set_time(time, length, cfg.timer_mode);
 
     if (cfg.timer_mode == TIMER_REMAINING) {

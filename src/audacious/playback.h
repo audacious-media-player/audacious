@@ -29,6 +29,7 @@
 #include "plugin.h"
 
 gint playback_get_time(void);
+gint playback_get_length(void);
 void playback_initiate(void);
 void playback_pause(void);
 void playback_stop(void);
