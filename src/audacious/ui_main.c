@@ -163,6 +163,7 @@ static GtkWidget *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
 static gint mainwin_timeout_id;
 
 static gboolean mainwin_info_text_locked = FALSE;
+static guint mainwin_volume_release_timeout = 0;
 
 static int ab_position_a = -1;
 static int ab_position_b = -1;
@@ -1604,10 +1605,11 @@ mainwin_volume_motion_cb(GtkWidget *widget, gint pos)
     equalizerwin_set_volume_slider(vol);
 }
 
-void
+gboolean
 mainwin_volume_release_cb(GtkWidget *widget, gint pos)
 {
     mainwin_adjust_volume_release();
+    return FALSE;
 }
 
 gint
@@ -1643,6 +1645,10 @@ mainwin_set_volume_diff(gint diff)
     setting_volume = FALSE;
     mainwin_set_volume_slider(vol);
     equalizerwin_set_volume_slider(vol);
+
+    if (mainwin_volume_release_timeout)
+       g_source_remove(mainwin_volume_release_timeout);
+    mainwin_volume_release_timeout = g_timeout_add(700, (GSourceFunc)(mainwin_volume_release_cb), NULL);
 }
 
 void

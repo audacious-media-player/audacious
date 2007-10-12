@@ -311,6 +311,11 @@ static gboolean ui_skinned_horizontal_slider_button_press(GtkWidget *widget, Gdk
             g_signal_emit_by_name(widget, "motion", priv->position);
             gtk_widget_queue_draw(widget);
         } else if (event->button == 3) {
+            if (hs->pressed) {
+                hs->pressed = FALSE;
+                g_signal_emit_by_name(widget, "release", priv->position);
+                gtk_widget_queue_draw(widget);
+            }
             event->x = event->x + hs->x;
             event->y = event->y + hs->y;
             return FALSE;
@@ -323,7 +328,7 @@ static gboolean ui_skinned_horizontal_slider_button_release(GtkWidget *widget, G
     UiSkinnedHorizontalSlider *hs = UI_SKINNED_HORIZONTAL_SLIDER(widget);
     UiSkinnedHorizontalSliderPrivate *priv = UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(widget);
 
-    if (event->button == 1) {
+    if (hs->pressed) {
         hs->pressed = FALSE;
         g_signal_emit_by_name(widget, "release", priv->position);
         gtk_widget_queue_draw(widget);
