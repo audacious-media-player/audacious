@@ -503,7 +503,7 @@ playback_seek(gint time)
         output_set_volume(l, r);
     }
 
-    hook_call("playback seek", playback);
+    event_queue("playback seek", playback);
 }
 
 void
