@@ -19,7 +19,7 @@ dnl POSSIBILITY OF SUCH DAMAGE.
 dnl
 
 AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
-	AC_MSG_CHECKING(wether we need an implib)
+	AC_MSG_CHECKING(whether we need an implib)
 	case "$target" in
 		*-*-cygwin | *-*-mingw32)
 			AC_MSG_RESULT(yes)
