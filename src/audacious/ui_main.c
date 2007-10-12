@@ -2447,6 +2447,8 @@ mainwin_create_widgets(void)
 
     hook_associate("playback audio error", (void *) mainwin_stop_pushed, NULL);
     hook_associate("playback audio error", (void *) run_no_output_device_dialog, NULL);
+
+    hook_associate("playback seek", (HookFunction) mainwin_update_song_info, NULL);
 }
 
 static void
