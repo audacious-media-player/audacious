@@ -31,5 +31,6 @@ typedef struct {
 } HookCallQueue;
 
 void event_queue(const gchar *name, gpointer user_data);
+void event_queue_timed(gint time, const gchar *name, gpointer user_data);
 
 #endif

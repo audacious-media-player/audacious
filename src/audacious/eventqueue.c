@@ -45,3 +45,17 @@ void event_queue(const gchar *name, gpointer user_data)
 
     g_idle_add_full(G_PRIORITY_HIGH_IDLE, eventqueue_handle, hq, NULL);
 }
+
+void event_queue_timed(gint time, const gchar *name, gpointer data)
+{
+    HookCallQueue *hq;
+
+    g_return_if_fail(name != NULL);
+    g_return_if_fail(user_data != NULL);
+
+    hq = g_slice_new0(HookCallQueue);
+    hq->name = g_strdup(name);
+    hq->user_data = user_data;
+
+    g_timeout_add(time, eventqueue_handle, hq);
+}
