@@ -28,8 +28,6 @@ syntax: regexp
 syntax: glob
 .git
 .deps
-.depend
-.depend-done
 *.a
 *.dylib
 *.gmo
