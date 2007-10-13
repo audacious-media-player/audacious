@@ -1375,7 +1375,7 @@
 			      <child>
 				<widget class="GtkCheckButton" id="checkbutton17">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).</property>
+				  <property name="tooltip" translatable="yes">If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction.</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Use two-way text scroller</property>
 				  <property name="use_underline">True</property>
