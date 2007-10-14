@@ -133,6 +133,20 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .uri_set_plugin = uri_set_plugin,
 
     .util_info_dialog = util_info_dialog,
+
+    .escape_shell_chars = escape_shell_chars,
+    .str_append = str_append,
+    .str_replace = str_replace,
+    .str_replace_in = str_replace_in,
+    .str_has_prefix_nocase = str_has_prefix_nocase,
+    .str_has_suffix_nocase = str_has_suffix_nocase,
+    .str_has_suffixes_nocase = str_has_suffixes_nocase,
+    .str_to_utf8_fallback = str_to_utf8_fallback,
+    .str_to_utf8 = str_to_utf8,
+    .filename_to_utf8 = filename_to_utf8,
+    .str_skip_chars = str_skip_chars,
+    .convert_title_text = convert_title_text,
+    .chardet_to_utf8 = chardet_to_utf8,
 };
 
 /*****************************************************************/

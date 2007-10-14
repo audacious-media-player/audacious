@@ -285,6 +285,29 @@ struct _AudaciousFuncTableV1 {
                                    GCallback button_action,
                                    gpointer action_data);
 
+    /* strings API */
+    gchar *(*escape_shell_chars)(const gchar * string);
+
+    gchar *(*str_append)(gchar * str, const gchar * add_str);
+    gchar *(*str_replace)(gchar * str, gchar * new_str);
+    void (*str_replace_in)(gchar ** str, gchar * new_str);
+
+    gboolean (*str_has_prefix_nocase)(const gchar * str, const gchar * prefix);
+    gboolean (*str_has_suffix_nocase)(const gchar * str, const gchar * suffix);
+    gboolean (*str_has_suffixes_nocase)(const gchar * str, gchar * const *suffixes);
+
+    gchar *(*str_to_utf8_fallback)(const gchar * str);
+    gchar *(*filename_to_utf8)(const gchar * filename);
+    gchar *(*str_to_utf8)(const gchar * str);
+
+    const gchar *(*str_skip_chars)(const gchar * str, const gchar * chars);
+
+    gchar *(*convert_title_text)(gchar * text);
+
+    gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
+                       gsize *arg_bytes_read, gsize *arg_bytes_write,
+                       GError **arg_error);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -374,6 +397,20 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_info_dialog			_audvt->util_info_dialog
 #define audacious_info_dialog		_audvt->util_info_dialog
+
+#define aud_escape_shell_chars		_audvt->escape_shell_chars
+#define aud_str_append			_audvt->str_append
+#define aud_str_replace			_audvt->str_replace
+#define aud_str_replace_in		_audvt->str_replace_in
+#define aud_str_has_prefix_nocase	_audvt->str_has_prefix_nocase
+#define aud_str_has_suffix_nocase	_audvt->str_has_suffix_nocase
+#define aud_str_has_suffixes_nocase	_audvt->str_has_suffixes_nocase
+#define aud_str_to_utf8_fallback	_audvt->str_to_utf8_fallback
+#define aud_filename_to_utf8		_audvt->filename_to_utf8
+#define aud_str_to_utf8			_audvt->str_to_utf8
+#define aud_str_skip_chars		_audvt->str_skip_chars
+#define aud_convert_title_text		_audvt->convert_title_text
+#define aud_chardet_to_utf8		_audvt->chardet_to_utf8
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
