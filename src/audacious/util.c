@@ -894,9 +894,9 @@ GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix) {
  * Return value: A GTK widget handle for the message box.
  **/
 GtkWidget *
-audacious_info_dialog(const gchar * title, const gchar * text,
-                  const gchar * button_text, gboolean modal,
-                  GCallback button_action, gpointer action_data)
+util_info_dialog(const gchar * title, const gchar * text,
+                 const gchar * button_text, gboolean modal,
+                 GCallback button_action, gpointer action_data)
 {
   GtkWidget *dialog;
   GtkWidget *dialog_vbox, *dialog_hbox, *dialog_bbox;
