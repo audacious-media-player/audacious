@@ -179,7 +179,7 @@ void report_error(const gchar *error_message, ...);
 
 extern GCond *cond_scan;
 extern GMutex *mutex_scan;
-#ifdef USE_DBUS
+#if defined(USE_DBUS) && defined(_AUDACIOUS_CORE)
 extern MprisPlayer *mpris;
 #endif
 
