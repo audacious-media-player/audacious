@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-10-13 14:15+0200\n"
-"PO-Revision-Date: 2007-09-10 09:20+0900\n"
+"PO-Revision-Date: 2007-10-14 22:22+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -191,10 +191,12 @@ msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
+"これを使うと，メインウィンドウのファイル情報テキストが前後にスクロールします．"
+"そうでなければ，テキストは一方向のみにスクロールします．"
 
 #: src/audacious/glade/prefswin.glade:1380
 msgid "Use two-way text scroller"
-msgstr ""
+msgstr "双方向テキストスクロールを使う"
 
 #: src/audacious/glade/prefswin.glade:1422 src/audacious/ui_preferences.c:111
 msgid "Appearance"
@@ -551,19 +553,21 @@ msgid "Sampling Rate [Hz]:"
 msgstr "サンプリングレート [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4517
-#, fuzzy
 msgid "<b>Volume Control</b>"
-msgstr "<b>マウスのホィール</b>"
+msgstr "<b>ボリュームコントロール</b>"
 
 #: src/audacious/glade/prefswin.glade:4556
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
+"ソフトウェアボリュームコントロールを使います．オーディオシステムが"
+"再生音量のコントロールをサポートしていない状況で有用でしょう．"
+
 
 #: src/audacious/glade/prefswin.glade:4558
 msgid "Use software volume control"
-msgstr ""
+msgstr "ソフトウェアボリュームコントロールを使う"
 
 #: src/audacious/glade/prefswin.glade:4746
 msgid "Reload Plugins"
@@ -864,7 +868,7 @@ msgid "Credits"
 msgstr "クレジット"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
@@ -872,7 +876,7 @@ msgid ""
 "Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"The future of UNIX multimedia.\n"
+"多くのプラットフォーム向けのスキン機能付マルチメディアプレーヤ.\n"
 "\n"
 "Copyright (C) 2005-2007 Audacious 開発チーム\n"
 
@@ -1775,7 +1779,6 @@ msgid "Play media from the selected location"
 msgstr "選択した場所からメディアを演奏"
 
 #: src/audacious/ui_manager.c:400
-#, fuzzy
 msgid "Plugin services"
 msgstr "プラグインサービス"
 
@@ -2051,12 +2054,11 @@ msgstr "コメント"
 
 #: src/audacious/ui_preferences.c:133
 msgid "Codec"
-msgstr ""
+msgstr "コーデック"
 
 #: src/audacious/ui_preferences.c:134
-#, fuzzy
 msgid "Quality"
-msgstr "終了(_Q)"
+msgstr "音質"
 
 #: src/audacious/ui_preferences.c:155
 msgid "localhost"
