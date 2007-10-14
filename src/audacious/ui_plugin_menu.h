@@ -35,8 +35,8 @@
 #define AUDACIOUS_MENU_PLAYLIST_SELECT  5
 #define AUDACIOUS_MENU_PLAYLIST_MISC    6
 
-gint audacious_menu_plugin_item_add( gint , GtkWidget * );
-gint audacious_menu_plugin_item_remove( gint , GtkWidget * );
+gint menu_plugin_item_add( gint , GtkWidget * );
+gint menu_plugin_item_remove( gint , GtkWidget * );
 
 
 #endif /* AUD_UIPLUGINMENU_H */

@@ -810,7 +810,7 @@ audacious_menu_plugin_menuwid( menu_id )
 
 
 gint
-audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
+menu_plugin_item_add( gint menu_id , GtkWidget * item )
 {
   if ( menu_created )
   {
@@ -840,7 +840,7 @@ audacious_menu_plugin_item_add( gint menu_id , GtkWidget * item )
 
 
 gint
-audacious_menu_plugin_item_remove( gint menu_id , GtkWidget * item )
+menu_plugin_item_remove( gint menu_id , GtkWidget * item )
 {
   if ( menu_created )
   {
