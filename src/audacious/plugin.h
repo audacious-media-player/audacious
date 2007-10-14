@@ -279,6 +279,12 @@ struct _AudaciousFuncTableV1 {
     InputPlugin *(*uri_get_plugin)(const gchar *filename);
     void (*uri_set_plugin)(const gchar *uri, InputPlugin *ip);
 
+    /* Util funcs */
+    GtkWidget *(*util_info_dialog)(const gchar * title, const gchar * text,
+                                   const gchar * button_text, gboolean modal,
+                                   GCallback button_action,
+                                   gpointer action_data);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -365,6 +371,9 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_uri_get_plugin		_audvt->uri_get_plugin
 #define aud_uri_set_plugin		_audvt->uri_set_plugin
+
+#define aud_info_dialog			_audvt->util_info_dialog
+#define audacious_info_dialog		_audvt->util_info_dialog
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;

@@ -131,6 +131,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .uri_get_plugin = uri_get_plugin,
     .uri_set_plugin = uri_set_plugin,
+
+    .util_info_dialog = util_info_dialog,
 };
 
 /*****************************************************************/
