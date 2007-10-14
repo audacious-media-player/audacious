@@ -291,6 +291,15 @@ struct _AudaciousFuncTableV1 {
                                    gpointer action_data);
     const gchar *(*get_gentitle_format)(void);
 
+    /* INI funcs */
+    INIFile *(*open_ini_file)(const gchar *filename);
+    void (*close_ini_file)(INIFile *key_file);
+    gchar *(*read_ini_string)(INIFile *key_file, const gchar *section,
+                                           const gchar *key);
+    GArray *(*read_ini_array)(INIFile *key_file, const gchar *section,
+                       const gchar *key);
+
+
     /* strings API */
     gchar *(*escape_shell_chars)(const gchar * string);
 
@@ -667,6 +676,11 @@ struct _AudaciousFuncTableV1 {
 #define aud_hook_dissociate			_audvt->hook_dissociate
 #define aud_hook_register			_audvt->hook_register
 #define aud_hook_call				_audvt->hook_call
+
+#define aud_open_ini_file			_audvt->open_ini_file
+#define aud_close_ini_file			_audvt->close_ini_file
+#define aud_read_ini_string			_audvt->read_ini_string
+#define aud_read_ini_array			_audvt->read_ini_array
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
