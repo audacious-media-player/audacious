@@ -36,14 +36,14 @@
 /* player */
 
 void
-audacious_drct_quit ( void )
+drct_quit ( void )
 {
   mainwin_quit_cb();
   return;
 }
 
 void
-audacious_drct_eject ( void )
+drct_eject ( void )
 {
   if (has_x11_connection)
     mainwin_eject_pushed();
@@ -51,7 +51,7 @@ audacious_drct_eject ( void )
 }
 
 void
-audacious_drct_jtf_show ( void )
+drct_jtf_show ( void )
 {
   if (has_x11_connection)
     ui_jump_to_track();
@@ -59,13 +59,13 @@ audacious_drct_jtf_show ( void )
 }
 
 gboolean
-audacious_drct_main_win_is_visible ( void )
+drct_main_win_is_visible ( void )
 {
   return cfg.player_visible;
 }
 
 void
-audacious_drct_main_win_toggle ( gboolean show )
+drct_main_win_toggle ( gboolean show )
 {
   if (has_x11_connection)
     mainwin_show(show);
@@ -73,13 +73,13 @@ audacious_drct_main_win_toggle ( gboolean show )
 }
 
 gboolean
-audacious_drct_eq_win_is_visible ( void )
+drct_eq_win_is_visible ( void )
 {
   return cfg.equalizer_visible;
 }
 
 void
-audacious_drct_eq_win_toggle ( gboolean show )
+drct_eq_win_toggle ( gboolean show )
 {
   if (has_x11_connection)
     equalizerwin_show(show);
@@ -87,13 +87,13 @@ audacious_drct_eq_win_toggle ( gboolean show )
 }
 
 gboolean
-audacious_drct_pl_win_is_visible ( void )
+drct_pl_win_is_visible ( void )
 {
   return cfg.playlist_visible;
 }
 
 void
-audacious_drct_pl_win_toggle ( gboolean show )
+drct_pl_win_toggle ( gboolean show )
 {
   if (has_x11_connection) {
     if (show)
@@ -104,13 +104,13 @@ audacious_drct_pl_win_toggle ( gboolean show )
   return;
 }
 
-void audacious_drct_set_skin(gchar *skinfile)
+void drct_set_skin(gchar *skinfile)
 {
     if (has_x11_connection)
         bmp_active_skin_load(skinfile);
 }
 
-void audacious_drct_activate(void)
+void drct_activate(void)
 {
     gtk_window_present(GTK_WINDOW(mainwin));
 }
@@ -118,7 +118,7 @@ void audacious_drct_activate(void)
 /* playback */
 
 void
-audacious_drct_play ( void )
+drct_play ( void )
 {
   if (playback_get_paused())
     playback_pause();
@@ -130,14 +130,14 @@ audacious_drct_play ( void )
 }
 
 void
-audacious_drct_pause ( void )
+drct_pause ( void )
 {
   playback_pause();
   return;
 }
 
 void
-audacious_drct_stop ( void )
+drct_stop ( void )
 {
   ip_data.stop = TRUE;
   playback_stop();
@@ -147,31 +147,31 @@ audacious_drct_stop ( void )
 }
 
 gboolean
-audacious_drct_get_playing ( void )
+drct_get_playing ( void )
 {
   return playback_get_playing();
 }
 
 gboolean
-audacious_drct_get_paused ( void )
+drct_get_paused ( void )
 {
   return playback_get_paused();
 }
 
 gboolean
-audacious_drct_get_stopped ( void )
+drct_get_stopped ( void )
 {
   return !playback_get_playing();
 }
 
 void
-audacious_drct_get_info( gint *rate, gint *freq, gint *nch)
+drct_get_info( gint *rate, gint *freq, gint *nch)
 {
     playback_get_sample_params(rate, freq, nch);
 }
 
 gint
-audacious_drct_get_time ( void )
+drct_get_time ( void )
 {
   gint time;
   if (playback_get_playing())
@@ -182,7 +182,7 @@ audacious_drct_get_time ( void )
 }
 
 void
-audacious_drct_seek ( guint pos )
+drct_seek ( guint pos )
 {
   if (playlist_get_current_length(playlist_get_active()) > 0 &&
       pos < (guint)playlist_get_current_length(playlist_get_active()))
@@ -191,14 +191,14 @@ audacious_drct_seek ( guint pos )
 }
 
 void
-audacious_drct_get_volume ( gint *vl, gint *vr )
+drct_get_volume ( gint *vl, gint *vr )
 {
   input_get_volume(vl, vr);
   return;
 }
 
 void
-audacious_drct_set_volume ( gint vl, gint vr )
+drct_set_volume ( gint vl, gint vr )
 {
   if (vl > 100)
     vl = 100;
@@ -209,19 +209,19 @@ audacious_drct_set_volume ( gint vl, gint vr )
 }
 
 void
-audacious_drct_get_volume_main( gint *v )
+drct_get_volume_main( gint *v )
 {
   gint vl, vr;
-  audacious_drct_get_volume(&vl, &vr);
+  drct_get_volume(&vl, &vr);
   *v = (vl > vr) ? vl : vr;
   return;
 }
 
 void
-audacious_drct_set_volume_main ( gint v )
+drct_set_volume_main ( gint v )
 {
   gint b, vl, vr;
-  audacious_drct_get_volume_balance(&b);
+  drct_get_volume_balance(&b);
   if (b < 0) {
     vl = v;
     vr = (v * (100 - abs(b))) / 100;
@@ -232,11 +232,11 @@ audacious_drct_set_volume_main ( gint v )
   }
   else
     vl = vr = v;
-  audacious_drct_set_volume(vl, vr);
+  drct_set_volume(vl, vr);
 }
 
 void
-audacious_drct_get_volume_balance ( gint *b )
+drct_get_volume_balance ( gint *b )
 {
   gint vl, vr;
   input_get_volume(&vl, &vr);
@@ -252,14 +252,14 @@ audacious_drct_get_volume_balance ( gint *b )
 }
 
 void
-audacious_drct_set_volume_balance ( gint b )
+drct_set_volume_balance ( gint b )
 {
   gint v, vl, vr;
   if (b < -100)
     b = -100;
   if (b > 100)
     b = 100;
-  audacious_drct_get_volume_main(&v);
+  drct_get_volume_main(&v);
   if (b < 0) {
     vl = v;
     vr = (v * (100 - abs(b))) / 100;
@@ -273,7 +273,7 @@ audacious_drct_set_volume_balance ( gint b )
     vl = v;
     vr = v;
   }
-  audacious_drct_set_volume(vl, vr);
+  drct_set_volume(vl, vr);
   return;
 }
 
@@ -281,71 +281,71 @@ audacious_drct_set_volume_balance ( gint b )
 /* playlist */
 
 void
-audacious_drct_pl_next ( void )
+drct_pl_next ( void )
 {
   playlist_next(playlist_get_active());
   return;
 }
 
 void
-audacious_drct_pl_prev ( void )
+drct_pl_prev ( void )
 {
   playlist_prev(playlist_get_active());
   return;
 }
 
 gboolean
-audacious_drct_pl_repeat_is_enabled( void )
+drct_pl_repeat_is_enabled( void )
 {
     return cfg.repeat;
 }
 
 void
-audacious_drct_pl_repeat_toggle( void )
+drct_pl_repeat_toggle( void )
 {
   mainwin_repeat_pushed(!cfg.repeat);
   return;
 }
 
 gboolean
-audacious_drct_pl_repeat_is_shuffled( void )
+drct_pl_repeat_is_shuffled( void )
 {
     return cfg.shuffle;
 }
 
 void
-audacious_drct_pl_shuffle_toggle( void )
+drct_pl_shuffle_toggle( void )
 {
   mainwin_shuffle_pushed(!cfg.shuffle);
   return;
 }
 
 gchar *
-audacious_drct_pl_get_title( gint pos )
+drct_pl_get_title( gint pos )
 {
     return playlist_get_songtitle(playlist_get_active(), pos);
 }
 
 gint
-audacious_drct_pl_get_time( gint pos )
+drct_pl_get_time( gint pos )
 {
     return playlist_get_songtime(playlist_get_active(), pos);
 }
 
 gint
-audacious_drct_pl_get_pos( void )
+drct_pl_get_pos( void )
 {
     return playlist_get_position_nolock(playlist_get_active());
 }
 
 gchar *
-audacious_drct_pl_get_file( gint pos )
+drct_pl_get_file( gint pos )
 {
     return playlist_get_filename(playlist_get_active(), pos);
 }
 
 void
-audacious_drct_pl_add ( GList * list )
+drct_pl_add ( GList * list )
 {
   GList *node = list;
   while ( node != NULL )
@@ -357,7 +357,7 @@ audacious_drct_pl_add ( GList * list )
 }
 
 void
-audacious_drct_pl_clear ( void )
+drct_pl_clear ( void )
 {
   playlist_clear(playlist_get_active());
   mainwin_clear_song_info();
@@ -367,7 +367,7 @@ audacious_drct_pl_clear ( void )
 
 /* following functions are not tested yet. be careful. --yaz */
 void
-audacious_drct_pl_delete ( gint pos )
+drct_pl_delete ( gint pos )
 {
     GDK_THREADS_ENTER();
     playlist_delete_index(playlist_get_active(), pos);
@@ -375,7 +375,7 @@ audacious_drct_pl_delete ( gint pos )
 }
 
 void
-audacious_drct_pl_set_pos( gint pos )
+drct_pl_set_pos( gint pos )
 {
     Playlist *playlist = playlist_get_active();
     if (pos < (guint)playlist_get_length(playlist))
@@ -383,19 +383,19 @@ audacious_drct_pl_set_pos( gint pos )
 }
 
 gint
-audacious_drct_pl_get_length( void )
+drct_pl_get_length( void )
 {
     return playlist_get_length(playlist_get_active());
 }
 
 void
-audacious_drct_pl_ins_url_string( gchar * string, gint pos )
+drct_pl_ins_url_string( gchar * string, gint pos )
 {
     playlist_ins_url(playlist_get_active(), string, pos);
 }
 
 void
-audacious_drct_pl_add_url_string( gchar * string )
+drct_pl_add_url_string( gchar * string )
 {
     GDK_THREADS_ENTER();
     playlist_add_url(playlist_get_active(), string);
@@ -403,7 +403,7 @@ audacious_drct_pl_add_url_string( gchar * string )
 }
 
 void
-audacious_drct_pl_enqueue_to_temp( gchar * string )
+drct_pl_enqueue_to_temp( gchar * string )
 {
     Playlist *new_pl = playlist_new();
 
@@ -416,13 +416,13 @@ audacious_drct_pl_enqueue_to_temp( gchar * string )
 
 /* playqueue */
 gint
-audacious_drct_pq_get_length( void )
+drct_pq_get_length( void )
 {
     return playlist_queue_get_length(playlist_get_active());
 }
 
 void
-audacious_drct_pq_add( gint pos )
+drct_pq_add( gint pos )
 {
     Playlist *playlist = playlist_get_active();
     if (pos < (guint)playlist_get_length(playlist))
@@ -430,7 +430,7 @@ audacious_drct_pq_add( gint pos )
 }
 
 void
-audacious_drct_pq_remove( gint pos )
+drct_pq_remove( gint pos )
 {
     Playlist *playlist = playlist_get_active();
     if (pos < (guint)playlist_get_length(playlist))
@@ -438,25 +438,25 @@ audacious_drct_pq_remove( gint pos )
 }
 
 void
-audacious_drct_pq_clear( void )
+drct_pq_clear( void )
 {
     playlist_clear_queue(playlist_get_active());
 }
 
 gboolean
-audacious_drct_pq_is_queued( gint pos )
+drct_pq_is_queued( gint pos )
 {
     return playlist_is_position_queued(playlist_get_active(), pos);
 }
 
 gint
-audacious_drct_pq_get_position( gint pos )
+drct_pq_get_position( gint pos )
 {
     return playlist_get_queue_position_number(playlist_get_active(), pos);
 }
 
 gint
-audaciuos_drct_pq_get_queue_position( gint pos )
+drct_pq_get_queue_position( gint pos )
 {
     return playlist_get_queue_position_number(playlist_get_active(), pos);
 }

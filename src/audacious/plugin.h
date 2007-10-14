@@ -474,6 +474,65 @@ struct _AudaciousFuncTableV1 {
     gint (*menu_plugin_item_add)(gint, GtkWidget *);
     gint (*menu_plugin_item_remove)(gint, GtkWidget *);
 
+    /* DRCT API. */
+    void (*drct_quit) ( void );
+    void (*drct_eject) ( void );
+    void (*drct_jtf_show) ( void );
+    gboolean (*drct_main_win_is_visible)( void );
+    void (*drct_main_win_toggle) ( gboolean );
+    gboolean (*drct_eq_win_is_visible)( void );
+    void (*drct_eq_win_toggle) ( gboolean );
+    gboolean (*drct_pl_win_is_visible)( void );
+    void (*drct_pl_win_toggle) ( gboolean );
+    void (*drct_set_skin)(gchar *skinfile);
+    void (*drct_activate)(void);
+
+    /* DRCT API: playback */
+    void (*drct_play) ( void );
+    void (*drct_pause) ( void );
+    void (*drct_stop) ( void );
+    gboolean (*drct_get_playing)( void );
+    gboolean (*drct_get_paused)( void );
+    gboolean (*drct_get_stopped)( void );
+    void (*drct_get_info)( gint *rate, gint *freq, gint *nch);
+    gint (*drct_get_time )( void );
+    void (*drct_seek) ( guint pos );
+    void (*drct_get_volume)( gint *vl, gint *vr );
+    void (*drct_set_volume)( gint vl, gint vr );
+    void (*drct_get_volume_main)( gint *v );
+    void (*drct_set_volume_main)( gint v );
+    void (*drct_get_volume_balance)( gint *b );
+    void (*drct_set_volume_balance)( gint b );
+
+    /* DRCT API: playlist */
+    void (*drct_pl_next)( void );
+    void (*drct_pl_prev)( void );
+    gboolean (*drct_pl_repeat_is_enabled)( void );
+    void (*drct_pl_repeat_toggle) ( void );
+    gboolean (*drct_pl_repeat_is_shuffled)( void );
+    void (*drct_pl_shuffle_toggle) ( void );
+    gchar *(*drct_pl_get_title)( gint pos );
+    gint (*drct_pl_get_time)( gint pos );
+    gint (*drct_pl_get_pos)( void );
+    gchar *(*drct_pl_get_file)( gint pos );
+    void (*drct_pl_add) ( GList * list );
+    void (*drct_pl_clear) ( void );
+    gint (*drct_pl_get_length)( void );
+    void (*drct_pl_delete) ( gint pos );
+    void (*drct_pl_set_pos)( gint pos );
+    void (*drct_pl_ins_url_string)( gchar * string, gint pos );
+    void (*drct_pl_add_url_string)( gchar * string );
+    void (*drct_pl_enqueue_to_temp)( gchar * string );
+
+    /* DRCT API: playqueue */
+    gint (*drct_pq_get_length)( void );
+    void (*drct_pq_add)( gint pos );
+    void (*drct_pq_remove)( gint pos );
+    void (*drct_pq_clear)( void );
+    gboolean (*drct_pq_is_queued)( gint pos );
+    gint (*drct_pq_get_position)( gint pos );
+    gint (*drct_pq_get_queue_position)( gint pos );
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -713,6 +772,63 @@ struct _AudaciousFuncTableV1 {
 #define audacious_menu_plugin_item_remove	_audvt->menu_plugin_item_remove
 #define aud_menu_plugin_item_add		_audvt->menu_plugin_item_add
 #define aud_menu_plugin_item_remove		_audvt->menu_plugin_item_remove
+
+#define audacious_drct_quit			_audvt->drct_quit
+#define audacious_drct_eject			_audvt->drct_eject
+#define audacious_drct_jtf_show			_audvt->drct_jtf_show
+#define audacious_drct_main_win_is_visible	_audvt->drct_main_win_is_visible
+#define audacious_drct_main_win_toggle		_audvt->drct_main_win_toggle
+#define audacious_drct_eq_win_is_visible	_audvt->drct_eq_win_is_visible
+#define audacious_drct_eq_win_toggle		_audvt->drct_eq_win_toggle
+#define audacious_drct_pl_win_is_visible	_audvt->drct_pl_win_is_visible
+#define audacious_drct_pl_win_toggle		_audvt->drct_pl_win_toggle
+#define audacious_drct_set_skin			_audvt->drct_set_skin
+#define audacious_drct_activate			_audvt->drct_activate
+
+#define audacious_drct_play			_audvt->drct_play
+#define audacious_drct_pause			_audvt->drct_pause
+#define audacious_drct_stop			_audvt->drct_stop
+#define audacious_drct_get_playing		_audvt->drct_get_playing
+#define audacious_drct_get_paused		_audvt->drct_get_paused
+#define audacious_drct_get_stopped		_audvt->drct_get_stopped
+#define audacious_drct_get_info			_audvt->drct_get_info
+#define audacious_drct_get_time			_audvt->drct_get_time
+#define audacious_drct_seek			_audvt->drct_seek
+#define audacious_drct_get_volume		_audvt->drct_get_volume
+#define audacious_drct_set_volume		_audvt->drct_set_volume
+#define audacious_drct_get_volume_main		_audvt->drct_get_volume_main
+#define audacious_drct_set_volume_main		_audvt->drct_set_volume_main
+#define audacious_drct_get_volume_balance	_audvt->drct_get_volume_balance
+#define audacious_drct_set_volume_balance	_audvt->drct_set_volume_balance
+
+#define audacious_drct_pl_next			_audvt->drct_pl_next
+#define audacious_drct_pl_prev			_audvt->drct_pl_prev
+#define audacious_drct_pl_repeat_is_enabled	_audvt->drct_pl_repeat_is_enabled
+#define audacious_drct_pl_repeat_toggle		_audvt->drct_pl_repeat_toggle
+#define audacious_drct_pl_repeat_is_shuffled	_audvt->drct_pl_repeat_is_shuffled
+#define audacious_drct_pl_shuffle_toggle	_audvt->drct_pl_shuffle_toggle
+#define audacious_drct_pl_get_title		_audvt->drct_pl_get_title
+#define audacious_drct_pl_get_time		_audvt->drct_pl_get_time
+#define audacious_drct_pl_get_pos		_audvt->drct_pl_get_pos
+#define audacious_drct_pl_get_file		_audvt->drct_pl_get_file
+#define audacious_drct_pl_add			_audvt->drct_pl_add
+#define audacious_drct_pl_clear			_audvt->drct_pl_clear
+#define audacious_drct_pl_get_length		_audvt->drct_pl_get_length
+#define audacious_drct_pl_delete		_audvt->drct_pl_delete
+#define audacious_drct_pl_set_pos		_audvt->drct_pl_set_pos
+#define audacious_drct_pl_ins_url_string	_audvt->drct_pl_ins_url_string
+#define audacious_drct_pl_add_url_string	_audvt->drct_pl_add_url_string
+#define audacious_drct_pl_enqueue_to_temp	_audvt->drct_pl_enqueue_to_temp
+
+#define audacious_drct_pq_get_length		_audvt->drct_pq_get_length
+#define audacious_drct_pq_add			_audvt->drct_pq_add
+#define audacious_drct_pq_remove		_audvt->drct_pq_remove
+#define audacious_drct_pq_clear			_audvt->drct_pq_clear
+#define audacious_drct_pq_is_queued		_audvt->drct_pq_is_queued
+#define audacious_drct_pq_get_position		_audvt->drct_pq_get_position
+#define audacious_drct_pq_get_queue_position	_audvt->drct_pq_get_queue_position
+
+#include "audacious/auddrct.h"
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;

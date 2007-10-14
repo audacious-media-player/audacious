@@ -27,63 +27,63 @@
 #include <glib.h>
 
 /* player */
-void audacious_drct_quit ( void );
-void audacious_drct_eject ( void );
-void audacious_drct_jtf_show ( void );
-gboolean audacious_drct_main_win_is_visible ( void );
-void audacious_drct_main_win_toggle ( gboolean );
-gboolean audacious_drct_eq_win_is_visible ( void );
-void audacious_drct_eq_win_toggle ( gboolean );
-gboolean audacious_drct_pl_win_is_visible ( void );
-void audacious_drct_pl_win_toggle ( gboolean );
-void audacious_drct_set_skin(gchar *skinfile);
-void audacious_drct_activate(void);
+void drct_quit ( void );
+void drct_eject ( void );
+void drct_jtf_show ( void );
+gboolean drct_main_win_is_visible ( void );
+void drct_main_win_toggle ( gboolean );
+gboolean drct_eq_win_is_visible ( void );
+void drct_eq_win_toggle ( gboolean );
+gboolean drct_pl_win_is_visible ( void );
+void drct_pl_win_toggle ( gboolean );
+void drct_set_skin(gchar *skinfile);
+void drct_activate(void);
 
 /* playback */
-void audacious_drct_play ( void );
-void audacious_drct_pause ( void );
-void audacious_drct_stop ( void );
-gboolean audacious_drct_get_playing ( void );
-gboolean audacious_drct_get_paused ( void );
-gboolean audacious_drct_get_stopped ( void );
-void audacious_drct_get_info( gint *rate, gint *freq, gint *nch);
-gint audacious_drct_get_time ( void );
-void audacious_drct_seek ( guint pos );
-void audacious_drct_get_volume( gint *vl, gint *vr );
-void audacious_drct_set_volume( gint vl, gint vr );
-void audacious_drct_get_volume_main( gint *v );
-void audacious_drct_set_volume_main( gint v );
-void audacious_drct_get_volume_balance( gint *b );
-void audacious_drct_set_volume_balance( gint b );
+void drct_play ( void );
+void drct_pause ( void );
+void drct_stop ( void );
+gboolean drct_get_playing ( void );
+gboolean drct_get_paused ( void );
+gboolean drct_get_stopped ( void );
+void drct_get_info( gint *rate, gint *freq, gint *nch);
+gint drct_get_time ( void );
+void drct_seek ( guint pos );
+void drct_get_volume( gint *vl, gint *vr );
+void drct_set_volume( gint vl, gint vr );
+void drct_get_volume_main( gint *v );
+void drct_set_volume_main( gint v );
+void drct_get_volume_balance( gint *b );
+void drct_set_volume_balance( gint b );
 
 /* playlist */
-void audacious_drct_pl_next( void );
-void audacious_drct_pl_prev( void );
-gboolean audacious_drct_pl_repeat_is_enabled ( void );
-void audacious_drct_pl_repeat_toggle ( void );
-gboolean audacious_drct_pl_repeat_is_shuffled ( void );
-void audacious_drct_pl_shuffle_toggle ( void );
-gchar *audacious_drct_pl_get_title( gint pos );
-gint audacious_drct_pl_get_time( gint pos );
-gint audacious_drct_pl_get_pos( void );
-gchar *audacious_drct_pl_get_file( gint pos );
-void audacious_drct_pl_add ( GList * list );
-void audacious_drct_pl_clear ( void );
-gint audacious_drct_pl_get_length( void );
-void audacious_drct_pl_delete ( gint pos );
-void audacious_drct_pl_set_pos( gint pos );
-void audacious_drct_pl_ins_url_string( gchar * string, gint pos );
-void audacious_drct_pl_add_url_string( gchar * string );
-void audacious_drct_pl_enqueue_to_temp( gchar * string );
+void drct_pl_next( void );
+void drct_pl_prev( void );
+gboolean drct_pl_repeat_is_enabled ( void );
+void drct_pl_repeat_toggle ( void );
+gboolean drct_pl_repeat_is_shuffled ( void );
+void drct_pl_shuffle_toggle ( void );
+gchar *drct_pl_get_title( gint pos );
+gint drct_pl_get_time( gint pos );
+gint drct_pl_get_pos( void );
+gchar *drct_pl_get_file( gint pos );
+void drct_pl_add ( GList * list );
+void drct_pl_clear ( void );
+gint drct_pl_get_length( void );
+void drct_pl_delete ( gint pos );
+void drct_pl_set_pos( gint pos );
+void drct_pl_ins_url_string( gchar * string, gint pos );
+void drct_pl_add_url_string( gchar * string );
+void drct_pl_enqueue_to_temp( gchar * string );
 
 /* playqueue */
-gint audacious_drct_pq_get_length( void );
-void audacious_drct_pq_add( gint pos );
-void audacious_drct_pq_remove( gint pos );
-void audacious_drct_pq_clear( void );
-gboolean audacious_drct_pq_is_queued( gint pos );
-gint audacious_drct_pq_get_position( gint pos );
-gint audaciuos_drct_pq_get_queue_position( gint pos );
+gint drct_pq_get_length( void );
+void drct_pq_add( gint pos );
+void drct_pq_remove( gint pos );
+void drct_pq_clear( void );
+gboolean drct_pq_is_queued( gint pos );
+gint drct_pq_get_position( gint pos );
+gint drct_pq_get_queue_position( gint pos );
 
 /* adjust naming scheme to audacious_remote_* functions */
 #define audacious_drct_show_jtf_box audacious_drct_jtf_show
