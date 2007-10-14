@@ -28,10 +28,9 @@
 
 #ifdef _AUDACIOUS_CORE
 # include "ui_main.h"
-#endif
-
-#ifdef USE_DBUS
-#include "dbus-service.h"
+# ifdef USE_DBUS
+#  include "dbus-service.h"
+# endif
 #endif
 
 #include <sys/types.h>
