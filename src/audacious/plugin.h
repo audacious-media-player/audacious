@@ -460,8 +460,8 @@ struct _AudaciousFuncTableV1 {
 
     /* xconvert API */
     struct xmms_convert_buffers *(*xmms_convert_buffers_new)(void);
-    void *(*xmms_convert_buffers_free)(struct xmms_convert_buffers *buf);
-    void *(*xmms_convert_buffers_destroy)(struct xmms_convert_buffers *buf);
+    void (*xmms_convert_buffers_free)(struct xmms_convert_buffers *buf);
+    void (*xmms_convert_buffers_destroy)(struct xmms_convert_buffers *buf);
     convert_func_t (*xmms_convert_get_func)(AFormat output, AFormat input);
     convert_channel_func_t (*xmms_convert_get_channel_func)(AFormat fmt,
                                                      int output,
