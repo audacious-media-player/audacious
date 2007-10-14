@@ -147,6 +147,12 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .str_skip_chars = str_skip_chars,
     .convert_title_text = convert_title_text,
     .chardet_to_utf8 = chardet_to_utf8,
+
+    .playlist_container_register = playlist_container_register,
+    .playlist_container_unregister = playlist_container_unregister,
+    .playlist_container_read = playlist_container_read,
+    .playlist_container_write = playlist_container_write,
+    .playlist_container_find = playlist_container_find,
 };
 
 /*****************************************************************/

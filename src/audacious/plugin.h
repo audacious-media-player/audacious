@@ -42,6 +42,7 @@
 #include "audacious/tuple_formatter.h"
 #include "audacious/eventqueue.h"
 #include "audacious/configdb.h"
+#include "audacious/playlist_container.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -308,6 +309,12 @@ struct _AudaciousFuncTableV1 {
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 
+    /* PlaylistContainer API. */
+    void (*playlist_container_register)(PlaylistContainer *plc);
+    void (*playlist_container_unregister)(PlaylistContainer *plc);
+    void (*playlist_container_read)(gchar *filename, gint pos);
+    void (*playlist_container_write)(gchar *filename, gint pos);
+    PlaylistContainer *(*playlist_container_find)(gchar *ext);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -411,6 +418,12 @@ struct _AudaciousFuncTableV1 {
 #define aud_str_skip_chars		_audvt->str_skip_chars
 #define aud_convert_title_text		_audvt->convert_title_text
 #define aud_chardet_to_utf8		_audvt->chardet_to_utf8
+
+#define aud_playlist_container_register		_audvt->playlist_container_register
+#define aud_playlist_container_unregister	_audvt->playlist_container_unregister
+#define aud_playlist_container_read		_audvt->playlist_container_read
+#define aud_playlist_container_write		_audvt->playlist_container_write
+#define aud_playlist_container_find		_audvt->playlist_container_find
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
