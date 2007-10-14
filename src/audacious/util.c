@@ -896,7 +896,7 @@ GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix) {
 GtkWidget *
 audacious_info_dialog(const gchar * title, const gchar * text,
                   const gchar * button_text, gboolean modal,
-                  GtkSignalFunc button_action, gpointer action_data)
+                  GCallback button_action, gpointer action_data)
 {
   GtkWidget *dialog;
   GtkWidget *dialog_vbox, *dialog_hbox, *dialog_bbox;

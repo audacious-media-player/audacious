@@ -93,7 +93,7 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
 
 GtkWidget *audacious_info_dialog(const gchar * title, const gchar * text,
                              const gchar * button_text, gboolean modal,
-                             GtkSignalFunc button_action,
+                             GCallback button_action,
                              gpointer action_data);
 
 GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
