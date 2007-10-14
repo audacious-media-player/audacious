@@ -89,6 +89,7 @@ typedef struct _LowlevelPlugin LowlevelPlugin;
 typedef struct _InputPlayback InputPlayback;
 
 #include "audacious/playlist.h"
+#include "audacious/input.h"
 #include "audacious/mime.h"
 #include "audacious/custom_uri.h"
 
