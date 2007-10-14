@@ -262,6 +262,11 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .ip_state = &ip_data,
     ._cfg = &cfg,
+
+    .hook_associate = hook_associate,
+    .hook_dissociate = hook_dissociate,
+    .hook_register = hook_register,
+    .hook_call = hook_call,
 };
 
 /*****************************************************************/

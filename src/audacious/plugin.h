@@ -93,6 +93,7 @@ typedef struct _InputPlayback InputPlayback;
 #include "audacious/input.h"
 #include "audacious/mime.h"
 #include "audacious/custom_uri.h"
+#include "audacious/hook.h"
 
 #define PLUGIN_COMMON_FIELDS		\
     gpointer handle;			\
@@ -438,6 +439,12 @@ struct _AudaciousFuncTableV1 {
     /* state vars */
     InputPluginData *ip_state;
     BmpConfig *_cfg;
+
+    /* hook API */
+    void (*hook_register)(const gchar *name);
+    gint (*hook_associate)(const gchar *name, HookFunction func, gpointer user_data);
+    gint (*hook_dissociate)(const gchar *name, HookFunction func);
+    void (*hook_call)(const gchar *name, gpointer hook_data);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -655,6 +662,11 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_ip_state				_audvt->ip_state
 #define aud_cfg					_audvt->_cfg
+
+#define aud_hook_associate			_audvt->hook_associate
+#define aud_hook_dissociate			_audvt->hook_dissociate
+#define aud_hook_register			_audvt->hook_register
+#define aud_hook_call				_audvt->hook_call
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
