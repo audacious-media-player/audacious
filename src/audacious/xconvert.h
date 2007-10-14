@@ -4,6 +4,9 @@
  *  Licensed under GNU GPL version 3.
  */
 
+#ifndef _AUDACIOUS_XCONVERT_H
+#define _AUDACIOUS_XCONVERT_H
+
 #include <audacious/plugin.h>
 
 struct xmms_convert_buffers;
@@ -32,3 +35,5 @@ convert_channel_func_t xmms_convert_get_channel_func(AFormat fmt,
                                                      int input);
 convert_freq_func_t xmms_convert_get_frequency_func(AFormat fmt,
                                                     int channels);
+
+#endif
