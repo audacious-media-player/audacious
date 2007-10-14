@@ -2627,7 +2627,9 @@ playlist_get_info_func(gpointer arg)
                            Restart. */
                         node = playlist->entries;
                 }
-                else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
+                else if ((entry->tuple != NULL || entry->title != NULL) && 
+                    tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
+                    tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1) {
                     update_playlistwin = TRUE;
                     break;
                 }
@@ -2671,10 +2673,12 @@ playlist_get_info_func(gpointer arg)
                         node = g_list_nth(playlist->entries,
                                           playlistwin_get_toprow());
                  }
-                 else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
+                 else if ((entry->tuple != NULL || entry->title != NULL) && 
+                     tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
+                     tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1) {
                      update_playlistwin = TRUE;
-                        // no need for break here since this iteration is very short.
-                }
+                     break;
+                 }
             }
         } // on_demand
         else if (cfg.get_info_on_demand &&
