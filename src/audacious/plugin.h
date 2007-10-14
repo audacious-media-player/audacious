@@ -97,6 +97,7 @@ typedef GHashTable INIFile;
 #include "audacious/custom_uri.h"
 #include "audacious/hook.h"
 #include "audacious/xconvert.h"
+#include "audacious/ui_plugin_menu.h"
 
 #define PLUGIN_COMMON_FIELDS		\
     gpointer handle;			\
@@ -469,6 +470,10 @@ struct _AudaciousFuncTableV1 {
     convert_freq_func_t (*xmms_convert_get_frequency_func)(AFormat fmt,
                                                     int channels);
 
+    /* PluginMenu API */
+    gint (*menu_plugin_item_add)(gint, GtkWidget *);
+    gint (*menu_plugin_item_remove)(gint, GtkWidget *);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -703,6 +708,11 @@ struct _AudaciousFuncTableV1 {
 #define aud_convert_get_func			_audvt->xmms_convert_get_func
 #define aud_convert_get_channel_func		_audvt->xmms_convert_get_channel_func
 #define aud_convert_get_frequency_func		_audvt->xmms_convert_get_frequency_func
+
+#define audacious_menu_plugin_item_add		_audvt->menu_plugin_item_add
+#define audacious_menu_plugin_item_remove	_audvt->menu_plugin_item_remove
+#define aud_menu_plugin_item_add		_audvt->menu_plugin_item_add
+#define aud_menu_plugin_item_remove		_audvt->menu_plugin_item_remove
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;

@@ -279,6 +279,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .xmms_convert_get_func = xmms_convert_get_func,
     .xmms_convert_get_channel_func = xmms_convert_get_channel_func,
     .xmms_convert_get_frequency_func = xmms_convert_get_frequency_func,
+
+    .menu_plugin_item_add = menu_plugin_item_add,
+    .menu_plugin_item_remove = menu_plugin_item_remove,
 };
 
 /*****************************************************************/
