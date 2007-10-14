@@ -285,6 +285,7 @@ struct _AudaciousFuncTableV1 {
                                    const gchar * button_text, gboolean modal,
                                    GCallback button_action,
                                    gpointer action_data);
+    const gchar *(*get_gentitle_format)(void);
 
     /* strings API */
     gchar *(*escape_shell_chars)(const gchar * string);
@@ -404,6 +405,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_info_dialog			_audvt->util_info_dialog
 #define audacious_info_dialog		_audvt->util_info_dialog
+#define aud_get_gentitle_format		_audvt->get_gentitle_format
 
 #define aud_escape_shell_chars		_audvt->escape_shell_chars
 #define aud_str_append			_audvt->str_append
@@ -602,12 +604,5 @@ struct _DiscoveryPlugin {
 
 /* undefine the macro -- struct Plugin should be used instead. */
 #undef PLUGIN_COMMON_FIELDS
-
-G_BEGIN_DECLS
-
-/* So that input plugins can get the title formatting information */
-G_CONST_RETURN gchar * get_gentitle_format(void);
-
-G_END_DECLS
 
 #endif
