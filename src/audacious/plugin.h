@@ -43,6 +43,7 @@
 #include "audacious/eventqueue.h"
 #include "audacious/configdb.h"
 #include "audacious/playlist_container.h"
+#include "audacious/main.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -434,6 +435,9 @@ struct _AudaciousFuncTableV1 {
 
     gboolean (*playlist_playlists_equal)(Playlist *p1, Playlist *p2);
 
+    /* state vars */
+    InputPluginData *ip_state;
+    BmpConfig *_cfg;
 };
 
 /* Convenience macros for accessing the public API. */
@@ -648,6 +652,9 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_playlist_get_active			_audvt->playlist_get_active
 #define aud_playlist_playlists_equal		_audvt->playlist_playlists_equal
+
+#define aud_ip_state				_audvt->ip_state
+#define aud_cfg					_audvt->_cfg
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;

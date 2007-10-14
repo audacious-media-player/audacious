@@ -26,9 +26,9 @@
 #ifndef _AUDACIOUS_INPUT_H
 #define _AUDACIOUS_INPUT_H
 
-#include "plugin.h"
-
 typedef struct _InputPluginData InputPluginData;
+
+#include "plugin.h"
 
 struct _InputPluginData {
     GList *input_list;

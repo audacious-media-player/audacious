@@ -259,6 +259,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .playlist_get_active = playlist_get_active,
     .playlist_playlists_equal = playlist_playlists_equal,
+
+    .ip_state = &ip_data,
+    ._cfg = &cfg,
 };
 
 /*****************************************************************/
