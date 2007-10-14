@@ -22,8 +22,8 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#ifndef PLAYLIST_H
-#define PLAYLIST_H
+#ifndef _AUDACIOUS_PLAYLIST_H
+#define _AUDACIOUS_PLAYLIST_H
 
 /* XXX: Allow pre-0.2 libmowgli to build audacious. */
 #ifdef TRUE

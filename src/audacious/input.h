@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef _AUDACIOUS_INPUT_H
+#define _AUDACIOUS_INPUT_H
 
 #include "plugin.h"
 
