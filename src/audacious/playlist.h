@@ -245,6 +245,8 @@ Playlist *playlist_get_active(void);
 
 gboolean playlist_playlists_equal(Playlist *p1, Playlist *p2);
 
+extern const gchar *get_gentitle_format(void);
+
 G_END_DECLS
 
 #endif
