@@ -37,9 +37,9 @@
 
 G_BEGIN_DECLS
 
-#define SWAP(a, b)      { a^=b; b^=a; a^=b; }
+#include "audacious/plugin.h"
 
-typedef GHashTable INIFile;
+#define SWAP(a, b)      { a^=b; b^=a; a^=b; }
 
 typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,

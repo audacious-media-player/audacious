@@ -89,6 +89,8 @@ typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
+typedef GHashTable INIFile;
+
 #include "audacious/playlist.h"
 #include "audacious/input.h"
 #include "audacious/mime.h"
