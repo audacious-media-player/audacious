@@ -38,9 +38,9 @@
 #include <glib.h>
 #include "audacious/tuple.h"
 #include "audacious/tuple_formatter.h"
-#include "input.h"
 
-G_BEGIN_DECLS
+typedef struct _PlaylistEntry PlaylistEntry;
+typedef struct _Playlist Playlist;
 
 typedef enum {
     PLAYLIST_SORT_PATH,
@@ -58,22 +58,19 @@ typedef enum {
     PLAYLIST_DUPS_TITLE
 } PlaylistDupsType;
 
-typedef enum {
-    PLAYLIST_FORMAT_UNKNOWN = -1,
-    PLAYLIST_FORMAT_M3U,
-    PLAYLIST_FORMAT_PLS,
-    PLAYLIST_FORMAT_COUNT
-} PlaylistFormat;
+#include "audacious/plugin.h"
+
+G_BEGIN_DECLS
 
 #define PLAYLIST_ENTRY(x)  ((PlaylistEntry*)(x))
-typedef struct _PlaylistEntry {
+struct _PlaylistEntry {
     gchar *filename;
     gchar *title;
     gint length;
     gboolean selected;
     InputPlugin *decoder;
     Tuple *tuple;		/* cached entry tuple, if available */
-} PlaylistEntry;
+};
 
 #define PLAYLIST(x)  ((Playlist *)(x))
 
@@ -83,7 +80,7 @@ typedef enum {
     PLAYLIST_USE_RELATIVE = 1 << 1,
 } PlaylistAttribute;
 
-typedef struct _Playlist {
+struct _Playlist {
     gchar         *title;
     gchar         *filename;
     gint           length;
@@ -99,7 +96,7 @@ typedef struct _Playlist {
     GMutex        *mutex;       /* this is required for multiple playlist */
     GList *tail; /* marker for the last element in playlist->entries */
     gint           attribute; /* PlaylistAttribute */
-} Playlist;
+};
 
 typedef enum {
     PLAYLIST_ASSOC_LINEAR,
@@ -193,7 +190,6 @@ Tuple *playlist_get_tuple(Playlist *playlist, guint pos);
 gint playlist_get_songtime(Playlist *playlist, guint pos);
 
 GList *playlist_get_selected(Playlist *playlist);
-GList *playlist_get_selected_list(Playlist *playlist);
 int playlist_get_num_selected(Playlist *playlist);
 
 void playlist_get_total_time(Playlist *playlist, gulong * total_time, gulong * selection_time,
@@ -225,7 +221,6 @@ Playlist *playlist_new(void);
 void playlist_free(Playlist *playlist);
 Playlist *playlist_new_from_selected(void);
 
-PlaylistFormat playlist_format_get_from_name(const gchar * filename);
 gboolean is_playlist_name(const gchar * filename);
 
 #define PLAYLIST_LOCK(pl)    g_mutex_lock(pl->mutex)

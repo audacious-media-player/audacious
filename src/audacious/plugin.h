@@ -88,6 +88,7 @@ typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
+#include "audacious/playlist.h"
 #include "audacious/mime.h"
 #include "audacious/custom_uri.h"
 
@@ -316,6 +317,122 @@ struct _AudaciousFuncTableV1 {
     void (*playlist_container_read)(gchar *filename, gint pos);
     void (*playlist_container_write)(gchar *filename, gint pos);
     PlaylistContainer *(*playlist_container_find)(gchar *ext);
+
+    /* Playlist API */
+    PlaylistEntry *(*playlist_entry_new)(const gchar * filename,
+                                  const gchar * title, const gint len,
+                                  InputPlugin * dec);
+    void (*playlist_entry_free)(PlaylistEntry * entry);
+
+    void (*playlist_add_playlist)(Playlist *);
+    void (*playlist_remove_playlist)(Playlist *);
+    void (*playlist_select_playlist)(Playlist *);
+    void (*playlist_select_next)(void);
+    void (*playlist_select_prev)(void);
+    GList *(*playlist_get_playlists)(void);
+
+    void (*playlist_clear_only)(Playlist *playlist);
+    void (*playlist_clear)(Playlist *playlist);
+    void (*playlist_delete)(Playlist *playlist, gboolean crop);
+
+    gboolean (*playlist_add)(Playlist *playlist, const gchar * filename);
+    gboolean (*playlist_ins)(Playlist *playlist, const gchar * filename, gint pos);
+    guint (*playlist_add_dir)(Playlist *playlist, const gchar * dir);
+    guint (*playlist_ins_dir)(Playlist *playlist, const gchar * dir, gint pos, gboolean background);
+    guint (*playlist_add_url)(Playlist *playlist, const gchar * url);
+    guint (*playlist_ins_url)(Playlist *playlist, const gchar * string, gint pos);
+
+    void (*playlist_check_pos_current)(Playlist *playlist);
+    void (*playlist_next)(Playlist *playlist);
+    void (*playlist_prev)(Playlist *playlist);
+    void (*playlist_queue)(Playlist *playlist);
+    void (*playlist_queue_position)(Playlist *playlist, guint pos);
+    void (*playlist_queue_remove)(Playlist *playlist, guint pos);
+    gint (*playlist_queue_get_length)(Playlist *playlist);
+    gboolean (*playlist_is_position_queued)(Playlist *playlist, guint pos);
+    void (*playlist_clear_queue)(Playlist *playlist);
+    gint (*playlist_get_queue_position)(Playlist *playlist, PlaylistEntry * entry);
+    gint (*playlist_get_queue_position_number)(Playlist *playlist, guint pos);
+    gint (*playlist_get_queue_qposition_number)(Playlist *playlist, guint pos);
+    void (*playlist_eof_reached)(Playlist *playlist);
+    void (*playlist_set_position)(Playlist *playlist, guint pos);
+    gint (*playlist_get_length)(Playlist *playlist);
+    gint (*playlist_get_position)(Playlist *playlist);
+    gint (*playlist_get_position_nolock)(Playlist *playlist);
+    gchar *(*playlist_get_info_text)(Playlist *playlist);
+    gint (*playlist_get_current_length)(Playlist *playlist);
+
+    gboolean (*playlist_save)(Playlist *playlist, const gchar * filename);
+    gboolean (*playlist_load)(Playlist *playlist, const gchar * filename);
+
+    void (*playlist_sort)(Playlist *playlist, PlaylistSortType type);
+    void (*playlist_sort_selected)(Playlist *playlist, PlaylistSortType type);
+
+    void (*playlist_reverse)(Playlist *playlist);
+    void (*playlist_random)(Playlist *playlist);
+    void (*playlist_remove_duplicates)(Playlist *playlist, PlaylistDupsType);
+    void (*playlist_remove_dead_files)(Playlist *playlist);
+
+    void (*playlist_fileinfo_current)(Playlist *playlist);
+    void (*playlist_fileinfo)(Playlist *playlist, guint pos);
+
+    void (*playlist_delete_index)(Playlist *playlist, guint pos);
+    void (*playlist_delete_filenames)(Playlist *playlist, GList * filenames);
+
+    PlaylistEntry *(*playlist_get_entry_to_play)(Playlist *playlist);
+
+    gchar *(*playlist_get_filename)(Playlist *playlist, guint pos);
+    gchar *(*playlist_get_songtitle)(Playlist *playlist, guint pos);
+    Tuple *(*playlist_get_tuple)(Playlist *playlist, guint pos);
+    gint (*playlist_get_songtime)(Playlist *playlist, guint pos);
+
+    GList *(*playlist_get_selected)(Playlist *playlist);
+    int (*playlist_get_num_selected)(Playlist *playlist);
+
+    void (*playlist_get_total_time)(Playlist *playlist, gulong * total_time, gulong * selection_time,
+                             gboolean * total_more,
+                             gboolean * selection_more);
+
+    gint (*playlist_select_search)(Playlist *playlist, Tuple *tuple, gint action);
+    void (*playlist_select_all)(Playlist *playlist, gboolean set);
+    void (*playlist_select_range)(Playlist *playlist, gint min, gint max, gboolean sel);
+    void (*playlist_select_invert_all)(Playlist *playlist);
+    gboolean (*playlist_select_invert)(Playlist *playlist, guint pos);
+
+    gboolean (*playlist_read_info_selection)(Playlist *playlist);
+    void (*playlist_read_info)(Playlist *playlist, guint pos);
+
+    void (*playlist_set_shuffle)(gboolean shuffle);
+
+    void (*playlist_clear_selected)(Playlist *playlist);
+
+    GList *(*get_playlist_nth)(Playlist *playlist, guint);
+
+    gboolean (*playlist_set_current_name)(Playlist *playlist, const gchar * title);
+    const gchar *(*playlist_get_current_name)(Playlist *playlist);
+
+    gboolean (*playlist_filename_set)(Playlist *playlist, const gchar * filename);
+
+    gchar *(*playlist_filename_get)(Playlist *playlist);
+
+    Playlist *(*playlist_new)(void);
+    void (*playlist_free)(Playlist *playlist);
+    Playlist *(*playlist_new_from_selected)(void);
+
+    gboolean (*is_playlist_name)(const gchar * filename);
+
+    void (*playlist_load_ins_file)(Playlist *playlist, const gchar * filename,
+                                   const gchar * playlist_name, gint pos,
+                                   const gchar * title, gint len);
+
+    void (*playlist_load_ins_file_tuple)(Playlist *playlist, const gchar * filename_p,
+                                         const gchar * playlist_name, gint pos,
+                                         Tuple *tuple);
+
+    Playlist *(*playlist_get_active)(void);
+
+    gboolean (*playlist_playlists_equal)(Playlist *p1, Playlist *p2);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -426,6 +543,110 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_container_read		_audvt->playlist_container_read
 #define aud_playlist_container_write		_audvt->playlist_container_write
 #define aud_playlist_container_find		_audvt->playlist_container_find
+
+#define aud_playlist_entry_new			_audvt->playlist_entry_new
+#define aud_playlist_entry_free			_audvt->playlist_entry_free
+
+#define aud_playlist_add_playlist		_audvt->playlist_add_playlist
+#define aud_playlist_remove_playlist		_audvt->playlist_remove_playlist
+#define aud_playlist_select_playlist		_audvt->playlist_select_playlist
+#define aud_playlist_select_next		_audvt->playlist_select_next
+#define aud_playlist_select_prev		_audvt->playlist_select_prev
+#define aud_playlist_get_playlists		_audvt->playlist_get_playlists
+
+#define aud_playlist_clear_only			_audvt->playlist_clear_only
+#define aud_playlist_clear			_audvt->playlist_clear
+#define aud_playlist_delete			_audvt->playlist_delete
+
+#define aud_playlist_add			_audvt->playlist_add
+#define aud_playlist_ins			_audvt->playlist_ins
+#define aud_playlist_add_dir			_audvt->playlist_add_dir
+#define aud_playlist_ins_dir			_audvt->playlist_ins_dir
+#define aud_playlist_add_url			_audvt->playlist_add_url
+#define aud_playlist_ins_url			_audvt->playlist_ins_url
+
+#define aud_playlist_check_pos_current		_audvt->playlist_check_pos_current
+#define aud_playlist_next			_audvt->playlist_next
+#define aud_playlist_prev			_audvt->playlist_prev
+
+#define aud_playlist_queue			_audvt->playlist_queue
+#define aud_playlist_queue_position		_audvt->playlist_queue_position
+#define aud_playlist_queue_remove		_audvt->playlist_queue_remove
+#define aud_playlist_queue_get_length		_audvt->playlist_queue_get_length
+#define aud_playlist_is_position_queued		_audvt->playlist_is_position_queued
+#define aud_playlist_clear_queue		_audvt->playlist_clear_queue
+#define aud_playlist_get_queue_position		_audvt->playlist_get_queue_position
+#define aud_playlist_get_queue_position_number	_audvt->playlist_get_queue_position_number
+#define aud_playlist_get_queue_qposition_number	_audvt->playlist_get_queue_qposition_number
+#define aud_playlist_eof_reached		_audvt->playlist_eof_reached
+#define aud_playlist_set_position		_audvt->playlist_set_position
+#define aud_playlist_get_length			_audvt->playlist_get_length
+#define aud_playlist_get_position		_audvt->playlist_get_position
+#define aud_playlist_get_position_nolock	_audvt->playlist_get_position_nolock
+#define aud_playlist_get_info_text		_audvt->playlist_get_info_text
+#define aud_playlist_get_current_length		_audvt->playlist_get_current_length
+
+#define aud_playlist_save			_audvt->playlist_save
+#define aud_playlist_load			_audvt->playlist_load
+
+#define aud_playlist_sort			_audvt->playlist_sort
+#define aud_playlist_sort_selected		_audvt->playlist_sort_selected
+
+#define aud_playlist_reverse			_audvt->playlist_reverse
+#define aud_playlist_random			_audvt->playlist_random
+#define aud_playlist_remove_duplicates		_audvt->playlist_remove_duplicates
+#define aud_playlist_remove_dead_files		_audvt->playlist_remove_dead_files
+
+#define aud_playlist_fileinfo_current		_audvt->playlist_fileinfo_current
+#define aud_playlist_fileinfo			_audvt->playlist_fileinfo
+
+#define aud_playlist_delete_index		_audvt->playlist_delete_index
+#define aud_playlist_delete_filenames		_audvt->playlist_delete_filenames
+
+#define aud_playlist_get_entry_to_play		_audvt->playlist_get_entry_to_play
+
+#define aud_playlist_get_filename		_audvt->playlist_get_filename
+#define aud_playlist_get_songtitle		_audvt->playlist_get_songtitle
+#define aud_playlist_get_tuple			_audvt->playlist_get_tuple
+#define aud_playlist_get_songtime		_audvt->playlist_get_songtime
+
+#define aud_playlist_get_selected		_audvt->playlist_get_selected
+#define aud_playlist_get_num_selected		_audvt->playlist_get_num_selected
+
+#define aud_playlist_get_total_time		_audvt->playlist_get_total_time
+
+#define aud_playlist_select_search		_audvt->playlist_select_search
+#define aud_playlist_select_all			_audvt->playlist_select_all
+#define aud_playlist_select_range		_audvt->playlist_select_range
+#define aud_playlist_select_invert_all		_audvt->playlist_select_invert_all
+#define aud_playlist_select_invert		_audvt->playlist_select_invert
+
+#define aud_playlist_read_info_selection	_audvt->playlist_read_info_selection
+#define aud_playlist_read_info			_audvt->playlist_read_info
+
+#define aud_playlist_set_shuffle		_audvt->playlist_set_shuffle
+
+#define aud_playlist_clear_selected		_audvt->playlist_clear_selected
+
+#define aud_get_playlist_nth			_audvt->get_playlist_nth
+
+#define aud_playlist_set_current_name		_audvt->playlist_set_current_name
+#define aud_playlist_get_current_name		_audvt->playlist_get_current_name
+
+#define aud_playlist_filename_set		_audvt->playlist_filename_set
+#define aud_playlist_filename_get		_audvt->playlist_filename_get
+
+#define aud_playlist_new			_audvt->playlist_new
+#define aud_playlist_free			_audvt->playlist_free
+#define aud_playlist_new_from_selected		_audvt->playlist_new_from_selected
+
+#define aud_is_playlist_name			_audvt->is_playlist_name
+
+#define aud_playlist_load_ins_file		_audvt->playlist_load_ins_file
+#define aud_playlist_load_ins_file_tuple	_audvt->playlist_load_ins_file_tuple
+
+#define aud_playlist_get_active			_audvt->playlist_get_active
+#define aud_playlist_playlists_equal		_audvt->playlist_playlists_equal
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;

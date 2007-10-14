@@ -154,6 +154,111 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_container_read = playlist_container_read,
     .playlist_container_write = playlist_container_write,
     .playlist_container_find = playlist_container_find,
+
+    .playlist_entry_new = playlist_entry_new,
+    .playlist_entry_free = playlist_entry_free,
+
+    .playlist_add_playlist = playlist_add_playlist,
+    .playlist_remove_playlist = playlist_remove_playlist,
+    .playlist_select_playlist = playlist_select_playlist,
+    .playlist_select_next = playlist_select_next,
+    .playlist_select_prev = playlist_select_prev,
+    .playlist_get_playlists = playlist_get_playlists,
+
+    .playlist_clear_only = playlist_clear_only,
+    .playlist_clear = playlist_clear,
+    .playlist_delete = playlist_delete,
+
+    .playlist_add = playlist_add,
+    .playlist_ins = playlist_ins,
+    .playlist_add_dir = playlist_add_dir,
+    .playlist_ins_dir = playlist_ins_dir,
+    .playlist_add_url = playlist_add_url,
+    .playlist_ins_url = playlist_ins_url,
+
+    .playlist_check_pos_current = playlist_check_pos_current,
+    .playlist_next = playlist_next,
+    .playlist_prev = playlist_prev,
+
+    .playlist_queue = playlist_queue,
+    .playlist_queue_position = playlist_queue_position,
+    .playlist_queue_remove = playlist_queue_remove,
+    .playlist_queue_get_length = playlist_queue_get_length,
+    .playlist_is_position_queued = playlist_is_position_queued,
+    .playlist_clear_queue = playlist_clear_queue,
+    .playlist_get_queue_position = playlist_get_queue_position,
+    .playlist_get_queue_position_number = playlist_get_queue_position_number,
+    .playlist_get_queue_qposition_number = playlist_get_queue_qposition_number,
+
+    .playlist_eof_reached = playlist_eof_reached,
+    .playlist_set_position = playlist_set_position,
+
+    .playlist_get_length = playlist_get_length,
+    .playlist_get_position = playlist_get_position,
+    .playlist_get_position_nolock = playlist_get_position_nolock,
+    .playlist_get_info_text = playlist_get_info_text,
+    .playlist_get_current_length = playlist_get_current_length,
+
+    .playlist_save = playlist_save,
+    .playlist_load = playlist_load,
+
+    .playlist_sort = playlist_sort,
+    .playlist_sort_selected = playlist_sort_selected,
+
+    .playlist_reverse = playlist_reverse,
+    .playlist_random = playlist_random,
+    .playlist_remove_duplicates = playlist_remove_duplicates,
+    .playlist_remove_dead_files = playlist_remove_dead_files,
+
+    .playlist_fileinfo_current = playlist_fileinfo_current,
+    .playlist_fileinfo = playlist_fileinfo,
+
+    .playlist_delete_index = playlist_delete_index,
+    .playlist_delete_filenames = playlist_delete_filenames,
+
+    .playlist_get_entry_to_play = playlist_get_entry_to_play,
+
+    .playlist_get_filename = playlist_get_filename,
+    .playlist_get_songtitle = playlist_get_songtitle,
+    .playlist_get_tuple = playlist_get_tuple,
+    .playlist_get_songtime = playlist_get_songtime,
+
+    .playlist_get_selected = playlist_get_selected,
+    .playlist_get_num_selected = playlist_get_num_selected,
+
+    .playlist_get_total_time = playlist_get_total_time,
+    .playlist_select_search = playlist_select_search,
+    .playlist_select_all = playlist_select_all,
+    .playlist_select_range = playlist_select_range,
+    .playlist_select_invert_all = playlist_select_invert_all,
+    .playlist_select_invert = playlist_select_invert,
+
+    .playlist_read_info_selection = playlist_read_info_selection,
+    .playlist_read_info = playlist_read_info,
+
+    .playlist_set_shuffle = playlist_set_shuffle,
+
+    .playlist_clear_selected = playlist_clear_selected,
+
+    .get_playlist_nth = get_playlist_nth,
+
+    .playlist_set_current_name = playlist_set_current_name,
+    .playlist_get_current_name = playlist_get_current_name,
+
+    .playlist_filename_set = playlist_filename_set,
+    .playlist_filename_get = playlist_filename_get,
+
+    .playlist_new = playlist_new,
+    .playlist_free = playlist_free,
+    .playlist_new_from_selected = playlist_new_from_selected,
+
+    .is_playlist_name = is_playlist_name,
+
+    .playlist_load_ins_file = playlist_load_ins_file,
+    .playlist_load_ins_file_tuple = playlist_load_ins_file_tuple,
+
+    .playlist_get_active = playlist_get_active,
+    .playlist_playlists_equal = playlist_playlists_equal,
 };
 
 /*****************************************************************/
