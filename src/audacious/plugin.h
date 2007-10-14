@@ -94,6 +94,7 @@ typedef struct _InputPlayback InputPlayback;
 #include "audacious/mime.h"
 #include "audacious/custom_uri.h"
 #include "audacious/hook.h"
+#include "audacious/xconvert.h"
 
 #define PLUGIN_COMMON_FIELDS		\
     gpointer handle;			\
@@ -454,6 +455,18 @@ struct _AudaciousFuncTableV1 {
     gint (*hook_associate)(const gchar *name, HookFunction func, gpointer user_data);
     gint (*hook_dissociate)(const gchar *name, HookFunction func);
     void (*hook_call)(const gchar *name, gpointer hook_data);
+
+    /* xconvert API */
+    struct xmms_convert_buffers *(*xmms_convert_buffers_new)(void);
+    void *(*xmms_convert_buffers_free)(struct xmms_convert_buffers *buf);
+    void *(*xmms_convert_buffers_destroy)(struct xmms_convert_buffers *buf);
+    convert_func_t (*xmms_convert_get_func)(AFormat output, AFormat input);
+    convert_channel_func_t (*xmms_convert_get_channel_func)(AFormat fmt,
+                                                     int output,
+                                                     int input);
+    convert_freq_func_t (*xmms_convert_get_frequency_func)(AFormat fmt,
+                                                    int channels);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -681,6 +694,13 @@ struct _AudaciousFuncTableV1 {
 #define aud_close_ini_file			_audvt->close_ini_file
 #define aud_read_ini_string			_audvt->read_ini_string
 #define aud_read_ini_array			_audvt->read_ini_array
+
+#define aud_convert_buffers_new			_audvt->xmms_convert_buffers_new
+#define aud_convert_buffers_free		_audvt->xmms_convert_buffers_free
+#define aud_convert_buffers_destroy		_audvt->xmms_convert_buffers_destroy
+#define aud_convert_get_func			_audvt->xmms_convert_get_func
+#define aud_convert_get_channel_func		_audvt->xmms_convert_get_channel_func
+#define aud_convert_get_frequency_func		_audvt->xmms_convert_get_frequency_func
 
 /* for multi-file plugins :( */
 extern struct _AudaciousFuncTableV1 *_audvt;
