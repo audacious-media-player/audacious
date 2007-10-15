@@ -85,8 +85,8 @@ if [ "x$AUTOMATIC" != "xyes" ]; then
 fi
 
 if [ "x$PUBLISH" = "xyes" ]; then
-	scp $RELEASENAME.tgz sidhe.atheme.org:/var/www/distfiles/htdocs
-	scp $RELEASENAME.tbz2 sidhe.atheme.org:/var/www/distfiles/htdocs
+	scp $RELEASENAME.tgz distfiles-master.atheme.org:/var/www/distfiles/htdocs
+	scp $RELEASENAME.tbz2 distfiles-master.atheme.org:/var/www/distfiles/htdocs
 
 	echo
 	echo "The releases have been published, and will be available to the entire"
