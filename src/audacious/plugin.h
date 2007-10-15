@@ -555,6 +555,10 @@ struct _AudaciousFuncTableV1 {
 
     /* Probe */
     ProbeResult *(*input_check_file)(const gchar * filename, gboolean show_warning);
+
+    /* InputPlayback */
+    InputPlayback *(*playback_new)(void);
+    void (*playback_run)(InputPlayback *);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -868,6 +872,10 @@ struct _AudaciousFuncTableV1 {
 #define audacious_get_localdir			_audvt->util_get_localdir
 
 #define aud_input_check_file			_audvt->input_check_file
+
+#define aud_playback_new			_audvt->playback_new
+#define aud_playback_run			_audvt->playback_run
+#define aud_playback_free(x)			g_slice_free(InputPlayback, (x))
 
 #include "audacious/auddrct.h"
 
