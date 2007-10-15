@@ -87,7 +87,7 @@ filepopup_entry_set_image(GtkWidget *filepopup_win, const gchar *entry_name,
 }
 
 static gboolean
-audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
+fileinfopopup_progress_cb(gpointer filepopup_win)
 {
     GtkWidget *progressbar =
         g_object_get_data(G_OBJECT(filepopup_win), "progressbar");
@@ -138,7 +138,7 @@ audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
 }
 
 static gboolean
-audacious_fileinfopopup_progress_check_active(GtkWidget *filepopup_win)
+fileinfopopup_progress_check_active(GtkWidget *filepopup_win)
 {
     if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),"progress_sid")) == 0)
         return FALSE;
@@ -146,23 +146,23 @@ audacious_fileinfopopup_progress_check_active(GtkWidget *filepopup_win)
 }
 
 static void
-audacious_fileinfopopup_progress_init(GtkWidget *filepopup_win)
+fileinfopopup_progress_init(GtkWidget *filepopup_win)
 {
     g_object_set_data( G_OBJECT(filepopup_win) , "progress_sid" , GINT_TO_POINTER(0) );
 }
 
 static void
-audacious_fileinfopopup_progress_start(GtkWidget *filepopup_win)
+fileinfopopup_progress_start(GtkWidget *filepopup_win)
 {
     gint sid =
-        g_timeout_add(500, (GSourceFunc)audacious_fileinfopopup_progress_cb,
+        g_timeout_add(500, (GSourceFunc)fileinfopopup_progress_cb,
                       filepopup_win);
     g_object_set_data(G_OBJECT(filepopup_win), "progress_sid",
                       GINT_TO_POINTER(sid));
 }
 
 static void
-audacious_fileinfopopup_progress_stop(GtkWidget *filepopup_win)
+fileinfopopup_progress_stop(GtkWidget *filepopup_win)
 {
     gint sid = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),
                                                  "progress_sid"));
@@ -174,7 +174,7 @@ audacious_fileinfopopup_progress_stop(GtkWidget *filepopup_win)
 }
 
 static void
-audacious_fileinfopopup_add_category(GtkWidget *filepopup_win,
+fileinfopopup_add_category(GtkWidget *filepopup_win,
                                      GtkWidget *filepopup_data_table,
                                      const gchar *category,
                                      const gchar *header_data,
@@ -211,7 +211,7 @@ audacious_fileinfopopup_add_category(GtkWidget *filepopup_win,
 
 
 GtkWidget *
-audacious_fileinfopopup_create(void)
+fileinfopopup_create(void)
 {
     GtkWidget *filepopup_win;
     GtkWidget *filepopup_hbox;
@@ -248,26 +248,26 @@ audacious_fileinfopopup_create(void)
     gtk_box_pack_start(GTK_BOX(filepopup_hbox), filepopup_data_table,
                        TRUE, TRUE, 0);
 
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Title"),
                                          "header_title", "label_title", 0);
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Artist"),
                                          "header_artist", "label_artist", 1);
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Album"),
                                          "header_album", "label_album", 2);
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Genre"),
                                          "header_genre", "label_genre", 3);
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Year"),
                                          "header_year", "label_year", 4);
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Track Number"),
                                          "header_tracknum", "label_tracknum",
                                          5);
-    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+    fileinfopopup_add_category(filepopup_win, filepopup_data_table,
                                          _("Track Length"),
                                          "header_tracklen", "label_tracklen",
                                          6);
@@ -284,7 +284,7 @@ audacious_fileinfopopup_create(void)
     g_object_set_data(G_OBJECT(filepopup_win), "file", NULL);
     g_object_set_data(G_OBJECT(filepopup_win), "progressbar",
                       filepopup_progress);
-    audacious_fileinfopopup_progress_init(filepopup_win);
+    fileinfopopup_progress_init(filepopup_win);
     
     /* this will realize all widgets contained in filepopup_hbox */
     gtk_widget_show_all(filepopup_hbox);
@@ -296,10 +296,10 @@ audacious_fileinfopopup_create(void)
 }
 
 void
-audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
+fileinfopopup_destroy(GtkWidget *filepopup_win)
 {
     gchar *last_artwork;
-    audacious_fileinfopopup_progress_stop(filepopup_win);
+    fileinfopopup_progress_stop(filepopup_win);
 
     last_artwork =
         g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
@@ -310,7 +310,7 @@ audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
 }
 
 static void
-audacious_fileinfopupup_update_data(GtkWidget *filepopup_win,
+fileinfopupup_update_data(GtkWidget *filepopup_win,
                                     const gchar *text,
                                     const gchar *label_data,
                                     const gchar *header_data)
@@ -329,7 +329,7 @@ audacious_fileinfopupup_update_data(GtkWidget *filepopup_win,
 }
 
 void
-audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
+fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
                                         Tuple *tuple)
 {
     gchar *tmp = NULL;
@@ -378,17 +378,17 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
         g_free(utf_filename);
     }
 
-    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ARTIST, NULL),
+    fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ARTIST, NULL),
                                         "label_artist", "header_artist");
-    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ALBUM, NULL),
+    fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ALBUM, NULL),
                                         "label_album", "header_album");
-    audacious_fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_GENRE, NULL),
+    fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_GENRE, NULL),
                                         "label_genre", "header_genre");
 
     length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
     length_string = (length > 0) ?
         g_strdup_printf("%d:%02d", length / 60000, (length / 1000) % 60) : NULL;
-    audacious_fileinfopupup_update_data(filepopup_win, length_string,
+    fileinfopupup_update_data(filepopup_win, length_string,
                                         "label_tracklen", "header_tracklen");
     g_free(length_string);
 
@@ -398,12 +398,12 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
       g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
 
     year_string = (tuple_get_int(tuple, FIELD_YEAR, NULL) == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, FIELD_YEAR, NULL));
-    audacious_fileinfopupup_update_data(filepopup_win, year_string,
+    fileinfopupup_update_data(filepopup_win, year_string,
                                         "label_year", "header_year");
     g_free(year_string);
 
     track_string = (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL) == 0) ? NULL : g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL));
-    audacious_fileinfopupup_update_data(filepopup_win, track_string,
+    fileinfopupup_update_data(filepopup_win, track_string,
                                         "label_tracknum", "header_tracknum");
     g_free(track_string);
     
@@ -433,11 +433,11 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
-    if (audacious_fileinfopopup_progress_check_active(filepopup_win) == FALSE)
+    if (fileinfopopup_progress_check_active(filepopup_win) == FALSE)
     { 
-        audacious_fileinfopopup_progress_start(filepopup_win);
+        fileinfopopup_progress_start(filepopup_win);
         /* immediately run the callback once to update progressbar status */
-        audacious_fileinfopopup_progress_cb(filepopup_win);
+        fileinfopopup_progress_cb(filepopup_win);
     }
 
     gdk_window_get_pointer(gdk_get_default_root_window(), &x, &y, NULL);
@@ -450,21 +450,21 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
 }
 
 void
-audacious_fileinfopopup_show_from_title(GtkWidget *filepopup_win, gchar *title)
+fileinfopopup_show_from_title(GtkWidget *filepopup_win, gchar *title)
 {
     Tuple * tuple = tuple_new();
     tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
-    audacious_fileinfopopup_show_from_tuple(filepopup_win, tuple);
+    fileinfopopup_show_from_tuple(filepopup_win, tuple);
     mowgli_object_unref(tuple);
     return;
 }
 
 void
-audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
+fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
 {
     if (GTK_WIDGET_VISIBLE(filepopup_win))
     {
-        audacious_fileinfopopup_progress_stop(filepopup_win);
+        fileinfopopup_progress_stop(filepopup_win);
 
         gtk_widget_hide(filepopup_win);
 

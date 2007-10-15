@@ -348,6 +348,12 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .prefswin_page_new = prefswin_page_new,
     .prefswin_page_destroy = prefswin_page_destroy,
+
+    .fileinfopopup_create = fileinfopopup_create,
+    .fileinfopopup_destroy = fileinfopopup_destroy,
+    .fileinfopopup_show_from_title = fileinfopopup_show_from_title,
+    .fileinfopopup_show_from_tuple = fileinfopopup_show_from_tuple,
+    .fileinfopopup_hide = fileinfopopup_hide,
 };
 
 /*****************************************************************/

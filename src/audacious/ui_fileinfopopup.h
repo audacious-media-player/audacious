@@ -25,12 +25,12 @@
 #include <gtk/gtk.h>
 
 /* create/destroy */
-GtkWidget* audacious_fileinfopopup_create(void);
-void audacious_fileinfopopup_destroy(GtkWidget* fileinfopopup_win);
+GtkWidget* fileinfopopup_create(void);
+void fileinfopopup_destroy(GtkWidget* fileinfopopup_win);
 
 /* show/hide */
-void audacious_fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, Tuple *tuple);
-void audacious_fileinfopopup_show_from_title(GtkWidget *fileinfopopup_win, gchar *title);
-void audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused);
+void fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, Tuple *tuple);
+void fileinfopopup_show_from_title(GtkWidget *fileinfopopup_win, gchar *title);
+void fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused);
 
 #endif

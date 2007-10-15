@@ -544,6 +544,13 @@ struct _AudaciousFuncTableV1 {
 
     gint (*prefswin_page_new)(GtkWidget *container, gchar *name, gchar *imgurl);
     void (*prefswin_page_destroy)(GtkWidget *container);
+
+    /* FileInfoPopup API */
+    GtkWidget *(*fileinfopopup_create)(void);
+    void (*fileinfopopup_destroy)(GtkWidget* fileinfopopup_win);
+    void (*fileinfopopup_show_from_tuple)(GtkWidget *fileinfopopup_win, Tuple *tuple);
+    void (*fileinfopopup_show_from_title)(GtkWidget *fileinfopopup_win, gchar *title);
+    void (*fileinfopopup_hide)(GtkWidget *filepopup_win, gpointer unused);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -847,6 +854,12 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_prefswin_page_new			_audvt->prefswin_page_new
 #define aud_prefswin_page_destroy		_audvt->prefswin_page_destroy
+
+#define audacious_fileinfopopup_create			_audvt->fileinfopopup_create
+#define audacious_fileinfopopup_destroy			_audvt->fileinfopopup_destroy
+#define audacious_fileinfopopup_show_from_tuple		_audvt->fileinfopopup_show_from_tuple
+#define audacious_fileinfopopup_show_from_title		_audvt->fileinfopopup_show_from_title
+#define audacious_fileinfopopup_hide			_audvt->fileinfopopup_hide
 
 #include "audacious/auddrct.h"
 

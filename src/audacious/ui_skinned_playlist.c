@@ -164,7 +164,7 @@ static void ui_skinned_playlist_init(UiSkinnedPlaylist *playlist) {
     g_object_set_data(G_OBJECT(playlist), "timer_id", GINT_TO_POINTER(0));
     g_object_set_data(G_OBJECT(playlist), "timer_active", GINT_TO_POINTER(0));
 
-    GtkWidget *popup = audacious_fileinfopopup_create();
+    GtkWidget *popup = fileinfopopup_create();
     g_object_set_data(G_OBJECT(playlist), "popup", popup);
     g_object_set_data(G_OBJECT(playlist), "popup_active", GINT_TO_POINTER(0));
     g_object_set_data(G_OBJECT(playlist), "popup_position", GINT_TO_POINTER(-1));
@@ -1021,10 +1021,10 @@ static gboolean ui_skinned_playlist_popup_show(gpointer data) {
         tuple = playlist_get_tuple(pl_active, pos);
         if ((tuple == NULL) || (tuple_get_int(tuple, FIELD_LENGTH, NULL) < 1)) {
            gchar *title = playlist_get_songtitle(pl_active, pos);
-           audacious_fileinfopopup_show_from_title(popup, title);
+           fileinfopopup_show_from_title(popup, title);
            g_free(title);
         } else {
-           audacious_fileinfopopup_show_from_tuple(popup , tuple);
+           fileinfopopup_show_from_tuple(popup , tuple);
         }
         g_object_set_data(G_OBJECT(widget), "popup_active" , GINT_TO_POINTER(1));
     }
@@ -1037,7 +1037,7 @@ static void ui_skinned_playlist_popup_hide(GtkWidget *widget) {
     if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "popup_active")) == 1) {
         GtkWidget *popup = g_object_get_data(G_OBJECT(widget), "popup");
         g_object_set_data(G_OBJECT(widget), "popup_active", GINT_TO_POINTER(0));
-        audacious_fileinfopopup_hide(popup, NULL);
+        fileinfopopup_hide(popup, NULL);
     }
 }
 
