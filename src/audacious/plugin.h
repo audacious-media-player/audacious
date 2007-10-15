@@ -89,6 +89,11 @@ typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
+typedef struct {
+    Tuple *tuple;
+    InputPlugin *ip;
+} ProbeResult;
+
 typedef GHashTable INIFile;
 
 #include "audacious/playlist.h"
@@ -99,6 +104,7 @@ typedef GHashTable INIFile;
 #include "audacious/xconvert.h"
 #include "audacious/ui_plugin_menu.h"
 #include "audacious/formatter.h"
+#include "audacious/flow.h"
 
 #define PLUGIN_COMMON_FIELDS		\
     gpointer handle;			\
@@ -559,6 +565,16 @@ struct _AudaciousFuncTableV1 {
     /* InputPlayback */
     InputPlayback *(*playback_new)(void);
     void (*playback_run)(InputPlayback *);
+
+    /* Flows */
+    gsize (*flow_execute)(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt,
+                          gint srate, gint channels);
+    Flow *(*flow_new)(void);
+    void (*flow_link_element)(Flow *flow, FlowFunction func);
+    void (*flow_unlink_element)(Flow *flow, FlowFunction func);
+    void (*effect_flow)(FlowContext *context);
+    void (*iir_flow)(FlowContext *context);
+    void (*volumecontrol_flow)(FlowContext *context);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -876,6 +892,15 @@ struct _AudaciousFuncTableV1 {
 #define aud_playback_new			_audvt->playback_new
 #define aud_playback_run			_audvt->playback_run
 #define aud_playback_free(x)			g_slice_free(InputPlayback, (x))
+
+#define aud_flow_execute			_audvt->flow_execute
+#define aud_flow_new				_audvt->flow_new
+#define aud_flow_link_element			_audvt->flow_link_element
+#define aud_flow_unlink_element			_audvt->flow_unlink_element
+#define aud_effect_flow				_audvt->effect_flow
+#define aud_iir_flow				_audvt->iir_flow
+#define aud_volumecontrol_flow			_audvt->volumecontrol_flow
+#define aud_flow_destroy(flow)			mowgli_object_unref(flow)
 
 #include "audacious/auddrct.h"
 

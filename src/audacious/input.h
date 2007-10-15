@@ -40,11 +40,6 @@ struct _InputPluginData {
     GMutex *playback_mutex;
 };
 
-typedef struct {
-    Tuple *tuple;
-    InputPlugin *ip;
-} ProbeResult;
-
 GList *get_input_list(void);
 InputPlayback *get_current_input_playback(void);
 void set_current_input_playback(InputPlayback * ip);
