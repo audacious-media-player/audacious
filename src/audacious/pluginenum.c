@@ -357,6 +357,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .fileinfopopup_hide = fileinfopopup_hide,
 
     .util_get_localdir = util_get_localdir,
+
+    .input_check_file = input_check_file,
 };
 
 /*****************************************************************/

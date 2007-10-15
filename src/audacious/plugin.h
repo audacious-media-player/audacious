@@ -552,6 +552,9 @@ struct _AudaciousFuncTableV1 {
     void (*fileinfopopup_show_from_tuple)(GtkWidget *fileinfopopup_win, Tuple *tuple);
     void (*fileinfopopup_show_from_title)(GtkWidget *fileinfopopup_win, gchar *title);
     void (*fileinfopopup_hide)(GtkWidget *filepopup_win, gpointer unused);
+
+    /* Probe */
+    ProbeResult *(*input_check_file)(const gchar * filename, gboolean show_warning);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -863,6 +866,8 @@ struct _AudaciousFuncTableV1 {
 #define audacious_fileinfopopup_hide			_audvt->fileinfopopup_hide
 
 #define audacious_get_localdir			_audvt->util_get_localdir
+
+#define aud_input_check_file			_audvt->input_check_file
 
 #include "audacious/auddrct.h"
 
