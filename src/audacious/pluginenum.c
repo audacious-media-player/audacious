@@ -55,6 +55,8 @@
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
 
+#include "ui_preferences.h"
+
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
     NULL
@@ -337,6 +339,15 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_pq_is_queued = drct_pq_is_queued,
     .drct_pq_get_position = drct_pq_get_position,
     .drct_pq_get_queue_position = drct_pq_get_queue_position,
+
+    .formatter_new = formatter_new,
+    .formatter_destroy = formatter_destroy,
+    .formatter_associate = formatter_associate,
+    .formatter_dissociate = formatter_dissociate,
+    .formatter_format = formatter_format,
+
+    .prefswin_page_new = prefswin_page_new,
+    .prefswin_page_destroy = prefswin_page_destroy,
 };
 
 /*****************************************************************/
