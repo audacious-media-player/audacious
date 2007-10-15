@@ -191,7 +191,7 @@ LIBS += ${LDADD}		\
 	${LIBGLADE_LIBS}	\
 	${REGEX_LIBS}
 
-LDFLAGS += ${EXPORTDYN} ${PROG_IMPLIB_LDFLAGS}
+LDFLAGS += ${PROG_IMPLIB_LDFLAGS}
 
 build_stamp.c: 
 	if [ -d ../../.hg ]; then \
