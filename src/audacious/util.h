@@ -100,7 +100,7 @@ GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
 
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
-gchar *audacious_get_localdir(void);
+gchar *util_get_localdir(void);
 
 /* menu-related function */
 void audacious_menu_main_show(gint x, gint y, guint button, guint time);

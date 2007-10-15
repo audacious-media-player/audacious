@@ -295,6 +295,7 @@ struct _AudaciousFuncTableV1 {
                                    GCallback button_action,
                                    gpointer action_data);
     const gchar *(*get_gentitle_format)(void);
+    gchar *(*util_get_localdir)(void);
 
     /* INI funcs */
     INIFile *(*open_ini_file)(const gchar *filename);
@@ -860,6 +861,8 @@ struct _AudaciousFuncTableV1 {
 #define audacious_fileinfopopup_show_from_tuple		_audvt->fileinfopopup_show_from_tuple
 #define audacious_fileinfopopup_show_from_title		_audvt->fileinfopopup_show_from_title
 #define audacious_fileinfopopup_hide			_audvt->fileinfopopup_hide
+
+#define audacious_get_localdir			_audvt->util_get_localdir
 
 #include "audacious/auddrct.h"
 

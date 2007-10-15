@@ -949,7 +949,7 @@ util_info_dialog(const gchar * title, const gchar * text,
 
 
 /**
- * audacious_get_localdir:
+ * util_get_localdir:
  *
  * Returns a string with the full path of Audacious local datadir (where config files are placed).
  * It's useful in order to put in the right place custom config files for audacious plugins.
@@ -957,7 +957,7 @@ util_info_dialog(const gchar * title, const gchar * text,
  * Return value: a string with full path of Audacious local datadir (should be freed after use)
  **/
 gchar*
-audacious_get_localdir(void)
+util_get_localdir(void)
 {
   gchar *datadir;
   gchar *tmp;
