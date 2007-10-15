@@ -157,11 +157,7 @@ dnl ========================
 dnl Ok, first we find out what flags we need to use.
 BUILDSYS_PROG_IMPLIB
 BUILDSYS_SHARED_LIB
-if test x"$PROG_IMPLIB_NEEDED" = x"yes"; then
-	IMPLIB_LIBS='-L../audacious -laudacious.exe'
-else
-	IMPLIB_LIBS=''
-fi
+IMPLIB_LIBS=''
 AC_SUBST(IMPLIB_LIBS)
 
 dnl XXX
@@ -177,12 +173,9 @@ case "$target" in
 		LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices -framework Carbon"
 		;;
 	*)
-		EXPORTDYN="-Wl,-export-dynamic"
 		AC_MSG_RESULT([no])
 		;;
 esac
-
-AC_SUBST(EXPORTDYN)
 
 dnl chardet support
 dnl ========================

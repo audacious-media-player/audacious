@@ -21,11 +21,6 @@ dnl
 AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
 	AC_MSG_CHECKING(whether we need an implib)
 	case "$target" in
-		*-*-cygwin | *-*-mingw32)
-			AC_MSG_RESULT(yes)
-			PROG_IMPLIB_NEEDED='yes'
-			PROG_IMPLIB_LDFLAGS='-Wl,-export-all-symbols,--out-implib,lib${PROG}.a'
-			;;
 		*)
 			AC_MSG_RESULT(no)
 			PROG_IMPLIB_NEEDED='no'
