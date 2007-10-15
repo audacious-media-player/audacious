@@ -58,6 +58,10 @@
 #include "ui_preferences.h"
 #include "ui_fileinfopopup.h"
 
+#include "effect.h"
+#include "iir.h"
+#include "volumecontrol.h"
+
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
     NULL
@@ -359,6 +363,15 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .util_get_localdir = util_get_localdir,
 
     .input_check_file = input_check_file,
+
+    .flow_new = flow_new,
+    .flow_execute = flow_execute,
+    .flow_link_element = flow_link_element,
+    .flow_unlink_element = flow_unlink_element,
+    .effect_flow = effect_flow,
+    .iir_flow = iir_flow,
+    .volumecontrol_flow = volumecontrol_flow,
+
 };
 
 /*****************************************************************/
