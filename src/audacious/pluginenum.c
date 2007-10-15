@@ -372,6 +372,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .iir_flow = iir_flow,
     .volumecontrol_flow = volumecontrol_flow,
 
+    .util_menu_main_show = util_menu_main_show,
 };
 
 /*****************************************************************/

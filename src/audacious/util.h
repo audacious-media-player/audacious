@@ -103,7 +103,7 @@ GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint gree
 gchar *util_get_localdir(void);
 
 /* menu-related function */
-void audacious_menu_main_show(gint x, gint y, guint button, guint time);
+void util_menu_main_show(gint x, gint y, guint button, guint time);
 
 
 G_END_DECLS

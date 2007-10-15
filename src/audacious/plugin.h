@@ -302,6 +302,7 @@ struct _AudaciousFuncTableV1 {
                                    gpointer action_data);
     const gchar *(*get_gentitle_format)(void);
     gchar *(*util_get_localdir)(void);
+    void (*util_menu_main_show)(gint x, gint y, guint button, guint time);
 
     /* INI funcs */
     INIFile *(*open_ini_file)(const gchar *filename);
@@ -901,6 +902,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_iir_flow				_audvt->iir_flow
 #define aud_volumecontrol_flow			_audvt->volumecontrol_flow
 #define aud_flow_destroy(flow)			mowgli_object_unref(flow)
+
+#define audacious_menu_main_show		_audvt->util_menu_main_show
 
 #include "audacious/auddrct.h"
 
