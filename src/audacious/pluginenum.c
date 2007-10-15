@@ -56,6 +56,7 @@
 #include "vfs_buffered_file.h"
 
 #include "ui_preferences.h"
+#include "ui_fileinfopopup.h"
 
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
