@@ -37,6 +37,7 @@
 #include <string.h>
 
 #include "main.h"
+#include "dock.h"
 #include "ui_main.h"
 #include "playback.h"
 #include "playlist.h"
@@ -373,6 +374,14 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .volumecontrol_flow = volumecontrol_flow,
 
     .util_menu_main_show = util_menu_main_show,
+    
+    .get_dock_window_list = get_dock_window_list,
+    .dock_add_window = dock_add_window,
+    .dock_remove_window = dock_remove_window,
+    .dock_move_press = dock_move_press,
+    .dock_move_motion = dock_move_motion,
+    .dock_move_release = dock_move_release,
+    .dock_is_moving = dock_is_moving,
 };
 
 /*****************************************************************/

@@ -565,3 +565,8 @@ dock_window_set_decorated(GList * list, GtkWindow * window,
 
     return list;
 }
+
+GList *
+get_dock_window_list() {
+    return dock_window_list;
+}

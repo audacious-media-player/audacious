@@ -576,6 +576,16 @@ struct _AudaciousFuncTableV1 {
     void (*effect_flow)(FlowContext *context);
     void (*iir_flow)(FlowContext *context);
     void (*volumecontrol_flow)(FlowContext *context);
+    
+    /* Dock */
+    GList *(*get_dock_window_list)(void);
+    GList *(*dock_add_window)(GList * window_list, GtkWindow * window);
+    GList *(*dock_remove_window)(GList * window_list, GtkWindow * window);
+    void (*dock_move_press)(GList * window_list, GtkWindow * w,
+                         GdkEventButton * event, gboolean move_list);
+    void (*dock_move_motion)(GtkWindow * w, GdkEventMotion * event);
+    void (*dock_move_release)(GtkWindow * w);
+    gboolean (*dock_is_moving)(GtkWindow * w);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -904,6 +914,14 @@ struct _AudaciousFuncTableV1 {
 #define aud_flow_destroy(flow)			mowgli_object_unref(flow)
 
 #define audacious_menu_main_show		_audvt->util_menu_main_show
+
+#define aud_get_dock_window_list                _audvt->get_dock_window_list
+#define aud_dock_add_window                     _audvt->dock_add_window
+#define aud_dock_remove_window                  _audvt->dock_remove_window
+#define aud_dock_move_press                     _audvt->dock_move_press
+#define aud_dock_move_motion                    _audvt->dock_move_motion
+#define aud_dock_move_release                   _audvt->dock_move_release
+#define aud_dock_is_moving                      _audvt->dock_is_moving
 
 #include "audacious/auddrct.h"
 
