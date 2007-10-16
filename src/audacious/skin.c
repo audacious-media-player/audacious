@@ -1464,7 +1464,7 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
 static gboolean
 skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
-    gchar *cpath;
+    gchar *cpath, *gtkrcpath;
 
     g_return_val_if_fail(skin != NULL, FALSE);
     g_return_val_if_fail(path != NULL, FALSE);
@@ -1489,6 +1489,24 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
         skin_load_cursor(skin, path);
 
+        gtkrcpath = find_file_recursively(skin->path, "gtkrc");
+
+        /* the way GTK does things can be very broken. --nenolod */
+        if (gtkrcpath != NULL) {
+            GtkSettings *settings = gtk_settings_get_default();
+            gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(), basename(skin->path));
+
+            gchar *troot = g_strdup_printf("%s/.themes");
+            g_mkdir_with_parents(troot, 0755);
+            g_free(troot);
+
+            symlink(skin->path, tmp);
+            gtk_settings_set_string_property (settings, "gtk-theme-name", basename(skin->path), "audacious");
+
+            unlink(tmp);
+            g_free(tmp);
+        }
+
         return TRUE;
     }
 
@@ -1496,6 +1514,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         g_message("Unable to extract skin archive (%s)", path);
         return FALSE;
     }
+
+    gtkrcpath = find_file_recursively(skin->path, "gtkrc");
 
     /* Parse the hints for this skin. */
     skin_parse_hints(skin, cpath);
@@ -1508,6 +1528,22 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     }
 
     skin_load_cursor(skin, cpath);
+
+    /* the way GTK does things can be very broken. --nenolod */
+    if (gtkrcpath != NULL) {
+        GtkSettings *settings = gtk_settings_get_default();
+        gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(), basename(skin->path));
+
+        gchar *troot = g_strdup_printf("%s/.themes");
+        g_mkdir_with_parents(troot, 0755);
+        g_free(troot);
+
+        symlink(skin->path, tmp);
+        gtk_settings_set_string_property (settings, "gtk-theme-name", basename(skin->path), "audacious");
+
+        unlink(tmp);
+        g_free(tmp);
+    }
 
     del_directory(cpath);
     g_free(cpath);
