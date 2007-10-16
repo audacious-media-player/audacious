@@ -1491,6 +1491,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
         gtkrcpath = find_file_recursively(skin->path, "gtkrc");
 
+#ifndef _WIN32
         /* the way GTK does things can be very broken. --nenolod */
         if (gtkrcpath != NULL) {
             GtkSettings *settings = gtk_settings_get_default();
@@ -1506,6 +1507,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
             unlink(tmp);
             g_free(tmp);
         }
+#endif
 
         return TRUE;
     }
@@ -1529,6 +1531,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
     skin_load_cursor(skin, cpath);
 
+#ifndef _WIN32
     /* the way GTK does things can be very broken. --nenolod */
     if (gtkrcpath != NULL) {
         GtkSettings *settings = gtk_settings_get_default();
@@ -1544,6 +1547,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         unlink(tmp);
         g_free(tmp);
     }
+#endif
 
     del_directory(cpath);
     g_free(cpath);
