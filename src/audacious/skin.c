@@ -1461,6 +1461,28 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     return TRUE;
 }
 
+static void
+skin_set_gtk_theme(Skin * skin, gboolean tmp_clean)
+{
+    GtkSettings *settings = gtk_settings_get_default();
+    gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(),
+                                 basename(skin->path));
+
+    gchar *troot = g_strdup_printf("%s/.themes", g_get_home_dir());
+    g_mkdir_with_parents(troot, 0755);
+    g_free(troot);
+
+    symlink(skin->path, tmp);
+    gtk_settings_set_string_property(settings, "gtk-theme-name",
+                                     basename(tmp), "audacious");
+
+    if (tmp_clean)
+    {
+        unlink(tmp);
+        g_free(tmp);
+    }
+}
+
 static gboolean
 skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
@@ -1494,20 +1516,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 #ifndef _WIN32
         /* the way GTK does things can be very broken. --nenolod */
         if (gtkrcpath != NULL) {
-            GtkSettings *settings = gtk_settings_get_default();
-            gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(), basename(skin->path));
-
-            gchar *troot = g_strdup_printf("%s/.themes", g_get_home_dir());
-            g_mkdir_with_parents(troot, 0755);
-            g_free(troot);
-
-            symlink(skin->path, tmp);
-            gtk_settings_set_string_property (settings, "gtk-theme-name", basename(tmp), "audacious");
-
-#if 0
-            unlink(tmp);
-            g_free(tmp);
-#endif
+            skin_set_gtk_theme(skin, FALSE);
         }
 #endif
 
@@ -1536,18 +1545,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 #ifndef _WIN32
     /* the way GTK does things can be very broken. --nenolod */
     if (gtkrcpath != NULL) {
-        GtkSettings *settings = gtk_settings_get_default();
-        gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(), basename(skin->path));
-
-        gchar *troot = g_strdup_printf("%s/.themes", g_get_home_dir());
-        g_mkdir_with_parents(troot, 0755);
-        g_free(troot);
-
-        symlink(skin->path, tmp);
-        gtk_settings_set_string_property (settings, "gtk-theme-name", basename(tmp), "audacious");
-
-        unlink(tmp);
-        g_free(tmp);
+        skin_set_gtk_theme(skin, TRUE);
     }
 #endif
 
