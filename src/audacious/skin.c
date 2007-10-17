@@ -127,6 +127,8 @@ static const guchar skin_default_viscolor[24][3] = {
     {200, 200, 200}
 };
 
+static gchar *original_gtk_theme = NULL;
+
 static GdkBitmap *skin_create_transparent_mask(const gchar *,
                                                const gchar *,
                                                const gchar *,
@@ -1462,9 +1464,11 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
 }
 
 static void
-skin_set_gtk_theme(Skin * skin, gboolean tmp_clean)
+skin_set_gtk_theme(GtkSettings * settings, Skin * skin, gboolean tmp_clean)
 {
-    GtkSettings *settings = gtk_settings_get_default();
+    if (original_gtk_theme == NULL)
+         g_object_get(settings, "gtk-theme-name", &original_gtk_theme, NULL);
+
     gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(),
                                  basename(skin->path));
 
@@ -1486,6 +1490,7 @@ skin_set_gtk_theme(Skin * skin, gboolean tmp_clean)
 static gboolean
 skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
+    GtkSettings *settings;
     gchar *cpath, *gtkrcpath;
 
     g_return_val_if_fail(skin != NULL, FALSE);
@@ -1496,11 +1501,23 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         return FALSE;
    
     if (!force && skin->path && !strcmp(skin->path, path))
-	return FALSE;
+    return FALSE;
       
     skin_current_num++;
 
     skin->path = g_strdup(path);
+
+
+    settings = gtk_settings_get_default();
+    
+    if (original_gtk_theme != NULL)
+    {
+        gtk_settings_set_string_property(settings, "gtk-theme-name",
+                                         original_gtk_theme, "audacious");
+        g_free(original_gtk_theme);
+        original_gtk_theme = NULL;
+    }
+
 
     if (!file_is_archive(path)) {
         /* Parse the hints for this skin. */
@@ -1516,7 +1533,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 #ifndef _WIN32
         /* the way GTK does things can be very broken. --nenolod */
         if (gtkrcpath != NULL) {
-            skin_set_gtk_theme(skin, FALSE);
+            skin_set_gtk_theme(settings, skin, FALSE);
         }
 #endif
 
@@ -1545,7 +1562,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 #ifndef _WIN32
     /* the way GTK does things can be very broken. --nenolod */
     if (gtkrcpath != NULL) {
-        skin_set_gtk_theme(skin, TRUE);
+        skin_set_gtk_theme(settings, skin, TRUE);
     }
 #endif
 
