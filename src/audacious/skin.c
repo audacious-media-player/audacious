@@ -1497,15 +1497,17 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
             GtkSettings *settings = gtk_settings_get_default();
             gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(), basename(skin->path));
 
-            gchar *troot = g_strdup_printf("%s/.themes");
+            gchar *troot = g_strdup_printf("%s/.themes", g_get_home_dir());
             g_mkdir_with_parents(troot, 0755);
             g_free(troot);
 
             symlink(skin->path, tmp);
-            gtk_settings_set_string_property (settings, "gtk-theme-name", basename(skin->path), "audacious");
+            gtk_settings_set_string_property (settings, "gtk-theme-name", basename(tmp), "audacious");
 
+#if 0
             unlink(tmp);
             g_free(tmp);
+#endif
         }
 #endif
 
@@ -1537,12 +1539,12 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         GtkSettings *settings = gtk_settings_get_default();
         gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(), basename(skin->path));
 
-        gchar *troot = g_strdup_printf("%s/.themes");
+        gchar *troot = g_strdup_printf("%s/.themes", g_get_home_dir());
         g_mkdir_with_parents(troot, 0755);
         g_free(troot);
 
         symlink(skin->path, tmp);
-        gtk_settings_set_string_property (settings, "gtk-theme-name", basename(skin->path), "audacious");
+        gtk_settings_set_string_property (settings, "gtk-theme-name", basename(tmp), "audacious");
 
         unlink(tmp);
         g_free(tmp);
