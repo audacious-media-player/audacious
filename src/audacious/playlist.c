@@ -668,7 +668,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 			       InputPlugin * dec)
 {
     PlaylistEntry *entry;
-    Tuple *main_tuple = NULL;
+    Tuple *parent_tuple = NULL;
     gint nsubtunes = 0, i = 0;
     gboolean add_flag = TRUE;
 
@@ -678,7 +678,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     if (tuple != NULL) {
         nsubtunes = tuple->nsubtunes;
         if (nsubtunes > 0) {
-            main_tuple = tuple;
+            parent_tuple = tuple;
             i = 1;
         }
     }
@@ -688,7 +688,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         
         if (nsubtunes > 0) {
             filename_entry = g_strdup_printf("%s?%d", filename,
-                main_tuple->subtunes ? main_tuple->subtunes[i] : i);
+                parent_tuple->subtunes ? parent_tuple->subtunes[i] : i);
             
             /* We're dealing with subtune, let's ask again tuple information
              * to plugin, by passing the ?subtune suffix; this way we get
@@ -741,8 +741,8 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         }
     }
     
-    if (main_tuple)
-        tuple_free(main_tuple);
+    if (parent_tuple)
+        tuple_free(parent_tuple);
 
     if (tuple != NULL && tuple_get_int(tuple, FIELD_MTIME, NULL) == -1) {
         // kick the scanner thread only if mtime = -1 (uninitialized)
