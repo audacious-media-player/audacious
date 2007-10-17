@@ -669,7 +669,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 {
     PlaylistEntry *entry;
     Tuple *parent_tuple = NULL;
-    gint nsubtunes = 0, i = 0;
+    gint nsubtunes, subtune;
     gboolean add_flag = TRUE;
 
     g_return_if_fail(playlist != NULL);
@@ -677,18 +677,17 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 
     if (tuple != NULL) {
         nsubtunes = tuple->nsubtunes;
-        if (nsubtunes > 0) {
+        if (nsubtunes > 0)
             parent_tuple = tuple;
-            i = 1;
-        }
-    }
+    } else
+        nsubtunes = 0;
 
-    for (; add_flag && i <= nsubtunes; i++) {
+    for (subtune = 0; add_flag && subtune < nsubtunes; subtune++) {
         gchar *filename_entry;
         
         if (nsubtunes > 0) {
             filename_entry = g_strdup_printf("%s?%d", filename,
-                parent_tuple->subtunes ? parent_tuple->subtunes[i] : i);
+                parent_tuple->subtunes ? parent_tuple->subtunes[subtune] : subtune + 1);
             
             /* We're dealing with subtune, let's ask again tuple information
              * to plugin, by passing the ?subtune suffix; this way we get
@@ -709,7 +708,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 
         PLAYLIST_LOCK(playlist);
 
-        if ((pos == -1) && (i < 2)) { // the common case
+        if (pos == -1 && subtune < 1 && nsubtunes < 1) { // the common case
             GList *element;
             element = g_list_alloc();
             element->data = entry;
