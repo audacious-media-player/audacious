@@ -679,15 +679,18 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         nsubtunes = tuple->nsubtunes;
         if (nsubtunes > 0)
             parent_tuple = tuple;
-    } else
+        subtune = 1;
+    } else {
         nsubtunes = 0;
+        subtune = 0;
+    }
 
-    for (subtune = 0; add_flag && subtune < nsubtunes; subtune++) {
+    for (; add_flag && subtune <= nsubtunes; subtune++) {
         gchar *filename_entry;
         
         if (nsubtunes > 0) {
             filename_entry = g_strdup_printf("%s?%d", filename,
-                parent_tuple->subtunes ? parent_tuple->subtunes[subtune] : subtune + 1);
+                parent_tuple->subtunes ? parent_tuple->subtunes[subtune - 1] : subtune);
             
             /* We're dealing with subtune, let's ask again tuple information
              * to plugin, by passing the ?subtune suffix; this way we get
@@ -708,7 +711,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 
         PLAYLIST_LOCK(playlist);
 
-        if (pos == -1 && subtune < 1 && nsubtunes < 1) { // the common case
+        if (pos == -1) { // the common case
             GList *element;
             element = g_list_alloc();
             element->data = entry;
@@ -725,12 +728,9 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
                 } else
                     add_flag = FALSE;
             }
-        } else {
-            playlist->entries = g_list_insert(playlist->entries, entry, pos);
-        }
-
-        PLAYLIST_UNLOCK(playlist);
-
+        } else
+            playlist->entries = g_list_insert(playlist->entries, entry, pos++);
+        
         if (tuple != NULL) {
             const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
             entry->title = tuple_formatter_make_title_string(tuple,
@@ -738,7 +738,10 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
             entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
             entry->tuple = tuple;
         }
+        
+        PLAYLIST_UNLOCK(playlist);
     }
+
     
     if (parent_tuple)
         tuple_free(parent_tuple);
