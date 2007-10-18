@@ -669,7 +669,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 {
     PlaylistEntry *entry;
     Tuple *parent_tuple = NULL;
-    gint nsubtunes, subtune;
+    gint nsubtunes = 0, subtune = 0;
     gboolean add_flag = TRUE;
 
     g_return_if_fail(playlist != NULL);
@@ -677,12 +677,10 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 
     if (tuple != NULL) {
         nsubtunes = tuple->nsubtunes;
-        if (nsubtunes > 0)
+        if (nsubtunes > 0) {
             parent_tuple = tuple;
-        subtune = 1;
-    } else {
-        nsubtunes = 0;
-        subtune = 0;
+            subtune = 1;
+        }
     }
 
     for (; add_flag && subtune <= nsubtunes; subtune++) {
@@ -706,10 +704,10 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
             tuple ? tuple_get_int(tuple, FIELD_LENGTH, NULL) : -1, dec);
         g_free(filename_entry);
 
+        PLAYLIST_LOCK(playlist);
+        
         if (!playlist->tail)
             playlist->tail = g_list_last(playlist->entries);
-
-        PLAYLIST_LOCK(playlist);
 
         if (pos == -1) { // the common case
             GList *element;
@@ -742,7 +740,6 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         PLAYLIST_UNLOCK(playlist);
     }
 
-    
     if (parent_tuple)
         tuple_free(parent_tuple);
 
