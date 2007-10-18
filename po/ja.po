@@ -191,8 +191,8 @@ msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
-"これを使うと，メインウィンドウのファイル情報テキストが前後にスクロールします．"
-"そうでなければ，テキストは一方向のみにスクロールします．"
+"これを使うと，メインウィンドウのファイル情報テキストが前後にスクロールしま"
+"す．そうでなければ，テキストは一方向のみにスクロールします．"
 
 #: src/audacious/glade/prefswin.glade:1380
 msgid "Use two-way text scroller"
@@ -561,9 +561,8 @@ msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
-"ソフトウェアボリュームコントロールを使います．オーディオシステムが"
-"再生音量のコントロールをサポートしていない状況で有用でしょう．"
-
+"ソフトウェアボリュームコントロールを使います．オーディオシステムが再生音量の"
+"コントロールをサポートしていない状況で有用でしょう．"
 
 #: src/audacious/glade/prefswin.glade:4558
 msgid "Use software volume control"
