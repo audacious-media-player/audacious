@@ -499,9 +499,14 @@ output_pass_audio(InputPlayback *playback,
                 return;                        /* yes, so finish */
 
             /* else sleep for retry */
+#ifndef GDK_WINDOWING_QUARTZ
             g_mutex_lock(playback->pb_change_mutex);
             g_cond_timed_wait(playback->pb_change_cond, playback->pb_change_mutex, &pb_abs_time);
             g_mutex_unlock(playback->pb_change_mutex);
+#else
+            /* Darwin threading sucks. */
+            g_usleep(10000);
+#endif
         }
 
         if (ip_data.stop)
