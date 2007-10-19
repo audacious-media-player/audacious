@@ -32,6 +32,13 @@
  */
 #define TUPLE_USE_COMPILER
 
+/*
+ * TUPLE_COMPILER_DEBUG:
+ *  Define this to debug the execution process of the Tuplez compiled
+ *  bytecode. This may be useful if bugs creep in.
+ */
+#undef TUPLE_COMPILER_DEBUG
+
 #ifdef TUPLE_USE_COMPILER
 # include "tuple_compiler.h"
 #endif
@@ -551,6 +558,14 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         last_ev = tuple_formatter_compile(last_ctx, last_string);
     }
 
+#ifdef TUPLE_COMPILER_DEBUG
+    {
+        gint level = 0;
+
+        tuple_formatter_print(stderr, &level, last_ctx, last_ev);
+    }
+#endif
+
     tuple_evalctx_reset(last_ctx);
     return tuple_formatter_eval(last_ctx, last_ev, tuple);
 #else
@@ -576,3 +591,114 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 
     return rv;
 }
+
+#ifdef TUPLE_COMPILER_DEBUG
+static void print_vars(FILE *f, TupleEvalContext *ctx, TupleEvalNode *node, gint start, gint end)
+{
+  gint i;
+  g_return_if_fail(node != NULL);
+  g_return_if_fail(ctx != NULL);
+  g_return_if_fail(start >= 0);
+  g_return_if_fail(start <= end);
+  g_return_if_fail(end < MAX_VAR);
+
+  for (i = start; i <= end; i++) {
+    TupleEvalVar *v = NULL;
+    gchar *s = NULL;
+    gint n = node->var[i];
+
+    if (n >= 0) {
+      v = ctx->variables[n];
+      if (v) {
+        s = v->name;
+
+        if (v->type == VAR_CONST)
+          fprintf(f, "(const)");
+        else if (v->type == VAR_DEF)
+          fprintf(f, "(def)");
+      }
+    }
+
+    fprintf(f, "var[%d]=(%d),\"%s\" ", i, n, s);
+  }
+}
+
+gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEvalNode *expr)
+{
+  TupleEvalNode *curr = expr;
+
+  if (!expr) return -1;
+
+  (*level)++;
+
+  /* Evaluate tuple in given TupleEval expression in given
+   * context and return resulting string.
+   */
+  while (curr) {
+    gint i;
+    for (i = 0; i < *level; i++)
+      fprintf(f, "  ");
+
+    switch (curr->opcode) {
+      case OP_RAW:
+        fprintf(f, "OP_RAW text=\"%s\"\n", curr->text);
+        break;
+
+      case OP_FIELD:
+        fprintf(f, "OP_FIELD ");
+        print_vars(f, ctx, curr, 0, 0);
+        fprintf(f, "\n");
+        break;
+
+      case OP_EXISTS:
+        fprintf(f, "OP_EXISTS ");
+        print_vars(f, ctx, curr, 0, 0);
+        fprintf(f, "\n");
+        tuple_formatter_print(f, level, ctx, curr->children);
+        break;
+
+      case OP_DEF_STRING:
+        fprintf(f, "OP_DEF_STRING ");
+        fprintf(f, "\n");
+        break;
+
+      case OP_DEF_INT:
+        fprintf(f, "OP_DEF_INT ");
+        fprintf(f, "\n");
+        break;
+
+      case OP_EQUALS:
+        fprintf(f, "OP_EQUALS ");
+        print_vars(f, ctx, curr, 0, 1);
+        fprintf(f, "\n");
+        tuple_formatter_print(f, level, ctx, curr->children);
+        break;
+
+      case OP_NOT_EQUALS:
+        fprintf(f, "OP_NOT_EQUALS ");
+        print_vars(f, ctx, curr, 0, 1);
+        fprintf(f, "\n");
+        tuple_formatter_print(f, level, ctx, curr->children);
+        break;
+
+      case OP_IS_EMPTY:
+        fprintf(f, "OP_IS_EMPTY ");
+        print_vars(f, ctx, curr, 0, 0);
+        fprintf(f, "\n");
+        tuple_formatter_print(f, level, ctx, curr->children);
+        break;
+
+      default:
+        fprintf(f, "Unimplemented opcode %d!\n", curr->opcode);
+        break;
+    }
+
+    curr = curr->next;
+  }
+
+  (*level)--;
+
+  return 0;
+}
+
+#endif
