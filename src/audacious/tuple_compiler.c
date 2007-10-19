@@ -644,7 +644,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
         break;
       
       case OP_EXISTS:
-        if (mowgli_dictionary_retrieve(tuple->dict, ctx->variables[curr->var[0]]->name)) {
+        if (tf_get_fieldref(ctx->variables[curr->var[0]], tuple)) {
           if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
             return FALSE;
         }
