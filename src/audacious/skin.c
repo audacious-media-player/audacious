@@ -1480,11 +1480,13 @@ skin_set_gtk_theme(GtkSettings * settings, Skin * skin, gboolean tmp_clean)
     gtk_settings_set_string_property(settings, "gtk-theme-name",
                                      basename(tmp), "audacious");
 
+#if 0
     if (tmp_clean)
     {
         unlink(tmp);
         g_free(tmp);
     }
+#endif
 }
 
 static gboolean
@@ -1528,13 +1530,15 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
         skin_load_cursor(skin, path);
 
-        gtkrcpath = find_file_recursively(skin->path, "gtkrc");
-
 #ifndef _WIN32
+        gtkrcpath = find_path_recursively(skin->path, "gtkrc");
+
         /* the way GTK does things can be very broken. --nenolod */
         if (gtkrcpath != NULL) {
             skin_set_gtk_theme(settings, skin, FALSE);
         }
+
+        g_free(gtkrcpath);
 #endif
 
         return TRUE;
@@ -1544,8 +1548,6 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         g_message("Unable to extract skin archive (%s)", path);
         return FALSE;
     }
-
-    gtkrcpath = find_file_recursively(skin->path, "gtkrc");
 
     /* Parse the hints for this skin. */
     skin_parse_hints(skin, cpath);
@@ -1560,10 +1562,14 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     skin_load_cursor(skin, cpath);
 
 #ifndef _WIN32
+    gtkrcpath = find_path_recursively(skin->path, "gtkrc");
+
     /* the way GTK does things can be very broken. --nenolod */
     if (gtkrcpath != NULL) {
         skin_set_gtk_theme(settings, skin, TRUE);
     }
+
+    g_free(gtkrcpath);
 #endif
 
     del_directory(cpath);
