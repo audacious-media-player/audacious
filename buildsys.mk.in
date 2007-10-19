@@ -104,7 +104,7 @@ depend: pre-depend ${SRCS}
 			esac; \
 		done; \
 		if test x"$$list" != "x"; then \
-			if ${CPP} ${CPPFLAGS} -M $$list >.deps; then \
+			if ${CC} ${CPPFLAGS} -M $$list >.deps; then \
 				${DEPEND_OK}; \
 			else \
 				${DEPEND_FAILED}; \
