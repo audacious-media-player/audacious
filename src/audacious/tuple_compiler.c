@@ -123,7 +123,8 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type)
 {
   gint i, ref = -1;
-  TupleEvalVar * tmp = g_new0(TupleEvalVar, 1);
+  TupleEvalVar *tmp = g_new0(TupleEvalVar, 1);
+  assert(tmp != NULL);
 
   tmp->name = g_strdup(name);
   tmp->istemp = istemp;
