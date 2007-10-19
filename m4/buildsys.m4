@@ -39,7 +39,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT([Mac OS X (Intel)])
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB}'
+			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB} -flat_namespace -undefined suppress'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			PLUGIN_CPPFLAGS=''
@@ -54,7 +54,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(Mac OS X)
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS=''
-			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB}'
+			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB} -flat_namespace -undefined suppress'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			PLUGIN_CPPFLAGS=''
