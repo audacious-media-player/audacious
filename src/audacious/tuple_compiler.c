@@ -33,6 +33,10 @@
 #include <stdarg.h>
 #include "tuple_compiler.h"
 
+#define MAX_STR		(256)
+#define MIN_ALLOC_NODES (8)
+#define MIN_ALLOC_BUF	(64)
+
 
 void tuple_error(const char *fmt, ...)
 {
@@ -753,7 +757,7 @@ gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *t
   assert(ctx != NULL);
   assert(tuple != NULL);
   
-  if (!expr) return NULL;
+  if (!expr) return res;
   
   tuple_formatter_eval_do(ctx, expr, tuple, &res, &resmax, &reslen);
   
