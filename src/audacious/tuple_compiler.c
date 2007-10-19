@@ -33,6 +33,10 @@
 #include <stdarg.h>
 #include "tuple_compiler.h"
 
+#define MAX_STR		(256)
+#define MIN_ALLOC_NODES (8)
+#define MIN_ALLOC_BUF	(64)
+
 
 void tuple_error(const char *fmt, ...)
 {
