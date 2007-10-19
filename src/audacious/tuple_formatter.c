@@ -25,7 +25,16 @@
 #include "tuple.h"
 #include "tuple_formatter.h"
 
-//#define _DEBUG
+/*
+ * TUPLE_USE_COMPILER:
+ *  Undefine this to disable usage of the Tuplez compiler implementation.
+ *  This may be useful for prototyping new features of the language.
+ */
+#define TUPLE_USE_COMPILER
+
+#ifdef TUPLE_USE_COMPILER
+# include "tuple_compiler.h"
+#endif
 
 #ifdef _DEBUG
 # define _TRACE(fmt, ...) g_print("[tuple-fmt] %s(%d) " fmt "\n", __FILE__, __LINE__, __VA_ARGS__);
@@ -497,12 +506,22 @@ tuple_formatter_function_version(Tuple *tuple, gchar **args)
     return g_strdup(PACKAGE_NAME " " PACKAGE_VERSION);
 }
 
-/* processes a string containing instructions. does initialization phases
-   if not already done */
+/*
+ * Compile a tuplez string and cache the result.
+ * This caches the result for the last string, so that
+ * successive calls are sped up.
+ *
+ * TODO/1.5: Implement a more efficient use of the compiler.
+ */
 gchar *
 tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 {
     static gboolean initialized = FALSE;
+    static gchar *last_string = NULL;
+#ifdef TUPLE_USE_COMPILER
+    static TupleEvalContext *last_ctx = NULL;
+    static TupleEvalNode *last_ev = NULL;
+#endif
 
     if (initialized == FALSE)
     {
@@ -515,7 +534,28 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         initialized = TRUE;
     }
 
+#ifdef TUPLE_USE_COMPILER
+    if (last_string == NULL ||
+        (last_string != NULL && strcmp(last_string, string)))
+    {
+        g_free(last_string);
+
+        if (last_ctx != NULL)
+        {
+            tuple_evalctx_free(last_ctx);
+            tuple_evalnode_free(last_ev);
+        }
+
+        last_ctx = tuple_evalctx_new();
+        last_string = g_strdup(string);
+        last_ev = tuple_formatter_compile(last_ctx, last_string);
+    }
+
+    tuple_evalctx_reset(last_ctx);
+    return tuple_formatter_eval(last_ctx, last_ev, tuple);
+#else
     return tuple_formatter_process_construct(tuple, string);
+#endif
 }
 
 /* wrapper function for making title string. it falls back to filename
