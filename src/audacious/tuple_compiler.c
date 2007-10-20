@@ -704,8 +704,9 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             tmps2 = var0->fieldref->value.string;
             
             while (result && *tmps2 != '\0') {
-              if (*tmps2 == ' ')
-                tmps2++;
+              gunichar uc = g_utf8_get_char(tmps2);
+              if (g_unichar_isspace(uc))
+                g_utf8_next_char(tmps2);
               else
                 result = FALSE;
             }
