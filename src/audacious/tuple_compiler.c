@@ -652,14 +652,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             break;
         }
         break;
-      
-      case OP_EXISTS:
-        if (tf_get_fieldref(ctx->variables[curr->var[0]], tuple)) {
-          if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
-            return FALSE;
-        }
-        break;
-      
+
       case OP_EQUALS:
       case OP_NOT_EQUALS:
       case OP_LT: case OP_LTEQ:
@@ -693,6 +686,15 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
         }
         break;
       
+      case OP_EXISTS:
+#ifdef NO_EXISTS_HACK
+        if (tf_get_fieldref(ctx->variables[curr->var[0]], tuple)) {
+          if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
+            return FALSE;
+        }
+        break;
+#endif
+
       case OP_IS_EMPTY:
         var0 = ctx->variables[curr->var[0]];
 
@@ -721,9 +723,16 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
           }
         } else
           result = TRUE;
-        
+
+#ifdef NO_EXISTS_HACK        
         if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
           return FALSE;
+#else
+        if ((curr->opcode == OP_EXISTS && !result) || (curr->opcode == OP_IS_EMPTY && result)) {
+          if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
+            return FALSE;
+        }
+#endif
         break;
       
       default:
