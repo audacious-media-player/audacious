@@ -733,7 +733,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
       *reslen += strlen(str);
       if (*res) {
         if (*reslen >= *resmax) {
-          *resmax += MIN_ALLOC_BUF;
+          *resmax += *reslen + MIN_ALLOC_BUF;
           *res = g_realloc(*res, *resmax);
         }
         
