@@ -212,10 +212,10 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
 
 
 static gboolean tc_get_item(TupleEvalContext *ctx,
-    gchar **str, gchar *buf, size_t max,
+    gchar **str, gchar *buf, gssize max,
     gchar endch, gboolean *literal, gchar *errstr, gchar *item)
 {
-  size_t i = 0;
+  gssize i = 0;
   gchar *s = *str, tmpendch;
   assert(str != NULL);
   assert(buf != NULL);
@@ -467,7 +467,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
       /* Function? */
       item = c++;
       if (*c == '{') {
-        size_t i = 0;
+        gssize i = 0;
         c++;
         
         while (*c != '\0' && (isalnum(*c) || *c == '-') && *c != '}' && *c != ':' && i < (MAX_STR - 1))
@@ -488,7 +488,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
       }
     } else {
       /* Parse raw/literal text */
-      size_t i = 0;
+      gssize i = 0;
       while (*c != '\0' && *c != '$' && *c != '%' && *c != '}' && i < (MAX_STR - 1)) {
         if (*c == '\\') c++;
         tmps1[i++] = *(c++);
@@ -601,7 +601,7 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
 /* Evaluate tuple in given TupleEval expression in given
  * context and return resulting string.
  */
-static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple, gchar **res, size_t *resmax, size_t *reslen)
+static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple, gchar **res, gssize *resmax, gssize *reslen)
 {
   TupleEvalNode *curr = expr;
   gchar tmps[MAX_STR], *tmps2;
@@ -756,7 +756,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple)
 {
   gchar *res = g_strdup("");
-  size_t resmax = 0, reslen = 0;
+  gssize resmax = 0, reslen = 0;
   assert(ctx != NULL);
   assert(tuple != NULL);
   
