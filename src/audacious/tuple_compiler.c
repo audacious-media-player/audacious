@@ -23,7 +23,6 @@
  * - implement definitions (${=foo,"baz"} ${=foo,1234})
  * - implement functions
  * - implement handling of external expressions
- * - error handling issues?
  * - evaluation context: how local variables should REALLY work?
  *   currently there is just a single context, is a "global" context needed?
  */
@@ -38,14 +37,14 @@
 #define MIN_ALLOC_BUF	(64)
 
 
-void tuple_error(const char *fmt, ...)
+void tuple_error(TupleEvalContext *ctx, const gchar *fmt, ...)
 {
   va_list ap;
-  fprintf(stderr, "compiler: ");
+  g_free(ctx->errmsg);
   va_start(ap, fmt);
-  vfprintf(stderr, fmt, ap);
+  ctx->errmsg = g_strdup_vprintf(fmt, ap);
   va_end(ap);
-//  exit(5);
+  ctx->iserror = TRUE;
 }
 
 
@@ -89,6 +88,8 @@ void tuple_evalctx_reset(TupleEvalContext *ctx)
       if (ctx->variables[i]->istemp)
         tuple_evalctx_free_var(ctx->variables[i]);
     }
+  
+  ctx->iserror = FALSE;
 }
 
 
@@ -122,7 +123,8 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type)
 {
   gint i, ref = -1;
-  TupleEvalVar * tmp = g_new0(TupleEvalVar, 1);
+  TupleEvalVar *tmp = g_new0(TupleEvalVar, 1);
+  assert(tmp != NULL);
 
   tmp->name = g_strdup(name);
   tmp->istemp = istemp;
@@ -209,16 +211,18 @@ void tuple_evalnode_free(TupleEvalNode *expr)
 static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, gchar **expression);
 
 
-static gboolean tc_get_item(gchar **str, gchar *buf, size_t max, gchar endch, gboolean *literal, gchar *errstr, gchar *item)
+static gboolean tc_get_item(TupleEvalContext *ctx,
+    gchar **str, gchar *buf, gssize max,
+    gchar endch, gboolean *literal, gchar *errstr, gchar *item)
 {
-  size_t i = 0;
+  gssize i = 0;
   gchar *s = *str, tmpendch;
   assert(str != NULL);
   assert(buf != NULL);
   
   if (*s == '"') {
     if (*literal == FALSE) {
-      tuple_error("Literal string value not allowed in '%s'.\n", item);
+      tuple_error(ctx, "Literal string value not allowed in '%s'.\n", item);
       return FALSE;
     }
     s++;
@@ -235,10 +239,10 @@ static gboolean tc_get_item(gchar **str, gchar *buf, size_t max, gchar endch, gb
     }
     
     if (*s != tmpendch && *s != '}' && !isalnum(*s) && *s != '-') {
-      tuple_error("Invalid field '%s' in '%s'.\n", *str, item);
+      tuple_error(ctx, "Invalid field '%s' in '%s'.\n", *str, item);
       return FALSE;
     } else if (*s != tmpendch) {
-      tuple_error("Expected '%c' in '%s'.\n", tmpendch, item);
+      tuple_error(ctx, "Expected '%c' in '%s'.\n", tmpendch, item);
       return FALSE;
     }
   } else {
@@ -253,13 +257,13 @@ static gboolean tc_get_item(gchar **str, gchar *buf, size_t max, gchar endch, gb
     if (*s == tmpendch)
       s++;
     else {
-      tuple_error("Expected literal string end ('%c') in '%s'.\n", tmpendch, item);
+      tuple_error(ctx, "Expected literal string end ('%c') in '%s'.\n", tmpendch, item);
       return FALSE;
     }
   }
 
   if (*s != endch) {
-    tuple_error("Expected '%c' after %s in '%s'\n", endch, errstr, item);
+    tuple_error(ctx, "Expected '%c' after %s in '%s'\n", endch, errstr, item);
     return FALSE;
   } else {
     *str = s;
@@ -288,21 +292,21 @@ static gboolean tc_parse_construct1(TupleEvalContext *ctx, TupleEvalNode **res, 
   gboolean literal1 = TRUE, literal2 = TRUE;
 
   (*c)++;
-  if (tc_get_item(c, tmps1, MAX_STR, ',', &literal1, "tag1", item)) {
+  if (tc_get_item(ctx, c, tmps1, MAX_STR, ',', &literal1, "tag1", item)) {
     (*c)++;
-    if (tc_get_item(c, tmps2, MAX_STR, ':', &literal2, "tag2", item)) {
+    if (tc_get_item(ctx, c, tmps2, MAX_STR, ':', &literal2, "tag2", item)) {
       TupleEvalNode *tmp = tuple_evalnode_new();
       (*c)++;
 
       tmp->opcode = opcode;
       if ((tmp->var[0] = tc_get_variable(ctx, tmps1, literal1 ? VAR_CONST : VAR_FIELD)) < 0) {
         tuple_evalnode_free(tmp);
-        tuple_error("Invalid variable '%s' in '%s'.\n", tmps1, item);
+        tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, item);
         return FALSE;
       }
       if ((tmp->var[1] = tc_get_variable(ctx, tmps2, literal2 ? VAR_CONST : VAR_FIELD)) < 0) {
         tuple_evalnode_free(tmp);
-        tuple_error("Invalid variable '%s' in '%s'.\n", tmps2, item);
+        tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps2, item);
         return FALSE;
       }
       tmp->children = tuple_compiler_pass1(level, ctx, c);
@@ -347,12 +351,12 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
           case '?': c++;
             /* Exists? */
             literal = FALSE;
-            if (tc_get_item(&c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
+            if (tc_get_item(ctx, &c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
               c++;
               tmp = tuple_evalnode_new();
               tmp->opcode = OP_EXISTS;
               if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
-                tuple_error("Invalid variable '%s' in '%s'.\n", tmps1, expr);
+                tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                 goto ret_error;
               }
               tmp->children = tuple_compiler_pass1(level, ctx, &c);
@@ -365,7 +369,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
             if (*c != '=') {
               /* Definition */
               literal = FALSE;
-              if (tc_get_item(&c, tmps1, MAX_STR, ',', &literal, "variable", item)) {
+              if (tc_get_item(ctx, &c, tmps1, MAX_STR, ',', &literal, "variable", item)) {
                 c++;
                 if (*c == '"') {
                   /* String */
@@ -374,7 +378,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
                   /* Integer */
                 }
                 
-                tuple_error("Definitions are not yet supported!\n");
+                tuple_error(ctx, "Definitions are not yet supported!\n");
                 goto ret_error;
               } else
                 goto ret_error;
@@ -417,12 +421,12 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
             if (!strncmp(c, "empty)?", 7)) {
               c += 7;
               literal = FALSE;
-              if (tc_get_item(&c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
+              if (tc_get_item(ctx, &c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
                 c++;
                 tmp = tuple_evalnode_new();
                 tmp->opcode = OP_EXISTS;
                 if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
-                  tuple_error("Invalid variable '%s' in '%s'.\n", tmps1, expr);
+                  tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                   goto ret_error;
                 }
                 tmp->children = tuple_compiler_pass1(level, ctx, &c);
@@ -438,14 +442,14 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
             /* Get expression content */
             c = expr;
             literal = FALSE;
-            if (tc_get_item(&c, tmps1, MAX_STR, '}', &literal, "field", item)) {
+            if (tc_get_item(ctx, &c, tmps1, MAX_STR, '}', &literal, "field", item)) {
               /* FIXME!! FIX ME! Check for external expressions */
               
               /* I HAS A FIELD - A field. You has it. */
               tmp = tuple_evalnode_new();
               tmp->opcode = OP_FIELD;
               if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
-                tuple_error("Invalid variable '%s' in '%s'.\n", tmps1, expr);
+                tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                 goto ret_error;
               }
               tuple_evalnode_insert(&res, tmp);
@@ -455,7 +459,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
               goto ret_error;
         }        
       } else {
-        tuple_error("Expected '{', got '%c' in '%s'.\n", *c, c);
+        tuple_error(ctx, "Expected '{', got '%c' in '%s'.\n", *c, c);
         goto ret_error;
       }
        
@@ -463,7 +467,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
       /* Function? */
       item = c++;
       if (*c == '{') {
-        size_t i = 0;
+        gssize i = 0;
         c++;
         
         while (*c != '\0' && (isalnum(*c) || *c == '-') && *c != '}' && *c != ':' && i < (MAX_STR - 1))
@@ -475,16 +479,16 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
         } else if (*c == '}') {
           c++;
         } else if (*c == '\0') {
-          tuple_error("Expected '}' or function arguments in '%s'\n", item);
+          tuple_error(ctx, "Expected '}' or function arguments in '%s'\n", item);
           goto ret_error;
         }
       } else {
-        tuple_error("Expected '{', got '%c' in '%s'.\n", *c, c);
+        tuple_error(ctx, "Expected '{', got '%c' in '%s'.\n", *c, c);
         goto ret_error;
       }
     } else {
       /* Parse raw/literal text */
-      size_t i = 0;
+      gssize i = 0;
       while (*c != '\0' && *c != '$' && *c != '%' && *c != '}' && i < (MAX_STR - 1)) {
         if (*c == '\\') c++;
         tmps1[i++] = *(c++);
@@ -499,7 +503,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
   }
 
   if (*level <= 0) {
-    tuple_error("Syntax error! Uneven/unmatched nesting of elements in '%s'!\n", c);
+    tuple_error(ctx, "Syntax error! Uneven/unmatched nesting of elements in '%s'!\n", c);
     goto ret_error;
   }
   
@@ -518,7 +522,6 @@ static TupleEvalNode *tuple_compiler_pass2(gboolean *changed, TupleEvalContext *
   /* TupleEvalNode *curr = expr; */
   TupleEvalNode *res = NULL;
   assert(ctx != NULL);
-  assert(expr != NULL);
   
   return res;
 }
@@ -534,7 +537,7 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
   res1 = tuple_compiler_pass1(&level, ctx, &tmpexpr);
 
   if (level != 1) {
-    tuple_error("Syntax error! Uneven/unmatched nesting of elements! (%d)\n", level);
+    tuple_error(ctx, "Syntax error! Uneven/unmatched nesting of elements! (%d)\n", level);
     tuple_evalnode_free(res1);
     return NULL;
   }
@@ -598,16 +601,15 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
 /* Evaluate tuple in given TupleEval expression in given
  * context and return resulting string.
  */
-static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple, gchar **res, size_t *resmax, size_t *reslen)
+static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple, gchar **res, gssize *resmax, gssize *reslen)
 {
   TupleEvalNode *curr = expr;
-  gchar tmps[MAX_STR], *tmps2;
+  TupleEvalVar *var0, *var1;
+  TupleValueType type0, type1;
+  gint tmpi0, tmpi1;
+  gchar tmps[MAX_STR], *tmps0, *tmps1, *tmps2;
   gboolean result;
   gint resulti;
-  TupleEvalVar *var0, *var1;
-  gint tmpi0, tmpi1;
-  gchar *tmps0, *tmps1;
-  TupleValueType type0, type1;
   
   if (!expr) return FALSE;
   
@@ -635,7 +637,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
                   break;
           
                 case TUPLE_INT:
-                  snprintf(tmps, sizeof(tmps), "%d", var0->fieldref->value.integer);
+                  g_snprintf(tmps, sizeof(tmps), "%d", var0->fieldref->value.integer);
                   str = tmps;
                   break;
                 
@@ -669,7 +671,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             resulti = strcmp(tmps0, tmps1);
           else
             resulti = tmpi0 - tmpi1;
-
+          
           switch (curr->opcode) {
             case OP_EQUALS:     result = (resulti == 0); break;
             case OP_NOT_EQUALS: result = (resulti != 0); break;
@@ -679,7 +681,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             case OP_GTEQ:       result = (resulti >= 0); break;
             default:		result = FALSE;
           }
-            
+          
           if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
             return FALSE;
         } else {
@@ -700,15 +702,16 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
           case TUPLE_STRING:
             result = TRUE;
             tmps2 = var0->fieldref->value.string;
-          
+            
             while (result && *tmps2 != '\0') {
-              if (*tmps2 == ' ')
-                tmps2++;
+              gunichar uc = g_utf8_get_char(tmps2);
+              if (g_unichar_isspace(uc))
+                g_utf8_next_char(tmps2);
               else
                 result = FALSE;
             }
             break;
-
+            
           default:
             result = TRUE;
           }
@@ -720,7 +723,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
         break;
       
       default:
-        tuple_error("Unimplemented opcode %d!\n", curr->opcode);
+        tuple_error(ctx, "Unimplemented opcode %d!\n", curr->opcode);
         return FALSE;
         break;
     }
@@ -730,7 +733,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
       *reslen += strlen(str);
       if (*res) {
         if (*reslen >= *resmax) {
-          *resmax += MIN_ALLOC_BUF;
+          *resmax += *reslen + MIN_ALLOC_BUF;
           *res = g_realloc(*res, *resmax);
         }
         
@@ -753,7 +756,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple)
 {
   gchar *res = g_strdup("");
-  size_t resmax = 0, reslen = 0;
+  gssize resmax = 0, reslen = 0;
   assert(ctx != NULL);
   assert(tuple != NULL);
   

@@ -88,6 +88,10 @@ typedef struct {
     gint nvariables, nfunctions, nexpressions;
     TupleEvalVar **variables;
     TupleEvalFunc **functions;
+    
+    /* Error context */
+    gboolean iserror;
+    gchar *errmsg;
 } TupleEvalContext;
 
 
