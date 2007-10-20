@@ -20,6 +20,10 @@
 
 /*
  * TODO:
+ * - Unicode/UTF-8 support in format strings. using any non-ASCII
+ *   characters in Tuplez format strings WILL cause things go boom
+ *   at the moment!
+ *
  * - implement definitions (${=foo,"baz"} ${=foo,1234})
  * - implement functions
  * - implement handling of external expressions
