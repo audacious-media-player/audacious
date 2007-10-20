@@ -37,7 +37,7 @@
 #define MIN_ALLOC_BUF	(64)
 
 
-void tuple_error(TupleEvalContext *ctx, const char *fmt, ...)
+void tuple_error(TupleEvalContext *ctx, const gchar *fmt, ...)
 {
   va_list ap;
   g_free(ctx->errmsg);
