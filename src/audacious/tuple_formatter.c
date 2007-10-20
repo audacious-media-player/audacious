@@ -30,7 +30,7 @@
  *  Undefine this to disable usage of the Tuplez compiler implementation.
  *  This may be useful for prototyping new features of the language.
  */
-#define TUPLE_USE_COMPILER
+#undef TUPLE_USE_COMPILER
 
 /*
  * TUPLE_COMPILER_DEBUG:
