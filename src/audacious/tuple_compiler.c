@@ -604,13 +604,12 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
 static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple, gchar **res, gssize *resmax, gssize *reslen)
 {
   TupleEvalNode *curr = expr;
-  gchar tmps[MAX_STR], *tmps2;
+  TupleEvalVar *var0, *var1;
+  TupleValueType type0, type1;
+  gint tmpi0, tmpi1;
+  gchar tmps[MAX_STR], *tmps0, *tmps1, *tmps2;
   gboolean result;
   gint resulti;
-  TupleEvalVar *var0, *var1;
-  gint tmpi0, tmpi1;
-  gchar *tmps0, *tmps1;
-  TupleValueType type0, type1;
   
   if (!expr) return FALSE;
   
@@ -672,7 +671,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             resulti = strcmp(tmps0, tmps1);
           else
             resulti = tmpi0 - tmpi1;
-
+          
           switch (curr->opcode) {
             case OP_EQUALS:     result = (resulti == 0); break;
             case OP_NOT_EQUALS: result = (resulti != 0); break;
@@ -682,7 +681,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             case OP_GTEQ:       result = (resulti >= 0); break;
             default:		result = FALSE;
           }
-            
+          
           if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
             return FALSE;
         } else {
@@ -703,7 +702,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
           case TUPLE_STRING:
             result = TRUE;
             tmps2 = var0->fieldref->value.string;
-          
+            
             while (result && *tmps2 != '\0') {
               if (*tmps2 == ' ')
                 tmps2++;
@@ -711,7 +710,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
                 result = FALSE;
             }
             break;
-
+            
           default:
             result = TRUE;
           }
