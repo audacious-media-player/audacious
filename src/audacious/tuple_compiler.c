@@ -637,7 +637,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
                   break;
           
                 case TUPLE_INT:
-                  snprintf(tmps, sizeof(tmps), "%d", var0->fieldref->value.integer);
+                  g_snprintf(tmps, sizeof(tmps), "%d", var0->fieldref->value.integer);
                   str = tmps;
                   break;
                 
