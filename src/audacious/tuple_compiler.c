@@ -710,7 +710,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             while (result && *tmps2 != '\0') {
               gunichar uc = g_utf8_get_char(tmps2);
               if (g_unichar_isspace(uc))
-                g_utf8_next_char(tmps2);
+                tmps2 = g_utf8_next_char(tmps2);
               else
                 result = FALSE;
             }
