@@ -253,7 +253,7 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
     if (string == NULL)
         value->value.string = NULL;
     else
-        value->value.string = g_strdup(string);
+        value->value.string = str_to_utf8(string);
 
     TUPLE_UNLOCK_WRITE();
     return TRUE;
