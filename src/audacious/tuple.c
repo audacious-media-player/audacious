@@ -145,6 +145,9 @@ tuple_new(void)
     return tuple;
 }
 
+static TupleValue *
+tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype);
+
 static gboolean
 _tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
 {
