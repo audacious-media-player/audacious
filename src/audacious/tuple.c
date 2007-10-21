@@ -145,6 +145,24 @@ tuple_new(void)
     return tuple;
 }
 
+static gboolean
+_tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
+{
+    TupleValue *value;
+
+    TUPLE_LOCK_WRITE();
+    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
+        return FALSE;
+
+    if (string == NULL)
+        value->value.string = NULL;
+    else
+        value->value.string = g_strdup(string);
+
+    TUPLE_UNLOCK_WRITE();
+    return TRUE;
+}
+
 Tuple *
 tuple_new_from_filename(const gchar *filename)
 {
@@ -160,11 +178,11 @@ tuple_new_from_filename(const gchar *filename)
     realfn = g_filename_from_uri(filename, NULL, NULL);
 
     scratch = g_path_get_basename(realfn ? realfn : filename);
-    tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, scratch);
+    _tuple_associate_raw_string(tuple, FIELD_FILE_NAME, NULL, scratch);
     g_free(scratch);
 
     scratch = g_path_get_dirname(realfn ? realfn : filename);
-    tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, scratch);
+    _tuple_associate_raw_string(tuple, FIELD_FILE_PATH, NULL, scratch);
     g_free(scratch);
 
     g_free(realfn); realfn = NULL;
@@ -172,7 +190,7 @@ tuple_new_from_filename(const gchar *filename)
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
-        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, scratch);
+        _tuple_associate_raw_string(tuple, FIELD_FILE_EXT, NULL, scratch);
     }
 
     return tuple;
@@ -254,7 +272,7 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
     if (string == NULL)
         value->value.string = NULL;
     else
-        value->value.string = g_strdup(string);
+        value->value.string = str_to_utf8(string);
 
     TUPLE_UNLOCK_WRITE();
     return TRUE;
