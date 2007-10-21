@@ -180,9 +180,13 @@ GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     TupleValueType type;
     type = tuple_get_value_type(tuple, -1, key);
     if (type == TUPLE_STRING) {
+        gchar *result = str_to_utf8(tuple_get_string(tuple, -1, key));
+
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_STRING);
-        g_value_set_string(val, tuple_get_string(tuple, -1, key));
+        g_value_set_string(val, result);
+
+        g_free(result);
         return val;
     } else if (type == TUPLE_INT) {
         val = g_new0(GValue, 1);
@@ -379,7 +383,7 @@ gboolean mpris_emit_caps_change(MprisPlayer *obj) {
 }
 
 gboolean mpris_emit_track_change(MprisPlayer *obj) {
-	GHashTable *metadata;
+    GHashTable *metadata;
     Tuple *tuple = NULL;
     GValue *value;
     Playlist *active;
@@ -391,13 +395,13 @@ gboolean mpris_emit_track_change(MprisPlayer *obj) {
     metadata = mpris_metadata_from_tuple(tuple);
 
     if (metadata != NULL) {
-		// Song URI
-		value = g_new0(GValue, 1);
-		g_value_init(value, G_TYPE_STRING);
-		g_value_set_string(value, playlist_get_filename(active, pos));
+	// Song URI
+	value = g_new0(GValue, 1);
+	g_value_init(value, G_TYPE_STRING);
+	g_value_set_string(value, playlist_get_filename(active, pos));
 
-		g_hash_table_insert(metadata, "URI", value);
-	}
+	g_hash_table_insert(metadata, "URI", value);
+    }
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     return TRUE;
