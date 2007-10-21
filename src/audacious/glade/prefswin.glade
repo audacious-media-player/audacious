@@ -4335,7 +4335,7 @@ Please note however, that high values will result in Audacious performing poorly
 				      <child>
 					<widget class="GtkComboBox" id="src_converter_type">
 					  <property name="visible">True</property>
-					  <property name="items">Best Sinc Interpolation
+					  <property name="items" translatable="yes">Best Sinc Interpolation
 Medium Sinc Interpolation
 Fastest Sinc Interpolation
 ZOH Interpolation
