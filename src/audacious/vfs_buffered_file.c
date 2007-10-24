@@ -238,6 +238,7 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
 
     if (!sz)
     {
+	vfs_fclose(fd->fd);
 	g_free(fd->mem);
 	g_free(fd);
 	g_free(handle);
