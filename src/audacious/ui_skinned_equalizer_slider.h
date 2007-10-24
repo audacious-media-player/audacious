@@ -1,6 +1,6 @@
 /*
  * Audacious - a cross-platform multimedia player
- * Copyright (c) 2007  Audacious development team.
+ * Copyright (c) 2007 Tomasz Moń
  *
  * Based on:
  * BMP - Cross-platform multimedia player

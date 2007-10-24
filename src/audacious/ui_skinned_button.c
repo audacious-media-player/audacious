@@ -1,6 +1,6 @@
 /*
  * Audacious - a cross-platform multimedia player
- * Copyright (c) 2007  Audacious development team.
+ * Copyright (c) 2007 Tomasz Moń
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
