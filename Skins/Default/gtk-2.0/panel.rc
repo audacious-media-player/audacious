@@ -1,0 +1,50 @@
+style "tasklist-button"
+{
+xthickness	= 0
+ythickness = 0
+engine "pixmap" 
+{
+image
+{
+function	= BOX
+state		= NORMAL
+file		= "Buttons/button-normal.png"
+border	= {6,6,14,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+state		= ACTIVE
+file		= "Buttons/button-prelight.png"
+border	= {6,6,14,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+state		= PRELIGHT
+file		= "Buttons/button-prelight.png"
+border	= {6,6,14,2}
+stretch	= TRUE
+}
+}
+}
+widget "*.tasklist-button" style "tasklist-button" 
+style "panel-menubar"
+{
+xthickness	= 1
+ythickness	= 0
+engine "pixmap" 
+{
+image
+{
+function	= BOX
+state		= NORMAL
+file		= "Panel/panel-bg.png"
+border	= {0,0,0,0}
+stretch	= FALSE
+}
+}
+}
+class "*Panel*" style "panel-menubar"
