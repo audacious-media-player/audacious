@@ -17,25 +17,24 @@ DATA = Skins/Classic/balance.png	\
        Skins/Classic/titlebar.png	\
        Skins/Classic/viscolor.txt	\
        Skins/Classic/volume.png		\
-       Skins/Default1.3/balance.png	\
-       Skins/Default1.3/cbuttons.png	\
-       Skins/Default1.3/eq_ex.png		\
-       Skins/Default1.3/eqmain.png		\
-       Skins/Default1.3/main.png		\
-       Skins/Default1.3/monoster.png	\
-       Skins/Default1.3/nums_ex.png	\
-       Skins/Default1.3/playpaus.png	\
-       Skins/Default1.3/pledit.png		\
-       Skins/Default1.3/pledit.txt		\
-       Skins/Default1.3/posbar.png		\
-       Skins/Default1.3/shufrep.png	\
-       Skins/Default1.3/skin-classic.hints	\
-       Skins/Default1.3/skin.hints		\
-       Skins/Default1.3/text.png		\
-       Skins/Default1.3/titlebar.png	\
-       Skins/Default1.3/viscolor.txt	\
-       Skins/Default1.3/volume.png		\
-       Skins/Default/balance.png	\
+       Skins/Classic1.3/balance.png	\
+       Skins/Classic1.3/cbuttons.png	\
+       Skins/Classic1.3/eq_ex.png		\
+       Skins/Classic1.3/eqmain.png		\
+       Skins/Classic1.3/main.png		\
+       Skins/Classic1.3/monoster.png	\
+       Skins/Classic1.3/nums_ex.png	\
+       Skins/Classic1.3/playpaus.png	\
+       Skins/Classic1.3/pledit.png		\
+       Skins/Classic1.3/pledit.txt		\
+       Skins/Classic1.3/posbar.png		\
+       Skins/Classic1.3/shufrep.png	\
+       Skins/Classic1.3/skin-classic.hints	\
+       Skins/Classic1.3/skin.hints		\
+       Skins/Classic1.3/text.png		\
+       Skins/Classic1.3/titlebar.png	\
+       Skins/Classic1.3/viscolor.txt	\
+       Skins/Classic1.3/volume.png		\
        Skins/Default/cbuttons.png	\
        Skins/Default/eq_ex.png		\
        Skins/Default/eqmain.png		\
@@ -47,7 +46,6 @@ DATA = Skins/Classic/balance.png	\
        Skins/Default/pledit.txt		\
        Skins/Default/posbar.png		\
        Skins/Default/shufrep.png	\
-       Skins/Default/skin-classic.hints	\
        Skins/Default/skin.hints		\
        Skins/Default/text.png		\
        Skins/Default/titlebar.png	\

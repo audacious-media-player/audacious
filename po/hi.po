@@ -531,6 +531,15 @@ msgstr "सैम्पल की दर:"
 msgid "Enable Sampling Rate Converter"
 msgstr "सैम्पल की दर:"
 
+#: src/audacious/glade/prefswin.glade:4338
+msgid ""
+"Best Sinc Interpolation\n"
+"Medium Sinc Interpolation\n"
+"Fastest Sinc Interpolation\n"
+"ZOH Interpolation\n"
+"Linear Interpolation"
+msgstr ""
+
 #: src/audacious/glade/prefswin.glade:4361
 #, fuzzy
 msgid "Interpolation Engine:"

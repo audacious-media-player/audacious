@@ -528,6 +528,15 @@ msgstr "샘플링율:"
 msgid "Enable Sampling Rate Converter"
 msgstr "샘플링율:"
 
+#: src/audacious/glade/prefswin.glade:4338
+msgid ""
+"Best Sinc Interpolation\n"
+"Medium Sinc Interpolation\n"
+"Fastest Sinc Interpolation\n"
+"ZOH Interpolation\n"
+"Linear Interpolation"
+msgstr ""
+
 #: src/audacious/glade/prefswin.glade:4361
 #, fuzzy
 msgid "Interpolation Engine:"

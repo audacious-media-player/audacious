@@ -529,6 +529,15 @@ msgstr "<b>Abtastfrequenz:</b>"
 msgid "Enable Sampling Rate Converter"
 msgstr "Aktiviere Abtastfrequenz-Umwandler"
 
+#: src/audacious/glade/prefswin.glade:4338
+msgid ""
+"Best Sinc Interpolation\n"
+"Medium Sinc Interpolation\n"
+"Fastest Sinc Interpolation\n"
+"ZOH Interpolation\n"
+"Linear Interpolation"
+msgstr ""
+
 #: src/audacious/glade/prefswin.glade:4361
 msgid "Interpolation Engine:"
 msgstr "Interpolations-Engine:"

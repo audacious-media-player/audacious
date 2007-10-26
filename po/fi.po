@@ -529,6 +529,15 @@ msgstr "Näytetaajuus:"
 msgid "Enable Sampling Rate Converter"
 msgstr "Näytetaajuus:"
 
+#: src/audacious/glade/prefswin.glade:4338
+msgid ""
+"Best Sinc Interpolation\n"
+"Medium Sinc Interpolation\n"
+"Fastest Sinc Interpolation\n"
+"ZOH Interpolation\n"
+"Linear Interpolation"
+msgstr ""
+
 #: src/audacious/glade/prefswin.glade:4361
 #, fuzzy
 msgid "Interpolation Engine:"

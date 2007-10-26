@@ -526,6 +526,15 @@ msgstr "<b>Pretvarač učestalosti odabiranja uzoraka</b>"
 msgid "Enable Sampling Rate Converter"
 msgstr "Uključi pretvarač učestalosti odabiranja uzoraka"
 
+#: src/audacious/glade/prefswin.glade:4338
+msgid ""
+"Best Sinc Interpolation\n"
+"Medium Sinc Interpolation\n"
+"Fastest Sinc Interpolation\n"
+"ZOH Interpolation\n"
+"Linear Interpolation"
+msgstr ""
+
 #: src/audacious/glade/prefswin.glade:4361
 msgid "Interpolation Engine:"
 msgstr ""

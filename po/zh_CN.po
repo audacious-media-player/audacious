@@ -507,6 +507,15 @@ msgstr "<b>采样率转换器</b>"
 msgid "Enable Sampling Rate Converter"
 msgstr "启用采样率转换器"
 
+#: src/audacious/glade/prefswin.glade:4338
+msgid ""
+"Best Sinc Interpolation\n"
+"Medium Sinc Interpolation\n"
+"Fastest Sinc Interpolation\n"
+"ZOH Interpolation\n"
+"Linear Interpolation"
+msgstr ""
+
 #: src/audacious/glade/prefswin.glade:4361
 msgid "Interpolation Engine:"
 msgstr ""
