@@ -1,0 +1,1534 @@
+include "panel.rc"
+
+gtk-menu-drop-shadow = 0
+gtk-menu-shadow-delay = 0
+
+style "default"
+{
+GtkWidget::interior_focus			= 7
+GtkWidget::focus_padding			= 1
+GtkButton::default_border			= {0,0,0,0}
+GtkButton::default_outside_border	= {0,0,0,0}
+
+GtkRange::trough_border			= 1
+GtkRange::slider_width			= 14
+GtkRange::stepper_size			= 14
+
+GtkVScale::slider_length 			= 29
+GtkVScale::slider_width 			= 15
+GtkHScale::slider_length 			= 29
+GtkHScale::slider_width 			= 15
+
+GtkPaned::handle_size			= 6
+GtkScrollbar::min_slider_length		= 50
+GtkCheckButton::indicator_size		= 12
+GtkCheckButton::indicator_spacing	= 3
+GtkMenuBar::internal_padding		= 1
+#GtkOptionMenu::indicator_size		= {15,8}
+#GtkOptionMenu::indicator_spacing	= {8,2,0,0}
+GtkStatusbar::shadow_type 		= GTK_SHADOW_NONE
+GtkSpinButton::shadow_type 		= GTK_SHADOW_NONE
+
+xthickness	= 2
+ythickness	= 2
+
+GtkEntry::cursor_color			= "#ffffff"
+GtkTextView::cursor_color			= "#ffffff"
+GtkTextView::secondary_cursor_color	= "#ffffff"
+GtkWidget::cursor_color			= "#ffffff"
+GtkWidget::secondary_cursor_color	= "#ffffff"
+
+fg[NORMAL]		= "#ffffff"
+fg[PRELIGHT]		= "#ffffff"
+fg[ACTIVE]		= "#ffffff"
+fg[SELECTED]		= "#909090"
+fg[INSENSITIVE]		= "#909090"
+
+bg[NORMAL]		= "#080808"
+bg[PRELIGHT]		= "#000000"
+bg[ACTIVE]		= "#000000"
+bg[SELECTED]		= "#080808"
+bg[INSENSITIVE] 	= "#3f3f3f"
+
+base[NORMAL]		= "#000000"
+base[PRELIGHT]	= "#313131"
+base[ACTIVE]		= "#071f46"
+base[SELECTED]	= "#0d377c"
+base[INSENSITIVE]	= "#000000"
+
+text[NORMAL]		= "#ffffff"
+text[PRELIGHT]		= "#ffffff"
+text[ACTIVE]		= "#ffffff"
+text[SELECTED]		= "#ffffff"
+text[INSENSITIVE]	= "#606060"
+
+engine "pixmap"
+{
+image
+{
+function		= HANDLE
+overlay_file	= "Handles/handle-h.png"
+overlay_stretch	= FALSE
+orientation	= HORIZONTAL
+}
+image
+{
+function		= HANDLE
+overlay_file	= "Handles/handle-v.png"
+overlay_stretch	= FALSE
+orientation	= VERTICAL
+}
+
+image
+{
+function	= SHADOW
+shadow	= IN
+file		= "Shadows/shadow-in.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= SHADOW
+shadow	= OUT
+file		= "Shadows/shadow-out.png"
+stretch	= TRUE
+}
+
+image
+{
+function	= SHADOW
+shadow	= ETCHED_IN
+file		= "Frame-Gap/frame.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= SHADOW
+shadow	= ETCHED_OUT
+file		= "Others/null.png"
+border	= {0,0,0,0}
+stretch	= TRUE
+}
+image
+{
+function			= SHADOW_GAP
+file				= "Frame-Gap/frame.png"
+border			= {2,2,2,2}
+stretch			= TRUE
+gap_start_file		= "Frame-Gap/frame-gap-start.png"
+gap_start_border	= {2,0,2,0}
+gap_end_file		= "Frame-Gap/frame-gap-end.png"
+gap_end_border	= {0,2,2,0}
+gap_side			= TOP
+}
+image
+{
+function	= VLINE
+file		= "Lines/line-v.png"
+border	= {0,0,0,0}
+stretch	= TRUE
+}
+image
+{
+function	= HLINE
+file		= "Lines/line-h.png"
+border	= {0,0,0,0}
+stretch	= TRUE
+}
+
+image
+{
+function		= ARROW
+overlay_file	= "Arrows/arrow-up.png"
+overlay_border	= {0,0,0,0}
+overlay_stretch	= FALSE
+arrow_direction	= UP
+}
+image
+{
+function		= ARROW
+overlay_file	= "Arrows/arrow-down.png"
+overlay_border	= {0,0,0,0}
+overlay_stretch	= FALSE
+arrow_direction	= DOWN
+}
+image
+{
+function		= ARROW
+overlay_file	= "Arrows/arrow-left.png"
+overlay_border	= {0,0,0,0}
+overlay_stretch	= FALSE
+arrow_direction	= LEFT
+}
+image
+{
+function		= ARROW
+overlay_file	= "Arrows/arrow-right.png"
+overlay_border	= {0,0,0,0}
+overlay_stretch	= FALSE
+arrow_direction	= RIGHT
+}
+image
+{
+function	= BOX
+file		= "Toolbar/toolbar.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+}
+
+}
+
+gtk-font-name = "Sans 8"
+
+class "GtkWidget" style "default"
+
+style "button" = "default"
+{
+engine "pixmap"
+{
+image
+{
+function	= BOX
+detail	= "buttondefault"
+file		= "Buttons/button-normal.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+state		= PRELIGHT
+file		= "Buttons/button-prelight.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+state		= ACTIVE
+file		= "Buttons/button-prelight.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+state		= INSENSITIVE
+file		= "Buttons/button-insensitive.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+file		= "Buttons/button-normal.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+}
+}
+
+style "checkradiobutton" {
+engine "pixmap" {
+image
+{
+function	= FLAT_BOX
+file		= "Others/null.png"
+border	= {0,0,0,0}
+stretch	= TRUE
+}
+}
+}
+
+class "GtkRadioButton" style "checkradiobutton"
+class "GtkCheckButton" style "checkradiobutton"
+
+style "optionmenu" = "default"
+{
+engine "pixmap"
+{
+image
+{
+function	= BOX
+state		= PRELIGHT
+file		= "Buttons/button-prelight.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+detail	= "buttondefault"
+state		= NORMAL
+file		= "Buttons/button-normal.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+
+image
+{
+function	= BOX
+state		= ACTIVE
+file		= "Buttons/button-prelight.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+state		= INSENSITIVE
+file		= "Buttons/button-insensitive.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function		= TAB
+state			= INSENSITIVE
+overlay_file	= "Arrows/arrow-insens.png"
+overlay_stretch	= FALSE
+}
+image
+{
+function		= TAB
+state			= NORMAL
+overlay_file	= "Arrows/arrow-down.png"
+overlay_border	= {0,0,0,0}
+overlay_stretch	= FALSE
+}
+image
+{
+function		= TAB
+state			= PRELIGHT
+overlay_file	= "Arrows/arrow-down.png"
+overlay_border	= {0,0,0,0}
+overlay_stretch	= FALSE
+}
+}
+}
+
+widget_class "*Combo*" style "optionmenu"
+
+style "radiobutton"	= "default"
+{
+engine "pixmap"
+{
+image
+{
+function 		= OPTION
+state 		= NORMAL
+shadow 		= OUT
+overlay_file 	= "Check-Radio/option1.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= OPTION
+state			= PRELIGHT
+shadow 		= OUT
+overlay_file 	= "Check-Radio/option3.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= OPTION
+state 		= ACTIVE
+shadow 		= OUT
+overlay_file 	= "Check-Radio/option1.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= OPTION
+state 		= INSENSITIVE
+shadow 		= OUT
+overlay_file 	= "Check-Radio/option5.png"
+overlay_stretch 	= FALSE
+}
+
+image
+{
+function 		= OPTION
+state 		= NORMAL
+shadow 		= IN
+overlay_file 	= "Check-Radio/option2.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= OPTION
+state 		= PRELIGHT
+shadow 		= IN
+overlay_file 	= "Check-Radio/option4.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= OPTION
+state 		= ACTIVE
+shadow 		= IN
+overlay_file 	= "Check-Radio/option2.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= OPTION
+state 		= INSENSITIVE
+shadow 		= IN
+overlay_file 	= "Check-Radio/option6.png"
+overlay_stretch 	= FALSE
+}
+
+image
+{
+function 	= FLAT_BOX
+stretch	= TRUE
+file 		= "Others/null.png"
+border 	= {0,0,0,0}
+}
+}
+}
+
+style "checkbutton"	= "default"
+{
+engine "pixmap"
+{
+image
+{
+function 		= CHECK
+state 		= NORMAL
+shadow 		= OUT
+overlay_file 	= "Check-Radio/check1.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= CHECK
+state 		= PRELIGHT
+shadow 		= OUT
+overlay_file 	= "Check-Radio/check3.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= CHECK
+state 		= ACTIVE
+shadow 		= OUT
+overlay_file 	= "Check-Radio/check1.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= CHECK
+state 		= INSENSITIVE
+shadow 		= OUT
+overlay_file 	= "Check-Radio/check5.png"
+overlay_stretch 	= FALSE
+}
+
+image
+{
+function 		= CHECK
+state 		= NORMAL
+shadow 		= IN
+overlay_file 	= "Check-Radio/check2.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= CHECK
+state 		= PRELIGHT
+shadow 		= IN
+overlay_file 	= "Check-Radio/check4.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= CHECK
+state 		= ACTIVE
+shadow 		= IN
+overlay_file 	= "Check-Radio/check4.png"
+overlay_stretch 	= FALSE
+}
+image
+{
+function 		= CHECK
+state 		= INSENSITIVE
+shadow 		= IN
+overlay_file 	= "Check-Radio/check6.png"
+overlay_stretch 	= FALSE
+}
+
+image
+{
+function 	= FLAT_BOX
+stretch	= TRUE
+file 		= "Others/null.png"
+border 	= {2,2,2,2}
+}
+}
+}
+
+style "entry" = "default"
+{
+
+xthickness = 3
+ythickness = 1
+
+GtkWidget::interior_focus = 0
+
+engine "pixmap"
+{
+image
+{
+function	= FOCUS
+file		= "Shadows/text-entry.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+shadow	= IN
+state		= NORMAL
+file		= "Shadows/text-entry.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+shadow	= OUT
+state		= NORMAL
+file		= "Shadows/text-entry.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+image
+{
+function	= SHADOW
+detail	= "entry"
+shadow	= IN
+file		= "Shadows/text-entry.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+}
+}
+
+
+style "spinbutton" = "entry"
+{
+
+
+engine "pixmap"
+{
+image
+{
+function = ARROW
+}
+
+image
+{
+function		= BOX
+state 		= NORMAL
+detail		= "spinbutton_up"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-up.png"
+overlay_stretch	= FALSE
+}
+image
+{
+function		= BOX
+state 		= PRELIGHT
+detail		= "spinbutton_up"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-up-prelight.png"
+overlay_stretch	= FALSE
+}
+image
+{
+function		= BOX
+state 		= INSENSITIVE
+detail		= "spinbutton_up"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-up-disable.png"
+overlay_stretch	= FALSE
+}
+image
+{
+function		= BOX
+state 		= ACTIVE
+detail		= "spinbutton_up"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-up-prelight.png"
+overlay_stretch	= FALSE
+}
+
+image
+{
+function		= BOX
+state 		= NORMAL
+detail		= "spinbutton_down"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-down.png"
+overlay_stretch	= FALSE
+}
+image
+{
+function		= BOX
+state 		= PRELIGHT
+detail		= "spinbutton_down"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-down-prelight.png"
+overlay_stretch	= FALSE
+}
+image
+{
+function		= BOX
+state 		= INSENSITIVE
+detail		= "spinbutton_down"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-down-disable.png"
+overlay_stretch	= FALSE
+}
+
+image
+{
+function		= BOX
+state 		= ACTIVE
+detail		= "spinbutton_down"
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Spin/spin-down-prelight.png"
+overlay_stretch	= FALSE
+}
+}
+}
+
+style "scrollbar" = "default"
+{
+engine "pixmap"
+{
+
+image
+{
+function	= BOX
+detail	= "trough"
+file		= "Scrollbars/trough-scrollbar-horiz.png"
+border	= {16,16,2,2}
+stretch	= TRUE
+orientation = HORIZONTAL
+}
+image
+{
+function	= BOX
+detail	= "trough"
+file		= "Scrollbars/trough-scrollbar-vert.png"
+border	= {2,2,16,16}
+stretch	= TRUE
+orientation = VERTICAL
+}
+
+
+image
+{
+function		= SLIDER
+state 		= NORMAL
+file			= "Scrollbars/slider-horiz.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= HORIZONTAL
+}
+image
+{
+function		= SLIDER
+state 		= ACTIVE
+shadow		= IN
+file			= "Scrollbars/slider-horiz-pre.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= HORIZONTAL
+}
+
+image
+{
+function		= SLIDER
+state 		= PRELIGHT
+file			= "Scrollbars/slider-horiz-pre.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= HORIZONTAL
+}
+image
+{
+function		= SLIDER
+state 		= INSENSITIVE
+file			= "Scrollbars/slider-horiz.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= HORIZONTAL
+}
+
+
+image
+{
+function		= SLIDER
+state 		= NORMAL
+file			= "Scrollbars/slider-vert.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= VERTICAL
+}
+image
+{
+function		= SLIDER
+state 		= ACTIVE
+shadow		= IN
+file			= "Scrollbars/slider-vert-pre.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= VERTICAL
+}
+image
+{
+function		= SLIDER
+state 		= PRELIGHT
+file			= "Scrollbars/slider-vert-pre.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= VERTICAL
+}
+image
+{
+function		= SLIDER
+state 		= INSENSITIVE
+file			= "Scrollbars/slider-vert.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+orientation	= VERTICAL
+}
+
+image
+{
+function		= STEPPER
+state			= NORMAL
+file			= "Scrollbars/stepper-up.png"
+stretch		= TRUE
+arrow_direction	= UP
+}
+image
+{
+function		= STEPPER
+state			= PRELIGHT
+file			= "Scrollbars/stepper-up-prelight.png"
+stretch		= TRUE
+arrow_direction	= UP
+}
+image
+{
+function		= STEPPER
+state			= ACTIVE
+file			= "Scrollbars/stepper-up-prelight.png"
+stretch		= TRUE
+arrow_direction	= UP
+}
+image
+{
+function		= STEPPER
+state			= INSENSITIVE
+file			= "Scrollbars/stepper-up.png"
+stretch		= TRUE
+arrow_direction	= UP
+}
+
+
+image
+{
+function		= STEPPER
+state			= NORMAL
+file			= "Scrollbars/stepper-down.png"
+stretch		= TRUE
+arrow_direction	= DOWN
+}
+image
+{
+function		= STEPPER
+state			= PRELIGHT
+file			= "Scrollbars/stepper-down-prelight.png"
+stretch		= TRUE
+arrow_direction	= DOWN
+}
+image
+{
+function		= STEPPER
+state			= ACTIVE
+file			= "Scrollbars/stepper-down-prelight.png"
+stretch		= TRUE
+arrow_direction	= DOWN
+}
+image
+{
+function		= STEPPER
+state			= INSENSITIVE
+file			= "Scrollbars/stepper-down.png"
+stretch		= TRUE
+arrow_direction	= DOWN
+}
+
+image
+{
+function		= STEPPER
+state			= NORMAL
+file			= "Scrollbars/stepper-right.png"
+stretch		= TRUE
+arrow_direction	= RIGHT
+}
+image
+{
+function		= STEPPER
+state			= PRELIGHT
+file			= "Scrollbars/stepper-right-prelight.png"
+stretch		= TRUE
+arrow_direction	= RIGHT
+}
+image
+{
+function		= STEPPER
+state			= ACTIVE
+file			= "Scrollbars/stepper-right-prelight.png"
+stretch		= TRUE
+arrow_direction	= RIGHT
+}
+image
+{
+function		= STEPPER
+state			= INSENSITIVE
+file			= "Scrollbars/stepper-right.png"
+stretch		= TRUE
+arrow_direction	= RIGHT
+}
+
+image
+{
+function		= STEPPER
+state			= NORMAL
+file			= "Scrollbars/stepper-left.png"
+stretch		= TRUE
+arrow_direction	= LEFT
+}
+image
+{
+function		= STEPPER
+state			= PRELIGHT
+file			= "Scrollbars/stepper-left-prelight.png"
+stretch		= TRUE
+arrow_direction	= LEFT
+}
+image
+{
+function		= STEPPER
+state			= ACTIVE
+file			= "Scrollbars/stepper-left-prelight.png"
+stretch		= TRUE
+arrow_direction	= LEFT
+}
+image
+{
+function		= STEPPER
+state			= INSENSITIVE
+file			= "Scrollbars/stepper-left.png"
+stretch		= TRUE
+arrow_direction	= LEFT
+}
+}
+}
+
+style "progressbar" {
+fg[PRELIGHT] 	= "#ffffff"
+text[PRELIGHT] = "#ffffff"
+xthickness 	= 2
+ythickness 	= 2
+
+engine "pixmap"
+{
+image
+{
+function		= BOX
+detail		= "trough"
+file			= "ProgressBar/trough-progressbar-horiz.png"
+border		= {1,1,1,1}
+stretch		= TRUE
+}
+image
+{
+function		= BOX
+detail		= "bar"
+file			= "ProgressBar/progressbar-horiz.png"
+border		= {1,1,1,1}
+stretch		= TRUE
+}
+}
+}
+
+style "range" = "default"
+{
+engine "pixmap"
+{
+image
+{
+function		= BOX
+detail		= "trough"
+file			= "Range/trough-horizontal.png"
+border		= {2,2,8,7}
+stretch		= TRUE
+orientation	= HORIZONTAL
+}
+image
+{
+function		= BOX
+detail		= "trough"
+file			= "Range/trough-vertical.png"
+border		= {7,8,2,2}
+stretch		= TRUE
+orientation	= VERTICAL
+}
+
+image
+{
+function		= SLIDER
+state 		= NORMAL
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Range/slider-horiz.png"
+overlay_stretch	= FALSE
+orientation	= HORIZONTAL
+}
+image
+{
+function		= SLIDER
+state 		= PRELIGHT
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Range/slider-horiz-prelight.png"
+overlay_stretch	= FALSE
+orientation	= HORIZONTAL
+}
+image
+{
+function		= SLIDER
+state 		= INSENSITIVE
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Range/slider-horiz.png"
+overlay_stretch	= FALSE
+orientation	= HORIZONTAL
+}
+
+image
+{
+function		= SLIDER
+state 		= NORMAL
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Range/slider-vert.png"
+overlay_stretch	= FALSE
+orientation	= VERTICAL
+}
+image
+{
+function		= SLIDER
+state 		= PRELIGHT
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Range/slider-vert-prelight.png"
+overlay_stretch	= FALSE
+orientation	= VERTICAL
+}
+image
+{
+function		= SLIDER
+state 		= INSENSITIVE
+file			= "Others/null.png"
+border		= {0,0,0,0}
+stretch		= TRUE
+overlay_file	= "Range/slider-vert.png"
+overlay_stretch	= FALSE
+orientation	= VERTICAL
+}
+}
+}
+
+style "toolbar"
+{
+
+engine "pixmap"
+{
+image
+{
+function	= BOX
+file		= "Toolbar/toolbar.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+}
+}
+#widget_class "*BonoboDockItem" style "toolbar"
+#class "*BonoboDockItem" style "toolbar"
+
+widget_class "*HandleBox" style "toolbar"
+class "*HandleBox" style "toolbar"
+
+widget_class "*Toolbar" style "toolbar"
+class "*Toolbar" style "toolbar"
+
+style "toolbuttons" = "default"
+{
+xthickness = 1
+ythickness = 1
+
+GtkWidget::focus_padding = 2
+
+engine "pixmap" {
+
+image
+{
+function 	= BOX
+state		= NORMAL
+file		= "Buttons/button-normal.png"
+border	= {2,2,2,2}
+stretch 	= TRUE
+}
+image
+{
+function 	= BOX
+state		= PRELIGHT
+file 		= "Buttons/button-prelight.png"
+border	= {2,2,2,2}
+stretch 	= TRUE
+}
+image
+{
+function 	= BOX
+state		= ACTIVE
+file 		= "Buttons/button-prelight.png"
+border	= {2,2,2,2}
+stretch 	= TRUE
+}
+image
+{
+function 	= BOX
+state		= INSENSITIVE
+file 		= "Buttons/button-normal.png"
+border	= {2,2,2,2}
+stretch 	= TRUE
+}
+}
+}
+widget_class "*Tool*GtkToggleButton" style "toolbuttons"
+widget_class "*Tool*GtkButton" style "toolbuttons"
+
+style "menu" = "default"
+{
+#bg_pixmap[NORMAL] = "Menu-Menubar/menu-overlay.png"
+xthickness	= 1
+ythickness	= 1
+
+engine "pixmap"
+{
+image
+{
+function	= BOX
+detail	= "menu"
+file		= "Menu-Menubar/menu.png"
+border	= {2,2,14,2}
+stretch	= TRUE
+}
+}
+}
+
+style "menuitem" = "default"
+{
+xthickness		= 1
+fg[PRELIGHT] 	= "#ffffff"
+text[PRELIGHT]	= "#949494"
+
+engine "pixmap"
+{
+image
+{
+function		= BOX
+file			= "Menu-Menubar/menubar-item-active.png"
+border		= {2,2,2,2}
+stretch		= TRUE
+}
+image
+{
+function		= ARROW
+state			= NORMAL
+overlay_file	= "Arrows/arrow-right.png"
+overlay_stretch	= FALSE
+arrow_direction	= RIGHT
+}
+image
+{
+function		= ARROW
+state			= PRELIGHT
+overlay_file	= "Arrows/arrow-right.png"
+overlay_stretch	= FALSE
+arrow_direction	= RIGHT
+}
+}
+}
+
+style "tearoffmenuitem" = "menuitem"
+{
+engine "pixmap"
+{
+image
+{
+function		= ARROW
+file			= "Arrows/arrow-left.png"
+stretch		= TRUE
+arrow_direction	= LEFT
+}
+}
+}
+
+style "menubar"
+{
+fg[NORMAL]		= "#ffffff"
+text[NORMAL]		= "#ffffff"
+fg[PRELIGHT]		= "#ffffff"
+fg[ACTIVE]		= "#ffffff"
+fg[INSENSITIVE]		= "#909090"
+bg[INSENSITIVE]	= "#3f3f3f"
+text[PRELIGHT]		= "#ffffff"
+
+xthickness	= 1
+ythickness	= 1
+engine "pixmap"
+{
+image
+{
+function	= BOX
+state 	= NORMAL
+file		= "Menu-Menubar/menubar.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+
+image
+{
+function	= BOX
+state 	= ACTIVE
+file		= "Menu-Menubar/menubar.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+
+image
+{
+function	= BOX
+state 	= INSENSITIVE
+file		= "Menu-Menubar/menubar.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+
+image
+{
+function	= BOX
+state 	= PRELIGHT
+file		= "Menu-Menubar/menubar-item.png"
+border	= {2,2,14,1}
+stretch	= TRUE
+}
+}
+}
+
+style "notebook" = "default"
+{
+
+xthickness = 2
+ythickness = 2
+engine "pixmap"
+{
+image
+{
+function	= EXTENSION
+state		= ACTIVE
+file		= "Tabs/tab-bottom.png"
+border	= {3,3,1,4}
+stretch	= TRUE
+gap_side	= TOP
+}
+image
+{
+function	= EXTENSION
+state		= ACTIVE
+file		= "Tabs/tab-top.png"
+border	= {3,3,4,1}
+stretch	= TRUE
+gap_side	= BOTTOM
+}
+image
+{
+function	= EXTENSION
+state		= ACTIVE
+file		= "Tabs/tab-left.png"
+border	= {4,1,3,3}
+stretch	= TRUE
+gap_side	= RIGHT
+}
+image
+{
+function	= EXTENSION
+state		= ACTIVE
+file		= "Tabs/tab-right.png"
+border	= {1,4,3,3}
+stretch	= TRUE
+gap_side	= LEFT
+}
+image
+{
+function	= EXTENSION
+file		= "Tabs/tab-top-active.png"
+border	= {3,3,3,1}
+stretch	= TRUE
+gap_side	= BOTTOM
+}
+image
+{
+function	= EXTENSION
+file		= "Tabs/tab-bottom-active.png"
+border	= {3,3,1,3}
+stretch	= TRUE
+gap_side	= TOP
+}
+image
+{
+function	= EXTENSION
+file		= "Tabs/tab-left-active.png"
+border	= {3,1,3,3}
+stretch	= TRUE
+gap_side	= RIGHT
+}
+image
+{
+function	= EXTENSION
+file		= "Tabs/tab-right-active.png"
+border	= {1,3,3,3}
+stretch	= TRUE
+gap_side	= LEFT
+}
+
+image
+{
+function		= BOX_GAP
+file			= "Tabs/notebook.png"
+border			= {1,1,1,1}
+stretch			= TRUE
+gap_file		= "Tabs/gap-top-current.png"
+gap_border		= {2,2,2,2}
+gap_start_file		= "Tabs/gap-top-left.png"
+gap_start_border	= {1,0,1,0}
+gap_end_file		= "Tabs/gap-top-right.png"
+gap_end_border		= {0,1,1,0}
+gap_side			= TOP
+}
+image
+{
+function			= BOX_GAP
+file				= "Tabs/notebook.png"
+border			= {1,1,1,1}
+stretch			= TRUE
+gap_file		= "Tabs/gap-top-current.png"
+gap_border		= {2,2,2,2}
+gap_start_file		= "Tabs/gap-bottom-left.png"
+gap_start_border	= {1,0,1,0}
+gap_end_file		= "Tabs/gap-bottom-right.png"
+gap_end_border		= {0,1,1,0}
+gap_side			= BOTTOM
+}
+image
+{
+function			= BOX_GAP
+file				= "Tabs/notebook.png"
+border			= {1,1,1,1}
+stretch			= TRUE
+gap_file		= "Tabs/gap-top-current.png"
+gap_border		= {2,2,2,2}
+gap_start_file		= "Tabs/gap-left-top.png"
+gap_start_border	= {1,0,1,0}
+gap_end_file		= "Tabs/gap-left-bottom.png"
+gap_end_border		= {1,0,0,1}
+gap_side			= LEFT
+}
+image
+{
+function			= BOX_GAP
+file				= "Tabs/notebook.png"
+border			= {1,1,1,1}
+stretch			= TRUE
+gap_file		= "Tabs/gap-top-current.png"
+gap_border		= {2,2,2,2}
+gap_start_file		= "Tabs/gap-right-top.png"
+gap_start_border	= {0,1,1,0}
+gap_end_file		= "Tabs/gap-right-bottom.png"
+gap_end_border		= {0,1,0,1}
+gap_side			= RIGHT
+}
+
+# Notebook with no tabs
+image
+{
+function			= BOX
+file				= "Tabs/notebook.png"
+border			= {1,1,1,1}
+stretch			= TRUE
+}
+}
+}
+
+style "tooltips"	= "default"
+{
+bg[NORMAL]	= "#070707"
+}
+
+style "ruler" = "default"
+{
+engine "pixmap" {
+image
+{
+function	= BOX
+detail	= "vruler"
+file		= "Others/ruler.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+detail	= "hruler"
+file		= "Others/ruler.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+}
+}
+
+style "handlebox" = "default"
+{
+engine "pixmap"
+{
+image
+{
+}
+image
+{
+function		= HANDLE
+overlay_file	= "Handles/handle-v.png"
+overlay_stretch	= FALSE
+orientation	= VERTICAL
+}
+image
+{
+function		= HANDLE
+overlay_file	= "Handles/handle-h.png"
+overlay_stretch 	= FALSE
+orientation	= HORIZONTAL
+}
+}
+}
+
+style "flat" = "default"
+{
+engine "pixmap"
+{
+image
+{
+function = SHADOW
+}
+}
+}
+
+style "layout" = "default"
+{
+engine "pixmap"
+{
+image
+{
+function	= SHADOW
+detail	= "entry"
+shadow	= IN
+file		= "Shadows/text-.png"
+border	= {1,1,1,1}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+detail	= "button"
+state		= NORMAL
+file		= "Buttons/button-normal.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+}
+}
+
+style "list-header"
+{
+ythickness = 3
+GtkTreeView::odd_row_color = "#171717"
+GtkTreeView::even_row_color = "#000000"
+
+engine "pixmap"
+{
+image
+{
+function 	= BOX
+state		= NORMAL
+file 		= "ListHeaders/list_header.png"
+border 	= {1,2,1,2}
+stretch 	= TRUE
+}
+
+image
+{
+function 	= BOX
+state		= PRELIGHT
+file 		= "ListHeaders/list_header-prelight.png"
+border 	= {1,2,5,2}
+stretch 	= TRUE
+}
+
+image
+{
+function 	= BOX
+state		= ACTIVE
+file		= "ListHeaders/list_header-pressed.png"
+border 	= {0,0,0,0}
+stretch 	= TRUE
+}
+image
+{
+function 	= BOX
+state		= SELECTED
+file		= "ListHeaders/list_header-prelight.png"
+border 	= {4,5,2,2}
+stretch 	= TRUE
+}
+image
+{
+function 	= BOX
+state		= INSENSITIVE
+file		= "ListHeaders/list_header-insens.png"
+border 	= {1,2,1,2}
+stretch 	= TRUE
+}
+}
+}
+
+widget_class "*List" style "list-header"
+widget_class "*GtkTree*" style "list-header"
+widget_class "*GtkCList*" style "list-header"
+#widget_class "*Tree*" style "list-header"
+
+# Sodipodi bug
+style "unstyle"
+{
+engine ""
+{
+}
+}
+class "SPColorSlider" 			style "unstyle"
+
+style "SPbutton"
+{
+engine "pixmap"
+{
+image
+{
+function	= BOX
+shadow	= IN
+file		= "Shadows/shadow-out.png"
+border	= {2,2,2,2}
+stretch	= TRUE
+}
+image
+{
+function	= BOX
+}
+}
+}
+
+style "treecol"
+{
+bg[NORMAL] = "#000000"
+}
+
+class "GtkButton" 			style "button"
+class "GtkRadioButton" 		style "radiobutton"
+class "GtkRadioMenuItem" 	style "radiobutton"
+class "GtkCheckButton" 		style "checkbutton"
+class "GtkCheckMenuItem" 	style "checkbutton"
+class "GtkOptionMenu" 		style "optionmenu"
+class "GtkCombo*" 			style "optionmenu"
+class "*Font*" 				style "optionmenu"
+class "GtkEntry" 			style "entry"
+class "GtkOldEditable" 		style "entry"
+class "GtkSpinButton" 	 	style "spinbutton"
+class "GtkRuler" 			style "ruler"
+class "GtkScrollbar" 			style "scrollbar"
+class "GtkProgressBar" 		style "progressbar"
+class "GtkRange" 			style "range"
+class "GtkMenu" 			style "menu"
+class "GtkMenuBar*" 		 	style "menubar"
+widget_class "*MenuBar.*" 	style "menubar"
+class "GtkMenuItem"			style "menuitem"
+class "GtkTearoffMenuItem"	style "menuitem"
+class "GtkNotebook"	 		style "notebook"
+class "GtkToolbar" 			style "flat"
+class "GtkHandleBox" 		style "handlebox"
+class "GtkEventBox" 			style "flat"
+class "GtkPaned" 			style "handlebox"
+class "GtkLayout" 			style "layout"
+class "SPButton" 			style "SPbutton"
+widget "gtk-tooltips" 		style "tooltips"
+
+# colorize ugly white line at the top of the vertical scrollbar in Nautilus
+style "searchbar" {
+bg[NORMAL] = "#080808"
+}
+widget "*.nautilus-extra-view-widget" style:highest "searchbar"
+
+# separator in Nautilus sidebar
+style "separator" {
+bg[NORMAL] = "#191919"
+}
+widget "*nautilus*side*" 		style:highest "separator"
