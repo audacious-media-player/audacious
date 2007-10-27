@@ -1634,66 +1634,34 @@ on_colorize_button_clicked(GtkButton *button, gpointer data)
 }
 
 static void
+reload_skin()
+{
+    /* reload the skin to apply the change */
+    skin_reload_forced();
+    ui_skinned_window_draw_all(mainwin);
+    ui_skinned_window_draw_all(equalizerwin);
+    ui_skinned_window_draw_all(playlistwin);
+}
+
+static void
 on_red_scale_value_changed(GtkHScale *scale, gpointer data)
 {
-	//GladeXML *xml = prefswin_get_xml();
-	//GtkWidget *widget;
-	gint value;
-
-	value = gtk_range_get_value(GTK_RANGE(scale));
-
-	if (value != cfg.colorize_r)
-	{
-		cfg.colorize_r = value;
-
-		/* reload the skin to apply the change */
-		skin_reload_forced();
-		ui_skinned_window_draw_all(mainwin);
-		ui_skinned_window_draw_all(equalizerwin);
-		ui_skinned_window_draw_all(playlistwin);
-	}
+    cfg.colorize_r = gtk_range_get_value(GTK_RANGE(scale));
+    reload_skin();
 }
 
 static void
 on_green_scale_value_changed(GtkHScale *scale, gpointer data)
 {
-	//GladeXML *xml = prefswin_get_xml();
-	//GtkWidget *widget;
-	gint value;
-
-	value = gtk_range_get_value(GTK_RANGE(scale));
-
-	if (value != cfg.colorize_r)
-	{
-		cfg.colorize_g = value;
-
-		/* reload the skin to apply the change */
-		skin_reload_forced();
-		ui_skinned_window_draw_all(mainwin);
-		ui_skinned_window_draw_all(equalizerwin);
-		ui_skinned_window_draw_all(playlistwin);
-	}
+    cfg.colorize_g = gtk_range_get_value(GTK_RANGE(scale));
+    reload_skin();
 }
 
 static void
 on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
 {
-	//GladeXML *xml = prefswin_get_xml();
-	//GtkWidget *widget;
-	gint value;
-
-	value = gtk_range_get_value(GTK_RANGE(scale));
-
-	if (value != cfg.colorize_r)
-	{
-		cfg.colorize_b = value;
-
-		/* reload the skin to apply the change */
-		skin_reload_forced();
-		ui_skinned_window_draw_all(mainwin);
-		ui_skinned_window_draw_all(equalizerwin);
-		ui_skinned_window_draw_all(playlistwin);
-	}
+    cfg.colorize_b = gtk_range_get_value(GTK_RANGE(scale));
+    reload_skin();
 }
 
 static void
