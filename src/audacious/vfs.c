@@ -475,9 +475,7 @@ vfs_is_streaming(VFSFile *file)
     if(!file)
         return FALSE;
 
-    curpos = file->base->vfs_ftell_impl(file);
     size = file->base->vfs_fsize_impl(file);
-    file->base->vfs_fseek_impl(file, curpos, SEEK_SET);
 
     if(size == -1)
         return TRUE;
