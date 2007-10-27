@@ -1,6 +1,6 @@
 [Text]
 Normal=#2499FF
 Current=#FFEEFF
-NormalBG=#0A120A
+NormalBG=#000000
 SelectedBG=#0A124A
 
