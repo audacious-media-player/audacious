@@ -235,6 +235,9 @@ install-extra:
 			${INSTALL_FAILED}; \
 		fi \
 	done
+	if [ -f ${DESTDIR}${datadir}/audacious/Skins/Default/balance.png ]; then \
+		rm -f ${DESTDIR}${datadir}/audacious/Skins/Default/balance.png \
+	fi
 
 uninstall-extra:
 	for i in audacious.pc audclient.pc; do \
