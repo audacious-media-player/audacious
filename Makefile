@@ -236,7 +236,7 @@ install-extra:
 		fi \
 	done
 	if [ -f ${DESTDIR}${datadir}/audacious/Skins/Default/balance.png ]; then \
-		rm -f ${DESTDIR}${datadir}/audacious/Skins/Default/balance.png \
+		rm -f ${DESTDIR}${datadir}/audacious/Skins/Default/balance.png; \
 	fi
 
 uninstall-extra:
