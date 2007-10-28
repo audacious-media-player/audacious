@@ -1464,10 +1464,12 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
 }
 
 static void
-skin_set_gtk_theme(GtkSettings * settings, Skin * skin, gboolean tmp_clean)
+skin_set_gtk_theme(GtkSettings * settings, Skin * skin)
 {
     if (original_gtk_theme == NULL)
          g_object_get(settings, "gtk-theme-name", &original_gtk_theme, NULL);
+
+    /* the way GTK does things can be very broken. --nenolod */
 
     gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(),
                                  basename(skin->path));
@@ -1479,14 +1481,7 @@ skin_set_gtk_theme(GtkSettings * settings, Skin * skin, gboolean tmp_clean)
     symlink(skin->path, tmp);
     gtk_settings_set_string_property(settings, "gtk-theme-name",
                                      basename(tmp), "audacious");
-
-#if 0
-    if (tmp_clean)
-    {
-        unlink(tmp);
-        g_free(tmp);
-    }
-#endif
+    g_free(tmp);
 }
 
 static gboolean
@@ -1532,12 +1527,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
 #ifndef _WIN32
         gtkrcpath = find_path_recursively(skin->path, "gtkrc");
-
-        /* the way GTK does things can be very broken. --nenolod */
-        if (gtkrcpath != NULL) {
-            skin_set_gtk_theme(settings, skin, FALSE);
-        }
-
+        if (gtkrcpath != NULL)
+            skin_set_gtk_theme(settings, skin);
         g_free(gtkrcpath);
 #endif
 
@@ -1563,12 +1554,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
 #ifndef _WIN32
     gtkrcpath = find_path_recursively(skin->path, "gtkrc");
-
-    /* the way GTK does things can be very broken. --nenolod */
-    if (gtkrcpath != NULL) {
-        skin_set_gtk_theme(settings, skin, TRUE);
-    }
-
+    if (gtkrcpath != NULL)
+        skin_set_gtk_theme(settings, skin);
     g_free(gtkrcpath);
 #endif
 
