@@ -106,8 +106,8 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			PLUGIN_CFLAGS='-fPIC'
 			PLUGIN_LDFLAGS='-shared -fPIC'
 			PLUGIN_SUFFIX='.so'
-			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i'
-			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
+			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${LIBDIR}/$$i'
+			UNINSTALL_LIB='rm -f ${DESTDIR}${LIBDIR}/$$i ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR} ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
 			CLEAN_LIB=''
 			;;
 	esac
