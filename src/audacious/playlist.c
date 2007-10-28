@@ -2977,10 +2977,10 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
     gboolean is_first_search = TRUE;
     gint num_of_entries_found = 0;
     const gchar *regex_pattern;
-    const gchar *track_name = tuple_get_string( tuple, FIELD_TITLE, NULL );
-    const gchar *album_name = tuple_get_string( tuple, FIELD_ALBUM, NULL );
-    const gchar *performer = tuple_get_string( tuple, FIELD_PERFORMER, NULL );
-    const gchar *file_name = tuple_get_string( tuple, FIELD_FILE_NAME, NULL );
+    const gchar *track_name;
+    const gchar *album_name;
+    const gchar *performer;
+    const gchar *file_name;
 
 #if defined(USE_REGEX_ONIGURUMA)
     /* set encoding for Oniguruma regex to UTF-8 */
@@ -2990,7 +2990,8 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
 
     PLAYLIST_LOCK(playlist);
 
-    if ( (regex_pattern = tuple_get_string(tuple, FIELD_TITLE, NULL)) != NULL )
+    if ( (regex_pattern = tuple_get_string(tuple, FIELD_TITLE, NULL)) != NULL &&
+         (*regex_pattern != '\0') )
     {
         /* match by track_name */
         regex_t regex;
@@ -3006,10 +3007,14 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( track_name != NULL ) &&
-                   ( regexec( &regex , track_name , 0 , NULL , 0 ) == 0 ) )
+                if ( entry->tuple != NULL )
                 {
-                    tfound_list = g_list_append( tfound_list , entry );
+                   track_name = tuple_get_string( entry->tuple, FIELD_TITLE, NULL );
+                   if (( track_name != NULL ) &&
+                       ( regexec( &regex , track_name , 0 , NULL , 0 ) == 0 ) )
+                   {
+                        tfound_list = g_list_append( tfound_list , entry );
+                   }
                 }
             }
             g_list_free( found_list ); /* wipe old found_list */
@@ -3019,7 +3024,8 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
         is_first_search = FALSE;
     }
 
-    if ( (regex_pattern = tuple_get_string(tuple, FIELD_ALBUM, NULL)) != NULL )
+    if ( (regex_pattern = tuple_get_string(tuple, FIELD_ALBUM, NULL)) != NULL &&
+         (*regex_pattern != '\0') )
     {
         /* match by album_name */
         regex_t regex;
@@ -3035,10 +3041,14 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( album_name != NULL ) &&
-                   ( regexec( &regex , album_name , 0 , NULL , 0 ) == 0 ) )
+                if ( entry->tuple != NULL )
                 {
-                    tfound_list = g_list_append( tfound_list , entry );
+                    album_name = tuple_get_string( entry->tuple, FIELD_ALBUM, NULL );
+                    if ( ( album_name != NULL ) &&
+                        ( regexec( &regex , album_name , 0 , NULL , 0 ) == 0 ) )
+                    {
+                        tfound_list = g_list_append( tfound_list , entry );
+                    }
                 }
             }
             g_list_free( found_list ); /* wipe old found_list */
@@ -3048,7 +3058,8 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
         is_first_search = FALSE;
     }
 
-    if ( (regex_pattern = tuple_get_string(tuple, FIELD_ARTIST, NULL)) != NULL )
+    if ( (regex_pattern = tuple_get_string(tuple, FIELD_ARTIST, NULL)) != NULL &&
+         (*regex_pattern != '\0') )
     {
         /* match by performer */
         regex_t regex;
@@ -3064,10 +3075,14 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( performer != NULL ) &&
-                   ( regexec( &regex , performer , 0 , NULL , 0 ) == 0 ) )
+                if ( entry->tuple != NULL )
                 {
-                    tfound_list = g_list_append( tfound_list , entry );
+                    performer = tuple_get_string( entry->tuple, FIELD_ARTIST, NULL );
+                    if ( ( entry->tuple != NULL ) && ( performer != NULL ) &&
+                        ( regexec( &regex , performer , 0 , NULL , 0 ) == 0 ) )
+                    {
+                        tfound_list = g_list_append( tfound_list , entry );
+                    }
                 }
             }
             g_list_free( found_list ); /* wipe old found_list */
@@ -3077,7 +3092,8 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
         is_first_search = FALSE;
     }
 
-    if ( (regex_pattern = tuple_get_string(tuple, FIELD_FILE_NAME, NULL)) != NULL )
+    if ( (regex_pattern = tuple_get_string(tuple, FIELD_FILE_NAME, NULL)) != NULL &&
+         (*regex_pattern != '\0') )
     {
         /* match by file_name */
         regex_t regex;
@@ -3093,10 +3109,14 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) && ( file_name != NULL ) &&
-                   ( regexec( &regex , file_name , 0 , NULL , 0 ) == 0 ) )
+                if ( entry->tuple != NULL )
                 {
-                    tfound_list = g_list_append( tfound_list , entry );
+                    file_name = tuple_get_string( entry->tuple, FIELD_FILE_NAME, NULL );
+                    if ( ( file_name != NULL ) &&
+                        ( regexec( &regex , file_name , 0 , NULL , 0 ) == 0 ) )
+                    {
+                        tfound_list = g_list_append( tfound_list , entry );
+                    }
                 }
             }
             g_list_free( found_list ); /* wipe old found_list */
