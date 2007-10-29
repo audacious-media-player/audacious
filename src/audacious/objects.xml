@@ -56,37 +56,42 @@
     CMD_PLAYLIST_GET_TUPLE_DATA
     CMD_IS_ADVANCE
     CMD_TOGGLE_ADVANCE
+    CMD_SHOW_PREFS_BOX
+    CMD_SHOW_ABOUT_BOX
+    CMD_SHOW_JTF_BOX
 
-
-    Remaining:
-    CMD_PLAYLIST_ADD
+    New:
+    CMD_PLAY_PAUSE
+    CMD_ACTIVATE
     CMD_GET_SKIN
     CMD_SET_SKIN
     CMD_GET_INFO
-    CMD_GET_EQ_DATA
-    CMD_SET_EQ_DATA
-    CMD_SHOW_PREFS_BOX
     CMD_TOGGLE_AOT
-    CMD_SHOW_ABOUT_BOX
+    CMD_GET_PLAYQUEUE_LENGTH
+    CMD_PLAYQUEUE_ADD
+    CMD_PLAYQUEUE_REMOVE
+    CMD_PLAYQUEUE_CLEAR
+    CMD_PLAYQUEUE_GET_LPOS //CHANGED: get list position by queue position
+    CMD_PLAYQUEUE_GET_QPOS //CHANGED: get queue position by list postion
+    CMD_PLAYQUEUE_IS_QUEUED
+
+
+    In Progress:
+    CMD_PLAYLIST_INS_URL_STRING
+    CMD_PLAYLIST_ADD
+    CMD_PLAYLIST_ENQUEUE_TO_TEMP
+
+
+    Remaining:
+    CMD_PLAYLIST_INS //unnecessary?
+    CMD_GET_EQ_DATA //obsolete
+    CMD_SET_EQ_DATA //obsolete
     CMD_GET_EQ
     CMD_GET_EQ_PREAMP
     CMD_GET_EQ_BAND
     CMD_SET_EQ
     CMD_SET_EQ_PREAMP
     CMD_SET_EQ_BAND
-    CMD_PLAYLIST_INS_URL_STRING
-    CMD_PLAYLIST_INS
-    CMD_PLAY_PAUSE
-    CMD_PLAYQUEUE_ADD
-    CMD_GET_PLAYQUEUE_LENGTH
-    CMD_PLAYQUEUE_REMOVE
-    CMD_ACTIVATE
-    CMD_SHOW_JTF_BOX
-    CMD_PLAYQUEUE_CLEAR
-    CMD_PLAYQUEUE_IS_QUEUED
-    CMD_PLAYQUEUE_GET_POS
-    CMD_PLAYQUEUE_GET_QPOS
-    CMD_PLAYLIST_ENQUEUE_TO_TEMP
 -->
 
 <node name="/">
@@ -358,5 +363,107 @@
         <method name="ToggleShuffle">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
+
+        <!-- Show preferences window -->
+        <method name="ShowPrefsBox">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Show about window -->
+        <method name="ShowAboutBox">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Show jump to file window -->
+        <method name="ShowJtfBox">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Either play or pause -->
+        <method name="PlayPause">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Activate -->
+        <method name="Activate">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Playqueue get playlist pos -->
+        <method name="QueueGetListPos">
+            <arg type="u" name="qpos"/>
+            <arg type="u" direction="out" name="pos"/>
+        </method>
+
+        <!-- Playqueue get playqueue pos -->
+        <method name="QueueGetQueuePos">
+            <arg type="u" name="pos"/>
+            <arg type="u" direction="out" name="qpos"/>
+        </method>
+
+        <!-- Get skin -->
+        <method name="GetSkin">
+            <!-- Return filename of desired song -->
+            <arg type="s" direction="out" name="skin"/>
+        </method>
+
+        <!-- Set skin -->
+        <method name="SetSkin">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <!-- Return filename of desired song -->
+            <arg type="s" name="skin"/>
+        </method>
+
+        <!-- Get Info -->
+        <method name="GetInfo">
+            <arg type="i" direction="out" name="rate"/>
+            <arg type="i" direction="out" name="freq"/>
+            <arg type="i" direction="out" name="nch"/>
+        </method>
+
+        <method name="ToggleAot">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="ontop"/>
+        </method>
+
+        <method name="GetPlayqueueLength">
+            <arg type="i" direction="out" name="length"/>
+        </method>
+
+        <method name="PlaylistInsUrlString">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="s" name="url"/>
+            <arg type="i" name="pos"/>
+        </method>
+
+        <method name="PlaylistAdd">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="s" name="list"/>
+        </method>
+
+        <method name="PlayqueueAdd">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="i" name="pos"/>
+        </method>
+
+        <method name="PlayqueueRemove">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="i" name="pos"/>
+        </method>
+
+        <method name="PlayqueueClear">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <method name="PlayqueueIsQueued">
+            <arg type="i" name="pos"/>
+            <arg type="b" direction="out" name="is_queued"/>
+        </method>
+
+        <method name="PlaylistEnqueueToTemp">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="s" name="url"/>
+        </method>
+
     </interface>
 </node>

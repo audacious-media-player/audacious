@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <glib.h>
+#include <string.h>
 #include <dbus/dbus-glib.h>
 #include "audacious/dbus.h"
 #include "audacious/dbus-client-bindings.h"
@@ -37,9 +38,29 @@ static GError *error = NULL; //it must be hidden from outside, otherwise symbol 
  *
  * Sends a playlist to audacious.
  **/
-void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
-                               gboolean enqueue) {
-//XXX
+void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num, gboolean enqueue) {
+    GList *glist = NULL;
+    gchar **data = list;
+
+    g_return_if_fail(list != NULL);
+    g_return_if_fail(num > 0);
+
+    if (!enqueue)
+        audacious_remote_playlist_clear(proxy);
+
+    // construct a GList
+    while(data) {
+        glist = g_list_append(glist, (gpointer)data);
+        data++;
+    }
+
+    org_atheme_audacious_playlist_add(proxy, (gpointer)glist, &error);
+
+    g_list_free(glist);
+    glist = NULL;
+
+    if (!enqueue)
+        audacious_remote_play(proxy);
 }
 
 /**
@@ -64,7 +85,7 @@ gint audacious_remote_get_version(DBusGProxy *proxy) {
 void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
 	GList *iter;
 	for (iter = list; iter != NULL; iter = g_list_next(iter))
-		org_atheme_audacious_add(proxy, iter->data, &error);
+		org_atheme_audacious_playlist_add(proxy, iter->data, &error);
 	g_clear_error(&error);
 }
 
@@ -76,7 +97,8 @@ void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
  * Deletes a playlist entry.
  **/
 void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos) {
-//XXX
+    org_atheme_audacious_delete(proxy, pos, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -340,8 +362,10 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
  * Return value: A path to the currently selected skin.
  **/
 gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
-//XXX
-    return NULL;
+    gchar *skin = NULL;
+    org_atheme_audacious_get_skin (proxy, &skin, &error); // xxx
+    g_clear_error(&error);
+    return skin;
 }
 
 /**
@@ -352,7 +376,8 @@ gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
  * Tells audacious to start using the skinfile provided.
  **/
 void audacious_remote_set_skin(DBusGProxy *proxy, gchar *skinfile) {
-//XXX
+    org_atheme_audacious_set_skin(proxy, skinfile, &error);
+	g_clear_error(&error);
 }
 
 /**
@@ -506,7 +531,19 @@ gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
  * Tells audacious to show the preferences pane.
  **/
 void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
-//XXX
+    org_atheme_audacious_show_prefs_box(proxy, &error);
+    g_clear_error(&error);
+}
+
+/**
+ * audacious_remote_show_about_box:
+ * @proxy: DBus proxy for audacious
+ *
+ * Tells audacious to show the about box.
+ **/
+void audacious_remote_show_about_box(DBusGProxy *proxy) {
+    org_atheme_audacious_show_about_box(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -517,7 +554,8 @@ void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
  * Tells audacious to toggle the always-on-top feature.
  **/
 void audacious_remote_toggle_aot(DBusGProxy *proxy, gboolean ontop) {
-//XXX
+    org_atheme_audacious_toggle_aot(proxy, ontop, &error);
+	g_clear_error(&error);
 }
 
 /**
@@ -733,7 +771,7 @@ void audacious_remote_quit(DBusGProxy *proxy) {
  * Tells audacious to either play or pause.
  **/
 void audacious_remote_play_pause(DBusGProxy *proxy) {
-//XXX
+    org_atheme_audacious_play_pause(proxy, &error);
 }
 
 /**
@@ -746,7 +784,8 @@ void audacious_remote_play_pause(DBusGProxy *proxy) {
  **/
 void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
                                               gchar *string, guint pos) {
-//XXX
+    org_atheme_audacious_playlist_ins_url_string (proxy, string, pos, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -757,7 +796,8 @@ void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
  * Tells audacious to add a playlist entry to the playqueue.
  **/
 void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
-//XXX
+    org_atheme_audacious_playqueue_add (proxy, pos, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -768,7 +808,8 @@ void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
  * Tells audacious to remove a playlist entry from the playqueue.
  **/
 void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos) {
-//XXX
+    org_atheme_audacious_playqueue_remove (proxy, pos, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -820,7 +861,8 @@ gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
  * Tells audacious to display the main window and become the selected window.
  **/
 void audacious_remote_activate(DBusGProxy *proxy) {
-//XXX
+    org_atheme_audacious_activate(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -830,7 +872,8 @@ void audacious_remote_activate(DBusGProxy *proxy) {
  * Tells audacious to show the Jump-to-File pane.
  **/
 void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
-//XXX
+    org_atheme_audacious_show_jtf_box(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -840,7 +883,8 @@ void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
  * Tells audacious to clear the playqueue.
  **/
 void audacious_remote_playqueue_clear(DBusGProxy *proxy) {
-//XXX
+    org_atheme_audacious_playqueue_clear(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -853,22 +897,10 @@ void audacious_remote_playqueue_clear(DBusGProxy *proxy) {
  * Return value: TRUE if yes, FALSE otherwise.
  **/
 gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos) {
-//XXX
-    return FALSE;
-}
-
-/**
- * audacious_remote_get_playqueue_position:
- * @proxy: DBus proxy for audacious
- * @pos: Position to check queue for.
- *
- * Queries audacious about what the playqueue position is for a playlist entry.
- *
- * Return value: TRUE if yes, FALSE otherwise.
- **/
-gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, guint pos) {
-//XXX
-    return 0;
+    gboolean is_queued;
+    org_atheme_audacious_playqueue_is_queued (proxy, pos, &is_queued, &error);
+    g_clear_error(&error);
+    return is_queued;
 }
 
 /**
@@ -876,14 +908,31 @@ gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, guint pos) {
  * @proxy: DBus proxy for audacious
  * @pos: Position to check queue for.
  *
+ * Queries audacious about what the playqueue position is for a playlist entry.
+ *
+ * Return value: the playqueue position for a playlist entry
+ **/
+gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy, guint pos) {
+    guint qpos = 0;
+    org_atheme_audacious_queue_get_queue_pos (proxy, pos, &qpos, &error);
+    g_clear_error(&error);
+    return qpos;
+}
+
+/**
+ * audacious_remote_get_playqueue_list_position:
+ * @proxy: DBus proxy for audacious
+ * @pos: Position to check queue for.
+ *
  * Queries audacious about what the playlist position is for a playqueue entry.
  *
- * Return value: TRUE if yes, FALSE otherwise.
+ * Return value: the playlist position for a playqueue entry
  **/
-gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy,
-                                                   guint pos) {
-//XXX
-    return 0;
+gint audacious_remote_get_playqueue_list_position(DBusGProxy *proxy, guint qpos) {
+    guint pos = 0;
+    org_atheme_audacious_queue_get_list_pos (proxy, qpos, &pos, &error);
+    g_clear_error(&error);
+    return pos;
 }
 
 /**
@@ -895,7 +944,8 @@ gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy,
  **/
 void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
                                                gchar *string) {
-//XXX
+    org_atheme_audacious_playlist_enqueue_to_temp(proxy, string, &error);
+	g_clear_error(&error);
 }
 
 /**
@@ -911,5 +961,7 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                       guint pos) {
 //XXX
+	g_clear_error(&error);
     return NULL;
 }
+

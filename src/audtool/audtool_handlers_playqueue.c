@@ -101,11 +101,15 @@ void playqueue_is_queued(gint argc, gchar **argv)
 		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
-
-	exit(!(audacious_remote_playqueue_is_queued(dbus_proxy, i - 1)));
+    if(audacious_remote_playqueue_is_queued(dbus_proxy, i - 1)) {
+        audtool_report("OK");
+        exit(0);
+    }
+    else
+        exit(1);
 }
 
-void playqueue_get_position(gint argc, gchar **argv)
+void playqueue_get_queue_position(gint argc, gchar **argv)
 {
 	gint i, pos;
 
@@ -124,7 +128,7 @@ void playqueue_get_position(gint argc, gchar **argv)
 		return;
 	}
 
-	pos = audacious_remote_get_playqueue_position(dbus_proxy, i - 1) + 1;
+	pos = audacious_remote_get_playqueue_queue_position(dbus_proxy, i - 1) + 1;
 
 	if (pos < 1)
 		return;
@@ -132,7 +136,7 @@ void playqueue_get_position(gint argc, gchar **argv)
 	audtool_report("%d", pos);
 }
 
-void playqueue_get_qposition(gint argc, gchar **argv)
+void playqueue_get_list_position(gint argc, gchar **argv)
 {
 	gint i, pos;
 
@@ -151,7 +155,7 @@ void playqueue_get_qposition(gint argc, gchar **argv)
 		return;
 	}
 
-	pos = audacious_remote_get_playqueue_queue_position(dbus_proxy, i - 1) + 1;
+	pos = audacious_remote_get_playqueue_list_position(dbus_proxy, i - 1) + 1;
 
 	if (pos < 1)
 		return;
@@ -174,7 +178,7 @@ void playqueue_display(gint argc, gchar **argv)
 
 	for (ii = 0; ii < i; ii++)
 	{
-		position = audacious_remote_get_playqueue_queue_position(dbus_proxy, ii);
+		position = audacious_remote_get_playqueue_list_position(dbus_proxy, ii);
 		songname = audacious_remote_get_playlist_title(dbus_proxy, position);
 		frames = audacious_remote_get_playlist_time(dbus_proxy, position);
 		length = frames / 1000;

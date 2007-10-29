@@ -41,6 +41,8 @@
 #include "tuple.h"
 #include "ui_jumptotrack.h"
 #include "strings.h"
+#include "ui_credits.h"
+#include "skin.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -791,6 +793,128 @@ gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
     mainwin_shuffle_pushed(!cfg.shuffle);
     return TRUE;
 }
+
+/* New on Oct 5 */
+gboolean audacious_rc_show_prefs_box(RemoteObject *obj, GError **error) {
+    if (has_x11_connection)
+        show_prefs_window();
+    return TRUE;
+}
+gboolean audacious_rc_show_about_box(RemoteObject *obj, GError **error) {
+    if (has_x11_connection)
+        show_about_window();
+    return TRUE;
+}
+
+gboolean audacious_rc_show_jtf_box(RemoteObject *obj, GError **error) {
+    if (has_x11_connection)
+        ui_jump_to_track();
+    return TRUE;
+}
+
+gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error) {
+    if (playback_get_playing())
+        playback_pause();
+    else
+        playback_initiate();
+    return TRUE;
+}
+
+gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
+    gtk_window_present(GTK_WINDOW(mainwin));
+    return TRUE;
+}
+
+gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error) {
+    *skin = g_strdup(bmp_active_skin->path);
+    return TRUE;
+}
+
+gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error) {
+    if (has_x11_connection == TRUE)
+        bmp_active_skin_load(skin);
+    return TRUE;
+}
+
+gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error) {
+    playback_get_sample_params(rate, freq, nch);
+    return TRUE;
+}
+
+gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **error) {
+    if (has_x11_connection) {
+        mainwin_set_always_on_top(ontop);
+    }
+    return TRUE;
+}
+
+/* New on Oct9: Queue */
+gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error) {
+    if (pos < (guint)playlist_get_length(playlist_get_active()))
+        playlist_queue_position(playlist_get_active(), pos);
+    return TRUE;
+}
+
+gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **error) {
+    if (pos < (guint)playlist_get_length(playlist_get_active()))
+        playlist_queue_remove(playlist_get_active(), pos);
+    return TRUE;
+}
+
+gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error) {
+    playlist_clear_queue(playlist_get_active());
+    return TRUE;
+}
+
+gboolean audacious_rc_get_playqueue_length(RemoteObject *obj, gint *length, GError **error) {
+    *length = playlist_queue_get_length(playlist_get_active());
+    return TRUE;
+}
+
+gboolean audacious_rc_queue_get_list_pos(RemoteObject *obj, gint qpos, gint *pos, GError **error) {
+    if (playback_get_playing())
+        *pos = playlist_get_queue_qposition_number(playlist_get_active(), qpos);
+
+    return TRUE;
+}
+
+gboolean audacious_rc_queue_get_queue_pos(RemoteObject *obj, gint pos, gint *qpos, GError **error) {
+    if (playback_get_playing())
+        *qpos = playlist_get_queue_position_number(playlist_get_active(), pos);
+
+    return TRUE;
+}
+
+gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error) {
+    *is_queued = playlist_is_position_queued(playlist_get_active(), pos);
+    return TRUE;
+}
+
+
+
+/* In Progress */
+static void call_add_url(GList *list, gpointer *data) {
+        playlist_add_url(playlist_get_active(), list->data);
+}
+
+gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error) {
+    g_list_foreach((GList *)list, (GFunc)call_add_url, NULL);
+    return TRUE;
+}
+
+gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, char *list, gint num, gboolean enqueue, GError **error) {
+    return TRUE;
+}
+
+gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint *pos, GError **error) {
+    if (url && strlen(url)) {
+        playlist_ins_url(playlist_get_active(), url, *pos);
+    }
+    return TRUE;
+}
+
+
+/********************************************************************************/
 
 DBusGProxy *audacious_get_dbus_proxy(void)
 {

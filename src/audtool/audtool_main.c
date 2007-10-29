@@ -77,8 +77,8 @@ struct commandhandler handlers[] = {
 	{"playqueue-add", playqueue_add, "adds a song to the playqueue", 1},
 	{"playqueue-remove", playqueue_remove, "removes a song from the playqueue", 1},
 	{"playqueue-is-queued", playqueue_is_queued, "returns OK if a song is queued", 1},
-	{"playqueue-get-position", playqueue_get_position, "returns the queue position of a song in the playlist", 1},
-	{"playqueue-get-qposition", playqueue_get_qposition, "returns the playlist position of a song in the queue", 1},
+	{"playqueue-get-queue-position", playqueue_get_queue_position, "returns the playqueue position of a song in the given poition in the playlist", 1},
+	{"playqueue-get-list-position", playqueue_get_list_position, "returns the playlist position of a song in the given position in the playqueue", 1},
 	{"playqueue-length", playqueue_length, "returns the length of the playqueue", 0},
 	{"playqueue-display", playqueue_display, "returns a list of currently-queued songs", 0},
 	{"playqueue-clear", playqueue_clear, "clears the playqueue", 0},
@@ -100,12 +100,23 @@ struct commandhandler handlers[] = {
 	{"mainwin-show", mainwin_show, "shows/hides the main window", 1},
 	{"playlist-show", playlist_show, "shows/hides the playlist window", 1},
 	{"equalizer-show", equalizer_show, "shows/hides the equalizer window", 1},
-	{"preferences", show_preferences_window, "shows/hides the preferences window", 0},
+	{"preferences", show_preferences_window, "shows the preferences window", 0},
+	{"about", show_about_window, "shows the about window", 0},
 	{"jumptofile", show_jtf_window, "shows the jump to file window", 0},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},
 	{"<sep>", NULL, "Help system", 0},
 	{"list-handlers", get_handlers_list, "shows handlers list", 0},
 	{"help", get_handlers_list, "shows handlers list", 0},
+
+    /* test suite */
+	{"<sep>", NULL, "Test suite", 0},
+	{"activate", test_activate, "activate", 0},
+	{"playlist-enqueue-to-temp", test_enqueue_to_temp, "enqueue_to_temp", 1},
+	{"toggle-aot", test_toggle_aot, "specify allways on top or not", 1}, // xxx need to be improved.
+    {"get-skin", test_get_skin, "get skin", 0},
+    {"set-skin", test_set_skin, "set skin", 1},
+    {"get-info", test_get_info, "get info", 0},
+
 	{NULL, NULL, NULL, 0}
 };
 

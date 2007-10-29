@@ -87,8 +87,8 @@ extern void playlist_tuple_field_data(gint, gchar **argv);
 extern void playqueue_add(gint, gchar **);
 extern void playqueue_remove(gint, gchar **);
 extern void playqueue_is_queued(gint, gchar **);
-extern void playqueue_get_position(gint, gchar **);
-extern void playqueue_get_qposition(gint, gchar **);
+extern void playqueue_get_queue_position(gint, gchar **);
+extern void playqueue_get_list_position(gint, gchar **);
 extern void playqueue_display(gint, gchar **);
 extern void playqueue_length(gint, gchar **);
 extern void playqueue_clear(gint, gchar **);
@@ -108,8 +108,17 @@ extern void equalizer_show(gint, gchar **);
 extern void show_preferences_window(gint, gchar **);
 extern void show_jtf_window(gint, gchar **);
 extern void shutdown_audacious_server(gint, gchar **);
+extern void show_about_window(gint, gchar **);
 
 extern void audtool_report(const gchar *str, ...);
 extern void audtool_whine(const gchar *str, ...);
+
+/* test suite */
+extern void test_activate(gint argc, gchar **argv);
+extern void test_enqueue_to_temp(gint argc, gchar **argv);
+extern void test_toggle_aot(gint argc, gchar **argv);
+extern void test_get_skin(gint argc, gchar **argv);
+extern void test_set_skin(gint argc, gchar **argv);
+extern void test_get_info(gint argc, gchar **argv);
 
 #endif

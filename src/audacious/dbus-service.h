@@ -183,4 +183,28 @@ gboolean audacious_rc_toggle_repeat(RemoteObject *obj, GError **error);
 gboolean audacious_rc_shuffle(RemoteObject *obj, gboolean *is_shuffle,
                               GError **error);
 gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error);
+
+/* new */
+gboolean audacious_rc_show_prefs_box(RemoteObject *obj, GError **error);
+gboolean audacious_rc_show_about_box(RemoteObject *obj, GError **error);
+gboolean audacious_rc_show_jtf_box(RemoteObject *obj, GError **error);
+gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error);
+gboolean audacious_rc_activate(RemoteObject *obj, GError **error);
+gboolean audacious_rc_queue_get_list_pos(RemoteObject *obj, gint qpos, gint *pos, GError **error);
+gboolean audacious_rc_queue_get_queue_pos(RemoteObject *obj, gint pos, gint *qpos, GError **error);
+gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error);
+gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error);
+gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error);
+gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **error);
+gboolean audacious_rc_get_playqueue_length(RemoteObject *obj, gint *length, GError **error);
+gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error);
+gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **error);
+gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
+gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error);
+
+/* in progress */
+gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint *pos, GError **error);
+gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
+gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, char *list, gint num, gboolean enqueue, GError **error);
+
 #endif // !_DBUS_SERVICE_H

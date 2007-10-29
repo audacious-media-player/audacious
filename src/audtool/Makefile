@@ -5,6 +5,7 @@ SRCS = audtool_main.c			\
        audtool_handlers_playlist.c	\
        audtool_handlers_playqueue.c	\
        audtool_handlers_vitals.c	\
+       audtool_handlers_test.c	\
        audtool_report.c
 
 include ../../buildsys.mk

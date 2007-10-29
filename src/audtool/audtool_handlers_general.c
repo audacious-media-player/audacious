@@ -128,6 +128,11 @@ void show_preferences_window(gint argc, gchar **argv)
 	audacious_remote_show_prefs_box(dbus_proxy);
 }
 
+void show_about_window(gint argc, gchar **argv)
+{
+	audacious_remote_show_about_box(dbus_proxy);
+}
+
 void show_jtf_window(gint argc, gchar **argv)
 {
 	audacious_remote_show_jtf_box(dbus_proxy);
