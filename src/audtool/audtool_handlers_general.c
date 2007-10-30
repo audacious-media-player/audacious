@@ -54,7 +54,7 @@ void set_volume(gint argc, gchar **argv)
 	{
 		audtool_whine("invalid parameters for %s.", argv[0]);
 		audtool_whine("syntax: %s <level>", argv[0]);
-		return;
+		exit(1);
 	}
 
 	current_volume = audacious_remote_get_main_volume(dbus_proxy);
@@ -74,53 +74,56 @@ void set_volume(gint argc, gchar **argv)
 
 void mainwin_show(gint argc, gchar **argv)
 {
-	if (argc > 1)
-	{
-		if (!g_ascii_strcasecmp(argv[1], "on")) {
-			audacious_remote_main_win_toggle(dbus_proxy, TRUE);
-			return;
-		}
-		else if (!g_ascii_strcasecmp(argv[1], "off")) {
-			audacious_remote_main_win_toggle(dbus_proxy, FALSE);
-			return;
-		}
-	}
-	audtool_whine("invalid parameter for %s.", argv[0]);
-	audtool_whine("syntax: %s <on/off>", argv[0]);
+	if (argc < 2) {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on")) {
+        audacious_remote_main_win_toggle(dbus_proxy, TRUE);
+        return;
+    }
+    else if (!g_ascii_strcasecmp(argv[1], "off")) {
+        audacious_remote_main_win_toggle(dbus_proxy, FALSE);
+        return;
+    }
 }
 
 void playlist_show(gint argc, gchar **argv)
 {
-	if (argc > 1)
-	{
-		if (!g_ascii_strcasecmp(argv[1], "on")) {
-			audacious_remote_pl_win_toggle(dbus_proxy, TRUE);
-			return;
-		}
-		else if (!g_ascii_strcasecmp(argv[1], "off")) {
-			audacious_remote_pl_win_toggle(dbus_proxy, FALSE);
-			return;
-		}
-	}
-	audtool_whine("invalid parameter for %s.", argv[0]);
-	audtool_whine("syntax: %s <on/off>", argv[0]);
+	if (argc < 2) {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on")) {
+        audacious_remote_pl_win_toggle(dbus_proxy, TRUE);
+        return;
+    }
+    else if (!g_ascii_strcasecmp(argv[1], "off")) {
+        audacious_remote_pl_win_toggle(dbus_proxy, FALSE);
+        return;
+    }
 }
 
 void equalizer_show(gint argc, gchar **argv)
 {
-	if (argc > 1)
-	{
-		if (!g_ascii_strcasecmp(argv[1] ,"on")) {
-			audacious_remote_eq_win_toggle(dbus_proxy, TRUE);
-			return;
-		}
-		else if (!g_ascii_strcasecmp(argv[1] ,"off")) {
-			audacious_remote_eq_win_toggle(dbus_proxy, FALSE);
-			return;
-		}
-	}
-	audtool_whine("invalid parameter for %s.", argv[0]);
-	audtool_whine("syntax: %s <on/off>", argv[0]);
+	if (argc < 2) {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+    }
+
+    if (!g_ascii_strcasecmp(argv[1] ,"on")) {
+        audacious_remote_eq_win_toggle(dbus_proxy, TRUE);
+        return;
+    }
+    else if (!g_ascii_strcasecmp(argv[1] ,"off")) {
+        audacious_remote_eq_win_toggle(dbus_proxy, FALSE);
+        return;
+    }
 }
 
 void show_preferences_window(gint argc, gchar **argv)
@@ -155,6 +158,7 @@ void get_handlers_list(gint argc, gchar **argv)
 			audtool_report("   %-34s - %s", handlers[i].name, handlers[i].desc);
 	}
 
+    audtool_report("");
 	audtool_report("Handlers may be prefixed with `--' (GNU-style long-options) or not, your choice.");
 	audtool_report("Report bugs to http://bugs-meta.atheme.org/");
 }

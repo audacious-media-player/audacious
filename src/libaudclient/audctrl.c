@@ -67,12 +67,16 @@ void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num, gboole
  * audacious_remote_get_version:
  * @proxy: DBus proxy for audacious
  *
- * Queries audacious for it's protocol version.
+ * Queries audacious for it's version.
  *
- * Return value: The protocol version used by Audacious.
+ * Return value: The version of Audacious.
  **/
-gint audacious_remote_get_version(DBusGProxy *proxy) {
-    return 0x09a3; // XXX should do actual dbus call.
+gchar *audacious_remote_get_version(DBusGProxy *proxy) {
+    char *string = NULL;
+    org_atheme_audacious_version(proxy, &string, &error);
+    g_clear_error(&error);
+
+    return (string ? string : NULL);
 }
 
 /**

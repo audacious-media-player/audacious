@@ -111,8 +111,7 @@ gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
 
 /* Legacy API */
 // Audacious General Information
-gboolean audacious_rc_version(RemoteObject *obj, gchar **version,
-                              GError **error);
+gboolean audacious_rc_version(RemoteObject *obj, gchar **version, GError **error);
 gboolean audacious_rc_quit(RemoteObject *obj, GError **error);
 gboolean audacious_rc_eject(RemoteObject *obj, GError **error);
 gboolean audacious_rc_main_win_visible(RemoteObject *obj,
@@ -201,10 +200,11 @@ gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error)
 gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **error);
 gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
 gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error);
+gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint pos, GError **error);
+
 
 /* in progress */
-gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint *pos, GError **error);
 gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
-gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, char *list, gint num, gboolean enqueue, GError **error);
+gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error);
 
 #endif // !_DBUS_SERVICE_H

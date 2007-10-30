@@ -29,7 +29,7 @@ extern "C" {
 
     void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
                                    gboolean enqueue);
-    gint audacious_remote_get_version(DBusGProxy *proxy);
+    gchar *audacious_remote_get_version(DBusGProxy *proxy);
     void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list);
     void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos);
     void audacious_remote_play(DBusGProxy *proxy);

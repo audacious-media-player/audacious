@@ -19,7 +19,7 @@
 
 <!--
     Defined:
-    CMD_GET_VERSION
+    CMD_GET_VERSION //CHANGED: now it returns audacious version instead of protocol version.
     CMD_PLAY
     CMD_PAUSE
     CMD_STOP
@@ -60,7 +60,7 @@
     CMD_SHOW_ABOUT_BOX
     CMD_SHOW_JTF_BOX
 
-    New:
+    Newly defined:
     CMD_PLAY_PAUSE
     CMD_ACTIVATE
     CMD_GET_SKIN
@@ -71,16 +71,12 @@
     CMD_PLAYQUEUE_ADD
     CMD_PLAYQUEUE_REMOVE
     CMD_PLAYQUEUE_CLEAR
-    CMD_PLAYQUEUE_GET_LPOS //CHANGED: get list position by queue position
-    CMD_PLAYQUEUE_GET_QPOS //CHANGED: get queue position by list postion
+    CMD_PLAYQUEUE_GET_LIST_POS //CHANGED: get list position by queue position
+    CMD_PLAYQUEUE_GET_QUEUE_POS //CHANGED: get queue position by list postion
     CMD_PLAYQUEUE_IS_QUEUED
-
-
-    In Progress:
     CMD_PLAYLIST_INS_URL_STRING
-    CMD_PLAYLIST_ADD
     CMD_PLAYLIST_ENQUEUE_TO_TEMP
-
+    CMD_PLAYLIST_ADD
 
     Remaining:
     CMD_PLAYLIST_INS //unnecessary?

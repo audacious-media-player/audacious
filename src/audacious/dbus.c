@@ -486,8 +486,7 @@ gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
 }
 
 // Audacious General Information
-gboolean audacious_rc_version(RemoteObject *obj, gchar **version,
-                              GError **error) {
+gboolean audacious_rc_version(RemoteObject *obj, gchar **version, GError **error) {
     *version = g_strdup(VERSION);
     return TRUE;
 }
@@ -890,28 +889,45 @@ gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean 
     return TRUE;
 }
 
+gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint pos, GError **error) {
+    if (pos >= 0 && url && strlen(url)) {
+        playlist_ins_url(playlist_get_active(), url, pos);
+    }
+    return TRUE;
+}
 
-
-/* In Progress */
-static void call_add_url(GList *list, gpointer *data) {
+static void call_playlist_add_url(GList *list, gpointer *data) {
         playlist_add_url(playlist_get_active(), list->data);
 }
 
 gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error) {
-    g_list_foreach((GList *)list, (GFunc)call_add_url, NULL);
+    g_list_foreach((GList *)list, (GFunc)call_playlist_add_url, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, char *list, gint num, gboolean enqueue, GError **error) {
+gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error) {
+    GList *playlists = NULL;
+    Playlist *new_pl = playlist_new();
+    gchar *pl_name = NULL;
+
+    pl_name = (gchar*)playlist_get_current_name(new_pl);
+    if(!pl_name)
+        pl_name = g_strdup("New Playlist");
+    playlist_set_current_name(new_pl, pl_name);
+    g_free(pl_name);
+
+    playlists = playlist_get_playlists();
+    playlist_add_playlist(new_pl);
+
+//    DISABLE_MANAGER_UPDATE();
+    playlist_select_playlist(new_pl);
+//    ENABLE_MANAGER_UPDATE();
+
+    playlist_add_url(new_pl, url);
+
     return TRUE;
 }
 
-gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint *pos, GError **error) {
-    if (url && strlen(url)) {
-        playlist_ins_url(playlist_get_active(), url, *pos);
-    }
-    return TRUE;
-}
 
 
 /********************************************************************************/

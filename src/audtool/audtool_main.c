@@ -111,11 +111,13 @@ struct commandhandler handlers[] = {
     /* test suite */
 	{"<sep>", NULL, "Test suite", 0},
 	{"activate", test_activate, "activate", 0},
-	{"playlist-enqueue-to-temp", test_enqueue_to_temp, "enqueue_to_temp", 1},
-	{"toggle-aot", test_toggle_aot, "specify allways on top or not", 1}, // xxx need to be improved.
+	{"playlist-addurl-to-new-playlist", test_enqueue_to_temp, "adds a url to the newly created playlist", 1},
+	{"always-on-top", test_toggle_aot, "on/off always on top", 1},
     {"get-skin", test_get_skin, "get skin", 0},
     {"set-skin", test_set_skin, "set skin", 1},
     {"get-info", test_get_info, "get info", 0},
+    {"playlist-insurl", test_ins_url_string, "inserts a url at specified position in the playlist", 2},
+    {"get-version", test_get_version, "get version of audacious", 0},
 
 	{NULL, NULL, NULL, 0}
 };
@@ -167,7 +169,9 @@ gint main(gint argc, gchar **argv)
 			     !g_ascii_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
 			    && g_ascii_strcasecmp("<sep>", handlers[i].name))
   			{
- 				handlers[i].handler(handlers[i].args + 1, &argv[j]);
+// 				handlers[i].handler(handlers[i].args + 1, &argv[j]);
+ 				handlers[i].handler(handlers[i].args + 1 < argc - 1 ? handlers[i].args + 1 : argc - 1,
+                                    &argv[j]); // to enable argc check --yaz
 				j += handlers[i].args;
 				k++;
 			}
