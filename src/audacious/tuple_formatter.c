@@ -24,6 +24,7 @@
 #include "config.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
+#include "strings.h"
 
 /*
  * TUPLE_USE_COMPILER:
@@ -586,10 +587,11 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 
     if(!rv || !strcmp(rv, "")) {
         const gchar *file_name = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
+        gchar *realfn = g_filename_from_uri(file_name, NULL, NULL);
+
         g_free(rv);
-        rv = g_filename_from_uri(file_name, NULL, NULL);
-        if(!rv)
-            rv = g_strdup(file_name);
+        rv = str_to_utf8(realfn ? realfn : file_name);
+        g_free(realfn);
     }
 
     return rv;
