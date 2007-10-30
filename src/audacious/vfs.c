@@ -470,7 +470,6 @@ gboolean
 vfs_is_streaming(VFSFile *file)
 {
     off_t size = 0;
-    glong curpos;
 
     if(!file)
         return FALSE;
