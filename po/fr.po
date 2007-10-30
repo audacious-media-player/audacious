@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-10-13 14:15+0200\n"
-"PO-Revision-Date: 2007-10-17 03:45+0100\n"
+"PO-Revision-Date: 2007-10-27 10:18+0100\n"
 "Last-Translator: Stany Henry <StrassBoy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1120,7 +1120,7 @@ msgstr "Durée du morceau :"
 
 #: src/audacious/ui_main.c:1228
 msgid "Audacious - visibility warning"
-msgstr "Audacious - avertissement quant à la visibilité"
+msgstr "Audacious - avertissement"
 
 #: src/audacious/ui_main.c:1230
 msgid "Show main player window"
@@ -1136,14 +1136,16 @@ msgid ""
 "You may want to show the player window again to control Audacious; otherwise, you'll have to control it remotely via audtool or enabled plugins (such as the statusicon plugin)."
 msgstr ""
 "Audacious a démarré, mais toutes les fenêtres de l'interface sont cachées.\n"
-"Peut-être voulez-vous voir à nouveau la fenêtre principale, afin de pouvoir\n"
-"contrôler Audacious. Dans le cas contraire, vous devrez utiliser les commandes\n"
-"distantes, par l'intermédiaire de 'audtool' ou des extensions activées\n"
-"('statusicon', par exemple)."
+"\n"
+"Peut-être voulez-vous voir à nouveau la fenêtre principale, afin de pouvoir contrôler Audacious.\n"
+"Dans le cas contraire, vous devrez utiliser les commandes distantes, par l'intermédiaire de 'audtool' ou des extensions activées (le module 'statusicon', par exemple).\n"
+" "
 
 #: src/audacious/ui_main.c:1241
 msgid "Always ignore, show/hide is controlled remotely"
-msgstr "Toujours ignorer : la fonction 'montrer'/'cacher' est contrôlée de manière distante."
+msgstr ""
+"Toujours ignorer : la fonction 'montrer/cacher'\n"
+"est contrôlée de manière distante."
 
 #: src/audacious/ui_main.c:1259
 msgid "Enter location to play:"
@@ -2071,6 +2073,7 @@ msgstr "Activé"
 msgid "Description"
 msgstr "Description"
 
+#: src/audacious/ui_preferences.c:1395
 msgid "Category"
 msgstr "Catégorie"
 
@@ -2133,4 +2136,3 @@ msgstr "Thème Winamp 2.x non archivé"
 #: src/audacious/ui_urlopener.c:88
 msgid "Add/Open URL Dialog"
 msgstr "Ouvrir/Ajouter un flux"
-
