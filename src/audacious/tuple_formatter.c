@@ -529,6 +529,7 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 #ifdef TUPLE_USE_COMPILER
     static TupleEvalContext *last_ctx = NULL;
     static TupleEvalNode *last_ev = NULL;
+    gchar *result = NULL;
 #endif
 
     if (initialized == FALSE)
@@ -557,6 +558,12 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         last_ctx = tuple_evalctx_new();
         last_string = g_strdup(string);
         last_ev = tuple_formatter_compile(last_ctx, last_string);
+        if (last_ctx->iserror) {
+            fprintf(stderr, "[TuplezCC]: %s", last_ctx->errmsg);
+        }
+        if (!last_ev) {
+            fprintf(stderr, "[TuplezCC]: Compilation failed!\n");
+        }
     }
 
 #ifdef TUPLE_COMPILER_DEBUG
@@ -568,7 +575,11 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 #endif
 
     tuple_evalctx_reset(last_ctx);
-    return tuple_formatter_eval(last_ctx, last_ev, tuple);
+    result = tuple_formatter_eval(last_ctx, last_ev, tuple);
+    if (last_ctx->iserror) {
+        fprintf(stderr, "[TuplezEV]: %s", last_ctx->errmsg);
+    }
+    return result;
 #else
     return tuple_formatter_process_construct(tuple, string);
 #endif
