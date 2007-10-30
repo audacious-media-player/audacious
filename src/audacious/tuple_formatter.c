@@ -585,8 +585,11 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
     rv = tuple_formatter_process_string(tuple, string);
 
     if(!rv || !strcmp(rv, "")) {
+        const gchar *file_name = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
         g_free(rv);
-        rv = g_strdup(tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
+        rv = g_filename_from_uri(file_name, NULL, NULL);
+        if(!rv)
+            rv = g_strdup(file_name);
     }
 
     return rv;
