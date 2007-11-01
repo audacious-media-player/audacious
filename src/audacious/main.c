@@ -1081,6 +1081,13 @@ static GOptionEntry cmd_entries[] = {
     {NULL},
 };
 
+static gboolean
+aud_start_playback(gpointer unused)
+{
+    drct_play();
+    return FALSE;
+}
+
 static void
 handle_cmd_line_options(BmpCmdLineOpt * options,
                         gboolean remote)
@@ -1088,6 +1095,9 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
     gchar **filenames = options->filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
+    gboolean is_running = audacious_remote_is_running(session);
+#else
+    gboolean is_running = FALSE;
 #endif
 
     if (options->version)
@@ -1097,65 +1107,74 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
     }
 
 #ifdef USE_DBUS
-    if (filenames != NULL)
+    if (is_running)
     {
-        gint pos = 0;
-        gint i = 0;
-        GList *fns = NULL;
-
-        for (i = 0; filenames[i] != NULL; i++)
+        if (filenames != NULL)
         {
-            gchar *filename;
-            gchar *current_dir = g_get_current_dir();
+            gint pos = 0;
+            gint i = 0;
+            GList *fns = NULL;
 
-            if (filenames[i][0] == '/' || strstr(filenames[i], "://"))
-                filename = g_strdup(filenames[i]);
-            else
-                filename = g_build_filename(current_dir, filenames[i], NULL);
-
-            fns = g_list_prepend(fns, filename);
-
-            g_free(current_dir);
-        }
-
-        fns = g_list_reverse(fns);
-
-        if (options->load_skins)
-        {
-            audacious_remote_set_skin(session, filenames[0]);
-            skin_install_skin(filenames[0]);
-        }
-        else
-        {
-            if (options->enqueue_to_temp)
-                audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
-
-            if (options->enqueue && options->play)
-                pos = audacious_remote_get_playlist_length(session);
-
-            if (!options->enqueue)
+            for (i = 0; filenames[i] != NULL; i++)
             {
-                audacious_remote_playlist_clear(session);
-                audacious_remote_stop(session);
+                gchar *filename;
+                gchar *current_dir = g_get_current_dir();
+
+		if (!strstr(filenames[i], "://"))
+		{
+                    if (filenames[i][0] == '/')
+   	               filename = g_strdup_printf("file:///%s", filenames[i]);
+                    else
+	               filename = g_strdup_printf("file:///%s/%s", current_dir, filenames[i]);
+		}
+                else
+                    filename = g_strdup(filenames[i]);
+
+                fns = g_list_prepend(fns, filename);
+
+                g_free(current_dir);
             }
 
-            audacious_remote_playlist_add(session, fns);
+            fns = g_list_reverse(fns);
 
-            if (options->enqueue && options->play &&
-                audacious_remote_get_playlist_length(session) > pos)
-                audacious_remote_set_playlist_pos(session, pos);
+            if (options->load_skins)
+            {
+                audacious_remote_set_skin(session, filenames[0]);
+                skin_install_skin(filenames[0]);
+            }
+            else
+            {
+                GList *i;
 
-            if (!options->enqueue)
-                audacious_remote_play(session);
-        }
+                if (options->enqueue_to_temp)
+                    audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
 
-        g_list_foreach(fns, (GFunc) g_free, NULL);
-        g_list_free(fns);
+                if (options->enqueue && options->play)
+                    pos = audacious_remote_get_playlist_length(session);
 
-        g_strfreev(filenames);
-    } /* filename */
+                if (!options->enqueue)
+                {
+                    audacious_remote_playlist_clear(session);
+                    audacious_remote_stop(session);
+                }
 
-    if (remote) {
+                for (i = fns; i != NULL; i = i->next)
+                    audacious_remote_playlist_add_url_string(session, i->data);
+
+                if (options->enqueue && options->play &&
+                    audacious_remote_get_playlist_length(session) > pos)
+                    audacious_remote_set_playlist_pos(session, pos);
+
+                if (!options->enqueue)
+                    audacious_remote_play(session);
+            }
+
+            g_list_foreach(fns, (GFunc) g_free, NULL);
+            g_list_free(fns);
+
+            g_strfreev(filenames);
+        } /* filename */
+
         if (options->rew)
             audacious_remote_playlist_prev(session);
 
@@ -1182,7 +1201,69 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->activate)
             audacious_remote_activate(session);
-    } else {
+
+        exit(EXIT_SUCCESS);
+    }
+    else
+#endif
+    {
+        if (filenames != NULL)
+        {
+            gint pos = 0;
+            gint i = 0;
+            GList *fns = NULL;
+
+            for (i = 0; filenames[i] != NULL; i++)
+            {
+                gchar *filename;
+                gchar *current_dir = g_get_current_dir();
+
+		if (!strstr(filenames[i], "://"))
+		{
+                    if (filenames[i][0] == '/')
+   	               filename = g_strdup_printf("file:///%s", filenames[i]);
+                    else
+	               filename = g_strdup_printf("file:///%s/%s", current_dir, filenames[i]);
+		}
+                else
+                    filename = g_strdup(filenames[i]);
+
+                fns = g_list_prepend(fns, filename);
+
+                g_free(current_dir);
+            }
+
+            fns = g_list_reverse(fns);
+
+            {
+                if (options->enqueue_to_temp)
+                    drct_pl_enqueue_to_temp(filenames[0]);
+
+                if (options->enqueue && options->play)
+                    pos = drct_pl_get_length();
+
+                if (!options->enqueue)
+                {
+                    drct_pl_clear();
+                    drct_stop();
+                }
+
+                drct_pl_add(fns);
+
+                if (options->enqueue && options->play &&
+                    drct_pl_get_length() > pos)
+                    drct_pl_set_pos(pos);
+
+                if (!options->enqueue)
+                    g_idle_add(aud_start_playback, NULL);
+            }
+
+            g_list_foreach(fns, (GFunc) g_free, NULL);
+            g_list_free(fns);
+
+            g_strfreev(filenames);
+        } /* filename */
+
         if (options->rew)
             drct_pl_prev();
 
@@ -1214,13 +1295,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         if (options->activate)
             drct_activate();
     }
-
-    if(remote) {
-        gboolean is_running = audacious_remote_is_running(session);
-        if (is_running)
-            exit(EXIT_SUCCESS);
-    }
-#endif
 }
 
 static void
@@ -1385,11 +1459,6 @@ main(gint argc, gchar ** argv)
 
     bmp_config_load();
 
-    handle_cmd_line_options(&options, TRUE);
-
-#ifdef USE_DBUS
-    init_dbus();
-#endif
     mowgli_init();
 
     if (options.headless != 1)
@@ -1405,6 +1474,15 @@ main(gint argc, gchar ** argv)
 
     /* Initialize the playlist system. */
     playlist_init();
+    playlist = playlist_get_active();
+    playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_set_position(playlist, cfg.playlist_position);
+
+    handle_cmd_line_options(&options, TRUE);
+
+#ifdef USE_DBUS
+    init_dbus();
+#endif
 
     if (options.headless != 1)
     {
@@ -1425,11 +1503,6 @@ main(gint argc, gchar ** argv)
 
         GDK_THREADS_ENTER();
     }
-
-    /* Load the default playlist in. */
-    playlist = playlist_get_active();
-    playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
-    playlist_set_position(playlist, cfg.playlist_position);
 
     /* Load extra playlists */
     if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
