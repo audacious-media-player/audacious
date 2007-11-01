@@ -926,7 +926,9 @@ struct _AudaciousFuncTableV1 {
 #include "audacious/auddrct.h"
 
 /* for multi-file plugins :( */
+G_BEGIN_DECLS
 extern struct _AudaciousFuncTableV1 *_audvt;
+G_END_DECLS
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
 	G_BEGIN_DECLS \
