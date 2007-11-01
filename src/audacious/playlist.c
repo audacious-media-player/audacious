@@ -1368,7 +1368,7 @@ gboolean
 playlist_is_position_queued(Playlist *playlist, guint pos)
 {
     PlaylistEntry *entry;
-    GList *tmp;
+    GList *tmp = NULL;
 
     PLAYLIST_LOCK(playlist);
     entry = g_list_nth_data(playlist->entries, pos);

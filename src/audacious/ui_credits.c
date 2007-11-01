@@ -75,6 +75,7 @@ static const gchar *credit_text[] = {
 
     N_("Default skin:"),
     "George Averill",
+	"Michael Färber",
     "William Pitcock",
     NULL,
 

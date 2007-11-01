@@ -29,7 +29,7 @@ extern "C" {
 
     void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
                                    gboolean enqueue);
-    gint audacious_remote_get_version(DBusGProxy *proxy);
+    gchar *audacious_remote_get_version(DBusGProxy *proxy);
     void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list);
     void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos);
     void audacious_remote_play(DBusGProxy *proxy);
@@ -106,9 +106,8 @@ extern "C" {
     void audacious_remote_show_jtf_box(DBusGProxy *proxy);
     void audacious_remote_playqueue_clear(DBusGProxy *proxy);
     gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos);
-    gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, guint pos);
-    gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy,
-                                                       guint pos);
+    gint audacious_remote_get_playqueue_list_position(DBusGProxy *proxy, guint qpos);
+    gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy, guint pos);
 
 /* Added in Audacious 1.2 */
     void audacious_set_session_uri(DBusGProxy *proxy, gchar *uri);
@@ -120,6 +119,8 @@ extern "C" {
                                                    gchar *string);
     gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                           guint pos);
+/* Added in Audacious 1.4 */
+    void audacious_remote_show_about_box(DBusGProxy *proxy);
 
 #ifdef __cplusplus
 };

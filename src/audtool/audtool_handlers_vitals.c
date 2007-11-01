@@ -171,7 +171,7 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 		audtool_whine("       track_name, track_number, year, date, genre, comment,");
 		audtool_whine("       file_name, file_ext, file_path, length, formatter,");
 		audtool_whine("       custom, mtime");
-		return;
+		exit(1);
 	}
 
 	if (!(data = audacious_get_tuple_field_data(dbus_proxy, argv[1], audacious_remote_get_playlist_pos(dbus_proxy))))

@@ -118,7 +118,7 @@ void playback_seek(gint argc, gchar **argv)
 	{
 		audtool_whine("invalid parameters for %s.", argv[0]);
 		audtool_whine("syntax: %s <position>", argv[0]);
-		return;
+		exit(1);
 	}
 
 	audacious_remote_jump_to_time(dbus_proxy, atoi(argv[1]) * 1000);
@@ -132,7 +132,7 @@ void playback_seek_relative(gint argc, gchar **argv)
 	{
 		audtool_whine("invalid parameters for %s.", argv[0]);
 		audtool_whine("syntax: %s <position>", argv[0]);
-		return;
+		exit(1);
 	}
 
 	oldtime = audacious_remote_get_output_time(dbus_proxy);
