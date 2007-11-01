@@ -1,5 +1,5 @@
 dnl
-dnl Copyright (c) 2007, Jonathan Schleifer <js@h3c.de>
+dnl Copyright (c) 2007, Jonathan Schleifer <js-buildsys@webkeks.org>
 dnl
 dnl Permission to use, copy, modify, and/or distribute this software for any
 dnl purpose with or without fee is hereby granted, provided that the above
