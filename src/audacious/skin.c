@@ -48,6 +48,7 @@
 #include "vfs.h"
 
 #include "ui_skinned_window.h"
+#include "ui_skinned_number.h"
 
 #define EXTENSION_TARGETS 7
 
@@ -1581,6 +1582,14 @@ skin_install_skin(const gchar * path)
     g_free(command);
 }
 
+static SkinPixmap *
+skin_get_pixmap(Skin * skin, SkinPixmapId map_id)
+{
+    g_return_val_if_fail(skin != NULL, NULL);
+    g_return_val_if_fail(map_id < SKIN_PIXMAP_COUNT, NULL);
+
+    return &skin->pixmaps[map_id];
+}
 
 gboolean
 skin_load(Skin * skin, const gchar * path)
@@ -1595,7 +1604,15 @@ skin_load(Skin * skin, const gchar * path)
     skin_lock(skin);
     error = skin_load_nolock(skin, path, FALSE);
     skin_unlock(skin);
-    
+
+    SkinPixmap *pixmap = skin_get_pixmap(skin, SKIN_NUMBERS);
+    if (pixmap) {
+        ui_skinned_number_set_size(mainwin_minus_num, 9, pixmap->height);
+        ui_skinned_number_set_size(mainwin_10min_num, 9, pixmap->height);
+        ui_skinned_number_set_size(mainwin_min_num, 9, pixmap->height);
+        ui_skinned_number_set_size(mainwin_10sec_num, 9, pixmap->height);
+        ui_skinned_number_set_size(mainwin_sec_num, 9, pixmap->height);
+    }
     return error;
 }
 
@@ -1616,16 +1633,6 @@ skin_reload(Skin * skin)
 {
     g_return_if_fail(skin != NULL);
     skin_load_nolock(skin, skin->path, TRUE);
-}
-
-
-static SkinPixmap *
-skin_get_pixmap(Skin * skin, SkinPixmapId map_id)
-{
-    g_return_val_if_fail(skin != NULL, NULL);
-    g_return_val_if_fail(map_id < SKIN_PIXMAP_COUNT, NULL);
-
-    return &skin->pixmaps[map_id];
 }
 
 GdkBitmap *
@@ -1703,9 +1710,9 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
     g_return_if_fail(pixmap->pixmap != NULL);
 
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
-        if (pixmap_id == SKIN_NUMBERS)
+        if (pixmap_id == SKIN_NUMBERS) {
             xsrc = 90;
-        else if (pixmap_id == SKIN_VOLUME) {
+        } else if (pixmap_id == SKIN_VOLUME) {
             /* some winamp skins have too strait SKIN_VOLUME, so let's copy what's remain from SKIN_MAIN */
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                               skin->properties.mainwin_volume_x, skin->properties.mainwin_volume_y,

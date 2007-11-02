@@ -53,6 +53,7 @@ struct _UiSkinnedNumberClass {
 GtkWidget* ui_skinned_number_new (GtkWidget *fixed, gint x, gint y, SkinPixmapId si);
 GtkType ui_skinned_number_get_type(void);
 void ui_skinned_number_set_number(GtkWidget *widget, gint num);
+void ui_skinned_number_set_size(GtkWidget *widget, gint width, gint height);
 
 #ifdef __cplusplus
 }

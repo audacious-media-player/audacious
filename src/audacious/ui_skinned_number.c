@@ -227,6 +227,7 @@ static void ui_skinned_number_toggle_doublesize(UiSkinnedNumber *number) {
 }
 
 void ui_skinned_number_set_number(GtkWidget *widget, gint num) {
+    g_return_if_fail(UI_SKINNED_IS_NUMBER(widget));
     UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
 
     if (number->num == num)
@@ -234,4 +235,14 @@ void ui_skinned_number_set_number(GtkWidget *widget, gint num) {
 
     number->num = num;
     gtk_widget_queue_draw(GTK_WIDGET(number));
+}
+
+void ui_skinned_number_set_size(GtkWidget *widget, gint width, gint height) {
+    g_return_if_fail(UI_SKINNED_IS_NUMBER(widget));
+    UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
+
+    number->width = width;
+    number->height = height;
+
+    gtk_widget_set_size_request(widget, width*(1+number->double_size), height*(1+number->double_size));
 }
