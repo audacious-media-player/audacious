@@ -1615,6 +1615,10 @@ skin_load(Skin * skin, const gchar * path)
         ui_skinned_number_set_size(mainwin_sec_num, 9, pixmap->height);
     }
 
+    pixmap = skin_get_pixmap(skin, SKIN_MAIN);
+    if (pixmap && skin->properties.mainwin_height > pixmap->height)
+        skin->properties.mainwin_height = pixmap->height;
+
     return error;
 }
 
