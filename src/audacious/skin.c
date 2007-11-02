@@ -1605,7 +1605,8 @@ skin_load(Skin * skin, const gchar * path)
     error = skin_load_nolock(skin, path, FALSE);
     skin_unlock(skin);
 
-    SkinPixmap *pixmap = skin_get_pixmap(skin, SKIN_NUMBERS);
+    SkinPixmap *pixmap = NULL;
+    pixmap = skin_get_pixmap(skin, SKIN_NUMBERS);
     if (pixmap) {
         ui_skinned_number_set_size(mainwin_minus_num, 9, pixmap->height);
         ui_skinned_number_set_size(mainwin_10min_num, 9, pixmap->height);
@@ -1613,6 +1614,7 @@ skin_load(Skin * skin, const gchar * path)
         ui_skinned_number_set_size(mainwin_10sec_num, 9, pixmap->height);
         ui_skinned_number_set_size(mainwin_sec_num, 9, pixmap->height);
     }
+
     return error;
 }
 
@@ -1723,6 +1725,10 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                               212 + xdest, 41, xdest, ydest, width, height);
             height = pixmap->height/2;
+        } else if (pixmap_id == SKIN_PLAYPAUSE) {
+            /* it's better to hide mainwin_playstatus than display mess */
+            if (pixmap->width != 42)
+                gtk_widget_hide(mainwin_playstatus);
         } else
             return;
     }
