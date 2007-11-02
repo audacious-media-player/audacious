@@ -1711,6 +1711,7 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
     g_return_if_fail(pixmap != NULL);
     g_return_if_fail(pixmap->pixmap != NULL);
 
+    /* FIXME: instead of copying stuff from SKIN_MAIN, we should use transparency or resize widget */
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
         if (pixmap_id == SKIN_NUMBERS) {
             xsrc = 90;
@@ -1729,6 +1730,11 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
             /* it's better to hide mainwin_playstatus than display mess */
             if (pixmap->width != 42)
                 gtk_widget_hide(mainwin_playstatus);
+        } else if (pixmap_id == SKIN_SHUFREP) {
+            /* some winamp skins have too strait SKIN_SHUFREP, so let's copy what's remain from SKIN_MAIN */
+            gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
+                              164 + xdest, 89, xdest, ydest, width, height);
+            width = pixmap->width - xsrc;
         } else
             return;
     }
