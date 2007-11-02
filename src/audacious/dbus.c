@@ -23,7 +23,10 @@
 #endif
 
 #include <glib.h>
+#include <dbus/dbus.h>
+#include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-bindings.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include "dbus.h"
 #include "dbus-service.h"
 #include "dbus-server-bindings.h"
