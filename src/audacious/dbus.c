@@ -161,6 +161,7 @@ void mpris_tracklist_init(MprisTrackList *object) {
 
 void init_dbus() {
     GError *error = NULL;
+    DBusConnection *local_conn;
     // Initialize the DBus connection
     dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     if (dbus_conn == NULL) {
@@ -175,6 +176,9 @@ void init_dbus() {
     mpris = g_object_new(mpris_player_get_type(), NULL);
     g_object_new(mpris_tracklist_get_type(), NULL);
     g_message("D-Bus support has been activated");
+
+    local_conn = dbus_g_connection_get_connection(dbus_conn);
+    dbus_connection_set_exit_on_disconnect(local_conn, FALSE);
 }
 
 GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
