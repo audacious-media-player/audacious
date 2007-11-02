@@ -250,3 +250,13 @@ void ui_skinned_playstatus_set_buffering(GtkWidget *widget, gboolean status) {
     playstatus->buffering = status;
     gtk_widget_queue_draw(widget);
 }
+
+void ui_skinned_playstatus_set_size(GtkWidget *widget, gint width, gint height) {
+    g_return_if_fail (UI_SKINNED_IS_PLAYSTATUS (widget));
+    UiSkinnedPlaystatus *playstatus = UI_SKINNED_PLAYSTATUS (widget);
+
+    playstatus->width = width;
+    playstatus->height = height;
+
+    gtk_widget_set_size_request(widget, width*(1+playstatus->double_size), height*(1+playstatus->double_size));
+}

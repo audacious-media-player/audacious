@@ -49,6 +49,7 @@
 
 #include "ui_skinned_window.h"
 #include "ui_skinned_number.h"
+#include "ui_skinned_playstatus.h"
 
 #define EXTENSION_TARGETS 7
 
@@ -1618,6 +1619,10 @@ skin_load(Skin * skin, const gchar * path)
     pixmap = skin_get_pixmap(skin, SKIN_MAIN);
     if (pixmap && skin->properties.mainwin_height > pixmap->height)
         skin->properties.mainwin_height = pixmap->height;
+
+    pixmap = skin_get_pixmap(skin, SKIN_PLAYPAUSE);
+    if (pixmap)
+        ui_skinned_playstatus_set_size(mainwin_playstatus, 11, pixmap->height);
 
     return error;
 }

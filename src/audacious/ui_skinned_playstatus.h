@@ -63,6 +63,7 @@ GtkWidget* ui_skinned_playstatus_new (GtkWidget *fixed, gint x, gint y);
 GtkType ui_skinned_playstatus_get_type(void);
 void ui_skinned_playstatus_set_status(GtkWidget *widget, PStatus status);
 void ui_skinned_playstatus_set_buffering(GtkWidget *widget, gboolean status);
+void ui_skinned_playstatus_set_size(GtkWidget *widget, gint width, gint height);
 
 #ifdef __cplusplus
 }
