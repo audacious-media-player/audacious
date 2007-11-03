@@ -220,6 +220,8 @@ fileinfopopup_create(void)
     GtkWidget *filepopup_progress;
 
     filepopup_win = gtk_window_new(GTK_WINDOW_POPUP);
+    gtk_window_set_type_hint(GTK_WINDOW(filepopup_win),
+		    		 GDK_WINDOW_TYPE_HINT_TOOLTIP);
     gtk_window_set_decorated(GTK_WINDOW(filepopup_win), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(filepopup_win), 6);
     gtk_window_set_transient_for(GTK_WINDOW(filepopup_win),
