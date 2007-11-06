@@ -964,7 +964,7 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
  **/
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                       guint pos) {
-    GValue value;
+    GValue value = {};
     gchar *s = NULL;
 
     org_atheme_audacious_song_tuple(proxy, pos, field, &value, &error);
@@ -978,7 +978,7 @@ gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
         s = g_strescape(g_value_get_string(&value), NULL);
     else if (g_value_type_transformable(G_VALUE_TYPE(&value), G_TYPE_STRING))
     {
-        GValue tmp_value = {};
+        GValue tmp_value = { 0, };
 
         g_value_init(&tmp_value, G_TYPE_STRING);
         g_value_transform(&value, &tmp_value);
@@ -991,7 +991,6 @@ gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
         s = g_strdup("<unknown type>");
 
     g_value_unset(&value);
-
     return s;
 }
 
