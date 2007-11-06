@@ -694,23 +694,20 @@ mainwin_refresh_hints(void)
         cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
 
     mainwin_refresh_visible();
+
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
-    gint width, height;
+        gint width, height;
 
-    gdk_window_get_size(mainwin->window, &width, &height);
-
-        if (width == bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1) &&
-        height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
-            return;
+        gdk_window_get_size(mainwin->window, &width, &height);
 
         dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
         cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
         bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
         bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
 
-    gdk_flush();
+        gdk_flush();
     }
 }
 
