@@ -161,7 +161,7 @@ void get_current_song_channels(gint argc, gchar **argv)
 
 void get_current_song_tuple_field_data(gint argc, gchar **argv)
 {
-	gpointer data;
+	gchar *data;
 
 	if (argc < 2)
 	{
@@ -179,14 +179,7 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 		return;
 	}
 	
-	if (!g_ascii_strcasecmp(argv[1], "track_number") || !g_ascii_strcasecmp(argv[1], "year") || !g_ascii_strcasecmp(argv[1], "length") || !g_ascii_strcasecmp(argv[1], "mtime"))
-	{
-		if (*(gint *)data > 0)
-		{
-			audtool_report("%d", *(gint *)data);
-		}
-		return;
-	}
+	audtool_report("%s", data);
 
-	audtool_report("%s", (gchar *)data);
+	g_free(data);
 }
