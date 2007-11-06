@@ -1674,8 +1674,6 @@ mainwin_real_show(void)
     if (cfg.player_shaded)
         ui_vis_clear_data(mainwin_vis);
 
-    mainwin_set_shape_mask();
-
     if (cfg.show_wm_decorations) {
         if (cfg.player_x != -1 && cfg.save_window_position)
             gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
@@ -1690,17 +1688,12 @@ mainwin_real_show(void)
       nullmask = NULL;
     }
 
-    gtk_window_resize(GTK_WINDOW(mainwin),
-                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
-                bmp_active_skin->properties.mainwin_width,
-                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
-                bmp_active_skin->properties.mainwin_height);
-
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
     gtk_window_present(GTK_WINDOW(mainwin));
     mainwin_refresh_hints();
+    mainwin_set_shape_mask();
 }
 
 void
