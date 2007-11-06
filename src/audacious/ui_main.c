@@ -1693,8 +1693,8 @@ mainwin_real_show(void)
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
-    gtk_window_present(GTK_WINDOW(mainwin));
     mainwin_refresh_hints();
+    gtk_window_present(GTK_WINDOW(mainwin));
 }
 
 void
