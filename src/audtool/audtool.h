@@ -123,4 +123,11 @@ extern void test_get_info(gint argc, gchar **argv);
 extern void test_ins_url_string(gint argc, gchar **argv);
 extern void test_get_version(gint argc, gchar **argv);
 
+extern void test_get_eq(gint argc, gchar **argv);
+extern void test_get_eq_preamp(gint argc, gchar **argv);
+extern void test_get_eq_band(gint argc, gchar **argv);
+extern void test_set_eq(gint argc, gchar **argv);
+extern void test_set_eq_preamp(gint argc, gchar **argv);
+extern void test_set_eq_band(gint argc, gchar **argv);
+
 #endif

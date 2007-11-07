@@ -74,15 +74,15 @@ extern "C" {
     void audacious_remote_toggle_shuffle(DBusGProxy *proxy);
     gboolean audacious_remote_is_repeat(DBusGProxy *proxy);
     gboolean audacious_remote_is_shuffle(DBusGProxy *proxy);
-    void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
-                                 gfloat **bands);
-    gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy);
-    gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band);
-    void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
-                                 gfloat *bands);
-    void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp);
+    void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp,
+                                 GArray **bands);
+    gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy);
+    gdouble audacious_remote_get_eq_band(DBusGProxy *proxy, gint band);
+    void audacious_remote_set_eq(DBusGProxy *proxy, gdouble preamp,
+                                 GArray *bands);
+    void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gdouble preamp);
     void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band,
-                                      gfloat value);
+                                      gdouble value);
 
 /* Added in XMMS 1.2.1 */
     void audacious_remote_quit(DBusGProxy *proxy);

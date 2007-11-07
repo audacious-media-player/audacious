@@ -854,7 +854,7 @@ gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **err
     return TRUE;
 }
 
-/* New on Oct9: Queue */
+/* New on Oct 9: Queue */
 gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error) {
     if (pos < (guint)playlist_get_length(playlist_get_active()))
         playlist_queue_position(playlist_get_active(), pos);
@@ -935,9 +935,60 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GE
     return TRUE;
 }
 
+/* New on Nov 7: Equalizer */ 
+gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error)
+{
+    int i;
 
+    *preamp = (gdouble)equalizerwin_get_preamp();
+    *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), 10);
 
-/********************************************************************************/
+    for(i=0; i<10; i++){
+        gdouble val = (gdouble)equalizerwin_get_band(i);
+        g_array_append_val(*bands, val);
+    }
+
+    return TRUE;
+}
+
+gboolean audacious_rc_get_eq_preamp(RemoteObject *obj, gdouble *preamp, GError **error)
+{
+    *preamp = (gdouble)equalizerwin_get_preamp();
+    return TRUE;
+}
+
+gboolean audacious_rc_get_eq_band(RemoteObject *obj, gint band, gdouble *value, GError **error)
+{
+    *value = (gdouble)equalizerwin_get_band(band);
+    return TRUE;
+}
+
+gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, GError **error)
+{
+    gdouble element;
+    int i;
+    
+    equalizerwin_set_preamp((gfloat)preamp);
+
+    for (i = 0; i < 10; i++) {
+        element = g_array_index(bands, gdouble, i);
+        equalizerwin_set_band(i, (gfloat)element);
+    }
+
+    return TRUE;
+}
+
+gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error)
+{
+    equalizerwin_set_preamp((gfloat)preamp);
+    return TRUE;
+}
+
+gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error)
+{
+    equalizerwin_set_band(band, (gfloat)value);
+    return TRUE;
+}
 
 DBusGProxy *audacious_get_dbus_proxy(void)
 {

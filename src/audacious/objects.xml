@@ -77,17 +77,18 @@
     CMD_PLAYLIST_INS_URL_STRING
     CMD_PLAYLIST_ENQUEUE_TO_TEMP
     CMD_PLAYLIST_ADD
-
-    Remaining:
-    CMD_PLAYLIST_INS //unnecessary?
-    CMD_GET_EQ_DATA //obsolete
-    CMD_SET_EQ_DATA //obsolete
-    CMD_GET_EQ
+    CMD_GET_EQ //CHANGED: now these functions use double due to dbus-glib restriction
     CMD_GET_EQ_PREAMP
-    CMD_GET_EQ_BAND
+    CMD_GET_EQ_BAND //NOTE: GArray is used for bands
     CMD_SET_EQ
     CMD_SET_EQ_PREAMP
     CMD_SET_EQ_BAND
+
+    Obsolete:
+    CMD_PLAYLIST_INS //unnecessary?
+    CMD_GET_EQ_DATA //obsolete
+    CMD_SET_EQ_DATA //obsolete
+
 -->
 
 <node name="/">
@@ -459,6 +460,39 @@
         <method name="PlaylistEnqueueToTemp">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="s" name="url"/>
+        </method>
+
+        <!-- equalizer -->
+        <method name="GetEq">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="d" direction="out" name="preamp"/>
+            <arg type="ad" direction="out" name="bands"/>
+        </method>
+
+        <method name="GetEqPreamp">
+            <arg type="d" direction="out" name="preamp"/>
+        </method>
+
+        <method name="GetEqBand">
+            <arg type="i" name="band"/>
+            <arg type="d" direction="out" name="value"/>
+        </method>
+
+        <method name="SetEq">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="d" name="preamp"/>
+            <arg type="ad" name="bands"/>
+        </method>
+
+        <method name="SetEqPreamp">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="d" name="preamp"/>
+        </method>
+
+        <method name="SetEqBand">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="i" name="band"/>
+            <arg type="d" name="value"/>
         </method>
 
     </interface>

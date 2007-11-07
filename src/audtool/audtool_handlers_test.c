@@ -44,24 +44,24 @@ void test_activate(gint argc, gchar **argv)
 
 void test_enqueue_to_temp(gint argc, gchar **argv)
 {
-	if (argc < 2)
-	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <url>", argv[0]);
-		exit(1);
-	}
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <url>", argv[0]);
+        exit(1);
+    }
 
     audacious_remote_playlist_enqueue_to_temp(dbus_proxy, argv[1]);
 }
 
 void test_toggle_aot(gint argc, gchar **argv)
 {
-	if (argc < 2)
-	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <on/off>", argv[0]);
-		exit(1);
-	}
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+    }
 
     if (!g_ascii_strcasecmp(argv[1], "on")) {
         audacious_remote_toggle_aot(dbus_proxy, TRUE);
@@ -83,12 +83,12 @@ void test_get_skin(gint argc, gchar **argv)
 
 void test_set_skin(gint argc, gchar **argv)
 {
-	if (argc < 2)
-	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <skin>", argv[0]);
-		exit(1);
-	}
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <skin>", argv[0]);
+        exit(1);
+    }
 
     if(!argv[1] || !strcmp(argv[1], ""))
        return;
@@ -108,12 +108,12 @@ void test_ins_url_string(gint argc, gchar **argv)
 {
     gint pos = -1;
 
-	if (argc < 3)
-	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <url> <position>", argv[0]);
-		exit(1);
-	}
+    if (argc < 3)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <url> <position>", argv[0]);
+        exit(1);
+    }
 
     pos = atoi(argv[2]) - 1;
     if(pos >= 0)
@@ -127,4 +127,105 @@ void test_get_version(gint argc, gchar **argv)
     if(version)
         audtool_report("Audacious %s", version);
     g_free(version);
+}
+
+void test_get_eq(gint argc, gchar **argv)
+{
+    double preamp;
+    GArray *bands;
+    int i;
+
+    audacious_remote_get_eq(dbus_proxy, &preamp, &bands);
+
+    audtool_report("preamp = %.2f", preamp);
+    for(i=0; i<10; i++){
+        printf("%.2f ", g_array_index(bands, gdouble, i));
+    }
+    printf("\n");
+    g_array_free(bands, TRUE);
+}
+
+void test_get_eq_preamp(gint argc, gchar **argv)
+{
+    audtool_report("preamp = %.2f", audacious_remote_get_eq_preamp(dbus_proxy));
+}
+
+void test_get_eq_band(gint argc, gchar **argv)
+{
+    int band;
+
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <band>", argv[0]);
+        exit(1);
+    }
+
+    band = atoi(argv[1]);
+
+    if (band < 0 || band > 9)
+    {
+        audtool_whine("band number out of range");
+        exit(1);
+    }
+    
+    audtool_report("band %d = %.2f", band, audacious_remote_get_eq_band(dbus_proxy, band));
+    
+}
+
+void test_set_eq(gint argc, gchar **argv)
+{
+    gdouble preamp;
+    GArray *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), 10);
+    int i;
+
+    if (argc < 12)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <preamp> <band0> <band1> <band2> <band3> <band4> <band5> <band6> <band7> <band8> <band9>", argv[0]);
+        exit(1);
+    }
+
+    preamp = atof(argv[1]);
+    
+    for(i=0; i<10; i++){
+        gdouble val = atof(argv[i+2]);
+        g_array_append_val(bands, val);
+    }
+    
+    audacious_remote_set_eq(dbus_proxy, preamp, bands);
+}
+
+void test_set_eq_preamp(gint argc, gchar **argv)
+{
+    gdouble preamp;
+
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <preamp>", argv[0]);
+        exit(1);
+    }
+
+    preamp = atof(argv[1]);
+
+    audacious_remote_set_eq_preamp(dbus_proxy, preamp);
+}
+
+void test_set_eq_band(gint argc, gchar **argv)
+{
+    int band;
+    gdouble preamp;
+
+    if (argc < 3)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <band> <value>", argv[0]);
+        exit(1);
+    }
+
+    band = atoi(argv[1]);
+    preamp = atof(argv[2]);
+
+    audacious_remote_set_eq_band(dbus_proxy, band, preamp);
 }

@@ -1282,7 +1282,7 @@ equalizerwin_get_preamp(void)
 gfloat
 equalizerwin_get_band(gint band)
 {
-    g_return_val_if_fail(band >= 0 && band < 10, 0);
+    g_return_val_if_fail(band >= 0 && band < 10, 0.0);
     return ui_skinned_equalizer_slider_get_position(equalizerwin_bands[band]);
 }
 

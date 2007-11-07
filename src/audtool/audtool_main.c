@@ -119,6 +119,14 @@ struct commandhandler handlers[] = {
     {"playlist-insurl", test_ins_url_string, "inserts a url at specified position in the playlist", 2},
     {"get-version", test_get_version, "get version of audacious", 0},
 
+    /* test suite for equalizer */
+    {"get-eq", test_get_eq, "get equalizer", 0},
+    {"get-eq-preamp", test_get_eq_preamp, "get equalizer pre-amplitude", 0},
+    {"get-eq-band", test_get_eq_band, "get equalizer bands", 1},
+    {"set-eq", test_set_eq, "set equalizer", 11},
+    {"set-eq-preamp", test_set_eq_preamp, "set equalizer pre-amplitude", 1},
+    {"set-eq-band", test_set_eq_band, "set equalizer bands", 2},
+
 	{NULL, NULL, NULL, 0}
 };
 

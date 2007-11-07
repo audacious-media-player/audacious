@@ -201,10 +201,15 @@ gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **err
 gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
 gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error);
 gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint pos, GError **error);
-
-
-/* in progress */
-gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
 gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error);
+gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
+
+/* new on nov 7 */
+gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error);
+gboolean audacious_rc_get_eq_preamp(RemoteObject *obj, gdouble *preamp, GError **error);
+gboolean audacious_rc_get_eq_band(RemoteObject *obj, gint band, gdouble *value, GError **error);
+gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, GError **error);
+gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error);
+gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error);
 
 #endif // !_DBUS_SERVICE_H

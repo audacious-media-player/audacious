@@ -367,7 +367,7 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
  **/
 gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
     gchar *skin = NULL;
-    org_atheme_audacious_get_skin (proxy, &skin, &error); // xxx
+    org_atheme_audacious_get_skin (proxy, &skin, &error);
     g_clear_error(&error);
     return skin;
 }
@@ -688,9 +688,9 @@ gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
  *
  * Queries audacious about the equalizer settings.
  **/
-void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
-                             gfloat **bands) {
-//XXX
+void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp, GArray **bands) {
+    org_atheme_audacious_get_eq(proxy, preamp, bands, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -701,9 +701,13 @@ void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
  *
  * Return value: The equalizer preamp's setting.
  **/
-gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
-//XXX
-    return 0.0;
+gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
+    gdouble preamp = 0.0;
+
+    org_atheme_audacious_get_eq_preamp(proxy, &preamp, &error);
+    g_clear_error(&error);
+
+    return preamp;
 }
 
 /**
@@ -715,9 +719,13 @@ gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
  *
  * Return value: The equalizer band's value.
  **/
-gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
-//XXX
-    return 0.0;
+gdouble audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
+    gdouble value = 0.0;
+
+    org_atheme_audacious_get_eq_band(proxy, band, &value, &error);
+    g_clear_error(&error);
+
+    return value;
 }
 
 /**
@@ -728,9 +736,9 @@ gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
  *
  * Tells audacious to set the equalizer up using the provided values.
  **/
-void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
-                             gfloat *bands) {
-//XXX
+void audacious_remote_set_eq(DBusGProxy *proxy, gdouble preamp, GArray *bands) {
+    org_atheme_audacious_set_eq(proxy, preamp, bands, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -740,8 +748,9 @@ void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
  *
  * Tells audacious to set the equalizer's preamp setting.
  **/
-void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp) {
-//XXX
+void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gdouble preamp) {
+    org_atheme_audacious_set_eq_preamp(proxy, preamp, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -752,9 +761,9 @@ void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp) {
  *
  * Tells audacious to set an equalizer band's setting.
  **/
-void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band,
-                                  gfloat value) {
-//XXX
+void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band, gdouble value) {
+    org_atheme_audacious_set_eq_band(proxy, band, value, &error);
+    g_clear_error(&error);
 }
 
 /**
