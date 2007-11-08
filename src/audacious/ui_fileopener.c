@@ -108,8 +108,8 @@ filebrowser_on_keypress(GtkWidget * browser,
     return FALSE;
 }
 
-void
-util_run_filebrowser_gtk2style(gboolean play_button)
+static void
+util_run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 {
     static GtkWidget *window = NULL;
     GtkWidget *vbox, *hbox, *bbox;
@@ -119,9 +119,19 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     gchar *window_title, *toggle_text;
     gpointer action_stock, storage;
 
-    if(window) {
-        gtk_window_present(GTK_WINDOW(window)); /* raise filebrowser */
-        return;
+    if(!show) {
+        if(window){
+            gtk_widget_hide(window);
+            return;
+        }
+        else
+            return;
+    }
+    else {
+        if(window) {
+            gtk_window_present(GTK_WINDOW(window)); /* raise filebrowser */
+            return;
+        }
     }
     
     window_title = play_button ? _("Open Files") : _("Add Files");
@@ -339,17 +349,27 @@ static void filebrowser_add_all_files_classic(GtkWidget * w, gpointer data)
     gtk_entry_set_text(GTK_ENTRY(filesel->selection_entry), "");
 }
 
-void
-util_run_filebrowser_classic(gboolean play_button)
+static void
+util_run_filebrowser_classic(gboolean play_button, gboolean show)
 {
     static GtkWidget *dialog;
     GtkWidget *button_add_selected, *button_add_all, *button_close,
     *button_add;
     char *title;
 
-    if (dialog != NULL) {
-    gtk_window_present(GTK_WINDOW(dialog));
-    return;
+    if (!show) {
+        if(dialog) {
+            gtk_widget_hide(dialog);
+            return;
+        }
+        else
+            return;
+    }
+    else {
+        if (dialog) {
+            gtk_window_present(GTK_WINDOW(dialog));
+            return;
+        }
     }
 
     if (play_button)
@@ -450,7 +470,16 @@ void
 run_filebrowser(gboolean play_button)
 {
     if (!cfg.use_xmms_style_fileselector)
-        util_run_filebrowser_gtk2style(play_button);
+        util_run_filebrowser_gtk2style(play_button, TRUE);
     else
-        util_run_filebrowser_classic(play_button);
+        util_run_filebrowser_classic(play_button, TRUE);
+}
+
+void
+hide_filebrowser(void)
+{
+    if (!cfg.use_xmms_style_fileselector)
+        util_run_filebrowser_gtk2style(FALSE, FALSE);
+    else
+        util_run_filebrowser_classic(FALSE, FALSE);
 }

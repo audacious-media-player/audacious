@@ -295,6 +295,7 @@ void playlist_jump(gint argc, gchar **argv)
 
 void playlist_clear(gint argc, gchar **argv)
 {
+	audacious_remote_stop(dbus_proxy);
 	audacious_remote_playlist_clear(dbus_proxy);
 }
 

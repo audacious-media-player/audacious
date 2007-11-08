@@ -100,9 +100,12 @@ struct commandhandler handlers[] = {
 	{"mainwin-show", mainwin_show, "shows/hides the main window", 1},
 	{"playlist-show", playlist_show, "shows/hides the playlist window", 1},
 	{"equalizer-show", equalizer_show, "shows/hides the equalizer window", 1},
-	{"preferences", show_preferences_window, "shows the preferences window", 0},
-	{"about", show_about_window, "shows the about window", 0},
-	{"jumptofile", show_jtf_window, "shows the jump to file window", 0},
+
+	{"preferences-show", show_preferences_window, "shows/hides the preferences window", 1},
+	{"about-show", show_about_window, "shows/hides the about window", 1},
+	{"jumptofile-show", show_jtf_window, "shows/hides the jump to file window", 1},
+	{"filebrowser-show", show_filebrowser, "shows/hides the filebrowser", 1},
+
 	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},
 	{"<sep>", NULL, "Help system", 0},
 	{"list-handlers", get_handlers_list, "shows handlers list", 0},
@@ -110,23 +113,24 @@ struct commandhandler handlers[] = {
 
     /* test suite */
 	{"<sep>", NULL, "Test suite", 0},
-	{"activate", test_activate, "activate", 0},
-	{"playlist-addurl-to-new-playlist", test_enqueue_to_temp, "adds a url to the newly created playlist", 1},
+	{"activate", test_activate, "activate audacious", 0},
 	{"always-on-top", test_toggle_aot, "on/off always on top", 1},
+    {"get-version", test_get_version, "get the version string of audacious", 0},
+    {"get-info", test_get_info, "get info", 0},
     {"get-skin", test_get_skin, "get skin", 0},
     {"set-skin", test_set_skin, "set skin", 1},
-    {"get-info", test_get_info, "get info", 0},
+	{"playlist-addurl-to-new-playlist", test_enqueue_to_temp, "adds a url to the newly created playlist", 1},
     {"playlist-insurl", test_ins_url_string, "inserts a url at specified position in the playlist", 2},
-    {"get-version", test_get_version, "get version of audacious", 0},
 
     /* test suite for equalizer */
-    {"get-eq", test_get_eq, "get equalizer", 0},
-    {"get-eq-preamp", test_get_eq_preamp, "get equalizer pre-amplitude", 0},
-    {"get-eq-band", test_get_eq_band, "get equalizer bands", 1},
-    {"set-eq", test_set_eq, "set equalizer", 11},
-    {"set-eq-preamp", test_set_eq_preamp, "set equalizer pre-amplitude", 1},
-    {"set-eq-band", test_set_eq_band, "set equalizer bands", 2},
-
+    {"equalizer-get", test_get_eq, "get the equalizer settings", 0},
+    {"equalizer-get-preamp", test_get_eq_preamp, "get the equalizer pre-amplification", 0},
+    {"equalizer-get-band", test_get_eq_band, "get the equalizer value in specified band", 1},
+    {"equalizer-set", test_set_eq, "set the equalizer settings", 11},
+    {"equalizer-set-preamp", test_set_eq_preamp, "set the equalizer pre-amplification", 1},
+    {"equalizer-set-band", test_set_eq_band, "set the equalizer value in the specified band", 2},
+    {"equalizer-activate", test_equalizer_active, "activate/deactivate the equalizer", 1},
+    
 	{NULL, NULL, NULL, 0}
 };
 
@@ -167,7 +171,7 @@ gint main(gint argc, gchar **argv)
 	mowgli_error_context_push(e, "While processing the commandline");
 
 	if (argc < 2)
-		mowgli_error_context_display_with_error(e, ":\n  * ", "not enough parameters, use audtool --help for more information.");
+		mowgli_error_context_display_with_error(e, ":\n  * ", "not enough parameters, use \'audtool help\' for more information.");
 
 	for (j = 1; j < argc; j++)
 	{
@@ -177,17 +181,18 @@ gint main(gint argc, gchar **argv)
 			     !g_ascii_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
 			    && g_ascii_strcasecmp("<sep>", handlers[i].name))
   			{
-// 				handlers[i].handler(handlers[i].args + 1, &argv[j]);
- 				handlers[i].handler(handlers[i].args + 1 < argc - 1 ? handlers[i].args + 1 : argc - 1,
-                                    &argv[j]); // to enable argc check --yaz
+				int numargs = handlers[i].args + 1 < argc - 1 ? handlers[i].args + 1 : argc - 1;
+				handlers[i].handler(numargs, &argv[j]);
 				j += handlers[i].args;
 				k++;
+				if(j >= argc)
+					break;
 			}
 		}
 	}
 
 	if (k == 0)
-		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command `%s' encountered, use audtool --help for a command list.", argv[1]));
+		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command '%s' encountered, use \'audtool help\' for a command list.", argv[1]));
 
 	return 0;
 }

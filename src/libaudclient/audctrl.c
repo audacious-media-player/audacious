@@ -535,7 +535,18 @@ gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
  * Tells audacious to show the preferences pane.
  **/
 void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
-    org_atheme_audacious_show_prefs_box(proxy, &error);
+    audacious_remote_toggle_prefs_box(proxy, TRUE);
+}
+
+/**
+ * audacious_remote_toggle_prefs_box:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides
+ *
+ * Tells audacious to show/hide the preferences pane.
+ **/
+void audacious_remote_toggle_prefs_box(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_prefs_box(proxy, show, &error);
     g_clear_error(&error);
 }
 
@@ -546,7 +557,18 @@ void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
  * Tells audacious to show the about box.
  **/
 void audacious_remote_show_about_box(DBusGProxy *proxy) {
-    org_atheme_audacious_show_about_box(proxy, &error);
+    audacious_remote_toggle_about_box(proxy, TRUE);
+}
+
+/**
+ * audacious_remote_toggle_about_box:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides
+ *
+ * Tells audacious to show/hide the about box.
+ **/
+void audacious_remote_toggle_about_box(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_about_box(proxy, show, &error);
     g_clear_error(&error);
 }
 
@@ -885,7 +907,30 @@ void audacious_remote_activate(DBusGProxy *proxy) {
  * Tells audacious to show the Jump-to-File pane.
  **/
 void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
-    org_atheme_audacious_show_jtf_box(proxy, &error);
+    audacious_remote_toggle_jtf_box(proxy, TRUE);
+}
+
+/**
+ * audacious_remote_toggle_jtf_box:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides jtf pane
+ *
+ * Tells audacious to show/hide the Jump-to-File pane.
+ **/
+void audacious_remote_toggle_jtf_box(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_jtf_box(proxy, show, &error);
+    g_clear_error(&error);
+}
+
+/**
+ * audacious_remote_toggle_filebrowser:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides filebrowser
+ *
+ * Tells audacious to show the filebrowser dialog.
+ **/
+void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_filebrowser(proxy, show, &error);
     g_clear_error(&error);
 }
 
@@ -1003,3 +1048,14 @@ gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
     return s;
 }
 
+/**
+ * audacious_remote_eq_activate:
+ * @proxy: DBus proxy for audacious
+ * @active: Whether or not to activate the equalizer.
+ *
+ * Toggles the equalizer.
+ **/
+void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active) {
+    org_atheme_audacious_equalizer_activate (proxy, active, &error);
+    g_clear_error(&error);
+}

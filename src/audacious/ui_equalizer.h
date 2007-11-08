@@ -60,4 +60,6 @@ gboolean equalizerwin_has_focus(void);
 extern GtkWidget *equalizerwin;
 extern gboolean equalizerwin_focus;
 
+void equalizer_activate(gboolean active);
+
 #endif

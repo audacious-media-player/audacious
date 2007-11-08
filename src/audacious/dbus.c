@@ -46,6 +46,7 @@
 #include "strings.h"
 #include "ui_credits.h"
 #include "skin.h"
+#include "ui_fileopener.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -801,20 +802,43 @@ gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
 }
 
 /* New on Oct 5 */
-gboolean audacious_rc_show_prefs_box(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        show_prefs_window();
+gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            show_prefs_window();
+        else
+            hide_prefs_window();
+    }
     return TRUE;
 }
-gboolean audacious_rc_show_about_box(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        show_about_window();
+gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            show_about_window();
+        else
+            hide_about_window();
+    }
     return TRUE;
 }
 
-gboolean audacious_rc_show_jtf_box(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        ui_jump_to_track();
+gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            ui_jump_to_track();
+        else
+            ui_jump_to_track_hide();
+    }
+    return TRUE;
+}
+
+gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError **error)
+{
+    if (has_x11_connection) {
+        if (show)
+            run_filebrowser(FALSE);
+        else
+            hide_filebrowser();
+    }
     return TRUE;
 }
 
@@ -974,6 +998,7 @@ gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, G
         element = g_array_index(bands, gdouble, i);
         equalizerwin_set_band(i, (gfloat)element);
     }
+    equalizerwin_eq_changed();
 
     return TRUE;
 }
@@ -981,14 +1006,23 @@ gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, G
 gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error)
 {
     equalizerwin_set_preamp((gfloat)preamp);
+    equalizerwin_eq_changed();
     return TRUE;
 }
 
 gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error)
 {
     equalizerwin_set_band(band, (gfloat)value);
+    equalizerwin_eq_changed();
     return TRUE;
 }
+
+gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error)
+{
+    equalizer_activate(active);
+    return TRUE;
+}
+
 
 DBusGProxy *audacious_get_dbus_proxy(void)
 {

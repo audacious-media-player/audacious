@@ -128,17 +128,113 @@ void equalizer_show(gint argc, gchar **argv)
 
 void show_preferences_window(gint argc, gchar **argv)
 {
-	audacious_remote_show_prefs_box(dbus_proxy);
+    gboolean show = TRUE;
+
+	if (argc < 2) {
+#if 0
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+#else
+        audacious_remote_toggle_prefs_box(dbus_proxy, show);
+        return;
+#endif
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on"))
+        show = TRUE;
+    else if (!g_ascii_strcasecmp(argv[1], "off"))
+        show = FALSE;
+    else {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit (1);
+    }
+
+	audacious_remote_toggle_prefs_box(dbus_proxy, show);
 }
 
 void show_about_window(gint argc, gchar **argv)
 {
-	audacious_remote_show_about_box(dbus_proxy);
+    gboolean show = TRUE;
+
+	if (argc < 2) {
+#if 0
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+#else
+        audacious_remote_toggle_about_box(dbus_proxy, show);
+        return;
+#endif
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on"))
+        show = TRUE;
+    else if (!g_ascii_strcasecmp(argv[1], "off"))
+        show = FALSE;
+    else {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit (1);
+    }
+
+	audacious_remote_toggle_about_box(dbus_proxy, show);
 }
 
 void show_jtf_window(gint argc, gchar **argv)
 {
-	audacious_remote_show_jtf_box(dbus_proxy);
+    gboolean show = TRUE;
+
+	if (argc < 2) {
+#if 0
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+#else
+        audacious_remote_toggle_jtf_box(dbus_proxy, show);
+        return;
+#endif
+    }
+    if (!g_ascii_strcasecmp(argv[1], "on"))
+        show = TRUE;
+    else if (!g_ascii_strcasecmp(argv[1], "off"))
+        show = FALSE;
+    else {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit (1);
+    }
+
+	audacious_remote_toggle_jtf_box(dbus_proxy, show);
+}
+
+void show_filebrowser(gint argc, gchar **argv)
+{
+    gboolean show = TRUE;
+
+	if (argc < 2) {
+#if 0
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+#else
+        audacious_remote_toggle_filebrowser(dbus_proxy, show);
+        return;
+#endif
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on"))
+        show = TRUE;
+    else if (!g_ascii_strcasecmp(argv[1], "off"))
+        show = FALSE;
+    else {
+        audtool_whine("invalid parameter for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit (1);
+    }
+
+	audacious_remote_toggle_filebrowser(dbus_proxy, show);
 }
 
 void shutdown_audacious_server(gint argc, gchar **argv)

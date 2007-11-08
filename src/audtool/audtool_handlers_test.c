@@ -229,3 +229,22 @@ void test_set_eq_band(gint argc, gchar **argv)
 
     audacious_remote_set_eq_band(dbus_proxy, band, preamp);
 }
+
+void test_equalizer_active(gint argc, gchar **argv)
+{
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on")) {
+        audacious_remote_eq_activate(dbus_proxy, TRUE);
+        return;
+    }
+    else if (!g_ascii_strcasecmp(argv[1], "off")) {
+        audacious_remote_eq_activate(dbus_proxy, FALSE);
+        return;
+    }
+}

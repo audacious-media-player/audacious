@@ -116,6 +116,13 @@ ui_jump_to_track_jump(GtkTreeView * treeview)
     }
 }
 
+void
+ui_jump_to_track_hide(void)
+{
+    g_return_if_fail(jump_to_track_win);
+    gtk_widget_hide(jump_to_track_win);
+}
+
 static void
 ui_jump_to_track_toggle_cb(GtkWidget * toggle)
 {

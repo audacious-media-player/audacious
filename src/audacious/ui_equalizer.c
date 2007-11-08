@@ -1515,3 +1515,13 @@ action_equ_delete_auto_preset(void)
                                     G_CALLBACK(equalizerwin_delete_auto_delete),
                                     NULL);
 }
+
+void
+equalizer_activate(gboolean active)
+{
+    cfg.equalizer_active = active;
+    UI_SKINNED_BUTTON(equalizerwin_on)->inside = active;
+    gtk_widget_queue_draw(equalizerwin_on);
+
+    equalizerwin_eq_changed();
+}

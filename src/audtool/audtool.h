@@ -107,6 +107,7 @@ extern void playlist_show(gint, gchar **);
 extern void equalizer_show(gint, gchar **);
 extern void show_preferences_window(gint, gchar **);
 extern void show_jtf_window(gint, gchar **);
+extern void show_filebrowser(gint, gchar **);
 extern void shutdown_audacious_server(gint, gchar **);
 extern void show_about_window(gint, gchar **);
 
@@ -129,5 +130,6 @@ extern void test_get_eq_band(gint argc, gchar **argv);
 extern void test_set_eq(gint argc, gchar **argv);
 extern void test_set_eq_preamp(gint argc, gchar **argv);
 extern void test_set_eq_band(gint argc, gchar **argv);
+void test_equalizer_active(gint argc, gchar **argv);
 
 #endif

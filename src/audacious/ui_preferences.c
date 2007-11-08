@@ -2182,6 +2182,13 @@ show_prefs_window(void)
     }
 }
 
+void
+hide_prefs_window(void)
+{
+    g_return_if_fail(prefswin);
+    gtk_widget_hide(GTK_WIDGET(prefswin));
+}
+
 static void
 prefswin_page_queue_new(GtkWidget *container, gchar *name, gchar *imgurl)
 {
