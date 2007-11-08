@@ -1744,6 +1744,9 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                               164 + xdest, 89, xdest, ydest, width, height);
             width = pixmap->width - xsrc;
+        } else if (pixmap_id == SKIN_EQMAIN) {
+            /* TODO: we have to show this somewhere again! -- mf0102 */
+            gtk_widget_hide(equalizerwin_graph);
         } else
             return;
     }

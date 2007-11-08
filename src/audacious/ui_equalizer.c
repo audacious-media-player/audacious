@@ -74,6 +74,7 @@ typedef struct _EqualizerPreset EqualizerPreset;
 
 
 GtkWidget *equalizerwin;
+GtkWidget *equalizerwin_graph;
 
 static GtkWidget *equalizerwin_load_window = NULL;
 static GtkWidget *equalizerwin_load_auto_window = NULL;
@@ -87,7 +88,6 @@ static GtkWidget *equalizerwin_delete_auto_window = NULL;
 static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
-static GtkWidget *equalizerwin_graph;
 static GtkWidget *equalizerwin_preamp,*equalizerwin_bands[10];
 static GtkWidget *equalizerwin_volume, *equalizerwin_balance;
 
