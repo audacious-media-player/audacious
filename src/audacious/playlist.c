@@ -1844,6 +1844,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_manager_update();
+    playlist->serial++;
     return new_len - old_len;
 }
 
