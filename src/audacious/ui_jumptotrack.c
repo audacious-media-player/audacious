@@ -80,6 +80,7 @@
 #include "ui_skinned_window.h"
 
 static GtkWidget *jump_to_track_win = NULL;
+static gulong serial = 0;
 
 static void
 change_song(guint pos)
@@ -89,6 +90,13 @@ change_song(guint pos)
 
     playlist_set_position(playlist_get_active(), pos);
     playback_initiate();
+}
+
+void
+ui_jump_to_track_hide(void)
+{
+    g_return_if_fail(jump_to_track_win);
+    gtk_widget_hide(jump_to_track_win);
 }
 
 static void
@@ -109,18 +117,8 @@ ui_jump_to_track_jump(GtkTreeView * treeview)
 
     change_song(pos - 1);
 
-    /* FIXME: should only hide window */
-    if(cfg.close_jtf_dialog){
-        gtk_widget_destroy(jump_to_track_win);
-        jump_to_track_win = NULL;
-    }
-}
-
-void
-ui_jump_to_track_hide(void)
-{
-    g_return_if_fail(jump_to_track_win);
-    gtk_widget_hide(jump_to_track_win);
+    if(cfg.close_jtf_dialog)
+        ui_jump_to_track_hide();
 }
 
 static void
@@ -219,9 +217,7 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
 {
     switch (event->keyval) {
     case GDK_Escape:
-        /* FIXME: show only hide window */
-        gtk_widget_destroy(jump_to_track_win);
-        jump_to_track_win = NULL;
+        ui_jump_to_track_hide();
         return TRUE;
     case GDK_KP_Enter:
         ui_jump_to_track_queue_cb(NULL, data);
@@ -254,12 +250,9 @@ ui_jump_to_track_match(const gchar * song, GSList *regex_list)
     return rv;
 }
 
-/* FIXME: Clear the entry when the list gets updated */
 void
 ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
 {
-    /* FIXME: Is not in sync with playlist due to delayed extinfo
-     * reading */
     guint row;
     GList *playlist_glist;
     gchar *desc_buf = NULL;
@@ -269,10 +262,18 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
 
     GtkTreeModel *store;
 
+    GtkTreeView *tree = GTK_TREE_VIEW(g_object_get_data(user_data, "treeview"));
+    GtkEntry *edit = g_object_get_data(user_data, "edit");
+
     if (!jump_to_track_win)
         return;
 
-    store = gtk_tree_view_get_model(GTK_TREE_VIEW(user_data));
+    /* clear edit widget */
+    if(edit){
+        gtk_entry_set_text(edit, "\0");
+    }
+
+    store = gtk_tree_view_get_model(tree);
     gtk_list_store_clear(GTK_LIST_STORE(store));
 
     row = 1;
@@ -303,8 +304,9 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
-    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(user_data));
+    selection = gtk_tree_view_get_selection(tree);
     gtk_tree_selection_select_iter(selection, &iter);
+    serial = playlist->serial; // important. --yaz
 }
 
 static void
@@ -450,11 +452,9 @@ ui_jump_to_track_fill(gpointer treeview)
     gtk_list_store_clear(jtf_store);
 
     row = 1;
-
     playlist = playlist_get_active();
 
     PLAYLIST_LOCK(playlist);
-
     for (playlist_glist = playlist->entries; playlist_glist;
          playlist_glist = g_list_next(playlist_glist)) {
 
@@ -477,18 +477,30 @@ ui_jump_to_track_fill(gpointer treeview)
                            0, row, 1, desc_buf, -1);
         row++;
 
-        if (desc_buf) {
-            g_free(desc_buf);
-            desc_buf = NULL;
-        }
+        g_free(desc_buf);
+        desc_buf = NULL;
     }
-
     PLAYLIST_UNLOCK(playlist);
 
     /* attach liststore to treeview */
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(jtf_store));
     g_object_unref(jtf_store);
+    serial = playlist->serial;
     return FALSE;
+}
+
+static gboolean
+watchdog(gpointer storage)
+{
+    GtkWidget *widget;
+    Playlist *playlist = playlist_get_active();
+
+    if(serial == playlist->serial)
+        return TRUE;
+
+    widget = g_object_get_data(storage, "widget");
+    ui_jump_to_track_update(widget, storage);
+    return TRUE;
 }
 
 void
@@ -497,15 +509,17 @@ ui_jump_to_track(void)
     GtkWidget *scrollwin;
     GtkWidget *vbox, *bbox, *sep;
     GtkWidget *toggle;
-    GtkWidget *jump, *queue, *cancel;
+    GtkWidget *jump, *queue, *close;
     GtkWidget *rescan, *edit;
     GtkWidget *search_label, *hbox;
 
-    GtkWidget *treeview;
+    GtkWidget *treeview = NULL;
     GtkListStore *jtf_store;
 
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
+
+    gpointer storage;
 
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
@@ -619,8 +633,16 @@ ui_jump_to_track(void)
 
     rescan = gtk_button_new_from_stock(GTK_STOCK_REFRESH);
     gtk_box_pack_start(GTK_BOX(bbox), rescan, FALSE, FALSE, 0);
+
+    /* pack to container */
+    storage = g_object_new(G_TYPE_OBJECT, NULL);
+    g_object_set_data(storage, "widget", rescan);
+    g_object_set_data(storage, "treeview", treeview);
+    g_object_set_data(storage, "edit", edit);
+
     g_signal_connect(rescan, "clicked",
-                     G_CALLBACK(ui_jump_to_track_update), treeview);
+                     G_CALLBACK(ui_jump_to_track_update), storage);
+
     GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
     gtk_widget_grab_default(rescan);
 
@@ -634,14 +656,18 @@ ui_jump_to_track(void)
     GTK_WIDGET_SET_FLAGS(jump, GTK_CAN_DEFAULT);
     gtk_widget_grab_default(jump);
 
-    cancel = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-    gtk_box_pack_start(GTK_BOX(bbox), cancel, FALSE, FALSE, 0);
-    g_signal_connect_swapped(cancel, "clicked",
-                             G_CALLBACK(gtk_widget_destroy),
-                             jump_to_track_win);
-    GTK_WIDGET_SET_FLAGS(cancel, GTK_CAN_DEFAULT);
+    close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+    gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
+/*     g_signal_connect_swapped(close, "clicked", */
+/*                              G_CALLBACK(gtk_widget_destroy), */
+/*                              jump_to_track_win); */
+    g_signal_connect_swapped(close, "clicked",
+                             G_CALLBACK(gtk_widget_hide),
+                             jump_to_track_win); // just hide --yaz
+    GTK_WIDGET_SET_FLAGS(close, GTK_CAN_DEFAULT);
 
     g_timeout_add(100, (GSourceFunc)ui_jump_to_track_fill, treeview);
+    g_timeout_add(500, (GSourceFunc)watchdog, storage);
 
     gtk_widget_show_all(jump_to_track_win);
     gtk_widget_grab_focus(edit);
