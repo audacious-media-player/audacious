@@ -143,6 +143,8 @@ static void playlist_recalc_total_time_nolock(Playlist *);
 static void playlist_recalc_total_time(Playlist *);
 static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
+static void playlist_incr_serial(Playlist *playlist);
+
 static mowgli_heap_t *playlist_entry_heap = NULL;
 
 /* *********************** playlist entry code ********************** */
@@ -466,6 +468,7 @@ playlist_clear(Playlist *playlist)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
     playlist_manager_update();
 }
 
@@ -525,6 +528,7 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
     g_list_free_1(node);
 
     playlist_recalc_total_time_nolock(playlist);
+    playlist_incr_serial(playlist);
 }
 
 void
@@ -550,6 +554,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
 
     playlistwin_update_list(playlist);
     if (restart_playing) {
@@ -587,6 +592,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
     playlistwin_update_list(playlist);
 
     if (restart_playing) {
@@ -627,6 +633,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
 
     if (restart_playing) {
         if (playlist->position)
@@ -1021,6 +1028,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     g_free(path2);
 
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_manager_update();
@@ -1079,6 +1087,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     }
 
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
 
@@ -1113,7 +1122,7 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         }
     }
 
-//    playlist_recalc_total_time(playlist); //annoying --yaz
+    playlist_recalc_total_time(playlist);
 
     /* broadcast a PlaylistEventInfoChange message. */
     msg = g_new0(PlaylistEventInfoChange, 1);
@@ -2788,6 +2797,7 @@ playlist_remove_dead_files(Playlist *playlist)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
     playlist_manager_update();
 }
 
@@ -2907,6 +2917,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
 
     playlist_manager_update();
 }
@@ -2926,6 +2937,11 @@ playlist_get_total_time(Playlist * playlist,
     PLAYLIST_UNLOCK(playlist);
 }
 
+static void
+playlist_incr_serial(Playlist *playlist)
+{
+    playlist->serial++;
+}
 
 static void
 playlist_recalc_total_time_nolock(Playlist *playlist)
@@ -2955,7 +2971,6 @@ playlist_recalc_total_time_nolock(Playlist *playlist)
                 playlist->pl_selection_more = TRUE;
         }
     }
-    playlist->serial++;
 }
 
 static void
@@ -3136,6 +3151,7 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
 
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
+    playlist_incr_serial(playlist);
 
     return num_of_entries_found;
 }
@@ -3153,7 +3169,7 @@ playlist_select_all(Playlist *playlist, gboolean set)
     }
 
     PLAYLIST_UNLOCK(playlist);
-//    playlist_recalc_total_time(playlist); //annoying --yaz
+    playlist_recalc_total_time(playlist);
 }
 
 void
@@ -3187,7 +3203,7 @@ playlist_select_invert(Playlist *playlist, guint pos)
     }
 
     PLAYLIST_UNLOCK(playlist);
-//    playlist_recalc_total_time(playlist); //annoying --yaz
+    playlist_recalc_total_time(playlist);
 
     return invert_ok;
 }
