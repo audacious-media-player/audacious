@@ -102,6 +102,8 @@ ui_skinned_window_configure(GtkWidget *widget,
     window->x = event->x;
     window->y = event->y;
 
+    gtk_window_set_keep_above(GTK_WINDOW(widget), cfg.always_on_top);
+
     return FALSE;
 }
 
