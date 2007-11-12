@@ -168,7 +168,7 @@ playback_get_length(void)
     if (playback && playback->plugin->get_song_tuple) {
         Tuple *tuple = playback->plugin->get_song_tuple(playback->filename);
         if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
-            return tuple_get_value_type(tuple, FIELD_LENGTH, NULL);
+            return tuple_get_int(tuple, FIELD_LENGTH, NULL);
     }
 
     return -1;
