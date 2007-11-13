@@ -1,3 +1,30 @@
+Audacious 1.4.1 (2007-11-??)
+
+Enhancements:
+* The skin code has been tweaked a little to fix loading of
+  more substandard winamp skins.
+  (http://boards.nenolod.net/viewtopic.php?f=5&t=859)
+* Playlists now carry an atomic serial number in order to avoid
+  unnecessary reloading of metadata.
+* The command names used by audtool have been sanitized in order
+  to make some leve of sense.
+* Add many new calls to libaudclient which were unimplemented after
+  DBus transition.
+
+Bugfixes:
+* [Bugzilla #53]: UTF-8 validation gives false positives
+  (Reported by Kosma Moczek; Fixed by Yoshiki Yazawa)
+* [Bugzilla #20]: status icon plugin breaks the 'always on top' feature
+  (Reported by Dorian Scholz; Fixed by Tomasz Mon)
+* playback_get_length() was returning the typecode of FIELD_LENGTH, not
+  it's value (Fixed by Yoshiki Yazawa)
+* audctrl.h was dependent on #ifdef __cplusplus being a valid macro,
+  now we use G_BEGIN_DECLS/G_END_DECLS to handle that.
+
+Audacious 1.4.0 (2007-11-01)
+
+* Everything ;)
+
 Audacious 1.3.0 (2007-03-02)
 
 Enhancements
