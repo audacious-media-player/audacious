@@ -1624,6 +1624,10 @@ skin_load(Skin * skin, const gchar * path)
     if (pixmap)
         ui_skinned_playstatus_set_size(mainwin_playstatus, 11, pixmap->height);
 
+    pixmap = skin_get_pixmap(skin, SKIN_EQMAIN);
+    if (pixmap->height >= 313)
+        gtk_widget_show(equalizerwin_graph);
+
     return error;
 }
 
@@ -1744,6 +1748,10 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                               164 + xdest, 89, xdest, ydest, width, height);
             width = pixmap->width - xsrc;
+        } else if (pixmap_id == SKIN_EQMAIN) {
+            /* there are skins which EQMAIN doesn't include pixmap for equalizer graph */
+            if (pixmap->height != 313) /* skins with EQMAIN which is 313 in height seems to display ok */
+                gtk_widget_hide(equalizerwin_graph);
         } else
             return;
     }

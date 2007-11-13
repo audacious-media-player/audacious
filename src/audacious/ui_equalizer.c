@@ -74,6 +74,7 @@ typedef struct _EqualizerPreset EqualizerPreset;
 
 
 GtkWidget *equalizerwin;
+GtkWidget *equalizerwin_graph;
 
 static GtkWidget *equalizerwin_load_window = NULL;
 static GtkWidget *equalizerwin_load_auto_window = NULL;
@@ -87,7 +88,6 @@ static GtkWidget *equalizerwin_delete_auto_window = NULL;
 static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
-static GtkWidget *equalizerwin_graph;
 static GtkWidget *equalizerwin_preamp,*equalizerwin_bands[10];
 static GtkWidget *equalizerwin_volume, *equalizerwin_balance;
 
@@ -1514,4 +1514,14 @@ action_equ_delete_auto_preset(void)
                                     GTK_STOCK_DELETE,
                                     G_CALLBACK(equalizerwin_delete_auto_delete),
                                     NULL);
+}
+
+void
+equalizer_activate(gboolean active)
+{
+    cfg.equalizer_active = active;
+    UI_SKINNED_BUTTON(equalizerwin_on)->inside = active;
+    gtk_widget_queue_draw(equalizerwin_on);
+
+    equalizerwin_eq_changed();
 }

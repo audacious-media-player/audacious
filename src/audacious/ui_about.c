@@ -203,3 +203,10 @@ show_about_window(void)
     gtk_widget_show_all(about_window);
     gtk_window_present(GTK_WINDOW(about_window));
 }
+
+void
+hide_about_window(void)
+{
+    g_return_if_fail(about_window);
+    gtk_widget_hide(GTK_WIDGET(about_window));
+}

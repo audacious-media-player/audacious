@@ -364,16 +364,25 @@
         <!-- Show preferences window -->
         <method name="ShowPrefsBox">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
         </method>
 
         <!-- Show about window -->
         <method name="ShowAboutBox">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
         </method>
 
         <!-- Show jump to file window -->
         <method name="ShowJtfBox">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
+        </method>
+
+        <!-- Show filebrowser -->
+        <method name="ShowFilebrowser">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
         </method>
 
         <!-- Either play or pause -->
@@ -493,6 +502,12 @@
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" name="band"/>
             <arg type="d" name="value"/>
+        </method>
+
+       <!-- Activate/Deactivate Equalizer -->
+        <method name="EqualizerActivate">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="active"/>
         </method>
 
     </interface>

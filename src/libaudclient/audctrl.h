@@ -121,6 +121,11 @@ extern "C" {
                                           guint pos);
 /* Added in Audacious 1.4 */
     void audacious_remote_show_about_box(DBusGProxy *proxy);
+    void audacious_remote_toggle_about_box(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_toggle_jtf_box(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_toggle_prefs_box(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active);
 
 #ifdef __cplusplus
 };

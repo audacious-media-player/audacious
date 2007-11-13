@@ -451,6 +451,7 @@ playlist_clear_only(Playlist *playlist)
     playlist->entries = NULL;
     playlist->tail = NULL;
     playlist->attribute = PLAYLIST_PLAIN;
+    playlist->serial = 0;
 
     PLAYLIST_UNLOCK(playlist);
 }
@@ -465,6 +466,7 @@ playlist_clear(Playlist *playlist)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
     playlist_manager_update();
 }
 
@@ -524,6 +526,7 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
     g_list_free_1(node);
 
     playlist_recalc_total_time_nolock(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
 }
 
 void
@@ -549,6 +552,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
 
     playlistwin_update_list(playlist);
     if (restart_playing) {
@@ -586,6 +590,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
     playlistwin_update_list(playlist);
 
     if (restart_playing) {
@@ -626,6 +631,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
 
     if (restart_playing) {
         if (playlist->position)
@@ -658,6 +664,7 @@ __playlist_ins_with_info(Playlist * playlist,
     playlist_get_info_scan_active = TRUE;
     g_mutex_unlock(mutex_scan);
     g_cond_signal(cond_scan);
+    PLAYLIST_INCR_SERIAL(playlist);
 }
 
 static void
@@ -750,6 +757,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         g_mutex_unlock(mutex_scan);
         g_cond_signal(cond_scan);
     }
+    PLAYLIST_INCR_SERIAL(playlist);
 }
 
 gboolean
@@ -985,7 +993,6 @@ playlist_add_url(Playlist * playlist, const gchar * url)
 {
     guint entries;
     entries = playlist_ins_url(playlist, url, -1);
-//    printf("playlist_add_url: entries = %d\n", entries);
     return entries;
 }
 
@@ -1038,8 +1045,6 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(string != NULL, 0);
 
-//    playlistwin_update_list(playlist); // is this necessary? --yaz
-
     while (*string) {
         GList *node;
         guint i = 0;
@@ -1081,6 +1086,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     }
 
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist); //probably necessary because there is no underlying __playlist_ins --yaz
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
 
@@ -1145,6 +1151,7 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
     }
 
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
     mainwin_set_song_info(rate, freq, nch);
 
@@ -1714,7 +1721,6 @@ playlist_load_ins_file(Playlist *playlist,
 		pr = input_check_file(filename, FALSE);
 
             __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
-
             g_free(pr);
             return;
         }
@@ -1741,7 +1747,6 @@ playlist_load_ins_file(Playlist *playlist,
 	    pr = input_check_file(filename, FALSE);
 
         __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
-
         g_free(pr);
     }
 
@@ -1782,7 +1787,6 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 	        pr = input_check_file(filename, FALSE);
 
             __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
-
             g_free(pr);
             return;
         }
@@ -1849,6 +1853,9 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_manager_update();
+
+    playlist_recalc_total_time(playlist); //tentative --yaz
+    PLAYLIST_INCR_SERIAL(playlist);
 
     return new_len - old_len;
 }
@@ -2793,6 +2800,7 @@ playlist_remove_dead_files(Playlist *playlist)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
     playlist_manager_update();
 }
 
@@ -2912,6 +2920,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
 
     playlist_manager_update();
 }
@@ -2930,7 +2939,6 @@ playlist_get_total_time(Playlist * playlist,
     *selection_more = playlist->pl_selection_more;
     PLAYLIST_UNLOCK(playlist);
 }
-
 
 static void
 playlist_recalc_total_time_nolock(Playlist *playlist)
@@ -3140,6 +3148,7 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
 
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
+//    PLAYLIST_INCR_SERIAL(playlist); //unnecessary? --yaz
 
     return num_of_entries_found;
 }
@@ -3253,6 +3262,7 @@ playlist_read_info_selection(Playlist *playlist)
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
     return retval;
 }
@@ -3275,6 +3285,7 @@ playlist_read_info(Playlist *playlist, guint pos)
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 }
 
 Playlist *
@@ -3315,6 +3326,9 @@ playlist_new(void)
     playlist->title = NULL;
     playlist->filename = NULL;
     playlist_clear(playlist);
+    playlist->tail = NULL;
+    playlist->attribute = PLAYLIST_PLAIN;
+    playlist->serial = 0;
 
     return playlist;
 }
@@ -3327,6 +3341,7 @@ playlist_free(Playlist *playlist)
     
     g_mutex_free( playlist->mutex );
     g_free( playlist );
+    playlist = NULL; //XXX lead to crash? --yaz
 }
 
 Playlist *
