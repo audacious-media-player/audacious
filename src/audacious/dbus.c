@@ -40,7 +40,6 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
-#include "memorypool.h"
 #include "tuple.h"
 #include "ui_jumptotrack.h"
 #include "strings.h"
