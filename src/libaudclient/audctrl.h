@@ -23,9 +23,7 @@
 #include <glib.h>
 #include <dbus/dbus-glib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
     void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
                                    gboolean enqueue);
@@ -127,8 +125,6 @@ extern "C" {
     void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show);
     void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active);
 
-#ifdef __cplusplus
-};
-#endif
+G_END_DECLS
 
 #endif
