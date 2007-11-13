@@ -15,7 +15,7 @@ Bugfixes:
 * [Bugzilla #53]: UTF-8 validation gives false positives
   (Reported by Kosma Moczek; Fixed by Yoshiki Yazawa)
 * [Bugzilla #20]: status icon plugin breaks the 'always on top' feature
-  (Reported by Dorian Scholz; Fixed by Tomasz Mon)
+  (Reported by Dorian Scholz; Fixed by Tomasz Moń)
 * playback_get_length() was returning the typecode of FIELD_LENGTH, not
   it's value (Fixed by Yoshiki Yazawa)
 * audctrl.h was dependent on #ifdef __cplusplus being a valid macro,
