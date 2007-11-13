@@ -25,7 +25,6 @@ SRCS = auddrct.c			\
        input.c				\
        logger.c				\
        main.c				\
-       memorypool.c			\
        mime.c				\
        output.c				\
        pixbuf_effects.c			\
