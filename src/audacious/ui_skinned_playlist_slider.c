@@ -251,7 +251,7 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
     }
 
     /* drawing knob */
-    skin_draw_pixmap(bmp_active_skin, obj, gc, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
 
     gdk_draw_drawable(widget->window, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
     g_object_unref(obj);

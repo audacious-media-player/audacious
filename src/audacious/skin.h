@@ -29,7 +29,7 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
-
+#include <gtk/gtk.h>
 
 #define BMP_DEFAULT_SKIN_PATH \
   DATA_DIR G_DIR_SEPARATOR_S "Skins" G_DIR_SEPARATOR_S "Default"
@@ -219,7 +219,7 @@ GdkColor *skin_get_color(Skin * skin, SkinColorId color_id);
 
 void skin_get_viscolor(Skin * skin, guchar vis_color[24][3]);
 gint skin_get_id(void);
-void skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
+void skin_draw_pixmap(GtkWidget * widget, Skin * skin, GdkDrawable * drawable, GdkGC * gc,
                       SkinPixmapId pixmap_id,
                       gint xsrc, gint ysrc, gint xdest, gint ydest,
                       gint width, gint height);

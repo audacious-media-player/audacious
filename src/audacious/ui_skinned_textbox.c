@@ -707,7 +707,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
         else
             textbox_handle_special_char(tmp, &x, &y);
 
-        skin_draw_pixmap(bmp_active_skin,
+        skin_draw_pixmap(GTK_WIDGET(textbox), bmp_active_skin,
                          priv->pixmap, gc, priv->skin_index,
                          x, y, i * bmp_active_skin->properties.textbox_bitmap_font_width, 0,
                          bmp_active_skin->properties.textbox_bitmap_font_width, 

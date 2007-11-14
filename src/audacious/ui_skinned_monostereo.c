@@ -187,17 +187,17 @@ static gboolean ui_skinned_monostereo_expose(GtkWidget *widget, GdkEventExpose *
 
     switch (monostereo->num_channels) {
     case 1:
-        skin_draw_pixmap(bmp_active_skin, obj, gc, monostereo->skin_index, 29, 0, 0, 0, 27, 12);
-        skin_draw_pixmap(bmp_active_skin, obj, gc, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 29, 0, 0, 0, 27, 12);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
         break;
     case 2:
-        skin_draw_pixmap(bmp_active_skin, obj, gc, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
-        skin_draw_pixmap(bmp_active_skin, obj, gc, monostereo->skin_index, 0, 0, 27, 0, 29, 12);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 0, 0, 27, 0, 29, 12);
         break;
     default:
     case 0:
-        skin_draw_pixmap(bmp_active_skin, obj, gc, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
-        skin_draw_pixmap(bmp_active_skin, obj, gc, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
         break;
     }
 

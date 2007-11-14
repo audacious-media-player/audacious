@@ -42,6 +42,7 @@ struct _UiSkinnedButton {
     GtkWidget widget;
 
     GdkWindow *event_window;
+    GtkWidget *fixed;
     gboolean button_down;
     gboolean pressed;
     gboolean hover;

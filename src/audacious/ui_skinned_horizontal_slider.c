@@ -249,18 +249,18 @@ static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventE
     obj = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(obj);
 
-    skin_draw_pixmap(bmp_active_skin, obj, gc,
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                      priv->skin_index, priv->frame_offset,
                      priv->frame * priv->frame_height,
                      0, 0, priv->width, priv->height);
     if (hs->pressed)
-        skin_draw_pixmap(bmp_active_skin, obj, gc,
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                          priv->skin_index, hs->knob_px,
                          hs->knob_py, priv->position,
                          ((priv->height - priv->knob_height) / 2),
                          priv->knob_width, priv->knob_height);
     else
-        skin_draw_pixmap(bmp_active_skin, obj, gc,
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                          priv->skin_index, hs->knob_nx,
                          hs->knob_ny, priv->position,
                          ((priv->height - priv->knob_height) / 2),

@@ -166,21 +166,21 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
 
     switch (window->type) {
         case WINDOW_MAIN:
-            skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_MAIN, 0, 0, 0, 0, width, height);
+            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_MAIN, 0, 0, 0, 0, width, height);
             skin_draw_mainwin_titlebar(bmp_active_skin, obj, gc, cfg.player_shaded, focus || !cfg.dim_titlebar);
             break;
         case WINDOW_EQ:
-            skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
+            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
             if (focus || !cfg.dim_titlebar) {
                 if (!cfg.equalizer_shaded)
-                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
+                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
                 else
-                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
+                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
             } else {
                 if (!cfg.equalizer_shaded)
-                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
+                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
                 else
-                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
+                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
             }
             break;
         case WINDOW_PLAYLIST:

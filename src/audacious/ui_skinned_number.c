@@ -193,7 +193,7 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
     if (number->num > 11 || number->num < 0)
         number->num = 10;
 
-    skin_draw_pixmap(bmp_active_skin, obj, gc,
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                      number->skin_index, number->num * 9, 0,
                      0, 0, number->width, number->height);
 

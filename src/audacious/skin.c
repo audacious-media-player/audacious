@@ -48,6 +48,7 @@
 #include "vfs.h"
 
 #include "ui_skinned_window.h"
+#include "ui_skinned_button.h"
 #include "ui_skinned_number.h"
 #include "ui_skinned_playstatus.h"
 
@@ -1369,9 +1370,9 @@ skin_numbers_generate_dash(Skin * skin)
                             numbers->current_height,
                             -1);
 
-    skin_draw_pixmap(skin, pixmap, gc, SKIN_NUMBERS, 0, 0, 0, 0, 99, 13);
-    skin_draw_pixmap(skin, pixmap, gc, SKIN_NUMBERS, 90, 0, 99, 0, 9, 13);
-    skin_draw_pixmap(skin, pixmap, gc, SKIN_NUMBERS, 20, 6, 101, 6, 5, 1);
+    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 0, 0, 0, 0, 99, 13);
+    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 90, 0, 99, 0, 9, 13);
+    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 20, 6, 101, 6, 5, 1);
 
     g_object_unref(numbers->pixmap);
     g_object_unref(gc);
@@ -1711,7 +1712,7 @@ skin_get_id(void)
 }
 
 void
-skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
+skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC * gc,
                  SkinPixmapId pixmap_id,
                  gint xsrc, gint ysrc, gint xdest, gint ydest,
                  gint width, gint height)
@@ -1739,19 +1740,26 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                               212 + xdest, 41, xdest, ydest, width, height);
             height = pixmap->height/2;
-        } else if (pixmap_id == SKIN_PLAYPAUSE) {
-            /* it's better to hide mainwin_playstatus than display mess */
-            if (pixmap->width != 42)
-                gtk_widget_hide(mainwin_playstatus);
-        } else if (pixmap_id == SKIN_SHUFREP) {
-            /* some winamp skins have too strait SKIN_SHUFREP, so let's copy what's remain from SKIN_MAIN */
-            gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
-                              164 + xdest, 89, xdest, ydest, width, height);
-            width = pixmap->width - xsrc;
         } else if (pixmap_id == SKIN_EQMAIN) {
             /* there are skins which EQMAIN doesn't include pixmap for equalizer graph */
             if (pixmap->height != 313) /* skins with EQMAIN which is 313 in height seems to display ok */
                 gtk_widget_hide(equalizerwin_graph);
+        } else if (widget) {
+            if (UI_SKINNED_IS_BUTTON(widget) &&
+                UI_SKINNED_BUTTON(widget)->fixed == SKINNED_WINDOW(mainwin)->fixed) {
+
+                /* let's copy what's under widget */
+                gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
+                                  UI_SKINNED_BUTTON(widget)->x + xdest, UI_SKINNED_BUTTON(widget)->y,
+                                  xdest, ydest, width, height);
+
+                /* some winamp skins have too strait SKIN_SHUFREP */
+                if (pixmap_id == SKIN_SHUFREP)
+                    width = pixmap->width - xsrc;
+            } else
+                /* it's better to hide widget using SKIN_PLAYPAUSE than display mess */
+                if ((pixmap_id == SKIN_PLAYPAUSE && pixmap->width != 42) || pixmap_id == SKIN_POSBAR)
+                    gtk_widget_hide(widget);
         } else
             return;
     }
@@ -1819,14 +1827,14 @@ skin_draw_playlistwin_frame_top(Skin * skin,
         y = 21;
 
     /* left corner */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 0, y, 0, 0, 25, 20);
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 0, y, 0, 0, 25, 20);
 
     /* titlebar title */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 26, y,
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 26, y,
                      (width - 100) / 2, 0, 100, 20);
 
     /* titlebar right corner  */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 153, y,
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 153, y,
                      width - 25, 0, 25, 20);
 
     /* tile draw the remaining frame */
@@ -1836,20 +1844,20 @@ skin_draw_playlistwin_frame_top(Skin * skin,
 
     for (i = 0; i < c / 2; i++) {
         /* left of title */
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
                          25 + i * 25, 0, 25, 20);
 
         /* right of title */
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
                          (width + 100) / 2 + i * 25, 0, 25, 20);
     }
 
     if (c & 1) {
         /* Odd tile count, so one remaining to draw. Here we split
          * it into two and draw half on either side of the title */
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
                          ((c / 2) * 25) + 25, 0, 12, 20);
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
                          (width / 2) + ((c / 2) * 25) + 50, 0, 13, 20);
     }
 }
@@ -1874,7 +1882,7 @@ skin_draw_playlistwin_frame_bottom(Skin * skin,
     gint i, c;
 
     /* bottom left corner (menu buttons) */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 0, 72,
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 0, 72,
                      0, height - 38, 125, 38);
 
     c = (width - 275) / 25;
@@ -1882,17 +1890,17 @@ skin_draw_playlistwin_frame_bottom(Skin * skin,
     /* draw visualization window, if width allows */
     if (c >= 3) {
         c -= 3;
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 205, 0,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 205, 0,
                          width - (150 + 75), height - 38, 75, 38);
     }
 
     /* Bottom right corner (playbuttons etc) */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT,
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT,
                      126, 72, width - 150, height - 38, 150, 38);
 
     /* Tile draw the remaining undrawn portions */
     for (i = 0; i < c; i++)
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 179, 0,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 179, 0,
                          125 + i * 25, height - 38, 25, 38);
 }
 
@@ -1913,11 +1921,11 @@ skin_draw_playlistwin_frame_sides(Skin * skin,
     /* frame sides */
     for (i = 0; i < (height - (20 + 38)) / 29; i++) {
         /* left */
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 0, 42,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 0, 42,
                          0, 20 + i * 29, 12, 29);
 
         /* right */
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 32, 42,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 32, 42,
                          width - 19, 20 + i * 29, 19, 29);
     }
 }
@@ -1951,15 +1959,15 @@ skin_draw_playlistwin_shaded(Skin * skin,
     gint i;
 
     /* left corner */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 72, 42, 0, 0, 25, 14);
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 72, 42, 0, 0, 25, 14);
 
     /* bar tile */
     for (i = 0; i < (width - 75) / 25; i++)
-        skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 72, 57,
+        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 72, 57,
                          (i * 25) + 25, 0, 25, 14);
 
     /* right corner */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 99, focus ? 42 : 57,
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 99, focus ? 42 : 57,
                      width - 50, 0, 50, 14);
 }
 
@@ -1995,7 +2003,7 @@ skin_draw_mainwin_titlebar(Skin * skin,
             y_offset = 15;
     }
 
-    skin_draw_pixmap(skin, drawable, gc, SKIN_TITLEBAR, 27, y_offset,
+    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_TITLEBAR, 27, y_offset,
                      0, 0, bmp_active_skin->properties.mainwin_width, MAINWIN_TITLEBAR_HEIGHT);
 }
 
