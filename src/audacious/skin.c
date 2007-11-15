@@ -1726,12 +1726,7 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
 
     /* FIXME: instead of copying stuff from SKIN_MAIN, we should use transparency or resize widget */
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
-        if (pixmap_id == SKIN_MONOSTEREO) {
-            /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
-            gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
-                              212 + xdest, 41, xdest, ydest, width, height);
-            height = pixmap->height/2;
-        } else if (pixmap_id == SKIN_EQMAIN) {
+        if (pixmap_id == SKIN_EQMAIN) {
             /* there are skins which EQMAIN doesn't include pixmap for equalizer graph */
             if (pixmap->height != 313) /* skins with EQMAIN which is 313 in height seems to display ok */
                 gtk_widget_hide(equalizerwin_graph);
@@ -1765,7 +1760,7 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
                     }
                     /* let's copy what's under widget */
                     gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
-                                      x + xdest, y, xdest, ydest, width, height);
+                                      x, y, xdest, ydest, width, height);
 
                     /* some winamp skins have too strait SKIN_SHUFREP */
                     if (pixmap_id == SKIN_SHUFREP)
@@ -1773,6 +1768,10 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
 
                     if (pixmap_id == SKIN_VOLUME)
                         width = pixmap->width;
+
+                    /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
+                    if (pixmap_id == SKIN_MONOSTEREO)
+                        height = pixmap->height/2;
                 }
             } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(equalizerwin)->fixed) {
                    /* TODO */
