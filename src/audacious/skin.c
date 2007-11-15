@@ -1753,6 +1753,12 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
                 }
 
                 if (x && y) {
+                    /* Some skins include SKIN_VOLUME and/or SKIN_BALANCE
+                       without knobs */
+                    if (pixmap_id == SKIN_VOLUME || pixmap_id == SKIN_BALANCE) {
+                        if (ysrc+height > 421 && xsrc+width <= pixmap->width)
+                            return;
+                    }
                     /* let's copy what's under widget */
                     gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                                       x + xdest, y, xdest, ydest, width, height);
