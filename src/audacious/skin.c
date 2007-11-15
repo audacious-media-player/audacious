@@ -50,6 +50,7 @@
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_number.h"
+#include "ui_skinned_horizontal_slider.h"
 #include "ui_skinned_playstatus.h"
 
 #define EXTENSION_TARGETS 7
@@ -1727,12 +1728,6 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
         if (pixmap_id == SKIN_NUMBERS) {
             xsrc = 90;
-        } else if (pixmap_id == SKIN_VOLUME) {
-            /* some winamp skins have too strait SKIN_VOLUME, so let's copy what's remain from SKIN_MAIN */
-            gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
-                              skin->properties.mainwin_volume_x, skin->properties.mainwin_volume_y,
-                              pixmap->width, ydest, width - pixmap->width, height);
-            width = pixmap->width;
         } else if (pixmap_id == SKIN_MONOSTEREO) {
             /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
@@ -1743,21 +1738,40 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
             if (pixmap->height != 313) /* skins with EQMAIN which is 313 in height seems to display ok */
                 gtk_widget_hide(equalizerwin_graph);
         } else if (widget) {
-            if (UI_SKINNED_IS_BUTTON(widget) &&
-                UI_SKINNED_BUTTON(widget)->fixed == SKINNED_WINDOW(mainwin)->fixed) {
+            gint x, y;
+            x = 0;
+            y = 0;
+            if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(mainwin)->fixed) {
 
-                /* let's copy what's under widget */
-                gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
-                                  UI_SKINNED_BUTTON(widget)->x + xdest, UI_SKINNED_BUTTON(widget)->y,
-                                  xdest, ydest, width, height);
+                /* Perhaps we should get x and y from GtkFixedChild */
+                if (UI_SKINNED_IS_BUTTON(widget)) {
+                    x = UI_SKINNED_BUTTON(widget)->x;
+                    y = UI_SKINNED_BUTTON(widget)->y;
+                } else if (UI_SKINNED_IS_HORIZONTAL_SLIDER(widget)) {
+                    x = UI_SKINNED_HORIZONTAL_SLIDER(widget)->x;
+                    y = UI_SKINNED_HORIZONTAL_SLIDER(widget)->y;
+                }
 
-                /* some winamp skins have too strait SKIN_SHUFREP */
-                if (pixmap_id == SKIN_SHUFREP)
-                    width = pixmap->width - xsrc;
-            } else
+                if (x && y) {
+                    /* let's copy what's under widget */
+                    gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
+                                      x + xdest, y, xdest, ydest, width, height);
+
+                    /* some winamp skins have too strait SKIN_SHUFREP */
+                    if (pixmap_id == SKIN_SHUFREP)
+                        width = pixmap->width - xsrc;
+
+                    if (pixmap_id == SKIN_VOLUME)
+                        width = pixmap->width;
+                }
                 /* it's better to hide widget using SKIN_PLAYPAUSE than display mess */
-                if ((pixmap_id == SKIN_PLAYPAUSE && pixmap->width != 42) || pixmap_id == SKIN_POSBAR)
+                else if ((pixmap_id == SKIN_PLAYPAUSE && pixmap->width != 42) || pixmap_id == SKIN_POSBAR)
                     gtk_widget_hide(widget);
+            } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(equalizerwin)->fixed) {
+                   /* TODO */
+            } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(playlistwin)->fixed) {
+                   /* TODO */
+            }
         } else
             return;
     }
