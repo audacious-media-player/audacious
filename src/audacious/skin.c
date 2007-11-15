@@ -1369,8 +1369,8 @@ skin_numbers_generate_dash(Skin * skin)
                             gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(pixmap);
 
-    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 0, 0, 0, 0, 99, 13);
-    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 90, 0, 99, 0, 9, 13);
+    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 0, 0, 0, 0, 99, numbers->current_height);
+    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 90, 0, 99, 0, 9, numbers->current_height);
     skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 20, 6, 101, 6, 5, 1);
 
     g_object_unref(numbers->pixmap);
