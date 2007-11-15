@@ -3477,27 +3477,16 @@ filter_by_extension(const gchar *uri)
 
     filename = g_strdup(tmp ? tmp : uri);
     g_free(tmp);
-    
-    base = g_path_get_basename(filename);
-    ext = strrchr(base, '.');
 
-    g_free(base);
+    base = g_path_get_basename(filename);
+    ext = g_strrstr(base, ".");
 
     if(!ext) {
-#if 0
-        if(g_file_test(filename, G_FILE_TEST_IS_REGULAR)) { //allow a file without extension.
-            g_print("no ext file\n");
-            rv = TRUE;
-        }
-        else
-            rv = FALSE;
-#else
-        rv = FALSE; //disallow.
-#endif
-        return rv;
+        g_free(base);
+        return FALSE;
     }
 
-    lext = g_ascii_strdown(ext+1, -1);
+    lext = g_utf8_strdown(ext+1, -1);
 
     if(g_hash_table_lookup(ext_hash, lext))
         rv = TRUE;
@@ -3505,5 +3494,6 @@ filter_by_extension(const gchar *uri)
         rv = FALSE;
 
     g_free(lext);
+    g_free(base);
     return rv;
 }
