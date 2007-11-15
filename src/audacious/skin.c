@@ -1738,21 +1738,27 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
             if (pixmap->height != 313) /* skins with EQMAIN which is 313 in height seems to display ok */
                 gtk_widget_hide(equalizerwin_graph);
         } else if (widget) {
+            /* it's better to hide widget using SKIN_PLAYPAUSE/SKIN_POSBAR than display mess */
+            if ((pixmap_id == SKIN_PLAYPAUSE && pixmap->width != 42) || pixmap_id == SKIN_POSBAR) {
+                gtk_widget_hide(widget);
+                return;
+            }
             gint x, y;
-            x = 0;
-            y = 0;
-            if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(mainwin)->fixed) {
+            x = -1;
+            y = -1;
 
-                /* Perhaps we should get x and y from GtkFixedChild */
-                if (UI_SKINNED_IS_BUTTON(widget)) {
-                    x = UI_SKINNED_BUTTON(widget)->x;
-                    y = UI_SKINNED_BUTTON(widget)->y;
-                } else if (UI_SKINNED_IS_HORIZONTAL_SLIDER(widget)) {
-                    x = UI_SKINNED_HORIZONTAL_SLIDER(widget)->x;
-                    y = UI_SKINNED_HORIZONTAL_SLIDER(widget)->y;
+            if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(mainwin)->fixed) {
+                GList *iter;
+                for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+                     GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+                     if (child_data->widget == widget) {
+                         x = child_data->x;
+                         y = child_data->y;
+                         break;
+                     }
                 }
 
-                if (x && y) {
+                if (x != -1 && y != -1) {
                     /* Some skins include SKIN_VOLUME and/or SKIN_BALANCE
                        without knobs */
                     if (pixmap_id == SKIN_VOLUME || pixmap_id == SKIN_BALANCE) {
@@ -1770,9 +1776,6 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
                     if (pixmap_id == SKIN_VOLUME)
                         width = pixmap->width;
                 }
-                /* it's better to hide widget using SKIN_PLAYPAUSE than display mess */
-                else if ((pixmap_id == SKIN_PLAYPAUSE && pixmap->width != 42) || pixmap_id == SKIN_POSBAR)
-                    gtk_widget_hide(widget);
             } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(equalizerwin)->fixed) {
                    /* TODO */
             } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(playlistwin)->fixed) {
