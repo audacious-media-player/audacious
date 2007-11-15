@@ -1726,11 +1726,7 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
 
     /* perhaps we should use transparency or resize widget? */
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
-        if (pixmap_id == SKIN_EQMAIN) {
-            /* there are skins which EQMAIN doesn't include pixmap for equalizer graph */
-            if (pixmap->height != 313) /* skins with EQMAIN which is 313 in height seems to display ok */
-                gtk_widget_hide(equalizerwin_graph);
-        } else if (widget) {
+        if (widget) {
             /* it's better to hide widget using SKIN_PLAYPAUSE/SKIN_POSBAR than display mess */
             if ((pixmap_id == SKIN_PLAYPAUSE && pixmap->width != 42) || pixmap_id == SKIN_POSBAR) {
                 gtk_widget_hide(widget);
@@ -1767,9 +1763,11 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
                         height = pixmap->height/2;
                 }
             } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(equalizerwin)->fixed) {
-                   /* TODO */
+                   if (!(pixmap_id == SKIN_EQMAIN && ysrc == 314)) /* equalizer preamp on equalizer graph */
+                         gtk_widget_hide(widget);
             } else if (gtk_widget_get_parent(widget) == SKINNED_WINDOW(playlistwin)->fixed) {
-                   /* TODO */
+                   /* I haven't seen any skin with substandard playlist */
+                   gtk_widget_hide(widget);
             }
         } else
             return;
