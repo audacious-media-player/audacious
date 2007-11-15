@@ -1726,9 +1726,7 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
 
     /* FIXME: instead of copying stuff from SKIN_MAIN, we should use transparency or resize widget */
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
-        if (pixmap_id == SKIN_NUMBERS) {
-            xsrc = 90;
-        } else if (pixmap_id == SKIN_MONOSTEREO) {
+        if (pixmap_id == SKIN_MONOSTEREO) {
             /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
             gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
                               212 + xdest, 41, xdest, ydest, width, height);
