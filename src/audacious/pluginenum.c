@@ -68,6 +68,8 @@ const gchar *plugin_dir_list[] = {
     NULL
 };
 
+GHashTable *ext_hash = NULL;
+
 /*****************************************************************/
 
 static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
@@ -517,6 +519,14 @@ input_plugin_init(Plugin * plugin)
     /* XXX: we need something better than p->filename if plugins
        will eventually provide multiple plugins --nenolod */
     mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+
+    /* build the extension hash table */
+    gint i;
+    if(p->vfs_extensions) {
+        for(i = 0; p->vfs_extensions[i] != NULL; i++) {
+            g_hash_table_replace(ext_hash, g_strdup(p->vfs_extensions[i]), g_strdup(p->description));
+        }
+    }
 }
 
 static void
@@ -751,6 +761,9 @@ plugin_system_init(void)
     }
 
     plugin_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
+
+    /* make extension hash */
+    ext_hash = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
 
 #ifndef DISABLE_USER_PLUGIN_DIR
     scan_plugins(bmp_paths[BMP_PATH_USER_PLUGIN_DIR]);
@@ -1030,4 +1043,5 @@ plugin_system_cleanup(void)
     }
 
     mowgli_dictionary_destroy(plugin_dict, NULL, NULL);
+    g_hash_table_remove_all(ext_hash);
 }
