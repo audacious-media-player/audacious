@@ -48,7 +48,6 @@ struct _UiSkinnedPlaystatus {
     GtkWidget        widget;
 
     gint             x, y, width, height;
-    GtkWidget        *fixed;
     gboolean         double_size;
     PStatus          status;
     gboolean         buffering;

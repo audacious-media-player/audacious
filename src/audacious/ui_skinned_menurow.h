@@ -50,7 +50,6 @@ struct _UiSkinnedMenurow {
     GtkWidget        widget;
 
     gint             x, y, width, height;
-    GtkWidget        *fixed;
     gboolean         double_size;
     gint             nx, ny;
     gint             sx, sy;

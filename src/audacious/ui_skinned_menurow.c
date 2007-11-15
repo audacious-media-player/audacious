@@ -133,10 +133,9 @@ GtkWidget* ui_skinned_menurow_new(GtkWidget *fixed, gint x, gint y, gint nx, gin
 
     menurow->skin_index = si;
 
-    menurow->fixed = fixed;
     menurow->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(menurow->fixed), GTK_WIDGET(menurow), menurow->x, menurow->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(menurow), menurow->x, menurow->y);
 
     return GTK_WIDGET(menurow);
 }

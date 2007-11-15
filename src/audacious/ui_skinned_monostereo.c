@@ -102,10 +102,9 @@ GtkWidget* ui_skinned_monostereo_new(GtkWidget *fixed, gint x, gint y, SkinPixma
     monostereo->x = x;
     monostereo->y = y;
     monostereo->skin_index = si;
-    monostereo->fixed = fixed;
     monostereo->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(monostereo->fixed), GTK_WIDGET(monostereo), monostereo->x, monostereo->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(monostereo), monostereo->x, monostereo->y);
 
     return GTK_WIDGET(monostereo);
 }

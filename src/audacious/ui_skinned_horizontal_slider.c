@@ -39,7 +39,6 @@ enum {
 };
 
 struct _UiSkinnedHorizontalSliderPrivate {
-    GtkWidget        *fixed;
     SkinPixmapId     skin_index;
     gboolean         double_size;
     gint             frame, frame_offset, frame_height, min, max;
@@ -141,7 +140,6 @@ GtkWidget* ui_skinned_horizontal_slider_new(GtkWidget *fixed, gint x, gint y, gi
     hs->y = y;
     priv->width = w;
     priv->height = h;
-    priv->fixed = fixed;
     hs->knob_nx = knx;
     hs->knob_ny = kny;
     hs->knob_px = kpx;
@@ -158,7 +156,7 @@ GtkWidget* ui_skinned_horizontal_slider_new(GtkWidget *fixed, gint x, gint y, gi
         priv->frame = priv->frame_cb(0);
     priv->skin_index = si;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(hs), hs->x, hs->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(hs), hs->x, hs->y);
 
     return GTK_WIDGET(hs);
 }

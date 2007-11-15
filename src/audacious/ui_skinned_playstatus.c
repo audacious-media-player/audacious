@@ -104,10 +104,9 @@ GtkWidget* ui_skinned_playstatus_new(GtkWidget *fixed, gint x, gint y) {
     playstatus->x = x;
     playstatus->y = y;
 
-    playstatus->fixed = fixed;
     playstatus->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(playstatus->fixed), GTK_WIDGET(playstatus), playstatus->x, playstatus->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(playstatus), playstatus->x, playstatus->y);
 
     return GTK_WIDGET(playstatus);
 }

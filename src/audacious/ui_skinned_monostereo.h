@@ -47,7 +47,6 @@ struct _UiSkinnedMonoStereo {
     gint             x, y, width, height;
     gint             num_channels;
     SkinPixmapId     skin_index;
-    GtkWidget        *fixed;
     gboolean         double_size;
 };
 

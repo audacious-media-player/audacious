@@ -47,7 +47,6 @@ enum {
 
 struct _UiSkinnedTextboxPrivate {
     SkinPixmapId     skin_index;
-    GtkWidget        *fixed;
     gboolean         double_size;
     gboolean         scroll_back;
     gint             nominal_y, nominal_height;
@@ -184,10 +183,9 @@ GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, gint x, gint y, gint w, gboo
     priv->scroll_timeout = 0;
     priv->scroll_dummy = 0;
 
-    priv->fixed = fixed;
     priv->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x, textbox->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(textbox), textbox->x, textbox->y);
 
     return GTK_WIDGET(textbox);
 }
@@ -431,7 +429,8 @@ static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
     if (priv->move_x || priv->move_y)
-        gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x+priv->move_x, textbox->y+priv->move_y);
+        gtk_fixed_move(GTK_FIXED(gtk_widget_get_parent(GTK_WIDGET(textbox))), GTK_WIDGET(textbox),
+                       textbox->x+priv->move_x, textbox->y+priv->move_y);
 
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }

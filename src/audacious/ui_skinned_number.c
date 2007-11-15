@@ -108,10 +108,9 @@ GtkWidget* ui_skinned_number_new(GtkWidget *fixed, gint x, gint y, SkinPixmapId 
     number->num = 0;
     number->skin_index = si;
 
-    number->fixed = fixed;
     number->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(number->fixed), GTK_WIDGET(number), number->x, number->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(number), number->x, number->y);
 
     return GTK_WIDGET(number);
 }

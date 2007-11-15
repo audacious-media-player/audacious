@@ -38,7 +38,6 @@ enum {
 };
 
 struct _UiSkinnedEqualizerSliderPrivate {
-    GtkWidget        *fixed;
     SkinPixmapId     skin_index;
     gboolean         double_size;
     gint             position;
@@ -129,9 +128,8 @@ GtkWidget* ui_skinned_equalizer_slider_new(GtkWidget *fixed, gint x, gint y) {
     priv->width = 14;
     priv->height = 63;
     priv->skin_index = SKIN_EQMAIN;
-    priv->fixed = fixed;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(es), es->x, es->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(es), es->x, es->y);
 
     return GTK_WIDGET(es);
 }

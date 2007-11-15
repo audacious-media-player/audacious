@@ -101,10 +101,9 @@ GtkWidget* ui_skinned_equalizer_graph_new(GtkWidget *fixed, gint x, gint y) {
     equalizer_graph->x = x;
     equalizer_graph->y = y;
     equalizer_graph->skin_index = SKIN_EQMAIN;
-    equalizer_graph->fixed = fixed;
     equalizer_graph->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(equalizer_graph->fixed), GTK_WIDGET(equalizer_graph), equalizer_graph->x, equalizer_graph->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(equalizer_graph), equalizer_graph->x, equalizer_graph->y);
 
     return GTK_WIDGET(equalizer_graph);
 }

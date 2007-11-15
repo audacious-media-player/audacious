@@ -371,10 +371,9 @@ void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, g
     sbutton->type = TYPE_PUSH;
     priv->skin_index1 = si;
     priv->skin_index2 = si;
-    sbutton->fixed = fixed;
     priv->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(sbutton->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
 void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, gint pnx, gint pny, gint ppx, gint ppy, SkinPixmapId si) {
@@ -396,10 +395,9 @@ void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, gint x,
     sbutton->type = TYPE_TOGGLE;
     priv->skin_index1 = si;
     priv->skin_index2 = si;
-    sbutton->fixed = fixed;
     priv->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(sbutton->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
 void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, gint y, gint w, gint h) {
@@ -411,10 +409,9 @@ void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, 
     sbutton->x = x;
     sbutton->y = y;
     sbutton->type = TYPE_SMALL;
-    sbutton->fixed = fixed;
     priv->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(sbutton->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
 static void button_pressed(UiSkinnedButton *button) {
@@ -515,7 +512,8 @@ static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
 static void ui_skinned_button_redraw(UiSkinnedButton *button) {
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     if (priv->move_x || priv->move_y)
-        gtk_fixed_move(GTK_FIXED(button->fixed), GTK_WIDGET(button), button->x+priv->move_x, button->y+priv->move_y);
+        gtk_fixed_move(GTK_FIXED(gtk_widget_get_parent(GTK_WIDGET(button))), GTK_WIDGET(button),
+                       button->x+priv->move_x, button->y+priv->move_y);
 
     gtk_widget_queue_draw(GTK_WIDGET(button));
 }
