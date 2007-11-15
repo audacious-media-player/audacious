@@ -3471,9 +3471,10 @@ playlist_playlists_equal(Playlist *p1, Playlist *p2)
 static gboolean
 filter_by_extension(const gchar *uri)
 {
-    gchar *base, *ext, *filename;
+    gchar *base, *ext, *lext, *filename;
     gchar *tmp = g_filename_from_uri(uri, NULL, NULL);
-    
+    gboolean rv;
+
     filename = g_strdup(tmp ? tmp : uri);
     g_free(tmp);
     
@@ -3486,17 +3487,23 @@ filter_by_extension(const gchar *uri)
 #if 0
         if(g_file_test(filename, G_FILE_TEST_IS_REGULAR)) { //allow a file without extension.
             g_print("no ext file\n");
-            return TRUE;
+            rv = TRUE;
         }
         else
-            return FALSE;
+            rv = FALSE;
 #else
-        return FALSE; //disallow.
+        rv = FALSE; //disallow.
 #endif
+        return rv;
     }
 
-    if(g_hash_table_lookup(ext_hash, ext+1))
-        return TRUE;
+    lext = g_ascii_strdown(ext+1, -1);
+
+    if(g_hash_table_lookup(ext_hash, lext))
+        rv = TRUE;
     else
-        return FALSE;
+        rv = FALSE;
+
+    g_free(lext);
+    return rv;
 }
