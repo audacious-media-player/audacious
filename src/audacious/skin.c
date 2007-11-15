@@ -1351,7 +1351,6 @@ skin_load_viscolor(Skin * skin, const gchar * path, const gchar * basename)
     vfs_fclose(file);
 }
 
-#if 0
 static void
 skin_numbers_generate_dash(Skin * skin)
 {
@@ -1365,10 +1364,10 @@ skin_numbers_generate_dash(Skin * skin)
     if (!numbers->pixmap || numbers->current_width < 99)
         return;
 
-    gc = gdk_gc_new(numbers->pixmap);
-    pixmap = gdk_pixmap_new(mainwin->window, 108,
+    pixmap = gdk_pixmap_new(NULL, 108,
                             numbers->current_height,
-                            -1);
+                            gdk_rgb_get_visual()->depth);
+    gc = gdk_gc_new(pixmap);
 
     skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 0, 0, 0, 0, 99, 13);
     skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 90, 0, 99, 0, 9, 13);
@@ -1379,8 +1378,8 @@ skin_numbers_generate_dash(Skin * skin)
 
     numbers->pixmap = pixmap;
     numbers->current_width = 108;
+    numbers->width = 108;
 }
-#endif
 
 static void
 skin_load_cursor(Skin * skin, const gchar * dirname)
@@ -1431,10 +1430,9 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     if (text_pm)
         skin_get_textcolors(text_pm, skin->textbg, skin->textfg);
 
-#if 0
-    if (skin->pixmaps[SKIN_NUMBERS].pixmap)
+    if (skin->pixmaps[SKIN_NUMBERS].pixmap &&
+        skin->pixmaps[SKIN_NUMBERS].width < 108 )
         skin_numbers_generate_dash(skin);
-#endif
 
     filename = find_file_recursively(path, "pledit.txt");
     inifile = open_ini_file(filename);
