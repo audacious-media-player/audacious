@@ -591,10 +591,12 @@ static gboolean textbox_scroll(gpointer data) {
                 if (priv->offset >= (priv->pixmap_width - textbox->width)) {
                     priv->scroll_back = TRUE;
                     priv->scroll_dummy = 0;
+                    priv->offset = priv->pixmap_width - textbox->width;
                 }
                 if (priv->offset <= 0) {
                     priv->scroll_back = FALSE;
                     priv->scroll_dummy = 0;
+                    priv->offset = 0;
                 }
             }
             else { // oneway scroll
