@@ -403,14 +403,15 @@ gboolean mpris_emit_track_change(MprisPlayer *obj) {
 
     metadata = mpris_metadata_from_tuple(tuple);
 
-    if (metadata != NULL) {
-	// Song URI
-	value = g_new0(GValue, 1);
-	g_value_init(value, G_TYPE_STRING);
-	g_value_set_string(value, playlist_get_filename(active, pos));
+    if (!metadata)
+        metadata = g_hash_table_new(g_str_hash, g_str_equal);
 
-	g_hash_table_insert(metadata, "URI", value);
-    }
+    // Song URI
+    value = g_new0(GValue, 1);
+    g_value_init(value, G_TYPE_STRING);
+    g_value_set_string(value, playlist_get_filename(active, pos));
+
+    g_hash_table_insert(metadata, "URI", value);
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     return TRUE;
