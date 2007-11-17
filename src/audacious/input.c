@@ -318,9 +318,9 @@ input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolea
 
     vfs_rewind(fd);
 
-    if (ip->probe_for_tuple &&
-        cfg.use_pl_metadata &&
-        (!loading || (loading && cfg.get_info_on_load)) ) {
+    /* some input plugins provide probe_for_tuple() only. */
+    if ( (ip->probe_for_tuple && !ip->is_our_file_from_vfs && !ip->is_our_file) ||
+         (ip->probe_for_tuple && (cfg.use_pl_metadata && (!loading || (loading && cfg.get_info_on_load)))) ) {
 
         Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
