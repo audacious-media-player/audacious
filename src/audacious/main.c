@@ -207,8 +207,8 @@ BmpConfig bmp_default_config = {
     TRUE,                       /* show seperators in pl */
     NULL,           /* chardet_detector */
     NULL,           /* chardet_fallback */
-    500,           /* audio buffer size */
-    FALSE,          /* whether or not to postpone format detection on initial add */
+    500,            /* audio buffer size */
+    TRUE,           /* whether or not to postpone format detection on initial add */
     TRUE,           /* show filepopup for tuple */
     NULL,           /* words identifying covers */
     NULL,           /* words that might not show up in cover names */

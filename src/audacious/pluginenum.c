@@ -524,7 +524,16 @@ input_plugin_init(Plugin * plugin)
     gint i;
     if(p->vfs_extensions) {
         for(i = 0; p->vfs_extensions[i] != NULL; i++) {
-            g_hash_table_replace(ext_hash, g_strdup(p->vfs_extensions[i]), g_strdup(p->description));
+            GList *hdr = NULL;
+            GList **handle = NULL; //allocated as auto in stack.
+            GList **handle2 = g_malloc(sizeof(GList **));
+
+            handle = g_hash_table_lookup(ext_hash, p->vfs_extensions[i]);
+            if(handle)
+                hdr = *handle;
+            hdr = g_list_append(hdr, p); //returned hdr is non-volatile
+            *handle2 = hdr;
+            g_hash_table_replace(ext_hash, g_strdup(p->vfs_extensions[i]), handle2);
         }
     }
 }
