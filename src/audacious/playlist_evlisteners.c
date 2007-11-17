@@ -26,6 +26,7 @@
 #include "playlist_evlisteners.h"
 
 #include "ui_main.h"
+#include "ui_playlist.h"
 
 static void
 playlist_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
@@ -37,8 +38,16 @@ playlist_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
      g_free(msg);
 }
 
+static void
+playlist_evlistener_playlistwin_update_list(gpointer hook_data, gpointer user_data)
+{
+     Playlist *playlist = (Playlist *) hook_data;
+
+     playlistwin_update_list(playlist);
+}
+
 void playlist_evlistener_init(void)
 {
      hook_associate("playlist info change", playlist_evlistener_playlist_info_change, NULL);
+     hook_associate("playlistwin update list", playlist_evlistener_playlistwin_update_list, NULL);
 }
-

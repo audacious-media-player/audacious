@@ -363,6 +363,8 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
             } else
                 g_signal_emit(widget, textbox_signals[CLICKED], 0);
 
+        } else if (event->button == 3) {
+            g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
         } else
             priv->is_dragging = FALSE;
     } else if (event->type == GDK_2BUTTON_PRESS) {
@@ -382,8 +384,6 @@ static gboolean ui_skinned_textbox_button_release(GtkWidget *widget, GdkEventBut
 
     if (event->button == 1) {
         priv->is_dragging = FALSE;
-    } else if (event->button == 3) {
-        g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
     }
 
     return TRUE;
@@ -591,10 +591,12 @@ static gboolean textbox_scroll(gpointer data) {
                 if (priv->offset >= (priv->pixmap_width - textbox->width)) {
                     priv->scroll_back = TRUE;
                     priv->scroll_dummy = 0;
+                    priv->offset = priv->pixmap_width - textbox->width;
                 }
                 if (priv->offset <= 0) {
                     priv->scroll_back = FALSE;
                     priv->scroll_dummy = 0;
+                    priv->offset = 0;
                 }
             }
             else { // oneway scroll

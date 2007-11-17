@@ -225,10 +225,10 @@ playlistwin_update_sinfo(Playlist *playlist)
 gboolean
 playlistwin_item_visible(gint index)
 {
-    if (index >= UI_SKINNED_PLAYLIST(playlistwin_list)->first
-        && index <
-        (UI_SKINNED_PLAYLIST(playlistwin_list)->first + UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible))
+    if (index >= UI_SKINNED_PLAYLIST(playlistwin_list)->first &&
+        index < (UI_SKINNED_PLAYLIST(playlistwin_list)->first + UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible) ) {
         return TRUE;
+    }
     return FALSE;
 }
 
@@ -996,7 +996,7 @@ playlistwin_scrolled(GtkWidget * widget,
         playlistwin_scroll(-cfg.scroll_pl_by);
 
     // deactivating this fixed a gui freeze when scrolling. -- mf0102
-    //g_cond_signal(cond_scan);
+    g_cond_signal(cond_scan);
 
 }
 
@@ -1269,7 +1269,7 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
 
     if (refresh) {
         // fixes keyboard scrolling gui freeze for me. -- mf0102
-        //g_cond_signal(cond_scan);
+        g_cond_signal(cond_scan);
         playlistwin_update_list(playlist_get_active());
     }
 

@@ -593,9 +593,11 @@ mainwin_refresh_hints(void)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
         bmp_active_skin->properties.mainwin_text_y);
 
-    if (bmp_active_skin->properties.mainwin_text_width)
-    gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width*(1+cfg.doublesize),
-        UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
+    if (bmp_active_skin->properties.mainwin_text_width) {
+        UI_SKINNED_TEXTBOX(mainwin_info)->width = bmp_active_skin->properties.mainwin_text_width;
+        gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width*(1+cfg.doublesize),
+                                    UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
+    }
 
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,

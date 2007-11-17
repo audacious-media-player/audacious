@@ -1990,7 +1990,7 @@
 			      <child>
 				<widget class="GtkRadioButton" id="playlist_metadata_on_display">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Load metadata on demand when displaying the file in the playlist</property>
+				  <property name="tooltip" translatable="yes">Load metadata on demand when displaying the file in the playlist. You may need to set &quot;Detect file formats on demand&quot; in Audio page for full benefit.</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">On display</property>
 				  <property name="use_underline">True</property>
@@ -3968,7 +3968,7 @@ Please note however, that high values will result in Audacious performing poorly
 			      <child>
 				<widget class="GtkCheckButton" id="detect_by_extension_cb">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">When checked, Audacious will detect file formats based by extension. This is slightly slower than detection on demand, but still provides a minimal level of format detection.</property>
+				  <property name="tooltip" translatable="yes">When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded.</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Detect file formats by extension.</property>
 				  <property name="use_underline">True</property>
