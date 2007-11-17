@@ -885,6 +885,12 @@ plugin_system_init(void)
     }
 }
 
+static void
+remove_list(gpointer key, gpointer value, gpointer data)
+{
+    g_list_free(*(GList **)value);
+}
+
 void
 plugin_system_cleanup(void)
 {
@@ -1052,5 +1058,6 @@ plugin_system_cleanup(void)
     }
 
     mowgli_dictionary_destroy(plugin_dict, NULL, NULL);
+    g_hash_table_foreach(ext_hash, remove_list, NULL);
     g_hash_table_remove_all(ext_hash);
 }
