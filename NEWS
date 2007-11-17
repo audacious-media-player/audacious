@@ -1,4 +1,4 @@
-Audacious 1.4.1 (2007-11-??)
+Audacious 1.4.1 (2007-11-17)
 
 Enhancements:
 * The skin code has been tweaked a little to fix loading of
@@ -7,9 +7,18 @@ Enhancements:
 * Playlists now carry an atomic serial number in order to avoid
   unnecessary reloading of metadata.
 * The command names used by audtool have been sanitized in order
-  to make some leve of sense.
+  to make some level of sense.
 * Add many new calls to libaudclient which were unimplemented after
   DBus transition.
+* Add error reporting when Tuplez scripts fail to compile.
+* Use a hashtable of extension to codec candidate lists to speed up 
+  codec detection.
+* Make on demand codec detection use the hashtable to filter out unplayable 
+  files.
+* Codec detection is now done on demand by default. Due to the recent 
+  rework of the codec detection system, this is the recommended setting.
+  (Audacious can process a large directory in only a few seconds of blocking 
+   this way, and streams are entirely processed in background this way.)
 
 Bugfixes:
 * [Bugzilla #53]: UTF-8 validation gives false positives
@@ -17,9 +26,16 @@ Bugfixes:
 * [Bugzilla #20]: status icon plugin breaks the 'always on top' feature
   (Reported by Dorian Scholz; Fixed by Tomasz Moń)
 * playback_get_length() was returning the typecode of FIELD_LENGTH, not
-  it's value (Fixed by Yoshiki Yazawa)
+  it's value
 * audctrl.h was dependent on #ifdef __cplusplus being a valid macro,
   now we use G_BEGIN_DECLS/G_END_DECLS to handle that.
+* Fix doublesize issues on startup. (Gentoo #199071)
+* Fix possible glitches that could be triggered by a scrolling textbox,
+  when the skin is switched.
+* Fix improper handling of integer constants in the Tuplez 
+  compiler/evaluation engine.
+* Fix misleading assertion notice triggers when a URI fails to load.
+* Cope with Winamp2 skins which do not have dashes in numbers.bmp.
 
 Audacious 1.4.0 (2007-11-01)
 
