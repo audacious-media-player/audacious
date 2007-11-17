@@ -1244,6 +1244,73 @@ mainwin_show_visibility_warning(void)
     }
 }
 
+static void
+on_broken_gtk_engine_warning_toggle(GtkToggleButton *tbt, gpointer unused)
+{
+    cfg.warn_about_broken_gtk_engines = !gtk_toggle_button_get_active(tbt);
+}
+
+void
+ui_main_check_theme_engine(void)
+{
+    GtkSettings *settings;
+    GtkWidget *widget;
+    gchar *theme = NULL;
+
+    widget = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_widget_ensure_style(widget);
+
+    settings = gtk_settings_get_default();
+    g_object_get(G_OBJECT(settings), "gtk-theme-name", &theme, NULL);
+    gtk_widget_destroy(widget);
+
+    if (theme == NULL)
+        return;
+
+    if (g_ascii_strcasecmp(theme, "Qt"))
+    {
+        g_free(theme);
+        return;
+    }
+
+    if (cfg.warn_about_broken_gtk_engines)
+    {
+        gchar *msg;
+        GtkWidget *label, *checkbt, *vbox;
+        GtkWidget *warning_dlg = gtk_dialog_new_with_buttons( _("Audacious - broken GTK engine usage warning") ,
+            GTK_WINDOW(mainwin) , GTK_DIALOG_DESTROY_WITH_PARENT ,
+            _("Close"), GTK_RESPONSE_OK, NULL );
+        vbox = gtk_vbox_new( FALSE , 4 );
+        gtk_container_set_border_width( GTK_CONTAINER(vbox) , 4 );
+        gtk_box_pack_start( GTK_BOX(GTK_DIALOG(warning_dlg)->vbox) , vbox , TRUE , TRUE , 0 );
+
+        msg = g_strdup_printf(_("<big><b>Broken GTK engine in use</b></big>\n\n"
+				 "Audacious has detected that you are using a broken GTK engine.\n\n"
+                                 "The theme engine you are using, <i>%s</i> is incompatible with some of the features "
+                                 "used by modern skins. The incompatible features have been disabled for this session.\n\n"
+                                 "To use these features, please consider using a different GTK theme engine."), theme);
+        label = gtk_label_new(msg);
+        gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
+        g_free(msg);
+
+        gtk_label_set_line_wrap( GTK_LABEL(label) , TRUE );
+        gtk_misc_set_alignment( GTK_MISC(label) , 0.0 , 0.0 );
+        checkbt = gtk_check_button_new_with_label( _("Do not display this warning again") );
+        gtk_box_pack_start( GTK_BOX(vbox) , label , TRUE , TRUE , 0 );
+        gtk_box_pack_start( GTK_BOX(vbox) , checkbt , TRUE , TRUE , 0 );
+        g_signal_connect( G_OBJECT(checkbt) , "toggled" ,
+            G_CALLBACK(on_broken_gtk_engine_warning_toggle) , NULL );
+        g_signal_connect( G_OBJECT(warning_dlg) , "response" ,
+            G_CALLBACK(gtk_widget_destroy) , NULL );        
+        gtk_widget_show_all(warning_dlg);
+        gtk_window_stick(GTK_WINDOW(warning_dlg));
+    }
+
+    cfg.disable_inline_gtk = TRUE;
+
+    g_free(theme);
+}
+
 void
 mainwin_show_add_url_window(void)
 {

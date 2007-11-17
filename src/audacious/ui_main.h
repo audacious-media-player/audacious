@@ -189,4 +189,6 @@ void playback_get_sample_params(gint * bitrate,
                                 gint * frequency,
                                 gint * numchannels);
 
+void ui_main_check_theme_engine(void);
+
 #endif

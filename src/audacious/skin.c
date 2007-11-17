@@ -1528,10 +1528,12 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         skin_load_cursor(skin, path);
 
 #ifndef _WIN32
-        gtkrcpath = find_path_recursively(skin->path, "gtkrc");
-        if (gtkrcpath != NULL)
-            skin_set_gtk_theme(settings, skin);
-        g_free(gtkrcpath);
+        if (!cfg.disable_inline_gtk) {
+            gtkrcpath = find_path_recursively(skin->path, "gtkrc");
+            if (gtkrcpath != NULL)
+                skin_set_gtk_theme(settings, skin);
+            g_free(gtkrcpath);
+        }
 #endif
 
         return TRUE;
@@ -1555,10 +1557,12 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     skin_load_cursor(skin, cpath);
 
 #ifndef _WIN32
-    gtkrcpath = find_path_recursively(skin->path, "gtkrc");
-    if (gtkrcpath != NULL)
-        skin_set_gtk_theme(settings, skin);
-    g_free(gtkrcpath);
+    if (!cfg.disable_inline_gtk) {
+        gtkrcpath = find_path_recursively(skin->path, "gtkrc");
+        if (gtkrcpath != NULL)
+            skin_set_gtk_theme(settings, skin);
+        g_free(gtkrcpath);
+    }
 #endif
 
     del_directory(cpath);

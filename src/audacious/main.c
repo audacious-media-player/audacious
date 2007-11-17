@@ -226,6 +226,8 @@ BmpConfig bmp_default_config = {
     TRUE,           /* close jtf dialog on jump */
     TRUE,           /* use back and forth scroll */
     FALSE,          /* use software volume control */
+    .warn_about_broken_gtk_engines = TRUE,           /* warn about broken gtk themes */
+    FALSE,          /* disable inline themes */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -334,6 +336,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
     {"twoway_scroll", &cfg.twoway_scroll, TRUE},
     {"software_volume_control", &cfg.software_volume_control, TRUE},
+    {"warn_about_broken_gtk_engines", &cfg.warn_about_broken_gtk_engines, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -1463,6 +1466,8 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
+      ui_main_check_theme_engine();
+
       /* UIManager
          NOTE: this needs to be called before plugin init, cause
          plugin init functions may want to add custom menu entries */ 
