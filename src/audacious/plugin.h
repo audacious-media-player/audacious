@@ -1077,6 +1077,10 @@ struct _InputPlugin {
     /* Added in Audacious 1.4.0 */
     void (*mseek) (InputPlayback * playback, gulong millisecond);
     Tuple *(*probe_for_tuple)(gchar *uri, VFSFile *fd);
+
+    /* Added in Audacious 1.4.1 */
+    gboolean have_subtune;
+
 };
 
 struct _GeneralPlugin {
