@@ -785,20 +785,22 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
         return TRUE;
     }
 
-    /* audio file or uri */
-    if (playlist->loading_playlist == TRUE)
+    /* playlist file or remote uri */
+    if (playlist->loading_playlist == TRUE ||
+        str_has_prefix_nocase(filename, "http://") ||
+        str_has_prefix_nocase(filename, "https://")) {
         dec = NULL;
+    }
 
-    /* on demand probing is on */
-    if (cfg.playlist_detect == TRUE) { 
+    /* local file and on-demand probing is on */
+    else if (cfg.playlist_detect == TRUE) { 
         dec = NULL;
         if(cfg.use_extension_probing && !filter_by_extension(filename))
             return FALSE;
     }
-    /* find decorder for non-remote uri i.e. local file */
-    else if (!str_has_prefix_nocase(filename, "http://") && 
-        !str_has_prefix_nocase(filename, "https://")) {
 
+    /* find decorder for local file */
+    else {
         pr = input_check_file(filename, TRUE);
 
         if (pr) {
@@ -983,7 +985,7 @@ playlist_dir_find_files(const gchar * path,
             else
                 list = g_list_prepend(list, filename);
         }
-        else if ((pr = input_check_file(filename, TRUE)) != NULL)
+        else if ((pr = input_check_file(filename, TRUE)) != NULL) /* local file, probing*/
         {
             list = g_list_prepend(list, filename);
 
@@ -1735,32 +1737,47 @@ playlist_load_ins_file(Playlist *playlist,
 
     if (filename[0] != '/' && !strstr(filename, "://")) {
         path = g_strdup(playlist_name);
+
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-            if ((playlist->loading_playlist == TRUE ||
-                 cfg.playlist_detect == TRUE)) {
+            /* playlist file or remote uri */
+            if (playlist->loading_playlist == TRUE ||
+                str_has_prefix_nocase(filename, "http://") ||
+                str_has_prefix_nocase(filename, "https://")) {
                 pr = NULL;
-                if(!filter_by_extension(filename))
+            }
+            /* local file and on-demand probing is on */
+            else if (cfg.playlist_detect == TRUE) {
+                pr = NULL;
+                if(cfg.use_extension_probing && !filter_by_extension(filename))
                     return;
             }
-            else if (!str_has_prefix_nocase(filename, "http://") && 
-                     !str_has_prefix_nocase(filename, "https://")) {
+            /* find decorder for local file */
+            else {
                 pr = input_check_file(filename, TRUE);
             }
             __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
             g_free(pr);
             return;
         }
+
         tmp = g_build_filename(path, filename, NULL);
 
-        if (playlist->loading_playlist == TRUE && cfg.playlist_detect == TRUE) {
+        /* playlist file or remote uri */
+        if (playlist->loading_playlist == TRUE ||
+            str_has_prefix_nocase(tmp, "http://") ||
+            str_has_prefix_nocase(tmp, "https://")) {
             pr = NULL;
-            if(!filter_by_extension(filename))
+        }
+        /* local file and on-demand probing is on */
+        else if (cfg.playlist_detect == TRUE) {
+            pr = NULL;
+            if(cfg.use_extension_probing && !filter_by_extension(filename))
                 return;
         }
-        else if (!str_has_prefix_nocase(tmp, "http://") && 
-                 !str_has_prefix_nocase(tmp, "https://")) {
+        /* find decoder for local file */
+        else {
             pr = input_check_file(tmp, TRUE);
         }
 
@@ -1771,14 +1788,20 @@ playlist_load_ins_file(Playlist *playlist,
     }
     else
     {
-        if ((playlist->loading_playlist == TRUE ||
-             cfg.playlist_detect == TRUE)) {
+        /* playlist file or remote uri */
+        if (playlist->loading_playlist == TRUE ||
+            str_has_prefix_nocase(filename, "http://") ||
+            str_has_prefix_nocase(filename, "https://")) {
             pr = NULL;
-            if(!filter_by_extension(filename))
+        }
+        /* local file and on-demand probing is on */
+        else if (cfg.playlist_detect == TRUE) {
+            pr = NULL;
+            if(cfg.use_extension_probing && !filter_by_extension(filename))
                 return;
         }
-        else if (!str_has_prefix_nocase(filename, "http://") && 
-                 !str_has_prefix_nocase(filename, "https://")) {
+        /* find decoder for local file */
+        else {
             pr = input_check_file(filename, TRUE);
         }
         __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
@@ -1814,31 +1837,40 @@ playlist_load_ins_file_tuple(Playlist * playlist,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-            if ((playlist->loading_playlist == TRUE ||
-                 cfg.playlist_detect == TRUE)) {
+            if (playlist->loading_playlist == TRUE ||
+            str_has_prefix_nocase(filename, "http://") ||
+            str_has_prefix_nocase(filename, "https://")) {
                 pr = NULL;
-                if(!filter_by_extension(filename))
+            }
+            else if (cfg.playlist_detect == TRUE) {
+                pr = NULL;
+                if(cfg.use_extension_probing && !filter_by_extension(filename))
                     return;
             }
-	    else if (!str_has_prefix_nocase(filename, "http://") && 
-	        !str_has_prefix_nocase(filename, "https://"))
-	        pr = input_check_file(filename, TRUE);
+            else {
+                pr = input_check_file(filename, TRUE);
+            }
 
             __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
             g_free(pr);
             return;
         }
+
         tmp = g_build_filename(path, filename, NULL);
 
-        if ((playlist->loading_playlist == TRUE ||
-             cfg.playlist_detect == TRUE)) {
+        if (playlist->loading_playlist == TRUE ||
+            str_has_prefix_nocase(filename, "http://") ||
+            str_has_prefix_nocase(filename, "https://")) {
             pr = NULL;
-            if(!filter_by_extension(filename))
+        }
+        else if (cfg.playlist_detect == TRUE) {
+            pr = NULL;
+            if(cfg.use_extension_probing && !filter_by_extension(filename))
                 return;
         }
-        else if (!str_has_prefix_nocase(filename, "http://") && 
-            !str_has_prefix_nocase(filename, "https://"))
+        else {
             pr = input_check_file(filename, TRUE);
+        }
 
         __playlist_ins_with_info_tuple(playlist, tmp, pos, tuple, pr ? pr->ip : NULL);
         g_free(tmp);
@@ -1847,15 +1879,19 @@ playlist_load_ins_file_tuple(Playlist * playlist,
     }
     else
     {
-        if ((playlist->loading_playlist == TRUE ||
-             cfg.playlist_detect == TRUE)) {
+        if (playlist->loading_playlist == TRUE ||
+            str_has_prefix_nocase(filename, "http://") ||
+            str_has_prefix_nocase(filename, "https://")) {
             pr = NULL;
-            if(!filter_by_extension(filename))
+        }
+        else if (cfg.playlist_detect == TRUE) {
+            pr = NULL;
+            if(cfg.use_extension_probing && !filter_by_extension(filename))
                 return;
         }
-        else if (!str_has_prefix_nocase(filename, "http://") && 
-            !str_has_prefix_nocase(filename, "https://"))
+        else {
             pr = input_check_file(filename, TRUE);
+        }
 
         __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
         g_free(pr);
