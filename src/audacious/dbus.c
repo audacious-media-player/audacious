@@ -240,6 +240,16 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
         g_hash_table_insert(md, "genre", value);
     }
 
+    value = tuple_value_to_gvalue(tuple, "codec");
+    if (value != NULL) {
+        g_hash_table_insert(md, "codec", value);
+    }
+
+    value = tuple_value_to_gvalue(tuple, "quality");
+    if (value != NULL) {
+        g_hash_table_insert(md, "quality", value);
+    }
+
     return md;
 }
 
