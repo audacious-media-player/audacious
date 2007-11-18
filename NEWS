@@ -19,6 +19,7 @@ Enhancements:
   rework of the codec detection system, this is the recommended setting.
   (Audacious can process a large directory in only a few seconds of blocking 
    this way, and streams are entirely processed in background this way.)
+* Add codec and quality fields to MPRIS TrackInfo tuples sent over DBus.
 
 Bugfixes:
 * [Bugzilla #53]: UTF-8 validation gives false positives
