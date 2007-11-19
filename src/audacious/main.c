@@ -1468,9 +1468,13 @@ main(gint argc, gchar ** argv)
     {
       ui_main_check_theme_engine();
 
+      /* register icons in stock
+         NOTE: should be called before UIManager */
+      register_aud_stock_icons();
+
       /* UIManager
          NOTE: this needs to be called before plugin init, cause
-         plugin init functions may want to add custom menu entries */ 
+         plugin init functions may want to add custom menu entries */
       ui_manager_init();
       ui_manager_create_menus();
     }
@@ -1491,9 +1495,6 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
-        /* register icons in stock */
-        register_aud_stock_icons();
-
         bmp_set_default_icon();
 #ifdef GDK_WINDOWING_QUARTZ
         set_dock_icon();

@@ -1,7 +1,7 @@
 /* GdkPixbuf RGBA C-Source image dump 1-byte-run-length-encoded */
 
 #ifdef __SUNPRO_C
-#pragma align 4 (my_pixbuf)
+#pragma align 4 (info_pixbuf)
 #endif
 #ifdef __GNUC__
 static const guint8 info_pixbuf[] __attribute__ ((__aligned__ (4))) = 
