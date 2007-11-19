@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-10-13 14:15+0200\n"
+"POT-Creation-Date: 2007-11-19 18:40+0100\n"
 "PO-Revision-Date: 2007-06-15 13:51-0600\n"
 "Last-Translator: William Pitcock <nenolod@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
@@ -261,7 +261,10 @@ msgid "On load"
 msgstr "Am llwytho"
 
 #: src/audacious/glade/prefswin.glade:1993
-msgid "Load metadata on demand when displaying the file in the playlist"
+#, fuzzy
+msgid ""
+"Load metadata on demand when displaying the file in the playlist. You may "
+"need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr "Llwytho'r metadata at galw pryd gofyn ar ffeil am ar rhestr chwarae"
 
 #: src/audacious/glade/prefswin.glade:1995
@@ -460,10 +463,10 @@ msgid "Detect file formats on demand, instead of immediately."
 msgstr "Awtoganfod ffiel trefniad am gofyn."
 
 #: src/audacious/glade/prefswin.glade:3971
+#, fuzzy
 msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
+"When checked, Audacious will detect file formats based by extension. Only "
+"files with extensions of supported formats will be loaded."
 msgstr ""
 "Os dewisedig, Audacious ewyllys awtoganfod ffiel trefniad at ymestyniad."
 
@@ -552,62 +555,62 @@ msgstr ""
 msgid "Use software volume control"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4746
+#: src/audacious/glade/prefswin.glade:4745
 msgid "Reload Plugins"
 msgstr "Ategynnau Ail-wytho"
 
-#: src/audacious/glade/prefswin.glade:4807
+#: src/audacious/glade/prefswin.glade:4806
 msgid "Popup Information Settings"
 msgstr "Gwybodaeth Popup"
 
-#: src/audacious/glade/prefswin.glade:4831
+#: src/audacious/glade/prefswin.glade:4830
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Albwm celf adennill</b>"
 
-#: src/audacious/glade/prefswin.glade:4856
+#: src/audacious/glade/prefswin.glade:4855
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr "Chi enwi y allweddair yng chwilio am tannod."
 
-#: src/audacious/glade/prefswin.glade:4911
+#: src/audacious/glade/prefswin.glade:4910
 msgid "Exclude:"
 msgstr "Allgau:"
 
-#: src/audacious/glade/prefswin.glade:4939
+#: src/audacious/glade/prefswin.glade:4938
 msgid "Include:"
 msgstr "Cynnwys:"
 
-#: src/audacious/glade/prefswin.glade:5008
+#: src/audacious/glade/prefswin.glade:5007
 msgid "Recursively search for cover"
 msgstr "Archwilio amrfyal gwastad am pictiwr"
 
-#: src/audacious/glade/prefswin.glade:5046
+#: src/audacious/glade/prefswin.glade:5045
 msgid "Search depth: "
 msgstr "Archwilio dyfndra:"
 
-#: src/audacious/glade/prefswin.glade:5112
+#: src/audacious/glade/prefswin.glade:5111
 msgid "Use per-file cover"
 msgstr "Defnyddio amgenach pictiwr am y pen ffiel"
 
-#: src/audacious/glade/prefswin.glade:5132
+#: src/audacious/glade/prefswin.glade:5131
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Amrywiol</b>"
 
-#: src/audacious/glade/prefswin.glade:5170
+#: src/audacious/glade/prefswin.glade:5169
 msgid "Show Progress bar for the current track"
 msgstr "Dangos cynnydd dangosydd am y cerrynt trac"
 
-#: src/audacious/glade/prefswin.glade:5208
+#: src/audacious/glade/prefswin.glade:5207
 msgid "Delay until filepopup comes up: "
 msgstr "Oediad tan filepopup ys dangosydd"
 
-#: src/audacious/glade/prefswin.glade:5302
+#: src/audacious/glade/prefswin.glade:5301
 msgid "Color Adjustment"
 msgstr "Addasiad Eiliwiau"
 
-#: src/audacious/glade/prefswin.glade:5325
+#: src/audacious/glade/prefswin.glade:5324
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
@@ -615,32 +618,32 @@ msgstr ""
 "Audacious caniatáu altradau am y eiliwiau tafol ym y UI. Y opsiwnau caniatáu "
 "am taw."
 
-#: src/audacious/glade/prefswin.glade:5359
+#: src/audacious/glade/prefswin.glade:5358
 msgid "Blue"
 msgstr "Glas"
 
-#: src/audacious/glade/prefswin.glade:5387
+#: src/audacious/glade/prefswin.glade:5386
 msgid "Green"
 msgstr "Gwyrdd"
 
-#: src/audacious/glade/prefswin.glade:5415
+#: src/audacious/glade/prefswin.glade:5414
 msgid "Red"
 msgstr "Rhudd"
 
-#: src/audacious/input.c:627
+#: src/audacious/input.c:633
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: src/audacious/input.c:643
+#: src/audacious/input.c:649
 msgid "Filename:"
 msgstr "Enw ffeil:"
 
-#: src/audacious/input.c:662
+#: src/audacious/input.c:668
 msgid "No input plugin recognized this file"
 msgstr "Ategyn mewnbwn heb adnabod y ffeil"
 
-#: src/audacious/input.c:664
+#: src/audacious/input.c:670
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Ategyn mewnbwn: %s"
@@ -651,80 +654,80 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Methu creu'r ffeil gofnod (%s)!\n"
 
 #: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:491
-#: src/audacious/ui_main.c:2466
+#: src/audacious/ui_main.c:2525
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:477
+#: src/audacious/main.c:480
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Methu Creu Cyfrifiadur (%s): %s\n"
 
-#: src/audacious/main.c:1065
+#: src/audacious/main.c:1068
 msgid "Select which Audacious session ID to use"
 msgstr "Dewis sesiwn Audacious ID defnyddio"
 
-#: src/audacious/main.c:1066
+#: src/audacious/main.c:1069
 msgid "Skip backwards in playlist"
 msgstr "Sgipio nôl yn y rhestr chwarae"
 
-#: src/audacious/main.c:1067
+#: src/audacious/main.c:1070
 msgid "Start playing current playlist"
 msgstr "Cychwyn chwarae'r rhestr chwarae"
 
-#: src/audacious/main.c:1068
+#: src/audacious/main.c:1071
 msgid "Pause current song"
 msgstr "Oedi'r gân"
 
-#: src/audacious/main.c:1069
+#: src/audacious/main.c:1072
 msgid "Stop current song"
 msgstr "Atal y gân"
 
-#: src/audacious/main.c:1070
+#: src/audacious/main.c:1073
 msgid "Pause if playing, play otherwise"
 msgstr "Oedi os yn chwarae, chwarae fel arall"
 
-#: src/audacious/main.c:1071
+#: src/audacious/main.c:1074
 msgid "Skip forward in playlist"
 msgstr "Sgipio mlaen yn y rhestr chwarae"
 
-#: src/audacious/main.c:1072
+#: src/audacious/main.c:1075
 msgid "Display Jump to File dialog"
 msgstr "Dangos Neidio i Ffeil"
 
-#: src/audacious/main.c:1073
+#: src/audacious/main.c:1076
 msgid "Don't clear the playlist"
 msgstr "Peidio clirio'r rhestr chwarae"
 
-#: src/audacious/main.c:1074
+#: src/audacious/main.c:1077
 msgid "Add new files to a temporary playlist"
 msgstr "Adio y ffeil at ar rhestr chwarae ni parahol"
 
-#: src/audacious/main.c:1075
+#: src/audacious/main.c:1078
 msgid "Display the main window"
 msgstr "Dangos y prif ffenestr."
 
-#: src/audacious/main.c:1076
+#: src/audacious/main.c:1079
 msgid "Display all open Audacious windows"
 msgstr "Dangos pob agor Audacious ffenestrau"
 
-#: src/audacious/main.c:1077
+#: src/audacious/main.c:1080
 msgid "Enable headless operation"
 msgstr "Gallougi gweithrediad headless"
 
-#: src/audacious/main.c:1078
+#: src/audacious/main.c:1081
 msgid "Print all errors and warnings to stdout"
 msgstr "Argaffu gwallau a rhybudd i stdout"
 
-#: src/audacious/main.c:1079
+#: src/audacious/main.c:1082
 msgid "Show version and builtin features"
 msgstr "Argaffu rhif y fersiwn a nodwedd ar gael"
 
-#: src/audacious/main.c:1080
+#: src/audacious/main.c:1083
 msgid "FILE..."
 msgstr "FFEIL..."
 
-#: src/audacious/main.c:1239
+#: src/audacious/main.c:1316
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -736,7 +739,7 @@ msgstr ""
 "\n"
 "Gwiriwch croen am '%s' ar gael a croen rhagosodedig at am '%s'\n"
 
-#: src/audacious/main.c:1320
+#: src/audacious/main.c:1397
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -750,11 +753,11 @@ msgstr ""
 "LinuxThreads\n"
 "bydd angen i chi ailgrynhoi GLIB a GTK+\n"
 
-#: src/audacious/main.c:1351
+#: src/audacious/main.c:1428
 msgid "- play multimedia files"
 msgstr "- chwarae ffeil amlgyfrwng"
 
-#: src/audacious/main.c:1358
+#: src/audacious/main.c:1435
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -763,7 +766,7 @@ msgstr ""
 "%s: %s\n"
 "Ceisio `%s --help' am ychwaneg gwybodaeth.\n"
 
-#: src/audacious/main.c:1368
+#: src/audacious/main.c:1445
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Methu agor dangosydd, yn gadael.\n"
@@ -824,12 +827,12 @@ msgstr ""
 "\n"
 "Hawlfraint (C) 2005-2006 Audacious Development Team"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:357
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:358
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
 msgstr "Ynghylch Audacious"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:400
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:401
 msgid "Credits"
 msgstr "Diolchiadau"
 
@@ -858,151 +861,151 @@ msgstr "Diolchiadau graphi:"
 msgid "Default skin:"
 msgstr "Croen rhagosodedig:"
 
-#: src/audacious/ui_credits.c:81
+#: src/audacious/ui_credits.c:82
 msgid "Plugin development:"
 msgstr "Diolchiadau ategynnau:"
 
-#: src/audacious/ui_credits.c:97
+#: src/audacious/ui_credits.c:98
 msgid "Patch authors:"
 msgstr "Diolchiadau patch:"
 
-#: src/audacious/ui_credits.c:117
+#: src/audacious/ui_credits.c:118
 msgid "0.1.x developers:"
 msgstr "Diolchiadau 0.1.x:"
 
-#: src/audacious/ui_credits.c:123
+#: src/audacious/ui_credits.c:124
 msgid "BMP Developers:"
 msgstr "Diolchiadau BMP:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:156
 msgid "Brazilian Portuguese:"
 msgstr "Portiwgaleg Brasilaidd:"
 
-#: src/audacious/ui_credits.c:159
+#: src/audacious/ui_credits.c:160
 msgid "Breton:"
 msgstr "Bretwig:"
 
-#: src/audacious/ui_credits.c:162
+#: src/audacious/ui_credits.c:163
 msgid "Bulgarian:"
 msgstr "Bwlgareg:"
 
-#: src/audacious/ui_credits.c:165
+#: src/audacious/ui_credits.c:166
 msgid "Catalan:"
 msgstr "Catalaneg:"
 
-#: src/audacious/ui_credits.c:168
+#: src/audacious/ui_credits.c:169
 msgid "Croatian:"
 msgstr "Croataidd:"
 
-#: src/audacious/ui_credits.c:171
+#: src/audacious/ui_credits.c:172
 msgid "Czech:"
 msgstr "Tsiec:"
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:175
 msgid "Dutch:"
 msgstr "Isalmaeneg:"
 
-#: src/audacious/ui_credits.c:178
+#: src/audacious/ui_credits.c:179
 msgid "Finnish:"
 msgstr "Ffineg:"
 
-#: src/audacious/ui_credits.c:181
+#: src/audacious/ui_credits.c:182
 msgid "French:"
 msgstr "Ffrangeg:"
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:186
 msgid "German:"
 msgstr "Almaeneg:"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:191
 msgid "Georgian:"
 msgstr "Georgieg:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:194
 msgid "Greek:"
 msgstr "Groeg:"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Hindi:"
 msgstr "Hyndig:"
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:202
 msgid "Hungarian:"
 msgstr "Hwngareg:"
 
-#: src/audacious/ui_credits.c:204
+#: src/audacious/ui_credits.c:205
 msgid "Italian:"
 msgstr "Eidaleg:"
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:209
 msgid "Japanese:"
 msgstr "Siapanëeg:"
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:212
 msgid "Korean:"
 msgstr "Corëeg:"
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:215
 msgid "Lithuanian:"
 msgstr "Lithueneg:"
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:218
 msgid "Macedonian:"
 msgstr "Macedonieg:"
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:221
 msgid "Polish:"
 msgstr "Pwyleg:"
 
-#: src/audacious/ui_credits.c:223
+#: src/audacious/ui_credits.c:224
 msgid "Romanian:"
 msgstr "Romaneg:"
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:228
 msgid "Russian:"
 msgstr "Rwsieg:"
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:231
 msgid "Serbian (Latin):"
 msgstr "Serbeg (Lladin):"
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:234
 msgid "Serbian (Cyrillic):"
 msgstr "Serbeg (Cwyrileg):"
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:237
 msgid "Simplified Chinese:"
 msgstr "Tsieineaidd Seml:"
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:240
 msgid "Slovak:"
 msgstr "Slofaceg:"
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:243
 msgid "Spanish:"
 msgstr "Spaeneg:"
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:246
 msgid "Swedish:"
 msgstr "Swedeg:"
 
-#: src/audacious/ui_credits.c:248
+#: src/audacious/ui_credits.c:249
 msgid "Traditional Chinese:"
 msgstr "Tsieineaidd Traddodiadol:"
 
-#: src/audacious/ui_credits.c:251
+#: src/audacious/ui_credits.c:252
 msgid "Turkish:"
 msgstr "Twrceg:"
 
-#: src/audacious/ui_credits.c:255
+#: src/audacious/ui_credits.c:256
 msgid "Ukrainian:"
 msgstr "Wcraneg:"
 
-#: src/audacious/ui_credits.c:258
+#: src/audacious/ui_credits.c:259
 msgid "Welsh:"
 msgstr "Cymraeg:"
 
-#: src/audacious/ui_credits.c:404
+#: src/audacious/ui_credits.c:405
 msgid "Translators"
 msgstr "Cyfieithwyr"
 
@@ -1018,85 +1021,85 @@ msgstr "Rhagosodau"
 msgid "Track Information Window"
 msgstr "Gwybodaeth Trac"
 
-#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
+#: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
 #: src/audacious/ui_preferences.c:125
 msgid "Title"
 msgstr "Teitl"
 
-#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:123
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:123
 msgid "Artist"
 msgstr "Cyflawnwr"
 
-#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:124
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:124
 msgid "Album"
 msgstr "Albwm"
 
-#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:127
 msgid "Genre"
 msgstr "Math"
 
-#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:131
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:131
 msgid "Year"
 msgstr "Blwyddyn"
 
-#: src/audacious/ui_fileinfopopup.c:267
+#: src/audacious/ui_fileinfopopup.c:269
 msgid "Track Number"
 msgstr "Rhif y Trac"
 
-#: src/audacious/ui_fileinfopopup.c:271
+#: src/audacious/ui_fileinfopopup.c:273
 msgid "Track Length"
 msgstr "Hyd trac"
 
-#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:128
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:128
 #: src/audacious/ui_preferences.c:420
 msgid "Filename"
 msgstr "Enw ffeil"
 
-#: src/audacious/ui_fileopener.c:127
+#: src/audacious/ui_fileopener.c:137
 msgid "Open Files"
 msgstr "Tocio Ffeiliau"
 
-#: src/audacious/ui_fileopener.c:127
+#: src/audacious/ui_fileopener.c:137
 msgid "Add Files"
 msgstr "Ychwanegu Ffeiliau"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:139
 msgid "Close dialog on Open"
 msgstr "Closio am Tocio"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:139
 msgid "Close dialog on Add"
 msgstr "Closio am Ychwanegu"
 
-#: src/audacious/ui_fileopener.c:356
+#: src/audacious/ui_fileopener.c:376
 msgid "Play files"
 msgstr "Ffeiliau chwarae"
 
-#: src/audacious/ui_fileopener.c:358
+#: src/audacious/ui_fileopener.c:378
 msgid "Load files"
 msgstr "Llwytho ffeiliau"
 
-#: src/audacious/ui_jumptotrack.c:138
+#: src/audacious/ui_jumptotrack.c:143
 msgid "Un_queue"
 msgstr "_Rhes tynnu"
 
-#: src/audacious/ui_jumptotrack.c:140 src/audacious/ui_jumptotrack.c:603
+#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:624
 msgid "_Queue"
 msgstr "_Rhes"
 
-#: src/audacious/ui_jumptotrack.c:518
+#: src/audacious/ui_jumptotrack.c:539
 msgid "Jump to Track"
 msgstr "Neidio i trac"
 
-#: src/audacious/ui_jumptotrack.c:559
+#: src/audacious/ui_jumptotrack.c:580
 msgid "Filter: "
 msgstr "Hidl:"
 
-#: src/audacious/ui_jumptotrack.c:560
+#: src/audacious/ui_jumptotrack.c:581
 msgid "_Filter:"
 msgstr "_Hidl:"
 
-#: src/audacious/ui_jumptotrack.c:594
+#: src/audacious/ui_jumptotrack.c:615
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Closio am Tocio"
@@ -1106,44 +1109,44 @@ msgstr "Closio am Tocio"
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:744
+#: src/audacious/ui_main.c:739
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:761 src/audacious/ui_main.c:765
+#: src/audacious/ui_main.c:756 src/audacious/ui_main.c:760
 msgid "stereo"
 msgstr "Stereo"
 
-#: src/audacious/ui_main.c:761 src/audacious/ui_main.c:765
+#: src/audacious/ui_main.c:756 src/audacious/ui_main.c:760
 msgid "mono"
 msgstr "Unsain"
 
-#: src/audacious/ui_main.c:1060 src/audacious/ui_manager.c:420
+#: src/audacious/ui_main.c:1055 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
 msgid "Jump to Time"
 msgstr "Neidio i Amser"
 
-#: src/audacious/ui_main.c:1081
+#: src/audacious/ui_main.c:1076
 msgid "minutes:seconds"
 msgstr "munudau:eiliadau"
 
-#: src/audacious/ui_main.c:1091
+#: src/audacious/ui_main.c:1086
 msgid "Track length:"
 msgstr "Hyd trac:"
 
-#: src/audacious/ui_main.c:1228
+#: src/audacious/ui_main.c:1223
 msgid "Audacious - visibility warning"
 msgstr "Audacious - rhybudd gwelededd"
 
-#: src/audacious/ui_main.c:1230
+#: src/audacious/ui_main.c:1225
 msgid "Show main player window"
 msgstr "Dangos y brif ffenestr"
 
-#: src/audacious/ui_main.c:1231
+#: src/audacious/ui_main.c:1226
 msgid "Ignore"
 msgstr "Anwybyddu"
 
-#: src/audacious/ui_main.c:1235
+#: src/audacious/ui_main.c:1230
 msgid ""
 "Audacious has been started with all of its windows hidden.\n"
 "You may want to show the player window again to control Audacious; "
@@ -1151,72 +1154,96 @@ msgid ""
 "(such as the statusicon plugin)."
 msgstr ""
 
-#: src/audacious/ui_main.c:1241
+#: src/audacious/ui_main.c:1236
 msgid "Always ignore, show/hide is controlled remotely"
 msgstr ""
 
-#: src/audacious/ui_main.c:1259
+#: src/audacious/ui_main.c:1282
+#, fuzzy
+msgid "Audacious - broken GTK engine usage warning"
+msgstr "Audacious - rhybudd gwelededd"
+
+#: src/audacious/ui_main.c:1290
+#, c-format
+msgid ""
+"<big><b>Broken GTK engine in use</b></big>\n"
+"\n"
+"Audacious has detected that you are using a broken GTK engine.\n"
+"\n"
+"The theme engine you are using, <i>%s</i>, is incompatible with some of the "
+"features used by modern skins. The incompatible features have been disabled "
+"for this session.\n"
+"\n"
+"To use these features, please consider using a different GTK theme engine."
+msgstr ""
+
+#: src/audacious/ui_main.c:1301
+#, fuzzy
+msgid "Do not display this warning again"
+msgstr "Peidio â dangos y r rhybydd yma eto."
+
+#: src/audacious/ui_main.c:1324
 msgid "Enter location to play:"
 msgstr "Rhowch leoliad i chwarae:"
 
-#: src/audacious/ui_main.c:1504
+#: src/audacious/ui_main.c:1569
 #, fuzzy, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "CHWILIO HYD: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1536
+#: src/audacious/ui_main.c:1601
 #, c-format
 msgid "Volume: %d%%"
 msgstr ""
 
-#: src/audacious/ui_main.c:1566
+#: src/audacious/ui_main.c:1631
 #, c-format
 msgid "Balance: %d%% left"
 msgstr ""
 
-#: src/audacious/ui_main.c:1570
+#: src/audacious/ui_main.c:1635
 msgid "Balance: center"
 msgstr ""
 
-#: src/audacious/ui_main.c:1574
+#: src/audacious/ui_main.c:1639
 #, c-format
 msgid "Balance: %d%% right"
 msgstr ""
 
-#: src/audacious/ui_main.c:1916
+#: src/audacious/ui_main.c:1975
 msgid "Options Menu"
 msgstr ""
 
-#: src/audacious/ui_main.c:1920
+#: src/audacious/ui_main.c:1979
 #, fuzzy
 msgid "Disable 'Always On Top'"
 msgstr "Bob Tro ar yr Wyneb"
 
-#: src/audacious/ui_main.c:1922
+#: src/audacious/ui_main.c:1981
 #, fuzzy
 msgid "Enable 'Always On Top'"
 msgstr "Bob Tro ar yr Wyneb"
 
-#: src/audacious/ui_main.c:1925
+#: src/audacious/ui_main.c:1984
 msgid "File Info Box"
 msgstr ""
 
-#: src/audacious/ui_main.c:1929
+#: src/audacious/ui_main.c:1988
 #, fuzzy
 msgid "Disable 'Doublesize'"
 msgstr "Maint Dwbwl"
 
-#: src/audacious/ui_main.c:1931
+#: src/audacious/ui_main.c:1990
 #, fuzzy
 msgid "Enable 'Doublesize'"
 msgstr "Maint Dwbwl"
 
-#: src/audacious/ui_main.c:1934
+#: src/audacious/ui_main.c:1993
 #, fuzzy
 msgid "Visualization Menu"
 msgstr "Modd Delweddu"
 
-#: src/audacious/ui_main.c:1982
+#: src/audacious/ui_main.c:2041
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1232,7 +1259,7 @@ msgstr ""
 "2. Nid oes rhaglen arall yn rhwystro'r cerdyn sain\n"
 "3. Bod eich cerdyn sain wedi ei ffurfweddu'n gywir\n"
 
-#: src/audacious/ui_main.c:2446
+#: src/audacious/ui_main.c:2505
 msgid "Error in Audacious."
 msgstr "Cyfeiliorn am Audacious"
 
@@ -2053,51 +2080,51 @@ msgstr "Disgrifiad:"
 msgid "Category"
 msgstr "Categori"
 
-#: src/audacious/ui_preferences.c:1963
+#: src/audacious/ui_preferences.c:1931
 msgid "Preferences Window"
 msgstr "Dewisiadau"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:386
+#: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "PREAMP"
 msgstr "CYNAMP"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:386
+#: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "60HZ"
 msgstr "60HZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:386
+#: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "170HZ"
 msgstr "170HZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:387
+#: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "310HZ"
 msgstr "310HZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:387
+#: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "600HZ"
 msgstr "600HZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:387
+#: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "1KHZ"
 msgstr "1KHZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:388
+#: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "3KHZ"
 msgstr "3KHZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:388
+#: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "6KHZ"
 msgstr "6KHZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:388
+#: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "12KHZ"
 msgstr "12KHZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:389
+#: src/audacious/ui_skinned_equalizer_slider.c:387
 msgid "14KHZ"
 msgstr "14KHZ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:389
+#: src/audacious/ui_skinned_equalizer_slider.c:387
 msgid "16KHZ"
 msgstr "16KHZ"
 
@@ -2112,6 +2139,10 @@ msgstr "Croen Winamp 2.x"
 #: src/audacious/ui_urlopener.c:88
 msgid "Add/Open URL Dialog"
 msgstr "Ffenestr am y Adio/Llwytho URL"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Llygod"
 
 #~ msgid "Show window manager decorations"
 #~ msgstr "Dangos addurniadau'r rheolwr ffenestr"
@@ -2265,9 +2296,6 @@ msgstr "Ffenestr am y Adio/Llwytho URL"
 #~ "1. they are accessible.\n"
 #~ "2. you have enabled the media plugins required."
 #~ msgstr "<b><big>Ategyn mewnbwn heb adnabod y ffeil</big></b>"
-
-#~ msgid "Don't show this warning anymore"
-#~ msgstr "Peidio â dangos y r rhybydd yma eto."
 
 #~ msgid "Show more _details"
 #~ msgstr "Dangos _manylion"

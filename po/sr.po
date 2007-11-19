@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-10-13 14:15+0200\n"
+"POT-Creation-Date: 2007-11-19 18:40+0100\n"
 "PO-Revision-Date: 2007-07-31 14:42+0200\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team:  Serbian Cyrillic <kustodian@gmail.com>\n"
@@ -257,7 +257,10 @@ msgid "On load"
 msgstr "Приликом учитавања"
 
 #: src/audacious/glade/prefswin.glade:1993
-msgid "Load metadata on demand when displaying the file in the playlist"
+#, fuzzy
+msgid ""
+"Load metadata on demand when displaying the file in the playlist. You may "
+"need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr "Учитај мета-податке приликом приказивања датотеке у листи нумера"
 
 #: src/audacious/glade/prefswin.glade:1995
@@ -468,10 +471,10 @@ msgid "Detect file formats on demand, instead of immediately."
 msgstr "Препознај формат датотеке на захтев, уместо одма."
 
 #: src/audacious/glade/prefswin.glade:3971
+#, fuzzy
 msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
+"When checked, Audacious will detect file formats based by extension. Only "
+"files with extensions of supported formats will be loaded."
 msgstr ""
 "Ако је потврђено, Аудациоус ће препознати формат датотеке према ознаци типа. "
 "Ово је мало спорије од препознавања на захтев, али ипак обезбеђује минималан "
@@ -568,19 +571,19 @@ msgstr ""
 msgid "Use software volume control"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4746
+#: src/audacious/glade/prefswin.glade:4745
 msgid "Reload Plugins"
 msgstr "Освежи додатке"
 
-#: src/audacious/glade/prefswin.glade:4807
+#: src/audacious/glade/prefswin.glade:4806
 msgid "Popup Information Settings"
 msgstr "Подешавања искачућих информација"
 
-#: src/audacious/glade/prefswin.glade:4831
+#: src/audacious/glade/prefswin.glade:4830
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Учитавање насловне слике</b>"
 
-#: src/audacious/glade/prefswin.glade:4856
+#: src/audacious/glade/prefswin.glade:4855
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -589,43 +592,43 @@ msgstr ""
 "Док тражи насловне слике албума, Аудациоус тражи одређене речи у имену "
 "датотеке. Можете навести те речи доле у листи, раздвојене запетама."
 
-#: src/audacious/glade/prefswin.glade:4911
+#: src/audacious/glade/prefswin.glade:4910
 msgid "Exclude:"
 msgstr "Искључи:"
 
-#: src/audacious/glade/prefswin.glade:4939
+#: src/audacious/glade/prefswin.glade:4938
 msgid "Include:"
 msgstr "Укључи:"
 
-#: src/audacious/glade/prefswin.glade:5008
+#: src/audacious/glade/prefswin.glade:5007
 msgid "Recursively search for cover"
 msgstr "Рекурзивно тражи насловну слику"
 
-#: src/audacious/glade/prefswin.glade:5046
+#: src/audacious/glade/prefswin.glade:5045
 msgid "Search depth: "
 msgstr "Дубина претраге: "
 
-#: src/audacious/glade/prefswin.glade:5112
+#: src/audacious/glade/prefswin.glade:5111
 msgid "Use per-file cover"
 msgstr "Користи једну насловну слику по датотеци"
 
-#: src/audacious/glade/prefswin.glade:5132
+#: src/audacious/glade/prefswin.glade:5131
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Остало</b>"
 
-#: src/audacious/glade/prefswin.glade:5170
+#: src/audacious/glade/prefswin.glade:5169
 msgid "Show Progress bar for the current track"
 msgstr "Прикажи индикатор напредовања за текућу нумеру"
 
-#: src/audacious/glade/prefswin.glade:5208
+#: src/audacious/glade/prefswin.glade:5207
 msgid "Delay until filepopup comes up: "
 msgstr "Закашњење појављивања искачућег проз. датоетеке: "
 
-#: src/audacious/glade/prefswin.glade:5302
+#: src/audacious/glade/prefswin.glade:5301
 msgid "Color Adjustment"
 msgstr "Подешавање боје"
 
-#: src/audacious/glade/prefswin.glade:5325
+#: src/audacious/glade/prefswin.glade:5324
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
@@ -633,32 +636,32 @@ msgstr ""
 "Аудациоус вам дозвољава да промените баланс боја маскираног УИ-а. Доњи "
 "клизачи ће вам омогућити да то урадите."
 
-#: src/audacious/glade/prefswin.glade:5359
+#: src/audacious/glade/prefswin.glade:5358
 msgid "Blue"
 msgstr "Плаво"
 
-#: src/audacious/glade/prefswin.glade:5387
+#: src/audacious/glade/prefswin.glade:5386
 msgid "Green"
 msgstr "Зелено"
 
-#: src/audacious/glade/prefswin.glade:5415
+#: src/audacious/glade/prefswin.glade:5414
 msgid "Red"
 msgstr "Црвено"
 
-#: src/audacious/input.c:627
+#: src/audacious/input.c:633
 #, c-format
 msgid "audacious: %s"
 msgstr "аудациоус: %s"
 
-#: src/audacious/input.c:643
+#: src/audacious/input.c:649
 msgid "Filename:"
 msgstr "Име датотеке:"
 
-#: src/audacious/input.c:662
+#: src/audacious/input.c:668
 msgid "No input plugin recognized this file"
 msgstr "Ниједан улазни додатак није препознао ову датотеку"
 
-#: src/audacious/input.c:664
+#: src/audacious/input.c:670
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Улазни додатак: %s"
@@ -669,80 +672,80 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Није могуће направити датотеку евиденције (%s)!\n"
 
 #: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:491
-#: src/audacious/ui_main.c:2466
+#: src/audacious/ui_main.c:2525
 msgid "Audacious"
 msgstr "Аудациоус"
 
-#: src/audacious/main.c:477
+#: src/audacious/main.c:480
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Није могуће направити директоријум (%s): %s\n"
 
-#: src/audacious/main.c:1065
+#: src/audacious/main.c:1068
 msgid "Select which Audacious session ID to use"
 msgstr "Изаберите коју Аудациоус сесију треба користити"
 
-#: src/audacious/main.c:1066
+#: src/audacious/main.c:1069
 msgid "Skip backwards in playlist"
 msgstr "Скочи уназад у листи нумера"
 
-#: src/audacious/main.c:1067
+#: src/audacious/main.c:1070
 msgid "Start playing current playlist"
 msgstr "Пусти текућу листу нумера"
 
-#: src/audacious/main.c:1068
+#: src/audacious/main.c:1071
 msgid "Pause current song"
 msgstr "Паузирај текућу песму"
 
-#: src/audacious/main.c:1069
+#: src/audacious/main.c:1072
 msgid "Stop current song"
 msgstr "Заустави текућу песму"
 
-#: src/audacious/main.c:1070
+#: src/audacious/main.c:1073
 msgid "Pause if playing, play otherwise"
 msgstr "Паузирај ако свира, иначе пусти"
 
-#: src/audacious/main.c:1071
+#: src/audacious/main.c:1074
 msgid "Skip forward in playlist"
 msgstr "Скочи унапред у листи нумера"
 
-#: src/audacious/main.c:1072
+#: src/audacious/main.c:1075
 msgid "Display Jump to File dialog"
 msgstr "Прикажи Пређи на датотеку оквир"
 
-#: src/audacious/main.c:1073
+#: src/audacious/main.c:1076
 msgid "Don't clear the playlist"
 msgstr "Немој обрисати листу нумера"
 
-#: src/audacious/main.c:1074
+#: src/audacious/main.c:1077
 msgid "Add new files to a temporary playlist"
 msgstr "Додаје нове датотеке у привремену листу нумера"
 
-#: src/audacious/main.c:1075
+#: src/audacious/main.c:1078
 msgid "Display the main window"
 msgstr "Прикажи главни прозор"
 
-#: src/audacious/main.c:1076
+#: src/audacious/main.c:1079
 msgid "Display all open Audacious windows"
 msgstr "Прикажи све отворене Аудациоус прозоре"
 
-#: src/audacious/main.c:1077
+#: src/audacious/main.c:1080
 msgid "Enable headless operation"
 msgstr "Укључи безглаву операцију"
 
-#: src/audacious/main.c:1078
+#: src/audacious/main.c:1081
 msgid "Print all errors and warnings to stdout"
 msgstr "Штампај све грешке и упозорења у stdout"
 
-#: src/audacious/main.c:1079
+#: src/audacious/main.c:1082
 msgid "Show version and builtin features"
 msgstr "Прикажи верзију и уграђена својства"
 
-#: src/audacious/main.c:1080
+#: src/audacious/main.c:1083
 msgid "FILE..."
 msgstr "ДАТОТЕКА..."
 
-#: src/audacious/main.c:1239
+#: src/audacious/main.c:1316
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -755,7 +758,7 @@ msgstr ""
 "Проверите да ли је маска у '%s' употребљива и да ли је подразумевана маска "
 "правилно инсталирана у '%s'\n"
 
-#: src/audacious/main.c:1320
+#: src/audacious/main.c:1397
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -769,11 +772,11 @@ msgstr ""
 "пре него\n"
 "што сте инсталирали LinuxThreads морате поново превести Glib и GTK+.\n"
 
-#: src/audacious/main.c:1351
+#: src/audacious/main.c:1428
 msgid "- play multimedia files"
 msgstr "- пусти мултимедијалне датотеке"
 
-#: src/audacious/main.c:1358
+#: src/audacious/main.c:1435
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -782,7 +785,7 @@ msgstr ""
 "%s: %s\n"
 "Пробајте `%s --help' за више информација.\n"
 
-#: src/audacious/main.c:1368
+#: src/audacious/main.c:1445
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Није могуће отворити приказ, излазим.\n"
@@ -861,12 +864,12 @@ msgstr ""
 "\n"
 "Сва права задржана, 2005-2007 Аудациоус Развојни Тим"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:357
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:358
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
 msgstr "O Аудациоус-u"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:400
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:401
 msgid "Credits"
 msgstr "Заслуге"
 
@@ -895,151 +898,151 @@ msgstr "Графика:"
 msgid "Default skin:"
 msgstr "Подразумевана маска:"
 
-#: src/audacious/ui_credits.c:81
+#: src/audacious/ui_credits.c:82
 msgid "Plugin development:"
 msgstr "Развој додатака:"
 
-#: src/audacious/ui_credits.c:97
+#: src/audacious/ui_credits.c:98
 msgid "Patch authors:"
 msgstr "Аутори закрпа:"
 
-#: src/audacious/ui_credits.c:117
+#: src/audacious/ui_credits.c:118
 msgid "0.1.x developers:"
 msgstr "0.1.x ствараоци:"
 
-#: src/audacious/ui_credits.c:123
+#: src/audacious/ui_credits.c:124
 msgid "BMP Developers:"
 msgstr "BMP ствараоци:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:156
 msgid "Brazilian Portuguese:"
 msgstr "Бразилско Португалски:"
 
-#: src/audacious/ui_credits.c:159
+#: src/audacious/ui_credits.c:160
 msgid "Breton:"
 msgstr "Бретонски:"
 
-#: src/audacious/ui_credits.c:162
+#: src/audacious/ui_credits.c:163
 msgid "Bulgarian:"
 msgstr "Бугарски:"
 
-#: src/audacious/ui_credits.c:165
+#: src/audacious/ui_credits.c:166
 msgid "Catalan:"
 msgstr "Каталонски:"
 
-#: src/audacious/ui_credits.c:168
+#: src/audacious/ui_credits.c:169
 msgid "Croatian:"
 msgstr "Хрватски:"
 
-#: src/audacious/ui_credits.c:171
+#: src/audacious/ui_credits.c:172
 msgid "Czech:"
 msgstr "Чешки:"
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:175
 msgid "Dutch:"
 msgstr "Холандски:"
 
-#: src/audacious/ui_credits.c:178
+#: src/audacious/ui_credits.c:179
 msgid "Finnish:"
 msgstr "Фински:"
 
-#: src/audacious/ui_credits.c:181
+#: src/audacious/ui_credits.c:182
 msgid "French:"
 msgstr "Француски:"
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:186
 msgid "German:"
 msgstr "Немачки:"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:191
 msgid "Georgian:"
 msgstr "Арменски:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:194
 msgid "Greek:"
 msgstr "Грчки:"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Hindi:"
 msgstr "Индијски:"
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:202
 msgid "Hungarian:"
 msgstr "Мађарски:"
 
-#: src/audacious/ui_credits.c:204
+#: src/audacious/ui_credits.c:205
 msgid "Italian:"
 msgstr "Италијански:"
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:209
 msgid "Japanese:"
 msgstr "Јапански:"
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:212
 msgid "Korean:"
 msgstr "Кореански:"
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:215
 msgid "Lithuanian:"
 msgstr "Литвански:"
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:218
 msgid "Macedonian:"
 msgstr "Македонски:"
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:221
 msgid "Polish:"
 msgstr "Пољски:"
 
-#: src/audacious/ui_credits.c:223
+#: src/audacious/ui_credits.c:224
 msgid "Romanian:"
 msgstr "Румунски:"
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:228
 msgid "Russian:"
 msgstr "Руски:"
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:231
 msgid "Serbian (Latin):"
 msgstr "Спрски (Латиница):"
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:234
 msgid "Serbian (Cyrillic):"
 msgstr "Спрски (Ћирилица):"
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:237
 msgid "Simplified Chinese:"
 msgstr "Упроштен Кинески:"
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:240
 msgid "Slovak:"
 msgstr "Словеначки:"
 
-#: src/audacious/ui_credits.c:242
+#: src/audacious/ui_credits.c:243
 msgid "Spanish:"
 msgstr "Шпански:"
 
-#: src/audacious/ui_credits.c:245
+#: src/audacious/ui_credits.c:246
 msgid "Swedish:"
 msgstr "Шведски:"
 
-#: src/audacious/ui_credits.c:248
+#: src/audacious/ui_credits.c:249
 msgid "Traditional Chinese:"
 msgstr "Традиционални Кинески:"
 
-#: src/audacious/ui_credits.c:251
+#: src/audacious/ui_credits.c:252
 msgid "Turkish:"
 msgstr "Турски:"
 
-#: src/audacious/ui_credits.c:255
+#: src/audacious/ui_credits.c:256
 msgid "Ukrainian:"
 msgstr "Украински:"
 
-#: src/audacious/ui_credits.c:258
+#: src/audacious/ui_credits.c:259
 msgid "Welsh:"
 msgstr "Велшански:"
 
-#: src/audacious/ui_credits.c:404
+#: src/audacious/ui_credits.c:405
 msgid "Translators"
 msgstr "Преводиоци"
 
@@ -1055,85 +1058,85 @@ msgstr "Претподешавања"
 msgid "Track Information Window"
 msgstr "Прозор информација о нумери"
 
-#: src/audacious/ui_fileinfopopup.c:252 src/audacious/ui_fileinfopopup.c:364
+#: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
 #: src/audacious/ui_preferences.c:125
 msgid "Title"
 msgstr "Наслов"
 
-#: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_preferences.c:123
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:123
 msgid "Artist"
 msgstr "Извођач"
 
-#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:124
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:124
 msgid "Album"
 msgstr "Албум"
 
-#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:127
 msgid "Genre"
 msgstr "Жанр"
 
-#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:131
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:131
 msgid "Year"
 msgstr "Година"
 
-#: src/audacious/ui_fileinfopopup.c:267
+#: src/audacious/ui_fileinfopopup.c:269
 msgid "Track Number"
 msgstr "Број нумере"
 
-#: src/audacious/ui_fileinfopopup.c:271
+#: src/audacious/ui_fileinfopopup.c:273
 msgid "Track Length"
 msgstr "Дужина нумере"
 
-#: src/audacious/ui_fileinfopopup.c:373 src/audacious/ui_preferences.c:128
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:128
 #: src/audacious/ui_preferences.c:420
 msgid "Filename"
 msgstr "Име датотеке"
 
-#: src/audacious/ui_fileopener.c:127
+#: src/audacious/ui_fileopener.c:137
 msgid "Open Files"
 msgstr "Отвори датотеке"
 
-#: src/audacious/ui_fileopener.c:127
+#: src/audacious/ui_fileopener.c:137
 msgid "Add Files"
 msgstr "Додај датотеке"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:139
 msgid "Close dialog on Open"
 msgstr "Затвори оквир кликом на Отвори"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:139
 msgid "Close dialog on Add"
 msgstr "Затвори оквир кликом на Додај"
 
-#: src/audacious/ui_fileopener.c:356
+#: src/audacious/ui_fileopener.c:376
 msgid "Play files"
 msgstr "Пусти датотеке"
 
-#: src/audacious/ui_fileopener.c:358
+#: src/audacious/ui_fileopener.c:378
 msgid "Load files"
 msgstr "Учитај датотеке"
 
-#: src/audacious/ui_jumptotrack.c:138
+#: src/audacious/ui_jumptotrack.c:143
 msgid "Un_queue"
 msgstr "Избаци из _реда"
 
-#: src/audacious/ui_jumptotrack.c:140 src/audacious/ui_jumptotrack.c:603
+#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:624
 msgid "_Queue"
 msgstr "Стави у _ред"
 
-#: src/audacious/ui_jumptotrack.c:518
+#: src/audacious/ui_jumptotrack.c:539
 msgid "Jump to Track"
 msgstr "Пређи на нумеру"
 
-#: src/audacious/ui_jumptotrack.c:559
+#: src/audacious/ui_jumptotrack.c:580
 msgid "Filter: "
 msgstr "Филтер: "
 
-#: src/audacious/ui_jumptotrack.c:560
+#: src/audacious/ui_jumptotrack.c:581
 msgid "_Filter:"
 msgstr "_Филтер:"
 
-#: src/audacious/ui_jumptotrack.c:594
+#: src/audacious/ui_jumptotrack.c:615
 msgid "Close on Jump"
 msgstr "Затвори после скока"
 
@@ -1142,44 +1145,44 @@ msgstr "Затвори после скока"
 msgid "%s - Audacious"
 msgstr "%s - Аудациоус"
 
-#: src/audacious/ui_main.c:744
+#: src/audacious/ui_main.c:739
 msgid "VBR"
 msgstr "ВБР"
 
-#: src/audacious/ui_main.c:761 src/audacious/ui_main.c:765
+#: src/audacious/ui_main.c:756 src/audacious/ui_main.c:760
 msgid "stereo"
 msgstr "стерео"
 
-#: src/audacious/ui_main.c:761 src/audacious/ui_main.c:765
+#: src/audacious/ui_main.c:756 src/audacious/ui_main.c:760
 msgid "mono"
 msgstr "моно"
 
-#: src/audacious/ui_main.c:1060 src/audacious/ui_manager.c:420
+#: src/audacious/ui_main.c:1055 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
 msgid "Jump to Time"
 msgstr "Пређи на време"
 
-#: src/audacious/ui_main.c:1081
+#: src/audacious/ui_main.c:1076
 msgid "minutes:seconds"
 msgstr "минути:секунде"
 
-#: src/audacious/ui_main.c:1091
+#: src/audacious/ui_main.c:1086
 msgid "Track length:"
 msgstr "Дужина нумере:"
 
-#: src/audacious/ui_main.c:1228
+#: src/audacious/ui_main.c:1223
 msgid "Audacious - visibility warning"
 msgstr "Аудациоус - упозорење видљивости"
 
-#: src/audacious/ui_main.c:1230
+#: src/audacious/ui_main.c:1225
 msgid "Show main player window"
 msgstr "Прикажи главни прозор плејера"
 
-#: src/audacious/ui_main.c:1231
+#: src/audacious/ui_main.c:1226
 msgid "Ignore"
 msgstr "Игнориши"
 
-#: src/audacious/ui_main.c:1235
+#: src/audacious/ui_main.c:1230
 msgid ""
 "Audacious has been started with all of its windows hidden.\n"
 "You may want to show the player window again to control Audacious; "
@@ -1191,67 +1194,91 @@ msgstr ""
 "Аудациоус; у супротном, мораћете га контролисати даљински преко audtool или "
 "укључених додатака (као што је додатак \"статусна иконица\")."
 
-#: src/audacious/ui_main.c:1241
+#: src/audacious/ui_main.c:1236
 msgid "Always ignore, show/hide is controlled remotely"
 msgstr "Увек игнориши, прикажи/сакриј се контролише даљински"
 
-#: src/audacious/ui_main.c:1259
+#: src/audacious/ui_main.c:1282
+#, fuzzy
+msgid "Audacious - broken GTK engine usage warning"
+msgstr "Аудациоус - упозорење видљивости"
+
+#: src/audacious/ui_main.c:1290
+#, c-format
+msgid ""
+"<big><b>Broken GTK engine in use</b></big>\n"
+"\n"
+"Audacious has detected that you are using a broken GTK engine.\n"
+"\n"
+"The theme engine you are using, <i>%s</i>, is incompatible with some of the "
+"features used by modern skins. The incompatible features have been disabled "
+"for this session.\n"
+"\n"
+"To use these features, please consider using a different GTK theme engine."
+msgstr ""
+
+#: src/audacious/ui_main.c:1301
+#, fuzzy
+msgid "Do not display this warning again"
+msgstr "Прикажи главни прозор"
+
+#: src/audacious/ui_main.c:1324
 msgid "Enter location to play:"
 msgstr "Унесите локацију за репродуковање:"
 
-#: src/audacious/ui_main.c:1504
+#: src/audacious/ui_main.c:1569
 #, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "Тражи до: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1536
+#: src/audacious/ui_main.c:1601
 #, c-format
 msgid "Volume: %d%%"
 msgstr "Јачин звука: %d%%"
 
-#: src/audacious/ui_main.c:1566
+#: src/audacious/ui_main.c:1631
 #, c-format
 msgid "Balance: %d%% left"
 msgstr "Баланс: %d%% леви"
 
-#: src/audacious/ui_main.c:1570
+#: src/audacious/ui_main.c:1635
 msgid "Balance: center"
 msgstr "Баланс: центрирано"
 
-#: src/audacious/ui_main.c:1574
+#: src/audacious/ui_main.c:1639
 #, c-format
 msgid "Balance: %d%% right"
 msgstr "Баланс: %d%% десни"
 
-#: src/audacious/ui_main.c:1916
+#: src/audacious/ui_main.c:1975
 msgid "Options Menu"
 msgstr "Мени опција"
 
-#: src/audacious/ui_main.c:1920
+#: src/audacious/ui_main.c:1979
 msgid "Disable 'Always On Top'"
 msgstr "Искључи 'Увек на врху'"
 
-#: src/audacious/ui_main.c:1922
+#: src/audacious/ui_main.c:1981
 msgid "Enable 'Always On Top'"
 msgstr "Укључи 'Увек на врху'"
 
-#: src/audacious/ui_main.c:1925
+#: src/audacious/ui_main.c:1984
 msgid "File Info Box"
 msgstr "Оквир информација о датотеци"
 
-#: src/audacious/ui_main.c:1929
+#: src/audacious/ui_main.c:1988
 msgid "Disable 'Doublesize'"
 msgstr "Искључи 'Дуплу величину'"
 
-#: src/audacious/ui_main.c:1931
+#: src/audacious/ui_main.c:1990
 msgid "Enable 'Doublesize'"
 msgstr "Укључи 'Дуплу величину'"
 
-#: src/audacious/ui_main.c:1934
+#: src/audacious/ui_main.c:1993
 msgid "Visualization Menu"
 msgstr "Мени визуелизације"
 
-#: src/audacious/ui_main.c:1982
+#: src/audacious/ui_main.c:2041
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1267,7 +1294,7 @@ msgstr ""
 "2. Ниједан други програм не блокира звучну картицу.\n"
 "3. Ваша звучна картица је исправно подешена.\n"
 
-#: src/audacious/ui_main.c:2446
+#: src/audacious/ui_main.c:2505
 msgid "Error in Audacious."
 msgstr "Грешка у Аудациоус-у."
 
@@ -2084,51 +2111,51 @@ msgstr "Опис"
 msgid "Category"
 msgstr "Категорија"
 
-#: src/audacious/ui_preferences.c:1963
+#: src/audacious/ui_preferences.c:1931
 msgid "Preferences Window"
 msgstr "Прозор поставки"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:386
+#: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "PREAMP"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:386
+#: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "60HZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:386
+#: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "170HZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:387
+#: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "310HZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:387
+#: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "600HZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:387
+#: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "1KHZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:388
+#: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "3KHZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:388
+#: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "6KHZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:388
+#: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "12KHZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:389
+#: src/audacious/ui_skinned_equalizer_slider.c:387
 msgid "14KHZ"
 msgstr ""
 
-#: src/audacious/ui_skinned_equalizer_slider.c:389
+#: src/audacious/ui_skinned_equalizer_slider.c:387
 msgid "16KHZ"
 msgstr ""
 
@@ -2143,6 +2170,10 @@ msgstr "Неархивирана Winamp 2.x маска"
 #: src/audacious/ui_urlopener.c:88
 msgid "Add/Open URL Dialog"
 msgstr "Оквир додај/отвори URL"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Миш"
 
 #~ msgid "Show window manager decorations"
 #~ msgstr "Прикажи украсе програма за управљање прозорима"

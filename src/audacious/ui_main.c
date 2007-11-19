@@ -1277,16 +1277,18 @@ ui_main_check_theme_engine(void)
     {
         gchar *msg;
         GtkWidget *label, *checkbt, *vbox;
-        GtkWidget *warning_dlg = gtk_dialog_new_with_buttons( _("Audacious - broken GTK engine usage warning") ,
+        GtkWidget *warning_dlg =
+            gtk_dialog_new_with_buttons( _("Audacious - broken GTK engine usage warning") ,
             GTK_WINDOW(mainwin) , GTK_DIALOG_DESTROY_WITH_PARENT ,
-            _("Close"), GTK_RESPONSE_OK, NULL );
+            GTK_STOCK_CLOSE, GTK_RESPONSE_OK, NULL );
         vbox = gtk_vbox_new( FALSE , 4 );
         gtk_container_set_border_width( GTK_CONTAINER(vbox) , 4 );
-        gtk_box_pack_start( GTK_BOX(GTK_DIALOG(warning_dlg)->vbox) , vbox , TRUE , TRUE , 0 );
+        gtk_box_pack_start( GTK_BOX(GTK_DIALOG(warning_dlg)->vbox) , vbox ,
+                            TRUE , TRUE , 0 );
 
         msg = g_strdup_printf(_("<big><b>Broken GTK engine in use</b></big>\n\n"
 				 "Audacious has detected that you are using a broken GTK engine.\n\n"
-                                 "The theme engine you are using, <i>%s</i> is incompatible with some of the features "
+                                 "The theme engine you are using, <i>%s</i>, is incompatible with some of the features "
                                  "used by modern skins. The incompatible features have been disabled for this session.\n\n"
                                  "To use these features, please consider using a different GTK theme engine."), theme);
         label = gtk_label_new(msg);
