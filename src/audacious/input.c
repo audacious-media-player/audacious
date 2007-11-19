@@ -76,6 +76,7 @@ InputPluginData ip_data = {
 };
 
 static GList *vis_list = NULL;
+static int volume_l = -1, volume_r = -1;
 
 InputPlayback *
 get_current_input_playback(void)
@@ -755,17 +756,11 @@ input_scan_dir(const gchar * path)
 void
 input_get_volume(gint * l, gint * r)
 {
-    InputPlayback *playback;
+    if (volume_l == -1 || volume_r == -1)
+	output_get_volume(&volume_l, &volume_r);
 
-    *l = -1;
-    *r = -1;
-    if (playback_get_playing()) {
-        if ((playback = get_current_input_playback()) != NULL &&
-            playback->plugin->get_volume &&
-            playback->plugin->get_volume(l, r))
-            return;
-    }
-    output_get_volume(l, r);
+    *l = volume_l;
+    *r = volume_r;
 }
 
 void
@@ -786,6 +781,9 @@ input_set_volume(gint l, gint r)
         return;
 
     output_set_volume(l, r);
+
+    volume_l = l;
+    volume_r = r;
 }
 
 void

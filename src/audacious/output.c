@@ -256,6 +256,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 {
     gint ret;
     OutputPlugin *op;
+    int l, r;
     
 #ifdef USE_SRC
     ConfigDb *db;
@@ -323,6 +324,9 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         op_state.rate = rate;
         op_state.nch = nch;
     }
+
+    input_get_volume(&l, &r);
+    op->set_volume(l, r);
 
     return ret;
 }
