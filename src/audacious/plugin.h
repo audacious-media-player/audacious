@@ -586,6 +586,8 @@ struct _AudaciousFuncTableV1 {
     void (*dock_move_motion)(GtkWindow * w, GdkEventMotion * event);
     void (*dock_move_release)(GtkWindow * w);
     gboolean (*dock_is_moving)(GtkWindow * w);
+
+    GList *(*get_output_list)(void);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -922,6 +924,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_dock_move_motion                    _audvt->dock_move_motion
 #define aud_dock_move_release                   _audvt->dock_move_release
 #define aud_dock_is_moving                      _audvt->dock_is_moving
+
+#define aud_get_output_list			_audvt->get_output_list
 
 #include "audacious/auddrct.h"
 

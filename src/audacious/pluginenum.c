@@ -384,6 +384,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .dock_move_motion = dock_move_motion,
     .dock_move_release = dock_move_release,
     .dock_is_moving = dock_is_moving,
+
+    .get_output_list = get_output_list,
 };
 
 /*****************************************************************/
