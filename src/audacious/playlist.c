@@ -1113,19 +1113,19 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     return entries;
 }
 
+/* set info for current song. */
 void
-playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
+playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint rate,
                           gint freq, gint nch)
 {
-    Playlist *playlist = playlist_get_active();
     PlaylistEventInfoChange *msg;
     gchar *text;
+
+    g_return_if_fail(playlist != NULL);
 
     if(length == -1) {
         event_queue("hide seekbar", (gpointer)0xdeadbeef); // event_queue hates NULL --yaz
     }
-
-    g_return_if_fail(playlist != NULL);
 
     if (playlist->position) {
         g_free(playlist->position->title);
@@ -1156,25 +1156,13 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         hook_call( "playlist set info" , playlist->position );
 }
 
+/* wrapper for playlist_set_info. this function is called by input plugins. */
 void
-playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint rate,
-                  gint freq, gint nch)
+playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
+                          gint freq, gint nch)
 {
-    g_return_if_fail(playlist != NULL);
-
-    if (playlist->position) {
-        g_free(playlist->position->title);
-        playlist->position->title = g_strdup(title);
-        playlist->position->length = length;
-    }
-
-    playlist_recalc_total_time(playlist);
-    PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
-
-    mainwin_set_song_info(rate, freq, nch);
-
-    if (playlist->position)
-        hook_call( "playlist set info" , playlist->position );
+    Playlist *playlist = playlist_get_active();
+    playlist_set_info(playlist, title, length, rate, freq, nch);
 }
 
 void
