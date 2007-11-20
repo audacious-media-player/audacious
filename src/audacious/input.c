@@ -321,6 +321,7 @@ input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolea
 
     /* some input plugins provide probe_for_tuple() only. */
     if ( (ip->probe_for_tuple && !ip->is_our_file_from_vfs && !ip->is_our_file) ||
+         (ip->probe_for_tuple && ip->have_subtune == TRUE) ||
          (ip->probe_for_tuple && (cfg.use_pl_metadata && (!loading || (loading && cfg.get_info_on_load)))) ) {
 
         Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
@@ -418,27 +419,24 @@ input_check_file(const gchar *filename, gboolean loading)
     GList **list_hdr = NULL;
     extern GHashTable *ext_hash;
 
-    filename_proxy = g_strdup(filename);
-
-
     /* Some URIs will end in ?<subsong> to determine the subsong requested. */
     tmp_uri = g_strdup(filename);
     tmp = strrchr(tmp_uri, '?');
 
-    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
+    if (tmp && g_ascii_isdigit(*(tmp + 1)))
         *tmp = '\0';
 
+    filename_proxy = g_strdup(tmp_uri);
+    g_free(tmp_uri);
 
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */
-    if ((ip = uri_get_plugin(filename)) != NULL && ip->enabled)
-    {
+    if ((ip = uri_get_plugin(filename_proxy)) != NULL && ip->enabled) {
         if (ip->is_our_file != NULL)
             ret = ip->is_our_file(filename_proxy);
         else
             ret = 0;
-        if (ret > 0)
-        {
+        if (ret > 0) {
             g_free(filename_proxy);
             pr = g_new0(ProbeResult, 1);
             pr->ip = ip;
@@ -450,8 +448,7 @@ input_check_file(const gchar *filename, gboolean loading)
 
 
     // open the file with vfs sub-system
-    fd = vfs_buffered_file_new_from_uri(tmp_uri);
-    g_free(tmp_uri);
+    fd = vfs_buffered_file_new_from_uri(filename_proxy);
 
     if (!fd) {
         printf("Unable to read from %s, giving up.\n", filename_proxy);
@@ -481,8 +478,8 @@ input_check_file(const gchar *filename, gboolean loading)
     // apply ext_hash check
     if(cfg.use_extension_probing) {
         use_ext_filter =
-            (fd != NULL && (!g_strncasecmp(filename, "/", 1) ||
-                            !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
+            (fd && (!g_strncasecmp(filename_proxy, "/", 1) ||
+                    !g_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
     }
 
     if(use_ext_filter) {

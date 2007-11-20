@@ -149,6 +149,7 @@ static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 #define EXT_TRUE    1
 #define EXT_FALSE   0
 #define EXT_HAVE_SUBTUNE    2
+#define EXT_CUSTOM  3
 
 static gint filter_by_extension(const gchar *filename);
 static gboolean is_http(const gchar *filename);
@@ -655,29 +656,6 @@ playlist_delete(Playlist * playlist, gboolean crop)
 }
 
 static void
-__playlist_ins_with_info(Playlist * playlist,
-                         const gchar * filename,
-                         gint pos,
-                         const gchar * title,
-                         gint len,
-                         InputPlugin * dec)
-{
-    g_return_if_fail(filename != NULL);
-
-    PLAYLIST_LOCK(playlist);
-    playlist->entries = g_list_insert(playlist->entries,
-                             playlist_entry_new(filename, title, len, dec),
-                             pos);
-    PLAYLIST_UNLOCK(playlist);
-
-    g_mutex_lock(mutex_scan);
-    playlist_get_info_scan_active = TRUE;
-    g_mutex_unlock(mutex_scan);
-    g_cond_signal(cond_scan);
-    PLAYLIST_INCR_SERIAL(playlist);
-}
-
-static void
 __playlist_ins_with_info_tuple(Playlist * playlist,
 			       const gchar * filename,
 			       gint pos,
@@ -802,7 +780,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     }
 
     /* local file and on-demand probing is on */
-    else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE) {
+    else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE && ext_flag != EXT_CUSTOM) {
         dec = NULL;
         if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
             return FALSE;
@@ -990,7 +968,7 @@ playlist_dir_find_files(const gchar * path,
             g_free(filename);
             list = g_list_concat(list, sub);
         }
-        else if (cfg.playlist_detect && ext_flag != EXT_HAVE_SUBTUNE) { /* local file, no probing, no subtune */
+        else if (cfg.playlist_detect && ext_flag != EXT_HAVE_SUBTUNE && ext_flag != EXT_CUSTOM) { /* local file, no probing, no subtune */
             if(cfg.use_extension_probing) {
                 if(ext_flag == EXT_TRUE)
                     list = g_list_prepend(list, filename);
@@ -1734,109 +1712,27 @@ playlist_load_ins_file(Playlist *playlist,
                        const gchar * playlist_name, gint pos,
                        const gchar * title, gint len)
 {
-    gchar *filename;
-    gchar *tmp, *path;
-    ProbeResult *pr = NULL;
+    Tuple *tuple = tuple_new();
 
-    g_return_if_fail(filename_p != NULL);
-    g_return_if_fail(playlist != NULL);
-    g_return_if_fail(playlist_name != NULL);
+    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
+    tuple_associate_int(tuple, FIELD_LENGTH, NULL, len);
+    tuple_associate_int(tuple, FIELD_MTIME, NULL, -1); // invalidate to make tuple renew
 
-    filename = g_strchug(g_strdup(filename_p));
-
-    if (cfg.convert_slash)
-        while ((tmp = strchr(filename, '\\')) != NULL)
-            *tmp = '/';
-
-    if (filename[0] != '/' && !strstr(filename, "://")) {
-        path = g_strdup(playlist_name);
-
-        if ((tmp = strrchr(path, '/')))
-            *tmp = '\0';
-        else {
-            gint ext_flag = filter_by_extension(filename);
-            gboolean http_flag = is_http(filename);
-
-            /* playlist file or remote uri */
-            if (playlist->loading_playlist == TRUE || http_flag == TRUE) {
-                pr = NULL;
-            }
-            /* local file and on-demand probing is on */
-            else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE) {
-                pr = NULL;
-                if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-                    return;
-            }
-            /* find decorder for local file */
-            else {
-                pr = input_check_file(filename, TRUE);
-            }
-
-            __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
-            g_free(pr);
-            return;
-        }
-
-        tmp = g_build_filename(path, filename, NULL);
-        gint ext_flag = filter_by_extension(tmp);
-        gboolean http_flag = is_http(tmp);
-
-        /* playlist file or remote uri */
-        if (playlist->loading_playlist == TRUE || http_flag == TRUE) {
-            pr = NULL;
-        }
-        /* local file and no probing, no subtune */
-        else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE) {
-            pr = NULL;
-            if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-                return;
-        }
-        /* find decoder for local file */
-        else {
-            pr = input_check_file(tmp, TRUE);
-        }
-
-        __playlist_ins_with_info(playlist, tmp, pos, title, len, pr ? pr->ip : NULL);
-        g_free(tmp);
-        g_free(path);
-        g_free(pr);
-    }
-    else {
-        gint ext_flag = filter_by_extension(filename);
-        gboolean http_flag = is_http(filename);
-
-        /* playlist file or remote uri */
-        if (playlist->loading_playlist == TRUE || http_flag == TRUE) {
-            pr = NULL;
-        }
-        /* local file and on-demand probing is on */
-        else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE) {
-            pr = NULL;
-            if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-                return;
-        }
-        /* find decoder for local file */
-        else {
-            pr = input_check_file(filename, TRUE);
-        }
-        __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
-        g_free(pr);
-    }
-
-    g_free(filename);
+    playlist_load_ins_file_tuple(playlist, filename_p, playlist_name, pos, tuple);
 }
-
 
 void
 playlist_load_ins_file_tuple(Playlist * playlist,
-			     const gchar * filename_p,
-			     const gchar * playlist_name, 
-			     gint pos,
-			     Tuple *tuple)
+                             const gchar * filename_p,      //filename to add
+                             const gchar * playlist_name,   //path of playlist file itself
+                             gint pos,
+                             Tuple *tuple)
 {
     gchar *filename;
     gchar *tmp, *path;
     ProbeResult *pr = NULL;		/* for decoder cache */
+    gchar *uri = NULL;
+
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist_name != NULL);
@@ -1844,76 +1740,61 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 
     filename = g_strchug(g_strdup(filename_p));
 
+
+    /* convert backslash to slash */
     if (cfg.convert_slash)
         while ((tmp = strchr(filename, '\\')) != NULL)
             *tmp = '/';
 
-    if (filename[0] != '/' && !strstr(filename, "://")) {
+
+    /* make full path uri here */
+    // case 1: filename is raw full path or uri
+    if (filename[0] == '/' || strstr(filename, "://")) {
+        uri = g_filename_to_uri(filename, NULL, NULL);
+        if(!uri) {
+            uri = g_strdup(filename);
+        }
+        g_free(filename);
+    }
+    // case 2: filename is not raw full path nor uri, playlist path is full path
+    // make full path by replacing last part of playlist path with filename. (using g_build_filename)
+    else if (playlist_name[0] == '/' || strstr(playlist_name, "://")) {
         path = g_strdup(playlist_name);
-        if ((tmp = strrchr(path, '/')))
-            *tmp = '\0';
-        else {
-            gint ext_flag = filter_by_extension(filename);
-            gboolean http_flag = is_http(filename);
-
-            if (playlist->loading_playlist == TRUE || http_flag == TRUE) {
-                pr = NULL;
-            }
-            else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE) {
-                pr = NULL;
-                if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-                    return;
-            }
-            else {
-                pr = input_check_file(filename, TRUE);
-            }
-
-            __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
-            g_free(pr);
-            return;
-        }
-
+        tmp = strrchr(path, '/'); *tmp = '\0';
         tmp = g_build_filename(path, filename, NULL);
-        gint ext_flag = filter_by_extension(tmp);
-        gboolean http_flag = is_http(tmp);
-
-        if (playlist->loading_playlist == TRUE || http_flag == TRUE) {
-            pr = NULL;
-        }
-        else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE) {
-            pr = NULL;
-            if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-                return;
-        }
-        else {
-            pr = input_check_file(filename, TRUE);
-        }
-
-        __playlist_ins_with_info_tuple(playlist, tmp, pos, tuple, pr ? pr->ip : NULL);
-        g_free(tmp);
-        g_free(path);
-        g_free(pr);
+        uri = g_filename_to_uri(tmp, NULL, NULL);
+        g_free(tmp); g_free(filename);
     }
+    // case 3: filename is not raw full path nor uri, playlist path is not full path
+    // just abort.
     else {
-        if (playlist->loading_playlist == TRUE ||
-            str_has_prefix_nocase(filename, "http://") ||
-            str_has_prefix_nocase(filename, "https://")) {
-            pr = NULL;
-        }
-        else if (cfg.playlist_detect == TRUE) {
-            pr = NULL;
-            if(cfg.use_extension_probing && !filter_by_extension(filename))
-                return;
-        }
-        else {
-            pr = input_check_file(filename, TRUE);
-        }
-
-        __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
-        g_free(pr);
+        g_free(filename);
+        return;
     }
 
-    g_free(filename);
+
+    /* apply pre check and add to playlist */
+    gint ext_flag = filter_by_extension(uri);
+    gboolean http_flag = is_http(uri);
+
+    /* playlist file or remote uri */
+    if ((playlist->loading_playlist == TRUE && ext_flag != EXT_HAVE_SUBTUNE ) || http_flag == TRUE) {
+        pr = NULL;
+    }
+    /* local file and on-demand probing is on */
+    else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE && ext_flag != EXT_CUSTOM) {
+        pr = NULL;
+        if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
+            return;
+    }
+    /* find decorder for local file */
+    else {
+        pr = input_check_file(uri, TRUE);
+    }
+
+    __playlist_ins_with_info_tuple(playlist, uri, pos, tuple, pr ? pr->ip : NULL);
+    g_free(pr);
+
 }
 
 static guint
@@ -3512,14 +3393,31 @@ playlist_playlists_equal(Playlist *p1, Playlist *p2)
 static gint
 filter_by_extension(const gchar *uri)
 {
-    gchar *base, *ext, *lext, *filename;
-    gchar *tmp = g_filename_from_uri(uri, NULL, NULL);
+    gchar *base, *ext, *lext, *filename, *tmp_uri;
+    gchar *tmp;
     gint rv;
     GList **lhandle, *node;
     InputPlugin *ip;
+    
+    /* Some URIs will end in ?<subsong> to determine the subsong requested. */
+    tmp_uri = g_strdup(uri);
+    tmp = strrchr(tmp_uri, '?');
 
-    filename = g_strdup(tmp ? tmp : uri);
-    g_free(tmp);
+    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
+        *tmp = '\0';
+
+    /* Check for plugins with custom URI:// strings */
+    /* cue:// cdda:// tone:// tact:// */
+    if ((ip = uri_get_plugin(tmp_uri)) != NULL && ip->enabled) {
+        g_free(tmp_uri);
+        return EXT_CUSTOM;
+    }
+    
+    tmp = g_filename_from_uri(tmp_uri, NULL, NULL);
+    filename = g_strdup(tmp ? tmp : tmp_uri);
+    g_free(tmp); tmp = NULL;
+    g_free(tmp_uri); tmp_uri = NULL;
+
 
     base = g_path_get_basename(filename);
     ext = strrchr(base, '.');
