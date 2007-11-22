@@ -445,7 +445,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
               if (tc_get_item(ctx, &c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
                 c++;
                 tmp = tuple_evalnode_new();
-                tmp->opcode = OP_EXISTS;
+                tmp->opcode = OP_IS_EMPTY;
                 if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
                   tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                   goto ret_error;
