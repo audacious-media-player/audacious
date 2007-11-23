@@ -209,120 +209,58 @@ output_plugin_open_info(GtkComboBox * cbox,
 }
 
 static void
-input_plugin_toggle(GtkCellRendererToggle * cell,
-                    const gchar * path_str,
-                    gpointer data)
+plugin_toggle(GtkCellRendererToggle * cell,
+              const gchar * path_str,
+              gpointer data)
 {
     GtkTreeModel *model = GTK_TREE_MODEL(data);
     GtkTreeIter iter;
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     gint pluginnr;
-    Plugin *plugin;
-    /*GList *diplist, *tmplist; */
+    gint plugin_type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(data), "plugin_type"));
 
     /* get toggled iter */
     gtk_tree_model_get_iter(model, &iter, path);
-    gtk_tree_model_get(model, &iter,
-                       PLUGIN_VIEW_COL_ID, &pluginnr,
-		       PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin,
-                       -1);
 
-    /* do something with the value */
-    plugin->enabled ^= 1;
+    if (plugin_type == PLUGIN_VIEW_TYPE_INPUT) {
+        Plugin *plugin;
+        /*GList *diplist, *tmplist; */
 
-    /* set new value */
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, plugin->enabled, -1);
+        gtk_tree_model_get(model, &iter,
+                           PLUGIN_VIEW_COL_ID, &pluginnr,
+                           PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
-    /* clean up */
-    gtk_tree_path_free(path);
-}
+        /* do something with the value */
+        plugin->enabled ^= 1;
 
+        /* set new value */
+        gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                           PLUGIN_VIEW_COL_ACTIVE, plugin->enabled, -1);
+    } else {
+        gboolean fixed;
+        gtk_tree_model_get(model, &iter,
+                           PLUGIN_VIEW_COL_ACTIVE, &fixed,
+                           PLUGIN_VIEW_COL_ID, &pluginnr, -1);
 
-static void
-vis_plugin_toggle(GtkCellRendererToggle * cell,
-                  const gchar * path_str,
-                  gpointer data)
-{
-    GtkTreeModel *model = GTK_TREE_MODEL(data);
-    GtkTreeIter iter;
-    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-    gboolean fixed;
-    gint pluginnr;
+        /* do something with the value */
+        fixed ^= 1;
 
-    /* get toggled iter */
-    gtk_tree_model_get_iter(model, &iter, path);
-    gtk_tree_model_get(model, &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, &fixed,
-                       PLUGIN_VIEW_COL_ID, &pluginnr, -1);
+        switch (plugin_type) {
+            case PLUGIN_VIEW_TYPE_GENERAL:
+                enable_general_plugin(pluginnr, fixed);
+                break;
+            case PLUGIN_VIEW_TYPE_VIS:
+                enable_vis_plugin(pluginnr, fixed);
+                break;
+            case PLUGIN_VIEW_TYPE_EFFECT:
+                enable_effect_plugin(pluginnr, fixed);
+                break;
+        }
 
-    /* do something with the value */
-    fixed ^= 1;
-
-    enable_vis_plugin(pluginnr, fixed);
-
-    /* set new value */
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
-
-    /* clean up */
-    gtk_tree_path_free(path);
-}
-
-static void
-effect_plugin_toggle(GtkCellRendererToggle * cell,
-                  const gchar * path_str,
-                  gpointer data)
-{
-    GtkTreeModel *model = GTK_TREE_MODEL(data);
-    GtkTreeIter iter;
-    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-    gboolean fixed;
-    gint pluginnr;
-
-    /* get toggled iter */
-    gtk_tree_model_get_iter(model, &iter, path);
-    gtk_tree_model_get(model, &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, &fixed,
-                       PLUGIN_VIEW_COL_ID, &pluginnr, -1);
-
-    /* do something with the value */
-    fixed ^= 1;
-
-    enable_effect_plugin(pluginnr, fixed);
-
-    /* set new value */
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
-
-    /* clean up */
-    gtk_tree_path_free(path);
-}
-static void
-general_plugin_toggle(GtkCellRendererToggle * cell,
-                      const gchar * path_str,
-                      gpointer data)
-{
-    GtkTreeModel *model = GTK_TREE_MODEL(data);
-    GtkTreeIter iter;
-    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-    gboolean fixed;
-    gint pluginnr;
-
-    /* get toggled iter */
-    gtk_tree_model_get_iter(model, &iter, path);
-    gtk_tree_model_get(model, &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, &fixed,
-                       PLUGIN_VIEW_COL_ID, &pluginnr, -1);
-
-    /* do something with the value */
-    fixed ^= 1;
-
-    enable_general_plugin(pluginnr, fixed);
-
-    /* set new value */
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
+        /* set new value */
+        gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                           PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
+    }
 
     /* clean up */
     gtk_tree_path_free(path);
@@ -368,7 +306,8 @@ on_output_plugin_cbox_realize(GtkComboBox * cbox,
 static void
 on_plugin_view_realize(GtkTreeView * treeview,
                        GCallback callback,
-                       gpointer data)
+                       gpointer data,
+                       gint plugin_type)
 {
     GtkListStore *store;
     GtkTreeIter iter;
@@ -385,6 +324,7 @@ on_plugin_view_realize(GtkTreeView * treeview,
     store = gtk_list_store_new(PLUGIN_VIEW_N_COLS,
                                G_TYPE_BOOLEAN, G_TYPE_STRING,
                                G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER);
+    g_object_set_data(G_OBJECT(store), "plugin_type" , GINT_TO_POINTER(plugin_type));
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Enabled"));
@@ -455,28 +395,28 @@ static void
 on_input_plugin_view_realize(GtkTreeView * treeview,
                              gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(input_plugin_toggle), ip_data.input_list);
+    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), ip_data.input_list, PLUGIN_VIEW_TYPE_INPUT);
 }
 
 static void
 on_effect_plugin_view_realize(GtkTreeView * treeview,
                               gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(effect_plugin_toggle), ep_data.effect_list);
+    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), ep_data.effect_list, PLUGIN_VIEW_TYPE_EFFECT);
 }
 
 static void
 on_general_plugin_view_realize(GtkTreeView * treeview,
                                gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(general_plugin_toggle), gp_data.general_list);
+    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), gp_data.general_list, PLUGIN_VIEW_TYPE_GENERAL);
 }
 
 static void
 on_vis_plugin_view_realize(GtkTreeView * treeview,
                            gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(vis_plugin_toggle), vp_data.vis_list);
+    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), vp_data.vis_list, PLUGIN_VIEW_TYPE_VIS);
 }
 
 static void
