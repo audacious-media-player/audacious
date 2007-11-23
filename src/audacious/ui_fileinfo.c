@@ -165,6 +165,7 @@ create_fileinfo_window(void)
     GtkWidget *table1;
     GtkWidget *bbox_close;
     GtkWidget *btn_close;
+    GtkWidget *alignment;
 
     fileinfo_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width(GTK_CONTAINER(fileinfo_win), 6);
@@ -185,51 +186,71 @@ create_fileinfo_window(void)
     vbox1 = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), vbox1, TRUE, TRUE, 0);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox1), alignment, TRUE, TRUE, 0);
     vbox2 = gtk_vbox_new(FALSE, 0);
-    gtk_container_add(GTK_CONTAINER(vbox1), vbox2);
+    gtk_container_add(GTK_CONTAINER(alignment), vbox2);
 
     label_title = gtk_label_new(_("<span size=\"small\">Title</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_title, FALSE, FALSE, 0);
     gtk_label_set_use_markup(GTK_LABEL(label_title), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_title), 0, 0);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_title = gtk_entry_new();
-    gtk_container_add(GTK_CONTAINER(vbox2), entry_title);
+    gtk_container_add(GTK_CONTAINER(alignment), entry_title);
 
     label_artist = gtk_label_new(_("<span size=\"small\">Artist</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_artist, FALSE, FALSE, 0);
     gtk_label_set_use_markup(GTK_LABEL(label_artist), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_artist), 0, 0.5);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_artist = gtk_entry_new();
-    gtk_container_add(GTK_CONTAINER(vbox2), entry_artist);
+    gtk_container_add(GTK_CONTAINER(alignment), entry_artist);
 
     label_album = gtk_label_new(_("<span size=\"small\">Album</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_album, FALSE, FALSE, 0);
     gtk_label_set_use_markup(GTK_LABEL(label_album), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_album), 0, 0.5);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_album = gtk_entry_new();
-    gtk_container_add(GTK_CONTAINER(vbox2), entry_album);
+    gtk_container_add(GTK_CONTAINER(alignment), entry_album);
 
     label_comment = gtk_label_new(_("<span size=\"small\">Comment</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_comment, FALSE, FALSE, 0);
     gtk_label_set_use_markup(GTK_LABEL(label_comment), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_comment), 0, 0.5);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_comment = gtk_entry_new();
-    gtk_container_add (GTK_CONTAINER(vbox2), entry_comment);
+    gtk_container_add (GTK_CONTAINER(alignment), entry_comment);
 
     label_genre = gtk_label_new(_("<span size=\"small\">Genre</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_genre, FALSE, FALSE, 0);
     gtk_label_set_use_markup(GTK_LABEL(label_genre), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_genre), 0, 0.5);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_genre = gtk_entry_new();
-    gtk_container_add(GTK_CONTAINER(vbox2), entry_genre);
+    gtk_container_add(GTK_CONTAINER(alignment), entry_genre);
 
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     table1 = gtk_table_new(2, 2, FALSE);
-    gtk_container_add(GTK_CONTAINER(vbox2), table1);
+    gtk_container_add(GTK_CONTAINER(alignment), table1);
     gtk_table_set_col_spacings(GTK_TABLE(table1), 6);
 
     label_year = gtk_label_new(_("<span size=\"small\">Year</span>"));
@@ -261,8 +282,12 @@ create_fileinfo_window(void)
     gtk_label_set_use_markup(GTK_LABEL(label_location), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_location), 0, 0.5);
 
+    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (vbox2), alignment, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 0, 0);
+
     entry_location = gtk_entry_new();
-    gtk_container_add(GTK_CONTAINER(vbox2), entry_location);
+    gtk_container_add(GTK_CONTAINER(alignment), entry_location);
 
     bbox_close = gtk_hbutton_box_new();
     gtk_box_pack_start(GTK_BOX(vbox1), bbox_close, FALSE, FALSE, 0);
