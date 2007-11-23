@@ -119,8 +119,7 @@ INCLUDES = auddrct.h		\
 	   vfs_buffered_file.h	\
 	   xconvert.h
 
-DATA = glade/fileinfo.glade			\
-       glade/prefswin.glade			\
+DATA = glade/prefswin.glade			\
        images/about-logo.png			\
        images/appearance.png			\
        images/audacious_eq.xpm			\
