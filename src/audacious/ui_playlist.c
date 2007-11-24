@@ -408,9 +408,6 @@ playlistwin_release(GtkWidget * widget,
                     GdkEventButton * event,
                     gpointer callback_data)
 {
-    if (event->button == 3)
-        return;
-
     playlistwin_resizing = FALSE;
 
     if (dock_is_moving(GTK_WINDOW(playlistwin)))
