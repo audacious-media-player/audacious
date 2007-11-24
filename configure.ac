@@ -106,13 +106,6 @@ PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.4],
     [AC_MSG_ERROR([Cannot find libmowgli: try http://www.atheme-project.org/projects/mowgli.shtml])]
 )
 
-dnl Check for libglade
-
-PKG_CHECK_MODULES(LIBGLADE, [libglade-2.0 >= 2.3.1],
-    [],
-    [AC_MSG_ERROR([Cannot find libglade])]
-)
-
 # Check if socklen_t is defined
 
 AC_CACHE_CHECK(for socklen_t, beep_cv_type_socklen_t,

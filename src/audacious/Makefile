@@ -16,7 +16,6 @@ SRCS = auddrct.c			\
        flow.c				\
        formatter.c			\
        general.c			\
-       glade.c				\
        hints.c				\
        hook.c				\
        iir.c				\
@@ -119,8 +118,7 @@ INCLUDES = auddrct.h		\
 	   vfs_buffered_file.h	\
 	   xconvert.h
 
-DATA = glade/prefswin.glade			\
-       images/about-logo.png			\
+DATA = images/about-logo.png			\
        images/appearance.png			\
        images/audacious_eq.xpm			\
        images/audacious_player.xpm		\
@@ -167,7 +165,6 @@ pre-depend: ${DBUS_BINDINGS}
 CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${MOWGLI_CFLAGS}		\
 	    ${GTK_CFLAGS}		\
-	    ${LIBGLADE_CFLAGS}		\
 	    ${BEEP_DEFINES}		\
 	    ${ARCH_DEFINES}		\
 	    ${DBUS_CFLAGS}		\
@@ -186,7 +183,6 @@ LIBS += ${LDADD}		\
 	${DBUS_LIBS}		\
 	${MOWGLI_LIBS}		\
 	${LIBMCS_LIBS}		\
-	${LIBGLADE_LIBS}	\
 	${REGEX_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS}
