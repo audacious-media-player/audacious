@@ -125,6 +125,7 @@ GtkWidget *titlestring_entry;
 GtkWidget *skin_view;
 GtkWidget *skin_refresh_button;
 GtkWidget *filepopup_for_tuple_settings_button;
+GtkTooltips *tooltips;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
@@ -163,6 +164,38 @@ typedef struct {
 CategoryQueueEntry *category_queue = NULL;
 
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
+
+#define gettext_noop(String) String
+
+enum WidgetTypes {
+    WIDGET_NONE,
+    WIDGET_CHK_BTN
+};
+
+typedef struct preferences_widgets_t {
+    gint type;               /* widget type */
+    char *label;             /* widget title */
+    gboolean *cfg;           /* connected config value */
+    void (*callback) (void); /* this func will be called after value change, can be NULL */
+    char *tooltip;           /* widget tooltip, can be NULL */
+} preferences_widgets;
+
+static void playlist_show_pl_separator_numbers_cb();
+static void show_wm_decorations_cb();
+
+static preferences_widgets checkboxes[] = {
+    {WIDGET_CHK_BTN, gettext_noop("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
+     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Show separators in playlist"), &cfg.show_separator_in_pl,
+     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
+     gettext_noop("This enables the window manager to show decorations for windows.")},
+    {WIDGET_CHK_BTN, gettext_noop("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 
+     gettext_noop("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).")},
+    {WIDGET_CHK_BTN, gettext_noop("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
+     gettext_noop("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction.")},
+};
 
 /* GLib 2.6 compatibility */
 #if (! ((GLIB_MAJOR_VERSION > 2) || ((GLIB_MAJOR_VERSION == 2) && (GLIB_MINOR_VERSION >= 8))))
@@ -582,19 +615,8 @@ on_playlist_font_button_realize(GtkFontButton * button,
 }
 
 static void
-on_playlist_show_pl_numbers_toggled(GtkToggleButton * button,
-                                    gpointer data)
+playlist_show_pl_separator_numbers_cb()
 {
-    cfg.show_numbers_in_pl = gtk_toggle_button_get_active(button);
-    playlistwin_update_list(playlist_get_active());
-    gtk_widget_queue_draw(playlistwin_list);
-}
-
-static void
-on_playlist_show_pl_separator_toggled(GtkToggleButton * button,
-                                    gpointer data)
-{
-    cfg.show_separator_in_pl = gtk_toggle_button_get_active(button);
     playlistwin_update_list(playlist_get_active());
     gtk_widget_queue_draw(playlistwin_list);
 }
@@ -1099,14 +1121,6 @@ on_pl_metadata_on_display_toggled(GtkRadioButton * button,
 }
 
 static void
-on_custom_cursors_toggled(GtkToggleButton *togglebutton,
-                          gpointer data)
-{
-    cfg.custom_cursors = gtk_toggle_button_get_active(togglebutton);
-    skin_reload_forced();
-}
-
-static void
 on_eq_dir_preset_entry_realize(GtkEntry * entry,
                                gpointer data)
 {
@@ -1475,10 +1489,12 @@ on_filepopup_settings_cancel_clicked(GtkButton *button, gpointer data)
 }
 
 static void
-on_xmms_style_fileselector_toggled(GtkToggleButton * button,
-                                   gpointer data)
+on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
 {
-    cfg.use_xmms_style_fileselector = gtk_toggle_button_get_active(button);
+    *cfg = gtk_toggle_button_get_active(button);
+    void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
+    if (callback) callback();
+
 }
 
 static void
@@ -1488,11 +1504,8 @@ on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
 }
 
 static void
-on_show_wm_decorations_toggled(GtkToggleButton * button,
-                                   gpointer data)
+show_wm_decorations_cb()
 {
-    extern GtkWidget *equalizerwin;
-    cfg.show_wm_decorations = gtk_toggle_button_get_active(button);
     gtk_window_set_decorated(GTK_WINDOW(mainwin), cfg.show_wm_decorations);
     gtk_window_set_decorated(GTK_WINDOW(playlistwin), cfg.show_wm_decorations);
     gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
@@ -1511,14 +1524,6 @@ on_reload_plugins_clicked(GtkButton * button, gpointer data)
     bmp_config_free();
     bmp_config_load();
     plugin_system_init();
-}
-
-static void
-on_twoway_scroller_toggled(GtkToggleButton * button,
-                                    gpointer data)
-{
-    cfg.twoway_scroll = gtk_toggle_button_get_active(button);
-    //XXX need to redraw textbox? --yaz
 }
 
 void
@@ -1789,6 +1794,37 @@ create_filepopup_settings(void)
     gtk_widget_show_all(vbox);
 }
 
+/* it's at early stage */
+static void
+create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
+{
+    int x;
+    GtkWidget *alignment = NULL, *widget = NULL;
+
+    for (x = 0; x < amt; ++x) {
+         alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+         gtk_box_pack_start(box, alignment, TRUE, TRUE, 0);
+         gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
+
+         if (widgets[x].type == WIDGET_CHK_BTN) {
+             widget = gtk_check_button_new_with_mnemonic(widgets[x].label);
+             g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
+             g_signal_connect(G_OBJECT(widget), "toggled",
+                              G_CALLBACK(on_toggle_button_toggled),
+                              widgets[x].cfg);
+             g_signal_connect(G_OBJECT(widget), "realize",
+                              G_CALLBACK(on_toggle_button_realize),
+                              widgets[x].cfg);
+         }
+
+         if (widget)
+             gtk_container_add(GTK_CONTAINER(alignment), widget);
+         if (widgets[x].tooltip)
+             gtk_tooltips_set_tip(tooltips, widget, widgets[x].tooltip, NULL);
+    }
+
+}
+
 void
 create_prefs_window(void)
 {
@@ -1866,18 +1902,6 @@ create_prefs_window(void)
   GtkWidget *vbox40;
   GtkWidget *alignment100;
   GtkWidget *label107;
-  GtkWidget *alignment101;
-  GtkWidget *playlist_show_pl_numbers;
-  GtkWidget *alignment102;
-  GtkWidget *playlist_show_pl_separator;
-  GtkWidget *alignment103;
-  GtkWidget *checkbutton14;
-  GtkWidget *alignment104;
-  GtkWidget *show_wm_decorations;
-  GtkWidget *alignment105;
-  GtkWidget *xmms_style_fileselector_cb1;
-  GtkWidget *alignment106;
-  GtkWidget *checkbutton17;
   GtkWidget *appearance_label;
   GtkWidget *mouse_page_vbox;
   GtkWidget *vbox20;
@@ -2053,7 +2077,6 @@ create_prefs_window(void)
   GtkWidget *label102;
   GtkWidget *close;
   GtkAccelGroup *accel_group;
-  GtkTooltips *tooltips;
 
   tooltips = gtk_tooltips_new ();
 
@@ -2397,50 +2420,7 @@ create_prefs_window(void)
   gtk_label_set_use_markup (GTK_LABEL (label107), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label107), 0, 0.5);
 
-  alignment101 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment101, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment101), 2, 0, 12, 0);
-
-  playlist_show_pl_numbers = gtk_check_button_new_with_mnemonic (_("Show track numbers in playlist"));
-  gtk_container_add (GTK_CONTAINER (alignment101), playlist_show_pl_numbers);
-
-  alignment102 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment102, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment102), 0, 0, 12, 0);
-
-  playlist_show_pl_separator = gtk_check_button_new_with_mnemonic (_("Show separators in playlist"));
-  gtk_container_add (GTK_CONTAINER (alignment102), playlist_show_pl_separator);
-
-  alignment103 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment103, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment103), 0, 0, 12, 0);
-
-  checkbutton14 = gtk_check_button_new_with_mnemonic (_("Use custom cursors"));
-  gtk_container_add (GTK_CONTAINER (alignment103), checkbutton14);
-
-  alignment104 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment104, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment104), 0, 0, 12, 0);
-
-  show_wm_decorations = gtk_check_button_new_with_mnemonic (_("Show window manager decoration"));
-  gtk_container_add (GTK_CONTAINER (alignment104), show_wm_decorations);
-  gtk_tooltips_set_tip (tooltips, show_wm_decorations, _("This enables the window manager to show decorations for windows."), NULL);
-
-  alignment105 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment105, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment105), 0, 0, 12, 0);
-
-  xmms_style_fileselector_cb1 = gtk_check_button_new_with_mnemonic (_("Use XMMS-style file selector instead of the default selector"));
-  gtk_container_add (GTK_CONTAINER (alignment105), xmms_style_fileselector_cb1);
-  gtk_tooltips_set_tip (tooltips, xmms_style_fileselector_cb1, _("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), NULL);
-
-  alignment106 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment106, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment106), 0, 0, 12, 0);
-
-  checkbutton17 = gtk_check_button_new_with_mnemonic (_("Use two-way text scroller"));
-  gtk_container_add (GTK_CONTAINER (alignment106), checkbutton17);
-  gtk_tooltips_set_tip (tooltips, checkbutton17, _("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), NULL);
+    create_widgets(GTK_BOX(vbox40), checkboxes, G_N_ELEMENTS(checkboxes));
 
   appearance_label = gtk_label_new (_("Appearance"));
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 1), appearance_label);
@@ -3271,42 +3251,7 @@ create_prefs_window(void)
     g_signal_connect_after(G_OBJECT(checkbutton11), "realize",
                            G_CALLBACK(on_use_bitmap_fonts_realize),
                            NULL);
-    g_signal_connect(G_OBJECT(playlist_show_pl_numbers), "toggled",
-                     G_CALLBACK(on_playlist_show_pl_numbers_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(playlist_show_pl_numbers), "realize",
-                     G_CALLBACK(on_toggle_button_realize),
-                     &cfg.show_numbers_in_pl);
-    g_signal_connect(G_OBJECT(playlist_show_pl_separator), "toggled",
-                     G_CALLBACK(on_playlist_show_pl_separator_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(playlist_show_pl_separator), "realize",
-                     G_CALLBACK(on_toggle_button_realize),
-                     &cfg.show_separator_in_pl);
-    g_signal_connect(G_OBJECT(checkbutton14), "toggled",
-                     G_CALLBACK(on_custom_cursors_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(checkbutton14), "realize",
-                     G_CALLBACK(on_toggle_button_realize),
-                     &cfg.custom_cursors);
-    g_signal_connect(G_OBJECT(show_wm_decorations), "toggled",
-                     G_CALLBACK(on_show_wm_decorations_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(show_wm_decorations), "realize",
-                     G_CALLBACK(on_toggle_button_realize),
-                     &cfg.show_wm_decorations);
-    g_signal_connect(G_OBJECT(xmms_style_fileselector_cb1), "toggled",
-                     G_CALLBACK(on_xmms_style_fileselector_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(xmms_style_fileselector_cb1), "realize",
-                     G_CALLBACK(on_toggle_button_realize),
-                     &cfg.use_xmms_style_fileselector);
-    g_signal_connect(G_OBJECT(checkbutton17), "toggled",
-                     G_CALLBACK(on_twoway_scroller_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(checkbutton17), "realize",
-                     G_CALLBACK(on_toggle_button_realize),
-                     &cfg.twoway_scroll);
+
     g_signal_connect(G_OBJECT(mouse_wheel_volume), "value_changed",
                      G_CALLBACK(on_mouse_wheel_volume_changed),
                      NULL);
