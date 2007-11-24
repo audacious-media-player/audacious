@@ -582,26 +582,12 @@ on_playlist_font_button_realize(GtkFontButton * button,
 }
 
 static void
-on_playlist_show_pl_numbers_realize(GtkToggleButton * button,
-                                    gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.show_numbers_in_pl);
-}
-
-static void
 on_playlist_show_pl_numbers_toggled(GtkToggleButton * button,
                                     gpointer data)
 {
     cfg.show_numbers_in_pl = gtk_toggle_button_get_active(button);
     playlistwin_update_list(playlist_get_active());
     gtk_widget_queue_draw(playlistwin_list);
-}
-
-static void
-on_playlist_show_pl_separator_realize(GtkToggleButton * button,
-                                    gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.show_separator_in_pl);
 }
 
 static void
@@ -1113,13 +1099,6 @@ on_pl_metadata_on_display_toggled(GtkRadioButton * button,
 }
 
 static void
-on_custom_cursors_realize(GtkToggleButton * button,
-                          gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.custom_cursors);
-}
-
-static void
 on_custom_cursors_toggled(GtkToggleButton *togglebutton,
                           gpointer data)
 {
@@ -1496,13 +1475,6 @@ on_filepopup_settings_cancel_clicked(GtkButton *button, gpointer data)
 }
 
 static void
-on_xmms_style_fileselector_realize(GtkToggleButton * button,
-                                   gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.use_xmms_style_fileselector);
-}
-
-static void
 on_xmms_style_fileselector_toggled(GtkToggleButton * button,
                                    gpointer data)
 {
@@ -1510,10 +1482,9 @@ on_xmms_style_fileselector_toggled(GtkToggleButton * button,
 }
 
 static void
-on_show_wm_decorations_realize(GtkToggleButton * button,
-                                   gpointer data)
+on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
 {
-    gtk_toggle_button_set_active(button, cfg.show_wm_decorations);
+    gtk_toggle_button_set_active(button, *cfg);
 }
 
 static void
@@ -1540,13 +1511,6 @@ on_reload_plugins_clicked(GtkButton * button, gpointer data)
     bmp_config_free();
     bmp_config_load();
     plugin_system_init();
-}
-
-static void
-on_twoway_scroller_realize(GtkToggleButton * button,
-                                    gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.twoway_scroll);
 }
 
 static void
@@ -3310,39 +3274,39 @@ create_prefs_window(void)
     g_signal_connect(G_OBJECT(playlist_show_pl_numbers), "toggled",
                      G_CALLBACK(on_playlist_show_pl_numbers_toggled),
                      NULL);
-    g_signal_connect_after(G_OBJECT(playlist_show_pl_numbers), "realize",
-                           G_CALLBACK(on_playlist_show_pl_numbers_realize),
-                           NULL);
+    g_signal_connect(G_OBJECT(playlist_show_pl_numbers), "realize",
+                     G_CALLBACK(on_toggle_button_realize),
+                     &cfg.show_numbers_in_pl);
     g_signal_connect(G_OBJECT(playlist_show_pl_separator), "toggled",
                      G_CALLBACK(on_playlist_show_pl_separator_toggled),
                      NULL);
-    g_signal_connect_after(G_OBJECT(playlist_show_pl_separator), "realize",
-                           G_CALLBACK(on_playlist_show_pl_separator_realize),
-                           NULL);
+    g_signal_connect(G_OBJECT(playlist_show_pl_separator), "realize",
+                     G_CALLBACK(on_toggle_button_realize),
+                     &cfg.show_separator_in_pl);
     g_signal_connect(G_OBJECT(checkbutton14), "toggled",
                      G_CALLBACK(on_custom_cursors_toggled),
                      NULL);
-    g_signal_connect_after(G_OBJECT(checkbutton14), "realize",
-                           G_CALLBACK(on_custom_cursors_realize),
-                           NULL);
+    g_signal_connect(G_OBJECT(checkbutton14), "realize",
+                     G_CALLBACK(on_toggle_button_realize),
+                     &cfg.custom_cursors);
     g_signal_connect(G_OBJECT(show_wm_decorations), "toggled",
                      G_CALLBACK(on_show_wm_decorations_toggled),
                      NULL);
     g_signal_connect(G_OBJECT(show_wm_decorations), "realize",
-                     G_CALLBACK(on_show_wm_decorations_realize),
-                     NULL);
+                     G_CALLBACK(on_toggle_button_realize),
+                     &cfg.show_wm_decorations);
     g_signal_connect(G_OBJECT(xmms_style_fileselector_cb1), "toggled",
                      G_CALLBACK(on_xmms_style_fileselector_toggled),
                      NULL);
     g_signal_connect(G_OBJECT(xmms_style_fileselector_cb1), "realize",
-                     G_CALLBACK(on_xmms_style_fileselector_realize),
-                     NULL);
+                     G_CALLBACK(on_toggle_button_realize),
+                     &cfg.use_xmms_style_fileselector);
     g_signal_connect(G_OBJECT(checkbutton17), "toggled",
                      G_CALLBACK(on_twoway_scroller_toggled),
                      NULL);
     g_signal_connect(G_OBJECT(checkbutton17), "realize",
-                     G_CALLBACK(on_twoway_scroller_realize),
-                     NULL);
+                     G_CALLBACK(on_toggle_button_realize),
+                     &cfg.twoway_scroll);
     g_signal_connect(G_OBJECT(mouse_wheel_volume), "value_changed",
                      G_CALLBACK(on_mouse_wheel_volume_changed),
                      NULL);
