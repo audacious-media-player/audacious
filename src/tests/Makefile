@@ -9,13 +9,11 @@ LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
 	$(DBUS_LIBS) \
 	$(GTK_LIBS)      \
-	$(MOWGLI_LIBS)	 \
-	$(LIBGLADE_LIBS)
+	$(MOWGLI_LIBS)
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \
 	$(DBUS_CFLAGS)     \
-	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
 	$(MOWGLI_CFLAGS)   \
