@@ -107,6 +107,11 @@ static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
 
+/* colorize settings scales */
+GtkWidget *green_scale;
+GtkWidget *red_scale;
+GtkWidget *blue_scale;
+
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
     {DATA_DIR "/images/audio.png", N_("Audio"), 6},
@@ -1558,19 +1563,11 @@ on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
 static void
 on_colorize_button_clicked(GtkButton *button, gpointer data)
 {
-	GladeXML *xml = prefswin_get_xml();
-	GtkWidget *widget;
+    gtk_range_set_value(GTK_RANGE(red_scale), cfg.colorize_r);
+    gtk_range_set_value(GTK_RANGE(green_scale), cfg.colorize_g);
+    gtk_range_set_value(GTK_RANGE(blue_scale), cfg.colorize_b);
 
-	widget = glade_xml_get_widget(xml, "red_scale");
-	gtk_range_set_value(GTK_RANGE(widget), cfg.colorize_r);
-
-	widget = glade_xml_get_widget(xml, "green_scale");
-	gtk_range_set_value(GTK_RANGE(widget), cfg.colorize_g);
-
-	widget = glade_xml_get_widget(xml, "blue_scale");
-	gtk_range_set_value(GTK_RANGE(widget), cfg.colorize_b);
-
-	gtk_widget_show(colorize_settings);
+    gtk_widget_show(colorize_settings);
 }
 
 static void
@@ -1847,13 +1844,109 @@ FUNC_MAP_BEGIN(prefswin_func_map)
 
     /* colorize */
     FUNC_MAP_ENTRY(on_colorize_button_clicked)
-    FUNC_MAP_ENTRY(on_red_scale_value_changed)
-    FUNC_MAP_ENTRY(on_green_scale_value_changed)
-    FUNC_MAP_ENTRY(on_blue_scale_value_changed)
-    FUNC_MAP_ENTRY(on_colorize_close_clicked)
 
     FUNC_MAP_ENTRY(on_reload_plugins_clicked)
 FUNC_MAP_END
+
+void
+create_colorize_settings(void)
+{
+    GtkWidget *vbox;
+    GtkWidget *label;
+    GtkWidget *table;
+    GtkWidget *hbuttonbox;
+    GtkWidget *colorize_close;
+
+    GtkWidget *green_label;
+    GtkWidget *red_label;
+    GtkWidget *blue_label;
+
+    colorize_settings = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_container_set_border_width(GTK_CONTAINER(colorize_settings), 12);
+    gtk_window_set_title(GTK_WINDOW(colorize_settings), _("Color Adjustment"));
+    gtk_window_set_type_hint(GTK_WINDOW(colorize_settings), GDK_WINDOW_TYPE_HINT_DIALOG);
+    gtk_window_set_transient_for(GTK_WINDOW(colorize_settings), GTK_WINDOW(prefswin));
+
+    vbox = gtk_vbox_new(FALSE, 12);
+    gtk_container_add(GTK_CONTAINER(colorize_settings), vbox);
+
+    label = gtk_label_new(_("Audacious allows you to alter the color balance of the skinned UI. The sliders below will allow you to do this."));
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
+    gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+
+    table = gtk_table_new(3, 2, FALSE);
+    gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
+    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+    gtk_table_set_col_spacings(GTK_TABLE(table), 12);
+
+    blue_label = gtk_label_new(_("Blue"));
+    gtk_table_attach(GTK_TABLE(table), blue_label, 0, 1, 2, 3,
+                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify(GTK_LABEL(blue_label), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment(GTK_MISC(blue_label), 1, 0.5);
+
+    green_label = gtk_label_new(_("Green"));
+    gtk_table_attach(GTK_TABLE(table), green_label, 0, 1, 1, 2,
+                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify(GTK_LABEL(green_label), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment(GTK_MISC(green_label), 1, 0.5);
+
+   red_label = gtk_label_new(_("Red"));
+   gtk_table_attach(GTK_TABLE(table), red_label, 0, 1, 0, 1,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify(GTK_LABEL(red_label), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment(GTK_MISC(red_label), 1, 0.5);
+
+    red_scale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 0, 0, 0)));
+    gtk_table_attach(GTK_TABLE(table), red_scale, 1, 2, 0, 1,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    gtk_scale_set_draw_value(GTK_SCALE(red_scale), FALSE);
+    gtk_scale_set_digits(GTK_SCALE(red_scale), 3);
+
+    green_scale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 0, 0, 0)));
+    gtk_table_attach(GTK_TABLE(table), green_scale, 1, 2, 1, 2,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    gtk_scale_set_draw_value(GTK_SCALE(green_scale), FALSE);
+    gtk_scale_set_digits(GTK_SCALE(green_scale), 3);
+
+    blue_scale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 0, 0, 0)));
+    gtk_table_attach(GTK_TABLE(table), blue_scale, 1, 2, 2, 3,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    gtk_scale_set_draw_value(GTK_SCALE(blue_scale), FALSE);
+    gtk_scale_set_digits(GTK_SCALE(blue_scale), 3);
+
+    hbuttonbox = gtk_hbutton_box_new();
+    gtk_box_pack_start(GTK_BOX(vbox), hbuttonbox, FALSE, FALSE, 0);
+    gtk_button_box_set_layout(GTK_BUTTON_BOX(hbuttonbox), GTK_BUTTONBOX_END);
+    gtk_box_set_spacing(GTK_BOX(hbuttonbox), 6);
+
+    colorize_close = gtk_button_new_from_stock("gtk-close");
+    gtk_container_add(GTK_CONTAINER(hbuttonbox), colorize_close);
+    GTK_WIDGET_SET_FLAGS(colorize_close, GTK_CAN_DEFAULT);
+
+    g_signal_connect((gpointer) red_scale, "value_changed",
+                     G_CALLBACK (on_red_scale_value_changed),
+                     NULL);
+    g_signal_connect((gpointer) green_scale, "value_changed",
+                     G_CALLBACK(on_green_scale_value_changed),
+                     NULL);
+    g_signal_connect((gpointer) blue_scale, "value_changed",
+                     G_CALLBACK(on_blue_scale_value_changed),
+                     NULL);
+    g_signal_connect((gpointer) colorize_close, "clicked",
+                     G_CALLBACK(on_colorize_close_clicked),
+                     NULL);
+
+    gtk_widget_grab_default(colorize_close);
+    gtk_widget_show_all(vbox);
+}
 
 void
 create_prefs_window(void)
@@ -2095,10 +2188,8 @@ create_prefs_window(void)
 		G_CALLBACK(on_recurse_for_cover_toggled),
 		widget);
 
-	/* Create window for color adjustment settings */
-	colorize_settings = glade_xml_get_widget(xml, "colorize_popup");
-	gtk_window_set_transient_for(GTK_WINDOW(colorize_settings), GTK_WINDOW(prefswin));
-	gtk_widget_hide(colorize_settings);
+    /* Create window for color adjustment settings */
+    create_colorize_settings();
 }
 
 void
