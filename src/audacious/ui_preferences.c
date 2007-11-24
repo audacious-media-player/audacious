@@ -1574,7 +1574,10 @@ on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
 static void
 on_colorize_button_clicked(GtkButton *button, gpointer data)
 {
-    create_colorize_settings();
+    if (colorize_settings)
+        gtk_window_present(GTK_WINDOW(colorize_settings));
+    else
+        create_colorize_settings();
 }
 
 static void
@@ -1611,7 +1614,8 @@ on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
 static void
 on_colorize_close_clicked(GtkButton *button, gpointer data)
 {
-	gtk_widget_destroy(colorize_settings);
+    gtk_widget_destroy(colorize_settings);
+    colorize_settings = NULL;
 }
 
 static void
