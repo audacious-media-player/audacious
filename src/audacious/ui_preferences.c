@@ -698,119 +698,34 @@ on_proxy_auth_toggled(GtkToggleButton * button,
 }
 
 static void
-on_proxy_host_realize(GtkEntry * entry,
-                     gpointer data)
+on_proxy_entry_changed(GtkEntry *entry, gchar *cfg)
 {
-    ConfigDb *db;
-    gchar *ret;
+    g_return_if_fail(cfg != NULL);
 
-    db = cfg_db_open();
-
-    if (cfg_db_get_string(db, NULL, "proxy_host", &ret) != FALSE)
-        gtk_entry_set_text(entry, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_host_changed(GtkEntry * entry,
-                     gpointer data)
-{
     ConfigDb *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
 
     db = cfg_db_open();
-    cfg_db_set_string(db, NULL, "proxy_host", ret);
+    cfg_db_set_string(db, NULL, cfg, ret);
     cfg_db_close(db);
 
     g_free(ret);
 }
 
 static void
-on_proxy_port_realize(GtkEntry * entry,
-                     gpointer data)
+on_proxy_entry_realize(GtkEntry *entry, gchar *cfg)
 {
+    g_return_if_fail(cfg != NULL);
+
     ConfigDb *db;
     gchar *ret;
 
     db = cfg_db_open();
 
-    if (cfg_db_get_string(db, NULL, "proxy_port", &ret) != FALSE)
+    if (cfg_db_get_string(db, NULL, cfg, &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
 
     cfg_db_close(db);
-}
-
-static void
-on_proxy_port_changed(GtkEntry * entry,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gchar *ret = g_strdup(gtk_entry_get_text(entry));
-
-    db = cfg_db_open();
-    cfg_db_set_string(db, NULL, "proxy_port", ret);
-    cfg_db_close(db);
-
-    g_free(ret);
-}
-
-static void
-on_proxy_user_realize(GtkEntry * entry,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gchar *ret;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_string(db, NULL, "proxy_user", &ret) != FALSE)
-        gtk_entry_set_text(entry, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_user_changed(GtkEntry * entry,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gchar *ret = g_strdup(gtk_entry_get_text(entry));
-
-    db = cfg_db_open();
-    cfg_db_set_string(db, NULL, "proxy_user", ret);
-    cfg_db_close(db);
-
-    g_free(ret);
-}
-
-static void
-on_proxy_pass_realize(GtkEntry * entry,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gchar *ret;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_string(db, NULL, "proxy_pass", &ret) != FALSE)
-        gtk_entry_set_text(entry, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_pass_changed(GtkEntry * entry,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gchar *ret = g_strdup(gtk_entry_get_text(entry));
-
-    db = cfg_db_open();
-    cfg_db_set_string(db, NULL, "proxy_pass", ret);
-    cfg_db_close(db);
-
-    g_free(ret);
 }
 
 static void
@@ -3544,17 +3459,17 @@ create_prefs_window(void)
                      G_CALLBACK(on_proxy_use_realize),
                      NULL);
     g_signal_connect(G_OBJECT(proxy_port), "changed",
-                     G_CALLBACK(on_proxy_port_changed),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_port");
     g_signal_connect(G_OBJECT(proxy_port), "realize",
-                     G_CALLBACK(on_proxy_port_realize),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_port");
     g_signal_connect(G_OBJECT(proxy_host), "changed",
-                     G_CALLBACK(on_proxy_host_changed),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_host");
     g_signal_connect(G_OBJECT(proxy_host), "realize",
-                     G_CALLBACK(on_proxy_host_realize),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_host");
     g_signal_connect(G_OBJECT(proxy_auth), "toggled",
                      G_CALLBACK(on_proxy_auth_toggled),
                      NULL);
@@ -3562,17 +3477,17 @@ create_prefs_window(void)
                      G_CALLBACK(on_proxy_auth_realize),
                      NULL);
     g_signal_connect(G_OBJECT(proxy_pass), "changed",
-                     G_CALLBACK(on_proxy_pass_changed),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_pass");
     g_signal_connect(G_OBJECT(proxy_pass), "realize",
-                     G_CALLBACK(on_proxy_pass_realize),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_pass");
     g_signal_connect(G_OBJECT(proxy_user), "changed",
-                     G_CALLBACK(on_proxy_user_changed),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_user");
     g_signal_connect(G_OBJECT(proxy_user), "realize",
-                     G_CALLBACK(on_proxy_user_realize),
-                     NULL);
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_user");
     g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
                      G_CALLBACK(on_output_plugin_bufsize_value_changed),
                      NULL);
