@@ -1946,7 +1946,6 @@ create_prefs_window(void)
   GtkWidget *vbox;
   GtkWidget *hbox1;
   GtkWidget *scrolledwindow6;
-  GtkWidget *category_notebook;
   GtkWidget *plugin_page_vbox;
   GtkWidget *plugin_notebook;
   GtkWidget *plugin_input_vbox;
