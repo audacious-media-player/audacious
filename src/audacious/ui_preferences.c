@@ -644,56 +644,31 @@ on_detect_by_extension_cb_realize(GtkToggleButton * button,
 
 /* proxy */
 static void
-on_proxy_use_realize(GtkToggleButton * button,
-                     gpointer data)
+on_proxy_button_realize(GtkToggleButton *button, gchar *cfg)
 {
+    g_return_if_fail(cfg != NULL);
+
     ConfigDb *db;
     gboolean ret;
 
     db = cfg_db_open();
 
-    if (cfg_db_get_bool(db, NULL, "use_proxy", &ret) != FALSE)
+    if (cfg_db_get_bool(db, NULL, cfg, &ret) != FALSE)
         gtk_toggle_button_set_active(button, ret);
 
     cfg_db_close(db);
 }
 
 static void
-on_proxy_use_toggled(GtkToggleButton * button,
-                     gpointer data)
+on_proxy_button_toggled(GtkToggleButton *button, gchar *cfg)
 {
+    g_return_if_fail(cfg != NULL);
+
     ConfigDb *db;
     gboolean ret = gtk_toggle_button_get_active(button);
 
     db = cfg_db_open();
-    cfg_db_set_bool(db, NULL, "use_proxy", ret);
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_auth_realize(GtkToggleButton * button,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gboolean ret;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_bool(db, NULL, "proxy_use_auth", &ret) != FALSE)
-        gtk_toggle_button_set_active(button, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_auth_toggled(GtkToggleButton * button,
-                     gpointer data)
-{
-    ConfigDb *db;
-    gboolean ret = gtk_toggle_button_get_active(button);
-
-    db = cfg_db_open();
-    cfg_db_set_bool(db, NULL, "proxy_use_auth", ret);
+    cfg_db_set_bool(db, NULL, cfg, ret);
     cfg_db_close(db);
 }
 
@@ -3453,11 +3428,11 @@ create_prefs_window(void)
                      G_CALLBACK(on_eq_dir_preset_entry_realize),
                      NULL);
     g_signal_connect(G_OBJECT(proxy_use), "toggled",
-                     G_CALLBACK(on_proxy_use_toggled),
-                     NULL);
+                     G_CALLBACK(on_proxy_button_toggled),
+                     "use_proxy");
     g_signal_connect(G_OBJECT(proxy_use), "realize",
-                     G_CALLBACK(on_proxy_use_realize),
-                     NULL);
+                     G_CALLBACK(on_proxy_button_realize),
+                     "use_proxy");
     g_signal_connect(G_OBJECT(proxy_port), "changed",
                      G_CALLBACK(on_proxy_entry_changed),
                      "proxy_port");
@@ -3471,11 +3446,11 @@ create_prefs_window(void)
                      G_CALLBACK(on_proxy_entry_realize),
                      "proxy_host");
     g_signal_connect(G_OBJECT(proxy_auth), "toggled",
-                     G_CALLBACK(on_proxy_auth_toggled),
-                     NULL);
+                     G_CALLBACK(on_proxy_button_toggled),
+                     "proxy_use_auth");
     g_signal_connect(G_OBJECT(proxy_auth), "realize",
-                     G_CALLBACK(on_proxy_auth_realize),
-                     NULL);
+                     G_CALLBACK(on_proxy_button_realize),
+                     "proxy_use_auth");
     g_signal_connect(G_OBJECT(proxy_pass), "changed",
                      G_CALLBACK(on_proxy_entry_changed),
                      "proxy_pass");
