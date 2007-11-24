@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-11-19 18:40+0100\n"
+"POT-Creation-Date: 2007-11-24 17:30+0100\n"
 "PO-Revision-Date: 2007-03-07 03:21+0100\n"
 "Last-Translator: Andrej Herceg <herceg.andrej@zoznam.sk>\n"
 "Language-Team: Default (i18n-default@i18n.atheme.org)\n"
@@ -19,651 +19,20 @@ msgstr ""
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/audacious/glade.c:45
-#, c-format
-msgid ""
-"<b><big>Unable to create %s.</big></b>\n"
-"\n"
-"Could not open glade file (%s). Please check your installation.\n"
-msgstr ""
-"<b><big>Nemôžem vytvoriť %s.</big></b>\n"
-"\n"
-"Nepodarilo sa otvoriť glade súbor %s. Skontrolujte prosím Vašu inštaláciu.\n"
-
-#: src/audacious/glade/fileinfo.glade:8
-msgid "Track Information"
-msgstr "Informácie o stope"
-
-#: src/audacious/glade/fileinfo.glade:81
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\"><b>Názov</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:139
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\"><b>Umelec</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:197
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\"><b>Album</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:255
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\"><b>Komentár</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:313
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\"><b>Žáner</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:392
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\"><b>Rok</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:441
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\"><b>Číslo stopy</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:499
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"small\"><b>Umiestnenie</b></span>"
-
-#: src/audacious/glade/prefswin.glade:8
-msgid "Audacious Preferences"
-msgstr "Nastavenia programu"
-
-#: src/audacious/glade/prefswin.glade:115
-msgid "_Decoder list:"
-msgstr "Zoznam _dekódovacích modulov:"
-
-#: src/audacious/glade/prefswin.glade:219
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Dekódery</b></span>"
-
-#: src/audacious/glade/prefswin.glade:261
-msgid "_General plugin list:"
-msgstr "_Zoznam všeobecných modulov:"
-
-#: src/audacious/glade/prefswin.glade:365
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>Všeobecné</b></span>"
-
-#: src/audacious/glade/prefswin.glade:407
-msgid "_Visualization plugin list:"
-msgstr "_Zoznam vizualizačných modulov:"
-
-#: src/audacious/glade/prefswin.glade:511
-msgid "<b>Visualization</b>"
-msgstr "<b>Vizualizácia</b>"
-
-#: src/audacious/glade/prefswin.glade:553
-msgid "_Effect plugin list:"
-msgstr "_Zoznam efektových modulov:"
-
-#: src/audacious/glade/prefswin.glade:657
-msgid "<b>Effects</b>"
-msgstr "<b>Efekty</b>"
-
-#: src/audacious/glade/prefswin.glade:693 src/audacious/ui_preferences.c:117
-msgid "Plugins"
-msgstr "Moduly"
-
-#: src/audacious/glade/prefswin.glade:758
-msgid "<b>_Skin</b>"
-msgstr "<b>_Skiny</b>"
-
-#: src/audacious/glade/prefswin.glade:811
-msgid "Refresh skin list"
-msgstr "Obnovoviť zoznam skinov"
-
-#: src/audacious/glade/prefswin.glade:926
-msgid "<b>_Fonts</b>"
-msgstr "<b>_Fonty</b>"
-
-#: src/audacious/glade/prefswin.glade:975
-msgid "_Player:"
-msgstr "V okne _prehrávača:"
-
-#: src/audacious/glade/prefswin.glade:1018
-msgid "_Playlist:"
-msgstr "V zozname _skladieb:"
-
-#: src/audacious/glade/prefswin.glade:1050
-msgid "Select main player window font:"
-msgstr "Vyberte font použitý v hlavnom okne:"
-
-#: src/audacious/glade/prefswin.glade:1072
-#, fuzzy
-msgid "Select playlist font:"
-msgstr "Vyberte font použitý v hlavnom okne:"
-
-#: src/audacious/glade/prefswin.glade:1112
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-"Ak sú dostupné, použiť bitmapové fonty. Bitmapové fonty nepodporujú Unicode "
-"reťazce."
-
-#: src/audacious/glade/prefswin.glade:1114
-msgid "Use Bitmap fonts if available"
-msgstr "Ak sú dostupné, použiť bitmapové fonty."
-
-#: src/audacious/glade/prefswin.glade:1161
-msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_Rôzne</b>"
-
-#: src/audacious/glade/prefswin.glade:1202
-msgid "Show track numbers in playlist"
-msgstr "Zobrazovať čísla skladieb v playliste"
-
-#: src/audacious/glade/prefswin.glade:1237
-msgid "Show separators in playlist"
-msgstr "Zobrazovať oddeľovač v zozname skladieb"
-
-#: src/audacious/glade/prefswin.glade:1272
-msgid "Use custom cursors"
-msgstr "Používať vlastné kurzory"
-
-#: src/audacious/glade/prefswin.glade:1306
-msgid "This enables the window manager to show decorations for windows."
-msgstr "Touto voľbou povolíte zobrazovanie dekorácie okien."
-
-#: src/audacious/glade/prefswin.glade:1308
-msgid "Show window manager decoration"
-msgstr "Zobrazovať dekoráciu okien"
-
-#: src/audacious/glade/prefswin.glade:1342
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-"Táto voľba zapne dialóg ny výber súboru v štýle XMMS/GTK1. Tento dialóg je "
-"poskytovaný priamo Audacious a je rýchlejší ako štandardný GTK2 (ale nie je "
-"tak pohodlný)."
-
-#: src/audacious/glade/prefswin.glade:1344
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "Používať dialóg výberu súboru ako je v XMMS namiesto štandardného"
-
-#: src/audacious/glade/prefswin.glade:1378
-msgid ""
-"If selected, the file information text in the main window will scroll back "
-"and forth. If not selected, the text will only scroll in one direction."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1380
-msgid "Use two-way text scroller"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1422 src/audacious/ui_preferences.c:111
-msgid "Appearance"
-msgstr "Vzhľad"
-
-#: src/audacious/glade/prefswin.glade:1469
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>Koliesko myši</b>"
-
-#: src/audacious/glade/prefswin.glade:1542
-msgid "lines"
-msgstr "riadkov"
-
-#: src/audacious/glade/prefswin.glade:1595
-msgid "Scrolls playlist by"
-msgstr "Posunie zoznam skladieb o"
-
-#: src/audacious/glade/prefswin.glade:1623
-msgid "percent"
-msgstr "percent"
-
-#: src/audacious/glade/prefswin.glade:1651
-msgid "Changes volume by"
-msgstr "Zmení hlasitosť o"
-
-#: src/audacious/glade/prefswin.glade:1701 src/audacious/ui_preferences.c:115
-msgid "Mouse"
-msgstr "Myš"
-
-#: src/audacious/glade/prefswin.glade:1748
-msgid "<b>Filename</b>"
-msgstr "<b>Meno súboru</b>"
-
-#: src/audacious/glade/prefswin.glade:1788
-msgid "Convert underscores to blanks"
-msgstr "Zmeniť podčiarknutia na medzery"
-
-#: src/audacious/glade/prefswin.glade:1823
-msgid "Convert %20 to blanks"
-msgstr "Zmeniť %20 na medzery"
-
-#: src/audacious/glade/prefswin.glade:1858
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr "Zmeniť spätné lomítka '\\' na lomítka dopredné '/'"
-
-#: src/audacious/glade/prefswin.glade:1892
-msgid "<b>Metadata</b>"
-msgstr "<b>Metadáta</b>"
-
-#: src/audacious/glade/prefswin.glade:1931
-msgid "Load metadata (tag information) from music files."
-msgstr "Načítať metadáta (tagy) zo zvukových súborov."
-
-#: src/audacious/glade/prefswin.glade:1933
-msgid "Load metadata from playlists and files"
-msgstr "Načítať metadáta zo zoznamov skladieb a súborov"
-
-#: src/audacious/glade/prefswin.glade:1971
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Načítať metadáta pri pridávaní súboru do zoznamu skladieb alebo pri otváraní"
-
-#: src/audacious/glade/prefswin.glade:1973
-msgid "On load"
-msgstr "Pri načítaní"
-
-#: src/audacious/glade/prefswin.glade:1993
-#, fuzzy
-msgid ""
-"Load metadata on demand when displaying the file in the playlist. You may "
-"need to set \"Detect file formats on demand\" in Audio page for full benefit."
-msgstr "Načítať metadáta na vyžiadanie pri zobrazení súboru v zozname skladieb"
-
-#: src/audacious/glade/prefswin.glade:1995
-msgid "On display"
-msgstr "Pri zobrazení"
-
-#: src/audacious/glade/prefswin.glade:2025
-msgid "Auto character encoding detector for:"
-msgstr "Automatické rozoznávanie kódovania znakov:"
-
-#: src/audacious/glade/prefswin.glade:2070
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"Zoznam kódovaní znakov použitých pri konverzii metadát, ak sa je automatické "
-"rozpoznávanie zakázané alebo neuspeje. Kódovania z tohoto zoznamu budu "
-"použité na konverziu metadát do UTF-8."
-
-#: src/audacious/glade/prefswin.glade:2094
-msgid "Fallback character encodings:"
-msgstr "Záložné kódovanie znakov:"
-
-#: src/audacious/glade/prefswin.glade:2150
-msgid "<b>File Dialog</b>"
-msgstr "<b>Dialóg O súbore</b>"
-
-#: src/audacious/glade/prefswin.glade:2189
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-"Obnoviť dialóg o súbore vždy (toto môže spomaliť načítanie veľkých "
-"adresárov; Gnome VFS by mal obnovovať automaticky)."
-
-#: src/audacious/glade/prefswin.glade:2191
-msgid "Always refresh directory when opening file dialog"
-msgstr "Skontrolovať adresár pri každom otvorení dialógu o súbore"
-
-#: src/audacious/glade/prefswin.glade:2225
-msgid "<b>Song Display</b>"
-msgstr "<b>Zobrazenie skladby</b>"
-
-#: src/audacious/glade/prefswin.glade:2273
-msgid "Show information about titlestring format"
-msgstr "Zobraziť informácie o formáte názvu"
-
-#: src/audacious/glade/prefswin.glade:2302
-msgid ""
-"TITLE\n"
-"ARTIST - TITLE\n"
-"ARTIST - ALBUM - TITLE\n"
-"ARTIST - ALBUM - TRACK. TITLE\n"
-"ARTIST [ ALBUM ] - TRACK. TITLE\n"
-"ALBUM - TITLE\n"
-"Custom"
-msgstr ""
-"NÁZOV\n"
-"UMELEC - NÁZOV\n"
-"UMELEC - ALBUM - NÁZOV\n"
-"UMELEC - ALBUM - STOPA. NÁZOV\n"
-"UMELEC [ ALBUM ] - STOPA. NÁZOV\n"
-"ALBUM - NÁZOV\n"
-"Vlastné"
-
-#: src/audacious/glade/prefswin.glade:2347
-msgid "Custom string:"
-msgstr "Vlastný reťazec:"
-
-#: src/audacious/glade/prefswin.glade:2375
-msgid "Title format:"
-msgstr "Formát názvu:"
-
-#: src/audacious/glade/prefswin.glade:2424
-msgid "<b>Popup Information</b>"
-msgstr "<b>Vyskakovacie okno s podrobnosťami</b>"
-
-#: src/audacious/glade/prefswin.glade:2475
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-"Prepne zobrazovanie vyskakovacieho okna s podrobnosťami o vybranej položke v "
-"zozname skladieb. V okne sa zobrazí názov skladby, názov albumu, žáner, rok "
-"vydania, číslo stopy, dĺžka stopy a obal."
-
-#: src/audacious/glade/prefswin.glade:2477
-msgid "Show popup information for playlist entries"
-msgstr "Zobrazovať okno s informáciami pre položky v zozname skladieb"
-
-#: src/audacious/glade/prefswin.glade:2504
-msgid "Edit settings for popup information"
-msgstr "Upraviť nastavenia pre vyskakovacie okno s informáciami"
-
-#: src/audacious/glade/prefswin.glade:2553 src/audacious/ui_manager.c:203
-#: src/audacious/ui_playlist_manager.c:402 src/audacious/ui_preferences.c:116
-msgid "Playlist"
-msgstr "Zoznam skladieb"
-
-#: src/audacious/glade/prefswin.glade:2612
-msgid "<b>Presets</b>"
-msgstr "<b>Predvoľby</b>"
-
-#: src/audacious/glade/prefswin.glade:2666
-msgid "File preset extension:"
-msgstr "Prípony súborov s predvoľbami:"
-
-#: src/audacious/glade/prefswin.glade:2694
-msgid "Directory preset file:"
-msgstr "Adresár s predvoľbami:"
-
-#: src/audacious/glade/prefswin.glade:2788
-msgid "Available _Presets:"
-msgstr "Dostupné _predvoľby:"
-
-#: src/audacious/glade/prefswin.glade:2921 src/audacious/ui_preferences.c:114
-msgid "Equalizer"
-msgstr "Ekvalizér"
-
-#: src/audacious/glade/prefswin.glade:2968
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Nastavenie proxy</b>"
-
-#: src/audacious/glade/prefswin.glade:3026
-msgid "Enable proxy usage"
-msgstr "Používať proxy"
-
-#: src/audacious/glade/prefswin.glade:3103
-msgid "Proxy port:"
-msgstr "Port:"
-
-#: src/audacious/glade/prefswin.glade:3131
-msgid "Proxy hostname:"
-msgstr "Meno počítača:"
-
-#: src/audacious/glade/prefswin.glade:3179
-msgid "Use authentication with proxy"
-msgstr "Používať autentifikáciu"
-
-#: src/audacious/glade/prefswin.glade:3256
-msgid "Proxy password:"
-msgstr "Heslo:"
-
-#: src/audacious/glade/prefswin.glade:3284
-msgid "Proxy username:"
-msgstr "Používateľ:"
-
-#: src/audacious/glade/prefswin.glade:3354
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Zmena týchto nastavení sa prejaví až po reštarte "
-"Audacious.</span>"
-
-#: src/audacious/glade/prefswin.glade:3493
-msgid "<b>Audio System</b>"
-msgstr "<b>Zvukový systém</b>"
-
-#: src/audacious/glade/prefswin.glade:3566
-msgid "Buffer size:"
-msgstr "Veľkosť vyrovnávacej pamäte:"
-
-#: src/audacious/glade/prefswin.glade:3593
-#, fuzzy
-msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping.\n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
-msgstr ""
-"<span size=\"small\">Určuje dĺžku zvukového prúdu, v milisekundách, ktorá "
-"bude uložená do vyrovnávacej pamäte.\n"
-"Ak máte problémy s preskakovaním zvuku, zvýšte túto hodnotu.\n"
-"Prosím vezmite na vedomie, že vysoké hodnoty môžu negatívne ovplyvniť výkon "
-"Audacious.</span>"
-
-#: src/audacious/glade/prefswin.glade:3663
-msgid "Current output plugin:"
-msgstr "Aktuálny výstupný modul:"
-
-#: src/audacious/glade/prefswin.glade:3769
-msgid "Output Plugin Preferences"
-msgstr "Nastavenia výstupného modulu"
-
-#: src/audacious/glade/prefswin.glade:3844
-msgid "Output Plugin Information"
-msgstr "Podrobnosti o výstupnom module"
-
-#: src/audacious/glade/prefswin.glade:3896
-msgid "<b>Format Detection</b>"
-msgstr "<b>Rozpoznávanie formátu</b>"
-
-#: src/audacious/glade/prefswin.glade:3935
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-"Ak je povolené, Audacious bude rozoznávať zoznam súboru až keď to bude "
-"nutné. Môže to viesť k škaredšiemu zoznamu skladieb, ale výrazne to "
-"urýchľuje jeho spracovávanie."
-
-#: src/audacious/glade/prefswin.glade:3937
-msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
-"Namiesto rozoznávania formátu súboru okamžite, rozoznávať formát až keď je "
-"to nutné."
-
-#: src/audacious/glade/prefswin.glade:3971
-#, fuzzy
-msgid ""
-"When checked, Audacious will detect file formats based by extension. Only "
-"files with extensions of supported formats will be loaded."
-msgstr ""
-"Ak je povolené, Audacious bude rozoznávať formát súboru podľa prípony. Tento "
-"spôsob je pomalší ako rozoznávanie až keď je to nutné, ale poskytuje aspoň "
-"minimálnu úroveň rozoznania formátu."
-
-#: src/audacious/glade/prefswin.glade:3973
-msgid "Detect file formats by extension."
-msgstr "Rozoznávať formát súboru podľa prípony."
-
-#: src/audacious/glade/prefswin.glade:4007
-msgid "<b>Playback</b>"
-msgstr "<b>Prehrávanie</b>"
-
-#: src/audacious/glade/prefswin.glade:4046
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr "Po spustení začne Audacious hrať tam, kde pred tým skončil."
-
-#: src/audacious/glade/prefswin.glade:4048
-msgid "Continue playback on startup"
-msgstr "Po spustení pokračovať v prehrávaní"
-
-#: src/audacious/glade/prefswin.glade:4082
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "Keď skončí prehrávanie skladby, automaticky nepokračovať ďalšou."
-
-#: src/audacious/glade/prefswin.glade:4084
-msgid "Don't advance in the playlist"
-msgstr "Nepokračovať v playliste"
-
-#: src/audacious/glade/prefswin.glade:4119
-msgid "Pause between songs"
-msgstr "Pauza medzi skladbami"
-
-#: src/audacious/glade/prefswin.glade:4157
-msgid "Pause for"
-msgstr "Pozastaviť na"
-
-#: src/audacious/glade/prefswin.glade:4203
-msgid "seconds"
-msgstr "sekúnd"
-
-#: src/audacious/glade/prefswin.glade:4249
-msgid "<b>Sampling Rate Converter</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4289
-msgid "Enable Sampling Rate Converter"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4338
-msgid ""
-"Best Sinc Interpolation\n"
-"Medium Sinc Interpolation\n"
-"Fastest Sinc Interpolation\n"
-"ZOH Interpolation\n"
-"Linear Interpolation"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4361
-msgid "Interpolation Engine:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4389
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4461
-msgid "Sampling Rate [Hz]:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4517
-#, fuzzy
-msgid "<b>Volume Control</b>"
-msgstr "<b>Koliesko myši</b>"
-
-#: src/audacious/glade/prefswin.glade:4556
-msgid ""
-"Use software volume control. This may be useful for situations where your "
-"audio system does not support controlling the playback volume."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4558
-msgid "Use software volume control"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4745
-#, fuzzy
-msgid "Reload Plugins"
-msgstr "Moduly"
-
-#: src/audacious/glade/prefswin.glade:4806
-msgid "Popup Information Settings"
-msgstr "Nastavenie vyskakovacieho okna s informáciami"
-
-#: src/audacious/glade/prefswin.glade:4830
-msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Získanie obrázku obalu</b>"
-
-#: src/audacious/glade/prefswin.glade:4855
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-"Pri hľadaní obalu albumu hľadá Audacious určité slová v názve súboru. Tieto "
-"slová môžete zadať, oddelené čiarkou, do nižšie uvedených zoznamov."
-
-#: src/audacious/glade/prefswin.glade:4910
-msgid "Exclude:"
-msgstr "Vylúčiť:"
-
-#: src/audacious/glade/prefswin.glade:4938
-msgid "Include:"
-msgstr "Zahrnúť:"
-
-#: src/audacious/glade/prefswin.glade:5007
-msgid "Recursively search for cover"
-msgstr "Rekurzívne hľadanie obalu"
-
-#: src/audacious/glade/prefswin.glade:5045
-msgid "Search depth: "
-msgstr "Hĺbka hľadania:"
-
-#: src/audacious/glade/prefswin.glade:5111
-msgid "Use per-file cover"
-msgstr "Obrázok obalu pre každý súbor zvlášť"
-
-#: src/audacious/glade/prefswin.glade:5131
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>Rôzne</b>"
-
-#: src/audacious/glade/prefswin.glade:5169
-msgid "Show Progress bar for the current track"
-msgstr "Zobraziť pruh priebehu pre pozíciu v prehrávanej skladbe"
-
-#: src/audacious/glade/prefswin.glade:5207
-msgid "Delay until filepopup comes up: "
-msgstr "Oneskorenie zobrazenia vyskakovacieho okna: "
-
-#: src/audacious/glade/prefswin.glade:5301
-msgid "Color Adjustment"
-msgstr "Prispôsobenie farby"
-
-#: src/audacious/glade/prefswin.glade:5324
-msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
-msgstr ""
-"Pomocou posuvníkov umožňuje Audacious upraviť zafarbenie skinu užívateľského "
-"rozhrania. "
-
-#: src/audacious/glade/prefswin.glade:5358
-msgid "Blue"
-msgstr "Modrá"
-
-#: src/audacious/glade/prefswin.glade:5386
-msgid "Green"
-msgstr "Zelená"
-
-#: src/audacious/glade/prefswin.glade:5414
-msgid "Red"
-msgstr "Červená"
-
-#: src/audacious/input.c:633
+#: src/audacious/input.c:631
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: src/audacious/input.c:649
+#: src/audacious/input.c:647
 msgid "Filename:"
 msgstr "Názov súboru:"
 
-#: src/audacious/input.c:668
+#: src/audacious/input.c:666
 msgid "No input plugin recognized this file"
 msgstr "Súbor nebol rozoznaný žiadnym vstupným modulom"
 
-#: src/audacious/input.c:670
+#: src/audacious/input.c:668
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Vstupný modul: %s"
@@ -674,7 +43,7 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Nepodarilo sa vytvoriť log súbor (%s)!\n"
 
 #: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:491
-#: src/audacious/ui_main.c:2525
+#: src/audacious/ui_main.c:2524
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -1037,28 +406,60 @@ msgstr "Ekvalizér"
 msgid "Presets"
 msgstr "Predvoľby"
 
-#: src/audacious/ui_fileinfo.c:158
-msgid "Track Information Window"
-msgstr "Okno s podrobnosťami o stope"
+#: src/audacious/ui_fileinfo.c:172
+msgid "Track Information"
+msgstr "Informácie o stope"
+
+#: src/audacious/ui_fileinfo.c:194
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\"><b>Názov</b></span>"
+
+#: src/audacious/ui_fileinfo.c:205
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\"><b>Umelec</b></span>"
+
+#: src/audacious/ui_fileinfo.c:216
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\"><b>Album</b></span>"
+
+#: src/audacious/ui_fileinfo.c:227
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\"><b>Komentár</b></span>"
+
+#: src/audacious/ui_fileinfo.c:238
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\"><b>Žáner</b></span>"
+
+#: src/audacious/ui_fileinfo.c:256
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\"><b>Rok</b></span>"
+
+#: src/audacious/ui_fileinfo.c:268
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\"><b>Číslo stopy</b></span>"
+
+#: src/audacious/ui_fileinfo.c:280
+msgid "<span size=\"small\">Location</span>"
+msgstr "<span size=\"small\"><b>Umiestnenie</b></span>"
 
 #: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
-#: src/audacious/ui_preferences.c:125
+#: src/audacious/ui_preferences.c:144
 msgid "Title"
 msgstr "Názov"
 
-#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:123
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:142
 msgid "Artist"
 msgstr "Umelec"
 
-#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:124
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:143
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:127
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:146
 msgid "Genre"
 msgstr "Žáner"
 
-#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:131
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:150
 msgid "Year"
 msgstr "Rok"
 
@@ -1070,8 +471,8 @@ msgstr "Číslo stopy"
 msgid "Track Length"
 msgstr "Dĺžka stopy"
 
-#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:128
-#: src/audacious/ui_preferences.c:420
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:369
 msgid "Filename"
 msgstr "Názov súboru"
 
@@ -1179,11 +580,11 @@ msgstr ""
 msgid "Always ignore, show/hide is controlled remotely"
 msgstr ""
 
-#: src/audacious/ui_main.c:1282
+#: src/audacious/ui_main.c:1281
 msgid "Audacious - broken GTK engine usage warning"
 msgstr ""
 
-#: src/audacious/ui_main.c:1290
+#: src/audacious/ui_main.c:1289
 #, c-format
 msgid ""
 "<big><b>Broken GTK engine in use</b></big>\n"
@@ -1197,73 +598,73 @@ msgid ""
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
 
-#: src/audacious/ui_main.c:1301
+#: src/audacious/ui_main.c:1300
 #, fuzzy
 msgid "Do not display this warning again"
 msgstr "Nabudúce už toto upozornenie nezobrazovať"
 
-#: src/audacious/ui_main.c:1324
+#: src/audacious/ui_main.c:1323
 msgid "Enter location to play:"
 msgstr "Zadajte adresu, s ktorej sa má prehrávať"
 
-#: src/audacious/ui_main.c:1569
+#: src/audacious/ui_main.c:1568
 #, fuzzy, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "PRESUN NA: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1601
+#: src/audacious/ui_main.c:1600
 #, c-format
 msgid "Volume: %d%%"
 msgstr ""
 
-#: src/audacious/ui_main.c:1631
+#: src/audacious/ui_main.c:1630
 #, c-format
 msgid "Balance: %d%% left"
 msgstr ""
 
-#: src/audacious/ui_main.c:1635
+#: src/audacious/ui_main.c:1634
 msgid "Balance: center"
 msgstr ""
 
-#: src/audacious/ui_main.c:1639
+#: src/audacious/ui_main.c:1638
 #, c-format
 msgid "Balance: %d%% right"
 msgstr ""
 
-#: src/audacious/ui_main.c:1975
+#: src/audacious/ui_main.c:1974
 msgid "Options Menu"
 msgstr ""
 
-#: src/audacious/ui_main.c:1979
+#: src/audacious/ui_main.c:1978
 #, fuzzy
 msgid "Disable 'Always On Top'"
 msgstr "Vždy navrchu"
 
-#: src/audacious/ui_main.c:1981
+#: src/audacious/ui_main.c:1980
 #, fuzzy
 msgid "Enable 'Always On Top'"
 msgstr "Vždy navrchu"
 
-#: src/audacious/ui_main.c:1984
+#: src/audacious/ui_main.c:1983
 msgid "File Info Box"
 msgstr ""
 
-#: src/audacious/ui_main.c:1988
+#: src/audacious/ui_main.c:1987
 #, fuzzy
 msgid "Disable 'Doublesize'"
 msgstr "Dvojitá veľkosť"
 
-#: src/audacious/ui_main.c:1990
+#: src/audacious/ui_main.c:1989
 #, fuzzy
 msgid "Enable 'Doublesize'"
 msgstr "Dvojitá veľkosť"
 
-#: src/audacious/ui_main.c:1993
+#: src/audacious/ui_main.c:1992
 #, fuzzy
 msgid "Visualization Menu"
 msgstr "Typ zobrazenia"
 
-#: src/audacious/ui_main.c:2041
+#: src/audacious/ui_main.c:2040
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1279,7 +680,7 @@ msgstr ""
 "2. či žiadne iné programy neblokujú zvukovú kartu.\n"
 "3. či je vaša zvuková karta správne nakonfigurovaná.\n"
 
-#: src/audacious/ui_main.c:2505
+#: src/audacious/ui_main.c:2504
 msgid "Error in Audacious."
 msgstr "Chyba v Audacious."
 
@@ -1507,6 +908,11 @@ msgstr "Klesanie stĺpcov"
 #: src/audacious/ui_manager.c:198
 msgid "Peaks Falloff"
 msgstr "Klesanie vrcholov"
+
+#: src/audacious/ui_manager.c:203 src/audacious/ui_playlist_manager.c:402
+#: src/audacious/ui_preferences.c:135 src/audacious/ui_preferences.c:2871
+msgid "Playlist"
+msgstr "Zoznam skladieb"
 
 #: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
 msgid "New Playlist"
@@ -2050,58 +1456,651 @@ msgstr "Položky"
 msgid "_Rename"
 msgstr "_Premenovať"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:130 src/audacious/ui_preferences.c:2591
+msgid "Appearance"
+msgstr "Vzhľad"
+
+#: src/audacious/ui_preferences.c:131
 msgid "Audio"
 msgstr "Zvuk"
 
-#: src/audacious/ui_preferences.c:113
+#: src/audacious/ui_preferences.c:132
 msgid "Connectivity"
 msgstr "Pripojenie"
 
-#: src/audacious/ui_preferences.c:126
+#: src/audacious/ui_preferences.c:133 src/audacious/ui_preferences.c:2926
+msgid "Equalizer"
+msgstr "Ekvalizér"
+
+#: src/audacious/ui_preferences.c:134 src/audacious/ui_preferences.c:2658
+msgid "Mouse"
+msgstr "Myš"
+
+#: src/audacious/ui_preferences.c:136 src/audacious/ui_preferences.c:2413
+msgid "Plugins"
+msgstr "Moduly"
+
+#: src/audacious/ui_preferences.c:145
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:148
 msgid "Filepath"
 msgstr "Cesta k súboru"
 
-#: src/audacious/ui_preferences.c:130
+#: src/audacious/ui_preferences.c:149
 msgid "Date"
 msgstr "Dátum"
 
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:151
 msgid "Comment"
 msgstr "Komentár"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:152
 msgid "Codec"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:134
+#: src/audacious/ui_preferences.c:153
 #, fuzzy
 msgid "Quality"
 msgstr "_Koniec"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:174
 msgid "localhost"
 msgstr "localhost"
 
-#: src/audacious/ui_preferences.c:390
+#: src/audacious/ui_preferences.c:339
 msgid "Enabled"
 msgstr "Povolené"
 
-#: src/audacious/ui_preferences.c:406
+#: src/audacious/ui_preferences.c:355
 msgid "Description"
 msgstr "Popis"
 
-#: src/audacious/ui_preferences.c:1395
+#: src/audacious/ui_preferences.c:1310
 msgid "Category"
 msgstr "Kategória"
 
-#: src/audacious/ui_preferences.c:1931
-msgid "Preferences Window"
-msgstr "Okno nastavení"
+#: src/audacious/ui_preferences.c:1685
+msgid "Color Adjustment"
+msgstr "Prispôsobenie farby"
+
+#: src/audacious/ui_preferences.c:1692
+msgid ""
+"Audacious allows you to alter the color balance of the skinned UI. The "
+"sliders below will allow you to do this."
+msgstr ""
+"Pomocou posuvníkov umožňuje Audacious upraviť zafarbenie skinu užívateľského "
+"rozhrania. "
+
+#: src/audacious/ui_preferences.c:1702
+msgid "Blue"
+msgstr "Modrá"
+
+#: src/audacious/ui_preferences.c:1709
+msgid "Green"
+msgstr "Zelená"
+
+#: src/audacious/ui_preferences.c:1716
+msgid "Red"
+msgstr "Červená"
+
+#: src/audacious/ui_preferences.c:1799
+msgid "Popup Information Settings"
+msgstr "Nastavenie vyskakovacieho okna s informáciami"
+
+#: src/audacious/ui_preferences.c:1808
+msgid "<b>Cover image retrieve</b>"
+msgstr "<b>Získanie obrázku obalu</b>"
+
+#: src/audacious/ui_preferences.c:1813
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"Pri hľadaní obalu albumu hľadá Audacious určité slová v názve súboru. Tieto "
+"slová môžete zadať, oddelené čiarkou, do nižšie uvedených zoznamov."
+
+#: src/audacious/ui_preferences.c:1830
+msgid "Exclude:"
+msgstr "Vylúčiť:"
+
+#: src/audacious/ui_preferences.c:1837
+msgid "Include:"
+msgstr "Zahrnúť:"
+
+#: src/audacious/ui_preferences.c:1854
+msgid "Recursively search for cover"
+msgstr "Rekurzívne hľadanie obalu"
+
+#: src/audacious/ui_preferences.c:1864
+msgid "Search depth: "
+msgstr "Hĺbka hľadania:"
+
+#: src/audacious/ui_preferences.c:1877
+msgid "Use per-file cover"
+msgstr "Obrázok obalu pre každý súbor zvlášť"
+
+#: src/audacious/ui_preferences.c:1880
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>Rôzne</b>"
+
+#: src/audacious/ui_preferences.c:1889
+msgid "Show Progress bar for the current track"
+msgstr "Zobraziť pruh priebehu pre pozíciu v prehrávanej skladbe"
+
+#: src/audacious/ui_preferences.c:1899
+msgid "Delay until filepopup comes up: "
+msgstr "Oneskorenie zobrazenia vyskakovacieho okna: "
+
+#: src/audacious/ui_preferences.c:2210
+msgid "Audacious Preferences"
+msgstr "Nastavenia programu"
+
+#: src/audacious/ui_preferences.c:2252
+msgid "_Decoder list:"
+msgstr "Zoznam _dekódovacích modulov:"
+
+#: src/audacious/ui_preferences.c:2282
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>Dekódery</b></span>"
+
+#: src/audacious/ui_preferences.c:2295
+msgid "_General plugin list:"
+msgstr "_Zoznam všeobecných modulov:"
+
+#: src/audacious/ui_preferences.c:2325
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Všeobecné</b></span>"
+
+#: src/audacious/ui_preferences.c:2337
+msgid "_Visualization plugin list:"
+msgstr "_Zoznam vizualizačných modulov:"
+
+#: src/audacious/ui_preferences.c:2367
+msgid "<b>Visualization</b>"
+msgstr "<b>Vizualizácia</b>"
+
+#: src/audacious/ui_preferences.c:2379
+msgid "_Effect plugin list:"
+msgstr "_Zoznam efektových modulov:"
+
+#: src/audacious/ui_preferences.c:2409
+msgid "<b>Effects</b>"
+msgstr "<b>Efekty</b>"
+
+#: src/audacious/ui_preferences.c:2435
+msgid "<b>_Skin</b>"
+msgstr "<b>_Skiny</b>"
+
+#: src/audacious/ui_preferences.c:2449
+msgid "Refresh skin list"
+msgstr "Obnovoviť zoznam skinov"
+
+#: src/audacious/ui_preferences.c:2477
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Fonty</b>"
+
+#: src/audacious/ui_preferences.c:2493
+msgid "_Player:"
+msgstr "V okne _prehrávača:"
+
+#: src/audacious/ui_preferences.c:2504
+msgid "_Playlist:"
+msgstr "V zozname _skladieb:"
+
+#: src/audacious/ui_preferences.c:2514
+msgid "Select main player window font:"
+msgstr "Vyberte font použitý v hlavnom okne:"
+
+#: src/audacious/ui_preferences.c:2522
+#, fuzzy
+msgid "Select playlist font:"
+msgstr "Vyberte font použitý v hlavnom okne:"
+
+#: src/audacious/ui_preferences.c:2530
+msgid "Use Bitmap fonts if available"
+msgstr "Ak sú dostupné, použiť bitmapové fonty."
+
+#: src/audacious/ui_preferences.c:2532
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
+"Ak sú dostupné, použiť bitmapové fonty. Bitmapové fonty nepodporujú Unicode "
+"reťazce."
+
+#: src/audacious/ui_preferences.c:2541
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Rôzne</b>"
+
+#: src/audacious/ui_preferences.c:2550
+msgid "Show track numbers in playlist"
+msgstr "Zobrazovať čísla skladieb v playliste"
+
+#: src/audacious/ui_preferences.c:2557
+msgid "Show separators in playlist"
+msgstr "Zobrazovať oddeľovač v zozname skladieb"
+
+#: src/audacious/ui_preferences.c:2564
+msgid "Use custom cursors"
+msgstr "Používať vlastné kurzory"
+
+#: src/audacious/ui_preferences.c:2571
+msgid "Show window manager decoration"
+msgstr "Zobrazovať dekoráciu okien"
+
+#: src/audacious/ui_preferences.c:2573
+msgid "This enables the window manager to show decorations for windows."
+msgstr "Touto voľbou povolíte zobrazovanie dekorácie okien."
+
+#: src/audacious/ui_preferences.c:2579
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr "Používať dialóg výberu súboru ako je v XMMS namiesto štandardného"
+
+#: src/audacious/ui_preferences.c:2581
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr ""
+"Táto voľba zapne dialóg ny výber súboru v štýle XMMS/GTK1. Tento dialóg je "
+"poskytovaný priamo Audacious a je rýchlejší ako štandardný GTK2 (ale nie je "
+"tak pohodlný)."
+
+#: src/audacious/ui_preferences.c:2587
+msgid "Use two-way text scroller"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2589
+msgid ""
+"If selected, the file information text in the main window will scroll back "
+"and forth. If not selected, the text will only scroll in one direction."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2604
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Koliesko myši</b>"
+
+#: src/audacious/ui_preferences.c:2624
+msgid "lines"
+msgstr "riadkov"
+
+#: src/audacious/ui_preferences.c:2637
+msgid "Scrolls playlist by"
+msgstr "Posunie zoznam skladieb o"
+
+#: src/audacious/ui_preferences.c:2644
+msgid "percent"
+msgstr "percent"
+
+#: src/audacious/ui_preferences.c:2651
+msgid "Changes volume by"
+msgstr "Zmení hlasitosť o"
+
+#: src/audacious/ui_preferences.c:2671
+msgid "<b>Filename</b>"
+msgstr "<b>Meno súboru</b>"
+
+#: src/audacious/ui_preferences.c:2680
+msgid "Convert underscores to blanks"
+msgstr "Zmeniť podčiarknutia na medzery"
+
+#: src/audacious/ui_preferences.c:2687
+msgid "Convert %20 to blanks"
+msgstr "Zmeniť %20 na medzery"
+
+#: src/audacious/ui_preferences.c:2694
+msgid "Convert backslash '\\' to forward slash '/'"
+msgstr "Zmeniť spätné lomítka '\\' na lomítka dopredné '/'"
+
+#: src/audacious/ui_preferences.c:2701
+msgid "<b>Metadata</b>"
+msgstr "<b>Metadáta</b>"
+
+#: src/audacious/ui_preferences.c:2710
+msgid "Load metadata from playlists and files"
+msgstr "Načítať metadáta zo zoznamov skladieb a súborov"
+
+#: src/audacious/ui_preferences.c:2712
+msgid "Load metadata (tag information) from music files."
+msgstr "Načítať metadáta (tagy) zo zvukových súborov."
+
+#: src/audacious/ui_preferences.c:2721
+msgid "On load"
+msgstr "Pri načítaní"
+
+#: src/audacious/ui_preferences.c:2723
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+"Načítať metadáta pri pridávaní súboru do zoznamu skladieb alebo pri otváraní"
+
+#: src/audacious/ui_preferences.c:2727
+msgid "On display"
+msgstr "Pri zobrazení"
+
+#: src/audacious/ui_preferences.c:2729
+#, fuzzy
+msgid ""
+"Load metadata on demand when displaying the file in the playlist. You may "
+"need to set \"Detect file formats on demand\" in Audio page for full benefit."
+msgstr "Načítať metadáta na vyžiadanie pri zobrazení súboru v zozname skladieb"
+
+#: src/audacious/ui_preferences.c:2736
+msgid "Auto character encoding detector for:"
+msgstr "Automatické rozoznávanie kódovania znakov:"
+
+#: src/audacious/ui_preferences.c:2752
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+"Zoznam kódovaní znakov použitých pri konverzii metadát, ak sa je automatické "
+"rozpoznávanie zakázané alebo neuspeje. Kódovania z tohoto zoznamu budu "
+"použité na konverziu metadát do UTF-8."
+
+#: src/audacious/ui_preferences.c:2754
+msgid "Fallback character encodings:"
+msgstr "Záložné kódovanie znakov:"
+
+#: src/audacious/ui_preferences.c:2765
+msgid "<b>File Dialog</b>"
+msgstr "<b>Dialóg O súbore</b>"
+
+#: src/audacious/ui_preferences.c:2774
+msgid "Always refresh directory when opening file dialog"
+msgstr "Skontrolovať adresár pri každom otvorení dialógu o súbore"
+
+#: src/audacious/ui_preferences.c:2776
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+"Obnoviť dialóg o súbore vždy (toto môže spomaliť načítanie veľkých "
+"adresárov; Gnome VFS by mal obnovovať automaticky)."
+
+#: src/audacious/ui_preferences.c:2782
+msgid "<b>Song Display</b>"
+msgstr "<b>Zobrazenie skladby</b>"
+
+#: src/audacious/ui_preferences.c:2801
+msgid "Show information about titlestring format"
+msgstr "Zobraziť informácie o formáte názvu"
+
+#: src/audacious/ui_preferences.c:2812
+msgid "TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2813
+msgid "ARTIST - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2814
+msgid "ARTIST - ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2815
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2816
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2817
+msgid "ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2818
+#, fuzzy
+msgid "Custom"
+msgstr "Vlastný reťazec:"
+
+#: src/audacious/ui_preferences.c:2825
+msgid "Custom string:"
+msgstr "Vlastný reťazec:"
+
+#: src/audacious/ui_preferences.c:2832
+msgid "Title format:"
+msgstr "Formát názvu:"
+
+#: src/audacious/ui_preferences.c:2843
+msgid "<b>Popup Information</b>"
+msgstr "<b>Vyskakovacie okno s podrobnosťami</b>"
+
+#: src/audacious/ui_preferences.c:2858
+msgid "Show popup information for playlist entries"
+msgstr "Zobrazovať okno s informáciami pre položky v zozname skladieb"
+
+#: src/audacious/ui_preferences.c:2860
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"Prepne zobrazovanie vyskakovacieho okna s podrobnosťami o vybranej položke v "
+"zozname skladieb. V okne sa zobrazí názov skladby, názov albumu, žáner, rok "
+"vydania, číslo stopy, dĺžka stopy a obal."
+
+#: src/audacious/ui_preferences.c:2865
+msgid "Edit settings for popup information"
+msgstr "Upraviť nastavenia pre vyskakovacie okno s informáciami"
+
+#: src/audacious/ui_preferences.c:2887
+msgid "<b>Presets</b>"
+msgstr "<b>Predvoľby</b>"
+
+#: src/audacious/ui_preferences.c:2904
+msgid "File preset extension:"
+msgstr "Prípony súborov s predvoľbami:"
+
+#: src/audacious/ui_preferences.c:2910
+msgid "Directory preset file:"
+msgstr "Adresár s predvoľbami:"
+
+#: src/audacious/ui_preferences.c:2939
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Nastavenie proxy</b>"
+
+#: src/audacious/ui_preferences.c:2955
+msgid "Enable proxy usage"
+msgstr "Používať proxy"
+
+#: src/audacious/ui_preferences.c:2973
+msgid "Proxy port:"
+msgstr "Port:"
+
+#: src/audacious/ui_preferences.c:2979
+msgid "Proxy hostname:"
+msgstr "Meno počítača:"
+
+#: src/audacious/ui_preferences.c:2989
+msgid "Use authentication with proxy"
+msgstr "Používať autentifikáciu"
+
+#: src/audacious/ui_preferences.c:3008
+msgid "Proxy password:"
+msgstr "Heslo:"
+
+#: src/audacious/ui_preferences.c:3014
+msgid "Proxy username:"
+msgstr "Používateľ:"
+
+#: src/audacious/ui_preferences.c:3031
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">Zmena týchto nastavení sa prejaví až po reštarte "
+"Audacious.</span>"
+
+#: src/audacious/ui_preferences.c:3062
+msgid "<b>Audio System</b>"
+msgstr "<b>Zvukový systém</b>"
+
+#: src/audacious/ui_preferences.c:3085
+msgid "Buffer size:"
+msgstr "Veľkosť vyrovnávacej pamäte:"
+
+#: src/audacious/ui_preferences.c:3091
+#, fuzzy
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping.\n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+"<span size=\"small\">Určuje dĺžku zvukového prúdu, v milisekundách, ktorá "
+"bude uložená do vyrovnávacej pamäte.\n"
+"Ak máte problémy s preskakovaním zvuku, zvýšte túto hodnotu.\n"
+"Prosím vezmite na vedomie, že vysoké hodnoty môžu negatívne ovplyvniť výkon "
+"Audacious.</span>"
+
+#: src/audacious/ui_preferences.c:3110
+msgid "Current output plugin:"
+msgstr "Aktuálny výstupný modul:"
+
+#: src/audacious/ui_preferences.c:3139
+msgid "Output Plugin Preferences"
+msgstr "Nastavenia výstupného modulu"
+
+#: src/audacious/ui_preferences.c:3156
+msgid "Output Plugin Information"
+msgstr "Podrobnosti o výstupnom module"
+
+#: src/audacious/ui_preferences.c:3163
+msgid "<b>Format Detection</b>"
+msgstr "<b>Rozpoznávanie formátu</b>"
+
+#: src/audacious/ui_preferences.c:3172
+msgid "Detect file formats on demand, instead of immediately."
+msgstr ""
+"Namiesto rozoznávania formátu súboru okamžite, rozoznávať formát až keď je "
+"to nutné."
+
+#: src/audacious/ui_preferences.c:3174
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"Ak je povolené, Audacious bude rozoznávať zoznam súboru až keď to bude "
+"nutné. Môže to viesť k škaredšiemu zoznamu skladieb, ale výrazne to "
+"urýchľuje jeho spracovávanie."
+
+#: src/audacious/ui_preferences.c:3180
+msgid "Detect file formats by extension."
+msgstr "Rozoznávať formát súboru podľa prípony."
+
+#: src/audacious/ui_preferences.c:3182
+#, fuzzy
+msgid ""
+"When checked, Audacious will detect file formats based by extension. Only "
+"files with extensions of supported formats will be loaded."
+msgstr ""
+"Ak je povolené, Audacious bude rozoznávať formát súboru podľa prípony. Tento "
+"spôsob je pomalší ako rozoznávanie až keď je to nutné, ale poskytuje aspoň "
+"minimálnu úroveň rozoznania formátu."
+
+#: src/audacious/ui_preferences.c:3188
+msgid "<b>Playback</b>"
+msgstr "<b>Prehrávanie</b>"
+
+#: src/audacious/ui_preferences.c:3197
+msgid "Continue playback on startup"
+msgstr "Po spustení pokračovať v prehrávaní"
+
+#: src/audacious/ui_preferences.c:3199
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr "Po spustení začne Audacious hrať tam, kde pred tým skončil."
+
+#: src/audacious/ui_preferences.c:3205
+msgid "Don't advance in the playlist"
+msgstr "Nepokračovať v playliste"
+
+#: src/audacious/ui_preferences.c:3207
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Keď skončí prehrávanie skladby, automaticky nepokračovať ďalšou."
+
+#: src/audacious/ui_preferences.c:3213
+msgid "Pause between songs"
+msgstr "Pauza medzi skladbami"
+
+#: src/audacious/ui_preferences.c:3223
+msgid "Pause for"
+msgstr "Pozastaviť na"
+
+#: src/audacious/ui_preferences.c:3231
+msgid "seconds"
+msgstr "sekúnd"
+
+#: src/audacious/ui_preferences.c:3239
+msgid "<b>Sampling Rate Converter</b>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3248
+msgid "Enable Sampling Rate Converter"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3268
+msgid "Best Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3269
+msgid "Medium Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3270
+msgid "Fastest Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3271
+msgid "ZOH Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3272
+msgid "Linear Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3274
+msgid "Interpolation Engine:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3280
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3300
+msgid "Sampling Rate [Hz]:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3310
+#, fuzzy
+msgid "<b>Volume Control</b>"
+msgstr "<b>Koliesko myši</b>"
+
+#: src/audacious/ui_preferences.c:3319
+msgid "Use software volume control"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3321
+msgid ""
+"Use software volume control. This may be useful for situations where your "
+"audio system does not support controlling the playback volume."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:3354
+#, fuzzy
+msgid "Reload Plugins"
+msgstr "Moduly"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "PREAMP"
@@ -2155,9 +2154,45 @@ msgstr "Zabalený skin Winamp 2.x"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Nezabalený skin Winamp 2.x"
 
-#: src/audacious/ui_urlopener.c:88
+#: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
 msgstr "Dialóg Pridať/Otvoriť URL"
+
+#~ msgid ""
+#~ "<b><big>Unable to create %s.</big></b>\n"
+#~ "\n"
+#~ "Could not open glade file (%s). Please check your installation.\n"
+#~ msgstr ""
+#~ "<b><big>Nemôžem vytvoriť %s.</big></b>\n"
+#~ "\n"
+#~ "Nepodarilo sa otvoriť glade súbor %s. Skontrolujte prosím Vašu "
+#~ "inštaláciu.\n"
+
+#~ msgid ""
+#~ "TITLE\n"
+#~ "ARTIST - TITLE\n"
+#~ "ARTIST - ALBUM - TITLE\n"
+#~ "ARTIST - ALBUM - TRACK. TITLE\n"
+#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
+#~ "ALBUM - TITLE\n"
+#~ "Custom"
+#~ msgstr ""
+#~ "NÁZOV\n"
+#~ "UMELEC - NÁZOV\n"
+#~ "UMELEC - ALBUM - NÁZOV\n"
+#~ "UMELEC - ALBUM - STOPA. NÁZOV\n"
+#~ "UMELEC [ ALBUM ] - STOPA. NÁZOV\n"
+#~ "ALBUM - NÁZOV\n"
+#~ "Vlastné"
+
+#~ msgid "Available _Presets:"
+#~ msgstr "Dostupné _predvoľby:"
+
+#~ msgid "Track Information Window"
+#~ msgstr "Okno s podrobnosťami o stope"
+
+#~ msgid "Preferences Window"
+#~ msgstr "Okno nastavení"
 
 #, fuzzy
 #~ msgid "Close"
