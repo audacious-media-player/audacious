@@ -173,6 +173,7 @@ g_get_host_name (void)
 }
 #endif
 
+static void create_colorize_settings(void);
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 
 static GladeXML *
@@ -1573,11 +1574,7 @@ on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
 static void
 on_colorize_button_clicked(GtkButton *button, gpointer data)
 {
-    gtk_range_set_value(GTK_RANGE(red_scale), cfg.colorize_r);
-    gtk_range_set_value(GTK_RANGE(green_scale), cfg.colorize_g);
-    gtk_range_set_value(GTK_RANGE(blue_scale), cfg.colorize_b);
-
-    gtk_widget_show(colorize_settings);
+    create_colorize_settings();
 }
 
 static void
@@ -1614,7 +1611,7 @@ on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
 static void
 on_colorize_close_clicked(GtkButton *button, gpointer data)
 {
-	gtk_widget_hide(colorize_settings);
+	gtk_widget_destroy(colorize_settings);
 }
 
 static void
@@ -1918,8 +1915,12 @@ create_colorize_settings(void)
                      G_CALLBACK(on_colorize_close_clicked),
                      NULL);
 
+    gtk_range_set_value(GTK_RANGE(red_scale), cfg.colorize_r);
+    gtk_range_set_value(GTK_RANGE(green_scale), cfg.colorize_g);
+    gtk_range_set_value(GTK_RANGE(blue_scale), cfg.colorize_b);
+
     gtk_widget_grab_default(colorize_close);
-    gtk_widget_show_all(vbox);
+    gtk_widget_show_all(colorize_settings);
 }
 
 void
@@ -2288,8 +2289,8 @@ create_prefs_window(void)
     /* create tag menu */
     titlestring_tag_menu = gtk_menu_new();
     for(i = 0; i < n_title_field_tags; i++) {
-    	menu_item = gtk_menu_item_new_with_label(_(title_field_tags[i].name));
-	gtk_menu_shell_append(GTK_MENU_SHELL(titlestring_tag_menu), menu_item);
+        menu_item = gtk_menu_item_new_with_label(_(title_field_tags[i].name));
+        gtk_menu_shell_append(GTK_MENU_SHELL(titlestring_tag_menu), menu_item);
         g_signal_connect(menu_item, "activate",
                          G_CALLBACK(titlestring_tag_menu_callback), 
                          GINT_TO_POINTER(i));
@@ -2310,17 +2311,15 @@ create_prefs_window(void)
    widget = glade_xml_get_widget(xml, "audversionlabel");
 
    aud_version_string = g_strdup_printf("<span size='small'>%s (%s) (%s@%s)</span>",
-		    "Audacious " PACKAGE_VERSION ,
-                    svn_stamp , g_get_user_name() , g_get_host_name() );
+                                        "Audacious " PACKAGE_VERSION ,
+                                        svn_stamp ,
+                                        g_get_user_name() , g_get_host_name() );
 
    gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string );
    g_free(aud_version_string);
 
     /* Create window for filepopup settings */
     create_filepopup_settings();
-
-    /* Create window for color adjustment settings */
-    create_colorize_settings();
 }
 
 void
