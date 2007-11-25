@@ -172,15 +172,16 @@ enum WidgetTypes {
     WIDGET_CHK_BTN,
     WIDGET_LABEL,
     WIDGET_RADIO_BTN,
+    WIDGET_SPIN_BTN,
     WIDGET_CHARDET_TABLE     /* 'fixed' widget, not for reuse */
 };
 
 typedef struct preferences_widgets_t {
     gint type;               /* widget type */
-    char *label;             /* widget title */
+    char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
     gboolean *cfg;           /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
-    char *tooltip;           /* widget tooltip, can be NULL */
+    char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
     gboolean child;
 } preferences_widgets;
 
@@ -213,6 +214,8 @@ static preferences_widgets audio_page_widgets[] = {
      gettext_noop("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
      gettext_noop("When finished playing a song, don't automatically advance to the next."), FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
+    {WIDGET_SPIN_BTN, gettext_noop("Pause for"), &cfg.pause_between_songs_time, NULL, gettext_noop("seconds"), TRUE},
 };
 
 static preferences_widgets playlist_page_widgets[] = {
@@ -227,6 +230,12 @@ static preferences_widgets playlist_page_widgets[] = {
     {WIDGET_CHARDET_TABLE, NULL, NULL, NULL, NULL, TRUE},
     {WIDGET_LABEL, gettext_noop("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, gettext_noop("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
+};
+
+static preferences_widgets mouse_page_widgets[] = {
+    {WIDGET_LABEL, gettext_noop("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_SPIN_BTN, gettext_noop("Changes volume by"), &cfg.mouse_change, NULL, gettext_noop("percent"), FALSE},
+    {WIDGET_SPIN_BTN, gettext_noop("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, gettext_noop("lines"), FALSE},
 };
 
 /* GLib 2.6 compatibility */
@@ -832,34 +841,6 @@ on_output_plugin_bufsize_value_changed(GtkSpinButton *button,
 }
 
 static void
-on_mouse_wheel_volume_realize(GtkSpinButton * button,
-                              gpointer data)
-{
-    gtk_spin_button_set_value(button, cfg.mouse_change);
-}
-
-static void
-on_mouse_wheel_volume_changed(GtkSpinButton * button,
-                              gpointer data)
-{
-    cfg.mouse_change = gtk_spin_button_get_value_as_int(button);
-}
-
-static void
-on_pause_between_songs_time_realize(GtkSpinButton * button,
-                                    gpointer data)
-{
-    gtk_spin_button_set_value(button, cfg.pause_between_songs_time);
-}
-
-static void
-on_pause_between_songs_time_changed(GtkSpinButton * button,
-                                    gpointer data)
-{
-    cfg.pause_between_songs_time = gtk_spin_button_get_value_as_int(button);
-}
-
-static void
 on_enable_src_realize(GtkToggleButton * button,
                                     gpointer data)
 {
@@ -956,17 +937,15 @@ on_src_converter_type_changed(GtkComboBox * box,
 }
 
 static void
-on_mouse_wheel_scroll_pl_realize(GtkSpinButton * button,
-                                 gpointer data)
+on_spin_btn_realize(GtkSpinButton *button, gboolean *cfg)
 {
-    gtk_spin_button_set_value(button, cfg.scroll_pl_by);
+    gtk_spin_button_set_value(button, *cfg);
 }
 
 static void
-on_mouse_wheel_scroll_pl_changed(GtkSpinButton * button,
-                                 gpointer data)
+on_spin_btn_changed(GtkSpinButton *button, gboolean *cfg)
 {
-    cfg.scroll_pl_by = gtk_spin_button_get_value_as_int(button);
+    *cfg = gtk_spin_button_get_value_as_int(button);
 }
 
 static void
@@ -979,24 +958,6 @@ static void
 on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.software_volume_control);
-}
-
-static void
-on_pause_between_songs_realize(GtkToggleButton * button,
-                               gpointer data)
-{
-    gboolean state = cfg.pause_between_songs;
-    gtk_toggle_button_set_active(button, state);
-    gtk_widget_set_sensitive(GTK_WIDGET(data), state);
-}
-
-static void
-on_pause_between_songs_toggled(GtkToggleButton * button,
-                               gpointer data)
-{
-    gboolean state = gtk_toggle_button_get_active(button);
-    cfg.pause_between_songs = state;
-    gtk_widget_set_sensitive(GTK_WIDGET(data), state);
 }
 
 static void
@@ -1684,22 +1645,23 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
     GSList *radio_btn_group = NULL;
+    int table_line=0;  /* used for WIDGET_SPIN_BTN */
 
     for (x = 0; x < amt; ++x) {
          if (widgets[x].child) { /* perhaps this logic can be better */
              if (!child_box) {
                  child_box = gtk_vbox_new(FALSE, 0);
                  g_object_set_data(G_OBJECT(widget), "child", child_box);
-             }
                  alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
                  gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
                  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 24, 0);
                  gtk_container_add (GTK_CONTAINER (alignment), child_box);
+             }
          } else
              child_box = NULL;
 
          alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-         gtk_box_pack_start(child_box ? GTK_BOX(child_box) : box, alignment, TRUE, TRUE, 0);
+         gtk_box_pack_start(child_box ? GTK_BOX(child_box) : box, alignment, FALSE, FALSE, 0);
 
          if (radio_btn_group && widgets[x].type != WIDGET_RADIO_BTN)
              radio_btn_group = NULL;
@@ -1730,6 +1692,51 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                                   widgets[x].cfg);
                  g_signal_connect(G_OBJECT(widget), "realize",
                                   G_CALLBACK(on_toggle_button_realize),
+                                  widgets[x].cfg);
+                 break;
+             case WIDGET_SPIN_BTN:
+                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
+
+                 if (x > 1 && widgets[x-1].type == WIDGET_SPIN_BTN) {
+                     table_line++;
+                 } else {
+                     /* check how many WIDGET_SPIN_BTNs are there */
+                     gint lines = 0, i;
+                     for (i=x; i<amt && widgets[i].type == WIDGET_SPIN_BTN; i++)
+                          lines++;
+
+                     widget = gtk_table_new(lines, 3, FALSE);
+                     gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
+                     table_line=0;
+                 }
+
+                 GtkWidget *label_pre = gtk_label_new (widgets[x].label);
+                 gtk_table_attach(GTK_TABLE (widget), label_pre, 0, 1, table_line, table_line+1,
+                                  (GtkAttachOptions) (0),
+                                  (GtkAttachOptions) (0), 0, 0);
+                 gtk_misc_set_alignment(GTK_MISC(label_pre), 0, 0.5);
+                 gtk_misc_set_padding(GTK_MISC(label_pre), 4, 0);
+
+                 GtkObject *adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+                 GtkWidget *spin_btn = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
+                 gtk_table_attach(GTK_TABLE(widget), spin_btn, 1, 2, table_line, table_line+1,
+                                  (GtkAttachOptions) (0),
+                                  (GtkAttachOptions) (0), 4, 0);
+
+                 if (widgets[x].tooltip) {
+                     GtkWidget *label_past = gtk_label_new (widgets[x].tooltip);
+                     gtk_table_attach(GTK_TABLE(widget), label_past, 2, 3, table_line, table_line+1,
+                                      (GtkAttachOptions) (0),
+                                      (GtkAttachOptions) (0), 0, 0);
+                     gtk_misc_set_alignment(GTK_MISC(label_past), 0, 0.5);
+                     gtk_misc_set_padding(GTK_MISC(label_past), 4, 0);
+                 }
+
+                 g_signal_connect(G_OBJECT(spin_btn), "value_changed",
+                                  G_CALLBACK(on_spin_btn_changed),
+                                  widgets[x].cfg);
+                 g_signal_connect(G_OBJECT(spin_btn), "realize",
+                                  G_CALLBACK(on_spin_btn_realize),
                                   widgets[x].cfg);
                  break;
              case WIDGET_CHARDET_TABLE:
@@ -1777,9 +1784,9 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                  continue;
          }
 
-         if (widget)
+         if (widget && !gtk_widget_get_parent(widget))
              gtk_container_add(GTK_CONTAINER(alignment), widget);
-         if (widgets[x].tooltip)
+         if (widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
              gtk_tooltips_set_tip(tooltips, widget, widgets[x].tooltip, NULL);
     }
 
@@ -1863,18 +1870,6 @@ create_prefs_window(void)
   GtkWidget *appearance_label;
   GtkWidget *mouse_page_vbox;
   GtkWidget *vbox20;
-  GtkWidget *alignment36;
-  GtkWidget *label51;
-  GtkWidget *alignment34;
-  GtkWidget *table4;
-  GtkObject *mouse_wheel_volume_adj;
-  GtkWidget *mouse_wheel_volume;
-  GtkWidget *label35;
-  GtkObject *mouse_wheel_scroll_pl_adj;
-  GtkWidget *mouse_wheel_scroll_pl;
-  GtkWidget *label34;
-  GtkWidget *label33;
-  GtkWidget *label32;
   GtkWidget *mouse_label;
   GtkWidget *playlist_page_vbox;
   GtkWidget *vbox5;
@@ -1962,14 +1957,6 @@ create_prefs_window(void)
   GtkWidget *hbox8;
   GtkWidget *image6;
   GtkWidget *label81;
-  GtkWidget *alignment80;
-  GtkWidget *pause_between_songs;
-  GtkWidget *alignment22;
-  GtkWidget *pause_between_songs_box;
-  GtkWidget *label41;
-  GtkObject *pause_between_songs_time_adj;
-  GtkWidget *pause_between_songs_time;
-  GtkWidget *label42;
   GtkWidget *alignment90;
   GtkWidget *label93;
   GtkWidget *alignment92;
@@ -2344,63 +2331,7 @@ create_prefs_window(void)
   vbox20 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (mouse_page_vbox), vbox20, TRUE, TRUE, 0);
 
-  alignment36 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox20), alignment36, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment36), 0, 12, 0, 0);
-
-  label51 = gtk_label_new (_("<b>Mouse wheel</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment36), label51);
-  gtk_label_set_use_markup (GTK_LABEL (label51), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label51), 0, 0);
-
-  alignment34 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox20), alignment34, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment34), 0, 0, 12, 0);
-
-  table4 = gtk_table_new (2, 3, FALSE);
-  gtk_container_add (GTK_CONTAINER (alignment34), table4);
-  gtk_table_set_row_spacings (GTK_TABLE (table4), 6);
-
-  mouse_wheel_volume_adj = gtk_adjustment_new (5, 0, 100, 1, 10, 10);
-  mouse_wheel_volume = gtk_spin_button_new (GTK_ADJUSTMENT (mouse_wheel_volume_adj), 1, 0);
-  gtk_table_attach (GTK_TABLE (table4), mouse_wheel_volume, 1, 2, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 4, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (mouse_wheel_volume), TRUE);
-
-  label35 = gtk_label_new (_("lines"));
-  gtk_table_attach (GTK_TABLE (table4), label35, 2, 3, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label35), 0, 0.5);
-  gtk_misc_set_padding (GTK_MISC (label35), 4, 0);
-
-  mouse_wheel_scroll_pl_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
-  mouse_wheel_scroll_pl = gtk_spin_button_new (GTK_ADJUSTMENT (mouse_wheel_scroll_pl_adj), 1, 0);
-  gtk_table_attach (GTK_TABLE (table4), mouse_wheel_scroll_pl, 1, 2, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 4, 0);
-
-  label34 = gtk_label_new (_("Scrolls playlist by"));
-  gtk_table_attach (GTK_TABLE (table4), label34, 0, 1, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label34), 0, 0.5);
-  gtk_misc_set_padding (GTK_MISC (label34), 4, 0);
-
-  label33 = gtk_label_new (_("percent"));
-  gtk_table_attach (GTK_TABLE (table4), label33, 2, 3, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label33), 0, 0.5);
-  gtk_misc_set_padding (GTK_MISC (label33), 4, 0);
-
-  label32 = gtk_label_new (_("Changes volume by"));
-  gtk_table_attach (GTK_TABLE (table4), label32, 0, 1, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label32), 0, 0.5);
-  gtk_misc_set_padding (GTK_MISC (label32), 4, 0);
+    create_widgets(GTK_BOX(vbox20), mouse_page_widgets, G_N_ELEMENTS(mouse_page_widgets));
 
   mouse_label = gtk_label_new (_("Mouse"));
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 2), mouse_label);
@@ -2796,32 +2727,6 @@ create_prefs_window(void)
 
     create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
 
-  alignment80 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment80, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment80), 0, 0, 12, 0);
-
-  pause_between_songs = gtk_check_button_new_with_mnemonic (_("Pause between songs"));
-  gtk_container_add (GTK_CONTAINER (alignment80), pause_between_songs);
-
-  alignment22 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment22, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment22), 0, 0, 45, 0);
-
-  pause_between_songs_box = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (alignment22), pause_between_songs_box);
-
-  label41 = gtk_label_new (_("Pause for"));
-  gtk_box_pack_start (GTK_BOX (pause_between_songs_box), label41, FALSE, FALSE, 0);
-  gtk_misc_set_padding (GTK_MISC (label41), 4, 0);
-
-  pause_between_songs_time_adj = gtk_adjustment_new (2, 0, 100, 1, 10, 10);
-  pause_between_songs_time = gtk_spin_button_new (GTK_ADJUSTMENT (pause_between_songs_time_adj), 1, 0);
-  gtk_box_pack_start (GTK_BOX (pause_between_songs_box), pause_between_songs_time, FALSE, FALSE, 0);
-
-  label42 = gtk_label_new (_("seconds"));
-  gtk_box_pack_start (GTK_BOX (pause_between_songs_box), label42, FALSE, FALSE, 0);
-  gtk_misc_set_padding (GTK_MISC (label42), 4, 0);
-
   alignment90 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment90, FALSE, FALSE, 0);
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment90), 12, 12, 0, 0);
@@ -3006,19 +2911,6 @@ create_prefs_window(void)
     g_signal_connect_after(G_OBJECT(checkbutton11), "realize",
                            G_CALLBACK(on_use_bitmap_fonts_realize),
                            NULL);
-
-    g_signal_connect(G_OBJECT(mouse_wheel_volume), "value_changed",
-                     G_CALLBACK(on_mouse_wheel_volume_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(mouse_wheel_volume), "realize",
-                           G_CALLBACK(on_mouse_wheel_volume_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(mouse_wheel_scroll_pl), "value_changed",
-                     G_CALLBACK(on_mouse_wheel_scroll_pl_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(mouse_wheel_scroll_pl), "realize",
-                           G_CALLBACK(on_mouse_wheel_scroll_pl_realize),
-                           NULL);
     g_signal_connect(G_OBJECT(titlestring_entry), "changed",
                      G_CALLBACK(on_titlestring_entry_changed),
                      NULL);
@@ -3090,12 +2982,6 @@ create_prefs_window(void)
                            NULL);
     g_signal_connect_after(G_OBJECT(output_plugin_cbox), "realize",
                            G_CALLBACK(on_output_plugin_cbox_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(pause_between_songs_time), "value_changed",
-                     G_CALLBACK(on_pause_between_songs_time_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(pause_between_songs_time), "realize",
-                           G_CALLBACK(on_pause_between_songs_time_realize),
                            NULL);
     g_signal_connect(G_OBJECT(enable_src), "toggled",
                      G_CALLBACK(on_enable_src_toggled),
@@ -3230,13 +3116,6 @@ create_prefs_window(void)
                              effect_plugin_view);
 
     /* playlist page */
-
-    g_signal_connect_after(G_OBJECT(pause_between_songs), "realize",
-                           G_CALLBACK(on_pause_between_songs_realize),
-                           pause_between_songs_box);
-    g_signal_connect(G_OBJECT(pause_between_songs), "toggled",
-                     G_CALLBACK(on_pause_between_songs_toggled),
-                     pause_between_songs_box);
 
     g_signal_connect(skin_view, "drag-data-received",
                      G_CALLBACK(on_skin_view_drag_data_received),
