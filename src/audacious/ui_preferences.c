@@ -171,7 +171,8 @@ enum WidgetTypes {
     WIDGET_NONE,
     WIDGET_CHK_BTN,
     WIDGET_LABEL,
-    WIDGET_RADIO_BTN
+    WIDGET_RADIO_BTN,
+    WIDGET_CHARDET_TABLE     /* 'fixed' widget, not for reuse */
 };
 
 typedef struct preferences_widgets_t {
@@ -223,6 +224,9 @@ static preferences_widgets playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, gettext_noop("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, gettext_noop("Load metadata (tag information) from music files."), FALSE},
     {WIDGET_RADIO_BTN, gettext_noop("On load"), &cfg.get_info_on_load, NULL, gettext_noop("Load metadata when adding the file to the playlist or opening it"), TRUE},
     {WIDGET_RADIO_BTN, gettext_noop("On display"), &cfg.get_info_on_demand, NULL, gettext_noop("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), TRUE},
+    {WIDGET_CHARDET_TABLE, NULL, NULL, NULL, NULL, TRUE},
+    {WIDGET_LABEL, gettext_noop("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, gettext_noop("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
 
 /* GLib 2.6 compatibility */
@@ -978,18 +982,6 @@ on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
 }
 
 static void
-on_refresh_file_list_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.refresh_file_list);
-}
-
-static void
-on_refresh_file_list_toggled(GtkToggleButton * button, gpointer data)
-{
-    cfg.refresh_file_list = gtk_toggle_button_get_active(button);
-}
-
-static void
 on_pause_between_songs_realize(GtkToggleButton * button,
                                gpointer data)
 {
@@ -1740,9 +1732,48 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                                   G_CALLBACK(on_toggle_button_realize),
                                   widgets[x].cfg);
                  break;
+             case WIDGET_CHARDET_TABLE:
+                 widget = gtk_table_new(2, 2, FALSE);
+                 GtkWidget *label;
+
+                 label = gtk_label_new(_("Auto character encoding detector for:"));
+                 gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 0, 1,
+                                  (GtkAttachOptions) (0),
+                                  (GtkAttachOptions) (0), 0, 0);
+                 gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
+                 gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+
+                 GtkWidget *combobox = gtk_combo_box_new_text();
+                 gtk_table_attach(GTK_TABLE(widget), combobox, 1, 2, 0, 1,
+                                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                                  (GtkAttachOptions) (0), 0, 0);
+                 g_signal_connect_after(G_OBJECT(combobox), "realize",
+                                        G_CALLBACK(on_chardet_detector_cbox_realize),
+                                        NULL);
+
+                 GtkWidget *entry = gtk_entry_new();
+                 gtk_table_attach(GTK_TABLE(widget), entry, 1, 2, 1, 2,
+                                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                                  (GtkAttachOptions) (0), 0, 0);
+                 gtk_tooltips_set_tip (tooltips, entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
+
+                 label = gtk_label_new(_("Fallback character encodings:"));
+                 gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 1, 2,
+                                  (GtkAttachOptions) (0),
+                                  (GtkAttachOptions) (0), 0, 0);
+                 gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
+                 gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+
+                 g_signal_connect(G_OBJECT(entry), "changed",
+                                  G_CALLBACK(on_chardet_fallback_changed),
+                                  NULL);
+                 g_signal_connect_after(G_OBJECT(entry), "realize",
+                                  G_CALLBACK(on_chardet_fallback_realize),
+                                  NULL);
+
+                 break;
              default:
-                 g_object_unref(alignment);
-                 widget = NULL;
+                 /* shouldn't ever happen - expect things to break */
                  continue;
          }
 
@@ -1847,15 +1878,6 @@ create_prefs_window(void)
   GtkWidget *mouse_label;
   GtkWidget *playlist_page_vbox;
   GtkWidget *vbox5;
-  GtkWidget *table10;
-  GtkWidget *label73;
-  GtkWidget *combobox1;
-  GtkWidget *entry1;
-  GtkWidget *label74;
-  GtkWidget *alignment19;
-  GtkWidget *label40;
-  GtkWidget *alignment20;
-  GtkWidget *refresh_file_list;
   GtkWidget *alignment55;
   GtkWidget *label60;
   GtkWidget *alignment56;
@@ -2390,54 +2412,6 @@ create_prefs_window(void)
   gtk_box_pack_start (GTK_BOX (playlist_page_vbox), vbox5, TRUE, TRUE, 0);
 
     create_widgets(GTK_BOX(vbox5), playlist_page_widgets, G_N_ELEMENTS(playlist_page_widgets));
-
-  /* TODO: this needs to be done by create_widgets and packed into child_box */
-  {
-    table10 = gtk_table_new (2, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox5), table10, TRUE, TRUE, 0);
-
-    label73 = gtk_label_new (_("Auto character encoding detector for:"));
-    gtk_table_attach (GTK_TABLE (table10), label73, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify (GTK_LABEL (label73), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment (GTK_MISC (label73), 1, 0.5);
-
-    combobox1 = gtk_combo_box_new_text ();
-    gtk_table_attach (GTK_TABLE (table10), combobox1, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    entry1 = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table10), entry1, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_tooltips_set_tip (tooltips, entry1, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
-
-    label74 = gtk_label_new (_("Fallback character encodings:"));
-    gtk_table_attach (GTK_TABLE (table10), label74, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify (GTK_LABEL (label74), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment (GTK_MISC (label74), 1, 0.5);
-  }
-
-  alignment19 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment19, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment19), 12, 12, 0, 0);
-
-  label40 = gtk_label_new (_("<b>File Dialog</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment19), label40);
-  gtk_label_set_use_markup (GTK_LABEL (label40), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label40), 0, 0.5);
-
-  alignment20 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment20, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment20), 0, 0, 12, 0);
-
-  refresh_file_list = gtk_check_button_new_with_mnemonic (_("Always refresh directory when opening file dialog"));
-  gtk_container_add (GTK_CONTAINER (alignment20), refresh_file_list);
-  gtk_tooltips_set_tip (tooltips, refresh_file_list, _("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), NULL);
 
   alignment55 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_box_pack_start (GTK_BOX (vbox5), alignment55, FALSE, FALSE, 0);
@@ -3044,21 +3018,6 @@ create_prefs_window(void)
                      NULL);
     g_signal_connect_after(G_OBJECT(mouse_wheel_scroll_pl), "realize",
                            G_CALLBACK(on_mouse_wheel_scroll_pl_realize),
-                           NULL);
-    g_signal_connect_after(G_OBJECT(combobox1), "realize",
-                           G_CALLBACK(on_chardet_detector_cbox_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(entry1), "changed",
-                     G_CALLBACK(on_chardet_fallback_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(entry1), "realize",
-                           G_CALLBACK(on_chardet_fallback_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(refresh_file_list), "toggled",
-                     G_CALLBACK(on_refresh_file_list_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(refresh_file_list), "realize",
-                           G_CALLBACK(on_refresh_file_list_realize),
                            NULL);
     g_signal_connect(G_OBJECT(titlestring_entry), "changed",
                      G_CALLBACK(on_titlestring_entry_changed),
