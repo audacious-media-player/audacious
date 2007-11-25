@@ -280,6 +280,53 @@ create_fileinfo_window(void)
     gtk_box_pack_start(GTK_BOX(vbox1), alignment, TRUE, TRUE, 0);
     vbox2 = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(alignment), vbox2);
+    
+    label_codec = gtk_label_new(_("<span size=\"small\">Codec</span>"));
+    gtk_box_pack_start (GTK_BOX (vbox2), label_codec, FALSE, FALSE, 0);
+    gtk_label_set_use_markup(GTK_LABEL(label_codec), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_codec), 0, 0.5);
+    
+    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 6, 0, 0);
+    gtk_box_pack_start (GTK_BOX (vbox2), alignment, FALSE, FALSE, 0);
+
+    codec_hbox = gtk_hbox_new(FALSE, 6);
+    gtk_container_add (GTK_CONTAINER(alignment), codec_hbox);
+
+    image_fileicon = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG);
+    gtk_box_pack_start (GTK_BOX (codec_hbox), image_fileicon, FALSE, FALSE, 0);
+    
+    codec_table = gtk_table_new(2, 2, FALSE);
+    gtk_table_set_row_spacings (GTK_TABLE(codec_table), 6);
+    gtk_table_set_col_spacings (GTK_TABLE(codec_table), 12);
+    gtk_box_pack_start (GTK_BOX (codec_hbox), codec_table, FALSE, FALSE, 0);
+
+    label_codec_label = gtk_label_new(_("<span size=\"small\">Codec name:</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_codec_label), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_codec_label), 0, 0.5);
+    label_quality_label = gtk_label_new(_("<span size=\"small\">Quality:</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_quality_label), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_quality_label), 0, 0.5);
+
+    label_codec_name = gtk_label_new(_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_codec_name), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_codec_name), 0, 0.5);
+    label_quality = gtk_label_new(_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_quality), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_quality), 0, 0.5);
+    
+    gtk_table_attach(GTK_TABLE(codec_table), label_codec_label, 0, 1, 0, 1,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_table_attach(GTK_TABLE(codec_table), label_codec_name, 1, 2, 0, 1,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_table_attach(GTK_TABLE(codec_table), label_quality_label, 0, 1, 1, 2,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_table_attach(GTK_TABLE(codec_table), label_quality, 1, 2, 1, 2,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
 
     label_title = gtk_label_new(_("<span size=\"small\">Title</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_title, FALSE, FALSE, 0);
@@ -379,53 +426,6 @@ create_fileinfo_window(void)
     entry_location = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_location);
     
-    label_codec = gtk_label_new(_("<span size=\"small\">Codec</span>"));
-    gtk_box_pack_start (GTK_BOX (vbox2), label_codec, FALSE, FALSE, 0);
-    gtk_label_set_use_markup(GTK_LABEL(label_codec), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_codec), 0, 0.5);
-    
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 6, 0, 0);
-    gtk_box_pack_start (GTK_BOX (vbox2), alignment, FALSE, FALSE, 0);
-
-    codec_hbox = gtk_hbox_new(FALSE, 6);
-    gtk_container_add (GTK_CONTAINER(alignment), codec_hbox);
-
-    image_fileicon = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG);
-    gtk_box_pack_start (GTK_BOX (codec_hbox), image_fileicon, FALSE, FALSE, 0);
-    
-    codec_table = gtk_table_new(2, 2, FALSE);
-    gtk_table_set_row_spacings (GTK_TABLE(codec_table), 6);
-    gtk_table_set_col_spacings (GTK_TABLE(codec_table), 12);
-    gtk_box_pack_start (GTK_BOX (codec_hbox), codec_table, FALSE, FALSE, 0);
-
-    label_codec_label = gtk_label_new(_("<span size=\"small\">Codec name:</span>"));
-    gtk_label_set_use_markup(GTK_LABEL(label_codec_label), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_codec_label), 0, 0.5);
-    label_quality_label = gtk_label_new(_("<span size=\"small\">Quality:</span>"));
-    gtk_label_set_use_markup(GTK_LABEL(label_quality_label), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_quality_label), 0, 0.5);
-
-    label_codec_name = gtk_label_new(_("<span size=\"small\">n/a</span>"));
-    gtk_label_set_use_markup(GTK_LABEL(label_codec_name), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_codec_name), 0, 0.5);
-    label_quality = gtk_label_new(_("<span size=\"small\">n/a</span>"));
-    gtk_label_set_use_markup(GTK_LABEL(label_quality), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_quality), 0, 0.5);
-    
-    gtk_table_attach(GTK_TABLE(codec_table), label_codec_label, 0, 1, 0, 1,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_table_attach(GTK_TABLE(codec_table), label_codec_name, 1, 2, 0, 1,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_table_attach(GTK_TABLE(codec_table), label_quality_label, 0, 1, 1, 2,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_table_attach(GTK_TABLE(codec_table), label_quality, 1, 2, 1, 2,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-
     bbox_close = gtk_hbutton_box_new();
     gtk_box_pack_start(GTK_BOX(vbox1), bbox_close, FALSE, FALSE, 0);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox_close), GTK_BUTTONBOX_END);
