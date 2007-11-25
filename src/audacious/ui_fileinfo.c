@@ -95,11 +95,11 @@ fileinfo_label_set_text(GtkWidget *widget, const char *text)
 
     if (text) {
         tmp = g_strdup_printf("<span size=\"small\">%s</span>", text);
-	gtk_label_set_text(GTK_LABEL(widget), tmp);
+        gtk_label_set_text(GTK_LABEL(widget), tmp);
         gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
-	g_free(tmp);
+        g_free(tmp);
     } else {
-	gtk_label_set_text(GTK_LABEL(widget), _("<span size=\"small\">n/a</span>"));
+        gtk_label_set_text(GTK_LABEL(widget), _("<span size=\"small\">n/a</span>"));
         gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
     }
 }
@@ -118,41 +118,41 @@ fileinfo_entry_set_text_free(GtkWidget *widget, char *text)
 static void
 fileinfo_entry_set_image(GtkWidget *widget, const char *text)
 {
-	GdkPixbuf *pixbuf;
-	int width, height;
-	double aspect;
-	GdkPixbuf *pixbuf2;
+        GdkPixbuf *pixbuf;
+        int width, height;
+        double aspect;
+        GdkPixbuf *pixbuf2;
 
-	if (widget == NULL)
-		return;
+        if (widget == NULL)
+                return;
 
-	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+        pixbuf = gdk_pixbuf_new_from_file(text, NULL);
 
-	if (pixbuf == NULL)
-		return;
+        if (pixbuf == NULL)
+                return;
 
-	width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
-	height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
+        width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
+        height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
 
-	if(strcmp(DATA_DIR "/images/audio.png", text))
-	{
-		if(width == 0)
-			width = 1;
-		aspect = (double)height / (double)width;
-		if(aspect > 1.0) {
-			height = (int)(cfg.filepopup_pixelsize * aspect);
-			width = cfg.filepopup_pixelsize;
-		} else {
-			height = cfg.filepopup_pixelsize;
-			width = (int)(cfg.filepopup_pixelsize / aspect);
-		}
-		pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
-		g_object_unref(G_OBJECT(pixbuf));
-		pixbuf = pixbuf2;
-	}
+        if(strcmp(DATA_DIR "/images/audio.png", text))
+        {
+                if(width == 0)
+                        width = 1;
+                aspect = (double)height / (double)width;
+                if(aspect > 1.0) {
+                        height = (int)(cfg.filepopup_pixelsize * aspect);
+                        width = cfg.filepopup_pixelsize;
+                } else {
+                        height = cfg.filepopup_pixelsize;
+                        width = (int)(cfg.filepopup_pixelsize / aspect);
+                }
+                pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
+                g_object_unref(G_OBJECT(pixbuf));
+                pixbuf = pixbuf2;
+        }
 
-	gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
-	g_object_unref(G_OBJECT(pixbuf));
+        gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+        g_object_unref(G_OBJECT(pixbuf));
 }
 
 void fileinfo_hide(gpointer unused)
@@ -192,13 +192,13 @@ themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of
     va_start(par, name);
     while((n = (gchar*)va_arg(par, gchar *)) != NULL) {
         //fprintf(stderr, "looking for %s\n", n);
-	error = NULL;
+        error = NULL;
         pixbuf = gtk_icon_theme_load_icon (icon_theme, n, size, 0, &error);
         if(pixbuf) {
             //fprintf(stderr, "%s is ok\n", n);
-	    va_end(par);
-	    return pixbuf;
-	}
+            va_end(par);
+            return pixbuf;
+        }
         if(error != NULL) g_error_free(error);
     }
     
@@ -222,11 +222,11 @@ mime_icon_lookup(gint size, const gchar *mime_type) /* smart icon resolving rout
         mime_generic       = g_strdup_printf("%s-x-generic", s[0]);
         mime_gnome_generic = g_strdup_printf("gnome-mime-%s", s[0]);
         //fprintf(stderr, "will look for %s, %s, %s, %s, %s\n", mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0]);
-	icon = themed_icon_lookup(size, mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0], NULL); /* s[0] is category */
-	g_free(mime_gnome_generic);
-	g_free(mime_generic);
-	g_free(mime_gnome);
-	g_free(mime_as_is);
+        icon = themed_icon_lookup(size, mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0], NULL); /* s[0] is category */
+        g_free(mime_gnome_generic);
+        g_free(mime_generic);
+        g_free(mime_gnome);
+        g_free(mime_as_is);
     }
     g_strfreev(s);
 
@@ -444,69 +444,69 @@ create_fileinfo_window(void)
 void
 fileinfo_show_for_tuple(Tuple *tuple)
 {
-	gchar *tmp = NULL;
-	GdkPixbuf *icon = NULL;
+        gchar *tmp = NULL;
+        GdkPixbuf *icon = NULL;
 
-	if (tuple == NULL)
-		return;
+        if (tuple == NULL)
+                return;
 
-	gtk_widget_realize(fileinfo_win);
+        gtk_widget_realize(fileinfo_win);
 
-	fileinfo_entry_set_text(entry_title, tuple_get_string(tuple, FIELD_TITLE, NULL));
-	fileinfo_entry_set_text(entry_artist, tuple_get_string(tuple, FIELD_ARTIST, NULL));
-	fileinfo_entry_set_text(entry_album, tuple_get_string(tuple, FIELD_ALBUM, NULL));
-	fileinfo_entry_set_text(entry_comment, tuple_get_string(tuple, FIELD_COMMENT, NULL));
-	fileinfo_entry_set_text(entry_genre, tuple_get_string(tuple, FIELD_GENRE, NULL));
+        fileinfo_entry_set_text(entry_title, tuple_get_string(tuple, FIELD_TITLE, NULL));
+        fileinfo_entry_set_text(entry_artist, tuple_get_string(tuple, FIELD_ARTIST, NULL));
+        fileinfo_entry_set_text(entry_album, tuple_get_string(tuple, FIELD_ALBUM, NULL));
+        fileinfo_entry_set_text(entry_comment, tuple_get_string(tuple, FIELD_COMMENT, NULL));
+        fileinfo_entry_set_text(entry_genre, tuple_get_string(tuple, FIELD_GENRE, NULL));
 
-	tmp = g_strdup_printf("%s/%s",
-		tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
-		tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
-	if(tmp){
-		fileinfo_entry_set_text_free(entry_location, str_to_utf8(tmp));
-		g_free(tmp);
-		tmp = NULL;
-	}
+        tmp = g_strdup_printf("%s/%s",
+                tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
+                tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
+        if(tmp){
+                fileinfo_entry_set_text_free(entry_location, str_to_utf8(tmp));
+                g_free(tmp);
+                tmp = NULL;
+        }
 
-	if (tuple_get_int(tuple, FIELD_YEAR, NULL))
-		fileinfo_entry_set_text_free(entry_year,
-			g_strdup_printf("%d", tuple_get_int(tuple, FIELD_YEAR, NULL)));
+        if (tuple_get_int(tuple, FIELD_YEAR, NULL))
+                fileinfo_entry_set_text_free(entry_year,
+                        g_strdup_printf("%d", tuple_get_int(tuple, FIELD_YEAR, NULL)));
 
-	if (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL))
-		fileinfo_entry_set_text_free(entry_track,
-			g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL)));
+        if (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL))
+                fileinfo_entry_set_text_free(entry_track,
+                        g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL)));
 
-	fileinfo_label_set_text(label_codec_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
-	fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
+        fileinfo_label_set_text(label_codec_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
+        fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
 
-	tmp = (gchar *)tuple_get_string(tuple, FIELD_MIMETYPE, NULL);
+        tmp = (gchar *)tuple_get_string(tuple, FIELD_MIMETYPE, NULL);
         icon = mime_icon_lookup(48, tmp ? tmp : "audio/x-generic");
-	if (icon) {
-	    if (image_fileicon) gtk_image_set_from_pixbuf (GTK_IMAGE(image_fileicon), icon);
-	    g_object_unref(icon);
-	}
+        if (icon) {
+            if (image_fileicon) gtk_image_set_from_pixbuf (GTK_IMAGE(image_fileicon), icon);
+            g_object_unref(icon);
+        }
 
-	tmp = fileinfo_recursive_get_image(
-		tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
-		tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
-	
-	if(tmp)
-	{
-		fileinfo_entry_set_image(image_artwork, tmp);
-		g_free(tmp);
-	}
-	
-	gtk_widget_show(fileinfo_win);
+        tmp = fileinfo_recursive_get_image(
+                tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
+                tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
+        
+        if(tmp)
+        {
+                fileinfo_entry_set_image(image_artwork, tmp);
+                g_free(tmp);
+        }
+        
+        gtk_widget_show(fileinfo_win);
 }
 
 void
 fileinfo_show_for_path(gchar *path)
 {
-	Tuple *tuple = input_get_song_tuple(path);
+        Tuple *tuple = input_get_song_tuple(path);
 
-	if (tuple == NULL)
-		return input_file_info_box(path);
+        if (tuple == NULL)
+                return input_file_info_box(path);
 
-	fileinfo_show_for_tuple(tuple);
+        fileinfo_show_for_tuple(tuple);
 
-	mowgli_object_unref(tuple);
+        mowgli_object_unref(tuple);
 }
