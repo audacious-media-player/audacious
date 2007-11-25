@@ -212,6 +212,13 @@ static preferences_widgets audio_page_widgets[] = {
      gettext_noop("When finished playing a song, don't automatically advance to the next.")},
 };
 
+static preferences_widgets playlist_page_widgets[] = {
+    {WIDGET_LABEL, gettext_noop("<b>Filename</b>"), NULL, NULL, NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL},
+};
+
 /* GLib 2.6 compatibility */
 #if (! ((GLIB_MAJOR_VERSION > 2) || ((GLIB_MAJOR_VERSION == 2) && (GLIB_MINOR_VERSION >= 8))))
 static const char *
@@ -953,20 +960,6 @@ on_mouse_wheel_scroll_pl_changed(GtkSpinButton * button,
 }
 
 static void
-on_playlist_convert_underscore_realize(GtkToggleButton * button,
-                                       gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.convert_underscore);
-}
-
-static void
-on_playlist_convert_underscore_toggled(GtkToggleButton * button,
-                                       gpointer data)
-{
-    cfg.convert_underscore = gtk_toggle_button_get_active(button);
-}
-
-static void
 on_software_volume_control_toggled(GtkToggleButton * button, gpointer data)
 {
     cfg.software_volume_control = gtk_toggle_button_get_active(button);
@@ -988,30 +981,6 @@ static void
 on_refresh_file_list_toggled(GtkToggleButton * button, gpointer data)
 {
     cfg.refresh_file_list = gtk_toggle_button_get_active(button);
-}
-
-static void
-on_playlist_convert_twenty_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.convert_twenty);
-}
-
-static void
-on_playlist_convert_twenty_toggled(GtkToggleButton * button, gpointer data)
-{
-    cfg.convert_twenty = gtk_toggle_button_get_active(button);
-}
-
-static void
-on_playlist_convert_slash_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.convert_slash);
-}
-
-static void
-on_playlist_convert_slash_toggled(GtkToggleButton * button, gpointer data)
-{
-    cfg.convert_slash = gtk_toggle_button_get_active(button);
 }
 
 static void
@@ -1893,14 +1862,6 @@ create_prefs_window(void)
   GtkWidget *mouse_label;
   GtkWidget *playlist_page_vbox;
   GtkWidget *vbox5;
-  GtkWidget *alignment14;
-  GtkWidget *label38;
-  GtkWidget *alignment12;
-  GtkWidget *playlist_convert_underscore;
-  GtkWidget *alignment13;
-  GtkWidget *playlist_convert_twenty;
-  GtkWidget *alignment88;
-  GtkWidget *playlist_convert_slash;
   GtkWidget *alignment15;
   GtkWidget *label39;
   GtkWidget *alignment16;
@@ -2452,35 +2413,7 @@ create_prefs_window(void)
   vbox5 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (playlist_page_vbox), vbox5, TRUE, TRUE, 0);
 
-  alignment14 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment14, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment14), 0, 12, 0, 0);
-
-  label38 = gtk_label_new (_("<b>Filename</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment14), label38);
-  gtk_label_set_use_markup (GTK_LABEL (label38), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label38), 0, 0.5);
-
-  alignment12 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment12, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment12), 0, 0, 12, 0);
-
-  playlist_convert_underscore = gtk_check_button_new_with_mnemonic (_("Convert underscores to blanks"));
-  gtk_container_add (GTK_CONTAINER (alignment12), playlist_convert_underscore);
-
-  alignment13 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment13, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment13), 0, 0, 12, 0);
-
-  playlist_convert_twenty = gtk_check_button_new_with_mnemonic (_("Convert %20 to blanks"));
-  gtk_container_add (GTK_CONTAINER (alignment13), playlist_convert_twenty);
-
-  alignment88 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment88, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment88), 0, 0, 12, 0);
-
-  playlist_convert_slash = gtk_check_button_new_with_mnemonic (_("Convert backslash '\\' to forward slash '/'"));
-  gtk_container_add (GTK_CONTAINER (alignment88), playlist_convert_slash);
+    create_widgets(GTK_BOX(vbox5), playlist_page_widgets, G_N_ELEMENTS(playlist_page_widgets));
 
   alignment15 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_box_pack_start (GTK_BOX (vbox5), alignment15, FALSE, FALSE, 0);
@@ -3168,24 +3101,6 @@ create_prefs_window(void)
                      NULL);
     g_signal_connect_after(G_OBJECT(mouse_wheel_scroll_pl), "realize",
                            G_CALLBACK(on_mouse_wheel_scroll_pl_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(playlist_convert_underscore), "toggled",
-                     G_CALLBACK(on_playlist_convert_underscore_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(playlist_convert_underscore), "realize",
-                          G_CALLBACK(on_playlist_convert_underscore_realize),
-                          NULL);
-    g_signal_connect(G_OBJECT(playlist_convert_twenty), "toggled",
-                     G_CALLBACK(on_playlist_convert_twenty_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(playlist_convert_twenty), "realize",
-                           G_CALLBACK(on_playlist_convert_twenty_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(playlist_convert_slash), "toggled",
-                     G_CALLBACK(on_playlist_convert_slash_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(playlist_convert_slash), "realize",
-                           G_CALLBACK(on_playlist_convert_slash_realize),
                            NULL);
     g_signal_connect(G_OBJECT(playlist_metadata_on_load), "toggled",
                      G_CALLBACK(on_pl_metadata_on_load_toggled),
