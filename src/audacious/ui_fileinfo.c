@@ -256,6 +256,7 @@ create_fileinfo_window(void)
     GtkWidget *bbox_close;
     GtkWidget *btn_close;
     GtkWidget *alignment;
+    GtkWidget *separator;
 
     fileinfo_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width(GTK_CONTAINER(fileinfo_win), 6);
@@ -265,13 +266,15 @@ create_fileinfo_window(void)
     gtk_window_set_type_hint(GTK_WINDOW(fileinfo_win), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_transient_for(GTK_WINDOW(fileinfo_win), GTK_WINDOW(mainwin));
 
-    hbox = gtk_hbox_new(FALSE, 0);
+    hbox = gtk_hbox_new(FALSE, 6);
     gtk_container_add(GTK_CONTAINER(fileinfo_win), hbox);
 
     image_artwork = gtk_image_new();
     gtk_box_pack_start(GTK_BOX(hbox), image_artwork, FALSE, FALSE, 0);
     gtk_misc_set_alignment(GTK_MISC(image_artwork), 0.5, 0);
     gtk_image_set_from_file(GTK_IMAGE(image_artwork), DATA_DIR "/images/audio.png");
+    separator = gtk_vseparator_new();
+    gtk_box_pack_start(GTK_BOX(hbox), separator, FALSE, FALSE, 0);
 
     vbox1 = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), vbox1, TRUE, TRUE, 0);
