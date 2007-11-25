@@ -1669,7 +1669,7 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
          switch(widgets[x].type) {
              case WIDGET_CHK_BTN:
                  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-                 widget = gtk_check_button_new_with_mnemonic(widgets[x].label);
+                 widget = gtk_check_button_new_with_mnemonic(_(widgets[x].label));
                  g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
                  g_signal_connect(G_OBJECT(widget), "toggled",
                                   G_CALLBACK(on_toggle_button_toggled),
@@ -1680,12 +1680,12 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                  break;
              case WIDGET_LABEL:
                  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
-                 widget = gtk_label_new_with_mnemonic(widgets[x].label);
+                 widget = gtk_label_new_with_mnemonic(_(widgets[x].label));
                  gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
                  gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
                  break;
              case WIDGET_RADIO_BTN:
-                 widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, widgets[x].label);
+                 widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, _(widgets[x].label));
                  radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
                  g_signal_connect(G_OBJECT(widget), "toggled",
                                   G_CALLBACK(on_toggle_button_toggled),
@@ -1710,7 +1710,7 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                      table_line=0;
                  }
 
-                 GtkWidget *label_pre = gtk_label_new (widgets[x].label);
+                 GtkWidget *label_pre = gtk_label_new(_(widgets[x].label));
                  gtk_table_attach(GTK_TABLE (widget), label_pre, 0, 1, table_line, table_line+1,
                                   (GtkAttachOptions) (0),
                                   (GtkAttachOptions) (0), 0, 0);
@@ -1724,7 +1724,7 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                                   (GtkAttachOptions) (0), 4, 0);
 
                  if (widgets[x].tooltip) {
-                     GtkWidget *label_past = gtk_label_new (widgets[x].tooltip);
+                     GtkWidget *label_past = gtk_label_new(_(widgets[x].tooltip));
                      gtk_table_attach(GTK_TABLE(widget), label_past, 2, 3, table_line, table_line+1,
                                       (GtkAttachOptions) (0),
                                       (GtkAttachOptions) (0), 0, 0);
@@ -1787,7 +1787,7 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
          if (widget && !gtk_widget_get_parent(widget))
              gtk_container_add(GTK_CONTAINER(alignment), widget);
          if (widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
-             gtk_tooltips_set_tip(tooltips, widget, widgets[x].tooltip, NULL);
+             gtk_tooltips_set_tip(tooltips, widget, _(widgets[x].tooltip), NULL);
     }
 
 }
