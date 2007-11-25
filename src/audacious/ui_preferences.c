@@ -170,7 +170,8 @@ static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 enum WidgetTypes {
     WIDGET_NONE,
     WIDGET_CHK_BTN,
-    WIDGET_LABEL
+    WIDGET_LABEL,
+    WIDGET_RADIO_BTN
 };
 
 typedef struct preferences_widgets_t {
@@ -179,44 +180,49 @@ typedef struct preferences_widgets_t {
     gboolean *cfg;           /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip, can be NULL */
+    gboolean child;
 } preferences_widgets;
 
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
 
 static preferences_widgets apperance_misc_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>_Miscellaneous</b>"), NULL, NULL, NULL},
+    {WIDGET_LABEL, gettext_noop("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
-     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL},
+     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Show separators in playlist"), &cfg.show_separator_in_pl,
-     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL},
-    {WIDGET_CHK_BTN, gettext_noop("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL},
+     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL, FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
-     gettext_noop("This enables the window manager to show decorations for windows.")},
+     gettext_noop("This enables the window manager to show decorations for windows."), FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 
-     gettext_noop("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).")},
+     gettext_noop("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
-     gettext_noop("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction.")},
+     gettext_noop("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
 };
 
 static preferences_widgets audio_page_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>Format Detection</b>"), NULL, NULL, NULL},
+    {WIDGET_LABEL, gettext_noop("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
-     gettext_noop("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit.")},
+     gettext_noop("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
-     gettext_noop("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded.")},
-    {WIDGET_LABEL, gettext_noop("<b>Playback</b>"), NULL, NULL, NULL},
+     gettext_noop("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
+    {WIDGET_LABEL, gettext_noop("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
-     gettext_noop("When Audacious starts, automatically begin playing from the point where we stopped before.")},
+     gettext_noop("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, gettext_noop("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
-     gettext_noop("When finished playing a song, don't automatically advance to the next.")},
+     gettext_noop("When finished playing a song, don't automatically advance to the next."), FALSE},
 };
 
 static preferences_widgets playlist_page_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>Filename</b>"), NULL, NULL, NULL},
-    {WIDGET_CHK_BTN, gettext_noop("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL},
-    {WIDGET_CHK_BTN, gettext_noop("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL},
-    {WIDGET_CHK_BTN, gettext_noop("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL},
+    {WIDGET_LABEL, gettext_noop("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
+    {WIDGET_LABEL, gettext_noop("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, gettext_noop("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, gettext_noop("Load metadata (tag information) from music files."), FALSE},
+    {WIDGET_RADIO_BTN, gettext_noop("On load"), &cfg.get_info_on_load, NULL, gettext_noop("Load metadata when adding the file to the playlist or opening it"), TRUE},
+    {WIDGET_RADIO_BTN, gettext_noop("On display"), &cfg.get_info_on_demand, NULL, gettext_noop("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), TRUE},
 };
 
 /* GLib 2.6 compatibility */
@@ -984,24 +990,6 @@ on_refresh_file_list_toggled(GtkToggleButton * button, gpointer data)
 }
 
 static void
-on_use_pl_metadata_realize(GtkToggleButton * button,
-                           gpointer data)
-{
-    gboolean state = cfg.use_pl_metadata;
-    gtk_toggle_button_set_active(button, state);
-    gtk_widget_set_sensitive(GTK_WIDGET(data), state);
-}
-
-static void
-on_use_pl_metadata_toggled(GtkToggleButton * button,
-                           gpointer data)
-{
-    gboolean state = gtk_toggle_button_get_active(button);
-    cfg.use_pl_metadata = state;
-    gtk_widget_set_sensitive(GTK_WIDGET(data), state);
-}
-
-static void
 on_pause_between_songs_realize(GtkToggleButton * button,
                                gpointer data)
 {
@@ -1017,38 +1005,6 @@ on_pause_between_songs_toggled(GtkToggleButton * button,
     gboolean state = gtk_toggle_button_get_active(button);
     cfg.pause_between_songs = state;
     gtk_widget_set_sensitive(GTK_WIDGET(data), state);
-}
-
-static void
-on_pl_metadata_on_load_realize(GtkRadioButton * button,
-                               gpointer data)
-{
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
-                                 cfg.get_info_on_load);
-}
-
-static void
-on_pl_metadata_on_display_realize(GtkRadioButton * button,
-                                  gpointer data)
-{
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
-                                 cfg.get_info_on_demand);
-}
-
-static void
-on_pl_metadata_on_load_toggled(GtkRadioButton * button,
-                               gpointer data)
-{
-    cfg.get_info_on_load = 
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-}
-
-static void
-on_pl_metadata_on_display_toggled(GtkRadioButton * button,
-                                  gpointer data)
-{
-    cfg.get_info_on_demand =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
 }
 
 static void
@@ -1425,13 +1381,16 @@ on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
     *cfg = gtk_toggle_button_get_active(button);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
     if (callback) callback();
-
+    GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
+    if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
 }
 
 static void
 on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
 {
     gtk_toggle_button_set_active(button, *cfg);
+    GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
+    if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
 }
 
 static void
@@ -1731,11 +1690,27 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
 {
     int x;
     GtkWidget *alignment = NULL, *widget = NULL;
+    GtkWidget *child_box = NULL;
+    GSList *radio_btn_group = NULL;
 
     for (x = 0; x < amt; ++x) {
-         alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-         gtk_box_pack_start(box, alignment, TRUE, TRUE, 0);
+         if (widgets[x].child) { /* perhaps this logic can be better */
+             if (!child_box) {
+                 child_box = gtk_vbox_new(FALSE, 0);
+                 g_object_set_data(G_OBJECT(widget), "child", child_box);
+             }
+                 alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+                 gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
+                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 24, 0);
+                 gtk_container_add (GTK_CONTAINER (alignment), child_box);
+         } else
+             child_box = NULL;
 
+         alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+         gtk_box_pack_start(child_box ? GTK_BOX(child_box) : box, alignment, TRUE, TRUE, 0);
+
+         if (radio_btn_group && widgets[x].type != WIDGET_RADIO_BTN)
+             radio_btn_group = NULL;
 
          switch(widgets[x].type) {
              case WIDGET_CHK_BTN:
@@ -1754,6 +1729,16 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
                  widget = gtk_label_new_with_mnemonic(widgets[x].label);
                  gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
                  gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
+                 break;
+             case WIDGET_RADIO_BTN:
+                 widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, widgets[x].label);
+                 radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
+                 g_signal_connect(G_OBJECT(widget), "toggled",
+                                  G_CALLBACK(on_toggle_button_toggled),
+                                  widgets[x].cfg);
+                 g_signal_connect(G_OBJECT(widget), "realize",
+                                  G_CALLBACK(on_toggle_button_realize),
+                                  widgets[x].cfg);
                  break;
              default:
                  g_object_unref(alignment);
@@ -1862,15 +1847,6 @@ create_prefs_window(void)
   GtkWidget *mouse_label;
   GtkWidget *playlist_page_vbox;
   GtkWidget *vbox5;
-  GtkWidget *alignment15;
-  GtkWidget *label39;
-  GtkWidget *alignment16;
-  GtkWidget *playlist_use_metadata;
-  GtkWidget *alignment18;
-  GtkWidget *playlist_use_metadata_box;
-  GtkWidget *playlist_metadata_on_load;
-  GSList *playlist_metadata_on_load_group = NULL;
-  GtkWidget *playlist_metadata_on_display;
   GtkWidget *table10;
   GtkWidget *label73;
   GtkWidget *combobox1;
@@ -2415,69 +2391,36 @@ create_prefs_window(void)
 
     create_widgets(GTK_BOX(vbox5), playlist_page_widgets, G_N_ELEMENTS(playlist_page_widgets));
 
-  alignment15 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment15, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment15), 12, 12, 0, 0);
+  /* TODO: this needs to be done by create_widgets and packed into child_box */
+  {
+    table10 = gtk_table_new (2, 2, FALSE);
+    gtk_box_pack_start (GTK_BOX (vbox5), table10, TRUE, TRUE, 0);
 
-  label39 = gtk_label_new (_("<b>Metadata</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment15), label39);
-  gtk_label_set_use_markup (GTK_LABEL (label39), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label39), 0, 0.5);
+    label73 = gtk_label_new (_("Auto character encoding detector for:"));
+    gtk_table_attach (GTK_TABLE (table10), label73, 0, 1, 0, 1,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify (GTK_LABEL (label73), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment (GTK_MISC (label73), 1, 0.5);
 
-  alignment16 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment16, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment16), 0, 0, 12, 0);
+    combobox1 = gtk_combo_box_new_text ();
+    gtk_table_attach (GTK_TABLE (table10), combobox1, 1, 2, 0, 1,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
 
-  playlist_use_metadata = gtk_check_button_new_with_mnemonic (_("Load metadata from playlists and files"));
-  gtk_container_add (GTK_CONTAINER (alignment16), playlist_use_metadata);
-  gtk_tooltips_set_tip (tooltips, playlist_use_metadata, _("Load metadata (tag information) from music files."), NULL);
+    entry1 = gtk_entry_new ();
+    gtk_table_attach (GTK_TABLE (table10), entry1, 1, 2, 1, 2,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_tooltips_set_tip (tooltips, entry1, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
 
-  alignment18 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox5), alignment18, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment18), 0, 0, 24, 0);
-
-  playlist_use_metadata_box = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (alignment18), playlist_use_metadata_box);
-
-  playlist_metadata_on_load = gtk_radio_button_new_with_mnemonic (NULL, _("On load"));
-  gtk_box_pack_start (GTK_BOX (playlist_use_metadata_box), playlist_metadata_on_load, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, playlist_metadata_on_load, _("Load metadata when adding the file to the playlist or opening it"), NULL);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (playlist_metadata_on_load), playlist_metadata_on_load_group);
-  playlist_metadata_on_load_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (playlist_metadata_on_load));
-
-  playlist_metadata_on_display = gtk_radio_button_new_with_mnemonic (NULL, _("On display"));
-  gtk_box_pack_start (GTK_BOX (playlist_use_metadata_box), playlist_metadata_on_display, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, playlist_metadata_on_display, _("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), NULL);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (playlist_metadata_on_display), playlist_metadata_on_load_group);
-  playlist_metadata_on_load_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (playlist_metadata_on_display));
-
-  table10 = gtk_table_new (2, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (playlist_use_metadata_box), table10, TRUE, TRUE, 0);
-
-  label73 = gtk_label_new (_("Auto character encoding detector for:"));
-  gtk_table_attach (GTK_TABLE (table10), label73, 0, 1, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label73), GTK_JUSTIFY_RIGHT);
-  gtk_misc_set_alignment (GTK_MISC (label73), 1, 0.5);
-
-  combobox1 = gtk_combo_box_new_text ();
-  gtk_table_attach (GTK_TABLE (table10), combobox1, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
-  entry1 = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table10), entry1, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_tooltips_set_tip (tooltips, entry1, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
-
-  label74 = gtk_label_new (_("Fallback character encodings:"));
-  gtk_table_attach (GTK_TABLE (table10), label74, 0, 1, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label74), GTK_JUSTIFY_RIGHT);
-  gtk_misc_set_alignment (GTK_MISC (label74), 1, 0.5);
+    label74 = gtk_label_new (_("Fallback character encodings:"));
+    gtk_table_attach (GTK_TABLE (table10), label74, 0, 1, 1, 2,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify (GTK_LABEL (label74), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment (GTK_MISC (label74), 1, 0.5);
+  }
 
   alignment19 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_box_pack_start (GTK_BOX (vbox5), alignment19, FALSE, FALSE, 0);
@@ -3102,18 +3045,6 @@ create_prefs_window(void)
     g_signal_connect_after(G_OBJECT(mouse_wheel_scroll_pl), "realize",
                            G_CALLBACK(on_mouse_wheel_scroll_pl_realize),
                            NULL);
-    g_signal_connect(G_OBJECT(playlist_metadata_on_load), "toggled",
-                     G_CALLBACK(on_pl_metadata_on_load_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(playlist_metadata_on_load), "realize",
-                           G_CALLBACK(on_pl_metadata_on_load_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(playlist_metadata_on_display), "toggled",
-                     G_CALLBACK(on_pl_metadata_on_display_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(playlist_metadata_on_display), "realize",
-                           G_CALLBACK(on_pl_metadata_on_display_realize),
-                           NULL);
     g_signal_connect_after(G_OBJECT(combobox1), "realize",
                            G_CALLBACK(on_chardet_detector_cbox_realize),
                            NULL);
@@ -3347,13 +3278,6 @@ create_prefs_window(void)
     g_signal_connect(G_OBJECT(pause_between_songs), "toggled",
                      G_CALLBACK(on_pause_between_songs_toggled),
                      pause_between_songs_box);
-
-    g_signal_connect_after(G_OBJECT(playlist_use_metadata), "realize",
-                           G_CALLBACK(on_use_pl_metadata_realize),
-                           playlist_use_metadata_box);
-    g_signal_connect(G_OBJECT(playlist_use_metadata), "toggled",
-                     G_CALLBACK(on_use_pl_metadata_toggled),
-                     playlist_use_metadata_box);
 
     g_signal_connect(skin_view, "drag-data-received",
                      G_CALLBACK(on_skin_view_drag_data_received),
