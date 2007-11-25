@@ -73,7 +73,7 @@ GtkWidget *entry_genre;
 GtkWidget *image_artwork;
 
 GtkWidget *image_fileicon;
-GtkWidget *label_codec_name;
+GtkWidget *label_format_name;
 GtkWidget *label_quality;
 
 static void
@@ -247,8 +247,8 @@ create_fileinfo_window(void)
     GtkWidget *label_year;
     GtkWidget *label_track;
     GtkWidget *label_location;
-    GtkWidget *label_codec;
-    GtkWidget *label_codec_label;
+    GtkWidget *label_general;
+    GtkWidget *label_format;
     GtkWidget *label_quality_label;
     GtkWidget *codec_hbox;
     GtkWidget *codec_table;
@@ -284,10 +284,10 @@ create_fileinfo_window(void)
     vbox2 = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(alignment), vbox2);
     
-    label_codec = gtk_label_new(_("<span size=\"small\">Codec</span>"));
-    gtk_box_pack_start (GTK_BOX (vbox2), label_codec, FALSE, FALSE, 0);
-    gtk_label_set_use_markup(GTK_LABEL(label_codec), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_codec), 0, 0.5);
+    label_general = gtk_label_new(_("<span size=\"small\">General</span>"));
+    gtk_box_pack_start (GTK_BOX (vbox2), label_general, FALSE, FALSE, 0);
+    gtk_label_set_use_markup(GTK_LABEL(label_general), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_general), 0, 0.5);
     
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 6, 0, 0);
@@ -304,24 +304,24 @@ create_fileinfo_window(void)
     gtk_table_set_col_spacings (GTK_TABLE(codec_table), 12);
     gtk_box_pack_start (GTK_BOX (codec_hbox), codec_table, FALSE, FALSE, 0);
 
-    label_codec_label = gtk_label_new(_("<span size=\"small\">Codec name:</span>"));
-    gtk_label_set_use_markup(GTK_LABEL(label_codec_label), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_codec_label), 0, 0.5);
+    label_format = gtk_label_new(_("<span size=\"small\">Format:</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_format), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_format), 0, 0.5);
     label_quality_label = gtk_label_new(_("<span size=\"small\">Quality:</span>"));
     gtk_label_set_use_markup(GTK_LABEL(label_quality_label), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_quality_label), 0, 0.5);
 
-    label_codec_name = gtk_label_new(_("<span size=\"small\">n/a</span>"));
-    gtk_label_set_use_markup(GTK_LABEL(label_codec_name), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_codec_name), 0, 0.5);
+    label_format_name = gtk_label_new(_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_format_name), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_format_name), 0, 0.5);
     label_quality = gtk_label_new(_("<span size=\"small\">n/a</span>"));
     gtk_label_set_use_markup(GTK_LABEL(label_quality), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_quality), 0, 0.5);
     
-    gtk_table_attach(GTK_TABLE(codec_table), label_codec_label, 0, 1, 0, 1,
+    gtk_table_attach(GTK_TABLE(codec_table), label_format, 0, 1, 0, 1,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
-    gtk_table_attach(GTK_TABLE(codec_table), label_codec_name, 1, 2, 0, 1,
+    gtk_table_attach(GTK_TABLE(codec_table), label_format_name, 1, 2, 0, 1,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_table_attach(GTK_TABLE(codec_table), label_quality_label, 0, 1, 1, 2,
@@ -475,7 +475,7 @@ fileinfo_show_for_tuple(Tuple *tuple)
                 fileinfo_entry_set_text_free(entry_track,
                         g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL)));
 
-        fileinfo_label_set_text(label_codec_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
+        fileinfo_label_set_text(label_format_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
         fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
 
         tmp = (gchar *)tuple_get_string(tuple, FIELD_MIMETYPE, NULL);
