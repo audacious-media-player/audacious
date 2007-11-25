@@ -169,7 +169,8 @@ static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
 enum WidgetTypes {
     WIDGET_NONE,
-    WIDGET_CHK_BTN
+    WIDGET_CHK_BTN,
+    WIDGET_LABEL
 };
 
 typedef struct preferences_widgets_t {
@@ -183,7 +184,8 @@ typedef struct preferences_widgets_t {
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
 
-static preferences_widgets checkboxes[] = {
+static preferences_widgets apperance_misc_widgets[] = {
+    {WIDGET_LABEL, gettext_noop("<b>_Miscellaneous</b>"), NULL, NULL, NULL},
     {WIDGET_CHK_BTN, gettext_noop("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
      G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL},
     {WIDGET_CHK_BTN, gettext_noop("Show separators in playlist"), &cfg.show_separator_in_pl,
@@ -195,6 +197,19 @@ static preferences_widgets checkboxes[] = {
      gettext_noop("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).")},
     {WIDGET_CHK_BTN, gettext_noop("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
      gettext_noop("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction.")},
+};
+
+static preferences_widgets audio_page_widgets[] = {
+    {WIDGET_LABEL, gettext_noop("<b>Format Detection</b>"), NULL, NULL, NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
+     gettext_noop("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit.")},
+    {WIDGET_CHK_BTN, gettext_noop("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
+     gettext_noop("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded.")},
+    {WIDGET_LABEL, gettext_noop("<b>Playback</b>"), NULL, NULL, NULL},
+    {WIDGET_CHK_BTN, gettext_noop("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
+     gettext_noop("When Audacious starts, automatically begin playing from the point where we stopped before.")},
+    {WIDGET_CHK_BTN, gettext_noop("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
+     gettext_noop("When finished playing a song, don't automatically advance to the next.")},
 };
 
 /* GLib 2.6 compatibility */
@@ -621,35 +636,6 @@ playlist_show_pl_separator_numbers_cb()
     gtk_widget_queue_draw(playlistwin_list);
 }
 
-/* format detection */
-static void
-on_audio_format_det_cb_toggled(GtkToggleButton * button,
-                                    gpointer data)
-{
-    cfg.playlist_detect = gtk_toggle_button_get_active(button);
-}
-
-static void
-on_audio_format_det_cb_realize(GtkToggleButton * button,
-                                    gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.playlist_detect);
-}
-
-static void
-on_detect_by_extension_cb_toggled(GtkToggleButton * button,
-                                    gpointer data)
-{
-    cfg.use_extension_probing = gtk_toggle_button_get_active(button);
-}
-
-static void
-on_detect_by_extension_cb_realize(GtkToggleButton * button,
-                                    gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.use_extension_probing);
-}
-
 /* proxy */
 static void
 on_proxy_button_realize(GtkToggleButton *button, gchar *cfg)
@@ -981,24 +967,6 @@ on_playlist_convert_underscore_toggled(GtkToggleButton * button,
 }
 
 static void
-on_playlist_no_advance_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.no_playlist_advance);
-}
-
-static void
-on_playlist_no_advance_toggled(GtkToggleButton * button, gpointer data)
-{
-    cfg.no_playlist_advance = gtk_toggle_button_get_active(button);
-}
-
-static void
-on_continue_playback_on_startup_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.resume_playback_on_startup);
-}
-
-static void
 on_software_volume_control_toggled(GtkToggleButton * button, gpointer data)
 {
     cfg.software_volume_control = gtk_toggle_button_get_active(button);
@@ -1008,12 +976,6 @@ static void
 on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.software_volume_control);
-}
-
-static void
-on_continue_playback_on_startup_toggled(GtkToggleButton * button, gpointer data)
-{
-    cfg.resume_playback_on_startup = gtk_toggle_button_get_active(button);
 }
 
 static void
@@ -1804,17 +1766,30 @@ create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
     for (x = 0; x < amt; ++x) {
          alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
          gtk_box_pack_start(box, alignment, TRUE, TRUE, 0);
-         gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
 
-         if (widgets[x].type == WIDGET_CHK_BTN) {
-             widget = gtk_check_button_new_with_mnemonic(widgets[x].label);
-             g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
-             g_signal_connect(G_OBJECT(widget), "toggled",
-                              G_CALLBACK(on_toggle_button_toggled),
-                              widgets[x].cfg);
-             g_signal_connect(G_OBJECT(widget), "realize",
-                              G_CALLBACK(on_toggle_button_realize),
-                              widgets[x].cfg);
+
+         switch(widgets[x].type) {
+             case WIDGET_CHK_BTN:
+                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
+                 widget = gtk_check_button_new_with_mnemonic(widgets[x].label);
+                 g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
+                 g_signal_connect(G_OBJECT(widget), "toggled",
+                                  G_CALLBACK(on_toggle_button_toggled),
+                                  widgets[x].cfg);
+                 g_signal_connect(G_OBJECT(widget), "realize",
+                                  G_CALLBACK(on_toggle_button_realize),
+                                  widgets[x].cfg);
+                 break;
+             case WIDGET_LABEL:
+                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
+                 widget = gtk_label_new_with_mnemonic(widgets[x].label);
+                 gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
+                 gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
+                 break;
+             default:
+                 g_object_unref(alignment);
+                 widget = NULL;
+                 continue;
          }
 
          if (widget)
@@ -1900,8 +1875,6 @@ create_prefs_window(void)
   GtkWidget *alignment99;
   GtkWidget *checkbutton11;
   GtkWidget *vbox40;
-  GtkWidget *alignment100;
-  GtkWidget *label107;
   GtkWidget *appearance_label;
   GtkWidget *mouse_page_vbox;
   GtkWidget *vbox20;
@@ -2030,16 +2003,6 @@ create_prefs_window(void)
   GtkWidget *hbox8;
   GtkWidget *image6;
   GtkWidget *label81;
-  GtkWidget *alignment78;
-  GtkWidget *label83;
-  GtkWidget *alignment84;
-  GtkWidget *audio_format_det_cb;
-  GtkWidget *alignment89;
-  GtkWidget *detect_by_extension_cb;
-  GtkWidget *alignment83;
-  GtkWidget *continue_playback_on_startup;
-  GtkWidget *alignment79;
-  GtkWidget *playlist_no_advance;
   GtkWidget *alignment80;
   GtkWidget *pause_between_songs;
   GtkWidget *alignment22;
@@ -2411,16 +2374,7 @@ create_prefs_window(void)
   vbox40 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox37), vbox40, FALSE, TRUE, 0);
 
-  alignment100 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox40), alignment100, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment100), 12, 6, 0, 0);
-
-  label107 = gtk_label_new_with_mnemonic (_("<b>_Miscellaneous</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment100), label107);
-  gtk_label_set_use_markup (GTK_LABEL (label107), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label107), 0, 0.5);
-
-    create_widgets(GTK_BOX(vbox40), checkboxes, G_N_ELEMENTS(checkboxes));
+    create_widgets(GTK_BOX(vbox40), apperance_misc_widgets, G_N_ELEMENTS(apperance_misc_widgets));
 
   appearance_label = gtk_label_new (_("Appearance"));
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 1), appearance_label);
@@ -2990,55 +2944,7 @@ create_prefs_window(void)
   label81 = gtk_label_new_with_mnemonic (_("Output Plugin Information"));
   gtk_box_pack_start (GTK_BOX (hbox8), label81, FALSE, FALSE, 0);
 
-  alignment78 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment78, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment78), 12, 12, 0, 0);
-
-  label83 = gtk_label_new (_("<b>Format Detection</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment78), label83);
-  gtk_label_set_use_markup (GTK_LABEL (label83), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label83), 0, 0.5);
-
-  alignment84 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment84, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment84), 0, 0, 12, 0);
-
-  audio_format_det_cb = gtk_check_button_new_with_mnemonic (_("Detect file formats on demand, instead of immediately."));
-  gtk_container_add (GTK_CONTAINER (alignment84), audio_format_det_cb);
-  gtk_tooltips_set_tip (tooltips, audio_format_det_cb, _("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), NULL);
-
-  alignment89 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment89, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment89), 0, 0, 12, 0);
-
-  detect_by_extension_cb = gtk_check_button_new_with_mnemonic (_("Detect file formats by extension."));
-  gtk_container_add (GTK_CONTAINER (alignment89), detect_by_extension_cb);
-  gtk_tooltips_set_tip (tooltips, detect_by_extension_cb, _("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), NULL);
-
-  alignment19 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment19, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment19), 12, 12, 0, 0);
-
-  label40 = gtk_label_new (_("<b>Playback</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment19), label40);
-  gtk_label_set_use_markup (GTK_LABEL (label40), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label40), 0, 0.5);
-
-  alignment83 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment83, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment83), 0, 0, 12, 0);
-
-  continue_playback_on_startup = gtk_check_button_new_with_mnemonic (_("Continue playback on startup"));
-  gtk_container_add (GTK_CONTAINER (alignment83), continue_playback_on_startup);
-  gtk_tooltips_set_tip (tooltips, continue_playback_on_startup, _("When Audacious starts, automatically begin playing from the point where we stopped before."), NULL);
-
-  alignment79 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment79, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment79), 0, 0, 12, 0);
-
-  playlist_no_advance = gtk_check_button_new_with_mnemonic (_("Don't advance in the playlist"));
-  gtk_container_add (GTK_CONTAINER (alignment79), playlist_no_advance);
-  gtk_tooltips_set_tip (tooltips, playlist_no_advance, _("When finished playing a song, don't automatically advance to the next."), NULL);
+    create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
 
   alignment80 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment80, FALSE, FALSE, 0);
@@ -3204,7 +3110,6 @@ create_prefs_window(void)
     gtk_label_set_mnemonic_widget (GTK_LABEL (label104), category_notebook);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label105), fontbutton1);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label106), fontbutton2);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label107), category_notebook);
 
     gtk_window_add_accel_group (GTK_WINDOW (prefswin), accel_group);
 
@@ -3380,30 +3285,6 @@ create_prefs_window(void)
                            NULL);
     g_signal_connect_after(G_OBJECT(output_plugin_cbox), "realize",
                            G_CALLBACK(on_output_plugin_cbox_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(audio_format_det_cb), "toggled",
-                     G_CALLBACK(on_audio_format_det_cb_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(audio_format_det_cb), "realize",
-                     G_CALLBACK(on_audio_format_det_cb_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(detect_by_extension_cb), "toggled",
-                     G_CALLBACK(on_detect_by_extension_cb_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(detect_by_extension_cb), "realize",
-                     G_CALLBACK(on_detect_by_extension_cb_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(continue_playback_on_startup), "toggled",
-                     G_CALLBACK(on_continue_playback_on_startup_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(continue_playback_on_startup), "realize",
-                     G_CALLBACK(on_continue_playback_on_startup_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(playlist_no_advance), "toggled",
-                     G_CALLBACK(on_playlist_no_advance_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(playlist_no_advance), "realize",
-                           G_CALLBACK(on_playlist_no_advance_realize),
                            NULL);
     g_signal_connect(G_OBJECT(pause_between_songs_time), "value_changed",
                      G_CALLBACK(on_pause_between_songs_time_changed),
