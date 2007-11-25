@@ -32,7 +32,6 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <glade/glade.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,7 +40,6 @@
 #include "platform/smartinclude.h"
 #include <errno.h>
 
-#include "glade.h"
 #include "input.h"
 #include "main.h"
 #include "playback.h"

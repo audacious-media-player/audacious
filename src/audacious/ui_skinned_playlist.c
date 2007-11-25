@@ -868,12 +868,10 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
 static gboolean ui_skinned_playlist_button_release(GtkWidget *widget, GdkEventButton *event) {
     UiSkinnedPlaylistPrivate *priv = UI_SKINNED_PLAYLIST_GET_PRIVATE(widget);
 
-    if (event->button == 1) {
-        priv->dragging = FALSE;
-        priv->auto_drag_down = FALSE;
-        priv->auto_drag_up = FALSE;
-        gtk_widget_queue_draw(widget);
-    }
+    priv->dragging = FALSE;
+    priv->auto_drag_down = FALSE;
+    priv->auto_drag_up = FALSE;
+    gtk_widget_queue_draw(widget);
 
     ui_skinned_playlist_popup_hide(widget);
     ui_skinned_playlist_popup_timer_stop(widget);

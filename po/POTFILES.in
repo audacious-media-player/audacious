@@ -1,7 +1,4 @@
 # Please don't update this file manually - use ./update-potfiles.sh instead!
-src/audacious/glade.c
-src/audacious/glade/fileinfo.glade
-src/audacious/glade/prefswin.glade
 src/audacious/iir_cfs.c
 src/audacious/iir_fpu.c
 src/audacious/input.c

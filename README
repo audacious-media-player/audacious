@@ -76,9 +76,6 @@ packages installed:
   GTK+ 2.6
   (http://www.gtk.org/download/)
 
-  libglade >= 2.4
-  (http://ftp.gnome.org/pub/GNOME/sources/libglade/2.4/)
-
   mcs >= 0.1
   (http://sacredspiral.co.uk/~nenolod/mcs)
 

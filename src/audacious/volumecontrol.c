@@ -123,6 +123,18 @@ void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt,
 
     switch (fmt)
     {
+        case FMT_S16_NE:
+            fmt = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_LE;
+            break;
+        case FMT_U16_NE:
+            fmt = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_U16_LE : FMT_U16_BE;
+            break;
+        default:
+            break;
+    }
+
+    switch (fmt)
+    {
         case FMT_S16_LE:
             VOLUME_ADJUST(gint16, GINT16, LE);
             break;
