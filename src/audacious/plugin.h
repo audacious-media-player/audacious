@@ -1071,7 +1071,7 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.1.0 */
     Tuple *(*get_song_tuple) (gchar * filename);
-    void (*set_song_tuple) (Tuple * tuple);
+    void (*set_song_tuple) (Tuple * tuple); /* stillborn, obsoleted by update_song_tuple, which must be used for tag writing */
     void (*set_status_buffering) (gboolean status);
 
     /* Added in Audacious 1.3.0 */
@@ -1085,6 +1085,8 @@ struct _InputPlugin {
     /* Added in Audacious 1.4.1 */
     gboolean have_subtune;
 
+    /* Added in Audacious 1.5.0 */
+    gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
 };
 
 struct _GeneralPlugin {
