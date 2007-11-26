@@ -50,6 +50,7 @@
 #include "util.h"
 #include "dnd.h"
 #include "tuple.h"
+#include "vfs.h"
 
 #include "playlist.h"
 
@@ -75,6 +76,9 @@ GtkWidget *image_artwork;
 GtkWidget *image_fileicon;
 GtkWidget *label_format_name;
 GtkWidget *label_quality;
+
+//static gchar *current_file = NULL;
+//static InputPlugin *current_ip = NULL;
 
 static void
 fileinfo_entry_set_text(GtkWidget *widget, const char *text)
@@ -157,7 +161,7 @@ fileinfo_entry_set_image(GtkWidget *widget, const char *text)
 
 void fileinfo_hide(gpointer unused)
 {
-    gtk_widget_hide(fileinfo_win);
+    if(GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_hide(fileinfo_win);
 
     /* Clear it out. */
     fileinfo_entry_set_text(entry_title, "");
@@ -171,6 +175,12 @@ void fileinfo_hide(gpointer unused)
 
     fileinfo_entry_set_image(image_artwork, DATA_DIR "/images/audio.png");
 }
+
+void fileinfo_update_tuple(gpointer data)
+{
+  /* TODO */
+}
+
 
 GdkPixbuf *
 themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of icon names */
@@ -255,6 +265,7 @@ create_fileinfo_window(void)
     GtkWidget *table1;
     GtkWidget *bbox_close;
     GtkWidget *btn_close;
+    GtkWidget *btn_apply;
     GtkWidget *alignment;
     GtkWidget *separator;
 
@@ -430,8 +441,14 @@ create_fileinfo_window(void)
     gtk_container_add(GTK_CONTAINER(alignment), entry_location);
     
     bbox_close = gtk_hbutton_box_new();
+    gtk_box_set_spacing(GTK_BOX(bbox_close), 6);
     gtk_box_pack_start(GTK_BOX(vbox1), bbox_close, FALSE, FALSE, 0);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox_close), GTK_BUTTONBOX_END);
+
+    btn_apply = gtk_button_new_from_stock("gtk-apply");
+    gtk_container_add(GTK_CONTAINER(bbox_close), btn_apply);
+    g_signal_connect(G_OBJECT(btn_apply), "clicked", (GCallback) fileinfo_update_tuple, NULL);
+    gtk_widget_set_sensitive(btn_apply, FALSE);
 
     btn_close = gtk_button_new_from_stock("gtk-close");
     gtk_container_add(GTK_CONTAINER(bbox_close), btn_close);
@@ -450,7 +467,7 @@ fileinfo_show_for_tuple(Tuple *tuple)
         if (tuple == NULL)
                 return;
 
-        gtk_widget_realize(fileinfo_win);
+        if(!GTK_WIDGET_REALIZED(fileinfo_win)) gtk_widget_realize(fileinfo_win);
 
         fileinfo_entry_set_text(entry_title, tuple_get_string(tuple, FIELD_TITLE, NULL));
         fileinfo_entry_set_text(entry_artist, tuple_get_string(tuple, FIELD_ARTIST, NULL));
@@ -495,7 +512,7 @@ fileinfo_show_for_tuple(Tuple *tuple)
                 g_free(tmp);
         }
         
-        gtk_widget_show(fileinfo_win);
+        if(! GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_show(fileinfo_win);
 }
 
 void
