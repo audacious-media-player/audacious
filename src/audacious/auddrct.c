@@ -123,7 +123,7 @@ drct_play ( void )
   if (playback_get_paused())
     playback_pause();
   else if (playlist_get_length(playlist_get_active()))
-    playback_initiate();
+    event_queue("playback initiate", (gpointer)0xdeadbeef); // to avoid crash at startup. --yaz
   else
     mainwin_eject_pushed();
   return;

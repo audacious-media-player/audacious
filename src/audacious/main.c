@@ -1206,10 +1206,10 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             audacious_remote_activate(session);
 
         exit(EXIT_SUCCESS);
-    }
+    } /* is_running */
     else
 #endif
-    {
+    { /* !is_running */
         if (filenames != NULL)
         {
             gint pos = 0;
@@ -1297,7 +1297,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->activate)
             drct_activate();
-    }
+    } /* !is_running */
 }
 
 static void
