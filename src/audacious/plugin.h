@@ -1087,6 +1087,17 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.5.0 */
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
+    /* 
+     * Plugin can provide this function for file metadata (aka tag) writing functionality
+     * in case when no reason to provide its own custom file info dialog. Thus in most cases.
+     *
+     * Some notes:
+     *
+     * 1. In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
+     * 2. Each field in tuple means operation on one and only one tag's filed:
+     *     2.1. Set this field to appropriate value, if non-empty string or positive number provided.
+     *     2.2. Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
+     */
 };
 
 struct _GeneralPlugin {
