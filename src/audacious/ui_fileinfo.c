@@ -60,6 +60,8 @@
 #include "ui_fileinfo.h"
 #include "ui_playlist.h"
 
+#define G_FREE_CLEAR(a) { if(a != NULL) { g_free(a); a = NULL; } }
+
 GtkWidget *fileinfo_win;
 
 GtkWidget *entry_location;
@@ -76,9 +78,10 @@ GtkWidget *image_artwork;
 GtkWidget *image_fileicon;
 GtkWidget *label_format_name;
 GtkWidget *label_quality;
+GtkWidget *btn_apply;
 
-//static gchar *current_file = NULL;
-//static InputPlugin *current_ip = NULL;
+static gchar *current_file = NULL;
+static InputPlugin *current_ip = NULL;
 
 static void
 fileinfo_entry_set_text(GtkWidget *widget, const char *text)
@@ -86,7 +89,48 @@ fileinfo_entry_set_text(GtkWidget *widget, const char *text)
     if (widget == NULL)
         return;
 
-    gtk_entry_set_text(GTK_ENTRY(widget), text);
+    gtk_entry_set_text(GTK_ENTRY(widget), text != NULL ? text : "");
+}
+
+static void
+set_entry_str_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn)
+{
+    gchar *text;
+
+    if(widget != NULL) {
+        text = (gchar*)tuple_get_string(tuple, fieldn, NULL);
+        gtk_entry_set_text(GTK_ENTRY(widget), text != NULL ? text : "");
+    }
+}
+
+static void
+set_entry_int_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn)
+{
+    gchar *text;
+
+    if(widget == NULL) return;
+
+    if(tuple_get_value_type(tuple, fieldn, NULL) == TUPLE_INT) {
+        text = g_strdup_printf("%d", tuple_get_int(tuple, fieldn, NULL));
+        gtk_entry_set_text(GTK_ENTRY(widget), text);
+        g_free(text);
+    } else {
+        gtk_entry_set_text(GTK_ENTRY(widget), "");
+    }
+}
+
+static void
+set_field_str_from_entry(Tuple *tuple, gint fieldn, GtkWidget *widget)
+{
+    if(widget == NULL) return;
+    tuple_associate_string(tuple, fieldn, NULL, gtk_entry_get_text(GTK_ENTRY(widget)));
+}
+
+static void
+set_field_int_from_entry(Tuple *tuple, gint fieldn, GtkWidget *widget)
+{
+    if(widget == NULL) return;
+    tuple_associate_int(tuple, fieldn, NULL, atoi(gtk_entry_get_text(GTK_ENTRY(widget))));
 }
 
 static void
@@ -106,17 +150,6 @@ fileinfo_label_set_text(GtkWidget *widget, const char *text)
         gtk_label_set_text(GTK_LABEL(widget), _("<span size=\"small\">n/a</span>"));
         gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
     }
-}
-
-static void
-fileinfo_entry_set_text_free(GtkWidget *widget, char *text)
-{
-    if (widget == NULL)
-        return;
-
-    gtk_entry_set_text(GTK_ENTRY(widget), text);
-
-    g_free(text);
 }
 
 static void
@@ -173,12 +206,51 @@ void fileinfo_hide(gpointer unused)
     fileinfo_entry_set_text(entry_track, "");
     fileinfo_entry_set_text(entry_location, "");
 
+    fileinfo_label_set_text(label_format_name, NULL);
+    fileinfo_label_set_text(label_quality, NULL);
+
+    current_ip = NULL;
+    G_FREE_CLEAR(current_file);
+
     fileinfo_entry_set_image(image_artwork, DATA_DIR "/images/audio.png");
 }
 
-void fileinfo_update_tuple(gpointer data)
+static void fileinfo_update_tuple(gpointer data)
 {
-  /* TODO */
+        Tuple *tuple;
+        VFSFile *fd;
+        if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL) { /* TODO only if changed*/
+
+            tuple = tuple_new();
+            fd = vfs_fopen(current_file, "r+b");
+
+            if (fd != NULL) {
+                set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
+                set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
+                set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
+                set_field_str_from_entry(tuple, FIELD_COMMENT, entry_comment);
+                set_field_str_from_entry(tuple, FIELD_GENRE, entry_genre);
+
+                set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
+                set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
+                
+                if(current_ip->update_song_tuple(tuple, fd)) {
+                    /* TODO display ok */
+                    fprintf(stderr, "fileinfo_update_tuple(): updated\n");
+                } else {
+                    /* TODO error message */
+                    fprintf(stderr, "fileinfo_update_tuple(): failed\n");
+                }
+
+                vfs_fclose(fd);
+
+            } else {
+                /* TODO: error message */
+                fprintf(stderr, "fileinfo_update_tuple(): can't open file %s\n", current_file);
+            }
+
+            mowgli_object_unref(tuple);
+        }
 }
 
 
@@ -265,7 +337,6 @@ create_fileinfo_window(void)
     GtkWidget *table1;
     GtkWidget *bbox_close;
     GtkWidget *btn_close;
-    GtkWidget *btn_apply;
     GtkWidget *alignment;
     GtkWidget *separator;
 
@@ -458,39 +529,42 @@ create_fileinfo_window(void)
     gtk_widget_show_all (hbox);
 }
 
-void
-fileinfo_show_for_tuple(Tuple *tuple)
+void 
+fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
-        gchar *tmp = NULL;
+        gchar *tmp, *tmp_utf = NULL;
         GdkPixbuf *icon = NULL;
 
         if (tuple == NULL)
                 return;
+        
+        if(!updating_enabled) {
+            current_ip = NULL;
+            G_FREE_CLEAR(current_file);
+        }
 
         if(!GTK_WIDGET_REALIZED(fileinfo_win)) gtk_widget_realize(fileinfo_win);
 
-        fileinfo_entry_set_text(entry_title, tuple_get_string(tuple, FIELD_TITLE, NULL));
-        fileinfo_entry_set_text(entry_artist, tuple_get_string(tuple, FIELD_ARTIST, NULL));
-        fileinfo_entry_set_text(entry_album, tuple_get_string(tuple, FIELD_ALBUM, NULL));
-        fileinfo_entry_set_text(entry_comment, tuple_get_string(tuple, FIELD_COMMENT, NULL));
-        fileinfo_entry_set_text(entry_genre, tuple_get_string(tuple, FIELD_GENRE, NULL));
+        set_entry_str_from_field(entry_title, tuple, FIELD_TITLE);
+        set_entry_str_from_field(entry_artist, tuple, FIELD_ARTIST);
+        set_entry_str_from_field(entry_album, tuple, FIELD_ALBUM);
+        set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT);
+        set_entry_str_from_field(entry_genre, tuple, FIELD_GENRE);
 
         tmp = g_strdup_printf("%s/%s",
                 tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
                 tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
         if(tmp){
-                fileinfo_entry_set_text_free(entry_location, str_to_utf8(tmp));
+                tmp_utf = str_to_utf8(tmp);
+                fileinfo_entry_set_text(entry_location, tmp_utf);
+                g_free(tmp_utf);
                 g_free(tmp);
                 tmp = NULL;
         }
-
-        if (tuple_get_int(tuple, FIELD_YEAR, NULL))
-                fileinfo_entry_set_text_free(entry_year,
-                        g_strdup_printf("%d", tuple_get_int(tuple, FIELD_YEAR, NULL)));
-
-        if (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL))
-                fileinfo_entry_set_text_free(entry_track,
-                        g_strdup_printf("%d", tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL)));
+        
+        /* set empty string if field not availaible. --eugene */
+        set_entry_int_from_field(entry_year, tuple, FIELD_YEAR);
+        set_entry_int_from_field(entry_track, tuple, FIELD_TRACK_NUMBER);
 
         fileinfo_label_set_text(label_format_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
         fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
@@ -511,6 +585,11 @@ fileinfo_show_for_tuple(Tuple *tuple)
                 fileinfo_entry_set_image(image_artwork, tmp);
                 g_free(tmp);
         }
+
+        if(updating_enabled && current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL)
+                gtk_widget_set_sensitive(btn_apply, TRUE);
+        else
+                gtk_widget_set_sensitive(btn_apply, FALSE);
         
         if(! GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_show(fileinfo_win);
 }
@@ -523,7 +602,24 @@ fileinfo_show_for_path(gchar *path)
         if (tuple == NULL)
                 return input_file_info_box(path);
 
-        fileinfo_show_for_tuple(tuple);
+        fileinfo_show_for_tuple(tuple, FALSE);
+
+        mowgli_object_unref(tuple);
+}
+
+void
+fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
+{
+        G_FREE_CLEAR(current_file);
+        current_file = g_strdup(path);
+        current_ip = ip;
+
+        Tuple *tuple = input_get_song_tuple(path);
+
+        if (tuple == NULL)
+                return input_file_info_box(path);
+
+        fileinfo_show_for_tuple(tuple, TRUE);
 
         mowgli_object_unref(tuple);
 }

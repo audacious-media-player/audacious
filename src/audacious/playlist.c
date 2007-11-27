@@ -2453,44 +2453,55 @@ playlist_fileinfo(Playlist *playlist, guint pos)
 
     PLAYLIST_UNLOCK(playlist);
 
-    if (entry->tuple)
-        mtime = tuple_get_int(entry->tuple, FIELD_MTIME, NULL);
-    else
-        mtime = 0;
-
-    /* No tuple? Try to set this entry up properly. --nenolod */
-    if (entry->tuple == NULL || mtime == -1 ||
-        mtime == 0 || mtime != playlist_get_mtime(entry->filename))
+    if (entry->decoder == NULL)
     {
-        playlist_entry_get_info(entry);
-        tuple = entry->tuple;
+        pr = input_check_file(entry->filename, FALSE); /* try to find a decoder */
+        entry->decoder = pr ? pr->ip : NULL;
+
+        g_free(pr);
     }
 
-    if (tuple != NULL)
-    {
-        if (entry->decoder == NULL)
-        {
-            pr = input_check_file(entry->filename, FALSE); /* try to find a decoder */
-            entry->decoder = pr ? pr->ip : NULL;
+    /* plugin is capable to update tags. we need to bypass tuple cache. --eugene */
+    /* maybe code cleanup required... */
+    if (entry->decoder != NULL && entry->decoder->update_song_tuple != NULL &&
+        entry->decoder->file_info_box == NULL && path != NULL) {
 
-            g_free(pr);
+        fileinfo_show_editor_for_path(path, entry->decoder);
+        g_free(path);
+
+    } else {
+
+        if (entry->tuple)
+            mtime = tuple_get_int(entry->tuple, FIELD_MTIME, NULL);
+        else
+            mtime = 0;
+
+        /* No tuple? Try to set this entry up properly. --nenolod */
+        if (entry->tuple == NULL || mtime == -1 ||
+            mtime == 0 || mtime != playlist_get_mtime(entry->filename))
+        {
+            playlist_entry_get_info(entry);
+            tuple = entry->tuple;
         }
 
-        if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
-            fileinfo_show_for_tuple(tuple);
-        else if (entry->decoder != NULL && entry->decoder->file_info_box != NULL)
-            entry->decoder->file_info_box(path);
-        else
-            fileinfo_show_for_path(path);
-        g_free(path);
-    }
-    else if (path != NULL)
-    {
-        if (entry != NULL && entry->decoder != NULL && entry->decoder->file_info_box != NULL)
-            entry->decoder->file_info_box(path);
-        else
-            fileinfo_show_for_path(path);
-        g_free(path);
+        if (tuple != NULL)
+        {
+            if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
+                fileinfo_show_for_tuple(tuple, FALSE);
+            else if (entry->decoder != NULL && entry->decoder->file_info_box != NULL)
+                entry->decoder->file_info_box(path);
+            else
+                fileinfo_show_for_path(path);
+            g_free(path);
+        }
+        else if (path != NULL)
+        {
+            if (entry != NULL && entry->decoder != NULL && entry->decoder->file_info_box != NULL)
+                entry->decoder->file_info_box(path);
+            else
+                fileinfo_show_for_path(path);
+            g_free(path);
+        }
     }
 }
 
@@ -2512,23 +2523,32 @@ playlist_fileinfo_current(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist);
 
-    if (tuple != NULL)
-    {
-        if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box == NULL)
-            fileinfo_show_for_tuple(tuple);
-        else if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
-            playlist->position->decoder->file_info_box(path);
-        else
-            fileinfo_show_for_path(path);
+    if (playlist->position->decoder != NULL && playlist->position->decoder->update_song_tuple != NULL &&
+        playlist->position->decoder->file_info_box == NULL && path != NULL) {
+
+        fileinfo_show_editor_for_path(path, playlist->position->decoder);
         g_free(path);
-    }
-    else if (path != NULL)
-    {
-        if (playlist->position != NULL && playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
-            playlist->position->decoder->file_info_box(path);
-        else
-            fileinfo_show_for_path(path);
-        g_free(path);
+
+    } else {
+
+        if (tuple != NULL)
+        {
+            if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box == NULL)
+                fileinfo_show_for_tuple(tuple, FALSE);
+            else if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
+                playlist->position->decoder->file_info_box(path);
+            else
+                fileinfo_show_for_path(path);
+            g_free(path);
+        }
+        else if (path != NULL)
+        {
+            if (playlist->position != NULL && playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
+                playlist->position->decoder->file_info_box(path);
+            else
+                fileinfo_show_for_path(path);
+            g_free(path);
+        }
     }
 }
 
