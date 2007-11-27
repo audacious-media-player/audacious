@@ -70,11 +70,18 @@ ui_main_evlistener_volume_change(gpointer hook_data, gpointer user_data)
     equalizerwin_set_balance_slider(b);
 }
 
+static void
+ui_main_evlistener_playback_initiate(gpointer hook_data, gpointer user_data)
+{
+    playback_initiate();
+}
+
 void
 ui_main_evlistener_init(void)
 {
     hook_associate("title change", ui_main_evlistener_title_change, NULL);
     hook_associate("hide seekbar", ui_main_evlistener_hide_seekbar, NULL);
     hook_associate("volume set", ui_main_evlistener_volume_change, NULL);
+    hook_associate("playback initiate", ui_main_evlistener_playback_initiate, NULL);
 }
 
