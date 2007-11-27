@@ -84,6 +84,7 @@ GtkWidget *label_mini_status;
 
 static gchar *current_file = NULL;
 static InputPlugin *current_ip = NULL;
+static gboolean something_changed = FALSE;
 
 static void
 fileinfo_entry_set_text(GtkWidget *widget, const char *text)
@@ -224,11 +225,22 @@ void fileinfo_hide(gpointer unused)
         gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
         gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
     }
+    
+    something_changed = FALSE;
+    gtk_widget_set_sensitive(btn_apply, FALSE);
 
     current_ip = NULL;
     G_FREE_CLEAR(current_file);
 
     fileinfo_entry_set_image(image_artwork, DATA_DIR "/images/audio.png");
+}
+
+static void entry_changed (GtkEditable *editable, gpointer user_data)
+{
+    if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL) {
+        something_changed = TRUE;
+        gtk_widget_set_sensitive(btn_apply, TRUE);
+    }
 }
 
 static gboolean
@@ -270,7 +282,7 @@ fileinfo_update_tuple(gpointer data)
 {
         Tuple *tuple;
         VFSFile *fd;
-        if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL) { /* TODO only if changed*/
+        if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL && something_changed) {
 
             tuple = tuple_new();
             fd = vfs_fopen(current_file, "r+b");
@@ -287,6 +299,8 @@ fileinfo_update_tuple(gpointer data)
                 
                 if(current_ip->update_song_tuple(tuple, fd)) {
                     message_update_successfull();
+                    something_changed = FALSE;
+                    gtk_widget_set_sensitive(btn_apply, FALSE);
                 } else {
                     message_update_failed();
                 }
@@ -476,6 +490,7 @@ create_fileinfo_window(void)
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_title = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_title);
+    g_signal_connect(G_OBJECT(entry_title), "changed", (GCallback) entry_changed, NULL);
 
     label_artist = gtk_label_new(_("<span size=\"small\">Artist</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_artist, FALSE, FALSE, 0);
@@ -487,6 +502,7 @@ create_fileinfo_window(void)
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_artist = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_artist);
+    g_signal_connect(G_OBJECT(entry_artist), "changed", (GCallback) entry_changed, NULL);
 
     label_album = gtk_label_new(_("<span size=\"small\">Album</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_album, FALSE, FALSE, 0);
@@ -498,6 +514,7 @@ create_fileinfo_window(void)
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_album = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_album);
+    g_signal_connect(G_OBJECT(entry_album), "changed", (GCallback) entry_changed, NULL);
 
     label_comment = gtk_label_new(_("<span size=\"small\">Comment</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_comment, FALSE, FALSE, 0);
@@ -509,6 +526,7 @@ create_fileinfo_window(void)
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_comment = gtk_entry_new();
     gtk_container_add (GTK_CONTAINER(alignment), entry_comment);
+    g_signal_connect(G_OBJECT(entry_comment), "changed", (GCallback) entry_changed, NULL);
 
     label_genre = gtk_label_new(_("<span size=\"small\">Genre</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_genre, FALSE, FALSE, 0);
@@ -520,6 +538,7 @@ create_fileinfo_window(void)
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
     entry_genre = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_genre);
+    g_signal_connect(G_OBJECT(entry_genre), "changed", (GCallback) entry_changed, NULL);
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
@@ -539,6 +558,7 @@ create_fileinfo_window(void)
     gtk_table_attach(GTK_TABLE(table1), entry_year, 0, 1, 1, 2,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
+    g_signal_connect(G_OBJECT(entry_year), "changed", (GCallback) entry_changed, NULL);
 
     label_track = gtk_label_new(_("<span size=\"small\">Track Number</span>"));
     gtk_table_attach(GTK_TABLE(table1), label_track, 1, 2, 0, 1,
@@ -551,6 +571,7 @@ create_fileinfo_window(void)
     gtk_table_attach(GTK_TABLE(table1), entry_track, 1, 2, 1, 2,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
+    g_signal_connect(G_OBJECT(entry_track), "changed", (GCallback) entry_changed, NULL);
 
     label_location = gtk_label_new(_("<span size=\"small\">Location</span>"));
     gtk_box_pack_start(GTK_BOX(vbox2), label_location, FALSE, FALSE, 0);
@@ -605,6 +626,8 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
             G_FREE_CLEAR(current_file);
         }
 
+        something_changed = FALSE;
+
         if(!GTK_WIDGET_REALIZED(fileinfo_win)) gtk_widget_realize(fileinfo_win);
 
         set_entry_str_from_field(entry_title, tuple, FIELD_TITLE, updating_enabled);
@@ -648,10 +671,12 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
                 g_free(tmp);
         }
 
-        if(updating_enabled && current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL)
+        /*if(updating_enabled && current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL)
                 gtk_widget_set_sensitive(btn_apply, TRUE);
         else
-                gtk_widget_set_sensitive(btn_apply, FALSE);
+                gtk_widget_set_sensitive(btn_apply, FALSE);*/
+        
+        gtk_widget_set_sensitive(btn_apply, FALSE);
     
         if (label_mini_status != NULL) {
             gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
