@@ -95,18 +95,19 @@ fileinfo_entry_set_text(GtkWidget *widget, const char *text)
 }
 
 static void
-set_entry_str_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn)
+set_entry_str_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn, gboolean editable)
 {
     gchar *text;
 
     if(widget != NULL) {
         text = (gchar*)tuple_get_string(tuple, fieldn, NULL);
         gtk_entry_set_text(GTK_ENTRY(widget), text != NULL ? text : "");
+        gtk_editable_set_editable(GTK_EDITABLE(widget), editable);
     }
 }
 
 static void
-set_entry_int_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn)
+set_entry_int_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn, gboolean editable)
 {
     gchar *text;
 
@@ -115,9 +116,11 @@ set_entry_int_from_field(GtkWidget *widget, Tuple *tuple, gint fieldn)
     if(tuple_get_value_type(tuple, fieldn, NULL) == TUPLE_INT) {
         text = g_strdup_printf("%d", tuple_get_int(tuple, fieldn, NULL));
         gtk_entry_set_text(GTK_ENTRY(widget), text);
+        gtk_editable_set_editable(GTK_EDITABLE(widget), editable);
         g_free(text);
     } else {
         gtk_entry_set_text(GTK_ENTRY(widget), "");
+        gtk_editable_set_editable(GTK_EDITABLE(widget), editable);
     }
 }
 
@@ -131,8 +134,14 @@ set_field_str_from_entry(Tuple *tuple, gint fieldn, GtkWidget *widget)
 static void
 set_field_int_from_entry(Tuple *tuple, gint fieldn, GtkWidget *widget)
 {
+    gchar *tmp;
     if(widget == NULL) return;
-    tuple_associate_int(tuple, fieldn, NULL, atoi(gtk_entry_get_text(GTK_ENTRY(widget))));
+
+    tmp = (gchar*)gtk_entry_get_text(GTK_ENTRY(widget));
+    if(*tmp != '\0')
+        tuple_associate_int(tuple, fieldn, NULL, atoi(tmp));
+    else
+        tuple_associate_int(tuple, fieldn, NULL, -1);
 }
 
 static void
@@ -554,6 +563,7 @@ create_fileinfo_window(void)
 
     entry_location = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_location);
+    gtk_editable_set_editable(GTK_EDITABLE(entry_location), FALSE);
     
     hbox_status_and_bbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox0), hbox_status_and_bbox, FALSE, FALSE, 0);
@@ -597,11 +607,11 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 
         if(!GTK_WIDGET_REALIZED(fileinfo_win)) gtk_widget_realize(fileinfo_win);
 
-        set_entry_str_from_field(entry_title, tuple, FIELD_TITLE);
-        set_entry_str_from_field(entry_artist, tuple, FIELD_ARTIST);
-        set_entry_str_from_field(entry_album, tuple, FIELD_ALBUM);
-        set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT);
-        set_entry_str_from_field(entry_genre, tuple, FIELD_GENRE);
+        set_entry_str_from_field(entry_title, tuple, FIELD_TITLE, updating_enabled);
+        set_entry_str_from_field(entry_artist, tuple, FIELD_ARTIST, updating_enabled);
+        set_entry_str_from_field(entry_album, tuple, FIELD_ALBUM, updating_enabled);
+        set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT, updating_enabled);
+        set_entry_str_from_field(entry_genre, tuple, FIELD_GENRE, updating_enabled);
 
         tmp = g_strdup_printf("%s/%s",
                 tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
@@ -615,8 +625,8 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         }
         
         /* set empty string if field not availaible. --eugene */
-        set_entry_int_from_field(entry_year, tuple, FIELD_YEAR);
-        set_entry_int_from_field(entry_track, tuple, FIELD_TRACK_NUMBER);
+        set_entry_int_from_field(entry_year, tuple, FIELD_YEAR, updating_enabled);
+        set_entry_int_from_field(entry_track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
         fileinfo_label_set_text(label_format_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
         fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
