@@ -61,6 +61,7 @@
 #include "ui_playlist.h"
 
 #define G_FREE_CLEAR(a) { if(a != NULL) { g_free(a); a = NULL; } }
+#define STATUS_TIMEOUT 3*1000
 
 GtkWidget *fileinfo_win;
 
@@ -79,6 +80,7 @@ GtkWidget *image_fileicon;
 GtkWidget *label_format_name;
 GtkWidget *label_quality;
 GtkWidget *btn_apply;
+GtkWidget *label_mini_status;
 
 static gchar *current_file = NULL;
 static InputPlugin *current_ip = NULL;
@@ -208,6 +210,11 @@ void fileinfo_hide(gpointer unused)
 
     fileinfo_label_set_text(label_format_name, NULL);
     fileinfo_label_set_text(label_quality, NULL);
+    
+    if (label_mini_status != NULL) {
+        gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
+        gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
+    }
 
     current_ip = NULL;
     G_FREE_CLEAR(current_file);
@@ -215,7 +222,42 @@ void fileinfo_hide(gpointer unused)
     fileinfo_entry_set_image(image_artwork, DATA_DIR "/images/audio.png");
 }
 
-static void fileinfo_update_tuple(gpointer data)
+static gboolean
+ministatus_timeout_proc (gpointer data)
+{
+    GtkLabel *status = GTK_LABEL(data);
+    gtk_label_set_text(status, "<span size=\"small\"></span>");
+    gtk_label_set_use_markup(status, TRUE);
+
+    return FALSE;
+}
+
+static void
+ministatus_display_message(gchar *text)
+{
+    if(label_mini_status != NULL) {
+        gchar *tmp = g_strdup_printf("<span size=\"small\">%s</span>", text);
+        gtk_label_set_text(GTK_LABEL(label_mini_status), tmp);
+        g_free(tmp);
+        gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
+        g_timeout_add (STATUS_TIMEOUT, (GSourceFunc) ministatus_timeout_proc, (gpointer) label_mini_status);
+    }
+}
+
+static void
+message_update_successfull()
+{
+    ministatus_display_message(_("Metadata updated successfully"));
+}
+
+static void
+message_update_failed()
+{
+    ministatus_display_message(_("Metadata updating failed"));
+}
+
+static void
+fileinfo_update_tuple(gpointer data)
 {
         Tuple *tuple;
         VFSFile *fd;
@@ -235,18 +277,15 @@ static void fileinfo_update_tuple(gpointer data)
                 set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
                 
                 if(current_ip->update_song_tuple(tuple, fd)) {
-                    /* TODO display ok */
-                    fprintf(stderr, "fileinfo_update_tuple(): updated\n");
+                    message_update_successfull();
                 } else {
-                    /* TODO error message */
-                    fprintf(stderr, "fileinfo_update_tuple(): failed\n");
+                    message_update_failed();
                 }
 
                 vfs_fclose(fd);
 
             } else {
-                /* TODO: error message */
-                fprintf(stderr, "fileinfo_update_tuple(): can't open file %s\n", current_file);
+                message_update_failed();
             }
 
             mowgli_object_unref(tuple);
@@ -319,6 +358,8 @@ void
 create_fileinfo_window(void)
 {
     GtkWidget *hbox;
+    GtkWidget *hbox_status_and_bbox;
+    GtkWidget *vbox0;
     GtkWidget *vbox1;
     GtkWidget *vbox2;
     GtkWidget *label_title;
@@ -348,8 +389,11 @@ create_fileinfo_window(void)
     gtk_window_set_type_hint(GTK_WINDOW(fileinfo_win), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_transient_for(GTK_WINDOW(fileinfo_win), GTK_WINDOW(mainwin));
 
+    vbox0 = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(fileinfo_win), vbox0);
+
     hbox = gtk_hbox_new(FALSE, 6);
-    gtk_container_add(GTK_CONTAINER(fileinfo_win), hbox);
+    gtk_box_pack_start(GTK_BOX(vbox0), hbox, TRUE, TRUE, 0);
 
     image_artwork = gtk_image_new();
     gtk_box_pack_start(GTK_BOX(hbox), image_artwork, FALSE, FALSE, 0);
@@ -511,9 +555,17 @@ create_fileinfo_window(void)
     entry_location = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_location);
     
+    hbox_status_and_bbox = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox0), hbox_status_and_bbox, FALSE, FALSE, 0);
+
+    label_mini_status = gtk_label_new("<span size=\"small\"></span>");
+    gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_mini_status), 0, 0.5);
+    gtk_box_pack_start (GTK_BOX (hbox_status_and_bbox), label_mini_status, TRUE, TRUE, 0);
+    
     bbox_close = gtk_hbutton_box_new();
     gtk_box_set_spacing(GTK_BOX(bbox_close), 6);
-    gtk_box_pack_start(GTK_BOX(vbox1), bbox_close, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox_status_and_bbox), bbox_close, FALSE, FALSE, 0);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox_close), GTK_BUTTONBOX_END);
 
     btn_apply = gtk_button_new_from_stock("gtk-apply");
@@ -526,7 +578,7 @@ create_fileinfo_window(void)
     GTK_WIDGET_SET_FLAGS(btn_close, GTK_CAN_DEFAULT);
     g_signal_connect(G_OBJECT(btn_close), "clicked", (GCallback) fileinfo_hide, NULL);
 
-    gtk_widget_show_all (hbox);
+    gtk_widget_show_all (vbox0);
 }
 
 void 
@@ -590,6 +642,11 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
                 gtk_widget_set_sensitive(btn_apply, TRUE);
         else
                 gtk_widget_set_sensitive(btn_apply, FALSE);
+    
+        if (label_mini_status != NULL) {
+            gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
+            gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
+        }
         
         if(! GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_show(fileinfo_win);
 }
