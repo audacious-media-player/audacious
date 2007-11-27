@@ -1097,6 +1097,8 @@ struct _InputPlugin {
      * 2. Each field in tuple means operation on one and only one tag's filed:
      *     2.1. Set this field to appropriate value, if non-empty string or positive number provided.
      *     2.2. Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
+     *
+     * -- eugene.
      */
 };
 
