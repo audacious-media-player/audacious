@@ -39,7 +39,6 @@ enum {
 };
 
 struct _UiSkinnedHorizontalSliderPrivate {
-    GtkWidget        *fixed;
     SkinPixmapId     skin_index;
     gboolean         double_size;
     gint             frame, frame_offset, frame_height, min, max;
@@ -141,7 +140,6 @@ GtkWidget* ui_skinned_horizontal_slider_new(GtkWidget *fixed, gint x, gint y, gi
     hs->y = y;
     priv->width = w;
     priv->height = h;
-    priv->fixed = fixed;
     hs->knob_nx = knx;
     hs->knob_ny = kny;
     hs->knob_px = kpx;
@@ -158,7 +156,7 @@ GtkWidget* ui_skinned_horizontal_slider_new(GtkWidget *fixed, gint x, gint y, gi
         priv->frame = priv->frame_cb(0);
     priv->skin_index = si;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(hs), hs->x, hs->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(hs), hs->x, hs->y);
 
     return GTK_WIDGET(hs);
 }
@@ -249,18 +247,18 @@ static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventE
     obj = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(obj);
 
-    skin_draw_pixmap(bmp_active_skin, obj, gc,
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                      priv->skin_index, priv->frame_offset,
                      priv->frame * priv->frame_height,
                      0, 0, priv->width, priv->height);
     if (hs->pressed)
-        skin_draw_pixmap(bmp_active_skin, obj, gc,
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                          priv->skin_index, hs->knob_px,
                          hs->knob_py, priv->position,
                          ((priv->height - priv->knob_height) / 2),
                          priv->knob_width, priv->knob_height);
     else
-        skin_draw_pixmap(bmp_active_skin, obj, gc,
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
                          priv->skin_index, hs->knob_nx,
                          hs->knob_ny, priv->position,
                          ((priv->height - priv->knob_height) / 2),

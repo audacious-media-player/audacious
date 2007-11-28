@@ -14,12 +14,10 @@ include ../../extra.mk
 CPPFLAGS += ${CFLAGS} -I.. -I../.. -I../intl
 CFLAGS += ${GTK_CFLAGS}		\
 	  ${DBUS_CFLAGS}	\
-	  ${LIBGLADE_CFLAGS}	\
 	  ${BEEP_DEFINES}	\
 	  ${ARCH_DEFINES}	\
 	  ${MOWGLI_CFLAGS}
 LIBS += ${DBUS_LIBS}			\
 	-L../libaudclient -laudclient	\
 	${GTK_LIBS}			\
-	${MOWGLI_LIBS}			\
-	${LIBGLADE_LIBS}
+	${MOWGLI_LIBS}

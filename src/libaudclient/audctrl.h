@@ -23,9 +23,7 @@
 #include <glib.h>
 #include <dbus/dbus-glib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
     void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
                                    gboolean enqueue);
@@ -74,15 +72,15 @@ extern "C" {
     void audacious_remote_toggle_shuffle(DBusGProxy *proxy);
     gboolean audacious_remote_is_repeat(DBusGProxy *proxy);
     gboolean audacious_remote_is_shuffle(DBusGProxy *proxy);
-    void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
-                                 gfloat **bands);
-    gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy);
-    gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band);
-    void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
-                                 gfloat *bands);
-    void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp);
+    void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp,
+                                 GArray **bands);
+    gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy);
+    gdouble audacious_remote_get_eq_band(DBusGProxy *proxy, gint band);
+    void audacious_remote_set_eq(DBusGProxy *proxy, gdouble preamp,
+                                 GArray *bands);
+    void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gdouble preamp);
     void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band,
-                                      gfloat value);
+                                      gdouble value);
 
 /* Added in XMMS 1.2.1 */
     void audacious_remote_quit(DBusGProxy *proxy);
@@ -121,9 +119,12 @@ extern "C" {
                                           guint pos);
 /* Added in Audacious 1.4 */
     void audacious_remote_show_about_box(DBusGProxy *proxy);
+    void audacious_remote_toggle_about_box(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_toggle_jtf_box(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_toggle_prefs_box(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show);
+    void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active);
 
-#ifdef __cplusplus
-};
-#endif
+G_END_DECLS
 
 #endif

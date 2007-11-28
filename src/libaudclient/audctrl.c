@@ -367,7 +367,7 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
  **/
 gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
     gchar *skin = NULL;
-    org_atheme_audacious_get_skin (proxy, &skin, &error); // xxx
+    org_atheme_audacious_get_skin (proxy, &skin, &error);
     g_clear_error(&error);
     return skin;
 }
@@ -535,7 +535,18 @@ gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
  * Tells audacious to show the preferences pane.
  **/
 void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
-    org_atheme_audacious_show_prefs_box(proxy, &error);
+    audacious_remote_toggle_prefs_box(proxy, TRUE);
+}
+
+/**
+ * audacious_remote_toggle_prefs_box:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides
+ *
+ * Tells audacious to show/hide the preferences pane.
+ **/
+void audacious_remote_toggle_prefs_box(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_prefs_box(proxy, show, &error);
     g_clear_error(&error);
 }
 
@@ -546,7 +557,18 @@ void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
  * Tells audacious to show the about box.
  **/
 void audacious_remote_show_about_box(DBusGProxy *proxy) {
-    org_atheme_audacious_show_about_box(proxy, &error);
+    audacious_remote_toggle_about_box(proxy, TRUE);
+}
+
+/**
+ * audacious_remote_toggle_about_box:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides
+ *
+ * Tells audacious to show/hide the about box.
+ **/
+void audacious_remote_toggle_about_box(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_about_box(proxy, show, &error);
     g_clear_error(&error);
 }
 
@@ -688,9 +710,9 @@ gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
  *
  * Queries audacious about the equalizer settings.
  **/
-void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
-                             gfloat **bands) {
-//XXX
+void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp, GArray **bands) {
+    org_atheme_audacious_get_eq(proxy, preamp, bands, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -701,9 +723,13 @@ void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
  *
  * Return value: The equalizer preamp's setting.
  **/
-gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
-//XXX
-    return 0.0;
+gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
+    gdouble preamp = 0.0;
+
+    org_atheme_audacious_get_eq_preamp(proxy, &preamp, &error);
+    g_clear_error(&error);
+
+    return preamp;
 }
 
 /**
@@ -715,9 +741,13 @@ gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
  *
  * Return value: The equalizer band's value.
  **/
-gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
-//XXX
-    return 0.0;
+gdouble audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
+    gdouble value = 0.0;
+
+    org_atheme_audacious_get_eq_band(proxy, band, &value, &error);
+    g_clear_error(&error);
+
+    return value;
 }
 
 /**
@@ -728,9 +758,9 @@ gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
  *
  * Tells audacious to set the equalizer up using the provided values.
  **/
-void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
-                             gfloat *bands) {
-//XXX
+void audacious_remote_set_eq(DBusGProxy *proxy, gdouble preamp, GArray *bands) {
+    org_atheme_audacious_set_eq(proxy, preamp, bands, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -740,8 +770,9 @@ void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
  *
  * Tells audacious to set the equalizer's preamp setting.
  **/
-void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp) {
-//XXX
+void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gdouble preamp) {
+    org_atheme_audacious_set_eq_preamp(proxy, preamp, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -752,9 +783,9 @@ void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp) {
  *
  * Tells audacious to set an equalizer band's setting.
  **/
-void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band,
-                                  gfloat value) {
-//XXX
+void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band, gdouble value) {
+    org_atheme_audacious_set_eq_band(proxy, band, value, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -876,7 +907,30 @@ void audacious_remote_activate(DBusGProxy *proxy) {
  * Tells audacious to show the Jump-to-File pane.
  **/
 void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
-    org_atheme_audacious_show_jtf_box(proxy, &error);
+    audacious_remote_toggle_jtf_box(proxy, TRUE);
+}
+
+/**
+ * audacious_remote_toggle_jtf_box:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides jtf pane
+ *
+ * Tells audacious to show/hide the Jump-to-File pane.
+ **/
+void audacious_remote_toggle_jtf_box(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_jtf_box(proxy, show, &error);
+    g_clear_error(&error);
+}
+
+/**
+ * audacious_remote_toggle_filebrowser:
+ * @proxy: DBus proxy for audacious
+ * @show: shows/hides filebrowser
+ *
+ * Tells audacious to show the filebrowser dialog.
+ **/
+void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_filebrowser(proxy, show, &error);
     g_clear_error(&error);
 }
 
@@ -964,8 +1018,44 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
  **/
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                       guint pos) {
-//XXX
-	g_clear_error(&error);
-    return NULL;
+    GValue value = {};
+    gchar *s = NULL;
+
+    org_atheme_audacious_song_tuple(proxy, pos, field, &value, &error);
+
+    g_clear_error(&error);
+
+    if (G_IS_VALUE(&value) == FALSE)
+        return NULL;
+
+    if (G_VALUE_HOLDS_STRING(&value))
+        s = g_strescape(g_value_get_string(&value), NULL);
+    else if (g_value_type_transformable(G_VALUE_TYPE(&value), G_TYPE_STRING))
+    {
+        GValue tmp_value = { 0, };
+
+        g_value_init(&tmp_value, G_TYPE_STRING);
+        g_value_transform(&value, &tmp_value);
+
+        s = g_strescape(g_value_get_string(&tmp_value), NULL);
+
+        g_value_unset(&tmp_value);
+    }
+    else
+        s = g_strdup("<unknown type>");
+
+    g_value_unset(&value);
+    return s;
 }
 
+/**
+ * audacious_remote_eq_activate:
+ * @proxy: DBus proxy for audacious
+ * @active: Whether or not to activate the equalizer.
+ *
+ * Toggles the equalizer.
+ **/
+void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active) {
+    org_atheme_audacious_equalizer_activate (proxy, active, &error);
+    g_clear_error(&error);
+}

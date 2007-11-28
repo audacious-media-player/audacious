@@ -593,9 +593,11 @@ mainwin_refresh_hints(void)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
         bmp_active_skin->properties.mainwin_text_y);
 
-    if (bmp_active_skin->properties.mainwin_text_width)
-    gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width*(1+cfg.doublesize),
-        UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
+    if (bmp_active_skin->properties.mainwin_text_width) {
+        UI_SKINNED_TEXTBOX(mainwin_info)->width = bmp_active_skin->properties.mainwin_text_width;
+        gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width*(1+cfg.doublesize),
+                                    UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
+    }
 
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
@@ -694,23 +696,16 @@ mainwin_refresh_hints(void)
         cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
 
     mainwin_refresh_visible();
+
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
-    gint width, height;
-
-    gdk_window_get_size(mainwin->window, &width, &height);
-
-        if (width == bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1) &&
-        height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
-            return;
-
         dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-        cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
-        bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-        bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
+            cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
+            bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
+            bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
 
-    gdk_flush();
+        gdk_flush();
     }
 }
 
@@ -1249,6 +1244,75 @@ mainwin_show_visibility_warning(void)
     }
 }
 
+static void
+on_broken_gtk_engine_warning_toggle(GtkToggleButton *tbt, gpointer unused)
+{
+    cfg.warn_about_broken_gtk_engines = !gtk_toggle_button_get_active(tbt);
+}
+
+void
+ui_main_check_theme_engine(void)
+{
+    GtkSettings *settings;
+    GtkWidget *widget;
+    gchar *theme = NULL;
+
+    widget = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_widget_ensure_style(widget);
+
+    settings = gtk_settings_get_default();
+    g_object_get(G_OBJECT(settings), "gtk-theme-name", &theme, NULL);
+    gtk_widget_destroy(widget);
+
+    if (theme == NULL)
+        return;
+
+    if (g_ascii_strcasecmp(theme, "Qt"))
+    {
+        g_free(theme);
+        return;
+    }
+
+    if (cfg.warn_about_broken_gtk_engines)
+    {
+        gchar *msg;
+        GtkWidget *label, *checkbt, *vbox;
+        GtkWidget *warning_dlg =
+            gtk_dialog_new_with_buttons( _("Audacious - broken GTK engine usage warning") ,
+            GTK_WINDOW(mainwin) , GTK_DIALOG_DESTROY_WITH_PARENT ,
+            GTK_STOCK_CLOSE, GTK_RESPONSE_OK, NULL );
+        vbox = gtk_vbox_new( FALSE , 4 );
+        gtk_container_set_border_width( GTK_CONTAINER(vbox) , 4 );
+        gtk_box_pack_start( GTK_BOX(GTK_DIALOG(warning_dlg)->vbox) , vbox ,
+                            TRUE , TRUE , 0 );
+
+        msg = g_strdup_printf(_("<big><b>Broken GTK engine in use</b></big>\n\n"
+				 "Audacious has detected that you are using a broken GTK engine.\n\n"
+                                 "The theme engine you are using, <i>%s</i>, is incompatible with some of the features "
+                                 "used by modern skins. The incompatible features have been disabled for this session.\n\n"
+                                 "To use these features, please consider using a different GTK theme engine."), theme);
+        label = gtk_label_new(msg);
+        gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
+        g_free(msg);
+
+        gtk_label_set_line_wrap( GTK_LABEL(label) , TRUE );
+        gtk_misc_set_alignment( GTK_MISC(label) , 0.0 , 0.0 );
+        checkbt = gtk_check_button_new_with_label( _("Do not display this warning again") );
+        gtk_box_pack_start( GTK_BOX(vbox) , label , TRUE , TRUE , 0 );
+        gtk_box_pack_start( GTK_BOX(vbox) , checkbt , TRUE , TRUE , 0 );
+        g_signal_connect( G_OBJECT(checkbt) , "toggled" ,
+            G_CALLBACK(on_broken_gtk_engine_warning_toggle) , NULL );
+        g_signal_connect( G_OBJECT(warning_dlg) , "response" ,
+            G_CALLBACK(gtk_widget_destroy) , NULL );        
+        gtk_widget_show_all(warning_dlg);
+        gtk_window_stick(GTK_WINDOW(warning_dlg));
+    }
+
+    cfg.disable_inline_gtk = TRUE;
+
+    g_free(theme);
+}
+
 void
 mainwin_show_add_url_window(void)
 {
@@ -1697,17 +1761,11 @@ mainwin_real_show(void)
       nullmask = NULL;
     }
 
-    gtk_window_resize(GTK_WINDOW(mainwin),
-                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
-                bmp_active_skin->properties.mainwin_width,
-                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
-                bmp_active_skin->properties.mainwin_height);
-
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
-    gtk_window_present(GTK_WINDOW(mainwin));
     mainwin_refresh_hints();
+    gtk_window_present(GTK_WINDOW(mainwin));
 }
 
 void

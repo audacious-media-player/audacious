@@ -101,10 +101,9 @@ GtkWidget* ui_skinned_equalizer_graph_new(GtkWidget *fixed, gint x, gint y) {
     equalizer_graph->x = x;
     equalizer_graph->y = y;
     equalizer_graph->skin_index = SKIN_EQMAIN;
-    equalizer_graph->fixed = fixed;
     equalizer_graph->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(equalizer_graph->fixed), GTK_WIDGET(equalizer_graph), equalizer_graph->x, equalizer_graph->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(equalizer_graph), equalizer_graph->x, equalizer_graph->y);
 
     return GTK_WIDGET(equalizer_graph);
 }
@@ -246,9 +245,9 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
      */
     void (*__init_spline) (gfloat *, gfloat *, gint, gfloat *) = init_spline;
 
-    skin_draw_pixmap(bmp_active_skin, obj, gc, equalizer_graph->skin_index, 0, 294, 0, 0,
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, equalizer_graph->skin_index, 0, 294, 0, 0,
                      equalizer_graph->width, equalizer_graph->height);
-    skin_draw_pixmap(bmp_active_skin, obj, gc, equalizer_graph->skin_index, 0, 314,
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, equalizer_graph->skin_index, 0, 314,
                      0, 9 + ((cfg.equalizer_preamp * 9) / 20),
                      equalizer_graph->width, 1);
 

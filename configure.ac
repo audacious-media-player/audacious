@@ -1,6 +1,6 @@
 
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([audacious], [1.4.0], [bugs+audacious@atheme.org])
+AC_INIT([audacious], [1.5.0], [bugs+audacious@atheme.org])
 AC_PREREQ([2.59])
 
 AC_CANONICAL_HOST
@@ -87,8 +87,8 @@ AC_ARG_ENABLE(user-plugin-dir,
 
 dnl Check for GTK/GLib/GThread/Pango
 
-PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.10.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.10.0, gtk+-2.0 >= 2.6.0])],
+PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.10.0 gtk+-2.0 >= 2.10.0 gthread-2.0 pango],
+    [ADD_PC_REQUIRES([glib-2.0 >= 2.10.0, gtk+-2.0 >= 2.10.0])],
     [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
 )
 
@@ -104,13 +104,6 @@ dnl Check for libmowgli.
 PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.4],
     [ADD_PC_REQUIRES([libmowgli >= 0.4])],
     [AC_MSG_ERROR([Cannot find libmowgli: try http://www.atheme-project.org/projects/mowgli.shtml])]
-)
-
-dnl Check for libglade
-
-PKG_CHECK_MODULES(LIBGLADE, [libglade-2.0 >= 2.3.1],
-    [],
-    [AC_MSG_ERROR([Cannot find libglade])]
 )
 
 # Check if socklen_t is defined

@@ -112,6 +112,8 @@ int dfa_validate_utf8(const char *buf, int buflen)
             break;
     }
 
+    DFA_NEXT(utf8, '\0'); //Bug #53
+
     if(DFA_ALIVE(utf8))
         return 1;
     else 

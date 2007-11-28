@@ -27,12 +27,10 @@
 #  include "config.h"
 #endif
 
-#define NEED_GLADE
 #include "util.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <glade/glade.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,7 +45,6 @@
 #  include <fts.h>
 #endif
 
-#include "glade.h"
 #include "input.h"
 #include "main.h"
 #include "playback.h"

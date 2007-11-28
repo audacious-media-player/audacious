@@ -47,7 +47,6 @@ enum {
 
 struct _UiSkinnedTextboxPrivate {
     SkinPixmapId     skin_index;
-    GtkWidget        *fixed;
     gboolean         double_size;
     gboolean         scroll_back;
     gint             nominal_y, nominal_height;
@@ -184,10 +183,9 @@ GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, gint x, gint y, gint w, gboo
     priv->scroll_timeout = 0;
     priv->scroll_dummy = 0;
 
-    priv->fixed = fixed;
     priv->double_size = FALSE;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x, textbox->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(textbox), textbox->x, textbox->y);
 
     return GTK_WIDGET(textbox);
 }
@@ -365,6 +363,8 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
             } else
                 g_signal_emit(widget, textbox_signals[CLICKED], 0);
 
+        } else if (event->button == 3) {
+            g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
         } else
             priv->is_dragging = FALSE;
     } else if (event->type == GDK_2BUTTON_PRESS) {
@@ -384,8 +384,6 @@ static gboolean ui_skinned_textbox_button_release(GtkWidget *widget, GdkEventBut
 
     if (event->button == 1) {
         priv->is_dragging = FALSE;
-    } else if (event->button == 3) {
-        g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
     }
 
     return TRUE;
@@ -431,7 +429,8 @@ static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
     if (priv->move_x || priv->move_y)
-        gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x+priv->move_x, textbox->y+priv->move_y);
+        gtk_fixed_move(GTK_FIXED(gtk_widget_get_parent(GTK_WIDGET(textbox))), GTK_WIDGET(textbox),
+                       textbox->x+priv->move_x, textbox->y+priv->move_y);
 
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }
@@ -592,10 +591,12 @@ static gboolean textbox_scroll(gpointer data) {
                 if (priv->offset >= (priv->pixmap_width - textbox->width)) {
                     priv->scroll_back = TRUE;
                     priv->scroll_dummy = 0;
+                    priv->offset = priv->pixmap_width - textbox->width;
                 }
                 if (priv->offset <= 0) {
                     priv->scroll_back = FALSE;
                     priv->scroll_dummy = 0;
+                    priv->offset = 0;
                 }
             }
             else { // oneway scroll
@@ -707,7 +708,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
         else
             textbox_handle_special_char(tmp, &x, &y);
 
-        skin_draw_pixmap(bmp_active_skin,
+        skin_draw_pixmap(GTK_WIDGET(textbox), bmp_active_skin,
                          priv->pixmap, gc, priv->skin_index,
                          x, y, i * bmp_active_skin->properties.textbox_bitmap_font_width, 0,
                          bmp_active_skin->properties.textbox_bitmap_font_width, 

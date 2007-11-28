@@ -22,6 +22,7 @@
 
 void create_prefs_window(void);
 void show_prefs_window(void);
+void hide_prefs_window(void);
 
 gint prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl);
 void prefswin_page_destroy(GtkWidget *container);

@@ -39,7 +39,6 @@ enum {
 };
 
 struct _UiSkinnedPlaylistSliderPrivate {
-    GtkWidget        *fixed;
     SkinPixmapId     skin_index;
     gint             width, height;
 
@@ -133,10 +132,9 @@ GtkWidget* ui_skinned_playlist_slider_new(GtkWidget *fixed, gint x, gint y, gint
     hs->y = y;
     priv->width = 8;
     priv->height = h;
-    priv->fixed = fixed;
     priv->skin_index = SKIN_PLEDIT;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(hs), hs->x, hs->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(hs), hs->x, hs->y);
 
     return GTK_WIDGET(hs);
 }
@@ -251,7 +249,7 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
     }
 
     /* drawing knob */
-    skin_draw_pixmap(bmp_active_skin, obj, gc, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
+    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
 
     gdk_draw_drawable(widget->window, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
     g_object_unref(obj);
@@ -326,7 +324,8 @@ static void ui_skinned_playlist_slider_redraw(UiSkinnedPlaylistSlider *playlist_
     if (priv->resize_height)
         gtk_widget_set_size_request(GTK_WIDGET(playlist_slider), priv->width, priv->height+priv->resize_height);
     if (priv->move_x)
-        gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(playlist_slider), playlist_slider->x+priv->move_x, playlist_slider->y);
+        gtk_fixed_move(GTK_FIXED(gtk_widget_get_parent(GTK_WIDGET(playlist_slider))), GTK_WIDGET(playlist_slider),
+                       playlist_slider->x+priv->move_x, playlist_slider->y);
 
     gtk_widget_queue_draw(GTK_WIDGET(playlist_slider));
 }

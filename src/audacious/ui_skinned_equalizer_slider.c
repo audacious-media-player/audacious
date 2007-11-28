@@ -38,7 +38,6 @@ enum {
 };
 
 struct _UiSkinnedEqualizerSliderPrivate {
-    GtkWidget        *fixed;
     SkinPixmapId     skin_index;
     gboolean         double_size;
     gint             position;
@@ -129,9 +128,8 @@ GtkWidget* ui_skinned_equalizer_slider_new(GtkWidget *fixed, gint x, gint y) {
     priv->width = 14;
     priv->height = 63;
     priv->skin_index = SKIN_EQMAIN;
-    priv->fixed = fixed;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(es), es->x, es->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(es), es->x, es->y);
 
     return GTK_WIDGET(es);
 }
@@ -216,14 +214,14 @@ static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventEx
     gint frame;
     frame = 27 - ((priv->position * 27) / 50);
     if (frame < 14)
-        skin_draw_pixmap(bmp_active_skin, obj, gc, priv->skin_index, (frame * 15) + 13, 164, 0, 0, priv->width, priv->height);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, (frame * 15) + 13, 164, 0, 0, priv->width, priv->height);
     else
-        skin_draw_pixmap(bmp_active_skin, obj, gc, priv->skin_index, ((frame - 14) * 15) + 13, 229, 0, 0, priv->width, priv->height);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, ((frame - 14) * 15) + 13, 229, 0, 0, priv->width, priv->height);
 
     if (priv->pressed)
-        skin_draw_pixmap(bmp_active_skin, obj, gc, priv->skin_index, 0, 176, 1, priv->position, 11, 11);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, 0, 176, 1, priv->position, 11, 11);
     else
-        skin_draw_pixmap(bmp_active_skin, obj, gc, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
+        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
 
     GdkPixmap *image = NULL;
 

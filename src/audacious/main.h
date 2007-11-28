@@ -131,6 +131,8 @@ struct _BmpConfig {
     gboolean close_jtf_dialog;
     gboolean twoway_scroll;
     gboolean software_volume_control;
+    gboolean warn_about_broken_gtk_engines;
+    gboolean disable_inline_gtk;
 };
 
 typedef struct _BmpConfig BmpConfig;

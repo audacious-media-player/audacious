@@ -26,5 +26,6 @@
 #define PLAY_BUTTON     TRUE
 
 void run_filebrowser(gboolean clear_pl_on_ok);
+void hide_filebrowser(void);
 
 #endif

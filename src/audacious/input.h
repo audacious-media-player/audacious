@@ -47,7 +47,7 @@ void set_current_input_data(void * data);
 InputVisType input_get_vis_type();
 void free_vis_data(void);
 
-ProbeResult *input_check_file(const gchar * filename, gboolean show_warning);
+ProbeResult *input_check_file(const gchar * filename, gboolean loading);
 Tuple *input_get_song_tuple(const gchar * filename);
 
 void input_play(gchar * filename);

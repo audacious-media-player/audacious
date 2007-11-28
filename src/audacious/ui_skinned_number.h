@@ -42,7 +42,6 @@ struct _UiSkinnedNumber {
     gint             num;
     gboolean         double_size;
     SkinPixmapId     skin_index;
-    GtkWidget        *fixed;
 };
 
 struct _UiSkinnedNumberClass {

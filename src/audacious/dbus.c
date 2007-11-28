@@ -40,12 +40,12 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
-#include "memorypool.h"
 #include "tuple.h"
 #include "ui_jumptotrack.h"
 #include "strings.h"
 #include "ui_credits.h"
 #include "skin.h"
+#include "ui_fileopener.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -240,6 +240,16 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
         g_hash_table_insert(md, "genre", value);
     }
 
+    value = tuple_value_to_gvalue(tuple, "codec");
+    if (value != NULL) {
+        g_hash_table_insert(md, "codec", value);
+    }
+
+    value = tuple_value_to_gvalue(tuple, "quality");
+    if (value != NULL) {
+        g_hash_table_insert(md, "quality", value);
+    }
+
     return md;
 }
 
@@ -403,14 +413,15 @@ gboolean mpris_emit_track_change(MprisPlayer *obj) {
 
     metadata = mpris_metadata_from_tuple(tuple);
 
-    if (metadata != NULL) {
-	// Song URI
-	value = g_new0(GValue, 1);
-	g_value_init(value, G_TYPE_STRING);
-	g_value_set_string(value, playlist_get_filename(active, pos));
+    if (!metadata)
+        metadata = g_hash_table_new(g_str_hash, g_str_equal);
 
-	g_hash_table_insert(metadata, "URI", value);
-    }
+    // Song URI
+    value = g_new0(GValue, 1);
+    g_value_init(value, G_TYPE_STRING);
+    g_value_set_string(value, playlist_get_filename(active, pos));
+
+    g_hash_table_insert(metadata, "URI", value);
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     return TRUE;
@@ -801,20 +812,43 @@ gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
 }
 
 /* New on Oct 5 */
-gboolean audacious_rc_show_prefs_box(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        show_prefs_window();
+gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            show_prefs_window();
+        else
+            hide_prefs_window();
+    }
     return TRUE;
 }
-gboolean audacious_rc_show_about_box(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        show_about_window();
+gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            show_about_window();
+        else
+            hide_about_window();
+    }
     return TRUE;
 }
 
-gboolean audacious_rc_show_jtf_box(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        ui_jump_to_track();
+gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            ui_jump_to_track();
+        else
+            ui_jump_to_track_hide();
+    }
+    return TRUE;
+}
+
+gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError **error)
+{
+    if (has_x11_connection) {
+        if (show)
+            run_filebrowser(FALSE);
+        else
+            hide_filebrowser();
+    }
     return TRUE;
 }
 
@@ -854,7 +888,7 @@ gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **err
     return TRUE;
 }
 
-/* New on Oct9: Queue */
+/* New on Oct 9: Queue */
 gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error) {
     if (pos < (guint)playlist_get_length(playlist_get_active()))
         playlist_queue_position(playlist_get_active(), pos);
@@ -935,9 +969,70 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GE
     return TRUE;
 }
 
+/* New on Nov 7: Equalizer */ 
+gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error)
+{
+    int i;
 
+    *preamp = (gdouble)equalizerwin_get_preamp();
+    *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), 10);
 
-/********************************************************************************/
+    for(i=0; i<10; i++){
+        gdouble val = (gdouble)equalizerwin_get_band(i);
+        g_array_append_val(*bands, val);
+    }
+
+    return TRUE;
+}
+
+gboolean audacious_rc_get_eq_preamp(RemoteObject *obj, gdouble *preamp, GError **error)
+{
+    *preamp = (gdouble)equalizerwin_get_preamp();
+    return TRUE;
+}
+
+gboolean audacious_rc_get_eq_band(RemoteObject *obj, gint band, gdouble *value, GError **error)
+{
+    *value = (gdouble)equalizerwin_get_band(band);
+    return TRUE;
+}
+
+gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, GError **error)
+{
+    gdouble element;
+    int i;
+    
+    equalizerwin_set_preamp((gfloat)preamp);
+
+    for (i = 0; i < 10; i++) {
+        element = g_array_index(bands, gdouble, i);
+        equalizerwin_set_band(i, (gfloat)element);
+    }
+    equalizerwin_eq_changed();
+
+    return TRUE;
+}
+
+gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error)
+{
+    equalizerwin_set_preamp((gfloat)preamp);
+    equalizerwin_eq_changed();
+    return TRUE;
+}
+
+gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error)
+{
+    equalizerwin_set_band(band, (gfloat)value);
+    equalizerwin_eq_changed();
+    return TRUE;
+}
+
+gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error)
+{
+    equalizer_activate(active);
+    return TRUE;
+}
+
 
 DBusGProxy *audacious_get_dbus_proxy(void)
 {

@@ -58,25 +58,27 @@ enum {
  */
 typedef struct {
     gchar *name;
-    gboolean isdeterministic;
-    gchar *(*func)(Tuple *tuple, gchar **argument);
-} TupleEvalFunc;
-
-
-typedef struct {
-    gchar *name;
     gboolean istemp;		/* Scope of variable - TRUE = temporary */
     gint type;			/* Type of variable, see VAR_* */
-    gchar *defval;		/* Defined value ${=foo,bar} */
+    gchar *defvals;		/* Defined value ${=foo,bar} */
+    gint defvali;
+    TupleValueType ctype;	/* Type of constant/def value */
 
     gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
     TupleValue *fieldref;	/* Cached tuple field ref */
 } TupleEvalVar;
 
 
+typedef struct {
+    gchar *name;
+    gboolean isdeterministic;
+    gchar *(*func)(Tuple *tuple, TupleEvalVar **argument);
+} TupleEvalFunc;
+
+
 typedef struct _TupleEvalNode {
     gint opcode;		/* operator, see OP_ enums */
-    gint var[TUP_MAX_VARS];	/* tuple / global variable references (perhaps hashes, or just indexes to a list?) */
+    gint var[TUP_MAX_VARS];	/* tuple / global variable references */
     gboolean global[TUP_MAX_VARS];
     gchar *text;		/* raw text, if any (OP_RAW) */
     gint function, expression;	/* for OP_FUNCTION and OP_EXPRESSION */
@@ -98,7 +100,7 @@ typedef struct {
 TupleEvalContext * tuple_evalctx_new(void);
 void tuple_evalctx_reset(TupleEvalContext *ctx);
 void tuple_evalctx_free(TupleEvalContext *ctx);
-gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type);
+gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type, const TupleValueType ctype);
 
 void tuple_evalnode_free(TupleEvalNode *expr);
 

@@ -586,6 +586,8 @@ struct _AudaciousFuncTableV1 {
     void (*dock_move_motion)(GtkWindow * w, GdkEventMotion * event);
     void (*dock_move_release)(GtkWindow * w);
     gboolean (*dock_is_moving)(GtkWindow * w);
+
+    GList *(*get_output_list)(void);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -923,6 +925,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_dock_move_release                   _audvt->dock_move_release
 #define aud_dock_is_moving                      _audvt->dock_is_moving
 
+#define aud_get_output_list			_audvt->get_output_list
+
 #include "audacious/auddrct.h"
 
 /* for multi-file plugins :( */
@@ -1067,7 +1071,7 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.1.0 */
     Tuple *(*get_song_tuple) (gchar * filename);
-    void (*set_song_tuple) (Tuple * tuple);
+    void (*set_song_tuple) (Tuple * tuple); /* stillborn, obsoleted by update_song_tuple, which must be used for tag writing */
     void (*set_status_buffering) (gboolean status);
 
     /* Added in Audacious 1.3.0 */
@@ -1077,6 +1081,25 @@ struct _InputPlugin {
     /* Added in Audacious 1.4.0 */
     void (*mseek) (InputPlayback * playback, gulong millisecond);
     Tuple *(*probe_for_tuple)(gchar *uri, VFSFile *fd);
+
+    /* Added in Audacious 1.4.1 */
+    gboolean have_subtune;
+
+    /* Added in Audacious 1.5.0 */
+    gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
+    /* 
+     * Plugin can provide this function for file metadata (aka tag) writing functionality
+     * in case when no reason to provide its own custom file info dialog. Thus in most cases.
+     *
+     * Some notes:
+     *
+     * 1. In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
+     * 2. Each field in tuple means operation on one and only one tag's filed:
+     *     2.1. Set this field to appropriate value, if non-empty string or positive number provided.
+     *     2.2. Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
+     *
+     * -- eugene.
+     */
 };
 
 struct _GeneralPlugin {

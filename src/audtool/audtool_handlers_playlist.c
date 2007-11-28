@@ -295,6 +295,7 @@ void playlist_jump(gint argc, gchar **argv)
 
 void playlist_clear(gint argc, gchar **argv)
 {
+	audacious_remote_stop(dbus_proxy);
 	audacious_remote_playlist_clear(dbus_proxy);
 }
 
@@ -339,16 +340,16 @@ void playlist_shuffle_toggle(gint argc, gchar **argv)
 void playlist_tuple_field_data(gint argc, gchar **argv)
 {
 	gint i;
-	gpointer data;
+	gchar *data;
 
 	if (argc < 3)
 	{
 		audtool_whine("invalid parameters for %s.", argv[0]);
 		audtool_whine("syntax: %s <fieldname> <position>", argv[0]);
-		audtool_whine("  - fieldname example choices: performer, album_name,");
-		audtool_whine("      track_name, track_number, year, date, genre, comment,");
-		audtool_whine("      file_name, file_ext, file_path, length, formatter,");
-		audtool_whine("      custom, mtime");
+		audtool_whine("  - fieldname example choices include but are not limited to:");
+		audtool_whine("      artist, album, title, track_number, year, date,");
+		audtool_whine("      genre, comment, file_name, file_ext, file_path,");
+		audtool_whine("      length, formatter, custom, mtime");
 		exit(1);
 	}
 
@@ -362,17 +363,10 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 
 	if (!(data = audacious_get_tuple_field_data(dbus_proxy, argv[1], i - 1)))
 	{
-		return; //XXX ??? --yaz
-	}
-	
-	if (!g_ascii_strcasecmp(argv[1], "track_number") || !g_ascii_strcasecmp(argv[1], "year") || !g_ascii_strcasecmp(argv[1], "length") || !g_ascii_strcasecmp(argv[1], "mtime"))
-	{
-		if (*(gint *)data > 0)
-		{
-			audtool_report("%d", *(gint *)data);
-		}
 		return;
 	}
+	
+	audtool_report("%s", data);
 
-	audtool_report("%s", (gchar *)data);
+	g_free(data);
 }

@@ -28,5 +28,6 @@
 
 extern void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
 extern void ui_jump_to_track(void);
+extern void ui_jump_to_track_hide(void);
 
 #endif

@@ -76,6 +76,7 @@ InputPluginData ip_data = {
 };
 
 static GList *vis_list = NULL;
+static int volume_l = -1, volume_r = -1;
 
 InputPlayback *
 get_current_input_playback(void)
@@ -306,6 +307,61 @@ input_get_mtime(const gchar *filename)
     }
 }
 
+
+/* do actual probing. this function is called from input_check_file() */
+static ProbeResult *
+input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolean loading)
+{
+    ProbeResult *pr = NULL;
+    gint result = 0;
+
+    g_return_val_if_fail(fd != NULL, NULL);
+
+    vfs_rewind(fd);
+
+    /* some input plugins provide probe_for_tuple() only. */
+    if ( (ip->probe_for_tuple && !ip->is_our_file_from_vfs && !ip->is_our_file) ||
+         (ip->probe_for_tuple && ip->have_subtune == TRUE) ||
+         (ip->probe_for_tuple && (cfg.use_pl_metadata && (!loading || (loading && cfg.get_info_on_load)))) ) {
+
+        Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
+
+        if (tuple != NULL) {
+            pr = g_new0(ProbeResult, 1);
+            pr->ip = ip;
+            pr->tuple = tuple;
+            tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
+
+            return pr;
+        }
+    }
+
+    else if (ip->is_our_file_from_vfs != NULL) {
+        result = ip->is_our_file_from_vfs(filename_proxy, fd);
+
+        if (result > 0) {
+            pr = g_new0(ProbeResult, 1);
+            pr->ip = ip;
+
+            return pr;
+        }
+    }
+
+    else if (ip->is_our_file != NULL) {
+        result = ip->is_our_file(filename_proxy);
+
+        if (result > 0) {
+            pr = g_new0(ProbeResult, 1);
+            pr->ip = ip;
+
+            return pr;
+        }
+    }
+
+    return NULL;
+}
+
+
 /*
  * input_check_file()
  *
@@ -341,9 +397,15 @@ input_get_mtime(const gchar *filename)
  * Adapted to return ProbeResult structure.
  *
  * --nenolod, Jul 20 2007
+ *
+ * Make use of ext_hash to avoid full scan in input list.
+ *
+ * --yaz, Nov 16 2007
  */
+
+/* if loading is TRUE, tuple probing can be skipped as regards configuration. */
 ProbeResult *
-input_check_file(const gchar * filename, gboolean show_warning)
+input_check_file(const gchar *filename, gboolean loading)
 {
     VFSFile *fd;
     GList *node;
@@ -351,31 +413,30 @@ input_check_file(const gchar * filename, gboolean show_warning)
     gchar *filename_proxy;
     gint ret = 1;
     gchar *ext, *tmp, *tmp_uri;
-    gboolean use_ext_filter;
+    gboolean use_ext_filter = FALSE;
     gchar *mimetype;
     ProbeResult *pr = NULL;
-
-    filename_proxy = g_strdup(filename);
+    GList **list_hdr = NULL;
+    extern GHashTable *ext_hash;
 
     /* Some URIs will end in ?<subsong> to determine the subsong requested. */
     tmp_uri = g_strdup(filename);
-
     tmp = strrchr(tmp_uri, '?');
 
-    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
+    if (tmp && g_ascii_isdigit(*(tmp + 1)))
         *tmp = '\0';
+
+    filename_proxy = g_strdup(tmp_uri);
+    g_free(tmp_uri);
 
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */
-    if ((ip = uri_get_plugin(filename)) != NULL && ip->enabled)
-    {
-        printf("Offering '%s' to %s, based on special URL scheme\n", filename, ip->description);
+    if ((ip = uri_get_plugin(filename_proxy)) != NULL && ip->enabled) {
         if (ip->is_our_file != NULL)
             ret = ip->is_our_file(filename_proxy);
         else
             ret = 0;
-        if (ret > 0)
-        {
+        if (ret > 0) {
             g_free(filename_proxy);
             pr = g_new0(ProbeResult, 1);
             pr->ip = ip;
@@ -385,8 +446,9 @@ input_check_file(const gchar * filename, gboolean show_warning)
         return NULL;
     }
 
-    fd = vfs_buffered_file_new_from_uri(tmp_uri);
-    g_free(tmp_uri);
+
+    // open the file with vfs sub-system
+    fd = vfs_buffered_file_new_from_uri(filename_proxy);
 
     if (!fd) {
         printf("Unable to read from %s, giving up.\n", filename_proxy);
@@ -394,152 +456,90 @@ input_check_file(const gchar * filename, gboolean show_warning)
         return NULL;
     }
 
-    ext = strrchr(filename_proxy, '.') + 1;
 
-    use_ext_filter =
-        (fd != NULL && (!g_strncasecmp(filename, "/", 1) ||
-                        !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
-
+    // apply mimetype check. note that stdio does not support mimetype check.
     mimetype = vfs_get_metadata(fd, "content-type");
-    if ((ip = mime_get_plugin(mimetype)) != NULL && ip->enabled)
-    {
-        printf("Offering '%s' to %s, based on mime-type\n", filename, ip->description);
-        if (ip->probe_for_tuple != NULL)
-        {
-            Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
+    if ((ip = mime_get_plugin(mimetype)) != NULL && ip->enabled) {
+        while(1) {
+            if (!ip || !ip->enabled)
+                continue;
 
-            if (tuple != NULL)
-            {
+            pr = input_do_check_file(ip, fd, filename_proxy, loading);
+
+            if(pr) {
                 g_free(filename_proxy);
                 vfs_fclose(fd);
-
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-                pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
-
-                return pr;
-            }
-        }
-        else if (fd && ip->is_our_file_from_vfs != NULL)
-        {
-            ret = ip->is_our_file_from_vfs(filename_proxy, fd);
-
-            if (ret > 0)
-            {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-
-                return pr;
-            }
-        }
-        else if (ip->is_our_file != NULL)
-        {
-            ret = ip->is_our_file(filename_proxy);
-
-            if (ret > 0)
-            {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-
                 return pr;
             }
         }
     }
 
-    for (node = get_input_list(); node != NULL; node = g_list_next(node))
-    {
+
+    // apply ext_hash check
+    if(cfg.use_extension_probing) {
+        use_ext_filter =
+            (fd && (!g_strncasecmp(filename_proxy, "/", 1) ||
+                    !g_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
+    }
+
+    if(use_ext_filter) {
+        gchar *base, *lext;
+        gchar *tmp2 = g_filename_from_uri(filename_proxy, NULL, NULL);
+        gchar *realfn = g_strdup(tmp2 ? tmp2 : filename_proxy);
+        g_free(tmp2);
+
+        base = g_path_get_basename(realfn);
+        g_free(realfn);
+        ext = strrchr(base, '.');
+    
+        if(ext) {
+            lext = g_ascii_strdown(ext+1, -1);
+            list_hdr = g_hash_table_lookup(ext_hash, lext);
+            g_free(lext);
+        }
+        g_free(base);
+
+        if(list_hdr) {
+            for(node = *list_hdr; node != NULL; node = g_list_next(node)) {
+                ip = INPUT_PLUGIN(node->data);
+
+                if (!ip || !ip->enabled)
+                    continue;
+
+                pr = input_do_check_file(ip, fd, filename_proxy, loading);
+
+                if(pr) {
+                    g_free(filename_proxy);
+                    vfs_fclose(fd);
+                    return pr;
+                }
+            }
+        }
+
+        return NULL; // no plugin found.
+    }
+
+
+    // do full scan when extension match isn't specified.
+    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
 
         if (!ip || !ip->enabled)
             continue;
 
-        printf("Offering '%s' to %s\n", filename, ip->description);
+        pr = input_do_check_file(ip, fd, filename_proxy, loading);
 
-        vfs_rewind(fd);
-
-        if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL &&
-            ext != NULL && ext != (gpointer) 0x1 && use_ext_filter == TRUE)
-        {
-            gint i;
-            gboolean is_our_ext = FALSE;
-
-            for (i = 0; ip->vfs_extensions[i] != NULL; i++)
-            {
-                if (str_has_prefix_nocase(ext, ip->vfs_extensions[i]))
-                {
-                    is_our_ext = TRUE;
-                    break;
-                }
-            }
-
-            /* not a plugin that supports this extension */
-            if (is_our_ext == FALSE) 
-                continue;
+        if(pr) {
+            g_free(filename_proxy);
+            vfs_fclose(fd);
+            return pr;
         }
-
-        if (fd && ip->probe_for_tuple != NULL)
-        {
-            Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
-
-            if (tuple != NULL)
-            {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-                pr->tuple = tuple;
-                tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
-
-                return pr;
-            }
-        }
-        else if (fd && ip->is_our_file_from_vfs != NULL)
-        {
-            ret = ip->is_our_file_from_vfs(filename_proxy, fd);
-
-            if (ret > 0)
-            {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-
-                return pr;
-            }
-        }
-        else if (ip->is_our_file != NULL)
-        {
-            ret = ip->is_our_file(filename_proxy);
-
-            if (ret > 0)
-            {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-
-                pr = g_new0(ProbeResult, 1);
-                pr->ip = ip;
-
-                return pr;
-            }
-        }
-
-        if (ret <= -1)
-            break;
     }
 
+
+    // all probing failed. return NULL
     g_free(filename_proxy);
-
     vfs_fclose(fd);
-
     return NULL;
 }
 
@@ -753,17 +753,11 @@ input_scan_dir(const gchar * path)
 void
 input_get_volume(gint * l, gint * r)
 {
-    InputPlayback *playback;
+    if (volume_l == -1 || volume_r == -1)
+	output_get_volume(&volume_l, &volume_r);
 
-    *l = -1;
-    *r = -1;
-    if (playback_get_playing()) {
-        if ((playback = get_current_input_playback()) != NULL &&
-            playback->plugin->get_volume &&
-            playback->plugin->get_volume(l, r))
-            return;
-    }
-    output_get_volume(l, r);
+    *l = volume_l;
+    *r = volume_r;
 }
 
 void
@@ -784,6 +778,9 @@ input_set_volume(gint l, gint r)
         return;
 
     output_set_volume(l, r);
+
+    volume_l = l;
+    volume_r = r;
 }
 
 void

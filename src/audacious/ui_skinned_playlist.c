@@ -72,7 +72,6 @@ enum {
 };
 
 struct _UiSkinnedPlaylistPrivate {
-    GtkWidget        *fixed;
     SkinPixmapId     skin_index;
     gint             width, height;
     gint             resize_width, resize_height;
@@ -179,10 +178,9 @@ GtkWidget* ui_skinned_playlist_new(GtkWidget *fixed, gint x, gint y, gint w, gin
     hs->y = y;
     priv->width = w;
     priv->height = h;
-    priv->fixed = fixed;
     priv->skin_index = SKIN_PLEDIT;
 
-    gtk_fixed_put(GTK_FIXED(priv->fixed), GTK_WIDGET(hs), hs->x, hs->y);
+    gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(hs), hs->x, hs->y);
 
     return GTK_WIDGET(hs);
 }
@@ -870,12 +868,10 @@ static gboolean ui_skinned_playlist_button_press(GtkWidget *widget, GdkEventButt
 static gboolean ui_skinned_playlist_button_release(GtkWidget *widget, GdkEventButton *event) {
     UiSkinnedPlaylistPrivate *priv = UI_SKINNED_PLAYLIST_GET_PRIVATE(widget);
 
-    if (event->button == 1) {
-        priv->dragging = FALSE;
-        priv->auto_drag_down = FALSE;
-        priv->auto_drag_up = FALSE;
-        gtk_widget_queue_draw(widget);
-    }
+    priv->dragging = FALSE;
+    priv->auto_drag_down = FALSE;
+    priv->auto_drag_up = FALSE;
+    gtk_widget_queue_draw(widget);
 
     ui_skinned_playlist_popup_hide(widget);
     ui_skinned_playlist_popup_timer_stop(widget);

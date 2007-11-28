@@ -207,8 +207,8 @@ BmpConfig bmp_default_config = {
     TRUE,                       /* show seperators in pl */
     NULL,           /* chardet_detector */
     NULL,           /* chardet_fallback */
-    500,           /* audio buffer size */
-    FALSE,          /* whether or not to postpone format detection on initial add */
+    500,            /* audio buffer size */
+    TRUE,           /* whether or not to postpone format detection on initial add */
     TRUE,           /* show filepopup for tuple */
     NULL,           /* words identifying covers */
     NULL,           /* words that might not show up in cover names */
@@ -226,6 +226,8 @@ BmpConfig bmp_default_config = {
     TRUE,           /* close jtf dialog on jump */
     TRUE,           /* use back and forth scroll */
     FALSE,          /* use software volume control */
+    .warn_about_broken_gtk_engines = TRUE,           /* warn about broken gtk themes */
+    FALSE,          /* disable inline themes */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -334,6 +336,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
     {"twoway_scroll", &cfg.twoway_scroll, TRUE},
     {"software_volume_control", &cfg.software_volume_control, TRUE},
+    {"warn_about_broken_gtk_engines", &cfg.warn_about_broken_gtk_engines, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -1203,10 +1206,10 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             audacious_remote_activate(session);
 
         exit(EXIT_SUCCESS);
-    }
+    } /* is_running */
     else
 #endif
-    {
+    { /* !is_running */
         if (filenames != NULL)
         {
             gint pos = 0;
@@ -1294,7 +1297,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->activate)
             drct_activate();
-    }
+    } /* !is_running */
 }
 
 static void
@@ -1463,9 +1466,15 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
+      ui_main_check_theme_engine();
+
+      /* register icons in stock
+         NOTE: should be called before UIManager */
+      register_aud_stock_icons();
+
       /* UIManager
          NOTE: this needs to be called before plugin init, cause
-         plugin init functions may want to add custom menu entries */ 
+         plugin init functions may want to add custom menu entries */
       ui_manager_init();
       ui_manager_create_menus();
     }
@@ -1486,9 +1495,6 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
-        /* register icons in stock */
-        register_aud_stock_icons();
-
         bmp_set_default_icon();
 #ifdef GDK_WINDOWING_QUARTZ
         set_dock_icon();

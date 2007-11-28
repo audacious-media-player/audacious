@@ -184,9 +184,10 @@ gboolean audacious_rc_shuffle(RemoteObject *obj, gboolean *is_shuffle,
 gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error);
 
 /* new */
-gboolean audacious_rc_show_prefs_box(RemoteObject *obj, GError **error);
-gboolean audacious_rc_show_about_box(RemoteObject *obj, GError **error);
-gboolean audacious_rc_show_jtf_box(RemoteObject *obj, GError **error);
+gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **error);
+gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **error);
+gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error);
+gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError **error); //new Nov 8
 gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error);
 gboolean audacious_rc_activate(RemoteObject *obj, GError **error);
 gboolean audacious_rc_queue_get_list_pos(RemoteObject *obj, gint qpos, gint *pos, GError **error);
@@ -201,10 +202,16 @@ gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **err
 gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
 gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error);
 gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint pos, GError **error);
-
-
-/* in progress */
-gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
 gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error);
+gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
+
+/* new on nov 7 */
+gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error);
+gboolean audacious_rc_get_eq_preamp(RemoteObject *obj, gdouble *preamp, GError **error);
+gboolean audacious_rc_get_eq_band(RemoteObject *obj, gint band, gdouble *value, GError **error);
+gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, GError **error);
+gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error);
+gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error);
+gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error);
 
 #endif // !_DBUS_SERVICE_H

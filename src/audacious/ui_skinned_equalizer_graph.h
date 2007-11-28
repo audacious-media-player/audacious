@@ -46,7 +46,6 @@ struct _UiSkinnedEqualizerGraph {
 
     gint             x, y, width, height;
     SkinPixmapId     skin_index;
-    GtkWidget        *fixed;
     gboolean         double_size;
 };
 
