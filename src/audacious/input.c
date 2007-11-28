@@ -369,6 +369,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     /* cue:// cdda:// tone:// tact:// */
     if ((ip = uri_get_plugin(filename)) != NULL && ip->enabled)
     {
+        printf("Offering '%s' to %s, based on special URL scheme\n", filename, ip->description);
         if (ip->is_our_file != NULL)
             ret = ip->is_our_file(filename_proxy);
         else
@@ -402,6 +403,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     mimetype = vfs_get_metadata(fd, "content-type");
     if ((ip = mime_get_plugin(mimetype)) != NULL && ip->enabled)
     {
+        printf("Offering '%s' to %s, based on mime-type\n", filename, ip->description);
         if (ip->probe_for_tuple != NULL)
         {
             Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
@@ -457,6 +459,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
         if (!ip || !ip->enabled)
             continue;
+
+        printf("Offering '%s' to %s\n", filename, ip->description);
 
         vfs_rewind(fd);
 

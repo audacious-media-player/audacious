@@ -494,6 +494,7 @@ struct id3_file *id3_file_vfsopen(VFSFile *iofile, enum id3_file_mode mode)
   file = new_file(iofile, mode, path);
   if (file == 0){
     printf("id3_file_vfsopen: file failed\n");
+    aud_vfs_fclose(iofile);
   }
 
   aud_vfs_fseek(iofile, curpos, SEEK_SET);
