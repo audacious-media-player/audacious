@@ -588,6 +588,8 @@ struct _AudaciousFuncTableV1 {
     gboolean (*dock_is_moving)(GtkWindow * w);
 
     GList *(*get_output_list)(void);
+
+    void (*input_get_volume)(gint * l, gint * r);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -926,6 +928,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_dock_is_moving                      _audvt->dock_is_moving
 
 #define aud_get_output_list			_audvt->get_output_list
+
+#define aud_input_get_volume			_audvt->input_get_volume
 
 #include "audacious/auddrct.h"
 
