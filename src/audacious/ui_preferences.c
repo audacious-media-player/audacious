@@ -165,7 +165,7 @@ CategoryQueueEntry *category_queue = NULL;
 
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
-#define gettext_noop(String) String
+#define N_(String) String
 
 enum WidgetTypes {
     WIDGET_NONE,
@@ -176,80 +176,67 @@ enum WidgetTypes {
     WIDGET_CHARDET_TABLE     /* 'fixed' widget, not for reuse */
 };
 
-typedef struct preferences_widgets_t {
+typedef struct preferences_widget_ {
     gint type;               /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
     gboolean *cfg;           /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
     gboolean child;
-} preferences_widgets;
+} preferences_widget_t;
 
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
 
-static preferences_widgets apperance_misc_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
+static preferences_widget_t apperance_misc_widgets[] = {
+    {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
      G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Show separators in playlist"), &cfg.show_separator_in_pl,
+    {WIDGET_CHK_BTN, N_("Show separators in playlist"), &cfg.show_separator_in_pl,
      G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
-     gettext_noop("This enables the window manager to show decorations for windows."), FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 
-     gettext_noop("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
-     gettext_noop("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
+    {WIDGET_CHK_BTN, N_("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
+     N_("This enables the window manager to show decorations for windows."), FALSE},
+    {WIDGET_CHK_BTN, N_("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 
+     N_("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
+    {WIDGET_CHK_BTN, N_("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
+     N_("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
 };
 
-static preferences_widgets audio_page_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
-     gettext_noop("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
-     gettext_noop("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
-    {WIDGET_LABEL, gettext_noop("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
-     gettext_noop("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
-     gettext_noop("When finished playing a song, don't automatically advance to the next."), FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
-    {WIDGET_SPIN_BTN, gettext_noop("Pause for"), &cfg.pause_between_songs_time, NULL, gettext_noop("seconds"), TRUE},
+static preferences_widget_t audio_page_widgets[] = {
+    {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
+     N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
+    {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
+     N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
+    {WIDGET_LABEL, N_("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
+     N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
+    {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
+     N_("When finished playing a song, don't automatically advance to the next."), FALSE},
+    {WIDGET_CHK_BTN, N_("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
+    {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, N_("seconds"), TRUE},
 };
 
-static preferences_widgets playlist_page_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
-    {WIDGET_LABEL, gettext_noop("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, gettext_noop("Load metadata (tag information) from music files."), FALSE},
-    {WIDGET_RADIO_BTN, gettext_noop("On load"), &cfg.get_info_on_load, NULL, gettext_noop("Load metadata when adding the file to the playlist or opening it"), TRUE},
-    {WIDGET_RADIO_BTN, gettext_noop("On display"), &cfg.get_info_on_demand, NULL, gettext_noop("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), TRUE},
+static preferences_widget_t playlist_page_widgets[] = {
+    {WIDGET_LABEL, N_("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
+    {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, N_("Load metadata (tag information) from music files."), FALSE},
+    {WIDGET_RADIO_BTN, N_("On load"), &cfg.get_info_on_load, NULL, N_("Load metadata when adding the file to the playlist or opening it"), TRUE},
+    {WIDGET_RADIO_BTN, N_("On display"), &cfg.get_info_on_demand, NULL, N_("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), TRUE},
     {WIDGET_CHARDET_TABLE, NULL, NULL, NULL, NULL, TRUE},
-    {WIDGET_LABEL, gettext_noop("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, gettext_noop("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, gettext_noop("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
+    {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
 
-static preferences_widgets mouse_page_widgets[] = {
-    {WIDGET_LABEL, gettext_noop("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_SPIN_BTN, gettext_noop("Changes volume by"), &cfg.mouse_change, NULL, gettext_noop("percent"), FALSE},
-    {WIDGET_SPIN_BTN, gettext_noop("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, gettext_noop("lines"), FALSE},
+static preferences_widget_t mouse_page_widgets[] = {
+    {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, N_("percent"), FALSE},
+    {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, N_("lines"), FALSE},
 };
-
-/* GLib 2.6 compatibility */
-#if (! ((GLIB_MAJOR_VERSION > 2) || ((GLIB_MAJOR_VERSION == 2) && (GLIB_MINOR_VERSION >= 8))))
-static const char *
-g_get_host_name (void)
-{
-    static char hostname [HOST_NAME_MAX + 1];
-    if (gethostname (hostname, HOST_NAME_MAX) == -1) {
-        return _("localhost");
-    }
-    return hostname;
-}
-#endif
 
 static void create_colorize_settings(void);
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
@@ -1639,7 +1626,7 @@ create_filepopup_settings(void)
 
 /* it's at early stage */
 static void
-create_widgets(GtkBox *box, preferences_widgets* widgets, gint amt)
+create_widgets(GtkBox *box, preferences_widget_t* widgets, gint amt)
 {
     int x;
     GtkWidget *alignment = NULL, *widget = NULL;
