@@ -170,7 +170,7 @@ typedef enum {
     WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
 } WidgetType;
 
-typedef struct preferences_widget_ {
+typedef struct {
     WidgetType type;         /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
     gboolean *cfg;           /* connected config value */
@@ -178,13 +178,13 @@ typedef struct preferences_widget_ {
     char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
     gboolean child;
     GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
-} preferences_widget_t;
+} PreferencesWidget;
 
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
 
-static preferences_widget_t apperance_misc_widgets[] = {
+static PreferencesWidget apperance_misc_widgets[] = {
     {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
      G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
@@ -199,7 +199,7 @@ static preferences_widget_t apperance_misc_widgets[] = {
      N_("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
 };
 
-static preferences_widget_t audio_page_widgets[] = {
+static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
      N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
@@ -214,7 +214,7 @@ static preferences_widget_t audio_page_widgets[] = {
     {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, N_("seconds"), TRUE},
 };
 
-static preferences_widget_t playlist_page_widgets[] = {
+static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
@@ -228,7 +228,7 @@ static preferences_widget_t playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
 
-static preferences_widget_t mouse_page_widgets[] = {
+static PreferencesWidget mouse_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, N_("percent"), FALSE},
     {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, N_("lines"), FALSE},
@@ -1666,7 +1666,7 @@ ui_preferences_chardet_table_populate(void)
 
 /* it's at early stage */
 static void
-create_widgets(GtkBox *box, preferences_widget_t* widgets, gint amt)
+create_widgets(GtkBox *box, PreferencesWidget* widgets, gint amt)
 {
     int x;
     GtkWidget *alignment = NULL, *widget = NULL;
