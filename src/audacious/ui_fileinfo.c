@@ -599,7 +599,7 @@ create_fileinfo_window(void)
     gtk_box_pack_start(GTK_BOX(hbox_status_and_bbox), bbox_close, FALSE, FALSE, 0);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox_close), GTK_BUTTONBOX_END);
 
-    btn_apply = gtk_button_new_from_stock("gtk-apply");
+    btn_apply = gtk_button_new_from_stock("gtk-save");
     gtk_container_add(GTK_CONTAINER(bbox_close), btn_apply);
     g_signal_connect(G_OBJECT(btn_apply), "clicked", (GCallback) fileinfo_update_tuple, NULL);
     gtk_widget_set_sensitive(btn_apply, FALSE);
