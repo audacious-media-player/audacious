@@ -92,8 +92,7 @@ typedef struct {
 typedef struct {
     const gchar *name;
     const gchar *tag;
-}
-TitleFieldTag;
+} TitleFieldTag;
 
 static GtkWidget *prefswin = NULL;
 static GtkWidget *filepopup_settings = NULL;
@@ -162,28 +161,28 @@ CategoryQueueEntry *category_queue = NULL;
 
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
-#define N_(String) String
-
-enum WidgetTypes {
+typedef enum {
     WIDGET_NONE,
     WIDGET_CHK_BTN,
     WIDGET_LABEL,
     WIDGET_RADIO_BTN,
     WIDGET_SPIN_BTN,
-    WIDGET_CHARDET_TABLE     /* 'fixed' widget, not for reuse */
-};
+    WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
+} WidgetType;
 
 typedef struct preferences_widget_ {
-    gint type;               /* widget type */
+    WidgetType type;         /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
     gboolean *cfg;           /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
     gboolean child;
+    GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
 } preferences_widget_t;
 
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
+GtkWidget *ui_preferences_chardet_table_populate(void);
 
 static preferences_widget_t apperance_misc_widgets[] = {
     {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
@@ -224,7 +223,7 @@ static preferences_widget_t playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, N_("Load metadata (tag information) from music files."), FALSE},
     {WIDGET_RADIO_BTN, N_("On load"), &cfg.get_info_on_load, NULL, N_("Load metadata when adding the file to the playlist or opening it"), TRUE},
     {WIDGET_RADIO_BTN, N_("On display"), &cfg.get_info_on_demand, NULL, N_("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), TRUE},
-    {WIDGET_CHARDET_TABLE, NULL, NULL, NULL, NULL, TRUE},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_chardet_table_populate},
     {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
@@ -1621,6 +1620,50 @@ create_filepopup_settings(void)
     gtk_widget_show_all(vbox);
 }
 
+GtkWidget *
+ui_preferences_chardet_table_populate(void)
+{
+    GtkWidget *widget = gtk_table_new(2, 2, FALSE);
+    GtkWidget *label;
+
+    label = gtk_label_new(_("Auto character encoding detector for:"));
+    gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 0, 1,
+        (GtkAttachOptions) (0),
+        (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+
+    GtkWidget *combobox = gtk_combo_box_new_text();
+    gtk_table_attach(GTK_TABLE(widget), combobox, 1, 2, 0, 1,
+        (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+        (GtkAttachOptions) (0), 0, 0);
+    g_signal_connect_after(G_OBJECT(combobox), "realize",
+              G_CALLBACK(on_chardet_detector_cbox_realize),
+              NULL);
+
+    GtkWidget *entry = gtk_entry_new();
+    gtk_table_attach(GTK_TABLE(widget), entry, 1, 2, 1, 2,
+        (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+        (GtkAttachOptions) (0), 0, 0);
+    gtk_tooltips_set_tip (tooltips, entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
+
+    label = gtk_label_new(_("Fallback character encodings:"));
+    gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 1, 2,
+        (GtkAttachOptions) (0),
+        (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
+    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(on_chardet_fallback_changed),
+        NULL);
+    g_signal_connect_after(G_OBJECT(entry), "realize",
+        G_CALLBACK(on_chardet_fallback_realize),
+        NULL);
+
+    return widget;
+}
+
 /* it's at early stage */
 static void
 create_widgets(GtkBox *box, preferences_widget_t* widgets, gint amt)
@@ -1723,44 +1766,11 @@ create_widgets(GtkBox *box, preferences_widget_t* widgets, gint amt)
                                   G_CALLBACK(on_spin_btn_realize),
                                   widgets[x].cfg);
                  break;
-             case WIDGET_CHARDET_TABLE:
-                 widget = gtk_table_new(2, 2, FALSE);
-                 GtkWidget *label;
-
-                 label = gtk_label_new(_("Auto character encoding detector for:"));
-                 gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 0, 1,
-                                  (GtkAttachOptions) (0),
-                                  (GtkAttachOptions) (0), 0, 0);
-                 gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
-                 gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-
-                 GtkWidget *combobox = gtk_combo_box_new_text();
-                 gtk_table_attach(GTK_TABLE(widget), combobox, 1, 2, 0, 1,
-                                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                                  (GtkAttachOptions) (0), 0, 0);
-                 g_signal_connect_after(G_OBJECT(combobox), "realize",
-                                        G_CALLBACK(on_chardet_detector_cbox_realize),
-                                        NULL);
-
-                 GtkWidget *entry = gtk_entry_new();
-                 gtk_table_attach(GTK_TABLE(widget), entry, 1, 2, 1, 2,
-                                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                                  (GtkAttachOptions) (0), 0, 0);
-                 gtk_tooltips_set_tip (tooltips, entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
-
-                 label = gtk_label_new(_("Fallback character encodings:"));
-                 gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 1, 2,
-                                  (GtkAttachOptions) (0),
-                                  (GtkAttachOptions) (0), 0, 0);
-                 gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
-                 gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-
-                 g_signal_connect(G_OBJECT(entry), "changed",
-                                  G_CALLBACK(on_chardet_fallback_changed),
-                                  NULL);
-                 g_signal_connect_after(G_OBJECT(entry), "realize",
-                                  G_CALLBACK(on_chardet_fallback_realize),
-                                  NULL);
+             case WIDGET_CUSTOM:  /* custom widget. --nenolod */
+                 if (widgets[x].populate)
+                     widget = widgets[x].populate();
+                 else
+                     widget = NULL;
 
                  break;
              default:
@@ -1770,7 +1780,7 @@ create_widgets(GtkBox *box, preferences_widget_t* widgets, gint amt)
 
          if (widget && !gtk_widget_get_parent(widget))
              gtk_container_add(GTK_CONTAINER(alignment), widget);
-         if (widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
+         if (widget && widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
              gtk_tooltips_set_tip(tooltips, widget, _(widgets[x].tooltip), NULL);
     }
 
