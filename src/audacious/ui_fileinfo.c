@@ -287,7 +287,7 @@ fileinfo_update_tuple(gpointer data)
             tuple = tuple_new();
             fd = vfs_fopen(current_file, "r+b");
 
-            if (fd != NULL) {
+            if (fd != NULL && !vfs_is_streaming(fd)) {
                 set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
                 set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
                 set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
