@@ -118,35 +118,34 @@ INCLUDES = auddrct.h		\
 	   vfs_buffered_file.h	\
 	   xconvert.h
 
-DATA = images/about-logo.png			\
-       images/appearance.png			\
-       images/audacious_eq.xpm			\
-       images/audacious_player.xpm		\
+DATA = images/about-logo.png				\
+       images/appearance.png				\
+       images/audacious_eq.xpm				\
+       images/audacious_player.xpm			\
        images/audacious_playlist.xpm		\
-       images/audio.png				\
-       images/connectivity.png			\
-       images/eq.png				\
-       images/info.png				\
+       images/audio.png						\
+       images/connectivity.png				\
+       images/info.png						\
        images/menu_invert_playlist.png		\
-       images/menu_queue_toggle.png		\
+       images/menu_queue_toggle.png			\
        images/menu_randomize_playlist.png	\
-       images/menu_remove_dups.png		\
+       images/menu_remove_dups.png			\
        images/menu_remove_unavail.png		\
-       images/menu_select_all.png		\
+       images/menu_select_all.png			\
        images/menu_select_invert.png		\
-       images/menu_select_none.png		\
-       images/menu_sort_artist.png		\
+       images/menu_select_none.png			\
+       images/menu_sort_artist.png			\
        images/menu_sort_filename.png		\
        images/menu_sort_pathfile.png		\
-       images/menu_sort_title.png		\
-       images/mouse.png				\
-       images/pl.png				\
-       images/play.png				\
-       images/playlist.png			\
-       images/plugins.png			\
-       ui/equalizer.ui				\
-       ui/mainwin.ui				\
-       ui/playlist.ui				\
+       images/menu_sort_title.png			\
+       images/mouse.png						\
+       images/pl.png						\
+       images/play.png						\
+       images/playlist.png					\
+       images/plugins.png					\
+       ui/equalizer.ui						\
+       ui/mainwin.ui						\
+       ui/playlist.ui						\
        ui/carbon-menubar.ui
 
 CLEAN = build_stamp.c libaudacious.exe.a
