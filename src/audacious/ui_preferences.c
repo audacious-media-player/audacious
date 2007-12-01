@@ -1122,7 +1122,7 @@ on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
     guint i=0,index=0;
 
     for(i=0; i<n_chardet_detector_presets; i++) {
-        gtk_combo_box_append_text(combobox, chardet_detector_presets[i]);
+        gtk_combo_box_append_text(combobox, _(chardet_detector_presets[i]));
     }
 
     db = cfg_db_open();

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-11-30 13:57+0100\n"
+"POT-Creation-Date: 2007-12-01 12:06+0100\n"
 "PO-Revision-Date: 2007-10-14 22:22+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -48,6 +48,57 @@ msgstr "ログファイル (%s) を作成できません!\n"
 #: src/audacious/ui_main.c:2524
 msgid "Audacious"
 msgstr "Audacious"
+
+#: src/audacious/main.c:263
+msgid "None"
+msgstr ""
+
+#: src/audacious/main.c:264
+#, fuzzy
+msgid "Japanese"
+msgstr "日本語:"
+
+#: src/audacious/main.c:265
+#, fuzzy
+msgid "Taiwanese"
+msgstr "日本語:"
+
+#: src/audacious/main.c:266
+#, fuzzy
+msgid "Chinese"
+msgstr "ライン"
+
+#: src/audacious/main.c:267
+#, fuzzy
+msgid "Korean"
+msgstr "朝鮮語:"
+
+#: src/audacious/main.c:268
+#, fuzzy
+msgid "Russian"
+msgstr "ロシア語:"
+
+#: src/audacious/main.c:269
+#, fuzzy
+msgid "Greek"
+msgstr "ギリシア語:"
+
+#: src/audacious/main.c:270
+msgid "Hebrew"
+msgstr ""
+
+#: src/audacious/main.c:271
+#, fuzzy
+msgid "Turkish"
+msgstr "トルコ語:"
+
+#: src/audacious/main.c:272
+msgid "Arabic"
+msgstr ""
+
+#: src/audacious/main.c:274
+msgid "Universal"
+msgstr ""
 
 #: src/audacious/main.c:480
 #, c-format
@@ -496,23 +547,23 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">位置</span>"
 
 #: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:141
 msgid "Title"
 msgstr "タイトル"
 
-#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:140
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:139
 msgid "Artist"
 msgstr "アーティスト"
 
-#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:141
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:140
 msgid "Album"
 msgstr "アルバム名"
 
-#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:144
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:143
 msgid "Genre"
 msgstr "ジャンル"
 
-#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:148
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:147
 msgid "Year"
 msgstr "制作年"
 
@@ -524,8 +575,8 @@ msgstr "トラック番号"
 msgid "Track Length"
 msgstr "トラックの長さ:"
 
-#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:145
-#: src/audacious/ui_preferences.c:427
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:426
 msgid "Filename"
 msgstr "ファイル名"
 
@@ -961,7 +1012,7 @@ msgid "Peaks Falloff"
 msgstr "ピーク フォールオフ"
 
 #: src/audacious/ui_manager.c:203 src/audacious/ui_playlist_manager.c:402
-#: src/audacious/ui_preferences.c:133 src/audacious/ui_preferences.c:2424
+#: src/audacious/ui_preferences.c:132 src/audacious/ui_preferences.c:2434
 msgid "Playlist"
 msgstr "プレイリスト"
 
@@ -1500,83 +1551,83 @@ msgstr "エントリ"
 msgid "_Rename"
 msgstr "リネーム(_R)"
 
-#: src/audacious/ui_preferences.c:128 src/audacious/ui_preferences.c:2309
+#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:2319
 msgid "Appearance"
 msgstr "外観"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:128
 msgid "Audio"
 msgstr "オーディオ"
 
-#: src/audacious/ui_preferences.c:130
+#: src/audacious/ui_preferences.c:129
 msgid "Connectivity"
 msgstr "接続"
 
-#: src/audacious/ui_preferences.c:131 src/audacious/ui_preferences.c:2479
+#: src/audacious/ui_preferences.c:130 src/audacious/ui_preferences.c:2489
 msgid "Equalizer"
 msgstr "イコライザ"
 
-#: src/audacious/ui_preferences.c:132 src/audacious/ui_preferences.c:2320
+#: src/audacious/ui_preferences.c:131 src/audacious/ui_preferences.c:2330
 msgid "Mouse"
 msgstr "マウス"
 
-#: src/audacious/ui_preferences.c:134 src/audacious/ui_preferences.c:2183
+#: src/audacious/ui_preferences.c:133 src/audacious/ui_preferences.c:2193
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:142
 msgid "Tracknumber"
 msgstr "トラック番号"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:145
 msgid "Filepath"
 msgstr "パス名"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:146
 msgid "Date"
 msgstr "日付"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:148
 msgid "Comment"
 msgstr "コメント"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:149
 msgid "Codec"
 msgstr "コーデック"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:150
 msgid "Quality"
 msgstr "音質"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:188
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>その他(_M)</b>"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:189
 msgid "Show track numbers in playlist"
 msgstr "プレイリストにトラック番号を表示する"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:191
 msgid "Show separators in playlist"
 msgstr "プレイリストの区切り線を表示する"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:193
 msgid "Use custom cursors"
 msgstr "カスタムカーソルを使用する"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:194
 msgid "Show window manager decoration"
 msgstr "ウィンドウマネージャ装飾を表示する"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:195
 msgid "This enables the window manager to show decorations for windows."
 msgstr "ウィンドウマネージャによるウィンドウ装飾を有効にします."
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:196
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr "デフォルトのセレクタの代わりに XMMS スタイルのファイルセレクタを使う"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:197
 msgid ""
 "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
 "provided by Audacious itself and is faster than the default GTK2 selector "
@@ -1586,11 +1637,11 @@ msgstr ""
 "Audacious 自身が提供し, GTK2 デフォルトのセレクタより高速です. (ただし, 悲し"
 "いことにユーザフレンドリではありません)"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:198
 msgid "Use two-way text scroller"
 msgstr "双方向テキストスクロールを使う"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:199
 msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
@@ -1598,15 +1649,15 @@ msgstr ""
 "これを使うと，メインウィンドウのファイル情報テキストが前後にスクロールしま"
 "す．そうでなければ，テキストは一方向のみにスクロールします．"
 
-#: src/audacious/ui_preferences.c:204
+#: src/audacious/ui_preferences.c:203
 msgid "<b>Format Detection</b>"
 msgstr "<b>フォーマットの検出</b>"
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:204
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "ファイルフォーマットをすぐにではなく要求に応じて検出する"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:205
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
@@ -1614,11 +1665,11 @@ msgstr ""
 "有効ならば, Audacious はファイルフォーマットを要求に応じて検出します. プレイ"
 "リストが汚くなってしまいますが, 速度は大いに早くなります."
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:206
 msgid "Detect file formats by extension."
 msgstr "ファイルフォーマットを拡張子で検出する"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:207
 #, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
@@ -1628,84 +1679,84 @@ msgstr ""
 "は要求に応じて検出するよりやや遅いですが, それでも最低限のフォーマット検出を"
 "提供します."
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:208
 msgid "<b>Playback</b>"
 msgstr "<b>再生</b>"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:209
 msgid "Continue playback on startup"
 msgstr "起動時に再生を続ける"
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:210
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
 "Audacious が開始したとき, 以前停止した位置から自動的に演奏を開始します."
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:211
 msgid "Don't advance in the playlist"
 msgstr "プレイリストの次の曲へ進めない"
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:212
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "曲の演奏が終了したら, 次の曲を自動的に演奏しません."
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:213
 msgid "Pause between songs"
 msgstr "曲の間に一時停止する"
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:214
 msgid "Pause for"
 msgstr "一時停止の時間: "
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:214
 msgid "seconds"
 msgstr "秒"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:218
 msgid "<b>Filename</b>"
 msgstr "<b>ファイル名</b>"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:219
 msgid "Convert underscores to blanks"
 msgstr "アンダースコア (__) をスペースに変換する"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:220
 msgid "Convert %20 to blanks"
 msgstr "'%20' をスペースに変換する"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:221
 msgid "Convert backslash '\\' to forward slash '/'"
 msgstr "バックスラッシュ '\\' をスラッシュ '/' に変換する"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:222
 msgid "<b>Metadata</b>"
 msgstr "<b>メタデータ</b>"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "Load metadata from playlists and files"
 msgstr "プレイリストとファイルからメタデータを読み込む"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "Load metadata (tag information) from music files."
 msgstr "曲ファイルからタグ情報を読み込みます."
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:224
 msgid "On load"
 msgstr "読み込み時"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:224
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
 "プレイリストへファイルを追加するか, プレイリストを開いたらタグ情報を読み込み"
 "ます."
 
-#: src/audacious/ui_preferences.c:226
+#: src/audacious/ui_preferences.c:225
 msgid "On display"
 msgstr "表示時"
 
-#: src/audacious/ui_preferences.c:226
+#: src/audacious/ui_preferences.c:225
 #, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
@@ -1713,15 +1764,15 @@ msgid ""
 msgstr ""
 "プレイリストのファイルが表示されたら要求に応じてメタデータを読み込みます."
 
-#: src/audacious/ui_preferences.c:228
+#: src/audacious/ui_preferences.c:227
 msgid "<b>File Dialog</b>"
 msgstr "<b>ファイルダイアログ</b>"
 
-#: src/audacious/ui_preferences.c:229
+#: src/audacious/ui_preferences.c:228
 msgid "Always refresh directory when opening file dialog"
 msgstr "ファイルダイアログを開くときにディレクトリを常に更新する"
 
-#: src/audacious/ui_preferences.c:229
+#: src/audacious/ui_preferences.c:228
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
@@ -1729,69 +1780,69 @@ msgstr ""
 "ファイルダイアログを常に更新します(大きなディレクトリがあるとダイアログを開く"
 "のが遅くなりますが, Gnome VFS は自動的に扱ってくれます)."
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:232
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>マウスのホィール</b>"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "Changes volume by"
 msgstr "音量を変更する割合: "
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "percent"
 msgstr "％"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:234
 msgid "Scrolls playlist by"
 msgstr "プレイリストで移動する量: "
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:234
 msgid "lines"
 msgstr "行"
 
-#: src/audacious/ui_preferences.c:397
+#: src/audacious/ui_preferences.c:396
 msgid "Enabled"
 msgstr "有効"
 
-#: src/audacious/ui_preferences.c:413
+#: src/audacious/ui_preferences.c:412
 msgid "Description"
 msgstr "説明"
 
-#: src/audacious/ui_preferences.c:1017
+#: src/audacious/ui_preferences.c:1016
 msgid "Category"
 msgstr "カテゴリ"
 
-#: src/audacious/ui_preferences.c:1371
+#: src/audacious/ui_preferences.c:1370
 msgid "Color Adjustment"
 msgstr "色補正"
 
-#: src/audacious/ui_preferences.c:1378
+#: src/audacious/ui_preferences.c:1377
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr "以下のスライダを用いてスキン UI の色合いの変更ができます."
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1387
 msgid "Blue"
 msgstr "青"
 
-#: src/audacious/ui_preferences.c:1395
+#: src/audacious/ui_preferences.c:1394
 msgid "Green"
 msgstr "緑"
 
-#: src/audacious/ui_preferences.c:1402
+#: src/audacious/ui_preferences.c:1401
 msgid "Red"
 msgstr "赤"
 
-#: src/audacious/ui_preferences.c:1485
+#: src/audacious/ui_preferences.c:1484
 msgid "Popup Information Settings"
 msgstr "ポップアップ情報の設定"
 
-#: src/audacious/ui_preferences.c:1494
+#: src/audacious/ui_preferences.c:1493
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>カバー画像の取得</b>"
 
-#: src/audacious/ui_preferences.c:1499
+#: src/audacious/ui_preferences.c:1498
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1800,43 +1851,43 @@ msgstr ""
 "アルバムのカバーを検索する際, Audacious はファイル名の中の単語を探します. コ"
 "ンマで区切られた単語リストを以下に指定できます."
 
-#: src/audacious/ui_preferences.c:1516
+#: src/audacious/ui_preferences.c:1515
 msgid "Exclude:"
 msgstr "含まない:"
 
-#: src/audacious/ui_preferences.c:1523
+#: src/audacious/ui_preferences.c:1522
 msgid "Include:"
 msgstr "含む:"
 
-#: src/audacious/ui_preferences.c:1540
+#: src/audacious/ui_preferences.c:1539
 msgid "Recursively search for cover"
 msgstr "カバーの再帰検索"
 
-#: src/audacious/ui_preferences.c:1550
+#: src/audacious/ui_preferences.c:1549
 msgid "Search depth: "
 msgstr "検索の深さ: "
 
-#: src/audacious/ui_preferences.c:1563
+#: src/audacious/ui_preferences.c:1562
 msgid "Use per-file cover"
 msgstr "ファイルごとのカバーを使う"
 
-#: src/audacious/ui_preferences.c:1566
+#: src/audacious/ui_preferences.c:1565
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>その他</b>"
 
-#: src/audacious/ui_preferences.c:1575
+#: src/audacious/ui_preferences.c:1574
 msgid "Show Progress bar for the current track"
 msgstr "現在のトラックのプログレスバーを表示する"
 
-#: src/audacious/ui_preferences.c:1585
+#: src/audacious/ui_preferences.c:1584
 msgid "Delay until filepopup comes up: "
 msgstr "ファイルポップアップが表示されるまでの遅延: "
 
-#: src/audacious/ui_preferences.c:1730
+#: src/audacious/ui_preferences.c:1629
 msgid "Auto character encoding detector for:"
 msgstr "自動キャラクタエンコーディング検出:"
 
-#: src/audacious/ui_preferences.c:1749
+#: src/audacious/ui_preferences.c:1648
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1848,79 +1899,79 @@ msgstr ""
 "グの候補としてリスト中のエンコーディングが用いられ, これらのエンコーディング"
 "から UTF-8 への変換が試みられます."
 
-#: src/audacious/ui_preferences.c:1751
+#: src/audacious/ui_preferences.c:1650
 msgid "Fallback character encodings:"
 msgstr "代替キャラクタエンコーディング:"
 
-#: src/audacious/ui_preferences.c:1980
+#: src/audacious/ui_preferences.c:1990
 msgid "Audacious Preferences"
 msgstr "Audacious の設定"
 
-#: src/audacious/ui_preferences.c:2022
+#: src/audacious/ui_preferences.c:2032
 msgid "_Decoder list:"
 msgstr "デコーダ一覧(_D):"
 
-#: src/audacious/ui_preferences.c:2052
+#: src/audacious/ui_preferences.c:2062
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>デコーダ</b></span>"
 
-#: src/audacious/ui_preferences.c:2065
+#: src/audacious/ui_preferences.c:2075
 msgid "_General plugin list:"
 msgstr "全般プラグインの一覧(_G):"
 
-#: src/audacious/ui_preferences.c:2095
+#: src/audacious/ui_preferences.c:2105
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>全般</b></span>"
 
-#: src/audacious/ui_preferences.c:2107
+#: src/audacious/ui_preferences.c:2117
 msgid "_Visualization plugin list:"
 msgstr "視覚化プラグインの一覧(_V):"
 
-#: src/audacious/ui_preferences.c:2137
+#: src/audacious/ui_preferences.c:2147
 msgid "<b>Visualization</b>"
 msgstr "<b>視覚化</b>"
 
-#: src/audacious/ui_preferences.c:2149
+#: src/audacious/ui_preferences.c:2159
 msgid "_Effect plugin list:"
 msgstr "エフェクトプラグインの一覧(_E):"
 
-#: src/audacious/ui_preferences.c:2179
+#: src/audacious/ui_preferences.c:2189
 msgid "<b>Effects</b>"
 msgstr "<b>エフェクト</b>"
 
-#: src/audacious/ui_preferences.c:2205
+#: src/audacious/ui_preferences.c:2215
 msgid "<b>_Skin</b>"
 msgstr "<b>スキン(_S)</b>"
 
-#: src/audacious/ui_preferences.c:2219
+#: src/audacious/ui_preferences.c:2229
 msgid "Refresh skin list"
 msgstr "スキン一覧の更新"
 
-#: src/audacious/ui_preferences.c:2247
+#: src/audacious/ui_preferences.c:2257
 msgid "<b>_Fonts</b>"
 msgstr "<b>フォント(_F)</b>"
 
-#: src/audacious/ui_preferences.c:2263
+#: src/audacious/ui_preferences.c:2273
 msgid "_Player:"
 msgstr "プレイヤ(_P):"
 
-#: src/audacious/ui_preferences.c:2274
+#: src/audacious/ui_preferences.c:2284
 msgid "_Playlist:"
 msgstr "プレイリスト(_P):"
 
-#: src/audacious/ui_preferences.c:2284
+#: src/audacious/ui_preferences.c:2294
 msgid "Select main player window font:"
 msgstr "メインウィンドウで使用するフォントの選択"
 
-#: src/audacious/ui_preferences.c:2292
+#: src/audacious/ui_preferences.c:2302
 msgid "Select playlist font:"
 msgstr "プレイリスで使用するフォントの選択"
 
-#: src/audacious/ui_preferences.c:2300
+#: src/audacious/ui_preferences.c:2310
 msgid "Use Bitmap fonts if available"
 msgstr "可能ならばビットマップフォントを使用"
 
-#: src/audacious/ui_preferences.c:2302
+#: src/audacious/ui_preferences.c:2312
 msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
@@ -1928,60 +1979,60 @@ msgstr ""
 "可能ならばビットマップフォントを使用します. ビットマップフォントは Unicode 文"
 "字列をサポートしていません."
 
-#: src/audacious/ui_preferences.c:2335
+#: src/audacious/ui_preferences.c:2345
 msgid "<b>Song Display</b>"
 msgstr "<b>曲の表示</b>"
 
-#: src/audacious/ui_preferences.c:2354
+#: src/audacious/ui_preferences.c:2364
 msgid "Show information about titlestring format"
 msgstr "タイトルに使用できる書式を表示します"
 
-#: src/audacious/ui_preferences.c:2365
+#: src/audacious/ui_preferences.c:2375
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2366
+#: src/audacious/ui_preferences.c:2376
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2367
+#: src/audacious/ui_preferences.c:2377
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2368
+#: src/audacious/ui_preferences.c:2378
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2369
+#: src/audacious/ui_preferences.c:2379
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2370
+#: src/audacious/ui_preferences.c:2380
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2371
+#: src/audacious/ui_preferences.c:2381
 #, fuzzy
 msgid "Custom"
 msgstr "タイトルの文字:"
 
-#: src/audacious/ui_preferences.c:2378
+#: src/audacious/ui_preferences.c:2388
 msgid "Custom string:"
 msgstr "タイトルの文字:"
 
-#: src/audacious/ui_preferences.c:2385
+#: src/audacious/ui_preferences.c:2395
 msgid "Title format:"
 msgstr "タイトルの書式:"
 
-#: src/audacious/ui_preferences.c:2396
+#: src/audacious/ui_preferences.c:2406
 msgid "<b>Popup Information</b>"
 msgstr "<b>ポップアップ情報</b>"
 
-#: src/audacious/ui_preferences.c:2411
+#: src/audacious/ui_preferences.c:2421
 msgid "Show popup information for playlist entries"
 msgstr "プレイリストのエントリのポップアップ情報を表示する"
 
-#: src/audacious/ui_preferences.c:2413
+#: src/audacious/ui_preferences.c:2423
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -1991,51 +2042,51 @@ msgstr ""
 "ます. ウィンドウには曲のタイトル, アルバム名, ジャンル, 製作年, トラック番"
 "号, トラックの長さとアートワークが表示されます."
 
-#: src/audacious/ui_preferences.c:2418
+#: src/audacious/ui_preferences.c:2428
 msgid "Edit settings for popup information"
 msgstr "ポップアップ情報の設定を編集する"
 
-#: src/audacious/ui_preferences.c:2440
+#: src/audacious/ui_preferences.c:2450
 msgid "<b>Presets</b>"
 msgstr "<b>プリセット</b>"
 
-#: src/audacious/ui_preferences.c:2457
+#: src/audacious/ui_preferences.c:2467
 msgid "File preset extension:"
 msgstr "プリセットの拡張子:"
 
-#: src/audacious/ui_preferences.c:2463
+#: src/audacious/ui_preferences.c:2473
 msgid "Directory preset file:"
 msgstr "ディレクトリのプリセット:"
 
-#: src/audacious/ui_preferences.c:2492
+#: src/audacious/ui_preferences.c:2502
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>プロキシ設定</b>"
 
-#: src/audacious/ui_preferences.c:2508
+#: src/audacious/ui_preferences.c:2518
 msgid "Enable proxy usage"
 msgstr "プロキシの使用を有効にする"
 
-#: src/audacious/ui_preferences.c:2526
+#: src/audacious/ui_preferences.c:2536
 msgid "Proxy port:"
 msgstr "プロキシのポート:"
 
-#: src/audacious/ui_preferences.c:2532
+#: src/audacious/ui_preferences.c:2542
 msgid "Proxy hostname:"
 msgstr "プロキシのホスト名:"
 
-#: src/audacious/ui_preferences.c:2542
+#: src/audacious/ui_preferences.c:2552
 msgid "Use authentication with proxy"
 msgstr "プロキシの認証を行う"
 
-#: src/audacious/ui_preferences.c:2561
+#: src/audacious/ui_preferences.c:2571
 msgid "Proxy password:"
 msgstr "プロキシのパスワード:"
 
-#: src/audacious/ui_preferences.c:2567
+#: src/audacious/ui_preferences.c:2577
 msgid "Proxy username:"
 msgstr "プロキシのユーザ名:"
 
-#: src/audacious/ui_preferences.c:2584
+#: src/audacious/ui_preferences.c:2594
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -2043,15 +2094,15 @@ msgstr ""
 "<span size=\"small\">変更した設定を有効にするには Audacious の再起動が必要で"
 "す.</span>"
 
-#: src/audacious/ui_preferences.c:2615
+#: src/audacious/ui_preferences.c:2625
 msgid "<b>Audio System</b>"
 msgstr "<b>オーディオシステム:</b>"
 
-#: src/audacious/ui_preferences.c:2638
+#: src/audacious/ui_preferences.c:2648
 msgid "Buffer size:"
 msgstr "バッファのサイズ:"
 
-#: src/audacious/ui_preferences.c:2644
+#: src/audacious/ui_preferences.c:2654
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -2065,53 +2116,53 @@ msgstr ""
 "しかし, 高い値は Audacious のパフォーマンスを悪くすることに注意してください."
 "</span>"
 
-#: src/audacious/ui_preferences.c:2663
+#: src/audacious/ui_preferences.c:2673
 msgid "Current output plugin:"
 msgstr "現在の出力プラグイン:"
 
-#: src/audacious/ui_preferences.c:2692
+#: src/audacious/ui_preferences.c:2702
 msgid "Output Plugin Preferences"
 msgstr "出力プラグイン設定"
 
-#: src/audacious/ui_preferences.c:2709
+#: src/audacious/ui_preferences.c:2719
 msgid "Output Plugin Information"
 msgstr "出力プラグイン情報"
 
-#: src/audacious/ui_preferences.c:2718
+#: src/audacious/ui_preferences.c:2728
 msgid "<b>Sampling Rate Converter</b>"
 msgstr "<b>サンプリングレートコンバータ</b>"
 
-#: src/audacious/ui_preferences.c:2727
+#: src/audacious/ui_preferences.c:2737
 msgid "Enable Sampling Rate Converter"
 msgstr "サンプリングレートコンバータを有効にする"
 
-#: src/audacious/ui_preferences.c:2747
+#: src/audacious/ui_preferences.c:2757
 msgid "Best Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2748
+#: src/audacious/ui_preferences.c:2758
 msgid "Medium Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2749
+#: src/audacious/ui_preferences.c:2759
 msgid "Fastest Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2750
+#: src/audacious/ui_preferences.c:2760
 #, fuzzy
 msgid "ZOH Interpolation"
 msgstr "インターポレーションエンジン:"
 
-#: src/audacious/ui_preferences.c:2751
+#: src/audacious/ui_preferences.c:2761
 #, fuzzy
 msgid "Linear Interpolation"
 msgstr "インターポレーションエンジン:"
 
-#: src/audacious/ui_preferences.c:2753
+#: src/audacious/ui_preferences.c:2763
 msgid "Interpolation Engine:"
 msgstr "インターポレーションエンジン:"
 
-#: src/audacious/ui_preferences.c:2759
+#: src/audacious/ui_preferences.c:2769
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
@@ -2122,19 +2173,19 @@ msgstr ""
 "これはサウンドカードか出力プラグインでサポートされたサンプリングレートの最大"
 "値となるはずです．</span>"
 
-#: src/audacious/ui_preferences.c:2779
+#: src/audacious/ui_preferences.c:2789
 msgid "Sampling Rate [Hz]:"
 msgstr "サンプリングレート [Hz]:"
 
-#: src/audacious/ui_preferences.c:2789
+#: src/audacious/ui_preferences.c:2799
 msgid "<b>Volume Control</b>"
 msgstr "<b>ボリュームコントロール</b>"
 
-#: src/audacious/ui_preferences.c:2798
+#: src/audacious/ui_preferences.c:2808
 msgid "Use software volume control"
 msgstr "ソフトウェアボリュームコントロールを使う"
 
-#: src/audacious/ui_preferences.c:2800
+#: src/audacious/ui_preferences.c:2810
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
@@ -2142,7 +2193,7 @@ msgstr ""
 "ソフトウェアボリュームコントロールを使います．オーディオシステムが再生音量の"
 "コントロールをサポートしていない状況で有用でしょう．"
 
-#: src/audacious/ui_preferences.c:2833
+#: src/audacious/ui_preferences.c:2843
 msgid "Reload Plugins"
 msgstr "プラグインを再読み込みする"
 

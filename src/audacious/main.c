@@ -260,18 +260,18 @@ const gchar *bmp_titlestring_presets[] = {
 const guint n_titlestring_presets = G_N_ELEMENTS(bmp_titlestring_presets);
 
 const gchar *chardet_detector_presets[] = {
-    "None",
-    "Japanese",
-    "Taiwanese",
-    "Chinese",
-    "Korean",
-    "Russian",
-    "Greek",
-    "Hebrew",
-    "Turkish",
-    "Arabic",
+    N_("None"),
+    N_("Japanese"),
+    N_("Taiwanese"),
+    N_("Chinese"),
+    N_("Korean"),
+    N_("Russian"),
+    N_("Greek"),
+    N_("Hebrew"),
+    N_("Turkish"),
+    N_("Arabic"),
 #ifdef HAVE_UDET
-    "Universal"
+    N_("Universal")
 #endif
 };
 
