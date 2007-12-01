@@ -1700,7 +1700,14 @@ playlist_load_ins_file(Playlist *playlist,
                        const gchar * playlist_name, gint pos,
                        const gchar * title, gint len)
 {
-    Tuple *tuple = tuple_new();
+    Tuple *tuple;
+
+    if (is_http(filename_p)) {
+      tuple = tuple_new();
+      tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, filename_p);        
+    } else {
+      tuple = tuple_new_from_filename(filename_p);
+    }
 
     tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
     tuple_associate_int(tuple, FIELD_LENGTH, NULL, len);
