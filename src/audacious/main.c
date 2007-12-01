@@ -80,7 +80,6 @@
 #include "signals.h"
 #include "ui_skinned_window.h"
 
-#include "icons-csource.h"
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
@@ -1010,58 +1009,57 @@ set_dock_icon(void)
 #endif
 
 static void
+load_stock_icon(gchar *id, gchar *filename, GtkIconFactory *iconfactory)
+{
+    GtkIconSet *iconset;
+    GdkPixbuf *pixbuf;
+
+    pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+    if (pixbuf == NULL)
+        return;
+
+    iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
+    g_object_unref(pixbuf);
+
+    gtk_icon_factory_add(iconfactory, id, iconset);
+}
+
+static void
 register_aud_stock_icons(void)
 {
-  GtkIconFactory *iconfactory = gtk_icon_factory_new();
-  GtkIconSet *iconset;
-  GdkPixbuf *pixbuf;
+    GtkIconFactory *iconfactory = gtk_icon_factory_new();
 
-  /* pick images in icons-csource.h */
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , removedups_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_REMOVEDUPS , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , removeunavail_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_REMOVEUNAVAIL , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , randomizepl_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_RANDOMIZEPL , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbytitle_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYTITLE , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbyfilename_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYFILENAME , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbyartist_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYARTIST , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbypathfile_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYPATHFILE , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , selectnone_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SELECTNONE , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , selectall_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SELECTALL , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , selectinvert_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_SELECTINVERT , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , invertpl_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_INVERTPL , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , queuetoggle_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_QUEUETOGGLE , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , info_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_INFO , iconset );
-  pixbuf = gdk_pixbuf_new_from_inline( -1 , playlist_pixbuf , FALSE , NULL );
-   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
-   gtk_icon_factory_add( iconfactory , AUD_STOCK_PLAYLIST , iconset );
+    load_stock_icon(AUD_STOCK_INFO,
+                    DATA_DIR "/images/info.png", iconfactory);
+    load_stock_icon(AUD_STOCK_INVERTPL,
+                    DATA_DIR "/images/menu_invert_playlist.png", iconfactory);
+    load_stock_icon(AUD_STOCK_PLAYLIST,
+                    DATA_DIR "/images/pl.png", iconfactory);
+    load_stock_icon(AUD_STOCK_QUEUETOGGLE,
+                    DATA_DIR "/images/menu_queue_toggle.png", iconfactory);
+    load_stock_icon(AUD_STOCK_RANDOMIZEPL,
+                    DATA_DIR "/images/menu_randomize_playlist.png", iconfactory);
+    load_stock_icon(AUD_STOCK_REMOVEDUPS,
+                    DATA_DIR "/images/menu_remove_dups.png", iconfactory);
+    load_stock_icon(AUD_STOCK_REMOVEUNAVAIL,
+                    DATA_DIR "/images/menu_remove_unavail.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SELECTALL,
+                    DATA_DIR "/images/menu_select_all.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SELECTINVERT,
+                    DATA_DIR "/images/menu_select_invert.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SELECTNONE,
+                    DATA_DIR "/images/menu_select_none.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SORTBYARTIST,
+                    DATA_DIR "/images/menu_sort_artist.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SORTBYFILENAME,
+                    DATA_DIR "/images/menu_sort_filename.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SORTBYPATHFILE,
+                    DATA_DIR "/images/menu_sort_pathfile.png", iconfactory);
+    load_stock_icon(AUD_STOCK_SORTBYTITLE,
+                    DATA_DIR "/images/menu_sort_title.png", iconfactory);
 
-  gtk_icon_factory_add_default( iconfactory );
-  g_object_unref( iconfactory );
+    gtk_icon_factory_add_default( iconfactory );
+    g_object_unref( iconfactory );
 }
 
 static GOptionEntry cmd_entries[] = {
