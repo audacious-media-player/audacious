@@ -172,7 +172,7 @@ typedef enum {
 typedef struct {
     WidgetType type;         /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
-    gboolean *cfg;           /* connected config value */
+    gpointer cfg;            /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
     gboolean child;
