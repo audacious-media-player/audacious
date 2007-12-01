@@ -125,9 +125,8 @@ GtkTooltips *tooltips;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
-    {DATA_DIR "/images/audio.png", N_("Audio"), 6},
-    {DATA_DIR "/images/connectivity.png",    N_("Connectivity"), 5},	
-    {DATA_DIR "/images/eq.png",         N_("Equalizer"), 4},
+    {DATA_DIR "/images/audio.png", N_("Audio"), 5},
+    {DATA_DIR "/images/connectivity.png",    N_("Connectivity"), 4},	
     {DATA_DIR "/images/mouse.png",      N_("Mouse"), 2},
     {DATA_DIR "/images/playlist.png",   N_("Playlist"), 3},
     {DATA_DIR "/images/plugins.png",    N_("Plugins"), 0},
@@ -184,7 +183,7 @@ static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
 
-static PreferencesWidget apperance_misc_widgets[] = {
+static PreferencesWidget appearance_misc_widgets[] = {
     {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
      G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
@@ -942,41 +941,6 @@ on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.software_volume_control);
 }
-
-static void
-on_eq_dir_preset_entry_realize(GtkEntry * entry,
-                               gpointer data)
-{
-    gtk_entry_set_text(entry, cfg.eqpreset_default_file);
-}
-
-static void
-on_eq_dir_preset_entry_changed(GtkEntry * entry,
-                               gpointer data)
-{
-    g_free(cfg.eqpreset_default_file);
-    cfg.eqpreset_default_file = g_strdup(gtk_entry_get_text(entry));
-}
-
-static void
-on_eq_file_preset_entry_realize(GtkEntry * entry,
-                                gpointer data)
-{
-    gtk_entry_set_text(entry, cfg.eqpreset_extension);
-}
-
-static void
-on_eq_file_preset_entry_changed(GtkEntry * entry, gpointer data)
-{
-    const gchar *text = gtk_entry_get_text(entry);
-
-    while (*text == '.')
-        text++;
-
-    g_free(cfg.eqpreset_extension);
-    cfg.eqpreset_extension = g_strdup(text);
-}
-
 
 static void
 on_skin_refresh_button_clicked(GtkButton * button,
@@ -1884,19 +1848,6 @@ create_prefs_window(void)
   GtkWidget *checkbutton10;
   GtkWidget *image8;
   GtkWidget *playlist_label;
-  GtkWidget *equalizer_page_vbox;
-  GtkWidget *alignment28;
-  GtkWidget *vbox22;
-  GtkWidget *alignment30;
-  GtkWidget *equalizer_page_label;
-  GtkWidget *vbox23;
-  GtkWidget *alignment33;
-  GtkWidget *table5;
-  GtkWidget *label58;
-  GtkWidget *label57;
-  GtkWidget *eq_file_preset_entry;
-  GtkWidget *eq_dir_preset_entry;
-  GtkWidget *equalizer_label;
   GtkWidget *connectivity_page_vbox;
   GtkWidget *vbox29;
   GtkWidget *alignment63;
@@ -2314,7 +2265,7 @@ create_prefs_window(void)
   vbox40 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox37), vbox40, FALSE, TRUE, 0);
 
-    create_widgets(GTK_BOX(vbox40), apperance_misc_widgets, G_N_ELEMENTS(apperance_misc_widgets));
+    create_widgets(GTK_BOX(vbox40), appearance_misc_widgets, G_N_ELEMENTS(appearance_misc_widgets));
 
   appearance_label = gtk_label_new (_("Appearance"));
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 1), appearance_label);
@@ -2433,61 +2384,6 @@ create_prefs_window(void)
 
   playlist_label = gtk_label_new (_("Playlist"));
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 3), playlist_label);
-
-  equalizer_page_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (category_notebook), equalizer_page_vbox);
-
-  alignment28 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (equalizer_page_vbox), alignment28, TRUE, TRUE, 0);
-
-  vbox22 = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (alignment28), vbox22);
-
-  alignment30 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox22), alignment30, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment30), 0, 12, 0, 0);
-
-  equalizer_page_label = gtk_label_new (_("<b>Presets</b>"));
-  gtk_container_add (GTK_CONTAINER (alignment30), equalizer_page_label);
-  gtk_label_set_use_markup (GTK_LABEL (equalizer_page_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (equalizer_page_label), 0, 0.5);
-
-  vbox23 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox22), vbox23, TRUE, TRUE, 0);
-
-  alignment33 = gtk_alignment_new (0.5, 0.5, 1, 1);
-  gtk_box_pack_start (GTK_BOX (vbox23), alignment33, FALSE, FALSE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment33), 0, 12, 0, 0);
-
-  table5 = gtk_table_new (2, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (alignment33), table5);
-  gtk_table_set_row_spacings (GTK_TABLE (table5), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table5), 6);
-
-  label58 = gtk_label_new (_("File preset extension:"));
-  gtk_table_attach (GTK_TABLE (table5), label58, 0, 1, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label58), 0, 0.5);
-
-  label57 = gtk_label_new (_("Directory preset file:"));
-  gtk_table_attach (GTK_TABLE (table5), label57, 0, 1, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label57), 0, 0.5);
-
-  eq_file_preset_entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table5), eq_file_preset_entry, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
-  eq_dir_preset_entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table5), eq_dir_preset_entry, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
-  equalizer_label = gtk_label_new (_("Equalizer"));
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 4), equalizer_label);
 
   connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (category_notebook), connectivity_page_vbox);
@@ -2919,18 +2815,6 @@ create_prefs_window(void)
                            NULL);
     g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
                      G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
-                     NULL);
-    g_signal_connect(G_OBJECT(eq_file_preset_entry), "changed",
-                     G_CALLBACK(on_eq_file_preset_entry_changed),
-                     NULL);
-    g_signal_connect(G_OBJECT(eq_file_preset_entry), "realize",
-                     G_CALLBACK(on_eq_file_preset_entry_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(eq_dir_preset_entry), "changed",
-                     G_CALLBACK(on_eq_dir_preset_entry_changed),
-                     NULL);
-    g_signal_connect(G_OBJECT(eq_dir_preset_entry), "realize",
-                     G_CALLBACK(on_eq_dir_preset_entry_realize),
                      NULL);
     g_signal_connect(G_OBJECT(proxy_use), "toggled",
                      G_CALLBACK(on_proxy_button_toggled),
