@@ -287,7 +287,7 @@ fileinfo_update_tuple(gpointer data)
             tuple = tuple_new();
             fd = vfs_fopen(current_file, "r+b");
 
-            if (fd != NULL && !vfs_is_streaming(fd)) {
+            if (fd != NULL) {
                 set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
                 set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
                 set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
@@ -691,8 +691,10 @@ fileinfo_show_for_path(gchar *path)
 {
         Tuple *tuple = input_get_song_tuple(path);
 
-        if (tuple == NULL)
-                return input_file_info_box(path);
+        if (tuple == NULL) {
+                input_file_info_box(path);
+                return;
+        }
 
         fileinfo_show_for_tuple(tuple, FALSE);
 
@@ -708,8 +710,10 @@ fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
 
         Tuple *tuple = input_get_song_tuple(path);
 
-        if (tuple == NULL)
-                return input_file_info_box(path);
+        if (tuple == NULL) {
+                input_file_info_box(path);
+                return;
+        }
 
         fileinfo_show_for_tuple(tuple, TRUE);
 
