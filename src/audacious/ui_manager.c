@@ -307,11 +307,11 @@ static GtkActionEntry action_entries_playlist_sort[] = {
 	  N_("Randomizes the playlist."),
 	  G_CALLBACK(action_playlist_randomize_list) },
 
-	{ "playlist reverse list", NULL , N_("Reverse List"), NULL,
+	{ "playlist reverse list", GTK_STOCK_GO_UP , N_("Reverse List"), NULL,
 	  N_("Reverses the playlist."),
 	  G_CALLBACK(action_playlist_reverse_list) },
 
-	{ "playlist sort menu", NULL , N_("Sort List") },
+	{ "playlist sort menu", GTK_STOCK_GO_DOWN , N_("Sort List") },
 
 	{ "playlist sort by title", NULL , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
@@ -341,7 +341,7 @@ static GtkActionEntry action_entries_playlist_sort[] = {
 	  N_("Sorts the list by playlist entry."),
 	  G_CALLBACK(action_playlist_sort_by_playlist_entry) },
 
-	{ "playlist sort selected menu", NULL , N_("Sort Selected") },
+	{ "playlist sort selected menu", GTK_STOCK_GO_DOWN , N_("Sort Selected") },
 
 	{ "playlist sort selected by title", NULL , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
