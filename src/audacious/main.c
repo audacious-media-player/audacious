@@ -1008,60 +1008,6 @@ set_dock_icon(void)
 }
 #endif
 
-static void
-load_stock_icon(gchar *id, gchar *filename, GtkIconFactory *iconfactory)
-{
-    GtkIconSet *iconset;
-    GdkPixbuf *pixbuf;
-
-    pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-    if (pixbuf == NULL)
-        return;
-
-    iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
-    g_object_unref(pixbuf);
-
-    gtk_icon_factory_add(iconfactory, id, iconset);
-}
-
-static void
-register_aud_stock_icons(void)
-{
-    GtkIconFactory *iconfactory = gtk_icon_factory_new();
-
-    load_stock_icon(AUD_STOCK_INFO,
-                    DATA_DIR "/images/info.png", iconfactory);
-    load_stock_icon(AUD_STOCK_INVERTPL,
-                    DATA_DIR "/images/menu_invert_playlist.png", iconfactory);
-    load_stock_icon(AUD_STOCK_PLAYLIST,
-                    DATA_DIR "/images/pl.png", iconfactory);
-    load_stock_icon(AUD_STOCK_QUEUETOGGLE,
-                    DATA_DIR "/images/menu_queue_toggle.png", iconfactory);
-    load_stock_icon(AUD_STOCK_RANDOMIZEPL,
-                    DATA_DIR "/images/menu_randomize_playlist.png", iconfactory);
-    load_stock_icon(AUD_STOCK_REMOVEDUPS,
-                    DATA_DIR "/images/menu_remove_dups.png", iconfactory);
-    load_stock_icon(AUD_STOCK_REMOVEUNAVAIL,
-                    DATA_DIR "/images/menu_remove_unavail.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SELECTALL,
-                    DATA_DIR "/images/menu_select_all.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SELECTINVERT,
-                    DATA_DIR "/images/menu_select_invert.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SELECTNONE,
-                    DATA_DIR "/images/menu_select_none.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SORTBYARTIST,
-                    DATA_DIR "/images/menu_sort_artist.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SORTBYFILENAME,
-                    DATA_DIR "/images/menu_sort_filename.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SORTBYPATHFILE,
-                    DATA_DIR "/images/menu_sort_pathfile.png", iconfactory);
-    load_stock_icon(AUD_STOCK_SORTBYTITLE,
-                    DATA_DIR "/images/menu_sort_title.png", iconfactory);
-
-    gtk_icon_factory_add_default( iconfactory );
-    g_object_unref( iconfactory );
-}
-
 static GOptionEntry cmd_entries[] = {
     {"session", 'n', 0, G_OPTION_ARG_INT, &options.session, N_("Select which Audacious session ID to use"), NULL},
     {"rew", 'r', 0, G_OPTION_ARG_NONE, &options.rew, N_("Skip backwards in playlist"), NULL},

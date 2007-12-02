@@ -20,6 +20,8 @@
 #ifndef ICONSSTOCK_H
 #define ICONSSTOCK_H
 
+void register_aud_stock_icons(void);
+
 /* this header contains macro defines for Audacious stock icons */
 
 #define AUD_STOCK_INFO				"aud-info"
