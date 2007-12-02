@@ -267,6 +267,10 @@ static GtkActionEntry action_entries_playlist_select[] = {
 };
 
 static GtkActionEntry action_entries_playlist_delete[] = {
+	{ "playlist remove all", GTK_STOCK_CLEAR, N_("Remove All"), NULL, 
+	  N_("Removes all entries from the playlist."),
+	  G_CALLBACK(action_playlist_remove_all) },
+
 	{ "playlist clear queue", GTK_STOCK_CLEAR, N_("Clear Queue"), "<Shift>Q",
 	  N_("Clears the queue associated with this playlist."),
 	  G_CALLBACK(action_playlist_clear_queue) },
@@ -296,10 +300,6 @@ static GtkActionEntry action_entries_playlist_delete[] = {
 	{ "playlist remove selected", GTK_STOCK_REMOVE, N_("Remove Selected"), "Delete", 
 	  N_("Remove selected entries from the playlist."),
 	  G_CALLBACK(action_playlist_remove_selected) },
-
-	{ "playlist remove all", GTK_STOCK_CLEAR, N_("Remove All"), NULL, 
-	  N_("Removes all entries from the playlist."),
-	  G_CALLBACK(action_playlist_remove_all) },
 };
 
 static GtkActionEntry action_entries_playlist_sort[] = {
