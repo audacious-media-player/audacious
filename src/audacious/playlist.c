@@ -2471,7 +2471,7 @@ playlist_fileinfo(Playlist *playlist, guint pos)
     /* plugin is capable to update tags. we need to bypass tuple cache. --eugene */
     /* maybe code cleanup required... */
     if (entry->decoder != NULL && entry->decoder->update_song_tuple != NULL &&
-        entry->decoder->file_info_box == NULL && path != NULL) {
+        entry->decoder->file_info_box == NULL && path != NULL && !vfs_is_remote(path)) {
 
         fileinfo_show_editor_for_path(path, entry->decoder);
         g_free(path);
