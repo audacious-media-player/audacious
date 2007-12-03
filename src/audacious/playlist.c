@@ -1702,7 +1702,7 @@ playlist_load_ins_file(Playlist *playlist,
 {
     Tuple *tuple;
 
-    if (is_http(filename_p)) {
+    if (vfs_is_remote(filename_p)) {
       tuple = tuple_new();
       tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, filename_p);        
     } else {
