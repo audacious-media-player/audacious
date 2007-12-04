@@ -43,6 +43,13 @@ G_BEGIN_DECLS
 #define PLAYER_WIDTH \
   (MAINWIN_WIDTH * (cfg.doublesize + 1))
 
+/* macro for debug print */
+#if AUD_DEBUG
+#  define AUDDBG(...) g_print("%s:%d %s(): ", __FILE__, (int)__LINE__, __FUNCTION__), g_print(__VA_ARGS__)
+#else
+#  define AUDDBG(...)
+#endif
+
 struct _BmpConfig {
     gint player_x, player_y;
     gint equalizer_x, equalizer_y;
