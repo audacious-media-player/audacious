@@ -79,6 +79,7 @@ GtkWidget *image_artwork;
 GtkWidget *image_fileicon;
 GtkWidget *label_format_name;
 GtkWidget *label_quality;
+GtkWidget *label_bitrate;
 GtkWidget *btn_apply;
 GtkWidget *label_mini_status;
 
@@ -220,6 +221,7 @@ void fileinfo_hide(gpointer unused)
 
     fileinfo_label_set_text(label_format_name, NULL);
     fileinfo_label_set_text(label_quality, NULL);
+    fileinfo_label_set_text(label_bitrate, NULL);
     
     if (label_mini_status != NULL) {
         gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
@@ -396,6 +398,7 @@ create_fileinfo_window(void)
     GtkWidget *label_general;
     GtkWidget *label_format;
     GtkWidget *label_quality_label;
+    GtkWidget *label_bitrate_label;
     GtkWidget *codec_hbox;
     GtkWidget *codec_table;
     GtkWidget *table1;
@@ -448,7 +451,7 @@ create_fileinfo_window(void)
     image_fileicon = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG);
     gtk_box_pack_start (GTK_BOX (codec_hbox), image_fileicon, FALSE, FALSE, 0);
     
-    codec_table = gtk_table_new(2, 2, FALSE);
+    codec_table = gtk_table_new(3, 2, FALSE);
     gtk_table_set_row_spacings (GTK_TABLE(codec_table), 6);
     gtk_table_set_col_spacings (GTK_TABLE(codec_table), 12);
     gtk_box_pack_start (GTK_BOX (codec_hbox), codec_table, FALSE, FALSE, 0);
@@ -459,6 +462,9 @@ create_fileinfo_window(void)
     label_quality_label = gtk_label_new(_("<span size=\"small\">Quality:</span>"));
     gtk_label_set_use_markup(GTK_LABEL(label_quality_label), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_quality_label), 0, 0.5);
+    label_bitrate_label = gtk_label_new(_("<span size=\"small\">Bitrate:</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_bitrate_label), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_bitrate_label), 0, 0.5);
 
     label_format_name = gtk_label_new(_("<span size=\"small\">n/a</span>"));
     gtk_label_set_use_markup(GTK_LABEL(label_format_name), TRUE);
@@ -466,6 +472,9 @@ create_fileinfo_window(void)
     label_quality = gtk_label_new(_("<span size=\"small\">n/a</span>"));
     gtk_label_set_use_markup(GTK_LABEL(label_quality), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_quality), 0, 0.5);
+    label_bitrate = gtk_label_new(_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup(GTK_LABEL(label_bitrate), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(label_bitrate), 0, 0.5);
     
     gtk_table_attach(GTK_TABLE(codec_table), label_format, 0, 1, 0, 1,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -477,6 +486,12 @@ create_fileinfo_window(void)
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_table_attach(GTK_TABLE(codec_table), label_quality, 1, 2, 1, 2,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_table_attach(GTK_TABLE(codec_table), label_bitrate_label, 0, 1, 2, 3,
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_table_attach(GTK_TABLE(codec_table), label_bitrate, 1, 2, 2, 3,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
 
@@ -654,6 +669,14 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         fileinfo_label_set_text(label_format_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
         fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
 
+        if (tuple_get_value_type(tuple, FIELD_BITRATE, NULL) == TUPLE_INT) {
+            tmp = g_strdup_printf(_("%d kb/s"), tuple_get_int(tuple, FIELD_BITRATE, NULL));
+            fileinfo_label_set_text(label_bitrate, tmp);
+            g_free(tmp);
+        } else {
+            fileinfo_label_set_text(label_bitrate, NULL);
+        }
+
         tmp = (gchar *)tuple_get_string(tuple, FIELD_MIMETYPE, NULL);
         icon = mime_icon_lookup(48, tmp ? tmp : "audio/x-generic");
         if (icon) {
@@ -671,11 +694,6 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
                 g_free(tmp);
         }
 
-        /*if(updating_enabled && current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL)
-                gtk_widget_set_sensitive(btn_apply, TRUE);
-        else
-                gtk_widget_set_sensitive(btn_apply, FALSE);*/
-        
         gtk_widget_set_sensitive(btn_apply, FALSE);
     
         if (label_mini_status != NULL) {

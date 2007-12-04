@@ -52,6 +52,7 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "subsong-id",     TUPLE_INT },
     { "subsong-num",    TUPLE_INT },
     { "mime-type",      TUPLE_STRING },
+    { "bitrate",        TUPLE_INT },
 };
 
 static mowgli_heap_t *tuple_heap = NULL;

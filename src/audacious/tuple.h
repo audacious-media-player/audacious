@@ -53,6 +53,7 @@ enum {
     FIELD_SUBSONG_ID,
     FIELD_SUBSONG_NUM,
     FIELD_MIMETYPE,
+    FIELD_BITRATE,
 
     /* special field, must always be last */
     FIELD_LAST
