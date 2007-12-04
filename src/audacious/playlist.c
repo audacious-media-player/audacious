@@ -2740,9 +2740,7 @@ playlist_remove_dead_files(Playlist *playlist)
             continue;
         }
 
-        /* FIXME: What about 'file:///'? */
-        /* Don't kill URLs */
-        if (strstr(entry->filename, "://"))
+        if (!g_str_has_prefix(entry->filename, "file://"))
             continue;
 
         /* FIXME: Should test for readability */
