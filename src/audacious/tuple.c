@@ -35,7 +35,7 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "track-number",   TUPLE_INT },
     { "length",         TUPLE_INT },
     { "year",           TUPLE_INT },
-    { "quality",	TUPLE_STRING },
+    { "quality",        TUPLE_STRING },
 
     { "codec",          TUPLE_STRING },
     { "file-name",      TUPLE_STRING },
