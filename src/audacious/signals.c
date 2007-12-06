@@ -23,14 +23,10 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <glib/gprintf.h>
 #include <config.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
 #include <pthread.h>	/* for pthread_sigmask() */
 #include <signal.h>
-#include <strings.h>
 
 #ifdef HAVE_EXECINFO_H
 # include <execinfo.h>
@@ -245,7 +241,7 @@ signal_check_for_broken_impl(void)
         gchar str[1024];
         confstr(_CS_GNU_LIBPTHREAD_VERSION, str, sizeof(str));
 
-        if (!strncasecmp("linuxthreads", str, 12))
+        if (g_ascii_strncasecmp("linuxthreads", str, 12) == 0)
             return TRUE;
     }
 #endif
