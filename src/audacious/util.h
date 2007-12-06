@@ -105,6 +105,7 @@ gchar *util_get_localdir(void);
 /* menu-related function */
 void util_menu_main_show(gint x, gint y, guint button, guint time);
 
+gchar *construct_uri(gchar *string, const gchar *playlist_name);
 
 G_END_DECLS
 

@@ -26,6 +26,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+/* #define AUD_DEBUG 1 */
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -153,6 +155,7 @@ static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
 static gint filter_by_extension(const gchar *filename);
 static gboolean is_http(const gchar *filename);
+static gboolean do_precheck(Playlist *playlist, const gchar *uri, ProbeResult *pr);
 
 static mowgli_heap_t *playlist_entry_heap = NULL;
 
@@ -656,11 +659,13 @@ playlist_delete(Playlist * playlist, gboolean crop)
 }
 
 static void
-__playlist_ins_with_info_tuple(Playlist * playlist,
-			       const gchar * filename,
-			       gint pos,
-			       Tuple *tuple,
-			       InputPlugin * dec)
+__playlist_ins_file(Playlist * playlist,
+                    const gchar * filename,
+                    gint pos,
+                    Tuple *tuple,
+                    const gchar *title, // may NULL
+                    gint len,
+                    InputPlugin * dec)
 {
     PlaylistEntry *entry;
     Tuple *parent_tuple = NULL;
@@ -693,11 +698,17 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         } else
             filename_entry = g_strdup(filename);
         
-        
-        entry = playlist_entry_new(filename_entry,
-            tuple ? tuple_get_string(tuple, FIELD_TITLE, NULL) : NULL,
-            tuple ? tuple_get_int(tuple, FIELD_LENGTH, NULL) : -1, dec);
+        if(tuple) {
+            entry = playlist_entry_new(filename_entry,
+                                       tuple_get_string(tuple, FIELD_TITLE, NULL),
+                                       tuple_get_int(tuple, FIELD_LENGTH, NULL), dec);
+        }
+        else {
+            entry = playlist_entry_new(filename_entry, title, len, dec);
+        }
+
         g_free(filename_entry);
+
 
         PLAYLIST_LOCK(playlist);
         
@@ -757,7 +768,6 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     ProbeResult *pr = NULL;
     InputPlugin *dec = NULL;
     Tuple *tuple = NULL;
-    gint ext_flag;
     gboolean http_flag;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
@@ -771,44 +781,25 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
         return TRUE;
     }
 
-    ext_flag = filter_by_extension(filename);
-    http_flag = is_http(filename);
-
-    /* playlist file or remote uri */
-    if (playlist->loading_playlist == TRUE || http_flag == TRUE) {
-        dec = NULL;
-    }
-
-    /* local file and on-demand probing is on */
-    else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE && ext_flag != EXT_CUSTOM) {
-        dec = NULL;
-        if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-            return FALSE;
-    }
-
-    /* find decorder for local file */
-    else {
-        pr = input_check_file(filename, TRUE);
-
-        if (pr) {
+    if(do_precheck(playlist, filename, pr)) {
+        if(pr) {
             dec = pr->ip;
             tuple = pr->tuple;
         }
-        g_free(pr);
-    }
+        /* add filename to playlist */
+        if (cfg.playlist_detect == TRUE ||
+            playlist->loading_playlist == TRUE ||
+            (playlist->loading_playlist == FALSE && dec != NULL) ||
+            (playlist->loading_playlist == FALSE && !is_playlist_name(filename) && http_flag) ) {
 
-    /* add filename to playlist */
-    if (cfg.playlist_detect == TRUE ||
-        playlist->loading_playlist == TRUE ||
-       (playlist->loading_playlist == FALSE && dec != NULL) ||
-       (playlist->loading_playlist == FALSE && !is_playlist_name(filename) && http_flag) ) {
+            __playlist_ins_file(playlist, filename, pos, tuple, NULL, -1, dec);
 
-        __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
-
-        playlist_generate_shuffle_list(playlist);
-        playlistwin_update_list(playlist);
-        playlist_manager_update();
-        return TRUE;
+            g_free(pr);
+            playlist_generate_shuffle_list(playlist);
+            playlistwin_update_list(playlist);
+            playlist_manager_update();
+            return TRUE;
+        }
     }
 
     /* Some files (typically produced by some cgi-scripts) don't have
@@ -1104,7 +1095,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     }
 
     playlist_recalc_total_time(playlist);
-    PLAYLIST_INCR_SERIAL(playlist); //probably necessary because there is no underlying __playlist_ins --yaz
+    PLAYLIST_INCR_SERIAL(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
 
@@ -1696,100 +1687,75 @@ playlist_load(Playlist * playlist, const gchar * filename)
 
 void
 playlist_load_ins_file(Playlist *playlist,
-                       const gchar * filename_p,
+                       const gchar * uri,
                        const gchar * playlist_name, gint pos,
                        const gchar * title, gint len)
 {
-    Tuple *tuple;
+    ProbeResult *pr = NULL;
 
-    if (vfs_is_remote(filename_p)) {
-      tuple = tuple_new();
-      tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, filename_p);        
-    } else {
-      tuple = tuple_new_from_filename(filename_p);
+    g_return_if_fail(uri != NULL);
+    g_return_if_fail(playlist_name != NULL);
+    g_return_if_fail(playlist != NULL);
+
+    if(do_precheck(playlist, uri, pr)) {
+        __playlist_ins_file(playlist, uri, pos, NULL, title, len, pr ? pr->ip : NULL);
     }
-
-    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
-    tuple_associate_int(tuple, FIELD_LENGTH, NULL, len);
-    tuple_associate_int(tuple, FIELD_MTIME, NULL, -1); // invalidate to make tuple renew
-
-    playlist_load_ins_file_tuple(playlist, filename_p, playlist_name, pos, tuple);
+    g_free(pr);
 }
 
 void
 playlist_load_ins_file_tuple(Playlist * playlist,
-                             const gchar * filename_p,      //filename to add
+                             const gchar * uri,
                              const gchar * playlist_name,   //path of playlist file itself
                              gint pos,
                              Tuple *tuple)
 {
-    gchar *filename;
-    gchar *tmp, *path;
     ProbeResult *pr = NULL;		/* for decoder cache */
-    gchar *uri = NULL;
 
-
-    g_return_if_fail(filename_p != NULL);
+    g_return_if_fail(uri != NULL);
     g_return_if_fail(playlist_name != NULL);
     g_return_if_fail(playlist != NULL);
 
-    filename = g_strchug(g_strdup(filename_p));
-
-
-    /* convert backslash to slash */
-    if (cfg.convert_slash)
-        while ((tmp = strchr(filename, '\\')) != NULL)
-            *tmp = '/';
-
-
-    /* make full path uri here */
-    // case 1: filename is raw full path or uri
-    if (filename[0] == '/' || strstr(filename, "://")) {
-        uri = g_filename_to_uri(filename, NULL, NULL);
-        if(!uri) {
-            uri = g_strdup(filename);
-        }
-        g_free(filename);
+    if(do_precheck(playlist, uri, pr)) {
+        __playlist_ins_file(playlist, uri, pos, tuple, NULL, -1, pr ? pr->ip : NULL);
     }
-    // case 2: filename is not raw full path nor uri, playlist path is full path
-    // make full path by replacing last part of playlist path with filename. (using g_build_filename)
-    else if (playlist_name[0] == '/' || strstr(playlist_name, "://")) {
-        path = g_strdup(playlist_name);
-        tmp = strrchr(path, '/'); *tmp = '\0';
-        tmp = g_build_filename(path, filename, NULL);
-        uri = g_filename_to_uri(tmp, NULL, NULL);
-        g_free(tmp); g_free(filename);
-    }
-    // case 3: filename is not raw full path nor uri, playlist path is not full path
-    // just abort.
-    else {
-        g_free(filename);
-        return;
-    }
+    g_free(pr);
 
+}
 
-    /* apply pre check and add to playlist */
+static gboolean
+do_precheck(Playlist *playlist, const gchar *uri, ProbeResult *pr)
+{
     gint ext_flag = filter_by_extension(uri);
     gboolean http_flag = is_http(uri);
+    gboolean rv = FALSE;
 
     /* playlist file or remote uri */
     if ((playlist->loading_playlist == TRUE && ext_flag != EXT_HAVE_SUBTUNE ) || http_flag == TRUE) {
         pr = NULL;
+        rv = TRUE;
     }
     /* local file and on-demand probing is on */
     else if (cfg.playlist_detect == TRUE && ext_flag != EXT_HAVE_SUBTUNE && ext_flag != EXT_CUSTOM) {
-        pr = NULL;
-        if(cfg.use_extension_probing && ext_flag == EXT_FALSE)
-            return;
+        if(cfg.use_extension_probing && ext_flag == EXT_FALSE) {
+            AUDDBG("reject %s\n", uri);
+            rv = FALSE;
+        }
+        else {
+            pr = NULL;
+            rv = TRUE;
+        }
     }
     /* find decorder for local file */
     else {
         pr = input_check_file(uri, TRUE);
+        if(pr) {
+            AUDDBG("got pr\n");
+            rv = TRUE;
+        }
     }
 
-    __playlist_ins_with_info_tuple(playlist, uri, pos, tuple, pr ? pr->ip : NULL);
-    g_free(pr);
-
+    return rv;
 }
 
 static guint
@@ -2684,7 +2650,7 @@ playlist_get_info_func(gpointer arg)
         g_cond_wait(cond_scan, mutex_scan);
         g_mutex_unlock(mutex_scan);
 
-//        g_print("scanner invoked\n");
+//        AUDDBG("scanner invoked\n");
 
     } // while
 
@@ -3411,6 +3377,8 @@ filter_by_extension(const gchar *uri)
     gint rv;
     GList **lhandle, *node;
     InputPlugin *ip;
+
+    g_return_val_if_fail(uri != NULL, EXT_FALSE);
     
     /* Some URIs will end in ?<subsong> to determine the subsong requested. */
     tmp_uri = g_strdup(uri);
@@ -3437,7 +3405,7 @@ filter_by_extension(const gchar *uri)
 
     if(!ext) {
         g_free(base);
-        return 0;
+        return EXT_FALSE;
     }
 
     lext = g_ascii_strdown(ext+1, -1);

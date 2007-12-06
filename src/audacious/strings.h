@@ -45,6 +45,7 @@ gchar *str_to_utf8(const gchar * str);
 const gchar *str_skip_chars(const gchar * str, const gchar * chars);
 
 gchar *convert_title_text(gchar * text);
+gchar *convert_dos_path(gchar * text);
 
 gchar *chardet_to_utf8(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,

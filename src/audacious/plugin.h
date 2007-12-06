@@ -590,6 +590,8 @@ struct _AudaciousFuncTableV1 {
     GList *(*get_output_list)(void);
 
     void (*input_get_volume)(gint * l, gint * r);
+
+    gchar *(*construct_uri)(gchar *string, const gchar *playlist_name);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -930,6 +932,9 @@ struct _AudaciousFuncTableV1 {
 #define aud_get_output_list			_audvt->get_output_list
 
 #define aud_input_get_volume			_audvt->input_get_volume
+
+#define aud_construct_uri        _audvt->construct_uri
+
 
 #include "audacious/auddrct.h"
 
