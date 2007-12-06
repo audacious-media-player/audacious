@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-12-01 12:06+0100\n"
+"POT-Creation-Date: 2007-12-06 17:13+0100\n"
 "PO-Revision-Date: 2007-05-23 00:04+0300\n"
 "Last-Translator: Murat Şenel <muratasenel@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -42,132 +42,132 @@ msgstr "Giriş eklentisi: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Günlük dosyası oluşturulamıyor (%s)!\n"
 
-#: src/audacious/main.c:90 src/audacious/main.c:92 src/audacious/ui_main.c:491
+#: src/audacious/main.c:89 src/audacious/main.c:91 src/audacious/ui_main.c:491
 #: src/audacious/ui_main.c:2524
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "None"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 #, fuzzy
 msgid "Japanese"
 msgstr "Japonca:"
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:264
 #, fuzzy
 msgid "Taiwanese"
 msgstr "Japonca:"
 
-#: src/audacious/main.c:266
+#: src/audacious/main.c:265
 #, fuzzy
 msgid "Chinese"
 msgstr "Satırlar"
 
-#: src/audacious/main.c:267
+#: src/audacious/main.c:266
 #, fuzzy
 msgid "Korean"
 msgstr "Korece:"
 
-#: src/audacious/main.c:268
+#: src/audacious/main.c:267
 #, fuzzy
 msgid "Russian"
 msgstr "Rusça:"
 
-#: src/audacious/main.c:269
+#: src/audacious/main.c:268
 #, fuzzy
 msgid "Greek"
 msgstr "Yunanca:"
 
-#: src/audacious/main.c:270
+#: src/audacious/main.c:269
 msgid "Hebrew"
 msgstr ""
 
-#: src/audacious/main.c:271
+#: src/audacious/main.c:270
 #, fuzzy
 msgid "Turkish"
 msgstr "Türkçe:"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:271
 msgid "Arabic"
 msgstr ""
 
-#: src/audacious/main.c:274
+#: src/audacious/main.c:273
 msgid "Universal"
 msgstr ""
 
-#: src/audacious/main.c:480
+#: src/audacious/main.c:479
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Dizin oluşturulamadı (%s): %s\n"
 
-#: src/audacious/main.c:1068
+#: src/audacious/main.c:1012
 msgid "Select which Audacious session ID to use"
 msgstr "Kullanılacak Audacious oturum ID'sini seçin"
 
-#: src/audacious/main.c:1069
+#: src/audacious/main.c:1013
 msgid "Skip backwards in playlist"
 msgstr "Parça listesinde geriye atla"
 
-#: src/audacious/main.c:1070
+#: src/audacious/main.c:1014
 msgid "Start playing current playlist"
 msgstr "Şu anki parça listesini çalmaya başla"
 
-#: src/audacious/main.c:1071
+#: src/audacious/main.c:1015
 msgid "Pause current song"
 msgstr "Şu anki parçayı duraklat"
 
-#: src/audacious/main.c:1072
+#: src/audacious/main.c:1016
 msgid "Stop current song"
 msgstr "Şu anki parçayı durdur"
 
-#: src/audacious/main.c:1073
+#: src/audacious/main.c:1017
 msgid "Pause if playing, play otherwise"
 msgstr "Çalıyorsa durdur, değilse çal"
 
-#: src/audacious/main.c:1074
+#: src/audacious/main.c:1018
 msgid "Skip forward in playlist"
 msgstr "Parça listesinde ileriye atla"
 
-#: src/audacious/main.c:1075
+#: src/audacious/main.c:1019
 msgid "Display Jump to File dialog"
 msgstr "Dosya penceresine atlama penceresini göster"
 
-#: src/audacious/main.c:1076
+#: src/audacious/main.c:1020
 msgid "Don't clear the playlist"
 msgstr "Parça listesini temizleme"
 
-#: src/audacious/main.c:1077
+#: src/audacious/main.c:1021
 msgid "Add new files to a temporary playlist"
 msgstr "Geçici çalma listesine yeni dosya ekleyin"
 
-#: src/audacious/main.c:1078
+#: src/audacious/main.c:1022
 msgid "Display the main window"
 msgstr "Ana pencereyi göster"
 
-#: src/audacious/main.c:1079
+#: src/audacious/main.c:1023
 msgid "Display all open Audacious windows"
 msgstr "Açık olan tüm Audacious pencerelerini göster"
 
-#: src/audacious/main.c:1080
+#: src/audacious/main.c:1024
 msgid "Enable headless operation"
 msgstr "Başsız uygulamaları etkinleştir"
 
-#: src/audacious/main.c:1081
+#: src/audacious/main.c:1025
 msgid "Print all errors and warnings to stdout"
 msgstr "Tüm hata ve uyarıları stdout'a bas"
 
-#: src/audacious/main.c:1082
+#: src/audacious/main.c:1026
 msgid "Show version and builtin features"
 msgstr "Sürüm ve tümleşik özellikleri göster"
 
-#: src/audacious/main.c:1083
+#: src/audacious/main.c:1027
 msgid "FILE..."
 msgstr "DOSYA..."
 
-#: src/audacious/main.c:1316
+#: src/audacious/main.c:1260
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -180,7 +180,7 @@ msgstr ""
 "%s adresindeki kabuğun kullanılabilir olduğunu ve %s adresindeki öntanımlı "
 "kabuğun doğru kurulduğunu gözden geçirin.\n"
 
-#: src/audacious/main.c:1397
+#: src/audacious/main.c:1341
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -193,11 +193,11 @@ msgstr ""
 "Libc5 yüklü linux sisteminde ve Linux İş Parçacıklarını yüklemeden önce Glib "
 "& GTK+'yı yüklemişseniz Glib & GTK+'yı yeniden derlemeniz gerekmektedir.\n"
 
-#: src/audacious/main.c:1428
+#: src/audacious/main.c:1372
 msgid "- play multimedia files"
 msgstr "- çoklu ortam dosyaları çal"
 
-#: src/audacious/main.c:1435
+#: src/audacious/main.c:1379
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -206,7 +206,7 @@ msgstr ""
 "%s: %s\n"
 "Daha fazla bilgi için `%s --help' komutunu deneyin.\n"
 
-#: src/audacious/main.c:1445
+#: src/audacious/main.c:1389
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Görüntü açılamıyor, çıkılıyor.\n"
@@ -219,7 +219,7 @@ msgstr ""
 "<b><big>Hiçbir çıkış eklentisi seçilmedi.</big></b>\n"
 "Çıkış eklentisi seçmediniz."
 
-#: src/audacious/signals.c:49
+#: src/audacious/signals.c:45
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -238,14 +238,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/signals.c:80
+#: src/audacious/signals.c:76
 msgid ""
 "\n"
 "Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
 "product.\n"
 msgstr ""
 
-#: src/audacious/signals.c:266
+#: src/audacious/signals.c:262
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
@@ -267,12 +267,12 @@ msgstr ""
 "\n"
 "Telif Hakkı (C) 2005-2006 Audacious Geliştirme Ekibi"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:362
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:363
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
 msgstr "Audacious Hakkında"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:405
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:406
 msgid "Credits"
 msgstr "Yazarlar"
 
@@ -358,99 +358,99 @@ msgstr "Fince:"
 msgid "French:"
 msgstr "Fransızca:"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:191
 msgid "German:"
 msgstr "Almanca:"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Georgian:"
 msgstr "Georgian:"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Greek:"
 msgstr "Yunanca:"
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:204
 msgid "Hindi:"
 msgstr "Hintçe:"
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:207
 msgid "Hungarian:"
 msgstr "Macarca:"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:210
 msgid "Italian:"
 msgstr "İtalyanca:"
 
-#: src/audacious/ui_credits.c:213
+#: src/audacious/ui_credits.c:214
 msgid "Japanese:"
 msgstr "Japonca:"
 
-#: src/audacious/ui_credits.c:216
+#: src/audacious/ui_credits.c:217
 msgid "Korean:"
 msgstr "Korece:"
 
-#: src/audacious/ui_credits.c:219
+#: src/audacious/ui_credits.c:220
 msgid "Lithuanian:"
 msgstr "Litvanca:"
 
-#: src/audacious/ui_credits.c:222
+#: src/audacious/ui_credits.c:223
 msgid "Macedonian:"
 msgstr "Makedonca:"
 
-#: src/audacious/ui_credits.c:225
+#: src/audacious/ui_credits.c:226
 msgid "Polish:"
 msgstr "Polonca:"
 
-#: src/audacious/ui_credits.c:228
+#: src/audacious/ui_credits.c:229
 msgid "Romanian:"
 msgstr "Romanca:"
 
-#: src/audacious/ui_credits.c:232
+#: src/audacious/ui_credits.c:233
 msgid "Russian:"
 msgstr "Rusça:"
 
-#: src/audacious/ui_credits.c:235
+#: src/audacious/ui_credits.c:236
 msgid "Serbian (Latin):"
 msgstr "Sırpça (Latin):"
 
-#: src/audacious/ui_credits.c:238
+#: src/audacious/ui_credits.c:239
 msgid "Serbian (Cyrillic):"
 msgstr "Sırpça (Cyrillic):"
 
-#: src/audacious/ui_credits.c:241
+#: src/audacious/ui_credits.c:242
 msgid "Simplified Chinese:"
 msgstr "Basitleştirilmiş Çince:"
 
-#: src/audacious/ui_credits.c:244
+#: src/audacious/ui_credits.c:245
 msgid "Slovak:"
 msgstr "Slovakça:"
 
-#: src/audacious/ui_credits.c:247
+#: src/audacious/ui_credits.c:248
 msgid "Spanish:"
 msgstr "İspanyolca:"
 
-#: src/audacious/ui_credits.c:250
+#: src/audacious/ui_credits.c:251
 msgid "Swedish:"
 msgstr "İsveçce:"
 
-#: src/audacious/ui_credits.c:253
+#: src/audacious/ui_credits.c:254
 msgid "Traditional Chinese:"
 msgstr "Geleneksel Çince:"
 
-#: src/audacious/ui_credits.c:256
+#: src/audacious/ui_credits.c:257
 msgid "Turkish:"
 msgstr "Türkçe:"
 
-#: src/audacious/ui_credits.c:260
+#: src/audacious/ui_credits.c:261
 msgid "Ukrainian:"
 msgstr "Ukraynaca:"
 
-#: src/audacious/ui_credits.c:263
+#: src/audacious/ui_credits.c:264
 msgid "Welsh:"
 msgstr "Galce:"
 
-#: src/audacious/ui_credits.c:409
+#: src/audacious/ui_credits.c:410
 msgid "Translators"
 msgstr "Çevirmenler"
 
@@ -462,89 +462,99 @@ msgstr "Audacios Ekolayzır"
 msgid "Presets"
 msgstr "Ayarlar"
 
-#: src/audacious/ui_fileinfo.c:162 src/audacious/ui_fileinfo.c:463
-#: src/audacious/ui_fileinfo.c:466
+#: src/audacious/ui_fileinfo.c:163 src/audacious/ui_fileinfo.c:469
+#: src/audacious/ui_fileinfo.c:472 src/audacious/ui_fileinfo.c:475
 #, fuzzy
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">Yıl</span>"
 
-#: src/audacious/ui_fileinfo.c:271
+#: src/audacious/ui_fileinfo.c:273
 msgid "Metadata updated successfully"
 msgstr ""
 
-#: src/audacious/ui_fileinfo.c:277
+#: src/audacious/ui_fileinfo.c:279
 msgid "Metadata updating failed"
 msgstr ""
 
-#: src/audacious/ui_fileinfo.c:409
+#: src/audacious/ui_fileinfo.c:412
 msgid "Track Information"
 msgstr "Parça Bilgisi"
 
-#: src/audacious/ui_fileinfo.c:436
+#: src/audacious/ui_fileinfo.c:439
 #, fuzzy
 msgid "<span size=\"small\">General</span>"
 msgstr "<span size=\"small\">Tarz</span>"
 
-#: src/audacious/ui_fileinfo.c:456
+#: src/audacious/ui_fileinfo.c:459
 #, fuzzy
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Yorum</span>"
 
-#: src/audacious/ui_fileinfo.c:459
+#: src/audacious/ui_fileinfo.c:462
 #, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Başlık</span>"
 
-#: src/audacious/ui_fileinfo.c:483
+#: src/audacious/ui_fileinfo.c:465
+#, fuzzy
+msgid "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Yorum</span>"
+
+#: src/audacious/ui_fileinfo.c:498
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Başlık</span>"
 
-#: src/audacious/ui_fileinfo.c:495
+#: src/audacious/ui_fileinfo.c:510
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Sanatçı</span>"
 
-#: src/audacious/ui_fileinfo.c:507
+#: src/audacious/ui_fileinfo.c:522
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Albüm</span>"
 
-#: src/audacious/ui_fileinfo.c:519
+#: src/audacious/ui_fileinfo.c:534
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Yorum</span>"
 
-#: src/audacious/ui_fileinfo.c:531
+#: src/audacious/ui_fileinfo.c:546
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Tarz</span>"
 
-#: src/audacious/ui_fileinfo.c:550
+#: src/audacious/ui_fileinfo.c:565
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Yıl</span>"
 
-#: src/audacious/ui_fileinfo.c:563
+#: src/audacious/ui_fileinfo.c:578
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Parça Numarası</span>"
 
-#: src/audacious/ui_fileinfo.c:576
+#: src/audacious/ui_fileinfo.c:591
 msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Konum</span>"
 
+#: src/audacious/ui_fileinfo.c:673
+#, c-format
+msgid "%d kb/s"
+msgstr ""
+
 #: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:140
 msgid "Title"
 msgstr "Başlık"
 
-#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:139
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:138
 msgid "Artist"
 msgstr "Sanatçı"
 
-#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:140
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:139
 msgid "Album"
 msgstr "Albüm"
 
-#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:142
 msgid "Genre"
 msgstr "Tarz"
 
-#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:147
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:146
 msgid "Year"
 msgstr "Yıl"
 
@@ -556,8 +566,8 @@ msgstr "Parça Numarası"
 msgid "Track Length"
 msgstr "Parça Uzunluğu"
 
-#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:144
-#: src/audacious/ui_preferences.c:426
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:425
 msgid "Filename"
 msgstr "Dosya adı"
 
@@ -994,7 +1004,7 @@ msgid "Peaks Falloff"
 msgstr "Peaks Falloff"
 
 #: src/audacious/ui_manager.c:203 src/audacious/ui_playlist_manager.c:402
-#: src/audacious/ui_preferences.c:132 src/audacious/ui_preferences.c:2434
+#: src/audacious/ui_preferences.c:131 src/audacious/ui_preferences.c:2387
 msgid "Playlist"
 msgstr "Parça Listesi"
 
@@ -1111,59 +1121,59 @@ msgid "Deselects all of the playlist entries."
 msgstr "Çalma listesindeki tüm girdileri seçilmemiş yapar."
 
 #: src/audacious/ui_manager.c:270
+msgid "Remove All"
+msgstr "Hepsini Kaldır"
+
+#: src/audacious/ui_manager.c:271
+msgid "Removes all entries from the playlist."
+msgstr "Çalma listesindeki tüm girdileri kaldırır."
+
+#: src/audacious/ui_manager.c:274
 msgid "Clear Queue"
 msgstr "Kuyruğu Temizle"
 
-#: src/audacious/ui_manager.c:271
+#: src/audacious/ui_manager.c:275
 msgid "Clears the queue associated with this playlist."
 msgstr "Çalma listesi ile eşleşmiş kuyruğu temizler."
 
-#: src/audacious/ui_manager.c:274
+#: src/audacious/ui_manager.c:278
 msgid "Remove Unavailable Files"
 msgstr "Olmayan Dosyaları Kaldır"
 
-#: src/audacious/ui_manager.c:275
+#: src/audacious/ui_manager.c:279
 msgid "Removes unavailable files from the playlist."
 msgstr "Çalma listesinde olmayan dosyaları kaldırır."
 
-#: src/audacious/ui_manager.c:278
+#: src/audacious/ui_manager.c:282
 msgid "Remove Duplicates"
 msgstr "Kopyaları Kaldır"
 
-#: src/audacious/ui_manager.c:280 src/audacious/ui_manager.c:316
+#: src/audacious/ui_manager.c:284 src/audacious/ui_manager.c:316
 #: src/audacious/ui_manager.c:346
 msgid "By Title"
 msgstr "Başlığa göre"
 
-#: src/audacious/ui_manager.c:281
+#: src/audacious/ui_manager.c:285
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "Başlık olarak aynı olan girdileri çalma listesinde kaldırır."
 
-#: src/audacious/ui_manager.c:284 src/audacious/ui_manager.c:324
+#: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:324
 #: src/audacious/ui_manager.c:354
 msgid "By Filename"
 msgstr "Dosya adına göre"
 
-#: src/audacious/ui_manager.c:285
+#: src/audacious/ui_manager.c:289
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "Dosya adı aynı olan girdileri çalma listesinden kaldırır."
 
-#: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:328
+#: src/audacious/ui_manager.c:292 src/audacious/ui_manager.c:328
 #: src/audacious/ui_manager.c:358
 msgid "By Path + Filename"
 msgstr "Yol + Dosya adına göre"
 
-#: src/audacious/ui_manager.c:289
+#: src/audacious/ui_manager.c:293
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "Tam yolu aynı olan girdileri çalma listesinden kaldırır."
-
-#: src/audacious/ui_manager.c:292
-msgid "Remove All"
-msgstr "Hepsini Kaldır"
-
-#: src/audacious/ui_manager.c:293
-msgid "Removes all entries from the playlist."
-msgstr "Çalma listesindeki tüm girdileri kaldırır."
 
 #: src/audacious/ui_manager.c:296
 msgid "Remove Unselected"
@@ -1542,7 +1552,7 @@ msgstr "Girdiler"
 msgid "_Rename"
 msgstr "_Yeniden adlandır"
 
-#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:2319
+#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:2272
 msgid "Appearance"
 msgstr "Görünüm"
 
@@ -1554,72 +1564,68 @@ msgstr "Ses"
 msgid "Connectivity"
 msgstr "Bağlantı"
 
-#: src/audacious/ui_preferences.c:130 src/audacious/ui_preferences.c:2489
-msgid "Equalizer"
-msgstr "Ekolayzır"
-
-#: src/audacious/ui_preferences.c:131 src/audacious/ui_preferences.c:2330
+#: src/audacious/ui_preferences.c:130 src/audacious/ui_preferences.c:2283
 msgid "Mouse"
 msgstr "Fare"
 
-#: src/audacious/ui_preferences.c:133 src/audacious/ui_preferences.c:2193
+#: src/audacious/ui_preferences.c:132 src/audacious/ui_preferences.c:2146
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:141
 msgid "Tracknumber"
 msgstr "Parça numarası"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:144
 msgid "Filepath"
 msgstr "Dosya yolu"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:145
 msgid "Date"
 msgstr "Tarih"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:147
 msgid "Comment"
 msgstr "Yorum"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:148
 msgid "Codec"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:149
 #, fuzzy
 msgid "Quality"
 msgstr "_Çık"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:187
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>_Çeşitli</b>"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:188
 msgid "Show track numbers in playlist"
 msgstr "Parça listesinde parça numaralarını göster"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:190
 msgid "Show separators in playlist"
 msgstr "Parça listesinde ayırıcıları göster"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:192
 msgid "Use custom cursors"
 msgstr "Özel imleçleri kullan"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:193
 msgid "Show window manager decoration"
 msgstr "Pencere yöneticisi dekorasyonunu göster"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:194
 msgid "This enables the window manager to show decorations for windows."
 msgstr "Bu, pencere yöneticisini dekorasyon göstermek için etkinleştirir."
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:195
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr "Öntanımlı seçici yerine XMMS biçimi dosya seçicisi kullan"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:196
 msgid ""
 "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
 "provided by Audacious itself and is faster than the default GTK2 selector "
@@ -1629,26 +1635,26 @@ msgstr ""
 "Audacious'da kendiliğinden desteklenmiştir ve öntanımlı GTK2 seçiminden daha "
 "hızlıdır. (ancak kullanıcı dostu değildir)"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:197
 msgid "Use two-way text scroller"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:198
 msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:203
+#: src/audacious/ui_preferences.c:202
 msgid "<b>Format Detection</b>"
 msgstr "<b>Biçim Tanıma</b>"
 
-#: src/audacious/ui_preferences.c:204
+#: src/audacious/ui_preferences.c:203
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 "Dosya biçimlerini hemen saptamak yerine istekte bulunulduğu zaman sapta"
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:204
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
@@ -1657,11 +1663,11 @@ msgstr ""
 "hatalı bir çalma listesine sebep olabilir. Fakat, hız açısından büyük yarar "
 "sağlar"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:205
 msgid "Detect file formats by extension."
 msgstr "Uzantıya göre dosya biçimini belirle"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:206
 #, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
@@ -1669,99 +1675,99 @@ msgid ""
 msgstr ""
 "İşaretlendiğinde, Audacious, dosya formatlarını uzantıya göre saptayacak."
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:207
 msgid "<b>Playback</b>"
 msgstr "<b>Oynat</b>"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:208
 msgid "Continue playback on startup"
 msgstr "Başlangıçta çalmaya devam et"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:209
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr "Audacious başladığında, en son kaldığı yerden çalmaya devam et."
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:210
 msgid "Don't advance in the playlist"
 msgstr "Çalma listesinde ilerleme"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:211
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
 "Bir şarkının çalınması sonlandığında, otomati olarak bir sonraki şarkıya "
 "geçme."
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:212
 msgid "Pause between songs"
 msgstr "Şarkılar arasında durakla"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:213
 msgid "Pause for"
 msgstr "Durakla"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:213
 msgid "seconds"
 msgstr "saniye"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Filename</b>"
 msgstr "<b>Dosya adı</b>"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:218
 msgid "Convert underscores to blanks"
 msgstr "Alt çizgileri boşluklara çevir"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:219
 msgid "Convert %20 to blanks"
 msgstr "%20 karakterlerini boşluklara çevir"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:220
 msgid "Convert backslash '\\' to forward slash '/'"
 msgstr "Backslash '\\'ı slash '/' olarak çevir"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:221
 msgid "<b>Metadata</b>"
 msgstr "<b>Müzik bilgisi</b>"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:222
 msgid "Load metadata from playlists and files"
 msgstr "Parça bilgisini parça listelerinden ve dosyalardan yükle"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:222
 msgid "Load metadata (tag information) from music files."
 msgstr "Müzik bilgisini (etiket bilgisi) müzik dosyalarından yükle"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "On load"
 msgstr "Yüklendiğinde"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
 "Parça bilgisini, parça listesine eklenirken veya parça açılırken yükle."
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:224
 msgid "On display"
 msgstr "Gösterildiğinde"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:224
 #, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr "Parça bilgisini parça listesinde gösterilirken ve istenildiğinde yükle"
 
-#: src/audacious/ui_preferences.c:227
+#: src/audacious/ui_preferences.c:226
 msgid "<b>File Dialog</b>"
 msgstr "<b>Dosya Penceresi</b>"
 
-#: src/audacious/ui_preferences.c:228
+#: src/audacious/ui_preferences.c:227
 msgid "Always refresh directory when opening file dialog"
 msgstr "Dosya penceresi açıldığında her zaman dizini yenile"
 
-#: src/audacious/ui_preferences.c:228
+#: src/audacious/ui_preferences.c:227
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
@@ -1769,43 +1775,43 @@ msgstr ""
 "Dosya penceresini her zaman yenile (bu büyük klasörleri açarken yavaş "
 "çalışacak ve Gnome VFS otomatik olarak algılamalı)"
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:231
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Fare tekerleği</b>"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:232
 msgid "Changes volume by"
 msgstr "Ses değişikliği"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:232
 msgid "percent"
 msgstr "yüzde"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "Scrolls playlist by"
 msgstr "Parça listesi kaydırma"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "lines"
 msgstr "satır"
 
-#: src/audacious/ui_preferences.c:396
+#: src/audacious/ui_preferences.c:395
 msgid "Enabled"
 msgstr "Etkin"
 
-#: src/audacious/ui_preferences.c:412
+#: src/audacious/ui_preferences.c:411
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/audacious/ui_preferences.c:1016
+#: src/audacious/ui_preferences.c:980
 msgid "Category"
 msgstr "Kategori"
 
-#: src/audacious/ui_preferences.c:1370
+#: src/audacious/ui_preferences.c:1336
 msgid "Color Adjustment"
 msgstr "Renk Düzenleme"
 
-#: src/audacious/ui_preferences.c:1377
+#: src/audacious/ui_preferences.c:1343
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
@@ -1813,27 +1819,27 @@ msgstr ""
 "Audacious, arayüzün renk dengesini değiştirmenize olanak sağlar. Alttaki "
 "kaydırıcılar sayesinde bunu yapabilirsiniz."
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1353
 msgid "Blue"
 msgstr "Mavi"
 
-#: src/audacious/ui_preferences.c:1394
+#: src/audacious/ui_preferences.c:1360
 msgid "Green"
 msgstr "Yeşil"
 
-#: src/audacious/ui_preferences.c:1401
+#: src/audacious/ui_preferences.c:1367
 msgid "Red"
 msgstr "Kırmızı"
 
-#: src/audacious/ui_preferences.c:1484
+#: src/audacious/ui_preferences.c:1450
 msgid "Popup Information Settings"
 msgstr "Açılır Pencere Bilgisi Ayarları"
 
-#: src/audacious/ui_preferences.c:1493
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Kapak resmi getirme</b>"
 
-#: src/audacious/ui_preferences.c:1498
+#: src/audacious/ui_preferences.c:1464
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1842,43 +1848,43 @@ msgstr ""
 "Albüm kapakları için ararken, Audacious dosya ismindeki belirli kelimeleri "
 "kullanır. Bu kelimeleri, altta virgülle ayrılmış listede belirtebilirsiniz."
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1481
 msgid "Exclude:"
 msgstr "Dahil etme:"
 
-#: src/audacious/ui_preferences.c:1522
+#: src/audacious/ui_preferences.c:1488
 msgid "Include:"
 msgstr "Dahil et:"
 
-#: src/audacious/ui_preferences.c:1539
+#: src/audacious/ui_preferences.c:1505
 msgid "Recursively search for cover"
 msgstr "Kapak için özyinelemeli olarak ara"
 
-#: src/audacious/ui_preferences.c:1549
+#: src/audacious/ui_preferences.c:1515
 msgid "Search depth: "
 msgstr "Derinliği araştır:"
 
-#: src/audacious/ui_preferences.c:1562
+#: src/audacious/ui_preferences.c:1528
 msgid "Use per-file cover"
 msgstr "Her dosya için kapak kullan"
 
-#: src/audacious/ui_preferences.c:1565
+#: src/audacious/ui_preferences.c:1531
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Çeşitli</b>"
 
-#: src/audacious/ui_preferences.c:1574
+#: src/audacious/ui_preferences.c:1540
 msgid "Show Progress bar for the current track"
 msgstr "Şuan çalan parça için İlerleme Çubuğunu göster"
 
-#: src/audacious/ui_preferences.c:1584
+#: src/audacious/ui_preferences.c:1550
 msgid "Delay until filepopup comes up: "
 msgstr "Popup pencere açılana kadar bekle"
 
-#: src/audacious/ui_preferences.c:1629
+#: src/audacious/ui_preferences.c:1595
 msgid "Auto character encoding detector for:"
 msgstr "Otomatik karakter kodlama bulucu:"
 
-#: src/audacious/ui_preferences.c:1648
+#: src/audacious/ui_preferences.c:1614
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1890,80 +1896,80 @@ msgstr ""
 "akitf değilse, bu listedeki kodlamalar metadata kodlaması olarak varsayılır "
 "ve bu kodlamalardan UTF-8'e geri düşüm dönüşümü denenir."
 
-#: src/audacious/ui_preferences.c:1650
+#: src/audacious/ui_preferences.c:1616
 msgid "Fallback character encodings:"
 msgstr "Fallback karakter kodlaması:"
 
-#: src/audacious/ui_preferences.c:1990
+#: src/audacious/ui_preferences.c:1943
 msgid "Audacious Preferences"
 msgstr "Audacious Seçenekleri"
 
-#: src/audacious/ui_preferences.c:2032
+#: src/audacious/ui_preferences.c:1985
 msgid "_Decoder list:"
 msgstr "_Çözümleyici listesi:"
 
-#: src/audacious/ui_preferences.c:2062
+#: src/audacious/ui_preferences.c:2015
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Çözümleyiciler</b></span>"
 
-#: src/audacious/ui_preferences.c:2075
+#: src/audacious/ui_preferences.c:2028
 msgid "_General plugin list:"
 msgstr "_Genel eklenti listesi:"
 
-#: src/audacious/ui_preferences.c:2105
+#: src/audacious/ui_preferences.c:2058
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Genel</b></span>"
 
-#: src/audacious/ui_preferences.c:2117
+#: src/audacious/ui_preferences.c:2070
 msgid "_Visualization plugin list:"
 msgstr "_Canlandırma eklenti listesi:"
 
-#: src/audacious/ui_preferences.c:2147
+#: src/audacious/ui_preferences.c:2100
 msgid "<b>Visualization</b>"
 msgstr "<b>Canlandırma</b>"
 
-#: src/audacious/ui_preferences.c:2159
+#: src/audacious/ui_preferences.c:2112
 msgid "_Effect plugin list:"
 msgstr "_Efekt eklenti listesi:"
 
-#: src/audacious/ui_preferences.c:2189
+#: src/audacious/ui_preferences.c:2142
 msgid "<b>Effects</b>"
 msgstr "<b>Efektler</b>"
 
-#: src/audacious/ui_preferences.c:2215
+#: src/audacious/ui_preferences.c:2168
 msgid "<b>_Skin</b>"
 msgstr "<b>_Kabuk</b>"
 
-#: src/audacious/ui_preferences.c:2229
+#: src/audacious/ui_preferences.c:2182
 msgid "Refresh skin list"
 msgstr "Kabuk listesini tazele"
 
-#: src/audacious/ui_preferences.c:2257
+#: src/audacious/ui_preferences.c:2210
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Yazı Tipleri</b>"
 
-#: src/audacious/ui_preferences.c:2273
+#: src/audacious/ui_preferences.c:2226
 msgid "_Player:"
 msgstr "_Oynatıcı:"
 
-#: src/audacious/ui_preferences.c:2284
+#: src/audacious/ui_preferences.c:2237
 msgid "_Playlist:"
 msgstr "_Parça Listesi:"
 
-#: src/audacious/ui_preferences.c:2294
+#: src/audacious/ui_preferences.c:2247
 msgid "Select main player window font:"
 msgstr "Ana çalıcı penceresi yazı tipini seç:"
 
-#: src/audacious/ui_preferences.c:2302
+#: src/audacious/ui_preferences.c:2255
 #, fuzzy
 msgid "Select playlist font:"
 msgstr "Ana çalıcı penceresi yazı tipini seç:"
 
-#: src/audacious/ui_preferences.c:2310
+#: src/audacious/ui_preferences.c:2263
 msgid "Use Bitmap fonts if available"
 msgstr "Kullanılabilir ise Bitmap yazı tiplerini kullan"
 
-#: src/audacious/ui_preferences.c:2312
+#: src/audacious/ui_preferences.c:2265
 msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
@@ -1971,60 +1977,60 @@ msgstr ""
 "Kullanılabilir ise bitmap yazı tiplerini kullan. Bitmap yazı tipleri Unicode "
 "yazıları desteklemez."
 
-#: src/audacious/ui_preferences.c:2345
+#: src/audacious/ui_preferences.c:2298
 msgid "<b>Song Display</b>"
 msgstr "<b>Parça Göster</b>"
 
-#: src/audacious/ui_preferences.c:2364
+#: src/audacious/ui_preferences.c:2317
 msgid "Show information about titlestring format"
 msgstr "Başlık dizisi biçimi hakkında daha fazla bilgi göster"
 
-#: src/audacious/ui_preferences.c:2375
+#: src/audacious/ui_preferences.c:2328
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2376
+#: src/audacious/ui_preferences.c:2329
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2377
+#: src/audacious/ui_preferences.c:2330
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2378
+#: src/audacious/ui_preferences.c:2331
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2379
+#: src/audacious/ui_preferences.c:2332
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2380
+#: src/audacious/ui_preferences.c:2333
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2381
+#: src/audacious/ui_preferences.c:2334
 #, fuzzy
 msgid "Custom"
 msgstr "Özel dizi:"
 
-#: src/audacious/ui_preferences.c:2388
+#: src/audacious/ui_preferences.c:2341
 msgid "Custom string:"
 msgstr "Özel dizi:"
 
-#: src/audacious/ui_preferences.c:2395
+#: src/audacious/ui_preferences.c:2348
 msgid "Title format:"
 msgstr "Başlık biçimi:"
 
-#: src/audacious/ui_preferences.c:2406
+#: src/audacious/ui_preferences.c:2359
 msgid "<b>Popup Information</b>"
 msgstr "<b>Küçük Bilgi</b>"
 
-#: src/audacious/ui_preferences.c:2421
+#: src/audacious/ui_preferences.c:2374
 msgid "Show popup information for playlist entries"
 msgstr "Parça listesi girdileri için küçük bilgi göster"
 
-#: src/audacious/ui_preferences.c:2423
+#: src/audacious/ui_preferences.c:2376
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -2034,51 +2040,39 @@ msgstr ""
 "Pencere, şarkı başlığını, albüm adını, türünü, yayınlanma yılını, parça "
 "uzunluğunu ve resimi gösterir."
 
-#: src/audacious/ui_preferences.c:2428
+#: src/audacious/ui_preferences.c:2381
 msgid "Edit settings for popup information"
 msgstr "Küçük bilgi için ayarları düzenle"
 
-#: src/audacious/ui_preferences.c:2450
-msgid "<b>Presets</b>"
-msgstr "<b>Ayarlar</b>"
-
-#: src/audacious/ui_preferences.c:2467
-msgid "File preset extension:"
-msgstr "Dosya ayar uzantısı"
-
-#: src/audacious/ui_preferences.c:2473
-msgid "Directory preset file:"
-msgstr "Dizin ayar dosyası:"
-
-#: src/audacious/ui_preferences.c:2502
+#: src/audacious/ui_preferences.c:2400
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Vekil Sunucu Seçenekleri</b>"
 
-#: src/audacious/ui_preferences.c:2518
+#: src/audacious/ui_preferences.c:2416
 msgid "Enable proxy usage"
 msgstr "Vekil sunucu kullanımını etkinleştir"
 
-#: src/audacious/ui_preferences.c:2536
+#: src/audacious/ui_preferences.c:2434
 msgid "Proxy port:"
 msgstr "Vekil sunucu port'u:"
 
-#: src/audacious/ui_preferences.c:2542
+#: src/audacious/ui_preferences.c:2440
 msgid "Proxy hostname:"
 msgstr "Vekil sunucu adı:"
 
-#: src/audacious/ui_preferences.c:2552
+#: src/audacious/ui_preferences.c:2450
 msgid "Use authentication with proxy"
 msgstr "Vekil sunucu ile yetkilendirme kullan"
 
-#: src/audacious/ui_preferences.c:2571
+#: src/audacious/ui_preferences.c:2469
 msgid "Proxy password:"
 msgstr "Vekil sunucu parolası:"
 
-#: src/audacious/ui_preferences.c:2577
+#: src/audacious/ui_preferences.c:2475
 msgid "Proxy username:"
 msgstr "Vekil sunucu kullanıcı adı:"
 
-#: src/audacious/ui_preferences.c:2594
+#: src/audacious/ui_preferences.c:2492
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -2086,15 +2080,15 @@ msgstr ""
 "<span size=\"small\">Bu ayarların değiştirilmesi Audacious'un yeniden "
 "başlatılmasını gerektirecek.</span>"
 
-#: src/audacious/ui_preferences.c:2625
+#: src/audacious/ui_preferences.c:2523
 msgid "<b>Audio System</b>"
 msgstr "<b>Ses Sistemi</b>"
 
-#: src/audacious/ui_preferences.c:2648
+#: src/audacious/ui_preferences.c:2546
 msgid "Buffer size:"
 msgstr "Arabellek büyüklüğü:"
 
-#: src/audacious/ui_preferences.c:2654
+#: src/audacious/ui_preferences.c:2552
 #, fuzzy
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
@@ -2109,77 +2103,77 @@ msgstr ""
 "Ancak, yüksek bir değer Audacious'ın düşük performans göstermesine neden "
 "olabilir.</span>"
 
-#: src/audacious/ui_preferences.c:2673
+#: src/audacious/ui_preferences.c:2571
 msgid "Current output plugin:"
 msgstr "Şu anki çıkış eklentisi:"
 
-#: src/audacious/ui_preferences.c:2702
+#: src/audacious/ui_preferences.c:2600
 msgid "Output Plugin Preferences"
 msgstr "Çıkış Eklentisi Seçenekleri"
 
-#: src/audacious/ui_preferences.c:2719
+#: src/audacious/ui_preferences.c:2617
 msgid "Output Plugin Information"
 msgstr "Çıkış Eklentisi Bilgisi"
 
-#: src/audacious/ui_preferences.c:2728
+#: src/audacious/ui_preferences.c:2626
 msgid "<b>Sampling Rate Converter</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2737
+#: src/audacious/ui_preferences.c:2635
 msgid "Enable Sampling Rate Converter"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2757
+#: src/audacious/ui_preferences.c:2655
 msgid "Best Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2758
+#: src/audacious/ui_preferences.c:2656
 msgid "Medium Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2759
+#: src/audacious/ui_preferences.c:2657
 msgid "Fastest Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2760
+#: src/audacious/ui_preferences.c:2658
 msgid "ZOH Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2761
+#: src/audacious/ui_preferences.c:2659
 msgid "Linear Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2763
+#: src/audacious/ui_preferences.c:2661
 msgid "Interpolation Engine:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2769
+#: src/audacious/ui_preferences.c:2667
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2789
+#: src/audacious/ui_preferences.c:2687
 msgid "Sampling Rate [Hz]:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2799
+#: src/audacious/ui_preferences.c:2697
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "<b>Fare tekerleği</b>"
 
-#: src/audacious/ui_preferences.c:2808
+#: src/audacious/ui_preferences.c:2706
 msgid "Use software volume control"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2810
+#: src/audacious/ui_preferences.c:2708
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2843
+#: src/audacious/ui_preferences.c:2741
 msgid "Reload Plugins"
 msgstr "Eklentileri yeniden yükle"
 
@@ -2238,6 +2232,18 @@ msgstr "Winamp 2.x kabuğu açıldı"
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
 msgstr "URL penceresini Ekle/Aç"
+
+#~ msgid "Equalizer"
+#~ msgstr "Ekolayzır"
+
+#~ msgid "<b>Presets</b>"
+#~ msgstr "<b>Ayarlar</b>"
+
+#~ msgid "File preset extension:"
+#~ msgstr "Dosya ayar uzantısı"
+
+#~ msgid "Directory preset file:"
+#~ msgstr "Dizin ayar dosyası:"
 
 #~ msgid "localhost"
 #~ msgstr "localhost"

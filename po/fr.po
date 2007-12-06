@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-12-01 12:06+0100\n"
+"POT-Creation-Date: 2007-12-06 17:13+0100\n"
 "PO-Revision-Date: 2007-12-05 09:39+0100\n"
 "Last-Translator: Stany Henry <StrassBoy@gmail.com>\n"
 "Language-Team: \n"
@@ -40,154 +40,157 @@ msgstr "Module d'entrée : %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Impossible de créer le fichier journal (%s)!\n"
 
-#: src/audacious/main.c:90
-#: src/audacious/main.c:92
-#: src/audacious/ui_main.c:491
+#: src/audacious/main.c:89 src/audacious/main.c:91 src/audacious/ui_main.c:491
 #: src/audacious/ui_main.c:2524
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "None"
 msgstr "Néant"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "Japanese"
 msgstr "le japonais"
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:264
 msgid "Taiwanese"
 msgstr "le taïwanais"
 
-#: src/audacious/main.c:266
+#: src/audacious/main.c:265
 msgid "Chinese"
 msgstr "le chinois"
 
-#: src/audacious/main.c:267
+#: src/audacious/main.c:266
 msgid "Korean"
 msgstr "le coréen"
 
-#: src/audacious/main.c:268
+#: src/audacious/main.c:267
 msgid "Russian"
 msgstr "le russe"
 
-#: src/audacious/main.c:269
+#: src/audacious/main.c:268
 msgid "Greek"
 msgstr "le grec"
 
-#: src/audacious/main.c:270
+#: src/audacious/main.c:269
 msgid "Hebrew"
 msgstr "l'hébreu"
 
-#: src/audacious/main.c:271
+#: src/audacious/main.c:270
 msgid "Turkish"
 msgstr "le turc"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:271
 msgid "Arabic"
 msgstr "l'arabe"
 
-#: src/audacious/main.c:274
+#: src/audacious/main.c:273
 msgid "Universal"
 msgstr "Universel"
 
-#: src/audacious/main.c:480
+#: src/audacious/main.c:479
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Impossible de créer le répertoire (%s): %s\n"
 
-#: src/audacious/main.c:1068
+#: src/audacious/main.c:1012
 msgid "Select which Audacious session ID to use"
 msgstr "Choisir l'identifiant de la session Audacious à utiliser"
 
-#: src/audacious/main.c:1069
+#: src/audacious/main.c:1013
 msgid "Skip backwards in playlist"
 msgstr "Reculer dans la liste d'écoute"
 
-#: src/audacious/main.c:1070
+#: src/audacious/main.c:1014
 msgid "Start playing current playlist"
 msgstr "Commencer à lire la liste de lecture active"
 
-#: src/audacious/main.c:1071
+#: src/audacious/main.c:1015
 msgid "Pause current song"
 msgstr "Mettre en pause la chanson en cours de lecture"
 
-#: src/audacious/main.c:1072
+#: src/audacious/main.c:1016
 msgid "Stop current song"
 msgstr "Arrêter la chanson en cours de lecture"
 
-#: src/audacious/main.c:1073
+#: src/audacious/main.c:1017
 msgid "Pause if playing, play otherwise"
 msgstr "Mettre en pause, sinon commencer la lecture"
 
-#: src/audacious/main.c:1074
+#: src/audacious/main.c:1018
 msgid "Skip forward in playlist"
 msgstr "Avancer dans la liste de lecture"
 
-#: src/audacious/main.c:1075
+#: src/audacious/main.c:1019
 msgid "Display Jump to File dialog"
 msgstr "Afficher la fenêtre 'Aller au fichier...'"
 
-#: src/audacious/main.c:1076
+#: src/audacious/main.c:1020
 msgid "Don't clear the playlist"
 msgstr "Ne pas effacer la liste de lecture"
 
-#: src/audacious/main.c:1077
+#: src/audacious/main.c:1021
 msgid "Add new files to a temporary playlist"
 msgstr "Ajouter les nouveaux fichiers à une liste de lecture provisoire"
 
-#: src/audacious/main.c:1078
+#: src/audacious/main.c:1022
 msgid "Display the main window"
 msgstr "Afficher la fenêtre principale"
 
-#: src/audacious/main.c:1079
+#: src/audacious/main.c:1023
 msgid "Display all open Audacious windows"
 msgstr "Afficher toutes les fenêtres ouvertes d'Audacious"
 
-#: src/audacious/main.c:1080
+#: src/audacious/main.c:1024
 msgid "Enable headless operation"
 msgstr "Activer le mode 'serveur'"
 
-#: src/audacious/main.c:1081
+#: src/audacious/main.c:1025
 msgid "Print all errors and warnings to stdout"
 msgstr "Afficher toutes les erreurs et tous les avertissements dans 'stdout'"
 
-#: src/audacious/main.c:1082
+#: src/audacious/main.c:1026
 msgid "Show version and builtin features"
 msgstr "Afficher le numéro de version et les notes de compilation"
 
-#: src/audacious/main.c:1083
+#: src/audacious/main.c:1027
 msgid "FILE..."
 msgstr "FICHIER..."
 
-#: src/audacious/main.c:1316
+#: src/audacious/main.c:1260
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
 "\n"
-"Check that skin at '%s' is usable and default skin is properly installed at '%s'\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
 msgstr ""
 "<b><big>Impossible de charger le thème.</big></b>\n"
 "\n"
-"Vérifier que le thème '%s' est valide et que le thème par défaut est bien installé dans '%s'\n"
+"Vérifier que le thème '%s' est valide et que le thème par défaut est bien "
+"installé dans '%s'\n"
 
-#: src/audacious/main.c:1397
+#: src/audacious/main.c:1341
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
 "Désolé, mais votre plate-forme ne gère pas les processus multiples.\n"
 "\n"
-"Si vous utilisez un système Linux basé sur 'libc5' et que vous avez installé\n"
-"'Glib' et 'GTK+' avant 'LinuxThreads', vous devez recompiler 'Glib' et 'GTK+'.\n"
+"Si vous utilisez un système Linux basé sur 'libc5' et que vous avez "
+"installé\n"
+"'Glib' et 'GTK+' avant 'LinuxThreads', vous devez recompiler 'Glib' et 'GTK"
+"+'.\n"
 
-#: src/audacious/main.c:1428
+#: src/audacious/main.c:1372
 msgid "- play multimedia files"
 msgstr "- lire les fichiers multimédia"
 
-#: src/audacious/main.c:1435
+#: src/audacious/main.c:1379
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -196,7 +199,7 @@ msgstr ""
 "%s: %s\n"
 "Essayez '%s --help' pour davantage d'informations.\n"
 
-#: src/audacious/main.c:1445
+#: src/audacious/main.c:1389
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Impossible d'accéder à la session d'affichage.\n"
@@ -209,46 +212,59 @@ msgstr ""
 "<b><big>Aucun module de sortie n'a été sélectionné.</big></b>\n"
 "Vous n'avez pas choisi de module de sortie audio."
 
-#: src/audacious/signals.c:49
+#: src/audacious/signals.c:45
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
 "\n"
 "We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal circumstances.\n"
+"This is a bug in the program, and should never happen under normal "
+"circumstances.\n"
 "Your current configuration has been saved and should not be damaged.\n"
 "\n"
-"You can help improve the quality of Audacious by filing a bug at http://bugs-meta.atheme.org\n"
-"Please include the entire text of this message and a description of what you were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug report:\n"
+"You can help improve the quality of Audacious by filing a bug at http://bugs-"
+"meta.atheme.org\n"
+"Please include the entire text of this message and a description of what you "
+"were doing when\n"
+"this crash occured in order to quickly expedite the handling of your bug "
+"report:\n"
 "\n"
 msgstr ""
 "\n"
 "Audacious a reçu un signal 11 ('SIGSEGV').\n"
 "\n"
-"Nous sommes désolés pour ce désagrément, mais la session d'Audacious s'est interrompue.\n"
-"La situation résulte d'une erreur dans Audacious : elle ne devrait pas survenir dans des conditions normales.\n"
-"Votre configuration actuelle a toutefois été enregistrée : elle ne devrait pas avoir été altérée.\n"
+"Nous sommes désolés pour ce désagrément, mais la session d'Audacious s'est "
+"interrompue.\n"
+"La situation résulte d'une erreur dans Audacious : elle ne devrait pas "
+"survenir dans des conditions normales.\n"
+"Votre configuration actuelle a toutefois été enregistrée : elle ne devrait "
+"pas avoir été altérée.\n"
 "\n"
-"Vous pouvez nous aider à améliorer la qualité d'Audacious en soumettant cette erreur à l'adresse suivante : http://bugs-meta.atheme.org\n"
-"Veillez à joindre le message suivant à votre rapport, ainsi qu'une description (en anglais) de ce que vous faisiez\n"
-"lorsque cette erreur s'est produite, de manière à ce que nous puissions traiter votre rapport dans les plus brefs délais :\n"
+"Vous pouvez nous aider à améliorer la qualité d'Audacious en soumettant "
+"cette erreur à l'adresse suivante : http://bugs-meta.atheme.org\n"
+"Veillez à joindre le message suivant à votre rapport, ainsi qu'une "
+"description (en anglais) de ce que vous faisiez\n"
+"lorsque cette erreur s'est produite, de manière à ce que nous puissions "
+"traiter votre rapport dans les plus brefs délais :\n"
 "\n"
 
-#: src/audacious/signals.c:80
+#: src/audacious/signals.c:76
 msgid ""
 "\n"
-"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious product.\n"
+"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
+"product.\n"
 msgstr ""
 "\n"
-"Les erreurs relatives à Audacious peuvent être soumises à l'adresse suivantes : http://bugs-meta.atheme.org\n"
+"Les erreurs relatives à Audacious peuvent être soumises à l'adresse "
+"suivantes : http://bugs-meta.atheme.org\n"
 
-#: src/audacious/signals.c:266
+#: src/audacious/signals.c:262
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
 msgstr ""
-"Le système de gestion des signaux d'erreur de votre système semble corrompu.\n"
+"Le système de gestion des signaux d'erreur de votre système semble "
+"corrompu.\n"
 "Attendez-vous à des rapports d'erreurs inutilisables.\n"
 
 #: src/audacious/strings.c:170
@@ -266,15 +282,12 @@ msgstr ""
 "\n"
 "Droits d'utilisation : Équipe de Développement Audacious (2005-2007)"
 
-#: src/audacious/ui_about.c:125
-#: src/audacious/ui_credits.c:362
-#: src/audacious/ui_manager.c:391
-#: src/audacious/ui_manager.c:392
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:363
+#: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
 msgstr "À propos d'Audacious"
 
-#: src/audacious/ui_about.c:174
-#: src/audacious/ui_credits.c:405
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:406
 msgid "Credits"
 msgstr "Crédits"
 
@@ -360,99 +373,99 @@ msgstr "Finlandais :"
 msgid "French:"
 msgstr "Français :"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:191
 msgid "German:"
 msgstr "Allemand :"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Georgian:"
 msgstr "Géorgien :"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Greek:"
 msgstr "Grec :"
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:204
 msgid "Hindi:"
 msgstr "Hindi :"
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:207
 msgid "Hungarian:"
 msgstr "Hongrois :"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:210
 msgid "Italian:"
 msgstr "Italien :"
 
-#: src/audacious/ui_credits.c:213
+#: src/audacious/ui_credits.c:214
 msgid "Japanese:"
 msgstr "Japonais :"
 
-#: src/audacious/ui_credits.c:216
+#: src/audacious/ui_credits.c:217
 msgid "Korean:"
 msgstr "Koréenn :"
 
-#: src/audacious/ui_credits.c:219
+#: src/audacious/ui_credits.c:220
 msgid "Lithuanian:"
 msgstr "Lituanien :"
 
-#: src/audacious/ui_credits.c:222
+#: src/audacious/ui_credits.c:223
 msgid "Macedonian:"
 msgstr "Macédonien :"
 
-#: src/audacious/ui_credits.c:225
+#: src/audacious/ui_credits.c:226
 msgid "Polish:"
 msgstr "Polonais :"
 
-#: src/audacious/ui_credits.c:228
+#: src/audacious/ui_credits.c:229
 msgid "Romanian:"
 msgstr "Roumain :"
 
-#: src/audacious/ui_credits.c:232
+#: src/audacious/ui_credits.c:233
 msgid "Russian:"
 msgstr "Russe :"
 
-#: src/audacious/ui_credits.c:235
+#: src/audacious/ui_credits.c:236
 msgid "Serbian (Latin):"
 msgstr "Serbe (latin) :"
 
-#: src/audacious/ui_credits.c:238
+#: src/audacious/ui_credits.c:239
 msgid "Serbian (Cyrillic):"
 msgstr "Serbe (cyrillique) :"
 
-#: src/audacious/ui_credits.c:241
+#: src/audacious/ui_credits.c:242
 msgid "Simplified Chinese:"
 msgstr "Chinois simplifié :"
 
-#: src/audacious/ui_credits.c:244
+#: src/audacious/ui_credits.c:245
 msgid "Slovak:"
 msgstr "Slovaque :"
 
-#: src/audacious/ui_credits.c:247
+#: src/audacious/ui_credits.c:248
 msgid "Spanish:"
 msgstr "Espagnol :"
 
-#: src/audacious/ui_credits.c:250
+#: src/audacious/ui_credits.c:251
 msgid "Swedish:"
 msgstr "Suédois :"
 
-#: src/audacious/ui_credits.c:253
+#: src/audacious/ui_credits.c:254
 msgid "Traditional Chinese:"
 msgstr "Chinois traditionnel :"
 
-#: src/audacious/ui_credits.c:256
+#: src/audacious/ui_credits.c:257
 msgid "Turkish:"
 msgstr "Turc :"
 
-#: src/audacious/ui_credits.c:260
+#: src/audacious/ui_credits.c:261
 msgid "Ukrainian:"
 msgstr "Ukrainien :"
 
-#: src/audacious/ui_credits.c:263
+#: src/audacious/ui_credits.c:264
 msgid "Welsh:"
 msgstr "Gallois :"
 
-#: src/audacious/ui_credits.c:409
+#: src/audacious/ui_credits.c:410
 msgid "Translators"
 msgstr "Traducteurs"
 
@@ -464,91 +477,95 @@ msgstr "Égaliseur d'Audacious"
 msgid "Presets"
 msgstr "Préréglages"
 
-#: src/audacious/ui_fileinfo.c:162
-#: src/audacious/ui_fileinfo.c:463
-#: src/audacious/ui_fileinfo.c:466
+#: src/audacious/ui_fileinfo.c:163 src/audacious/ui_fileinfo.c:469
+#: src/audacious/ui_fileinfo.c:472 src/audacious/ui_fileinfo.c:475
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
-#: src/audacious/ui_fileinfo.c:271
+#: src/audacious/ui_fileinfo.c:273
 msgid "Metadata updated successfully"
 msgstr "Mise à jour des métadonnées réussie"
 
-#: src/audacious/ui_fileinfo.c:277
+#: src/audacious/ui_fileinfo.c:279
 msgid "Metadata updating failed"
 msgstr "Échec lors de la mise à jour des métadonnées"
 
-#: src/audacious/ui_fileinfo.c:409
+#: src/audacious/ui_fileinfo.c:412
 msgid "Track Information"
 msgstr "Informations sur le morceau"
 
-#: src/audacious/ui_fileinfo.c:436
+#: src/audacious/ui_fileinfo.c:439
 msgid "<span size=\"small\">General</span>"
 msgstr "<span size=\"small\">Général</span>"
 
-#: src/audacious/ui_fileinfo.c:456
+#: src/audacious/ui_fileinfo.c:459
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Format :</span>"
 
-#: src/audacious/ui_fileinfo.c:459
+#: src/audacious/ui_fileinfo.c:462
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Qualité :</span>"
 
-#: src/audacious/ui_fileinfo.c:483
+#: src/audacious/ui_fileinfo.c:465
+#, fuzzy
+msgid "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Format :</span>"
+
+#: src/audacious/ui_fileinfo.c:498
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Titre</span>"
 
-#: src/audacious/ui_fileinfo.c:495
+#: src/audacious/ui_fileinfo.c:510
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Title</span>"
 
-#: src/audacious/ui_fileinfo.c:507
+#: src/audacious/ui_fileinfo.c:522
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/audacious/ui_fileinfo.c:519
+#: src/audacious/ui_fileinfo.c:534
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Commentaire</span>"
 
-#: src/audacious/ui_fileinfo.c:531
+#: src/audacious/ui_fileinfo.c:546
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Genre</span>"
 
-#: src/audacious/ui_fileinfo.c:550
+#: src/audacious/ui_fileinfo.c:565
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Année</span>"
 
-#: src/audacious/ui_fileinfo.c:563
+#: src/audacious/ui_fileinfo.c:578
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Piste</span>"
 
-#: src/audacious/ui_fileinfo.c:576
+#: src/audacious/ui_fileinfo.c:591
 msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Emplacement</span>"
 
-#: src/audacious/ui_fileinfopopup.c:254
-#: src/audacious/ui_fileinfopopup.c:366
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_fileinfo.c:673
+#, c-format
+msgid "%d kb/s"
+msgstr ""
+
+#: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
+#: src/audacious/ui_preferences.c:140
 msgid "Title"
 msgstr "Titre"
 
-#: src/audacious/ui_fileinfopopup.c:257
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:138
 msgid "Artist"
 msgstr "Artiste"
 
-#: src/audacious/ui_fileinfopopup.c:260
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:139
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_fileinfopopup.c:263
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:142
 msgid "Genre"
 msgstr "Genre"
 
-#: src/audacious/ui_fileinfopopup.c:266
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:146
 msgid "Year"
 msgstr "Année"
 
@@ -560,9 +577,8 @@ msgstr "Piste"
 msgid "Track Length"
 msgstr "Durée"
 
-#: src/audacious/ui_fileinfopopup.c:375
-#: src/audacious/ui_preferences.c:144
-#: src/audacious/ui_preferences.c:426
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:425
 msgid "Filename"
 msgstr "Nom du fichier"
 
@@ -594,8 +610,7 @@ msgstr "Charger des fichiers"
 msgid "Un_queue"
 msgstr "Enlever de la file d'attente"
 
-#: src/audacious/ui_jumptotrack.c:145
-#: src/audacious/ui_jumptotrack.c:624
+#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:624
 msgid "_Queue"
 msgstr "_Mettre dans la file"
 
@@ -626,18 +641,15 @@ msgstr "%s - Audacious"
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:756
-#: src/audacious/ui_main.c:760
+#: src/audacious/ui_main.c:756 src/audacious/ui_main.c:760
 msgid "stereo"
 msgstr "stereo"
 
-#: src/audacious/ui_main.c:756
-#: src/audacious/ui_main.c:760
+#: src/audacious/ui_main.c:756 src/audacious/ui_main.c:760
 msgid "mono"
 msgstr "mono"
 
-#: src/audacious/ui_main.c:1055
-#: src/audacious/ui_manager.c:420
+#: src/audacious/ui_main.c:1055 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
 msgid "Jump to Time"
 msgstr "Aller au temps..."
@@ -665,17 +677,23 @@ msgstr "Ignorer"
 #: src/audacious/ui_main.c:1230
 msgid ""
 "Audacious has been started with all of its windows hidden.\n"
-"You may want to show the player window again to control Audacious; otherwise, you'll have to control it remotely via audtool or enabled plugins (such as the statusicon plugin)."
+"You may want to show the player window again to control Audacious; "
+"otherwise, you'll have to control it remotely via audtool or enabled plugins "
+"(such as the statusicon plugin)."
 msgstr ""
 "Audacious a démarré, mais toutes les fenêtres de l'interface sont cachées.\n"
 "\n"
-"Peut-être voulez-vous voir à nouveau la fenêtre principale, afin de pouvoir contrôler Audacious.\n"
-"Dans le cas contraire, vous devrez utiliser les commandes distantes, par l'intermédiaire de 'audtool' ou des extensions activées (le module 'statusicon', par exemple).\n"
+"Peut-être voulez-vous voir à nouveau la fenêtre principale, afin de pouvoir "
+"contrôler Audacious.\n"
+"Dans le cas contraire, vous devrez utiliser les commandes distantes, par "
+"l'intermédiaire de 'audtool' ou des extensions activées (le module "
+"'statusicon', par exemple).\n"
 " "
 
 #: src/audacious/ui_main.c:1236
 msgid "Always ignore, show/hide is controlled remotely"
-msgstr "Toujours ignorer : la fonction 'montrer/cacher' est contrôlée à distance."
+msgstr ""
+"Toujours ignorer : la fonction 'montrer/cacher' est contrôlée à distance."
 
 #: src/audacious/ui_main.c:1281
 msgid "Audacious - broken GTK engine usage warning"
@@ -688,7 +706,9 @@ msgid ""
 "\n"
 "Audacious has detected that you are using a broken GTK engine.\n"
 "\n"
-"The theme engine you are using, <i>%s</i>, is incompatible with some of the features used by modern skins. The incompatible features have been disabled for this session.\n"
+"The theme engine you are using, <i>%s</i>, is incompatible with some of the "
+"features used by modern skins. The incompatible features have been disabled "
+"for this session.\n"
 "\n"
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
@@ -696,9 +716,12 @@ msgstr ""
 "\n"
 "'Audacious' a détecté un moteur GTK défaillant.\n"
 "\n"
-"Le moteur de rendu de votre système (<i>%s</i>) est incompatible avec certaines fonctions propres aux thèmes modernes d'Audacious. Les caractéristiques concernées ont donc été désactivées pour cette session.\n"
+"Le moteur de rendu de votre système (<i>%s</i>) est incompatible avec "
+"certaines fonctions propres aux thèmes modernes d'Audacious. Les "
+"caractéristiques concernées ont donc été désactivées pour cette session.\n"
 "\n"
-"Pour disposer de ces options particulières, vous devrez utilisez un autre moteur de rendu GTK.\n"
+"Pour disposer de ces options particulières, vous devrez utilisez un autre "
+"moteur de rendu GTK.\n"
 " "
 
 #: src/audacious/ui_main.c:1300
@@ -781,83 +804,67 @@ msgstr ""
 msgid "Error in Audacious."
 msgstr "Erreur dans Audacious."
 
-#: src/audacious/ui_manager.c:48
-#: src/audacious/ui_manager.c:49
+#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
 msgid "Autoscroll Songname"
 msgstr "Défilement du titre"
 
-#: src/audacious/ui_manager.c:51
-#: src/audacious/ui_manager.c:52
+#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
 msgid "Stop after Current Song"
 msgstr "Arrêter après le titre en cours de lecture"
 
-#: src/audacious/ui_manager.c:54
-#: src/audacious/ui_manager.c:55
+#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
 msgid "Peaks"
 msgstr "Pics"
 
-#: src/audacious/ui_manager.c:57
-#: src/audacious/ui_manager.c:58
+#: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
 msgid "Repeat"
 msgstr "Répéter"
 
-#: src/audacious/ui_manager.c:60
-#: src/audacious/ui_manager.c:61
+#: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
 msgid "Shuffle"
 msgstr "Mode aléatoire"
 
-#: src/audacious/ui_manager.c:63
-#: src/audacious/ui_manager.c:64
+#: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
 msgid "No Playlist Advance"
 msgstr "Ne pas avancer dans la liste de lecture"
 
-#: src/audacious/ui_manager.c:66
-#: src/audacious/ui_manager.c:67
+#: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
 msgid "Show Player"
 msgstr "Montrer le lecteur"
 
-#: src/audacious/ui_manager.c:69
-#: src/audacious/ui_manager.c:70
+#: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
 msgid "Show Playlist Editor"
 msgstr "Montrer l'éditeur de liste"
 
-#: src/audacious/ui_manager.c:72
-#: src/audacious/ui_manager.c:73
+#: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
 msgid "Show Equalizer"
 msgstr "Montrer l'égaliseur"
 
-#: src/audacious/ui_manager.c:75
-#: src/audacious/ui_manager.c:76
+#: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
 msgid "Always on Top"
 msgstr "Toujours au premier plan"
 
-#: src/audacious/ui_manager.c:78
-#: src/audacious/ui_manager.c:79
+#: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
 msgid "Put on All Workspaces"
 msgstr "Afficher sur tous les bureaux"
 
-#: src/audacious/ui_manager.c:81
-#: src/audacious/ui_manager.c:82
+#: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
 msgid "Roll up Player"
 msgstr "Enrouler le lecteur"
 
-#: src/audacious/ui_manager.c:84
-#: src/audacious/ui_manager.c:85
+#: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
 msgid "Roll up Playlist Editor"
 msgstr "Enrouler l'éditeur de liste"
 
-#: src/audacious/ui_manager.c:87
-#: src/audacious/ui_manager.c:88
+#: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
 msgid "Roll up Equalizer"
 msgstr "Enrouler l'égaliseur"
 
-#: src/audacious/ui_manager.c:90
-#: src/audacious/ui_manager.c:91
+#: src/audacious/ui_manager.c:90 src/audacious/ui_manager.c:91
 msgid "DoubleSize"
 msgstr "Taille double"
 
-#: src/audacious/ui_manager.c:93
-#: src/audacious/ui_manager.c:94
+#: src/audacious/ui_manager.c:93 src/audacious/ui_manager.c:94
 msgid "Easy Move"
 msgstr "Déplacement facile"
 
@@ -877,14 +884,12 @@ msgstr "Spectrogramme"
 msgid "Off"
 msgstr "Arrêt"
 
-#: src/audacious/ui_manager.c:109
-#: src/audacious/ui_manager.c:126
+#: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
 #: src/audacious/ui_manager.c:132
 msgid "Normal"
 msgstr "Normal"
 
-#: src/audacious/ui_manager.c:110
-#: src/audacious/ui_manager.c:127
+#: src/audacious/ui_manager.c:110 src/audacious/ui_manager.c:127
 msgid "Fire"
 msgstr "Feu"
 
@@ -936,28 +941,23 @@ msgstr "Quart (~13 fps)"
 msgid "Eighth (~6 fps)"
 msgstr "Huitième (~6 fps)"
 
-#: src/audacious/ui_manager.c:144
-#: src/audacious/ui_manager.c:152
+#: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
 msgid "Slowest"
 msgstr "Très lente"
 
-#: src/audacious/ui_manager.c:145
-#: src/audacious/ui_manager.c:153
+#: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
 msgid "Slow"
 msgstr "Lente"
 
-#: src/audacious/ui_manager.c:146
-#: src/audacious/ui_manager.c:154
+#: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
 msgid "Medium"
 msgstr "Moyenne"
 
-#: src/audacious/ui_manager.c:147
-#: src/audacious/ui_manager.c:155
+#: src/audacious/ui_manager.c:147 src/audacious/ui_manager.c:155
 msgid "Fast"
 msgstr "Rapide"
 
-#: src/audacious/ui_manager.c:148
-#: src/audacious/ui_manager.c:156
+#: src/audacious/ui_manager.c:148 src/audacious/ui_manager.c:156
 msgid "Fastest"
 msgstr "Très rapide"
 
@@ -973,28 +973,23 @@ msgstr "Temps restant"
 msgid "Playback"
 msgstr "Lecture"
 
-#: src/audacious/ui_manager.c:172
-#: src/audacious/ui_manager.c:173
+#: src/audacious/ui_manager.c:172 src/audacious/ui_manager.c:173
 msgid "Play"
 msgstr "Lecture"
 
-#: src/audacious/ui_manager.c:175
-#: src/audacious/ui_manager.c:176
+#: src/audacious/ui_manager.c:175 src/audacious/ui_manager.c:176
 msgid "Pause"
 msgstr "Pause"
 
-#: src/audacious/ui_manager.c:178
-#: src/audacious/ui_manager.c:179
+#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:179
 msgid "Stop"
 msgstr "Arrêt"
 
-#: src/audacious/ui_manager.c:181
-#: src/audacious/ui_manager.c:182
+#: src/audacious/ui_manager.c:181 src/audacious/ui_manager.c:182
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/audacious/ui_manager.c:184
-#: src/audacious/ui_manager.c:185
+#: src/audacious/ui_manager.c:184 src/audacious/ui_manager.c:185
 msgid "Next"
 msgstr "Suivant"
 
@@ -1034,30 +1029,24 @@ msgstr "Retombée de l'analyseur"
 msgid "Peaks Falloff"
 msgstr "Retombée des pics"
 
-#: src/audacious/ui_manager.c:203
-#: src/audacious/ui_playlist_manager.c:402
-#: src/audacious/ui_preferences.c:132
-#: src/audacious/ui_preferences.c:2434
+#: src/audacious/ui_manager.c:203 src/audacious/ui_playlist_manager.c:402
+#: src/audacious/ui_preferences.c:131 src/audacious/ui_preferences.c:2387
 msgid "Playlist"
 msgstr "Liste de lecture"
 
-#: src/audacious/ui_manager.c:205
-#: src/audacious/ui_manager.c:206
+#: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
 msgid "New Playlist"
 msgstr "Nouvelle liste"
 
-#: src/audacious/ui_manager.c:208
-#: src/audacious/ui_manager.c:209
+#: src/audacious/ui_manager.c:208 src/audacious/ui_manager.c:209
 msgid "Select Next Playlist"
 msgstr "Liste suivante"
 
-#: src/audacious/ui_manager.c:211
-#: src/audacious/ui_manager.c:212
+#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:212
 msgid "Select Previous Playlist"
 msgstr "Liste précédente"
 
-#: src/audacious/ui_manager.c:214
-#: src/audacious/ui_manager.c:215
+#: src/audacious/ui_manager.c:214 src/audacious/ui_manager.c:215
 msgid "Delete Playlist"
 msgstr "Supprimer la liste"
 
@@ -1126,8 +1115,12 @@ msgid "Search and Select"
 msgstr "Chercher et sélectionner"
 
 #: src/audacious/ui_manager.c:253
-msgid "Searches the playlist and selects playlist entries based on specific criteria."
-msgstr "Effectue une recherche dans la liste de lecture et sélectionne des entrées en fonction de critères définis."
+msgid ""
+"Searches the playlist and selects playlist entries based on specific "
+"criteria."
+msgstr ""
+"Effectue une recherche dans la liste de lecture et sélectionne des entrées "
+"en fonction de critères définis."
 
 #: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
@@ -1154,62 +1147,59 @@ msgid "Deselects all of the playlist entries."
 msgstr "Annule la sélection de toutes les entrées de la liste."
 
 #: src/audacious/ui_manager.c:270
+msgid "Remove All"
+msgstr "Effacer toutes les entrées"
+
+#: src/audacious/ui_manager.c:271
+msgid "Removes all entries from the playlist."
+msgstr "Efface toutes les entrées de la liste de lecture."
+
+#: src/audacious/ui_manager.c:274
 msgid "Clear Queue"
 msgstr "Vider la file"
 
-#: src/audacious/ui_manager.c:271
+#: src/audacious/ui_manager.c:275
 msgid "Clears the queue associated with this playlist."
 msgstr "Vide la file associée à la liste de lecture."
 
-#: src/audacious/ui_manager.c:274
+#: src/audacious/ui_manager.c:278
 msgid "Remove Unavailable Files"
 msgstr "Effacer les fichiers inexistants"
 
-#: src/audacious/ui_manager.c:275
+#: src/audacious/ui_manager.c:279
 msgid "Removes unavailable files from the playlist."
 msgstr "Efface les fichiers inexistants de la liste de lecture."
 
-#: src/audacious/ui_manager.c:278
+#: src/audacious/ui_manager.c:282
 msgid "Remove Duplicates"
 msgstr "Effacer les éléments redondants"
 
-#: src/audacious/ui_manager.c:280
-#: src/audacious/ui_manager.c:316
+#: src/audacious/ui_manager.c:284 src/audacious/ui_manager.c:316
 #: src/audacious/ui_manager.c:346
 msgid "By Title"
 msgstr "Par titre"
 
-#: src/audacious/ui_manager.c:281
+#: src/audacious/ui_manager.c:285
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "Efface les entrées redondantes, en fonction de leur titre."
 
-#: src/audacious/ui_manager.c:284
-#: src/audacious/ui_manager.c:324
+#: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:324
 #: src/audacious/ui_manager.c:354
 msgid "By Filename"
 msgstr "Par nom de fichier"
 
-#: src/audacious/ui_manager.c:285
+#: src/audacious/ui_manager.c:289
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "Efface les entrées redondantes, en fonction de leur nom de fichier."
 
-#: src/audacious/ui_manager.c:288
-#: src/audacious/ui_manager.c:328
+#: src/audacious/ui_manager.c:292 src/audacious/ui_manager.c:328
 #: src/audacious/ui_manager.c:358
 msgid "By Path + Filename"
 msgstr "Par chemin et nom de fichier"
 
-#: src/audacious/ui_manager.c:289
+#: src/audacious/ui_manager.c:293
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "Efface les entrées redondantes, en fonction de leur chemin complet."
-
-#: src/audacious/ui_manager.c:292
-msgid "Remove All"
-msgstr "Effacer toutes les entrées"
-
-#: src/audacious/ui_manager.c:293
-msgid "Removes all entries from the playlist."
-msgstr "Efface toutes les entrées de la liste de lecture."
 
 #: src/audacious/ui_manager.c:296
 msgid "Remove Unselected"
@@ -1247,58 +1237,47 @@ msgstr "Inverse la liste de lecture."
 msgid "Sort List"
 msgstr "Trier la liste"
 
-#: src/audacious/ui_manager.c:317
-#: src/audacious/ui_manager.c:347
+#: src/audacious/ui_manager.c:317 src/audacious/ui_manager.c:347
 msgid "Sorts the list by title."
 msgstr "Trie la liste, en fonction du titre des entrées."
 
-#: src/audacious/ui_manager.c:320
-#: src/audacious/ui_manager.c:350
+#: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
 msgid "By Artist"
 msgstr "Par artiste"
 
-#: src/audacious/ui_manager.c:321
-#: src/audacious/ui_manager.c:351
+#: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
 msgid "Sorts the list by artist."
 msgstr "Trie la liste, en fonction de l'artiste."
 
-#: src/audacious/ui_manager.c:325
-#: src/audacious/ui_manager.c:355
+#: src/audacious/ui_manager.c:325 src/audacious/ui_manager.c:355
 msgid "Sorts the list by filename."
 msgstr "Trie la liste, en fonction du nom de fichier des entrées."
 
-#: src/audacious/ui_manager.c:329
-#: src/audacious/ui_manager.c:359
+#: src/audacious/ui_manager.c:329 src/audacious/ui_manager.c:359
 msgid "Sorts the list by full pathname."
 msgstr "Trie la liste, en fonction du chemin complet des entrées."
 
-#: src/audacious/ui_manager.c:332
-#: src/audacious/ui_manager.c:362
+#: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
 msgid "By Date"
 msgstr "Par date"
 
-#: src/audacious/ui_manager.c:333
-#: src/audacious/ui_manager.c:363
+#: src/audacious/ui_manager.c:333 src/audacious/ui_manager.c:363
 msgid "Sorts the list by modification time."
 msgstr "Trie la liste, en fonction de la date de modification."
 
-#: src/audacious/ui_manager.c:336
-#: src/audacious/ui_manager.c:366
+#: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
 msgid "By Track Number"
 msgstr "Par numéro de piste"
 
-#: src/audacious/ui_manager.c:337
-#: src/audacious/ui_manager.c:367
+#: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
 msgid "Sorts the list by track number."
 msgstr "Trie la liste, en fonction du numéro des pistes."
 
-#: src/audacious/ui_manager.c:340
-#: src/audacious/ui_manager.c:370
+#: src/audacious/ui_manager.c:340 src/audacious/ui_manager.c:370
 msgid "By Playlist Entry"
 msgstr "Par entrée de liste"
 
-#: src/audacious/ui_manager.c:341
-#: src/audacious/ui_manager.c:371
+#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:371
 msgid "Sorts the list by playlist entry."
 msgstr "Trie la liste, en fonction des entrées qu'elle contient."
 
@@ -1318,13 +1297,11 @@ msgstr "Aide"
 msgid "Plugin Services"
 msgstr "Services des modules"
 
-#: src/audacious/ui_manager.c:385
-#: src/audacious/ui_manager.c:388
+#: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 msgid "View Track Details"
 msgstr "Afficher les détails"
 
-#: src/audacious/ui_manager.c:386
-#: src/audacious/ui_manager.c:389
+#: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:389
 msgid "View track details"
 msgstr "Affiche les informations relatives au morceau."
 
@@ -1364,23 +1341,19 @@ msgstr "_Quitter"
 msgid "Quit Audacious"
 msgstr "Ferme Audacious."
 
-#: src/audacious/ui_manager.c:408
-#: src/audacious/ui_manager.c:409
+#: src/audacious/ui_manager.c:408 src/audacious/ui_manager.c:409
 msgid "Set A-B"
 msgstr "Marquer A-B"
 
-#: src/audacious/ui_manager.c:411
-#: src/audacious/ui_manager.c:412
+#: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
 msgid "Clear A-B"
 msgstr "Effacer A-B"
 
-#: src/audacious/ui_manager.c:414
-#: src/audacious/ui_manager.c:415
+#: src/audacious/ui_manager.c:414 src/audacious/ui_manager.c:415
 msgid "Jump to Playlist Start"
 msgstr "Aller au début de la liste"
 
-#: src/audacious/ui_manager.c:417
-#: src/audacious/ui_manager.c:418
+#: src/audacious/ui_manager.c:417 src/audacious/ui_manager.c:418
 msgid "Jump to File"
 msgstr "Aller au fichier..."
 
@@ -1408,8 +1381,7 @@ msgstr "Enregistrer"
 msgid "Delete"
 msgstr "Effacer"
 
-#: src/audacious/ui_manager.c:436
-#: src/audacious/ui_manager.c:457
+#: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
 #: src/audacious/ui_manager.c:472
 msgid "Preset"
 msgstr "Préréglage général"
@@ -1418,8 +1390,7 @@ msgstr "Préréglage général"
 msgid "Load preset"
 msgstr "Charge un préréglage général."
 
-#: src/audacious/ui_manager.c:439
-#: src/audacious/ui_manager.c:460
+#: src/audacious/ui_manager.c:439 src/audacious/ui_manager.c:460
 #: src/audacious/ui_manager.c:475
 msgid "Auto-load preset"
 msgstr "Préréglage spécifique"
@@ -1428,8 +1399,7 @@ msgstr "Préréglage spécifique"
 msgid "Load auto-load preset"
 msgstr "Charge un préréglage spécifique."
 
-#: src/audacious/ui_manager.c:442
-#: src/audacious/ui_manager.c:463
+#: src/audacious/ui_manager.c:442 src/audacious/ui_manager.c:463
 msgid "Default"
 msgstr "Préréglage par défaut"
 
@@ -1510,8 +1480,17 @@ msgid "Search entries in active playlist"
 msgstr "Chercher des entrées dans la liste active"
 
 #: src/audacious/ui_playlist.c:482
-msgid "Select entries in playlist by filling one or more fields. Fields use regular expressions syntax, case-insensitive. If you don't know how regular expressions work, simply insert a literal portion of what you're searching for."
-msgstr "Le choix des entrées de la liste de lecture s'effectue au moyen des champs ci-dessous. La syntaxe utilisée est celle des expressions régulières et est sensible à la casse. Si vous ne savez pas comment fonctionnent les expressions régulières, vous pouvez simplement indiquer une expression littérale de ce que vous cherchez."
+msgid ""
+"Select entries in playlist by filling one or more fields. Fields use regular "
+"expressions syntax, case-insensitive. If you don't know how regular "
+"expressions work, simply insert a literal portion of what you're searching "
+"for."
+msgstr ""
+"Le choix des entrées de la liste de lecture s'effectue au moyen des champs "
+"ci-dessous. La syntaxe utilisée est celle des expressions régulières et est "
+"sensible à la casse. Si vous ne savez pas comment fonctionnent les "
+"expressions régulières, vous pouvez simplement indiquer une expression "
+"littérale de ce que vous cherchez."
 
 #: src/audacious/ui_playlist.c:490
 msgid "Title: "
@@ -1594,8 +1573,7 @@ msgstr "Entrées"
 msgid "_Rename"
 msgstr "_Renommer"
 
-#: src/audacious/ui_preferences.c:127
-#: src/audacious/ui_preferences.c:2319
+#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:2272
 msgid "Appearance"
 msgstr "Apparence"
 
@@ -1607,540 +1585,602 @@ msgstr "Audio"
 msgid "Connectivity"
 msgstr "Connectivité"
 
-#: src/audacious/ui_preferences.c:130
-#: src/audacious/ui_preferences.c:2489
-msgid "Equalizer"
-msgstr "Égaliseur"
-
-#: src/audacious/ui_preferences.c:131
-#: src/audacious/ui_preferences.c:2330
+#: src/audacious/ui_preferences.c:130 src/audacious/ui_preferences.c:2283
 msgid "Mouse"
 msgstr "Souris"
 
-#: src/audacious/ui_preferences.c:133
-#: src/audacious/ui_preferences.c:2193
+#: src/audacious/ui_preferences.c:132 src/audacious/ui_preferences.c:2146
 msgid "Plugins"
 msgstr "Modules"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:141
 msgid "Tracknumber"
 msgstr "Numéro de la piste"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:144
 msgid "Filepath"
 msgstr "Chemin du fichier"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:145
 msgid "Date"
 msgstr "Date"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:147
 msgid "Comment"
 msgstr "Commentaire"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:148
 msgid "Codec"
 msgstr "Codec"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:149
 msgid "Quality"
 msgstr "Qualité"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:187
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>_Divers</b>"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:188
 msgid "Show track numbers in playlist"
 msgstr "Afficher la position des morceaux dans la liste de lecture"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:190
 msgid "Show separators in playlist"
 msgstr "Afficher les barres de séparation dans la liste de lecture"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:192
 msgid "Use custom cursors"
 msgstr "Utiliser des pointeurs de souris personnalisés"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:193
 msgid "Show window manager decoration"
 msgstr "Montrer la décoration du gestionnaire de fenêtres"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:194
 msgid "This enables the window manager to show decorations for windows."
-msgstr "Cette option affiche les ornements propres au gestionnaire de fenêtres."
+msgstr ""
+"Cette option affiche les ornements propres au gestionnaire de fenêtres."
+
+#: src/audacious/ui_preferences.c:195
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr ""
+"Utiliser le système de sélection de fichiers de XMMS à la place du système "
+"par défaut"
 
 #: src/audacious/ui_preferences.c:196
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "Utiliser le système de sélection de fichiers de XMMS à la place du système par défaut"
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr ""
+"Cette option active les boîtes de sélection de fichiers 'XMMS/GTK1'. Comme "
+"ce système est géré par Audacious, il est plus rapide que la version 'GTK2' "
+"par défaut. Cependant, il n'est pas très esthétique."
 
 #: src/audacious/ui_preferences.c:197
-msgid "This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."
-msgstr "Cette option active les boîtes de sélection de fichiers 'XMMS/GTK1'. Comme ce système est géré par Audacious, il est plus rapide que la version 'GTK2' par défaut. Cependant, il n'est pas très esthétique."
-
-#: src/audacious/ui_preferences.c:198
 msgid "Use two-way text scroller"
 msgstr "Utiliser le défilement de texte bidirectionnel"
 
-#: src/audacious/ui_preferences.c:199
-msgid "If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."
-msgstr "Si cette option est cochée, le texte d'information relatif au morceau défilera, dans la fenêtre principale, vers la gauche et vers la droite. Sinon, le texte défilera dans une seule direction."
+#: src/audacious/ui_preferences.c:198
+msgid ""
+"If selected, the file information text in the main window will scroll back "
+"and forth. If not selected, the text will only scroll in one direction."
+msgstr ""
+"Si cette option est cochée, le texte d'information relatif au morceau "
+"défilera, dans la fenêtre principale, vers la gauche et vers la droite. "
+"Sinon, le texte défilera dans une seule direction."
 
-#: src/audacious/ui_preferences.c:203
+#: src/audacious/ui_preferences.c:202
 msgid "<b>Format Detection</b>"
 msgstr "<b>Détection du format audio</b>"
 
-#: src/audacious/ui_preferences.c:204
+#: src/audacious/ui_preferences.c:203
 msgid "Detect file formats on demand, instead of immediately."
-msgstr "Déterminer les formats audio à la demande, au lieu de les détecter immédiatement."
+msgstr ""
+"Déterminer les formats audio à la demande, au lieu de les détecter "
+"immédiatement."
+
+#: src/audacious/ui_preferences.c:204
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"Si cette option est activée, Audacious détectera les formats audio à la "
+"demande. Cette méthode peut affecter l'organisation de la liste de lecture, "
+"mais elle offre une rapidité sensiblement supérieure."
 
 #: src/audacious/ui_preferences.c:205
-msgid "When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."
-msgstr "Si cette option est activée, Audacious détectera les formats audio à la demande. Cette méthode peut affecter l'organisation de la liste de lecture, mais elle offre une rapidité sensiblement supérieure."
-
-#: src/audacious/ui_preferences.c:206
 msgid "Detect file formats by extension."
 msgstr "Déterminer les formats audio en fonction de l'extension des fichiers."
 
-#: src/audacious/ui_preferences.c:207
-msgid "When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."
-msgstr "Si cette option est activée, Audacious détectera les formats audio d'après l'extension des fichiers. Ne seront alors chargés que les fichiers dont l'extension correspond à un format audio supporté."
+#: src/audacious/ui_preferences.c:206
+msgid ""
+"When checked, Audacious will detect file formats based by extension. Only "
+"files with extensions of supported formats will be loaded."
+msgstr ""
+"Si cette option est activée, Audacious détectera les formats audio d'après "
+"l'extension des fichiers. Ne seront alors chargés que les fichiers dont "
+"l'extension correspond à un format audio supporté."
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:207
 msgid "<b>Playback</b>"
 msgstr "<b>Lecture</b>"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:208
 msgid "Continue playback on startup"
 msgstr "Reprendre la lecture au démarrage"
 
-#: src/audacious/ui_preferences.c:210
-msgid "When Audacious starts, automatically begin playing from the point where we stopped before."
-msgstr "Au démarrage d'Audacious, la lecture reprendra là où elle s'était arrêtée lors de la session précédente."
+#: src/audacious/ui_preferences.c:209
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+"Au démarrage d'Audacious, la lecture reprendra là où elle s'était arrêtée "
+"lors de la session précédente."
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:210
 msgid "Don't advance in the playlist"
 msgstr "Ne pas avancer dans la liste de lecture"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:211
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "À la fin d'un morceau, ne pas lire automatiquement le titre suivant."
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:212
 msgid "Pause between songs"
 msgstr "Pause entre les morceaux"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:213
 msgid "Pause for"
 msgstr "Pause de"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:213
 msgid "seconds"
 msgstr "secondes"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Filename</b>"
 msgstr "<b>Nom des fichiers</b>"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:218
 msgid "Convert underscores to blanks"
 msgstr "Remplacer les caractères '__' par des espaces"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:219
 msgid "Convert %20 to blanks"
 msgstr "Remplacer les chaînes '%20' par des espaces"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:220
 msgid "Convert backslash '\\' to forward slash '/'"
 msgstr "Remplacer les caractères '\\' par '/'"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:221
 msgid "<b>Metadata</b>"
 msgstr "<b>Métadonnées</b>"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:222
 msgid "Load metadata from playlists and files"
 msgstr "Lire les métadonnées des listes de lecture et des fichiers"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:222
 msgid "Load metadata (tag information) from music files."
 msgstr "Lit les métadonnées ('tags') des fichiers musicaux."
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "On load"
 msgstr "Au chargement"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr "Lit les métadonnées lors de l'ouverture ou de l'ajout des fichiers"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:224
 msgid "On display"
 msgstr "À l'affichage"
 
-#: src/audacious/ui_preferences.c:225
-msgid "Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."
-msgstr "Charge les métadonnées à la demande, lors de l'affichage des fichiers dans la liste de lecture. Pour un résultat optimal, vous devrez également cocher l'option \"Déterminer les formats audio à la demande\", dans l'onglet 'Audio'."
+#: src/audacious/ui_preferences.c:224
+msgid ""
+"Load metadata on demand when displaying the file in the playlist. You may "
+"need to set \"Detect file formats on demand\" in Audio page for full benefit."
+msgstr ""
+"Charge les métadonnées à la demande, lors de l'affichage des fichiers dans "
+"la liste de lecture. Pour un résultat optimal, vous devrez également cocher "
+"l'option \"Déterminer les formats audio à la demande\", dans l'onglet "
+"'Audio'."
 
-#: src/audacious/ui_preferences.c:227
+#: src/audacious/ui_preferences.c:226
 msgid "<b>File Dialog</b>"
 msgstr "<b>Fenêtre de sélection des fichiers</b>"
 
-#: src/audacious/ui_preferences.c:228
+#: src/audacious/ui_preferences.c:227
 msgid "Always refresh directory when opening file dialog"
 msgstr "Toujours réactualiser le répertoire à l'ouverture de la fenêtre"
 
-#: src/audacious/ui_preferences.c:228
-msgid "Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."
-msgstr "Réactualise systématiquement l'arborescence de la boîte de sélection des fichiers (l'opération peut ralentir l'ouverture de répertoires contenant beaucoup de fichiers et le système 'VFS' de Gnome procède déjà à une réactualisation automatique)."
+#: src/audacious/ui_preferences.c:227
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+"Réactualise systématiquement l'arborescence de la boîte de sélection des "
+"fichiers (l'opération peut ralentir l'ouverture de répertoires contenant "
+"beaucoup de fichiers et le système 'VFS' de Gnome procède déjà à une "
+"réactualisation automatique)."
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:231
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Molette de la souris</b>"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:232
 msgid "Changes volume by"
 msgstr "Ajustement du niveau sonore de"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:232
 msgid "percent"
 msgstr "pourcents"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "Scrolls playlist by"
 msgstr "Défilement de la liste de lecture de"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "lines"
 msgstr "lignes"
 
-#: src/audacious/ui_preferences.c:396
+#: src/audacious/ui_preferences.c:395
 msgid "Enabled"
 msgstr "Activé"
 
-#: src/audacious/ui_preferences.c:412
+#: src/audacious/ui_preferences.c:411
 msgid "Description"
 msgstr "Description"
 
-#: src/audacious/ui_preferences.c:1016
+#: src/audacious/ui_preferences.c:980
 msgid "Category"
 msgstr "Catégorie"
 
-#: src/audacious/ui_preferences.c:1370
+#: src/audacious/ui_preferences.c:1336
 msgid "Color Adjustment"
 msgstr "Ajustement des couleurs"
 
-#: src/audacious/ui_preferences.c:1377
-msgid "Audacious allows you to alter the color balance of the skinned UI. The sliders below will allow you to do this."
-msgstr "Audacious permet de modifier la balance des couleurs de l'interface, à l'aide des curseurs ci-dessous."
+#: src/audacious/ui_preferences.c:1343
+msgid ""
+"Audacious allows you to alter the color balance of the skinned UI. The "
+"sliders below will allow you to do this."
+msgstr ""
+"Audacious permet de modifier la balance des couleurs de l'interface, à "
+"l'aide des curseurs ci-dessous."
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1353
 msgid "Blue"
 msgstr "Bleu"
 
-#: src/audacious/ui_preferences.c:1394
+#: src/audacious/ui_preferences.c:1360
 msgid "Green"
 msgstr "Vert"
 
-#: src/audacious/ui_preferences.c:1401
+#: src/audacious/ui_preferences.c:1367
 msgid "Red"
 msgstr "Rouge"
 
-#: src/audacious/ui_preferences.c:1484
+#: src/audacious/ui_preferences.c:1450
 msgid "Popup Information Settings"
 msgstr "Préférences de la fenêtre contextuelle"
 
-#: src/audacious/ui_preferences.c:1493
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Récupération des pochettes</b>"
 
-#: src/audacious/ui_preferences.c:1498
-msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
-msgstr "Lors de la recherche de la pochette d'un album, Audacious vérifie certains mots dans le nom du fichier. Vous pouvez spécifier ces mots dans les listes ci-dessous, séparés par des virgules."
+#: src/audacious/ui_preferences.c:1464
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"Lors de la recherche de la pochette d'un album, Audacious vérifie certains "
+"mots dans le nom du fichier. Vous pouvez spécifier ces mots dans les listes "
+"ci-dessous, séparés par des virgules."
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1481
 msgid "Exclude:"
 msgstr "Exclure :"
 
-#: src/audacious/ui_preferences.c:1522
+#: src/audacious/ui_preferences.c:1488
 msgid "Include:"
 msgstr "Inclure :"
 
-#: src/audacious/ui_preferences.c:1539
+#: src/audacious/ui_preferences.c:1505
 msgid "Recursively search for cover"
 msgstr "Chercher les pochettes de manière récursive"
 
-#: src/audacious/ui_preferences.c:1549
+#: src/audacious/ui_preferences.c:1515
 msgid "Search depth: "
 msgstr "Profondeur de la recherche :"
 
-#: src/audacious/ui_preferences.c:1562
+#: src/audacious/ui_preferences.c:1528
 msgid "Use per-file cover"
 msgstr "Chercher les pochettes d'après le nom exact des fichiers audio"
 
-#: src/audacious/ui_preferences.c:1565
+#: src/audacious/ui_preferences.c:1531
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Divers</b>"
 
-#: src/audacious/ui_preferences.c:1574
+#: src/audacious/ui_preferences.c:1540
 msgid "Show Progress bar for the current track"
 msgstr "Montrer une barre de progression pour le morceau écouté"
 
-#: src/audacious/ui_preferences.c:1584
+#: src/audacious/ui_preferences.c:1550
 msgid "Delay until filepopup comes up: "
 msgstr "Délai avant l'affichage de la fenêtre :"
 
-#: src/audacious/ui_preferences.c:1629
+#: src/audacious/ui_preferences.c:1595
 msgid "Auto character encoding detector for:"
 msgstr "Détection automatique de l'encodage pour  "
 
-#: src/audacious/ui_preferences.c:1648
-msgid "List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr "Ce champ reprend les divers types d'encodages utilisés pour la conversion des métadonnées. Si la détection automatique de l'encodage échoue ou n'a pas été activée, les éléments de cette liste seront considérés comme des encodages possibles et la conversion des métadonnées en UTF-8 sera tentée à partir de ces encodages."
+#: src/audacious/ui_preferences.c:1614
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+"Ce champ reprend les divers types d'encodages utilisés pour la conversion "
+"des métadonnées. Si la détection automatique de l'encodage échoue ou n'a pas "
+"été activée, les éléments de cette liste seront considérés comme des "
+"encodages possibles et la conversion des métadonnées en UTF-8 sera tentée à "
+"partir de ces encodages."
 
-#: src/audacious/ui_preferences.c:1650
+#: src/audacious/ui_preferences.c:1616
 msgid "Fallback character encodings:"
 msgstr "Encodages supplémentaires :"
 
-#: src/audacious/ui_preferences.c:1990
+#: src/audacious/ui_preferences.c:1943
 msgid "Audacious Preferences"
 msgstr "Préférences d'Audacious"
 
-#: src/audacious/ui_preferences.c:2032
+#: src/audacious/ui_preferences.c:1985
 msgid "_Decoder list:"
 msgstr "_Liste des décodeurs :"
 
-#: src/audacious/ui_preferences.c:2062
+#: src/audacious/ui_preferences.c:2015
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Décodeurs</b></span>"
 
-#: src/audacious/ui_preferences.c:2075
+#: src/audacious/ui_preferences.c:2028
 msgid "_General plugin list:"
 msgstr "_Liste des modules généraux :"
 
-#: src/audacious/ui_preferences.c:2105
+#: src/audacious/ui_preferences.c:2058
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Général</b></span>"
 
-#: src/audacious/ui_preferences.c:2117
+#: src/audacious/ui_preferences.c:2070
 msgid "_Visualization plugin list:"
 msgstr "_Liste des modules de visualisation :"
 
-#: src/audacious/ui_preferences.c:2147
+#: src/audacious/ui_preferences.c:2100
 msgid "<b>Visualization</b>"
 msgstr "<b>Visualisation</b>"
 
-#: src/audacious/ui_preferences.c:2159
+#: src/audacious/ui_preferences.c:2112
 msgid "_Effect plugin list:"
 msgstr "_Liste des modules d'effets :"
 
-#: src/audacious/ui_preferences.c:2189
+#: src/audacious/ui_preferences.c:2142
 msgid "<b>Effects</b>"
 msgstr "<b>Effets</b>"
 
-#: src/audacious/ui_preferences.c:2215
+#: src/audacious/ui_preferences.c:2168
 msgid "<b>_Skin</b>"
 msgstr "<b>_Thème</b>"
 
-#: src/audacious/ui_preferences.c:2229
+#: src/audacious/ui_preferences.c:2182
 msgid "Refresh skin list"
 msgstr "Actualiser la liste des thèmes"
 
-#: src/audacious/ui_preferences.c:2257
+#: src/audacious/ui_preferences.c:2210
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Polices</b>"
 
-#: src/audacious/ui_preferences.c:2273
+#: src/audacious/ui_preferences.c:2226
 msgid "_Player:"
 msgstr "_Fenêtre principale"
 
-#: src/audacious/ui_preferences.c:2284
+#: src/audacious/ui_preferences.c:2237
 msgid "_Playlist:"
 msgstr "_Liste de lecture"
 
-#: src/audacious/ui_preferences.c:2294
+#: src/audacious/ui_preferences.c:2247
 msgid "Select main player window font:"
 msgstr "Police de la fenêtre principale :"
 
-#: src/audacious/ui_preferences.c:2302
+#: src/audacious/ui_preferences.c:2255
 msgid "Select playlist font:"
 msgstr "Police de la liste de lecture :"
 
-#: src/audacious/ui_preferences.c:2310
+#: src/audacious/ui_preferences.c:2263
 msgid "Use Bitmap fonts if available"
 msgstr "Utiliser les polices matricielles (si elles sont disponibles)"
 
-#: src/audacious/ui_preferences.c:2312
-msgid "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."
-msgstr "Cette option permet d'utiliser les polices matricielles ('bitmap'). Ces polices ne gèrent pas la norme 'Unicode' (caractères accentués)."
+#: src/audacious/ui_preferences.c:2265
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
+"Cette option permet d'utiliser les polices matricielles ('bitmap'). Ces "
+"polices ne gèrent pas la norme 'Unicode' (caractères accentués)."
 
-#: src/audacious/ui_preferences.c:2345
+#: src/audacious/ui_preferences.c:2298
 msgid "<b>Song Display</b>"
 msgstr "<b>Affichage du morceau</b>"
 
-#: src/audacious/ui_preferences.c:2364
+#: src/audacious/ui_preferences.c:2317
 msgid "Show information about titlestring format"
 msgstr "Affiche des informations sur le format du titre"
 
-#: src/audacious/ui_preferences.c:2375
+#: src/audacious/ui_preferences.c:2328
 msgid "TITLE"
 msgstr "TITRE"
 
-#: src/audacious/ui_preferences.c:2376
+#: src/audacious/ui_preferences.c:2329
 msgid "ARTIST - TITLE"
 msgstr "ARTISTE - TITRE"
 
-#: src/audacious/ui_preferences.c:2377
+#: src/audacious/ui_preferences.c:2330
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTE - ALBUM - TITRE"
 
-#: src/audacious/ui_preferences.c:2378
+#: src/audacious/ui_preferences.c:2331
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTE - ALBUM - PISTE. TITRE"
 
-#: src/audacious/ui_preferences.c:2379
+#: src/audacious/ui_preferences.c:2332
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTE [ ALBUM ] - PISTE. TITRE"
 
-#: src/audacious/ui_preferences.c:2380
+#: src/audacious/ui_preferences.c:2333
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TITRE"
 
-#: src/audacious/ui_preferences.c:2381
+#: src/audacious/ui_preferences.c:2334
 msgid "Custom"
 msgstr "Personnalisé"
 
-#: src/audacious/ui_preferences.c:2388
+#: src/audacious/ui_preferences.c:2341
 msgid "Custom string:"
 msgstr "Format personnalisé :"
 
-#: src/audacious/ui_preferences.c:2395
+#: src/audacious/ui_preferences.c:2348
 msgid "Title format:"
 msgstr "Format du titre :"
 
-#: src/audacious/ui_preferences.c:2406
+#: src/audacious/ui_preferences.c:2359
 msgid "<b>Popup Information</b>"
 msgstr "<b>Fenêtre d'informations contextuelle</b>"
 
-#: src/audacious/ui_preferences.c:2421
+#: src/audacious/ui_preferences.c:2374
 msgid "Show popup information for playlist entries"
-msgstr "Montrer la fenêtre d'informations pour les entrées de la liste de lecture"
+msgstr ""
+"Montrer la fenêtre d'informations pour les entrées de la liste de lecture"
 
-#: src/audacious/ui_preferences.c:2423
-msgid "Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."
-msgstr "Affiche une fenêtre d'informations sur l'entrée de la liste de lecture pointée par le curseur de la souris. La fenêtre présente le titre du morceau, le nom de l'album, le genre, l'année de publication, le numéro de la piste, la durée du morceau, ainsi que la pochette de l'album."
+#: src/audacious/ui_preferences.c:2376
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"Affiche une fenêtre d'informations sur l'entrée de la liste de lecture "
+"pointée par le curseur de la souris. La fenêtre présente le titre du "
+"morceau, le nom de l'album, le genre, l'année de publication, le numéro de "
+"la piste, la durée du morceau, ainsi que la pochette de l'album."
 
-#: src/audacious/ui_preferences.c:2428
+#: src/audacious/ui_preferences.c:2381
 msgid "Edit settings for popup information"
 msgstr "Modifie les préférences de la fenêtre d'informations contextuelle"
 
-#: src/audacious/ui_preferences.c:2450
-msgid "<b>Presets</b>"
-msgstr "<b>Préréglages</b>"
-
-#: src/audacious/ui_preferences.c:2467
-msgid "File preset extension:"
-msgstr "Extension des fichiers de préréglages :"
-
-#: src/audacious/ui_preferences.c:2473
-msgid "Directory preset file:"
-msgstr "Répertoire des fichiers de préréglages :"
-
-#: src/audacious/ui_preferences.c:2502
+#: src/audacious/ui_preferences.c:2400
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Configuration du serveur mandataire</b>"
 
-#: src/audacious/ui_preferences.c:2518
+#: src/audacious/ui_preferences.c:2416
 msgid "Enable proxy usage"
 msgstr "Activer l'utilisation du serveur mandataire"
 
-#: src/audacious/ui_preferences.c:2536
+#: src/audacious/ui_preferences.c:2434
 msgid "Proxy port:"
 msgstr "Port du serveur :"
 
-#: src/audacious/ui_preferences.c:2542
+#: src/audacious/ui_preferences.c:2440
 msgid "Proxy hostname:"
 msgstr "Nom du serveur :"
 
-#: src/audacious/ui_preferences.c:2552
+#: src/audacious/ui_preferences.c:2450
 msgid "Use authentication with proxy"
 msgstr "Utiliser l'authentification avec le serveur mandataire"
 
-#: src/audacious/ui_preferences.c:2571
+#: src/audacious/ui_preferences.c:2469
 msgid "Proxy password:"
 msgstr "Mot de passe :"
 
-#: src/audacious/ui_preferences.c:2577
+#: src/audacious/ui_preferences.c:2475
 msgid "Proxy username:"
 msgstr "Nom d'utilisateur :"
 
-#: src/audacious/ui_preferences.c:2594
-msgid "<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"
-msgstr "<span size=\"small\">La modification de ces préférences nécessite le redémarrage d'Audacious.</span>"
+#: src/audacious/ui_preferences.c:2492
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">La modification de ces préférences nécessite le "
+"redémarrage d'Audacious.</span>"
 
-#: src/audacious/ui_preferences.c:2625
+#: src/audacious/ui_preferences.c:2523
 msgid "<b>Audio System</b>"
 msgstr "<b>Système Audio</b>"
 
-#: src/audacious/ui_preferences.c:2648
+#: src/audacious/ui_preferences.c:2546
 msgid "Buffer size:"
 msgstr "Taille du tampon :"
 
-#: src/audacious/ui_preferences.c:2654
+#: src/audacious/ui_preferences.c:2552
 msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\n"
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
 "Increase this value if you are experiencing audio skipping.\n"
-"Please note however, that high values will result in Audacious performing poorly.</span>"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
 msgstr ""
-"<span size=\"small\">Ce champ détermine la durée du tampon à allouer aux flux, en millisecondes.\n"
+"<span size=\"small\">Ce champ détermine la durée du tampon à allouer aux "
+"flux, en millisecondes.\n"
 "Augmentez cette valeur, si la lecture du flux est saccadée.\n"
-"Sachez, toutefois, que des valeurs élevées détérioreront les performances d'Audacious.</span>"
+"Sachez, toutefois, que des valeurs élevées détérioreront les performances "
+"d'Audacious.</span>"
 
-#: src/audacious/ui_preferences.c:2673
+#: src/audacious/ui_preferences.c:2571
 msgid "Current output plugin:"
 msgstr "Module de sortie actuel :"
 
-#: src/audacious/ui_preferences.c:2702
+#: src/audacious/ui_preferences.c:2600
 msgid "Output Plugin Preferences"
 msgstr "Préférences du module"
 
-#: src/audacious/ui_preferences.c:2719
+#: src/audacious/ui_preferences.c:2617
 msgid "Output Plugin Information"
 msgstr "Informations sur le module"
 
-#: src/audacious/ui_preferences.c:2728
+#: src/audacious/ui_preferences.c:2626
 msgid "<b>Sampling Rate Converter</b>"
 msgstr "<b>Conversion du taux d'échantillonnage</b>"
 
-#: src/audacious/ui_preferences.c:2737
+#: src/audacious/ui_preferences.c:2635
 msgid "Enable Sampling Rate Converter"
 msgstr "Activer la conversion du taux d'échantillonnage"
 
-#: src/audacious/ui_preferences.c:2757
+#: src/audacious/ui_preferences.c:2655
 msgid "Best Sinc Interpolation"
 msgstr "Qualité optimale"
 
-#: src/audacious/ui_preferences.c:2758
+#: src/audacious/ui_preferences.c:2656
 msgid "Medium Sinc Interpolation"
 msgstr "Qualité moyenne"
 
-#: src/audacious/ui_preferences.c:2759
+#: src/audacious/ui_preferences.c:2657
 msgid "Fastest Sinc Interpolation"
 msgstr "Vitesse optimale"
 
-#: src/audacious/ui_preferences.c:2760
+#: src/audacious/ui_preferences.c:2658
 msgid "ZOH Interpolation"
 msgstr "ZOH (blocage d'ordre zéro)"
 
-#: src/audacious/ui_preferences.c:2761
+#: src/audacious/ui_preferences.c:2659
 msgid "Linear Interpolation"
 msgstr "Méthode linéaire"
 
-#: src/audacious/ui_preferences.c:2763
+#: src/audacious/ui_preferences.c:2661
 msgid "Interpolation Engine:"
 msgstr "Algorithme d'interpolation :"
 
-#: src/audacious/ui_preferences.c:2769
+#: src/audacious/ui_preferences.c:2667
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
@@ -2150,23 +2190,27 @@ msgstr ""
 "Idéalement, ce taux devrait correspondre au taux d'échantillonnage\n"
 "maximal que supporte la carte son ou le module d'extension de sortie.</span>"
 
-#: src/audacious/ui_preferences.c:2789
+#: src/audacious/ui_preferences.c:2687
 msgid "Sampling Rate [Hz]:"
 msgstr "Taux d'échantillonnage [Hz] :"
 
-#: src/audacious/ui_preferences.c:2799
+#: src/audacious/ui_preferences.c:2697
 msgid "<b>Volume Control</b>"
 msgstr "<b>Contrôle du volume</b>"
 
-#: src/audacious/ui_preferences.c:2808
+#: src/audacious/ui_preferences.c:2706
 msgid "Use software volume control"
 msgstr "Utiliser le contrôle du volume logiciel"
 
-#: src/audacious/ui_preferences.c:2810
-msgid "Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."
-msgstr "Utilise le contrôle du volume logiciel. Cette option peut se révéler utile, si votre système audio ne dispose pas de support de contrôle du volume."
+#: src/audacious/ui_preferences.c:2708
+msgid ""
+"Use software volume control. This may be useful for situations where your "
+"audio system does not support controlling the playback volume."
+msgstr ""
+"Utilise le contrôle du volume logiciel. Cette option peut se révéler utile, "
+"si votre système audio ne dispose pas de support de contrôle du volume."
 
-#: src/audacious/ui_preferences.c:2843
+#: src/audacious/ui_preferences.c:2741
 msgid "Reload Plugins"
 msgstr "Recharger les modules"
 
@@ -2226,8 +2270,21 @@ msgstr "Thème Winamp 2.x non archivé"
 msgid "Add/Open URL Dialog"
 msgstr "Ouvrir/Ajouter un flux"
 
+#~ msgid "Equalizer"
+#~ msgstr "Égaliseur"
+
+#~ msgid "<b>Presets</b>"
+#~ msgstr "<b>Préréglages</b>"
+
+#~ msgid "File preset extension:"
+#~ msgstr "Extension des fichiers de préréglages :"
+
+#~ msgid "Directory preset file:"
+#~ msgstr "Répertoire des fichiers de préréglages :"
+
 #~ msgid "localhost"
 #~ msgstr "hôte local"
+
 #~ msgid ""
 #~ "<b><big>Unable to create %s.</big></b>\n"
 #~ "\n"
@@ -2237,6 +2294,7 @@ msgstr "Ouvrir/Ajouter un flux"
 #~ "\n"
 #~ "Impossible d'ouvrir le fichier 'glade' (%s). Veuillez vérifier "
 #~ "l'installation.\n"
+
 #~ msgid ""
 #~ "TITLE\n"
 #~ "ARTIST - TITLE\n"
@@ -2253,8 +2311,10 @@ msgstr "Ouvrir/Ajouter un flux"
 #~ "ARTISTE [ ALBUM ] - PISTE. TITRE\n"
 #~ "ALBUM - TITRE\n"
 #~ "Personnalisé"
+
 #~ msgid "Available _Presets:"
 #~ msgstr "_Préréglages disponibles :"
+
 #~ msgid ""
 #~ "Best Sinc Interpolation\n"
 #~ "Medium Sinc Interpolation\n"
@@ -2267,8 +2327,9 @@ msgstr "Ouvrir/Ajouter un flux"
 #~ "Vitesse optimale\n"
 #~ "ZOH (blocage d'ordre zéro)\n"
 #~ "Méthode linéaire"
+
 #~ msgid "Track Information Window"
 #~ msgstr "Fenêtre d'informations sur le morceau"
+
 #~ msgid "Preferences Window"
 #~ msgstr "Fenêtre des préférences"
-
