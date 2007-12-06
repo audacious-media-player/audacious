@@ -73,6 +73,7 @@ escape_shell_chars(const gchar * string)
     return escaped;
 }
 
+/* replace %20 with ' ' in place */
 static gchar *
 str_twenty_to_space(gchar * str)
 {
@@ -86,6 +87,26 @@ str_twenty_to_space(gchar * str)
         while (*match_end)
             *match++ = *match_end++;
         *match = 0;
+    }
+
+    return str;
+}
+
+/* replace drive letter with '/' in place */
+static gchar *
+str_replace_drive_letter(gchar * str)
+{
+    gchar *match, *match_end;
+
+    g_return_val_if_fail(str != NULL, NULL);
+
+    while ((match = strstr(str, ":\\"))) {
+        match--;
+        match_end = match + 3;
+        *match++ = '/';
+        while (*match_end)
+            *match++ = *match_end++;
+        *match = 0; /* the end of line */
     }
 
     return str;
@@ -263,7 +284,22 @@ convert_title_text(gchar * title)
     return title;
 }
 
-gchar *chardet_to_utf8(const gchar *str, gssize len,
+gchar *
+convert_dos_path(gchar * path)
+{
+    g_return_val_if_fail(path != NULL, NULL);
+
+    /* replace drive letter with '/' */
+    str_replace_drive_letter(path);
+
+    /* replace '\' with '/' */
+    str_replace_char(path, '\\', '/');
+
+    return path;
+}
+
+gchar *
+chardet_to_utf8(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
 					   GError **arg_error)
 {

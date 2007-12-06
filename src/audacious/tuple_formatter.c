@@ -598,11 +598,17 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 
     if(!rv || !strcmp(rv, "")) {
         const gchar *file_name = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
-        gchar *realfn = file_name != NULL ? g_filename_from_uri(file_name, NULL, NULL) : g_strdup("<unknown>");
 
-        g_free(rv);
-        rv = str_to_utf8(realfn ? realfn : file_name);
-        g_free(realfn);
+        if(file_name) {
+            gchar *realfn = g_filename_from_uri(file_name, NULL, NULL);
+            g_free(rv);
+            rv = str_to_utf8(realfn ? realfn : file_name);
+            g_free(realfn);
+        }
+        else {
+            g_free(rv);
+            rv = g_strdup("<unknown>");
+        }
     }
 
     return rv;

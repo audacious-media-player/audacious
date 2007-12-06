@@ -388,6 +388,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .get_output_list = get_output_list,
 
     .input_get_volume = input_get_volume,
+    .construct_uri = construct_uri,
 };
 
 /*****************************************************************/

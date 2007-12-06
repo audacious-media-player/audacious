@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+/* #define AUD_DEBUG 1 */
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -967,3 +969,46 @@ util_get_localdir(void)
   return datadir;
 }
 
+
+gchar *
+construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anything else
+{
+    gchar *filename = g_strdup(string);
+    gchar *tmp, *path;
+    gchar *uri = NULL;
+
+    /* try to translate dos path */
+    convert_dos_path(filename); /* in place replacement */
+
+    /* convert backslash to slash */
+    while ((tmp = strchr(filename, '\\')) != NULL)
+        *tmp = '/';
+
+    // make full path uri here
+    // case 1: filename is raw full path or uri
+    if (filename[0] == '/' || strstr(filename, "://")) {
+        uri = g_filename_to_uri(filename, NULL, NULL);
+        if(!uri) {
+            uri = g_strdup(filename);
+        }
+        g_free(filename);
+    }
+    // case 2: filename is not raw full path nor uri, playlist path is full path
+    // make full path by replacing last part of playlist path with filename. (using g_build_filename)
+    else if (playlist_name[0] == '/' || strstr(playlist_name, "://")) {
+        path = g_strdup(playlist_name);
+        tmp = strrchr(path, '/'); *tmp = '\0';
+        tmp = g_build_filename(path, filename, NULL);
+        uri = g_filename_to_uri(tmp, NULL, NULL);
+        g_free(tmp); g_free(filename);
+    }
+    // case 3: filename is not raw full path nor uri, playlist path is not full path
+    // just abort.
+    else {
+        g_free(filename);
+        return NULL;
+    }
+
+    AUDDBG("uri=%s\n", uri);
+    return uri;
+}
