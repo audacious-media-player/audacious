@@ -155,7 +155,7 @@ static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
 static gint filter_by_extension(const gchar *filename);
 static gboolean is_http(const gchar *filename);
-static gboolean do_precheck(Playlist *playlist, const gchar *uri, ProbeResult *pr);
+static gboolean do_precheck(Playlist *playlist, const gchar *uri, ProbeResult **pr);
 
 static mowgli_heap_t *playlist_entry_heap = NULL;
 
@@ -781,7 +781,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
         return TRUE;
     }
 
-    if(do_precheck(playlist, filename, pr)) {
+    if(do_precheck(playlist, filename, &pr)) {
         if(pr) {
             dec = pr->ip;
             tuple = pr->tuple;
@@ -1697,7 +1697,7 @@ playlist_load_ins_file(Playlist *playlist,
     g_return_if_fail(playlist_name != NULL);
     g_return_if_fail(playlist != NULL);
 
-    if(do_precheck(playlist, uri, pr)) {
+    if(do_precheck(playlist, uri, &pr)) {
         __playlist_ins_file(playlist, uri, pos, NULL, title, len, pr ? pr->ip : NULL);
     }
     g_free(pr);
@@ -1716,7 +1716,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
     g_return_if_fail(playlist_name != NULL);
     g_return_if_fail(playlist != NULL);
 
-    if(do_precheck(playlist, uri, pr)) {
+    if(do_precheck(playlist, uri, &pr)) {
         __playlist_ins_file(playlist, uri, pos, tuple, NULL, -1, pr ? pr->ip : NULL);
     }
     g_free(pr);
@@ -1724,7 +1724,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 }
 
 static gboolean
-do_precheck(Playlist *playlist, const gchar *uri, ProbeResult *pr)
+do_precheck(Playlist *playlist, const gchar *uri, ProbeResult **pr)
 {
     gint ext_flag = filter_by_extension(uri);
     gboolean http_flag = is_http(uri);
@@ -1748,8 +1748,8 @@ do_precheck(Playlist *playlist, const gchar *uri, ProbeResult *pr)
     }
     /* find decorder for local file */
     else {
-        pr = input_check_file(uri, TRUE);
-        if(pr) {
+        *pr = input_check_file(uri, TRUE);
+        if(*pr) {
             AUDDBG("got pr\n");
             rv = TRUE;
         }
