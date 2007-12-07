@@ -768,7 +768,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     ProbeResult *pr = NULL;
     InputPlugin *dec = NULL;
     Tuple *tuple = NULL;
-    gboolean http_flag;
+    gboolean http_flag = is_http(filename);
 
     g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
