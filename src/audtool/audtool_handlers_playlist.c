@@ -47,8 +47,38 @@ void playlist_advance(gint argc, gchar **argv)
 	audacious_remote_playlist_next(dbus_proxy);
 }
 
+static gchar *
+construct_uri(gchar *string)
+{
+    gchar *filename = g_strdup(string);
+    gchar *tmp, *path;
+    gchar *uri = NULL;
+
+    // case 1: filename is raw full path or uri
+    if (filename[0] == '/' || strstr(filename, "://")) {
+        uri = g_filename_to_uri(filename, NULL, NULL);
+        if(!uri) {
+            uri = g_strdup(filename);
+        }
+        g_free(filename);
+    }
+    // case 2: filename is not raw full path nor uri.
+    // make full path with pwd. (using g_build_filename)
+    else {
+        path = g_get_current_dir();
+        tmp = g_build_filename(path, filename, NULL);
+        g_free(path); g_free(filename);
+        uri = g_filename_to_uri(tmp, NULL, NULL);
+        g_free(tmp);
+    }
+
+    return uri;
+}
+
 void playlist_add_url_string(gint argc, gchar **argv)
 {
+    gchar *uri;
+
 	if (argc < 2)
 	{
 		audtool_whine("invalid parameters for %s.", argv[0]);
@@ -56,7 +86,11 @@ void playlist_add_url_string(gint argc, gchar **argv)
 		exit(1);
 	}
 
-	audacious_remote_playlist_add_url_string(dbus_proxy, argv[1]);
+    uri = construct_uri(argv[1]);
+    if (uri) {
+        audacious_remote_playlist_add_url_string(dbus_proxy, uri);
+    }
+    g_free(uri);
 }
 
 void playlist_delete(gint argc, gchar **argv)
@@ -369,4 +403,44 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 	audtool_report("%s", data);
 
 	g_free(data);
+}
+
+void playlist_ins_url_string(gint argc, gchar **argv)
+{
+    gint pos = -1;
+    gchar *uri;
+
+    if (argc < 3)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <url> <position>", argv[0]);
+        exit(1);
+    }
+
+    pos = atoi(argv[2]) - 1;
+    if(pos >= 0) {
+        uri = construct_uri(argv[1]);
+        if (uri) {
+            audacious_remote_playlist_ins_url_string(dbus_proxy, uri, pos);
+        }
+        g_free(uri);
+    }
+}
+
+void playlist_enqueue_to_temp(gint argc, gchar **argv)
+{
+    gchar *uri;
+
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <url>", argv[0]);
+        exit(1);
+    }
+
+    uri = construct_uri(argv[1]);
+    if (uri) {
+        audacious_remote_playlist_enqueue_to_temp(dbus_proxy, uri);
+    }
+    g_free(uri);
 }

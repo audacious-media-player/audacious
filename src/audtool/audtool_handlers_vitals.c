@@ -183,3 +183,12 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 
 	g_free(data);
 }
+
+void get_current_song_info(gint argc, gchar **argv)
+{
+    gint rate, freq, nch;
+
+    audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
+    audtool_report("rate = %d freq = %d nch = %d", rate, freq, nch);
+}
+

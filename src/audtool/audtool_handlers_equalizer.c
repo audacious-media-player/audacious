@@ -37,99 +37,7 @@
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
 
-void test_activate(gint argc, gchar **argv)
-{
-    audacious_remote_activate(dbus_proxy);
-}
-
-void test_enqueue_to_temp(gint argc, gchar **argv)
-{
-    if (argc < 2)
-    {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <url>", argv[0]);
-        exit(1);
-    }
-
-    audacious_remote_playlist_enqueue_to_temp(dbus_proxy, argv[1]);
-}
-
-void test_toggle_aot(gint argc, gchar **argv)
-{
-    if (argc < 2)
-    {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
-        exit(1);
-    }
-
-    if (!g_ascii_strcasecmp(argv[1], "on")) {
-        audacious_remote_toggle_aot(dbus_proxy, TRUE);
-        return;
-    }
-    else if (!g_ascii_strcasecmp(argv[1], "off")) {
-        audacious_remote_toggle_aot(dbus_proxy, FALSE);
-        return;
-    }
-}
-
-void test_get_skin(gint argc, gchar **argv)
-{
-    gchar *skin = NULL;
-    skin = audacious_remote_get_skin(dbus_proxy);
-    audtool_report("%s", skin);
-    g_free(skin);
-}
-
-void test_set_skin(gint argc, gchar **argv)
-{
-    if (argc < 2)
-    {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <skin>", argv[0]);
-        exit(1);
-    }
-
-    if(!argv[1] || !strcmp(argv[1], ""))
-       return;
-
-    audacious_remote_set_skin(dbus_proxy, argv[1]);
-}
-
-void test_get_info(gint argc, gchar **argv)
-{
-    gint rate, freq, nch;
-
-    audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
-    audtool_report("rate = %d freq = %d nch = %d", rate, freq, nch);
-}
-
-void test_ins_url_string(gint argc, gchar **argv)
-{
-    gint pos = -1;
-
-    if (argc < 3)
-    {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <url> <position>", argv[0]);
-        exit(1);
-    }
-
-    pos = atoi(argv[2]) - 1;
-    if(pos >= 0)
-        audacious_remote_playlist_ins_url_string(dbus_proxy, argv[1], pos);
-}
-
-void test_get_version(gint argc, gchar **argv)
-{
-    gchar *version = NULL;
-    version = audacious_remote_get_version(dbus_proxy);
-    if(version)
-        audtool_report("Audacious %s", version);
-    g_free(version);
-}
-
-void test_get_eq(gint argc, gchar **argv)
+void equalizer_get_eq(gint argc, gchar **argv)
 {
     double preamp;
     GArray *bands;
@@ -145,12 +53,12 @@ void test_get_eq(gint argc, gchar **argv)
     g_array_free(bands, TRUE);
 }
 
-void test_get_eq_preamp(gint argc, gchar **argv)
+void equalizer_get_eq_preamp(gint argc, gchar **argv)
 {
     audtool_report("preamp = %.2f", audacious_remote_get_eq_preamp(dbus_proxy));
 }
 
-void test_get_eq_band(gint argc, gchar **argv)
+void equalizer_get_eq_band(gint argc, gchar **argv)
 {
     int band;
 
@@ -173,7 +81,7 @@ void test_get_eq_band(gint argc, gchar **argv)
     
 }
 
-void test_set_eq(gint argc, gchar **argv)
+void equalizer_set_eq(gint argc, gchar **argv)
 {
     gdouble preamp;
     GArray *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), 10);
@@ -196,7 +104,7 @@ void test_set_eq(gint argc, gchar **argv)
     audacious_remote_set_eq(dbus_proxy, preamp, bands);
 }
 
-void test_set_eq_preamp(gint argc, gchar **argv)
+void equalizer_set_eq_preamp(gint argc, gchar **argv)
 {
     gdouble preamp;
 
@@ -212,7 +120,7 @@ void test_set_eq_preamp(gint argc, gchar **argv)
     audacious_remote_set_eq_preamp(dbus_proxy, preamp);
 }
 
-void test_set_eq_band(gint argc, gchar **argv)
+void equalizer_set_eq_band(gint argc, gchar **argv)
 {
     int band;
     gdouble preamp;
@@ -230,7 +138,7 @@ void test_set_eq_band(gint argc, gchar **argv)
     audacious_remote_set_eq_band(dbus_proxy, band, preamp);
 }
 
-void test_equalizer_active(gint argc, gchar **argv)
+void equalizer_active(gint argc, gchar **argv)
 {
     if (argc < 2)
     {

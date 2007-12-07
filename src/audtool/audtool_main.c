@@ -53,10 +53,15 @@ struct commandhandler handlers[] = {
 	{"current-song-frequency-khz", get_current_song_frequency_khz, "returns current song frequency in kilohertz", 0},
 	{"current-song-channels", get_current_song_channels, "returns current song channels", 0},
 	{"current-song-tuple-data", get_current_song_tuple_field_data, "returns the value of a tuple field for the current song", 1},
+    {"current-song-info", get_current_song_info, "returns current song bitrate, frequency and channels", 0},
+
+
 	{"<sep>", NULL, "Playlist manipulation", 0},
 	{"playlist-advance", playlist_advance, "go to the next song in the playlist", 0},
 	{"playlist-reverse", playlist_reverse, "go to the previous song in the playlist", 0},
 	{"playlist-addurl", playlist_add_url_string, "adds a url to the playlist", 1},
+    {"playlist-insurl", playlist_ins_url_string, "inserts a url at specified position in the playlist", 2},
+	{"playlist-addurl-to-new-playlist", playlist_enqueue_to_temp, "adds a url to the newly created playlist", 1},
 	{"playlist-delete", playlist_delete, "deletes a song from the playlist", 1},
 	{"playlist-length", playlist_length, "returns the total length of the playlist", 0},
 	{"playlist-song", playlist_song, "returns the title of a song in the playlist", 1},
@@ -73,6 +78,8 @@ struct commandhandler handlers[] = {
 	{"playlist-shuffle-status", playlist_shuffle_status, "returns the status of playlist shuffle", 0},
 	{"playlist-shuffle-toggle", playlist_shuffle_toggle, "toggles playlist shuffle", 0},
 	{"playlist-tuple-data", playlist_tuple_field_data, "returns the value of a tuple field for a song in the playlist", 2},
+
+
 	{"<sep>", NULL, "Playqueue manipulation", 0},
 	{"playqueue-add", playqueue_add, "adds a song to the playqueue", 1},
 	{"playqueue-remove", playqueue_remove, "removes a song from the playqueue", 1},
@@ -82,6 +89,8 @@ struct commandhandler handlers[] = {
 	{"playqueue-length", playqueue_length, "returns the length of the playqueue", 0},
 	{"playqueue-display", playqueue_display, "returns a list of currently-queued songs", 0},
 	{"playqueue-clear", playqueue_clear, "clears the playqueue", 0},
+
+
 	{"<sep>", NULL, "Playback manipulation", 0},
 	{"playback-play", playback_play, "starts/unpauses song playback", 0},
 	{"playback-pause", playback_pause, "(un)pauses song playback", 0},
@@ -93,43 +102,45 @@ struct commandhandler handlers[] = {
 	{"playback-status", playback_status, "returns the playback status", 0},
 	{"playback-seek", playback_seek, "performs an absolute seek", 1},
 	{"playback-seek-relative", playback_seek_relative, "performs a seek relative to the current position", 1},
+
+
 	{"<sep>", NULL, "Volume control", 0},
 	{"get-volume", get_volume, "returns the current volume level in percent", 0},
 	{"set-volume", set_volume, "sets the current volume level in percent", 1},
+
+
+	{"<sep>", NULL, "Equalizer manipulation", 0},
+    {"equalizer-activate", equalizer_active, "activates/deactivates the equalizer", 1},
+    {"equalizer-get", equalizer_get_eq, "gets the equalizer settings", 0},
+    {"equalizer-set", equalizer_set_eq, "sets the equalizer settings", 11},
+    {"equalizer-get-preamp", equalizer_get_eq_preamp, "gets the equalizer pre-amplification", 0},
+    {"equalizer-set-preamp", equalizer_set_eq_preamp, "sets the equalizer pre-amplification", 1},
+    {"equalizer-get-band", equalizer_get_eq_band, "gets the equalizer value in specified band", 1},
+    {"equalizer-set-band", equalizer_set_eq_band, "sets the equalizer value in the specified band", 2},
+
+
 	{"<sep>", NULL, "Miscellaneous", 0},
 	{"mainwin-show", mainwin_show, "shows/hides the main window", 1},
 	{"playlist-show", playlist_show, "shows/hides the playlist window", 1},
 	{"equalizer-show", equalizer_show, "shows/hides the equalizer window", 1},
 
+	{"filebrowser-show", show_filebrowser, "shows/hides the filebrowser", 1},
+	{"jumptofile-show", show_jtf_window, "shows/hides the jump to file window", 1},
 	{"preferences-show", show_preferences_window, "shows/hides the preferences window", 1},
 	{"about-show", show_about_window, "shows/hides the about window", 1},
-	{"jumptofile-show", show_jtf_window, "shows/hides the jump to file window", 1},
-	{"filebrowser-show", show_filebrowser, "shows/hides the filebrowser", 1},
 
+	{"activate", activate, "activates and raises audacious", 0},
+	{"always-on-top", toggle_aot, "on/off always on top", 1},
+    {"get-skin", get_skin, "gets skin", 0},
+    {"set-skin", set_skin, "sets skin", 1},
+    {"version", get_version, "shows audaciuos version", 0},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},
+
+
 	{"<sep>", NULL, "Help system", 0},
 	{"list-handlers", get_handlers_list, "shows handlers list", 0},
 	{"help", get_handlers_list, "shows handlers list", 0},
 
-    /* test suite */
-	{"<sep>", NULL, "Test suite", 0},
-	{"activate", test_activate, "activate audacious", 0},
-	{"always-on-top", test_toggle_aot, "on/off always on top", 1},
-    {"get-version", test_get_version, "get the version string of audacious", 0},
-    {"get-info", test_get_info, "get info", 0},
-    {"get-skin", test_get_skin, "get skin", 0},
-    {"set-skin", test_set_skin, "set skin", 1},
-	{"playlist-addurl-to-new-playlist", test_enqueue_to_temp, "adds a url to the newly created playlist", 1},
-    {"playlist-insurl", test_ins_url_string, "inserts a url at specified position in the playlist", 2},
-
-    /* test suite for equalizer */
-    {"equalizer-get", test_get_eq, "get the equalizer settings", 0},
-    {"equalizer-get-preamp", test_get_eq_preamp, "get the equalizer pre-amplification", 0},
-    {"equalizer-get-band", test_get_eq_band, "get the equalizer value in specified band", 1},
-    {"equalizer-set", test_set_eq, "set the equalizer settings", 11},
-    {"equalizer-set-preamp", test_set_eq_preamp, "set the equalizer pre-amplification", 1},
-    {"equalizer-set-band", test_set_eq_band, "set the equalizer value in the specified band", 2},
-    {"equalizer-activate", test_equalizer_active, "activate/deactivate the equalizer", 1},
     
 	{NULL, NULL, NULL, 0}
 };

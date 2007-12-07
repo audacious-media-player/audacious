@@ -258,3 +258,59 @@ void get_handlers_list(gint argc, gchar **argv)
 	audtool_report("Handlers may be prefixed with `--' (GNU-style long-options) or not, your choice.");
 	audtool_report("Report bugs to http://bugs-meta.atheme.org/");
 }
+
+void activate(gint argc, gchar **argv)
+{
+    audacious_remote_activate(dbus_proxy);
+}
+
+void toggle_aot(gint argc, gchar **argv)
+{
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <on/off>", argv[0]);
+        exit(1);
+    }
+
+    if (!g_ascii_strcasecmp(argv[1], "on")) {
+        audacious_remote_toggle_aot(dbus_proxy, TRUE);
+        return;
+    }
+    else if (!g_ascii_strcasecmp(argv[1], "off")) {
+        audacious_remote_toggle_aot(dbus_proxy, FALSE);
+        return;
+    }
+}
+
+void get_skin(gint argc, gchar **argv)
+{
+    gchar *skin = NULL;
+    skin = audacious_remote_get_skin(dbus_proxy);
+    audtool_report("%s", skin);
+    g_free(skin);
+}
+
+void set_skin(gint argc, gchar **argv)
+{
+    if (argc < 2)
+    {
+        audtool_whine("invalid parameters for %s.", argv[0]);
+        audtool_whine("syntax: %s <skin>", argv[0]);
+        exit(1);
+    }
+
+    if(!argv[1] || !strcmp(argv[1], ""))
+       return;
+
+    audacious_remote_set_skin(dbus_proxy, argv[1]);
+}
+
+void get_version(gint argc, gchar **argv)
+{
+    gchar *version = NULL;
+    version = audacious_remote_get_version(dbus_proxy);
+    if(version)
+        audtool_report("Audacious %s", version);
+    g_free(version);
+}

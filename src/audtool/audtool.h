@@ -47,6 +47,9 @@ struct commandhandler {
 
 extern struct commandhandler handlers[];
 
+extern void audtool_report(const gchar *str, ...);
+extern void audtool_whine(const gchar *str, ...);
+
 extern void get_handlers_list(gint, gchar **);
 extern void get_current_song(gint, gchar **);
 extern void get_current_song_filename(gint, gchar **);
@@ -62,8 +65,11 @@ extern void get_current_song_frequency(gint, gchar **);
 extern void get_current_song_frequency_khz(gint, gchar **);
 extern void get_current_song_channels(gint, gchar **);
 extern void get_current_song_tuple_field_data(gint, gchar **argv);
+extern void get_current_song_info(gint argc, gchar **argv);
+
 extern void get_volume(gint, gchar **);
 extern void set_volume(gint, gchar **);
+
 extern void playlist_position(gint, gchar **);
 extern void playlist_advance(gint, gchar **);
 extern void playlist_reverse(gint, gchar **);
@@ -84,6 +90,10 @@ extern void playlist_repeat_toggle(gint, gchar **);
 extern void playlist_shuffle_status(gint, gchar **);
 extern void playlist_shuffle_toggle(gint, gchar **);
 extern void playlist_tuple_field_data(gint, gchar **argv);
+extern void playlist_show(gint, gchar **);
+extern void playlist_enqueue_to_temp(gint argc, gchar **argv);
+extern void playlist_ins_url_string(gint argc, gchar **argv);
+
 extern void playqueue_add(gint, gchar **);
 extern void playqueue_remove(gint, gchar **);
 extern void playqueue_is_queued(gint, gchar **);
@@ -92,6 +102,7 @@ extern void playqueue_get_list_position(gint, gchar **);
 extern void playqueue_display(gint, gchar **);
 extern void playqueue_length(gint, gchar **);
 extern void playqueue_clear(gint, gchar **);
+
 extern void playback_play(gint, gchar **);
 extern void playback_pause(gint, gchar **);
 extern void playback_playpause(gint, gchar **);
@@ -102,34 +113,27 @@ extern void playback_stopped(gint, gchar **);
 extern void playback_status(gint, gchar **);
 extern void playback_seek(gint, gchar **);
 extern void playback_seek_relative(gint, gchar **);
+
 extern void mainwin_show(gint, gchar **);
-extern void playlist_show(gint, gchar **);
-extern void equalizer_show(gint, gchar **);
 extern void show_preferences_window(gint, gchar **);
 extern void show_jtf_window(gint, gchar **);
 extern void show_filebrowser(gint, gchar **);
 extern void shutdown_audacious_server(gint, gchar **);
 extern void show_about_window(gint, gchar **);
 
-extern void audtool_report(const gchar *str, ...);
-extern void audtool_whine(const gchar *str, ...);
+extern void activate(gint argc, gchar **argv);
+extern void toggle_aot(gint argc, gchar **argv);
+extern void get_skin(gint argc, gchar **argv);
+extern void set_skin(gint argc, gchar **argv);
+extern void get_version(gint argc, gchar **argv);
 
-/* test suite */
-extern void test_activate(gint argc, gchar **argv);
-extern void test_enqueue_to_temp(gint argc, gchar **argv);
-extern void test_toggle_aot(gint argc, gchar **argv);
-extern void test_get_skin(gint argc, gchar **argv);
-extern void test_set_skin(gint argc, gchar **argv);
-extern void test_get_info(gint argc, gchar **argv);
-extern void test_ins_url_string(gint argc, gchar **argv);
-extern void test_get_version(gint argc, gchar **argv);
-
-extern void test_get_eq(gint argc, gchar **argv);
-extern void test_get_eq_preamp(gint argc, gchar **argv);
-extern void test_get_eq_band(gint argc, gchar **argv);
-extern void test_set_eq(gint argc, gchar **argv);
-extern void test_set_eq_preamp(gint argc, gchar **argv);
-extern void test_set_eq_band(gint argc, gchar **argv);
-void test_equalizer_active(gint argc, gchar **argv);
+extern void equalizer_get_eq(gint argc, gchar **argv);
+extern void equalizer_get_eq_preamp(gint argc, gchar **argv);
+extern void equalizer_get_eq_band(gint argc, gchar **argv);
+extern void equalizer_set_eq(gint argc, gchar **argv);
+extern void equalizer_set_eq_preamp(gint argc, gchar **argv);
+extern void equalizer_set_eq_band(gint argc, gchar **argv);
+extern void equalizer_active(gint argc, gchar **argv);
+extern void equalizer_show(gint, gchar **);
 
 #endif
