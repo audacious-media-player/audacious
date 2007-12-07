@@ -999,8 +999,9 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
         path = g_strdup(playlist_name);
         tmp = strrchr(path, '/'); *tmp = '\0';
         tmp = g_build_filename(path, filename, NULL);
+        g_free(path); g_free(filename);
         uri = g_filename_to_uri(tmp, NULL, NULL);
-        g_free(tmp); g_free(filename);
+        g_free(tmp);
     }
     // case 3: filename is not raw full path nor uri, playlist path is not full path
     // just abort.
