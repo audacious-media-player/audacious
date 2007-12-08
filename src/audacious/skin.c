@@ -158,18 +158,20 @@ skin_unlock(Skin * skin)
 gboolean
 bmp_active_skin_reload(void) 
 {
+    AUDDBG("\n");
     return bmp_active_skin_load(bmp_active_skin->path); 
 }
 
 gboolean
 bmp_active_skin_load(const gchar * path)
 {
+    AUDDBG("%s\n", path);
     g_return_val_if_fail(bmp_active_skin != NULL, FALSE);
 
-    memset(&bmp_active_skin->properties, 0, sizeof(SkinProperties));
-
-    if (!skin_load(bmp_active_skin, path))
+    if (!skin_load(bmp_active_skin, path)) {
+        AUDDBG("loading failed\n");
         return FALSE;
+    }
 
     skin_setup_masks(bmp_active_skin);
 
@@ -381,6 +383,8 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
         g_free(filename);
         return FALSE;
     }
+
+    AUDDBG("loaded %s\n", filename);
 
     g_free(filename);
 
@@ -1423,6 +1427,8 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     gchar *filename;
     INIFile *inifile;
 
+    AUDDBG("\n");
+
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
         skin_load_pixmap_id(skin, i, path);
 
@@ -1492,6 +1498,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     GtkSettings *settings;
     gchar *cpath, *gtkrcpath;
 
+    AUDDBG("\n");
+
     g_return_val_if_fail(skin != NULL, FALSE);
     g_return_val_if_fail(path != NULL, FALSE);
     REQUIRE_LOCK(skin->lock);
@@ -1499,8 +1507,12 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     if (!g_file_test(path, G_FILE_TEST_IS_REGULAR | G_FILE_TEST_IS_DIR))
         return FALSE;
    
-    if (!force && skin->path && !strcmp(skin->path, path))
-    return FALSE;
+    if (!force && skin->path && !strcmp(skin->path, path)) {
+        AUDDBG("skin %s already loaded\n", path);
+        return FALSE;
+    }
+    
+    memset(&(skin->properties), 0, sizeof(SkinProperties)); /* do it only if all tests above passed! --asphyx */
       
     skin_current_num++;
 
@@ -1538,6 +1550,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
         return TRUE;
     }
+    
+    AUDDBG("Attempt to load archive\n");
 
     if (!(cpath = archive_decompress(path))) {
         g_message("Unable to extract skin archive (%s)", path);
@@ -1599,7 +1613,7 @@ skin_get_pixmap(Skin * skin, SkinPixmapId map_id)
 gboolean
 skin_load(Skin * skin, const gchar * path)
 {
-    gboolean error;
+    gboolean ret;
 
     g_return_val_if_fail(skin != NULL, FALSE);
 
@@ -1607,8 +1621,13 @@ skin_load(Skin * skin, const gchar * path)
         return FALSE;
 
     skin_lock(skin);
-    error = skin_load_nolock(skin, path, FALSE);
+    ret = skin_load_nolock(skin, path, FALSE);
     skin_unlock(skin);
+
+    if(!ret) {
+        AUDDBG("loading failed\n");
+        return FALSE; /* don't try to update anything if loading failed --asphyx */
+    }
 
     SkinPixmap *pixmap = NULL;
     pixmap = skin_get_pixmap(skin, SKIN_NUMBERS);
@@ -1632,7 +1651,7 @@ skin_load(Skin * skin, const gchar * path)
     if (pixmap->height >= 313)
         gtk_widget_show(equalizerwin_graph);
 
-    return error;
+    return TRUE;
 }
 
 gboolean
