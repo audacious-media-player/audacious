@@ -1,4 +1,4 @@
-# translation of sr@Latn.po to
+# translation of audacious.po to Serbian (Latin)
 # Strahinja Kustudic <kustudic@gmail.com>, 2007.
 # Copyright (C) 2007 Strahinja  Kustudić <kustodian@gmail.com>
 # This file is distributed under the same license as the Audacious package.
@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-12-06 17:13+0100\n"
-"PO-Revision-Date: 2007-07-31 14:31+0200\n"
-"Last-Translator: Strahinja Kustudić <kustudic@gmail.com>\n"
-"Language-Team:  Serbian Latin <kustodian@gmail.com>\n"
+"PO-Revision-Date: 2007-12-08 14:02+0100\n"
+"Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
+"Language-Team: Serbian Latin <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,54 +44,47 @@ msgstr "Audacious"
 
 #: src/audacious/main.c:262
 msgid "None"
-msgstr ""
+msgstr "Nijedan"
 
 #: src/audacious/main.c:263
-#, fuzzy
 msgid "Japanese"
-msgstr "Japanski:"
+msgstr "Japanski"
 
 #: src/audacious/main.c:264
-#, fuzzy
 msgid "Taiwanese"
-msgstr "Japanski:"
+msgstr "Tajvanski"
 
 #: src/audacious/main.c:265
-#, fuzzy
 msgid "Chinese"
-msgstr "Linije"
+msgstr "Kineski"
 
 #: src/audacious/main.c:266
-#, fuzzy
 msgid "Korean"
-msgstr "Koreanski:"
+msgstr "Koreanski"
 
 #: src/audacious/main.c:267
-#, fuzzy
 msgid "Russian"
-msgstr "Ruski:"
+msgstr "Ruski"
 
 #: src/audacious/main.c:268
-#, fuzzy
 msgid "Greek"
-msgstr "Grčki:"
+msgstr "Grčki"
 
 #: src/audacious/main.c:269
 msgid "Hebrew"
-msgstr ""
+msgstr "Jevrejski"
 
 #: src/audacious/main.c:270
-#, fuzzy
 msgid "Turkish"
-msgstr "Turski:"
+msgstr "Turski"
 
 #: src/audacious/main.c:271
 msgid "Arabic"
-msgstr ""
+msgstr "Arapski"
 
 #: src/audacious/main.c:273
 msgid "Universal"
-msgstr ""
+msgstr "Univerzalan"
 
 #: src/audacious/main.c:479
 #, c-format
@@ -291,7 +284,7 @@ msgid "Credits"
 msgstr "Zasluge"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
@@ -299,7 +292,7 @@ msgid ""
 "Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Budućnost UNIX multimedije.\n"
+"Maskirani multimedijalni plejer za više platformi.\n"
 "\n"
 "Sva prava zadržana, 2005-2007 Audacious Razvojni Tim\n"
 
@@ -360,9 +353,8 @@ msgid "Dutch:"
 msgstr "Holandski:"
 
 #: src/audacious/ui_credits.c:180
-#, fuzzy
 msgid "Estonian:"
-msgstr "Rumunski:"
+msgstr "Estonski"
 
 #: src/audacious/ui_credits.c:183
 msgid "Finnish:"
@@ -478,41 +470,36 @@ msgstr "Pretpodešavanja"
 
 #: src/audacious/ui_fileinfo.c:163 src/audacious/ui_fileinfo.c:469
 #: src/audacious/ui_fileinfo.c:472 src/audacious/ui_fileinfo.c:475
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">Godina</span>"
+msgstr "<span size=\"small\">nedostupno</span>"
 
 #: src/audacious/ui_fileinfo.c:273
 msgid "Metadata updated successfully"
-msgstr ""
+msgstr "Meta podaci su uspešno osveženi"
 
 #: src/audacious/ui_fileinfo.c:279
 msgid "Metadata updating failed"
-msgstr ""
+msgstr "Osvežavanje meta podataka neuspešno"
 
 #: src/audacious/ui_fileinfo.c:412
 msgid "Track Information"
 msgstr "Informacije o numeri"
 
 #: src/audacious/ui_fileinfo.c:439
-#, fuzzy
 msgid "<span size=\"small\">General</span>"
-msgstr "<span size=\"small\">Žanr</span>"
+msgstr "<span size=\"small\">Opšte</span>"
 
 #: src/audacious/ui_fileinfo.c:459
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Komentar</span>"
+msgstr "<span size=\"small\">Format:</span>"
 
 #: src/audacious/ui_fileinfo.c:462
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Naslov</span>"
+msgstr "<span size=\"small\">Kvalitet:</span>"
 
 #: src/audacious/ui_fileinfo.c:465
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Komentar</span>"
+msgstr "<span size=\"small\">Brzina u bitovima:</span>"
 
 #: src/audacious/ui_fileinfo.c:498
 msgid "<span size=\"small\">Title</span>"
@@ -549,7 +536,7 @@ msgstr "<span size=\"small\">Lokacija</span>"
 #: src/audacious/ui_fileinfo.c:673
 #, c-format
 msgid "%d kb/s"
-msgstr ""
+msgstr "%d kb/s"
 
 #: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
 #: src/audacious/ui_preferences.c:140
@@ -692,9 +679,8 @@ msgid "Always ignore, show/hide is controlled remotely"
 msgstr "Uvek ignoriši, prikaži/sakrij se kontroliše daljinski"
 
 #: src/audacious/ui_main.c:1281
-#, fuzzy
 msgid "Audacious - broken GTK engine usage warning"
-msgstr "Audacious - upozorenje vidljivosti"
+msgstr "Audacious - upozorenje korišćenja pokvarene GTK mašine"
 
 #: src/audacious/ui_main.c:1289
 #, c-format
@@ -709,11 +695,19 @@ msgid ""
 "\n"
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
+"<big><b>Pokrvarena GTK mašina u upotrebi</b></big>\n"
+"\n"
+"Audacious je otkrio da koristite pokvarenu GTK mašinu.\n"
+"\n"
+"Mašina za tema koju koristite, <i>%s</i>, nije kompatibilna sa nekim od "
+"elemenata koje koriste moderne maske. Nekompatibilne osobine su isključene "
+"za ovu sesiju.\n"
+"\n"
+"Da biste koristili ove osobine, razmislite o korišćenju neke druge GTK mašine za teme."
 
 #: src/audacious/ui_main.c:1300
-#, fuzzy
 msgid "Do not display this warning again"
-msgstr "Prikaži glavni prozor"
+msgstr "Ne prikazuj ovo upozorenje"
 
 #: src/audacious/ui_main.c:1323
 msgid "Enter location to play:"
@@ -1273,18 +1267,16 @@ msgid "Sort Selected"
 msgstr "Sortiraj označene"
 
 #: src/audacious/ui_manager.c:380
-#, fuzzy
 msgid "File"
-msgstr "Vatra"
+msgstr "Fajl"
 
 #: src/audacious/ui_manager.c:381
 msgid "Help"
-msgstr ""
+msgstr "Pomoć"
 
 #: src/audacious/ui_manager.c:383
-#, fuzzy
 msgid "Plugin Services"
-msgstr "Dodaci"
+msgstr "Usluge dodataka"
 
 #: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 msgid "View Track Details"
@@ -1311,9 +1303,8 @@ msgid "Play media from the selected location"
 msgstr "Pusti medije iz izabrane lokacije"
 
 #: src/audacious/ui_manager.c:400
-#, fuzzy
 msgid "Plugin services"
-msgstr "Dodaci"
+msgstr "Usluge dodataka"
 
 #: src/audacious/ui_manager.c:402
 msgid "Preferences"
@@ -1600,12 +1591,11 @@ msgstr "Komentar"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Codec"
-msgstr ""
+msgstr "Kodek"
 
 #: src/audacious/ui_preferences.c:149
-#, fuzzy
 msgid "Quality"
-msgstr "_Izađi"
+msgstr "Kvalitet"
 
 #: src/audacious/ui_preferences.c:187
 msgid "<b>_Miscellaneous</b>"
@@ -1649,13 +1639,16 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:197
 msgid "Use two-way text scroller"
-msgstr ""
+msgstr "Koristi dvosmerni tekst klizač"
 
 #: src/audacious/ui_preferences.c:198
 msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
+"Ako je uključeno, tekst koji prkazuje imformacije o datoteci u glavnom prozoru "
+"će klizati napred i nazad. "
+"Ako je isključeno, tekst će se klizati samo u jednom smeru."
 
 #: src/audacious/ui_preferences.c:202
 msgid "<b>Format Detection</b>"
@@ -1678,14 +1671,12 @@ msgid "Detect file formats by extension."
 msgstr "Prepoznaj format datoteke na osnovu oznake tipa."
 
 #: src/audacious/ui_preferences.c:206
-#, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
 "Ako je potvrđeno, Audacious će prepoznati format datoteke prema oznaci tipa. "
-"Ovo je malo sporije od prepoznavanja na zahtev, ali ipak obezbeđuje "
-"minimalan nivo prepoznavanja formata."
+"Samo datoteke sa podržanim oznakama tipa će biti učitane."
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Playback</b>"
@@ -1757,19 +1748,19 @@ msgstr "Prilikom učitavanja"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/ui_preferences.c:224
 msgid "On display"
 msgstr "Prilikom prikazivanja"
 
 #: src/audacious/ui_preferences.c:224
-#, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
-msgstr "Učitaj meta-podatke prilikom prikazivanja datoteke u listi numera"
+msgstr ""
+"Učitaj meta-podatke prilikom prikazivanja datoteke u listi numera. Možda ćete "
+"morati da postavite \"Prepoznaj format datoteke na zahtev\" u Audio odeljku."
 
 #: src/audacious/ui_preferences.c:226
 msgid "<b>File Dialog</b>"
@@ -1998,32 +1989,31 @@ msgstr "Prikaži informacije o formatu znakovnog niza naslova"
 
 #: src/audacious/ui_preferences.c:2328
 msgid "TITLE"
-msgstr ""
+msgstr "NASLOV"
 
 #: src/audacious/ui_preferences.c:2329
 msgid "ARTIST - TITLE"
-msgstr ""
+msgstr "IZVOĐAČ - NASLOV"
 
 #: src/audacious/ui_preferences.c:2330
 msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
+msgstr "IZVOĐAČ - ALBUM - NASLOV"
 
 #: src/audacious/ui_preferences.c:2331
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
+msgstr "IZVOĐAČ - ALBUM - BROJ. NASLOV"
 
 #: src/audacious/ui_preferences.c:2332
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
+msgstr "IZVOĐAČ [ ALBUM ] - BROJ. NASLOV"
 
 #: src/audacious/ui_preferences.c:2333
 msgid "ALBUM - TITLE"
-msgstr ""
+msgstr "ALBUM - NASLOV"
 
 #: src/audacious/ui_preferences.c:2334
-#, fuzzy
 msgid "Custom"
-msgstr "Sopstveni znakovni niz:"
+msgstr "Sopstveni"
 
 #: src/audacious/ui_preferences.c:2341
 msgid "Custom string:"
@@ -2135,27 +2125,27 @@ msgstr "Uključi pretvarač učestalosti odabiranja uzoraka"
 
 #: src/audacious/ui_preferences.c:2655
 msgid "Best Sinc Interpolation"
-msgstr ""
+msgstr "Najbolja Sinc interpolacija"
 
 #: src/audacious/ui_preferences.c:2656
 msgid "Medium Sinc Interpolation"
-msgstr ""
+msgstr "Srednja Sinc interpolacija"
 
 #: src/audacious/ui_preferences.c:2657
 msgid "Fastest Sinc Interpolation"
-msgstr ""
+msgstr "Nabrža Sinc interpolacija"
 
 #: src/audacious/ui_preferences.c:2658
 msgid "ZOH Interpolation"
-msgstr ""
+msgstr "ZOH interpolacija"
 
 #: src/audacious/ui_preferences.c:2659
 msgid "Linear Interpolation"
-msgstr ""
+msgstr "Linearna interpolacija"
 
 #: src/audacious/ui_preferences.c:2661
 msgid "Interpolation Engine:"
-msgstr ""
+msgstr "Interpolaciona mašina:"
 
 #: src/audacious/ui_preferences.c:2667
 msgid ""
@@ -2173,19 +2163,20 @@ msgid "Sampling Rate [Hz]:"
 msgstr "Učestalost odabiranja uzoraka [Hz]:"
 
 #: src/audacious/ui_preferences.c:2697
-#, fuzzy
 msgid "<b>Volume Control</b>"
-msgstr "<b>Točkić miša</b>"
+msgstr "<b>Kontrola jačine zvuka</b>"
 
 #: src/audacious/ui_preferences.c:2706
 msgid "Use software volume control"
-msgstr ""
+msgstr "Koristi softversku kontrolu zvuka"
 
 #: src/audacious/ui_preferences.c:2708
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
+"Koristi softversku kontrolu zvuka. Ovo može biti korisno u situacijama "
+"gde vaš audio sistem ne podržava kontrolu jačine zvuka reprodukcije."
 
 #: src/audacious/ui_preferences.c:2741
 msgid "Reload Plugins"
@@ -2193,47 +2184,47 @@ msgstr "Osveži dodatke"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "PREAMP"
-msgstr ""
+msgstr "PREAMP"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "60HZ"
-msgstr ""
+msgstr "60Hz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:384
 msgid "170HZ"
-msgstr ""
+msgstr "170Hz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "310HZ"
-msgstr ""
+msgstr "310Hz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "600HZ"
-msgstr ""
+msgstr "600Hz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:385
 msgid "1KHZ"
-msgstr ""
+msgstr "1kHz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "3KHZ"
-msgstr ""
+msgstr "3kHz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "6KHZ"
-msgstr ""
+msgstr "6kHz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:386
 msgid "12KHZ"
-msgstr ""
+msgstr "12kHz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:387
 msgid "14KHZ"
-msgstr ""
+msgstr "14kHz"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:387
 msgid "16KHZ"
-msgstr ""
+msgstr "16kHz"
 
 #: src/audacious/ui_skinselector.c:178
 msgid "Archived Winamp 2.x skin"
@@ -2247,165 +2238,3 @@ msgstr "Nearhivirana Winamp 2.x maska"
 msgid "Add/Open URL Dialog"
 msgstr "Dodaj/otvori URL okvir"
 
-#~ msgid "Equalizer"
-#~ msgstr "Ekvilajzer"
-
-#~ msgid "<b>Presets</b>"
-#~ msgstr "<b>Pretpodešavanja</b>"
-
-#~ msgid "File preset extension:"
-#~ msgstr "Oznaka tipa datoteke pretpodešavanja:"
-
-#~ msgid "Directory preset file:"
-#~ msgstr "Datoteke direktorijuma pretpodešavanja:"
-
-#~ msgid "localhost"
-#~ msgstr "lokalni računar"
-
-#~ msgid ""
-#~ "<b><big>Unable to create %s.</big></b>\n"
-#~ "\n"
-#~ "Could not open glade file (%s). Please check your installation.\n"
-#~ msgstr ""
-#~ "<b><big>Nije moguće napraviti %s.</big></b>\n"
-#~ "\n"
-#~ "Nije moguće otvoriti glade datoteku (%s). Molim vas proverite vašu "
-#~ "instalaciju.\n"
-
-#~ msgid ""
-#~ "TITLE\n"
-#~ "ARTIST - TITLE\n"
-#~ "ARTIST - ALBUM - TITLE\n"
-#~ "ARTIST - ALBUM - TRACK. TITLE\n"
-#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
-#~ "ALBUM - TITLE\n"
-#~ "Custom"
-#~ msgstr ""
-#~ "IME\n"
-#~ "IZVOĐAČ - NASLOV\n"
-#~ "IZVOĐAČ - ALBUM - NASLOV\n"
-#~ "IZVOĐAČ - ALBUM - BROJ. NASLOV\n"
-#~ "IZVOĐAČ [ ALBUM ] - BROJ. NASLOV\n"
-#~ "ALBUM - NASLOV\n"
-#~ "Sopstveni"
-
-#~ msgid "Available _Presets:"
-#~ msgstr "Dostupna _pretpodešavanja:"
-
-#~ msgid "Track Information Window"
-#~ msgstr "Prozor informacija o numeri"
-
-#~ msgid "Preferences Window"
-#~ msgstr "Prozor postavki"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "Miš"
-
-#~ msgid "Show window manager decorations"
-#~ msgstr "Prikaži ukrase programa za upravljanje prozorima"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b> %s"
-#~ msgstr "<b>Pretpodešavanja</b>"
-
-#, fuzzy
-#~ msgid "<b>Title:</b> %s"
-#~ msgstr "<b>Ime datoteke</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b> %s"
-#~ msgstr "Album: "
-
-#, fuzzy
-#~ msgid "Audacious last.fm radio tuner"
-#~ msgstr "Audacious editor liste numera"
-
-#, fuzzy
-#~ msgid "Station:"
-#~ msgstr "Italijanski:"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b>"
-#~ msgstr "<b>Pretpodešavanja</b>"
-
-#, fuzzy
-#~ msgid "<b>Title:</b>"
-#~ msgstr "<b>Ime datoteke</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b>"
-#~ msgstr "<b>Ime datoteke</b>"
-
-#~ msgid "VOLUME: %d%%"
-#~ msgstr "JAČINA: %d%%"
-
-#~ msgid "BALANCE: %d%% LEFT"
-#~ msgstr "BALANS: %d%% LEVO"
-
-#~ msgid "BALANCE: CENTER"
-#~ msgstr "BALANS: CENTRIRAN"
-
-#~ msgid "BALANCE: %d%% RIGHT"
-#~ msgstr "BALANS: %d%% DESNO"
-
-#~ msgid "Last.fm radio"
-#~ msgstr "Last.fm radio"
-
-#~ msgid "Play Last.fm radio"
-#~ msgstr "Pusti Last.fm radio"
-
-#~ msgid "Converter Type:"
-#~ msgstr "Tip pretvarača:"
-
-#~ msgid ""
-#~ "SRC_SINC_BEST_QUALITY\n"
-#~ "SRC_SINC_MEDIUM_QUALITY\n"
-#~ "SRC_SINC_FASTEST\n"
-#~ "SRC_ZERO_ORDER_HOLD\n"
-#~ "SRC_LINEAR"
-#~ msgstr ""
-#~ "SRC_SINC_BEST_QUALITY\n"
-#~ "SRC_SINC_MEDIUM_QUALITY\n"
-#~ "SRC_SINC_FASTEST\n"
-#~ "SRC_ZERO_ORDER_HOLD\n"
-#~ "SRC_LINEAR"
-
-#~ msgid ""
-#~ "<b><big>No playable CD found.</big></b>\n"
-#~ "\n"
-#~ "No CD inserted, or inserted CD is not an audio CD.\n"
-#~ msgstr ""
-#~ "<b><big>Nije pronađen CD koji je moguće pustiti.</big></b>\n"
-#~ "\n"
-#~ "Ili CD nije umetnut, ili umetnuti CD nije audio CD.\n"
-
-#~ msgid "Add CD..."
-#~ msgstr "Dodaj CD..."
-
-#~ msgid "Adds a CD to the playlist."
-#~ msgstr "Dodaje CD u listu numera."
-
-#~ msgid "Play CD"
-#~ msgstr "Pusti CD"
-
-#~ msgid "Performer/Artist"
-#~ msgstr "Izvođač/Umetnik"
-
-#~ msgid "File name"
-#~ msgstr "Ime datoteke"
-
-#~ msgid "File path"
-#~ msgstr "Putanja datoteke"
-
-#~ msgid "File extension"
-#~ msgstr "Oznaka tipa"
-
-#~ msgid "Track name"
-#~ msgstr "Ime numere"
-
-#~ msgid "Track number"
-#~ msgstr "Broj numere"
-
-#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
-#~ msgstr "%{n:...%}: Prikaži \"...\" samo ako je prisutan elemenat %n"
