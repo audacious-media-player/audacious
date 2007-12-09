@@ -82,7 +82,7 @@ struct _BmpConfig {
     gboolean use_backslash_as_dir_delimiter;
     gboolean random_skin_on_play;
     gboolean use_fontsets;
-    gboolean mainwin_use_xfont;
+    gboolean mainwin_use_bitmapfont;
     gboolean custom_cursors;
     gboolean close_dialog_open;
     gboolean close_dialog_add;

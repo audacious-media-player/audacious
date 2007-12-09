@@ -340,7 +340,7 @@ playlistwin_set_sinfo_font(gchar *font)
     tmp2 = g_strdup_printf("%s 8", tmp);
     g_return_if_fail(tmp2);
 
-    ui_skinned_textbox_set_xfont(playlistwin_sinfo, cfg.mainwin_use_xfont, tmp2);
+    ui_skinned_textbox_set_xfont(playlistwin_sinfo, !cfg.mainwin_use_bitmapfont, tmp2);
 
     g_free(tmp);
     g_free(tmp2);

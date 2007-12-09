@@ -307,7 +307,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"playlist_shaded", &cfg.playlist_shaded, TRUE},
     {"playlist_visible", &cfg.playlist_visible, TRUE},
     {"use_fontsets", &cfg.use_fontsets, TRUE},
-    {"mainwin_use_xfont", &cfg.mainwin_use_xfont, FALSE},
+    {"mainwin_use_bitmapfont", &cfg.mainwin_use_bitmapfont, FALSE},
     {"equalizer_visible", &cfg.equalizer_visible, TRUE},
     {"equalizer_active", &cfg.equalizer_active, TRUE},
     {"equalizer_shaded", &cfg.equalizer_shaded, TRUE},
@@ -857,8 +857,8 @@ bmp_config_save(void)
                            SKINNED_WINDOW(equalizerwin)->y);
     }
 
-    cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
-            cfg.mainwin_use_xfont);
+    cfg_db_set_bool(db, NULL, "mainwin_use_bitmapfont",
+            cfg.mainwin_use_bitmapfont);
 
     for (i = 0; i < ncfgsent; ++i) {
         if (bmp_strents[i].se_wrt)

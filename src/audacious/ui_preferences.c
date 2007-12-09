@@ -167,6 +167,7 @@ typedef enum {
     WIDGET_RADIO_BTN,
     WIDGET_SPIN_BTN,
     WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
+    WIDGET_FONT_BTN,
 } WidgetType;
 
 typedef struct {
@@ -181,9 +182,16 @@ typedef struct {
 
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
+static void bitmap_fonts_cb();
+static void mainwin_font_set_cb();
+static void playlist_font_set_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
 
 static PreferencesWidget appearance_misc_widgets[] = {
+    {WIDGET_LABEL, N_("<b>_Fonts</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_FONT_BTN, N_("_Player:"), &cfg.mainwin_font, G_CALLBACK(mainwin_font_set_cb), N_("Select main player window font:"), FALSE},
+    {WIDGET_FONT_BTN, N_("_Playlist:"), &cfg.playlist_font, G_CALLBACK(playlist_font_set_cb), N_("Select playlist font:"), FALSE},
+    {WIDGET_CHK_BTN, N_("Use Bitmap fonts if available"), &cfg.mainwin_use_bitmapfont, G_CALLBACK(bitmap_fonts_cb), N_("Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."), FALSE},
     {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
      G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
@@ -578,63 +586,33 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
 }
 
 static void
-on_mainwin_font_button_font_set(GtkFontButton * button,
-                                gpointer data)
+on_font_btn_realize(GtkFontButton * button, gchar *cfg)
 {
-    g_free(cfg.mainwin_font);
-    cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
-
-    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    gtk_font_button_set_font_name(button, cfg);
 }
 
 static void
-on_use_bitmap_fonts_realize(GtkToggleButton * button,
-                            gpointer data)
+on_font_btn_font_set(GtkFontButton * button, gchar *cfg)
 {
-    gtk_toggle_button_set_active(button,
-                                 cfg.mainwin_use_xfont != FALSE ? FALSE : TRUE);
+    g_free(cfg);
+    cfg = g_strdup(gtk_font_button_get_font_name(button));
+    void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
+    if (callback) callback();
 }
 
 static void
-on_use_bitmap_fonts_toggled(GtkToggleButton * button,
-                                    gpointer data)
+mainwin_font_set_cb()
 {
-    gboolean useit = gtk_toggle_button_get_active(button);
-    cfg.mainwin_use_xfont = useit != FALSE ? FALSE : TRUE;
-    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
-    playlistwin_set_sinfo_font(cfg.playlist_font);
-
-    if (cfg.playlist_shaded) {
-        playlistwin_update_list(playlist_get_active());
-        ui_skinned_window_draw_all(playlistwin);
-    }
+    ui_skinned_textbox_set_xfont(mainwin_info, !cfg.mainwin_use_bitmapfont, cfg.mainwin_font);
 }
 
 static void
-on_mainwin_font_button_realize(GtkFontButton * button,
-                               gpointer data)
+playlist_font_set_cb()
 {
-    gtk_font_button_set_font_name(button, cfg.mainwin_font);
-}
-
-static void
-on_playlist_font_button_font_set(GtkFontButton * button,
-                                 gpointer data)
-{
-    g_free(cfg.playlist_font);
-    cfg.playlist_font = g_strdup(gtk_font_button_get_font_name(button));
-
     ui_skinned_playlist_set_font(cfg.playlist_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
     playlistwin_update_list(playlist_get_active());
     gtk_widget_queue_draw(playlistwin_list);
-}
-
-static void
-on_playlist_font_button_realize(GtkFontButton * button,
-                                gpointer data)
-{
-    gtk_font_button_set_font_name(button, cfg.playlist_font);
 }
 
 static void
@@ -1296,6 +1274,18 @@ on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
 }
 
 static void
+bitmap_fonts_cb()
+{
+    ui_skinned_textbox_set_xfont(mainwin_info, !cfg.mainwin_use_bitmapfont, cfg.mainwin_font);
+    playlistwin_set_sinfo_font(cfg.playlist_font);
+
+    if (cfg.playlist_shaded) {
+        playlistwin_update_list(playlist_get_active());
+        ui_skinned_window_draw_all(playlistwin);
+    }
+}
+
+static void
 show_wm_decorations_cb()
 {
     gtk_window_set_decorated(GTK_WINDOW(mainwin), cfg.show_wm_decorations);
@@ -1739,6 +1729,50 @@ create_widgets(GtkBox *box, PreferencesWidget* widgets, gint amt)
                      widget = NULL;
 
                  break;
+             case WIDGET_FONT_BTN:
+                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
+
+                 if (x > 1 && widgets[x-1].type == WIDGET_FONT_BTN) {
+                     table_line++;
+                 } else {
+                     /* check how many WIDGET_FONT_BTNs are there */
+                     gint lines = 0, i;
+                     for (i=x; i<amt && widgets[i].type == WIDGET_FONT_BTN; i++)
+                          lines++;
+
+                     widget = gtk_table_new(lines, 2, FALSE);
+                     gtk_table_set_row_spacings(GTK_TABLE(widget), 8);
+                     gtk_table_set_col_spacings(GTK_TABLE(widget), 2);
+                     table_line=0;
+                 }
+
+                 GtkWidget *label = gtk_label_new_with_mnemonic(_(widgets[x].label));
+                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                 gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
+                 gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+                 gtk_table_attach(GTK_TABLE (widget), label, 0, 1, table_line, table_line+1,
+                                  (GtkAttachOptions) (0),
+                                  (GtkAttachOptions) (0), 0, 0);
+
+                 GtkWidget *font_btn = gtk_font_button_new();
+                 gtk_table_attach(GTK_TABLE(widget), font_btn, 1, 2, table_line, table_line+1,
+                                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                                  (GtkAttachOptions) (0), 0, 0);
+
+                 gtk_font_button_set_use_font(GTK_FONT_BUTTON(font_btn), TRUE);
+                 gtk_font_button_set_use_size(GTK_FONT_BUTTON(font_btn), TRUE);
+                 gtk_label_set_mnemonic_widget(GTK_LABEL(label), font_btn);
+                 if (widgets[x].tooltip)
+                     gtk_font_button_set_title (GTK_FONT_BUTTON (font_btn), _(widgets[x].tooltip));
+                 g_object_set_data(G_OBJECT(font_btn), "callback", widgets[x].callback);
+
+                 g_signal_connect(G_OBJECT(font_btn), "font_set",
+                                  G_CALLBACK(on_font_btn_font_set),
+                                  *(char**)widgets[x].cfg);
+                 g_signal_connect(G_OBJECT(font_btn), "realize",
+                                  G_CALLBACK(on_font_btn_realize),
+                                  *(char**)widgets[x].cfg);
+                 break;
              default:
                  /* shouldn't ever happen - expect things to break */
                  continue;
@@ -1814,19 +1848,6 @@ create_prefs_window(void)
     GtkWidget *image12;
     GtkWidget *alignment95;
     GtkWidget *skin_view_scrolled_window;
-    GtkWidget *vbox39;
-    GtkWidget *alignment96;
-    GtkWidget *label104;
-    GtkWidget *table14;
-    GtkWidget *alignment97;
-    GtkWidget *label105;
-    GtkWidget *alignment98;
-    GtkWidget *label106;
-    GtkWidget *fontbutton1;
-    GtkWidget *fontbutton2;
-    GtkWidget *alignment99;
-    GtkWidget *checkbutton11;
-    GtkWidget *vbox40;
     GtkWidget *appearance_label;
     GtkWidget *mouse_page_vbox;
     GtkWidget *vbox20;
@@ -2200,74 +2221,7 @@ create_prefs_window(void)
     gtk_container_add (GTK_CONTAINER (skin_view_scrolled_window), skin_view);
     gtk_widget_set_size_request (skin_view, -1, 100);
 
-    vbox39 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox37), vbox39, FALSE, TRUE, 0);
-
-    alignment96 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox39), alignment96, TRUE, TRUE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment96), 12, 6, 0, 0);
-
-    label104 = gtk_label_new_with_mnemonic (_("<b>_Fonts</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment96), label104);
-    gtk_label_set_use_markup (GTK_LABEL (label104), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label104), 0, 0.5);
-
-    table14 = gtk_table_new (2, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox39), table14, TRUE, TRUE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table14), 8);
-    gtk_table_set_col_spacings (GTK_TABLE (table14), 2);
-
-    alignment97 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_table_attach (GTK_TABLE (table14), alignment97, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment97), 0, 0, 12, 6);
-
-    label105 = gtk_label_new_with_mnemonic (_("_Player:"));
-    gtk_container_add (GTK_CONTAINER (alignment97), label105);
-    gtk_label_set_use_markup (GTK_LABEL (label105), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label105), 1, 0.5);
-
-    alignment98 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_table_attach (GTK_TABLE (table14), alignment98, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment98), 0, 0, 12, 6);
-
-    label106 = gtk_label_new_with_mnemonic (_("_Playlist:"));
-    gtk_container_add (GTK_CONTAINER (alignment98), label106);
-    gtk_label_set_use_markup (GTK_LABEL (label106), TRUE);
-    gtk_label_set_justify (GTK_LABEL (label106), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment (GTK_MISC (label106), 1, 0.5);
-
-    fontbutton1 = gtk_font_button_new ();
-    gtk_table_attach (GTK_TABLE (table14), fontbutton1, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_font_button_set_title (GTK_FONT_BUTTON (fontbutton1), _("Select main player window font:"));
-    gtk_font_button_set_use_font (GTK_FONT_BUTTON (fontbutton1), TRUE);
-    gtk_font_button_set_use_size (GTK_FONT_BUTTON (fontbutton1), TRUE);
-
-    fontbutton2 = gtk_font_button_new ();
-    gtk_table_attach (GTK_TABLE (table14), fontbutton2, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_font_button_set_title (GTK_FONT_BUTTON (fontbutton2), _("Select playlist font:"));
-    gtk_font_button_set_use_font (GTK_FONT_BUTTON (fontbutton2), TRUE);
-    gtk_font_button_set_use_size (GTK_FONT_BUTTON (fontbutton2), TRUE);
-
-    alignment99 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox39), alignment99, TRUE, TRUE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment99), 4, 0, 12, 0);
-
-    checkbutton11 = gtk_check_button_new_with_mnemonic (_("Use Bitmap fonts if available"));
-    gtk_container_add (GTK_CONTAINER (alignment99), checkbutton11);
-    gtk_tooltips_set_tip (tooltips, checkbutton11, _("Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."), NULL);
-
-    vbox40 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox37), vbox40, FALSE, TRUE, 0);
-
-    create_widgets(GTK_BOX(vbox40), appearance_misc_widgets, G_N_ELEMENTS(appearance_misc_widgets));
+    create_widgets(GTK_BOX(vbox37), appearance_misc_widgets, G_N_ELEMENTS(appearance_misc_widgets));
 
     appearance_label = gtk_label_new (_("Appearance"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 1), appearance_label);
@@ -2754,9 +2708,6 @@ create_prefs_window(void)
     gtk_label_set_mnemonic_widget (GTK_LABEL (label53), category_notebook);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label64), category_notebook);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label103), category_notebook);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label104), category_notebook);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label105), fontbutton1);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label106), fontbutton2);
 
     gtk_window_add_accel_group (GTK_WINDOW (prefswin), accel_group);
 
@@ -2784,24 +2735,6 @@ create_prefs_window(void)
                              prefswin);
     g_signal_connect_after(G_OBJECT(skin_view), "realize",
                            G_CALLBACK(on_skin_view_realize),
-                           NULL);
-    g_signal_connect_after(G_OBJECT(fontbutton1), "realize",
-                           G_CALLBACK(on_mainwin_font_button_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(fontbutton1), "font_set",
-                     G_CALLBACK(on_mainwin_font_button_font_set),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(fontbutton2), "realize",
-                           G_CALLBACK(on_playlist_font_button_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(fontbutton2), "font_set",
-                     G_CALLBACK(on_playlist_font_button_font_set),
-                     NULL);
-    g_signal_connect(G_OBJECT(checkbutton11), "toggled",
-                     G_CALLBACK(on_use_bitmap_fonts_toggled),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(checkbutton11), "realize",
-                           G_CALLBACK(on_use_bitmap_fonts_realize),
                            NULL);
     g_signal_connect(G_OBJECT(titlestring_entry), "changed",
                      G_CALLBACK(on_titlestring_entry_changed),
@@ -3009,10 +2942,6 @@ create_prefs_window(void)
     g_signal_connect(skin_refresh_button, "clicked",
                      G_CALLBACK(on_skin_refresh_button_clicked),
                      NULL);
-
-    g_signal_connect(mainwin, "drag-data-received",
-                     G_CALLBACK(mainwin_drag_data_received),
-                     fontbutton2);
 
     g_signal_connect(titlestring_cbox, "realize",
                      G_CALLBACK(on_titlestring_cbox_realize),

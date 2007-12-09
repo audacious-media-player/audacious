@@ -2428,7 +2428,7 @@ mainwin_create_widgets(void)
 
     mainwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 112, 27, 153, 1, SKIN_TEXT);
     ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
-    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_info, !cfg.mainwin_use_bitmapfont, cfg.mainwin_font);
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
     g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
 
