@@ -26,5 +26,10 @@ void hide_prefs_window(void);
 
 gint prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl);
 void prefswin_page_destroy(GtkWidget *container);
-
+void on_skin_view_drag_data_received(GtkWidget * widget,
+                                GdkDragContext * context,
+                                gint x, gint y,
+                                GtkSelectionData * selection_data,
+                                guint info, guint time,
+                                gpointer user_data);
 #endif

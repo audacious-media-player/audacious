@@ -1000,7 +1000,7 @@ on_category_treeview_realize(GtkTreeView * treeview,
     }
 }
 
-static void
+void
 on_skin_view_drag_data_received(GtkWidget * widget,
                                 GdkDragContext * context,
                                 gint x, gint y,
@@ -1039,7 +1039,6 @@ on_skin_view_drag_data_received(GtkWidget * widget,
         cfg_db_set_string(db, NULL, "skin", path);
         cfg_db_close(db);
     }
-                           
 }
 
 static void
