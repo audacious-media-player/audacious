@@ -1029,7 +1029,8 @@ on_skin_view_drag_data_received(GtkWidget * widget,
     }
 
     if (file_is_archive(path)) {
-        bmp_active_skin_load(path);
+        if (!bmp_active_skin_load(path))
+            return;
         skin_install_skin(path);
         skin_view_update(GTK_TREE_VIEW(widget),
                          GTK_WIDGET(skin_refresh_button));
