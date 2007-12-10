@@ -194,29 +194,29 @@ static PreferencesWidget appearance_misc_widgets[] = {
     {WIDGET_CHK_BTN, N_("Use Bitmap fonts if available"), &cfg.mainwin_use_bitmapfont, G_CALLBACK(bitmap_fonts_cb), N_("Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."), FALSE},
     {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
-     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
+        G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show separators in playlist"), &cfg.show_separator_in_pl,
-     G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
+        G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
-     N_("This enables the window manager to show decorations for windows."), FALSE},
+        N_("This enables the window manager to show decorations for windows."), FALSE},
     {WIDGET_CHK_BTN, N_("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 
-     N_("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
+        N_("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
     {WIDGET_CHK_BTN, N_("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
-     N_("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
+        N_("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
 };
 
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
-     N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
+        N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
-     N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
+        N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
-     N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
+        N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
-     N_("When finished playing a song, don't automatically advance to the next."), FALSE},
+        N_("When finished playing a song, don't automatically advance to the next."), FALSE},
     {WIDGET_CHK_BTN, N_("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
     {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, N_("seconds"), TRUE},
 };
@@ -524,27 +524,26 @@ static void
 on_titlestring_help_button_clicked(GtkButton * button,
                                    gpointer data) 
 {
-    
     GtkMenu *menu;
     MenuPos *pos = g_new0(MenuPos, 1);
     GdkWindow *parent;
-  
+
     gint x_ro, y_ro;
     gint x_widget, y_widget;
     gint x_size, y_size;
-  
+
     g_return_if_fail (button != NULL);
     g_return_if_fail (GTK_IS_MENU (data));
 
     parent = gtk_widget_get_parent_window(GTK_WIDGET(button));
-  
+
     gdk_drawable_get_size(parent, &x_size, &y_size);
     gdk_window_get_root_origin(GTK_WIDGET(button)->window, &x_ro, &y_ro); 
     gdk_window_get_position(GTK_WIDGET(button)->window, &x_widget, &y_widget);
-  
+
     pos->x = x_size + x_ro;
     pos->y = y_size + y_ro - 100;
-  
+
     menu = GTK_MENU(data);
     gtk_menu_popup (menu, NULL, NULL, util_menu_position, pos, 
                     0, GDK_CURRENT_TIME);
@@ -580,7 +579,7 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
                             gpointer data)
 {
     gint position = gtk_combo_box_get_active(GTK_COMBO_BOX(cbox));
-    
+
     cfg.titlestring_preset = position;
     gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
 }
@@ -802,7 +801,7 @@ on_output_plugin_bufsize_value_changed(GtkSpinButton *button,
 
 static void
 on_enable_src_realize(GtkToggleButton * button,
-                                    gpointer data)
+                      gpointer data)
 {
 #ifdef USE_SRC
     ConfigDb *db;
@@ -822,7 +821,7 @@ on_enable_src_realize(GtkToggleButton * button,
 
 static void
 on_enable_src_toggled(GtkToggleButton * button,
-                                    gpointer data)
+                      gpointer data)
 {
     ConfigDb *db;
     gboolean ret = gtk_toggle_button_get_active(button);
@@ -834,7 +833,7 @@ on_enable_src_toggled(GtkToggleButton * button,
 
 static void
 on_src_rate_realize(GtkSpinButton * button,
-                                    gpointer data)
+                    gpointer data)
 {
 #ifdef USE_SRC
     ConfigDb *db;
@@ -853,7 +852,7 @@ on_src_rate_realize(GtkSpinButton * button,
 
 static void
 on_src_rate_value_changed(GtkSpinButton * button,
-                                    gpointer data)
+                          gpointer data)
 {
     ConfigDb *db;
     gint value = gtk_spin_button_get_value_as_int(button);
@@ -943,7 +942,7 @@ on_skin_view_realize(GtkTreeView * treeview,
 
 static void
 on_category_treeview_realize(GtkTreeView * treeview,
-                         GtkNotebook * notebook)
+                             GtkNotebook * notebook)
 {
     GtkListStore *store;
     GtkCellRenderer *renderer;
@@ -993,10 +992,10 @@ on_category_treeview_realize(GtkTreeView * treeview,
     /* prefswin_page_queue_destroy already pops the queue forward for us. */
     for (qlist = category_queue; qlist != NULL; qlist = category_queue)
     {
-         CategoryQueueEntry *ent = (CategoryQueueEntry *) qlist;
+        CategoryQueueEntry *ent = (CategoryQueueEntry *) qlist;
 
-         prefswin_page_new(ent->container, ent->pg_name, ent->img_url);
-         prefswin_page_queue_destroy(ent);
+        prefswin_page_new(ent->container, ent->pg_name, ent->img_url);
+        prefswin_page_queue_destroy(ent);
     }
 }
 
@@ -1166,7 +1165,7 @@ static void
 on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(data),
-    gtk_toggle_button_get_active(button));
+                             gtk_toggle_button_get_active(button));
 }
 
 static void
@@ -1584,45 +1583,45 @@ ui_preferences_chardet_table_populate(void)
 
     label = gtk_label_new(_("Auto character encoding detector for:"));
     gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 0, 1,
-        (GtkAttachOptions) (0),
-        (GtkAttachOptions) (0), 0, 0);
+                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (0), 0, 0);
     gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 
     GtkWidget *combobox = gtk_combo_box_new_text();
     gtk_table_attach(GTK_TABLE(widget), combobox, 1, 2, 0, 1,
-        (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-        (GtkAttachOptions) (0), 0, 0);
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
     g_signal_connect_after(G_OBJECT(combobox), "realize",
-              G_CALLBACK(on_chardet_detector_cbox_realize),
-              NULL);
+                           G_CALLBACK(on_chardet_detector_cbox_realize),
+                           NULL);
 
     GtkWidget *entry = gtk_entry_new();
     gtk_table_attach(GTK_TABLE(widget), entry, 1, 2, 1, 2,
-        (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-        (GtkAttachOptions) (0), 0, 0);
+                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
     gtk_tooltips_set_tip (tooltips, entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
 
     label = gtk_label_new(_("Fallback character encodings:"));
     gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 1, 2,
-        (GtkAttachOptions) (0),
-        (GtkAttachOptions) (0), 0, 0);
+                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (0), 0, 0);
     gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 
     g_signal_connect(G_OBJECT(entry), "changed",
-        G_CALLBACK(on_chardet_fallback_changed),
-        NULL);
+                     G_CALLBACK(on_chardet_fallback_changed),
+                     NULL);
     g_signal_connect_after(G_OBJECT(entry), "realize",
-        G_CALLBACK(on_chardet_fallback_realize),
-        NULL);
+                           G_CALLBACK(on_chardet_fallback_realize),
+                           NULL);
 
     return widget;
 }
 
 /* it's at early stage */
 static void
-create_widgets(GtkBox *box, PreferencesWidget* widgets, gint amt)
+create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 {
     int x;
     GtkWidget *alignment = NULL, *widget = NULL;
@@ -1631,157 +1630,157 @@ create_widgets(GtkBox *box, PreferencesWidget* widgets, gint amt)
     int table_line=0;  /* used for WIDGET_SPIN_BTN */
 
     for (x = 0; x < amt; ++x) {
-         if (widgets[x].child) { /* perhaps this logic can be better */
-             if (!child_box) {
-                 child_box = gtk_vbox_new(FALSE, 0);
-                 g_object_set_data(G_OBJECT(widget), "child", child_box);
-                 alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-                 gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
-                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 24, 0);
-                 gtk_container_add (GTK_CONTAINER (alignment), child_box);
-             }
-         } else
-             child_box = NULL;
+        if (widgets[x].child) { /* perhaps this logic can be better */
+            if (!child_box) {
+                child_box = gtk_vbox_new(FALSE, 0);
+                g_object_set_data(G_OBJECT(widget), "child", child_box);
+                alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+                gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 24, 0);
+                gtk_container_add (GTK_CONTAINER (alignment), child_box);
+            }
+        } else
+            child_box = NULL;
 
-         alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-         gtk_box_pack_start(child_box ? GTK_BOX(child_box) : box, alignment, FALSE, FALSE, 0);
+        alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+        gtk_box_pack_start(child_box ? GTK_BOX(child_box) : box, alignment, FALSE, FALSE, 0);
 
-         if (radio_btn_group && widgets[x].type != WIDGET_RADIO_BTN)
-             radio_btn_group = NULL;
+        if (radio_btn_group && widgets[x].type != WIDGET_RADIO_BTN)
+            radio_btn_group = NULL;
 
-         switch(widgets[x].type) {
-             case WIDGET_CHK_BTN:
-                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-                 widget = gtk_check_button_new_with_mnemonic(_(widgets[x].label));
-                 g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
-                 g_signal_connect(G_OBJECT(widget), "toggled",
-                                  G_CALLBACK(on_toggle_button_toggled),
-                                  widgets[x].cfg);
-                 g_signal_connect(G_OBJECT(widget), "realize",
-                                  G_CALLBACK(on_toggle_button_realize),
-                                  widgets[x].cfg);
-                 break;
-             case WIDGET_LABEL:
-                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
-                 widget = gtk_label_new_with_mnemonic(_(widgets[x].label));
-                 gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
-                 gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
-                 break;
-             case WIDGET_RADIO_BTN:
-                 widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, _(widgets[x].label));
-                 radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
-                 g_signal_connect(G_OBJECT(widget), "toggled",
-                                  G_CALLBACK(on_toggle_button_toggled),
-                                  widgets[x].cfg);
-                 g_signal_connect(G_OBJECT(widget), "realize",
-                                  G_CALLBACK(on_toggle_button_realize),
-                                  widgets[x].cfg);
-                 break;
-             case WIDGET_SPIN_BTN:
-                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
+        switch(widgets[x].type) {
+            case WIDGET_CHK_BTN:
+                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
+                widget = gtk_check_button_new_with_mnemonic(_(widgets[x].label));
+                g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
+                g_signal_connect(G_OBJECT(widget), "toggled",
+                                 G_CALLBACK(on_toggle_button_toggled),
+                                 widgets[x].cfg);
+                g_signal_connect(G_OBJECT(widget), "realize",
+                                 G_CALLBACK(on_toggle_button_realize),
+                                 widgets[x].cfg);
+                break;
+            case WIDGET_LABEL:
+                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
+                widget = gtk_label_new_with_mnemonic(_(widgets[x].label));
+                gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
+                gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
+                break;
+            case WIDGET_RADIO_BTN:
+                widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, _(widgets[x].label));
+                radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
+                g_signal_connect(G_OBJECT(widget), "toggled",
+                                 G_CALLBACK(on_toggle_button_toggled),
+                                 widgets[x].cfg);
+                g_signal_connect(G_OBJECT(widget), "realize",
+                                 G_CALLBACK(on_toggle_button_realize),
+                                 widgets[x].cfg);
+                break;
+            case WIDGET_SPIN_BTN:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
 
-                 if (x > 1 && widgets[x-1].type == WIDGET_SPIN_BTN) {
-                     table_line++;
-                 } else {
-                     /* check how many WIDGET_SPIN_BTNs are there */
-                     gint lines = 0, i;
-                     for (i=x; i<amt && widgets[i].type == WIDGET_SPIN_BTN; i++)
-                          lines++;
+                if (x > 1 && widgets[x-1].type == WIDGET_SPIN_BTN) {
+                    table_line++;
+                } else {
+                    /* check how many WIDGET_SPIN_BTNs are there */
+                    gint lines = 0, i;
+                    for (i=x; i<amt && widgets[i].type == WIDGET_SPIN_BTN; i++)
+                        lines++;
 
-                     widget = gtk_table_new(lines, 3, FALSE);
-                     gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
-                     table_line=0;
-                 }
+                    widget = gtk_table_new(lines, 3, FALSE);
+                    gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
+                    table_line=0;
+                }
 
-                 GtkWidget *label_pre = gtk_label_new(_(widgets[x].label));
-                 gtk_table_attach(GTK_TABLE (widget), label_pre, 0, 1, table_line, table_line+1,
-                                  (GtkAttachOptions) (0),
-                                  (GtkAttachOptions) (0), 0, 0);
-                 gtk_misc_set_alignment(GTK_MISC(label_pre), 0, 0.5);
-                 gtk_misc_set_padding(GTK_MISC(label_pre), 4, 0);
+                GtkWidget *label_pre = gtk_label_new(_(widgets[x].label));
+                gtk_table_attach(GTK_TABLE (widget), label_pre, 0, 1, table_line, table_line+1,
+                                 (GtkAttachOptions) (0),
+                                 (GtkAttachOptions) (0), 0, 0);
+                gtk_misc_set_alignment(GTK_MISC(label_pre), 0, 0.5);
+                gtk_misc_set_padding(GTK_MISC(label_pre), 4, 0);
 
-                 GtkObject *adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
-                 GtkWidget *spin_btn = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
-                 gtk_table_attach(GTK_TABLE(widget), spin_btn, 1, 2, table_line, table_line+1,
-                                  (GtkAttachOptions) (0),
-                                  (GtkAttachOptions) (0), 4, 0);
+                GtkObject *adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+                GtkWidget *spin_btn = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
+                gtk_table_attach(GTK_TABLE(widget), spin_btn, 1, 2, table_line, table_line+1,
+                                 (GtkAttachOptions) (0),
+                                 (GtkAttachOptions) (0), 4, 0);
 
-                 if (widgets[x].tooltip) {
-                     GtkWidget *label_past = gtk_label_new(_(widgets[x].tooltip));
-                     gtk_table_attach(GTK_TABLE(widget), label_past, 2, 3, table_line, table_line+1,
-                                      (GtkAttachOptions) (0),
-                                      (GtkAttachOptions) (0), 0, 0);
-                     gtk_misc_set_alignment(GTK_MISC(label_past), 0, 0.5);
-                     gtk_misc_set_padding(GTK_MISC(label_past), 4, 0);
-                 }
+                if (widgets[x].tooltip) {
+                    GtkWidget *label_past = gtk_label_new(_(widgets[x].tooltip));
+                    gtk_table_attach(GTK_TABLE(widget), label_past, 2, 3, table_line, table_line+1,
+                                     (GtkAttachOptions) (0),
+                                     (GtkAttachOptions) (0), 0, 0);
+                    gtk_misc_set_alignment(GTK_MISC(label_past), 0, 0.5);
+                    gtk_misc_set_padding(GTK_MISC(label_past), 4, 0);
+                }
 
-                 g_signal_connect(G_OBJECT(spin_btn), "value_changed",
-                                  G_CALLBACK(on_spin_btn_changed),
-                                  widgets[x].cfg);
-                 g_signal_connect(G_OBJECT(spin_btn), "realize",
-                                  G_CALLBACK(on_spin_btn_realize),
-                                  widgets[x].cfg);
-                 break;
-             case WIDGET_CUSTOM:  /* custom widget. --nenolod */
-                 if (widgets[x].populate)
-                     widget = widgets[x].populate();
-                 else
-                     widget = NULL;
+                g_signal_connect(G_OBJECT(spin_btn), "value_changed",
+                                 G_CALLBACK(on_spin_btn_changed),
+                                 widgets[x].cfg);
+                g_signal_connect(G_OBJECT(spin_btn), "realize",
+                                 G_CALLBACK(on_spin_btn_realize),
+                                 widgets[x].cfg);
+                break;
+            case WIDGET_CUSTOM:  /* custom widget. --nenolod */
+                if (widgets[x].populate)
+                    widget = widgets[x].populate();
+                else
+                    widget = NULL;
 
-                 break;
-             case WIDGET_FONT_BTN:
-                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
+                break;
+            case WIDGET_FONT_BTN:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
 
-                 if (x > 1 && widgets[x-1].type == WIDGET_FONT_BTN) {
-                     table_line++;
-                 } else {
-                     /* check how many WIDGET_FONT_BTNs are there */
-                     gint lines = 0, i;
-                     for (i=x; i<amt && widgets[i].type == WIDGET_FONT_BTN; i++)
-                          lines++;
+                if (x > 1 && widgets[x-1].type == WIDGET_FONT_BTN) {
+                    table_line++;
+                } else {
+                    /* check how many WIDGET_FONT_BTNs are there */
+                    gint lines = 0, i;
+                    for (i=x; i<amt && widgets[i].type == WIDGET_FONT_BTN; i++)
+                        lines++;
 
-                     widget = gtk_table_new(lines, 2, FALSE);
-                     gtk_table_set_row_spacings(GTK_TABLE(widget), 8);
-                     gtk_table_set_col_spacings(GTK_TABLE(widget), 2);
-                     table_line=0;
-                 }
+                    widget = gtk_table_new(lines, 2, FALSE);
+                    gtk_table_set_row_spacings(GTK_TABLE(widget), 8);
+                    gtk_table_set_col_spacings(GTK_TABLE(widget), 2);
+                    table_line=0;
+                }
 
-                 GtkWidget *label = gtk_label_new_with_mnemonic(_(widgets[x].label));
-                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-                 gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-                 gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
-                 gtk_table_attach(GTK_TABLE (widget), label, 0, 1, table_line, table_line+1,
-                                  (GtkAttachOptions) (0),
-                                  (GtkAttachOptions) (0), 0, 0);
+                GtkWidget *label = gtk_label_new_with_mnemonic(_(widgets[x].label));
+                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
+                gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+                gtk_table_attach(GTK_TABLE (widget), label, 0, 1, table_line, table_line+1,
+                                 (GtkAttachOptions) (0),
+                                 (GtkAttachOptions) (0), 0, 0);
 
-                 GtkWidget *font_btn = gtk_font_button_new();
-                 gtk_table_attach(GTK_TABLE(widget), font_btn, 1, 2, table_line, table_line+1,
-                                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                                  (GtkAttachOptions) (0), 0, 0);
+                GtkWidget *font_btn = gtk_font_button_new();
+                gtk_table_attach(GTK_TABLE(widget), font_btn, 1, 2, table_line, table_line+1,
+                                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                                 (GtkAttachOptions) (0), 0, 0);
 
-                 gtk_font_button_set_use_font(GTK_FONT_BUTTON(font_btn), TRUE);
-                 gtk_font_button_set_use_size(GTK_FONT_BUTTON(font_btn), TRUE);
-                 gtk_label_set_mnemonic_widget(GTK_LABEL(label), font_btn);
-                 if (widgets[x].tooltip)
-                     gtk_font_button_set_title (GTK_FONT_BUTTON (font_btn), _(widgets[x].tooltip));
-                 g_object_set_data(G_OBJECT(font_btn), "callback", widgets[x].callback);
+                gtk_font_button_set_use_font(GTK_FONT_BUTTON(font_btn), TRUE);
+                gtk_font_button_set_use_size(GTK_FONT_BUTTON(font_btn), TRUE);
+                gtk_label_set_mnemonic_widget(GTK_LABEL(label), font_btn);
+                if (widgets[x].tooltip)
+                    gtk_font_button_set_title (GTK_FONT_BUTTON (font_btn), _(widgets[x].tooltip));
+                g_object_set_data(G_OBJECT(font_btn), "callback", widgets[x].callback);
 
-                 g_signal_connect(G_OBJECT(font_btn), "font_set",
-                                  G_CALLBACK(on_font_btn_font_set),
-                                  *(char**)widgets[x].cfg);
-                 g_signal_connect(G_OBJECT(font_btn), "realize",
-                                  G_CALLBACK(on_font_btn_realize),
-                                  *(char**)widgets[x].cfg);
-                 break;
-             default:
-                 /* shouldn't ever happen - expect things to break */
-                 continue;
-         }
+                g_signal_connect(G_OBJECT(font_btn), "font_set",
+                                 G_CALLBACK(on_font_btn_font_set),
+                                 *(char**)widgets[x].cfg);
+                g_signal_connect(G_OBJECT(font_btn), "realize",
+                                 G_CALLBACK(on_font_btn_realize),
+                                 *(char**)widgets[x].cfg);
+                break;
+            default:
+                /* shouldn't ever happen - expect things to break */
+                continue;
+        }
 
-         if (widget && !gtk_widget_get_parent(widget))
-             gtk_container_add(GTK_CONTAINER(alignment), widget);
-         if (widget && widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
-             gtk_tooltips_set_tip(tooltips, widget, _(widgets[x].tooltip), NULL);
+        if (widget && !gtk_widget_get_parent(widget))
+            gtk_container_add(GTK_CONTAINER(alignment), widget);
+        if (widget && widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
+            gtk_tooltips_set_tip(tooltips, widget, _(widgets[x].tooltip), NULL);
     }
 
 }
@@ -2993,8 +2992,8 @@ show_prefs_window(void)
 
     if ( !skinlist_filled )
     {
-      skin_view_update(GTK_TREE_VIEW(skin_view), GTK_WIDGET(skin_refresh_button));
-      skinlist_filled = TRUE;
+        skin_view_update(GTK_TREE_VIEW(skin_view), GTK_WIDGET(skin_refresh_button));
+        skinlist_filled = TRUE;
     }
 }
 
