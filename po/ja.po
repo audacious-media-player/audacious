@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-12-06 17:13+0100\n"
-"PO-Revision-Date: 2007-10-14 22:22+0900\n"
+"PO-Revision-Date: 2007-12-15 15:51+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,54 +51,47 @@ msgstr "Audacious"
 
 #: src/audacious/main.c:262
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #: src/audacious/main.c:263
-#, fuzzy
 msgid "Japanese"
-msgstr "日本語:"
+msgstr "日本語"
 
 #: src/audacious/main.c:264
-#, fuzzy
 msgid "Taiwanese"
-msgstr "日本語:"
+msgstr "繁体中国語"
 
 #: src/audacious/main.c:265
-#, fuzzy
 msgid "Chinese"
-msgstr "ライン"
+msgstr "簡体中国語"
 
 #: src/audacious/main.c:266
-#, fuzzy
 msgid "Korean"
-msgstr "朝鮮語:"
+msgstr "朝鮮語"
 
 #: src/audacious/main.c:267
-#, fuzzy
 msgid "Russian"
-msgstr "ロシア語:"
+msgstr "ロシア語"
 
 #: src/audacious/main.c:268
-#, fuzzy
 msgid "Greek"
-msgstr "ギリシア語:"
+msgstr "ギリシア語"
 
 #: src/audacious/main.c:269
 msgid "Hebrew"
-msgstr ""
+msgstr "ヘブライ語"
 
 #: src/audacious/main.c:270
-#, fuzzy
 msgid "Turkish"
-msgstr "トルコ語:"
+msgstr "トルコ語"
 
 #: src/audacious/main.c:271
 msgid "Arabic"
-msgstr ""
+msgstr "アラビア語"
 
 #: src/audacious/main.c:273
 msgid "Universal"
-msgstr ""
+msgstr "汎用"
 
 #: src/audacious/main.c:479
 #, c-format
@@ -365,9 +358,8 @@ msgid "Dutch:"
 msgstr "オランダ語:"
 
 #: src/audacious/ui_credits.c:180
-#, fuzzy
 msgid "Estonian:"
-msgstr "ルーマニア語:"
+msgstr "エストニア語:"
 
 #: src/audacious/ui_credits.c:183
 msgid "Finnish:"
@@ -483,41 +475,36 @@ msgstr "プリセット"
 
 #: src/audacious/ui_fileinfo.c:163 src/audacious/ui_fileinfo.c:469
 #: src/audacious/ui_fileinfo.c:472 src/audacious/ui_fileinfo.c:475
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">年</span>"
+msgstr "<span size=\"small\">n/a</span>"
 
 #: src/audacious/ui_fileinfo.c:273
 msgid "Metadata updated successfully"
-msgstr ""
+msgstr "メタデータは正常に更新されました"
 
 #: src/audacious/ui_fileinfo.c:279
 msgid "Metadata updating failed"
-msgstr ""
+msgstr "メタデータの更新に失敗しました"
 
 #: src/audacious/ui_fileinfo.c:412
 msgid "Track Information"
 msgstr "トラック"
 
 #: src/audacious/ui_fileinfo.c:439
-#, fuzzy
 msgid "<span size=\"small\">General</span>"
-msgstr "<span size=\"small\">ジャンル</span>"
+msgstr "<span size=\"small\">一般</span>"
 
 #: src/audacious/ui_fileinfo.c:459
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">コメント</span>"
+msgstr "<span size=\"small\">フォーマット:</span>"
 
 #: src/audacious/ui_fileinfo.c:462
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">タイトル</span>"
+msgstr "<span size=\"small\">品質:</span>"
 
 #: src/audacious/ui_fileinfo.c:465
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">コメント</span>"
+msgstr "<span size=\"small\">ビットレート:</span>"
 
 #: src/audacious/ui_fileinfo.c:498
 msgid "<span size=\"small\">Title</span>"
@@ -554,7 +541,7 @@ msgstr "<span size=\"small\">位置</span>"
 #: src/audacious/ui_fileinfo.c:673
 #, c-format
 msgid "%d kb/s"
-msgstr ""
+msgstr "%d kb/s"
 
 #: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
 #: src/audacious/ui_preferences.c:140
@@ -697,9 +684,8 @@ msgid "Always ignore, show/hide is controlled remotely"
 msgstr "常に無視し，表示する/隠す は遠隔操作する"
 
 #: src/audacious/ui_main.c:1281
-#, fuzzy
 msgid "Audacious - broken GTK engine usage warning"
-msgstr "Audacious - 可視警告"
+msgstr "Audacious - 壊れた GTK エンジンの使用警告"
 
 #: src/audacious/ui_main.c:1289
 #, c-format
@@ -714,9 +700,16 @@ msgid ""
 "\n"
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
+"<big><b>壊れた GTK エンジンが使われています</b></big>\n"
+"\n"
+"Audacious は GTK エンジンが使われていることを検出しました.\n"
+"\n"
+"テーマエンジン <i>%s</i> は最近のスキンで用いられている特徴と非互換です."
+"非互換な特徴はこのセッションでは無効にされました.\n"
+"\n"
+"これらの特徴を用いるには, 他の GTK テーマエンジンを使うことを考慮してください."
 
 #: src/audacious/ui_main.c:1300
-#, fuzzy
 msgid "Do not display this warning again"
 msgstr "次回からこの警告を表示しない"
 
@@ -1676,14 +1669,12 @@ msgid "Detect file formats by extension."
 msgstr "ファイルフォーマットを拡張子で検出する"
 
 #: src/audacious/ui_preferences.c:206
-#, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
-"有効ならば, Audacious はファイルフォーマットを拡張子によって検出します. これ"
-"は要求に応じて検出するよりやや遅いですが, それでも最低限のフォーマット検出を"
-"提供します."
+"有効ならば, Audacious はファイルフォーマットを拡張子によって検出します. "
+"サポートされたフォーマットの拡張子を持ったファイルのみ読み込まれます."
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Playback</b>"
@@ -1763,12 +1754,13 @@ msgid "On display"
 msgstr "表示時"
 
 #: src/audacious/ui_preferences.c:224
-#, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr ""
-"プレイリストのファイルが表示されたら要求に応じてメタデータを読み込みます."
+"プレイリストのファイル表示に応じてメタデータを読み込みます."
+"完全な恩恵を得るにはオーディオ設定にて"
+"\"ファイルフォーマットを要求に応じて検出する\" を有効にする必要があります."
 
 #: src/audacious/ui_preferences.c:226
 msgid "<b>File Dialog</b>"
@@ -1995,36 +1987,35 @@ msgstr "タイトルに使用できる書式を表示します"
 
 #: src/audacious/ui_preferences.c:2328
 msgid "TITLE"
-msgstr ""
+msgstr "タイトル"
 
 #: src/audacious/ui_preferences.c:2329
 msgid "ARTIST - TITLE"
-msgstr ""
+msgstr "アーティスト - タイトル"
 
 #: src/audacious/ui_preferences.c:2330
 msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
+msgstr "アーティスト - アルバム - タイトル"
 
 #: src/audacious/ui_preferences.c:2331
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
+msgstr "アーティスト - アルバム - トラック. タイトル"
 
 #: src/audacious/ui_preferences.c:2332
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
+msgstr "アーティスト [ アルバム ] - トラック. タイトル"
 
 #: src/audacious/ui_preferences.c:2333
 msgid "ALBUM - TITLE"
-msgstr ""
+msgstr "アルバム - タイトル"
 
 #: src/audacious/ui_preferences.c:2334
-#, fuzzy
 msgid "Custom"
-msgstr "タイトルの文字:"
+msgstr "カスタム"
 
 #: src/audacious/ui_preferences.c:2341
 msgid "Custom string:"
-msgstr "タイトルの文字:"
+msgstr "カスタム文字列:"
 
 #: src/audacious/ui_preferences.c:2348
 msgid "Title format:"
@@ -2132,29 +2123,27 @@ msgstr "サンプリングレートコンバータを有効にする"
 
 #: src/audacious/ui_preferences.c:2655
 msgid "Best Sinc Interpolation"
-msgstr ""
+msgstr "最適 Sinc 補間"
 
 #: src/audacious/ui_preferences.c:2656
 msgid "Medium Sinc Interpolation"
-msgstr ""
+msgstr "中間 Sinc 補間"
 
 #: src/audacious/ui_preferences.c:2657
 msgid "Fastest Sinc Interpolation"
-msgstr ""
+msgstr "最速 Sinc 補間"
 
 #: src/audacious/ui_preferences.c:2658
-#, fuzzy
 msgid "ZOH Interpolation"
-msgstr "インターポレーションエンジン:"
+msgstr "ZOH 補間"
 
 #: src/audacious/ui_preferences.c:2659
-#, fuzzy
 msgid "Linear Interpolation"
-msgstr "インターポレーションエンジン:"
+msgstr "線形補間"
 
 #: src/audacious/ui_preferences.c:2661
 msgid "Interpolation Engine:"
-msgstr "インターポレーションエンジン:"
+msgstr "補間エンジン:"
 
 #: src/audacious/ui_preferences.c:2667
 msgid ""
