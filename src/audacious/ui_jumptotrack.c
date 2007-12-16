@@ -510,7 +510,8 @@ ui_jump_to_track(void)
     GtkWidget *vbox, *bbox, *sep;
     GtkWidget *toggle;
     GtkWidget *jump, *queue, *close;
-    GtkWidget *rescan, *edit;
+    GtkWidget *rescan;
+    static GtkWidget *edit;
     GtkWidget *search_label, *hbox;
 
     GtkWidget *treeview = NULL;
@@ -523,6 +524,7 @@ ui_jump_to_track(void)
 
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
+        gtk_widget_grab_focus(edit);
         return;
     }
 
@@ -658,9 +660,6 @@ ui_jump_to_track(void)
 
     close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
-/*     g_signal_connect_swapped(close, "clicked", */
-/*                              G_CALLBACK(gtk_widget_destroy), */
-/*                              jump_to_track_win); */
     g_signal_connect_swapped(close, "clicked",
                              G_CALLBACK(gtk_widget_hide),
                              jump_to_track_win); // just hide --yaz
@@ -672,4 +671,3 @@ ui_jump_to_track(void)
     gtk_widget_show_all(jump_to_track_win);
     gtk_widget_grab_focus(edit);
 }
-
