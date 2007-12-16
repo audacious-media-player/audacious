@@ -336,6 +336,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"twoway_scroll", &cfg.twoway_scroll, TRUE},
     {"software_volume_control", &cfg.software_volume_control, TRUE},
     {"warn_about_broken_gtk_engines", &cfg.warn_about_broken_gtk_engines, TRUE},
+    {"disable_inline_gtk", &cfg.disable_inline_gtk, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

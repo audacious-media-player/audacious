@@ -204,6 +204,7 @@ static PreferencesWidget appearance_misc_widgets[] = {
         N_("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
     {WIDGET_CHK_BTN, N_("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
         N_("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
+    {WIDGET_CHK_BTN, N_("Disable inline gtk theme"), &cfg.disable_inline_gtk, NULL, NULL, FALSE},
 };
 
 static PreferencesWidget audio_page_widgets[] = {
