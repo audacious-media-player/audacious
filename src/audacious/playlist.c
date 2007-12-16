@@ -2604,9 +2604,12 @@ playlist_get_info_func(gpointer arg)
                  if(playlist->attribute & PLAYLIST_STATIC ||
                    (entry->tuple && tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
                     tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1)) {
-                    update_playlistwin = TRUE;
                     continue;
                  }
+
+                 AUDDBG("len=%d mtime=%d\n",
+                        tuple_get_int(entry->tuple, FIELD_LENGTH, NULL),
+                        tuple_get_int(entry->tuple, FIELD_MTIME, NULL));
 
                  if (!playlist_entry_get_info(entry)) { 
                      if (g_list_index(playlist->entries, entry) == -1)
@@ -2622,6 +2625,7 @@ playlist_get_info_func(gpointer arg)
                  }
             }
         } // on_demand
+
         else if (cfg.get_info_on_demand &&
                  (!cfg.playlist_visible || cfg.playlist_shaded || !cfg.use_pl_metadata))
         {
@@ -2629,6 +2633,7 @@ playlist_get_info_func(gpointer arg)
             playlist_get_info_scan_active = FALSE;
             g_mutex_unlock(mutex_scan);
         }
+
         else /* not on_demand and not on_load...
                 NOTE: this shouldn't happen anymore, sanity check in bmp_config_load now */
         {
