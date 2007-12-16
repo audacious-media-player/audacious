@@ -2638,7 +2638,9 @@ playlist_get_info_func(gpointer arg)
         }
 
         if (update_playlistwin) {
-            event_queue("playlistwin update list", playlist_get_active());
+            Playlist *playlist = playlist_get_active();
+            event_queue("playlistwin update list", playlist);
+            PLAYLIST_INCR_SERIAL(playlist);
             update_playlistwin = FALSE;
         }
 
