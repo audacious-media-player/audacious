@@ -592,6 +592,9 @@ struct _AudaciousFuncTableV1 {
     void (*input_get_volume)(gint * l, gint * r);
 
     gchar *(*construct_uri)(gchar *string, const gchar *playlist_name);
+    gchar *(*uri_to_display_basename)(const gchar * uri);
+    gchar *(*uri_to_display_dirname)(const gchar * uri);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -934,7 +937,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_input_get_volume			_audvt->input_get_volume
 
 #define aud_construct_uri        _audvt->construct_uri
-
+#define aud_uri_to_display_basename _audvt->uri_to_display_basename
+#define aud_uri_to_display_dirname _audvt->uri_to_display_dirname
 
 #include "audacious/auddrct.h"
 

@@ -39,8 +39,8 @@ enum {
     FIELD_QUALITY,
 
     FIELD_CODEC,
-    FIELD_FILE_NAME,
-    FIELD_FILE_PATH,
+    FIELD_FILE_NAME, /* This is always in UTF-8 */
+    FIELD_FILE_PATH, /* This is always in UTF-8 */
     FIELD_FILE_EXT,
     FIELD_SONG_ARTIST,
 

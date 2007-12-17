@@ -570,14 +570,16 @@ input_get_song_tuple(const gchar * filename)
     ProbeResult *pr;
 
     if (filename == NULL)
-    return NULL;
+        return NULL;
 
     filename_proxy = g_strdup(filename);
 
     pr = input_check_file(filename_proxy, FALSE);
 
-    if (!pr)
+    if (!pr) {
+        g_free(filename_proxy);
         return NULL;
+    }
 
     ip = pr->ip;
 
@@ -587,23 +589,24 @@ input_get_song_tuple(const gchar * filename)
         input = ip->get_song_tuple(filename_proxy);
     else
     {
-        gchar *tmp;
+        gchar *scratch;
 
-        input = tuple_new();
+        scratch = uri_to_display_basename(filename);
+        tuple_associate_string(input, FIELD_FILE_NAME, NULL, scratch);
+        g_free(scratch);
 
-        tmp = g_strdup(filename);
-        if ((ext = strrchr(tmp, '.')))
-            *ext = '\0';
+        scratch = uri_to_display_dirname(filename);
+        tuple_associate_string(input, FIELD_FILE_PATH, NULL, scratch);
+        g_free(scratch);
 
-        tuple_associate_string(input, FIELD_FILE_NAME, NULL, g_path_get_basename(tmp));
+        ext = strrchr(filename, '.');
+        if (ext != NULL) {
+            ++ext;
+            tuple_associate_string(input, FIELD_FILE_EXT, NULL, ext);
+        }
 
-        if (ext)
-            tuple_associate_string(input, FIELD_FILE_EXT, NULL, ext + 1);
-
-        tuple_associate_string(input, FIELD_FILE_PATH, NULL, g_path_get_dirname(tmp));
         tuple_associate_int(input, FIELD_LENGTH, NULL, -1);
 
-        g_free(tmp);
     }
 
     g_free(filename_proxy);
