@@ -373,11 +373,9 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
         /* display filename if track_name is not available */
         gchar *markup =
             g_markup_printf_escaped("<span style=\"italic\">%s</span>", _("Filename"));
-        gchar *utf_filename = filename_to_utf8(tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
         gtk_label_set_markup(GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win), "header_title")), markup);
         g_free(markup);
-        filepopup_entry_set_text(filepopup_win, "label_title", utf_filename);
-        g_free(utf_filename);
+        filepopup_entry_set_text(filepopup_win, "label_title", tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
     }
 
     fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ARTIST, NULL),
