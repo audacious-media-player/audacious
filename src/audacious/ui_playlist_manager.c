@@ -66,12 +66,16 @@ playlist_manager_populate ( GtkListStore * store )
         gchar *pl_name = NULL;
         Playlist *playlist = (Playlist*)playlists->data;
 
-        PLAYLIST_LOCK(playlist);
+        if(playlist != active) //XXX the active playlist has been locked in playlist_new_from_selected()
+            PLAYLIST_LOCK(playlist);
+
         /* for each playlist, pick name and number of entries */
         pl_name = (gchar*)playlist_get_current_name( playlist );
         for (entries = playlist->entries; entries; entries = g_list_next(entries))
             entriesnum++;
-        PLAYLIST_UNLOCK(playlist);
+
+        if(playlist != active)
+            PLAYLIST_UNLOCK(playlist);
 
         /* update the tree model conservatively */
 
