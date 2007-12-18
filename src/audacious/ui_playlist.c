@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+/* #define AUD_DEBUG 1 */
+
 #include "ui_playlist.h"
 
 #include <glib.h>
@@ -570,14 +572,23 @@ playlistwin_select_search(void)
          /* create a TitleInput tuple with user search data */
          Tuple *tuple = tuple_new();
          gchar *searchdata = NULL;
+
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_title) );
+         AUDDBG("title=\"%s\"\n", searchdata);
          tuple_associate_string(tuple, FIELD_TITLE, NULL, searchdata);
+
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_album) );
+         AUDDBG("album=\"%s\"\n", searchdata);
          tuple_associate_string(tuple, FIELD_ALBUM, NULL, searchdata);
+
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_performer) );
+         AUDDBG("performer=\"%s\"\n", searchdata);
          tuple_associate_string(tuple, FIELD_ARTIST, NULL, searchdata);
+
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_file_name) );
+         AUDDBG("filename=\"%s\"\n", searchdata);
          tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, searchdata);
+
          /* check if previous selection should be cleared before searching */
          if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_clearprevsel)) == TRUE )
              playlistwin_select_none();
@@ -1927,8 +1938,13 @@ playlistwin_select_search_kp_cb(GtkWidget *entry, GdkEventKey *event,
     switch (event->keyval)
     {
         case GDK_Return:
-            gtk_dialog_response(GTK_DIALOG(searchdlg_win), GTK_RESPONSE_ACCEPT);
-            return TRUE;
+            if (gtk_im_context_filter_keypress (GTK_ENTRY (entry)->im_context, event)) {
+                GTK_ENTRY (entry)->need_im_reset = TRUE;
+                return TRUE;
+            } else {
+                gtk_dialog_response(GTK_DIALOG(searchdlg_win), GTK_RESPONSE_ACCEPT);
+                return TRUE;
+            }
         default:
             return FALSE;
     }
