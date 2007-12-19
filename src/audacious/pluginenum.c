@@ -881,6 +881,7 @@ plugin_system_init(void)
 
         while (disabled[i]) {
             Plugin *plugintmp = plugin_get_plugin(disabled[i]);
+            g_free(disabled[i]);
             if (plugintmp)
                 INPUT_PLUGIN(plugintmp)->enabled = FALSE;
             i++;
