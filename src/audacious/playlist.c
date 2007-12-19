@@ -3408,6 +3408,7 @@ filter_by_extension(const gchar *uri)
 
 
     base = g_path_get_basename(filename);
+    g_free(filename);
     ext = strrchr(base, '.');
 
     if(!ext) {
