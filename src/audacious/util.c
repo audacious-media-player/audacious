@@ -482,7 +482,7 @@ open_ini_file(const gchar *filename)
             if (buffer[off] == '\n')
             {
                 g_string_free(key_name, TRUE);
-                g_string_free(value, FALSE);
+                g_string_free(value, TRUE);
                 key_name = g_string_new(NULL);
                 value = g_string_new(NULL);
             }
