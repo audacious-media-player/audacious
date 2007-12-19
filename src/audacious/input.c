@@ -111,10 +111,12 @@ input_stringify_disabled_list(void)
     MOWGLI_ITER_FOREACH(node, ip_data.input_list)
     {
         Plugin *plugin = (Plugin *) node->data;
-        gchar *filename = g_path_get_basename(plugin->filename);
+        gchar *filename;
 
         if (plugin->enabled)
             continue;
+
+        filename = g_path_get_basename(plugin->filename);
 
         if (list->len > 0)
             g_string_append(list, ":");
