@@ -448,8 +448,11 @@ vfs_is_remote(const gchar * path)
     if (vtable == NULL)
     {
         g_warning("could not open '%s', no transport plugin available", decpath);
+        g_free(decpath);
         return FALSE;
     }
+
+    g_free(decpath);
 
     /* check if vtable->uri_id is file:// or not, for now. */
     if(!strncasecmp("file://", vtable->uri_id, strlen(vtable->uri_id)))
