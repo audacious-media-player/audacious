@@ -496,6 +496,7 @@ mainwin_set_song_title(const gchar * title)
 {
     gchar *mainwin_title_text = make_mainwin_title(title);
     gtk_window_set_title(GTK_WINDOW(mainwin), mainwin_title_text);
+    g_free(mainwin_title_text);
 }
 
 static void
@@ -727,13 +728,13 @@ mainwin_set_song_info(gint bitrate,
         if (bitrate < 1000) {
             /* Show bitrate in 1000s */
             text = g_strdup_printf("%3d", bitrate);
-            ui_skinned_textbox_set_text(mainwin_rate_text, text);
         }
         else {
             /* Show bitrate in 100,000s */
             text = g_strdup_printf("%2dH", bitrate / 100);
-            ui_skinned_textbox_set_text(mainwin_rate_text, text);
         }
+        ui_skinned_textbox_set_text(mainwin_rate_text, text);
+        g_free(text);
     }
     else
         ui_skinned_textbox_set_text(mainwin_rate_text, _("VBR"));
@@ -741,6 +742,7 @@ mainwin_set_song_info(gint bitrate,
     /* Show sampling frequency in kHz */
     text = g_strdup_printf("%2d", frequency / 1000);
     ui_skinned_textbox_set_text(mainwin_freq_text, text);
+    g_free(text);
 
     ui_skinned_monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
@@ -760,6 +762,7 @@ mainwin_set_song_info(gint bitrate,
             (n_channels > 1) ? _("stereo") : _("mono"));
 
         ui_skinned_textbox_set_text(mainwin_othertext, text);
+        g_free(text);
     }
 
     title = playlist_get_info_text(playlist);
