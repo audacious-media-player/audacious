@@ -607,13 +607,16 @@ read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
     strip_lower_string(key_string);
     section_hash = GINT_TO_POINTER(g_string_hash(section_string));
     key_hash = GINT_TO_POINTER(g_string_hash(key_string));
-    g_string_free(section_string, FALSE);
-    g_string_free(key_string, FALSE);
-
     section_table = g_hash_table_lookup(inifile, section_hash);
-    g_return_val_if_fail(section_table, NULL);
 
-    value = g_hash_table_lookup(section_table, GINT_TO_POINTER(key_hash));
+    if (section_table) {
+        value = g_hash_table_lookup(section_table, GINT_TO_POINTER(key_hash));
+    }
+
+    g_string_free(section_string, TRUE);
+    g_string_free(key_string, TRUE);
+
+    g_return_val_if_fail(value, NULL);
     return value;
 }
 
