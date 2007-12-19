@@ -516,6 +516,8 @@ input_check_file(const gchar *filename, gboolean loading)
             }
         }
 
+        g_free(filename_proxy);
+        vfs_fclose(fd);
         return NULL; // no plugin found.
     }
 
