@@ -78,11 +78,11 @@ void id3_field_init(union id3_field *field, enum id3_field_type type)
     break;
 
   case ID3_FIELD_TYPE_LANGUAGE:
-    strcpy(field->immediate.value, "XXX");
+    strncpy(field->immediate.value, "XXX", sizeof(field->immediate.value));
     break;
 
   case ID3_FIELD_TYPE_FRAMEID:
-    strcpy(field->immediate.value, "XXXX");
+    strncpy(field->immediate.value, "XXXX", sizeof(field->immediate.value));
     break;
 
   case ID3_FIELD_TYPE_DATE:
@@ -671,7 +671,7 @@ int id3_field_setlanguage(union id3_field *field, char const *language)
     if (strlen(language) != 3)
       return -1;
 
-    strcpy(field->immediate.value, language);
+    strncpy(field->immediate.value, language, sizeof(field->immediate.value));
   }
 
   return 0;

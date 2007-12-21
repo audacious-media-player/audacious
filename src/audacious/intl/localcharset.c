@@ -186,8 +186,8 @@ get_charset_aliases ()
 		  res_size = 0;
 		  break;
 		}
-	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
-	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
+	      strncpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1, res_size - (l2 + 1));
+	      strncpy (res_ptr + res_size - (l2 + 1), buf2, res_size - (l1 + 1));
 	    }
 	  fclose (fp);
 	  if (res_size == 0)

@@ -1094,7 +1094,7 @@ save_winamp_file(const gchar * filename)
     vfs_fwrite("Winamp EQ library file v1.1\x1a!--", 1, 31, file);
 
     memset(name, 0, 257);
-    strcpy(name, "Entry1");
+    strncpy(name, "Entry1", 257);
     vfs_fwrite(name, 1, 257, file);
 
     for (i = 0; i < 10; i++)

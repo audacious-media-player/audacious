@@ -805,7 +805,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
         *resmax = *reslen + MIN_ALLOC_BUF;
         *res = g_malloc(*resmax);
         
-        strcpy(*res, str);
+        strncpy(*res, str, *resmax);
       }
     }
     

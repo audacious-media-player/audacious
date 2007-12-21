@@ -126,7 +126,7 @@ formatter_format(Formatter * formatter, char *format)
     for (p = format, q = buffer; *p; p++)
         if (*p == '%') {
             if (formatter->values[(int) *++p]) {
-                strcpy(q, formatter->values[(int) *p]);
+                strncpy(q, formatter->values[(int) *p], len - 1);
                 q += strlen(q);
             }
             else {
