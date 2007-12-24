@@ -81,7 +81,7 @@ _nl_log_untranslated (logfilename, domainname, msgid1, msgid2, plural)
       last_logfilename = (char *) malloc (strlen (logfilename) + 1);
       if (last_logfilename == NULL)
 	return;
-      strncpy (last_logfilename, logfilename, strlen(logfilename) + 1);
+      g_strlcpy (last_logfilename, logfilename, strlen(logfilename) + 1);
       last_logfile = fopen (logfilename, "a");
       if (last_logfile == NULL)
 	return;

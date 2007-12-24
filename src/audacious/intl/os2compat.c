@@ -94,5 +94,5 @@ nlos2_initialize ()
     }
 
   if (strlen (_nlos2_localedir) <= MAXPATHLEN)
-    strncpy (libintl_nl_default_dirname, _nlos2_localedir, MAXPATHLEN + 1);
+    g_strlcpy (libintl_nl_default_dirname, _nlos2_localedir, MAXPATHLEN + 1);
 }

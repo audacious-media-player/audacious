@@ -427,7 +427,7 @@ relocate (const char *pathname)
 #endif
 	    {
 	      memcpy (result, curr_prefix, curr_prefix_len);
-	      strncpy (result + curr_prefix_len, pathname_tail, strlen(pathname_tail) + 1);
+	      g_strlcpy (result + curr_prefix_len, pathname_tail, strlen(pathname_tail) + 1);
 	      return result;
 	    }
 	}
