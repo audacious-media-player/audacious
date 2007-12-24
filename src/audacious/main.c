@@ -679,6 +679,10 @@ bmp_config_load(void)
     /* at least one of these should be true */
     if ((!cfg.get_info_on_demand) && (!cfg.get_info_on_load))
         cfg.get_info_on_demand = TRUE;
+
+    /* playlist width and height can't be smaller than minimum */
+    cfg.playlist_width = MAX(cfg.playlist_width, PLAYLISTWIN_MIN_WIDTH);
+    cfg.playlist_height = MAX(cfg.playlist_height, PLAYLISTWIN_MIN_HEIGHT);
 }
 
 static gboolean
