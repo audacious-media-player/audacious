@@ -955,6 +955,7 @@ bmp_config_save(void)
 
     /* Save other playlists to PLAYLISTS_DIR */
     save_other_playlists(saved);
+    g_list_free(saved);
 }
 
 static void
