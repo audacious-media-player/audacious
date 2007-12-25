@@ -95,7 +95,7 @@ change_song(guint pos)
 void
 ui_jump_to_track_hide(void)
 {
-    g_return_if_fail(jump_to_track_win);
+    g_return_if_fail(jump_to_track_win != NULL);
     gtk_widget_hide(jump_to_track_win);
 }
 
@@ -511,8 +511,8 @@ ui_jump_to_track(void)
     GtkWidget *toggle;
     GtkWidget *jump, *queue, *close;
     GtkWidget *rescan;
-    static GtkWidget *edit;
     GtkWidget *search_label, *hbox;
+    static GtkWidget *edit;
 
     GtkWidget *treeview = NULL;
     GtkListStore *jtf_store;
@@ -524,6 +524,7 @@ ui_jump_to_track(void)
 
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
+        gtk_entry_set_text(edit, "");
         gtk_widget_grab_focus(edit);
         return;
     }
