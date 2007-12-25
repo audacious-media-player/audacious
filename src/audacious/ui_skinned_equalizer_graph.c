@@ -226,7 +226,7 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
     g_return_val_if_fail (event != NULL, FALSE);
 
     UiSkinnedEqualizerGraph *equalizer_graph = UI_SKINNED_EQUALIZER_GRAPH (widget);
-    g_return_val_if_fail (equalizer_graph->width > 0 || equalizer_graph->height > 0, FALSE);
+    g_return_val_if_fail (equalizer_graph->width > 0 && equalizer_graph->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;

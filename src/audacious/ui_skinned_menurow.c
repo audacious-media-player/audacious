@@ -209,7 +209,7 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
     g_return_val_if_fail (event != NULL, FALSE);
 
     UiSkinnedMenurow *menurow = UI_SKINNED_MENUROW (widget);
-    g_return_val_if_fail (menurow->width > 0 || menurow->height > 0, FALSE);
+    g_return_val_if_fail (menurow->width > 0 && menurow->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;

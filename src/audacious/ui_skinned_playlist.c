@@ -414,7 +414,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
     UiSkinnedPlaylist *pl = UI_SKINNED_PLAYLIST (widget);
     UiSkinnedPlaylistPrivate *priv = UI_SKINNED_PLAYLIST_GET_PRIVATE(pl);
-    g_return_val_if_fail (priv->width > 0 || priv->height > 0, FALSE);
+    g_return_val_if_fail (priv->width > 0 && priv->height > 0, FALSE);
 
     Playlist *playlist = playlist_get_active();
     GList *list;

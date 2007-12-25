@@ -290,7 +290,7 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
 
     UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
-    g_return_val_if_fail (priv->w > 0 || priv->h > 0, FALSE);
+    g_return_val_if_fail (priv->w > 0 && priv->h > 0, FALSE);
 
     //TYPE_SMALL doesn't have its own face
     if (button->type == TYPE_SMALL || button->type == TYPE_NOT_SET)

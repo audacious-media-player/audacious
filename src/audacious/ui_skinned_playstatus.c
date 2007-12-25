@@ -179,7 +179,7 @@ static gboolean ui_skinned_playstatus_expose(GtkWidget *widget, GdkEventExpose *
     g_return_val_if_fail (event != NULL, FALSE);
 
     UiSkinnedPlaystatus *playstatus = UI_SKINNED_PLAYSTATUS (widget);
-    g_return_val_if_fail (playstatus->width > 0 || playstatus->height > 0, FALSE);
+    g_return_val_if_fail (playstatus->width > 0 && playstatus->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;
