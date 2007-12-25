@@ -108,6 +108,7 @@ fileinfopopup_progress_cb(gpointer filepopup_win)
     current_file_u = playlist_get_filename(pl , pos);
     g_return_val_if_fail(current_file_u != NULL, FALSE);
     current_file = g_filename_from_uri(current_file_u, NULL, NULL);
+    g_free(current_file_u);
 
     if (playback_get_playing() && length != -1 &&
         current_file != NULL && tooltip_file != NULL &&
