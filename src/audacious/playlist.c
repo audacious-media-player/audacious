@@ -3282,7 +3282,9 @@ playlist_free(Playlist *playlist)
 {
     if (!playlist)
         return;
-    
+
+    if (playlist->filename)
+        g_free( playlist->filename );
     g_mutex_free( playlist->mutex );
     g_free( playlist );
     playlist = NULL; //XXX lead to crash? --yaz
