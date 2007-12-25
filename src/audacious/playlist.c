@@ -227,9 +227,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     /* renew tuple if file mtime is newer than tuple mtime. */
     if (entry->tuple){
-        if (tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == modtime)
+        if (tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == modtime) {
+            g_free(pr);
             return TRUE;
-        else {
+        } else {
             mowgli_object_unref(entry->tuple);
             entry->tuple = NULL;
         }
@@ -240,8 +241,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
     else if (entry->decoder != NULL && entry->decoder->get_song_tuple != NULL)
         tuple = entry->decoder->get_song_tuple(entry->filename);
 
-    if (tuple == NULL)
+    if (tuple == NULL) {
+        g_free(pr);
         return FALSE;
+    }
 
     /* attach mtime */
     tuple_associate_int(tuple, FIELD_MTIME, NULL, modtime);
