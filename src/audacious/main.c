@@ -158,7 +158,7 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* use \ as directory delimiter */
     FALSE,                      /* random skin on play */
     FALSE,                      /* use fontsets */
-    FALSE,                      /* use X font for mainwin */
+    TRUE,                       /* use bitmap font for mainwin */
     TRUE,                       /* use custom cursors */
     TRUE,                       /* close dialog on open */
     TRUE,                       /* close dialog on add */
@@ -308,7 +308,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"playlist_shaded", &cfg.playlist_shaded, TRUE},
     {"playlist_visible", &cfg.playlist_visible, TRUE},
     {"use_fontsets", &cfg.use_fontsets, TRUE},
-    {"mainwin_use_bitmapfont", &cfg.mainwin_use_bitmapfont, FALSE},
+    {"mainwin_use_bitmapfont", &cfg.mainwin_use_bitmapfont, TRUE},
     {"equalizer_visible", &cfg.equalizer_visible, TRUE},
     {"equalizer_active", &cfg.equalizer_active, TRUE},
     {"equalizer_shaded", &cfg.equalizer_shaded, TRUE},
