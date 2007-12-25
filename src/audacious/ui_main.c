@@ -982,8 +982,12 @@ mainwin_keypress(GtkWidget * grab_widget,
         mainwin_minimize_cb();
         break;
     case GDK_Tab:
-        if (event->state & GDK_CONTROL_MASK)
-	    equalizerwin_real_show();
+        if (event->state & GDK_CONTROL_MASK) {
+            if (cfg.equalizer_visible)
+                gtk_window_present(GTK_WINDOW(equalizerwin));
+            else if (cfg.playlist_visible)
+                gtk_window_present(GTK_WINDOW(playlistwin));
+        }
         break;
     case GDK_c:
 	if (event->state & GDK_CONTROL_MASK) {

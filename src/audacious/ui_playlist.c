@@ -1268,8 +1268,12 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
         mainwin_minimize_cb();
         break;
     case GDK_Tab:
-        if (event->state & GDK_CONTROL_MASK)
-            gtk_window_present(GTK_WINDOW(mainwin));
+        if (event->state & GDK_CONTROL_MASK) {
+            if (cfg.player_visible)
+                gtk_window_present(GTK_WINDOW(mainwin));
+            else if (cfg.equalizer_visible)
+                gtk_window_present(GTK_WINDOW(equalizerwin));
+        }
         break;
     default:
         return FALSE;
