@@ -204,6 +204,7 @@ static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventEx
 
     UiSkinnedEqualizerSlider *es = UI_SKINNED_EQUALIZER_SLIDER (widget);
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(es);
+    g_return_val_if_fail (priv->width > 0 || priv->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;

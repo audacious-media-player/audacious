@@ -215,6 +215,7 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
 
     UiSkinnedPlaylistSlider *ps = UI_SKINNED_PLAYLIST_SLIDER (widget);
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(ps);
+    g_return_val_if_fail (priv->width > 0 || priv->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;

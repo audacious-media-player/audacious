@@ -177,6 +177,7 @@ static gboolean ui_skinned_monostereo_expose(GtkWidget *widget, GdkEventExpose *
     g_return_val_if_fail (event != NULL, FALSE);
 
     UiSkinnedMonoStereo *monostereo = UI_SKINNED_MONOSTEREO (widget);
+    g_return_val_if_fail (monostereo->width > 0 || monostereo->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;

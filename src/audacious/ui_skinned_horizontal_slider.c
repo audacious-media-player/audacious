@@ -237,6 +237,7 @@ static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventE
 
     UiSkinnedHorizontalSlider *hs = UI_SKINNED_HORIZONTAL_SLIDER (widget);
     UiSkinnedHorizontalSliderPrivate *priv = UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(hs);
+    g_return_val_if_fail (priv->width > 0 || priv->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;

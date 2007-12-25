@@ -276,6 +276,7 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
 
     UiSkinnedTextbox *textbox = UI_SKINNED_TEXTBOX (widget);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
+    g_return_val_if_fail (textbox->width > 0 || textbox->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;
@@ -527,6 +528,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
 
     g_return_if_fail(textbox != NULL);
     g_return_if_fail(pixmaptext != NULL);
+    g_return_val_if_fail (textbox->height > 0, FALSE);
 
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 

@@ -183,6 +183,7 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
     g_return_val_if_fail (event != NULL, FALSE);
 
     UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
+    g_return_val_if_fail (number->width > 0 || number->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;
