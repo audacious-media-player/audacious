@@ -740,6 +740,7 @@ __playlist_ins_file(Playlist * playlist,
         
         if (tuple != NULL) {
             const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
+            g_free(entry->title);
             entry->title = tuple_formatter_make_title_string(tuple,
                 formatter ? formatter : get_gentitle_format());
             entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
