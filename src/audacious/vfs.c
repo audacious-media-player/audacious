@@ -89,10 +89,12 @@ vfs_fopen(const gchar * path,
     if (vtable == NULL)
     {
         g_warning("could not open '%s', no transport plugin available", decpath);
+        g_free(decpath);
         return NULL;
     }
 
     file = vtable->vfs_fopen_impl(decpath, mode);
+    g_free(decpath);
 
     if (file == NULL)
         return NULL;
@@ -100,8 +102,6 @@ vfs_fopen(const gchar * path,
     file->uri = g_strdup(path);
     file->base = vtable;
     file->ref = 1;
-
-    g_free(decpath);
 
     return file;
 }
