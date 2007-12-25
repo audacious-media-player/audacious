@@ -227,6 +227,7 @@ BmpConfig bmp_default_config = {
     FALSE,          /* use software volume control */
     .warn_about_broken_gtk_engines = TRUE,           /* warn about broken gtk themes */
     FALSE,          /* disable inline themes */
+    TRUE,           /* remember jtf text entry */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -337,6 +338,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"software_volume_control", &cfg.software_volume_control, TRUE},
     {"warn_about_broken_gtk_engines", &cfg.warn_about_broken_gtk_engines, TRUE},
     {"disable_inline_gtk", &cfg.disable_inline_gtk, TRUE},
+    {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

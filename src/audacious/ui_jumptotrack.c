@@ -129,6 +129,13 @@ ui_jump_to_track_toggle_cb(GtkWidget * toggle)
 }
 
 static void
+ui_jump_to_track_toggle2_cb(GtkWidget * toggle)
+{
+    cfg.remember_jtf_entry =
+        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
+}
+
+static void
 ui_jump_to_track_jump_cb(GtkTreeView * treeview,
                              gpointer data)
 {
@@ -270,7 +277,7 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
 
     /* clear edit widget */
     if(edit){
-        gtk_entry_set_text(edit, "\0");
+        gtk_entry_set_text(edit, "");
     }
 
     store = gtk_tree_view_get_model(tree);
@@ -508,7 +515,7 @@ ui_jump_to_track(void)
 {
     GtkWidget *scrollwin;
     GtkWidget *vbox, *bbox, *sep;
-    GtkWidget *toggle;
+    GtkWidget *toggle, *toggle2;
     GtkWidget *jump, *queue, *close;
     GtkWidget *rescan;
     GtkWidget *search_label, *hbox;
@@ -524,8 +531,12 @@ ui_jump_to_track(void)
 
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
-        gtk_entry_set_text(edit, "");
+
+        if(!cfg.remember_jtf_entry)
+            gtk_entry_set_text(GTK_ENTRY(edit), "");
+
         gtk_widget_grab_focus(edit);
+        gtk_editable_select_region(GTK_EDITABLE(edit), 0, -1);
         return;
     }
 
@@ -622,6 +633,15 @@ ui_jump_to_track(void)
     g_signal_connect(toggle, "clicked", 
                      G_CALLBACK(ui_jump_to_track_toggle_cb),
                      toggle);
+
+    /* remember text entry */
+    toggle2 = gtk_check_button_new_with_label(_("Remember Entry"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
+                                 cfg.remember_jtf_entry ? TRUE : FALSE);
+    gtk_box_pack_start(GTK_BOX(bbox), toggle2, FALSE, FALSE, 0);
+    g_signal_connect(toggle2, "clicked",
+                     G_CALLBACK(ui_jump_to_track_toggle2_cb),
+                     toggle2);
 
 
     queue = gtk_button_new_with_mnemonic(_("_Queue"));

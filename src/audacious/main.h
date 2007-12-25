@@ -140,6 +140,7 @@ struct _BmpConfig {
     gboolean software_volume_control;
     gboolean warn_about_broken_gtk_engines;
     gboolean disable_inline_gtk;
+    gboolean remember_jtf_entry;
 };
 
 typedef struct _BmpConfig BmpConfig;
