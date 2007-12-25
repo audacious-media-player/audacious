@@ -204,6 +204,12 @@ skin_new(void)
     return skin;
 }
 
+/**
+ * Frees the data associated for skin.
+ *
+ * Does not free skin itself or lock variable so that the skin can immediately
+ * populated with new skin data if needed.
+ */
 void
 skin_free(Skin * skin)
 {
@@ -211,12 +217,10 @@ skin_free(Skin * skin)
 
     g_return_if_fail(skin != NULL);
 
-    skin_lock(skin);
-
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
         skin_pixmap_free(&skin->pixmaps[i]);
 
-    for (i = 0; i < SKIN_PIXMAP_COUNT; i++) {
+    for (i = 0; i < SKIN_MASK_COUNT; i++) {
         if (skin->masks[i])
             g_object_unref(skin->masks[i]);
         if (skin->ds_masks[i])
@@ -226,8 +230,17 @@ skin_free(Skin * skin)
         skin->ds_masks[i] = NULL;
     }
 
+    for (i = 0; i < SKIN_COLOR_COUNT; i++) {
+        if (skin->colors[i])
+            g_free(skin->colors[i]);
+
+        skin->colors[i] = NULL;
+    }
+
+    g_free(skin->path);
+    skin->path = NULL;
+
     skin_set_default_vis_color(skin);
-    skin_unlock(skin);
 }
 
 void
@@ -530,6 +543,12 @@ init_skins(const gchar * path)
 
     return TRUE;
 }
+
+void cleanup_skins()
+{
+    skin_destroy(bmp_active_skin);
+}
+
 
 /*
  * Opens and parses a skin's hints file.
@@ -1476,6 +1495,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
     GtkSettings *settings;
     gchar *cpath, *gtkrcpath;
+    gchar *newpath;
 
     AUDDBG("\n");
 
@@ -1490,13 +1510,16 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         AUDDBG("skin %s already loaded\n", path);
         return FALSE;
     }
-    
+
+    // skin_free() frees skin->path and variable path can actually be skin->path
+    // and we want to get the path before possibly freeing it.
+    newpath = g_strdup(path);
+    skin_free(skin);
+    skin->path = newpath;
+
     memset(&(skin->properties), 0, sizeof(SkinProperties)); /* do it only if all tests above passed! --asphyx */
       
     skin_current_num++;
-
-    skin->path = g_strdup(path);
-
 
     settings = gtk_settings_get_default();
     

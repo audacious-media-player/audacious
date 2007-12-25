@@ -405,6 +405,8 @@ mainwin_quit_cb(void)
 
     gtk_main_quit();
 
+    cleanup_skins();
+
     exit(EXIT_SUCCESS);
 }
 
