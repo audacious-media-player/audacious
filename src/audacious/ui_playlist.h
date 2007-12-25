@@ -64,7 +64,6 @@ void playlistwin_hide_timer(void);
 void playlistwin_set_time(gint time, gint length, TimerMode mode);
 void playlistwin_show(void);
 void playlistwin_hide(void);
-void playlistwin_set_back_pixmap(void);
 void playlistwin_scroll(gint num);
 void playlistwin_scroll_up_pushed(void);
 void playlistwin_scroll_down_pushed(void);

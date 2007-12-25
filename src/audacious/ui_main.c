@@ -116,7 +116,6 @@ struct _PlaybackInfo {
 GtkWidget *mainwin = NULL;
 GtkWidget *err = NULL; /* an error dialog for miscellaneous error messages */
 
-static GdkBitmap *nullmask;
 static gint balance;
 
 static GtkWidget *mainwin_jtt = NULL;
@@ -233,20 +232,6 @@ mainwin_set_always_on_top(gboolean always)
 }
 
 static void
-mainwin_set_shape_mask(void)
-{
-    if (!cfg.player_visible)
-        return;
-
-    if (cfg.doublesize == FALSE)
-        gtk_widget_shape_combine_mask(mainwin,
-                                  skin_get_mask(bmp_active_skin,
-                                                SKIN_MASK_MAIN), 0, 0);
-    else
-        gtk_widget_shape_combine_mask(mainwin, NULL, 0, 0);
-}
-
-static void
 mainwin_set_shade(gboolean shaded)
 {
     GtkAction *action = gtk_action_group_get_action(
@@ -259,7 +244,6 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 {
     cfg.player_shaded = shaded;
 
-    mainwin_set_shape_mask();
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(mainwin),
                    MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1));
@@ -1761,20 +1745,12 @@ mainwin_real_show(void)
     if (cfg.player_shaded)
         ui_vis_clear_data(mainwin_vis);
 
-    mainwin_set_shape_mask();
-
     if (cfg.show_wm_decorations) {
         if (cfg.player_x != -1 && cfg.save_window_position)
             gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
         gtk_widget_show(mainwin);
         return;
-    }
-
-    if (nullmask)
-    {
-      g_object_unref(nullmask);
-      nullmask = NULL;
     }
 
     if (cfg.player_x != -1 && cfg.save_window_position)
@@ -1787,23 +1763,10 @@ mainwin_real_show(void)
 void
 mainwin_real_hide(void)
 {
-    GdkGC *gc;
-    GdkColor pattern;
-
     check_set( toggleaction_group_others , "show player", FALSE);
 
     if (cfg.player_shaded)
         ui_svis_clear_data(mainwin_svis);
-
-    if (!cfg.show_wm_decorations) {
-        nullmask = gdk_pixmap_new(mainwin->window, 20, 20, 1);
-        gc = gdk_gc_new(nullmask);
-        pattern.pixel = 0;
-        gdk_gc_set_foreground(gc, &pattern);
-        gdk_draw_rectangle(nullmask, gc, TRUE, 0, 0, 20, 20);
-        g_object_unref(gc);
-        gtk_widget_shape_combine_mask(mainwin, nullmask, 0, 0);
-    }
 
     gtk_widget_hide(mainwin);
 
@@ -1834,8 +1797,6 @@ mainwin_set_doublesize(gboolean doublesize)
         height = MAINWIN_SHADED_HEIGHT;
     else
         height = bmp_active_skin->properties.mainwin_height;
-
-    mainwin_set_shape_mask();
 
     dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
         cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,

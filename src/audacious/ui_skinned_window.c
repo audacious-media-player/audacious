@@ -147,10 +147,12 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
         case WINDOW_MAIN:
             width = bmp_active_skin->properties.mainwin_width;
             height = bmp_active_skin->properties.mainwin_height;
+            gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
             break;
         case WINDOW_EQ:
             width = 275;
             height = 116;
+            gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
             break;
         case WINDOW_PLAYLIST:
             width = playlistwin_get_width();
@@ -273,6 +275,8 @@ ui_skinned_window_new(const gchar *wmclass_name)
     dock_window_list = dock_window_set_decorated(dock_window_list,
 	GTK_WINDOW(widget), cfg.show_wm_decorations);
     gtk_widget_set_app_paintable(GTK_WIDGET(widget), TRUE);
+    gdk_window_set_back_pixmap(widget->window, NULL, FALSE);
+    gtk_widget_shape_combine_mask(widget, NULL, 0, 0);
 
     ui_skinned_cursor_set(GTK_WIDGET(widget));
 

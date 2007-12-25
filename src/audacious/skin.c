@@ -139,8 +139,6 @@ static GdkBitmap *skin_create_transparent_mask(const gchar *,
                                                GdkWindow *,
                                                gint, gint, gboolean);
 
-static void skin_setup_masks(Skin * skin);
-
 static void skin_set_default_vis_color(Skin * skin);
 
 void
@@ -172,8 +170,6 @@ bmp_active_skin_load(const gchar * path)
         AUDDBG("loading failed\n");
         return FALSE;
     }
-
-    skin_setup_masks(bmp_active_skin);
 
     ui_skinned_window_draw_all(mainwin);
     ui_skinned_window_draw_all(equalizerwin);
@@ -416,23 +412,6 @@ skin_mask_create(Skin * skin,
                                      skin_mask_info[id].inistr, window,
                                      skin_mask_info[id].width * 2,
                                      skin_mask_info[id].height * 2, TRUE);
-}
-
-static void
-skin_setup_masks(Skin * skin)
-{
-    GdkBitmap *mask;
-
-    if (cfg.show_wm_decorations)
-        return;
-
-    if (cfg.player_visible) {
-        mask = skin_get_mask(skin, SKIN_MASK_MAIN + cfg.player_shaded);
-        gtk_widget_shape_combine_mask(mainwin, mask, 0, 0);
-    }
-
-    mask = skin_get_mask(skin, SKIN_MASK_EQ + cfg.equalizer_shaded);
-    gtk_widget_shape_combine_mask(equalizerwin, mask, 0, 0);
 }
 
 static GdkBitmap *

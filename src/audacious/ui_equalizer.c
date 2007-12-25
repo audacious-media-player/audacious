@@ -111,21 +111,6 @@ equalizer_preset_free(EqualizerPreset * preset)
     g_free(preset);
 }
 
-
-static void
-equalizerwin_set_shape_mask(void)
-{
-    if (cfg.show_wm_decorations)
-        return;
-
-    if (cfg.doublesize == FALSE)
-        gtk_widget_shape_combine_mask(equalizerwin,
-                                      skin_get_mask(bmp_active_skin,
-                                                    SKIN_MASK_EQ), 0, 0);
-    else
-        gtk_widget_shape_combine_mask(equalizerwin, NULL, 0, 0);
-}
-
 void
 equalizerwin_set_doublesize(gboolean ds)
 {
@@ -135,8 +120,6 @@ equalizerwin_set_doublesize(gboolean ds)
         height = 14;
     else
         height = 116;
-
-    equalizerwin_set_shape_mask();
 
     if (ds) {
         dock_window_resize(GTK_WINDOW(equalizerwin), 550, height * 2, 550, height * 2);
@@ -156,8 +139,6 @@ void
 equalizerwin_set_shade_menu_cb(gboolean shaded)
 {
     cfg.equalizer_shaded = shaded;
-
-    equalizerwin_set_shape_mask();
 
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),

@@ -73,8 +73,6 @@ static GMutex *resize_mutex = NULL;
 GtkWidget *playlistwin_list = NULL;
 GtkWidget *playlistwin_shade, *playlistwin_close;
 
-static GdkBitmap *playlistwin_mask = NULL;
-
 static gboolean playlistwin_hint_flag = FALSE;
 
 static GtkWidget *playlistwin_slider = NULL;
@@ -279,28 +277,6 @@ playlistwin_update_list(Playlist *playlist)
 }
 
 static void
-playlistwin_set_mask(void)
-{
-    GdkGC *gc;
-    GdkColor pattern;
-
-    if (playlistwin_mask)
-        g_object_unref(playlistwin_mask);
-
-    playlistwin_mask =
-        gdk_pixmap_new(playlistwin->window, playlistwin_get_width(),
-                       playlistwin_get_height(), 1);
-    gc = gdk_gc_new(playlistwin_mask);
-    pattern.pixel = 1;
-    gdk_gc_set_foreground(gc, &pattern);
-    gdk_draw_rectangle(playlistwin_mask, gc, TRUE, 0, 0,
-                       playlistwin_get_width(), playlistwin_get_height());
-    g_object_unref(gc);
-
-    gtk_widget_shape_combine_mask(playlistwin, playlistwin_mask, 0, 0);
-}
-
-static void
 playlistwin_set_geometry_hints(gboolean shaded)
 {
     GdkGeometry geometry;
@@ -384,8 +360,6 @@ playlistwin_set_shade(gboolean shaded)
     gtk_window_resize(GTK_WINDOW(playlistwin),
                       playlistwin_get_width(),
                       playlistwin_get_height());
-
-    playlistwin_set_mask();
 }
 
 static void
@@ -675,8 +649,6 @@ playlistwin_resize(gint width, gint height)
     ui_skinned_button_move_relative(playlistwin_seject, dx, dy);
     ui_skinned_button_move_relative(playlistwin_sscroll_up, dx, dy);
     ui_skinned_button_move_relative(playlistwin_sscroll_down, dx, dy);
-
-    playlistwin_set_mask();
 
     gtk_widget_set_size_request(playlistwin_sinfo, playlistwin_get_width() - 35,
                                 bmp_active_skin->properties.textbox_bitmap_font_height);
@@ -1533,8 +1505,6 @@ playlistwin_create_window(void)
     gtk_window_set_icon(GTK_WINDOW(playlistwin), icon);
     g_object_unref(icon);
 
-    gtk_widget_set_app_paintable(playlistwin, TRUE);
-
     if (cfg.playlist_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(playlistwin),
                         cfg.playlist_x, cfg.playlist_y);
@@ -1576,8 +1546,6 @@ playlistwin_create_window(void)
                      G_CALLBACK(playlistwin_keypress), NULL);
     g_signal_connect(playlistwin, "selection_received",
                      G_CALLBACK(selection_received), NULL);
-
-    playlistwin_set_mask();
 }
 
 void
