@@ -565,6 +565,7 @@ struct _AudaciousFuncTableV1 {
 
     /* InputPlayback */
     InputPlayback *(*playback_new)(void);
+    void (*playback_free)(InputPlayback *);
     void (*playback_run)(InputPlayback *);
 
     /* Flows */
@@ -911,7 +912,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_playback_new			_audvt->playback_new
 #define aud_playback_run			_audvt->playback_run
-#define aud_playback_free(x)			g_slice_free(InputPlayback, (x))
+#define aud_playback_free(x)			_audvt->playback_free
 
 #define aud_flow_execute			_audvt->flow_execute
 #define aud_flow_new				_audvt->flow_new

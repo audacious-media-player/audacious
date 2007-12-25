@@ -41,6 +41,7 @@ void playback_seek_relative(gint offset);
 void playback_eof(void);
 void playback_error(void);
 InputPlayback *playback_new(void);
+void playback_free(InputPlayback *);
 void playback_run(InputPlayback *);
 
 #endif

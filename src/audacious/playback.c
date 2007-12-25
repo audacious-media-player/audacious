@@ -311,13 +311,7 @@ playback_stop(void)
         free_vis_data();
         ip_data.paused = FALSE;
 
-        if (playback->pb_ready_mutex)
-            g_mutex_free(playback->pb_ready_mutex);
-        if (playback->pb_ready_cond)
-            g_cond_free(playback->pb_ready_cond);
-
-        g_free(playback->filename);
-        g_slice_free(InputPlayback, playback);
+        playback_free(playback);
         set_current_input_playback(NULL);
 #ifdef USE_DBUS
         mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
@@ -394,6 +388,27 @@ playback_new(void)
     playback->pass_audio = output_pass_audio;
 
     return playback;
+}
+
+/**
+ * Destroys InputPlayback.
+ *
+ * Playback comes from playback_new() function but there can be also
+ * other sources for allocated playback data (like filename and title)
+ * and this tries to deallocate all that data.
+ */
+void playback_free(InputPlayback *playback)
+{
+    g_free(playback->filename);
+    g_free(playback->title);
+
+    g_mutex_free(playback->pb_ready_mutex);
+    g_cond_free(playback->pb_ready_cond);
+
+    g_mutex_free(playback->pb_change_mutex);
+    g_cond_free(playback->pb_change_cond);
+
+    g_slice_free(InputPlayback, playback);
 }
 
 void
