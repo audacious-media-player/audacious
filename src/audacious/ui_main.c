@@ -254,7 +254,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * (cfg.doublesize + 1));
     }
 
-    mainwin_refresh_visible();
+    mainwin_refresh_hints();
     ui_skinned_set_push_button_data(mainwin_shade, 0, cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18);
 }
 
