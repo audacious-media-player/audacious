@@ -967,6 +967,8 @@ playlist_dir_find_files(const gchar * path,
             if(cfg.use_extension_probing) {
                 if(ext_flag == EXT_TRUE)
                     list = g_list_prepend(list, filename);
+                else // ext_flag == EXT_FALSE => extension isn't known
+                    g_free(filename);
             }
             else
                 list = g_list_prepend(list, filename);
