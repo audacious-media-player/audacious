@@ -193,9 +193,7 @@ GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
 
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_STRING);
-        g_value_set_string(val, result);
-
-        g_free(result);
+        g_value_take_string(val, result);
         return val;
     } else if (type == TUPLE_INT) {
         val = g_new0(GValue, 1);
@@ -206,6 +204,13 @@ GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     return NULL;
 }
 
+static void
+remove_metadata_value(gpointer value)
+{
+    g_value_unset((GValue*)value);
+    g_free((GValue*)value);
+}
+
 GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     GHashTable *md = NULL;
     GValue *value;
@@ -213,7 +218,8 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     if (tuple == NULL)
         return NULL;
 
-    md = g_hash_table_new(g_str_hash, g_str_equal);
+    md = g_hash_table_new_full(g_str_hash, g_str_equal,
+                               NULL, remove_metadata_value);
 
     value = tuple_value_to_gvalue(tuple, "length");
     if (value != NULL) {
@@ -332,7 +338,7 @@ gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
     // Song URI
     value = g_new0(GValue, 1);
     g_value_init(value, G_TYPE_STRING);
-    g_value_set_string(value, playlist_get_filename(active, pos));
+    g_value_take_string(value, playlist_get_filename(active, pos));
 
     g_hash_table_insert(md, "URI", value);
 
@@ -414,16 +420,18 @@ gboolean mpris_emit_track_change(MprisPlayer *obj) {
     metadata = mpris_metadata_from_tuple(tuple);
 
     if (!metadata)
-        metadata = g_hash_table_new(g_str_hash, g_str_equal);
+        metadata = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                         NULL, remove_metadata_value);
 
     // Song URI
     value = g_new0(GValue, 1);
     g_value_init(value, G_TYPE_STRING);
-    g_value_set_string(value, playlist_get_filename(active, pos));
+    g_value_take_string(value, playlist_get_filename(active, pos));
 
     g_hash_table_insert(metadata, "URI", value);
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
+    g_hash_table_destroy(metadata);
     return TRUE;
 }
 
@@ -453,7 +461,7 @@ gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
     // Song URI
     value = g_new0(GValue, 1);
     g_value_init(value, G_TYPE_STRING);
-    g_value_set_string(value, playlist_get_filename(active, pos));
+    g_value_take_string(value, playlist_get_filename(active, pos));
 
     g_hash_table_insert(md, "URI", value);
 
