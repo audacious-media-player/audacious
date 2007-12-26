@@ -388,7 +388,7 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
         return FALSE;
 
     if (!(gpm = pixmap_new_from_file(filename))) {
-        g_warning("loading of %s failed", filename);
+        AUDDBG("loading of %s failed\n", filename);
         g_free(filename);
         return FALSE;
     }
@@ -526,13 +526,13 @@ init_skins(const gchar * path)
 
     if (!bmp_active_skin_load(path)) {
         if (path != NULL)
-            g_message("Unable to load skin (%s), trying default...", path);
+            AUDDBG("Unable to load skin (%s), trying default...\n", path);
         else
-            g_message("Skin not defined: trying default...");
+            AUDDBG("Skin not defined: trying default...\n");
 
         /* can't load configured skin, retry with default */
         if (!bmp_active_skin_load(BMP_DEFAULT_SKIN_PATH)) {
-            g_message("Unable to load default skin (%s)! Giving up.",
+            AUDDBG("Unable to load default skin (%s)! Giving up.\n",
                       BMP_DEFAULT_SKIN_PATH);
             return FALSE;
         }
@@ -1556,7 +1556,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     AUDDBG("Attempt to load archive\n");
 
     if (!(cpath = archive_decompress(path))) {
-        g_message("Unable to extract skin archive (%s)", path);
+        AUDDBG("Unable to extract skin archive (%s)\n", path);
         return FALSE;
     }
 
@@ -1597,7 +1597,7 @@ skin_install_skin(const gchar * path)
     command = g_strdup_printf("cp %s %s",
                               path, bmp_paths[BMP_PATH_USER_SKIN_DIR]);
     if (system(command)) {
-        g_message("Unable to install skin (%s) into user directory (%s)",
+        AUDDBG("Unable to install skin (%s) into user directory (%s)\n",
                   path, bmp_paths[BMP_PATH_USER_SKIN_DIR]);
     }
     g_free(command);
