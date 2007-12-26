@@ -23,7 +23,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-/* #define AUD_DEBUG 1 */
+#define AUD_DEBUG
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
@@ -78,7 +78,7 @@ find_file_func(const gchar * path, const gchar * basename, gpointer data)
     FindFileContext *context = data;
 
     if (strlen(path) > FILENAME_MAX) {
-        g_warning("Ignoring path: name too long (%s)", path);
+        AUDDBG("Ignoring path: name too long (%s)\n", path);
         return TRUE;
     }
 
@@ -302,8 +302,8 @@ archive_decompress(const gchar * filename)
     tmpdir = g_build_filename(g_get_tmp_dir(), "audacious.XXXXXXXX", NULL);
     if (!mkdtemp(tmpdir)) {
         g_free(tmpdir);
-        g_message("Unable to load skin: Failed to create temporary "
-                  "directory: %s", g_strerror(errno));
+        AUDDBG("Unable to load skin: Failed to create temporary "
+                  "directory: %s\n", g_strerror(errno));
         return NULL;
     }
 #else
@@ -316,14 +316,16 @@ archive_decompress(const gchar * filename)
     g_free(escaped_filename);
 
     if (!cmd) {
-        g_message("extraction function is NULL!");
+        AUDDBG("extraction function is NULL!\n");
         g_free(tmpdir);
         return NULL;
     }
 
-    if(system(cmd) == -1)
+    AUDDBG("Attempt to execute \"%s\"\n", cmd);
+
+    if(system(cmd) != 0)
     {
-        g_message("could not execute cmd %s",cmd);
+        AUDDBG("could not execute cmd %s\n",cmd);
         g_free(cmd);
         return NULL;
     }
