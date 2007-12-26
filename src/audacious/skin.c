@@ -1424,8 +1424,11 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     guint i;
     gchar *filename;
     INIFile *inifile;
+    
+    if(!skin) return FALSE;
+    if(!path) return FALSE;
 
-    AUDDBG("\n");
+    AUDDBG("Loading pixmaps in %s\n", path);
 
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
         skin_load_pixmap_id(skin, i, path);
@@ -1442,8 +1445,10 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     filename = find_file_recursively(path, "pledit.txt");
     inifile = open_ini_file(filename);
 
-    if (!inifile)
+    if (!inifile) {
+        AUDDBG("Can't load inifile %s\n", filename);
         return FALSE;
+    }
 
     skin->colors[SKIN_PLEDIT_NORMAL] =
         skin_load_color(inifile, "Text", "Normal", "#2499ff");
@@ -1493,11 +1498,12 @@ skin_set_gtk_theme(GtkSettings * settings, Skin * skin)
 static gboolean
 skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
-    GtkSettings *settings;
-    gchar *cpath, *gtkrcpath;
-    gchar *newpath;
+    GtkSettings *settings = NULL;
+    gchar *gtkrcpath;
+    gchar *newpath, *skin_path;
+    int archive = 0;
 
-    AUDDBG("\n");
+    AUDDBG("Attempt to load skin \"%s\"\n", path);
 
     g_return_val_if_fail(skin != NULL, FALSE);
     g_return_val_if_fail(path != NULL, FALSE);
@@ -1506,9 +1512,21 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     if (!g_file_test(path, G_FILE_TEST_IS_REGULAR | G_FILE_TEST_IS_DIR))
         return FALSE;
    
+    if(force) AUDDBG("reloading forced!\n");
     if (!force && skin->path && !strcmp(skin->path, path)) {
         AUDDBG("skin %s already loaded\n", path);
         return FALSE;
+    }
+    
+    if (file_is_archive(path)) {
+        AUDDBG("Attempt to load archive\n");
+        if (!(skin_path = archive_decompress(path))) {
+            AUDDBG("Unable to extract skin archive (%s)\n", path);
+            return FALSE;
+        }
+        archive = 1;
+    } else {
+        skin_path = g_strdup(path);
     }
 
     // skin_free() frees skin->path and variable path can actually be skin->path
@@ -1521,59 +1539,30 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
       
     skin_current_num++;
 
-    settings = gtk_settings_get_default();
-    
-    if (original_gtk_theme != NULL)
-    {
+    /* Parse the hints for this skin. */
+    skin_parse_hints(skin, skin_path);
+
+    if (!skin_load_pixmaps(skin, skin_path)) {
+        if(archive) del_directory(skin_path);
+        g_free(skin_path);
+        AUDDBG("Skin loading failed\n");
+        return FALSE;
+    }
+
+    skin_load_cursor(skin, skin_path);
+
+    /* restore gtk theme if changed by previous skin */
+    if (original_gtk_theme != NULL) {
+        settings = gtk_settings_get_default();
+
         gtk_settings_set_string_property(settings, "gtk-theme-name",
-                                         original_gtk_theme, "audacious");
+                                              original_gtk_theme, "audacious");
         g_free(original_gtk_theme);
         original_gtk_theme = NULL;
     }
 
-
-    if (!file_is_archive(path)) {
-        /* Parse the hints for this skin. */
-        skin_parse_hints(skin, NULL);
-
-        if (!skin_load_pixmaps(skin, path))
-            return FALSE;
-
-        skin_load_cursor(skin, path);
-
 #ifndef _WIN32
-        if (!cfg.disable_inline_gtk) {
-            gtkrcpath = find_path_recursively(skin->path, "gtkrc");
-            if (gtkrcpath != NULL)
-                skin_set_gtk_theme(settings, skin);
-            g_free(gtkrcpath);
-        }
-#endif
-
-        return TRUE;
-    }
-    
-    AUDDBG("Attempt to load archive\n");
-
-    if (!(cpath = archive_decompress(path))) {
-        AUDDBG("Unable to extract skin archive (%s)\n", path);
-        return FALSE;
-    }
-
-    /* Parse the hints for this skin. */
-    skin_parse_hints(skin, cpath);
-
-    if (!skin_load_pixmaps(skin, cpath))
-    {
-        del_directory(cpath);
-        g_free(cpath);
-        return FALSE;
-    }
-
-    skin_load_cursor(skin, cpath);
-
-#ifndef _WIN32
-    if (!cfg.disable_inline_gtk) {
+    if (!cfg.disable_inline_gtk && !archive) {
         gtkrcpath = find_path_recursively(skin->path, "gtkrc");
         if (gtkrcpath != NULL)
             skin_set_gtk_theme(settings, skin);
@@ -1581,8 +1570,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     }
 #endif
 
-    del_directory(cpath);
-    g_free(cpath);
+    if(archive) del_directory(skin_path);
+    g_free(skin_path);
 
     return TRUE;
 }
