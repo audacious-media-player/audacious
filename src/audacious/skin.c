@@ -22,7 +22,8 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#define AUD_DEBUG
+
+/*#define AUD_DEBUG*/
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -1498,7 +1499,7 @@ skin_set_gtk_theme(GtkSettings * settings, Skin * skin)
 static gboolean
 skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
-    GtkSettings *settings = NULL;
+    GtkSettings *settings;
     gchar *gtkrcpath;
     gchar *newpath, *skin_path;
     int archive = 0;
@@ -1552,9 +1553,9 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     skin_load_cursor(skin, skin_path);
 
     /* restore gtk theme if changed by previous skin */
-    if (original_gtk_theme != NULL) {
-        settings = gtk_settings_get_default();
+    settings = gtk_settings_get_default();
 
+    if (original_gtk_theme != NULL) {
         gtk_settings_set_string_property(settings, "gtk-theme-name",
                                               original_gtk_theme, "audacious");
         g_free(original_gtk_theme);
@@ -1649,6 +1650,7 @@ gboolean
 skin_reload_forced(void) 
 {
    gboolean error;
+   AUDDBG("\n");
 
    skin_lock(bmp_active_skin);
    error = skin_load_nolock(bmp_active_skin, bmp_active_skin->path, TRUE);
@@ -1660,6 +1662,7 @@ skin_reload_forced(void)
 void
 skin_reload(Skin * skin)
 {
+    AUDDBG("\n");
     g_return_if_fail(skin != NULL);
     skin_load_nolock(skin, skin->path, TRUE);
 }
