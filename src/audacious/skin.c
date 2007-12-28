@@ -1574,6 +1574,9 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     if(archive) del_directory(skin_path);
     g_free(skin_path);
 
+    gtk_widget_shape_combine_mask(mainwin, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
+    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+
     return TRUE;
 }
 

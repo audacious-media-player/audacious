@@ -107,6 +107,18 @@ ui_skinned_window_configure(GtkWidget *widget,
     return FALSE;
 }
 
+static void
+ui_skinned_window_map(GtkWidget *widget)
+{
+    (* GTK_WIDGET_CLASS (parent)->map) (widget);
+
+    SkinnedWindow *window = SKINNED_WINDOW(widget);
+    if (window->type == WINDOW_MAIN)
+        gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
+    else if (window->type == WINDOW_EQ)
+        gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+}
+
 static gboolean
 ui_skinned_window_motion_notify_event(GtkWidget *widget,
                                       GdkEventMotion *event)
@@ -147,12 +159,10 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
         case WINDOW_MAIN:
             width = bmp_active_skin->properties.mainwin_width;
             height = bmp_active_skin->properties.mainwin_height;
-            gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
             break;
         case WINDOW_EQ:
             width = 275;
             height = 116;
-            gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
             break;
         case WINDOW_PLAYLIST:
             width = playlistwin_get_width();
@@ -225,6 +235,7 @@ ui_skinned_window_class_init(SkinnedWindowClass *klass)
     widget_class->expose_event = ui_skinned_window_expose;
     widget_class->focus_in_event = ui_skinned_window_focus_in;
     widget_class->focus_out_event = ui_skinned_window_focus_out;
+    widget_class->map = ui_skinned_window_map;
 }
 
 void
