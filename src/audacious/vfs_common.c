@@ -142,22 +142,57 @@ void
 vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size)
 {
     VFSFile *fd;
-
+    size_t filled_size = 0;
+    size_t buf_size = 4096;
+    gchar *ptr;
+    
     fd = vfs_fopen(filename, "rb");
 
     if (fd == NULL)
         return;
 
-    vfs_fseek(fd, 0, SEEK_END);
-    *size = vfs_ftell(fd);
+    if ( vfs_fseek(fd, 0, SEEK_END) == 0) { // seeking supported by VFS backend
+	    *size = vfs_ftell(fd);
 
-    *buf = g_new(gchar, *size);
+	    *buf = g_new(gchar, *size);
+    
+	    if (*buf == NULL)
+    		goto close_handle;
 
+	    vfs_fseek(fd, 0, SEEK_SET);
+	    vfs_fread(*buf, 1, *size, fd);
+
+	    goto close_handle;
+    }
+
+
+    *buf = g_new(gchar, buf_size);
+    
     if (*buf == NULL)
-        return;
+    	goto close_handle;
 
-    vfs_fseek(fd, 0, SEEK_SET);
-    vfs_fread(*buf, 1, *size, fd);
+    ptr=*buf;
+    while ( 1 ) {
+	    size_t read_size = vfs_fread(ptr, 1, buf_size - filled_size, fd);
+	    if ( read_size == 0 ) break;
+	    
+	    filled_size+=read_size;
+	    ptr+=read_size;
+	    
+	    if ( filled_size == buf_size ) {
+		    buf_size+=4096;
+		    
+		    *buf = g_realloc(*buf, buf_size);
+		    
+		    if ( *buf == NULL )
+			goto close_handle;
+			
+		    ptr=*buf + filled_size;
+	    }
+    }
 
-    vfs_fclose(fd);
+    *size = filled_size;
+    
+    close_handle:
+    vfs_fclose(fd);    
 }
