@@ -422,10 +422,9 @@ mainwin_vis_cb(GtkWidget *widget, GdkEventButton *event)
 
         mainwin_vis_set_type(cfg.vis_type);
     } else if (event->button == 3) {
-        gint x, y;
-        gdk_window_get_pointer(NULL, &x, &y, NULL);
         ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu),
-                                   x, y, 3, event->time);
+                                   event->x_root, event->y_root, 3,
+                                   event->time);
     }
     return TRUE;
 }
