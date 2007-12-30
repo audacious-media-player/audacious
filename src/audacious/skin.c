@@ -640,6 +640,8 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         return;
 
     inifile = open_ini_file(filename);
+    if (!inifile)
+        return;
 
     tmp = read_ini_string(inifile, "skin", "mainwinOthertext");
 
@@ -1432,7 +1434,8 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     AUDDBG("Loading pixmaps in %s\n", path);
 
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
-        skin_load_pixmap_id(skin, i, path);
+        if (!skin_load_pixmap_id(skin, i, path))
+            return FALSE;
 
     text_pm = skin->pixmaps[SKIN_TEXT].pixmap;
 
@@ -1446,11 +1449,6 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     filename = find_file_recursively(path, "pledit.txt");
     inifile = open_ini_file(filename);
 
-    if (!inifile) {
-        AUDDBG("Can't load inifile %s\n", filename);
-        return FALSE;
-    }
-
     skin->colors[SKIN_PLEDIT_NORMAL] =
         skin_load_color(inifile, "Text", "Normal", "#2499ff");
     skin->colors[SKIN_PLEDIT_CURRENT] =
@@ -1460,9 +1458,11 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     skin->colors[SKIN_PLEDIT_SELECTEDBG] =
         skin_load_color(inifile, "Text", "SelectedBG", "#0a124a");
 
+    if (inifile)
+        close_ini_file(inifile);
+
     if (filename)
         g_free(filename);
-    close_ini_file(inifile);
 
     skin_mask_create(skin, path, SKIN_MASK_MAIN, mainwin->window);
     skin_mask_create(skin, path, SKIN_MASK_MAIN_SHADE, mainwin->window);
