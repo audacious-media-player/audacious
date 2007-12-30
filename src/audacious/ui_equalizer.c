@@ -178,13 +178,6 @@ equalizerwin_shade_toggle(void)
     equalizerwin_set_shade(!cfg.equalizer_shaded);
 }
 
-static void
-equalizerwin_raise(void)
-{
-    if (cfg.equalizer_visible)
-        gtk_window_present(GTK_WINDOW(equalizerwin));
-}
-
 void
 equalizerwin_eq_changed(void)
 {
@@ -232,7 +225,6 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
 {
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         (cfg.easy_move || cfg.equalizer_shaded || event->y < 14)) {
-         equalizerwin_raise();
          dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
                          FALSE);
     }

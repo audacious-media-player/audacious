@@ -863,7 +863,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         (cfg.easy_move || event->y < 14)) {
-        gtk_window_present(GTK_WINDOW(mainwin));
         dock_move_press(dock_window_list, GTK_WINDOW(mainwin), event,
                         TRUE);
     }
