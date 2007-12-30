@@ -1975,16 +1975,13 @@ mainwin_mr_change(GtkWidget *widget, MenuRowItem i)
 }
 
 static void
-mainwin_mr_release(GtkWidget *widget, MenuRowItem i)
+mainwin_mr_release(GtkWidget *widget, MenuRowItem i, GdkEventButton *event)
 {
-    GdkModifierType modmask;
-    gint x, y;
-
     switch (i) {
     case MENUROW_OPTIONS:
-        gdk_window_get_pointer(NULL, &x, &y, &modmask);
-        ui_manager_popup_menu_show(GTK_MENU(mainwin_view_menu), x, y, 1,
-                                GDK_CURRENT_TIME);
+        ui_manager_popup_menu_show(GTK_MENU(mainwin_view_menu),
+                                   event->x_root, event->y_root, 1,
+                                   event->time);
         break;
     case MENUROW_ALWAYS:
         gtk_toggle_action_set_active(
@@ -2002,8 +1999,9 @@ mainwin_mr_release(GtkWidget *widget, MenuRowItem i)
           UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected );
         break;
     case MENUROW_VISUALIZATION:
-        gdk_window_get_pointer(NULL, &x, &y, &modmask);
-        ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu), x, y, 1, GDK_CURRENT_TIME);
+        ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu),
+                                   event->x_root, event->y_root, 1,
+                                   event->time);
         break;
     case MENUROW_NONE:
         break;
@@ -2296,10 +2294,8 @@ static void mainwin_info_double_clicked_cb(void) {
      playlist_fileinfo_current(playlist_get_active());
 }
 
-static void mainwin_info_right_clicked_cb(void) {
-     gint x, y;
-     gdk_window_get_pointer(NULL, &x, &y, NULL);
-     ui_manager_popup_menu_show(GTK_MENU(mainwin_songname_menu), x, y, 3, GDK_CURRENT_TIME);
+static void mainwin_info_right_clicked_cb(GtkWidget *widget, GdkEventButton *event) {
+     ui_manager_popup_menu_show(GTK_MENU(mainwin_songname_menu), event->x_root, event->y_root, 3, event->time);
 }
 
 static void
@@ -2408,7 +2404,7 @@ mainwin_create_widgets(void)
     ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     ui_skinned_textbox_set_xfont(mainwin_info, !cfg.mainwin_use_bitmapfont, cfg.mainwin_font);
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
-    g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
+    g_signal_connect(mainwin_info, "right-clicked", G_CALLBACK(mainwin_info_right_clicked_cb), NULL);
 
     mainwin_othertext = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 112, 43, 153, 1, SKIN_TEXT);
 

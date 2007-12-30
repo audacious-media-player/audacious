@@ -109,7 +109,7 @@ static void ui_skinned_menurow_class_init(UiSkinnedMenurowClass *klass) {
     menurow_signals[RELEASE] = 
         g_signal_new ("release", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                       G_STRUCT_OFFSET (UiSkinnedMenurowClass, release), NULL, NULL,
-                      gtk_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+                      g_cclosure_marshal_VOID__UINT_POINTER, G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_POINTER);
 
 }
 
@@ -311,7 +311,7 @@ static gboolean ui_skinned_menurow_button_release(GtkWidget *widget, GdkEventBut
             menurow->doublesize_selected = !menurow->doublesize_selected;
 
         if ((int)(menurow->selected) != -1)
-            g_signal_emit_by_name(widget, "release", menurow->selected);
+            g_signal_emit_by_name(widget, "release", menurow->selected, event);
 
         menurow->selected = MENUROW_NONE;
         gtk_widget_queue_draw(widget);

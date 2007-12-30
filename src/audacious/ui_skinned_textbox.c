@@ -145,7 +145,7 @@ static void ui_skinned_textbox_class_init(UiSkinnedTextboxClass *klass) {
     textbox_signals[RIGHT_CLICKED] = 
         g_signal_new ("right-clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                       G_STRUCT_OFFSET (UiSkinnedTextboxClass, right_clicked), NULL, NULL,
-                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+                      gtk_marshal_VOID__POINTER, G_TYPE_NONE, 1, G_TYPE_POINTER);
 
     textbox_signals[DOUBLED] = 
         g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -365,7 +365,7 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
                 g_signal_emit(widget, textbox_signals[CLICKED], 0);
 
         } else if (event->button == 3) {
-            g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
+            g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0, event);
         } else
             priv->is_dragging = FALSE;
     } else if (event->type == GDK_2BUTTON_PRESS) {
