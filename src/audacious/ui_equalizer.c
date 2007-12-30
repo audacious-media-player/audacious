@@ -160,6 +160,8 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_hide(equalizerwin_volume);
         gtk_widget_hide(equalizerwin_balance);
     }
+
+    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 }
 
 static void

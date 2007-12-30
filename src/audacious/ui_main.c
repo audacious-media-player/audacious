@@ -256,6 +256,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
     mainwin_refresh_hints();
     ui_skinned_set_push_button_data(mainwin_shade, 0, cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18);
+    gtk_widget_shape_combine_mask(mainwin, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
 }
 
 static void
