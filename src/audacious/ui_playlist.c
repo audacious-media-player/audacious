@@ -679,13 +679,13 @@ playlistwin_motion(GtkWidget * widget,
         {
             playlistwin_resize(event->x + playlistwin_resize_x,
                                event->y + playlistwin_resize_y);
+            gdk_window_resize(playlistwin->window,
+                              cfg.playlist_width, playlistwin_get_height());
+            gdk_flush();
         }
-        gdk_window_resize(playlistwin->window,
-                          cfg.playlist_width, cfg.playlist_height);
     }
     else if (dock_is_moving(GTK_WINDOW(playlistwin)))
         dock_move_motion(GTK_WINDOW(playlistwin), event);
-    gdk_flush();
 
     while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
 }
