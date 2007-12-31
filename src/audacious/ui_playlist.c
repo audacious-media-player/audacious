@@ -108,11 +108,9 @@ playlistwin_get_width(void)
 gint
 playlistwin_get_height_unshaded(void)
 {
-    gint height;
     cfg.playlist_height /= PLAYLISTWIN_HEIGHT_SNAP;
     cfg.playlist_height *= PLAYLISTWIN_HEIGHT_SNAP;
-    height = cfg.playlist_height;
-    return height;
+    return cfg.playlist_height;
 }
 
 gint
@@ -128,16 +126,6 @@ playlistwin_get_height(void)
         return playlistwin_get_height_shaded();
     else
         return playlistwin_get_height_unshaded();
-}
-
-void
-playlistwin_get_size(gint * width, gint * height)
-{
-    if (width)
-        *width = playlistwin_get_width();
-
-    if (height)
-        *height = playlistwin_get_height();
 }
 
 static void
