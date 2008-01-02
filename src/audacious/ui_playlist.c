@@ -108,11 +108,9 @@ playlistwin_get_width(void)
 gint
 playlistwin_get_height_unshaded(void)
 {
-    gint height;
     cfg.playlist_height /= PLAYLISTWIN_HEIGHT_SNAP;
     cfg.playlist_height *= PLAYLISTWIN_HEIGHT_SNAP;
-    height = cfg.playlist_height;
-    return height;
+    return cfg.playlist_height;
 }
 
 gint
@@ -128,16 +126,6 @@ playlistwin_get_height(void)
         return playlistwin_get_height_shaded();
     else
         return playlistwin_get_height_unshaded();
-}
-
-void
-playlistwin_get_size(gint * width, gint * height)
-{
-    if (width)
-        *width = playlistwin_get_width();
-
-    if (height)
-        *height = playlistwin_get_height();
 }
 
 static void
@@ -679,13 +667,13 @@ playlistwin_motion(GtkWidget * widget,
         {
             playlistwin_resize(event->x + playlistwin_resize_x,
                                event->y + playlistwin_resize_y);
+            gdk_window_resize(playlistwin->window,
+                              cfg.playlist_width, playlistwin_get_height());
+            gdk_flush();
         }
-        gdk_window_resize(playlistwin->window,
-                          cfg.playlist_width, cfg.playlist_height);
     }
     else if (dock_is_moving(GTK_WINDOW(playlistwin)))
         dock_move_motion(GTK_WINDOW(playlistwin), event);
-    gdk_flush();
 
     while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
 }
