@@ -1821,28 +1821,6 @@ create_appearence_category(void)
     GtkWidget *alignment95;
     GtkWidget *skin_view_scrolled_window;
     GtkWidget *appearance_label;
-    GtkWidget *mouse_page_vbox;
-    GtkWidget *vbox20;
-    GtkWidget *mouse_label;
-    GtkWidget *playlist_page_vbox;
-    GtkWidget *vbox5;
-    GtkWidget *alignment55;
-    GtkWidget *label60;
-    GtkWidget *alignment56;
-    GtkWidget *table6;
-    GtkWidget *titlestring_help_button;
-    GtkWidget *image1;
-    GtkWidget *titlestring_cbox;
-    GtkWidget *label62;
-    GtkWidget *label61;
-    GtkWidget *alignment85;
-    GtkWidget *label84;
-    GtkWidget *alignment86;
-    GtkWidget *hbox9;
-    GtkWidget *vbox34;
-    GtkWidget *checkbutton10;
-    GtkWidget *image8;
-    GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
 
     appearance_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), appearance_page_vbox);
@@ -1903,6 +1881,21 @@ create_appearence_category(void)
     appearance_label = gtk_label_new (_("Appearance"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 1), appearance_label);
 
+
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label103), category_notebook);
+
+    g_signal_connect(G_OBJECT(colorspace_button), "clicked",
+                     G_CALLBACK(on_colorize_button_clicked),
+                     NULL);
+}
+
+static void
+create_mouse_category(void)
+{
+    GtkWidget *mouse_page_vbox;
+    GtkWidget *vbox20;
+    GtkWidget *mouse_label;
+
     mouse_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), mouse_page_vbox);
 
@@ -1913,6 +1906,32 @@ create_appearence_category(void)
 
     mouse_label = gtk_label_new (_("Mouse"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 2), mouse_label);
+}
+
+static void
+create_playlist_category(void)
+{
+    GtkWidget *playlist_page_vbox;
+    GtkWidget *vbox5;
+    GtkWidget *alignment55;
+    GtkWidget *label60;
+    GtkWidget *alignment56;
+    GtkWidget *table6;
+    GtkWidget *titlestring_help_button;
+    GtkWidget *image1;
+    GtkWidget *titlestring_cbox;
+    GtkWidget *label62;
+    GtkWidget *label61;
+    GtkWidget *alignment85;
+    GtkWidget *label84;
+    GtkWidget *alignment86;
+    GtkWidget *hbox9;
+    GtkWidget *vbox34;
+    GtkWidget *checkbutton10;
+    GtkWidget *image8;
+    GtkWidget *playlist_label;
+    GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
+
 
     playlist_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), playlist_page_vbox);
@@ -2015,13 +2034,10 @@ create_appearence_category(void)
     image8 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_BUTTON);
     gtk_container_add (GTK_CONTAINER (filepopup_for_tuple_settings_button), image8);
 
+    playlist_label = gtk_label_new (_("Playlist"));
+    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 3), playlist_label);
 
 
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label103), category_notebook);
-
-    g_signal_connect(G_OBJECT(colorspace_button), "clicked",
-                     G_CALLBACK(on_colorize_button_clicked),
-                     NULL);
 
     g_signal_connect(G_OBJECT(checkbutton10), "toggled",
                      G_CALLBACK(on_show_filepopup_for_tuple_toggled),
@@ -2044,6 +2060,7 @@ create_appearence_category(void)
                      G_CALLBACK(on_titlestring_help_button_clicked),
                      titlestring_tag_menu);
 }
+
 
 static void
 create_audio_category(void)
@@ -2361,14 +2378,186 @@ create_audio_category(void)
 
 }
 
-void
-create_prefs_window(void)
+static void
+create_connectivity_category(void)
 {
-    gchar *aud_version_string;
+    GtkWidget *connectivity_page_vbox;
+    GtkWidget *vbox29;
+    GtkWidget *alignment63;
+    GtkWidget *connectivity_page_label;
+    GtkWidget *alignment68;
+    GtkWidget *vbox30;
+    GtkWidget *alignment65;
+    GtkWidget *proxy_use;
+    GtkWidget *table8;
+    GtkWidget *proxy_port;
+    GtkWidget *proxy_host;
+    GtkWidget *label69;
+    GtkWidget *label68;
+    GtkWidget *alignment67;
+    GtkWidget *proxy_auth;
+    GtkWidget *table9;
+    GtkWidget *proxy_pass;
+    GtkWidget *proxy_user;
+    GtkWidget *label71;
+    GtkWidget *label70;
+    GtkWidget *alignment72;
+    GtkWidget *hbox6;
+    GtkWidget *image4;
+    GtkWidget *label75;
+    GtkWidget *label95;
 
-    GtkWidget *vbox;
-    GtkWidget *hbox1;
-    GtkWidget *scrolledwindow6;
+    connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (category_notebook), connectivity_page_vbox);
+
+    vbox29 = gtk_vbox_new (FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (connectivity_page_vbox), vbox29, TRUE, TRUE, 0);
+
+    alignment63 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (vbox29), alignment63, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment63), 0, 12, 0, 0);
+
+    connectivity_page_label = gtk_label_new (_("<b>Proxy Configuration</b>"));
+    gtk_container_add (GTK_CONTAINER (alignment63), connectivity_page_label);
+    gtk_label_set_use_markup (GTK_LABEL (connectivity_page_label), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (connectivity_page_label), 0, 0.5);
+
+    alignment68 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (vbox29), alignment68, TRUE, TRUE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment68), 0, 0, 12, 0);
+
+    vbox30 = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (alignment68), vbox30);
+
+    alignment65 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (vbox30), alignment65, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment65), 0, 12, 0, 0);
+
+    proxy_use = gtk_check_button_new_with_mnemonic (_("Enable proxy usage"));
+    gtk_container_add (GTK_CONTAINER (alignment65), proxy_use);
+
+    table8 = gtk_table_new (2, 2, FALSE);
+    gtk_box_pack_start (GTK_BOX (vbox30), table8, FALSE, FALSE, 0);
+    gtk_table_set_row_spacings (GTK_TABLE (table8), 6);
+    gtk_table_set_col_spacings (GTK_TABLE (table8), 6);
+
+    proxy_port = gtk_entry_new ();
+    gtk_table_attach (GTK_TABLE (table8), proxy_port, 1, 2, 1, 2,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+
+    proxy_host = gtk_entry_new ();
+    gtk_table_attach (GTK_TABLE (table8), proxy_host, 1, 2, 0, 1,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+
+    label69 = gtk_label_new (_("Proxy port:"));
+    gtk_table_attach (GTK_TABLE (table8), label69, 0, 1, 1, 2,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label69), 0, 0.5);
+
+    label68 = gtk_label_new (_("Proxy hostname:"));
+    gtk_table_attach (GTK_TABLE (table8), label68, 0, 1, 0, 1,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label68), 0, 0);
+
+    alignment67 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (vbox30), alignment67, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment67), 12, 12, 0, 0);
+
+    proxy_auth = gtk_check_button_new_with_mnemonic (_("Use authentication with proxy"));
+    gtk_container_add (GTK_CONTAINER (alignment67), proxy_auth);
+
+    table9 = gtk_table_new (2, 2, FALSE);
+    gtk_box_pack_start (GTK_BOX (vbox30), table9, FALSE, FALSE, 0);
+    gtk_table_set_row_spacings (GTK_TABLE (table9), 6);
+    gtk_table_set_col_spacings (GTK_TABLE (table9), 6);
+
+    proxy_pass = gtk_entry_new ();
+    gtk_table_attach (GTK_TABLE (table9), proxy_pass, 1, 2, 1, 2,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_entry_set_visibility (GTK_ENTRY (proxy_pass), FALSE);
+
+    proxy_user = gtk_entry_new ();
+    gtk_table_attach (GTK_TABLE (table9), proxy_user, 1, 2, 0, 1,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+
+    label71 = gtk_label_new (_("Proxy password:"));
+    gtk_table_attach (GTK_TABLE (table9), label71, 0, 1, 1, 2,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label71), 0, 0.5);
+
+    label70 = gtk_label_new (_("Proxy username:"));
+    gtk_table_attach (GTK_TABLE (table9), label70, 0, 1, 0, 1,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label70), 0, 0);
+
+    alignment72 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (vbox30), alignment72, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment72), 6, 0, 0, 0);
+
+    hbox6 = gtk_hbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (alignment72), hbox6);
+
+    image4 = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_BUTTON);
+    gtk_box_pack_start (GTK_BOX (hbox6), image4, FALSE, FALSE, 0);
+    gtk_misc_set_padding (GTK_MISC (image4), 3, 0);
+
+    label75 = gtk_label_new (_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"));
+    gtk_box_pack_start (GTK_BOX (hbox6), label75, FALSE, FALSE, 0);
+    gtk_label_set_use_markup (GTK_LABEL (label75), TRUE);
+
+    label95 = gtk_label_new ("");
+    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 5), label95);
+
+
+    g_signal_connect(G_OBJECT(proxy_use), "toggled",
+                     G_CALLBACK(on_proxy_button_toggled),
+                     "use_proxy");
+    g_signal_connect(G_OBJECT(proxy_use), "realize",
+                     G_CALLBACK(on_proxy_button_realize),
+                     "use_proxy");
+    g_signal_connect(G_OBJECT(proxy_port), "changed",
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_port");
+    g_signal_connect(G_OBJECT(proxy_port), "realize",
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_port");
+    g_signal_connect(G_OBJECT(proxy_host), "changed",
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_host");
+    g_signal_connect(G_OBJECT(proxy_host), "realize",
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_host");
+    g_signal_connect(G_OBJECT(proxy_auth), "toggled",
+                     G_CALLBACK(on_proxy_button_toggled),
+                     "proxy_use_auth");
+    g_signal_connect(G_OBJECT(proxy_auth), "realize",
+                     G_CALLBACK(on_proxy_button_realize),
+                     "proxy_use_auth");
+    g_signal_connect(G_OBJECT(proxy_pass), "changed",
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_pass");
+    g_signal_connect(G_OBJECT(proxy_pass), "realize",
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_pass");
+    g_signal_connect(G_OBJECT(proxy_user), "changed",
+                     G_CALLBACK(on_proxy_entry_changed),
+                     "proxy_user");
+    g_signal_connect(G_OBJECT(proxy_user), "realize",
+                     G_CALLBACK(on_proxy_entry_realize),
+                     "proxy_user");
+}
+
+static void
+create_plugin_category(void)
+{
     GtkWidget *plugin_page_vbox;
     GtkWidget *plugin_notebook;
     GtkWidget *plugin_input_vbox;
@@ -2408,77 +2597,6 @@ create_prefs_window(void)
     GtkWidget *effect_plugin_info;
     GtkWidget *effects_label;
     GtkWidget *plugin_label;
-    GtkWidget *playlist_label;
-    GtkWidget *connectivity_page_vbox;
-    GtkWidget *vbox29;
-    GtkWidget *alignment63;
-    GtkWidget *connectivity_page_label;
-    GtkWidget *alignment68;
-    GtkWidget *vbox30;
-    GtkWidget *alignment65;
-    GtkWidget *proxy_use;
-    GtkWidget *table8;
-    GtkWidget *proxy_port;
-    GtkWidget *proxy_host;
-    GtkWidget *label69;
-    GtkWidget *label68;
-    GtkWidget *alignment67;
-    GtkWidget *proxy_auth;
-    GtkWidget *table9;
-    GtkWidget *proxy_pass;
-    GtkWidget *proxy_user;
-    GtkWidget *label71;
-    GtkWidget *label70;
-    GtkWidget *alignment72;
-    GtkWidget *hbox6;
-    GtkWidget *image4;
-    GtkWidget *label75;
-    GtkWidget *label95;
-    GtkWidget *hseparator1;
-    GtkWidget *hbox4;
-    GtkWidget *audversionlabel;
-    GtkWidget *prefswin_button_box;
-    GtkWidget *reload_plugins;
-    GtkWidget *alignment93;
-    GtkWidget *hbox11;
-    GtkWidget *image10;
-    GtkWidget *label102;
-    GtkWidget *close;
-    GtkWidget *empty_notebook_page;
-    GtkAccelGroup *accel_group;
-
-    tooltips = gtk_tooltips_new ();
-
-    accel_group = gtk_accel_group_new ();
-
-    prefswin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_container_set_border_width (GTK_CONTAINER (prefswin), 12);
-    gtk_window_set_title (GTK_WINDOW (prefswin), _("Audacious Preferences"));
-    gtk_window_set_position (GTK_WINDOW (prefswin), GTK_WIN_POS_CENTER);
-    gtk_window_set_default_size (GTK_WINDOW (prefswin), 680, 400);
-
-    vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (prefswin), vbox);
-
-    hbox1 = gtk_hbox_new (FALSE, 8);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
-
-    scrolledwindow6 = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow6, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_SHADOW_IN);
-
-    category_treeview = gtk_tree_view_new ();
-    gtk_container_add (GTK_CONTAINER (scrolledwindow6), category_treeview);
-    gtk_widget_set_size_request (category_treeview, 172, -1);
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (category_treeview), FALSE);
-
-    category_notebook = gtk_notebook_new ();
-    gtk_box_pack_start (GTK_BOX (hbox1), category_notebook, TRUE, TRUE, 0);
-    GTK_WIDGET_UNSET_FLAGS (category_notebook, GTK_CAN_FOCUS);
-    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (category_notebook), FALSE);
-    gtk_notebook_set_show_border (GTK_NOTEBOOK (category_notebook), FALSE);
-    gtk_notebook_set_scrollable (GTK_NOTEBOOK (category_notebook), TRUE);
 
     plugin_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), plugin_page_vbox);
@@ -2660,182 +2778,13 @@ create_prefs_window(void)
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 0), plugin_label);
 
 
-
-    create_appearence_category();
-
-
-
-    playlist_label = gtk_label_new (_("Playlist"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 3), playlist_label);
-
-    connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), connectivity_page_vbox);
-
-    vbox29 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (connectivity_page_vbox), vbox29, TRUE, TRUE, 0);
-
-    alignment63 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox29), alignment63, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment63), 0, 12, 0, 0);
-
-    connectivity_page_label = gtk_label_new (_("<b>Proxy Configuration</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment63), connectivity_page_label);
-    gtk_label_set_use_markup (GTK_LABEL (connectivity_page_label), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (connectivity_page_label), 0, 0.5);
-
-    alignment68 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox29), alignment68, TRUE, TRUE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment68), 0, 0, 12, 0);
-
-    vbox30 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment68), vbox30);
-
-    alignment65 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox30), alignment65, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment65), 0, 12, 0, 0);
-
-    proxy_use = gtk_check_button_new_with_mnemonic (_("Enable proxy usage"));
-    gtk_container_add (GTK_CONTAINER (alignment65), proxy_use);
-
-    table8 = gtk_table_new (2, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox30), table8, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table8), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table8), 6);
-
-    proxy_port = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table8), proxy_port, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    proxy_host = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table8), proxy_host, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label69 = gtk_label_new (_("Proxy port:"));
-    gtk_table_attach (GTK_TABLE (table8), label69, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label69), 0, 0.5);
-
-    label68 = gtk_label_new (_("Proxy hostname:"));
-    gtk_table_attach (GTK_TABLE (table8), label68, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label68), 0, 0);
-
-    alignment67 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox30), alignment67, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment67), 12, 12, 0, 0);
-
-    proxy_auth = gtk_check_button_new_with_mnemonic (_("Use authentication with proxy"));
-    gtk_container_add (GTK_CONTAINER (alignment67), proxy_auth);
-
-    table9 = gtk_table_new (2, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox30), table9, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table9), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table9), 6);
-
-    proxy_pass = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table9), proxy_pass, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_entry_set_visibility (GTK_ENTRY (proxy_pass), FALSE);
-
-    proxy_user = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table9), proxy_user, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label71 = gtk_label_new (_("Proxy password:"));
-    gtk_table_attach (GTK_TABLE (table9), label71, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label71), 0, 0.5);
-
-    label70 = gtk_label_new (_("Proxy username:"));
-    gtk_table_attach (GTK_TABLE (table9), label70, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label70), 0, 0);
-
-    alignment72 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox30), alignment72, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment72), 6, 0, 0, 0);
-
-    hbox6 = gtk_hbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment72), hbox6);
-
-    image4 = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox6), image4, FALSE, FALSE, 0);
-    gtk_misc_set_padding (GTK_MISC (image4), 3, 0);
-
-    label75 = gtk_label_new (_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"));
-    gtk_box_pack_start (GTK_BOX (hbox6), label75, FALSE, FALSE, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label75), TRUE);
-
-    label95 = gtk_label_new ("");
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 5), label95);
-
-
-
-    create_audio_category();
-
-
-
-    empty_notebook_page = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
-
-    hseparator1 = gtk_hseparator_new ();
-    gtk_box_pack_start (GTK_BOX (vbox), hseparator1, FALSE, FALSE, 6);
-
-    hbox4 = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox4, FALSE, FALSE, 0);
-
-    audversionlabel = gtk_label_new ("");
-    gtk_box_pack_start (GTK_BOX (hbox4), audversionlabel, FALSE, FALSE, 0);
-    gtk_label_set_use_markup (GTK_LABEL (audversionlabel), TRUE);
-
-    prefswin_button_box = gtk_hbutton_box_new ();
-    gtk_box_pack_start (GTK_BOX (hbox4), prefswin_button_box, TRUE, TRUE, 0);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (prefswin_button_box), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing (GTK_BOX (prefswin_button_box), 6);
-
-    reload_plugins = gtk_button_new ();
-    gtk_container_add (GTK_CONTAINER (prefswin_button_box), reload_plugins);
-    GTK_WIDGET_SET_FLAGS (reload_plugins, GTK_CAN_DEFAULT);
-
-    alignment93 = gtk_alignment_new (0.5, 0.5, 0, 0);
-    gtk_container_add (GTK_CONTAINER (reload_plugins), alignment93);
-
-    hbox11 = gtk_hbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (alignment93), hbox11);
-
-    image10 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
-
-    label102 = gtk_label_new_with_mnemonic (_("Reload Plugins"));
-    gtk_box_pack_start (GTK_BOX (hbox11), label102, FALSE, FALSE, 0);
-
-    close = gtk_button_new_from_stock ("gtk-close");
-    gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
-    GTK_WIDGET_SET_FLAGS (close, GTK_CAN_DEFAULT);
-    gtk_widget_add_accelerator (close, "clicked", accel_group,
-                                GDK_Escape, (GdkModifierType) 0,
-                                GTK_ACCEL_VISIBLE);
-
-
     gtk_label_set_mnemonic_widget (GTK_LABEL (input_plugin_list_label), category_notebook);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label11), category_notebook);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label53), category_notebook);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label64), category_notebook);
 
-    gtk_window_add_accel_group (GTK_WINDOW (prefswin), accel_group);
 
-    /* connect signals */
-    g_signal_connect(G_OBJECT(prefswin), "delete_event",
-                     G_CALLBACK(gtk_widget_hide_on_delete),
-                     NULL);
+
     g_signal_connect_after(G_OBJECT(input_plugin_view), "realize",
                            G_CALLBACK(on_input_plugin_view_realize),
                            NULL);
@@ -2848,68 +2797,8 @@ create_prefs_window(void)
     g_signal_connect_after(G_OBJECT(effect_plugin_view), "realize",
                            G_CALLBACK(on_effect_plugin_view_realize),
                            NULL);
-    g_signal_connect_swapped(G_OBJECT(skin_refresh_button), "clicked",
-                             G_CALLBACK(on_skin_refresh_button_clicked),
-                             prefswin);
-    g_signal_connect_after(G_OBJECT(skin_view), "realize",
-                           G_CALLBACK(on_skin_view_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(titlestring_entry), "changed",
-                     G_CALLBACK(on_titlestring_entry_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(titlestring_entry), "realize",
-                           G_CALLBACK(on_titlestring_entry_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
-                     G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
-                     NULL);
-    g_signal_connect(G_OBJECT(proxy_use), "toggled",
-                     G_CALLBACK(on_proxy_button_toggled),
-                     "use_proxy");
-    g_signal_connect(G_OBJECT(proxy_use), "realize",
-                     G_CALLBACK(on_proxy_button_realize),
-                     "use_proxy");
-    g_signal_connect(G_OBJECT(proxy_port), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_port");
-    g_signal_connect(G_OBJECT(proxy_port), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_port");
-    g_signal_connect(G_OBJECT(proxy_host), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_host");
-    g_signal_connect(G_OBJECT(proxy_host), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_host");
-    g_signal_connect(G_OBJECT(proxy_auth), "toggled",
-                     G_CALLBACK(on_proxy_button_toggled),
-                     "proxy_use_auth");
-    g_signal_connect(G_OBJECT(proxy_auth), "realize",
-                     G_CALLBACK(on_proxy_button_realize),
-                     "proxy_use_auth");
-    g_signal_connect(G_OBJECT(proxy_pass), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_pass");
-    g_signal_connect(G_OBJECT(proxy_pass), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_pass");
-    g_signal_connect(G_OBJECT(proxy_user), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_user");
-    g_signal_connect(G_OBJECT(proxy_user), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_user");
-    g_signal_connect(G_OBJECT(reload_plugins), "clicked",
-                     G_CALLBACK(on_reload_plugins_clicked),
-                     NULL);
-    g_signal_connect_swapped(G_OBJECT(close), "clicked",
-                             G_CALLBACK(gtk_widget_hide),
-                             GTK_OBJECT (prefswin));
 
-    /* create category view */
-    g_signal_connect_after(G_OBJECT(category_treeview), "realize",
-                           G_CALLBACK(on_category_treeview_realize),
-                           category_notebook);
+
 
     /* plugin->input page */
     g_object_set_data(G_OBJECT(input_plugin_view), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_INPUT));
@@ -2991,6 +2880,163 @@ create_prefs_window(void)
     g_signal_connect_swapped(G_OBJECT(effect_plugin_info), "clicked",
                              G_CALLBACK(plugin_treeview_open_info),
                              effect_plugin_view);
+
+}
+
+void
+create_prefs_window(void)
+{
+    gchar *aud_version_string;
+
+    GtkWidget *vbox;
+    GtkWidget *hbox1;
+    GtkWidget *scrolledwindow6;
+    GtkWidget *hseparator1;
+    GtkWidget *hbox4;
+    GtkWidget *audversionlabel;
+    GtkWidget *prefswin_button_box;
+    GtkWidget *reload_plugins;
+    GtkWidget *alignment93;
+    GtkWidget *hbox11;
+    GtkWidget *image10;
+    GtkWidget *label102;
+    GtkWidget *close;
+    GtkWidget *empty_notebook_page;
+    GtkAccelGroup *accel_group;
+
+    tooltips = gtk_tooltips_new ();
+
+    accel_group = gtk_accel_group_new ();
+
+    prefswin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_container_set_border_width (GTK_CONTAINER (prefswin), 12);
+    gtk_window_set_title (GTK_WINDOW (prefswin), _("Audacious Preferences"));
+    gtk_window_set_position (GTK_WINDOW (prefswin), GTK_WIN_POS_CENTER);
+    gtk_window_set_default_size (GTK_WINDOW (prefswin), 680, 400);
+
+    vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (prefswin), vbox);
+
+    hbox1 = gtk_hbox_new (FALSE, 8);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
+
+    scrolledwindow6 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow6, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_SHADOW_IN);
+
+    category_treeview = gtk_tree_view_new ();
+    gtk_container_add (GTK_CONTAINER (scrolledwindow6), category_treeview);
+    gtk_widget_set_size_request (category_treeview, 172, -1);
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (category_treeview), FALSE);
+
+    category_notebook = gtk_notebook_new ();
+    gtk_box_pack_start (GTK_BOX (hbox1), category_notebook, TRUE, TRUE, 0);
+    GTK_WIDGET_UNSET_FLAGS (category_notebook, GTK_CAN_FOCUS);
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (category_notebook), FALSE);
+    gtk_notebook_set_show_border (GTK_NOTEBOOK (category_notebook), FALSE);
+    gtk_notebook_set_scrollable (GTK_NOTEBOOK (category_notebook), TRUE);
+
+
+    create_plugin_category();
+
+
+
+    create_appearence_category();
+
+
+
+    create_mouse_category();
+
+
+
+    create_playlist_category();
+
+
+
+    create_connectivity_category();
+
+
+
+    create_audio_category();
+
+
+
+    empty_notebook_page = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
+
+    hseparator1 = gtk_hseparator_new ();
+    gtk_box_pack_start (GTK_BOX (vbox), hseparator1, FALSE, FALSE, 6);
+
+    hbox4 = gtk_hbox_new (FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox4, FALSE, FALSE, 0);
+
+    audversionlabel = gtk_label_new ("");
+    gtk_box_pack_start (GTK_BOX (hbox4), audversionlabel, FALSE, FALSE, 0);
+    gtk_label_set_use_markup (GTK_LABEL (audversionlabel), TRUE);
+
+    prefswin_button_box = gtk_hbutton_box_new ();
+    gtk_box_pack_start (GTK_BOX (hbox4), prefswin_button_box, TRUE, TRUE, 0);
+    gtk_button_box_set_layout (GTK_BUTTON_BOX (prefswin_button_box), GTK_BUTTONBOX_END);
+    gtk_box_set_spacing (GTK_BOX (prefswin_button_box), 6);
+
+    reload_plugins = gtk_button_new ();
+    gtk_container_add (GTK_CONTAINER (prefswin_button_box), reload_plugins);
+    GTK_WIDGET_SET_FLAGS (reload_plugins, GTK_CAN_DEFAULT);
+
+    alignment93 = gtk_alignment_new (0.5, 0.5, 0, 0);
+    gtk_container_add (GTK_CONTAINER (reload_plugins), alignment93);
+
+    hbox11 = gtk_hbox_new (FALSE, 2);
+    gtk_container_add (GTK_CONTAINER (alignment93), hbox11);
+
+    image10 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
+    gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
+
+    label102 = gtk_label_new_with_mnemonic (_("Reload Plugins"));
+    gtk_box_pack_start (GTK_BOX (hbox11), label102, FALSE, FALSE, 0);
+
+    close = gtk_button_new_from_stock ("gtk-close");
+    gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
+    GTK_WIDGET_SET_FLAGS (close, GTK_CAN_DEFAULT);
+    gtk_widget_add_accelerator (close, "clicked", accel_group,
+                                GDK_Escape, (GdkModifierType) 0,
+                                GTK_ACCEL_VISIBLE);
+
+
+    gtk_window_add_accel_group (GTK_WINDOW (prefswin), accel_group);
+
+    /* connect signals */
+    g_signal_connect(G_OBJECT(prefswin), "delete_event",
+                     G_CALLBACK(gtk_widget_hide_on_delete),
+                     NULL);
+    g_signal_connect_swapped(G_OBJECT(skin_refresh_button), "clicked",
+                             G_CALLBACK(on_skin_refresh_button_clicked),
+                             prefswin);
+    g_signal_connect_after(G_OBJECT(skin_view), "realize",
+                           G_CALLBACK(on_skin_view_realize),
+                           NULL);
+    g_signal_connect(G_OBJECT(titlestring_entry), "changed",
+                     G_CALLBACK(on_titlestring_entry_changed),
+                     NULL);
+    g_signal_connect_after(G_OBJECT(titlestring_entry), "realize",
+                           G_CALLBACK(on_titlestring_entry_realize),
+                           NULL);
+    g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
+                     G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
+                     NULL);
+    g_signal_connect(G_OBJECT(reload_plugins), "clicked",
+                     G_CALLBACK(on_reload_plugins_clicked),
+                     NULL);
+    g_signal_connect_swapped(G_OBJECT(close), "clicked",
+                             G_CALLBACK(gtk_widget_hide),
+                             GTK_OBJECT (prefswin));
+
+    /* create category view */
+    g_signal_connect_after(G_OBJECT(category_treeview), "realize",
+                           G_CALLBACK(on_category_treeview_realize),
+                           category_notebook);
+
 
     /* playlist page */
 
