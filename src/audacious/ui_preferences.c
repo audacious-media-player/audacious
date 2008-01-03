@@ -124,12 +124,12 @@ GtkWidget *filepopup_for_tuple_settings_button;
 GtkTooltips *tooltips;
 
 static Category categories[] = {
-    {DATA_DIR "/images/appearance.png",   N_("Appearance"), 1},
-    {DATA_DIR "/images/audio.png",        N_("Audio"), 5},
-    {DATA_DIR "/images/connectivity.png", N_("Connectivity"), 4},
-    {DATA_DIR "/images/mouse.png",        N_("Mouse"), 2},
-    {DATA_DIR "/images/playlist.png",     N_("Playlist"), 3},
-    {DATA_DIR "/images/plugins.png",      N_("Plugins"), 0},
+    {DATA_DIR "/images/appearance.png",   N_("Appearance"), 0},
+    {DATA_DIR "/images/audio.png",        N_("Audio"), 1},
+    {DATA_DIR "/images/connectivity.png", N_("Connectivity"), 2},
+    {DATA_DIR "/images/mouse.png",        N_("Mouse"), 3},
+    {DATA_DIR "/images/playlist.png",     N_("Playlist"), 4},
+    {DATA_DIR "/images/plugins.png",      N_("Plugins"), 5},
 };
 
 static gint n_categories = G_N_ELEMENTS(categories);
@@ -1887,6 +1887,19 @@ create_appearence_category(void)
     g_signal_connect(G_OBJECT(colorspace_button), "clicked",
                      G_CALLBACK(on_colorize_button_clicked),
                      NULL);
+
+    g_signal_connect(skin_view, "drag-data-received",
+                     G_CALLBACK(on_skin_view_drag_data_received),
+                     NULL);
+    bmp_drag_dest_set(skin_view);
+
+    g_signal_connect(mainwin, "drag-data-received",
+                     G_CALLBACK(mainwin_drag_data_received),
+                     skin_view);
+
+    g_signal_connect(skin_refresh_button, "clicked",
+                     G_CALLBACK(on_skin_refresh_button_clicked),
+                     NULL);
 }
 
 static void
@@ -2045,6 +2058,9 @@ create_playlist_category(void)
     g_signal_connect_after(G_OBJECT(checkbutton10), "realize",
                            G_CALLBACK(on_show_filepopup_for_tuple_realize),
                            NULL);
+    g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
+                     G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
+                     NULL);
 
     g_signal_connect(titlestring_cbox, "realize",
                      G_CALLBACK(on_titlestring_cbox_realize),
@@ -2059,6 +2075,18 @@ create_playlist_category(void)
     g_signal_connect(titlestring_help_button, "clicked",
                      G_CALLBACK(on_titlestring_help_button_clicked),
                      titlestring_tag_menu);
+
+    g_signal_connect(G_OBJECT(titlestring_entry), "changed",
+                     G_CALLBACK(on_titlestring_entry_changed),
+                     NULL);
+    g_signal_connect_after(G_OBJECT(titlestring_entry), "realize",
+                           G_CALLBACK(on_titlestring_entry_realize),
+                           NULL);
+
+
+
+    /* Create window for filepopup settings */
+    create_filepopup_settings();
 }
 
 
@@ -2938,27 +2966,15 @@ create_prefs_window(void)
     gtk_notebook_set_scrollable (GTK_NOTEBOOK (category_notebook), TRUE);
 
 
-    create_plugin_category();
-
 
 
     create_appearence_category();
-
-
-
-    create_mouse_category();
-
-
-
-    create_playlist_category();
-
-
-
-    create_connectivity_category();
-
-
-
     create_audio_category();
+    create_connectivity_category();
+    create_mouse_category();
+    create_playlist_category();
+    create_plugin_category();
+
 
 
 
@@ -3016,15 +3032,6 @@ create_prefs_window(void)
     g_signal_connect_after(G_OBJECT(skin_view), "realize",
                            G_CALLBACK(on_skin_view_realize),
                            NULL);
-    g_signal_connect(G_OBJECT(titlestring_entry), "changed",
-                     G_CALLBACK(on_titlestring_entry_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(titlestring_entry), "realize",
-                           G_CALLBACK(on_titlestring_entry_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
-                     G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
-                     NULL);
     g_signal_connect(G_OBJECT(reload_plugins), "clicked",
                      G_CALLBACK(on_reload_plugins_clicked),
                      NULL);
@@ -3038,23 +3045,6 @@ create_prefs_window(void)
                            category_notebook);
 
 
-    /* playlist page */
-
-    g_signal_connect(skin_view, "drag-data-received",
-                     G_CALLBACK(on_skin_view_drag_data_received),
-                     NULL);
-    bmp_drag_dest_set(skin_view);
-
-    g_signal_connect(mainwin, "drag-data-received",
-                     G_CALLBACK(mainwin_drag_data_received),
-                     skin_view);
-
-    g_signal_connect(skin_refresh_button, "clicked",
-                     G_CALLBACK(on_skin_refresh_button_clicked),
-                     NULL);
-
-
-
     /* audacious version label */
 
     aud_version_string = g_strdup_printf("<span size='small'>%s (%s) (%s@%s)</span>",
@@ -3065,9 +3055,6 @@ create_prefs_window(void)
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
-
-    /* Create window for filepopup settings */
-    create_filepopup_settings();
 }
 
 void
