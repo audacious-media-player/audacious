@@ -2045,6 +2045,322 @@ create_appearence_category(void)
                      titlestring_tag_menu);
 }
 
+static void
+create_audio_category(void)
+{
+    GtkWidget *label96;
+    GtkWidget *audio_scrolled_window;
+    GtkWidget *audio_page_viewport;
+    GtkWidget *audio_page_vbox;
+    GtkWidget *alignment74;
+    GtkWidget *label77;
+    GtkWidget *alignment73;
+    GtkWidget *vbox33;
+    GtkWidget *table11;
+    GtkWidget *image7;
+    GtkWidget *label79;
+    GtkWidget *label82;
+    GtkObject *output_plugin_bufsize_adj;
+    GtkWidget *output_plugin_bufsize;
+    GtkWidget *output_plugin_cbox;
+    GtkWidget *label78;
+    GtkWidget *alignment82;
+    GtkWidget *output_plugin_button_box;
+    GtkWidget *output_plugin_prefs;
+    GtkWidget *alignment76;
+    GtkWidget *hbox7;
+    GtkWidget *image5;
+    GtkWidget *label80;
+    GtkWidget *output_plugin_info;
+    GtkWidget *alignment77;
+    GtkWidget *hbox8;
+    GtkWidget *image6;
+    GtkWidget *label81;
+    GtkWidget *alignment90;
+    GtkWidget *label93;
+    GtkWidget *alignment92;
+    GtkWidget *enable_src;
+    GtkWidget *alignment91;
+    GtkWidget *vbox36;
+    GtkWidget *table13;
+    GtkWidget *src_converter_type;
+    GtkWidget *label94;
+    GtkWidget *label92;
+    GtkWidget *image9;
+    GtkObject *src_rate_adj;
+    GtkWidget *src_rate;
+    GtkWidget *label91;
+    GtkWidget *alignment4;
+    GtkWidget *label2;
+    GtkWidget *alignment7;
+    GtkWidget *software_volume_control;
+    GtkWidget *empty_notebook_page;
+
+    
+    empty_notebook_page = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
+
+    label96 = gtk_label_new ("");
+    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 6), label96);
+
+    audio_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+    gtk_container_add (GTK_CONTAINER (empty_notebook_page), audio_scrolled_window);
+    gtk_notebook_set_tab_label_packing (GTK_NOTEBOOK (category_notebook), audio_scrolled_window,
+                                        TRUE, TRUE, GTK_PACK_START);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (audio_scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+
+    audio_page_viewport = gtk_viewport_new (NULL, NULL);
+    gtk_container_add (GTK_CONTAINER (audio_scrolled_window), audio_page_viewport);
+    gtk_widget_set_events (audio_page_viewport, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+    gtk_viewport_set_shadow_type (GTK_VIEWPORT (audio_page_viewport), GTK_SHADOW_NONE);
+
+    audio_page_vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (audio_page_viewport), audio_page_vbox);
+
+    alignment74 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment74, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment74), 0, 12, 0, 0);
+
+    label77 = gtk_label_new (_("<b>Audio System</b>"));
+    gtk_container_add (GTK_CONTAINER (alignment74), label77);
+    gtk_label_set_use_markup (GTK_LABEL (label77), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label77), 0, 0.5);
+
+    alignment73 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment73, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment73), 0, 6, 12, 0);
+
+    vbox33 = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (alignment73), vbox33);
+
+    table11 = gtk_table_new (3, 2, FALSE);
+    gtk_box_pack_start (GTK_BOX (vbox33), table11, FALSE, FALSE, 0);
+    gtk_table_set_row_spacings (GTK_TABLE (table11), 6);
+    gtk_table_set_col_spacings (GTK_TABLE (table11), 6);
+
+    image7 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
+    gtk_table_attach (GTK_TABLE (table11), image7, 0, 1, 2, 3,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (image7), 1, 0);
+
+    label79 = gtk_label_new (_("Buffer size:"));
+    gtk_table_attach (GTK_TABLE (table11), label79, 0, 1, 1, 2,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
+
+    label82 = gtk_label_new (_("<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\nIncrease this value if you are experiencing audio skipping.\nPlease note however, that high values will result in Audacious performing poorly.</span>"));
+    gtk_table_attach (GTK_TABLE (table11), label82, 1, 2, 2, 3,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_use_markup (GTK_LABEL (label82), TRUE);
+    gtk_label_set_line_wrap (GTK_LABEL (label82), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label82), 0, 0.5);
+
+    output_plugin_bufsize_adj = gtk_adjustment_new (0, 0, 600000, 100, 1000, 1000);
+    output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 1, 0);
+    gtk_table_attach (GTK_TABLE (table11), output_plugin_bufsize, 1, 2, 1, 2,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+
+    output_plugin_cbox = gtk_combo_box_new_text ();
+    gtk_table_attach (GTK_TABLE (table11), output_plugin_cbox, 1, 2, 0, 1,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+
+    label78 = gtk_label_new (_("Current output plugin:"));
+    gtk_table_attach (GTK_TABLE (table11), label78, 0, 1, 0, 1,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label78), 0, 0.5);
+
+    alignment82 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment82, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment82), 0, 0, 12, 0);
+
+    output_plugin_button_box = gtk_hbutton_box_new ();
+    gtk_container_add (GTK_CONTAINER (alignment82), output_plugin_button_box);
+    gtk_button_box_set_layout (GTK_BUTTON_BOX (output_plugin_button_box), GTK_BUTTONBOX_START);
+    gtk_box_set_spacing (GTK_BOX (output_plugin_button_box), 8);
+
+    output_plugin_prefs = gtk_button_new ();
+    gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_prefs);
+    gtk_widget_set_sensitive (output_plugin_prefs, FALSE);
+    GTK_WIDGET_SET_FLAGS (output_plugin_prefs, GTK_CAN_DEFAULT);
+
+    alignment76 = gtk_alignment_new (0.5, 0.5, 0, 0);
+    gtk_container_add (GTK_CONTAINER (output_plugin_prefs), alignment76);
+
+    hbox7 = gtk_hbox_new (FALSE, 2);
+    gtk_container_add (GTK_CONTAINER (alignment76), hbox7);
+
+    image5 = gtk_image_new_from_stock ("gtk-preferences", GTK_ICON_SIZE_BUTTON);
+    gtk_box_pack_start (GTK_BOX (hbox7), image5, FALSE, FALSE, 0);
+
+    label80 = gtk_label_new_with_mnemonic (_("Output Plugin Preferences"));
+    gtk_box_pack_start (GTK_BOX (hbox7), label80, FALSE, FALSE, 0);
+
+    output_plugin_info = gtk_button_new ();
+    gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_info);
+    gtk_widget_set_sensitive (output_plugin_info, FALSE);
+    GTK_WIDGET_SET_FLAGS (output_plugin_info, GTK_CAN_DEFAULT);
+
+    alignment77 = gtk_alignment_new (0.5, 0.5, 0, 0);
+    gtk_container_add (GTK_CONTAINER (output_plugin_info), alignment77);
+
+    hbox8 = gtk_hbox_new (FALSE, 2);
+    gtk_container_add (GTK_CONTAINER (alignment77), hbox8);
+
+    image6 = gtk_image_new_from_stock ("gtk-about", GTK_ICON_SIZE_BUTTON);
+    gtk_box_pack_start (GTK_BOX (hbox8), image6, FALSE, FALSE, 0);
+
+    label81 = gtk_label_new_with_mnemonic (_("Output Plugin Information"));
+    gtk_box_pack_start (GTK_BOX (hbox8), label81, FALSE, FALSE, 0);
+
+    create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
+
+    alignment90 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment90, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment90), 12, 12, 0, 0);
+
+    label93 = gtk_label_new (_("<b>Sampling Rate Converter</b>"));
+    gtk_container_add (GTK_CONTAINER (alignment90), label93);
+    gtk_label_set_use_markup (GTK_LABEL (label93), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label93), 0, 0.5);
+
+    alignment92 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment92, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment92), 0, 0, 12, 0);
+
+    enable_src = gtk_check_button_new_with_mnemonic (_("Enable Sampling Rate Converter"));
+    gtk_container_add (GTK_CONTAINER (alignment92), enable_src);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_src), TRUE);
+
+    alignment91 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment91, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment91), 0, 6, 12, 0);
+
+    vbox36 = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (alignment91), vbox36);
+
+    table13 = gtk_table_new (3, 2, FALSE);
+    gtk_box_pack_start (GTK_BOX (vbox36), table13, FALSE, FALSE, 0);
+    gtk_table_set_row_spacings (GTK_TABLE (table13), 6);
+    gtk_table_set_col_spacings (GTK_TABLE (table13), 6);
+
+    src_converter_type = gtk_combo_box_new_text ();
+    gtk_table_attach (GTK_TABLE (table13), src_converter_type, 1, 2, 1, 2,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Best Sinc Interpolation"));
+    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Medium Sinc Interpolation"));
+    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Fastest Sinc Interpolation"));
+    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("ZOH Interpolation"));
+    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Linear Interpolation"));
+
+    label94 = gtk_label_new (_("Interpolation Engine:"));
+    gtk_table_attach (GTK_TABLE (table13), label94, 0, 1, 1, 2,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label94), 0, 0.5);
+
+    label92 = gtk_label_new (_("<span size=\"small\">All streams will be converted to this sampling rate.\nThis should be the max supported sampling rate of\nthe sound card or output plugin.</span>"));
+    gtk_table_attach (GTK_TABLE (table13), label92, 1, 2, 2, 3,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_use_markup (GTK_LABEL (label92), TRUE);
+    gtk_label_set_line_wrap (GTK_LABEL (label92), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label92), 0, 0.5);
+
+    image9 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
+    gtk_table_attach (GTK_TABLE (table13), image9, 0, 1, 2, 3,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (image9), 1, 0);
+
+    src_rate_adj = gtk_adjustment_new (96000, 1000, 768000, 1000, 1000, 1000);
+    src_rate = gtk_spin_button_new (GTK_ADJUSTMENT (src_rate_adj), 1, 0);
+    gtk_table_attach (GTK_TABLE (table13), src_rate, 1, 2, 0, 1,
+                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+
+    label91 = gtk_label_new (_("Sampling Rate [Hz]:"));
+    gtk_table_attach (GTK_TABLE (table13), label91, 0, 1, 0, 1,
+                      (GtkAttachOptions) (0),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment (GTK_MISC (label91), 0, 0.5);
+
+    alignment4 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment4, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment4), 12, 12, 0, 0);
+
+    label2 = gtk_label_new (_("<b>Volume Control</b>"));
+    gtk_container_add (GTK_CONTAINER (alignment4), label2);
+    gtk_label_set_use_markup (GTK_LABEL (label2), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
+
+    alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment7, FALSE, FALSE, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment7), 0, 0, 12, 0);
+
+    software_volume_control = gtk_check_button_new_with_mnemonic (_("Use software volume control"));
+    gtk_container_add (GTK_CONTAINER (alignment7), software_volume_control);
+    gtk_tooltips_set_tip (tooltips, software_volume_control, _("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), NULL);
+
+
+    g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
+                     G_CALLBACK(on_output_plugin_bufsize_value_changed),
+                     NULL);
+    g_signal_connect_after(G_OBJECT(output_plugin_bufsize), "realize",
+                           G_CALLBACK(on_output_plugin_bufsize_realize),
+                           NULL);
+    g_signal_connect_after(G_OBJECT(output_plugin_cbox), "realize",
+                           G_CALLBACK(on_output_plugin_cbox_realize),
+                           NULL);
+    g_signal_connect(G_OBJECT(enable_src), "toggled",
+                     G_CALLBACK(on_enable_src_toggled),
+                     NULL);
+    g_signal_connect(G_OBJECT(enable_src), "realize",
+                     G_CALLBACK(on_enable_src_realize),
+                     NULL);
+    g_signal_connect(G_OBJECT(src_converter_type), "changed",
+                     G_CALLBACK(on_src_converter_type_changed),
+                     NULL);
+    g_signal_connect_after(G_OBJECT(src_converter_type), "realize",
+                           G_CALLBACK(on_src_converter_type_realize),
+                           NULL);
+    g_signal_connect(G_OBJECT(src_rate), "value_changed",
+                     G_CALLBACK(on_src_rate_value_changed),
+                     NULL);
+    g_signal_connect(G_OBJECT(src_rate), "realize",
+                     G_CALLBACK(on_src_rate_realize),
+                     NULL);
+    g_signal_connect(G_OBJECT(software_volume_control), "toggled",
+                     G_CALLBACK(on_software_volume_control_toggled),
+                     NULL);
+    g_signal_connect(G_OBJECT(software_volume_control), "realize",
+                     G_CALLBACK(on_software_volume_control_realize),
+                     NULL);
+
+    /* plugin->output page */
+
+    g_signal_connect(G_OBJECT(output_plugin_cbox), "changed",
+                     G_CALLBACK(output_plugin_enable_prefs),
+                     output_plugin_prefs);
+    g_signal_connect_swapped(G_OBJECT(output_plugin_prefs), "clicked",
+                             G_CALLBACK(output_plugin_open_prefs),
+                             output_plugin_cbox);
+
+    g_signal_connect(G_OBJECT(output_plugin_cbox), "changed",
+                     G_CALLBACK(output_plugin_enable_info),
+                     output_plugin_info);
+    g_signal_connect_swapped(G_OBJECT(output_plugin_info), "clicked",
+                             G_CALLBACK(output_plugin_open_info),
+                             output_plugin_cbox);
+
+}
+
 void
 create_prefs_window(void)
 {
@@ -2118,53 +2434,6 @@ create_prefs_window(void)
     GtkWidget *image4;
     GtkWidget *label75;
     GtkWidget *label95;
-    GtkWidget *empty_notebook_page;
-    GtkWidget *label96;
-    GtkWidget *audio_scrolled_window;
-    GtkWidget *audio_page_viewport;
-    GtkWidget *audio_page_vbox;
-    GtkWidget *alignment74;
-    GtkWidget *label77;
-    GtkWidget *alignment73;
-    GtkWidget *vbox33;
-    GtkWidget *table11;
-    GtkWidget *image7;
-    GtkWidget *label79;
-    GtkWidget *label82;
-    GtkObject *output_plugin_bufsize_adj;
-    GtkWidget *output_plugin_bufsize;
-    GtkWidget *output_plugin_cbox;
-    GtkWidget *label78;
-    GtkWidget *alignment82;
-    GtkWidget *output_plugin_button_box;
-    GtkWidget *output_plugin_prefs;
-    GtkWidget *alignment76;
-    GtkWidget *hbox7;
-    GtkWidget *image5;
-    GtkWidget *label80;
-    GtkWidget *output_plugin_info;
-    GtkWidget *alignment77;
-    GtkWidget *hbox8;
-    GtkWidget *image6;
-    GtkWidget *label81;
-    GtkWidget *alignment90;
-    GtkWidget *label93;
-    GtkWidget *alignment92;
-    GtkWidget *enable_src;
-    GtkWidget *alignment91;
-    GtkWidget *vbox36;
-    GtkWidget *table13;
-    GtkWidget *src_converter_type;
-    GtkWidget *label94;
-    GtkWidget *label92;
-    GtkWidget *image9;
-    GtkObject *src_rate_adj;
-    GtkWidget *src_rate;
-    GtkWidget *label91;
-    GtkWidget *alignment4;
-    GtkWidget *label2;
-    GtkWidget *alignment7;
-    GtkWidget *software_volume_control;
     GtkWidget *hseparator1;
     GtkWidget *hbox4;
     GtkWidget *audversionlabel;
@@ -2175,6 +2444,7 @@ create_prefs_window(void)
     GtkWidget *image10;
     GtkWidget *label102;
     GtkWidget *close;
+    GtkWidget *empty_notebook_page;
     GtkAccelGroup *accel_group;
 
     tooltips = gtk_tooltips_new ();
@@ -2507,216 +2777,11 @@ create_prefs_window(void)
     label95 = gtk_label_new ("");
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 5), label95);
 
-    empty_notebook_page = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
 
-    label96 = gtk_label_new ("");
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 6), label96);
 
-    audio_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-    gtk_container_add (GTK_CONTAINER (empty_notebook_page), audio_scrolled_window);
-    gtk_notebook_set_tab_label_packing (GTK_NOTEBOOK (category_notebook), audio_scrolled_window,
-                                        TRUE, TRUE, GTK_PACK_START);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (audio_scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+    create_audio_category();
 
-    audio_page_viewport = gtk_viewport_new (NULL, NULL);
-    gtk_container_add (GTK_CONTAINER (audio_scrolled_window), audio_page_viewport);
-    gtk_widget_set_events (audio_page_viewport, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-    gtk_viewport_set_shadow_type (GTK_VIEWPORT (audio_page_viewport), GTK_SHADOW_NONE);
 
-    audio_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (audio_page_viewport), audio_page_vbox);
-
-    alignment74 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment74, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment74), 0, 12, 0, 0);
-
-    label77 = gtk_label_new (_("<b>Audio System</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment74), label77);
-    gtk_label_set_use_markup (GTK_LABEL (label77), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label77), 0, 0.5);
-
-    alignment73 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment73, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment73), 0, 6, 12, 0);
-
-    vbox33 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment73), vbox33);
-
-    table11 = gtk_table_new (3, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox33), table11, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table11), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table11), 6);
-
-    image7 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
-    gtk_table_attach (GTK_TABLE (table11), image7, 0, 1, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (image7), 1, 0);
-
-    label79 = gtk_label_new (_("Buffer size:"));
-    gtk_table_attach (GTK_TABLE (table11), label79, 0, 1, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
-
-    label82 = gtk_label_new (_("<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\nIncrease this value if you are experiencing audio skipping.\nPlease note however, that high values will result in Audacious performing poorly.</span>"));
-    gtk_table_attach (GTK_TABLE (table11), label82, 1, 2, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label82), TRUE);
-    gtk_label_set_line_wrap (GTK_LABEL (label82), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label82), 0, 0.5);
-
-    output_plugin_bufsize_adj = gtk_adjustment_new (0, 0, 600000, 100, 1000, 1000);
-    output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 1, 0);
-    gtk_table_attach (GTK_TABLE (table11), output_plugin_bufsize, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    output_plugin_cbox = gtk_combo_box_new_text ();
-    gtk_table_attach (GTK_TABLE (table11), output_plugin_cbox, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label78 = gtk_label_new (_("Current output plugin:"));
-    gtk_table_attach (GTK_TABLE (table11), label78, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label78), 0, 0.5);
-
-    alignment82 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment82, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment82), 0, 0, 12, 0);
-
-    output_plugin_button_box = gtk_hbutton_box_new ();
-    gtk_container_add (GTK_CONTAINER (alignment82), output_plugin_button_box);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (output_plugin_button_box), GTK_BUTTONBOX_START);
-    gtk_box_set_spacing (GTK_BOX (output_plugin_button_box), 8);
-
-    output_plugin_prefs = gtk_button_new ();
-    gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_prefs);
-    gtk_widget_set_sensitive (output_plugin_prefs, FALSE);
-    GTK_WIDGET_SET_FLAGS (output_plugin_prefs, GTK_CAN_DEFAULT);
-
-    alignment76 = gtk_alignment_new (0.5, 0.5, 0, 0);
-    gtk_container_add (GTK_CONTAINER (output_plugin_prefs), alignment76);
-
-    hbox7 = gtk_hbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (alignment76), hbox7);
-
-    image5 = gtk_image_new_from_stock ("gtk-preferences", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox7), image5, FALSE, FALSE, 0);
-
-    label80 = gtk_label_new_with_mnemonic (_("Output Plugin Preferences"));
-    gtk_box_pack_start (GTK_BOX (hbox7), label80, FALSE, FALSE, 0);
-
-    output_plugin_info = gtk_button_new ();
-    gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_info);
-    gtk_widget_set_sensitive (output_plugin_info, FALSE);
-    GTK_WIDGET_SET_FLAGS (output_plugin_info, GTK_CAN_DEFAULT);
-
-    alignment77 = gtk_alignment_new (0.5, 0.5, 0, 0);
-    gtk_container_add (GTK_CONTAINER (output_plugin_info), alignment77);
-
-    hbox8 = gtk_hbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (alignment77), hbox8);
-
-    image6 = gtk_image_new_from_stock ("gtk-about", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox8), image6, FALSE, FALSE, 0);
-
-    label81 = gtk_label_new_with_mnemonic (_("Output Plugin Information"));
-    gtk_box_pack_start (GTK_BOX (hbox8), label81, FALSE, FALSE, 0);
-
-    create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
-
-    alignment90 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment90, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment90), 12, 12, 0, 0);
-
-    label93 = gtk_label_new (_("<b>Sampling Rate Converter</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment90), label93);
-    gtk_label_set_use_markup (GTK_LABEL (label93), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label93), 0, 0.5);
-
-    alignment92 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment92, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment92), 0, 0, 12, 0);
-
-    enable_src = gtk_check_button_new_with_mnemonic (_("Enable Sampling Rate Converter"));
-    gtk_container_add (GTK_CONTAINER (alignment92), enable_src);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_src), TRUE);
-
-    alignment91 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment91, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment91), 0, 6, 12, 0);
-
-    vbox36 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment91), vbox36);
-
-    table13 = gtk_table_new (3, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox36), table13, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table13), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table13), 6);
-
-    src_converter_type = gtk_combo_box_new_text ();
-    gtk_table_attach (GTK_TABLE (table13), src_converter_type, 1, 2, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Best Sinc Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Medium Sinc Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Fastest Sinc Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("ZOH Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Linear Interpolation"));
-
-    label94 = gtk_label_new (_("Interpolation Engine:"));
-    gtk_table_attach (GTK_TABLE (table13), label94, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label94), 0, 0.5);
-
-    label92 = gtk_label_new (_("<span size=\"small\">All streams will be converted to this sampling rate.\nThis should be the max supported sampling rate of\nthe sound card or output plugin.</span>"));
-    gtk_table_attach (GTK_TABLE (table13), label92, 1, 2, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label92), TRUE);
-    gtk_label_set_line_wrap (GTK_LABEL (label92), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label92), 0, 0.5);
-
-    image9 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
-    gtk_table_attach (GTK_TABLE (table13), image9, 0, 1, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (image9), 1, 0);
-
-    src_rate_adj = gtk_adjustment_new (96000, 1000, 768000, 1000, 1000, 1000);
-    src_rate = gtk_spin_button_new (GTK_ADJUSTMENT (src_rate_adj), 1, 0);
-    gtk_table_attach (GTK_TABLE (table13), src_rate, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label91 = gtk_label_new (_("Sampling Rate [Hz]:"));
-    gtk_table_attach (GTK_TABLE (table13), label91, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label91), 0, 0.5);
-
-    alignment4 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment4, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment4), 12, 12, 0, 0);
-
-    label2 = gtk_label_new (_("<b>Volume Control</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment4), label2);
-    gtk_label_set_use_markup (GTK_LABEL (label2), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
-
-    alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment7, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment7), 0, 0, 12, 0);
-
-    software_volume_control = gtk_check_button_new_with_mnemonic (_("Use software volume control"));
-    gtk_container_add (GTK_CONTAINER (alignment7), software_volume_control);
-    gtk_tooltips_set_tip (tooltips, software_volume_control, _("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), NULL);
 
     empty_notebook_page = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
@@ -2834,39 +2899,6 @@ create_prefs_window(void)
     g_signal_connect(G_OBJECT(proxy_user), "realize",
                      G_CALLBACK(on_proxy_entry_realize),
                      "proxy_user");
-    g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
-                     G_CALLBACK(on_output_plugin_bufsize_value_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(output_plugin_bufsize), "realize",
-                           G_CALLBACK(on_output_plugin_bufsize_realize),
-                           NULL);
-    g_signal_connect_after(G_OBJECT(output_plugin_cbox), "realize",
-                           G_CALLBACK(on_output_plugin_cbox_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(enable_src), "toggled",
-                     G_CALLBACK(on_enable_src_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(enable_src), "realize",
-                     G_CALLBACK(on_enable_src_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(src_converter_type), "changed",
-                     G_CALLBACK(on_src_converter_type_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(src_converter_type), "realize",
-                           G_CALLBACK(on_src_converter_type_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(src_rate), "value_changed",
-                     G_CALLBACK(on_src_rate_value_changed),
-                     NULL);
-    g_signal_connect(G_OBJECT(src_rate), "realize",
-                     G_CALLBACK(on_src_rate_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(software_volume_control), "toggled",
-                     G_CALLBACK(on_software_volume_control_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(software_volume_control), "realize",
-                     G_CALLBACK(on_software_volume_control_realize),
-                     NULL);
     g_signal_connect(G_OBJECT(reload_plugins), "clicked",
                      G_CALLBACK(on_reload_plugins_clicked),
                      NULL);
@@ -2899,21 +2931,6 @@ create_prefs_window(void)
                              G_CALLBACK(plugin_treeview_open_info),
                              input_plugin_view);
 
-    /* plugin->output page */
-
-    g_signal_connect(G_OBJECT(output_plugin_cbox), "changed",
-                     G_CALLBACK(output_plugin_enable_prefs),
-                     output_plugin_prefs);
-    g_signal_connect_swapped(G_OBJECT(output_plugin_prefs), "clicked",
-                             G_CALLBACK(output_plugin_open_prefs),
-                             output_plugin_cbox);
-
-    g_signal_connect(G_OBJECT(output_plugin_cbox), "changed",
-                     G_CALLBACK(output_plugin_enable_info),
-                     output_plugin_info);
-    g_signal_connect_swapped(G_OBJECT(output_plugin_info), "clicked",
-                             G_CALLBACK(output_plugin_open_info),
-                             output_plugin_cbox);
 
     /* plugin->general page */
 
