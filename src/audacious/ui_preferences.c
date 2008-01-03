@@ -86,7 +86,6 @@ enum PluginViewType {
 typedef struct {
     const gchar *icon_path;
     const gchar *name;
-    gint id;
 } Category;
 
 typedef struct {
@@ -124,12 +123,12 @@ GtkWidget *filepopup_for_tuple_settings_button;
 GtkTooltips *tooltips;
 
 static Category categories[] = {
-    {DATA_DIR "/images/appearance.png",   N_("Appearance"), 0},
-    {DATA_DIR "/images/audio.png",        N_("Audio"), 1},
-    {DATA_DIR "/images/connectivity.png", N_("Connectivity"), 2},
-    {DATA_DIR "/images/mouse.png",        N_("Mouse"), 3},
-    {DATA_DIR "/images/playlist.png",     N_("Playlist"), 4},
-    {DATA_DIR "/images/plugins.png",      N_("Plugins"), 5},
+    {DATA_DIR "/images/appearance.png",   N_("Appearance")},
+    {DATA_DIR "/images/audio.png",        N_("Audio")},
+    {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
+    {DATA_DIR "/images/mouse.png",        N_("Mouse")},
+    {DATA_DIR "/images/playlist.png",     N_("Playlist")},
+    {DATA_DIR "/images/plugins.png",      N_("Plugins")},
 };
 
 static gint n_categories = G_N_ELEMENTS(categories);
@@ -978,7 +977,7 @@ on_category_treeview_realize(GtkTreeView * treeview,
                            CATEGORY_VIEW_COL_ICON, img,
                            CATEGORY_VIEW_COL_NAME,
                            gettext(categories[i].name), CATEGORY_VIEW_COL_ID,
-                           categories[i].id, -1);
+                           i, -1);
         g_object_unref(img);
     }
 
