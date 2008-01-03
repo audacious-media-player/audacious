@@ -127,6 +127,7 @@ static Category categories[] = {
     {DATA_DIR "/images/audio.png",        N_("Audio")},
     {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
     {DATA_DIR "/images/mouse.png",        N_("Mouse")},
+    {DATA_DIR "/images/playback.png",     N_("Playback")},
     {DATA_DIR "/images/playlist.png",     N_("Playlist")},
     {DATA_DIR "/images/plugins.png",      N_("Plugins")},
 };
@@ -212,6 +213,9 @@ static PreferencesWidget audio_page_widgets[] = {
         N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
+};
+
+static PreferencesWidget playback_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
         N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
@@ -1819,7 +1823,6 @@ create_appearence_category(void)
     GtkWidget *image12;
     GtkWidget *alignment95;
     GtkWidget *skin_view_scrolled_window;
-    GtkWidget *appearance_label;
 
     appearance_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), appearance_page_vbox);
@@ -1877,8 +1880,6 @@ create_appearence_category(void)
 
     create_widgets(GTK_BOX(vbox37), appearance_misc_widgets, G_N_ELEMENTS(appearance_misc_widgets));
 
-    appearance_label = gtk_label_new (_("Appearance"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 1), appearance_label);
 
 
     gtk_label_set_mnemonic_widget (GTK_LABEL (label103), category_notebook);
@@ -1906,7 +1907,6 @@ create_mouse_category(void)
 {
     GtkWidget *mouse_page_vbox;
     GtkWidget *vbox20;
-    GtkWidget *mouse_label;
 
     mouse_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), mouse_page_vbox);
@@ -1915,9 +1915,20 @@ create_mouse_category(void)
     gtk_box_pack_start (GTK_BOX (mouse_page_vbox), vbox20, TRUE, TRUE, 0);
 
     create_widgets(GTK_BOX(vbox20), mouse_page_widgets, G_N_ELEMENTS(mouse_page_widgets));
+}
 
-    mouse_label = gtk_label_new (_("Mouse"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 2), mouse_label);
+static void
+create_playback_category(void)
+{
+    GtkWidget *playback_page_vbox;
+    GtkWidget *widgets_vbox;
+
+    playback_page_vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (category_notebook), playback_page_vbox);
+
+    widgets_vbox = gtk_vbox_new (FALSE, 0);
+    create_widgets(GTK_BOX(widgets_vbox), playback_page_widgets, G_N_ELEMENTS(playback_page_widgets));
+    gtk_box_pack_start (GTK_BOX (playback_page_vbox), widgets_vbox, TRUE, TRUE, 0);
 }
 
 static void
@@ -1941,7 +1952,6 @@ create_playlist_category(void)
     GtkWidget *vbox34;
     GtkWidget *checkbutton10;
     GtkWidget *image8;
-    GtkWidget *playlist_label;
     GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
 
 
@@ -2046,9 +2056,6 @@ create_playlist_category(void)
     image8 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_BUTTON);
     gtk_container_add (GTK_CONTAINER (filepopup_for_tuple_settings_button), image8);
 
-    playlist_label = gtk_label_new (_("Playlist"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 3), playlist_label);
-
 
 
     g_signal_connect(G_OBJECT(checkbutton10), "toggled",
@@ -2092,7 +2099,6 @@ create_playlist_category(void)
 static void
 create_audio_category(void)
 {
-    GtkWidget *label96;
     GtkWidget *audio_scrolled_window;
     GtkWidget *audio_page_viewport;
     GtkWidget *audio_page_vbox;
@@ -2143,9 +2149,6 @@ create_audio_category(void)
     
     empty_notebook_page = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
-
-    label96 = gtk_label_new ("");
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 6), label96);
 
     audio_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_container_add (GTK_CONTAINER (empty_notebook_page), audio_scrolled_window);
@@ -2432,7 +2435,6 @@ create_connectivity_category(void)
     GtkWidget *hbox6;
     GtkWidget *image4;
     GtkWidget *label75;
-    GtkWidget *label95;
 
     connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), connectivity_page_vbox);
@@ -2540,9 +2542,6 @@ create_connectivity_category(void)
     gtk_box_pack_start (GTK_BOX (hbox6), label75, FALSE, FALSE, 0);
     gtk_label_set_use_markup (GTK_LABEL (label75), TRUE);
 
-    label95 = gtk_label_new ("");
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 5), label95);
-
 
     g_signal_connect(G_OBJECT(proxy_use), "toggled",
                      G_CALLBACK(on_proxy_button_toggled),
@@ -2623,7 +2622,6 @@ create_plugin_category(void)
     GtkWidget *effect_plugin_prefs;
     GtkWidget *effect_plugin_info;
     GtkWidget *effects_label;
-    GtkWidget *plugin_label;
 
     plugin_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), plugin_page_vbox);
@@ -2801,8 +2799,6 @@ create_plugin_category(void)
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 3), effects_label);
     gtk_label_set_use_markup (GTK_LABEL (effects_label), TRUE);
 
-    plugin_label = gtk_label_new (_("Plugins"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (category_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (category_notebook), 0), plugin_label);
 
 
     gtk_label_set_mnemonic_widget (GTK_LABEL (input_plugin_list_label), category_notebook);
@@ -2971,6 +2967,7 @@ create_prefs_window(void)
     create_audio_category();
     create_connectivity_category();
     create_mouse_category();
+    create_playback_category();
     create_playlist_category();
     create_plugin_category();
 
