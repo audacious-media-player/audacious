@@ -568,7 +568,7 @@ Tuple *
 input_get_song_tuple(const gchar * filename)
 {
     InputPlugin *ip = NULL;
-    Tuple *input;
+    Tuple *input = NULL;
     gchar *ext = NULL;
     gchar *filename_proxy;
     ProbeResult *pr;

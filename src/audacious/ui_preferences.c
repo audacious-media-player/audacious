@@ -2099,8 +2099,6 @@ create_playlist_category(void)
 static void
 create_audio_category(void)
 {
-    GtkWidget *audio_scrolled_window;
-    GtkWidget *audio_page_viewport;
     GtkWidget *audio_page_vbox;
     GtkWidget *alignment74;
     GtkWidget *label77;
@@ -2144,25 +2142,10 @@ create_audio_category(void)
     GtkWidget *label2;
     GtkWidget *alignment7;
     GtkWidget *software_volume_control;
-    GtkWidget *empty_notebook_page;
 
     
-    empty_notebook_page = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
-
-    audio_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-    gtk_container_add (GTK_CONTAINER (empty_notebook_page), audio_scrolled_window);
-    gtk_notebook_set_tab_label_packing (GTK_NOTEBOOK (category_notebook), audio_scrolled_window,
-                                        TRUE, TRUE, GTK_PACK_START);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (audio_scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-
-    audio_page_viewport = gtk_viewport_new (NULL, NULL);
-    gtk_container_add (GTK_CONTAINER (audio_scrolled_window), audio_page_viewport);
-    gtk_widget_set_events (audio_page_viewport, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-    gtk_viewport_set_shadow_type (GTK_VIEWPORT (audio_page_viewport), GTK_SHADOW_NONE);
-
     audio_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (audio_page_viewport), audio_page_vbox);
+    gtk_container_add (GTK_CONTAINER (category_notebook), audio_page_vbox);
 
     alignment74 = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment74, FALSE, FALSE, 0);
@@ -2924,7 +2907,6 @@ create_prefs_window(void)
     GtkWidget *image10;
     GtkWidget *label102;
     GtkWidget *close;
-    GtkWidget *empty_notebook_page;
     GtkAccelGroup *accel_group;
 
     tooltips = gtk_tooltips_new ();
@@ -2973,9 +2955,6 @@ create_prefs_window(void)
 
 
 
-
-    empty_notebook_page = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), empty_notebook_page);
 
     hseparator1 = gtk_hseparator_new ();
     gtk_box_pack_start (GTK_BOX (vbox), hseparator1, FALSE, FALSE, 6);
