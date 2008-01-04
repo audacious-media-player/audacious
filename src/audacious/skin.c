@@ -345,26 +345,20 @@ pixmap_new_from_file(const gchar * filename)
     return pixmap;
 }
 
-static gboolean
-skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
+/**
+ * Creates possible file names for a pixmap.
+ *
+ * Basically this makes list of all possible file names that pixmap data
+ * can be found from by using the static ext_targets variable to get all
+ * possible extensions that pixmap file might have.
+ */
+static gchar **
+skin_pixmap_create_basenames(const SkinPixmapIdMapping * pixmap_id_mapping)
 {
-    const gchar *path;
-    gchar *filename;
-    gint width, height;
-    const SkinPixmapIdMapping *pixmap_id_mapping;
-    GdkPixmap *gpm;
-    SkinPixmap *pm = NULL;
-    gchar *basenames[EXTENSION_TARGETS * 2 + 1]; /* alternate basenames */
+    gchar **basenames = g_malloc0(sizeof(gchar*) * (EXTENSION_TARGETS * 2 + 1));
     gint i, y;
 
-    g_return_val_if_fail(skin != NULL, FALSE);
-    g_return_val_if_fail(id < SKIN_PIXMAP_COUNT, FALSE);
-
-    pixmap_id_mapping = skin_pixmap_id_lookup(id);
-    g_return_val_if_fail(pixmap_id_mapping != NULL, FALSE);
-
-    memset(&basenames, 0, sizeof(basenames));
-
+    // Create list of all possible image formats that can be loaded
     for (i = 0, y = 0; i < EXTENSION_TARGETS; i++, y++)
     {
         basenames[y] =
@@ -376,14 +370,60 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
                                 ext_targets[i]);
     }
 
-    path = path_p ? path_p : skin->path;
-    filename = skin_pixmap_locate(path, basenames);
+    return basenames;
+}
 
+/**
+ * Frees the data allocated by skin_pixmap_create_basenames
+ */
+static void
+skin_pixmap_free_basenames(gchar ** basenames)
+{
+    int i;
     for (i = 0; basenames[i] != NULL; i++)
     {
-         g_free(basenames[i]);
-         basenames[i] = NULL;
+        g_free(basenames[i]);
+        basenames[i] = NULL;
     }
+    g_free(basenames);
+}
+
+/**
+ * Locates a pixmap file for skin.
+ */
+static gchar *
+skin_pixmap_locate_basenames(const Skin * skin,
+                             const SkinPixmapIdMapping * pixmap_id_mapping,
+                             const gchar * path_p)
+{
+    gchar *filename = NULL;
+    const gchar *path = path_p ? path_p : skin->path;
+    gchar **basenames = skin_pixmap_create_basenames(pixmap_id_mapping);
+
+    filename = skin_pixmap_locate(path, basenames);
+
+    skin_pixmap_free_basenames(basenames);
+
+    return filename;
+}
+
+
+static gboolean
+skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
+{
+    const SkinPixmapIdMapping *pixmap_id_mapping;
+    gchar *filename;
+    gint width, height;
+    GdkPixmap *gpm;
+    SkinPixmap *pm = NULL;
+
+    g_return_val_if_fail(skin != NULL, FALSE);
+    g_return_val_if_fail(id < SKIN_PIXMAP_COUNT, FALSE);
+
+    pixmap_id_mapping = skin_pixmap_id_lookup(id);
+    g_return_val_if_fail(pixmap_id_mapping != NULL, FALSE);
+
+    filename = skin_pixmap_locate_basenames(skin, pixmap_id_mapping, path_p);
 
     if (filename == NULL)
         return FALSE;
@@ -1496,6 +1536,25 @@ skin_set_gtk_theme(GtkSettings * settings, Skin * skin)
     g_free(tmp);
 }
 
+/**
+ * Checks if all pixmap files exist that skin needs.
+ */
+static gboolean
+skin_check_pixmaps(const Skin * skin, const gchar * skin_path)
+{
+    guint i;
+    for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
+    {
+        gchar *filename = skin_pixmap_locate_basenames(skin,
+                                                       skin_pixmap_id_lookup(i),
+                                                       skin_path);
+        if (!filename)
+            return FALSE;
+        g_free(filename);
+    }
+    return TRUE;
+}
+
 static gboolean
 skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 {
@@ -1530,6 +1589,14 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         skin_path = g_strdup(path);
     }
 
+    // Check if skin path has all necessary files.
+    if (!skin_check_pixmaps(skin, skin_path)) {
+        if(archive) del_directory(skin_path);
+        g_free(skin_path);
+        AUDDBG("Skin path (%s) doesn't have all wanted pixmaps\n", skin_path);
+        return FALSE;
+    }
+
     // skin_free() frees skin->path and variable path can actually be skin->path
     // and we want to get the path before possibly freeing it.
     newpath = g_strdup(path);
@@ -1537,7 +1604,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     skin->path = newpath;
 
     memset(&(skin->properties), 0, sizeof(SkinProperties)); /* do it only if all tests above passed! --asphyx */
-      
+    
     skin_current_num++;
 
     /* Parse the hints for this skin. */
