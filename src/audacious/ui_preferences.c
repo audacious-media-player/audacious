@@ -970,6 +970,10 @@ on_category_treeview_realize(GtkTreeView * treeview,
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
     gtk_tree_view_column_set_attributes(column, renderer, "text", 1, NULL);
 
+    gint width, height;
+    gtk_widget_get_size_request(GTK_WIDGET(treeview), &width, &height);
+    g_object_set(G_OBJECT(renderer), "wrap-width", width - 64 - 20, "wrap-mode", PANGO_WRAP_WORD, NULL);
+
     store = gtk_list_store_new(CATEGORY_VIEW_N_COLS,
                                GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
