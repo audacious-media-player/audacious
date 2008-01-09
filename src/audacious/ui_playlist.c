@@ -298,6 +298,7 @@ playlistwin_set_sinfo_font(gchar *font)
     gchar *tmp = NULL, *tmp2 = NULL;
 
     g_return_if_fail(font);
+    AUDDBG("Attempt to set font \"%s\"\n", font);
 
     tmp = g_strdup(font);
     g_return_if_fail(tmp);
