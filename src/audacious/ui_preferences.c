@@ -21,6 +21,8 @@
 #  include "config.h"
 #endif
 
+/* #define AUD_DEBUG */
+
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -589,16 +591,17 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
 }
 
 static void
-on_font_btn_realize(GtkFontButton * button, gchar *cfg)
+on_font_btn_realize(GtkFontButton * button, gchar **cfg)
 {
-    gtk_font_button_set_font_name(button, cfg);
+    gtk_font_button_set_font_name(button, *cfg);
 }
 
 static void
-on_font_btn_font_set(GtkFontButton * button, gchar *cfg)
+on_font_btn_font_set(GtkFontButton * button, gchar **cfg)
 {
-    g_free(cfg);
-    cfg = g_strdup(gtk_font_button_get_font_name(button));
+    g_free(*cfg);
+    *cfg = g_strdup(gtk_font_button_get_font_name(button));
+    AUDDBG("Returned font name: \"%s\"\n", *cfg);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
     if (callback) callback();
 }
@@ -612,6 +615,7 @@ mainwin_font_set_cb()
 static void
 playlist_font_set_cb()
 {
+    AUDDBG("Attempt to set font \"%s\"\n", cfg.playlist_font);
     ui_skinned_playlist_set_font(cfg.playlist_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
     playlistwin_update_list(playlist_get_active());
@@ -1775,10 +1779,10 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 
                 g_signal_connect(G_OBJECT(font_btn), "font_set",
                                  G_CALLBACK(on_font_btn_font_set),
-                                 *(char**)widgets[x].cfg);
+                                 (char**)widgets[x].cfg);
                 g_signal_connect(G_OBJECT(font_btn), "realize",
                                  G_CALLBACK(on_font_btn_realize),
-                                 *(char**)widgets[x].cfg);
+                                 (char**)widgets[x].cfg);
                 break;
             default:
                 /* shouldn't ever happen - expect things to break */
