@@ -1231,7 +1231,7 @@ skin_load_color(INIFile *inifile,
 
     if (inifile || default_hex) {
         if (inifile) {
-            value = g_strdup(read_ini_string(inifile, section, key));
+            value = read_ini_string(inifile, section, key);
             if (value == NULL) {
                 value = g_strdup(default_hex);
             }
