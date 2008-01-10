@@ -316,6 +316,21 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
     serial = playlist->serial; // important. --yaz
 }
 
+
+/**
+ * Normalizes an UTF-8 string to be used in case-insensitive searches.
+ *
+ * Returned string should be freed.
+ */
+static gchar *
+normalize_search_string(const gchar * string)
+{
+    gchar* normalized_string = g_utf8_normalize(string, -1, G_NORMALIZE_NFKD);
+    gchar* folded_string = g_utf8_casefold(normalized_string, -1);
+    g_free(normalized_string);
+    return folded_string;
+}
+
 static void
 ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 {
@@ -336,16 +351,18 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     gint i = -1;
 
     /* Chop the key string into ' '-separated key regex-pattern strings */
-    words = g_strsplit(gtk_entry_get_text(entry), " ", 0);
+    gchar *search_text = normalize_search_string(gtk_entry_get_text(entry));
+    words = g_strsplit(search_text, " ", 0);
+    g_free(search_text);
 
     /* create a list of regex using the regex-pattern strings */
     while ( words[++i] != NULL )
     {
         regex_t *regex = g_malloc(sizeof(regex_t));
     #if defined(USE_REGEX_PCRE)
-        if ( regcomp( regex , words[i] , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
+        if ( regcomp( regex , words[i] , REG_NOSUB | REG_UTF8 ) == 0 )
     #else
-        if ( regcomp( regex , words[i] , REG_NOSUB | REG_ICASE ) == 0 )
+        if ( regcomp( regex , words[i] , REG_NOSUB ) == 0 )
     #endif
             regex_list = g_slist_append( regex_list , regex );
     }
@@ -369,12 +386,14 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
         gchar *title = NULL;
 
-        if (entry->title)
-            title = g_strdup(entry->title);
-        else {
+        if (entry->title) {
+            title = normalize_search_string(entry->title);
+        } else {
             gchar *realfn = NULL;
             realfn = g_filename_from_uri(entry->filename, NULL, NULL);
-            title = str_to_utf8(realfn ? realfn : entry->filename);
+            gchar *tmp_title = str_to_utf8(realfn ? realfn : entry->filename);
+            title = normalize_search_string(tmp_title);
+            g_free(tmp_title);
             g_free(realfn); realfn = NULL;
         }
 
@@ -397,6 +416,8 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
                 match = ui_jump_to_track_match(title, regex_list);
         else
                 match = TRUE;
+
+        g_free(title); title = NULL;
 
         if (match) {
                 if (entry->title)
