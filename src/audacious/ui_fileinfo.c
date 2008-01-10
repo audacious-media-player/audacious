@@ -88,6 +88,57 @@ static gchar *current_file = NULL;
 static InputPlugin *current_ip = NULL;
 static gboolean something_changed = FALSE;
 
+/* stolen from Audacious 1.4 vorbis plugin. --nenolod */
+static const gchar *genre_table[] = {
+    N_("Blues"), N_("Classic Rock"), N_("Country"), N_("Dance"),
+    N_("Disco"), N_("Funk"), N_("Grunge"), N_("Hip-Hop"),
+    N_("Jazz"), N_("Metal"), N_("New Age"), N_("Oldies"),
+    N_("Other"), N_("Pop"), N_("R&B"), N_("Rap"), N_("Reggae"),
+    N_("Rock"), N_("Techno"), N_("Industrial"), N_("Alternative"),
+    N_("Ska"), N_("Death Metal"), N_("Pranks"), N_("Soundtrack"),
+    N_("Euro-Techno"), N_("Ambient"), N_("Trip-Hop"), N_("Vocal"),
+    N_("Jazz+Funk"), N_("Fusion"), N_("Trance"), N_("Classical"),
+    N_("Instrumental"), N_("Acid"), N_("House"), N_("Game"),
+    N_("Sound Clip"), N_("Gospel"), N_("Noise"), N_("AlternRock"),
+    N_("Bass"), N_("Soul"), N_("Punk"), N_("Space"),
+    N_("Meditative"), N_("Instrumental Pop"),
+    N_("Instrumental Rock"), N_("Ethnic"), N_("Gothic"),
+    N_("Darkwave"), N_("Techno-Industrial"), N_("Electronic"),
+    N_("Pop-Folk"), N_("Eurodance"), N_("Dream"),
+    N_("Southern Rock"), N_("Comedy"), N_("Cult"),
+    N_("Gangsta Rap"), N_("Top 40"), N_("Christian Rap"),
+    N_("Pop/Funk"), N_("Jungle"), N_("Native American"),
+    N_("Cabaret"), N_("New Wave"), N_("Psychedelic"), N_("Rave"),
+    N_("Showtunes"), N_("Trailer"), N_("Lo-Fi"), N_("Tribal"),
+    N_("Acid Punk"), N_("Acid Jazz"), N_("Polka"), N_("Retro"),
+    N_("Musical"), N_("Rock & Roll"), N_("Hard Rock"), N_("Folk"),
+    N_("Folk/Rock"), N_("National Folk"), N_("Swing"),
+    N_("Fast-Fusion"), N_("Bebob"), N_("Latin"), N_("Revival"),
+    N_("Celtic"), N_("Bluegrass"), N_("Avantgarde"),
+    N_("Gothic Rock"), N_("Progressive Rock"),
+    N_("Psychedelic Rock"), N_("Symphonic Rock"), N_("Slow Rock"),
+    N_("Big Band"), N_("Chorus"), N_("Easy Listening"),
+    N_("Acoustic"), N_("Humour"), N_("Speech"), N_("Chanson"),
+    N_("Opera"), N_("Chamber Music"), N_("Sonata"), N_("Symphony"),
+    N_("Booty Bass"), N_("Primus"), N_("Porn Groove"),
+    N_("Satire"), N_("Slow Jam"), N_("Club"), N_("Tango"),
+    N_("Samba"), N_("Folklore"), N_("Ballad"), N_("Power Ballad"),
+    N_("Satire"), N_("Slow Jam"), N_("Club"), N_("Tango"),
+    N_("Samba"), N_("Folklore"), N_("Ballad"), N_("Power Ballad"),
+    N_("Rhythmic Soul"), N_("Freestyle"), N_("Duet"),
+    N_("Punk Rock"), N_("Drum Solo"), N_("A Cappella"),
+    N_("Euro-House"), N_("Dance Hall"), N_("Goa"),
+    N_("Drum & Bass"), N_("Club-House"), N_("Hardcore"),
+    N_("Terror"), N_("Indie"), N_("BritPop"), N_("Negerpunk"),
+    N_("Polsk Punk"), N_("Beat"), N_("Christian Gangsta Rap"),
+    N_("Heavy Metal"), N_("Black Metal"), N_("Crossover"),
+    N_("Contemporary Christian"), N_("Christian Rock"),
+    N_("Merengue"), N_("Salsa"), N_("Thrash Metal"),
+    N_("Anime"), N_("JPop"), N_("Synthpop")
+};
+
+static GList *genre_list = NULL;
+
 static void
 fileinfo_entry_set_text(GtkWidget *widget, const char *text)
 {
@@ -215,7 +266,7 @@ void fileinfo_hide(gpointer unused)
     fileinfo_entry_set_text(entry_artist, "");
     fileinfo_entry_set_text(entry_album, "");
     fileinfo_entry_set_text(entry_comment, "");
-    fileinfo_entry_set_text(entry_genre, "");
+    fileinfo_entry_set_text(gtk_bin_get_child(GTK_BIN(entry_genre)), "");
     fileinfo_entry_set_text(entry_year, "");
     fileinfo_entry_set_text(entry_track, "");
     fileinfo_entry_set_text(entry_location, "");
@@ -295,7 +346,7 @@ fileinfo_update_tuple(gpointer data)
                 set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
                 set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
                 set_field_str_from_entry(tuple, FIELD_COMMENT, entry_comment);
-                set_field_str_from_entry(tuple, FIELD_GENRE, entry_genre);
+                set_field_str_from_entry(tuple, FIELD_GENRE, gtk_bin_get_child(GTK_BIN(entry_genre)));
 
                 set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
                 set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
@@ -419,6 +470,7 @@ create_fileinfo_window(void)
     GtkWidget *btn_close;
     GtkWidget *alignment;
     GtkWidget *separator;
+    gint i;
 
     fileinfo_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width(GTK_CONTAINER(fileinfo_win), 6);
@@ -564,7 +616,19 @@ create_fileinfo_window(void)
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
-    entry_genre = gtk_entry_new();
+    entry_genre = gtk_combo_box_entry_new_text();
+
+    if (!genre_list) {
+        GList *iter;
+
+        for (i = 0; i < G_N_ELEMENTS(genre_table); i++)
+            genre_list = g_list_prepend(genre_list, _(genre_table[i]));
+        genre_list = g_list_sort(genre_list, (GCompareFunc) g_ascii_strcasecmp);
+
+        MOWGLI_ITER_FOREACH(iter, genre_list)
+            gtk_combo_box_append_text(GTK_COMBO_BOX(entry_genre), iter->data);
+    }
+
     gtk_container_add(GTK_CONTAINER(alignment), entry_genre);
     g_signal_connect(G_OBJECT(entry_genre), "changed", (GCallback) entry_changed, NULL);
 
@@ -662,7 +726,7 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         set_entry_str_from_field(entry_artist, tuple, FIELD_ARTIST, updating_enabled);
         set_entry_str_from_field(entry_album, tuple, FIELD_ALBUM, updating_enabled);
         set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT, updating_enabled);
-        set_entry_str_from_field(entry_genre, tuple, FIELD_GENRE, updating_enabled);
+        set_entry_str_from_field(gtk_bin_get_child(GTK_BIN(entry_genre)), tuple, FIELD_GENRE, updating_enabled);
 
         tmp = g_strdup_printf("%s/%s",
                 tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
