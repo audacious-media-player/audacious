@@ -2,6 +2,7 @@
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2006 William Pitcock, Tony Vroon, George Averill,
  *                    Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
+ * Copyright (c) 2008 Eugene Zagidullin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +61,7 @@
 #include "ui_fileinfo.h"
 #include "ui_playlist.h"
 
-#define G_FREE_CLEAR(a) { if(a != NULL) { g_free(a); a = NULL; } }
+#define G_FREE_CLEAR(a) if(a != NULL) { g_free(a); a = NULL; }
 #define STATUS_TIMEOUT 3*1000
 
 GtkWidget *fileinfo_win;
@@ -317,9 +318,15 @@ fileinfo_update_tuple(gpointer data)
         }
 }
 
-
+/**
+ * Looks up an icon from a NULL-terminated list of icon names.
+ *
+ * size: the requested size
+ * name: the default name
+ * ... : a NULL-terminated list of alternates
+ */
 GdkPixbuf *
-themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of icon names */
+themed_icon_lookup(gint size, const gchar *name, ...)
 {
     GtkIconTheme *icon_theme;
     GdkPixbuf *pixbuf;
@@ -328,7 +335,6 @@ themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of
     va_list par;
 
     icon_theme = gtk_icon_theme_get_default ();
-    //fprintf(stderr, "looking for %s\n", name);
     pixbuf = gtk_icon_theme_load_icon (icon_theme, name, size, 0, &error);
     if(pixbuf) return pixbuf;
     
@@ -337,20 +343,28 @@ themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of
     /* fallback */
     va_start(par, name);
     while((n = (gchar*)va_arg(par, gchar *)) != NULL) {
-        //fprintf(stderr, "looking for %s\n", n);
         error = NULL;
         pixbuf = gtk_icon_theme_load_icon (icon_theme, n, size, 0, &error);
-        if(pixbuf) {
-            //fprintf(stderr, "%s is ok\n", n);
+
+        if (pixbuf) {
             va_end(par);
             return pixbuf;
         }
-        if(error != NULL) g_error_free(error);
+
+        if (error != NULL)
+            g_error_free(error);
     }
     
     return NULL;
 }
 
+/**
+ * Intelligently looks up an icon for a mimetype. Supports
+ * HIDEOUSLY BROKEN gnome icon naming scheme too.
+ *
+ * size     : the requested size
+ * mime_type: the mime type.
+ */
 GdkPixbuf *
 mime_icon_lookup(gint size, const gchar *mime_type) /* smart icon resolving routine :) */
 {
@@ -367,7 +381,6 @@ mime_icon_lookup(gint size, const gchar *mime_type) /* smart icon resolving rout
         mime_gnome         = g_strdup_printf("gnome-mime-%s-%s", s[0], s[1]);
         mime_generic       = g_strdup_printf("%s-x-generic", s[0]);
         mime_gnome_generic = g_strdup_printf("gnome-mime-%s", s[0]);
-        //fprintf(stderr, "will look for %s, %s, %s, %s, %s\n", mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0]);
         icon = themed_icon_lookup(size, mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0], NULL); /* s[0] is category */
         g_free(mime_gnome_generic);
         g_free(mime_generic);
