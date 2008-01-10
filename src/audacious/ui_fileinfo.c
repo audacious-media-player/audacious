@@ -86,6 +86,12 @@ GtkWidget *label_mini_status;
 GtkWidget *arrow_rawdata;
 GtkWidget *treeview_rawdata;
 
+enum {
+    RAWDATA_KEY,
+    RAWDATA_VALUE,
+    RAWDATA_N_COLS
+};
+
 static gchar *current_file = NULL;
 static InputPlugin *current_ip = NULL;
 static gboolean something_changed = FALSE;
@@ -476,6 +482,8 @@ create_fileinfo_window(void)
     GtkWidget *alignment;
     GtkWidget *separator;
     GtkWidget *scrolledwindow;
+    GtkTreeViewColumn *column;
+    GtkCellRenderer *renderer;
     gint i;
 
     fileinfo_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -711,6 +719,32 @@ create_fileinfo_window(void)
     gtk_container_add(GTK_CONTAINER(scrolledwindow), treeview_rawdata);
     gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_rawdata), TRUE);
     gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview_rawdata), TRUE);
+
+    column = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(column, _("Key"));
+    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+    gtk_tree_view_column_set_spacing(column, 4);
+    gtk_tree_view_column_set_resizable(column, FALSE);
+    gtk_tree_view_column_set_fixed_width(column, 50);
+
+    renderer = gtk_cell_renderer_text_new();
+    gtk_tree_view_column_pack_start(column, renderer, FALSE);
+    gtk_tree_view_column_set_attributes(column, renderer,
+                                        "text", RAWDATA_KEY, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_rawdata), column);
+
+    column = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(column, _("Value"));
+    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+    gtk_tree_view_column_set_spacing(column, 4);
+    gtk_tree_view_column_set_resizable(column, FALSE);
+    gtk_tree_view_column_set_fixed_width(column, 50);
+
+    renderer = gtk_cell_renderer_text_new();
+    gtk_tree_view_column_pack_start(column, renderer, FALSE);
+    gtk_tree_view_column_set_attributes(column, renderer,
+                                        "text", RAWDATA_VALUE, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_rawdata), column);
     
     hbox_status_and_bbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox0), hbox_status_and_bbox, FALSE, FALSE, 0);
@@ -743,6 +777,11 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
     gchar *tmp, *tmp_utf = NULL;
     GdkPixbuf *icon = NULL;
+    GtkTreeIter iter;
+    GtkListStore *store;
+    mowgli_dictionary_iteration_state_t state;
+    TupleValue *tvalue;
+    gint i;
 
     if (tuple == NULL)
         return;
@@ -811,7 +850,58 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
         gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
     }
-        
+
+    store = gtk_list_store_new(RAWDATA_N_COLS, G_TYPE_STRING, G_TYPE_STRING);
+
+    for (i = 0; i < FIELD_LAST; i++) {
+         gchar *key, *value;
+
+         if (!tuple->values[i])
+             continue;
+
+         if (tuple->values[i]->type != TUPLE_INT && tuple->values[i]->value.string)
+             value = g_strdup(tuple->values[i]->value.string);
+         else if (tuple->values[i]->type == TUPLE_INT)
+             value = g_strdup_printf("%d", tuple->values[i]->value.integer);
+         else
+             continue;
+
+         key = g_strdup(tuple_fields[i].name);
+
+         gtk_list_store_append(store, &iter);
+         gtk_list_store_set(store, &iter,
+                            RAWDATA_KEY, key,
+                            RAWDATA_VALUE, value, -1);
+
+         g_free(key);
+         g_free(value);
+    }
+
+    /* non-standard values are stored in a dictionary. */
+    MOWGLI_DICTIONARY_FOREACH(tvalue, &state, tuple->dict) {
+         gchar *key, *value;
+
+         if (tvalue->type != TUPLE_INT && tvalue->value.string)
+             value = g_strdup(tvalue->value.string);
+         else if (tvalue->type == TUPLE_INT)
+             value = g_strdup_printf("%d", tvalue->value.integer);
+         else
+             continue;
+
+         key = g_strdup(state.cur->key);
+
+         gtk_list_store_append(store, &iter);
+         gtk_list_store_set(store, &iter,
+                            RAWDATA_KEY, key,
+                            RAWDATA_VALUE, value, -1);
+
+         g_free(key);
+         g_free(value);
+    }
+
+    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview_rawdata), GTK_TREE_MODEL(store));
+    g_object_unref(store);
+
     if (!GTK_WIDGET_VISIBLE(fileinfo_win))
         gtk_widget_show(fileinfo_win);
 }
