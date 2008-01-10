@@ -481,6 +481,7 @@ create_fileinfo_window(void)
     GtkWidget *btn_close;
     GtkWidget *alignment;
     GtkWidget *separator;
+    GtkWidget *scrolledwindow;
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
     gint i;
@@ -709,8 +710,13 @@ create_fileinfo_window(void)
     gtk_container_add(GTK_CONTAINER(alignment), arrow_rawdata);
     gtk_box_pack_start(GTK_BOX(hbox), alignment, TRUE, TRUE, 0);
 
+    scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_SHADOW_IN);
+    gtk_container_add(GTK_CONTAINER(arrow_rawdata), scrolledwindow);
+
     treeview_rawdata = gtk_tree_view_new();
-    gtk_container_add(GTK_CONTAINER(arrow_rawdata), treeview_rawdata);
+    gtk_container_add(GTK_CONTAINER(scrolledwindow), treeview_rawdata);
     gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_rawdata), TRUE);
     gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview_rawdata), TRUE);
 
