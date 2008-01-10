@@ -719,6 +719,7 @@ create_fileinfo_window(void)
     gtk_container_add(GTK_CONTAINER(scrolledwindow), treeview_rawdata);
     gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_rawdata), TRUE);
     gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview_rawdata), TRUE);
+    gtk_widget_set_size_request(treeview_rawdata, -1, 130);
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Key"));
