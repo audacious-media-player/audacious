@@ -83,6 +83,8 @@ GtkWidget *label_quality;
 GtkWidget *label_bitrate;
 GtkWidget *btn_apply;
 GtkWidget *label_mini_status;
+GtkWidget *arrow_rawdata;
+GtkWidget *treeview_rawdata;
 
 static gchar *current_file = NULL;
 static InputPlugin *current_ip = NULL;
@@ -453,6 +455,7 @@ create_fileinfo_window(void)
     GtkWidget *vbox0;
     GtkWidget *vbox1;
     GtkWidget *vbox2;
+    GtkWidget *vbox3;
     GtkWidget *label_title;
     GtkWidget *label_artist;
     GtkWidget *label_album;
@@ -472,6 +475,7 @@ create_fileinfo_window(void)
     GtkWidget *btn_close;
     GtkWidget *alignment;
     GtkWidget *separator;
+    GtkWidget *scrolledwindow;
     gint i;
 
     fileinfo_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -500,8 +504,15 @@ create_fileinfo_window(void)
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox1), alignment, TRUE, TRUE, 0);
+
     vbox2 = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(alignment), vbox2);
+
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox1), alignment, TRUE, TRUE, 0);
+
+    vbox3 = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(alignment), vbox3);
     
     label_general = gtk_label_new(_("<span size=\"small\">General</span>"));
     gtk_box_pack_start (GTK_BOX (vbox2), label_general, FALSE, FALSE, 0);
@@ -679,6 +690,27 @@ create_fileinfo_window(void)
     entry_location = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_location);
     gtk_editable_set_editable(GTK_EDITABLE(entry_location), FALSE);
+
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    hbox = gtk_hbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(alignment), hbox);
+    gtk_box_pack_start(GTK_BOX(vbox3), alignment, TRUE, TRUE, 0);
+
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    arrow_rawdata = gtk_expander_new(_("<span size=\"small\">Raw Metadata</span>"));
+    gtk_expander_set_use_markup(GTK_EXPANDER(arrow_rawdata), TRUE);
+    gtk_container_add(GTK_CONTAINER(alignment), arrow_rawdata);
+    gtk_box_pack_start(GTK_BOX(hbox), alignment, TRUE, TRUE, 0);
+
+    scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_SHADOW_IN);
+    gtk_container_add(GTK_CONTAINER(arrow_rawdata), scrolledwindow);
+
+    treeview_rawdata = gtk_tree_view_new();
+    gtk_container_add(GTK_CONTAINER(scrolledwindow), treeview_rawdata);
+    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_rawdata), TRUE);
+    gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview_rawdata), TRUE);
     
     hbox_status_and_bbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox0), hbox_status_and_bbox, FALSE, FALSE, 0);
