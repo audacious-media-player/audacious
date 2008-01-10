@@ -220,41 +220,42 @@ fileinfo_label_set_text(GtkWidget *widget, const char *text)
 static void
 fileinfo_entry_set_image(GtkWidget *widget, const char *text)
 {
-        GdkPixbuf *pixbuf;
-        int width, height;
-        double aspect;
-        GdkPixbuf *pixbuf2;
+    GdkPixbuf *pixbuf;
+    int width, height;
+    double aspect;
+    GdkPixbuf *pixbuf2;
 
-        if (widget == NULL)
-                return;
+    if (widget == NULL)
+        return;
 
-        pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+    pixbuf = gdk_pixbuf_new_from_file(text, NULL);
 
-        if (pixbuf == NULL)
-                return;
+    if (pixbuf == NULL)
+        return;
 
-        width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
-        height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
+    width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
+    height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
 
-        if(strcmp(DATA_DIR "/images/audio.png", text))
-        {
-                if(width == 0)
-                        width = 1;
-                aspect = (double)height / (double)width;
-                if(aspect > 1.0) {
-                        height = (int)(cfg.filepopup_pixelsize * aspect);
-                        width = cfg.filepopup_pixelsize;
-                } else {
-                        height = cfg.filepopup_pixelsize;
-                        width = (int)(cfg.filepopup_pixelsize / aspect);
-                }
-                pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
-                g_object_unref(G_OBJECT(pixbuf));
-                pixbuf = pixbuf2;
+    if (strcmp(DATA_DIR "/images/audio.png", text)) {
+        if (width == 0)
+            width = 1;
+        aspect = (double)height / (double)width;
+
+        if (aspect > 1.0) {
+            height = (int)(cfg.filepopup_pixelsize * aspect);
+            width = cfg.filepopup_pixelsize;
+        } else {
+            height = cfg.filepopup_pixelsize;
+            width = (int)(cfg.filepopup_pixelsize / aspect);
         }
 
-        gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+        pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
         g_object_unref(G_OBJECT(pixbuf));
+        pixbuf = pixbuf2;
+    }
+
+    gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+    g_object_unref(G_OBJECT(pixbuf));
 }
 
 void fileinfo_hide(gpointer unused)
@@ -334,39 +335,37 @@ message_update_failed()
 static void
 fileinfo_update_tuple(gpointer data)
 {
-        Tuple *tuple;
-        VFSFile *fd;
-        if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL && something_changed) {
+    Tuple *tuple;
+    VFSFile *fd;
 
-            tuple = tuple_new();
-            fd = vfs_fopen(current_file, "r+b");
+    if (current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL && something_changed) {
+        tuple = tuple_new();
+        fd = vfs_fopen(current_file, "r+b");
 
-            if (fd != NULL) {
-                set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
-                set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
-                set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
-                set_field_str_from_entry(tuple, FIELD_COMMENT, entry_comment);
-                set_field_str_from_entry(tuple, FIELD_GENRE, gtk_bin_get_child(GTK_BIN(entry_genre)));
+        if (fd != NULL) {
+            set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
+            set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
+            set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
+            set_field_str_from_entry(tuple, FIELD_COMMENT, entry_comment);
+            set_field_str_from_entry(tuple, FIELD_GENRE, gtk_bin_get_child(GTK_BIN(entry_genre)));
 
-                set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
-                set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
+            set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
+            set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
                 
-                if(current_ip->update_song_tuple(tuple, fd)) {
-                    message_update_successfull();
-                    something_changed = FALSE;
-                    gtk_widget_set_sensitive(btn_apply, FALSE);
-                } else {
-                    message_update_failed();
-                }
-
-                vfs_fclose(fd);
-
-            } else {
+            if (current_ip->update_song_tuple(tuple, fd)) {
+                message_update_successfull();
+                something_changed = FALSE;
+                gtk_widget_set_sensitive(btn_apply, FALSE);
+            } else
                 message_update_failed();
-            }
 
-            mowgli_object_unref(tuple);
-        }
+            vfs_fclose(fd);
+
+        } else
+            message_update_failed();
+
+        mowgli_object_unref(tuple);
+    }
 }
 
 /**
@@ -387,9 +386,12 @@ themed_icon_lookup(gint size, const gchar *name, ...)
 
     icon_theme = gtk_icon_theme_get_default ();
     pixbuf = gtk_icon_theme_load_icon (icon_theme, name, size, 0, &error);
-    if(pixbuf) return pixbuf;
+
+    if (pixbuf != NULL)
+        return pixbuf;
     
-    if(error != NULL) g_error_free(error);
+    if (error != NULL)
+        g_error_free(error);
 
     /* fallback */
     va_start(par, name);
