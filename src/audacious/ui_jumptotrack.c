@@ -578,7 +578,7 @@ ui_jump_to_track(void)
                      G_CALLBACK(gtk_widget_destroyed), &jump_to_track_win);
 
     gtk_container_border_width(GTK_CONTAINER(jump_to_track_win), 10);
-    gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 550, 350);
+    gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
 
     vbox = gtk_vbox_new(FALSE, 5);
     gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
