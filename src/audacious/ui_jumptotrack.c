@@ -630,6 +630,32 @@ ui_jump_to_track(void)
 
     gtk_box_pack_start(GTK_BOX(hbox), edit, TRUE, TRUE, 3);
 
+    /* remember text entry */
+    toggle2 = gtk_check_button_new_with_label(_("Remember"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
+                                 cfg.remember_jtf_entry ? TRUE : FALSE);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
+    g_signal_connect(toggle2, "clicked",
+                     G_CALLBACK(ui_jump_to_track_toggle2_cb),
+                     toggle2);
+    
+    rescan = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
+    gtk_box_pack_start(GTK_BOX(hbox), rescan, FALSE, FALSE, 0);
+
+    //gtk_button_set_label (GTK_BUTTON(rescan),"");
+
+    /* pack to container */
+    storage = g_object_new(G_TYPE_OBJECT, NULL);
+    g_object_set_data(storage, "widget", rescan);
+    g_object_set_data(storage, "treeview", treeview);
+    g_object_set_data(storage, "edit", edit);
+
+    g_signal_connect(rescan, "clicked",
+                     G_CALLBACK(ui_jump_to_track_update), storage);
+
+    GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
+    gtk_widget_grab_default(rescan);
+
     scrollwin = gtk_scrolled_window_new(NULL, NULL);
     gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
@@ -643,7 +669,7 @@ ui_jump_to_track(void)
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
+    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 4);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
 
     /* close dialog toggle */
@@ -654,17 +680,7 @@ ui_jump_to_track(void)
     g_signal_connect(toggle, "clicked", 
                      G_CALLBACK(ui_jump_to_track_toggle_cb),
                      toggle);
-
-    /* remember text entry */
-    toggle2 = gtk_check_button_new_with_label(_("Remember Entry"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
-                                 cfg.remember_jtf_entry ? TRUE : FALSE);
-    gtk_box_pack_start(GTK_BOX(bbox), toggle2, FALSE, FALSE, 0);
-    g_signal_connect(toggle2, "clicked",
-                     G_CALLBACK(ui_jump_to_track_toggle2_cb),
-                     toggle2);
-
-
+   
     queue = gtk_button_new_with_mnemonic(_("_Queue"));
     gtk_box_pack_start(GTK_BOX(bbox), queue, FALSE, FALSE, 0);
     GTK_WIDGET_SET_FLAGS(queue, GTK_CAN_DEFAULT);
@@ -674,21 +690,6 @@ ui_jump_to_track(void)
     g_signal_connect(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview)), "changed",
                      G_CALLBACK(ui_jump_to_track_selection_changed_cb),
                      queue);
-
-    rescan = gtk_button_new_from_stock(GTK_STOCK_REFRESH);
-    gtk_box_pack_start(GTK_BOX(bbox), rescan, FALSE, FALSE, 0);
-
-    /* pack to container */
-    storage = g_object_new(G_TYPE_OBJECT, NULL);
-    g_object_set_data(storage, "widget", rescan);
-    g_object_set_data(storage, "treeview", treeview);
-    g_object_set_data(storage, "edit", edit);
-
-    g_signal_connect(rescan, "clicked",
-                     G_CALLBACK(ui_jump_to_track_update), storage);
-
-    GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
-    gtk_widget_grab_default(rescan);
 
     jump = gtk_button_new_from_stock(GTK_STOCK_JUMP_TO);
     gtk_box_pack_start(GTK_BOX(bbox), jump, FALSE, FALSE, 0);
