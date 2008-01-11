@@ -131,8 +131,6 @@ static const gchar *genre_table[] = {
     N_("Booty Bass"), N_("Primus"), N_("Porn Groove"),
     N_("Satire"), N_("Slow Jam"), N_("Club"), N_("Tango"),
     N_("Samba"), N_("Folklore"), N_("Ballad"), N_("Power Ballad"),
-    N_("Satire"), N_("Slow Jam"), N_("Club"), N_("Tango"),
-    N_("Samba"), N_("Folklore"), N_("Ballad"), N_("Power Ballad"),
     N_("Rhythmic Soul"), N_("Freestyle"), N_("Duet"),
     N_("Punk Rock"), N_("Drum Solo"), N_("A Cappella"),
     N_("Euro-House"), N_("Dance Hall"), N_("Goa"),
