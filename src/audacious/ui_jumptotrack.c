@@ -239,8 +239,6 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
 static gboolean
 ui_jump_to_track_match(const gchar * song, GSList *regex_list)
 {
-    gboolean rv = TRUE;
-
     if ( song == NULL )
         return FALSE;
 
@@ -248,13 +246,10 @@ ui_jump_to_track_match(const gchar * song, GSList *regex_list)
     {
         regex_t *regex = regex_list->data;
         if ( regexec( regex , song , 0 , NULL , 0 ) != 0 )
-        {
-            rv = FALSE;
-            break;
-        }
+            return FALSE;
     }
 
-    return rv;
+    return TRUE;
 }
 
 void
@@ -365,6 +360,8 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         if ( regcomp( regex , words[i] , REG_NOSUB ) == 0 )
     #endif
             regex_list = g_slist_append( regex_list , regex );
+        else
+            g_free( regex );
     }
 
     /* FIXME: Remove the connected signals before clearing
@@ -451,6 +448,7 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         {
             regex_t *regex = regex_list->data;
             regfree( regex );
+            g_free( regex );
             regex_list = g_slist_next(regex_list);
         }
         g_slist_free( regex_list_tmp );
