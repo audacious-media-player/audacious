@@ -239,8 +239,6 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
 static gboolean
 ui_jump_to_track_match(const gchar * song, GSList *regex_list)
 {
-    gboolean rv = TRUE;
-
     if ( song == NULL )
         return FALSE;
 
@@ -248,13 +246,10 @@ ui_jump_to_track_match(const gchar * song, GSList *regex_list)
     {
         regex_t *regex = regex_list->data;
         if ( regexec( regex , song , 0 , NULL , 0 ) != 0 )
-        {
-            rv = FALSE;
-            break;
-        }
+            return FALSE;
     }
 
-    return rv;
+    return TRUE;
 }
 
 void
@@ -365,6 +360,8 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         if ( regcomp( regex , words[i] , REG_NOSUB ) == 0 )
     #endif
             regex_list = g_slist_append( regex_list , regex );
+        else
+            g_free( regex );
     }
 
     /* FIXME: Remove the connected signals before clearing
@@ -451,6 +448,7 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         {
             regex_t *regex = regex_list->data;
             regfree( regex );
+            g_free( regex );
             regex_list = g_slist_next(regex_list);
         }
         g_slist_free( regex_list_tmp );
@@ -578,7 +576,7 @@ ui_jump_to_track(void)
                      G_CALLBACK(gtk_widget_destroyed), &jump_to_track_win);
 
     gtk_container_border_width(GTK_CONTAINER(jump_to_track_win), 10);
-    gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 550, 350);
+    gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
 
     vbox = gtk_vbox_new(FALSE, 5);
     gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
@@ -612,6 +610,8 @@ ui_jump_to_track(void)
     hbox = gtk_hbox_new(FALSE, 3);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
+    
+    /* filter box */
     search_label = gtk_label_new(_("Filter: "));
     gtk_label_set_markup_with_mnemonic(GTK_LABEL(search_label), _("_Filter:"));
     gtk_box_pack_start(GTK_BOX(hbox), search_label, FALSE, FALSE, 0);
@@ -630,6 +630,32 @@ ui_jump_to_track(void)
 
     gtk_box_pack_start(GTK_BOX(hbox), edit, TRUE, TRUE, 3);
 
+    /* remember text entry */
+    toggle2 = gtk_check_button_new_with_label(_("Remember"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
+                                 cfg.remember_jtf_entry ? TRUE : FALSE);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
+    g_signal_connect(toggle2, "clicked",
+                     G_CALLBACK(ui_jump_to_track_toggle2_cb),
+                     toggle2);
+
+    /* clear button */
+    rescan = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
+    gtk_box_pack_start(GTK_BOX(hbox), rescan, FALSE, FALSE, 0);
+
+
+    /* pack to container */
+    storage = g_object_new(G_TYPE_OBJECT, NULL);
+    g_object_set_data(storage, "widget", rescan);
+    g_object_set_data(storage, "treeview", treeview);
+    g_object_set_data(storage, "edit", edit);
+
+    g_signal_connect(rescan, "clicked",
+                     G_CALLBACK(ui_jump_to_track_update), storage);
+
+    GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
+    gtk_widget_grab_default(rescan);
+
     scrollwin = gtk_scrolled_window_new(NULL, NULL);
     gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
@@ -643,7 +669,7 @@ ui_jump_to_track(void)
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
+    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 4);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
 
     /* close dialog toggle */
@@ -654,18 +680,10 @@ ui_jump_to_track(void)
     g_signal_connect(toggle, "clicked", 
                      G_CALLBACK(ui_jump_to_track_toggle_cb),
                      toggle);
-
-    /* remember text entry */
-    toggle2 = gtk_check_button_new_with_label(_("Remember Entry"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
-                                 cfg.remember_jtf_entry ? TRUE : FALSE);
-    gtk_box_pack_start(GTK_BOX(bbox), toggle2, FALSE, FALSE, 0);
-    g_signal_connect(toggle2, "clicked",
-                     G_CALLBACK(ui_jump_to_track_toggle2_cb),
-                     toggle2);
-
-
+    
     queue = gtk_button_new_with_mnemonic(_("_Queue"));
+    gtk_button_set_image(GTK_BUTTON(queue),
+                     gtk_image_new_from_stock(AUD_STOCK_QUEUETOGGLE, GTK_ICON_SIZE_BUTTON));
     gtk_box_pack_start(GTK_BOX(bbox), queue, FALSE, FALSE, 0);
     GTK_WIDGET_SET_FLAGS(queue, GTK_CAN_DEFAULT);
     g_signal_connect(queue, "clicked", 
@@ -674,21 +692,6 @@ ui_jump_to_track(void)
     g_signal_connect(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview)), "changed",
                      G_CALLBACK(ui_jump_to_track_selection_changed_cb),
                      queue);
-
-    rescan = gtk_button_new_from_stock(GTK_STOCK_REFRESH);
-    gtk_box_pack_start(GTK_BOX(bbox), rescan, FALSE, FALSE, 0);
-
-    /* pack to container */
-    storage = g_object_new(G_TYPE_OBJECT, NULL);
-    g_object_set_data(storage, "widget", rescan);
-    g_object_set_data(storage, "treeview", treeview);
-    g_object_set_data(storage, "edit", edit);
-
-    g_signal_connect(rescan, "clicked",
-                     G_CALLBACK(ui_jump_to_track_update), storage);
-
-    GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
-    gtk_widget_grab_default(rescan);
 
     jump = gtk_button_new_from_stock(GTK_STOCK_JUMP_TO);
     gtk_box_pack_start(GTK_BOX(bbox), jump, FALSE, FALSE, 0);

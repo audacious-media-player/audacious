@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-01-02 00:49+0100\n"
+"POT-Creation-Date: 2008-01-10 15:53+0100\n"
 "PO-Revision-Date: 2004-06-29 19:02+0900\n"
 "Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -261,7 +261,7 @@ msgstr "  (유효하지 않은 UTF-8)"
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2005-2007 Audacious Development Team"
+"Copyright (C) 2005-2008 Audacious Development Team"
 msgstr ""
 "<big><b>Beep Media Player %s</b></big>\n"
 "XMMS 기반의 미디어 플레이어\n"
@@ -285,7 +285,7 @@ msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
 "\n"
-"Copyright (C) 2005-2007 Audacious Development Team\n"
+"Copyright (C) 2005-2008 Audacious Development Team\n"
 msgstr ""
 "<big><b>Beep Media Player %s</b></big>\n"
 "XMMS 기반의 미디어 플레이어\n"
@@ -485,109 +485,722 @@ msgstr "이퀄라이저"
 msgid "Presets"
 msgstr "설정값"
 
-#: src/audacious/ui_fileinfo.c:163 src/audacious/ui_fileinfo.c:469
-#: src/audacious/ui_fileinfo.c:472 src/audacious/ui_fileinfo.c:475
+#: src/audacious/ui_fileinfo.c:101
+#, fuzzy
+msgid "Blues"
+msgstr "블루스"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Classic Rock"
+msgstr "고전 락"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Country"
+msgstr "컨트리"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Dance"
+msgstr "댄스"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Disco"
+msgstr "디스코"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Funk"
+msgstr "펑크"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Grunge"
+msgstr "그런지"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Hip-Hop"
+msgstr "힙합"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Jazz"
+msgstr "재즈"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Metal"
+msgstr "메탈"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "New Age"
+msgstr "뉴에이지"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Oldies"
+msgstr "올드팝"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Other"
+msgstr "기타"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Pop"
+msgstr "팝"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "R&B"
+msgstr "R&B"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Rap"
+msgstr "랩"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Reggae"
+msgstr "레게"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Rock"
+msgstr "락"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Techno"
+msgstr "테크노"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Industrial"
+msgstr "인터스트리얼"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Alternative"
+msgstr "얼터너티브"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "Ska"
+msgstr "스카"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "Death Metal"
+msgstr "데스 메탈"
+
+#: src/audacious/ui_fileinfo.c:106
+#, fuzzy
+msgid "Pranks"
+msgstr "프랭크스"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "Soundtrack"
+msgstr "사운드트랙"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Euro-Techno"
+msgstr "유로-테크노"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Ambient"
+msgstr "엠비엔트"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Trip-Hop"
+msgstr "트립 합"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Vocal"
+msgstr "보컬"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Jazz+Funk"
+msgstr "재즈+펑크"
+
+#: src/audacious/ui_fileinfo.c:108
+#, fuzzy
+msgid "Fusion"
+msgstr "빠른-퓨전"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Trance"
+msgstr "트랜스"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Classical"
+msgstr "클래식"
+
+#: src/audacious/ui_fileinfo.c:109
+msgid "Instrumental"
+msgstr "기악"
+
+#: src/audacious/ui_fileinfo.c:109
+msgid "Acid"
+msgstr "에시드"
+
+#: src/audacious/ui_fileinfo.c:109
+msgid "House"
+msgstr "하우스"
+
+#: src/audacious/ui_fileinfo.c:109
+msgid "Game"
+msgstr "게임"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "Sound Clip"
+msgstr "소리 클립"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "Gospel"
+msgstr "성가"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "Noise"
+msgstr "잡음"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "AlternRock"
+msgstr "알턴 락"
+
+#: src/audacious/ui_fileinfo.c:111
+#, fuzzy
+msgid "Bass"
+msgstr "베이스"
+
+#: src/audacious/ui_fileinfo.c:111
+msgid "Soul"
+msgstr "소울"
+
+#: src/audacious/ui_fileinfo.c:111
+msgid "Punk"
+msgstr "펑크"
+
+#: src/audacious/ui_fileinfo.c:111
+msgid "Space"
+msgstr "우주"
+
+#: src/audacious/ui_fileinfo.c:112
+msgid "Meditative"
+msgstr "명상"
+
+#: src/audacious/ui_fileinfo.c:112
+msgid "Instrumental Pop"
+msgstr "인스트루멘탈 팝"
+
+#: src/audacious/ui_fileinfo.c:113
+msgid "Instrumental Rock"
+msgstr "인스트루멘탈 록"
+
+#: src/audacious/ui_fileinfo.c:113
+msgid "Ethnic"
+msgstr "민족"
+
+#: src/audacious/ui_fileinfo.c:113
+msgid "Gothic"
+msgstr "고딕"
+
+#: src/audacious/ui_fileinfo.c:114
+msgid "Darkwave"
+msgstr "다크웨이브"
+
+#: src/audacious/ui_fileinfo.c:114
+msgid "Techno-Industrial"
+msgstr "인터스트리얼 테크노"
+
+#: src/audacious/ui_fileinfo.c:114
+msgid "Electronic"
+msgstr "전자음악"
+
+#: src/audacious/ui_fileinfo.c:115
+msgid "Pop-Folk"
+msgstr "팝-포크"
+
+#: src/audacious/ui_fileinfo.c:115
+msgid "Eurodance"
+msgstr "유로댄스"
+
+#: src/audacious/ui_fileinfo.c:115
+msgid "Dream"
+msgstr "드림"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "Southern Rock"
+msgstr "남부 락"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "Comedy"
+msgstr "코메디"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "Cult"
+msgstr "컬트"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Gangsta Rap"
+msgstr "갱스터 랩"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Top 40"
+msgstr "톱 40"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Christian Rap"
+msgstr "기독교 랩"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Pop/Funk"
+msgstr "팝/펑크"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Jungle"
+msgstr "정글"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Native American"
+msgstr "북미 토속"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Cabaret"
+msgstr "카바레"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "New Wave"
+msgstr "뉴 웨이브"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Psychedelic"
+msgstr "환각풍"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Rave"
+msgstr "레이브"
+
+#: src/audacious/ui_fileinfo.c:120
+#, fuzzy
+msgid "Showtunes"
+msgstr "쇼 음악"
+
+#: src/audacious/ui_fileinfo.c:120
+msgid "Trailer"
+msgstr "예고음악"
+
+#: src/audacious/ui_fileinfo.c:120
+msgid "Lo-Fi"
+msgstr "로-파이"
+
+#: src/audacious/ui_fileinfo.c:120
+msgid "Tribal"
+msgstr "트라이벌"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Acid Punk"
+msgstr "에시드 펑크"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Acid Jazz"
+msgstr "에시드 재즈"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Polka"
+msgstr "폴카"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Retro"
+msgstr "레트로"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Musical"
+msgstr "뮤지컬"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Rock & Roll"
+msgstr "락 & 롤"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Hard Rock"
+msgstr "하드 락"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Folk"
+msgstr "포크"
+
+#: src/audacious/ui_fileinfo.c:123
+msgid "Folk/Rock"
+msgstr "포크/록"
+
+#: src/audacious/ui_fileinfo.c:123
+msgid "National Folk"
+msgstr "내쇼날 포크"
+
+#: src/audacious/ui_fileinfo.c:123
+msgid "Swing"
+msgstr "스윙"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Fast-Fusion"
+msgstr "빠른-퓨전"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Bebob"
+msgstr "비밥"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Latin"
+msgstr "라틴"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Revival"
+msgstr "리바이벌"
+
+#: src/audacious/ui_fileinfo.c:125
+msgid "Celtic"
+msgstr "켈트"
+
+#: src/audacious/ui_fileinfo.c:125
+msgid "Bluegrass"
+msgstr "블루그래스"
+
+#: src/audacious/ui_fileinfo.c:125
+msgid "Avantgarde"
+msgstr "전위"
+
+#: src/audacious/ui_fileinfo.c:126
+msgid "Gothic Rock"
+msgstr "고딕 락"
+
+#: src/audacious/ui_fileinfo.c:126
+msgid "Progressive Rock"
+msgstr "프로그래시브 락"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Psychedelic Rock"
+msgstr "환각풍 락"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Symphonic Rock"
+msgstr "교향악단풍 락"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Slow Rock"
+msgstr "느린 락"
+
+#: src/audacious/ui_fileinfo.c:128
+msgid "Big Band"
+msgstr "큰 밴드"
+
+#: src/audacious/ui_fileinfo.c:128
+msgid "Chorus"
+msgstr "합창"
+
+#: src/audacious/ui_fileinfo.c:128
+msgid "Easy Listening"
+msgstr "이지 리스닝"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Acoustic"
+msgstr "어쿠스틱"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Humour"
+msgstr "유머"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Speech"
+msgstr "연설"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Chanson"
+msgstr "샹숑"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Opera"
+msgstr "오페라"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Chamber Music"
+msgstr "실내악"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Sonata"
+msgstr "소나타"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Symphony"
+msgstr "교향악"
+
+#: src/audacious/ui_fileinfo.c:131
+msgid "Booty Bass"
+msgstr "부티 배이스"
+
+#: src/audacious/ui_fileinfo.c:131
+msgid "Primus"
+msgstr "프라이머스"
+
+#: src/audacious/ui_fileinfo.c:131
+msgid "Porn Groove"
+msgstr "포르노풍"
+
+#: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
+#, fuzzy
+msgid "Satire"
+msgstr "스테레오"
+
+#: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
+#, fuzzy
+msgid "Slow Jam"
+msgstr "슬로우 잼"
+
+#: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
+msgid "Club"
+msgstr "클럽"
+
+#: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
+msgid "Tango"
+msgstr "탱고"
+
+#: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
+msgid "Samba"
+msgstr "삼바"
+
+#: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
+msgid "Folklore"
+msgstr "민속악"
+
+#: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
+msgid "Ballad"
+msgstr "발라드"
+
+#: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
+msgid "Power Ballad"
+msgstr "파워 발라드"
+
+#: src/audacious/ui_fileinfo.c:136
+msgid "Rhythmic Soul"
+msgstr "리드믹 소울"
+
+#: src/audacious/ui_fileinfo.c:136
+msgid "Freestyle"
+msgstr "프리스타일"
+
+#: src/audacious/ui_fileinfo.c:136
+msgid "Duet"
+msgstr "듀엣"
+
+#: src/audacious/ui_fileinfo.c:137
+msgid "Punk Rock"
+msgstr "펑크 락"
+
+#: src/audacious/ui_fileinfo.c:137
+msgid "Drum Solo"
+msgstr "드럼 독주"
+
+#: src/audacious/ui_fileinfo.c:137
+msgid "A Cappella"
+msgstr "아 카펠라"
+
+#: src/audacious/ui_fileinfo.c:138
+msgid "Euro-House"
+msgstr "유로-하우스"
+
+#: src/audacious/ui_fileinfo.c:138
+msgid "Dance Hall"
+msgstr "댄스홀"
+
+#: src/audacious/ui_fileinfo.c:138
+msgid "Goa"
+msgstr "인도풍"
+
+#: src/audacious/ui_fileinfo.c:139
+msgid "Drum & Bass"
+msgstr "드럼 & 베이스"
+
+#: src/audacious/ui_fileinfo.c:139
+msgid "Club-House"
+msgstr "클럽-하우스"
+
+#: src/audacious/ui_fileinfo.c:139
+msgid "Hardcore"
+msgstr "하드코어"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "Terror"
+msgstr "콩포"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "Indie"
+msgstr "인디"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "BritPop"
+msgstr "영국팝"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "Negerpunk"
+msgstr "흑인펑크"
+
+#: src/audacious/ui_fileinfo.c:141
+msgid "Polsk Punk"
+msgstr "Polsk 펑크"
+
+#: src/audacious/ui_fileinfo.c:141
+msgid "Beat"
+msgstr "비트"
+
+#: src/audacious/ui_fileinfo.c:141
+msgid "Christian Gangsta Rap"
+msgstr "기독교 갱스터 랩"
+
+#: src/audacious/ui_fileinfo.c:142
+msgid "Heavy Metal"
+msgstr "헤비 메탈"
+
+#: src/audacious/ui_fileinfo.c:142
+msgid "Black Metal"
+msgstr "흑인 메탈"
+
+#: src/audacious/ui_fileinfo.c:142
+msgid "Crossover"
+msgstr "크로스 오버"
+
+#: src/audacious/ui_fileinfo.c:143
+msgid "Contemporary Christian"
+msgstr "현재 기독교"
+
+#: src/audacious/ui_fileinfo.c:143
+msgid "Christian Rock"
+msgstr "기독교 락"
+
+#: src/audacious/ui_fileinfo.c:144
+msgid "Merengue"
+msgstr "메렝계"
+
+#: src/audacious/ui_fileinfo.c:144
+msgid "Salsa"
+msgstr "살사"
+
+#: src/audacious/ui_fileinfo.c:144
+msgid "Thrash Metal"
+msgstr "트래시 메탈"
+
+#: src/audacious/ui_fileinfo.c:145
+msgid "Anime"
+msgstr "만화"
+
+#: src/audacious/ui_fileinfo.c:145
+msgid "JPop"
+msgstr "일본 팝"
+
+#: src/audacious/ui_fileinfo.c:145
+msgid "Synthpop"
+msgstr "신스팝"
+
+#: src/audacious/ui_fileinfo.c:223 src/audacious/ui_fileinfo.c:555
+#: src/audacious/ui_fileinfo.c:558 src/audacious/ui_fileinfo.c:561
 #, fuzzy
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"medium\"><b>미디어</b></span>"
 
-#: src/audacious/ui_fileinfo.c:273
+#: src/audacious/ui_fileinfo.c:334
 msgid "Metadata updated successfully"
 msgstr ""
 
-#: src/audacious/ui_fileinfo.c:279
+#: src/audacious/ui_fileinfo.c:340
 msgid "Metadata updating failed"
 msgstr ""
 
-#: src/audacious/ui_fileinfo.c:412
+#: src/audacious/ui_fileinfo.c:491
 #, fuzzy
 msgid "Track Information"
 msgstr "트랙 음량조정:"
 
-#: src/audacious/ui_fileinfo.c:439
+#: src/audacious/ui_fileinfo.c:525
 #, fuzzy
 msgid "<span size=\"small\">General</span>"
 msgstr "<span size=\"medium\"><b>일반</b></span>"
 
-#: src/audacious/ui_fileinfo.c:459
+#: src/audacious/ui_fileinfo.c:545
 #, fuzzy
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"medium\"><b>일반</b></span>"
 
-#: src/audacious/ui_fileinfo.c:462
+#: src/audacious/ui_fileinfo.c:548
 #, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"medium\"><b>미디어</b></span>"
 
-#: src/audacious/ui_fileinfo.c:465
+#: src/audacious/ui_fileinfo.c:551
 #, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"medium\"><b>일반</b></span>"
 
-#: src/audacious/ui_fileinfo.c:498
+#: src/audacious/ui_fileinfo.c:584
 #, fuzzy
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"medium\"><b>미디어</b></span>"
 
-#: src/audacious/ui_fileinfo.c:510
+#: src/audacious/ui_fileinfo.c:596
 #, fuzzy
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"medium\"><b>설정</b></span>"
 
-#: src/audacious/ui_fileinfo.c:522
+#: src/audacious/ui_fileinfo.c:608
 #, fuzzy
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"medium\"><b>출력</b></span>"
 
-#: src/audacious/ui_fileinfo.c:534
+#: src/audacious/ui_fileinfo.c:620
 #, fuzzy
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"medium\"><b>일반</b></span>"
 
-#: src/audacious/ui_fileinfo.c:546
+#: src/audacious/ui_fileinfo.c:632
 #, fuzzy
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"medium\"><b>일반</b></span>"
 
-#: src/audacious/ui_fileinfo.c:565
+#: src/audacious/ui_fileinfo.c:663
 #, fuzzy
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"medium\"><b>미디어</b></span>"
 
-#: src/audacious/ui_fileinfo.c:578
+#: src/audacious/ui_fileinfo.c:676
 #, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"medium\"><b>일반</b></span>"
 
-#: src/audacious/ui_fileinfo.c:591
+#: src/audacious/ui_fileinfo.c:689
 #, fuzzy
 msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"medium\"><b>설정</b></span>"
 
-#: src/audacious/ui_fileinfo.c:673
+#: src/audacious/ui_fileinfo.c:708
+#, fuzzy
+msgid "<span size=\"small\">Raw Metadata</span>"
+msgstr "<span size=\"medium\"><b>미디어</b></span>"
+
+#: src/audacious/ui_fileinfo.c:725
+msgid "Key"
+msgstr ""
+
+#: src/audacious/ui_fileinfo.c:738
+#, fuzzy
+msgid "Value"
+msgstr "블루스"
+
+#: src/audacious/ui_fileinfo.c:826
 #, fuzzy, c-format
 msgid "%d kb/s"
 msgstr "%d KBit/s"
 
 #: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_fileinfopopup.c:367
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:142
 msgid "Title"
 msgstr "제목"
 
-#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:138
+#: src/audacious/ui_fileinfopopup.c:258 src/audacious/ui_preferences.c:140
 #, fuzzy
 msgid "Artist"
 msgstr "가수:"
 
-#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:139
+#: src/audacious/ui_fileinfopopup.c:261 src/audacious/ui_preferences.c:141
 msgid "Album"
 msgstr "앨범"
 
-#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:142
+#: src/audacious/ui_fileinfopopup.c:264 src/audacious/ui_preferences.c:144
 msgid "Genre"
 msgstr "장르"
 
-#: src/audacious/ui_fileinfopopup.c:267 src/audacious/ui_preferences.c:146
+#: src/audacious/ui_fileinfopopup.c:267 src/audacious/ui_preferences.c:148
 msgid "Year"
 msgstr "연도"
 
@@ -601,8 +1214,8 @@ msgstr "트랙 번호"
 msgid "Track Length"
 msgstr "트랙 길이:"
 
-#: src/audacious/ui_fileinfopopup.c:376 src/audacious/ui_preferences.c:143
-#: src/audacious/ui_preferences.c:434
+#: src/audacious/ui_fileinfopopup.c:376 src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:439
 msgid "Filename"
 msgstr "파일이름"
 
@@ -639,30 +1252,30 @@ msgstr "/읽기/파일"
 msgid "Un_queue"
 msgstr "대기열"
 
-#: src/audacious/ui_jumptotrack.c:152 src/audacious/ui_jumptotrack.c:647
+#: src/audacious/ui_jumptotrack.c:152 src/audacious/ui_jumptotrack.c:668
 #, fuzzy
 msgid "_Queue"
 msgstr "대기열"
 
-#: src/audacious/ui_jumptotrack.c:553
+#: src/audacious/ui_jumptotrack.c:574
 msgid "Jump to Track"
 msgstr "트랙 이동"
 
-#: src/audacious/ui_jumptotrack.c:594
+#: src/audacious/ui_jumptotrack.c:615
 msgid "Filter: "
 msgstr "필터: "
 
-#: src/audacious/ui_jumptotrack.c:595
+#: src/audacious/ui_jumptotrack.c:616
 #, fuzzy
 msgid "_Filter:"
 msgstr "필터: "
 
-#: src/audacious/ui_jumptotrack.c:629
+#: src/audacious/ui_jumptotrack.c:650
 #, fuzzy
 msgid "Close on Jump"
 msgstr "/닫기"
 
-#: src/audacious/ui_jumptotrack.c:638
+#: src/audacious/ui_jumptotrack.c:659
 msgid "Remember Entry"
 msgstr ""
 
@@ -1031,7 +1644,7 @@ msgstr "/경과 시간"
 msgid "Time Remaining"
 msgstr "/남은 시간"
 
-#: src/audacious/ui_manager.c:170
+#: src/audacious/ui_manager.c:170 src/audacious/ui_preferences.c:132
 #, fuzzy
 msgid "Playback"
 msgstr "/재생하기"
@@ -1107,7 +1720,7 @@ msgid "Peaks Falloff"
 msgstr "/최고점 감소"
 
 #: src/audacious/ui_manager.c:203 src/audacious/ui_playlist_manager.c:406
-#: src/audacious/ui_preferences.c:131 src/audacious/ui_preferences.c:2341
+#: src/audacious/ui_preferences.c:133
 msgid "Playlist"
 msgstr "재생목록"
 
@@ -1639,12 +2252,12 @@ msgstr "설정값 삭제"
 msgid "Delete auto-load preset"
 msgstr "/삭제/설정값 자동-읽기"
 
-#: src/audacious/ui_playlist.c:438
+#: src/audacious/ui_playlist.c:439
 #, fuzzy
 msgid "Search entries in active playlist"
 msgstr "재생목록에 트랙 번호 보이기"
 
-#: src/audacious/ui_playlist.c:446
+#: src/audacious/ui_playlist.c:447
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1652,49 +2265,49 @@ msgid ""
 "for."
 msgstr ""
 
-#: src/audacious/ui_playlist.c:454
+#: src/audacious/ui_playlist.c:455
 #, fuzzy
 msgid "Title: "
 msgstr "제목:"
 
-#: src/audacious/ui_playlist.c:461
+#: src/audacious/ui_playlist.c:462
 #, fuzzy
 msgid "Album: "
 msgstr "앨범:"
 
-#: src/audacious/ui_playlist.c:468
+#: src/audacious/ui_playlist.c:469
 #, fuzzy
 msgid "Artist: "
 msgstr "가수:"
 
-#: src/audacious/ui_playlist.c:475
+#: src/audacious/ui_playlist.c:476
 #, fuzzy
 msgid "Filename: "
 msgstr "파일이름:"
 
-#: src/audacious/ui_playlist.c:483
+#: src/audacious/ui_playlist.c:484
 msgid "Clear previous selection before searching"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:486
+#: src/audacious/ui_playlist.c:487
 msgid "Automatically toggle queue for matching entries"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:489
+#: src/audacious/ui_playlist.c:490
 msgid "Create a new playlist with matching entries"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:716
+#: src/audacious/ui_playlist.c:717
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "재생목록 \"%s\" 쓰기 오류: %s"
 
-#: src/audacious/ui_playlist.c:738
+#: src/audacious/ui_playlist.c:739
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s는 이미 존재합니다. 계속 할까요?"
 
-#: src/audacious/ui_playlist.c:753
+#: src/audacious/ui_playlist.c:754
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1702,26 +2315,26 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "재생목록을 저장할 수 없습니다! %s의 파일형식을 알 수 없습니다."
 
-#: src/audacious/ui_playlist.c:879
+#: src/audacious/ui_playlist.c:880
 #, fuzzy
 msgid "Save as Static Playlist"
 msgstr "재생목록 저장"
 
-#: src/audacious/ui_playlist.c:886
+#: src/audacious/ui_playlist.c:887
 msgid "Use Relative Path"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:908
+#: src/audacious/ui_playlist.c:909
 #, fuzzy
 msgid "Load Playlist"
 msgstr "재생목록 열기"
 
-#: src/audacious/ui_playlist.c:921
+#: src/audacious/ui_playlist.c:922
 #, fuzzy
 msgid "Save Playlist"
 msgstr "재생목록 저장"
 
-#: src/audacious/ui_playlist.c:1479
+#: src/audacious/ui_playlist.c:1480
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/재생목록 편집기 보기"
@@ -1740,372 +2353,372 @@ msgstr ""
 msgid "_Rename"
 msgstr "파일이름"
 
-#: src/audacious/ui_preferences.c:127 src/audacious/ui_preferences.c:2226
+#: src/audacious/ui_preferences.c:128
 msgid "Appearance"
 msgstr "겉모양"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:129
 #, fuzzy
 msgid "Audio"
 msgstr "MPEG 오디오 플러그인 정보"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:130
 msgid "Connectivity"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:130 src/audacious/ui_preferences.c:2237
+#: src/audacious/ui_preferences.c:131
 msgid "Mouse"
 msgstr "마우스"
 
-#: src/audacious/ui_preferences.c:132 src/audacious/ui_preferences.c:2167
+#: src/audacious/ui_preferences.c:134
 msgid "Plugins"
 msgstr "플러그인"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:143
 #, fuzzy
 msgid "Tracknumber"
 msgstr "트랙 번호"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:146
 #, fuzzy
 msgid "Filepath"
 msgstr "파일 경로"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:147
 msgid "Date"
 msgstr "날짜"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:149
 msgid "Comment"
 msgstr "설명"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:150
 #, fuzzy
 msgid "Codec"
 msgstr "/닫기"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:151
 #, fuzzy
 msgid "Quality"
 msgstr "/끝내기(_Q)"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:193
 msgid "<b>_Fonts</b>"
 msgstr "<b>글꼴(_F)</b>"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:194
 msgid "_Player:"
 msgstr "플레이어(_P):"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:194
 msgid "Select main player window font:"
 msgstr "기본 재생 창 글꼴 선택:"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:195
 msgid "_Playlist:"
 msgstr "재생목록(_P):"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:195
 #, fuzzy
 msgid "Select playlist font:"
 msgstr "기본 재생 창 글꼴 선택:"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:196
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "스테레오 (가능한 경우)"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:196
 msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:197
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>기타(_M)</b>"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:198
 msgid "Show track numbers in playlist"
 msgstr "재생목록에 트랙 번호 보이기"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:200
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "재생목록에 트랙 번호 보이기"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:202
 msgid "Use custom cursors"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:203
 msgid "Show window manager decoration"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:202
+#: src/audacious/ui_preferences.c:204
 msgid "This enables the window manager to show decorations for windows."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:203
+#: src/audacious/ui_preferences.c:205
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:204
+#: src/audacious/ui_preferences.c:206
 msgid ""
 "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
 "provided by Audacious itself and is faster than the default GTK2 selector "
 "(but sadly not as user-friendly)."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:207
 msgid "Use two-way text scroller"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:208
 msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:209
 msgid "Disable inline gtk theme"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "자동 감지"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:214
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:215
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:216
 msgid "Detect file formats by extension."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:217
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:221
 msgid "<b>Playback</b>"
 msgstr "<b>재생하기</b>"
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:222
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:223
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:224
 msgid "Don't advance in the playlist"
 msgstr "재생목록에서 다음곡 진행 안함"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:225
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "재생이 끝나면, 자동으로 다음곡 진행 안함."
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:226
 msgid "Pause between songs"
 msgstr "곡사이 멈춤 시간"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:227
 msgid "Pause for"
 msgstr "잠시 멈춤"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:227
 msgid "seconds"
 msgstr "초"
 
-#: src/audacious/ui_preferences.c:226
+#: src/audacious/ui_preferences.c:231
 msgid "<b>Filename</b>"
 msgstr "<b>파일이름</b>"
 
-#: src/audacious/ui_preferences.c:227
+#: src/audacious/ui_preferences.c:232
 msgid "Convert underscores to blanks"
 msgstr "밑줄을 공백으로 바꿈"
 
-#: src/audacious/ui_preferences.c:228
+#: src/audacious/ui_preferences.c:233
 msgid "Convert %20 to blanks"
 msgstr "%20을 공백으로 바꿈"
 
-#: src/audacious/ui_preferences.c:229
+#: src/audacious/ui_preferences.c:234
 msgid "Convert backslash '\\' to forward slash '/'"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:230
+#: src/audacious/ui_preferences.c:235
 msgid "<b>Metadata</b>"
 msgstr "<b>메타데이터</b>"
 
-#: src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:236
 msgid "Load metadata from playlists and files"
 msgstr "재생목록 및 파일로부터 메타데이터 읽기"
 
-#: src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:236
 msgid "Load metadata (tag information) from music files."
 msgstr "음악 파일로부터 메타데이터(태그 정보) 읽기"
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:237
 msgid "On load"
 msgstr "읽을 때"
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:237
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr "파일을 열거나 재생목록에 추가할 때 메타테이터 읽기"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:238
 msgid "On display"
 msgstr "표시할 때"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:238
 #, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr "파일을 열거나 재생목록에 추가할 때 메타테이터 읽기"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:240
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>파일이름</b>"
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:241
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:241
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:245
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>마우스 휠</b>"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:246
 #, fuzzy
 msgid "Changes volume by"
 msgstr "마우스 휠에 의한 음량 조절"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:246
 msgid "percent"
 msgstr "퍼센트"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:247
 #, fuzzy
 msgid "Scrolls playlist by"
 msgstr "재생목록에서 마우스 스크롤"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:247
 msgid "lines"
 msgstr "줄"
 
-#: src/audacious/ui_preferences.c:404
+#: src/audacious/ui_preferences.c:409
 msgid "Enabled"
 msgstr "사용함"
 
-#: src/audacious/ui_preferences.c:420
+#: src/audacious/ui_preferences.c:425
 msgid "Description"
 msgstr "설명:"
 
-#: src/audacious/ui_preferences.c:958
+#: src/audacious/ui_preferences.c:965
 msgid "Category"
 msgstr "카테고리"
 
-#: src/audacious/ui_preferences.c:1326
+#: src/audacious/ui_preferences.c:1337
 msgid "Color Adjustment"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1333
+#: src/audacious/ui_preferences.c:1344
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1343
+#: src/audacious/ui_preferences.c:1354
 #, fuzzy
 msgid "Blue"
 msgstr "블루스"
 
-#: src/audacious/ui_preferences.c:1350
+#: src/audacious/ui_preferences.c:1361
 #, fuzzy
 msgid "Green"
 msgstr "장르:"
 
-#: src/audacious/ui_preferences.c:1357
+#: src/audacious/ui_preferences.c:1368
 msgid "Red"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1440
+#: src/audacious/ui_preferences.c:1451
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "bmp: MPEG 오디오 플러그인 설정"
 
-#: src/audacious/ui_preferences.c:1449
+#: src/audacious/ui_preferences.c:1460
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "자동 감지"
 
-#: src/audacious/ui_preferences.c:1454
+#: src/audacious/ui_preferences.c:1465
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1471
+#: src/audacious/ui_preferences.c:1482
 msgid "Exclude:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1478
+#: src/audacious/ui_preferences.c:1489
 #, fuzzy
 msgid "Include:"
 msgstr "인디"
 
-#: src/audacious/ui_preferences.c:1495
+#: src/audacious/ui_preferences.c:1506
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1505
+#: src/audacious/ui_preferences.c:1516
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1518
+#: src/audacious/ui_preferences.c:1529
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1521
+#: src/audacious/ui_preferences.c:1532
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>기타(_M)</b>"
 
-#: src/audacious/ui_preferences.c:1530
+#: src/audacious/ui_preferences.c:1541
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1540
+#: src/audacious/ui_preferences.c:1551
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1585
+#: src/audacious/ui_preferences.c:1596
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1604
+#: src/audacious/ui_preferences.c:1615
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -2113,178 +2726,96 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1606
+#: src/audacious/ui_preferences.c:1617
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1964
-#, fuzzy
-msgid "Audacious Preferences"
-msgstr "BMP 선택사항"
-
-#: src/audacious/ui_preferences.c:2006
-#, fuzzy
-msgid "_Decoder list:"
-msgstr "디코더"
-
-#: src/audacious/ui_preferences.c:2036
-#, fuzzy
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>일반</b></span>"
-
-#: src/audacious/ui_preferences.c:2049
-#, fuzzy
-msgid "_General plugin list:"
-msgstr "플러그인 목록(_P):"
-
-#: src/audacious/ui_preferences.c:2079
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>일반</b></span>"
-
-#: src/audacious/ui_preferences.c:2091
-#, fuzzy
-msgid "_Visualization plugin list:"
-msgstr "/시각효과 플러그인"
-
-#: src/audacious/ui_preferences.c:2121
-msgid "<b>Visualization</b>"
-msgstr "<b>시각효과</b>"
-
-#: src/audacious/ui_preferences.c:2133
-#, fuzzy
-msgid "_Effect plugin list:"
-msgstr "플러그인 목록(_P):"
-
-#: src/audacious/ui_preferences.c:2163
-#, fuzzy
-msgid "<b>Effects</b>"
-msgstr "<b>설정값</b>"
-
-#: src/audacious/ui_preferences.c:2189
+#: src/audacious/ui_preferences.c:1854
 msgid "<b>_Skin</b>"
 msgstr "<b>스킨(_S)</b>"
 
-#: src/audacious/ui_preferences.c:2203
+#: src/audacious/ui_preferences.c:1868
 #, fuzzy
 msgid "Refresh skin list"
 msgstr "/재생율"
 
-#: src/audacious/ui_preferences.c:2252
+#: src/audacious/ui_preferences.c:1978
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>노래 표시</b>"
 
-#: src/audacious/ui_preferences.c:2271
+#: src/audacious/ui_preferences.c:1997
 msgid "Show information about titlestring format"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2282
+#: src/audacious/ui_preferences.c:2008
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2283
+#: src/audacious/ui_preferences.c:2009
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2284
+#: src/audacious/ui_preferences.c:2010
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2285
+#: src/audacious/ui_preferences.c:2011
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2286
+#: src/audacious/ui_preferences.c:2012
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2287
+#: src/audacious/ui_preferences.c:2013
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2288
+#: src/audacious/ui_preferences.c:2014
 #, fuzzy
 msgid "Custom"
 msgstr "버퍼 시간 (ms):"
 
-#: src/audacious/ui_preferences.c:2295
+#: src/audacious/ui_preferences.c:2021
 msgid "Custom string:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2302
+#: src/audacious/ui_preferences.c:2028
 msgid "Title format:"
 msgstr "제목 형식:"
 
-#: src/audacious/ui_preferences.c:2313
+#: src/audacious/ui_preferences.c:2039
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "bmp: MPEG 오디오 플러그인 설정"
 
-#: src/audacious/ui_preferences.c:2328
+#: src/audacious/ui_preferences.c:2054
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2330
+#: src/audacious/ui_preferences.c:2056
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2335
+#: src/audacious/ui_preferences.c:2061
 msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2354
-#, fuzzy
-msgid "<b>Proxy Configuration</b>"
-msgstr "bmp: MPEG 오디오 플러그인 설정"
-
-#: src/audacious/ui_preferences.c:2370
-msgid "Enable proxy usage"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2388
-#, fuzzy
-msgid "Proxy port:"
-msgstr "프록시:"
-
-#: src/audacious/ui_preferences.c:2394
-msgid "Proxy hostname:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2404
-#, fuzzy
-msgid "Use authentication with proxy"
-msgstr "인증 사용"
-
-#: src/audacious/ui_preferences.c:2423
-#, fuzzy
-msgid "Proxy password:"
-msgstr "비밀번호:"
-
-#: src/audacious/ui_preferences.c:2429
-#, fuzzy
-msgid "Proxy username:"
-msgstr "사용자명:"
-
-#: src/audacious/ui_preferences.c:2446
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2477
+#: src/audacious/ui_preferences.c:2162
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>설정값</b>"
 
-#: src/audacious/ui_preferences.c:2500
+#: src/audacious/ui_preferences.c:2185
 #, fuzzy
 msgid "Buffer size:"
 msgstr "버퍼 크기 (kb):"
 
-#: src/audacious/ui_preferences.c:2506
+#: src/audacious/ui_preferences.c:2191
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -2293,86 +2824,168 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2525
+#: src/audacious/ui_preferences.c:2210
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "현재 출력 플러그인(_C):"
 
-#: src/audacious/ui_preferences.c:2554
+#: src/audacious/ui_preferences.c:2239
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS 출력 플러그인"
 
-#: src/audacious/ui_preferences.c:2571
+#: src/audacious/ui_preferences.c:2256
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD 출력 플러그인 설정"
 
-#: src/audacious/ui_preferences.c:2580
+#: src/audacious/ui_preferences.c:2265
 #, fuzzy
 msgid "<b>Sampling Rate Converter</b>"
 msgstr "샘플링율:"
 
-#: src/audacious/ui_preferences.c:2589
+#: src/audacious/ui_preferences.c:2274
 #, fuzzy
 msgid "Enable Sampling Rate Converter"
 msgstr "샘플링율:"
 
-#: src/audacious/ui_preferences.c:2609
+#: src/audacious/ui_preferences.c:2294
 msgid "Best Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2610
+#: src/audacious/ui_preferences.c:2295
 msgid "Medium Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2611
+#: src/audacious/ui_preferences.c:2296
 msgid "Fastest Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2612
+#: src/audacious/ui_preferences.c:2297
 #, fuzzy
 msgid "ZOH Interpolation"
 msgstr "인증 사용"
 
-#: src/audacious/ui_preferences.c:2613
+#: src/audacious/ui_preferences.c:2298
 #, fuzzy
 msgid "Linear Interpolation"
 msgstr "인증 사용"
 
-#: src/audacious/ui_preferences.c:2615
+#: src/audacious/ui_preferences.c:2300
 #, fuzzy
 msgid "Interpolation Engine:"
 msgstr "인증 사용"
 
-#: src/audacious/ui_preferences.c:2621
+#: src/audacious/ui_preferences.c:2306
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2641
+#: src/audacious/ui_preferences.c:2326
 #, fuzzy
 msgid "Sampling Rate [Hz]:"
 msgstr "샘플링율:"
 
-#: src/audacious/ui_preferences.c:2651
+#: src/audacious/ui_preferences.c:2336
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "음량 조절:"
 
-#: src/audacious/ui_preferences.c:2660
+#: src/audacious/ui_preferences.c:2345
 msgid "Use software volume control"
 msgstr "소프트웨어 음량 조절 사용"
 
-#: src/audacious/ui_preferences.c:2662
+#: src/audacious/ui_preferences.c:2347
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2695
+#: src/audacious/ui_preferences.c:2440
+#, fuzzy
+msgid "<b>Proxy Configuration</b>"
+msgstr "bmp: MPEG 오디오 플러그인 설정"
+
+#: src/audacious/ui_preferences.c:2456
+msgid "Enable proxy usage"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2474
+#, fuzzy
+msgid "Proxy port:"
+msgstr "프록시:"
+
+#: src/audacious/ui_preferences.c:2480
+msgid "Proxy hostname:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2490
+#, fuzzy
+msgid "Use authentication with proxy"
+msgstr "인증 사용"
+
+#: src/audacious/ui_preferences.c:2509
+#, fuzzy
+msgid "Proxy password:"
+msgstr "비밀번호:"
+
+#: src/audacious/ui_preferences.c:2515
+#, fuzzy
+msgid "Proxy username:"
+msgstr "사용자명:"
+
+#: src/audacious/ui_preferences.c:2532
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:2632
+#, fuzzy
+msgid "_Decoder list:"
+msgstr "디코더"
+
+#: src/audacious/ui_preferences.c:2662
+#, fuzzy
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>일반</b></span>"
+
+#: src/audacious/ui_preferences.c:2675
+#, fuzzy
+msgid "_General plugin list:"
+msgstr "플러그인 목록(_P):"
+
+#: src/audacious/ui_preferences.c:2705
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>일반</b></span>"
+
+#: src/audacious/ui_preferences.c:2717
+#, fuzzy
+msgid "_Visualization plugin list:"
+msgstr "/시각효과 플러그인"
+
+#: src/audacious/ui_preferences.c:2747
+msgid "<b>Visualization</b>"
+msgstr "<b>시각효과</b>"
+
+#: src/audacious/ui_preferences.c:2759
+#, fuzzy
+msgid "_Effect plugin list:"
+msgstr "플러그인 목록(_P):"
+
+#: src/audacious/ui_preferences.c:2789
+#, fuzzy
+msgid "<b>Effects</b>"
+msgstr "<b>설정값</b>"
+
+#: src/audacious/ui_preferences.c:2926
+#, fuzzy
+msgid "Audacious Preferences"
+msgstr "BMP 선택사항"
+
+#: src/audacious/ui_preferences.c:2995
 #, fuzzy
 msgid "Reload Plugins"
 msgstr "/스킨 다시 읽기"
@@ -3207,426 +3820,6 @@ msgstr "파일 추가"
 #~ msgid "About Flac Plugin"
 #~ msgstr "ESounD 오디오 플러그인 정보"
 
-#~ msgid "Classic Rock"
-#~ msgstr "고전 락"
-
-#~ msgid "Country"
-#~ msgstr "컨트리"
-
-#~ msgid "Dance"
-#~ msgstr "댄스"
-
-#~ msgid "Disco"
-#~ msgstr "디스코"
-
-#~ msgid "Funk"
-#~ msgstr "펑크"
-
-#~ msgid "Grunge"
-#~ msgstr "그런지"
-
-#~ msgid "Hip-Hop"
-#~ msgstr "힙합"
-
-#~ msgid "Jazz"
-#~ msgstr "재즈"
-
-#~ msgid "Metal"
-#~ msgstr "메탈"
-
-#~ msgid "New Age"
-#~ msgstr "뉴에이지"
-
-#~ msgid "Oldies"
-#~ msgstr "올드팝"
-
-#~ msgid "Other"
-#~ msgstr "기타"
-
-#~ msgid "Pop"
-#~ msgstr "팝"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Rap"
-#~ msgstr "랩"
-
-#~ msgid "Reggae"
-#~ msgstr "레게"
-
-#~ msgid "Rock"
-#~ msgstr "락"
-
-#~ msgid "Techno"
-#~ msgstr "테크노"
-
-#~ msgid "Industrial"
-#~ msgstr "인터스트리얼"
-
-#~ msgid "Alternative"
-#~ msgstr "얼터너티브"
-
-#~ msgid "Ska"
-#~ msgstr "스카"
-
-#~ msgid "Death Metal"
-#~ msgstr "데스 메탈"
-
-#~ msgid "Soundtrack"
-#~ msgstr "사운드트랙"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "유로-테크노"
-
-#~ msgid "Ambient"
-#~ msgstr "엠비엔트"
-
-#~ msgid "Trip-Hop"
-#~ msgstr "트립 합"
-
-#~ msgid "Vocal"
-#~ msgstr "보컬"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "재즈+펑크"
-
-#~ msgid "Trance"
-#~ msgstr "트랜스"
-
-#~ msgid "Classical"
-#~ msgstr "클래식"
-
-#~ msgid "Instrumental"
-#~ msgstr "기악"
-
-#~ msgid "Acid"
-#~ msgstr "에시드"
-
-#~ msgid "House"
-#~ msgstr "하우스"
-
-#~ msgid "Game"
-#~ msgstr "게임"
-
-#~ msgid "Sound Clip"
-#~ msgstr "소리 클립"
-
-#~ msgid "Gospel"
-#~ msgstr "성가"
-
-#~ msgid "Noise"
-#~ msgstr "잡음"
-
-#~ msgid "Soul"
-#~ msgstr "소울"
-
-#~ msgid "Punk"
-#~ msgstr "펑크"
-
-#~ msgid "Space"
-#~ msgstr "우주"
-
-#~ msgid "Meditative"
-#~ msgstr "명상"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "인스트루멘탈 팝"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "인스트루멘탈 록"
-
-#~ msgid "Ethnic"
-#~ msgstr "민족"
-
-#~ msgid "Gothic"
-#~ msgstr "고딕"
-
-#~ msgid "Darkwave"
-#~ msgstr "다크웨이브"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "인터스트리얼 테크노"
-
-#~ msgid "Electronic"
-#~ msgstr "전자음악"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "팝-포크"
-
-#~ msgid "Eurodance"
-#~ msgstr "유로댄스"
-
-#~ msgid "Dream"
-#~ msgstr "드림"
-
-#~ msgid "Southern Rock"
-#~ msgstr "남부 락"
-
-#~ msgid "Comedy"
-#~ msgstr "코메디"
-
-#~ msgid "Cult"
-#~ msgstr "컬트"
-
-#~ msgid "Gangsta Rap"
-#~ msgstr "갱스터 랩"
-
-#~ msgid "Top 40"
-#~ msgstr "톱 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "기독교 랩"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "팝/펑크"
-
-#~ msgid "Jungle"
-#~ msgstr "정글"
-
-#~ msgid "Native American"
-#~ msgstr "북미 토속"
-
-#~ msgid "Cabaret"
-#~ msgstr "카바레"
-
-#~ msgid "New Wave"
-#~ msgstr "뉴 웨이브"
-
-#~ msgid "Psychedelic"
-#~ msgstr "환각풍"
-
-#~ msgid "Rave"
-#~ msgstr "레이브"
-
-#~ msgid "Trailer"
-#~ msgstr "예고음악"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "로-파이"
-
-#~ msgid "Tribal"
-#~ msgstr "트라이벌"
-
-#~ msgid "Acid Punk"
-#~ msgstr "에시드 펑크"
-
-#~ msgid "Acid Jazz"
-#~ msgstr "에시드 재즈"
-
-#~ msgid "Polka"
-#~ msgstr "폴카"
-
-#~ msgid "Retro"
-#~ msgstr "레트로"
-
-#~ msgid "Musical"
-#~ msgstr "뮤지컬"
-
-#~ msgid "Rock & Roll"
-#~ msgstr "락 & 롤"
-
-#~ msgid "Hard Rock"
-#~ msgstr "하드 락"
-
-#~ msgid "Folk"
-#~ msgstr "포크"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "포크/록"
-
-#~ msgid "National Folk"
-#~ msgstr "내쇼날 포크"
-
-#~ msgid "Swing"
-#~ msgstr "스윙"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "빠른-퓨전"
-
-#~ msgid "Bebob"
-#~ msgstr "비밥"
-
-#~ msgid "Latin"
-#~ msgstr "라틴"
-
-#~ msgid "Revival"
-#~ msgstr "리바이벌"
-
-#~ msgid "Celtic"
-#~ msgstr "켈트"
-
-#~ msgid "Bluegrass"
-#~ msgstr "블루그래스"
-
-#~ msgid "Avantgarde"
-#~ msgstr "전위"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "고딕 락"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "프로그래시브 락"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "환각풍 락"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "교향악단풍 락"
-
-#~ msgid "Slow Rock"
-#~ msgstr "느린 락"
-
-#~ msgid "Big Band"
-#~ msgstr "큰 밴드"
-
-#~ msgid "Chorus"
-#~ msgstr "합창"
-
-#~ msgid "Easy Listening"
-#~ msgstr "이지 리스닝"
-
-#~ msgid "Acoustic"
-#~ msgstr "어쿠스틱"
-
-#~ msgid "Humour"
-#~ msgstr "유머"
-
-#~ msgid "Speech"
-#~ msgstr "연설"
-
-#~ msgid "Chanson"
-#~ msgstr "샹숑"
-
-#~ msgid "Opera"
-#~ msgstr "오페라"
-
-#~ msgid "Chamber Music"
-#~ msgstr "실내악"
-
-#~ msgid "Sonata"
-#~ msgstr "소나타"
-
-#~ msgid "Symphony"
-#~ msgstr "교향악"
-
-#~ msgid "Booty Bass"
-#~ msgstr "부티 배이스"
-
-#~ msgid "Primus"
-#~ msgstr "프라이머스"
-
-#~ msgid "Porn Groove"
-#~ msgstr "포르노풍"
-
-#~ msgid "Club"
-#~ msgstr "클럽"
-
-#~ msgid "Tango"
-#~ msgstr "탱고"
-
-#~ msgid "Samba"
-#~ msgstr "삼바"
-
-#~ msgid "Folklore"
-#~ msgstr "민속악"
-
-#~ msgid "Ballad"
-#~ msgstr "발라드"
-
-#~ msgid "Power Ballad"
-#~ msgstr "파워 발라드"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "리드믹 소울"
-
-#~ msgid "Freestyle"
-#~ msgstr "프리스타일"
-
-#~ msgid "Duet"
-#~ msgstr "듀엣"
-
-#~ msgid "Punk Rock"
-#~ msgstr "펑크 락"
-
-#~ msgid "Drum Solo"
-#~ msgstr "드럼 독주"
-
-#~ msgid "A Cappella"
-#~ msgstr "아 카펠라"
-
-#~ msgid "Euro-House"
-#~ msgstr "유로-하우스"
-
-#~ msgid "Dance Hall"
-#~ msgstr "댄스홀"
-
-#~ msgid "Goa"
-#~ msgstr "인도풍"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "드럼 & 베이스"
-
-#~ msgid "Club-House"
-#~ msgstr "클럽-하우스"
-
-#~ msgid "Hardcore"
-#~ msgstr "하드코어"
-
-#~ msgid "Terror"
-#~ msgstr "콩포"
-
-#~ msgid "Indie"
-#~ msgstr "인디"
-
-#~ msgid "BritPop"
-#~ msgstr "영국팝"
-
-#~ msgid "Negerpunk"
-#~ msgstr "흑인펑크"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Polsk 펑크"
-
-#~ msgid "Beat"
-#~ msgstr "비트"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "기독교 갱스터 랩"
-
-#~ msgid "Heavy Metal"
-#~ msgstr "헤비 메탈"
-
-#~ msgid "Black Metal"
-#~ msgstr "흑인 메탈"
-
-#~ msgid "Crossover"
-#~ msgstr "크로스 오버"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "현재 기독교"
-
-#~ msgid "Christian Rock"
-#~ msgstr "기독교 락"
-
-#~ msgid "Merengue"
-#~ msgstr "메렝계"
-
-#~ msgid "Salsa"
-#~ msgstr "살사"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "트래시 메탈"
-
-#~ msgid "Anime"
-#~ msgstr "만화"
-
-#~ msgid "JPop"
-#~ msgstr "일본 팝"
-
-#~ msgid "Synthpop"
-#~ msgstr "신스팝"
-
 #, fuzzy
 #~ msgid "Samplerate: %d Hz"
 #~ msgstr "샘플링율:"
@@ -3720,9 +3913,6 @@ msgstr "파일 추가"
 #, fuzzy
 #~ msgid "Channels"
 #~ msgstr "채널:"
-
-#~ msgid "Stereo"
-#~ msgstr "스테레오"
 
 #, fuzzy
 #~ msgid "48 kHz"
@@ -3912,9 +4102,6 @@ msgstr "파일 추가"
 #, fuzzy
 #~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
 #~ msgstr "사전 버퍼링: %dKB/%dKB"
-
-#~ msgid "AlternRock"
-#~ msgstr "알턴 락"
 
 #~ msgid "About MPEG Audio Plugin"
 #~ msgstr "MPEG 오디오 플러그인 정보"
