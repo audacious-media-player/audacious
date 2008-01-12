@@ -221,7 +221,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     if (entry->decoder == NULL) {
         pr = input_check_file(entry->filename, FALSE);
-        if (pr)
+        if (pr != NULL)
             entry->decoder = pr->ip;
     }
 
