@@ -437,7 +437,7 @@ output_pass_audio(InputPlayback *playback,
 #ifdef USE_SRC
     if(src_state != NULL&&length > 0)
       {
-        int lrLength = length/2;
+        int lrLength = length / nch;
         int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
 	if(lengthOfSrcIn < lrLength)
 	  {
@@ -457,8 +457,8 @@ output_pass_audio(InputPlayback *playback,
         src_data.data_in = srcIn;
         src_data.data_out = srcOut;
         src_data.end_of_input = 0;
-        src_data.input_frames = lrLength/2;
-        src_data.output_frames = overLrLength/2;
+        src_data.input_frames = lrLength / nch;
+        src_data.output_frames = overLrLength / nch;
         if ((srcError = src_process(src_state, &src_data)) > 0)
           {
             fprintf(stderr, "src_process(): %s\n", src_strerror(srcError));
@@ -467,7 +467,7 @@ output_pass_audio(InputPlayback *playback,
           {
             src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);
             ptr = wOut;
-            length = src_data.output_frames_gen*4;
+            length = src_data.output_frames_gen * (nch * 2);
           }
       }
 #endif
