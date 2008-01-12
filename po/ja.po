@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-01-10 15:53+0100\n"
-"PO-Revision-Date: 2007-12-15 15:51+0900\n"
+"PO-Revision-Date: 2008-01-12 21:40+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -269,7 +269,7 @@ msgid "  (invalid UTF-8)"
 msgstr "  (不正な UTF-8)"
 
 #: src/audacious/ui_about.c:46
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
@@ -277,7 +277,7 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2005-2007 Audacious 開発チーム"
+"Copyright (C) 2005-2008 Audacious 開発チーム"
 
 #: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:363
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
@@ -289,7 +289,7 @@ msgid "Credits"
 msgstr "クレジット"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
@@ -299,7 +299,7 @@ msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "多くのプラットフォーム向けのスキン機能付マルチメディアプレーヤ.\n"
 "\n"
-"Copyright (C) 2005-2007 Audacious 開発チーム\n"
+"Copyright (C) 2005-2008 Audacious 開発チーム\n"
 
 #: src/audacious/ui_credits.c:53
 msgid "Audacious core developers:"
@@ -474,626 +474,596 @@ msgid "Presets"
 msgstr "プリセット"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Blues"
-msgstr "青"
+msgstr "ブルース"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Classic Rock"
-msgstr ""
+msgstr "クラシックロック"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Country"
-msgstr ""
+msgstr "カントリー"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Dance"
-msgstr "日付"
+msgstr "ダンス"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Disco"
-msgstr ""
+msgstr "ディスコ"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Funk"
-msgstr ""
+msgstr "ファンキー"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Grunge"
-msgstr ""
+msgstr "グランジ"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Hip-Hop"
-msgstr ""
+msgstr "ヒップホップ"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Jazz"
-msgstr ""
+msgstr "ジャズ"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Metal"
-msgstr ""
+msgstr "メタル"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "New Age"
-msgstr ""
+msgstr "ニューエイジ"
 
 #: src/audacious/ui_fileinfo.c:103
-#, fuzzy
 msgid "Oldies"
-msgstr "行"
+msgstr "オールディーズ"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Other"
-msgstr ""
+msgstr "その他"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Pop"
-msgstr ""
+msgstr "ポップ"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "R&B"
-msgstr ""
+msgstr "Ｒ＆Ｂ"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Rap"
-msgstr ""
+msgstr "ラップ"
 
 #: src/audacious/ui_fileinfo.c:104
-#, fuzzy
 msgid "Reggae"
-msgstr "リネーム(_R)"
+msgstr "レゲェ"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Rock"
-msgstr ""
+msgstr "ロック"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Techno"
-msgstr ""
+msgstr "テクノ"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Industrial"
-msgstr ""
+msgstr "インダストリアル"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Alternative"
-msgstr ""
+msgstr "オルタナティヴ"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Ska"
-msgstr ""
+msgstr "スカ"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Death Metal"
-msgstr ""
+msgstr "デスメタル"
 
 #: src/audacious/ui_fileinfo.c:106
-#, fuzzy
 msgid "Pranks"
-msgstr "ピーク"
+msgstr "プランク"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Soundtrack"
-msgstr ""
+msgstr "サウンドトラック"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Euro-Techno"
-msgstr ""
+msgstr "ユーロテクノ"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Ambient"
-msgstr ""
+msgstr "アンビエント"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Trip-Hop"
-msgstr ""
+msgstr "トリップホップ"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Vocal"
-msgstr ""
+msgstr "ヴォーカル"
 
 #: src/audacious/ui_fileinfo.c:108
 msgid "Jazz+Funk"
-msgstr ""
+msgstr "ジャズ+ファンク"
 
 #: src/audacious/ui_fileinfo.c:108
-#, fuzzy
 msgid "Fusion"
-msgstr "ロシア語"
+msgstr "フュージョン"
 
 #: src/audacious/ui_fileinfo.c:108
-#, fuzzy
 msgid "Trance"
-msgstr "外観"
+msgstr "トランス"
 
 #: src/audacious/ui_fileinfo.c:108
 msgid "Classical"
-msgstr ""
+msgstr "クラシカル"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Instrumental"
-msgstr ""
+msgstr "インストゥルメンタル"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Acid"
-msgstr ""
+msgstr "アシッド"
 
 #: src/audacious/ui_fileinfo.c:109
-#, fuzzy
 msgid "House"
-msgstr "マウス"
+msgstr "ハウス"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Game"
-msgstr ""
+msgstr "ゲーム"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "Sound Clip"
-msgstr ""
+msgstr "サウンドクリップ"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "Gospel"
-msgstr ""
+msgstr "ゴスペル"
 
 #: src/audacious/ui_fileinfo.c:110
-#, fuzzy
 msgid "Noise"
-msgstr "なし"
+msgstr "ノイズ"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "AlternRock"
-msgstr ""
+msgstr "オルタナロック"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Bass"
-msgstr "バー"
+msgstr "ベース"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Soul"
-msgstr ""
+msgstr "ソウル"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Punk"
-msgstr ""
+msgstr "パンク"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Space"
-msgstr "保存"
+msgstr "スペース"
 
 #: src/audacious/ui_fileinfo.c:112
 msgid "Meditative"
-msgstr ""
+msgstr "教会音楽"
 
 #: src/audacious/ui_fileinfo.c:112
 msgid "Instrumental Pop"
-msgstr ""
+msgstr "インストゥルメンタルポップ"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Instrumental Rock"
-msgstr ""
+msgstr "インストゥルメンタルロック"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Ethnic"
-msgstr ""
+msgstr "エスニック"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Gothic"
-msgstr ""
+msgstr "ゴシック"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Darkwave"
-msgstr ""
+msgstr "ダークウェーヴ"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Techno-Industrial"
-msgstr ""
+msgstr "テクノインスツルメント"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Electronic"
-msgstr ""
+msgstr "エレクトロニック"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Pop-Folk"
-msgstr ""
+msgstr "ポップフォーク"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Eurodance"
-msgstr ""
+msgstr "ユーロダンス"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Dream"
-msgstr ""
+msgstr "ドリーム"
 
 #: src/audacious/ui_fileinfo.c:116
 msgid "Southern Rock"
-msgstr ""
+msgstr "サザンロック"
 
 #: src/audacious/ui_fileinfo.c:116
-#, fuzzy
 msgid "Comedy"
-msgstr "コメント"
+msgstr "コメディ"
 
 #: src/audacious/ui_fileinfo.c:116
-#, fuzzy
 msgid "Cult"
-msgstr "カスタム"
+msgstr "カルト"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "ギャングスタラップ"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Top 40"
-msgstr ""
+msgstr "トップ 40"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Christian Rap"
-msgstr ""
+msgstr "クリスチャンラップ"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Pop/Funk"
-msgstr ""
+msgstr "ポップ/ファンキー"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Jungle"
-msgstr ""
+msgstr "ジャングル"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Native American"
-msgstr ""
+msgstr "ネイティヴアメリカン"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "Cabaret"
-msgstr ""
+msgstr "キャバレー"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "New Wave"
-msgstr ""
+msgstr "ニューウェーブ"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "Psychedelic"
-msgstr ""
+msgstr "サイケデリック"
 
 #: src/audacious/ui_fileinfo.c:119
-#, fuzzy
 msgid "Rave"
-msgstr "保存"
+msgstr "レイヴ"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Showtunes"
-msgstr "最も遅い"
+msgstr "ショーチューン"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Trailer"
-msgstr "タイトル"
+msgstr "トレイラー"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Lo-Fi"
-msgstr ""
+msgstr "ローファイ"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Tribal"
-msgstr ""
+msgstr "トリバル"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Punk"
-msgstr ""
+msgstr "アシッドパンク"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Jazz"
-msgstr ""
+msgstr "アシッドジャズ"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Polka"
-msgstr "演奏"
+msgstr "ポルカ"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Retro"
-msgstr "ゼロ"
+msgstr "レトロ"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Musical"
-msgstr ""
+msgstr "ミュージカル"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Rock & Roll"
-msgstr ""
+msgstr "ロックンロール"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Hard Rock"
-msgstr ""
+msgstr "ハードロック"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Folk"
-msgstr ""
+msgstr "フォーク"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "Folk/Rock"
-msgstr ""
+msgstr "フォーク/ロック"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "National Folk"
-msgstr ""
+msgstr "ナショナルフォーク"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "Swing"
-msgstr ""
+msgstr "スウィング"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Fast-Fusion"
-msgstr ""
+msgstr "ファストフュージョン"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Bebob"
-msgstr ""
+msgstr "Bebob"
 
 #: src/audacious/ui_fileinfo.c:124
-#, fuzzy
 msgid "Latin"
-msgstr "ステーション:"
+msgstr "ラテン"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Revival"
-msgstr ""
+msgstr "リバイバル"
 
 #: src/audacious/ui_fileinfo.c:125
 msgid "Celtic"
-msgstr ""
+msgstr "セルティック"
 
 #: src/audacious/ui_fileinfo.c:125
-#, fuzzy
 msgid "Bluegrass"
-msgstr "青"
+msgstr "ブルーグラス"
 
 #: src/audacious/ui_fileinfo.c:125
 msgid "Avantgarde"
-msgstr ""
+msgstr "アバンギャルド"
 
 #: src/audacious/ui_fileinfo.c:126
 msgid "Gothic Rock"
-msgstr ""
+msgstr "ゴシックロック"
 
 #: src/audacious/ui_fileinfo.c:126
 msgid "Progressive Rock"
-msgstr ""
+msgstr "プログレッシヴロック"
 
 #: src/audacious/ui_fileinfo.c:127
 msgid "Psychedelic Rock"
-msgstr ""
+msgstr "サイケデリックロック"
 
 #: src/audacious/ui_fileinfo.c:127
 msgid "Symphonic Rock"
-msgstr ""
+msgstr "シンフォニックロック"
 
 #: src/audacious/ui_fileinfo.c:127
-#, fuzzy
 msgid "Slow Rock"
-msgstr "遅い"
+msgstr "スローロック"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Big Band"
-msgstr ""
+msgstr "ビッグバンド"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Chorus"
-msgstr ""
+msgstr "コーラス"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Easy Listening"
-msgstr ""
+msgstr "イージーリスニング"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Acoustic"
-msgstr ""
+msgstr "アコースティック"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Humour"
-msgstr ""
+msgstr "ユーモア"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Speech"
-msgstr ""
+msgstr "スピーチ"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Chanson"
-msgstr ""
+msgstr "シャンソン"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Opera"
-msgstr ""
+msgstr "オペラ"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Chamber Music"
-msgstr ""
+msgstr "チャンバーミュージック"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Sonata"
-msgstr ""
+msgstr "ソナタ"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Symphony"
-msgstr ""
+msgstr "シンフォニー"
 
 #: src/audacious/ui_fileinfo.c:131
 msgid "Booty Bass"
-msgstr ""
+msgstr "ブーティベース"
 
 #: src/audacious/ui_fileinfo.c:131
-#, fuzzy
 msgid "Primus"
-msgstr "前の曲"
+msgstr "プリマス"
 
 #: src/audacious/ui_fileinfo.c:131
 msgid "Porn Groove"
-msgstr ""
+msgstr "ポルノグルーヴ"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
-#, fuzzy
 msgid "Satire"
-msgstr "ファイア"
+msgstr "サティア"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
-#, fuzzy
 msgid "Slow Jam"
-msgstr "遅い"
+msgstr "スロージャム"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
 msgid "Club"
-msgstr ""
+msgstr "クラブ"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
 msgid "Tango"
-msgstr ""
+msgstr "タンゴ"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Samba"
-msgstr ""
+msgstr "サンバ"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Folklore"
-msgstr ""
+msgstr "フォークロア"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Ballad"
-msgstr ""
+msgstr "バラード"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Power Ballad"
-msgstr ""
+msgstr "パワーバラード"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Rhythmic Soul"
-msgstr ""
+msgstr "リズミックソウル"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Freestyle"
-msgstr ""
+msgstr "フリースタイル"
 
 #: src/audacious/ui_fileinfo.c:136
-#, fuzzy
 msgid "Duet"
-msgstr "オランダ語:"
+msgstr "デュエット"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Punk Rock"
-msgstr ""
+msgstr "パンクロック"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Drum Solo"
-msgstr ""
+msgstr "ドラムソロ"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "A Cappella"
-msgstr ""
+msgstr "ア・カペラ"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Euro-House"
-msgstr ""
+msgstr "ユーロハウス"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Dance Hall"
-msgstr ""
+msgstr "ダンスホール"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Goa"
-msgstr ""
+msgstr "ゴア"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Drum & Bass"
-msgstr ""
+msgstr "ドラムンベース"
 
 #: src/audacious/ui_fileinfo.c:139
-#, fuzzy
 msgid "Club-House"
-msgstr "マウス"
+msgstr "クラブハウス"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Hardcore"
-msgstr ""
+msgstr "ハードコア"
 
 #: src/audacious/ui_fileinfo.c:140
-#, fuzzy
 msgid "Terror"
-msgstr "ゼロ"
+msgstr "テラー"
 
 #: src/audacious/ui_fileinfo.c:140
-#, fuzzy
 msgid "Indie"
-msgstr "含む:"
+msgstr "インディーズ"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "BritPop"
-msgstr ""
+msgstr "ブリットポップ"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "Negerpunk"
-msgstr ""
+msgstr "ニガーパンク"
 
 #: src/audacious/ui_fileinfo.c:141
 msgid "Polsk Punk"
-msgstr ""
+msgstr "ポルスクパンク"
 
 #: src/audacious/ui_fileinfo.c:141
-#, fuzzy
 msgid "Beat"
-msgstr "リピート"
+msgstr "ビート"
 
 #: src/audacious/ui_fileinfo.c:141
 msgid "Christian Gangsta Rap"
-msgstr ""
+msgstr "クリスチャンギャングスタラップ"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Heavy Metal"
-msgstr ""
+msgstr "ヘヴィメタル"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Black Metal"
-msgstr ""
+msgstr "ブラックメタル"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Crossover"
-msgstr ""
+msgstr "クロスオーバー"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "Contemporary Christian"
-msgstr ""
+msgstr "コンテンポラリクリスチャン"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "Christian Rock"
-msgstr ""
+msgstr "クリスチャンロック"
 
 #: src/audacious/ui_fileinfo.c:144
 msgid "Merengue"
-msgstr ""
+msgstr "メレンゲ"
 
 #: src/audacious/ui_fileinfo.c:144
 msgid "Salsa"
-msgstr ""
+msgstr "サルサ"
 
 #: src/audacious/ui_fileinfo.c:144
 msgid "Thrash Metal"
-msgstr ""
+msgstr "スラッシュメタル"
 
 #: src/audacious/ui_fileinfo.c:145
 msgid "Anime"
-msgstr ""
+msgstr "アニメ"
 
 #: src/audacious/ui_fileinfo.c:145
 msgid "JPop"
-msgstr ""
+msgstr "Jポップ"
 
 #: src/audacious/ui_fileinfo.c:145
-#, fuzzy
 msgid "Synthpop"
-msgstr "停止"
+msgstr "シンセポップ"
 
 #: src/audacious/ui_fileinfo.c:223 src/audacious/ui_fileinfo.c:555
 #: src/audacious/ui_fileinfo.c:558 src/audacious/ui_fileinfo.c:561
@@ -1161,18 +1131,16 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">位置</span>"
 
 #: src/audacious/ui_fileinfo.c:708
-#, fuzzy
 msgid "<span size=\"small\">Raw Metadata</span>"
-msgstr "<span size=\"small\">年</span>"
+msgstr "<span size=\"small\">生メタデータ</span>"
 
 #: src/audacious/ui_fileinfo.c:725
 msgid "Key"
-msgstr ""
+msgstr "キー"
 
 #: src/audacious/ui_fileinfo.c:738
-#, fuzzy
 msgid "Value"
-msgstr "青"
+msgstr "値"
 
 #: src/audacious/ui_fileinfo.c:826
 #, c-format
@@ -1263,7 +1231,7 @@ msgstr "ジャンプしたらダイアログを閉じる"
 
 #: src/audacious/ui_jumptotrack.c:659
 msgid "Remember Entry"
-msgstr ""
+msgstr "エントリを記憶する"
 
 #: src/audacious/ui_main.c:475
 #, c-format
@@ -2323,7 +2291,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:209
 msgid "Disable inline gtk theme"
-msgstr ""
+msgstr "インライン GTK テーマを無効にする"
 
 #: src/audacious/ui_preferences.c:213
 msgid "<b>Format Detection</b>"
