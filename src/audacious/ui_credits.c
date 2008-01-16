@@ -87,6 +87,7 @@ static const gchar *credit_text[] = {
     "Michael Färber",
     "Shay Green",
     "Matti Hämäläinen",
+    "Sascha Hlusiak",
     "Giacomo Lozito",
     "Cristi Măgherușan",
     "Tomasz Moń",
