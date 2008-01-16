@@ -89,6 +89,7 @@ static const gchar *credit_text[] = {
     "Matti Hämäläinen",
     "Giacomo Lozito",
     "Cristi Măgherușan",
+    "Tomasz Moń",
     "William Pitcock",
     "Derek Pomery",
     "Jonathan Schleifer",
