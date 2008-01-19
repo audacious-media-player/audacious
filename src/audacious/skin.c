@@ -194,11 +194,6 @@ skin_pixmap_free(SkinPixmap * p)
 
     g_object_unref(p->pixbuf);
     p->pixbuf = NULL;
-
-    if (p->pixmap) {
-        g_object_unref(p->pixmap);
-        p->pixmap = NULL;
-    }
 }
 
 Skin *
@@ -316,40 +311,6 @@ skin_pixmap_locate(const gchar * dirname, gchar ** basenames)
     return NULL;
 }
 
-/* FIXME: this function is temporary. It will be removed when the skinning system
-   uses GdkPixbuf in place of GdkPixmap */
-
-static GdkPixmap *
-pixmap_new_from_file(const gchar * filename)
-{
-    GdkPixbuf *pixbuf, *pixbuf2;
-    GdkPixmap *pixmap;
-    gint width, height;
-
-    if (!(pixbuf = gdk_pixbuf_new_from_file(filename, NULL)))
-        return NULL;
-
-    width = gdk_pixbuf_get_width(pixbuf);
-    height = gdk_pixbuf_get_height(pixbuf);
-
-    if (!(pixmap = gdk_pixmap_new(mainwin->window, width, height,
-                                  gdk_rgb_get_visual()->depth))) {
-        g_object_unref(pixbuf);
-        return NULL;
-    }
-
-    pixbuf2 = audacious_create_colorized_pixbuf(pixbuf, cfg.colorize_r, cfg.colorize_g, cfg.colorize_b);
-    g_object_unref(pixbuf);
-
-    GdkGC *gc;
-    gc = gdk_gc_new(pixmap);
-    gdk_draw_pixbuf(pixmap, gc, pixbuf2, 0, 0, 0, 0, width, height, GDK_RGB_DITHER_MAX, 0, 0);
-    g_object_unref(gc);
-    g_object_unref(pixbuf2);
-
-    return pixmap;
-}
-
 /**
  * Creates possible file names for a pixmap.
  *
@@ -437,16 +398,6 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
     GdkPixbuf *pix = gdk_pixbuf_new_from_file(filename, NULL);
     pm->pixbuf = audacious_create_colorized_pixbuf(pix, cfg.colorize_r, cfg.colorize_g, cfg.colorize_b);
     g_object_unref(pix);
-    if (id == SKIN_EQMAIN) {
-        GdkPixmap *gpm;
-        if (!(gpm = pixmap_new_from_file(filename))) {
-            AUDDBG("loading of %s failed\n", filename);
-            g_free(filename);
-            return FALSE;
-        }
-        pm->pixmap = gpm;
-    } else
-        pm->pixmap = NULL;
     pm->width = gdk_pixbuf_get_width(pm->pixbuf);
     pm->height = gdk_pixbuf_get_height(pm->pixbuf);
     pm->current_width = pm->width;
@@ -516,7 +467,7 @@ skin_calc_luminance(GdkColor * c)
 }
 
 static void
-skin_get_textcolors(GdkPixmap * text, GdkColor * bgc, GdkColor * fgc)
+skin_get_textcolors(GdkPixbuf * pix, GdkColor * bgc, GdkColor * fgc)
 {
     /*
      * Try to extract reasonable background and foreground colors
@@ -527,9 +478,12 @@ skin_get_textcolors(GdkPixmap * text, GdkColor * bgc, GdkColor * fgc)
     GdkColormap *cm;
     gint i;
 
-    g_return_if_fail(text != NULL);
+    g_return_if_fail(pix != NULL);
     g_return_if_fail(GDK_IS_WINDOW(playlistwin->window));
 
+    GdkPixmap *text = gdk_pixmap_new(NULL, gdk_pixbuf_get_width(pix), gdk_pixbuf_get_height(pix), gdk_rgb_get_visual()->depth);
+    gdk_draw_pixbuf(text, NULL, pix, 0, 0, 0, 0, gdk_pixbuf_get_width(pix), gdk_pixbuf_get_height(pix),
+                    GDK_RGB_DITHER_NONE, 0, 0);
     /* Get the first line of text */
     gi = gdk_drawable_get_image(text, 0, 0, 152, 6);
     cm = gdk_drawable_get_colormap(playlistwin->window);
@@ -556,6 +510,7 @@ skin_get_textcolors(GdkPixmap * text, GdkColor * bgc, GdkColor * fgc)
         }
     }
     g_object_unref(gi);
+    g_object_unref(text);
 }
 
 gboolean
@@ -1467,7 +1422,7 @@ skin_load_cursor(Skin * skin, const gchar * dirname)
 static gboolean
 skin_load_pixmaps(Skin * skin, const gchar * path)
 {
-    GdkPixmap *text_pm;
+    GdkPixbuf *text_pb;
     guint i;
     gchar *filename;
     INIFile *inifile;
@@ -1481,12 +1436,12 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
         if (!skin_load_pixmap_id(skin, i, path))
             return FALSE;
 
-    text_pm = skin->pixmaps[SKIN_TEXT].pixmap;
+    text_pb = skin->pixmaps[SKIN_TEXT].pixbuf;
 
-    if (text_pm)
-        skin_get_textcolors(text_pm, skin->textbg, skin->textfg);
+    if (text_pb)
+        skin_get_textcolors(text_pb, skin->textbg, skin->textfg);
 
-    if (skin->pixmaps[SKIN_NUMBERS].pixmap &&
+    if (skin->pixmaps[SKIN_NUMBERS].pixbuf &&
         skin->pixmaps[SKIN_NUMBERS].width < 108 )
         skin_numbers_generate_dash(skin);
 
@@ -1762,13 +1717,13 @@ skin_get_color(Skin * skin, SkinColorId color_id)
 
     switch (color_id) {
     case SKIN_TEXTBG:
-        if (skin->pixmaps[SKIN_TEXT].pixmap)
+        if (skin->pixmaps[SKIN_TEXT].pixbuf)
             ret = skin->textbg;
         else
             ret = skin->def_textbg;
         break;
     case SKIN_TEXTFG:
-        if (skin->pixmaps[SKIN_TEXT].pixmap)
+        if (skin->pixmaps[SKIN_TEXT].pixbuf)
             ret = skin->textfg;
         else
             ret = skin->def_textfg;
@@ -1799,35 +1754,6 @@ gint
 skin_get_id(void)
 {
     return skin_current_num;
-}
-
-/* obsolete, will be removed after equalizer graph transition to GdkPixbuf */
-void
-skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC * gc,
-                 SkinPixmapId pixmap_id,
-                 gint xsrc, gint ysrc, gint xdest, gint ydest,
-                 gint width, gint height)
-{
-    SkinPixmap *pixmap;
-
-    g_return_if_fail(skin != NULL);
-    g_return_if_fail(pixmap_id == SKIN_EQMAIN);
-
-    pixmap = skin_get_pixmap(skin, pixmap_id);
-    g_return_if_fail(pixmap != NULL);
-    g_return_if_fail(pixmap->pixmap != NULL);
-
-    /* perhaps we should use transparency or resize widget? */
-    if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
-        if (widget)
-            if (!(pixmap_id == SKIN_EQMAIN && ysrc == 314)) /* equalizer preamp on equalizer graph */
-                gtk_widget_hide(widget);
-    }
-
-    width = MIN(width, pixmap->width - xsrc);
-    height = MIN(height, pixmap->height - ysrc);
-    gdk_draw_pixbuf(drawable, gc, pixmap->pixbuf, xsrc, ysrc,
-                      xdest, ydest, width, height, GDK_RGB_DITHER_NONE, 0, 0);
 }
 
 void
@@ -1903,29 +1829,42 @@ void
 skin_get_eq_spline_colors(Skin * skin, guint32 colors[19])
 {
     gint i;
-    GdkPixmap *pixmap;
+    GdkPixbuf *pixbuf;
     GdkImage *img;
     SkinPixmap *eqmainpm;
+    GdkPixmap *pixmap;
+    GdkGC *gc;
 
     g_return_if_fail(skin != NULL);
 
     eqmainpm = &skin->pixmaps[SKIN_EQMAIN];
-    if (eqmainpm->pixmap &&
+    if (eqmainpm->pixbuf &&
         eqmainpm->current_width >= 116 && eqmainpm->current_height >= 313)
-        pixmap = eqmainpm->pixmap;
+        pixbuf = eqmainpm->pixbuf;
     else
         return;
 
-    if (!GDK_IS_DRAWABLE(pixmap))
+    if (!GDK_IS_PIXBUF(pixbuf))
         return;
 
-    if (!(img = gdk_drawable_get_image(pixmap, 115, 294, 1, 19)))
+    pixmap = gdk_pixmap_new(NULL, eqmainpm->current_width, eqmainpm->current_height,
+                            gdk_rgb_get_visual()->depth);
+    gc = gdk_gc_new(pixmap);
+    gdk_draw_pixbuf(pixmap, gc, pixbuf, 0, 0, 0, 0, eqmainpm->current_width, eqmainpm->current_height,
+                    GDK_RGB_DITHER_MAX, 0, 0);
+
+    if (!(img = gdk_drawable_get_image(pixmap, 115, 294, 1, 19))) {
+        g_object_unref(gc);
+        g_object_unref(pixmap);
         return;
+    }
 
     for (i = 0; i < 19; i++)
         colors[i] = gdk_image_get_pixel(img, 0, i);
 
     g_object_unref(img);
+    g_object_unref(gc);
+    g_object_unref(pixmap);
 }
 
 
