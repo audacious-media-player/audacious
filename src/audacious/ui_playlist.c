@@ -1145,6 +1145,7 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
 
     guint keyval;
     gboolean refresh = FALSE;
+    guint cur_pos;
 
     if (cfg.playlist_shaded)
         return FALSE;
@@ -1234,6 +1235,12 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
             else if (cfg.equalizer_visible)
                 gtk_window_present(GTK_WINDOW(equalizerwin));
         }
+        break;
+    case GDK_space:
+        cur_pos=playlist_get_position(playlist);
+        UI_SKINNED_PLAYLIST(playlistwin_list)->first =
+            cur_pos - (UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible >> 1);
+        refresh = TRUE;
         break;
     default:
         return FALSE;
