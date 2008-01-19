@@ -102,6 +102,7 @@ struct _BmpCmdLineOpt {
     gboolean enqueue_to_temp;
     gboolean version;
     gchar *previous_session_id;
+	gboolean macpack;
 };
 
 typedef struct _BmpCmdLineOpt BmpCmdLineOpt;
@@ -1031,6 +1032,9 @@ static GOptionEntry cmd_entries[] = {
     {"headless", 'H', 0, G_OPTION_ARG_NONE, &options.headless, N_("Enable headless operation"), NULL},
     {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version and builtin features"), NULL},
+	#ifdef GDK_WINDOWING_QUARTZ
+	{"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL}, /* Make this hidden */
+	#endif
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
     {NULL},
 };
