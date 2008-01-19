@@ -173,7 +173,8 @@ typedef struct _SkinProperties {
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))
 typedef struct _SkinPixmap {
-    GdkPixmap *pixmap;
+    GdkPixmap *pixmap; /* TODO: remove it in favour for pixbuf */
+    GdkPixbuf *pixbuf;
     /* GdkPixmap *def_pixmap; */
 
     /* The real size of the pixmap */
@@ -223,18 +224,20 @@ void skin_draw_pixmap(GtkWidget * widget, Skin * skin, GdkDrawable * drawable, G
                       SkinPixmapId pixmap_id,
                       gint xsrc, gint ysrc, gint xdest, gint ydest,
                       gint width, gint height);
+void skin_draw_pixbuf(GtkWidget *widget, Skin * skin, GdkPixbuf * pix,
+                 SkinPixmapId pixmap_id,
+                 gint xsrc, gint ysrc, gint xdest, gint ydest,
+                 gint width, gint height);
+
 void skin_get_eq_spline_colors(Skin * skin, guint32 colors[19]);
 void skin_install_skin(const gchar * path);
 
-void skin_draw_playlistwin_shaded(Skin * skin,
-                                  GdkDrawable * drawable, GdkGC * gc,
+void skin_draw_playlistwin_shaded(Skin * skin, GdkPixbuf * pix,
                                   gint width, gboolean focus);
-void skin_draw_playlistwin_frame(Skin * skin,
-                                 GdkDrawable * drawable, GdkGC * gc,
+void skin_draw_playlistwin_frame(Skin * skin, GdkPixbuf * pix,
                                  gint width, gint height, gboolean focus);
 
-void skin_draw_mainwin_titlebar(Skin * skin,
-                                GdkDrawable * drawable, GdkGC * gc,
+void skin_draw_mainwin_titlebar(Skin * skin, GdkPixbuf * pix,
                                 gboolean shaded, gboolean focus);
 
 

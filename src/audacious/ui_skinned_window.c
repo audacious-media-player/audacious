@@ -151,8 +151,7 @@ static gboolean ui_skinned_window_focus_out(GtkWidget *widget, GdkEventFocus *fo
 static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *event) {
     SkinnedWindow *window = SKINNED_WINDOW(widget);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
+    GdkPixbuf *obj = NULL;
 
     gint width = 0, height = 0;
     switch (window->type) {
@@ -171,52 +170,50 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
         default:
             return FALSE;
     }
-    obj = gdk_pixmap_new(NULL, width, height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, width, height);
 
     gboolean focus = gtk_window_has_toplevel_focus(GTK_WINDOW(widget));
 
     switch (window->type) {
         case WINDOW_MAIN:
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_MAIN, 0, 0, 0, 0, width, height);
-            skin_draw_mainwin_titlebar(bmp_active_skin, obj, gc, cfg.player_shaded, focus || !cfg.dim_titlebar);
+            skin_draw_pixbuf(widget, bmp_active_skin, obj,SKIN_MAIN, 0, 0, 0, 0, width, height);
+            skin_draw_mainwin_titlebar(bmp_active_skin, obj, cfg.player_shaded, focus || !cfg.dim_titlebar);
             break;
         case WINDOW_EQ:
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
+            skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
             if (focus || !cfg.dim_titlebar) {
                 if (!cfg.equalizer_shaded)
-                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
                 else
-                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
             } else {
                 if (!cfg.equalizer_shaded)
-                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
                 else
-                    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
             }
             break;
         case WINDOW_PLAYLIST:
             focus |= !cfg.dim_titlebar;
             if (cfg.playlist_shaded) {
-                skin_draw_playlistwin_shaded(bmp_active_skin, obj, gc, playlistwin_get_width(), focus);
+                skin_draw_playlistwin_shaded(bmp_active_skin, obj, playlistwin_get_width(), focus);
             } else {
-                skin_draw_playlistwin_frame(bmp_active_skin, obj, gc, playlistwin_get_width(), cfg.playlist_height, focus);
+                skin_draw_playlistwin_frame(bmp_active_skin, obj, playlistwin_get_width(), cfg.playlist_height, focus);
             }
             break;
     }
 
-    GdkPixmap *image = NULL;
-
     if (window->type != WINDOW_PLAYLIST && cfg.doublesize) {
-        image = create_dblsize_pixmap(obj);
+        GdkPixbuf *image = gdk_pixbuf_scale_simple(obj, width*2, height*2, GDK_INTERP_NEAREST);
+        gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0, width*2, height*2,
+                        GDK_RGB_DITHER_NONE, 0, 0);
+        g_object_unref(image);
     } else {
-        image = gdk_pixmap_new(NULL, width, height, gdk_rgb_get_visual()->depth);
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, width, height);
+        gdk_draw_pixbuf(widget->window, NULL, obj, 0, 0, 0, 0, width, height,
+                        GDK_RGB_DITHER_NONE, 0, 0);
     }
+
     g_object_unref(obj);
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0, width*(1+cfg.doublesize), height*(1+cfg.doublesize));
-    g_object_unref(gc);
-    g_object_unref(image);
 
     return FALSE;
 }

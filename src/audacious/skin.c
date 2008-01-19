@@ -190,10 +190,15 @@ void
 skin_pixmap_free(SkinPixmap * p)
 {
     g_return_if_fail(p != NULL);
-    g_return_if_fail(p->pixmap != NULL);
+    g_return_if_fail(p->pixbuf != NULL);
 
-    g_object_unref(p->pixmap);
-    p->pixmap = NULL;
+    g_object_unref(p->pixbuf);
+    p->pixbuf = NULL;
+
+    if (p->pixmap) {
+        g_object_unref(p->pixmap);
+        p->pixmap = NULL;
+    }
 }
 
 Skin *
@@ -413,8 +418,6 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
 {
     const SkinPixmapIdMapping *pixmap_id_mapping;
     gchar *filename;
-    gint width, height;
-    GdkPixmap *gpm;
     SkinPixmap *pm = NULL;
 
     g_return_val_if_fail(skin != NULL, FALSE);
@@ -428,23 +431,28 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
     if (filename == NULL)
         return FALSE;
 
-    if (!(gpm = pixmap_new_from_file(filename))) {
-        AUDDBG("loading of %s failed\n", filename);
-        g_free(filename);
-        return FALSE;
-    }
-
     AUDDBG("loaded %s\n", filename);
 
-    g_free(filename);
-
-    gdk_drawable_get_size(GDK_DRAWABLE(gpm), &width, &height);
     pm = &skin->pixmaps[id];
-    pm->pixmap = gpm;
-    pm->width = width;
-    pm->height = height;
-    pm->current_width = width;
-    pm->current_height = height;
+    GdkPixbuf *pix = gdk_pixbuf_new_from_file(filename, NULL);
+    pm->pixbuf = audacious_create_colorized_pixbuf(pix, cfg.colorize_r, cfg.colorize_g, cfg.colorize_b);
+    g_object_unref(pix);
+    if (id == SKIN_EQMAIN) {
+        GdkPixmap *gpm;
+        if (!(gpm = pixmap_new_from_file(filename))) {
+            AUDDBG("loading of %s failed\n", filename);
+            g_free(filename);
+            return FALSE;
+        }
+        pm->pixmap = gpm;
+    } else
+        pm->pixmap = NULL;
+    pm->width = gdk_pixbuf_get_width(pm->pixbuf);
+    pm->height = gdk_pixbuf_get_height(pm->pixbuf);
+    pm->current_width = pm->width;
+    pm->current_height = pm->height;
+
+    g_free(filename);
 
     return TRUE;
 }
@@ -1400,29 +1408,25 @@ skin_load_viscolor(Skin * skin, const gchar * path, const gchar * basename)
 static void
 skin_numbers_generate_dash(Skin * skin)
 {
-    GdkGC *gc;
-    GdkPixmap *pixmap;
+    GdkPixbuf *pixbuf;
     SkinPixmap *numbers;
 
     g_return_if_fail(skin != NULL);
 
     numbers = &skin->pixmaps[SKIN_NUMBERS];
-    if (!numbers->pixmap || numbers->current_width < 99)
+    if (!numbers->pixbuf || numbers->current_width < 99)
         return;
 
-    pixmap = gdk_pixmap_new(NULL, 108,
-                            numbers->current_height,
-                            gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(pixmap);
+    pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8,
+                            108, numbers->current_height);
 
-    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 0, 0, 0, 0, 99, numbers->current_height);
-    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 90, 0, 99, 0, 9, numbers->current_height);
-    skin_draw_pixmap(NULL, skin, pixmap, gc, SKIN_NUMBERS, 20, 6, 101, 6, 5, 1);
+    skin_draw_pixbuf(NULL, skin, pixbuf, SKIN_NUMBERS, 0, 0, 0, 0, 99, numbers->current_height);
+    skin_draw_pixbuf(NULL, skin, pixbuf, SKIN_NUMBERS, 90, 0, 99, 0, 9, numbers->current_height);
+    skin_draw_pixbuf(NULL, skin, pixbuf, SKIN_NUMBERS, 20, 6, 101, 6, 5, 1);
 
-    g_object_unref(numbers->pixmap);
-    g_object_unref(gc);
+    g_object_unref(numbers->pixbuf);
 
-    numbers->pixmap = pixmap;
+    numbers->pixbuf = pixbuf;
     numbers->current_width = 108;
     numbers->width = 108;
 }
@@ -1797,8 +1801,37 @@ skin_get_id(void)
     return skin_current_num;
 }
 
+/* obsolete, will be removed after equalizer graph transition to GdkPixbuf */
 void
 skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC * gc,
+                 SkinPixmapId pixmap_id,
+                 gint xsrc, gint ysrc, gint xdest, gint ydest,
+                 gint width, gint height)
+{
+    SkinPixmap *pixmap;
+
+    g_return_if_fail(skin != NULL);
+    g_return_if_fail(pixmap_id == SKIN_EQMAIN);
+
+    pixmap = skin_get_pixmap(skin, pixmap_id);
+    g_return_if_fail(pixmap != NULL);
+    g_return_if_fail(pixmap->pixmap != NULL);
+
+    /* perhaps we should use transparency or resize widget? */
+    if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
+        if (widget)
+            if (!(pixmap_id == SKIN_EQMAIN && ysrc == 314)) /* equalizer preamp on equalizer graph */
+                gtk_widget_hide(widget);
+    }
+
+    width = MIN(width, pixmap->width - xsrc);
+    height = MIN(height, pixmap->height - ysrc);
+    gdk_draw_pixbuf(drawable, gc, pixmap->pixbuf, xsrc, ysrc,
+                      xdest, ydest, width, height, GDK_RGB_DITHER_NONE, 0, 0);
+}
+
+void
+skin_draw_pixbuf(GtkWidget *widget, Skin * skin, GdkPixbuf * pix,
                  SkinPixmapId pixmap_id,
                  gint xsrc, gint ysrc, gint xdest, gint ydest,
                  gint width, gint height)
@@ -1809,7 +1842,7 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
 
     pixmap = skin_get_pixmap(skin, pixmap_id);
     g_return_if_fail(pixmap != NULL);
-    g_return_if_fail(pixmap->pixmap != NULL);
+    g_return_if_fail(pixmap->pixbuf != NULL);
 
     /* perhaps we should use transparency or resize widget? */
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
@@ -1842,8 +1875,8 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
                             return;
                     }
                     /* let's copy what's under widget */
-                    gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
-                                      x, y, xdest, ydest, width, height);
+                    gdk_pixbuf_copy_area(skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixbuf,
+                                         x, y, width, height, pix, xdest, ydest);
 
                     /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
                     if (pixmap_id == SKIN_MONOSTEREO)
@@ -1862,8 +1895,8 @@ skin_draw_pixmap(GtkWidget *widget, Skin * skin, GdkDrawable * drawable, GdkGC *
 
     width = MIN(width, pixmap->width - xsrc);
     height = MIN(height, pixmap->height - ysrc);
-    gdk_draw_drawable(drawable, gc, pixmap->pixmap, xsrc, ysrc,
-                      xdest, ydest, width, height);
+    gdk_pixbuf_copy_area(pixmap->pixbuf, xsrc, ysrc, width, height,
+                         pix, xdest, ydest);
 }
 
 void
@@ -1897,9 +1930,7 @@ skin_get_eq_spline_colors(Skin * skin, guint32 colors[19])
 
 
 static void
-skin_draw_playlistwin_frame_top(Skin * skin,
-                                GdkDrawable * drawable,
-                                GdkGC * gc,
+skin_draw_playlistwin_frame_top(Skin * skin, GdkPixbuf * pix,
                                 gint width, gint height, gboolean focus)
 {
     /* The title bar skin consists of 2 sets of 4 images, 1 set
@@ -1923,14 +1954,14 @@ skin_draw_playlistwin_frame_top(Skin * skin,
         y = 21;
 
     /* left corner */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 0, y, 0, 0, 25, 20);
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 0, y, 0, 0, 25, 20);
 
     /* titlebar title */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 26, y,
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 26, y,
                      (width - 100) / 2, 0, 100, 20);
 
     /* titlebar right corner  */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 153, y,
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 153, y,
                      width - 25, 0, 25, 20);
 
     /* tile draw the remaining frame */
@@ -1940,28 +1971,26 @@ skin_draw_playlistwin_frame_top(Skin * skin,
 
     for (i = 0; i < c / 2; i++) {
         /* left of title */
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 127, y,
                          25 + i * 25, 0, 25, 20);
 
         /* right of title */
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 127, y,
                          (width + 100) / 2 + i * 25, 0, 25, 20);
     }
 
     if (c & 1) {
         /* Odd tile count, so one remaining to draw. Here we split
          * it into two and draw half on either side of the title */
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 127, y,
                          ((c / 2) * 25) + 25, 0, 12, 20);
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 127, y,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 127, y,
                          (width / 2) + ((c / 2) * 25) + 50, 0, 13, 20);
     }
 }
 
 static void
-skin_draw_playlistwin_frame_bottom(Skin * skin,
-                                   GdkDrawable * drawable,
-                                   GdkGC * gc,
+skin_draw_playlistwin_frame_bottom(Skin * skin, GdkPixbuf * pix,
                                    gint width, gint height, gboolean focus)
 {
     /* The bottom frame skin consists of 1 set of 4 images. The 4
@@ -1978,7 +2007,7 @@ skin_draw_playlistwin_frame_bottom(Skin * skin,
     gint i, c;
 
     /* bottom left corner (menu buttons) */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 0, 72,
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 0, 72,
                      0, height - 38, 125, 38);
 
     c = (width - 275) / 25;
@@ -1986,24 +2015,22 @@ skin_draw_playlistwin_frame_bottom(Skin * skin,
     /* draw visualization window, if width allows */
     if (c >= 3) {
         c -= 3;
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 205, 0,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 205, 0,
                          width - (150 + 75), height - 38, 75, 38);
     }
 
     /* Bottom right corner (playbuttons etc) */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT,
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT,
                      126, 72, width - 150, height - 38, 150, 38);
 
     /* Tile draw the remaining undrawn portions */
     for (i = 0; i < c; i++)
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 179, 0,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 179, 0,
                          125 + i * 25, height - 38, 25, 38);
 }
 
 static void
-skin_draw_playlistwin_frame_sides(Skin * skin,
-                                  GdkDrawable * drawable,
-                                  GdkGC * gc,
+skin_draw_playlistwin_frame_sides(Skin * skin, GdkPixbuf * pix,
                                   gint width, gint height, gboolean focus)
 {
     /* The side frames consist of 2 tile images. 1 for the left, 1 for
@@ -2017,32 +2044,28 @@ skin_draw_playlistwin_frame_sides(Skin * skin,
     /* frame sides */
     for (i = 0; i < (height - (20 + 38)) / 29; i++) {
         /* left */
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 0, 42,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 0, 42,
                          0, 20 + i * 29, 12, 29);
 
         /* right */
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 32, 42,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 32, 42,
                          width - 19, 20 + i * 29, 19, 29);
     }
 }
 
 
 void
-skin_draw_playlistwin_frame(Skin * skin,
-                            GdkDrawable * drawable, GdkGC * gc,
+skin_draw_playlistwin_frame(Skin * skin, GdkPixbuf * pix,
                             gint width, gint height, gboolean focus)
 {
-    skin_draw_playlistwin_frame_top(skin, drawable, gc, width, height, focus);
-    skin_draw_playlistwin_frame_bottom(skin, drawable, gc, width, height,
-                                       focus);
-    skin_draw_playlistwin_frame_sides(skin, drawable, gc, width, height,
-                                      focus);
+    skin_draw_playlistwin_frame_top(skin, pix, width, height, focus);
+    skin_draw_playlistwin_frame_bottom(skin, pix, width, height, focus);
+    skin_draw_playlistwin_frame_sides(skin, pix, width, height, focus);
 }
 
 
 void
-skin_draw_playlistwin_shaded(Skin * skin,
-                             GdkDrawable * drawable, GdkGC * gc,
+skin_draw_playlistwin_shaded(Skin * skin, GdkPixbuf * pix,
                              gint width, gboolean focus)
 {
     /* The shade mode titlebar skin consists of 4 images:
@@ -2055,22 +2078,21 @@ skin_draw_playlistwin_shaded(Skin * skin,
     gint i;
 
     /* left corner */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 72, 42, 0, 0, 25, 14);
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 72, 42, 0, 0, 25, 14);
 
     /* bar tile */
     for (i = 0; i < (width - 75) / 25; i++)
-        skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 72, 57,
+        skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 72, 57,
                          (i * 25) + 25, 0, 25, 14);
 
     /* right corner */
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_PLEDIT, 99, focus ? 42 : 57,
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_PLEDIT, 99, focus ? 42 : 57,
                      width - 50, 0, 50, 14);
 }
 
 
 void
-skin_draw_mainwin_titlebar(Skin * skin,
-                           GdkDrawable * drawable, GdkGC * gc,
+skin_draw_mainwin_titlebar(Skin * skin, GdkPixbuf * pix,
                            gboolean shaded, gboolean focus)
 {
     /* The titlebar skin consists of 2 sets of 2 images, one for for
@@ -2099,7 +2121,7 @@ skin_draw_mainwin_titlebar(Skin * skin,
             y_offset = 15;
     }
 
-    skin_draw_pixmap(NULL, skin, drawable, gc, SKIN_TITLEBAR, 27, y_offset,
+    skin_draw_pixbuf(NULL, skin, pix, SKIN_TITLEBAR, 27, y_offset,
                      0, 0, bmp_active_skin->properties.mainwin_width, MAINWIN_TITLEBAR_HEIGHT);
 }
 

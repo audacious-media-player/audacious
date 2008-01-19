@@ -185,33 +185,28 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
     UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
     g_return_val_if_fail (number->width > 0 && number->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
-    obj = gdk_pixmap_new(NULL, number->width, number->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    GdkPixbuf *obj;
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, number->width, number->height);
 
     if (number->num > 11 || number->num < 0)
         number->num = 10;
 
-    skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
+    skin_draw_pixbuf(widget, bmp_active_skin, obj,
                      number->skin_index, number->num * 9, 0,
                      0, 0, number->width, number->height);
 
-    GdkPixmap *image;
-    image = gdk_pixmap_new(NULL, number->width*(1+number->double_size),
-                                 number->height*(1+number->double_size),
-                                 gdk_rgb_get_visual()->depth);
-
+    GdkPixbuf *image = NULL;
     if (number->double_size) {
-        image = create_dblsize_pixmap(obj);
-    } else
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, number->width, number->height);
+        image = gdk_pixbuf_scale_simple(obj, number->width*2, number->height*2, GDK_INTERP_NEAREST);
+    } else {
+        image = gdk_pixbuf_copy(obj);
+    }
+
+    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
+                    number->width*(1+number->double_size), number->height*(1+number->double_size),
+                    GDK_RGB_DITHER_NONE, 0, 0);
 
     g_object_unref(obj);
-
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                       number->width*(1+number->double_size), number->height*(1+number->double_size));
-    g_object_unref(gc);
     g_object_unref(image);
 
     return FALSE;

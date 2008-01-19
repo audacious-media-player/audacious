@@ -54,12 +54,12 @@ struct _UiSkinnedTextboxPrivate {
     gint             font_ascent, font_descent;
     PangoFontDescription *font;
     gchar            *fontname;
-    gchar            *pixmap_text;
+    gchar            *pixbuf_text;
     gint             skin_id;
     gint             drag_x, drag_off, offset;
     gboolean         is_scrollable, is_dragging;
-    gint             pixmap_width;
-    GdkPixmap        *pixmap;
+    gint             pixbuf_width;
+    GdkPixbuf        *pixbuf;
     gboolean         scroll_allowed, scroll_enabled;
     gint             scroll_dummy;
     gint             move_x, move_y;
@@ -261,8 +261,8 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
 
     if (textbox->width != widget->allocation.width/(priv->double_size ? 2 : 1)) {
             textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
-            if (priv->pixmap_text) g_free(priv->pixmap_text);
-            priv->pixmap_text = NULL;
+            if (priv->pixbuf_text) g_free(priv->pixbuf_text);
+            priv->pixbuf_text = NULL;
             priv->offset = 0;
             gtk_widget_set_size_request(widget, textbox->width, textbox->height);
             gtk_widget_queue_draw(GTK_WIDGET(textbox));
@@ -278,65 +278,59 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
     g_return_val_if_fail (textbox->width > 0 && textbox->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
+    GdkPixbuf *obj = NULL;
     gint cw;
 
-    if (textbox->text && (!priv->pixmap_text || strcmp(textbox->text, priv->pixmap_text)))
+    if (textbox->text && (!priv->pixbuf_text || strcmp(textbox->text, priv->pixbuf_text)))
         textbox_generate_pixmap(textbox);
 
-    if (priv->pixmap) {
+    if (priv->pixbuf) {
         if (skin_get_id() != priv->skin_id) {
             priv->skin_id = skin_get_id();
             textbox_generate_pixmap(textbox);
         }
-        obj = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
-        gc = gdk_gc_new(obj);
+        obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, textbox->width, textbox->height);
 
         if (cfg.twoway_scroll) { // twoway scroll
-            cw = priv->pixmap_width - priv->offset;
+            cw = priv->pixbuf_width - priv->offset;
             if (cw > textbox->width)
                 cw = textbox->width;
-            gdk_draw_drawable(obj, gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
+            gdk_pixbuf_copy_area(priv->pixbuf, priv->offset, 0, cw, textbox->height, obj, 0, 0);
             if (cw < textbox->width)
-                gdk_draw_drawable(obj, gc, priv->pixmap, 0, 0,
-                                  textbox->x + cw, textbox->y,
-                                  textbox->width - cw, textbox->height);
+                gdk_pixbuf_copy_area(priv->pixbuf, 0, 0, textbox->width - cw, textbox->height,
+                                     obj, textbox->width - cw, textbox->height);
         } else { // oneway scroll
             int cw1, cw2;
 
-            if (priv->offset >= priv->pixmap_width)
+            if (priv->offset >= priv->pixbuf_width)
                 priv->offset = 0;
 
-            if (priv->pixmap_width - priv->offset > textbox->width) { // case1
+            if (priv->pixbuf_width - priv->offset > textbox->width) { // case1
                 cw1 = textbox->width;
-                gdk_draw_drawable(obj, gc, priv->pixmap, priv->offset, 0,
-                                  0, 0, cw1, textbox->height);
+                gdk_pixbuf_copy_area(priv->pixbuf, priv->offset, 0, cw1, textbox->height,
+                                     obj, 0, 0);
             } else { // case 2
-                cw1 = priv->pixmap_width - priv->offset;
-                gdk_draw_drawable(obj, gc, priv->pixmap, priv->offset, 0,
-                                  0, 0, cw1, textbox->height);
+                cw1 = priv->pixbuf_width - priv->offset;
+                gdk_pixbuf_copy_area(priv->pixbuf, priv->offset, 0, cw1, textbox->height, obj, 0, 0);
                 cw2 = textbox->width - cw1;
-                gdk_draw_drawable(obj, gc, priv->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
+                gdk_pixbuf_copy_area(priv->pixbuf, 0, 0, cw2, textbox->height, obj, cw1, 0);
             }
-
         }
 
-        GdkPixmap *image = NULL;
-
+        GdkPixbuf *image = NULL;
         if (priv->double_size) {
-            image = create_dblsize_pixmap(obj);
+            image = gdk_pixbuf_scale_simple(obj, textbox->width*2, textbox->height*2, GDK_INTERP_NEAREST);
         } else {
-            image = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
-            gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, textbox->width, textbox->height);
+            image = gdk_pixbuf_copy(obj);
         }
+
+        gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
+                        textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size),
+                        GDK_RGB_DITHER_NONE, 0, 0);
 
         g_object_unref(obj);
-
-        gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                           textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
-        g_object_unref(gc);
         g_object_unref(image);
+
     }
 
     return FALSE;
@@ -356,7 +350,7 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
             return FALSE;
         else if (event->button == 1) {
             if (priv->scroll_allowed) {
-                if ((priv->pixmap_width > textbox->width) && priv->is_scrollable) {
+                if ((priv->pixbuf_width > textbox->width) && priv->is_scrollable) {
                     priv->is_dragging = TRUE;
                     priv->drag_off = priv->offset;
                     priv->drag_x = event->x;
@@ -399,14 +393,14 @@ static gboolean ui_skinned_textbox_motion_notify(GtkWidget *widget, GdkEventMoti
 
     if (priv->is_dragging) {
         if (priv->scroll_allowed &&
-            priv->pixmap_width > textbox->width) {
+            priv->pixbuf_width > textbox->width) {
             priv->offset = priv->drag_off - (event->x - priv->drag_x);
 
             while (priv->offset < 0)
                 priv->offset = 0;
 
-            while (priv->offset > (priv->pixmap_width - textbox->width))
-                priv->offset = (priv->pixmap_width - textbox->width);
+            while (priv->offset > (priv->pixbuf_width - textbox->width))
+                priv->offset = (priv->pixbuf_width - textbox->width);
 
             gtk_widget_queue_draw(widget);
         }
@@ -475,9 +469,9 @@ void ui_skinned_textbox_set_xfont(GtkWidget *widget, gboolean use_xfont, const g
     textbox->height = priv->nominal_height;
 
     /* Make sure the pixmap is regenerated */
-    if (priv->pixmap_text) {
-        g_free(priv->pixmap_text);
-        priv->pixmap_text = NULL;
+    if (priv->pixbuf_text) {
+        g_free(priv->pixbuf_text);
+        priv->pixbuf_text = NULL;
     }
 
     if (!use_xfont || strlen(fontname) == 0)
@@ -519,12 +513,14 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
 }
 
 static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar *pixmaptext) {
+    /* FIXME: should operate directly on priv->pixbuf, it shouldn't use pixmap */
     gint length, i;
     GdkGC *gc, *maskgc;
     GdkColor *c, pattern;
     GdkBitmap *mask;
     PangoLayout *layout;
     gint width;
+    GdkPixmap *pixmap;
 
     g_return_if_fail(textbox != NULL);
     g_return_if_fail(pixmaptext != NULL);
@@ -536,23 +532,23 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
 
     text_get_extents(priv->fontname, pixmaptext, &width, NULL, NULL, NULL);
 
-    priv->pixmap_width = MAX(width, textbox->width);
-    priv->pixmap = gdk_pixmap_new(mainwin->window, priv->pixmap_width,
+    priv->pixbuf_width = MAX(width, textbox->width);
+    pixmap = gdk_pixmap_new(mainwin->window, priv->pixbuf_width,
                                    textbox->height,
                                    gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(priv->pixmap);
+    gc = gdk_gc_new(pixmap);
     c = skin_get_color(bmp_active_skin, SKIN_TEXTBG);
     for (i = 0; i < textbox->height; i++) {
         gdk_gc_set_foreground(gc, &c[6 * i / textbox->height]);
-        gdk_draw_line(priv->pixmap, gc, 0, i, priv->pixmap_width, i);
+        gdk_draw_line(pixmap, gc, 0, i, priv->pixbuf_width, i);
     }
 
-    mask = gdk_pixmap_new(mainwin->window, priv->pixmap_width, textbox->height, 1);
+    mask = gdk_pixmap_new(mainwin->window, priv->pixbuf_width, textbox->height, 1);
     maskgc = gdk_gc_new(mask);
     pattern.pixel = 0;
     gdk_gc_set_foreground(maskgc, &pattern);
 
-    gdk_draw_rectangle(mask, maskgc, TRUE, 0, 0, priv->pixmap_width, textbox->height);
+    gdk_draw_rectangle(mask, maskgc, TRUE, 0, 0, priv->pixbuf_width, textbox->height);
     pattern.pixel = 1;
     gdk_gc_set_foreground(maskgc, &pattern);
 
@@ -561,7 +557,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
     layout = gtk_widget_create_pango_layout(mainwin, pixmaptext);
     pango_layout_set_font_description(layout, priv->font);
 
-    gdk_draw_layout(priv->pixmap, gc, 0, (priv->font_descent / 2), layout);
+    gdk_draw_layout(pixmap, gc, 0, (priv->font_descent / 2), layout);
     g_object_unref(layout);
 
     g_object_unref(maskgc);
@@ -570,8 +566,9 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
     c = skin_get_color(bmp_active_skin, SKIN_TEXTFG);
     for (i = 0; i < textbox->height; i++) {
         gdk_gc_set_foreground(gc, &c[6 * i / textbox->height]);
-        gdk_draw_line(priv->pixmap, gc, 0, i, priv->pixmap_width, i);
+        gdk_draw_line(pixmap, gc, 0, i, priv->pixbuf_width, i);
     }
+    priv->pixbuf = gdk_pixbuf_get_from_drawable(NULL, pixmap, gdk_colormap_get_system(), 0, 0, 0, 0, priv->pixbuf_width, textbox->height);
     g_object_unref(mask);
     g_object_unref(gc);
 }
@@ -590,10 +587,10 @@ static gboolean textbox_scroll(gpointer data) {
                 else
                     priv->offset += 1;
 
-                if (priv->offset >= (priv->pixmap_width - textbox->width)) {
+                if (priv->offset >= (priv->pixbuf_width - textbox->width)) {
                     priv->scroll_back = TRUE;
                     priv->scroll_dummy = 0;
-                    priv->offset = priv->pixmap_width - textbox->width;
+                    priv->offset = priv->pixbuf_width - textbox->width;
                 }
                 if (priv->offset <= 0) {
                     priv->scroll_back = FALSE;
@@ -615,14 +612,13 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     gint length, i, x, y, wl;
     gchar *pixmaptext;
     gchar *tmp, *stxt;
-    GdkGC *gc;
 
     g_return_if_fail(textbox != NULL);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
-    if (priv->pixmap) {
-        g_object_unref(priv->pixmap);
-        priv->pixmap = NULL;
+    if (priv->pixbuf) {
+        g_object_unref(priv->pixbuf);
+        priv->pixbuf = NULL;
     }
 
     /*
@@ -630,13 +626,13 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
      * changed.  This is a hack to avoid visual noice on vbr files
      * where we guess the length.
      */
-    if (!(priv->pixmap_text && strrchr(textbox->text, '(') &&
-          !strncmp(priv->pixmap_text, textbox->text,
+    if (!(priv->pixbuf_text && strrchr(textbox->text, '(') &&
+          !strncmp(priv->pixbuf_text, textbox->text,
                    strrchr(textbox->text, '(') - textbox->text)))
         priv->offset = 0;
 
-    g_free(priv->pixmap_text);
-    priv->pixmap_text = g_strdup(textbox->text);
+    g_free(priv->pixbuf_text);
+    priv->pixbuf_text = g_strdup(textbox->text);
 
     /*
      * wl is the number of (partial) letters visible. Only makes
@@ -654,20 +650,20 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
 
     if (priv->is_scrollable) {
         if(!cfg.twoway_scroll) {
-            pixmaptext = g_strdup_printf("%s *** ", priv->pixmap_text);
+            pixmaptext = g_strdup_printf("%s *** ", priv->pixbuf_text);
             length += 5;
         } else
-            pixmaptext = g_strdup(priv->pixmap_text);
+            pixmaptext = g_strdup(priv->pixbuf_text);
     } else
     if (!priv->font && length <= wl) {
         gint pad = wl - length;
         gchar *padchars = g_strnfill(pad, ' ');
 
-        pixmaptext = g_strconcat(priv->pixmap_text, padchars, NULL);
+        pixmaptext = g_strconcat(priv->pixbuf_text, padchars, NULL);
         g_free(padchars);
         length += pad;
     } else
-        pixmaptext = g_strdup(priv->pixmap_text);
+        pixmaptext = g_strdup(priv->pixbuf_text);
 
     if (priv->is_scrollable) {
         if (priv->scroll_enabled && !priv->scroll_timeout) {
@@ -689,11 +685,9 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
         return;
     }
 
-    priv->pixmap_width = length * bmp_active_skin->properties.textbox_bitmap_font_width;
-    priv->pixmap = gdk_pixmap_new(NULL,
-                                     priv->pixmap_width, bmp_active_skin->properties.textbox_bitmap_font_height,
-                                     gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(priv->pixmap);
+    priv->pixbuf_width = length * bmp_active_skin->properties.textbox_bitmap_font_width;
+    priv->pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8,
+                                  priv->pixbuf_width, bmp_active_skin->properties.textbox_bitmap_font_height);
 
     for (tmp = stxt = g_utf8_strup(pixmaptext, -1), i = 0;
          tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
@@ -710,15 +704,14 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
         else
             textbox_handle_special_char(tmp, &x, &y);
 
-        skin_draw_pixmap(GTK_WIDGET(textbox), bmp_active_skin,
-                         priv->pixmap, gc, priv->skin_index,
+        skin_draw_pixbuf(GTK_WIDGET(textbox), bmp_active_skin,
+                         priv->pixbuf, priv->skin_index,
                          x, y, i * bmp_active_skin->properties.textbox_bitmap_font_width, 0,
                          bmp_active_skin->properties.textbox_bitmap_font_width, 
                          bmp_active_skin->properties.textbox_bitmap_font_height);
     }
     g_free(stxt);
     g_free(pixmaptext);
-    g_object_unref(gc);
 }
 
 void ui_skinned_textbox_set_scroll(GtkWidget *widget, gboolean scroll) {
