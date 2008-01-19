@@ -133,6 +133,7 @@ equalizerwin_set_doublesize(gboolean ds)
         GtkWidget *child = child_data->widget;
         g_signal_emit_by_name(child, "toggle-double-size");
     }
+    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 }
 
 void

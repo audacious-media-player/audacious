@@ -1811,6 +1811,7 @@ mainwin_set_doublesize(gboolean doublesize)
     }
 
     mainwin_refresh_hints();
+    gtk_widget_shape_combine_mask(mainwin, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
 }
 
 void
