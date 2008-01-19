@@ -1383,9 +1383,16 @@ main(gint argc, gchar ** argv)
 
     if (error != NULL)
     {
-        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
-	  argv[0], error->message, argv[0]);
-        exit(EXIT_FAILURE);
+        if(error->message)
+        {   /* checking for MacOS X -psn_0_* errors*/
+            char* s = g_strrstr(error->message,"-psn_0_");
+            if(!s)
+            {
+                g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
+                        argv[0], error->message, argv[0]);
+                exit(EXIT_FAILURE);
+            }
+        }
     }
 
     if (!gtk_init_check_ok) {
