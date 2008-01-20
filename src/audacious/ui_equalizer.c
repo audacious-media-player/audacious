@@ -789,12 +789,12 @@ import_winamp_eqf(VFSFile * file)
             return NULL;
 
         filename = g_filename_from_uri(file->uri,NULL,NULL);
-        name = g_basename(filename);
+        name = g_path_get_basename(filename);
         g_free(filename);
         g_print("The preset name is '%s'\n", name);
 
         preset = equalizer_preset_new(name);
-
+        g_free(name);
         preset->preamp = 20.0 - ((bands[10] * 40.0) / 64.0);
 
         for (i = 0; i < 10; i++)
