@@ -1,4 +1,4 @@
-# translation of sr@Latn.po to
+# translation of audacious.pot to Serbian Latin
 # Strahinja Kustudic <kustudic@gmail.com>, 2007, 2008.
 # Copyright (C) 2007 Strahinja  Kustudić <kustodian@gmail.com>
 # This file is distributed under the same license as the Audacious package.
@@ -7,13 +7,12 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-01-10 15:53+0100\n"
-"PO-Revision-Date: 2008-01-03 10:41+0100\n"
+"PO-Revision-Date: 2008-01-20 20:16+0100\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
-"Language-Team:  <en@li.org>\n"
+"Language-Team:  <kustudic@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: src/audacious/input.c:638
 #, c-format
@@ -265,7 +264,7 @@ msgid "  (invalid UTF-8)"
 msgstr "  (neispravan UTF-8)"
 
 #: src/audacious/ui_about.c:46
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
@@ -273,7 +272,7 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Sva prava zadržana, 2005-2007 Audacious Razvojni Tim"
+"Sva prava zadržana, 2005-2008 Audacious Razvojni Tim"
 
 #: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:363
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
@@ -285,7 +284,7 @@ msgid "Credits"
 msgstr "Zasluge"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
@@ -295,7 +294,7 @@ msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Maskirani multimedijalni plejer za više platformi.\n"
 "\n"
-"Sva prava zadržana, 2005-2007 Audacious Razvojni Tim\n"
+"Sva prava zadržana, 2005-2008 Audacious Razvojni Tim\n"
 
 #: src/audacious/ui_credits.c:53
 msgid "Audacious core developers:"
@@ -470,625 +469,596 @@ msgid "Presets"
 msgstr "Pretpodešavanja"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Blues"
-msgstr "Plavo"
+msgstr "Bluz"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Classic Rock"
-msgstr ""
+msgstr "Klasični rok"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Country"
-msgstr ""
+msgstr "Kantri"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Dance"
-msgstr "Datum"
+msgstr "Dens"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Disco"
-msgstr ""
+msgstr "Disko"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Funk"
-msgstr ""
+msgstr "Fanki"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Grunge"
-msgstr ""
+msgstr "Grandž"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Hip-Hop"
-msgstr ""
+msgstr "Hip Hop"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Jazz"
-msgstr ""
+msgstr "Džez"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Metal"
-msgstr ""
+msgstr "Metal"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "New Age"
-msgstr ""
+msgstr "Nju Ejdž"
 
 #: src/audacious/ui_fileinfo.c:103
-#, fuzzy
 msgid "Oldies"
-msgstr "linije"
+msgstr "Evergrin"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Other"
-msgstr ""
+msgstr "Ostalo"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Pop"
-msgstr ""
+msgstr "Pop"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "R&B"
-msgstr ""
+msgstr "R&B"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Rap"
-msgstr ""
+msgstr "Rep"
 
 #: src/audacious/ui_fileinfo.c:104
-#, fuzzy
 msgid "Reggae"
-msgstr "_Preimenuj"
+msgstr "Rege"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Rock"
-msgstr ""
+msgstr "Rok"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Techno"
-msgstr ""
+msgstr "Tehno"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Industrial"
-msgstr ""
+msgstr "Industrija"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Alternative"
-msgstr ""
+msgstr "Alternativa"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Ska"
-msgstr ""
+msgstr "Ska"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Death Metal"
-msgstr ""
+msgstr "Det metal"
 
 #: src/audacious/ui_fileinfo.c:106
-#, fuzzy
 msgid "Pranks"
-msgstr "Vrhovi"
+msgstr "Pranks"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Soundtrack"
-msgstr ""
+msgstr "Tema iz filma"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Euro-Techno"
-msgstr ""
+msgstr "Euro-Tehno"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Ambient"
-msgstr ""
+msgstr "Ambijentalna"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Trip-Hop"
-msgstr ""
+msgstr "Trip-Hop"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Vocal"
-msgstr ""
+msgstr "Vokal"
 
 #: src/audacious/ui_fileinfo.c:108
 msgid "Jazz+Funk"
-msgstr ""
+msgstr "Džez i Fanki"
 
 #: src/audacious/ui_fileinfo.c:108
-#, fuzzy
 msgid "Fusion"
-msgstr "Ruski"
+msgstr "Fuzija"
 
 #: src/audacious/ui_fileinfo.c:108
-#, fuzzy
 msgid "Trance"
-msgstr "Izgled"
+msgstr "Trens"
 
 #: src/audacious/ui_fileinfo.c:108
 msgid "Classical"
-msgstr ""
+msgstr "Klasična"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Instrumental"
-msgstr ""
+msgstr "Instrumental"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Acid"
-msgstr ""
+msgstr "Acid"
 
 #: src/audacious/ui_fileinfo.c:109
-#, fuzzy
 msgid "House"
-msgstr "Miš"
+msgstr "Haus"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Game"
-msgstr ""
+msgstr "Muzika iz igre"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "Sound Clip"
-msgstr ""
+msgstr "Tonski zapis"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "Gospel"
-msgstr ""
+msgstr "Verska"
 
 #: src/audacious/ui_fileinfo.c:110
-#, fuzzy
 msgid "Noise"
-msgstr "Nijedan"
+msgstr "Šum"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "AlternRock"
-msgstr ""
+msgstr "AlternRok"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Bass"
-msgstr "Trake"
+msgstr "Bas"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Soul"
-msgstr ""
+msgstr "Soul"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Punk"
-msgstr ""
+msgstr "Pank"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Space"
-msgstr "Sačuvati"
+msgstr "Spejs"
 
 #: src/audacious/ui_fileinfo.c:112
 msgid "Meditative"
-msgstr ""
+msgstr "Meditaciona"
 
 #: src/audacious/ui_fileinfo.c:112
 msgid "Instrumental Pop"
-msgstr ""
+msgstr "Instrumentalni pop"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Instrumental Rock"
-msgstr ""
+msgstr "Instrumentalni rok"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Ethnic"
-msgstr ""
+msgstr "Etno"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Gothic"
-msgstr ""
+msgstr "Gotska"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Darkwave"
-msgstr ""
+msgstr "Crni talas"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Techno-Industrial"
-msgstr ""
+msgstr "Tehno-Industrija"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Electronic"
-msgstr ""
+msgstr "Elektronska"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Pop-Folk"
-msgstr ""
+msgstr "Pop-Folk"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Eurodance"
-msgstr ""
+msgstr "Eurodens"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Dream"
-msgstr ""
+msgstr "Drim"
 
 #: src/audacious/ui_fileinfo.c:116
 msgid "Southern Rock"
-msgstr ""
+msgstr "Južnjački rok"
 
 #: src/audacious/ui_fileinfo.c:116
-#, fuzzy
 msgid "Comedy"
-msgstr "Komentar"
+msgstr "Komedija"
 
 #: src/audacious/ui_fileinfo.c:116
-#, fuzzy
 msgid "Cult"
-msgstr "Sopstveni"
+msgstr "Kultna"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "Gangsterski rep"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Top 40"
-msgstr ""
+msgstr "Najpolularnijih 40"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Christian Rap"
-msgstr ""
+msgstr "Hrišćanski rep"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Pop/Funk"
-msgstr ""
+msgstr "Pop/Fanki"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Jungle"
-msgstr ""
+msgstr "Džangl"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Native American"
-msgstr ""
+msgstr "Tradicionalna američka"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "Cabaret"
-msgstr ""
+msgstr "Kabare"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "New Wave"
-msgstr ""
+msgstr "Novi talas"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "Psychedelic"
-msgstr ""
+msgstr "Psihodelično"
 
 #: src/audacious/ui_fileinfo.c:119
-#, fuzzy
 msgid "Rave"
-msgstr "Sačuvati"
+msgstr "Rejv"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Showtunes"
-msgstr "Najsporiji"
+msgstr "Muzika iz predstave"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Trailer"
-msgstr "Naslov"
+msgstr "Trejler"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Lo-Fi"
-msgstr ""
+msgstr "Lo-Fi"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Tribal"
-msgstr ""
+msgstr "Plemenska"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Punk"
-msgstr ""
+msgstr "Acid pank"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Jazz"
-msgstr ""
+msgstr "Acid džez"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Polka"
-msgstr "Pusti"
+msgstr "Polka"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Retro"
-msgstr "Nula"
+msgstr "Retro"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Musical"
-msgstr ""
+msgstr "Muzička"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Rock & Roll"
-msgstr ""
+msgstr "Rokenrol"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Hard Rock"
-msgstr ""
+msgstr "Hard rok"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Folk"
-msgstr ""
+msgstr "Narodna"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "Folk/Rock"
-msgstr ""
+msgstr "Narodna/Rok"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "National Folk"
-msgstr ""
+msgstr "Nacionalna"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "Swing"
-msgstr ""
+msgstr "Sving"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Fast-Fusion"
-msgstr ""
+msgstr "Fast-Fjužn"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Bebob"
-msgstr ""
+msgstr "Bibop"
 
 #: src/audacious/ui_fileinfo.c:124
-#, fuzzy
 msgid "Latin"
-msgstr "Linije"
+msgstr "Latino"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Revival"
-msgstr ""
+msgstr "Oživljenje"
 
 #: src/audacious/ui_fileinfo.c:125
 msgid "Celtic"
-msgstr ""
+msgstr "Keltska"
 
 #: src/audacious/ui_fileinfo.c:125
-#, fuzzy
 msgid "Bluegrass"
-msgstr "Plavo"
+msgstr "Blu-gras"
 
 #: src/audacious/ui_fileinfo.c:125
 msgid "Avantgarde"
-msgstr ""
+msgstr "Avangardna"
 
 #: src/audacious/ui_fileinfo.c:126
 msgid "Gothic Rock"
-msgstr ""
+msgstr "Gotski rok"
 
 #: src/audacious/ui_fileinfo.c:126
 msgid "Progressive Rock"
-msgstr ""
+msgstr "Progresivni rok"
 
 #: src/audacious/ui_fileinfo.c:127
 msgid "Psychedelic Rock"
-msgstr ""
+msgstr "Psihodelični rok"
 
 #: src/audacious/ui_fileinfo.c:127
 msgid "Symphonic Rock"
-msgstr ""
+msgstr "Simfonijski rok"
 
 #: src/audacious/ui_fileinfo.c:127
-#, fuzzy
 msgid "Slow Rock"
-msgstr "Spor"
+msgstr "Lagani rok"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Big Band"
-msgstr ""
+msgstr "Big Bend"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Chorus"
-msgstr ""
+msgstr "Horska"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Easy Listening"
-msgstr ""
+msgstr "Laka za slušanje"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Acoustic"
-msgstr ""
+msgstr "Akuctična"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Humour"
-msgstr ""
+msgstr "Humor"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Speech"
-msgstr ""
+msgstr "Govor"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Chanson"
-msgstr ""
+msgstr "Šansona"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Opera"
-msgstr ""
+msgstr "Opera"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Chamber Music"
-msgstr ""
+msgstr "Kamerna muzika"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Sonata"
-msgstr ""
+msgstr "Sonata"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Symphony"
-msgstr ""
+msgstr "Simfonija"
 
 #: src/audacious/ui_fileinfo.c:131
 msgid "Booty Bass"
-msgstr ""
+msgstr "Buti Bas"
 
 #: src/audacious/ui_fileinfo.c:131
-#, fuzzy
 msgid "Primus"
-msgstr "Prethodna"
+msgstr "Primus"
 
 #: src/audacious/ui_fileinfo.c:131
 msgid "Porn Groove"
-msgstr ""
+msgstr "Erotska"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
-#, fuzzy
 msgid "Satire"
-msgstr "Vatra"
+msgstr "Satirična"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
-#, fuzzy
 msgid "Slow Jam"
-msgstr "Spor"
+msgstr "Lagani džem"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
 msgid "Club"
-msgstr ""
+msgstr "Klubska"
 
 #: src/audacious/ui_fileinfo.c:132 src/audacious/ui_fileinfo.c:134
 msgid "Tango"
-msgstr ""
+msgstr "Tango"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Samba"
-msgstr ""
+msgstr "Samba"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Folklore"
-msgstr ""
+msgstr "Folklor"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Ballad"
-msgstr ""
+msgstr "Balada"
 
 #: src/audacious/ui_fileinfo.c:133 src/audacious/ui_fileinfo.c:135
 msgid "Power Ballad"
-msgstr ""
+msgstr "Brža balada"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Rhythmic Soul"
-msgstr ""
+msgstr "Ritmični soul"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Freestyle"
-msgstr ""
+msgstr "Fristajl"
 
 #: src/audacious/ui_fileinfo.c:136
-#, fuzzy
 msgid "Duet"
-msgstr "Holandski:"
+msgstr "Duet"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Punk Rock"
-msgstr ""
+msgstr "Pank rok"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Drum Solo"
-msgstr ""
+msgstr "Solo bubnjevi"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "A Cappella"
-msgstr ""
+msgstr "A Cappella"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Euro-House"
-msgstr ""
+msgstr "Euro-Haus"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Dance Hall"
-msgstr ""
+msgstr "Dens"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Goa"
-msgstr ""
+msgstr "Goa"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Drum & Bass"
-msgstr ""
+msgstr "Dramenbes"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Club-House"
-msgstr ""
+msgstr "Klab-Haus"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Hardcore"
-msgstr ""
+msgstr "Hardkor"
 
 #: src/audacious/ui_fileinfo.c:140
-#, fuzzy
 msgid "Terror"
-msgstr "Nula"
+msgstr "Teror"
 
 #: src/audacious/ui_fileinfo.c:140
-#, fuzzy
 msgid "Indie"
-msgstr "Uključi:"
+msgstr "Indi"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "BritPop"
-msgstr ""
+msgstr "BritPop"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "Negerpunk"
-msgstr ""
+msgstr "Nigerpank"
 
 #: src/audacious/ui_fileinfo.c:141
 msgid "Polsk Punk"
-msgstr ""
+msgstr "Poljsk pank"
 
 #: src/audacious/ui_fileinfo.c:141
-#, fuzzy
 msgid "Beat"
-msgstr "Ponovi"
+msgstr "Bit"
 
 #: src/audacious/ui_fileinfo.c:141
 msgid "Christian Gangsta Rap"
-msgstr ""
+msgstr "Hrišćanski gangsterski rep"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Heavy Metal"
-msgstr ""
+msgstr "Hevi metal"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Black Metal"
-msgstr ""
+msgstr "Crni metal"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Crossover"
-msgstr ""
+msgstr "Prelazna"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "Contemporary Christian"
-msgstr ""
+msgstr "Savremena hrišćanska"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "Christian Rock"
-msgstr ""
+msgstr "Hrišćanski rok"
 
 #: src/audacious/ui_fileinfo.c:144
 msgid "Merengue"
-msgstr ""
+msgstr "Miringva"
 
 #: src/audacious/ui_fileinfo.c:144
 msgid "Salsa"
-msgstr ""
+msgstr "Salsa"
 
 #: src/audacious/ui_fileinfo.c:144
 msgid "Thrash Metal"
-msgstr ""
+msgstr "Threš metal"
 
 #: src/audacious/ui_fileinfo.c:145
 msgid "Anime"
-msgstr ""
+msgstr "Anime"
 
 #: src/audacious/ui_fileinfo.c:145
 msgid "JPop"
-msgstr ""
+msgstr "DžejPop"
 
 #: src/audacious/ui_fileinfo.c:145
-#, fuzzy
 msgid "Synthpop"
-msgstr "Zaustavi"
+msgstr "Sintpop"
 
 #: src/audacious/ui_fileinfo.c:223 src/audacious/ui_fileinfo.c:555
 #: src/audacious/ui_fileinfo.c:558 src/audacious/ui_fileinfo.c:561
@@ -1156,18 +1126,16 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Lokacija</span>"
 
 #: src/audacious/ui_fileinfo.c:708
-#, fuzzy
 msgid "<span size=\"small\">Raw Metadata</span>"
-msgstr "<span size=\"small\">Godina</span>"
+msgstr "<span size=\"small\">Sirovi metapodaci</span>"
 
 #: src/audacious/ui_fileinfo.c:725
 msgid "Key"
-msgstr ""
+msgstr "Ključ"
 
 #: src/audacious/ui_fileinfo.c:738
-#, fuzzy
 msgid "Value"
-msgstr "Plavo"
+msgstr "Vrednost"
 
 #: src/audacious/ui_fileinfo.c:826
 #, c-format
@@ -2425,8 +2393,7 @@ msgstr "Prilikom učitavanja"
 
 #: src/audacious/ui_preferences.c:237
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/ui_preferences.c:238
 msgid "On display"
@@ -2884,3 +2851,4 @@ msgstr "Nearhivirana Winamp 2.x maska"
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
 msgstr "Dodaj/otvori URL okvir"
+
