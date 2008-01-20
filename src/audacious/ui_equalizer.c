@@ -770,27 +770,38 @@ static GList *
 import_winamp_eqf(VFSFile * file)
 {
     gchar header[31];
-    gchar name[257];
+    gchar *name;
+    gchar *filename;
     gchar bands[11];
     gint i = 0;
     GList *list = NULL;
     EqualizerPreset *preset;
 
     vfs_fread(header, 1, 31, file);
-    if (!strncmp(header, "Winamp EQ library file v1.1", 27)) {
-        while (vfs_fread(name, 1, 257, file)) {
-            preset = equalizer_preset_new(name);
-            preset->preamp = 20.0 - ((bands[10] * 40.0) / 64);
+    if (!strncmp(header, "Winamp EQ library file v1.1", 27)) 
+    {
 
-            vfs_fread(bands, 1, 11, file);
+        g_print("The EQF header is OK\n");
 
-            for (i = 0; i < 10; i++)
-                preset->bands[i] = 20.0 - ((bands[i] * 40.0) / 64);
+        if(vfs_fseek(file, 0x120, SEEK_SET) == -1)
+            return NULL; 
+        if(vfs_fread(bands, 1, 11, file) != 11)
+            return NULL;
 
-            list = g_list_prepend(list, preset);
-        }
+        filename = g_filename_from_uri(file->uri,NULL,NULL);
+        name = g_basename(filename);
+        g_free(filename);
+        g_print("The preset name is '%s'\n", name);
+
+        preset = equalizer_preset_new(name);
+
+        preset->preamp = 20.0 - ((bands[10] * 40.0) / 64.0);
+
+        for (i = 0; i < 10; i++)
+            preset->bands[i] = 20.0 - ((bands[i] * 40.0) / 64.0);
+
+        list = g_list_prepend(list, preset);
     }
-
     list = g_list_reverse(list);
     return list;
 }
@@ -806,18 +817,18 @@ equalizerwin_read_winamp_eqf(VFSFile * file)
 
     if (!strncmp(header, "Winamp EQ library file v1.1", 27)) {
         /* Skip name */
-        if (vfs_fseek(file, 257, SEEK_CUR) == -1)
+        if (vfs_fseek(file, 0x120, SEEK_SET) == -1)
             return;
 
         if (vfs_fread(bands, 1, 11, file) != 11)
             return;
 
         ui_skinned_equalizer_slider_set_position(equalizerwin_preamp,
-                              20.0 - ((bands[10] * 40.0) / 63.0));
+                20.0 - ((bands[10] * 40.0) / 64.0)); /*this was divided by 63, but shouldn't it be 64? --majeru*/
 
         for (i = 0; i < 10; i++)
             ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],
-                                  20.0 - ((bands[i] * 40.0) / 64.0));
+                    20.0 - ((bands[i] * 40.0) / 64.0));
     }
 
     equalizerwin_eq_changed();
@@ -1321,14 +1332,14 @@ void
 action_equ_load_preset_file(void)
 {
     GtkWidget *dialog;
-    gchar *filename;
+    gchar *file_uri;
 
     dialog = make_filebrowser(Q_("Load equalizer preset"), FALSE);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
     {
-        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        load_preset_file(filename);
-        g_free(filename);
+        file_uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+        load_preset_file(file_uri);
+        g_free(file_uri);
     }
     gtk_widget_destroy(dialog);
 }
@@ -1337,14 +1348,14 @@ void
 action_equ_load_preset_eqf(void)
 {
     GtkWidget *dialog;
-    gchar *filename;
+    gchar *file_uri;
 
     dialog = make_filebrowser(Q_("Load equalizer preset"), FALSE);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
     {
-        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        load_winamp_file(filename);
-        g_free(filename);
+        file_uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+        load_winamp_file(file_uri);
+        g_free(file_uri);
     }
     gtk_widget_destroy(dialog);
 }
@@ -1353,14 +1364,14 @@ void
 action_equ_import_winamp_presets(void)
 {
     GtkWidget *dialog;
-    gchar *filename;
+    gchar *file_uri;
 
     dialog = make_filebrowser(Q_("Load equalizer preset"), FALSE);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
     {
-        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        import_winamp_file(filename);
-        g_free(filename);
+        file_uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+        import_winamp_file(file_uri);
+        g_free(file_uri);
     }
     gtk_widget_destroy(dialog);
 }
@@ -1420,16 +1431,16 @@ void
 action_equ_save_preset_file(void)
 {
     GtkWidget *dialog;
-    gchar *filename;
+    gchar *file_uri;
     gchar *songname;
     Playlist *playlist = playlist_get_active();
 
     dialog = make_filebrowser(Q_("Save equalizer preset"), TRUE);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
     {
-        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        save_preset_file(filename);
-        g_free(filename);
+        file_uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+        save_preset_file(file_uri);
+        g_free(file_uri);
     }
 
     songname = playlist_get_filename(playlist, playlist_get_position(playlist));
@@ -1449,14 +1460,14 @@ void
 action_equ_save_preset_eqf(void)
 {
     GtkWidget *dialog;
-    gchar *filename;
+    gchar *file_uri;
 
     dialog = make_filebrowser(Q_("Save equalizer preset"), TRUE);
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
     {
-        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        save_winamp_file(filename);
-        g_free(filename);
+        file_uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog));
+        save_winamp_file(file_uri);
+        g_free(file_uri);
     }
     gtk_widget_destroy(dialog);
 }
