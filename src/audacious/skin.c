@@ -1830,16 +1830,14 @@ skin_get_eq_spline_colors(Skin * skin, guint32 colors[19])
 {
     gint i;
     GdkPixbuf *pixbuf;
-    GdkImage *img;
     SkinPixmap *eqmainpm;
-    GdkPixmap *pixmap;
-    GdkGC *gc;
-
+    guchar* pixels,*p;
+    guint rowstride, n_channels;
     g_return_if_fail(skin != NULL);
 
     eqmainpm = &skin->pixmaps[SKIN_EQMAIN];
     if (eqmainpm->pixbuf &&
-        eqmainpm->current_width >= 116 && eqmainpm->current_height >= 313)
+            eqmainpm->current_width >= 116 && eqmainpm->current_height >= 313)
         pixbuf = eqmainpm->pixbuf;
     else
         return;
@@ -1847,24 +1845,16 @@ skin_get_eq_spline_colors(Skin * skin, guint32 colors[19])
     if (!GDK_IS_PIXBUF(pixbuf))
         return;
 
-    pixmap = gdk_pixmap_new(NULL, eqmainpm->current_width, eqmainpm->current_height,
-                            gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(pixmap);
-    gdk_draw_pixbuf(pixmap, gc, pixbuf, 0, 0, 0, 0, eqmainpm->current_width, eqmainpm->current_height,
-                    GDK_RGB_DITHER_MAX, 0, 0);
-
-    if (!(img = gdk_drawable_get_image(pixmap, 115, 294, 1, 19))) {
-        g_object_unref(gc);
-        g_object_unref(pixmap);
-        return;
-    }
-
+    pixels = gdk_pixbuf_get_pixels (pixbuf);
+    rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+    n_channels = gdk_pixbuf_get_n_channels (pixbuf);
     for (i = 0; i < 19; i++)
-        colors[i] = gdk_image_get_pixel(img, 0, i);
-
-    g_object_unref(img);
-    g_object_unref(gc);
-    g_object_unref(pixmap);
+    {
+        p = pixels + rowstride * (i + 294) + 115 * n_channels;
+        colors[i] = (p[0] << 16) | (p[1] << 8) | p[2]; 
+        if(n_channels == 4)       /* should we really treat the Alpha channel? */
+            colors[i]= (colors[i] << 8) | p[3];
+    }
 }
 
 
