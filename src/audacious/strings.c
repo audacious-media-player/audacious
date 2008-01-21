@@ -149,7 +149,8 @@ str_replace_in(gchar ** str, gchar * new_str)
 gboolean
 str_has_prefix_nocase(const gchar * str, const gchar * prefix)
 {
-    return (strncasecmp(str, prefix, strlen(prefix)) == 0);
+    /* strncasecmp causes segfaults when str is NULL*/
+    return (str && (strncasecmp(str, prefix, strlen(prefix)) == 0));
 }
 
 gboolean
