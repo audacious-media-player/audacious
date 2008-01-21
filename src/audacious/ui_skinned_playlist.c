@@ -684,7 +684,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             if ((y > pl->y)
                 && !(y > (priv->height + ply))) {
 
-                pos = ((y - pl->y) / pl->fheight) +
+                pos = (y / pl->fheight) +
                     pl->first;
 
                 if (pos > (plength)) {

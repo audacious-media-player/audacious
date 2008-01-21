@@ -413,11 +413,23 @@ strip_lower_string(GString *string)
     string->str = lower;
 }
 
+static void
+close_ini_file_free_value(gpointer value)
+{
+    g_free((gchar*)value);
+}
+
+static void
+close_ini_file_free_section(gpointer section)
+{
+    g_hash_table_destroy((GHashTable*)section);
+}
+
 INIFile *
 open_ini_file(const gchar *filename)
 {
-    GHashTable *ini_file = g_hash_table_new(NULL, NULL);
-    GHashTable *section = g_hash_table_new(NULL, NULL);
+    GHashTable *ini_file = NULL;
+    GHashTable *section = NULL;
     GString *section_name, *key_name, *value;
     gpointer section_hash, key_hash;
     gchar *buffer = NULL;
@@ -426,22 +438,10 @@ open_ini_file(const gchar *filename)
 
     unsigned char x[] = { 0xff, 0xfe, 0x00 };
 
-
     g_return_val_if_fail(filename, NULL);
-
-    section_name = g_string_new("");
-    key_name = g_string_new(NULL);
-    value = g_string_new(NULL);
-
-    /* make a nameless section which should store all entries that are not
-     * embedded in a section */
-    section_hash = GINT_TO_POINTER(g_string_hash(section_name));
-    g_hash_table_insert(ini_file, section_hash, section);
-
     vfs_file_get_contents(filename, &buffer, &filesize);
     if (buffer == NULL)
         return NULL;
-
 
     /*
      * Convert UTF-16 into something useful. Original implementation
@@ -455,10 +455,13 @@ open_ini_file(const gchar *filename)
 
         for (counter = 2; counter < filesize; counter += 2)
         {
-            if (!memcmp(&buffer[counter+1], &x[2], 1))
+            if (!memcmp(&buffer[counter+1], &x[2], 1)) {
                 outbuf[(counter-2)/2] = buffer[counter];
-            else
+            } else {
+                g_free(buffer);
+                g_free(outbuf);
                 return NULL;
+            }
         }
 
         outbuf[(counter-2)/2] = '\0';
@@ -470,10 +473,24 @@ open_ini_file(const gchar *filename)
         }
         else
         {
+            g_free(buffer);
             g_free(outbuf);
             return NULL;    /* XXX wrong encoding */
         }
     }
+
+    section_name = g_string_new("");
+    key_name = g_string_new(NULL);
+    value = g_string_new(NULL);
+
+    ini_file = g_hash_table_new_full(NULL, NULL, NULL,
+                                     close_ini_file_free_section);
+    section = g_hash_table_new_full(NULL, NULL, NULL,
+                                    close_ini_file_free_value);
+    /* make a nameless section which should store all entries that are not
+     * embedded in a section */
+    section_hash = GINT_TO_POINTER(g_string_hash(section_name));
+    g_hash_table_insert(ini_file, section_hash, section);
 
     while (off < filesize)
     {
@@ -532,7 +549,8 @@ open_ini_file(const gchar *filename)
                     section = g_hash_table_lookup(ini_file, section_hash);
                 else
                 {
-                    section = g_hash_table_new(NULL, NULL);
+                    section = g_hash_table_new_full(NULL, NULL, NULL,
+                                                    close_ini_file_free_value);
                     g_hash_table_insert(ini_file, section_hash, section);
                 }
 
@@ -578,18 +596,23 @@ return_sequence:
     return ini_file;
 }
 
+/**
+ * Frees the memory allocated for inifile.
+ */
 void
 close_ini_file(INIFile *inifile)
 {
     g_return_if_fail(inifile);
-
-    /* we don't have to destroy anything in the hash table manually, as the
-     * keys are represented as integers and the string values may be used in
-     * functions which have read the strings from the hash table
-     */
     g_hash_table_destroy(inifile);
 }
 
+/**
+ * Returns a string that corresponds to correct section and key in inifile.
+ *
+ * Returns NULL if value was not found in inifile. Otherwise returns a copy
+ * of string pointed by "section" and "key". Returned string should be freed
+ * after use.
+ */
 gchar *
 read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
 {
@@ -612,7 +635,8 @@ read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
     section_table = g_hash_table_lookup(inifile, section_hash);
 
     if (section_table) {
-        value = g_hash_table_lookup(section_table, GINT_TO_POINTER(key_hash));
+        value = g_strdup(g_hash_table_lookup(section_table,
+                                             GINT_TO_POINTER(key_hash)));
     }
 
     g_string_free(section_string, TRUE);

@@ -206,38 +206,33 @@ static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventEx
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(es);
     g_return_val_if_fail (priv->width > 0 && priv->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
-
-    obj = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    GdkPixbuf *obj = NULL;
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, priv->width, priv->height);
 
     gint frame;
     frame = 27 - ((priv->position * 27) / 50);
     if (frame < 14)
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, (frame * 15) + 13, 164, 0, 0, priv->width, priv->height);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, (frame * 15) + 13, 164, 0, 0, priv->width, priv->height);
     else
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, ((frame - 14) * 15) + 13, 229, 0, 0, priv->width, priv->height);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, ((frame - 14) * 15) + 13, 229, 0, 0, priv->width, priv->height);
 
     if (priv->pressed)
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, 0, 176, 1, priv->position, 11, 11);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, 0, 176, 1, priv->position, 11, 11);
     else
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
 
-    GdkPixmap *image = NULL;
-
+    GdkPixbuf *image = NULL;
     if (priv->double_size) {
-        image = create_dblsize_pixmap(obj);
+        image = gdk_pixbuf_scale_simple(obj, priv->width*2, priv->height*2, GDK_INTERP_NEAREST);
     } else {
-        image = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
+        image = gdk_pixbuf_copy(obj);
     }
 
-    g_object_unref(obj);
+    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
+                    priv->width*(1+priv->double_size), priv->height*(1+priv->double_size),
+                    GDK_RGB_DITHER_NONE, 0, 0);
 
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                       priv->width*(1+priv->double_size), priv->height*(1+priv->double_size));
-    g_object_unref(gc);
+    g_object_unref(obj);
     g_object_unref(image);
 
     return FALSE;

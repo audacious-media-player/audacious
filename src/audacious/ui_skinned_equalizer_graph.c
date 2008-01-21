@@ -229,8 +229,10 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
     g_return_val_if_fail (equalizer_graph->width > 0 && equalizer_graph->height > 0, FALSE);
 
     GdkPixmap *obj = NULL;
+    GdkPixbuf *pix = NULL;
     GdkGC *gc;
 
+    pix = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, equalizer_graph->width, equalizer_graph->height);
     obj = gdk_pixmap_new(NULL, equalizer_graph->width, equalizer_graph->height, gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(obj);
 
@@ -246,11 +248,16 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
      */
     void (*__init_spline) (gfloat *, gfloat *, gint, gfloat *) = init_spline;
 
-    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, equalizer_graph->skin_index, 0, 294, 0, 0,
+    skin_draw_pixbuf(widget, bmp_active_skin, pix, equalizer_graph->skin_index, 0, 294, 0, 0,
                      equalizer_graph->width, equalizer_graph->height);
-    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, equalizer_graph->skin_index, 0, 314,
+    skin_draw_pixbuf(widget, bmp_active_skin, pix, equalizer_graph->skin_index, 0, 314,
                      0, 9 + ((cfg.equalizer_preamp * 9) / 20),
                      equalizer_graph->width, 1);
+
+    /* we shouldn't do it this way... we should paint equalizer-line pixels on pixbuf */
+    gdk_draw_pixbuf(obj, gc, pix, 0, 0, 0, 0, equalizer_graph->width, equalizer_graph->height,
+                    GDK_RGB_DITHER_NONE, 0, 0);
+    g_object_unref(pix);
 
     skin_get_eq_spline_colors(bmp_active_skin, cols);
 
@@ -274,6 +281,8 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
             ymax = y;
         }
         py = y;
+
+        /* this should operate directly on GdkPixbuf */
         for (y = ymin; y <= ymax; y++) {
             col.pixel = cols[y];
             gdk_gc_set_foreground(gc, &col);
@@ -281,6 +290,7 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
         }
     }
 
+    gc = gdk_gc_new(obj);
     GdkPixmap *image = NULL;
 
     if (equalizer_graph->double_size) {

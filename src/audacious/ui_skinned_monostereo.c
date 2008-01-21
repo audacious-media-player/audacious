@@ -179,42 +179,37 @@ static gboolean ui_skinned_monostereo_expose(GtkWidget *widget, GdkEventExpose *
     UiSkinnedMonoStereo *monostereo = UI_SKINNED_MONOSTEREO (widget);
     g_return_val_if_fail (monostereo->width > 0 && monostereo->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
-
-    obj = gdk_pixmap_new(NULL, monostereo->width, monostereo->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    GdkPixbuf *obj = NULL;
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, monostereo->width, monostereo->height);
 
     switch (monostereo->num_channels) {
     case 1:
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 29, 0, 0, 0, 27, 12);
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, monostereo->skin_index, 29, 0, 0, 0, 27, 12);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
         break;
     case 2:
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 0, 0, 27, 0, 29, 12);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, monostereo->skin_index, 0, 0, 27, 0, 29, 12);
         break;
     default:
     case 0:
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, monostereo->skin_index, 29, 12, 0, 0, 27, 12);
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, monostereo->skin_index, 0, 12, 27, 0, 29, 12);
         break;
     }
 
-    GdkPixmap *image = NULL;
-
+    GdkPixbuf *image = NULL;
     if (monostereo->double_size) {
-        image = create_dblsize_pixmap(obj);
+        image = gdk_pixbuf_scale_simple(obj, monostereo->width*2, monostereo->height*2, GDK_INTERP_NEAREST);
     } else {
-        image = gdk_pixmap_new(NULL, monostereo->width, monostereo->height, gdk_rgb_get_visual()->depth);
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, monostereo->width, monostereo->height);
+        image = gdk_pixbuf_copy(obj);
     }
 
-    g_object_unref(obj);
+    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
+                    monostereo->width*(1+monostereo->double_size), monostereo->height*(1+monostereo->double_size),
+                    GDK_RGB_DITHER_NONE, 0, 0);
 
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                       monostereo->width*(1+monostereo->double_size), monostereo->height*(1+monostereo->double_size));
-    g_object_unref(gc);
+    g_object_unref(obj);
     g_object_unref(image);
 
     return FALSE;

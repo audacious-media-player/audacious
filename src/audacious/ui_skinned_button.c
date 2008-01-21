@@ -300,14 +300,12 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
     if (button->event_window != NULL)
         return FALSE;
 
-    GdkPixmap *obj;
-    GdkGC *gc;
-    obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    GdkPixbuf *obj;
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, priv->w, priv->h);
 
     switch (button->type) {
         case TYPE_PUSH:
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
+            skin_draw_pixbuf(widget, bmp_active_skin, obj,
                              button->pressed ? priv->skin_index2 : priv->skin_index1,
                              button->pressed ? priv->px : priv->nx,
                              button->pressed ? priv->py : priv->ny,
@@ -315,13 +313,13 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
         case TYPE_TOGGLE:
             if (button->inside)
-                skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
+                skin_draw_pixbuf(widget, bmp_active_skin, obj,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? priv->ppx : priv->pnx,
                                  button->pressed ? priv->ppy : priv->pny,
                                  0, 0, priv->w, priv->h);
             else
-                skin_draw_pixmap(widget, bmp_active_skin, obj, gc,
+                skin_draw_pixbuf(widget, bmp_active_skin, obj,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? priv->px : priv->nx,
                                  button->pressed ? priv->py : priv->ny,
@@ -331,21 +329,16 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
     }
 
-    GdkPixmap *image = NULL;
-
+    GdkPixbuf *image = NULL;
     if (priv->double_size) {
-        image = create_dblsize_pixmap(obj);
+        image = gdk_pixbuf_scale_simple(obj, priv->w*2, priv->h*2, GDK_INTERP_NEAREST);
     } else {
-        image = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, priv->w, priv->h);
+        image = gdk_pixbuf_copy(obj);
     }
 
+    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size), GDK_RGB_DITHER_NONE, 0, 0);
+
     g_object_unref(obj);
-
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                       priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
-
-    g_object_unref(gc);
     g_object_unref(image);
 
     return FALSE;

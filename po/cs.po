@@ -2,14 +2,14 @@
 # Copyright (C) 2004 Jan Nárovec <finn@sendmail.cz>
 # This file is distributed under the same license as the Audacious package.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
-# Petr Písař <petr.pisar@atlas.cz>, 2007.
+# Petr Písař <petr.pisar@atlas.cz>, 2007, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious hg-3877\n"
+"Project-Id-Version: audacious hg-4157\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-01-02 00:49+0100\n"
-"PO-Revision-Date: 2007-11-01 17:59+0100\n"
+"PO-Revision-Date: 2008-01-09 18:52+0100\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -49,52 +49,44 @@ msgid "None"
 msgstr "Žádné"
 
 #: src/audacious/main.c:264
-#, fuzzy
 msgid "Japanese"
-msgstr "Japonština:"
+msgstr "Japonština"
 
 #: src/audacious/main.c:265
-#, fuzzy
 msgid "Taiwanese"
-msgstr "Japonština:"
+msgstr "Tchajwanština"
 
 #: src/audacious/main.c:266
-#, fuzzy
 msgid "Chinese"
-msgstr "Čínský:"
+msgstr "Čínština"
 
 #: src/audacious/main.c:267
-#, fuzzy
 msgid "Korean"
-msgstr "Korejština:"
+msgstr "Korejština"
 
 #: src/audacious/main.c:268
-#, fuzzy
 msgid "Russian"
-msgstr "Ruština:"
+msgstr "Ruština"
 
 #: src/audacious/main.c:269
-#, fuzzy
 msgid "Greek"
-msgstr "Řečtina:"
+msgstr "Řečtina"
 
 #: src/audacious/main.c:270
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrejština"
 
 #: src/audacious/main.c:271
-#, fuzzy
 msgid "Turkish"
-msgstr "Turečtina:"
+msgstr "Turečtina"
 
 #: src/audacious/main.c:272
 msgid "Arabic"
-msgstr ""
+msgstr "Arabština"
 
 #: src/audacious/main.c:274
-#, fuzzy
 msgid "Universal"
-msgstr "Obecné"
+msgstr "Univerzální"
 
 #: src/audacious/main.c:482
 #, c-format
@@ -240,13 +232,13 @@ msgstr ""
 "Audacious zachytil signál č. 11 (SIGSEGV).\n"
 "\n"
 "Omlouváme se za potíže, ale Audacious zhavaroval.\n"
-"Toto je chyba programu a za běžbých okolností by k ní nikdy nemělo dojít.\n"
+"Toto je chyba programu a za běžných okolností by k ní nikdy nemělo dojít.\n"
 "Vaše současná konfigurace byla uložena a neměla by být poškozena.\n"
 "\n"
 "I vy můžete pomoci zlepšit Audacious tím, že vyplníte chybové hlášení na "
 "http://bugs-meta.atheme.org\n"
 "Prosím, zahrňte celý text této hlášky a popis toho, co jste dělali, když\n"
-"došlo k pádu. Pomůžete tím k rychlejšímu odbavení vašho chybového hlášení:\n"
+"došlo k pádu. Pomůžete tím k rychlejšímu odbavení svého chybového hlášení:\n"
 "\n"
 
 #: src/audacious/signals.c:76
@@ -361,9 +353,8 @@ msgid "Dutch:"
 msgstr "Holandština:"
 
 #: src/audacious/ui_credits.c:180
-#, fuzzy
 msgid "Estonian:"
-msgstr "Rumunština:"
+msgstr "Estonština:"
 
 #: src/audacious/ui_credits.c:183
 msgid "Finnish:"
@@ -479,41 +470,36 @@ msgstr "Předvolby"
 
 #: src/audacious/ui_fileinfo.c:163 src/audacious/ui_fileinfo.c:469
 #: src/audacious/ui_fileinfo.c:472 src/audacious/ui_fileinfo.c:475
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">Rok</span>"
+msgstr "<span size=\"small\">−</span>"
 
 #: src/audacious/ui_fileinfo.c:273
 msgid "Metadata updated successfully"
-msgstr ""
+msgstr "Metadata byla úspěšně aktualizována"
 
 #: src/audacious/ui_fileinfo.c:279
 msgid "Metadata updating failed"
-msgstr ""
+msgstr "Aktualizace metadat selhala"
 
 #: src/audacious/ui_fileinfo.c:412
 msgid "Track Information"
 msgstr "Informace o stopě"
 
 #: src/audacious/ui_fileinfo.c:439
-#, fuzzy
 msgid "<span size=\"small\">General</span>"
-msgstr "<span size=\"small\">Žánr</span>"
+msgstr "<span size=\"small\">Obecné</span>"
 
 #: src/audacious/ui_fileinfo.c:459
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Komentář</span>"
+msgstr "<span size=\"small\">Formát:</span>"
 
 #: src/audacious/ui_fileinfo.c:462
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Název</span>"
+msgstr "<span size=\"small\">Kvalita:</span>"
 
 #: src/audacious/ui_fileinfo.c:465
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Komentář</span>"
+msgstr "<span size=\"small\">Datový tok:</span>"
 
 #: src/audacious/ui_fileinfo.c:498
 msgid "<span size=\"small\">Title</span>"
@@ -548,9 +534,9 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Umístění</span>"
 
 #: src/audacious/ui_fileinfo.c:673
-#, fuzzy, c-format
+#, c-format
 msgid "%d kb/s"
-msgstr "%d kb/s"
+msgstr "%d kb/s"
 
 #: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_fileinfopopup.c:367
 #: src/audacious/ui_preferences.c:140
@@ -636,7 +622,7 @@ msgstr "Zavřít při skoku"
 
 #: src/audacious/ui_jumptotrack.c:638
 msgid "Remember Entry"
-msgstr ""
+msgstr "Zapamatovat si položku"
 
 #: src/audacious/ui_main.c:475
 #, c-format
@@ -697,9 +683,8 @@ msgid "Always ignore, show/hide is controlled remotely"
 msgstr "Vždy ignorovat, ukázat/skrýt je ovládáno vzdáleně"
 
 #: src/audacious/ui_main.c:1282
-#, fuzzy
 msgid "Audacious - broken GTK engine usage warning"
-msgstr "Audacious – viditelnost varování"
+msgstr "Audacious – varování před rozbitým jádrem GTK"
 
 #: src/audacious/ui_main.c:1290
 #, c-format
@@ -714,11 +699,20 @@ msgid ""
 "\n"
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
+"<big><b>Používá se rozbité jádro GTK</b></big>\n"
+"\n"
+"Audacious zjistil, že používáte rozbité jádro GTK.\n"
+"\n"
+"Tématické jádro, které používáte, <i>%s</i>, není kompatibilní s některými "
+"vlastnostmi moderních témat. V této relaci budou nekompatibilní "
+"vlastnosti vypnuty.\n"
+"\n"
+"Chcete-li využít těchto vlastností, zvažte použití jiného tematického jádra "
+"pro GTK."
 
 #: src/audacious/ui_main.c:1301
-#, fuzzy
 msgid "Do not display this warning again"
-msgstr "Příště již nevarovat"
+msgstr "Příště již toto varování nezobrazovat"
 
 #: src/audacious/ui_main.c:1324
 msgid "Enter location to play:"
@@ -1290,11 +1284,11 @@ msgstr "Služby modulu"
 
 #: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 msgid "View Track Details"
-msgstr "Zobrazit inforamce o skladbě"
+msgstr "Zobrazit informace o skladbě"
 
 #: src/audacious/ui_manager.c:386 src/audacious/ui_manager.c:389
 msgid "View track details"
-msgstr "Zobrazit inforamce o skladbě"
+msgstr "Zobrazit informace o skladbě"
 
 #: src/audacious/ui_manager.c:394
 msgid "Play File"
@@ -1478,7 +1472,7 @@ msgid ""
 "for."
 msgstr ""
 "Položky seznamu skladeb vyberete vyplněním jednoho, nebo více polí. Pole "
-"použivají regulární výrazy a neberou ohled na velikost písmen. Pokud "
+"používají regulární výrazy a neberou ohled na velikost písmen. Pokud "
 "regulárním výrazům nerozumíte, jednoduše vložte části textu, které chcete "
 "vyhledat."
 
@@ -1692,7 +1686,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:207
 msgid "Disable inline gtk theme"
-msgstr ""
+msgstr "Zakázat vnitřní téma GTK"
 
 #: src/audacious/ui_preferences.c:211
 msgid "<b>Format Detection</b>"
@@ -1716,14 +1710,12 @@ msgid "Detect file formats by extension."
 msgstr "Rozpoznávat formát souboru podle přípony."
 
 #: src/audacious/ui_preferences.c:215
-#, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
 "Je-li zatrhnuto, Audacious bude rozpoznávat formát souboru podle přípony. "
-"Tento způsob je o něco pomalejší než rozpoznávání na požádání, ale poskytuje "
-"alespoň základní úroveň rozpoznání formátu. "
+"Nahrány budou jen soubory, jejichž přípona přísluší podporovanému formátu."
 
 #: src/audacious/ui_preferences.c:216
 msgid "<b>Playback</b>"
@@ -1802,11 +1794,13 @@ msgid "On display"
 msgstr "Při zobrazení"
 
 #: src/audacious/ui_preferences.c:233
-#, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
-msgstr "Načíst metadata na vyžádání při zobrazení souboru v seznamu skladeb"
+msgstr ""
+"Načíst metadata na vyžádání při zobrazení souboru v seznamu skladeb. Plného "
+"účinku dosáhnete, když v záložce „Zvuk“ zapnete „Rozpoznávat formát souboru "
+"na požádání“."
 
 #: src/audacious/ui_preferences.c:235
 msgid "<b>File Dialog</b>"
@@ -2004,32 +1998,31 @@ msgstr "Zobrazit informace o formátu titulku"
 
 #: src/audacious/ui_preferences.c:2282
 msgid "TITLE"
-msgstr ""
+msgstr "NÁZEV"
 
 #: src/audacious/ui_preferences.c:2283
 msgid "ARTIST - TITLE"
-msgstr ""
+msgstr "UMĚLEC – NÁZEV"
 
 #: src/audacious/ui_preferences.c:2284
 msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
+msgstr "UMĚLEC – ALBUM – NÁZEV"
 
 #: src/audacious/ui_preferences.c:2285
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
+msgstr "UMĚLEC – ALBUM – STOPA. NÁZEV"
 
 #: src/audacious/ui_preferences.c:2286
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
+msgstr "UMĚLEC [ ALBUM ] – STOPA. NÁZEV"
 
 #: src/audacious/ui_preferences.c:2287
 msgid "ALBUM - TITLE"
-msgstr ""
+msgstr "ALBUM – NÁZEV"
 
 #: src/audacious/ui_preferences.c:2288
-#, fuzzy
 msgid "Custom"
-msgstr "Vlastní (ms):"
+msgstr "Vlastní"
 
 #: src/audacious/ui_preferences.c:2295
 msgid "Custom string:"
@@ -2141,25 +2134,23 @@ msgstr "Zapnout konvertor vzorkovacího kmitočtu"
 
 #: src/audacious/ui_preferences.c:2609
 msgid "Best Sinc Interpolation"
-msgstr ""
+msgstr "Nejlepší sinová interpolace"
 
 #: src/audacious/ui_preferences.c:2610
 msgid "Medium Sinc Interpolation"
-msgstr ""
+msgstr "Střední sinová interpolace"
 
 #: src/audacious/ui_preferences.c:2611
 msgid "Fastest Sinc Interpolation"
-msgstr ""
+msgstr "Nejrychlejší sinová interpolace"
 
 #: src/audacious/ui_preferences.c:2612
-#, fuzzy
 msgid "ZOH Interpolation"
-msgstr "Způsob interpolace:"
+msgstr "Interpolace ZOH:"
 
 #: src/audacious/ui_preferences.c:2613
-#, fuzzy
 msgid "Linear Interpolation"
-msgstr "Způsob interpolace:"
+msgstr "Lineární interpolace:"
 
 #: src/audacious/ui_preferences.c:2615
 msgid "Interpolation Engine:"
@@ -2256,21 +2247,6 @@ msgstr "Nezabalený skin Winampu 2.x"
 msgid "Add/Open URL Dialog"
 msgstr "Dialog Přidat/otevřít URL"
 
-#~ msgid "Equalizer"
-#~ msgstr "Ekvalizér"
-
-#~ msgid "<b>Presets</b>"
-#~ msgstr "<b>Předvolby</b>"
-
-#~ msgid "File preset extension:"
-#~ msgstr "Přípony souborů s předvolbami:"
-
-#~ msgid "Directory preset file:"
-#~ msgstr "Adresář s předvolbami:"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
 #~ msgid ""
 #~ "<b><big>Unable to create %s.</big></b>\n"
 #~ "\n"
@@ -2297,8 +2273,20 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ "ALBUM – NÁZEV\n"
 #~ "Vlastní"
 
+#~ msgid "<b>Presets</b>"
+#~ msgstr "<b>Předvolby</b>"
+
+#~ msgid "File preset extension:"
+#~ msgstr "Přípony souborů s předvolbami:"
+
+#~ msgid "Directory preset file:"
+#~ msgstr "Adresář s předvolbami:"
+
 #~ msgid "Available _Presets:"
 #~ msgstr "Dostupné _předvolby:"
+
+#~ msgid "Equalizer"
+#~ msgstr "Ekvalizér"
 
 #~ msgid ""
 #~ "Best Sinc Interpolation\n"
@@ -2316,12 +2304,14 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "Track Information Window"
 #~ msgstr "Okno s podrobnosti o stopě"
 
+#~ msgid "Close"
+#~ msgstr "Zavřít"
+
+#~ msgid "localhost"
+#~ msgstr "localhost"
+
 #~ msgid "Preferences Window"
 #~ msgstr "Okno nastavení"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "/Zavřít"
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
@@ -2742,7 +2732,6 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "Command:"
 #~ msgstr "Příkaz:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can use the following format strings which\n"
 #~ "will be substituted before calling the command\n"
@@ -2761,14 +2750,14 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ "spuštěním příkazu nahrazeny (ne všechny jsou užitečné pro příkaz "
 #~ "spouštěný na konci seznamu skladeb).\n"
 #~ "\n"
-#~ "%%F: frekvence (v hertzech)\n"
-#~ "%%c: počet kanálů\n"
-#~ "%%f: jméno souboru\n"
+#~ "%%F: Frekvence (v hertzích)\n"
+#~ "%%c: Počet kanálů\n"
+#~ "%%f: jméno souboru (celá cesta)\n"
 #~ "%%l: délka (v milisekundách)\n"
-#~ "%%n nebo %%s: název skladby\n"
-#~ "%%r: datový tok (v bitech za sekundu)\n"
-#~ "%%t: pozice v seznamu skladeb (%%02d)\n"
-#~ "%%p: právě se hraje (1 nebo 0)"
+#~ "%%n nebo %%s: Název skladby\n"
+#~ "%%r: Datový tok (v bitech za sekundu)\n"
+#~ "%%t: Pozice v seznamu skladeb (%%02d)\n"
+#~ "%%p: Právě se hraje (1 nebo 0)"
 
 #~ msgid "Name:"
 #~ msgstr "Jméno:"
@@ -2926,18 +2915,17 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "CD Info"
 #~ msgstr "Informace o CD"
 
-#, fuzzy
 #~ msgid ""
 #~ "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
 #~ "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
 #~ "        Shay Green <hotpop.com@blargg>"
 #~ msgstr ""
-#~ "Konzolový hudební dekodér založený na Game_Music_Emu 0.2.4.\n"
-#~ "Implementace v Audacious: William Pitcock <nenold@nenold.net>"
+#~ "Dekodér konzolové hudby založený na Game_Music_Emu 0.3.0.\n"
+#~ "Implementace v Audacious: William Pitcock <nenold@nenold.net>,\n"
+#~ "        Shay Green <hotpop.com@blargg>"
 
-#, fuzzy
 #~ msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
-#~ msgstr "Dekodér SPC, GYM, NSF, VGM a GBS"
+#~ msgstr "Dekodér SPC, VGM, NSF/NSFE, GBS a modulů GYM"
 
 #~ msgid "Arabic (IBM-864)"
 #~ msgstr "arabštiny (IBM-864)"
@@ -3188,7 +3176,6 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "ReplayGain"
 #~ msgstr "Zesílení přehrávání"
 
-#, fuzzy
 #~ msgid "Enable ReplayGain processing"
 #~ msgstr "Zapnout zesílení pro přehrávání"
 
@@ -3201,16 +3188,14 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "Resolution"
 #~ msgstr "Rozlišení"
 
-#, fuzzy
 #~ msgid "Without ReplayGain"
-#~ msgstr "Zesílení přehrávání"
+#~ msgstr "Bez zesílení při přehrávání"
 
 #~ msgid "Dither 24bps to 16bps"
 #~ msgstr "Ditheringem převést 24 bitů na 16"
 
-#, fuzzy
 #~ msgid "With ReplayGain"
-#~ msgstr "Zesílení přehrávání"
+#~ msgstr "Se zesílením při přehrávání"
 
 #~ msgid "Enable dithering"
 #~ msgstr "Povolení ditheringu"
@@ -4145,7 +4130,6 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ "\n"
 #~ "Navštivte stránky \"the Xiph.org Foundation\": http://www.xiph.org/\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 #~ "from the xmms_sndfile plugin which is:\n"
@@ -4169,9 +4153,9 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgstr ""
 #~ "Pro Audacious upravil Tony Vroon <chainsaw@gentoo.org>\n"
 #~ "z původního modulu xmms_sndfile,\n"
-#~ "copyright (C) 2000, 2002 Erik de Castro Lopo\n"
+#~ "copyright © 2000, 2002 Erik de Castro Lopo\n"
 #~ "\n"
-#~ "  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 #~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
 #~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
 #~ "libovolné novější.\n"
@@ -4180,10 +4164,13 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ "ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
 #~ "JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
 #~ "\n"
-#~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation,\n"
-#~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA. Český překlad naleznete na webové adrese\n"
+#~ "S tímto programem byste měli obdržet kopii GNU GPL.\n"
+#~ "Pokud se tak nestalo, obraťte se na\n"
+#~ "Free Software Foundation, Inc.,\n"
+#~ "51 Fraklin Streen, Fifth Floor,\n"
+#~ "Boston, MA  02110-1301,\n"
+#~ "USA.\n"
+#~ "Český překlad naleznete na webové adrese\n"
 #~ "http://www.gnu.cz/licence.html."
 
 #~ msgid "WAV Audio Plugin"
@@ -4195,7 +4182,6 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "About OSS Driver"
 #~ msgstr "O modulu OSS"
 
-#, fuzzy
 #~ msgid ""
 #~ "Audacious OSS Driver\n"
 #~ "\n"
@@ -4217,18 +4203,18 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgstr ""
 #~ "Ovladač OSS programu Audacious\n"
 #~ "\n"
-#~ " Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 #~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
 #~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
 #~ "libovolné novější.\n"
 #~ "\n"
 #~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
-#~ "JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
+#~ "ZÁRUKY a to ani záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO\n"
+#~ "JAKÝKOLIV ÚČEL. Více informací najdete v GNU GPL.\n"
 #~ "\n"
 #~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation,\n"
-#~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+#~ "tak nestalo, obraťte se na Free Software Foundation, Inc.,\n"
+#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 #~ "USA. Český překlad naleznete na webové adrese\n"
 #~ "http://www.gnu.cz/licence.html."
 
@@ -4268,7 +4254,6 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "About ALSA Driver"
 #~ msgstr "O ovladači ALSA"
 
-#, fuzzy
 #~ msgid ""
 #~ "Audacious ALSA Driver\n"
 #~ "\n"
@@ -4289,20 +4274,20 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ "USA.\n"
 #~ "Author: Matthieu Sozeau (mattam@altern.org)"
 #~ msgstr ""
-#~ "XMMS ALSA ovladač\n"
+#~ "Ovladač ALSY programu Audacious\n"
 #~ "\n"
-#~ "  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 #~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
 #~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
 #~ "libovolné novější.\n"
 #~ "\n"
 #~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
-#~ "JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
+#~ "ZÁRUKY a to ani záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO\n"
+#~ "JAKÝKOLIV ÚČEL. Více informací najdete v GNU GPL.\n"
 #~ "\n"
 #~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation,\n"
-#~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+#~ "tak nestalo, obraťte se na Free Software Foundation, Inc.,\n"
+#~ "51 Franklin Streen, Fifth Floor, Boston, MA 02110-1301,\n"
 #~ "USA. Český překlad naleznete na webové adrese\n"
 #~ "http://www.gnu.cz/licence.html.\n"
 #~ "Autor: Matthieu Sozeau (mattam@altern.org)"
@@ -4340,9 +4325,8 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "Advanced settings"
 #~ msgstr "Pokročilé nastavení"
 
-#, fuzzy
 #~ msgid "aRts Driver configuration"
-#~ msgstr "Nastavení ovladače OSS"
+#~ msgstr "Nastavení ovladače aRts"
 
 #~ msgid "Disk Writer Plugin %s"
 #~ msgstr "Modul Disk writer %s"
@@ -4358,12 +4342,11 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgstr "Vyberte adresář, do něhož chcete soubory uložit:"
 
 #~ msgid "Disk Writer Configuration"
-#~ msgstr "Nastavení Disk Writeru"
+#~ msgstr "Nastavení záznamu na disk"
 
 #~ msgid "About ESounD Plugin"
 #~ msgstr "O modulu ESounD"
 
-#, fuzzy
 #~ msgid ""
 #~ "Audacious ESounD Plugin\n"
 #~ "\n"
@@ -4385,18 +4368,18 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgstr ""
 #~ "Modul ESounD programu Audacious\n"
 #~ "\n"
-#~ " Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 #~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
 #~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
 #~ "libovolné novější.\n"
 #~ "\n"
 #~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
-#~ "JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
+#~ "ZÁRUKY a to ani záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO\n"
+#~ "JAKÝKOLIV ÚČEL. Více informací najdete v GNU GPL.\n"
 #~ "\n"
 #~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation,\n"
-#~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+#~ "tak nestalo, obraťte se na Free Software Foundation, Inc.,\n"
+#~ "51 Fanklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 #~ "USA. Český překlad naleznete na webové adrese\n"
 #~ "http://www.gnu.cz/licence.html."
 
@@ -5076,7 +5059,6 @@ msgstr "Dialog Přidat/otevřít URL"
 #~ msgid "ENABLE ALWAYS ON TOP (N/A)"
 #~ msgstr "POVOLIT FCI \"VŽDY NA VRCHU\" (N/A)"
 
-#, fuzzy
 #~ msgid "Downsample:"
 #~ msgstr "Snížit vzorkovací kmitočet:"
 

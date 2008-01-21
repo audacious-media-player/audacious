@@ -217,11 +217,8 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(ps);
     g_return_val_if_fail (priv->width > 0 && priv->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
-
-    obj = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    GdkPixbuf *obj = NULL;
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, priv->width, priv->height);
 
     gint num_visible;
     num_visible = playlistwin_list_get_visible_count();
@@ -244,17 +241,16 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
     /* FIXME: uses bmp_active_skin->pixmaps directly and may need calibration */
     /* drawing background */
     gint c;
-    for (c = 0; c <= priv->height / 29; c++) {
-         gdk_draw_drawable(obj, gc, bmp_active_skin->pixmaps[SKIN_PLEDIT].pixmap,
-                           36, 42, 0, c*29, priv->width, 29);
+    for (c = 0; c < priv->height / 29; c++) {
+         gdk_pixbuf_copy_area(bmp_active_skin->pixmaps[SKIN_PLEDIT].pixbuf,
+                              36, 42, priv->width, 29, obj, 0, c*29);
     }
 
     /* drawing knob */
-    skin_draw_pixmap(widget, bmp_active_skin, obj, gc, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
+    skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
 
-    gdk_draw_drawable(widget->window, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
+    gdk_draw_pixbuf(widget->window, NULL, obj, 0, 0, 0, 0, priv->width, priv->height, GDK_RGB_DITHER_NONE, 0, 0);
     g_object_unref(obj);
-    g_object_unref(gc);
 
     return FALSE;
 }

@@ -1017,7 +1017,6 @@ set_dock_icon(void)
 #endif
 
 static GOptionEntry cmd_entries[] = {
-    {"session", 'n', 0, G_OPTION_ARG_INT, &options.session, N_("Select which Audacious session ID to use"), NULL},
     {"rew", 'r', 0, G_OPTION_ARG_NONE, &options.rew, N_("Skip backwards in playlist"), NULL},
     {"play", 'p', 0, G_OPTION_ARG_NONE, &options.play, N_("Start playing current playlist"), NULL},
     {"pause", 'u', 0, G_OPTION_ARG_NONE, &options.pause, N_("Pause current song"), NULL},
@@ -1384,9 +1383,16 @@ main(gint argc, gchar ** argv)
 
     if (error != NULL)
     {
-        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
-	  argv[0], error->message, argv[0]);
-        exit(EXIT_FAILURE);
+        if(error->message)
+        {   /* checking for MacOS X -psn_0_* errors*/
+            char* s = g_strrstr(error->message,"-psn_0_");
+            if(!s)
+            {
+                g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
+                        argv[0], error->message, argv[0]);
+                exit(EXIT_FAILURE);
+            }
+        }
     }
 
     if (!gtk_init_check_ok) {

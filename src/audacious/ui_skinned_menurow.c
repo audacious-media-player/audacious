@@ -211,48 +211,43 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
     UiSkinnedMenurow *menurow = UI_SKINNED_MENUROW (widget);
     g_return_val_if_fail (menurow->width > 0 && menurow->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
-
-    obj = gdk_pixmap_new(NULL, menurow->width, menurow->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    GdkPixbuf *obj = NULL;
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, menurow->width, menurow->height);
 
     if (menurow->selected == MENUROW_NONE) {
         if (cfg.always_show_cb || menurow->pushed)
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, menurow->skin_index,
+            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                              menurow->nx, menurow->ny, 0, 0, 8, 43);
         else
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, menurow->skin_index,
+            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                              menurow->nx + 8, menurow->ny, 0, 0, 8, 43);
     }
     else {
-        skin_draw_pixmap(widget, bmp_active_skin, obj, gc, menurow->skin_index,
+        skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                          menurow->sx + ((menurow->selected - 1) * 8),
                          menurow->sy, 0, 0, 8, 43);
     }
     if (cfg.always_show_cb || menurow->pushed) {
         if (menurow->always_selected)
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, menurow->skin_index,
+            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                              menurow->sx + 8, menurow->sy + 10, 0, 10, 8, 8);
         if (menurow->doublesize_selected)
-            skin_draw_pixmap(widget, bmp_active_skin, obj, gc, menurow->skin_index,
+            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                              menurow->sx + 24, menurow->sy + 26, 0, 26, 8, 8);
     }
 
-    GdkPixmap *image = NULL;
-
+    GdkPixbuf *image = NULL;
     if (menurow->double_size) {
-        image = create_dblsize_pixmap(obj);
+        image = gdk_pixbuf_scale_simple(obj, menurow->width*2, menurow->height*2, GDK_INTERP_NEAREST);
     } else {
-        image = gdk_pixmap_new(NULL, menurow->width, menurow->height, gdk_rgb_get_visual()->depth);
-        gdk_draw_drawable(image, gc, obj, 0, 0, 0, 0, menurow->width, menurow->height);
+        image = gdk_pixbuf_copy(obj);
     }
 
-    g_object_unref(obj);
+    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
+                    menurow->width*(1+menurow->double_size), menurow->height*(1+menurow->double_size),
+                    GDK_RGB_DITHER_NONE, 0, 0);
 
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                       menurow->width*(1+menurow->double_size), menurow->height*(1+menurow->double_size));
-    g_object_unref(gc);
+    g_object_unref(obj);
     g_object_unref(image);
 
     return FALSE;

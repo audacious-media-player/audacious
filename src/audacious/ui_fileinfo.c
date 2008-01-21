@@ -2,6 +2,7 @@
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2006 William Pitcock, Tony Vroon, George Averill,
  *                    Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
+ * Copyright (c) 2008 Eugene Zagidullin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +61,7 @@
 #include "ui_fileinfo.h"
 #include "ui_playlist.h"
 
-#define G_FREE_CLEAR(a) { if(a != NULL) { g_free(a); a = NULL; } }
+#define G_FREE_CLEAR(a) if(a != NULL) { g_free(a); a = NULL; }
 #define STATUS_TIMEOUT 3*1000
 
 GtkWidget *fileinfo_win;
@@ -82,10 +83,67 @@ GtkWidget *label_quality;
 GtkWidget *label_bitrate;
 GtkWidget *btn_apply;
 GtkWidget *label_mini_status;
+GtkWidget *arrow_rawdata;
+GtkWidget *treeview_rawdata;
+
+enum {
+    RAWDATA_KEY,
+    RAWDATA_VALUE,
+    RAWDATA_N_COLS
+};
 
 static gchar *current_file = NULL;
 static InputPlugin *current_ip = NULL;
 static gboolean something_changed = FALSE;
+
+/* stolen from Audacious 1.4 vorbis plugin. --nenolod */
+static const gchar *genre_table[] = {
+    N_("Blues"), N_("Classic Rock"), N_("Country"), N_("Dance"),
+    N_("Disco"), N_("Funk"), N_("Grunge"), N_("Hip-Hop"),
+    N_("Jazz"), N_("Metal"), N_("New Age"), N_("Oldies"),
+    N_("Other"), N_("Pop"), N_("R&B"), N_("Rap"), N_("Reggae"),
+    N_("Rock"), N_("Techno"), N_("Industrial"), N_("Alternative"),
+    N_("Ska"), N_("Death Metal"), N_("Pranks"), N_("Soundtrack"),
+    N_("Euro-Techno"), N_("Ambient"), N_("Trip-Hop"), N_("Vocal"),
+    N_("Jazz+Funk"), N_("Fusion"), N_("Trance"), N_("Classical"),
+    N_("Instrumental"), N_("Acid"), N_("House"), N_("Game"),
+    N_("Sound Clip"), N_("Gospel"), N_("Noise"), N_("AlternRock"),
+    N_("Bass"), N_("Soul"), N_("Punk"), N_("Space"),
+    N_("Meditative"), N_("Instrumental Pop"),
+    N_("Instrumental Rock"), N_("Ethnic"), N_("Gothic"),
+    N_("Darkwave"), N_("Techno-Industrial"), N_("Electronic"),
+    N_("Pop-Folk"), N_("Eurodance"), N_("Dream"),
+    N_("Southern Rock"), N_("Comedy"), N_("Cult"),
+    N_("Gangsta Rap"), N_("Top 40"), N_("Christian Rap"),
+    N_("Pop/Funk"), N_("Jungle"), N_("Native American"),
+    N_("Cabaret"), N_("New Wave"), N_("Psychedelic"), N_("Rave"),
+    N_("Showtunes"), N_("Trailer"), N_("Lo-Fi"), N_("Tribal"),
+    N_("Acid Punk"), N_("Acid Jazz"), N_("Polka"), N_("Retro"),
+    N_("Musical"), N_("Rock & Roll"), N_("Hard Rock"), N_("Folk"),
+    N_("Folk/Rock"), N_("National Folk"), N_("Swing"),
+    N_("Fast-Fusion"), N_("Bebob"), N_("Latin"), N_("Revival"),
+    N_("Celtic"), N_("Bluegrass"), N_("Avantgarde"),
+    N_("Gothic Rock"), N_("Progressive Rock"),
+    N_("Psychedelic Rock"), N_("Symphonic Rock"), N_("Slow Rock"),
+    N_("Big Band"), N_("Chorus"), N_("Easy Listening"),
+    N_("Acoustic"), N_("Humour"), N_("Speech"), N_("Chanson"),
+    N_("Opera"), N_("Chamber Music"), N_("Sonata"), N_("Symphony"),
+    N_("Booty Bass"), N_("Primus"), N_("Porn Groove"),
+    N_("Satire"), N_("Slow Jam"), N_("Club"), N_("Tango"),
+    N_("Samba"), N_("Folklore"), N_("Ballad"), N_("Power Ballad"),
+    N_("Rhythmic Soul"), N_("Freestyle"), N_("Duet"),
+    N_("Punk Rock"), N_("Drum Solo"), N_("A Cappella"),
+    N_("Euro-House"), N_("Dance Hall"), N_("Goa"),
+    N_("Drum & Bass"), N_("Club-House"), N_("Hardcore"),
+    N_("Terror"), N_("Indie"), N_("BritPop"), N_("Negerpunk"),
+    N_("Polsk Punk"), N_("Beat"), N_("Christian Gangsta Rap"),
+    N_("Heavy Metal"), N_("Black Metal"), N_("Crossover"),
+    N_("Contemporary Christian"), N_("Christian Rock"),
+    N_("Merengue"), N_("Salsa"), N_("Thrash Metal"),
+    N_("Anime"), N_("JPop"), N_("Synthpop")
+};
+
+static GList *genre_list = NULL;
 
 static void
 fileinfo_entry_set_text(GtkWidget *widget, const char *text)
@@ -168,41 +226,42 @@ fileinfo_label_set_text(GtkWidget *widget, const char *text)
 static void
 fileinfo_entry_set_image(GtkWidget *widget, const char *text)
 {
-        GdkPixbuf *pixbuf;
-        int width, height;
-        double aspect;
-        GdkPixbuf *pixbuf2;
+    GdkPixbuf *pixbuf;
+    int width, height;
+    double aspect;
+    GdkPixbuf *pixbuf2;
 
-        if (widget == NULL)
-                return;
+    if (widget == NULL)
+        return;
 
-        pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+    pixbuf = gdk_pixbuf_new_from_file(text, NULL);
 
-        if (pixbuf == NULL)
-                return;
+    if (pixbuf == NULL)
+        return;
 
-        width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
-        height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
+    width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
+    height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
 
-        if(strcmp(DATA_DIR "/images/audio.png", text))
-        {
-                if(width == 0)
-                        width = 1;
-                aspect = (double)height / (double)width;
-                if(aspect > 1.0) {
-                        height = (int)(cfg.filepopup_pixelsize * aspect);
-                        width = cfg.filepopup_pixelsize;
-                } else {
-                        height = cfg.filepopup_pixelsize;
-                        width = (int)(cfg.filepopup_pixelsize / aspect);
-                }
-                pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
-                g_object_unref(G_OBJECT(pixbuf));
-                pixbuf = pixbuf2;
+    if (strcmp(DATA_DIR "/images/audio.png", text)) {
+        if (width == 0)
+            width = 1;
+        aspect = (double)height / (double)width;
+
+        if (aspect > 1.0) {
+            height = (int)(cfg.filepopup_pixelsize * aspect);
+            width = cfg.filepopup_pixelsize;
+        } else {
+            height = cfg.filepopup_pixelsize;
+            width = (int)(cfg.filepopup_pixelsize / aspect);
         }
 
-        gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+        pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
         g_object_unref(G_OBJECT(pixbuf));
+        pixbuf = pixbuf2;
+    }
+
+    gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+    g_object_unref(G_OBJECT(pixbuf));
 }
 
 void fileinfo_hide(gpointer unused)
@@ -214,7 +273,7 @@ void fileinfo_hide(gpointer unused)
     fileinfo_entry_set_text(entry_artist, "");
     fileinfo_entry_set_text(entry_album, "");
     fileinfo_entry_set_text(entry_comment, "");
-    fileinfo_entry_set_text(entry_genre, "");
+    fileinfo_entry_set_text(gtk_bin_get_child(GTK_BIN(entry_genre)), "");
     fileinfo_entry_set_text(entry_year, "");
     fileinfo_entry_set_text(entry_track, "");
     fileinfo_entry_set_text(entry_location, "");
@@ -282,44 +341,48 @@ message_update_failed()
 static void
 fileinfo_update_tuple(gpointer data)
 {
-        Tuple *tuple;
-        VFSFile *fd;
-        if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL && something_changed) {
+    Tuple *tuple;
+    VFSFile *fd;
 
-            tuple = tuple_new();
-            fd = vfs_fopen(current_file, "r+b");
+    if (current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL && something_changed) {
+        tuple = tuple_new();
+        fd = vfs_fopen(current_file, "r+b");
 
-            if (fd != NULL) {
-                set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
-                set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
-                set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
-                set_field_str_from_entry(tuple, FIELD_COMMENT, entry_comment);
-                set_field_str_from_entry(tuple, FIELD_GENRE, entry_genre);
+        if (fd != NULL) {
+            set_field_str_from_entry(tuple, FIELD_TITLE, entry_title);
+            set_field_str_from_entry(tuple, FIELD_ARTIST, entry_artist);
+            set_field_str_from_entry(tuple, FIELD_ALBUM, entry_album);
+            set_field_str_from_entry(tuple, FIELD_COMMENT, entry_comment);
+            set_field_str_from_entry(tuple, FIELD_GENRE, gtk_bin_get_child(GTK_BIN(entry_genre)));
 
-                set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
-                set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
+            set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
+            set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
                 
-                if(current_ip->update_song_tuple(tuple, fd)) {
-                    message_update_successfull();
-                    something_changed = FALSE;
-                    gtk_widget_set_sensitive(btn_apply, FALSE);
-                } else {
-                    message_update_failed();
-                }
-
-                vfs_fclose(fd);
-
-            } else {
+            if (current_ip->update_song_tuple(tuple, fd)) {
+                message_update_successfull();
+                something_changed = FALSE;
+                gtk_widget_set_sensitive(btn_apply, FALSE);
+            } else
                 message_update_failed();
-            }
 
-            mowgli_object_unref(tuple);
-        }
+            vfs_fclose(fd);
+
+        } else
+            message_update_failed();
+
+        mowgli_object_unref(tuple);
+    }
 }
 
-
+/**
+ * Looks up an icon from a NULL-terminated list of icon names.
+ *
+ * size: the requested size
+ * name: the default name
+ * ... : a NULL-terminated list of alternates
+ */
 GdkPixbuf *
-themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of icon names */
+themed_icon_lookup(gint size, const gchar *name, ...)
 {
     GtkIconTheme *icon_theme;
     GdkPixbuf *pixbuf;
@@ -328,29 +391,39 @@ themed_icon_lookup(gint size, const gchar *name, ...) /* NULL-terminated list of
     va_list par;
 
     icon_theme = gtk_icon_theme_get_default ();
-    //fprintf(stderr, "looking for %s\n", name);
     pixbuf = gtk_icon_theme_load_icon (icon_theme, name, size, 0, &error);
-    if(pixbuf) return pixbuf;
+
+    if (pixbuf != NULL)
+        return pixbuf;
     
-    if(error != NULL) g_error_free(error);
+    if (error != NULL)
+        g_error_free(error);
 
     /* fallback */
     va_start(par, name);
     while((n = (gchar*)va_arg(par, gchar *)) != NULL) {
-        //fprintf(stderr, "looking for %s\n", n);
         error = NULL;
         pixbuf = gtk_icon_theme_load_icon (icon_theme, n, size, 0, &error);
-        if(pixbuf) {
-            //fprintf(stderr, "%s is ok\n", n);
+
+        if (pixbuf) {
             va_end(par);
             return pixbuf;
         }
-        if(error != NULL) g_error_free(error);
+
+        if (error != NULL)
+            g_error_free(error);
     }
     
     return NULL;
 }
 
+/**
+ * Intelligently looks up an icon for a mimetype. Supports
+ * HIDEOUSLY BROKEN gnome icon naming scheme too.
+ *
+ * size     : the requested size
+ * mime_type: the mime type.
+ */
 GdkPixbuf *
 mime_icon_lookup(gint size, const gchar *mime_type) /* smart icon resolving routine :) */
 {
@@ -367,7 +440,6 @@ mime_icon_lookup(gint size, const gchar *mime_type) /* smart icon resolving rout
         mime_gnome         = g_strdup_printf("gnome-mime-%s-%s", s[0], s[1]);
         mime_generic       = g_strdup_printf("%s-x-generic", s[0]);
         mime_gnome_generic = g_strdup_printf("gnome-mime-%s", s[0]);
-        //fprintf(stderr, "will look for %s, %s, %s, %s, %s\n", mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0]);
         icon = themed_icon_lookup(size, mime_as_is, mime_gnome, mime_generic, mime_gnome_generic, s[0], NULL); /* s[0] is category */
         g_free(mime_gnome_generic);
         g_free(mime_generic);
@@ -387,6 +459,7 @@ create_fileinfo_window(void)
     GtkWidget *vbox0;
     GtkWidget *vbox1;
     GtkWidget *vbox2;
+    GtkWidget *vbox3;
     GtkWidget *label_title;
     GtkWidget *label_artist;
     GtkWidget *label_album;
@@ -406,6 +479,10 @@ create_fileinfo_window(void)
     GtkWidget *btn_close;
     GtkWidget *alignment;
     GtkWidget *separator;
+    GtkWidget *scrolledwindow;
+    GtkTreeViewColumn *column;
+    GtkCellRenderer *renderer;
+    gint i;
 
     fileinfo_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width(GTK_CONTAINER(fileinfo_win), 6);
@@ -433,8 +510,15 @@ create_fileinfo_window(void)
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox1), alignment, TRUE, TRUE, 0);
+
     vbox2 = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(alignment), vbox2);
+
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_box_pack_start(GTK_BOX(vbox1), alignment, TRUE, TRUE, 0);
+
+    vbox3 = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(alignment), vbox3);
     
     label_general = gtk_label_new(_("<span size=\"small\">General</span>"));
     gtk_box_pack_start (GTK_BOX (vbox2), label_general, FALSE, FALSE, 0);
@@ -551,7 +635,19 @@ create_fileinfo_window(void)
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox2), alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 6, 0, 0);
-    entry_genre = gtk_entry_new();
+    entry_genre = gtk_combo_box_entry_new_text();
+
+    if (!genre_list) {
+        GList *iter;
+
+        for (i = 0; i < G_N_ELEMENTS(genre_table); i++)
+            genre_list = g_list_prepend(genre_list, _(genre_table[i]));
+        genre_list = g_list_sort(genre_list, (GCompareFunc) g_ascii_strcasecmp);
+
+        MOWGLI_ITER_FOREACH(iter, genre_list)
+            gtk_combo_box_append_text(GTK_COMBO_BOX(entry_genre), iter->data);
+    }
+
     gtk_container_add(GTK_CONTAINER(alignment), entry_genre);
     g_signal_connect(G_OBJECT(entry_genre), "changed", (GCallback) entry_changed, NULL);
 
@@ -600,6 +696,54 @@ create_fileinfo_window(void)
     entry_location = gtk_entry_new();
     gtk_container_add(GTK_CONTAINER(alignment), entry_location);
     gtk_editable_set_editable(GTK_EDITABLE(entry_location), FALSE);
+
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    hbox = gtk_hbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(alignment), hbox);
+    gtk_box_pack_start(GTK_BOX(vbox3), alignment, TRUE, TRUE, 0);
+
+    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    arrow_rawdata = gtk_expander_new(_("<span size=\"small\">Raw Metadata</span>"));
+    gtk_expander_set_use_markup(GTK_EXPANDER(arrow_rawdata), TRUE);
+    gtk_container_add(GTK_CONTAINER(alignment), arrow_rawdata);
+    gtk_box_pack_start(GTK_BOX(hbox), alignment, TRUE, TRUE, 0);
+
+    scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_SHADOW_IN);
+    gtk_container_add(GTK_CONTAINER(arrow_rawdata), scrolledwindow);
+
+    treeview_rawdata = gtk_tree_view_new();
+    gtk_container_add(GTK_CONTAINER(scrolledwindow), treeview_rawdata);
+    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_rawdata), TRUE);
+    gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview_rawdata), TRUE);
+    gtk_widget_set_size_request(treeview_rawdata, -1, 130);
+
+    column = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(column, _("Key"));
+    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+    gtk_tree_view_column_set_spacing(column, 4);
+    gtk_tree_view_column_set_resizable(column, FALSE);
+    gtk_tree_view_column_set_fixed_width(column, 50);
+
+    renderer = gtk_cell_renderer_text_new();
+    gtk_tree_view_column_pack_start(column, renderer, FALSE);
+    gtk_tree_view_column_set_attributes(column, renderer,
+                                        "text", RAWDATA_KEY, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_rawdata), column);
+
+    column = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(column, _("Value"));
+    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+    gtk_tree_view_column_set_spacing(column, 4);
+    gtk_tree_view_column_set_resizable(column, FALSE);
+    gtk_tree_view_column_set_fixed_width(column, 50);
+
+    renderer = gtk_cell_renderer_text_new();
+    gtk_tree_view_column_pack_start(column, renderer, FALSE);
+    gtk_tree_view_column_set_attributes(column, renderer,
+                                        "text", RAWDATA_VALUE, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_rawdata), column);
     
     hbox_status_and_bbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox0), hbox_status_and_bbox, FALSE, FALSE, 0);
@@ -630,110 +774,167 @@ create_fileinfo_window(void)
 void 
 fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
-        gchar *tmp, *tmp_utf = NULL;
-        GdkPixbuf *icon = NULL;
+    gchar *tmp, *tmp_utf = NULL;
+    GdkPixbuf *icon = NULL;
+    GtkTreeIter iter;
+    GtkListStore *store;
+    mowgli_dictionary_iteration_state_t state;
+    TupleValue *tvalue;
+    gint i;
 
-        if (tuple == NULL)
-                return;
+    if (tuple == NULL)
+        return;
         
-        if(!updating_enabled) {
-            current_ip = NULL;
-            G_FREE_CLEAR(current_file);
-        }
+    if(!updating_enabled) {
+        current_ip = NULL;
+        G_FREE_CLEAR(current_file);
+    }
 
-        something_changed = FALSE;
+    something_changed = FALSE;
 
-        if(!GTK_WIDGET_REALIZED(fileinfo_win)) gtk_widget_realize(fileinfo_win);
+    if (!GTK_WIDGET_REALIZED(fileinfo_win))
+        gtk_widget_realize(fileinfo_win);
 
-        set_entry_str_from_field(entry_title, tuple, FIELD_TITLE, updating_enabled);
-        set_entry_str_from_field(entry_artist, tuple, FIELD_ARTIST, updating_enabled);
-        set_entry_str_from_field(entry_album, tuple, FIELD_ALBUM, updating_enabled);
-        set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT, updating_enabled);
-        set_entry_str_from_field(entry_genre, tuple, FIELD_GENRE, updating_enabled);
+    set_entry_str_from_field(entry_title, tuple, FIELD_TITLE, updating_enabled);
+    set_entry_str_from_field(entry_artist, tuple, FIELD_ARTIST, updating_enabled);
+    set_entry_str_from_field(entry_album, tuple, FIELD_ALBUM, updating_enabled);
+    set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT, updating_enabled);
+    set_entry_str_from_field(gtk_bin_get_child(GTK_BIN(entry_genre)), tuple, FIELD_GENRE, updating_enabled);
 
-        tmp = g_strdup_printf("%s/%s",
-                tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
-                tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
-        if(tmp){
-                tmp_utf = str_to_utf8(tmp);
-                fileinfo_entry_set_text(entry_location, tmp_utf);
-                g_free(tmp_utf);
-                g_free(tmp);
-                tmp = NULL;
-        }
+    tmp = g_strdup_printf("%s/%s",
+            tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
+            tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
+
+    if (tmp) {
+        tmp_utf = str_to_utf8(tmp);
+        fileinfo_entry_set_text(entry_location, tmp_utf);
+        g_free(tmp_utf);
+        g_free(tmp);
+        tmp = NULL;
+    }
         
-        /* set empty string if field not availaible. --eugene */
-        set_entry_int_from_field(entry_year, tuple, FIELD_YEAR, updating_enabled);
-        set_entry_int_from_field(entry_track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
+    /* set empty string if field not availaible. --eugene */
+    set_entry_int_from_field(entry_year, tuple, FIELD_YEAR, updating_enabled);
+    set_entry_int_from_field(entry_track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
-        fileinfo_label_set_text(label_format_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
-        fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
+    fileinfo_label_set_text(label_format_name, tuple_get_string(tuple, FIELD_CODEC, NULL));
+    fileinfo_label_set_text(label_quality, tuple_get_string(tuple, FIELD_QUALITY, NULL));
 
-        if (tuple_get_value_type(tuple, FIELD_BITRATE, NULL) == TUPLE_INT) {
-            tmp = g_strdup_printf(_("%d kb/s"), tuple_get_int(tuple, FIELD_BITRATE, NULL));
-            fileinfo_label_set_text(label_bitrate, tmp);
-            g_free(tmp);
-        } else {
-            fileinfo_label_set_text(label_bitrate, NULL);
-        }
+    if (tuple_get_value_type(tuple, FIELD_BITRATE, NULL) == TUPLE_INT) {
+        tmp = g_strdup_printf(_("%d kb/s"), tuple_get_int(tuple, FIELD_BITRATE, NULL));
+        fileinfo_label_set_text(label_bitrate, tmp);
+        g_free(tmp);
+    } else
+        fileinfo_label_set_text(label_bitrate, NULL);
 
-        tmp = (gchar *)tuple_get_string(tuple, FIELD_MIMETYPE, NULL);
-        icon = mime_icon_lookup(48, tmp ? tmp : "audio/x-generic");
-        if (icon) {
-            if (image_fileicon) gtk_image_set_from_pixbuf (GTK_IMAGE(image_fileicon), icon);
-            g_object_unref(icon);
-        }
+    tmp = (gchar *)tuple_get_string(tuple, FIELD_MIMETYPE, NULL);
+    icon = mime_icon_lookup(48, tmp ? tmp : "audio/x-generic");
+    if (icon) {
+        if (image_fileicon) gtk_image_set_from_pixbuf (GTK_IMAGE(image_fileicon), icon);
+        g_object_unref(icon);
+    }
 
-        tmp = fileinfo_recursive_get_image(
-                tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
-                tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
+    tmp = fileinfo_recursive_get_image(
+            tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
+            tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
         
-        if(tmp)
-        {
-                fileinfo_entry_set_image(image_artwork, tmp);
-                g_free(tmp);
-        }
+    if (tmp) {
+        fileinfo_entry_set_image(image_artwork, tmp);
+        g_free(tmp);
+    }
 
-        gtk_widget_set_sensitive(btn_apply, FALSE);
+    gtk_widget_set_sensitive(btn_apply, FALSE);
     
-        if (label_mini_status != NULL) {
-            gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
-            gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
-        }
-        
-        if(! GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_show(fileinfo_win);
+    if (label_mini_status != NULL) {
+        gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
+        gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
+    }
+
+    store = gtk_list_store_new(RAWDATA_N_COLS, G_TYPE_STRING, G_TYPE_STRING);
+
+    for (i = 0; i < FIELD_LAST; i++) {
+         gchar *key, *value;
+
+         if (!tuple->values[i])
+             continue;
+
+         if (tuple->values[i]->type != TUPLE_INT && tuple->values[i]->value.string)
+             value = g_strdup(tuple->values[i]->value.string);
+         else if (tuple->values[i]->type == TUPLE_INT)
+             value = g_strdup_printf("%d", tuple->values[i]->value.integer);
+         else
+             continue;
+
+         key = g_strdup(tuple_fields[i].name);
+
+         gtk_list_store_append(store, &iter);
+         gtk_list_store_set(store, &iter,
+                            RAWDATA_KEY, key,
+                            RAWDATA_VALUE, value, -1);
+
+         g_free(key);
+         g_free(value);
+    }
+
+    /* non-standard values are stored in a dictionary. */
+    MOWGLI_DICTIONARY_FOREACH(tvalue, &state, tuple->dict) {
+         gchar *key, *value;
+
+         if (tvalue->type != TUPLE_INT && tvalue->value.string)
+             value = g_strdup(tvalue->value.string);
+         else if (tvalue->type == TUPLE_INT)
+             value = g_strdup_printf("%d", tvalue->value.integer);
+         else
+             continue;
+
+         key = g_strdup(state.cur->key);
+
+         gtk_list_store_append(store, &iter);
+         gtk_list_store_set(store, &iter,
+                            RAWDATA_KEY, key,
+                            RAWDATA_VALUE, value, -1);
+
+         g_free(key);
+         g_free(value);
+    }
+
+    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview_rawdata), GTK_TREE_MODEL(store));
+    g_object_unref(store);
+
+    if (!GTK_WIDGET_VISIBLE(fileinfo_win))
+        gtk_widget_show(fileinfo_win);
 }
 
 void
 fileinfo_show_for_path(gchar *path)
 {
-        Tuple *tuple = input_get_song_tuple(path);
+    Tuple *tuple = input_get_song_tuple(path);
 
-        if (tuple == NULL) {
-                input_file_info_box(path);
-                return;
-        }
+    if (tuple == NULL) {
+         input_file_info_box(path);
+         return;
+    }
 
-        fileinfo_show_for_tuple(tuple, FALSE);
+    fileinfo_show_for_tuple(tuple, FALSE);
 
-        mowgli_object_unref(tuple);
+    mowgli_object_unref(tuple);
 }
 
 void
 fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
 {
-        G_FREE_CLEAR(current_file);
-        current_file = g_strdup(path);
-        current_ip = ip;
+    G_FREE_CLEAR(current_file);
+    current_file = g_strdup(path);
+    current_ip = ip;
 
-        Tuple *tuple = input_get_song_tuple(path);
+    Tuple *tuple = input_get_song_tuple(path);
 
-        if (tuple == NULL) {
-                input_file_info_box(path);
-                return;
-        }
+    if (tuple == NULL) {
+        input_file_info_box(path);
+        return;
+    }
 
-        fileinfo_show_for_tuple(tuple, TRUE);
+    fileinfo_show_for_tuple(tuple, TRUE);
 
-        mowgli_object_unref(tuple);
+    mowgli_object_unref(tuple);
 }
