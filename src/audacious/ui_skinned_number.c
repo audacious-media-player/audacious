@@ -195,19 +195,9 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
                      number->skin_index, number->num * 9, 0,
                      0, 0, number->width, number->height);
 
-    GdkPixbuf *image = NULL;
-    if (number->double_size) {
-        image = gdk_pixbuf_scale_simple(obj, number->width*2, number->height*2, GDK_INTERP_NEAREST);
-    } else {
-        image = gdk_pixbuf_copy(obj);
-    }
-
-    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
-                    number->width*(1+number->double_size), number->height*(1+number->double_size),
-                    GDK_RGB_DITHER_NONE, 0, 0);
+    ui_skinned_widget_draw(widget, obj, number->width, number->height, number->double_size);
 
     g_object_unref(obj);
-    g_object_unref(image);
 
     return FALSE;
 }

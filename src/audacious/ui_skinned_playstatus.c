@@ -204,19 +204,9 @@ static gboolean ui_skinned_playstatus_expose(GtkWidget *widget, GdkEventExpose *
         break;
     }
 
-    GdkPixbuf *image = NULL;
-    if (playstatus->double_size) {
-        image = gdk_pixbuf_scale_simple(obj, playstatus->width*2, playstatus->height*2, GDK_INTERP_NEAREST);
-    } else {
-        image = gdk_pixbuf_copy(obj);
-    }
-
-    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
-                    playstatus->width*(1+playstatus->double_size), playstatus->height*(1+playstatus->double_size),
-                    GDK_RGB_DITHER_NONE, 0, 0);
+    ui_skinned_widget_draw(widget, obj, playstatus->width, playstatus->height, playstatus->double_size);
 
     g_object_unref(obj);
-    g_object_unref(image);
 
     return FALSE;
 }

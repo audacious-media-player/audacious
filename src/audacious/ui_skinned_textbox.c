@@ -317,20 +317,9 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
             }
         }
 
-        GdkPixbuf *image = NULL;
-        if (priv->double_size) {
-            image = gdk_pixbuf_scale_simple(obj, textbox->width*2, textbox->height*2, GDK_INTERP_NEAREST);
-        } else {
-            image = gdk_pixbuf_copy(obj);
-        }
-
-        gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
-                        textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size),
-                        GDK_RGB_DITHER_NONE, 0, 0);
+        ui_skinned_widget_draw(widget, obj, textbox->width, textbox->height, priv->double_size);
 
         g_object_unref(obj);
-        g_object_unref(image);
-
     }
 
     return FALSE;

@@ -221,19 +221,9 @@ static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventEx
     else
         skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
 
-    GdkPixbuf *image = NULL;
-    if (priv->double_size) {
-        image = gdk_pixbuf_scale_simple(obj, priv->width*2, priv->height*2, GDK_INTERP_NEAREST);
-    } else {
-        image = gdk_pixbuf_copy(obj);
-    }
-
-    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
-                    priv->width*(1+priv->double_size), priv->height*(1+priv->double_size),
-                    GDK_RGB_DITHER_NONE, 0, 0);
+    ui_skinned_widget_draw(widget, obj, priv->width, priv->height, priv->double_size);
 
     g_object_unref(obj);
-    g_object_unref(image);
 
     return FALSE;
 }

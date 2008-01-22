@@ -236,19 +236,9 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
                              menurow->sx + 24, menurow->sy + 26, 0, 26, 8, 8);
     }
 
-    GdkPixbuf *image = NULL;
-    if (menurow->double_size) {
-        image = gdk_pixbuf_scale_simple(obj, menurow->width*2, menurow->height*2, GDK_INTERP_NEAREST);
-    } else {
-        image = gdk_pixbuf_copy(obj);
-    }
-
-    gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0,
-                    menurow->width*(1+menurow->double_size), menurow->height*(1+menurow->double_size),
-                    GDK_RGB_DITHER_NONE, 0, 0);
+    ui_skinned_widget_draw(widget, obj, menurow->width, menurow->height, menurow->double_size);
 
     g_object_unref(obj);
-    g_object_unref(image);
 
     return FALSE;
 }
