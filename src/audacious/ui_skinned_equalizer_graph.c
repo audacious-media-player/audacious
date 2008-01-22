@@ -228,19 +228,15 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
     UiSkinnedEqualizerGraph *equalizer_graph = UI_SKINNED_EQUALIZER_GRAPH (widget);
     g_return_val_if_fail (equalizer_graph->width > 0 && equalizer_graph->height > 0, FALSE);
 
-    GdkPixmap *obj = NULL;
-    GdkPixbuf *pix = NULL;
-    GdkGC *gc;
+    GdkPixbuf *obj = NULL;
 
-    pix = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, equalizer_graph->width, equalizer_graph->height);
-    obj = gdk_pixmap_new(NULL, equalizer_graph->width, equalizer_graph->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    obj = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, equalizer_graph->width, equalizer_graph->height);
 
-    GdkColor col;
-    guint32 cols[19];
+    guint32 cols[19], rowstride;
     gint i, y, ymin, ymax, py = 0;
     gfloat x[] = { 0, 11, 23, 35, 47, 59, 71, 83, 97, 109 }, yf[10];
-
+    guchar* pixels, *p;
+    gint n_channels;
     /*
      * This avoids the init_spline() function to be inlined.
      * Inlining the function caused troubles when compiling with
@@ -248,16 +244,11 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
      */
     void (*__init_spline) (gfloat *, gfloat *, gint, gfloat *) = init_spline;
 
-    skin_draw_pixbuf(widget, bmp_active_skin, pix, equalizer_graph->skin_index, 0, 294, 0, 0,
+    skin_draw_pixbuf(widget, bmp_active_skin, obj, equalizer_graph->skin_index, 0, 294, 0, 0,
                      equalizer_graph->width, equalizer_graph->height);
-    skin_draw_pixbuf(widget, bmp_active_skin, pix, equalizer_graph->skin_index, 0, 314,
+    skin_draw_pixbuf(widget, bmp_active_skin, obj, equalizer_graph->skin_index, 0, 314,
                      0, 9 + ((cfg.equalizer_preamp * 9) / 20),
                      equalizer_graph->width, 1);
-
-    /* we shouldn't do it this way... we should paint equalizer-line pixels on pixbuf */
-    gdk_draw_pixbuf(obj, gc, pix, 0, 0, 0, 0, equalizer_graph->width, equalizer_graph->height,
-                    GDK_RGB_DITHER_NONE, 0, 0);
-    g_object_unref(pix);
 
     skin_get_eq_spline_colors(bmp_active_skin, cols);
 
@@ -282,30 +273,25 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
         }
         py = y;
 
-        /* this should operate directly on GdkPixbuf */
-        for (y = ymin; y <= ymax; y++) {
-            col.pixel = cols[y];
-            gdk_gc_set_foreground(gc, &col);
-            gdk_draw_point(obj, gc, i + 2, y);
+        pixels = gdk_pixbuf_get_pixels(obj);
+        rowstride = gdk_pixbuf_get_rowstride(obj);
+        n_channels = gdk_pixbuf_get_n_channels(obj); 
+
+        for (y = ymin; y <= ymax; y++) 
+        {
+            p = pixels + (y * rowstride) + (( i + 2) * n_channels); 
+            p[0] = (cols[y] & 0xff0000) >> 16;
+            p[1] = (cols[y] & 0x00ff00) >> 8;
+            p[2] = (cols[y] & 0x0000ff);
+            /* do we really need to treat the alpha channel? */
+            /*if (n_channels == 4)
+                  p[3] = cols[y] >> 24;*/
         }
     }
 
-    gc = gdk_gc_new(obj);
-    GdkPixmap *image = NULL;
-
-    if (equalizer_graph->double_size) {
-        image = create_dblsize_pixmap(obj);
-    } else {
-        image = gdk_pixmap_new(NULL, equalizer_graph->width, equalizer_graph->height, gdk_rgb_get_visual()->depth);
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, equalizer_graph->width, equalizer_graph->height);
-    }
+    ui_skinned_widget_draw(widget, obj, equalizer_graph->width, equalizer_graph->height, equalizer_graph->double_size);
 
     g_object_unref(obj);
-
-    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
-                       equalizer_graph->width*(1+equalizer_graph->double_size), equalizer_graph->height*(1+equalizer_graph->double_size));
-    g_object_unref(gc);
-    g_object_unref(image);
 
     return FALSE;
 }

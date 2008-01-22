@@ -889,25 +889,6 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
     return out;
 }
 
-GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix) {
-    int w, h;
-    gdk_drawable_get_size(pix, &w, &h);
-    GdkGC* gc = gdk_gc_new(pix);
-    GdkPixbuf *img, *img2x;
-    GdkColormap *colormap = gdk_colormap_get_system();
-    img = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, w, h);
-    gdk_pixbuf_get_from_drawable(img, pix, colormap, 0, 0, 0, 0, w, h);
-    img2x = gdk_pixbuf_scale_simple(img, w*2, h*2, GDK_INTERP_NEAREST);
-
-    GdkPixmap *image;
-    image = gdk_pixmap_new(NULL, w*2, h*2, gdk_rgb_get_visual()->depth);
-    gdk_draw_pixbuf(image, gc, img2x, 0, 0, 0, 0, w*2, h*2, GDK_RGB_DITHER_NONE, 0, 0);
-    g_object_unref(img);
-    g_object_unref(img2x);
-    g_object_unref(gc);
-    return image;
-}
-
 void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint height, gboolean scale) {
     g_return_if_fail(widget != NULL);
     g_return_if_fail(obj != NULL);

@@ -1852,8 +1852,9 @@ skin_get_eq_spline_colors(Skin * skin, guint32 colors[19])
     {
         p = pixels + rowstride * (i + 294) + 115 * n_channels;
         colors[i] = (p[0] << 16) | (p[1] << 8) | p[2]; 
-        if(n_channels == 4)       /* should we really treat the Alpha channel? */
-            colors[i]= (colors[i] << 8) | p[3];
+        /* should we really treat the Alpha channel? */
+        /*if (n_channels == 4)
+            colors[i] = (colors[i] << 8) | p[3];*/
     }
 }
 
