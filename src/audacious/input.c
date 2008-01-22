@@ -516,11 +516,11 @@ input_check_file(const gchar *filename, gboolean loading)
                     return pr;
                 }
             }
-
-	    g_free(filename_proxy);
-	    vfs_fclose(fd);
-	    return NULL; // no plugin found.
         }
+
+        g_free(filename_proxy);
+        vfs_fclose(fd);
+        return NULL; // no plugin found.
     }
 
 
