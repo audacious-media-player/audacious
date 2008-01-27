@@ -122,7 +122,8 @@ equalizerwin_set_scaled(gboolean ds)
         height = 116;
 
     if (cfg.scaled) {
-        dock_window_resize(GTK_WINDOW(equalizerwin), 550, height * 2, 550, height * cfg.scale_factor);
+        dock_window_resize(GTK_WINDOW(equalizerwin), 275 * cfg.scale_factor, 
+            height * cfg.scale_factor, 275 * cfg.scale_factor, height * cfg.scale_factor);
     } else {
         dock_window_resize(GTK_WINDOW(equalizerwin), 275, height, 275, height);
     }
@@ -579,8 +580,8 @@ equalizerwin_real_show(void)
 {
     gtk_window_move(GTK_WINDOW(equalizerwin), cfg.equalizer_x, cfg.equalizer_y);
     if (cfg.scaled && cfg.eq_scaled_linked)
-        gtk_widget_set_size_request(equalizerwin, 550,
-                                    (cfg.equalizer_shaded ? 28 : 232));
+        gtk_widget_set_size_request(equalizerwin, 275 * cfg.scale_factor,
+                                    ((cfg.equalizer_shaded ? 14 : 116) * cfg.scale_factor));
     else
         gtk_widget_set_size_request(equalizerwin, 275,
                                     (cfg.equalizer_shaded ? 14 : 116));
