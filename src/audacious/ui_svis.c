@@ -242,16 +242,16 @@ static void ui_svis_unmap (GtkWidget *widget)
 static void ui_svis_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSVis *svis = UI_SVIS(widget);
 
-    requisition->width = svis->width*(1+svis->scaled);
-    requisition->height = svis->height*(1+svis->scaled);
+    requisition->width = svis->width * (svis->scaled ? cfg.scale_factor : 1);
+    requisition->height = svis->height*(svis->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_svis_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSVis *svis = UI_SVIS (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+svis->scaled);
-    widget->allocation.y *= (1+svis->scaled);
+    widget->allocation.x *= (svis->scaled ? cfg.scale_factor : 1 );
+    widget->allocation.y *= (svis->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
     {
         if (svis->event_window != NULL)
@@ -352,7 +352,7 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
         }
 
     }
-    else {   /*            svis scaling is disabled for now 
+    else {            /*svis scaling, this needs some work, since a lot of stuff is hardcoded --majeru*/
 
       memset(rgb_data, 0, SVIS_WIDTH * cfg.scale_factor * SVIS_HEIGHT * cfg.scale_factor);
       if (cfg.vis_type == VIS_ANALYZER && !playback_get_paused() && playback_get_playing()){
@@ -418,7 +418,7 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
             }
         }
 
-*/
+
     }
 
     GdkPixmap *obj = NULL;

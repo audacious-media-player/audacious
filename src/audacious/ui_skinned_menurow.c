@@ -186,16 +186,16 @@ static void ui_skinned_menurow_realize(GtkWidget *widget) {
 static void ui_skinned_menurow_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedMenurow *menurow = UI_SKINNED_MENUROW(widget);
 
-    requisition->width = menurow->width*(1+menurow->scaled);
-    requisition->height = menurow->height*(1+menurow->scaled);
+    requisition->width = menurow->width*(menurow->scaled ? cfg.scale_factor : 1);
+    requisition->height = menurow->height*(menurow->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_menurow_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedMenurow *menurow = UI_SKINNED_MENUROW (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+menurow->scaled);
-    widget->allocation.y *= (1+menurow->scaled);
+    widget->allocation.x *= (menurow->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (menurow->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
