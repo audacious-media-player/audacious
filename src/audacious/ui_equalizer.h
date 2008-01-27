@@ -29,9 +29,11 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#define EQUALIZER_DOUBLESIZE     (cfg.doublesize && cfg.eq_doublesize_linked)
-#define EQUALIZER_HEIGHT         ((cfg.equalizer_shaded ? 14 : 116) * (EQUALIZER_DOUBLESIZE + 1))
-#define EQUALIZER_WIDTH          (275 * (EQUALIZER_DOUBLESIZE + 1))
+#define EQUALIZER_SCALED     (cfg.scaled && cfg.eq_scaled_linked)
+#define EQUALIZER_SCALE_FACTOR (EQUALIZER_SCALED ? cfg.scale_factor : 1)
+
+#define EQUALIZER_HEIGHT         ((cfg.equalizer_shaded ? 14 : 116) * (EQUALIZER_SCALE_FACTOR))
+#define EQUALIZER_WIDTH          (275 * EQUALIZER_SCALE_FACTOR)
 
 #define EQUALIZER_DEFAULT_POS_X  20
 #define EQUALIZER_DEFAULT_POS_Y  136
@@ -39,7 +41,7 @@
 #define EQUALIZER_DEFAULT_DIR_PRESET "dir_default.preset"
 #define EQUALIZER_DEFAULT_PRESET_EXT "preset"
 
-void equalizerwin_set_doublesize(gboolean ds);
+void equalizerwin_set_scaled(gboolean ds);
 void equalizerwin_set_shade_menu_cb(gboolean shaded);
 void draw_equalizer_window(gboolean force);
 void equalizerwin_create(void);

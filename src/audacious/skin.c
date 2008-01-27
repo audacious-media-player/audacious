@@ -224,11 +224,11 @@ skin_free(Skin * skin)
     for (i = 0; i < SKIN_MASK_COUNT; i++) {
         if (skin->masks[i])
             g_object_unref(skin->masks[i]);
-        if (skin->ds_masks[i])
-            g_object_unref(skin->ds_masks[i]);
+        if (skin->scaled_masks[i])
+            g_object_unref(skin->scaled_masks[i]);
 
         skin->masks[i] = NULL;
-        skin->ds_masks[i] = NULL;
+        skin->scaled_masks[i] = NULL;
     }
 
     for (i = 0; i < SKIN_COLOR_COUNT; i++) {
@@ -420,7 +420,7 @@ skin_mask_create(Skin * skin,
                                      skin_mask_info[id].width,
                                      skin_mask_info[id].height, FALSE);
 
-    skin->ds_masks[id] =
+    skin->scaled_masks[id] =
         skin_create_transparent_mask(path, "region.txt",
                                      skin_mask_info[id].inistr, window,
                                      skin_mask_info[id].width * 2,
@@ -1704,7 +1704,7 @@ skin_get_mask(Skin * skin, SkinMaskId mi)
     g_return_val_if_fail(skin != NULL, NULL);
     g_return_val_if_fail(mi < SKIN_PIXMAP_COUNT, NULL);
 
-    masks = cfg.doublesize ? skin->ds_masks : skin->masks;
+    masks = cfg.scaled ? skin->scaled_masks : skin->masks;
     return masks[mi];
 }
 

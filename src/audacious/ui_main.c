@@ -179,7 +179,7 @@ static void change_timer_mode(void);
 void mainwin_position_motion_cb(GtkWidget *widget, gint pos);
 void mainwin_position_release_cb(GtkWidget *widget, gint pos);
 
-void set_doublesize(gboolean doublesize);
+void set_scaled(gboolean scaled);
 void mainwin_eq_pushed(gboolean toggled);
 void mainwin_pl_pushed(gboolean toggled);
 
@@ -246,12 +246,12 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(mainwin),
-                   MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1));
+                   MAINWIN_SHADED_HEIGHT * MAINWIN_SCALE_FACTOR);
     } else {
         gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
                        bmp_active_skin->properties.mainwin_height;
 
-        dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * (cfg.doublesize + 1));
+        dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * MAINWIN_SCALE_FACTOR);
     }
 
     mainwin_refresh_hints();
@@ -353,8 +353,8 @@ mainwin_menubtn_cb(void)
     gint x, y;
     gtk_window_get_position(GTK_WINDOW(mainwin), &x, &y);
     ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
-                            x + 6 * (1 + cfg.doublesize),
-                            y + MAINWIN_SHADED_HEIGHT * (1 + cfg.doublesize),
+                            x + 6 * MAINWIN_SCALE_FACTOR ,
+                            y + MAINWIN_SHADED_HEIGHT * MAINWIN_SCALE_FACTOR,
                             1, GDK_CURRENT_TIME);
 }
 
@@ -573,8 +573,8 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_vis_y);
 
     if (bmp_active_skin->properties.mainwin_vis_width)
-    gtk_widget_set_size_request(mainwin_vis, bmp_active_skin->properties.mainwin_vis_width*(1+cfg.doublesize),
-        UI_VIS(mainwin_vis)->height*(1+cfg.doublesize));
+    gtk_widget_set_size_request(mainwin_vis, bmp_active_skin->properties.mainwin_vis_width * MAINWIN_SCALE_FACTOR,
+        UI_VIS(mainwin_vis)->height* MAINWIN_SCALE_FACTOR);
 
     if (bmp_active_skin->properties.mainwin_text_x && bmp_active_skin->properties.mainwin_text_y)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
@@ -582,8 +582,8 @@ mainwin_refresh_hints(void)
 
     if (bmp_active_skin->properties.mainwin_text_width) {
         UI_SKINNED_TEXTBOX(mainwin_info)->width = bmp_active_skin->properties.mainwin_text_width;
-        gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width*(1+cfg.doublesize),
-                                    UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
+        gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width * MAINWIN_SCALE_FACTOR,
+                                    UI_SKINNED_TEXTBOX(mainwin_info)->height * MAINWIN_SCALE_FACTOR );
     }
 
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
@@ -687,10 +687,10 @@ mainwin_refresh_hints(void)
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
-        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-            cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
-            bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-            bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
+        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH * MAINWIN_SCALE_FACTOR : bmp_active_skin->properties.mainwin_width * MAINWIN_SCALE_FACTOR,
+            cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * MAINWIN_SCALE_FACTOR : bmp_active_skin->properties.mainwin_height * MAINWIN_SCALE_FACTOR,
+            bmp_active_skin->properties.mainwin_width * MAINWIN_SCALE_FACTOR,
+            bmp_active_skin->properties.mainwin_height * MAINWIN_SCALE_FACTOR);
 
         gdk_flush();
     }
@@ -850,14 +850,14 @@ mainwin_mouse_button_press(GtkWidget * widget,
                            GdkEventButton * event,
                            gpointer callback_data)
 {
-    if (cfg.doublesize) {
+    if (cfg.scaled) {
         /*
-         * A hack to make doublesize transparent to callbacks.
+         * A hack to make scaling transparent to callbacks.
          * We should make a copy of this data instead of
          * tampering with the data we get from gtk+
          */
-        event->x /= 2;
-        event->y /= 2;
+        event->x /= cfg.scale_factor;
+        event->y /= cfg.scale_factor;
     }
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
@@ -1790,7 +1790,7 @@ mainwin_set_noplaylistadvance(gboolean no_advance)
 }
 
 static void
-mainwin_set_doublesize(gboolean doublesize)
+mainwin_set_scaled(gboolean scaled)
 {
     gint height;
 
@@ -1801,13 +1801,13 @@ mainwin_set_doublesize(gboolean doublesize)
 
     dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
         cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-        bmp_active_skin->properties.mainwin_width * 2, bmp_active_skin->properties.mainwin_height * 2);
+        bmp_active_skin->properties.mainwin_width * cfg.scale_factor , bmp_active_skin->properties.mainwin_height * cfg.scale_factor);
 
     GList *iter;
     for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
         GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
         GtkWidget *child = child_data->widget;
-        g_signal_emit_by_name(child, "toggle-double-size");
+        g_signal_emit_by_name(child, "toggle-scaled");
     }
 
     mainwin_refresh_hints();
@@ -1815,14 +1815,14 @@ mainwin_set_doublesize(gboolean doublesize)
 }
 
 void
-set_doublesize(gboolean doublesize)
+set_scaled(gboolean scaled)
 {
-    cfg.doublesize = doublesize;
+    cfg.scaled = scaled;
 
-    mainwin_set_doublesize(doublesize);
+    mainwin_set_scaled(scaled);
 
-    if (cfg.eq_doublesize_linked)
-        equalizerwin_set_doublesize(doublesize);
+    if (cfg.eq_scaled_linked)
+        equalizerwin_set_scaled(scaled);
 }
 
 
@@ -1961,11 +1961,11 @@ mainwin_mr_change(GtkWidget *widget, MenuRowItem i)
     case MENUROW_FILEINFOBOX:
         mainwin_lock_info_text(_("File Info Box"));
         break;
-    case MENUROW_DOUBLESIZE:
-        if (UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected)
-            mainwin_lock_info_text(_("Disable 'Doublesize'"));
+    case MENUROW_SCALE:
+        if (UI_SKINNED_MENUROW(mainwin_menurow)->scale_selected)
+            mainwin_lock_info_text(_("Disable 'GUI Scaling'"));
         else
-            mainwin_lock_info_text(_("Enable 'Doublesize'"));
+            mainwin_lock_info_text(_("Enable 'GUI Scaling'"));
         break;
     case MENUROW_VISUALIZATION:
         mainwin_lock_info_text(_("Visualization Menu"));
@@ -1993,11 +1993,11 @@ mainwin_mr_release(GtkWidget *widget, MenuRowItem i, GdkEventButton *event)
     case MENUROW_FILEINFOBOX:
         playlist_fileinfo_current(playlist_get_active());
         break;
-    case MENUROW_DOUBLESIZE:
+    case MENUROW_SCALE:
         gtk_toggle_action_set_active(
           GTK_TOGGLE_ACTION(gtk_action_group_get_action(
           toggleaction_group_others , "view doublesize" )) ,
-          UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected );
+          UI_SKINNED_MENUROW(mainwin_menurow)->scale_selected );
         break;
     case MENUROW_VISUALIZATION:
         ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu),
@@ -2134,7 +2134,7 @@ mainwin_setup_menus(void)
     check_set(toggleaction_group_others, "roll up playlist editor", cfg.playlist_shaded);
     check_set(toggleaction_group_others, "roll up equalizer", cfg.equalizer_shaded);
     check_set(toggleaction_group_others, "view easy move", cfg.easy_move);
-    check_set(toggleaction_group_others, "view doublesize", cfg.doublesize);
+    check_set(toggleaction_group_others, "view scaled", cfg.scaled);
 
     /* Songname menu */
 
@@ -2503,9 +2503,9 @@ mainwin_create_window(void)
     width = cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width;
     height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height;
 
-    if (cfg.doublesize) {
-        width *= 2;
-        height *= 2;
+    if (cfg.scaled) {
+        width *= cfg.scale_factor;
+        height *= cfg.scale_factor;
     }
 
     gtk_widget_set_size_request(mainwin, width, height);
@@ -2736,11 +2736,11 @@ action_view_always_on_top( GtkToggleAction * action )
 }
 
 void
-action_view_doublesize( GtkToggleAction * action )
+action_view_scale( GtkToggleAction * action )
 {
-  UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected = gtk_toggle_action_get_active( action );
+  UI_SKINNED_MENUROW(mainwin_menurow)->scale_selected = gtk_toggle_action_get_active( action );
   gtk_widget_queue_draw(mainwin_menurow);
-  set_doublesize(UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected);
+  set_scaled(UI_SKINNED_MENUROW(mainwin_menurow)->scale_selected);
   gdk_flush();
 }
 

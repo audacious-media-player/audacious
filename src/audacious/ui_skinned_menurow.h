@@ -43,26 +43,26 @@ typedef struct _UiSkinnedMenurowClass   UiSkinnedMenurowClass;
 
 typedef enum {
     MENUROW_NONE, MENUROW_OPTIONS, MENUROW_ALWAYS, MENUROW_FILEINFOBOX,
-    MENUROW_DOUBLESIZE, MENUROW_VISUALIZATION
+    MENUROW_SCALE, MENUROW_VISUALIZATION
 } MenuRowItem;
 
 struct _UiSkinnedMenurow {
     GtkWidget        widget;
 
     gint             x, y, width, height;
-    gboolean         double_size;
+    gboolean         scaled;
     gint             nx, ny;
     gint             sx, sy;
     MenuRowItem      selected;
     gboolean         always_selected;
-    gboolean         doublesize_selected;
+    gboolean         scale_selected;
     gboolean         pushed;
     SkinPixmapId     skin_index;
 };
 
 struct _UiSkinnedMenurowClass {
     GtkWidgetClass          parent_class;
-    void (* doubled)        (UiSkinnedMenurow *menurow);
+    void (* scaled)        (UiSkinnedMenurow *menurow);
     void (* change)         (UiSkinnedMenurow *menurow);
     void (* release)        (UiSkinnedMenurow *menurow);
 };

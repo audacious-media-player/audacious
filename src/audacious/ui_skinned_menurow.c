@@ -46,7 +46,7 @@ static MenuRowItem menurow_find_selected          (UiSkinnedMenurow * mr, gint x
 static gboolean ui_skinned_menurow_button_press   (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_menurow_button_release (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_menurow_motion_notify  (GtkWidget *widget, GdkEventMotion *event);
-static void ui_skinned_menurow_toggle_doublesize  (UiSkinnedMenurow *menurow);
+static void ui_skinned_menurow_toggle_scaled  (UiSkinnedMenurow *menurow);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint menurow_signals[LAST_SIGNAL] = { 0 };
@@ -91,13 +91,13 @@ static void ui_skinned_menurow_class_init(UiSkinnedMenurowClass *klass) {
     widget_class->button_release_event = ui_skinned_menurow_button_release;
     widget_class->motion_notify_event = ui_skinned_menurow_motion_notify;
 
-    klass->doubled = ui_skinned_menurow_toggle_doublesize;
+    klass->scaled = ui_skinned_menurow_toggle_scaled;
     klass->change = NULL;
     klass->release = NULL;
 
     menurow_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedMenurowClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedMenurowClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
 
@@ -114,7 +114,7 @@ static void ui_skinned_menurow_class_init(UiSkinnedMenurowClass *klass) {
 }
 
 static void ui_skinned_menurow_init(UiSkinnedMenurow *menurow) {
-    menurow->doublesize_selected = cfg.doublesize;
+    menurow->scale_selected = cfg.scaled;
     menurow->always_selected = cfg.always_on_top;
 }
 
@@ -133,7 +133,7 @@ GtkWidget* ui_skinned_menurow_new(GtkWidget *fixed, gint x, gint y, gint nx, gin
 
     menurow->skin_index = si;
 
-    menurow->double_size = FALSE;
+    menurow->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(menurow), menurow->x, menurow->y);
 
@@ -186,21 +186,21 @@ static void ui_skinned_menurow_realize(GtkWidget *widget) {
 static void ui_skinned_menurow_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedMenurow *menurow = UI_SKINNED_MENUROW(widget);
 
-    requisition->width = menurow->width*(1+menurow->double_size);
-    requisition->height = menurow->height*(1+menurow->double_size);
+    requisition->width = menurow->width*(1+menurow->scaled);
+    requisition->height = menurow->height*(1+menurow->scaled);
 }
 
 static void ui_skinned_menurow_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedMenurow *menurow = UI_SKINNED_MENUROW (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+menurow->double_size);
-    widget->allocation.y *= (1+menurow->double_size);
+    widget->allocation.x *= (1+menurow->scaled);
+    widget->allocation.y *= (1+menurow->scaled);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    menurow->x = widget->allocation.x/(menurow->double_size ? 2 : 1);
-    menurow->y = widget->allocation.y/(menurow->double_size ? 2 : 1);
+    menurow->x = widget->allocation.x/(menurow->scaled ? 2 : 1);
+    menurow->y = widget->allocation.y/(menurow->scaled ? 2 : 1);
 }
 
 static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -231,12 +231,12 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
         if (menurow->always_selected)
             skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                              menurow->sx + 8, menurow->sy + 10, 0, 10, 8, 8);
-        if (menurow->doublesize_selected)
+        if (menurow->scale_selected)
             skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
                              menurow->sx + 24, menurow->sy + 26, 0, 26, 8, 8);
     }
 
-    ui_skinned_widget_draw(widget, obj, menurow->width, menurow->height, menurow->double_size);
+    ui_skinned_widget_draw(widget, obj, menurow->width, menurow->height, menurow->scaled);
 
     g_object_unref(obj);
 
@@ -246,8 +246,8 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
 static MenuRowItem menurow_find_selected(UiSkinnedMenurow * mr, gint x, gint y) {
     MenuRowItem ret = MENUROW_NONE;
 
-    x = x/(mr->double_size ? 2 : 1);
-    y = y/(mr->double_size ? 2 : 1);
+    x = x/(mr->scaled ? 2 : 1);
+    y = y/(mr->scaled ? 2 : 1);
     if (x > 0 && x < 8) {
         if (y >= 0 && y <= 10)
             ret = MENUROW_OPTIONS;
@@ -256,7 +256,7 @@ static MenuRowItem menurow_find_selected(UiSkinnedMenurow * mr, gint x, gint y) 
         if (y >= 18 && y <= 25)
             ret = MENUROW_FILEINFOBOX;
         if (y >= 26 && y <= 33)
-            ret = MENUROW_DOUBLESIZE;
+            ret = MENUROW_SCALE;
         if (y >= 34 && y <= 42)
             ret = MENUROW_VISUALIZATION;
     }
@@ -292,8 +292,8 @@ static gboolean ui_skinned_menurow_button_release(GtkWidget *widget, GdkEventBut
         if (menurow->selected == MENUROW_ALWAYS)
             menurow->always_selected = !menurow->always_selected;
 
-        if (menurow->selected == MENUROW_DOUBLESIZE)
-            menurow->doublesize_selected = !menurow->doublesize_selected;
+        if (menurow->selected == MENUROW_SCALE)
+            menurow->scale_selected = !menurow->scale_selected;
 
         if ((int)(menurow->selected) != -1)
             g_signal_emit_by_name(widget, "release", menurow->selected, event);
@@ -321,11 +321,12 @@ static gboolean ui_skinned_menurow_motion_notify(GtkWidget *widget, GdkEventMoti
     return TRUE;
 }
 
-static void ui_skinned_menurow_toggle_doublesize(UiSkinnedMenurow *menurow) {
+static void ui_skinned_menurow_toggle_scaled(UiSkinnedMenurow *menurow) {
     GtkWidget *widget = GTK_WIDGET (menurow);
 
-    menurow->double_size = !menurow->double_size;
-    gtk_widget_set_size_request(widget, menurow->width*(1+menurow->double_size), menurow->height*(1+menurow->double_size));
+    menurow->scaled = !menurow->scaled;
+    gtk_widget_set_size_request(widget, menurow->width* (menurow->scaled ? cfg.scale_factor : 1),
+    menurow->height * (menurow->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(menurow));
 }

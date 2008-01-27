@@ -40,7 +40,7 @@ struct _UiSVis {
     gint             x, y, width, height;
     gint             data[75];
     gint             refresh_delay;
-    gboolean         double_size;
+    gboolean         scaled;
     GtkWidget        *fixed;
     gboolean         visible_window;
     GdkWindow        *event_window;
@@ -48,7 +48,7 @@ struct _UiSVis {
 
 struct _UiSVisClass {
     GtkWidgetClass          parent_class;
-    void (* doubled)        (UiSVis *vis);
+    void (* scaled)        (UiSVis *vis);
 };
 
 GtkWidget* ui_svis_new (GtkWidget *fixed, gint x, gint y);

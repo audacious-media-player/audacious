@@ -204,7 +204,7 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
     }
 
     ui_skinned_widget_draw(GTK_WIDGET(window), obj, width, height,
-                           window->type != WINDOW_PLAYLIST && cfg.doublesize);
+                           window->type != WINDOW_PLAYLIST && cfg.scaled);
 
     g_object_unref(obj);
 

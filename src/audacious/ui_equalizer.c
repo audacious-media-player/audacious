@@ -112,7 +112,7 @@ equalizer_preset_free(EqualizerPreset * preset)
 }
 
 void
-equalizerwin_set_doublesize(gboolean ds)
+equalizerwin_set_scaled(gboolean ds)
 {
     gint height;
 
@@ -121,8 +121,8 @@ equalizerwin_set_doublesize(gboolean ds)
     else
         height = 116;
 
-    if (ds) {
-        dock_window_resize(GTK_WINDOW(equalizerwin), 550, height * 2, 550, height * 2);
+    if (cfg.scaled) {
+        dock_window_resize(GTK_WINDOW(equalizerwin), 550, height * 2, 550, height * cfg.scale_factor);
     } else {
         dock_window_resize(GTK_WINDOW(equalizerwin), 275, height, 275, height);
     }
@@ -131,7 +131,7 @@ equalizerwin_set_doublesize(gboolean ds)
     for (iter = GTK_FIXED (SKINNED_WINDOW(equalizerwin)->fixed)->children; iter; iter = g_list_next (iter)) {
         GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
         GtkWidget *child = child_data->widget;
-        g_signal_emit_by_name(child, "toggle-double-size");
+        g_signal_emit_by_name(child, "toggle-scaled");
     }
     gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 }
@@ -143,7 +143,7 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
 
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
-                   14 * (EQUALIZER_DOUBLESIZE + 1));
+                   14 * EQUALIZER_SCALE_FACTOR);
         ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
         ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
         ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
@@ -153,7 +153,7 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
     }
     else {
         dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
-                   116 * (EQUALIZER_DOUBLESIZE + 1));
+                   116 * EQUALIZER_SCALE_FACTOR);
         ui_skinned_set_push_button_data(equalizerwin_shade, -1, 137, -1, 38);
         ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
         ui_skinned_set_push_button_data(equalizerwin_close, 0, 116, 0, 125);
@@ -515,9 +515,9 @@ equalizerwin_create_window(void)
     gtk_window_set_role(GTK_WINDOW(equalizerwin), "equalizer");
     gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
 
-    if (cfg.doublesize && cfg.eq_doublesize_linked) {
-        width *= 2;
-        height *= 2;
+    if (cfg.scaled && cfg.eq_scaled_linked) {
+        width *= cfg.scale_factor;
+        height *= cfg.scale_factor;
     }
 
     gtk_widget_set_size_request(equalizerwin, width, height);
@@ -578,7 +578,7 @@ void
 equalizerwin_real_show(void)
 {
     gtk_window_move(GTK_WINDOW(equalizerwin), cfg.equalizer_x, cfg.equalizer_y);
-    if (cfg.doublesize && cfg.eq_doublesize_linked)
+    if (cfg.scaled && cfg.eq_scaled_linked)
         gtk_widget_set_size_request(equalizerwin, 550,
                                     (cfg.equalizer_shaded ? 28 : 232));
     else

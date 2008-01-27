@@ -41,7 +41,7 @@ G_BEGIN_DECLS
 #define PLAYER_HEIGHT \
   ((cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT) * (cfg.doublesize + 1))
 #define PLAYER_WIDTH \
-  (MAINWIN_WIDTH * (cfg.doublesize + 1))
+  (MAINWIN_WIDTH * (cfg.scaled ? gui_scale_factor : 1))
 
 /* macro for debug print */
 #ifdef AUD_DEBUG
@@ -58,7 +58,7 @@ struct _BmpConfig {
     gint snap_distance;
     gboolean use_realtime;
     gboolean shuffle, repeat;
-    gboolean doublesize, autoscroll;
+    gboolean scaled, autoscroll;
     gboolean analyzer_peaks, equalizer_autoload, easy_move, equalizer_active;
     gboolean playlist_visible, equalizer_visible, player_visible;
     gboolean player_shaded, playlist_shaded, equalizer_shaded;
@@ -68,7 +68,7 @@ struct _BmpConfig {
     gboolean snap_windows, save_window_position;
     gboolean dim_titlebar;
     gboolean get_info_on_load, get_info_on_demand;
-    gboolean eq_doublesize_linked;
+    gboolean eq_scaled_linked;
     gboolean sort_jump_to_file;
     gboolean use_eplugins;
     gboolean always_on_top, sticky;
@@ -87,6 +87,7 @@ struct _BmpConfig {
     gboolean close_dialog_open;
     gboolean close_dialog_add;
     gfloat equalizer_preamp, equalizer_bands[10];
+    gfloat scale_factor;
     gchar *skin;
     gchar *outputplugin;
     gchar *filesel_path;

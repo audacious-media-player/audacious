@@ -69,7 +69,7 @@ static void ui_svis_unmap              (GtkWidget *widget);
 static void ui_svis_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_svis_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_svis_expose         (GtkWidget *widget, GdkEventExpose *event);
-static void ui_svis_toggle_doublesize  (UiSVis *svis);
+static void ui_svis_toggle_scaled      (UiSVis *svis);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint vis_signals[LAST_SIGNAL] = { 0 };
@@ -112,11 +112,11 @@ static void ui_svis_class_init(UiSVisClass *klass) {
     widget_class->size_request = ui_svis_size_request;
     widget_class->size_allocate = ui_svis_size_allocate;
 
-    klass->doubled = ui_svis_toggle_doublesize;
+    klass->scaled = ui_svis_toggle_scaled;
 
     vis_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSVisClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSVisClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
@@ -134,7 +134,7 @@ GtkWidget* ui_svis_new(GtkWidget *fixed, gint x, gint y) {
     svis->height = SVIS_HEIGHT;
 
     svis->fixed = fixed;
-    svis->double_size = FALSE;
+    svis->scaled = FALSE;
 
     svis->visible_window = TRUE;
     svis->event_window = NULL;
@@ -242,16 +242,16 @@ static void ui_svis_unmap (GtkWidget *widget)
 static void ui_svis_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSVis *svis = UI_SVIS(widget);
 
-    requisition->width = svis->width*(1+svis->double_size);
-    requisition->height = svis->height*(1+svis->double_size);
+    requisition->width = svis->width*(1+svis->scaled);
+    requisition->height = svis->height*(1+svis->scaled);
 }
 
 static void ui_svis_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSVis *svis = UI_SVIS (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+svis->double_size);
-    widget->allocation.y *= (1+svis->double_size);
+    widget->allocation.x *= (1+svis->scaled);
+    widget->allocation.y *= (1+svis->scaled);
     if (GTK_WIDGET_REALIZED (widget))
     {
         if (svis->event_window != NULL)
@@ -260,8 +260,8 @@ static void ui_svis_size_allocate(GtkWidget *widget, GtkAllocation *allocation) 
             gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
     }
 
-    svis->x = widget->allocation.x/(svis->double_size ? 2 : 1);
-    svis->y = widget->allocation.y/(svis->double_size ? 2 : 1);
+    svis->x = widget->allocation.x/(svis->scaled ? 2 : 1);
+    svis->y = widget->allocation.y/(svis->scaled ? 2 : 1);
 }
 
 static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -290,7 +290,7 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
     }
     cmap = gdk_rgb_cmap_new(colors, 24);
 
-    if (!cfg.doublesize) {
+    if (!cfg.scaled) {
       memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
       if (cfg.vis_type == VIS_ANALYZER  && !playback_get_paused() && playback_get_playing()){
 	for(y=0; y < SVIS_HEIGHT; y++){
@@ -352,16 +352,16 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
         }
 
     }
-    else {                      /* doublesize */
+    else {   /*            svis scaling is disabled for now 
 
-        memset(rgb_data, 0, SVIS_WIDTH * 2 * SVIS_HEIGHT * 2);
-        if (cfg.vis_type == VIS_ANALYZER && !playback_get_paused() && playback_get_playing()){
+      memset(rgb_data, 0, SVIS_WIDTH * cfg.scale_factor * SVIS_HEIGHT * cfg.scale_factor);
+      if (cfg.vis_type == VIS_ANALYZER && !playback_get_paused() && playback_get_playing()){
 	  for(y=0; y < SVIS_HEIGHT; y++){
             if (cfg.analyzer_type == ANALYZER_BARS){
               for(x=0;x< SVIS_WIDTH; x++){
                 if(svis->data[x] > y << 1)
                 {
-                  ptr = rgb_data + x * 6 + (SVIS_HEIGHT * 2 - y * 2) * SVIS_WIDTH * 2;
+                  ptr = rgb_data + x * 6 + (SVIS_HEIGHT * 2 - y * 2) * SVIS_WIDTH *2;
                   DRAW_DS_PIXEL(ptr, 23);
                   DRAW_DS_PIXEL(ptr + 2, 23);
                 }
@@ -418,15 +418,16 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
             }
         }
 
-
+*/
     }
 
     GdkPixmap *obj = NULL;
     GdkGC *gc;
-    obj = gdk_pixmap_new(NULL, svis->width*(1+svis->double_size), svis->height*(1+svis->double_size), gdk_rgb_get_visual()->depth);
+    obj = gdk_pixmap_new(NULL, svis->width* ( svis->scaled ? cfg.scale_factor : 1), 
+        svis->height*(svis->scaled ? cfg.scale_factor : 1), gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(obj);
 
-    if (!svis->double_size) {
+    if (!svis->scaled) {
         gdk_draw_indexed_image(obj, gc, 0, 0, svis->width, svis->height,
                                GDK_RGB_DITHER_NORMAL, (guchar *) rgb_data,
                                38, cmap);
@@ -440,18 +441,19 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
 
     gdk_rgb_cmap_free(cmap);
     gdk_draw_drawable (widget->window, gc, obj, 0, 0, 0, 0,
-                       svis->width*(1+svis->double_size), svis->height*(1+svis->double_size));
+                       svis->width*(svis->scaled ? cfg.scale_factor : 1), 
+                       svis->height*(svis->scaled ? cfg.scale_factor : 1));
     g_object_unref(obj);
     g_object_unref(gc);
 
     return FALSE;
 }
 
-static void ui_svis_toggle_doublesize(UiSVis *svis) {
+static void ui_svis_toggle_scaled(UiSVis *svis) {
     GtkWidget *widget = GTK_WIDGET (svis);
-    svis->double_size = !svis->double_size;
+    svis->scaled = !svis->scaled;
 
-    gtk_widget_set_size_request(widget, svis->width*(1+svis->double_size), svis->height*(1+svis->double_size));
+    gtk_widget_set_size_request(widget, svis->width* cfg.scale_factor, svis->height * cfg.scale_factor);
 
     gtk_widget_queue_draw(widget);
 }

@@ -174,7 +174,6 @@ typedef struct _SkinProperties {
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))
 typedef struct _SkinPixmap {
     GdkPixbuf *pixbuf;
-    /* GdkPixmap *def_pixmap; */
 
     /* The real size of the pixmap */
     gint width, height;
@@ -196,7 +195,7 @@ typedef struct _Skin {
     GdkColor *colors[SKIN_COLOR_COUNT];
     guchar vis_color[24][3];
     GdkBitmap *masks[SKIN_MASK_COUNT];
-    GdkBitmap *ds_masks[SKIN_MASK_COUNT];
+    GdkBitmap *scaled_masks[SKIN_MASK_COUNT];
     SkinProperties properties;
 } Skin;
 

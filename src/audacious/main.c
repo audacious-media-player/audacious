@@ -166,6 +166,7 @@ BmpConfig bmp_default_config = {
     0.0,                        /* equalizer preamp */
     {0.0, 0.0, 0.0, 0.0, 0.0,             /* equalizer bands */
      0.0, 0.0, 0.0, 0.0, 0.0},
+    1.0,                        /* GUI scale factor */
     NULL,                       /* skin */
     NULL,                       /* output plugin */
     NULL,                       /* file selector path */
@@ -292,7 +293,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"dim_titlebar", &cfg.dim_titlebar, TRUE},
     {"get_info_on_load", &cfg.get_info_on_load, TRUE},
     {"get_info_on_demand", &cfg.get_info_on_demand, TRUE},
-    {"eq_doublesize_linked", &cfg.eq_doublesize_linked, TRUE},
+    {"eq_scaled_linked", &cfg.eq_scaled_linked, TRUE},
     {"no_playlist_advance", &cfg.no_playlist_advance, TRUE},
     {"refresh_file_list", &cfg.refresh_file_list, TRUE},
     {"sort_jump_to_file", &cfg.sort_jump_to_file, TRUE},
@@ -303,7 +304,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"player_visible", &cfg.player_visible, TRUE},
     {"shuffle", &cfg.shuffle, TRUE},
     {"repeat", &cfg.repeat, TRUE},
-    {"doublesize", &cfg.doublesize, TRUE},
+    {"scaled", &cfg.scaled, TRUE},   /* toggles custom scale */
     {"autoscroll_songname", &cfg.autoscroll, TRUE},
     {"stop_after_current_song", &cfg.stopaftersong, TRUE},
     {"playlist_shaded", &cfg.playlist_shaded, TRUE},
