@@ -861,34 +861,6 @@ make_filebrowser(const gchar *title, gboolean save)
     return dialog;
 }
 
-/*
- * Resizes a GDK pixmap.
- */
-GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in, gint width, gint height)
-{
-    GdkPixmap *out;
-    gint owidth, oheight;
-
-    g_return_val_if_fail(src != NULL, NULL);
-    g_return_val_if_fail(src_gc != NULL, NULL);
-    g_return_val_if_fail(in != NULL, NULL);
-    g_return_val_if_fail(width > 0 && height > 0, NULL);
-
-    gdk_drawable_get_size(in, &owidth, &oheight);
-
-    if (oheight == height && owidth == width)
-        return NULL;
-
-    out = gdk_pixmap_new(src, width, height, -1);
-
-    gdk_draw_rectangle(out, src_gc, TRUE, 0, 0, width, height);
-
-    gdk_window_copy_area(out, src_gc, 0, 0, in, 0, 0, owidth, oheight);
-    g_object_unref(src);
-
-    return out;
-}
-
 void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint height, gboolean scale) {
     g_return_if_fail(widget != NULL);
     g_return_if_fail(obj != NULL);

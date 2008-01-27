@@ -88,9 +88,6 @@ typedef struct {
     gint y;
 } MenuPos;
 
-
-GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in, gint width, gint height);
-
 GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
                             const gchar * button_text, gboolean modal,
                             GCallback button_action,
