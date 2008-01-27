@@ -252,14 +252,14 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    if (textbox->x + priv->move_x == widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1));
+    if (textbox->x + priv->move_x - widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1) <3);
         priv->move_x = 0;
-    if (textbox->y + priv->move_y == widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1));
+    if (textbox->y + priv->move_y - widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1) <3);
         priv->move_y = 0;
     textbox->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
     textbox->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
 
-    if (textbox->width != (guint) (widget->allocation.width / (priv->scaled ? cfg.scale_factor : 1))) {
+    if (textbox->width - (guint) (widget->allocation.width / (priv->scaled ? cfg.scale_factor : 1)) > 2) {
             textbox->width = (guint) (widget->allocation.width / (priv->scaled ? cfg.scale_factor : 1));
             if (priv->pixbuf_text) g_free(priv->pixbuf_text);
             priv->pixbuf_text = NULL;
