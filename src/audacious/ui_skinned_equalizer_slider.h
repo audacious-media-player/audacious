@@ -45,7 +45,7 @@ struct _UiSkinnedEqualizerSlider {
 
 struct _UiSkinnedEqualizerSliderClass {
     GtkWidgetClass    parent_class;
-    void (* doubled)  (UiSkinnedEqualizerSlider *equalizer_slider);
+    void (* scaled)  (UiSkinnedEqualizerSlider *equalizer_slider);
 };
 
 GtkWidget* ui_skinned_equalizer_slider_new(GtkWidget *fixed, gint x, gint y);

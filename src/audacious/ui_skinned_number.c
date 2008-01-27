@@ -47,7 +47,7 @@ static void ui_skinned_number_realize            (GtkWidget *widget);
 static void ui_skinned_number_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_skinned_number_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_skinned_number_expose         (GtkWidget *widget, GdkEventExpose *event);
-static void ui_skinned_number_toggle_doublesize  (UiSkinnedNumber *number);
+static void ui_skinned_number_toggle_scaled  (UiSkinnedNumber *number);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint number_signals[LAST_SIGNAL] = { 0 };
@@ -87,11 +87,11 @@ static void ui_skinned_number_class_init(UiSkinnedNumberClass *klass) {
     widget_class->size_request = ui_skinned_number_size_request;
     widget_class->size_allocate = ui_skinned_number_size_allocate;
 
-    klass->doubled = ui_skinned_number_toggle_doublesize;
+    klass->scaled = ui_skinned_number_toggle_scaled;
 
     number_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedNumberClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedNumberClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
@@ -108,7 +108,7 @@ GtkWidget* ui_skinned_number_new(GtkWidget *fixed, gint x, gint y, SkinPixmapId 
     number->num = 0;
     number->skin_index = si;
 
-    number->double_size = FALSE;
+    number->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(number), number->x, number->y);
 
@@ -160,21 +160,21 @@ static void ui_skinned_number_realize(GtkWidget *widget) {
 static void ui_skinned_number_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedNumber *number = UI_SKINNED_NUMBER(widget);
 
-    requisition->width = number->width*(1+number->double_size);
-    requisition->height = number->height*(1+number->double_size);
+    requisition->width = number->width * ( number->scaled ? cfg.scale_factor : 1 );
+    requisition->height = number->height*( number->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_number_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+number->double_size);
-    widget->allocation.y *= (1+number->double_size);
+    widget->allocation.x *= (number->scaled ? cfg.scale_factor: 1 );
+    widget->allocation.y *= (number->scaled ? cfg.scale_factor: 1 );
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    number->x = widget->allocation.x/(number->double_size ? 2 : 1);
-    number->y = widget->allocation.y/(number->double_size ? 2 : 1);
+    number->x = widget->allocation.x/(number->scaled ? cfg.scale_factor : 1);
+    number->y = widget->allocation.y/(number->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -195,18 +195,19 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
                      number->skin_index, number->num * 9, 0,
                      0, 0, number->width, number->height);
 
-    ui_skinned_widget_draw(widget, obj, number->width, number->height, number->double_size);
+    ui_skinned_widget_draw(widget, obj, number->width, number->height, number->scaled);
 
     g_object_unref(obj);
 
     return FALSE;
 }
 
-static void ui_skinned_number_toggle_doublesize(UiSkinnedNumber *number) {
+static void ui_skinned_number_toggle_scaled(UiSkinnedNumber *number) {
     GtkWidget *widget = GTK_WIDGET (number);
-    number->double_size = !number->double_size;
+    number->scaled = !number->scaled;
 
-    gtk_widget_set_size_request(widget, number->width*(1+number->double_size), number->height*(1+number->double_size));
+    gtk_widget_set_size_request(widget, number->width * ( number->scaled ? cfg.scale_factor : 1),
+        number->height * ( number->scaled ? cfg.scale_factor : 1) );
 
     gtk_widget_queue_draw(GTK_WIDGET(number));
 }
@@ -229,5 +230,6 @@ void ui_skinned_number_set_size(GtkWidget *widget, gint width, gint height) {
     number->width = width;
     number->height = height;
 
-    gtk_widget_set_size_request(widget, width*(1+number->double_size), height*(1+number->double_size));
+    gtk_widget_set_size_request(widget, width*(number->scaled ? cfg.scale_factor : 1 ),
+    height*(number->scaled ? cfg.scale_factor : 1 ));
 }

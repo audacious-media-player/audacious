@@ -39,7 +39,7 @@ enum {
 
 struct _UiSkinnedEqualizerSliderPrivate {
     SkinPixmapId     skin_index;
-    gboolean         double_size;
+    gboolean         scaled;
     gint             position;
     gint             width, height;
     gboolean         pressed;
@@ -57,7 +57,7 @@ static gboolean ui_skinned_equalizer_slider_button_press   (GtkWidget *widget, G
 static gboolean ui_skinned_equalizer_slider_button_release (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_equalizer_slider_motion_notify  (GtkWidget *widget, GdkEventMotion *event);
 static gboolean ui_skinned_equalizer_slider_scroll         (GtkWidget *widget, GdkEventScroll *event);
-static void ui_skinned_equalizer_slider_toggle_doublesize  (UiSkinnedEqualizerSlider *equalizer_slider);
+static void ui_skinned_equalizer_slider_toggle_scaled      (UiSkinnedEqualizerSlider *equalizer_slider);
 void ui_skinned_equalizer_slider_set_mainwin_text          (UiSkinnedEqualizerSlider * es);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -104,11 +104,11 @@ static void ui_skinned_equalizer_slider_class_init(UiSkinnedEqualizerSliderClass
     widget_class->motion_notify_event = ui_skinned_equalizer_slider_motion_notify;
     widget_class->scroll_event = ui_skinned_equalizer_slider_scroll;
 
-    klass->doubled = ui_skinned_equalizer_slider_toggle_doublesize;
+    klass->scaled = ui_skinned_equalizer_slider_toggle_scaled;
 
     equalizer_slider_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedEqualizerSliderClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedEqualizerSliderClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     g_type_class_add_private (gobject_class, sizeof (UiSkinnedEqualizerSliderPrivate));
@@ -179,8 +179,8 @@ static void ui_skinned_equalizer_slider_realize(GtkWidget *widget) {
 static void ui_skinned_equalizer_slider_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(widget);
 
-    requisition->width = priv->width*(1+priv->double_size);
-    requisition->height = priv->height*(1+priv->double_size);
+    requisition->width = priv->width*(priv->scaled ? cfg.scale_factor : 1);
+    requisition->height = priv->height*(priv->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_equalizer_slider_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
@@ -188,13 +188,13 @@ static void ui_skinned_equalizer_slider_size_allocate(GtkWidget *widget, GtkAllo
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(equalizer_slider);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+priv->double_size);
-    widget->allocation.y *= (1+priv->double_size);
+    widget->allocation.x *= (priv->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (priv->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    equalizer_slider->x = widget->allocation.x/(priv->double_size ? 2 : 1);
-    equalizer_slider->y = widget->allocation.y/(priv->double_size ? 2 : 1);
+    equalizer_slider->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
+    equalizer_slider->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -221,7 +221,7 @@ static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventEx
     else
         skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
 
-    ui_skinned_widget_draw(widget, obj, priv->width, priv->height, priv->double_size);
+    ui_skinned_widget_draw(widget, obj, priv->width, priv->height, priv->scaled);
 
     g_object_unref(obj);
 
@@ -241,7 +241,7 @@ static gboolean ui_skinned_equalizer_slider_button_press(GtkWidget *widget, GdkE
     if (event->type == GDK_BUTTON_PRESS) {
         if (event->button == 1) {
             priv->pressed = TRUE;
-            y = event->y/(priv->double_size ? 2 : 1);
+            y = event->y/(priv->scaled ? cfg.scale_factor : 1);
 
             if (y >= priv->position && y < priv->position + 11)
                 priv->drag_y = y - priv->position;
@@ -286,7 +286,7 @@ static gboolean ui_skinned_equalizer_slider_motion_notify(GtkWidget *widget, Gdk
     if (priv->pressed) {
         gint y;
 
-        y = event->y/(priv->double_size ? 2 : 1);
+        y = event->y/(priv->scaled ? cfg.scale_factor : 1);
         priv->position = y - priv->drag_y;
 
         if (priv->position < 0)
@@ -327,13 +327,14 @@ static gboolean ui_skinned_equalizer_slider_scroll(GtkWidget *widget, GdkEventSc
     return TRUE;
 }
 
-static void ui_skinned_equalizer_slider_toggle_doublesize(UiSkinnedEqualizerSlider *equalizer_slider) {
+static void ui_skinned_equalizer_slider_toggle_scaled(UiSkinnedEqualizerSlider *equalizer_slider) {
     GtkWidget *widget = GTK_WIDGET (equalizer_slider);
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(equalizer_slider);
 
-    priv->double_size = !priv->double_size;
+    priv->scaled = !priv->scaled;
 
-    gtk_widget_set_size_request(widget, priv->width*(1+priv->double_size), priv->height*(1+priv->double_size));
+    gtk_widget_set_size_request(widget, priv->width*(priv->scaled ? cfg.scale_factor : 1),
+    priv->height*(priv->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(equalizer_slider));
 }

@@ -65,7 +65,7 @@
 				<menuitem action="roll up playlist editor" />
 				<menuitem action="roll up equalizer" />
 				<separator />
-				<menuitem action="view doublesize" />
+				<menuitem action="view scale" />
 				<menuitem action="view easy move" />
 			</menu>
 			<menu action="visualization">

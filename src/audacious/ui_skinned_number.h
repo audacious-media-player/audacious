@@ -40,13 +40,13 @@ struct _UiSkinnedNumber {
 
     gint             x, y, width, height;
     gint             num;
-    gboolean         double_size;
+    gboolean         scaled;
     SkinPixmapId     skin_index;
 };
 
 struct _UiSkinnedNumberClass {
     GtkWidgetClass          parent_class;
-    void (* doubled)        (UiSkinnedNumber *textbox);
+    void (* scaled)        (UiSkinnedNumber *textbox);
 };
 
 GtkWidget* ui_skinned_number_new (GtkWidget *fixed, gint x, gint y, SkinPixmapId si);

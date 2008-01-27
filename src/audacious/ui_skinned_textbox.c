@@ -47,7 +47,7 @@ enum {
 
 struct _UiSkinnedTextboxPrivate {
     SkinPixmapId     skin_index;
-    gboolean         double_size;
+    gboolean         scaled;
     gboolean         scroll_back;
     gint             nominal_y, nominal_height;
     gint             scroll_timeout;
@@ -75,7 +75,7 @@ static gboolean ui_skinned_textbox_expose         (GtkWidget *widget, GdkEventEx
 static gboolean ui_skinned_textbox_button_press   (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_textbox_button_release (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_textbox_motion_notify  (GtkWidget *widget, GdkEventMotion *event);
-static void ui_skinned_textbox_toggle_doublesize  (UiSkinnedTextbox *textbox);
+static void ui_skinned_textbox_toggle_scaled      (UiSkinnedTextbox *textbox);
 static void ui_skinned_textbox_redraw             (UiSkinnedTextbox *textbox);
 static gboolean ui_skinned_textbox_should_scroll  (UiSkinnedTextbox *textbox);
 static void textbox_generate_xfont_pixmap         (UiSkinnedTextbox *textbox, const gchar *pixmaptext);
@@ -129,7 +129,7 @@ static void ui_skinned_textbox_class_init(UiSkinnedTextboxClass *klass) {
     klass->clicked = NULL;
     klass->double_clicked = NULL;
     klass->right_clicked = NULL;
-    klass->doubled = ui_skinned_textbox_toggle_doublesize;
+    klass->scaled = ui_skinned_textbox_toggle_scaled;
     klass->redraw = ui_skinned_textbox_redraw;
 
     textbox_signals[CLICKED] = 
@@ -148,8 +148,8 @@ static void ui_skinned_textbox_class_init(UiSkinnedTextboxClass *klass) {
                       gtk_marshal_VOID__POINTER, G_TYPE_NONE, 1, G_TYPE_POINTER);
 
     textbox_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedTextboxClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedTextboxClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     textbox_signals[REDRAW] = 
@@ -183,7 +183,7 @@ GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, gint x, gint y, gint w, gboo
     priv->scroll_timeout = 0;
     priv->scroll_dummy = 0;
 
-    priv->double_size = FALSE;
+    priv->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(textbox), textbox->x, textbox->y);
 
@@ -238,8 +238,8 @@ static void ui_skinned_textbox_size_request(GtkWidget *widget, GtkRequisition *r
     UiSkinnedTextbox *textbox = UI_SKINNED_TEXTBOX(widget);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
-    requisition->width = textbox->width*(1+priv->double_size);
-    requisition->height = textbox->height*(1+priv->double_size);
+    requisition->width = textbox->width*(priv->scaled ? cfg.scale_factor : 1);
+    requisition->height = textbox->height*(priv->scaled ?  cfg.scale_factor : 1 );
 }
 
 static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
@@ -247,20 +247,20 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+priv->double_size);
-    widget->allocation.y *= (1+priv->double_size);
+    widget->allocation.x *= (priv->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (priv->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    if (textbox->x + priv->move_x == widget->allocation.x/(priv->double_size ? 2 : 1))
+    if (textbox->x + priv->move_x == widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1));
         priv->move_x = 0;
-    if (textbox->y + priv->move_y == widget->allocation.y/(priv->double_size ? 2 : 1))
+    if (textbox->y + priv->move_y == widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1));
         priv->move_y = 0;
-    textbox->x = widget->allocation.x/(priv->double_size ? 2 : 1);
-    textbox->y = widget->allocation.y/(priv->double_size ? 2 : 1);
+    textbox->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
+    textbox->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
 
-    if (textbox->width != widget->allocation.width/(priv->double_size ? 2 : 1)) {
-            textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
+    if (textbox->width != (guint) (widget->allocation.width / (priv->scaled ? cfg.scale_factor : 1))) {
+            textbox->width = (guint) (widget->allocation.width / (priv->scaled ? cfg.scale_factor : 1));
             if (priv->pixbuf_text) g_free(priv->pixbuf_text);
             priv->pixbuf_text = NULL;
             priv->offset = 0;
@@ -317,7 +317,7 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
             }
         }
 
-        ui_skinned_widget_draw(widget, obj, textbox->width, textbox->height, priv->double_size);
+        ui_skinned_widget_draw(widget, obj, textbox->width, textbox->height, priv->scaled);
 
         g_object_unref(obj);
     }
@@ -398,13 +398,14 @@ static gboolean ui_skinned_textbox_motion_notify(GtkWidget *widget, GdkEventMoti
   return TRUE;
 }
 
-static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
+static void ui_skinned_textbox_toggle_scaled(UiSkinnedTextbox *textbox) {
     GtkWidget *widget = GTK_WIDGET (textbox);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
-    priv->double_size = !priv->double_size;
+    priv->scaled = !priv->scaled;
 
-    gtk_widget_set_size_request(widget, textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
+    gtk_widget_set_size_request(widget, textbox->width*(priv->scaled ? cfg.scale_factor : 1 ), 
+    textbox->height*(priv->scaled ? cfg.scale_factor : 1 ));
 
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }

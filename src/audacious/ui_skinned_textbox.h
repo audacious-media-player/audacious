@@ -53,7 +53,7 @@ struct _UiSkinnedTextboxClass {
     void (* clicked)        (UiSkinnedTextbox *textbox);
     void (* double_clicked) (UiSkinnedTextbox *textbox);
     void (* right_clicked)  (UiSkinnedTextbox *textbox);
-    void (* doubled)        (UiSkinnedTextbox *textbox);
+    void (* scaled)         (UiSkinnedTextbox *textbox);
     void (* redraw)         (UiSkinnedTextbox *textbox);
 };
 
