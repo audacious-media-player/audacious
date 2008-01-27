@@ -48,14 +48,14 @@ struct _UiSkinnedPlaystatus {
     GtkWidget        widget;
 
     gint             x, y, width, height;
-    gboolean         double_size;
+    gboolean         scaled;
     PStatus          status;
     gboolean         buffering;
 };
 
 struct _UiSkinnedPlaystatusClass {
     GtkWidgetClass          parent_class;
-    void (* doubled)        (UiSkinnedPlaystatus *menurow);
+    void (* scaled)        (UiSkinnedPlaystatus *menurow);
 };
 
 GtkWidget* ui_skinned_playstatus_new (GtkWidget *fixed, gint x, gint y);

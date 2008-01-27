@@ -160,8 +160,8 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
             height = bmp_active_skin->properties.mainwin_height;
             break;
         case WINDOW_EQ:
-            width = 275;
-            height = 116;
+            width = 275 * (cfg.scaled ? cfg.scale_factor : 1);
+            height = 116 * (cfg.scaled ? cfg.scale_factor : 1) ;
             break;
         case WINDOW_PLAYLIST:
             width = playlistwin_get_width();

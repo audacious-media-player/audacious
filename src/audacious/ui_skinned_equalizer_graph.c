@@ -40,7 +40,7 @@ static void ui_skinned_equalizer_graph_realize            (GtkWidget *widget);
 static void ui_skinned_equalizer_graph_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_skinned_equalizer_graph_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_skinned_equalizer_graph_expose         (GtkWidget *widget, GdkEventExpose *event);
-static void ui_skinned_equalizer_graph_toggle_doublesize  (UiSkinnedEqualizerGraph *equalizer_graph);
+static void ui_skinned_equalizer_graph_toggle_scaled  (UiSkinnedEqualizerGraph *equalizer_graph);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint equalizer_graph_signals[LAST_SIGNAL] = { 0 };
@@ -82,11 +82,11 @@ static void ui_skinned_equalizer_graph_class_init(UiSkinnedEqualizerGraphClass *
     widget_class->size_request = ui_skinned_equalizer_graph_size_request;
     widget_class->size_allocate = ui_skinned_equalizer_graph_size_allocate;
 
-    klass->doubled = ui_skinned_equalizer_graph_toggle_doublesize;
+    klass->scaled = ui_skinned_equalizer_graph_toggle_scaled;
 
     equalizer_graph_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedEqualizerGraphClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedEqualizerGraphClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
@@ -101,7 +101,7 @@ GtkWidget* ui_skinned_equalizer_graph_new(GtkWidget *fixed, gint x, gint y) {
     equalizer_graph->x = x;
     equalizer_graph->y = y;
     equalizer_graph->skin_index = SKIN_EQMAIN;
-    equalizer_graph->double_size = FALSE;
+    equalizer_graph->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(equalizer_graph), equalizer_graph->x, equalizer_graph->y);
 
@@ -153,21 +153,21 @@ static void ui_skinned_equalizer_graph_realize(GtkWidget *widget) {
 static void ui_skinned_equalizer_graph_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedEqualizerGraph *equalizer_graph = UI_SKINNED_EQUALIZER_GRAPH(widget);
 
-    requisition->width = equalizer_graph->width*(1+equalizer_graph->double_size);
-    requisition->height = equalizer_graph->height*(1+equalizer_graph->double_size);
+    requisition->width = equalizer_graph->width*(equalizer_graph->scaled ? cfg.scale_factor : 1);
+    requisition->height = equalizer_graph->height*(equalizer_graph->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_equalizer_graph_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedEqualizerGraph *equalizer_graph = UI_SKINNED_EQUALIZER_GRAPH (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+equalizer_graph->double_size);
-    widget->allocation.y *= (1+equalizer_graph->double_size);
+    widget->allocation.x *= (equalizer_graph->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (equalizer_graph->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    equalizer_graph->x = widget->allocation.x/(equalizer_graph->double_size ? 2 : 1);
-    equalizer_graph->y = widget->allocation.y/(equalizer_graph->double_size ? 2 : 1);
+    equalizer_graph->x = widget->allocation.x/(equalizer_graph->scaled ? cfg.scale_factor : 1);
+    equalizer_graph->y = widget->allocation.y/(equalizer_graph->scaled ? cfg.scale_factor : 1);
 }
 
 void
@@ -289,19 +289,19 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
         }
     }
 
-    ui_skinned_widget_draw(widget, obj, equalizer_graph->width, equalizer_graph->height, equalizer_graph->double_size);
+    ui_skinned_widget_draw(widget, obj, equalizer_graph->width, equalizer_graph->height, equalizer_graph->scaled);
 
     g_object_unref(obj);
 
     return FALSE;
 }
 
-static void ui_skinned_equalizer_graph_toggle_doublesize(UiSkinnedEqualizerGraph *equalizer_graph) {
+static void ui_skinned_equalizer_graph_toggle_scaled(UiSkinnedEqualizerGraph *equalizer_graph) {
     GtkWidget *widget = GTK_WIDGET (equalizer_graph);
 
-    equalizer_graph->double_size = !equalizer_graph->double_size;
-    gtk_widget_set_size_request(widget, equalizer_graph->width*(1+equalizer_graph->double_size),
-                                        equalizer_graph->height*(1+equalizer_graph->double_size));
+    equalizer_graph->scaled = !equalizer_graph->scaled;
+    gtk_widget_set_size_request(widget, equalizer_graph->width*(equalizer_graph->scaled ? cfg.scale_factor : 1),
+                                        equalizer_graph->height*(equalizer_graph->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(equalizer_graph));
 }

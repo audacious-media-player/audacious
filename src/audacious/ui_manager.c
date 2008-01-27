@@ -87,8 +87,8 @@ static GtkToggleActionEntry toggleaction_entries_others[] = {
 	{ "roll up equalizer", NULL , N_("Roll up Equalizer"), "<Ctrl><Alt>W",
 	  N_("Roll up Equalizer"), G_CALLBACK(action_roll_up_equalizer) , FALSE },
 
-	{ "view scale", NULL , N_("Scale"), "<Ctrl>D",
-	  N_("DoubleSize"), G_CALLBACK(action_view_scale) , FALSE },
+	{ "view scaled", NULL , N_("Scale"), "<Ctrl>D",
+	  N_("DoubleSize"), G_CALLBACK(action_view_scaled) , FALSE },
 
 	{ "view easy move", NULL , N_("Easy Move"), "<Ctrl>E",
 	  N_("Easy Move"), G_CALLBACK(action_view_easymove) , FALSE }

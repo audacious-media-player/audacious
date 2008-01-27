@@ -56,7 +56,7 @@ struct _UiSkinnedButtonClass {
     void (* released)      (UiSkinnedButton *button);
     void (* clicked)       (UiSkinnedButton *button);
     void (* right_clicked) (UiSkinnedButton *button);
-    void (* doubled)       (UiSkinnedButton *button);
+    void (* scaled)        (UiSkinnedButton *button);
     void (* redraw)        (UiSkinnedButton *button);
 };
 

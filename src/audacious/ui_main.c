@@ -1996,7 +1996,7 @@ mainwin_mr_release(GtkWidget *widget, MenuRowItem i, GdkEventButton *event)
     case MENUROW_SCALE:
         gtk_toggle_action_set_active(
           GTK_TOGGLE_ACTION(gtk_action_group_get_action(
-          toggleaction_group_others , "view doublesize" )) ,
+          toggleaction_group_others , "view scaled" )) ,
           UI_SKINNED_MENUROW(mainwin_menurow)->scale_selected );
         break;
     case MENUROW_VISUALIZATION:
@@ -2736,7 +2736,7 @@ action_view_always_on_top( GtkToggleAction * action )
 }
 
 void
-action_view_scale( GtkToggleAction * action )
+action_view_scaled( GtkToggleAction * action )
 {
   UI_SKINNED_MENUROW(mainwin_menurow)->scale_selected = gtk_toggle_action_get_active( action );
   gtk_widget_queue_draw(mainwin_menurow);

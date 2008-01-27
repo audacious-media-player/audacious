@@ -34,7 +34,7 @@ void action_playback_repeat(GtkToggleAction*);
 void action_playback_shuffle(GtkToggleAction*);
 void action_stop_after_current_song(GtkToggleAction*);
 void action_view_always_on_top(GtkToggleAction*);
-void action_view_scale(GtkToggleAction*);
+void action_view_scaled(GtkToggleAction*);
 void action_view_easymove(GtkToggleAction*);
 void action_view_on_all_workspaces(GtkToggleAction*);
 void action_roll_up_equalizer(GtkToggleAction*);

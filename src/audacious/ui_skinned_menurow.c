@@ -199,8 +199,8 @@ static void ui_skinned_menurow_size_allocate(GtkWidget *widget, GtkAllocation *a
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    menurow->x = widget->allocation.x/(menurow->scaled ? 2 : 1);
-    menurow->y = widget->allocation.y/(menurow->scaled ? 2 : 1);
+    menurow->x = widget->allocation.x/(menurow->scaled ? cfg.scale_factor : 1);
+    menurow->y = widget->allocation.y/(menurow->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -246,8 +246,8 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
 static MenuRowItem menurow_find_selected(UiSkinnedMenurow * mr, gint x, gint y) {
     MenuRowItem ret = MENUROW_NONE;
 
-    x = x/(mr->scaled ? 2 : 1);
-    y = y/(mr->scaled ? 2 : 1);
+    x = x/(mr->scaled ? cfg.scale_factor : 1);
+    y = y/(mr->scaled ? cfg.scale_factor : 1);
     if (x > 0 && x < 8) {
         if (y >= 0 && y <= 10)
             ret = MENUROW_OPTIONS;

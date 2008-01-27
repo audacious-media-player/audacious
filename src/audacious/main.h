@@ -39,9 +39,9 @@
 G_BEGIN_DECLS
 
 #define PLAYER_HEIGHT \
-  ((cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT) * (cfg.doublesize + 1))
+  ((cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT) * (cfg.scaled ? cfg.scale_factor : 1))
 #define PLAYER_WIDTH \
-  (MAINWIN_WIDTH * (cfg.scaled ? gui_scale_factor : 1))
+  (MAINWIN_WIDTH * (cfg.scaled ? cfg.scale_factor : 1))
 
 /* macro for debug print */
 #ifdef AUD_DEBUG

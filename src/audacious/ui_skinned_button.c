@@ -40,7 +40,7 @@ struct _UiSkinnedButtonPrivate {
     gint             h;
     SkinPixmapId     skin_index1;
     SkinPixmapId     skin_index2;
-    gboolean         double_size;
+    gboolean         scaled;
     gint             move_x, move_y;
 
     gint             nx, ny, px, py;
@@ -73,7 +73,7 @@ static void ui_skinned_button_released(UiSkinnedButton *button);
 static void ui_skinned_button_clicked(UiSkinnedButton *button);
 static void ui_skinned_button_set_pressed (UiSkinnedButton *button, gboolean pressed);
 
-static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button);
+static void ui_skinned_button_toggle_scaled(UiSkinnedButton *button);
 
 static gint ui_skinned_button_enter_notify(GtkWidget *widget, GdkEventCrossing *event);
 static gint ui_skinned_button_leave_notify(GtkWidget *widget, GdkEventCrossing *event);
@@ -126,7 +126,7 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
     klass->pressed = button_pressed;
     klass->released = button_released;
     klass->clicked = NULL;
-    klass->doubled = ui_skinned_button_toggle_doublesize;
+    klass->scaled = ui_skinned_button_toggle_scaled;
     klass->redraw = ui_skinned_button_redraw;
 
     button_signals[PRESSED] = 
@@ -145,8 +145,8 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     button_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedButtonClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedButtonClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     button_signals[REDRAW] = 
@@ -255,32 +255,32 @@ static void ui_skinned_button_unmap (GtkWidget *widget)
 
 static void ui_skinned_button_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(widget);
-    requisition->width = priv->w*(1+priv->double_size);
-    requisition->height = priv->h*(1+priv->double_size);
+    requisition->width = priv->w*(priv->scaled ? cfg.scale_factor : 1);
+    requisition->height = priv->h*(priv->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+priv->double_size);
-    widget->allocation.y *= (1+priv->double_size);
+    widget->allocation.x *= (priv->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (priv->scaled ? cfg.scale_factor : 1);
 
     if (GTK_WIDGET_REALIZED (widget))
     {
         if ( button->event_window != NULL )
-            gdk_window_move_resize(button->event_window, allocation->x*(1+priv->double_size), allocation->y*(1+priv->double_size), allocation->width, allocation->height);
+            gdk_window_move_resize(button->event_window, allocation->x*(priv->scaled ? cfg.scale_factor : 1), allocation->y*(priv->scaled ? cfg.scale_factor : 1), allocation->width, allocation->height);
         else
-            gdk_window_move_resize(widget->window, allocation->x*(1+priv->double_size), allocation->y*(1+priv->double_size), allocation->width, allocation->height);
+            gdk_window_move_resize(widget->window, allocation->x*(priv->scaled ? cfg.scale_factor : 1), allocation->y*(priv->scaled ? cfg.scale_factor : 1), allocation->width, allocation->height);
     }
 
-    if (button->x + priv->move_x == widget->allocation.x/(priv->double_size ? 2 : 1))
+    if (button->x + priv->move_x == widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1))
         priv->move_x = 0;
-    if (button->y + priv->move_y == widget->allocation.y/(priv->double_size ? 2 : 1))
+    if (button->y + priv->move_y == widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1))
         priv->move_y = 0;
 
-    button->x = widget->allocation.x/(priv->double_size ? 2 : 1);
-    button->y = widget->allocation.y/(priv->double_size ? 2 : 1);
+    button->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
+    button->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -329,7 +329,7 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
     }
 
-    ui_skinned_widget_draw(widget, obj, priv->w, priv->h, priv->double_size);
+    ui_skinned_widget_draw(widget, obj, priv->w, priv->h, priv->scaled);
     g_object_unref(obj);
 
     return FALSE;
@@ -356,7 +356,7 @@ void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, g
     sbutton->type = TYPE_PUSH;
     priv->skin_index1 = si;
     priv->skin_index2 = si;
-    priv->double_size = FALSE;
+    priv->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
@@ -380,7 +380,7 @@ void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, gint x,
     sbutton->type = TYPE_TOGGLE;
     priv->skin_index1 = si;
     priv->skin_index2 = si;
-    priv->double_size = FALSE;
+    priv->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
@@ -394,7 +394,7 @@ void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, 
     sbutton->x = x;
     sbutton->y = y;
     sbutton->type = TYPE_SMALL;
-    priv->double_size = FALSE;
+    priv->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
@@ -484,12 +484,12 @@ static gboolean ui_skinned_button_leave_notify(GtkWidget *widget, GdkEventCrossi
     return FALSE;
 }
 
-static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
+static void ui_skinned_button_toggle_scaled(UiSkinnedButton *button) {
     GtkWidget *widget = GTK_WIDGET (button);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
-    priv->double_size = !priv->double_size;
+    priv->scaled = !priv->scaled;
 
-    gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
+    gtk_widget_set_size_request(widget, priv->w*(priv->scaled ? cfg.scale_factor : 1), priv->h*(priv->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(widget);
 }

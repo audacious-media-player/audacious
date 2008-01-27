@@ -123,7 +123,7 @@ BmpConfig bmp_default_config = {
     10,                         /* snap distance */
     FALSE,                      /* real-time priority */
     FALSE, FALSE,               /* shuffle, repeat */
-    FALSE,                      /* UNUSED (double size) */
+    FALSE,                      /* scaling */
     TRUE,                       /* autoscroll */
     TRUE,                       /* analyzer peaks */
     FALSE,                      /* equalizer autoload */
@@ -144,7 +144,7 @@ BmpConfig bmp_default_config = {
     TRUE,                       /* dim titlebar */
     FALSE,                      /* get playlist info on load */
     TRUE,                       /* get playlist info on demand */
-    TRUE,                       /* UNUSED (equalizer doublesize linked) */
+    TRUE,                       /* equalizer scale linked */
     FALSE,                      /* sort jump to file */
     FALSE,                      /* use effect plugins */
     FALSE,                      /* always on top */
@@ -166,7 +166,7 @@ BmpConfig bmp_default_config = {
     0.0,                        /* equalizer preamp */
     {0.0, 0.0, 0.0, 0.0, 0.0,             /* equalizer bands */
      0.0, 0.0, 0.0, 0.0, 0.0},
-    1.0,                        /* GUI scale factor */
+    1.5,                        /* GUI scale factor, set to 1.5 for testing purposes --majeru */
     NULL,                       /* skin */
     NULL,                       /* output plugin */
     NULL,                       /* file selector path */

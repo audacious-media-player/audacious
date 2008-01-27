@@ -43,7 +43,7 @@ static void ui_skinned_playstatus_realize            (GtkWidget *widget);
 static void ui_skinned_playstatus_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_skinned_playstatus_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_skinned_playstatus_expose         (GtkWidget *widget, GdkEventExpose *event);
-static void ui_skinned_playstatus_toggle_doublesize  (UiSkinnedPlaystatus *playstatus);
+static void ui_skinned_playstatus_toggle_scaled      (UiSkinnedPlaystatus *playstatus);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint playstatus_signals[LAST_SIGNAL] = { 0 };
@@ -85,11 +85,11 @@ static void ui_skinned_playstatus_class_init(UiSkinnedPlaystatusClass *klass) {
     widget_class->size_request = ui_skinned_playstatus_size_request;
     widget_class->size_allocate = ui_skinned_playstatus_size_allocate;
 
-    klass->doubled = ui_skinned_playstatus_toggle_doublesize;
+    klass->scaled = ui_skinned_playstatus_toggle_scaled;
 
     playstatus_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedPlaystatusClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedPlaystatusClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
@@ -104,7 +104,7 @@ GtkWidget* ui_skinned_playstatus_new(GtkWidget *fixed, gint x, gint y) {
     playstatus->x = x;
     playstatus->y = y;
 
-    playstatus->double_size = FALSE;
+    playstatus->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(playstatus), playstatus->x, playstatus->y);
 
@@ -156,21 +156,21 @@ static void ui_skinned_playstatus_realize(GtkWidget *widget) {
 static void ui_skinned_playstatus_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedPlaystatus *playstatus = UI_SKINNED_PLAYSTATUS(widget);
 
-    requisition->width = playstatus->width*(1+playstatus->double_size);
-    requisition->height = playstatus->height*(1+playstatus->double_size);
+    requisition->width = playstatus->width*(playstatus->scaled ? cfg.scale_factor : 1);
+    requisition->height = playstatus->height*(playstatus->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_playstatus_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedPlaystatus *playstatus = UI_SKINNED_PLAYSTATUS (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+playstatus->double_size);
-    widget->allocation.y *= (1+playstatus->double_size);
+    widget->allocation.x *= (playstatus->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (playstatus->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    playstatus->x = widget->allocation.x/(playstatus->double_size ? 2 : 1);
-    playstatus->y = widget->allocation.y/(playstatus->double_size ? 2 : 1);
+    playstatus->x = widget->allocation.x/(playstatus->scaled ? cfg.scale_factor : 1);
+    playstatus->y = widget->allocation.y/(playstatus->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_playstatus_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -204,18 +204,18 @@ static gboolean ui_skinned_playstatus_expose(GtkWidget *widget, GdkEventExpose *
         break;
     }
 
-    ui_skinned_widget_draw(widget, obj, playstatus->width, playstatus->height, playstatus->double_size);
+    ui_skinned_widget_draw(widget, obj, playstatus->width, playstatus->height, playstatus->scaled);
 
     g_object_unref(obj);
 
     return FALSE;
 }
 
-static void ui_skinned_playstatus_toggle_doublesize(UiSkinnedPlaystatus *playstatus) {
+static void ui_skinned_playstatus_toggle_scaled(UiSkinnedPlaystatus *playstatus) {
     GtkWidget *widget = GTK_WIDGET (playstatus);
 
-    playstatus->double_size = !playstatus->double_size;
-    gtk_widget_set_size_request(widget, playstatus->width*(1+playstatus->double_size), playstatus->height*(1+playstatus->double_size));
+    playstatus->scaled = !playstatus->scaled;
+    gtk_widget_set_size_request(widget, playstatus->width*(playstatus->scaled ? cfg.scale_factor : 1), playstatus->height*(playstatus->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(playstatus));
 }
@@ -243,5 +243,5 @@ void ui_skinned_playstatus_set_size(GtkWidget *widget, gint width, gint height) 
     playstatus->width = width;
     playstatus->height = height;
 
-    gtk_widget_set_size_request(widget, width*(1+playstatus->double_size), height*(1+playstatus->double_size));
+    gtk_widget_set_size_request(widget, width*(playstatus->scaled ? cfg.scale_factor : 1), height*(playstatus->scaled ? cfg.scale_factor : 1));
 }

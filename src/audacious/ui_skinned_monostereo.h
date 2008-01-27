@@ -47,12 +47,12 @@ struct _UiSkinnedMonoStereo {
     gint             x, y, width, height;
     gint             num_channels;
     SkinPixmapId     skin_index;
-    gboolean         double_size;
+    gboolean         scaled;
 };
 
 struct _UiSkinnedMonoStereoClass {
     GtkWidgetClass          parent_class;
-    void (* doubled)        (UiSkinnedMonoStereo *menurow);
+    void (* scaled)        (UiSkinnedMonoStereo *menurow);
 };
 
 GtkWidget* ui_skinned_monostereo_new (GtkWidget *fixed, gint x, gint y, SkinPixmapId si);

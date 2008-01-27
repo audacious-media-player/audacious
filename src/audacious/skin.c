@@ -1242,7 +1242,7 @@ skin_create_transparent_mask(const gchar * path,
                              const gchar * section,
                              GdkWindow * window,
                              gint width,
-                             gint height, gboolean doublesize)
+                             gint height, gboolean scale)
 {
     GdkBitmap *mask = NULL;
     GdkGC *gc = NULL;
@@ -1296,10 +1296,10 @@ skin_create_transparent_mask(const gchar * path,
             gpoints = g_new(GdkPoint, g_array_index(num, gint, i));
             for (k = 0; k < g_array_index(num, gint, i); k++) {
                 gpoints[k].x =
-                    g_array_index(point, gint, j + k * 2) * (1 + doublesize);
+                    g_array_index(point, gint, j + k * 2) * (scale ? cfg.scale_factor : 1 );
                 gpoints[k].y =
                     g_array_index(point, gint,
-                                  j + k * 2 + 1) * (1 + doublesize);
+                                  j + k * 2 + 1) * (scale ? cfg.scale_factor : 1);
             }
             j += k * 2;
             gdk_draw_polygon(mask, gc, TRUE, gpoints,

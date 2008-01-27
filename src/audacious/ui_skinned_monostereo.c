@@ -41,7 +41,7 @@ static void ui_skinned_monostereo_realize            (GtkWidget *widget);
 static void ui_skinned_monostereo_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_skinned_monostereo_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_skinned_monostereo_expose         (GtkWidget *widget, GdkEventExpose *event);
-static void ui_skinned_monostereo_toggle_doublesize  (UiSkinnedMonoStereo *monostereo);
+static void ui_skinned_monostereo_toggle_scaled      (UiSkinnedMonoStereo *monostereo);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint monostereo_signals[LAST_SIGNAL] = { 0 };
@@ -83,11 +83,11 @@ static void ui_skinned_monostereo_class_init(UiSkinnedMonoStereoClass *klass) {
     widget_class->size_request = ui_skinned_monostereo_size_request;
     widget_class->size_allocate = ui_skinned_monostereo_size_allocate;
 
-    klass->doubled = ui_skinned_monostereo_toggle_doublesize;
+    klass->scaled = ui_skinned_monostereo_toggle_scaled;
 
     monostereo_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedMonoStereoClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedMonoStereoClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
@@ -102,7 +102,7 @@ GtkWidget* ui_skinned_monostereo_new(GtkWidget *fixed, gint x, gint y, SkinPixma
     monostereo->x = x;
     monostereo->y = y;
     monostereo->skin_index = si;
-    monostereo->double_size = FALSE;
+    monostereo->scaled = FALSE;
 
     gtk_fixed_put(GTK_FIXED(fixed), GTK_WIDGET(monostereo), monostereo->x, monostereo->y);
 
@@ -154,21 +154,21 @@ static void ui_skinned_monostereo_realize(GtkWidget *widget) {
 static void ui_skinned_monostereo_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedMonoStereo *monostereo = UI_SKINNED_MONOSTEREO(widget);
 
-    requisition->width = monostereo->width*(1+monostereo->double_size);
-    requisition->height = monostereo->height*(1+monostereo->double_size);
+    requisition->width = monostereo->width*(monostereo->scaled ? cfg.scale_factor : 1);
+    requisition->height = monostereo->height*(monostereo->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_monostereo_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     UiSkinnedMonoStereo *monostereo = UI_SKINNED_MONOSTEREO (widget);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+monostereo->double_size);
-    widget->allocation.y *= (1+monostereo->double_size);
+    widget->allocation.x *= (monostereo->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (monostereo->scaled ? cfg.scale_factor : 1);
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    monostereo->x = widget->allocation.x/(monostereo->double_size ? 2 : 1);
-    monostereo->y = widget->allocation.y/(monostereo->double_size ? 2 : 1);
+    monostereo->x = widget->allocation.x/(monostereo->scaled ? cfg.scale_factor : 1);
+    monostereo->y = widget->allocation.y/(monostereo->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_monostereo_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -198,18 +198,18 @@ static gboolean ui_skinned_monostereo_expose(GtkWidget *widget, GdkEventExpose *
         break;
     }
 
-    ui_skinned_widget_draw(widget, obj, monostereo->width, monostereo->height, monostereo->double_size);
+    ui_skinned_widget_draw(widget, obj, monostereo->width, monostereo->height, monostereo->scaled);
 
     g_object_unref(obj);
 
     return FALSE;
 }
 
-static void ui_skinned_monostereo_toggle_doublesize(UiSkinnedMonoStereo *monostereo) {
+static void ui_skinned_monostereo_toggle_scaled(UiSkinnedMonoStereo *monostereo) {
     GtkWidget *widget = GTK_WIDGET (monostereo);
 
-    monostereo->double_size = !monostereo->double_size;
-    gtk_widget_set_size_request(widget, monostereo->width*(1+monostereo->double_size), monostereo->height*(1+monostereo->double_size));
+    monostereo->scaled = !monostereo->scaled;
+    gtk_widget_set_size_request(widget, monostereo->width*(monostereo->scaled ? cfg.scale_factor : 1), monostereo->height*(monostereo->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(monostereo));
 }

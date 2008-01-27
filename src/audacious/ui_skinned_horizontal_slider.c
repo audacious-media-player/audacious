@@ -40,7 +40,7 @@ enum {
 
 struct _UiSkinnedHorizontalSliderPrivate {
     SkinPixmapId     skin_index;
-    gboolean         double_size;
+    gboolean         scaled;
     gint             frame, frame_offset, frame_height, min, max;
     gint             knob_width, knob_height;
     gint             position;
@@ -58,7 +58,7 @@ static gboolean ui_skinned_horizontal_slider_expose         (GtkWidget *widget, 
 static gboolean ui_skinned_horizontal_slider_button_press   (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_horizontal_slider_button_release (GtkWidget *widget, GdkEventButton *event);
 static gboolean ui_skinned_horizontal_slider_motion_notify  (GtkWidget *widget, GdkEventMotion *event);
-static void ui_skinned_horizontal_slider_toggle_doublesize  (UiSkinnedHorizontalSlider *horizontal_slider);
+static void ui_skinned_horizontal_slider_toggle_scaled  (UiSkinnedHorizontalSlider *horizontal_slider);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint horizontal_slider_signals[LAST_SIGNAL] = { 0 };
@@ -105,7 +105,7 @@ static void ui_skinned_horizontal_slider_class_init(UiSkinnedHorizontalSliderCla
 
     klass->motion = NULL;
     klass->release = NULL;
-    klass->doubled = ui_skinned_horizontal_slider_toggle_doublesize;
+    klass->scaled = ui_skinned_horizontal_slider_toggle_scaled;
 
     horizontal_slider_signals[MOTION] = 
         g_signal_new ("motion", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -118,8 +118,8 @@ static void ui_skinned_horizontal_slider_class_init(UiSkinnedHorizontalSliderCla
                       gtk_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 
     horizontal_slider_signals[DOUBLED] = 
-        g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedHorizontalSliderClass, doubled), NULL, NULL,
+        g_signal_new ("toggle-scaled", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedHorizontalSliderClass, scaled), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     g_type_class_add_private (gobject_class, sizeof (UiSkinnedHorizontalSliderPrivate));
@@ -206,8 +206,8 @@ static void ui_skinned_horizontal_slider_realize(GtkWidget *widget) {
 static void ui_skinned_horizontal_slider_size_request(GtkWidget *widget, GtkRequisition *requisition) {
     UiSkinnedHorizontalSliderPrivate *priv = UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(widget);
 
-    requisition->width = priv->width*(1+priv->double_size);
-    requisition->height = priv->height*(1+priv->double_size);
+    requisition->width = priv->width*(priv->scaled ? cfg.scale_factor : 1);
+    requisition->height = priv->height*(priv->scaled ? cfg.scale_factor : 1);
 }
 
 static void ui_skinned_horizontal_slider_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
@@ -215,19 +215,19 @@ static void ui_skinned_horizontal_slider_size_allocate(GtkWidget *widget, GtkAll
     UiSkinnedHorizontalSliderPrivate *priv = UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(horizontal_slider);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (1+priv->double_size);
-    widget->allocation.y *= (1+priv->double_size);
+    widget->allocation.x *= (priv->scaled ? cfg.scale_factor : 1);
+    widget->allocation.y *= (priv->scaled ? cfg.scale_factor : 1);
 
     if (priv->knob_height == priv->height)
-        priv->knob_height = allocation->height/(priv->double_size ? 2 : 1);
-    priv->width = allocation->width/(priv->double_size ? 2 : 1);
-    priv->height = allocation->height/(priv->double_size ? 2 : 1);
+        priv->knob_height = allocation->height/(priv->scaled ? cfg.scale_factor : 1);
+    priv->width = allocation->width/(priv->scaled ? cfg.scale_factor : 1);
+    priv->height = allocation->height/(priv->scaled ? cfg.scale_factor : 1);
 
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    horizontal_slider->x = widget->allocation.x/(priv->double_size ? 2 : 1);
-    horizontal_slider->y = widget->allocation.y/(priv->double_size ? 2 : 1);
+    horizontal_slider->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
+    horizontal_slider->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -263,7 +263,7 @@ static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventE
                          ((priv->height - priv->knob_height) / 2),
                          priv->knob_width, priv->knob_height);
 
-    ui_skinned_widget_draw(widget, obj, priv->width, priv->height, priv->double_size);
+    ui_skinned_widget_draw(widget, obj, priv->width, priv->height, priv->scaled);
 
     g_object_unref(obj);
 
@@ -282,10 +282,10 @@ static gboolean ui_skinned_horizontal_slider_button_press(GtkWidget *widget, Gdk
         if (event->button == 1) {
             gint x;
 
-            x = event->x - (priv->knob_width / (priv->double_size ? 1 : 2));
+            x = event->x - (priv->knob_width / (priv->scaled ? 1 : cfg.scale_factor));
             hs->pressed = TRUE;
 
-            priv->position = x/(1+priv->double_size);
+            priv->position = x/(priv->scaled ? cfg.scale_factor : 1);
             if (priv->position < priv->min)
                 priv->position = priv->min;
             if (priv->position > priv->max)
@@ -331,8 +331,8 @@ static gboolean ui_skinned_horizontal_slider_motion_notify(GtkWidget *widget, Gd
     if (hs->pressed) {
         gint x;
 
-        x = event->x - (priv->knob_width / (priv->double_size ? 1 : 2));
-        priv->position = x/(1+priv->double_size);
+        x = event->x - (priv->knob_width / (priv->scaled ? 1 : cfg.scale_factor));
+        priv->position = x/(priv->scaled ? cfg.scale_factor : 1);
 
         if (priv->position < priv->min)
             priv->position = priv->min;
@@ -350,13 +350,13 @@ static gboolean ui_skinned_horizontal_slider_motion_notify(GtkWidget *widget, Gd
     return TRUE;
 }
 
-static void ui_skinned_horizontal_slider_toggle_doublesize(UiSkinnedHorizontalSlider *horizontal_slider) {
+static void ui_skinned_horizontal_slider_toggle_scaled(UiSkinnedHorizontalSlider *horizontal_slider) {
     GtkWidget *widget = GTK_WIDGET (horizontal_slider);
     UiSkinnedHorizontalSliderPrivate *priv = UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(horizontal_slider);
 
-    priv->double_size = !priv->double_size;
+    priv->scaled = !priv->scaled;
 
-    gtk_widget_set_size_request(widget, priv->width*(1+priv->double_size), priv->height*(1+priv->double_size));
+    gtk_widget_set_size_request(widget, priv->width*(priv->scaled ? cfg.scale_factor : 1), priv->height*(priv->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(horizontal_slider));
 }

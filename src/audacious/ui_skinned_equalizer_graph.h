@@ -46,12 +46,12 @@ struct _UiSkinnedEqualizerGraph {
 
     gint             x, y, width, height;
     SkinPixmapId     skin_index;
-    gboolean         double_size;
+    gboolean         scaled;
 };
 
 struct _UiSkinnedEqualizerGraphClass {
     GtkWidgetClass          parent_class;
-    void (* doubled)        (UiSkinnedEqualizerGraph *eq_graph);
+    void (* scaled)        (UiSkinnedEqualizerGraph *eq_graph);
 };
 
 GtkWidget* ui_skinned_equalizer_graph_new(GtkWidget *fixed, gint x, gint y);

@@ -260,8 +260,8 @@ static void ui_svis_size_allocate(GtkWidget *widget, GtkAllocation *allocation) 
             gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
     }
 
-    svis->x = widget->allocation.x/(svis->scaled ? 2 : 1);
-    svis->y = widget->allocation.y/(svis->scaled ? 2 : 1);
+    svis->x = widget->allocation.x/(svis->scaled ? cfg.scale_factor : 1);
+    svis->y = widget->allocation.y/(svis->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {

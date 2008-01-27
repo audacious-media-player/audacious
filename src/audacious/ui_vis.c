@@ -243,8 +243,8 @@ static void ui_vis_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
             gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
     }
 
-    vis->x = widget->allocation.x/(vis->scaled ? 2 : 1);
-    vis->y = widget->allocation.y/(vis->scaled ? 2 : 1);
+    vis->x = widget->allocation.x/(vis->scaled ? cfg.scale_factor : 1);
+    vis->y = widget->allocation.y/(vis->scaled ? cfg.scale_factor : 1);
 }
 
 static gboolean ui_vis_expose(GtkWidget *widget, GdkEventExpose *event) {
