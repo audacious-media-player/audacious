@@ -27,6 +27,7 @@
 #include "ui_skinned_horizontal_slider.h"
 #include "main.h"
 #include "util.h"
+#include <math.h>
 
 #define UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_horizontal_slider_get_type(), UiSkinnedHorizontalSliderPrivate))
 typedef struct _UiSkinnedHorizontalSliderPrivate UiSkinnedHorizontalSliderPrivate;
@@ -215,19 +216,19 @@ static void ui_skinned_horizontal_slider_size_allocate(GtkWidget *widget, GtkAll
     UiSkinnedHorizontalSliderPrivate *priv = UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(horizontal_slider);
 
     widget->allocation = *allocation;
-    widget->allocation.x *= (priv->scaled ? cfg.scale_factor : 1);
-    widget->allocation.y *= (priv->scaled ? cfg.scale_factor : 1);
+    widget->allocation.x = ceil(widget->allocation.x*(priv->scaled ? cfg.scale_factor : 1));
+    widget->allocation.y = ceil(widget->allocation.y*(priv->scaled ? cfg.scale_factor : 1));
 
     if (priv->knob_height == priv->height)
-        priv->knob_height = allocation->height/(priv->scaled ? cfg.scale_factor : 1);
-    priv->width = allocation->width/(priv->scaled ? cfg.scale_factor : 1);
-    priv->height = allocation->height/(priv->scaled ? cfg.scale_factor : 1);
+        priv->knob_height = ceil(allocation->height/(priv->scaled ? cfg.scale_factor : 1));
+    priv->width = ceil(allocation->width/(priv->scaled ? cfg.scale_factor : 1));
+    priv->height = ceil(allocation->height/(priv->scaled ? cfg.scale_factor : 1));
 
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
-    horizontal_slider->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
-    horizontal_slider->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
+    horizontal_slider->x = ceil(widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1));
+    horizontal_slider->y = ceil(widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1));
 }
 
 static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -356,7 +357,9 @@ static void ui_skinned_horizontal_slider_toggle_scaled(UiSkinnedHorizontalSlider
 
     priv->scaled = !priv->scaled;
 
-    gtk_widget_set_size_request(widget, priv->width*(priv->scaled ? cfg.scale_factor : 1), priv->height*(priv->scaled ? cfg.scale_factor : 1));
+    gtk_widget_set_size_request(widget,
+        priv->width*(priv->scaled ? cfg.scale_factor : 1),
+        priv->height*(priv->scaled ? cfg.scale_factor : 1));
 
     gtk_widget_queue_draw(GTK_WIDGET(horizontal_slider));
 }
