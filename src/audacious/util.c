@@ -866,8 +866,8 @@ void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint 
     g_return_if_fail(obj != NULL);
 
     if (scale) {
-        GdkPixbuf *image = gdk_pixbuf_scale_simple(obj, width * cfg.scale_factor, height* cfg.scale_factor, GDK_INTERP_NEAREST);
-        gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0, width * cfg.scale_factor , height * cfg.scale_factor, GDK_RGB_DITHER_NONE, 0, 0);
+        GdkPixbuf *image = gdk_pixbuf_scale_simple(obj, width * cfg.scale_factor, height* cfg.scale_factor, GDK_INTERP_BILINEAR);
+        gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0, width * cfg.scale_factor , height * cfg.scale_factor, GDK_RGB_DITHER_NORMAL, 0, 0);
         g_object_unref(image);
     } else {
         gdk_draw_pixbuf(widget->window, NULL, obj, 0, 0, 0, 0, width, height, GDK_RGB_DITHER_NONE, 0, 0);

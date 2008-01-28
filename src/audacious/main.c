@@ -166,7 +166,7 @@ BmpConfig bmp_default_config = {
     0.0,                        /* equalizer preamp */
     {0.0, 0.0, 0.0, 0.0, 0.0,             /* equalizer bands */
      0.0, 0.0, 0.0, 0.0, 0.0},
-    1.5,                        /* GUI scale factor, set to 1.5 for testing purposes --majeru */
+    1.2,                        /* GUI scale factor, hardcoded for testing purposes --majeru */
     NULL,                       /* skin */
     NULL,                       /* output plugin */
     NULL,                       /* file selector path */
