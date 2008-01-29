@@ -1,4 +1,4 @@
-SUBDIRS = libguess audacious libid3tag
+SUBDIRS = libguess audacious libid3tag libSAD
 
 include ../extra.mk
 

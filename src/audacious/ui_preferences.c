@@ -188,6 +188,7 @@ static void bitmap_fonts_cb();
 static void mainwin_font_set_cb();
 static void playlist_font_set_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
+static GtkWidget *ui_preferences_bit_depth(void);
 
 static PreferencesWidget appearance_misc_widgets[] = {
     {WIDGET_LABEL, N_("<b>_Fonts</b>"), NULL, NULL, NULL, FALSE},
@@ -215,6 +216,8 @@ static PreferencesWidget audio_page_widgets[] = {
         N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
+    {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_bit_depth},
 };
 
 static PreferencesWidget playback_page_widgets[] = {
@@ -1629,6 +1632,38 @@ ui_preferences_chardet_table_populate(void)
                            NULL);
 
     return widget;
+}
+
+static void
+on_bit_depth_cbox_changed(GtkWidget *cbox, gpointer data)
+{
+    gint active = gtk_combo_box_get_active(GTK_COMBO_BOX(cbox));
+    cfg.output_bit_depth = (active == 1) ? 24 : 16;
+}
+
+GtkWidget *
+ui_preferences_bit_depth(void)
+{
+    GtkWidget *box = gtk_hbox_new(FALSE, 10);
+    GtkWidget *label = gtk_label_new(_("Output bit depth:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+    gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
+
+    GtkWidget *combo = gtk_combo_box_new_text ();
+    gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "16");
+    gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "24");
+    gtk_box_pack_start(GTK_BOX(box), combo, FALSE, FALSE, 0);
+    
+    gint active = (cfg.output_bit_depth == 24) ? 1 : 0;
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), active);
+    g_signal_connect(combo, "changed", G_CALLBACK(on_bit_depth_cbox_changed), NULL);
+    
+    gtk_tooltips_set_tip (tooltips, box,
+                          _("All streams will be converted to this bit depth.\n"
+                          "This should be the max supported bit depth of\nthe sound card or output plugin."),
+                          NULL);
+
+    return box;
 }
 
 /* it's at early stage */

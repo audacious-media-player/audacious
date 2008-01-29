@@ -142,6 +142,7 @@ struct _BmpConfig {
     gboolean warn_about_broken_gtk_engines;
     gboolean disable_inline_gtk;
     gboolean remember_jtf_entry;
+    gint output_bit_depth;
 };
 
 typedef struct _BmpConfig BmpConfig;

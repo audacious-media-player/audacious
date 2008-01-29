@@ -230,6 +230,7 @@ BmpConfig bmp_default_config = {
     .warn_about_broken_gtk_engines = TRUE,           /* warn about broken gtk themes */
     FALSE,          /* disable inline themes */
     TRUE,           /* remember jtf text entry */
+    16,             /* output bit depth */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -378,6 +379,7 @@ static bmp_cfg_nument bmp_numents[] = {
     {"colorize_r", &cfg.colorize_r, TRUE},
     {"colorize_g", &cfg.colorize_g, TRUE},
     {"colorize_b", &cfg.colorize_b, TRUE},
+    {"output_bit_depth", &cfg.output_bit_depth, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);

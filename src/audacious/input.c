@@ -250,6 +250,8 @@ convert_to_s16_ne(AFormat fmt, gpointer ptr, gint16 * left,
                 right[i] = (*ptr16++);
             }
         break;
+    default:
+        AUDDBG("Incorrect sample format!\n");
     }
 }
 

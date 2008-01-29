@@ -62,12 +62,30 @@
 typedef enum {
     FMT_U8,
     FMT_S8,
+
     FMT_U16_LE,
     FMT_U16_BE,
     FMT_U16_NE,
     FMT_S16_LE,
     FMT_S16_BE,
-    FMT_S16_NE
+    FMT_S16_NE,
+
+    /* added in Audacious 1.5 */
+    FMT_U24_LE, /* stored in lower 3 bytes of 32-bit value, highest byte must be always set to 0 --asphyx */
+    FMT_U24_BE,
+    FMT_U24_NE,
+    FMT_S24_LE,
+    FMT_S24_BE,
+    FMT_S24_NE,
+
+    FMT_U32_LE,
+    FMT_U32_BE,
+    FMT_U32_NE,
+    FMT_S32_LE,
+    FMT_S32_BE,
+    FMT_S32_NE,
+
+    FMT_FLOAT,
 } AFormat;
 
 typedef enum {
