@@ -26,7 +26,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#define AUD_DEBUG 1
+/* #define AUD_DEBUG 1 */
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"

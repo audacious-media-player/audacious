@@ -63,6 +63,8 @@
 
 #include "build_stamp.h"
 
+#define TITLESTRING_UPDATE_TIMEOUT 3
+
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
     CATEGORY_VIEW_COL_NAME,
@@ -189,6 +191,7 @@ static void bitmap_fonts_cb();
 static void mainwin_font_set_cb();
 static void playlist_font_set_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
+static gint titlestring_timeout_counter = 0;
 
 static PreferencesWidget appearance_misc_widgets[] = {
     {WIDGET_LABEL, N_("<b>_Fonts</b>"), NULL, NULL, NULL, FALSE},
@@ -564,12 +567,32 @@ on_titlestring_entry_realize(GtkWidget * entry,
     gtk_entry_set_text(GTK_ENTRY(entry), cfg.gentitle_format);
 }
 
+static gboolean
+titlestring_timeout_proc (gpointer data)
+{
+    titlestring_timeout_counter--;
+
+    if(titlestring_timeout_counter <= 0) {
+        titlestring_timeout_counter = 0;
+        playlist_update_all_titles();
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}
+
 static void
 on_titlestring_entry_changed(GtkWidget * entry,
                              gpointer data) 
 {
     g_free(cfg.gentitle_format);
     cfg.gentitle_format = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
+
+    if(titlestring_timeout_counter == 0) {
+        g_timeout_add_seconds (1, (GSourceFunc) titlestring_timeout_proc, NULL);
+    }
+    
+    titlestring_timeout_counter = TITLESTRING_UPDATE_TIMEOUT;
 }
 
 static void
