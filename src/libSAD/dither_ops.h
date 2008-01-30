@@ -1,7 +1,7 @@
 /* Scale & Dither library (libSAD)
  * High-precision bit depth converter with ReplayGain support
  *
- * (c)2007 by Eugene Zagidullin (e.asphyx@gmail.com)
+ * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef BUFFER_H
-#define BUFFER_H
+#ifndef DITHER_OPS_H
+#define DITHER_OPS_H
 
-#include "common.h"
+#include "libSAD.h"
 #include "dither.h"
 
 SAD_buffer_ops* SAD_assign_buf_ops (SAD_buffer_format *format);
 
-#endif /*BUFFER_H*/
+#endif /*DITHER_OPS_H*/

@@ -1,14 +1,33 @@
+/* Scale & Dither library (libSAD)
+ * High-precision bit depth converter with ReplayGain support
+ *
+ * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 #ifndef DITHER_H
 #define DITHER_H
 
-#include "common.h"
+#include "libSAD.h"
 
 #define SAD_ERROR_INCORRECT_INPUT_SAMPLEFORMAT -2
 #define SAD_ERROR_INCORRECT_OUTPUT_SAMPLEFORMAT -3
 #define SAD_ERROR_CORRUPTED_PRIVATE_DATA -4
 
-typedef sad_sint32 (*SAD_get_sample_proc) (void *buf, int nch, int ch, int i);
-typedef void (*SAD_put_sample_proc) (void *buf, sad_sint32 sample, int nch, int ch, int i);
+typedef int32_t (*SAD_get_sample_proc) (void *buf, int nch, int ch, int i);
+typedef void (*SAD_put_sample_proc) (void *buf, int32_t sample, int nch, int ch, int i);
 
 typedef struct {
   SAD_get_sample_proc get_sample;

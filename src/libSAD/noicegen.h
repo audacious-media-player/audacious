@@ -1,7 +1,7 @@
-#ifndef NOISGEN_H
-#define NOISGEN_H
+#ifndef NOICEGEN_H
+#define NOICEGEN_H
 
 int triangular_dither_noise(int nbits);
 float triangular_dither_noise_f(void);
 
-#endif /*NOISGEN_H*/
+#endif /*NOICEGEN_H*/

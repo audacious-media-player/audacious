@@ -282,6 +282,54 @@ PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
    [AC_MSG_ERROR([Cannot find libmcs])]
 )
 
+dnl AltiVec support 
+
+AC_ARG_ENABLE(altivec,
+    [  --disable-altivec       disable AltiVec support. (default=enabled) ],
+    [enable_altivec=$enableval],
+    [enable_altivec=yes]
+)
+if test "x$enable_altivec" = "xyes"; then
+  AC_CHECK_HEADERS(altivec.h,
+      [AC_DEFINE(HAVE_ALTIVEC, 1, [Define to 1 if your system has AltiVec.])
+       AC_DEFINE(HAVE_ALTIVEC_H, 1, [Define to 1 if your system has an altivec.h file.])
+       AC_DEFINE(ARCH_POWERPC, 1, [Define to 1 if your system is a PowerPC.])
+       SIMD_CFLAGS=-maltivec
+       AC_SUBST(SIMD_CFLAGS)],
+      [enable_altivec="no"]
+  )    
+fi
+
+dnl SSE2 support
+
+AC_ARG_ENABLE(sse2,
+    [  --disable-sse2          disable SSE2 support. (default=enabled) ],
+    [enable_sse2=$enableval],
+    [enable_sse2=yes]
+)
+if test "x$enable_sse2" = "xyes"; then
+  AC_MSG_CHECKING(SSE2)
+  ac_save_CFLAGS="$CFLAGS"
+  CFLAGS="-msse2"
+  AC_TRY_RUN([
+  #include <emmintrin.h>
+  int main()
+  {
+    _mm_setzero_pd();
+    return 0;
+  }
+  ],
+  [AC_MSG_RESULT(SSE2 yes)
+  AC_DEFINE(HAVE_SSE2, 1, [Define to 1 if your system has SSE2])
+  SIMD_CFLAGS=-msse2],
+  [AC_MSG_RESULT(SSE2 no)
+  enable_sse2="no"],
+  )
+fi
+AC_SUBST(SIMD_CFLAGS)
+CFLAGS="$ac_save_CFLAGS"
+
+
 AC_CHECK_HEADERS(unistd.h)
 AC_CHECK_HEADERS(fcntl.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
@@ -464,6 +512,9 @@ echo
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  Sample rate upconversion:               $enable_samplerate"
 echo "  D-Bus support:                          $enable_dbus"
+echo 
+echo "  SSE2:                                   $enable_sse2"
+echo "  AltiVec:                                $enable_altivec"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then

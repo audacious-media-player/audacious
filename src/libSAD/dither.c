@@ -1,7 +1,7 @@
 /* Scale & Dither library (libSAD)
  * High-precision bit depth converter with ReplayGain support
  *
- * (c)2007 by Eugene Zagidullin (e.asphyx@gmail.com)
+ * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@
  */
 
 
-#include "common.h"
-#include "buffer.h"
-#include "noisegen.h"
+#include "libSAD.h"
+#include "dither_ops.h"
+#include "noicegen.h"
 
 #include <assert.h>
 #include <math.h>
@@ -89,11 +89,11 @@ static inline double compute_hardlimit (double sample, float scale) {
  * samples < -1 and > 1 will be clipped
  */
 
-static inline sad_sint32 __dither_sample_fixed_to_int (sad_sint32 sample, int inbits, int fracbits, int outbits, float scale, int dither,
+static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, int fracbits, int outbits, float scale, int dither,
 							int hardlimit)
 {
   int n_bits_to_loose, bitwidth, precision_loss;
-  sad_sint32 maxint = MAXINT(outbits);
+  int32_t maxint = MAXINT(outbits);
 
   n_bits_to_loose = 0;
   bitwidth = inbits;
@@ -131,7 +131,7 @@ static inline sad_sint32 __dither_sample_fixed_to_int (sad_sint32 sample, int in
   assert(n_bits_to_loose >=0 );
 
   if (hardlimit) {
-    sample = (sad_sint32)(compute_hardlimit((double)sample/(double)MAXINT(bitwidth), scale) * (double)MAXINT(bitwidth));
+    sample = (int32_t)(compute_hardlimit((double)sample/(double)MAXINT(bitwidth), scale) * (double)MAXINT(bitwidth));
 #ifdef PRECISION_DEBUG
     printf("Precision loss, reason: hard limiter\n", inbits, outbits);
 #endif
@@ -150,11 +150,11 @@ static inline sad_sint32 __dither_sample_fixed_to_int (sad_sint32 sample, int in
   if (precision_loss && (n_bits_to_loose >= 1)) sample += (1L << (n_bits_to_loose - 1));
 
 #ifdef DITHER_DEBUG
-  sad_sint32 val_wo_dither = sample, >> n_bits_to_loose;
+  int32_t val_wo_dither = sample, >> n_bits_to_loose;
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
   if (dither && precision_loss && (n_bits_to_loose >= 1)) {
-    sad_sint32 dither_num = triangular_dither_noise(n_bits_to_loose + 1);
+    int32_t dither_num = triangular_dither_noise(n_bits_to_loose + 1);
     sample += dither_num;
   }
 
@@ -162,7 +162,7 @@ static inline sad_sint32 __dither_sample_fixed_to_int (sad_sint32 sample, int in
 
   /* Clipping */
 #ifdef CLIPPING_DEBUG
-  sad_sint32 val_wo_clip = sample;
+  int32_t val_wo_clip = sample;
 #endif
   sample = CLIP(sample, maxint);
 #ifdef CLIPPING_DEBUG
@@ -180,13 +180,13 @@ static inline sad_sint32 __dither_sample_fixed_to_int (sad_sint32 sample, int in
  * Dither floating-point normalized sample to n-bits integer
  * samples < -1 and > 1 will be clipped
  */
-static inline sad_sint32 __dither_sample_float_to_int (float sample, int nbits, float scale, int dither, int hardlimit) {
+static inline int32_t __dither_sample_float_to_int (float sample, int nbits, float scale, int dither, int hardlimit) {
 
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_float_to_int\n");
 #endif
 
-  sad_sint32 maxint = MAXINT(nbits);
+  int32_t maxint = MAXINT(nbits);
 
   if (hardlimit) {
     sample = compute_hardlimit((double)sample, scale);
@@ -199,7 +199,7 @@ static inline sad_sint32 __dither_sample_float_to_int (float sample, int nbits, 
   sample = (sample < 0 ? sample - 0.5 : sample + 0.5);
 
 #ifdef DITHER_DEBUG
-  sad_sint32 val_wo_dither = (sad_sint32) sample;
+  int32_t val_wo_dither = (int32_t) sample;
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
   if (dither) {
@@ -208,9 +208,9 @@ static inline sad_sint32 __dither_sample_float_to_int (float sample, int nbits, 
   }
 
   /* Round and clipping */
-  sad_sint32 value = (sad_sint32) sample;
+  int32_t value = (int32_t) sample;
 #ifdef CLIPPING_DEBUG
-  sad_sint32 val_wo_clip = value;
+  int32_t val_wo_clip = value;
 #endif
   value = CLIP(value, maxint);
 #ifdef CLIPPING_DEBUG
@@ -237,7 +237,7 @@ static inline float __dither_sample_float_to_float (float sample, float scale, i
   return sample;
 }
 
-static inline float __dither_sample_fixed_to_float (sad_sint32 sample, int inbits, int fracbits, float scale, int hardlimit) {
+static inline float __dither_sample_fixed_to_float (int32_t sample, int inbits, int fracbits, float scale, int hardlimit) {
   float fsample;
 
 #ifdef DEEP_DEBUG
@@ -396,7 +396,7 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++) {
 	          float sample = GET_FLOAT_SAMPLE(inbuf, input_chorder, channels, ch ,i);
-	          sad_sint32 isample = __dither_sample_float_to_int(sample, outbits, scale, dither, hardlimit);
+	          int32_t isample = __dither_sample_float_to_int(sample, outbits, scale, dither, hardlimit);
                   put_sample (outbuf, isample, channels, ch, i);
 	      }
 	  }
@@ -407,7 +407,7 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           /* process buffer */
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++) {
-  	          sad_sint32 sample = get_sample (inbuf, channels, ch, i);
+  	          int32_t sample = get_sample (inbuf, channels, ch, i);
                   float fsample = __dither_sample_fixed_to_float (sample, inbits, fracbits, scale, hardlimit);
                   PUT_FLOAT_SAMPLE(outbuf, output_chorder, channels, ch ,i, fsample);
 	      }
@@ -417,8 +417,8 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           /* process buffer */
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++){
-  	          sad_sint32 sample = get_sample (inbuf, channels, ch, i);
-	          sad_sint32 isample = __dither_sample_fixed_to_int (sample, inbits, fracbits, outbits, scale, dither, hardlimit);
+  	          int32_t sample = get_sample (inbuf, channels, ch, i);
+	          int32_t isample = __dither_sample_fixed_to_int (sample, inbits, fracbits, outbits, scale, dither, hardlimit);
                   put_sample (outbuf, isample, channels, ch, i);
 	      }
 	  }

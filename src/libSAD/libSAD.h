@@ -1,7 +1,7 @@
 /* Scale & Dither library (libSAD)
  * High-precision bit depth converter with ReplayGain support
  *
- * (c)2007 by Eugene Zagidullin (e.asphyx@gmail.com)
+ * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef LIBSAD_H
+#define LIBSAD_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,34 +33,7 @@
 #define FALSE 0
 #endif
 
-#include "../config.h"
-
-#ifdef ENABLE_NLS
-#  include <libintl.h>
-#  include <locale.h>
-#  define _(String) dgettext(PACKAGE,String)
-#else 
-#  define _(String) (String)
-#endif
-
-typedef u_int8_t sad_uint8;
-typedef int8_t sad_sint8;
-
-#if SIZEOF_SHORT == 2
-  typedef unsigned short sad_uint16;
-  typedef short sad_sint16;
-#else
-#  error "Unsupported sizeof(short)"
-#endif
-
-#if SIZEOF_INT == 4
-  typedef unsigned int sad_uint32;
-  typedef int sad_sint32;
-#else
-#  error "Unsupported sizeof(int)"
-#endif
-
-typedef size_t sad_size_t;
+#include "../../config.h"
 
 typedef int SAD_error;
 
@@ -91,16 +64,16 @@ typedef enum {
 } SAD_sample_format;
 
 /* sample format -> sample size */
-static inline sad_size_t sf2ss(SAD_sample_format fmt) {
+static inline unsigned sf2ss(SAD_sample_format fmt) {
   switch(fmt) {
     case SAD_SAMPLE_S8:
-    case SAD_SAMPLE_U8: return sizeof(sad_sint8);
+    case SAD_SAMPLE_U8: return sizeof(int8_t);
     case SAD_SAMPLE_S16:
     case SAD_SAMPLE_S16_LE:
     case SAD_SAMPLE_S16_BE:
     case SAD_SAMPLE_U16:
     case SAD_SAMPLE_U16_LE:
-    case SAD_SAMPLE_U16_BE: return sizeof(sad_sint16);
+    case SAD_SAMPLE_U16_BE: return sizeof(int16_t);
     case SAD_SAMPLE_S24:
     case SAD_SAMPLE_S24_LE:
     case SAD_SAMPLE_S24_BE:
@@ -113,7 +86,7 @@ static inline sad_size_t sf2ss(SAD_sample_format fmt) {
     case SAD_SAMPLE_U32:
     case SAD_SAMPLE_U32_LE:
     case SAD_SAMPLE_U32_BE:
-    case SAD_SAMPLE_FIXED32: return sizeof(sad_sint32);
+    case SAD_SAMPLE_FIXED32: return sizeof(int32_t);
     case SAD_SAMPLE_FLOAT: return sizeof(float);
     default: return 0;
   }
@@ -133,11 +106,11 @@ typedef struct {
   int samplerate;
 } SAD_buffer_format;
 
-static inline sad_size_t bytes2frames(SAD_buffer_format *fmt, sad_size_t bytes) {
+static inline unsigned bytes2frames(SAD_buffer_format *fmt, unsigned bytes) {
   return bytes / sf2ss(fmt->sample_format) / fmt->channels;
 }
 
-static inline sad_size_t frames2bytes(SAD_buffer_format *fmt, sad_size_t frames) {
+static inline unsigned frames2bytes(SAD_buffer_format *fmt, unsigned frames) {
   return frames * sf2ss(fmt->sample_format) * fmt->channels;
 }
 
@@ -176,5 +149,5 @@ typedef struct {
 } SAD_replaygain_mode;
 
 
-#endif /* COMMON_H */
+#endif /* LIBSAD_H */
 

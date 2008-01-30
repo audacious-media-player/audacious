@@ -140,7 +140,8 @@ DATA = images/about-logo.png				\
        ui/carbon-menubar.ui
 
 CLEAN = build_stamp.c libaudacious.exe.a
-EXT_DEPS = ../libguess/libguess.a
+EXT_DEPS = ../libguess/libguess.a \
+           ../libSAD/libSAD.a
 
 include ../../buildsys.mk
 
@@ -161,7 +162,9 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${samplerate_CFLAGS}	\
 	    ${REGEX_CFLAGS}		\
 	    ${LIBMCS_CFLAGS}		\
+	    ${SIMD_CFLAGS}		\
 	    -D_AUDACIOUS_CORE		\
+	    -I../libSAD			\
 	    -I.. -I../..		\
 	    -I./intl
 
@@ -169,6 +172,7 @@ LIBS += ${LDADD}		\
 	${LIBINTL}		\
 	${samplerate_LIBS}	\
 	../libguess/libguess.a	\
+	../libSAD/libSAD.a	\
 	${GTK_LIBS}		\
 	${DBUS_LIBS}		\
 	${MOWGLI_LIBS}		\

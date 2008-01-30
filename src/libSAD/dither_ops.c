@@ -1,7 +1,7 @@
 /* Scale & Dither library (libSAD)
  * High-precision bit depth converter with ReplayGain support
  *
- * (c)2007 by Eugene Zagidullin (e.asphyx@gmail.com)
+ * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "common.h"
-#include "buffer.h"
+#include "libSAD.h"
+#include "dither_ops.h"
 #include "dither.h"
 
 /* buffer ops: */
@@ -27,37 +27,37 @@
  **********/
 
 /* signed */
-static sad_sint32 get_s8_i_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint8*)buf)[i*nch+ch];
+static int32_t get_s8_i_sample (void *buf, int nch, int ch, int i) {
+  return ((int8_t*)buf)[i*nch+ch];
 }
 
-static sad_sint32 get_s8_s_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint8**)buf)[ch][i];
+static int32_t get_s8_s_sample (void *buf, int nch, int ch, int i) {
+  return ((int8_t**)buf)[ch][i];
 }
 
-static void put_s8_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_sint8*)buf)[i*nch+ch] = (sad_sint8)sample;
+static void put_s8_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((int8_t*)buf)[i*nch+ch] = (int8_t)sample;
 }
 
-static void put_s8_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_sint8**)buf)[ch][i] = (sad_sint8)sample;
+static void put_s8_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((int8_t**)buf)[ch][i] = (int8_t)sample;
 }
 
 /* unsigned */
-static sad_sint32 get_u8_i_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)(((sad_uint8*)buf)[i*nch+ch]) - 128;
+static int32_t get_u8_i_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)(((u_int8_t*)buf)[i*nch+ch]) - 128;
 }
 
-static sad_sint32 get_u8_s_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)(((sad_uint8**)buf)[ch][i]) - 128;
+static int32_t get_u8_s_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)(((u_int8_t**)buf)[ch][i]) - 128;
 }
 
-static void put_u8_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint8*)buf)[i*nch+ch] = (sad_uint8)sample + 128;
+static void put_u8_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int8_t*)buf)[i*nch+ch] = (u_int8_t)sample + 128;
 }
 
-static void put_u8_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint8**)buf)[ch][i] = (sad_uint8)sample + 128;
+static void put_u8_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int8_t**)buf)[ch][i] = (u_int8_t)sample + 128;
 }
 
 static SAD_buffer_ops buf_s8_i_ops = {
@@ -85,43 +85,43 @@ static SAD_buffer_ops buf_u8_s_ops = {
  **********/
 
 /* signed */
-static sad_sint32 get_s16_i_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)(((sad_sint16*)buf)[i*nch+ch]);
+static int32_t get_s16_i_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)(((int16_t*)buf)[i*nch+ch]);
 }
 
-static sad_sint32 get_s16_s_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)(((sad_sint16**)buf)[ch][i]);
+static int32_t get_s16_s_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)(((int16_t**)buf)[ch][i]);
 }
 
-static void put_s16_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
+static void put_s16_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
 /*#ifdef DEEP_DEBUG
   printf("f: put_s16_i_sample\n");
 #endif*/
-  ((sad_sint16*)buf)[i*nch+ch] = (sad_sint16)sample;
+  ((int16_t*)buf)[i*nch+ch] = (int16_t)sample;
 }
 
-static void put_s16_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
+static void put_s16_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
 /*#ifdef DEEP_DEBUG
   printf("f: put_s16_s_sample\n");
 #endif*/
-  ((sad_sint16**)buf)[ch][i] = (sad_sint16)sample;
+  ((int16_t**)buf)[ch][i] = (int16_t)sample;
 }
 
 /* unsigned */
-static sad_sint32 get_u16_i_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint32)(((sad_uint16*)buf)[i*nch+ch])) - 32768;
+static int32_t get_u16_i_sample (void *buf, int nch, int ch, int i) {
+  return ((int32_t)(((u_int16_t*)buf)[i*nch+ch])) - 32768;
 }
 
-static sad_sint32 get_u16_s_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint32)(((sad_uint16**)buf)[ch][i])) - 32768;
+static int32_t get_u16_s_sample (void *buf, int nch, int ch, int i) {
+  return ((int32_t)(((u_int16_t**)buf)[ch][i])) - 32768;
 }
 
-static void put_u16_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint16*)buf)[i*nch+ch] = (sad_uint16)(sample + 32768);
+static void put_u16_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int16_t*)buf)[i*nch+ch] = (u_int16_t)(sample + 32768);
 }
 
-static void put_u16_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint16**)buf)[ch][i] = (sad_uint16)(sample + 32768);
+static void put_u16_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int16_t**)buf)[ch][i] = (u_int16_t)(sample + 32768);
 }
 
 static SAD_buffer_ops buf_s16_i_ops = {
@@ -149,40 +149,40 @@ static SAD_buffer_ops buf_u16_s_ops = {
  **********/
 
 /*expand 24-bit signed value to 32-bit*/
-#define EXPAND_24_TO_32(x) (((sad_sint32)(((x) & 0x00ffffff) << 8)) >> 8)
+#define EXPAND_24_TO_32(x) (((int32_t)(((x) & 0x00ffffff) << 8)) >> 8)
 
 /* signed */
-static sad_sint32 get_s24_i_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)EXPAND_24_TO_32(((sad_sint32*)buf)[i*nch+ch]);
+static int32_t get_s24_i_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)EXPAND_24_TO_32(((int32_t*)buf)[i*nch+ch]);
 }
 
-static sad_sint32 get_s24_s_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)EXPAND_24_TO_32(((sad_sint32**)buf)[ch][i]);
+static int32_t get_s24_s_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)EXPAND_24_TO_32(((int32_t**)buf)[ch][i]);
 }
 
-static void put_s24_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_sint32*)buf)[i*nch+ch] = (sad_sint32)sample & 0x00ffffff;
+static void put_s24_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((int32_t*)buf)[i*nch+ch] = (int32_t)sample & 0x00ffffff;
 }
 
-static void put_s24_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_sint32**)buf)[ch][i] = (sad_sint32)sample & 0x00ffffff;
+static void put_s24_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((int32_t**)buf)[ch][i] = (int32_t)sample & 0x00ffffff;
 }
 
 /* unsigned */
-static sad_sint32 get_u24_i_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)EXPAND_24_TO_32(((sad_uint32*)buf)[i*nch+ch]) - 8388608;
+static int32_t get_u24_i_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)EXPAND_24_TO_32(((u_int32_t*)buf)[i*nch+ch]) - 8388608;
 }
 
-static sad_sint32 get_u24_s_sample (void *buf, int nch, int ch, int i) {
-  return (sad_sint32)EXPAND_24_TO_32(((sad_uint32**)buf)[ch][i]) - 8388608;
+static int32_t get_u24_s_sample (void *buf, int nch, int ch, int i) {
+  return (int32_t)EXPAND_24_TO_32(((u_int32_t**)buf)[ch][i]) - 8388608;
 }
 
-static void put_u24_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint32*)buf)[i*nch+ch] = ((sad_uint32)sample + 8388608) & 0x00ffffff;
+static void put_u24_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int32_t*)buf)[i*nch+ch] = ((u_int32_t)sample + 8388608) & 0x00ffffff;
 }
 
-static void put_u24_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint32**)buf)[ch][i] = ((sad_uint32)sample + 8388608) & 0x00ffffff;
+static void put_u24_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int32_t**)buf)[ch][i] = ((u_int32_t)sample + 8388608) & 0x00ffffff;
 }
 
 static SAD_buffer_ops buf_s24_i_ops = {
@@ -210,37 +210,37 @@ static SAD_buffer_ops buf_u24_s_ops = {
  **********/
 
 /* signed */
-static sad_sint32 get_s32_i_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint32*)buf)[i*nch+ch];
+static int32_t get_s32_i_sample (void *buf, int nch, int ch, int i) {
+  return ((int32_t*)buf)[i*nch+ch];
 }
 
-static sad_sint32 get_s32_s_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint32**)buf)[ch][i];
+static int32_t get_s32_s_sample (void *buf, int nch, int ch, int i) {
+  return ((int32_t**)buf)[ch][i];
 }
 
-static void put_s32_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_sint32*)buf)[i*nch+ch] = (sad_sint32)sample;
+static void put_s32_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((int32_t*)buf)[i*nch+ch] = (int32_t)sample;
 }
 
-static void put_s32_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_sint32**)buf)[ch][i] = (sad_sint32)sample;
+static void put_s32_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((int32_t**)buf)[ch][i] = (int32_t)sample;
 }
 
 /* unsigned */
-static sad_sint32 get_u32_i_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint32*)buf)[i*nch+ch] - (sad_sint32)(1L<<31);
+static int32_t get_u32_i_sample (void *buf, int nch, int ch, int i) {
+  return ((int32_t*)buf)[i*nch+ch] - (int32_t)(1L<<31);
 }
 
-static sad_sint32 get_u32_s_sample (void *buf, int nch, int ch, int i) {
-  return ((sad_sint32**)buf)[ch][i] - (sad_sint32)(1L<<31);
+static int32_t get_u32_s_sample (void *buf, int nch, int ch, int i) {
+  return ((int32_t**)buf)[ch][i] - (int32_t)(1L<<31);
 }
 
-static void put_u32_i_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint32*)buf)[i*nch+ch] = (sad_uint32)(sample + (sad_sint32)(1L<<31));
+static void put_u32_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int32_t*)buf)[i*nch+ch] = (u_int32_t)(sample + (int32_t)(1L<<31));
 }
 
-static void put_u32_s_sample (void *buf, sad_sint32 sample, int nch, int ch, int i) {
-  ((sad_uint32**)buf)[ch][i] = (sad_uint32)(sample + (sad_sint32)(1L<<31));
+static void put_u32_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  ((u_int32_t**)buf)[ch][i] = (u_int32_t)(sample + (int32_t)(1L<<31));
 }
 
 static SAD_buffer_ops buf_s32_i_ops = {
