@@ -26,7 +26,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-/* #define AUD_DEBUG 1 */
+#define AUD_DEBUG 1
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
@@ -228,7 +228,18 @@ playlist_entry_get_info(PlaylistEntry * entry)
     /* renew tuple if file mtime is newer than tuple mtime. */
     if (entry->tuple){
         if (tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == modtime) {
-            g_free(pr);
+            if (pr != NULL) g_free(pr);
+            
+            if (entry->title_is_valid == FALSE) { /* update title even tuple is present and up to date --asphyx */
+                AUDDBG("updating title from actual tuple\n");
+                formatter = tuple_get_string(entry->tuple, FIELD_FORMATTER, NULL);
+                if (entry->title != NULL) g_free(entry->title);
+                entry->title = tuple_formatter_make_title_string(entry->tuple, formatter ?
+                                                  formatter : get_gentitle_format());
+                entry->title_is_valid = TRUE;
+                AUDDBG("new title: \"%s\"\n", entry->title);
+            }
+
             return TRUE;
         } else {
             mowgli_object_unref(entry->tuple);
@@ -242,7 +253,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
         tuple = entry->decoder->get_song_tuple(entry->filename);
 
     if (tuple == NULL) {
-        g_free(pr);
+        if (pr != NULL) g_free(pr);
         return FALSE;
     }
 
@@ -253,10 +264,11 @@ playlist_entry_get_info(PlaylistEntry * entry)
     formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
     entry->title = tuple_formatter_make_title_string(tuple, formatter ?
                                                   formatter : get_gentitle_format());
+    entry->title_is_valid = TRUE;
     entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
     entry->tuple = tuple;
 
-    g_free(pr);
+    if (pr != NULL) g_free(pr);
 
     return TRUE;
 }
@@ -743,6 +755,7 @@ __playlist_ins_file(Playlist * playlist,
             g_free(entry->title);
             entry->title = tuple_formatter_make_title_string(tuple,
                 formatter ? formatter : get_gentitle_format());
+            entry->title_is_valid = TRUE;
             entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
             entry->tuple = tuple;
         }
@@ -2564,7 +2577,7 @@ playlist_get_info_func(gpointer arg)
 
                 if(playlist->attribute & PLAYLIST_STATIC || // live lock fix
                    (entry->tuple && tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                    tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1)) {
+                    tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 && entry->title_is_valid)) {
                     update_playlistwin = TRUE;
                     continue;
                 }
@@ -2579,7 +2592,7 @@ playlist_get_info_func(gpointer arg)
                     tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
                     tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1) {
                     update_playlistwin = TRUE;
-                    break;
+                    break; /* hmmm... --asphyx */
                 }
             }
             
@@ -2609,7 +2622,7 @@ playlist_get_info_func(gpointer arg)
 
                  if(playlist->attribute & PLAYLIST_STATIC ||
                    (entry->tuple && tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                    tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1)) {
+                    tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 && entry->title_is_valid)) {
                     continue;
                  }
 
@@ -2696,11 +2709,29 @@ playlist_stop_get_info_thread(void)
 void
 playlist_start_get_info_scan(void)
 {
+    AUDDBG("waking up scan thread\n");
     g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
     g_mutex_unlock(mutex_scan);
 
     g_cond_signal(cond_scan);
+}
+
+void
+playlist_update_all_titles(void) /* update titles after format changing --asphyx */
+{
+    PlaylistEntry *entry;
+    GList *node;
+    Playlist *playlist = playlist_get_active();
+    
+    AUDDBG("invalidating titles\n");
+    PLAYLIST_LOCK(playlist);
+    for (node = playlist->entries; node; node = g_list_next(node)) {
+        entry = node->data;
+        entry->title_is_valid = FALSE;
+    }
+    PLAYLIST_UNLOCK(playlist);
+    playlist_start_get_info_scan();
 }
 
 void

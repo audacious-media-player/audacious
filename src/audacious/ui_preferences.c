@@ -44,6 +44,7 @@
 #include "general.h"
 #include "output.h"
 #include "visualization.h"
+#include "playlist.h"
 
 #include "main.h"
 #include "ui_skinned_textbox.h"
@@ -588,6 +589,8 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
 
     cfg.titlestring_preset = position;
     gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
+
+    playlist_update_all_titles(); /* update titles */
 }
 
 static void
