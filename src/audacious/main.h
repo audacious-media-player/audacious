@@ -143,6 +143,13 @@ struct _BmpConfig {
     gboolean disable_inline_gtk;
     gboolean remember_jtf_entry;
     gint output_bit_depth;
+    gboolean enable_replay_gain;
+    gboolean enable_clipping_prevention;
+    gboolean replay_gain_track;
+    gboolean replay_gain_album;
+    gboolean enable_hard_limiter;
+    gfloat replay_gain_preamp;
+    gfloat default_gain;
 };
 
 typedef struct _BmpConfig BmpConfig;

@@ -232,6 +232,13 @@ BmpConfig bmp_default_config = {
     FALSE,          /* disable inline themes */
     TRUE,           /* remember jtf text entry */
     16,             /* output bit depth */
+    TRUE,           /* enable replay gain */
+    TRUE,           /* enable clipping prevention */
+    TRUE,           /* track mode */
+    FALSE,          /* album mode */
+    FALSE,          /* enable hard limiter */
+    0.0,            /* preamp */
+    -9.0,           /* default gain */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -343,6 +350,11 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"warn_about_broken_gtk_engines", &cfg.warn_about_broken_gtk_engines, TRUE},
     {"disable_inline_gtk", &cfg.disable_inline_gtk, TRUE},
     {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
+    {"enable_replay_gain",         &cfg.enable_replay_gain, TRUE},
+    {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
+    {"replay_gain_track",          &cfg.replay_gain_track, TRUE},
+    {"replay_gain_album",          &cfg.replay_gain_album, TRUE},
+    {"enable_hard_limiter",        &cfg.enable_hard_limiter, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -631,6 +643,10 @@ bmp_config_load(void)
         }
     }
 
+    /* RG settings */
+    cfg_db_get_float(db, NULL, "replay_gain_preamp", &cfg.replay_gain_preamp);
+    cfg_db_get_float(db, NULL, "default_gain", &cfg.default_gain);
+
     cfg_db_close(db);
 
 
@@ -883,6 +899,10 @@ bmp_config_save(void)
     }
 
     cfg_db_set_float(db, NULL, "equalizer_preamp", cfg.equalizer_preamp);
+    
+    /* RG settings */
+    cfg_db_set_float(db, NULL, "replay_gain_preamp", cfg.replay_gain_preamp);
+    cfg_db_set_float(db, NULL, "default_gain",       cfg.default_gain);
 
     for (i = 0; i < 10; i++) {
         str = g_strdup_printf("equalizer_band%d", i);

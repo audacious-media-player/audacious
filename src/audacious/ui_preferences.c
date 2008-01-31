@@ -218,6 +218,12 @@ static PreferencesWidget audio_page_widgets[] = {
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_bit_depth},
+    {WIDGET_LABEL, N_("<b>Replay Gain</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
+    {WIDGET_RADIO_BTN, N_("Use track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
+    {WIDGET_RADIO_BTN, N_("Use album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
+    {WIDGET_CHK_BTN, N_("Enable clipping prevention"), &cfg.enable_clipping_prevention, NULL, NULL, TRUE},
+    {WIDGET_CHK_BTN, N_("Enable 6 dB hard limiter"), &cfg.enable_hard_limiter, NULL, NULL, TRUE},
 };
 
 static PreferencesWidget playback_page_widgets[] = {
@@ -1714,6 +1720,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
                 break;
             case WIDGET_RADIO_BTN:
+                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
                 widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, _(widgets[x].label));
                 radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
                 g_signal_connect(G_OBJECT(widget), "toggled",
