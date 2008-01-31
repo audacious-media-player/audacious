@@ -265,7 +265,7 @@ int id3_field_parse(union id3_field *field, id3_byte_t const **ptr,
 
       end = *ptr + length;
 
-      while (end - *ptr > 0) {
+      while (end - *ptr > 0 && **ptr != '\0') {
 	latin1 = id3_parse_latin1(ptr, end - *ptr, 0);
 	if (latin1 == 0)
 	  goto fail;
@@ -304,7 +304,7 @@ int id3_field_parse(union id3_field *field, id3_byte_t const **ptr,
 
       end = *ptr + length;
 
-      while (end - *ptr > 0) {
+      while (end - *ptr > 0 && **ptr != '\0') {
 	ucs4 = id3_parse_string(ptr, end - *ptr, *encoding, 0);
 	if (ucs4 == 0)
 	  goto fail;
