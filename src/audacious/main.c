@@ -79,6 +79,7 @@
 #include "ui_fileinfo.h"
 #include "signals.h"
 #include "ui_skinned_window.h"
+#include "libSAD.h"
 
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
@@ -1429,6 +1430,7 @@ main(gint argc, gchar ** argv)
     signal_handlers_init();
 
     g_random_set_seed(time(NULL));
+    SAD_dither_init_rand((gint32)time(NULL));
 
     bmp_config_load();
 

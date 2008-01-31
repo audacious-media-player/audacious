@@ -20,7 +20,7 @@
 #ifndef DITHER_OPS_H
 #define DITHER_OPS_H
 
-#include "libSAD.h"
+#include "common.h"
 #include "dither.h"
 
 SAD_buffer_ops* SAD_assign_buf_ops (SAD_buffer_format *format);

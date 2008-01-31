@@ -18,7 +18,7 @@
  */
 
 
-#include "libSAD.h"
+#include "common.h"
 #include "dither_ops.h"
 #include "noicegen.h"
 
@@ -303,6 +303,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_S8:
     case SAD_SAMPLE_U8: priv->output_bits = 8; break;
     case SAD_SAMPLE_S16:
+    case SAD_SAMPLE_S16_LE:
     case SAD_SAMPLE_U16: priv->output_bits = 16; break;
     case SAD_SAMPLE_S24:
     case SAD_SAMPLE_U24: priv->output_bits = 24; break;
@@ -319,6 +320,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_S8:
     case SAD_SAMPLE_U8: priv->input_bits = 8; break;
     case SAD_SAMPLE_S16:
+    case SAD_SAMPLE_S16_LE:
     case SAD_SAMPLE_U16: priv->input_bits = 16; break;
     case SAD_SAMPLE_S24:
     case SAD_SAMPLE_U24: priv->input_bits = 24; break;
@@ -489,4 +491,8 @@ int SAD_dither_set_dither (SAD_dither_t *state, int dither) {
   SAD_state_priv *priv = (SAD_state_priv*) state;
   priv->dither = dither;
   return SAD_ERROR_OK;
+}
+
+void SAD_dither_init_rand(uint32_t seed) {
+  noicegen_init_rand(seed);
 }

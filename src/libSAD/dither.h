@@ -20,7 +20,7 @@
 #ifndef DITHER_H
 #define DITHER_H
 
-#include "libSAD.h"
+#include "common.h"
 
 #define SAD_ERROR_INCORRECT_INPUT_SAMPLEFORMAT -2
 #define SAD_ERROR_INCORRECT_OUTPUT_SAMPLEFORMAT -3
@@ -36,6 +36,8 @@ typedef struct {
 
 /* private data */
 typedef struct {} SAD_dither_t;
+
+void SAD_dither_init_rand(uint32_t seed);
 
 SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format *outbuf_format, int *error);
 int SAD_dither_free(SAD_dither_t* state);

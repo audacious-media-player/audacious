@@ -40,3 +40,7 @@ float triangular_dither_noise_f() {
   // Please, check it thoroughly: is this assumption correct in floatin-point arithmetic?
   return (float) triangular_dither_noise(17) / 65536.0;
 }
+
+void noicegen_init_rand(uint32_t seed) {
+  init_gen_rand(seed);
+}

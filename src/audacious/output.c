@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious team
+ *  Copyright (C) 2005-2008  Audacious team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#define AUD_DEBUG
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -41,6 +43,8 @@
 #include "effect.h"
 #include "volumecontrol.h"
 #include "visualization.h"
+
+#include "libSAD.h"
 
 #include <math.h>
 
@@ -76,6 +80,78 @@ OutputPlugin psuedo_output_plugin = {
     .output_time = get_output_time,
     .written_time = get_written_time,
 };
+
+static const struct {
+    AFormat afmt;
+    SAD_sample_format sadfmt;
+} format_table[] = {
+    {FMT_U8, SAD_SAMPLE_U8},
+    {FMT_S8, SAD_SAMPLE_S8},
+
+    {FMT_S16_LE, SAD_SAMPLE_S16_LE},
+    {FMT_S16_BE, SAD_SAMPLE_S16_BE},
+    {FMT_S16_NE, SAD_SAMPLE_S16},
+
+    {FMT_U16_LE, SAD_SAMPLE_U16_LE},
+    {FMT_U16_BE, SAD_SAMPLE_U16_BE},
+    {FMT_U16_NE, SAD_SAMPLE_U16},
+
+    {FMT_S24_LE, SAD_SAMPLE_S24_LE},
+    {FMT_S24_BE, SAD_SAMPLE_S24_BE},
+    {FMT_S24_NE, SAD_SAMPLE_S24},
+    
+    {FMT_U24_LE, SAD_SAMPLE_U24_LE},
+    {FMT_U24_BE, SAD_SAMPLE_U24_BE},
+    {FMT_U24_NE, SAD_SAMPLE_U24},
+
+    {FMT_S32_LE, SAD_SAMPLE_S32_LE},
+    {FMT_S32_BE, SAD_SAMPLE_S32_BE},
+    {FMT_S32_NE, SAD_SAMPLE_S32},
+    
+    {FMT_U32_LE, SAD_SAMPLE_U32_LE},
+    {FMT_U32_BE, SAD_SAMPLE_U32_BE},
+    {FMT_U32_NE, SAD_SAMPLE_U32},
+    
+    {FMT_FLOAT, SAD_SAMPLE_FLOAT},
+};
+
+static inline unsigned sample_size(AFormat fmt) {
+  switch(fmt) {
+    case FMT_S8:
+    case FMT_U8: return sizeof(gint8);
+    case FMT_S16_NE:
+    case FMT_S16_LE:
+    case FMT_S16_BE:
+    case FMT_U16_NE:
+    case FMT_U16_LE:
+    case FMT_U16_BE: return sizeof(gint16);
+    case FMT_S24_NE:
+    case FMT_S24_LE:
+    case FMT_S24_BE:
+    case FMT_U24_NE:
+    case FMT_U24_LE:
+    case FMT_U24_BE:
+    case FMT_S32_NE:
+    case FMT_S32_LE:
+    case FMT_S32_BE:
+    case FMT_U32_NE:
+    case FMT_U32_LE:
+    case FMT_U32_BE: return sizeof(gint32);
+    case FMT_FLOAT: return sizeof(float);
+    default: return 0;
+  }
+}
+
+static SAD_sample_format
+sadfmt_from_afmt(AFormat fmt)
+{
+    int i;
+    for (i = 0; i < sizeof(format_table) / sizeof(format_table[0]); i++) {
+        if (format_table[i].afmt == fmt) return format_table[i].sadfmt;
+    }
+
+    return -1;
+}
 
 OutputPlugin *
 get_current_output_plugin(void)
@@ -251,17 +327,39 @@ static void freeSRC()
 
 #endif
 
+static SAD_dither_t *sad_state = NULL;
+static SAD_dither_t *sad_state_to_float = NULL;
+static SAD_dither_t *sad_state_from_float = NULL;
+static void *sad_out_buf = NULL;
+static int sad_out_buf_length = 0;
+
+static void
+freeSAD()
+{
+    if (sad_state != NULL)            {SAD_dither_free(sad_state);            sad_state = NULL;}
+    if (sad_state_from_float != NULL) {SAD_dither_free(sad_state_from_float); sad_state_from_float = NULL;}
+    if (sad_state_to_float != NULL)   {SAD_dither_free(sad_state_to_float);   sad_state_to_float = NULL;}
+    if (sad_out_buf != NULL)          {free(sad_out_buf);                     sad_out_buf = NULL; sad_out_buf_length = 0;}
+}
+
 gint
 output_open_audio(AFormat fmt, gint rate, gint nch)
 {
     gint ret;
     OutputPlugin *op;
-    
-#ifdef USE_SRC
     ConfigDb *db;
+    AUDDBG("\n");
+
+    AFormat output_fmt;
+    int bit_depth;
+    SAD_buffer_format input_sad_fmt;
+    SAD_buffer_format output_sad_fmt;
+    
+    db = cfg_db_open();
+
+#ifdef USE_SRC
     gboolean src_enabled;
     gint src_rate, src_type;
-    db = cfg_db_open();
     
     if (cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
       src_enabled = FALSE;
@@ -280,13 +378,9 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     else
       converter_type = src_type;
     
-    cfg_db_close(db);
-    
     freeSRC();
     
-    if(src_enabled&&
-       (fmt == FMT_S16_NE||(fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN)||
-	(fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)))
+    if(src_enabled)
       {
 	src_state = src_new(converter_type, nch, &srcError);
 	if (src_state != NULL)
@@ -295,9 +389,93 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 	    rate = overSamplingFs;
 	  }
 	else
+        {
 	  fprintf(stderr, "src_new(): %s\n\n", src_strerror(srcError));
+          src_enabled = FALSE;
+        }
       }
 #endif
+    
+    if (cfg_db_get_int(db, NULL, "output_bit_depth", &bit_depth) == FALSE) bit_depth = 16;
+    cfg_db_close(db);
+
+    AUDDBG("bit depth: %d\n", bit_depth);
+    output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE; /* no reason to support other output formats --asphyx */
+    
+    freeSAD();
+
+#ifdef USE_SRC
+    if (src_enabled) {
+        AUDDBG("initializing dithering engine for 2 stage conversion\n");
+        input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
+        if (input_sad_fmt.sample_format < 0) return -1;
+        input_sad_fmt.fracbits = 0;
+        input_sad_fmt.channels = nch;
+        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+        input_sad_fmt.samplerate = 0;
+        
+        output_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
+        output_sad_fmt.fracbits = 0;
+        output_sad_fmt.channels = nch;
+        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+        output_sad_fmt.samplerate = 0;
+        
+        sad_state_to_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
+        if (sad_state_to_float == NULL) {
+            AUDDBG("ditherer init failed (decoder's native --> float)\n");
+            return -1;
+        }
+        SAD_dither_set_dither (sad_state_to_float, FALSE);
+        
+        input_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
+        input_sad_fmt.fracbits = 0;
+        input_sad_fmt.channels = nch;
+        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+        input_sad_fmt.samplerate = 0;
+        
+        output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
+        if (output_sad_fmt.sample_format < 0) return -1;
+        output_sad_fmt.fracbits = 0;
+        output_sad_fmt.channels = nch;
+        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+        output_sad_fmt.samplerate = 0;
+        
+        sad_state_from_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
+        if (sad_state_from_float == NULL) {
+            SAD_dither_free(sad_state_to_float);
+            AUDDBG("ditherer init failed (float --> output)\n");
+            return -1;
+        }
+        SAD_dither_set_dither (sad_state_from_float, TRUE);
+        
+        fmt = output_fmt;
+    } else
+#endif /* USE_SRC */
+    if (output_fmt != fmt) {
+        AUDDBG("initializing dithering engine for direct conversion\n");
+
+        input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
+        if (input_sad_fmt.sample_format < 0) return -1;
+        input_sad_fmt.fracbits = 0;
+        input_sad_fmt.channels = nch;
+        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+        input_sad_fmt.samplerate = 0; /* resampling not implemented yet in libSAD */
+        
+        output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
+        output_sad_fmt.fracbits = 0;
+        output_sad_fmt.channels = nch;
+        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+        output_sad_fmt.samplerate = 0;
+
+        sad_state = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
+        if (sad_state == NULL) {
+            AUDDBG("ditherer init failed\n");
+            return -1;
+        }
+        SAD_dither_set_dither (sad_state, TRUE);
+
+        fmt = output_fmt;
+    }
     
     op = get_current_output_plugin();
 
@@ -319,6 +497,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
     if (ret == 1)            /* Success? */
     {
+        AUDDBG("opened audio: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
         op_state.fmt = fmt;
         op_state.rate = rate;
         op_state.nch = nch;
@@ -344,9 +523,12 @@ output_close_audio(void)
 {
     OutputPlugin *op = get_current_output_plugin();
 
+    AUDDBG("\n");
+
 #ifdef USE_SRC
     freeSRC();
 #endif
+    freeSAD();
 
     /* Do not close if there are still songs to play and the user has 
      * not requested a stop.  --nenolod
@@ -423,6 +605,8 @@ output_pass_audio(InputPlayback *playback,
     static Flow *postproc_flow = NULL;
     OutputPlugin *op = playback->output;
     gint writeoffs;
+
+    if (length <= 0) return;
     gint time = playback->output->written_time();
 
     if (postproc_flow == NULL)
@@ -435,9 +619,10 @@ output_pass_audio(InputPlayback *playback,
     }
 
 #ifdef USE_SRC
-    if(src_state != NULL&&length > 0)
+    if(src_state != NULL)
       {
-        int lrLength = length / nch;
+        /*int lrLength = length / nch;*/
+        int lrLength = length / sample_size(fmt);
         int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
 	if(lengthOfSrcIn < lrLength)
 	  {
@@ -451,9 +636,10 @@ output_pass_audio(InputPlayback *playback,
 	    free(srcOut);
 	    free(wOut);
 	    srcOut = (float*)malloc(sizeof(float)*overLrLength);
-	    wOut = (short int*)malloc(sizeof(short int)*overLrLength);
+	    wOut = (short int*)malloc(sample_size(op_state.fmt) * overLrLength);
 	  }
-        src_short_to_float_array((short int*)ptr, srcIn, lrLength);
+        /*src_short_to_float_array((short int*)ptr, srcIn, lrLength);*/
+        SAD_dither_process_buffer(sad_state_to_float, ptr, srcIn, lrLength / nch);
         src_data.data_in = srcIn;
         src_data.data_out = srcOut;
         src_data.end_of_input = 0;
@@ -465,14 +651,31 @@ output_pass_audio(InputPlayback *playback,
           }
         else
           {
-            src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);
+            /*src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);*/
+            SAD_dither_process_buffer(sad_state_from_float, srcOut, wOut, src_data.output_frames_gen);
             ptr = wOut;
-            length = src_data.output_frames_gen * (nch * 2);
+            length = src_data.output_frames_gen *  op_state.nch * sample_size(op_state.fmt);
           }
-      }
+      } else
 #endif
-
-    length = flow_execute(postproc_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+    if(sad_state != NULL) {
+        int frames  = length / nch / sample_size(fmt);
+        int len =  frames * op_state.nch * sample_size(op_state.fmt);
+        if(sad_out_buf == NULL || sad_out_buf_length < len ) {
+            if(sad_out_buf != NULL) free (sad_out_buf);
+            sad_out_buf = malloc(len);
+            sad_out_buf_length = len; 
+        }
+        SAD_dither_process_buffer(sad_state, ptr, sad_out_buf, frames);
+        ptr = sad_out_buf;
+    }
+    
+    if (op_state.fmt == FMT_S16_NE || (op_state.fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN) ||
+                                      (op_state.fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)) {
+        length = flow_execute(postproc_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+    } else {
+        AUDDBG("postproc_flow can deal only with S16_NE streams\n"); /*FIXME*/
+    }
 
     writeoffs = 0;
     while (writeoffs < length)
