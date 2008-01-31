@@ -487,6 +487,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
     {
         /* Yes, and it's the correct sampling rate. Reset the counter and go. */
+        AUDDBG("flushing output instead of reopening\n");
         op->flush(0);
         return 1;
     }
@@ -668,6 +669,7 @@ output_pass_audio(InputPlayback *playback,
         }
         SAD_dither_process_buffer(sad_state, ptr, sad_out_buf, frames);
         ptr = sad_out_buf;
+        length = len;
     }
     
     if (op_state.fmt == FMT_S16_NE || (op_state.fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN) ||
@@ -723,4 +725,11 @@ output_pass_audio(InputPlayback *playback,
 
         writeoffs += writable;
     }
+}
+
+/* called by input plugin when RG info available */
+void
+output_set_replaygain_info (InputPlayback *pb, ReplayGainInfo *rg_info)
+{
+ /*stub*/
 }

@@ -112,6 +112,13 @@ typedef struct {
     InputPlugin *ip;
 } ProbeResult;
 
+typedef struct {
+    gfloat track_gain; /* in dB !!! --asphyx */
+    gfloat track_peak;
+    gfloat album_gain;
+    gfloat album_peak;
+} ReplayGainInfo;
+
 typedef GHashTable INIFile;
 
 #include "audacious/playlist.h"
@@ -1071,6 +1078,9 @@ struct _InputPlayback {
     void (*set_title) (InputPlayback *, gchar * text);
 
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
+
+    /* added in Audacious 1.5 */
+    void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *); /* called by input plugin when RG info available --asphyx */
 };
 
 struct _InputPlugin {

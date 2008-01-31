@@ -17,6 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*#define CLIPPING_DEBUG*/
+/*#define DITHER_DEBUG*/
 
 #include "common.h"
 #include "dither_ops.h"
@@ -150,7 +152,7 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
   if (precision_loss && (n_bits_to_loose >= 1)) sample += (1L << (n_bits_to_loose - 1));
 
 #ifdef DITHER_DEBUG
-  int32_t val_wo_dither = sample, >> n_bits_to_loose;
+  int32_t val_wo_dither = sample >> n_bits_to_loose;
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
   if (dither && precision_loss && (n_bits_to_loose >= 1)) {

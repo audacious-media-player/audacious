@@ -386,6 +386,7 @@ playback_new(void)
     playback->set_params = playback_set_pb_params;
     playback->set_title = playback_set_pb_title;
     playback->pass_audio = output_pass_audio;
+    playback->set_replaygain_info = output_set_replaygain_info;
 
     return playback;
 }
