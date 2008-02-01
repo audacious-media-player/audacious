@@ -20,6 +20,7 @@
 
 #include "ui_skinned_button.h"
 #include "util.h"
+#include <math.h>
 
 #define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_button_get_type(), UiSkinnedButtonPrivate))
 typedef struct _UiSkinnedButtonPrivate UiSkinnedButtonPrivate;
@@ -263,24 +264,24 @@ static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *al
     UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     widget->allocation = *allocation;
-    widget->allocation.x *= (priv->scaled ? cfg.scale_factor : 1);
-    widget->allocation.y *= (priv->scaled ? cfg.scale_factor : 1);
+    widget->allocation.x = ceil(widget->allocation.x*(priv->scaled ? cfg.scale_factor : 1));
+    widget->allocation.y = ceil(widget->allocation.y*(priv->scaled ? cfg.scale_factor : 1));
 
     if (GTK_WIDGET_REALIZED (widget))
     {
         if ( button->event_window != NULL )
-            gdk_window_move_resize(button->event_window, allocation->x*(priv->scaled ? cfg.scale_factor : 1), allocation->y*(priv->scaled ? cfg.scale_factor : 1), allocation->width, allocation->height);
+            gdk_window_move_resize(button->event_window, ceil(allocation->x*(priv->scaled ? cfg.scale_factor : 1)), ceil(allocation->y*(priv->scaled ? cfg.scale_factor : 1)), allocation->width, allocation->height);
         else
-            gdk_window_move_resize(widget->window, allocation->x*(priv->scaled ? cfg.scale_factor : 1), allocation->y*(priv->scaled ? cfg.scale_factor : 1), allocation->width, allocation->height);
+            gdk_window_move_resize(widget->window, ceil(allocation->x*(priv->scaled ? cfg.scale_factor : 1)), ceil(allocation->y*(priv->scaled ? cfg.scale_factor : 1)), allocation->width, allocation->height);
     }
 
-    if (button->x + priv->move_x == widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1))
+    if (button->x + priv->move_x == ceil(widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1)))
         priv->move_x = 0;
-    if (button->y + priv->move_y == widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1))
+    if (button->y + priv->move_y == ceil(widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1)))
         priv->move_y = 0;
 
-    button->x = widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1);
-    button->y = widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1);
+    button->x = ceil(widget->allocation.x/(priv->scaled ? cfg.scale_factor : 1));
+    button->y = ceil(widget->allocation.y/(priv->scaled ? cfg.scale_factor : 1));
 }
 
 static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *event) {

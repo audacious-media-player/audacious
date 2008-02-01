@@ -703,6 +703,7 @@ create_fileinfo_window(void)
     gtk_box_pack_start(GTK_BOX(vbox3), alignment, TRUE, TRUE, 0);
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 0, 0);
     arrow_rawdata = gtk_expander_new(_("<span size=\"small\">Raw Metadata</span>"));
     gtk_expander_set_use_markup(GTK_EXPANDER(arrow_rawdata), TRUE);
     gtk_container_add(GTK_CONTAINER(alignment), arrow_rawdata);

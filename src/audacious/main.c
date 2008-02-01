@@ -166,7 +166,7 @@ BmpConfig bmp_default_config = {
     0.0,                        /* equalizer preamp */
     {0.0, 0.0, 0.0, 0.0, 0.0,             /* equalizer bands */
      0.0, 0.0, 0.0, 0.0, 0.0},
-    1.5,                        /* GUI scale factor, set to 1.5 for testing purposes --majeru */
+    1.2,                        /* GUI scale factor, hardcoded for testing purposes --majeru */
     NULL,                       /* skin */
     NULL,                       /* output plugin */
     NULL,                       /* file selector path */
@@ -614,6 +614,9 @@ bmp_config_load(void)
         cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
     }
 
+    /* custom scale factor */
+    cfg_db_get_float(db, NULL, "scale_factor", &cfg.scale_factor);
+
     /* History */
     if (cfg_db_get_int(db, NULL, "url_history_length", &length)) {
         for (i = 1; i <= length; i++) {
@@ -883,6 +886,8 @@ bmp_config_save(void)
         cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
         g_free(str);
     }
+
+    cfg_db_set_float(db, NULL, "scale_factor", cfg.scale_factor);
 
     if (bmp_active_skin != NULL)
     {
