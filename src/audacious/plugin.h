@@ -1080,7 +1080,8 @@ struct _InputPlayback {
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 
     /* added in Audacious 1.5 */
-    void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *); /* called by input plugin when RG info available --asphyx */
+    /* called by input plugin when RG info available --asphyx */
+    void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 };
 
 struct _InputPlugin {

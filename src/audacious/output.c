@@ -142,6 +142,8 @@ static inline unsigned sample_size(AFormat fmt) {
   }
 }
 
+static void apply_replaygain_info (ReplayGainInfo *rg_info);
+
 static SAD_sample_format
 sadfmt_from_afmt(AFormat fmt)
 {
@@ -332,6 +334,12 @@ static SAD_dither_t *sad_state_to_float = NULL;
 static SAD_dither_t *sad_state_from_float = NULL;
 static void *sad_out_buf = NULL;
 static int sad_out_buf_length = 0;
+static ReplayGainInfo replay_gain_info = {
+    .track_gain = 0.0,
+    .track_peak = 0.0,
+    .album_gain = 0.0,
+    .album_peak = 0.0,
+};
 
 static void
 freeSAD()
@@ -347,19 +355,19 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 {
     gint ret;
     OutputPlugin *op;
-    ConfigDb *db;
     AUDDBG("\n");
 
     AFormat output_fmt;
     int bit_depth;
     SAD_buffer_format input_sad_fmt;
     SAD_buffer_format output_sad_fmt;
-    
-    db = cfg_db_open();
 
 #ifdef USE_SRC
     gboolean src_enabled;
     gint src_rate, src_type;
+    ConfigDb *db;
+    
+    db = cfg_db_open();
     
     if (cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
       src_enabled = FALSE;
@@ -394,10 +402,12 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
           src_enabled = FALSE;
         }
       }
+    
+    cfg_db_close(db);
 #endif
     
-    if (cfg_db_get_int(db, NULL, "output_bit_depth", &bit_depth) == FALSE) bit_depth = 16;
-    cfg_db_close(db);
+    /*if (cfg_db_get_int(db, NULL, "output_bit_depth", &bit_depth) == FALSE) bit_depth = 16;*/
+    bit_depth = cfg.output_bit_depth;
 
     AUDDBG("bit depth: %d\n", bit_depth);
     output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE; /* no reason to support other output formats --asphyx */
@@ -451,7 +461,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         fmt = output_fmt;
     } else
 #endif /* USE_SRC */
-    if (output_fmt != fmt) {
+    {   /* needed for RG processing !*/
         AUDDBG("initializing dithering engine for direct conversion\n");
 
         input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
@@ -476,6 +486,9 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
         fmt = output_fmt;
     }
+
+    if(replay_gain_info.album_peak != 0.0 || replay_gain_info.track_peak != 0.0)
+        apply_replaygain_info(&replay_gain_info);
     
     op = get_current_output_plugin();
 
@@ -530,6 +543,12 @@ output_close_audio(void)
     freeSRC();
 #endif
     freeSAD();
+    
+    AUDDBG("clearing RG settings\n");
+    replay_gain_info.track_gain = 0.0;
+    replay_gain_info.track_peak = 0.0;
+    replay_gain_info.album_gain = 0.0;
+    replay_gain_info.album_peak = 0.0;
 
     /* Do not close if there are still songs to play and the user has 
      * not requested a stop.  --nenolod
@@ -727,9 +746,57 @@ output_pass_audio(InputPlayback *playback,
     }
 }
 
-/* called by input plugin when RG info available */
+/* called by input plugin when RG info available --asphyx */
 void
 output_set_replaygain_info (InputPlayback *pb, ReplayGainInfo *rg_info)
 {
- /*stub*/
+    replay_gain_info = *rg_info;
+    apply_replaygain_info(rg_info);
+}
+
+static void
+apply_replaygain_info (ReplayGainInfo *rg_info)
+{
+    SAD_replaygain_mode mode;
+    SAD_replaygain_info info;
+    /*ConfigDb *db;*/
+    gboolean rg_enabled;
+    gboolean album_mode;
+    SAD_dither_t *active_state;
+
+
+    if(sad_state == NULL && sad_state_from_float == NULL) {
+        AUDDBG("SAD not initialized!\n");
+        return;
+    }
+    
+    rg_enabled = cfg.enable_replay_gain;
+    album_mode = cfg.replay_gain_album;
+    mode.clipping_prevention = cfg.enable_clipping_prevention;
+    mode.hard_limit = cfg.enable_hard_limiter;
+    
+    if(!rg_enabled) return;
+
+    mode.mode = album_mode ? SAD_RG_ALBUM : SAD_RG_TRACK;
+    mode.preamp = 0.0; /*FIXME*/
+
+    info.present = TRUE;
+    info.track_gain = rg_info->track_gain;
+    info.track_peak = rg_info->track_peak;
+    info.album_gain = rg_info->album_gain;
+    info.album_peak = rg_info->album_peak;
+
+    AUDDBG("Applying Replay Gain settings:\n");
+    AUDDBG("* mode:                %s\n",     mode.mode == SAD_RG_ALBUM ? "album" : "track");
+    AUDDBG("* clipping prevention: %s\n",     mode.clipping_prevention ? "yes" : "no");
+    AUDDBG("* hard limit:          %s\n",     mode.hard_limit ? "yes" : "no");
+    AUDDBG("* preamp:              %+f dB\n", mode.preamp);
+    AUDDBG("Replay Gain info for current track:\n");
+    AUDDBG("* track gain:          %+f dB\n", info.track_gain);
+    AUDDBG("* track peak:          %f\n",     info.track_peak);
+    AUDDBG("* album gain:          %+f dB\n", info.album_gain);
+    AUDDBG("* album peak:          %f\n",     info.album_peak);
+    
+    active_state = sad_state != NULL ? sad_state : sad_state_from_float;
+    SAD_dither_apply_replaygain(active_state, &info, &mode);
 }

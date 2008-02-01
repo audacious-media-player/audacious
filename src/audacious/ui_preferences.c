@@ -127,6 +127,7 @@ GtkTooltips *tooltips;
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png",   N_("Appearance")},
     {DATA_DIR "/images/audio.png",        N_("Audio")},
+    {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
     {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
     {DATA_DIR "/images/mouse.png",        N_("Mouse")},
     {DATA_DIR "/images/playback.png",     N_("Playback")},
@@ -218,6 +219,9 @@ static PreferencesWidget audio_page_widgets[] = {
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_bit_depth},
+};
+    
+static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Replay Gain</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
     {WIDGET_RADIO_BTN, N_("Use track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
@@ -1982,6 +1986,20 @@ create_playback_category(void)
 }
 
 static void
+create_replay_gain_category(void)
+{
+    GtkWidget *rg_page_vbox;
+    GtkWidget *widgets_vbox;
+
+    rg_page_vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (category_notebook), rg_page_vbox);
+
+    widgets_vbox = gtk_vbox_new (FALSE, 0);
+    create_widgets(GTK_BOX(widgets_vbox), replay_gain_page_widgets, G_N_ELEMENTS(replay_gain_page_widgets));
+    gtk_box_pack_start (GTK_BOX (rg_page_vbox), widgets_vbox, TRUE, TRUE, 0);
+}
+
+static void
 create_playlist_category(void)
 {
     GtkWidget *playlist_page_vbox;
@@ -2997,6 +3015,7 @@ create_prefs_window(void)
 
     create_appearence_category();
     create_audio_category();
+    create_replay_gain_category();
     create_connectivity_category();
     create_mouse_category();
     create_playback_category();

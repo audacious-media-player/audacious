@@ -134,6 +134,7 @@ DATA = images/about-logo.png				\
        images/playback.png					\
        images/playlist.png					\
        images/plugins.png					\
+       images/replay_gain.png					\
        ui/equalizer.ui						\
        ui/mainwin.ui						\
        ui/playlist.ui						\

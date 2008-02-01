@@ -457,6 +457,11 @@ int SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_in
     case SAD_RG_TRACK:
       scale = db2scale(rg_info->track_gain);
       peak = rg_info->track_peak;
+      if (peak == 0.0) {
+        scale = db2scale(rg_info->album_gain); // fallback to per-album mode
+	peak = rg_info->album_peak;
+	DEBUG_MSG("f: SAD_dither_apply_replaygain: fallback to album mode\n",0);
+      }
       break;
     case SAD_RG_NONE:
       scale = -1.0;
@@ -464,7 +469,7 @@ int SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_in
   
   if (scale != -1.0 && peak != 0.0) {
     DEBUG_MSG("f: SAD_dither_apply_replaygain: applying\n",0);
-    scale *= mode->preamp;
+    scale *= db2scale(mode->preamp);
     // Clipping prevention
     if(mode->clipping_prevention) {
 #ifdef DEBUG
