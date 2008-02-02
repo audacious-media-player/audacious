@@ -410,7 +410,8 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     bit_depth = cfg.output_bit_depth;
 
     AUDDBG("bit depth: %d\n", bit_depth);
-    output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE; /* no reason to support other output formats --asphyx */
+    output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE;
+    /*output_fmt = (bit_depth == 24) ? FMT_S24_LE : FMT_S16_LE;*/ /* no reason to support other output formats --asphyx */
     
     freeSAD();
 

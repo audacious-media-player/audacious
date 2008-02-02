@@ -306,7 +306,10 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_U8: priv->output_bits = 8; break;
     case SAD_SAMPLE_S16:
     case SAD_SAMPLE_S16_LE:
-    case SAD_SAMPLE_U16: priv->output_bits = 16; break;
+    case SAD_SAMPLE_S16_BE:
+    case SAD_SAMPLE_U16:
+    case SAD_SAMPLE_U16_LE:
+    case SAD_SAMPLE_U16_BE: priv->output_bits = 16; break;
     case SAD_SAMPLE_S24:
     case SAD_SAMPLE_U24: priv->output_bits = 24; break;
     case SAD_SAMPLE_S32:
@@ -323,7 +326,10 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_U8: priv->input_bits = 8; break;
     case SAD_SAMPLE_S16:
     case SAD_SAMPLE_S16_LE:
-    case SAD_SAMPLE_U16: priv->input_bits = 16; break;
+    case SAD_SAMPLE_S16_BE:
+    case SAD_SAMPLE_U16:
+    case SAD_SAMPLE_U16_LE:
+    case SAD_SAMPLE_U16_BE: priv->input_bits = 16; break;
     case SAD_SAMPLE_S24:
     case SAD_SAMPLE_U24: priv->input_bits = 24; break;
     case SAD_SAMPLE_S32:
