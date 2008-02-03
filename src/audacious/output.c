@@ -419,7 +419,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     if (src_enabled) {
         AUDDBG("initializing dithering engine for 2 stage conversion\n");
         input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
-        if (input_sad_fmt.sample_format < 0) return -1;
+        if (input_sad_fmt.sample_format < 0) return FALSE;
         input_sad_fmt.fracbits = 0;
         input_sad_fmt.channels = nch;
         input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
@@ -434,7 +434,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         sad_state_to_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
         if (sad_state_to_float == NULL) {
             AUDDBG("ditherer init failed (decoder's native --> float)\n");
-            return -1;
+            return FALSE;
         }
         SAD_dither_set_dither (sad_state_to_float, FALSE);
         
@@ -445,7 +445,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         input_sad_fmt.samplerate = 0;
         
         output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
-        if (output_sad_fmt.sample_format < 0) return -1;
+        if (output_sad_fmt.sample_format < 0) return FALSE;
         output_sad_fmt.fracbits = 0;
         output_sad_fmt.channels = nch;
         output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
@@ -455,7 +455,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         if (sad_state_from_float == NULL) {
             SAD_dither_free(sad_state_to_float);
             AUDDBG("ditherer init failed (float --> output)\n");
-            return -1;
+            return FALSE;
         }
         SAD_dither_set_dither (sad_state_from_float, TRUE);
         
@@ -466,7 +466,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         AUDDBG("initializing dithering engine for direct conversion\n");
 
         input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
-        if (input_sad_fmt.sample_format < 0) return -1;
+        if (input_sad_fmt.sample_format < 0) return FALSE;
         input_sad_fmt.fracbits = 0;
         input_sad_fmt.channels = nch;
         input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
@@ -481,7 +481,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         sad_state = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
         if (sad_state == NULL) {
             AUDDBG("ditherer init failed\n");
-            return -1;
+            return FALSE;
         }
         SAD_dither_set_dither (sad_state, TRUE);
 
@@ -494,7 +494,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     op = get_current_output_plugin();
 
     if (op == NULL)
-        return -1;
+        return FALSE;
 
     /* Is our output port already open? */
     if ((op_state.rate != 0 && op_state.nch != 0) &&
@@ -503,7 +503,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         /* Yes, and it's the correct sampling rate. Reset the counter and go. */
         AUDDBG("flushing output instead of reopening\n");
         op->flush(0);
-        return 1;
+        return TRUE;
     }
     else if (op_state.rate != 0 && op_state.nch != 0)
         op->close_audio();
