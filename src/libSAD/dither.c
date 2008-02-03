@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/*#define CLIPPING_DEBUG*/
-/*#define DITHER_DEBUG*/
+/* #define CLIPPING_DEBUG */
+/* #define DITHER_DEBUG */
 
 #include "common.h"
 #include "dither_ops.h"
@@ -149,13 +149,13 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
 #endif
   }
 
-  if (precision_loss && (n_bits_to_loose >= 1)) sample += (1L << (n_bits_to_loose - 1));
+  if (precision_loss && (n_bits_to_loose >= 1) && (inbits < 32 || fracbits != 0)) sample += (1L << (n_bits_to_loose - 1));
 
 #ifdef DITHER_DEBUG
   int32_t val_wo_dither = sample >> n_bits_to_loose;
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
-  if (dither && precision_loss && (n_bits_to_loose >= 1)) {
+  if (dither && precision_loss && (n_bits_to_loose >= 1) && (inbits < 32 || fracbits != 0)) {
     int32_t dither_num = triangular_dither_noise(n_bits_to_loose + 1);
     sample += dither_num;
   }
@@ -317,7 +317,11 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_U24_LE:
     case SAD_SAMPLE_U24_BE: priv->output_bits = 24; break;
     case SAD_SAMPLE_S32:
-    case SAD_SAMPLE_U32: priv->output_bits = 32; break;
+    case SAD_SAMPLE_S32_LE:
+    case SAD_SAMPLE_S32_BE:
+    case SAD_SAMPLE_U32:
+    case SAD_SAMPLE_U32_LE:
+    case SAD_SAMPLE_U32_BE: priv->output_bits = 32; break;
     case SAD_SAMPLE_FLOAT: break;
     default:
       free(priv);
@@ -341,7 +345,11 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_U24_LE:
     case SAD_SAMPLE_U24_BE: priv->input_bits = 24; break;
     case SAD_SAMPLE_S32:
-    case SAD_SAMPLE_U32: priv->input_bits = 32; break;
+    case SAD_SAMPLE_S32_LE:
+    case SAD_SAMPLE_S32_BE:
+    case SAD_SAMPLE_U32:
+    case SAD_SAMPLE_U32_LE:
+    case SAD_SAMPLE_U32_BE: priv->input_bits = 32; break;
     case SAD_SAMPLE_FIXED32: priv->input_fracbits = inbuf_format->fracbits; break;
     case SAD_SAMPLE_FLOAT: break;
     default:

@@ -510,6 +510,48 @@ static void put_s32_s_sample (void *buf, int32_t sample, int nch, int ch, int i)
   ((int32_t**)buf)[ch][i] = (int32_t)sample;
 }
 
+/* LE: signed */
+static int32_t get_s32_le_i_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  return (int32_t)SAD_GET_LE32(tmp);
+}
+
+static int32_t get_s32_le_s_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  return (int32_t)SAD_GET_LE32(tmp);
+}
+
+static void put_s32_le_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  SAD_PUT_LE32(tmp, sample);
+}
+
+static void put_s32_le_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  SAD_PUT_LE32(tmp, sample);
+}
+
+/* BE: signed */
+static int32_t get_s32_be_i_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  return (int32_t)SAD_GET_BE32(tmp);
+}
+
+static int32_t get_s32_be_s_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  return (int32_t)SAD_GET_BE32(tmp);
+}
+
+static void put_s32_be_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  SAD_PUT_BE32(tmp, sample);
+}
+
+static void put_s32_be_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  SAD_PUT_BE32(tmp, sample);
+}
+
 /* unsigned */
 static int32_t get_u32_i_sample (void *buf, int nch, int ch, int i) {
   return ((int32_t*)buf)[i*nch+ch] - (int32_t)(1L<<31);
@@ -527,6 +569,48 @@ static void put_u32_s_sample (void *buf, int32_t sample, int nch, int ch, int i)
   ((uint32_t**)buf)[ch][i] = (uint32_t)(sample + (int32_t)(1L<<31));
 }
 
+/* LE: unsigned */
+static int32_t get_u32_le_i_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  return (int32_t)SAD_GET_LE32(tmp) - (int32_t)(1L<<31);
+}
+
+static int32_t get_u32_le_s_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  return (int32_t)SAD_GET_LE32(tmp) - (int32_t)(1L<<31);
+}
+
+static void put_u32_le_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  SAD_PUT_LE32(tmp, sample + (int32_t)(1L<<31));
+}
+
+static void put_u32_le_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  SAD_PUT_LE32(tmp, sample + (int32_t)(1L<<31));
+}
+
+/* BE: unsigned */
+static int32_t get_u32_be_i_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  return (int32_t)SAD_GET_BE32(tmp) - (int32_t)(1L<<31);
+}
+
+static int32_t get_u32_be_s_sample (void *buf, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  return (int32_t)SAD_GET_BE32(tmp) - (int32_t)(1L<<31);
+}
+
+static void put_u32_be_i_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = (int32_t*)buf+i*nch+ch;
+  SAD_PUT_BE32(tmp, sample + (int32_t)(1L<<31));
+}
+
+static void put_u32_be_s_sample (void *buf, int32_t sample, int nch, int ch, int i) {
+  int32_t *tmp = ((int32_t**)buf)[ch]+i;
+  SAD_PUT_BE32(tmp, sample + (int32_t)(1L<<31));
+}
+
 static SAD_buffer_ops buf_s32_i_ops = {
   &get_s32_i_sample,
   &put_s32_i_sample
@@ -537,6 +621,26 @@ static SAD_buffer_ops buf_s32_s_ops = {
   &put_s32_s_sample
 };
 
+static SAD_buffer_ops buf_s32_le_i_ops = {
+  &get_s32_le_i_sample,
+  &put_s32_le_i_sample
+};
+
+static SAD_buffer_ops buf_s32_le_s_ops = {
+  &get_s32_le_s_sample,
+  &put_s32_le_s_sample
+};
+
+static SAD_buffer_ops buf_s32_be_i_ops = {
+  &get_s32_be_i_sample,
+  &put_s32_be_i_sample
+};
+
+static SAD_buffer_ops buf_s32_be_s_ops = {
+  &get_s32_be_s_sample,
+  &put_s32_be_s_sample
+};
+
 static SAD_buffer_ops buf_u32_i_ops = {
   &get_u32_i_sample,
   &put_u32_i_sample
@@ -545,6 +649,26 @@ static SAD_buffer_ops buf_u32_i_ops = {
 static SAD_buffer_ops buf_u32_s_ops = {
   &get_u32_s_sample,
   &put_u32_s_sample
+};
+
+static SAD_buffer_ops buf_u32_le_i_ops = {
+  &get_u32_le_i_sample,
+  &put_u32_le_i_sample
+};
+
+static SAD_buffer_ops buf_u32_le_s_ops = {
+  &get_u32_le_s_sample,
+  &put_u32_le_s_sample
+};
+
+static SAD_buffer_ops buf_u32_be_i_ops = {
+  &get_u32_be_i_sample,
+  &put_u32_be_i_sample
+};
+
+static SAD_buffer_ops buf_u32_be_s_ops = {
+  &get_u32_be_s_sample,
+  &put_u32_be_s_sample
 };
 
 static SAD_buffer_ops *SAD_buffer_optable[SAD_SAMPLE_MAX][SAD_CHORDER_MAX] = {
@@ -566,11 +690,11 @@ static SAD_buffer_ops *SAD_buffer_optable[SAD_SAMPLE_MAX][SAD_CHORDER_MAX] = {
   {&buf_u24_be_i_ops, &buf_u24_be_s_ops}, /* SAD_SAMPLE_U24_BE */
 
   {&buf_s32_i_ops,    &buf_s32_s_ops}, 	  /* SAD_SAMPLE_S32    */
-  {NULL,              NULL}, 		  /* SAD_SAMPLE_S32_LE */
-  {NULL,              NULL}, 		  /* SAD_SAMPLE_S32_BE */
+  {&buf_s32_le_i_ops, &buf_s32_le_s_ops}, /* SAD_SAMPLE_S32_LE */
+  {&buf_s32_be_i_ops, &buf_s32_be_s_ops}, /* SAD_SAMPLE_S32_BE */
   {&buf_u32_i_ops,    &buf_u32_s_ops}, 	  /* SAD_SAMPLE_U32    */
-  {NULL,              NULL}, 		  /* SAD_SAMPLE_U32_LE */
-  {NULL,              NULL}, 		  /* SAD_SAMPLE_U32_BE */
+  {&buf_u32_le_i_ops, &buf_u32_le_s_ops}, /* SAD_SAMPLE_U32_LE */
+  {&buf_u32_be_i_ops, &buf_u32_be_s_ops}, /* SAD_SAMPLE_U32_BE */
 
   {&buf_s32_i_ops,    &buf_s32_s_ops}, 	  /* SAD_SAMPLE_FIXED32*/
 
