@@ -52,6 +52,8 @@
 #include <samplerate.h>
 #endif
 
+#define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
+
 OutputPluginData op_data = {
     NULL,
     NULL
@@ -113,7 +115,10 @@ static const struct {
     {FMT_U32_NE, SAD_SAMPLE_U32},
     
     {FMT_FLOAT, SAD_SAMPLE_FLOAT},
+    {FMT_FIXED32, SAD_SAMPLE_FIXED32},
 };
+
+static void apply_replaygain_info (ReplayGainInfo *rg_info);
 
 static inline unsigned sample_size(AFormat fmt) {
   switch(fmt) {
@@ -136,13 +141,12 @@ static inline unsigned sample_size(AFormat fmt) {
     case FMT_S32_BE:
     case FMT_U32_NE:
     case FMT_U32_LE:
-    case FMT_U32_BE: return sizeof(gint32);
+    case FMT_U32_BE:
+    case FMT_FIXED32: return sizeof(gint32);
     case FMT_FLOAT: return sizeof(float);
     default: return 0;
   }
 }
-
-static void apply_replaygain_info (ReplayGainInfo *rg_info);
 
 static SAD_sample_format
 sadfmt_from_afmt(AFormat fmt)
@@ -420,7 +424,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         AUDDBG("initializing dithering engine for 2 stage conversion\n");
         input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
         if (input_sad_fmt.sample_format < 0) return FALSE;
-        input_sad_fmt.fracbits = 0;
+        input_sad_fmt.fracbits = FMT_FRACBITS(fmt);
         input_sad_fmt.channels = nch;
         input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         input_sad_fmt.samplerate = 0;
@@ -446,7 +450,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         
         output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
         if (output_sad_fmt.sample_format < 0) return FALSE;
-        output_sad_fmt.fracbits = 0;
+        output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
         output_sad_fmt.channels = nch;
         output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         output_sad_fmt.samplerate = 0;
@@ -467,13 +471,13 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
         input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
         if (input_sad_fmt.sample_format < 0) return FALSE;
-        input_sad_fmt.fracbits = 0;
+        input_sad_fmt.fracbits = FMT_FRACBITS(fmt);
         input_sad_fmt.channels = nch;
         input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         input_sad_fmt.samplerate = 0; /* resampling not implemented yet in libSAD */
         
         output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
-        output_sad_fmt.fracbits = 0;
+        output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
         output_sad_fmt.channels = nch;
         output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         output_sad_fmt.samplerate = 0;

@@ -86,7 +86,31 @@ typedef enum {
     FMT_S32_NE,
 
     FMT_FLOAT,
+    FMT_FIXED32, /* equivalent of libmad's mad_fixed_t explained below */
 } AFormat;
+
+/* From mad.h:
+ *
+ * Fixed-point format: 0xABBBBBBB
+ * A == whole part      (sign + 3 bits)
+ * B == fractional part (28 bits)
+ *
+ * Values are signed two's complement, so the effective range is:
+ * 0x80000000 to 0x7fffffff
+ *       -8.0 to +7.9999999962747097015380859375
+ *
+ * The smallest representable value is:
+ * 0x00000001 == 0.0000000037252902984619140625 (i.e. about 3.725e-9)
+ *
+ * 28 bits of fractional accuracy represent about
+ * 8.6 digits of decimal accuracy.
+ *
+ * Fixed-point numbers can be added or subtracted as normal
+ * integers, but multiplication requires shifting the 64-bit result
+ * from 56 fractional bits back to 28 (and rounding.)
+ */
+
+#define __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ 28 /* useful for build time check for plugins linked against libmad, i.e. madplug */
 
 typedef enum {
     INPUT_VIS_ANALYZER,
