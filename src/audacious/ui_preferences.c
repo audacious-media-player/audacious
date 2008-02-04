@@ -190,6 +190,7 @@ static void mainwin_font_set_cb();
 static void playlist_font_set_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
 static GtkWidget *ui_preferences_bit_depth(void);
+static GtkWidget *ui_preferences_rg_params(void);
 
 static PreferencesWidget appearance_misc_widgets[] = {
     {WIDGET_LABEL, N_("<b>_Fonts</b>"), NULL, NULL, NULL, FALSE},
@@ -218,16 +219,19 @@ static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_bit_depth},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, FALSE, ui_preferences_bit_depth},
 };
     
 static PreferencesWidget replay_gain_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Replay Gain</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_LABEL, N_("<b>Replay Gain configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
-    {WIDGET_RADIO_BTN, N_("Use track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
-    {WIDGET_RADIO_BTN, N_("Use album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
+    {WIDGET_LABEL, N_("<b>Replay Gain mode</b>"), NULL, NULL, NULL, TRUE},
+    {WIDGET_RADIO_BTN, N_("Track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
+    {WIDGET_RADIO_BTN, N_("Album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
+    {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
     {WIDGET_CHK_BTN, N_("Enable clipping prevention"), &cfg.enable_clipping_prevention, NULL, NULL, TRUE},
     {WIDGET_CHK_BTN, N_("Enable 6 dB hard limiter"), &cfg.enable_hard_limiter, NULL, NULL, TRUE},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_rg_params},
 };
 
 static PreferencesWidget playback_page_widgets[] = {
@@ -1674,6 +1678,65 @@ ui_preferences_bit_depth(void)
                           NULL);
 
     return box;
+}
+
+static void
+on_rg_spin_changed(GtkSpinButton *spinbutton, gpointer user_data)
+{
+    *((gfloat*) user_data) = gtk_spin_button_get_value(spinbutton);
+}
+
+static GtkWidget *
+ui_preferences_rg_params(void)
+{
+    GtkWidget *alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
+    GtkWidget *table = gtk_table_new(2, 3, FALSE);
+    gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+    gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+
+    GtkWidget *label = gtk_label_new(_("Preamp:"));
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
+                     (GtkAttachOptions) (GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+    GtkWidget *spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
+    gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 0, 1,
+                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.replay_gain_preamp);
+    g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.replay_gain_preamp);
+
+    label = gtk_label_new(_("dB"));
+    gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
+                     (GtkAttachOptions) (GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    
+    label = gtk_label_new(_("Default gain:"));
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
+                     (GtkAttachOptions) (GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    
+    spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
+    gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 1, 2,
+                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.default_gain);
+    g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.default_gain);
+    gtk_tooltips_set_tip (tooltips, spin, _("This gain will be used if file doesn't contain Replay Gain metadata."), NULL);
+    
+    label = gtk_label_new(_("dB"));
+    gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
+                     (GtkAttachOptions) (GTK_FILL),
+                     (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    
+    gtk_container_add(GTK_CONTAINER(alignment), table);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
+
+    return alignment;
 }
 
 /* it's at early stage */

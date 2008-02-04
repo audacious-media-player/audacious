@@ -23,7 +23,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#define AUD_DEBUG
+/* #define AUD_DEBUG */
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
@@ -492,8 +492,14 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         fmt = output_fmt;
     }
 
-    if(replay_gain_info.album_peak != 0.0 || replay_gain_info.track_peak != 0.0)
-        apply_replaygain_info(&replay_gain_info);
+    if(replay_gain_info.album_peak == 0.0 && replay_gain_info.track_peak == 0.0) {
+        AUDDBG("RG info isn't set yet. Filling replay_gain_info with default values.\n");
+        replay_gain_info.track_gain = cfg.default_gain;
+        replay_gain_info.track_peak = 1.0;
+        replay_gain_info.album_gain = cfg.default_gain;
+        replay_gain_info.album_peak = 1.0;
+    }
+    apply_replaygain_info(&replay_gain_info);
     
     op = get_current_output_plugin();
 
@@ -783,7 +789,7 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
     if(!rg_enabled) return;
 
     mode.mode = album_mode ? SAD_RG_ALBUM : SAD_RG_TRACK;
-    mode.preamp = 0.0; /*FIXME*/
+    mode.preamp = cfg.replay_gain_preamp;
 
     info.present = TRUE;
     info.track_gain = rg_info->track_gain;

@@ -17,6 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* WARNING: reading this can damage your brain */
+
 #include "common.h"
 #include "dither_ops.h"
 #include "dither.h"
