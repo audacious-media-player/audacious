@@ -1,0 +1,23 @@
+Since 38449056c293 input plugins can open audio output in their's native format,
+without worrying of output plugin's capabilities. Audio stream will be converted to format specified
+in prefs win (currently FMT_S16_NE and FMT_S24_NE). Dithering will be applied automatically if
+precision loss expected (except FMT_*32_*, on which dithering can cause clipping).
+
+For full list of available formats see plugin.h
+
+Known issues:
+
+1. postproc_flow can deal only with S16_NE streams, so it will be bypassed in 24bit mode, i.e.: no vis, no equalizer, no softvolume.
+2. Currently none of output plugins supports 24bit output :)
+
+Possible solution:
+
+1. It's easy to produce S16_NE stream directly from decoder's output special for vis_flow, as far as the latter has no output.
+2. Switch equalizer and softvolume (and, in perspective, DSP PAPI) to floating-point. Another solution can cause precision
+   loss and avoid dithering. Why floating-point, not fixed? Because:
+     1. libsamplerate requires it.
+     2. Floating-point is standard for inter-component and inter-process audio exchange (LADSPA, JACK etc.).
+
+Have a look at proposed_pipeline.dia
+
+-- asphyx
