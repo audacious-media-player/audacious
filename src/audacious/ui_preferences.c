@@ -44,6 +44,7 @@
 #include "general.h"
 #include "output.h"
 #include "visualization.h"
+#include "playlist.h"
 
 #include "main.h"
 #include "ui_skinned_textbox.h"
@@ -61,6 +62,8 @@
 #include "ui_skinned_window.h"
 
 #include "build_stamp.h"
+
+#define TITLESTRING_UPDATE_TIMEOUT 3
 
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
@@ -580,12 +583,32 @@ on_titlestring_entry_realize(GtkWidget * entry,
     gtk_entry_set_text(GTK_ENTRY(entry), cfg.gentitle_format);
 }
 
+static gboolean
+titlestring_timeout_proc (gpointer data)
+{
+    titlestring_timeout_counter--;
+
+    if(titlestring_timeout_counter <= 0) {
+        titlestring_timeout_counter = 0;
+        playlist_update_all_titles();
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}
+
 static void
 on_titlestring_entry_changed(GtkWidget * entry,
                              gpointer data) 
 {
     g_free(cfg.gentitle_format);
     cfg.gentitle_format = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
+
+    if(titlestring_timeout_counter == 0) {
+        g_timeout_add_seconds (1, (GSourceFunc) titlestring_timeout_proc, NULL);
+    }
+    
+    titlestring_timeout_counter = TITLESTRING_UPDATE_TIMEOUT;
 }
 
 static void
@@ -605,6 +628,8 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
 
     cfg.titlestring_preset = position;
     gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
+
+    playlist_update_all_titles(); /* update titles */
 }
 
 static void
