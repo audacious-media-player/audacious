@@ -3,7 +3,6 @@
 #include "../../config.h"
 
 #ifdef HAVE_SSE2
-#  include <emmintrin.h>
 #  define SSE2 1
 #endif
 
@@ -13,7 +12,7 @@
 
 #define MEXP 19937
 
-/*#include "SFMT.h"*/
+#include "SFMT.h"
 #include "SFMT.c"
 
 #include "noicegen.h"

@@ -4,5 +4,6 @@ SRCS = dither.c \
        noicegen.c
 
 include ../../buildsys.mk
+include ../../extra.mk
 
 CPPFLAGS += ${SIMD_CFLAGS}
