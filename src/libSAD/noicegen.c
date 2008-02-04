@@ -3,6 +3,7 @@
 #include "../../config.h"
 
 #ifdef HAVE_SSE2
+#  include <emmintrin.h>
 #  define SSE2 1
 #endif
 
