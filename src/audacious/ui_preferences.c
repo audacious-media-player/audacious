@@ -126,6 +126,7 @@ GtkWidget *skin_view;
 GtkWidget *skin_refresh_button;
 GtkWidget *filepopup_for_tuple_settings_button;
 GtkTooltips *tooltips;
+static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png",   N_("Appearance")},
