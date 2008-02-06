@@ -146,6 +146,7 @@ typedef struct {
   int mode;
   int clipping_prevention;
   int hard_limit;
+  int adaptive_scaler;
   float preamp; /* in dB ! */
 } SAD_replaygain_mode;
 

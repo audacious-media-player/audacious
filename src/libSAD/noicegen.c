@@ -35,10 +35,10 @@ int triangular_dither_noise(int nbits)
     return v;
 }
 
-float triangular_dither_noise_f() {
+double triangular_dither_noise_f() {
   // Сonditionally assume we have 16 bits in fractional part
   // Please, check it thoroughly: is this assumption correct in floatin-point arithmetic?
-  return (float) triangular_dither_noise(17) / 65536.0;
+  return (double) triangular_dither_noise(17) / 65536.0;
 }
 
 void noicegen_init_rand(uint32_t seed) {

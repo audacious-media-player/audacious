@@ -236,7 +236,7 @@ BmpConfig bmp_default_config = {
     TRUE,           /* enable clipping prevention */
     TRUE,           /* track mode */
     FALSE,          /* album mode */
-    FALSE,          /* enable hard limiter */
+    FALSE,          /* enable adaptive scaler */
     0.0,            /* preamp */
     -9.0,           /* default gain */
 };
@@ -354,7 +354,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
     {"replay_gain_track",          &cfg.replay_gain_track, TRUE},
     {"replay_gain_album",          &cfg.replay_gain_album, TRUE},
-    {"enable_hard_limiter",        &cfg.enable_hard_limiter, TRUE},
+    {"enable_adaptive_scaler",     &cfg.enable_adaptive_scaler, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

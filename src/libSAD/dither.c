@@ -17,8 +17,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* #define CLIPPING_DEBUG */
-/* #define DITHER_DEBUG */
+/* #define CLIPPING_DEBUG
+#define DEBUG
+#define DITHER_DEBUG */
 
 #include "common.h"
 #include "dither_ops.h"
@@ -51,6 +52,8 @@
 #define MAXINT(a) (1L << ((a)-1))
 #define CLIP(x,m) (x > m-1 ? m-1 : (x < -m ? -m : x))
 
+#define ADJUSTMENT_COEFFICIENT 0.1
+
 /* private object */
 typedef struct {
   SAD_sample_format input_sample_format;
@@ -66,15 +69,16 @@ typedef struct {
   SAD_put_sample_proc put_sample;
   int dither;
   int hardlimit;
-  float scale;
-  float rg_scale;
+  double scale;
+  double rg_scale;
+  int adaptive_scaler;
 } SAD_state_priv;
 
 /* error code */
 
 //static SAD_error SAD_last_error = SAD_ERROR_OK;
 
-static inline double compute_hardlimit (double sample, float scale) {
+static inline double compute_hardlimit (double sample, double scale) {
   sample *= scale;
   const double k = 0.5;    /* -6dBFS */
   if (sample > k) {
@@ -91,8 +95,8 @@ static inline double compute_hardlimit (double sample, float scale) {
  * samples < -1 and > 1 will be clipped
  */
 
-static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, int fracbits, int outbits, float scale, int dither,
-							int hardlimit)
+static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, int fracbits, int outbits, double *scale, int dither,
+							int hardlimit, int adaptive_scale)
 {
   int n_bits_to_loose, bitwidth, precision_loss;
   int32_t maxint = MAXINT(outbits);
@@ -131,18 +135,34 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
   }
   
   assert(n_bits_to_loose >=0 );
-
+  
+  /* adaptive scaler */
+  if (adaptive_scale) {
+    int sam = sample >> n_bits_to_loose;
+    double d_sam = fabs((double)sam) / (double)(maxint - 1);
+    if (d_sam * *scale > 1.0) {
+#ifdef CLIPPING_DEBUG
+      printf("sample val %d, scale factor adjusted %f --> ", sam, *scale);
+#endif
+      *scale -= (*scale - 1.0 / d_sam) * ADJUSTMENT_COEFFICIENT;
+#ifdef CLIPPING_DEBUG
+      printf("%f\n", *scale);
+#endif
+    }
+    sample = SCALE(sample, *scale);
+  } else
+  /*****************/
   if (hardlimit) {
-    sample = (int32_t)(compute_hardlimit((double)sample/(double)MAXINT(bitwidth), scale) * (double)MAXINT(bitwidth));
+    sample = (int32_t)(compute_hardlimit((double)sample/(double)MAXINT(bitwidth), *scale) * (double)MAXINT(bitwidth));
 #ifdef PRECISION_DEBUG
     printf("Precision loss, reason: hard limiter\n", inbits, outbits);
 #endif
     precision_loss = TRUE;
   } else {
-    sample = SCALE(sample, scale);
+    sample = SCALE(sample, *scale);
   }
  
-  if (scale != 1.0){
+  if (*scale != 1.0){
     precision_loss = TRUE;
 #ifdef PRECISION_DEBUG
     printf("Precision loss, reason: scale\n", inbits, outbits);
@@ -182,18 +202,32 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
  * Dither floating-point normalized sample to n-bits integer
  * samples < -1 and > 1 will be clipped
  */
-static inline int32_t __dither_sample_float_to_int (float sample, int nbits, float scale, int dither, int hardlimit) {
+static inline int32_t __dither_sample_float_to_int (float sample, int nbits, double *scale, int dither, int hardlimit, int adaptive_scale) {
 
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_float_to_int\n");
 #endif
 
   int32_t maxint = MAXINT(nbits);
-
+  
+  /* adaptive scaler */
+  if (adaptive_scale) {
+    if (fabs(sample) * *scale > 1.0) {
+#ifdef CLIPPING_DEBUG
+      printf("sample val %f, scale factor adjusted %f --> ", sample, *scale);
+#endif
+      *scale -= (*scale - 1.0 / sample) * ADJUSTMENT_COEFFICIENT;
+#ifdef CLIPPING_DEBUG
+      printf("%f\n", *scale);
+#endif
+    }
+    sample = SCALE(sample, *scale);
+  } else
+  /*****************/
   if (hardlimit) {
-    sample = compute_hardlimit((double)sample, scale);
+    sample = compute_hardlimit((double)sample, *scale);
   } else {
-    sample = SCALE(sample, scale);
+    sample = SCALE(sample, *scale);
   }
 
   sample *= maxint;
@@ -205,7 +239,7 @@ static inline int32_t __dither_sample_float_to_int (float sample, int nbits, flo
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
   if (dither) {
-    float dither_num = triangular_dither_noise_f();
+    double dither_num = triangular_dither_noise_f();
     sample += dither_num;
   }
 
@@ -227,7 +261,7 @@ static inline int32_t __dither_sample_float_to_int (float sample, int nbits, flo
   return value;
 }
 
-static inline float __dither_sample_float_to_float (float sample, float scale, int hardlimit) {
+static inline float __dither_sample_float_to_float (float sample, double scale, int hardlimit) {
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_float_to_float\n");
 #endif
@@ -239,16 +273,16 @@ static inline float __dither_sample_float_to_float (float sample, float scale, i
   return sample;
 }
 
-static inline float __dither_sample_fixed_to_float (int32_t sample, int inbits, int fracbits, float scale, int hardlimit) {
+static inline float __dither_sample_fixed_to_float (int32_t sample, int inbits, int fracbits, double scale, int hardlimit) {
   float fsample;
 
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_fixed_to_float\n");
 #endif
   if (fracbits == 0) {
-     fsample = (float)sample / (float)MAXINT(inbits);
+     fsample = (double)sample / (double)MAXINT(inbits);
   } else {
-     fsample = (float)sample / (float)MAXINT(fracbits+1);
+     fsample = (double)sample / (double)MAXINT(fracbits+1);
   }
   return __dither_sample_float_to_float (fsample, scale, hardlimit);
 }
@@ -300,6 +334,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
   priv->rg_scale = 1.0;
   priv->dither = TRUE;
   priv->hardlimit = FALSE;
+  priv->adaptive_scaler = FALSE;
 
   switch(outbuf_format->sample_format){
     case SAD_SAMPLE_S8:
@@ -393,9 +428,11 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
   int inbits = priv->input_bits;
   int outbits = priv->output_bits;
   int fracbits = priv->input_fracbits;
-  float scale = priv->scale * priv->rg_scale;
+  double scale = priv->scale * priv->rg_scale;
+  double oldscale = scale;
   int dither = priv->dither;
   int hardlimit = priv->hardlimit;
+  int adaptive_scale = priv->adaptive_scaler;
   SAD_channels_order input_chorder = priv->input_chorder;
   SAD_channels_order output_chorder = priv->output_chorder;
 
@@ -422,7 +459,7 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++) {
 	          float sample = GET_FLOAT_SAMPLE(inbuf, input_chorder, channels, ch ,i);
-	          int32_t isample = __dither_sample_float_to_int(sample, outbits, scale, dither, hardlimit);
+	          int32_t isample = __dither_sample_float_to_int(sample, outbits, &scale, dither, hardlimit, adaptive_scale);
                   put_sample (outbuf, isample, channels, ch, i);
 	      }
 	  }
@@ -444,19 +481,22 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++){
   	          int32_t sample = get_sample (inbuf, channels, ch, i);
-	          int32_t isample = __dither_sample_fixed_to_int (sample, inbits, fracbits, outbits, scale, dither, hardlimit);
+	          int32_t isample = __dither_sample_fixed_to_int (sample, inbits, fracbits, outbits, &scale, dither, hardlimit, adaptive_scale);
                   put_sample (outbuf, isample, channels, ch, i);
 	      }
 	  }
       }
   }
 
+  /* recalc scale factor */
+  if (adaptive_scale && oldscale != scale) priv->rg_scale = scale / priv->scale;
+
   return SAD_ERROR_OK;
 }
 
 int SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_info, SAD_replaygain_mode *mode) {
   SAD_state_priv *priv = (SAD_state_priv*) state;
-  float scale = -1.0, peak = 0.0;
+  double scale = -1.0, peak = 0.0;
 
   DEBUG_MSG("f: SAD_dither_apply_replaygain\n",0);
   
@@ -498,13 +538,16 @@ int SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_in
       if(scale * peak > 1.0) DEBUG_MSG("f: SAD_dither_apply_replaygain: clipping prevented\n",0);
 #endif
       scale = scale * peak > 1.0 ? 1.0 / peak : scale;
+      DEBUG_MSG("f: SAD_dither_apply_replaygain: new scale %f\n", scale);
     }
     scale = scale > 15.0 ? 15.0 : scale; // safety
     priv->rg_scale = scale;
     priv->hardlimit = mode->hard_limit; // apply settings
+    priv->adaptive_scaler = mode->adaptive_scaler;
   } else {
     priv->rg_scale = 1.0;
     priv->hardlimit = FALSE;
+    priv->adaptive_scaler = FALSE; // apply settings
   }
 
   return SAD_ERROR_OK;

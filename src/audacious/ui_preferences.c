@@ -233,8 +233,10 @@ static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_RADIO_BTN, N_("Track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
     {WIDGET_RADIO_BTN, N_("Album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
     {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
-    {WIDGET_CHK_BTN, N_("Enable clipping prevention"), &cfg.enable_clipping_prevention, NULL, NULL, TRUE},
-    {WIDGET_CHK_BTN, N_("Enable 6 dB hard limiter"), &cfg.enable_hard_limiter, NULL, NULL, TRUE},
+    {WIDGET_CHK_BTN, N_("Enable peak info clipping prevention"), &cfg.enable_clipping_prevention, NULL,
+                     N_("Use peak value from Replay Gain info for clipping prevention"), TRUE},
+    {WIDGET_CHK_BTN, N_("Dynamically adjust scale factor to prevent clipping"), &cfg.enable_adaptive_scaler, NULL, 
+                     N_("Decrease scale factor (gain) if clipping nevertheless occurred"), TRUE},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_rg_params},
 };
 
@@ -1728,7 +1730,7 @@ ui_preferences_rg_params(void)
 
     GtkWidget *spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
     gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 0, 1,
-                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.replay_gain_preamp);
     g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.replay_gain_preamp);
@@ -1747,7 +1749,7 @@ ui_preferences_rg_params(void)
     
     spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
     gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 1, 2,
-                     (GtkAttachOptions) (0),
+                     (GtkAttachOptions) (GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.default_gain);
     g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.default_gain);
@@ -1761,6 +1763,20 @@ ui_preferences_rg_params(void)
     
     gtk_container_add(GTK_CONTAINER(alignment), table);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
+    
+    GtkWidget *image = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
+    gtk_table_attach (GTK_TABLE (table), image, 0, 1, 2, 3,
+                      (GtkAttachOptions) (GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+    
+    label = gtk_label_new (_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use "
+                             "positive values above.</span>"));
+    gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
+                      (GtkAttachOptions) (GTK_FILL),
+                      (GtkAttachOptions) (0), 0, 0);
+    gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+    gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
 
     return alignment;
 }

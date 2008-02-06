@@ -495,9 +495,9 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     if(replay_gain_info.album_peak == 0.0 && replay_gain_info.track_peak == 0.0) {
         AUDDBG("RG info isn't set yet. Filling replay_gain_info with default values.\n");
         replay_gain_info.track_gain = cfg.default_gain;
-        replay_gain_info.track_peak = 1.0;
+        replay_gain_info.track_peak = 0.01;
         replay_gain_info.album_gain = cfg.default_gain;
-        replay_gain_info.album_peak = 1.0;
+        replay_gain_info.album_peak = 0.01;
     }
     apply_replaygain_info(&replay_gain_info);
     
@@ -779,7 +779,8 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
     rg_enabled = cfg.enable_replay_gain;
     album_mode = cfg.replay_gain_album;
     mode.clipping_prevention = cfg.enable_clipping_prevention;
-    mode.hard_limit = cfg.enable_hard_limiter;
+    mode.hard_limit = FALSE;
+    mode.adaptive_scaler = cfg.enable_adaptive_scaler;
     
     if(!rg_enabled) return;
 
@@ -795,7 +796,7 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
     AUDDBG("Applying Replay Gain settings:\n");
     AUDDBG("* mode:                %s\n",     mode.mode == SAD_RG_ALBUM ? "album" : "track");
     AUDDBG("* clipping prevention: %s\n",     mode.clipping_prevention ? "yes" : "no");
-    AUDDBG("* hard limit:          %s\n",     mode.hard_limit ? "yes" : "no");
+    AUDDBG("* adaptive scaler      %s\n",     mode.adaptive_scaler ? "yes" : "no");
     AUDDBG("* preamp:              %+f dB\n", mode.preamp);
     AUDDBG("Replay Gain info for current track:\n");
     AUDDBG("* track gain:          %+f dB\n", info.track_gain);
