@@ -491,7 +491,6 @@ id3_length_t render_data(id3_byte_t **ptr,
   unsigned int i;
 
   encoding = ID3_FIELD_TEXTENCODING_ISO_8859_1; //here!! --yaz
-  printf("frame.c: render_data: encoding = %d\n", encoding);
   fflush(NULL);
   for (i = 0; i < length; ++i)
     size += id3_field_render(&fields[i], ptr, &encoding, i < length - 1);
