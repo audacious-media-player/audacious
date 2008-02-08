@@ -112,6 +112,13 @@ typedef enum {
 
 #define __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ 28 /* useful for build time check for plugins linked against libmad, i.e. madplug */
 
+#define FMT_SIZEOF(a) ( \
+    (a == FMT_S8 || a == FMT_U8) ? sizeof(gint8) : (                                                                   \
+    (a == FMT_S16_NE || a == FMT_S16_LE || a == FMT_S16_BE || a == FMT_U16_NE || a == FMT_U16_LE || a == FMT_U16_BE) ? sizeof(gint16) : ( \
+    (a == FMT_S24_NE || a == FMT_S24_LE || a == FMT_S24_BE || a == FMT_U24_NE || a == FMT_U24_LE || a == FMT_U24_BE || \
+     a == FMT_S32_NE || a == FMT_S32_LE || a == FMT_S32_BE || a == FMT_U32_NE || a == FMT_U32_LE || a == FMT_U32_BE || \
+     a == FMT_FIXED32) ? sizeof(gint32) : sizeof(float))))
+
 typedef enum {
     INPUT_VIS_ANALYZER,
     INPUT_VIS_SCOPE,

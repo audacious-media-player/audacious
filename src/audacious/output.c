@@ -120,34 +120,6 @@ static const struct {
 
 static void apply_replaygain_info (ReplayGainInfo *rg_info);
 
-static inline unsigned sample_size(AFormat fmt) {
-  switch(fmt) {
-    case FMT_S8:
-    case FMT_U8: return sizeof(gint8);
-    case FMT_S16_NE:
-    case FMT_S16_LE:
-    case FMT_S16_BE:
-    case FMT_U16_NE:
-    case FMT_U16_LE:
-    case FMT_U16_BE: return sizeof(gint16);
-    case FMT_S24_NE:
-    case FMT_S24_LE:
-    case FMT_S24_BE:
-    case FMT_U24_NE:
-    case FMT_U24_LE:
-    case FMT_U24_BE:
-    case FMT_S32_NE:
-    case FMT_S32_LE:
-    case FMT_S32_BE:
-    case FMT_U32_NE:
-    case FMT_U32_LE:
-    case FMT_U32_BE:
-    case FMT_FIXED32: return sizeof(gint32);
-    case FMT_FLOAT: return sizeof(float);
-    default: return 0;
-  }
-}
-
 static SAD_sample_format
 sadfmt_from_afmt(AFormat fmt)
 {
@@ -653,7 +625,7 @@ output_pass_audio(InputPlayback *playback,
     if(src_state != NULL)
       {
         /*int lrLength = length / nch;*/
-        int lrLength = length / sample_size(fmt);
+        int lrLength = length / FMT_SIZEOF(fmt);
         int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
 	if(lengthOfSrcIn < lrLength)
 	  {
@@ -667,7 +639,7 @@ output_pass_audio(InputPlayback *playback,
 	    free(srcOut);
 	    free(wOut);
 	    srcOut = (float*)malloc(sizeof(float)*overLrLength);
-	    wOut = (short int*)malloc(sample_size(op_state.fmt) * overLrLength);
+	    wOut = (short int*)malloc(FMT_SIZEOF(op_state.fmt) * overLrLength);
 	  }
         /*src_short_to_float_array((short int*)ptr, srcIn, lrLength);*/
         SAD_dither_process_buffer(sad_state_to_float, ptr, srcIn, lrLength / nch);
@@ -685,13 +657,13 @@ output_pass_audio(InputPlayback *playback,
             /*src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);*/
             SAD_dither_process_buffer(sad_state_from_float, srcOut, wOut, src_data.output_frames_gen);
             ptr = wOut;
-            length = src_data.output_frames_gen *  op_state.nch * sample_size(op_state.fmt);
+            length = src_data.output_frames_gen *  op_state.nch * FMT_SIZEOF(op_state.fmt);
           }
       } else
 #endif
     if(sad_state != NULL) {
-        int frames  = length / nch / sample_size(fmt);
-        int len =  frames * op_state.nch * sample_size(op_state.fmt);
+        int frames  = length / nch / FMT_SIZEOF(fmt);
+        int len =  frames * op_state.nch * FMT_SIZEOF(op_state.fmt);
         if(sad_out_buf == NULL || sad_out_buf_length < len ) {
             if(sad_out_buf != NULL) free (sad_out_buf);
             sad_out_buf = malloc(len);
