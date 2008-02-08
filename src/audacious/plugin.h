@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2007  Audacious team.
+ *  Copyright (C) 2005-2008  Audacious team.
  *
  *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.

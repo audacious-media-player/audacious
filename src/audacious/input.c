@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2008  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -53,6 +53,8 @@
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
 
+#include "libSAD.h"
+
 G_LOCK_DEFINE_STATIC(vis_mutex);
 
 struct _VisNode {
@@ -77,6 +79,8 @@ InputPluginData ip_data = {
 
 static GList *vis_list = NULL;
 static int volume_l = -1, volume_r = -1;
+static SAD_dither_t *sad_state = NULL;
+static gint sad_nch = -1;
 
 InputPlayback *
 get_current_input_playback(void)
@@ -144,121 +148,33 @@ free_vis_data(void)
     G_UNLOCK(vis_mutex);
 }
 
-static void
-convert_to_s16_ne(AFormat fmt, gpointer ptr, gint16 * left,
-                  gint16 * right, gint nch, gint max)
-{
-    gint16 *ptr16;
-    guint16 *ptru16;
-    guint8 *ptru8;
-    gint i;
-
-    switch (fmt) {
-    case FMT_U8:
-        ptru8 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++)
-                left[i] = ((*ptru8++) ^ 128) << 8;
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = ((*ptru8++) ^ 128) << 8;
-                right[i] = ((*ptru8++) ^ 128) << 8;
-            }
-        break;
-    case FMT_S8:
-        ptru8 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++)
-                left[i] = (*ptru8++) << 8;
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = (*ptru8++) << 8;
-                right[i] = (*ptru8++) << 8;
-            }
-        break;
-    case FMT_U16_LE:
-        ptru16 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++, ptru16++)
-                left[i] = GUINT16_FROM_LE(*ptru16) ^ 32768;
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = GUINT16_FROM_LE(*ptru16) ^ 32768;
-                ptru16++;
-                right[i] = GUINT16_FROM_LE(*ptru16) ^ 32768;
-                ptru16++;
-            }
-        break;
-    case FMT_U16_BE:
-        ptru16 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++, ptru16++)
-                left[i] = GUINT16_FROM_BE(*ptru16) ^ 32768;
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = GUINT16_FROM_BE(*ptru16) ^ 32768;
-                ptru16++;
-                right[i] = GUINT16_FROM_BE(*ptru16) ^ 32768;
-                ptru16++;
-            }
-        break;
-    case FMT_U16_NE:
-        ptru16 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++)
-                left[i] = (*ptru16++) ^ 32768;
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = (*ptru16++) ^ 32768;
-                right[i] = (*ptru16++) ^ 32768;
-            }
-        break;
-    case FMT_S16_LE:
-        ptr16 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++, ptr16++)
-                left[i] = GINT16_FROM_LE(*ptr16);
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = GINT16_FROM_LE(*ptr16);
-                ptr16++;
-                right[i] = GINT16_FROM_LE(*ptr16);
-                ptr16++;
-            }
-        break;
-    case FMT_S16_BE:
-        ptr16 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++, ptr16++)
-                left[i] = GINT16_FROM_BE(*ptr16);
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = GINT16_FROM_BE(*ptr16);
-                ptr16++;
-                right[i] = GINT16_FROM_BE(*ptr16);
-                ptr16++;
-            }
-        break;
-    case FMT_S16_NE:
-        ptr16 = ptr;
-        if (nch == 1)
-            for (i = 0; i < max; i++)
-                left[i] = (*ptr16++);
-        else
-            for (i = 0; i < max; i++) {
-                left[i] = (*ptr16++);
-                right[i] = (*ptr16++);
-            }
-        break;
-    default:
-        AUDDBG("Incorrect sample format!\n");
-    }
-}
-
 InputVisType
 input_get_vis_type()
 {
     return INPUT_VIS_OFF;
+}
+
+static SAD_dither_t*
+init_sad(gint nch)
+{
+    gint ret;
+
+    SAD_buffer_format in, out;
+    in.sample_format = SAD_SAMPLE_FLOAT;
+    in.fracbits = 0;
+    in.channels = nch;
+    in.channels_order = SAD_CHORDER_INTERLEAVED;
+    in.samplerate = 0;
+    
+    out.sample_format = SAD_SAMPLE_S16;
+    out.fracbits = 0;
+    out.channels = nch;
+    out.channels_order = SAD_CHORDER_SEPARATED; /* sic! --asphyx */
+    out.samplerate = 0;
+        
+    SAD_dither_t *state = SAD_dither_init(&in, &out, &ret);
+    if (state != NULL) SAD_dither_set_dither(state, FALSE);
+    return state;
 }
 
 void
@@ -266,19 +182,29 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
 {
     VisNode *vis_node;
     gint max;
+    
+    if (fmt != FMT_FLOAT || nch > 2) return;
 
-    max = length / nch;
-    if (fmt == FMT_U16_LE || fmt == FMT_U16_BE || fmt == FMT_U16_NE ||
-        fmt == FMT_S16_LE || fmt == FMT_S16_BE || fmt == FMT_S16_NE)
-        max /= 2;
+    if (sad_state == NULL || nch != sad_nch) {
+        if(sad_state != NULL) SAD_dither_free(sad_state);
+        sad_state = init_sad(nch);
+        if(sad_state == NULL) return;
+        sad_nch = nch;
+    }
+
+    max = length / nch / sizeof(float);
     max = CLAMP(max, 0, 512);
 
     vis_node = g_slice_new0(VisNode);
     vis_node->time = time;
     vis_node->nch = nch;
     vis_node->length = max;
-    convert_to_s16_ne(fmt, ptr, vis_node->data[0], vis_node->data[1], nch,
-                      max);
+
+    gint16 *tmp[2];
+
+    tmp[0] = vis_node->data[0];
+    tmp[1] = vis_node->data[1];
+    SAD_dither_process_buffer(sad_state, ptr, tmp, max);
 
     G_LOCK(vis_mutex);
     vis_list = g_list_append(vis_list, vis_node);

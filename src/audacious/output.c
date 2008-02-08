@@ -45,6 +45,7 @@
 #include "visualization.h"
 
 #include "libSAD.h"
+#include "util.h"
 
 #include <math.h>
 
@@ -83,53 +84,7 @@ OutputPlugin psuedo_output_plugin = {
     .written_time = get_written_time,
 };
 
-static const struct {
-    AFormat afmt;
-    SAD_sample_format sadfmt;
-} format_table[] = {
-    {FMT_U8, SAD_SAMPLE_U8},
-    {FMT_S8, SAD_SAMPLE_S8},
-
-    {FMT_S16_LE, SAD_SAMPLE_S16_LE},
-    {FMT_S16_BE, SAD_SAMPLE_S16_BE},
-    {FMT_S16_NE, SAD_SAMPLE_S16},
-
-    {FMT_U16_LE, SAD_SAMPLE_U16_LE},
-    {FMT_U16_BE, SAD_SAMPLE_U16_BE},
-    {FMT_U16_NE, SAD_SAMPLE_U16},
-
-    {FMT_S24_LE, SAD_SAMPLE_S24_LE},
-    {FMT_S24_BE, SAD_SAMPLE_S24_BE},
-    {FMT_S24_NE, SAD_SAMPLE_S24},
-    
-    {FMT_U24_LE, SAD_SAMPLE_U24_LE},
-    {FMT_U24_BE, SAD_SAMPLE_U24_BE},
-    {FMT_U24_NE, SAD_SAMPLE_U24},
-
-    {FMT_S32_LE, SAD_SAMPLE_S32_LE},
-    {FMT_S32_BE, SAD_SAMPLE_S32_BE},
-    {FMT_S32_NE, SAD_SAMPLE_S32},
-    
-    {FMT_U32_LE, SAD_SAMPLE_U32_LE},
-    {FMT_U32_BE, SAD_SAMPLE_U32_BE},
-    {FMT_U32_NE, SAD_SAMPLE_U32},
-    
-    {FMT_FLOAT, SAD_SAMPLE_FLOAT},
-    {FMT_FIXED32, SAD_SAMPLE_FIXED32},
-};
-
 static void apply_replaygain_info (ReplayGainInfo *rg_info);
-
-static SAD_sample_format
-sadfmt_from_afmt(AFormat fmt)
-{
-    int i;
-    for (i = 0; i < sizeof(format_table) / sizeof(format_table[0]); i++) {
-        if (format_table[i].afmt == fmt) return format_table[i].sadfmt;
-    }
-
-    return -1;
-}
 
 OutputPlugin *
 get_current_output_plugin(void)
@@ -606,25 +561,30 @@ output_pass_audio(InputPlayback *playback,
               )
 {
     static Flow *postproc_flow = NULL;
+    static Flow *legacy_flow = NULL;
     OutputPlugin *op = playback->output;
     gint writeoffs;
 
     if (length <= 0) return;
     gint time = playback->output->written_time();
 
+    if (legacy_flow == NULL)
+    {
+        legacy_flow = flow_new();
+        flow_link_element(legacy_flow, iir_flow);
+        flow_link_element(legacy_flow, effect_flow);
+        flow_link_element(legacy_flow, volumecontrol_flow);
+    }
+    
     if (postproc_flow == NULL)
     {
         postproc_flow = flow_new();
-        flow_link_element(postproc_flow, iir_flow);
-        flow_link_element(postproc_flow, effect_flow);
         flow_link_element(postproc_flow, vis_flow);
-        flow_link_element(postproc_flow, volumecontrol_flow);
     }
 
 #ifdef USE_SRC
     if(src_state != NULL)
       {
-        /*int lrLength = length / nch;*/
         int lrLength = length / FMT_SIZEOF(fmt);
         int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
 	if(lengthOfSrcIn < lrLength)
@@ -641,8 +601,11 @@ output_pass_audio(InputPlayback *playback,
 	    srcOut = (float*)malloc(sizeof(float)*overLrLength);
 	    wOut = (short int*)malloc(FMT_SIZEOF(op_state.fmt) * overLrLength);
 	  }
-        /*src_short_to_float_array((short int*)ptr, srcIn, lrLength);*/
+        
         SAD_dither_process_buffer(sad_state_to_float, ptr, srcIn, lrLength / nch);
+        /*flow_execute(postproc_flow, time, &srcIn, lrLength * sizeof(float), FMT_FLOAT, op_state.rate, nch);*/ /*FIXME*/
+
+
         src_data.data_in = srcIn;
         src_data.data_out = srcOut;
         src_data.end_of_input = 0;
@@ -654,7 +617,6 @@ output_pass_audio(InputPlayback *playback,
           }
         else
           {
-            /*src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);*/
             SAD_dither_process_buffer(sad_state_from_float, srcOut, wOut, src_data.output_frames_gen);
             ptr = wOut;
             length = src_data.output_frames_gen *  op_state.nch * FMT_SIZEOF(op_state.fmt);
@@ -676,9 +638,9 @@ output_pass_audio(InputPlayback *playback,
     
     if (op_state.fmt == FMT_S16_NE || (op_state.fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN) ||
                                       (op_state.fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)) {
-        length = flow_execute(postproc_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+        length = flow_execute(legacy_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
     } else {
-        AUDDBG("postproc_flow can deal only with S16_NE streams\n"); /*FIXME*/
+        AUDDBG("legacy_flow can deal only with S16_NE streams\n"); /*FIXME*/
     }
 
     writeoffs = 0;

@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2008  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -38,6 +38,7 @@
 G_BEGIN_DECLS
 
 #include "audacious/plugin.h"
+#include "libSAD/libSAD.h"
 
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
 
@@ -103,6 +104,8 @@ gchar *util_get_localdir(void);
 void util_menu_main_show(gint x, gint y, guint button, guint time);
 
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
+
+SAD_sample_format sadfmt_from_afmt(AFormat fmt);
 
 G_END_DECLS
 

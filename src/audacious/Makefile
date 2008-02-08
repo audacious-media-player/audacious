@@ -36,6 +36,7 @@ SRCS = auddrct.c						\
        pluginenum.c						\
        rcfile.c							\
        signals.c						\
+       src_flow.c						\
        strings.c						\
        tuple.c							\
        tuple_formatter.c				\
