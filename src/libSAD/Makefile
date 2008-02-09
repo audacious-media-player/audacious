@@ -1,9 +1,16 @@
+include ../../buildsys.mk
+include ../../extra.mk
+
+PACKAGE = libSAD
+
 STATIC_LIB_NOINST = libSAD.a
 SRCS = dither.c \
        dither_ops.c \
        noicegen.c
 
-include ../../buildsys.mk
-include ../../extra.mk
 
-CPPFLAGS += ${SIMD_CFLAGS}
+INCLUDES = libSAD.h \
+           common.h \
+           dither.h
+
+CPPFLAGS += ${SIMD_CFLAGS} -I../..

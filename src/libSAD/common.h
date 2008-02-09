@@ -34,7 +34,9 @@
 #define FALSE 0
 #endif
 
-#include "../../config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 typedef int SAD_error;
 
