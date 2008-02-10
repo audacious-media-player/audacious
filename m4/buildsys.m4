@@ -1,6 +1,8 @@
 dnl
 dnl Copyright (c) 2007, Jonathan Schleifer <js-buildsys@webkeks.org>
 dnl
+dnl https://webkeks.org/hg/buildsys/
+dnl
 dnl Permission to use, copy, modify, and/or distribute this software for any
 dnl purpose with or without fee is hereby granted, provided that the above
 dnl copyright notice and this permission notice is present in all copies.
@@ -21,6 +23,11 @@ dnl
 AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
 	AC_MSG_CHECKING(whether we need an implib)
 	case "$target" in
+		*-*-cygwin | *-*-mingw32)
+			AC_MSG_RESULT(yes)
+			PROG_IMPLIB_NEEDED='yes'
+			PROG_IMPLIB_LDFLAGS='-Wl,-export-all-symbols,--out-implib,lib${PROG}.a'
+			;;
 		*)
 			AC_MSG_RESULT(no)
 			PROG_IMPLIB_NEEDED='no'
@@ -106,8 +113,8 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			PLUGIN_CFLAGS='-fPIC'
 			PLUGIN_LDFLAGS='-shared -fPIC'
 			PLUGIN_SUFFIX='.so'
-			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${LIBDIR}/$$i'
-			UNINSTALL_LIB='rm -f ${DESTDIR}${LIBDIR}/$$i ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR} ${DESTDIR}${LIBDIR}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
+			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i'
+			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
 			CLEAN_LIB=''
 			;;
 	esac
