@@ -37,6 +37,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 #include "platform/smartinclude.h"
 #include <errno.h>
@@ -1056,3 +1057,19 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
     AUDDBG("uri=%s\n", uri);
     return uri;
 }
+
+/* 
+ * minimize number of realloc's:
+ *  - set N to nearest power of 2 not less then N
+ *  - double it
+ *
+ *  -- asphyx
+ */
+void*
+smart_realloc(void *ptr, size_t *size) {
+    *size = (size_t)pow(2, ceil(log(*size) / log(2)) + 1);
+    if (ptr != NULL) free(ptr);
+    ptr = malloc(*size);
+    return ptr;
+}
+

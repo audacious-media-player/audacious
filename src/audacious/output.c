@@ -23,7 +23,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-/* #define AUD_DEBUG */
+/*#define AUD_DEBUG*/
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
@@ -52,7 +52,7 @@
 #include <math.h>
 
 #ifdef USE_SRC
-#include <samplerate.h>
+# include "src_flow.h"
 #endif
 
 #define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
@@ -67,6 +67,8 @@ OutputPluginState op_state = {
     0,
     0
 };
+
+static gint decoder_srate = 0;
 
 OutputPlugin psuedo_output_plugin = {
     .description = "XMMS reverse compatibility output plugin",
@@ -249,40 +251,12 @@ get_output_time(void)
     return op->output_time();
 }
 
-#ifdef USE_SRC
-
-static SRC_STATE *src_state;
-static SRC_DATA src_data;
-static int overSamplingFs = 96000;
-static int converter_type = SRC_SINC_BEST_QUALITY;
-static int srcError = 0;
-
-static float *srcIn = NULL, *srcOut = NULL;
-static short int *wOut = NULL;
-static int lengthOfSrcIn = 0;
-static int lengthOfSrcOut = 0;
-
-static void freeSRC()
-{
-  if(src_state != NULL)
-    src_state = src_delete(src_state);
-  free(srcIn);
-  free(srcOut);
-  free(wOut);
-  srcIn = NULL;
-  srcOut = NULL;
-  wOut = NULL;
-  lengthOfSrcIn = 0;
-  lengthOfSrcOut = 0;
-}
-
-#endif
-
-static SAD_dither_t *sad_state = NULL;
 static SAD_dither_t *sad_state_to_float = NULL;
 static SAD_dither_t *sad_state_from_float = NULL;
+static float *sad_float_buf = NULL;
 static void *sad_out_buf = NULL;
-static int sad_out_buf_length = 0;
+static guint sad_float_buf_length = 0;
+static guint sad_out_buf_length = 0;
 static ReplayGainInfo replay_gain_info = {
     .track_gain = 0.0,
     .track_peak = 0.0,
@@ -293,10 +267,8 @@ static ReplayGainInfo replay_gain_info = {
 static void
 freeSAD()
 {
-    if (sad_state != NULL)            {SAD_dither_free(sad_state);            sad_state = NULL;}
     if (sad_state_from_float != NULL) {SAD_dither_free(sad_state_from_float); sad_state_from_float = NULL;}
     if (sad_state_to_float != NULL)   {SAD_dither_free(sad_state_to_float);   sad_state_to_float = NULL;}
-    if (sad_out_buf != NULL)          {free(sad_out_buf);                     sad_out_buf = NULL; sad_out_buf_length = 0;}
 }
 
 gint
@@ -304,138 +276,69 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 {
     gint ret;
     OutputPlugin *op;
-    AUDDBG("\n");
+    AUDDBG("requested: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
 
     AFormat output_fmt;
     int bit_depth;
     SAD_buffer_format input_sad_fmt;
     SAD_buffer_format output_sad_fmt;
 
+    decoder_srate = rate;
+
 #ifdef USE_SRC
-    gboolean src_enabled;
-    gint src_rate, src_type;
-    ConfigDb *db;
-    
-    db = cfg_db_open();
-    
-    if (cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
-      src_enabled = FALSE;
-
-    if (cfg_db_get_int(db, NULL, "src_rate", &src_rate) == FALSE)
-      overSamplingFs = 48000;
-    else
-      overSamplingFs = src_rate;
-
-    /* don't resample if sampling rates are the same --nenolod */
-    if (rate == overSamplingFs)
-      src_enabled = FALSE;
-
-    if (cfg_db_get_int(db, NULL, "src_type", &src_type) == FALSE)
-      converter_type = SRC_SINC_BEST_QUALITY;
-    else
-      converter_type = src_type;
-    
-    freeSRC();
-    
-    if(src_enabled)
-      {
-	src_state = src_new(converter_type, nch, &srcError);
-	if (src_state != NULL)
-	  {
-	    src_data.src_ratio = (float)overSamplingFs/(float)rate;
-	    rate = overSamplingFs;
-	  }
-	else
-        {
-	  fprintf(stderr, "src_new(): %s\n\n", src_strerror(srcError));
-          src_enabled = FALSE;
-        }
-      }
-    
-    cfg_db_close(db);
+    if(cfg.enable_src) rate = cfg.src_rate;
 #endif
     
-    /*if (cfg_db_get_int(db, NULL, "output_bit_depth", &bit_depth) == FALSE) bit_depth = 16;*/
     bit_depth = cfg.output_bit_depth;
 
     AUDDBG("bit depth: %d\n", bit_depth);
     output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE;
-    /*output_fmt = (bit_depth == 24) ? FMT_S24_LE : FMT_S16_LE;*/ /* no reason to support other output formats --asphyx */
     
     freeSAD();
 
-#ifdef USE_SRC
-    if (src_enabled) {
-        AUDDBG("initializing dithering engine for 2 stage conversion\n");
-        input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
-        if (input_sad_fmt.sample_format < 0) return FALSE;
-        input_sad_fmt.fracbits = FMT_FRACBITS(fmt);
-        input_sad_fmt.channels = nch;
-        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        input_sad_fmt.samplerate = 0;
-        
-        output_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
-        output_sad_fmt.fracbits = 0;
-        output_sad_fmt.channels = nch;
-        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        output_sad_fmt.samplerate = 0;
-        
-        sad_state_to_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
-        if (sad_state_to_float == NULL) {
-            AUDDBG("ditherer init failed (decoder's native --> float)\n");
-            return FALSE;
-        }
-        SAD_dither_set_dither (sad_state_to_float, FALSE);
-        
-        input_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
-        input_sad_fmt.fracbits = 0;
-        input_sad_fmt.channels = nch;
-        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        input_sad_fmt.samplerate = 0;
-        
-        output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
-        if (output_sad_fmt.sample_format < 0) return FALSE;
-        output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
-        output_sad_fmt.channels = nch;
-        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        output_sad_fmt.samplerate = 0;
-        
-        sad_state_from_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
-        if (sad_state_from_float == NULL) {
-            SAD_dither_free(sad_state_to_float);
-            AUDDBG("ditherer init failed (float --> output)\n");
-            return FALSE;
-        }
-        SAD_dither_set_dither (sad_state_from_float, TRUE);
-        
-        fmt = output_fmt;
-    } else
-#endif /* USE_SRC */
-    {   /* needed for RG processing !*/
-        AUDDBG("initializing dithering engine for direct conversion\n");
-
-        input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
-        if (input_sad_fmt.sample_format < 0) return FALSE;
-        input_sad_fmt.fracbits = FMT_FRACBITS(fmt);
-        input_sad_fmt.channels = nch;
-        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        input_sad_fmt.samplerate = 0; /* resampling not implemented yet in libSAD */
-        
-        output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
-        output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
-        output_sad_fmt.channels = nch;
-        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        output_sad_fmt.samplerate = 0;
-
-        sad_state = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
-        if (sad_state == NULL) {
-            AUDDBG("ditherer init failed\n");
-            return FALSE;
-        }
-        SAD_dither_set_dither (sad_state, TRUE);
-
-        fmt = output_fmt;
+    AUDDBG("initializing dithering engine for 2 stage conversion: fmt%d --> float -->fmt%d\n", fmt, output_fmt);
+    input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
+    if (input_sad_fmt.sample_format < 0) return FALSE;
+    input_sad_fmt.fracbits = FMT_FRACBITS(fmt);
+    input_sad_fmt.channels = nch;
+    input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+    input_sad_fmt.samplerate = 0;
+    
+    output_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
+    output_sad_fmt.fracbits = 0;
+    output_sad_fmt.channels = nch;
+    output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+    output_sad_fmt.samplerate = 0;
+    
+    sad_state_to_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
+    if (sad_state_to_float == NULL) {
+        AUDDBG("ditherer init failed (decoder's native --> float)\n");
+        return FALSE;
     }
+    SAD_dither_set_dither (sad_state_to_float, FALSE);
+    
+    input_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
+    input_sad_fmt.fracbits = 0;
+    input_sad_fmt.channels = nch;
+    input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+    input_sad_fmt.samplerate = 0;
+    
+    output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
+    if (output_sad_fmt.sample_format < 0) return FALSE;
+    output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
+    output_sad_fmt.channels = nch;
+    output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
+    output_sad_fmt.samplerate = 0;
+    
+    sad_state_from_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
+    if (sad_state_from_float == NULL) {
+        SAD_dither_free(sad_state_to_float);
+        AUDDBG("ditherer init failed (float --> output)\n");
+        return FALSE;
+    }
+    SAD_dither_set_dither (sad_state_from_float, TRUE);
+    
+    fmt = output_fmt;
 
     if(replay_gain_info.album_peak == 0.0 && replay_gain_info.track_peak == 0.0) {
         AUDDBG("RG info isn't set yet. Filling replay_gain_info with default values.\n");
@@ -499,11 +402,6 @@ output_close_audio(void)
 {
     OutputPlugin *op = get_current_output_plugin();
 
-    AUDDBG("\n");
-
-#ifdef USE_SRC
-    freeSRC();
-#endif
     freeSAD();
     
     AUDDBG("clearing RG settings\n");
@@ -515,10 +413,12 @@ output_close_audio(void)
     /* Do not close if there are still songs to play and the user has 
      * not requested a stop.  --nenolod
      */
-    if (ip_data.stop == FALSE && 
-       (playlist_get_position_nolock(playlist_get_active()) < 
-        playlist_get_length(playlist_get_active()) - 1))
-        return;
+    Playlist *pl = playlist_get_active();
+    if (ip_data.stop == FALSE &&
+       (playlist_get_position_nolock(pl) < playlist_get_length(pl) - 1)) {
+            AUDDBG("leaving audio opened\n");
+            return;
+        }
 
     /* Sanity check. */
     if (op == NULL)
@@ -526,6 +426,10 @@ output_close_audio(void)
 
     plugin_set_current((Plugin *)op);
     op->close_audio();
+    AUDDBG("done\n");
+#ifdef USE_SRC
+    src_flow_free();
+#endif
 
     /* Reset the op_state. */
     op_state.fmt = op_state.rate = op_state.nch = 0;
@@ -593,8 +497,7 @@ output_pass_audio(InputPlayback *playback,
     static Flow *legacy_flow = NULL;
     OutputPlugin *op = playback->output;
     gint writeoffs;
-
-    if (length <= 0) return;
+    gpointer float_ptr;
     
     plugin_set_current((Plugin *)(playback->output));
     gint time = playback->output->written_time();
@@ -611,61 +514,40 @@ output_pass_audio(InputPlayback *playback,
     {
         postproc_flow = flow_new();
         flow_link_element(postproc_flow, vis_flow);
-    }
-
 #ifdef USE_SRC
-    if(src_state != NULL)
-      {
-        int lrLength = length / FMT_SIZEOF(fmt);
-        int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
-	if(lengthOfSrcIn < lrLength)
-	  {
-	    lengthOfSrcIn = lrLength;
-	    free(srcIn);
-	    srcIn = (float*)malloc(sizeof(float)*lrLength);
-	  }
-	if(lengthOfSrcOut < overLrLength)
-	  {
-	    lengthOfSrcOut = overLrLength;
-	    free(srcOut);
-	    free(wOut);
-	    srcOut = (float*)malloc(sizeof(float)*overLrLength);
-	    wOut = (short int*)malloc(FMT_SIZEOF(op_state.fmt) * overLrLength);
-	  }
-        
-        SAD_dither_process_buffer(sad_state_to_float, ptr, srcIn, lrLength / nch);
-        /*flow_execute(postproc_flow, time, &srcIn, lrLength * sizeof(float), FMT_FLOAT, op_state.rate, nch);*/ /*FIXME*/
-
-
-        src_data.data_in = srcIn;
-        src_data.data_out = srcOut;
-        src_data.end_of_input = 0;
-        src_data.input_frames = lrLength / nch;
-        src_data.output_frames = overLrLength / nch;
-        if ((srcError = src_process(src_state, &src_data)) > 0)
-          {
-            fprintf(stderr, "src_process(): %s\n", src_strerror(srcError));
-          }
-        else
-          {
-            SAD_dither_process_buffer(sad_state_from_float, srcOut, wOut, src_data.output_frames_gen);
-            ptr = wOut;
-            length = src_data.output_frames_gen *  op_state.nch * FMT_SIZEOF(op_state.fmt);
-          }
-      } else
+        flow_link_element(postproc_flow, src_flow);
 #endif
-    if(sad_state != NULL) {
-        int frames  = length / nch / FMT_SIZEOF(fmt);
-        int len =  frames * op_state.nch * FMT_SIZEOF(op_state.fmt);
-        if(sad_out_buf == NULL || sad_out_buf_length < len ) {
-            if(sad_out_buf != NULL) free (sad_out_buf);
-            sad_out_buf = malloc(len);
-            sad_out_buf_length = len; 
-        }
-        SAD_dither_process_buffer(sad_state, ptr, sad_out_buf, frames);
-        ptr = sad_out_buf;
-        length = len;
     }
+
+    int frames = length / nch / FMT_SIZEOF(fmt);
+    int len = frames * nch * sizeof(float);
+    if(sad_float_buf == NULL || sad_float_buf_length < len) {
+        sad_float_buf_length = len;
+        sad_float_buf = smart_realloc(sad_float_buf, &sad_float_buf_length);
+    }
+
+    SAD_dither_process_buffer(sad_state_to_float, ptr, sad_float_buf, frames);
+    float_ptr = sad_float_buf;
+    
+    length = flow_execute(postproc_flow,
+                          time,
+                          &float_ptr,
+                          len,
+                          FMT_FLOAT,
+                          decoder_srate,
+                          nch);
+    
+    frames = length / nch / sizeof(float);
+    len = frames * nch * FMT_SIZEOF(op_state.fmt);
+    if(sad_out_buf == NULL || sad_out_buf_length < len) {
+        sad_out_buf_length = len;
+        sad_out_buf = smart_realloc(sad_out_buf, &sad_out_buf_length);
+    }
+
+    SAD_dither_process_buffer(sad_state_from_float, float_ptr, sad_out_buf, frames);
+
+    length = len;
+    ptr = sad_out_buf;
     
     if (op_state.fmt == FMT_S16_NE || (op_state.fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN) ||
                                       (op_state.fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)) {
@@ -673,6 +555,8 @@ output_pass_audio(InputPlayback *playback,
     } else {
         AUDDBG("legacy_flow can deal only with S16_NE streams\n"); /*FIXME*/
     }
+
+    /**** write it out ****/
 
     writeoffs = 0;
     while (writeoffs < length)
@@ -731,13 +615,10 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
 {
     SAD_replaygain_mode mode;
     SAD_replaygain_info info;
-    /*ConfigDb *db;*/
     gboolean rg_enabled;
     gboolean album_mode;
-    SAD_dither_t *active_state;
 
-
-    if(sad_state == NULL && sad_state_from_float == NULL) {
+    if(sad_state_from_float == NULL) {
         AUDDBG("SAD not initialized!\n");
         return;
     }
@@ -770,6 +651,5 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
     AUDDBG("* album gain:          %+f dB\n", info.album_gain);
     AUDDBG("* album peak:          %f\n",     info.album_peak);
     
-    active_state = sad_state != NULL ? sad_state : sad_state_from_float;
-    SAD_dither_apply_replaygain(active_state, &info, &mode);
+    SAD_dither_apply_replaygain(sad_state_from_float, &info, &mode);
 }

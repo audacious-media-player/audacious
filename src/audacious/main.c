@@ -45,6 +45,10 @@
 #include <sys/stat.h>
 #include <signal.h>
 
+#ifdef USE_SRC
+#  include <samplerate.h>
+#endif
+
 #include "platform/smartinclude.h"
 
 #include "configdb.h"
@@ -239,6 +243,11 @@ BmpConfig bmp_default_config = {
     FALSE,          /* enable adaptive scaler */
     0.0,            /* preamp */
     -9.0,           /* default gain */
+#ifdef USE_SRC
+    FALSE,          /* enable resampling */
+    48000,          /* samplerate */
+    SRC_SINC_BEST_QUALITY, /* default interpolation method */
+#endif
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -355,6 +364,9 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"replay_gain_track",          &cfg.replay_gain_track, TRUE},
     {"replay_gain_album",          &cfg.replay_gain_album, TRUE},
     {"enable_adaptive_scaler",     &cfg.enable_adaptive_scaler, TRUE},
+#ifdef USE_SRC
+    {"enable_src",                 &cfg.enable_src, TRUE},
+#endif
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -393,6 +405,10 @@ static bmp_cfg_nument bmp_numents[] = {
     {"colorize_g", &cfg.colorize_g, TRUE},
     {"colorize_b", &cfg.colorize_b, TRUE},
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
+#ifdef USE_SRC
+    {"src_rate", &cfg.src_rate, TRUE},
+    {"src_type", &cfg.src_type, TRUE},
+#endif
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);

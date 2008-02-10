@@ -150,6 +150,11 @@ struct _BmpConfig {
     gboolean enable_adaptive_scaler;
     gfloat replay_gain_preamp;
     gfloat default_gain;
+#ifdef USE_SRC
+    gboolean enable_src;
+    gint src_rate;
+    gint src_type;
+#endif
 };
 
 typedef struct _BmpConfig BmpConfig;
