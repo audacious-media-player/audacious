@@ -99,15 +99,17 @@ depend: pre-depend ${SRCS}
 		${DEPEND_STATUS}; \
 		rm -f .deps; \
 		if ${MAKE} ${MFLAGS} ${DEPS}; then \
+			cat ${DEPS} >.deps; \
+			rm -f ${DEPS}; \
 			${DEPEND_OK}; \
 		else \
-			rm -f .deps; \
+			rm -f .deps ${DEPS}; \
 			${DEPEND_FAILED}; \
 		fi; \
 	fi
 
 .c.dep .cc.dep .cxx.dep .m.dep:
-	${CPP} ${CPPFLAGS} -M $< >>.deps
+	${CPP} ${CPPFLAGS} -M $< >$@
 
 .d.dep:
 
@@ -353,7 +355,7 @@ clean:
 		${DIR_LEAVE}; \
 	done
 	
-	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} .deps; do \
+	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} .deps ${DEPS}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
