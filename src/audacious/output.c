@@ -498,6 +498,8 @@ output_pass_audio(InputPlayback *playback,
     OutputPlugin *op = playback->output;
     gint writeoffs;
     gpointer float_ptr;
+
+    if(length <= 0 || sad_state_from_float == NULL || sad_state_to_float == NULL) return;
     
     plugin_set_current((Plugin *)(playback->output));
     gint time = playback->output->written_time();
