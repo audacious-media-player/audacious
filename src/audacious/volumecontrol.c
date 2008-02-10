@@ -43,119 +43,41 @@ typedef struct {
 
 static volumecontrol_req_t vc_state_ = { 100, 100 };
 
-#define STEREO_ADJUST(type, type2, endian)                                      \
-do {                                                                            \
-        type *ptr = data;                                                       \
-        for (i = 0; i < length; i += 4)                                         \
-        {                                                                       \
-                *ptr = type2##_TO_##endian(type2##_FROM_## endian(*ptr) *       \
-                                           lvol / 256);                         \
-                ptr++;                                                          \
-                *ptr = type2##_TO_##endian(type2##_FROM_##endian(*ptr) *        \
-                                           rvol / 256);                         \
-                ptr++;                                                          \
-        }                                                                       \
-} while (0)
-
-#define MONO_ADJUST(type, type2, endian)                                        \
-do {                                                                            \
-        type *ptr = data;                                                       \
-        for (i = 0; i < length; i += 2)                                         \
-        {                                                                       \
-                *ptr = type2##_TO_##endian(type2##_FROM_## endian(*ptr) *       \
-                                           vol / 256);                          \
-                ptr++;                                                          \
-        }                                                                       \
-} while (0)
-
-#define VOLUME_ADJUST(type, type2, endian)              \
-do {                                                    \
-        if (channels == 2)                              \
-                STEREO_ADJUST(type, type2, endian);     \
-        else                                            \
-                MONO_ADJUST(type, type2, endian);       \
-} while (0)
-
-#define STEREO_ADJUST8(type)                            \
-do {                                                    \
-        type *ptr = data;                               \
-        for (i = 0; i < length; i += 2)                 \
-        {                                               \
-                *ptr = *ptr * lvol / 256;               \
-                ptr++;                                  \
-                *ptr = *ptr * rvol / 256;               \
-                ptr++;                                  \
-        }                                               \
-} while (0)
-
-#define MONO_ADJUST8(type)                      \
-do {                                            \
-        type *ptr = data;                       \
-        for (i = 0; i < length; i++)            \
-        {                                       \
-                *ptr = *ptr * vol / 256;        \
-                ptr++;                          \
-        }                                       \
-} while (0)
-
-#define VOLUME_ADJUST8(type)                    \
-do {                                            \
-        if (channels == 2)                      \
-                STEREO_ADJUST8(type);           \
-        else                                    \
-                MONO_ADJUST8(type);             \
-} while (0)
+#define GAIN -50.0 /* dB */
 
 void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt,
     gint channels)
 {
-    gint i, vol, lvol, rvol;
+    gint i, k, samples;
+    float vol, lvol, rvol;
+    float lgain, rgain;
 
     if (vc_state_.left == 100 && vc_state_.right == 100)
         return;
 
-    if (channels == 1 && (vc_state_.left == 100 || vc_state_.right == 100))
+    if (channels != 2 && (vc_state_.left == 100 || vc_state_.right == 100))
         return;
 
-    lvol = pow(10, (vc_state_.left - 100) / 40.0) * 256;
-    rvol = pow(10, (vc_state_.right - 100) / 40.0) * 256;
+    lgain = (float)(100 - vc_state_.left) * GAIN / 100.0;
+    rgain = (float)(100 - vc_state_.right) * GAIN / 100.0;
+
+    lvol = pow(10.0, lgain / 20.0);
+    rvol = pow(10.0, rgain / 20.0);
     vol = MAX(lvol, rvol);
 
-    switch (fmt)
-    {
-        case FMT_S16_NE:
-            fmt = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_LE;
-            break;
-        case FMT_U16_NE:
-            fmt = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_U16_LE : FMT_U16_BE;
-            break;
-        default:
-            break;
-    }
-
-    switch (fmt)
-    {
-        case FMT_S16_LE:
-            VOLUME_ADJUST(gint16, GINT16, LE);
-            break;
-        case FMT_U16_LE:
-            VOLUME_ADJUST(guint16, GUINT16, LE);
-            break;
-        case FMT_S16_BE:
-            VOLUME_ADJUST(gint16, GINT16, LE);
-            break;
-        case FMT_U16_BE:
-            VOLUME_ADJUST(guint16, GUINT16, LE);
-            break;
-        case FMT_S8:
-            VOLUME_ADJUST8(gint8);
-            break;
-        case FMT_U8:
-            VOLUME_ADJUST8(guint8);
-            break;
-        default:
-            g_warning("unhandled format %d.", fmt);
-            break;
+    float *ptr = data;
+    samples = length / sizeof(float);
+    for (k = 0; k < samples; k++) {
+        if (channels == 2) {
+            *ptr *= lvol;
+            ptr++;
+            *ptr *= rvol;
+            ptr++;
+        } else { /* for mono and other channels number */
+            for (i = 0; i < channels; i++) {
+                *ptr *= vol; ptr++;
+            }
+        }
     }
 }
 
@@ -178,6 +100,12 @@ volumecontrol_flow(FlowContext *context)
 {
     if (!cfg.software_volume_control)
         return;
+
+    if (context->fmt != FMT_FLOAT) {
+        g_warning("volumecontrol_flow(): unhandled format %d.", context->fmt);
+        context->error = TRUE;
+        return;
+    }
 
     volumecontrol_pad_audio(context->data, context->len, context->fmt, context->channels);
 }
