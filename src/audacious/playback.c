@@ -55,6 +55,7 @@
 #include "util.h"
 #include "visualization.h"
 #include "skin.h"
+#include "pluginenum.h"
 
 #include "playback.h"
 #include "playback_evlisteners.h"
@@ -113,6 +114,7 @@ playback_set_pb_params(InputPlayback *playback, gchar *title,
     playback->nch = nch;
 
     /* XXX: this can be removed/merged here someday */
+    plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->set_info(title, length, rate, freq, nch);
 }
 
@@ -121,6 +123,7 @@ playback_set_pb_title(InputPlayback *playback, gchar *title)
 {
     playback->title = g_strdup(title);
 
+    plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->set_info_text(title);
 }
 
@@ -145,8 +148,12 @@ playback_get_time(void)
 
     if (!playback) /* playback can be NULL during init even if playing is TRUE */              
         return -1;
+    plugin_set_current((Plugin *)(playback->plugin));
     if (playback->plugin->get_time)
+    {
+        plugin_set_current((Plugin *)(playback->plugin));
         return playback->plugin->get_time(playback);
+    }
     if (playback->error)
         return -2;
     if (!playback->playing || 
@@ -166,6 +173,7 @@ playback_get_length(void)
         return playback->length;
 
     if (playback && playback->plugin->get_song_tuple) {
+        plugin_set_current((Plugin *)(playback->plugin));
         Tuple *tuple = playback->plugin->get_song_tuple(playback->filename);
         if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
             return tuple_get_int(tuple, FIELD_LENGTH, NULL);
@@ -249,7 +257,10 @@ playback_pause(void)
     ip_data.paused = !ip_data.paused;
 
     if (playback->plugin->pause)
+    {
+        plugin_set_current((Plugin *)(playback->plugin));
         playback->plugin->pause(playback, ip_data.paused);
+    }
 
     if (ip_data.paused)
         hook_call("playback pause", NULL);
@@ -300,7 +311,10 @@ playback_stop(void)
         playback->set_pb_change(playback);
 
         if (playback->plugin->stop)
+	{
+	    plugin_set_current((Plugin *)(playback->plugin));
             playback->plugin->stop(playback);
+	}
 
         if (playback->thread != NULL)
         {
@@ -352,6 +366,7 @@ playback_monitor_thread(gpointer data)
 {
     InputPlayback *playback = (InputPlayback *) data;
 
+    plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->play_file(playback);
 
     /* if play_file has not reached the 'safe state' before returning (an error
@@ -509,6 +524,7 @@ playback_seek(gint time)
         playback_pause();
     }
     
+    plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->seek(playback, time);
     playback->set_pb_change(playback);
     free_vis_data();

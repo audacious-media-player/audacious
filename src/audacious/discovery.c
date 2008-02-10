@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <string.h>
 #include "plugin.h"
+#include "pluginenum.h"
 #include "discovery.h"
 
 DiscoveryPluginData dp_data = {
@@ -64,12 +65,18 @@ enable_discovery_plugin(gint i, gboolean enable)
     if (enable && !plugin->enabled) {
         dp_data.enabled_list = g_list_append(dp_data.enabled_list, plugin);
         if (plugin->init)
+	{
+	    plugin_set_current((Plugin *)plugin);
             plugin->init();
+	}
     }
     else if (!enable && plugin->enabled) {
         dp_data.enabled_list = g_list_remove(dp_data.enabled_list, plugin);
         if (plugin->cleanup)
+	{
+	    plugin_set_current((Plugin *)plugin);
             plugin->cleanup();
+	}
     }
 
     plugin->enabled = enable;
@@ -123,7 +130,10 @@ discovery_enable_from_stringified_list(const gchar * list_str)
                 dp_data.enabled_list = g_list_append(dp_data.enabled_list,
                                                       plugin);
                 if (plugin->init)
+		{
+		    plugin_set_current((Plugin *)plugin);
                     plugin->init();
+		}
 
                 plugin->enabled = TRUE;
             }

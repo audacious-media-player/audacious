@@ -40,6 +40,8 @@
 
 #include "flow.h"
 
+#include "pluginenum.h"
+
 #include "effect.h"
 #include "volumecontrol.h"
 #include "visualization.h"
@@ -112,6 +114,8 @@ set_current_output_plugin(gint i)
     {
         guint time, pos;
         PlaylistEntry *entry;
+	
+	plugin_set_current((Plugin *)op);
 
         /* don't stop yet, get the seek time and playlist position first */
         pos = playlist_get_position(playlist_get_active());
@@ -156,7 +160,10 @@ output_about(gint i)
 {
     OutputPlugin *out = g_list_nth(op_data.output_list, i)->data;
     if (out && out->about)
+    {
+	plugin_set_current((Plugin *)out);
         out->about();
+    }
 }
 
 void
@@ -164,7 +171,10 @@ output_configure(gint i)
 {
     OutputPlugin *out = g_list_nth(op_data.output_list, i)->data;
     if (out && out->configure)
+    {
+	plugin_set_current((Plugin *)out);
         out->configure();
+    }
 }
 
 void
@@ -181,7 +191,10 @@ output_get_volume(gint * l, gint * r)
     if (cfg.software_volume_control)
         volumecontrol_get_volume_state(l, r);
     else
+    {
+        plugin_set_current((Plugin *)op_data.current_output_plugin);
         op_data.current_output_plugin->get_volume(l, r);
+    }
 }
 
 void
@@ -196,7 +209,10 @@ output_set_volume(gint l, gint r)
     if (cfg.software_volume_control)
         volumecontrol_set_volume_state(l, r);
     else
+    {
+        plugin_set_current((Plugin *)op_data.current_output_plugin);
         op_data.current_output_plugin->set_volume(l, r);
+    }
 }
 
 void
@@ -219,6 +235,7 @@ get_written_time(void)
 {
     OutputPlugin *op = get_current_output_plugin();
 
+    plugin_set_current((Plugin *)op);
     return op->written_time();
 }
 
@@ -228,6 +245,7 @@ get_output_time(void)
 {
     OutputPlugin *op = get_current_output_plugin();
 
+    plugin_set_current((Plugin *)op);
     return op->output_time();
 }
 
@@ -438,13 +456,18 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
     {
         /* Yes, and it's the correct sampling rate. Reset the counter and go. */
-        AUDDBG("flushing output instead of reopening\n");
+	AUDDBG("flushing output instead of reopening\n");
+	plugin_set_current((Plugin *)op);
         op->flush(0);
         return TRUE;
     }
     else if (op_state.rate != 0 && op_state.nch != 0)
+    {
+        plugin_set_current((Plugin *)op);
         op->close_audio();
+    }
 
+    plugin_set_current((Plugin *)op);
     ret = op->open_audio(fmt, rate, nch);
 
     if (ret == 1)            /* Success? */
@@ -467,6 +490,7 @@ output_write_audio(gpointer ptr, gint length)
     if (op == NULL)
         return;
 
+    plugin_set_current((Plugin *)op);
     op->write_audio(ptr, length);
 }
 
@@ -500,6 +524,7 @@ output_close_audio(void)
     if (op == NULL)
         return;
 
+    plugin_set_current((Plugin *)op);
     op->close_audio();
 
     /* Reset the op_state. */
@@ -514,6 +539,7 @@ output_flush(gint time)
     if (op == NULL)
         return;
 
+    plugin_set_current((Plugin *)op);
     op->flush(time);
 }
 
@@ -525,6 +551,7 @@ output_pause(gshort paused)
     if (op == NULL)
         return;
 
+    plugin_set_current((Plugin *)op);
     op->pause(paused);
 }
 
@@ -536,6 +563,7 @@ output_buffer_free(void)
     if (op == NULL)
         return 0;
 
+    plugin_set_current((Plugin *)op);
     return op->buffer_free();
 }
 
@@ -547,6 +575,7 @@ output_buffer_playing(void)
     if (op == NULL)
         return 0;
 
+    plugin_set_current((Plugin *)op);
     return op->buffer_playing();
 }
 
@@ -566,6 +595,8 @@ output_pass_audio(InputPlayback *playback,
     gint writeoffs;
 
     if (length <= 0) return;
+    
+    plugin_set_current((Plugin *)(playback->output));
     gint time = playback->output->written_time();
 
     if (legacy_flow == NULL)
@@ -680,6 +711,7 @@ output_pass_audio(InputPlayback *playback,
             return;                            /* so finish */
 
         /* do output */
+	plugin_set_current((Plugin *)op);
         op->write_audio(((guint8 *) ptr) + writeoffs, writable);
 
         writeoffs += writable;

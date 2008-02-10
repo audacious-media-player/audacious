@@ -29,6 +29,7 @@
 #include <glib.h>
 #include <string.h>
 #include "plugin.h"
+#include "pluginenum.h"
 
 EffectPluginData ep_data = {
     NULL,
@@ -45,7 +46,10 @@ effect_do_mod_samples(gpointer * data, gint length,
         if (l->data) {
             EffectPlugin *ep = l->data;
             if (ep->mod_samples)
+	    {
+	        plugin_set_current((Plugin *)ep);
                 length = ep->mod_samples(data, length, fmt, srate, nch);
+	    }
         }
         l = g_list_next(l);
     }
@@ -62,7 +66,10 @@ effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
         if (l->data) {
             EffectPlugin *ep = l->data;
             if (ep->query_format)
+	    {
+	        plugin_set_current((Plugin *)ep);
                 ep->query_format(fmt, rate, nch);
+	    }
         }
         l = g_list_next(l);
     }
@@ -87,12 +94,18 @@ enable_effect_plugin(int i, gboolean enable)
     if (enable && !ep->enabled) {
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
         if (ep->init)
+	{
+	    plugin_set_current((Plugin *)ep);
             ep->init();
+	}
     }
     else if (!enable && ep->enabled) {
         ep_data.enabled_list = g_list_remove(ep_data.enabled_list, ep);
         if (ep->cleanup)
+	{
+	    plugin_set_current((Plugin *)ep);
             ep->cleanup();
+	}
     }
 
     ep->enabled = enable;
@@ -150,7 +163,10 @@ effect_enable_from_stringified_list(const gchar * list)
                 ep_data.enabled_list =
                     g_list_append(ep_data.enabled_list, ep);
                 if (ep->init)
+		{
+		    plugin_set_current((Plugin *)ep);
                     ep->init();
+		}
             }
             g_free(base);
             node = node->next;

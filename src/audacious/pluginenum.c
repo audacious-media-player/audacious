@@ -70,6 +70,9 @@ const gchar *plugin_dir_list[] = {
 
 GHashTable *ext_hash = NULL;
 
+static void set_pvt_data(Plugin * plugin, gpointer data);
+static gpointer get_pvt_data(void);
+
 /*****************************************************************/
 
 static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
@@ -392,6 +395,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .uri_to_display_basename = uri_to_display_basename,
     .uri_to_display_dirname = uri_to_display_dirname,
 
+    .get_pvt_data = get_pvt_data,
+    .set_pvt_data = set_pvt_data,
+
 };
 
 /*****************************************************************/
@@ -400,6 +406,39 @@ GList *lowlevel_list = NULL;
 extern GList *vfs_transports;
 
 mowgli_dictionary_t *plugin_dict = NULL;
+
+static GStaticPrivate cur_plugin_key = G_STATIC_PRIVATE_INIT;
+static mowgli_dictionary_t *pvt_data_dict = NULL;
+
+static mowgli_list_t *headers_list = NULL;
+
+void plugin_set_current(Plugin *plugin)
+{
+    g_static_private_set(&cur_plugin_key, plugin, NULL);
+}
+
+static Plugin *plugin_get_current(void)
+{
+    return g_static_private_get(&cur_plugin_key);
+}
+
+static void set_pvt_data(Plugin * plugin, gpointer data)
+{
+    mowgli_dictionary_elem_t *elem;
+
+    elem = mowgli_dictionary_find(pvt_data_dict, g_basename(plugin->filename));
+    if (elem == NULL)
+        mowgli_dictionary_add(pvt_data_dict, g_basename(plugin->filename), data);
+    else
+        elem->data = data;
+}
+
+static gpointer get_pvt_data(void)
+{
+    Plugin *cur_p = plugin_get_current();
+
+    return mowgli_dictionary_retrieve(pvt_data_dict, g_basename(cur_p->filename));
+}
 
 static gint
 inputlist_compare_func(gconstpointer a, gconstpointer b)
@@ -611,12 +650,8 @@ plugin2_dispose(GModule *module, const gchar *str, ...)
 void
 plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
 {
-    InputPlugin **ip_iter;
-    OutputPlugin **op_iter;
-    EffectPlugin **ep_iter;
-    GeneralPlugin **gp_iter;
-    VisPlugin **vp_iter;
-    DiscoveryPlugin **dp_iter;
+    int i;
+    mowgli_node_t *hlist_node;
 
     if (header->magic != PLUGIN_MAGIC)
         return plugin2_dispose(module, "plugin <%s> discarded, invalid module magic", filename);
@@ -625,6 +660,9 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
         return plugin2_dispose(module, "plugin <%s> discarded, wanting API version %d, we implement API version %d",
                                filename, header->api_version, __AUDACIOUS_PLUGIN_API__);
 
+    hlist_node = mowgli_node_create();
+    mowgli_node_add(header, hlist_node, headers_list);
+
     if (header->init)
         header->init();
 
@@ -632,63 +670,65 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     header->priv_assoc->handle = module;
     header->priv_assoc->filename = g_strdup(filename);
 
+    i = 0;
+
     if (header->ip_list)
     {
-        for (ip_iter = header->ip_list; *ip_iter != NULL; ip_iter++)
+        for (; (header->ip_list)[i] != NULL; i++)
         {
-            PLUGIN(*ip_iter)->filename = g_strdup(filename);
-            input_plugin_init(PLUGIN(*ip_iter));
+            PLUGIN((header->ip_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            input_plugin_init(PLUGIN((header->ip_list)[i]));
         }
     }
 
     if (header->op_list)
     {
-        for (op_iter = header->op_list; *op_iter != NULL; op_iter++)
+        for (; (header->op_list)[i] != NULL; i++)
         {
-            PLUGIN(*op_iter)->filename = g_strdup(filename);
-            output_plugin_init(PLUGIN(*op_iter));
+            PLUGIN((header->op_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            output_plugin_init(PLUGIN((header->op_list)[i]));
         }
     }
 
     if (header->ep_list)
     {
-        for (ep_iter = header->ep_list; *ep_iter != NULL; ep_iter++)
+        for (; (header->ep_list)[i] != NULL; i++)
         {
-            PLUGIN(*ep_iter)->filename = g_strdup(filename);
-            effect_plugin_init(PLUGIN(*ep_iter));
+            PLUGIN((header->ep_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            effect_plugin_init(PLUGIN((header->ep_list)[i]));
         }
     }
 
     if (header->gp_list)
     {
-        for (gp_iter = header->gp_list; *gp_iter != NULL; gp_iter++)
+        for (; (header->gp_list)[i] != NULL; i++)
         {
-            PLUGIN(*gp_iter)->filename = g_strdup(filename);
-            general_plugin_init(PLUGIN(*gp_iter));
+            PLUGIN((header->gp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            general_plugin_init(PLUGIN((header->gp_list)[i]));
         }
     }
 
     if (header->vp_list)
     {
-        for (vp_iter = header->vp_list; *vp_iter != NULL; vp_iter++)
+        for (; (header->vp_list)[i] != NULL; i++)
         {
-            PLUGIN(*vp_iter)->filename = g_strdup(filename);
-            vis_plugin_init(PLUGIN(*vp_iter));
+            PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            vis_plugin_init(PLUGIN((header->vp_list)[i]));
         }
     }
 
     if (header->dp_list)
     {
-        for (dp_iter = header->dp_list; *dp_iter != NULL; dp_iter++)
+        for (; (header->dp_list)[i] != NULL; i++)
         {
-            PLUGIN(*dp_iter)->filename = g_strdup(filename);
-            discovery_plugin_init(PLUGIN(*dp_iter));
+            PLUGIN((header->dp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            discovery_plugin_init(PLUGIN((header->dp_list)[i]));
         }
     }
 }
 
 void
-plugin2_unload(PluginHeader *header)
+plugin2_unload(PluginHeader *header, mowgli_node_t *hlist_node)
 {
     GModule *module;
 
@@ -701,6 +741,9 @@ plugin2_unload(PluginHeader *header)
 
     if (header->fini)
         header->fini();
+
+    mowgli_node_delete(hlist_node, headers_list);
+    mowgli_node_free(hlist_node);
 
     g_module_close(module);
 }
@@ -778,6 +821,9 @@ plugin_system_init(void)
     }
 
     plugin_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
+    pvt_data_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
+
+    headers_list = mowgli_list_create();
 
     /* make extension hash */
     ext_hash = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
@@ -854,26 +900,38 @@ plugin_system_init(void)
         if (cfg.outputplugin && !strcmp(g_basename(cfg.outputplugin), g_basename(op->filename)))
             op_data.current_output_plugin = op;
         if (op->init)
+	{
+	    plugin_set_current((Plugin *)op);
             op->init();
+	}
     }
 
     for (node = ip_data.input_list; node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip->init)
+	{
+	    plugin_set_current((Plugin *)ip);
             ip->init();
+	}
     }
 
     for (node = dp_data.discovery_list; node; node = g_list_next(node)) {
         dp = DISCOVERY_PLUGIN(node->data);
         if (dp->init)
+	{
+	    plugin_set_current((Plugin *)dp);
             dp->init();
+	}
     }
 
 
     for (node = lowlevel_list; node; node = g_list_next(node)) {
         lp = LOWLEVEL_PLUGIN(node->data);
         if (lp->init)
+	{
+	    plugin_set_current((Plugin *)lp);
             lp->init();
+	}
     }
 
     if (cfg.disabled_iplugins) {
@@ -911,6 +969,7 @@ plugin_system_cleanup(void)
     LowlevelPlugin *lp;
     DiscoveryPlugin *dp;
     GList *node;
+    mowgli_node_t *hlist_node;
 
     g_message("Shutting down plugin system");
 
@@ -926,6 +985,7 @@ plugin_system_cleanup(void)
     for (node = get_input_list(); node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip && ip->cleanup) {
+	    plugin_set_current((Plugin *)ip);
             ip->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -945,6 +1005,7 @@ plugin_system_cleanup(void)
     for (node = get_output_list(); node; node = g_list_next(node)) {
         op = OUTPUT_PLUGIN(node->data);
         if (op && op->cleanup) {
+	    plugin_set_current((Plugin *)op);
             op->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -964,6 +1025,7 @@ plugin_system_cleanup(void)
     for (node = get_effect_list(); node; node = g_list_next(node)) {
         ep = EFFECT_PLUGIN(node->data);
         if (ep && ep->cleanup) {
+	    plugin_set_current((Plugin *)ep);
             ep->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -983,6 +1045,7 @@ plugin_system_cleanup(void)
     for (node = get_general_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
         if (gp && gp->cleanup) {
+	    plugin_set_current((Plugin *)gp);
             gp->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -1002,6 +1065,7 @@ plugin_system_cleanup(void)
     for (node = get_vis_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
         if (vp && vp->cleanup) {
+	    plugin_set_current((Plugin *)vp);
             vp->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -1022,6 +1086,7 @@ plugin_system_cleanup(void)
     for (node = get_discovery_list(); node; node = g_list_next(node)) {
         dp = DISCOVERY_PLUGIN(node->data);
         if (dp && dp->cleanup) {
+	    plugin_set_current((Plugin *)dp);
             dp->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -1043,6 +1108,7 @@ plugin_system_cleanup(void)
     for (node = lowlevel_list; node; node = g_list_next(node)) {
         lp = LOWLEVEL_PLUGIN(node->data);
         if (lp && lp->cleanup) {
+	    plugin_set_current((Plugin *)lp);
             lp->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -1066,7 +1132,14 @@ plugin_system_cleanup(void)
         vfs_transports = NULL;
     }
 
+    MOWGLI_LIST_FOREACH(hlist_node, headers_list->head)
+    	plugin2_unload(hlist_node->data, hlist_node);
+
     mowgli_dictionary_destroy(plugin_dict, NULL, NULL);
+    mowgli_dictionary_destroy(pvt_data_dict, NULL, NULL);
+
+    mowgli_list_free(headers_list);
+
     g_hash_table_foreach(ext_hash, remove_list, NULL);
     g_hash_table_remove_all(ext_hash);
 }

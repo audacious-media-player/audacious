@@ -34,6 +34,7 @@
 #include "input.h"
 #include "main.h"
 #include "playback.h"
+#include "pluginenum.h"
 #include "plugin.h"
 #include "ui_preferences.h"
 
@@ -74,7 +75,10 @@ vis_playback_start(void)
     for (node = vp_data.enabled_list; node; node = g_list_next(node)) {
         vp = node->data;
         if (vp->playback_start)
+	{
+            plugin_set_current((Plugin *)vp);
             vp->playback_start();
+	}
     }
     vp_data.playback_started = TRUE;
 }
@@ -91,7 +95,10 @@ vis_playback_stop(void)
     for (node = vp_data.enabled_list; node; node = g_list_next(node)) {
         vp = node->data;
         if (vp->playback_stop)
+	{
+            plugin_set_current((Plugin *)vp);
             vp->playback_stop();
+	}
     }
     vp_data.playback_started = FALSE;
 }
@@ -109,16 +116,28 @@ enable_vis_plugin(gint i, gboolean enable)
     if (enable && !vp->enabled) {
         vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
         if (vp->init)
+	{
+            plugin_set_current((Plugin *)vp);
             vp->init();
+	}
         if (playback_get_playing() && vp->playback_start)
+	{
+            plugin_set_current((Plugin *)vp);
             vp->playback_start();
+	}
     }
     else if (!enable && vp->enabled) {
         vp_data.enabled_list = g_list_remove(vp_data.enabled_list, vp);
         if (playback_get_playing() && vp->playback_stop)
+	{
+            plugin_set_current((Plugin *)vp);
             vp->playback_stop();
+	}
         if (vp->cleanup)
+	{
+            plugin_set_current((Plugin *)vp);
             vp->cleanup();
+	}
     }
 
     vp->enabled = enable;
@@ -162,9 +181,15 @@ vis_enable_from_stringified_list(gchar * list)
                 vp_data.enabled_list =
                     g_list_append(vp_data.enabled_list, vp);
                 if (vp->init)
+		{
+                    plugin_set_current((Plugin *)vp);
                     vp->init();
+		}
                 if (playback_get_playing() && vp->playback_start)
+		{
+                    plugin_set_current((Plugin *)vp);
                     vp->playback_start();
+		}
                 vp->enabled = TRUE;
             }
             g_free(base);
@@ -277,6 +302,7 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
                     calc_mono_pcm(mono_pcm, pcm_data, nch);
                     mono_pcm_calced = TRUE;
                 }
+		plugin_set_current((Plugin *)vp);
                 vp->render_pcm(mono_pcm);
             }
             else {
@@ -284,6 +310,7 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
                     calc_stereo_pcm(stereo_pcm, pcm_data, nch);
                     stereo_pcm_calced = TRUE;
                 }
+		plugin_set_current((Plugin *)vp);
                 vp->render_pcm(stereo_pcm);
             }
         }
@@ -293,6 +320,7 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
                     calc_mono_freq(mono_freq, pcm_data, nch);
                     mono_freq_calced = TRUE;
                 }
+		plugin_set_current((Plugin *)vp);
                 vp->render_freq(mono_freq);
             }
             else {
@@ -300,6 +328,7 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
                     calc_stereo_freq(stereo_freq, pcm_data, nch);
                     stereo_freq_calced = TRUE;
                 }
+		plugin_set_current((Plugin *)vp);
                 vp->render_freq(stereo_freq);
             }
         }

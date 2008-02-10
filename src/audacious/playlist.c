@@ -73,6 +73,8 @@
 
 #include "hook.h"
 
+#include "pluginenum.h"
+
 #include "playlist_evmessages.h"
 #include "playlist_evlisteners.h"
 #include "ui_skinned_playlist.h"
@@ -250,7 +252,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
     if (pr != NULL && pr->tuple != NULL)
         tuple = pr->tuple;
     else if (entry->decoder != NULL && entry->decoder->get_song_tuple != NULL)
+    {
+        plugin_set_current((Plugin *)(entry->decoder));
         tuple = entry->decoder->get_song_tuple(entry->filename);
+    }
 
     if (tuple == NULL) {
         if (pr != NULL) g_free(pr);
@@ -709,6 +714,7 @@ __playlist_ins_file(Playlist * playlist,
              * to plugin, by passing the ?subtune suffix; this way we get
              * specific subtune information in the tuple, if available.
              */
+            plugin_set_current((Plugin *)dec);
             tuple = dec->get_song_tuple(filename_entry);
         } else
             filename_entry = g_strdup(filename);
@@ -2481,7 +2487,10 @@ playlist_fileinfo(Playlist *playlist, guint pos)
             if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
                 fileinfo_show_for_tuple(tuple, FALSE);
             else if (entry->decoder != NULL && entry->decoder->file_info_box != NULL)
+	    {
+                plugin_set_current((Plugin *)(entry->decoder));
                 entry->decoder->file_info_box(path);
+	    }
             else
                 fileinfo_show_for_path(path);
             g_free(path);
@@ -2489,7 +2498,10 @@ playlist_fileinfo(Playlist *playlist, guint pos)
         else if (path != NULL)
         {
             if (entry != NULL && entry->decoder != NULL && entry->decoder->file_info_box != NULL)
+	    {
+                plugin_set_current((Plugin *)(entry->decoder));
                 entry->decoder->file_info_box(path);
+	    }
             else
                 fileinfo_show_for_path(path);
             g_free(path);
@@ -2528,7 +2540,10 @@ playlist_fileinfo_current(Playlist *playlist)
             if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box == NULL)
                 fileinfo_show_for_tuple(tuple, FALSE);
             else if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
+	    {
+                plugin_set_current((Plugin *)(playlist->position->decoder));
                 playlist->position->decoder->file_info_box(path);
+	    }
             else
                 fileinfo_show_for_path(path);
             g_free(path);
@@ -2536,7 +2551,10 @@ playlist_fileinfo_current(Playlist *playlist)
         else if (path != NULL)
         {
             if (playlist->position != NULL && playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
+	    {
+                plugin_set_current((Plugin *)(playlist->position->decoder));
                 playlist->position->decoder->file_info_box(path);
+	    }
             else
                 fileinfo_show_for_path(path);
             g_free(path);

@@ -652,6 +652,9 @@ struct _AudaciousFuncTableV1 {
     gchar *(*uri_to_display_basename)(const gchar * uri);
     gchar *(*uri_to_display_dirname)(const gchar * uri);
 
+    void (*set_pvt_data)(Plugin * plugin, gpointer data);
+    gpointer (*get_pvt_data)(void);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -996,6 +999,9 @@ struct _AudaciousFuncTableV1 {
 #define aud_construct_uri        _audvt->construct_uri
 #define aud_uri_to_display_basename _audvt->uri_to_display_basename
 #define aud_uri_to_display_dirname _audvt->uri_to_display_dirname
+
+#define aud_set_pvt_data			_audvt->set_pvt_data
+#define aud_get_pvt_data			_audvt->get_pvt_data
 
 #include "audacious/auddrct.h"
 

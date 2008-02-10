@@ -357,7 +357,8 @@ fileinfo_update_tuple(gpointer data)
 
             set_field_int_from_entry(tuple, FIELD_YEAR, entry_year);
             set_field_int_from_entry(tuple, FIELD_TRACK_NUMBER, entry_track);
-                
+
+            plugin_set_current((Plugin *)current_ip);
             if (current_ip->update_song_tuple(tuple, fd)) {
                 message_update_successfull();
                 something_changed = FALSE;

@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <string.h>
 #include "plugin.h"
+#include "pluginenum.h"
 #include "general.h"
 
 GeneralPluginData gp_data = {
@@ -64,12 +65,18 @@ enable_general_plugin(gint i, gboolean enable)
     if (enable && !plugin->enabled) {
         gp_data.enabled_list = g_list_append(gp_data.enabled_list, plugin);
         if (plugin->init)
+	{
+	    plugin_set_current((Plugin *)plugin);
             plugin->init();
+	}
     }
     else if (!enable && plugin->enabled) {
         gp_data.enabled_list = g_list_remove(gp_data.enabled_list, plugin);
         if (plugin->cleanup)
+	{
+	    plugin_set_current((Plugin *)plugin);
             plugin->cleanup();
+	}
     }
 
     plugin->enabled = enable;
@@ -125,7 +132,10 @@ general_enable_from_stringified_list(const gchar * list_str)
                 gp_data.enabled_list = g_list_append(gp_data.enabled_list,
                                                       plugin);
                 if (plugin->init)
+		{
+	            plugin_set_current((Plugin *)plugin);
                     plugin->init();
+		}
             }
 
             g_free(base);

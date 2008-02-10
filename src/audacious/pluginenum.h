@@ -40,4 +40,6 @@ gboolean plugin_is_enabled(const gchar *filename);
 void plugin_set_enabled(const gchar *filename, gboolean enabled);
 Plugin *plugin_get_plugin(const gchar *filename);
 
+void plugin_set_current(Plugin *plugin);
+
 #endif
