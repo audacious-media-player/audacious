@@ -3,7 +3,12 @@ SRCS = dither.c \
        dither_ops.c \
        noicegen.c
 
+INCLUDES = libSAD.h \
+           common.h \
+           dither.h
+
 include ../../buildsys.mk
 include ../../extra.mk
 
-CPPFLAGS += ${SIMD_CFLAGS}
+PACKAGE = libSAD
+CPPFLAGS += ${SIMD_CFLAGS} -I../..

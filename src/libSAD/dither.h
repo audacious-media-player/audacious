@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef DITHER_H
-#define DITHER_H
+#ifndef LIBSAD_DITHER_H
+#define LIBSAD_DITHER_H
 
 #include "common.h"
 
