@@ -857,15 +857,7 @@ on_enable_src_realize(GtkToggleButton * button,
                       gpointer data)
 {
 #ifdef USE_SRC
-    ConfigDb *db;
-    gboolean ret;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_bool(db, NULL, "enable_src", &ret) != FALSE)
-        gtk_toggle_button_set_active(button, ret);
-
-    cfg_db_close(db);
+    gtk_toggle_button_set_active(button, cfg.enable_src);
 #else
     gtk_toggle_button_set_active(button, FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
@@ -873,15 +865,11 @@ on_enable_src_realize(GtkToggleButton * button,
 }
 
 static void
-on_enable_src_toggled(GtkToggleButton * button,
-                      gpointer data)
+on_enable_src_toggled(GtkToggleButton * button, gpointer data)
 {
-    ConfigDb *db;
-    gboolean ret = gtk_toggle_button_get_active(button);
-
-    db = cfg_db_open();
-    cfg_db_set_bool(db, NULL, "enable_src", ret);
-    cfg_db_close(db);
+#ifdef USE_SRC
+    cfg.enable_src = gtk_toggle_button_get_active(button);
+#endif
 }
 
 static void
@@ -889,15 +877,7 @@ on_src_rate_realize(GtkSpinButton * button,
                     gpointer data)
 {
 #ifdef USE_SRC
-    ConfigDb *db;
-    gint value;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_int(db, NULL, "src_rate", &value) != FALSE)
-        gtk_spin_button_set_value(button, (gdouble)value);
-
-    cfg_db_close(db);
+    gtk_spin_button_set_value(button, (gdouble)cfg.src_rate);
 #else
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 #endif
@@ -907,12 +887,9 @@ static void
 on_src_rate_value_changed(GtkSpinButton * button,
                           gpointer data)
 {
-    ConfigDb *db;
-    gint value = gtk_spin_button_get_value_as_int(button);
-
-    db = cfg_db_open();
-    cfg_db_set_int(db, NULL, "src_rate", value);
-    cfg_db_close(db);
+#ifdef USE_SRC
+    cfg.src_rate = gtk_spin_button_get_value_as_int(button);
+#endif
 }
 
 static void
@@ -920,17 +897,7 @@ on_src_converter_type_realize(GtkComboBox * box,
                               gpointer data)
 {
 #ifdef USE_SRC
-    ConfigDb *db;
-    gint value;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_int(db, NULL, "src_type", &value) != FALSE)
-        gtk_combo_box_set_active(box, value);
-    else
-        gtk_combo_box_set_active(box, 0);
-
-    cfg_db_close(db);
+    gtk_combo_box_set_active(box, cfg.src_type);
 #else
     gtk_widget_set_sensitive(GTK_WIDGET(box), FALSE);
 #endif
@@ -940,12 +907,9 @@ static void
 on_src_converter_type_changed(GtkComboBox * box,
                               gpointer data)
 {
-    ConfigDb *db;
-    gint value = gtk_combo_box_get_active(box);
-
-    db = cfg_db_open();
-    cfg_db_set_int(db, NULL, "src_type", value);
-    cfg_db_close(db);
+#ifdef USE_SRC
+    cfg.src_type = gtk_combo_box_get_active(box);
+#endif
 }
 
 static void

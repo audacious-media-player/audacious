@@ -20,6 +20,9 @@
  * Audacious or using our public API to be a derived work. 
  */
 
+#define AUD_DEBUG
+
+#include "main.h"
 #include "flow.h"
 
 mowgli_object_class_t flow_klass;
@@ -59,8 +62,10 @@ flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt,
     {
         element->func(&context);
 
-        if (context.error)
+        if (context.error) {
+            AUDDBG("context.error!\n");
             break;
+        }
     }
 
     *data = context.data;

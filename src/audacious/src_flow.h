@@ -24,7 +24,7 @@
 #include "flow.h"
 
 void src_flow(FlowContext *context);
-void src_flow_init(gint infreq, gint outfreq);
+gint src_flow_init(gint infreq, gint nch);
 void src_flow_free();
 
 #endif
