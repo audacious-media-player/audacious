@@ -1064,9 +1064,12 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
  *  - double it
  *
  *  -- asphyx
+ *
+ * XXX: what's so smart about this?? seems wasteful and silly. --nenolod
  */
-void*
-smart_realloc(void *ptr, size_t *size) {
+gpointer
+smart_realloc(gpointer ptr, gsize *size)
+{
     *size = (size_t)pow(2, ceil(log(*size) / log(2)) + 1);
     if (ptr != NULL) free(ptr);
     ptr = malloc(*size);

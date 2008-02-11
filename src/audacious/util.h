@@ -108,7 +108,7 @@ gchar *construct_uri(gchar *string, const gchar *playlist_name);
 SAD_sample_format sadfmt_from_afmt(AFormat fmt);
 
 /* minimizes number of realloc's */
-void* smart_realloc(void *ptr, size_t *size);
+gpointer smart_realloc(gpointer ptr, gsize *size);
 
 G_END_DECLS
 
