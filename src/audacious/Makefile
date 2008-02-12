@@ -80,8 +80,7 @@ SRCS = auddrct.c						\
        vfs_common.c						\
        visualization.c					\
        volumecontrol.c					\
-       sync-menu.c						\
-       xconvert.c
+       sync-menu.c
 
 ifdef USE_DBUS
 SRCS += dbus.c
@@ -117,8 +116,7 @@ INCLUDES = auddrct.h		\
 	   util.h		\
 	   vfs.h		\
 	   vfs_buffer.h		\
-	   vfs_buffered_file.h	\
-	   xconvert.h
+	   vfs_buffered_file.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\

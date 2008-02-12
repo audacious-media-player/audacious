@@ -30,7 +30,6 @@
 #include "configdb.h"
 
 #include "effect.h"
-#include "xconvert.h"
 
 #include "volumecontrol.h"
 
