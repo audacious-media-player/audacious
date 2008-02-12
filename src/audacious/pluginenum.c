@@ -286,13 +286,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .read_ini_string = read_ini_string,
     .read_ini_array = read_ini_array,
 
-    .xmms_convert_buffers_new = xmms_convert_buffers_new,
-    .xmms_convert_buffers_free = xmms_convert_buffers_free,
-    .xmms_convert_buffers_destroy = xmms_convert_buffers_destroy,
-    .xmms_convert_get_func = xmms_convert_get_func,
-    .xmms_convert_get_channel_func = xmms_convert_get_channel_func,
-    .xmms_convert_get_frequency_func = xmms_convert_get_frequency_func,
-
     .menu_plugin_item_add = menu_plugin_item_add,
     .menu_plugin_item_remove = menu_plugin_item_remove,
 
