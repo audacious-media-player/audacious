@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-02-10 20:05+0100\n"
-"PO-Revision-Date: 2008-01-12 21:40+0900\n"
+"PO-Revision-Date: 2008-02-12 15:41+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -156,7 +156,7 @@ msgstr "ヴァージョンと組み込み機能を表示する"
 
 #: src/audacious/main.c:1081
 msgid "Used in macpacking"
-msgstr ""
+msgstr "macpack で使用する"
 
 #: src/audacious/main.c:1083
 msgid "FILE..."
@@ -297,7 +297,7 @@ msgid ""
 "Copyright (C) 2005-2008 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"多くのプラットフォーム向けのスキン機能付マルチメディアプレーヤ.\n"
+"多くのプラットフォームに対応したスキン機能付マルチメディアプレーヤ.\n"
 "\n"
 "Copyright (C) 2005-2008 Audacious 開発チーム\n"
 
@@ -1226,9 +1226,8 @@ msgid "_Filter:"
 msgstr "フィルタ(_F):"
 
 #: src/audacious/ui_jumptotrack.c:634
-#, fuzzy
 msgid "Remember"
-msgstr "エントリを記憶する"
+msgstr "記憶"
 
 #: src/audacious/ui_jumptotrack.c:676
 msgid "Close on Jump"
@@ -1369,11 +1368,11 @@ msgstr "ファイル情報ボックス"
 
 #: src/audacious/ui_main.c:1966
 msgid "Disable 'GUI Scaling'"
-msgstr ""
+msgstr "「GUI スケーリング」無効"
 
 #: src/audacious/ui_main.c:1968
 msgid "Enable 'GUI Scaling'"
-msgstr ""
+msgstr "「GUI スケーリング」有効"
 
 #: src/audacious/ui_main.c:1971
 msgid "Visualization Menu"
@@ -1456,9 +1455,8 @@ msgid "Roll up Equalizer"
 msgstr "イコライザを巻き上げる"
 
 #: src/audacious/ui_manager.c:90
-#, fuzzy
 msgid "Scale"
-msgstr "保存"
+msgstr "スケール"
 
 #: src/audacious/ui_manager.c:91
 msgid "DoubleSize"
@@ -2179,7 +2177,7 @@ msgstr "オーディオ"
 
 #: src/audacious/ui_preferences.c:134
 msgid "Replay Gain"
-msgstr ""
+msgstr "リプレイゲイン"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Connectivity"
@@ -2332,32 +2330,28 @@ msgstr ""
 "ポートされたフォーマットの拡張子を持ったファイルのみ読み込まれます."
 
 #: src/audacious/ui_preferences.c:225
-#, fuzzy
 msgid "<b>Bit Depth</b>"
-msgstr "<b>タイトル:</b>"
+msgstr "<b>ビット深度</b>"
 
 #: src/audacious/ui_preferences.c:230
-#, fuzzy
 msgid "<b>Replay Gain configuration</b>"
-msgstr "<b>プロキシ設定</b>"
+msgstr "<b>リプレイゲイン設定</b>"
 
 #: src/audacious/ui_preferences.c:231
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "プロキシの使用を有効にする"
+msgstr "リプレイゲイン有効にする"
 
 #: src/audacious/ui_preferences.c:232
 msgid "<b>Replay Gain mode</b>"
-msgstr ""
+msgstr "<b>リプレイゲインモード</b>"
 
 #: src/audacious/ui_preferences.c:233
-#, fuzzy
 msgid "Track gain/peak"
-msgstr "トラック名"
+msgstr "トラックゲイン/ピーク"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Album gain/peak"
-msgstr ""
+msgstr "アルバムゲイン/ピーク"
 
 #: src/audacious/ui_preferences.c:235 src/audacious/ui_preferences.c:1543
 msgid "<b>Miscellaneous</b>"
@@ -2365,19 +2359,19 @@ msgstr "<b>その他</b>"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Enable peak info clipping prevention"
-msgstr ""
+msgstr "クリッピング防止のためにピーク情報を有効にする"
 
 #: src/audacious/ui_preferences.c:237
 msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr ""
+msgstr "リプレイゲイン情報のピーク値を用います．"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Dynamically adjust scale factor to prevent clipping"
-msgstr ""
+msgstr "クリッピング防止のために縮尺係数を動的に調整する"
 
 #: src/audacious/ui_preferences.c:239
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-msgstr ""
+msgstr "それにもかかわらずクリッピングが発生するなら，縮尺係数(ゲイン)を減らしてください．"
 
 #: src/audacious/ui_preferences.c:244
 msgid "<b>Playback</b>"
@@ -2602,43 +2596,41 @@ msgstr "代替キャラクタエンコーディング:"
 
 #: src/audacious/ui_preferences.c:1656
 msgid "Output bit depth:"
-msgstr ""
+msgstr "出力ビット深度:"
 
 #: src/audacious/ui_preferences.c:1670
-#, fuzzy
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
-"<span size=\"small\">すべてのストリームはこのサンプリングレートに変換されま"
-"す．\n"
-"これはサウンドカードか出力プラグインでサポートされたサンプリングレートの最大"
+"<span size=\"small\">すべてのストリームはこのビット深度に変換されます．\n"
+"これはサウンドカードか出力プラグインでサポートされたビット深度の最大"
 "値となるはずです．</span>"
 
 #: src/audacious/ui_preferences.c:1691
-#, fuzzy
 msgid "Preamp:"
-msgstr "ドリーム"
+msgstr "プリアンプ:"
 
 #: src/audacious/ui_preferences.c:1704 src/audacious/ui_preferences.c:1724
 msgid "dB"
-msgstr ""
+msgstr "dB"
 
 #: src/audacious/ui_preferences.c:1710
-#, fuzzy
 msgid "Default gain:"
-msgstr "デフォルトのスキン:"
+msgstr "デフォルトゲイン:"
 
 #: src/audacious/ui_preferences.c:1722
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
+msgstr "ファイルがリプレイゲインメタデータを含んでいなければ，この値が用いられます．"
 
 #: src/audacious/ui_preferences.c:1738
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
+"<span size=\"small\">シグナルクリッピングを防ぐ最も有効な方法は，"
+"正数値を用いないということに注意しください．</span>"
 
 #: src/audacious/ui_preferences.c:1971
 msgid "<b>_Skin</b>"
