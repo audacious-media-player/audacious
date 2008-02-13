@@ -2062,6 +2062,7 @@ playlist_compare_title(PlaylistEntry * a,
 
     if (a->tuple != NULL)
         a_title = tuple_get_string(a->tuple, FIELD_TITLE, NULL);
+
     if (b->tuple != NULL)
         b_title = tuple_get_string(b->tuple, FIELD_TITLE, NULL);
 
@@ -2091,12 +2092,20 @@ playlist_compare_artist(PlaylistEntry * a,
 
     if (a->tuple != NULL) {
         a_artist = tuple_get_string(a->tuple, FIELD_ARTIST, NULL);
+
+        if (a_artist == NULL)
+            return 0;
+
         if (str_has_prefix_nocase(a_artist, "the "))
             a_artist += 4;
     }
 
     if (b->tuple != NULL) {
         b_artist = tuple_get_string(b->tuple, FIELD_ARTIST, NULL);
+
+        if (b_artist == NULL)
+            return 0;
+
         if (str_has_prefix_nocase(b_artist, "the "))
             b_artist += 4;
     }
