@@ -1,5 +1,6 @@
-# translation of audacious.pot to Serbian Latin
+# translation of sr@Latn.po to
 # Strahinja Kustudic <kustudic@gmail.com>, 2007, 2008.
+# translation of audacious.pot to Serbian Latin
 # Copyright (C) 2007 Strahinja  Kustudić <kustodian@gmail.com>
 # This file is distributed under the same license as the Audacious package.
 msgid ""
@@ -7,12 +8,13 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-02-10 20:05+0100\n"
-"PO-Revision-Date: 2008-01-20 20:16+0100\n"
+"PO-Revision-Date: 2008-02-15 15:28+0100\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
-"Language-Team:  <kustudic@gmail.com>\n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: src/audacious/input.c:578
 #, c-format
@@ -149,7 +151,7 @@ msgstr "Prikaži verziju i ugrađena svojstva"
 
 #: src/audacious/main.c:1081
 msgid "Used in macpacking"
-msgstr ""
+msgstr "Koristi se za macpakovanje"
 
 #: src/audacious/main.c:1083
 msgid "FILE..."
@@ -1221,9 +1223,8 @@ msgid "_Filter:"
 msgstr "_Filter:"
 
 #: src/audacious/ui_jumptotrack.c:634
-#, fuzzy
 msgid "Remember"
-msgstr "Zapamti stavku"
+msgstr "Zapamti"
 
 #: src/audacious/ui_jumptotrack.c:676
 msgid "Close on Jump"
@@ -1365,11 +1366,11 @@ msgstr "Okvir informacija o datoteci"
 
 #: src/audacious/ui_main.c:1966
 msgid "Disable 'GUI Scaling'"
-msgstr ""
+msgstr "Isključi 'Skaliranje GUI-a'"
 
 #: src/audacious/ui_main.c:1968
 msgid "Enable 'GUI Scaling'"
-msgstr ""
+msgstr "Uključi 'Skaliranje GUI-a'"
 
 #: src/audacious/ui_main.c:1971
 msgid "Visualization Menu"
@@ -1452,9 +1453,8 @@ msgid "Roll up Equalizer"
 msgstr "Zamotaj ekvilajzer"
 
 #: src/audacious/ui_manager.c:90
-#, fuzzy
 msgid "Scale"
-msgstr "Sačuvati"
+msgstr "Skaliraj"
 
 #: src/audacious/ui_manager.c:91
 msgid "DoubleSize"
@@ -2178,7 +2178,7 @@ msgstr "Audio"
 
 #: src/audacious/ui_preferences.c:134
 msgid "Replay Gain"
-msgstr ""
+msgstr "Replay Gain"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Connectivity"
@@ -2334,31 +2334,28 @@ msgstr ""
 "Samo datoteke sa podržanim oznakama tipa će biti učitane."
 
 #: src/audacious/ui_preferences.c:225
-#, fuzzy
 msgid "<b>Bit Depth</b>"
-msgstr "<b>Prepoznavanje formata</b>"
+msgstr "<b>Dubina bita</b>"
 
 #: src/audacious/ui_preferences.c:230
-#, fuzzy
 msgid "<b>Replay Gain configuration</b>"
-msgstr "<b>Konfiguracija posrednika</b>"
+msgstr "<b>Replay Gain konfiguracija</b>"
 
 #: src/audacious/ui_preferences.c:231
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "Uključi korišćenje posrednika"
+msgstr "Uključi Replay Gain"
 
 #: src/audacious/ui_preferences.c:232
 msgid "<b>Replay Gain mode</b>"
-msgstr ""
+msgstr "<b>Replay Gain režim</b>"
 
 #: src/audacious/ui_preferences.c:233
 msgid "Track gain/peak"
-msgstr ""
+msgstr "Pojačanje/vrhunac numere"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Album gain/peak"
-msgstr ""
+msgstr "Pojačanje/vrhunac albuma"
 
 #: src/audacious/ui_preferences.c:235 src/audacious/ui_preferences.c:1543
 msgid "<b>Miscellaneous</b>"
@@ -2366,19 +2363,19 @@ msgstr "<b>Ostalo</b>"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Enable peak info clipping prevention"
-msgstr ""
+msgstr "Uključi zaštitu od odsecanja vrhunaca"
 
 #: src/audacious/ui_preferences.c:237
 msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr ""
+msgstr "Koristi vrednost vrhunca iz Replay Gain-a kao zastitu od odsecanja"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Dynamically adjust scale factor to prevent clipping"
-msgstr ""
+msgstr "Dinamički podesi faktor skaliranja da bi se sprečilo odsecanje"
 
 #: src/audacious/ui_preferences.c:239
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-msgstr ""
+msgstr "Ako dođe do odsecanja, smanji faktor skaliranja"
 
 #: src/audacious/ui_preferences.c:244
 msgid "<b>Playback</b>"
@@ -2450,8 +2447,7 @@ msgstr "Prilikom učitavanja"
 
 #: src/audacious/ui_preferences.c:260
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/ui_preferences.c:261
 msgid "On display"
@@ -2605,43 +2601,41 @@ msgstr "Rezervno kodiranja karaktera:"
 
 #: src/audacious/ui_preferences.c:1656
 msgid "Output bit depth:"
-msgstr ""
+msgstr "Dubina bita izlaza:"
 
 #: src/audacious/ui_preferences.c:1670
-#, fuzzy
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
-"<span size=\"small\">Svi tokovi će biti pretvoreni u ovu učestalost "
-"odabiranja uzoraka.\n"
-"Ovo bi trebala da bude maksimalna podržana učestalost odabiranja uzoraka\n"
-"muzičke kartice ili izlaznog dodatka.</span>"
+"Svi tokovi će biti pretvoreni u ovu dubinu bita.\n"
+"Ovo bi trebala da bude maksimalna podržana dubina bita\n"
+"muzičke kartice ili izlaznog dodatka."
 
 #: src/audacious/ui_preferences.c:1691
-#, fuzzy
 msgid "Preamp:"
-msgstr "Drim"
+msgstr "Predpojačalo:"
 
 #: src/audacious/ui_preferences.c:1704 src/audacious/ui_preferences.c:1724
 msgid "dB"
-msgstr ""
+msgstr "dB"
 
 #: src/audacious/ui_preferences.c:1710
-#, fuzzy
 msgid "Default gain:"
-msgstr "Podrazumevana Maska:"
+msgstr "Podrazumevano pojačanje:"
 
 #: src/audacious/ui_preferences.c:1722
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
+msgstr "Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
 
 #: src/audacious/ui_preferences.c:1738
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
+"<span size=\"small\">Zapamtite da najefikasniji način da sprečite "
+"odsecanje signala je da ne koristite pozitivne vrednosti iznad.</span>"
 
 #: src/audacious/ui_preferences.c:1971
 msgid "<b>_Skin</b>"
@@ -2946,11 +2940,3 @@ msgstr "Nearhivirana Winamp 2.x maska"
 msgid "Add/Open URL Dialog"
 msgstr "Dodaj/otvori URL okvir"
 
-#~ msgid "Select which Audacious session ID to use"
-#~ msgstr "Izaberite koju Audacious sesiju treba koristiti"
-
-#~ msgid "Disable 'Doublesize'"
-#~ msgstr "Isključi 'Duplu veličinu'"
-
-#~ msgid "Enable 'Doublesize'"
-#~ msgstr "Uključi 'Duplu veličinu'"
