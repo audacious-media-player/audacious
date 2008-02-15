@@ -155,6 +155,7 @@ struct _BmpConfig {
     gint src_rate;
     gint src_type;
 #endif
+    gboolean bypass_dsp;
 };
 
 typedef struct _BmpConfig BmpConfig;

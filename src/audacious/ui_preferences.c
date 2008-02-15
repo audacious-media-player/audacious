@@ -225,7 +225,19 @@ static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, FALSE, ui_preferences_bit_depth},
 };
-    
+
+static PreferencesWidget audio_page_widgets2[] = {
+    {WIDGET_LABEL, N_("<b>Volume Control</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Use software volume control"), &cfg.software_volume_control, NULL,
+                     N_("Use software volume control. This may be useful for situations where your audio system does not support"
+                        "controlling the playback volume."), FALSE},
+    {WIDGET_LABEL,   N_("<b>Advanced</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Bypass all of signal processing if possible"), &cfg.bypass_dsp, NULL,
+                     N_("Try to pass input plugin's output directly to output plugin, if the latter supports "
+                        "format produced by input plugin. If it's true, all signal processing will be disabled "
+                        "(i.e. DSP plugins, equalizer, Replay Gain and software volume control)."), FALSE},
+};
+
 static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Replay Gain configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
@@ -924,18 +936,6 @@ static void
 on_spin_btn_changed(GtkSpinButton *button, gboolean *cfg)
 {
     *cfg = gtk_spin_button_get_value_as_int(button);
-}
-
-static void
-on_software_volume_control_toggled(GtkToggleButton * button, gpointer data)
-{
-    cfg.software_volume_control = gtk_toggle_button_get_active(button);
-}
-
-static void
-on_software_volume_control_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.software_volume_control);
 }
 
 static void
@@ -2278,10 +2278,6 @@ create_audio_category(void)
     GtkWidget *src_rate;
     GtkWidget *label91;
     GtkWidget *alignment4;
-    GtkWidget *label2;
-    GtkWidget *alignment7;
-    GtkWidget *software_volume_control;
-
     
     audio_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), audio_page_vbox);
@@ -2463,20 +2459,8 @@ create_audio_category(void)
     alignment4 = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment4, FALSE, FALSE, 0);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment4), 12, 12, 0, 0);
-
-    label2 = gtk_label_new (_("<b>Volume Control</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment4), label2);
-    gtk_label_set_use_markup (GTK_LABEL (label2), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
-
-    alignment7 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment7, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment7), 0, 0, 12, 0);
-
-    software_volume_control = gtk_check_button_new_with_mnemonic (_("Use software volume control"));
-    gtk_container_add (GTK_CONTAINER (alignment7), software_volume_control);
-    gtk_tooltips_set_tip (tooltips, software_volume_control, _("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), NULL);
-
+    
+    create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets2, G_N_ELEMENTS(audio_page_widgets2));
 
     g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
                      G_CALLBACK(on_output_plugin_bufsize_value_changed),
@@ -2504,12 +2488,6 @@ create_audio_category(void)
                      NULL);
     g_signal_connect(G_OBJECT(src_rate), "realize",
                      G_CALLBACK(on_src_rate_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(software_volume_control), "toggled",
-                     G_CALLBACK(on_software_volume_control_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(software_volume_control), "realize",
-                     G_CALLBACK(on_software_volume_control_realize),
                      NULL);
 
     /* plugin->output page */

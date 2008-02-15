@@ -248,6 +248,7 @@ BmpConfig bmp_default_config = {
     48000,          /* samplerate */
     SRC_SINC_BEST_QUALITY, /* default interpolation method */
 #endif
+    FALSE,          /* bypass dsp */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -367,6 +368,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
 #ifdef USE_SRC
     {"enable_src",                 &cfg.enable_src, TRUE},
 #endif
+    {"bypass_dsp",                 &cfg.bypass_dsp, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
