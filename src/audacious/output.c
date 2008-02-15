@@ -316,7 +316,6 @@ gint
 output_open_audio(AFormat fmt, gint rate, gint nch)
 {
     gint ret;
-    /*OutputPlugin *op;*/
     AUDDBG("requested: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
 
     AFormat output_fmt;
@@ -402,42 +401,6 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     
         return reopen_audio(fmt, rate, nch);
     } /* bypass_dsp */
-    
-#if 0
-    op = get_current_output_plugin();
-
-    if (op == NULL)
-        return FALSE;
-
-    /* Is our output port already open? */
-    if ((op_state.rate != 0 && op_state.nch != 0) &&
-        (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
-    {
-        /* Yes, and it's the correct sampling rate. Reset the counter and go. */
-	AUDDBG("flushing output instead of reopening\n");
-	plugin_set_current((Plugin *)op);
-        op->flush(0);
-        return TRUE;
-    }
-    else if (op_state.rate != 0 && op_state.nch != 0)
-    {
-        plugin_set_current((Plugin *)op);
-        op->close_audio();
-    }
-
-    plugin_set_current((Plugin *)op);
-    ret = op->open_audio(fmt, rate, nch);
-
-    if (ret == 1)            /* Success? */
-    {
-        AUDDBG("opened audio: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
-        op_state.fmt = fmt;
-        op_state.rate = rate;
-        op_state.nch = nch;
-    }
-
-    return ret;
-#endif
 }
 
 void
