@@ -391,6 +391,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .get_pvt_data = get_pvt_data,
     .set_pvt_data = set_pvt_data,
 
+    .event_queue = event_queue,
+
 };
 
 /*****************************************************************/

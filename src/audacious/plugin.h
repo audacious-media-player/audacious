@@ -643,6 +643,8 @@ struct _AudaciousFuncTableV1 {
     void (*set_pvt_data)(Plugin * plugin, gpointer data);
     gpointer (*get_pvt_data)(void);
 
+    void (*event_queue)(const gchar *name, gpointer user_data);
+
 };
 
 /* Convenience macros for accessing the public API. */
@@ -983,6 +985,8 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_set_pvt_data			_audvt->set_pvt_data
 #define aud_get_pvt_data			_audvt->get_pvt_data
+
+#define aud_event_queue             _audvt->event_queue
 
 #include "audacious/auddrct.h"
 
