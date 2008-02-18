@@ -235,7 +235,7 @@ static PreferencesWidget audio_page_widgets2[] = {
     {WIDGET_CHK_BTN, N_("Bypass all of signal processing if possible"), &cfg.bypass_dsp, NULL,
                      N_("Try to pass input plugin's output directly to output plugin, if the latter supports "
                         "format produced by input plugin. If it's true, all signal processing will be disabled "
-                        "(i.e. DSP plugins, equalizer, Replay Gain and software volume control)."), FALSE},
+                        "(i.e. DSP plugins, equalizer, resampling, Replay Gain and software volume control)."), FALSE},
 };
 
 static PreferencesWidget replay_gain_page_widgets[] = {
