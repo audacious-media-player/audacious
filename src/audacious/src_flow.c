@@ -57,9 +57,9 @@ src_flow_free()
     AUDDBG("\n");
     if(src_state != NULL) src_state = src_delete(src_state);
     src_state = NULL;
-    if(srcOut != NULL) free(srcOut);
+    /*if(srcOut != NULL) free(srcOut);
     srcOut = NULL;
-    lengthOfSrcOut = 0;
+    lengthOfSrcOut = 0;*/
     inputFs = 0;
     overSamplingFs = 0;
     input_nch = 0;
@@ -68,11 +68,11 @@ src_flow_free()
 gint
 src_flow_init(gint infreq, gint nch)
 {
-    AUDDBG("input_rate=%d, nch=%d\n", infreq, nch);
     src_flow_free();
 
     /* don't resample if sampling rates are the same --nenolod */
     if (infreq == cfg.src_rate || !cfg.enable_src) return infreq;
+    AUDDBG("input_rate=%d, output_rate=%d, nch=%d\n", infreq, cfg.src_rate, nch);
     
     overSamplingFs = cfg.src_rate;
     inputFs = infreq;
@@ -92,14 +92,14 @@ src_flow_init(gint infreq, gint nch)
 void
 src_flow(FlowContext *context) {
    
-    if(!cfg.enable_src) return;
+    if(src_state == NULL) return;
     
     if(context->fmt != FMT_FLOAT) {
         context->error = TRUE;
         return;
     }
 
-    if(src_state == NULL || context->srate != inputFs || context->channels != input_nch) {
+    if(context->srate != inputFs || context->channels != input_nch) {
         AUDDBG("reinitializing src\n");
         src_flow_init(context->srate, context->channels);
     }
@@ -108,7 +108,7 @@ src_flow(FlowContext *context) {
     int overLrLength = (int)floor(lrLength * (src_data.src_ratio + 1));
     
     if(lengthOfSrcOut < overLrLength || srcOut == NULL) {
-        AUDDBG("reallocating srcOut\n");
+        AUDDBG("reallocating srcOut (%d bytes)\n", overLrLength);
         lengthOfSrcOut = overLrLength;
         srcOut = smart_realloc(srcOut, &lengthOfSrcOut);
     }

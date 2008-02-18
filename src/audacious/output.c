@@ -336,7 +336,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         return TRUE;
     } else {
 #ifdef USE_SRC
-        if(cfg.enable_src) rate = cfg.src_rate;
+        rate = src_flow_init(rate, nch); /* returns sample rate unchanged if resampling switched off */
 #endif
     
         bit_depth = cfg.output_bit_depth;
@@ -429,6 +429,9 @@ output_close_audio(void)
     replay_gain_info.album_gain = 0.0;
     replay_gain_info.album_peak = 0.0;
 
+#ifdef USE_SRC
+    src_flow_free();
+#endif
     /* Do not close if there are still songs to play and the user has 
      * not requested a stop.  --nenolod
      */
@@ -446,9 +449,6 @@ output_close_audio(void)
     plugin_set_current((Plugin *)op);
     op->close_audio();
     AUDDBG("done\n");
-#ifdef USE_SRC
-    src_flow_free();
-#endif
 
     /* Reset the op_state. */
     op_state.fmt = op_state.rate = op_state.nch = 0;
