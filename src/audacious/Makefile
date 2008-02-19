@@ -50,6 +50,7 @@ SRCS = auddrct.c						\
        ui_fileinfopopup.c				\
        ui_fileopener.c					\
        ui_jumptotrack.c					\
+       ui_jumptotrack_cache.c					\
        ui_main.c						\
        ui_main_evlisteners.c			\
        ui_manager.c						\

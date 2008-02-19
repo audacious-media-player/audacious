@@ -79,8 +79,12 @@
 
 #include "ui_skinned_window.h"
 
+#include "ui_jumptotrack_cache.h"
+
 static GtkWidget *jump_to_track_win = NULL;
 static gulong serial = 0;
+
+static JumpToTrackCache* cache = NULL;
 
 static void
 change_song(guint pos)
@@ -236,22 +240,6 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
     return FALSE;
 }
 
-static gboolean
-ui_jump_to_track_match(const gchar * song, GSList *regex_list)
-{
-    if ( song == NULL )
-        return FALSE;
-
-    for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
-    {
-        regex_t *regex = regex_list->data;
-        if ( regexec( regex , song , 0 , NULL , 0 ) != 0 )
-            return FALSE;
-    }
-
-    return TRUE;
-}
-
 void
 ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
 {
@@ -311,21 +299,6 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
     serial = playlist->serial; // important. --yaz
 }
 
-
-/**
- * Normalizes an UTF-8 string to be used in case-insensitive searches.
- *
- * Returned string should be freed.
- */
-static gchar *
-normalize_search_string(const gchar * string)
-{
-    gchar* normalized_string = g_utf8_normalize(string, -1, G_NORMALIZE_NFKD);
-    gchar* folded_string = g_utf8_casefold(normalized_string, -1);
-    g_free(normalized_string);
-    return folded_string;
-}
-
 static void
 ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 {
@@ -335,33 +308,12 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 
     GtkListStore *store;
 
-    guint song_index = 0;
-    gchar **words;
-    GList *playlist_glist;
+    const GArray *search_matches;
     Playlist *playlist;
+    int i;
 
-    gboolean match = FALSE;
-
-    GSList *regex_list = NULL, *regex_list_tmp = NULL;
-    gint i = -1;
-
-    /* Chop the key string into ' '-separated key regex-pattern strings */
-    gchar *search_text = normalize_search_string(gtk_entry_get_text(entry));
-    words = g_strsplit(search_text, " ", 0);
-    g_free(search_text);
-
-    /* create a list of regex using the regex-pattern strings */
-    while ( words[++i] != NULL )
-    {
-        regex_t *regex = g_malloc(sizeof(regex_t));
-    #if defined(USE_REGEX_PCRE)
-        if ( regcomp( regex , words[i] , REG_NOSUB | REG_UTF8 ) == 0 )
-    #else
-        if ( regcomp( regex , words[i] , REG_NOSUB ) == 0 )
-    #endif
-            regex_list = g_slist_append( regex_list , regex );
-        else
-            g_free( regex );
+    if (cache == NULL) {
+        cache = ui_jump_to_track_cache_new();
     }
 
     /* FIXME: Remove the connected signals before clearing
@@ -377,62 +329,30 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 
     PLAYLIST_LOCK(playlist);
 
-    for (playlist_glist = playlist->entries; playlist_glist;
-         playlist_glist = g_list_next(playlist_glist))
+    search_matches = ui_jump_to_track_cache_search(cache,
+                                                   playlist,
+                                                   gtk_entry_get_text(entry));
+
+    for (i = 0; i < search_matches->len; i++)
     {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
+        JumpToTrackEntry *jttentry = g_array_index(search_matches, JumpToTrackEntry*, i);
+        PlaylistEntry* entry = jttentry->entry;
         gchar *title = NULL;
 
-        if (entry->title) {
-            title = normalize_search_string(entry->title);
-        } else {
+        if (entry->title)
+            title = g_strdup(entry->title);
+        else {
             gchar *realfn = NULL;
             realfn = g_filename_from_uri(entry->filename, NULL, NULL);
-            gchar *tmp_title = str_to_utf8(realfn ? realfn : entry->filename);
-            title = normalize_search_string(tmp_title);
-            g_free(tmp_title);
+            if (strchr(realfn ? realfn : entry->filename, '/'))
+                title = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+            else
+                title = str_to_utf8(realfn ? realfn : entry->filename);
             g_free(realfn); realfn = NULL;
         }
-
-        /*we are matching all the path not just the filename or title*/
-
-        /* Compare the reg.expressions to the string - if all the
-           regexp in regex_list match, add to the ListStore */
-
-        /*
-         * FIXME: The search string should be adapted to the
-         * current display setting, e.g. if the user has set it to
-         * "%p - %t" then build the match string like that too, or
-         * even better, search for each of the tags seperatly.
-         *
-         * In any case the string to match should _never_ contain
-         * something the user can't actually see in the playlist.
-         */
-        //g_print ("it passed\n");
-        if (regex_list != NULL)
-                match = ui_jump_to_track_match(title, regex_list);
-        else
-                match = TRUE;
-
-        g_free(title); title = NULL;
-
-        if (match) {
-                if (entry->title)
-                    title = g_strdup(entry->title);
-                else {
-                    gchar *realfn = NULL;
-                    realfn = g_filename_from_uri(entry->filename, NULL, NULL);
-                    if (strchr(realfn ? realfn : entry->filename, '/'))
-                        title = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
-                    else
-                        title = str_to_utf8(realfn ? realfn : entry->filename);
-                    g_free(realfn); realfn = NULL;
-                }
-                gtk_list_store_append(store, &iter);
-                gtk_list_store_set(store, &iter, 0, song_index + 1 , 1, title, -1);
-        }
-        song_index++;
-        g_free(title); title = NULL;
+        gtk_list_store_append(store, &iter);
+        gtk_list_store_set(store, &iter, 0, jttentry->playlist_position + 1 , 1, title, -1);
+        g_free(title);
     }
 
     PLAYLIST_UNLOCK(playlist);
@@ -440,20 +360,6 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     /* attach the model again to the treeview */
     gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , GTK_TREE_MODEL(store) );
     g_object_unref( store );
-
-    if ( regex_list != NULL )
-    {
-        regex_list_tmp = regex_list;
-        while ( regex_list != NULL )
-        {
-            regex_t *regex = regex_list->data;
-            regfree( regex );
-            g_free( regex );
-            regex_list = g_slist_next(regex_list);
-        }
-        g_slist_free( regex_list_tmp );
-    }
-    g_strfreev(words);
 
     if (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter)) {
         selection = gtk_tree_view_get_selection(treeview);
