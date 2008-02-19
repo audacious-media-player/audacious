@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-02-18 22:28+0300\n"
-"PO-Revision-Date: 2008-02-12 15:41+0900\n"
+"PO-Revision-Date: 2008-02-19 14:48+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2342,7 +2342,6 @@ msgid "Use software volume control"
 msgstr "ソフトウェアボリュームコントロールを使う"
 
 #: src/audacious/ui_preferences.c:232
-#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not supportcontrolling the playback volume."
@@ -2351,13 +2350,12 @@ msgstr ""
 "コントロールをサポートしていない状況で有用でしょう．"
 
 #: src/audacious/ui_preferences.c:234
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>再生</b>"
+msgstr "<b>高度な設定</b>"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Bypass all of signal processing if possible"
-msgstr ""
+msgstr "可能ならすべての信号処理をバイパスする"
 
 #: src/audacious/ui_preferences.c:236
 msgid ""
@@ -2366,6 +2364,10 @@ msgid ""
 "processing will be disabled (i.e. DSP plugins, equalizer, resampling, Replay "
 "Gain and software volume control)."
 msgstr ""
+"入力プラグインによって生成されたフォーマットが出力プラグインで"
+"サポートされているならば，入力プラグインの出力を直接出力プラグインに渡します．"
+"これを有効にすると，すべての信号処理は無効にされます (例: DSP プラグイン，"
+"イコライザ，リサンプリング，リプレイゲイン，ソフトウェアボリュームコントロール)"
 
 #: src/audacious/ui_preferences.c:242
 msgid "<b>Replay Gain configuration</b>"
