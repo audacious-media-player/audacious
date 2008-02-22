@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-02-18 22:28+0300\n"
+"POT-Creation-Date: 2008-02-22 17:40+0200\n"
 "PO-Revision-Date: 2007-01-13 12:01+0200\n"
 "Last-Translator: Andrew Ivanov <aa.ivanov@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -1234,31 +1234,31 @@ msgstr "Просвирване на файлове"
 msgid "Load files"
 msgstr "Зареждане на файлове"
 
-#: src/audacious/ui_jumptotrack.c:150
+#: src/audacious/ui_jumptotrack.c:154
 msgid "Un_queue"
 msgstr "_Премахване от опашката"
 
-#: src/audacious/ui_jumptotrack.c:152 src/audacious/ui_jumptotrack.c:684
+#: src/audacious/ui_jumptotrack.c:156 src/audacious/ui_jumptotrack.c:590
 msgid "_Queue"
 msgstr "_На опашката"
 
-#: src/audacious/ui_jumptotrack.c:572
+#: src/audacious/ui_jumptotrack.c:478
 msgid "Jump to Track"
 msgstr "Прескачане до песен"
 
-#: src/audacious/ui_jumptotrack.c:615
+#: src/audacious/ui_jumptotrack.c:521
 msgid "Filter: "
 msgstr "Филтър:"
 
-#: src/audacious/ui_jumptotrack.c:616
+#: src/audacious/ui_jumptotrack.c:522
 msgid "_Filter:"
 msgstr "_Филтър:"
 
-#: src/audacious/ui_jumptotrack.c:634
+#: src/audacious/ui_jumptotrack.c:540
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:676
+#: src/audacious/ui_jumptotrack.c:582
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Затваряне при отваряне на файл"

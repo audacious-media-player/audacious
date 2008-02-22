@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-02-18 22:28+0300\n"
+"POT-Creation-Date: 2008-02-22 17:40+0200\n"
 "PO-Revision-Date: 2007-06-15 13:51-0600\n"
 "Last-Translator: William Pitcock <nenolod@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
@@ -1236,31 +1236,31 @@ msgstr "Ffeiliau chwarae"
 msgid "Load files"
 msgstr "Llwytho ffeiliau"
 
-#: src/audacious/ui_jumptotrack.c:150
+#: src/audacious/ui_jumptotrack.c:154
 msgid "Un_queue"
 msgstr "_Rhes tynnu"
 
-#: src/audacious/ui_jumptotrack.c:152 src/audacious/ui_jumptotrack.c:684
+#: src/audacious/ui_jumptotrack.c:156 src/audacious/ui_jumptotrack.c:590
 msgid "_Queue"
 msgstr "_Rhes"
 
-#: src/audacious/ui_jumptotrack.c:572
+#: src/audacious/ui_jumptotrack.c:478
 msgid "Jump to Track"
 msgstr "Neidio i trac"
 
-#: src/audacious/ui_jumptotrack.c:615
+#: src/audacious/ui_jumptotrack.c:521
 msgid "Filter: "
 msgstr "Hidl:"
 
-#: src/audacious/ui_jumptotrack.c:616
+#: src/audacious/ui_jumptotrack.c:522
 msgid "_Filter:"
 msgstr "_Hidl:"
 
-#: src/audacious/ui_jumptotrack.c:634
+#: src/audacious/ui_jumptotrack.c:540
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:676
+#: src/audacious/ui_jumptotrack.c:582
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Closio am Tocio"

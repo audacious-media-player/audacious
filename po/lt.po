@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-02-18 22:28+0300\n"
+"POT-Creation-Date: 2008-02-22 17:40+0200\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -1232,34 +1232,34 @@ msgstr "/Groti"
 msgid "Load files"
 msgstr "/Įkelti/Iš bylos"
 
-#: src/audacious/ui_jumptotrack.c:150
+#: src/audacious/ui_jumptotrack.c:154
 #, fuzzy
 msgid "Un_queue"
 msgstr "Eilė"
 
-#: src/audacious/ui_jumptotrack.c:152 src/audacious/ui_jumptotrack.c:684
+#: src/audacious/ui_jumptotrack.c:156 src/audacious/ui_jumptotrack.c:590
 #, fuzzy
 msgid "_Queue"
 msgstr "Eilė"
 
-#: src/audacious/ui_jumptotrack.c:572
+#: src/audacious/ui_jumptotrack.c:478
 msgid "Jump to Track"
 msgstr "Šokti į takelį"
 
-#: src/audacious/ui_jumptotrack.c:615
+#: src/audacious/ui_jumptotrack.c:521
 msgid "Filter: "
 msgstr "Filtruoti:"
 
-#: src/audacious/ui_jumptotrack.c:616
+#: src/audacious/ui_jumptotrack.c:522
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filtruoti:"
 
-#: src/audacious/ui_jumptotrack.c:634
+#: src/audacious/ui_jumptotrack.c:540
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:676
+#: src/audacious/ui_jumptotrack.c:582
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Atvėrus, užverti dialogą"

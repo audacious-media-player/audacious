@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-02-18 22:28+0300\n"
+"POT-Creation-Date: 2008-02-22 17:40+0200\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -1216,35 +1216,35 @@ msgstr "bmp: Spela filer"
 msgid "Load files"
 msgstr "bmp: Ladda filer"
 
-#: src/audacious/ui_jumptotrack.c:150
+#: src/audacious/ui_jumptotrack.c:154
 #, fuzzy
 msgid "Un_queue"
 msgstr "/_Lägg i väntelista"
 
-#: src/audacious/ui_jumptotrack.c:152 src/audacious/ui_jumptotrack.c:684
+#: src/audacious/ui_jumptotrack.c:156 src/audacious/ui_jumptotrack.c:590
 #, fuzzy
 msgid "_Queue"
 msgstr "Kö"
 
-#: src/audacious/ui_jumptotrack.c:572
+#: src/audacious/ui_jumptotrack.c:478
 #, fuzzy
 msgid "Jump to Track"
 msgstr "bmp: Hoppa till spår"
 
-#: src/audacious/ui_jumptotrack.c:615
+#: src/audacious/ui_jumptotrack.c:521
 msgid "Filter: "
 msgstr "Filter:"
 
-#: src/audacious/ui_jumptotrack.c:616
+#: src/audacious/ui_jumptotrack.c:522
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filter:"
 
-#: src/audacious/ui_jumptotrack.c:634
+#: src/audacious/ui_jumptotrack.c:540
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:676
+#: src/audacious/ui_jumptotrack.c:582
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Stäng"
