@@ -676,14 +676,12 @@ playlist_font_set_cb()
     ui_skinned_playlist_set_font(cfg.playlist_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
     playlistwin_update_list(playlist_get_active());
-    gtk_widget_queue_draw(playlistwin_list);
 }
 
 static void
 playlist_show_pl_separator_numbers_cb()
 {
     playlistwin_update_list(playlist_get_active());
-    gtk_widget_queue_draw(playlistwin_list);
 }
 
 /* proxy */

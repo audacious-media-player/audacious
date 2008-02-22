@@ -70,7 +70,7 @@ GtkWidget *playlistwin;
 
 static GMutex *resize_mutex = NULL;
 
-GtkWidget *playlistwin_list = NULL;
+static GtkWidget *playlistwin_list = NULL;
 GtkWidget *playlistwin_shade, *playlistwin_close;
 
 static gboolean playlistwin_hint_flag = FALSE;
@@ -213,6 +213,8 @@ playlistwin_update_sinfo(Playlist *playlist)
 gboolean
 playlistwin_item_visible(gint index)
 {
+    g_return_val_if_fail(UI_SKINNED_IS_PLAYLIST(playlistwin_list), FALSE);
+
     if (index >= UI_SKINNED_PLAYLIST(playlistwin_list)->first &&
         index < (UI_SKINNED_PLAYLIST(playlistwin_list)->first + UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible) ) {
         return TRUE;
@@ -223,31 +225,31 @@ playlistwin_item_visible(gint index)
 gint
 playlistwin_list_get_visible_count(void)
 {
-    if (playlistwin_list)
+    g_return_val_if_fail(UI_SKINNED_IS_PLAYLIST(playlistwin_list), -1);
+
     return UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible;
-    return (-1);
 }
 
 gint
 playlistwin_list_get_first(void)
 {
-    if (playlistwin_list)
+    g_return_val_if_fail(UI_SKINNED_IS_PLAYLIST(playlistwin_list), -1);
+
     return UI_SKINNED_PLAYLIST(playlistwin_list)->first;
-    return (-1);
 }
 
 gint
 playlistwin_get_toprow(void)
 {
-    if (playlistwin_list)
-        return (UI_SKINNED_PLAYLIST(playlistwin_list)->first);
-    return (-1);
+    g_return_val_if_fail(UI_SKINNED_IS_PLAYLIST(playlistwin_list), -1);
+
+    return (UI_SKINNED_PLAYLIST(playlistwin_list)->first);
 }
 
 void
 playlistwin_set_toprow(gint toprow)
 {
-    if (playlistwin_list)
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list))
         UI_SKINNED_PLAYLIST(playlistwin_list)->first = toprow;
     playlistwin_update_list(playlist_get_active());
 }
@@ -382,7 +384,8 @@ playlistwin_release(GtkWidget * widget,
 void
 playlistwin_scroll(gint num)
 {
-    UI_SKINNED_PLAYLIST(playlistwin_list)->first += num;
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list))
+        UI_SKINNED_PLAYLIST(playlistwin_list)->first += num;
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -404,9 +407,11 @@ playlistwin_select_all(void)
     Playlist *playlist = playlist_get_active();
 
     playlist_select_all(playlist, TRUE);
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = 0;
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = 0;
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_max = playlist_get_length(playlist) - 1;
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list)) {
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = 0;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = 0;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_max = playlist_get_length(playlist) - 1;
+    }
     playlistwin_update_list(playlist);
 }
 
@@ -414,8 +419,10 @@ static void
 playlistwin_select_none(void)
 {
     playlist_select_all(playlist_get_active(), FALSE);
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = -1;
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = -1;
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list)) {
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = -1;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = -1;
+    }
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -579,8 +586,10 @@ static void
 playlistwin_inverse_selection(void)
 {
     playlist_select_invert_all(playlist_get_active());
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = -1;
-    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = -1;
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list)) {
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = -1;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = -1;
+    }
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -1141,6 +1150,7 @@ playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
 static gboolean
 playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
 {
+    g_return_val_if_fail(UI_SKINNED_IS_PLAYLIST(playlistwin_list), FALSE);
     Playlist *playlist = playlist_get_active();
 
     guint keyval;
@@ -1297,9 +1307,11 @@ playlistwin_drag_motion(GtkWidget * widget,
                         GtkSelectionData * selection_data,
                         guint info, guint time, gpointer user_data)
 {
-    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion = TRUE;
-    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion_x = x;
-    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion_y = y;
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list)) {
+        UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion = TRUE;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion_x = x;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion_y = y;
+    }
     playlistwin_update_list(playlist_get_active());
     playlistwin_hint_flag = TRUE;
 }
@@ -1308,7 +1320,8 @@ static void
 playlistwin_drag_end(GtkWidget * widget,
                      GdkDragContext * context, gpointer user_data)
 {
-    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion = FALSE;
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list))
+        UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion = FALSE;
     playlistwin_hint_flag = FALSE;
     playlistwin_update_list(playlist_get_active());
 }
@@ -1330,7 +1343,8 @@ playlistwin_drag_data_received(GtkWidget * widget,
         g_message("Received no DND data!");
         return;
     }
-    if (x < playlistwin_get_width() - 20 || y < cfg.playlist_height - 38) {
+    if (UI_SKINNED_IS_PLAYLIST(playlistwin_list) &&
+        (x < playlistwin_get_width() - 20 || y < cfg.playlist_height - 38)) {
         pos = y / UI_SKINNED_PLAYLIST(playlistwin_list)->fheight + UI_SKINNED_PLAYLIST(playlistwin_list)->first;
 
         pos = MIN(pos, playlist_get_length(playlist));
