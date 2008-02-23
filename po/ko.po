@@ -160,8 +160,7 @@ msgid ""
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
-"<span size=\"small\">모든 스트림을 이 샘플링율로
-변환합니다.\n"
+"<span size=\"small\">모든 스트림을 이 샘플링율로변환합니다.\n"
 "사운드카드나 출력 플러그인에서 지원하는\n"
 "최대 샘플링율로 설정하는 것이 좋습니다.</span>"
 
@@ -169,8 +168,7 @@ msgstr ""
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
-msgstr "<span size=\"small\">바뀐 설정 값은 재시작 해야
-적용됩니다.</span>"
+msgstr "<span size=\"small\">바뀐 설정 값은 재시작 해야적용됩니다.</span>"
 
 #: ../src/audacious/glade/prefswin.glade.h:27
 msgid ""
@@ -180,25 +178,21 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
-"<span size=\"small\">오디오 스트림에서 미리 읽을 버퍼
-크기(1/1000초) 입니"
+"<span size=\"small\">오디오 스트림에서 미리 읽을 버퍼크기(1/1000초) 입니"
 "다.\n"
 "재생이 원활하지 않으면 이 크기를 늘리세요.\n"
-"그러나 지나치게 큰 값은 재생 성능에 안 좋을 수
-있습니다.</span>"
+"그러나 지나치게 큰 값은 재생 성능에 안 좋을 수있습니다.</span>"
 
 #: ../src/audacious/glade/prefswin.glade.h:30
 msgid "Always refresh directory when opening file dialog"
-msgstr "파일 창을 열 때마다 항상 디렉터리 내용을 새로
-고침"
+msgstr "파일 창을 열 때마다 항상 디렉터리 내용을 새로고침"
 
 #: ../src/audacious/glade/prefswin.glade.h:31
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
-"항상 파일 대화창을 새로 고침 (큰 디렉터리를 열 때
-느려질 수 있으며, Gnome VFS"
+"항상 파일 대화창을 새로 고침 (큰 디렉터리를 열 때느려질 수 있으며, Gnome VFS"
 "는 자동으로 제어합니다.)"
 
 #: ../src/audacious/glade/prefswin.glade.h:32
@@ -215,8 +209,7 @@ msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
-"스킨 UI의 색상 균형을 조절할 수 있습니다. 아래의
-슬라이더를 이용해 이것을 바"
+"스킨 UI의 색상 균형을 조절할 수 있습니다. 아래의슬라이더를 이용해 이것을 바"
 "꿀 수 있습니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:35
@@ -340,8 +333,7 @@ msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
-"선택하면 파일 정보가 기본 창에서 앞뒤로 흐릅니다.
-선택하지 않으면 한 방향으로"
+"선택하면 파일 정보가 기본 창에서 앞뒤로 흐릅니다. 선택하지 않으면 한 방향으로"
 "만 흐릅니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:67
@@ -359,16 +351,13 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
-"메타데이터의 변환을 대체할 문자 인코딩 목록입니다.
-만약 자동으로 문자 인코딩"
-"을 감지하는데 실패하거나 사용할 수 없을 때, 이 목록
-중에서 인코딩을 시도하며 "
+"메타데이터의 변환을 대체할 문자 인코딩 목록입니다. 만약 자동으로 문자 인코딩"
+"을 감지하는데 실패하거나 사용할 수 없을 때, 이 목록 중에서 인코딩을 시도하며 "
 "이들은 UTF-8 인코딩을 대체할 수 있도록 도움을 줍니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:70
 msgid "Load metadata (tag information) from music files."
-msgstr "음악 파일로부터 메타데이터(태그 정보)를
-불러옵니다."
+msgstr "음악 파일로부터 메타데이터(태그 정보)를 불러옵니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:71
 msgid "Load metadata from playlists and files"
@@ -379,13 +368,11 @@ msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr ""
-"연주 목록에서 파일을 표시하는데 있어 필요할 때
-메타데이터를 불러옵니다. "
+"연주 목록에서 파일을 표시하는데 있어 필요할 때 메타데이터를 불러옵니다. "
 
 #: ../src/audacious/glade/prefswin.glade.h:73
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr "파일을 열거나 연주 목록에 추가할 때 메타데이터
-불러오기"
+msgstr "파일을 열거나 연주 목록에 추가할 때 메타데이터 불러오기"
 
 #: ../src/audacious/glade/prefswin.glade.h:74
 #: ../src/audacious/ui_preferences.c:115
@@ -524,10 +511,8 @@ msgid ""
 "provided by Audacious itself and is faster than the default GTK2 selector "
 "(but sadly not as user-friendly)."
 msgstr ""
-"파일 선택 창에서 XMMS/GTK1 스타일을 사용합니다. Audacious
-자체에서 제공하며, "
-"기본 값인 GTK2 스타일의 선택기보다 빠릅니다. (그러나
-사용자에게 친숙하지 않음)"
+"파일 선택 창에서 XMMS/GTK1 스타일을 사용합니다. Audacious 자체에서 제공하며, "
+"기본 값인 GTK2 스타일의 선택기보다 빠릅니다. (그러나 사용자에게 친숙하지 않음)"
 
 #: ../src/audacious/glade/prefswin.glade.h:109
 msgid "This enables the window manager to show decorations for windows."
@@ -543,8 +528,7 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"연주 목록의 항목에서 팝업 정보 창을 보거나 끕니다.
-창에서 노래 제목, 음반, 장"
+"연주 목록의 항목에서 팝업 정보 창을 보거나 끕니다. 창에서 노래 제목, 음반, 장"
 "르, 연도, 트랙 번호, 트랙 길이 등을 보여줍니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:112
@@ -582,8 +566,7 @@ msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
-"소프트웨어 음량 제어를 사용합니다. 이것은 오디오
-시스템이 음량 제어를 지원하"
+"소프트웨어 음량 제어를 사용합니다. 이것은 오디오 시스템이 음량 제어를 지원하"
 "지 않을 때 유용합니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:120
@@ -602,8 +585,7 @@ msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
-"선택하면 확장자로 파일 형식을 감지합니다. 지원하는
-확장자의 파일만 불러올 수 "
+"선택하면 확장자로 파일 형식을 감지합니다. 지원하는 확장자의 파일만 불러올 수 "
 "있습니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:123
@@ -611,14 +593,12 @@ msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
-"선택하면 필요할 때만 파일 형식을 감지합니다. 이것은
-뒤죽박죽인 연주 목록에서 "
+"선택하면 필요할 때만 파일 형식을 감지합니다. 이것은 뒤죽박죽인 연주 목록에서 "
 "빠른 속도의 전송 이점을 볼 수 있습니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:124
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "재생이 끝났을 때 자동으로 다음 노래 진행을 안
-합니다."
+msgstr "재생이 끝났을 때 자동으로 다음 노래 진행을 안 합니다."
 
 #: ../src/audacious/glade/prefswin.glade.h:125
 msgid ""
@@ -626,8 +606,7 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
-"음반 표지를 찾을 때까지 파일 이름의 정확한 단어로
-찾습니다. 아래 목록에서 찾"
+"음반 표지를 찾을 때까지 파일 이름의 정확한 단어로 찾습니다. 아래 목록에서 찾"
 "을 단어를 지정할 수 있습니다. 쉼표(,)로 구분하세요."
 
 #: ../src/audacious/glade/prefswin.glade.h:126
@@ -771,8 +750,7 @@ msgid ""
 msgstr ""
 "<b><big>스킨을 불러올 수 없습니다.</big></b>\n"
 "\n"
-"'%s'에 있는 스킨이 사용 가능한지, 기본 스킨이 '%s'에
-설치됐는지 확인하세요.\n"
+"'%s'에 있는 스킨이 사용 가능한지, 기본 스킨이 '%s'에 설치됐는지 확인하세요.\n"
 
 #: ../src/audacious/main.c:1403
 #, c-format
@@ -785,8 +763,7 @@ msgid ""
 msgstr ""
 "쓰레드가 사용자의 플랫폼을 지원하지 않습니다.\n"
 "\n"
-"libc5 기반이며 LinuxThereds를 설치하기 전에 Glib와 GTK+를
-설치했다면\n"
+"libc5 기반이며 LinuxThereds를 설치하기 전에 Glib와 GTK+를 설치했다면\n"
 "Glib와 GTK+를 다시 컴파일 해야 합니다.\n"
 
 #: ../src/audacious/main.c:1434
@@ -841,17 +818,13 @@ msgstr ""
 "시그널 11 발생 (SIGSEGV)\n"
 "\n"
 "불편을 드려 죄송합니다. 충돌이 생겼습니다.\n"
-"이것은 프로그램 오류이며, 일반 상황에서는 절대 생기지
-않습니다.\n"
+"이것은 프로그램 오류이며, 일반 상황에서는 절대 생기지 않습니다.\n"
 "현재 설정을 저장해서 피해를 입지 않도록 하세요.\n"
 "\n"
-"http://bugs-meta.atheme.org 에서 Audacious의 품질을 향상하는데
-도울 수 있습니"
+"http://bugs-meta.atheme.org 에서 Audacious의 품질을 향상하는데 도울 수 있습니"
 "다.\n"
-"이 메시지의 전체 내용과 어떤 상황에서 오류가
-발생했는지\n"
-"자세한 내용을 알려주시면 신속히 처리하는데 도움이
-됩니다.\n"
+"이 메시지의 전체 내용과 어떤 상황에서 오류가 발생했는지\n"
+"자세한 내용을 알려주시면 신속히 처리하는데 도움이 됩니다.\n"
 
 #: ../src/audacious/signals.c:76
 #, c-format
@@ -861,8 +834,7 @@ msgid ""
 "product.\n"
 msgstr ""
 "\n"
-"오류 보고는 Audacious 제작자가 아닌 http://bugs-meta.atheme.org
-에서 할 수 있"
+"오류 보고는 Audacious 제작자가 아닌 http://bugs-meta.atheme.org 에서 할 수 있"
 "습니다.\n"
 
 #: ../src/audacious/signals.c:262
@@ -1231,8 +1203,7 @@ msgid ""
 "(such as the statusicon plugin)."
 msgstr ""
 "Audacious 창을 숨기며 시작합니다.\n"
-"제어할 때 등 원할 때만, 그밖에는 원격에서나 플러그인을
-사용할 때만 보입니다."
+"제어할 때 등 원할 때만, 그밖에는 원격에서나 플러그인을 사용할 때만 보입니다."
 
 #: ../src/audacious/ui_main.c:1247
 msgid "Always ignore, show/hide is controlled remotely"
@@ -1263,12 +1234,10 @@ msgstr ""
 "\n"
 "깨진 GTK 엔진을 사용 중인 것을 감지했습니다.\n"
 "\n"
-"사용 중인 <i>%s<i/> 테마 엔진은 최신 스킨에 호환되지
-않습니다. 호환되지 않는 "
+"사용 중인 <i>%s<i/> 테마 엔진은 최신 스킨에 호환되지 않습니다. 호환되지 않는 "
 "스킨은 이 세션에서 사용되지 않을 것입니다.\n"
 "\n"
-"이 스킨을 사용하려면 다른 GTK 테마 엔진을 선택해서
-사용하세요."
+"이 스킨을 사용하려면 다른 GTK 테마 엔진을 선택해서 사용하세요."
 
 #: ../src/audacious/ui_main.c:1309
 msgid "Do not display this warning again"
@@ -1623,8 +1592,7 @@ msgstr "목록 새로 고침"
 
 #: ../src/audacious/ui_manager.c:228
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr "연주 목록 항목에 포함된 메타데이터를 새로
-고칩니다."
+msgstr "연주 목록 항목에 포함된 메타데이터를 새로 고칩니다."
 
 #: ../src/audacious/ui_manager.c:231
 msgid "List Manager"
@@ -1662,8 +1630,7 @@ msgstr "검색과 선택"
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr "검색한 연주 목록과 선택한 연주 목록 항목은 특정
-기준에 기반을 둡니다."
+msgstr "검색한 연주 목록과 선택한 연주 목록 항목은 특정 기준에 기반을 둡니다."
 
 #: ../src/audacious/ui_manager.c:256
 msgid "Invert Selection"
@@ -1725,8 +1692,7 @@ msgstr "파일 이름 순"
 
 #: ../src/audacious/ui_manager.c:285
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "파일 이름 순으로 정렬하고 중복된 항목은
-삭제합니다."
+msgstr "파일 이름 순으로 정렬하고 중복된 항목은 삭제합니다."
 
 #: ../src/audacious/ui_manager.c:288 ../src/audacious/ui_manager.c:328
 #: ../src/audacious/ui_manager.c:358
@@ -2031,10 +1997,8 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
-"연주 목록에서 하나 이상의 필드로 채워진 항목을
-선택합니다. 필드는 정규 표현식"
-"을 사용하며 대소문자를 구분합니다. 만약 정규 표현식을
-사용할 줄 모르면 편하"
+"연주 목록에서 하나 이상의 필드로 채워진 항목을 선택합니다. 필드는 정규 표현식"
+"을 사용하며 대소문자를 구분합니다. 만약 정규 표현식을 사용할 줄 모르면 편하"
 "게 원하는 위치에 문자를 넣고 검색하세요."
 
 #. title
