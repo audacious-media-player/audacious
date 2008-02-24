@@ -221,25 +221,10 @@ output_set_volume(gint l, gint r)
 void
 output_set_eq(gboolean active, gfloat pre, gfloat * bands)
 {
-    int i;
-    /*
-    preamp[0] = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
-    preamp[1] = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
     AUDDBG("preamp: %f, bands: %f:%f:%f:%f:%f:%f:%f:%f:%f:%f\n", pre, bands[0], bands[1], bands[2], bands[3], bands[4],
             bands[5], bands[6], bands[7], bands[8], bands[9]);
 
-    for (i = 0; i < 10; ++i)
-    {
-        set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
-        set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
-    }
-    */
-
-    gfloat b[10];
-    for (i = 0; i < 10; i++) {
-        b[i] = bands[i] * 12.0 / 20.0; /* FIXME: change equalizer sliders range from -20..20 to -12..12 dB --asphyx */
-    }
-    equalizer_flow_set_bands(pre, b);
+    equalizer_flow_set_bands(pre, bands);
 }
 
 /* called by input plugin to peek at the output plugin's write progress */

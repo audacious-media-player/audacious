@@ -48,6 +48,7 @@
 #include "ui_playlist.h"
 #include "util.h"
 #include "output.h"
+#include "equalizer_flow.h"
 
 #include "rcfile.h"
 #include "vfs.h"
@@ -766,23 +767,21 @@ equalizerwin_delete_selected_presets(GtkTreeView *view, gchar *filename)
     }
 }
 
-
-static GList *
-import_winamp_eqf(VFSFile * file)
+static EqualizerPreset *
+load_winamp_eqf(VFSFile * file)
 {
     gchar header[31];
     gchar *name;
     gchar *filename;
     gchar bands[11];
     gint i = 0;
-    GList *list = NULL;
-    EqualizerPreset *preset;
+    EqualizerPreset *preset = NULL;
 
     vfs_fread(header, 1, 31, file);
     if (!strncmp(header, "Winamp EQ library file v1.1", 27)) 
     {
 
-        g_print("The EQF header is OK\n");
+        AUDDBG("The EQF header is OK\n");
 
         if(vfs_fseek(file, 0x120, SEEK_SET) == -1)
             return NULL; 
@@ -792,17 +791,28 @@ import_winamp_eqf(VFSFile * file)
         filename = g_filename_from_uri(file->uri,NULL,NULL);
         name = g_path_get_basename(filename);
         g_free(filename);
-        g_print("The preset name is '%s'\n", name);
+        AUDDBG("The preset name is '%s'\n", name);
 
         preset = equalizer_preset_new(name);
         g_free(name);
-        preset->preamp = 20.0 - ((bands[10] * 40.0) / 64.0);
+        /*this was divided by 63, but shouldn't it be 64? --majeru*/
+        preset->preamp = EQUALIZER_MAX_GAIN - ((bands[10] * EQUALIZER_MAX_GAIN * 2) / 64.0);
 
         for (i = 0; i < 10; i++)
-            preset->bands[i] = 20.0 - ((bands[i] * 40.0) / 64.0);
-
-        list = g_list_prepend(list, preset);
+            preset->bands[i] = EQUALIZER_MAX_GAIN - ((bands[i] * EQUALIZER_MAX_GAIN) / 64.0);
     }
+
+    return preset;
+}
+
+static GList *
+import_winamp_eqf(VFSFile * file)
+{
+    EqualizerPreset *preset;
+    GList *list = NULL;
+
+    if((preset = load_winamp_eqf(file)) == NULL) return NULL;
+    list = g_list_prepend(list, preset);
     list = g_list_reverse(list);
     return list;
 }
@@ -810,28 +820,17 @@ import_winamp_eqf(VFSFile * file)
 static void
 equalizerwin_read_winamp_eqf(VFSFile * file)
 {
-    gchar header[31];
-    guchar bands[11];
+    EqualizerPreset *preset;
     gint i;
 
-    vfs_fread(header, 1, 31, file);
+    if((preset = load_winamp_eqf(file)) == NULL) return;
 
-    if (!strncmp(header, "Winamp EQ library file v1.1", 27)) {
-        /* Skip name */
-        if (vfs_fseek(file, 0x120, SEEK_SET) == -1)
-            return;
+    ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, preset->preamp);
 
-        if (vfs_fread(bands, 1, 11, file) != 11)
-            return;
+    for (i = 0; i < 10; i++)
+        ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],  preset->bands[i]);
 
-        ui_skinned_equalizer_slider_set_position(equalizerwin_preamp,
-                20.0 - ((bands[10] * 40.0) / 64.0)); /*this was divided by 63, but shouldn't it be 64? --majeru*/
-
-        for (i = 0; i < 10; i++)
-            ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],
-                    20.0 - ((bands[i] * 40.0) / 64.0));
-    }
-
+    equalizer_preset_free(preset);
     equalizerwin_eq_changed();
 }
 
@@ -1089,8 +1088,8 @@ save_winamp_file(const gchar * filename)
     vfs_fwrite(name, 1, 257, file);
 
     for (i = 0; i < 10; i++)
-        bands[i] = 63 - (((ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]) + 20) * 63) / 40);
-    bands[10] = 63 - (((ui_skinned_equalizer_slider_get_position(equalizerwin_preamp) + 20) * 63) / 40);
+        bands[i] = 63 - (((ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]) + EQUALIZER_MAX_GAIN) * 63) / EQUALIZER_MAX_GAIN / 2);
+    bands[10] = 63 - (((ui_skinned_equalizer_slider_get_position(equalizerwin_preamp) + EQUALIZER_MAX_GAIN) * 63) / EQUALIZER_MAX_GAIN / 2);
     vfs_fwrite(bands, 1, 11, file);
 
     vfs_fclose(file);

@@ -26,6 +26,7 @@
 #include "util.h"
 #include "ui_equalizer.h"
 #include "ui_main.h"
+#include "equalizer_flow.h"
 #include <glib/gi18n.h>
 
 #define UI_TYPE_SKINNED_EQUALIZER_SLIDER           (ui_skinned_equalizer_slider_get_type())
@@ -346,7 +347,7 @@ void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gint pos) {
     if (priv->pressed)
         return;
 
-    priv->position = 25 - (gint) ((pos * 25.0) / 20.0);
+    priv->position = 25 - (gint) ((pos * 25.0) / EQUALIZER_MAX_GAIN);
 
     if (priv->position < 0)
         priv->position = 0;
@@ -363,7 +364,7 @@ void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gint pos) {
 gfloat ui_skinned_equalizer_slider_get_position(GtkWidget *widget) {
     g_return_val_if_fail (UI_SKINNED_IS_EQUALIZER_SLIDER (widget), -1);
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(widget);
-    return (20.0 - (((gfloat) priv->position * 20.0) / 25.0));
+    return (EQUALIZER_MAX_GAIN - (((gfloat) priv->position * EQUALIZER_MAX_GAIN) / 25.0));
 }
 
 void ui_skinned_equalizer_slider_set_mainwin_text(UiSkinnedEqualizerSlider * es) {
