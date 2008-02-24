@@ -17,7 +17,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#define AUD_DEBUG
+/*#define AUD_DEBUG*/
 
 #include <glib.h>
 #include "main.h"

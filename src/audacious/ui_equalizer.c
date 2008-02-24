@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+/*#define AUD_DEBUG*/
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -767,70 +769,66 @@ equalizerwin_delete_selected_presets(GtkTreeView *view, gchar *filename)
     }
 }
 
-static EqualizerPreset *
-load_winamp_eqf(VFSFile * file)
+static GList *
+import_winamp_eqf(VFSFile * file)
 {
     gchar header[31];
-    gchar *name;
-    gchar *filename;
     gchar bands[11];
     gint i = 0;
     EqualizerPreset *preset = NULL;
+    GList *list = NULL;
+    gchar preset_name[0xb4];
 
     vfs_fread(header, 1, 31, file);
-    if (!strncmp(header, "Winamp EQ library file v1.1", 27)) 
-    {
+    if (strncmp(header, "Winamp EQ library file v1.1", 27)) return NULL;
 
-        AUDDBG("The EQF header is OK\n");
+    AUDDBG("The EQF header is OK\n");
 
-        if(vfs_fseek(file, 0x120, SEEK_SET) == -1)
-            return NULL; 
-        if(vfs_fread(bands, 1, 11, file) != 11)
-            return NULL;
+    if(vfs_fseek(file, 0x1f, SEEK_SET) == -1) return NULL;
 
-        filename = g_filename_from_uri(file->uri,NULL,NULL);
-        name = g_path_get_basename(filename);
-        g_free(filename);
-        AUDDBG("The preset name is '%s'\n", name);
+    while(vfs_fread(preset_name, 1, 0xb4, file) == 0xb4) {
+        AUDDBG("The preset name is '%s'\n", preset_name);
+        vfs_fseek(file, 0x4d, SEEK_CUR); /* unknown crap --asphyx */
+        if(vfs_fread(bands, 1, 11, file) != 11) break;
 
-        preset = equalizer_preset_new(name);
-        g_free(name);
+        preset = equalizer_preset_new(preset_name);
         /*this was divided by 63, but shouldn't it be 64? --majeru*/
         preset->preamp = EQUALIZER_MAX_GAIN - ((bands[10] * EQUALIZER_MAX_GAIN * 2) / 64.0);
 
         for (i = 0; i < 10; i++)
-            preset->bands[i] = EQUALIZER_MAX_GAIN - ((bands[i] * EQUALIZER_MAX_GAIN) / 64.0);
+            preset->bands[i] = EQUALIZER_MAX_GAIN - ((bands[i] * EQUALIZER_MAX_GAIN * 2) / 64.0);
+        
+        list = g_list_prepend(list, preset);
     }
+    
+    /*list = g_list_reverse(list);*/
 
-    return preset;
+    return list;
 }
 
-static GList *
-import_winamp_eqf(VFSFile * file)
+static void
+free_cb (gpointer data, gpointer user_data)
 {
-    EqualizerPreset *preset;
-    GList *list = NULL;
-
-    if((preset = load_winamp_eqf(file)) == NULL) return NULL;
-    list = g_list_prepend(list, preset);
-    list = g_list_reverse(list);
-    return list;
+    equalizer_preset_free((EqualizerPreset*)data);
 }
 
 static void
 equalizerwin_read_winamp_eqf(VFSFile * file)
 {
-    EqualizerPreset *preset;
+    GList *presets;
     gint i;
 
-    if((preset = load_winamp_eqf(file)) == NULL) return;
+    if((presets = import_winamp_eqf(file)) == NULL) return;
+    EqualizerPreset *preset = (EqualizerPreset*)presets->data; /* just get the first preset --asphyx */
 
     ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, preset->preamp);
 
     for (i = 0; i < 10; i++)
         ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],  preset->bands[i]);
 
-    equalizer_preset_free(preset);
+    g_list_foreach(presets, free_cb, NULL);
+    g_list_free(presets);
+
     equalizerwin_eq_changed();
 }
 
