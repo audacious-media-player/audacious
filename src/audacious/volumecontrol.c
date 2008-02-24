@@ -21,7 +21,6 @@
  */
 
 #include "output.h"
-#include "iir.h"
 #include "main.h"
 #include "input.h"
 #include "playback.h"

@@ -30,7 +30,6 @@
 #endif
 
 #include "output.h"
-#include "iir.h"
 #include "main.h"
 #include "input.h"
 #include "playback.h"
@@ -540,7 +539,6 @@ output_pass_audio(InputPlayback *playback,
         if (legacy_flow == NULL)
         {
             legacy_flow = flow_new();
-            /*flow_link_element(legacy_flow, iir_flow);*/
             flow_link_element(legacy_flow, effect_flow);
         }
         

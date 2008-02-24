@@ -60,7 +60,6 @@
 #include "ui_fileinfopopup.h"
 
 #include "effect.h"
-#include "iir.h"
 #include "volumecontrol.h"
 
 const gchar *plugin_dir_list[] = {
@@ -368,7 +367,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .flow_link_element = flow_link_element,
     .flow_unlink_element = flow_unlink_element,
     .effect_flow = effect_flow,
-    .iir_flow = iir_flow,
     .volumecontrol_flow = volumecontrol_flow,
 
     .util_menu_main_show = util_menu_main_show,

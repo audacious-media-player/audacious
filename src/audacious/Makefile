@@ -21,9 +21,6 @@ SRCS = af_equalizer.c						\
        hints.c							\
        hook.c							\
        icons-stock.c					\
-       iir.c							\
-       iir_cfs.c						\
-       iir_fpu.c						\
        input.c							\
        logger.c							\
        main.c							\
