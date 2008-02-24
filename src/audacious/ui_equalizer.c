@@ -1025,16 +1025,16 @@ import_winamp_file(const gchar * filename)
 {
     VFSFile *file;
     gchar *tmp;
+    GList *list;
 
-    if (!(file = vfs_fopen(filename, "rb"))) {
+    if (!(file = vfs_fopen(filename, "rb")) || (list = import_winamp_eqf(file)) == NULL) {
         tmp = g_strconcat("Failed to import WinAmp file: ",filename,"\n",NULL);
         report_error(tmp);
         g_free(tmp);
         return;
     }
 
-    equalizer_presets = g_list_concat(equalizer_presets,
-                                      import_winamp_eqf(file));
+    equalizer_presets = g_list_concat(equalizer_presets, list);
     equalizerwin_write_preset_file(equalizer_presets, "eq.preset");
 
     vfs_fclose(file);
