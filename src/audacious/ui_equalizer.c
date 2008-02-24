@@ -801,8 +801,7 @@ import_winamp_eqf(VFSFile * file)
         list = g_list_prepend(list, preset);
     }
     
-    /*list = g_list_reverse(list);*/
-
+    list = g_list_reverse(list);
     return list;
 }
 
