@@ -25,6 +25,7 @@
 #include "ui_skinned_equalizer_graph.h"
 #include "main.h"
 #include "util.h"
+#include "equalizer_flow.h"
 
 #define UI_TYPE_SKINNED_EQUALIZER_GRAPH           (ui_skinned_equalizer_graph_get_type())
 
@@ -256,7 +257,7 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
     for (i = 0; i < 109; i++) {
         y = 9 -
             (gint) ((eval_spline(x, cfg.equalizer_bands, yf, 10, i) *
-                     9.0) / 20.0);
+                     9.0) / EQUALIZER_MAX_GAIN);
         if (y < 0)
             y = 0;
         if (y > 18)
