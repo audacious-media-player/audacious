@@ -45,6 +45,7 @@ struct _UiSkinnedEqualizerSliderPrivate {
     gint             width, height;
     gboolean         pressed;
     gint             drag_y;
+    gfloat           value; /* store gain as is to prevent truncation --asphyx */
 };
 
 static void ui_skinned_equalizer_slider_class_init         (UiSkinnedEqualizerSliderClass *klass);
@@ -255,6 +256,8 @@ static gboolean ui_skinned_equalizer_slider_button_press(GtkWidget *widget, GdkE
                     priv->position = 50;
                 if (priv->position >= 24 && priv->position <= 26)
                     priv->position = 25;
+                
+                priv->value = ((gfloat) (25 - priv->position) * EQUALIZER_MAX_GAIN / 25.0 );
                 equalizerwin_eq_changed();
             }
 
@@ -296,7 +299,8 @@ static gboolean ui_skinned_equalizer_slider_motion_notify(GtkWidget *widget, Gdk
             priv->position = 50;
         if (priv->position >= 24 && priv->position <= 26)
             priv->position = 25;
-
+        
+        priv->value = ((gfloat) (25 - priv->position) * EQUALIZER_MAX_GAIN / 25.0 );
         ui_skinned_equalizer_slider_set_mainwin_text(es);
         equalizerwin_eq_changed();
         gtk_widget_queue_draw(widget);
@@ -323,6 +327,7 @@ static gboolean ui_skinned_equalizer_slider_scroll(GtkWidget *widget, GdkEventSc
             priv->position = 50;
     }
 
+    priv->value = ((gfloat) (25 - priv->position) * EQUALIZER_MAX_GAIN / 25.0 );
     equalizerwin_eq_changed();
     gtk_widget_queue_draw(widget);
     return TRUE;
@@ -340,13 +345,14 @@ static void ui_skinned_equalizer_slider_toggle_scaled(UiSkinnedEqualizerSlider *
     gtk_widget_queue_draw(GTK_WIDGET(equalizer_slider));
 }
 
-void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gint pos) {
+void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gfloat pos) {
     g_return_if_fail (UI_SKINNED_IS_EQUALIZER_SLIDER (widget));
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(widget);
 
     if (priv->pressed)
         return;
 
+    priv->value = pos;
     priv->position = 25 - (gint) ((pos * 25.0) / EQUALIZER_MAX_GAIN);
 
     if (priv->position < 0)
@@ -364,7 +370,7 @@ void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gint pos) {
 gfloat ui_skinned_equalizer_slider_get_position(GtkWidget *widget) {
     g_return_val_if_fail (UI_SKINNED_IS_EQUALIZER_SLIDER (widget), -1);
     UiSkinnedEqualizerSliderPrivate *priv = UI_SKINNED_EQUALIZER_SLIDER_GET_PRIVATE(widget);
-    return (EQUALIZER_MAX_GAIN - (((gfloat) priv->position * EQUALIZER_MAX_GAIN) / 25.0));
+    return priv->value;
 }
 
 void ui_skinned_equalizer_slider_set_mainwin_text(UiSkinnedEqualizerSlider * es) {

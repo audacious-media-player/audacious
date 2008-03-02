@@ -50,7 +50,7 @@ struct _UiSkinnedEqualizerSliderClass {
 
 GtkWidget* ui_skinned_equalizer_slider_new(GtkWidget *fixed, gint x, gint y);
 GtkType ui_skinned_equalizer_slider_get_type(void);
-void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gint pos);
+void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gfloat pos);
 gfloat ui_skinned_equalizer_slider_get_position(GtkWidget *widget);
 
 #ifdef __cplusplus
