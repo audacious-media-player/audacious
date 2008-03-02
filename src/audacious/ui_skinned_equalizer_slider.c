@@ -352,7 +352,7 @@ void ui_skinned_equalizer_slider_set_position(GtkWidget *widget, gfloat pos) {
     if (priv->pressed)
         return;
 
-    priv->value = pos;
+    priv->value = (pos > EQUALIZER_MAX_GAIN) ? EQUALIZER_MAX_GAIN : ((pos < -EQUALIZER_MAX_GAIN) ? -EQUALIZER_MAX_GAIN : pos);
     priv->position = 25 - (gint) ((pos * 25.0) / EQUALIZER_MAX_GAIN);
 
     if (priv->position < 0)
