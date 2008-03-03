@@ -20,6 +20,7 @@
 /*#define AUD_DEBUG*/
 
 #include <glib.h>
+#include <math.h>
 #include "main.h"
 #include "plugin.h"
 #include "flow.h"
@@ -81,14 +82,27 @@ equalizer_flow_set_bands(gfloat pre, gfloat *bands)
 {
     int i;
     af_control_ext_t ctl;
+    gfloat b[10];
+    gfloat adj = 0.0;
     AUDDBG("\n");
     
     if(eq == NULL) {
         eq = g_malloc(sizeof(af_instance_t));
         equalizer_open(eq);
     }
-    
-    ctl.arg = bands;
+
+    for(i = 0; i < 10; i++)
+        b[i] = bands[i] + pre;
+
+    for(i = 0; i < 10; i++)
+        if(fabsf(b[i]) > fabsf(adj)) adj = b[i];
+
+    if(fabsf(adj) > EQUALIZER_MAX_GAIN) {
+        adj = adj > 0.0 ? EQUALIZER_MAX_GAIN - adj : -EQUALIZER_MAX_GAIN - adj;
+        for(i = 0; i < 10; i++) b[i] += adj;
+    }
+
+    ctl.arg = b;
     for(i = 0; i < AF_NCH; i++) {
         ctl.ch = i;
         eq->control(eq, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &ctl);
