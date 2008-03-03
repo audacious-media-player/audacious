@@ -1,0 +1,22 @@
+2007-05-02
+
+	* EggLauncher is now replaced by EggDesktopFile
+
+	* egg_sm_client_register() is now gone, replaced by
+          egg_set_desktop_file() and egg_sm_client_set_mode(). See the
+          beginning of the "Using EggSMClient" section of README for
+          details of how these work.
+
+2007-04-02
+
+	* The state-saving machinery has changed; it's all based on
+          keyfiles now. See the "More notes" section of README for an
+          explanation of why this is cool.
+
+	* egg_sm_client_end_session() no longer takes an EggSMClient;
+          eventually it could be put somewhere entirely
+          non-EggSMClient-related in the public API.
+
+2007-03-04
+
+	* The win32 backend works now.

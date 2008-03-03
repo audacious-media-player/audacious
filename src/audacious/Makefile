@@ -141,7 +141,8 @@ DATA = images/about-logo.png				\
 
 CLEAN = build_stamp.c libaudacious.exe.a
 EXT_DEPS = ../libguess/libguess.a \
-           ../libSAD/libSAD.a
+           ../libSAD/libSAD.a \
+           ../libeggsmclient/libeggsmclient.a
 
 include ../../buildsys.mk
 
@@ -165,6 +166,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${SIMD_CFLAGS}		\
 	    -D_AUDACIOUS_CORE		\
 	    -I../libSAD			\
+	    -I../libeggsmclient		\
 	    -I.. -I../..		\
 	    -I./intl
 
@@ -173,6 +175,7 @@ LIBS += ${LDADD}		\
 	${samplerate_LIBS}	\
 	../libguess/libguess.a	\
 	../libSAD/libSAD.a	\
+	../libeggsmclient/libeggsmclient.a -lSM -lICE \
 	${GTK_LIBS}		\
 	${DBUS_LIBS}		\
 	${MOWGLI_LIBS}		\

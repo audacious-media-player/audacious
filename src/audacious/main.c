@@ -84,6 +84,8 @@
 #include "signals.h"
 #include "ui_skinned_window.h"
 #include "libSAD.h"
+#include "eggsmclient.h"
+#include "eggdesktopfile.h"
 
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
@@ -1412,14 +1414,14 @@ main(gint argc, gchar ** argv)
     bind_textdomain_codeset(PACKAGE_NAME "-plugins", "UTF-8");
     textdomain(PACKAGE_NAME);
 
+#ifndef _WIN32
+    egg_set_desktop_file(AUDACIOUS_DESKTOP_FILE);
+#endif
     bmp_init_paths();
     bmp_make_user_dir();
 
-    g_set_application_name(_(application_name));
-
     cond_scan = g_cond_new();
     mutex_scan = g_mutex_new();
-
     gtk_rc_add_default_file(bmp_paths[BMP_PATH_GTKRC_FILE]);
 
     gtk_init_check_ok = gtk_init_check(&argc, &argv);
@@ -1430,6 +1432,7 @@ main(gint argc, gchar ** argv)
     context = g_option_context_new(_("- play multimedia files"));
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
     g_option_context_add_group(context, gtk_get_option_group(TRUE));
+    g_option_context_add_group(context, egg_sm_client_get_option_group());
     g_option_context_parse(context, &argc, &argv, &error);
 
     if (error != NULL)

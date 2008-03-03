@@ -1,0 +1,22 @@
+ifdef PLATFORM_WIN32
+platform_sources = eggsmclient-win32.c
+platform_defines =
+platform_libs =
+else
+platform_sources = eggsmclient-xsmp.c \
+                   eggdesktopfile.c
+platform_defines = -DEGG_SM_CLIENT_BACKEND_XSMP
+platform_libs = -lSM -lICE
+endif
+
+STATIC_LIB_NOINST = libeggsmclient.a
+
+SRCS = eggsmclient.c         \
+       ${platform_sources}
+
+include ../../buildsys.mk
+include ../../extra.mk
+
+CFLAGS += ${INCLUDES} ${GLIB_CFLAGS} ${GTK_CFLAGS} -I. ${platform_defines}
+LIBS += ${GLIB_LIBS} ${GTK_LIBS} ${platform_libs}
+CPPFLAGS += ${CFLAGS}

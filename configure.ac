@@ -478,6 +478,11 @@ if test "x$enable_rpath" = "xyes"; then
 	LDFLAGS="$LDFLAGS $RPATH"
 fi
 
+dnl AUDACIOUS_DESKTOP_FILE check
+dnl ========================
+AS_AC_EXPAND(desktop_file,"${datadir}/applications/audacious.desktop")
+AC_DEFINE_UNQUOTED(AUDACIOUS_DESKTOP_FILE,"${desktop_file}",["The location of the desktop file"])
+
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
 

@@ -1,0 +1,245 @@
+This is a draft of a replacement for GnomeClient. See also
+http://live.gnome.org/SessionManagement and
+http://bugzilla.gnome.org/show_bug.cgi?id=79285.
+
+The eventual target of this code is gtk, gdk, glib, or some
+combination of them. Having it entirely in gtk/gdk may not be the best
+option, because non-GUI apps like beagled want a chance to exit
+cleanly when the session ends too. OTOH, making glib depend on libSM
+would obviously suck. Using dlopen may be a good solution.
+
+EggDesktopItem is proposed gtk-level rewrite of GnomeDesktopItem. See
+http://bugzilla.gnome.org/show_bug.cgi?id=415070
+
+
+Building your app with EggSMClient
+----------------------------------
+
+If you are using libgnomeui:
+
+	Link to libeggsmclient-gnome.la, #include
+	"eggsmclient-libgnomeui.h" in your main .c file (and
+	"eggsmclient.h" elsewhere).
+
+If you are using plain gtk:
+
+	Link to libeggsmclient.la, and #include "eggsmclient.h".
+
+If you are building on Windows:
+
+	You need to make sure to link your application as a Windows
+        GUI binary. (If using GNU tools, use "-mwindows".) If you
+        build it as a console binary, Windows won't send it the
+        WM_QUERYENDSESSION (quit_requested) and WM_ENDSESSION (quit)
+        messages.
+
+	You need to call g_thread_null(NULL) to initialize threads.
+
+
+Using EggSMClient
+-----------------
+
+Initialization with libgnomeui and GnomeProgram:
+
+	Change the gnome_program_new() invocation to use
+	EGG_SM_CLIENT_LIBGNOMEUI_MODULE instead of LIBGNOMEUI_MODULE.
+	If you haven't yet switched from popt to GOption for option
+	parsing, you have to do that now.
+
+	You should also add an EGG_SM_CLIENT_PARAM_DESKTOP_FILE
+	parameter to the gnome_program_new() invocation, and pass it
+	the path to your application's installed .desktop file. (This
+	will be used for some SM-related purposes and will also be
+	used to initialize your application's localized name and
+	default window icon. If you are currently calling
+	g_set_application_name(), gtk_window_set_default_icon(), or
+	gtk_window_set_default_icon_name(), you can remove those
+	calls.)
+
+	If you only want to use the logout notification/cancellation
+	API, and don't want to participate in session saving, you can
+	pass the EGGSMCLIENT_PARAM_MODE parameter as well, with the
+	value EGG_SM_CLIENT_MODE_NO_RESTART.
+
+Initialization with plain gtk:
+
+	Add the GOptionGroup returned by
+        egg_sm_client_get_option_group() to your GOptionContext when
+        parsing command line arguments. (If you were previously just
+        using gtk_init() or the like, you will have to create your own
+        option context now and also add the group returned by
+        gtk_get_option_group() to it. See egg-session-end.c for an
+        example.)
+
+	You should also call egg_set_desktop_file() (in
+	"eggdesktopfile.h"), passing it the path to your application's
+	installed .desktop file. (This will be used for some
+	SM-related purposes and will also be used to initialize your
+	application's localized name and default window icon. If you
+	are currently calling g_set_application_name(),
+	gtk_window_set_default_icon(), or
+	gtk_window_set_default_icon_name(), you can remove those
+	calls.)
+
+	If you only want to use the logout notification/cancellation
+	API, and don't want to participate in session saving, you can
+	call egg_sm_client_set_mode(EGG_SM_CLIENT_MODE_NO_RESTART).
+
+After parsing the command-line arguments, call
+egg_sm_client_get() to get the EggSMClient object.
+
+Use egg_sm_client_is_resumed() on the EggSMClient to see if you need
+to resume a saved state, and egg_sm_client_get_state_file() to find
+that saved state.
+
+Connect to the client's "save_state" signal if you want to be able to
+save your state and be resumed in future sessions. Connect to
+"quit_requested" if you want to get a chance to save files before
+shutdown (and/or cancel shutting down).
+
+See the gtk-doc comments in eggsmclient.c for more details.
+
+
+Notes on porting from GnomeClient or raw libSM
+----------------------------------------------
+
+There's no way to manually set most of the XSMP properties using
+EggSMClient (and no need to). Program, ProcessID, and UserID are set
+automatically. RestartCommand and CloneCommand are set from the
+.desktop file (or from a call to egg_sm_client_set_restart_command),
+and DiscardCommand is set automatically as needed after save_state is
+emitted.
+
+RestartStyleHint is set automatically based on a few things:
+
+	- SmRestartNever if you set the mode to
+          EGG_SM_CLIENT_MODE_NO_RESTART
+
+	- SmRestartImmediately if you initialize with a desktop file
+	  containing the entry "X-GNOME-AutoRestart=true"
+
+	- SmRestartIfRunning if you initialize with no desktop_file,
+	  or with a desktop_file that doesn't set
+	  "X-GNOME-AutoRestart=true". (This is the normal case.)
+
+There's no way to set the restart style hint to SmRestartAnyway
+("restart the client in the resumed session even if it wasn't running
+in the saved session"). FDO Autostart is a much better solution for
+that class of program. If your program is configured to do autostart,
+you don't need to also register for XSMP restart (unless you want to
+have it save and resume its state as well).
+
+CurrentDirectory and Environment are never set. GnomeClient sets
+CurrentDirectory, but KDE doesn't restore either of those properties
+when resuming a saved session, so it's better for apps to not depend
+on them. (If the application must have its working directory restored,
+it can just save and restore it itself.)
+
+(There probably needs to be a way to set _GSM_Priority, for
+compatibility with the current gnome-session; this will probably be
+done via another .desktop key.)
+
+The "save_yourself" signal/callback is split into two signals in
+EggSMClient: save_state and quit_requested. Most GnomeClient-based
+apps only implement the state-saving functionality currently, so they
+would only connect to "save_state" in EggSMClient, not
+"quit_requested".
+
+When saving state, EggSMClient provides you with a GKeyFile to store
+data in. If you write any data to the key file, EggSMClient will save
+it to disk and set an XSMP DiscardCommand to make sure that the
+session manager deletes it when it is no longer needed. If you can
+record your entire state on the command line, you can use
+egg_sm_client_set_restart_command() instead, to set the command that
+will be used to restart the app.
+
+If you implement the "quit_requested" side of the functionality as
+well, you don't need to "request interaction" like in
+GnomeClient/libSM. You can just start interacting with the user right
+away when the signal is emitted. Note that the argument to
+egg_sm_client_will_quit() is TRUE if you're willing to quit, and FALSE
+if not, which is the opposite of gnome_interaction_key_return() /
+SmcInteractDone().
+
+quit_requested is only for saving user files and preparing to quit. DO
+NOT save the current state from the quit_requested signal. If the user
+chooses the "save current session" option when logging out,
+EggSMClient will emit quit_requested, let you deal with all of that,
+and *then* after you're done, it will emit save_state to give you a
+chance to deal with saving the state as well.
+
+There are a bunch of other bits of GnomeClient API with no analogs:
+
+	- GNOME_CLIENT_IS_CONNECTED - Is this really ever needed?
+
+	- gnome_client_request_phase_2 - This is only needed by window
+          managers... if someone really wanted it, it could be added
+          as an EggSMClientXSMP-specific call. (You'd just call it
+          once, at startup time, to register the fact that you were a
+          phase2 client, and then when EggSMClientXSMP got a
+          SaveYourself, it would automatically respond with a
+          SaveYourselfPhase2Request, and it wouldn't emit the
+          quit_requested/save_state signals until phase 2.)
+
+	- gnome_client_request_save - Shutdown saves are now done via
+	  egg_sm_client_end_session. There is no way to request a
+	  non-shutdown save, either for yourself, or for the whole
+	  session. (Requesting a local SaveYourself for yourself won't
+	  actually have any effect under most session managers, and
+	  requesting it for the whole session is something that only a
+	  program directly associated with the session manager ought
+	  to do, so there doesn't seem to be a need for a public API
+	  for this.)
+
+	- gnome_client_flush - In most cases this is a no-op. Where
+          it's not, EggSMClientXSMP should do it automatically
+          whenever you change anything. (FIXME!)
+
+	- gnome_client_get_id - Why would you need to know?
+
+
+More notes
+----------
+
+Assuming you provide a .desktop file to gnome_program_init() or
+egg_set_desktop_file(), the state file that gets saved when you save
+the application state will actually be a copy of that .desktop file,
+with the state information appended to the end, and the Exec key
+adjusted to include "--sm-client-state-file %k" (where "%k" means "the
+path to this .desktop file"). So if you want to, you can move the
+state file out of ~/.config/session-state/ and use it directly as a
+launcher to restart the application with that saved state.
+
+Set EGG_SM_CLIENT_DEBUG=1 to debug
+
+Example code:
+
+	- egg-session-end.c: A replacement for gnome-session-save.
+	  (Well, actually only for "gnome-session-save --kill".)
+	  Yes, the --reboot and --shutdown arguments are only there to
+	  tease you.
+
+	- logout-test.c: Sits around waiting for you to try to log
+          out, and then asks "are you sure", to test
+          quit_requested/will_quit handling.
+
+	- gedit.diff: A patch to SVN gedit to make it use EggSMClient
+          instead of GnomeClient.
+
+Non-functional backends:
+
+	- OS X: eggsmclient-osx.c is not quite a proof-of-concept.
+          It's more of a handwave-of-concept. I don't have a working
+          OS X machine at the moment, so I can't test/finish this.
+
+	  See http://developer.apple.com/documentation/MacOSX/Conceptual/BPSystemStartup/Articles/BootProcess.html#//apple_ref/doc/uid/20002130-114618
+	  and other URLs linked from it for more info on the OS X
+	  logout process.
+
+	- D-Bus: There are a few references in the code to a
+          non-existent D-Bus session management client. The idea is
+          that once we have a session manager that implements that,
+          EggSMClient will pick between the (sane) D-Bus and (nasty)
+          XSMP backends at runtime depending on what session manager
+          is running. Or in special environments, it could be compiled
+          with just XSMP or just D-Bus.

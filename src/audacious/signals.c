@@ -36,6 +36,7 @@
 #include "ui_main.h"
 #include "signals.h"
 #include "build_stamp.h"
+#include "eggsmclient.h"
 
 gint linuxthread_signal_number = 0;
 
@@ -249,9 +250,36 @@ signal_check_for_broken_impl(void)
     return FALSE;
 }
 
+static void
+signal_session_quit_cb(EggSMClient *client, gpointer user_data)
+{
+    g_print("Session quit requested. Saving state and shutting down.\n");    
+    mainwin_quit_cb();
+}
+
+static void
+signal_session_save_cb(EggSMClient *client, const char *state_dir, gpointer user_data)
+{
+    g_print("Session save requested. Saving state.\n");    
+    bmp_config_save();
+}
+
 void 
 signal_handlers_init(void)
 {
+    EggSMClient *client;
+
+    client = egg_sm_client_get ();
+    if (client != NULL) 
+    {
+        egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
+        g_signal_connect (client, "quit",
+                          G_CALLBACK (signal_session_quit_cb), NULL);
+        g_signal_connect (client, "save-state",
+                          G_CALLBACK (signal_session_save_cb), NULL);
+    
+    }
+
     if (signal_check_for_broken_impl() != TRUE)
     {
         signal_initialize_blockers();
