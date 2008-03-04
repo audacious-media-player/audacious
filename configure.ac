@@ -483,6 +483,9 @@ dnl ========================
 AS_AC_EXPAND(desktop_file,"${datadir}/applications/audacious.desktop")
 AC_DEFINE_UNQUOTED(AUDACIOUS_DESKTOP_FILE,"${desktop_file}",["The location of the desktop file"])
 
+dnl libSM check
+PKG_CHECK_MODULES(sm, sm)
+
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
 

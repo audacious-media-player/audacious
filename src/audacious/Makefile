@@ -175,7 +175,7 @@ LIBS += ${LDADD}		\
 	${samplerate_LIBS}	\
 	../libguess/libguess.a	\
 	../libSAD/libSAD.a	\
-	../libeggsmclient/libeggsmclient.a -lSM -lICE \
+	../libeggsmclient/libeggsmclient.a ${SM_LIBS} \
 	${GTK_LIBS}		\
 	${DBUS_LIBS}		\
 	${MOWGLI_LIBS}		\
