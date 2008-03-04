@@ -434,7 +434,7 @@ AC_SUBST(pluginsubs)
 
 dnl setup rpath if prefix or exec-prefix is specified
 if test "$prefix" != "NONE" || test "$exec_prefix" != "NONE" ; then
-	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && RPATH="-Wl,-rpath $libdir"
+	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && RPATH="-Wl,-rpath,$libdir"
 fi
 
 dnl XXX Work around some autoconf bugs.
