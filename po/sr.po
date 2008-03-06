@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-02-22 17:40+0200\n"
-"PO-Revision-Date: 2008-02-15 15:33+0100\n"
+"PO-Revision-Date: 2008-03-06 11:28+0100\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1714,8 +1714,7 @@ msgstr "Претражи и означи"
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr ""
-"Претржује листу нумера и означи ставке листе нумера по одређеном критеријуму."
+msgstr "Претржује листу нумера и означи ставке листе нумера по одређеном критеријуму."
 
 #: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
@@ -2268,8 +2267,7 @@ msgstr "Прикажи украс програма за управљање пр�
 
 #: src/audacious/ui_preferences.c:211
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-"Ово омогућава програму за управљањe прозорима да прикаже украсе на прозорима."
+msgstr "Ово омогућава програму за управљањe прозорима да прикаже украсе на прозорима."
 
 #: src/audacious/ui_preferences.c:212
 msgid "Use XMMS-style file selector instead of the default selector"
@@ -2343,7 +2341,6 @@ msgid "Use software volume control"
 msgstr "Користи софтверску контролу звука"
 
 #: src/audacious/ui_preferences.c:232
-#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not supportcontrolling the playback volume."
@@ -2352,13 +2349,12 @@ msgstr ""
 "ваш аудио систем не подржава контролу јачине звука репродукције."
 
 #: src/audacious/ui_preferences.c:234
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>Репродуковање</b>"
+msgstr "<b>Напредно</b>"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Bypass all of signal processing if possible"
-msgstr ""
+msgstr "Заобиђи све обраде сигнала, ако је могуће"
 
 #: src/audacious/ui_preferences.c:236
 msgid ""
@@ -2367,6 +2363,10 @@ msgid ""
 "processing will be disabled (i.e. DSP plugins, equalizer, resampling, Replay "
 "Gain and software volume control)."
 msgstr ""
+"Покушај да проследиш излаз улазног додатка директно у излазни додатак, ако "
+"каснији подржава формат који ствара улазни додатак. Ако је ово тачно, свака обрада "
+"сигнала ће бити искључена (нпр. DSP додаци, еквилајзер, Replay Gain "
+"и остала софтверска контрола јачине звука)."
 
 #: src/audacious/ui_preferences.c:242
 msgid "<b>Replay Gain configuration</b>"
@@ -2478,8 +2478,7 @@ msgstr "Приликом учитавања"
 
 #: src/audacious/ui_preferences.c:272
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Учитај мета-податке при додавању датотеке у листу или приликом отварања"
+msgstr "Учитај мета-податке при додавању датотеке у листу или приликом отварања"
 
 #: src/audacious/ui_preferences.c:273
 msgid "On display"
@@ -2658,8 +2657,7 @@ msgstr "Подразумевано појачање:"
 
 #: src/audacious/ui_preferences.c:1722
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-"Ово појачање ће се користити ако датотека не садржи Replay Gain метаподатке."
+msgstr "Ово појачање ће се користити ако датотека не садржи Replay Gain метаподатке."
 
 #: src/audacious/ui_preferences.c:1738
 msgid ""
@@ -2955,3 +2953,4 @@ msgstr "Неархивирана Winamp 2.x маска"
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
 msgstr "Оквир додај/отвори URL"
+

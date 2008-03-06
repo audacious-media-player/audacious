@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-02-22 17:40+0200\n"
-"PO-Revision-Date: 2008-02-15 15:28+0100\n"
+"PO-Revision-Date: 2008-03-06 11:28+0100\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -240,7 +240,7 @@ msgstr ""
 "meta.atheme.org\n"
 "Molim vas uključite celokupan tekst ove poruke i opišite nam šta ste radili "
 "kad se ovaj\n"
-"otkaz desio, da bismo brzo mogli obraditi Vaš izveštaj грешке:\n"
+"otkaz desio, da bismo brzo mogli obraditi Vaš izveštaj greške:\n"
 "\n"
 
 #: src/audacious/signals.c:76
@@ -2346,7 +2346,6 @@ msgid "Use software volume control"
 msgstr "Koristi softversku kontrolu zvuka"
 
 #: src/audacious/ui_preferences.c:232
-#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not supportcontrolling the playback volume."
@@ -2355,13 +2354,12 @@ msgstr ""
 "vaš audio sistem ne podržava kontrolu jačine zvuka reprodukcije."
 
 #: src/audacious/ui_preferences.c:234
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>Reprodukovanje</b>"
+msgstr "<b>Napredno</b>"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Bypass all of signal processing if possible"
-msgstr ""
+msgstr "Zaobiđi sve obrade signala, ako je moguće"
 
 #: src/audacious/ui_preferences.c:236
 msgid ""
@@ -2370,6 +2368,10 @@ msgid ""
 "processing will be disabled (i.e. DSP plugins, equalizer, resampling, Replay "
 "Gain and software volume control)."
 msgstr ""
+"Pokušaj da proslediš izlaz ulaznog dodatka direktno u izlazni dodatak, ako "
+"kasniji podržava format koji stvara ulazni dodatak. Ako je ovo tačno, svaka obrada "
+"signala će biti isključena (npr. DSP dodaci, ekvilajzer, Replay Gain "
+"i ostala softverska kontrola jačine zvuka)."
 
 #: src/audacious/ui_preferences.c:242
 msgid "<b>Replay Gain configuration</b>"
@@ -2481,8 +2483,7 @@ msgstr "Prilikom učitavanja"
 
 #: src/audacious/ui_preferences.c:272
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/ui_preferences.c:273
 msgid "On display"
@@ -2662,8 +2663,7 @@ msgstr "Podrazumevano pojačanje:"
 
 #: src/audacious/ui_preferences.c:1722
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-"Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
+msgstr "Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
 
 #: src/audacious/ui_preferences.c:1738
 msgid ""
@@ -2959,3 +2959,4 @@ msgstr "Nearhivirana Winamp 2.x maska"
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
 msgstr "Dodaj/otvori URL okvir"
+
