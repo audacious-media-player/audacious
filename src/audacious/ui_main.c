@@ -144,8 +144,6 @@ GtkWidget *mainwin_playstatus;
 GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
 GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 
-static gboolean setting_volume = FALSE;
-
 GtkWidget *mainwin_vis;
 GtkWidget *mainwin_svis;
 
@@ -1596,8 +1594,6 @@ mainwin_adjust_volume_motion(gint v)
 {
     gchar *volume_msg;
 
-    setting_volume = TRUE;
-
     volume_msg = g_strdup_printf(_("Volume: %d%%"), v);
     mainwin_lock_info_text(volume_msg);
     g_free(volume_msg);
@@ -1614,7 +1610,6 @@ void
 mainwin_adjust_volume_release(void)
 {
     mainwin_release_info_text();
-    setting_volume = FALSE;
 }
 
 void
@@ -1623,7 +1618,6 @@ mainwin_adjust_balance_motion(gint b)
     gchar *balance_msg;
     gint v, pvl, pvr;
 
-    setting_volume = TRUE;
     balance = b;
     input_get_volume(&pvl, &pvr);
     v = MAX(pvl, pvr);
@@ -1647,7 +1641,6 @@ void
 mainwin_adjust_balance_release(void)
 {
     mainwin_release_info_text();
-    setting_volume = FALSE;
 }
 
 void
@@ -1707,7 +1700,6 @@ mainwin_set_volume_diff(gint diff)
     vol = CLAMP(vol + diff, 0, 100);
 
     mainwin_adjust_volume_motion(vol);
-    setting_volume = FALSE;
     mainwin_set_volume_slider(vol);
     equalizerwin_set_volume_slider(vol);
 
@@ -1722,7 +1714,6 @@ mainwin_set_balance_diff(gint diff)
     gint b;
     b = CLAMP(balance + diff, -100, 100);
     mainwin_adjust_balance_motion(b);
-    setting_volume = FALSE;
     mainwin_set_balance_slider(b);
     equalizerwin_set_balance_slider(b);
 }
