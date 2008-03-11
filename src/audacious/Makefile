@@ -188,6 +188,8 @@ build_stamp.c:
 	if [ -d ../../.hg ]; then \
 		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
 		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
+	else \
+		echo "const char *svn_stamp = \"UNSUPPORTED VERSION\";" > build_stamp.c; \
 	fi
 
 DBUS_BINDINGS_SOURCES = objects.xml		\
