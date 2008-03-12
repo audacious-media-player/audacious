@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+/* #define AUD_DEBUG */
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -55,6 +57,8 @@
 
 #include "libSAD.h"
 
+#define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
+
 G_LOCK_DEFINE_STATIC(vis_mutex);
 
 struct _VisNode {
@@ -81,6 +85,7 @@ static GList *vis_list = NULL;
 static int volume_l = -1, volume_r = -1;
 static SAD_dither_t *sad_state = NULL;
 static gint sad_nch = -1;
+static AFormat sad_fmt = -1;
 
 InputPlayback *
 get_current_input_playback(void)
@@ -155,13 +160,13 @@ input_get_vis_type()
 }
 
 static SAD_dither_t*
-init_sad(gint nch)
+init_sad(AFormat fmt, gint nch)
 {
     gint ret;
 
     SAD_buffer_format in, out;
-    in.sample_format = SAD_SAMPLE_FLOAT;
-    in.fracbits = 0;
+    in.sample_format = sadfmt_from_afmt(fmt);
+    in.fracbits = FMT_FRACBITS(fmt);
     in.channels = nch;
     in.channels_order = SAD_CHORDER_INTERLEAVED;
     in.samplerate = 0;
@@ -171,7 +176,8 @@ init_sad(gint nch)
     out.channels = nch;
     out.channels_order = SAD_CHORDER_SEPARATED; /* sic! --asphyx */
     out.samplerate = 0;
-        
+
+    AUDDBG("fmt=%d, nch=%d\n", fmt, nch);
     SAD_dither_t *state = SAD_dither_init(&in, &out, &ret);
     if (state != NULL) SAD_dither_set_dither(state, FALSE);
     return state;
@@ -183,16 +189,17 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
     VisNode *vis_node;
     gint max;
     
-    if (fmt != FMT_FLOAT || nch > 2) return;
+    if (nch > 2) return;
 
-    if (sad_state == NULL || nch != sad_nch) {
+    if (sad_state == NULL || nch != sad_nch || fmt != sad_fmt) {
         if(sad_state != NULL) SAD_dither_free(sad_state);
-        sad_state = init_sad(nch);
+        sad_state = init_sad(fmt, nch);
         if(sad_state == NULL) return;
         sad_nch = nch;
+        sad_fmt = fmt;
     }
 
-    max = length / nch / sizeof(float);
+    max = length / nch / FMT_SIZEOF(fmt);
     max = CLAMP(max, 0, 512);
 
     vis_node = g_slice_new0(VisNode);

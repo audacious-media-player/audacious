@@ -508,19 +508,28 @@ output_pass_audio(InputPlayback *playback,
               int *going         /* 0 when time to stop  */
               )
 {
+    static Flow *visualization_flow = NULL;
     static Flow *postproc_flow = NULL;
     static Flow *legacy_flow = NULL;
     OutputPlugin *op = playback->output;
     gint writeoffs;
     gpointer float_ptr;
+        
+    if (visualization_flow == NULL)
+    {
+        visualization_flow = flow_new();
+        flow_link_element(visualization_flow, vis_flow);
+    }
+        
+    plugin_set_current((Plugin *)(playback->output));
+    gint time = playback->output->written_time();
+        
+    flow_execute(visualization_flow, time, &ptr, length, fmt, decoder_srate, nch);
 
     if (!bypass_dsp) {
 
         if(length <= 0 || sad_state_from_float == NULL || sad_state_to_float == NULL) return;
         
-        plugin_set_current((Plugin *)(playback->output));
-        gint time = playback->output->written_time();
-
         if (legacy_flow == NULL)
         {
             legacy_flow = flow_new();
@@ -530,7 +539,6 @@ output_pass_audio(InputPlayback *playback,
         if (postproc_flow == NULL)
         {
             postproc_flow = flow_new();
-            flow_link_element(postproc_flow, vis_flow);
 #ifdef USE_SRC
             flow_link_element(postproc_flow, src_flow);
 #endif
