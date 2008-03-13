@@ -525,14 +525,6 @@ echo "  SSE2:                                   $enable_sse2"
 echo "  AltiVec:                                $enable_altivec"
 echo
 
-if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
-    echo "Note: You need to have thread-safe xlibs to use Audacious."
-    echo "If you are using libc5 thread aware Xlibs just skip this."
-    echo ""
-    echo "If you don't have those libs and you are on a libc5 system get them at:"
-    echo "ftp://ftp.dent.med.uni-muenchen.de/pub/wmglo/"
-fi
-
 if test "$BEEP_PATH" != "no" && test "$prefix/bin/audacious" != "$BEEP_PATH" ; then
     echo ""
     echo "Note: Configure has discovered that you already have Audacious installed"
