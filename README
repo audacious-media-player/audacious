@@ -71,18 +71,20 @@ Audacious requires the following libraries and their development
 packages installed:
 
   Glib 2.6
-  (http://www.gtk.org/download/)
+    http://www.gtk.org/download/
 
   GTK+ 2.6
-  (http://www.gtk.org/download/)
+    http://www.gtk.org/download/
 
   mcs >= 0.1
-  (http://sacredspiral.co.uk/~nenolod/mcs)
+    http://www.atheme.org/projects/mcs.shtml
 
-If you compile Audacious from a fresh CVS checkout, you will also need
-the following tools:
+  libmowgli >= 0.4
+    http://www.atheme.org/projects/mowgli.shtml
 
-  automake >= 1.9
+If you compile Audacious from a fresh Mercurial checkout, you will also
+need the following tools:
+
   autoconf >= 2.59
 
 Note that these tools and libraries are bundled with major Linux
