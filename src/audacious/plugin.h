@@ -523,6 +523,14 @@ struct _AudaciousFuncTableV1 {
     gint (*hook_dissociate)(const gchar *name, HookFunction func);
     void (*hook_call)(const gchar *name, gpointer hook_data);
 
+    /* defunct xconvert API, not really supported. */
+    gpointer xmms_convert_buffers_new;
+    gpointer xmms_convert_buffers_free;
+    gpointer xmms_convert_buffers_destroy;
+    gpointer xmms_convert_get_func;
+    gpointer xmms_convert_get_channel_func;
+    gpointer xmms_convert_get_frequency_func;
+
     /* PluginMenu API */
     gint (*menu_plugin_item_add)(gint, GtkWidget *);
     gint (*menu_plugin_item_remove)(gint, GtkWidget *);
