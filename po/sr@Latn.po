@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-03-13 17:12+0100\n"
-"PO-Revision-Date: 2008-03-06 11:28+0100\n"
+"PO-Revision-Date: 2008-03-13 23:54+0100\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: src/audacious/input.c:585
 #, c-format
@@ -212,7 +213,7 @@ msgstr ""
 
 #: src/audacious/pluginenum.c:819
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
+msgstr "Učitavanje modula nije podržano! Dodaci neće biti učitani.\n"
 
 #: src/audacious/signals.c:46
 msgid ""
@@ -473,7 +474,7 @@ msgstr "Audacious Ekvilajzer"
 #: src/audacious/ui_equalizer.c:817
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "Greška prilikom uvozenja Winamp EQF datoteke '%s'"
 
 #: src/audacious/ui_equalizer.c:1183
 msgid "Presets"
@@ -1258,7 +1259,7 @@ msgstr "mono"
 
 #: src/audacious/ui_main.c:1032
 msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
+msgstr "Ne mogu da skočim na vreme kad nijedna numera nije puštena.\n"
 
 #: src/audacious/ui_main.c:1047 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
@@ -2355,7 +2356,6 @@ msgid "Use software volume control"
 msgstr "Koristi softversku kontrolu zvuka"
 
 #: src/audacious/ui_preferences.c:232
-#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
@@ -2493,8 +2493,7 @@ msgstr "Prilikom učitavanja"
 
 #: src/audacious/ui_preferences.c:271
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/ui_preferences.c:272
 msgid "On display"
@@ -2674,8 +2673,7 @@ msgstr "Podrazumevano pojačanje:"
 
 #: src/audacious/ui_preferences.c:1719
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-"Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
+msgstr "Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
 
 #: src/audacious/ui_preferences.c:1735
 msgid ""
@@ -2974,64 +2972,60 @@ msgstr "Dodaj/otvori URL okvir"
 
 #: src/libeggsmclient/eggdesktopfile.c:139
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Datoteka nije validna .desktop datoteka"
 
 #: src/libeggsmclient/eggdesktopfile.c:161
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "Nepoznata verzija datoteke radne površi (.desktop) '%s'"
 
 #: src/libeggsmclient/eggdesktopfile.c:868
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "Pokrećem %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:1004
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Aplikacija ne podržava dokumente u komandnoj liniji"
 
 #: src/libeggsmclient/eggdesktopfile.c:1072
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "Nepoznata opcija pokretanja: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1274
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Ne mogu da prosledim adrese dokumenta u stavku radne površi 'Tip=Link' "
 
 #: src/libeggsmclient/eggdesktopfile.c:1293
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Stavka ne može da se pokrene"
 
 #: src/libeggsmclient/eggsmclient.c:183
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Isključi vezu sa menadžerom sesije"
 
 #: src/libeggsmclient/eggsmclient.c:186
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Navedite datoteku koja sadrži sačuvana podešavanja"
 
 #: src/libeggsmclient/eggsmclient.c:186
-#, fuzzy
 msgid "FILE"
-msgstr "DATOTEKA..."
+msgstr "DATOTEKA"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Navedite ID upravljanja sesije"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:225
 msgid "Session Management Options"
-msgstr ""
+msgstr "Opcije upravljanja sesije"
 
 #: src/libeggsmclient/eggsmclient.c:226
-#, fuzzy
 msgid "Show Session Management options"
-msgstr "Prikaži ukras programa za upravljanje prozorima"
+msgstr "Prikaži opcije upravljanja sesije"
 
-#~ msgid "Error in Audacious."
-#~ msgstr "Greška u Audacious-u."
