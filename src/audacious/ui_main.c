@@ -91,12 +91,8 @@
 
 #include "ui_main_evlisteners.h"
 
-static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
-
-#define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
-#define TRISTATE_THRESHOLD 200
-
-#define VOLSET_DISP_TIMES 5
+static GTimeVal cb_time; 
+static const int TRISTATE_THRESHOLD = 200;
 
 enum {
     MAINWIN_SEEK_REV = -1,
@@ -135,8 +131,7 @@ GtkWidget *mainwin_eq, *mainwin_pl;
 GtkWidget *mainwin_info;
 GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
-static GtkWidget *mainwin_rate_text, *mainwin_freq_text,
-    *mainwin_othertext;
+static GtkWidget *mainwin_rate_text, *mainwin_freq_text, *mainwin_othertext;
 
 GtkWidget *mainwin_playstatus;
 
