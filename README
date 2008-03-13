@@ -1,7 +1,7 @@
 Audacious
 A relatively powerful media player
 
-Copyright (c) 2005-2007 Audacious Development Team (see AUTHORS)
+Copyright (c) 2005-2008 Audacious Development Team (see AUTHORS)
 
 Based on:
   BMP - Beep Media Player (c)2002-2005
@@ -62,6 +62,9 @@ We are not liable for any damage caused by the use of this program.
 Audacious is NOT a port of Winamp (http://www.Winamp.com). Audacious is a fork of
 XMMS (http://xmms.org) and BMP (http://beep-media-player.org) which borrowed the
 Winamp GUI.
+
+However, Audacious is neither XMMS, or BMP, but takes a direction of its
+own.
 
 
 2. Installation
