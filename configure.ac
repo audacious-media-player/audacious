@@ -87,23 +87,27 @@ AC_ARG_ENABLE(user-plugin-dir,
 
 dnl Check for GTK/GLib/GThread/Pango
 
-PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.14.0 gtk+-2.0 >= 2.10.0 gthread-2.0 pango],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.14.0, gtk+-2.0 >= 2.10.0])],
-    [AC_MSG_ERROR([Cannot find GLib2/Gtk+2/Pango])]
-)
-
-dnl Check for GLib.
-
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.14.0],
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.14.0 gthread-2.0],
     [ADD_PC_REQUIRES([glib-2.0 >= 2.14.0])],
-    [AC_MSG_ERROR([Cannot find GLib2])]
+    [AC_MSG_ERROR([Cannot find Glib2 >= 2.14.0])]
 )
+
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0],
+    [ADD_PC_REQUIRES([gtk+-2.0 >= 2.10.0])],
+    [AC_MSG_ERROR([Cannot find Gtk+2 >= 2.10.0])]
+)
+
+PKG_CHECK_MODULES(PANGO, [pango >= 1.8.0],
+    [ADD_PC_REQUIRES([pango >= 1.8.0])],
+    [AC_MSG_ERROR([Cannot find Pango >= 1.8.0])]
+)
+
 
 dnl Check for libmowgli.
 
-PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.4],
-    [ADD_PC_REQUIRES([libmowgli >= 0.4])],
-    [AC_MSG_ERROR([Cannot find libmowgli: try http://www.atheme.org/projects/mowgli.shtml])]
+PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.4.0],
+    [ADD_PC_REQUIRES([libmowgli >= 0.4.0])],
+    [AC_MSG_ERROR([Cannot find libmowgli, try http://www.atheme.org/projects/mowgli.shtml])]
 )
 
 # Check if socklen_t is defined
