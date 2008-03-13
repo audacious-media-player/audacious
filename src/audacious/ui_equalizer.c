@@ -777,19 +777,21 @@ import_winamp_eqf(VFSFile * file)
     gint i = 0;
     EqualizerPreset *preset = NULL;
     GList *list = NULL;
+    GtkWidget *dialog;
+    gchar *realfn;
     gchar preset_name[0xb4];
 
     vfs_fread(header, 1, 31, file);
-    if (strncmp(header, "Winamp EQ library file v1.1", 27)) return NULL;
+    if (strncmp(header, "Winamp EQ library file v1.1", 27)) goto error;
 
     AUDDBG("The EQF header is OK\n");
 
-    if(vfs_fseek(file, 0x1f, SEEK_SET) == -1) return NULL;
+    if (vfs_fseek(file, 0x1f, SEEK_SET) == -1) goto error;
 
-    while(vfs_fread(preset_name, 1, 0xb4, file) == 0xb4) {
+    while (vfs_fread(preset_name, 1, 0xb4, file) == 0xb4) {
         AUDDBG("The preset name is '%s'\n", preset_name);
         vfs_fseek(file, 0x4d, SEEK_CUR); /* unknown crap --asphyx */
-        if(vfs_fread(bands, 1, 11, file) != 11) break;
+        if (vfs_fread(bands, 1, 11, file) != 11) break;
 
         preset = equalizer_preset_new(preset_name);
         /*this was divided by 63, but shouldn't it be 64? --majeru*/
@@ -802,7 +804,22 @@ import_winamp_eqf(VFSFile * file)
     }
     
     list = g_list_reverse(list);
+    if (list == NULL) goto error;
+
     return list;
+
+error:
+    realfn = g_filename_from_uri(file->uri, NULL, NULL);
+    dialog = gtk_message_dialog_new (GTK_WINDOW(mainwin),
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_CLOSE,
+                                     _("Error importing Winamp EQF file '%s'"),
+                                     realfn);
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+    g_free(realfn);
+    return NULL;
 }
 
 static void
@@ -817,13 +834,17 @@ equalizerwin_read_winamp_eqf(VFSFile * file)
     GList *presets;
     gint i;
 
-    if((presets = import_winamp_eqf(file)) == NULL) return;
-    EqualizerPreset *preset = (EqualizerPreset*)presets->data; /* just get the first preset --asphyx */
+    if ((presets = import_winamp_eqf(file)) == NULL)
+        return;
 
-    ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, preset->preamp);
+    /* just get the first preset --asphyx */
+    EqualizerPreset *preset = (EqualizerPreset*)presets->data;
+    ui_skinned_equalizer_slider_set_position(equalizerwin_preamp,
+                                             preset->preamp);
 
     for (i = 0; i < 10; i++)
-        ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],  preset->bands[i]);
+        ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],
+                                                 preset->bands[i]);
 
     g_list_foreach(presets, free_cb, NULL);
     g_list_free(presets);
@@ -1003,18 +1024,33 @@ load_preset_file(const gchar *filename)
     }
 }
 
+static VFSFile *
+open_vfs_file(const gchar *filename, const gchar *mode)
+{
+    VFSFile *file;
+    GtkWidget *dialog;
+
+    if (!(file = vfs_fopen(filename, mode))) {
+        dialog = gtk_message_dialog_new (GTK_WINDOW (mainwin),
+                                         GTK_DIALOG_DESTROY_WITH_PARENT,
+                                         GTK_MESSAGE_ERROR,
+                                         GTK_BUTTONS_CLOSE,
+                                         "Error loading file '%s'",
+                                         filename);
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
+    }
+
+    return file;
+}
+
 static void
 load_winamp_file(const gchar * filename)
 {
     VFSFile *file;
-    gchar *tmp;
 
-    if (!(file = vfs_fopen(filename, "rb"))) {
-        tmp = g_strconcat("Failed to load WinAmp file: ",filename,"\n",NULL);
-        report_error(tmp);
-        g_free(tmp);
+    if (!(file = open_vfs_file(filename, "rb")))
         return;
-    }
 
     equalizerwin_read_winamp_eqf(file);
     vfs_fclose(file);
@@ -1024,15 +1060,11 @@ static void
 import_winamp_file(const gchar * filename)
 {
     VFSFile *file;
-    gchar *tmp;
     GList *list;
 
-    if (!(file = vfs_fopen(filename, "rb")) || (list = import_winamp_eqf(file)) == NULL) {
-        tmp = g_strconcat("Failed to import WinAmp file: ",filename,"\n",NULL);
-        report_error(tmp);
-        g_free(tmp);
+    if (!(file = open_vfs_file(filename, "rb")) ||
+        !(list = import_winamp_eqf(file)))
         return;
-    }
 
     equalizer_presets = g_list_concat(equalizer_presets, list);
     equalizerwin_write_preset_file(equalizer_presets, "eq.preset");
@@ -1069,14 +1101,9 @@ save_winamp_file(const gchar * filename)
     gchar name[257];
     gint i;
     guchar bands[11];
-    gchar *tmp;
 
-    if (!(file = vfs_fopen(filename, "wb"))) {
-        tmp = g_strconcat("Failed to save WinAmp file: ",filename,"\n",NULL);
-        report_error(tmp);
-        g_free(tmp);
+    if (!(file = open_vfs_file(filename, "wb")))
         return;
-    }
 
     vfs_fwrite("Winamp EQ library file v1.1\x1a!--", 1, 31, file);
 

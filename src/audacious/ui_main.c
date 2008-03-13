@@ -114,7 +114,6 @@ struct _PlaybackInfo {
 };
 
 GtkWidget *mainwin = NULL;
-GtkWidget *err = NULL; /* an error dialog for miscellaneous error messages */
 
 static gint balance;
 
@@ -1025,11 +1024,19 @@ mainwin_jump_to_time(void)
 {
     GtkWidget *vbox, *hbox_new, *hbox_total;
     GtkWidget *time_entry, *label, *bbox, *jump, *cancel;
+    GtkWidget *dialog;
     guint tindex;
     gchar time_str[10];
 
     if (!playback_get_playing()) {
-        report_error("JIT can't be launched when no track is being played.\n");
+        dialog =
+            gtk_message_dialog_new (GTK_WINDOW (mainwin),
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    GTK_MESSAGE_ERROR,
+                                    GTK_BUTTONS_CLOSE,
+                                    _("Can't jump to time when no track is being played.\n"));
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
         return;
     }
 
@@ -2466,14 +2473,6 @@ mainwin_create_widgets(void)
     mainwin_stime_sec = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 147, 4, 10, FALSE, SKIN_TEXT);
     g_signal_connect(mainwin_stime_sec, "button-press-event", G_CALLBACK(change_timer_mode_cb), NULL);
 
-    err = gtk_message_dialog_new(GTK_WINDOW(mainwin), GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_MODAL,
-                                 GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("Error in Audacious."));
-
-
-    gtk_window_set_position(GTK_WINDOW(err), GTK_WIN_POS_CENTER);
-    /* Dang well better set an error message or you'll see this */
-    gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
-                                             "Boo! Bad stuff! Booga Booga!");
 
     hook_associate("playback audio error", (void *) mainwin_stop_pushed, NULL);
     hook_associate("playback audio error", (void *) run_no_output_device_dialog, NULL);

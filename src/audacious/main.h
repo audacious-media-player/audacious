@@ -200,7 +200,6 @@ void bmp_config_save(void);
 void bmp_config_load(void);
 void bmp_config_free(void);
 void make_directory(const gchar * path, mode_t mode);
-void report_error(const gchar *error_message, ...);
 
 extern GCond *cond_scan;
 extern GMutex *mutex_scan;

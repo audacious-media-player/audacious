@@ -32,8 +32,9 @@
 #endif
 
 #include <glib.h>
-#include <gmodule.h>
+#include <glib/gi18n.h>
 #include <glib/gprintf.h>
+#include <gmodule.h>
 #include <string.h>
 
 #include "main.h"
@@ -806,10 +807,18 @@ plugin_system_init(void)
     InputPlugin *ip;
     LowlevelPlugin *lp;
     DiscoveryPlugin *dp;
+    GtkWidget *dialog;
     gint dirsel = 0, i = 0;
 
     if (!g_module_supported()) {
-        report_error("Module loading not supported! Plugins will not be loaded.\n");
+        dialog =
+            gtk_message_dialog_new (GTK_WINDOW (mainwin),
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    GTK_MESSAGE_ERROR,
+                                    GTK_BUTTONS_CLOSE,
+                                    _("Module loading not supported! Plugins will not be loaded.\n"));
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
         return;
     }
 
