@@ -1,3 +1,56 @@
+Audacious 1.5.0 (2008-03-13)
+
+Enhancements:
+* Everything between 1.4.1 and 1.4.7. (duh)
+* Ability to disable GTK+ theme suggestions provided by skins.
+* Entirely from scratch audio engine (libSAD) which supports:
+  - 16-bit audio
+  - 24-bit audio
+  - 32-bit audio
+  - IEEE floating point audio
+  - 28-bit fractional audio
+  - many weird obscure "audiophile" formats
+  and:
+  - high quality dithering/conversion/resampling to produce as
+    high quality audio as possible for your sound system.
+  - bit-exact passthrough of decoded audio (compare to
+    "kernel streaming" in foobar2000)
+  As a result, support for oldschool 8-bit soundcards has been
+  _dropped_. It's 2008, they haven't made such hardware since the
+  early 90's.
+  Additionally, codecs now send audio to audacious using their
+  native format; removing the need for costly implementation-specific
+  conversion functionality.
+* New unified metadata editing for most formats. Ability to see
+  "raw metadata"; the metadata which can be used in tuplez scripts.
+* Removal of the XMMS audio conversion engine in it's entirety.
+* Support for "virtual plugins"; the ability for a single module to
+  export up to thousands of plugins. This will be used more in Audacious2.
+* Many adjustments to the winamp2 skinengine.
+* Faster jump-to-file.
+* Implement support for session management.
+
+Bugfixes:
+* playlist_compare_artist(): Avoid NULL dereferences.
+  (Bugzilla #172, Bugzilla #168, Bugzilla #35).
+* Tons of memory leaks fixed.
+
+Notes from us (the audacious developers):
+This is the last branch of Audacious that will support in Winamp2 skins
+in core. We are working on a new default UI for Audacious2 which provides
+a more metadata rich environment (while still be lightweight and fast).
+However, it is planned to implement support for Winamp2 skins as a plugin in
+the next version. No promises, though.
+
+It has been fun being seen as "rescuing XMMS" by the community; but this
+has never been our goal. Our goal has always been to develop the best
+possible player on Linux. This means that we are audiophiles, and we want
+our audio to sound as nice as possible. This has been our primary goal;
+not maintaining a Winamp2 skinned player. When we determined that the current
+UI implementation was getting in our way, we decided to rip it out. As such,
+the future of Winamp2 skins in Audacious is undefined, but they will probably
+be supported via a plugin.
+
 Audacious 1.4.1 (2007-11-17)
 
 Enhancements:
