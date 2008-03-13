@@ -67,6 +67,7 @@ static const gchar *credit_text[] = {
     "Ben Tucker",
     "Tony Vroon",
     "Yoshiki Yazawa",
+    "Eugene Zagidullin",
     NULL,
 
     N_("Graphics:"),
