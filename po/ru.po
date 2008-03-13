@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.5\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-02-22 17:40+0200\n"
+"POT-Creation-Date: 2008-03-13 17:12+0100\n"
 "PO-Revision-Date: 2008-02-18 22:48+0300\n"
 "Last-Translator: Eugene Zagidullin <e.asphyx@gmail.com>\n"
 "Language-Team: none\n"
@@ -26,20 +26,20 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Basepath: /home/asphyx/ahinea/audacious\n"
 
-#: src/audacious/input.c:578
+#: src/audacious/input.c:585
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: src/audacious/input.c:594
+#: src/audacious/input.c:601
 msgid "Filename:"
 msgstr "Имя файла:"
 
-#: src/audacious/input.c:613
+#: src/audacious/input.c:620
 msgid "No input plugin recognized this file"
 msgstr "Нет модуля ввода, распознающего этот файл"
 
-#: src/audacious/input.c:615
+#: src/audacious/input.c:622
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Модуль ввода: %s"
@@ -49,125 +49,125 @@ msgstr "Модуль ввода: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Невозможно создать файл журнала (%s)!\n"
 
-#: src/audacious/main.c:94 src/audacious/main.c:96 src/audacious/ui_main.c:477
-#: src/audacious/ui_main.c:2499
+#: src/audacious/main.c:96 src/audacious/main.c:98 src/audacious/ui_main.c:469
+#: src/audacious/ui_main.c:2484
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:284
+#: src/audacious/main.c:286
 msgid "None"
 msgstr "Нет"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:287
 msgid "Japanese"
 msgstr "Японский"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:288
 msgid "Taiwanese"
 msgstr "Тайваньский"
 
-#: src/audacious/main.c:287
+#: src/audacious/main.c:289
 msgid "Chinese"
 msgstr "Китайский"
 
-#: src/audacious/main.c:288
+#: src/audacious/main.c:290
 msgid "Korean"
 msgstr "Корейский"
 
-#: src/audacious/main.c:289
+#: src/audacious/main.c:291
 msgid "Russian"
 msgstr "Русский"
 
-#: src/audacious/main.c:290
+#: src/audacious/main.c:292
 msgid "Greek"
 msgstr "Греческий"
 
-#: src/audacious/main.c:291
+#: src/audacious/main.c:293
 msgid "Hebrew"
 msgstr "Иврит"
 
-#: src/audacious/main.c:292
+#: src/audacious/main.c:294
 msgid "Turkish"
 msgstr "Турецкий"
 
-#: src/audacious/main.c:293
+#: src/audacious/main.c:295
 msgid "Arabic"
 msgstr "Арабский"
 
-#: src/audacious/main.c:295
+#: src/audacious/main.c:297
 msgid "Universal"
 msgstr "Универсальный режим"
 
-#: src/audacious/main.c:517
+#: src/audacious/main.c:519
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Невозможно создать каталог (%s): %s\n"
 
-#: src/audacious/main.c:1068
+#: src/audacious/main.c:1070
 msgid "Skip backwards in playlist"
 msgstr "Перейти к предыдущей песне в списке воспроизведения"
 
-#: src/audacious/main.c:1069
+#: src/audacious/main.c:1071
 msgid "Start playing current playlist"
 msgstr "Начать проигрывание текущего списка воспроизведения"
 
-#: src/audacious/main.c:1070
+#: src/audacious/main.c:1072
 msgid "Pause current song"
 msgstr "Приостановить текущую песню"
 
-#: src/audacious/main.c:1071
+#: src/audacious/main.c:1073
 msgid "Stop current song"
 msgstr "Остановить текущую песню"
 
-#: src/audacious/main.c:1072
+#: src/audacious/main.c:1074
 msgid "Pause if playing, play otherwise"
 msgstr "Приостановить, если что-либо проигрывается, иначе воспроизводить"
 
-#: src/audacious/main.c:1073
+#: src/audacious/main.c:1075
 msgid "Skip forward in playlist"
 msgstr "Перейти к следующей песне в списке"
 
-#: src/audacious/main.c:1074
+#: src/audacious/main.c:1076
 msgid "Display Jump to File dialog"
 msgstr "Показать диалог перехода к файлу"
 
-#: src/audacious/main.c:1075
+#: src/audacious/main.c:1077
 msgid "Don't clear the playlist"
 msgstr "Не очищать список воспроизведения"
 
-#: src/audacious/main.c:1076
+#: src/audacious/main.c:1078
 msgid "Add new files to a temporary playlist"
 msgstr "Добавить файлы во временный список воспроизведения"
 
-#: src/audacious/main.c:1077
+#: src/audacious/main.c:1079
 msgid "Display the main window"
 msgstr "Показать главное окно"
 
-#: src/audacious/main.c:1078
+#: src/audacious/main.c:1080
 msgid "Display all open Audacious windows"
 msgstr "Показать все открытые окна Audacious"
 
-#: src/audacious/main.c:1079
+#: src/audacious/main.c:1081
 msgid "Enable headless operation"
 msgstr "Включить работу в режиме сервера"
 
-#: src/audacious/main.c:1080
+#: src/audacious/main.c:1082
 msgid "Print all errors and warnings to stdout"
 msgstr "Выводить все ошибки и предупреждения в стандартный вывод"
 
-#: src/audacious/main.c:1081
+#: src/audacious/main.c:1083
 msgid "Show version and builtin features"
 msgstr "Показать версию и встроенные возможности"
 
-#: src/audacious/main.c:1083
+#: src/audacious/main.c:1085
 msgid "Used in macpacking"
 msgstr "Для внутреннего использования под OS X"
 
-#: src/audacious/main.c:1085
+#: src/audacious/main.c:1087
 msgid "FILE..."
 msgstr "ФАЙЛ..."
 
-#: src/audacious/main.c:1318
+#: src/audacious/main.c:1320
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -180,7 +180,7 @@ msgstr ""
 "Проверьте, пригодна ли к использованию тема '%s' и установлена ли тема по "
 "умолчанию в '%s'\n"
 
-#: src/audacious/main.c:1399
+#: src/audacious/main.c:1379
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -194,11 +194,11 @@ msgstr ""
 "Glib и GTK+\n"
 "до установки LinuxThreads, вам необходимо перекомпилировать Glib и GTK+.\n"
 
-#: src/audacious/main.c:1430
+#: src/audacious/main.c:1410
 msgid "- play multimedia files"
 msgstr "- мультимедийный проигрыватель"
 
-#: src/audacious/main.c:1442
+#: src/audacious/main.c:1423
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -207,7 +207,7 @@ msgstr ""
 "%s: %s\n"
 "Попробуйте `%s --help' для получения более подробного описания.\n"
 
-#: src/audacious/main.c:1454
+#: src/audacious/main.c:1435
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Невозможно открыть экран, выходим.\n"
@@ -220,7 +220,11 @@ msgstr ""
 "<b><big>Не выбран модуль вывода звука.</big></b>\n"
 "Вы не выбрали модуль вывода звука."
 
-#: src/audacious/signals.c:45
+#: src/audacious/pluginenum.c:819
+msgid "Module loading not supported! Plugins will not be loaded.\n"
+msgstr ""
+
+#: src/audacious/signals.c:46
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -254,7 +258,7 @@ msgstr ""
 "Это поможет быстро обработать ваш отчёт и понять в чём проблема:\n"
 "\n"
 
-#: src/audacious/signals.c:76
+#: src/audacious/signals.c:77
 msgid ""
 "\n"
 "Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
@@ -263,7 +267,7 @@ msgstr ""
 "\n"
 "Об ошибках в Audacious можно сообщить на http://bugs-meta.atheme.org .\n"
 
-#: src/audacious/signals.c:262
+#: src/audacious/signals.c:290
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
@@ -472,11 +476,16 @@ msgstr "Уэльский:"
 msgid "Translators"
 msgstr "Переводчики"
 
-#: src/audacious/ui_equalizer.c:515
+#: src/audacious/ui_equalizer.c:518
 msgid "Audacious Equalizer"
 msgstr "Эквалайзер Audacious"
 
-#: src/audacious/ui_equalizer.c:1160
+#: src/audacious/ui_equalizer.c:817
+#, c-format
+msgid "Error importing Winamp EQF file '%s'"
+msgstr ""
+
+#: src/audacious/ui_equalizer.c:1183
 msgid "Presets"
 msgstr "Предустановки"
 
@@ -1184,7 +1193,7 @@ msgid "Track Length"
 msgstr "Длительность"
 
 #: src/audacious/ui_fileinfopopup.c:376 src/audacious/ui_preferences.c:150
-#: src/audacious/ui_preferences.c:474
+#: src/audacious/ui_preferences.c:473
 msgid "Filename"
 msgstr "Имя файла"
 
@@ -1240,22 +1249,26 @@ msgstr "Запомнить"
 msgid "Close on Jump"
 msgstr "Закрыть после"
 
-#: src/audacious/ui_main.c:475
+#: src/audacious/ui_main.c:467
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:726
+#: src/audacious/ui_main.c:718
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:744 src/audacious/ui_main.c:748
+#: src/audacious/ui_main.c:736 src/audacious/ui_main.c:740
 msgid "stereo"
 msgstr "стерео"
 
-#: src/audacious/ui_main.c:744 src/audacious/ui_main.c:748
+#: src/audacious/ui_main.c:736 src/audacious/ui_main.c:740
 msgid "mono"
 msgstr "моно"
+
+#: src/audacious/ui_main.c:1032
+msgid "Can't jump to time when no track is being played.\n"
+msgstr ""
 
 #: src/audacious/ui_main.c:1047 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
@@ -1338,54 +1351,54 @@ msgstr "Введите адрес для воспроизведения:"
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "Перемещение: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1601
+#: src/audacious/ui_main.c:1599
 #, c-format
 msgid "Volume: %d%%"
 msgstr "Громкость: %d%%"
 
-#: src/audacious/ui_main.c:1631
+#: src/audacious/ui_main.c:1627
 #, c-format
 msgid "Balance: %d%% left"
 msgstr "Баланс: %d%% влево"
 
-#: src/audacious/ui_main.c:1635
+#: src/audacious/ui_main.c:1631
 msgid "Balance: center"
 msgstr "Баланс: центр"
 
-#: src/audacious/ui_main.c:1639
+#: src/audacious/ui_main.c:1635
 #, c-format
 msgid "Balance: %d%% right"
 msgstr "Баланс: %d%% вправо"
 
-#: src/audacious/ui_main.c:1953
+#: src/audacious/ui_main.c:1946
 msgid "Options Menu"
 msgstr "Меню параметров"
 
-#: src/audacious/ui_main.c:1957
+#: src/audacious/ui_main.c:1950
 msgid "Disable 'Always On Top'"
 msgstr "Выключить \"Всегда на переднем плане\""
 
-#: src/audacious/ui_main.c:1959
+#: src/audacious/ui_main.c:1952
 msgid "Enable 'Always On Top'"
 msgstr "Включить \"Всегда на переднем плане\""
 
-#: src/audacious/ui_main.c:1962
+#: src/audacious/ui_main.c:1955
 msgid "File Info Box"
 msgstr "Окно информации о файле"
 
-#: src/audacious/ui_main.c:1966
+#: src/audacious/ui_main.c:1959
 msgid "Disable 'GUI Scaling'"
 msgstr "Отключить масштабирование интерфейса"
 
-#: src/audacious/ui_main.c:1968
+#: src/audacious/ui_main.c:1961
 msgid "Enable 'GUI Scaling'"
 msgstr "Включить масштабирование интерфейса"
 
-#: src/audacious/ui_main.c:1971
+#: src/audacious/ui_main.c:1964
 msgid "Visualization Menu"
 msgstr "Меню визуализации"
 
-#: src/audacious/ui_main.c:2017
+#: src/audacious/ui_main.c:2010
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1400,10 +1413,6 @@ msgstr ""
 "1. Правильность выбора модуля вывода.\n"
 "2. Не блокируют ли другие программы звуковую карту.\n"
 "3. Правильность настройки звуковой карты.\n"
-
-#: src/audacious/ui_main.c:2479
-msgid "Error in Audacious."
-msgstr "Ошибка Audacious."
 
 #: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
 msgid "Autoscroll Songname"
@@ -2080,11 +2089,11 @@ msgstr "Удалить предустановку"
 msgid "Delete auto-load preset"
 msgstr "Удалить автозагружаемую предустановку"
 
-#: src/audacious/ui_playlist.c:439
+#: src/audacious/ui_playlist.c:446
 msgid "Search entries in active playlist"
 msgstr "Поиск элементов в текущем списке"
 
-#: src/audacious/ui_playlist.c:447
+#: src/audacious/ui_playlist.c:454
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -2096,45 +2105,45 @@ msgstr ""
 "вы не знаете что такое регулярные выражения, то просто впишите буквенную "
 "часть того, что вы ищете."
 
-#: src/audacious/ui_playlist.c:455
+#: src/audacious/ui_playlist.c:462
 msgid "Title: "
 msgstr "Название: "
 
-#: src/audacious/ui_playlist.c:462
+#: src/audacious/ui_playlist.c:469
 msgid "Album: "
 msgstr "Альбом: "
 
-#: src/audacious/ui_playlist.c:469
+#: src/audacious/ui_playlist.c:476
 msgid "Artist: "
 msgstr "Исполнитель: "
 
-#: src/audacious/ui_playlist.c:476
+#: src/audacious/ui_playlist.c:483
 msgid "Filename: "
 msgstr "Имя файла: "
 
-#: src/audacious/ui_playlist.c:484
+#: src/audacious/ui_playlist.c:491
 msgid "Clear previous selection before searching"
 msgstr "Сбросить предыдущий выбор перед поиском"
 
-#: src/audacious/ui_playlist.c:487
+#: src/audacious/ui_playlist.c:494
 msgid "Automatically toggle queue for matching entries"
 msgstr "Автоматически поставить в очередь найденные элементы"
 
-#: src/audacious/ui_playlist.c:490
+#: src/audacious/ui_playlist.c:497
 msgid "Create a new playlist with matching entries"
 msgstr "Создать новый список из найденных элементов"
 
-#: src/audacious/ui_playlist.c:717
+#: src/audacious/ui_playlist.c:726
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Ошибка записи списка воспроизведения \"%s\": %s"
 
-#: src/audacious/ui_playlist.c:739
+#: src/audacious/ui_playlist.c:748
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s уже существует. Продолжить?"
 
-#: src/audacious/ui_playlist.c:754
+#: src/audacious/ui_playlist.c:763
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -2145,23 +2154,23 @@ msgstr ""
 "\n"
 "Неизвестный формат файла '%s'.\n"
 
-#: src/audacious/ui_playlist.c:880
+#: src/audacious/ui_playlist.c:889
 msgid "Save as Static Playlist"
 msgstr "Сохранить статический список воспроизведения"
 
-#: src/audacious/ui_playlist.c:887
+#: src/audacious/ui_playlist.c:896
 msgid "Use Relative Path"
 msgstr "Использовать относительный путь"
 
-#: src/audacious/ui_playlist.c:909
+#: src/audacious/ui_playlist.c:918
 msgid "Load Playlist"
 msgstr "Загрузка списка воспроизведения"
 
-#: src/audacious/ui_playlist.c:922
+#: src/audacious/ui_playlist.c:931
 msgid "Save Playlist"
 msgstr "Сохранение списка воспроизведения"
 
-#: src/audacious/ui_playlist.c:1487
+#: src/audacious/ui_playlist.c:1501
 msgid "Audacious Playlist Editor"
 msgstr "Список воспроизведения Audacious"
 
@@ -2355,22 +2364,23 @@ msgid "Use software volume control"
 msgstr "Программная регулировка громкости"
 
 #: src/audacious/ui_preferences.c:232
+#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
-"audio system does not supportcontrolling the playback volume."
+"audio system does not support controlling the playback volume."
 msgstr ""
 "Использовать программное управление громкостью. Это может быть полезно, если "
 "ваша звуковая система не поддерживает управление громкостью воспроизведения."
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:233
 msgid "<b>Advanced</b>"
 msgstr "<b>Дополнительно</b>"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:234
 msgid "Bypass all of signal processing if possible"
 msgstr "Не использовать какую-либо обработку сигнала, если возможно"
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:235
 msgid ""
 "Try to pass input plugin's output directly to output plugin, if the latter "
 "supports format produced by input plugin. If it's true, all signal "
@@ -2383,60 +2393,60 @@ msgstr ""
 "частоты дискретизации, Replay Gain и программное управление громкостью) "
 "будет отключена."
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:241
 msgid "<b>Replay Gain configuration</b>"
 msgstr "<b>Параметры Replay Gain</b>"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:242
 msgid "Enable Replay Gain"
 msgstr "Включить Replay Gain"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:243
 msgid "<b>Replay Gain mode</b>"
 msgstr "<b>Режим Replay Gain</b>"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:244
 msgid "Track gain/peak"
 msgstr "Использовать усиление и пиковое значение дорожки"
 
-#: src/audacious/ui_preferences.c:246
+#: src/audacious/ui_preferences.c:245
 msgid "Album gain/peak"
 msgstr "Использовать усиление и пиковое значение альбома"
 
-#: src/audacious/ui_preferences.c:247 src/audacious/ui_preferences.c:1543
+#: src/audacious/ui_preferences.c:246 src/audacious/ui_preferences.c:1540
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Разное</b>"
 
-#: src/audacious/ui_preferences.c:248
+#: src/audacious/ui_preferences.c:247
 msgid "Enable peak info clipping prevention"
 msgstr "Использовать пиковое значение для предотвращения срезания"
 
-#: src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:248
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
 "Использовать значение пика из метаданных Replay Gain для предотвращения "
 "срезания"
 
-#: src/audacious/ui_preferences.c:250
+#: src/audacious/ui_preferences.c:249
 msgid "Dynamically adjust scale factor to prevent clipping"
 msgstr ""
 "Динамически подстраивать коэффициент усиления для предотвращения срезания"
 
-#: src/audacious/ui_preferences.c:251
+#: src/audacious/ui_preferences.c:250
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
 msgstr ""
 "Автоматически уменьшать коэффициент масштабирования\n"
 "(усиления), если срезание всё-таки происходит."
 
-#: src/audacious/ui_preferences.c:256
+#: src/audacious/ui_preferences.c:255
 msgid "<b>Playback</b>"
 msgstr "<b>Воспроизведение</b>"
 
-#: src/audacious/ui_preferences.c:257
+#: src/audacious/ui_preferences.c:256
 msgid "Continue playback on startup"
 msgstr "Продолжать проигрывание при запуске"
 
-#: src/audacious/ui_preferences.c:258
+#: src/audacious/ui_preferences.c:257
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
@@ -2444,73 +2454,73 @@ msgstr ""
 "При запуске Audacious, автоматически продолжать проигрывание с момента "
 "остановки."
 
-#: src/audacious/ui_preferences.c:259
+#: src/audacious/ui_preferences.c:258
 msgid "Don't advance in the playlist"
 msgstr "Не продвигаться по списку воспроизведения"
 
-#: src/audacious/ui_preferences.c:260
+#: src/audacious/ui_preferences.c:259
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
 "При завершении проигрывания песни не передвигаться автоматически на "
 "следующую."
 
-#: src/audacious/ui_preferences.c:261
+#: src/audacious/ui_preferences.c:260
 msgid "Pause between songs"
 msgstr "Пауза между песнями"
 
-#: src/audacious/ui_preferences.c:262
+#: src/audacious/ui_preferences.c:261
 msgid "Pause for"
 msgstr "Приостанавливать на"
 
-#: src/audacious/ui_preferences.c:262
+#: src/audacious/ui_preferences.c:261
 msgid "seconds"
 msgstr "секунд"
 
-#: src/audacious/ui_preferences.c:266
+#: src/audacious/ui_preferences.c:265
 msgid "<b>Filename</b>"
 msgstr "<b>Название файла</b>"
 
-#: src/audacious/ui_preferences.c:267
+#: src/audacious/ui_preferences.c:266
 msgid "Convert underscores to blanks"
 msgstr "Преобразовывать подчёркивание в пробел"
 
-#: src/audacious/ui_preferences.c:268
+#: src/audacious/ui_preferences.c:267
 msgid "Convert %20 to blanks"
 msgstr "Преобразовывать %20 в пробел"
 
-#: src/audacious/ui_preferences.c:269
+#: src/audacious/ui_preferences.c:268
 msgid "Convert backslash '\\' to forward slash '/'"
 msgstr "Преобразовывать обратный слэш '\\' в прямой слэш '/'"
 
-#: src/audacious/ui_preferences.c:270
+#: src/audacious/ui_preferences.c:269
 msgid "<b>Metadata</b>"
 msgstr "<b>Информация о песне и исполнителе</b>"
 
-#: src/audacious/ui_preferences.c:271
+#: src/audacious/ui_preferences.c:270
 msgid "Load metadata from playlists and files"
 msgstr "Загружать информацию о песнях из файлов и списков воспроизведения"
 
-#: src/audacious/ui_preferences.c:271
+#: src/audacious/ui_preferences.c:270
 msgid "Load metadata (tag information) from music files."
 msgstr ""
 "Загружать информацию о песне и исполнителе (информационный тэг) из "
 "музыкальных файлов."
 
-#: src/audacious/ui_preferences.c:272
+#: src/audacious/ui_preferences.c:271
 msgid "On load"
 msgstr "При открытии"
 
-#: src/audacious/ui_preferences.c:272
+#: src/audacious/ui_preferences.c:271
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
 "Загружать метаданные при добавлении файла в список воспроизведения или при "
 "открытии"
 
-#: src/audacious/ui_preferences.c:273
+#: src/audacious/ui_preferences.c:272
 msgid "On display"
 msgstr "При отображении"
 
-#: src/audacious/ui_preferences.c:273
+#: src/audacious/ui_preferences.c:272
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
@@ -2519,15 +2529,15 @@ msgstr ""
 "воспроизведения. Вы можете также включить опцию \"Определять формат файлов "
 "при необходимости\"."
 
-#: src/audacious/ui_preferences.c:275
+#: src/audacious/ui_preferences.c:274
 msgid "<b>File Dialog</b>"
 msgstr "<b>Окно выбора файла</b>"
 
-#: src/audacious/ui_preferences.c:276
+#: src/audacious/ui_preferences.c:275
 msgid "Always refresh directory when opening file dialog"
 msgstr "Всегда обновлять каталог при открытии окна выбора файлов"
 
-#: src/audacious/ui_preferences.c:276
+#: src/audacious/ui_preferences.c:275
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
@@ -2535,43 +2545,43 @@ msgstr ""
 "Всегда обновлять окно выбора файлов (это замедлит открытие окна для больших "
 "каталогов; при использовании Gnome VFS обновление происходит автоматически)."
 
-#: src/audacious/ui_preferences.c:280
+#: src/audacious/ui_preferences.c:279
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Колесо мыши</b>"
 
-#: src/audacious/ui_preferences.c:281
+#: src/audacious/ui_preferences.c:280
 msgid "Changes volume by"
 msgstr "Изменяет громкость на"
 
-#: src/audacious/ui_preferences.c:281
+#: src/audacious/ui_preferences.c:280
 msgid "percent"
 msgstr "процентов"
 
-#: src/audacious/ui_preferences.c:282
+#: src/audacious/ui_preferences.c:281
 msgid "Scrolls playlist by"
 msgstr "Прокручивает список воспроизведения на"
 
-#: src/audacious/ui_preferences.c:282
+#: src/audacious/ui_preferences.c:281
 msgid "lines"
 msgstr "строк"
 
-#: src/audacious/ui_preferences.c:444
+#: src/audacious/ui_preferences.c:443
 msgid "Enabled"
 msgstr "Включен"
 
-#: src/audacious/ui_preferences.c:460
+#: src/audacious/ui_preferences.c:459
 msgid "Description"
 msgstr "Описание"
 
-#: src/audacious/ui_preferences.c:976
+#: src/audacious/ui_preferences.c:973
 msgid "Category"
 msgstr "Категория"
 
-#: src/audacious/ui_preferences.c:1348
+#: src/audacious/ui_preferences.c:1345
 msgid "Color Adjustment"
 msgstr "Настройка цвета"
 
-#: src/audacious/ui_preferences.c:1355
+#: src/audacious/ui_preferences.c:1352
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
@@ -2579,27 +2589,27 @@ msgstr ""
 "Audacious позволяет вам изменить цветовой баланс пользовательского "
 "интерфейса. Ползунки внизу позволят вам сделать это."
 
-#: src/audacious/ui_preferences.c:1365
+#: src/audacious/ui_preferences.c:1362
 msgid "Blue"
 msgstr "Синий"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1369
 msgid "Green"
 msgstr "Зелёный"
 
-#: src/audacious/ui_preferences.c:1379
+#: src/audacious/ui_preferences.c:1376
 msgid "Red"
 msgstr "Красный"
 
-#: src/audacious/ui_preferences.c:1462
+#: src/audacious/ui_preferences.c:1459
 msgid "Popup Information Settings"
 msgstr "Настройки всплывающей информации"
 
-#: src/audacious/ui_preferences.c:1471
+#: src/audacious/ui_preferences.c:1468
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Поиск обложки альбома</b>"
 
-#: src/audacious/ui_preferences.c:1476
+#: src/audacious/ui_preferences.c:1473
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -2608,39 +2618,39 @@ msgstr ""
 "При поиске обложки альбома, Audacious ищет определенные слова в именах "
 "файлов. Вы можете указать эти слова ниже, разделив их запятыми."
 
-#: src/audacious/ui_preferences.c:1493
+#: src/audacious/ui_preferences.c:1490
 msgid "Exclude:"
 msgstr "Исключая:"
 
-#: src/audacious/ui_preferences.c:1500
+#: src/audacious/ui_preferences.c:1497
 msgid "Include:"
 msgstr "Включая:"
 
-#: src/audacious/ui_preferences.c:1517
+#: src/audacious/ui_preferences.c:1514
 msgid "Recursively search for cover"
 msgstr "Искать обложку во вложенных каталогах"
 
-#: src/audacious/ui_preferences.c:1527
+#: src/audacious/ui_preferences.c:1524
 msgid "Search depth: "
 msgstr "Глубина поиска: "
 
-#: src/audacious/ui_preferences.c:1540
+#: src/audacious/ui_preferences.c:1537
 msgid "Use per-file cover"
 msgstr "Искать изображение для каждого файла"
 
-#: src/audacious/ui_preferences.c:1552
+#: src/audacious/ui_preferences.c:1549
 msgid "Show Progress bar for the current track"
 msgstr "Показывать полосу завершения для проигрываемой записи"
 
-#: src/audacious/ui_preferences.c:1562
+#: src/audacious/ui_preferences.c:1559
 msgid "Delay until filepopup comes up: "
 msgstr "Задержка при появлении всплывающей информации: "
 
-#: src/audacious/ui_preferences.c:1607
+#: src/audacious/ui_preferences.c:1604
 msgid "Auto character encoding detector for:"
 msgstr "Язык для автоматического определения кодировки:"
 
-#: src/audacious/ui_preferences.c:1626
+#: src/audacious/ui_preferences.c:1623
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -2652,15 +2662,15 @@ msgstr ""
 "преобразования метаданных в UTF-8 будут использованы кодировки из этого "
 "списка."
 
-#: src/audacious/ui_preferences.c:1628
+#: src/audacious/ui_preferences.c:1625
 msgid "Fallback character encodings:"
 msgstr "Кодировка по умолчанию:"
 
-#: src/audacious/ui_preferences.c:1656
+#: src/audacious/ui_preferences.c:1653
 msgid "Output bit depth:"
 msgstr "Разрядность выходного потока:"
 
-#: src/audacious/ui_preferences.c:1670
+#: src/audacious/ui_preferences.c:1667
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
@@ -2670,25 +2680,25 @@ msgstr ""
 " которая должна быть максимальной поддерживаемой\n"
 "разрядностью звуковой карты или выходного модуля."
 
-#: src/audacious/ui_preferences.c:1691
+#: src/audacious/ui_preferences.c:1688
 msgid "Preamp:"
 msgstr "Предварительное усиление:"
 
-#: src/audacious/ui_preferences.c:1704 src/audacious/ui_preferences.c:1724
+#: src/audacious/ui_preferences.c:1701 src/audacious/ui_preferences.c:1721
 msgid "dB"
 msgstr "дБ"
 
-#: src/audacious/ui_preferences.c:1710
+#: src/audacious/ui_preferences.c:1707
 msgid "Default gain:"
 msgstr "Усиление по-умолачнию:"
 
-#: src/audacious/ui_preferences.c:1722
+#: src/audacious/ui_preferences.c:1719
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 "Это значение будет использовано в случае, если дорожка\n"
 "не содержит информации Replay Gain."
 
-#: src/audacious/ui_preferences.c:1738
+#: src/audacious/ui_preferences.c:1735
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
@@ -2697,67 +2707,67 @@ msgstr ""
 "срезания, — не использовать положительные значения предварительного усиления "
 "и усиления по-умолчанию.</span>"
 
-#: src/audacious/ui_preferences.c:1971
+#: src/audacious/ui_preferences.c:1968
 msgid "<b>_Skin</b>"
 msgstr "<b>_Тема</b>"
 
-#: src/audacious/ui_preferences.c:1985
+#: src/audacious/ui_preferences.c:1982
 msgid "Refresh skin list"
 msgstr "Обновить список тем"
 
-#: src/audacious/ui_preferences.c:2109
+#: src/audacious/ui_preferences.c:2106
 msgid "<b>Song Display</b>"
 msgstr "<b>Отображение Названий</b>"
 
-#: src/audacious/ui_preferences.c:2128
+#: src/audacious/ui_preferences.c:2125
 msgid "Show information about titlestring format"
 msgstr "Показать информацию о формате названия"
 
-#: src/audacious/ui_preferences.c:2139
+#: src/audacious/ui_preferences.c:2136
 msgid "TITLE"
 msgstr "НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:2140
+#: src/audacious/ui_preferences.c:2137
 msgid "ARTIST - TITLE"
 msgstr "ИСПОЛНИТЕЛЬ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:2141
+#: src/audacious/ui_preferences.c:2138
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ИСПОЛНИТЕЛЬ - АЛЬБОМ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:2142
+#: src/audacious/ui_preferences.c:2139
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ИСПОЛНИТЕЛЬ - АЛЬБОМ - ДОРОЖКА. НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:2143
+#: src/audacious/ui_preferences.c:2140
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ИСПОЛНИТЕЛЬ [ АЛЬБОМ ] - ДОРОЖКА. НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:2144
+#: src/audacious/ui_preferences.c:2141
 msgid "ALBUM - TITLE"
 msgstr "АЛЬБОМ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:2145
+#: src/audacious/ui_preferences.c:2142
 msgid "Custom"
 msgstr "Выбрать самостоятельно"
 
-#: src/audacious/ui_preferences.c:2152
+#: src/audacious/ui_preferences.c:2149
 msgid "Custom string:"
 msgstr "Формат:"
 
-#: src/audacious/ui_preferences.c:2159
+#: src/audacious/ui_preferences.c:2156
 msgid "Title format:"
 msgstr "Формат названия:"
 
-#: src/audacious/ui_preferences.c:2170
+#: src/audacious/ui_preferences.c:2167
 msgid "<b>Popup Information</b>"
 msgstr "<b>Всплывающее информационное окно</b>"
 
-#: src/audacious/ui_preferences.c:2185
+#: src/audacious/ui_preferences.c:2182
 msgid "Show popup information for playlist entries"
 msgstr "Показывать всплывающее информационное окно для песен в списке"
 
-#: src/audacious/ui_preferences.c:2187
+#: src/audacious/ui_preferences.c:2184
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -2767,19 +2777,19 @@ msgstr ""
 "содержит название песни, название альбома, стиль, год, номер дорожки, "
 "длительность песни и обложку альбома."
 
-#: src/audacious/ui_preferences.c:2192
+#: src/audacious/ui_preferences.c:2189
 msgid "Edit settings for popup information"
 msgstr "Изменить настройки всплывающего информационного окна"
 
-#: src/audacious/ui_preferences.c:2289
+#: src/audacious/ui_preferences.c:2286
 msgid "<b>Audio System</b>"
 msgstr "<b>Звуковая Система</b>"
 
-#: src/audacious/ui_preferences.c:2312
+#: src/audacious/ui_preferences.c:2309
 msgid "Buffer size:"
 msgstr "Размер буфера:"
 
-#: src/audacious/ui_preferences.c:2318
+#: src/audacious/ui_preferences.c:2315
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -2793,51 +2803,51 @@ msgstr ""
 "Учтите, что при слишком больших значениях Audacious будет работать "
 "замедленно.</span>"
 
-#: src/audacious/ui_preferences.c:2337
+#: src/audacious/ui_preferences.c:2334
 msgid "Current output plugin:"
 msgstr "Текущий модуль вывода звука:"
 
-#: src/audacious/ui_preferences.c:2366
+#: src/audacious/ui_preferences.c:2363
 msgid "Output Plugin Preferences"
 msgstr "Настройки модуля вывода звука"
 
-#: src/audacious/ui_preferences.c:2383
+#: src/audacious/ui_preferences.c:2380
 msgid "Output Plugin Information"
 msgstr "Информация о модуле вывода звука"
 
-#: src/audacious/ui_preferences.c:2392
+#: src/audacious/ui_preferences.c:2389
 msgid "<b>Sampling Rate Converter</b>"
 msgstr "<b>Преобразование частоты дискретизации</b>"
 
-#: src/audacious/ui_preferences.c:2401
+#: src/audacious/ui_preferences.c:2398
 msgid "Enable Sampling Rate Converter"
 msgstr "Включить преобразование частоты дискретизации"
 
-#: src/audacious/ui_preferences.c:2421
+#: src/audacious/ui_preferences.c:2418
 msgid "Best Sinc Interpolation"
 msgstr "Интерполяция sinc-функцией (высокое качество)"
 
-#: src/audacious/ui_preferences.c:2422
+#: src/audacious/ui_preferences.c:2419
 msgid "Medium Sinc Interpolation"
 msgstr "Интерполяция sinc-функцией (среднее качество)"
 
-#: src/audacious/ui_preferences.c:2423
+#: src/audacious/ui_preferences.c:2420
 msgid "Fastest Sinc Interpolation"
 msgstr "Интерполяция sinc-функцией (быстрая)"
 
-#: src/audacious/ui_preferences.c:2424
+#: src/audacious/ui_preferences.c:2421
 msgid "ZOH Interpolation"
 msgstr "Кусочно-постоянная интерполяция"
 
-#: src/audacious/ui_preferences.c:2425
+#: src/audacious/ui_preferences.c:2422
 msgid "Linear Interpolation"
 msgstr "Линейная интерполяция"
 
-#: src/audacious/ui_preferences.c:2427
+#: src/audacious/ui_preferences.c:2424
 msgid "Interpolation Engine:"
 msgstr "Алгоритм интерполяции:"
 
-#: src/audacious/ui_preferences.c:2433
+#: src/audacious/ui_preferences.c:2430
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
@@ -2847,39 +2857,39 @@ msgstr ""
 "дискретизации, которая должна быть максимальной поддерживаемой\n"
 "частотой звуковой карты или выходного модуля.</span>"
 
-#: src/audacious/ui_preferences.c:2453
+#: src/audacious/ui_preferences.c:2450
 msgid "Sampling Rate [Hz]:"
 msgstr "Частота дискретизации [Гц]:"
 
-#: src/audacious/ui_preferences.c:2549
+#: src/audacious/ui_preferences.c:2546
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Настройка Прокси</b>"
 
-#: src/audacious/ui_preferences.c:2565
+#: src/audacious/ui_preferences.c:2562
 msgid "Enable proxy usage"
 msgstr "Использовать прокси"
 
-#: src/audacious/ui_preferences.c:2583
+#: src/audacious/ui_preferences.c:2580
 msgid "Proxy port:"
 msgstr "Прокси порт:"
 
-#: src/audacious/ui_preferences.c:2589
+#: src/audacious/ui_preferences.c:2586
 msgid "Proxy hostname:"
 msgstr "Прокси сервер:"
 
-#: src/audacious/ui_preferences.c:2599
+#: src/audacious/ui_preferences.c:2596
 msgid "Use authentication with proxy"
 msgstr "Использовать авторизацию на прокси"
 
-#: src/audacious/ui_preferences.c:2618
+#: src/audacious/ui_preferences.c:2615
 msgid "Proxy password:"
 msgstr "Пароль прокси:"
 
-#: src/audacious/ui_preferences.c:2624
+#: src/audacious/ui_preferences.c:2621
 msgid "Proxy username:"
 msgstr "Имя пользователя прокси:"
 
-#: src/audacious/ui_preferences.c:2641
+#: src/audacious/ui_preferences.c:2638
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -2887,87 +2897,87 @@ msgstr ""
 "<span size=\"small\">Изменение этих настроек потребует перезапуск Audacious."
 "</span>"
 
-#: src/audacious/ui_preferences.c:2741
+#: src/audacious/ui_preferences.c:2738
 msgid "_Decoder list:"
 msgstr "Список модулей _декодеров:"
 
-#: src/audacious/ui_preferences.c:2771
+#: src/audacious/ui_preferences.c:2768
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Декодеры</b></span>"
 
-#: src/audacious/ui_preferences.c:2784
+#: src/audacious/ui_preferences.c:2781
 msgid "_General plugin list:"
 msgstr "Список модулей _общего назначения:"
 
-#: src/audacious/ui_preferences.c:2814
+#: src/audacious/ui_preferences.c:2811
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Общие</b></span>"
 
-#: src/audacious/ui_preferences.c:2826
+#: src/audacious/ui_preferences.c:2823
 msgid "_Visualization plugin list:"
 msgstr "Список модулей _визуализации:"
 
-#: src/audacious/ui_preferences.c:2856
+#: src/audacious/ui_preferences.c:2853
 msgid "<b>Visualization</b>"
 msgstr "<b>Визуализация</b>"
 
-#: src/audacious/ui_preferences.c:2868
+#: src/audacious/ui_preferences.c:2865
 msgid "_Effect plugin list:"
 msgstr "Список модулей _эффектов:"
 
-#: src/audacious/ui_preferences.c:2898
+#: src/audacious/ui_preferences.c:2895
 msgid "<b>Effects</b>"
 msgstr "<b>Эффекты</b>"
 
-#: src/audacious/ui_preferences.c:3035
+#: src/audacious/ui_preferences.c:3032
 msgid "Audacious Preferences"
 msgstr "Настройки Audacious"
 
-#: src/audacious/ui_preferences.c:3105
+#: src/audacious/ui_preferences.c:3102
 msgid "Reload Plugins"
 msgstr "Перезагрузить модули"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:371
+#: src/audacious/ui_skinned_equalizer_slider.c:378
 msgid "PREAMP"
 msgstr "ПРЕДУСИЛЕНИЕ"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:371
+#: src/audacious/ui_skinned_equalizer_slider.c:378
 msgid "60HZ"
 msgstr "60 Гц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:371
+#: src/audacious/ui_skinned_equalizer_slider.c:378
 msgid "170HZ"
 msgstr "170 Гц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:372
+#: src/audacious/ui_skinned_equalizer_slider.c:379
 msgid "310HZ"
 msgstr "310 Гц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:372
+#: src/audacious/ui_skinned_equalizer_slider.c:379
 msgid "600HZ"
 msgstr "600 Гц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:372
+#: src/audacious/ui_skinned_equalizer_slider.c:379
 msgid "1KHZ"
 msgstr "1 кГц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:373
+#: src/audacious/ui_skinned_equalizer_slider.c:380
 msgid "3KHZ"
 msgstr "3 кГц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:373
+#: src/audacious/ui_skinned_equalizer_slider.c:380
 msgid "6KHZ"
 msgstr "6 кГц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:373
+#: src/audacious/ui_skinned_equalizer_slider.c:380
 msgid "12KHZ"
 msgstr "12 кГц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:374
+#: src/audacious/ui_skinned_equalizer_slider.c:381
 msgid "14KHZ"
 msgstr "14 кГц"
 
-#: src/audacious/ui_skinned_equalizer_slider.c:374
+#: src/audacious/ui_skinned_equalizer_slider.c:381
 msgid "16KHZ"
 msgstr "16 кГц"
 
@@ -2982,6 +2992,70 @@ msgstr "Неупакованная тема Winamp 2.x"
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
 msgstr "Добавить/Открыть URL"
+
+#: src/libeggsmclient/eggdesktopfile.c:139
+msgid "File is not a valid .desktop file"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:161
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:868
+#, c-format
+msgid "Starting %s"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1004
+msgid "Application does not accept documents on command line"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1072
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1274
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1293
+msgid "Not a launchable item"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:183
+msgid "Disable connection to session manager"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:186
+msgid "Specify file containing saved configuration"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:186
+#, fuzzy
+msgid "FILE"
+msgstr "ФАЙЛ..."
+
+#: src/libeggsmclient/eggsmclient.c:189
+msgid "Specify session management ID"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:189
+msgid "ID"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:225
+msgid "Session Management Options"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:226
+#, fuzzy
+msgid "Show Session Management options"
+msgstr "Показывать заголовок менеджера окон"
+
+#~ msgid "Error in Audacious."
+#~ msgstr "Ошибка Audacious."
 
 #~ msgid "Enable 6 dB hard limiter"
 #~ msgstr "Включить жёсткое ограничение на 6 дБ"

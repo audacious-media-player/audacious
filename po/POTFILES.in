@@ -1,11 +1,10 @@
 # Please don't update this file manually - use ./update-potfiles.sh instead!
-src/audacious/iir_cfs.c
-src/audacious/iir_fpu.c
 src/audacious/input.c
 src/audacious/intl/os2compat.c
 src/audacious/logger.c
 src/audacious/main.c
 src/audacious/playback.c
+src/audacious/pluginenum.c
 src/audacious/signals.c
 src/audacious/strings.c
 src/audacious/ui_about.c
@@ -23,3 +22,5 @@ src/audacious/ui_preferences.c
 src/audacious/ui_skinned_equalizer_slider.c
 src/audacious/ui_skinselector.c
 src/audacious/ui_urlopener.c
+src/libeggsmclient/eggdesktopfile.c
+src/libeggsmclient/eggsmclient.c
