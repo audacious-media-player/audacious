@@ -89,21 +89,21 @@ dnl Check for GTK/GLib/GThread/Pango
 
 PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.14.0 gtk+-2.0 >= 2.10.0 gthread-2.0 pango],
     [ADD_PC_REQUIRES([glib-2.0 >= 2.14.0, gtk+-2.0 >= 2.10.0])],
-    [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
+    [AC_MSG_ERROR([Cannot find GLib2/Gtk+2/Pango])]
 )
 
 dnl Check for GLib.
 
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.14.0],
     [ADD_PC_REQUIRES([glib-2.0 >= 2.14.0])],
-    [AC_MSG_ERROR([Cannot find glib2])]
+    [AC_MSG_ERROR([Cannot find GLib2])]
 )
 
 dnl Check for libmowgli.
 
 PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.4],
     [ADD_PC_REQUIRES([libmowgli >= 0.4])],
-    [AC_MSG_ERROR([Cannot find libmowgli: try http://www.atheme-project.org/projects/mowgli.shtml])]
+    [AC_MSG_ERROR([Cannot find libmowgli: try http://www.atheme.org/projects/mowgli.shtml])]
 )
 
 # Check if socklen_t is defined
@@ -279,7 +279,7 @@ PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
       AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
       ADD_PC_REQUIRES([libmcs >= 0.1])
    ],
-   [AC_MSG_ERROR([Cannot find libmcs])]
+   [AC_MSG_ERROR([Cannot find libmcs, try http://www.atheme.org/projects/mcs.shtml])]
 )
 
 dnl AltiVec support 
@@ -524,14 +524,6 @@ echo
 echo "  SSE2:                                   $enable_sse2"
 echo "  AltiVec:                                $enable_altivec"
 echo
-
-if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
-    echo "Note: You need to have thread-safe xlibs to use Audacious."
-    echo "If you are using libc5 thread aware Xlibs just skip this."
-    echo ""
-    echo "If you don't have those libs and you are on a libc5 system get them at:"
-    echo "ftp://ftp.dent.med.uni-muenchen.de/pub/wmglo/"
-fi
 
 if test "$BEEP_PATH" != "no" && test "$prefix/bin/audacious" != "$BEEP_PATH" ; then
     echo ""

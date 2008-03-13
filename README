@@ -1,7 +1,7 @@
 Audacious
 A relatively powerful media player
 
-Copyright (c) 2005-2007 Audacious Development Team (see AUTHORS)
+Copyright (c) 2005-2008 Audacious Development Team (see AUTHORS)
 
 Based on:
   BMP - Beep Media Player (c)2002-2005
@@ -63,6 +63,9 @@ Audacious is NOT a port of Winamp (http://www.Winamp.com). Audacious is a fork o
 XMMS (http://xmms.org) and BMP (http://beep-media-player.org) which borrowed the
 Winamp GUI.
 
+However, Audacious is neither XMMS, or BMP, but takes a direction of its
+own.
+
 
 2. Installation
 ---------------
@@ -70,19 +73,21 @@ Winamp GUI.
 Audacious requires the following libraries and their development
 packages installed:
 
-  Glib 2.6
-  (http://www.gtk.org/download/)
+  Glib 2.14.0
+    http://www.gtk.org/download/
 
-  GTK+ 2.6
-  (http://www.gtk.org/download/)
+  GTK+ 2.10.0
+    http://www.gtk.org/download/
 
   mcs >= 0.1
-  (http://sacredspiral.co.uk/~nenolod/mcs)
+    http://www.atheme.org/projects/mcs.shtml
 
-If you compile Audacious from a fresh CVS checkout, you will also need
-the following tools:
+  libmowgli >= 0.4
+    http://www.atheme.org/projects/mowgli.shtml
 
-  automake >= 1.9
+If you compile Audacious from a fresh Mercurial checkout, you will also
+need the following tools:
+
   autoconf >= 2.59
 
 Note that these tools and libraries are bundled with major Linux
