@@ -226,7 +226,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_fileinfo = playlist_fileinfo,
 
     .playlist_delete_index = playlist_delete_index,
-    .playlist_delete_filenames = playlist_delete_filenames,
+    .playlist_delete_filenames = NULL, /* remove eventually --mf0102 */
 
     .playlist_get_entry_to_play = playlist_get_entry_to_play,
 

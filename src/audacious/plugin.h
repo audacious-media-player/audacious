@@ -157,7 +157,6 @@ typedef GHashTable INIFile;
 #include "audacious/mime.h"
 #include "audacious/custom_uri.h"
 #include "audacious/hook.h"
-#include "audacious/ui_plugin_menu.h"
 #include "audacious/formatter.h"
 #include "audacious/flow.h"
 

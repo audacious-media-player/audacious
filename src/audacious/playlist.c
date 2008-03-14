@@ -599,44 +599,6 @@ playlist_delete_index(Playlist *playlist, guint pos)
 }
 
 void
-playlist_delete_filenames(Playlist * playlist, GList * filenames)
-{
-    GList *node, *fnode;
-    gboolean set_info_text = FALSE, restart_playing = FALSE;
-
-    PLAYLIST_LOCK(playlist);
-
-    for (fnode = filenames; fnode; fnode = g_list_next(fnode)) {
-        node = playlist->entries;
-
-        while (node) {
-            GList *next = g_list_next(node);
-            PlaylistEntry *entry = node->data;
-
-            if (!strcmp(entry->filename, fnode->data))
-                playlist_delete_node(playlist, node, &set_info_text, &restart_playing);
-
-            node = next;
-        }
-    }
-
-    PLAYLIST_UNLOCK(playlist);
-
-    playlist_recalc_total_time(playlist);
-    PLAYLIST_INCR_SERIAL(playlist);
-    playlistwin_update_list(playlist);
-
-    if (restart_playing) {
-        if (playlist->position)
-            playback_initiate();
-        else
-            mainwin_clear_song_info();
-    }
-
-    playlist_manager_update();
-}
-
-void
 playlist_delete(Playlist * playlist, gboolean crop)
 {
     gboolean restart_playing = FALSE, set_info_text = FALSE;
