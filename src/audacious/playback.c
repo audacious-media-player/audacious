@@ -332,7 +332,6 @@ playback_stop(void)
 #endif
     }
 
-    ip_data.buffering = FALSE;
     ip_data.playing = FALSE;
 
     if (song_info_timeout_source)

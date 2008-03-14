@@ -36,7 +36,6 @@ struct _InputPluginData {
     gboolean playing;
     gboolean paused;
     gboolean stop;
-    gboolean buffering;
     GMutex *playback_mutex;
 };
 
@@ -66,7 +65,6 @@ InputVisType input_get_vis_type();
 void input_update_vis(gint time);
 
 void input_set_info_text(gchar * text);
-void input_set_status_buffering(gboolean status);
 
 GList *input_scan_dir(const gchar * dir);
 void input_get_volume(gint * l, gint * r);

@@ -33,7 +33,6 @@
 #endif
 
 #include "main.h"
-#include "ui_main.h"
 #include "signals.h"
 #include "build_stamp.h"
 #include "eggsmclient.h"

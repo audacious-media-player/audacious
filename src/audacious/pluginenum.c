@@ -39,7 +39,6 @@
 
 #include "main.h"
 #include "dock.h"
-#include "ui_main.h"
 #include "playback.h"
 #include "playlist.h"
 #include "strings.h"
@@ -551,7 +550,7 @@ input_plugin_init(Plugin * plugin)
        - descender */
     p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info_old_abi;
     p->set_info_text = input_set_info_text;
-    p->set_status_buffering = input_set_status_buffering;
+    p->set_status_buffering = NULL; /* XXX: remove this someday --mf0102 */
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
     

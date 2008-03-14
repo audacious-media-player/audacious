@@ -45,10 +45,8 @@
 #include "strings.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
-#include "ui_main.h"
 #include "util.h"
 #include "visualization.h"
-#include "ui_skinned_playstatus.h"
 #include "hook.h"
 
 #include "vfs.h"
@@ -74,7 +72,6 @@ typedef struct _VisNode VisNode;
 InputPluginData ip_data = {
     NULL,
     NULL,
-    FALSE,
     FALSE,
     FALSE,
     FALSE,
@@ -785,23 +782,4 @@ input_set_info_text(gchar *text)
 {
     gchar *title = g_strdup(text);
     event_queue("title change", title);
-}
-
-void
-input_set_status_buffering(gboolean status)
-{
-    if (!playback_get_playing())
-        return;
-
-    if (!get_current_input_playback())
-        return;
-
-    ip_data.buffering = status;
-
-    g_return_if_fail(mainwin_playstatus != NULL);
-
-    if (ip_data.buffering == TRUE && mainwin_playstatus != NULL && UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status == STATUS_STOP)
-        UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status = STATUS_PLAY;
-
-    ui_skinned_playstatus_set_buffering(mainwin_playstatus, ip_data.buffering);
 }

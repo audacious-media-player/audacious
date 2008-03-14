@@ -1144,7 +1144,7 @@ struct _InputPlugin {
     /* Added in Audacious 1.1.0 */
     Tuple *(*get_song_tuple) (gchar * filename);
     void (*set_song_tuple) (Tuple * tuple); /* stillborn, obsoleted by update_song_tuple, which must be used for tag writing */
-    void (*set_status_buffering) (gboolean status);
+    void (*set_status_buffering) (gboolean status); /* unfunctional */
 
     /* Added in Audacious 1.3.0 */
     gint (*is_our_file_from_vfs) (gchar *filename, VFSFile *fd);
