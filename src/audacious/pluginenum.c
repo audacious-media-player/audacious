@@ -61,6 +61,7 @@
 
 #include "effect.h"
 #include "volumecontrol.h"
+#include "ui_plugin_menu.h"
 
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
