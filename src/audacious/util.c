@@ -52,7 +52,7 @@
 #include "main.h"
 #include "playback.h"
 #include "strings.h"
-#include "ui_playlist.h"
+
 #include "libSAD.h"
 
 #ifdef USE_CHARDET

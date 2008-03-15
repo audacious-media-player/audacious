@@ -59,30 +59,31 @@
 #  include "audctrl.h"
 #endif
 
-#include "skin.h"
 #include "auddrct.h"
+#include "build_stamp.h"
 #include "dnd.h"
 #include "effect.h"
-#include "ui_equalizer.h"
 #include "general.h"
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
-#include "ui_main.h"
-#include "ui_manager.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
+#include "pluginenum.h"
+#include "signals.h"
+#include "skin.h"
+#include "ui_equalizer.h"
+#include "ui_fileinfo.h"
+#include "ui_main.h"
+#include "ui_manager.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
-#include "pluginenum.h"
+#include "ui_skinned_window.h"
 #include "ui_skinselector.h"
 #include "util.h"
 #include "visualization.h"
-#include "build_stamp.h"
-#include "ui_fileinfo.h"
-#include "signals.h"
-#include "ui_skinned_window.h"
+
 #include "libSAD.h"
 #include "eggsmclient.h"
 #include "eggdesktopfile.h"
@@ -91,12 +92,7 @@
 #include "images/audacious_player.xpm"
 
 gboolean has_x11_connection = FALSE;    /* do we have an X11 connection? */
-
-/* Translatable string for beep.desktop's comment field */
-const gchar *desktop_comment = N_("Audacious");
-
 const gchar *application_name = N_("Audacious");
-
 
 struct _BmpCmdLineOpt {
     gchar **filenames;
