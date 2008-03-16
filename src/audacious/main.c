@@ -101,7 +101,7 @@ struct _AudCmdLineOpt {
     gboolean enqueue_to_temp;
     gboolean version;
     gchar *previous_session_id;
-	gboolean macpack;
+    gboolean macpack;
 };
 
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
@@ -311,12 +311,14 @@ set_dock_icon(void)
 
     /* create the colourspace for the CGImage. */
     colorspace = CGColorSpaceCreateDeviceRGB();
-    data_provider = CGDataProviderCreateWithData(NULL, data, pixbuf_height * rowstride, NULL);
+    data_provider = CGDataProviderCreateWithData(NULL, data,
+                                                 pixbuf_height * rowstride,
+                                                 NULL);
     image = CGImageCreate(pixbuf_width, pixbuf_height, 8,
-	has_alpha ? 32 : 24, rowstride, colorspace,
-	has_alpha ? kCGImageAlphaLast : 0,
-	data_provider, NULL, FALSE,
-	kCGRenderingIntentDefault);
+                          has_alpha ? 32 : 24, rowstride, colorspace,
+                          has_alpha ? kCGImageAlphaLast : 0,
+                          data_provider, NULL, FALSE,
+                          kCGRenderingIntentDefault);
 
     /* release the colourspace and data provider, we have what we want. */
     CGDataProviderRelease(data_provider);
@@ -349,9 +351,9 @@ static GOptionEntry cmd_entries[] = {
     {"headless", 'H', 0, G_OPTION_ARG_NONE, &options.headless, N_("Enable headless operation"), NULL},
     {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version and builtin features"), NULL},
-	#ifdef GDK_WINDOWING_QUARTZ
-	{"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL}, /* Make this hidden */
-	#endif
+#ifdef GDK_WINDOWING_QUARTZ
+    {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL}, /* Make this hidden */
+#endif
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
     {NULL},
 };
@@ -395,13 +397,14 @@ handle_cmd_line_options(AudCmdLineOpt * options,
                 gchar *filename;
                 gchar *current_dir = g_get_current_dir();
 
-		if (!strstr(filenames[i], "://"))
-		{
+                if (!strstr(filenames[i], "://"))
+                {
                     if (filenames[i][0] == '/')
-   	               filename = g_strdup_printf("file:///%s", filenames[i]);
+                        filename = g_strdup_printf("file:///%s", filenames[i]);
                     else
-	               filename = g_strdup_printf("file:///%s/%s", current_dir, filenames[i]);
-		}
+                        filename = g_strdup_printf("file:///%s/%s", current_dir,
+                                                   filenames[i]);
+                }
                 else
                     filename = g_strdup(filenames[i]);
 
@@ -493,13 +496,14 @@ handle_cmd_line_options(AudCmdLineOpt * options,
                 gchar *filename;
                 gchar *current_dir = g_get_current_dir();
 
-		if (!strstr(filenames[i], "://"))
-		{
+                if (!strstr(filenames[i], "://"))
+                {
                     if (filenames[i][0] == '/')
-   	               filename = g_strdup_printf("file:///%s", filenames[i]);
+                        filename = g_strdup_printf("file:///%s", filenames[i]);
                     else
-	               filename = g_strdup_printf("file:///%s/%s", current_dir, filenames[i]);
-		}
+                        filename = g_strdup_printf("file:///%s/%s", current_dir,
+                                                   filenames[i]);
+                }
                 else
                     filename = g_strdup(filenames[i]);
 
@@ -670,33 +674,29 @@ main(gint argc, gchar ** argv)
     mutex_scan = g_mutex_new();
     gtk_rc_add_default_file(bmp_paths[BMP_PATH_GTKRC_FILE]);
 
-    gtk_init_check_ok = gtk_init_check(&argc, &argv);
-
     memset(&options, '\0', sizeof(AudCmdLineOpt));
     options.session = -1;
 
     context = g_option_context_new(_("- play multimedia files"));
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
-    g_option_context_add_group(context, gtk_get_option_group(TRUE));
+    g_option_context_add_group(context, gtk_get_option_group(FALSE));
     g_option_context_add_group(context, egg_sm_client_get_option_group());
     g_option_context_parse(context, &argc, &argv, &error);
 
+
+    gtk_init_check_ok = gtk_init_check(&argc, &argv);
+
+
     if (error != NULL)
     {
-        if(error->message)
-        {   /* checking for MacOS X -psn_0_* errors*/
-            char* s = g_strrstr(error->message,"-psn_0_");
-            if(!s)
-            {
-                g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
-                        argv[0], error->message, argv[0]);
-                exit(EXIT_FAILURE);
-            }
+        /* checking for MacOS X -psn_0_* errors*/
+        if(error->message && !g_strrstr(error->message,"-psn_0_")) {
+            g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
+                       argv[0], error->message, argv[0]);
+            exit(EXIT_FAILURE);
         }
-    }
 
-    if (!gtk_init_check_ok) {
-        if (argc < 2) {
+        if (!gtk_init_check_ok && argc < 2) {
             /* GTK check failed, and no arguments passed to indicate
                that user is intending to only remote control a running
                session */
@@ -707,7 +707,7 @@ main(gint argc, gchar ** argv)
         handle_cmd_line_options(&options, TRUE);
 
         /* we could be running headless, so GTK probably wont matter */
-        if (options.headless != 1)
+        if (options.headless == FALSE)
             exit(EXIT_SUCCESS);
     }
 
@@ -723,7 +723,7 @@ main(gint argc, gchar ** argv)
 
     mowgli_init();
 
-    if (options.headless != 1)
+    if (options.headless == FALSE)
     {
       ui_main_check_theme_engine();
 
@@ -752,7 +752,7 @@ main(gint argc, gchar ** argv)
     init_dbus();
 #endif
 
-    if (options.headless != 1)
+    if (options.headless == FALSE)
     {
         bmp_set_default_icon();
 #ifdef GDK_WINDOWING_QUARTZ
@@ -781,7 +781,7 @@ main(gint argc, gchar ** argv)
      */
     mainwin_setup_menus();
 
-    if (options.headless != 1)
+    if (options.headless == FALSE)
     {
         ui_main_set_initial_volume();
 
