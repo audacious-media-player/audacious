@@ -41,7 +41,7 @@ AC_PROG_CXX
 AC_ISC_POSIX
 AC_C_BIGENDIAN
 
-test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -Wall -pipe"
+test "x$GCC" = "xyes" && CFLAGS="$CFLAGS -Wall -pipe"
 
 dnl Check for assembler
 
@@ -132,10 +132,10 @@ dnl ========================
 AC_ARG_ENABLE(ipv6,
 	[  --enable-ipv6		  enable IPv6 support (default=no)],
 			enable_ipv6=$enableval, enable_ipv6=no)
-if test "x$enable_ipv6" = xyes; then
+if test "x$enable_ipv6" = "xyes"; then
     AC_DEFINE(USE_IPV6,, [Define if building with IPv6 support] )
 fi
-AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = xyes)
+AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = "xyes")
 AC_SUBST(USE_IPV6)
 
 dnl PCH support
@@ -143,7 +143,7 @@ dnl ========================
 AC_ARG_ENABLE(pch,
 	[  --enable-pch                   use GCC precompiled headers (experimental) (default=no)],
 			enable_pch=$enableval, enable_pch=no)
-if test "x$enable_pch" = xyes; then
+if test "x$enable_pch" = "xyes"; then
    PCH="pch"
 fi
 AC_SUBST(PCH)
@@ -183,7 +183,7 @@ if test "x$enable_chardet" = "xyes"; then
     AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled] )
     AC_CHECK_LIB(udet_c, detectCharset, [AC_DEFINE(HAVE_UDET, 1,[Define if the system has Mozilla universal character detector library]) CHARDET_LIBS=["$CHARDET_LIBS -ludet -ludet_c"]])
 fi
-AM_CONDITIONAL(USE_CHARDET,test "x$enable_chardet" = xyes)
+AM_CONDITIONAL(USE_CHARDET,test "x$enable_chardet" = "xyes")
 AC_SUBST(USE_CHARDET)
 AC_SUBST(CHARDET_LIBS)
 AC_SUBST(SUBDIR_GUESS)
@@ -398,9 +398,9 @@ AC_SUBST(ARCH_DEFINES)
 
 dnl XXX delete ASAP -nenolod
 AM_CONDITIONAL(ARCH_X86, test "x$arch_type" = "xix86")
-AM_CONDITIONAL(USE_X86ASM, test "x$x86_asm" = xyes)
-AM_CONDITIONAL(HAVE_SOLARIS, test "x$have_solaris" = xyes)
-AM_CONDITIONAL(HAVE_SUN, test "x$have_sun" = xyes)
+AM_CONDITIONAL(USE_X86ASM, test "x$x86_asm" = "xyes")
+AM_CONDITIONAL(HAVE_SOLARIS, test "x$have_solaris" = "xyes")
+AM_CONDITIONAL(HAVE_SUN, test "x$have_sun" = "xyes")
 
 plugindir="$libdir/audacious"
 AC_SUBST(plugindir)
@@ -437,12 +437,12 @@ AC_SUBST(TRANSPORT_PLUGIN_DIR)
 AC_SUBST(pluginsubs)
 
 dnl setup rpath if prefix or exec-prefix is specified
-if test "$prefix" != "NONE" || test "$exec_prefix" != "NONE" ; then
-	test x"`$CC -dM -E - </dev/null | grep __ELF__`" != x"" && RPATH="-Wl,-rpath,$libdir"
+if test "x$prefix" != "xNONE" || test "x$exec_prefix" != "xNONE" ; then
+	test "x`$CC -dM -E - </dev/null | grep __ELF__`" != "x" && RPATH="-Wl,-rpath,$libdir"
 fi
 
 dnl XXX Work around some autoconf bugs.
-if test "$prefix" = "NONE"; then
+if test "x$prefix" = "xNONE"; then
         prefix="${ac_default_prefix}"
 fi
 
@@ -471,7 +471,7 @@ AM_PATH_XML2(2.0.0, , [
        have_xspf="no"
 ])
 
-if test "$have_xspf" = "yes"; then
+if test "x$have_xspf" = "xyes"; then
        AC_DEFINE(HAVE_XSPF_PLAYLIST, 1, [Define if XSPF playlists are available.])
 fi
 
@@ -512,7 +512,7 @@ echo "Configuration:"
 echo
 echo "  Install path:                           ${prefix}"
 
-if test "$BEEP_PATH" != "no"; then
+if test "x$BEEP_PATH" != "xno"; then
     echo "  Current Audacious executable:           $BEEP_PATH"
 fi
 
