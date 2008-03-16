@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-03-13 17:12+0100\n"
-"PO-Revision-Date: 2008-02-19 14:48+0900\n"
+"PO-Revision-Date: 2008-03-16 15:04+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -217,7 +217,7 @@ msgstr ""
 
 #: src/audacious/pluginenum.c:819
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
+msgstr "モジュール読み込みがサポートされていません! プラグインは読み込まれません.\n"
 
 #: src/audacious/signals.c:46
 msgid ""
@@ -476,7 +476,7 @@ msgstr "Audacious イコライザ"
 #: src/audacious/ui_equalizer.c:817
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "Winamp EQF ファイル '%s' のインポートエラー"
 
 #: src/audacious/ui_equalizer.c:1183
 msgid "Presets"
@@ -1261,7 +1261,7 @@ msgstr "モノラル"
 
 #: src/audacious/ui_main.c:1032
 msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
+msgstr "再生されるトラックがない時間へは移動できません.\n"
 
 #: src/audacious/ui_main.c:1047 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
@@ -2351,7 +2351,6 @@ msgid "Use software volume control"
 msgstr "ソフトウェアボリュームコントロールを使う"
 
 #: src/audacious/ui_preferences.c:232
-#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
@@ -2970,64 +2969,62 @@ msgstr "ファイルの追加/URL を開く"
 
 #: src/libeggsmclient/eggdesktopfile.c:139
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "有効な .desktop ファイルではありません"
 
 #: src/libeggsmclient/eggdesktopfile.c:161
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "認識できないデスクトップファイルヴァージョン '%s'"
 
 #: src/libeggsmclient/eggdesktopfile.c:868
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "%s を開始"
 
 #: src/libeggsmclient/eggdesktopfile.c:1004
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "アプリケーションはコマンドライン上のドキュメントを受け付けません"
 
 #: src/libeggsmclient/eggdesktopfile.c:1072
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "認識できないローンチオプション: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1274
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "'Type=Link' デスクトップエントリにドキュメント URI を渡せません"
 
 #: src/libeggsmclient/eggdesktopfile.c:1293
 msgid "Not a launchable item"
-msgstr ""
+msgstr "ローンチ可能なアイテムではありません"
 
 #: src/libeggsmclient/eggsmclient.c:183
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "セッションマネージャとの接続を無効にする"
 
 #: src/libeggsmclient/eggsmclient.c:186
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "保存された構成を含むファイルを指定する"
 
 #: src/libeggsmclient/eggsmclient.c:186
-#, fuzzy
 msgid "FILE"
-msgstr "ファイル..."
+msgstr "ファイル"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "Specify session management ID"
-msgstr ""
+msgstr "セッションマネージメント ID を指定する"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:225
 msgid "Session Management Options"
-msgstr ""
+msgstr "セッションマネージメントオプション"
 
 #: src/libeggsmclient/eggsmclient.c:226
-#, fuzzy
 msgid "Show Session Management options"
-msgstr "ウィンドウマネージャ装飾を表示する"
+msgstr "セッションマネージメントオプションを表示する"
 
 #~ msgid "Error in Audacious."
 #~ msgstr "Audacious エラー"
