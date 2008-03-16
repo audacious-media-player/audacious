@@ -94,7 +94,7 @@
 gboolean has_x11_connection = FALSE;    /* do we have an X11 connection? */
 const gchar *application_name = N_("Audacious");
 
-struct _BmpCmdLineOpt {
+struct _AudCmdLineOpt {
     gchar **filenames;
     gint session;
     gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
@@ -108,9 +108,9 @@ struct _BmpCmdLineOpt {
 	gboolean macpack;
 };
 
-typedef struct _BmpCmdLineOpt BmpCmdLineOpt;
+typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
-BmpCmdLineOpt options;
+AudCmdLineOpt options;
 
 BmpConfig cfg;
 
@@ -1092,7 +1092,7 @@ aud_start_playback(gpointer unused)
 }
 
 static void
-handle_cmd_line_options(BmpCmdLineOpt * options,
+handle_cmd_line_options(AudCmdLineOpt * options,
                         gboolean remote)
 {
     gchar **filenames = options->filenames;
@@ -1400,7 +1400,7 @@ main(gint argc, gchar ** argv)
 
     gtk_init_check_ok = gtk_init_check(&argc, &argv);
 
-    memset(&options, '\0', sizeof(BmpCmdLineOpt));
+    memset(&options, '\0', sizeof(AudCmdLineOpt));
     options.session = -1;
 
     context = g_option_context_new(_("- play multimedia files"));
