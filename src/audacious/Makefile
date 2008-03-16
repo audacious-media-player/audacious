@@ -3,8 +3,9 @@ include ../../extra.mk
 SUBDIRS = ${INTL_OBJECTIVE}
 
 PROG = audacious${PROG_SUFFIX}
-SRCS = af_equalizer.c						\
+SRCS = af_equalizer.c					\
        auddrct.c						\
+       bmpconfig.c						\
        build_stamp.c					\
        configdb.c						\
        custom_uri.c						\
@@ -12,7 +13,7 @@ SRCS = af_equalizer.c						\
        dnd.c							\
        dock.c							\
        effect.c							\
-       equalizer_flow.c						\
+       equalizer_flow.c					\
        eventqueue.c						\
        fft.c							\
        flow.c							\
@@ -49,7 +50,7 @@ SRCS = af_equalizer.c						\
        ui_fileinfopopup.c				\
        ui_fileopener.c					\
        ui_jumptotrack.c					\
-       ui_jumptotrack_cache.c					\
+       ui_jumptotrack_cache.c			\
        ui_main.c						\
        ui_main_evlisteners.c			\
        ui_manager.c						\
@@ -86,37 +87,38 @@ ifdef USE_DBUS
 SRCS += dbus.c
 endif
 
-INCLUDES = auddrct.h		\
-	   configdb.h		\
-	   custom_uri.h		\
-	   dbus.h		\
-	   discovery.h		\
-	   dbus-service.h	\
-	   eventqueue.h		\
-	   flow.h		\
-	   formatter.h		\
-	   rcfile.h		\
-	   i18n.h		\
-	   input.h		\
-	   hook.h		\
-	   main.h		\
-	   mime.h		\
-	   output.h		\
-	   playback.h		\
-	   playlist.h		\
-	   playlist_container.h	\
-	   plugin.h		\
-	   strings.h		\
-	   tuple.h		\
-	   tuple_formatter.h	\
-	   tuple_compiler.h	\
-	   ui_fileinfopopup.h	\
-	   ui_plugin_menu.h	\
-	   ui_preferences.h	\
-	   util.h		\
-	   vfs.h		\
-	   vfs_buffer.h		\
-	   vfs_buffered_file.h
+INCLUDES = auddrct.h			\
+           bmpconfig.h			\
+           configdb.h			\
+           custom_uri.h			\
+           dbus.h				\
+           discovery.h			\
+           dbus-service.h		\
+           eventqueue.h			\
+           flow.h				\
+           formatter.h			\
+           rcfile.h				\
+           i18n.h				\
+           input.h				\
+           hook.h				\
+           main.h				\
+           mime.h				\
+           output.h				\
+           playback.h			\
+           playlist.h			\
+           playlist_container.h	\
+           plugin.h				\
+           strings.h			\
+           tuple.h				\
+           tuple_formatter.h	\
+           tuple_compiler.h		\
+           ui_fileinfopopup.h	\
+           ui_plugin_menu.h		\
+           ui_preferences.h		\
+           util.h				\
+           vfs.h				\
+           vfs_buffer.h			\
+           vfs_buffered_file.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\
@@ -133,7 +135,7 @@ DATA = images/about-logo.png				\
        images/playback.png					\
        images/playlist.png					\
        images/plugins.png					\
-       images/replay_gain.png					\
+       images/replay_gain.png				\
        ui/equalizer.ui						\
        ui/mainwin.ui						\
        ui/playlist.ui						\
@@ -156,30 +158,30 @@ pre-depend: ${DBUS_BINDINGS}
 
 CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${MOWGLI_CFLAGS}		\
-	    ${GTK_CFLAGS}		\
-	    ${BEEP_DEFINES}		\
-	    ${ARCH_DEFINES}		\
-	    ${DBUS_CFLAGS}		\
+	    ${GTK_CFLAGS}			\
+	    ${BEEP_DEFINES}			\
+	    ${ARCH_DEFINES}			\
+	    ${DBUS_CFLAGS}			\
 	    ${samplerate_CFLAGS}	\
-	    ${REGEX_CFLAGS}		\
+	    ${REGEX_CFLAGS}			\
 	    ${LIBMCS_CFLAGS}		\
-	    ${SIMD_CFLAGS}		\
+	    ${SIMD_CFLAGS}			\
 	    -D_AUDACIOUS_CORE		\
-	    -I../libSAD			\
+	    -I../libSAD				\
 	    -I../libeggsmclient		\
-	    -I.. -I../..		\
+	    -I.. -I../..			\
 	    -I./intl
 
-LIBS += ${LDADD}		\
-	${LIBINTL}		\
-	${samplerate_LIBS}	\
-	../libguess/libguess.a	\
-	../libSAD/libSAD.a	\
-	../libeggsmclient/libeggsmclient.a ${SM_LIBS} \
-	${GTK_LIBS}		\
-	${DBUS_LIBS}		\
-	${MOWGLI_LIBS}		\
-	${LIBMCS_LIBS}		\
+LIBS += ${LDADD}									\
+	${LIBINTL}										\
+	${samplerate_LIBS}								\
+	../libguess/libguess.a							\
+	../libSAD/libSAD.a								\
+	../libeggsmclient/libeggsmclient.a ${SM_LIBS}	\
+	${GTK_LIBS}										\
+	${DBUS_LIBS}									\
+	${MOWGLI_LIBS}									\
+	${LIBMCS_LIBS}									\
 	${REGEX_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS}

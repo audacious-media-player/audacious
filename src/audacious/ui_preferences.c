@@ -46,7 +46,6 @@
 #include "visualization.h"
 #include "playlist.h"
 
-#include "main.h"
 #include "ui_skinned_textbox.h"
 #include "strings.h"
 #include "util.h"

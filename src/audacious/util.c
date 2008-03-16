@@ -49,7 +49,6 @@
 #endif
 
 #include "input.h"
-#include "main.h"
 #include "playback.h"
 #include "strings.h"
 
@@ -1076,3 +1075,12 @@ smart_realloc(gpointer ptr, gsize *size)
     return ptr;
 }
 
+void
+make_directory(const gchar * path, mode_t mode)
+{
+    if (g_mkdir_with_parents(path, mode) == 0)
+        return;
+
+    g_printerr(_("Could not create directory (%s): %s\n"), path,
+               g_strerror(errno));
+}

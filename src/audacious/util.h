@@ -110,6 +110,8 @@ SAD_sample_format sadfmt_from_afmt(AFormat fmt);
 /* minimizes number of realloc's */
 gpointer smart_realloc(gpointer ptr, gsize *size);
 
+void make_directory(const gchar * path, mode_t mode);
+
 G_END_DECLS
 
 #endif
