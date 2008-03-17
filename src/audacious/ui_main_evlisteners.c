@@ -26,11 +26,29 @@
 #include "playlist.h"
 #include "playlist_evmessages.h"
 #include "playlist_evlisteners.h"
+#include "visualization.h"
 
 #include "ui_main.h"
 #include "ui_equalizer.h"
+#include "ui_skinned_playstatus.h"
 #include "ui_skinned_textbox.h"
 #include "ui_playlist.h"
+
+static gint song_info_timeout_source = 0;
+static gint update_vis_timeout_source = 0;
+
+/* XXX: there has to be a better way than polling here! */
+/* also: where should this function go? should it stay here? --mf0102 */
+static gboolean
+update_vis_func(gpointer unused)
+{
+    if (!playback_get_playing())
+        return FALSE;
+
+    input_update_vis(playback_get_time());
+
+    return TRUE;
+}
 
 static void
 ui_main_evlistener_title_change(gpointer hook_data, gpointer user_data)
@@ -76,6 +94,86 @@ ui_main_evlistener_playback_initiate(gpointer hook_data, gpointer user_data)
     playback_initiate();
 }
 
+static void
+ui_main_evlistener_playback_begin(gpointer hook_data, gpointer user_data)
+{
+    ui_vis_clear_data(mainwin_vis);
+    ui_svis_clear_data(mainwin_svis);
+    mainwin_disable_seekbar();
+    mainwin_update_song_info();
+
+    /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
+    song_info_timeout_source = g_timeout_add(1000,
+        (GSourceFunc) mainwin_update_song_info, NULL);
+
+    if (cfg.player_shaded) {
+        gtk_widget_show(mainwin_stime_min);
+        gtk_widget_show(mainwin_stime_sec);
+        gtk_widget_show(mainwin_sposition);
+    } else {
+        gtk_widget_show(mainwin_minus_num);
+        gtk_widget_show(mainwin_10min_num);
+        gtk_widget_show(mainwin_min_num);
+        gtk_widget_show(mainwin_10sec_num);
+        gtk_widget_show(mainwin_sec_num);
+        gtk_widget_show(mainwin_position);
+    }
+
+    update_vis_timeout_source = g_timeout_add(10,
+    (GSourceFunc) update_vis_func, NULL);
+
+    vis_playback_start();
+
+    ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+}
+
+static void
+ui_main_evlistener_playback_stop(gpointer hook_data, gpointer user_data)
+{
+    if (song_info_timeout_source)
+        g_source_remove(song_info_timeout_source);
+
+    vis_playback_stop();
+    free_vis_data();
+
+    ui_skinned_playstatus_set_buffering(mainwin_playstatus, FALSE);
+}
+
+static void
+ui_main_evlistener_playback_pause(gpointer hook_data, gpointer user_data)
+{
+    ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
+}
+
+static void
+ui_main_evlistener_playback_unpause(gpointer hook_data, gpointer user_data)
+{
+    ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+}
+
+static void
+ui_main_evlistener_playback_seek(gpointer hook_data, gpointer user_data)
+{
+    free_vis_data();
+}
+
+static void
+ui_main_evlistener_playback_play_file(gpointer hook_data, gpointer user_data)
+{
+    if (cfg.random_skin_on_play)
+        skin_set_random_skin();
+}
+
+static void
+ui_main_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
+{
+     PlaylistEventInfoChange *msg = (PlaylistEventInfoChange *) hook_data;
+
+     mainwin_set_song_info(msg->bitrate, msg->samplerate, msg->channels);
+
+     g_free(msg);
+}
+
 void
 ui_main_evlistener_init(void)
 {
@@ -83,5 +181,12 @@ ui_main_evlistener_init(void)
     hook_associate("hide seekbar", ui_main_evlistener_hide_seekbar, NULL);
     hook_associate("volume set", ui_main_evlistener_volume_change, NULL);
     hook_associate("playback initiate", ui_main_evlistener_playback_initiate, NULL);
+    hook_associate("playback begin", ui_main_evlistener_playback_begin, NULL);
+    hook_associate("playback stop", ui_main_evlistener_playback_stop, NULL);
+    hook_associate("playback pause", ui_main_evlistener_playback_pause, NULL);
+    hook_associate("playback unpause", ui_main_evlistener_playback_unpause, NULL);
+    hook_associate("playback seek", ui_main_evlistener_playback_seek, NULL);
+    hook_associate("playback play file", ui_main_evlistener_playback_play_file, NULL);
+    hook_associate("playlist info change", ui_main_evlistener_playlist_info_change, NULL);
 }
 

@@ -40,38 +40,17 @@
 #include <dirent.h>
 
 #include "configdb.h"
-
 #include "eventqueue.h"
 #include "hook.h"
 #include "input.h"
-#include "main.h"
 #include "output.h"
 #include "playlist.h"
 #include "pluginenum.h"
-#include "skin.h"
 #include "ui_equalizer.h"
-#include "ui_main.h"
-#include "ui_skinned_playstatus.h"
 #include "util.h"
-#include "visualization.h"
 
 #include "playback.h"
 #include "playback_evlisteners.h"
-
-static gint song_info_timeout_source = 0;
-static gint update_vis_timeout_source = 0;
-
-/* XXX: there has to be a better way than polling here! */
-static gboolean
-playback_update_vis_func(gpointer unused)
-{
-    if (!playback_get_playing())
-        return FALSE;
-
-    input_update_vis(playback_get_time());
-
-    return TRUE;
-}
 
 static gint
 playback_set_pb_ready(InputPlayback *playback)
@@ -194,10 +173,6 @@ playback_initiate(void)
     if (playback_get_playing())
         playback_stop();
 
-    ui_vis_clear_data(mainwin_vis);
-    ui_svis_clear_data(mainwin_svis);
-    mainwin_disable_seekbar();
-
     entry = playlist_get_entry_to_play(playlist);
     g_return_if_fail(entry != NULL);
 #ifdef USE_DBUS
@@ -214,29 +189,6 @@ playback_initiate(void)
 //    }
 
     playlist_check_pos_current(playlist);
-    mainwin_update_song_info();
-
-    /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
-    song_info_timeout_source = g_timeout_add(1000,
-        (GSourceFunc) mainwin_update_song_info, NULL);
-
-    update_vis_timeout_source = g_timeout_add(10,
-        (GSourceFunc) playback_update_vis_func, NULL);
-
-    if (cfg.player_shaded) {
-        gtk_widget_show(mainwin_stime_min);
-        gtk_widget_show(mainwin_stime_sec);
-        gtk_widget_show(mainwin_sposition);
-    } else {
-        gtk_widget_show(mainwin_minus_num);
-        gtk_widget_show(mainwin_10min_num);
-        gtk_widget_show(mainwin_min_num);
-        gtk_widget_show(mainwin_10sec_num);
-        gtk_widget_show(mainwin_sec_num);
-        gtk_widget_show(mainwin_position);
-    }
-
-    vis_playback_start();
 
     hook_call("playback begin", entry);
 }
@@ -265,19 +217,12 @@ playback_pause(void)
     else
         hook_call("playback unpause", NULL);
 
-    g_return_if_fail(mainwin_playstatus != NULL);
-
-    if (ip_data.paused) {
-        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
 #ifdef USE_DBUS
+    if (ip_data.paused)
         mpris_emit_status_change(mpris, MPRIS_STATUS_PAUSE);
-#endif
-    } else {
-        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
-#ifdef USE_DBUS
+    else
         mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
 #endif
-    }
 }
 
 void
@@ -309,10 +254,10 @@ playback_stop(void)
         playback->set_pb_change(playback);
 
         if (playback->plugin->stop)
-	{
-	    plugin_set_current((Plugin *)(playback->plugin));
+        {
+            plugin_set_current((Plugin *)(playback->plugin));
             playback->plugin->stop(playback);
-	}
+        }
 
         if (playback->thread != NULL)
         {
@@ -320,7 +265,6 @@ playback_stop(void)
             playback->thread = NULL;
         }
 
-        free_vis_data();
         ip_data.paused = FALSE;
 
         playback_free(playback);
@@ -332,13 +276,7 @@ playback_stop(void)
 
     ip_data.playing = FALSE;
 
-    if (song_info_timeout_source)
-        g_source_remove(song_info_timeout_source);
-
-    vis_playback_stop();
-
-    g_return_if_fail(mainwin_playstatus != NULL);
-    ui_skinned_playstatus_set_buffering(mainwin_playstatus, FALSE);
+    hook_call("playback stop", NULL);
 }
 
 static void
@@ -443,9 +381,6 @@ playback_play_file(PlaylistEntry *entry)
         return FALSE;
     }
 
-    if (cfg.random_skin_on_play)
-        skin_set_random_skin();
-
     if (!entry->decoder)
     {
         ProbeResult *pr = input_check_file(entry->filename, FALSE);
@@ -483,6 +418,8 @@ playback_play_file(PlaylistEntry *entry)
 #ifdef USE_DBUS
     mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
 #endif
+
+    hook_call("playback play file", NULL);
 
     return TRUE;
 }
@@ -524,7 +461,6 @@ playback_seek(gint time)
     plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->seek(playback, time);
     playback->set_pb_change(playback);
-    free_vis_data();
     
     if (restore_pause)
     {
