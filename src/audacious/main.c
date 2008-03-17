@@ -366,10 +366,33 @@ aud_start_playback(gpointer unused)
 }
 
 static void
-handle_cmd_line_options(AudCmdLineOpt * options,
-                        gboolean remote)
+parse_cmd_line_options(gint *argc, gchar ***argv)
 {
-    gchar **filenames = options->filenames;
+    GOptionContext *context;
+    GError *error = NULL;
+
+    memset(&options, '\0', sizeof(AudCmdLineOpt));
+    options.session = -1;
+
+    context = g_option_context_new(_("- play multimedia files"));
+    g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
+    g_option_context_add_group(context, gtk_get_option_group(FALSE));
+    g_option_context_add_group(context, egg_sm_client_get_option_group());
+    g_option_context_parse(context, argc, argv, &error);
+    if (!g_option_context_parse(context, argc, argv, &error))
+        /* checking for MacOS X -psn_0_* errors*/
+        if (error->message && !g_strrstr(error->message,"-psn_0_"))
+        {
+            g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
+                       (*argv)[0], error->message, (*argv)[0]);
+            exit(EXIT_FAILURE);
+        }
+}
+
+static void
+handle_cmd_line_options()
+{
+    gchar **filenames = options.filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
     gboolean is_running = audacious_remote_is_running(session);
@@ -377,7 +400,7 @@ handle_cmd_line_options(AudCmdLineOpt * options,
     gboolean is_running = FALSE;
 #endif
 
-    if (options->version)
+    if (options.version)
     {
         dump_version();
         exit(EXIT_SUCCESS);
@@ -415,7 +438,7 @@ handle_cmd_line_options(AudCmdLineOpt * options,
 
             fns = g_list_reverse(fns);
 
-            if (options->load_skins)
+            if (options.load_skins)
             {
                 audacious_remote_set_skin(session, filenames[0]);
                 skin_install_skin(filenames[0]);
@@ -424,13 +447,13 @@ handle_cmd_line_options(AudCmdLineOpt * options,
             {
                 GList *i;
 
-                if (options->enqueue_to_temp)
+                if (options.enqueue_to_temp)
                     audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
 
-                if (options->enqueue && options->play)
+                if (options.enqueue && options.play)
                     pos = audacious_remote_get_playlist_length(session);
 
-                if (!options->enqueue)
+                if (!options.enqueue)
                 {
                     audacious_remote_playlist_clear(session);
                     audacious_remote_stop(session);
@@ -439,11 +462,11 @@ handle_cmd_line_options(AudCmdLineOpt * options,
                 for (i = fns; i != NULL; i = i->next)
                     audacious_remote_playlist_add_url_string(session, i->data);
 
-                if (options->enqueue && options->play &&
+                if (options.enqueue && options.play &&
                     audacious_remote_get_playlist_length(session) > pos)
                     audacious_remote_set_playlist_pos(session, pos);
 
-                if (!options->enqueue)
+                if (!options.enqueue)
                     audacious_remote_play(session);
             }
 
@@ -453,31 +476,31 @@ handle_cmd_line_options(AudCmdLineOpt * options,
             g_strfreev(filenames);
         } /* filename */
 
-        if (options->rew)
+        if (options.rew)
             audacious_remote_playlist_prev(session);
 
-        if (options->play)
+        if (options.play)
             audacious_remote_play(session);
 
-        if (options->pause)
+        if (options.pause)
             audacious_remote_pause(session);
 
-        if (options->stop)
+        if (options.stop)
             audacious_remote_stop(session);
 
-        if (options->fwd)
+        if (options.fwd)
             audacious_remote_playlist_next(session);
 
-        if (options->play_pause)
+        if (options.play_pause)
             audacious_remote_play_pause(session);
 
-        if (options->show_jump_box)
+        if (options.show_jump_box)
             audacious_remote_show_jtf_box(session);
 
-        if (options->mainwin)
+        if (options.mainwin)
             audacious_remote_main_win_toggle(session, TRUE);
 
-        if (options->activate)
+        if (options.activate)
             audacious_remote_activate(session);
 
         exit(EXIT_SUCCESS);
@@ -515,13 +538,13 @@ handle_cmd_line_options(AudCmdLineOpt * options,
             fns = g_list_reverse(fns);
 
             {
-                if (options->enqueue_to_temp)
+                if (options.enqueue_to_temp)
                     drct_pl_enqueue_to_temp(filenames[0]);
 
-                if (options->enqueue && options->play)
+                if (options.enqueue && options.play)
                     pos = drct_pl_get_length();
 
-                if (!options->enqueue)
+                if (!options.enqueue)
                 {
                     drct_pl_clear();
                     drct_stop();
@@ -529,11 +552,11 @@ handle_cmd_line_options(AudCmdLineOpt * options,
 
                 drct_pl_add(fns);
 
-                if (options->enqueue && options->play &&
+                if (options.enqueue && options.play &&
                     drct_pl_get_length() > pos)
                     drct_pl_set_pos(pos);
 
-                if (!options->enqueue)
+                if (!options.enqueue)
                     g_idle_add(aud_start_playback, NULL);
             }
 
@@ -543,35 +566,35 @@ handle_cmd_line_options(AudCmdLineOpt * options,
             g_strfreev(filenames);
         } /* filename */
 
-        if (options->rew)
+        if (options.rew)
             drct_pl_prev();
 
-        if (options->play)
+        if (options.play)
             drct_play();
 
-        if (options->pause)
+        if (options.pause)
             drct_pause();
 
-        if (options->stop)
+        if (options.stop)
             drct_stop();
 
-        if (options->fwd)
+        if (options.fwd)
             drct_pl_next();
 
-        if (options->play_pause) {
+        if (options.play_pause) {
             if (drct_get_paused())
                 drct_play();
             else
                 drct_pause();
         }
 
-        if (options->show_jump_box)
+        if (options.show_jump_box)
             drct_jtf_show();
 
-        if (options->mainwin)
+        if (options.mainwin)
             drct_main_win_toggle(TRUE);
 
-        if (options->activate)
+        if (options.activate)
             drct_activate();
     } /* !is_running */
 }
@@ -639,18 +662,13 @@ load_extra_playlist(const gchar * path, const gchar * basename,
 gint
 main(gint argc, gchar ** argv)
 {
-    gboolean gtk_init_check_ok;
     Playlist *playlist;
-    GOptionContext *context;
-    GError *error = NULL;
 
     /* glib-2.13.0 requires g_thread_init() to be called before all
        other GLib functions */
     g_thread_init(NULL);
     if (!g_thread_supported()) {
-        g_printerr(_("Sorry, threads isn't supported on your platform.\n\n"
-                     "If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
-                     "installed LinuxThreads you need to recompile Glib & GTK+.\n"));
+        g_printerr(_("Sorry, threads aren't supported on your platform.\n"));
         exit(EXIT_FAILURE);
     }
 
@@ -674,68 +692,40 @@ main(gint argc, gchar ** argv)
     mutex_scan = g_mutex_new();
     gtk_rc_add_default_file(bmp_paths[BMP_PATH_GTKRC_FILE]);
 
-    memset(&options, '\0', sizeof(AudCmdLineOpt));
-    options.session = -1;
-
-    context = g_option_context_new(_("- play multimedia files"));
-    g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
-    g_option_context_add_group(context, gtk_get_option_group(FALSE));
-    g_option_context_add_group(context, egg_sm_client_get_option_group());
-    g_option_context_parse(context, &argc, &argv, &error);
-
-
-    gtk_init_check_ok = gtk_init_check(&argc, &argv);
-
-
-    if (error != NULL)
-    {
-        /* checking for MacOS X -psn_0_* errors*/
-        if(error->message && !g_strrstr(error->message,"-psn_0_")) {
-            g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
-                       argv[0], error->message, argv[0]);
-            exit(EXIT_FAILURE);
-        }
-
-        if (!gtk_init_check_ok && argc < 2) {
-            /* GTK check failed, and no arguments passed to indicate
-               that user is intending to only remote control a running
-               session */
-            g_printerr(_("%s: Unable to open display, exiting.\n"), argv[0]);
-            exit(EXIT_FAILURE);
-        }
-
-        handle_cmd_line_options(&options, TRUE);
-
-        /* we could be running headless, so GTK probably wont matter */
-        if (options.headless == FALSE)
-            exit(EXIT_SUCCESS);
-    }
+    parse_cmd_line_options(&argc, &argv);
 
     if (options.no_log == FALSE)
         bmp_setup_logger();
 
-    signal_handlers_init();
+    if (!gtk_init_check(&argc, &argv) && options.headless == FALSE) {
+        /* GTK check failed, and no arguments passed to indicate
+           that user is intending to only remote control a running
+           session */
+        g_printerr(_("%s: Unable to open display, exiting.\n"), argv[0]);
+        exit(EXIT_FAILURE);
+    }
 
     g_random_set_seed(time(NULL));
     SAD_dither_init_rand((gint32)time(NULL));
 
     bmp_config_load();
 
+    signal_handlers_init();
     mowgli_init();
 
     if (options.headless == FALSE)
     {
-      ui_main_check_theme_engine();
+        ui_main_check_theme_engine();
 
-      /* register icons in stock
-         NOTE: should be called before UIManager */
-      register_aud_stock_icons();
+        /* register icons in stock
+           NOTE: should be called before UIManager */
+        register_aud_stock_icons();
 
-      /* UIManager
-         NOTE: this needs to be called before plugin init, cause
-         plugin init functions may want to add custom menu entries */
-      ui_manager_init();
-      ui_manager_create_menus();
+        /* UIManager
+           NOTE: this needs to be called before plugin init, cause
+           plugin init functions may want to add custom menu entries */
+        ui_manager_init();
+        ui_manager_create_menus();
     }
 
     plugin_system_init();
@@ -746,7 +736,7 @@ main(gint argc, gchar ** argv)
     playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(playlist, cfg.playlist_position);
 
-    handle_cmd_line_options(&options, TRUE);
+    handle_cmd_line_options();
 
 #ifdef USE_DBUS
     init_dbus();
