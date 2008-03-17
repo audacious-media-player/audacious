@@ -736,6 +736,11 @@ main(gint argc, gchar ** argv)
     playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(playlist, cfg.playlist_position);
 
+    /* Load extra playlists */
+    if (!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
+                     playlist, NULL))
+        g_warning("Could not load extra playlists\n");
+
     handle_cmd_line_options();
 
 #ifdef USE_DBUS
@@ -757,22 +762,13 @@ main(gint argc, gchar ** argv)
         }
 
         GDK_THREADS_ENTER();
-    }
 
-    /* Load extra playlists */
-    if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
-            playlist, NULL)) {
-        g_warning("Could not load extra playlists\n");
-    }
+        /* this needs to be called after all 3 windows are created and
+         * input plugins are setup'ed 
+         * but not if we're running headless --nenolod
+         */
+        mainwin_setup_menus();
 
-    /* this needs to be called after all 3 windows are created and
-     * input plugins are setup'ed 
-     * but not if we're running headless --nenolod
-     */
-    mainwin_setup_menus();
-
-    if (options.headless == FALSE)
-    {
         ui_main_set_initial_volume();
 
         /* FIXME: delayed, because it deals directly with the plugin
