@@ -97,14 +97,19 @@ ui_main_evlistener_playback_initiate(gpointer hook_data, gpointer user_data)
 static void
 ui_main_evlistener_playback_begin(gpointer hook_data, gpointer user_data)
 {
+    PlaylistEntry *entry = (PlaylistEntry*)hook_data;
+    g_return_if_fail(entry != NULL);
+
+    equalizerwin_load_auto_preset(entry->filename);
+    input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                 cfg.equalizer_bands);
+    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                  cfg.equalizer_bands);
+
     ui_vis_clear_data(mainwin_vis);
     ui_svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
     mainwin_update_song_info();
-
-    /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
-    song_info_timeout_source = g_timeout_add(1000,
-        (GSourceFunc) mainwin_update_song_info, NULL);
 
     if (cfg.player_shaded) {
         gtk_widget_show(mainwin_stime_min);
@@ -119,8 +124,11 @@ ui_main_evlistener_playback_begin(gpointer hook_data, gpointer user_data)
         gtk_widget_show(mainwin_position);
     }
 
-    update_vis_timeout_source = g_timeout_add(10,
-    (GSourceFunc) update_vis_func, NULL);
+    song_info_timeout_source = 
+        g_timeout_add_seconds(1, (GSourceFunc) mainwin_update_song_info, NULL);
+
+    update_vis_timeout_source =
+        g_timeout_add(10, (GSourceFunc) update_vis_func, NULL);
 
     vis_playback_start();
 

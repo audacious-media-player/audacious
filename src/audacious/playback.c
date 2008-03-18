@@ -46,7 +46,6 @@
 #include "output.h"
 #include "playlist.h"
 #include "pluginenum.h"
-#include "ui_equalizer.h"
 #include "util.h"
 
 #include "playback.h"
@@ -179,14 +178,6 @@ playback_initiate(void)
     mpris_emit_track_change(mpris);
 #endif
     playback_play_file(entry);
-
-//    if (playback_get_time() != -1) {
-        equalizerwin_load_auto_preset(entry->filename);
-        input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                     cfg.equalizer_bands);
-        output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                      cfg.equalizer_bands);
-//    }
 
     playlist_check_pos_current(playlist);
 
