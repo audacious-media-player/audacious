@@ -767,7 +767,7 @@ main(gint argc, gchar ** argv)
          * but not if we're running headless --nenolod
          */
         mainwin_setup_menus();
-
+        output_set_volume(((cfg.saved_volume & 0xff00) >> 8),(cfg.saved_volume & 0x00ff));
         ui_main_set_initial_volume();
 
         /* FIXME: delayed, because it deals directly with the plugin
@@ -805,7 +805,8 @@ main(gint argc, gchar ** argv)
                 int i;
                 gint l = 0, r = 0;
                 while (gtk_events_pending()) gtk_main_iteration();
-                output_get_volume(&l, &r);
+                l = (cfg.saved_volume & 0xff00)>>8;
+                r = cfg.saved_volume & 0x00ff;
                 output_set_volume(0,0);
                 playback_initiate();
 

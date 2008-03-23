@@ -172,6 +172,7 @@ BmpConfig bmp_default_config = {
     FALSE,          /* enable adaptive scaler */
     0.0,            /* preamp */
     -9.0,           /* default gain */
+    0x6464,         /* saved volume for both channels, 0x64=100 */
 #ifdef USE_SRC
     FALSE,          /* enable resampling */
     48000,          /* samplerate */
@@ -321,6 +322,7 @@ static bmp_cfg_nument bmp_numents[] = {
     {"colorize_g", &cfg.colorize_g, TRUE},
     {"colorize_b", &cfg.colorize_b, TRUE},
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
+    {"saved_volume", &cfg.saved_volume, TRUE},
 #ifdef USE_SRC
     {"src_rate", &cfg.src_rate, TRUE},
     {"src_type", &cfg.src_type, TRUE},
@@ -518,6 +520,8 @@ bmp_config_load(void)
         cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
     }
 
+    cfg_db_get_int(db,NULL, "saved_volume", &cfg.saved_volume);
+
     /* custom scale factor */
     cfg_db_get_float(db, NULL, "scale_factor", &cfg.scale_factor);
 
@@ -605,7 +609,7 @@ bmp_config_save(void)
 {
     GList *node;
     gchar *str;
-    gint i, cur_pb_time;
+    gint i, cur_pb_time, vol_l, vol_r;
     ConfigDb *db;
     GList *saved;
     Playlist *playlist = playlist_get_active();
@@ -735,7 +739,10 @@ bmp_config_save(void)
 
     cfg_db_set_int(db, NULL, "url_history_length",
                        g_list_length(cfg.url_history));
-
+    
+    input_get_volume(&vol_l,&vol_r);
+    cfg_db_set_int(db, NULL, "saved_volume", (vol_l<<8) | vol_r );
+    
     for (node = cfg.url_history, i = 1; node; node = g_list_next(node), i++) {
         str = g_strdup_printf("url_history%d", i);
         cfg_db_set_string(db, NULL, str, node->data);
