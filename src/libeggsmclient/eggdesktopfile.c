@@ -202,6 +202,7 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
       if (!exec)
 	{
 	  egg_desktop_file_free (desktop_file);
+	  g_free(type);
 	  return NULL;
 	}
 
@@ -234,6 +235,7 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
       if (!url)
 	{
 	  egg_desktop_file_free (desktop_file);
+	  g_free(type);
 	  return NULL;
 	}
       g_free (url);
@@ -242,6 +244,8 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
     desktop_file->type = EGG_DESKTOP_FILE_TYPE_DIRECTORY;
   else
     desktop_file->type = EGG_DESKTOP_FILE_TYPE_UNRECOGNIZED;
+
+  g_free(type);
 
   /* Check the Icon key */
   desktop_file->icon = g_key_file_get_string (key_file,
