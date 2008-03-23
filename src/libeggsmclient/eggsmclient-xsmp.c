@@ -56,7 +56,6 @@ typedef struct _EggSMClientXSMPClass   EggSMClientXSMPClass;
  */
 typedef enum
 {
-  XSMP_STATE_START,
   XSMP_STATE_IDLE,
   XSMP_STATE_SAVE_YOURSELF,
   XSMP_STATE_INTERACT_REQUEST,
@@ -101,6 +100,7 @@ struct _EggSMClientXSMP
   guint shutting_down : 1;
 
   /* Todo list */
+  guint waiting_to_set_initial_properties : 1;
   guint waiting_to_emit_quit : 1;
   guint waiting_to_emit_quit_cancelled : 1;
   guint waiting_to_save_myself : 1;
@@ -199,71 +199,6 @@ egg_sm_client_xsmp_new (void)
   return g_object_new (EGG_TYPE_SM_CLIENT_XSMP, NULL);
 }
 
-static void
-sm_client_xsmp_connect (EggSMClient *client)
-{
-  EggSMClientXSMP *xsmp = (EggSMClientXSMP *) client;
-  SmcCallbacks callbacks;
-  char *client_id;
-  char error_string_ret[256];
-
-  ice_init ();
-  SmcSetErrorHandler (smc_error_handler);
-
-  callbacks.save_yourself.callback      = xsmp_save_yourself;
-  callbacks.die.callback                = xsmp_die;
-  callbacks.save_complete.callback      = xsmp_save_complete;
-  callbacks.shutdown_cancelled.callback = xsmp_shutdown_cancelled;
-
-  callbacks.save_yourself.client_data      = xsmp;
-  callbacks.die.client_data                = xsmp;
-  callbacks.save_complete.client_data      = xsmp;
-  callbacks.shutdown_cancelled.client_data = xsmp;
-
-  client_id = NULL;
-  error_string_ret[0] = '\0';
-  xsmp->connection =
-    SmcOpenConnection (NULL, xsmp, SmProtoMajor, SmProtoMinor,
-		       SmcSaveYourselfProcMask | SmcDieProcMask |
-		       SmcSaveCompleteProcMask |
-		       SmcShutdownCancelledProcMask,
-		       &callbacks,
-		       xsmp->client_id, &client_id,
-		       sizeof (error_string_ret), error_string_ret);
-
-  if (!xsmp->connection)
-    {
-      g_warning ("Failed to connect to the session manager: %s\n",
-		 error_string_ret[0] ?
-		 error_string_ret : "no error message given");
-      xsmp->state = XSMP_STATE_CONNECTION_CLOSED;
-      return;
-    }
-
-  /* We expect a pointless initial SaveYourself if either (a) we
-   * didn't have an initial client ID, or (b) we DID have an initial
-   * client ID, but the server rejected it and gave us a new one.
-   */
-  if (!xsmp->client_id ||
-      (client_id && strcmp (xsmp->client_id, client_id) != 0))
-    xsmp->expecting_initial_save_yourself = TRUE;
-
-  if (client_id)
-    {
-      g_free (xsmp->client_id);
-      xsmp->client_id = g_strdup (client_id);
-      free (client_id);
-
-      gdk_threads_enter ();
-      gdk_set_sm_client_id (xsmp->client_id);
-      gdk_threads_leave ();
-
-      g_debug ("Got client ID \"%s\"", xsmp->client_id);
-    }
-
-  xsmp->state = XSMP_STATE_IDLE;
-}
-
 static gboolean
 sm_client_xsmp_set_initial_properties (gpointer user_data)
 {
@@ -272,8 +207,12 @@ sm_client_xsmp_set_initial_properties (gpointer user_data)
   GPtrArray *clone, *restart;
   char pid_str[64];
 
-  g_source_remove (xsmp->idle);
-  xsmp->idle = 0;
+  if (xsmp->idle)
+    {
+      g_source_remove (xsmp->idle);
+      xsmp->idle = 0;
+    }
+  xsmp->waiting_to_set_initial_properties = FALSE;
 
   if (egg_sm_client_get_mode () == EGG_SM_CLIENT_MODE_NO_RESTART)
     xsmp->restart_style = SmRestartNever;
@@ -347,6 +286,7 @@ sm_client_xsmp_set_initial_properties (gpointer user_data)
 		      NULL);
     }
 
+  update_pending_events (xsmp);
   return FALSE;
 }
 
@@ -378,18 +318,75 @@ sm_client_xsmp_startup (EggSMClient *client,
 			const char  *client_id)
 {
   EggSMClientXSMP *xsmp = (EggSMClientXSMP *)client;
+  SmcCallbacks callbacks;
+  char *ret_client_id;
+  char error_string_ret[256];
 
-  xsmp->state = XSMP_STATE_START;
-  if (xsmp->client_id)
-    g_free (xsmp->client_id);
   xsmp->client_id = g_strdup (client_id);
 
-  sm_client_xsmp_connect (client);
-  /* Do not initialize the properties until we reach the main.
-   * This also gives the application a chance to call 
-   * egg_set_desktop_file() before we set the initial
-   * properties.
+  ice_init ();
+  SmcSetErrorHandler (smc_error_handler);
+
+  callbacks.save_yourself.callback      = xsmp_save_yourself;
+  callbacks.die.callback                = xsmp_die;
+  callbacks.save_complete.callback      = xsmp_save_complete;
+  callbacks.shutdown_cancelled.callback = xsmp_shutdown_cancelled;
+
+  callbacks.save_yourself.client_data      = xsmp;
+  callbacks.die.client_data                = xsmp;
+  callbacks.save_complete.client_data      = xsmp;
+  callbacks.shutdown_cancelled.client_data = xsmp;
+
+  client_id = NULL;
+  error_string_ret[0] = '\0';
+  xsmp->connection =
+    SmcOpenConnection (NULL, xsmp, SmProtoMajor, SmProtoMinor,
+		       SmcSaveYourselfProcMask | SmcDieProcMask |
+		       SmcSaveCompleteProcMask |
+		       SmcShutdownCancelledProcMask,
+		       &callbacks,
+		       xsmp->client_id, &ret_client_id,
+		       sizeof (error_string_ret), error_string_ret);
+
+  if (!xsmp->connection)
+    {
+      g_warning ("Failed to connect to the session manager: %s\n",
+		 error_string_ret[0] ?
+		 error_string_ret : "no error message given");
+      xsmp->state = XSMP_STATE_CONNECTION_CLOSED;
+      return;
+    }
+
+  /* We expect a pointless initial SaveYourself if either (a) we
+   * didn't have an initial client ID, or (b) we DID have an initial
+   * client ID, but the server rejected it and gave us a new one.
    */
+  if (!xsmp->client_id ||
+      (ret_client_id && strcmp (xsmp->client_id, ret_client_id) != 0))
+    xsmp->expecting_initial_save_yourself = TRUE;
+
+  if (ret_client_id)
+    {
+      g_free (xsmp->client_id);
+      xsmp->client_id = g_strdup (ret_client_id);
+      free (ret_client_id);
+
+      gdk_threads_enter ();
+      gdk_set_sm_client_id (xsmp->client_id);
+      gdk_threads_leave ();
+
+      g_debug ("Got client ID \"%s\"", xsmp->client_id);
+    }
+
+  xsmp->state = XSMP_STATE_IDLE;
+
+  /* Do not set the initial properties until we reach the main loop,
+   * so that the application has a chance to call
+   * egg_set_desktop_file(). (This may also help the session manager
+   * have a better idea of when the application is fully up and
+   * running.)
+   */
+  xsmp->waiting_to_set_initial_properties = TRUE;
   xsmp->idle = g_idle_add (sm_client_xsmp_set_initial_properties, client);
 }
 
@@ -480,11 +477,6 @@ sm_client_xsmp_end_session (EggSMClient         *client,
 
       switch (xsmp->state)
 	{
-	case XSMP_STATE_START:
-	  /* Force the connection to complete (or fail) now. */
-	  sm_client_xsmp_connect (client);
-	  break;
-
 	case XSMP_STATE_CONNECTION_CLOSED:
 	  return FALSE;
 
@@ -505,6 +497,9 @@ sm_client_xsmp_end_session (EggSMClient         *client,
 	  return TRUE;
 
 	case XSMP_STATE_IDLE:
+	  if (xsmp->waiting_to_set_initial_properties)
+	    sm_client_xsmp_set_initial_properties (xsmp);
+
 	  if (!xsmp->expecting_initial_save_yourself)
 	    break;
 	  /* else fall through */
@@ -644,6 +639,9 @@ xsmp_save_yourself (SmcConn   smc_conn,
       fix_broken_state (xsmp, "SaveYourself", FALSE, TRUE);
       return;
     }
+
+  if (xsmp->waiting_to_set_initial_properties)
+    sm_client_xsmp_set_initial_properties (xsmp);
 
   /* If this is the initial SaveYourself, ignore it; we've already set
    * properties and there's no reason to actually save state too.
