@@ -87,7 +87,12 @@ AC_ARG_ENABLE(user-plugin-dir,
 
 dnl Check for GTK/GLib/GThread/Pango
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.14.0 gthread-2.0],
+PKG_CHECK_MODULES(GLIB, [gthread-2.0],
+    [ADD_PC_REQUIRES([gthread-2.0 >= 2.14.0])],
+    [AC_MSG_ERROR([Cannot find gthread-2.0 >= 2.14.0])]
+)
+
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.14.0],
     [ADD_PC_REQUIRES([glib-2.0 >= 2.14.0])],
     [AC_MSG_ERROR([Cannot find Glib2 >= 2.14.0])]
 )
