@@ -378,7 +378,6 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
     g_option_context_add_group(context, gtk_get_option_group(FALSE));
     g_option_context_add_group(context, egg_sm_client_get_option_group());
-    g_option_context_parse(context, argc, argv, &error);
     if (!g_option_context_parse(context, argc, argv, &error))
         /* checking for MacOS X -psn_0_* errors*/
         if (error->message && !g_strrstr(error->message,"-psn_0_"))
