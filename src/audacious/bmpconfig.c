@@ -635,7 +635,8 @@ bmp_config_save(void)
     /* FIXME: we're looking up SkinnedWindow::x &c ourselves here.
      * this isn't exactly right. -nenolod
      */
-    if ( SKINNED_WINDOW(playlistwin)->x != -1 &&
+    if ( playlistwin &&
+         SKINNED_WINDOW(playlistwin)->x != -1 &&
          SKINNED_WINDOW(playlistwin)->y != -1 )
     {
         cfg_db_set_int(db, NULL, "playlist_x",
@@ -644,7 +645,8 @@ bmp_config_save(void)
                            SKINNED_WINDOW(playlistwin)->y);
     }
     
-    if ( SKINNED_WINDOW(mainwin)->x != -1 &&
+    if ( mainwin &&
+         SKINNED_WINDOW(mainwin)->x != -1 &&
          SKINNED_WINDOW(mainwin)->y != -1 )
     {
         cfg_db_set_int(db, NULL, "player_x",
@@ -653,7 +655,8 @@ bmp_config_save(void)
                            SKINNED_WINDOW(mainwin)->y);
     }
 
-    if ( SKINNED_WINDOW(equalizerwin)->x != -1 &&
+    if ( equalizerwin &&
+         SKINNED_WINDOW(equalizerwin)->x != -1 &&
          SKINNED_WINDOW(equalizerwin)->y != -1 )
     {
         cfg_db_set_int(db, NULL, "equalizer_x",
