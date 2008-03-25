@@ -49,7 +49,7 @@ TABLE OF CONTENTS
    7.1 Shoutcast support
    7.2 Tips and tricks
 8. Bugs
-9. Contact Email
+9. Contact
 
 
 
@@ -639,23 +639,20 @@ rewriting and enhancement. Help us along by reporting new bugs, and
 verifying existing ones.
 
 
-9. Contact Emails
------------------
+9. Contact
+----------
 
-Project Admins:
+Primarily any end-user type questions should be directed to the
+Audacious web forums:
+
+  http://boards.nenolod.net/
+
+There is also an IRC channel at irc.atheme.org #audacious. You should
+note that this IRC presence is mainly for development issues and
+internal project use, but that doesn't seem to stop 50-someodd people
+from visiting there.
+
+Project admins:
 
   William Pitcock       email: nenolod at sacredspiral.co.uk
   Tony Vroon            email: chainsaw at gentoo.org
-
-Alternatively, you can try the mailing list at audacious@atheme.org.
-Subscription information is available at:
-
-  http://mail.atheme.org/mailman/listinfo/audacious
-
-If a mailing list is not interesting to you, you can try our forums:
-
-  http://boards.nenolod.net
-
-There is also an IRC channel at irc.atheme.org #audacious. You should
-note that this IRC presence is mainly for internal project use, but
-that doesn't stop 50-someodd people from visiting there.
