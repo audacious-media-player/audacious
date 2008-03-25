@@ -23,6 +23,14 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#ifdef USE_SRC
+#  include <samplerate.h>
+#endif
+
 #include "effect.h"
 #include "general.h"
 #include "playback.h"

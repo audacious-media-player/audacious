@@ -1,17 +1,32 @@
-2008-03-03  Ivan N. Zlatev  <contact@i-nz.net>
+2008-03-23  Jussi Judin  <jjudin+audacious@iki.fi>
 
-	* eggsmclient-xsmp.c (sm_client_xsmp_startup): Connect 
-	immediately, so that windows created before 
-	running the main loop will have SM_CLIENT_ID set. We are not 
-	supposed to modify SM_CLIENT_ID after the visible window has 
-	been created (e.g Metacity will just ignore us).
-	Delay setting the initial properties until after the main loop, 
-	has started in order to provide a larger time frame for the 
-	user to call egg_set_desktop_file().
+	* eggdesktopfile.c (egg_desktop_file_new_from_key_file): do not 
+	leak the type.
+
+2008-03-15  Dan Winship  <danw@gnome.org>
+
+	* eggsmclient-xsmp.c: Reorganize; we have to call
+	gdk_set_sm_client_id() before the application creates any windows
+	(you're not allowed to change SM_CLIENT_ID while you have windows
+	mapped), which means that to be safe, we have to do it at startup
+	time, not after the main loop starts.
+	(EggSMClientXSMP): add a waiting_to_set_initial_properties flag.
+	(sm_client_xsmp_startup): Move the begining of the old
+	sm_client_xsmp_connect to here. Set
+	waiting_to_set_initial_properties and set up an idle handler to do
+	that.
+	(sm_client_xsmp_set_initial_properties): The rest of the old
+	sm_client_xsmp_connect.
+	(sm_client_xsmp_end_session): XSMP_STATE_START no longer exists,
+	but we have to deal with waiting_to_set_initial_properties now.
+	(xsmp_save_yourself): Likewise, if this arrives before we get a
+	chance to set the initial properties, set them now.
+
+	Based on a patch from Ivan N. Zlatev.
 
 2007-05-02  Dan Winship  <danw@novell.com>
 
-	* egglauncher.c: 
+	* egglauncher.c:
 	* eggdesktopfile.c: Replace EggLauncher with EggDesktopFile,
 	which is more like GnomeDesktopItem, but with a nicer launching
 	API.

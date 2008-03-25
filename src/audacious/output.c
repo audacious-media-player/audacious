@@ -289,6 +289,9 @@ reopen_audio(AFormat fmt, gint rate, gint nch)
     {
         plugin_set_current((Plugin *)op);
         op->close_audio();
+	op_state.fmt = 0;
+	op_state.rate = 0;
+	op_state.nch = 0;
     }
 
     plugin_set_current((Plugin *)op);

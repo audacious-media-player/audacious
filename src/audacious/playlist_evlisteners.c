@@ -20,23 +20,10 @@
 
 #include <glib.h>
 #include "hook.h"
-#include "playback.h"
 #include "playlist.h"
-#include "playlist_evmessages.h"
-#include "playlist_evlisteners.h"
-
-#include "ui_main.h"
 #include "ui_playlist.h"
 
-static void
-playlist_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
-{
-     PlaylistEventInfoChange *msg = (PlaylistEventInfoChange *) hook_data;
-
-     mainwin_set_song_info(msg->bitrate, msg->samplerate, msg->channels);
-
-     g_free(msg);
-}
+#include "playlist_evlisteners.h"
 
 static void
 playlist_evlistener_playlistwin_update_list(gpointer hook_data, gpointer user_data)
@@ -48,6 +35,5 @@ playlist_evlistener_playlistwin_update_list(gpointer hook_data, gpointer user_da
 
 void playlist_evlistener_init(void)
 {
-     hook_associate("playlist info change", playlist_evlistener_playlist_info_change, NULL);
      hook_associate("playlistwin update list", playlist_evlistener_playlistwin_update_list, NULL);
 }
