@@ -2495,8 +2495,10 @@ playlist_fileinfo_current(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist);
 
-    if (playlist->position->decoder != NULL && playlist->position->decoder->update_song_tuple != NULL &&
-        playlist->position->decoder->file_info_box == NULL && path != NULL && !vfs_is_remote(path)) {
+    if (playlist->position != NULL && playlist->position->decoder != NULL &&
+        playlist->position->decoder->update_song_tuple != NULL &&
+        playlist->position->decoder->file_info_box == NULL && path != NULL &&
+        !vfs_is_remote(path)) {
 
         fileinfo_show_editor_for_path(path, playlist->position->decoder);
         g_free(path);
