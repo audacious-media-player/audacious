@@ -632,7 +632,7 @@ find the file you downloaded 3 minutes ago)
 Audacious is under heavy development and as such, has quite a number of
 bugs. Our bug tracker page is maintained at:
 
-  http://bugs-meta.atheme.org/
+  http://bugzilla.atheme.org/
 
 It will continue to have bugs as we fix and introduce new ones through
 rewriting and enhancement. Help us along by reporting new bugs, and
