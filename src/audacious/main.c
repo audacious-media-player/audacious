@@ -836,6 +836,8 @@ main(gint argc, gchar ** argv)
     {
         GMainLoop *loop;
 
+        g_print(_("Headless operation enabled\n"));
+
         playlist_start_get_info_thread();
 
         loop = g_main_loop_new(NULL, TRUE);
