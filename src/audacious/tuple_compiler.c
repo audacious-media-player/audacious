@@ -834,11 +834,6 @@ gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *t
 static void print_vars(FILE *f, TupleEvalContext *ctx, TupleEvalNode *node, gint start, gint end)
 {
   gint i;
-  g_return_if_fail(node != NULL);
-  g_return_if_fail(ctx != NULL);
-  g_return_if_fail(start >= 0);
-  g_return_if_fail(start <= end);
-  g_return_if_fail(end < MAX_VAR);
 
   for (i = start; i <= end; i++) {
     TupleEvalVar *v = NULL;
