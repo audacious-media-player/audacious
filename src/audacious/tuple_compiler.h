@@ -104,6 +104,7 @@ gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gbool
 
 void tuple_evalnode_free(TupleEvalNode *expr);
 
+gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEvalNode *expr);
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple);
 
