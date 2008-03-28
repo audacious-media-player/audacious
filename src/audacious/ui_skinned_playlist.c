@@ -303,6 +303,7 @@ void ui_skinned_playlist_move_up(UiSkinnedPlaylist * pl) {
             glist_moveup(list);
         list = g_list_next(list);
     }
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
     if (pl->prev_selected != -1)
         pl->prev_selected--;
@@ -338,6 +339,7 @@ void ui_skinned_playlist_move_down(UiSkinnedPlaylist * pl) {
         list = g_list_previous(list);
     }
 
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 
     if (pl->prev_selected != -1)

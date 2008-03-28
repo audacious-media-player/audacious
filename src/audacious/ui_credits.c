@@ -117,6 +117,7 @@ static const gchar *credit_text[] = {
     "Valentine Sinitsyn",
     "Johan Tavelin",
     "Tim Yamin",
+    "Ivan N. Zlatev",
     NULL,
 
     N_("0.1.x developers:"),
