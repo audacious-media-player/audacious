@@ -756,6 +756,8 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
 
+    PLAYLIST_INCR_SERIAL(playlist);
+
     /* load playlist */
     if (is_playlist_name(filename)) {
         playlist->loading_playlist = TRUE;
@@ -2193,6 +2195,7 @@ playlist_sort(Playlist *playlist, PlaylistSortType type)
     playlist->entries =
         g_list_sort(playlist->entries,
                     (GCompareFunc) playlist_compare_func_table[type]);
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
 
@@ -2252,6 +2255,7 @@ playlist_sort_selected(Playlist *playlist, PlaylistSortType type)
     playlist->entries = playlist_sort_selected_generic(playlist->entries, (GCompareFunc)
                                                        playlist_compare_func_table
                                                        [type]);
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
 
@@ -2260,6 +2264,7 @@ playlist_reverse(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist->entries = g_list_reverse(playlist->entries);
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
 
@@ -2312,6 +2317,7 @@ playlist_random(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist->entries = playlist_shuffle_list(playlist, playlist->entries);
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
 
@@ -2341,6 +2347,7 @@ playlist_clear_selected(Playlist *playlist)
     for (node = playlist->entries; node; node = g_list_next(node), i++) {
         PLAYLIST_ENTRY(node->data)->selected = FALSE;
     }
+    PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
     playlist_manager_update();
