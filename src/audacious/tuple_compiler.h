@@ -25,7 +25,7 @@
 #include "tuple.h"
 
 
-#define TUP_MAX_VARS (4)
+#define TUPLEZ_MAX_VARS (4)
 
 
 enum {
@@ -78,8 +78,8 @@ typedef struct {
 
 typedef struct _TupleEvalNode {
     gint opcode;		/* operator, see OP_ enums */
-    gint var[TUP_MAX_VARS];	/* tuple / global variable references */
-    gboolean global[TUP_MAX_VARS];
+    gint var[TUPLEZ_MAX_VARS];	/* tuple / global variable references */
+    gboolean global[TUPLEZ_MAX_VARS];
     gchar *text;		/* raw text, if any (OP_RAW) */
     gint function, expression;	/* for OP_FUNCTION and OP_EXPRESSION */
     struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
