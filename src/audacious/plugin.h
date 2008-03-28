@@ -1187,6 +1187,13 @@ struct _VisPlugin {
     void (*playback_start) (void);
     void (*playback_stop) (void);
     void (*render_pcm) (gint16 pcm_data[2][512]);
+    
+    /* The range of intensities is 0 - 32767 (though theoretically it is
+     * possible for the FFT to result in bigger values, making the final
+     * intensity negative due to overflowing the 16bit signed integer.)
+     *
+     * If output is mono, only freq_data[0] is filled.
+     */
     void (*render_freq) (gint16 freq_data[2][256]);
 };
 
