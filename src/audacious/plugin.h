@@ -32,8 +32,8 @@
  * SUCH DAMAGE.
  */
 
-#ifndef BMP_PLUGIN_H
-#define BMP_PLUGIN_H
+#ifndef AUD_PLUGIN_H
+#define AUD_PLUGIN_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
