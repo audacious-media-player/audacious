@@ -86,7 +86,7 @@ typedef enum {
     FMT_S32_NE,
 
     FMT_FLOAT,
-    FMT_FIXED32, /* equivalent of libmad's mad_fixed_t explained below */
+    FMT_FIXED32 /* equivalent of libmad's mad_fixed_t explained below */
 } AFormat;
 
 /* From mad.h:
