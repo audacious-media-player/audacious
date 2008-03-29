@@ -652,6 +652,13 @@ struct _AudaciousFuncTableV1 {
 
     void (*event_queue)(const gchar *name, gpointer user_data);
 
+    /* VFS endianess helper functions */
+    gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
+    gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
+    gboolean (*vfs_fget_le64)(guint64 *value, VFSFile *stream);
+    gboolean (*vfs_fget_be16)(guint16 *value, VFSFile *stream);
+    gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
+    gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -684,6 +691,13 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_vfs_buffered_file_new_from_uri	_audvt->vfs_buffered_file_new_from_uri
 #define aud_vfs_buffered_file_release_live_fd	_audvt->vfs_buffered_file_release_live_fd
+
+#define aud_vfs_fget_le16		_audvt->vfs_fget_le16
+#define aud_vfs_fget_le32		_audvt->vfs_fget_le32
+#define aud_vfs_fget_le64		_audvt->vfs_fget_le64
+#define aud_vfs_fget_be16		_audvt->vfs_fget_be16
+#define aud_vfs_fget_be32		_audvt->vfs_fget_be32
+#define aud_vfs_fget_be64		_audvt->vfs_fget_be64
 
 /* XXX: deprecation warnings */
 #define bmp_cfg_db_open			_audvt->cfg_db_open

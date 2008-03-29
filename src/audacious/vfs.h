@@ -136,6 +136,13 @@ extern gboolean vfs_is_remote(const gchar * path);
 
 extern gboolean vfs_is_streaming(VFSFile *file);
 
+extern gboolean vfs_fget_le16(guint16 *value, VFSFile *stream);
+extern gboolean vfs_fget_le32(guint32 *value, VFSFile *stream);
+extern gboolean vfs_fget_le64(guint64 *value, VFSFile *stream);
+extern gboolean vfs_fget_be16(guint16 *value, VFSFile *stream);
+extern gboolean vfs_fget_be32(guint32 *value, VFSFile *stream);
+extern gboolean vfs_fget_be64(guint64 *value, VFSFile *stream);
+
 G_END_DECLS
 
 #endif /* VFS_H */
