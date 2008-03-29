@@ -658,6 +658,35 @@ load_extra_playlist(const gchar * path, const gchar * basename,
     return FALSE; /* keep loading other playlists */
 }
 
+static void
+resume_playback_on_startup()
+{
+    g_return_if_fail(cfg.resume_playback_on_startup);
+    g_return_if_fail(cfg.resume_playback_on_startup_time != -1);
+    g_return_if_fail(playlist_get_length(playlist_get_active()) > 0);
+
+    int i;
+    gint l = 0, r = 0;
+
+    while (gtk_events_pending()) gtk_main_iteration();
+
+    l = (cfg.saved_volume & 0xff00) >> 8;
+    r = cfg.saved_volume & 0x00ff;
+    output_set_volume(l, r);
+
+    playback_initiate();
+
+    /* Busy wait; loop is fairly tight to minimize duration of
+     * "frozen" GUI. Feel free to tune. --chainsaw */
+    for (i = 0; i < 20; i++)
+    { 
+        g_usleep(1000);
+        if (!ip_data.playing)
+            break;
+    }
+    playback_seek(cfg.resume_playback_on_startup_time / 1000);
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
@@ -746,6 +775,8 @@ main(gint argc, gchar ** argv)
     init_dbus();
 #endif
 
+    playlist_start_get_info_thread();
+
     if (options.headless == FALSE)
     {
         bmp_set_default_icon();
@@ -793,44 +824,13 @@ main(gint argc, gchar ** argv)
 
         hint_set_always(cfg.always_on_top);
 
-        playlist_start_get_info_thread();
-
         has_x11_connection = TRUE;
 
-        if (cfg.resume_playback_on_startup)
-        {
-            if (cfg.resume_playback_on_startup_time != -1 &&
-                playlist_get_length(playlist) > 0)
-            {
-                int i;
-                gint l = 0, r = 0;
-                while (gtk_events_pending()) gtk_main_iteration();
-                l = (cfg.saved_volume & 0xff00)>>8;
-                r = cfg.saved_volume & 0x00ff;
-                output_set_volume(0,0);
-                playback_initiate();
-
-                /* Busy wait; loop is fairly tight to minimize duration of
-                 * "frozen" GUI. Feel free to tune. --chainsaw */
-                for (i = 0; i < 20; i++)
-                { 
-                    g_usleep(1000);
-                    if (!ip_data.playing)
-                        break;
-                }
-                playback_seek(cfg.resume_playback_on_startup_time / 1000);
-                output_set_volume(l, r);
-            }
-        }
+        resume_playback_on_startup();
         
         gtk_main();
 
         GDK_THREADS_LEAVE();
-
-        g_cond_free(cond_scan);
-        g_mutex_free(mutex_scan);
-
-        return EXIT_SUCCESS;
     }
     // if we are running headless
     else
@@ -839,12 +839,15 @@ main(gint argc, gchar ** argv)
 
         g_print(_("Headless operation enabled\n"));
 
-        playlist_start_get_info_thread();
+        resume_playback_on_startup();
 
         loop = g_main_loop_new(NULL, TRUE);
         g_timeout_add(10, aud_headless_iteration, NULL);
         g_main_loop_run(loop);
-
-        return EXIT_SUCCESS;
     }
+
+    g_cond_free(cond_scan);
+    g_mutex_free(mutex_scan);
+
+    return EXIT_SUCCESS;
 }
