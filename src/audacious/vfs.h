@@ -125,7 +125,7 @@ extern off_t vfs_fsize(VFSFile * file);
 
 extern gchar *vfs_get_metadata(VFSFile * file, const gchar * field);
 
-extern int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
+extern gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
     __attribute__ ((__format__ (__printf__, 2, 3)));
 
 extern gboolean vfs_register_transport(VFSConstructor *vtable);

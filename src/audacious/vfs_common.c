@@ -83,7 +83,7 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
  *
  * Return value: The amount of bytes written.
  **/
-int vfs_fputs(const gchar *s, VFSFile *stream)
+gint vfs_fputs(const gchar *s, VFSFile *stream)
 {
 	size_t n = strlen(s);
 
@@ -100,7 +100,7 @@ int vfs_fputs(const gchar *s, VFSFile *stream)
  *
  * Return value: The amount of bytes written.
  **/
-int vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
+gint vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
 {
     gchar *string;
     gint rv = g_vasprintf(&string, format, args);
@@ -120,7 +120,7 @@ int vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
  *
  * Return value: The amount of bytes written.
  **/
-int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
+gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
 {
     va_list arg;
     gint rv;
