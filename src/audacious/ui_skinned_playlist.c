@@ -1,10 +1,12 @@
 /*
  * Audacious - a cross-platform multimedia player
  * Copyright (c) 2007 Tomasz Moń
+ * Copyright (c) 2008 William Pitcock
  *
  * Based on:
  * BMP - Cross-platform multimedia player
  * Copyright (C) 2003-2004  BMP development team.
+ *
  * XMMS:
  * Copyright (C) 1998-2003  XMMS development team.
  *
@@ -38,6 +40,11 @@
  *  number.
  */
 
+/*
+ * JOIN_SELECTION_BORKBORKBORK == join selected elements together like banshee2
+ * it has bugs. fix them plz!
+ */
+#undef JOIN_SELECTION_BORKBORKBORK
 
 #include "skin.h"
 #include "ui_skinned_playlist.h"
@@ -351,7 +358,7 @@ void ui_skinned_playlist_move_down(UiSkinnedPlaylist * pl) {
 }
 
 static void
-playlist_list_draw_string(GdkPixmap *obj, GdkGC *gc, UiSkinnedPlaylist *pl,
+playlist_list_draw_string(cairo_t *cr, UiSkinnedPlaylist *pl,
                           PangoFontDescription * font,
                           gint line,
                           gint width,
@@ -363,6 +370,8 @@ playlist_list_draw_string(GdkPixmap *obj, GdkGC *gc, UiSkinnedPlaylist *pl,
     PangoLayout *layout;
 
     REQUIRE_LOCK(playlist->mutex);
+
+    cairo_new_path(cr);
 
     if (cfg.show_numbers_in_pl) {
         gchar *pos_string = g_strdup_printf(cfg.show_separator_in_pl == TRUE ? "%d" : "%d.", ppos);
@@ -378,12 +387,12 @@ playlist_list_draw_string(GdkPixmap *obj, GdkGC *gc, UiSkinnedPlaylist *pl,
 
         pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
 
-
-        gdk_draw_layout(obj, gc, (width_approx_digits *
+        cairo_move_to(cr, (width_approx_digits *
                          (-1 + plist_length_int - strlen(pos_string))) +
-                        (width_approx_digits / 4),
-                        (line - 1) * pl->fheight +
-                        ascent + abs(descent), layout);
+                        (width_approx_digits / 4), (line - 1) * pl->fheight +
+                        ascent + abs(descent));
+        pango_cairo_show_layout(cr, layout);
+
         g_free(pos_string);
         g_object_unref(layout);
 
@@ -401,19 +410,16 @@ playlist_list_draw_string(GdkPixmap *obj, GdkGC *gc, UiSkinnedPlaylist *pl,
     pango_layout_set_width(layout, width * PANGO_SCALE);
     pango_layout_set_single_paragraph_mode(layout, TRUE);
     pango_layout_set_ellipsize(layout, PANGO_ELLIPSIZE_END);
-    gdk_draw_layout(obj, gc,
-                    padding + (width_approx_letters / 4),
+
+    cairo_move_to(cr, padding + (width_approx_letters / 4),
                     (line - 1) * pl->fheight +
-                    ascent + abs(descent), layout);
+                    ascent + abs(descent));
+    pango_cairo_show_layout(cr, layout);
 
     g_object_unref(layout);
 }
 
 static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *event) {
-    g_return_val_if_fail (widget != NULL, FALSE);
-    g_return_val_if_fail (UI_SKINNED_IS_PLAYLIST (widget), FALSE);
-    g_return_val_if_fail (event != NULL, FALSE);
-
     UiSkinnedPlaylist *pl = UI_SKINNED_PLAYLIST (widget);
     UiSkinnedPlaylistPrivate *priv = UI_SKINNED_PLAYLIST_GET_PRIVATE(pl);
     g_return_val_if_fail (priv->width > 0 && priv->height > 0, FALSE);
@@ -432,6 +438,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     gint x, y;
     guint tail_width;
     guint tail_len;
+    gboolean in_selection = FALSE;
 
     gchar tail[100];
     gchar queuepos[255];
@@ -442,13 +449,13 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
     gint plw_w, plw_h;
 
-    GdkPixmap *obj = NULL;
-    GdkGC *gc;
+    cairo_t *cr;
 
-    obj = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
-    gc = gdk_gc_new(obj);
+    g_return_val_if_fail (widget != NULL, FALSE);
+    g_return_val_if_fail (UI_SKINNED_IS_PLAYLIST (widget), FALSE);
+    g_return_val_if_fail (event != NULL, FALSE);
 
-    GdkRectangle *playlist_rect;
+    cr = gdk_cairo_create(widget->window);
 
     width = priv->width;
     height = priv->height;
@@ -456,21 +463,10 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     plw_w = playlistwin_get_width();
     plw_h = playlistwin_get_height();
 
-    playlist_rect = g_slice_new0(GdkRectangle);
+    gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
 
-    playlist_rect->x = 0;
-    playlist_rect->y = 0;
-    playlist_rect->width = plw_w - 17;
-    playlist_rect->height = plw_h - 36;
-
-    gdk_gc_set_clip_origin(gc, 31, 58);
-    gdk_gc_set_clip_rectangle(gc, playlist_rect);
-
-    gdk_gc_set_foreground(gc,
-                          skin_get_color(bmp_active_skin,
-                                         SKIN_PLEDIT_NORMALBG));
-    gdk_draw_rectangle(obj, gc, TRUE, 0, 0,
-                       width, height);
+    cairo_rectangle(cr, 0, 0, width, height);
+    cairo_paint(cr);
 
     if (!playlist_list_font) {
         g_critical("Couldn't open playlist font");
@@ -516,15 +512,87 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         gint pos;
         PlaylistEntry *entry = list->data;
 
-        if (entry->selected) {
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_SELECTEDBG));
-            gdk_draw_rectangle(obj, gc, TRUE, 0,
-                               ((i - pl->first) * pl->fheight),
-                               width, pl->fheight);
+#ifdef JOIN_SELECTION_BORKBORKBORK
+        if (entry->selected && !in_selection) {
+            gdouble rounding_offset;
+	    gint yc;
+
+            rounding_offset = pl->fheight / 3;
+            yc = ((i - pl->first) * pl->fheight);
+
+            cairo_new_path(cr);
+
+            cairo_move_to(cr, 0, yc + (rounding_offset * 2));
+            cairo_curve_to(cr, 0, yc + rounding_offset, 0, yc + 0.5, 0 + rounding_offset, yc + 0.5);
+
+            cairo_line_to(cr, 0 + width - (rounding_offset * 2), yc + 0.5);
+            cairo_curve_to(cr, 0 + width - rounding_offset, yc + 0.5,
+                        0 + width, yc + 0.5, 0 + width, yc + rounding_offset);
+
+            in_selection = TRUE;
         }
 
+        if (!entry->selected && in_selection) {
+            gdouble rounding_offset;
+	    gint yc;
+
+            rounding_offset = pl->fheight / 3;
+            yc = (((i - 1) - pl->first) * pl->fheight);
+
+            cairo_line_to(cr, 0 + width, yc + pl->fheight - (rounding_offset * 2));
+            cairo_curve_to (cr, 0 + width, yc + pl->fheight - rounding_offset,
+                        0 + width, yc + pl->fheight - 0.5,
+                        0 + width-rounding_offset, yc + pl->fheight - 0.5);
+
+            cairo_line_to (cr, 0 + (rounding_offset * 2), yc + pl->fheight - 0.5);
+            cairo_curve_to (cr, 0 + rounding_offset, yc + pl->fheight - 0.5,
+                        0, yc + pl->fheight - 0.5,
+                        0, yc + pl->fheight - rounding_offset);
+
+            cairo_close_path (cr);
+
+            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_SELECTEDBG));
+
+            cairo_fill(cr);
+
+            in_selection = FALSE;
+        }
+#else
+        if (entry->selected) {
+            gdouble rounding_offset;
+	    gint yc;
+
+            rounding_offset = pl->fheight / 3;
+            yc = ((i - pl->first) * pl->fheight);
+
+            cairo_new_path(cr);
+
+            cairo_move_to(cr, 0, yc + (rounding_offset * 2));
+            cairo_curve_to(cr, 0, yc + rounding_offset, 0, yc + 0.5, 0 + rounding_offset, yc + 0.5);
+
+            cairo_line_to(cr, 0 + width - (rounding_offset * 2), yc + 0.5);
+            cairo_curve_to(cr, 0 + width - rounding_offset, yc + 0.5,
+                        0 + width, yc + 0.5, 0 + width, yc + rounding_offset);
+
+            in_selection = TRUE;
+
+            cairo_line_to(cr, 0 + width, yc + pl->fheight - (rounding_offset * 2));
+            cairo_curve_to (cr, 0 + width, yc + pl->fheight - rounding_offset,
+                        0 + width, yc + pl->fheight - 0.5,
+                        0 + width-rounding_offset, yc + pl->fheight - 0.5);
+
+            cairo_line_to (cr, 0 + (rounding_offset * 2), yc + pl->fheight - 0.5);
+            cairo_curve_to (cr, 0 + rounding_offset, yc + pl->fheight - 0.5,
+                        0, yc + pl->fheight - 0.5,
+                        0, yc + pl->fheight - rounding_offset);
+
+            cairo_close_path (cr);
+
+            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_SELECTEDBG));
+
+            cairo_fill(cr);
+        }
+#endif
         /* FIXME: entry->title should NEVER be NULL, and there should
            NEVER be a need to do a UTF-8 conversion. Playlist title
            strings should be kept properly. */
@@ -570,16 +638,19 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             tail_width = width;
 
         if (i == playlist_get_position_nolock(playlist))
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_CURRENT));
+            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
         else
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_NORMAL));
-        playlist_list_draw_string(obj, gc, pl, playlist_list_font,
-                                  i - pl->first, tail_width, title,
-                                  i + 1);
+            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMAL));
+
+#ifdef JOIN_SELECTION_BORKBORKBORK
+        if (!entry->selected) {
+#endif
+            playlist_list_draw_string(cr, pl, playlist_list_font,
+                                      i - pl->first, tail_width, title,
+                                      i + 1);
+#ifdef JOIN_SELECTION_BORKBORKBORK
+        }
+#endif
 
         x = width - width_approx_digits * 2;
         y = ((i - pl->first) - 1) * pl->fheight + ascent;
@@ -595,16 +666,19 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             pango_layout_set_font_description(layout, playlist_list_font);
             pango_layout_set_width(layout, tail_len * 100);
             pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
-            gdk_draw_layout(obj, gc, x - (0.5 * width_approx_digits),
-                            y + abs(descent), layout);
+
+            cairo_new_path(cr);
+            cairo_move_to(cr, x - (0.5 * width_approx_digits), y + abs(descent));
+            pango_cairo_show_layout(cr, layout);
             g_object_unref(layout);
 
             layout = gtk_widget_create_pango_layout(playlistwin, frag0);
             pango_layout_set_font_description(layout, playlist_list_font);
             pango_layout_set_width(layout, tail_len * 100);
             pango_layout_set_alignment(layout, PANGO_ALIGN_RIGHT);
-            gdk_draw_layout(obj, gc, x - (0.75 * width_approx_digits),
-                            y + abs(descent), layout);
+
+            cairo_move_to(cr, x - (0.75 * width_approx_digits), y + abs(descent));
+            pango_cairo_show_layout(cr, layout);
             g_object_unref(layout);
 
             g_free(frag0);
@@ -620,7 +694,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             else
                 queue_tailpadding = -0.75;
 
-            gdk_draw_rectangle(obj, gc, FALSE,
+            cairo_rectangle(cr,
                                x -
                                (((queue_tailpadding +
                                   strlen(queuepos)) *
@@ -637,14 +711,18 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             pango_layout_set_font_description(layout, playlist_list_font);
             pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
 
-            gdk_draw_layout(obj, gc,
+            cairo_move_to(cr,
                             x -
                             ((queue_tailpadding +
                               strlen(queuepos)) * width_approx_digits) +
                             (width_approx_digits / 4),
-                            y + abs(descent), layout);
+                            y + abs(descent));
+            pango_cairo_show_layout(cr, layout);
+
             g_object_unref(layout);
         }
+
+        cairo_stroke(cr);
 
         g_free(title);
     }
@@ -693,14 +771,16 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
                     pos = plength;
                 }
 
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_CURRENT));
+                gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
 
-                gdk_draw_line(obj, gc, 0,
-			      ((pos - pl->first) * pl->fheight),
-                              priv->width - 1,
-                              ((pos - pl->first) * pl->fheight));
+                cairo_new_path(cr);
+
+                cairo_move_to(cr, 0, ((pos - pl->first) * pl->fheight));
+                cairo_rel_line_to(cr, priv->width - 1, 0);
+
+                cairo_set_line_width(cr, 1);
+                cairo_set_antialias(cr, CAIRO_ANTIALIAS_NONE);
+                cairo_stroke(cr);
             }
 
         }
@@ -712,16 +792,24 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         if ((y < ply) || (y > priv->height + ply)) {
             if ((y >= 0) || (y <= (priv->height + ply))) {
                 pos = plength;
-                gdk_gc_set_foreground(gc, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
 
-                gdk_draw_line(obj, gc, 0, ((pos - pl->first) * pl->fheight),
-                              priv->width - 1, ((pos - pl->first) * pl->fheight));
+                gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
 
+                cairo_new_path(cr);
+
+                cairo_move_to(cr, 0, ((pos - pl->first) * pl->fheight));
+                cairo_rel_line_to(cr, priv->width - 1, 0);
+
+                cairo_set_line_width(cr, 1);
+                cairo_set_antialias(cr, CAIRO_ANTIALIAS_NONE);
+                cairo_stroke(cr);
             }
         }
     }
 
-    gdk_gc_set_foreground(gc, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMAL));
+    gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMAL));
+    cairo_set_line_width(cr, 1);
+    cairo_set_antialias(cr, CAIRO_ANTIALIAS_NONE);
 
     if (cfg.show_numbers_in_pl)
     {
@@ -745,7 +833,12 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             padding += width_approx_digits_half;
 
         if (cfg.show_separator_in_pl) {
-            gdk_draw_line(obj, gc, padding, 0, padding, priv->height - 1);
+            cairo_new_path(cr);
+
+            cairo_move_to(cr, padding, 0);
+            cairo_rel_line_to(cr, 0, priv->height - 1);
+
+            cairo_stroke(cr);
         }
     }
 
@@ -757,20 +850,18 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             tpadding += width_approx_digits_half;
 
         if (cfg.show_separator_in_pl) {
-            gdk_draw_line(obj, gc, priv->width - tpadding, 0, priv->width - tpadding, priv->height - 1);
+            cairo_new_path(cr);
+
+            cairo_move_to(cr, priv->width - tpadding, 0);
+            cairo_rel_line_to(cr, 0, priv->height - 1);
+
+            cairo_stroke(cr);
         }
     }
 
-    gdk_gc_set_clip_origin(gc, 0, 0);
-    gdk_gc_set_clip_rectangle(gc, NULL);
-
     PLAYLIST_UNLOCK(playlist);
 
-    gdk_draw_drawable(widget->window, gc, obj, 0, 0, 0, 0, priv->width, priv->height);
-
-    g_object_unref(obj);
-    g_object_unref(gc);
-    g_slice_free(GdkRectangle, playlist_rect);
+    cairo_destroy(cr);
 
     return FALSE;
 }

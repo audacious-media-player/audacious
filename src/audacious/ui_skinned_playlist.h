@@ -28,6 +28,10 @@
 #define UISKINNEDPLAYLIST_H
 
 #include <gtk/gtk.h>
+
+#include <cairo.h>
+#include <pango/pangocairo.h>
+
 #include "skin.h"
 
 #ifdef __cplusplus
