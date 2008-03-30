@@ -104,6 +104,13 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .vfs_buffered_file_new_from_uri = vfs_buffered_file_new_from_uri,
     .vfs_buffered_file_release_live_fd = vfs_buffered_file_release_live_fd,
+    
+    .vfs_fget_le16 = vfs_fget_le16,
+    .vfs_fget_le32 = vfs_fget_le32,
+    .vfs_fget_le64 = vfs_fget_le64,
+    .vfs_fget_be16 = vfs_fget_be16,
+    .vfs_fget_be32 = vfs_fget_be32,
+    .vfs_fget_be64 = vfs_fget_be64,
 
     .cfg_db_open = cfg_db_open,
     .cfg_db_close = cfg_db_close,

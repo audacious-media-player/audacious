@@ -125,7 +125,7 @@ extern off_t vfs_fsize(VFSFile * file);
 
 extern gchar *vfs_get_metadata(VFSFile * file, const gchar * field);
 
-extern int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
+extern gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
     __attribute__ ((__format__ (__printf__, 2, 3)));
 
 extern gboolean vfs_register_transport(VFSConstructor *vtable);
@@ -135,6 +135,13 @@ extern void vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *siz
 extern gboolean vfs_is_remote(const gchar * path);
 
 extern gboolean vfs_is_streaming(VFSFile *file);
+
+extern gboolean vfs_fget_le16(guint16 *value, VFSFile *stream);
+extern gboolean vfs_fget_le32(guint32 *value, VFSFile *stream);
+extern gboolean vfs_fget_le64(guint64 *value, VFSFile *stream);
+extern gboolean vfs_fget_be16(guint16 *value, VFSFile *stream);
+extern gboolean vfs_fget_be32(guint32 *value, VFSFile *stream);
+extern gboolean vfs_fget_be64(guint64 *value, VFSFile *stream);
 
 G_END_DECLS
 
