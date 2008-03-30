@@ -512,7 +512,6 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
          list = g_list_next(list), i++) {
         entry = list->data;
 
-
         if (entry->selected && !in_selection) {
             yc = ((i - pl->first) * pl->fheight);
 
@@ -528,8 +527,11 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             in_selection = TRUE;
         }
 
-        if (!entry->selected && in_selection) {
-            yc = (((i - 1) - pl->first) * pl->fheight);
+        if ((!entry->selected || !g_list_next(list)) && in_selection) {
+            if (!entry->selected)
+                yc = (((i - 1) - pl->first) * pl->fheight);
+            else /* !g_list_next(list) */
+                yc = ((i - pl->first) * pl->fheight);
 
             cairo_line_to(cr, 0 + width, yc + pl->fheight - (rounding_offset * 2));
             cairo_curve_to (cr, 0 + width, yc + pl->fheight - rounding_offset,
