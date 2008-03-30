@@ -40,12 +40,6 @@
  *  number.
  */
 
-/*
- * JOIN_SELECTION_BORKBORKBORK == join selected elements together like banshee2
- * it has bugs. fix them plz!
- */
-#undef JOIN_SELECTION_BORKBORKBORK
-
 #include "skin.h"
 #include "ui_skinned_playlist.h"
 #include "main.h"
@@ -509,10 +503,8 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     for (i = pl->first;
          list && i < pl->first + pl->num_visible;
          list = g_list_next(list), i++) {
-        gint pos;
         PlaylistEntry *entry = list->data;
 
-#ifdef JOIN_SELECTION_BORKBORKBORK
         if (entry->selected && !in_selection) {
             gdouble rounding_offset;
 	    gint yc;
@@ -557,42 +549,18 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
             in_selection = FALSE;
         }
-#else
-        if (entry->selected) {
-            gdouble rounding_offset;
-	    gint yc;
+    }
 
-            rounding_offset = pl->fheight / 3;
-            yc = ((i - pl->first) * pl->fheight);
+    list = playlist->entries;
+    list = g_list_nth(list, pl->first);
 
-            cairo_new_path(cr);
+    /* now draw the text */
+    for (i = pl->first;
+         list && i < pl->first + pl->num_visible;
+         list = g_list_next(list), i++) {
+        gint pos;
+        PlaylistEntry *entry = list->data;
 
-            cairo_move_to(cr, 0, yc + (rounding_offset * 2));
-            cairo_curve_to(cr, 0, yc + rounding_offset, 0, yc + 0.5, 0 + rounding_offset, yc + 0.5);
-
-            cairo_line_to(cr, 0 + width - (rounding_offset * 2), yc + 0.5);
-            cairo_curve_to(cr, 0 + width - rounding_offset, yc + 0.5,
-                        0 + width, yc + 0.5, 0 + width, yc + rounding_offset);
-
-            in_selection = TRUE;
-
-            cairo_line_to(cr, 0 + width, yc + pl->fheight - (rounding_offset * 2));
-            cairo_curve_to (cr, 0 + width, yc + pl->fheight - rounding_offset,
-                        0 + width, yc + pl->fheight - 0.5,
-                        0 + width-rounding_offset, yc + pl->fheight - 0.5);
-
-            cairo_line_to (cr, 0 + (rounding_offset * 2), yc + pl->fheight - 0.5);
-            cairo_curve_to (cr, 0 + rounding_offset, yc + pl->fheight - 0.5,
-                        0, yc + pl->fheight - 0.5,
-                        0, yc + pl->fheight - rounding_offset);
-
-            cairo_close_path (cr);
-
-            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_SELECTEDBG));
-
-            cairo_fill(cr);
-        }
-#endif
         /* FIXME: entry->title should NEVER be NULL, and there should
            NEVER be a need to do a UTF-8 conversion. Playlist title
            strings should be kept properly. */
@@ -642,15 +610,9 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         else
             gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMAL));
 
-#ifdef JOIN_SELECTION_BORKBORKBORK
-        if (!entry->selected) {
-#endif
-            playlist_list_draw_string(cr, pl, playlist_list_font,
-                                      i - pl->first, tail_width, title,
-                                      i + 1);
-#ifdef JOIN_SELECTION_BORKBORKBORK
-        }
-#endif
+        playlist_list_draw_string(cr, pl, playlist_list_font,
+                                  i - pl->first, tail_width, title,
+                                  i + 1);
 
         x = width - width_approx_digits * 2;
         y = ((i - pl->first) - 1) * pl->fheight + ascent;
