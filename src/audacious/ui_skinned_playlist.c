@@ -420,6 +420,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     g_return_val_if_fail (priv->width > 0 && priv->height > 0, FALSE);
 
     Playlist *playlist = playlist_get_active();
+    PlaylistEntry *entry;
     GList *list;
     PangoLayout *layout;
     gchar *title;
@@ -445,6 +446,9 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     gint plw_w, plw_h;
 
     cairo_t *cr;
+    gint yc;
+    gint pos;
+    gdouble rounding_offset;
 
     g_return_val_if_fail (widget != NULL, FALSE);
     g_return_val_if_fail (UI_SKINNED_IS_PLAYLIST (widget), FALSE);
@@ -471,6 +475,8 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     pl->fheight = (ascent + abs(descent));
     pl->num_visible = height / pl->fheight;
 
+    rounding_offset = pl->fheight / 3;
+
     max_first = playlist_get_length(playlist) - pl->num_visible;
     max_first = MAX(max_first, 0);
 
@@ -487,7 +493,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     for (i = pl->first;
          list && i < pl->first + pl->num_visible;
          list = g_list_next(list), i++) {
-        PlaylistEntry *entry = list->data;
+        entry = list->data;
 
         if (entry->length != -1)
         {
@@ -504,13 +510,10 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     for (i = pl->first;
          list && i < pl->first + pl->num_visible;
          list = g_list_next(list), i++) {
-        PlaylistEntry *entry = list->data;
+        entry = list->data;
+
 
         if (entry->selected && !in_selection) {
-            gdouble rounding_offset;
-	    gint yc;
-
-            rounding_offset = pl->fheight / 3;
             yc = ((i - pl->first) * pl->fheight);
 
             cairo_new_path(cr);
@@ -526,10 +529,6 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         }
 
         if (!entry->selected && in_selection) {
-            gdouble rounding_offset;
-	    gint yc;
-
-            rounding_offset = pl->fheight / 3;
             yc = (((i - 1) - pl->first) * pl->fheight);
 
             cairo_line_to(cr, 0 + width, yc + pl->fheight - (rounding_offset * 2));
@@ -559,8 +558,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     for (i = pl->first;
          list && i < pl->first + pl->num_visible;
          list = g_list_next(list), i++) {
-        gint pos;
-        PlaylistEntry *entry = list->data;
+        entry = list->data;
 
         /* FIXME: entry->title should NEVER be NULL, and there should
            NEVER be a need to do a UTF-8 conversion. Playlist title
@@ -649,25 +647,22 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         }
 
         if (pos != -1) {
-
-            /* DON'T remove the commented code yet please     -- Milosz */
-
             if (tpadding_dwidth > 0)
                 queue_tailpadding = tpadding_dwidth + 1;
             else
                 queue_tailpadding = -0.75;
 
             cairo_rectangle(cr,
-                               x -
-                               (((queue_tailpadding +
-                                  strlen(queuepos)) *
-                                 width_approx_digits) +
-                                (width_approx_digits / 4)),
-                               y + abs(descent),
-                               (strlen(queuepos)) *
-                               width_approx_digits +
-                               (width_approx_digits / 2),
-                               pl->fheight - 2);
+                            x -
+                            (((queue_tailpadding +
+                               strlen(queuepos)) *
+                              width_approx_digits) +
+                             (width_approx_digits / 4)),
+                            y + abs(descent),
+                            (strlen(queuepos)) *
+                            width_approx_digits +
+                            (width_approx_digits / 2),
+                            pl->fheight - 2);
 
             layout =
                 gtk_widget_create_pango_layout(playlistwin, queuepos);
@@ -702,7 +697,6 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
     if (pl->drag_motion) {
         guint pos, plength, lpadding;
-	gint x, y, plx, ply;
 
         if (cfg.show_numbers_in_pl) {
             lpadding = gint_count_digits(playlist_get_length(playlist)) + 1;
@@ -719,13 +713,10 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         x = pl->drag_motion_x;
         y = pl->drag_motion_y;
 
-        plx = pl->x;
-        ply = pl->y;
-
         if ((x > pl->x) && !(x > priv->width)) {
 
             if ((y > pl->y)
-                && !(y > (priv->height + ply))) {
+                && !(y > (priv->height + pl->y))) {
 
                 pos = (y / pl->fheight) +
                     pl->first;
@@ -752,8 +743,8 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
          * files get appended at the end of the list. Show that too.
          */
 
-        if ((y < ply) || (y > priv->height + ply)) {
-            if ((y >= 0) || (y <= (priv->height + ply))) {
+        if ((y < pl->y) || (y > priv->height + pl->y)) {
+            if ((y >= 0) || (y <= (priv->height + pl->y))) {
                 pos = plength;
 
                 gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
