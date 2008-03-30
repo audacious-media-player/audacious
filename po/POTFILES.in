@@ -22,5 +22,6 @@ src/audacious/ui_preferences.c
 src/audacious/ui_skinned_equalizer_slider.c
 src/audacious/ui_skinselector.c
 src/audacious/ui_urlopener.c
+src/audacious/util.c
 src/libeggsmclient/eggdesktopfile.c
 src/libeggsmclient/eggsmclient.c
