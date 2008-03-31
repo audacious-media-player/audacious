@@ -43,7 +43,7 @@
 #include "util.h"
 #include "visualization.h"
 
-#include "bmpconfig.h"
+#include "audconfig.h"
 
 BmpConfig bmp_default_config = {
     MAINWIN_DEFAULT_POS_X,      /* mainwin x position */
