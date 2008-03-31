@@ -19,10 +19,12 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#ifndef RCFILE_H
-#define RCFILE_H
+#ifndef __AUDACIOUS_RCFILE_H__
+#define __AUDACIOUS_RCFILE_H__
 
 #include <glib.h>
+
+G_BEGIN_DECLS
 
 /**
  * RcLine:
@@ -58,39 +60,38 @@ typedef struct {
     GList *sections;
 } RcFile;
 
-G_BEGIN_DECLS
 
-RcFile *bmp_rcfile_new(void);
-void bmp_rcfile_free(RcFile * file);
+RcFile *aud_rcfile_new(void);
+void aud_rcfile_free(RcFile * file);
 
-RcFile *bmp_rcfile_open(const gchar * filename);
-gboolean bmp_rcfile_write(RcFile * file, const gchar * filename);
+RcFile *aud_rcfile_open(const gchar * filename);
+gboolean aud_rcfile_write(RcFile * file, const gchar * filename);
 
-gboolean bmp_rcfile_read_string(RcFile * file, const gchar * section,
+gboolean aud_rcfile_read_string(RcFile * file, const gchar * section,
                                 const gchar * key, gchar ** value);
-gboolean bmp_rcfile_read_int(RcFile * file, const gchar * section,
+gboolean aud_rcfile_read_int(RcFile * file, const gchar * section,
                              const gchar * key, gint * value);
-gboolean bmp_rcfile_read_bool(RcFile * file, const gchar * section,
+gboolean aud_rcfile_read_bool(RcFile * file, const gchar * section,
                               const gchar * key, gboolean * value);
-gboolean bmp_rcfile_read_float(RcFile * file, const gchar * section,
+gboolean aud_rcfile_read_float(RcFile * file, const gchar * section,
                                const gchar * key, gfloat * value);
-gboolean bmp_rcfile_read_double(RcFile * file, const gchar * section,
+gboolean aud_rcfile_read_double(RcFile * file, const gchar * section,
                                 const gchar * key, gdouble * value);
 
-void bmp_rcfile_write_string(RcFile * file, const gchar * section,
+void aud_rcfile_write_string(RcFile * file, const gchar * section,
                              const gchar * key, const gchar * value);
-void bmp_rcfile_write_int(RcFile * file, const gchar * section,
+void aud_rcfile_write_int(RcFile * file, const gchar * section,
                           const gchar * key, gint value);
-void bmp_rcfile_write_boolean(RcFile * file, const gchar * section,
+void aud_rcfile_write_boolean(RcFile * file, const gchar * section,
                               const gchar * key, gboolean value);
-void bmp_rcfile_write_float(RcFile * file, const gchar * section,
+void aud_rcfile_write_float(RcFile * file, const gchar * section,
                             const gchar * key, gfloat value);
-void bmp_rcfile_write_double(RcFile * file, const gchar * section,
+void aud_rcfile_write_double(RcFile * file, const gchar * section,
                              const gchar * key, gdouble value);
 
-void bmp_rcfile_remove_key(RcFile * file, const gchar * section,
+void aud_rcfile_remove_key(RcFile * file, const gchar * section,
                            const gchar * key);
 
 G_END_DECLS
 
-#endif // RCFILE_H
+#endif /* __AUDACIOUS_RCFILE_H__ */
