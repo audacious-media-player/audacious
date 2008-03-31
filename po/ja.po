@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-03-30 16:55+0200\n"
-"PO-Revision-Date: 2008-03-16 15:04+0900\n"
+"PO-Revision-Date: 2008-03-31 14:53+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,7 +185,7 @@ msgstr ""
 
 #: src/audacious/main.c:699
 msgid "Sorry, threads aren't supported on your platform.\n"
-msgstr ""
+msgstr "申し訳ありません, このプラットフォームではスレッドがサポートされていません.\n"
 
 #: src/audacious/main.c:732
 #, c-format
@@ -193,9 +193,8 @@ msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: ディスプレイを開けません. 終了します.\n"
 
 #: src/audacious/main.c:840
-#, fuzzy
 msgid "Headless operation enabled\n"
-msgstr "ヘッドレス操作を有効にする"
+msgstr "ヘッドレス操作を有効にしました\n"
 
 #: src/audacious/playback.c:277
 msgid ""
