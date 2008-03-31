@@ -283,10 +283,10 @@ AC_SUBST(REGEX_CFLAGS)
 
 dnl GConf support
 
-PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
+PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.4],
    [
       AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
-      ADD_PC_REQUIRES([libmcs >= 0.1])
+      ADD_PC_REQUIRES([libmcs >= 0.4])
    ],
    [AC_MSG_ERROR([Cannot find libmcs, try http://www.atheme.org/projects/mcs.shtml])]
 )
