@@ -513,7 +513,7 @@ struct _AudaciousFuncTableV1 {
 
     /* state vars */
     InputPluginData *ip_state;
-    BmpConfig *_cfg;
+    AudConfig *_cfg;
 
     /* hook API */
     void (*hook_register)(const gchar *name);

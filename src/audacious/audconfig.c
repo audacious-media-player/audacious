@@ -45,7 +45,7 @@
 
 #include "audconfig.h"
 
-BmpConfig bmp_default_config = {
+AudConfig aud_default_config = {
     MAINWIN_DEFAULT_POS_X,      /* mainwin x position */
     MAINWIN_DEFAULT_POS_Y,      /* mainwin y position */
     EQUALIZER_DEFAULT_POS_X,    /* equalizer x position */
@@ -490,7 +490,7 @@ bmp_config_load(void)
     ConfigDb *db;
     gint i, length;
 
-    memcpy(&cfg, &bmp_default_config, sizeof(BmpConfig));
+    memcpy(&cfg, &aud_default_config, sizeof(AudConfig));
 
     db = cfg_db_open();
     for (i = 0; i < ncfgbent; ++i) {

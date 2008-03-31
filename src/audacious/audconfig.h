@@ -26,7 +26,7 @@
 #ifndef BMPCONFIG_H
 #define BMPCONFIG_H
 
-struct _BmpConfig {
+struct _AudConfig {
     gint player_x, player_y;
     gint equalizer_x, equalizer_y;
     gint playlist_x, playlist_y;
@@ -135,10 +135,10 @@ struct _BmpConfig {
     gboolean bypass_dsp;
 };
 
-typedef struct _BmpConfig BmpConfig;
+typedef struct _AudConfig AudConfig;
 
-extern BmpConfig cfg;
-extern BmpConfig bmp_default_config;
+extern AudConfig cfg;
+extern AudConfig aud_default_config;
 
 void bmp_config_free(void);
 void bmp_config_load(void);

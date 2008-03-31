@@ -108,7 +108,7 @@ typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
 AudCmdLineOpt options;
 
-BmpConfig cfg;
+AudConfig cfg;
 
 const gchar *bmp_titlestring_presets[] = {
     "${title}",
