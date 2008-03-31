@@ -472,7 +472,7 @@ cleanup:
 
 
 void
-bmp_config_free(void)
+aud_config_free(void)
 {
   gint i;
   for (i = 0; i < ncfgsent; ++i) {
@@ -485,7 +485,7 @@ bmp_config_free(void)
 }
 
 void
-bmp_config_load(void)
+aud_config_load(void)
 {
     ConfigDb *db;
     gint i, length;
@@ -605,7 +605,7 @@ bmp_config_load(void)
 }
 
 void
-bmp_config_save(void)
+aud_config_save(void)
 {
     GList *node;
     gchar *str;

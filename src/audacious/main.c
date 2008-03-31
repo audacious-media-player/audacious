@@ -736,7 +736,7 @@ main(gint argc, gchar ** argv)
     g_random_set_seed(time(NULL));
     SAD_dither_init_rand((gint32)time(NULL));
 
-    bmp_config_load();
+    aud_config_load();
 
     signal_handlers_init();
     mowgli_init();

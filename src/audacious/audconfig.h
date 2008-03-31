@@ -140,8 +140,8 @@ typedef struct _AudConfig AudConfig;
 extern AudConfig cfg;
 extern AudConfig aud_default_config;
 
-void bmp_config_free(void);
-void bmp_config_load(void);
-void bmp_config_save(void);
+void aud_config_free(void);
+void aud_config_load(void);
+void aud_config_save(void);
 
 #endif

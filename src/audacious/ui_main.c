@@ -379,7 +379,7 @@ mainwin_quit_cb(void)
     if (mainwin_timeout_id)
         g_source_remove(mainwin_timeout_id);
 
-    bmp_config_save();
+    aud_config_save();
     gtk_accel_map_save(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
     plugin_system_cleanup();

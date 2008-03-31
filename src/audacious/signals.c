@@ -77,7 +77,7 @@ signal_process_segv(void)
 
     g_critical("Received SIGSEGV -- Audacious has crashed.");
 
-    bmp_config_save();
+    aud_config_save();
     abort();
 }
 
@@ -260,7 +260,7 @@ static void
 signal_session_save_cb(EggSMClient *client, const char *state_dir, gpointer user_data)
 {
     g_print("Session save requested. Saving state.\n");    
-    bmp_config_save();
+    aud_config_save();
 }
 
 void 
