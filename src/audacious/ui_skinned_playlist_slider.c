@@ -238,16 +238,16 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
 
     priv->prev_y = y;
 
-    /* FIXME: uses bmp_active_skin->pixmaps directly and may need calibration */
+    /* FIXME: uses aud_active_skin->pixmaps directly and may need calibration */
     /* drawing background */
     gint c;
     for (c = 0; c < priv->height / 29; c++) {
-         gdk_pixbuf_copy_area(bmp_active_skin->pixmaps[SKIN_PLEDIT].pixbuf,
+         gdk_pixbuf_copy_area(aud_active_skin->pixmaps[SKIN_PLEDIT].pixbuf,
                               36, 42, priv->width, 29, obj, 0, c*29);
     }
 
     /* drawing knob */
-    skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
+    skin_draw_pixbuf(widget, aud_active_skin, obj, priv->skin_index, ps->pressed ? 61 : 52, 53, 0, y, priv->width, 18);
 
     ui_skinned_widget_draw(widget, obj, priv->width, priv->height, FALSE);
 

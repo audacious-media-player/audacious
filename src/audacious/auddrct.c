@@ -107,7 +107,7 @@ drct_pl_win_toggle ( gboolean show )
 void drct_set_skin(gchar *skinfile)
 {
     if (has_x11_connection)
-        bmp_active_skin_load(skinfile);
+        aud_active_skin_load(skinfile);
 }
 
 void drct_activate(void)

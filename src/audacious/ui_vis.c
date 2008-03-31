@@ -270,7 +270,7 @@ static gboolean ui_vis_expose(GtkWidget *widget, GdkEventExpose *event) {
     if (!vis->visible_window)
         return FALSE;
 
-    skin_get_viscolor(bmp_active_skin, vis_color);
+    skin_get_viscolor(aud_active_skin, vis_color);
     for (y = 0; y < 24; y++) {
         colors[y] =
             vis_color[y][0] << 16 | vis_color[y][1] << 8 | vis_color[y][2];
@@ -397,8 +397,8 @@ static gboolean ui_vis_expose(GtkWidget *widget, GdkEventExpose *event) {
       if(playback_get_playing()){ /*Only draw the data if we're playing*/
 	if(cfg.voiceprint_mode == VOICEPRINT_NORMAL){ 
 	  /* Create color gradient from the skin's background- and foreground color*/
-	  fgc = skin_get_color(bmp_active_skin, SKIN_TEXTFG);
-	  bgc = skin_get_color(bmp_active_skin, SKIN_TEXTBG);
+	  fgc = skin_get_color(aud_active_skin, SKIN_TEXTFG);
+	  bgc = skin_get_color(aud_active_skin, SKIN_TEXTBG);
 	  skin_col[0][0] = fgc->red   >> 8;
 	  skin_col[0][1] = fgc->green >> 8;
 	  skin_col[0][2] = fgc->blue  >> 8;

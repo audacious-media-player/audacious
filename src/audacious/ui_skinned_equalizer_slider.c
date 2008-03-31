@@ -214,14 +214,14 @@ static gboolean ui_skinned_equalizer_slider_expose(GtkWidget *widget, GdkEventEx
     gint frame;
     frame = 27 - ((priv->position * 27) / 50);
     if (frame < 14)
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, (frame * 15) + 13, 164, 0, 0, priv->width, priv->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, priv->skin_index, (frame * 15) + 13, 164, 0, 0, priv->width, priv->height);
     else
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, ((frame - 14) * 15) + 13, 229, 0, 0, priv->width, priv->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, priv->skin_index, ((frame - 14) * 15) + 13, 229, 0, 0, priv->width, priv->height);
 
     if (priv->pressed)
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, 0, 176, 1, priv->position, 11, 11);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, priv->skin_index, 0, 176, 1, priv->position, 11, 11);
     else
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, priv->skin_index, 0, 164, 1, priv->position, 11, 11);
 
     ui_skinned_widget_draw(widget, obj, priv->width, priv->height, priv->scaled);
 

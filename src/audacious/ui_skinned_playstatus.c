@@ -187,20 +187,20 @@ static gboolean ui_skinned_playstatus_expose(GtkWidget *widget, GdkEventExpose *
     if (playstatus->status == STATUS_STOP && playstatus->buffering == TRUE)
         playstatus->buffering = FALSE;
     if (playstatus->status == STATUS_PLAY && playstatus->buffering == TRUE)
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_PLAYPAUSE, 39, 0, 0, 0, 3, playstatus->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_PLAYPAUSE, 39, 0, 0, 0, 3, playstatus->height);
     else if (playstatus->status == STATUS_PLAY)
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_PLAYPAUSE, 36, 0, 0, 0, 3, playstatus->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_PLAYPAUSE, 36, 0, 0, 0, 3, playstatus->height);
     else
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_PLAYPAUSE, 27, 0, 0, 0, 2, playstatus->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_PLAYPAUSE, 27, 0, 0, 0, 2, playstatus->height);
     switch (playstatus->status) {
     case STATUS_STOP:
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_PLAYPAUSE, 18, 0, 2, 0, 9, playstatus->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_PLAYPAUSE, 18, 0, 2, 0, 9, playstatus->height);
         break;
     case STATUS_PAUSE:
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_PLAYPAUSE, 9, 0, 2, 0, 9, playstatus->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_PLAYPAUSE, 9, 0, 2, 0, 9, playstatus->height);
         break;
     case STATUS_PLAY:
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_PLAYPAUSE, 1, 0, 3, 0, 8, playstatus->height);
+        skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_PLAYPAUSE, 1, 0, 3, 0, 8, playstatus->height);
         break;
     }
 

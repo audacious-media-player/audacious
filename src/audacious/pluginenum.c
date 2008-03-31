@@ -832,7 +832,7 @@ plugin_system_init(void)
     ext_hash = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
 
 #ifndef DISABLE_USER_PLUGIN_DIR
-    scan_plugins(bmp_paths[BMP_PATH_USER_PLUGIN_DIR]);
+    scan_plugins(aud_paths[BMP_PATH_USER_PLUGIN_DIR]);
     /*
      * This is in a separate lo
      * DiscoveryPlugin *dpop so if the user puts them in the
@@ -840,7 +840,7 @@ plugin_system_init(void)
      * first)                                                - Zinx
      */
     while (plugin_dir_list[dirsel]) {
-        dir = g_build_filename(bmp_paths[BMP_PATH_USER_PLUGIN_DIR],
+        dir = g_build_filename(aud_paths[BMP_PATH_USER_PLUGIN_DIR],
                                plugin_dir_list[dirsel++], NULL);
         scan_plugins(dir);
         g_free(dir);

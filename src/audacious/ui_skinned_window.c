@@ -114,9 +114,9 @@ ui_skinned_window_map(GtkWidget *widget)
 
     SkinnedWindow *window = SKINNED_WINDOW(widget);
     if (window->type == WINDOW_MAIN)
-        gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
+        gtk_widget_shape_combine_mask(widget, skin_get_mask(aud_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
     else if (window->type == WINDOW_EQ)
-        gtk_widget_shape_combine_mask(widget, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+        gtk_widget_shape_combine_mask(widget, skin_get_mask(aud_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 }
 
 static gboolean
@@ -156,8 +156,8 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
     gint width = 0, height = 0;
     switch (window->type) {
         case WINDOW_MAIN:
-            width = bmp_active_skin->properties.mainwin_width;
-            height = bmp_active_skin->properties.mainwin_height;
+            width = aud_active_skin->properties.mainwin_width;
+            height = aud_active_skin->properties.mainwin_height;
             break;
         case WINDOW_EQ:
             width = 275 * (cfg.scaled ? cfg.scale_factor : 1);
@@ -176,29 +176,29 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
 
     switch (window->type) {
         case WINDOW_MAIN:
-            skin_draw_pixbuf(widget, bmp_active_skin, obj,SKIN_MAIN, 0, 0, 0, 0, width, height);
-            skin_draw_mainwin_titlebar(bmp_active_skin, obj, cfg.player_shaded, focus || !cfg.dim_titlebar);
+            skin_draw_pixbuf(widget, aud_active_skin, obj,SKIN_MAIN, 0, 0, 0, 0, width, height);
+            skin_draw_mainwin_titlebar(aud_active_skin, obj, cfg.player_shaded, focus || !cfg.dim_titlebar);
             break;
         case WINDOW_EQ:
-            skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
+            skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
             if (focus || !cfg.dim_titlebar) {
                 if (!cfg.equalizer_shaded)
-                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
                 else
-                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
             } else {
                 if (!cfg.equalizer_shaded)
-                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
                 else
-                    skin_draw_pixbuf(widget, bmp_active_skin, obj, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
+                    skin_draw_pixbuf(widget, aud_active_skin, obj, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
             }
             break;
         case WINDOW_PLAYLIST:
             focus |= !cfg.dim_titlebar;
             if (cfg.playlist_shaded) {
-                skin_draw_playlistwin_shaded(bmp_active_skin, obj, playlistwin_get_width(), focus);
+                skin_draw_playlistwin_shaded(aud_active_skin, obj, playlistwin_get_width(), focus);
             } else {
-                skin_draw_playlistwin_frame(bmp_active_skin, obj, playlistwin_get_width(), cfg.playlist_height, focus);
+                skin_draw_playlistwin_frame(aud_active_skin, obj, playlistwin_get_width(), cfg.playlist_height, focus);
             }
             break;
     }

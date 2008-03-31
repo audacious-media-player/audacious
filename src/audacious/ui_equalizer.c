@@ -137,7 +137,7 @@ equalizerwin_set_scaled(gboolean ds)
         GtkWidget *child = child_data->widget;
         g_signal_emit_by_name(child, "toggle-scaled");
     }
-    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(aud_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 }
 
 void
@@ -166,7 +166,7 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_hide(equalizerwin_balance);
     }
 
-    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(aud_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 }
 
 static void
@@ -323,7 +323,7 @@ equalizerwin_read_presets(const gchar * basename)
     /* START mod: add check for the default presets locate in system path ({prefix}/share/audacious)
        by Massimo Cavalleri (submax) */
 
-    filename = g_build_filename(bmp_paths[BMP_PATH_USER_DIR], basename, NULL);
+    filename = g_build_filename(aud_paths[BMP_PATH_USER_DIR], basename, NULL);
 
     if ((rcfile = aud_rcfile_open(filename)) == NULL) {
         g_free(filename);
@@ -531,7 +531,7 @@ equalizerwin_create_window(void)
                                  GTK_WINDOW(mainwin));
     gtk_window_set_skip_taskbar_hint(GTK_WINDOW(equalizerwin), TRUE);
 
-    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) bmp_eq_icon);
+    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_eq_icon);
     gtk_window_set_icon(GTK_WINDOW(equalizerwin), icon);
     g_object_unref(icon);
 
@@ -660,7 +660,7 @@ equalizerwin_write_preset_file(GList * list, const gchar * basename)
         }
     }
 
-    filename = g_build_filename(bmp_paths[BMP_PATH_USER_DIR], basename, NULL);
+    filename = g_build_filename(aud_paths[BMP_PATH_USER_DIR], basename, NULL);
     aud_rcfile_write(rcfile, filename);
     aud_rcfile_free(rcfile);
     g_free(filename);
@@ -853,7 +853,7 @@ equalizerwin_read_winamp_eqf(VFSFile * file)
 }
 
 static void
-equalizerwin_read_bmp_preset(RcFile * rcfile)
+equalizerwin_read_aud_preset(RcFile * rcfile)
 {
     gfloat val;
     gint i;
@@ -1019,7 +1019,7 @@ load_preset_file(const gchar *filename)
     RcFile *rcfile;
 
     if ((rcfile = aud_rcfile_open(filename)) != NULL) {
-        equalizerwin_read_bmp_preset(rcfile);
+        equalizerwin_read_aud_preset(rcfile);
         aud_rcfile_free(rcfile);
     }
 }
@@ -1246,7 +1246,7 @@ equalizerwin_load_auto_preset(const gchar * filename)
     if (strlen(cfg.eqpreset_extension) > 0 &&
         (rcfile = aud_rcfile_open(presetfilename)) != NULL) {
         g_free(presetfilename);
-        equalizerwin_read_bmp_preset(rcfile);
+        equalizerwin_read_aud_preset(rcfile);
         aud_rcfile_free(rcfile);
         return;
     }
@@ -1261,7 +1261,7 @@ equalizerwin_load_auto_preset(const gchar * filename)
     /* Try to find a per directory preset file */
     if (strlen(cfg.eqpreset_default_file) > 0 &&
         (rcfile = aud_rcfile_open(presetfilename)) != NULL) {
-        equalizerwin_read_bmp_preset(rcfile);
+        equalizerwin_read_aud_preset(rcfile);
         aud_rcfile_free(rcfile);
     }
     else if (!equalizerwin_load_preset

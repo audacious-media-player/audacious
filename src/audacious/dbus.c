@@ -874,13 +874,13 @@ gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error) {
-    *skin = g_strdup(bmp_active_skin->path);
+    *skin = g_strdup(aud_active_skin->path);
     return TRUE;
 }
 
 gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error) {
     if (has_x11_connection == TRUE)
-        bmp_active_skin_load(skin);
+        aud_active_skin_load(skin);
     return TRUE;
 }
 

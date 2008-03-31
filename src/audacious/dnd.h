@@ -38,7 +38,7 @@ enum {
 };
 
 /* Drag data format listing for gtk_drag_dest_set() */
-static const GtkTargetEntry bmp_drop_types[] = {
+static const GtkTargetEntry aud_drop_types[] = {
     {"text/plain", 0, BMP_DROP_PLAINTEXT},
     {"text/uri-list", 0, BMP_DROP_URLENCODED},
     {"STRING", 0, BMP_DROP_STRING},
@@ -46,6 +46,6 @@ static const GtkTargetEntry bmp_drop_types[] = {
     {"application/x-font-ttf", 0, BMP_DROP_FONT},
 };
 
-void bmp_drag_dest_set(GtkWidget*);
+void aud_drag_dest_set(GtkWidget*);
 
 #endif

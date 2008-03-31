@@ -74,9 +74,9 @@ enum {
     BMP_PATH_COUNT
 };
 
-extern gchar *bmp_paths[];
+extern gchar *aud_paths[];
 
-extern const gchar *bmp_titlestring_presets[];
+extern const gchar *aud_titlestring_presets[];
 extern const guint n_titlestring_presets;
 
 extern const gchar *chardet_detector_presets[];

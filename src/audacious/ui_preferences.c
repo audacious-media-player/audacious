@@ -940,8 +940,8 @@ on_skin_refresh_button_clicked(GtkButton * button,
 {
     const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 
-    del_directory(bmp_paths[BMP_PATH_SKIN_THUMB_DIR]);
-    make_directory(bmp_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
+    del_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR]);
+    make_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
 
     skin_view_update(GTK_TREE_VIEW(skin_view), GTK_WIDGET(skin_refresh_button));
 }
@@ -1047,7 +1047,7 @@ on_skin_view_drag_data_received(GtkWidget * widget,
     }
 
     if (file_is_archive(path)) {
-        if (!bmp_active_skin_load(path))
+        if (!aud_active_skin_load(path))
             return;
         skin_install_skin(path);
         skin_view_update(GTK_TREE_VIEW(widget),
@@ -2012,7 +2012,7 @@ create_appearence_category(void)
     g_signal_connect(skin_view, "drag-data-received",
                      G_CALLBACK(on_skin_view_drag_data_received),
                      NULL);
-    bmp_drag_dest_set(skin_view);
+    aud_drag_dest_set(skin_view);
 
     g_signal_connect(mainwin, "drag-data-received",
                      G_CALLBACK(mainwin_drag_data_received),

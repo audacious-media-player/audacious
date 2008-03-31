@@ -649,7 +649,7 @@ playlistwin_resize(gint width, gint height)
     ui_skinned_button_move_relative(playlistwin_sscroll_down, dx, dy);
 
     gtk_widget_set_size_request(playlistwin_sinfo, playlistwin_get_width() - 35,
-                                bmp_active_skin->properties.textbox_bitmap_font_height);
+                                aud_active_skin->properties.textbox_bitmap_font_height);
     GList *iter;
     for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
          GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
@@ -1510,7 +1510,7 @@ playlistwin_create_window(void)
                                  GTK_WINDOW(mainwin));
     gtk_window_set_skip_taskbar_hint(GTK_WINDOW(playlistwin), TRUE);
 
-    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) bmp_playlist_icon);
+    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_playlist_icon);
     gtk_window_set_icon(GTK_WINDOW(playlistwin), icon);
     g_object_unref(icon);
 
@@ -1535,7 +1535,7 @@ playlistwin_create_window(void)
     g_signal_connect(playlistwin, "motion_notify_event",
                      G_CALLBACK(playlistwin_motion), NULL);
 
-    bmp_drag_dest_set(playlistwin);
+    aud_drag_dest_set(playlistwin);
 
     /* DnD stuff */
     g_signal_connect(playlistwin, "drag-leave",
@@ -1850,7 +1850,7 @@ action_playlist_save_default_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
-    playlist_save(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_save(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
 }
 
 void

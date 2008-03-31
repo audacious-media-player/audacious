@@ -110,7 +110,7 @@ AudCmdLineOpt options;
 
 AudConfig cfg;
 
-const gchar *bmp_titlestring_presets[] = {
+const gchar *aud_titlestring_presets[] = {
     "${title}",
     "${?artist:${artist} - }${title}",
     "${?artist:${artist} - }${?album:${album} - }${title}",
@@ -119,7 +119,7 @@ const gchar *bmp_titlestring_presets[] = {
     "${?album:${album} - }${title}"
 };
 
-const guint n_titlestring_presets = G_N_ELEMENTS(bmp_titlestring_presets);
+const guint n_titlestring_presets = G_N_ELEMENTS(aud_titlestring_presets);
 
 const gchar *chardet_detector_presets[] = {
     N_("None"),
@@ -138,7 +138,7 @@ const gchar *chardet_detector_presets[] = {
 };
 
 const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);    
-gchar *bmp_paths[BMP_PATH_COUNT] = {};
+gchar *aud_paths[BMP_PATH_COUNT] = {};
 
 GList *dock_window_list = NULL;
 
@@ -192,37 +192,37 @@ get_gentitle_format(void)
     guint titlestring_preset = cfg.titlestring_preset;
 
     if (titlestring_preset < n_titlestring_presets)
-        return bmp_titlestring_presets[titlestring_preset];
+        return aud_titlestring_presets[titlestring_preset];
 
     return cfg.gentitle_format;
 }
 
 static void
-bmp_make_user_dir(void)
+aud_make_user_dir(void)
 {
     const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 
-    make_directory(bmp_paths[BMP_PATH_USER_DIR], mode755);
-    make_directory(bmp_paths[BMP_PATH_USER_PLUGIN_DIR], mode755);
-    make_directory(bmp_paths[BMP_PATH_USER_SKIN_DIR], mode755);
-    make_directory(bmp_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
-    make_directory(bmp_paths[BMP_PATH_PLAYLISTS_DIR], mode755);
+    make_directory(aud_paths[BMP_PATH_USER_DIR], mode755);
+    make_directory(aud_paths[BMP_PATH_USER_PLUGIN_DIR], mode755);
+    make_directory(aud_paths[BMP_PATH_USER_SKIN_DIR], mode755);
+    make_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
+    make_directory(aud_paths[BMP_PATH_PLAYLISTS_DIR], mode755);
 }
 
 static void
-bmp_free_paths(void)
+aud_free_paths(void)
 {
     int i;
 
     for (i = 0; i < BMP_PATH_COUNT; i++)
     {
-        g_free(bmp_paths[i]);
-        bmp_paths[i] = 0;
+        g_free(aud_paths[i]);
+        aud_paths[i] = 0;
     }
 }
 
 static void
-bmp_init_paths()
+aud_init_paths()
 {
     char *xdg_config_home;
     char *xdg_data_home;
@@ -238,48 +238,48 @@ bmp_init_paths()
         ? g_build_filename(g_get_home_dir(), ".cache", NULL)
         : g_strdup(getenv("XDG_CACHE_HOME")));
 
-    bmp_paths[BMP_PATH_USER_DIR] =
+    aud_paths[BMP_PATH_USER_DIR] =
         g_build_filename(xdg_config_home, "audacious", NULL);
-    bmp_paths[BMP_PATH_USER_SKIN_DIR] =
+    aud_paths[BMP_PATH_USER_SKIN_DIR] =
         g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
-    bmp_paths[BMP_PATH_USER_PLUGIN_DIR] =
+    aud_paths[BMP_PATH_USER_PLUGIN_DIR] =
         g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
 
-    bmp_paths[BMP_PATH_SKIN_THUMB_DIR] =
+    aud_paths[BMP_PATH_SKIN_THUMB_DIR] =
         g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
 
-    bmp_paths[BMP_PATH_PLAYLISTS_DIR] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "playlists", NULL);
+    aud_paths[BMP_PATH_PLAYLISTS_DIR] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlists", NULL);
 
-    bmp_paths[BMP_PATH_CONFIG_FILE] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "config", NULL);
+    aud_paths[BMP_PATH_CONFIG_FILE] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "config", NULL);
 #ifdef HAVE_XSPF_PLAYLIST
-    bmp_paths[BMP_PATH_PLAYLIST_FILE] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR],
+    aud_paths[BMP_PATH_PLAYLIST_FILE] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR],
         "playlist.xspf", NULL);
 #else
-    bmp_paths[BMP_PATH_PLAYLIST_FILE] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR],
+    aud_paths[BMP_PATH_PLAYLIST_FILE] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR],
         "playlist.m3u", NULL);
 #endif
-    bmp_paths[BMP_PATH_ACCEL_FILE] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "accels", NULL);
-    bmp_paths[BMP_PATH_LOG_FILE] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "log", NULL);
+    aud_paths[BMP_PATH_ACCEL_FILE] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "accels", NULL);
+    aud_paths[BMP_PATH_LOG_FILE] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "log", NULL);
 
-    bmp_paths[BMP_PATH_GTKRC_FILE] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
+    aud_paths[BMP_PATH_GTKRC_FILE] =
+        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
 
     g_free(xdg_config_home);
     g_free(xdg_data_home);
     g_free(xdg_cache_home);
 
-    g_atexit(bmp_free_paths);
+    g_atexit(aud_free_paths);
 }
 
 
 static void
-bmp_set_default_icon(void)
+aud_set_default_icon(void)
 {
     GdkPixbuf *icon;
 
@@ -599,12 +599,12 @@ handle_cmd_line_options()
 }
 
 static void
-bmp_setup_logger(void)
+aud_setup_logger(void)
 {
-    if (!bmp_logger_start(bmp_paths[BMP_PATH_LOG_FILE]))
+    if (!aud_logger_start(aud_paths[BMP_PATH_LOG_FILE]))
         return;
 
-    g_atexit(bmp_logger_stop);
+    g_atexit(aud_logger_stop);
 }
 
 static void
@@ -713,17 +713,17 @@ main(gint argc, gchar ** argv)
 #ifndef _WIN32
     egg_set_desktop_file(AUDACIOUS_DESKTOP_FILE);
 #endif
-    bmp_init_paths();
-    bmp_make_user_dir();
+    aud_init_paths();
+    aud_make_user_dir();
 
     cond_scan = g_cond_new();
     mutex_scan = g_mutex_new();
-    gtk_rc_add_default_file(bmp_paths[BMP_PATH_GTKRC_FILE]);
+    gtk_rc_add_default_file(aud_paths[BMP_PATH_GTKRC_FILE]);
 
     parse_cmd_line_options(&argc, &argv);
 
     if (options.no_log == FALSE)
-        bmp_setup_logger();
+        aud_setup_logger();
 
     if (!gtk_init_check(&argc, &argv) && options.headless == FALSE) {
         /* GTK check failed, and no arguments passed to indicate
@@ -761,11 +761,11 @@ main(gint argc, gchar ** argv)
     /* Initialize the playlist system. */
     playlist_init();
     playlist = playlist_get_active();
-    playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_load(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(playlist, cfg.playlist_position);
 
     /* Load extra playlists */
-    if (!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
+    if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
                      playlist, NULL))
         g_warning("Could not load extra playlists\n");
 
@@ -779,12 +779,12 @@ main(gint argc, gchar ** argv)
 
     if (options.headless == FALSE)
     {
-        bmp_set_default_icon();
+        aud_set_default_icon();
 #ifdef GDK_WINDOWING_QUARTZ
         set_dock_icon();
 #endif
 
-        gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
+        gtk_accel_map_load(aud_paths[BMP_PATH_ACCEL_FILE]);
 
         if (!init_skins(cfg.skin)) {
             run_load_skin_error_dialog(cfg.skin);

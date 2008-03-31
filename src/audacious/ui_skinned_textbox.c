@@ -170,7 +170,7 @@ GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, gint x, gint y, gint w, gboo
     UiSkinnedTextbox *textbox = g_object_new (ui_skinned_textbox_get_type (), NULL);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
-    textbox->height = bmp_active_skin->properties.textbox_bitmap_font_height;
+    textbox->height = aud_active_skin->properties.textbox_bitmap_font_height;
     textbox->x = x;
     textbox->y = y;
     textbox->text = g_strdup("");
@@ -436,7 +436,7 @@ static gboolean ui_skinned_textbox_should_scroll(UiSkinnedTextbox *textbox) {
             return TRUE;
     }
 
-    if (g_utf8_strlen(textbox->text, -1) * bmp_active_skin->properties.textbox_bitmap_font_width > textbox->width)
+    if (g_utf8_strlen(textbox->text, -1) * aud_active_skin->properties.textbox_bitmap_font_width > textbox->width)
         return TRUE;
 
     return FALSE;
@@ -527,7 +527,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
                                    textbox->height,
                                    gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(pixmap);
-    c = skin_get_color(bmp_active_skin, SKIN_TEXTBG);
+    c = skin_get_color(aud_active_skin, SKIN_TEXTBG);
     for (i = 0; i < textbox->height; i++) {
         gdk_gc_set_foreground(gc, &c[6 * i / textbox->height]);
         gdk_draw_line(pixmap, gc, 0, i, priv->pixbuf_width, i);
@@ -542,7 +542,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
     pattern.pixel = 1;
     gdk_gc_set_foreground(maskgc, &pattern);
 
-    gdk_gc_set_foreground(gc, skin_get_color(bmp_active_skin, SKIN_TEXTFG));
+    gdk_gc_set_foreground(gc, skin_get_color(aud_active_skin, SKIN_TEXTFG));
 
     layout = gtk_widget_create_pango_layout(mainwin, pixmaptext);
     pango_layout_set_font_description(layout, priv->font);
@@ -553,7 +553,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
     g_object_unref(maskgc);
 
     gdk_gc_set_clip_mask(gc, mask);
-    c = skin_get_color(bmp_active_skin, SKIN_TEXTFG);
+    c = skin_get_color(aud_active_skin, SKIN_TEXTFG);
     for (i = 0; i < textbox->height; i++) {
         gdk_gc_set_foreground(gc, &c[6 * i / textbox->height]);
         gdk_draw_line(pixmap, gc, 0, i, priv->pixbuf_width, i);
@@ -675,30 +675,30 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
         return;
     }
 
-    priv->pixbuf_width = length * bmp_active_skin->properties.textbox_bitmap_font_width;
+    priv->pixbuf_width = length * aud_active_skin->properties.textbox_bitmap_font_width;
     priv->pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8,
-                                  priv->pixbuf_width, bmp_active_skin->properties.textbox_bitmap_font_height);
+                                  priv->pixbuf_width, aud_active_skin->properties.textbox_bitmap_font_height);
 
     for (tmp = stxt = g_utf8_strup(pixmaptext, -1), i = 0;
          tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
         gchar c = *tmp;
         x = y = -1;
         if (c >= 'A' && c <= 'Z') {
-            x = bmp_active_skin->properties.textbox_bitmap_font_width * (c - 'A');
+            x = aud_active_skin->properties.textbox_bitmap_font_width * (c - 'A');
             y = 0;
         }
         else if (c >= '0' && c <= '9') {
-            x = bmp_active_skin->properties.textbox_bitmap_font_width * (c - '0');
-            y = bmp_active_skin->properties.textbox_bitmap_font_height;
+            x = aud_active_skin->properties.textbox_bitmap_font_width * (c - '0');
+            y = aud_active_skin->properties.textbox_bitmap_font_height;
         }
         else
             textbox_handle_special_char(tmp, &x, &y);
 
-        skin_draw_pixbuf(GTK_WIDGET(textbox), bmp_active_skin,
+        skin_draw_pixbuf(GTK_WIDGET(textbox), aud_active_skin,
                          priv->pixbuf, priv->skin_index,
-                         x, y, i * bmp_active_skin->properties.textbox_bitmap_font_width, 0,
-                         bmp_active_skin->properties.textbox_bitmap_font_width, 
-                         bmp_active_skin->properties.textbox_bitmap_font_height);
+                         x, y, i * aud_active_skin->properties.textbox_bitmap_font_width, 0,
+                         aud_active_skin->properties.textbox_bitmap_font_width, 
+                         aud_active_skin->properties.textbox_bitmap_font_height);
     }
     g_free(stxt);
     g_free(pixmaptext);
@@ -858,8 +858,8 @@ static void textbox_handle_special_char(gchar *c, gint * x, gint * y) {
         ty = 2;
     }
 
-    *x = tx * bmp_active_skin->properties.textbox_bitmap_font_width;
-    *y = ty * bmp_active_skin->properties.textbox_bitmap_font_height;
+    *x = tx * aud_active_skin->properties.textbox_bitmap_font_width;
+    *y = ty * aud_active_skin->properties.textbox_bitmap_font_height;
 }
 
 void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y) {

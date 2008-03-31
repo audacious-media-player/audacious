@@ -33,8 +33,8 @@ G_BEGIN_DECLS
 #define BMP_LOGGER_FILE_MAX_SIZE      ((size_t)1 << 19)
 
 
-gboolean bmp_logger_start(const gchar * filename);
-void bmp_logger_stop(void);
+gboolean aud_logger_start(const gchar * filename);
+void aud_logger_stop(void);
 
 G_END_DECLS
 

@@ -691,19 +691,19 @@ struct _AudaciousFuncTableV1 {
 #define aud_vfs_fget_be64		_audvt->vfs_fget_be64
 
 /* XXX: deprecation warnings */
-#define bmp_cfg_db_open			_audvt->cfg_db_open
-#define bmp_cfg_db_close		_audvt->cfg_db_close
-#define bmp_cfg_db_set_string		_audvt->cfg_db_set_string
-#define bmp_cfg_db_set_int		_audvt->cfg_db_set_int
-#define bmp_cfg_db_set_bool		_audvt->cfg_db_set_bool
-#define bmp_cfg_db_set_float		_audvt->cfg_db_set_float
-#define bmp_cfg_db_set_double		_audvt->cfg_db_set_double
-#define bmp_cfg_db_get_string		_audvt->cfg_db_get_string
-#define bmp_cfg_db_get_int		_audvt->cfg_db_get_int
-#define bmp_cfg_db_get_bool		_audvt->cfg_db_get_bool
-#define bmp_cfg_db_get_float		_audvt->cfg_db_get_float
-#define bmp_cfg_db_get_double		_audvt->cfg_db_get_double
-#define bmp_cfg_db_unset_key		_audvt->cfg_db_unset_key
+#define aud_cfg_db_open			_audvt->cfg_db_open
+#define aud_cfg_db_close		_audvt->cfg_db_close
+#define aud_cfg_db_set_string		_audvt->cfg_db_set_string
+#define aud_cfg_db_set_int		_audvt->cfg_db_set_int
+#define aud_cfg_db_set_bool		_audvt->cfg_db_set_bool
+#define aud_cfg_db_set_float		_audvt->cfg_db_set_float
+#define aud_cfg_db_set_double		_audvt->cfg_db_set_double
+#define aud_cfg_db_get_string		_audvt->cfg_db_get_string
+#define aud_cfg_db_get_int		_audvt->cfg_db_get_int
+#define aud_cfg_db_get_bool		_audvt->cfg_db_get_bool
+#define aud_cfg_db_get_float		_audvt->cfg_db_get_float
+#define aud_cfg_db_get_double		_audvt->cfg_db_get_double
+#define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
 
 #define aud_cfg_db_open			_audvt->cfg_db_open
 #define aud_cfg_db_close		_audvt->cfg_db_close

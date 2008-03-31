@@ -75,7 +75,7 @@ typedef struct _SkinPixmapIdMapping SkinPixmapIdMapping;
 typedef struct _SkinMaskInfo SkinMaskInfo;
 
 
-Skin *bmp_active_skin = NULL;
+Skin *aud_active_skin = NULL;
 
 static gint skin_current_num;
 
@@ -155,19 +155,19 @@ skin_unlock(Skin * skin)
 }
 
 gboolean
-bmp_active_skin_reload(void) 
+aud_active_skin_reload(void) 
 {
     AUDDBG("\n");
-    return bmp_active_skin_load(bmp_active_skin->path); 
+    return aud_active_skin_load(aud_active_skin->path); 
 }
 
 gboolean
-bmp_active_skin_load(const gchar * path)
+aud_active_skin_load(const gchar * path)
 {
     AUDDBG("%s\n", path);
-    g_return_val_if_fail(bmp_active_skin != NULL, FALSE);
+    g_return_val_if_fail(aud_active_skin != NULL, FALSE);
 
-    if (!skin_load(bmp_active_skin, path)) {
+    if (!skin_load(aud_active_skin, path)) {
         AUDDBG("loading failed\n");
         return FALSE;
     }
@@ -179,7 +179,7 @@ bmp_active_skin_load(const gchar * path)
     playlistwin_update_list(playlist_get_active());
 
     SkinPixmap *pixmap;
-    pixmap = &bmp_active_skin->pixmaps[SKIN_POSBAR];
+    pixmap = &aud_active_skin->pixmaps[SKIN_POSBAR];
     /* last 59 pixels of SKIN_POSBAR are knobs (normal and selected) */
     gtk_widget_set_size_request(mainwin_position, pixmap->width - 59, pixmap->height);
 
@@ -516,9 +516,9 @@ skin_get_textcolors(GdkPixbuf * pix, GdkColor * bgc, GdkColor * fgc)
 gboolean
 init_skins(const gchar * path)
 {
-    bmp_active_skin = skin_new();
+    aud_active_skin = skin_new();
 
-    skin_parse_hints(bmp_active_skin, NULL);
+    skin_parse_hints(aud_active_skin, NULL);
 
     /* create the windows if they haven't been created yet, needed for bootstrapping */
     if (mainwin == NULL)
@@ -528,14 +528,14 @@ init_skins(const gchar * path)
         playlistwin_create();
     }
 
-    if (!bmp_active_skin_load(path)) {
+    if (!aud_active_skin_load(path)) {
         if (path != NULL)
             AUDDBG("Unable to load skin (%s), trying default...\n", path);
         else
             AUDDBG("Skin not defined: trying default...\n");
 
         /* can't load configured skin, retry with default */
-        if (!bmp_active_skin_load(BMP_DEFAULT_SKIN_PATH)) {
+        if (!aud_active_skin_load(BMP_DEFAULT_SKIN_PATH)) {
             AUDDBG("Unable to load default skin (%s)! Giving up.\n",
                       BMP_DEFAULT_SKIN_PATH);
             return FALSE;
@@ -550,7 +550,7 @@ init_skins(const gchar * path)
 
 void cleanup_skins()
 {
-    skin_destroy(bmp_active_skin);
+    skin_destroy(aud_active_skin);
 }
 
 
@@ -1600,8 +1600,8 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     if(archive) del_directory(skin_path);
     g_free(skin_path);
 
-    gtk_widget_shape_combine_mask(mainwin, skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
-    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+    gtk_widget_shape_combine_mask(mainwin, skin_get_mask(aud_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
+    gtk_widget_shape_combine_mask(equalizerwin, skin_get_mask(aud_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
 
     return TRUE;
 }
@@ -1614,10 +1614,10 @@ skin_install_skin(const gchar * path)
     g_return_if_fail(path != NULL);
 
     command = g_strdup_printf("cp %s %s",
-                              path, bmp_paths[BMP_PATH_USER_SKIN_DIR]);
+                              path, aud_paths[BMP_PATH_USER_SKIN_DIR]);
     if (system(command)) {
         AUDDBG("Unable to install skin (%s) into user directory (%s)\n",
-                  path, bmp_paths[BMP_PATH_USER_SKIN_DIR]);
+                  path, aud_paths[BMP_PATH_USER_SKIN_DIR]);
     }
     g_free(command);
 }
@@ -1681,9 +1681,9 @@ skin_reload_forced(void)
    gboolean error;
    AUDDBG("\n");
 
-   skin_lock(bmp_active_skin);
-   error = skin_load_nolock(bmp_active_skin, bmp_active_skin->path, TRUE);
-   skin_unlock(bmp_active_skin);
+   skin_lock(aud_active_skin);
+   error = skin_load_nolock(aud_active_skin, aud_active_skin->path, TRUE);
+   skin_unlock(aud_active_skin);
 
    return error;
 }
@@ -1801,7 +1801,7 @@ skin_draw_pixbuf(GtkWidget *widget, Skin * skin, GdkPixbuf * pix,
                             return;
                     }
                     /* let's copy what's under widget */
-                    gdk_pixbuf_copy_area(skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixbuf,
+                    gdk_pixbuf_copy_area(skin_get_pixmap(aud_active_skin, SKIN_MAIN)->pixbuf,
                                          x, y, width, height, pix, xdest, ydest);
 
                     /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
@@ -2052,7 +2052,7 @@ skin_draw_mainwin_titlebar(Skin * skin, GdkPixbuf * pix,
     }
 
     skin_draw_pixbuf(NULL, skin, pix, SKIN_TITLEBAR, 27, y_offset,
-                     0, 0, bmp_active_skin->properties.mainwin_width, MAINWIN_TITLEBAR_HEIGHT);
+                     0, 0, aud_active_skin->properties.mainwin_width, MAINWIN_TITLEBAR_HEIGHT);
 }
 
 
@@ -2065,5 +2065,5 @@ skin_set_random_skin(void)
     /* Get a random value to select the skin to use */
     randval = g_random_int_range(0, g_list_length(skinlist));
     node = g_list_nth(skinlist, randval)->data;
-    bmp_active_skin_load(node->path);
+    aud_active_skin_load(node->path);
 }

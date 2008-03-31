@@ -199,13 +199,13 @@ typedef struct _Skin {
     SkinProperties properties;
 } Skin;
 
-extern Skin *bmp_active_skin;
+extern Skin *aud_active_skin;
 
 gboolean init_skins(const gchar * path);
 void cleanup_skins(void);
 
-gboolean bmp_active_skin_load(const gchar * path);
-gboolean bmp_active_skin_reload(void);
+gboolean aud_active_skin_load(const gchar * path);
+gboolean aud_active_skin_reload(void);
 
 Skin *skin_new(void);
 gboolean skin_load(Skin * skin, const gchar * path);

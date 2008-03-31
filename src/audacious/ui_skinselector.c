@@ -70,7 +70,7 @@ get_thumbnail_filename(const gchar * path)
     basename = g_path_get_basename(path);
     pngname = g_strconcat(basename, ".png", NULL);
 
-    thumbname = g_build_filename(bmp_paths[BMP_PATH_SKIN_THUMB_DIR],
+    thumbname = g_build_filename(aud_paths[BMP_PATH_SKIN_THUMB_DIR],
                                  pngname, NULL);
 
     g_free(basename);
@@ -254,7 +254,7 @@ skinlist_update(void)
 
     skinlist_clear();
 
-    scan_skindir(bmp_paths[BMP_PATH_USER_SKIN_DIR]);
+    scan_skindir(aud_paths[BMP_PATH_USER_SKIN_DIR]);
     scan_skindir(DATA_DIR G_DIR_SEPARATOR_S "Skins");
 
     skinsdir = getenv("SKINSDIR");
@@ -311,8 +311,8 @@ skin_view_update(GtkTreeView * treeview, GtkWidget * refresh_button)
             g_object_unref(thumbnail);
         g_free(formattedname);
 
-        if (g_strstr_len(bmp_active_skin->path,
-                         strlen(bmp_active_skin->path), name) ) {
+        if (g_strstr_len(aud_active_skin->path,
+                         strlen(aud_active_skin->path), name) ) {
             iter_current_skin = iter;
             have_current_skin = TRUE;
         }
@@ -359,7 +359,7 @@ skin_view_on_cursor_changed(GtkTreeView * treeview,
 
     g_free(name);
 
-    bmp_active_skin_load(comp);
+    aud_active_skin_load(comp);
 }
 
 

@@ -50,9 +50,9 @@ struct _LogHandler {
 typedef struct _LogHandler LogHandler;
 
 
-static FILE *bmp_log_file = NULL;
+static FILE *aud_log_file = NULL;
 
-G_LOCK_DEFINE_STATIC(bmp_log_file);
+G_LOCK_DEFINE_STATIC(aud_log_file);
 
 static LogHandler log_handlers[] = {
     {NULL, LOG_ALL_LEVELS, 0},
@@ -93,7 +93,7 @@ log_to_file(const gchar * domain, GLogLevelFlags level,
         return;
     }
 
-    G_LOCK(bmp_log_file);
+    G_LOCK(aud_log_file);
 
     if (domain)
         g_fprintf(file, "(%s) ", domain);
@@ -105,11 +105,11 @@ log_to_file(const gchar * domain, GLogLevelFlags level,
 
     fflush(file);
 
-    G_UNLOCK(bmp_log_file);
+    G_UNLOCK(aud_log_file);
 }
 
 gboolean
-bmp_logger_start(const gchar * filename)
+aud_logger_start(const gchar * filename)
 {
     guint i;
 
@@ -117,11 +117,11 @@ bmp_logger_start(const gchar * filename)
 
     /* truncate file when size limit is reached */
     if (get_filesize(filename) < BMP_LOGGER_FILE_MAX_SIZE)
-        bmp_log_file = fopen(filename, "at");
+        aud_log_file = fopen(filename, "at");
     else
-        bmp_log_file = fopen(filename, "w+t");
+        aud_log_file = fopen(filename, "w+t");
 
-    if (!bmp_log_file) {
+    if (!aud_log_file) {
         g_printerr(_("Unable to create log file (%s)!\n"), filename);
         return FALSE;
     }
@@ -129,7 +129,7 @@ bmp_logger_start(const gchar * filename)
     for (i = 0; i < log_handler_count; i++) {
         log_handlers[i].id = g_log_set_handler(log_handlers[i].domain,
                                                log_handlers[i].level,
-                                               log_to_file, bmp_log_file);
+                                               log_to_file, aud_log_file);
     }
 
     g_message("\n** LOGGING STARTED AT %s", get_timestamp_str());
@@ -138,11 +138,11 @@ bmp_logger_start(const gchar * filename)
 }
 
 void
-bmp_logger_stop(void)
+aud_logger_stop(void)
 {
     guint i;
 
-    if (!bmp_log_file)
+    if (!aud_log_file)
         return;
 
     g_message("\n** LOGGING STOPPED AT %s", get_timestamp_str());
@@ -150,6 +150,6 @@ bmp_logger_stop(void)
     for (i = 0; i < log_handler_count; i++)
         g_log_remove_handler(log_handlers[i].domain, log_handlers[i].id);
 
-    fclose(bmp_log_file);
-    bmp_log_file = NULL;
+    fclose(aud_log_file);
+    aud_log_file = NULL;
 }

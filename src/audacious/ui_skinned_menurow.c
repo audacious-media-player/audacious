@@ -216,23 +216,23 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
 
     if (menurow->selected == MENUROW_NONE) {
         if (cfg.always_show_cb || menurow->pushed)
-            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
+            skin_draw_pixbuf(widget, aud_active_skin, obj, menurow->skin_index,
                              menurow->nx, menurow->ny, 0, 0, 8, 43);
         else
-            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
+            skin_draw_pixbuf(widget, aud_active_skin, obj, menurow->skin_index,
                              menurow->nx + 8, menurow->ny, 0, 0, 8, 43);
     }
     else {
-        skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
+        skin_draw_pixbuf(widget, aud_active_skin, obj, menurow->skin_index,
                          menurow->sx + ((menurow->selected - 1) * 8),
                          menurow->sy, 0, 0, 8, 43);
     }
     if (cfg.always_show_cb || menurow->pushed) {
         if (menurow->always_selected)
-            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
+            skin_draw_pixbuf(widget, aud_active_skin, obj, menurow->skin_index,
                              menurow->sx + 8, menurow->sy + 10, 0, 10, 8, 8);
         if (menurow->scale_selected)
-            skin_draw_pixbuf(widget, bmp_active_skin, obj, menurow->skin_index,
+            skin_draw_pixbuf(widget, aud_active_skin, obj, menurow->skin_index,
                              menurow->sx + 24, menurow->sy + 26, 0, 26, 8, 8);
     }
 

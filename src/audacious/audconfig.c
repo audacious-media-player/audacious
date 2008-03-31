@@ -181,23 +181,23 @@ AudConfig aud_default_config = {
     FALSE,          /* bypass dsp */
 };
 
-typedef struct bmp_cfg_boolent_t {
+typedef struct aud_cfg_boolent_t {
     char const *be_vname;
     gboolean *be_vloc;
     gboolean be_wrt;
-} bmp_cfg_boolent;
+} aud_cfg_boolent;
 
-typedef struct bmp_cfg_nument_t {
+typedef struct aud_cfg_nument_t {
     char const *ie_vname;
     gint *ie_vloc;
     gboolean ie_wrt;
-} bmp_cfg_nument;
+} aud_cfg_nument;
 
-typedef struct bmp_cfg_strent_t {
+typedef struct aud_cfg_strent_t {
     char const *se_vname;
     char **se_vloc;
     gboolean se_wrt;
-} bmp_cfg_strent;
+} aud_cfg_strent;
 
 
 /* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */
@@ -213,7 +213,7 @@ static gchar *pl_candidates[] = {
 };
 
 
-static bmp_cfg_boolent bmp_boolents[] = {
+static aud_cfg_boolent aud_boolents[] = {
     {"allow_multiple_instances", &cfg.allow_multiple_instances, TRUE},
     {"use_realtime", &cfg.use_realtime, TRUE},
     {"always_show_cb", &cfg.always_show_cb, TRUE},
@@ -286,9 +286,9 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"bypass_dsp",                 &cfg.bypass_dsp, TRUE},
 };
 
-static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
+static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
 
-static bmp_cfg_nument bmp_numents[] = {
+static aud_cfg_nument aud_numents[] = {
     {"player_x", &cfg.player_x, TRUE},
     {"player_y", &cfg.player_y, TRUE},
     {"timer_mode", &cfg.timer_mode, TRUE},
@@ -329,9 +329,9 @@ static bmp_cfg_nument bmp_numents[] = {
 #endif
 };
 
-static gint ncfgient = G_N_ELEMENTS(bmp_numents);
+static gint ncfgient = G_N_ELEMENTS(aud_numents);
 
-static bmp_cfg_strent bmp_strents[] = {
+static aud_cfg_strent aud_strents[] = {
     {"playlist_font", &cfg.playlist_font, TRUE},
     {"mainwin_font", &cfg.mainwin_font, TRUE},
     {"eqpreset_default_file", &cfg.eqpreset_default_file, TRUE},
@@ -352,7 +352,7 @@ static bmp_cfg_strent bmp_strents[] = {
     {"session_uri_base", &cfg.session_uri_base, TRUE}
 };
 
-static gint ncfgsent = G_N_ELEMENTS(bmp_strents);
+static gint ncfgsent = G_N_ELEMENTS(aud_strents);
 
 
 static gboolean
@@ -458,7 +458,7 @@ save_other_playlists(GList *saved)
                     goto cleanup;
                 }
             }
-            filename = g_build_filename(bmp_paths[BMP_PATH_PLAYLISTS_DIR],
+            filename = g_build_filename(aud_paths[BMP_PATH_PLAYLISTS_DIR],
                     newbasename, NULL);
             g_free(newbasename);
         } while (g_file_test(filename, G_FILE_TEST_EXISTS));
@@ -476,10 +476,10 @@ aud_config_free(void)
 {
   gint i;
   for (i = 0; i < ncfgsent; ++i) {
-    if ( *(bmp_strents[i].se_vloc) != NULL )
+    if ( *(aud_strents[i].se_vloc) != NULL )
     {
-      g_free( *(bmp_strents[i].se_vloc) );
-      *(bmp_strents[i].se_vloc) = NULL;
+      g_free( *(aud_strents[i].se_vloc) );
+      *(aud_strents[i].se_vloc) = NULL;
     }
   }
 }
@@ -495,20 +495,20 @@ aud_config_load(void)
     db = cfg_db_open();
     for (i = 0; i < ncfgbent; ++i) {
         cfg_db_get_bool(db, NULL,
-                            bmp_boolents[i].be_vname,
-                            bmp_boolents[i].be_vloc);
+                            aud_boolents[i].be_vname,
+                            aud_boolents[i].be_vloc);
     }
 
     for (i = 0; i < ncfgient; ++i) {
         cfg_db_get_int(db, NULL,
-                           bmp_numents[i].ie_vname,
-                           bmp_numents[i].ie_vloc);
+                           aud_numents[i].ie_vname,
+                           aud_numents[i].ie_vloc);
     }
 
     for (i = 0; i < ncfgsent; ++i) {
         cfg_db_get_string(db, NULL,
-                              bmp_strents[i].se_vname,
-                              bmp_strents[i].se_vloc);
+                              aud_strents[i].se_vname,
+                              aud_strents[i].se_vloc);
     }
 
     /* Preset */
@@ -620,16 +620,16 @@ aud_config_save(void)
     db = cfg_db_open();
 
     for (i = 0; i < ncfgbent; ++i)
-        if (bmp_boolents[i].be_wrt)
+        if (aud_boolents[i].be_wrt)
             cfg_db_set_bool(db, NULL,
-                                bmp_boolents[i].be_vname,
-                                *bmp_boolents[i].be_vloc);
+                                aud_boolents[i].be_vname,
+                                *aud_boolents[i].be_vloc);
 
     for (i = 0; i < ncfgient; ++i)
-        if (bmp_numents[i].ie_wrt)
+        if (aud_numents[i].ie_wrt)
             cfg_db_set_int(db, NULL,
-                               bmp_numents[i].ie_vname,
-                               *bmp_numents[i].ie_vloc);
+                               aud_numents[i].ie_vname,
+                               *aud_numents[i].ie_vloc);
 
     /* This is a bit lame .. it'll end up being written twice,
      * could do with being done a bit neater.  -larne   */
@@ -673,10 +673,10 @@ aud_config_save(void)
             cfg.mainwin_use_bitmapfont);
 
     for (i = 0; i < ncfgsent; ++i) {
-        if (bmp_strents[i].se_wrt)
+        if (aud_strents[i].se_wrt)
             cfg_db_set_string(db, NULL,
-                                  bmp_strents[i].se_vname,
-                                  *bmp_strents[i].se_vloc);
+                                  aud_strents[i].se_vname,
+                                  *aud_strents[i].se_vloc);
     }
 
     cfg_db_set_float(db, NULL, "equalizer_preamp", cfg.equalizer_preamp);
@@ -693,10 +693,10 @@ aud_config_save(void)
 
     cfg_db_set_float(db, NULL, "scale_factor", cfg.scale_factor);
 
-    if (bmp_active_skin != NULL)
+    if (aud_active_skin != NULL)
     {
-        if (bmp_active_skin->path)
-            cfg_db_set_string(db, NULL, "skin", bmp_active_skin->path);
+        if (aud_active_skin->path)
+            cfg_db_set_string(db, NULL, "skin", aud_active_skin->path);
         else
             cfg_db_unset_key(db, NULL, "skin");
     }
@@ -759,12 +759,12 @@ aud_config_save(void)
 
     cfg_db_close(db);
 
-    playlist_save(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_save(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
 
     /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
     saved = NULL;
     saved = g_list_prepend(saved, playlist); /* don't save default again */
-    if(!dir_foreach(bmp_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
+    if(!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
             &saved, NULL)) {
         g_warning("Could not save extra playlists\n");
     }

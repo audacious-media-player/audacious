@@ -26,9 +26,9 @@
 #include "dnd.h"
 
 void
-bmp_drag_dest_set(GtkWidget *widget)
+aud_drag_dest_set(GtkWidget *widget)
 {
     gtk_drag_dest_set(widget, GTK_DEST_DEFAULT_MOTION | GTK_DEST_DEFAULT_DROP,
-					  bmp_drop_types, 5,
+					  aud_drop_types, 5,
                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
 }

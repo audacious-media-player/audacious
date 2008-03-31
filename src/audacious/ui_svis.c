@@ -283,7 +283,7 @@ static gboolean ui_svis_expose(GtkWidget *widget, GdkEventExpose *event) {
     if (!svis->visible_window)
         return FALSE;
 
-    skin_get_viscolor(bmp_active_skin, svis_color);
+    skin_get_viscolor(aud_active_skin, svis_color);
     for (y = 0; y < 24; y++) {
         colors[y] =
             svis_color[y][0] << 16 | svis_color[y][1] << 8 | svis_color[y][2];

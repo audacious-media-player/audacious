@@ -1,5 +1,5 @@
 /* XPM */
-static char *bmp_playlist_icon[] = {
+static char *audacious_playlist_icon[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 43 1",
 "  c #e36e45",

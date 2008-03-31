@@ -462,7 +462,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     plw_w = playlistwin_get_width();
     plw_h = playlistwin_get_height();
 
-    gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
+    gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_NORMALBG));
 
     cairo_rectangle(cr, 0, 0, width, height);
     cairo_paint(cr);
@@ -545,7 +545,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
 
             cairo_close_path (cr);
 
-            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_SELECTEDBG));
+            gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_SELECTEDBG));
 
             cairo_fill(cr);
 
@@ -607,9 +607,9 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             tail_width = width;
 
         if (i == playlist_get_position_nolock(playlist))
-            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
+            gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_CURRENT));
         else
-            gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMAL));
+            gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_NORMAL));
 
         playlist_list_draw_string(cr, pl, playlist_list_font,
                                   i - pl->first, tail_width, title,
@@ -727,7 +727,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
                     pos = plength;
                 }
 
-                gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
+                gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_CURRENT));
 
                 cairo_new_path(cr);
 
@@ -749,7 +749,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             if ((y >= 0) || (y <= (priv->height + pl->y))) {
                 pos = plength;
 
-                gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_CURRENT));
+                gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_CURRENT));
 
                 cairo_new_path(cr);
 
@@ -763,7 +763,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
         }
     }
 
-    gdk_cairo_set_source_color(cr, skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMAL));
+    gdk_cairo_set_source_color(cr, skin_get_color(aud_active_skin, SKIN_PLEDIT_NORMAL));
     cairo_set_line_width(cr, 1);
     cairo_set_antialias(cr, CAIRO_ANTIALIAS_NONE);
 

@@ -245,13 +245,13 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
      */
     void (*__init_spline) (gfloat *, gfloat *, gint, gfloat *) = init_spline;
 
-    skin_draw_pixbuf(widget, bmp_active_skin, obj, equalizer_graph->skin_index, 0, 294, 0, 0,
+    skin_draw_pixbuf(widget, aud_active_skin, obj, equalizer_graph->skin_index, 0, 294, 0, 0,
                      equalizer_graph->width, equalizer_graph->height);
-    skin_draw_pixbuf(widget, bmp_active_skin, obj, equalizer_graph->skin_index, 0, 314,
+    skin_draw_pixbuf(widget, aud_active_skin, obj, equalizer_graph->skin_index, 0, 314,
                      0, 9 + ((cfg.equalizer_preamp * 9) / 20),
                      equalizer_graph->width, 1);
 
-    skin_get_eq_spline_colors(bmp_active_skin, cols);
+    skin_get_eq_spline_colors(aud_active_skin, cols);
 
     __init_spline(x, cfg.equalizer_bands, 10, yf);
     for (i = 0; i < 109; i++) {

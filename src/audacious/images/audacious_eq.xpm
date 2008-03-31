@@ -1,5 +1,5 @@
 /* XPM */
-static char *bmp_eq_icon[] = {
+static char *audacious_eq_icon[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 39 1",
 "  c #e36d45",

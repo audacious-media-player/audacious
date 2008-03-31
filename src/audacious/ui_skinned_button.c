@@ -306,7 +306,7 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
 
     switch (button->type) {
         case TYPE_PUSH:
-            skin_draw_pixbuf(widget, bmp_active_skin, obj,
+            skin_draw_pixbuf(widget, aud_active_skin, obj,
                              button->pressed ? priv->skin_index2 : priv->skin_index1,
                              button->pressed ? priv->px : priv->nx,
                              button->pressed ? priv->py : priv->ny,
@@ -314,13 +314,13 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
         case TYPE_TOGGLE:
             if (button->inside)
-                skin_draw_pixbuf(widget, bmp_active_skin, obj,
+                skin_draw_pixbuf(widget, aud_active_skin, obj,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? priv->ppx : priv->pnx,
                                  button->pressed ? priv->ppy : priv->pny,
                                  0, 0, priv->w, priv->h);
             else
-                skin_draw_pixbuf(widget, bmp_active_skin, obj,
+                skin_draw_pixbuf(widget, aud_active_skin, obj,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? priv->px : priv->nx,
                                  button->pressed ? priv->py : priv->ny,
