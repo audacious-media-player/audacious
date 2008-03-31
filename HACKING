@@ -55,7 +55,10 @@ Coding guidelines
   equal to some other platform.
 
   Some clever people might think that making struct "packed" via the
-  C packed qualifier would be a solution, but this will
+  C packed qualifier would be a solution, but this will cause problems
+  on platforms which require words to be aligned in memory - so it
+  "works" on x86 (with performance penalty), but will fail with bus error
+  on elsewhere.
 
   What you SHOULD do is read individual members of the struct one by one
   from the stream. This may sound bothersome, but by doing so, your code
