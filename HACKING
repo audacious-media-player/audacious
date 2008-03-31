@@ -1,11 +1,13 @@
 Hacking / coding guide for Audacious and Audacious-plugins
 ==========================================================
 (C) Copyright 2008 Audacious Development Team
-Written by Matti 'ccr' Hämäläinen <ccr@tnsp.org>
+Written by Matti 'ccr' Hämäläinen <ccr@tnsp.org>, and mercilessly
+edited by others.
 
 
-Premeable
-=========
+Preamble
+========
+
 This document describes the guidelines for people who wish to work on
 improving or cleaning up Audacious media player, or any of the plugins
 we distribute in the plugins package.
@@ -78,7 +80,8 @@ Additional style guidelines
 
 - Indentation: Use the same indentation style (also spaces vs. tabs)
   as the file you are editing. In new files/code, use indentation of
-  4 spaces (no tabs).
+  4 spaces (no tabs). When moving functions to new files, PLEASE
+  reindent the code.
 
 - Whitespace usage in code:
 
@@ -88,10 +91,16 @@ Additional style guidelines
 
 - Blocks:
 
-  while (...) {
-      do_something(...)
+  while (...)
+  {
+      do_something(...);
   }
 
-  if (...) {
-  } else {
+  if (...)
+  {
+      do_stuff();
+  }
+  else
+  {
+      do_other_stuff();
   }
