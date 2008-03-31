@@ -508,7 +508,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
     list = g_list_nth(list, pl->first);
 
     for (i = pl->first;
-         list && i < pl->first + pl->num_visible;
+         list && i <= pl->first + pl->num_visible;
          list = g_list_next(list), i++) {
         entry = list->data;
 
