@@ -17,7 +17,6 @@ SRCS = af_equalizer.c					\
        eventqueue.c						\
        fft.c							\
        flow.c							\
-       formatter.c						\
        general.c						\
        hints.c							\
        hook.c							\
@@ -96,7 +95,6 @@ INCLUDES = auddrct.h			\
            dbus-service.h		\
            eventqueue.h			\
            flow.h				\
-           formatter.h			\
            rcfile.h				\
            i18n.h				\
            input.h				\

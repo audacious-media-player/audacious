@@ -157,7 +157,6 @@ typedef GHashTable INIFile;
 #include "audacious/mime.h"
 #include "audacious/custom_uri.h"
 #include "audacious/hook.h"
-#include "audacious/formatter.h"
 #include "audacious/flow.h"
 
 #define PLUGIN_COMMON_FIELDS		\
@@ -593,14 +592,6 @@ struct _AudaciousFuncTableV1 {
     gint (*drct_pq_get_position)( gint pos );
     gint (*drct_pq_get_queue_position)( gint pos );
 
-    /* Formatter API */
-    Formatter *(*formatter_new)(void);
-    void (*formatter_destroy)(Formatter * formatter);
-    void (*formatter_associate)(Formatter * formatter, guchar id,
-                                gchar * value);
-    void (*formatter_dissociate)(Formatter * formatter, guchar id);
-    gchar *(*formatter_format)(Formatter * formatter, gchar * format);
-
     gint (*prefswin_page_new)(GtkWidget *container, gchar *name, gchar *imgurl);
     void (*prefswin_page_destroy)(GtkWidget *container);
 
@@ -953,12 +944,6 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_pq_is_queued		_audvt->drct_pq_is_queued
 #define audacious_drct_pq_get_position		_audvt->drct_pq_get_position
 #define audacious_drct_pq_get_queue_position	_audvt->drct_pq_get_queue_position
-
-#define aud_formatter_new			_audvt->formatter_new
-#define aud_formatter_destroy			_audvt->formatter_destroy
-#define aud_formatter_associate			_audvt->formatter_associate
-#define aud_formatter_dissociate		_audvt->formatter_dissociate
-#define aud_formatter_format			_audvt->formatter_format
 
 #define aud_prefswin_page_new			_audvt->prefswin_page_new
 #define aud_prefswin_page_destroy		_audvt->prefswin_page_destroy
