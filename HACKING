@@ -24,7 +24,7 @@ Coding guidelines
 =================
 
 - We use Glib for portability. This means that we have sized integer types
-  like gint{16,32,64}, etc. and shorthand types like guint and guchar
+  such as gint{16,32,64}, etc. and shorthand types like guint and guchar
   provided, so please do use them.
 
   Arguably C99 provides inttypes.h with similar types, but C99 support
@@ -75,6 +75,11 @@ Coding guidelines
 - Audacious core provides some helper functions for reading endian-dependant
   integers from VFS streams (aud_vfs_fget_{le,be}{16,32,64}), see vfs.h and
   documentation for more information.
+
+
+- Avoid reinventing wheels, avoid code duplication. If same thing is done
+  in two places, it should be in a library, or possibly in Audacious core.
+  Discuss about it with fellow developers.
 
 
 
