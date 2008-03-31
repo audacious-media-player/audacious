@@ -31,35 +31,35 @@
 #include <sys/stat.h>
 
 
-static RcSection *bmp_rcfile_create_section(RcFile * file,
+static RcSection *aud_rcfile_create_section(RcFile * file,
                                             const gchar * name);
-static RcLine *bmp_rcfile_create_string(RcSection * section,
+static RcLine *aud_rcfile_create_string(RcSection * section,
                                         const gchar * key,
                                         const gchar * value);
-static RcSection *bmp_rcfile_find_section(RcFile * file, const gchar * name);
-static RcLine *bmp_rcfile_find_string(RcSection * section, const gchar * key);
+static RcSection *aud_rcfile_find_section(RcFile * file, const gchar * name);
+static RcLine *aud_rcfile_find_string(RcSection * section, const gchar * key);
 
 /**
- * bmp_rcfile_new:
+ * aud_rcfile_new:
  *
  * #RcFile object factory.
  *
  * Return value: A #RcFile object.
  **/
 RcFile *
-bmp_rcfile_new(void)
+aud_rcfile_new(void)
 {
     return g_new0(RcFile, 1);
 }
 
 /**
- * bmp_rcfile_free:
+ * aud_rcfile_free:
  * @file: A #RcFile object to destroy.
  *
  * #RcFile object destructor.
  **/
 void
-bmp_rcfile_free(RcFile * file)
+aud_rcfile_free(RcFile * file)
 {
     RcSection *section;
     RcLine *line;
@@ -91,7 +91,7 @@ bmp_rcfile_free(RcFile * file)
 }
 
 /**
- * bmp_rcfile_open:
+ * aud_rcfile_open:
  * @filename: Path to rcfile to open.
  *
  * Opens an rcfile and returns an #RcFile object representing it.
@@ -99,7 +99,7 @@ bmp_rcfile_free(RcFile * file)
  * Return value: An #RcFile object representing the rcfile given.
  **/
 RcFile *
-bmp_rcfile_open(const gchar * filename)
+aud_rcfile_open(const gchar * filename)
 {
     RcFile *file;
 
@@ -113,7 +113,7 @@ bmp_rcfile_open(const gchar * filename)
     if (!g_file_get_contents(filename, &buffer, NULL, NULL))
         return NULL;
 
-    file = bmp_rcfile_new();
+    file = aud_rcfile_new();
     lines = g_strsplit(buffer, "\n", 0);
     g_free(buffer);
     i = 0;
@@ -121,7 +121,7 @@ bmp_rcfile_open(const gchar * filename)
         if (lines[i][0] == '[') {
             if ((tmp = strchr(lines[i], ']'))) {
                 *tmp = '\0';
-                section = bmp_rcfile_create_section(file, &lines[i][1]);
+                section = aud_rcfile_create_section(file, &lines[i][1]);
             }
         }
         else if (lines[i][0] != '#' && section) {
@@ -129,7 +129,7 @@ bmp_rcfile_open(const gchar * filename)
                 gchar **frags;
                 frags = g_strsplit(lines[i], "=", 2);
                 if (strlen(frags[1]) > 0) {
-                    bmp_rcfile_create_string(section, frags[0], frags[1]);
+                    aud_rcfile_create_string(section, frags[0], frags[1]);
                 };
 		g_strfreev(frags);
             }
@@ -141,7 +141,7 @@ bmp_rcfile_open(const gchar * filename)
 }
 
 /**
- * bmp_rcfile_write:
+ * aud_rcfile_write:
  * @file: A #RcFile object to write to disk.
  * @filename: A path to write the #RcFile object's data to.
  *
@@ -150,7 +150,7 @@ bmp_rcfile_open(const gchar * filename)
  * Return value: TRUE on success, FALSE otherwise.
  **/
 gboolean
-bmp_rcfile_write(RcFile * file, const gchar * filename)
+aud_rcfile_write(RcFile * file, const gchar * filename)
 {
     FILE *fp;
     GList *section_list, *line_list;
@@ -183,7 +183,7 @@ bmp_rcfile_write(RcFile * file, const gchar * filename)
 }
 
 /**
- * bmp_rcfile_read_string:
+ * aud_rcfile_read_string:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to look in.
  * @key: The name of the identifier to look up.
@@ -194,7 +194,7 @@ bmp_rcfile_write(RcFile * file, const gchar * filename)
  * Return value: TRUE on success, FALSE otherwise.
  **/
 gboolean
-bmp_rcfile_read_string(RcFile * file, const gchar * section,
+aud_rcfile_read_string(RcFile * file, const gchar * section,
                        const gchar * key, gchar ** value)
 {
     RcSection *sect;
@@ -205,16 +205,16 @@ bmp_rcfile_read_string(RcFile * file, const gchar * section,
     g_return_val_if_fail(key != NULL, FALSE);
     g_return_val_if_fail(value != NULL, FALSE);
 
-    if (!(sect = bmp_rcfile_find_section(file, section)))
+    if (!(sect = aud_rcfile_find_section(file, section)))
         return FALSE;
-    if (!(line = bmp_rcfile_find_string(sect, key)))
+    if (!(line = aud_rcfile_find_string(sect, key)))
         return FALSE;
     *value = g_strdup(line->value);
     return TRUE;
 }
 
 /**
- * bmp_rcfile_read_int:
+ * aud_rcfile_read_int:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to look in.
  * @key: The name of the identifier to look up.
@@ -225,7 +225,7 @@ bmp_rcfile_read_string(RcFile * file, const gchar * section,
  * Return value: TRUE on success, FALSE otherwise.
  **/
 gboolean
-bmp_rcfile_read_int(RcFile * file, const gchar * section,
+aud_rcfile_read_int(RcFile * file, const gchar * section,
                     const gchar * key, gint * value)
 {
     gchar *str;
@@ -235,7 +235,7 @@ bmp_rcfile_read_int(RcFile * file, const gchar * section,
     g_return_val_if_fail(key != NULL, FALSE);
     g_return_val_if_fail(value != NULL, FALSE);
 
-    if (!bmp_rcfile_read_string(file, section, key, &str))
+    if (!aud_rcfile_read_string(file, section, key, &str))
         return FALSE;
     *value = atoi(str);
     g_free(str);
@@ -244,7 +244,7 @@ bmp_rcfile_read_int(RcFile * file, const gchar * section,
 }
 
 /**
- * bmp_rcfile_read_bool:
+ * aud_rcfile_read_bool:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to look in.
  * @key: The name of the identifier to look up.
@@ -255,7 +255,7 @@ bmp_rcfile_read_int(RcFile * file, const gchar * section,
  * Return value: TRUE on success, FALSE otherwise.
  **/
 gboolean
-bmp_rcfile_read_bool(RcFile * file, const gchar * section,
+aud_rcfile_read_bool(RcFile * file, const gchar * section,
                      const gchar * key, gboolean * value)
 {
     gchar *str;
@@ -265,7 +265,7 @@ bmp_rcfile_read_bool(RcFile * file, const gchar * section,
     g_return_val_if_fail(key != NULL, FALSE);
     g_return_val_if_fail(value != NULL, FALSE);
 
-    if (!bmp_rcfile_read_string(file, section, key, &str))
+    if (!aud_rcfile_read_string(file, section, key, &str))
         return FALSE;
     if (!strcasecmp(str, "TRUE"))
         *value = TRUE;
@@ -276,7 +276,7 @@ bmp_rcfile_read_bool(RcFile * file, const gchar * section,
 }
 
 /**
- * bmp_rcfile_read_float:
+ * aud_rcfile_read_float:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to look in.
  * @key: The name of the identifier to look up.
@@ -287,7 +287,7 @@ bmp_rcfile_read_bool(RcFile * file, const gchar * section,
  * Return value: TRUE on success, FALSE otherwise.
  **/
 gboolean
-bmp_rcfile_read_float(RcFile * file, const gchar * section,
+aud_rcfile_read_float(RcFile * file, const gchar * section,
                       const gchar * key, gfloat * value)
 {
     gchar *str, *locale;
@@ -297,7 +297,7 @@ bmp_rcfile_read_float(RcFile * file, const gchar * section,
     g_return_val_if_fail(key != NULL, FALSE);
     g_return_val_if_fail(value != NULL, FALSE);
 
-    if (!bmp_rcfile_read_string(file, section, key, &str))
+    if (!aud_rcfile_read_string(file, section, key, &str))
         return FALSE;
 
     locale = g_strdup(setlocale(LC_NUMERIC, NULL));
@@ -311,7 +311,7 @@ bmp_rcfile_read_float(RcFile * file, const gchar * section,
 }
 
 /**
- * bmp_rcfile_read_double:
+ * aud_rcfile_read_double:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to look in.
  * @key: The name of the identifier to look up.
@@ -322,7 +322,7 @@ bmp_rcfile_read_float(RcFile * file, const gchar * section,
  * Return value: TRUE on success, FALSE otherwise.
  **/
 gboolean
-bmp_rcfile_read_double(RcFile * file, const gchar * section,
+aud_rcfile_read_double(RcFile * file, const gchar * section,
                        const gchar * key, gdouble * value)
 {
     gchar *str, *locale;
@@ -332,7 +332,7 @@ bmp_rcfile_read_double(RcFile * file, const gchar * section,
     g_return_val_if_fail(key != NULL, FALSE);
     g_return_val_if_fail(value != NULL, FALSE);
 
-    if (!bmp_rcfile_read_string(file, section, key, &str))
+    if (!aud_rcfile_read_string(file, section, key, &str))
         return FALSE;
 
     locale = g_strdup(setlocale(LC_NUMERIC, NULL));
@@ -346,7 +346,7 @@ bmp_rcfile_read_double(RcFile * file, const gchar * section,
 }
 
 /**
- * bmp_rcfile_write_string:
+ * aud_rcfile_write_string:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to set the key in.
  * @key: The name of the identifier to set.
@@ -355,7 +355,7 @@ bmp_rcfile_read_double(RcFile * file, const gchar * section,
  * Sets a value in an RcFile for %key.
  **/
 void
-bmp_rcfile_write_string(RcFile * file, const gchar * section,
+aud_rcfile_write_string(RcFile * file, const gchar * section,
                         const gchar * key, const gchar * value)
 {
     RcSection *sect;
@@ -366,19 +366,19 @@ bmp_rcfile_write_string(RcFile * file, const gchar * section,
     g_return_if_fail(key != NULL);
     g_return_if_fail(value != NULL);
 
-    sect = bmp_rcfile_find_section(file, section);
+    sect = aud_rcfile_find_section(file, section);
     if (!sect)
-        sect = bmp_rcfile_create_section(file, section);
-    if ((line = bmp_rcfile_find_string(sect, key))) {
+        sect = aud_rcfile_create_section(file, section);
+    if ((line = aud_rcfile_find_string(sect, key))) {
         g_free(line->value);
         line->value = g_strstrip(g_strdup(value));
     }
     else
-        bmp_rcfile_create_string(sect, key, value);
+        aud_rcfile_create_string(sect, key, value);
 }
 
 /**
- * bmp_rcfile_write_int:
+ * aud_rcfile_write_int:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to set the key in.
  * @key: The name of the identifier to set.
@@ -387,7 +387,7 @@ bmp_rcfile_write_string(RcFile * file, const gchar * section,
  * Sets a value in an RcFile for %key.
  **/
 void
-bmp_rcfile_write_int(RcFile * file, const gchar * section,
+aud_rcfile_write_int(RcFile * file, const gchar * section,
                      const gchar * key, gint value)
 {
     gchar *strvalue;
@@ -397,12 +397,12 @@ bmp_rcfile_write_int(RcFile * file, const gchar * section,
     g_return_if_fail(key != NULL);
 
     strvalue = g_strdup_printf("%d", value);
-    bmp_rcfile_write_string(file, section, key, strvalue);
+    aud_rcfile_write_string(file, section, key, strvalue);
     g_free(strvalue);
 }
 
 /**
- * bmp_rcfile_write_boolean:
+ * aud_rcfile_write_boolean:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to set the key in.
  * @key: The name of the identifier to set.
@@ -411,7 +411,7 @@ bmp_rcfile_write_int(RcFile * file, const gchar * section,
  * Sets a value in an RcFile for %key.
  **/
 void
-bmp_rcfile_write_boolean(RcFile * file, const gchar * section,
+aud_rcfile_write_boolean(RcFile * file, const gchar * section,
                          const gchar * key, gboolean value)
 {
     g_return_if_fail(file != NULL);
@@ -419,13 +419,13 @@ bmp_rcfile_write_boolean(RcFile * file, const gchar * section,
     g_return_if_fail(key != NULL);
 
     if (value)
-        bmp_rcfile_write_string(file, section, key, "TRUE");
+        aud_rcfile_write_string(file, section, key, "TRUE");
     else
-        bmp_rcfile_write_string(file, section, key, "FALSE");
+        aud_rcfile_write_string(file, section, key, "FALSE");
 }
 
 /**
- * bmp_rcfile_write_float:
+ * aud_rcfile_write_float:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to set the key in.
  * @key: The name of the identifier to set.
@@ -434,7 +434,7 @@ bmp_rcfile_write_boolean(RcFile * file, const gchar * section,
  * Sets a value in an RcFile for %key.
  **/
 void
-bmp_rcfile_write_float(RcFile * file, const gchar * section,
+aud_rcfile_write_float(RcFile * file, const gchar * section,
                        const gchar * key, gfloat value)
 {
     gchar *strvalue, *locale;
@@ -447,13 +447,13 @@ bmp_rcfile_write_float(RcFile * file, const gchar * section,
     setlocale(LC_NUMERIC, "C");
     strvalue = g_strdup_printf("%g", value);
     setlocale(LC_NUMERIC, locale);
-    bmp_rcfile_write_string(file, section, key, strvalue);
+    aud_rcfile_write_string(file, section, key, strvalue);
     g_free(locale);
     g_free(strvalue);
 }
 
 /**
- * bmp_rcfile_write_double:
+ * aud_rcfile_write_double:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to set the key in.
  * @key: The name of the identifier to set.
@@ -462,7 +462,7 @@ bmp_rcfile_write_float(RcFile * file, const gchar * section,
  * Sets a value in an RcFile for %key.
  **/
 void
-bmp_rcfile_write_double(RcFile * file, const gchar * section,
+aud_rcfile_write_double(RcFile * file, const gchar * section,
                         const gchar * key, gdouble value)
 {
     gchar *strvalue, *locale;
@@ -475,13 +475,13 @@ bmp_rcfile_write_double(RcFile * file, const gchar * section,
     setlocale(LC_NUMERIC, "C");
     strvalue = g_strdup_printf("%g", value);
     setlocale(LC_NUMERIC, locale);
-    bmp_rcfile_write_string(file, section, key, strvalue);
+    aud_rcfile_write_string(file, section, key, strvalue);
     g_free(locale);
     g_free(strvalue);
 }
 
 /**
- * bmp_rcfile_remove_key:
+ * aud_rcfile_remove_key:
  * @file: A #RcFile object to write to disk.
  * @section: The section of the RcFile to set the key in.
  * @key: The name of the identifier to remove.
@@ -489,7 +489,7 @@ bmp_rcfile_write_double(RcFile * file, const gchar * section,
  * Removes %key from an #RcFile object.
  **/
 void
-bmp_rcfile_remove_key(RcFile * file, const gchar * section, const gchar * key)
+aud_rcfile_remove_key(RcFile * file, const gchar * section, const gchar * key)
 {
     RcSection *sect;
     RcLine *line;
@@ -498,8 +498,8 @@ bmp_rcfile_remove_key(RcFile * file, const gchar * section, const gchar * key)
     g_return_if_fail(section != NULL);
     g_return_if_fail(key != NULL);
 
-    if ((sect = bmp_rcfile_find_section(file, section)) != NULL) {
-        if ((line = bmp_rcfile_find_string(sect, key)) != NULL) {
+    if ((sect = aud_rcfile_find_section(file, section)) != NULL) {
+        if ((line = aud_rcfile_find_string(sect, key)) != NULL) {
             g_free(line->key);
             g_free(line->value);
             g_free(line);
@@ -509,7 +509,7 @@ bmp_rcfile_remove_key(RcFile * file, const gchar * section, const gchar * key)
 }
 
 static RcSection *
-bmp_rcfile_create_section(RcFile * file, const gchar * name)
+aud_rcfile_create_section(RcFile * file, const gchar * name)
 {
     RcSection *section;
 
@@ -521,7 +521,7 @@ bmp_rcfile_create_section(RcFile * file, const gchar * name)
 }
 
 static RcLine *
-bmp_rcfile_create_string(RcSection * section,
+aud_rcfile_create_string(RcSection * section,
                          const gchar * key, const gchar * value)
 {
     RcLine *line;
@@ -535,7 +535,7 @@ bmp_rcfile_create_string(RcSection * section,
 }
 
 static RcSection *
-bmp_rcfile_find_section(RcFile * file, const gchar * name)
+aud_rcfile_find_section(RcFile * file, const gchar * name)
 {
     RcSection *section;
     GList *list;
@@ -551,7 +551,7 @@ bmp_rcfile_find_section(RcFile * file, const gchar * name)
 }
 
 static RcLine *
-bmp_rcfile_find_string(RcSection * section, const gchar * key)
+aud_rcfile_find_string(RcSection * section, const gchar * key)
 {
     RcLine *line;
     GList *list;

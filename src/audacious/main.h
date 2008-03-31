@@ -36,7 +36,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "bmpconfig.h"
+#include "audconfig.h"
 
 G_BEGIN_DECLS
 
