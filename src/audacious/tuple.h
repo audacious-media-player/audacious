@@ -24,6 +24,7 @@
 #include <glib.h>
 #include <mowgli.h>
 
+G_BEGIN_DECLS
 
 enum {
     FIELD_ARTIST = 0,
@@ -100,4 +101,6 @@ const gchar *tuple_get_string(Tuple *tuple, const gint nfield, const gchar *fiel
 gint tuple_get_int(Tuple *tuple, const gint nfield, const gchar *field);
 #define tuple_free(x) mowgli_object_unref(x);
 
-#endif
+G_END_DECLS
+
+#endif /* __AUDACIOUS_TUPLE_H__ */

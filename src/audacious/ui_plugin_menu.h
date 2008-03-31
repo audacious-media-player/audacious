@@ -19,13 +19,13 @@
 
 /* these functions are currently implemented in ui_manager.c */
 
-#ifndef AUD_UIPLUGINMENU_H
-#define AUD_UIPLUGINMENU_H
-
+#ifndef __AUDACIOUS_UIPLUGINMENU_H__
+#define __AUDACIOUS_UIPLUGINMENU_H__
 
 #include <glib.h>
 #include <gtk/gtk.h>
 
+G_BEGIN_DECLS
 
 #define AUDACIOUS_MENU_MAIN             0
 #define AUDACIOUS_MENU_PLAYLIST         1
@@ -38,5 +38,6 @@
 gint menu_plugin_item_add( gint , GtkWidget * );
 gint menu_plugin_item_remove( gint , GtkWidget * );
 
+G_END_DECLS
 
-#endif /* AUD_UIPLUGINMENU_H */
+#endif /* __AUDACIOUS_UIPLUGINMENU_H__ */

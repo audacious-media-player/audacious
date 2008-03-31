@@ -20,11 +20,12 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef __AUDACIOUS_LOGGER_H__
+#define __AUDACIOUS_LOGGER_H__
 
 #include <glib.h>
 
+G_BEGIN_DECLS
 
 #define BMP_LOGGER_DEFAULT_LOG_LEVEL  G_LOG_LEVEL_MESSAGE
 
@@ -35,4 +36,6 @@
 gboolean bmp_logger_start(const gchar * filename);
 void bmp_logger_stop(void);
 
-#endif
+G_END_DECLS
+
+#endif /* __AUDACIOUS_LOGGER_H__ */

@@ -18,12 +18,14 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef VFS_H
-#define VFS_H
+#ifndef __AUDACIOUS_VFS_H__
+#define __AUDACIOUS_VFS_H__
 
 #include <glib.h>
 #include <stdio.h>
 #include <sys/types.h>
+
+G_BEGIN_DECLS
 
 typedef struct _VFSFile VFSFile;
 typedef struct _VFSConstructor VFSConstructor;
@@ -83,7 +85,6 @@ struct _VFSConstructor {
 	gchar *(*vfs_get_metadata_impl)(VFSFile *file, const gchar * field);
 };
 
-G_BEGIN_DECLS
 
 extern VFSFile * vfs_fopen(const gchar * path,
                     const gchar * mode);
@@ -145,4 +146,4 @@ extern gboolean vfs_fget_be64(guint64 *value, VFSFile *stream);
 
 G_END_DECLS
 
-#endif /* VFS_H */
+#endif /* __AUDACIOUS_VFS_H__ */

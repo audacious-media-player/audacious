@@ -17,14 +17,14 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUD_UIMANAGER_H
-#define AUD_UIMANAGER_H
-
+#ifndef __AUDACIOUS_UIMANAGER_H__
+#define __AUDACIOUS_UIMANAGER_H__
 
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
+G_BEGIN_DECLS
 
 GtkWidget *mainwin_songname_menu;
 GtkWidget *mainwin_general_menu;
@@ -72,5 +72,6 @@ GtkWidget * ui_manager_get_popup_menu ( GtkUIManager * , const gchar * );
 void ui_manager_popup_menu_show( GtkMenu * , gint , gint , guint , guint );
 #define popup_menu_show(x1,x2,x3,x4,x5) ui_manager_popup_menu_show(x1,x2,x3,x4,x5)
 
+G_END_DECLS
 
-#endif /* AUD_UIMANAGER_H */
+#endif /* __AUDACIOUS_UIMANAGER_H__ */

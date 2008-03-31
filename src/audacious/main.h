@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUD_MAIN_H
-#define AUD_MAIN_H
+#ifndef __AUDACIOUS_MAIN_H__
+#define __AUDACIOUS_MAIN_H__
 
 #ifdef _AUDACIOUS_CORE
 # include "ui_main.h"
@@ -94,4 +94,4 @@ extern MprisPlayer *mpris;
 
 G_END_DECLS
 
-#endif
+#endif /* __AUDACIOUS_MAIN_H__ */

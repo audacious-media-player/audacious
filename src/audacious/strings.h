@@ -23,10 +23,12 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUD_STRINGS_H
-#define AUD_STRINGS_H
+#ifndef __AUDACIOUS_STRINGS_H__
+#define __AUDACIOUS_STRINGS_H__
 
 #include <glib.h>
+
+G_BEGIN_DECLS
 
 gchar *escape_shell_chars(const gchar * string);
 
@@ -54,4 +56,6 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 
-#endif
+G_END_DECLS
+
+#endif /* __AUDACIOUS_STRINGS_H__ */

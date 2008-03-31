@@ -21,10 +21,12 @@
 
 /* fft.h: header for iterative implementation of a FFT */
 
-#ifndef FFT_H
-#define FFT_H
+#ifndef __AUDACIOUS_FFT_H__
+#define __AUDACIOUS_FFT_H__
 
 #include <glib.h>
+
+G_BEGIN_DECLS
 
 #define FFT_BUFFER_SIZE_LOG 9
 #define FFT_BUFFER_SIZE (1 << FFT_BUFFER_SIZE_LOG)
@@ -37,4 +39,6 @@ fft_state *fft_init(void);
 void fft_perform(const sound_sample * input, float *output, fft_state * state);
 void fft_close(fft_state * state);
 
-#endif
+G_END_DECLS
+
+#endif /* __AUDACIOUS_FFT_H__ */

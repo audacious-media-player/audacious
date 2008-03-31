@@ -108,4 +108,4 @@ gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEva
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple);
 
-#endif
+#endif /* __AUDACIOUS_TUPLE_COMPILER_H__ */
