@@ -325,11 +325,11 @@ equalizerwin_read_presets(const gchar * basename)
 
     filename = g_build_filename(bmp_paths[BMP_PATH_USER_DIR], basename, NULL);
 
-    if ((rcfile = bmp_rcfile_open(filename)) == NULL) {
+    if ((rcfile = aud_rcfile_open(filename)) == NULL) {
         g_free(filename);
         // DATA_DIR = "{prefix}/share/audacious" ; example is "/usr/share/audacious"
         filename = g_build_filename(DATA_DIR, basename, NULL);
-        if ((rcfile = bmp_rcfile_open(filename)) == NULL) {
+        if ((rcfile = aud_rcfile_open(filename)) == NULL) {
            g_free(filename);
            return NULL;
         }
@@ -343,14 +343,14 @@ equalizerwin_read_presets(const gchar * basename)
         gchar section[21];
 
         g_snprintf(section, sizeof(section), "Preset%d", p++);
-        if (bmp_rcfile_read_string(rcfile, "Presets", section, &name)) {
+        if (aud_rcfile_read_string(rcfile, "Presets", section, &name)) {
             preset = g_new0(EqualizerPreset, 1);
             preset->name = name;
-            bmp_rcfile_read_float(rcfile, name, "Preamp", &preset->preamp);
+            aud_rcfile_read_float(rcfile, name, "Preamp", &preset->preamp);
             for (i = 0; i < 10; i++) {
                 gchar band[7];
                 g_snprintf(band, sizeof(band), "Band%d", i);
-                bmp_rcfile_read_float(rcfile, name, band, &preset->bands[i]);
+                aud_rcfile_read_float(rcfile, name, band, &preset->bands[i]);
             }
             list = g_list_prepend(list, preset);
         }
@@ -358,7 +358,7 @@ equalizerwin_read_presets(const gchar * basename)
             break;
     }
     list = g_list_reverse(list);
-    bmp_rcfile_free(rcfile);
+    aud_rcfile_free(rcfile);
     return list;
 }
 
@@ -643,26 +643,26 @@ equalizerwin_write_preset_file(GList * list, const gchar * basename)
     RcFile *rcfile;
     GList *node;
 
-    rcfile = bmp_rcfile_new();
+    rcfile = aud_rcfile_new();
     p = 0;
     for (node = list; node; node = g_list_next(node)) {
         preset = node->data;
         tmp = g_strdup_printf("Preset%d", p++);
-        bmp_rcfile_write_string(rcfile, "Presets", tmp, preset->name);
+        aud_rcfile_write_string(rcfile, "Presets", tmp, preset->name);
         g_free(tmp);
-        bmp_rcfile_write_float(rcfile, preset->name, "Preamp",
+        aud_rcfile_write_float(rcfile, preset->name, "Preamp",
                                preset->preamp);
         for (i = 0; i < 10; i++) {
             tmp = g_strdup_printf("Band%d\n", i);
-            bmp_rcfile_write_float(rcfile, preset->name, tmp,
+            aud_rcfile_write_float(rcfile, preset->name, tmp,
                                    preset->bands[i]);
             g_free(tmp);
         }
     }
 
     filename = g_build_filename(bmp_paths[BMP_PATH_USER_DIR], basename, NULL);
-    bmp_rcfile_write(rcfile, filename);
-    bmp_rcfile_free(rcfile);
+    aud_rcfile_write(rcfile, filename);
+    aud_rcfile_free(rcfile);
     g_free(filename);
 }
 
@@ -858,12 +858,12 @@ equalizerwin_read_bmp_preset(RcFile * rcfile)
     gfloat val;
     gint i;
 
-    if (bmp_rcfile_read_float(rcfile, "Equalizer preset", "Preamp", &val))
+    if (aud_rcfile_read_float(rcfile, "Equalizer preset", "Preamp", &val))
         ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, val);
     for (i = 0; i < 10; i++) {
         gchar tmp[7];
         g_snprintf(tmp, sizeof(tmp), "Band%d", i);
-        if (bmp_rcfile_read_float(rcfile, "Equalizer preset", tmp, &val))
+        if (aud_rcfile_read_float(rcfile, "Equalizer preset", tmp, &val))
             ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i], val);
     }
     equalizerwin_eq_changed();
@@ -1018,9 +1018,9 @@ load_preset_file(const gchar *filename)
 {
     RcFile *rcfile;
 
-    if ((rcfile = bmp_rcfile_open(filename)) != NULL) {
+    if ((rcfile = aud_rcfile_open(filename)) != NULL) {
         equalizerwin_read_bmp_preset(rcfile);
-        bmp_rcfile_free(rcfile);
+        aud_rcfile_free(rcfile);
     }
 }
 
@@ -1078,19 +1078,19 @@ save_preset_file(const gchar * filename)
     RcFile *rcfile;
     gint i;
 
-    rcfile = bmp_rcfile_new();
-    bmp_rcfile_write_float(rcfile, "Equalizer preset", "Preamp",
+    rcfile = aud_rcfile_new();
+    aud_rcfile_write_float(rcfile, "Equalizer preset", "Preamp",
                            ui_skinned_equalizer_slider_get_position(equalizerwin_preamp));
 
     for (i = 0; i < 10; i++) {
         gchar tmp[7];
         g_snprintf(tmp, sizeof(tmp), "Band%d", i);
-        bmp_rcfile_write_float(rcfile, "Equalizer preset", tmp,
+        aud_rcfile_write_float(rcfile, "Equalizer preset", tmp,
                                ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]));
     }
 
-    bmp_rcfile_write(rcfile, filename);
-    bmp_rcfile_free(rcfile);
+    aud_rcfile_write(rcfile, filename);
+    aud_rcfile_free(rcfile);
 }
 
 static void
@@ -1244,10 +1244,10 @@ equalizerwin_load_auto_preset(const gchar * filename)
 
     /* First try to find a per file preset file */
     if (strlen(cfg.eqpreset_extension) > 0 &&
-        (rcfile = bmp_rcfile_open(presetfilename)) != NULL) {
+        (rcfile = aud_rcfile_open(presetfilename)) != NULL) {
         g_free(presetfilename);
         equalizerwin_read_bmp_preset(rcfile);
-        bmp_rcfile_free(rcfile);
+        aud_rcfile_free(rcfile);
         return;
     }
 
@@ -1260,9 +1260,9 @@ equalizerwin_load_auto_preset(const gchar * filename)
 
     /* Try to find a per directory preset file */
     if (strlen(cfg.eqpreset_default_file) > 0 &&
-        (rcfile = bmp_rcfile_open(presetfilename)) != NULL) {
+        (rcfile = aud_rcfile_open(presetfilename)) != NULL) {
         equalizerwin_read_bmp_preset(rcfile);
-        bmp_rcfile_free(rcfile);
+        aud_rcfile_free(rcfile);
     }
     else if (!equalizerwin_load_preset
              (equalizer_auto_presets, g_basename(filename))) {
