@@ -5,7 +5,7 @@ SUBDIRS = ${INTL_OBJECTIVE}
 PROG = audacious${PROG_SUFFIX}
 SRCS = af_equalizer.c					\
        auddrct.c						\
-       bmpconfig.c						\
+       audconfig.c						\
        build_stamp.c					\
        configdb.c						\
        custom_uri.c						\
@@ -87,7 +87,7 @@ SRCS += dbus.c
 endif
 
 INCLUDES = auddrct.h			\
-           bmpconfig.h			\
+           audconfig.h			\
            configdb.h			\
            custom_uri.h			\
            dbus.h				\
