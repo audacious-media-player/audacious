@@ -14,8 +14,8 @@ Which was based on:
   Peter Alm, Thomas Nilsson, Olle Hallnas, Håvard Kvålen
 
 
-NOTE: This document is hardly maintained. Please check the Users' Guide on
-the Audacious website.
+NOTE: This document is hardly maintained. Please check the Users' Guide
+on the Audacious website.
 
 
 TABLE OF CONTENTS
@@ -140,15 +140,15 @@ NoBorder {
 2.3. Skin Installation
 ----------------------
 
-Audacious will create a directory called ~/.local/share/audacious/Skins. You can unarchive
-the skins the same way as you do for Winamp.
+Audacious will create a directory called ~/.local/share/audacious/Skins.
+You can unarchive the skins the same way as you do for Winamp.
 
 However, you don't need to as Audacious supports archived skins. Audacious
 currently reads the following formats: zip, wsz, tar, tar.gz and
 tar.bz2
 
-Just copy the archive to one of the skin paths and Audacious will take care
-of the rest.
+Just copy the archive to one of the skin paths and Audacious will take
+care of the rest.
 
 In order to support zipped skins you will need to have unzip. Unzip
 is bundled with most Linux distributions.
@@ -168,10 +168,10 @@ For BASH:
 For C Shell:
   setenv SKINSDIR /path/to/Skins:/more/paths/to/other/locations/of/Skins
 
-You should note that skins designed specifically for Audacious are not compatible
-with Winamp. Likewise, we do not support Winamp "modern" skins as there is a lot of
-Winamp-specifics that would have to be reverse-engineered or emulated to properly
-support those skins.
+You should note that skins designed specifically for Audacious are not
+compatible with Winamp. Likewise, we do not support Winamp "modern" skins as
+there is a lot of Winamp-specifics that would have to be reverse-engineered
+or emulated to properly support those skins.
 
 3. Documentation
 ----------------
@@ -197,15 +197,14 @@ Winamp.
      bring up the Visualization menu. Left mouse button will change the
      analyzer to an oscilloscope and/or none.
 
-- To the right of the Spectrum analyzer is the title of the file being played.
-  This also contains the length of the song being played, as well as its
-  position in the [unsorted] playlist. Right clicking in this window will bring
-  up a new menu with some more options that are self explaining.
+- To the right of the Spectrum analyzer is the title of the file being
+  played. This also contains the length of the song being played, as well
+  as its position in the [unsorted] playlist. Right clicking in this window
+  will bring up a new menu with some more options that are self explaining.
 
-- In the left part of the Spectrum analyzer you'll have letters (at least if
-  you use the default skin) O A I D V. This is known as the
-  "clutterbar'. Left-clicking on these will open up menus or perform the
-  listed actions.
+- In the left part of the Spectrum analyzer you'll have letters (at least
+  if you use the default skin) O A I D V. This is known as the "clutterbar'.
+  Left-clicking on these will open up menus or perform the listed actions.
   O : Options menu
   A : Always on top
   I : File info box
@@ -222,21 +221,21 @@ Winamp.
    - The second slider controls the balance between speakers
    - The button marked "EQ" loads up the graphic equalizer
    - The button marked "PL" loads up the playlist editor
-   - The LARGE slide bar moves from left to right as the song plays. You can
-     drag this to jump to another location in the current file.
+   - The LARGE slide bar moves from left to right as the song plays. You
+     can drag this to jump to another location in the current file.
 
-- On the bottom of the console are the standard buttons you would see on a CD
-  player: Previous track, Play, Pause, Stop, Next track, eject, shuffle
-  and repeat.
+- On the bottom of the console are the standard buttons you would see on
+  a CD player: Previous track, Play, Pause, Stop, Next track, eject,
+  shuffle and repeat.
 
    - The eject button doesn't REALLY eject, of course. :) It opens up the
      file requester. The File Requester builds a playlist for the current
-     Audacious session. You can use it to load files, add files to the list, or
-     load all mp3s in a directory.
+     Audacious session. You can use it to load files, add files to the list,
+     or load all mp3s in a directory.
 
    - The shuffle button randomizes the sequence of the playlist.
 
-   - The repeat button when enabled makes the playlist loop when it reaches the
+   - The repeat button when enabled makes the playlist loop when it reaches
      end of the playlist.
 
 
@@ -329,7 +328,8 @@ inv sel   : invert you selection
 
 misc opts : held down you'll have 2 extra options
 fileinfo  : opens the file info dialog.
-sort      : release button on this will bring up another menu with sort options
+sort      : release button on this will bring up another menu with sort
+            options
 
 load list : will let you pick a playlist to load, held down you'll have
             2 extra options
@@ -338,24 +338,25 @@ new       : will empty the playlist and let you create a new playlist
 
 If you want to select/deselect files in the filrequester/playlist editor use
 CTRL for files and SHIFT key for blocks of files. You can also browse the PL
-using the cursor keys and enter to select song. Pressing the delete button will
-remove the song from the playlist. If your mouse is equipped with a mouse
-wheel, you can use this to scroll up and down.
+using the cursor keys and enter to select song. Pressing the delete button
+will remove the song from the playlist. If your mouse is equipped with a
+mouse wheel, you can use this to scroll up and down.
 
 
 3.3. Equalizer
 --------------
 
-To access the Equalizer, select the button labeled "EQ" on the right
-side of the Audacious console.
+To access the Equalizer, select the button labeled "EQ" on the right side
+of the Audacious console.
 
-That will bring up the Equalizer window. It looks like an equalizer on a stereo
-and behaves like one as well. Press the button labeled ON to enable the use of
-the equalizer, once you turned it on you use it as a normal equalizer.
+That will bring up the Equalizer window. It looks like an equalizer on a
+stereo and behaves like one as well. Press the button labeled ON to enable
+the use of the equalizer, once you turned it on you use it as a normal
+equalizer.
 
-EQ presets will be saved in ~/.audacious/config when you close Audacious. You can also
-have your own presets for different song using the "Preset" button, Audacious can
-also import/export from Winamp's preset files.
+EQ presets will be saved in ~/.audacious/config when you close Audacious. You
+can also have your own presets for different song using the "Preset" button,
+Audacious can also import/export from Winamp's preset files.
 
 If 'Auto' is enabled, Audacious will try to load equalizer presets like this:
 
@@ -398,10 +399,10 @@ Configure Equalizer     : Change the default names of directory based
 3.4. Menu
 ---------
 
-There are several menu hot spots on the Audacious window. One place is at the left
-hand side of the visual window described in sections 3.1 If you click the right
-mouse button in the main window, the menus will also pop up (same as clicking
-the button on the top left corner).
+There are several menu hot spots on the Audacious window. One place is at the
+left hand side of the visual window described in sections 3.1 If you click
+the right mouse button in the main window, the menus will also pop up (same
+as clicking the button on the top left corner).
 
 
 3.5. Preferences
@@ -415,17 +416,18 @@ preferences dialog up.
 -----------------
 
 Skins
-In the skinlist you can choose a skin. How to install skins is described above.
-Click on a skin in the list to change to it.
+In the skinlist you can choose a skin. How to install skins is described
+above. Click on a skin in the list to change to it.
 
 Fonts
-You can set the font in the main window by setting the 'Player' font. You can
-change the playlist font by setting the 'Playlist' font.
+You can set the font in the main window by setting the 'Player' font. You
+can change the playlist font by setting the 'Playlist' font.
 
 Miscellaneous
-Show track numbers in playlist - Enable/disable displaying of track numbers in
-                                 the playlist.
-Use custom cursors             - Enable/disable custom cursors set by the skin.
+Show track numbers in playlist - Enable/disable displaying of track numbers
+                                 in the playlist.
+Use custom cursors             - Enable/disable custom cursors set by the
+                                 skin.
 
 
 3.5.2. Mouse
@@ -449,8 +451,8 @@ Load metadata from playlists and files - Loads metadata from files and
                                          playlists (e.g. ID3 tags).
 
 Playback
-Don't advance in playlist - Don't advance to the next song in the playlist when
-                            the current song ends.
+Don't advance in playlist - Don't advance to the next song in the playlist
+                            when the current song ends.
 Pause between songs       - Set the time (in secons) to pause on songchange
 
 Song display
@@ -486,22 +488,22 @@ However to promote maximum flexibility of the platform itself, we no longer
 include any plugins with the Audacious core.
 
 You will need to download and install our plugin pack for Audacious if you
-expect it to do anything useful (or install someone else's plugin pack if one
-should exist).
+expect it to do anything useful (or install someone else's plugin pack if
+one should exist).
 
 Additionally, you can find a list of plugins at:
   http://audacious-media-player.org/Plugins
 
 You should note that third-party plugins are not supported by the Audacious
-development team, and that you should report any issues with them on our forums,
-but NEVER on our bugtracker.
+development team, and that you should report any issues with them on our
+forums, but NEVER on our bugtracker.
 
 
 3.7. Playlist Manager
 ---------------------
 
-Audacious supports multiple playlists (think foobar2000). For the manipulation of
-playlists, we have included a playlist manager tool.
+Audacious supports multiple playlists (think foobar2000). For the manipulation
+of playlists, we have included a playlist manager tool.
 
 It is accessible from the Playlist menu.
 
@@ -555,10 +557,9 @@ Audacious web forums:
 
   http://boards.nenolod.net/
 
-There is also an IRC channel at irc.atheme.org #audacious. You should
-note that this IRC presence is mainly for development issues and
-internal project use, but that doesn't seem to stop 50-someodd people
-from visiting there.
+There is also an IRC channel at irc.atheme.org #audacious. You should note
+that this IRC presence is mainly for development issues and internal project
+use, but that doesn't seem to stop 50-someodd people from visiting there.
 
 Project admins:
 
