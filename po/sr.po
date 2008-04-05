@@ -8,15 +8,14 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-03-30 16:55+0200\n"
-"PO-Revision-Date: 2008-03-13 23:54+0100\n"
+"PO-Revision-Date: 2008-04-05 12:27+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: src/audacious/input.c:582
 #, c-format
@@ -182,7 +181,7 @@ msgstr ""
 
 #: src/audacious/main.c:699
 msgid "Sorry, threads aren't supported on your platform.\n"
-msgstr ""
+msgstr "Жао мије, али ваша платформа не подржава нити.\n"
 
 #: src/audacious/main.c:732
 #, c-format
@@ -190,9 +189,8 @@ msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Није могуће отворити приказ, излазим.\n"
 
 #: src/audacious/main.c:840
-#, fuzzy
 msgid "Headless operation enabled\n"
-msgstr "Укључи безглаву операцију"
+msgstr "Безглава операција је укључена\n"
 
 #: src/audacious/playback.c:277
 msgid ""
@@ -1715,8 +1713,7 @@ msgstr "Претражи и означи"
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr ""
-"Претржује листу нумера и означи ставке листе нумера по одређеном критеријуму."
+msgstr "Претржује листу нумера и означи ставке листе нумера по одређеном критеријуму."
 
 #: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
@@ -2269,8 +2266,7 @@ msgstr "Прикажи украс програма за управљање пр�
 
 #: src/audacious/ui_preferences.c:210
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-"Ово омогућава програму за управљањe прозорима да прикаже украсе на прозорима."
+msgstr "Ово омогућава програму за управљањe прозорима да прикаже украсе на прозорима."
 
 #: src/audacious/ui_preferences.c:211
 msgid "Use XMMS-style file selector instead of the default selector"
@@ -2481,8 +2477,7 @@ msgstr "Приликом учитавања"
 
 #: src/audacious/ui_preferences.c:270
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Учитај мета-податке при додавању датотеке у листу или приликом отварања"
+msgstr "Учитај мета-податке при додавању датотеке у листу или приликом отварања"
 
 #: src/audacious/ui_preferences.c:271
 msgid "On display"
@@ -2661,8 +2656,7 @@ msgstr "Подразумевано појачање:"
 
 #: src/audacious/ui_preferences.c:1718
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-"Ово појачање ће се користити ако датотека не садржи Replay Gain метаподатке."
+msgstr "Ово појачање ће се користити ако датотека не садржи Replay Gain метаподатке."
 
 #: src/audacious/ui_preferences.c:1734
 msgid ""
@@ -2989,8 +2983,7 @@ msgstr "Непозната опција покретања: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1278
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"Не могу да проследим адресе документа у ставку радне површи 'Тип=Link' "
+msgstr "Не могу да проследим адресе документа у ставку радне површи 'Тип=Link' "
 
 #: src/libeggsmclient/eggdesktopfile.c:1297
 msgid "Not a launchable item"
@@ -3024,15 +3017,3 @@ msgstr "Опције управљања сесије"
 msgid "Show Session Management options"
 msgstr "Прикажи опције управљања сесије"
 
-#~ msgid ""
-#~ "Sorry, threads isn't supported on your platform.\n"
-#~ "\n"
-#~ "If you're on a libc5 based linux system and installed Glib & GTK+ before "
-#~ "you\n"
-#~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
-#~ msgstr ""
-#~ "Извините, ваша платформа не подржава нити.\n"
-#~ "\n"
-#~ "Ако сте на libc5 заснованом линукс систему и ако сте инсталирали Glib и "
-#~ "GTK+ пре него\n"
-#~ "што сте инсталирали LinuxThreads морате поново превести Glib и GTK+.\n"
