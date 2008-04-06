@@ -527,7 +527,8 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             in_selection = TRUE;
         }
 
-        if ((!entry->selected || i == pl->first + pl->num_visible - 1)
+        if ((!entry->selected ||
+            (i == pl->first + pl->num_visible - 1) || !g_list_next(list))
             && in_selection) {
 
             if (!entry->selected)
