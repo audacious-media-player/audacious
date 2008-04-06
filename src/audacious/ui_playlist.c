@@ -251,6 +251,7 @@ playlistwin_set_toprow(gint toprow)
 {
     if (UI_SKINNED_IS_PLAYLIST(playlistwin_list))
         UI_SKINNED_PLAYLIST(playlistwin_list)->first = toprow;
+    g_cond_signal(cond_scan);
     playlistwin_update_list(playlist_get_active());
 }
 
