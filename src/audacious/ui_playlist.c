@@ -251,6 +251,7 @@ playlistwin_set_toprow(gint toprow)
 {
     if (UI_SKINNED_IS_PLAYLIST(playlistwin_list))
         UI_SKINNED_PLAYLIST(playlistwin_list)->first = toprow;
+    g_cond_signal(cond_scan);
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -966,16 +967,13 @@ playlistwin_scrolled(GtkWidget * widget,
                      GdkEventScroll * event,
                      gpointer callback_data)
 {
-
     if (event->direction == GDK_SCROLL_DOWN)
         playlistwin_scroll(cfg.scroll_pl_by);
 
     if (event->direction == GDK_SCROLL_UP)
         playlistwin_scroll(-cfg.scroll_pl_by);
 
-    // deactivating this fixed a gui freeze when scrolling. -- mf0102
     g_cond_signal(cond_scan);
-
 }
 
 static gboolean
@@ -1257,7 +1255,6 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     }
 
     if (refresh) {
-        // fixes keyboard scrolling gui freeze for me. -- mf0102
         g_cond_signal(cond_scan);
         playlistwin_update_list(playlist_get_active());
     }
