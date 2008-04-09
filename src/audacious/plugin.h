@@ -250,52 +250,52 @@ struct _AudaciousFuncTableV1 {
     VFSFile *(*vfs_buffered_file_release_live_fd)(VFSFile *fd);
 
     /* ConfigDb */
-    ConfigDb *(*cfg_db_open)(void);
-    void (*cfg_db_close)(ConfigDb *db);
+    mcs_handle_t *(*cfg_db_open)(void);
+    void (*cfg_db_close)(mcs_handle_t *db);
 
-    gboolean (*cfg_db_get_string)(ConfigDb *db,
+    gboolean (*cfg_db_get_string)(mcs_handle_t *db,
                                   const gchar *section,
                                   const gchar *key,
                                   gchar **value);
-    gboolean (*cfg_db_get_int)(ConfigDb *db,
+    gboolean (*cfg_db_get_int)(mcs_handle_t *db,
                                const gchar *section,
                                const gchar *key,
                                gint *value);
-    gboolean (*cfg_db_get_bool)(ConfigDb *db,
+    gboolean (*cfg_db_get_bool)(mcs_handle_t *db,
                                 const gchar *section,
                                 const gchar *key,
                                 gboolean *value);
-    gboolean (*cfg_db_get_float)(ConfigDb *db,
+    gboolean (*cfg_db_get_float)(mcs_handle_t *db,
                                  const gchar *section,
                                  const gchar *key,
                                  gfloat *value);
-    gboolean (*cfg_db_get_double)(ConfigDb *db,
+    gboolean (*cfg_db_get_double)(mcs_handle_t *db,
                                   const gchar *section,
                                   const gchar *key,
                                   gdouble *value);
 
-    void (*cfg_db_set_string)(ConfigDb *db,
+    void (*cfg_db_set_string)(mcs_handle_t *db,
                               const gchar *section,
                               const gchar *key,
                               const gchar *value);
-    void (*cfg_db_set_int)(ConfigDb *db,
+    void (*cfg_db_set_int)(mcs_handle_t *db,
                            const gchar *section,
                            const gchar *key,
                            gint value);
-    void (*cfg_db_set_bool)(ConfigDb *db,
+    void (*cfg_db_set_bool)(mcs_handle_t *db,
                             const gchar *section,
                             const gchar *key,
                             gboolean value);
-    void (*cfg_db_set_float)(ConfigDb *db,
+    void (*cfg_db_set_float)(mcs_handle_t *db,
                              const gchar *section,
                              const gchar *key,
                              gfloat value);
-    void (*cfg_db_set_double)(ConfigDb *db,
+    void (*cfg_db_set_double)(mcs_handle_t *db,
                               const gchar *section,
                               const gchar *key,
                               gdouble value);
 
-    void (*cfg_db_unset_key)(ConfigDb *db,
+    void (*cfg_db_unset_key)(mcs_handle_t *db,
                              const gchar *section,
                              const gchar *key);
 
@@ -691,6 +691,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_vfs_fget_be64		_audvt->vfs_fget_be64
 
 /* XXX: deprecation warnings */
+#define ConfigDb mcs_handle_t		/* Alias for compatibility -- ccr */
 #define aud_cfg_db_open			_audvt->cfg_db_open
 #define aud_cfg_db_close		_audvt->cfg_db_close
 #define aud_cfg_db_set_string		_audvt->cfg_db_set_string

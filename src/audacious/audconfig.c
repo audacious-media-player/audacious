@@ -487,7 +487,7 @@ aud_config_free(void)
 void
 aud_config_load(void)
 {
-    ConfigDb *db;
+    mcs_handle_t *db;
     gint i, length;
 
     memcpy(&cfg, &aud_default_config, sizeof(AudConfig));
@@ -610,7 +610,7 @@ aud_config_save(void)
     GList *node;
     gchar *str;
     gint i, cur_pb_time, vol_l, vol_r;
-    ConfigDb *db;
+    mcs_handle_t *db;
     GList *saved;
     Playlist *playlist = playlist_get_active();
 

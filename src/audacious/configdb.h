@@ -3,13 +3,7 @@
 
 #include <glib.h>
 
-/**
- * ConfigDb:
- *
- * A configuration database handle, opened with cfg_db_open().
- **/
-typedef struct _ConfigDb ConfigDb;
-
+typedef struct mcs_handle_ mcs_handle_t;
 
 G_BEGIN_DECLS
 
@@ -20,7 +14,7 @@ G_BEGIN_DECLS
      *
      * Return value: A configuration database handle.
      **/
-    ConfigDb *cfg_db_open();
+    mcs_handle_t *cfg_db_open();
 
     /**
      * cfg_db_close:
@@ -28,7 +22,7 @@ G_BEGIN_DECLS
      *
      * Closes the configuration database.
      **/
-    void cfg_db_close(ConfigDb *db);
+    void cfg_db_close(mcs_handle_t *db);
 
     /**
      * cfg_db_get_string:
@@ -41,7 +35,7 @@ G_BEGIN_DECLS
      *
      * Return value: TRUE if successful, FALSE otherwise.
      **/
-    gboolean cfg_db_get_string(ConfigDb *db,
+    gboolean cfg_db_get_string(mcs_handle_t *db,
                                    const gchar *section,
                                    const gchar *key,
                                    gchar **value);
@@ -57,7 +51,7 @@ G_BEGIN_DECLS
      *
      * Return value: TRUE if successful, FALSE otherwise.
      **/
-    gboolean cfg_db_get_int(ConfigDb *db,
+    gboolean cfg_db_get_int(mcs_handle_t *db,
                                 const gchar *section,
                                 const gchar *key,
                                 gint *value);
@@ -73,7 +67,7 @@ G_BEGIN_DECLS
      *
      * Return value: TRUE if successful, FALSE otherwise.
      **/
-    gboolean cfg_db_get_bool(ConfigDb *db,
+    gboolean cfg_db_get_bool(mcs_handle_t *db,
                                  const gchar *section,
                                  const gchar *key,
                                  gboolean *value);
@@ -89,7 +83,7 @@ G_BEGIN_DECLS
      *
      * Return value: TRUE if successful, FALSE otherwise.
      **/
-    gboolean cfg_db_get_float(ConfigDb *db,
+    gboolean cfg_db_get_float(mcs_handle_t *db,
                                   const gchar *section,
                                   const gchar *key,
                                   gfloat *value);
@@ -105,7 +99,7 @@ G_BEGIN_DECLS
      *
      * Return value: TRUE if successful, FALSE otherwise.
      **/
-    gboolean cfg_db_get_double(ConfigDb *db,
+    gboolean cfg_db_get_double(mcs_handle_t *db,
                                    const gchar *section,
                                    const gchar *key,
                                    gdouble *value);
@@ -119,7 +113,7 @@ G_BEGIN_DECLS
      *
      * Sets a value in the configuration database.
      **/
-    void cfg_db_set_string(ConfigDb *db,
+    void cfg_db_set_string(mcs_handle_t *db,
                                const gchar *section,
                                const gchar *key,
                                const gchar *value);
@@ -133,7 +127,7 @@ G_BEGIN_DECLS
      *
      * Sets a value in the configuration database.
      **/
-    void cfg_db_set_int(ConfigDb *db,
+    void cfg_db_set_int(mcs_handle_t *db,
                             const gchar *section,
                             const gchar *key,
                             gint value);
@@ -147,7 +141,7 @@ G_BEGIN_DECLS
      *
      * Sets a value in the configuration database.
      **/
-    void cfg_db_set_bool(ConfigDb *db,
+    void cfg_db_set_bool(mcs_handle_t *db,
                              const gchar *section,
                              const gchar *key,
                              gboolean value);
@@ -161,7 +155,7 @@ G_BEGIN_DECLS
      *
      * Sets a value in the configuration database.
      **/
-    void cfg_db_set_float(ConfigDb *db,
+    void cfg_db_set_float(mcs_handle_t *db,
                               const gchar *section,
                               const gchar *key,
                               gfloat value);
@@ -175,7 +169,7 @@ G_BEGIN_DECLS
      *
      * Sets a value in the configuration database.
      **/
-    void cfg_db_set_double(ConfigDb *db,
+    void cfg_db_set_double(mcs_handle_t *db,
                                const gchar *section,
                                const gchar *key,
                                gdouble value);
@@ -188,7 +182,7 @@ G_BEGIN_DECLS
      *
      * Removes a value from the configuration database.
      **/
-    void cfg_db_unset_key(ConfigDb *db,
+    void cfg_db_unset_key(mcs_handle_t *db,
                               const gchar *section,
                               const gchar *key);
 

@@ -19,50 +19,36 @@
 #endif
 
 #include "configdb.h"
-
+#include <libmcs/mcs.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <libmcs/mcs.h>
 
 
 #define RCFILE_DEFAULT_SECTION_NAME "audacious"
 
 static gboolean mcs_initted = FALSE;
 
-struct _ConfigDb
-{
-    mcs_handle_t *handle;
-};
 
-
-ConfigDb *
+mcs_handle_t *
 cfg_db_open()
 {
-    ConfigDb *db;
-
-    db = g_new(ConfigDb, 1);
-
     if (!mcs_initted)
     {
 	mcs_init();
         mcs_initted = TRUE;
     }
 
-    db->handle = mcs_new(RCFILE_DEFAULT_SECTION_NAME);
-
-    return db;
+    return mcs_new(RCFILE_DEFAULT_SECTION_NAME);
 }
 
 void
-cfg_db_close(ConfigDb * db)
+cfg_db_close(mcs_handle_t * db)
 {
-    mcs_destroy(db->handle);
-    g_free(db);
+    mcs_destroy(db);
 }
 
 gboolean
-cfg_db_get_string(ConfigDb * db,
+cfg_db_get_string(mcs_handle_t * db,
                       const gchar * section,
                       const gchar * key,
                       gchar ** value)
@@ -70,21 +56,21 @@ cfg_db_get_string(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    return mcs_get_string(db->handle, section, key, value);
+    return mcs_get_string(db, section, key, value);
 }
 
 gboolean
-cfg_db_get_int(ConfigDb * db,
+cfg_db_get_int(mcs_handle_t * db,
                    const gchar * section, const gchar * key, gint * value)
 {
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    return mcs_get_int(db->handle, section, key, value);
+    return mcs_get_int(db, section, key, value);
 }
 
 gboolean
-cfg_db_get_bool(ConfigDb * db,
+cfg_db_get_bool(mcs_handle_t * db,
                     const gchar * section,
                     const gchar * key,
                     gboolean * value)
@@ -92,11 +78,11 @@ cfg_db_get_bool(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    return mcs_get_bool(db->handle, section, key, value);
+    return mcs_get_bool(db, section, key, value);
 }
 
 gboolean
-cfg_db_get_float(ConfigDb * db,
+cfg_db_get_float(mcs_handle_t * db,
                      const gchar * section,
                      const gchar * key,
                      gfloat * value)
@@ -104,11 +90,11 @@ cfg_db_get_float(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    return mcs_get_float(db->handle, section, key, value);
+    return mcs_get_float(db, section, key, value);
 }
 
 gboolean
-cfg_db_get_double(ConfigDb * db,
+cfg_db_get_double(mcs_handle_t * db,
                       const gchar * section,
                       const gchar * key,
                       gdouble * value)
@@ -116,11 +102,11 @@ cfg_db_get_double(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    return mcs_get_double(db->handle, section, key, value);
+    return mcs_get_double(db, section, key, value);
 }
 
 void
-cfg_db_set_string(ConfigDb * db,
+cfg_db_set_string(mcs_handle_t * db,
                       const gchar * section,
                       const gchar * key,
                       const gchar * value)
@@ -128,11 +114,11 @@ cfg_db_set_string(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_string(db->handle, section, key, value);
+    mcs_set_string(db, section, key, value);
 }
 
 void
-cfg_db_set_int(ConfigDb * db,
+cfg_db_set_int(mcs_handle_t * db,
                    const gchar * section,
                    const gchar * key,
                    gint value)
@@ -140,11 +126,11 @@ cfg_db_set_int(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_int(db->handle, section, key, value);
+    mcs_set_int(db, section, key, value);
 }
 
 void
-cfg_db_set_bool(ConfigDb * db,
+cfg_db_set_bool(mcs_handle_t * db,
                     const gchar * section,
                     const gchar * key,
                     gboolean value)
@@ -152,11 +138,11 @@ cfg_db_set_bool(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_bool(db->handle, section, key, value);
+    mcs_set_bool(db, section, key, value);
 }
 
 void
-cfg_db_set_float(ConfigDb * db,
+cfg_db_set_float(mcs_handle_t * db,
                      const gchar * section,
                      const gchar * key,
                      gfloat value)
@@ -164,11 +150,11 @@ cfg_db_set_float(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_float(db->handle, section, key, value);
+    mcs_set_float(db, section, key, value);
 }
 
 void
-cfg_db_set_double(ConfigDb * db,
+cfg_db_set_double(mcs_handle_t * db,
                       const gchar * section,
                       const gchar * key,
                       gdouble value)
@@ -176,11 +162,11 @@ cfg_db_set_double(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_double(db->handle, section, key, value);
+    mcs_set_double(db, section, key, value);
 }
 
 void
-cfg_db_unset_key(ConfigDb * db,
+cfg_db_unset_key(mcs_handle_t * db,
                      const gchar * section,
                      const gchar * key)
 {
@@ -190,5 +176,5 @@ cfg_db_unset_key(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_unset_key(db->handle, section, key);
+    mcs_unset_key(db, section, key);
 }
