@@ -1343,6 +1343,8 @@ egg_set_desktop_file (const char *desktop_file_path)
       g_warning ("Could not load desktop file '%s': %s",
 		 desktop_file_path, error->message);
       g_error_free (error);
+      G_UNLOCK (egg_desktop_file);
+      return;
     }
 
   /* Set localized application name and default window icon */
