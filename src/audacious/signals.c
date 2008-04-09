@@ -46,7 +46,7 @@ signal_process_segv(void)
          "We apologize for the inconvenience, but Audacious has crashed.\n"
          "This is a bug in the program, and should never happen under normal circumstances.\n"
 	 "Your current configuration has been saved and should not be damaged.\n\n"
-	 "You can help improve the quality of Audacious by filing a bug at http://bugs-meta.atheme.org\n"
+	 "You can help improve the quality of Audacious by filing a bug at http://bugzilla.atheme.org/\n"
          "Please include the entire text of this message and a description of what you were doing when\n"
          "this crash occured in order to quickly expedite the handling of your bug report:\n\n"));
 
@@ -70,10 +70,12 @@ signal_process_segv(void)
         g_free(strings);
     }
 #else
-    g_printerr("Stacktrace was unavailable.\n");
+    g_printerr(_("Stacktrace was unavailable. You might want to reproduce this "
+    "problem while running Audacious under GDB to get a proper backtrace.\n"));
 #endif
 
-    g_printerr(_("\nBugs can be reported at http://bugs-meta.atheme.org against the Audacious product.\n"));
+    g_printerr(_("\nBugs can be reported at http://bugzilla.atheme.org/ against "
+    "the Audacious or Audacious Plugins product.\n"));
 
     g_critical("Received SIGSEGV -- Audacious has crashed.");
 
