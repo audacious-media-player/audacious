@@ -256,7 +256,7 @@ void get_handlers_list(gint argc, gchar **argv)
 
     audtool_report("");
 	audtool_report("Handlers may be prefixed with `--' (GNU-style long-options) or not, your choice.");
-	audtool_report("Report bugs to http://bugs-meta.atheme.org/");
+	audtool_report("Report bugs to http://bugzilla.atheme.org/");
 }
 
 void activate(gint argc, gchar **argv)
