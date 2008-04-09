@@ -1340,7 +1340,8 @@ egg_set_desktop_file (const char *desktop_file_path)
   egg_desktop_file = egg_desktop_file_new (desktop_file_path, &error);
   if (error)
     {
-      g_warning ("Could not load desktop file '%s': %s",
+      g_warning ("Could not load desktop file '%s': %s"
+      " - Session management may not work now.",
 		 desktop_file_path, error->message);
       g_error_free (error);
       G_UNLOCK (egg_desktop_file);
