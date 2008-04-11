@@ -1040,7 +1040,7 @@ msgstr "Synthpop"
 #: src/audacious/ui_fileinfo.c:221 src/audacious/ui_fileinfo.c:554
 #: src/audacious/ui_fileinfo.c:557 src/audacious/ui_fileinfo.c:560
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"medium\">ei saatavilla</span>"
+msgstr "<span size=\"small\">ei saatavilla</span>"
 
 #: src/audacious/ui_fileinfo.c:332
 msgid "Metadata updated successfully"
@@ -1244,14 +1244,12 @@ msgid "Audacious - visibility warning"
 msgstr ""
 
 #: src/audacious/ui_main.c:1226
-#, fuzzy
 msgid "Show main player window"
-msgstr "Valitse pääikkunan kirjasinlaji:"
+msgstr "Näytä pääikkuna"
 
 #: src/audacious/ui_main.c:1227
-#, fuzzy
 msgid "Ignore"
-msgstr "Ei mikään"
+msgstr "Jätä huomiotta"
 
 #: src/audacious/ui_main.c:1231
 msgid ""
@@ -1293,46 +1291,42 @@ msgid "Enter location to play:"
 msgstr ""
 
 #: src/audacious/ui_main.c:1569
-#, fuzzy, c-format
+#, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr "SIIRRY: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "Siirry: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
 #: src/audacious/ui_main.c:1599
 #, c-format
 msgid "Volume: %d%%"
-msgstr ""
+msgstr "Voimakkuus: %d%%"
 
 #: src/audacious/ui_main.c:1627
 #, c-format
 msgid "Balance: %d%% left"
-msgstr ""
+msgstr "Tasapaino: %d%% vasemmalla"
 
 #: src/audacious/ui_main.c:1631
 msgid "Balance: center"
-msgstr ""
+msgstr "Tasapaino: keskellä"
 
 #: src/audacious/ui_main.c:1635
 #, c-format
 msgid "Balance: %d%% right"
-msgstr ""
+msgstr "Tasapaino %d%% oikealla"
 
 #: src/audacious/ui_main.c:1946
-#, fuzzy
 msgid "Options Menu"
-msgstr "Asetukset"
+msgstr "Asetusvalikko"
 
 #: src/audacious/ui_main.c:1950
-#, fuzzy
 msgid "Disable 'Always On Top'"
-msgstr "/Aina päällimmäisenä"
+msgstr "Poista 'aina päällimmäisenä' käytöstä"
 
 #: src/audacious/ui_main.c:1952
-#, fuzzy
 msgid "Enable 'Always On Top'"
-msgstr "/Aina päällimmäisenä"
+msgstr "Ota 'aina päällimmäisenä' käyttöön"
 
 #: src/audacious/ui_main.c:1955
-#, fuzzy
 msgid "File Info Box"
 msgstr "Tiedoston tiedot"
 
@@ -1346,9 +1340,8 @@ msgid "Enable 'GUI Scaling'"
 msgstr ""
 
 #: src/audacious/ui_main.c:1964
-#, fuzzy
 msgid "Visualization Menu"
-msgstr "/Visualisointitapa"
+msgstr "Visualisointivalikko"
 
 #: src/audacious/ui_main.c:2010
 msgid ""
@@ -1367,9 +1360,8 @@ msgstr ""
 "3. Äänikortin asetukset ovat oikein.\n"
 
 #: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
-#, fuzzy
 msgid "Autoscroll Songname"
-msgstr "/Vieritä kappaleen nimeä"
+msgstr "Vieritä kappaleen nimeä"
 
 #: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
 #, fuzzy
@@ -1377,87 +1369,72 @@ msgid "Stop after Current Song"
 msgstr "Pysäytä nykyisen kappaleen soittaminen"
 
 #: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
-#, fuzzy
 msgid "Peaks"
-msgstr "Pilat"
+msgstr "Huiput"
 
 #: src/audacious/ui_manager.c:57 src/audacious/ui_manager.c:58
-#, fuzzy
 msgid "Repeat"
-msgstr "/Toisto"
+msgstr "Toista"
 
 #: src/audacious/ui_manager.c:60 src/audacious/ui_manager.c:61
-#, fuzzy
 msgid "Shuffle"
-msgstr "/Sekaisin"
+msgstr "Sekoita"
 
 #: src/audacious/ui_manager.c:63 src/audacious/ui_manager.c:64
-#, fuzzy
 msgid "No Playlist Advance"
-msgstr "/Älä etene soittolistassa"
+msgstr "Älä etene soittolistassa"
 
 #: src/audacious/ui_manager.c:66 src/audacious/ui_manager.c:67
-#, fuzzy
 msgid "Show Player"
-msgstr "/Näytä soittolistan muokkain"
+msgstr "Näytä soitin"
 
 #: src/audacious/ui_manager.c:69 src/audacious/ui_manager.c:70
-#, fuzzy
 msgid "Show Playlist Editor"
-msgstr "/Näytä soittolistan muokkain"
+msgstr "Näytä soittolistan muokkain"
 
 #: src/audacious/ui_manager.c:72 src/audacious/ui_manager.c:73
-#, fuzzy
 msgid "Show Equalizer"
-msgstr "/Näytä taajuuskorjain"
+msgstr "Näytä taajuuskorjain"
 
 #: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
-#, fuzzy
 msgid "Always on Top"
-msgstr "/Aina päällimmäisenä"
+msgstr "Aina päällimmäisenä"
 
 #: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
-#, fuzzy
 msgid "Put on All Workspaces"
-msgstr "/Näkyy kaikissa työtiloissa"
+msgstr "Näkyy kaikissa työtiloissa"
 
 #: src/audacious/ui_manager.c:81 src/audacious/ui_manager.c:82
-#, fuzzy
 msgid "Roll up Player"
-msgstr "/Rullaa soittoikkuna"
+msgstr "Rullaa soittoikkuna"
 
 #: src/audacious/ui_manager.c:84 src/audacious/ui_manager.c:85
-#, fuzzy
 msgid "Roll up Playlist Editor"
-msgstr "/Rullaa soittolistan muokkausikkuna"
+msgstr "Rullaa soittolistan muokkausikkuna"
 
 #: src/audacious/ui_manager.c:87 src/audacious/ui_manager.c:88
-#, fuzzy
 msgid "Roll up Equalizer"
-msgstr "/Rullaa taajuuskorjainikkuna"
+msgstr "Rullaa taajuuskorjainikkuna"
 
 #: src/audacious/ui_manager.c:90
-#, fuzzy
 msgid "Scale"
-msgstr "/Tallenna"
+msgstr "Skaalaa"
 
 #: src/audacious/ui_manager.c:91
 msgid "DoubleSize"
-msgstr ""
+msgstr "Kaksinkertainen koko"
 
 #: src/audacious/ui_manager.c:93 src/audacious/ui_manager.c:94
 msgid "Easy Move"
-msgstr ""
+msgstr "Helppo siirtely"
 
 #: src/audacious/ui_manager.c:102
-#, fuzzy
 msgid "Analyzer"
-msgstr "/Taajuusspektri"
+msgstr "Taajuusspektri"
 
 #: src/audacious/ui_manager.c:103
-#, fuzzy
 msgid "Scope"
-msgstr "/Oskilloskooppi"
+msgstr "Oskilloskooppi"
 
 #: src/audacious/ui_manager.c:104
 #, fuzzy
@@ -1466,57 +1443,48 @@ msgstr "/Taajuusspektri/Tuli"
 
 #: src/audacious/ui_manager.c:105
 msgid "Off"
-msgstr ""
+msgstr "Pois päältä"
 
 #: src/audacious/ui_manager.c:109 src/audacious/ui_manager.c:126
 #: src/audacious/ui_manager.c:132
-#, fuzzy
 msgid "Normal"
-msgstr "ID3-muoto:"
+msgstr "Normaali"
 
 #: src/audacious/ui_manager.c:110 src/audacious/ui_manager.c:127
-#, fuzzy
 msgid "Fire"
-msgstr "Satiiri"
+msgstr "Tuli"
 
 #: src/audacious/ui_manager.c:111
-#, fuzzy
 msgid "Vertical Lines"
-msgstr "/Taajuusspektri/Pystyviivat"
+msgstr "Pystyviivat"
 
 #: src/audacious/ui_manager.c:115
-#, fuzzy
 msgid "Lines"
-msgstr "riviä"
+msgstr "Viivat"
 
 #: src/audacious/ui_manager.c:116
-#, fuzzy
 msgid "Bars"
-msgstr "Basso"
+msgstr "Palkit"
 
 #: src/audacious/ui_manager.c:120
-#, fuzzy
 msgid "Dot Scope"
-msgstr "/Oskilloskooppi/Pisteet"
+msgstr "Pisteskooppi"
 
 #: src/audacious/ui_manager.c:121
-#, fuzzy
 msgid "Line Scope"
-msgstr "/Oskilloskooppi/Viiva"
+msgstr "Viivaskooppi"
 
 #: src/audacious/ui_manager.c:122
-#, fuzzy
 msgid "Solid Scope"
-msgstr "/Oskilloskooppi/Yhtenäinen"
+msgstr "Yhtenäinen skooppi"
 
 #: src/audacious/ui_manager.c:128
 msgid "Ice"
-msgstr ""
+msgstr "Jää"
 
 #: src/audacious/ui_manager.c:133
-#, fuzzy
 msgid "Smooth"
-msgstr "Mono"
+msgstr "Pehmeä"
 
 #: src/audacious/ui_manager.c:137
 #, fuzzy
@@ -2783,12 +2751,10 @@ msgid "<b>_Skin</b>"
 msgstr "<b>_Teema</b>"
 
 #: src/audacious/ui_preferences.c:1981
-#, fuzzy
 msgid "Refresh skin list"
 msgstr "Päivitä lista"
 
 #: src/audacious/ui_preferences.c:2105
-#, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>Kappaleen näyttö</b>"
 
@@ -2821,9 +2787,8 @@ msgid "ALBUM - TITLE"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:2141
-#, fuzzy
 msgid "Custom"
-msgstr "Muu merkkijono:"
+msgstr "Muu ..."
 
 #: src/audacious/ui_preferences.c:2148
 msgid "Custom string:"
@@ -2854,14 +2819,12 @@ msgid "Edit settings for popup information"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:2285
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Asetukset</b>"
+msgstr "<b>Äänijärjestelmä</b>"
 
 #: src/audacious/ui_preferences.c:2308
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Puskurin koko (kt):"
+msgstr "Puskurin koko:"
 
 #: src/audacious/ui_preferences.c:2314
 msgid ""
@@ -2873,56 +2836,48 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_preferences.c:2333
-#, fuzzy
 msgid "Current output plugin:"
-msgstr "_Nykyinen ulostuloliitännäinen:"
+msgstr "Nykyinen ulostuloliitännäinen:"
 
 #: src/audacious/ui_preferences.c:2362
-#, fuzzy
 msgid "Output Plugin Preferences"
-msgstr "OSS-ulostuloliitännäinen"
+msgstr "Ulostuloliitännäisen asetukset"
 
 #: src/audacious/ui_preferences.c:2379
-#, fuzzy
 msgid "Output Plugin Information"
-msgstr "ESD-ulostuloliitännäisen asetukset"
+msgstr "Ulostuloliitännäisen tiedot"
 
 #: src/audacious/ui_preferences.c:2388
-#, fuzzy
 msgid "<b>Sampling Rate Converter</b>"
-msgstr "Näytetaajuus:"
+msgstr "<b>Näytetaajuuden muunnin</b>"
 
 #: src/audacious/ui_preferences.c:2397
-#, fuzzy
 msgid "Enable Sampling Rate Converter"
-msgstr "Näytetaajuus:"
+msgstr "Käytä näytetaajuuden muunninta"
 
 #: src/audacious/ui_preferences.c:2417
 msgid "Best Sinc Interpolation"
-msgstr ""
+msgstr "Paras Sinc-interpolointi"
 
 #: src/audacious/ui_preferences.c:2418
 msgid "Medium Sinc Interpolation"
-msgstr ""
+msgstr "Keskiverto Sinc-interpolointi"
 
 #: src/audacious/ui_preferences.c:2419
 msgid "Fastest Sinc Interpolation"
-msgstr ""
+msgstr "Nopein Sinc-interpolointi"
 
 #: src/audacious/ui_preferences.c:2420
-#, fuzzy
 msgid "ZOH Interpolation"
-msgstr "Käytä todennusta"
+msgstr "ZOH interpolointi"
 
 #: src/audacious/ui_preferences.c:2421
-#, fuzzy
 msgid "Linear Interpolation"
-msgstr "Käytä todennusta"
+msgstr "Lineaarinen interpolaatio"
 
 #: src/audacious/ui_preferences.c:2423
-#, fuzzy
 msgid "Interpolation Engine:"
-msgstr "Käytä todennusta"
+msgstr "Interpolointimoottori:"
 
 #: src/audacious/ui_preferences.c:2429
 msgid ""
@@ -2968,6 +2923,9 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Näiden asetusten muuttaminen vaatii Audaciouksen "
+"uudelleenkäynnistyksen, jotta muutokset tulisivat voimaan.</span>"
+
 
 #: src/audacious/ui_preferences.c:2737
 msgid "_Decoder list:"
@@ -2995,7 +2953,7 @@ msgstr "<b>Visualisointi</b>"
 
 #: src/audacious/ui_preferences.c:2864
 msgid "_Effect plugin list:"
-msgstr "_Efektiliitännäisten luettelo:"
+msgstr "_Tehosteliitännäisten luettelo:"
 
 #: src/audacious/ui_preferences.c:2894
 msgid "<b>Effects</b>"
@@ -3003,7 +2961,7 @@ msgstr "<b>Tehosteet</b>"
 
 #: src/audacious/ui_preferences.c:3031
 msgid "Audacious Preferences"
-msgstr "Audaciouksen asetukset"
+msgstr "Audaciouksen Asetukset"
 
 #: src/audacious/ui_preferences.c:3101
 msgid "Reload Plugins"
@@ -3055,44 +3013,43 @@ msgstr "16 kHz"
 
 #: src/audacious/ui_skinselector.c:178
 msgid "Archived Winamp 2.x skin"
-msgstr ""
+msgstr "Pakattu WinAmp 2.x -teema"
 
 #: src/audacious/ui_skinselector.c:183
 msgid "Unarchived Winamp 2.x skin"
-msgstr ""
+msgstr "Pakkaamaton WinAmp 2.x -teema"
 
 #: src/audacious/ui_urlopener.c:86
-#, fuzzy
 msgid "Add/Open URL Dialog"
-msgstr "Lisää/avaa tiedostoja -ikkuna"
+msgstr "Lisää/avaa URL -ikkuna"
 
 #: src/audacious/util.c:1084
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kansion (%s) luominen epäonnistui: %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:139
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Tiedosto ei ole validi .desktop-tiedosto"
 
 #: src/libeggsmclient/eggdesktopfile.c:161
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "%s: tuntematon valitsin `--%s'\n"
+msgstr "Tuntematon desktop-tiedoston versio '%s'"
 
 #: src/libeggsmclient/eggdesktopfile.c:872
-#, fuzzy, c-format
+#, c-format
 msgid "Starting %s"
-msgstr "Aloita soittaminen"
+msgstr "Käynnistetään %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:1008
 msgid "Application does not accept documents on command line"
 msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:1076
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "%s: tuntematon valitsin `--%s'\n"
+msgstr "Tunnistamaton käynnistysoptio: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1278
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
