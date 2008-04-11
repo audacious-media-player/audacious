@@ -184,7 +184,7 @@ msgstr "Tämä järjestelmä/alusta ei tue säikeitä.\n"
 #: src/audacious/main.c:732
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "%s: näytön avaaminen ei onnistu, ohjelma lopetetaan."
+msgstr "%s: näytön avaaminen ei onnistu, ohjelma lopetetaan.\n"
 
 #: src/audacious/main.c:840
 msgid "Headless operation enabled\n"
@@ -245,7 +245,7 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2005-2008 Audacious-kehittäjäryhmä\n"
+"Copyright (C) 2005-2008 Audacious-kehittäjäryhmä"
 
 #: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:367
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
@@ -3026,7 +3026,7 @@ msgstr "Lisää/avaa URL -ikkuna"
 #: src/audacious/util.c:1084
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Kansion (%s) luominen epäonnistui: %s"
+msgstr "Kansion (%s) luominen epäonnistui: %s\n"
 
 #: src/libeggsmclient/eggdesktopfile.c:139
 msgid "File is not a valid .desktop file"
