@@ -27,10 +27,6 @@ SRCS = compat.c		\
 include ../../buildsys.mk
 include ../../extra.mk
 
-CPPFLAGS += ${LIB_CPPFLAGS}		\
-			${GLIB_CFLAGS}		\
-			${GTK_CFLAGS}		\
-			${LIBMCS_CFLAGS}	\
-			${MOWGLI_CFLAGS}
+CPPFLAGS += ${LIB_CPPFLAGS} -I.. ${GLIB_CFLAGS} ${GTK_CFLAGS} ${MOWGLI_CFLAGS}
 CFLAGS += ${LIB_CFLAGS}
 LIBS += ${IMPLIB_LIBS} ${GLIB_LIBS} ${GTK_LIBS} ${MOWGLI_LIBS} -lz

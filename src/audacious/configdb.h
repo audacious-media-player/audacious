@@ -2,7 +2,8 @@
 #define CONFIGDB_H
 
 #include <glib.h>
-#include <libmcs/mcs.h>
+
+typedef struct mcs_handle_ mcs_handle_t;
 
 G_BEGIN_DECLS
 
