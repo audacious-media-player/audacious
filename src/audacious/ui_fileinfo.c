@@ -643,7 +643,7 @@ create_fileinfo_window(void)
 
         for (i = 0; i < G_N_ELEMENTS(genre_table); i++)
             genre_list = g_list_prepend(genre_list, _(genre_table[i]));
-        genre_list = g_list_sort(genre_list, (GCompareFunc) g_ascii_strcasecmp);
+        genre_list = g_list_sort(genre_list, (GCompareFunc) g_utf8_collate);
 
         MOWGLI_ITER_FOREACH(iter, genre_list)
             gtk_combo_box_append_text(GTK_COMBO_BOX(entry_genre), iter->data);
