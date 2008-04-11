@@ -72,7 +72,7 @@ packages installed:
   GTK+ 2.10.0
     http://www.gtk.org/download/
 
-  mcs >= 0.4
+  mcs >= 0.7
     http://www.atheme.org/projects/mcs.shtml
 
   libmowgli >= 0.4
