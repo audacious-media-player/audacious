@@ -77,7 +77,7 @@ static const gchar *credit_text[] = {
 
     N_("Default skin:"),
     "George Averill",
-	"Michael Färber",
+    "Michael Färber",
     "William Pitcock",
     NULL,
 
@@ -257,6 +257,8 @@ static const gchar *translators[] = {
     NULL,
     N_("Traditional Chinese:"),
     "Cheng-Wei Chien",
+    "Sylecn Song",
+    "Yang Zhang",
     NULL,
     N_("Turkish:"),
     "Murat Şenel",
