@@ -666,13 +666,8 @@ resume_playback_on_startup()
     g_return_if_fail(playlist_get_length(playlist_get_active()) > 0);
 
     int i;
-    gint l = 0, r = 0;
 
     while (gtk_events_pending()) gtk_main_iteration();
-
-    l = (cfg.saved_volume & 0xff00) >> 8;
-    r = cfg.saved_volume & 0x00ff;
-    output_set_volume(l, r);
 
     playback_initiate();
 
@@ -687,11 +682,25 @@ resume_playback_on_startup()
     playback_seek(cfg.resume_playback_on_startup_time / 1000);
 }
 
-gint
-main(gint argc, gchar ** argv)
+static void
+playlist_system_init()
 {
     Playlist *playlist;
 
+    playlist_init();
+    playlist = playlist_get_active();
+    playlist_load(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_set_position(playlist, cfg.playlist_position);
+
+    /* Load extra playlists */
+    if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
+                     playlist, NULL))
+        g_warning("Could not load extra playlists\n");
+}
+
+gint
+main(gint argc, gchar ** argv)
+{
     /* glib-2.13.0 requires g_thread_init() to be called before all
        other GLib functions */
     g_thread_init(NULL);
@@ -757,18 +766,7 @@ main(gint argc, gchar ** argv)
     }
 
     plugin_system_init();
-
-    /* Initialize the playlist system. */
-    playlist_init();
-    playlist = playlist_get_active();
-    playlist_load(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
-    playlist_set_position(playlist, cfg.playlist_position);
-
-    /* Load extra playlists */
-    if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
-                     playlist, NULL))
-        g_warning("Could not load extra playlists\n");
-
+    playlist_system_init();
     handle_cmd_line_options();
 
 #ifdef USE_DBUS
@@ -776,6 +774,9 @@ main(gint argc, gchar ** argv)
 #endif
 
     playlist_start_get_info_thread();
+
+    output_set_volume((cfg.saved_volume & 0xff00) >> 8,
+                      (cfg.saved_volume & 0x00ff));
 
     if (options.headless == FALSE)
     {
@@ -798,7 +799,6 @@ main(gint argc, gchar ** argv)
          * but not if we're running headless --nenolod
          */
         mainwin_setup_menus();
-        output_set_volume(((cfg.saved_volume & 0xff00) >> 8),(cfg.saved_volume & 0x00ff));
         ui_main_set_initial_volume();
 
         /* FIXME: delayed, because it deals directly with the plugin
