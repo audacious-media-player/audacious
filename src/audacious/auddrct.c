@@ -38,8 +38,7 @@
 void
 drct_quit ( void )
 {
-  mainwin_quit_cb();
-  return;
+  aud_quit();
 }
 
 void

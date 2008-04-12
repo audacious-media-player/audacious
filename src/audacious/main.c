@@ -698,6 +698,45 @@ playlist_system_init()
         g_warning("Could not load extra playlists\n");
 }
 
+void
+aud_quit(void)
+{
+    GList *playlists = NULL, *playlists_top = NULL;
+
+    playlist_stop_get_info_thread();
+
+    if (options.headless == FALSE)
+    {
+        gtk_widget_hide(equalizerwin);
+        gtk_widget_hide(playlistwin);
+        gtk_widget_hide(mainwin);
+
+        gtk_accel_map_save(aud_paths[BMP_PATH_ACCEL_FILE]);
+        gtk_main_quit();
+
+        cleanup_skins();
+    }
+
+    aud_config_save();
+    plugin_system_cleanup();
+
+    /* free and clear each playlist */
+    playlists = playlist_get_playlists();
+    playlists_top = playlists;
+    while ( playlists != NULL )
+    {
+        playlist_clear((Playlist*)playlists->data);
+        playlist_free((Playlist*)playlists->data);
+        playlists = g_list_next(playlists);
+    }
+    g_list_free( playlists_top );
+
+    g_cond_free(cond_scan);
+    g_mutex_free(mutex_scan);
+
+    exit(EXIT_SUCCESS);
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
@@ -846,8 +885,6 @@ main(gint argc, gchar ** argv)
         g_main_loop_run(loop);
     }
 
-    g_cond_free(cond_scan);
-    g_mutex_free(mutex_scan);
-
+    aud_quit();
     return EXIT_SUCCESS;
 }

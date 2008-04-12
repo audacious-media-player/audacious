@@ -92,6 +92,8 @@ extern GMutex *mutex_scan;
 extern MprisPlayer *mpris;
 #endif
 
+void aud_quit(void);
+
 G_END_DECLS
 
 #endif /* __AUDACIOUS_MAIN_H__ */

@@ -111,12 +111,12 @@ signal_process_signals (void *data)
 
         case SIGINT:
             g_print("Audacious has received SIGINT and is shutting down.\n");
-            mainwin_quit_cb();
+            aud_quit();
             break;
 
         case SIGTERM:
             g_print("Audacious has received SIGTERM and is shutting down.\n");
-            mainwin_quit_cb();
+            aud_quit();
             break;
         }
     }
@@ -150,12 +150,12 @@ signal_process_signals_linuxthread (void *data)
 
         case SIGINT:
             g_print("Audacious has received SIGINT and is shutting down.\n");
-            mainwin_quit_cb();
+            aud_quit();
             break;
 
         case SIGTERM:
             g_print("Audacious has received SIGTERM and is shutting down.\n");
-            mainwin_quit_cb();
+            aud_quit();
             break;
         }
     }
@@ -255,7 +255,7 @@ static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)
 {
     g_print("Session quit requested. Saving state and shutting down.\n");    
-    mainwin_quit_cb();
+    aud_quit();
 }
 
 static void

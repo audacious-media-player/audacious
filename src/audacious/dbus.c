@@ -302,7 +302,7 @@ gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
     return TRUE;
 }
 gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
-    mainwin_quit_cb();
+    aud_quit();
     return TRUE;
 }
 gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
@@ -518,7 +518,7 @@ gboolean audacious_rc_version(RemoteObject *obj, gchar **version, GError **error
 }
 
 gboolean audacious_rc_quit(RemoteObject *obj, GError **error) {
-    mainwin_quit_cb();
+    aud_quit();
     return TRUE;
 }
 
