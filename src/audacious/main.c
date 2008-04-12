@@ -149,41 +149,10 @@ GMutex *mutex_scan;
 MprisPlayer *mpris;
 #endif
 
-static GSList *
-get_feature_list(void)
-{
-    GSList *features = NULL;
-    
-#ifdef HAVE_GCONF
-    features = g_slist_append(features, "GConf");
-#endif
-
-    return features;
-}
-
 static void
 dump_version(void)
 {
-    GSList *features;
-
-    g_printf("%s %s [%s]", _(application_name), VERSION, svn_stamp);
-
-    features = get_feature_list();
-
-    if (features) {
-        GSList *item;
-
-        g_printf(" (");
-
-        for (item = features; g_slist_next(item); item = g_slist_next(item))
-            g_printf("%s, ", (const gchar *) item->data);
-
-        g_printf("%s)", (const gchar *) item->data);
-
-        g_slist_free(features);
-    }
-
-    g_printf("\n");
+    g_printf("%s %s [%s]\n", _(application_name), VERSION, svn_stamp);
 }
 
 const gchar *
