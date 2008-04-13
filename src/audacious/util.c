@@ -1023,10 +1023,6 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
     /* try to translate dos path */
     convert_dos_path(filename); /* in place replacement */
 
-    /* convert backslash to slash */
-    while ((tmp = strchr(filename, '\\')) != NULL)
-        *tmp = '/';
-
     // make full path uri here
     // case 1: filename is raw full path or uri
     if (filename[0] == '/' || strstr(filename, "://")) {
