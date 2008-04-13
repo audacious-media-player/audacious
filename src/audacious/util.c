@@ -1039,7 +1039,10 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
     // case 2: filename is not raw full path nor uri, playlist path is full path
     // make full path by replacing last part of playlist path with filename. (using g_build_filename)
     else if (playlist_name[0] == '/' || strstr(playlist_name, "://")) {
-        path = g_strdup(playlist_name);
+        path = g_filename_from_uri(playlist_name, NULL, NULL);
+        if (!path) {
+            path = g_strdup(playlist_name);
+        }
         tmp = strrchr(path, '/'); *tmp = '\0';
         tmp = g_build_filename(path, filename, NULL);
         g_free(path); g_free(filename);
