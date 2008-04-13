@@ -37,7 +37,7 @@
 
 #include "../libguess/libguess.h"
 #ifdef HAVE_UDET
-    #include <libudet_c.h>
+#include <libudet_c.h>
 #endif
 
 /*
