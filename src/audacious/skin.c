@@ -1433,7 +1433,7 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
     AUDDBG("Loading pixmaps in %s\n", path);
 
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
-        if (!skin_load_pixmap_id(skin, i, path))
+        if (!skin_load_pixmap_id(skin, i, path) && !cfg.allow_broken_skins)
             return FALSE;
 
     text_pb = skin->pixmaps[SKIN_TEXT].pixbuf;
@@ -1549,7 +1549,7 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     }
 
     // Check if skin path has all necessary files.
-    if (!skin_check_pixmaps(skin, skin_path)) {
+    if (!cfg.allow_broken_skins && !skin_check_pixmaps(skin, skin_path)) {
         if(archive) del_directory(skin_path);
         g_free(skin_path);
         AUDDBG("Skin path (%s) doesn't have all wanted pixmaps\n", skin_path);

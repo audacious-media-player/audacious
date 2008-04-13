@@ -95,6 +95,7 @@ AudConfig aud_default_config = {
     FALSE,                      /* use fontsets */
     TRUE,                       /* use bitmap font for mainwin */
     TRUE,                       /* use custom cursors */
+    FALSE,                      /* allow broken skins */
     TRUE,                       /* close dialog on open */
     TRUE,                       /* close dialog on add */
     0.0,                        /* equalizer preamp */
@@ -259,6 +260,7 @@ static aud_cfg_boolent aud_boolents[] = {
     {"eq_extra_filtering", &cfg.eq_extra_filtering, TRUE},
     {"analyzer_peaks", &cfg.analyzer_peaks, TRUE},
     {"custom_cursors", &cfg.custom_cursors, TRUE},
+    {"allow_broken_skins", &cfg.allow_broken_skins, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
     {"close_dialog_add", &cfg.close_dialog_add, TRUE},
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},

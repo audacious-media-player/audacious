@@ -60,6 +60,7 @@ struct _AudConfig {
     gboolean use_fontsets;
     gboolean mainwin_use_bitmapfont;
     gboolean custom_cursors;
+    gboolean allow_broken_skins;
     gboolean close_dialog_open;
     gboolean close_dialog_add;
     gfloat equalizer_preamp, equalizer_bands[10];
