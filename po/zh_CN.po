@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2008-03-30 16:55+0200\n"
-"PO-Revision-Date: 2007-04-18 20:00+0700\n"
-"Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
+"PO-Revision-Date: 2008-04-05 21:45+0800\n"
+"Last-Translator: sylecn <sylecn@yahoo.com.cn>\n"
 "Language-Team: Chinese/Simplified\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,70 +40,63 @@ msgstr "Audacious"
 
 #: src/audacious/main.c:125
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: src/audacious/main.c:126
-#, fuzzy
 msgid "Japanese"
-msgstr "日语："
+msgstr "日语"
 
 #: src/audacious/main.c:127
-#, fuzzy
 msgid "Taiwanese"
-msgstr "日语："
+msgstr "繁体中文"
 
 #: src/audacious/main.c:128
-#, fuzzy
 msgid "Chinese"
-msgstr "中文："
+msgstr "简体中文"
 
 #: src/audacious/main.c:129
-#, fuzzy
 msgid "Korean"
-msgstr "朝语："
+msgstr "韩语"
 
 #: src/audacious/main.c:130
-#, fuzzy
 msgid "Russian"
-msgstr "俄语："
+msgstr "俄语"
 
 #: src/audacious/main.c:131
-#, fuzzy
 msgid "Greek"
-msgstr "希腊语："
+msgstr "希腊语"
 
 #: src/audacious/main.c:132
 msgid "Hebrew"
-msgstr ""
+msgstr "以色列语"
 
 #: src/audacious/main.c:133
-#, fuzzy
 msgid "Turkish"
-msgstr "土耳其语："
+msgstr "土耳其语"
 
 #: src/audacious/main.c:134
 msgid "Arabic"
-msgstr ""
+msgstr "阿拉伯语"
 
 #: src/audacious/main.c:136
 msgid "Universal"
-msgstr ""
+msgstr "世界语"
 
 #: src/audacious/main.c:340
 msgid "Skip backwards in playlist"
-msgstr "在播放列表中向后跳"
+msgstr "播放上一首"
 
 #: src/audacious/main.c:341
 msgid "Start playing current playlist"
-msgstr "开始播放当前列表"
+msgstr "播放当前列表"
 
 #: src/audacious/main.c:342
 msgid "Pause current song"
-msgstr "暂停当前歌曲"
+msgstr "暂停播放"
 
 #: src/audacious/main.c:343
 msgid "Stop current song"
-msgstr "停止当前歌曲"
+msgstr "停止播放"
 
 #: src/audacious/main.c:344
 msgid "Pause if playing, play otherwise"
@@ -111,7 +104,7 @@ msgstr "如正播放则暂停，否则播放"
 
 #: src/audacious/main.c:345
 msgid "Skip forward in playlist"
-msgstr "在播放列表中向前跳"
+msgstr "播放下一首"
 
 #: src/audacious/main.c:346
 msgid "Display Jump to File dialog"
@@ -139,7 +132,7 @@ msgstr "启动无界面操作"
 
 #: src/audacious/main.c:352
 msgid "Print all errors and warnings to stdout"
-msgstr "打印所有错误和警告到标准输出"
+msgstr "显示所有错误和警告到标准输出(控制台)"
 
 #: src/audacious/main.c:353
 msgid "Show version and builtin features"
@@ -147,7 +140,7 @@ msgstr "显示版本和内建特性"
 
 #: src/audacious/main.c:355
 msgid "Used in macpacking"
-msgstr ""
+msgstr "在macpacking中使用"
 
 #: src/audacious/main.c:357
 msgid "FILE..."
@@ -180,17 +173,16 @@ msgstr ""
 
 #: src/audacious/main.c:699
 msgid "Sorry, threads aren't supported on your platform.\n"
-msgstr ""
+msgstr "对不起，您的平台不支持多线程。\n"
 
 #: src/audacious/main.c:732
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "%s： 无法打开显示，即将退出。\n"
+msgstr "%s： 无法使用显示器设备，正在退出。\n"
 
 #: src/audacious/main.c:840
-#, fuzzy
 msgid "Headless operation enabled\n"
-msgstr "Headless 选项 [实验性质的]"
+msgstr "Headless operation enabled ??操作开启\n"
 
 #: src/audacious/playback.c:277
 msgid ""
@@ -202,7 +194,7 @@ msgstr ""
 
 #: src/audacious/pluginenum.c:826
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
+msgstr "不支持模块加载！不会加载任何插件。\n"
 
 #: src/audacious/signals.c:45
 msgid ""
@@ -243,20 +235,19 @@ msgstr ""
 "请在 http://bugs-meta.atheme.org 报告 Audacious 产品的 Bug。\n"
 
 #: src/audacious/signals.c:289
-#, fuzzy
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
 msgstr ""
-"您信号的实现已损坏。\n"
-"崩溃报告将会不能使用。\n"
+"信号处理的实现(signaling implementation)被损坏。\n"
+"可能会出现“无法使用”的崩溃报告。\n"
 
 #: src/audacious/strings.c:192
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的 UTF-8 字符)"
 
 #: src/audacious/ui_about.c:46
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
@@ -264,19 +255,19 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious 开发小组"
+"Copyright (C) 2005-2008 Audacious 开发小组"
 
 #: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:367
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
-msgstr "关于 Audacious"
+msgstr "关于Audacious"
 
 #: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:410
 msgid "Credits"
 msgstr "致谢"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
@@ -284,9 +275,9 @@ msgid ""
 "Copyright (C) 2005-2008 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"UNIX 多媒体的未来。\n"
+"一个多平台可更换皮肤的媒体播放器。\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious 开发小组\n"
+"Copyright (C) 2005-2008 Audacious 开发小组\n"
 
 #: src/audacious/ui_credits.c:53
 msgid "Audacious core developers:"
@@ -345,9 +336,8 @@ msgid "Dutch:"
 msgstr "荷兰语："
 
 #: src/audacious/ui_credits.c:184
-#, fuzzy
 msgid "Estonian:"
-msgstr "罗马尼亚语："
+msgstr "爱沙尼亚语："
 
 #: src/audacious/ui_credits.c:187
 msgid "Finnish:"
@@ -460,672 +450,636 @@ msgstr "Audacious 均衡器"
 #: src/audacious/ui_equalizer.c:817
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "导入Winamp EQF文件时发生错误 '%s'"
 
 #: src/audacious/ui_equalizer.c:1183
 msgid "Presets"
 msgstr "预设"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Blues"
-msgstr "蓝"
+msgstr "Blues"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Classic Rock"
-msgstr ""
+msgstr "Classic Rock"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Country"
-msgstr ""
+msgstr "Country"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Dance"
-msgstr "日期"
+msgstr "Dance"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Disco"
-msgstr ""
+msgstr "Disco"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Funk"
-msgstr ""
+msgstr "Funk"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Grunge"
-msgstr ""
+msgstr "Grunge"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Hip-Hop"
-msgstr ""
+msgstr "Hip-Hop"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Jazz"
-msgstr ""
+msgstr "Jazz"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Metal"
-msgstr ""
+msgstr "Metal"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "New Age"
-msgstr ""
+msgstr "New Age"
 
 #: src/audacious/ui_fileinfo.c:103
-#, fuzzy
 msgid "Oldies"
-msgstr "行"
+msgstr "Oldies"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Other"
-msgstr ""
+msgstr "Other"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Pop"
-msgstr ""
+msgstr "Pop"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "R&B"
-msgstr ""
+msgstr "R&B"
 
 #: src/audacious/ui_fileinfo.c:104
 msgid "Rap"
-msgstr ""
+msgstr "Rap"
 
 #: src/audacious/ui_fileinfo.c:104
-#, fuzzy
 msgid "Reggae"
-msgstr "重命名(_R)"
+msgstr "Reggae"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Rock"
-msgstr ""
+msgstr "Rock"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Techno"
-msgstr ""
+msgstr "Techno"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Industrial"
-msgstr ""
+msgstr "Industrial"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "Alternative"
-msgstr ""
+msgstr "Alternative"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Ska"
-msgstr ""
+msgstr "Ska"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Death Metal"
-msgstr ""
+msgstr "Death Metal"
 
 #: src/audacious/ui_fileinfo.c:106
-#, fuzzy
 msgid "Pranks"
-msgstr "波峰"
+msgstr "Pranks"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Soundtrack"
-msgstr ""
+msgstr "Soundtrack"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Euro-Techno"
-msgstr ""
+msgstr "Euro-Techno"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Ambient"
-msgstr ""
+msgstr "Ambient"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Trip-Hop"
-msgstr ""
+msgstr "Trip-Hop"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Vocal"
-msgstr ""
+msgstr "Vocal"
 
 #: src/audacious/ui_fileinfo.c:108
 msgid "Jazz+Funk"
-msgstr ""
+msgstr "Jazz+Funk"
 
 #: src/audacious/ui_fileinfo.c:108
-#, fuzzy
 msgid "Fusion"
-msgstr "俄语："
+msgstr "Fusion"
 
 #: src/audacious/ui_fileinfo.c:108
-#, fuzzy
 msgid "Trance"
-msgstr "外观"
+msgstr "Trance"
 
 #: src/audacious/ui_fileinfo.c:108
 msgid "Classical"
-msgstr ""
+msgstr "Classical"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Instrumental"
-msgstr ""
+msgstr "Instrumental"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Acid"
-msgstr ""
+msgstr "Acid"
 
 #: src/audacious/ui_fileinfo.c:109
-#, fuzzy
 msgid "House"
-msgstr "鼠标"
+msgstr "House"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Game"
-msgstr ""
+msgstr "Game"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "Sound Clip"
-msgstr ""
+msgstr "Sound Clip"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "Gospel"
-msgstr ""
+msgstr "Gospel"
 
 #: src/audacious/ui_fileinfo.c:110
-#, fuzzy
 msgid "Noise"
-msgstr "鼠标"
+msgstr "Noise"
 
 #: src/audacious/ui_fileinfo.c:110
 msgid "AlternRock"
-msgstr ""
+msgstr "AlternRock"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Bass"
-msgstr "条"
+msgstr "Bass"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Soul"
-msgstr ""
+msgstr "Soul"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Punk"
-msgstr ""
+msgstr "Punk"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Space"
-msgstr "保存"
+msgstr "Space"
 
 #: src/audacious/ui_fileinfo.c:112
 msgid "Meditative"
-msgstr ""
+msgstr "Meditative"
 
 #: src/audacious/ui_fileinfo.c:112
 msgid "Instrumental Pop"
-msgstr ""
+msgstr "Instrumental Pop"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Instrumental Rock"
-msgstr ""
+msgstr "Instrumental Rock"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Ethnic"
-msgstr ""
+msgstr "Ethnic"
 
 #: src/audacious/ui_fileinfo.c:113
 msgid "Gothic"
-msgstr ""
+msgstr "Gothic"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Darkwave"
-msgstr ""
+msgstr "Darkwave"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Techno-Industrial"
-msgstr ""
+msgstr "Techno-Industrial"
 
 #: src/audacious/ui_fileinfo.c:114
 msgid "Electronic"
-msgstr ""
+msgstr "Electronic"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Pop-Folk"
-msgstr ""
+msgstr "Pop-Folk"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Eurodance"
-msgstr ""
+msgstr "Eurodance"
 
 #: src/audacious/ui_fileinfo.c:115
 msgid "Dream"
-msgstr ""
+msgstr "Dream"
 
 #: src/audacious/ui_fileinfo.c:116
 msgid "Southern Rock"
-msgstr ""
+msgstr "Southern Rock"
 
 #: src/audacious/ui_fileinfo.c:116
-#, fuzzy
 msgid "Comedy"
-msgstr "备注"
+msgstr "Comedy"
 
 #: src/audacious/ui_fileinfo.c:116
-#, fuzzy
 msgid "Cult"
-msgstr "自定字符串："
+msgstr "Cult"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "Gangsta Rap"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Top 40"
-msgstr ""
+msgstr "Top 40"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Christian Rap"
-msgstr ""
+msgstr "Christian Rap"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Pop/Funk"
-msgstr ""
+msgstr "Pop/Funk"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Jungle"
-msgstr ""
+msgstr "Jungle"
 
 #: src/audacious/ui_fileinfo.c:118
 msgid "Native American"
-msgstr ""
+msgstr "Native American"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "Cabaret"
-msgstr ""
+msgstr "Cabaret"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "New Wave"
-msgstr ""
+msgstr "New Wave"
 
 #: src/audacious/ui_fileinfo.c:119
 msgid "Psychedelic"
-msgstr ""
+msgstr "Psychedelic"
 
 #: src/audacious/ui_fileinfo.c:119
-#, fuzzy
 msgid "Rave"
-msgstr "保存"
+msgstr "Rave"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Showtunes"
-msgstr "最慢"
+msgstr "Showtunes"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Trailer"
-msgstr "标题"
+msgstr "Trailer"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Lo-Fi"
-msgstr ""
+msgstr "Lo-Fi"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Tribal"
-msgstr ""
+msgstr "Tribal"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Punk"
-msgstr ""
+msgstr "Acid Punk"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Jazz"
-msgstr ""
+msgstr "Acid Jazz"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Polka"
-msgstr "播放"
+msgstr "Polka"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Retro"
-msgstr "无增益调节"
+msgstr "Retro"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Musical"
-msgstr ""
+msgstr "Musical"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Rock & Roll"
-msgstr ""
+msgstr "Rock & Roll"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Hard Rock"
-msgstr ""
+msgstr "Hard Rock"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Folk"
-msgstr ""
+msgstr "Folk"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "Folk/Rock"
-msgstr ""
+msgstr "Folk/Rock"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "National Folk"
-msgstr ""
+msgstr "National Folk"
 
 #: src/audacious/ui_fileinfo.c:123
 msgid "Swing"
-msgstr ""
+msgstr "Swing"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Fast-Fusion"
-msgstr ""
+msgstr "Fast-Fusion"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Bebob"
-msgstr ""
+msgstr "Bebob"
 
 #: src/audacious/ui_fileinfo.c:124
-#, fuzzy
 msgid "Latin"
-msgstr "广播站："
+msgstr "Latin"
 
 #: src/audacious/ui_fileinfo.c:124
 msgid "Revival"
-msgstr ""
+msgstr "Revival"
 
 #: src/audacious/ui_fileinfo.c:125
 msgid "Celtic"
-msgstr ""
+msgstr "Celtic"
 
 #: src/audacious/ui_fileinfo.c:125
-#, fuzzy
 msgid "Bluegrass"
-msgstr "蓝"
+msgstr "Bluegrass"
 
 #: src/audacious/ui_fileinfo.c:125
 msgid "Avantgarde"
-msgstr ""
+msgstr "Avantgarde"
 
 #: src/audacious/ui_fileinfo.c:126
 msgid "Gothic Rock"
-msgstr ""
+msgstr "Gothic Rock"
 
 #: src/audacious/ui_fileinfo.c:126
 msgid "Progressive Rock"
-msgstr ""
+msgstr "Progressive Rock"
 
 #: src/audacious/ui_fileinfo.c:127
 msgid "Psychedelic Rock"
-msgstr ""
+msgstr "Psychedelic Rock"
 
 #: src/audacious/ui_fileinfo.c:127
 msgid "Symphonic Rock"
-msgstr ""
+msgstr "Symphonic Rock"
 
 #: src/audacious/ui_fileinfo.c:127
-#, fuzzy
 msgid "Slow Rock"
-msgstr "慢速"
+msgstr "Slow Rock"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Big Band"
-msgstr ""
+msgstr "Big Band"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Chorus"
-msgstr ""
+msgstr "Chorus"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Easy Listening"
-msgstr ""
+msgstr "Easy Listening"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Acoustic"
-msgstr ""
+msgstr "Acoustic"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Humour"
-msgstr ""
+msgstr "Humour"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Speech"
-msgstr ""
+msgstr "Speech"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Chanson"
-msgstr ""
+msgstr "Chanson"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Opera"
-msgstr ""
+msgstr "Opera"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Chamber Music"
-msgstr ""
+msgstr "Chamber Music"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Sonata"
-msgstr ""
+msgstr "Sonata"
 
 #: src/audacious/ui_fileinfo.c:130
 msgid "Symphony"
-msgstr ""
+msgstr "Symphony"
 
 #: src/audacious/ui_fileinfo.c:131
 msgid "Booty Bass"
-msgstr ""
+msgstr "Booty Bass"
 
 #: src/audacious/ui_fileinfo.c:131
-#, fuzzy
 msgid "Primus"
-msgstr "前一曲"
+msgstr "Primus"
 
 #: src/audacious/ui_fileinfo.c:131
 msgid "Porn Groove"
-msgstr ""
+msgstr "Porn Groove"
 
 #: src/audacious/ui_fileinfo.c:132
-#, fuzzy
 msgid "Satire"
-msgstr "火焰"
+msgstr "Satire"
 
 #: src/audacious/ui_fileinfo.c:132
-#, fuzzy
 msgid "Slow Jam"
-msgstr "慢速"
+msgstr "Slow Jam"
 
 #: src/audacious/ui_fileinfo.c:132
 msgid "Club"
-msgstr ""
+msgstr "Club"
 
 #: src/audacious/ui_fileinfo.c:132
 msgid "Tango"
-msgstr ""
+msgstr "Tango"
 
 #: src/audacious/ui_fileinfo.c:133
 msgid "Samba"
-msgstr ""
+msgstr "Samba"
 
 #: src/audacious/ui_fileinfo.c:133
 msgid "Folklore"
-msgstr ""
+msgstr "Folklore"
 
 #: src/audacious/ui_fileinfo.c:133
 msgid "Ballad"
-msgstr ""
+msgstr "Ballad"
 
 #: src/audacious/ui_fileinfo.c:133
 msgid "Power Ballad"
-msgstr ""
+msgstr "Power Ballad"
 
 #: src/audacious/ui_fileinfo.c:134
 msgid "Rhythmic Soul"
-msgstr ""
+msgstr "Rhythmic Soul"
 
 #: src/audacious/ui_fileinfo.c:134
 msgid "Freestyle"
-msgstr ""
+msgstr "Freestyle"
 
 #: src/audacious/ui_fileinfo.c:134
-#, fuzzy
 msgid "Duet"
-msgstr "荷兰语："
+msgstr "Duet"
 
 #: src/audacious/ui_fileinfo.c:135
 msgid "Punk Rock"
-msgstr ""
+msgstr "Punk Rock"
 
 #: src/audacious/ui_fileinfo.c:135
 msgid "Drum Solo"
-msgstr ""
+msgstr "Drum Solo"
 
 #: src/audacious/ui_fileinfo.c:135
 msgid "A Cappella"
-msgstr ""
+msgstr "A Cappella"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Euro-House"
-msgstr ""
+msgstr "Euro-House"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Dance Hall"
-msgstr ""
+msgstr "Dance Hall"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Goa"
-msgstr ""
+msgstr "Goa"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Drum & Bass"
-msgstr ""
+msgstr "Drum & Bass"
 
 #: src/audacious/ui_fileinfo.c:137
-#, fuzzy
 msgid "Club-House"
-msgstr "鼠标"
+msgstr "Club-House"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Hardcore"
-msgstr ""
+msgstr "Hardcore"
 
 #: src/audacious/ui_fileinfo.c:138
-#, fuzzy
 msgid "Terror"
-msgstr "无增益调节"
+msgstr "Terror"
 
 #: src/audacious/ui_fileinfo.c:138
-#, fuzzy
 msgid "Indie"
-msgstr "包括："
+msgstr "Indie"
 
 #: src/audacious/ui_fileinfo.c:138
-#, fuzzy
 msgid "BritPop"
-msgstr "艺术家(弹出)"
+msgstr "BritPop"
 
 #: src/audacious/ui_fileinfo.c:138
 msgid "Negerpunk"
-msgstr ""
+msgstr "Negerpunk"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Polsk Punk"
-msgstr ""
+msgstr "Polsk Punk"
 
 #: src/audacious/ui_fileinfo.c:139
-#, fuzzy
 msgid "Beat"
-msgstr "重复播放"
+msgstr "Beat"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Christian Gangsta Rap"
-msgstr ""
+msgstr "Christian Gangsta Rap"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "Heavy Metal"
-msgstr ""
+msgstr "Heavy Metal"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "Black Metal"
-msgstr ""
+msgstr "Black Metal"
 
 #: src/audacious/ui_fileinfo.c:140
 msgid "Crossover"
-msgstr ""
+msgstr "Crossover"
 
 #: src/audacious/ui_fileinfo.c:141
 msgid "Contemporary Christian"
-msgstr ""
+msgstr "Contemporary Christian"
 
 #: src/audacious/ui_fileinfo.c:141
 msgid "Christian Rock"
-msgstr ""
+msgstr "Christian Rock"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Merengue"
-msgstr ""
+msgstr "Merengue"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Salsa"
-msgstr ""
+msgstr "Salsa"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Thrash Metal"
-msgstr ""
+msgstr "Thrash Metal"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "Anime"
-msgstr ""
+msgstr "Anime"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "JPop"
-msgstr ""
+msgstr "JPop"
 
 #: src/audacious/ui_fileinfo.c:143
-#, fuzzy
 msgid "Synthpop"
-msgstr "停止"
+msgstr "Synthpop"
 
 #: src/audacious/ui_fileinfo.c:221 src/audacious/ui_fileinfo.c:554
 #: src/audacious/ui_fileinfo.c:557 src/audacious/ui_fileinfo.c:560
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">年份</span>"
+msgstr "<span size=\"small\">未知</span>"
 
 #: src/audacious/ui_fileinfo.c:332
 msgid "Metadata updated successfully"
-msgstr ""
+msgstr "歌曲信息(Metadata)更新成功"
 
 #: src/audacious/ui_fileinfo.c:338
 msgid "Metadata updating failed"
-msgstr ""
+msgstr "歌曲信息(Metadata)更新失败"
 
 #: src/audacious/ui_fileinfo.c:490
 msgid "Track Information"
 msgstr "音轨信息"
 
 #: src/audacious/ui_fileinfo.c:524
-#, fuzzy
 msgid "<span size=\"small\">General</span>"
 msgstr "<span size=\"small\">流派</span>"
 
 #: src/audacious/ui_fileinfo.c:544
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">注释</span>"
+msgstr "<span size=\"small\">注释：</span>"
 
 #: src/audacious/ui_fileinfo.c:547
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">标题</span>"
+msgstr "<span size=\"small\">音质：</span>"
 
 #: src/audacious/ui_fileinfo.c:550
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">注释</span>"
+msgstr "<span size=\"small\">比特率：</span>"
 
 #: src/audacious/ui_fileinfo.c:583
 msgid "<span size=\"small\">Title</span>"
@@ -1160,23 +1114,21 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">位置</span>"
 
 #: src/audacious/ui_fileinfo.c:708
-#, fuzzy
 msgid "<span size=\"small\">Raw Metadata</span>"
-msgstr "<span size=\"small\">年份</span>"
+msgstr "<span size=\"small\">原始Metadata</span>"
 
 #: src/audacious/ui_fileinfo.c:725
 msgid "Key"
-msgstr ""
+msgstr "项目"
 
 #: src/audacious/ui_fileinfo.c:738
-#, fuzzy
 msgid "Value"
-msgstr "蓝"
+msgstr "值"
 
 #: src/audacious/ui_fileinfo.c:826
 #, c-format
 msgid "%d kb/s"
-msgstr ""
+msgstr "%d kb/s"
 
 #: src/audacious/ui_fileinfopopup.c:255 src/audacious/ui_fileinfopopup.c:367
 #: src/audacious/ui_preferences.c:146
@@ -1234,15 +1186,15 @@ msgstr "播放文件"
 
 #: src/audacious/ui_fileopener.c:378
 msgid "Load files"
-msgstr "装入文件"
+msgstr "载入文件"
 
 #: src/audacious/ui_jumptotrack.c:154
 msgid "Un_queue"
-msgstr "不排队(_q)"
+msgstr "从播放队列中取消(_q)"
 
 #: src/audacious/ui_jumptotrack.c:156 src/audacious/ui_jumptotrack.c:590
 msgid "_Queue"
-msgstr "排队(_Q)"
+msgstr "加入播放队列(_Q)"
 
 #: src/audacious/ui_jumptotrack.c:478
 msgid "Jump to Track"
@@ -1258,12 +1210,11 @@ msgstr "过滤(_F): "
 
 #: src/audacious/ui_jumptotrack.c:540
 msgid "Remember"
-msgstr ""
+msgstr "记住"
 
 #: src/audacious/ui_jumptotrack.c:582
-#, fuzzy
 msgid "Close on Jump"
-msgstr "打开后关闭对话框"
+msgstr "跳转后关闭对话框"
 
 #: src/audacious/ui_main.c:467
 #, c-format
@@ -1272,7 +1223,7 @@ msgstr "%s - Audacious"
 
 #: src/audacious/ui_main.c:718
 msgid "VBR"
-msgstr "可变位数率"
+msgstr "VBR"
 
 #: src/audacious/ui_main.c:736 src/audacious/ui_main.c:740
 msgid "stereo"
@@ -1284,12 +1235,12 @@ msgstr "单声道"
 
 #: src/audacious/ui_main.c:1032
 msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
+msgstr "没有播放时不能跳转到指定时间。\n"
 
 #: src/audacious/ui_main.c:1047 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
 msgid "Jump to Time"
-msgstr "跳到特定时间"
+msgstr "跳到指定时间"
 
 #: src/audacious/ui_main.c:1068
 msgid "minutes:seconds"
@@ -1301,7 +1252,7 @@ msgstr "音轨长度："
 
 #: src/audacious/ui_main.c:1224
 msgid "Audacious - visibility warning"
-msgstr "Audacious - 可见性警告"
+msgstr "Audacious - 可视化警告"
 
 #: src/audacious/ui_main.c:1226
 msgid "Show main player window"
@@ -1327,9 +1278,8 @@ msgid "Always ignore, show/hide is controlled remotely"
 msgstr "总是忽略，并远程控制 显示/隐藏"
 
 #: src/audacious/ui_main.c:1282
-#, fuzzy
 msgid "Audacious - broken GTK engine usage warning"
-msgstr "Audacious - 可见性警告"
+msgstr "Audacious - 警告：使用被破坏的GTK引擎"
 
 #: src/audacious/ui_main.c:1290
 #, c-format
@@ -1344,20 +1294,27 @@ msgid ""
 "\n"
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
+"<big><b>正在使用被破坏的GTK引擎</b></big>\n"
+"\n"
+"Audacious 检测到你正在使用被破坏的GTK引擎。\n"
+"\n"
+"你正在使用的主题引擎，<i>%s</i>, 与现代皮肤使用的特性不兼容。这些特性将暂时被"
+"禁用。\n"
+"\n"
+"要使用这些新特性，请考虑更换到一个较新的GTK主题引擎。"
 
 #: src/audacious/ui_main.c:1301
-#, fuzzy
 msgid "Do not display this warning again"
-msgstr "不要再显示这警告"
+msgstr "以后不要显示这个警告"
 
 #: src/audacious/ui_main.c:1324
 msgid "Enter location to play:"
 msgstr "输入要播放的位置："
 
 #: src/audacious/ui_main.c:1569
-#, fuzzy, c-format
+#, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr "搜寻：%d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "定位到: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
 #: src/audacious/ui_main.c:1599
 #, c-format
@@ -1383,14 +1340,12 @@ msgid "Options Menu"
 msgstr "选项菜单"
 
 #: src/audacious/ui_main.c:1950
-#, fuzzy
 msgid "Disable 'Always On Top'"
-msgstr "禁用永远在上层"
+msgstr "禁用“置顶显示”"
 
 #: src/audacious/ui_main.c:1952
-#, fuzzy
 msgid "Enable 'Always On Top'"
-msgstr "启用永远在上层"
+msgstr "启用“置顶显示”"
 
 #: src/audacious/ui_main.c:1955
 msgid "File Info Box"
@@ -1398,16 +1353,15 @@ msgstr "文件信息框"
 
 #: src/audacious/ui_main.c:1959
 msgid "Disable 'GUI Scaling'"
-msgstr ""
+msgstr "取消GUI放大"
 
 #: src/audacious/ui_main.c:1961
 msgid "Enable 'GUI Scaling'"
-msgstr ""
+msgstr "设置GUI放大"
 
 #: src/audacious/ui_main.c:1964
-#, fuzzy
 msgid "Visualization Menu"
-msgstr "视觉化菜单"
+msgstr "可视化菜单"
 
 #: src/audacious/ui_main.c:2010
 msgid ""
@@ -1426,11 +1380,11 @@ msgstr ""
 
 #: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
 msgid "Autoscroll Songname"
-msgstr "自动卷动歌名"
+msgstr "歌名自动滚动"
 
 #: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
 msgid "Stop after Current Song"
-msgstr "在当前歌曲后停止"
+msgstr "当前歌曲播完后停止"
 
 #: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
 msgid "Peaks"
@@ -1462,7 +1416,7 @@ msgstr "显示均衡器"
 
 #: src/audacious/ui_manager.c:75 src/audacious/ui_manager.c:76
 msgid "Always on Top"
-msgstr "永远在上层"
+msgstr "置顶显示"
 
 #: src/audacious/ui_manager.c:78 src/audacious/ui_manager.c:79
 msgid "Put on All Workspaces"
@@ -1481,9 +1435,8 @@ msgid "Roll up Equalizer"
 msgstr "卷起均衡器"
 
 #: src/audacious/ui_manager.c:90
-#, fuzzy
 msgid "Scale"
-msgstr "保存"
+msgstr "放大"
 
 #: src/audacious/ui_manager.c:91
 msgid "DoubleSize"
@@ -1747,15 +1700,15 @@ msgstr "精确搜索并且选定播放列表条目。"
 
 #: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
-msgstr "反转选择"
+msgstr "反选"
 
 #: src/audacious/ui_manager.c:257
 msgid "Inverts the selected and unselected entries."
-msgstr "反转选定与未选定的条目"
+msgstr "选择当前未选定的条目"
 
 #: src/audacious/ui_manager.c:260
 msgid "Select All"
-msgstr "全部选中"
+msgstr "全选"
 
 #: src/audacious/ui_manager.c:261
 msgid "Selects all of the playlist entries."
@@ -1771,7 +1724,7 @@ msgstr "取消选择全部列表条目"
 
 #: src/audacious/ui_manager.c:270
 msgid "Remove All"
-msgstr "全部删除"
+msgstr "清空"
 
 #: src/audacious/ui_manager.c:271
 msgid "Removes all entries from the playlist."
@@ -1909,7 +1862,6 @@ msgid "Sort Selected"
 msgstr "排序选择的项"
 
 #: src/audacious/ui_manager.c:380
-#, fuzzy
 msgid "File"
 msgstr "文件"
 
@@ -1918,7 +1870,6 @@ msgid "Help"
 msgstr "帮助"
 
 #: src/audacious/ui_manager.c:383
-#, fuzzy
 msgid "Plugin Services"
 msgstr "插件服务"
 
@@ -1947,7 +1898,6 @@ msgid "Play media from the selected location"
 msgstr "从选定的位置播放媒体文件"
 
 #: src/audacious/ui_manager.c:400
-#, fuzzy
 msgid "Plugin services"
 msgstr "插件服务"
 
@@ -1993,7 +1943,7 @@ msgstr "打开/关闭列表队列项目"
 
 #: src/audacious/ui_manager.c:431
 msgid "Load"
-msgstr "装入"
+msgstr "载入"
 
 #: src/audacious/ui_manager.c:432
 msgid "Import"
@@ -2116,14 +2066,12 @@ msgstr ""
 "使用正规表达式。只要输入你想搜索的文字一部分就可以了。"
 
 #: src/audacious/ui_playlist.c:462
-#, fuzzy
 msgid "Title: "
-msgstr "标题"
+msgstr "标题："
 
 #: src/audacious/ui_playlist.c:469
-#, fuzzy
 msgid "Album: "
-msgstr "专辑"
+msgstr "专辑："
 
 #: src/audacious/ui_playlist.c:476
 msgid "Artist: "
@@ -2166,7 +2114,6 @@ msgstr ""
 "未知文件类型 %s\n"
 
 #: src/audacious/ui_playlist.c:889
-#, fuzzy
 msgid "Save as Static Playlist"
 msgstr "保存为静态播放列表"
 
@@ -2208,7 +2155,7 @@ msgstr "音频"
 
 #: src/audacious/ui_preferences.c:133
 msgid "Replay Gain"
-msgstr ""
+msgstr "播放增益"
 
 #: src/audacious/ui_preferences.c:134
 msgid "Connectivity"
@@ -2240,16 +2187,15 @@ msgstr "备注"
 
 #: src/audacious/ui_preferences.c:154
 msgid "Codec"
-msgstr ""
+msgstr "编码(Codec)"
 
 #: src/audacious/ui_preferences.c:155
-#, fuzzy
 msgid "Quality"
-msgstr "退出(_Q)"
+msgstr "品质"
 
 #: src/audacious/ui_preferences.c:199
 msgid "<b>_Fonts</b>"
-msgstr "<b>字体(_F)</b>"
+msgstr "<b>字体</b>"
 
 #: src/audacious/ui_preferences.c:200
 msgid "_Player:"
@@ -2257,16 +2203,15 @@ msgstr "播放器(_P)："
 
 #: src/audacious/ui_preferences.c:200
 msgid "Select main player window font:"
-msgstr "选择播放窗口字体："
+msgstr "选择主窗口字体"
 
 #: src/audacious/ui_preferences.c:201
 msgid "_Playlist:"
 msgstr "播放列表(_P)："
 
 #: src/audacious/ui_preferences.c:201
-#, fuzzy
 msgid "Select playlist font:"
-msgstr "选择播放列表字体："
+msgstr "选择播放列表字体"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Use Bitmap fonts if available"
@@ -2296,11 +2241,11 @@ msgstr "使用自定义光标"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Show window manager decoration"
-msgstr "显示窗口管理器装饰"
+msgstr "显示窗口管理器边框"
 
 #: src/audacious/ui_preferences.c:210
 msgid "This enables the window manager to show decorations for windows."
-msgstr "这个选项启用窗口管理器显示窗口装饰。"
+msgstr "这个选项启用窗口管理器显示窗口边框(window manager decoration)。"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Use XMMS-style file selector instead of the default selector"
@@ -2317,17 +2262,17 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:213
 msgid "Use two-way text scroller"
-msgstr ""
+msgstr "双向滚动"
 
 #: src/audacious/ui_preferences.c:214
 msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
-msgstr ""
+msgstr "主窗口显示的歌曲信息是否来回滚动。如果不选则只朝一个方向滚动。"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Disable inline gtk theme"
-msgstr ""
+msgstr "禁用嵌入gtk主题"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Format Detection</b>"
@@ -2350,42 +2295,38 @@ msgid "Detect file formats by extension."
 msgstr "根据扩展名检测文件格式"
 
 #: src/audacious/ui_preferences.c:223
-#, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
-"选中时，Audacious 将会根据扩展名来检测文件格式。这样会略微慢于根据需要检测格"
-"式。但是仍然提供了一个最简单的文件格式检测。"
+"选中时，Audacious 将会根据扩展名来检测文件格式。只有文件扩展名所表示的格式被"
+"支持时才会被载入。"
 
 #: src/audacious/ui_preferences.c:224
-#, fuzzy
 msgid "<b>Bit Depth</b>"
-msgstr "<i>标题</i>"
+msgstr "<b>位深(Bit Depth)</b>"
 
 #: src/audacious/ui_preferences.c:229
-#, fuzzy
 msgid "<b>Volume Control</b>"
-msgstr "<b>鼠标滚轮</b>"
+msgstr "<b>音量控制</b>"
 
 #: src/audacious/ui_preferences.c:230
 msgid "Use software volume control"
-msgstr ""
+msgstr "使用软音量控制"
 
 #: src/audacious/ui_preferences.c:231
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
-msgstr ""
+msgstr "使用软音量控制。在你的回放系统不支持音量调节时可以使用这个设置。"
 
 #: src/audacious/ui_preferences.c:232
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>播放</b>"
+msgstr "<b>高级</b>"
 
 #: src/audacious/ui_preferences.c:233
 msgid "Bypass all of signal processing if possible"
-msgstr ""
+msgstr "只要可能就跳过音效处理"
 
 #: src/audacious/ui_preferences.c:234
 msgid ""
@@ -2394,29 +2335,28 @@ msgid ""
 "processing will be disabled (i.e. DSP plugins, equalizer, resampling, Replay "
 "Gain and software volume control)."
 msgstr ""
+"如果输出插件支持，尝试将输入插件处理结果直接给输出插件。如果此项生效，则所有"
+"音效处理（例如 DSP插件，均衡器，重采样，回放增益和软音量控制）被自动禁用。"
 
 #: src/audacious/ui_preferences.c:240
-#, fuzzy
 msgid "<b>Replay Gain configuration</b>"
-msgstr "<b>代理服务器配置</b>"
+msgstr "<b>回放增益配置</b>"
 
 #: src/audacious/ui_preferences.c:241
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "启用代理服务器"
+msgstr "启用回放增益"
 
 #: src/audacious/ui_preferences.c:242
 msgid "<b>Replay Gain mode</b>"
-msgstr ""
+msgstr "<b>回放增益模式</b>"
 
 #: src/audacious/ui_preferences.c:243
-#, fuzzy
 msgid "Track gain/peak"
-msgstr "音轨名称"
+msgstr "音轨增益/峰值"
 
 #: src/audacious/ui_preferences.c:244
 msgid "Album gain/peak"
-msgstr ""
+msgstr "专辑增益/峰值"
 
 #: src/audacious/ui_preferences.c:245 src/audacious/ui_preferences.c:1539
 msgid "<b>Miscellaneous</b>"
@@ -2424,19 +2364,19 @@ msgstr "<b>杂项</b>"
 
 #: src/audacious/ui_preferences.c:246
 msgid "Enable peak info clipping prevention"
-msgstr ""
+msgstr "启用峰值信息避免削波"
 
 #: src/audacious/ui_preferences.c:247
 msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr ""
+msgstr "使用回复增益的峰值信息避免削波"
 
 #: src/audacious/ui_preferences.c:248
 msgid "Dynamically adjust scale factor to prevent clipping"
-msgstr ""
+msgstr "动态调整尺度因数(scale factor)素避免削波"
 
 #: src/audacious/ui_preferences.c:249
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-msgstr ""
+msgstr "如果仍然有削波就降低尺度因数(增益)"
 
 #: src/audacious/ui_preferences.c:254
 msgid "<b>Playback</b>"
@@ -2454,7 +2394,7 @@ msgstr "当 Audacious 启动时，自动从上次停止的地方开始播放。"
 
 #: src/audacious/ui_preferences.c:257
 msgid "Don't advance in the playlist"
-msgstr "不允许在列表前进"
+msgstr "不要自动播放列表中的下一首歌曲"
 
 #: src/audacious/ui_preferences.c:258
 msgid "When finished playing a song, don't automatically advance to the next."
@@ -2490,34 +2430,35 @@ msgstr "转换反斜杠“\\”为正斜杠“/”"
 
 #: src/audacious/ui_preferences.c:268
 msgid "<b>Metadata</b>"
-msgstr "<b>元数据</b>"
+msgstr "<b>歌曲信息</b>"
 
 #: src/audacious/ui_preferences.c:269
 msgid "Load metadata from playlists and files"
-msgstr "从播放列表和文件中载入元数据"
+msgstr "从播放列表和文件中载入歌曲信息"
 
 #: src/audacious/ui_preferences.c:269
 msgid "Load metadata (tag information) from music files."
-msgstr "从文件中获取元数据(标签信息)。"
+msgstr "从文件中获取歌曲信息(标签)。"
 
 #: src/audacious/ui_preferences.c:270
 msgid "On load"
-msgstr "装入时"
+msgstr "载入时"
 
 #: src/audacious/ui_preferences.c:270
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr "打开文件或者把文件加入列表时载入元数据"
+msgstr "打开文件或者把文件加入列表时获取歌曲信息"
 
 #: src/audacious/ui_preferences.c:271
 msgid "On display"
 msgstr "显示时"
 
 #: src/audacious/ui_preferences.c:271
-#, fuzzy
 msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
-msgstr "当文件在列表中显示时根据需要加载元数据"
+msgstr ""
+"当文件在列表中显示时根据需要加载歌曲信息。在音频页设置“在需要时而不是立即检测"
+"文件格式”配合使用可以取得最好效果。"
 
 #: src/audacious/ui_preferences.c:273
 msgid "<b>File Dialog</b>"
@@ -2632,11 +2573,11 @@ msgstr "为当前音轨显示进度条"
 
 #: src/audacious/ui_preferences.c:1558
 msgid "Delay until filepopup comes up: "
-msgstr "延迟直到文件弹出信息显示："
+msgstr "显示歌曲信息延时："
 
 #: src/audacious/ui_preferences.c:1603
 msgid "Auto character encoding detector for:"
-msgstr "使用自动编码检测器："
+msgstr "使用自动编码检测器检测这些编码："
 
 #: src/audacious/ui_preferences.c:1622
 msgid ""
@@ -2654,40 +2595,40 @@ msgstr "备用字符编码："
 
 #: src/audacious/ui_preferences.c:1652
 msgid "Output bit depth:"
-msgstr ""
+msgstr "输出位深："
 
 #: src/audacious/ui_preferences.c:1666
-#, fuzzy
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
-"<span size=\"small\">所有音频流将被转换到此采样率。\n"
-"这应当是您的声卡或输出插件支持的最大采样率。</span>"
+"所有音频流将被转换到此位深。\n"
+"这应当是您的声卡或输出插件支持的最大位深。</span>"
 
 #: src/audacious/ui_preferences.c:1687
 msgid "Preamp:"
-msgstr ""
+msgstr "前置放大器："
 
 #: src/audacious/ui_preferences.c:1700 src/audacious/ui_preferences.c:1720
 msgid "dB"
-msgstr ""
+msgstr "dB"
 
 #: src/audacious/ui_preferences.c:1706
-#, fuzzy
 msgid "Default gain:"
-msgstr "默认皮肤："
+msgstr "默认增益："
 
 #: src/audacious/ui_preferences.c:1718
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
+msgstr "如果文件不包含回放增益数据则使用这个增益。"
 
 #: src/audacious/ui_preferences.c:1734
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
+"<span size=\"small\">请注意避免声音信号削波的最有效率的办法是上面这个参数不设"
+"为正值。</span>"
 
 #: src/audacious/ui_preferences.c:1967
 msgid "<b>_Skin</b>"
@@ -2707,36 +2648,35 @@ msgstr "显示标题格式信息"
 
 #: src/audacious/ui_preferences.c:2135
 msgid "TITLE"
-msgstr ""
+msgstr "标题"
 
 #: src/audacious/ui_preferences.c:2136
 msgid "ARTIST - TITLE"
-msgstr ""
+msgstr "艺术家 - 标题"
 
 #: src/audacious/ui_preferences.c:2137
 msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
+msgstr "艺术家 - 专辑 - 标题"
 
 #: src/audacious/ui_preferences.c:2138
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
+msgstr "艺术家 - 专辑 - 曲目号. 标题"
 
 #: src/audacious/ui_preferences.c:2139
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
+msgstr "艺术家 [专辑] - 曲目号. 标题"
 
 #: src/audacious/ui_preferences.c:2140
 msgid "ALBUM - TITLE"
-msgstr ""
+msgstr "专辑 - 标题"
 
 #: src/audacious/ui_preferences.c:2141
-#, fuzzy
 msgid "Custom"
-msgstr "自定字符串："
+msgstr "自定义"
 
 #: src/audacious/ui_preferences.c:2148
 msgid "Custom string:"
-msgstr "自定字符串："
+msgstr "自定义字符串："
 
 #: src/audacious/ui_preferences.c:2155
 msgid "Title format:"
@@ -2772,7 +2712,6 @@ msgid "Buffer size:"
 msgstr "缓冲区大小："
 
 #: src/audacious/ui_preferences.c:2314
-#, fuzzy
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -2782,7 +2721,7 @@ msgid ""
 msgstr ""
 "<span size=\"small\">这是预先缓冲的音频流的时间，以毫秒为单位。\n"
 "如果您碰到跳音，请增加这个值。\n"
-"但需要注意的是：增大这个值可能会使 Audacious 表现很糟糕。</span>"
+"但需要注意的是：增大这个值可能会使 Audacious 运行效率变低。</span>"
 
 #: src/audacious/ui_preferences.c:2333
 msgid "Current output plugin:"
@@ -2806,32 +2745,29 @@ msgstr "启用采样率转换器"
 
 #: src/audacious/ui_preferences.c:2417
 msgid "Best Sinc Interpolation"
-msgstr ""
+msgstr "最佳低通滤波"
 
 #: src/audacious/ui_preferences.c:2418
 msgid "Medium Sinc Interpolation"
-msgstr ""
+msgstr "中等低通滤波"
 
 #: src/audacious/ui_preferences.c:2419
 msgid "Fastest Sinc Interpolation"
-msgstr ""
+msgstr "快速低通插值"
 
 #: src/audacious/ui_preferences.c:2420
-#, fuzzy
 msgid "ZOH Interpolation"
-msgstr "插值引擎"
+msgstr "零阶保持插值"
 
 #: src/audacious/ui_preferences.c:2421
-#, fuzzy
 msgid "Linear Interpolation"
-msgstr "插值引擎"
+msgstr "线性插值"
 
 #: src/audacious/ui_preferences.c:2423
 msgid "Interpolation Engine:"
 msgstr "插值引擎"
 
 #: src/audacious/ui_preferences.c:2429
-#, fuzzy
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
@@ -2888,7 +2824,7 @@ msgstr "<span size=\"medium\"><b>解码器</b></span>"
 
 #: src/audacious/ui_preferences.c:2780
 msgid "_General plugin list:"
-msgstr "通用插件列表(_G)："
+msgstr "常规插件列表(_G)："
 
 #: src/audacious/ui_preferences.c:2810
 msgid "<span size=\"medium\"><b>General</b></span>"
@@ -2896,7 +2832,7 @@ msgstr "<span size=\"medium\"><b>常规</b></span>"
 
 #: src/audacious/ui_preferences.c:2822
 msgid "_Visualization plugin list:"
-msgstr "可视效果插件列表(_V)："
+msgstr "可视化效果插件列表(_V)："
 
 #: src/audacious/ui_preferences.c:2852
 msgid "<b>Visualization</b>"
@@ -2920,7 +2856,7 @@ msgstr "重新加载插件"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:378
 msgid "PREAMP"
-msgstr "前期处理"
+msgstr "前置放大器"
 
 #: src/audacious/ui_skinned_equalizer_slider.c:378
 msgid "60HZ"
@@ -2968,11 +2904,11 @@ msgstr "打包的 Winamp 2.x 皮肤"
 
 #: src/audacious/ui_skinselector.c:183
 msgid "Unarchived Winamp 2.x skin"
-msgstr "未打包的 Winamp 2.x 皮肤"
+msgstr "Winamp 2.x 皮肤"
 
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
-msgstr "打开/添加 URL 对话框"
+msgstr "添加/打开URL 对话框"
 
 #: src/audacious/util.c:1084
 #, c-format
@@ -2981,64 +2917,62 @@ msgstr "新建目录 %s 失败，错误：%s\n"
 
 #: src/libeggsmclient/eggdesktopfile.c:139
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "不是一个合法的.desktop文件"
 
 #: src/libeggsmclient/eggdesktopfile.c:161
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "%s：无法辨识的选项“--%s”\n"
+msgstr "无法识别的.desktop文件版本'%s'"
 
 #: src/libeggsmclient/eggdesktopfile.c:872
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "启动 %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:1008
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "应用程序不支持从命令行获取文档"
 
 #: src/libeggsmclient/eggdesktopfile.c:1076
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "%s：无法辨识的选项“--%s”\n"
+msgstr "无法辨识的启动选项：%d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1278
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "无法通过Type=Link desktop entry传递文档URL"
 
 #: src/libeggsmclient/eggdesktopfile.c:1297
 msgid "Not a launchable item"
-msgstr ""
+msgstr "不是一个可启动项目"
 
 #: src/libeggsmclient/eggsmclient.c:183
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "不与会话管理器取得连接"
 
 #: src/libeggsmclient/eggsmclient.c:186
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "指定保存配置信息的文件"
 
 #: src/libeggsmclient/eggsmclient.c:186
-#, fuzzy
 msgid "FILE"
-msgstr "文件..."
+msgstr "文件"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "Specify session management ID"
-msgstr ""
+msgstr "指定会话管理ID"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:225
 msgid "Session Management Options"
-msgstr ""
+msgstr "会话管理选项"
 
 #: src/libeggsmclient/eggsmclient.c:226
-#, fuzzy
 msgid "Show Session Management options"
-msgstr "显示窗口管理器装饰"
+msgstr "显示会话管理器选项"
 
 #~ msgid ""
 #~ "Sorry, threads isn't supported on your platform.\n"
@@ -3047,7 +2981,7 @@ msgstr "显示窗口管理器装饰"
 #~ "you\n"
 #~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 #~ msgstr ""
-#~ "很抱歉，您的平台不支持线程。\n"
+#~ "很抱歉，您的平台不支持多线程。\n"
 #~ "\n"
 #~ "如果你原本使用 libc5 的 Linux 并且装了 GLIB & GTK+ \n"
 #~ "之后又安装了 LinuxThreads，请重新编译 GLIB & GTK+。\n"
