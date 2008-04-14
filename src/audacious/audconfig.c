@@ -46,140 +46,135 @@
 #include "audconfig.h"
 
 AudConfig aud_default_config = {
-    MAINWIN_DEFAULT_POS_X,      /* mainwin x position */
-    MAINWIN_DEFAULT_POS_Y,      /* mainwin y position */
-    EQUALIZER_DEFAULT_POS_X,    /* equalizer x position */
-    EQUALIZER_DEFAULT_POS_Y,    /* equalizer y position */
-    PLAYLISTWIN_DEFAULT_POS_X,  /* playlistwin x position */
-    PLAYLISTWIN_DEFAULT_POS_Y,  /* playlistwin y position */
-    PLAYLISTWIN_DEFAULT_WIDTH,  /* playlistwin width */
-    PLAYLISTWIN_DEFAULT_HEIGHT, /* playlistwin height */
-    10,                         /* snap distance */
-    FALSE,                      /* real-time priority */
-    FALSE, FALSE,               /* shuffle, repeat */
-    FALSE,                      /* scaling */
-    TRUE,                       /* autoscroll */
-    TRUE,                       /* analyzer peaks */
-    FALSE,                      /* equalizer autoload */
-    FALSE,                      /* easy move */
-    FALSE,                      /* equalizer active */
-    FALSE,                      /* playlistwin visible */
-    FALSE,                      /* equalizer visible */
-    TRUE,                       /* player visible */
-    FALSE,                      /* player shaded */
-    FALSE,                      /* playlistwin shaded */
-    FALSE,                      /* equalizer shaded */
-    FALSE,                      /* allow multiple instances */
-    TRUE,                       /* always show cb */
-    TRUE, TRUE, TRUE,           /* convert '_', %20 and '\' */
-    TRUE,                       /* show numbers in playlist */
-    TRUE,                       /* snap windows */
-    TRUE,                       /* save window positions */
-    TRUE,                       /* dim titlebar */
-    FALSE,                      /* get playlist info on load */
-    TRUE,                       /* get playlist info on demand */
-    TRUE,                       /* equalizer scale linked */
-    FALSE,                      /* sort jump to file */
-    FALSE,                      /* use effect plugins */
-    FALSE,                      /* always on top */
-    FALSE,                      /* sticky */
-    FALSE,                      /* no playlist advance */
-    FALSE,                      /* stop after current song */
-    TRUE,                       /* refresh file list */
-    TRUE,                       /* UNUSED (smooth title scrolling) */
-    TRUE,                       /* use playlist metadata */
-    TRUE,                       /* deprecated */
-    TRUE,                       /* warn about windows visibility */
-    FALSE,                      /* use \ as directory delimiter */
-    FALSE,                      /* random skin on play */
-    FALSE,                      /* use fontsets */
-    TRUE,                       /* use bitmap font for mainwin */
-    TRUE,                       /* use custom cursors */
-    FALSE,                      /* allow broken skins */
-    TRUE,                       /* close dialog on open */
-    TRUE,                       /* close dialog on add */
-    0.0,                        /* equalizer preamp */
-    {0.0, 0.0, 0.0, 0.0, 0.0,             /* equalizer bands */
-     0.0, 0.0, 0.0, 0.0, 0.0},
-    1.2,                        /* GUI scale factor, hardcoded for testing purposes --majeru */
-    NULL,                       /* skin */
-    NULL,                       /* output plugin */
-    NULL,                       /* file selector path */
-    NULL,                       /* playlist path */
-    NULL,                       /* playlist font */
-    NULL,                       /* mainwin font */
-    NULL,                       /* disabled input plugins */
-    NULL,                       /* enabled general plugins */
-    NULL,                       /* enabled visualization plugins */
-    NULL,                       /* enabled effect plugins */
-    NULL,                       /* enabled discovery plugins */
-    NULL,                       /* equalizer preset default file */
-    NULL,                       /* equalizer preset extension */
-    NULL,                       /* URL history */
-    0,                          /* timer mode */
-    VIS_ANALYZER,               /* visualizer type */
-    ANALYZER_NORMAL,            /* analyzer mode */
-    ANALYZER_BARS,              /* analyzer type */
-    SCOPE_DOT,                  /* scope mode */
-    VOICEPRINT_NORMAL,          /* voiceprint mode */
-    VU_SMOOTH,                  /* VU mode */
-    REFRESH_FULL,               /* visualizer refresh rate */
-    FALLOFF_FAST,               /* analyzer fall off rate */
-    FALLOFF_SLOW,               /* peaks fall off rate */
-    0,                          /* playlist position */
-    2,                          /* pause between songs time */
-    FALSE,                      /* pause between songs */
-    FALSE,                      /* show window decorations */
-    8,                          /* mouse wheel scroll step */
-    FALSE,                      /* playlist transparent */
-    2,                          /* 3rd preset (ARTIST - ALBUM - TITLE) */
-    NULL,                       /* title format */
-    FALSE,                      /* software volume control enabled */
-    TRUE,                       /* UNUSED (XMMS compatibility mode) */
-    TRUE,                       /* extra eq filtering */
-    3,                          /* scroll pl by */
-    FALSE,                      /* resume playback on startup */
-    -1,                         /* resume playback on startup time */
-    TRUE,                       /* show seperators in pl */
-    NULL,           /* chardet_detector */
-    NULL,           /* chardet_fallback */
-    500,            /* audio buffer size */
-    TRUE,           /* whether or not to postpone format detection on initial add */
-    TRUE,           /* show filepopup for tuple */
-    NULL,           /* words identifying covers */
-    NULL,           /* words that might not show up in cover names */
-    FALSE,
-    0,
-    NULL,           /* default session uri base (non-NULL = custom session uri base) */
-    150,            /* short side length of the picture in the filepopup */
-    20,             /* delay until the filepopup comes up */
-    FALSE,          /* use filename.jpg for coverart */
-    FALSE,          /* use XMMS-style file selection */
-    TRUE,           /* use extension probing */
-    255, 255, 255,  /* colorize r, g, b */
-    FALSE,          /* internal: whether or not to terminate */
-    TRUE,           /* whether show progress bar in filepopup or not */
-    TRUE,           /* close jtf dialog on jump */
-    TRUE,           /* use back and forth scroll */
-    FALSE,          /* use software volume control */
-    .warn_about_broken_gtk_engines = TRUE,           /* warn about broken gtk themes */
-    FALSE,          /* disable inline themes */
-    TRUE,           /* remember jtf text entry */
-    16,             /* output bit depth */
-    TRUE,           /* enable replay gain */
-    TRUE,           /* enable clipping prevention */
-    TRUE,           /* track mode */
-    FALSE,          /* album mode */
-    FALSE,          /* enable adaptive scaler */
-    0.0,            /* preamp */
-    -9.0,           /* default gain */
-    0x6464,         /* saved volume for both channels, 0x64=100 */
+    .player_x = MAINWIN_DEFAULT_POS_X,
+    .player_y = MAINWIN_DEFAULT_POS_Y,
+    .equalizer_x = EQUALIZER_DEFAULT_POS_X,
+    .equalizer_y = EQUALIZER_DEFAULT_POS_Y,
+    .playlist_x = PLAYLISTWIN_DEFAULT_POS_X,
+    .playlist_y = PLAYLISTWIN_DEFAULT_POS_Y,
+    .playlist_width = PLAYLISTWIN_DEFAULT_WIDTH,
+    .playlist_height = PLAYLISTWIN_DEFAULT_HEIGHT,
+    .snap_distance = 10,
+    .use_realtime = FALSE,
+    .shuffle = FALSE,
+    .repeat = FALSE,
+    .scaled = FALSE,
+    .autoscroll = TRUE,
+    .analyzer_peaks = TRUE,
+    .equalizer_autoload = FALSE,
+    .easy_move = FALSE,
+    .equalizer_active = FALSE,
+    .playlist_visible = FALSE,
+    .equalizer_visible = FALSE,
+    .player_visible = TRUE,
+    .player_shaded = FALSE,
+    .playlist_shaded = FALSE,
+    .equalizer_shaded = FALSE,
+    .allow_multiple_instances = FALSE,
+    .always_show_cb = TRUE,
+    .convert_underscore = TRUE,
+    .convert_twenty = TRUE,            /* convert %20 */
+    .convert_slash = TRUE,
+    .show_numbers_in_pl = TRUE,
+    .snap_windows = TRUE,
+    .save_window_position = TRUE,
+    .dim_titlebar = TRUE,
+    .get_info_on_load = FALSE,         /* get playlist info on load */
+    .get_info_on_demand = TRUE,        /* get playlist info on demand */
+    .eq_scaled_linked = TRUE,
+    .sort_jump_to_file = FALSE,
+    .use_eplugins = FALSE,             /* use effect plugins */
+    .always_on_top = FALSE,
+    .sticky = FALSE,
+    .no_playlist_advance = FALSE,
+    .stopaftersong = FALSE,
+    .refresh_file_list = TRUE,
+    .use_pl_metadata = TRUE,
+    .warn_about_win_visibility = TRUE,
+    .use_backslash_as_dir_delimiter = FALSE,
+    .random_skin_on_play = FALSE,
+    .use_fontsets = FALSE,
+    .mainwin_use_bitmapfont = TRUE,
+    .custom_cursors = TRUE,
+    .allow_broken_skins = FALSE,
+    .close_dialog_open = TRUE,
+    .close_dialog_add = TRUE,
+    .equalizer_preamp = 0.0,
+    .equalizer_bands = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+    .scale_factor = 1.2, /* GUI scale factor, hardcoded for testing purposes --majeru */
+    .skin = NULL,
+    .outputplugin = NULL,
+    .filesel_path = NULL,
+    .playlist_path = NULL,
+    .playlist_font = NULL,
+    .mainwin_font = NULL,
+    .disabled_iplugins = NULL,         /* disabled input plugins */
+    .enabled_gplugins = NULL,          /* enabled general plugins */
+    .enabled_vplugins = NULL,          /* enabled visualization plugins */
+    .enabled_eplugins = NULL,          /* enabled effect plugins */
+    .enabled_dplugins = NULL,          /* enabled discovery plugins */
+    .eqpreset_default_file = NULL,
+    .eqpreset_extension = NULL,
+    .url_history = NULL,
+    .timer_mode = 0,
+    .vis_type = VIS_ANALYZER,
+    .analyzer_mode = ANALYZER_NORMAL,
+    .analyzer_type = ANALYZER_BARS,
+    .scope_mode = SCOPE_DOT,
+    .voiceprint_mode = VOICEPRINT_NORMAL,
+    .vu_mode = VU_SMOOTH,
+    .vis_refresh = REFRESH_FULL,
+    .analyzer_falloff = FALLOFF_FAST,
+    .peaks_falloff = FALLOFF_SLOW,
+    .playlist_position = 0,
+    .pause_between_songs_time = 2,
+    .pause_between_songs = FALSE,
+    .show_wm_decorations = FALSE,
+    .mouse_change = 8,                 /* mouse wheel scroll step */
+    .playlist_transparent = FALSE,
+    .eq_extra_filtering = TRUE,
+    .scroll_pl_by = 3,
+    .resume_playback_on_startup = FALSE,
+    .resume_playback_on_startup_time = -1,
+    .show_separator_in_pl = TRUE,
+    .chardet_detector = NULL,
+    .chardet_fallback = NULL,
+    .output_buffer_size = 500,
+    .playlist_detect = TRUE,           /* whether or not to postpone format detection on initial add */
+    .show_filepopup_for_tuple = TRUE,
+    .cover_name_include = NULL,        /* words identifying covers */
+    .cover_name_exclude = NULL,        /* words that might not show up in cover names */
+    .recurse_for_cover = FALSE,
+    .recurse_for_cover_depth = 0,
+    .session_uri_base = NULL,          /* default session uri base (non-NULL = custom session uri base) */
+    .filepopup_pixelsize = 150,        /* short side length of the picture in the filepopup */
+    .filepopup_delay = 20,             /* delay until the filepopup comes up */
+    .use_file_cover = FALSE,           /* use filename.jpg for coverart */
+    .use_xmms_style_fileselector = FALSE,
+    .use_extension_probing = TRUE,
+    .colorize_r = 255, .colorize_g = 255, .colorize_b = 255,
+    .filepopup_showprogressbar = TRUE,
+    .close_jtf_dialog = TRUE,          /* close jtf dialog on jump */
+    .twoway_scroll = TRUE,             /* use back and forth scroll */
+    .software_volume_control = FALSE,
+    .warn_about_broken_gtk_engines = TRUE,
+    .disable_inline_gtk = FALSE,       /* disable inline themes */
+    .remember_jtf_entry = TRUE,
+    .output_bit_depth = 16,
+    .enable_replay_gain = TRUE,
+    .enable_clipping_prevention = TRUE,
+    .replay_gain_track = TRUE,         /* track mode */
+    .replay_gain_album = FALSE,        /* album mode */
+    .enable_adaptive_scaler = FALSE,
+    .replay_gain_preamp = 0.0,
+    .default_gain = -9.0,
+    .saved_volume = 0x6464,            /* for both channels; 0x64=100 */
 #ifdef USE_SRC
-    FALSE,          /* enable resampling */
-    48000,          /* samplerate */
-    SRC_SINC_BEST_QUALITY, /* default interpolation method */
+    .enable_src = FALSE,               /* enable resampling */
+    .src_rate = 48000,                 /* samplerate */
+    .src_type = SRC_SINC_BEST_QUALITY, /* default interpolation method */
 #endif
-    FALSE,          /* bypass dsp */
+    .bypass_dsp = FALSE,
 };
 
 typedef struct aud_cfg_boolent_t {
