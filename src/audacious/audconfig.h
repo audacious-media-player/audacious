@@ -51,9 +51,7 @@ struct _AudConfig {
     gboolean no_playlist_advance;
     gboolean stopaftersong;
     gboolean refresh_file_list;
-    gboolean smooth_title_scroll;
     gboolean use_pl_metadata;
-    gboolean warn_about_unplayables;
     gboolean warn_about_win_visibility;
     gboolean use_backslash_as_dir_delimiter;
     gboolean random_skin_on_play;
@@ -90,7 +88,6 @@ struct _AudConfig {
     gint titlestring_preset;
     gchar *gentitle_format;
     gboolean softvolume_enable;
-    gboolean xmms_compat_mode;
     gboolean eq_extra_filtering;
     gint scroll_pl_by;
     gboolean resume_playback_on_startup;
@@ -111,7 +108,6 @@ struct _AudConfig {
     gboolean use_xmms_style_fileselector;
     gboolean use_extension_probing;
     gint colorize_r; gint colorize_g; gint colorize_b;
-    gboolean terminate;
     gboolean filepopup_showprogressbar;
     gboolean close_jtf_dialog;
     gboolean twoway_scroll;

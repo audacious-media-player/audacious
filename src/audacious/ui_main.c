@@ -2498,17 +2498,17 @@ mainwin_create(void)
 gboolean
 mainwin_update_song_info(void)
 {
-    gint time = playback_get_time();
-    gint length, t;
-    gchar stime_prefix;
-
     if (!playback_get_playing())
         return FALSE;
+
+    gint time = playback_get_time();
+    gint length = playback_get_length();
+    gint t;
+    gchar stime_prefix;
 
     if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
         playback_seek(ab_position_a/1000);
 
-    length = playback_get_length();
     if (length == -1 && cfg.timer_mode == TIMER_REMAINING)
         cfg.timer_mode = TIMER_ELAPSED;
 
