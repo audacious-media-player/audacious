@@ -364,8 +364,6 @@ handle_cmd_line_options()
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
     gboolean is_running = audacious_remote_is_running(session);
-#else
-    gboolean is_running = FALSE;
 #endif
 
     if (options.version)
