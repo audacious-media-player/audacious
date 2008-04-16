@@ -185,7 +185,7 @@ LIBS += ${LDADD}									\
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS}
 
 build_stamp.c: 
-	if [ -d ../../.hg ]; then \
+	if test -d ../../.hg ; then \
 		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
 		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
 	else \
