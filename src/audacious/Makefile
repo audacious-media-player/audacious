@@ -156,6 +156,8 @@ pre-depend: ${DBUS_BINDINGS}
 
 CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${MOWGLI_CFLAGS}		\
+	    ${GLIB_CFLAGS}		\
+	    ${GTHREAD_CFLAGS}		\
 	    ${GTK_CFLAGS}			\
 	    ${BEEP_DEFINES}			\
 	    ${ARCH_DEFINES}			\
@@ -166,7 +168,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${SIMD_CFLAGS}			\
 	    -D_AUDACIOUS_CORE		\
 	    -I../libSAD				\
-	    -I../libeggsmclient		\
+	    -I../libeggsmclient	${SM_CFLAGS}	\
 	    -I.. -I../..			\
 	    -I./intl
 
@@ -176,6 +178,8 @@ LIBS += ${LDADD}									\
 	../libguess/libguess.a							\
 	../libSAD/libSAD.a								\
 	../libeggsmclient/libeggsmclient.a ${SM_LIBS}	\
+	${GLIB_LIBS}				\
+	${GTHREAD_LIBS}					\
 	${GTK_LIBS}										\
 	${DBUS_LIBS}									\
 	${MOWGLI_LIBS}									\
