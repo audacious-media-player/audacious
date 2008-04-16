@@ -47,9 +47,9 @@ G_BEGIN_DECLS
 
 /* macro for debug print */
 #ifdef AUD_DEBUG
-#  define AUDDBG(...) g_print("%s:%d %s(): ", __FILE__, (int)__LINE__, __FUNCTION__), g_print(__VA_ARGS__)
+#  define AUDDBG(...) do { g_print("%s:%d %s(): ", __FILE__, (int)__LINE__, __FUNCTION__); g_print(__VA_ARGS__); } while (0)
 #else
-#  define AUDDBG(...)
+#  define AUDDBG(...) do { } while (0)
 #endif
 
 
