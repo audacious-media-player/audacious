@@ -33,7 +33,7 @@ fi
 if test "x$PKG_CONFIG" != "x"; then
 	_pkg_min_version=m4_default([$1], [0.9.0])
 	AC_MSG_CHECKING([pkg-config is at least version $_pkg_min_version])
-	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version ; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
@@ -119,9 +119,9 @@ See the pkg-config man page for more details.])
 if test "x$pkg_failed" = "xyes"; then
         _PKG_SHORT_ERRORS_SUPPORTED
         if test "x$_pkg_short_errors_supported" = "xyes"; then
-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "$2"`
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "$2" 2>&1`
         else 
-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2"`
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
