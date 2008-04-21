@@ -447,6 +447,23 @@ AUD_DEFINE_PLUGIN_DIR([Discovery])
 
 
 ### ---------------------------------------------------------------------------
+dnl XXX Work around some autoconf bugs.
+if test "x$prefix" = "xNONE"; then
+        prefix="${ac_default_prefix}"
+fi
+
+if test -z "$datadir"; then
+	datadir="${prefix}/share"
+fi
+
+localedir="$datadir/locale"
+AC_SUBST([localedir])
+
+AUDACIOUS_DEFINES="$CFLAGS -DDATA_DIR=\\\"$datadir/audacious\\\" -DPLUGIN_DIR=\\\"$plugindir\\\" -DPLUGINSUBS=$pluginsubs -DLOCALEDIR=\\\"$localedir\\\""
+AC_SUBST([AUDACIOUS_DEFINES])
+
+
+### ---------------------------------------------------------------------------
 dnl Output configuration files
 dnl ==========================
 AC_CONFIG_FILES([
