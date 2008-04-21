@@ -78,6 +78,8 @@ packages installed:
   libmowgli >= 0.4
     http://www.atheme.org/projects/mowgli.shtml
 
+  GNU Make >= 3.80
+
 If you compile Audacious from a fresh Mercurial checkout, you will also
 need the following tools:
 
