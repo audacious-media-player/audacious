@@ -37,7 +37,9 @@ $5]])
 dnl ** Simplifying wrapper
 AC_DEFUN([AUD_CONDITIONAL], [AM_CONDITIONAL([$1],[dnl
 test "x${$2}" = m4_ifval([$3], ["x$3"],["xyes"])dnl
-])])
+])dnl
+AC_SUBST([$1])dnl
+])
 
 
 dnl ** Simple wrapper for AC_ARG_ENABLE
