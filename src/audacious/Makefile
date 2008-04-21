@@ -145,8 +145,8 @@ EXT_DEPS = ../libguess/libguess.a \
 
 ifeq ($(USE_EGGSM),yes)
 EXT_DEPS += ../libeggsmclient/libeggsmclient.a
-EGGSM_LIBS += ../libeggsmclient/libeggsmclient.a ${SM_LIBS}
-EGGSM_CFLAGS +=  -I../libeggsmclient ${SM_CFLAGS}
+EGGSM_LIBS = ../libeggsmclient/libeggsmclient.a ${SM_LIBS}
+EGGSM_CFLAGS =  -I../libeggsmclient ${SM_CFLAGS}
 endif
 
 include ../../buildsys.mk
