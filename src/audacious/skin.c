@@ -551,6 +551,7 @@ init_skins(const gchar * path)
 void cleanup_skins()
 {
     skin_destroy(aud_active_skin);
+    aud_active_skin = NULL;
 }
 
 
