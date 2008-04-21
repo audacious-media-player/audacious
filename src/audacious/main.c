@@ -81,8 +81,10 @@
 #include "util.h"
 
 #include "libSAD.h"
+#ifdef USE_EGGSM
 #include "eggsmclient.h"
 #include "eggdesktopfile.h"
+#endif
 
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
@@ -346,7 +348,9 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
     context = g_option_context_new(_("- play multimedia files"));
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
     g_option_context_add_group(context, gtk_get_option_group(FALSE));
+#ifdef USE_EGGSM
     g_option_context_add_group(context, egg_sm_client_get_option_group());
+#endif
     if (!g_option_context_parse(context, argc, argv, &error))
         /* checking for MacOS X -psn_0_* errors*/
         if (error->message && !g_strrstr(error->message,"-psn_0_"))
@@ -725,7 +729,7 @@ main(gint argc, gchar ** argv)
     bind_textdomain_codeset(PACKAGE_NAME "-plugins", "UTF-8");
     textdomain(PACKAGE_NAME);
 
-#ifndef _WIN32
+#if !defined(_WIN32) && defined(USE_EGGSM)
     egg_set_desktop_file(AUDACIOUS_DESKTOP_FILE);
 #endif
     aud_init_paths();

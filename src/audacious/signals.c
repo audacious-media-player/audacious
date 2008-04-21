@@ -35,7 +35,9 @@
 #include "main.h"
 #include "signals.h"
 #include "build_stamp.h"
+#ifdef USE_EGGSM
 #include "eggsmclient.h"
+#endif
 
 gint linuxthread_signal_number = 0;
 
@@ -251,6 +253,7 @@ signal_check_for_broken_impl(void)
     return FALSE;
 }
 
+#ifdef USE_EGGSM
 static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)
 {
@@ -264,10 +267,12 @@ signal_session_save_cb(EggSMClient *client, const char *state_dir, gpointer user
     g_print("Session save requested. Saving state.\n");    
     aud_config_save();
 }
+#endif
 
 void 
 signal_handlers_init(void)
 {
+#ifdef USE_EGGSM
     EggSMClient *client;
 
     client = egg_sm_client_get ();
@@ -280,6 +285,7 @@ signal_handlers_init(void)
                           G_CALLBACK (signal_session_save_cb), NULL);
     
     }
+#endif
 
     if (signal_check_for_broken_impl() != TRUE)
     {
