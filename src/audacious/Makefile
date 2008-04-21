@@ -145,6 +145,8 @@ EXT_DEPS = ../libguess/libguess.a \
 
 ifeq ($(USE_EGGSM),yes)
 EXT_DEPS += ../libeggsmclient/libeggsmclient.a
+EGGSM_LIBS += ../libeggsmclient/libeggsmclient.a ${SM_LIBS}
+EGGSM_CFLAGS +=  -I../libeggsmclient ${SM_CFLAGS}
 endif
 
 include ../../buildsys.mk
@@ -171,7 +173,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${SIMD_CFLAGS}			\
 	    -D_AUDACIOUS_CORE		\
 	    -I../libSAD				\
-	    -I../libeggsmclient	${SM_CFLAGS}	\
+	    ${EGGSM_CFLAGS}		\
 	    -I.. -I../..			\
 	    -I./intl
 
@@ -180,7 +182,7 @@ LIBS += ${LDADD}									\
 	${SAMPLERATE_LIBS}								\
 	../libguess/libguess.a							\
 	../libSAD/libSAD.a								\
-	../libeggsmclient/libeggsmclient.a ${SM_LIBS}	\
+	${EGGSM_LIBS}				\
 	${GLIB_LIBS}				\
 	${GTHREAD_LIBS}					\
 	${GTK_LIBS}										\
