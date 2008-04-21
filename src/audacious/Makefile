@@ -162,7 +162,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${AUDACIOUS_DEFINES}			\
 	    ${ARCH_DEFINES}			\
 	    ${DBUS_CFLAGS}			\
-	    ${samplerate_CFLAGS}	\
+	    ${SAMPLERATE_CFLAGS}	\
 	    ${REGEX_CFLAGS}			\
 	    ${LIBMCS_CFLAGS}		\
 	    ${SIMD_CFLAGS}			\
@@ -174,7 +174,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 
 LIBS += ${LDADD}									\
 	${LIBINTL}										\
-	${samplerate_LIBS}								\
+	${SAMPLERATE_LIBS}								\
 	../libguess/libguess.a							\
 	../libSAD/libSAD.a								\
 	../libeggsmclient/libeggsmclient.a ${SM_LIBS}	\
