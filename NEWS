@@ -1,6 +1,22 @@
 Audacious 1.5.0 (2008-03-13)
+============================
+This is the last branch of Audacious that will support in Winamp2 skins
+in core. We are working on a new default UI for Audacious2 which provides
+a more metadata rich environment (while still be lightweight and fast).
+However, it is planned to implement support for Winamp2 skins as a plugin in
+the next version. No promises, though.
 
-Enhancements:
+It has been fun being seen as "rescuing XMMS" by the community; but this
+has never been our goal. Our goal has always been to develop the best
+possible player on Linux. This means that we are audiophiles, and we want
+our audio to sound as nice as possible. This has been our primary goal;
+not maintaining a Winamp2 skinned player. When we determined that the current
+UI implementation was getting in our way, we decided to rip it out. As such,
+the future of Winamp2 skins in Audacious is undefined, but they will probably
+be supported via a plugin.
+
+Enhancements
+------------
 * Everything between 1.4.1 and 1.4.7. (duh)
 * Ability to disable GTK+ theme suggestions provided by skins.
 * Entirely from scratch audio engine (libSAD) which supports:
@@ -30,30 +46,18 @@ Enhancements:
 * Faster jump-to-file.
 * Implement support for session management.
 
-Bugfixes:
+Bugfixes
+--------
 * playlist_compare_artist(): Avoid NULL dereferences.
   (Bugzilla #172, Bugzilla #168, Bugzilla #35).
 * Tons of memory leaks fixed.
 
-Notes from us (the audacious developers):
-This is the last branch of Audacious that will support in Winamp2 skins
-in core. We are working on a new default UI for Audacious2 which provides
-a more metadata rich environment (while still be lightweight and fast).
-However, it is planned to implement support for Winamp2 skins as a plugin in
-the next version. No promises, though.
-
-It has been fun being seen as "rescuing XMMS" by the community; but this
-has never been our goal. Our goal has always been to develop the best
-possible player on Linux. This means that we are audiophiles, and we want
-our audio to sound as nice as possible. This has been our primary goal;
-not maintaining a Winamp2 skinned player. When we determined that the current
-UI implementation was getting in our way, we decided to rip it out. As such,
-the future of Winamp2 skins in Audacious is undefined, but they will probably
-be supported via a plugin.
 
 Audacious 1.4.1 (2007-11-17)
+============================
 
-Enhancements:
+Enhancements
+------------
 * The skin code has been tweaked a little to fix loading of
   more substandard winamp skins.
   (http://boards.nenolod.net/viewtopic.php?f=5&t=859)
@@ -74,7 +78,8 @@ Enhancements:
    this way, and streams are entirely processed in background this way.)
 * Add codec and quality fields to MPRIS TrackInfo tuples sent over DBus.
 
-Bugfixes:
+Bugfixes
+--------
 * [Bugzilla #53]: UTF-8 validation gives false positives
   (Reported by Kosma Moczek; Fixed by Yoshiki Yazawa)
 * [Bugzilla #20]: status icon plugin breaks the 'always on top' feature
@@ -91,13 +96,18 @@ Bugfixes:
 * Fix misleading assertion notice triggers when a URI fails to load.
 * Cope with Winamp2 skins which do not have dashes in numbers.bmp.
 
+
 Audacious 1.4.0 (2007-11-01)
+============================
 
 * Everything ;)
 
+
 Audacious 1.3.0 (2007-03-02)
+============================
 
 Enhancements
+------------
 * The playlist code has been rewritten using conditional variables, 
   which has resulted in speed improvements for the playlist code overall.
 * The behaviour for detecting filemagic has been redone and is now more
@@ -137,10 +147,10 @@ Enhancements
   instead of blindly pushing data down a potentially undefined pipeline.
 * Audacious now uses GOption to parse the commandline.
 
-Bugfixes:
+Bugfixes
+--------
 * Too many to count.
 
-*** See http://audacious-media-player.org/1.3_Release for more information. ***
 
 Audacious 1.2.1 (2006-10-23)
 
