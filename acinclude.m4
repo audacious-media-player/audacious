@@ -35,9 +35,13 @@ $5]])
 
 
 dnl ** Simplifying wrapper
-AC_DEFUN([AUD_CONDITIONAL], [AM_CONDITIONAL([$1],[dnl
-test "x${$2}" = m4_ifval([$3], ["x$3"],["xyes"])dnl
-])dnl
+AC_DEFUN([AUD_CONDITIONAL],
+dnl [AM_CONDITIONAL([$1],[test "x${$2}" = m4_ifval([$3], ["x$3"],["xyes"])])
+[if test "x${$2}" = m4_ifval([$3], ["x$3"],["xyes"]) ; then
+    $1="yes"
+else
+    $1="no"
+fi
 AC_SUBST([$1])dnl
 ])
 
