@@ -127,26 +127,6 @@ AUD_CHECK_MODULE([LIBMCS], [libmcs >= 0.7], [libmcs],
 
 
 ### ---------------------------------------------------------------------------
-dnl Check if socklen_t is defined
-dnl =============================
-AUD_TRY_COMPILE([for socklen_t], [have_socklen_t], [
-#include <sys/types.h>
-#include <sys/socket.h>
-], [socklen_t s;],, [
-    AC_DEFINE([socklen_t], [int], [Define to int if the socklen_t type is missing])
-])
-
-
-### ---------------------------------------------------------------------------
-dnl IPv6 support
-dnl ============
-AUD_ARG_SIMPLE([ipv6], [no],
-[  --enable-ipv6                Enable IPv6 support],
-[USE_IPV6],, [Define if building with IPv6 support])
-
-
-
-### ---------------------------------------------------------------------------
 dnl Plugin stuff
 dnl ========================
 dnl Ok, first we find out what flags we need to use.
@@ -169,7 +149,6 @@ case "$target" in
         AC_MSG_RESULT([no])
         ;;
 esac
-
 
 
 ### ---------------------------------------------------------------------------
