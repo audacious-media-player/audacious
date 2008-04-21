@@ -1,9 +1,13 @@
-SUBDIRS = libeggsmclient libguess libSAD audacious libid3tag
+SUBDIRS = libguess libSAD audacious libid3tag
 
 include ../extra.mk
 
-ifdef USE_DBUS
-SUBDIRS := libaudclient audtool $(SUBDIRS)
+ifeq ($(USE_EGGSM),yes)
+SUBDIRS := libeggsmclient ${SUBDIRS}
+endif
+
+ifeq ($(USE_DBUS),yes)
+SUBDIRS := libaudclient audtool ${SUBDIRS}
 endif
 
 include ../buildsys.mk
