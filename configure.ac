@@ -145,7 +145,7 @@ dnl =============================
 AUD_TRY_COMPILE([for socklen_t], [have_socklen_t], [
 #include <sys/types.h>
 #include <sys/socket.h>
-], [socklen_t s;], [
+], [socklen_t s;],, [
     AC_DEFINE([socklen_t], [int], [Define to int if the socklen_t type is missing])
 ])
 
