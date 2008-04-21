@@ -159,7 +159,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 	    ${GLIB_CFLAGS}		\
 	    ${GTHREAD_CFLAGS}		\
 	    ${GTK_CFLAGS}			\
-	    ${BEEP_DEFINES}			\
+	    ${AUDACIOUS_DEFINES}			\
 	    ${ARCH_DEFINES}			\
 	    ${DBUS_CFLAGS}			\
 	    ${samplerate_CFLAGS}	\

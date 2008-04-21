@@ -14,7 +14,7 @@ LDADD = \
 CFLAGS += \
 	$(GTK_CFLAGS)      \
 	$(DBUS_CFLAGS)     \
-	$(BEEP_DEFINES)    \
+	$(AUDACIOUS_DEFINES)    \
 	$(ARCH_DEFINES)    \
 	$(MOWGLI_CFLAGS)   \
 	-I.. -I../..   \

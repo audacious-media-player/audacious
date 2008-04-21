@@ -14,7 +14,7 @@ include ../../extra.mk
 CPPFLAGS += ${CFLAGS} -I.. -I../.. -I../intl
 CFLAGS += ${GTK_CFLAGS}		\
 	  ${DBUS_CFLAGS}	\
-	  ${BEEP_DEFINES}	\
+	  ${AUDACIOUS_DEFINES}	\
 	  ${ARCH_DEFINES}	\
 	  ${MOWGLI_CFLAGS}
 LIBS += ${DBUS_LIBS}			\
