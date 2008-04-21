@@ -311,14 +311,14 @@ AUD_ARG_ENABLE([sse2], [yes],
     AC_MSG_CHECKING([SSE2 support])
     aud_my_save_CFLAGS="$CFLAGS"
     CFLAGS="-msse2"
-    AC_TRY_RUN([[
+    AC_TRY_RUN([
 #include <emmintrin.h>
 int main()
 {
   _mm_setzero_pd();
   return 0;
 }
-    ]],[
+    ],[
         AC_MSG_RESULT([yes])
         AC_DEFINE([HAVE_SSE2], 1, [Define to 1 if your system has SSE2 support])
         SIMD_CFLAGS="-msse2"
