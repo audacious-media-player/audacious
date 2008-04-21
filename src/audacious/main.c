@@ -676,6 +676,8 @@ aud_quit(void)
 
     playlist_stop_get_info_thread();
 
+    aud_config_save();
+
     if (options.headless == FALSE)
     {
         gtk_widget_hide(equalizerwin);
@@ -688,7 +690,6 @@ aud_quit(void)
         cleanup_skins();
     }
 
-    aud_config_save();
     plugin_system_cleanup();
 
     /* free and clear each playlist */
