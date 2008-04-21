@@ -48,9 +48,9 @@
 
 #ifdef USE_CHARDET
 #include "../libguess/libguess.h"
-#ifdef HAVE_UDET
-#include <libudet_c.h>
-#endif
+#  ifdef HAVE_UDET
+#    include <libudet_c.h>
+#  endif
 #endif
 
 #define URL_HISTORY_MAX_SIZE 30
