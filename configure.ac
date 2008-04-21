@@ -92,19 +92,6 @@ dnl Path settings
 dnl =============
 AC_PATH_PROG([AUDACIOUS_PATH], [audacious], [no])
 
-AC_ARG_WITH([rc-path], [dnl
-  --with-rc-path=path          Resource and configuration path for Audacious
-                               relative to $HOME. (deprecated, use XDG)],
-    [rc_path=$withval],
-    [rc_path=.audacious]
-)
-AC_DEFINE_UNQUOTED([AUD_RCPATH], "$rc_path",
-    [Resource and configuration path for audacious relative to $HOME.]
-)
-AC_DEFINE([DOTAUDACIOUS_COMPAT], 1, [Enable compatibility for $HOME/.audacious])
-AC_SUBST([AUD_RCPATH])
-
-
 AUD_ARG_ENABLE([one-plugin-dir], [no],
 [  --enable-one-plugin-dir      Use a single plugin dir (def: no)])
 
@@ -492,8 +479,6 @@ if test "x$AUDACIOUS_PATH" != "xno"; then
 echo "  Current Audacious executable:           $AUDACIOUS_PATH"
 fi
 
-echo "  Legacy configuration path:              \$HOME/$rc_path"
-echo ""
 echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
