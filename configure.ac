@@ -112,6 +112,10 @@ AUD_ARG_ENABLE([one-plugin-dir], [no],
 AUD_ARG_ENABLE([user-plugin-dir], [yes],
 [  --disable-user-plugin-dir    Disable per-user plugin dir])
 
+if test "x$enable_user_plugin_dir" = "xno"; then
+    AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
+fi
+
 
 ### ---------------------------------------------------------------------------
 dnl Check for Gtk+/GLib and pals
