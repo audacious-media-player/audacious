@@ -5,8 +5,8 @@ platform_libs =
 else
 platform_sources = eggsmclient-xsmp.c \
                    eggdesktopfile.c
-platform_defines = -DEGG_SM_CLIENT_BACKEND_XSMP
-platform_libs = -lSM -lICE
+platform_defines = -DEGG_SM_CLIENT_BACKEND_XSMP ${SM_CFLAGS}
+platform_libs = ${SM_LIBS}
 endif
 
 STATIC_LIB_NOINST = libeggsmclient.a
@@ -17,6 +17,6 @@ SRCS = eggsmclient.c         \
 include ../../buildsys.mk
 include ../../extra.mk
 
-CFLAGS += ${INCLUDES} ${GLIB_CFLAGS} ${GTK_CFLAGS} -I. ${platform_defines}
+CFLAGS += ${INCLUDES} ${GLIB_CFLAGS} ${GTK_CFLAGS} -I../.. -I. ${platform_defines}
 LIBS += ${GLIB_LIBS} ${GTK_LIBS} ${platform_libs}
 CPPFLAGS += ${CFLAGS}
