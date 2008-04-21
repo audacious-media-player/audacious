@@ -82,7 +82,7 @@ SRCS = af_equalizer.c					\
        volumecontrol.c					\
        sync-menu.c
 
-ifdef USE_DBUS
+ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
 endif
 
@@ -141,12 +141,15 @@ DATA = images/about-logo.png				\
 
 CLEAN = build_stamp.c libaudacious.exe.a
 EXT_DEPS = ../libguess/libguess.a \
-           ../libSAD/libSAD.a \
-           ../libeggsmclient/libeggsmclient.a
+           ../libSAD/libSAD.a
+
+ifeq ($(USE_EGGSM),yes)
+EXT_DEPS += ../libeggsmclient/libeggsmclient.a
+endif
 
 include ../../buildsys.mk
 
-ifdef USE_DBUS
+ifeq ($(USE_DBUS),yes)
 CPPFLAGS += -I../libaudclient
 DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 LIBS += -L../libaudclient -laudclient
