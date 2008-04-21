@@ -367,7 +367,6 @@ AUD_ARG_ENABLE([sm], [yes],
     ])
 ])
 AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
-AC_SUBST([USE_EGGSM])
 
 
 ### ---------------------------------------------------------------------------
