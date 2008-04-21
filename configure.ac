@@ -237,10 +237,13 @@ AUD_ARG_ENABLE([samplerate], [no],
 [  --enable-samplerate          Enable libsamplerate support],
 [
     AUD_CHECK_MODULE([SAMPLERATE], [samplerate],, [libsamplerate])
-    AC_CHECK_LIB([samplerate], [src_process],,
-    [
+    aud_save_LIBS="$LIBS"
+    AC_CHECK_LIB([samplerate], [src_process],[
+    	SAMPLERATE_LIBS="-lsamplerate"
+    ], [
         AC_MSG_ERROR([*** Unable to link with libsamplerate!])
     ])
+    LIBS="$aud_save_LIBS"
     AC_DEFINE([USE_SAMPLERATE], 1, [Define if libsamplerate enabled])
     AC_SUBST([USE_SAMPLERATE])
     AC_SUBST([SAMPLERATE_CFLAGS])
