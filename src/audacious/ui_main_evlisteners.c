@@ -18,6 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
+#include "ui_playlist_evlisteners.h"
+
 #include <glib.h>
 #include <math.h>
 
@@ -25,7 +27,6 @@
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_evmessages.h"
-#include "playlist_evlisteners.h"
 #include "visualization.h"
 
 #include "ui_main.h"
@@ -173,6 +174,12 @@ ui_main_evlistener_playback_play_file(gpointer hook_data, gpointer user_data)
 }
 
 static void
+ui_main_evlistener_playlist_end_reached(gpointer hook_data, gpointer user_data)
+{
+     mainwin_clear_song_info();
+}
+
+static void
 ui_main_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
 {
      PlaylistEventInfoChange *msg = (PlaylistEventInfoChange *) hook_data;
@@ -195,6 +202,7 @@ ui_main_evlistener_init(void)
     hook_associate("playback unpause", ui_main_evlistener_playback_unpause, NULL);
     hook_associate("playback seek", ui_main_evlistener_playback_seek, NULL);
     hook_associate("playback play file", ui_main_evlistener_playback_play_file, NULL);
+    hook_associate("playlist end reached", ui_main_evlistener_playlist_end_reached, NULL);
     hook_associate("playlist info change", ui_main_evlistener_playlist_info_change, NULL);
 }
 

@@ -18,7 +18,6 @@ SRCS = af_equalizer.c					\
        fft.c							\
        flow.c							\
        general.c						\
-       hints.c							\
        hook.c							\
        icons-stock.c					\
        input.c							\
@@ -31,7 +30,6 @@ SRCS = af_equalizer.c					\
        playback_evlisteners.c			\
        playlist.c						\
        playlist_container.c				\
-       playlist_evlisteners.c			\
        pluginenum.c						\
        rcfile.c							\
        signals.c						\
@@ -48,12 +46,14 @@ SRCS = af_equalizer.c					\
        ui_fileinfo.c					\
        ui_fileinfopopup.c				\
        ui_fileopener.c					\
+       ui_hints.c						\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
        ui_main.c						\
        ui_main_evlisteners.c			\
        ui_manager.c						\
        ui_playlist.c					\
+       ui_playlist_evlisteners.c		\
        ui_playlist_manager.c			\
        ui_preferences.c					\
        ui_skinned_cursor.c				\

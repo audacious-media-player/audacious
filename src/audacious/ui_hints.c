@@ -23,7 +23,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include "hints.h"
+#include "ui_hints.h"
 
 #include <glib.h>
 #include <gtk/gtk.h>

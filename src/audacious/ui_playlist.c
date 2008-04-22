@@ -42,7 +42,6 @@
 #include "actions-playlist.h"
 #include "dnd.h"
 #include "dock.h"
-#include "hints.h"
 #include "input.h"
 #include "main.h"
 #include "playback.h"
@@ -54,6 +53,7 @@
 #include "ui_fileopener.h"
 #include "ui_main.h"
 #include "ui_manager.h"
+#include "ui_playlist_evlisteners.h"
 #include "util.h"
 #include "config.h"
 
@@ -1478,6 +1478,8 @@ playlistwin_create_widgets(void)
                                   playlistwin_get_width() - 14,
                                   cfg.playlist_height - 30, 8, 5);
     g_signal_connect(playlistwin_sscroll_down, "clicked", playlistwin_scroll_down_pushed, NULL);
+
+    ui_playlist_evlistener_init();
 }
 
 static void

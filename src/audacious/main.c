@@ -62,7 +62,6 @@
 #include "auddrct.h"
 #include "build_stamp.h"
 #include "dnd.h"
-#include "hints.h"
 #include "input.h"
 #include "logger.h"
 #include "output.h"
@@ -73,6 +72,7 @@
 #include "skin.h"
 #include "ui_equalizer.h"
 #include "ui_fileinfo.h"
+#include "ui_hints.h"
 #include "ui_main.h"
 #include "ui_manager.h"
 #include "ui_playlist.h"
@@ -846,15 +846,11 @@ main(gint argc, gchar ** argv)
     // if we are running headless
     else
     {
-        GMainLoop *loop;
-
         g_print(_("Headless operation enabled\n"));
-
         resume_playback_on_startup();
 
-        loop = g_main_loop_new(NULL, TRUE);
         g_timeout_add(10, aud_headless_iteration, NULL);
-        g_main_loop_run(loop);
+        g_main_loop_run(g_main_loop_new(NULL, TRUE));
     }
 
     aud_quit();

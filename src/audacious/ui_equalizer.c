@@ -41,7 +41,6 @@
 #include "platform/smartinclude.h"
 #include "skin.h"
 #include "dock.h"
-#include "hints.h"
 #include "input.h"
 #include "main.h"
 #include "ui_manager.h"

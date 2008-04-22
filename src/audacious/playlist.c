@@ -55,7 +55,6 @@
 #endif
 
 #include "input.h"
-#include "main.h"
 #include "ui_main.h"
 #include "util.h"
 #include "configdb.h"
@@ -75,7 +74,6 @@
 #include "pluginenum.h"
 
 #include "playlist_evmessages.h"
-#include "playlist_evlisteners.h"
 
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
@@ -292,8 +290,6 @@ playlist_init(void)
     initial_pl = playlist_new();
 
     playlist_add_playlist(initial_pl);
-
-    playlist_evlistener_init();
 }
 
 void
@@ -317,7 +313,7 @@ playlist_remove_playlist(Playlist *playlist)
         ip_data.stop = TRUE;
         playback_stop();
         ip_data.stop = FALSE;
-        mainwin_clear_song_info();
+        hook_call("playlist end reached", NULL);
     }
 
     /* trying to free the last playlist simply clears and resets it */
@@ -591,7 +587,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
         if (playlist->position)
             playback_initiate();
         else
-            mainwin_clear_song_info();
+            hook_call("playlist end reached", NULL);
     }
 
     playlist_manager_update();
@@ -631,7 +627,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
         if (playlist->position)
             playback_initiate();
         else
-            mainwin_clear_song_info();
+            hook_call("playlist end reached", NULL);
     }
 
     playlistwin_update_list(playlist);
@@ -1495,15 +1491,16 @@ playlist_eof_reached(Playlist *playlist)
 
     if (cfg.no_playlist_advance) {
         PLAYLIST_UNLOCK(playlist);
-        mainwin_clear_song_info();
         if (cfg.repeat)
             playback_initiate();
+        else
+            hook_call("playlist end reached", NULL);
         return;
     }
 
     if (cfg.stopaftersong) {
         PLAYLIST_UNLOCK(playlist);
-        mainwin_clear_song_info();
+        hook_call("playlist end reached", NULL);
         mainwin_set_stopaftersong(FALSE);
         return;
     }
@@ -1521,8 +1518,7 @@ playlist_eof_reached(Playlist *playlist)
 
         if (!cfg.repeat) {
             PLAYLIST_UNLOCK(playlist);
-	    hook_call("playlist end reached", playlist->position);
-            mainwin_clear_song_info();
+            hook_call("playlist end reached", NULL);
             return;
         }
     }
