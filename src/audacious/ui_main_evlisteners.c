@@ -176,17 +176,17 @@ ui_main_evlistener_playback_play_file(gpointer hook_data, gpointer user_data)
 static void
 ui_main_evlistener_playlist_end_reached(gpointer hook_data, gpointer user_data)
 {
-     mainwin_clear_song_info();
+    mainwin_clear_song_info();
 }
 
 static void
 ui_main_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
 {
-     PlaylistEventInfoChange *msg = (PlaylistEventInfoChange *) hook_data;
+    PlaylistEventInfoChange *msg = (PlaylistEventInfoChange *) hook_data;
 
-     mainwin_set_song_info(msg->bitrate, msg->samplerate, msg->channels);
+    mainwin_set_song_info(msg->bitrate, msg->samplerate, msg->channels);
 
-     g_free(msg);
+    g_free(msg);
 }
 
 void
