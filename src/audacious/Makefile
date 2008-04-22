@@ -201,13 +201,13 @@ build_stamp.c:
 		echo "const char *svn_stamp = \"UNSUPPORTED VERSION\";" > build_stamp.c; \
 	fi
 
-DBUS_BINDINGS_SOURCES = objects.xml		\
-			mpris_root.xml		\
-			mpris_tracklist.xml	\
-			mpris_player.xml
+DBUS_BINDINGS_SOURCES = objects.xml				\
+						mpris_root.xml			\
+						mpris_tracklist.xml		\
+						mpris_player.xml
 
 desktop_DATA = audacious.desktop
-desktopdir = ${datadir}/applicationu
+desktopdir = ${datadir}/applications
 
 dbus-server-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=audacious_rc objects.xml > $@
