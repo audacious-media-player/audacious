@@ -272,15 +272,15 @@ static aud_cfg_boolent aud_boolents[] = {
     {"warn_about_broken_gtk_engines", &cfg.warn_about_broken_gtk_engines, TRUE},
     {"disable_inline_gtk", &cfg.disable_inline_gtk, TRUE},
     {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
-    {"enable_replay_gain",         &cfg.enable_replay_gain, TRUE},
+    {"enable_replay_gain", &cfg.enable_replay_gain, TRUE},
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
-    {"replay_gain_track",          &cfg.replay_gain_track, TRUE},
-    {"replay_gain_album",          &cfg.replay_gain_album, TRUE},
-    {"enable_adaptive_scaler",     &cfg.enable_adaptive_scaler, TRUE},
+    {"replay_gain_track", &cfg.replay_gain_track, TRUE},
+    {"replay_gain_album", &cfg.replay_gain_album, TRUE},
+    {"enable_adaptive_scaler", &cfg.enable_adaptive_scaler, TRUE},
 #ifdef USE_SRC
-    {"enable_src",                 &cfg.enable_src, TRUE},
+    {"enable_src", &cfg.enable_src, TRUE},
 #endif
-    {"bypass_dsp",                 &cfg.bypass_dsp, TRUE},
+    {"bypass_dsp", &cfg.bypass_dsp, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
@@ -633,6 +633,8 @@ aud_config_save(void)
     cfg_db_set_int(db, NULL, "playlist_position",
                        playlist_get_position(playlist));
 
+    hook_call("config save", db);
+
     /* FIXME: we're looking up SkinnedWindow::x &c ourselves here.
      * this isn't exactly right. -nenolod
      */
@@ -646,16 +648,6 @@ aud_config_save(void)
                            SKINNED_WINDOW(playlistwin)->y);
     }
     
-    if ( mainwin &&
-         SKINNED_WINDOW(mainwin)->x != -1 &&
-         SKINNED_WINDOW(mainwin)->y != -1 )
-    {
-        cfg_db_set_int(db, NULL, "player_x",
-                           SKINNED_WINDOW(mainwin)->x);
-        cfg_db_set_int(db, NULL, "player_y",
-                           SKINNED_WINDOW(mainwin)->y);
-    }
-
     if ( equalizerwin &&
          SKINNED_WINDOW(equalizerwin)->x != -1 &&
          SKINNED_WINDOW(equalizerwin)->y != -1 )
@@ -665,9 +657,6 @@ aud_config_save(void)
         cfg_db_set_int(db, NULL, "equalizer_y",
                            SKINNED_WINDOW(equalizerwin)->y);
     }
-
-    cfg_db_set_bool(db, NULL, "mainwin_use_bitmapfont",
-            cfg.mainwin_use_bitmapfont);
 
     for (i = 0; i < ncfgsent; ++i) {
         if (aud_strents[i].se_wrt)

@@ -33,6 +33,7 @@
 #include "ui_equalizer.h"
 #include "ui_skinned_playstatus.h"
 #include "ui_skinned_textbox.h"
+#include "ui_skinned_window.h"
 #include "ui_playlist.h"
 
 static gint song_info_timeout_source = 0;
@@ -189,6 +190,22 @@ ui_main_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
     g_free(msg);
 }
 
+static void
+ui_main_evlistener_config_save(gpointer hook_data, gpointer user_data)
+{
+    ConfigDb *db = (ConfigDb *) hook_data;
+
+    if (SKINNED_WINDOW(mainwin)->x != -1 &&
+        SKINNED_WINDOW(mainwin)->y != -1 )
+    {
+        cfg_db_set_int(db, NULL, "player_x", SKINNED_WINDOW(mainwin)->x);
+        cfg_db_set_int(db, NULL, "player_y", SKINNED_WINDOW(mainwin)->y);
+    }
+
+    cfg_db_set_bool(db, NULL, "mainwin_use_bitmapfont",
+                    cfg.mainwin_use_bitmapfont);
+}
+
 void
 ui_main_evlistener_init(void)
 {
@@ -204,5 +221,6 @@ ui_main_evlistener_init(void)
     hook_associate("playback play file", ui_main_evlistener_playback_play_file, NULL);
     hook_associate("playlist end reached", ui_main_evlistener_playlist_end_reached, NULL);
     hook_associate("playlist info change", ui_main_evlistener_playlist_info_change, NULL);
+    hook_associate("config save", ui_main_evlistener_config_save, NULL);
 }
 

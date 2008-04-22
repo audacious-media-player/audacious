@@ -754,25 +754,6 @@ glist_moveup(GList * list)
     }
 }
 
-
-void
-util_menu_position(GtkMenu * menu, gint * x, gint * y,
-                   gboolean * push_in, gpointer data)
-{
-    GtkRequisition requisition;
-    gint screen_width;
-    gint screen_height;
-    MenuPos *pos = data;
-
-    gtk_widget_size_request(GTK_WIDGET(menu), &requisition);
-
-    screen_width = gdk_screen_width();
-    screen_height = gdk_screen_height();
-
-    *x = CLAMP(pos->x - 2, 0, MAX(0, screen_width - requisition.width));
-    *y = CLAMP(pos->y - 2, 0, MAX(0, screen_height - requisition.height));
-}
-
 GdkFont *
 util_font_load(const gchar * name)
 {

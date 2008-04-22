@@ -97,6 +97,11 @@ typedef struct {
     const gchar *tag;
 } TitleFieldTag;
 
+typedef struct {
+    gint x;
+    gint y;
+} MenuPos;
+
 static GtkWidget *prefswin = NULL;
 static GtkWidget *filepopup_settings = NULL;
 static GtkWidget *colorize_settings = NULL;
@@ -559,6 +564,24 @@ titlestring_tag_menu_callback(GtkMenuItem * menuitem,
                          &pos);
 
     gtk_editable_set_position(GTK_EDITABLE(titlestring_entry), pos);
+}
+
+static void
+util_menu_position(GtkMenu * menu, gint * x, gint * y,
+                   gboolean * push_in, gpointer data)
+{
+    GtkRequisition requisition;
+    gint screen_width;
+    gint screen_height;
+    MenuPos *pos = data;
+
+    gtk_widget_size_request(GTK_WIDGET(menu), &requisition);
+
+    screen_width = gdk_screen_width();
+    screen_height = gdk_screen_height();
+
+    *x = CLAMP(pos->x - 2, 0, MAX(0, screen_width - requisition.width));
+    *y = CLAMP(pos->y - 2, 0, MAX(0, screen_height - requisition.height));
 }
 
 static void

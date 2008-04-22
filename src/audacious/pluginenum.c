@@ -152,7 +152,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .uri_get_plugin = uri_get_plugin,
     .uri_set_plugin = uri_set_plugin,
 
-    .util_info_dialog = util_info_dialog,
+    .util_info_dialog = NULL, /* deprecated --mf0102 */
     .get_gentitle_format = get_gentitle_format,
 
     .escape_shell_chars = escape_shell_chars,
@@ -371,7 +371,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .effect_flow = effect_flow,
     .volumecontrol_flow = volumecontrol_flow,
 
-    .util_menu_main_show = util_menu_main_show,
+    .util_menu_main_show = NULL, /* deprecated --mf0102 */
     
     .get_dock_window_list = get_dock_window_list,
     .dock_add_window = dock_add_window,
@@ -400,7 +400,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 GList *lowlevel_list = NULL;
 extern GList *vfs_transports;
 
-mowgli_dictionary_t *plugin_dict = NULL;
+static mowgli_dictionary_t *plugin_dict = NULL;
 
 static GStaticPrivate cur_plugin_key = G_STATIC_PRIVATE_INIT;
 static mowgli_dictionary_t *pvt_data_dict = NULL;

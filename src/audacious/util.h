@@ -66,9 +66,6 @@ GArray *string_to_garray(const gchar * str);
 void glist_movedown(GList * list);
 void glist_moveup(GList * list);
 
-void util_menu_position(GtkMenu * menu, gint * x, gint * y,
-                        gboolean * push_in, gpointer data);
-
 GdkFont *util_font_load(const gchar * name);
 void util_set_cursor(GtkWidget * window);
 gboolean text_get_extents(const gchar * fontname, const gchar * text,
@@ -84,22 +81,9 @@ guint gint_count_digits(gint n);
 
 GtkWidget *make_filebrowser(const gchar *title, gboolean save);
 
-typedef struct {
-    gint x;
-    gint y;
-} MenuPos;
-
-GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
-                            const gchar * button_text, gboolean modal,
-                            GCallback button_action,
-                            gpointer action_data);
-
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
 gchar *util_get_localdir(void);
-
-/* menu-related function */
-void util_menu_main_show(gint x, gint y, guint button, guint time);
 
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
 
