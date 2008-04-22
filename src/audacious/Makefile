@@ -160,36 +160,36 @@ endif
 pre-depend: ${DBUS_BINDINGS}
 
 CPPFLAGS += -DHAVE_CONFIG_H		\
-	    ${MOWGLI_CFLAGS}		\
-	    ${GLIB_CFLAGS}		\
-	    ${GTHREAD_CFLAGS}		\
-	    ${GTK_CFLAGS}			\
-	    ${AUDACIOUS_DEFINES}			\
-	    ${ARCH_DEFINES}			\
-	    ${DBUS_CFLAGS}			\
-	    ${SAMPLERATE_CFLAGS}	\
-	    ${REGEX_CFLAGS}			\
-	    ${LIBMCS_CFLAGS}		\
-	    ${SIMD_CFLAGS}			\
-	    -D_AUDACIOUS_CORE		\
-	    -I../libSAD				\
-	    ${EGGSM_CFLAGS}		\
-	    -I.. -I../..			\
-	    -I./intl
+		${MOWGLI_CFLAGS}		\
+		${GLIB_CFLAGS}			\
+		${GTHREAD_CFLAGS}		\
+		${GTK_CFLAGS}			\
+		${AUDACIOUS_DEFINES}	\
+		${ARCH_DEFINES}			\
+		${DBUS_CFLAGS}			\
+		${SAMPLERATE_CFLAGS}	\
+		${REGEX_CFLAGS}			\
+		${LIBMCS_CFLAGS}		\
+		${SIMD_CFLAGS}			\
+		-D_AUDACIOUS_CORE		\
+		-I../libSAD				\
+		${EGGSM_CFLAGS}			\
+		-I.. -I../..			\
+		-I./intl
 
-LIBS += ${LDADD}									\
-	${LIBINTL}										\
-	${SAMPLERATE_LIBS}								\
-	../libguess/libguess.a							\
-	../libSAD/libSAD.a								\
-	${EGGSM_LIBS}				\
-	${GLIB_LIBS}				\
-	${GTHREAD_LIBS}					\
-	${GTK_LIBS}										\
-	${DBUS_LIBS}									\
-	${MOWGLI_LIBS}									\
-	${LIBMCS_LIBS}									\
-	${REGEX_LIBS}
+LIBS += ${LDADD}						\
+		${LIBINTL}						\
+		${SAMPLERATE_LIBS}				\
+		../libguess/libguess.a			\
+		../libSAD/libSAD.a				\
+		${EGGSM_LIBS}					\
+		${GLIB_LIBS}					\
+		${GTHREAD_LIBS}					\
+		${GTK_LIBS}						\
+		${DBUS_LIBS}					\
+		${MOWGLI_LIBS}					\
+		${LIBMCS_LIBS}					\
+		${REGEX_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS}
 
