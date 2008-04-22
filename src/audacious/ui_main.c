@@ -27,21 +27,18 @@
 #  include "config.h"
 #endif
 
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
 #include <gtk/gtkmessagedialog.h>
-
-/* GDK including */
-#include "platform/smartinclude.h"
-
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <sys/types.h>
+
+/* GDK including */
+#include "platform/smartinclude.h"
 
 #if defined(USE_REGEX_ONIGURUMA)
   #include <onigposix.h>
@@ -55,29 +52,29 @@
 #include "icons-stock.h"
 
 #include "actions-mainwin.h"
-
-#include "main.h"
 #include "configdb.h"
 #include "dnd.h"
 #include "dock.h"
 #include "input.h"
+#include "main.h"
 #include "playback.h"
 #include "playlist.h"
 #include "pluginenum.h"
+#include "strings.h"
 #include "ui_credits.h"
 #include "ui_equalizer.h"
 #include "ui_fileopener.h"
 #include "ui_hints.h"
+#include "ui_jumptotrack.h"
+#include "ui_main_evlisteners.h"
 #include "ui_manager.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
 #include "ui_skinselector.h"
 #include "ui_urlopener.h"
-#include "strings.h"
 #include "util.h"
 #include "visualization.h"
 
-#include "skin.h"
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_textbox.h"
@@ -87,9 +84,6 @@
 #include "ui_skinned_playstatus.h"
 #include "ui_skinned_monostereo.h"
 #include "ui_skinned_playlist.h"
-#include "ui_jumptotrack.h"
-
-#include "ui_main_evlisteners.h"
 
 static GTimeVal cb_time; 
 static const int TRISTATE_THRESHOLD = 200;
@@ -100,23 +94,14 @@ enum {
     MAINWIN_SEEK_FWD
 };
 
-typedef struct _PlaybackInfo PlaybackInfo;
-
-struct _PlaybackInfo {
-    gchar *title;
-    gint bitrate;
-    gint frequency;
-    gint n_channels;
-};
-
 GtkWidget *mainwin = NULL;
 
 static gint balance;
 
 static GtkWidget *mainwin_jtt = NULL;
 
-gint seek_state = MAINWIN_SEEK_NIL;
-gint seek_initial_pos = 0;
+static gint seek_state = MAINWIN_SEEK_NIL;
+static gint seek_initial_pos = 0;
 
 static GtkWidget *mainwin_menubtn;
 static GtkWidget *mainwin_minimize, *mainwin_shade, *mainwin_close;
@@ -159,8 +144,6 @@ static guint mainwin_volume_release_timeout = 0;
 static int ab_position_a = -1;
 static int ab_position_b = -1;
 
-static PlaybackInfo playback_info = { NULL, 0, 0, 0 };
-
 static void mainwin_refresh_visible(void);
 static gint mainwin_idle_func(gpointer data);
 
@@ -168,44 +151,12 @@ static void set_timer_mode_menu_cb(TimerMode mode);
 static void set_timer_mode(TimerMode mode);
 static void change_timer_mode(void);
 
-void mainwin_position_motion_cb(GtkWidget *widget, gint pos);
-void mainwin_position_release_cb(GtkWidget *widget, gint pos);
+static void mainwin_position_motion_cb(GtkWidget *widget, gint pos);
+static void mainwin_position_release_cb(GtkWidget *widget, gint pos);
 
-void set_scaled(gboolean scaled);
-void mainwin_eq_pushed(gboolean toggled);
-void mainwin_pl_pushed(gboolean toggled);
-
-
-/* FIXME: placed here for now */
-void
-playback_get_sample_params(gint * bitrate,
-                           gint * frequency,
-                           gint * n_channels)
-{
-    if (bitrate)
-        *bitrate = playback_info.bitrate;
-
-    if (frequency)
-        *frequency = playback_info.frequency;
-
-    if (n_channels)
-        *n_channels = playback_info.n_channels;
-}
-
-static void
-playback_set_sample_params(gint bitrate,
-                           gint frequency,
-                           gint n_channels)
-{
-    if (bitrate >= 0)
-        playback_info.bitrate = bitrate;
-
-    if (frequency >= 0)
-        playback_info.frequency = frequency;
-
-    if (n_channels >= 0)
-        playback_info.n_channels = n_channels;
-}
+static void set_scaled(gboolean scaled);
+static void mainwin_eq_pushed(gboolean toggled);
+static void mainwin_pl_pushed(gboolean toggled);
 
 static void
 mainwin_set_title_scroll(gboolean scroll)

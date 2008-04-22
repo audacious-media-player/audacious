@@ -47,13 +47,13 @@
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
-#include "ui_playlist_manager.h"
 #include "strings.h"
 #include "ui_equalizer.h"
 #include "ui_fileopener.h"
 #include "ui_main.h"
 #include "ui_manager.h"
 #include "ui_playlist_evlisteners.h"
+#include "ui_playlist_manager.h"
 #include "util.h"
 #include "config.h"
 
@@ -71,11 +71,11 @@ GtkWidget *playlistwin;
 static GMutex *resize_mutex = NULL;
 
 static GtkWidget *playlistwin_list = NULL;
-GtkWidget *playlistwin_shade, *playlistwin_close;
+static GtkWidget *playlistwin_shade, *playlistwin_close;
 
 static gboolean playlistwin_hint_flag = FALSE;
 
-static GtkWidget *playlistwin_slider = NULL;
+static GtkWidget *playlistwin_slider;
 static GtkWidget *playlistwin_time_min, *playlistwin_time_sec;
 static GtkWidget *playlistwin_info, *playlistwin_sinfo;
 static GtkWidget *playlistwin_srew, *playlistwin_splay;
@@ -83,10 +83,11 @@ static GtkWidget *playlistwin_spause, *playlistwin_sstop;
 static GtkWidget *playlistwin_sfwd, *playlistwin_seject;
 static GtkWidget *playlistwin_sscroll_up, *playlistwin_sscroll_down;
 
-void playlistwin_select_search_cbt_cb( GtkWidget *called_cbt ,
-                                              gpointer other_cbt );
-static gboolean playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
-                                                 gpointer searchdlg_win );
+static void playlistwin_select_search_cbt_cb(GtkWidget *called_cbt,
+                                             gpointer other_cbt);
+static gboolean playlistwin_select_search_kp_cb(GtkWidget *entry,
+                                                GdkEventKey *event,
+                                                gpointer searchdlg_win);
 
 static gboolean playlistwin_resizing = FALSE;
 static gint playlistwin_resize_x, playlistwin_resize_y;
@@ -1900,10 +1901,7 @@ action_playlist_select_all(void)
 }
 
 
-
-/* playlistwin_select_search callback functions
-   placed here to avoid making the code messier :) */
-void
+static void
 playlistwin_select_search_cbt_cb(GtkWidget *called_cbt, gpointer other_cbt)
 {
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(called_cbt)) == TRUE)

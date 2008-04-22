@@ -28,6 +28,14 @@
 #include "playlist.h"
 #include "plugin.h"
 
+typedef struct _PlaybackInfo PlaybackInfo;
+
+struct _PlaybackInfo {
+    gint bitrate;
+    gint frequency;
+    gint n_channels;
+};
+
 gint playback_get_time(void);
 gint playback_get_length(void);
 void playback_initiate(void);
@@ -43,5 +51,7 @@ void playback_error(void);
 InputPlayback *playback_new(void);
 void playback_free(InputPlayback *);
 void playback_run(InputPlayback *);
+void playback_get_sample_params(gint *bitrate, gint *frequency, gint *n_channels);
+void playback_set_sample_params(gint bitrate, gint frequency, gint n_channels);
 
 #endif

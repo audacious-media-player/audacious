@@ -34,17 +34,16 @@
 
 #include "playlist.h"
 
-#include <mowgli.h>
 #include <glib.h>
 #include <glib/gprintf.h>
+#include <mowgli.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/errno.h>
+#include <time.h>
+#include <unistd.h>
 
 #if defined(USE_REGEX_ONIGURUMA)
 #  include <onigposix.h>
@@ -54,35 +53,32 @@
 #  include <regex.h>
 #endif
 
-#include "input.h"
-#include "ui_main.h"
-#include "util.h"
 #include "configdb.h"
-#include "vfs.h"
+#include "hook.h"
+#include "input.h"
 #include "playback.h"
-#include "playlist.h"
 #include "playlist_container.h"
-#include "ui_playlist_manager.h"
-#include "ui_playlist.h"
+#include "playlist_evmessages.h"
+#include "pluginenum.h"
 #include "strings.h"
 #include "ui_fileinfo.h"
+#include "ui_main.h"
+#include "ui_playlist_manager.h"
+#include "ui_playlist.h"
+#include "util.h"
+#include "vfs.h"
 
 #include "debug.h"
-
-#include "hook.h"
-
-#include "pluginenum.h"
-
-#include "playlist_evmessages.h"
 
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
 /* If we manually change the song, p_p_b_j will show us where to go back to */
-PlaylistEntry *playlist_position_before_jump = NULL;
+static PlaylistEntry *playlist_position_before_jump = NULL;
 
 static GList *playlists = NULL;
 static GList *playlists_iter;
+
 
 /* If this is set to TRUE, we do not probe upon playlist add.
  *
@@ -102,11 +98,8 @@ static GList *playlists_iter;
  * January 7, 2006, William Pitcock <nenolod@nenolod.net>
  */
 
-
-//static gchar *playlist_current_name = NULL;
-
 static gboolean playlist_get_info_scan_active = FALSE;
-GStaticRWLock playlist_get_info_rwlock = G_STATIC_RW_LOCK_INIT;
+static GStaticRWLock playlist_get_info_rwlock = G_STATIC_RW_LOCK_INIT;
 static gboolean playlist_get_info_going = FALSE;
 static GThread *playlist_get_info_thread;
 

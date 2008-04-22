@@ -51,6 +51,8 @@
 #include "playback.h"
 #include "playback_evlisteners.h"
 
+static PlaybackInfo playback_info = { 0, 0, 0 };
+
 static gint
 playback_set_pb_ready(InputPlayback *playback)
 {
@@ -468,4 +470,34 @@ playback_seek_relative(gint offset)
     gint time = CLAMP(playback_get_time() / 1000 + offset,
                       0, playlist_get_current_length(playlist_get_active()) / 1000 - 1);
     playback_seek(time);
+}
+
+void
+playback_get_sample_params(gint * bitrate,
+                           gint * frequency,
+                           gint * n_channels)
+{
+    if (bitrate)
+        *bitrate = playback_info.bitrate;
+
+    if (frequency)
+        *frequency = playback_info.frequency;
+
+    if (n_channels)
+        *n_channels = playback_info.n_channels;
+}
+
+void
+playback_set_sample_params(gint bitrate,
+                           gint frequency,
+                           gint n_channels)
+{
+    if (bitrate >= 0)
+        playback_info.bitrate = bitrate;
+
+    if (frequency >= 0)
+        playback_info.frequency = frequency;
+
+    if (n_channels >= 0)
+        playback_info.n_channels = n_channels;
 }
