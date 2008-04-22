@@ -31,7 +31,6 @@
 #include "ui_jumptotrack.h"
 #include "auddrct.h"
 #include "playlist.h"
-#include "ui_skin.h"
 
 /* player */
 
@@ -101,12 +100,6 @@ drct_pl_win_toggle ( gboolean show )
       playlistwin_hide();
   }
   return;
-}
-
-void drct_set_skin(gchar *skinfile)
-{
-    if (has_x11_connection)
-        aud_active_skin_load(skinfile);
 }
 
 void drct_activate(void)

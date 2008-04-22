@@ -305,7 +305,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_eq_win_toggle = drct_eq_win_toggle,
     .drct_pl_win_is_visible = drct_pl_win_is_visible,
     .drct_pl_win_toggle = drct_pl_win_toggle,
-    .drct_set_skin = drct_set_skin,
+    .drct_set_skin = NULL, /* remove someday. --mf0102 */
     .drct_activate = drct_activate,
 
     .drct_play = drct_play,

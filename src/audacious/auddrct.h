@@ -36,7 +36,6 @@ gboolean drct_eq_win_is_visible ( void );
 void drct_eq_win_toggle ( gboolean );
 gboolean drct_pl_win_is_visible ( void );
 void drct_pl_win_toggle ( gboolean );
-void drct_set_skin(gchar *skinfile);
 void drct_activate(void);
 
 /* playback */
