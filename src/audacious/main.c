@@ -69,7 +69,7 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "signals.h"
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_equalizer.h"
 #include "ui_fileinfo.h"
 #include "ui_hints.h"

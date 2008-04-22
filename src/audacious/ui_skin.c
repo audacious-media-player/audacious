@@ -36,7 +36,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_equalizer.h"
 #include "main.h"
 #include "ui_playlist.h"
@@ -2067,4 +2067,18 @@ skin_set_random_skin(void)
     randval = g_random_int_range(0, g_list_length(skinlist));
     node = g_list_nth(skinlist, randval)->data;
     aud_active_skin_load(node->path);
+}
+
+
+void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint height, gboolean scale) {
+    g_return_if_fail(widget != NULL);
+    g_return_if_fail(obj != NULL);
+
+    if (scale) {
+        GdkPixbuf *image = gdk_pixbuf_scale_simple(obj, width * cfg.scale_factor, height* cfg.scale_factor, GDK_INTERP_BILINEAR);
+        gdk_draw_pixbuf(widget->window, NULL, image, 0, 0, 0, 0, width * cfg.scale_factor , height * cfg.scale_factor, GDK_RGB_DITHER_NORMAL, 0, 0);
+        g_object_unref(image);
+    } else {
+        gdk_draw_pixbuf(widget->window, NULL, obj, 0, 0, 0, 0, width, height, GDK_RGB_DITHER_NONE, 0, 0);
+    }
 }

@@ -24,10 +24,9 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_skinned_playlist_slider.h"
 #include "main.h"
-#include "util.h"
 #include "ui_playlist.h"
 
 #define UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_playlist_slider_get_type(), UiSkinnedPlaylistSliderPrivate))

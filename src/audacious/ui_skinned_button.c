@@ -19,7 +19,6 @@
  */
 
 #include "ui_skinned_button.h"
-#include "util.h"
 #include <math.h>
 
 #define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_button_get_type(), UiSkinnedButtonPrivate))

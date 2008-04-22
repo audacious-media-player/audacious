@@ -19,7 +19,7 @@
  */
 
 #include "platform/smartinclude.h"
-#include "skin.h"
+#include "ui_skin.h"
 
 #include <gtk/gtkmain.h>
 #include <glib-object.h>
@@ -32,7 +32,6 @@
 #include "dock.h"
 #include "ui_skinned_window.h"
 #include "ui_skinned_cursor.h"
-#include "util.h"
 #include "ui_playlist.h"
 
 static void ui_skinned_window_class_init(SkinnedWindowClass *klass);

@@ -38,7 +38,6 @@ SRCS = af_equalizer.c					\
        tuple.c							\
        tuple_formatter.c				\
        tuple_compiler.c					\
-       skin.c							\
        ui_about.c						\
        ui_albumart.c					\
        ui_credits.c						\
@@ -56,6 +55,7 @@ SRCS = af_equalizer.c					\
        ui_playlist_evlisteners.c		\
        ui_playlist_manager.c			\
        ui_preferences.c					\
+       ui_skin.c						\
        ui_skinned_cursor.c				\
        ui_skinned_window.c				\
        ui_skinned_button.c				\

@@ -39,7 +39,7 @@
 #include <string.h>
 
 #include "platform/smartinclude.h"
-#include "skin.h"
+#include "ui_skin.h"
 #include "dock.h"
 #include "input.h"
 #include "main.h"

@@ -44,7 +44,7 @@
 #include "ui_jumptotrack.h"
 #include "strings.h"
 #include "ui_credits.h"
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_fileopener.h"
 
 static DBusGConnection *dbus_conn = NULL;

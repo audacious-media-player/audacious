@@ -32,7 +32,7 @@
 #include <cairo.h>
 #include <pango/pangocairo.h>
 
-#include "skin.h"
+#include "ui_skin.h"
 
 #ifdef __cplusplus
 extern "C" {

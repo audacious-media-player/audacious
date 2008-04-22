@@ -26,10 +26,11 @@
 #ifndef SKIN_H
 #define SKIN_H
 
-
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
+
+#include "audconfig.h"
 
 #define BMP_DEFAULT_SKIN_PATH \
   DATA_DIR G_DIR_SEPARATOR_S "Skins" G_DIR_SEPARATOR_S "Default"
@@ -239,5 +240,8 @@ void skin_parse_hints(Skin * skin, gchar *path_p);
 
 
 void skin_set_random_skin(void);
+
+
+void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint height, gboolean scale);
 
 #endif

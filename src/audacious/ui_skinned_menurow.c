@@ -26,7 +26,6 @@
 
 #include "ui_skinned_menurow.h"
 #include "main.h"
-#include "util.h"
 
 enum {
     DOUBLED,

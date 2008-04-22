@@ -35,7 +35,7 @@
 #include "general.h"
 #include "playback.h"
 #include "pluginenum.h"
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_equalizer.h"
 #include "ui_playlist.h"
 #include "ui_skinned_window.h"

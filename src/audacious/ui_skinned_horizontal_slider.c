@@ -26,7 +26,6 @@
 
 #include "ui_skinned_horizontal_slider.h"
 #include "main.h"
-#include "util.h"
 #include <math.h>
 
 #define UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_horizontal_slider_get_type(), UiSkinnedHorizontalSliderPrivate))

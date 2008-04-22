@@ -24,7 +24,7 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_svis.h"
 #include "ui_vis.h"
 #include "main.h"

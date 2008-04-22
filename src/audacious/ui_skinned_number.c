@@ -26,7 +26,6 @@
 
 #include "ui_skinned_number.h"
 #include "main.h"
-#include "util.h"
 #include "strings.h"
 #include <string.h>
 #include <ctype.h>

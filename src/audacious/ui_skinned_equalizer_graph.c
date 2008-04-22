@@ -21,10 +21,9 @@
  * along with this program;  If not, see <http://www.gnu.org/licenses>.
  */
 
-#include "skin.h"
+#include "ui_skin.h"
 #include "ui_skinned_equalizer_graph.h"
 #include "main.h"
-#include "util.h"
 #include "equalizer_flow.h"
 
 #define UI_TYPE_SKINNED_EQUALIZER_GRAPH           (ui_skinned_equalizer_graph_get_type())

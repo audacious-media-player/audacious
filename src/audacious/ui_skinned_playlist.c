@@ -40,20 +40,20 @@
  *  number.
  */
 
-#include "skin.h"
 #include "ui_skinned_playlist.h"
-#include "main.h"
-#include "util.h"
-#include "ui_playlist.h"
-
-#include "input.h"
-#include "strings.h"
-#include "playback.h"
-#include "playlist.h"
-#include "ui_manager.h"
-#include "ui_fileinfopopup.h"
 
 #include "debug.h"
+#include "input.h"
+#include "main.h"
+#include "playback.h"
+#include "playlist.h"
+#include "strings.h"
+#include "ui_fileinfopopup.h"
+#include "ui_manager.h"
+#include "ui_playlist.h"
+#include "ui_skin.h"
+#include "util.h"
+
 static PangoFontDescription *playlist_list_font = NULL;
 static gint ascent, descent, width_delta_digit_one;
 static gboolean has_slant;

@@ -94,8 +94,6 @@ GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
                             GCallback button_action,
                             gpointer action_data);
 
-void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint height, gboolean scale);
-
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
 gchar *util_get_localdir(void);

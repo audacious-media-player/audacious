@@ -25,10 +25,12 @@
  */
 
 #include "ui_skinned_textbox.h"
+
+#include <string.h>
+
 #include "main.h"
 #include "util.h"
 #include "strings.h"
-#include <string.h>
 
 #define UI_SKINNED_TEXTBOX_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_textbox_get_type(), UiSkinnedTextboxPrivate))
 typedef struct _UiSkinnedTextboxPrivate UiSkinnedTextboxPrivate;

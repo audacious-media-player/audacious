@@ -28,7 +28,7 @@
 #define UISKINNEDHORIZONTAL_SLIDER_H
 
 #include <gtk/gtk.h>
-#include "skin.h"
+#include "ui_skin.h"
 
 #ifdef __cplusplus
 extern "C" {

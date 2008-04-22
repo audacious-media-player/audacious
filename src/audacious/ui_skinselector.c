@@ -36,7 +36,7 @@
 #include <string.h>
 
 #include "main.h"
-#include "skin.h"
+#include "ui_skin.h"
 #include "util.h"
 
 #define EXTENSION_TARGETS 7

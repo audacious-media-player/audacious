@@ -22,7 +22,7 @@
 #define UISKINNEDBUTTON_H
 
 #include <gtk/gtk.h>
-#include "skin.h"
+#include "ui_skin.h"
 
 #define UI_SKINNED_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), ui_skinned_button_get_type(), UiSkinnedButton))
 #define UI_SKINNED_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  ui_skinned_button_get_type(), UiSkinnedButtonClass))
