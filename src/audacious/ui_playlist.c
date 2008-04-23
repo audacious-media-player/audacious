@@ -49,6 +49,7 @@
 #include "playlist_container.h"
 #include "strings.h"
 #include "ui_equalizer.h"
+#include "ui_fileinfo.h"
 #include "ui_fileopener.h"
 #include "ui_main.h"
 #include "ui_manager.h"
@@ -705,11 +706,11 @@ playlistwin_fileinfo(void)
      * selected */
     GList *list = playlist_get_selected(playlist);
     if (list) {
-        playlist_fileinfo(playlist, GPOINTER_TO_INT(list->data));
+        ui_fileinfo_show(playlist, GPOINTER_TO_INT(list->data));
         g_list_free(list);
     }
     else
-        playlist_fileinfo_current(playlist);
+        ui_fileinfo_show_current(playlist);
 }
 
 static void

@@ -176,9 +176,6 @@ void playlist_random(Playlist *playlist);
 void playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType);
 void playlist_remove_dead_files(Playlist *playlist);
 
-void playlist_fileinfo_current(Playlist *playlist);
-void playlist_fileinfo(Playlist *playlist, guint pos);
-
 void playlist_delete_index(Playlist *playlist, guint pos);
 
 PlaylistEntry *playlist_get_entry_to_play(Playlist *playlist);

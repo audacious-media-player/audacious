@@ -63,6 +63,7 @@
 #include "strings.h"
 #include "ui_credits.h"
 #include "ui_equalizer.h"
+#include "ui_fileinfo.h"
 #include "ui_fileopener.h"
 #include "ui_hints.h"
 #include "ui_jumptotrack.h"
@@ -1768,7 +1769,7 @@ mainwin_general_menu_callback(gpointer data,
             mainwin_show_add_url_window();
             break;
         case MAINWIN_GENERAL_FILEINFO:
-            playlist_fileinfo_current(playlist);
+            ui_fileinfo_show_current(playlist);
             break;
         case MAINWIN_GENERAL_FOCUSPLWIN:
             gtk_window_present(GTK_WINDOW(playlistwin));
@@ -1911,7 +1912,7 @@ mainwin_mr_release(GtkWidget *widget, MenuRowItem i, GdkEventButton *event)
                                          UI_SKINNED_MENUROW(mainwin_menurow)->always_selected );
             break;
         case MENUROW_FILEINFOBOX:
-            playlist_fileinfo_current(playlist_get_active());
+            ui_fileinfo_show_current(playlist_get_active());
             break;
         case MENUROW_SCALE:
             gtk_toggle_action_set_active(
@@ -2193,7 +2194,7 @@ mainwin_setup_menus(void)
 }
 
 static void mainwin_info_double_clicked_cb(void) {
-    playlist_fileinfo_current(playlist_get_active());
+    ui_fileinfo_show_current(playlist_get_active());
 }
 
 static void
@@ -2801,7 +2802,7 @@ action_ab_clear( void )
 void
 action_current_track_info( void )
 {
-    playlist_fileinfo_current(playlist_get_active());
+    ui_fileinfo_show_current(playlist_get_active());
 }
 
 void

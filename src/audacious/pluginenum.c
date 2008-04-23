@@ -57,6 +57,7 @@
 #include "vfs_buffered_file.h"
 
 #include "ui_preferences.h"
+#include "ui_fileinfo.h"
 #include "ui_fileinfopopup.h"
 
 #include "effect.h"
@@ -230,8 +231,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_remove_duplicates = playlist_remove_duplicates,
     .playlist_remove_dead_files = playlist_remove_dead_files,
 
-    .playlist_fileinfo_current = playlist_fileinfo_current,
-    .playlist_fileinfo = playlist_fileinfo,
+    .playlist_fileinfo_current = ui_fileinfo_show_current,
+    .playlist_fileinfo = ui_fileinfo_show,
 
     .playlist_delete_index = playlist_delete_index,
     .playlist_delete_filenames = NULL, /* remove eventually --mf0102 */

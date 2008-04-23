@@ -24,9 +24,9 @@
 #include <glib.h>
 
 void create_fileinfo_window(void);
-void fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled);
 gchar* fileinfo_recursive_get_image(const gchar* path, const gchar* file_name, gint depth);
-void fileinfo_show_for_path(gchar *path);
-void fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip);
+
+void ui_fileinfo_show(Playlist *playlist, guint pos);
+void ui_fileinfo_show_current(Playlist *playlist);
 
 #endif

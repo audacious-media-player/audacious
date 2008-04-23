@@ -264,7 +264,8 @@ fileinfo_entry_set_image(GtkWidget *widget, const char *text)
     g_object_unref(G_OBJECT(pixbuf));
 }
 
-void fileinfo_hide(gpointer unused)
+static void
+fileinfo_hide(gpointer unused)
 {
     if(GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_hide(fileinfo_win);
 
@@ -296,7 +297,8 @@ void fileinfo_hide(gpointer unused)
     fileinfo_entry_set_image(image_artwork, DATA_DIR "/images/audio.png");
 }
 
-static void entry_changed (GtkEditable *editable, gpointer user_data)
+static void
+entry_changed (GtkEditable *editable, gpointer user_data)
 {
     if(current_file != NULL && current_ip != NULL && current_ip->update_song_tuple != NULL) {
         something_changed = TRUE;
@@ -773,7 +775,7 @@ create_fileinfo_window(void)
     gtk_widget_show_all (vbox0);
 }
 
-void 
+static void 
 fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
     gchar *tmp, *tmp_utf = NULL;
@@ -907,7 +909,7 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         gtk_widget_show(fileinfo_win);
 }
 
-void
+static void
 fileinfo_show_for_path(gchar *path)
 {
     Tuple *tuple = input_get_song_tuple(path);
@@ -922,7 +924,7 @@ fileinfo_show_for_path(gchar *path)
     mowgli_object_unref(tuple);
 }
 
-void
+static void
 fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
 {
     G_FREE_CLEAR(current_file);
@@ -939,4 +941,77 @@ fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
     fileinfo_show_for_tuple(tuple, TRUE);
 
     mowgli_object_unref(tuple);
+}
+
+static void
+ui_fileinfo_show_entry(Playlist *playlist, PlaylistEntry *entry)
+{
+    gchar *path = g_strdup(entry->filename);
+    Tuple *tuple = entry->tuple;
+
+    PLAYLIST_UNLOCK(playlist);
+
+    /* plugin is capable of updating tags. we need to bypass tuple cache. --eugene */
+    /* maybe code cleanup required... */
+    if (entry != NULL &&
+        entry->decoder != NULL &&
+        entry->decoder->update_song_tuple != NULL &&
+        entry->decoder->file_info_box == NULL &&
+        path != NULL && !vfs_is_remote(path))
+    {
+        fileinfo_show_editor_for_path(path, entry->decoder);
+        g_free(path);
+    }
+    else
+    {
+        if (tuple != NULL)
+        {
+            if (entry->decoder != NULL)
+            {
+                if (entry->decoder->file_info_box == NULL)
+                    fileinfo_show_for_tuple(tuple, FALSE);
+                else
+                {
+                    plugin_set_current((Plugin *)(entry->decoder));
+                    entry->decoder->file_info_box(path);
+                }
+            }
+            else
+                fileinfo_show_for_path(path);
+            g_free(path);
+        }
+        else if (path != NULL)
+        {
+            if (entry != NULL &&
+                entry->decoder != NULL &&
+                entry->decoder->file_info_box != NULL)
+            {
+                plugin_set_current((Plugin *)(entry->decoder));
+                entry->decoder->file_info_box(path);
+            }
+            else
+                fileinfo_show_for_path(path);
+            g_free(path);
+        }
+    }
+}
+
+void
+ui_fileinfo_show(Playlist *playlist, guint pos)
+{
+    GList *node = NULL;
+
+    PLAYLIST_LOCK(playlist);
+
+    if ((node = g_list_nth(playlist->entries, pos)))
+        ui_fileinfo_show_entry(playlist, node->data);
+}
+
+void
+ui_fileinfo_show_current(Playlist *playlist)
+{
+    PLAYLIST_LOCK(playlist);
+
+    if (playlist->entries && playlist->position)
+        ui_fileinfo_show_entry(playlist, playlist->position);
 }
