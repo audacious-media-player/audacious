@@ -62,7 +62,6 @@
 #include "pluginenum.h"
 #include "strings.h"
 #include "ui_main.h"
-#include "ui_playlist_manager.h"
 #include "ui_playlist.h"
 #include "util.h"
 #include "vfs.h"
@@ -292,7 +291,7 @@ playlist_add_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlist_manager_update();
+    hook_call("playlist update", NULL);
 }
 
 void
@@ -326,7 +325,7 @@ playlist_remove_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlist_manager_update();
+    hook_call("playlist update", NULL);
 }
 
 GList *
@@ -346,8 +345,7 @@ playlist_select_next(void)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlistwin_update_list(playlist_get_active());
-    playlist_manager_update();
+    hook_call("playlist update", playlist_get_active());
 }
 
 void
@@ -361,8 +359,7 @@ playlist_select_prev(void)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlistwin_update_list(playlist_get_active());
-    playlist_manager_update();
+    hook_call("playlist update", playlist_get_active());
 }
 
 void
@@ -373,8 +370,7 @@ playlist_select_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlistwin_update_list(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 }
 
 /* *********************** playlist code ********************** */
@@ -395,13 +391,13 @@ playlist_set_current_name(Playlist *playlist, const gchar * title)
     if (!title) {
         playlist->title = NULL;
         g_free(oldtitle);
-        playlist_manager_update();
+        hook_call("playlist update", NULL);
         return FALSE;
     }
 
     playlist->title = str_to_utf8(title);
     g_free(oldtitle);
-    playlist_manager_update();
+    hook_call("playlist update", NULL);
     return TRUE;
 }
 
@@ -484,10 +480,9 @@ playlist_clear(Playlist *playlist)
 
     playlist_clear_only(playlist);
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
-    playlist_manager_update();
 }
 
 static void
@@ -574,15 +569,13 @@ playlist_delete_index(Playlist *playlist, guint pos)
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
 
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
     if (restart_playing) {
         if (playlist->position)
             playback_initiate();
         else
             hook_call("playlist end reached", NULL);
     }
-
-    playlist_manager_update();
 }
 
 void
@@ -622,8 +615,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
             hook_call("playlist end reached", NULL);
     }
 
-    playlistwin_update_list(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 }
 
 static void
@@ -770,8 +762,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 
             g_free(pr);
             playlist_generate_shuffle_list(playlist);
-            playlistwin_update_list(playlist);
-            playlist_manager_update();
+            hook_call("playlist update", playlist);
             return TRUE;
         }
     }
@@ -1014,8 +1005,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
 
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
     return entries;
 }
 
@@ -1068,9 +1058,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list(playlist);
-
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 
     return entries;
 }
@@ -1211,8 +1199,7 @@ playlist_next(Playlist *playlist)
     if (restart_playing)
         playback_initiate();
 
-    playlistwin_update_list(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 }
 
 void
@@ -1271,9 +1258,7 @@ playlist_prev(Playlist *playlist)
     if (restart_playing)
         playback_initiate();
     else
-        playlistwin_update_list(playlist);
-
-    playlist_manager_update();
+        hook_call("playlist update", playlist);
 }
 
 void
@@ -1310,7 +1295,7 @@ playlist_queue(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 }
 
 void
@@ -1337,7 +1322,7 @@ playlist_queue_position(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 }
 
 gboolean
@@ -1391,7 +1376,7 @@ playlist_clear_queue(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 }
 
 void
@@ -1404,7 +1389,7 @@ playlist_queue_remove(Playlist *playlist, guint pos)
     playlist->queue = g_list_remove(playlist->queue, entry);
     PLAYLIST_UNLOCK(playlist);
 
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 }
 
 gint
@@ -1453,7 +1438,7 @@ playlist_set_position(Playlist *playlist, guint pos)
     if (restart_playing)
         playback_initiate();
     else
-        playlistwin_update_list(playlist);
+        hook_call("playlist update", playlist);
 }
 
 void
@@ -1519,7 +1504,7 @@ playlist_eof_reached(Playlist *playlist)
 
     playlist_check_pos_current(playlist);
     playback_initiate();
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 }
 
 gint
@@ -1761,8 +1746,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     new_len = playlist_get_length(playlist);
 
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 
     playlist_recalc_total_time(playlist); //tentative --yaz
     PLAYLIST_INCR_SERIAL(playlist);
@@ -2335,7 +2319,7 @@ playlist_clear_selected(Playlist *playlist)
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 }
 
 gint
@@ -2470,10 +2454,10 @@ playlist_get_info_func(gpointer arg)
                 entry = node->data;
 
                 if (playlist->attribute & PLAYLIST_STATIC ||
-                   (entry->tuple &&
-                    tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                    tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 &&
-                    entry->title_is_valid))
+                    (entry->tuple &&
+                     tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
+                     tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 &&
+                     entry->title_is_valid))
                     continue;
 
                 AUDDBG("len=%d mtime=%d\n",
@@ -2513,7 +2497,7 @@ playlist_get_info_func(gpointer arg)
 
         if (update_playlistwin) {
             Playlist *playlist = playlist_get_active();
-            event_queue("playlistwin update list", playlist);
+            event_queue("playlist update", playlist);
             PLAYLIST_INCR_SERIAL(playlist);
             update_playlistwin = FALSE;
         }
@@ -2624,10 +2608,9 @@ playlist_remove_dead_files(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
-    playlist_manager_update();
 }
 
 
@@ -2744,11 +2727,9 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
     PLAYLIST_UNLOCK(playlist);
 
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
-
-    playlist_manager_update();
 }
 
 void
@@ -3086,7 +3067,7 @@ playlist_read_info_selection(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist);
 
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
@@ -3109,7 +3090,7 @@ playlist_read_info(Playlist *playlist, guint pos)
 
     PLAYLIST_UNLOCK(playlist);
 
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 }
@@ -3194,8 +3175,7 @@ playlist_new_from_selected(void)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(newpl);
-    playlistwin_update_list(playlist);
-    playlist_manager_update();
+    hook_call("playlist update", playlist);
 
     return newpl;
 }

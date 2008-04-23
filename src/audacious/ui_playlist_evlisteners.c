@@ -25,16 +25,20 @@
 #include "hook.h"
 #include "playlist.h"
 #include "ui_playlist.h"
+#include "ui_playlist_manager.h"
 
 static void
-ui_playlist_evlistener_playlistwin_update_list(gpointer hook_data, gpointer user_data)
+ui_playlist_evlistener_playlist_update(gpointer hook_data, gpointer user_data)
 {
     Playlist *playlist = (Playlist *) hook_data;
+    if (playlist != NULL)
+        playlistwin_update_list(playlist);
 
-    playlistwin_update_list(playlist);
+    playlist_manager_update();
 }
 
 void ui_playlist_evlistener_init(void)
 {
-    hook_associate("playlistwin update list", ui_playlist_evlistener_playlistwin_update_list, NULL);
+    hook_associate("playlist update",
+                   ui_playlist_evlistener_playlist_update, NULL);
 } 
