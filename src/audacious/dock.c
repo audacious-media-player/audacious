@@ -31,6 +31,8 @@
 
 #include "platform/smartinclude.h"
 
+static GList *dock_window_list = NULL;
+
 struct _DockedWindow {
     GtkWindow *w;
     gint offset_x, offset_y;
@@ -500,4 +502,9 @@ dock_window_set_decorated(GList * list, GtkWindow * window,
 GList *
 get_dock_window_list() {
     return dock_window_list;
+}
+
+void
+set_dock_window_list(GList * list) {
+    dock_window_list = list;
 }

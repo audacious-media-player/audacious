@@ -41,4 +41,4 @@ void ui_playlist_evlistener_init(void)
 {
     hook_associate("playlist update",
                    ui_playlist_evlistener_playlist_update, NULL);
-} 
+}

@@ -346,7 +346,7 @@ playlistwin_set_shade(gboolean shaded)
         ui_skinned_set_push_button_data(playlistwin_close, 167, 3, -1, -1);
     }
 
-    dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
+    dock_shade(get_dock_window_list(), GTK_WINDOW(playlistwin),
                playlistwin_get_height());
 
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
@@ -1051,7 +1051,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              (cfg.easy_move || event->y < 14))
     {
-        dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
+        dock_move_press(get_dock_window_list(), GTK_WINDOW(playlistwin), event,
                         FALSE);
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS

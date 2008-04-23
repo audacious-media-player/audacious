@@ -189,13 +189,13 @@ mainwin_set_shade_menu_cb(gboolean shaded)
     cfg.player_shaded = shaded;
 
     if (shaded) {
-        dock_shade(dock_window_list, GTK_WINDOW(mainwin),
+        dock_shade(get_dock_window_list(), GTK_WINDOW(mainwin),
                    MAINWIN_SHADED_HEIGHT * MAINWIN_SCALE_FACTOR);
     } else {
         gint height = !aud_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
             aud_active_skin->properties.mainwin_height;
 
-        dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * MAINWIN_SCALE_FACTOR);
+        dock_shade(get_dock_window_list(), GTK_WINDOW(mainwin), height * MAINWIN_SCALE_FACTOR);
     }
 
     mainwin_refresh_hints();
@@ -777,7 +777,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         (cfg.easy_move || event->y < 14)) {
-        dock_move_press(dock_window_list, GTK_WINDOW(mainwin), event,
+        dock_move_press(get_dock_window_list(), GTK_WINDOW(mainwin), event,
                         TRUE);
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS && event->y < 14) {

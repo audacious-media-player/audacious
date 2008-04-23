@@ -145,7 +145,7 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
     cfg.equalizer_shaded = shaded;
 
     if (shaded) {
-        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
+        dock_shade(get_dock_window_list(), GTK_WINDOW(equalizerwin),
                    14 * EQUALIZER_SCALE_FACTOR);
         ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
         ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
@@ -155,7 +155,7 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_show(equalizerwin_balance);
     }
     else {
-        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
+        dock_shade(get_dock_window_list(), GTK_WINDOW(equalizerwin),
                    116 * EQUALIZER_SCALE_FACTOR);
         ui_skinned_set_push_button_data(equalizerwin_shade, -1, 137, -1, 38);
         ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
@@ -229,7 +229,7 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
 {
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         (cfg.easy_move || cfg.equalizer_shaded || event->y < 14)) {
-         dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
+         dock_move_press(get_dock_window_list(), GTK_WINDOW(equalizerwin), event,
                          FALSE);
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS

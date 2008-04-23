@@ -82,8 +82,6 @@ extern const guint n_titlestring_presets;
 extern const gchar *chardet_detector_presets[];
 extern const guint n_chardet_detector_presets;
 
-extern GList *dock_window_list;
-
 extern gboolean has_x11_connection;
 
 extern GCond *cond_scan;

@@ -23,8 +23,10 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef BMPCONFIG_H
-#define BMPCONFIG_H
+#ifndef AUDCONFIG_H
+#define AUDCONFIG_H
+
+#include <glib.h>
 
 struct _AudConfig {
     gint player_x, player_y;

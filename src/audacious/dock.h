@@ -45,5 +45,6 @@ GList *dock_window_set_decorated(GList * list, GtkWindow * window,
 void dock_window_resize(GtkWindow * widget, gint new_w, gint new_h, gint w, gint h);
 
 GList *get_dock_window_list();
+void set_dock_window_list(GList * list);
 
 #endif

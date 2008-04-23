@@ -89,8 +89,8 @@
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
-gboolean has_x11_connection = FALSE;    /* do we have an X11 connection? */
-const gchar *application_name = N_("Audacious");
+gboolean has_x11_connection = FALSE;  /* do we have an X11 connection? */
+static const gchar *application_name = N_("Audacious");
 
 struct _AudCmdLineOpt {
     gchar **filenames;
@@ -108,9 +108,7 @@ struct _AudCmdLineOpt {
 
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
-AudCmdLineOpt options;
-
-AudConfig cfg;
+static AudCmdLineOpt options;
 
 const gchar *aud_titlestring_presets[] = {
     "${title}",
@@ -120,7 +118,6 @@ const gchar *aud_titlestring_presets[] = {
     "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }${?track-number:${track-number}. }${title}",
     "${?album:${album} - }${title}"
 };
-
 const guint n_titlestring_presets = G_N_ELEMENTS(aud_titlestring_presets);
 
 const gchar *chardet_detector_presets[] = {
@@ -138,12 +135,9 @@ const gchar *chardet_detector_presets[] = {
     N_("Universal")
 #endif
 };
+const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);
 
-const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);    
 gchar *aud_paths[BMP_PATH_COUNT] = {};
-
-GList *dock_window_list = NULL;
-
 
 GCond *cond_scan;
 GMutex *mutex_scan;

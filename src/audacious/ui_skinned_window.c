@@ -272,8 +272,9 @@ ui_skinned_window_new(const gchar *wmclass_name)
                           GDK_VISIBILITY_NOTIFY_MASK | GDK_EXPOSURE_MASK);
     gtk_widget_realize(GTK_WIDGET(widget));
 
-    dock_window_list = dock_window_set_decorated(dock_window_list,
-	GTK_WINDOW(widget), cfg.show_wm_decorations);
+    set_dock_window_list(dock_window_set_decorated(get_dock_window_list(),
+                                                   GTK_WINDOW(widget),
+                                                   cfg.show_wm_decorations));
     gtk_widget_set_app_paintable(GTK_WIDGET(widget), TRUE);
     gdk_window_set_back_pixmap(widget->window, NULL, FALSE);
     gtk_widget_shape_combine_mask(widget, NULL, 0, 0);

@@ -31,19 +31,21 @@
 #  include <samplerate.h>
 #endif
 
+#include "audconfig.h"
+
 #include "effect.h"
 #include "general.h"
 #include "playback.h"
 #include "pluginenum.h"
-#include "ui_skin.h"
 #include "ui_equalizer.h"
 #include "ui_playlist.h"
+#include "ui_skin.h"
 #include "ui_skinned_window.h"
 #include "ui_vis.h"
 #include "util.h"
 #include "visualization.h"
 
-#include "audconfig.h"
+AudConfig cfg;
 
 AudConfig aud_default_config = {
     .player_x = MAINWIN_DEFAULT_POS_X,
