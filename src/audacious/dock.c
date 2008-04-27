@@ -423,7 +423,7 @@ dock_move_press(GList * window_list, GtkWindow * w,
 void
 dock_move_motion(GtkWindow * w, GdkEventMotion * event)
 {
-    gint offset_x, offset_y, win_x, win_y, x, y;
+    gint offset_x, offset_y, x, y;
     GList *dlist;
     GList *window_list;
 
@@ -436,8 +436,6 @@ dock_move_motion(GtkWindow * w, GdkEventMotion * event)
         GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w), "move_offset_y"));
     dlist = gtk_object_get_data(GTK_OBJECT(w), "docked_list");
     window_list = gtk_object_get_data(GTK_OBJECT(w), "window_list");
-
-    gtk_window_get_position(w, &win_x, &win_y);
 
     x = event->x_root - offset_x;
     y = event->y_root - offset_y;
