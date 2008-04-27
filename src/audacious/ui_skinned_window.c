@@ -122,13 +122,6 @@ static gboolean
 ui_skinned_window_motion_notify_event(GtkWidget *widget,
                                       GdkEventMotion *event)
 {
-    GtkWidgetClass *widget_class;
-
-    widget_class = (GtkWidgetClass*) parent;
-
-    if (widget_class->motion_notify_event != NULL)
-        widget_class->motion_notify_event(widget, event);
-
     if (dock_is_moving(GTK_WINDOW(widget)))
         dock_move_motion(GTK_WINDOW(widget), event);
 
