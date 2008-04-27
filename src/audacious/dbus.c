@@ -945,13 +945,8 @@ gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gin
     return TRUE;
 }
 
-static void call_playlist_add_url(GList *list, gpointer *data) {
-        playlist_add_url(playlist_get_active(), list->data);
-}
-
 gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error) {
-    g_list_foreach((GList *)list, (GFunc)call_playlist_add_url, NULL);
-    return TRUE;
+    return playlist_add_url(playlist_get_active(), (gchar *) list) > 0;
 }
 
 gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error) {
