@@ -28,6 +28,7 @@
 #include <gdk/gdk.h>
 #include <stdlib.h>
 #include "main.h"
+#include "ui_skinned_window.h"
 
 #include "platform/smartinclude.h"
 
@@ -226,6 +227,28 @@ docked_list_move(GList * list, gint x, gint y)
     for (node = list; node; node = g_list_next(node)) {
         dw = node->data;
         gtk_window_move(dw->w, x + dw->offset_x, y + dw->offset_y);
+
+        SkinnedWindow *window = SKINNED_WINDOW(dw->w);
+        if (window) {
+            switch(window->type) {
+
+            case WINDOW_MAIN:
+                cfg.player_x = x + dw->offset_x;
+                cfg.player_y = y + dw->offset_y;
+                break;
+            case WINDOW_EQ:
+                cfg.equalizer_x = x + dw->offset_x;
+                cfg.equalizer_y = y + dw->offset_y;
+                break;
+            case WINDOW_PLAYLIST:
+                cfg.playlist_x = x + dw->offset_x;
+                cfg.playlist_y = y + dw->offset_y;
+                break;
+            }
+
+            window->x = x + dw->offset_x;
+            window->y = y + dw->offset_y;
+        }
     }
 }
 

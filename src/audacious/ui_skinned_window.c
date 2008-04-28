@@ -66,46 +66,6 @@ ui_skinned_window_get_type(void)
   return window_type;
 }
 
-static gboolean
-ui_skinned_window_configure(GtkWidget *widget,
-                            GdkEventConfigure *event)
-{
-    GtkWidgetClass *widget_class;
-    SkinnedWindow *window = SKINNED_WINDOW(widget);
-
-    widget_class = (GtkWidgetClass*) parent;
-
-    if (widget_class->configure_event != NULL)
-        widget_class->configure_event(widget, event);
-
-    if (!GTK_WIDGET_VISIBLE(widget))
-        return FALSE;
-
-    switch(window->type) {
-        case WINDOW_MAIN:
-            if (cfg.show_wm_decorations)
-                gdk_window_get_root_origin(widget->window, &cfg.player_x, &cfg.player_y);
-            else
-                gdk_window_get_deskrelative_origin(widget->window, &cfg.player_x, &cfg.player_y);
-            break;
-        case WINDOW_EQ:
-            cfg.equalizer_x = event->x;
-            cfg.equalizer_y = event->y;
-            break;
-        case WINDOW_PLAYLIST:
-            cfg.playlist_x = event->x;
-            cfg.playlist_y = event->y;
-            break;
-    }
-
-    window->x = event->x;
-    window->y = event->y;
-
-    gtk_window_set_keep_above(GTK_WINDOW(widget), cfg.always_on_top);
-
-    return FALSE;
-}
-
 static void
 ui_skinned_window_map(GtkWidget *widget)
 {
@@ -116,6 +76,8 @@ ui_skinned_window_map(GtkWidget *widget)
         gtk_widget_shape_combine_mask(widget, skin_get_mask(aud_active_skin, SKIN_MASK_MAIN + cfg.player_shaded), 0, 0);
     else if (window->type == WINDOW_EQ)
         gtk_widget_shape_combine_mask(widget, skin_get_mask(aud_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded), 0, 0);
+
+    gtk_window_set_keep_above(GTK_WINDOW(widget), cfg.always_on_top);
 }
 
 static gboolean
@@ -212,7 +174,6 @@ ui_skinned_window_class_init(SkinnedWindowClass *klass)
 
     parent = gtk_type_class(gtk_window_get_type());
 
-    widget_class->configure_event = ui_skinned_window_configure;
     widget_class->motion_notify_event = ui_skinned_window_motion_notify_event;
     widget_class->expose_event = ui_skinned_window_expose;
     widget_class->focus_in_event = ui_skinned_window_focus_in;
