@@ -45,7 +45,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 
-#ifdef USE_SRC
+#ifdef USE_SAMPLERATE
 #  include <samplerate.h>
 #endif
 

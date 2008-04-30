@@ -51,7 +51,7 @@
 
 #include <math.h>
 
-#ifdef USE_SRC
+#ifdef USE_SAMPLERATE
 # include "src_flow.h"
 #endif
 
@@ -333,7 +333,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     if (bypass_dsp) {
         return TRUE;
     } else {
-#ifdef USE_SRC
+#ifdef USE_SAMPLERATE
         rate = src_flow_init(rate, nch); /* returns sample rate unchanged if resampling switched off */
 #endif
     
@@ -427,7 +427,7 @@ output_close_audio(void)
     replay_gain_info.album_gain = 0.0;
     replay_gain_info.album_peak = 0.0;
 
-#ifdef USE_SRC
+#ifdef USE_SAMPLERATE
     src_flow_free();
 #endif
     /* Do not close if there are still songs to play and the user has 
@@ -542,7 +542,7 @@ output_pass_audio(InputPlayback *playback,
         if (postproc_flow == NULL)
         {
             postproc_flow = flow_new();
-#ifdef USE_SRC
+#ifdef USE_SAMPLERATE
             flow_link_element(postproc_flow, src_flow);
 #endif
             flow_link_element(postproc_flow, equalizer_flow);

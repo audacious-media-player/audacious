@@ -23,7 +23,7 @@
 #  include "config.h"
 #endif
 
-#ifdef USE_SRC
+#ifdef USE_SAMPLERATE
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -129,5 +129,5 @@ src_flow(FlowContext *context) {
     }
 }
 
-#endif /* USE_SRC */
+#endif /* USE_SAMPLERATE */
 
