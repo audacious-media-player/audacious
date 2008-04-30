@@ -32,11 +32,13 @@ BUILDSYS_SHARED_LIB
 IMPLIB_LIBS=""
 AC_SUBST([IMPLIB_LIBS])
 
-dnl XXX
+
+dnl Plugin stuff
+dnl ========================
 SHARED_SUFFIX="$PLUGIN_SUFFIX"
 AC_SUBST([SHARED_SUFFIX])
 AC_DEFINE_UNQUOTED([SHARED_SUFFIX], "${SHARED_SUFFIX}",
-[Define the shared module suffix extension on your platform.])
+    [Define the shared module suffix extension on your platform.])
 
 AC_MSG_CHECKING([if you are running Apple-GCC])
 case "$target" in
@@ -124,31 +126,6 @@ dnl Check for libmcs
 dnl ================
 AUD_CHECK_MODULE([LIBMCS], [libmcs >= 0.7], [libmcs],
     [http://www.atheme.org/projects/mcs.shtml])
-
-
-### ---------------------------------------------------------------------------
-dnl Plugin stuff
-dnl ========================
-dnl Ok, first we find out what flags we need to use.
-IMPLIB_LIBS=''
-AC_SUBST([IMPLIB_LIBS])
-
-dnl XXX
-SHARED_SUFFIX=$PLUGIN_SUFFIX
-AC_SUBST([SHARED_SUFFIX])
-AC_DEFINE_UNQUOTED([SHARED_SUFFIX], "${SHARED_SUFFIX}",
-    [Define the shared module suffix extension on your platform.])
-
-AC_MSG_CHECKING([if you are running Apple-GCC])
-case "$target" in
-    *-apple-*)
-        AC_MSG_RESULT([yes, sorry you poor bastard])
-        LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices -framework Carbon"
-        ;;
-    *)
-        AC_MSG_RESULT([no])
-        ;;
-esac
 
 
 ### ---------------------------------------------------------------------------
