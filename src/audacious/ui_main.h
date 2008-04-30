@@ -189,4 +189,6 @@ void playback_get_sample_params(gint * bitrate,
 
 void ui_main_check_theme_engine(void);
 
+void util_menu_main_show( gint x , gint y , guint button , guint time );
+
 #endif

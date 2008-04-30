@@ -372,7 +372,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .effect_flow = effect_flow,
     .volumecontrol_flow = volumecontrol_flow,
 
-    .util_menu_main_show = NULL, /* deprecated --mf0102 */
+    .util_menu_main_show = util_menu_main_show,
     
     .get_dock_window_list = get_dock_window_list,
     .dock_add_window = dock_add_window,
