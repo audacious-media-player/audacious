@@ -2532,6 +2532,11 @@ void
 playlist_stop_get_info_thread(void)
 {
     g_static_rw_lock_writer_lock(&playlist_get_info_rwlock);
+    if (!playlist_get_info_going) {
+        g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
+        return;
+    }
+    
     playlist_get_info_going = FALSE;
     g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
 
