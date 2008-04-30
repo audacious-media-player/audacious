@@ -949,8 +949,6 @@ ui_fileinfo_show_entry(Playlist *playlist, PlaylistEntry *entry)
     gchar *path = g_strdup(entry->filename);
     Tuple *tuple = entry->tuple;
 
-    PLAYLIST_UNLOCK(playlist);
-
     /* plugin is capable of updating tags. we need to bypass tuple cache. --eugene */
     /* maybe code cleanup required... */
     if (entry != NULL &&
@@ -1005,6 +1003,8 @@ ui_fileinfo_show(Playlist *playlist, guint pos)
 
     if ((node = g_list_nth(playlist->entries, pos)))
         ui_fileinfo_show_entry(playlist, node->data);
+
+    PLAYLIST_UNLOCK(playlist);
 }
 
 void
@@ -1014,4 +1014,6 @@ ui_fileinfo_show_current(Playlist *playlist)
 
     if (playlist->entries && playlist->position)
         ui_fileinfo_show_entry(playlist, playlist->position);
+
+    PLAYLIST_UNLOCK(playlist);
 }
