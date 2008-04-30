@@ -153,7 +153,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .uri_get_plugin = uri_get_plugin,
     .uri_set_plugin = uri_set_plugin,
 
-    .util_info_dialog = NULL, /* deprecated --mf0102 */
+    .util_info_dialog = util_info_dialog,
     .get_gentitle_format = get_gentitle_format,
 
     .escape_shell_chars = escape_shell_chars,
