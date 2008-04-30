@@ -632,8 +632,10 @@ aud_config_save(void)
 
     /* This is a bit lame .. it'll end up being written twice,
      * could do with being done a bit neater.  -larne   */
-    cfg_db_set_int(db, NULL, "playlist_position",
+    if (playlist) {
+        cfg_db_set_int(db, NULL, "playlist_position",
                        playlist_get_position(playlist));
+    }
 
     hook_call("config save", db);
 
@@ -747,7 +749,9 @@ aud_config_save(void)
 
     cfg_db_close(db);
 
-    playlist_save(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
+    if (!playlist_save(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE])) {
+        g_warning("Could not save main playlist\n");
+    }
 
     /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
     saved = NULL;
