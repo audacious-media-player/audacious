@@ -891,7 +891,7 @@ make_filebrowser(const gchar *title, gboolean save)
 }
 
 /**
- * xmms_show_message:
+ * util_info_dialog:
  * @title: The title of the message to show.
  * @text: The text of the message to show.
  * @button_text: The text of the button which will close the messagebox.
