@@ -176,10 +176,13 @@ playback_initiate(void)
 
     entry = playlist_get_entry_to_play(playlist);
     g_return_if_fail(entry != NULL);
+
+    if (!playback_play_file(entry))
+        return;
+
 #ifdef USE_DBUS
     mpris_emit_track_change(mpris);
 #endif
-    playback_play_file(entry);
 
     playlist_check_pos_current(playlist);
 
@@ -384,6 +387,11 @@ playback_play_file(PlaylistEntry *entry)
             entry->tuple = pr->tuple;
 
             g_free(pr);
+        }
+        else
+        {
+            mainwin_stop_pushed();
+            return FALSE;
         }
     }
 
