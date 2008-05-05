@@ -28,7 +28,7 @@
 #include <glib.h>
 #include "config.h"
 
-#define PLUGIN_FILENAME(name) ("lib" name SHARED_SUFFIX)
+#define PLUGIN_FILENAME(name) (name SHARED_SUFFIX)
 
 void plugin_system_init(void);
 void plugin_system_cleanup(void);
