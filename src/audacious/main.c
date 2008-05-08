@@ -110,32 +110,6 @@ typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
 static AudCmdLineOpt options;
 
-const gchar *aud_titlestring_presets[] = {
-    "${title}",
-    "${?artist:${artist} - }${title}",
-    "${?artist:${artist} - }${?album:${album} - }${title}",
-    "${?artist:${artist} - }${?album:${album} - }${?track-number:${track-number}. }${title}",
-    "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }${?track-number:${track-number}. }${title}",
-    "${?album:${album} - }${title}"
-};
-const guint n_titlestring_presets = G_N_ELEMENTS(aud_titlestring_presets);
-
-const gchar *chardet_detector_presets[] = {
-    N_("None"),
-    N_("Japanese"),
-    N_("Taiwanese"),
-    N_("Chinese"),
-    N_("Korean"),
-    N_("Russian"),
-    N_("Greek"),
-    N_("Hebrew"),
-    N_("Turkish"),
-    N_("Arabic"),
-#ifdef HAVE_UDET
-    N_("Universal")
-#endif
-};
-const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);
 
 gchar *aud_paths[BMP_PATH_COUNT] = {};
 
@@ -149,17 +123,6 @@ static void
 dump_version(void)
 {
     g_printf("%s %s [%s]\n", _(application_name), VERSION, svn_stamp);
-}
-
-const gchar *
-get_gentitle_format(void)
-{
-    guint titlestring_preset = cfg.titlestring_preset;
-
-    if (titlestring_preset < n_titlestring_presets)
-        return aud_titlestring_presets[titlestring_preset];
-
-    return cfg.gentitle_format;
 }
 
 static void

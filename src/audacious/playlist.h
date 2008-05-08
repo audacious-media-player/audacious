@@ -106,6 +106,8 @@ typedef enum {
     PLAYLIST_ASSOC_SHUFFLE
 } PlaylistAssociation;
 
+extern const guint n_titlestring_presets;
+
 PlaylistEntry *playlist_entry_new(const gchar * filename,
                                   const gchar * title, const gint len,
 				  InputPlugin * dec);

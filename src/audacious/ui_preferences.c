@@ -159,6 +159,26 @@ static TitleFieldTag title_field_tags[] = {
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" },
 };
+static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
+
+
+const gchar *chardet_detector_presets[] = {
+    N_("None"),
+    N_("Japanese"),
+    N_("Taiwanese"),
+    N_("Chinese"),
+    N_("Korean"),
+    N_("Russian"),
+    N_("Greek"),
+    N_("Hebrew"),
+    N_("Turkish"),
+    N_("Arabic"),
+#ifdef HAVE_UDET
+    N_("Universal")
+#endif
+};
+const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);
+
 
 typedef struct {
     void *next;
@@ -168,8 +188,6 @@ typedef struct {
 } CategoryQueueEntry;
 
 CategoryQueueEntry *category_queue = NULL;
-
-static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
 typedef enum {
     WIDGET_NONE,

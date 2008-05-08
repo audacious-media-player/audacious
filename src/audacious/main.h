@@ -76,12 +76,6 @@ enum {
 
 extern gchar *aud_paths[];
 
-extern const gchar *aud_titlestring_presets[];
-extern const guint n_titlestring_presets;
-
-extern const gchar *chardet_detector_presets[];
-extern const guint n_chardet_detector_presets;
-
 extern gboolean has_x11_connection;
 
 extern GCond *cond_scan;

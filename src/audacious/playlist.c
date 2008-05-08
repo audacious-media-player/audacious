@@ -142,6 +142,17 @@ static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 #define EXT_HAVE_SUBTUNE    2
 #define EXT_CUSTOM  3
 
+const gchar *aud_titlestring_presets[] = {
+    "${title}",
+    "${?artist:${artist} - }${title}",
+    "${?artist:${artist} - }${?album:${album} - }${title}",
+    "${?artist:${artist} - }${?album:${album} - }${?track-number:${track-number}. }${title}",
+    "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }${?track-number:${track-number}. }${title}",
+    "${?album:${album} - }${title}"
+};
+const guint n_titlestring_presets = G_N_ELEMENTS(aud_titlestring_presets);
+
+
 static gint filter_by_extension(const gchar *filename);
 static gboolean is_http(const gchar *filename);
 static gboolean do_precheck(Playlist *playlist, const gchar *uri, ProbeResult **pr);
@@ -3323,4 +3334,15 @@ is_http(const gchar *uri)
     }
 
     return rv;
+}
+
+const gchar *
+get_gentitle_format(void)
+{
+    guint titlestring_preset = cfg.titlestring_preset;
+
+    if (titlestring_preset < n_titlestring_presets)
+        return aud_titlestring_presets[titlestring_preset];
+
+    return cfg.gentitle_format;
 }
