@@ -159,6 +159,8 @@ AUD_ARG_ENABLE([dbus], [yes],
     if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
         enable_dbus="no"
     else
+        ADD_PC_REQUIRES([dbus-1 >= 0.60])
+        ADD_PC_REQUIRES([dbus-glib-1 >= 0.60])
         AC_DEFINE([USE_DBUS], 1, [Define if D-Bus support enabled])
         AC_DEFINE([DBUS_SERVICES_DIR], "$datadir/dbus-1/services",
             [Location of D-Bus services directory])
