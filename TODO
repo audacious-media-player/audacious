@@ -1,5 +1,11 @@
 Long-term "TODO"
 ================
+- URIs with "?" are stripped (the subtune support uses that), which is bad,
+  because some (a lot) of real-world URLs use 'GET' arguments. this breaks
+  probing, but current input probing is confusing (and possibly broken anyway)
+  and should be refactored.
+
+
 - mime-types support:
   * there is already code for mime support, but I think it may not be
     sufficient as it is designed for input plugins only -- 
