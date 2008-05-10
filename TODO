@@ -1,0 +1,56 @@
+Long-term "TODO"
+================
+- mime-types support:
+  * there is already code for mime support, but I think it may not be
+    sufficient as it is designed for input plugins only -- 
+    also playlist containers etc. need this (IMHO)
+
+  * might be nicer to have the type registrations in plugin struct
+    instead of a separate function, a'la vfs_extensions.
+
+
+- document the different APIs via Doxygen
+
+
+- unified debugging/message system, for core and plugins
+  * something like glib logging system, with logging levels
+  * hardcoded "debugging" levels and/or macro-wrappers that would
+    disable superfluous debugging output compile-time.
+  --- being planned by ccr
+
+
+- audacious VFS is not 64-bit offset safe, breakage will most likely occur,
+  if files larger than 2^31 are used (rather unlikely, tho, but still...)
+
+  * nenolod says: current vfs sucks, it needs a "rewrite":
+    - buffering support
+    - non-blocking I/O support
+
+
+- {core,plugins}/configure.ac need some cleanup loving.
+  * make session management (SM) optional.
+  * build system cleanups .. extra.mk.in? wtf?
+  --- this is in progress, worked on by ccr
+
+
+- plugin rewrites:
+  * madplug
+  * modplug (in progress by ccr)
+  * scrobbler
+
+
+- playlist.c: playlist_clear() is VERY slow, possible reasons?
+  * GList sucks? (it does, but is it the reason here?)
+  * playlist_entry_free()?
+  * mowgli_heap_free()?
+
+  possible solutions?
+  * mempools for playlist data? not sure if possible, the tuple heaps
+    should then somehow be collected into pools...
+
+
+- playlist.c: racecondition in scanner thread vs. playlist manipulation
+  (playlist_clear(), free, etc.)
+  * go through scanner thread code and revise it.
+  * also all playlist manipulation should be double-checked.
+  * .. actually, the whole playlist.c should be refactored completely.
