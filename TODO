@@ -47,7 +47,8 @@ Long-term "TODO"
   possible solutions?
   * mempools for playlist data? not sure if possible, the tuple heaps
     should then somehow be collected into pools...
-
+  * storing the playlist as a GtkTreeModel seems to be fairly fast (at least
+    in mudkip-player it is) --nenolod
 
 - playlist.c: racecondition in scanner thread vs. playlist manipulation
   (playlist_clear(), free, etc.)
