@@ -399,18 +399,18 @@ input_check_file(const gchar *filename, gboolean loading)
 
     // apply mimetype check. note that stdio does not support mimetype check.
     mimetype = vfs_get_metadata(fd, "content-type");
-    if ((ip = mime_get_plugin(mimetype)) != NULL && ip->enabled) {
-        while(1) {
-            if (!ip || !ip->enabled)
-                continue;
-
-            pr = input_do_check_file(ip, fd, filename_proxy, loading);
-
-            if(pr) {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-                return pr;
-            }
+    if (mimetype) {
+        ip = mime_get_plugin(mimetype);
+        g_free(mimetype);
+    } else
+        ip = NULL;
+    
+    if (ip && ip->enabled) {
+        pr = input_do_check_file(ip, fd, filename_proxy, loading);
+        if (pr) {
+            g_free(filename_proxy);
+            vfs_fclose(fd);
+            return pr;
         }
     }
 
