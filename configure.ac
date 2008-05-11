@@ -57,30 +57,9 @@ dnl ===========
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.14.0])
 
-
-dnl Check for C and C++ compilers
-dnl =============================
-AUD_CHECK_GNU_MAKE
-AC_PROG_CC
-AC_PROG_CXX
-AM_PROG_AS
-AC_ISC_POSIX
-AC_C_BIGENDIAN
-
-if test "x$GCC" = "xyes"; then
-    CFLAGS="$CFLAGS -Wall -pipe"
-fi
-
-
-dnl Checks for various programs
-dnl ===========================
-AC_PROG_LN_S
-AC_PROG_MAKE_SET
-AC_PATH_PROG([RM], [rm])
-AC_PATH_PROG([MV], [mv])
-AC_PATH_PROG([CP], [cp])
-AC_PATH_PROG([AR], [ar])
-AC_PATH_PROG([RANLIB], [ranlib])
+dnl Checks common for core and plugins
+dnl ==================================
+AUD_COMMON_PROGS
 
 
 dnl Check for headers and functions
@@ -104,28 +83,6 @@ AUD_ARG_ENABLE([user-plugin-dir], [yes],
 if test "x$enable_user_plugin_dir" = "xno"; then
     AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
 fi
-
-
-### ---------------------------------------------------------------------------
-dnl Check for Gtk+/GLib and pals
-dnl ============================
-AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.14.0], [Glib2])
-AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.14.0], [gthread-2.0])
-AUD_CHECK_MODULE([GTK], [gtk+-2.0], [>= 2.10.0], [Gtk+2])
-AUD_CHECK_MODULE([PANGO], [pango], [>= 1.8.0], [Pango])
-AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.2.4], [Cairo])
-
-
-dnl Check for libmowgli
-dnl ===================
-AUD_CHECK_MODULE([MOWGLI], [libmowgli], [>= 0.4.0], [libmowgli],
-    [http://www.atheme.org/projects/mowgli.shtml])
-
-
-dnl Check for libmcs
-dnl ================
-AUD_CHECK_MODULE([LIBMCS], [libmcs >= 0.7], [libmcs],
-    [http://www.atheme.org/projects/mcs.shtml])
 
 
 ### ---------------------------------------------------------------------------
