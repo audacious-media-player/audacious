@@ -25,10 +25,6 @@
 #include "main.h"
 #include "input.h"
 #include "playback.h"
-#include "ui_main.h"
-#include "ui_playlist.h"
-#include "ui_equalizer.h"
-#include "ui_jumptotrack.h"
 #include "auddrct.h"
 #include "playlist.h"
 
@@ -43,17 +39,15 @@ drct_quit ( void )
 void
 drct_eject ( void )
 {
-    if (has_x11_connection)
-        mainwin_eject_pushed();
-    return;
+    gboolean play_button = FALSE;
+    hook_call("filebrowser show", &play_button);
 }
 
 void
 drct_jtf_show ( void )
 {
-    if (has_x11_connection)
-        ui_jump_to_track();
-    return;
+    gboolean show = TRUE;
+    hook_call("ui jump to track show", &show);
 }
 
 gboolean
@@ -65,9 +59,7 @@ drct_main_win_is_visible ( void )
 void
 drct_main_win_toggle ( gboolean show )
 {
-    if (has_x11_connection)
-        mainwin_show(show);
-    return;
+    hook_call("mainwin show", &show);
 }
 
 gboolean
@@ -79,9 +71,7 @@ drct_eq_win_is_visible ( void )
 void
 drct_eq_win_toggle ( gboolean show )
 {
-    if (has_x11_connection)
-        equalizerwin_show(show);
-    return;
+    hook_call("equalizerwin show", &show);
 }
 
 gboolean
@@ -93,13 +83,7 @@ drct_pl_win_is_visible ( void )
 void
 drct_pl_win_toggle ( gboolean show )
 {
-    if (has_x11_connection) {
-        if (show)
-            playlistwin_show();
-        else
-            playlistwin_hide();
-    }
-    return;
+    hook_call("playlistwin show", &show);
 }
 
 void drct_activate(void)

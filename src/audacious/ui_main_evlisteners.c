@@ -29,12 +29,16 @@
 #include "playlist_evmessages.h"
 #include "visualization.h"
 
-#include "ui_main.h"
+#include "ui_credits.h"
 #include "ui_equalizer.h"
+#include "ui_fileopener.h"
+#include "ui_jumptotrack.h"
+#include "ui_main.h"
+#include "ui_playlist.h"
+#include "ui_preferences.h"
 #include "ui_skinned_playstatus.h"
 #include "ui_skinned_textbox.h"
 #include "ui_skinned_window.h"
-#include "ui_playlist.h"
 
 static gint song_info_timeout_source = 0;
 static gint update_vis_timeout_source = 0;
@@ -191,6 +195,71 @@ ui_main_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
 }
 
 static void
+ui_main_evlistener_mainwin_set_always_on_top(gpointer hook_data, gpointer user_data)
+{
+    gboolean *ontop = (gboolean*)hook_data;
+    mainwin_set_always_on_top(*ontop);
+}
+
+static void
+ui_main_evlistener_mainwin_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *show = (gboolean*)hook_data;
+    mainwin_show(*show);
+}
+
+static void
+ui_main_evlistener_equalizerwin_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *show = (gboolean*)hook_data;
+    equalizerwin_show(*show);
+}
+
+static void
+ui_main_evlistener_prefswin_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *show = (gboolean*)hook_data;
+    if (*show == TRUE)
+        show_prefs_window();
+    else
+        hide_prefs_window();
+}
+
+static void
+ui_main_evlistener_aboutwin_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *show = (gboolean*)hook_data;
+    if (*show == TRUE)
+        show_about_window();
+    else
+        hide_about_window();
+}
+
+
+static void
+ui_main_evlistener_ui_jump_to_track_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *show = (gboolean*)hook_data;
+    if (*show == TRUE)
+        ui_jump_to_track();
+    else
+        ui_jump_to_track_hide();
+}
+
+static void
+ui_main_evlistener_filebrowser_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *play_button = (gboolean*)hook_data;
+    run_filebrowser(*play_button);
+}
+
+static void
+ui_main_evlistener_filebrowser_hide(gpointer hook_data, gpointer user_data)
+{
+    hide_filebrowser();
+}
+
+static void
 ui_main_evlistener_config_save(gpointer hook_data, gpointer user_data)
 {
     ConfigDb *db = (ConfigDb *) hook_data;
@@ -221,6 +290,14 @@ ui_main_evlistener_init(void)
     hook_associate("playback play file", ui_main_evlistener_playback_play_file, NULL);
     hook_associate("playlist end reached", ui_main_evlistener_playlist_end_reached, NULL);
     hook_associate("playlist info change", ui_main_evlistener_playlist_info_change, NULL);
+    hook_associate("mainwin set always on top", ui_main_evlistener_mainwin_set_always_on_top, NULL);
+    hook_associate("mainwin show", ui_main_evlistener_mainwin_show, NULL);
+    hook_associate("equalizerwin show", ui_main_evlistener_equalizerwin_show, NULL);
+    hook_associate("prefswin show", ui_main_evlistener_prefswin_show, NULL);
+    hook_associate("aboutwin show", ui_main_evlistener_aboutwin_show, NULL);
+    hook_associate("ui jump to track show", ui_main_evlistener_ui_jump_to_track_show, NULL);
+    hook_associate("filebrowser show", ui_main_evlistener_filebrowser_show, NULL);
+    hook_associate("filebrowser hide", ui_main_evlistener_filebrowser_hide, NULL);
     hook_associate("config save", ui_main_evlistener_config_save, NULL);
 }
 

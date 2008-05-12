@@ -76,8 +76,6 @@ enum {
 
 extern gchar *aud_paths[];
 
-extern gboolean has_x11_connection;
-
 extern GCond *cond_scan;
 extern GMutex *mutex_scan;
 #if defined(USE_DBUS) && defined(_AUDACIOUS_CORE)

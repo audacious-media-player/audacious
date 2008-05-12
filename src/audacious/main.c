@@ -89,7 +89,6 @@
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
-gboolean has_x11_connection = FALSE;  /* do we have an X11 connection? */
 static const gchar *application_name = N_("Audacious");
 
 struct _AudCmdLineOpt {
@@ -788,8 +787,6 @@ main(gint argc, gchar ** argv)
             playlistwin_show();
 
         hint_set_always(cfg.always_on_top);
-
-        has_x11_connection = TRUE;
 
         resume_playback_on_startup();
         

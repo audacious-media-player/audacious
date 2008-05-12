@@ -33,19 +33,13 @@
 
 #include <math.h>
 #include "main.h"
-#include "ui_equalizer.h"
-#include "ui_main.h"
 #include "input.h"
 #include "playback.h"
 #include "playlist.h"
-#include "ui_playlist.h"
-#include "ui_preferences.h"
 #include "tuple.h"
-#include "ui_jumptotrack.h"
 #include "strings.h"
-#include "ui_credits.h"
+#include "ui_equalizer.h"
 #include "ui_skin.h"
-#include "ui_fileopener.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -523,23 +517,19 @@ gboolean audacious_rc_quit(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_eject(RemoteObject *obj, GError **error) {
-    if (has_x11_connection)
-        mainwin_eject_pushed();
+    drct_eject();
     return TRUE;
 }
 
 gboolean audacious_rc_main_win_visible(RemoteObject *obj,
                                        gboolean *is_main_win, GError **error) {
     *is_main_win = cfg.player_visible;
-    g_message("main win %s\n", (cfg.player_visible? "visible" : "hidden"));
     return TRUE;
 }
 
 gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
                                     GError **error) {
-    g_message("%s main win\n", (show? "showing": "hiding"));
-    if (has_x11_connection)
-        mainwin_show(show);
+    drct_main_win_toggle(show);
     return TRUE;
 }
 
@@ -551,8 +541,7 @@ gboolean audacious_rc_equalizer_visible(RemoteObject *obj,
 
 gboolean audacious_rc_show_equalizer(RemoteObject *obj, gboolean show,
                                      GError **error) {
-    if (has_x11_connection)
-        equalizerwin_show(show);
+    drct_eq_win_toggle(show);
     return TRUE;
 }
 
@@ -564,12 +553,7 @@ gboolean audacious_rc_playlist_visible(RemoteObject *obj, gboolean *is_pl_win,
 
 gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
                                     GError **error) {
-    if (has_x11_connection) {
-        if (show)
-            playlistwin_show();
-        else
-            playlistwin_hide();
-    }
+    drct_pl_win_toggle(show);
     return TRUE;
 }
 
@@ -821,42 +805,27 @@ gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
 
 /* New on Oct 5 */
 gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **error) {
-    if (has_x11_connection) {
-        if (show)
-            show_prefs_window();
-        else
-            hide_prefs_window();
-    }
+    hook_call("prefswin show", &show);
     return TRUE;
 }
+
 gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **error) {
-    if (has_x11_connection) {
-        if (show)
-            show_about_window();
-        else
-            hide_about_window();
-    }
+    hook_call("aboutwin show", &show);
     return TRUE;
 }
 
 gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error) {
-    if (has_x11_connection) {
-        if (show)
-            ui_jump_to_track();
-        else
-            ui_jump_to_track_hide();
-    }
+    hook_call("ui jump to track show", &show);
     return TRUE;
 }
 
 gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError **error)
 {
-    if (has_x11_connection) {
-        if (show)
-            run_filebrowser(FALSE);
-        else
-            hide_filebrowser();
-    }
+    gboolean play_button = FALSE;
+    if (show)
+        hook_call("filebrowser show", &play_button);
+    else
+        hook_call("filebrowser hide", NULL);
     return TRUE;
 }
 
@@ -873,14 +842,15 @@ gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
+/* TODO: these skin functions should be removed when skin functionality
+ * disappears --mf0102 */
 gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error) {
     *skin = g_strdup(aud_active_skin->path);
     return TRUE;
 }
 
 gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error) {
-    if (has_x11_connection == TRUE)
-        aud_active_skin_load(skin);
+    aud_active_skin_load(skin);
     return TRUE;
 }
 
@@ -890,9 +860,7 @@ gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *
 }
 
 gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **error) {
-    if (has_x11_connection) {
-        mainwin_set_always_on_top(ontop);
-    }
+    hook_call("mainwin set always on top", &ontop);
     return TRUE;
 }
 
