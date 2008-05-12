@@ -105,11 +105,9 @@ struct _AudCmdLineOpt {
     gchar *previous_session_id;
     gboolean macpack;
 };
-
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
 static AudCmdLineOpt options;
-
 
 gchar *aud_paths[BMP_PATH_COUNT] = {};
 
@@ -120,7 +118,7 @@ MprisPlayer *mpris;
 #endif
 
 static void
-dump_version(void)
+print_version(void)
 {
     g_printf("%s %s [%s]\n", _(application_name), VERSION, svn_stamp);
 }
@@ -135,18 +133,6 @@ aud_make_user_dir(void)
     make_directory(aud_paths[BMP_PATH_USER_SKIN_DIR], mode755);
     make_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
     make_directory(aud_paths[BMP_PATH_PLAYLISTS_DIR], mode755);
-}
-
-static void
-aud_free_paths(void)
-{
-    int i;
-
-    for (i = 0; i < BMP_PATH_COUNT; i++)
-    {
-        g_free(aud_paths[i]);
-        aud_paths[i] = 0;
-    }
 }
 
 static void
@@ -205,6 +191,17 @@ aud_init_paths()
     g_atexit(aud_free_paths);
 }
 
+static void
+aud_free_paths(void)
+{
+    int i;
+
+    for (i = 0; i < BMP_PATH_COUNT; i++)
+    {
+        g_free(aud_paths[i]);
+        aud_paths[i] = 0;
+    }
+}
 
 static void
 aud_set_default_icon(void)
@@ -329,7 +326,7 @@ handle_cmd_line_options()
 
     if (options.version)
     {
-        dump_version();
+        print_version();
         exit(EXIT_SUCCESS);
     }
 
