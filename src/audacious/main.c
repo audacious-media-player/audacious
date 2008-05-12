@@ -136,6 +136,18 @@ aud_make_user_dir(void)
 }
 
 static void
+aud_free_paths(void)
+{
+    int i;
+
+    for (i = 0; i < BMP_PATH_COUNT; i++)
+    {
+        g_free(aud_paths[i]);
+        aud_paths[i] = 0;
+    }
+}
+
+static void
 aud_init_paths()
 {
     char *xdg_config_home;
@@ -189,18 +201,6 @@ aud_init_paths()
     g_free(xdg_cache_home);
 
     g_atexit(aud_free_paths);
-}
-
-static void
-aud_free_paths(void)
-{
-    int i;
-
-    for (i = 0; i < BMP_PATH_COUNT; i++)
-    {
-        g_free(aud_paths[i]);
-        aud_paths[i] = 0;
-    }
 }
 
 static void
