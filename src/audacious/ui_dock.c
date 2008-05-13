@@ -23,7 +23,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include "dock.h"
+#include "ui_dock.h"
 
 #include <gdk/gdk.h>
 #include <stdlib.h>

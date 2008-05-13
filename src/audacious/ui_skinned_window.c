@@ -29,7 +29,7 @@
 #include <string.h>
 
 #include "main.h"
-#include "dock.h"
+#include "ui_dock.h"
 #include "ui_skinned_window.h"
 #include "ui_skinned_cursor.h"
 #include "ui_playlist.h"

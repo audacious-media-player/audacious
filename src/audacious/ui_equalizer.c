@@ -40,7 +40,6 @@
 
 #include "platform/smartinclude.h"
 #include "ui_skin.h"
-#include "dock.h"
 #include "input.h"
 #include "main.h"
 #include "ui_manager.h"
@@ -56,6 +55,7 @@
 
 #include "images/audacious_eq.xpm"
 
+#include "ui_dock.h"
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_horizontal_slider.h"

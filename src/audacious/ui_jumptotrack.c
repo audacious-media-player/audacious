@@ -59,12 +59,12 @@
 #include "main.h"
 
 #include "dnd.h"
-#include "dock.h"
 #include "input.h"
 #include "playback.h"
 #include "playlist.h"
 #include "pluginenum.h"
 #include "ui_credits.h"
+#include "ui_dock.h"
 #include "ui_equalizer.h"
 #include "ui_fileopener.h"
 #include "ui_manager.h"

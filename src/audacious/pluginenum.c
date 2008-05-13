@@ -38,7 +38,6 @@
 #include <string.h>
 
 #include "main.h"
-#include "dock.h"
 #include "playback.h"
 #include "playlist.h"
 #include "strings.h"
@@ -56,6 +55,7 @@
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
 
+#include "ui_dock.h"
 #include "ui_preferences.h"
 #include "ui_fileinfo.h"
 #include "ui_fileinfopopup.h"

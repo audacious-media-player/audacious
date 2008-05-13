@@ -11,7 +11,6 @@ SRCS = af_equalizer.c					\
        custom_uri.c						\
        discovery.c						\
        dnd.c							\
-       dock.c							\
        effect.c							\
        equalizer_flow.c					\
        eventqueue.c						\
@@ -41,6 +40,7 @@ SRCS = af_equalizer.c					\
        ui_about.c						\
        ui_albumart.c					\
        ui_credits.c						\
+       ui_dock.c						\
        ui_equalizer.c					\
        ui_fileinfo.c					\
        ui_fileinfopopup.c				\

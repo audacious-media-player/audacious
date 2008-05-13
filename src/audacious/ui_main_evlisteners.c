@@ -182,6 +182,9 @@ static void
 ui_main_evlistener_playlist_end_reached(gpointer hook_data, gpointer user_data)
 {
     mainwin_clear_song_info();
+
+    if (cfg.stopaftersong)
+        mainwin_set_stopaftersong(FALSE);
 }
 
 static void

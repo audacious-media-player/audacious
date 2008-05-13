@@ -61,7 +61,6 @@
 #include "playlist_evmessages.h"
 #include "pluginenum.h"
 #include "strings.h"
-#include "ui_main.h"
 #include "ui_playlist.h"
 #include "util.h"
 #include "vfs.h"
@@ -1487,7 +1486,6 @@ playlist_eof_reached(Playlist *playlist)
     if (cfg.stopaftersong) {
         PLAYLIST_UNLOCK(playlist);
         hook_call("playlist end reached", NULL);
-        mainwin_set_stopaftersong(FALSE);
         return;
     }
 
