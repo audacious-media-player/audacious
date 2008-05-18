@@ -373,15 +373,13 @@ playlistwin_shade_toggle(void)
     playlistwin_set_shade_menu(!cfg.playlist_shaded);
 }
 
-static void
+static gboolean
 playlistwin_release(GtkWidget * widget,
                     GdkEventButton * event,
                     gpointer callback_data)
 {
     playlistwin_resizing = FALSE;
-
-    if (dock_is_moving(GTK_WINDOW(playlistwin)))
-       dock_move_release(GTK_WINDOW(playlistwin));
+    return FALSE;
 }
 
 void
@@ -1051,8 +1049,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              (cfg.easy_move || event->y < 14))
     {
-        dock_move_press(get_dock_window_list(), GTK_WINDOW(playlistwin), event,
-                        FALSE);
+        return FALSE;
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
              && event->y < 14) {
@@ -1071,7 +1068,7 @@ playlistwin_press(GtkWidget * widget,
                                 event->y_root + 2, 3, event->time);
     }
 
-    return FALSE;
+    return TRUE;
 }
 
 static gboolean

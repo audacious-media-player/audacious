@@ -227,35 +227,21 @@ gboolean
 equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
                    gpointer callback_data)
 {
-    if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-        (cfg.easy_move || cfg.equalizer_shaded || event->y < 14)) {
-         dock_move_press(get_dock_window_list(), GTK_WINDOW(equalizerwin), event,
-                         FALSE);
-    }
-    else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
+    if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
              && event->y < 14) {
         equalizerwin_set_shade(!cfg.equalizer_shaded);
         if (dock_is_moving(GTK_WINDOW(equalizerwin)))
             dock_move_release(GTK_WINDOW(equalizerwin));
+        return TRUE;
     }
-    else if (event->button == 3) {
+    if (event->button == 3) {
         /*
          * Pop up the main menu a few pixels down to avoid
          * anything to be selected initially.
          */
        ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
-    }
-
-    return FALSE;
-}
-
-static gboolean
-equalizerwin_release(GtkWidget * widget,
-                     GdkEventButton * event, gpointer callback_data)
-{
-    if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
-        dock_move_release(GTK_WINDOW(equalizerwin));
+       return TRUE;
     }
 
     return FALSE;
@@ -544,8 +530,6 @@ equalizerwin_create_window(void)
                      G_CALLBACK(equalizerwin_delete), NULL);
     g_signal_connect(equalizerwin, "button_press_event",
                      G_CALLBACK(equalizerwin_press), NULL);
-    g_signal_connect(equalizerwin, "button_release_event",
-                     G_CALLBACK(equalizerwin_release), NULL);
     g_signal_connect(equalizerwin, "key_press_event",
                      G_CALLBACK(equalizerwin_keypress), NULL);
 }

@@ -101,6 +101,23 @@ static gboolean ui_skinned_window_focus_out(GtkWidget *widget, GdkEventFocus *fo
     return val;
 }
 
+static gboolean ui_skinned_window_button_press(GtkWidget *widget, GdkEventButton *event) {
+    if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
+        (cfg.easy_move || cfg.equalizer_shaded || (event->y / cfg.scale_factor) < 14)) {
+         dock_move_press(get_dock_window_list(), GTK_WINDOW(widget),
+                         event, SKINNED_WINDOW(widget)->type == WINDOW_MAIN ? TRUE : FALSE);
+    }
+
+    return TRUE;
+}
+
+static gboolean ui_skinned_window_button_release(GtkWidget *widget, GdkEventButton *event) {
+    if (dock_is_moving(GTK_WINDOW(widget)))
+       dock_move_release(GTK_WINDOW(widget));
+
+    return TRUE;
+}
+
 static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *event) {
     SkinnedWindow *window = SKINNED_WINDOW(widget);
 
@@ -177,6 +194,8 @@ ui_skinned_window_class_init(SkinnedWindowClass *klass)
     widget_class->expose_event = ui_skinned_window_expose;
     widget_class->focus_in_event = ui_skinned_window_focus_in;
     widget_class->focus_out_event = ui_skinned_window_focus_out;
+    widget_class->button_press_event = ui_skinned_window_button_press;
+    widget_class->button_release_event = ui_skinned_window_button_release;
     widget_class->map = ui_skinned_window_map;
 }
 

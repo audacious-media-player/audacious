@@ -775,15 +775,11 @@ mainwin_mouse_button_press(GtkWidget * widget,
         event->y /= cfg.scale_factor;
     }
 
-    if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-        (cfg.easy_move || event->y < 14)) {
-        dock_move_press(get_dock_window_list(), GTK_WINDOW(mainwin), event,
-                        TRUE);
-    }
-    else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS && event->y < 14) {
+    if (event->button == 1 && event->type == GDK_2BUTTON_PRESS && event->y < 14) {
         mainwin_set_shade(!cfg.player_shaded);
         if (dock_is_moving(GTK_WINDOW(mainwin)))
             dock_move_release(GTK_WINDOW(mainwin));
+        return TRUE;
     }
 
     if (event->button == 3) {
@@ -821,6 +817,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
                                        event->x_root,
                                        event->y_root, 3, event->time);
         }
+        return TRUE;
     }
 
     return FALSE;
