@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDHORIZONTAL_SLIDER_H
-#define UISKINNEDHORIZONTAL_SLIDER_H
+#ifndef AUDACIOUS_UI_SKINNED_HORIZONTAL_SLIDER_H
+#define AUDACIOUS_UI_SKINNED_HORIZONTAL_SLIDER_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -66,4 +66,4 @@ gint ui_skinned_horizontal_slider_get_position(GtkWidget *widget);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_HORIZONTAL_SLIDER_H */

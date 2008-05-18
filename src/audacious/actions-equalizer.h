@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef ACTIONS_EQUALIZER_H
-#define ACTIONS_EQUALIZER_H
+#ifndef AUDACIOUS_ACTIONS_EQUALIZER_H
+#define AUDACIOUS_ACTIONS_EQUALIZER_H
 
 void action_equ_load_preset(void);
 void action_equ_load_auto_preset(void);
@@ -35,4 +35,4 @@ void action_equ_save_preset_eqf(void);
 void action_equ_delete_preset(void);
 void action_equ_delete_auto_preset(void);
 
-#endif
+#endif /* AUDACIOUS_ACTIONS_EQUALIZER_H */

@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_MAIN_H__
-#define __AUDACIOUS_MAIN_H__
+#ifndef AUDACIOUS_MAIN_H
+#define AUDACIOUS_MAIN_H
 
 #ifdef _AUDACIOUS_CORE
 # include "ui_main.h"
@@ -86,4 +86,4 @@ void aud_quit(void);
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_MAIN_H__ */
+#endif /* AUDACIOUS_MAIN_H */

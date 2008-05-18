@@ -22,8 +22,8 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#ifndef PLUGINENUM_H
-#define PLUGINENUM_H
+#ifndef AUDACIOUS_PLUGINENUM_H
+#define AUDACIOUS_PLUGINENUM_H
 
 #include <glib.h>
 #include "config.h"
@@ -42,4 +42,4 @@ Plugin *plugin_get_plugin(const gchar *filename);
 
 void plugin_set_current(Plugin *plugin);
 
-#endif
+#endif /* AUDACIOUS_PLUGINENUM_H */

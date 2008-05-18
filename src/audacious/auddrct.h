@@ -21,8 +21,8 @@
 /* audacious_drct_* provides a handy interface for player
    plugins, originally intended for migration from xmms_remote_* calls */
 
-#ifndef AUDDRCT_H
-#define AUDDRCT_H
+#ifndef AUDACIOUS_AUDDRCT_H
+#define AUDACIOUS_AUDDRCT_H
 
 #include <glib.h>
 
@@ -124,4 +124,4 @@ gint drct_pq_get_queue_position( gint pos );
 #define audacious_drct_get_playqueue_position audacious_drct_pq_get_position
 #define audacious_drct_get_playqueue_queue_position audaciuos_drct_pq_get_queue_position
 
-#endif
+#endif /* AUDACIOUS_AUDDRCT_H */

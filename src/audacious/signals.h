@@ -21,9 +21,9 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef SIGNALS_H
-#define SIGNALS_H
+#ifndef AUDACIOUS_SIGNALS_H
+#define AUDACIOUS_SIGNALS_H
 
 void signal_handlers_init(void);
 
-#endif
+#endif /* AUDACIOUS_SIGNALS_H */

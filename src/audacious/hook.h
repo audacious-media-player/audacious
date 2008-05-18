@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_HOOK_H__
-#define __AUDACIOUS_HOOK_H__
+#ifndef AUDACIOUS_HOOK_H
+#define AUDACIOUS_HOOK_H
 
 #include <glib.h>
 
@@ -39,4 +39,4 @@ gint hook_associate(const gchar *name, HookFunction func, gpointer user_data);
 gint hook_dissociate(const gchar *name, HookFunction func);
 void hook_call(const gchar *name, gpointer hook_data);
 
-#endif
+#endif /* AUDACIOUS_HOOK_H */

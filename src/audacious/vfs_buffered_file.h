@@ -58,4 +58,4 @@ VFSFile *vfs_buffered_file_release_live_fd(VFSFile *fd);
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_VFS_BUFFERED_FILE_H */

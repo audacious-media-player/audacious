@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDMONOSTEREO_H
-#define UISKINNEDMONOSTEREO_H
+#ifndef AUDACIOUS_UI_SKINNED_MONOSTEREO_H
+#define AUDACIOUS_UI_SKINNED_MONOSTEREO_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -63,4 +63,4 @@ void ui_skinned_monostereo_set_num_channels(GtkWidget *widget, gint nch);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_MONOSTEREO_H */

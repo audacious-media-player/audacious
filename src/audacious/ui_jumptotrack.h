@@ -23,11 +23,11 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef UI_JUMPTOTRACK_H
-#define UI_JUMPTOTRACK_H
+#ifndef AUDACIOUS_UI_JUMPTOTRACK_H
+#define AUDACIOUS_UI_JUMPTOTRACK_H
 
 extern void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
 extern void ui_jump_to_track(void);
 extern void ui_jump_to_track_hide(void);
 
-#endif
+#endif /* AUDACIOUS_UI_JUMPTOTRACK_H */

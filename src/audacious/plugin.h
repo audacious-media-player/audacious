@@ -32,8 +32,8 @@
  * SUCH DAMAGE.
  */
 
-#ifndef __AUDACIOUS_PLUGIN_H__
-#define __AUDACIOUS_PLUGIN_H__
+#ifndef AUDACIOUS_PLUGIN_H
+#define AUDACIOUS_PLUGIN_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -1206,4 +1206,4 @@ struct _DiscoveryPlugin {
 /* undefine the macro -- struct Plugin should be used instead. */
 #undef PLUGIN_COMMON_FIELDS
 
-#endif /* __AUDACIOUS_PLUGIN_H__ */
+#endif /* AUDACIOUS_PLUGIN_H */

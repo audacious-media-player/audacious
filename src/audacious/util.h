@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef AUDACIOUS_UTIL_H
+#define AUDACIOUS_UTIL_H
 
 #ifdef _AUDACIOUS_CORE
 # ifdef HAVE_CONFIG_H
@@ -100,4 +100,4 @@ void make_directory(const gchar * path, mode_t mode);
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_UTIL_H */

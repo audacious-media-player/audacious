@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UI_SKINNED_WINDOW_H
-#define UI_SKINNED_WINDOW_H
+#ifndef AUDACIOUS_UI_SKINNED_WINDOW_H
+#define AUDACIOUS_UI_SKINNED_WINDOW_H
 
 #define SKINNED_WINDOW(obj)          GTK_CHECK_CAST (obj, ui_skinned_window_get_type (), SkinnedWindow)
 #define SKINNED_WINDOW_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, ui_skinned_window_get_type (), SkinnedWindowClass)
@@ -61,4 +61,4 @@ extern GType ui_skinned_window_get_type(void);
 extern GtkWidget *ui_skinned_window_new(const gchar *wmclass_name);
 extern void ui_skinned_window_draw_all(GtkWidget *widget);
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_WINDOW_H */

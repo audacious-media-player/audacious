@@ -16,8 +16,8 @@
  * along with this program;  If not, see <http://www.gnu.org/licenses>.
  */
 
-#ifndef _UI_FILEINFO_H_
-#define _UI_FILEINFO_H_
+#ifndef AUDACIOUS_UI_FILEINFO_H
+#define AUDACIOUS_UI_FILEINFO_H
 
 #include "tuple.h"
 #include "plugin.h"
@@ -29,4 +29,4 @@ gchar* fileinfo_recursive_get_image(const gchar* path, const gchar* file_name, g
 void ui_fileinfo_show(Playlist *playlist, guint pos);
 void ui_fileinfo_show_current(Playlist *playlist);
 
-#endif
+#endif /* AUDACIOUS_UI_FILEINFO_H */

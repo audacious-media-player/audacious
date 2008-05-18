@@ -2,8 +2,8 @@
  * MPlayer libaf compatibility stuff
  */
 
-#ifndef AF_COMPAT_H
-#define AF_COMPAT_H
+#ifndef AUDACIOUS_AF_COMPAT_H
+#define AUDACIOUS_AF_COMPAT_H
 
 #include <glib.h>
 #include "main.h"
@@ -110,4 +110,4 @@ typedef struct af_control_ext_s{
 #define clamp(a,min,max) (((a)>(max))?(max):(((a)<(min))?(min):(a)))
 #endif
 
-#endif /* AF_COMPAT_H */
+#endif /* AUDACIOUS_AF_COMPAT_H */

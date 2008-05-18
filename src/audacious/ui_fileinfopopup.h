@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef _UI_FILEINFOPOPUP_H_
-#define _UI_FILEINFOPOPUP_H_
+#ifndef AUDACIOUS_UI_FILEINFOPOPUP_H
+#define AUDACIOUS_UI_FILEINFOPOPUP_H
 
 #include "audacious/tuple.h"
 #include <gtk/gtk.h>
@@ -33,4 +33,4 @@ void fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, Tuple *tuple);
 void fileinfopopup_show_from_title(GtkWidget *fileinfopopup_win, gchar *title);
 void fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused);
 
-#endif
+#endif /* AUDACIOUS_UI_FILEINFOPOPUP_H */

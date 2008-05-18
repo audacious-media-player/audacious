@@ -20,9 +20,9 @@
 
 #include <glib.h>
 
-#ifndef __AUDACIOUS_UI_MAIN_EVLISTENERS_H__
-#define __AUDACIOUS_UI_MAIN_EVLISTENERS_H__
+#ifndef AUDACIOUS_UI_MAIN_EVLISTENERS_H
+#define AUDACIOUS_UI_MAIN_EVLISTENERS_H
 
 void ui_main_evlistener_init(void);
 
-#endif
+#endif /* AUDACIOUS_UI_MAIN_EVLISTENERS_H */

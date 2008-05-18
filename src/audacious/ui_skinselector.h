@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef SKINWIN_H
-#define SKINWIN_H
+#ifndef AUDACIOUS_UI_SKINSELECTOR_H
+#define AUDACIOUS_UI_SKINSELECTOR_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -42,4 +42,4 @@ void skinlist_update();
 void skin_view_realize(GtkTreeView * treeview);
 void skin_view_update(GtkTreeView * treeview, GtkWidget * refresh_button);
 
-#endif
+#endif /* AUDACIOUS_UI_SKINSELECTOR_H */

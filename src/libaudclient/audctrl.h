@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef _AUDCTRL_H
-#define _AUDCTRL_H
+#ifndef AUDACIOUS_AUDCTRL_H
+#define AUDACIOUS_AUDCTRL_H
 
 #include <glib.h>
 #include <dbus/dbus-glib.h>
@@ -127,4 +127,4 @@ G_BEGIN_DECLS
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_AUDCTRL_H */

@@ -17,8 +17,8 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
-#ifndef __AUDACIOUS_TUPLE_COMPILER_H__
-#define __AUDACIOUS_TUPLE_COMPILER_H__
+#ifndef AUDACIOUS_TUPLE_COMPILER_H
+#define AUDACIOUS_TUPLE_COMPILER_H
 
 #include <glib.h>
 #include <mowgli.h>
@@ -108,4 +108,4 @@ gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEva
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple);
 
-#endif /* __AUDACIOUS_TUPLE_COMPILER_H__ */
+#endif /* AUDACIOUS_TUPLE_COMPILER_H */

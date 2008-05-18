@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDPLAYSTATUS_H
-#define UISKINNEDPLAYSTATUS_H
+#ifndef AUDACIOUS_UI_SKINNED_PLAYSTATUS_H
+#define AUDACIOUS_UI_SKINNED_PLAYSTATUS_H
 
 #include <gtk/gtk.h>
 
@@ -68,4 +68,4 @@ void ui_skinned_playstatus_set_size(GtkWidget *widget, gint width, gint height);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_PLAYSTATUS_H */

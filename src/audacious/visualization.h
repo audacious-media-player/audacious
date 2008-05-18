@@ -22,8 +22,8 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#ifndef VISUALIZATION_H
-#define VISUALIZATION_H
+#ifndef AUDACIOUS_VISUALIZATION_H
+#define AUDACIOUS_VISUALIZATION_H
 
 #include <glib.h>
 #include "flow.h"
@@ -50,4 +50,4 @@ void vis_flow(FlowContext *context);
 
 extern VisPluginData vp_data;
 
-#endif
+#endif /* AUDACIOUS_VISUALIZATION_H */

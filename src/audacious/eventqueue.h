@@ -22,8 +22,8 @@
 
 #include "audacious/hook.h"
 
-#ifndef __AUDACIOUS_EVENTQUEUE_H__
-#define __AUDACIOUS_EVENTQUEUE_H__
+#ifndef AUDACIOUS_EVENTQUEUE_H
+#define AUDACIOUS_EVENTQUEUE_H
 
 typedef struct {
     gchar *name;
@@ -33,4 +33,4 @@ typedef struct {
 void event_queue(const gchar *name, gpointer user_data);
 void event_queue_timed(gint time, const gchar *name, gpointer user_data);
 
-#endif
+#endif /* AUDACIOUS_EVENTQUEUE_H */

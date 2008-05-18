@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef _AUDACIOUS_INPUT_H
-#define _AUDACIOUS_INPUT_H
+#ifndef AUDACIOUS_INPUT_H
+#define AUDACIOUS_INPUT_H
 
 typedef struct _InputPluginData InputPluginData;
 
@@ -76,4 +76,4 @@ gchar *input_stringify_disabled_list(void);
 extern InputPluginData ip_data;
 
 
-#endif
+#endif /* AUDACIOUS_INPUT_H */

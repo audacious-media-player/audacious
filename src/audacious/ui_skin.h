@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef SKIN_H
-#define SKIN_H
+#ifndef AUDACIOUS_UI_SKIN_H
+#define AUDACIOUS_UI_SKIN_H
 
 #include <glib.h>
 #include <gdk/gdk.h>
@@ -244,4 +244,4 @@ void skin_set_random_skin(void);
 
 void ui_skinned_widget_draw(GtkWidget *widget, GdkPixbuf *obj, gint width, gint height, gboolean scale);
 
-#endif
+#endif /* AUDACIOUS_UI_SKIN_H */

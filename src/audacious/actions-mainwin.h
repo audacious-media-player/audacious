@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef ACTIONS_MAINWIN_H
-#define ACTIONS_MAINWIN_H
+#ifndef AUDACIOUS_ACTIONS_MAINWIN_H
+#define AUDACIOUS_ACTIONS_MAINWIN_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -73,4 +73,4 @@ void action_playback_stop(void);
 void action_preferences(void);
 void action_quit(void);
 void action_current_track_info(void);
-#endif
+#endif /* AUDACIOUS_ACTIONS_MAINWIN_H */

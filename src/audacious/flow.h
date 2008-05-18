@@ -25,8 +25,8 @@
 
 #include "output.h"
 
-#ifndef __AUDACIOUS_FLOW_H__
-#define __AUDACIOUS_FLOW_H__
+#ifndef AUDACIOUS_FLOW_H
+#define AUDACIOUS_FLOW_H
 
 typedef struct {
     gint time;
@@ -59,4 +59,4 @@ void flow_unlink_element(Flow *flow, FlowFunction func);
 
 #define flow_destroy(flow) mowgli_object_unref(flow)
 
-#endif
+#endif /* AUDACIOUS_FLOW_H */

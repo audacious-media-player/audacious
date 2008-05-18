@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef UI_FILEOPENER_H
-#define UI_FILEOPENER_H
+#ifndef AUDACIOUS_UI_FILEOPENER_H
+#define AUDACIOUS_UI_FILEOPENER_H
 
 #include <gtk/gtk.h>
 
@@ -28,4 +28,4 @@
 void run_filebrowser(gboolean clear_pl_on_ok);
 void hide_filebrowser(void);
 
-#endif
+#endif /* AUDACIOUS_UI_FILEOPENER_H */

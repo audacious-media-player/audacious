@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_TUPLE_FORMATTER_H__
-#define __AUDACIOUS_TUPLE_FORMATTER_H__
+#ifndef AUDACIOUS_TUPLE_FORMATTER_H
+#define AUDACIOUS_TUPLE_FORMATTER_H
 
 #include <glib.h>
 #include <mowgli.h>
@@ -38,4 +38,4 @@ gchar *tuple_formatter_process_function(Tuple *tuple, const gchar *expression,
     const gchar *argument);
 gchar *tuple_formatter_process_construct(Tuple *tuple, const gchar *string);
 
-#endif
+#endif /* AUDACIOUS_TUPLE_FORMATTER_H */

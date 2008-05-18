@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UIVIS_H
-#define UIVIS_H
+#ifndef AUDACIOUS_UI_VIS_H
+#define AUDACIOUS_UI_VIS_H
 
 #include <gtk/gtk.h>
 
@@ -95,4 +95,4 @@ void ui_vis_set_visible(GtkWidget *widget, gboolean window_is_visible);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_VIS_H */

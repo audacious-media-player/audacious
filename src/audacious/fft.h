@@ -21,8 +21,8 @@
 
 /* fft.h: header for iterative implementation of a FFT */
 
-#ifndef __AUDACIOUS_FFT_H__
-#define __AUDACIOUS_FFT_H__
+#ifndef AUDACIOUS_FFT_H
+#define AUDACIOUS_FFT_H
 
 #include <glib.h>
 
@@ -41,4 +41,4 @@ void fft_close(fft_state * state);
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_FFT_H__ */
+#endif /* AUDACIOUS_FFT_H */

@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef GENERIC_H
-#define GENERIC_H
+#ifndef AUDACIOUS_GENERAL_H
+#define AUDACIOUS_GENERAL_H
 
 #include <glib.h>
 
@@ -40,4 +40,4 @@ void general_enable_from_stringified_list(const gchar * list);
 
 extern GeneralPluginData gp_data;
 
-#endif
+#endif /* AUDACIOUS_GENERAL_H */

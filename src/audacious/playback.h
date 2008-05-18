@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef PLAYBACK_H
-#define PLAYBACK_H
+#ifndef AUDACIOUS_PLAYBACK_H
+#define AUDACIOUS_PLAYBACK_H
 
 #include <glib.h>
 
@@ -54,4 +54,4 @@ void playback_run(InputPlayback *);
 void playback_get_sample_params(gint *bitrate, gint *frequency, gint *n_channels);
 void playback_set_sample_params(gint bitrate, gint frequency, gint n_channels);
 
-#endif
+#endif /* AUDACIOUS_PLAYBACK_H */

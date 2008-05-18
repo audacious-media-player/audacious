@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_TUPLE_H__
-#define __AUDACIOUS_TUPLE_H__
+#ifndef AUDACIOUS_TUPLE_H
+#define AUDACIOUS_TUPLE_H
 
 #include <glib.h>
 #include <mowgli.h>
@@ -103,4 +103,4 @@ gint tuple_get_int(Tuple *tuple, const gint nfield, const gchar *field);
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_TUPLE_H__ */
+#endif /* AUDACIOUS_TUPLE_H */

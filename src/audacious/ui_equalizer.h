@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef EQUALIZER_H
-#define EQUALIZER_H
+#ifndef AUDACIOUS_UI_EQUALIZER_H
+#define AUDACIOUS_UI_EQUALIZER_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -65,4 +65,4 @@ extern gboolean equalizerwin_focus;
 
 void equalizer_activate(gboolean active);
 
-#endif
+#endif /* AUDACIOUS_UI_EQUALIZER_H */

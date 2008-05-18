@@ -19,8 +19,8 @@
 
 /* these functions are currently implemented in ui_manager.c */
 
-#ifndef __AUDACIOUS_UIPLUGINMENU_H__
-#define __AUDACIOUS_UIPLUGINMENU_H__
+#ifndef AUDACIOUS_UI_PLUGIN_MENU_H
+#define AUDACIOUS_UI_PLUGIN_MENU_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -40,4 +40,4 @@ gint menu_plugin_item_remove( gint , GtkWidget * );
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_UIPLUGINMENU_H__ */
+#endif /* AUDACIOUS_UI_PLUGIN_MENU_H */

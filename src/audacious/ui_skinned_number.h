@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDNUMBER_H
-#define UISKINNEDNUMBER_H
+#ifndef AUDACIOUS_UI_SKINNED_NUMBER_H
+#define AUDACIOUS_UI_SKINNED_NUMBER_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -58,4 +58,4 @@ void ui_skinned_number_set_size(GtkWidget *widget, gint width, gint height);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_NUMBER_H */

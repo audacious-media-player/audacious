@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_STRINGS_H__
-#define __AUDACIOUS_STRINGS_H__
+#ifndef AUDACIOUS_STRINGS_H
+#define AUDACIOUS_STRINGS_H
 
 #include <glib.h>
 
@@ -58,4 +58,4 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_STRINGS_H__ */
+#endif /* AUDACIOUS_STRINGS_H */

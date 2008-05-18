@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef ICONSSTOCK_H
-#define ICONSSTOCK_H
+#ifndef AUDACIOUS_ICONS_STOCK_H
+#define AUDACIOUS_ICONS_STOCK_H
 
 void register_aud_stock_icons(void);
 
@@ -29,4 +29,4 @@ void register_aud_stock_icons(void);
 #define AUD_STOCK_QUEUETOGGLE		"aud-queuetoggle"
 #define AUD_STOCK_RANDOMIZEPL		"aud-randomizepl"
 
-#endif
+#endif /* AUDACIOUS_ICONS_STOCK_H */

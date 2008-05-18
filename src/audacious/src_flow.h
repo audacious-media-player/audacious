@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef SRC_FLOW_H
-#define SRC_FLOW_H
+#ifndef AUDACIOUS_SRC_FLOW_H
+#define AUDACIOUS_SRC_FLOW_H
 
 #include <glib.h>
 #include "flow.h"
@@ -27,4 +27,4 @@ void src_flow(FlowContext *context);
 gint src_flow_init(gint infreq, gint nch);
 void src_flow_free();
 
-#endif
+#endif /* AUDACIOUS_SRC_FLOW_H */

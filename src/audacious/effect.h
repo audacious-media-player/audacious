@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef EFFECT_H
-#define EFFECT_H
+#ifndef AUDACIOUS_EFFECT_H
+#define AUDACIOUS_EFFECT_H
 
 #include <glib.h>
 
@@ -50,4 +50,4 @@ void effect_flow(FlowContext *context);
 
 extern EffectPluginData ep_data;
 
-#endif
+#endif /* AUDACIOUS_EFFECT_H */

@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDMENUROW_H
-#define UISKINNEDMENUROW_H
+#ifndef AUDACIOUS_UI_SKINNED_MENUROW_H
+#define AUDACIOUS_UI_SKINNED_MENUROW_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -74,4 +74,4 @@ GtkType ui_skinned_menurow_get_type(void);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_MENUROW_H */

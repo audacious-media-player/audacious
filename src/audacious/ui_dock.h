@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef DOCK_H
-#define DOCK_H
+#ifndef AUDACIOUS_UI_DOCK_H
+#define AUDACIOUS_UI_DOCK_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -47,4 +47,4 @@ void dock_window_resize(GtkWindow * widget, gint new_w, gint new_h, gint w, gint
 GList *get_dock_window_list();
 void set_dock_window_list(GList * list);
 
-#endif
+#endif /* AUDACIOUS_UI_DOCK_H */

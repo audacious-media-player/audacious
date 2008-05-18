@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef UI_JUMPTOTRACK_CACHE_H
-#define UI_JUMPTOTRACK_CACHE_H
+#ifndef AUDACIOUS_UI_JUMPTOTRACK_CACHE_H
+#define AUDACIOUS_UI_JUMPTOTRACK_CACHE_H
 
 #include <glib.h>
 
@@ -44,4 +44,4 @@ extern JumpToTrackCache* ui_jump_to_track_cache_new(void);
 extern const GArray* ui_jump_to_track_cache_search(JumpToTrackCache* cache, const Playlist* playlist, const gchar* keyword);
 extern void ui_jump_to_track_cache_free(JumpToTrackCache* cache);
 
-#endif
+#endif /* AUDACIOUS_UI_JUMPTOTRACK_CACHE_H */

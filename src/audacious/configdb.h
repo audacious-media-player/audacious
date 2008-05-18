@@ -1,5 +1,5 @@
-#ifndef CONFIGDB_H
-#define CONFIGDB_H
+#ifndef AUDACIOUS_CONFIGDB_H
+#define AUDACIOUS_CONFIGDB_H
 
 #include <glib.h>
 #include <libmcs/mcs.h>
@@ -187,5 +187,5 @@ G_BEGIN_DECLS
 
 G_END_DECLS
 
-#endif /* CONFIGDB_H */
+#endif /* AUDACIOUS_CONFIGDB_H */
 
