@@ -486,7 +486,7 @@ skin_get_textcolors(GdkPixbuf * pix, GdkColor * bgc, GdkColor * fgc)
                     GDK_RGB_DITHER_NONE, 0, 0);
     /* Get the first line of text */
     gi = gdk_drawable_get_image(text, 0, 0, 152, 6);
-    cm = gdk_drawable_get_colormap(playlistwin->window);
+    cm = gdk_colormap_get_system();
 
     for (i = 0; i < 6; i++) {
         GdkColor c;
@@ -1227,8 +1227,6 @@ skin_load_color(INIFile *inifile,
             if (len >= 2)
                 color->blue = hex_chars_to_int(*ptr, *(ptr + 1));
 
-            gdk_colormap_alloc_color(gdk_drawable_get_colormap(playlistwin->window),
-                            color, TRUE, TRUE);
             g_free(value);
         }
     }
@@ -1387,39 +1385,6 @@ skin_numbers_generate_dash(Skin * skin)
     numbers->width = 108;
 }
 
-static void
-skin_load_cursor(Skin * skin, const gchar * dirname)
-{
-    const gchar * basename = "normal.cur";
-    gchar * filename = NULL;
-    GdkPixbuf * cursor_pixbuf = NULL;
-    GdkPixbufAnimation * cursor_animated = NULL;
-    GdkCursor * cursor_gdk = NULL;
-    GError * error = NULL;
- 
-    filename = find_file_recursively(dirname, basename);
-
-    if (filename && cfg.custom_cursors)
-        cursor_animated = gdk_pixbuf_animation_new_from_file(filename, &error);
-
-    if (cursor_animated) {
-        cursor_pixbuf = gdk_pixbuf_animation_get_static_image(cursor_animated);
-        cursor_gdk = gdk_cursor_new_from_pixbuf(gdk_display_get_default(),
-                                                cursor_pixbuf, 0, 0);
-    }
-    else
-        cursor_gdk = gdk_cursor_new(GDK_LEFT_PTR);
-
-    if (mainwin && playlistwin && equalizerwin)
-    {
-        gdk_window_set_cursor(mainwin->window, cursor_gdk);
-        gdk_window_set_cursor(playlistwin->window, cursor_gdk);
-        gdk_window_set_cursor(equalizerwin->window, cursor_gdk);
-    }
-
-    gdk_cursor_unref(cursor_gdk);
-}
-
 static gboolean
 skin_load_pixmaps(Skin * skin, const gchar * path)
 {
@@ -1576,8 +1541,6 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         AUDDBG("Skin loading failed\n");
         return FALSE;
     }
-
-    skin_load_cursor(skin, skin_path);
 
     /* restore gtk theme if changed by previous skin */
     settings = gtk_settings_get_default();

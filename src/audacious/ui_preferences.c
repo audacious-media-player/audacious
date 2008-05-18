@@ -228,7 +228,6 @@ static PreferencesWidget appearance_misc_widgets[] = {
         G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show separators in playlist"), &cfg.show_separator_in_pl,
         G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Use custom cursors"), &cfg.custom_cursors, G_CALLBACK(skin_reload_forced), NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
         N_("This enables the window manager to show decorations for windows."), FALSE},
     {WIDGET_CHK_BTN, N_("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 

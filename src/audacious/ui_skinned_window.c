@@ -150,9 +150,9 @@ static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *even
         case WINDOW_PLAYLIST:
             focus |= !cfg.dim_titlebar;
             if (cfg.playlist_shaded) {
-                skin_draw_playlistwin_shaded(aud_active_skin, obj, playlistwin_get_width(), focus);
+                skin_draw_playlistwin_shaded(aud_active_skin, obj, width, focus);
             } else {
-                skin_draw_playlistwin_frame(aud_active_skin, obj, playlistwin_get_width(), cfg.playlist_height, focus);
+                skin_draw_playlistwin_frame(aud_active_skin, obj, width, cfg.playlist_height, focus);
             }
             break;
     }

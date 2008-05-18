@@ -59,7 +59,6 @@ struct _AudConfig {
     gboolean random_skin_on_play;
     gboolean use_fontsets;
     gboolean mainwin_use_bitmapfont;
-    gboolean custom_cursors;
     gboolean allow_broken_skins;
     gboolean close_dialog_open;
     gboolean close_dialog_add;
