@@ -263,6 +263,15 @@ ui_main_evlistener_filebrowser_hide(gpointer hook_data, gpointer user_data)
 }
 
 static void
+ui_main_evlistener_visualization_timeout(gpointer hook_data, gpointer user_data)
+{
+    if (cfg.player_shaded && cfg.player_visible)
+        ui_svis_timeout_func(mainwin_svis, hook_data);
+    else
+        ui_vis_timeout_func(mainwin_vis, hook_data);
+}
+
+static void
 ui_main_evlistener_config_save(gpointer hook_data, gpointer user_data)
 {
     ConfigDb *db = (ConfigDb *) hook_data;
@@ -301,6 +310,7 @@ ui_main_evlistener_init(void)
     hook_associate("ui jump to track show", ui_main_evlistener_ui_jump_to_track_show, NULL);
     hook_associate("filebrowser show", ui_main_evlistener_filebrowser_show, NULL);
     hook_associate("filebrowser hide", ui_main_evlistener_filebrowser_hide, NULL);
+    hook_associate("visualization timeout", ui_main_evlistener_visualization_timeout, NULL);
     hook_associate("config save", ui_main_evlistener_config_save, NULL);
 }
 
