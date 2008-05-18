@@ -31,7 +31,6 @@
 #include "main.h"
 #include "ui_dock.h"
 #include "ui_skinned_window.h"
-#include "ui_skinned_cursor.h"
 #include "ui_playlist.h"
 
 static void ui_skinned_window_class_init(SkinnedWindowClass *klass);
@@ -232,8 +231,6 @@ ui_skinned_window_new(const gchar *wmclass_name)
     gtk_widget_set_app_paintable(GTK_WIDGET(widget), TRUE);
     gdk_window_set_back_pixmap(widget->window, NULL, FALSE);
     gtk_widget_shape_combine_mask(widget, NULL, 0, 0);
-
-    ui_skinned_cursor_set(GTK_WIDGET(widget));
 
     if (!strcmp(wmclass_name, "player"))
         SKINNED_WINDOW(widget)->type = WINDOW_MAIN;

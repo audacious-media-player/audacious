@@ -479,7 +479,6 @@ skin_get_textcolors(GdkPixbuf * pix, GdkColor * bgc, GdkColor * fgc)
     gint i;
 
     g_return_if_fail(pix != NULL);
-    g_return_if_fail(GDK_IS_WINDOW(playlistwin->window));
 
     GdkPixmap *text = gdk_pixmap_new(NULL, gdk_pixbuf_get_width(pix), gdk_pixbuf_get_height(pix), gdk_rgb_get_visual()->depth);
     gdk_draw_pixbuf(text, NULL, pix, 0, 0, 0, 0, gdk_pixbuf_get_width(pix), gdk_pixbuf_get_height(pix),

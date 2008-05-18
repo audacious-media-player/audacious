@@ -56,7 +56,6 @@ SRCS = af_equalizer.c					\
        ui_playlist_manager.c			\
        ui_preferences.c					\
        ui_skin.c						\
-       ui_skinned_cursor.c				\
        ui_skinned_window.c				\
        ui_skinned_button.c				\
        ui_skinned_textbox.c				\
