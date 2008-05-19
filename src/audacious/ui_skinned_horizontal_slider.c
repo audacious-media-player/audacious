@@ -77,7 +77,7 @@ GType ui_skinned_horizontal_slider_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_horizontal_slider_init,
         };
-        horizontal_slider_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedHorizontalSlider", &horizontal_slider_info, 0);
+        horizontal_slider_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedHorizontalSlider_", &horizontal_slider_info, 0);
     }
 
     return horizontal_slider_type;

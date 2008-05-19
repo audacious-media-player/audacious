@@ -59,7 +59,7 @@ GType ui_skinned_equalizer_graph_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_equalizer_graph_init,
         };
-        equalizer_graph_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedEqualizerGraph", &equalizer_graph_info, 0);
+        equalizer_graph_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedEqualizerGraph_", &equalizer_graph_info, 0);
     }
 
     return equalizer_graph_type;

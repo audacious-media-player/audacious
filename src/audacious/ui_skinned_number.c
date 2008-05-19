@@ -65,7 +65,7 @@ GType ui_skinned_number_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_number_init,
         };
-        number_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedNumber", &number_info, 0);
+        number_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedNumber_", &number_info, 0);
     }
 
     return number_type;

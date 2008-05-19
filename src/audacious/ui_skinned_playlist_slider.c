@@ -77,7 +77,7 @@ GType ui_skinned_playlist_slider_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_playlist_slider_init,
         };
-        playlist_slider_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedPlaylistSlider", &playlist_slider_info, 0);
+        playlist_slider_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedPlaylistSlider_", &playlist_slider_info, 0);
     }
 
     return playlist_slider_type;

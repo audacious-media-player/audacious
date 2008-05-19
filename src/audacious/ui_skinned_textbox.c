@@ -102,7 +102,7 @@ GType ui_skinned_textbox_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_textbox_init,
         };
-        textbox_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedTextbox", &textbox_info, 0);
+        textbox_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedTextbox_", &textbox_info, 0);
     }
 
     return textbox_type;

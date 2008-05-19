@@ -59,7 +59,7 @@ GType ui_skinned_monostereo_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_monostereo_init,
         };
-        monostereo_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedMonoStereo", &monostereo_info, 0);
+        monostereo_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedMonoStereo_", &monostereo_info, 0);
     }
 
     return monostereo_type;

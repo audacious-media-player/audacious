@@ -93,7 +93,7 @@ GType ui_skinned_button_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_button_init,
         };
-        button_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedButton", &button_info, 0);
+        button_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedButton_", &button_info, 0);
     }
 
     return button_type;

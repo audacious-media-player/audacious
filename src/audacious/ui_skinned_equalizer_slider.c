@@ -78,7 +78,7 @@ GType ui_skinned_equalizer_slider_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_equalizer_slider_init,
         };
-        equalizer_slider_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedEqualizerSlider", &equalizer_slider_info, 0);
+        equalizer_slider_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedEqualizerSlider_", &equalizer_slider_info, 0);
     }
 
     return equalizer_slider_type;

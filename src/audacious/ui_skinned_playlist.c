@@ -115,7 +115,7 @@ GType ui_skinned_playlist_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_playlist_init,
         };
-        playlist_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedPlaylist", &playlist_info, 0);
+        playlist_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedPlaylist_", &playlist_info, 0);
     }
 
     return playlist_type;

@@ -58,7 +58,7 @@ ui_skinned_window_get_type(void)
       };
 
       window_type =
-        g_type_register_static (GTK_TYPE_WINDOW, "SkinnedWindow",
+        g_type_register_static (GTK_TYPE_WINDOW, "SkinnedWindow_",
                                 &window_info, 0);
     }
 

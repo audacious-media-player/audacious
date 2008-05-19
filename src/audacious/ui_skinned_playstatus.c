@@ -61,7 +61,7 @@ GType ui_skinned_playstatus_get_type() {
             0,
             (GInstanceInitFunc) ui_skinned_playstatus_init,
         };
-        playstatus_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedPlaystatus", &playstatus_info, 0);
+        playstatus_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSkinnedPlaystatus_", &playstatus_info, 0);
     }
 
     return playstatus_type;

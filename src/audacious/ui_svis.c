@@ -88,7 +88,7 @@ GType ui_svis_get_type() {
             0,
             (GInstanceInitFunc) ui_svis_init,
         };
-        vis_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSVis", &vis_info, 0);
+        vis_type = g_type_register_static (GTK_TYPE_WIDGET, "UiSVis_", &vis_info, 0);
     }
 
     return vis_type;
