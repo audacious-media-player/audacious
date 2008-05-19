@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDPLAYLIST_SLIDER_H
-#define UISKINNEDPLAYLIST_SLIDER_H
+#ifndef AUDACIOUS_UI_SKINNED_PLAYLIST_SLIDER_H
+#define AUDACIOUS_UI_SKINNED_PLAYLIST_SLIDER_H
 
 #include <gtk/gtk.h>
 
@@ -60,4 +60,4 @@ void ui_skinned_playlist_slider_resize_relative(GtkWidget *widget, gint h);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_PLAYLIST_SLIDER_H */

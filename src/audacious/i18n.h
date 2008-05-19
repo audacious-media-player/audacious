@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_I18N_H__
-#define __AUDACIOUS_I18N_H__
+#ifndef AUDACIOUS_I18N_H
+#define AUDACIOUS_I18N_H
 
 #include <glib/gstrfuncs.h>
 #include <libintl.h>
@@ -31,4 +31,4 @@
 #define N_(String) (String)
 #endif
 
-#endif
+#endif /* AUDACIOUS_I18N_H */

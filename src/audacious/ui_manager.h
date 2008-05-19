@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_UIMANAGER_H__
-#define __AUDACIOUS_UIMANAGER_H__
+#ifndef AUDACIOUS_UI_MANAGER_H
+#define AUDACIOUS_UI_MANAGER_H
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -74,4 +74,4 @@ void ui_manager_popup_menu_show( GtkMenu * , gint , gint , guint , guint );
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_UIMANAGER_H__ */
+#endif /* AUDACIOUS_UI_MANAGER_H */

@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef ACTIONS_PLAYLIST_H
-#define ACTIONS_PLAYLIST_H
+#ifndef AUDACIOUS_ACTIONS_PLAYLIST_H
+#define AUDACIOUS_ACTIONS_PLAYLIST_H
 
 void action_playlist_load_list(void);
 void action_playlist_save_list(void);
@@ -71,4 +71,4 @@ void action_playlist_sort_selected_by_playlist_entry(void);
 void action_playlist_track_info(void);
 void action_queue_toggle(void);
 
-#endif
+#endif /* AUDACIOUS_ACTIONS_PLAYLIST_H */

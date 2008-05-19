@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_VFS_H__
-#define __AUDACIOUS_VFS_H__
+#ifndef AUDACIOUS_VFS_H
+#define AUDACIOUS_VFS_H
 
 #include <glib.h>
 #include <stdio.h>
@@ -146,4 +146,4 @@ extern gboolean vfs_fget_be64(guint64 *value, VFSFile *stream);
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_VFS_H__ */
+#endif /* AUDACIOUS_VFS_H */

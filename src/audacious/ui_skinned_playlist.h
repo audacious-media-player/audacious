@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDPLAYLIST_H
-#define UISKINNEDPLAYLIST_H
+#ifndef AUDACIOUS_UI_SKINNED_PLAYLIST_H
+#define AUDACIOUS_UI_SKINNED_PLAYLIST_H
 
 #include <gtk/gtk.h>
 
@@ -74,4 +74,4 @@ gint ui_skinned_playlist_get_position(GtkWidget *widget, gint x, gint y);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_PLAYLIST_H */

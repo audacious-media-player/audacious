@@ -17,8 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef PREFSWIN_H
-#define PREFSWIN_H
+#ifndef AUDACIOUS_UI_PREFERENCES_H
+#define AUDACIOUS_UI_PREFERENCES_H
 
 void create_prefs_window(void);
 void show_prefs_window(void);
@@ -32,4 +32,4 @@ void on_skin_view_drag_data_received(GtkWidget * widget,
                                 GtkSelectionData * selection_data,
                                 guint info, guint time,
                                 gpointer user_data);
-#endif
+#endif /* AUDACIOUS_UI_PREFERENCES_H */

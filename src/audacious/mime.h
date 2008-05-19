@@ -23,8 +23,8 @@
 
 #include <audacious/plugin.h>
 
-#ifndef __AUDACIOUS_MIME_H__
-#define __AUDACIOUS_MIME_H__
+#ifndef AUDACIOUS_MIME_H
+#define AUDACIOUS_MIME_H
 
 G_BEGIN_DECLS
 
@@ -33,4 +33,4 @@ void mime_set_plugin(const gchar *mimetype, InputPlugin *ip);
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_MIME_H */

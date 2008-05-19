@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_UI_URLOPENER_H__
-#define __AUDACIOUS_UI_URLOPENER_H__
+#ifndef AUDACIOUS_UI_URLOPENER_H
+#define AUDACIOUS_UI_URLOPENER_H
 
 #ifdef _AUDACIOUS_CORE
 # ifdef HAVE_CONFIG_H
@@ -42,4 +42,4 @@ GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_UI_URLOPENER_H */

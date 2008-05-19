@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDTEXTBOX_H
-#define UISKINNEDTEXTBOX_H
+#ifndef AUDACIOUS_UI_SKINNED_TEXTBOX_H
+#define AUDACIOUS_UI_SKINNED_TEXTBOX_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -68,4 +68,4 @@ void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_TEXTBOX_H */

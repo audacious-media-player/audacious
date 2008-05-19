@@ -23,8 +23,8 @@
 
 #include <audacious/plugin.h>
 
-#ifndef __AUDACIOUS_CUSTOM_URI_H__
-#define __AUDACIOUS_CUSTOM_URI_H__
+#ifndef AUDACIOUS_CUSTOM_URI_H
+#define AUDACIOUS_CUSTOM_URI_H
 
 G_BEGIN_DECLS
 
@@ -33,4 +33,4 @@ void uri_set_plugin(const gchar *uri, InputPlugin *ip);
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_CUSTOM_URI_H */

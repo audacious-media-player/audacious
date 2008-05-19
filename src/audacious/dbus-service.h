@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef _DBUS_SERVICE_H
-#define _DBUS_SERVICE_H
+#ifndef AUDACIOUS_DBUS_SERVICE_H
+#define AUDACIOUS_DBUS_SERVICE_H
 
 #include <glib.h>
 
@@ -214,4 +214,4 @@ gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **
 gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error);
 gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error);
 
-#endif // !_DBUS_SERVICE_H
+#endif /* AUDACIOUS_DBUS_SERVICE_H */

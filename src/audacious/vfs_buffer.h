@@ -68,4 +68,4 @@ VFSFile *vfs_buffer_new_from_string(gchar *str);
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_VFS_BUFFER_H */

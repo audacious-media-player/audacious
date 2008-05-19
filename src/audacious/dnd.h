@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef DND_H
-#define DND_H
+#ifndef AUDACIOUS_DND_H
+#define AUDACIOUS_DND_H
 
 #include <gtk/gtk.h>
 
@@ -48,4 +48,4 @@ static const GtkTargetEntry aud_drop_types[] = {
 
 void aud_drag_dest_set(GtkWidget*);
 
-#endif
+#endif /* AUDACIOUS_DND_H */

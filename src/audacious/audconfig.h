@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDCONFIG_H
-#define AUDCONFIG_H
+#ifndef AUDACIOUS_AUDCONFIG_H
+#define AUDACIOUS_AUDCONFIG_H
 
 #include <glib.h>
 
@@ -142,4 +142,4 @@ void aud_config_free(void);
 void aud_config_load(void);
 void aud_config_save(void);
 
-#endif
+#endif /* AUDACIOUS_AUDCONFIG_H */

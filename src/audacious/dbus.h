@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef _AUDDBUS_H
-#define _AUDDBUS_H
+#ifndef AUDACIOUS_DBUS_H
+#define AUDACIOUS_DBUS_H
 
 #define AUDACIOUS_DBUS_SERVICE      "org.atheme.audacious"
 #define AUDACIOUS_DBUS_PATH         "/org/atheme/audacious"
@@ -41,4 +41,4 @@
 #define PROVIDES_TIMING       = 1 << 7
 
 
-#endif // !_AUDDBUS_H
+#endif /* AUDACIOUS_DBUS_H */

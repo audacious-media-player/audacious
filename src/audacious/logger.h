@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_LOGGER_H__
-#define __AUDACIOUS_LOGGER_H__
+#ifndef AUDACIOUS_LOGGER_H
+#define AUDACIOUS_LOGGER_H
 
 #include <glib.h>
 
@@ -38,4 +38,4 @@ void aud_logger_stop(void);
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_LOGGER_H__ */
+#endif /* AUDACIOUS_LOGGER_H */

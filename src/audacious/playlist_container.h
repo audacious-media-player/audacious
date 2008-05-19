@@ -19,8 +19,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef _PLAYLIST_CONTAINER_H_
-#define _PLAYLIST_CONTAINER_H_
+#ifndef AUDACIOUS_PLAYLIST_CONTAINER_H
+#define AUDACIOUS_PLAYLIST_CONTAINER_H
 
 G_BEGIN_DECLS
 
@@ -43,4 +43,4 @@ extern PlaylistContainer *playlist_container_find(gchar *ext);
 
 G_END_DECLS
 
-#endif
+#endif /* AUDACIOUS_PLAYLIST_CONTAINER_H */

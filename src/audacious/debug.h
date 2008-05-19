@@ -1,5 +1,5 @@
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef AUDACIOUS_DEBUG_H
+#define AUDACIOUS_DEBUG_H
 
 #include <glib.h>
 
@@ -41,4 +41,4 @@
 #endif                          /* NDEBUG */
 
 
-#endif
+#endif /* AUDACIOUS_DEBUG_H */

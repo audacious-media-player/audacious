@@ -18,8 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDBUTTON_H
-#define UISKINNEDBUTTON_H
+#ifndef AUDACIOUS_UI_SKINNED_BUTTON_H
+#define AUDACIOUS_UI_SKINNED_BUTTON_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -71,4 +71,4 @@ void ui_skinned_button_set_skin_index1(GtkWidget *button, SkinPixmapId si);
 void ui_skinned_button_set_skin_index2(GtkWidget *button, SkinPixmapId si);
 void ui_skinned_button_move_relative(GtkWidget *button, gint x, gint y);
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_BUTTON_H */

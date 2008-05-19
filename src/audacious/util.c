@@ -1036,10 +1036,8 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
 gpointer
 smart_realloc(gpointer ptr, gsize *size)
 {
-    *size = (size_t)pow(2, ceil(log(*size) / log(2)) + 1);
-    if (ptr != NULL) free(ptr);
-    ptr = malloc(*size);
-    return ptr;
+    *size = (gsize)pow(2, ceil(log(*size) / log(2)) + 1);
+    return g_realloc(ptr, *size);
 }
 
 void

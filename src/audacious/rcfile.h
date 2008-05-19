@@ -19,8 +19,8 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#ifndef __AUDACIOUS_RCFILE_H__
-#define __AUDACIOUS_RCFILE_H__
+#ifndef AUDACIOUS_RCFILE_H
+#define AUDACIOUS_RCFILE_H
 
 #include <glib.h>
 
@@ -94,4 +94,4 @@ void aud_rcfile_remove_key(RcFile * file, const gchar * section,
 
 G_END_DECLS
 
-#endif /* __AUDACIOUS_RCFILE_H__ */
+#endif /* AUDACIOUS_RCFILE_H */

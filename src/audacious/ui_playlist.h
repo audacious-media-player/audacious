@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef PLAYLISTWIN_H
-#define PLAYLISTWIN_H
+#ifndef AUDACIOUS_UI_PLAYLIST_H
+#define AUDACIOUS_UI_PLAYLIST_H
 
 #include <glib.h>
 
@@ -77,4 +77,4 @@ extern GtkWidget *playlistwin;
 
 extern gboolean playlistwin_focus;
 
-#endif
+#endif /* AUDACIOUS_UI_PLAYLIST_H */

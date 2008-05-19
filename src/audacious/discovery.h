@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef DISCOVERY_H
-#define DISCOVERY_H
+#ifndef AUDACIOUS_DISCOVERY_H
+#define AUDACIOUS_DISCOVERY_H
 
 #include <glib.h>
 
@@ -49,4 +49,4 @@ void discovery_enable_from_stringified_list(const gchar * list);
 
 extern DiscoveryPluginData dp_data;
 
-#endif
+#endif /* AUDACIOUS_DISCOVERY_H */

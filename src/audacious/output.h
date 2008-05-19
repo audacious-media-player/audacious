@@ -23,8 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef OUTPUT_H
-#define OUTPUT_H
+#ifndef AUDACIOUS_OUTPUT_H
+#define AUDACIOUS_OUTPUT_H
 
 #include <glib.h>
 
@@ -71,4 +71,4 @@ gint get_output_time(void);
 extern OutputPlugin psuedo_output_plugin;
 extern OutputPluginData op_data;
 
-#endif
+#endif /* AUDACIOUS_OUTPUT_H */

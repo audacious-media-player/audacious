@@ -20,8 +20,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef MAINWIN_H
-#define MAINWIN_H
+#ifndef AUDACIOUS_UI_MAIN_H
+#define AUDACIOUS_UI_MAIN_H
 
 #include <gtk/gtk.h>
 
@@ -191,4 +191,4 @@ void ui_main_check_theme_engine(void);
 
 void util_menu_main_show( gint x , gint y , guint button , guint time );
 
-#endif
+#endif /* AUDACIOUS_UI_MAIN_H */

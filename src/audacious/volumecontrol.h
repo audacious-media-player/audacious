@@ -22,8 +22,8 @@
 
 #include "flow.h"
 
-#ifndef __VOLUMECONTROL_H__
-#define __VOLUMECONTROL_H__
+#ifndef AUDACIOUS_VOLUMECONTROL_H
+#define AUDACIOUS_VOLUMECONTROL_H
 
 void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt, 
     gint channels);
@@ -31,4 +31,4 @@ void volumecontrol_get_volume_state(gint *l, gint *r);
 void volumecontrol_set_volume_state(gint l, gint r);
 void volumecontrol_flow(FlowContext *context);
 
-#endif
+#endif /* AUDACIOUS_VOLUMECONTROL_H */

@@ -24,8 +24,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef UISKINNEDEQUALIZERGRAPH_H
-#define UISKINNEDEQUALIZERGRAPH_H
+#ifndef AUDACIOUS_UI_SKINNED_EQUALIZER_GRAPH_H
+#define AUDACIOUS_UI_SKINNED_EQUALIZER_GRAPH_H
 
 #include <gtk/gtk.h>
 #include "ui_skin.h"
@@ -60,4 +60,4 @@ GtkWidget* ui_skinned_equalizer_graph_new(GtkWidget *fixed, gint x, gint y);
 }
 #endif
 
-#endif
+#endif /* AUDACIOUS_UI_SKINNED_EQUALIZER_GRAPH_H */

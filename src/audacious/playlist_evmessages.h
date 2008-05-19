@@ -20,8 +20,8 @@
 
 #include <glib.h>
 
-#ifndef __AUDACIOUS_PLAYLIST_EVMESSAGES_H__
-#define __AUDACIOUS_PLAYLIST_EVMESSAGES_H__
+#ifndef AUDACIOUS_PLAYLIST_EVMESSAGES_H
+#define AUDACIOUS_PLAYLIST_EVMESSAGES_H
 
 typedef struct {
     gint bitrate;
@@ -29,4 +29,4 @@ typedef struct {
     gint channels;
 } PlaylistEventInfoChange;
 
-#endif
+#endif /* AUDACIOUS_PLAYLIST_EVMESSAGES_H */

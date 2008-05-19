@@ -18,9 +18,9 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_PLAYBACK_EVLISTENERS_H__
-#define __AUDACIOUS_PLAYBACK_EVLISTENERS_H__
+#ifndef AUDACIOUS_PLAYBACK_EVLISTENERS_H
+#define AUDACIOUS_PLAYBACK_EVLISTENERS_H
 
 void playback_evlistener_init(void);
 
-#endif
+#endif /* AUDACIOUS_PLAYBACK_EVLISTENERS_H */

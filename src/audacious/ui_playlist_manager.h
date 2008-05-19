@@ -17,10 +17,10 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef PLAYLISTMANAGER_H
-#define PLAYLISTMANAGER_H
+#ifndef AUDACIOUS_UI_PLAYLIST_MANAGER_H
+#define AUDACIOUS_UI_PLAYLIST_MANAGER_H
 
 void playlist_manager_update ( void );
 void playlist_manager_ui_show ( void );
 
-#endif
+#endif /* AUDACIOUS_UI_PLAYLIST_MANAGER_H */
