@@ -591,11 +591,12 @@ load_extra_playlist(const gchar * path, const gchar * basename,
 static void
 resume_playback_on_startup()
 {
-    g_return_if_fail(cfg.resume_playback_on_startup);
-    g_return_if_fail(cfg.resume_playback_on_startup_time != -1);
-    g_return_if_fail(playlist_get_length(playlist_get_active()) > 0);
-
-    int i;
+    gint i;
+    
+    if (!cfg.resume_playback_on_startup ||
+        cfg.resume_playback_on_startup_time == -1 ||
+        playlist_get_length(playlist_get_active()) <= 0)
+        return;
 
     while (gtk_events_pending()) gtk_main_iteration();
 
