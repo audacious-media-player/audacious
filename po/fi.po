@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-05-21 08:00+0300\n"
+"POT-Creation-Date: 2008-05-21 09:36+0300\n"
 "PO-Revision-Date: 2008-04-09 12:12+0300\n"
 "Last-Translator: Matti Hämäläinen <ccr@tnsp.org>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -211,12 +211,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2008 Audacious-kehittäjäryhmä"
 
-#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:370
+#: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:371
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
 msgid "About Audacious"
 msgstr "Tietoja Audaciouksesta"
 
-#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:413
+#: src/audacious/ui_about.c:174 src/audacious/ui_credits.c:414
 msgid "Credits"
 msgstr "Tekijät"
 
@@ -296,103 +296,103 @@ msgstr "eesti:"
 msgid "Finnish:"
 msgstr "suomi:"
 
-#: src/audacious/ui_credits.c:191
+#: src/audacious/ui_credits.c:192
 msgid "French:"
 msgstr "ranska:"
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/ui_credits.c:197
 msgid "German:"
 msgstr "saksa:"
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:202
 msgid "Georgian:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:204
+#: src/audacious/ui_credits.c:205
 msgid "Greek:"
 msgstr "kreikka:"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:210
 msgid "Hindi:"
 msgstr "hindi:"
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/ui_credits.c:213
 msgid "Hungarian:"
 msgstr "unkari:"
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/ui_credits.c:216
 msgid "Italian:"
 msgstr "italia:"
 
-#: src/audacious/ui_credits.c:219
+#: src/audacious/ui_credits.c:220
 msgid "Japanese:"
 msgstr "japani:"
 
-#: src/audacious/ui_credits.c:222
+#: src/audacious/ui_credits.c:223
 msgid "Korean:"
 msgstr "korea:"
 
-#: src/audacious/ui_credits.c:225
+#: src/audacious/ui_credits.c:226
 msgid "Lithuanian:"
 msgstr "liettua:"
 
-#: src/audacious/ui_credits.c:228
+#: src/audacious/ui_credits.c:229
 msgid "Macedonian:"
 msgstr "makedonia:"
 
-#: src/audacious/ui_credits.c:231
+#: src/audacious/ui_credits.c:232
 msgid "Polish:"
 msgstr "puola:"
 
-#: src/audacious/ui_credits.c:234
+#: src/audacious/ui_credits.c:235
 msgid "Romanian:"
 msgstr "romania:"
 
-#: src/audacious/ui_credits.c:238
+#: src/audacious/ui_credits.c:239
 msgid "Russian:"
 msgstr "venäjä:"
 
-#: src/audacious/ui_credits.c:241
+#: src/audacious/ui_credits.c:242
 msgid "Serbian (Latin):"
 msgstr "serbia (latin):"
 
-#: src/audacious/ui_credits.c:244
+#: src/audacious/ui_credits.c:245
 msgid "Serbian (Cyrillic):"
 msgstr "serbia (kyrillinen):"
 
-#: src/audacious/ui_credits.c:247
+#: src/audacious/ui_credits.c:248
 msgid "Simplified Chinese:"
 msgstr "yksinkertaistettu kiina:"
 
-#: src/audacious/ui_credits.c:250
+#: src/audacious/ui_credits.c:251
 msgid "Slovak:"
 msgstr "slovakki:"
 
-#: src/audacious/ui_credits.c:253
+#: src/audacious/ui_credits.c:254
 msgid "Spanish:"
 msgstr "espanja:"
 
-#: src/audacious/ui_credits.c:256
+#: src/audacious/ui_credits.c:257
 msgid "Swedish:"
 msgstr "ruotsi:"
 
-#: src/audacious/ui_credits.c:259
+#: src/audacious/ui_credits.c:260
 msgid "Traditional Chinese:"
 msgstr "perinteinen kiina:"
 
-#: src/audacious/ui_credits.c:264
+#: src/audacious/ui_credits.c:265
 msgid "Turkish:"
 msgstr "turkki:"
 
-#: src/audacious/ui_credits.c:268
+#: src/audacious/ui_credits.c:269
 msgid "Ukrainian:"
 msgstr "ukraina:"
 
-#: src/audacious/ui_credits.c:271
+#: src/audacious/ui_credits.c:272
 msgid "Welsh:"
 msgstr "kymri:"
 
-#: src/audacious/ui_credits.c:417
+#: src/audacious/ui_credits.c:418
 msgid "Translators"
 msgstr "Kääntäjät"
 
@@ -1623,7 +1623,6 @@ msgid "Add Internet Address..."
 msgstr "Lisää URL-osoite..."
 
 #: src/audacious/ui_manager.c:243
-#, fuzzy
 msgid "Adds a remote track to the playlist."
 msgstr "Lisää URL-osoitteen soittolistaan."
 
@@ -1658,28 +1657,24 @@ msgid "Select All"
 msgstr "Valitse kaikki"
 
 #: src/audacious/ui_manager.c:261
-#, fuzzy
 msgid "Selects all of the playlist entries."
-msgstr "/Järjestä lista/Nimen mukaan"
+msgstr "Valitsee kaikki soittolistan kappaleet."
 
 #: src/audacious/ui_manager.c:264
 msgid "Select None"
 msgstr "Tyhjä valinta"
 
 #: src/audacious/ui_manager.c:265
-#, fuzzy
 msgid "Deselects all of the playlist entries."
-msgstr "Älä tyhjennä soittolistaa"
+msgstr "Tyhjentää soittolistan valinnan."
 
 #: src/audacious/ui_manager.c:270
-#, fuzzy
 msgid "Remove All"
-msgstr "/Poista kaikki"
+msgstr "Poista kaikki"
 
 #: src/audacious/ui_manager.c:271
-#, fuzzy
 msgid "Removes all entries from the playlist."
-msgstr "Poista valitut kappaleet"
+msgstr "Poistaa kaikki kappaleet soittolistasta."
 
 #: src/audacious/ui_manager.c:274
 msgid "Clear Queue"
@@ -1777,14 +1772,12 @@ msgid "Sorts the list by artist."
 msgstr "Järjestää listan kappaleen esittäjän nimen mukaan."
 
 #: src/audacious/ui_manager.c:325 src/audacious/ui_manager.c:355
-#, fuzzy
 msgid "Sorts the list by filename."
-msgstr "Järjestä kaikki tiedostonimen mukaan"
+msgstr "Järjestää listan tiedostonimen mukaan."
 
 #: src/audacious/ui_manager.c:329 src/audacious/ui_manager.c:359
-#, fuzzy
 msgid "Sorts the list by full pathname."
-msgstr "Järjestä kappaleet täydellisen tiedostonimen mukaan"
+msgstr "Järjestää listan täydellisen tiedostonimen mukaan."
 
 #: src/audacious/ui_manager.c:332 src/audacious/ui_manager.c:362
 msgid "By Date"
@@ -1824,7 +1817,7 @@ msgstr "Tiedosto"
 
 #: src/audacious/ui_manager.c:381
 msgid "Help"
-msgstr ""
+msgstr "Apua"
 
 #: src/audacious/ui_manager.c:383
 msgid "Plugin Services"
@@ -1879,24 +1872,20 @@ msgid "Quit Audacious"
 msgstr "Lopeta Audacious"
 
 #: src/audacious/ui_manager.c:408 src/audacious/ui_manager.c:409
-#, fuzzy
 msgid "Set A-B"
-msgstr "/Valitse kaikki"
+msgstr "Aseta A-B"
 
 #: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
-#, fuzzy
 msgid "Clear A-B"
-msgstr "/Tyhjennä jono"
+msgstr "Tyhjennä A-B"
 
 #: src/audacious/ui_manager.c:414 src/audacious/ui_manager.c:415
-#, fuzzy
 msgid "Jump to Playlist Start"
-msgstr "/Siirry soittolistan alkuun"
+msgstr "Siirry soittolistan alkuun"
 
 #: src/audacious/ui_manager.c:417 src/audacious/ui_manager.c:418
-#, fuzzy
 msgid "Jump to File"
-msgstr "/Siirry tiedoston kohdalle"
+msgstr "Siirry tiedoston kohdalle"
 
 #: src/audacious/ui_manager.c:423
 #, fuzzy
@@ -1908,9 +1897,8 @@ msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
 #: src/audacious/ui_manager.c:431
-#, fuzzy
 msgid "Load"
-msgstr "/Lataa"
+msgstr "Lataa"
 
 #: src/audacious/ui_manager.c:432
 msgid "Import"
@@ -1972,22 +1960,19 @@ msgstr "Lataa asetus tiedostosta"
 
 #: src/audacious/ui_manager.c:451
 msgid "From WinAMP EQF file"
-msgstr "Winamp EQF-tiedostosta"
+msgstr "WinAMP EQF-tiedostosta"
 
 #: src/audacious/ui_manager.c:452
-#, fuzzy
 msgid "Load preset from WinAMP EQF file"
-msgstr "/Lataa/Winampin EQF-tiedosto"
+msgstr "Lataa asetus WinAMP EQF-tiedostosta"
 
 #: src/audacious/ui_manager.c:454
-#, fuzzy
 msgid "WinAMP Presets"
-msgstr "/Tuo/Winampin asetukset"
+msgstr "WinAMPin asetukset"
 
 #: src/audacious/ui_manager.c:455
-#, fuzzy
 msgid "Import WinAMP presets"
-msgstr "/Tuo/Winampin asetukset"
+msgstr "Tuo WinAMPin asetukset"
 
 #: src/audacious/ui_manager.c:458
 msgid "Save preset"
@@ -2013,9 +1998,8 @@ msgid "Save preset to file"
 msgstr "Tallenna asetus"
 
 #: src/audacious/ui_manager.c:469
-#, fuzzy
 msgid "To WinAMP EQF file"
-msgstr "/Tallenna/Winampin EQF-tiedosto"
+msgstr "WinAMPin EQF-tiedostoon"
 
 #: src/audacious/ui_manager.c:470
 #, fuzzy
@@ -2089,7 +2073,9 @@ msgid ""
 "\n"
 "Unknown file type for '%s'.\n"
 msgstr ""
-"Soittolistan tallentaminen epäonnistui. Tuntematon tiedoston \"%s\" tyyppi."
+"<b><big>Soittolistan tallentaminen epäonnistui.</big></b>\n"
+"\n"
+"Tiedoston '%s' tyyppi on tuntematon.\n"
 
 #: src/audacious/ui_playlist.c:890
 msgid "Save as Static Playlist"
@@ -2140,7 +2126,7 @@ msgstr "ReplayGain"
 
 #: src/audacious/ui_preferences.c:139
 msgid "Connectivity"
-msgstr ""
+msgstr "Yhteydet"
 
 #: src/audacious/ui_preferences.c:140
 msgid "Mouse"
@@ -2167,14 +2153,12 @@ msgid "Comment"
 msgstr "Kommentti"
 
 #: src/audacious/ui_preferences.c:159
-#, fuzzy
 msgid "Codec"
-msgstr "/Sulje"
+msgstr "Kodekki"
 
 #: src/audacious/ui_preferences.c:160
-#, fuzzy
 msgid "Quality"
-msgstr "/_Lopeta"
+msgstr "Laatu"
 
 #: src/audacious/ui_preferences.c:166
 msgid "None"
@@ -2237,12 +2221,10 @@ msgid "_Playlist:"
 msgstr "_Soittolista:"
 
 #: src/audacious/ui_preferences.c:224
-#, fuzzy
 msgid "Select playlist font:"
-msgstr "Valitse pääikkunan kirjasinlaji:"
+msgstr "Valitse soittolistan kirjasinlaji:"
 
 #: src/audacious/ui_preferences.c:225
-#, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "Käytä bittikarttakirjasimia, jos saatavilla"
 
@@ -2334,18 +2316,16 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_preferences.c:248
-#, fuzzy
 msgid "<b>Bit Depth</b>"
-msgstr "Bittinopeus:"
+msgstr "<b>Bittisyvyys</b>"
 
 #: src/audacious/ui_preferences.c:253
-#, fuzzy
 msgid "<b>Volume Control</b>"
-msgstr "Äänenvoimakkuus:"
+msgstr "<b>Äänenvoimakkuuden säädöt</b>"
 
 #: src/audacious/ui_preferences.c:254
 msgid "Use software volume control"
-msgstr "Käytä ohjelmiston äänenvoimakkuussäätöä"
+msgstr "Käytä ohjelmistopohjaista äänenvoimakkuussäätöä"
 
 #: src/audacious/ui_preferences.c:255
 msgid ""
@@ -2354,7 +2334,6 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_preferences.c:256
-#, fuzzy
 msgid "<b>Advanced</b>"
 msgstr "<b>Lisäasetukset</b>"
 
@@ -2599,7 +2578,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:1565
 msgid "Search depth: "
-msgstr ""
+msgstr "Haun syvyys: "
 
 #: src/audacious/ui_preferences.c:1578
 msgid "Use per-file cover"
