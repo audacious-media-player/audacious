@@ -39,6 +39,9 @@
 #include "tuple.h"
 #include "strings.h"
 
+#include "ui_equalizer.h"
+#include "ui_skin.h"
+
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
 
@@ -840,7 +843,6 @@ gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
-#if 0
 /* TODO: these skin functions should be removed when skin functionality
  * disappears --mf0102 */
 gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error) {
@@ -852,7 +854,6 @@ gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error) {
     aud_active_skin_load(skin);
     return TRUE;
 }
-#endif
 
 gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error) {
     playback_get_sample_params(rate, freq, nch);
@@ -940,7 +941,6 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GE
     return TRUE;
 }
 
-#if 0
 /* New on Nov 7: Equalizer */ 
 gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error)
 {
@@ -1004,7 +1004,6 @@ gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GEr
     equalizer_activate(active);
     return TRUE;
 }
-#endif
 
 
 DBusGProxy *audacious_get_dbus_proxy(void)
