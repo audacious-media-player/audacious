@@ -781,5 +781,5 @@ void
 input_set_info_text(gchar *text)
 {
     gchar *title = g_strdup(text);
-    event_queue("title change", title);
+    event_queue_with_data_free("title change", title);
 }

@@ -28,9 +28,11 @@
 typedef struct {
     gchar *name;
     gpointer *user_data;
+    gboolean free_data;
 } HookCallQueue;
 
 void event_queue(const gchar *name, gpointer user_data);
 void event_queue_timed(gint time, const gchar *name, gpointer user_data);
+void event_queue_with_data_free(const gchar *name, gpointer user_data);
 
 #endif /* AUDACIOUS_EVENTQUEUE_H */

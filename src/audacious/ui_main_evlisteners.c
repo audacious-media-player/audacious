@@ -63,7 +63,6 @@ ui_main_evlistener_title_change(gpointer hook_data, gpointer user_data)
 
     ui_skinned_textbox_set_text(mainwin_info, text);
     playlistwin_update_list(playlist_get_active());
-    g_free(text);
 }
 
 static void
@@ -187,8 +186,6 @@ ui_main_evlistener_playlist_info_change(gpointer hook_data, gpointer user_data)
     PlaylistEventInfoChange *msg = (PlaylistEventInfoChange *) hook_data;
 
     mainwin_set_song_info(msg->bitrate, msg->samplerate, msg->channels);
-
-    g_free(msg);
 }
 
 static void

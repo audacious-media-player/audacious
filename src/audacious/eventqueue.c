@@ -27,6 +27,9 @@ static gboolean eventqueue_handle(gpointer udata)
     hook_call(hq->name, hq->user_data);
 
     g_free(hq->name);
+    if (hq->free_data && hq->user_data)
+        g_free(hq->user_data);
+
     g_slice_free(HookCallQueue, hq);
 
     return FALSE;
@@ -42,6 +45,7 @@ void event_queue(const gchar *name, gpointer user_data)
     hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);
     hq->user_data = user_data;
+    hq->free_data = FALSE;
 
     g_idle_add_full(G_PRIORITY_HIGH_IDLE, eventqueue_handle, hq, NULL);
 }
@@ -56,6 +60,22 @@ void event_queue_timed(gint time, const gchar *name, gpointer user_data)
     hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);
     hq->user_data = user_data;
+    hq->free_data = FALSE;
 
     g_timeout_add(time, eventqueue_handle, hq);
+}
+
+void event_queue_with_data_free(const gchar *name, gpointer user_data)
+{
+    HookCallQueue *hq;
+
+    g_return_if_fail(name != NULL);
+    g_return_if_fail(user_data != NULL);
+
+    hq = g_slice_new0(HookCallQueue);
+    hq->name = g_strdup(name);
+    hq->user_data = user_data;
+    hq->free_data = TRUE;
+
+    g_idle_add_full(G_PRIORITY_HIGH_IDLE, eventqueue_handle, hq, NULL);
 }

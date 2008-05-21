@@ -1109,10 +1109,10 @@ playlist_set_info(Playlist * playlist, const gchar * title,
     msg->channels = nch;
 
     playback_set_sample_params(rate, freq, nch);
-    event_queue("playlist info change", msg);
+    event_queue_with_data_free("playlist info change", msg);
 
     text = playlist_get_info_text(playlist);
-    event_queue("title change", text);
+    event_queue_with_data_free("title change", text);
 
     if ( playlist->position )
         hook_call( "playlist set info" , playlist->position );
