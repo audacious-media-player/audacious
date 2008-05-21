@@ -317,6 +317,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_get_stopped = drct_get_stopped,
     .drct_get_info = drct_get_info,
     .drct_get_time = drct_get_time,
+    .drct_get_length = drct_get_length,
     .drct_seek = drct_seek,
     .drct_get_volume = drct_get_volume,
     .drct_set_volume = drct_set_volume,

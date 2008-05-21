@@ -157,6 +157,15 @@ drct_get_time ( void )
     return time;
 }
 
+gint
+drct_get_length ( void )
+{
+    if (playback_get_playing())
+        return playback_get_length();
+    else
+        return -1;
+}
+
 void
 drct_seek ( guint pos )
 {

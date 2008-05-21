@@ -47,6 +47,7 @@ gboolean drct_get_paused ( void );
 gboolean drct_get_stopped ( void );
 void drct_get_info( gint *rate, gint *freq, gint *nch);
 gint drct_get_time ( void );
+gint drct_get_length ( void );
 void drct_seek ( guint pos );
 void drct_get_volume( gint *vl, gint *vr );
 void drct_set_volume( gint vl, gint vr );

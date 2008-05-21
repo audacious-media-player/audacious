@@ -555,6 +555,7 @@ struct _AudaciousFuncTableV1 {
     gboolean (*drct_get_stopped)( void );
     void (*drct_get_info)( gint *rate, gint *freq, gint *nch);
     gint (*drct_get_time )( void );
+    gint (*drct_get_length )( void );
     void (*drct_seek) ( guint pos );
     void (*drct_get_volume)( gint *vl, gint *vr );
     void (*drct_set_volume)( gint vl, gint vr );
@@ -911,6 +912,7 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_get_stopped		_audvt->drct_get_stopped
 #define audacious_drct_get_info			_audvt->drct_get_info
 #define audacious_drct_get_time			_audvt->drct_get_time
+#define audacious_drct_get_length               _audvt->drct_get_length
 #define audacious_drct_seek			_audvt->drct_seek
 #define audacious_drct_get_volume		_audvt->drct_get_volume
 #define audacious_drct_set_volume		_audvt->drct_set_volume
