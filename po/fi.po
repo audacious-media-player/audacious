@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-05-21 05:17+0300\n"
+"POT-Creation-Date: 2008-05-21 08:00+0300\n"
 "PO-Revision-Date: 2008-04-09 12:12+0300\n"
 "Last-Translator: Matti Hämäläinen <ccr@tnsp.org>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -1875,9 +1875,8 @@ msgid "_Quit"
 msgstr "/_Lopeta"
 
 #: src/audacious/ui_manager.c:406
-#, fuzzy
 msgid "Quit Audacious"
-msgstr "MPEG-ääniliitännäisestä"
+msgstr "Lopeta Audacious"
 
 #: src/audacious/ui_manager.c:408 src/audacious/ui_manager.c:409
 #, fuzzy
@@ -1914,19 +1913,16 @@ msgid "Load"
 msgstr "/Lataa"
 
 #: src/audacious/ui_manager.c:432
-#, fuzzy
 msgid "Import"
-msgstr "/Tuo"
+msgstr "Tuo"
 
 #: src/audacious/ui_manager.c:433
-#, fuzzy
 msgid "Save"
-msgstr "/Tallenna"
+msgstr "Tallenna"
 
 #: src/audacious/ui_manager.c:434
-#, fuzzy
 msgid "Delete"
-msgstr "/Poista"
+msgstr "Poista"
 
 #: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
 #: src/audacious/ui_manager.c:472
@@ -1958,9 +1954,8 @@ msgid "Load default preset into equalizer"
 msgstr "Tallenna automaattinen asetus"
 
 #: src/audacious/ui_manager.c:445
-#, fuzzy
 msgid "Zero"
-msgstr "Retro"
+msgstr "Nolla"
 
 #: src/audacious/ui_manager.c:446
 #, fuzzy
@@ -1968,19 +1963,16 @@ msgid "Set equalizer preset levels to zero"
 msgstr "Tallenna taajuuskorjaimen asetus"
 
 #: src/audacious/ui_manager.c:448
-#, fuzzy
 msgid "From file"
-msgstr "/Lataa/Tiedosto"
+msgstr "Tiedostosta"
 
 #: src/audacious/ui_manager.c:449
-#, fuzzy
 msgid "Load preset from file"
-msgstr "Lataa asetus"
+msgstr "Lataa asetus tiedostosta"
 
 #: src/audacious/ui_manager.c:451
-#, fuzzy
 msgid "From WinAMP EQF file"
-msgstr "/Lataa/Winampin EQF-tiedosto"
+msgstr "Winamp EQF-tiedostosta"
 
 #: src/audacious/ui_manager.c:452
 #, fuzzy
@@ -2012,9 +2004,8 @@ msgid "Save default preset"
 msgstr "Tallenna automaattinen asetus"
 
 #: src/audacious/ui_manager.c:466
-#, fuzzy
 msgid "To file"
-msgstr "/Lataa/Tiedosto"
+msgstr "Tiedostoon"
 
 #: src/audacious/ui_manager.c:467
 #, fuzzy
@@ -2054,24 +2045,20 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_playlist.c:463
-#, fuzzy
 msgid "Title: "
-msgstr "Nimi:"
+msgstr "Nimi: "
 
 #: src/audacious/ui_playlist.c:470
-#, fuzzy
 msgid "Album: "
-msgstr "Levy:"
+msgstr "Albumi: "
 
 #: src/audacious/ui_playlist.c:477
-#, fuzzy
 msgid "Artist: "
-msgstr "Esittäjä:"
+msgstr "Esittäjä: "
 
 #: src/audacious/ui_playlist.c:484
-#, fuzzy
 msgid "Filename: "
-msgstr "Tiedostonimi:"
+msgstr "Tiedostonimi: "
 
 #: src/audacious/ui_playlist.c:492
 msgid "Clear previous selection before searching"
@@ -2105,13 +2092,12 @@ msgstr ""
 "Soittolistan tallentaminen epäonnistui. Tuntematon tiedoston \"%s\" tyyppi."
 
 #: src/audacious/ui_playlist.c:890
-#, fuzzy
 msgid "Save as Static Playlist"
-msgstr "Tallenna soittolista"
+msgstr "Tallenna staattisena soittolistana"
 
 #: src/audacious/ui_playlist.c:897
 msgid "Use Relative Path"
-msgstr ""
+msgstr "Käytä suhteellista polkua"
 
 #: src/audacious/ui_playlist.c:919
 #, fuzzy
@@ -2123,23 +2109,20 @@ msgid "Save Playlist"
 msgstr "Tallenna soittolista"
 
 #: src/audacious/ui_playlist.c:1499
-#, fuzzy
 msgid "Audacious Playlist Editor"
-msgstr "/Näytä soittolistan muokkain"
+msgstr "Audaciouksen soittolistamuokkain"
 
 #: src/audacious/ui_playlist_manager.c:367
-#, fuzzy
 msgid "Playlist Manager"
-msgstr "/Älä etene soittolistassa"
+msgstr "Soittolistojen hallinta"
 
 #: src/audacious/ui_playlist_manager.c:413
 msgid "Entries"
 msgstr ""
 
 #: src/audacious/ui_playlist_manager.c:428
-#, fuzzy
 msgid "_Rename"
-msgstr "Tiedostonimi"
+msgstr "_Uudelleennimeä"
 
 #: src/audacious/ui_preferences.c:136
 msgid "Appearance"
@@ -2261,7 +2244,7 @@ msgstr "Valitse pääikkunan kirjasinlaji:"
 #: src/audacious/ui_preferences.c:225
 #, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "Stereo (jos saatavilla)"
+msgstr "Käytä bittikarttakirjasimia, jos saatavilla"
 
 #: src/audacious/ui_preferences.c:225
 msgid ""
@@ -2271,7 +2254,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:226
 msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_Sekalaista</b>"
+msgstr "<b>_Sekalaiset</b>"
 
 #: src/audacious/ui_preferences.c:227
 msgid "Show track numbers in playlist"
@@ -2303,7 +2286,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:235
 msgid "Use two-way text scroller"
-msgstr ""
+msgstr "Käytä kaksisuuntaista tekstin vieritystä"
 
 #: src/audacious/ui_preferences.c:236
 msgid ""
@@ -2317,7 +2300,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:238
 msgid "Allow loading incomplete skins"
-msgstr ""
+msgstr "Salli rikkinäisten teemojen lataaminen"
 
 #: src/audacious/ui_preferences.c:239
 msgid ""
@@ -2373,7 +2356,7 @@ msgstr ""
 #: src/audacious/ui_preferences.c:256
 #, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "Lisäasetukset"
+msgstr "<b>Lisäasetukset</b>"
 
 #: src/audacious/ui_preferences.c:257
 msgid "Bypass all of signal processing if possible"
@@ -2410,7 +2393,7 @@ msgstr "Kappaleen vahvistus:"
 #: src/audacious/ui_preferences.c:268
 #, fuzzy
 msgid "Album gain/peak"
-msgstr "Levyn vahvistus:"
+msgstr "Albumin vahvistus:"
 
 #: src/audacious/ui_preferences.c:269 src/audacious/ui_preferences.c:1581
 #, fuzzy
@@ -2564,7 +2547,7 @@ msgstr "Luokka"
 
 #: src/audacious/ui_preferences.c:1386
 msgid "Color Adjustment"
-msgstr ""
+msgstr "Värisäädöt"
 
 #: src/audacious/ui_preferences.c:1393
 msgid ""
@@ -2573,18 +2556,16 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_preferences.c:1403
-#, fuzzy
 msgid "Blue"
-msgstr "Blues"
+msgstr "Sininen"
 
 #: src/audacious/ui_preferences.c:1410
-#, fuzzy
 msgid "Green"
-msgstr "kreikka:"
+msgstr "Vihreä"
 
 #: src/audacious/ui_preferences.c:1417
 msgid "Red"
-msgstr ""
+msgstr "Punainen"
 
 #: src/audacious/ui_preferences.c:1500
 #, fuzzy
@@ -2852,15 +2833,15 @@ msgstr "Välityspalvelimen salasana:"
 
 #: src/audacious/ui_preferences.c:2662
 msgid "Proxy username:"
-msgstr "Välityspalvelimen käyttäjänimi:"
+msgstr "Välityspalvelimen käyttäjätunnus:"
 
 #: src/audacious/ui_preferences.c:2679
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">Näiden asetusten muuttaminen vaatii Audaciouksen "
-"uudelleenkäynnistyksen, jotta muutokset tulisivat voimaan.</span>"
+"<span size=\"small\">Näiden asetusten muuttaminen vaatii ohjelman "
+"uudelleenkäynnistyksen.</span>"
 
 #: src/audacious/ui_preferences.c:2779
 msgid "_Decoder list:"
@@ -3012,7 +2993,7 @@ msgstr ""
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:225
 msgid "Session Management Options"
