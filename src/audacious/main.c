@@ -314,7 +314,7 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
         }
 }
 
-static gboolean
+static void
 handle_cmd_line_options()
 {
     gchar **filenames = options.filenames;
@@ -520,12 +520,6 @@ handle_cmd_line_options()
         if (options.activate)
             drct_activate();
     } /* !is_running */
-    
-#ifdef USE_DBUS
-    return is_running;
-#else
-    return FALSE;
-#endif
 }
 
 static void
@@ -672,8 +666,6 @@ aud_quit(void)
 gint
 main(gint argc, gchar ** argv)
 {
-    gboolean cmd_line_handled = FALSE;
-    
     /* glib-2.13.0 requires g_thread_init() to be called before all
        other GLib functions */
     g_thread_init(NULL);
@@ -723,10 +715,7 @@ main(gint argc, gchar ** argv)
 
     signal_handlers_init();
 
-#ifdef USE_DBUS
-    /* If we are using DBUS, handle options here */
-    cmd_line_handled = handle_cmd_line_options();
-#endif
+    handle_cmd_line_options();
 
     if (options.headless == FALSE)
     {
@@ -745,9 +734,6 @@ main(gint argc, gchar ** argv)
 
     plugin_system_init();
     playlist_system_init();
-
-    if (!cmd_line_handled)
-        handle_cmd_line_options();
 
 #ifdef USE_DBUS
     init_dbus();
