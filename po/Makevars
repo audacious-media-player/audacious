@@ -16,7 +16,7 @@ COPYRIGHT_HOLDER = Translator <translator@invalid>
 # message catalogs shall be used.  It is usually empty.
 EXTRA_LOCALE_CATEGORIES =
 
-MSGID_BUGS_ADDRESS = http://bugs.audacious-media-player.org
+MSGID_BUGS_ADDRESS = http://bugzilla.atheme.org/
 
 build: all
 
