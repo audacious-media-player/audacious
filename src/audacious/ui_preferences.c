@@ -1353,21 +1353,6 @@ show_wm_decorations_cb()
     gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
 }
 
-static void
-on_reload_plugins_clicked(GtkButton * button, gpointer data)
-{
-    /* TBD: should every playlist entry have to be reprobed?
-     * Pointers could come back stale if new plugins are added or
-     * symbol sizes change.                       - nenolod
-     */
-
-    aud_config_save();
-    plugin_system_cleanup();
-    aud_config_free();
-    aud_config_load();
-    plugin_system_init();
-}
-
 void
 create_colorize_settings(void)
 {
@@ -3056,11 +3041,8 @@ create_prefs_window(void)
     GtkWidget *hbox4;
     GtkWidget *audversionlabel;
     GtkWidget *prefswin_button_box;
-    GtkWidget *reload_plugins;
-    GtkWidget *alignment93;
     GtkWidget *hbox11;
     GtkWidget *image10;
-    GtkWidget *label102;
     GtkWidget *close;
     GtkAccelGroup *accel_group;
 
@@ -3127,21 +3109,10 @@ create_prefs_window(void)
     gtk_button_box_set_layout (GTK_BUTTON_BOX (prefswin_button_box), GTK_BUTTONBOX_END);
     gtk_box_set_spacing (GTK_BOX (prefswin_button_box), 6);
 
-    reload_plugins = gtk_button_new ();
-    gtk_container_add (GTK_CONTAINER (prefswin_button_box), reload_plugins);
-    GTK_WIDGET_SET_FLAGS (reload_plugins, GTK_CAN_DEFAULT);
-
-    alignment93 = gtk_alignment_new (0.5, 0.5, 0, 0);
-    gtk_container_add (GTK_CONTAINER (reload_plugins), alignment93);
-
     hbox11 = gtk_hbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (alignment93), hbox11);
 
     image10 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
     gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
-
-    label102 = gtk_label_new_with_mnemonic (_("Reload Plugins"));
-    gtk_box_pack_start (GTK_BOX (hbox11), label102, FALSE, FALSE, 0);
 
     close = gtk_button_new_from_stock ("gtk-close");
     gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
@@ -3163,9 +3134,6 @@ create_prefs_window(void)
     g_signal_connect_after(G_OBJECT(skin_view), "realize",
                            G_CALLBACK(on_skin_view_realize),
                            NULL);
-    g_signal_connect(G_OBJECT(reload_plugins), "clicked",
-                     G_CALLBACK(on_reload_plugins_clicked),
-                     NULL);
     g_signal_connect_swapped(G_OBJECT(close), "clicked",
                              G_CALLBACK(gtk_widget_hide),
                              GTK_OBJECT (prefswin));
