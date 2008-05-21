@@ -547,6 +547,7 @@ struct _AudaciousFuncTableV1 {
     void (*drct_activate)(void);
 
     /* DRCT API: playback */
+    void (*drct_initiate) ( void );
     void (*drct_play) ( void );
     void (*drct_pause) ( void );
     void (*drct_stop) ( void );
@@ -904,6 +905,7 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_set_skin			_audvt->drct_set_skin
 #define audacious_drct_activate			_audvt->drct_activate
 
+#define audacious_drct_initiate                 _audvt->drct_initiate
 #define audacious_drct_play			_audvt->drct_play
 #define audacious_drct_pause			_audvt->drct_pause
 #define audacious_drct_stop			_audvt->drct_stop

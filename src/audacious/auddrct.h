@@ -39,6 +39,7 @@ void drct_pl_win_toggle ( gboolean );
 void drct_activate(void);
 
 /* playback */
+void drct_initiate ( void );
 void drct_play ( void );
 void drct_pause ( void );
 void drct_stop ( void );

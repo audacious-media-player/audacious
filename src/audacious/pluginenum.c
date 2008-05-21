@@ -309,6 +309,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_set_skin = NULL, /* remove someday. --mf0102 */
     .drct_activate = drct_activate,
 
+    .drct_initiate = drct_initiate,
     .drct_play = drct_play,
     .drct_pause = drct_pause,
     .drct_stop = drct_stop,

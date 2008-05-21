@@ -94,6 +94,12 @@ void drct_activate(void)
 /* playback */
 
 void
+drct_initiate ( void )
+{
+    playback_initiate();
+}
+
+void
 drct_play ( void )
 {
     if (playback_get_paused())
