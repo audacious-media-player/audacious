@@ -620,8 +620,6 @@ mainwin_set_song_info(gint bitrate,
     gchar *title;
     Playlist *playlist = playlist_get_active();
 
-    playback_set_sample_params(bitrate, frequency, n_channels);
-
     GDK_THREADS_ENTER();
     if (bitrate != -1) {
         bitrate /= 1000;
