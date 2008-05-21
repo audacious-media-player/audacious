@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2008-05-21 04:57+0300\n"
+"POT-Creation-Date: 2008-05-21 05:17+0300\n"
 "PO-Revision-Date: 2008-04-09 12:12+0300\n"
 "Last-Translator: Matti Hämäläinen <ccr@tnsp.org>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -1246,7 +1246,6 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_main.c:1225
-#, fuzzy
 msgid "Do not display this warning again"
 msgstr "Älä näytä tätä varoitusta enää"
 
@@ -1295,13 +1294,12 @@ msgid "File Info Box"
 msgstr "Tiedoston tiedot"
 
 #: src/audacious/ui_main.c:1884
-#, fuzzy
 msgid "Disable 'GUI Scaling'"
-msgstr "Poista ID3v2-tiedot käytöstä"
+msgstr "Poista käyttöliittymän skaalaus käytöstä"
 
 #: src/audacious/ui_main.c:1886
 msgid "Enable 'GUI Scaling'"
-msgstr ""
+msgstr "Ota käyttöliittymän skaalaus käyttöön"
 
 #: src/audacious/ui_main.c:1889
 msgid "Visualization Menu"
@@ -1328,9 +1326,8 @@ msgid "Autoscroll Songname"
 msgstr "Vieritä kappaleen nimeä"
 
 #: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
-#, fuzzy
 msgid "Stop after Current Song"
-msgstr "Pysäytä nykyisen kappaleen soittaminen"
+msgstr "Lopeta soitto nykyisen kappaleen jälkeen"
 
 #: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
 msgid "Peaks"
@@ -1527,14 +1524,12 @@ msgid "Visualization Mode"
 msgstr "Visualisointitapa"
 
 #: src/audacious/ui_manager.c:192
-#, fuzzy
 msgid "Analyzer Mode"
-msgstr "/Taajuusspektri/Tuli"
+msgstr "Taajuusspektri-moodi"
 
 #: src/audacious/ui_manager.c:193
-#, fuzzy
 msgid "Scope Mode"
-msgstr "/Oskilloskooppi"
+msgstr "Oskilloskooppi-moodi"
 
 #: src/audacious/ui_manager.c:194
 #, fuzzy
@@ -1564,7 +1559,6 @@ msgid "Playlist"
 msgstr "Soittolista"
 
 #: src/audacious/ui_manager.c:205 src/audacious/ui_manager.c:206
-#, fuzzy
 msgid "New Playlist"
 msgstr "Uusi soittolista"
 
@@ -1626,43 +1620,38 @@ msgstr "Näytä"
 
 #: src/audacious/ui_manager.c:242
 msgid "Add Internet Address..."
-msgstr "Lisää internet-osoite..."
+msgstr "Lisää URL-osoite..."
 
 #: src/audacious/ui_manager.c:243
 #, fuzzy
 msgid "Adds a remote track to the playlist."
-msgstr "Älä tyhjennä soittolistaa"
+msgstr "Lisää URL-osoitteen soittolistaan."
 
 #: src/audacious/ui_manager.c:246
-#, fuzzy
 msgid "Add Files..."
-msgstr "/Lisää tiedostoja..."
+msgstr "Lisää tiedostoja..."
 
 #: src/audacious/ui_manager.c:247
-#, fuzzy
 msgid "Adds files to the playlist."
-msgstr "Älä tyhjennä soittolistaa"
+msgstr "Lisää tiedostot soittolistaan."
 
 #: src/audacious/ui_manager.c:252
-#, fuzzy
 msgid "Search and Select"
-msgstr "/Järjestä valittu osa"
+msgstr "Etsi ja valitse"
 
 #: src/audacious/ui_manager.c:253
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr ""
+msgstr "Etsii ja valitsee soittolistasta kappaleita halutin kriterian mukaan."
 
 #: src/audacious/ui_manager.c:256
-#, fuzzy
 msgid "Invert Selection"
-msgstr "/Käänteinen valinta"
+msgstr "Käänteinen valinta"
 
 #: src/audacious/ui_manager.c:257
-#, fuzzy
 msgid "Inverts the selected and unselected entries."
-msgstr "Tallenna soittolista"
+msgstr "Käänteistää valitut ja valitsemattomat kappaleet."
 
 #: src/audacious/ui_manager.c:260
 msgid "Select All"
@@ -1674,9 +1663,8 @@ msgid "Selects all of the playlist entries."
 msgstr "/Järjestä lista/Nimen mukaan"
 
 #: src/audacious/ui_manager.c:264
-#, fuzzy
 msgid "Select None"
-msgstr "/Tyhjä valinta"
+msgstr "Tyhjä valinta"
 
 #: src/audacious/ui_manager.c:265
 #, fuzzy
@@ -1694,29 +1682,24 @@ msgid "Removes all entries from the playlist."
 msgstr "Poista valitut kappaleet"
 
 #: src/audacious/ui_manager.c:274
-#, fuzzy
 msgid "Clear Queue"
-msgstr "/Tyhjennä jono"
+msgstr "Tyhjennä jono"
 
 #: src/audacious/ui_manager.c:275
-#, fuzzy
 msgid "Clears the queue associated with this playlist."
-msgstr "Tallenna soittolista"
+msgstr "Tyhjentää tähän soittolistaan liittyvän jonon."
 
 #: src/audacious/ui_manager.c:278
-#, fuzzy
 msgid "Remove Unavailable Files"
-msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
+msgstr "Poista tiedostot, jotka eivät ole saatavilla"
 
 #: src/audacious/ui_manager.c:279
-#, fuzzy
 msgid "Removes unavailable files from the playlist."
-msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
+msgstr "Poistaa soittolistasta tiedostot, jotka eivät ole saatavilla."
 
 #: src/audacious/ui_manager.c:282
-#, fuzzy
 msgid "Remove Duplicates"
-msgstr "/Poista valitut"
+msgstr "Poista kaksoiskappaleet"
 
 #: src/audacious/ui_manager.c:284 src/audacious/ui_manager.c:316
 #: src/audacious/ui_manager.c:346
@@ -1724,9 +1707,8 @@ msgid "By Title"
 msgstr "Nimen mukaan"
 
 #: src/audacious/ui_manager.c:285
-#, fuzzy
 msgid "Removes duplicate entries from the playlist by title."
-msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
+msgstr "Poistaa soittolistasta saman nimiset kappaleet."
 
 #: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:324
 #: src/audacious/ui_manager.c:354
@@ -1734,80 +1716,65 @@ msgid "By Filename"
 msgstr "Tiedostonimen mukaan"
 
 #: src/audacious/ui_manager.c:289
-#, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
+msgstr "Poistaa soittolistasta saman tiedostonimen omaavat kappaleet."
 
 #: src/audacious/ui_manager.c:292 src/audacious/ui_manager.c:328
 #: src/audacious/ui_manager.c:358
-#, fuzzy
 msgid "By Path + Filename"
-msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
+msgstr "Polun ja tiedostonimen mukaan"
 
 #: src/audacious/ui_manager.c:293
-#, fuzzy
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
+msgstr "Poistaa soittolistasta saman polun ja tiedostonimen omaavat kappaleet."
 
 #: src/audacious/ui_manager.c:296
-#, fuzzy
 msgid "Remove Unselected"
-msgstr "/Poista valitsemattomat"
+msgstr "Poista valitsemattomat"
 
 #: src/audacious/ui_manager.c:297
-#, fuzzy
 msgid "Remove unselected entries from the playlist."
-msgstr "Poista valitut kappaleet"
+msgstr "Poistaa valitsemattomat kappaleet soittolistasta."
 
 #: src/audacious/ui_manager.c:300
-#, fuzzy
 msgid "Remove Selected"
-msgstr "/Poista valitut"
+msgstr "Poista valitut"
 
 #: src/audacious/ui_manager.c:301
-#, fuzzy
 msgid "Remove selected entries from the playlist."
-msgstr "Poista valitut kappaleet"
+msgstr "Poistaa valitut kappaleet soittolistasta."
 
 #: src/audacious/ui_manager.c:306
-#, fuzzy
 msgid "Randomize List"
-msgstr "/Sekoita lista"
+msgstr "Sekoita lista"
 
 #: src/audacious/ui_manager.c:307
-#, fuzzy
 msgid "Randomizes the playlist."
-msgstr "/Sekoita lista"
+msgstr "Sekoittaa soittolistan."
 
 #: src/audacious/ui_manager.c:310
-#, fuzzy
 msgid "Reverse List"
-msgstr "/Käänteinen järjestys"
+msgstr "Käänteinen järjestys"
 
 #: src/audacious/ui_manager.c:311
-#, fuzzy
 msgid "Reverses the playlist."
-msgstr "Päivitä soittolista"
+msgstr "Järjestää soittolistan käänteiseen järjestykseen."
 
 #: src/audacious/ui_manager.c:314
-#, fuzzy
 msgid "Sort List"
-msgstr "/Järjestä lista"
+msgstr "Järjestä lista"
 
 #: src/audacious/ui_manager.c:317 src/audacious/ui_manager.c:347
-#, fuzzy
 msgid "Sorts the list by title."
-msgstr "Järjestä kaikki nimen mukaan"
+msgstr "Järjestää listan kappaleen nimen mukaan"
 
 #: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
-#, fuzzy
 msgid "By Artist"
-msgstr "Esittäjä"
+msgstr "Esittäjän mukaan"
 
 #: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
-#, fuzzy
 msgid "Sorts the list by artist."
-msgstr "/Järjestä lista/Nimen mukaan"
+msgstr "Järjestää listan kappaleen esittäjän nimen mukaan."
 
 #: src/audacious/ui_manager.c:325 src/audacious/ui_manager.c:355
 #, fuzzy
@@ -1829,9 +1796,8 @@ msgid "Sorts the list by modification time."
 msgstr "Järjestä kaikki nimen mukaan"
 
 #: src/audacious/ui_manager.c:336 src/audacious/ui_manager.c:366
-#, fuzzy
 msgid "By Track Number"
-msgstr "Kappaleen numero"
+msgstr "Kappaleen numeron mukaan"
 
 #: src/audacious/ui_manager.c:337 src/audacious/ui_manager.c:367
 #, fuzzy
@@ -1849,23 +1815,20 @@ msgid "Sorts the list by playlist entry."
 msgstr "/Järjestä lista/Nimen mukaan"
 
 #: src/audacious/ui_manager.c:344
-#, fuzzy
 msgid "Sort Selected"
-msgstr "/Järjestä valittu osa"
+msgstr "Järjestä valitut"
 
 #: src/audacious/ui_manager.c:380
-#, fuzzy
 msgid "File"
-msgstr "Satiiri"
+msgstr "Tiedosto"
 
 #: src/audacious/ui_manager.c:381
 msgid "Help"
 msgstr ""
 
 #: src/audacious/ui_manager.c:383
-#, fuzzy
 msgid "Plugin Services"
-msgstr "Liitännäiset"
+msgstr "Liitännäispalvelut"
 
 #: src/audacious/ui_manager.c:385 src/audacious/ui_manager.c:388
 #, fuzzy
@@ -1888,31 +1851,26 @@ msgid "Load and play a file"
 msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
 
 #: src/audacious/ui_manager.c:397
-#, fuzzy
 msgid "Play Location"
-msgstr "Sijainti:"
+msgstr "Soita sijainti"
 
 #: src/audacious/ui_manager.c:398
 msgid "Play media from the selected location"
 msgstr ""
 
 #: src/audacious/ui_manager.c:400
-#, fuzzy
 msgid "Plugin services"
-msgstr "Liitännäiset"
+msgstr "Liitännäispalvelut"
 
 #: src/audacious/ui_manager.c:402
-#, fuzzy
 msgid "Preferences"
-msgstr "/Asetukset"
+msgstr "Asetukset"
 
 #: src/audacious/ui_manager.c:403
-#, fuzzy
 msgid "Open preferences window"
-msgstr "Avaa asetusikkuna"
+msgstr "Avaa asetusikkunan"
 
 #: src/audacious/ui_manager.c:405
-#, fuzzy
 msgid "_Quit"
 msgstr "/_Lopeta"
 
