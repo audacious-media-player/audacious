@@ -167,6 +167,6 @@ AUD_CHECK_MODULE([MOWGLI], [libmowgli], [>= 0.4.0], [libmowgli],
 
 dnl Check for libmcs
 dnl ================
-AUD_CHECK_MODULE([LIBMCS], [libmcs >= 0.7], [libmcs],
+AUD_CHECK_MODULE([LIBMCS], [libmcs], [>= 0.7], [libmcs],
     [http://www.atheme.org/projects/mcs.shtml])
 ])
