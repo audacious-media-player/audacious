@@ -94,6 +94,12 @@ ui_main_evlistener_volume_change(gpointer hook_data, gpointer user_data)
 }
 
 static void
+ui_main_evlistener_playback_initiate(gpointer hook_data, gpointer user_data)
+{
+    playback_initiate();
+}
+
+static void
 ui_main_evlistener_playback_begin(gpointer hook_data, gpointer user_data)
 {
     PlaylistEntry *entry = (PlaylistEntry*)hook_data;
@@ -284,6 +290,7 @@ ui_main_evlistener_init(void)
     hook_associate("title change", ui_main_evlistener_title_change, NULL);
     hook_associate("hide seekbar", ui_main_evlistener_hide_seekbar, NULL);
     hook_associate("volume set", ui_main_evlistener_volume_change, NULL);
+    hook_associate("playback initiate", ui_main_evlistener_playback_initiate, NULL);
     hook_associate("playback begin", ui_main_evlistener_playback_begin, NULL);
     hook_associate("playback stop", ui_main_evlistener_playback_stop, NULL);
     hook_associate("playback pause", ui_main_evlistener_playback_pause, NULL);
