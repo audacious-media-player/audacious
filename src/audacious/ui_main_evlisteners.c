@@ -106,10 +106,7 @@ ui_main_evlistener_playback_begin(gpointer hook_data, gpointer user_data)
     g_return_if_fail(entry != NULL);
 
     equalizerwin_load_auto_preset(entry->filename);
-    input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                 cfg.equalizer_bands);
-    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                  cfg.equalizer_bands);
+    hook_call("equalizer changed", NULL);
 
     ui_vis_clear_data(mainwin_vis);
     ui_svis_clear_data(mainwin_svis);
@@ -284,6 +281,17 @@ ui_main_evlistener_config_save(gpointer hook_data, gpointer user_data)
                     cfg.mainwin_use_bitmapfont);
 }
 
+static void
+ui_main_evlistener_equalizer_changed(gpointer hook_data, gpointer user_data)
+{
+    /* um .. i think we need both of these for xmms compatibility ..
+       not sure. -larne */
+    input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                 cfg.equalizer_bands);
+    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                  cfg.equalizer_bands);
+}
+
 void
 ui_main_evlistener_init(void)
 {
@@ -309,5 +317,7 @@ ui_main_evlistener_init(void)
     hook_associate("filebrowser hide", ui_main_evlistener_filebrowser_hide, NULL);
     hook_associate("visualization timeout", ui_main_evlistener_visualization_timeout, NULL);
     hook_associate("config save", ui_main_evlistener_config_save, NULL);
+
+    hook_associate("equalizer changed", ui_main_evlistener_equalizer_changed, NULL);
 }
 
