@@ -725,7 +725,7 @@ input_set_volume(gint l, gint r)
     h_vol[0] = l;
     h_vol[1] = r;
     hook_call("volume set", h_vol);
-    
+
     if (playback_get_playing())
         if ((playback = get_current_input_playback()) != NULL)
 	    if (playback->plugin->set_volume != NULL)

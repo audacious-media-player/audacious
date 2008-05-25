@@ -1948,29 +1948,6 @@ run_no_output_device_dialog(gpointer hook_data, gpointer user_data)
     GDK_THREADS_LEAVE();
 }
 
-void
-ui_main_set_initial_volume(void)
-{
-    gint vl, vr, b, v;
-
-    input_get_volume(&vl, &vr);
-
-    vl = CLAMP(vl, 0, 100);
-    vr = CLAMP(vr, 0, 100);
-    v = MAX(vl, vr);
-    if (vl > vr)
-        b = (gint) rint(((gdouble) vr / vl) * 100) - 100;
-    else if (vl < vr)
-        b = 100 - (gint) rint(((gdouble) vl / vr) * 100);
-    else
-        b = 0;
-
-    mainwin_set_volume_slider(v);
-    equalizerwin_set_volume_slider(v);
-    mainwin_set_balance_slider(b);
-    equalizerwin_set_balance_slider(b);
-}
-
 static void
 set_timer_mode(TimerMode mode)
 {

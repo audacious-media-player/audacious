@@ -765,7 +765,10 @@ main(gint argc, gchar ** argv)
          * but not if we're running headless --nenolod
          */
         mainwin_setup_menus();
-        ui_main_set_initial_volume();
+
+        gint h_vol[2];
+        input_get_volume(&h_vol[0], &h_vol[1]);
+        hook_call("volume set", h_vol);
 
         /* FIXME: delayed, because it deals directly with the plugin
          * interface to set menu items */
