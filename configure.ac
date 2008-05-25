@@ -244,7 +244,7 @@ AUD_ARG_ENABLE([altivec], [yes],
         AC_DEFINE([HAVE_ALTIVEC], 1, [Define to 1 if your system has AltiVec.])
         AC_DEFINE([HAVE_ALTIVEC_H], 1, [Define to 1 if your system has an altivec.h file.])
         AC_DEFINE([ARCH_POWERPC], 1, [Define to 1 if your system is a PowerPC.])
-        SIMD_CFLAGS=-maltivec
+        SIMD_CFLAGS="-maltivec"
         AC_SUBST([SIMD_CFLAGS])
     ],[
         enable_altivec="no"
