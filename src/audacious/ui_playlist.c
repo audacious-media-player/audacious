@@ -665,8 +665,6 @@ playlistwin_motion(GtkWidget * widget,
                    GdkEventMotion * event,
                    gpointer callback_data)
 {
-    GdkEvent *gevent;
-
     /*
      * GDK2's resize is broken and doesn't really play nice, so we have
      * to do all of this stuff by hand.
@@ -685,8 +683,6 @@ playlistwin_motion(GtkWidget * widget,
     }
     else if (dock_is_moving(GTK_WINDOW(playlistwin)))
         dock_move_motion(GTK_WINDOW(playlistwin), event);
-
-    while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
 }
 
 static void
