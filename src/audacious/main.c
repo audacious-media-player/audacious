@@ -315,7 +315,7 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 }
 
 static void
-handle_cmd_line_options()
+handle_cmd_line_options(gboolean skip)
 {
     gchar **filenames = options.filenames;
 #ifdef USE_DBUS
@@ -430,7 +430,7 @@ handle_cmd_line_options()
     } /* is_running */
     else
 #endif
-    { /* !is_running */
+    if (!skip) { /* !is_running */
         if (filenames != NULL)
         {
             gint pos = 0;
@@ -715,7 +715,7 @@ main(gint argc, gchar ** argv)
 
     signal_handlers_init();
 
-    handle_cmd_line_options();
+    handle_cmd_line_options(TRUE);
 
     if (options.headless == FALSE)
     {
@@ -734,6 +734,8 @@ main(gint argc, gchar ** argv)
 
     plugin_system_init();
     playlist_system_init();
+
+    handle_cmd_line_options(FALSE);
 
 #ifdef USE_DBUS
     init_dbus();
