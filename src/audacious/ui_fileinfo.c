@@ -778,7 +778,7 @@ create_fileinfo_window(void)
 static void 
 fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
-    gchar *tmp, *tmp_utf = NULL;
+    gchar *tmp = NULL;
     GdkPixbuf *icon = NULL;
     GtkTreeIter iter;
     GtkListStore *store;
@@ -810,11 +810,8 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
             tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
 
     if (tmp) {
-        tmp_utf = str_to_utf8(tmp);
-        fileinfo_entry_set_text(entry_location, tmp_utf);
-        g_free(tmp_utf);
+        fileinfo_entry_set_text(entry_location, tmp);
         g_free(tmp);
-        tmp = NULL;
     }
         
     /* set empty string if field not availaible. --eugene */
