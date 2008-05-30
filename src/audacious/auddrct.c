@@ -39,7 +39,7 @@ drct_quit ( void )
 void
 drct_eject ( void )
 {
-    gboolean play_button = FALSE;
+    gboolean play_button = TRUE;
     hook_call("filebrowser show", &play_button);
 }
 
