@@ -688,7 +688,7 @@ playlistwin_motion(GtkWidget * widget,
 static void
 playlistwin_show_filebrowser(void)
 {
-    run_filebrowser(NO_PLAY_BUTTON);
+    run_filebrowser(FALSE);
 }
 
 static void
@@ -1796,7 +1796,7 @@ action_playlist_remove_unselected(void)
 void
 action_playlist_add_files(void)
 {
-    run_filebrowser(NO_PLAY_BUTTON);
+    run_filebrowser(FALSE);
 }
 
 void

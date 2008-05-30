@@ -1271,7 +1271,7 @@ check_set( GtkActionGroup * action_group ,
 void
 mainwin_eject_pushed(void)
 {
-    run_filebrowser(PLAY_BUTTON);
+    run_filebrowser(TRUE);
 }
 
 void
@@ -1758,7 +1758,7 @@ mainwin_general_menu_callback(gpointer data,
             show_about_window();
             break;
         case MAINWIN_GENERAL_PLAYFILE:
-            run_filebrowser(NO_PLAY_BUTTON);
+            run_filebrowser(FALSE);
             break;
         case MAINWIN_GENERAL_PLAYLOCATION:
             mainwin_show_add_url_window();
@@ -2723,7 +2723,7 @@ action_about_audacious( void )
 void
 action_play_file( void )
 {
-    run_filebrowser(PLAY_BUTTON);
+    run_filebrowser(TRUE);
 }
 
 void

@@ -458,7 +458,9 @@ util_run_filebrowser_classic(gboolean play_button, gboolean show)
  * util_run_filebrowser(gboolean play_button)
  *
  * Inputs:
- *     - whether or not a play button should be used
+ *     - gboolean play_button
+ *       TRUE  - open files
+ *       FALSE - add files
  *
  * Outputs:
  *     - none
