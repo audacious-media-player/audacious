@@ -243,6 +243,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
         } else {
             mowgli_object_unref(entry->tuple);
             entry->tuple = NULL;
+            return TRUE;
         }
     }
 
