@@ -39,6 +39,15 @@ struct _InputPluginData {
     GMutex *playback_mutex;
 };
 
+struct _VisNode {
+    gint time;
+    gint nch;
+    gint length;                /* number of samples per channel */
+    gint16 data[2][512];
+};
+
+typedef struct _VisNode VisNode;
+
 GList *get_input_list(void);
 InputPlayback *get_current_input_playback(void);
 void set_current_input_playback(InputPlayback * ip);

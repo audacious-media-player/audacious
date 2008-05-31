@@ -59,16 +59,6 @@
 
 G_LOCK_DEFINE_STATIC(vis_mutex);
 
-struct _VisNode {
-    gint time;
-    gint nch;
-    gint length;                /* number of samples per channel */
-    gint16 data[2][512];
-};
-
-typedef struct _VisNode VisNode;
-
-
 InputPluginData ip_data = {
     NULL,
     NULL,
@@ -770,10 +760,11 @@ input_update_vis(gint time)
 
     if (found) {
         vis_send_data(vis->data, vis->nch, vis->length);
+        hook_call("visualization timeout", vis);
         g_free(vis);
     }
     else
-        vis_send_data(NULL, 0, 0);
+        hook_call("visualization timeout", NULL);
 }
 
 /* FIXME: move this somewhere else */

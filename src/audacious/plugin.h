@@ -645,6 +645,10 @@ struct _AudaciousFuncTableV1 {
 
     void (*event_queue)(const gchar *name, gpointer user_data);
 
+    void (*calc_mono_freq)(gint16 dest[2][256], gint16 src[2][512], gint nch);
+    void (*calc_mono_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
+    void (*calc_stereo_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
+
     /* VFS endianess helper functions */
     gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
     gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
@@ -997,6 +1001,10 @@ struct _AudaciousFuncTableV1 {
 #define aud_get_pvt_data			_audvt->get_pvt_data
 
 #define aud_event_queue             _audvt->event_queue
+
+#define aud_calc_mono_freq          _audvt->calc_mono_freq
+#define aud_calc_mono_pcm           _audvt->calc_mono_pcm
+#define aud_calc_stereo_pcm         _audvt->calc_stereo_pcm
 
 #include "audacious/auddrct.h"
 

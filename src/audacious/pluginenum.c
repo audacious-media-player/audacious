@@ -396,6 +396,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .event_queue = event_queue,
 
+    .calc_mono_freq = calc_mono_freq,
+    .calc_mono_pcm = calc_mono_pcm,
+    .calc_stereo_pcm = calc_stereo_pcm,
 };
 
 /*****************************************************************/

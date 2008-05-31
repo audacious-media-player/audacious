@@ -487,8 +487,9 @@ void ui_svis_set_visible(GtkWidget *widget, gboolean window_is_visible)
 }
 
 void ui_svis_clear_data(GtkWidget *widget) {
-    gint i;
+    g_return_if_fail(UI_IS_SVIS(widget));
 
+    gint i;
     UiSVis *svis = UI_SVIS (widget);
 
     for (i = 0; i < 75; i++) {
@@ -497,6 +498,8 @@ void ui_svis_clear_data(GtkWidget *widget) {
 }
 
 void ui_svis_timeout_func(GtkWidget *widget, guchar * data) {
+    g_return_if_fail(UI_IS_SVIS(widget));
+
     UiSVis *svis = UI_SVIS (widget);
     static GTimer *timer = NULL;
     gulong micros = 9999999;

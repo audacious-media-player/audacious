@@ -197,7 +197,7 @@ vis_enable_from_stringified_list(gchar * list)
     g_strfreev(plugins);
 }
 
-static void
+void
 calc_stereo_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
 {
     memcpy(dest[0], src[0], 512 * sizeof(gint16));
@@ -207,7 +207,7 @@ calc_stereo_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
         memcpy(dest[1], src[1], 512 * sizeof(gint16));
 }
 
-static void
+void
 calc_mono_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
 {
     gint i;
@@ -241,7 +241,7 @@ calc_freq(gint16 * dest, gint16 * src)
         dest[i] = ((gint) sqrt(tmp_out[i + 1])) >> 8;
 }
 
-static void
+void
 calc_mono_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
 {
     gint i;
@@ -260,7 +260,7 @@ calc_mono_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
     }
 }
 
-static void
+void
 calc_stereo_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
 {
     calc_freq(dest[0], src[0]);
@@ -280,14 +280,9 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
     gboolean mono_freq_calced = FALSE, stereo_freq_calced = FALSE;
     gint16 mono_pcm[2][512], stereo_pcm[2][512];
     gboolean mono_pcm_calced = FALSE, stereo_pcm_calced = FALSE;
-    guint8 intern_vis_data[512];
-    gint i;
 
-    if (!pcm_data || nch < 1) {
-        if (cfg.vis_type != VIS_OFF)
-            hook_call("visualization timeout", NULL);
+    if (!pcm_data || nch < 1)
         return;
-    }
 
     while (node) {
         vp = node->data;
@@ -329,146 +324,6 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
         }
         node = g_list_next(node);
     }
-
-    if (cfg.vis_type == VIS_OFF)
-        return;
-
-    if (cfg.vis_type == VIS_ANALYZER) {
-            /* Spectrum analyzer */
-            /* 76 values */
-            const gint long_xscale[] =
-                { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                17, 18,
-                19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
-                34,
-                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-                50, 51,
-                52, 53, 54, 55, 56, 57, 58, 61, 66, 71, 76, 81, 87, 93,
-                100, 107,
-                114, 122, 131, 140, 150, 161, 172, 184, 255
-            };
-            /* 20 values */
-            const int short_xscale[] =
-                { 0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 15, 20, 27,
-                36, 47, 62, 82, 107, 141, 184, 255
-            };
-            const double y_scale = 3.60673760222;   /* 20.0 / log(256) */
-            const int *xscale;
-            gint j, y, max;
-
-            if (!mono_freq_calced)
-                calc_mono_freq(mono_freq, pcm_data, nch);
-
-            memset(intern_vis_data, 0, 75);
-
-            if (cfg.analyzer_type == ANALYZER_BARS) {
-                if (cfg.player_shaded) {
-                    max = 13;
-                }
-                else {
-                    max = 19;
-                }
-                xscale = short_xscale;
-            }
-            else {
-                if (cfg.player_shaded) {
-                    max = 37;
-                }
-                else {
-                    max = 75;
-                }
-                xscale = long_xscale;
-            }
-
-            for (i = 0; i < max; i++) {
-                for (j = xscale[i], y = 0; j < xscale[i + 1]; j++) {
-                    if (mono_freq[0][j] > y)
-                        y = mono_freq[0][j];
-                }
-                y >>= 7;
-                if (y != 0) {
-                    intern_vis_data[i] = log(y) * y_scale;
-                    if (intern_vis_data[i] > 15)
-                        intern_vis_data[i] = 15;
-                }
-                else
-                    intern_vis_data[i] = 0;
-            }
-        
-    }
-    else if(cfg.vis_type == VIS_VOICEPRINT){
-        if (cfg.player_shaded && cfg.player_visible) {
-            /* VU */
-            gint vu, val;
-
-            if (!stereo_pcm_calced)
-                calc_stereo_pcm(stereo_pcm, pcm_data, nch);
-            vu = 0;
-            for (i = 0; i < 512; i++) {
-                val = abs(stereo_pcm[0][i]);
-                if (val > vu)
-                    vu = val;
-            }
-            intern_vis_data[0] = (vu * 37) >> 15;
-            if (intern_vis_data[0] > 37)
-                intern_vis_data[0] = 37;
-            if (nch == 2) {
-                vu = 0;
-                for (i = 0; i < 512; i++) {
-                    val = abs(stereo_pcm[1][i]);
-                    if (val > vu)
-                        vu = val;
-                }
-                intern_vis_data[1] = (vu * 37) >> 15;
-                if (intern_vis_data[1] > 37)
-                    intern_vis_data[1] = 37;
-            }
-            else
-                intern_vis_data[1] = intern_vis_data[0];
-        }
-        else { /*Voiceprint*/
-            if (!mono_freq_calced)
-                calc_mono_freq(mono_freq, pcm_data, nch);
-            memset(intern_vis_data, 0, 256);
-
-            /* For the values [0-16] we use the frequency that's 3/2 as much.
-               If we assume the 512 values calculated by calc_mono_freq to
-               cover 0-22kHz linearly we get a range of
-               [0-16] * 3/2 * 22000/512 = [0-1,031] Hz.
-               Most stuff above that is harmonics and we want to utilize the
-               16 samples we have to the max[tm]
-               */
-            for (i = 0; i < 50 ; i+=3){
-                intern_vis_data[i/3] += (mono_freq[0][i/2] >> 5);
-
-                /*Boost frequencies above 257Hz a little*/
-                //if(i > 4 * 3)
-                //  intern_vis_data[i/3] += 8;
-            }
-        }
-    }
-    else { /* (cfg.vis_type == VIS_SCOPE) */
-
-        /* Oscilloscope */
-        gint pos, step;
-
-        if (!mono_pcm_calced)
-            calc_mono_pcm(mono_pcm, pcm_data, nch);
-
-        step = (length << 8) / 74;
-        for (i = 0, pos = 0; i < 75; i++, pos += step) {
-            intern_vis_data[i] = ((mono_pcm[0][pos >> 8]) >> 12) + 7;
-            if (intern_vis_data[i] == 255)
-                intern_vis_data[i] = 0;
-            else if (intern_vis_data[i] > 12)
-                intern_vis_data[i] = 12;
-            /* Do not see the point of that? (comparison always false) -larne.
-               if (intern_vis_data[i] < 0)
-               intern_vis_data[i] = 0; */
-        }
-    }
-
-    hook_call("visualization timeout", intern_vis_data);
 }
 
 void
