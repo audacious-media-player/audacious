@@ -50,6 +50,7 @@ extern struct commandhandler handlers[];
 extern void audtool_report(const gchar *str, ...);
 extern void audtool_whine(const gchar *str, ...);
 extern void audtool_whine_args(const gchar *name, const gchar *str, ...);
+extern void audtool_whine_tuple_fields(void);
 
 extern void get_handlers_list(gint, gchar **);
 extern void get_current_song(gint, gchar **);

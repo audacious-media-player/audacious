@@ -290,10 +290,7 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 	if (argc < 3)
 	{
 		audtool_whine_args(argv[0], "<fieldname> <position>");
-		audtool_whine("  - fieldname example choices include but are not limited to:\n");
-		audtool_whine("      artist, album, title, track-number, year, date,\n");
-		audtool_whine("      genre, comment, file-name, file-ext, file-path,\n");
-		audtool_whine("      length, formatter, custom, mtime\n");
+		audtool_whine_tuple_fields();
 		exit(1);
 	}
 
