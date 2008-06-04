@@ -252,10 +252,10 @@ static gboolean ui_skinned_equalizer_graph_expose(GtkWidget *widget, GdkEventExp
 
     skin_get_eq_spline_colors(aud_active_skin, cols);
 
-    __init_spline(x, cfg.equalizer_bands, 10, yf);
+    __init_spline(x, cfg.equalizer_bands, AUD_EQUALIZER_NBANDS, yf);
     for (i = 0; i < 109; i++) {
         y = 9 -
-            (gint) ((eval_spline(x, cfg.equalizer_bands, yf, 10, i) *
+            (gint) ((eval_spline(x, cfg.equalizer_bands, yf, AUD_EQUALIZER_NBANDS, i) *
                      9.0) / EQUALIZER_MAX_GAIN);
         if (y < 0)
             y = 0;

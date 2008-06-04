@@ -69,7 +69,7 @@ enum PresetViewCols {
 
 struct _EqualizerPreset {
     gchar *name;
-    gfloat preamp, bands[10];
+    gfloat preamp, bands[AUD_EQUALIZER_NBANDS];
 };
 
 typedef struct _EqualizerPreset EqualizerPreset;
@@ -90,7 +90,7 @@ static GtkWidget *equalizerwin_delete_auto_window = NULL;
 static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
-static GtkWidget *equalizerwin_preamp,*equalizerwin_bands[10];
+static GtkWidget *equalizerwin_preamp,*equalizerwin_bands[AUD_EQUALIZER_NBANDS];
 static GtkWidget *equalizerwin_volume, *equalizerwin_balance;
 
 static GList *equalizer_presets = NULL, *equalizer_auto_presets = NULL;
@@ -188,7 +188,7 @@ equalizerwin_eq_changed(void)
     gint i;
 
     cfg.equalizer_preamp = ui_skinned_equalizer_slider_get_position(equalizerwin_preamp);
-    for (i = 0; i < 10; i++)
+    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++)
         cfg.equalizer_bands[i] = ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]);
     /* um .. i think we need both of these for xmms compatibility ..
        not sure. -larne */
@@ -325,15 +325,15 @@ equalizerwin_read_presets(const gchar * basename)
     g_free(filename);
 
     for (;;) {
-        gchar section[21];
+        gchar section[32];
 
         g_snprintf(section, sizeof(section), "Preset%d", p++);
         if (aud_rcfile_read_string(rcfile, "Presets", section, &name)) {
             preset = g_new0(EqualizerPreset, 1);
             preset->name = name;
             aud_rcfile_read_float(rcfile, name, "Preamp", &preset->preamp);
-            for (i = 0; i < 10; i++) {
-                gchar band[7];
+            for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
+                gchar band[16];
                 g_snprintf(band, sizeof(band), "Band%d", i);
                 aud_rcfile_read_float(rcfile, name, band, &preset->bands[i]);
             }
@@ -467,7 +467,7 @@ equalizerwin_create_widgets(void)
     equalizerwin_preamp = ui_skinned_equalizer_slider_new(SKINNED_WINDOW(equalizerwin)->fixed, 21, 38);
     ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, cfg.equalizer_preamp);
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
         equalizerwin_bands[i] =
             ui_skinned_equalizer_slider_new(SKINNED_WINDOW(equalizerwin)->fixed, 78 + (i * 18), 38);
         ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i], cfg.equalizer_bands[i]);

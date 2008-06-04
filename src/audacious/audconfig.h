@@ -28,6 +28,8 @@
 
 #include <glib.h>
 
+#define AUD_EQUALIZER_NBANDS    (10)
+
 struct _AudConfig {
     gint player_x, player_y;
     gint equalizer_x, equalizer_y;
@@ -62,7 +64,7 @@ struct _AudConfig {
     gboolean allow_broken_skins;
     gboolean close_dialog_open;
     gboolean close_dialog_add;
-    gfloat equalizer_preamp, equalizer_bands[10];
+    gfloat equalizer_preamp, equalizer_bands[AUD_EQUALIZER_NBANDS];
     gfloat scale_factor;
     gchar *skin;
     gchar *outputplugin;

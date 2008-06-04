@@ -473,7 +473,6 @@
 
         <!-- equalizer -->
         <method name="GetEq">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="d" direction="out" name="preamp"/>
             <arg type="ad" direction="out" name="bands"/>
         </method>

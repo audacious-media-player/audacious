@@ -558,6 +558,7 @@ gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
     return TRUE;
 }
 
+
 // Playback Information/Manipulation
 gboolean audacious_rc_play(RemoteObject *obj, GError **error) {
     if (playback_get_paused())
@@ -947,9 +948,9 @@ gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands,
     int i;
 
     *preamp = (gdouble)equalizerwin_get_preamp();
-    *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), 10);
+    *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), AUD_EQUALIZER_NBANDS);
 
-    for(i=0; i<10; i++){
+    for(i=0; i < AUD_EQUALIZER_NBANDS; i++){
         gdouble val = (gdouble)equalizerwin_get_band(i);
         g_array_append_val(*bands, val);
     }
@@ -976,7 +977,7 @@ gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, G
     
     equalizerwin_set_preamp((gfloat)preamp);
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
         element = g_array_index(bands, gdouble, i);
         equalizerwin_set_band(i, (gfloat)element);
     }

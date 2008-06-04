@@ -510,8 +510,8 @@ aud_config_load(void)
 
     /* Preset */
     cfg_db_get_float(db, NULL, "equalizer_preamp", &cfg.equalizer_preamp);
-    for (i = 0; i < 10; i++) {
-        gchar eqtext[18];
+    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
+        gchar eqtext[32];
 
         g_snprintf(eqtext, sizeof(eqtext), "equalizer_band%d", i);
         cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
