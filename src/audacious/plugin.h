@@ -44,6 +44,7 @@
 #include "audacious/configdb.h"
 #include "audacious/playlist_container.h"
 #include "audacious/main.h"
+#include "audacious/preferences.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -649,6 +650,8 @@ struct _AudaciousFuncTableV1 {
     void (*calc_mono_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
     void (*calc_stereo_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
 
+    void (*create_widgets)(GtkBox *box, PreferencesWidget *widgets, gint amt);
+
     /* VFS endianess helper functions */
     gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
     gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
@@ -1005,6 +1008,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_calc_mono_freq          _audvt->calc_mono_freq
 #define aud_calc_mono_pcm           _audvt->calc_mono_pcm
 #define aud_calc_stereo_pcm         _audvt->calc_stereo_pcm
+
+#define aud_create_widgets          _audvt->create_widgets
 
 #include "audacious/auddrct.h"
 

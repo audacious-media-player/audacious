@@ -51,6 +51,7 @@
 #include "util.h"
 #include "dnd.h"
 #include "configdb.h"
+#include "preferences.h"
 
 #include "ui_main.h"
 #include "ui_playlist.h"
@@ -188,26 +189,6 @@ typedef struct {
 } CategoryQueueEntry;
 
 CategoryQueueEntry *category_queue = NULL;
-
-typedef enum {
-    WIDGET_NONE,
-    WIDGET_CHK_BTN,
-    WIDGET_LABEL,
-    WIDGET_RADIO_BTN,
-    WIDGET_SPIN_BTN,
-    WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
-    WIDGET_FONT_BTN,
-} WidgetType;
-
-typedef struct {
-    WidgetType type;         /* widget type */
-    char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
-    gpointer cfg;            /* connected config value */
-    void (*callback) (void); /* this func will be called after value change, can be NULL */
-    char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
-    gboolean child;
-    GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
-} PreferencesWidget;
 
 static void playlist_show_pl_separator_numbers_cb();
 static void show_wm_decorations_cb();
@@ -1771,7 +1752,7 @@ ui_preferences_rg_params(void)
 }
 
 /* it's at early stage */
-static void
+void
 create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 {
     int x;

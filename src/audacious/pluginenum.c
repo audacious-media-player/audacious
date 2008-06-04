@@ -49,6 +49,7 @@
 #include "output.h"
 #include "visualization.h"
 #include "discovery.h"
+#include "preferences.h"
 
 #include "pluginenum.h"
 
@@ -399,6 +400,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .calc_mono_freq = calc_mono_freq,
     .calc_mono_pcm = calc_mono_pcm,
     .calc_stereo_pcm = calc_stereo_pcm,
+
+    .create_widgets = create_widgets,
 };
 
 /*****************************************************************/

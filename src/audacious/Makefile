@@ -105,6 +105,7 @@ INCLUDES = auddrct.h			\
            playlist.h			\
            playlist_container.h	\
            plugin.h				\
+           preferences.h		\
            strings.h			\
            tuple.h				\
            tuple_formatter.h	\
