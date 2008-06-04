@@ -170,7 +170,7 @@ playlist_entry_new(const gchar * filename,
 
     entry = mowgli_heap_alloc(playlist_entry_heap);
     entry->filename = g_strdup(filename);
-    entry->title = str_to_utf8(title);
+    entry->title = str_assert_utf8(title);
     entry->length = length;
     entry->selected = FALSE;
     entry->decoder = dec;
@@ -406,7 +406,7 @@ playlist_set_current_name(Playlist *playlist, const gchar * title)
         return FALSE;
     }
 
-    playlist->title = str_to_utf8(title);
+    playlist->title = str_assert_utf8(title);
     g_free(oldtitle);
     hook_call("playlist update", NULL);
     return TRUE;
@@ -1552,7 +1552,7 @@ playlist_get_info_text(Playlist *playlist)
     /* FIXME: there should not be a need to do additional conversion,
      * if playlist is properly maintained */
     if (playlist->position->title) {
-        title = str_to_utf8(playlist->position->title);
+        title = str_assert_utf8(playlist->position->title);
     }
     else {
         gchar *realfn = g_filename_from_uri(playlist->position->filename, NULL, NULL);
@@ -1864,7 +1864,7 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
         return str_replace(title, filename_to_utf8(title));
     }
 
-    return str_to_utf8(title);
+    return str_assert_utf8(title);
 }
 
 Tuple *

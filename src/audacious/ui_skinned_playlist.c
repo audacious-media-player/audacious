@@ -576,7 +576,7 @@ static gboolean ui_skinned_playlist_expose(GtkWidget *widget, GdkEventExpose *ev
             g_free(basename); g_free(realfn);
         }
         else
-            title = str_to_utf8(entry->title);
+            title = str_assert_utf8(entry->title);
 
         title = convert_title_text(title);
 

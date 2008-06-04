@@ -499,7 +499,7 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
     if (textbox->text)
         g_free(textbox->text);
 
-    textbox->text = str_to_utf8(text);
+    textbox->text = str_assert_utf8(text);
     priv->scroll_back = FALSE;
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }

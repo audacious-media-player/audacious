@@ -277,9 +277,9 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
             gchar *realfn = NULL;
             realfn = g_filename_from_uri(entry->filename, NULL, NULL);
             if (strchr(realfn ? realfn : entry->filename, '/'))
-                desc_buf = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+                desc_buf = str_assert_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
             else
-                desc_buf = str_to_utf8(realfn ? realfn : entry->filename);
+                desc_buf = str_assert_utf8(realfn ? realfn : entry->filename);
             g_free(realfn); realfn = NULL;
         }
 
@@ -344,9 +344,9 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
             gchar *realfn = NULL;
             realfn = g_filename_from_uri(entry->filename, NULL, NULL);
             if (strchr(realfn ? realfn : entry->filename, '/'))
-                title = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+                title = str_assert_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
             else
-                title = str_to_utf8(realfn ? realfn : entry->filename);
+                title = str_assert_utf8(realfn ? realfn : entry->filename);
             g_free(realfn); realfn = NULL;
         }
         gtk_list_store_append(store, &iter);
@@ -397,9 +397,9 @@ ui_jump_to_track_fill(gpointer treeview)
             gchar *realfn = NULL;
             realfn = g_filename_from_uri(entry->filename, NULL, NULL);
             if (strchr(realfn ? realfn : entry->filename, '/'))
-                desc_buf = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+                desc_buf = str_assert_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
             else
-                desc_buf = str_to_utf8(realfn ? realfn : entry->filename);
+                desc_buf = str_assert_utf8(realfn ? realfn : entry->filename);
             g_free(realfn); realfn = NULL;
         }
 

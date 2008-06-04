@@ -602,7 +602,7 @@ tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
         if(file_name) {
             gchar *realfn = g_filename_from_uri(file_name, NULL, NULL);
             g_free(rv);
-            rv = str_to_utf8(realfn ? realfn : file_name);
+            rv = str_assert_utf8(realfn ? realfn : file_name);
             g_free(realfn);
         }
         else {

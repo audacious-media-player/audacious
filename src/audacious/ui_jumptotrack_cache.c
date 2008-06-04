@@ -302,7 +302,7 @@ ui_jump_to_track_cache_init(JumpToTrackCache* cache,
             } else {
                 gchar *realfn = NULL;
                 realfn = g_filename_from_uri(playlist_entry->filename, NULL, NULL);
-                gchar *tmp_title = str_to_utf8(realfn ? realfn : playlist_entry->filename);
+                gchar *tmp_title = str_assert_utf8(realfn ? realfn : playlist_entry->filename);
                 title = normalize_search_string(tmp_title);
                 g_free(tmp_title);
                 g_free(realfn); realfn = NULL;
