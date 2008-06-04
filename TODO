@@ -1,5 +1,11 @@
 Long-term "TODO"
 ================
+- the equalizer should be fixed .. in more than one way:
+  * equalizer was broken by asphyx's libSAD
+  * lots of things are hardcoded, like number of EQ bands. this should
+    be changed.
+
+
 - URIs with "?" are stripped (the subtune support uses that), which is bad,
   because some (a lot) of real-world URLs use 'GET' arguments. this breaks
   probing, but current input probing is confusing (and possibly broken anyway)
