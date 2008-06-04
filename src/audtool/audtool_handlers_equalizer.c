@@ -64,16 +64,19 @@ void equalizer_get_eq_band(gint argc, gchar **argv)
 
     if (argc < 2)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <band>", argv[0]);
+        audtool_whine_args(argv[0], "<band>");
         exit(1);
     }
 
     band = atoi(argv[1]);
 
+    /* FIXME, XXX, TODO: we should have a function for requesting
+     * the actual number of bands, if we support dynamic amount some day ...
+     * -- ccr
+     */
     if (band < 0 || band > 9)
     {
-        audtool_whine("band number out of range");
+        audtool_whine("band number out of range\n");
         exit(1);
     }
     
@@ -89,8 +92,7 @@ void equalizer_set_eq(gint argc, gchar **argv)
 
     if (argc < 12)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <preamp> <band0> <band1> <band2> <band3> <band4> <band5> <band6> <band7> <band8> <band9>", argv[0]);
+        audtool_whine_args(argv[0], "<preamp> <band0> <band1> <band2> <band3> <band4> <band5> <band6> <band7> <band8> <band9>");
         exit(1);
     }
 
@@ -110,8 +112,7 @@ void equalizer_set_eq_preamp(gint argc, gchar **argv)
 
     if (argc < 2)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <preamp>", argv[0]);
+        audtool_whine_args(argv[0], "<preamp>");
         exit(1);
     }
 
@@ -127,8 +128,7 @@ void equalizer_set_eq_band(gint argc, gchar **argv)
 
     if (argc < 3)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <band> <value>", argv[0]);
+        audtool_whine_args(argv[0], "<band> <value>");
         exit(1);
     }
 
@@ -142,17 +142,14 @@ void equalizer_active(gint argc, gchar **argv)
 {
     if (argc < 2)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
     }
 
     if (!g_ascii_strcasecmp(argv[1], "on")) {
         audacious_remote_eq_activate(dbus_proxy, TRUE);
-        return;
     }
     else if (!g_ascii_strcasecmp(argv[1], "off")) {
         audacious_remote_eq_activate(dbus_proxy, FALSE);
-        return;
     }
 }

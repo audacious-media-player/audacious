@@ -52,8 +52,7 @@ void set_volume(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <level>", argv[0]);
+		audtool_whine_args(argv[0], "<level>", argv[0]);
 		exit(1);
 	}
 
@@ -75,8 +74,7 @@ void set_volume(gint argc, gchar **argv)
 void mainwin_show(gint argc, gchar **argv)
 {
 	if (argc < 2) {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
     }
 
@@ -93,8 +91,7 @@ void mainwin_show(gint argc, gchar **argv)
 void playlist_show(gint argc, gchar **argv)
 {
 	if (argc < 2) {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
     }
 
@@ -111,8 +108,7 @@ void playlist_show(gint argc, gchar **argv)
 void equalizer_show(gint argc, gchar **argv)
 {
 	if (argc < 2) {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
     }
 
@@ -132,8 +128,7 @@ void show_preferences_window(gint argc, gchar **argv)
 
 	if (argc < 2) {
 #if 0
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
 #else
         audacious_remote_toggle_prefs_box(dbus_proxy, show);
@@ -146,8 +141,7 @@ void show_preferences_window(gint argc, gchar **argv)
     else if (!g_ascii_strcasecmp(argv[1], "off"))
         show = FALSE;
     else {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit (1);
     }
 
@@ -160,8 +154,7 @@ void show_about_window(gint argc, gchar **argv)
 
 	if (argc < 2) {
 #if 0
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
 #else
         audacious_remote_toggle_about_box(dbus_proxy, show);
@@ -174,8 +167,7 @@ void show_about_window(gint argc, gchar **argv)
     else if (!g_ascii_strcasecmp(argv[1], "off"))
         show = FALSE;
     else {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit (1);
     }
 
@@ -188,8 +180,7 @@ void show_jtf_window(gint argc, gchar **argv)
 
 	if (argc < 2) {
 #if 0
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
 #else
         audacious_remote_toggle_jtf_box(dbus_proxy, show);
@@ -201,8 +192,7 @@ void show_jtf_window(gint argc, gchar **argv)
     else if (!g_ascii_strcasecmp(argv[1], "off"))
         show = FALSE;
     else {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit (1);
     }
 
@@ -215,8 +205,7 @@ void show_filebrowser(gint argc, gchar **argv)
 
 	if (argc < 2) {
 #if 0
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
 #else
         audacious_remote_toggle_filebrowser(dbus_proxy, show);
@@ -229,8 +218,7 @@ void show_filebrowser(gint argc, gchar **argv)
     else if (!g_ascii_strcasecmp(argv[1], "off"))
         show = FALSE;
     else {
-        audtool_whine("invalid parameter for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit (1);
     }
 
@@ -268,8 +256,7 @@ void toggle_aot(gint argc, gchar **argv)
 {
     if (argc < 2)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <on/off>", argv[0]);
+        audtool_whine_args(argv[0], "<on/off>");
         exit(1);
     }
 
@@ -295,8 +282,7 @@ void set_skin(gint argc, gchar **argv)
 {
     if (argc < 2)
     {
-        audtool_whine("invalid parameters for %s.", argv[0]);
-        audtool_whine("syntax: %s <skin>", argv[0]);
+        audtool_whine_args(argv[0], "<skin>");
         exit(1);
     }
 

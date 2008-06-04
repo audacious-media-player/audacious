@@ -116,8 +116,7 @@ void playback_seek(gint argc, gchar **argv)
 {
 	if (argc < 2)
 	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <position>", argv[0]);
+		audtool_whine_args(argv[0], "<position>");
 		exit(1);
 	}
 
@@ -130,8 +129,7 @@ void playback_seek_relative(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		audtool_whine("invalid parameters for %s.", argv[0]);
-		audtool_whine("syntax: %s <position>", argv[0]);
+		audtool_whine_args(argv[0], "<position>");
 		exit(1);
 	}
 

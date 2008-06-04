@@ -49,6 +49,7 @@ extern struct commandhandler handlers[];
 
 extern void audtool_report(const gchar *str, ...);
 extern void audtool_whine(const gchar *str, ...);
+extern void audtool_whine_args(const gchar *name, const gchar *str, ...);
 
 extern void get_handlers_list(gint, gchar **);
 extern void get_current_song(gint, gchar **);
@@ -135,5 +136,7 @@ extern void equalizer_set_eq_preamp(gint argc, gchar **argv);
 extern void equalizer_set_eq_band(gint argc, gchar **argv);
 extern void equalizer_active(gint argc, gchar **argv);
 extern void equalizer_show(gint, gchar **);
+
+extern gint check_args_playlist_pos(gint argc, gchar **argv);
 
 #endif
