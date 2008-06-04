@@ -1,12 +1,12 @@
 PROG = audtool
-SRCS = audtool_main.c				\
-       audtool_handlers_general.c	\
-       audtool_handlers_playback.c	\
-       audtool_handlers_playlist.c	\
-       audtool_handlers_playqueue.c	\
-       audtool_handlers_vitals.c	\
-       audtool_handlers_equalizer.c	\
-       audtool_report.c
+SRCS = main.c				\
+       handlers_general.c	\
+       handlers_playback.c	\
+       handlers_playlist.c	\
+       handlers_playqueue.c	\
+       handlers_vitals.c	\
+       handlers_equalizer.c	\
+       report.c
 
 include ../../buildsys.mk
 include ../../extra.mk
