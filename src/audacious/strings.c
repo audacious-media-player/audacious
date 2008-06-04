@@ -296,7 +296,6 @@ str_to_utf8(const gchar * str)
     return str_to_utf8_fallback(str);
 }
 
-
 /* This function is here to ASSERT that a given string IS valid UTF-8.
  * If it is, a copy of the string is returned (use g_free() to deallocate it.)
  *
@@ -307,7 +306,10 @@ str_to_utf8(const gchar * str)
  * and will be eventually removed...
  * -- ccr
  */
+#if defined(__GLIBC__) && (__GLIBC__ >= 2)
+#define HAVE_EXECINFO 1
 #include <execinfo.h>
+#endif
 
 gchar *
 str_assert_utf8(const gchar * str)
@@ -318,20 +320,23 @@ str_assert_utf8(const gchar * str)
 
     /* already UTF-8? */
     if (!g_utf8_validate(str, -1, NULL)) {
+#ifdef HAVE_EXECINFO
 		gint i, nsymbols;
 		const gint nsymmax = 50;
 		void *addrbuf[nsymmax];
 		gchar **symbols;
 		nsymbols = backtrace(addrbuf, nsymmax);
 		symbols = backtrace_symbols(addrbuf, nsymbols);
-		
+#endif
+
 		fprintf(stderr, "WARNING! String '%s' was not UTF-8! Backtrace (%d):\n", str, nsymbols);
-		
+
+#ifdef HAVE_EXECINFO
 		for (i = 0; i < nsymbols; i++)
 			fprintf(stderr, "#%d > %s\n", i, symbols[i]);
 		
 		free(symbols);
-		
+#endif
 		return str_to_utf8(str);
     } else
     	return g_strdup(str);
