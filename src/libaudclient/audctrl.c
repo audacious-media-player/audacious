@@ -1066,3 +1066,18 @@ void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active) {
     org_atheme_audacious_equalizer_activate (proxy, active, &error);
     g_clear_error(&error);
 }
+
+/**
+ * audacious_remote_get_tuple_fields:
+ * @proxy: DBus proxy for audacious
+ *
+ * Returns a array of strings with available tuple field names.
+ *
+ * Return value: Array of strings.
+ **/
+gchar **audacious_remote_get_tuple_fields(DBusGProxy *proxy) {
+    gchar **res = NULL;
+    org_atheme_audacious_get_tuple_fields (proxy, &res, &error);
+    g_clear_error(&error);
+    return res;
+}

@@ -127,6 +127,8 @@ gboolean audacious_rc_playlist_visible(RemoteObject *obj,
                                        GError **error);
 gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
                                     GError **error);
+gboolean audacious_rc_get_tuple_fields(RemoteObject *obj, gchar ***fields,
+                                    GError **error);
 
 // Playback Information/Manipulation
 gboolean audacious_rc_play(RemoteObject *obj, GError **error);

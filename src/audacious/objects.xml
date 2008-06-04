@@ -142,6 +142,12 @@
             <arg type="b" name="show"/>
         </method>
 
+        <!-- Get names of available 'standard' tuple fields -->
+        <method name="GetTupleFields">
+            <!-- Return array of tuple field names -->
+            <arg type="as" direction="out" name="fields"/>
+        </method>
+
         <!-- Playback Information/Manipulation -->
         <!-- Begin or resume playback -->
         <method name="Play">

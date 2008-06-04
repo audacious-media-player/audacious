@@ -558,6 +558,18 @@ gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
     return TRUE;
 }
 
+gboolean audacious_rc_get_tuple_fields(RemoteObject *obj, gchar ***fields,
+                                    GError **error) {
+    gchar **res = g_new0(gchar *, FIELD_LAST);
+    gint i;
+    for (i = 0; i < FIELD_LAST; i++) {
+        res[i] = g_strdup(tuple_fields[i].name);
+    }
+    *fields = res;
+    
+    return TRUE;
+}
+
 
 // Playback Information/Manipulation
 gboolean audacious_rc_play(RemoteObject *obj, GError **error) {
