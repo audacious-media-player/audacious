@@ -125,6 +125,8 @@ G_BEGIN_DECLS
     void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show);
     void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active);
 
+/* Added in Audacious 1.9 */
+    gchar **audacious_remote_get_tuple_fields(DBusGProxy *proxy);
 G_END_DECLS
 
 #endif /* AUDACIOUS_AUDCTRL_H */
