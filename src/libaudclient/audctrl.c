@@ -1028,16 +1028,23 @@ gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
     if (G_IS_VALUE(&value) == FALSE)
         return NULL;
 
+    /* I think the original "purpose" of using g_strescape() here
+     * has probably been to escape only \n, \t, \r, etc. but the function
+     * actually escapes all non-ASCII characters. Which is bad, since we
+     * are using UTF-8.  -- ccr
+     */
     if (G_VALUE_HOLDS_STRING(&value))
-        s = g_strescape(g_value_get_string(&value), NULL);
+        //s = g_strescape(g_value_get_string(&value), NULL);
+        s = g_strdup(g_value_get_string(&value));
     else if (g_value_type_transformable(G_VALUE_TYPE(&value), G_TYPE_STRING))
     {
         GValue tmp_value = { 0, };
 
         g_value_init(&tmp_value, G_TYPE_STRING);
         g_value_transform(&value, &tmp_value);
-
-        s = g_strescape(g_value_get_string(&tmp_value), NULL);
+        
+        //s = g_strescape(g_value_get_string(&tmp_value), NULL);
+        s = g_strdup(g_value_get_string(&tmp_value));
 
         g_value_unset(&tmp_value);
     }
