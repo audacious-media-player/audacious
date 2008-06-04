@@ -168,8 +168,8 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 		audtool_whine("invalid parameters for %s.", argv[0]);
 		audtool_whine("syntax: %s <fieldname>", argv[0]);
 		audtool_whine("  - fieldname example choices include but are not limited to:");
-		audtool_whine("      artist, album, title, track_number, year, date,");
-		audtool_whine("      genre, comment, file_name, file_ext, file_path,");
+		audtool_whine("      artist, album, title, track-number, year, date,");
+		audtool_whine("      genre, comment, file-name, file-ext, file-path,");
 		audtool_whine("      length, formatter, custom, mtime");
 		exit(1);
 	}
