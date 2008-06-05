@@ -1,5 +1,8 @@
 Long-term "TODO"
 ================
+- remove the idiotic XMMS compatibility output plugin hack.
+
+
 - the equalizer should be fixed .. in more than one way:
   * equalizer was broken by asphyx's libSAD
   * lots of things are hardcoded, like number of EQ bands. this should
