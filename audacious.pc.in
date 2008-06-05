@@ -15,6 +15,7 @@ visualization_plugin_dir=@plugindir@/@VISUALIZATION_PLUGIN_DIR@
 effect_plugin_dir=@plugindir@/@EFFECT_PLUGIN_DIR@
 container_plugin_dir=@plugindir@/@CONTAINER_PLUGIN_DIR@
 transport_plugin_dir=@plugindir@/@TRANSPORT_PLUGIN_DIR@
+discovery_plugin_dir=@plugindir@/@DISCOVERY_PLUGIN_DIR@
 
 Name: Audacious
 Description: Audacious is a versatile and handy multi platform media player
