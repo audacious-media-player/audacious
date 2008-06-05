@@ -85,7 +85,7 @@ fi
 dnl Chardet support
 dnl ===============
 AUD_ARG_ENABLE([chardet], [yes],
-[  --disable-chardet             Disable charset detection support (def: enabled)],
+[  --disable-chardet            Disable charset detection support (def: enabled)],
 [
     AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
     AC_CHECK_LIB([udet_c], [detectCharset], [
@@ -198,54 +198,6 @@ esac
 ])
 AC_SUBST([REGEX_LIBS])
 AC_SUBST([REGEX_CFLAGS])
-
-
-### ---------------------------------------------------------------------------
-dnl SSE2 support
-dnl ============
-AUD_ARG_ENABLE([sse2], [yes],
-[  --disable-sse2               Disable SSE2 support (def: enabled)],
-[
-    AC_MSG_CHECKING([SSE2 support])
-    aud_my_save_CFLAGS="$CFLAGS"
-    CFLAGS="-msse2"
-    AC_TRY_RUN([
-#include <emmintrin.h>
-int main()
-{
-  _mm_setzero_pd();
-  return 0;
-}
-    ],[
-        AC_MSG_RESULT([yes])
-        AC_DEFINE([HAVE_SSE2], 1, [Define to 1 if your system has SSE2 support])
-        SIMD_CFLAGS="-msse2"
-    ],[
-        AC_MSG_RESULT([no])
-        enable_sse2="no"
-    ])
-    AC_SUBST([SIMD_CFLAGS])
-    CFLAGS="$aud_my_save_CFLAGS"
-])
-
-
-### ---------------------------------------------------------------------------
-dnl AltiVec support 
-dnl ===============
-AUD_ARG_ENABLE([altivec], [yes],
-[  --disable-altivec            Disable AltiVec support (def: enabled)],
-[
-    AC_CHECK_HEADERS([altivec.h],
-    [
-        AC_DEFINE([HAVE_ALTIVEC], 1, [Define to 1 if your system has AltiVec.])
-        AC_DEFINE([HAVE_ALTIVEC_H], 1, [Define to 1 if your system has an altivec.h file.])
-        AC_DEFINE([ARCH_POWERPC], 1, [Define to 1 if your system is a PowerPC.])
-        SIMD_CFLAGS="-maltivec"
-        AC_SUBST([SIMD_CFLAGS])
-    ],[
-        enable_altivec="no"
-    ])
-])    
 
 
 ### ---------------------------------------------------------------------------
