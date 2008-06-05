@@ -73,10 +73,6 @@ dnl Path settings
 dnl =============
 AC_PATH_PROG([AUDACIOUS_PATH], [audacious], [no])
 
-AUD_ARG_ENABLE([one-plugin-dir], [no],
-[  --enable-one-plugin-dir      Use a single plugin dir (def: no)])
-
-
 AUD_ARG_ENABLE([user-plugin-dir], [yes],
 [  --disable-user-plugin-dir    Disable per-user plugin dir (def: enabled)])
 
