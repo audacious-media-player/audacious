@@ -1,6 +1,16 @@
 Long-term "TODO"
 ================
+- output plugins should have some kind of (optional) "query available formats"
+  function, so that the core could determine what should be used. perhaps
+  offer users this info?
+
 - remove the idiotic XMMS compatibility output plugin hack.
+
+- all audio plugins (input, output, effect) should be made completely
+  re-entrant. this probably means severely breaking the API. not very
+  trivial either :(
+  * basically plugin init() should allocate / init a state struct to
+    be used in all operations, etc.
 
 
 - the equalizer should be fixed .. in more than one way:
