@@ -32,6 +32,8 @@ BUILDSYS_SHARED_LIB
 IMPLIB_LIBS=""
 AC_SUBST([IMPLIB_LIBS])
 
+AUDLDFLAGS="-Wl,-rpath,${libdir}"
+AC_SUBST([AUDLDFLAGS])
 
 dnl Plugin stuff
 dnl ========================
@@ -106,7 +108,7 @@ AUD_ARG_ENABLE([dbus], [yes],
     PKG_CHECK_MODULES([DBUS], [dbus-1 >= 0.60 dbus-glib-1 >= 0.60 gthread-2.0],
         [enable_dbus=yes],
         [enable_dbus=no])
-    
+
     AC_PATH_PROG([DBUS_BINDING_TOOL], [dbus-binding-tool], [no])
     AC_PATH_PROG([GLIB_GENMARSHAL], [glib-genmarshal], [no])
     if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
@@ -117,7 +119,7 @@ AUD_ARG_ENABLE([dbus], [yes],
         AC_DEFINE([USE_DBUS], 1, [Define if D-Bus support enabled])
         AC_DEFINE([DBUS_SERVICES_DIR], "$datadir/dbus-1/services",
             [Location of D-Bus services directory])
-        LIBAUDCLIENT_LDFLAGS="-laudclient"
+        LIBAUDCLIENT_LDFLAGS="$AUDLDFLAGS -laudclient"
         AC_SUBST([DBUS_CFLAGS])
         AC_SUBST([DBUS_LIBS])
         AC_SUBST([DBUS_SERVICES_DIR])
