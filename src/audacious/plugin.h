@@ -522,14 +522,6 @@ struct _AudaciousFuncTableV1 {
     gint (*hook_dissociate)(const gchar *name, HookFunction func);
     void (*hook_call)(const gchar *name, gpointer hook_data);
 
-    /* defunct xconvert API, not really supported. */
-    gpointer xmms_convert_buffers_new;
-    gpointer xmms_convert_buffers_free;
-    gpointer xmms_convert_buffers_destroy;
-    gpointer xmms_convert_get_func;
-    gpointer xmms_convert_get_channel_func;
-    gpointer xmms_convert_get_frequency_func;
-
     /* PluginMenu API */
     gint (*menu_plugin_item_add)(gint, GtkWidget *);
     gint (*menu_plugin_item_remove)(gint, GtkWidget *);
@@ -620,21 +612,8 @@ struct _AudaciousFuncTableV1 {
     void (*flow_link_element)(Flow *flow, FlowFunction func);
     void (*flow_unlink_element)(Flow *flow, FlowFunction func);
     void (*effect_flow)(FlowContext *context);
-    gpointer iir_flow;	/* old iir_flow */
     void (*volumecontrol_flow)(FlowContext *context);
     
-#if 0
-    /* Dock */
-    GList *(*get_dock_window_list)(void);
-    GList *(*dock_add_window)(GList * window_list, GtkWindow * window);
-    GList *(*dock_remove_window)(GList * window_list, GtkWindow * window);
-    void (*dock_move_press)(GList * window_list, GtkWindow * w,
-                         GdkEventButton * event, gboolean move_list);
-    void (*dock_move_motion)(GtkWindow * w, GdkEventMotion * event);
-    void (*dock_move_release)(GtkWindow * w);
-    gboolean (*dock_is_moving)(GtkWindow * w);
-#endif
-
     GList *(*get_output_list)(void);
 
     void (*input_get_volume)(gint * l, gint * r);
@@ -1161,8 +1140,6 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.1.0 */
     Tuple *(*get_song_tuple) (gchar * filename);
-    void (*set_song_tuple) (Tuple * tuple); /* stillborn, obsoleted by update_song_tuple, which must be used for tag writing */
-    void (*set_status_buffering) (gboolean status); /* unfunctional */
 
     /* Added in Audacious 1.3.0 */
     gint (*is_our_file_from_vfs) (gchar *filename, VFSFile *fd);

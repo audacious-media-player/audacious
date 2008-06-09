@@ -232,7 +232,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_fileinfo = ui_fileinfo_show,
 
     .playlist_delete_index = playlist_delete_index,
-    .playlist_delete_filenames = NULL, /* remove eventually --mf0102 */
 
     .playlist_get_entry_to_play = playlist_get_entry_to_play,
 
@@ -303,7 +302,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_eq_win_toggle = drct_eq_win_toggle,
     .drct_pl_win_is_visible = drct_pl_win_is_visible,
     .drct_pl_win_toggle = drct_pl_win_toggle,
-    .drct_set_skin = NULL, /* remove someday. --mf0102 */
     .drct_activate = drct_activate,
 
     .drct_initiate = drct_initiate,
@@ -373,16 +371,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .util_menu_main_show = util_menu_main_show,
     
-#if 0
-    .get_dock_window_list = get_dock_window_list,
-    .dock_add_window = dock_add_window,
-    .dock_remove_window = dock_remove_window,
-    .dock_move_press = dock_move_press,
-    .dock_move_motion = dock_move_motion,
-    .dock_move_release = dock_move_release,
-    .dock_is_moving = dock_is_moving,
-#endif
-
     .get_output_list = get_output_list,
 
     .input_get_volume = input_get_volume,
@@ -559,7 +547,6 @@ input_plugin_init(Plugin * plugin)
        - descender */
     p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info_old_abi;
     p->set_info_text = input_set_info_text;
-    p->set_status_buffering = NULL; /* XXX: remove this someday --mf0102 */
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
     
