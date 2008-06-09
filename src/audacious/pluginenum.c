@@ -37,33 +37,29 @@
 #include <gmodule.h>
 #include <string.h>
 
+#include "pluginenum.h"
+
+#include "discovery.h"
+#include "effect.h"
+#include "general.h"
+#include "input.h"
 #include "main.h"
+#include "output.h"
 #include "playback.h"
 #include "playlist.h"
 #include "strings.h"
 #include "util.h"
-
-#include "effect.h"
-#include "general.h"
-#include "input.h"
-#include "output.h"
 #include "visualization.h"
-#include "discovery.h"
 #include "preferences.h"
-
-#include "pluginenum.h"
-
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
+#include "volumecontrol.h"
 
-#include "ui_dock.h"
-#include "ui_preferences.h"
 #include "ui_fileinfo.h"
 #include "ui_fileinfopopup.h"
-
-#include "effect.h"
-#include "volumecontrol.h"
 #include "ui_plugin_menu.h"
+#include "ui_preferences.h"
+
 
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
@@ -377,6 +373,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .util_menu_main_show = util_menu_main_show,
     
+#if 0
     .get_dock_window_list = get_dock_window_list,
     .dock_add_window = dock_add_window,
     .dock_remove_window = dock_remove_window,
@@ -384,6 +381,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .dock_move_motion = dock_move_motion,
     .dock_move_release = dock_move_release,
     .dock_is_moving = dock_is_moving,
+#endif
 
     .get_output_list = get_output_list,
 

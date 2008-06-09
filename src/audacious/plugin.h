@@ -623,6 +623,7 @@ struct _AudaciousFuncTableV1 {
     gpointer iir_flow;	/* old iir_flow */
     void (*volumecontrol_flow)(FlowContext *context);
     
+#if 0
     /* Dock */
     GList *(*get_dock_window_list)(void);
     GList *(*dock_add_window)(GList * window_list, GtkWindow * window);
@@ -632,6 +633,7 @@ struct _AudaciousFuncTableV1 {
     void (*dock_move_motion)(GtkWindow * w, GdkEventMotion * event);
     void (*dock_move_release)(GtkWindow * w);
     gboolean (*dock_is_moving)(GtkWindow * w);
+#endif
 
     GList *(*get_output_list)(void);
 
