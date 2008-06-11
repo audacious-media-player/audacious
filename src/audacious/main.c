@@ -563,21 +563,16 @@ static gboolean
 load_extra_playlist(const gchar * path, const gchar * basename,
         gpointer def)
 {
-    const gchar *title;
-    Playlist *playlist;
-    Playlist *deflist;
+    Playlist *playlist, *deflist = (Playlist *)def;
 
-    deflist = (Playlist *)def;
     playlist = playlist_new();
     if (!playlist) {
-        g_warning("Couldn't create new playlist\n");
+        g_warning("Couldn't create new playlist for %s / %s\n", path, basename);
         return FALSE;
     }
 
     playlist_add_playlist(playlist);
     playlist_load(playlist, path);
-
-    title = playlist_get_current_name(playlist);
 
     return FALSE; /* keep loading other playlists */
 }
