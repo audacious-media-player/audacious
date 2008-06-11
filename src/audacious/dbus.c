@@ -137,14 +137,19 @@ void mpris_player_init(MprisPlayer *object) {
                                         AUDACIOUS_DBUS_PATH_MPRIS_PLAYER,
                                         G_OBJECT(object));
 
-	// Add signals
-	DBusGProxy *proxy = object->proxy;
-	dbus_g_proxy_add_signal(proxy, "StatusChange",
-			G_TYPE_INT, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal(proxy, "CapsChange",
-			G_TYPE_INT, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal(proxy, "TrackChange",
-			DBUS_TYPE_G_STRING_VALUE_HASHTABLE, G_TYPE_INVALID);
+    // Add signals
+    DBusGProxy *proxy = object->proxy;
+    if (proxy != NULL) {
+        dbus_g_proxy_add_signal(proxy, "StatusChange",
+            G_TYPE_INT, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal(proxy, "CapsChange",
+            G_TYPE_INT, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal(proxy, "TrackChange",
+            DBUS_TYPE_G_STRING_VALUE_HASHTABLE, G_TYPE_INVALID);
+    } else {
+        /* XXX / FIXME: Why does this happen? -- ccr */
+        g_warning("in mpris_player_init object->proxy == NULL, not adding some signals.");
+    }
 }
 
 void mpris_tracklist_init(MprisTrackList *object) {
