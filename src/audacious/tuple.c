@@ -159,10 +159,7 @@ _tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field,
     if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
         return FALSE;
 
-    if (string == NULL)
-        value->value.string = NULL;
-    else
-        value->value.string = g_strdup(string);
+    value->value.string = NULL;
 
     TUPLE_UNLOCK_WRITE();
     return TRUE;
@@ -179,18 +176,17 @@ tuple_new_from_filename(const gchar *filename)
     tuple = tuple_new();
     g_return_val_if_fail(tuple != NULL, NULL);
 
-    scratch = uri_to_display_basename(filename);
-    _tuple_associate_raw_string(tuple, FIELD_FILE_NAME, NULL, scratch);
-    g_free(scratch);
+    _tuple_associate_raw_string(tuple, FIELD_FILE_NAME, NULL,
+        uri_to_display_basename(filename));
 
-    scratch = uri_to_display_dirname(filename);
-    _tuple_associate_raw_string(tuple, FIELD_FILE_PATH, NULL, scratch);
-    g_free(scratch);
+    _tuple_associate_raw_string(tuple, FIELD_FILE_PATH, NULL,
+        uri_to_display_basename(filename));
     
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
-        _tuple_associate_raw_string(tuple, FIELD_FILE_EXT, NULL, ext);
+        _tuple_associate_raw_string(tuple, FIELD_FILE_EXT, NULL,
+            g_strdup(ext));
     }
 
     return tuple;
