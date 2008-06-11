@@ -89,6 +89,7 @@ void audacious_rc_init(RemoteObject *object) {
     DBusGProxy *driver_proxy;
     guint request_ret;
 
+    g_message("Registering remote D-Bus interfaces");
     
     dbus_g_object_type_install_info(audacious_rc_get_type(),
                                     &dbus_glib_audacious_rc_object_info);
@@ -166,6 +167,7 @@ void init_dbus() {
     GError *error = NULL;
     DBusConnection *local_conn;
     // Initialize the DBus connection
+    g_message("Trying to initialize D-Bus");
     dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     if (dbus_conn == NULL) {
         g_warning("Unable to connect to dbus: %s", error->message);
@@ -174,9 +176,14 @@ void init_dbus() {
     }
 
     g_type_init();
+    g_message("D-Bus RC");
     g_object_new(audacious_rc_get_type(), NULL);
+    g_message("D-Bus MPRIS root");
     g_object_new(mpris_root_get_type(), NULL);
+    g_message("D-Bus MPRIS player");
     mpris = g_object_new(mpris_player_get_type(), NULL);
+    g_message("result=%p", mpris);
+    g_message("D-Bus MPRIS tracklist");
     g_object_new(mpris_tracklist_get_type(), NULL);
     g_message("D-Bus support has been activated");
 
