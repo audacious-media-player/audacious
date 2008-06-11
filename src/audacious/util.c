@@ -995,18 +995,16 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
     // case 1: filename is raw full path or uri
     if (filename[0] == '/' || strstr(filename, "://")) {
         uri = g_filename_to_uri(filename, NULL, NULL);
-        if(!uri) {
+        if(!uri)
             uri = g_strdup(filename);
-        }
         g_free(filename);
     }
     // case 2: filename is not raw full path nor uri, playlist path is full path
     // make full path by replacing last part of playlist path with filename. (using g_build_filename)
     else if (playlist_name[0] == '/' || strstr(playlist_name, "://")) {
         path = g_filename_from_uri(playlist_name, NULL, NULL);
-        if (!path) {
+        if (!path)
             path = g_strdup(playlist_name);
-        }
         tmp = strrchr(path, '/'); *tmp = '\0';
         tmp = g_build_filename(path, filename, NULL);
         g_free(path); g_free(filename);
@@ -1017,7 +1015,7 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
     // just abort.
     else {
         g_free(filename);
-        return NULL;
+        uri = NULL;
     }
 
     AUDDBG("uri=%s\n", uri);
