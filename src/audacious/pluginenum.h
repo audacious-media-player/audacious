@@ -25,8 +25,11 @@
 #ifndef AUDACIOUS_PLUGINENUM_H
 #define AUDACIOUS_PLUGINENUM_H
 
-#include <glib.h>
 #include "config.h"
+
+#include <glib.h>
+
+#include "plugin.h"
 
 #define PLUGIN_FILENAME(name) (name SHARED_SUFFIX)
 

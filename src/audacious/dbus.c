@@ -196,7 +196,7 @@ GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     TupleValueType type;
     type = tuple_get_value_type(tuple, -1, key);
     if (type == TUPLE_STRING) {
-        gchar *result = g_strdup(tuple_get_string(tuple, -1, key));
+        gchar *result = str_to_utf8(tuple_get_string(tuple, -1, key));
 
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_STRING);
@@ -698,7 +698,15 @@ gboolean audacious_rc_song_title(RemoteObject *obj, guint pos,
 
 gboolean audacious_rc_song_filename(RemoteObject *obj, guint pos,
                                     gchar **filename, GError **error) {
-    *filename = playlist_get_filename(playlist_get_active(), pos);
+    gchar *tmp = NULL;
+    tmp = playlist_get_filename(playlist_get_active(), pos);
+
+    if(tmp){
+        *filename = str_to_utf8(tmp);
+    }
+    free(tmp);
+    tmp = NULL;
+
     return TRUE;
 }
 
