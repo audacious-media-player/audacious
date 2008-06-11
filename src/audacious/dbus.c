@@ -211,8 +211,14 @@ GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     return NULL;
 }
 
-static void
-remove_metadata_value(gpointer value)
+static void tuple_insert_to_hash(GHashTable *md, Tuple *tuple, const gchar *key)
+{
+    GValue *value = tuple_value_to_gvalue(tuple, key);
+    if (value != NULL)
+        g_hash_table_insert(md, key, value);
+}
+
+static void remove_metadata_value(gpointer value)
 {
     g_value_unset((GValue*)value);
     g_free((GValue*)value);
@@ -228,40 +234,13 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     md = g_hash_table_new_full(g_str_hash, g_str_equal,
                                NULL, remove_metadata_value);
 
-    value = tuple_value_to_gvalue(tuple, "length");
-    if (value != NULL) {
-        g_hash_table_insert(md, "length", value);
-    }
-
-    value = tuple_value_to_gvalue(tuple, "title");
-    if (value != NULL) {
-        g_hash_table_insert(md, "title", value);
-    }
-
-    value = tuple_value_to_gvalue(tuple, "artist");
-    if (value != NULL) {
-        g_hash_table_insert(md, "artist", value);
-    }
-
-    value = tuple_value_to_gvalue(tuple, "album");
-    if (value != NULL) {
-        g_hash_table_insert(md, "album", value);
-    }
-
-    value = tuple_value_to_gvalue(tuple, "genre");
-    if (value != NULL) {
-        g_hash_table_insert(md, "genre", value);
-    }
-
-    value = tuple_value_to_gvalue(tuple, "codec");
-    if (value != NULL) {
-        g_hash_table_insert(md, "codec", value);
-    }
-
-    value = tuple_value_to_gvalue(tuple, "quality");
-    if (value != NULL) {
-        g_hash_table_insert(md, "quality", value);
-    }
+    tuple_insert_to_hash(md, tuple, "length");
+    tuple_insert_to_hash(md, tuple, "title");
+    tuple_insert_to_hash(md, tuple, "artist");
+    tuple_insert_to_hash(md, tuple, "album");
+    tuple_insert_to_hash(md, tuple, "genre");
+    tuple_insert_to_hash(md, tuple, "codec");
+    tuple_insert_to_hash(md, tuple, "quality");
 
     return md;
 }
