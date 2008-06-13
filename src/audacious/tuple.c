@@ -168,7 +168,7 @@ _tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field,
 Tuple *
 tuple_new_from_filename(const gchar *filename)
 {
-    gchar *scratch, *ext;
+    gchar *ext;
     Tuple *tuple;
 
     g_return_val_if_fail(filename != NULL, NULL);
