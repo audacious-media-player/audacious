@@ -159,7 +159,10 @@ _tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field,
     if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
         return FALSE;
 
-    value->value.string = NULL;
+    if (string)
+        value->value.string = str_to_utf8(string);
+    else
+        value->value.string = NULL;
 
     TUPLE_UNLOCK_WRITE();
     return TRUE;
