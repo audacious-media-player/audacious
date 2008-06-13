@@ -211,7 +211,7 @@ GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     return NULL;
 }
 
-static void tuple_insert_to_hash(GHashTable *md, Tuple *tuple, const gchar *key)
+static void tuple_insert_to_hash(GHashTable *md, Tuple *tuple, gchar *key)
 {
     GValue *value = tuple_value_to_gvalue(tuple, key);
     if (value != NULL)
@@ -226,7 +226,6 @@ static void remove_metadata_value(gpointer value)
 
 GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     GHashTable *md = NULL;
-    GValue *value;
 
     if (tuple == NULL)
         return NULL;
