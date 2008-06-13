@@ -35,6 +35,11 @@ if test "x$PKG_CONFIG" != "x"; then
 	AC_MSG_CHECKING([pkg-config is at least version $_pkg_min_version])
 	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version ; then
 		AC_MSG_RESULT([yes])
+		if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+		        _pkg_short_errors_supported=yes
+		else
+		        _pkg_short_errors_supported=no
+		fi
 	else
 		AC_MSG_RESULT([no])
 		PKG_CONFIG=""
@@ -62,34 +67,28 @@ m4_ifvaln([$3], [else
   $3])dnl
 fi])
 
-
-# _PKG_CONFIG([VARIABLE], [COMMAND], [MODULES])
+# _PKG_CONFIG([VARIABLE], [MODULES])
 # ---------------------------------------------
 m4_define([_PKG_CONFIG],
 [if test "x$PKG_CONFIG" != "x"; then
-    if test "x$$1" != "x"; then
-        pkg_cv_[]$1="$$1"
+    if AC_RUN_LOG([$PKG_CONFIG --exists --print-errors "$2"]); then
+        if test "x${$1[]_CFLAGS}" != "x"; then
+            pkg_cv_[]$1[]_CFLAGS="${$1[]_CFLAGS}"
+        else
+            pkg_cv_[]$1[]_CFLAGS=`$PKG_CONFIG --cflags "$2" 2>/dev/null`
+        fi
+        if test "x${$1[]_LIBS}" != "x"; then
+            pkg_cv_[]$1[]_LIBS="${$1_LIBS}"
+        else
+            pkg_cv_[]$1[]_LIBS=`$PKG_CONFIG --libs "$2" 2>/dev/null`
+        fi
     else
-        PKG_CHECK_EXISTS([$3],
-                         [pkg_cv_[]$1=`$PKG_CONFIG --[]$2 "$3" 2>/dev/null`],
-			 [pkg_failed=yes])
+        pkg_failed="yes"
     fi
 else
-	pkg_failed=untried
+	pkg_failed="untried"
 fi[]dnl
 ])# _PKG_CONFIG
-
-# _PKG_SHORT_ERRORS_SUPPORTED
-# -----------------------------
-AC_DEFUN([_PKG_SHORT_ERRORS_SUPPORTED],
-[AC_REQUIRE([PKG_PROG_PKG_CONFIG])
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi[]dnl
-])# _PKG_SHORT_ERRORS_SUPPORTED
-
 
 # PKG_CHECK_MODULES(VARIABLE-PREFIX, MODULES, [ACTION-IF-FOUND],
 # [ACTION-IF-NOT-FOUND])
@@ -105,27 +104,21 @@ AC_DEFUN([PKG_CHECK_MODULES],
 [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
 AC_ARG_VAR([$1][_CFLAGS], [C compiler flags for $1, overriding pkg-config])dnl
 AC_ARG_VAR([$1][_LIBS], [linker flags for $1, overriding pkg-config])dnl
-
 pkg_failed=no
 AC_MSG_CHECKING([for $1])
-
-_PKG_CONFIG([$1][_CFLAGS], [cflags], [$2])
-_PKG_CONFIG([$1][_LIBS], [libs], [$2])
-
+_PKG_CONFIG([$1], [$2])
 m4_define([_PKG_TEXT], [Alternatively, you may set the environment variables $1[]_CFLAGS
 and $1[]_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.])
 
 if test "x$pkg_failed" = "xyes"; then
-        _PKG_SHORT_ERRORS_SUPPORTED
         if test "x$_pkg_short_errors_supported" = "xyes"; then
 	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "$2" 2>&1`
         else 
 	        $1[]_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2" 2>&1`
         fi
-	# Put the nasty error message in config.log where it belongs
+	dnl Put the nasty error message in config.log where it belongs
 	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
-
 	ifelse([$4], , [AC_MSG_ERROR(dnl
 [Package requirements ($2) were not met:
 
