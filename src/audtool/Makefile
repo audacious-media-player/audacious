@@ -18,6 +18,8 @@ CFLAGS += ${GTK_CFLAGS}			\
 		  ${ARCH_DEFINES}		\
 		  ${MOWGLI_CFLAGS}
 
+LDFLAGS += ${AUDLDFLAGS}
+
 LIBS += ${DBUS_LIBS}				\
 	-L../libaudclient -laudclient	\
 	${GTK_LIBS}						\
