@@ -102,7 +102,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .vfs_buffered_file_new_from_uri = vfs_buffered_file_new_from_uri,
     .vfs_buffered_file_release_live_fd = vfs_buffered_file_release_live_fd,
-    
+
     .vfs_fget_le16 = vfs_fget_le16,
     .vfs_fget_le32 = vfs_fget_le32,
     .vfs_fget_le64 = vfs_fget_le64,
@@ -370,7 +370,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .volumecontrol_flow = volumecontrol_flow,
 
     .util_menu_main_show = util_menu_main_show,
-    
+
     .get_output_list = get_output_list,
 
     .input_get_volume = input_get_volume,
@@ -541,7 +541,7 @@ input_plugin_init(Plugin * plugin)
 
     p->get_vis_type = input_get_vis_type;
     p->add_vis_pcm = input_add_vis_pcm;
-    
+
     /* Pretty const casts courtesy of XMMS's plugin.h legacy. Anyone
        else thinks we could use a CONST macro to solve the warnings?
        - descender */
@@ -549,7 +549,7 @@ input_plugin_init(Plugin * plugin)
     p->set_info_text = input_set_info_text;
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
-    
+
     p->enabled = TRUE;
 
     /* XXX: we need something better than p->filename if plugins
@@ -578,7 +578,7 @@ static void
 output_plugin_init(Plugin * plugin)
 {
     OutputPlugin *p = OUTPUT_PLUGIN(plugin);
-    op_data.output_list = g_list_append(op_data.output_list, p);    
+    op_data.output_list = g_list_append(op_data.output_list, p);
 
     mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
 }
@@ -751,7 +751,7 @@ add_plugin(const gchar * filename)
     g_message("Loaded plugin (%s)", filename);
 
     if (!(module = g_module_open(filename, G_MODULE_BIND_LOCAL))) {
-        printf("Failed to load plugin (%s): %s\n", 
+        printf("Failed to load plugin (%s): %s\n",
                   filename, g_module_error());
         return;
     }
@@ -1012,7 +1012,7 @@ plugin_system_cleanup(void)
         if (op->handle)
             g_module_close(op->handle);
     }
-    
+
     if (op_data.output_list != NULL)
     {
         g_list_free(op_data.output_list);

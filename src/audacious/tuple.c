@@ -108,15 +108,15 @@ tuple_destroy(gpointer data)
     for (i = 0; i < FIELD_LAST; i++)
         if (tuple->values[i]) {
             TupleValue *value = tuple->values[i];
-            
+
             if (value->type == TUPLE_STRING)
                 g_free(value->value.string);
-            
+
             mowgli_heap_free(tuple_value_heap, value);
         }
-    
+
     g_free(tuple->subtunes);
-    
+
     mowgli_heap_free(tuple_heap, tuple);
     TUPLE_UNLOCK_WRITE();
 }
@@ -127,7 +127,7 @@ tuple_new(void)
     Tuple *tuple;
 
     TUPLE_LOCK_WRITE();
-    
+
     if (tuple_heap == NULL)
     {
         tuple_heap = mowgli_heap_create(sizeof(Tuple), 512, BH_NOW);
@@ -181,7 +181,7 @@ tuple_new_from_filename(const gchar *filename)
 
     _tuple_associate_raw_string(tuple, FIELD_FILE_PATH, NULL,
         uri_to_display_basename(filename));
-    
+
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
@@ -190,7 +190,7 @@ tuple_new_from_filename(const gchar *filename)
     }
 
     return tuple;
-}        
+}
 
 
 static gint tuple_get_nfield(const gchar *field)
@@ -209,7 +209,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     const gchar *tfield = field;
     gint nfield = cnfield;
     TupleValue *value = NULL;
-    
+
     g_return_val_if_fail(tuple != NULL, NULL);
     g_return_val_if_fail(cnfield < FIELD_LAST, NULL);
 
@@ -225,7 +225,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     if (nfield >= 0) {
         tfield = tuple_fields[nfield].name;
         value = tuple->values[nfield];
-        
+
         if (ftype != tuple_fields[nfield].type) {
             /* FIXME! Convert values perhaps .. or not? */
             fprintf(stderr, "Invalid type for [%s](%d->%d), %d != %d\n", tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
@@ -236,7 +236,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     } else {
         value = mowgli_dictionary_retrieve(tuple->dict, tfield);
     }
-    
+
     if (value != NULL) {
         /* Value exists, just delete old associated data */
         if (value->type == TUPLE_STRING) {
@@ -278,13 +278,13 @@ gboolean
 tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer)
 {
     TupleValue *value;
-    
+
     TUPLE_LOCK_WRITE();
     if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_INT)) == NULL)
         return FALSE;
 
     value->value.integer = integer;
-    
+
     TUPLE_UNLOCK_WRITE();
     return TRUE;
 }
@@ -314,7 +314,7 @@ tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
         TUPLE_UNLOCK_WRITE();
         return;
     }
-    
+
     /* Free associated data */
     if (value->type == TUPLE_STRING) {
         g_free(value->value.string);
@@ -336,7 +336,7 @@ tuple_get_value_type(Tuple *tuple, const gint cnfield, const gchar *field)
 
     if (nfield < 0)
         nfield = tuple_get_nfield(field);
-    
+
     TUPLE_LOCK_READ();
     if (nfield < 0) {
         TupleValue *value;
@@ -346,7 +346,7 @@ tuple_get_value_type(Tuple *tuple, const gint cnfield, const gchar *field)
         if (tuple->values[nfield])
             type = tuple->values[nfield]->type;
     }
-    
+
     TUPLE_UNLOCK_READ();
     return type;
 }
@@ -362,7 +362,7 @@ tuple_get_string(Tuple *tuple, const gint cnfield, const gchar *field)
 
     if (nfield < 0)
         nfield = tuple_get_nfield(field);
-    
+
     TUPLE_LOCK_READ();
     if (nfield < 0)
         value = mowgli_dictionary_retrieve(tuple->dict, field);
@@ -372,7 +372,7 @@ tuple_get_string(Tuple *tuple, const gint cnfield, const gchar *field)
     if (value) {
         if (value->type != TUPLE_STRING)
             mowgli_throw_exception_val(audacious.tuple.invalid_type_request, NULL);
-        
+
         TUPLE_UNLOCK_READ();
         return value->value.string;
     } else {
@@ -392,7 +392,7 @@ tuple_get_int(Tuple *tuple, const gint cnfield, const gchar *field)
 
     if (nfield < 0)
         nfield = tuple_get_nfield(field);
-    
+
     TUPLE_LOCK_READ();
     if (nfield < 0)
         value = mowgli_dictionary_retrieve(tuple->dict, field);
@@ -402,7 +402,7 @@ tuple_get_int(Tuple *tuple, const gint cnfield, const gchar *field)
     if (value) {
         if (value->type != TUPLE_INT)
             mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
-        
+
         TUPLE_UNLOCK_READ();
         return value->value.integer;
     } else {

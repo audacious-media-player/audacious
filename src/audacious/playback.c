@@ -124,7 +124,7 @@ playback_get_time(void)
     g_return_val_if_fail(playback_get_playing(), -1);
     playback = get_current_input_playback();
 
-    if (!playback) /* playback can be NULL during init even if playing is TRUE */              
+    if (!playback) /* playback can be NULL during init even if playing is TRUE */
         return -1;
     plugin_set_current((Plugin *)(playback->plugin));
     if (playback->plugin->get_time)
@@ -134,7 +134,7 @@ playback_get_time(void)
     }
     if (playback->error)
         return -2;
-    if (!playback->playing || 
+    if (!playback->playing ||
     (playback->eof && !playback->output->buffer_playing()))
         return -1;
     return playback->output->output_time();
