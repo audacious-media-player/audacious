@@ -53,8 +53,9 @@ Long-term "TODO"
 
 
 - {core,plugins}/configure.ac need some cleanup loving.
-  * make session management (SM) optional.
-  * build system cleanups .. extra.mk.in? wtf?
+  * make session management (SM) optional. (done)
+  * build system cleanups .. extra.mk.in? wtf? (done in core, progressing
+  for plugins)
   --- this is in progress, worked on by ccr
 
 
@@ -64,9 +65,27 @@ Long-term "TODO"
   * scrobbler
 
 
-- playlist.c: playlist_clear() is VERY slow, possible reasons?
-  * GList sucks? (it does, but is it the reason here?)
-  * playlist_entry_free()?
+Playlist code issues
+====================
+It's been determined that the playlist code should be completely refactored.
+
+ATTENTION! Add more stuff here! Issues that you can think of, suggestions
+for solutions, etc. References to algorithms...
+
+
+- code (mostly in playlist.c) is unnecessarily complex in some places and
+  there is lots of useless duplication.
+
+- what data structures should be used? things that factor in are
+  efficiency and scalability -  memory usage and speed.
+  see also below and notice the manipulation bottleneck(s).
+
+  (different structures typically have bottlenecks in different places.)
+
+- playlist_clear() is VERY slow with large playlists, possible reasons?
+  * GList scalability sucks? (it does, but is it the real reason here? need
+  to profile this...)
+  * maybe playlist_entry_free() is at fault instead? (see also below)
   * mowgli_heap_free()?
 
   possible solutions?
@@ -75,8 +94,36 @@ Long-term "TODO"
   * storing the playlist as a GtkTreeModel seems to be fairly fast (at least
     in mudkip-player it is) --nenolod
 
-- playlist.c: racecondition in scanner thread vs. playlist manipulation
-  (playlist_clear(), free, etc.)
-  * go through scanner thread code and revise it.
-  * also all playlist manipulation should be double-checked.
-  * .. actually, the whole playlist.c should be refactored completely.
+- current implementation has a nasty racecondition in scanner thread vs. playlist
+  manipulation (playlist_clear(), free, etc.)
+
+  * new code should be water-tight when it comes to locking. simpler code
+  with more "atomic operations" should help.
+
+
+ccr rants:
+----------
+I suggest that the whole playlist manipulation should be moved into separate
+thread. What I mean, is that the playlist scanning (e.g. probing for
+metadata) AND adding files into playlist should be in a thread.
+
+Adding files would work like this:
+  1) feed URIs to playlist handler thread
+  2) playlist handler notices new URIs and starts checking if they are valid
+     aka probing or other checks.
+  3) valid files/URIs get added to the playlist. unsupported files get discarded.
+
+Possible benefits of this approach:
+  - checking for "can we play this?", which currently happens in main
+     thread and blocks the GUI etc, would now happen asynchronously.
+  - improved user experience: less blocking generally, and it would be even
+     possible to _parallelize_ probing, if we wanted to, getting metadata
+     for multiple files at the same time. (this could be a user-settable
+     option.)
+
+Bad sides:
+  - requires careful design and thread locking .. but that we need anyway.
+  - possibly might make playlist GUI representation harder. I am not sure
+    what effects this might have, feel free to pitch in thoughts...
+
+    
