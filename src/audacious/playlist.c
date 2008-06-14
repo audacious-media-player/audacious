@@ -704,8 +704,10 @@ __playlist_ins_file(Playlist * playlist,
                 } else
                     add_flag = FALSE;
             }
-        } else
+        } else {
             playlist->entries = g_list_insert(playlist->entries, entry, pos++);
+            playlist->tail = g_list_last(playlist->entries);
+        }
 
         if (tuple != NULL) {
             const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
@@ -2175,6 +2177,7 @@ playlist_sort(Playlist *playlist, PlaylistSortType type)
     playlist->entries =
         g_list_sort(playlist->entries,
                     (GCompareFunc) playlist_compare_func_table[type]);
+    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2235,6 +2238,7 @@ playlist_sort_selected(Playlist *playlist, PlaylistSortType type)
     playlist->entries = playlist_sort_selected_generic(playlist->entries, (GCompareFunc)
                                                        playlist_compare_func_table
                                                        [type]);
+    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2244,6 +2248,7 @@ playlist_reverse(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist->entries = g_list_reverse(playlist->entries);
+    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2297,6 +2302,7 @@ playlist_random(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist->entries = playlist_shuffle_list(playlist, playlist->entries);
+    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
