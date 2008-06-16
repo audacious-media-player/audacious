@@ -76,7 +76,7 @@ dnl =============
 AC_PATH_PROG([AUDACIOUS_PATH], [audacious], [no])
 
 AUD_ARG_ENABLE([user-plugin-dir], [yes],
-[  --disable-user-plugin-dir    Disable per-user plugin dir (def: enabled)])
+[Disable per-user plugin dir (def: enabled)])
 
 if test "x$enable_user_plugin_dir" = "xno"; then
     AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
@@ -87,7 +87,7 @@ fi
 dnl Chardet support
 dnl ===============
 AUD_ARG_ENABLE([chardet], [yes],
-[  --disable-chardet            Disable charset detection support (def: enabled)],
+[Disable charset detection support (def: enabled)],
 [
     AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
     AC_CHECK_LIB([udet_c], [detectCharset], [
@@ -103,7 +103,7 @@ AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
 dnl D-Bus support
 dnl =============
 AUD_ARG_ENABLE([dbus], [yes],
-[  --enable-dbus                Enable D-Bus support (def: enabled)],
+[Enable D-Bus support (def: enabled)],
 [
     PKG_CHECK_MODULES([DBUS], [dbus-1 >= 0.60 dbus-glib-1 >= 0.60 gthread-2.0],
         [enable_dbus=yes],
@@ -134,7 +134,7 @@ AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
 dnl libsamplerate support
 dnl =====================
 AUD_ARG_ENABLE([samplerate], [no],
-[  --enable-samplerate          Enable libsamplerate support (def: disabled)],
+[Enable libsamplerate support (def: disabled)],
 [
     AUD_CHECK_MODULE([SAMPLERATE], [samplerate],, [libsamplerate])
     aud_save_LIBS="$LIBS"
@@ -155,7 +155,7 @@ AUD_ARG_ENABLE([samplerate], [no],
 dnl xspf playlist support
 dnl =====================
 AUD_ARG_ENABLE([xspf], [yes],
-[  --disable-xspf               Disable XSPF support (def: enabled)],
+[Disable XSPF support (def: enabled)],
 [
     AM_PATH_XML2([2.0.0],, [
        AC_MSG_WARN([*** libxml2 is not installed. XSPF playlist support will not be built. ***])
@@ -173,7 +173,7 @@ dnl ==================================
 REGEX_LIBS=
 REGEX_CFLAGS=
 AC_ARG_WITH([regexlib],
-[[  --with-regexlib[=gnu/oniguruma/pcre]   use the chosen regex library (def: gnu)]],
+[AS_HELP_STRING([--with-regexlib[=gnu/oniguruma/pcre]],[Use the chosen regex library (def: gnu)])],
 [
 case $withval in
   pcre)
@@ -209,7 +209,7 @@ AS_AC_EXPAND([desktop_file], "${datadir}/applications/audacious.desktop")
 AC_DEFINE_UNQUOTED([AUDACIOUS_DESKTOP_FILE], "${desktop_file}", [Location of the desktop file])
 
 AUD_ARG_ENABLE([sm], [yes],
-[  --disable-sm                 Disable session management (def: enabled)],
+[Disable session management (def: enabled)],
 [
     PKG_CHECK_MODULES([SM], [sm >= 1.0], [
         AC_DEFINE([USE_EGGSM], 1, [Define if session management should be used.])

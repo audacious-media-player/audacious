@@ -48,8 +48,9 @@ AC_SUBST([$1])dnl
 dnl ** Simple wrapper for AC_ARG_ENABLE
 dnl ** AUD_ARG_ENABLE([name], [default value], [help string], [if enabled], [if disabled])
 AC_DEFUN([AUD_ARG_ENABLE], [dnl
-    define([Name], [translit([$1], [./-], [___])])
-    AC_ARG_ENABLE([$1], [$3],, [enable_[]Name=$2])
+# _A_ARG_ENABLE($1, $2, $3, $4, $5)
+    define([Name], [translit([$1], [./-], [___])])dnl
+    AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], [$3])],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         m4_ifvaln([$4], [$4], [:])dnl
         m4_ifvaln([$5], [else $5])dnl
@@ -58,8 +59,9 @@ AC_DEFUN([AUD_ARG_ENABLE], [dnl
 
 
 AC_DEFUN([AUD_ARG_SIMPLE], [dnl
-    define([Name], [translit([$1], [./-], [___])])
-    AC_ARG_ENABLE([$1], [$3],, [enable_[]Name=$2])
+# _A_ARG_SIMPLE($1, $2, $3, $4, $5, $6)
+    define([Name], [translit([$1], [./-], [___])])dnl
+    AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], [$3])],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         AC_DEFINE([$4], [$5], [$6])
     fi
@@ -97,12 +99,12 @@ AC_DEFUN([AUD_CHECK_GNU_MAKE],[
     else
         AC_MSG_ERROR([** GNU make not found. If it is installed, try setting MAKE environment variable. **])
     fi
-    AC_SUBST([MAKE])
-])
+    AC_SUBST([MAKE])dnl
+])dnl
 
 
 dnl *** Define plugin directories
-AC_DEFUN([AUD_DEFINE_PLUGIN_DIR],[
+AC_DEFUN([AUD_DEFINE_PLUGIN_DIR],[dnl
 define([Name], [translit([$1], [a-z], [A-Z])])dnl
 if test "x$enable_one_plugin_dir" = "xyes"; then
 ifdef([aud_plugin_dirs_defined],[],
@@ -121,7 +123,7 @@ define([aud_def_plugin_dirs_defined],[1])dnl
 
 
 dnl *** Get plugin directories
-AC_DEFUN([AUD_GET_PLUGIN_DIR],[
+AC_DEFUN([AUD_GET_PLUGIN_DIR],[dnl
 define([Name], [translit([$1_plugin_dir], [A-Z], [a-z])])dnl
 define([BigName], [translit([$1], [a-z], [A-Z])])dnl
 ifdef([aud_get_plugin_dirs_defined],
@@ -188,7 +190,7 @@ AUD_CHECK_MODULE([LIBMCS], [libmcs], [>= 0.7], [libmcs],
 dnl SSE2 support
 dnl ============
 AUD_ARG_ENABLE([sse2], [yes],
-[  --disable-sse2               Disable SSE2 support (def: enabled)],
+[Disable SSE2 support (def: enabled)],
 [
     AC_MSG_CHECKING([SSE2 support])
     aud_my_save_CFLAGS="$CFLAGS"
@@ -215,7 +217,7 @@ int main()
 dnl AltiVec support 
 dnl ===============
 AUD_ARG_ENABLE([altivec], [yes],
-[  --disable-altivec            Disable AltiVec support (def: enabled)],
+[Disable AltiVec support (def: enabled)],
 [
     AC_CHECK_HEADERS([altivec.h],
     [
