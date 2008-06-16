@@ -188,7 +188,7 @@ case $withval in
         AC_DEFINE([USE_REGEX_ONIGURUMA], 1, [If this macro is defined, use Oniguruma regex library.])
         REGEX_LIBS=['-lonig']
     ],[
-        AC_MSG_ERROR([Cannot find Oniguruma])
+        AC_MSG_ERROR([Cannot find Oniguruma regex library.])
     ])
     ;;
   *)
