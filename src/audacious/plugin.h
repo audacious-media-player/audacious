@@ -1136,8 +1136,6 @@ struct _InputPlugin {
     void (*get_song_info) (gchar * filename, gchar ** title, gint * length);
     void (*file_info_box) (gchar * filename);
 
-    OutputPlugin *output; /* deprecated */
-
     /* Added in Audacious 1.1.0 */
     Tuple *(*get_song_tuple) (gchar * filename);
 

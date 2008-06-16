@@ -406,8 +406,6 @@ playback_play_file(PlaylistEntry *entry)
 
     playback = playback_new();
     
-    entry->decoder->output = &psuedo_output_plugin;
-
     playback->plugin = entry->decoder;
     playback->filename = g_strdup(entry->filename);
     playback->output = &psuedo_output_plugin;
