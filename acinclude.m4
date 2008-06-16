@@ -50,7 +50,8 @@ dnl ** AUD_ARG_ENABLE([name], [default value], [help string], [if enabled], [if 
 AC_DEFUN([AUD_ARG_ENABLE], [dnl
 # _A_ARG_ENABLE($1, $2, $3, $4, $5)
     define([Name], [translit([$1], [./-], [___])])dnl
-    AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], [$3])],, [enable_[]Name=$2])
+    define([cBasce], [$3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+    AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         m4_ifvaln([$4], [$4], [:])dnl
         m4_ifvaln([$5], [else $5])dnl
@@ -61,7 +62,8 @@ AC_DEFUN([AUD_ARG_ENABLE], [dnl
 AC_DEFUN([AUD_ARG_SIMPLE], [dnl
 # _A_ARG_SIMPLE($1, $2, $3, $4, $5, $6)
     define([Name], [translit([$1], [./-], [___])])dnl
-    AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], [$3])],, [enable_[]Name=$2])
+    define([cBasce], [$3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+    AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         AC_DEFINE([$4], [$5], [$6])
     fi
@@ -190,7 +192,7 @@ AUD_CHECK_MODULE([LIBMCS], [libmcs], [>= 0.7], [libmcs],
 dnl SSE2 support
 dnl ============
 AUD_ARG_ENABLE([sse2], [yes],
-[Disable SSE2 support (def: enabled)],
+[Disable SSE2 support],
 [
     AC_MSG_CHECKING([SSE2 support])
     aud_my_save_CFLAGS="$CFLAGS"
@@ -217,7 +219,7 @@ int main()
 dnl AltiVec support 
 dnl ===============
 AUD_ARG_ENABLE([altivec], [yes],
-[Disable AltiVec support (def: enabled)],
+[Disable AltiVec support],
 [
     AC_CHECK_HEADERS([altivec.h],
     [
