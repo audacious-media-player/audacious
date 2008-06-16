@@ -1121,8 +1121,6 @@ struct _InputPlugin {
     void (*pause) (InputPlayback * playback, gshort paused);
     void (*seek) (InputPlayback * playback, gint time);
 
-    void (*set_eq) (gint on, gfloat preamp, gfloat * bands);
-
     gint (*get_time) (InputPlayback * playback);
 
     gint (*get_volume) (gint * l, gint * r);

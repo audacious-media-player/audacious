@@ -439,10 +439,6 @@ ui_main_evlistener_config_save(gpointer hook_data, gpointer user_data)
 static void
 ui_main_evlistener_equalizer_changed(gpointer hook_data, gpointer user_data)
 {
-    /* um .. i think we need both of these for xmms compatibility ..
-       not sure. -larne */
-    input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                 cfg.equalizer_bands);
     output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                   cfg.equalizer_bands);
 }

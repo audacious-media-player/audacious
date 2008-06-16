@@ -190,10 +190,7 @@ equalizerwin_eq_changed(void)
     cfg.equalizer_preamp = ui_skinned_equalizer_slider_get_position(equalizerwin_preamp);
     for (i = 0; i < AUD_EQUALIZER_NBANDS; i++)
         cfg.equalizer_bands[i] = ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]);
-    /* um .. i think we need both of these for xmms compatibility ..
-       not sure. -larne */
-    input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                 cfg.equalizer_bands);
+
     output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                   cfg.equalizer_bands);
 

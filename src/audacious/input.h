@@ -62,7 +62,6 @@ void input_play(gchar * filename);
 void input_stop(void);
 void input_pause(void);
 gint input_get_time(void);
-void input_set_eq(gint on, gfloat preamp, gfloat * bands);
 void input_seek(gint time);
 
 guchar *input_get_vis(gint time);

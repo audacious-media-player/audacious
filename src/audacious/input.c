@@ -475,26 +475,6 @@ input_check_file(const gchar *filename, gboolean loading)
     return NULL;
 }
 
-
-void
-input_set_eq(gint on, gfloat preamp, gfloat * bands)
-{
-    InputPlayback *playback;
-
-    if (!ip_data.playing)
-        return;
-
-    if ((playback = get_current_input_playback()) == NULL)
-        return;
-
-    if (playback->plugin->set_eq)
-    {
-        plugin_set_current((Plugin *)(playback->plugin));
-        playback->plugin->set_eq(on, preamp, bands);
-    }
-}
-
-
 Tuple *
 input_get_song_tuple(const gchar * filename)
 {
