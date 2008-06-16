@@ -180,13 +180,13 @@ case $withval in
     AUD_CHECK_MODULE([LIBPCRE], [libpcre], [>= 6.7], [PCRE])
     AC_DEFINE([USE_REGEX_PCRE], 1, [If this macro is defined, use PCRE regex library.])
     REGEX_LIBS="-lpcreposix $LIBPCRE_LIBS"
-    REGEX_CFLAGS=$LIBPCRE_CFLAGS
+    REGEX_CFLAGS="$LIBPCRE_CFLAGS"
     ;;
   oniguruma)
     AC_CHECK_LIB([onig], [onig_new],
     [
         AC_DEFINE([USE_REGEX_ONIGURUMA], 1, [If this macro is defined, use Oniguruma regex library.])
-        REGEX_LIBS=['-lonig']
+        REGEX_LIBS="-lonig"
     ],[
         AC_MSG_ERROR([Cannot find Oniguruma regex library.])
     ])
