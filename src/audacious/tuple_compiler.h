@@ -24,6 +24,7 @@
 #include <mowgli.h>
 #include "tuple.h"
 
+G_BEGIN_DECLS
 
 #define TUPLEZ_MAX_VARS (4)
 
@@ -107,5 +108,8 @@ void tuple_evalnode_free(TupleEvalNode *expr);
 gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEvalNode *expr);
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
 gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple);
+
+
+G_END_DECLS
 
 #endif /* AUDACIOUS_TUPLE_COMPILER_H */
