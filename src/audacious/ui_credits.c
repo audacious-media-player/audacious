@@ -57,6 +57,7 @@ static const gchar *credit_text[] = {
     "Daniel Bradshaw",
     "Adam Cecile",
     "Michael Färber",
+    "Matti Hämäläinen",
     "Troels Bang Jensen",
     "Giacomo Lozito",
     "Cristi Măgherușan",
