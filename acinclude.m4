@@ -48,7 +48,6 @@ AC_SUBST([$1])dnl
 dnl ** Simple wrapper for AC_ARG_ENABLE
 dnl ** AUD_ARG_ENABLE([name], [default value], [help string], [if enabled], [if disabled])
 AC_DEFUN([AUD_ARG_ENABLE], [dnl
-# _A_ARG_ENABLE($1, $2, $3, $4, $5)
     define([Name], [translit([$1], [./-], [___])])dnl
     define([cBasce], [$3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
     AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
@@ -60,7 +59,6 @@ AC_DEFUN([AUD_ARG_ENABLE], [dnl
 
 
 AC_DEFUN([AUD_ARG_SIMPLE], [dnl
-# _A_ARG_SIMPLE($1, $2, $3, $4, $5, $6)
     define([Name], [translit([$1], [./-], [___])])dnl
     define([cBasce], [$3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
     AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
