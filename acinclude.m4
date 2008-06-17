@@ -1,5 +1,6 @@
 
 dnl ** ADD_PKG_REQUIRES([requirement])
+dnl ** Adds a dependency to package's pkg-config file.
 AC_DEFUN([ADD_PC_REQUIRES], [
    if test "x$PC_REQUIRES" = "x"; then
        PC_REQUIRES="$1"
@@ -10,9 +11,12 @@ AC_DEFUN([ADD_PC_REQUIRES], [
 ])
 
 
-dnl ** Like PKG_CHECK_MODULES, but provides an informative error message.
 dnl ** AUD_CHECK_MODULE([define name], [module], [version required],
 dnl **     [informational name], [additional error message])
+dnl **
+dnl ** Works like PKG_CHECK_MODULES, but provides an informative
+dnl ** error message if the package is not found. NOTICE! Unlike
+dnl ** PKG_C_M, this macro ONLY supports one module name!
 dnl **
 dnl ** AUD_CHECK_MODULE([GLIB], [gtk+-2.0], [>= 2.10.0], [Gtk+2], [See http://www.gtk.org/])
 AC_DEFUN([AUD_CHECK_MODULE], [
@@ -34,7 +38,10 @@ $5]])
 ])
 
 
-dnl ** Simplifying wrapper
+dnl ** AUD_CONDITIONAL([symbol], [variable to test][, value])
+dnl ** Simplifying wrapper for AM_CONDITIONAL.
+dnl **
+dnl ** AUD_CONDITIONAL([FOO], [foo])
 AC_DEFUN([AUD_CONDITIONAL],
 [if test "x${$2}" = m4_ifval([$3], ["x$3"],["xyes"]) ; then
     $1="yes"
@@ -48,8 +55,8 @@ AC_SUBST([$1])dnl
 dnl ** Simple wrapper for AC_ARG_ENABLE
 dnl ** AUD_ARG_ENABLE([name], [default value], [help string], [if enabled], [if disabled])
 AC_DEFUN([AUD_ARG_ENABLE], [dnl
-    define([Name], [translit([$1], [./-], [___])])dnl
-    define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+define([Name], [translit([$1], [./-], [___])])dnl
+define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
     AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         m4_ifvaln([$4], [$4], [:])dnl
@@ -59,8 +66,8 @@ AC_DEFUN([AUD_ARG_ENABLE], [dnl
 
 
 AC_DEFUN([AUD_ARG_SIMPLE], [dnl
-    define([Name], [translit([$1], [./-], [___])])dnl
-    define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+define([Name], [translit([$1], [./-], [___])])dnl
+define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
     AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         AC_DEFINE([$4], [$5], [$6])
@@ -136,9 +143,9 @@ define([aud_get_plugin_dirs_defined],[1])dnl
 
 
 
-dnl ***
-dnl *** Common checks
-dnl ***
+dnl **
+dnl ** Common checks
+dnl **
 AC_DEFUN([AUD_COMMON_PROGS], [
 
 dnl Check for C and C++ compilers
@@ -232,8 +239,11 @@ AUD_ARG_ENABLE([altivec], [yes], [AltiVec support],
 ])
 
 
-dnl Plugin helper macros
-dnl ====================
+dnl **
+dnl ** Plugin helper macros
+dnl **
+
+dnl ** Unconditionally add a plugin to "build these" list
 AC_DEFUN([AUD_PLUGIN_ADD], [dnl
 define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
 have_[]Name="yes"; res_short_[]Name="$1"
@@ -241,9 +251,11 @@ res_desc_[]Name="$3"; ifdef([aud_def_plugin_$2], [$2[]_PLUGINS="${$2[]_PLUGINS} 
 define([aud_def_plugin_$2],[1])dnl
 ])
 
+
+dnl ** Generic template for macros below
 AC_DEFUN([AUD_PLUGIN_CHK], [dnl
-define([cBasce], [$5 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
-AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_$2="$3"])dnl
+define([cBasce], [ifelse([$3],[yes],[Disable],[Enable]) $5 (def: ifelse([$3],[yes],[enabled],[disabled]))])dnl
+AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$3],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_$2="$3"])dnl
     have_$2="no"
     if test "x${enable_$2}" = "xyes"; then
         m4_ifvaln([$6], [$6], [:])
@@ -259,8 +271,10 @@ AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-
     fi
 ])
 
+
+dnl ** Add a plugin based on --enable/--disable options
 AC_DEFUN([AUD_PLUGIN_CHECK_SIMPLE], [dnl
-define([cBasce], [$6 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $6 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
 AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_$2="$3"])dnl
     have_$2="no"
     if test "x${enable_$2}" = "xyes"; then
@@ -272,7 +286,7 @@ AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-
 ])
 
 
-dnl Check and enable a plugin with a pkg-config check
+dnl ** Check and enable a plugin with a pkg-config check
 AC_DEFUN([AUD_PLUGIN_CHECK_PKG], [dnl
 define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
 define([BigN], [translit([$1], [a-z./-], [A-Z___])])dnl
@@ -284,7 +298,8 @@ define([BigN], [translit([$1], [a-z./-], [A-Z___])])dnl
     ], [$9], [$10])
 ])
 
-dnl Check and enable a plugin with a header files check
+
+dnl ** Check and enable a plugin with a header files check
 AC_DEFUN([AUD_PLUGIN_CHECK_HEADERS], [
 define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
     AUD_PLUGIN_CHK([$1], Name, [$2], [$4], [$6], [
@@ -295,7 +310,8 @@ define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
     ], [$9], [$10])
 ])
 
-dnl Check and enable a plugin with complex checks
+
+dnl ** Check and enable a plugin with a complex check
 AC_DEFUN([AUD_PLUGIN_CHECK_COMPLEX], [
 # CHECK_COMPLEX #1 : $1
 define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
@@ -309,5 +325,5 @@ define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
     m4_ifvaln([$8], [$8])
 # CHECK_COMPLEX #3 END
     ], [$9], [$10])
+# CHECK_COMPLEX #4 END
 ])
-
