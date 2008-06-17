@@ -49,7 +49,7 @@ dnl ** Simple wrapper for AC_ARG_ENABLE
 dnl ** AUD_ARG_ENABLE([name], [default value], [help string], [if enabled], [if disabled])
 AC_DEFUN([AUD_ARG_ENABLE], [dnl
     define([Name], [translit([$1], [./-], [___])])dnl
-    define([cBasce], [$3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+    define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
     AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         m4_ifvaln([$4], [$4], [:])dnl
@@ -60,7 +60,7 @@ AC_DEFUN([AUD_ARG_ENABLE], [dnl
 
 AC_DEFUN([AUD_ARG_SIMPLE], [dnl
     define([Name], [translit([$1], [./-], [___])])dnl
-    define([cBasce], [$3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+    define([cBasce], [ifelse([$2],[yes],[Disable],[Enable]) $3 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
     AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_[]Name=$2])
     if test "x${enable_[]Name}" = "xyes"; then
         AC_DEFINE([$4], [$5], [$6])
@@ -189,8 +189,7 @@ AUD_CHECK_MODULE([LIBMCS], [libmcs], [>= 0.7], [libmcs],
 
 dnl SSE2 support
 dnl ============
-AUD_ARG_ENABLE([sse2], [yes],
-[Disable SSE2 support],
+AUD_ARG_ENABLE([sse2], [yes], [SSE2 support],
 [
     AC_MSG_CHECKING([SSE2 support])
     aud_my_save_CFLAGS="$CFLAGS"
@@ -216,8 +215,7 @@ int main()
 
 dnl AltiVec support 
 dnl ===============
-AUD_ARG_ENABLE([altivec], [yes],
-[Disable AltiVec support],
+AUD_ARG_ENABLE([altivec], [yes], [AltiVec support],
 [
     AC_CHECK_HEADERS([altivec.h],
     [
@@ -232,3 +230,84 @@ AUD_ARG_ENABLE([altivec], [yes],
 ])    
 
 ])
+
+
+dnl Plugin helper macros
+dnl ====================
+AC_DEFUN([AUD_PLUGIN_ADD], [dnl
+define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
+have_[]Name="yes"; res_short_[]Name="$1"
+res_desc_[]Name="$3"; ifdef([aud_def_plugin_$2], [$2[]_PLUGINS="${$2[]_PLUGINS} $1"], [$2[]_PLUGINS="$1"])dnl
+define([aud_def_plugin_$2],[1])dnl
+])
+
+AC_DEFUN([AUD_PLUGIN_CHK], [dnl
+define([cBasce], [$5 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_$2="$3"])dnl
+    have_$2="no"
+    if test "x${enable_$2}" = "xyes"; then
+        m4_ifvaln([$6], [$6], [:])
+        if test "x${have_$2}" = "xyes"; then
+            m4_ifvaln([$7], [$7], [:])dnl
+        else
+            res_msg_$2="(not found)"
+            m4_ifvaln([$8], [$8], [:])dnl
+        fi
+    else
+        res_msg_$2="(disabled)"
+        m4_ifvaln([$9], [$9], [:])dnl
+    fi
+])
+
+AC_DEFUN([AUD_PLUGIN_CHECK_SIMPLE], [dnl
+define([cBasce], [$6 (def: ifelse([$2],[yes],[enabled],[disabled]))])dnl
+AC_ARG_ENABLE([$1], [AS_HELP_STRING([ifelse([$2],[yes],[--disable-$1],[--enable-$1])], cBasce)],, [enable_$2="$3"])dnl
+    have_$2="no"
+    if test "x${enable_$2}" = "xyes"; then
+        m4_ifvaln([$6], [$6], [:])
+    else
+        res_msg_$2="(disabled)"
+        m4_ifvaln([$7], [$7], [:])dnl
+    fi
+])
+
+
+dnl Check and enable a plugin with a pkg-config check
+AC_DEFUN([AUD_PLUGIN_CHECK_PKG], [dnl
+define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
+define([BigN], [translit([$1], [a-z./-], [A-Z___])])dnl
+    AUD_PLUGIN_CHK([$1], Name, [$2], [$4], [$6], [dnl
+        PKG_CHECK_MODULES([]BigN, [$7], [have_[]Name[]="yes"], [have_[]Name[]="no"])
+    ], [
+    AUD_PLUGIN_ADD([$5], [$3])
+    m4_ifvaln([$8], [$8])
+    ], [$9], [$10])
+])
+
+dnl Check and enable a plugin with a header files check
+AC_DEFUN([AUD_PLUGIN_CHECK_HEADERS], [
+define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
+    AUD_PLUGIN_CHK([$1], Name, [$2], [$4], [$6], [
+        AC_CHECK_HEADERS([$7], [have_[]Name[]="yes"], [have_[]Name[]="no"])
+    ], [
+    AUD_PLUGIN_ADD([$5], [$3])
+    m4_ifvaln([$8], [$8])
+    ], [$9], [$10])
+])
+
+dnl Check and enable a plugin with complex checks
+AC_DEFUN([AUD_PLUGIN_CHECK_COMPLEX], [
+# CHECK_COMPLEX #1 : $1
+define([Name], [translit([$1], [A-Z./-], [a-z___])])dnl
+    AUD_PLUGIN_CHK([$1], Name, [$2], [$4], [$6], [
+# CHECK_COMPLEX #2 BEGIN
+        $7
+# CHECK_COMPLEX #2 END
+    ], [
+# CHECK_COMPLEX #3 BEGIN
+    AUD_PLUGIN_ADD([$5], [$3])
+    m4_ifvaln([$8], [$8])
+# CHECK_COMPLEX #3 END
+    ], [$9], [$10])
+])
+
