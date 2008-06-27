@@ -320,7 +320,12 @@ handle_cmd_line_options(gboolean skip)
     gchar **filenames = options.filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
-    gboolean is_running = audacious_remote_is_running(session);
+    gboolean is_running;
+
+    if (skip)
+      is_running = audacious_remote_is_running(session);
+    else
+      is_running = FALSE;
 #endif
 
     if (options.version)
@@ -726,14 +731,15 @@ main(gint argc, gchar ** argv)
         ui_manager_create_menus();
     }
 
+#ifdef USE_DBUS
+    init_dbus();
+#endif
+
     plugin_system_init();
     playlist_system_init();
 
     handle_cmd_line_options(FALSE);
 
-#ifdef USE_DBUS
-    init_dbus();
-#endif
 
     playlist_start_get_info_thread();
 
