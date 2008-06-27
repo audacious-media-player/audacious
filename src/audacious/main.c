@@ -699,6 +699,7 @@ main(gint argc, gchar ** argv)
     if (options.no_log == FALSE)
         aud_setup_logger();
 
+    g_message("Initializing Gtk+");
     if (!gtk_init_check(&argc, &argv) && options.headless == FALSE) {
         /* GTK check failed, and no arguments passed to indicate
            that user is intending to only remote control a running
@@ -707,17 +708,22 @@ main(gint argc, gchar ** argv)
         exit(EXIT_FAILURE);
     }
 
+    g_message("Setting up libSAD");
     g_random_set_seed(time(NULL));
     SAD_dither_init_rand((gint32)time(NULL));
 
+    g_message("Loading configuration");
     aud_config_load();
 
+    g_message("Initializing signal handlers");
     signal_handlers_init();
 
+    g_message("Handling commandline options, part #1");
     handle_cmd_line_options(TRUE);
 
     if (options.headless == FALSE)
     {
+        g_message("Non-headless operation setup");
         ui_main_check_theme_engine();
 
         /* register icons in stock
@@ -732,15 +738,21 @@ main(gint argc, gchar ** argv)
     }
 
 #ifdef USE_DBUS
+    g_message("Initializing D-Bus");
     init_dbus();
 #endif
 
+    g_message("Initializing plugin subsystems...");
     plugin_system_init();
+    
+    g_message("Setting up playlists");
     playlist_system_init();
 
+    g_message("Handling commandline options, part #2");
     handle_cmd_line_options(FALSE);
 
 
+    g_message("Playlist scanner thread startup");
     playlist_start_get_info_thread();
 
     output_set_volume((cfg.saved_volume & 0xff00) >> 8,
@@ -748,6 +760,7 @@ main(gint argc, gchar ** argv)
 
     if (options.headless == FALSE)
     {
+        g_message("GUI and skin setup");
         aud_set_default_icon();
 #ifdef GDK_WINDOWING_QUARTZ
         set_dock_icon();
@@ -797,6 +810,7 @@ main(gint argc, gchar ** argv)
 
         resume_playback_on_startup();
         
+        g_message("Entering Gtk+ main loop!");
         gtk_main();
 
         GDK_THREADS_LEAVE();
