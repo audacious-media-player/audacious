@@ -89,6 +89,11 @@
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
+
+#include "ui_new.h"
+
+
+
 static const gchar *application_name = N_("Audacious");
 
 struct _AudCmdLineOpt {
@@ -818,11 +823,17 @@ main(gint argc, gchar ** argv)
     // if we are running headless
     else
     {
+        /* temporarily headless operation is disabled in favour of
+         * testing the new UI */
+        ui_initialize();
+
+#if 0
         g_print(_("Headless operation enabled\n"));
         resume_playback_on_startup();
 
         g_timeout_add(10, aud_headless_iteration, NULL);
         g_main_loop_run(g_main_loop_new(NULL, TRUE));
+#endif
     }
 
     aud_quit();
