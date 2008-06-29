@@ -17,9 +17,11 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include "interface.h"
+
 #ifndef UI_NEW_H
 #define UI_NEW_H
 
-void ui_initialize();
+Interface *ui_populate_default_interface();
 
 #endif

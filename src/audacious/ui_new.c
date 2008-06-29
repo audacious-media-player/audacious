@@ -17,10 +17,13 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
+#include "interface.h"
 #include "playlist.h"
 #include "ui_fileopener.h"
+#include "ui_new.h"
 
 static GtkWidget *label_prev, *label_current, *label_next;
 
@@ -84,8 +87,8 @@ gtk_markup_label_new(const gchar *str)
     return label;
 }
 
-void
-ui_initialize()
+static gboolean
+_ui_initialize(void)
 {
     GtkWidget *window;		/* the main window */
     GtkWidget *vbox;		/* the main vertical box */
@@ -142,4 +145,20 @@ ui_initialize()
 
     gtk_widget_show_all(window);
     gtk_main();
+
+    return TRUE;
+}
+
+static Interface default_interface = {
+    .id = "default",
+    .desc = N_("Default Interface"),
+    .init = _ui_initialize,
+};
+
+Interface *
+ui_populate_default_interface(void)
+{
+    interface_register(&default_interface);
+
+    return &default_interface;
 }

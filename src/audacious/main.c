@@ -763,6 +763,8 @@ main(gint argc, gchar ** argv)
     output_set_volume((cfg.saved_volume & 0xff00) >> 8,
                       (cfg.saved_volume & 0x00ff));
 
+    ui_populate_default_interface();
+
     if (options.headless == FALSE)
     {
         g_message("GUI and skin setup");
@@ -823,9 +825,9 @@ main(gint argc, gchar ** argv)
     // if we are running headless
     else
     {
-        /* temporarily headless operation is disabled in favour of
-         * testing the new UI */
-        ui_initialize();
+        /* temporarily headless operation is disabled in favour of testing the new UI */
+        Interface *i = interface_get("default"); /* XXX */
+        interface_run(i);
 
 #if 0
         g_print(_("Headless operation enabled\n"));
