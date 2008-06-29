@@ -248,17 +248,119 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 }
 
 static void
-handle_cmd_line_options(gboolean skip)
+handle_cmd_line_filenames(gboolean is_running)
 {
     gchar **filenames = options.filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
-    gboolean is_running;
+#endif
+
+    if (filenames == NULL)
+        return;
+
+    gint pos = 0;
+    gint i = 0;
+    GList *fns = NULL;
+
+    for (i = 0; filenames[i] != NULL; i++)
+    {
+        gchar *filename;
+        gchar *current_dir = g_get_current_dir();
+
+        if (!strstr(filenames[i], "://"))
+        {
+            if (filenames[i][0] == '/')
+                filename = g_strdup_printf("file:///%s", filenames[i]);
+            else
+                filename = g_strdup_printf("file:///%s/%s", current_dir,
+                                           filenames[i]);
+        }
+        else
+            filename = g_strdup(filenames[i]);
+
+        fns = g_list_prepend(fns, filename);
+
+        g_free(current_dir);
+    }
+
+    fns = g_list_reverse(fns);
+
+#ifdef USE_DBUS
+    if (is_running)
+    {
+        if (options.load_skins)
+        {
+            audacious_remote_set_skin(session, filenames[0]);
+            skin_install_skin(filenames[0]);
+        }
+        else
+        {
+            GList *i;
+
+            if (options.enqueue_to_temp)
+                audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
+
+            if (options.enqueue && options.play)
+                pos = audacious_remote_get_playlist_length(session);
+
+            if (!options.enqueue)
+            {
+                audacious_remote_playlist_clear(session);
+                audacious_remote_stop(session);
+            }
+
+            for (i = fns; i != NULL; i = i->next)
+                audacious_remote_playlist_add_url_string(session, i->data);
+
+            if (options.enqueue && options.play &&
+                audacious_remote_get_playlist_length(session) > pos)
+                audacious_remote_set_playlist_pos(session, pos);
+
+            if (!options.enqueue)
+                audacious_remote_play(session);
+        }
+    }
+    else /* !is_running */
+#endif
+    {
+        if (options.enqueue_to_temp)
+            drct_pl_enqueue_to_temp(filenames[0]);
+
+        if (options.enqueue && options.play)
+            pos = drct_pl_get_length();
+
+        if (!options.enqueue)
+        {
+            drct_pl_clear();
+            drct_stop();
+        }
+
+        drct_pl_add(fns);
+
+        if (options.enqueue && options.play &&
+            drct_pl_get_length() > pos)
+            drct_pl_set_pos(pos);
+
+        if (!options.enqueue)
+            g_idle_add(aud_start_playback, NULL);
+    } /* !is_running */
+
+    g_list_foreach(fns, (GFunc) g_free, NULL);
+    g_list_free(fns);
+
+    g_strfreev(filenames);
+}
+
+static void
+handle_cmd_line_options(gboolean skip)
+{
+    gboolean is_running = FALSE;
+
+#ifdef USE_DBUS
+    DBusGProxy *session = audacious_get_dbus_proxy();
 
     if (skip)
-      is_running = audacious_remote_is_running(session);
-    else
-      is_running = FALSE;
+        is_running = audacious_remote_is_running(session);
 #endif
 
     if (options.version)
@@ -268,80 +370,13 @@ handle_cmd_line_options(gboolean skip)
     }
 
     if (options.interface == NULL)
-    {
         options.interface = g_strdup("default");
-    }
+
+    handle_cmd_line_filenames(is_running);
 
 #ifdef USE_DBUS
     if (is_running)
     {
-        if (filenames != NULL)
-        {
-            gint pos = 0;
-            gint i = 0;
-            GList *fns = NULL;
-
-            for (i = 0; filenames[i] != NULL; i++)
-            {
-                gchar *filename;
-                gchar *current_dir = g_get_current_dir();
-
-                if (!strstr(filenames[i], "://"))
-                {
-                    if (filenames[i][0] == '/')
-                        filename = g_strdup_printf("file:///%s", filenames[i]);
-                    else
-                        filename = g_strdup_printf("file:///%s/%s", current_dir,
-                                                   filenames[i]);
-                }
-                else
-                    filename = g_strdup(filenames[i]);
-
-                fns = g_list_prepend(fns, filename);
-
-                g_free(current_dir);
-            }
-
-            fns = g_list_reverse(fns);
-
-            if (options.load_skins)
-            {
-                audacious_remote_set_skin(session, filenames[0]);
-                skin_install_skin(filenames[0]);
-            }
-            else
-            {
-                GList *i;
-
-                if (options.enqueue_to_temp)
-                    audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
-
-                if (options.enqueue && options.play)
-                    pos = audacious_remote_get_playlist_length(session);
-
-                if (!options.enqueue)
-                {
-                    audacious_remote_playlist_clear(session);
-                    audacious_remote_stop(session);
-                }
-
-                for (i = fns; i != NULL; i = i->next)
-                    audacious_remote_playlist_add_url_string(session, i->data);
-
-                if (options.enqueue && options.play &&
-                    audacious_remote_get_playlist_length(session) > pos)
-                    audacious_remote_set_playlist_pos(session, pos);
-
-                if (!options.enqueue)
-                    audacious_remote_play(session);
-            }
-
-            g_list_foreach(fns, (GFunc) g_free, NULL);
-            g_list_free(fns);
-
-            g_strfreev(filenames);
-        } /* filename */
-
         if (options.rew)
             audacious_remote_playlist_prev(session);
 
@@ -373,65 +408,7 @@ handle_cmd_line_options(gboolean skip)
     } /* is_running */
     else
 #endif
-    if (!skip) { /* !is_running */
-        if (filenames != NULL)
-        {
-            gint pos = 0;
-            gint i = 0;
-            GList *fns = NULL;
-
-            for (i = 0; filenames[i] != NULL; i++)
-            {
-                gchar *filename;
-                gchar *current_dir = g_get_current_dir();
-
-                if (!strstr(filenames[i], "://"))
-                {
-                    if (filenames[i][0] == '/')
-                        filename = g_strdup_printf("file:///%s", filenames[i]);
-                    else
-                        filename = g_strdup_printf("file:///%s/%s", current_dir,
-                                                   filenames[i]);
-                }
-                else
-                    filename = g_strdup(filenames[i]);
-
-                fns = g_list_prepend(fns, filename);
-
-                g_free(current_dir);
-            }
-
-            fns = g_list_reverse(fns);
-
-            {
-                if (options.enqueue_to_temp)
-                    drct_pl_enqueue_to_temp(filenames[0]);
-
-                if (options.enqueue && options.play)
-                    pos = drct_pl_get_length();
-
-                if (!options.enqueue)
-                {
-                    drct_pl_clear();
-                    drct_stop();
-                }
-
-                drct_pl_add(fns);
-
-                if (options.enqueue && options.play &&
-                    drct_pl_get_length() > pos)
-                    drct_pl_set_pos(pos);
-
-                if (!options.enqueue)
-                    g_idle_add(aud_start_playback, NULL);
-            }
-
-            g_list_foreach(fns, (GFunc) g_free, NULL);
-            g_list_free(fns);
-
-            g_strfreev(filenames);
-        } /* filename */
-
+    {
         if (options.rew)
             drct_pl_prev();
 
@@ -447,7 +424,8 @@ handle_cmd_line_options(gboolean skip)
         if (options.fwd)
             drct_pl_next();
 
-        if (options.play_pause) {
+        if (options.play_pause)
+        {
             if (drct_get_paused())
                 drct_play();
             else
