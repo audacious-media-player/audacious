@@ -89,9 +89,8 @@
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
-
 #include "ui_new.h"
-
+#include "ui_legacy.h"
 
 
 static const gchar *application_name = N_("Audacious");
@@ -107,11 +106,12 @@ struct _AudCmdLineOpt {
     gboolean enqueue_to_temp;
     gboolean version;
     gchar *previous_session_id;
+    gchar *interface;
     gboolean macpack;
 };
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
-static AudCmdLineOpt options;
+static AudCmdLineOpt options = {};
 
 gchar *aud_paths[BMP_PATH_COUNT] = {};
 
@@ -280,6 +280,7 @@ static GOptionEntry cmd_entries[] = {
     {"headless", 'H', 0, G_OPTION_ARG_NONE, &options.headless, N_("Enable headless operation"), NULL},
     {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
+    {"interface", 'i', 0, G_OPTION_ARG_STRING, &options.interface, N_("Interface to use"), NULL},
 #ifdef GDK_WINDOWING_QUARTZ
     {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL}, /* Make this hidden */
 #endif
@@ -337,6 +338,11 @@ handle_cmd_line_options(gboolean skip)
     {
         print_version();
         exit(EXIT_SUCCESS);
+    }
+
+    if (options.interface == NULL)
+    {
+        options.interface = g_strdup("default");
     }
 
 #ifdef USE_DBUS
@@ -541,27 +547,6 @@ aud_setup_logger(void)
     g_atexit(aud_logger_stop);
 }
 
-static void
-run_load_skin_error_dialog(const gchar * skin_path)
-{
-    const gchar *markup =
-        N_("<b><big>Unable to load skin.</big></b>\n"
-           "\n"
-           "Check that skin at '%s' is usable and default skin is properly "
-           "installed at '%s'\n");
-
-    GtkWidget *dialog =
-        gtk_message_dialog_new_with_markup(NULL,
-                                           GTK_DIALOG_MODAL,
-                                           GTK_MESSAGE_ERROR,
-                                           GTK_BUTTONS_CLOSE,
-                                           _(markup),
-                                           skin_path,
-                                           BMP_DEFAULT_SKIN_PATH);
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-}
-
 static gboolean
 aud_headless_iteration(gpointer unused)
 {
@@ -584,31 +569,6 @@ load_extra_playlist(const gchar * path, const gchar * basename,
     playlist_load(playlist, path);
 
     return FALSE; /* keep loading other playlists */
-}
-
-static void
-resume_playback_on_startup()
-{
-    gint i;
-    
-    if (!cfg.resume_playback_on_startup ||
-        cfg.resume_playback_on_startup_time == -1 ||
-        playlist_get_length(playlist_get_active()) <= 0)
-        return;
-
-    while (gtk_events_pending()) gtk_main_iteration();
-
-    playback_initiate();
-
-    /* Busy wait; loop is fairly tight to minimize duration of
-     * "frozen" GUI. Feel free to tune. --chainsaw */
-    for (i = 0; i < 20; i++)
-    { 
-        g_usleep(1000);
-        if (!ip_data.playing)
-            break;
-    }
-    playback_seek(cfg.resume_playback_on_startup_time / 1000);
 }
 
 static void
@@ -763,70 +723,19 @@ main(gint argc, gchar ** argv)
     output_set_volume((cfg.saved_volume & 0xff00) >> 8,
                       (cfg.saved_volume & 0x00ff));
 
+    g_message("Setting default icon");
+    aud_set_default_icon();
+
+    g_message("Populating included interfaces");
     ui_populate_default_interface();
+    ui_populate_legacy_interface();
 
-    if (options.headless == FALSE)
-    {
-        g_message("GUI and skin setup");
-        aud_set_default_icon();
-#ifdef GDK_WINDOWING_QUARTZ
-        set_dock_icon();
-#endif
-
-        gtk_accel_map_load(aud_paths[BMP_PATH_ACCEL_FILE]);
-
-        if (!init_skins(cfg.skin)) {
-            run_load_skin_error_dialog(cfg.skin);
-            exit(EXIT_FAILURE);
-        }
-
-        GDK_THREADS_ENTER();
-
-        /* this needs to be called after all 3 windows are created and
-         * input plugins are setup'ed 
-         * but not if we're running headless --nenolod
-         */
-        mainwin_setup_menus();
-
-        gint h_vol[2];
-        input_get_volume(&h_vol[0], &h_vol[1]);
-        hook_call("volume set", h_vol);
-
-        /* FIXME: delayed, because it deals directly with the plugin
-         * interface to set menu items */
-        create_prefs_window();
-
-        create_fileinfo_window();
-
-
-        if (cfg.player_visible)
-            mainwin_show(TRUE);
-        else if (!cfg.playlist_visible && !cfg.equalizer_visible)
-        {
-          /* all of the windows are hidden... warn user about this */
-          mainwin_show_visibility_warning();
-        }
-
-        if (cfg.equalizer_visible)
-            equalizerwin_show(TRUE);
-
-        if (cfg.playlist_visible)
-            playlistwin_show();
-
-        hint_set_always(cfg.always_on_top);
-
-        resume_playback_on_startup();
-        
-        g_message("Entering Gtk+ main loop!");
-        gtk_main();
-
-        GDK_THREADS_LEAVE();
-    }
-    // if we are running headless
-    else
     {
         /* temporarily headless operation is disabled in favour of testing the new UI */
-        Interface *i = interface_get("default"); /* XXX */
+        g_message("Selecting interface %s", options.interface);
+        Interface *i = interface_get(options.interface);
+
+        g_message("Running interface %s@%p", options.interface, i);
         interface_run(i);
 
 #if 0

@@ -49,6 +49,7 @@ SRCS = af_equalizer.c					\
        ui_hints.c						\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
+       ui_legacy.c				\
        ui_main.c						\
        ui_main_evlisteners.c			\
        ui_manager.c						\
