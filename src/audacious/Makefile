@@ -102,6 +102,7 @@ INCLUDES = auddrct.h			\
            i18n.h				\
            input.h				\
            hook.h				\
+           interface.h				\
            main.h				\
            mime.h				\
            output.h				\

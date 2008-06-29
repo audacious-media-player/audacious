@@ -714,6 +714,9 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
             discovery_plugin_init(PLUGIN((header->dp_list)[i]));
         }
     }
+
+    if (header->interface)
+        interface_register(header->interface);
 }
 
 void
@@ -722,6 +725,9 @@ plugin2_unload(PluginHeader *header, mowgli_node_t *hlist_node)
     GModule *module;
 
     g_return_if_fail(header->priv_assoc != NULL);
+
+    if (header->interface)
+        interface_deregister(header->interface);
 
     module = header->priv_assoc->handle;
 

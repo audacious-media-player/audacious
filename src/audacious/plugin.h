@@ -45,6 +45,7 @@
 #include "audacious/playlist_container.h"
 #include "audacious/main.h"
 #include "audacious/preferences.h"
+#include "audacious/interface.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -191,6 +192,7 @@ typedef struct {
     GeneralPlugin **gp_list;
     VisPlugin **vp_list;
     DiscoveryPlugin **dp_list;
+    Interface *interface;
 } PluginHeader;
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
@@ -1027,6 +1029,9 @@ G_END_DECLS
 
 #define SIMPLE_DISCOVER_PLUGIN(name, dp_list) \
     DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, dp_list)
+
+#define SIMPLE_INTERFACE_PLUGIN(name, interface) \
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
