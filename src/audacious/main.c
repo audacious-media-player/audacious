@@ -27,41 +27,30 @@
 #  include "config.h"
 #endif
 
+#include "platform/smartinclude.h"
+
 #include "main.h"
 
-#include <glib.h>
-#include <glib/gi18n.h>
 #include <glib/gprintf.h>
-#include <gdk/gdk.h>
-#include <stdlib.h>
-#include <string.h>
-#include <getopt.h>
-#include <ctype.h>
-#include <time.h>
-
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <signal.h>
 
 #ifdef USE_SAMPLERATE
 #  include <samplerate.h>
 #endif
-
-#include "platform/smartinclude.h"
-
-#include "configdb.h"
-#include "vfs.h"
 
 #ifdef USE_DBUS
 #  include "dbus-service.h"
 #  include "audctrl.h"
 #endif
 
-#include "auddrct.h"
+#ifdef USE_EGGSM
+#include "eggsmclient.h"
+#include "eggdesktopfile.h"
+#endif
+
+#include "libSAD.h"
+
 #include "build_stamp.h"
-#include "dnd.h"
+#include "configdb.h"
 #include "input.h"
 #include "logger.h"
 #include "output.h"
@@ -69,22 +58,10 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "signals.h"
-#include "ui_skin.h"
-#include "ui_equalizer.h"
-#include "ui_fileinfo.h"
-#include "ui_hints.h"
-#include "ui_main.h"
 #include "ui_manager.h"
-#include "ui_playlist.h"
-#include "ui_preferences.h"
-#include "ui_skinselector.h"
+#include "ui_skin.h"
 #include "util.h"
-
-#include "libSAD.h"
-#ifdef USE_EGGSM
-#include "eggsmclient.h"
-#include "eggdesktopfile.h"
-#endif
+#include "vfs.h"
 
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
@@ -215,54 +192,6 @@ aud_set_default_icon(void)
     gtk_window_set_default_icon(icon);
     g_object_unref(icon);
 }
-
-#ifdef GDK_WINDOWING_QUARTZ
-static void
-set_dock_icon(void)
-{
-    GdkPixbuf *icon, *pixbuf;
-    CGColorSpaceRef colorspace;
-    CGDataProviderRef data_provider;
-    CGImageRef image;
-    gpointer data;
-    gint rowstride, pixbuf_width, pixbuf_height;
-    gboolean has_alpha;
-
-    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_player_xpm);
-    pixbuf = gdk_pixbuf_scale_simple(icon, 128, 128, GDK_INTERP_BILINEAR);
-
-    data = gdk_pixbuf_get_pixels(pixbuf);
-    pixbuf_width = gdk_pixbuf_get_width(pixbuf);
-    pixbuf_height = gdk_pixbuf_get_height(pixbuf);
-    rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-    has_alpha = gdk_pixbuf_get_has_alpha(pixbuf);
-
-    /* create the colourspace for the CGImage. */
-    colorspace = CGColorSpaceCreateDeviceRGB();
-    data_provider = CGDataProviderCreateWithData(NULL, data,
-                                                 pixbuf_height * rowstride,
-                                                 NULL);
-    image = CGImageCreate(pixbuf_width, pixbuf_height, 8,
-                          has_alpha ? 32 : 24, rowstride, colorspace,
-                          has_alpha ? kCGImageAlphaLast : 0,
-                          data_provider, NULL, FALSE,
-                          kCGRenderingIntentDefault);
-
-    /* release the colourspace and data provider, we have what we want. */
-    CGDataProviderRelease(data_provider);
-    CGColorSpaceRelease(colorspace);
-
-    /* set the dock tile images */
-    SetApplicationDockTileImage(image);
-
-#if 0
-    /* and release */
-    CGImageRelease(image);
-    g_object_unref(icon);
-    g_object_unref(pixbuf);
-#endif
-}
-#endif
 
 static GOptionEntry cmd_entries[] = {
     {"rew", 'r', 0, G_OPTION_ARG_NONE, &options.rew, N_("Skip backwards in playlist"), NULL},
@@ -711,7 +640,6 @@ main(gint argc, gchar ** argv)
     g_message("Handling commandline options, part #2");
     handle_cmd_line_options(FALSE);
 
-
     g_message("Playlist scanner thread startup");
     playlist_start_get_info_thread();
 
@@ -726,7 +654,6 @@ main(gint argc, gchar ** argv)
     ui_populate_legacy_interface();
     ui_populate_headless_interface();
 
-    /* temporarily headless operation is disabled in favour of testing the new UI */
     g_message("Selecting interface %s", options.interface);
     i = interface_get(options.interface);
 
