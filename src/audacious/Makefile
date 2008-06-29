@@ -19,6 +19,7 @@ SRCS = af_equalizer.c					\
        general.c						\
        hook.c							\
        icons-stock.c					\
+       interface.c						\
        input.c							\
        logger.c							\
        main.c							\
