@@ -27,37 +27,37 @@
 
 static GtkWidget *label_prev, *label_current, *label_next;
 
-gboolean
+static gboolean
 window_delete()
 {
     return FALSE;
 }
 
-void
+static void
 window_destroy(GtkWidget *widget, gpointer data)
 {
     gtk_main_quit();
 }
 
-void
+static void
 button_open_pressed()
 {
     run_filebrowser(TRUE);
 }
 
-void
+static void
 button_previous_pressed()
 {
     playlist_prev(playlist_get_active());
 }
 
-void
+static void
 button_next_pressed()
 {
     playlist_next(playlist_get_active());
 }
 
-void
+static void
 set_song_title(gpointer hook_data, gpointer user_data)
 {
     gchar *title =
@@ -69,7 +69,7 @@ set_song_title(gpointer hook_data, gpointer user_data)
 }
 
 
-GtkWidget *
+static GtkWidget *
 gtk_box_button_add(GtkWidget *box, void(*callback)(), const gchar *stock_id)
 {
     GtkWidget *button = gtk_button_new_from_stock(stock_id);
@@ -79,7 +79,7 @@ gtk_box_button_add(GtkWidget *box, void(*callback)(), const gchar *stock_id)
     return button;
 }
 
-GtkWidget *
+static GtkWidget *
 gtk_markup_label_new(const gchar *str)
 {
     GtkWidget *label = gtk_label_new(str);
