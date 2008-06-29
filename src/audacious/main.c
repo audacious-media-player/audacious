@@ -101,7 +101,6 @@ struct _AudCmdLineOpt {
     gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
     gboolean enqueue, mainwin, remote, activate;
     gboolean load_skins;
-    gboolean headless;
     gboolean no_log;
     gboolean enqueue_to_temp;
     gboolean version;
@@ -277,7 +276,6 @@ static GOptionEntry cmd_entries[] = {
     {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, N_("Add new files to a temporary playlist"), NULL},
     {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
     {"activate", 'a', 0, G_OPTION_ARG_NONE, &options.activate, N_("Display all open Audacious windows"), NULL},
-    {"headless", 'H', 0, G_OPTION_ARG_NONE, &options.headless, N_("Enable headless operation"), NULL},
     {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
     {"interface", 'i', 0, G_OPTION_ARG_STRING, &options.interface, N_("Interface to use"), NULL},
@@ -548,13 +546,6 @@ aud_setup_logger(void)
 }
 
 static gboolean
-aud_headless_iteration(gpointer unused)
-{
-    free_vis_data();
-    return TRUE;
-}
-
-static gboolean
 load_extra_playlist(const gchar * path, const gchar * basename,
         gpointer def)
 {
@@ -596,6 +587,7 @@ aud_quit(void)
 
     aud_config_save();
 
+#if 0
     if (options.headless == FALSE)
     {
         gtk_widget_hide(equalizerwin);
@@ -607,6 +599,7 @@ aud_quit(void)
 
         cleanup_skins();
     }
+#endif
 
     plugin_system_cleanup();
 
@@ -630,6 +623,8 @@ aud_quit(void)
 gint
 main(gint argc, gchar ** argv)
 {
+    Interface *i;
+
     /* glib-2.13.0 requires g_thread_init() to be called before all
        other GLib functions */
     g_thread_init(NULL);
@@ -665,7 +660,7 @@ main(gint argc, gchar ** argv)
         aud_setup_logger();
 
     g_message("Initializing Gtk+");
-    if (!gtk_init_check(&argc, &argv) && options.headless == FALSE) {
+    if (!gtk_init_check(&argc, &argv)) { /* XXX */
         /* GTK check failed, and no arguments passed to indicate
            that user is intending to only remote control a running
            session */
@@ -686,7 +681,7 @@ main(gint argc, gchar ** argv)
     g_message("Handling commandline options, part #1");
     handle_cmd_line_options(TRUE);
 
-    if (options.headless == FALSE)
+    if (g_ascii_strcasecmp(options.interface, "headless")) /* XXX */
     {
         g_message("Non-headless operation setup");
         ui_main_check_theme_engine();
@@ -729,23 +724,14 @@ main(gint argc, gchar ** argv)
     g_message("Populating included interfaces");
     ui_populate_default_interface();
     ui_populate_legacy_interface();
+    ui_populate_headless_interface();
 
-    {
-        /* temporarily headless operation is disabled in favour of testing the new UI */
-        g_message("Selecting interface %s", options.interface);
-        Interface *i = interface_get(options.interface);
+    /* temporarily headless operation is disabled in favour of testing the new UI */
+    g_message("Selecting interface %s", options.interface);
+    i = interface_get(options.interface);
 
-        g_message("Running interface %s@%p", options.interface, i);
-        interface_run(i);
-
-#if 0
-        g_print(_("Headless operation enabled\n"));
-        resume_playback_on_startup();
-
-        g_timeout_add(10, aud_headless_iteration, NULL);
-        g_main_loop_run(g_main_loop_new(NULL, TRUE));
-#endif
-    }
+    g_message("Running interface %s@%p", options.interface, i);
+    interface_run(i);
 
     aud_quit();
     return EXIT_SUCCESS;

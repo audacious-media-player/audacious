@@ -46,6 +46,7 @@ SRCS = af_equalizer.c					\
        ui_fileinfo.c					\
        ui_fileinfopopup.c				\
        ui_fileopener.c					\
+       ui_headless.c					\
        ui_hints.c						\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
