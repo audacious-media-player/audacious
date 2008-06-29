@@ -36,6 +36,8 @@ _ui_initialize(void)
 {
     g_timeout_add(10, aud_headless_iteration, NULL);
     g_main_loop_run(g_main_loop_new(NULL, TRUE));
+
+    return TRUE;
 }
 
 static Interface headless_interface = {

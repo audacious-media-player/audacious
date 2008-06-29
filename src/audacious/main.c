@@ -91,7 +91,7 @@
 
 #include "ui_new.h"
 #include "ui_legacy.h"
-
+#include "ui_headless.h"
 
 static const gchar *application_name = N_("Audacious");
 
