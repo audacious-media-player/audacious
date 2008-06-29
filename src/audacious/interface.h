@@ -38,6 +38,8 @@ typedef struct {
 void interface_register(Interface *i);
 void interface_deregister(Interface *i);
 void interface_run(Interface *i);
+void interface_destroy(Interface *i);
+
 Interface *interface_get(gchar *id);
 
 #endif

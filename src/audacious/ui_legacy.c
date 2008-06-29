@@ -239,10 +239,26 @@ _ui_initialize(void)
     return TRUE;
 }
 
+static gboolean
+_ui_finalize()
+{
+    gtk_widget_hide(equalizerwin);
+    gtk_widget_hide(playlistwin);
+    gtk_widget_hide(mainwin);
+
+    gtk_accel_map_save(aud_paths[BMP_PATH_ACCEL_FILE]);
+    gtk_main_quit();
+
+    cleanup_skins();
+
+    return TRUE;
+}
+
 static Interface legacy_interface = {
     .id = "legacy",
     .desc = N_("Legacy Interface"),
     .init = _ui_initialize,
+    .fini = _ui_finalize
 };
 
 void

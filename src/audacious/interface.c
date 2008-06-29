@@ -52,6 +52,13 @@ interface_run(Interface *i)
     i->init();
 }
 
+void
+interface_destroy(Interface *i)
+{
+    if (i->fini != NULL)
+        i->fini();
+}
+
 Interface *
 interface_get(gchar *id)
 {

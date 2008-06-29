@@ -487,24 +487,13 @@ void
 aud_quit(void)
 {
     GList *playlists = NULL, *playlists_top = NULL;
+    Interface *i = interface_get(options.interface);
 
     playlist_stop_get_info_thread();
 
     aud_config_save();
 
-#if 0
-    if (options.headless == FALSE)
-    {
-        gtk_widget_hide(equalizerwin);
-        gtk_widget_hide(playlistwin);
-        gtk_widget_hide(mainwin);
-
-        gtk_accel_map_save(aud_paths[BMP_PATH_ACCEL_FILE]);
-        gtk_main_quit();
-
-        cleanup_skins();
-    }
-#endif
+    interface_destroy(i);
 
     plugin_system_cleanup();
 
