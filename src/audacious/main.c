@@ -347,8 +347,6 @@ handle_cmd_line_filenames(gboolean is_running)
 
     g_list_foreach(fns, (GFunc) g_free, NULL);
     g_list_free(fns);
-
-    g_strfreev(filenames);
 }
 
 static void
