@@ -143,7 +143,7 @@ _ui_initialize(void)
                                          GTK_STOCK_MEDIA_PREVIOUS);
     button_next = gtk_toolbar_button_add(buttonbox, button_next_pressed,
                                      GTK_STOCK_MEDIA_NEXT);
-    gtk_box_pack_start(GTK_BOX(vbox), buttonbox, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), buttonbox, FALSE, TRUE, 0);
 
 
     pcnbox = gtk_vbox_new(FALSE, 0);
