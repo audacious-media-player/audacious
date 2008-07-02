@@ -210,9 +210,6 @@ _ui_initialize(void)
      * interface to set menu items */
     create_prefs_window();
 
-    create_fileinfo_window();
-
-
     if (cfg.player_visible)
         mainwin_show(TRUE);
     else if (!cfg.playlist_visible && !cfg.equalizer_visible)

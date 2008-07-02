@@ -64,7 +64,7 @@
 #define G_FREE_CLEAR(a) if(a != NULL) { g_free(a); a = NULL; }
 #define STATUS_TIMEOUT 3*1000
 
-GtkWidget *fileinfo_win;
+GtkWidget *fileinfo_win = NULL;
 
 GtkWidget *entry_location;
 GtkWidget *entry_title;
@@ -788,13 +788,16 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 
     if (tuple == NULL)
         return;
-        
+
     if(!updating_enabled) {
         current_ip = NULL;
         G_FREE_CLEAR(current_file);
     }
 
     something_changed = FALSE;
+
+    if (fileinfo_win == NULL)
+        create_fileinfo_window();
 
     if (!GTK_WIDGET_REALIZED(fileinfo_win))
         gtk_widget_realize(fileinfo_win);
