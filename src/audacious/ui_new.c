@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "interface.h"
+#include "playback.h"
 #include "playlist.h"
 #include "ui_fileopener.h"
 #include "ui_new.h"
@@ -43,6 +44,21 @@ static void
 button_open_pressed()
 {
     run_filebrowser(TRUE);
+}
+
+static void
+button_add_pressed()
+{
+    run_filebrowser(FALSE);
+}
+
+static void
+button_play_pressed()
+{
+    if (playlist_get_length(playlist_get_active()))
+        playback_initiate();
+    else
+        button_open_pressed();
 }
 
 static void
@@ -69,12 +85,12 @@ set_song_title(gpointer hook_data, gpointer user_data)
 }
 
 
-static GtkWidget *
-gtk_box_button_add(GtkWidget *box, void(*callback)(), const gchar *stock_id)
+static GtkToolItem *
+gtk_toolbar_button_add(GtkWidget *toolbar, void(*callback)(), const gchar *stock_id)
 {
-    GtkWidget *button = gtk_button_new_from_stock(stock_id);
-    gtk_box_pack_start(GTK_BOX(box), button, TRUE, TRUE, 0);
-    g_signal_connect(G_OBJECT(button), "button-press-event",
+    GtkToolItem *button = gtk_tool_button_new_from_stock(stock_id);
+    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), button, -1);
+    g_signal_connect(G_OBJECT(button), "clicked",
                      G_CALLBACK(callback), NULL);
     return button;
 }
@@ -101,7 +117,8 @@ _ui_initialize(void)
     GtkWidget *cvbox;	/* box containing information about current track
                            and some control elements like position bar */
 
-    GtkWidget *button_open, *button_previous, *button_next;
+    GtkToolItem *button_open, *button_add,
+                *button_play, *button_previous, *button_next;
 
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -115,12 +132,16 @@ _ui_initialize(void)
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
 
-    buttonbox = gtk_hbox_new(FALSE, 0);
-    button_open = gtk_box_button_add(buttonbox, button_open_pressed,
+    buttonbox = gtk_toolbar_new();
+    button_open = gtk_toolbar_button_add(buttonbox, button_open_pressed,
                                      GTK_STOCK_OPEN);
-    button_previous = gtk_box_button_add(buttonbox, button_previous_pressed,
+    button_add = gtk_toolbar_button_add(buttonbox, button_add_pressed,
+                                    GTK_STOCK_ADD);
+    button_play = gtk_toolbar_button_add(buttonbox, button_play_pressed,
+                                         GTK_STOCK_MEDIA_PLAY);
+    button_previous = gtk_toolbar_button_add(buttonbox, button_previous_pressed,
                                          GTK_STOCK_MEDIA_PREVIOUS);
-    button_next = gtk_box_button_add(buttonbox, button_next_pressed,
+    button_next = gtk_toolbar_button_add(buttonbox, button_next_pressed,
                                      GTK_STOCK_MEDIA_NEXT);
     gtk_box_pack_start(GTK_BOX(vbox), buttonbox, TRUE, TRUE, 0);
 
