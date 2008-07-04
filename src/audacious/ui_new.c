@@ -169,6 +169,7 @@ _ui_initialize(void)
                 *button_play, *button_previous, *button_next;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(window), 350, 150);
     g_signal_connect(G_OBJECT(window), "delete_event",
                      G_CALLBACK(window_delete), NULL);
     g_signal_connect(G_OBJECT(window), "destroy",
