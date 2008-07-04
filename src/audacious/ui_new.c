@@ -27,6 +27,10 @@
 #include "ui_new.h"
 
 static GtkWidget *label_prev, *label_current, *label_next;
+static GtkWidget *slider;
+
+gulong slider_change_handler_id;
+static gint update_song_timeout_source = 0;
 
 static gboolean
 window_delete()
@@ -84,6 +88,46 @@ set_song_title(gpointer hook_data, gpointer user_data)
     g_free(title);
 }
 
+static gboolean
+update_song_info(gpointer hook_data, gpointer user_data)
+{
+    if (!playback_get_playing())
+        return FALSE;
+
+    gint time = playback_get_time();
+    gint length = playback_get_length();
+
+    g_signal_handler_block(slider, slider_change_handler_id);
+    gtk_range_set_range(GTK_RANGE(slider), (gdouble)0, (gdouble)length);
+    gtk_range_set_value(GTK_RANGE(slider), (gdouble)time);
+    g_signal_handler_unblock(slider, slider_change_handler_id);
+
+    return TRUE;
+}
+
+static gboolean
+ui_slider_value_changed_cb(GtkRange *range, GtkScrollType scroll,
+                             gdouble value, gpointer user_data)
+{
+    playback_seek(value/1000);
+
+    return TRUE;
+}
+
+static void
+ui_playback_begin(gpointer hook_data, gpointer user_data)
+{
+    update_song_timeout_source = g_timeout_add_seconds(1, (GSourceFunc) update_song_info, NULL);
+}
+
+static void
+ui_playback_stop(gpointer hook_data, gpointer user_data)
+{
+    if (update_song_timeout_source) {
+        g_source_remove(update_song_timeout_source);
+        update_song_timeout_source = 0;
+    }
+}
 
 static GtkToolItem *
 gtk_toolbar_button_add(GtkWidget *toolbar, void(*callback)(), const gchar *stock_id)
@@ -119,7 +163,6 @@ _ui_initialize(void)
 
     GtkToolItem *button_open, *button_add,
                 *button_play, *button_previous, *button_next;
-
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     g_signal_connect(G_OBJECT(window), "delete_event",
@@ -162,7 +205,17 @@ _ui_initialize(void)
 
     gtk_box_pack_start(GTK_BOX(vbox), pcnbox, TRUE, TRUE, 0);
 
+    slider = gtk_hscale_new(NULL);
+    gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
+    gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DISCONTINUOUS);
+    gtk_box_pack_end(GTK_BOX(cvbox), slider, TRUE, TRUE, 0);
+
     hook_associate("title change", set_song_title, NULL);
+    hook_associate("playback seek", (HookFunction) update_song_info, NULL);
+    hook_associate("playback begin", (HookFunction) ui_playback_begin, NULL);
+    hook_associate("playback stop", (HookFunction) ui_playback_stop, NULL);
+
+    slider_change_handler_id = g_signal_connect(slider, "value-changed", G_CALLBACK(ui_slider_value_changed_cb), NULL);
 
     gtk_widget_show_all(window);
     gtk_main();
