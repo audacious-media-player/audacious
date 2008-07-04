@@ -98,7 +98,10 @@ static gboolean
 update_song_info(gpointer hook_data, gpointer user_data)
 {
     if (!playback_get_playing())
+    {
+        gtk_range_set_value(GTK_RANGE(slider), (gdouble)0);
         return FALSE;
+    }
 
     gint time = playback_get_time();
     gint length = playback_get_length();
@@ -137,6 +140,12 @@ ui_playback_stop(gpointer hook_data, gpointer user_data)
         g_source_remove(update_song_timeout_source);
         update_song_timeout_source = 0;
     }
+}
+
+static void
+ui_playback_end(gpointer hook_data, gpointer user_data)
+{
+    update_song_info(NULL, NULL);
 }
 
 static GtkToolItem *
@@ -231,6 +240,7 @@ _ui_initialize(void)
     hook_associate("playback seek", (HookFunction) update_song_info, NULL);
     hook_associate("playback begin", (HookFunction) ui_playback_begin, NULL);
     hook_associate("playback stop", (HookFunction) ui_playback_stop, NULL);
+    hook_associate("playback end", (HookFunction) ui_playback_end, NULL);
 
     slider_change_handler_id =
         g_signal_connect(slider, "change-value",
