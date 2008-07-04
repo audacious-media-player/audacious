@@ -106,10 +106,12 @@ update_song_info(gpointer hook_data, gpointer user_data)
 }
 
 static gboolean
-ui_slider_value_changed_cb(GtkRange *range, GtkScrollType scroll,
-                             gdouble value, gpointer user_data)
+ui_slider_change_value_cb(GtkRange *range, GtkScrollType scroll,
+                          gdouble value, gpointer user_data)
 {
-    playback_seek(value/1000);
+    /* we are not allowed to do a playback_seek() with values < 1, therefore
+     * we add 1 to be on the safe side --mf0102 */
+    playback_seek(value/1000 + 1);
 
     return TRUE;
 }
@@ -117,7 +119,9 @@ ui_slider_value_changed_cb(GtkRange *range, GtkScrollType scroll,
 static void
 ui_playback_begin(gpointer hook_data, gpointer user_data)
 {
-    update_song_timeout_source = g_timeout_add_seconds(1, (GSourceFunc) update_song_info, NULL);
+    update_song_info(NULL, NULL);
+    update_song_timeout_source =
+        g_timeout_add_seconds(1, (GSourceFunc) update_song_info, NULL);
 }
 
 static void
@@ -177,15 +181,15 @@ _ui_initialize(void)
 
     buttonbox = gtk_toolbar_new();
     button_open = gtk_toolbar_button_add(buttonbox, button_open_pressed,
-                                     GTK_STOCK_OPEN);
+                                         GTK_STOCK_OPEN);
     button_add = gtk_toolbar_button_add(buttonbox, button_add_pressed,
-                                    GTK_STOCK_ADD);
+                                        GTK_STOCK_ADD);
     button_play = gtk_toolbar_button_add(buttonbox, button_play_pressed,
                                          GTK_STOCK_MEDIA_PLAY);
     button_previous = gtk_toolbar_button_add(buttonbox, button_previous_pressed,
-                                         GTK_STOCK_MEDIA_PREVIOUS);
+                                             GTK_STOCK_MEDIA_PREVIOUS);
     button_next = gtk_toolbar_button_add(buttonbox, button_next_pressed,
-                                     GTK_STOCK_MEDIA_NEXT);
+                                         GTK_STOCK_MEDIA_NEXT);
     gtk_box_pack_start(GTK_BOX(vbox), buttonbox, FALSE, TRUE, 0);
 
 
@@ -194,11 +198,14 @@ _ui_initialize(void)
     chbox = gtk_hbox_new(FALSE, 0);
     cvbox = gtk_vbox_new(FALSE, 0);
     label_current = gtk_markup_label_new("<big>Current: ?</big>");
+    gtk_misc_set_alignment(GTK_MISC(label_current), 0.0, 0.5);
     gtk_box_pack_start(GTK_BOX(cvbox), label_current, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(chbox), cvbox, TRUE, TRUE, 0);
 
     label_prev = gtk_markup_label_new("<small>Previous: ?</small>");
     label_next = gtk_markup_label_new("<small>Next: ?</small>");
+    gtk_misc_set_alignment(GTK_MISC(label_prev), 0.0, 0.5);
+    gtk_misc_set_alignment(GTK_MISC(label_next), 1.0, 0.5);
     gtk_box_pack_start(GTK_BOX(pcnbox), label_prev, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(pcnbox), chbox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(pcnbox), label_next, TRUE, TRUE, 0);
@@ -215,7 +222,9 @@ _ui_initialize(void)
     hook_associate("playback begin", (HookFunction) ui_playback_begin, NULL);
     hook_associate("playback stop", (HookFunction) ui_playback_stop, NULL);
 
-    slider_change_handler_id = g_signal_connect(slider, "value-changed", G_CALLBACK(ui_slider_value_changed_cb), NULL);
+    slider_change_handler_id =
+        g_signal_connect(slider, "change-value",
+                         G_CALLBACK(ui_slider_change_value_cb), NULL);
 
     gtk_widget_show_all(window);
     gtk_main();
