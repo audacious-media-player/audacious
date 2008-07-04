@@ -66,6 +66,12 @@ button_play_pressed()
 }
 
 static void
+button_pause_pressed()
+{
+    playback_pause();
+}
+
+static void
 button_previous_pressed()
 {
     playlist_prev(playlist_get_active());
@@ -166,10 +172,11 @@ _ui_initialize(void)
                            and some control elements like position bar */
 
     GtkToolItem *button_open, *button_add,
-                *button_play, *button_previous, *button_next;
+                *button_play, *button_pause,
+                *button_previous, *button_next;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_default_size(GTK_WINDOW(window), 350, 150);
+    gtk_window_set_default_size(GTK_WINDOW(window), 450, 150);
     g_signal_connect(G_OBJECT(window), "delete_event",
                      G_CALLBACK(window_delete), NULL);
     g_signal_connect(G_OBJECT(window), "destroy",
@@ -187,6 +194,8 @@ _ui_initialize(void)
                                         GTK_STOCK_ADD);
     button_play = gtk_toolbar_button_add(buttonbox, button_play_pressed,
                                          GTK_STOCK_MEDIA_PLAY);
+    button_pause = gtk_toolbar_button_add(buttonbox, button_pause_pressed,
+                                          GTK_STOCK_MEDIA_PAUSE);
     button_previous = gtk_toolbar_button_add(buttonbox, button_previous_pressed,
                                              GTK_STOCK_MEDIA_PREVIOUS);
     button_next = gtk_toolbar_button_add(buttonbox, button_next_pressed,
