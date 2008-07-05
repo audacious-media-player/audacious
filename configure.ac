@@ -66,7 +66,7 @@ AUD_COMMON_PROGS
 
 dnl Check for headers and functions
 dnl ===============================
-AC_CHECK_HEADERS([unistd.h fcntl.h sys/ioctl.h fnmatch.h limits.h wchar.h fts.h execinfo.h])
+AC_CHECK_HEADERS([unistd.h fcntl.h sys/ioctl.h fnmatch.h limits.h wchar.h fts.h execinfo.h sys/signalfd.h])
 AC_CHECK_FUNCS([mkdtemp getmntinfo statvfs strtoul lrintf signalfd])
 
 

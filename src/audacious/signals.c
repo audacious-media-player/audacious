@@ -85,7 +85,7 @@ signal_process_segv(void)
     abort();
 }
 
-#ifndef HAVE_SIGNALFD
+#if !defined(HAVE_SIGNALFD) && !defined(HAVE_SYS_SIGNALFD_H)
 
 static void *
 signal_process_signals (void *data)
@@ -341,6 +341,8 @@ signal_handlers_init(void)
     }
 #endif
 
+#if !defined(HAVE_SIGNALFD) && !defined(HAVE_SYS_SIGNALFD_H)
+
     if (signal_check_for_broken_impl() != TRUE)
     {
         signal_initialize_blockers();
@@ -361,4 +363,11 @@ signal_handlers_init(void)
         g_thread_create(signal_process_signals_linuxthread, NULL, FALSE, NULL);
 
     }
+
+#else
+
+    signal_initialize_blockers();
+    g_thread_create(signal_process_signals, NULL, FALSE, NULL);
+
+#endif
 }
