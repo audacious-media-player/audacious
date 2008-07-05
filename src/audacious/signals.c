@@ -85,6 +85,8 @@ signal_process_segv(void)
     abort();
 }
 
+#ifndef HAVE_SIGNALFD
+
 static void *
 signal_process_signals (void *data)
 {
@@ -171,6 +173,58 @@ linuxthread_handler (gint signal_number)
     /* note: cannot manipulate mutex from signal handler */
     linuxthread_signal_number = signal_number;
 }
+
+#else
+
+#include <sys/signalfd.h>
+
+static gpointer
+signal_process_signals(gpointer data)
+{
+    struct signalfd_siginfo d;
+    sigset_t waitset;
+    int sigfd;
+
+    sigemptyset(&waitset);
+    sigaddset(&waitset, SIGPIPE);
+    sigaddset(&waitset, SIGSEGV);  
+    sigaddset(&waitset, SIGINT);
+    sigaddset(&waitset, SIGTERM);
+
+    sigfd = signalfd(-1, &waitset, 0);
+
+    while (read(sigfd, &d, sizeof(struct signalfd_siginfo)) > 0)
+    {
+        switch(d.ssi_signo)
+        {
+        case SIGPIPE:
+            /*
+             * do something.
+             */
+            break;
+
+        case SIGSEGV:
+            signal_process_segv();
+            break;
+
+        case SIGINT:
+            g_print("Audacious has received SIGINT and is shutting down.\n");
+            aud_quit();
+            break;
+
+        case SIGTERM:
+            g_print("Audacious has received SIGTERM and is shutting down.\n");
+            aud_quit();
+            break;
+        }
+    }
+
+    close(sigfd);
+
+    return NULL;
+}
+
+#endif
 
 static SignalHandler
 signal_install_handler_full (gint           signal_number,
