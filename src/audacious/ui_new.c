@@ -26,7 +26,7 @@
 #include "ui_fileopener.h"
 #include "ui_new.h"
 
-static GtkWidget *label_prev, *label_current, *label_next;
+static GtkWidget *label_prev, *label_current, *label_next, *label_time;
 static GtkWidget *slider;
 
 static gulong slider_change_handler_id;
@@ -104,6 +104,8 @@ ui_playlist_update(Playlist *playlist, gpointer user_data)
 static gboolean
 ui_update_song_info(gpointer hook_data, gpointer user_data)
 {
+    gchar text[128];
+
     if (!playback_get_playing())
     {
         gtk_range_set_value(GTK_RANGE(slider), (gdouble)0);
@@ -120,6 +122,13 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
     gtk_range_set_range(GTK_RANGE(slider), 0.0, (gdouble)length);
     gtk_range_set_value(GTK_RANGE(slider), (gdouble)time);
     g_signal_handler_unblock(slider, slider_change_handler_id);
+
+    time /= 1000;
+    length /= 1000;
+
+    g_snprintf(text, 128, "<tt><b>%d:%.2d/%d:%.2d</b></tt>", time / 60, time % 60,
+        length / 60, length % 60);
+    gtk_label_set_markup(GTK_LABEL(label_time), text);
 
     return TRUE;
 }
@@ -202,6 +211,7 @@ _ui_initialize(void)
                            about current track */
     GtkWidget *cvbox;	/* box containing information about current track
                            and some control elements like position bar */
+    GtkWidget *shbox;   /* box for slider + time combo --nenolod */
 
     GtkToolItem *button_open, *button_add,
                 *button_play, *button_pause,
@@ -254,11 +264,17 @@ _ui_initialize(void)
 
     gtk_box_pack_start(GTK_BOX(vbox), pcnbox, TRUE, TRUE, 0);
 
+    shbox = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(cvbox), shbox, TRUE, TRUE, 0);
+
     slider = gtk_hscale_new(NULL);
     gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
     /* TODO: make this configureable */
     gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DELAYED);
-    gtk_box_pack_end(GTK_BOX(cvbox), slider, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(shbox), slider, TRUE, TRUE, 0);
+
+    label_time = gtk_markup_label_new("<tt><b>0:00/0:00</b></tt>");
+    gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
 
     hook_associate("title change", (HookFunction) ui_set_current_song_title, NULL);
     hook_associate("playback seek", (HookFunction) ui_update_song_info, NULL);
