@@ -284,10 +284,24 @@ _ui_initialize(void)
     return TRUE;
 }
 
+static gboolean
+_ui_finalize(void)
+{
+    hook_dissociate("title change", (HookFunction) ui_set_current_song_title);
+    hook_dissociate("playback seek", (HookFunction) ui_update_song_info);
+    hook_dissociate("playback begin", (HookFunction) ui_playback_begin);
+    hook_dissociate("playback stop", (HookFunction) ui_playback_stop);
+    hook_dissociate("playback end", (HookFunction) ui_playback_end);
+    hook_dissociate("playlist update", (HookFunction) ui_playlist_update);
+
+    return TRUE;
+}
+
 static Interface default_interface = {
     .id = "default",
     .desc = N_("Default Interface"),
     .init = _ui_initialize,
+    .fini = _ui_finalize,
 };
 
 Interface *
