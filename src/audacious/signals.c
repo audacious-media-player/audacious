@@ -85,7 +85,7 @@ signal_process_segv(void)
     abort();
 }
 
-#if !defined(HAVE_SIGNALFD) && !defined(HAVE_SYS_SIGNALFD_H)
+#if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 
 static void *
 signal_process_signals (void *data)
@@ -341,7 +341,7 @@ signal_handlers_init(void)
     }
 #endif
 
-#if !defined(HAVE_SIGNALFD) && !defined(HAVE_SYS_SIGNALFD_H)
+#if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 
     if (signal_check_for_broken_impl() != TRUE)
     {
