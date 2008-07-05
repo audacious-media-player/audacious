@@ -85,18 +85,24 @@ button_next_pressed()
 }
 
 static void
-set_song_title(gpointer hook_data, gpointer user_data)
+ui_set_current_song_title(gchar *text, gpointer user_data)
 {
-    gchar *title =
-        g_strdup_printf("<big>%s</big>",
-                        playlist_get_info_text(playlist_get_active()));
+    gchar *title = g_strdup_printf("<big>%s</big>", text);
     gtk_label_set_text(GTK_LABEL(label_current), title);
     g_object_set(G_OBJECT(label_current), "use-markup", TRUE, NULL);
     g_free(title);
 }
 
+static void
+ui_playlist_update(Playlist *playlist, gpointer user_data)
+{
+    gchar *text = playlist_get_info_text(playlist);
+    ui_set_current_song_title(text, NULL);
+    g_free(text);
+}
+
 static gboolean
-update_song_info(gpointer hook_data, gpointer user_data)
+ui_update_song_info(gpointer hook_data, gpointer user_data)
 {
     if (!playback_get_playing())
     {
@@ -145,9 +151,9 @@ ui_slider_button_release_cb(GtkWidget *widget, GdkEventButton *event, gpointer u
 static void
 ui_playback_begin(gpointer hook_data, gpointer user_data)
 {
-    update_song_info(NULL, NULL);
+    ui_update_song_info(NULL, NULL);
     update_song_timeout_source =
-        g_timeout_add_seconds(1, (GSourceFunc) update_song_info, NULL);
+        g_timeout_add_seconds(1, (GSourceFunc) ui_update_song_info, NULL);
 }
 
 static void
@@ -162,7 +168,7 @@ ui_playback_stop(gpointer hook_data, gpointer user_data)
 static void
 ui_playback_end(gpointer hook_data, gpointer user_data)
 {
-    update_song_info(NULL, NULL);
+    ui_update_song_info(NULL, NULL);
 }
 
 static GtkToolItem *
@@ -254,11 +260,12 @@ _ui_initialize(void)
     gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DELAYED);
     gtk_box_pack_end(GTK_BOX(cvbox), slider, TRUE, TRUE, 0);
 
-    hook_associate("title change", set_song_title, NULL);
-    hook_associate("playback seek", (HookFunction) update_song_info, NULL);
+    hook_associate("title change", (HookFunction) ui_set_current_song_title, NULL);
+    hook_associate("playback seek", (HookFunction) ui_update_song_info, NULL);
     hook_associate("playback begin", (HookFunction) ui_playback_begin, NULL);
     hook_associate("playback stop", (HookFunction) ui_playback_stop, NULL);
     hook_associate("playback end", (HookFunction) ui_playback_end, NULL);
+    hook_associate("playlist update", (HookFunction) ui_playlist_update, NULL);
 
     slider_change_handler_id =
         g_signal_connect(slider, "value-changed",
@@ -268,6 +275,8 @@ _ui_initialize(void)
                      G_CALLBACK(ui_slider_button_press_cb), NULL);
     g_signal_connect(slider, "button-release-event",
                      G_CALLBACK(ui_slider_button_release_cb), NULL);
+
+    ui_playlist_update(playlist_get_active(), NULL);
 
     gtk_widget_show_all(window);
     gtk_main();
