@@ -230,6 +230,7 @@ _ui_initialize(void)
 
 
     buttonbox = gtk_toolbar_new();
+    gtk_toolbar_set_style(buttonbox, GTK_TOOLBAR_ICONS);
     button_open = gtk_toolbar_button_add(buttonbox, button_open_pressed,
                                          GTK_STOCK_OPEN);
     button_add = gtk_toolbar_button_add(buttonbox, button_add_pressed,
