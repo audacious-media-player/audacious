@@ -39,8 +39,8 @@
 #include "tuple.h"
 #include "strings.h"
 
-#include "ui_equalizer.h"
-#include "ui_skin.h"
+#include "legacy/ui_equalizer.h"
+#include "legacy/ui_skin.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };

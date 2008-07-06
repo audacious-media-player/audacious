@@ -58,8 +58,8 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "signals.h"
-#include "ui_manager.h"
-#include "ui_skin.h"
+#include "legacy/ui_manager.h"
+#include "legacy/ui_skin.h"
 #include "util.h"
 #include "vfs.h"
 
