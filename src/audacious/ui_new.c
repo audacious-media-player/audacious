@@ -87,9 +87,12 @@ button_next_pressed()
 static void
 ui_set_current_song_title(gchar *text, gpointer user_data)
 {
-    gchar *title = g_strdup_printf("<big>%s</big>", text);
-    gtk_label_set_text(GTK_LABEL(label_current), title);
-    g_object_set(G_OBJECT(label_current), "use-markup", TRUE, NULL);
+    gchar *esc_title = g_markup_escape_text(text, -1);
+    gchar *title = g_strdup_printf("<big>%s</big>", esc_title);
+
+    gtk_label_set_markup(GTK_LABEL(label_current), title);
+
+    g_free(esc_title);
     g_free(title);
 }
 
