@@ -181,7 +181,8 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		-I../libSAD				\
 		${EGGSM_CFLAGS}			\
 		-I.. -I../..			\
-		-I./intl
+		-I./intl			\
+		-I.
 
 LIBS += ${LDADD}						\
 		${LIBINTL}						\
