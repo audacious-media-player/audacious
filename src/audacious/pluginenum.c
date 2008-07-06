@@ -55,7 +55,7 @@
 #include "vfs_buffered_file.h"
 #include "volumecontrol.h"
 
-#include "ui_fileinfo.h"
+#include "legacy/ui_fileinfo.h"
 #include "ui_fileinfopopup.h"
 #include "ui_plugin_menu.h"
 #include "ui_preferences.h"

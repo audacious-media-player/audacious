@@ -33,7 +33,7 @@
 #include "playback.h"
 #include "strings.h"
 #include "ui_fileinfopopup.h"
-#include "ui_fileinfo.h"
+#include "legacy/ui_fileinfo.h"
 
 static void
 filepopup_entry_set_text(GtkWidget *filepopup_win, const gchar *entry_name,
