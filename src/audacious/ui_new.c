@@ -129,8 +129,9 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
     time /= 1000;
     length /= 1000;
 
-    g_snprintf(text, 128, "<tt><b>%d:%.2d/%d:%.2d</b></tt>", time / 60, time % 60,
-        length / 60, length % 60);
+    g_snprintf(text, 128, "<tt><b>%d:%.2d/%d:%.2d</b></tt>",
+               time / 60, time % 60,
+               length / 60, length % 60);
     gtk_label_set_markup(GTK_LABEL(label_time), text);
 
     return TRUE;
@@ -204,15 +205,15 @@ gtk_markup_label_new(const gchar *str)
 static gboolean
 _ui_initialize(void)
 {
-    GtkWidget *window;		/* the main window */
-    GtkWidget *vbox;		/* the main vertical box */
-    GtkWidget *buttonbox;	/* box containing buttons like "open", "next" */
-    GtkWidget *pcnbox;		/* box containing information about previous,
+    GtkWidget *window;      /* the main window */
+    GtkWidget *vbox;        /* the main vertical box */
+    GtkWidget *toolbar;     /* contains buttons like "open", "next" */
+    GtkWidget *pcnbox;      /* box containing information about previous,
                                current and next track */
 
-    GtkWidget *chbox;	/* box containing album art and information
+    GtkWidget *chbox;   /* box containing album art and information
                            about current track */
-    GtkWidget *cvbox;	/* box containing information about current track
+    GtkWidget *cvbox;   /* box containing information about current track
                            and some control elements like position bar */
     GtkWidget *shbox;   /* box for slider + time combo --nenolod */
 
@@ -232,21 +233,21 @@ _ui_initialize(void)
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
 
-    buttonbox = gtk_toolbar_new();
-    gtk_toolbar_set_style(buttonbox, GTK_TOOLBAR_ICONS);
-    button_open = gtk_toolbar_button_add(buttonbox, button_open_pressed,
+    toolbar = gtk_toolbar_new();
+    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
+    button_open = gtk_toolbar_button_add(toolbar, button_open_pressed,
                                          GTK_STOCK_OPEN);
-    button_add = gtk_toolbar_button_add(buttonbox, button_add_pressed,
+    button_add = gtk_toolbar_button_add(toolbar, button_add_pressed,
                                         GTK_STOCK_ADD);
-    button_play = gtk_toolbar_button_add(buttonbox, button_play_pressed,
+    button_play = gtk_toolbar_button_add(toolbar, button_play_pressed,
                                          GTK_STOCK_MEDIA_PLAY);
-    button_pause = gtk_toolbar_button_add(buttonbox, button_pause_pressed,
+    button_pause = gtk_toolbar_button_add(toolbar, button_pause_pressed,
                                           GTK_STOCK_MEDIA_PAUSE);
-    button_previous = gtk_toolbar_button_add(buttonbox, button_previous_pressed,
+    button_previous = gtk_toolbar_button_add(toolbar, button_previous_pressed,
                                              GTK_STOCK_MEDIA_PREVIOUS);
-    button_next = gtk_toolbar_button_add(buttonbox, button_next_pressed,
+    button_next = gtk_toolbar_button_add(toolbar, button_next_pressed,
                                          GTK_STOCK_MEDIA_NEXT);
-    gtk_box_pack_start(GTK_BOX(vbox), buttonbox, FALSE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, TRUE, 0);
 
 
     pcnbox = gtk_vbox_new(FALSE, 0);
