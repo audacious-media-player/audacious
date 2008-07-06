@@ -206,6 +206,7 @@ AUD_ARG_ENABLE([sse2], [yes], [SSE2 support],
 int main()
 {
   _mm_setzero_pd();
+  asm volatile("xorpd %xmm0,%xmm0\n\t");
   return 0;
 }
     ],[
