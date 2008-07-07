@@ -635,6 +635,10 @@ struct _AudaciousFuncTableV1 {
 
     void (*create_widgets)(GtkBox *box, PreferencesWidget *widgets, gint amt);
 
+    GList *(*equalizer_read_presets)(const gchar * basename);
+    void (*equalizer_write_preset_file)(GList * list, const gchar * basename);
+    GList *(*import_winamp_eqf)(VFSFile * file);
+
     /* VFS endianess helper functions */
     gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
     gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
@@ -993,6 +997,10 @@ struct _AudaciousFuncTableV1 {
 #define aud_calc_stereo_pcm         _audvt->calc_stereo_pcm
 
 #define aud_create_widgets          _audvt->create_widgets
+
+#define aud_equalizer_read_presets  _audvt->equalizer_read_presets
+#define aud_equalizer_write_preset_file _audvt->equalizer_write_preset_file
+#define aud_import_winamp_eqf       _audvt->import_winamp_eqf
 
 #include "audacious/auddrct.h"
 

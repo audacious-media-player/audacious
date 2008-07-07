@@ -13,6 +13,7 @@ SRCS = af_equalizer.c							\
        dnd.c									\
        effect.c									\
        equalizer_flow.c							\
+       equalizer_preset.c							\
        eventqueue.c								\
        fft.c									\
        flow.c									\
@@ -96,6 +97,7 @@ INCLUDES = auddrct.h			\
            dbus.h				\
            discovery.h			\
            dbus-service.h		\
+           equalizer_preset.h			\
            eventqueue.h			\
            flow.h				\
            rcfile.h				\

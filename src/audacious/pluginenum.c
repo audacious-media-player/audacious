@@ -54,6 +54,7 @@
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
 #include "volumecontrol.h"
+#include "equalizer_preset.h"
 
 #include "legacy/ui_fileinfo.h"
 #include "ui_fileinfopopup.h"
@@ -388,6 +389,10 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .calc_stereo_pcm = calc_stereo_pcm,
 
     .create_widgets = create_widgets,
+
+    .equalizer_read_presets = equalizer_read_presets,
+    .equalizer_write_preset_file = equalizer_write_preset_file,
+    .import_winamp_eqf = import_winamp_eqf,
 };
 
 /*****************************************************************/
