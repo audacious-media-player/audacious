@@ -1350,7 +1350,7 @@ action_equ_delete_auto_preset(void)
 }
 
 void
-equalizer_activate(gboolean active)
+equalizerwin_activate(gboolean active)
 {
     cfg.equalizer_active = active;
     UI_SKINNED_BUTTON(equalizerwin_on)->inside = active;

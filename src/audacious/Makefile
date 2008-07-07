@@ -12,8 +12,9 @@ SRCS = af_equalizer.c							\
        discovery.c								\
        dnd.c									\
        effect.c									\
+       equalizer.c								\
        equalizer_flow.c							\
-       equalizer_preset.c							\
+       equalizer_preset.c						\
        eventqueue.c								\
        fft.c									\
        flow.c									\
