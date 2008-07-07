@@ -85,6 +85,8 @@ signal_process_segv(void)
     abort();
 }
 
+typedef void (*SignalHandler) (gint);
+
 #if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 
 static void *
@@ -131,8 +133,6 @@ signal_process_signals (void *data)
 /********************************************************************************/
 /* for linuxthread */
 /********************************************************************************/
-
-typedef void (*SignalHandler) (gint);
 
 static void *
 signal_process_signals_linuxthread (void *data)
