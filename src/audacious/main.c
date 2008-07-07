@@ -59,7 +59,6 @@
 #include "pluginenum.h"
 #include "signals.h"
 #include "legacy/ui_manager.h"
-#include "legacy/ui_skin.h"
 #include "util.h"
 #include "vfs.h"
 
@@ -77,7 +76,6 @@ struct _AudCmdLineOpt {
     gint session;
     gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
     gboolean enqueue, mainwin, remote, activate;
-    gboolean load_skins;
     gboolean no_log;
     gboolean enqueue_to_temp;
     gboolean version;
@@ -288,37 +286,29 @@ handle_cmd_line_filenames(gboolean is_running)
 #ifdef USE_DBUS
     if (is_running)
     {
-        if (options.load_skins)
+        GList *i;
+
+        if (options.enqueue_to_temp)
+            audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
+
+        if (options.enqueue && options.play)
+            pos = audacious_remote_get_playlist_length(session);
+
+        if (!options.enqueue)
         {
-            audacious_remote_set_skin(session, filenames[0]);
-            skin_install_skin(filenames[0]);
+            audacious_remote_playlist_clear(session);
+            audacious_remote_stop(session);
         }
-        else
-        {
-            GList *i;
 
-            if (options.enqueue_to_temp)
-                audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
+        for (i = fns; i != NULL; i = i->next)
+            audacious_remote_playlist_add_url_string(session, i->data);
 
-            if (options.enqueue && options.play)
-                pos = audacious_remote_get_playlist_length(session);
+        if (options.enqueue && options.play &&
+            audacious_remote_get_playlist_length(session) > pos)
+            audacious_remote_set_playlist_pos(session, pos);
 
-            if (!options.enqueue)
-            {
-                audacious_remote_playlist_clear(session);
-                audacious_remote_stop(session);
-            }
-
-            for (i = fns; i != NULL; i = i->next)
-                audacious_remote_playlist_add_url_string(session, i->data);
-
-            if (options.enqueue && options.play &&
-                audacious_remote_get_playlist_length(session) > pos)
-                audacious_remote_set_playlist_pos(session, pos);
-
-            if (!options.enqueue)
-                audacious_remote_play(session);
-        }
+        if (!options.enqueue)
+            audacious_remote_play(session);
     }
     else /* !is_running */
 #endif
