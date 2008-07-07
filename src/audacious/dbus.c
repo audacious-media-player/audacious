@@ -40,7 +40,6 @@
 #include "strings.h"
 
 #include "legacy/ui_equalizer.h"
-#include "legacy/ui_skin.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -835,18 +834,6 @@ gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error) {
 
 gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
     gtk_window_present(GTK_WINDOW(mainwin));
-    return TRUE;
-}
-
-/* TODO: these skin functions should be removed when skin functionality
- * disappears --mf0102 */
-gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error) {
-    *skin = g_strdup(aud_active_skin->path);
-    return TRUE;
-}
-
-gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error) {
-    aud_active_skin_load(skin);
     return TRUE;
 }
 
