@@ -73,6 +73,12 @@ button_pause_pressed()
 }
 
 static void
+button_stop_pressed()
+{
+    playback_stop();
+}
+
+static void
 button_previous_pressed()
 {
     playlist_prev(playlist_get_active());
@@ -94,6 +100,8 @@ ui_set_song_info(gchar *text, gpointer user_data)
 
     gtk_label_set_markup(GTK_LABEL(label_current), title);
     gtk_range_set_range(GTK_RANGE(slider), 0.0, (gdouble)length);
+    gtk_widget_show(slider);
+    gtk_widget_show(label_time);
 
     g_free(esc_title);
     g_free(title);
@@ -146,6 +154,13 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
     return TRUE;
 }
 
+static void
+ui_clear_song_info()
+{
+    gtk_widget_hide(slider);
+    gtk_widget_hide(label_time);
+}
+
 static gboolean
 ui_slider_value_changed_cb(GtkRange *range, gpointer user_data)
 {
@@ -196,6 +211,8 @@ ui_playback_stop(gpointer hook_data, gpointer user_data)
         g_source_remove(update_song_timeout_source);
         update_song_timeout_source = 0;
     }
+
+    ui_clear_song_info();
 }
 
 static void
@@ -261,7 +278,7 @@ _ui_initialize(void)
     GtkWidget *shbox;   /* box for slider + time combo --nenolod */
 
     GtkToolItem *button_open, *button_add,
-                *button_play, *button_pause,
+                *button_play, *button_pause, *button_stop,
                 *button_previous, *button_next;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -286,6 +303,8 @@ _ui_initialize(void)
                                          GTK_STOCK_MEDIA_PLAY);
     button_pause = gtk_toolbar_button_add(toolbar, button_pause_pressed,
                                           GTK_STOCK_MEDIA_PAUSE);
+    button_stop = gtk_toolbar_button_add(toolbar, button_stop_pressed,
+                                         GTK_STOCK_MEDIA_STOP);
     button_previous = gtk_toolbar_button_add(toolbar, button_previous_pressed,
                                              GTK_STOCK_MEDIA_PREVIOUS);
     button_next = gtk_toolbar_button_add(toolbar, button_next_pressed,
@@ -321,7 +340,7 @@ _ui_initialize(void)
     gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DISCONTINUOUS);
     gtk_box_pack_start(GTK_BOX(shbox), slider, TRUE, TRUE, 0);
 
-    label_time = gtk_markup_label_new("<tt><b>0:00/0:00</b></tt>");
+    label_time = gtk_markup_label_new(NULL);
     gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
 
     ui_hooks_associate();
@@ -340,6 +359,9 @@ _ui_initialize(void)
     ui_playlist_update(playlist_get_active(), NULL);
 
     gtk_widget_show_all(window);
+
+    ui_clear_song_info();
+
     gtk_main();
 
     return TRUE;
