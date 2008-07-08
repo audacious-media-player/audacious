@@ -20,6 +20,8 @@
 #ifndef AUDACIOUS_EQUALIZER_PRESET_H
 #define AUDACIOUS_EQUALIZER_PRESET_H
 
+#include "audacious/rcfile.h"
+
 struct _EqualizerPreset {
     gchar *name;
     gfloat preamp, bands[10];
@@ -32,5 +34,9 @@ void    equalizer_preset_free(EqualizerPreset * preset);
 GList * equalizer_read_presets(const gchar * basename);
 void    equalizer_write_preset_file(GList * list, const gchar * basename);
 GList * import_winamp_eqf(VFSFile * file);
+void    save_preset_file(EqualizerPreset *preset, const gchar * filename);
+
+EqualizerPreset * equalizer_read_aud_preset(const gchar * filename);
+EqualizerPreset * load_preset_file(const gchar *filename);
 
 #endif

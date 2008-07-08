@@ -183,3 +183,58 @@ error:
     return NULL;
 }
 
+void
+save_preset_file(EqualizerPreset *preset, const gchar * filename)
+{
+    RcFile *rcfile;
+    gint i;
+
+    rcfile = aud_rcfile_new();
+    aud_rcfile_write_float(rcfile, "Equalizer preset", "Preamp",
+                           preset->preamp);
+
+    for (i = 0; i < 10; i++) {
+        gchar tmp[7];
+        g_snprintf(tmp, sizeof(tmp), "Band%d", i);
+        aud_rcfile_write_float(rcfile, "Equalizer preset", tmp,
+                               preset->bands[i]);
+    }
+
+    aud_rcfile_write(rcfile, filename);
+    aud_rcfile_free(rcfile);
+}
+
+EqualizerPreset *
+equalizer_read_aud_preset(const gchar * filename)
+{
+    gfloat val;
+    gint i;
+    EqualizerPreset *preset = g_new0(EqualizerPreset, 1);
+    preset->name = g_strdup("");
+
+    RcFile *rcfile = aud_rcfile_open(filename);
+    if (rcfile == NULL)
+        return NULL;
+
+    if (aud_rcfile_read_float(rcfile, "Equalizer preset", "Preamp", &val))
+        preset->preamp = val;
+    for (i = 0; i < 10; i++) {
+        gchar tmp[7];
+        g_snprintf(tmp, sizeof(tmp), "Band%d", i);
+        if (aud_rcfile_read_float(rcfile, "Equalizer preset", tmp, &val))
+            preset->bands[i] = val;
+    }
+    aud_rcfile_free(rcfile);
+    return preset;
+}
+
+EqualizerPreset *
+load_preset_file(const gchar *filename)
+{
+    if (filename) {
+        EqualizerPreset *preset = equalizer_read_aud_preset(filename);
+        return preset;
+    }
+    return NULL;
+}
+
