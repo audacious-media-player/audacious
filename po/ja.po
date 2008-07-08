@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
 "POT-Creation-Date: 2008-06-21 08:26+0300\n"
-"PO-Revision-Date: 2008-03-31 14:53+0900\n"
+"PO-Revision-Date: 2008-07-08 11:25+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -102,9 +102,8 @@ msgid "Print all errors and warnings to stdout"
 msgstr "標準出力に全てのエラーと警告を表示する"
 
 #: src/audacious/main.c:277
-#, fuzzy
 msgid "Show version"
-msgstr "プレイヤを表示する"
+msgstr "ヴァージョンを表示する"
 
 #: src/audacious/main.c:279
 msgid "Used in macpacking"
@@ -168,7 +167,6 @@ msgstr ""
 "モジュール読み込みがサポートされていません! プラグインは読み込まれません.\n"
 
 #: src/audacious/signals.c:47
-#, fuzzy
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -193,8 +191,8 @@ msgstr ""
 "これはプログラムのバグで，通常の環境では起こりえません．\n"
 "現在の設定は保存されており，影響は受けていないはずです．\n"
 "\n"
-"このバグを http://bugs-meta.atheme.org にファイルしていただけると，Audacious "
-"の品質向上の手助けとなります．\n"
+"このバグを http://bugzilla.atheme.org/ にファイルしていただけると，"
+"Audacious の品質向上の手助けとなります．\n"
 "あなたのバグレポートの取り扱いを素早く済ませるために，このメッセージの全文と"
 "クラッシュしたときに何をしていたかの解説を含めてください:\n"
 "\n"
@@ -204,17 +202,18 @@ msgid ""
 "Stacktrace was unavailable. You might want to reproduce this problem while "
 "running Audacious under GDB to get a proper backtrace.\n"
 msgstr ""
+"スタックトレースが利用できませんでした．正しいバックトレースを取得するには，"
+"Audacious を GDB 経由で起動して問題を再現させる必要があります．\n"
 
 #: src/audacious/signals.c:79
-#, fuzzy
 msgid ""
 "\n"
 "Bugs can be reported at http://bugzilla.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 "\n"
-"Audacious プロダクトのバグは http://bugs-meta.atheme.org にレポートしてくださ"
-"い．\n"
+"Audacious や Audacious プラグインのバグは http://bugzilla.atheme.org/ に"
+"レポートしてください．\n"
 
 #: src/audacious/signals.c:297
 msgid ""
@@ -2308,13 +2307,15 @@ msgstr "インライン GTK テーマを無効にする"
 
 #: src/audacious/ui_preferences.c:219
 msgid "Allow loading incomplete skins"
-msgstr ""
+msgstr "不完全なスキンの読み込みを許可する"
 
 #: src/audacious/ui_preferences.c:220
 msgid ""
 "If selected, audacious won't refuse loading broken skins. Use only if your "
 "favourite skin doesn't work"
 msgstr ""
+"これを使うと，audacious は壊れたスキンの読み込みを拒絶しません．"
+"お気に入りのスキンが動かないときだけ使用してください．"
 
 #: src/audacious/ui_preferences.c:224
 msgid "<b>Format Detection</b>"
