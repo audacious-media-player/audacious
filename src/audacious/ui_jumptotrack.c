@@ -51,7 +51,6 @@
   #include <regex.h>
 #endif
 
-#include "ui_main.h"
 #include "icons-stock.h"
 
 #include "actions-mainwin.h"
@@ -64,19 +63,11 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "ui_credits.h"
-#include "ui_dock.h"
-#include "ui_equalizer.h"
 #include "ui_fileopener.h"
-#include "ui_manager.h"
-#include "ui_playlist.h"
 #include "ui_preferences.h"
-#include "ui_skinselector.h"
-#include "ui_urlopener.h"
 #include "strings.h"
 #include "util.h"
 #include "visualization.h"
-
-#include "ui_skinned_window.h"
 
 #include "ui_jumptotrack_cache.h"
 

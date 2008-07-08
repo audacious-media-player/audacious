@@ -30,7 +30,6 @@
 
 #include "ui_fileinfopopup.h"
 #include "main.h"
-#include "ui_main.h"
 #include "playlist.h"
 #include "playback.h"
 

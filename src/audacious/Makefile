@@ -54,15 +54,15 @@ SRCS = af_equalizer.c							\
        visualization.c							\
        volumecontrol.c							\
        sync-menu.c								\
-       legacy/ui_about.c						\
-       legacy/ui_albumart.c						\
-       legacy/ui_credits.c						\
+       ui_about.c						\
+       ui_albumart.c						\
+       ui_credits.c						\
        legacy/ui_dock.c							\
        legacy/ui_equalizer.c					\
-       legacy/ui_fileinfo.c						\
+       ui_fileinfo.c						\
        legacy/ui_hints.c						\
-       legacy/ui_jumptotrack.c					\
-       legacy/ui_jumptotrack_cache.c			\
+       ui_jumptotrack.c					\
+       ui_jumptotrack_cache.c			\
        legacy/ui_main.c							\
        legacy/ui_main_evlisteners.c				\
        legacy/ui_manager.c						\
@@ -85,7 +85,7 @@ SRCS = af_equalizer.c							\
        legacy/ui_skinned_playlist_slider.c		\
        legacy/ui_skinned_playlist.c				\
        legacy/ui_skinselector.c					\
-       legacy/ui_urlopener.c					\
+       ui_urlopener.c					\
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c

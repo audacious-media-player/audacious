@@ -66,7 +66,7 @@
 #include "signals.h"
 #include "legacy/ui_skin.h"
 #include "legacy/ui_equalizer.h"
-#include "legacy/ui_fileinfo.h"
+#include "ui_fileinfo.h"
 #include "legacy/ui_hints.h"
 #include "legacy/ui_main.h"
 #include "legacy/ui_manager.h"
