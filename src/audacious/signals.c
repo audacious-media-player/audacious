@@ -39,6 +39,8 @@
 #include "eggsmclient.h"
 #endif
 
+typedef void (*SignalHandler) (gint);
+
 gint linuxthread_signal_number = 0;
 
 static void
@@ -131,8 +133,6 @@ signal_process_signals (void *data)
 /********************************************************************************/
 /* for linuxthread */
 /********************************************************************************/
-
-typedef void (*SignalHandler) (gint);
 
 static void *
 signal_process_signals_linuxthread (void *data)
