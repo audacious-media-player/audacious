@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
 "POT-Creation-Date: 2008-06-21 08:26+0300\n"
-"PO-Revision-Date: 2008-07-08 11:25+0900\n"
+"PO-Revision-Date: 2008-07-08 12:25+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2241,7 +2241,7 @@ msgstr "プレイリスト(_P):"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Select playlist font:"
-msgstr "プレイリスで使用するフォントの選択"
+msgstr "プレイリストで使用するフォントの選択"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Use Bitmap fonts if available"
