@@ -156,3 +156,46 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
     return win;
 }
+
+static void
+on_add_url_add_clicked(GtkWidget * widget,
+                       GtkWidget * entry)
+{
+    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
+    if (text && *text)
+        playlist_add_url(playlist_get_active(), text);
+}
+
+static void
+on_add_url_ok_clicked(GtkWidget * widget,
+                      GtkWidget * entry)
+{
+    Playlist *playlist = playlist_get_active();
+
+    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
+    if (text && *text)
+    {
+        playlist_clear(playlist);
+        playlist_add_url(playlist, text);
+        playback_initiate();
+    }
+}
+
+void
+show_add_url_window(void)
+{
+    static GtkWidget *url_window = NULL;
+
+    if (!url_window) {
+        url_window =
+            util_add_url_dialog_new(_("Enter location to play:"),
+                                    G_CALLBACK(on_add_url_ok_clicked),
+                                    G_CALLBACK(on_add_url_add_clicked));
+
+        g_signal_connect(url_window, "destroy",
+                         G_CALLBACK(gtk_widget_destroyed),
+                         &url_window);
+    }
+
+    gtk_window_present(GTK_WINDOW(url_window));
+}

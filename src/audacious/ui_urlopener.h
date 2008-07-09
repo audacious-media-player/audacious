@@ -39,6 +39,7 @@ G_BEGIN_DECLS
 
 GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                                    GCallback enqueue_func);
+void show_add_url_window(void);
 
 G_END_DECLS
 

@@ -72,7 +72,6 @@
 #include "ui_playlist.h"
 #include "ui_preferences.h"
 #include "ui_skinselector.h"
-#include "ui_urlopener.h"
 #include "util.h"
 #include "visualization.h"
 
@@ -1089,30 +1088,6 @@ mainwin_drag_data_received(GtkWidget * widget,
 }
 
 static void
-on_add_url_add_clicked(GtkWidget * widget,
-                       GtkWidget * entry)
-{
-    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
-    if (text && *text)
-        playlist_add_url(playlist_get_active(), text);
-}
-
-static void
-on_add_url_ok_clicked(GtkWidget * widget,
-                      GtkWidget * entry)
-{
-    Playlist *playlist = playlist_get_active();
-
-    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
-    if (text && *text)
-    {
-        playlist_clear(playlist);
-        playlist_add_url(playlist, text);
-        playback_initiate();
-    }
-}
-
-static void
 on_visibility_warning_toggle(GtkToggleButton *tbt, gpointer unused)
 {
     cfg.warn_about_win_visibility = !gtk_toggle_button_get_active(tbt);
@@ -1234,26 +1209,6 @@ ui_main_check_theme_engine(void)
     cfg.disable_inline_gtk = TRUE;
 
     g_free(theme);
-}
-
-void
-mainwin_show_add_url_window(void)
-{
-    static GtkWidget *url_window = NULL;
-
-    if (!url_window) {
-        url_window =
-            util_add_url_dialog_new(_("Enter location to play:"),
-                                    G_CALLBACK(on_add_url_ok_clicked),
-                                    G_CALLBACK(on_add_url_add_clicked));
-        gtk_window_set_transient_for(GTK_WINDOW(url_window),
-                                     GTK_WINDOW(mainwin));
-        g_signal_connect(url_window, "destroy",
-                         G_CALLBACK(gtk_widget_destroyed),
-                         &url_window);
-    }
-
-    gtk_window_present(GTK_WINDOW(url_window));
 }
 
 static void
@@ -1761,7 +1716,7 @@ mainwin_general_menu_callback(gpointer data,
             run_filebrowser(FALSE);
             break;
         case MAINWIN_GENERAL_PLAYLOCATION:
-            mainwin_show_add_url_window();
+            hook_call("urlopener show", NULL);
             break;
         case MAINWIN_GENERAL_FILEINFO:
             ui_fileinfo_show_current(playlist);
@@ -2729,7 +2684,7 @@ action_play_file( void )
 void
 action_play_location( void )
 {
-    mainwin_show_add_url_window();
+    hook_call("urlopener show", NULL);
 }
 
 void
