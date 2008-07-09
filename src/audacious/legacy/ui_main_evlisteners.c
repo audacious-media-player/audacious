@@ -32,6 +32,7 @@
 #include "ui_credits.h"
 #include "ui_equalizer.h"
 #include "ui_fileopener.h"
+#include "ui_urlopener.h"
 #include "ui_jumptotrack.h"
 #include "ui_main.h"
 #include "ui_playlist.h"
@@ -443,6 +444,12 @@ ui_main_evlistener_equalizer_changed(gpointer hook_data, gpointer user_data)
                   cfg.equalizer_bands);
 }
 
+static void
+ui_main_evlistener_urlopener_show(gpointer hook_data, gpointer user_data)
+{
+    show_add_url_window();
+}
+
 void
 ui_main_evlistener_init(void)
 {
@@ -468,6 +475,7 @@ ui_main_evlistener_init(void)
     hook_associate("filebrowser hide", ui_main_evlistener_filebrowser_hide, NULL);
     hook_associate("visualization timeout", ui_main_evlistener_visualization_timeout, NULL);
     hook_associate("config save", ui_main_evlistener_config_save, NULL);
+    hook_associate("urlopener show", ui_main_evlistener_urlopener_show, NULL);
 
     hook_associate("equalizer changed", ui_main_evlistener_equalizer_changed, NULL);
 }

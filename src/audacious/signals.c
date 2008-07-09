@@ -39,6 +39,8 @@
 #include "eggsmclient.h"
 #endif
 
+typedef void (*SignalHandler) (gint);
+
 gint linuxthread_signal_number = 0;
 
 static void

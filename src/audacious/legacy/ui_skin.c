@@ -1641,14 +1641,18 @@ skin_load(Skin * skin, const gchar * path)
 gboolean
 skin_reload_forced(void) 
 {
-   gboolean error;
-   AUDDBG("\n");
+    gboolean error;
+    AUDDBG("\n");
 
-   skin_lock(aud_active_skin);
-   error = skin_load_nolock(aud_active_skin, aud_active_skin->path, TRUE);
-   skin_unlock(aud_active_skin);
+    skin_lock(aud_active_skin);
+    error = skin_load_nolock(aud_active_skin, aud_active_skin->path, TRUE);
+    skin_unlock(aud_active_skin);
 
-   return error;
+    ui_skinned_window_draw_all(mainwin);
+    ui_skinned_window_draw_all(equalizerwin);
+    ui_skinned_window_draw_all(playlistwin);
+
+    return error;
 }
 
 void

@@ -46,6 +46,7 @@
 #include "audacious/main.h"
 #include "audacious/preferences.h"
 #include "audacious/interface.h"
+#include "audacious/equalizer_preset.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -635,6 +636,13 @@ struct _AudaciousFuncTableV1 {
 
     void (*create_widgets)(GtkBox *box, PreferencesWidget *widgets, gint amt);
 
+    GList *(*equalizer_read_presets)(const gchar * basename);
+    void (*equalizer_write_preset_file)(GList * list, const gchar * basename);
+    GList *(*import_winamp_eqf)(VFSFile * file);
+    void (*save_preset_file)(EqualizerPreset *preset, const gchar * filename);
+    EqualizerPreset *(*equalizer_read_aud_preset)(const gchar * filename);
+    EqualizerPreset *(*load_preset_file)(const gchar *filename);
+
     /* VFS endianess helper functions */
     gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
     gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
@@ -993,6 +1001,13 @@ struct _AudaciousFuncTableV1 {
 #define aud_calc_stereo_pcm         _audvt->calc_stereo_pcm
 
 #define aud_create_widgets          _audvt->create_widgets
+
+#define aud_equalizer_read_presets  _audvt->equalizer_read_presets
+#define aud_equalizer_write_preset_file _audvt->equalizer_write_preset_file
+#define aud_import_winamp_eqf       _audvt->import_winamp_eqf
+#define aud_save_preset_file        _audvt->save_preset_file
+#define aud_equalizer_read_aud_preset _audvt->equalizer_read_aud_preset
+#define aud_load_preset_file        _audvt->load_preset_file
 
 #include "audacious/auddrct.h"
 

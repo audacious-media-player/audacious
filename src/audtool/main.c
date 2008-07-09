@@ -131,8 +131,6 @@ struct commandhandler handlers[] = {
 
 	{"activate", activate, "activates and raises audacious", 0},
 	{"always-on-top", toggle_aot, "on/off always on top", 1},
-    {"get-skin", get_skin, "gets skin", 0},
-    {"set-skin", set_skin, "sets skin", 1},
     {"version", get_version, "shows audaciuos version", 0},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},
 

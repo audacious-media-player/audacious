@@ -1,11 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
- *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team
- *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team
+ *  Copyright (C) 2005-2008  Audacious team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,24 +17,26 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_UI_URLOPENER_H
-#define AUDACIOUS_UI_URLOPENER_H
+#ifndef AUDACIOUS_EQUALIZER_PRESET_H
+#define AUDACIOUS_EQUALIZER_PRESET_H
 
-#ifdef _AUDACIOUS_CORE
-# ifdef HAVE_CONFIG_H
-#  include "config.h"
-# endif
+#include "audacious/rcfile.h"
+
+struct _EqualizerPreset {
+    gchar *name;
+    gfloat preamp, bands[10];
+};
+
+typedef struct _EqualizerPreset EqualizerPreset;
+
+EqualizerPreset * equalizer_preset_new(const gchar * name);
+void    equalizer_preset_free(EqualizerPreset * preset);
+GList * equalizer_read_presets(const gchar * basename);
+void    equalizer_write_preset_file(GList * list, const gchar * basename);
+GList * import_winamp_eqf(VFSFile * file);
+void    save_preset_file(EqualizerPreset *preset, const gchar * filename);
+
+EqualizerPreset * equalizer_read_aud_preset(const gchar * filename);
+EqualizerPreset * load_preset_file(const gchar *filename);
+
 #endif
-
-#include <glib.h>
-#include <gtk/gtk.h>
-
-G_BEGIN_DECLS
-
-GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
-                                   GCallback enqueue_func);
-void show_add_url_window(void);
-
-G_END_DECLS
-
-#endif /* AUDACIOUS_UI_URLOPENER_H */

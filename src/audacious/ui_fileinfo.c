@@ -55,11 +55,8 @@
 
 #include "playlist.h"
 
-#include "ui_main.h"
-#include "ui_playlist.h"
 #include "build_stamp.h"
 #include "ui_fileinfo.h"
-#include "ui_playlist.h"
 
 #define G_FREE_CLEAR(a) if(a != NULL) { g_free(a); a = NULL; }
 #define STATUS_TIMEOUT 3*1000

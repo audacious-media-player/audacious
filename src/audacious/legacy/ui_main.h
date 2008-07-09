@@ -155,7 +155,6 @@ void mainwin_shuffle_pushed(gboolean toggled);
 void mainwin_repeat_pushed(gboolean toggled);
 void mainwin_disable_seekbar(void);
 void mainwin_set_title(const gchar * text);
-void mainwin_show_add_url_window(void);
 void mainwin_minimize_cb(void);
 void mainwin_general_menu_callback(gpointer cb_data,
                                    guint action,

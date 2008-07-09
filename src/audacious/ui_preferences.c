@@ -46,20 +46,20 @@
 #include "visualization.h"
 #include "playlist.h"
 
-#include "ui_skinned_textbox.h"
 #include "strings.h"
 #include "util.h"
 #include "dnd.h"
 #include "configdb.h"
 #include "preferences.h"
 
-#include "ui_main.h"
-#include "ui_playlist.h"
-#include "ui_skinselector.h"
+#include "legacy/ui_equalizer.h"
+#include "legacy/ui_main.h"
+#include "legacy/ui_playlist.h"
+#include "legacy/ui_skinselector.h"
 #include "ui_preferences.h"
-#include "ui_equalizer.h"
-#include "ui_skinned_playlist.h"
-#include "ui_skinned_window.h"
+#include "legacy/ui_skinned_playlist.h"
+#include "legacy/ui_skinned_textbox.h"
+#include "legacy/ui_skinned_window.h"
 
 #include "build_stamp.h"
 
@@ -1224,9 +1224,6 @@ reload_skin()
 {
     /* reload the skin to apply the change */
     skin_reload_forced();
-    ui_skinned_window_draw_all(mainwin);
-    ui_skinned_window_draw_all(equalizerwin);
-    ui_skinned_window_draw_all(playlistwin);
 }
 
 static void

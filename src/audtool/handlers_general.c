@@ -270,28 +270,6 @@ void toggle_aot(gint argc, gchar **argv)
     }
 }
 
-void get_skin(gint argc, gchar **argv)
-{
-    gchar *skin = NULL;
-    skin = audacious_remote_get_skin(dbus_proxy);
-    audtool_report("%s", skin);
-    g_free(skin);
-}
-
-void set_skin(gint argc, gchar **argv)
-{
-    if (argc < 2)
-    {
-        audtool_whine_args(argv[0], "<skin>");
-        exit(1);
-    }
-
-    if(!argv[1] || !strcmp(argv[1], ""))
-       return;
-
-    audacious_remote_set_skin(dbus_proxy, argv[1]);
-}
-
 void get_version(gint argc, gchar **argv)
 {
     gchar *version = NULL;

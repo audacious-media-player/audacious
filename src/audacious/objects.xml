@@ -413,19 +413,6 @@
             <arg type="u" direction="out" name="qpos"/>
         </method>
 
-        <!-- Get skin -->
-        <method name="GetSkin">
-            <!-- Return filename of desired song -->
-            <arg type="s" direction="out" name="skin"/>
-        </method>
-
-        <!-- Set skin -->
-        <method name="SetSkin">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-            <!-- Return filename of desired song -->
-            <arg type="s" name="skin"/>
-        </method>
-
         <!-- Get Info -->
         <method name="GetInfo">
             <arg type="i" direction="out" name="rate"/>

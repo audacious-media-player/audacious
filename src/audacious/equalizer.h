@@ -1,11 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
- *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team
- *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team
+ *  Copyright (C) 2005-2008  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,24 +17,17 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_UI_URLOPENER_H
-#define AUDACIOUS_UI_URLOPENER_H
-
-#ifdef _AUDACIOUS_CORE
-# ifdef HAVE_CONFIG_H
-#  include "config.h"
-# endif
-#endif
+#ifndef AUDACIOUS_EQUALIZER_H
+#define AUDACIOUS_EQUALIZER_H
 
 #include <glib.h>
-#include <gtk/gtk.h>
 
-G_BEGIN_DECLS
+gfloat equalizer_get_preamp(void);
+void equalizer_set_preamp(gfloat preamp);
+gfloat equalizer_get_band(gint band);
+void equalizer_set_band(gint band, gfloat value);
 
-GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
-                                   GCallback enqueue_func);
-void show_add_url_window(void);
+gboolean equalizer_get_active();
+void equalizer_set_active(gboolean active);
 
-G_END_DECLS
-
-#endif /* AUDACIOUS_UI_URLOPENER_H */
+#endif

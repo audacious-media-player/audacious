@@ -26,8 +26,8 @@
 #ifndef AUDACIOUS_UI_JUMPTOTRACK_H
 #define AUDACIOUS_UI_JUMPTOTRACK_H
 
-extern void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
-extern void ui_jump_to_track(void);
-extern void ui_jump_to_track_hide(void);
+void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
+void ui_jump_to_track(void);
+void ui_jump_to_track_hide(void);
 
 #endif /* AUDACIOUS_UI_JUMPTOTRACK_H */

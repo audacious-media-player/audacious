@@ -63,6 +63,6 @@ extern GtkWidget *equalizerwin;
 extern GtkWidget *equalizerwin_graph;
 extern gboolean equalizerwin_focus;
 
-void equalizer_activate(gboolean active);
+void equalizerwin_activate(gboolean active);
 
 #endif /* AUDACIOUS_UI_EQUALIZER_H */

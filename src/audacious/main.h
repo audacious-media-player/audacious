@@ -27,7 +27,7 @@
 #define AUDACIOUS_MAIN_H
 
 #ifdef _AUDACIOUS_CORE
-# include "ui_main.h"
+# include "legacy/ui_main.h"
 # ifdef USE_DBUS
 #  include "dbus-service.h"
 # endif

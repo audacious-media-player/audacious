@@ -194,8 +194,6 @@ gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error);
 gboolean audacious_rc_activate(RemoteObject *obj, GError **error);
 gboolean audacious_rc_queue_get_list_pos(RemoteObject *obj, gint qpos, gint *pos, GError **error);
 gboolean audacious_rc_queue_get_queue_pos(RemoteObject *obj, gint pos, gint *qpos, GError **error);
-gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error);
-gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error);
 gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error);
 gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **error);
 gboolean audacious_rc_get_playqueue_length(RemoteObject *obj, gint *length, GError **error);

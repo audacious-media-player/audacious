@@ -358,33 +358,6 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
 }
 
 /**
- * audacious_remote_get_skin:
- * @proxy: DBus proxy for audacious
- *
- * Queries Audacious about it's skin.
- *
- * Return value: A path to the currently selected skin.
- **/
-gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
-    gchar *skin = NULL;
-    org_atheme_audacious_get_skin (proxy, &skin, &error);
-    g_clear_error(&error);
-    return skin;
-}
-
-/**
- * audacious_remote_set_skin:
- * @proxy: DBus proxy for audacious
- * @skinfile: Path to a skinfile to use with Audacious.
- *
- * Tells audacious to start using the skinfile provided.
- **/
-void audacious_remote_set_skin(DBusGProxy *proxy, gchar *skinfile) {
-    org_atheme_audacious_set_skin(proxy, skinfile, &error);
-	g_clear_error(&error);
-}
-
-/**
  * audacious_remote_get_playlist_file:
  * @proxy: DBus proxy for audacious
  * @pos: The playlist position to query for.

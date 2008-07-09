@@ -32,15 +32,13 @@
 #include "dbus-server-bindings.h"
 
 #include <math.h>
-#include "main.h"
+#include "equalizer.h"
 #include "input.h"
+#include "main.h"
 #include "playback.h"
 #include "playlist.h"
-#include "tuple.h"
 #include "strings.h"
-
-#include "ui_equalizer.h"
-#include "ui_skin.h"
+#include "tuple.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -838,18 +836,6 @@ gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
-/* TODO: these skin functions should be removed when skin functionality
- * disappears --mf0102 */
-gboolean audacious_rc_get_skin(RemoteObject *obj, gchar **skin, GError **error) {
-    *skin = g_strdup(aud_active_skin->path);
-    return TRUE;
-}
-
-gboolean audacious_rc_set_skin(RemoteObject *obj, gchar *skin, GError **error) {
-    aud_active_skin_load(skin);
-    return TRUE;
-}
-
 gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error) {
     playback_get_sample_params(rate, freq, nch);
     return TRUE;
@@ -941,11 +927,11 @@ gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands,
 {
     int i;
 
-    *preamp = (gdouble)equalizerwin_get_preamp();
+    *preamp = (gdouble)equalizer_get_preamp();
     *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), AUD_EQUALIZER_NBANDS);
 
     for(i=0; i < AUD_EQUALIZER_NBANDS; i++){
-        gdouble val = (gdouble)equalizerwin_get_band(i);
+        gdouble val = (gdouble)equalizer_get_band(i);
         g_array_append_val(*bands, val);
     }
 
@@ -954,13 +940,13 @@ gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands,
 
 gboolean audacious_rc_get_eq_preamp(RemoteObject *obj, gdouble *preamp, GError **error)
 {
-    *preamp = (gdouble)equalizerwin_get_preamp();
+    *preamp = (gdouble)equalizer_get_preamp();
     return TRUE;
 }
 
 gboolean audacious_rc_get_eq_band(RemoteObject *obj, gint band, gdouble *value, GError **error)
 {
-    *value = (gdouble)equalizerwin_get_band(band);
+    *value = (gdouble)equalizer_get_band(band);
     return TRUE;
 }
 
@@ -969,34 +955,31 @@ gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, G
     gdouble element;
     int i;
     
-    equalizerwin_set_preamp((gfloat)preamp);
+    equalizer_set_preamp((gfloat)preamp);
 
     for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
         element = g_array_index(bands, gdouble, i);
-        equalizerwin_set_band(i, (gfloat)element);
+        equalizer_set_band(i, (gfloat)element);
     }
-    equalizerwin_eq_changed();
 
     return TRUE;
 }
 
 gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error)
 {
-    equalizerwin_set_preamp((gfloat)preamp);
-    equalizerwin_eq_changed();
+    equalizer_set_preamp((gfloat)preamp);
     return TRUE;
 }
 
 gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error)
 {
-    equalizerwin_set_band(band, (gfloat)value);
-    equalizerwin_eq_changed();
+    equalizer_set_band(band, (gfloat)value);
     return TRUE;
 }
 
 gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error)
 {
-    equalizer_activate(active);
+    equalizer_set_active(active);
     return TRUE;
 }
 
