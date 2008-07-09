@@ -27,7 +27,6 @@
 #include "main.h"
 #include "playback.h"
 #include "strings.h"
-#include "legacy/ui_playlist.h"
 
 static void
 filebrowser_add_files(GtkFileChooser * browser,
@@ -49,7 +48,7 @@ filebrowser_add_files(GtkFileChooser * browser,
         g_free(filename);
     } 
 
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 
     ptr = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(browser));
 
@@ -286,7 +285,7 @@ static void filebrowser_add_files_classic(gchar ** files,
         playlist_add(playlist, filename);
         g_free(filename);
     }
-    playlistwin_update_list(playlist);
+    hook_call("playlist update", playlist);
 
     gtk_label_get(GTK_LABEL(GTK_BIN(filesel->history_pulldown)->child),
           &ptr);
