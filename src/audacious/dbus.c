@@ -979,7 +979,7 @@ gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, G
 
 gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error)
 {
-    equalizer_activate(active);
+    equalizer_set_active(active);
     return TRUE;
 }
 

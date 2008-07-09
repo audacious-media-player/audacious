@@ -22,11 +22,12 @@
 
 #include <glib.h>
 
-void equalizer_set_preamp(gfloat preamp);
-void equalizer_set_band(gint band, gfloat value);
 gfloat equalizer_get_preamp(void);
+void equalizer_set_preamp(gfloat preamp);
 gfloat equalizer_get_band(gint band);
+void equalizer_set_band(gint band, gfloat value);
 
-void equalizer_activate(gboolean active);
+gboolean equalizer_get_active();
+void equalizer_set_active(gboolean active);
 
 #endif

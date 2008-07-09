@@ -19,26 +19,19 @@
 
 #include "equalizer.h"
 
+#include "audconfig.h"
 #include "legacy/ui_equalizer.h"
-
-void
-equalizer_set_preamp(gfloat preamp)
-{
-    equalizerwin_set_preamp(preamp);
-    equalizerwin_eq_changed();
-}
-
-void
-equalizer_set_band(gint band, gfloat value)
-{
-    equalizerwin_set_band(band, value);
-    equalizerwin_eq_changed();
-}
 
 gfloat
 equalizer_get_preamp(void)
 {
     return equalizerwin_get_preamp();
+}
+
+void
+equalizer_set_preamp(gfloat preamp)
+{
+    equalizerwin_set_preamp(preamp);
 }
 
 gfloat
@@ -48,7 +41,18 @@ equalizer_get_band(gint band)
 }
 
 void
-equalizer_activate(gboolean active)
+equalizer_set_band(gint band, gfloat value)
+{
+    equalizerwin_set_band(band, value);
+}
+
+gboolean equalizer_get_active(gboolean active)
+{
+    return cfg.equalizer_active;
+}
+
+void
+equalizer_set_active(gboolean active)
 {
     equalizerwin_activate(active);
 }
