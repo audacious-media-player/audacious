@@ -52,14 +52,7 @@
 #include "configdb.h"
 #include "preferences.h"
 
-#include "legacy/ui_equalizer.h"
-#include "legacy/ui_main.h"
-#include "legacy/ui_playlist.h"
-#include "legacy/ui_skinselector.h"
 #include "ui_preferences.h"
-#include "legacy/ui_skinned_playlist.h"
-#include "legacy/ui_skinned_textbox.h"
-#include "legacy/ui_skinned_window.h"
 
 #include "build_stamp.h"
 
@@ -105,7 +98,6 @@ typedef struct {
 
 static GtkWidget *prefswin = NULL;
 static GtkWidget *filepopup_settings = NULL;
-static GtkWidget *colorize_settings = NULL;
 static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
@@ -127,14 +119,11 @@ GtkWidget *filepopup_settings_delay;
 
 /* prefswin widgets */
 GtkWidget *titlestring_entry;
-GtkWidget *skin_view;
-GtkWidget *skin_refresh_button;
 GtkWidget *filepopup_for_tuple_settings_button;
 GtkTooltips *tooltips;
 static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
-    {DATA_DIR "/images/appearance.png",   N_("Appearance")},
     {DATA_DIR "/images/audio.png",        N_("Audio")},
     {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
     {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
@@ -190,35 +179,9 @@ typedef struct {
 
 CategoryQueueEntry *category_queue = NULL;
 
-static void playlist_show_pl_separator_numbers_cb();
-static void show_wm_decorations_cb();
-static void bitmap_fonts_cb();
-static void mainwin_font_set_cb();
-static void playlist_font_set_cb();
 GtkWidget *ui_preferences_chardet_table_populate(void);
 static GtkWidget *ui_preferences_bit_depth(void);
 static GtkWidget *ui_preferences_rg_params(void);
-
-static PreferencesWidget appearance_misc_widgets[] = {
-    {WIDGET_LABEL, N_("<b>_Fonts</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_FONT_BTN, N_("_Player:"), &cfg.mainwin_font, G_CALLBACK(mainwin_font_set_cb), N_("Select main player window font:"), FALSE},
-    {WIDGET_FONT_BTN, N_("_Playlist:"), &cfg.playlist_font, G_CALLBACK(playlist_font_set_cb), N_("Select playlist font:"), FALSE},
-    {WIDGET_CHK_BTN, N_("Use Bitmap fonts if available"), &cfg.mainwin_use_bitmapfont, G_CALLBACK(bitmap_fonts_cb), N_("Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."), FALSE},
-    {WIDGET_LABEL, N_("<b>_Miscellaneous</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Show track numbers in playlist"), &cfg.show_numbers_in_pl,
-        G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Show separators in playlist"), &cfg.show_separator_in_pl,
-        G_CALLBACK(playlist_show_pl_separator_numbers_cb), NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Show window manager decoration"), &cfg.show_wm_decorations, G_CALLBACK(show_wm_decorations_cb),
-        N_("This enables the window manager to show decorations for windows."), FALSE},
-    {WIDGET_CHK_BTN, N_("Use XMMS-style file selector instead of the default selector"), &cfg.use_xmms_style_fileselector, NULL, 
-        N_("This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."), FALSE},
-    {WIDGET_CHK_BTN, N_("Use two-way text scroller"), &cfg.twoway_scroll, NULL,
-        N_("If selected, the file information text in the main window will scroll back and forth. If not selected, the text will only scroll in one direction."), FALSE},
-    {WIDGET_CHK_BTN, N_("Disable inline gtk theme"), &cfg.disable_inline_gtk, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Allow loading incomplete skins"), &cfg.allow_broken_skins, NULL,
-        N_("If selected, audacious won't refuse loading broken skins. Use only if your favourite skin doesn't work"), FALSE},
-};
 
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
@@ -285,7 +248,6 @@ static PreferencesWidget mouse_page_widgets[] = {
     {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, N_("lines"), FALSE},
 };
 
-static void create_colorize_settings(void);
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 
 static void
@@ -684,27 +646,6 @@ on_font_btn_font_set(GtkFontButton * button, gchar **cfg)
     if (callback) callback();
 }
 
-static void
-mainwin_font_set_cb()
-{
-    ui_skinned_textbox_set_xfont(mainwin_info, !cfg.mainwin_use_bitmapfont, cfg.mainwin_font);
-}
-
-static void
-playlist_font_set_cb()
-{
-    AUDDBG("Attempt to set font \"%s\"\n", cfg.playlist_font);
-    ui_skinned_playlist_set_font(cfg.playlist_font);
-    playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
-    playlistwin_update_list(playlist_get_active());
-}
-
-static void
-playlist_show_pl_separator_numbers_cb()
-{
-    playlistwin_update_list(playlist_get_active());
-}
-
 /* proxy */
 static void
 on_proxy_button_realize(GtkToggleButton *button, gchar *cfg)
@@ -958,27 +899,6 @@ on_spin_btn_changed(GtkSpinButton *button, gboolean *cfg)
 }
 
 static void
-on_skin_refresh_button_clicked(GtkButton * button,
-                               gpointer data)
-{
-    const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
-
-    del_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR]);
-    make_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
-
-    skin_view_update(GTK_TREE_VIEW(skin_view), GTK_WIDGET(skin_refresh_button));
-}
-
-static gboolean
-on_skin_view_realize(GtkTreeView * treeview,
-                     gpointer data)
-{
-    skin_view_realize(treeview);
-
-    return TRUE;
-}
-
-static void
 on_category_treeview_realize(GtkTreeView * treeview,
                              GtkNotebook * notebook)
 {
@@ -1038,48 +958,6 @@ on_category_treeview_realize(GtkTreeView * treeview,
 
         prefswin_page_new(ent->container, ent->pg_name, ent->img_url);
         prefswin_page_queue_destroy(ent);
-    }
-}
-
-void
-on_skin_view_drag_data_received(GtkWidget * widget,
-                                GdkDragContext * context,
-                                gint x, gint y,
-                                GtkSelectionData * selection_data,
-                                guint info, guint time,
-                                gpointer user_data) 
-{
-    mcs_handle_t *db;
-    gchar *path;
-
-    if (!selection_data->data) {
-        g_warning("DND data string is NULL");
-        return;
-    }
-
-    path = (gchar *) selection_data->data;
-
-    /* FIXME: use a real URL validator/parser */
-
-    if (str_has_prefix_nocase(path, "file:///")) {
-        path[strlen(path) - 2] = 0; /* Why the hell a CR&LF? */
-        path += 7;
-    }
-    else if (str_has_prefix_nocase(path, "file:")) {
-        path += 5;
-    }
-
-    if (file_is_archive(path)) {
-        if (!aud_active_skin_load(path))
-            return;
-        skin_install_skin(path);
-        skin_view_update(GTK_TREE_VIEW(widget),
-                         GTK_WIDGET(skin_refresh_button));
-
-        /* Change skin name in the config file */
-        db = cfg_db_open();
-        cfg_db_set_string(db, NULL, "skin", path);
-        cfg_db_close(db);
     }
 }
 
@@ -1211,50 +1089,6 @@ on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
 }
 
 static void
-on_colorize_button_clicked(GtkButton *button, gpointer data)
-{
-    if (colorize_settings)
-        gtk_window_present(GTK_WINDOW(colorize_settings));
-    else
-        create_colorize_settings();
-}
-
-static void
-reload_skin()
-{
-    /* reload the skin to apply the change */
-    skin_reload_forced();
-}
-
-static void
-on_red_scale_value_changed(GtkHScale *scale, gpointer data)
-{
-    cfg.colorize_r = gtk_range_get_value(GTK_RANGE(scale));
-    reload_skin();
-}
-
-static void
-on_green_scale_value_changed(GtkHScale *scale, gpointer data)
-{
-    cfg.colorize_g = gtk_range_get_value(GTK_RANGE(scale));
-    reload_skin();
-}
-
-static void
-on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
-{
-    cfg.colorize_b = gtk_range_get_value(GTK_RANGE(scale));
-    reload_skin();
-}
-
-static void
-on_colorize_close_clicked(GtkButton *button, gpointer data)
-{
-    gtk_widget_destroy(colorize_settings);
-    colorize_settings = NULL;
-}
-
-static void
 on_filepopup_for_tuple_settings_clicked(GtkButton *button, gpointer data)
 {
     gtk_entry_set_text(GTK_ENTRY(filepopup_settings_cover_name_include), cfg.cover_name_include);
@@ -1309,130 +1143,6 @@ on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
     gtk_toggle_button_set_active(button, *cfg);
     GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
     if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
-}
-
-static void
-bitmap_fonts_cb()
-{
-    ui_skinned_textbox_set_xfont(mainwin_info, !cfg.mainwin_use_bitmapfont, cfg.mainwin_font);
-    playlistwin_set_sinfo_font(cfg.playlist_font);
-
-    if (cfg.playlist_shaded) {
-        playlistwin_update_list(playlist_get_active());
-        ui_skinned_window_draw_all(playlistwin);
-    }
-}
-
-static void
-show_wm_decorations_cb()
-{
-    gtk_window_set_decorated(GTK_WINDOW(mainwin), cfg.show_wm_decorations);
-    gtk_window_set_decorated(GTK_WINDOW(playlistwin), cfg.show_wm_decorations);
-    gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
-}
-
-void
-create_colorize_settings(void)
-{
-    GtkWidget *vbox;
-    GtkWidget *label;
-    GtkWidget *table;
-    GtkWidget *hbuttonbox;
-    GtkWidget *colorize_close;
-
-    GtkWidget *green_label;
-    GtkWidget *red_label;
-    GtkWidget *blue_label;
-
-    colorize_settings = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_container_set_border_width(GTK_CONTAINER(colorize_settings), 12);
-    gtk_window_set_title(GTK_WINDOW(colorize_settings), _("Color Adjustment"));
-    gtk_window_set_type_hint(GTK_WINDOW(colorize_settings), GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_transient_for(GTK_WINDOW(colorize_settings), GTK_WINDOW(prefswin));
-
-    vbox = gtk_vbox_new(FALSE, 12);
-    gtk_container_add(GTK_CONTAINER(colorize_settings), vbox);
-
-    label = gtk_label_new(_("Audacious allows you to alter the color balance of the skinned UI. The sliders below will allow you to do this."));
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-    gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-
-    table = gtk_table_new(3, 2, FALSE);
-    gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-    gtk_table_set_col_spacings(GTK_TABLE(table), 12);
-
-    blue_label = gtk_label_new(_("Blue"));
-    gtk_table_attach(GTK_TABLE(table), blue_label, 0, 1, 2, 3,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify(GTK_LABEL(blue_label), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment(GTK_MISC(blue_label), 1, 0.5);
-
-    green_label = gtk_label_new(_("Green"));
-    gtk_table_attach(GTK_TABLE(table), green_label, 0, 1, 1, 2,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify(GTK_LABEL(green_label), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment(GTK_MISC(green_label), 1, 0.5);
-
-    red_label = gtk_label_new(_("Red"));
-    gtk_table_attach(GTK_TABLE(table), red_label, 0, 1, 0, 1,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify(GTK_LABEL(red_label), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment(GTK_MISC(red_label), 1, 0.5);
-
-    red_scale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 0, 0, 0)));
-    gtk_table_attach(GTK_TABLE(table), red_scale, 1, 2, 0, 1,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_scale_set_draw_value(GTK_SCALE(red_scale), FALSE);
-    gtk_scale_set_digits(GTK_SCALE(red_scale), 3);
-
-    green_scale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 0, 0, 0)));
-    gtk_table_attach(GTK_TABLE(table), green_scale, 1, 2, 1, 2,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_scale_set_draw_value(GTK_SCALE(green_scale), FALSE);
-    gtk_scale_set_digits(GTK_SCALE(green_scale), 3);
-
-    blue_scale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 0, 0, 0)));
-    gtk_table_attach(GTK_TABLE(table), blue_scale, 1, 2, 2, 3,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_scale_set_draw_value(GTK_SCALE(blue_scale), FALSE);
-    gtk_scale_set_digits(GTK_SCALE(blue_scale), 3);
-
-    hbuttonbox = gtk_hbutton_box_new();
-    gtk_box_pack_start(GTK_BOX(vbox), hbuttonbox, FALSE, FALSE, 0);
-    gtk_button_box_set_layout(GTK_BUTTON_BOX(hbuttonbox), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing(GTK_BOX(hbuttonbox), 6);
-
-    colorize_close = gtk_button_new_from_stock("gtk-close");
-    gtk_container_add(GTK_CONTAINER(hbuttonbox), colorize_close);
-    GTK_WIDGET_SET_FLAGS(colorize_close, GTK_CAN_DEFAULT);
-
-    g_signal_connect((gpointer) red_scale, "value_changed",
-                     G_CALLBACK(on_red_scale_value_changed),
-                     NULL);
-    g_signal_connect((gpointer) green_scale, "value_changed",
-                     G_CALLBACK(on_green_scale_value_changed),
-                     NULL);
-    g_signal_connect((gpointer) blue_scale, "value_changed",
-                     G_CALLBACK(on_blue_scale_value_changed),
-                     NULL);
-    g_signal_connect((gpointer) colorize_close, "clicked",
-                     G_CALLBACK(on_colorize_close_clicked),
-                     NULL);
-
-    gtk_range_set_value(GTK_RANGE(red_scale), cfg.colorize_r);
-    gtk_range_set_value(GTK_RANGE(green_scale), cfg.colorize_g);
-    gtk_range_set_value(GTK_RANGE(blue_scale), cfg.colorize_b);
-
-    gtk_widget_grab_default(colorize_close);
-    gtk_widget_show_all(colorize_settings);
 }
 
 void
@@ -1932,100 +1642,6 @@ create_titlestring_tag_menu(void)
     gtk_widget_show_all(titlestring_tag_menu);
 
     return titlestring_tag_menu;
-}
-
-static void
-create_appearence_category(void)
-{
-    GtkWidget *appearance_page_vbox;
-    GtkWidget *vbox37;
-    GtkWidget *vbox38;
-    GtkWidget *hbox12;
-    GtkWidget *alignment94;
-    GtkWidget *hbox13;
-    GtkWidget *label103;
-    GtkWidget *colorspace_button;
-    GtkWidget *image11;
-    GtkWidget *image12;
-    GtkWidget *alignment95;
-    GtkWidget *skin_view_scrolled_window;
-
-    appearance_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), appearance_page_vbox);
-
-    vbox37 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (appearance_page_vbox), vbox37, TRUE, TRUE, 0);
-
-    vbox38 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox37), vbox38, FALSE, TRUE, 0);
-
-    hbox12 = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox38), hbox12, TRUE, TRUE, 0);
-
-    alignment94 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (hbox12), alignment94, TRUE, TRUE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment94), 0, 4, 0, 0);
-
-    hbox13 = gtk_hbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment94), hbox13);
-
-    label103 = gtk_label_new_with_mnemonic (_("<b>_Skin</b>"));
-    gtk_box_pack_start (GTK_BOX (hbox13), label103, TRUE, TRUE, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label103), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label103), 0, 0);
-
-    colorspace_button = gtk_button_new ();
-    gtk_box_pack_start (GTK_BOX (hbox13), colorspace_button, FALSE, FALSE, 0);
-
-    image11 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_BUTTON);
-    gtk_container_add (GTK_CONTAINER (colorspace_button), image11);
-
-    skin_refresh_button = gtk_button_new ();
-    gtk_box_pack_start (GTK_BOX (hbox13), skin_refresh_button, FALSE, FALSE, 0);
-    GTK_WIDGET_UNSET_FLAGS (skin_refresh_button, GTK_CAN_FOCUS);
-    gtk_tooltips_set_tip (tooltips, skin_refresh_button, _("Refresh skin list"), NULL);
-    gtk_button_set_relief (GTK_BUTTON (skin_refresh_button), GTK_RELIEF_HALF);
-    gtk_button_set_focus_on_click (GTK_BUTTON (skin_refresh_button), FALSE);
-
-    image12 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
-    gtk_container_add (GTK_CONTAINER (skin_refresh_button), image12);
-
-    alignment95 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox38), alignment95, TRUE, TRUE, 0);
-    gtk_widget_set_size_request (alignment95, -1, 172);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment95), 0, 0, 12, 0);
-
-    skin_view_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-    gtk_container_add (GTK_CONTAINER (alignment95), skin_view_scrolled_window);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (skin_view_scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (skin_view_scrolled_window), GTK_SHADOW_IN);
-
-    skin_view = gtk_tree_view_new ();
-    gtk_container_add (GTK_CONTAINER (skin_view_scrolled_window), skin_view);
-    gtk_widget_set_size_request (skin_view, -1, 100);
-
-    create_widgets(GTK_BOX(vbox37), appearance_misc_widgets, G_N_ELEMENTS(appearance_misc_widgets));
-
-
-
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label103), category_notebook);
-
-    g_signal_connect(G_OBJECT(colorspace_button), "clicked",
-                     G_CALLBACK(on_colorize_button_clicked),
-                     NULL);
-
-    g_signal_connect(skin_view, "drag-data-received",
-                     G_CALLBACK(on_skin_view_drag_data_received),
-                     NULL);
-    aud_drag_dest_set(skin_view);
-
-    g_signal_connect(mainwin, "drag-data-received",
-                     G_CALLBACK(mainwin_drag_data_received),
-                     skin_view);
-
-    g_signal_connect(skin_refresh_button, "clicked",
-                     G_CALLBACK(on_skin_refresh_button_clicked),
-                     NULL);
 }
 
 static void
@@ -3059,8 +2675,6 @@ create_prefs_window(void)
 
 
 
-
-    create_appearence_category();
     create_audio_category();
     create_replay_gain_category();
     create_connectivity_category();
@@ -3106,12 +2720,6 @@ create_prefs_window(void)
     g_signal_connect(G_OBJECT(prefswin), "delete_event",
                      G_CALLBACK(gtk_widget_hide_on_delete),
                      NULL);
-    g_signal_connect_swapped(G_OBJECT(skin_refresh_button), "clicked",
-                             G_CALLBACK(on_skin_refresh_button_clicked),
-                             prefswin);
-    g_signal_connect_after(G_OBJECT(skin_view), "realize",
-                           G_CALLBACK(on_skin_view_realize),
-                           NULL);
     g_signal_connect_swapped(G_OBJECT(close), "clicked",
                              G_CALLBACK(gtk_widget_hide),
                              GTK_OBJECT (prefswin));
@@ -3137,15 +2745,7 @@ create_prefs_window(void)
 void
 show_prefs_window(void)
 {
-    static gboolean skinlist_filled = FALSE;
-
     gtk_window_present(GTK_WINDOW(prefswin)); /* show or raise prefs window */
-
-    if ( !skinlist_filled )
-    {
-        skin_view_update(GTK_TREE_VIEW(skin_view), GTK_WIDGET(skin_refresh_button));
-        skinlist_filled = TRUE;
-    }
 }
 
 void

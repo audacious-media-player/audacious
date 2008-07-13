@@ -22,8 +22,20 @@
 #include <mowgli.h>
 
 #include "interface.h"
+#include "ui_fileopener.h"
+#include "ui_urlopener.h"
+#include "ui_preferences.h"
 
 static mowgli_dictionary_t *interface_dict_ = NULL;
+
+static InterfaceOps interface_ops = {
+    .create_prefs_window = create_prefs_window,
+    .show_prefs_window = show_prefs_window,
+    .hide_prefs_window = hide_prefs_window,
+
+    .filebrowser_show = run_filebrowser,
+    .urlopener_show = show_add_url_window,
+};
 
 void
 interface_register(Interface *i)
@@ -42,13 +54,10 @@ interface_deregister(Interface *i)
     mowgli_dictionary_delete(interface_dict_, i->id);
 }
 
-/*
- * TODO:
- *     - set up InterfaceOps struct for the Interface to use
- */
 void
 interface_run(Interface *i)
 {
+    i->ops = &interface_ops;
     i->init();
 }
 

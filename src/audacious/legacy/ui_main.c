@@ -1072,7 +1072,7 @@ mainwin_drag_data_received(GtkWidget * widget,
 
         return;
     }
-
+#if 0
     /* perhaps make suffix check case-insensitive -- desowin */
     if (str_has_prefix_nocase((char*)selection_data->data, "file:///")) {
         if (str_has_suffix_nocase((char*)selection_data->data, ".wsz\r\n") ||
@@ -1081,7 +1081,7 @@ mainwin_drag_data_received(GtkWidget * widget,
             return;
         }
     }
-
+#endif
     playlist_clear(playlist);
     playlist_add_url(playlist, (gchar *) selection_data->data);
     playback_initiate();

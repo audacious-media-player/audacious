@@ -28,11 +28,24 @@
 #ifndef __AUDACIOUS2_INTERFACE_H__
 #define __AUDACIOUS2_INTERFACE_H__
 
+#include <gtk/gtk.h>
+
 typedef struct {
+	void (*create_prefs_window)(void);
+	void (*show_prefs_window)(void);
+	void (*hide_prefs_window)(void);
+
+	void (*filebrowser_show)(gboolean play_button);
+	void (*urlopener_show)(void);
+} InterfaceOps;
+
+typedef struct _Interface {
 	gchar *id;		/* simple ID like 'skinned' */
 	gchar *desc;		/* description like 'Skinned Interface' */
 	gboolean (*init)(void); /* init UI */
 	gboolean (*fini)(void); /* shutdown UI */
+
+	InterfaceOps *ops;
 } Interface;
 
 void interface_register(Interface *i);
