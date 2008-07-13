@@ -87,8 +87,6 @@ signal_process_segv(void)
     abort();
 }
 
-typedef void (*SignalHandler) (gint);
-
 #if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 
 static void *
