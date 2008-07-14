@@ -26,6 +26,8 @@
 #include "ui_fileopener.h"
 #include "ui_urlopener.h"
 #include "ui_preferences.h"
+#include "ui_jumptotrack.h"
+#include "ui_credits.h"
 
 static mowgli_dictionary_t *interface_dict_ = NULL;
 
@@ -36,6 +38,8 @@ static InterfaceOps interface_ops = {
 
     .filebrowser_show = run_filebrowser,
     .urlopener_show = show_add_url_window,
+    .jump_to_track_show = ui_jump_to_track,
+    .aboutwin_show = show_about_window,
 };
 
 void

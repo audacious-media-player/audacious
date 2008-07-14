@@ -38,6 +38,8 @@ typedef struct {
 
 	void (*filebrowser_show)(gboolean play_button);
 	void (*urlopener_show)(void);
+	void (*jump_to_track_show)(void);
+	void (*aboutwin_show)(void);
 } InterfaceOps;
 
 typedef struct _Interface {
