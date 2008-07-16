@@ -25,9 +25,11 @@
 #include "playlist.h"
 #include "ui_fileopener.h"
 #include "ui_new.h"
+#include "ui_playlist_widget.h"
 
 static GtkWidget *label_prev, *label_current, *label_next, *label_time;
 static GtkWidget *slider;
+static GtkWidget *treeview;
 
 static gulong slider_change_handler_id;
 static gboolean slider_is_moving = FALSE;
@@ -105,6 +107,8 @@ ui_set_song_info(gchar *text, gpointer user_data)
 
     g_free(esc_title);
     g_free(title);
+
+    ui_playlist_widget_set_current(treeview, playlist_get_position(playlist_get_active()));
 }
 
 static void
@@ -113,6 +117,8 @@ ui_playlist_update(Playlist *playlist, gpointer user_data)
     gchar *text = playlist_get_info_text(playlist);
     ui_set_song_info(text, NULL);
     g_free(text);
+
+    ui_playlist_widget_update(treeview);
 }
 
 static void
@@ -213,6 +219,7 @@ ui_playback_stop(gpointer hook_data, gpointer user_data)
     }
 
     ui_clear_song_info();
+    ui_playlist_widget_set_current(treeview, -1);
 }
 
 static void
@@ -277,6 +284,8 @@ _ui_initialize(void)
                            and some control elements like position bar */
     GtkWidget *shbox;   /* box for slider + time combo --nenolod */
 
+    GtkWidget *scrollwin;   /* widget to hold playlist widget */
+
     GtkToolItem *button_open, *button_add,
                 *button_play, *button_pause, *button_stop,
                 *button_previous, *button_next;
@@ -329,7 +338,7 @@ _ui_initialize(void)
     gtk_box_pack_start(GTK_BOX(pcnbox), chbox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(pcnbox), label_next, TRUE, TRUE, 0);
 
-    gtk_box_pack_start(GTK_BOX(vbox), pcnbox, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), pcnbox, FALSE, TRUE, 0);
 
     shbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_end(GTK_BOX(cvbox), shbox, TRUE, TRUE, 0);
@@ -342,6 +351,16 @@ _ui_initialize(void)
 
     label_time = gtk_markup_label_new(NULL);
     gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
+
+    treeview = ui_playlist_widget_new();
+    scrollwin = gtk_scrolled_window_new(NULL, NULL);
+    gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollwin),
+                                        GTK_SHADOW_IN);
+
+    gtk_box_pack_end(GTK_BOX(vbox), scrollwin, TRUE, TRUE, 0);
 
     ui_hooks_associate();
 

@@ -1212,8 +1212,8 @@ playlist_next(Playlist *playlist)
 
     if (restart_playing)
         playback_initiate();
-
-    hook_call("playlist update", playlist);
+    else
+        hook_call("playlist update", playlist);
 }
 
 void

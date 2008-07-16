@@ -86,6 +86,7 @@ SRCS = af_equalizer.c							\
        legacy/ui_skinned_playlist.c				\
        legacy/ui_skinselector.c					\
        ui_urlopener.c					\
+       ui_playlist_widget.c				\
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
