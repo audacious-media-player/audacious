@@ -173,6 +173,7 @@ init_sad(AFormat fmt, gint nch)
 void
 input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
 {
+#if 0
     VisNode *vis_node;
     gint max;
     
@@ -203,6 +204,7 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
     G_LOCK(vis_mutex);
     vis_list = g_list_append(vis_list, vis_node);
     G_UNLOCK(vis_mutex);
+#endif
 }
 
 void
@@ -524,7 +526,6 @@ input_get_song_tuple(const gchar * filename)
         }
 
         tuple_associate_int(input, FIELD_LENGTH, NULL, -1);
-
     }
 
     g_free(filename_proxy);
