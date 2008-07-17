@@ -290,6 +290,8 @@ _ui_initialize(void)
 
     GtkWidget *scrollwin;   /* widget to hold playlist widget */
 
+    GtkWidget *paned;
+
     GtkToolItem *button_open, *button_add,
                 *button_play, *button_pause, *button_stop,
                 *button_previous, *button_next;
@@ -305,6 +307,9 @@ _ui_initialize(void)
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
+
+    paned = gtk_hpaned_new();
+    gtk_box_pack_start(GTK_BOX(vbox), paned, FALSE, TRUE, 0);
 
     toolbar = gtk_toolbar_new();
     gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
@@ -322,8 +327,20 @@ _ui_initialize(void)
                                              GTK_STOCK_MEDIA_PREVIOUS);
     button_next = gtk_toolbar_button_add(toolbar, button_next_pressed,
                                          GTK_STOCK_MEDIA_NEXT);
-    gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, TRUE, 0);
 
+    gtk_paned_pack1(GTK_PANED(paned), toolbar, TRUE, TRUE);
+
+    shbox = gtk_hbox_new(FALSE, 0);
+    gtk_paned_add2(GTK_PANED(paned), shbox);
+
+    slider = gtk_hscale_new(NULL);
+    gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
+    /* TODO: make this configureable */
+    gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DISCONTINUOUS);
+    gtk_box_pack_start(GTK_BOX(shbox), slider, TRUE, TRUE, 0);
+
+    label_time = gtk_markup_label_new(NULL);
+    gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
 
     pcnbox = gtk_vbox_new(FALSE, 0);
 
@@ -343,18 +360,6 @@ _ui_initialize(void)
     gtk_box_pack_start(GTK_BOX(pcnbox), label_next, TRUE, TRUE, 0);
 
     gtk_box_pack_start(GTK_BOX(vbox), pcnbox, FALSE, TRUE, 0);
-
-    shbox = gtk_hbox_new(FALSE, 0);
-    gtk_box_pack_end(GTK_BOX(cvbox), shbox, TRUE, TRUE, 0);
-
-    slider = gtk_hscale_new(NULL);
-    gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
-    /* TODO: make this configureable */
-    gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DISCONTINUOUS);
-    gtk_box_pack_start(GTK_BOX(shbox), slider, TRUE, TRUE, 0);
-
-    label_time = gtk_markup_label_new(NULL);
-    gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
 
     treeview = ui_playlist_widget_new();
     scrollwin = gtk_scrolled_window_new(NULL, NULL);
