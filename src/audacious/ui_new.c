@@ -27,7 +27,7 @@
 #include "ui_new.h"
 #include "ui_playlist_widget.h"
 
-static GtkWidget *label_prev, *label_current, *label_next, *label_time;
+static GtkWidget *label_time;
 static GtkWidget *slider;
 static GtkWidget *treeview;
 
@@ -95,18 +95,10 @@ button_next_pressed()
 static void
 ui_set_song_info(gchar *text, gpointer user_data)
 {
-    gchar *esc_title = g_markup_escape_text(text, -1);
-    gchar *title = g_strdup_printf("<big>%s</big>", esc_title);
-
     gint length = playback_get_length();
 
-    gtk_label_set_markup(GTK_LABEL(label_current), title);
     gtk_range_set_range(GTK_RANGE(slider), 0.0, (gdouble)length);
-    gtk_widget_show(slider);
     gtk_widget_show(label_time);
-
-    g_free(esc_title);
-    g_free(title);
 
     ui_playlist_widget_set_current(treeview, playlist_get_position(playlist_get_active()));
 }
@@ -163,7 +155,6 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
 static void
 ui_clear_song_info()
 {
-    gtk_widget_hide(slider);
     gtk_widget_hide(label_time);
 }
 
@@ -279,13 +270,7 @@ _ui_initialize(void)
     GtkWidget *window;      /* the main window */
     GtkWidget *vbox;        /* the main vertical box */
     GtkWidget *toolbar;     /* contains buttons like "open", "next" */
-    GtkWidget *pcnbox;      /* box containing information about previous,
-                               current and next track */
 
-    GtkWidget *chbox;   /* box containing album art and information
-                           about current track */
-    GtkWidget *cvbox;   /* box containing information about current track
-                           and some control elements like position bar */
     GtkWidget *shbox;   /* box for slider + time combo --nenolod */
 
     GtkWidget *scrollwin;   /* widget to hold playlist widget */
@@ -341,25 +326,6 @@ _ui_initialize(void)
 
     label_time = gtk_markup_label_new(NULL);
     gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
-
-    pcnbox = gtk_vbox_new(FALSE, 0);
-
-    chbox = gtk_hbox_new(FALSE, 0);
-    cvbox = gtk_vbox_new(FALSE, 0);
-    label_current = gtk_markup_label_new("<big>Current: ?</big>");
-    gtk_misc_set_alignment(GTK_MISC(label_current), 0.0, 0.5);
-    gtk_box_pack_start(GTK_BOX(cvbox), label_current, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(chbox), cvbox, TRUE, TRUE, 0);
-
-    label_prev = gtk_markup_label_new("<small>Previous: ?</small>");
-    label_next = gtk_markup_label_new("<small>Next: ?</small>");
-    gtk_misc_set_alignment(GTK_MISC(label_prev), 0.0, 0.5);
-    gtk_misc_set_alignment(GTK_MISC(label_next), 1.0, 0.5);
-    gtk_box_pack_start(GTK_BOX(pcnbox), label_prev, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(pcnbox), chbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(pcnbox), label_next, TRUE, TRUE, 0);
-
-    gtk_box_pack_start(GTK_BOX(vbox), pcnbox, FALSE, TRUE, 0);
 
     treeview = ui_playlist_widget_new();
     scrollwin = gtk_scrolled_window_new(NULL, NULL);
