@@ -40,7 +40,6 @@ void event_queue(const gchar *name, gpointer user_data)
     HookCallQueue *hq;
 
     g_return_if_fail(name != NULL);
-    g_return_if_fail(user_data != NULL);
 
     hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);
@@ -55,7 +54,6 @@ void event_queue_timed(gint time, const gchar *name, gpointer user_data)
     HookCallQueue *hq;
 
     g_return_if_fail(name != NULL);
-    g_return_if_fail(user_data != NULL);
 
     hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);
