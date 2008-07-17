@@ -156,6 +156,7 @@ static void
 ui_clear_song_info()
 {
     gtk_widget_hide(label_time);
+    gtk_range_set_value(GTK_RANGE(slider), 0);
 }
 
 static gboolean
