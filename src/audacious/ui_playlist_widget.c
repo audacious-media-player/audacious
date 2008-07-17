@@ -40,35 +40,38 @@ ui_playlist_widget_change_song(guint pos)
         playback_initiate();
 }
 
+static void
+ui_playlist_widget_set_title_active(GtkTreeModel *model, gint pos,
+                                    gboolean active)
+{
+    GtkTreeIter iter;
+    GtkTreePath *path;
+    gchar *path_str;
+    
+    path_str = g_strdup_printf("%d", pos);
+    path = gtk_tree_path_new_from_string(path_str);
+    gtk_tree_model_get_iter(model, &iter, path);
+
+    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                       3, active ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL, -1);
+
+    g_free(path_str);
+    gtk_tree_path_free(path);
+}
+
 void
 ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
 {
     GtkTreeModel *model;
-    GtkTreeIter iter;
-    GtkTreePath *path;
-    gchar *p;
-
+    gint old_pos;
+    
     model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
+    old_pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "current"));
 
-    gint old_pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "current"));
-
-    if (old_pos != -1) {
-        p = g_strdup_printf("%d", old_pos);
-        path = gtk_tree_path_new_from_string(p);
-        gtk_tree_model_get_iter(model, &iter, path);
-        gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, PANGO_WEIGHT_NORMAL, -1);
-        g_free(p);
-        gtk_tree_path_free(path);
-    }
-
-    if (pos != -1) {
-        p = g_strdup_printf("%d", pos);
-        path = gtk_tree_path_new_from_string(p);
-        gtk_tree_model_get_iter(model, &iter, path);
-        gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, PANGO_WEIGHT_BOLD, -1);
-        g_free(p);
-        gtk_tree_path_free(path);
-    }
+    if (old_pos != -1)
+        ui_playlist_widget_set_title_active(model, old_pos, FALSE);
+    if (pos != -1)
+        ui_playlist_widget_set_title_active(model, pos, TRUE);
 
     g_object_set_data(G_OBJECT(treeview), "current", GINT_TO_POINTER(pos));
 }
