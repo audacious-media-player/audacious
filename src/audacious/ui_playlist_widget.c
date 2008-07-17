@@ -264,7 +264,8 @@ ui_playlist_widget_new(void)
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, TRUE);
     gtk_tree_view_column_set_attributes(column, renderer, "text", COLUMN_TEXT, "weight", COLUMN_WEIGHT, NULL);
-    g_object_set(G_OBJECT(renderer), "ypad", 0, NULL);
+    g_object_set(G_OBJECT(renderer), "ypad", 0, "ellipsize-set", TRUE,
+                 "ellipsize", PANGO_ELLIPSIZE_END, NULL);
 
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
