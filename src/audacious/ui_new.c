@@ -170,9 +170,13 @@ ui_clear_song_info()
 static gboolean
 ui_slider_value_changed_cb(GtkRange *range, gpointer user_data)
 {
-    /* we are not allowed to do a playback_seek() with values < 1, therefore
-     * we add 1 to be on the safe side --mf0102 */
-    playback_seek(gtk_range_get_value(range)/1000 + 1);
+    gint seek_;
+
+    seek_ = gtk_range_get_value(range) / 1000;
+
+    /* XXX: work around a horrible bug in playback_seek(), also
+       we should do mseek here. --nenolod */
+    playback_seek(seek_ != 0 ? seek_ : 1);
 
     return TRUE;
 }
