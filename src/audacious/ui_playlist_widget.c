@@ -47,7 +47,7 @@ ui_playlist_widget_set_title_active(GtkTreeModel *model, gint pos,
     GtkTreeIter iter;
     GtkTreePath *path;
     gchar *path_str;
-    
+
     path_str = g_strdup_printf("%d", pos);
     path = gtk_tree_path_new_from_string(path_str);
     gtk_tree_model_get_iter(model, &iter, path);
@@ -64,7 +64,7 @@ ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
 {
     GtkTreeModel *model;
     gint old_pos;
-    
+
     model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
     old_pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "current"));
 
@@ -93,8 +93,6 @@ ui_playlist_widget_jump(GtkTreeView * treeview, gpointer data)
     gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
     ui_playlist_widget_change_song(pos - 1);
-
-    ui_playlist_widget_set_current(GTK_WIDGET(treeview), pos);
 }
 
 static gboolean
