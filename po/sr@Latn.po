@@ -8,15 +8,14 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
 "POT-Creation-Date: 2008-06-21 08:26+0300\n"
-"PO-Revision-Date: 2008-04-05 12:25+0200\n"
+"PO-Revision-Date: 2008-07-19 11:56+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: src/audacious/input.c:552
 #, c-format
@@ -99,9 +98,8 @@ msgid "Print all errors and warnings to stdout"
 msgstr "Štampaj sve greške i upozorenja u stdout"
 
 #: src/audacious/main.c:277
-#, fuzzy
 msgid "Show version"
-msgstr "Prikaži plejer"
+msgstr "Prikaži verziju"
 
 #: src/audacious/main.c:279
 msgid "Used in macpacking"
@@ -163,7 +161,6 @@ msgid "Module loading not supported! Plugins will not be loaded.\n"
 msgstr "Učitavanje modula nije podržano! Dodaci neće biti učitani.\n"
 
 #: src/audacious/signals.c:47
-#, fuzzy
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -201,16 +198,17 @@ msgid ""
 "Stacktrace was unavailable. You might want to reproduce this problem while "
 "running Audacious under GDB to get a proper backtrace.\n"
 msgstr ""
+"Trag steka nije dostupan. Mogli biste da reprodukujete ovaj problem dok "
+"pokrećete Audacious u GDB-u da biste dobili ispravno stablo pozivanja.\n"
 
 #: src/audacious/signals.c:79
-#, fuzzy
 msgid ""
 "\n"
 "Bugs can be reported at http://bugzilla.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 "\n"
-"Greške za proizvod Audacious se mogu prijaviti na http://bugs-meta.atheme."
+"Greške za proizvode Audacious i Audacious Plugins se mogu prijaviti na http://bugs-meta.atheme."
 "org\n"
 
 #: src/audacious/signals.c:297
@@ -316,7 +314,7 @@ msgstr "Holandski:"
 
 #: src/audacious/ui_credits.c:186
 msgid "Estonian:"
-msgstr "Estonski"
+msgstr "Estonski:"
 
 #: src/audacious/ui_credits.c:189
 msgid "Finnish:"
@@ -529,7 +527,7 @@ msgstr "Det metal"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Pranks"
-msgstr "Pranks"
+msgstr "Šale"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Soundtrack"
@@ -573,7 +571,7 @@ msgstr "Instrumental"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "Acid"
-msgstr "Acid"
+msgstr "Asid"
 
 #: src/audacious/ui_fileinfo.c:109
 msgid "House"
@@ -605,7 +603,7 @@ msgstr "Bas"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Soul"
-msgstr "Soul"
+msgstr "Sol"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Punk"
@@ -729,11 +727,11 @@ msgstr "Plemenska"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Punk"
-msgstr "Acid pank"
+msgstr "Asid pank"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Acid Jazz"
-msgstr "Acid džez"
+msgstr "Asid džez"
 
 #: src/audacious/ui_fileinfo.c:121
 msgid "Polka"
@@ -945,7 +943,7 @@ msgstr "Goa"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Drum & Bass"
-msgstr "Dramenbes"
+msgstr "Dramenbejs"
 
 #: src/audacious/ui_fileinfo.c:137
 msgid "Club-House"
@@ -2312,13 +2310,15 @@ msgstr "Isključi ugrađenu gtk temu"
 
 #: src/audacious/ui_preferences.c:219
 msgid "Allow loading incomplete skins"
-msgstr ""
+msgstr "Dozvoli učitavanje nepotpunih maski"
 
 #: src/audacious/ui_preferences.c:220
 msgid ""
 "If selected, audacious won't refuse loading broken skins. Use only if your "
 "favourite skin doesn't work"
 msgstr ""
+"Ako je uključeno, Audacious neće zabraniti učitavanje neispravnih maski. Koristite samo "
+"ako vaša omiljena maska ne radi"
 
 #: src/audacious/ui_preferences.c:224
 msgid "<b>Format Detection</b>"
@@ -2498,8 +2498,7 @@ msgstr "Prilikom učitavanja"
 
 #: src/audacious/ui_preferences.c:275
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/ui_preferences.c:276
 msgid "On display"
@@ -2679,8 +2678,7 @@ msgstr "Podrazumevano pojačanje:"
 
 #: src/audacious/ui_preferences.c:1726
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-"Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
+msgstr "Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
 
 #: src/audacious/ui_preferences.c:1742
 msgid ""
@@ -3003,8 +3001,7 @@ msgstr "Nepoznata opcija pokretanja: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1278
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"Ne mogu da prosledim adrese dokumenta u stavku radne površi 'Tip=Link' "
+msgstr "Ne mogu da prosledim adrese dokumenta u stavku radne površi 'Tip=Link' "
 
 #: src/libeggsmclient/eggdesktopfile.c:1297
 msgid "Not a launchable item"
@@ -3038,11 +3035,3 @@ msgstr "Opcije upravljanja sesije"
 msgid "Show Session Management options"
 msgstr "Prikaži opcije upravljanja sesije"
 
-#~ msgid "Show version and builtin features"
-#~ msgstr "Prikaži verziju i ugrađena svojstva"
-
-#~ msgid "Use custom cursors"
-#~ msgstr "Koristi sopstveni kursor"
-
-#~ msgid "Reload Plugins"
-#~ msgstr "Osveži dodatke"
