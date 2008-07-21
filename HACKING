@@ -90,6 +90,9 @@ Coding guidelines
   Discuss about it with fellow developers.
 
 
+- In the core, DO NOT WRITE CODE THAT IS DEPENDENT ON A SPECIFIC UI OR
+  INTERFACE. The core should NEVER care what interface is in use.
+
 
 Additional style guidelines
 ===========================
