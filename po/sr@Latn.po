@@ -63,7 +63,7 @@ msgstr "Zaustavi tekuću pesmu"
 
 #: src/audacious/main.c:268
 msgid "Pause if playing, play otherwise"
-msgstr "Pauziraj ako svira, inče pusti"
+msgstr "Pauziraj ako svira, inače pusti"
 
 #: src/audacious/main.c:269
 msgid "Skip forward in playlist"
@@ -103,7 +103,7 @@ msgstr "Prikaži verziju"
 
 #: src/audacious/main.c:279
 msgid "Used in macpacking"
-msgstr "Koristi se za macpakovanje"
+msgstr "Koristi se za makpakovanje"
 
 #: src/audacious/main.c:281
 msgid "FILE..."
@@ -133,7 +133,7 @@ msgstr ""
 "<b><big>Nije moguće učitati masku.</big></b>\n"
 "\n"
 "Proverite da li je maska u '%s' upotrebljiva i da li je podrazumevana maska "
-"ispravno instalirana u '%s'\n"
+"pravilno instalirana u '%s'\n"
 
 #: src/audacious/main.c:667
 msgid "Sorry, threads aren't supported on your platform.\n"
@@ -190,7 +190,7 @@ msgstr ""
 "meta.atheme.org\n"
 "Molim vas uključite celokupan tekst ove poruke i opišite nam šta ste radili "
 "kad se ovaj\n"
-"otkaz desio, da bismo brzo mogli obraditi Vaš izveštaj greške:\n"
+"otkaz dogodio, da bismo brzo mogli obraditi Vaš izveštaj greške:\n"
 "\n"
 
 #: src/audacious/signals.c:75
@@ -266,7 +266,7 @@ msgstr "Grafika:"
 
 #: src/audacious/ui_credits.c:79
 msgid "Default skin:"
-msgstr "Podrazumevana Maska:"
+msgstr "Podrazumevana maska:"
 
 #: src/audacious/ui_credits.c:85
 msgid "Plugin development:"
@@ -286,7 +286,7 @@ msgstr "BMP stvaraoci:"
 
 #: src/audacious/ui_credits.c:163
 msgid "Brazilian Portuguese:"
-msgstr "Brazilsko Posrtugalski:"
+msgstr "Brazilsko Portugalski:"
 
 #: src/audacious/ui_credits.c:167
 msgid "Breton:"
@@ -386,7 +386,7 @@ msgstr "Srpski (Ćirilica):"
 
 #: src/audacious/ui_credits.c:249
 msgid "Simplified Chinese:"
-msgstr "Uprošteni Kineski:"
+msgstr "Uprošten Kineski:"
 
 #: src/audacious/ui_credits.c:252
 msgid "Slovak:"
@@ -463,7 +463,7 @@ msgstr "Grandž"
 
 #: src/audacious/ui_fileinfo.c:102
 msgid "Hip-Hop"
-msgstr "Hip Hop"
+msgstr "Hip hop"
 
 #: src/audacious/ui_fileinfo.c:103
 msgid "Jazz"
@@ -535,7 +535,7 @@ msgstr "Tema iz filma"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Euro-Techno"
-msgstr "Euro-Tehno"
+msgstr "Euro-tehno"
 
 #: src/audacious/ui_fileinfo.c:107
 msgid "Ambient"
@@ -675,7 +675,7 @@ msgstr "Gangsterski rep"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Top 40"
-msgstr "Najpolularnijih 40"
+msgstr "Najpopularnijih 40"
 
 #: src/audacious/ui_fileinfo.c:117
 msgid "Christian Rap"
@@ -831,7 +831,7 @@ msgstr "Laka za slušanje"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Acoustic"
-msgstr "Akuctična"
+msgstr "Akustična"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Humour"
@@ -927,7 +927,7 @@ msgstr "Solo bubnjevi"
 
 #: src/audacious/ui_fileinfo.c:135
 msgid "A Cappella"
-msgstr "A Cappella"
+msgstr "A kapela"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Euro-House"
@@ -971,7 +971,7 @@ msgstr "Nigerpank"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Polsk Punk"
-msgstr "Poljsk pank"
+msgstr "Poljski pank"
 
 #: src/audacious/ui_fileinfo.c:139
 msgid "Beat"
@@ -1011,7 +1011,7 @@ msgstr "Salsa"
 
 #: src/audacious/ui_fileinfo.c:142
 msgid "Thrash Metal"
-msgstr "Threš metal"
+msgstr "Treš metal"
 
 #: src/audacious/ui_fileinfo.c:143
 msgid "Anime"
@@ -1272,16 +1272,16 @@ msgid ""
 "\n"
 "To use these features, please consider using a different GTK theme engine."
 msgstr ""
-"<big><b>Pokrvarena GTK mašina u upotrebi</b></big>\n"
+"<big><b>Pokvarena GTK mašina u upotrebi</b></big>\n"
 "\n"
 "Audacious je otkrio da koristite pokvarenu GTK mašinu.\n"
 "\n"
-"Mašina za tema koju koristite, <i>%s</i>, nije kompatibilna sa nekim od "
-"elemenata koje koriste moderne maske. Nekompatibilne osobine su isključene "
-"za ovu sesiju.\n"
+"Mašina za teme koju koristite, <i>%s</i>, nije kompatibilna sa nekim od "
+"elemenata koje koriste moderne maske. Nekompatibilne osobine su isključene za "
+"ovu sesiju.\n"
 "\n"
-"Da biste koristili ove osobine, razmislite o korišćenju neke druge GTK "
-"mašine za teme."
+"Da biste koristili ove osobine, razmislite o korišćenju neke druge GTK mašine "
+"za teme."
 
 #: src/audacious/ui_main.c:1223
 msgid "Do not display this warning again"
@@ -1433,7 +1433,7 @@ msgstr "Analizatora"
 
 #: src/audacious/ui_manager.c:103
 msgid "Scope"
-msgstr "Dosega"
+msgstr "Doseg"
 
 #: src/audacious/ui_manager.c:104
 msgid "Voiceprint"
@@ -1502,11 +1502,11 @@ msgstr "Osmina (~6 fps)"
 
 #: src/audacious/ui_manager.c:144 src/audacious/ui_manager.c:152
 msgid "Slowest"
-msgstr "Najsporiji"
+msgstr "Najsporije"
 
 #: src/audacious/ui_manager.c:145 src/audacious/ui_manager.c:153
 msgid "Slow"
-msgstr "Spor"
+msgstr "Sporo"
 
 #: src/audacious/ui_manager.c:146 src/audacious/ui_manager.c:154
 msgid "Medium"
@@ -1574,7 +1574,7 @@ msgstr "Režim prikaza glasa"
 
 #: src/audacious/ui_manager.c:195
 msgid "WindowShade VU Mode"
-msgstr "VU režim delimičnog skrivenog prozora"
+msgstr "VU režim delimično skrivenog prozora"
 
 #: src/audacious/ui_manager.c:196
 msgid "Refresh Rate"
@@ -1631,7 +1631,7 @@ msgstr "Sačuvaj podrazumevanu listu"
 
 #: src/audacious/ui_manager.c:224
 msgid "Saves the selected playlist to the default location."
-msgstr "Sačuva izabranu listu numera u podrazumevanu lokaciju."
+msgstr "Sačuvaj izabranu listu numera u podrazumevanu lokaciju."
 
 #: src/audacious/ui_manager.c:227
 msgid "Refresh List"
@@ -1643,11 +1643,11 @@ msgstr "Osvežava meta-podatke pridružene stavki liste numera."
 
 #: src/audacious/ui_manager.c:231
 msgid "List Manager"
-msgstr "Menađžer liste"
+msgstr "Menadžer liste"
 
 #: src/audacious/ui_manager.c:232
 msgid "Opens the playlist manager."
-msgstr "Otvara menađžer liste."
+msgstr "Otvara menadžer liste."
 
 #: src/audacious/ui_manager.c:238
 msgid "View"
@@ -1749,7 +1749,7 @@ msgstr "Po imenu datoteke"
 
 #: src/audacious/ui_manager.c:289
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "Uklanja duplikate iz liste numera na osnovu imenu datoteke."
+msgstr "Uklanja duplikate iz liste numera na osnovu imena datoteke."
 
 #: src/audacious/ui_manager.c:292 src/audacious/ui_manager.c:328
 #: src/audacious/ui_manager.c:358
@@ -1766,7 +1766,7 @@ msgstr "Ukloni neoznačene"
 
 #: src/audacious/ui_manager.c:297
 msgid "Remove unselected entries from the playlist."
-msgstr "Uklanja neoznačene stavke iz listi numera."
+msgstr "Uklanja neoznačene stavke iz liste numera."
 
 #: src/audacious/ui_manager.c:300
 msgid "Remove Selected"
@@ -1774,7 +1774,7 @@ msgstr "Ukloni označene"
 
 #: src/audacious/ui_manager.c:301
 msgid "Remove selected entries from the playlist."
-msgstr "Uklanja označene stavke iz listi numera."
+msgstr "Uklanja označene stavke iz liste numera."
 
 #: src/audacious/ui_manager.c:306
 msgid "Randomize List"
@@ -1956,15 +1956,15 @@ msgstr "Auto-učitana pretpodešavanja"
 
 #: src/audacious/ui_manager.c:440
 msgid "Load auto-load preset"
-msgstr "Učitati аuto-učitana pretpodešavanja"
+msgstr "Učitati auto-učitana pretpodešavanja"
 
 #: src/audacious/ui_manager.c:442 src/audacious/ui_manager.c:463
 msgid "Default"
-msgstr "Podrazumevanо"
+msgstr "Podrazumevano"
 
 #: src/audacious/ui_manager.c:443
 msgid "Load default preset into equalizer"
-msgstr "Učitati podrazumevano pretpodešavawe u ekvilajzer"
+msgstr "Učitati podrazumevano pretpodešavanje u ekvilajzer"
 
 #: src/audacious/ui_manager.c:445
 msgid "Zero"
@@ -1988,7 +1988,7 @@ msgstr "Iz WinAMP EQF datoteke"
 
 #: src/audacious/ui_manager.c:452
 msgid "Load preset from WinAMP EQF file"
-msgstr "Učitati pretpodešavawe iz WinAMP EQF datoteke"
+msgstr "Učitati pretpodešavanje iz WinAMP EQF datoteke"
 
 #: src/audacious/ui_manager.c:454
 msgid "WinAMP Presets"
@@ -2046,8 +2046,8 @@ msgid ""
 "for."
 msgstr ""
 "Obeleži stavke u listi numera popunjavajući jedno ili više polja. Polja "
-"koriste sintaksu običnih izraza, razlikuju veličinu slova. Ako ne znate kako "
-"obični izrazi funkcionišu, jednostavno unesite doslovno deo onoga što "
+"koriste sintaksu regularnih izraza i razlikuju veličinu slova. Ako ne znate kako "
+"regularni izrazi funkcionišu, jednostavno unesite doslovno deo onoga što "
 "tražite."
 
 #: src/audacious/ui_playlist.c:463
@@ -2245,7 +2245,7 @@ msgstr "Izaberite font liste numera:"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Use Bitmap fonts if available"
-msgstr "Koristi bit mapirane fontove, ako su dostupni"
+msgstr "Koristi bitmapirane fontove, ako su dostupni"
 
 #: src/audacious/ui_preferences.c:206
 msgid ""
@@ -2273,9 +2273,7 @@ msgstr "Prikaži ukras programa za upravljanje prozorima"
 
 #: src/audacious/ui_preferences.c:213
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-"Ovo omogućava programu za upravljanje prozorima da prikaže ukrase na "
-"prozorima."
+msgstr "Ovo omogućava programu za upravljanje prozorima da prikaže ukrase na prozorima."
 
 #: src/audacious/ui_preferences.c:214
 msgid "Use XMMS-style file selector instead of the default selector"
@@ -2300,7 +2298,7 @@ msgid ""
 "If selected, the file information text in the main window will scroll back "
 "and forth. If not selected, the text will only scroll in one direction."
 msgstr ""
-"Ako je uključeno, tekst koji prkazuje imformacije o datoteci u glavnom "
+"Ako je uključeno, tekst koji prikazuje informacije o datoteci u glavnom "
 "prozoru će klizati napred i nazad. Ako je isključeno, tekst će se klizati "
 "samo u jednom smeru."
 
@@ -2418,7 +2416,7 @@ msgstr "Uključi zaštitu od odsecanja vrhunaca"
 
 #: src/audacious/ui_preferences.c:252
 msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr "Koristi vrednost vrhunca iz Replay Gain-a kao zastitu od odsecanja"
+msgstr "Koristi vrednost vrhunca iz Replay Gain-a kao zaštitu od odsecanja"
 
 #: src/audacious/ui_preferences.c:253
 msgid "Dynamically adjust scale factor to prevent clipping"
@@ -2527,7 +2525,7 @@ msgid ""
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 "Uvek osveži okvir datoteke (ovo će usporiti otvaranje okvira za velike "
-"direktorijume, i GNOME VFS bi trebao automatski obaviti)."
+"direktorijume, i Gnome VFS bi trebao automatski obaviti)."
 
 #: src/audacious/ui_preferences.c:283
 msgid "<b>Mouse wheel</b>"
@@ -2632,7 +2630,7 @@ msgstr "Zakašnjenje pojavljivanja iskačućeg proz. datoteke: "
 
 #: src/audacious/ui_preferences.c:1611
 msgid "Auto character encoding detector for:"
-msgstr "Auto-prepozavanje kodiranja karaktera za:"
+msgstr "Auto-prepoznavanje kodiranja karaktera za:"
 
 #: src/audacious/ui_preferences.c:1630
 msgid ""
@@ -2642,13 +2640,13 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 "Lista kodiranja karaktera koja se koriste za rezervnu konverziju meta-"
-"podataka. Ako automatsko prepoznavanje kodiranja ne uspe ili je isključeno, "
-"kodiranja u ovoj listi će biti kandidati za šifrovanje meta-podataka, i "
-"rezervna konverzija iz ovih kodiranja u UTF-8 će biti pokušana."
+"podataka. Ako automatsko prepoznavanje kodiranja karaktera ne upse ili je "
+"isključeno, kodiranja u ovoj listi će biti kandidati za šifrovanje meta-"
+"poataka, i rezervna konverzija iz ovih kodiranja u UTF-8 će biti pokušana."
 
 #: src/audacious/ui_preferences.c:1632
 msgid "Fallback character encodings:"
-msgstr "Rezervno kodiranja karaktera:"
+msgstr "Rezervno kodiranje karaktera:"
 
 #: src/audacious/ui_preferences.c:1660
 msgid "Output bit depth:"
@@ -2768,7 +2766,7 @@ msgstr "<b>Audio sistem</b>"
 
 #: src/audacious/ui_preferences.c:2316
 msgid "Buffer size:"
-msgstr "Veličina bafer:"
+msgstr "Veličina bafera:"
 
 #: src/audacious/ui_preferences.c:2322
 msgid ""
@@ -2969,7 +2967,7 @@ msgstr "Nearhivirana Winamp 2.x maska"
 
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
-msgstr "Dodaj/otvori URL okvir"
+msgstr "Okvir dodaj/otvori URL"
 
 #: src/audacious/util.c:1047
 #, c-format
@@ -3009,7 +3007,7 @@ msgstr "Stavka ne može da se pokrene"
 
 #: src/libeggsmclient/eggsmclient.c:183
 msgid "Disable connection to session manager"
-msgstr "Isključi vezu sa menadžerom sesije"
+msgstr "Isljuči vezu sa menadžerom sesije"
 
 #: src/libeggsmclient/eggsmclient.c:186
 msgid "Specify file containing saved configuration"

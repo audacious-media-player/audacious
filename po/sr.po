@@ -137,7 +137,7 @@ msgstr ""
 
 #: src/audacious/main.c:667
 msgid "Sorry, threads aren't supported on your platform.\n"
-msgstr "Жао мије, али ваша платформа не подржава нити.\n"
+msgstr "Жао ми је, али ваша платформа не подржава нити.\n"
 
 #: src/audacious/main.c:701
 #, c-format
@@ -181,8 +181,8 @@ msgstr ""
 "\n"
 "Audacious је ухватио сигнал 11 (SIGSEGV).\n"
 "\n"
-"Извињавамо се због непрелика, али Audacious је отказао.\n"
-"Ово је грешка у програму, и никед не би требала да се деси под нормалним "
+"Извињавамо се због неприлика, али Audacious је отказао.\n"
+"Ово је грешка у програму, и никад не би требала да се деси под нормалним "
 "околностима.\n"
 "Ваша тренутна конфигурација је сачувана и неби требала бити оштећена.\n"
 "\n"
@@ -378,11 +378,11 @@ msgstr "Руски:"
 
 #: src/audacious/ui_credits.c:243
 msgid "Serbian (Latin):"
-msgstr "Спрски (Латиница):"
+msgstr "Српски (Латиница):"
 
 #: src/audacious/ui_credits.c:246
 msgid "Serbian (Cyrillic):"
-msgstr "Спрски (Ћирилица):"
+msgstr "Српски (Ћирилица):"
 
 #: src/audacious/ui_credits.c:249
 msgid "Simplified Chinese:"
@@ -711,7 +711,7 @@ msgstr "Рејв"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Showtunes"
-msgstr "Музика из представа"
+msgstr "Музика из представе"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Trailer"
@@ -927,7 +927,7 @@ msgstr "Соло бубњеви"
 
 #: src/audacious/ui_fileinfo.c:135
 msgid "A Cappella"
-msgstr "Капела"
+msgstr "А капела"
 
 #: src/audacious/ui_fileinfo.c:136
 msgid "Euro-House"
@@ -1274,7 +1274,7 @@ msgid ""
 msgstr ""
 "<big><b>Покварена GTK машина у употреби</b></big>\n"
 "\n"
-"Audacious је открио да корисите покварену GTK машину.\n"
+"Audacious је открио да користите покварену GTK машину.\n"
 "\n"
 "Машина за теме коју користите, <i>%s</i>, није компатибилна са неким од "
 "елемената које користе модерне маске. Некомпатибилне особине су искључене за "
@@ -1299,7 +1299,7 @@ msgstr "Тражи до: %d:%-2.2d/%d:%-2.2d (%d%%)"
 #: src/audacious/ui_main.c:1521
 #, c-format
 msgid "Volume: %d%%"
-msgstr "Јачин звука: %d%%"
+msgstr "Јачина звука: %d%%"
 
 #: src/audacious/ui_main.c:1549
 #, c-format
@@ -1355,7 +1355,7 @@ msgstr ""
 "<b><big>Није могуће отворити аудио.</big></b>\n"
 "\n"
 "Молим вас проверите:\n"
-"1. Да ли сте изабрали добар излазни додатак .\n"
+"1. Да ли сте изабрали добар излазни додатак.\n"
 "2. Ниједан други програм не блокира звучну картицу.\n"
 "3. Ваша звучна картица је исправно подешена.\n"
 
@@ -1474,7 +1474,7 @@ msgstr "Линијски досег"
 
 #: src/audacious/ui_manager.c:122
 msgid "Solid Scope"
-msgstr "Испунњен досег"
+msgstr "Испуњен досег"
 
 #: src/audacious/ui_manager.c:128
 msgid "Ice"
@@ -1639,7 +1639,7 @@ msgstr "Освежи листу"
 
 #: src/audacious/ui_manager.c:228
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr "Освежава мета-податке придружене ставки листе нурма."
+msgstr "Освежава мета-податке придружене ставки листе нумера."
 
 #: src/audacious/ui_manager.c:231
 msgid "List Manager"
@@ -1677,7 +1677,9 @@ msgstr "Претражи и означи"
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr "Претржује листу нумера и означи ставке листе нумера по одређеном критеријуму."
+msgstr ""
+"Претражује листу нумера и означи ставке листе нумера по одређеном "
+"критеријуму."
 
 #: src/audacious/ui_manager.c:256
 msgid "Invert Selection"
@@ -1780,7 +1782,7 @@ msgstr "Насумице испремештај листу"
 
 #: src/audacious/ui_manager.c:307
 msgid "Randomizes the playlist."
-msgstr "Насумице испремешта листу нумера."
+msgstr "Насумице испремешта ставке у листи нумера."
 
 #: src/audacious/ui_manager.c:310
 msgid "Reverse List"
@@ -1800,7 +1802,7 @@ msgstr "Сортира листу према наслову."
 
 #: src/audacious/ui_manager.c:320 src/audacious/ui_manager.c:350
 msgid "By Artist"
-msgstr "По озвођачу"
+msgstr "По извођачу"
 
 #: src/audacious/ui_manager.c:321 src/audacious/ui_manager.c:351
 msgid "Sorts the list by artist."
@@ -1954,11 +1956,11 @@ msgstr "Aуто-учитана претподешавања"
 
 #: src/audacious/ui_manager.c:440
 msgid "Load auto-load preset"
-msgstr "Учитати Ауто-учитана претподешавања"
+msgstr "Учитати ауто-учитана претподешавања"
 
 #: src/audacious/ui_manager.c:442 src/audacious/ui_manager.c:463
 msgid "Default"
-msgstr "Подразумеванo"
+msgstr "Подразумевано"
 
 #: src/audacious/ui_manager.c:443
 msgid "Load default preset into equalizer"
@@ -2043,9 +2045,10 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
-"Обележи ставке у листи нумера попуњавајући једно или више поља. Поља користе "
-"синтаксу обичних израза, разликују величину слова. Ако не знате како обични "
-"изрази функционишу, једноставно унесите дословно део онога што тражите."
+"Обележи ставке у листи нумера попуњавајући једно или више поља. Поља "
+"користе синтаксу регуларних израза и разликују величину слова. Ако не знате како "
+"регуларни изрази функционишу, једноставно унесите дословно део онога што "
+"тражите."
 
 #: src/audacious/ui_playlist.c:463
 msgid "Title: "
@@ -2274,7 +2277,7 @@ msgstr "Ово омогућава програму за управљањe про
 
 #: src/audacious/ui_preferences.c:214
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "Користи  XMMS-ов селектор датотека уместо подразумеваног"
+msgstr "Користи XMMS-ов селектор датотека уместо подразумеваног"
 
 #: src/audacious/ui_preferences.c:215
 msgid ""
@@ -2312,7 +2315,7 @@ msgid ""
 "If selected, audacious won't refuse loading broken skins. Use only if your "
 "favourite skin doesn't work"
 msgstr ""
-"Ако је укључено, Audacious неће забранити учитавање несиправних маски. Користите само "
+"Ако је укључено, Audacious неће забранити учитавање неисправних маски. Користите само "
 "ако ваша омиљена маска не ради"
 
 #: src/audacious/ui_preferences.c:224
@@ -2380,12 +2383,12 @@ msgid ""
 msgstr ""
 "Покушај да проследиш излаз улазног додатка директно у излазни додатак, ако "
 "каснији подржава формат који ствара улазни додатак. Ако је ово тачно, свака "
-"обрада сигнала ће бити искључена (нпр. DSP додаци, еквилајзер, Replay Gain и "
-"остала софтверска контрола јачине звука)."
+"обрада сигнала ће бити искључена (нпр. DSP додаци, еквилајзер, Replay Gain "
+"и остала софтверска контрола јачине звука)."
 
 #: src/audacious/ui_preferences.c:245
 msgid "<b>Replay Gain configuration</b>"
-msgstr "<b>Конфигурација Replay Gain-а</b>"
+msgstr "<b>Replay Gain конфигурација</b>"
 
 #: src/audacious/ui_preferences.c:246
 msgid "Enable Replay Gain"
@@ -2504,8 +2507,9 @@ msgid ""
 "Load metadata on demand when displaying the file in the playlist. You may "
 "need to set \"Detect file formats on demand\" in Audio page for full benefit."
 msgstr ""
-"Учитај мета податке приликом приказивања датотеке у листи нумера. Можда ћете "
-"морати да поставите \"Преопознај формат датотеке на захтев\" у Аудио одељку."
+"Учитај мета-податке приликом приказивања датотеке у листи нумера. Можда "
+"ћете морати да поставите \"Препознај формат датотеке на захтев\" у Аудио "
+"одељку."
 
 #: src/audacious/ui_preferences.c:278
 msgid "<b>File Dialog</b>"
@@ -2622,7 +2626,7 @@ msgstr "Прикажи индикатор напредовања за текућ
 
 #: src/audacious/ui_preferences.c:1566
 msgid "Delay until filepopup comes up: "
-msgstr "Закашњење појављивања искачућег проз. датоетеке: "
+msgstr "Закашњење појављивања искачућег проз. датотеке: "
 
 #: src/audacious/ui_preferences.c:1611
 msgid "Auto character encoding detector for:"
@@ -2679,7 +2683,7 @@ msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
-"<span size=\"small\">Запамтите да најефикаснији начин да спречитеодсецање "
+"<span size=\"small\">Запамтите да најефикаснији начин да спречите одсецање "
 "сигнала је да не користите позитивне вредности изнад.</span>"
 
 #: src/audacious/ui_preferences.c:1975
@@ -2749,8 +2753,8 @@ msgid ""
 "number, track length, and artwork."
 msgstr ""
 "Укључује/искључује искачући прозор са информацијама за показану ставку у "
-"листи нумера. Прозор приказује име песме, име албума, жанр, годину издавања, "
-"број нумере, дужину нумере и слику."
+"листи нумера. Прозор приказује име песме, име албума, жанр, годину "
+"издавања, број нумере, дужину нумере и слику."
 
 #: src/audacious/ui_preferences.c:2196
 msgid "Edit settings for popup information"
@@ -2870,8 +2874,8 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">Мењање ових подешавања ће захтевати поновно покретање "
-"Audacious-а.</span>"
+"<span size=\"small\">Мењање ових подешавања ће захтевати поновно "
+"покретање Audacious-а.</span>"
 
 #: src/audacious/ui_preferences.c:2745
 msgid "_Decoder list:"
