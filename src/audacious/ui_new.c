@@ -97,7 +97,12 @@ ui_set_song_info(gchar *text, gpointer user_data)
 {
     gint length = playback_get_length();
 
+    /* block "value-changed" signal handler to prevent skipping track
+       if the next track is shorter than the previous one --desowin */
+    g_signal_handler_block(slider, slider_change_handler_id);
     gtk_range_set_range(GTK_RANGE(slider), 0.0, (gdouble)length);
+    g_signal_handler_unblock(slider, slider_change_handler_id);
+
     gtk_widget_show(label_time);
 
     ui_playlist_widget_set_current(treeview, playlist_get_position(playlist_get_active()));
@@ -134,7 +139,7 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
 {
     if (!playback_get_playing())
     {
-        gtk_range_set_value(GTK_RANGE(slider), (gdouble)0);
+        gtk_range_set_value(GTK_RANGE(slider), 0.0);
         return FALSE;
     }
 
