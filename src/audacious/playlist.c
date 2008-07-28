@@ -2437,9 +2437,10 @@ playlist_get_info_func(gpointer arg)
                     /* Entry disappeared while we looked it up.
                        Restart. */
                     node = playlist->entries;
-                else if (entry->tuple != NULL && 
+                else if ((entry->tuple != NULL) ||
+			 (entry->title != NULL && 
                          tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1)
+                         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1))
                 {
                     update_playlistwin = TRUE;
                     break; /* hmmm... --asphyx */
@@ -2488,9 +2489,10 @@ playlist_get_info_func(gpointer arg)
                         node = g_list_nth(playlist->entries,
                                           playlistwin_get_toprow());
                 }
-                else if (entry->tuple != NULL && 
+                else if ((entry->tuple != NULL) ||
+			 (entry->title != NULL && 
                          tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1) {
+                         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1)) {
                     update_playlistwin = TRUE;
                 }
             }
