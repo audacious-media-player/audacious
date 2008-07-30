@@ -633,14 +633,16 @@ discovery_plugin_init(Plugin * plugin)
 static void
 plugin2_dispose(GModule *module, const gchar *str, ...)
 {
-    gchar buf[4096];
+    gchar *buf;
     va_list va;
 
     va_start(va, str);
-    vsnprintf(buf, 4096, str, va);
+    buf = g_strdup_vprintf(str, va);
     va_end(va);
 
     g_message("*** %s\n", buf);
+    g_free(buf);
+    
     g_module_close(module);
 }
 
