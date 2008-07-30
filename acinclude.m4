@@ -91,18 +91,18 @@ AC_DEFUN([AUD_TRY_COMPILE], [dnl
 
 dnl ** Check for GNU make
 AC_DEFUN([AUD_CHECK_GNU_MAKE],[
-    AC_CACHE_CHECK([for GNU make],cv_gnu_make_command,[
-    cv_gnu_make_command=""
+    AC_CACHE_CHECK([for GNU make],_cv_gnu_make_command,[
+    _cv_gnu_make_command=""
     for a in "$MAKE" make gmake gnumake; do
         test "x$a" = "x" && continue
         if ( sh -c "$a --version" 2>/dev/null | grep "GNU Make" >/dev/null ) ; then
-            cv_gnu_make_command="$a"
+            _cv_gnu_make_command="$a"
             break
         fi
     done
     ])
-    if test "x$cv_gnu_make_command" != "x" ; then
-        MAKE="$cv_gnu_make_command"
+    if test "x$_cv_gnu_make_command" != "x" ; then
+        MAKE="$_cv_gnu_make_command"
     else
         AC_MSG_ERROR([** GNU make not found. If it is installed, try setting MAKE environment variable. **])
     fi
