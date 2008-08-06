@@ -1,4 +1,7 @@
-STATIC_LIB_NOINST = libSAD.a
+LIB = ${LIB_PREFIX}SAD${LIB_SUFFIX}
+LIB_MAJOR = 1
+LIB_MINOR = 0
+
 SRCS = dither.c \
        dither_ops.c \
        noicegen.c
