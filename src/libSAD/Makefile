@@ -15,3 +15,4 @@ include ../../extra.mk
 
 PACKAGE = libSAD
 CPPFLAGS += ${SIMD_CFLAGS} -I../..
+CFLAGS += ${LIB_CFLAGS}
