@@ -122,6 +122,8 @@ typedef enum {
      a == FMT_S32_NE || a == FMT_S32_LE || a == FMT_S32_BE || a == FMT_U32_NE || a == FMT_U32_LE || a == FMT_U32_BE || \
      a == FMT_FIXED32) ? sizeof(gint32) : sizeof(float))))
 
+#define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
+
 typedef enum {
     INPUT_VIS_ANALYZER,
     INPUT_VIS_SCOPE,
