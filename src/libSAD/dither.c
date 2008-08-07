@@ -25,6 +25,8 @@
 #include "dither_ops.h"
 #include "noicegen.h"
 
+#include "debug.h"
+
 #include <assert.h>
 #include <math.h>
 
