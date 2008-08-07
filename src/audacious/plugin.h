@@ -650,6 +650,8 @@ struct _AudaciousFuncTableV1 {
     gboolean (*vfs_fget_be16)(guint16 *value, VFSFile *stream);
     gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
     gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
+    void (*output_plugin_cleanup)(void);
+    void (*output_plugin_reinit)(void);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -1008,6 +1010,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_save_preset_file        _audvt->save_preset_file
 #define aud_equalizer_read_aud_preset _audvt->equalizer_read_aud_preset
 #define aud_load_preset_file        _audvt->load_preset_file
+#define aud_output_plugin_cleanup   _audvt->output_plugin_cleanup
+#define aud_output_plugin_reinit    _audvt->output_plugin_reinit
 
 #include "audacious/auddrct.h"
 

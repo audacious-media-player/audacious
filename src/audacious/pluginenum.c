@@ -396,6 +396,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .save_preset_file = save_preset_file,
     .equalizer_read_aud_preset = equalizer_read_aud_preset,
     .load_preset_file = load_preset_file,
+    .output_plugin_cleanup = output_plugin_cleanup,
+    .output_plugin_reinit = output_plugin_reinit,
 };
 
 /*****************************************************************/

@@ -70,5 +70,6 @@ gint get_output_time(void);
 
 extern OutputPlugin psuedo_output_plugin;
 extern OutputPluginData op_data;
-
+void output_plugin_cleanup(void);
+void output_plugin_reinit(void);
 #endif /* AUDACIOUS_OUTPUT_H */

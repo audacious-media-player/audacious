@@ -684,3 +684,16 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
     
     SAD_dither_apply_replaygain(sad_state_from_float, &info, &mode);
 }
+
+void output_plugin_cleanup(void)
+{
+  OutputPlugin *op = get_current_output_plugin();
+   op->init();
+   output_close_audio();
+   printf("output plugin cleanupn\n");
+}
+void output_plugin_reinit(void)
+{
+
+    printf("output plugin reinit \n");
+}
