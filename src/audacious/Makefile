@@ -181,11 +181,11 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		${LIBMCS_CFLAGS}		\
 		${SIMD_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
-		-I../libSAD				\
 		${EGGSM_CFLAGS}			\
 		-I.. -I../..			\
 		-I./intl			\
-		-I.
+		-I.				\
+		-I../libSAD
 
 LIBS += ${LDADD}						\
 		${LIBINTL}						\
