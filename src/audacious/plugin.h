@@ -47,6 +47,7 @@
 #include "audacious/preferences.h"
 #include "audacious/interface.h"
 #include "audacious/equalizer_preset.h"
+#include "libSAD/libSAD.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -362,6 +363,9 @@ struct _AudaciousFuncTableV1 {
     const gchar *(*get_gentitle_format)(void);
     gchar *(*util_get_localdir)(void);
     void (*util_menu_main_show)(gint x, gint y, guint button, guint time);
+
+    gpointer (*smart_realloc)(gpointer ptr, gsize *size);
+    SAD_sample_format (*sadfmt_from_afmt)(AFormat fmt);
 
     /* INI funcs */
     INIFile *(*open_ini_file)(const gchar *filename);
@@ -750,6 +754,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_info_dialog			_audvt->util_info_dialog
 #define audacious_info_dialog		_audvt->util_info_dialog
 #define aud_get_gentitle_format		_audvt->get_gentitle_format
+#define aud_smart_realloc               _audvt->smart_realloc
+#define aud_sadfmt_from_afmt            _audvt->sadfmt_from_afmt
 
 #define aud_escape_shell_chars		_audvt->escape_shell_chars
 #define aud_str_append			_audvt->str_append
