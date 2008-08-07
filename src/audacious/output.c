@@ -55,8 +55,6 @@
 # include "src_flow.h"
 #endif
 
-#define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
-
 OutputPluginData op_data = {
     NULL,
     NULL
