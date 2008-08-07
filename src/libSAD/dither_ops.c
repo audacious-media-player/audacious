@@ -23,6 +23,8 @@
 #include "dither_ops.h"
 #include "dither.h"
 
+#include "debug.h"
+
 #define SAD_GET_LE16(a) ( (uint16_t)(((uint8_t*)(a))[0])      | (uint16_t)(((uint8_t*)(a))[1]) << 8 )
 #define SAD_GET_BE16(a) ( (uint16_t)(((uint8_t*)(a))[0]) << 8 | (uint16_t)(((uint8_t*)(a))[1]) )
 

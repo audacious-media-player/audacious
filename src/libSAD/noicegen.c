@@ -17,6 +17,8 @@
 
 #include "noicegen.h"
 
+#include "debug.h"
+
 int triangular_dither_noise(int nbits)
 {
     // parameter nbits : the peak-to-peak amplitude desired (in bits)

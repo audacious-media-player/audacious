@@ -130,12 +130,6 @@ enum {
 #define SAD_ERROR_OK 0
 #define SAD_ERROR_FAIL -1
 
-#ifdef DEBUG
-#define DEBUG_MSG(f,x) {printf("debug: "f, x);}
-#else
-#define DEBUG_MSG(f,x) {}
-#endif
-
 typedef struct {
   int present;
   float track_gain; /* in dB !!! */

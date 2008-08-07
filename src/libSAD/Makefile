@@ -8,7 +8,8 @@ SRCS = dither.c \
 
 INCLUDES = libSAD.h \
            common.h \
-           dither.h
+           dither.h \
+           debug.h
 
 include ../../buildsys.mk
 include ../../extra.mk
