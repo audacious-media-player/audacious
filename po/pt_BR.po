@@ -118,7 +118,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Tente `%s --ajuda' para mais informações.\n"
+"Tente `%s --help' para mais informações.\n"
 
 #: src/audacious/main.c:538
 #, c-format
