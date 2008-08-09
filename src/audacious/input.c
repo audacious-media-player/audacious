@@ -55,8 +55,6 @@
 
 #include "libSAD.h"
 
-#define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
-
 G_LOCK_DEFINE_STATIC(vis_mutex);
 
 InputPluginData ip_data = {
