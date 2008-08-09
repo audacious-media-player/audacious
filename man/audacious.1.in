@@ -3,10 +3,10 @@
 Audacious \- an audio player for X.
 .SH SYNOPSIS
 .B audacious
-[\-h] [\-\-help] [\-r]
-[\-\-rew] [\-p] [\-\-play] [\-u] [\-\-pause] [\-s] [\-\-stop] [\-f]
-[\-\-fwd] [\-e] [\-\-enqueue] [\-m] [\-\-show\-main\-window] [\-v]
-[\-\-version] [\-\-headless] [\fIfilename\fP]...
+[\fB\-h\fP] [\fB\-\-help\fP] [\fB\-r\fP]
+[\fB\-\-rew\fP] [\fB\-p\fP] [\fB\-\-play\fP] [\fB\-u\fP] [\fB\-\-pause\fP] [\fB\-s\fP] [\fB\-\-stop\fP] [\fB\-f\fP]
+[\fB\-\-fwd\fP] [\fB\-e\fP] [\fB\-\-enqueue\fP] [\fB\-m\fP] [\fB\-\-show\-main\-window\fP] [\fB\-v\fP]
+[\fB\-\-version\fP] [\fB\-i\fP \fIinterface\fP] [\fB\-\-interface\fP \fIinterface\fP] [\fB\-\-display\fP=\fIDISPLAY\fP] [\fIfilename\fP]...
 .SH DESCRIPTION
 \fIAudacious\fP is a media player, based on Beep Media Player, 
 which is in turn based on the X Multimedia System.
@@ -47,8 +47,25 @@ Show the main window.
 .B \-v, \-\-version
 Print version number and exit.
 .TP
-.B \-H, \-\-headless
-Starts Audacious in headless mode.
+.B \-i, \-\-interface
+Select interface to use.
+.TP
+.B \-\-display=\fIDISPLAY\fP
+Select X display to use.
+.SH INTERFACES
+Audacious supports multiple interface plugins. Interface plugin determines Audacious look'n'feel.
+
+As for now, you can use following interfaces:
+
+.in +2
+default	Default interface that uses GTK+ widgets
+.br
+skinned	Interface that supports skinned interface
+.br
+legacy	Old (Audacious 1.*) skinned interface
+.br
+headless	Headless mode
+
 .SH SKINS
 Audacious supports Winamp Classic style skins.  Skins may be stored in either
 archived (\fI.zip\fP, \fI.wsz\fP, \fI.tgz\fP, \fI.tar.gz\fP, 
