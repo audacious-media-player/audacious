@@ -714,20 +714,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_cfg_db_get_double		_audvt->cfg_db_get_double
 #define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
 
-#define aud_cfg_db_open			_audvt->cfg_db_open
-#define aud_cfg_db_close		_audvt->cfg_db_close
-#define aud_cfg_db_set_string		_audvt->cfg_db_set_string
-#define aud_cfg_db_set_int		_audvt->cfg_db_set_int
-#define aud_cfg_db_set_bool		_audvt->cfg_db_set_bool
-#define aud_cfg_db_set_float		_audvt->cfg_db_set_float
-#define aud_cfg_db_set_double		_audvt->cfg_db_set_double
-#define aud_cfg_db_get_string		_audvt->cfg_db_get_string
-#define aud_cfg_db_get_int		_audvt->cfg_db_get_int
-#define aud_cfg_db_get_bool		_audvt->cfg_db_get_bool
-#define aud_cfg_db_get_float		_audvt->cfg_db_get_float
-#define aud_cfg_db_get_double		_audvt->cfg_db_get_double
-#define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
-
 #define aud_tuple_new			_audvt->tuple_new
 #define aud_tuple_new_from_filename	_audvt->tuple_new_from_filename
 #define aud_tuple_associate_string	_audvt->tuple_associate_string
