@@ -654,7 +654,7 @@ plugin2_dispose(GModule *module, const gchar *str, ...)
 void
 plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
 {
-    int i;
+    gint i, n;
     mowgli_node_t *hlist_node;
 
     if (header->magic != PLUGIN_MAGIC)
@@ -674,58 +674,59 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     header->priv_assoc->handle = module;
     header->priv_assoc->filename = g_strdup(filename);
 
-    i = 0;
-
+    n = 0;
+    
     if (header->ip_list)
     {
-        for (; (header->ip_list)[i] != NULL; i++)
+        for (i = 0; (header->ip_list)[i] != NULL; i++, n++)
         {
-            PLUGIN((header->ip_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            PLUGIN((header->ip_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             input_plugin_init(PLUGIN((header->ip_list)[i]));
         }
     }
 
     if (header->op_list)
     {
-        for (; (header->op_list)[i] != NULL; i++)
+        for (i = 0; (header->op_list)[i] != NULL; i++, n++)
         {
-            PLUGIN((header->op_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            PLUGIN((header->op_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             output_plugin_init(PLUGIN((header->op_list)[i]));
         }
     }
 
     if (header->ep_list)
     {
-        for (; (header->ep_list)[i] != NULL; i++)
+        for (i = 0; (header->ep_list)[i] != NULL; i++, n++)
         {
-            PLUGIN((header->ep_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            PLUGIN((header->ep_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             effect_plugin_init(PLUGIN((header->ep_list)[i]));
         }
     }
+    
 
     if (header->gp_list)
     {
-        for (; (header->gp_list)[i] != NULL; i++)
+        for (i = 0; (header->gp_list)[i] != NULL; i++, n++)
         {
-            PLUGIN((header->gp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            PLUGIN((header->gp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             general_plugin_init(PLUGIN((header->gp_list)[i]));
         }
     }
 
     if (header->vp_list)
     {
-        for (; (header->vp_list)[i] != NULL; i++)
+        for (i = 0; (header->vp_list)[i] != NULL; i++, n++)
         {
-            PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             vis_plugin_init(PLUGIN((header->vp_list)[i]));
         }
     }
 
     if (header->dp_list)
     {
-        for (; (header->dp_list)[i] != NULL; i++)
+        for (i = 0; (header->dp_list)[i] != NULL; i++, n++)
         {
-            PLUGIN((header->dp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, i);
+            PLUGIN((header->dp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             discovery_plugin_init(PLUGIN((header->dp_list)[i]));
         }
     }
