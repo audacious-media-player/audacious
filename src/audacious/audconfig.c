@@ -637,29 +637,6 @@ aud_config_save(void)
 
     hook_call("config save", db);
 
-    /* FIXME: we're looking up SkinnedWindow::x &c ourselves here.
-     * this isn't exactly right. -nenolod
-     */
-    if ( playlistwin &&
-         SKINNED_WINDOW(playlistwin)->x != -1 &&
-         SKINNED_WINDOW(playlistwin)->y != -1 )
-    {
-        cfg_db_set_int(db, NULL, "playlist_x",
-                           SKINNED_WINDOW(playlistwin)->x);
-        cfg_db_set_int(db, NULL, "playlist_y",
-                           SKINNED_WINDOW(playlistwin)->y);
-    }
-    
-    if ( equalizerwin &&
-         SKINNED_WINDOW(equalizerwin)->x != -1 &&
-         SKINNED_WINDOW(equalizerwin)->y != -1 )
-    {
-        cfg_db_set_int(db, NULL, "equalizer_x",
-                           SKINNED_WINDOW(equalizerwin)->x);
-        cfg_db_set_int(db, NULL, "equalizer_y",
-                           SKINNED_WINDOW(equalizerwin)->y);
-    }
-
     for (i = 0; i < ncfgsent; ++i) {
         if (aud_strents[i].se_wrt)
             cfg_db_set_string(db, NULL,
@@ -668,7 +645,7 @@ aud_config_save(void)
     }
 
     cfg_db_set_float(db, NULL, "equalizer_preamp", cfg.equalizer_preamp);
-    
+
     /* RG settings */
     cfg_db_set_float(db, NULL, "replay_gain_preamp", cfg.replay_gain_preamp);
     cfg_db_set_float(db, NULL, "default_gain",       cfg.default_gain);
@@ -677,16 +654,6 @@ aud_config_save(void)
         str = g_strdup_printf("equalizer_band%d", i);
         cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
         g_free(str);
-    }
-
-    cfg_db_set_float(db, NULL, "scale_factor", cfg.scale_factor);
-
-    if (aud_active_skin != NULL)
-    {
-        if (aud_active_skin->path)
-            cfg_db_set_string(db, NULL, "skin", aud_active_skin->path);
-        else
-            cfg_db_unset_key(db, NULL, "skin");
     }
 
     if (get_current_output_plugin())
@@ -727,10 +694,10 @@ aud_config_save(void)
 
     cfg_db_set_int(db, NULL, "url_history_length",
                        g_list_length(cfg.url_history));
-    
+
     input_get_volume(&vol_l,&vol_r);
     cfg_db_set_int(db, NULL, "saved_volume", (vol_l<<8) | vol_r );
-    
+
     for (node = cfg.url_history, i = 1; node; node = g_list_next(node), i++) {
         str = g_strdup_printf("url_history%d", i);
         cfg_db_set_string(db, NULL, str, node->data);
