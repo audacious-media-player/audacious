@@ -318,12 +318,12 @@ gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
         return TRUE;
     }
 
-    // Song URI
+    // Song location
     value = g_new0(GValue, 1);
     g_value_init(value, G_TYPE_STRING);
     g_value_take_string(value, playlist_get_filename(active, pos));
 
-    g_hash_table_insert(md, "URI", value);
+    g_hash_table_insert(md, "location", value);
 
     *metadata = md;
 
@@ -406,12 +406,12 @@ gboolean mpris_emit_track_change(MprisPlayer *obj) {
         metadata = g_hash_table_new_full(g_str_hash, g_str_equal,
                                          NULL, remove_metadata_value);
 
-    // Song URI
+    // Song location
     value = g_new0(GValue, 1);
     g_value_init(value, G_TYPE_STRING);
     g_value_take_string(value, playlist_get_filename(active, pos));
 
-    g_hash_table_insert(metadata, "URI", value);
+    g_hash_table_insert(metadata, "location", value);
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     g_hash_table_destroy(metadata);
@@ -441,12 +441,12 @@ gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
         return TRUE;
     }
 
-    // Song URI
+    // Song location
     value = g_new0(GValue, 1);
     g_value_init(value, G_TYPE_STRING);
     g_value_take_string(value, playlist_get_filename(active, pos));
 
-    g_hash_table_insert(md, "URI", value);
+    g_hash_table_insert(md, "location", value);
 
     *metadata = md;
 
