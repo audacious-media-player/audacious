@@ -29,6 +29,7 @@ ERLC = @ERLC@
 OBJC = @OBJC@
 AR = @AR@
 LD = ${CC}
+TR = @TR@
 CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@
 CPPFLAGS = @CPPFLAGS@
@@ -45,7 +46,8 @@ LIB_CFLAGS = @LIB_CFLAGS@
 LIB_LDFLAGS = @LIB_LDFLAGS@
 LIB_PREFIX = @LIB_PREFIX@
 LIB_SUFFIX = @LIB_SUFFIX@
-PLUGIN_CPPFLAGS = @PLUGIN_CPPFLAGS@
+PLUGIN_DEFNAME := `echo ${subst ${PLUGIN_SUFFIX},,${PLUGIN}} | tr '[:lower:]' '[:upper:]' | tr '-' '_'`
+PLUGIN_CPPFLAGS = @PLUGIN_CPPFLAGS@ -D${PLUGIN_DEFNAME}_CFGID=\"${subst ${PLUGIN_SUFFIX},,${PLUGIN}}\"
 PLUGIN_CFLAGS = @PLUGIN_CFLAGS@
 PLUGIN_LDFLAGS = @PLUGIN_LDFLAGS@
 PLUGIN_SUFFIX = @PLUGIN_SUFFIX@
@@ -100,7 +102,7 @@ depend: pre-depend ${SRCS}
 		case $$i in \
 			*.o) \
 				test $$i -nt .deps && regen=1; \
-				deps="$${deps%.o}.dep $$i"; \
+				deps="$${deps} $${i%.o}.dep"; \
 				;; \
 		esac; \
 	done; \
