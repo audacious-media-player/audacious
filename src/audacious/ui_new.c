@@ -229,12 +229,27 @@ ui_playback_end(gpointer hook_data, gpointer user_data)
     ui_update_song_info(NULL, NULL);
 }
 
-static GtkToolItem *
+static GtkWidget *
 gtk_toolbar_button_add(GtkWidget *toolbar, void(*callback)(),
                        const gchar *stock_id)
 {
-    GtkToolItem *button = gtk_tool_button_new_from_stock(stock_id);
-    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), button, -1);
+    GtkWidget *button = gtk_button_new();
+    gtk_button_set_label(GTK_BUTTON(button), stock_id);
+    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+    gtk_button_set_relief(GTK_BUTTON(button), GTK_RELIEF_NONE);
+
+    /* remove label */
+    GtkBox *box = GTK_BOX(gtk_bin_get_child(GTK_BIN(gtk_bin_get_child(GTK_BIN(button)))));
+    GList *iter;
+    for (iter = box->children; iter; iter = g_list_next(iter)) {
+        GtkBoxChild *child = (GtkBoxChild *) iter->data;
+        if (GTK_IS_LABEL(child->widget)) {
+            gtk_label_set_text(GTK_LABEL(child->widget), NULL);
+            break;
+        }
+    }
+
+    gtk_box_pack_start(GTK_BOX(toolbar), button, TRUE, TRUE, 0);
     g_signal_connect(G_OBJECT(button), "clicked",
                      G_CALLBACK(callback), NULL);
     return button;
@@ -275,17 +290,13 @@ _ui_initialize(void)
 {
     GtkWidget *window;      /* the main window */
     GtkWidget *vbox;        /* the main vertical box */
-    GtkWidget *toolbar;     /* contains buttons like "open", "next" */
-
-    GtkWidget *shbox;   /* box for slider + time combo --nenolod */
-
+    GtkWidget *tophbox;     /* box to contain toolbar and shbox */
     GtkWidget *scrollwin;   /* widget to hold playlist widget */
-
-    GtkWidget *paned;
-
-    GtkToolItem *button_open, *button_add,
-                *button_play, *button_pause, *button_stop,
-                *button_previous, *button_next;
+    GtkWidget *buttonbox;   /* contains buttons like "open", "next" */
+    GtkWidget *shbox;       /* box for slider + time combo --nenolod */
+    GtkWidget *button_open, *button_add,
+              *button_play, *button_pause, *button_stop,
+              *button_previous, *button_next;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 450, 150);
@@ -298,31 +309,29 @@ _ui_initialize(void)
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
+    tophbox = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), tophbox, FALSE, TRUE, 0);
 
-    paned = gtk_hpaned_new();
-    gtk_box_pack_start(GTK_BOX(vbox), paned, FALSE, TRUE, 0);
-
-    toolbar = gtk_toolbar_new();
-    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-    button_open = gtk_toolbar_button_add(toolbar, button_open_pressed,
+    buttonbox = gtk_hbox_new(FALSE, 0);
+    button_open = gtk_toolbar_button_add(buttonbox, button_open_pressed,
                                          GTK_STOCK_OPEN);
-    button_add = gtk_toolbar_button_add(toolbar, button_add_pressed,
+    button_add = gtk_toolbar_button_add(buttonbox, button_add_pressed,
                                         GTK_STOCK_ADD);
-    button_play = gtk_toolbar_button_add(toolbar, button_play_pressed,
+    button_play = gtk_toolbar_button_add(buttonbox, button_play_pressed,
                                          GTK_STOCK_MEDIA_PLAY);
-    button_pause = gtk_toolbar_button_add(toolbar, button_pause_pressed,
+    button_pause = gtk_toolbar_button_add(buttonbox, button_pause_pressed,
                                           GTK_STOCK_MEDIA_PAUSE);
-    button_stop = gtk_toolbar_button_add(toolbar, button_stop_pressed,
+    button_stop = gtk_toolbar_button_add(buttonbox, button_stop_pressed,
                                          GTK_STOCK_MEDIA_STOP);
-    button_previous = gtk_toolbar_button_add(toolbar, button_previous_pressed,
+    button_previous = gtk_toolbar_button_add(buttonbox, button_previous_pressed,
                                              GTK_STOCK_MEDIA_PREVIOUS);
-    button_next = gtk_toolbar_button_add(toolbar, button_next_pressed,
+    button_next = gtk_toolbar_button_add(buttonbox, button_next_pressed,
                                          GTK_STOCK_MEDIA_NEXT);
 
-    gtk_paned_pack1(GTK_PANED(paned), toolbar, TRUE, TRUE);
+    gtk_box_pack_start(GTK_BOX(tophbox), buttonbox, FALSE, FALSE, 0);
 
     shbox = gtk_hbox_new(FALSE, 0);
-    gtk_paned_add2(GTK_PANED(paned), shbox);
+    gtk_box_pack_start(GTK_BOX(tophbox), shbox, TRUE, TRUE, 0);
 
     slider = gtk_hscale_new(NULL);
     gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
