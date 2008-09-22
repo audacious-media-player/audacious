@@ -377,8 +377,12 @@ input_check_file(const gchar *filename, gboolean loading)
     }
 
 
-    // open the file with vfs sub-system
-    fd = vfs_buffered_file_new_from_uri(filename_proxy);
+    /* open the file with vfs sub-system
+     * FIXME! XXX! buffered VFS file does not handle mixed seeks and reads/writes
+     * correctly! As a temporary workaround, switching to unbuffered ... -ccr
+     */
+    //fd = vfs_buffered_file_new_from_uri(filename_proxy);
+    fd = vfs_fopen(filename_proxy, "rb");
 
     if (!fd) {
         printf("Unable to read from %s, giving up.\n", filename_proxy);
