@@ -429,9 +429,9 @@ static void set_pvt_data(Plugin * plugin, gpointer data)
 {
     mowgli_dictionary_elem_t *elem;
 
-    elem = mowgli_dictionary_find(pvt_data_dict, g_basename(plugin->filename));
+    elem = mowgli_dictionary_find(pvt_data_dict, g_path_get_basename(plugin->filename));
     if (elem == NULL)
-        mowgli_dictionary_add(pvt_data_dict, g_basename(plugin->filename), data);
+        mowgli_dictionary_add(pvt_data_dict, g_path_get_basename(plugin->filename), data);
     else
         elem->data = data;
 }
@@ -440,7 +440,7 @@ static gpointer get_pvt_data(void)
 {
     Plugin *cur_p = plugin_get_current();
 
-    return mowgli_dictionary_retrieve(pvt_data_dict, g_basename(cur_p->filename));
+    return mowgli_dictionary_retrieve(pvt_data_dict, g_path_get_basename(cur_p->filename));
 }
 
 static gint
@@ -567,7 +567,7 @@ input_plugin_init(Plugin * plugin)
 
     /* XXX: we need something better than p->filename if plugins
        will eventually provide multiple plugins --nenolod */
-    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 
     /* build the extension hash table */
     gint i;
@@ -593,7 +593,7 @@ output_plugin_init(Plugin * plugin)
     OutputPlugin *p = OUTPUT_PLUGIN(plugin);
     op_data.output_list = g_list_append(op_data.output_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 }
 
 static void
@@ -602,7 +602,7 @@ effect_plugin_init(Plugin * plugin)
     EffectPlugin *p = EFFECT_PLUGIN(plugin);
     ep_data.effect_list = g_list_append(ep_data.effect_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 }
 
 static void
@@ -611,7 +611,7 @@ general_plugin_init(Plugin * plugin)
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
     gp_data.general_list = g_list_append(gp_data.general_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 }
 
 static void
@@ -621,7 +621,7 @@ vis_plugin_init(Plugin * plugin)
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 }
 
 static void
@@ -630,7 +630,7 @@ discovery_plugin_init(Plugin * plugin)
     DiscoveryPlugin *p = DISCOVERY_PLUGIN(plugin);
     dp_data.discovery_list = g_list_append(dp_data.discovery_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 }
 
 /*******************************************************************/
@@ -916,7 +916,7 @@ plugin_system_init(void)
          * prefix.  We will only see one plugin with the same
          * basename, so this is usually what the user want.
          */
-        if (cfg.outputplugin && !strcmp(g_basename(cfg.outputplugin), g_basename(op->filename)))
+        if (cfg.outputplugin && !strcmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
             op_data.current_output_plugin = op;
         if (op->init)
 	{
