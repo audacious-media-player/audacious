@@ -125,12 +125,12 @@ effect_stringify_enabled_list(void)
 
     if (g_list_length(node)) {
         enalist =
-            g_strdup(g_basename(((EffectPlugin *) node->data)->filename));
+            g_path_get_basename(((EffectPlugin *) node->data)->filename);
         node = node->next;
         while (node) {
             temp = enalist;
             temp2 =
-                g_strdup(g_basename(((EffectPlugin *) node->data)->filename));
+                g_path_get_basename(((EffectPlugin *) node->data)->filename);
             enalist = g_strconcat(temp, ",", temp2, NULL);
             g_free(temp);
             g_free(temp2);
