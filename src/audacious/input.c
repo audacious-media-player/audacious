@@ -412,8 +412,8 @@ input_check_file(const gchar *filename, gboolean loading)
     // apply ext_hash check
     if(cfg.use_extension_probing) {
         use_ext_filter =
-            (fd && (!g_strncasecmp(filename_proxy, "/", 1) ||
-                    !g_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
+            (fd && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
+                    !g_ascii_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
     }
 
     if(use_ext_filter) {
