@@ -51,7 +51,7 @@ PlaylistContainer *playlist_container_find(gchar *ext)
 	for (node = registered_plcs; node != NULL; node = g_list_next(node)) {
 		plc = PLAYLIST_CONTAINER(node->data);
 
-		if (!g_strcasecmp(plc->ext, ext))
+		if (!g_ascii_strncasecmp(plc->ext, ext, strlen(ext)))
 			return plc;
 	}
 
