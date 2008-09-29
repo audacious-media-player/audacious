@@ -108,7 +108,7 @@ filebrowser_on_keypress(GtkWidget * browser,
 }
 
 static void
-util_run_filebrowser_gtk2style(gboolean play_button, gboolean show)
+run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 {
     static GtkWidget *window = NULL;
     GtkWidget *vbox, *hbox, *bbox;
@@ -244,7 +244,7 @@ filebrowser_entry_changed_classic(GtkEditable * entry, gpointer data)
 
 
 static gboolean
-util_filebrowser_is_dir_classic(GtkFileSelection * filesel)
+filebrowser_is_dir_classic(GtkFileSelection * filesel)
 {
     char *text;
     struct stat buf;
@@ -301,7 +301,7 @@ filebrowser_ok_classic(GtkWidget * w, GtkWidget * filesel)
 {
     gchar **files;
 
-    if (util_filebrowser_is_dir_classic(GTK_FILE_SELECTION(filesel)))
+    if (filebrowser_is_dir_classic(GTK_FILE_SELECTION(filesel)))
         return;
     files = gtk_file_selection_get_selections(GTK_FILE_SELECTION(filesel));
     filebrowser_add_files_classic(files, GTK_FILE_SELECTION(filesel));
@@ -313,7 +313,7 @@ filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
 {
     gchar **files;
 
-    if (util_filebrowser_is_dir_classic
+    if (filebrowser_is_dir_classic
         (GTK_FILE_SELECTION(GTK_FILE_SELECTION(filesel))))
         return;
     playlist_clear(playlist_get_active());
@@ -355,7 +355,7 @@ filebrowser_add_all_files_classic(GtkWidget * w, gpointer data)
 }
 
 static void
-util_run_filebrowser_classic(gboolean play_button, gboolean show)
+run_filebrowser_classic(gboolean play_button, gboolean show)
 {
     static GtkWidget *dialog;
     GtkWidget *button_add_selected, *button_add_all, *button_close,
@@ -475,16 +475,16 @@ void
 run_filebrowser(gboolean play_button)
 {
     if (!cfg.use_xmms_style_fileselector)
-        util_run_filebrowser_gtk2style(play_button, TRUE);
+        run_filebrowser_gtk2style(play_button, TRUE);
     else
-        util_run_filebrowser_classic(play_button, TRUE);
+        run_filebrowser_classic(play_button, TRUE);
 }
 
 void
 hide_filebrowser(void)
 {
     if (!cfg.use_xmms_style_fileselector)
-        util_run_filebrowser_gtk2style(FALSE, FALSE);
+        run_filebrowser_gtk2style(FALSE, FALSE);
     else
-        util_run_filebrowser_classic(FALSE, FALSE);
+        run_filebrowser_classic(FALSE, FALSE);
 }
