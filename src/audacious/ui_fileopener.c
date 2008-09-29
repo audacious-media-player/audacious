@@ -203,7 +203,8 @@ util_run_filebrowser_gtk2style(gboolean play_button, gboolean show)
  *
  * Although I changed it quite a bit. -nenolod
  */
-static void filebrowser_changed_classic(GtkFileSelection * filesel)
+static void
+filebrowser_changed_classic(GtkFileSelection * filesel)
 {
     GList *list;
     GList *node;
@@ -235,7 +236,8 @@ static void filebrowser_changed_classic(GtkFileSelection * filesel)
     }
 }
 
-static void filebrowser_entry_changed_classic(GtkEditable * entry, gpointer data)
+static void
+filebrowser_entry_changed_classic(GtkEditable * entry, gpointer data)
 {
     filebrowser_changed_classic(GTK_FILE_SELECTION(data));
 }
@@ -294,7 +296,8 @@ static void filebrowser_add_files_classic(gchar ** files,
     cfg.filesel_path = g_strconcat(ptr, "/", NULL);
 }
 
-static void filebrowser_ok_classic(GtkWidget * w, GtkWidget * filesel)
+static void
+filebrowser_ok_classic(GtkWidget * w, GtkWidget * filesel)
 {
     gchar **files;
 
@@ -305,7 +308,8 @@ static void filebrowser_ok_classic(GtkWidget * w, GtkWidget * filesel)
     gtk_widget_destroy(filesel);
 }
 
-static void filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
+static void
+filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
 {
     gchar **files;
 
@@ -319,7 +323,8 @@ static void filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
     playback_initiate();
 }
 
-static void filebrowser_add_selected_files_classic(GtkWidget * w, gpointer data)
+static void
+filebrowser_add_selected_files_classic(GtkWidget * w, gpointer data)
 {
     gchar **files;
 
@@ -333,7 +338,8 @@ static void filebrowser_add_selected_files_classic(GtkWidget * w, gpointer data)
     gtk_entry_set_text(GTK_ENTRY(filesel->selection_entry), "");
 }
 
-static void filebrowser_add_all_files_classic(GtkWidget * w, gpointer data)
+static void
+filebrowser_add_all_files_classic(GtkWidget * w, gpointer data)
 {
     gchar **files;
     GtkFileSelection *filesel;
@@ -452,7 +458,7 @@ util_run_filebrowser_classic(gboolean play_button, gboolean show)
 }
 
 /*
- * util_run_filebrowser(gboolean play_button)
+ * run_filebrowser(gboolean play_button)
  *
  * Inputs:
  *     - gboolean play_button
