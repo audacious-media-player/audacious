@@ -118,8 +118,8 @@ util_run_filebrowser_gtk2style(gboolean play_button, gboolean show)
     gchar *window_title, *toggle_text;
     gpointer action_stock, storage;
 
-    if(!show) {
-        if(window){
+    if (!show) {
+        if (window){
             gtk_widget_hide(window);
             return;
         }
@@ -127,12 +127,12 @@ util_run_filebrowser_gtk2style(gboolean play_button, gboolean show)
             return;
     }
     else {
-        if(window) {
+        if (window) {
             gtk_window_present(GTK_WINDOW(window)); /* raise filebrowser */
             return;
         }
     }
-    
+
     window_title = play_button ? _("Open Files") : _("Add Files");
     toggle_text = play_button ?
         _("Close dialog on Open") : _("Close dialog on Add");
@@ -191,8 +191,8 @@ util_run_filebrowser_gtk2style(gboolean play_button, gboolean show)
                      G_CALLBACK(gtk_widget_destroyed), &window);
 
     g_signal_connect(window, "key_press_event",
-		     G_CALLBACK(filebrowser_on_keypress),
-		     NULL);
+                     G_CALLBACK(filebrowser_on_keypress),
+                     NULL);
 
     gtk_widget_show_all(window);
 }
@@ -208,7 +208,7 @@ static void filebrowser_changed_classic(GtkFileSelection * filesel)
     GList *list;
     GList *node;
     char *filename = (char *)
-    gtk_file_selection_get_filename(GTK_FILE_SELECTION(filesel));
+        gtk_file_selection_get_filename(GTK_FILE_SELECTION(filesel));
     GtkListStore *store;
     GtkTreeIter iter;
 
@@ -220,7 +220,7 @@ static void filebrowser_changed_classic(GtkFileSelection * filesel)
          */
         store =
             GTK_LIST_STORE(gtk_tree_view_get_model
-                   (GTK_TREE_VIEW(filesel->file_list)));
+                           (GTK_TREE_VIEW(filesel->file_list)));
         gtk_list_store_clear(store);
 
         node = list;
@@ -251,29 +251,29 @@ util_filebrowser_is_dir_classic(GtkFileSelection * filesel)
     text = g_strdup(gtk_file_selection_get_filename(filesel));
 
     if (stat(text, &buf) == 0 && S_ISDIR(buf.st_mode)) {
-    /* Selected directory */
-    int len = strlen(text);
-    if (len > 3 && !strcmp(text + len - 4, "/../")) {
-        if (len == 4)
-        /* At the root already */
-        *(text + len - 3) = '\0';
-        else {
-        char *ptr;
-        *(text + len - 4) = '\0';
-        ptr = strrchr(text, '/');
-        *(ptr + 1) = '\0';
-        }
-    } else if (len > 2 && !strcmp(text + len - 3, "/./"))
-        *(text + len - 2) = '\0';
-    gtk_file_selection_set_filename(filesel, text);
-    retv = TRUE;
+        /* Selected directory */
+        int len = strlen(text);
+        if (len > 3 && !strcmp(text + len - 4, "/../")) {
+            if (len == 4)
+                /* At the root already */
+                *(text + len - 3) = '\0';
+            else {
+                char *ptr;
+                *(text + len - 4) = '\0';
+                ptr = strrchr(text, '/');
+                *(ptr + 1) = '\0';
+            }
+        } else if (len > 2 && !strcmp(text + len - 3, "/./"))
+            *(text + len - 2) = '\0';
+        gtk_file_selection_set_filename(filesel, text);
+        retv = TRUE;
     }
     g_free(text);
     return retv;
 }
 
 static void filebrowser_add_files_classic(gchar ** files,
-                  GtkFileSelection * filesel)
+                                          GtkFileSelection * filesel)
 {
     int ctr = 0;
     char *ptr;
@@ -288,7 +288,7 @@ static void filebrowser_add_files_classic(gchar ** files,
     hook_call("playlist update", playlist);
 
     gtk_label_get(GTK_LABEL(GTK_BIN(filesel->history_pulldown)->child),
-          &ptr);
+                  &ptr);
 
     /* This will give an extra slash if the current dir is the root. */
     cfg.filesel_path = g_strconcat(ptr, "/", NULL);
@@ -299,7 +299,7 @@ static void filebrowser_ok_classic(GtkWidget * w, GtkWidget * filesel)
     gchar **files;
 
     if (util_filebrowser_is_dir_classic(GTK_FILE_SELECTION(filesel)))
-    return;
+        return;
     files = gtk_file_selection_get_selections(GTK_FILE_SELECTION(filesel));
     filebrowser_add_files_classic(files, GTK_FILE_SELECTION(filesel));
     gtk_widget_destroy(filesel);
@@ -310,8 +310,8 @@ static void filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
     gchar **files;
 
     if (util_filebrowser_is_dir_classic
-    (GTK_FILE_SELECTION(GTK_FILE_SELECTION(filesel))))
-    return;
+        (GTK_FILE_SELECTION(GTK_FILE_SELECTION(filesel))))
+        return;
     playlist_clear(playlist_get_active());
     files = gtk_file_selection_get_selections(GTK_FILE_SELECTION(filesel));
     filebrowser_add_files_classic(files, GTK_FILE_SELECTION(filesel));
@@ -328,7 +328,7 @@ static void filebrowser_add_selected_files_classic(GtkWidget * w, gpointer data)
 
     filebrowser_add_files_classic(files, filesel);
     gtk_tree_selection_unselect_all(gtk_tree_view_get_selection
-                    (GTK_TREE_VIEW(filesel->file_list)));
+                                    (GTK_TREE_VIEW(filesel->file_list)));
 
     gtk_entry_set_text(GTK_ENTRY(filesel->selection_entry), "");
 }
@@ -340,11 +340,11 @@ static void filebrowser_add_all_files_classic(GtkWidget * w, gpointer data)
 
     filesel = data;
     gtk_tree_selection_select_all(gtk_tree_view_get_selection
-                  (GTK_TREE_VIEW(filesel->file_list)));
+                                  (GTK_TREE_VIEW(filesel->file_list)));
     files = gtk_file_selection_get_selections(filesel);
     filebrowser_add_files_classic(files, filesel);
     gtk_tree_selection_unselect_all(gtk_tree_view_get_selection
-                    (GTK_TREE_VIEW(filesel->file_list)));
+                                    (GTK_TREE_VIEW(filesel->file_list)));
     gtk_entry_set_text(GTK_ENTRY(filesel->selection_entry), "");
 }
 
@@ -353,7 +353,7 @@ util_run_filebrowser_classic(gboolean play_button, gboolean show)
 {
     static GtkWidget *dialog;
     GtkWidget *button_add_selected, *button_add_all, *button_close,
-    *button_add;
+              *button_add;
     char *title;
 
     if (!show) {
@@ -364,26 +364,24 @@ util_run_filebrowser_classic(gboolean play_button, gboolean show)
         else
             return;
     }
-    else {
-        if (dialog) {
+    else if (dialog) {
             gtk_window_present(GTK_WINDOW(dialog));
             return;
-        }
     }
 
     if (play_button)
-    title = _("Play files");
+        title = _("Play files");
     else
-    title = _("Load files");
+        title = _("Load files");
 
     dialog = gtk_file_selection_new(title);
 
     gtk_file_selection_set_select_multiple
-    (GTK_FILE_SELECTION(dialog), TRUE);
+        (GTK_FILE_SELECTION(dialog), TRUE);
 
     if (cfg.filesel_path)
-    gtk_file_selection_set_filename(GTK_FILE_SELECTION(dialog),
-                    cfg.filesel_path);
+        gtk_file_selection_set_filename(GTK_FILE_SELECTION(dialog),
+                                        cfg.filesel_path);
 
     gtk_file_selection_hide_fileop_buttons(GTK_FILE_SELECTION(dialog));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
@@ -396,57 +394,57 @@ util_run_filebrowser_classic(gboolean play_button, gboolean show)
      * plus kinda easy to use
      */
     button_add_selected =
-    gtk_dialog_add_button(GTK_DIALOG(dialog), "Add selected",
-                  GTK_RESPONSE_NONE);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), "Add selected",
+                              GTK_RESPONSE_NONE);
     gtk_button_set_use_underline(GTK_BUTTON(button_add_selected), TRUE);
     g_signal_connect(G_OBJECT(button_add_selected), "clicked",
-             G_CALLBACK(filebrowser_add_selected_files_classic), dialog);
+                     G_CALLBACK(filebrowser_add_selected_files_classic), dialog);
 
     button_add_all =
-    gtk_dialog_add_button(GTK_DIALOG(dialog), "Add all",
-                  GTK_RESPONSE_NONE);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), "Add all",
+                              GTK_RESPONSE_NONE);
     gtk_button_set_use_underline(GTK_BUTTON(button_add_all), TRUE);
     g_signal_connect(G_OBJECT(button_add_all), "clicked",
-             G_CALLBACK(filebrowser_add_all_files_classic), dialog);
+                     G_CALLBACK(filebrowser_add_all_files_classic), dialog);
 
     if (play_button) {
-    button_add =
-        gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_MEDIA_PLAY,
-                  GTK_RESPONSE_NONE);
-    gtk_button_set_use_stock(GTK_BUTTON(button_add), TRUE);
-    g_signal_connect(G_OBJECT(button_add), "clicked",
-             G_CALLBACK(filebrowser_play_classic), dialog);
-    g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
-             "clicked", G_CALLBACK(filebrowser_play_classic), dialog);
+        button_add =
+            gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_MEDIA_PLAY,
+                                  GTK_RESPONSE_NONE);
+        gtk_button_set_use_stock(GTK_BUTTON(button_add), TRUE);
+        g_signal_connect(G_OBJECT(button_add), "clicked",
+                         G_CALLBACK(filebrowser_play_classic), dialog);
+        g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
+                         "clicked", G_CALLBACK(filebrowser_play_classic), dialog);
     } else {
-    button_add =
-        gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_ADD,
-                  GTK_RESPONSE_NONE);
-    gtk_button_set_use_stock(GTK_BUTTON(button_add), TRUE);
-    g_signal_connect(G_OBJECT(button_add), "clicked",
-             G_CALLBACK(filebrowser_ok_classic), dialog);
-    g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
-             "clicked", G_CALLBACK(filebrowser_ok_classic), dialog);
+        button_add =
+            gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_ADD,
+                                  GTK_RESPONSE_NONE);
+        gtk_button_set_use_stock(GTK_BUTTON(button_add), TRUE);
+        g_signal_connect(G_OBJECT(button_add), "clicked",
+                         G_CALLBACK(filebrowser_ok_classic), dialog);
+        g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
+                         "clicked", G_CALLBACK(filebrowser_ok_classic), dialog);
     }
 
     button_close =
-    gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CLOSE,
-                  GTK_RESPONSE_NONE);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CLOSE,
+                              GTK_RESPONSE_NONE);
     gtk_button_set_use_stock(GTK_BUTTON(button_close), TRUE);
     g_signal_connect_swapped(G_OBJECT(button_close), "clicked",
-                 G_CALLBACK(gtk_widget_destroy),
-                 G_OBJECT(dialog));
+                             G_CALLBACK(gtk_widget_destroy),
+                             G_OBJECT(dialog));
 
     gtk_widget_set_size_request(dialog, 600, 450);
     gtk_widget_realize(dialog);
 
     g_signal_connect(G_OBJECT
-             (GTK_FILE_SELECTION(dialog)->history_pulldown),
-             "changed", G_CALLBACK(filebrowser_entry_changed_classic),
-             dialog);
+                     (GTK_FILE_SELECTION(dialog)->history_pulldown),
+                     "changed", G_CALLBACK(filebrowser_entry_changed_classic),
+                     dialog);
 
     g_signal_connect(G_OBJECT(dialog), "destroy",
-             G_CALLBACK(gtk_widget_destroyed), &dialog);
+                     G_CALLBACK(gtk_widget_destroyed), &dialog);
 
     filebrowser_changed_classic(GTK_FILE_SELECTION(dialog));
 
