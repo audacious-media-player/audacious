@@ -151,7 +151,6 @@ AudConfig aud_default_config = {
     .filepopup_pixelsize = 150,        /* short side length of the picture in the filepopup */
     .filepopup_delay = 20,             /* delay until the filepopup comes up */
     .use_file_cover = FALSE,           /* use filename.jpg for coverart */
-    .use_xmms_style_fileselector = FALSE,
     .use_extension_probing = TRUE,
     .colorize_r = 255, .colorize_g = 255, .colorize_b = 255,
     .filepopup_showprogressbar = TRUE,
@@ -263,7 +262,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
     {"recurse_for_cover", &cfg.recurse_for_cover, TRUE},
     {"use_file_cover", &cfg.use_file_cover, TRUE},
-    {"use_xmms_style_fileselector", &cfg.use_xmms_style_fileselector, TRUE},
     {"use_extension_probing", &cfg.use_extension_probing, TRUE},
     {"filepopup_showprogressbar", &cfg.filepopup_showprogressbar, TRUE},
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},

@@ -108,7 +108,6 @@ struct _AudConfig {
     gint filepopup_pixelsize;
     gint filepopup_delay;
     gboolean use_file_cover;
-    gboolean use_xmms_style_fileselector;
     gboolean use_extension_probing;
     gint colorize_r; gint colorize_g; gint colorize_b;
     gboolean filepopup_showprogressbar;
