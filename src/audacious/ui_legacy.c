@@ -132,6 +132,8 @@ run_load_skin_error_dialog(const gchar * skin_path)
 }
 
 #ifdef GDK_WINDOWING_QUARTZ
+#include "images/audacious_player.xpm"
+
 static void
 set_dock_icon(void)
 {
