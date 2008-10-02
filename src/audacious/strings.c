@@ -327,11 +327,9 @@ str_assert_utf8(const gchar * str)
 		gchar **symbols;
 		nsymbols = backtrace(addrbuf, nsymmax);
 		symbols = backtrace_symbols(addrbuf, nsymbols);
-#endif
 
 		fprintf(stderr, "WARNING! String '%s' was not UTF-8! Backtrace (%d):\n", str, nsymbols);
 
-#ifdef HAVE_EXECINFO
 		for (i = 0; i < nsymbols; i++)
 			fprintf(stderr, "#%d > %s\n", i, symbols[i]);
 		
