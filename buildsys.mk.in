@@ -29,7 +29,8 @@ ERLC = @ERLC@
 OBJC = @OBJC@
 AR = @AR@
 LD = ${CC}
-TR = @TR@
+RANLIB = @RANLIB@
+PYTHON = @PYTHON@
 CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@
 CPPFLAGS = @CPPFLAGS@
@@ -37,6 +38,7 @@ DFLAGS = @DFLAGS@
 ERLCFLAGS = @ERLCFLAGS@
 OBJCFLAGS = @OBJCFLAGS@
 LDFLAGS = @LDFLAGS@
+PYTHON_FLAGS = @PYTHON_FLAGS@
 LIBS = @LIBS@
 PROG_IMPLIB_NEEDED = @PROG_IMPLIB_NEEDED@
 PROG_IMPLIB_LDFLAGS = @PROG_IMPLIB_LDFLAGS@
@@ -46,8 +48,7 @@ LIB_CFLAGS = @LIB_CFLAGS@
 LIB_LDFLAGS = @LIB_LDFLAGS@
 LIB_PREFIX = @LIB_PREFIX@
 LIB_SUFFIX = @LIB_SUFFIX@
-PLUGIN_DEFNAME := `echo ${subst ${PLUGIN_SUFFIX},,${PLUGIN}} | tr '[:lower:]' '[:upper:]' | tr '-' '_'`
-PLUGIN_CPPFLAGS = @PLUGIN_CPPFLAGS@ -D${PLUGIN_DEFNAME}_CFGID=\"${subst ${PLUGIN_SUFFIX},,${PLUGIN}}\"
+PLUGIN_CPPFLAGS = @PLUGIN_CPPFLAGS@
 PLUGIN_CFLAGS = @PLUGIN_CFLAGS@
 PLUGIN_LDFLAGS = @PLUGIN_LDFLAGS@
 PLUGIN_SUFFIX = @PLUGIN_SUFFIX@
@@ -76,10 +77,11 @@ OBJS3 = ${OBJS2:.cxx=.o}
 OBJS4 = ${OBJS3:.d=.o}
 OBJS5 = ${OBJS4:.erl=.beam}
 OBJS6 = ${OBJS5:.m=.o}
-OBJS += ${OBJS6:.xpm=.o}
+OBJS7 = ${OBJS6:.py=.pyc}
+OBJS += ${OBJS7:.xpm=.o}
 
 .SILENT:
-.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .m .xpm
+.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .m .py .pyc .xpm
 .PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean
 
 all:
@@ -100,9 +102,21 @@ depend: pre-depend ${SRCS}
 	test -f .deps || regen=1; \
 	for i in ${SRCS}; do \
 		case $$i in \
-			*.o) \
+			*.c) \
 				test $$i -nt .deps && regen=1; \
-				deps="$${deps} $${i%.o}.dep"; \
+				deps="$$deps $${i%.c}.dep"; \
+				;; \
+			*.cc) \
+				test $$i -nt .deps && regen=1; \
+				deps="$$deps $${i%.cc}.dep"; \
+				;; \
+			*.cxx) \
+				test $$i -nt .deps && regen=1; \
+				deps="$$deps $${i%.cxx}.dep"; \
+				;; \
+			*.m) \
+				test $$i -nt .deps && regen=1; \
+				deps="$$deps $${i%.m}.dep"; \
 				;; \
 		esac; \
 	done; \
@@ -153,10 +167,11 @@ ${PLUGIN} ${PLUGIN_NOINST}: ${EXT_DEPS} ${OBJS}
 
 ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 	${LINK_STATUS}
-	if ${AR} cr $@ ${OBJS}; then \
+	if ${AR} cr $@ ${OBJS} && ${RANLIB} ${@}; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
+		rm -f $@; \
 	fi
 
 .c.o:
@@ -202,6 +217,14 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 .m.o:
 	${COMPILE_STATUS}
 	if ${OBJC} ${OBJCFLAGS} ${CPPFLAGS} -c -o $@ $<; then \
+		${COMPILE_OK}; \
+	else \
+		${COMPILE_FAILED}; \
+	fi
+
+.py.pyc:
+	${COMPILE_STATUS}
+	if ${PYTHON} ${PYTHON_FLAGS} -c "import py_compile; py_compile.compile('$<')"; then \
 		${COMPILE_OK}; \
 	else \
 		${COMPILE_FAILED}; \
