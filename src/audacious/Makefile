@@ -150,7 +150,7 @@ DATA = images/about-logo.png				\
        ui/carbon-menubar.ui
 
 CLEAN = build_stamp.c libaudacious.exe.a
-EXT_DEPS = ../libguess/libguess.a ../libSAD/libSAD.so
+EXT_DEPS = ../libguess/libguess.a ../libSAD/${LIB_PREFIX}SAD${LIB_SUFFIX}
 
 ifeq ($(USE_EGGSM),yes)
 EXT_DEPS += ../libeggsmclient/libeggsmclient.a
