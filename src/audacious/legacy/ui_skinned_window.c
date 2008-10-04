@@ -21,11 +21,9 @@
 #include "platform/smartinclude.h"
 #include "ui_skin.h"
 
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 #include <glib-object.h>
 #include <glib/gmacros.h>
-#include <gtk/gtkmarshal.h>
-#include <gtk/gtkwindow.h>
 #include <string.h>
 
 #include "main.h"

@@ -29,8 +29,7 @@
 #include "strings.h"
 #include <string.h>
 #include <ctype.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
+#include <gtk/gtk.h>
 
 #define UI_TYPE_SKINNED_NUMBER           (ui_skinned_number_get_type())
 

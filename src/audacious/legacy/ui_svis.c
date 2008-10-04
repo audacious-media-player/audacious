@@ -33,9 +33,7 @@
 #include "playback.h"
 #include <string.h>
 #include <ctype.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
+#include <gtk/gtk.h>
 
 #define UI_TYPE_SVIS           (ui_svis_get_type())
 

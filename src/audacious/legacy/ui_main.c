@@ -31,7 +31,6 @@
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkmessagedialog.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
