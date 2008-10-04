@@ -20,7 +20,7 @@
 #ifndef AUDACIOUS_I18N_H
 #define AUDACIOUS_I18N_H
 
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include <libintl.h>
 
 #define _(String) dgettext (PACKAGE, String)
