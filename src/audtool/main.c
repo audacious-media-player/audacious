@@ -139,7 +139,7 @@ struct commandhandler handlers[] = {
 	{"list-handlers", get_handlers_list, "shows handlers list", 0},
 	{"help", get_handlers_list, "shows handlers list", 0},
 
-    
+
 	{NULL, NULL, NULL, 0}
 };
 
@@ -147,7 +147,8 @@ mowgli_error_context_t *e = NULL;
 DBusGProxy *dbus_proxy = NULL;
 static DBusGConnection *connection = NULL;
 
-static void audtool_connect(void)
+static void
+audtool_connect(void)
 {
 	GError *error = NULL;
 
@@ -164,7 +165,15 @@ static void audtool_connect(void)
                                            AUDACIOUS_DBUS_INTERFACE);
 }
 
-gint main(gint argc, gchar **argv)
+static void
+audtool_disconnect(void)
+{
+	g_object_unref(dbus_proxy);
+	dbus_proxy = NULL;
+}
+
+gint
+main(gint argc, gchar **argv)
 {
 	gint i, j = 0, k = 0;
 
@@ -202,6 +211,8 @@ gint main(gint argc, gchar **argv)
 
 	if (k == 0)
 		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command '%s' encountered, use \'audtool help\' for a command list.", argv[1]));
+
+	audtool_disconnect();
 
 	return 0;
 }
