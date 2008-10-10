@@ -155,7 +155,7 @@ init_sad(AFormat fmt, gint nch)
     in.channels = nch;
     in.channels_order = SAD_CHORDER_INTERLEAVED;
     in.samplerate = 0;
-    
+
     out.sample_format = SAD_SAMPLE_S16;
     out.fracbits = 0;
     out.channels = nch;
@@ -171,11 +171,14 @@ init_sad(AFormat fmt, gint nch)
 void
 input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
 {
-#if 0
     VisNode *vis_node;
     gint max;
-    
+    const Interface *current = interface_get_current();
+
     if (nch > 2) return;
+
+    if (current && !strstr(current->desc, "Legacy Interface"))
+        return;
 
     if (sad_state == NULL || nch != sad_nch || fmt != sad_fmt) {
         if(sad_state != NULL) SAD_dither_free(sad_state);
@@ -202,7 +205,6 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
     G_LOCK(vis_mutex);
     vis_list = g_list_append(vis_list, vis_node);
     G_UNLOCK(vis_mutex);
-#endif
 }
 
 void
@@ -398,7 +400,7 @@ input_check_file(const gchar *filename, gboolean loading)
         g_free(mimetype);
     } else
         ip = NULL;
-    
+
     if (ip && ip->enabled) {
         pr = input_do_check_file(ip, fd, filename_proxy, loading);
         if (pr) {
@@ -425,7 +427,7 @@ input_check_file(const gchar *filename, gboolean loading)
         base = g_path_get_basename(realfn);
         g_free(realfn);
         ext = strrchr(base, '.');
-    
+
         if(ext) {
             lext = g_ascii_strdown(ext+1, -1);
             list_hdr = g_hash_table_lookup(ext_hash, lext);

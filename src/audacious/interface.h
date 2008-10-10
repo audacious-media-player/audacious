@@ -57,5 +57,6 @@ void interface_run(Interface *i);
 void interface_destroy(Interface *i);
 
 Interface *interface_get(gchar *id);
+const Interface *interface_get_current(void);
 
 #endif

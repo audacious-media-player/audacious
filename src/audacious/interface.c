@@ -30,6 +30,7 @@
 #include "ui_credits.h"
 
 static mowgli_dictionary_t *interface_dict_ = NULL;
+static Interface *current_interface = NULL;
 
 static InterfaceOps interface_ops = {
     .create_prefs_window = create_prefs_window,
@@ -62,6 +63,7 @@ interface_deregister(Interface *i)
 void
 interface_run(Interface *i)
 {
+    current_interface = i;
     i->ops = &interface_ops;
     i->init();
 }
@@ -80,4 +82,10 @@ interface_get(gchar *id)
         return NULL;
 
     return mowgli_dictionary_retrieve(interface_dict_, id);
+}
+
+const Interface *
+interface_get_current(void)
+{
+    return current_interface;
 }
