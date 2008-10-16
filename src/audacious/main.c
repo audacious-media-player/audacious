@@ -612,8 +612,13 @@ main(gint argc, gchar ** argv)
     g_message("Selecting interface %s", options.interface);
     i = interface_get(options.interface);
 
-    g_message("Running interface %s@%p", options.interface, i);
-    interface_run(i);
+    if (i != NULL)
+    {
+        g_message("Running interface %s@%p", options.interface, i);
+        interface_run(i);
+    }
+    else
+        g_print("%s: unable to launch selected interface %s\n", argv[0], options.interface);
 
     aud_quit();
     return EXIT_SUCCESS;
