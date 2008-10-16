@@ -276,7 +276,7 @@ static GtkActionEntry action_entries_others[] = {
         { "file", NULL, N_("File") },
         { "help", NULL, N_("Help") },
 
-	{ "plugins-menu", AUD_STOCK_PLUGIN, N_("Plugin Services") },
+	{ "plugins-menu", NULL, N_("Components") },
 
 	{ "current track info", GTK_STOCK_INFO , N_("View Track Details"), "I",
 	  N_("View track details"), G_CALLBACK(action_current_track_info) },
@@ -468,8 +468,6 @@ ui_manager_create_menus_init_pmenu( gchar * path )
   {
     /* initially set count of items under plugins_menu_item to 0 */
     g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(0) );
-    /* and since it's 0, hide the plugins_menu_item */
-    gtk_widget_hide( plugins_menu_item );
   }
   return;
 }
