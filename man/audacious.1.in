@@ -55,14 +55,12 @@ Select X display to use.
 .SH INTERFACES
 Audacious supports multiple interface plugins. Interface plugin determines Audacious look'n'feel.
 
-As for now, you can use following interfaces:
+The following interfaces are built in or provided by plugins in the default install:
 
 .in +2
 default	Default interface that uses GTK+ widgets
 .br
 skinned	Interface that supports skinned interface
-.br
-legacy	Old (Audacious 1.*) skinned interface
 .br
 headless	Headless mode
 
