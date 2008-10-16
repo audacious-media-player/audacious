@@ -618,7 +618,10 @@ main(gint argc, gchar ** argv)
         interface_run(i);
     }
     else
+    {
         g_print("%s: unable to launch selected interface %s\n", argv[0], options.interface);
+        return EXIT_FAILURE;
+    }
 
     aud_quit();
     return EXIT_SUCCESS;
