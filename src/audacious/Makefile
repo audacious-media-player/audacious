@@ -44,7 +44,6 @@ SRCS = af_equalizer.c							\
        ui_fileopener.c							\
        ui_headless.c							\
        ui_manager.c						\
-       ui_legacy.c								\
        ui_new.c									\
        ui_preferences.c							\
        util.c									\

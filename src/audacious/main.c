@@ -66,8 +66,8 @@
 #include "images/audacious_player.xpm"
 
 #include "ui_new.h"
-#include "ui_legacy.h"
 #include "ui_headless.h"
+#include "ui_preferences.h"
 
 static const gchar *application_name = N_("Audacious");
 
@@ -607,7 +607,6 @@ main(gint argc, gchar ** argv)
 
     g_message("Populating included interfaces");
     ui_populate_default_interface();
-    ui_populate_legacy_interface();
     ui_populate_headless_interface();
 
     g_message("Selecting interface %s", options.interface);
