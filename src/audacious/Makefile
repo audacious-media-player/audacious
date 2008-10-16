@@ -43,6 +43,7 @@ SRCS = af_equalizer.c							\
        ui_fileinfopopup.c						\
        ui_fileopener.c							\
        ui_headless.c							\
+       ui_manager.c						\
        ui_legacy.c								\
        ui_new.c									\
        ui_preferences.c							\
@@ -65,7 +66,6 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack_cache.c			\
        legacy/ui_main.c							\
        legacy/ui_main_evlisteners.c				\
-       legacy/ui_manager.c						\
        legacy/ui_playlist.c						\
        legacy/ui_playlist_evlisteners.c			\
        legacy/ui_playlist_manager.c				\
@@ -146,6 +146,7 @@ DATA = images/about-logo.png				\
        images/replay_gain.png				\
        ui/equalizer.ui						\
        ui/mainwin.ui						\
+       ui/player.ui						\
        ui/playlist.ui						\
        ui/carbon-menubar.ui
 

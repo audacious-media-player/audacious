@@ -58,7 +58,7 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "signals.h"
-#include "legacy/ui_manager.h"
+#include "ui_manager.h"
 #include "util.h"
 #include "vfs.h"
 
@@ -579,6 +579,7 @@ main(gint argc, gchar ** argv)
            plugin init functions may want to add custom menu entries */
         ui_manager_init();
         ui_manager_create_menus();
+        create_prefs_window();
     }
 
 #ifdef USE_DBUS

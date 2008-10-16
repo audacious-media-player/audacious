@@ -1,0 +1,58 @@
+<?xml version="1.0" standalone="yes" encoding="utf-8" ?>
+
+<ui>
+	<menubar name="mainwin-menus">
+		<menu action="file">
+			<menuitem action="play file" />
+			<menuitem action="play location" />
+			<separator />
+			<menuitem action="preferences" />
+			<menuitem action="quit" />
+		</menu>		
+
+		<menu action="playback">
+			<menuitem action="playback repeat" />
+			<menuitem action="playback shuffle" />
+			<menuitem action="playback no playlist advance" />
+			<menuitem action="stop after current song" />
+			<separator />
+			<menuitem action="playback play" />
+			<menuitem action="playback pause" />
+			<menuitem action="playback stop" />
+			<menuitem action="playback previous" />
+			<menuitem action="playback next" />
+			<separator />
+			<menuitem action="jump to playlist start" />
+			<separator />
+			<menuitem action="ab set" />
+			<menuitem action="ab clear" />
+			<separator />
+			<menuitem action="jump to file" />
+			<menuitem action="jump to time" />
+			<separator />
+			<menuitem action="current track info" />
+		</menu>
+		<menu action="playlist">
+			<menuitem action="playlist new" />
+			<menuitem action="playlist delete" />
+			<separator />
+			<menuitem action="playlist select next" />
+			<menuitem action="playlist select previous" />
+			<separator />
+			<menuitem action="playlist load" />
+			<menuitem action="playlist save" />
+			<menuitem action="playlist save default" />
+			<separator />
+			<menuitem action="playlist manager" />
+			<separator />
+			<menuitem action="playlist refresh" />
+			<separator />
+<!--				<menuitem action="playlist delete" /> -->
+		</menu>
+		<menu action="plugins-menu" />
+
+		<menu action="help">
+			<menuitem action="about audacious" />
+		</menu>
+	</menubar>
+</ui>

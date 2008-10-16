@@ -25,6 +25,7 @@
 #include "playlist.h"
 #include "ui_fileopener.h"
 #include "ui_new.h"
+#include "ui_manager.h"
 #include "ui_playlist_widget.h"
 
 static GtkWidget *label_time;
@@ -297,6 +298,7 @@ _ui_initialize(void)
     GtkWidget *button_open, *button_add,
               *button_play, *button_pause, *button_stop,
               *button_previous, *button_next;
+    GtkWidget *menu;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 450, 150);
@@ -308,6 +310,9 @@ _ui_initialize(void)
 
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    menu = ui_manager_create_menus();
+    gtk_box_pack_start(GTK_BOX(vbox), menu, FALSE, TRUE, 0);
 
     tophbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), tophbox, FALSE, TRUE, 0);
