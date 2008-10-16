@@ -2683,7 +2683,7 @@ action_play_file( void )
 void
 action_play_location( void )
 {
-    hook_call("urlopener show", NULL);
+    show_add_url_window();
 }
 
 void

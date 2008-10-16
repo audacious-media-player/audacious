@@ -1802,15 +1802,15 @@ action_playlist_add_files(void)
 void
 action_playlist_add_url(void)
 {
-    hook_call("urlopener show", NULL);
+    show_add_url_window();
 }
 
 void
 action_playlist_new( void )
 {
-  Playlist *new_pl = playlist_new();
-  playlist_add_playlist(new_pl);
-  playlist_select_playlist(new_pl);
+    Playlist *new_pl = playlist_new();
+    playlist_add_playlist(new_pl);
+    playlist_select_playlist(new_pl);
 }
 
 void
