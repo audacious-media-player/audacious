@@ -45,30 +45,22 @@ enum {
 
 static const gchar *audacious_brief =
     N_("<big><b>Audacious %s</b></big>\n"
-       "A skinned multimedia player for many platforms.\n"
+       "A multimedia player for many platforms.\n"
        "\n"
        "Copyright (C) 2005-2008 Audacious Development Team\n");
 
 static const gchar *credit_text[] = {
-    N_("Audacious core developers:"),
-    "George Averill",
-    "Daniel Barkalow",
+    N_("Core developers:"),
     "Christian Birchinger",
-    "Daniel Bradshaw",
-    "Adam Cecile",
     "Michael Färber",
     "Matti Hämäläinen",
-    "Troels Bang Jensen",
-    "Giacomo Lozito",
     "Cristi Măgherușan",
     "Tomasz Moń",
     "William Pitcock",
-    "Derek Pomery",
     "Jonathan Schleifer",
     "Ben Tucker",
     "Tony Vroon",
     "Yoshiki Yazawa",
-    "Eugene Zagidullin",
     NULL,
 
     N_("Graphics:"),
@@ -122,10 +114,26 @@ static const gchar *credit_text[] = {
     "Ivan N. Zlatev",
     NULL,
 
-    N_("0.1.x developers:"),
+    N_("1.x developers:"),
+    "George Averill",
+    "Daniel Barkalow",
+    "Christian Birchinger",
+    "Daniel Bradshaw",
+    "Adam Cecile",
+    "Michael Färber",
+    "Matti Hämäläinen",
+    "Troels Bang Jensen",
+    "Giacomo Lozito",
+    "Cristi Măgherușan",
+    "Tomasz Moń",
     "William Pitcock",
+    "Derek Pomery",
     "Mohammed Sameer",
+    "Jonathan Schleifer",
+    "Ben Tucker",
     "Tony Vroon",
+    "Yoshiki Yazawa",
+    "Eugene Zagidullin",
     NULL,
 
     N_("BMP Developers:"),
