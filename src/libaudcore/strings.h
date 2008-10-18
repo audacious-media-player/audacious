@@ -26,6 +26,7 @@
 #ifndef AUDACIOUS_STRINGS_H
 #define AUDACIOUS_STRINGS_H
 
+#include <stdlib.h>
 #include <glib.h>
 
 G_BEGIN_DECLS

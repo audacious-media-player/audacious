@@ -7,6 +7,7 @@ SRCS = af_equalizer.c							\
        auddrct.c								\
        audconfig.c								\
        build_stamp.c							\
+       chardet.c								\
        configdb.c								\
        custom_uri.c								\
        discovery.c								\
@@ -36,10 +37,6 @@ SRCS = af_equalizer.c							\
        rcfile.c									\
        signals.c								\
        src_flow.c								\
-       strings.c								\
-       tuple.c									\
-       tuple_formatter.c						\
-       tuple_compiler.c							\
        ui_fileinfopopup.c						\
        ui_fileopener.c							\
        ui_headless.c							\
@@ -47,10 +44,6 @@ SRCS = af_equalizer.c							\
        ui_new.c									\
        ui_preferences.c							\
        util.c									\
-       vfs.c									\
-       vfs_buffer.c								\
-       vfs_buffered_file.c						\
-       vfs_common.c								\
        visualization.c							\
        volumecontrol.c							\
        sync-menu.c								\
@@ -185,7 +178,8 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		-I.. -I../..			\
 		-I./intl			\
 		-I.				\
-		-I../libSAD
+		-I../libSAD			\
+		-I../libaudcore
 
 LIBS += ${LDADD}						\
 		${LIBINTL}						\
@@ -199,7 +193,8 @@ LIBS += ${LDADD}						\
 		${DBUS_LIBS}					\
 		${MOWGLI_LIBS}					\
 		${LIBMCS_LIBS}					\
-		${REGEX_LIBS}
+		${REGEX_LIBS}					\
+		-L../libaudcore -laudcore
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
 
