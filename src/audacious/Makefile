@@ -107,17 +107,10 @@ INCLUDES = auddrct.h			\
            playlist_container.h	\
            plugin.h				\
            preferences.h		\
-           strings.h			\
-           tuple.h				\
-           tuple_formatter.h	\
-           tuple_compiler.h		\
            ui_fileinfopopup.h	\
            ui_plugin_menu.h		\
            ui_preferences.h		\
-           util.h				\
-           vfs.h				\
-           vfs_buffer.h			\
-           vfs_buffered_file.h
+           util.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\
