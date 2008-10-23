@@ -21,7 +21,7 @@
 #ifndef AUDACIOUS_UI_FILEINFOPOPUP_H
 #define AUDACIOUS_UI_FILEINFOPOPUP_H
 
-#include "audacious/tuple.h"
+#include "libaudcore/tuple.h"
 #include <gtk/gtk.h>
 
 /* create/destroy */

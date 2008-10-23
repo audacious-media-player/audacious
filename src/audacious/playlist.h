@@ -36,8 +36,8 @@
 
 #include <mowgli.h>
 #include <glib.h>
-#include "audacious/tuple.h"
-#include "audacious/tuple_formatter.h"
+#include "libaudcore/tuple.h"
+#include "libaudcore/tuple_formatter.h"
 
 typedef struct _PlaylistEntry PlaylistEntry;
 typedef struct _Playlist Playlist;

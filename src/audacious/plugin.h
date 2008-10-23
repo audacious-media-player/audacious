@@ -37,9 +37,9 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include "audacious/vfs.h"
-#include "audacious/tuple.h"
-#include "audacious/tuple_formatter.h"
+#include "libaudcore/vfs.h"
+#include "libaudcore/tuple.h"
+#include "libaudcore/tuple_formatter.h"
 #include "audacious/eventqueue.h"
 #include "audacious/configdb.h"
 #include "audacious/playlist_container.h"
