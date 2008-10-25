@@ -22,7 +22,7 @@ INCLUDES = strings.h \
 include ../../buildsys.mk
 include ../../extra.mk
 
-includesubdir = ${PACKAGE}/libaudcore
+includesubdir := ${includesubdir}/libaudcore
 
 CPPFLAGS = ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
 CFLAGS += ${LIB_CFLAGS} ${GLIB_CFLAGS} ${MOWGLI_CFLAGS}
