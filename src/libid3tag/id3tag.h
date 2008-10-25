@@ -29,7 +29,7 @@
 extern "C" {
 # endif
 
-#include <audacious/vfs.h>
+#include "libaudcore/vfs.h"
 
 # define ID3_TAG_VERSION		0x0400
 # define ID3_TAG_VERSION_MAJOR(x)	(((x) >> 8) & 0xff)
