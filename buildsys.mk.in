@@ -398,7 +398,7 @@ clean:
 		${DIR_LEAVE}; \
 	done
 	
-	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} .deps ${DEPS}; do \
+	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} ${DEPS}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
