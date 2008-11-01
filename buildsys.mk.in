@@ -122,8 +122,8 @@ depend: pre-depend ${SRCS}
 	done; \
 	if test x"$$regen" = x"1" -a x"$$deps" != "x"; then \
 		${DEPEND_STATUS}; \
-		rm -f .deps; \
 		if ${MAKE} ${MFLAGS} $$deps; then \
+			rm -f .deps; \
 			cat $$deps >.deps; \
 			rm -f $$deps; \
 			${DEPEND_OK}; \
