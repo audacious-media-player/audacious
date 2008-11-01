@@ -123,12 +123,12 @@ depend: pre-depend ${SRCS}
 	if test x"$$regen" = x"1" -a x"$$deps" != "x"; then \
 		${DEPEND_STATUS}; \
 		if ${MAKE} ${MFLAGS} $$deps; then \
-			rm -f .deps; \
+			test -f .deps && rm .deps; \
 			cat $$deps >.deps; \
 			rm -f $$deps; \
 			${DEPEND_OK}; \
 		else \
-			rm -f .deps $$deps; \
+			:> $$deps; \
 			${DEPEND_FAILED}; \
 		fi; \
 	fi
@@ -415,7 +415,7 @@ distclean: clean
 		${DIR_LEAVE}; \
 	done
 	
-	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN} *~; do \
+	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN} .deps *~; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
