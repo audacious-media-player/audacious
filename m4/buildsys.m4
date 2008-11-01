@@ -136,6 +136,6 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 AC_DEFUN([BUILDSYS_TOUCH_DEPS], [
 	$as_echo "$as_me: Touching .deps files"
 	for i in $(find . -name Makefile); do
-		touch $(dirname $i)/.deps
+		touch -t 0001010000 $(dirname $i)/.deps
 	done
 ])
