@@ -329,8 +329,8 @@ AC_CONFIG_FILES([
     po/Makefile.in
 ])
 
+BUILDSYS_TOUCH_DEPS
 AC_OUTPUT
-
 
 ### ---------------------------------------------------------------------------
 dnl Print out the results

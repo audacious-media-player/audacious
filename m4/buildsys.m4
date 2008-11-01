@@ -1,5 +1,5 @@
 dnl
-dnl Copyright (c) 2007, Jonathan Schleifer <js-buildsys@webkeks.org>
+dnl Copyright (c) 2007 - 2008, Jonathan Schleifer <js-buildsys@webkeks.org>
 dnl
 dnl https://webkeks.org/hg/buildsys/
 dnl
@@ -46,7 +46,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT([Mac OS X (Intel)])
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB} -flat_namespace -undefined suppress'
+			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			PLUGIN_CPPFLAGS=''
@@ -61,7 +61,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(Mac OS X)
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS=''
-			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB} -flat_namespace -undefined suppress'
+			LIB_LDFLAGS='-dynamiclib -fPIC -install_name ${libdir}/${LIB}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			PLUGIN_CPPFLAGS=''
@@ -76,7 +76,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(Solaris)
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-shared -fPIC -Wl,-soname,${LIB}.${LIB_MAJOR}.${LIB_MINOR}'
+			LIB_LDFLAGS='-shared -fPIC -Wl,-soname=${LIB}.${LIB_MAJOR}.${LIB_MINOR}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			PLUGIN_CPPFLAGS='-DPIC'
@@ -103,10 +103,10 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			CLEAN_LIB='${LIB}.a'
 			;;
 		*)
-			AC_MSG_RESULT(POSIX)
+			AC_MSG_RESULT(GNU)
 			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-shared -fPIC -Wl,-soname,${LIB}.${LIB_MAJOR}'
+			LIB_LDFLAGS='-shared -fPIC -Wl,-soname=${LIB}.${LIB_MAJOR}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			PLUGIN_CPPFLAGS='-DPIC'
@@ -131,4 +131,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	AC_SUBST(INSTALL_LIB)
 	AC_SUBST(UNINSTALL_LIB)
 	AC_SUBST(CLEAN_LIB)
+])
+
+AC_DEFUN([BUILDSYS_TOUCH_DEPS], [
+	$as_echo "$as_me: Touching .deps files"
+	for i in $(find . -name Makefile); do
+		touch $(dirname $i)/.deps
+	done
 ])
