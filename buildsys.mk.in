@@ -81,7 +81,8 @@ OBJS7 = ${OBJS6:.py=.pyc}
 OBJS += ${OBJS7:.xpm=.o}
 
 .SILENT:
-.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .m .py .pyc .xpm
+.SUFFIXES:
+.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .m .o .py .pyc .xpm
 .PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean
 
 all:
