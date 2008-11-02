@@ -22,8 +22,7 @@
 #include "ui_skin.h"
 
 #include <gtk/gtk.h>
-#include <glib-object.h>
-#include <glib/gmacros.h>
+#include <glib.h>
 #include <string.h>
 
 #include "main.h"
