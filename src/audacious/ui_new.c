@@ -299,6 +299,7 @@ _ui_initialize(void)
               *button_play, *button_pause, *button_stop,
               *button_previous, *button_next;
     GtkWidget *menu;
+    GtkAccelGroup *accel;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 450, 150);
@@ -313,6 +314,9 @@ _ui_initialize(void)
 
     menu = ui_manager_create_menus();
     gtk_box_pack_start(GTK_BOX(vbox), menu, FALSE, TRUE, 0);
+
+    accel = ui_manager_get_accel_group();
+    gtk_window_add_accel_group(GTK_WINDOW(window), accel);
 
     tophbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), tophbox, FALSE, TRUE, 0);
