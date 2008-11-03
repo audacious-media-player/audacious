@@ -175,6 +175,8 @@ AudConfig aud_default_config = {
     .src_type = SRC_SINC_BEST_QUALITY, /* default interpolation method */
 #endif
     .bypass_dsp = FALSE,
+    .player_width = 450,
+    .player_height = 150,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -322,6 +324,8 @@ static aud_cfg_nument aud_numents[] = {
     {"src_rate", &cfg.src_rate, TRUE},
     {"src_type", &cfg.src_type, TRUE},
 #endif
+    {"player_width", &cfg.player_width, TRUE},
+    {"player_height", &cfg.player_height, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
@@ -597,6 +601,10 @@ aud_config_load(void)
     /* playlist width and height can't be smaller than minimum */
     cfg.playlist_width = MAX(cfg.playlist_width, PLAYLISTWIN_MIN_WIDTH);
     cfg.playlist_height = MAX(cfg.playlist_height, PLAYLISTWIN_MIN_HEIGHT);
+
+    /* player width and height can't be smaller than minimum */
+    cfg.player_width = MAX(cfg.player_width, 450);
+    cfg.player_height = MAX(cfg.player_height, 150);
 }
 
 void

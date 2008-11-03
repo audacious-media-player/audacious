@@ -37,6 +37,16 @@ static gboolean slider_is_moving = FALSE;
 static gint update_song_timeout_source = 0;
 
 static gboolean
+window_configured_cb(gpointer data)
+{
+    GtkWindow *window = GTK_WINDOW(data);
+    gtk_window_get_position(window, &cfg.player_x, &cfg.player_y);
+    gtk_window_get_size(window, &cfg.player_width, &cfg.player_height);
+
+    return FALSE;
+}
+
+static gboolean
 window_delete()
 {
     return FALSE;
@@ -300,10 +310,21 @@ _ui_initialize(void)
               *button_previous, *button_next;
     GtkWidget *menu;
     GtkAccelGroup *accel;
+    gint x = cfg.player_x;
+    gint y = cfg.player_y;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 450, 150);
-    g_signal_connect(G_OBJECT(window), "delete_event",
+
+    if(cfg.save_window_position && cfg.player_width && cfg.player_height)
+        gtk_window_resize(GTK_WINDOW(window),
+                            cfg.player_width, cfg.player_height);
+    if(cfg.save_window_position && cfg.player_x != -1)
+        gtk_window_move(GTK_WINDOW(window), x, y);
+
+    g_signal_connect(G_OBJECT(window), "configure-event",
+                     G_CALLBACK(window_configured_cb), window);
+    g_signal_connect(G_OBJECT(window), "delete-event",
                      G_CALLBACK(window_delete), NULL);
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(window_destroy), NULL);
