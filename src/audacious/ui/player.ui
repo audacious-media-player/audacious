@@ -5,10 +5,12 @@
 		<menu action="file">
 			<menuitem action="play file" />
 			<menuitem action="play location" />
+			<menuitem action="playlist add files" />
+			<menuitem action="playlist add url" />
 			<separator />
 			<menuitem action="preferences" />
 			<menuitem action="quit" />
-		</menu>		
+		</menu>
 
 		<menu action="playback">
 			<menuitem action="playback repeat" />
