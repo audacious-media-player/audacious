@@ -1,4 +1,4 @@
-PROG = audtool
+PROG = audtool2
 SRCS = main.c				\
        handlers_general.c	\
        handlers_playback.c	\

@@ -2,7 +2,7 @@ include ../../extra.mk
 
 SUBDIRS = ${INTL_OBJECTIVE}
 
-PROG = audacious${PROG_SUFFIX}
+PROG = audacious2${PROG_SUFFIX}
 SRCS = af_equalizer.c							\
        auddrct.c								\
        audconfig.c								\

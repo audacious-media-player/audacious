@@ -1,5 +1,5 @@
 LIB = ${LIB_PREFIX}audclient${LIB_SUFFIX}
-LIB_MAJOR = 1
+LIB_MAJOR = 2
 LIB_MINOR = 0
 
 SRCS = audctrl.c
