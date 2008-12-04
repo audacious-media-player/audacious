@@ -54,7 +54,7 @@ ui_playlist_widget_set_title_active(GtkTreeModel *model, gint pos,
     gtk_tree_model_get_iter(model, &iter, path);
 
     gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       3, active ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL, -1);
+                       COLUMN_WEIGHT, active ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL, -1);
 
     g_free(path_str);
     gtk_tree_path_free(path);
@@ -261,7 +261,7 @@ ui_playlist_widget_new(Playlist *playlist)
 
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes(column, renderer, "text", COLUMN_NUM, NULL);
+    gtk_tree_view_column_set_attributes(column, renderer, "text", COLUMN_NUM, "weight", COLUMN_WEIGHT, NULL);
     g_object_set(G_OBJECT(renderer), "ypad", 0, NULL);
 
     renderer = gtk_cell_renderer_text_new();
@@ -272,8 +272,8 @@ ui_playlist_widget_new(Playlist *playlist)
 
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes(column, renderer, "text", COLUMN_TIME, NULL);
-    g_object_set(G_OBJECT(renderer), "ypad", 0, NULL);
+    gtk_tree_view_column_set_attributes(column, renderer, "text", COLUMN_TIME, "weight", COLUMN_WEIGHT, NULL);
+    g_object_set(G_OBJECT(renderer), "ypad", 0, "xalign", 1.0, NULL);
 
     gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
