@@ -32,9 +32,10 @@ enum {
 };
 
 static void
-ui_playlist_widget_change_song(guint pos)
+ui_playlist_widget_change_song(GtkTreeView *treeview, guint pos)
 {
-    playlist_set_position(playlist_get_active(), pos);
+    Playlist *playlist = g_object_get_data(G_OBJECT(treeview), "my_playlist");
+    playlist_set_position(playlist, pos);
 
     if (!playback_get_playing())
         playback_initiate();
@@ -92,7 +93,7 @@ ui_playlist_widget_jump(GtkTreeView * treeview, gpointer data)
 
     gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    ui_playlist_widget_change_song(pos - 1);
+    ui_playlist_widget_change_song(treeview, pos - 1);
 }
 
 static gboolean
@@ -127,7 +128,8 @@ ui_playlist_widget_update(GtkWidget *widget)
     valid = gtk_tree_model_get_iter_first(store, &iter);
 
     row = 1;
-    playlist = playlist_get_active();
+    playlist = g_object_get_data(G_OBJECT(widget), "my_playlist");
+    g_message("widget_update: playlist:%s", playlist->filename);
 
     for (playlist_glist = playlist->entries; playlist_glist;
          playlist_glist = g_list_next(playlist_glist)) {
@@ -192,7 +194,7 @@ ui_playlist_widget_fill(gpointer treeview)
     gtk_list_store_clear(store);
 
     row = 1;
-    playlist = playlist_get_active();
+    playlist = g_object_get_data(G_OBJECT(treeview), "my_playlist");
 
     PLAYLIST_LOCK(playlist);
     for (playlist_glist = playlist->entries; playlist_glist;
@@ -239,7 +241,7 @@ ui_playlist_widget_fill(gpointer treeview)
 }
 
 GtkWidget *
-ui_playlist_widget_new(void)
+ui_playlist_widget_new(Playlist *playlist)
 {
     GtkWidget *treeview;
     GtkListStore *store;
@@ -281,9 +283,10 @@ ui_playlist_widget_new(void)
     g_signal_connect(treeview, "key-press-event",
                      G_CALLBACK(ui_playlist_widget_keypress_cb), NULL);
 
-    ui_playlist_widget_fill(treeview);
-
     g_object_set_data(G_OBJECT(treeview), "current", GINT_TO_POINTER(-1));
+    g_object_set_data(G_OBJECT(treeview), "my_playlist", playlist);
+
+    ui_playlist_widget_fill(treeview);
 
     return treeview;
 }

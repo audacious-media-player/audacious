@@ -98,6 +98,7 @@ struct _Playlist {
     GList         *tail; /* marker for the last element in playlist->entries */
     gint           attribute; /* PlaylistAttribute */
     gulong         serial;     /* serial number */
+    gpointer       ui_data;    /* pointer to UI data */
 };
 
 typedef enum {

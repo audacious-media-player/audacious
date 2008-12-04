@@ -302,6 +302,7 @@ playlist_add_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
+    hook_call("playlist create", playlist);
     hook_call("playlist update", NULL);
 }
 
@@ -325,6 +326,8 @@ playlist_remove_playlist(Playlist *playlist)
         playlist_filename_set(playlist, NULL);
         return;
     }
+
+    hook_call("playlist destroy", playlist);
 
     if (active) playlist_select_next();
 

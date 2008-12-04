@@ -30,11 +30,95 @@
 
 static GtkWidget *label_time;
 static GtkWidget *slider;
-static GtkWidget *treeview;
+static GtkWidget *playlist_notebook;
 
 static gulong slider_change_handler_id;
 static gboolean slider_is_moving = FALSE;
 static gint update_song_timeout_source = 0;
+
+typedef struct {
+    gint tab_id;
+    GtkWidget *treeview;
+} UIPlaylistTab;
+
+static void
+ui_playlist_create_tab(Playlist *playlist)
+{
+    GtkWidget *scrollwin;   /* widget to hold playlist widget */
+    GtkWidget *label;
+    UIPlaylistTab *tab = g_slice_new(UIPlaylistTab);
+
+    g_return_if_fail(playlist != NULL);
+
+    tab->treeview = ui_playlist_widget_new(playlist);
+    scrollwin = gtk_scrolled_window_new(NULL, NULL);
+    gtk_container_add(GTK_CONTAINER(scrollwin), tab->treeview);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollwin),
+                                        GTK_SHADOW_IN);
+
+    label = gtk_label_new(playlist->title != NULL && *(playlist->title) != '\0' ? playlist->title : playlist->filename);
+    tab->tab_id = gtk_notebook_append_page(GTK_NOTEBOOK(playlist_notebook), GTK_WIDGET(scrollwin), GTK_WIDGET(label));
+
+    playlist->ui_data = tab;
+}
+
+static void
+ui_playlist_destroy_tab(Playlist *playlist)
+{
+    UIPlaylistTab *tab;
+
+    g_return_if_fail(playlist != NULL);
+
+    tab = playlist->ui_data;
+    if (tab != NULL) {
+        GList *playlist_iter;
+
+        /* update any tab indexes after this tab. */
+        MOWGLI_ITER_FOREACH(playlist_iter, playlist_get_playlists()) {
+            Playlist *playlist2 = playlist_iter->data;
+            UIPlaylistTab *tab2 = playlist2->ui_data;
+
+            if (tab2->tab_id > tab->tab_id)
+                tab2->tab_id--;
+        }
+
+        gtk_notebook_remove_page(GTK_NOTEBOOK(playlist_notebook), tab->tab_id);
+        g_slice_free(UIPlaylistTab, tab);
+    }
+
+    playlist->ui_data = NULL;
+}
+
+static void
+ui_playlist_change_tab(GtkNotebook *notebook, GtkNotebookPage *page, gint tab_id, gpointer user_data)
+{
+    GList *playlist_iter;
+
+    g_message("playlist_change_tab id:%d", tab_id);
+    MOWGLI_ITER_FOREACH(playlist_iter, playlist_get_playlists()) {
+        Playlist *playlist = playlist_iter->data;
+        UIPlaylistTab *tab = playlist->ui_data;
+
+        if (tab->tab_id == tab_id) {
+            g_message("playlist_select_playlist playlist:%p", playlist);
+            playlist_select_playlist(playlist);
+        }
+    }
+}
+
+static void
+ui_populate_playlist_notebook(void)
+{
+    GList *playlists = playlist_get_playlists(), *playlists_iter;
+
+    MOWGLI_ITER_FOREACH(playlists_iter, playlists) {
+        Playlist *playlist = playlists_iter->data;
+
+        ui_playlist_create_tab(playlist);
+    }
+}
 
 static gboolean
 window_configured_cb(gpointer data)
@@ -107,6 +191,8 @@ static void
 ui_set_song_info(gchar *text, gpointer user_data)
 {
     gint length = playback_get_length();
+    UIPlaylistTab *tab;
+    Playlist *playlist = playlist_get_active();
 
     /* block "value-changed" signal handler to prevent skipping track
        if the next track is shorter than the previous one --desowin */
@@ -116,17 +202,40 @@ ui_set_song_info(gchar *text, gpointer user_data)
 
     gtk_widget_show(label_time);
 
-    ui_playlist_widget_set_current(treeview, playlist_get_position(playlist_get_active()));
+    tab = playlist->ui_data;
+    if (tab != NULL) {
+        ui_playlist_widget_set_current(tab->treeview, playlist_get_position(playlist));
+    }
+}
+
+static void
+ui_playlist_created(Playlist *playlist, gpointer user_data)
+{
+    ui_playlist_create_tab(playlist);
+}
+
+static void
+ui_playlist_destroyed(Playlist *playlist, gpointer user_data)
+{
+    ui_playlist_destroy_tab(playlist);    
 }
 
 static void
 ui_playlist_update(Playlist *playlist, gpointer user_data)
 {
+    UIPlaylistTab *tab;
+
     gchar *text = playlist_get_info_text(playlist);
     ui_set_song_info(text, NULL);
     g_free(text);
 
-    ui_playlist_widget_update(treeview);
+    if (playlist == NULL)
+        return;
+
+    tab = playlist->ui_data;
+    if (tab != NULL) {
+        ui_playlist_widget_update(tab->treeview);
+    }
 }
 
 static void
@@ -225,13 +334,21 @@ ui_playback_begin(gpointer hook_data, gpointer user_data)
 static void
 ui_playback_stop(gpointer hook_data, gpointer user_data)
 {
+    Playlist *playlist;
+    UIPlaylistTab *tab;
+
     if (update_song_timeout_source) {
         g_source_remove(update_song_timeout_source);
         update_song_timeout_source = 0;
     }
 
     ui_clear_song_info();
-    ui_playlist_widget_set_current(treeview, -1);
+
+    playlist = playlist_get_active();
+    tab = playlist->ui_data;
+    if (tab != NULL) {
+        ui_playlist_widget_set_current(tab->treeview, -1);
+    }
 }
 
 static void
@@ -275,34 +392,38 @@ gtk_markup_label_new(const gchar *str)
 }
 
 static void
-ui_hooks_associate()
+ui_hooks_associate(void)
 {
     hook_associate("title change", (HookFunction) ui_set_song_info, NULL);
     hook_associate("playback seek", (HookFunction) ui_update_song_info, NULL);
     hook_associate("playback begin", (HookFunction) ui_playback_begin, NULL);
     hook_associate("playback stop", (HookFunction) ui_playback_stop, NULL);
     hook_associate("playback end", (HookFunction) ui_playback_end, NULL);
+    hook_associate("playlist create", (HookFunction) ui_playlist_created, NULL);
+    hook_associate("playlist destroy", (HookFunction) ui_playlist_destroyed, NULL);
     hook_associate("playlist update", (HookFunction) ui_playlist_update, NULL);
 }
 
 static void
-ui_hooks_disassociate()
+ui_hooks_disassociate(void)
 {
     hook_dissociate("title change", (HookFunction) ui_set_song_info);
     hook_dissociate("playback seek", (HookFunction) ui_update_song_info);
     hook_dissociate("playback begin", (HookFunction) ui_playback_begin);
     hook_dissociate("playback stop", (HookFunction) ui_playback_stop);
     hook_dissociate("playback end", (HookFunction) ui_playback_end);
+    hook_dissociate("playlist create", (HookFunction) ui_playlist_created);
+    hook_dissociate("playlist destroy", (HookFunction) ui_playlist_destroyed);
     hook_dissociate("playlist update", (HookFunction) ui_playlist_update);
 }
 
 static gboolean
 _ui_initialize(void)
 {
+    Playlist *playlist;
     GtkWidget *window;      /* the main window */
     GtkWidget *vbox;        /* the main vertical box */
     GtkWidget *tophbox;     /* box to contain toolbar and shbox */
-    GtkWidget *scrollwin;   /* widget to hold playlist widget */
     GtkWidget *buttonbox;   /* contains buttons like "open", "next" */
     GtkWidget *shbox;       /* box for slider + time combo --nenolod */
     GtkWidget *button_open, *button_add,
@@ -313,6 +434,7 @@ _ui_initialize(void)
     gint x = cfg.player_x;
     gint y = cfg.player_y;
 
+    playlist = playlist_get_active();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 450, 150);
 
@@ -372,17 +494,14 @@ _ui_initialize(void)
     label_time = gtk_markup_label_new(NULL);
     gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
 
-    treeview = ui_playlist_widget_new();
-    scrollwin = gtk_scrolled_window_new(NULL, NULL);
-    gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollwin),
-                                        GTK_SHADOW_IN);
-
-    gtk_box_pack_end(GTK_BOX(vbox), scrollwin, TRUE, TRUE, 0);
+    playlist_notebook = gtk_notebook_new();
+    gtk_box_pack_end(GTK_BOX(vbox), playlist_notebook, TRUE, TRUE, 0);
 
     ui_hooks_associate();
+    ui_populate_playlist_notebook();
+
+    g_signal_connect(playlist_notebook, "switch-page",
+                     G_CALLBACK(ui_playlist_change_tab), NULL);
 
     slider_change_handler_id =
         g_signal_connect(slider, "value-changed",
@@ -395,7 +514,7 @@ _ui_initialize(void)
     g_signal_connect(slider, "button-release-event",
                      G_CALLBACK(ui_slider_button_release_cb), NULL);
 
-    ui_playlist_update(playlist_get_active(), NULL);
+    ui_playlist_update(playlist, NULL);
 
     gtk_widget_show_all(window);
 

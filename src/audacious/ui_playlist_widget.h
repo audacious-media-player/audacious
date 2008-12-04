@@ -21,9 +21,10 @@
 #define UI_PLAYLIST_WIDGET_H
 
 #include <gtk/gtk.h>
+#include "playlist.h"
 
 void ui_playlist_widget_set_current(GtkWidget *treeview, gint pos);
 void ui_playlist_widget_update(GtkWidget *widget);
-GtkWidget * ui_playlist_widget_new(void);
+GtkWidget * ui_playlist_widget_new(Playlist *playlist);
 
 #endif
