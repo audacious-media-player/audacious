@@ -1,4 +1,4 @@
-DATA = audacious.png
+DATA = audacious2.png
 
 include ../buildsys.mk
 
