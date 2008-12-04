@@ -57,6 +57,7 @@ ui_playlist_create_tab(Playlist *playlist)
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollwin),
                                         GTK_SHADOW_IN);
+    gtk_widget_show_all(scrollwin);
 
     label = gtk_label_new(playlist->title != NULL && *(playlist->title) != '\0' ? playlist->title : playlist->filename);
     tab->tab_id = gtk_notebook_append_page(GTK_NOTEBOOK(playlist_notebook), GTK_WIDGET(scrollwin), GTK_WIDGET(label));
