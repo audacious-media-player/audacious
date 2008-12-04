@@ -3157,7 +3157,7 @@ playlist_new(void)
     Playlist *playlist = g_new0(Playlist, 1);
     playlist->mutex = g_mutex_new();
     playlist->loading_playlist = FALSE;
-    playlist->title = NULL;
+    playlist->title = g_strdup(_("Untitled Playlist"));
     playlist->filename = NULL;
     playlist_clear(playlist);
     playlist->tail = NULL;
