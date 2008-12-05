@@ -59,7 +59,6 @@ SRCS = af_equalizer.c							\
        legacy/ui_main.c							\
        legacy/ui_main_evlisteners.c				\
        legacy/ui_playlist.c						\
-       legacy/ui_playlist_evlisteners.c			\
        ui_playlist_manager.c				\
        legacy/ui_skin.c							\
        legacy/ui_skinned_window.c				\
