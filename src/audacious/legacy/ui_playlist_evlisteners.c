@@ -49,6 +49,5 @@ ui_playlist_evlistener_playlistwin_show(gpointer hook_data, gpointer user_data)
 
 void ui_playlist_evlistener_init(void)
 {
-    hook_associate("playlist update", ui_playlist_evlistener_playlist_update, NULL);
     hook_associate("playlistwin show", ui_playlist_evlistener_playlistwin_show, NULL);
 }

@@ -18,9 +18,7 @@
  */
 
 #include "ui_playlist_manager.h"
-#include "ui_playlist.h"
 #include "playlist.h"
-#include "ui_main.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -471,6 +469,8 @@ playlist_manager_ui_show ( void )
     g_object_unref( pl_store );
 
     gtk_widget_show_all( playman_win );
+
+    hook_associate("playlist update", (HookFunction) playlist_manager_update, NULL);
 }
 
 
