@@ -198,7 +198,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_add_url = playlist_add_url,
     .playlist_ins_url = playlist_ins_url,
 
-    .playlist_check_pos_current = playlist_check_pos_current,
     .playlist_next = playlist_next,
     .playlist_prev = playlist_prev,
 

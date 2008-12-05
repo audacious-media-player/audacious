@@ -1134,34 +1134,6 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
 }
 
 void
-playlist_check_pos_current(Playlist *playlist)
-{
-    gint pos, row, bottom;
-
-    if (!playlist)
-        return;
-
-    PLAYLIST_LOCK(playlist);
-    if (!playlist->position) {
-        PLAYLIST_UNLOCK(playlist);
-        return;
-    }
-
-    pos = g_list_index(playlist->entries, playlist->position);
-
-    if (playlistwin_item_visible(pos)) {
-        PLAYLIST_UNLOCK(playlist);
-        return;
-    }
-
-    bottom = MAX(0, playlist_get_length(playlist) - playlistwin_list_get_visible_count());
-    row = CLAMP(pos - playlistwin_list_get_visible_count() / 2, 0, bottom);
-    PLAYLIST_UNLOCK(playlist);
-    playlistwin_set_toprow(row);
-    g_cond_signal(cond_scan);
-}
-
-void
 playlist_next(Playlist *playlist)
 {
     GList *plist_pos_list;
@@ -1210,8 +1182,6 @@ playlist_next(Playlist *playlist)
     }
 
     PLAYLIST_UNLOCK(playlist);
-
-    playlist_check_pos_current(playlist);
 
     if (restart_playing)
         playback_initiate();
@@ -1269,8 +1239,6 @@ playlist_prev(Playlist *playlist)
     }
 
     PLAYLIST_UNLOCK(playlist);
-
-    playlist_check_pos_current(playlist);
 
     if (restart_playing)
         playback_initiate();
@@ -1450,7 +1418,6 @@ playlist_set_position(Playlist *playlist, guint pos)
 
     playlist->position = node->data;
     PLAYLIST_UNLOCK(playlist);
-    playlist_check_pos_current(playlist);
 
     if (restart_playing)
         playback_initiate();
@@ -1518,7 +1485,6 @@ playlist_eof_reached(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist);
 
-    playlist_check_pos_current(playlist);
     playback_initiate();
     hook_call("playlist update", playlist);
 }
@@ -2456,66 +2422,6 @@ playlist_get_info_func(gpointer arg)
                 g_mutex_unlock(mutex_scan);
             }
         } // on_load
-
-        // on_demand
-        else if (!cfg.get_info_on_load &&
-                 cfg.get_info_on_demand &&
-                 cfg.playlist_visible &&
-                 !cfg.playlist_shaded &&
-                 cfg.use_pl_metadata) {
-
-            g_mutex_lock(mutex_scan);
-            playlist_get_info_scan_active = FALSE;
-            g_mutex_unlock(mutex_scan);
-
-            for (node = g_list_nth(playlist->entries, playlistwin_get_toprow());
-                 node && playlistwin_item_visible(g_list_position(playlist->entries, node));
-                 node = g_list_next(node)) {
-
-                entry = node->data;
-
-                if (playlist->attribute & PLAYLIST_STATIC ||
-                    (entry->tuple &&
-                     tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                     tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 &&
-                     entry->title_is_valid))
-                    continue;
-
-                AUDDBG("len=%d mtime=%d\n",
-                       tuple_get_int(entry->tuple, FIELD_LENGTH, NULL),
-                       tuple_get_int(entry->tuple, FIELD_MTIME, NULL));
-
-                if (!playlist_entry_get_info(entry)) { 
-                    if (g_list_index(playlist->entries, entry) == -1)
-                        /* Entry disapeared while we
-                           looked it up.  Restart. */
-                        node = g_list_nth(playlist->entries,
-                                          playlistwin_get_toprow());
-                }
-                else if ((entry->tuple != NULL) ||
-			 (entry->title != NULL && 
-                         tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1)) {
-                    update_playlistwin = TRUE;
-                }
-            }
-        } // on_demand
-
-        else if (cfg.get_info_on_demand &&
-                 (!cfg.playlist_visible || cfg.playlist_shaded || !cfg.use_pl_metadata))
-        {
-            g_mutex_lock(mutex_scan);
-            playlist_get_info_scan_active = FALSE;
-            g_mutex_unlock(mutex_scan);
-        }
-
-        else /* not on_demand and not on_load...
-                NOTE: this shouldn't happen anymore, sanity check in aud_config_load now */
-        {
-            g_mutex_lock(mutex_scan);
-            playlist_get_info_scan_active = FALSE;
-            g_mutex_unlock(mutex_scan);
-        }
 
         if (update_playlistwin) {
             Playlist *playlist = playlist_get_active();

@@ -184,8 +184,6 @@ playback_initiate(void)
     if (!playback_play_file(entry))
         return;
 
-    playlist_check_pos_current(playlist);
-
     hook_call("playback begin", entry);
 }
 

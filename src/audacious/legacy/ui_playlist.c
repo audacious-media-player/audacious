@@ -1577,7 +1577,6 @@ playlistwin_show(void)
     gtk_widget_queue_draw(mainwin_pl);
 
     playlistwin_set_toprow(0);
-    playlist_check_pos_current(playlist_get_active());
 
     gtk_widget_show_all(playlistwin);
     if (!cfg.playlist_shaded)
