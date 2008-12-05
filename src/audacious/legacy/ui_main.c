@@ -66,7 +66,6 @@
 #include "ui_fileopener.h"
 #include "ui_hints.h"
 #include "ui_jumptotrack.h"
-#include "ui_main_evlisteners.h"
 #include "ui_manager.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
@@ -2348,8 +2347,6 @@ mainwin_create_window(void)
 
     g_signal_connect(mainwin, "key_press_event",
                      G_CALLBACK(mainwin_keypress), NULL);
-
-    ui_main_evlistener_init();
 }
 
 void

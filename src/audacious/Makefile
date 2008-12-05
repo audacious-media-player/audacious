@@ -57,7 +57,6 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
        legacy/ui_main.c							\
-       legacy/ui_main_evlisteners.c				\
        legacy/ui_playlist.c						\
        ui_playlist_manager.c				\
        legacy/ui_skin.c							\
