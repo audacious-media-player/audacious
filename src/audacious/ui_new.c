@@ -206,6 +206,7 @@ ui_set_song_info(gchar *text, gpointer user_data)
     tab = playlist->ui_data;
     if (tab != NULL) {
         ui_playlist_widget_set_current(tab->treeview, playlist_get_position(playlist));
+        ui_playlist_widget_update(tab->treeview);
     }
 }
 
