@@ -1454,13 +1454,6 @@ playlistwin_create_widgets(void)
                                   cfg.playlist_height - 16, 8, 7);
     g_signal_connect(playlistwin_sfwd, "clicked", local_playlist_next, NULL);
 
-    /* eject button */
-    playlistwin_seject = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_seject, SKINNED_WINDOW(playlistwin)->fixed,
-                                  playlistwin_get_width() - 100,
-                                  cfg.playlist_height - 16, 9, 7);
-    g_signal_connect(playlistwin_seject, "clicked", mainwin_eject_pushed, NULL);
-
     playlistwin_sscroll_up = ui_skinned_button_new();
     ui_skinned_small_button_setup(playlistwin_sscroll_up, SKINNED_WINDOW(playlistwin)->fixed,
                                   playlistwin_get_width() - 14,

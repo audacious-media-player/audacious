@@ -267,7 +267,6 @@ gboolean mpris_player_stop(MprisPlayer *obj, GError **error) {
     ip_data.stop = TRUE;
     playback_stop();
     ip_data.stop = FALSE;
-    mainwin_clear_song_info();
     return TRUE;
 }
 gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
@@ -276,12 +275,11 @@ gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
     else if (playlist_get_length(playlist_get_active()))
         playback_initiate();
     else
-        mainwin_eject_pushed();
+        run_filebrowser(TRUE);
     return TRUE;
 }
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
-    mainwin_repeat_pushed(rpt);
-    mainwin_set_noplaylistadvance(rpt);
+    g_message("implement me");
     return TRUE;
 }
 gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
@@ -481,11 +479,7 @@ gboolean mpris_tracklist_del_track(MprisTrackList *obj, gint pos,
 }
 gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
                               GError **error) {
-    mainwin_repeat_pushed(loop);
-    if (loop) {
-        mainwin_set_noplaylistadvance(FALSE);
-        mainwin_set_stopaftersong(FALSE);
-    }
+    g_message("implement me");
     return TRUE;
 }
 gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
@@ -566,7 +560,7 @@ gboolean audacious_rc_play(RemoteObject *obj, GError **error) {
     else if (playlist_get_length(playlist_get_active()))
         playback_initiate();
     else
-        mainwin_eject_pushed();
+        run_filebrowser(TRUE);
     return TRUE;
 }
 
@@ -579,7 +573,6 @@ gboolean audacious_rc_stop(RemoteObject *obj, GError **error) {
     ip_data.stop = TRUE;
     playback_stop();
     ip_data.stop = FALSE;
-    mainwin_clear_song_info();
     return TRUE;
 }
 
@@ -760,7 +753,6 @@ gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error) {
 
 gboolean audacious_rc_clear(RemoteObject *obj, GError **error) {
     playlist_clear(playlist_get_active());
-    mainwin_clear_song_info();
     return TRUE;
 }
 

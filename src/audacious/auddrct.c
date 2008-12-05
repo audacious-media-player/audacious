@@ -107,7 +107,7 @@ drct_play ( void )
     else if (playlist_get_length(playlist_get_active()))
         event_queue("playback initiate", (gpointer)0xdeadbeef); // to avoid crash at startup. --yaz
     else
-        mainwin_eject_pushed();
+        run_filebrowser(TRUE);
     return;
 }
 
@@ -124,7 +124,6 @@ drct_stop ( void )
     ip_data.stop = TRUE;
     playback_stop();
     ip_data.stop = FALSE;
-    mainwin_clear_song_info();
     return;
 }
 
@@ -351,7 +350,6 @@ void
 drct_pl_clear ( void )
 {
     playlist_clear(playlist_get_active());
-    mainwin_clear_song_info();
     return;
 }
 

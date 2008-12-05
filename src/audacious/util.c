@@ -1047,3 +1047,13 @@ make_directory(const gchar * path, mode_t mode)
     g_printerr(_("Could not create directory (%s): %s\n"), path,
                g_strerror(errno));
 }
+
+void
+mainwin_stop_pushed(void)
+{
+    g_warning("deprecated function mainwin_stop_pushed called");
+    ip_data.stop = TRUE;
+    playback_stop();
+    ip_data.stop = FALSE;
+}
+

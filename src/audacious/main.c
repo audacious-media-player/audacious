@@ -568,7 +568,6 @@ main(gint argc, gchar ** argv)
     if (g_ascii_strcasecmp(options.interface, "headless")) /* XXX */
     {
         g_message("Non-headless operation setup");
-        ui_main_check_theme_engine();
 
         /* register icons in stock
            NOTE: should be called before UIManager */

@@ -1222,12 +1222,6 @@ check_set( GtkActionGroup * action_group ,
 }
 
 void
-mainwin_eject_pushed(void)
-{
-    run_filebrowser(TRUE);
-}
-
-void
 mainwin_rev_pushed(void)
 {
     g_get_current_time(&cb_time);
@@ -1323,18 +1317,6 @@ mainwin_play_pushed(void)
 
     if (playlist_get_length(playlist_get_active()))
         playback_initiate();
-    else
-        mainwin_eject_pushed();
-}
-
-void
-mainwin_stop_pushed(void)
-{
-    ip_data.stop = TRUE;
-    playback_stop();
-    mainwin_clear_song_info();
-    ab_position_a = ab_position_b = -1;
-    ip_data.stop = FALSE;
 }
 
 void
@@ -2180,11 +2162,6 @@ mainwin_create_widgets(void)
                                  85, 88, 23, 18, 69, 0, 69, 18, SKIN_CBUTTONS);
     g_signal_connect(mainwin_stop, "clicked", mainwin_stop_pushed, NULL );
 
-    mainwin_eject = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_eject, SKINNED_WINDOW(mainwin)->fixed,
-                                 136, 89, 22, 16, 114, 0, 114, 16, SKIN_CBUTTONS);
-    g_signal_connect(mainwin_eject, "clicked", mainwin_eject_pushed, NULL);
-
     mainwin_srew = ui_skinned_button_new();
     ui_skinned_small_button_setup(mainwin_srew, SKINNED_WINDOW(mainwin)->fixed, 169, 4, 8, 7);
     g_signal_connect(mainwin_srew, "clicked", mainwin_playlist_prev, NULL);
@@ -2204,10 +2181,6 @@ mainwin_create_widgets(void)
     mainwin_sfwd = ui_skinned_button_new();
     ui_skinned_small_button_setup(mainwin_sfwd, SKINNED_WINDOW(mainwin)->fixed, 206, 4, 8, 7);
     g_signal_connect(mainwin_sfwd, "clicked", mainwin_playlist_next, NULL);
-
-    mainwin_seject = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_seject, SKINNED_WINDOW(mainwin)->fixed, 216, 4, 9, 7);
-    g_signal_connect(mainwin_seject, "clicked", mainwin_eject_pushed, NULL);
 
     mainwin_shuffle = ui_skinned_button_new();
     ui_skinned_toggle_button_setup(mainwin_shuffle, SKINNED_WINDOW(mainwin)->fixed,
