@@ -457,7 +457,7 @@ _ui_initialize(void)
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    menu = ui_manager_create_menus();
+    menu = ui_manager_get_menus();
     gtk_box_pack_start(GTK_BOX(vbox), menu, FALSE, TRUE, 0);
 
     accel = ui_manager_get_accel_group();

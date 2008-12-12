@@ -472,6 +472,15 @@ ui_manager_create_menus_init_pmenu( gchar * path )
   return;
 }
 
+GtkWidget *
+ui_manager_get_menus ( void )
+{
+  GtkWidget *menu;
+
+  menu = gtk_ui_manager_get_widget( ui_manager , "/mainwin-menus" );
+
+  return menu;
+}
 
 GtkWidget *
 ui_manager_create_menus ( void )
@@ -583,7 +592,8 @@ menu_plugin_item_add( gint menu_id , GtkWidget * item )
     GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
     if ( plugins_menu_item )
     {
-      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
+      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item), "ic"));
+      g_print("ic:%d\n", ic);
       if ( ic == 0 ) /* no items under plugins_menu_item, create the submenu */
       {
         plugins_menu = gtk_menu_new();
@@ -614,6 +624,7 @@ menu_plugin_item_remove( gint menu_id , GtkWidget * item )
     if ( plugins_menu_item )
     {
       gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
+      g_print("ic:%d\n", ic);
       if ( ic > 0 )
       {
         plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );

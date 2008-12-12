@@ -67,6 +67,7 @@ GtkActionGroup *action_group_equalizer;
 
 void ui_manager_init ( void );
 GtkWidget * ui_manager_create_menus ( void );
+GtkWidget * ui_manager_get_menus ( void );
 GtkAccelGroup * ui_manager_get_accel_group ( void );
 GtkWidget * ui_manager_get_popup_menu ( GtkUIManager * , const gchar * );
 void ui_manager_popup_menu_show( GtkMenu * , gint , gint , guint , guint );
