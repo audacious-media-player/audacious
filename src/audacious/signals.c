@@ -98,7 +98,7 @@ signal_process_signals (void *data)
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
     sigaddset(&waitset, SIGSEGV);  
-    sigaddset(&waitset, SIGINT);
+//    sigaddset(&waitset, SIGINT);
     sigaddset(&waitset, SIGTERM);
 
     while(1) {
@@ -115,10 +115,10 @@ signal_process_signals (void *data)
             signal_process_segv();
             break;
 
-        case SIGINT:
-            g_print("Audacious has received SIGINT and is shutting down.\n");
-            aud_quit();
-            break;
+//        case SIGINT:
+//            g_print("Audacious has received SIGINT and is shutting down.\n");
+//            aud_quit();
+//            break;
 
         case SIGTERM:
             g_print("Audacious has received SIGTERM and is shutting down.\n");
@@ -152,10 +152,10 @@ signal_process_signals_linuxthread (void *data)
             signal_process_segv();
             break;
 
-        case SIGINT:
-            g_print("Audacious has received SIGINT and is shutting down.\n");
-            aud_quit();
-            break;
+//        case SIGINT:
+//            g_print("Audacious has received SIGINT and is shutting down.\n");
+//            aud_quit();
+//            break;
 
         case SIGTERM:
             g_print("Audacious has received SIGTERM and is shutting down.\n");
@@ -188,7 +188,7 @@ signal_process_signals(gpointer data)
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
     sigaddset(&waitset, SIGSEGV);  
-    sigaddset(&waitset, SIGINT);
+//    sigaddset(&waitset, SIGINT);
     sigaddset(&waitset, SIGTERM);
 
     sigfd = signalfd(-1, &waitset, 0);
@@ -207,10 +207,10 @@ signal_process_signals(gpointer data)
             signal_process_segv();
             break;
 
-        case SIGINT:
-            g_print("Audacious has received SIGINT and is shutting down.\n");
-            aud_quit();
-            break;
+//        case SIGINT:
+//            g_print("Audacious has received SIGINT and is shutting down.\n");
+//            aud_quit();
+//            break;
 
         case SIGTERM:
             g_print("Audacious has received SIGTERM and is shutting down.\n");
@@ -284,7 +284,7 @@ signal_initialize_blockers(void)
     sigemptyset(&blockset);
     sigaddset(&blockset, SIGPIPE);
     sigaddset(&blockset, SIGSEGV);  
-    sigaddset(&blockset, SIGINT);
+//    sigaddset(&blockset, SIGINT);
     sigaddset(&blockset, SIGTERM);
 
     if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
@@ -356,7 +356,7 @@ signal_handlers_init(void)
         /* install special handler which catches signals and forwards to the signal handling thread */
         signal_install_handler(SIGPIPE, linuxthread_handler);
         signal_install_handler(SIGSEGV, linuxthread_handler);
-        signal_install_handler(SIGINT, linuxthread_handler);
+//        signal_install_handler(SIGINT, linuxthread_handler);
         signal_install_handler(SIGTERM, linuxthread_handler);
 
         /* create handler thread */
