@@ -303,7 +303,7 @@ playlist_add_playlist(Playlist *playlist)
         playlists_iter = playlists;
 
     hook_call("playlist create", playlist);
-    hook_call("playlist update", NULL);
+    event_queue("playlist update", NULL);
 }
 
 void
@@ -339,7 +339,7 @@ playlist_remove_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    hook_call("playlist update", NULL);
+    event_queue("playlist update", NULL);
 }
 
 GList *
@@ -359,7 +359,7 @@ playlist_select_next(void)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    hook_call("playlist update", playlist_get_active());
+    event_queue("playlist update", playlist_get_active());
 }
 
 void
@@ -373,7 +373,7 @@ playlist_select_prev(void)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    hook_call("playlist update", playlist_get_active());
+    event_queue("playlist update", playlist_get_active());
 }
 
 void
@@ -384,7 +384,7 @@ playlist_select_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 /* *********************** playlist code ********************** */
@@ -405,13 +405,13 @@ playlist_set_current_name(Playlist *playlist, const gchar * title)
     if (!title) {
         playlist->title = NULL;
         g_free(oldtitle);
-        hook_call("playlist update", NULL);
+        event_queue("playlist update", NULL);
         return FALSE;
     }
 
     playlist->title = str_assert_utf8(title);
     g_free(oldtitle);
-    hook_call("playlist update", NULL);
+    event_queue("playlist update", NULL);
     return TRUE;
 }
 
@@ -494,7 +494,7 @@ playlist_clear(Playlist *playlist)
 
     playlist_clear_only(playlist);
     playlist_generate_shuffle_list(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
 }
@@ -583,7 +583,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     if (restart_playing) {
         if (playlist->position)
             playback_initiate();
@@ -629,7 +629,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
             hook_call("playlist end reached", NULL);
     }
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 static void
@@ -778,7 +778,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 
             g_free(pr);
             playlist_generate_shuffle_list(playlist);
-            hook_call("playlist update", playlist);
+            event_queue("playlist update", playlist);
             return TRUE;
         }
     }
@@ -1021,7 +1021,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
 
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     return entries;
 }
 
@@ -1074,7 +1074,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
     playlist_generate_shuffle_list(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 
     return entries;
 }
@@ -1121,7 +1121,7 @@ playlist_set_info(Playlist * playlist, const gchar * title,
     event_queue_with_data_free("title change", text);
 
     if ( playlist->position )
-        hook_call( "playlist set info" , playlist->position );
+        event_queue( "playlist set info" , playlist->position );
 }
 
 /* wrapper for playlist_set_info. this function is called by input plugins. */
@@ -1186,7 +1186,7 @@ playlist_next(Playlist *playlist)
     if (restart_playing)
         playback_initiate();
     else
-        hook_call("playlist update", playlist);
+        event_queue("playlist update", playlist);
 }
 
 void
@@ -1243,7 +1243,7 @@ playlist_prev(Playlist *playlist)
     if (restart_playing)
         playback_initiate();
     else
-        hook_call("playlist update", playlist);
+        event_queue("playlist update", playlist);
 }
 
 void
@@ -1280,7 +1280,7 @@ playlist_queue(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 void
@@ -1307,7 +1307,7 @@ playlist_queue_position(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 gboolean
@@ -1361,7 +1361,7 @@ playlist_clear_queue(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 void
@@ -1374,7 +1374,7 @@ playlist_queue_remove(Playlist *playlist, guint pos)
     playlist->queue = g_list_remove(playlist->queue, entry);
     PLAYLIST_UNLOCK(playlist);
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 gint
@@ -1422,7 +1422,7 @@ playlist_set_position(Playlist *playlist, guint pos)
     if (restart_playing)
         playback_initiate();
     else
-        hook_call("playlist update", playlist);
+        event_queue("playlist update", playlist);
 }
 
 void
@@ -1486,7 +1486,7 @@ playlist_eof_reached(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playback_initiate();
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 gint
@@ -1728,7 +1728,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     new_len = playlist_get_length(playlist);
 
     playlist_generate_shuffle_list(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 
     playlist_recalc_total_time(playlist); //tentative --yaz
     PLAYLIST_INCR_SERIAL(playlist);
@@ -2305,7 +2305,7 @@ playlist_clear_selected(Playlist *playlist)
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 }
 
 gint
@@ -2397,6 +2397,7 @@ playlist_get_info_func(gpointer arg)
                      tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 &&
                      entry->title_is_valid))
                 {
+                    g_print("that condition?");
                     update_playlistwin = TRUE;
                     continue;
                 }
@@ -2411,7 +2412,9 @@ playlist_get_info_func(gpointer arg)
                          tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
                          tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1))
                 {
-                    update_playlistwin = TRUE;
+                    g_print("this condition?");
+                    update_playlistwin = FALSE;
+                    playlist_get_info_scan_active = FALSE;
                     break; /* hmmm... --asphyx */
                 }
             }
@@ -2541,7 +2544,7 @@ playlist_remove_dead_files(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_generate_shuffle_list(playlist);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
 }
@@ -2660,7 +2663,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
     PLAYLIST_UNLOCK(playlist);
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
 }
@@ -3000,7 +3003,7 @@ playlist_read_info_selection(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist);
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
@@ -3023,7 +3026,7 @@ playlist_read_info(Playlist *playlist, guint pos)
 
     PLAYLIST_UNLOCK(playlist);
 
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
     playlist_recalc_total_time(playlist);
     PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 }
@@ -3108,7 +3111,7 @@ playlist_new_from_selected(void)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(newpl);
-    hook_call("playlist update", playlist);
+    event_queue("playlist update", playlist);
 
     return newpl;
 }
