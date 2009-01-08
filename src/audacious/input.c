@@ -173,12 +173,8 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
 {
     VisNode *vis_node;
     gint max;
-    const Interface *current = interface_get_current();
 
     if (nch > 2) return;
-
-    if (current && !strstr(current->desc, "Legacy Interface"))
-        return;
 
     if (sad_state == NULL || nch != sad_nch || fmt != sad_fmt) {
         if(sad_state != NULL) SAD_dither_free(sad_state);
