@@ -76,25 +76,6 @@ static PlaylistEntry *playlist_position_before_jump = NULL;
 static GList *playlists = NULL;
 static GList *playlists_iter;
 
-
-/* If this is set to TRUE, we do not probe upon playlist add.
- *
- * Under Audacious 0.1.x, this was not a big deal because we used 
- * file extension introspection instead of looking for file format magic
- * strings.
- *
- * Because we use file magic strings, we have to fstat a file being added
- * to a playlist up to 1 * <number of input plugins installed> times.
- *
- * This can get really slow now that we're looking for files to add to a
- * playlist. (Up to 5 minutes for 5000 songs, etcetera.)
- *
- * So, we obviously don't want to probe while opening a large playlist 
- * up. Hince the boolean below.
- *
- * January 7, 2006, William Pitcock <nenolod@nenolod.net>
- */
-
 static gboolean playlist_get_info_scan_active = FALSE;
 static GStaticRWLock playlist_get_info_rwlock = G_STATIC_RW_LOCK_INIT;
 static gboolean playlist_get_info_going = FALSE;
