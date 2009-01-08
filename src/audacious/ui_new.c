@@ -341,6 +341,7 @@ ui_playback_begin(gpointer hook_data, gpointer user_data)
         g_timeout_add(250, (GSourceFunc) ui_update_song_info, NULL);
 
     /* update vis info about 100 times a second */
+    free_vis_data();
     update_vis_timeout_source =
         g_timeout_add(10, (GSourceFunc) ui_update_vis, NULL);
 }
