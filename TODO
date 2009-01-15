@@ -6,4 +6,6 @@
       - GTK
       - DBus
 [ ] Playlist rewrite
-
+[ ] Output plugin API revisit
+      - init failure/success
+      - list of supported formats
