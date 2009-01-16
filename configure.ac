@@ -205,7 +205,7 @@ AC_SUBST([REGEX_CFLAGS])
 ### ---------------------------------------------------------------------------
 dnl Session management support
 dnl ==========================
-AS_AC_EXPAND([desktop_file], "${datadir}/applications/audacious.desktop")
+AS_AC_EXPAND([desktop_file], "${datadir}/applications/audacious2.desktop")
 AC_DEFINE_UNQUOTED([AUDACIOUS_DESKTOP_FILE], "${desktop_file}", [Location of the desktop file])
 
 AUD_ARG_ENABLE([sm], [yes],
