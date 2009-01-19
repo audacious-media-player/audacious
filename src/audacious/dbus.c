@@ -39,6 +39,7 @@
 #include "playlist.h"
 #include "strings.h"
 #include "tuple.h"
+#include "ui_fileopener.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
