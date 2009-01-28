@@ -27,6 +27,7 @@
 #include "playback.h"
 #include "auddrct.h"
 #include "playlist.h"
+#include "ui_fileopener.h"
 
 /* player */
 
