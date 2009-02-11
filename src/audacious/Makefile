@@ -50,33 +50,13 @@ SRCS = af_equalizer.c							\
        ui_about.c						\
        ui_albumart.c						\
        ui_credits.c						\
-       legacy/ui_dock.c							\
-       legacy/ui_equalizer.c					\
        ui_fileinfo.c						\
-       legacy/ui_hints.c						\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
-       legacy/ui_main.c							\
-       legacy/ui_playlist.c						\
        ui_playlist_manager.c				\
-       legacy/ui_skin.c							\
-       legacy/ui_skinned_window.c				\
-       legacy/ui_skinned_button.c				\
-       legacy/ui_skinned_textbox.c				\
-       legacy/ui_skinned_number.c				\
-       legacy/ui_skinned_horizontal_slider.c	\
-       legacy/ui_vis.c							\
-       legacy/ui_svis.c							\
-       legacy/ui_skinned_menurow.c				\
-       legacy/ui_skinned_playstatus.c			\
-       legacy/ui_skinned_monostereo.c			\
-       legacy/ui_skinned_equalizer_slider.c		\
-       legacy/ui_skinned_equalizer_graph.c		\
-       legacy/ui_skinned_playlist_slider.c		\
-       legacy/ui_skinned_playlist.c				\
-       legacy/ui_skinselector.c					\
        ui_urlopener.c					\
        ui_playlist_widget.c				\
+       actions.c
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c

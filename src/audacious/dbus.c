@@ -485,7 +485,7 @@ gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
 }
 gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
                                 GError **error) {
-    mainwin_shuffle_pushed(random);
+    g_message("implement me");
     return TRUE;
 }
 
@@ -775,7 +775,7 @@ gboolean audacious_rc_repeat(RemoteObject *obj, gboolean *is_repeating,
 }
 
 gboolean audacious_rc_toggle_repeat(RemoteObject *obj, GError **error) {
-    mainwin_repeat_pushed(!cfg.repeat);
+    g_message("implement me");
     return TRUE;
 }
 
@@ -786,7 +786,7 @@ gboolean audacious_rc_shuffle(RemoteObject *obj, gboolean *is_shuffling,
 }
 
 gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
-    mainwin_shuffle_pushed(!cfg.shuffle);
+    g_message("implement me");
     return TRUE;
 }
 
@@ -825,7 +825,7 @@ gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
-    gtk_window_present(GTK_WINDOW(mainwin));
+    g_message("implement me");
     return TRUE;
 }
 

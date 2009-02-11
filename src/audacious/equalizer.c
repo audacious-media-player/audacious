@@ -25,25 +25,29 @@
 gfloat
 equalizer_get_preamp(void)
 {
-    return equalizerwin_get_preamp();
+    return cfg.equalizer_preamp;
 }
 
 void
 equalizer_set_preamp(gfloat preamp)
 {
-    equalizerwin_set_preamp(preamp);
+    cfg.equalizer_preamp = preamp;
+    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                  cfg.equalizer_bands);
 }
 
 gfloat
 equalizer_get_band(gint band)
 {
-    return equalizerwin_get_band(band);
+    return cfg.equalizer_bands[band];
 }
 
 void
 equalizer_set_band(gint band, gfloat value)
 {
-    equalizerwin_set_band(band, value);
+    cfg.equalizer_bands[band] = value;
+    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                  cfg.equalizer_bands);
 }
 
 gboolean equalizer_get_active(gboolean active)
@@ -54,5 +58,7 @@ gboolean equalizer_get_active(gboolean active)
 void
 equalizer_set_active(gboolean active)
 {
-    equalizerwin_activate(active);
+    cfg.equalizer_active = active;
+    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
+                  cfg.equalizer_bands);
 }

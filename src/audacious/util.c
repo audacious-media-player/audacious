@@ -766,54 +766,6 @@ util_font_load(const gchar * name)
     return font;
 }
 
-/* text_get_extents() taken from The GIMP (C) Spencer Kimball, Peter
- * Mattis et al */
-gboolean
-text_get_extents(const gchar * fontname,
-                 const gchar * text,
-                 gint * width, gint * height, gint * ascent, gint * descent)
-{
-    PangoFontDescription *font_desc;
-    PangoLayout *layout;
-    PangoRectangle rect;
-
-    g_return_val_if_fail(fontname != NULL, FALSE);
-    g_return_val_if_fail(text != NULL, FALSE);
-
-    /* FIXME: resolution */
-    layout = gtk_widget_create_pango_layout(GTK_WIDGET(mainwin), text);
-
-    font_desc = pango_font_description_from_string(fontname);
-    pango_layout_set_font_description(layout, font_desc);
-    pango_font_description_free(font_desc);
-    pango_layout_get_pixel_extents(layout, NULL, &rect);
-
-    if (width)
-        *width = rect.width;
-    if (height)
-        *height = rect.height;
-
-    if (ascent || descent) {
-        PangoLayoutIter *iter;
-        PangoLayoutLine *line;
-
-        iter = pango_layout_get_iter(layout);
-        line = pango_layout_iter_get_line(iter);
-        pango_layout_iter_free(iter);
-
-        pango_layout_line_get_pixel_extents(line, NULL, &rect);
-
-        if (ascent)
-            *ascent = PANGO_ASCENT(rect);
-        if (descent)
-            *descent = -PANGO_DESCENT(rect);
-    }
-
-    g_object_unref(layout);
-
-    return TRUE;
-}
-
 /* counts number of digits in a gint */
 guint
 gint_count_digits(gint n)
@@ -867,7 +819,7 @@ make_filebrowser(const gchar *title, gboolean save)
 
     g_return_val_if_fail(title != NULL, NULL);
 
-    dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
+    dialog = gtk_file_chooser_dialog_new(title, NULL,
                                          save ?
                                          GTK_FILE_CHOOSER_ACTION_SAVE :
                                          GTK_FILE_CHOOSER_ACTION_OPEN,

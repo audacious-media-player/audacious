@@ -360,7 +360,6 @@ playlist_manager_ui_show ( void )
 
     playman_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
     gtk_window_set_type_hint( GTK_WINDOW(playman_win), GDK_WINDOW_TYPE_HINT_DIALOG );
-    gtk_window_set_transient_for( GTK_WINDOW(playman_win) , GTK_WINDOW(mainwin) );
     gtk_window_set_position( GTK_WINDOW(playman_win), GTK_WIN_POS_CENTER );
     gtk_window_set_title( GTK_WINDOW(playman_win), _("Playlist Manager") );
     gtk_container_set_border_width( GTK_CONTAINER(playman_win), 10 );

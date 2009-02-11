@@ -225,8 +225,6 @@ fileinfopopup_create(void)
 		    		 GDK_WINDOW_TYPE_HINT_TOOLTIP);
     gtk_window_set_decorated(GTK_WINDOW(filepopup_win), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(filepopup_win), 6);
-    gtk_window_set_transient_for(GTK_WINDOW(filepopup_win),
-                                 GTK_WINDOW(mainwin));
 
     filepopup_hbox = gtk_hbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(filepopup_win), filepopup_hbox);

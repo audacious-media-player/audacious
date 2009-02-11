@@ -490,7 +490,6 @@ create_fileinfo_window(void)
     gtk_window_set_position(GTK_WINDOW(fileinfo_win), GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(fileinfo_win), FALSE);
     gtk_window_set_type_hint(GTK_WINDOW(fileinfo_win), GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_transient_for(GTK_WINDOW(fileinfo_win), GTK_WINDOW(mainwin));
 
     vbox0 = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(fileinfo_win), vbox0);

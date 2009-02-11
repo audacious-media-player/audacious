@@ -826,7 +826,7 @@ plugin_system_init(void)
 
     if (!g_module_supported()) {
         dialog =
-            gtk_message_dialog_new (GTK_WINDOW (mainwin),
+            gtk_message_dialog_new (NULL,
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                     GTK_MESSAGE_ERROR,
                                     GTK_BUTTONS_CLOSE,

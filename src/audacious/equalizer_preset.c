@@ -171,7 +171,7 @@ import_winamp_eqf(VFSFile * file)
 
 error:
     realfn = g_filename_from_uri(file->uri, NULL, NULL);
-    dialog = gtk_message_dialog_new (GTK_WINDOW(mainwin),
+    dialog = gtk_message_dialog_new (NULL,
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      GTK_MESSAGE_ERROR,
                                      GTK_BUTTONS_CLOSE,

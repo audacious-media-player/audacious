@@ -89,7 +89,7 @@ drct_pl_win_toggle ( gboolean show )
 
 void drct_activate(void)
 {
-    gtk_window_present(GTK_WINDOW(mainwin));
+    g_message("implement me");
 }
 
 /* playback */
@@ -294,7 +294,7 @@ drct_pl_repeat_is_enabled( void )
 void
 drct_pl_repeat_toggle( void )
 {
-    mainwin_repeat_pushed(!cfg.repeat);
+    g_message("implement me");
     return;
 }
 
@@ -307,7 +307,7 @@ drct_pl_repeat_is_shuffled( void )
 void
 drct_pl_shuffle_toggle( void )
 {
-    mainwin_shuffle_pushed(!cfg.shuffle);
+    g_message("implement me");
     return;
 }
 
