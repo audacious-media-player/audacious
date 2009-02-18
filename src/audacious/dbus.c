@@ -225,6 +225,7 @@ static void remove_metadata_value(gpointer value)
 
 GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     GHashTable *md = NULL;
+    gpointer value;
 
     if (tuple == NULL)
         return NULL;
@@ -239,6 +240,12 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     tuple_insert_to_hash(md, tuple, "genre");
     tuple_insert_to_hash(md, tuple, "codec");
     tuple_insert_to_hash(md, tuple, "quality");
+
+    value = tuple_value_to_gvalue(tuple, "track-number");
+    if (value != NULL)
+    {
+        g_hash_table_insert(md, "tracknumber", value); 
+    }
 
     return md;
 }
