@@ -2364,8 +2364,7 @@ playlist_get_info_func(gpointer arg)
         PlaylistEntry *entry;
         Playlist *playlist = playlist_get_active();
 
-        // on_load
-        if (cfg.use_pl_metadata && cfg.get_info_on_load &&
+        if (cfg.use_pl_metadata &&
             playlist_get_info_scan_active) {
 
             for (node = playlist->entries; node; node = g_list_next(node)) {
@@ -2377,7 +2376,6 @@ playlist_get_info_func(gpointer arg)
                      tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 &&
                      entry->title_is_valid))
                 {
-                    g_print("that condition?");
                     update_playlistwin = TRUE;
                     continue;
                 }
@@ -2392,7 +2390,6 @@ playlist_get_info_func(gpointer arg)
                          tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
                          tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1))
                 {
-                    g_print("this condition?");
                     update_playlistwin = FALSE;
                     playlist_get_info_scan_active = FALSE;
                     break; /* hmmm... --asphyx */
