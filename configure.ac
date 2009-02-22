@@ -6,12 +6,12 @@ dnl Require autoconf 2.59 or later
 AC_PREREQ([2.59])
 
 dnl Initialize
-AC_INIT([audacious], [1.9.0], [bugs+audacious@atheme.org])
+AC_INIT([audacious], [2.0.0], [bugs+audacious@atheme.org])
 AC_COPYRIGHT([(C) 2005-2008 Audacious Development Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AC_GNU_SOURCE
-AC_CONFIG_HEADERS([config.h])
+8AC_CONFIG_HEADERS([config.h])
 PKG_PROG_PKG_CONFIG
 
 
