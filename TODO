@@ -1,11 +1,11 @@
-?: to be discussed, /: in progress, x: done
+?: to be discussed, /: in progress, x: done, 1: 2.1
 
 [ ] InterfacePlugins stuff
   [ ] UIEventLoop class, used by InterfacePlugins to encapsulate common tasks, like:
       - sending visualization messages to vis plugins
       - GTK
       - DBus
-[ ] Playlist rewrite
+[1] Playlist rewrite
 [ ] Output plugin API revisit
       - init failure/success
       - list of supported formats
