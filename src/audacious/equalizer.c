@@ -20,7 +20,6 @@
 #include "equalizer.h"
 
 #include "audconfig.h"
-#include "legacy/ui_equalizer.h"
 
 gfloat
 equalizer_get_preamp(void)

@@ -62,7 +62,6 @@
 #include "playlist_evmessages.h"
 #include "pluginenum.h"
 #include "strings.h"
-#include "legacy/ui_playlist.h"
 #include "util.h"
 #include "vfs.h"
 #include "debug.h"

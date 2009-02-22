@@ -37,11 +37,6 @@
 #include "general.h"
 #include "playback.h"
 #include "pluginenum.h"
-#include "legacy/ui_equalizer.h"
-#include "legacy/ui_playlist.h"
-#include "legacy/ui_skin.h"
-#include "legacy/ui_skinned_window.h"
-#include "legacy/ui_vis.h"
 #include "util.h"
 #include "visualization.h"
 
