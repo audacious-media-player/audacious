@@ -43,14 +43,6 @@
 AudConfig cfg;
 
 AudConfig aud_default_config = {
-    .player_x = MAINWIN_DEFAULT_POS_X,
-    .player_y = MAINWIN_DEFAULT_POS_Y,
-    .equalizer_x = EQUALIZER_DEFAULT_POS_X,
-    .equalizer_y = EQUALIZER_DEFAULT_POS_Y,
-    .playlist_x = PLAYLISTWIN_DEFAULT_POS_X,
-    .playlist_y = PLAYLISTWIN_DEFAULT_POS_Y,
-    .playlist_width = PLAYLISTWIN_DEFAULT_WIDTH,
-    .playlist_height = PLAYLISTWIN_DEFAULT_HEIGHT,
     .snap_distance = 10,
     .use_realtime = FALSE,
     .shuffle = FALSE,
@@ -113,15 +105,6 @@ AudConfig aud_default_config = {
     .eqpreset_extension = NULL,
     .url_history = NULL,
     .timer_mode = 0,
-    .vis_type = VIS_ANALYZER,
-    .analyzer_mode = ANALYZER_NORMAL,
-    .analyzer_type = ANALYZER_BARS,
-    .scope_mode = SCOPE_DOT,
-    .voiceprint_mode = VOICEPRINT_NORMAL,
-    .vu_mode = VU_SMOOTH,
-    .vis_refresh = REFRESH_FULL,
-    .analyzer_falloff = FALLOFF_FAST,
-    .peaks_falloff = FALLOFF_SLOW,
     .playlist_position = 0,
     .pause_between_songs_time = 2,
     .pause_between_songs = FALSE,
@@ -547,12 +530,6 @@ aud_config_load(void)
         cfg.mainwin_font = NULL;
     }
 
-    if (!cfg.playlist_font)
-        cfg.playlist_font = g_strdup(MAINWIN_DEFAULT_FONT);
-
-    if (!cfg.mainwin_font)
-        cfg.mainwin_font = g_strdup(PLAYLISTWIN_DEFAULT_FONT);
-
     if (!cfg.gentitle_format)
         cfg.gentitle_format = g_strdup("${?artist:${artist} - }${?album:${album} - }${title}");
 
@@ -567,12 +544,6 @@ aud_config_load(void)
 
         g_free(pl_path);
     }
-
-    if (!cfg.eqpreset_default_file)
-        cfg.eqpreset_default_file = g_strdup(EQUALIZER_DEFAULT_DIR_PRESET);
-
-    if (!cfg.eqpreset_extension)
-        cfg.eqpreset_extension = g_strdup(EQUALIZER_DEFAULT_PRESET_EXT);
 
     if (!cfg.chardet_detector)
         cfg.chardet_detector = g_strdup("");
@@ -592,14 +563,6 @@ aud_config_load(void)
     /* at least one of these should be true */
     if ((!cfg.get_info_on_demand) && (!cfg.get_info_on_load))
         cfg.get_info_on_demand = TRUE;
-
-    /* playlist width and height can't be smaller than minimum */
-    cfg.playlist_width = MAX(cfg.playlist_width, PLAYLISTWIN_MIN_WIDTH);
-    cfg.playlist_height = MAX(cfg.playlist_height, PLAYLISTWIN_MIN_HEIGHT);
-
-    /* player width and height can't be smaller than minimum */
-    cfg.player_width = MAX(cfg.player_width, 450);
-    cfg.player_height = MAX(cfg.player_height, 150);
 }
 
 void
