@@ -235,8 +235,6 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, N_("Load metadata (tag information) from music files."), FALSE},
-    {WIDGET_RADIO_BTN, N_("On load"), &cfg.get_info_on_load, NULL, N_("Load metadata when adding the file to the playlist or opening it"), TRUE},
-    {WIDGET_RADIO_BTN, N_("On display"), &cfg.get_info_on_demand, NULL, N_("Load metadata on demand when displaying the file in the playlist. You may need to set \"Detect file formats on demand\" in Audio page for full benefit."), TRUE},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_chardet_table_populate},
     {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
