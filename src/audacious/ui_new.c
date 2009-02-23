@@ -98,13 +98,11 @@ ui_playlist_change_tab(GtkNotebook *notebook, GtkNotebookPage *page, gint tab_id
 {
     GList *playlist_iter;
 
-    g_message("playlist_change_tab id:%d", tab_id);
     MOWGLI_ITER_FOREACH(playlist_iter, playlist_get_playlists()) {
         Playlist *playlist = playlist_iter->data;
         UIPlaylistTab *tab = playlist->ui_data;
 
         if (tab->tab_id == tab_id) {
-            g_message("playlist_select_playlist playlist:%p", playlist);
             playlist_select_playlist(playlist);
         }
     }
