@@ -35,7 +35,6 @@ static GtkWidget *playlist_notebook;
 static gulong slider_change_handler_id;
 static gboolean slider_is_moving = FALSE;
 static gint update_song_timeout_source = 0;
-static gint update_vis_timeout_source = 0;
 
 typedef struct {
     gint tab_id;
@@ -322,13 +321,6 @@ ui_slider_button_release_cb(GtkWidget *widget, GdkEventButton *event,
     return FALSE;
 }
 
-static gboolean
-ui_update_vis(gpointer user_data)
-{
-    input_update_vis(playback_get_time());
-    return TRUE;
-}
-
 static void
 ui_playback_begin(gpointer hook_data, gpointer user_data)
 {
@@ -337,11 +329,6 @@ ui_playback_begin(gpointer hook_data, gpointer user_data)
     /* update song info 4 times a second */
     update_song_timeout_source =
         g_timeout_add(250, (GSourceFunc) ui_update_song_info, NULL);
-
-    /* update vis info about 100 times a second */
-    free_vis_data();
-    update_vis_timeout_source =
-        g_timeout_add(10, (GSourceFunc) ui_update_vis, NULL);
 }
 
 static void
@@ -353,11 +340,6 @@ ui_playback_stop(gpointer hook_data, gpointer user_data)
     if (update_song_timeout_source) {
         g_source_remove(update_song_timeout_source);
         update_song_timeout_source = 0;
-    }
-
-    if (update_vis_timeout_source) {
-        g_source_remove(update_vis_timeout_source);
-        update_vis_timeout_source = 0;
     }
 
     ui_clear_song_info();
