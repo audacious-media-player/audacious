@@ -1,7 +1,7 @@
 ?: to be discussed, /: in progress, x: done, 1: 2.1
 
-[ ] InterfacePlugins stuff
-  [ ] UIEventLoop class, used by InterfacePlugins to encapsulate common tasks, like:
+[x] InterfacePlugins stuff
+  [x] UIEventLoop class, used by InterfacePlugins to encapsulate common tasks, like:
       - sending visualization messages to vis plugins
       - GTK
       - DBus
