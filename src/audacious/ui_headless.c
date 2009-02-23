@@ -25,16 +25,8 @@
 #include "input.h"
 
 static gboolean
-aud_headless_iteration(gpointer unused)
-{
-    free_vis_data();
-    return TRUE;
-}
-
-static gboolean
 _ui_initialize(void)
 {
-    g_timeout_add(10, aud_headless_iteration, NULL);
     g_main_loop_run(g_main_loop_new(NULL, TRUE));
 
     return TRUE;
