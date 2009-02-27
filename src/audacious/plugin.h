@@ -1064,8 +1064,21 @@ struct _LowlevelPlugin {
     PLUGIN_COMMON_FIELDS
 };
 
+typedef enum {
+    OUTPUT_PLUGIN_INIT_OK,
+    OUTPUT_PLUGIN_INIT_FAIL,
+    OUTPUT_PLUGIN_INIT_NO_DEVICES
+} OutputPluginInitStatus;
+
 struct _OutputPlugin {
-    PLUGIN_COMMON_FIELDS
+    gpointer handle;
+    gchar *filename;
+    gchar *description;
+    OutputPluginInitStatus (*init) (void);
+    void (*cleanup) (void);
+    void (*about) (void);
+    void (*configure) (void);
+    gboolean enabled;
 
     void (*get_volume) (gint * l, gint * r);
     void (*set_volume) (gint l, gint r);
