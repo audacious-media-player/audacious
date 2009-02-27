@@ -1095,6 +1095,8 @@ struct _OutputPlugin {
     gint (*written_time) (void);
 
     void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch);
+
+    gint probe_priority;
 };
 
 struct _EffectPlugin {
