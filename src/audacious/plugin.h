@@ -1065,9 +1065,9 @@ struct _LowlevelPlugin {
 };
 
 typedef enum {
-    OUTPUT_PLUGIN_INIT_OK,
     OUTPUT_PLUGIN_INIT_FAIL,
-    OUTPUT_PLUGIN_INIT_NO_DEVICES
+    OUTPUT_PLUGIN_INIT_NO_DEVICES,
+    OUTPUT_PLUGIN_INIT_FOUND_DEVICES,
 } OutputPluginInitStatus;
 
 struct _OutputPlugin {
