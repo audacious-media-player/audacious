@@ -18,6 +18,7 @@
  */
 
 #include "equalizer.h"
+#include "output.h"
 
 #include "audconfig.h"
 
