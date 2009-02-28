@@ -823,6 +823,7 @@ plugin_system_init(void)
     DiscoveryPlugin *dp;
     GtkWidget *dialog;
     gint dirsel = 0, i = 0;
+    gint prio;
 
     if (!g_module_supported()) {
         dialog =
@@ -906,22 +907,34 @@ plugin_system_init(void)
     cfg.enabled_dplugins = NULL;
 
 
-    for (node = op_data.output_list; node; node = g_list_next(node)) {
-        op = OUTPUT_PLUGIN(node->data);
-        /*
-         * Only test basename to avoid problems when changing
-         * prefix.  We will only see one plugin with the same
-         * basename, so this is usually what the user want.
-         */
-        if (cfg.outputplugin && !strcmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
-            op_data.current_output_plugin = op;
-        if (op->init)
-	{
-	    plugin_set_current((Plugin *)op);
-            op->init();
-	}
+    for (prio = 10; prio >= 0; prio--) {
+        for (node = op_data.output_list; node; node = g_list_next(node)) {
+            op = OUTPUT_PLUGIN(node->data);
+
+            /*
+             * Only test basename to avoid problems when changing
+             * prefix.  We will only see one plugin with the same
+             * basename, so this is usually what the user want.
+             */
+            if (cfg.outputplugin && !strcmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
+            {
+                op_data.current_output_plugin = op;
+                goto found_output;
+            }
+
+            if (op->init && op->probe_priority == prio)
+	    {
+	        plugin_set_current((Plugin *)op);
+                if (op->init() == OUTPUT_PLUGIN_INIT_FOUND_DEVICES && op_data.current_output_plugin == NULL)
+                {
+                    op_data.current_output_plugin = op;
+                    goto found_output;
+                }
+	    }
+        }
     }
 
+found_output:
     for (node = ip_data.input_list; node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip->init)
