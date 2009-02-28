@@ -454,10 +454,7 @@ static gint
 outputlist_compare_func(gconstpointer a, gconstpointer b)
 {
     const OutputPlugin *ap = a, *bp = b;
-    if(ap->description && bp->description)
-        return strcasecmp(ap->description, bp->description);
-    else
-        return 0;
+    return (bp->probe_priority - ap->probe_priority);
 }
 
 static gint
@@ -919,7 +916,26 @@ plugin_system_init(void)
             if (cfg.outputplugin && !strcmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
             {
                 op_data.current_output_plugin = op;
-                goto found_output;
+		if (op->init)
+		{
+		    OutputPluginInitStatus ret = op->init();
+		    if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
+		    {
+		        printf("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n", 
+		          g_path_get_basename(op->filename));
+                    } else if (ret == OUTPUT_PLUGIN_INIT_FAIL) {
+		        printf("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n", 
+		          g_path_get_basename(op->filename));
+                    } else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES) {
+		        goto found_output;
+                    } else {
+		        printf("Plugin %s did not report status. Do you still need to convert it? Will proceed for now.\n",
+		          g_path_get_basename(op->filename));
+		        goto found_output;
+                    }
+		} else {
+                   goto found_output;
+                }
             }
 
             if (op->init && op->probe_priority == prio)
