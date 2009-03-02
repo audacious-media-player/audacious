@@ -371,7 +371,7 @@ playback_play_file(PlaylistEntry *entry)
 
     if (!get_current_output_plugin()) {
         run_no_output_plugin_dialog();
-        mainwin_stop_pushed();
+        playback_stop();
         return FALSE;
     }
 
@@ -388,7 +388,7 @@ playback_play_file(PlaylistEntry *entry)
         }
         else
         {
-            mainwin_stop_pushed();
+            playback_stop();
             return FALSE;
         }
     }

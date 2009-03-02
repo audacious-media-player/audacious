@@ -123,7 +123,7 @@ set_current_output_plugin(gint i)
         time = op->output_time();
 
         /* reset the audio system */
-        mainwin_stop_pushed();
+        playback_stop();
         op->close_audio();
 
         g_usleep(300000);

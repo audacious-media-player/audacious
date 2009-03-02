@@ -347,7 +347,7 @@ action_playback_pause( void )
 void
 action_playback_stop( void )
 {
-    mainwin_stop_pushed();
+    playback_stop();
 }
 
 void

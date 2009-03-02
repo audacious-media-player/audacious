@@ -98,8 +98,6 @@ gpointer smart_realloc(gpointer ptr, gsize *size);
 
 void make_directory(const gchar * path, mode_t mode);
 
-void __attribute__((deprecated)) mainwin_stop_pushed(void);
-
 G_END_DECLS
 
 #endif /* AUDACIOUS_UTIL_H */
