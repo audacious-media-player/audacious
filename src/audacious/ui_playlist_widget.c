@@ -1,5 +1,6 @@
 /*  Audacious - Cross-platform multimedia player
  *  Copyright (C) 2008 Tomasz Moń <desowin@gmail.com>
+ *  Copyright (C) 2009 William Pitcock <nenolod@atheme.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +32,19 @@ enum {
     N_COLUMNS
 };
 
+static gint
+ui_playlist_widget_get_index_from_path(GtkTreePath *path)
+{
+    gint *pos;
+
+    g_return_val_if_fail(path != NULL, -1);
+
+    if (!(pos = gtk_tree_path_get_indices(path)))
+        return -1;
+
+    return pos[0];
+}
+
 static void
 ui_playlist_widget_change_song(GtkTreeView *treeview, guint pos)
 {
@@ -47,16 +61,13 @@ ui_playlist_widget_set_title_active(GtkTreeModel *model, gint pos,
 {
     GtkTreeIter iter;
     GtkTreePath *path;
-    gchar *path_str;
 
-    path_str = g_strdup_printf("%d", pos);
-    path = gtk_tree_path_new_from_string(path_str);
+    path = gtk_tree_path_new_from_indices(pos, -1);
     gtk_tree_model_get_iter(model, &iter, path);
 
     gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                        COLUMN_WEIGHT, active ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL, -1);
 
-    g_free(path_str);
     gtk_tree_path_free(path);
 }
 
@@ -83,6 +94,7 @@ ui_playlist_widget_jump(GtkTreeView * treeview, gpointer data)
     GtkTreeModel *model;
     GtkTreeSelection *selection;
     GtkTreeIter iter;
+    GtkTreePath *path;
     guint pos;
 
     model = gtk_tree_view_get_model(treeview);
@@ -91,9 +103,10 @@ ui_playlist_widget_jump(GtkTreeView * treeview, gpointer data)
     if (!gtk_tree_selection_get_selected(selection, NULL, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, 0, &pos, -1);
+    path = gtk_tree_model_get_path(model, &iter);
+    pos = ui_playlist_widget_get_index_from_path(path);
 
-    ui_playlist_widget_change_song(treeview, pos - 1);
+    ui_playlist_widget_change_song(treeview, pos);
 }
 
 static gboolean
@@ -252,6 +265,7 @@ ui_playlist_widget_new(Playlist *playlist)
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
     g_object_unref(store);
 
+    gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), TRUE);
     gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
 
     column = gtk_tree_view_column_new();
