@@ -32,6 +32,12 @@ enum {
     N_COLUMNS
 };
 
+typedef struct {
+    gint old_index;
+    gint new_index;
+    GtkTreeRowReference *ref;
+} UiPlaylistDragTracker;
+
 static gint
 ui_playlist_widget_get_index_from_path(GtkTreePath *path)
 {
@@ -43,6 +49,82 @@ ui_playlist_widget_get_index_from_path(GtkTreePath *path)
         return -1;
 
     return pos[0];
+}
+
+static void
+_ui_playlist_widget_drag_begin(GtkTreeView *widget, GdkDragContext *context, gpointer data)
+{
+    UiPlaylistDragTracker *t = g_slice_new0(UiPlaylistDragTracker);
+    GtkTreeModel *model;
+    GtkTreeSelection *sel;
+    GtkTreePath *path;
+    GtkTreeIter iter;
+
+    model = gtk_tree_view_get_model(widget);
+    sel = gtk_tree_view_get_selection(widget);
+
+    if (!gtk_tree_selection_get_selected(sel, NULL, &iter))
+        return;
+
+    model = gtk_tree_view_get_model(widget);
+    path = gtk_tree_model_get_path(model, &iter);
+    t->old_index = ui_playlist_widget_get_index_from_path(path);
+
+    g_object_set_data(G_OBJECT(widget), "ui_playlist_drag_context", t);
+}
+
+static int
+_ui_playlist_widget_get_drop_index(GtkTreeView *widget, GdkDragContext *context, gint x, gint y)
+{
+    GtkTreePath *path;
+    gint cx, cy, ins_pos = -1;
+
+    gdk_window_get_geometry(gtk_tree_view_get_bin_window(widget), &cx, &cy, NULL, NULL, NULL);
+
+    if (gtk_tree_view_get_path_at_pos(widget, x -= cx, y -= cy, &path, NULL, &cx, &cy))
+    {
+        GdkRectangle rect;
+
+        /* in lower 1/3 of row? use next row as target */
+        gtk_tree_view_get_background_area(widget, path, gtk_tree_view_get_column(widget, 0), &rect);
+        
+        if (cy >= rect.height * 2 / 3.0)
+        {
+            gtk_tree_path_free(path);
+
+            if (gtk_tree_view_get_path_at_pos(widget, x, y + rect.height, &path, NULL, &cx, &cy))
+                ins_pos = ui_playlist_widget_get_index_from_path(path);
+        }
+        else
+            ins_pos = ui_playlist_widget_get_index_from_path(path);
+
+        gtk_tree_path_free(path);
+    }
+
+    return ins_pos;
+} 
+
+static void
+_ui_playlist_widget_drag_data_received(GtkTreeView *widget, GdkDragContext *context, gint x, gint y, GtkSelectionData *data, guint info2, guint time)
+{
+    UiPlaylistDragTracker *t;
+    t = g_object_get_data(G_OBJECT(widget), "ui_playlist_drag_context");
+
+    t->new_index = _ui_playlist_widget_get_drop_index(widget, context, x, y);
+}
+
+static void
+_ui_playlist_widget_drag_end(GtkTreeView *widget, GdkDragContext *context, gpointer data)
+{
+    gint delta;
+    UiPlaylistDragTracker *t;
+
+    t = g_object_get_data(G_OBJECT(widget), "ui_playlist_drag_context");
+
+    delta = t->new_index - t->old_index;
+
+    g_print("%d -> %d = delta %d\n", t->old_index, t->new_index, delta);
+    g_slice_free(UiPlaylistDragTracker, t);
 }
 
 static void
@@ -296,6 +378,13 @@ ui_playlist_widget_new(Playlist *playlist)
 
     g_signal_connect(treeview, "key-press-event",
                      G_CALLBACK(ui_playlist_widget_keypress_cb), NULL);
+
+    g_signal_connect(treeview, "drag-begin",
+                     G_CALLBACK(_ui_playlist_widget_drag_begin), NULL);
+    g_signal_connect(treeview, "drag-data-received",
+                     G_CALLBACK(_ui_playlist_widget_drag_data_received), NULL);
+    g_signal_connect(treeview, "drag-end",
+                     G_CALLBACK(_ui_playlist_widget_drag_end), NULL);
 
     g_object_set_data(G_OBJECT(treeview), "current", GINT_TO_POINTER(-1));
     g_object_set_data(G_OBJECT(treeview), "my_playlist", playlist);
