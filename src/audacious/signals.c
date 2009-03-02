@@ -78,12 +78,11 @@ signal_process_segv(void)
     "problem while running Audacious under GDB to get a proper backtrace.\n"));
 #endif
 
-    g_printerr(_("\nBugs can be reported at http://bugzilla.atheme.org/ against "
-    "the Audacious or Audacious Plugins product.\n"));
+    g_printerr(_("\nBugs can be reported at http://redmine.atheme.org/ against "
+        "the Audacious or Audacious Plugins product.\n"));
 
     g_critical("Received SIGSEGV -- Audacious has crashed.");
 
-    aud_config_save();
     abort();
 }
 
