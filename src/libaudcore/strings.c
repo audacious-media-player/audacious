@@ -152,13 +152,13 @@ gboolean
 str_has_prefix_nocase(const gchar * str, const gchar * prefix)
 {
     /* strncasecmp causes segfaults when str is NULL*/
-    return (str && (strncasecmp(str, prefix, strlen(prefix)) == 0));
+    return (str != NULL && (strncasecmp(str, prefix, strlen(prefix)) == 0));
 }
 
 gboolean
 str_has_suffix_nocase(const gchar * str, const gchar * suffix)
 {
-    return (strcasecmp(str + strlen(str) - strlen(suffix), suffix) == 0);
+    return (str != NULL && strcasecmp(str + strlen(str) - strlen(suffix), suffix) == 0);
 }
 
 gboolean
