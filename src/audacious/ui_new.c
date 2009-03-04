@@ -492,7 +492,7 @@ _ui_initialize(void)
     gtk_box_pack_start(GTK_BOX(shbox), slider, TRUE, TRUE, 0);
 
     label_time = gtk_markup_label_new(NULL);
-    gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 5);
 
     playlist_notebook = gtk_notebook_new();
     gtk_box_pack_end(GTK_BOX(vbox), playlist_notebook, TRUE, TRUE, 0);
