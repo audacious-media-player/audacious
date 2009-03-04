@@ -437,33 +437,13 @@ void
 playback_seek(gint time)
 {
     InputPlayback *playback = get_current_input_playback();
-    gboolean restore_pause = FALSE;
-    gint l=0, r=0;
 
     g_return_if_fail(ip_data.playing);
     g_return_if_fail(playback != NULL);
 
-    /* FIXME WORKAROUND...that should work with all plugins
-     * mute the volume, start playback again, do the seek, then pause again
-     * -Patrick Sudowe 
-     */
-    if (ip_data.paused)
-    {
-        restore_pause = TRUE;
-        output_get_volume(&l, &r);
-        output_set_volume(0,0);
-        playback_pause();
-    }
-    
     plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->seek(playback, time);
     playback->set_pb_change(playback);
-    
-    if (restore_pause)
-    {
-        playback_pause();
-        output_set_volume(l, r);
-    }
 
     event_queue_timed(100, "playback seek", playback);
 }
