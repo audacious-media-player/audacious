@@ -116,6 +116,7 @@ _ui_playlist_widget_drag_data_received(GtkTreeView *widget, GdkDragContext *cont
 static void
 _ui_playlist_widget_drag_end(GtkTreeView *widget, GdkDragContext *context, gpointer data)
 {
+    Playlist *playlist = g_object_get_data(G_OBJECT(widget), "my_playlist");
     gint delta;
     UiPlaylistDragTracker *t;
 
@@ -123,7 +124,7 @@ _ui_playlist_widget_drag_end(GtkTreeView *widget, GdkDragContext *context, gpoin
 
     delta = t->new_index - t->old_index;
 
-    g_print("%d -> %d = delta %d\n", t->old_index, t->new_index, delta);
+    playlist_shift(playlist, delta);
     g_slice_free(UiPlaylistDragTracker, t);
 }
 
