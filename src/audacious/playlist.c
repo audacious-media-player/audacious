@@ -467,6 +467,52 @@ playlist_clear_only(Playlist *playlist)
 }
 
 void
+playlist_shift(Playlist *playlist, gint delta)
+{
+    gint orig_delta;
+    GList *n, *tn;
+    g_return_if_fail(playlist != NULL);
+
+    if (delta == 0)
+        return;
+
+    PLAYLIST_LOCK(playlist);
+
+    /* copy the delta over. */
+    orig_delta = delta;
+
+    /* even though it is unlikely we would ever be calling playlist_shift()
+       on an empty playlist... we should probably check for this. --nenolod */
+    if ((n = playlist->entries) == NULL)
+    {
+        PLAYLIST_UNLOCK(playlist);
+        return;
+    }
+
+    MOWGLI_ITER_FOREACH_SAFE(n, tn, playlist->entries)
+    {
+        PlaylistEntry *entry = PLAYLIST_ENTRY(n->data);
+
+        if (!entry->selected)
+            continue;
+
+        if (orig_delta > 0)
+            for (delta = orig_delta; delta > 0; delta--)
+                glist_movedown(n);
+        else (orig_delta < 0)
+            for (delta = orig_delta; delta > 0; delta--)
+                glist_moveup(n);
+    }
+
+    /* do the remaining work. */
+    playlist_generate_shuffle_list(playlist);
+    event_queue("playlist update", playlist);
+    PLAYLIST_INCR_SERIAL(playlist);
+
+    PLAYLIST_UNLOCK(playlist);
+}
+
+void
 playlist_clear(Playlist *playlist)
 {
     if (!playlist)

@@ -162,6 +162,7 @@ gint playlist_get_position(Playlist *playlist);
 gint playlist_get_position_nolock(Playlist *playlist);
 gchar *playlist_get_info_text(Playlist *playlist);
 gint playlist_get_current_length(Playlist *playlist);
+void playlist_shift(Playlist *playlist, gint delta);
 
 gboolean playlist_save(Playlist *playlist, const gchar * filename);
 gboolean playlist_load(Playlist *playlist, const gchar * filename);
