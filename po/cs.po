@@ -2,14 +2,14 @@
 # Copyright (C) 2004 Jan Nárovec <finn@sendmail.cz>
 # This file is distributed under the same license as the Audacious package.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
-# Petr Písař <petr.pisar@atlas.cz>, 2007, 2008.
+# Petr Písař <petr.pisar@atlas.cz>, 2007, 2008, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious hg-4157\n"
+"Project-Id-Version: audacious 7dec224d79af\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
 "POT-Creation-Date: 2008-06-21 08:26+0300\n"
-"PO-Revision-Date: 2008-01-09 18:52+0100\n"
+"PO-Revision-Date: 2009-03-29 20:16+0200\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -97,13 +97,12 @@ msgid "Print all errors and warnings to stdout"
 msgstr "Všechny chyby a varování tisknout na standardní výstup"
 
 #: src/audacious/main.c:277
-#, fuzzy
 msgid "Show version"
-msgstr "Zobrazit přehrávač"
+msgstr "Zobrazit verzi"
 
 #: src/audacious/main.c:279
 msgid "Used in macpacking"
-msgstr ""
+msgstr "Použito v macpackingu"
 
 #: src/audacious/main.c:281
 msgid "FILE..."
@@ -130,14 +129,14 @@ msgid ""
 "Check that skin at '%s' is usable and default skin is properly installed at "
 "'%s'\n"
 msgstr ""
-"<b><big>Nelze načíst skin.</big></b>\n"
+"<b><big>Vzhled nelze načíst.</big></b>\n"
 "\n"
-"Zkontrolujte, zda skin v '%s' je použitelný a zda je standardní skin správně "
-"nainstalován v '%s'.\n"
+"Zkontrolujte, zda vzhled v „%s“ je použitelný a zda je standardní vzhled "
+"správně nainstalován v „%s“.\n"
 
 #: src/audacious/main.c:667
 msgid "Sorry, threads aren't supported on your platform.\n"
-msgstr ""
+msgstr "Je nám líto, ale vlákna nejsou na vaší platformě podporována.\n"
 
 #: src/audacious/main.c:701
 #, c-format
@@ -145,9 +144,8 @@ msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Nepodařilo se otevřít displej, končím.\n"
 
 #: src/audacious/main.c:801
-#, fuzzy
 msgid "Headless operation enabled\n"
-msgstr "Bezhlavý režim [zkušební]"
+msgstr "Bezhlavý režim zapnut\n"
 
 #: src/audacious/playback.c:282
 msgid ""
@@ -159,10 +157,9 @@ msgstr ""
 
 #: src/audacious/pluginenum.c:814
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
+msgstr "Nahrávání modulu není podporováno! Moduly nebudou nahrány.\n"
 
 #: src/audacious/signals.c:47
-#, fuzzy
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -188,7 +185,7 @@ msgstr ""
 "Vaše současná konfigurace byla uložena a neměla by být poškozena.\n"
 "\n"
 "I vy můžete pomoci zlepšit Audacious tím, že vyplníte chybové hlášení na "
-"http://bugs-meta.atheme.org\n"
+"http://bugzilla.atheme.org/\n"
 "Prosím, zahrňte celý text této hlášky a popis toho, co jste dělali, když\n"
 "došlo k pádu. Pomůžete tím k rychlejšímu odbavení svého chybového hlášení:\n"
 "\n"
@@ -198,17 +195,19 @@ msgid ""
 "Stacktrace was unavailable. You might want to reproduce this problem while "
 "running Audacious under GDB to get a proper backtrace.\n"
 msgstr ""
+"Mapa zásobníku nebyla k dispozi. Možná byste mohli chtít zreprodukovat tento "
+"problém v Audicous běžícím pod GDB, aby jste tak získali správnou "
+"posloupnost volání.\n"
 
 #: src/audacious/signals.c:79
-#, fuzzy
 msgid ""
 "\n"
 "Bugs can be reported at http://bugzilla.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 "\n"
-"Chyby mohou být hlášeny na http://bugs-meta.atheme.org pod položkou\n"
-"„Audacious product“.\n"
+"Chyby mohou být hlášeny na http://bugzilla.atheme.org/ pod výrobkem\n"
+"„Audacious“ nebo „Audacious Plugins“.\n"
 
 #: src/audacious/signals.c:297
 msgid ""
@@ -223,7 +222,7 @@ msgid "  (invalid UTF-8)"
 msgstr "  (neplatné UTF8)"
 
 #: src/audacious/ui_about.c:46
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
@@ -231,7 +230,7 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright © 2005–2007 vývojový tým Audacious"
+"Copyright © 2005–2008 vývojový tým Audacious"
 
 #: src/audacious/ui_about.c:125 src/audacious/ui_credits.c:372
 #: src/audacious/ui_manager.c:391 src/audacious/ui_manager.c:392
@@ -243,7 +242,7 @@ msgid "Credits"
 msgstr "Zásluhy"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A skinned multimedia player for many platforms.\n"
@@ -253,7 +252,7 @@ msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Přehrávač multimédií s měnitelným vzhledem a pro různé platformy\n"
 "\n"
-"Copyright © 2005–2007 vývojový tým Audacious\n"
+"Copyright © 2005–2008 vývojový tým Audacious\n"
 
 #: src/audacious/ui_credits.c:53
 msgid "Audacious core developers:"
@@ -265,7 +264,7 @@ msgstr "Grafika:"
 
 #: src/audacious/ui_credits.c:79
 msgid "Default skin:"
-msgstr "Standardní skin:"
+msgstr "Standardní vzhled:"
 
 #: src/audacious/ui_credits.c:85
 msgid "Plugin development:"
@@ -426,16 +425,15 @@ msgstr "Ekvalizér"
 #: src/audacious/ui_equalizer.c:797
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "Chyba při importu winampovského EQF souboru „%s“"
 
 #: src/audacious/ui_equalizer.c:1163
 msgid "Presets"
 msgstr "Předvolby"
 
 #: src/audacious/ui_fileinfo.c:101
-#, fuzzy
 msgid "Blues"
-msgstr "Modrá"
+msgstr "Blues"
 
 #: src/audacious/ui_fileinfo.c:101
 msgid "Classic Rock"
@@ -526,9 +524,8 @@ msgid "Death Metal"
 msgstr "Death Metal"
 
 #: src/audacious/ui_fileinfo.c:106
-#, fuzzy
 msgid "Pranks"
-msgstr "Vrcholy"
+msgstr "Pranks"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Soundtrack"
@@ -599,9 +596,8 @@ msgid "AlternRock"
 msgstr "Alternativní rock"
 
 #: src/audacious/ui_fileinfo.c:111
-#, fuzzy
 msgid "Bass"
-msgstr "Obdélníky"
+msgstr "Basy"
 
 #: src/audacious/ui_fileinfo.c:111
 msgid "Soul"
@@ -712,9 +708,8 @@ msgid "Rave"
 msgstr "Rave"
 
 #: src/audacious/ui_fileinfo.c:120
-#, fuzzy
 msgid "Showtunes"
-msgstr "Nejpomalejší"
+msgstr "Šlágr z jeviště"
 
 #: src/audacious/ui_fileinfo.c:120
 msgid "Trailer"
@@ -741,9 +736,8 @@ msgid "Polka"
 msgstr "Polka"
 
 #: src/audacious/ui_fileinfo.c:121
-#, fuzzy
 msgid "Retro"
-msgstr "Vynulovat"
+msgstr "Retro"
 
 #: src/audacious/ui_fileinfo.c:122
 msgid "Musical"
@@ -878,9 +872,8 @@ msgid "Porn Groove"
 msgstr "Porn Groove"
 
 #: src/audacious/ui_fileinfo.c:132
-#, fuzzy
 msgid "Satire"
-msgstr "Stereo"
+msgstr "Satira"
 
 #: src/audacious/ui_fileinfo.c:132
 msgid "Slow Jam"
@@ -1096,18 +1089,16 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Umístění</span>"
 
 #: src/audacious/ui_fileinfo.c:710
-#, fuzzy
 msgid "<span size=\"small\">Raw Metadata</span>"
-msgstr "<span size=\"small\">Rok</span>"
+msgstr "<span size=\"small\">Syrová metadata</span>"
 
 #: src/audacious/ui_fileinfo.c:727
 msgid "Key"
-msgstr ""
+msgstr "Klíč"
 
 #: src/audacious/ui_fileinfo.c:740
-#, fuzzy
 msgid "Value"
-msgstr "Modrá"
+msgstr "Hodnota"
 
 #: src/audacious/ui_fileinfo.c:825
 #, c-format
@@ -1193,9 +1184,8 @@ msgid "_Filter:"
 msgstr "_Filtr:"
 
 #: src/audacious/ui_jumptotrack.c:539
-#, fuzzy
 msgid "Remember"
-msgstr "Zapamatovat si položku"
+msgstr "Zapamatovat si"
 
 #: src/audacious/ui_jumptotrack.c:581
 msgid "Close on Jump"
@@ -1220,7 +1210,7 @@ msgstr "mono"
 
 #: src/audacious/ui_main.c:950
 msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
+msgstr "Nelze přejít na čas, když žádná skladba nehraje.\n"
 
 #: src/audacious/ui_main.c:965 src/audacious/ui_manager.c:420
 #: src/audacious/ui_manager.c:421
@@ -1340,13 +1330,12 @@ msgid "File Info Box"
 msgstr "Informace o souboru"
 
 #: src/audacious/ui_main.c:1882
-#, fuzzy
 msgid "Disable 'GUI Scaling'"
-msgstr "Zakázat ID3v2 tagy"
+msgstr "Zapnout „Škálování GUI“"
 
 #: src/audacious/ui_main.c:1884
 msgid "Enable 'GUI Scaling'"
-msgstr ""
+msgstr "Vypnout „Škálování GUI“"
 
 #: src/audacious/ui_main.c:1887
 msgid "Visualization Menu"
@@ -1425,9 +1414,8 @@ msgid "Roll up Equalizer"
 msgstr "Sbalit ekvalizér"
 
 #: src/audacious/ui_manager.c:90
-#, fuzzy
 msgid "Scale"
-msgstr "Uložit"
+msgstr "Škálovat"
 
 #: src/audacious/ui_manager.c:91
 msgid "DoubleSize"
@@ -1538,6 +1526,8 @@ msgstr "Dosažený čas"
 msgid "Time Remaining"
 msgstr "Zbývající čas"
 
+# FIXME: This require context. "Přehrávání" In preferences, "Přhrát" in
+# manager.
 #: src/audacious/ui_manager.c:170 src/audacious/ui_preferences.c:142
 msgid "Playback"
 msgstr "Přehrát"
@@ -2149,9 +2139,8 @@ msgid "Audio"
 msgstr "Zvuk"
 
 #: src/audacious/ui_preferences.c:139
-#, fuzzy
 msgid "Replay Gain"
-msgstr "Zesílení přehrávání"
+msgstr "Zesílené přehrávání"
 
 #: src/audacious/ui_preferences.c:140
 msgid "Connectivity"
@@ -2318,13 +2307,15 @@ msgstr "Zakázat vnitřní téma GTK"
 
 #: src/audacious/ui_preferences.c:219
 msgid "Allow loading incomplete skins"
-msgstr ""
+msgstr "Povolit načítání neúplných vzhledů"
 
 #: src/audacious/ui_preferences.c:220
 msgid ""
 "If selected, audacious won't refuse loading broken skins. Use only if your "
 "favourite skin doesn't work"
 msgstr ""
+"Je-li vybráno, Audacious neodmítne nahrát rozbitý vzhled. Použijte, jen když "
+"váš oblíbený vzhled nefunguje."
 
 #: src/audacious/ui_preferences.c:224
 msgid "<b>Format Detection</b>"
@@ -2356,9 +2347,8 @@ msgstr ""
 "Nahrány budou jen soubory, jejichž přípona přísluší podporovanému formátu."
 
 #: src/audacious/ui_preferences.c:229
-#, fuzzy
 msgid "<b>Bit Depth</b>"
-msgstr "<b>Rozpoznávání formátu</b>"
+msgstr "<b>Bitová hloubka</b>"
 
 #: src/audacious/ui_preferences.c:234
 msgid "<b>Volume Control</b>"
@@ -2366,10 +2356,9 @@ msgstr "<b>Ovládání hlasitosti</b>"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Use software volume control"
-msgstr "Hlasitost nastavit softwarově"
+msgstr "Hlasitost měnit softwarově"
 
 #: src/audacious/ui_preferences.c:236
-#, fuzzy
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
@@ -2378,13 +2367,12 @@ msgstr ""
 "váš zvukový systém změnu hlasitosti přehrávání."
 
 #: src/audacious/ui_preferences.c:237
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "Pokročilé"
+msgstr "<b>Pokročilé</b>"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Bypass all of signal processing if possible"
-msgstr ""
+msgstr "Obejít veškeré zpracování signálu, je-li to možno"
 
 #: src/audacious/ui_preferences.c:239
 msgid ""
@@ -2393,52 +2381,52 @@ msgid ""
 "processing will be disabled (i.e. DSP plugins, equalizer, resampling, Replay "
 "Gain and software volume control)."
 msgstr ""
+"Pokusí se předávat výstup vstupního modulu přímo modulu výstupnímu, pokud "
+"výstupní modul podporuje formát dat vyráběných vstupním modulem. Je-li tomu "
+"tak, veškeré zpracování signálu bude zakázáno (tj. DSP moduly, ekvalizér, "
+"převzorkování, zesílení přehrávání a softwarové ovládání hlasitosti)."
 
 #: src/audacious/ui_preferences.c:245
-#, fuzzy
 msgid "<b>Replay Gain configuration</b>"
-msgstr "<b>Nastavení proxy</b>"
+msgstr "<b>Nastavení zesílení při přehrávání</b>"
 
 #: src/audacious/ui_preferences.c:246
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "Zapnout zesílení pro přehrávání"
+msgstr "Zapnout zesílení při přehrávání"
 
 #: src/audacious/ui_preferences.c:247
-#, fuzzy
 msgid "<b>Replay Gain mode</b>"
-msgstr "Typ zesílení pro přehrávání:"
+msgstr "<b>Typ zesílení při přehrávání</b>"
 
 #: src/audacious/ui_preferences.c:248
-#, fuzzy
 msgid "Track gain/peak"
-msgstr "Vrchol skladby:"
+msgstr "Zesílení/vrchol skladby"
 
 #: src/audacious/ui_preferences.c:249
-#, fuzzy
 msgid "Album gain/peak"
-msgstr "Zesílení alba:"
+msgstr "Zesílení/vrchol alba"
 
 #: src/audacious/ui_preferences.c:250 src/audacious/ui_preferences.c:1547
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Různé</b>"
 
 #: src/audacious/ui_preferences.c:251
-#, fuzzy
 msgid "Enable peak info clipping prevention"
-msgstr "Povolit prevenci před oříznutím"
+msgstr "Povolit ochranu před ořezem pomocí informací o vrcholu"
 
 #: src/audacious/ui_preferences.c:252
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
+"Použije hodnotu vrcholu z informací o zesílení pro přehrávání na ochranu "
+"proti ořezu."
 
 #: src/audacious/ui_preferences.c:253
 msgid "Dynamically adjust scale factor to prevent clipping"
-msgstr ""
+msgstr "Dynamicky upravovat škálovací činitel jako ochranu před ořezem"
 
 #: src/audacious/ui_preferences.c:254
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-msgstr ""
+msgstr "Sníží činitel zesílení, pokud by oříznutí bylo nevyhnutelné."
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Playback</b>"
@@ -2665,44 +2653,43 @@ msgstr "Záložní kódování znaků:"
 
 #: src/audacious/ui_preferences.c:1660
 msgid "Output bit depth:"
-msgstr ""
+msgstr "Bitová hloubka výstupu:"
 
 #: src/audacious/ui_preferences.c:1674
-#, fuzzy
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
-"<span size=\"small\">Všechny proudy budou převedeny na tento vzorkovací "
-"kmitočet.\n"
-"Ten by měl představovat maximální vzorkovací kmitočet zvukové karty nebo "
-"výstupního modulu.</span>"
+"Všechny proudy budou převedeny na tuto bitovou hloubku.\n"
+"Ta by měla představovat maximální bitovou hloubku zvukové\n"
+"karty nebo výstupního modulu."
 
 #: src/audacious/ui_preferences.c:1695
-#, fuzzy
 msgid "Preamp:"
-msgstr "Dream"
+msgstr "Předzesílení:"
 
 #: src/audacious/ui_preferences.c:1708 src/audacious/ui_preferences.c:1728
-#, fuzzy
 msgid "dB"
-msgstr "0 dB"
+msgstr "dB"
 
 #: src/audacious/ui_preferences.c:1714
-#, fuzzy
 msgid "Default gain:"
-msgstr "Standardní skin:"
+msgstr "Standardní zesílení:"
 
 #: src/audacious/ui_preferences.c:1726
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
+"Toto zesílení bude použito, pokud soubor neobsahuje metadata o zesílení pro "
+"přehrávání."
 
 #: src/audacious/ui_preferences.c:1742
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
+"<span size=\"small\">Prosím, zapamatujte si, že nejúčinnější způsob, jak "
+"předejít ořezu signálu, je výše nepoužít kladná čísla.</span>"
 
 #: src/audacious/ui_preferences.c:1975
 msgid "<b>_Skin</b>"
@@ -2710,7 +2697,7 @@ msgstr "<b>_Skin</b>"
 
 #: src/audacious/ui_preferences.c:1989
 msgid "Refresh skin list"
-msgstr "Obnovit seznam skinů"
+msgstr "Obnovit seznam vzhledů"
 
 #: src/audacious/ui_preferences.c:2113
 msgid "<b>Song Display</b>"
@@ -2977,11 +2964,11 @@ msgstr "16 kHz"
 
 #: src/audacious/ui_skinselector.c:178
 msgid "Archived Winamp 2.x skin"
-msgstr "Zabalený skin Winapmu 2.x"
+msgstr "Zabalený vzhled Winapmu 2.x"
 
 #: src/audacious/ui_skinselector.c:183
 msgid "Unarchived Winamp 2.x skin"
-msgstr "Nezabalený skin Winampu 2.x"
+msgstr "Nezabalený vzhled Winampu 2.x"
 
 #: src/audacious/ui_urlopener.c:86
 msgid "Add/Open URL Dialog"
@@ -2994,64 +2981,62 @@ msgstr "Nepodařilo se vytvořit adresář (%s): %s\n"
 
 #: src/libeggsmclient/eggdesktopfile.c:139
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Soubor není platný souboru druhu .desktop"
 
 #: src/libeggsmclient/eggdesktopfile.c:161
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "%s: neznámá volba `--%s'\n"
+msgstr "Nerozpoznaná verze „%s“ desktopového souboru"
 
 #: src/libeggsmclient/eggdesktopfile.c:872
-#, fuzzy, c-format
+#, c-format
 msgid "Starting %s"
-msgstr "Vysílání"
+msgstr "Startuji %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:1008
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Aplikace nepřijímá dokumenty z příkazové řádky"
 
 #: src/libeggsmclient/eggdesktopfile.c:1076
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "%s: neznámá volba `--%s'\n"
+msgstr "Nerozpoznaná volba pro spuštění: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1278
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "URI dokumentu nelze předat do desktopové položky „Type=Link“"
 
 #: src/libeggsmclient/eggdesktopfile.c:1297
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Položka není spustitelná"
 
 #: src/libeggsmclient/eggsmclient.c:183
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Vypínám spojení ke správci relace"
 
 #: src/libeggsmclient/eggsmclient.c:186
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Určete soubor obsahující uloženou konfiguraci"
 
 #: src/libeggsmclient/eggsmclient.c:186
-#, fuzzy
 msgid "FILE"
-msgstr "SOUBOR…"
+msgstr "SOUBOR"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Určete identifikátor správy relace"
 
 #: src/libeggsmclient/eggsmclient.c:189
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:225
 msgid "Session Management Options"
-msgstr ""
+msgstr "Volby správy relace"
 
 #: src/libeggsmclient/eggsmclient.c:226
-#, fuzzy
 msgid "Show Session Management options"
-msgstr "Zobrazovat dekorace podle správce oken"
+msgstr "Zobrazovat volby správy relace"
 
 #~ msgid "Show version and builtin features"
 #~ msgstr "Zobrazit verzi a vestavěné funkce"
@@ -3078,9 +3063,8 @@ msgstr "Zobrazovat dekorace podle správce oken"
 #~ msgid "Error in Audacious."
 #~ msgstr "Chyba v Audacious"
 
-#, fuzzy
 #~ msgid "Enable 6 dB hard limiter"
-#~ msgstr "Povolit 6dB tvrdé omezení"
+#~ msgstr "Zapnout 6dB tvrdé omezení"
 
 #~ msgid "Select which Audacious session ID to use"
 #~ msgstr "Výběr identifikátoru relace Audacious"
