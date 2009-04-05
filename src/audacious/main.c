@@ -358,7 +358,13 @@ handle_cmd_line_options(gboolean skip)
     }
 
     if (options.interface == NULL)
-        options.interface = g_strdup("default");
+    {
+        mcs_handle_t *db = cfg_db_open();
+        cfg_db_get_string(db, NULL, "interface", &options.interface);
+
+        if (options.interface == NULL)
+            options.interface = g_strdup("skinned");
+    }
 
     handle_cmd_line_filenames(is_running);
 
