@@ -533,8 +533,8 @@ _ui_finalize(void)
 }
 
 static Interface default_interface = {
-    .id = "default",
-    .desc = N_("Default Interface"),
+    .id = "newui",
+    .desc = N_("New Interface"),
     .init = _ui_initialize,
     .fini = _ui_finalize,
 };
