@@ -499,7 +499,7 @@ playlist_shift(Playlist *playlist, gint delta)
         if (orig_delta > 0)
             for (delta = orig_delta; delta > 0; delta--)
                 glist_movedown(n);
-        else (orig_delta < 0)
+        else if (orig_delta < 0)
             for (delta = orig_delta; delta > 0; delta--)
                 glist_moveup(n);
     }
