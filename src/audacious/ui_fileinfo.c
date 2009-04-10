@@ -261,7 +261,7 @@ fileinfo_entry_set_image(GtkWidget *widget, const char *text)
     g_object_unref(G_OBJECT(pixbuf));
 }
 
-static void
+static int
 fileinfo_hide(gpointer unused)
 {
     if(GTK_WIDGET_VISIBLE(fileinfo_win)) gtk_widget_hide(fileinfo_win);
@@ -292,6 +292,7 @@ fileinfo_hide(gpointer unused)
     G_FREE_CLEAR(current_file);
 
     fileinfo_entry_set_image(image_artwork, DATA_DIR "/images/audio.png");
+    return 1;
 }
 
 static void
@@ -767,6 +768,8 @@ create_fileinfo_window(void)
     gtk_container_add(GTK_CONTAINER(bbox_close), btn_close);
     GTK_WIDGET_SET_FLAGS(btn_close, GTK_CAN_DEFAULT);
     g_signal_connect(G_OBJECT(btn_close), "clicked", (GCallback) fileinfo_hide, NULL);
+    g_signal_connect ((GObject *) fileinfo_win, "delete-event",
+     (GCallback) fileinfo_hide, 0);
 
     gtk_widget_show_all (vbox0);
 }
