@@ -199,7 +199,7 @@ main(gint argc, gchar **argv)
 			     !g_ascii_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
 			    && g_ascii_strcasecmp("<sep>", handlers[i].name))
   			{
-				int numargs = handlers[i].args + 1 < argc - 1 ? handlers[i].args + 1 : argc - 1;
+				int numargs = handlers[i].args + 1 < argc - j ? handlers[i].args + 1 : argc - j;
 				handlers[i].handler(numargs, &argv[j]);
 				j += handlers[i].args;
 				k++;
