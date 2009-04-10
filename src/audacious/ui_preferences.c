@@ -120,7 +120,6 @@ GtkWidget *filepopup_settings_delay;
 /* prefswin widgets */
 GtkWidget *titlestring_entry;
 GtkWidget *filepopup_for_tuple_settings_button;
-GtkTooltips *tooltips;
 static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
@@ -1332,7 +1331,7 @@ ui_preferences_chardet_table_populate(void)
     gtk_table_attach(GTK_TABLE(widget), entry, 1, 2, 1, 2,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
-    gtk_tooltips_set_tip (tooltips, entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), NULL);
+    gtk_widget_set_tooltip_text (entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."));
 
     label = gtk_label_new(_("Fallback character encodings:"));
     gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 1, 2,
@@ -1375,10 +1374,9 @@ ui_preferences_bit_depth(void)
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), active);
     g_signal_connect(combo, "changed", G_CALLBACK(on_bit_depth_cbox_changed), NULL);
     
-    gtk_tooltips_set_tip (tooltips, box,
-                          _("All streams will be converted to this bit depth.\n"
-                          "This should be the max supported bit depth of\nthe sound card or output plugin."),
-                          NULL);
+    gtk_widget_set_tooltip_text(box,
+                                _("All streams will be converted to this bit depth.\n"
+                                "This should be the max supported bit depth of\nthe sound card or output plugin."));
 
     return box;
 }
@@ -1428,7 +1426,7 @@ ui_preferences_rg_params(void)
                      (GtkAttachOptions) (0), 0, 0);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.default_gain);
     g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.default_gain);
-    gtk_tooltips_set_tip (tooltips, spin, _("This gain will be used if file doesn't contain Replay Gain metadata."), NULL);
+    gtk_widget_set_tooltip_text (spin, _("This gain will be used if file doesn't contain Replay Gain metadata."));
     
     label = gtk_label_new(_("dB"));
     gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
@@ -1618,7 +1616,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
         if (widget && !gtk_widget_get_parent(widget))
             gtk_container_add(GTK_CONTAINER(alignment), widget);
         if (widget && widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
-            gtk_tooltips_set_tip(tooltips, widget, _(widgets[x].tooltip), NULL);
+            gtk_widget_set_tooltip_text(widget, _(widgets[x].tooltip));
     }
 
 }
@@ -1740,7 +1738,7 @@ create_playlist_category(void)
                       (GtkAttachOptions) (0),
                       (GtkAttachOptions) (0), 0, 0);
     GTK_WIDGET_UNSET_FLAGS (titlestring_help_button, GTK_CAN_FOCUS);
-    gtk_tooltips_set_tip (tooltips, titlestring_help_button, _("Show information about titlestring format"), NULL);
+    gtk_widget_set_tooltip_text (titlestring_help_button, _("Show information about titlestring format"));
     gtk_button_set_relief (GTK_BUTTON (titlestring_help_button), GTK_RELIEF_HALF);
     gtk_button_set_focus_on_click (GTK_BUTTON (titlestring_help_button), FALSE);
 
@@ -1799,12 +1797,12 @@ create_playlist_category(void)
 
     checkbutton10 = gtk_check_button_new_with_mnemonic (_("Show popup information for playlist entries"));
     gtk_box_pack_start (GTK_BOX (vbox34), checkbutton10, TRUE, FALSE, 0);
-    gtk_tooltips_set_tip (tooltips, checkbutton10, _("Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."), NULL);
+    gtk_widget_set_tooltip_text (checkbutton10, _("Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."));
 
     filepopup_for_tuple_settings_button = gtk_button_new ();
     gtk_box_pack_start (GTK_BOX (hbox9), filepopup_for_tuple_settings_button, FALSE, FALSE, 0);
     GTK_WIDGET_UNSET_FLAGS (filepopup_for_tuple_settings_button, GTK_CAN_FOCUS);
-    gtk_tooltips_set_tip (tooltips, filepopup_for_tuple_settings_button, _("Edit settings for popup information"), NULL);
+    gtk_widget_set_tooltip_text (filepopup_for_tuple_settings_button, _("Edit settings for popup information"));
     gtk_button_set_relief (GTK_BUTTON (filepopup_for_tuple_settings_button), GTK_RELIEF_HALF);
 
     image8 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_BUTTON);
@@ -2637,8 +2635,6 @@ create_prefs_window(void)
     GtkWidget *image10;
     GtkWidget *close;
     GtkAccelGroup *accel_group;
-
-    tooltips = gtk_tooltips_new ();
 
     accel_group = gtk_accel_group_new ();
 

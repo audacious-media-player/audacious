@@ -66,7 +66,6 @@ GArray *string_to_garray(const gchar * str);
 void glist_movedown(GList * list);
 void glist_moveup(GList * list);
 
-GdkFont *util_font_load(const gchar * name);
 void util_set_cursor(GtkWidget * window);
 gboolean text_get_extents(const gchar * fontname, const gchar * text,
                           gint * width, gint * height, gint * ascent,

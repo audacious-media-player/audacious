@@ -754,18 +754,6 @@ glist_moveup(GList * list)
     }
 }
 
-GdkFont *
-util_font_load(const gchar * name)
-{
-    GdkFont *font;
-    PangoFontDescription *desc;
-
-    desc = pango_font_description_from_string(name);
-    font = gdk_font_from_description(desc);
-
-    return font;
-}
-
 /* counts number of digits in a gint */
 guint
 gint_count_digits(gint n)

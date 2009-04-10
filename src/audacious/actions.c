@@ -240,7 +240,7 @@ mainwin_jump_to_time(void)
 
     g_signal_connect(mainwin_jtt, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &mainwin_jtt);
-    gtk_container_border_width(GTK_CONTAINER(mainwin_jtt), 10);
+    gtk_container_set_border_width(GTK_CONTAINER(mainwin_jtt), 10);
 
     vbox = gtk_vbox_new(FALSE, 5);
     gtk_container_add(GTK_CONTAINER(mainwin_jtt), vbox);
@@ -277,7 +277,7 @@ mainwin_jump_to_time(void)
     bbox = gtk_hbutton_box_new();
     gtk_box_pack_start(GTK_BOX(vbox), bbox, TRUE, TRUE, 0);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
+    gtk_box_set_spacing(GTK_BOX(bbox), 5);
 
     cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
     GTK_WIDGET_SET_FLAGS(cancel, GTK_CAN_DEFAULT);
@@ -296,7 +296,7 @@ mainwin_jump_to_time(void)
                tindex % 60);
     gtk_entry_set_text(GTK_ENTRY(time_entry), time_str);
 
-    gtk_entry_select_region(GTK_ENTRY(time_entry), 0, strlen(time_str));
+    gtk_editable_select_region(GTK_EDITABLE(time_entry), 0, strlen(time_str));
 
     gtk_widget_show_all(mainwin_jtt);
 
@@ -1084,7 +1084,7 @@ equalizerwin_create_list_window(GList *preset_list,
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
+    gtk_box_set_spacing(GTK_BOX(bbox), 5);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
 
     button_cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);

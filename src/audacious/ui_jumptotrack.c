@@ -470,7 +470,7 @@ ui_jump_to_track(void)
     g_signal_connect(jump_to_track_win, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &jump_to_track_win);
 
-    gtk_container_border_width(GTK_CONTAINER(jump_to_track_win), 10);
+    gtk_container_set_border_width(GTK_CONTAINER(jump_to_track_win), 10);
     gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
 
     vbox = gtk_vbox_new(FALSE, 5);
@@ -512,7 +512,7 @@ ui_jump_to_track(void)
     gtk_box_pack_start(GTK_BOX(hbox), search_label, FALSE, FALSE, 0);
 
     edit = gtk_entry_new();
-    gtk_entry_set_editable(GTK_ENTRY(edit), TRUE);
+    gtk_editable_set_editable(GTK_EDITABLE(edit), TRUE);
     gtk_label_set_mnemonic_widget(GTK_LABEL(search_label), edit);
     g_signal_connect(edit, "changed",
                      G_CALLBACK(ui_jump_to_track_edit_cb), treeview);
@@ -564,7 +564,7 @@ ui_jump_to_track(void)
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 4);
+    gtk_box_set_spacing(GTK_BOX(bbox), 4);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
 
     /* close dialog toggle */

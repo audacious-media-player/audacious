@@ -434,7 +434,7 @@ playlist_manager_ui_show ( void )
     /* button bar */
     playman_bbar_hbbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout( GTK_BUTTON_BOX(playman_bbar_hbbox) , GTK_BUTTONBOX_END );
-	gtk_button_box_set_spacing(GTK_BUTTON_BOX(playman_bbar_hbbox), 5);
+    gtk_box_set_spacing(GTK_BOX(playman_bbar_hbbox), 5);
     playman_bbar_bt_close = gtk_button_new_from_stock( GTK_STOCK_CLOSE );
     playman_bbar_bt_del = gtk_button_new_from_stock( GTK_STOCK_DELETE );
     playman_bbar_bt_new = gtk_button_new_from_stock( GTK_STOCK_NEW );

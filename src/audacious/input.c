@@ -601,8 +601,8 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
 
     cancel = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     g_signal_connect_swapped(G_OBJECT(cancel), "clicked",
-                             GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                             GTK_OBJECT(window));
+                             G_CALLBACK(gtk_widget_destroy),
+                             window);
     GTK_WIDGET_SET_FLAGS(cancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(bbox), cancel, TRUE, TRUE, 0);
 

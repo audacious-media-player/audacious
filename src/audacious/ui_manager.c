@@ -635,7 +635,7 @@ menu_plugin_item_remove( gint menu_id , GtkWidget * item )
           g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(--ic) );
           if ( ic == 0 ) /* if the menu is empty now, destroy it */
           {
-            gtk_menu_item_remove_submenu( GTK_MENU_ITEM(plugins_menu_item) );
+            gtk_menu_item_set_submenu( GTK_MENU_ITEM(plugins_menu_item) , NULL );
             gtk_widget_destroy( plugins_menu );
             gtk_widget_hide( plugins_menu_item );
           }
