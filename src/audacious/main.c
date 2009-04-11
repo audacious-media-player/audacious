@@ -339,102 +339,61 @@ handle_cmd_line_filenames(gboolean is_running)
     g_list_free(fns);
 }
 
-static void
-handle_cmd_line_options(gboolean skip)
-{
-    gboolean is_running = FALSE;
-
+static void handle_cmd_line_options_first (void) {
 #ifdef USE_DBUS
-    DBusGProxy *session = audacious_get_dbus_proxy();
-
-    if (skip)
-        is_running = audacious_remote_is_running(session);
+  DBusGProxy * session;
 #endif
-
-    if (options.version)
-    {
-        print_version();
-        exit(EXIT_SUCCESS);
-    }
-
-    if (options.interface == NULL)
-    {
-        mcs_handle_t *db = cfg_db_open();
-        cfg_db_get_string(db, NULL, "interface", &options.interface);
-
-        if (options.interface == NULL)
-            options.interface = g_strdup("skinned");
-    }
-
-    handle_cmd_line_filenames(is_running);
-
+   if (options.version) {
+      print_version ();
+      exit (EXIT_SUCCESS);
+   }
 #ifdef USE_DBUS
-    if (is_running)
-    {
-        if (options.rew)
-            audacious_remote_playlist_prev(session);
-
-        if (options.play)
-            audacious_remote_play(session);
-
-        if (options.pause)
-            audacious_remote_pause(session);
-
-        if (options.stop)
-            audacious_remote_stop(session);
-
-        if (options.fwd)
-            audacious_remote_playlist_next(session);
-
-        if (options.play_pause)
-            audacious_remote_play_pause(session);
-
-        if (options.show_jump_box)
-            audacious_remote_show_jtf_box(session);
-
-        if (options.mainwin)
-            audacious_remote_main_win_toggle(session, TRUE);
-
-        if (options.activate)
-            audacious_remote_activate(session);
-
-        exit(EXIT_SUCCESS);
-    } /* is_running */
-    else
+   session = audacious_get_dbus_proxy ();
+   if (audacious_remote_is_running (session)) {
+      handle_cmd_line_filenames (TRUE);
+      if (options.rew)
+         audacious_remote_playlist_prev (session);
+      if (options.play)
+         audacious_remote_play (session);
+      if (options.pause)
+         audacious_remote_pause (session);
+      if (options.stop)
+         audacious_remote_stop (session);
+      if (options.fwd)
+         audacious_remote_playlist_next (session);
+      if (options.play_pause)
+         audacious_remote_play_pause (session);
+      if (options.show_jump_box)
+         audacious_remote_show_jtf_box (session);
+      if (options.mainwin)
+         audacious_remote_main_win_toggle (session, 1);
+      if (options.activate)
+         audacious_remote_activate (session);
+      exit (EXIT_SUCCESS);
+   }
 #endif
-    {
-        if (options.rew)
-            drct_pl_prev();
+   if (options.interface == NULL) {
+     mcs_handle_t * db = cfg_db_open ();
+      cfg_db_get_string (db, NULL, "interface", & options.interface);
+      if (options.interface == NULL)
+         options.interface = g_strdup ("skinned");
+   }
+}
 
-        if (options.play)
-            drct_play();
-
-        if (options.pause)
-            drct_pause();
-
-        if (options.stop)
-            drct_stop();
-
-        if (options.fwd)
-            drct_pl_next();
-
-        if (options.play_pause)
-        {
-            if (drct_get_paused())
-                drct_play();
-            else
-                drct_pause();
-        }
-
-        if (options.show_jump_box)
-            drct_jtf_show();
-
-        if (options.mainwin)
-            drct_main_win_toggle(TRUE);
-
-        if (options.activate)
-            drct_activate();
-    } /* !is_running */
+static void handle_cmd_line_options (void) {
+   handle_cmd_line_filenames (FALSE);
+   if (options.rew)
+      drct_pl_prev ();
+   if (options.play || options.play_pause)
+      g_idle_add (aud_start_playback, NULL);
+   if (options.fwd)
+      drct_pl_next ();
+   if (options.show_jump_box)
+      drct_jtf_show ();
+   if (options.mainwin)
+      drct_main_win_toggle (TRUE);
+   if (options.activate)
+      drct_activate ();
 }
 
 static void
@@ -569,7 +528,7 @@ main(gint argc, gchar ** argv)
     signal_handlers_init();
 
     g_message("Handling commandline options, part #1");
-    handle_cmd_line_options(TRUE);
+    handle_cmd_line_options_first ();
 
     if (g_ascii_strcasecmp(options.interface, "headless")) /* XXX */
     {
@@ -599,7 +558,7 @@ main(gint argc, gchar ** argv)
     playlist_system_init();
 
     g_message("Handling commandline options, part #2");
-    handle_cmd_line_options(FALSE);
+    handle_cmd_line_options ();
 
     g_message("Playlist scanner thread startup");
     playlist_start_get_info_thread();

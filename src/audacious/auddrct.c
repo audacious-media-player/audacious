@@ -106,7 +106,7 @@ drct_play ( void )
     if (playback_get_paused())
         playback_pause();
     else if (playlist_get_length(playlist_get_active()))
-        event_queue("playback initiate", (gpointer)0xdeadbeef); // to avoid crash at startup. --yaz
+        playback_initiate ();
     else
         run_filebrowser(TRUE);
     return;
