@@ -225,6 +225,7 @@ signal_process_signals(gpointer data)
 
 #endif
 
+#if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 static SignalHandler
 signal_install_handler_full (gint           signal_number,
                              SignalHandler  handler,
@@ -267,6 +268,22 @@ signal_install_handler (gint          signal_number,
     return signal_install_handler_full (signal_number, handler, NULL, 0);
 }
 
+static gboolean
+signal_check_for_broken_impl(void)
+{
+#ifdef _CS_GNU_LIBPTHREAD_VERSION
+    {
+        gchar str[1024];
+        confstr(_CS_GNU_LIBPTHREAD_VERSION, str, sizeof(str));
+
+        if (g_ascii_strncasecmp("linuxthreads", str, 12) == 0)
+            return TRUE;
+    }
+#endif
+
+    return FALSE;
+}
+#endif
 
 /* sets up blocking signals for pthreads. 
  * linuxthreads sucks and needs this to make sigwait(2) work 
@@ -288,22 +305,6 @@ signal_initialize_blockers(void)
 
     if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
         g_print("pthread_sigmask() failed.\n");    
-}
-
-static gboolean
-signal_check_for_broken_impl(void)
-{
-#ifdef _CS_GNU_LIBPTHREAD_VERSION
-    {
-        gchar str[1024];
-        confstr(_CS_GNU_LIBPTHREAD_VERSION, str, sizeof(str));
-
-        if (g_ascii_strncasecmp("linuxthreads", str, 12) == 0)
-            return TRUE;
-    }
-#endif
-
-    return FALSE;
 }
 
 #ifdef USE_EGGSM
