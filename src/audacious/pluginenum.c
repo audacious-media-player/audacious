@@ -398,6 +398,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .load_preset_file = load_preset_file,
     .output_plugin_cleanup = output_plugin_cleanup,
     .output_plugin_reinit = output_plugin_reinit,
+
+    .get_plugin_menu = get_plugin_menu
 };
 
 /*****************************************************************/
@@ -641,7 +643,7 @@ plugin2_dispose(GModule *module, const gchar *str, ...)
 
     g_message("*** %s\n", buf);
     g_free(buf);
-    
+
     g_module_close(module);
 }
 
@@ -669,7 +671,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     header->priv_assoc->filename = g_strdup(filename);
 
     n = 0;
-    
+
     if (header->ip_list)
     {
         for (i = 0; (header->ip_list)[i] != NULL; i++, n++)
@@ -696,7 +698,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
             effect_plugin_init(PLUGIN((header->ep_list)[i]));
         }
     }
-    
+
 
     if (header->gp_list)
     {
@@ -921,10 +923,10 @@ plugin_system_init(void)
 		    OutputPluginInitStatus ret = op->init();
 		    if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
 		    {
-		        printf("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n", 
+		        printf("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n",
 		          g_path_get_basename(op->filename));
                     } else if (ret == OUTPUT_PLUGIN_INIT_FAIL) {
-		        printf("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n", 
+		        printf("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n",
 		          g_path_get_basename(op->filename));
                     } else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES) {
 		        goto found_output;

@@ -34,8 +34,6 @@
 #include "sync-menu.h"
 
 static GtkUIManager *ui_manager = NULL;
-static gboolean menu_created = FALSE;
-
 
 /* toggle action entries */
 
@@ -63,7 +61,7 @@ static GtkToggleActionEntry toggleaction_entries_others[] = {
 static GtkActionEntry action_entries_playback[] = {
 
 	{ "playback", NULL, N_("Playback") },
-	
+
 	{ "playback play", GTK_STOCK_MEDIA_PLAY , N_("Play"), "X",
 	  N_("Play"), G_CALLBACK(action_playback_play) },
 
@@ -163,7 +161,7 @@ static GtkActionEntry action_entries_playlist_select[] = {
 };
 
 static GtkActionEntry action_entries_playlist_delete[] = {
-	{ "playlist remove all", GTK_STOCK_CLEAR, N_("Remove All"), NULL, 
+	{ "playlist remove all", GTK_STOCK_CLEAR, N_("Remove All"), NULL,
 	  N_("Removes all entries from the playlist."),
 	  G_CALLBACK(action_playlist_remove_all) },
 
@@ -181,11 +179,11 @@ static GtkActionEntry action_entries_playlist_delete[] = {
 	  N_("Removes duplicate entries from the playlist by title."),
 	  G_CALLBACK(action_playlist_remove_dupes_by_title) },
 
-	{ "playlist remove dups by filename", NULL , N_("By Filename"), NULL, 
+	{ "playlist remove dups by filename", NULL , N_("By Filename"), NULL,
 	  N_("Removes duplicate entries from the playlist by filename."),
 	  G_CALLBACK(action_playlist_remove_dupes_by_filename) },
 
-	{ "playlist remove dups by full path", NULL , N_("By Path + Filename"), NULL, 
+	{ "playlist remove dups by full path", NULL , N_("By Path + Filename"), NULL,
 	  N_("Removes duplicate entries from the playlist by their full path."),
 	  G_CALLBACK(action_playlist_remove_dupes_by_full_path) },
 
@@ -193,7 +191,7 @@ static GtkActionEntry action_entries_playlist_delete[] = {
 	  N_("Remove unselected entries from the playlist."),
 	  G_CALLBACK(action_playlist_remove_unselected) },
 
-	{ "playlist remove selected", GTK_STOCK_REMOVE, N_("Remove Selected"), "Delete", 
+	{ "playlist remove selected", GTK_STOCK_REMOVE, N_("Remove Selected"), "Delete",
 	  N_("Remove selected entries from the playlist."),
 	  G_CALLBACK(action_playlist_remove_selected) },
 };
@@ -316,7 +314,7 @@ static GtkActionEntry action_entries_others[] = {
 	{ "jump to time", GTK_STOCK_JUMP_TO , N_("Jump to Time"), "<Ctrl>J",
 	  N_("Jump to Time"), G_CALLBACK(action_jump_to_time) },
 
-	{ "queue toggle", AUD_STOCK_QUEUETOGGLE , N_("Queue Toggle"), "Q", 
+	{ "queue toggle", AUD_STOCK_QUEUETOGGLE , N_("Queue Toggle"), "Q",
 	  N_("Enables/disables the entry in the playlist's queue."),
 	  G_CALLBACK(action_queue_toggle) },
 };
@@ -460,17 +458,6 @@ ui_manager_init ( void )
 static GtkWidget *carbon_menubar;
 #endif
 
-static void
-ui_manager_create_menus_init_pmenu( gchar * path )
-{
-  GtkWidget *plugins_menu_item = gtk_ui_manager_get_widget( ui_manager , path );
-  if ( plugins_menu_item )
-  {
-    /* initially set count of items under plugins_menu_item to 0 */
-    g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(0) );
-  }
-  return;
-}
 
 GtkWidget *
 ui_manager_get_menus ( void )
@@ -486,7 +473,7 @@ GtkWidget *
 ui_manager_create_menus ( void )
 {
   GError *gerr = NULL;
-  GtkWidget *menu;
+  GtkWidget * menu, * header;
 
   /* attach xml menu definitions */
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/player.ui" , &gerr );
@@ -501,14 +488,14 @@ ui_manager_create_menus ( void )
   /* create GtkMenu widgets using path from xml definitions */
   menu = gtk_ui_manager_get_widget( ui_manager , "/mainwin-menus" );
 
-  /* initialize plugins-menu for mainwin-menus */
-  ui_manager_create_menus_init_pmenu( "/mainwin-menus/plugins-menu" );
+  header = gtk_ui_manager_get_widget (ui_manager, "/mainwin-menus/plugins-menu");
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (header), get_plugin_menu
+   (AUDACIOUS_MENU_MAIN));
+  gtk_widget_show (header);
 
 #ifdef GDK_WINDOWING_QUARTZ
   sync_menu_takeover_menu(GTK_MENU_SHELL(menu));
 #endif
-
-  menu_created = TRUE;
 
   return menu;
 }
@@ -563,86 +550,33 @@ ui_manager_popup_menu_show ( GtkMenu * menu , gint x , gint y , guint button , g
     (GtkMenuPositionFunc) menu_popup_pos_func , pos , button , time );
 }
 
+/* The three functions below manage a GTK menu of plugin services independently
+of the skin. This is a temporary arrangement for the 2.0 release. In the future,
+there will be an actual registry for plugin services, and each skin can decide
+how it wants to display them, rather than being forced to use the GTK menu.
+ -- John Lindgren (April 12, 2009) */
 
-
-/******************************/
-/* plugin-available functions */
-
-#define _MP_GWID(y) gtk_ui_manager_get_widget( ui_manager , y )
-
-static GtkWidget*
-audacious_menu_plugin_menuwid( menu_id )
-{
-  switch (menu_id)
-  {
-    case AUDACIOUS_MENU_MAIN:
-      return _MP_GWID("/mainwin-menus/plugins-menu");
-    default:
-      return NULL;
-  }
+GtkWidget * get_plugin_menu (int id) {
+  static char initted = 0;
+  static GtkWidget * menus [TOTAL_PLUGIN_MENUS];
+   if (! initted) {
+      memset (menus, 0, sizeof menus);
+      initted = 1;
+   }
+   if (! menus [id]) {
+      menus [id] = gtk_menu_new ();
+      g_object_ref (G_OBJECT (menus [id]));
+      gtk_widget_show (menus [id]);
+   }
+   return menus [id];
 }
 
-
-gint
-menu_plugin_item_add( gint menu_id , GtkWidget * item )
-{
-  if ( menu_created )
-  {
-    GtkWidget *plugins_menu = NULL;
-    GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
-    if ( plugins_menu_item )
-    {
-      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item), "ic"));
-      g_print("ic:%d\n", ic);
-      if ( ic == 0 ) /* no items under plugins_menu_item, create the submenu */
-      {
-        plugins_menu = gtk_menu_new();
-        gtk_menu_item_set_submenu( GTK_MENU_ITEM(plugins_menu_item), plugins_menu );
-      }
-      else /* items available under plugins_menu_item, pick the existing submenu */
-      {
-        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-        if ( !plugins_menu ) return -1;
-      }
-      gtk_menu_shell_append( GTK_MENU_SHELL(plugins_menu) , item );
-      gtk_widget_show( plugins_menu_item );
-      g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(++ic) );
-      return 0; /* success */
-    }
-  }
-  return -1; /* failure */
+gint menu_plugin_item_add (gint menu_id, GtkWidget * item) {
+   gtk_menu_shell_append (GTK_MENU_SHELL (get_plugin_menu (menu_id)), item);
+   return 0;
 }
 
-
-gint
-menu_plugin_item_remove( gint menu_id , GtkWidget * item )
-{
-  if ( menu_created )
-  {
-    GtkWidget *plugins_menu = NULL;
-    GtkWidget *plugins_menu_item = audacious_menu_plugin_menuwid( menu_id );
-    if ( plugins_menu_item )
-    {
-      gint ic = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(plugins_menu_item),"ic"));
-      g_print("ic:%d\n", ic);
-      if ( ic > 0 )
-      {
-        plugins_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM(plugins_menu_item) );
-        if ( plugins_menu )
-        {
-          /* remove the plugin-added entry */
-          gtk_container_remove( GTK_CONTAINER(plugins_menu) , item );
-          g_object_set_data( G_OBJECT(plugins_menu_item) , "ic" , GINT_TO_POINTER(--ic) );
-          if ( ic == 0 ) /* if the menu is empty now, destroy it */
-          {
-            gtk_menu_item_set_submenu( GTK_MENU_ITEM(plugins_menu_item) , NULL );
-            gtk_widget_destroy( plugins_menu );
-            gtk_widget_hide( plugins_menu_item );
-          }
-          return 0; /* success */
-        }
-      }
-    }
-  }
-  return -1; /* failure */
+gint menu_plugin_item_remove (gint menu_id, GtkWidget * item) {
+   gtk_container_remove (GTK_CONTAINER (get_plugin_menu (menu_id)), item);
+   return 0;
 }

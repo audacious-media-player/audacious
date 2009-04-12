@@ -34,7 +34,9 @@ G_BEGIN_DECLS
 #define AUDACIOUS_MENU_PLAYLIST_REMOVE  4
 #define AUDACIOUS_MENU_PLAYLIST_SELECT  5
 #define AUDACIOUS_MENU_PLAYLIST_MISC    6
+#define TOTAL_PLUGIN_MENUS 7
 
+GtkWidget * get_plugin_menu (int id);
 gint menu_plugin_item_add( gint , GtkWidget * );
 gint menu_plugin_item_remove( gint , GtkWidget * );
 

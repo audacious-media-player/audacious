@@ -15,8 +15,8 @@
  *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in 
- *    the documentation and/or other materials provided with the 
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
  *    distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
@@ -174,7 +174,7 @@ typedef GHashTable INIFile;
     void (*about) (void);		\
     void (*configure) (void);		\
     gboolean enabled;
-	
+
 
 /*
  * The v2 Module header.
@@ -622,7 +622,7 @@ struct _AudaciousFuncTableV1 {
     void (*flow_unlink_element)(Flow *flow, FlowFunction func);
     void (*effect_flow)(FlowContext *context);
     void (*volumecontrol_flow)(FlowContext *context);
-    
+
     GList *(*get_output_list)(void);
 
     void (*input_get_volume)(gint * l, gint * r);
@@ -658,6 +658,9 @@ struct _AudaciousFuncTableV1 {
     gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
     void (*output_plugin_cleanup)(void);
     void (*output_plugin_reinit)(void);
+
+    /* PluginMenu API */
+    GtkWidget * (* get_plugin_menu) (int id);
 };
 
 /* Convenience macros for accessing the public API. */
@@ -1007,6 +1010,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_output_plugin_cleanup   _audvt->output_plugin_cleanup
 #define aud_output_plugin_reinit    _audvt->output_plugin_reinit
 
+#define aud_get_plugin_menu _audvt->get_plugin_menu
+
 #include "audacious/auddrct.h"
 
 /* for multi-file plugins :( */
@@ -1117,10 +1122,10 @@ struct _InputPlayback {
     gboolean eof;
 
     GThread *thread;
-    
+
     GMutex *pb_ready_mutex;
     GCond *pb_ready_cond;
-    gint pb_ready_val;    
+    gint pb_ready_val;
     gint (*set_pb_ready) (InputPlayback*);
 
     GMutex *pb_change_mutex;
@@ -1132,7 +1137,7 @@ struct _InputPlayback {
     gint freq;
     gint length;
     gchar *title;
-    
+
     void (*set_params) (InputPlayback *, gchar * title, gint length, gint rate, gint freq, gint nch);
     void (*set_title) (InputPlayback *, gchar * text);
 
@@ -1183,7 +1188,7 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.5.0 */
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
-    /* 
+    /*
      * Plugin can provide this function for file metadata (aka tag) writing functionality
      * in case when no reason to provide its own custom file info dialog. Thus in most cases.
      *
@@ -1212,7 +1217,7 @@ struct _VisPlugin {
     void (*playback_start) (void);
     void (*playback_stop) (void);
     void (*render_pcm) (gint16 pcm_data[2][512]);
-    
+
     /* The range of intensities is 0 - 32767 (though theoretically it is
      * possible for the FFT to result in bigger values, making the final
      * intensity negative due to overflowing the 16bit signed integer.)
@@ -1225,7 +1230,7 @@ struct _VisPlugin {
 struct _DiscoveryPlugin {
     PLUGIN_COMMON_FIELDS
 
-    GList *(*get_devices);  
+    GList *(*get_devices);
 };
 
 /* undefine the macro -- struct Plugin should be used instead. */
