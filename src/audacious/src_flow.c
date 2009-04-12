@@ -49,7 +49,7 @@ static int converter_type = SRC_SINC_BEST_QUALITY;
 static int srcError = 0;
 
 static float *srcOut = NULL;
-static unsigned int lengthOfSrcOut = 0;
+static gsize lengthOfSrcOut = 0;
 
 void
 src_flow_free()
