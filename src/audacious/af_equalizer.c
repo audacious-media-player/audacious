@@ -1,5 +1,5 @@
 /*=============================================================================
-//	
+//
 //  This software has been released under the terms of the GNU General Public
 //  license. See http://www.gnu.org/copyleft/gpl.html for details.
 //
@@ -24,14 +24,14 @@
 #include "af_compat.h"
 
 #define L   	2      // Storage for filter taps
-#define KM  	10     // Max number of bands 
+#define KM  	10     // Max number of bands
 
 #define Q   1.2247449
 /* Q value for band-pass filters 1.2247=(3/2)^(1/2)
    gives 4dB suppression @ Fc*2 and Fc/2 */
 
 /* Center frequencies for band-pass filters
-   The different frequency bands are:	
+   The different frequency bands are:
    nr.    	center frequency
    0  	31.25 Hz
    1 	62.50 Hz
@@ -49,7 +49,7 @@
 
 // Maximum and minimum gain for the bands
 #define G_MAX	+12.0
-#define G_MIN	-12.0	
+#define G_MIN	-12.0
 
 // Data for specific instances of this filter
 typedef struct af_equalizer_s
@@ -60,12 +60,11 @@ typedef struct af_equalizer_s
   float   g[AF_NCH][KM];      	// Gain factor for each channel and band
   int     K; 		   	// Number of used eq bands
   int     channels;        	// Number of channels
-  float   gain_factor;     // applied at output to avoid clipping
 } af_equalizer_t;
 
 static int af_test_output(struct af_instance_s* af, af_data_t* out)
 {
-  if((af->data->format != out->format) || 
+  if((af->data->format != out->format) ||
      (af->data->bps    != out->bps)    ||
      (af->data->rate   != out->rate)   ||
      (af->data->nch    != out->nch)){
@@ -82,7 +81,7 @@ static void bp2(float* a, float* b, float fc, float q){
 
   a[0] = (1.0 + C) * cos(th);
   a[1] = -1 * C;
-  
+
   b[0] = (1.0 - C)/2.0;
   b[1] = -1.0050;
 }
@@ -90,30 +89,28 @@ static void bp2(float* a, float* b, float fc, float q){
 // Initialization and runtime control
 static int control(struct af_instance_s* af, int cmd, void* arg)
 {
-  af_equalizer_t* s   = (af_equalizer_t*)af->setup; 
+  af_equalizer_t* s   = (af_equalizer_t*)af->setup;
 
   switch(cmd){
   case AF_CONTROL_REINIT:{
-    int k =0, i =0;
+    int k = 0;
     float F[KM] = CF;
-    
-    s->gain_factor=0.0;
 
     // Sanity check
     if(!arg) return AF_ERROR;
-    
+
     af->data->rate   = ((af_data_t*)arg)->rate;
     af->data->nch    = ((af_data_t*)arg)->nch;
     af->data->format = AF_FORMAT_FLOAT_NE;
     af->data->bps    = 4;
-    
+
     // Calculate number of active filters
     s->K=KM;
     while(F[s->K-1] > (float)af->data->rate/2.2)
       s->K--;
-    
+
     if(s->K != KM)
-      af_msg(AF_MSG_INFO,"[equalizer] Limiting the number of filters to" 
+      af_msg(AF_MSG_INFO,"[equalizer] Limiting the number of filters to"
 	     " %i due to low sample rate.\n",s->K);
 
     // Generate filter taps
@@ -122,35 +119,17 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
 
     // Calculate how much this plugin adds to the overall time delay
     af->delay = 2 * af->data->nch * af->data->bps;
-    
-    // Calculate gain factor to prevent clipping at output
-    for(k=0;k<AF_NCH;k++)
-    {
-        for(i=0;i<KM;i++)
-        {
-            if(s->gain_factor < s->g[k][i]) s->gain_factor=s->g[k][i];
-        }
-    }
 
-    s->gain_factor=log10(s->gain_factor + 1.0) * 20.0;
-	 
-    if(s->gain_factor > 0.0)
-    {
-        s->gain_factor=0.1+(s->gain_factor/12.0);
-    }else{
-        s->gain_factor=1;
-    }
-	
     return af_test_output(af,arg);
   }
   case AF_CONTROL_COMMAND_LINE:{
     float g[10]={0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
     int i,j;
-    sscanf((char*)arg,"%f:%f:%f:%f:%f:%f:%f:%f:%f:%f", &g[0], &g[1], 
+    sscanf((char*)arg,"%f:%f:%f:%f:%f:%f:%f:%f:%f:%f", &g[0], &g[1],
 	   &g[2], &g[3], &g[4], &g[5], &g[6], &g[7], &g[8] ,&g[9]);
     for(i=0;i<AF_NCH;i++){
       for(j=0;j<KM;j++){
-	((af_equalizer_t*)af->setup)->g[i][j] = 
+	((af_equalizer_t*)af->setup)->g[i][j] =
 	  pow(10.0,clamp(g[j],G_MIN,G_MAX)/20.0)-1.0;
       }
     }
@@ -184,7 +163,7 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
   return AF_UNKNOWN;
 }
 
-// Deallocate memory 
+// Deallocate memory
 static void uninit(struct af_instance_s* af)
 {
   if(af->data)
@@ -197,12 +176,12 @@ static void uninit(struct af_instance_s* af)
 static af_data_t* play(struct af_instance_s* af, af_data_t* data)
 {
   af_data_t*       c 	= data;			    	// Current working data
-  af_equalizer_t*  s 	= (af_equalizer_t*)af->setup; 	// Setup 
+  af_equalizer_t*  s 	= (af_equalizer_t*)af->setup; 	// Setup
   uint32_t  	   ci  	= af->data->nch; 	    	// Index for channels
   uint32_t	   nch 	= af->data->nch;   	    	// Number of channels
 
   while(ci--){
-    float*	g   = s->g[ci];      // Gain factor 
+    float*	g   = s->g[ci];      // Gain factor
     float*	in  = ((float*)c->audio)+ci;
     float*	out = ((float*)c->audio)+ci;
     float* 	end = in + c->len/4; // Block loop end
@@ -211,7 +190,7 @@ static af_data_t* play(struct af_instance_s* af, af_data_t* data)
       register int	k  = 0;		// Frequency band index
       register float 	yt = *in; 	// Current input sample
       in+=nch;
-      
+
       // Run the filters
       for(;k<s->K;k++){
  	// Pointer to circular buffer wq
@@ -224,8 +203,8 @@ static af_data_t* play(struct af_instance_s* af, af_data_t* data)
  	wq[1] = wq[0];
 	wq[0] = w;
       }
-      // Calculate output 
-      *out=yt*s->gain_factor;
+      // Calculate output
+      * out = yt;
       out+=nch;
     }
   }

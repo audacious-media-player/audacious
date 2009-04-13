@@ -70,7 +70,7 @@ equalizer_flow(FlowContext *context)
         eq_rate = context->srate;
         bands_changed = FALSE;
     }
-    
+
     data.nch = context->channels;
     data.audio = context->data;
     data.len = context->len;
@@ -82,27 +82,23 @@ equalizer_flow_set_bands(gfloat pre, gfloat *bands)
 {
     int i;
     af_control_ext_t ctl;
-    gfloat b[10];
-    gfloat adj = 0.0;
-    AUDDBG("\n");
-    
+    gfloat highest;
+    gfloat adjusted [10];
+
     if(eq == NULL) {
         eq = g_malloc(sizeof(af_instance_t));
         equalizer_open(eq);
     }
 
-    for(i = 0; i < 10; i++)
-        b[i] = bands[i] + pre;
-
-    for(i = 0; i < 10; i++)
-        if(fabsf(b[i]) > fabsf(adj)) adj = b[i];
-
-    if(fabsf(adj) > EQUALIZER_MAX_GAIN) {
-        adj = adj > 0.0 ? EQUALIZER_MAX_GAIN - adj : -EQUALIZER_MAX_GAIN - adj;
-        for(i = 0; i < 10; i++) b[i] += adj;
+    highest = - EQUALIZER_MAX_GAIN;
+    for (i = 0; i < 10; i ++) {
+       if (bands [i] > highest)
+          highest = bands [i];
     }
+    for (i = 0; i < 10; i ++)
+       adjusted [i] = pre + bands [i] - highest;
 
-    ctl.arg = b;
+    ctl.arg = adjusted;
     for(i = 0; i < AF_NCH; i++) {
         ctl.ch = i;
         eq->control(eq, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &ctl);
