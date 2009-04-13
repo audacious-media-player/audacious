@@ -22,6 +22,8 @@
 
 #include <glib.h>
 
+void init_equalizer (void);
+
 gfloat equalizer_get_preamp(void);
 void equalizer_set_preamp(gfloat preamp);
 gfloat equalizer_get_band(gint band);

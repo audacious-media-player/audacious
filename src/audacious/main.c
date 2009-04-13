@@ -51,6 +51,7 @@
 
 #include "build_stamp.h"
 #include "configdb.h"
+#include "equalizer.h"
 #include "input.h"
 #include "logger.h"
 #include "output.h"
@@ -565,6 +566,7 @@ main(gint argc, gchar ** argv)
 
     output_set_volume((cfg.saved_volume & 0xff00) >> 8,
                       (cfg.saved_volume & 0x00ff));
+    init_equalizer ();
 
     g_message("Setting default icon");
     aud_set_default_icon();

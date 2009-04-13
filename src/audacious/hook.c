@@ -17,6 +17,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <stdio.h>
 #include <glib.h>
 #include "hook.h"
 
@@ -122,8 +123,10 @@ hook_call(const gchar *name, gpointer hook_data)
 
     hook = hook_find(name);
 
-    if (hook == NULL)
+    if (hook == NULL) {
+        printf ("Warning: no hook found for \"%s\"\n", name);
         return;
+    }
 
     for (iter = hook->items; iter != NULL; iter = g_slist_next(iter))
     {

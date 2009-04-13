@@ -18,9 +18,21 @@
  */
 
 #include "equalizer.h"
+#include "hook.h"
 #include "output.h"
 
 #include "audconfig.h"
+
+static void change_equalizer (void) {
+   output_set_eq (cfg.equalizer_active, cfg.equalizer_preamp,
+    cfg.equalizer_bands);
+}
+
+void init_equalizer (void) {
+   hook_register ("equalizer changed");
+   if (hook_associate ("equalizer changed", (HookFunction) change_equalizer, 0))
+      abort ();
+}
 
 gfloat
 equalizer_get_preamp(void)
