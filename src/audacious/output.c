@@ -29,6 +29,8 @@
 #  include "config.h"
 #endif
 
+#include "audconfig.h"
+#include "equalizer.h"
 #include "output.h"
 #include "main.h"
 #include "input.h"
@@ -115,7 +117,7 @@ set_current_output_plugin(gint i)
     {
         guint time, pos;
         PlaylistEntry *entry;
-	
+
 	plugin_set_current((Plugin *)op);
 
         /* don't stop yet, get the seek time and playlist position first */
@@ -302,6 +304,8 @@ reopen_audio(AFormat fmt, gint rate, gint nch)
         op_state.rate = rate;
         op_state.nch = nch;
 
+        output_set_eq (cfg.equalizer_active, cfg.equalizer_preamp,
+         cfg.equalizer_bands);
         return TRUE;
     } else {
         return FALSE;
@@ -334,14 +338,14 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 #ifdef USE_SAMPLERATE
         rate = src_flow_init(rate, nch); /* returns sample rate unchanged if resampling switched off */
 #endif
-    
+
         bit_depth = cfg.output_bit_depth;
-    
+
         AUDDBG("bit depth: %d\n", bit_depth);
         output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE;
-        
+
         freeSAD();
-    
+
         AUDDBG("initializing dithering engine for 2 stage conversion: fmt%d --> float -->fmt%d\n", fmt, output_fmt);
         input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
         if (input_sad_fmt.sample_format < 0) return FALSE;
@@ -349,33 +353,33 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         input_sad_fmt.channels = nch;
         input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         input_sad_fmt.samplerate = 0;
-        
+
         output_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
         output_sad_fmt.fracbits = 0;
         output_sad_fmt.channels = nch;
         output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         output_sad_fmt.samplerate = 0;
-        
+
         sad_state_to_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
         if (sad_state_to_float == NULL) {
             AUDDBG("ditherer init failed (decoder's native --> float)\n");
             return FALSE;
         }
         SAD_dither_set_dither (sad_state_to_float, FALSE);
-        
+
         input_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
         input_sad_fmt.fracbits = 0;
         input_sad_fmt.channels = nch;
         input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         input_sad_fmt.samplerate = 0;
-        
+
         output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
         if (output_sad_fmt.sample_format < 0) return FALSE;
         output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
         output_sad_fmt.channels = nch;
         output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
         output_sad_fmt.samplerate = 0;
-        
+
         sad_state_from_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
         if (sad_state_from_float == NULL) {
             SAD_dither_free(sad_state_to_float);
@@ -383,9 +387,9 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
             return FALSE;
         }
         SAD_dither_set_dither (sad_state_from_float, TRUE);
-        
+
         fmt = output_fmt;
-    
+
         if(replay_gain_info.album_peak == 0.0 && replay_gain_info.track_peak == 0.0) {
             AUDDBG("RG info isn't set yet. Filling replay_gain_info with default values.\n");
             replay_gain_info.track_gain = cfg.default_gain;
@@ -394,7 +398,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
             replay_gain_info.album_peak = 0.01;
         }
         apply_replaygain_info(&replay_gain_info);
-    
+
         return reopen_audio(fmt, rate, nch);
     } /* bypass_dsp */
 }
@@ -418,7 +422,7 @@ output_close_audio(void)
     OutputPlugin *op = get_current_output_plugin();
 
     freeSAD();
-    
+
     AUDDBG("clearing RG settings\n");
     replay_gain_info.track_gain = 0.0;
     replay_gain_info.track_peak = 0.0;
@@ -428,7 +432,7 @@ output_close_audio(void)
 #ifdef USE_SAMPLERATE
     src_flow_free();
 #endif
-    /* Do not close if there are still songs to play and the user has 
+    /* Do not close if there are still songs to play and the user has
      * not requested a stop.  --nenolod
      */
     Playlist *pl = playlist_get_active();
@@ -515,28 +519,28 @@ output_pass_audio(InputPlayback *playback,
     OutputPlugin *op = playback->output;
     gint writeoffs;
     gpointer float_ptr;
-        
+
     if (visualization_flow == NULL)
     {
         visualization_flow = flow_new();
         flow_link_element(visualization_flow, vis_flow);
     }
-        
+
     plugin_set_current((Plugin *)(playback->output));
     gint time = playback->output->written_time();
-        
+
     flow_execute(visualization_flow, time, &ptr, length, fmt, decoder_srate, nch);
 
     if (!bypass_dsp) {
 
         if(length <= 0 || sad_state_from_float == NULL || sad_state_to_float == NULL) return;
-        
+
         if (legacy_flow == NULL)
         {
             legacy_flow = flow_new();
             flow_link_element(legacy_flow, effect_flow);
         }
-        
+
         if (postproc_flow == NULL)
         {
             postproc_flow = flow_new();
@@ -546,17 +550,17 @@ output_pass_audio(InputPlayback *playback,
             flow_link_element(postproc_flow, equalizer_flow);
             flow_link_element(postproc_flow, volumecontrol_flow);
         }
-    
+
         int frames = length / nch / FMT_SIZEOF(fmt);
         int len = frames * nch * sizeof(float);
         if(sad_float_buf == NULL || sad_float_buf_length < len) {
             sad_float_buf_length = len;
             sad_float_buf = smart_realloc(sad_float_buf, &sad_float_buf_length);
         }
-    
+
         SAD_dither_process_buffer(sad_state_to_float, ptr, sad_float_buf, frames);
         float_ptr = sad_float_buf;
-        
+
         length = flow_execute(postproc_flow,
                               time,
                               &float_ptr,
@@ -564,19 +568,19 @@ output_pass_audio(InputPlayback *playback,
                               FMT_FLOAT,
                               decoder_srate,
                               nch);
-        
+
         frames = length / nch / sizeof(float);
         len = frames * nch * FMT_SIZEOF(op_state.fmt);
         if(sad_out_buf == NULL || sad_out_buf_length < len) {
             sad_out_buf_length = len;
             sad_out_buf = smart_realloc(sad_out_buf, &sad_out_buf_length);
         }
-    
+
         SAD_dither_process_buffer(sad_state_from_float, float_ptr, sad_out_buf, frames);
-    
+
         length = len;
         ptr = sad_out_buf;
-    
+
         if (op_state.fmt == FMT_S16_NE || (op_state.fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN) ||
                                           (op_state.fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)) {
             length = flow_execute(legacy_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
@@ -651,13 +655,13 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
         AUDDBG("SAD not initialized!\n");
         return;
     }
-    
+
     rg_enabled = cfg.enable_replay_gain;
     album_mode = cfg.replay_gain_album;
     mode.clipping_prevention = cfg.enable_clipping_prevention;
     mode.hard_limit = FALSE;
     mode.adaptive_scaler = cfg.enable_adaptive_scaler;
-    
+
     if(!rg_enabled) return;
 
     mode.mode = album_mode ? SAD_RG_ALBUM : SAD_RG_TRACK;
@@ -679,7 +683,7 @@ apply_replaygain_info (ReplayGainInfo *rg_info)
     AUDDBG("* track peak:          %f\n",     info.track_peak);
     AUDDBG("* album gain:          %+f dB\n", info.album_gain);
     AUDDBG("* album peak:          %f\n",     info.album_peak);
-    
+
     SAD_dither_apply_replaygain(sad_state_from_float, &info, &mode);
 }
 

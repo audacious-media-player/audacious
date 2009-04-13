@@ -29,7 +29,6 @@ static void change_equalizer (void) {
 }
 
 void init_equalizer (void) {
-   change_equalizer ();
    hook_register ("equalizer changed");
    if (hook_associate ("equalizer changed", (HookFunction) change_equalizer, 0))
       abort ();
