@@ -1,4 +1,4 @@
-a/*
+/*
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2006-2007 William Pitcock, Tony Vroon, George Averill,
  *                         Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
