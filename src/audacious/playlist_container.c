@@ -1,4 +1,4 @@
-/*
+a/*
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2006-2007 William Pitcock, Tony Vroon, George Averill,
  *                         Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
@@ -51,7 +51,7 @@ PlaylistContainer *playlist_container_find(gchar *ext)
 	for (node = registered_plcs; node != NULL; node = g_list_next(node)) {
 		plc = PLAYLIST_CONTAINER(node->data);
 
-		if (!g_ascii_strncasecmp(plc->ext, ext, strlen(ext)))
+		if (!g_ascii_strncasecmp(plc->ext, ext, strlen(plc->ext)))
 			return plc;
 	}
 
