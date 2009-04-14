@@ -917,42 +917,44 @@ plugin_system_init(void)
              */
             if (cfg.outputplugin && !strcmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
             {
-                op_data.current_output_plugin = op;
 		if (op->init)
 		{
 		    OutputPluginInitStatus ret = op->init();
 		    if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
 		    {
-		        printf("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n",
-		          g_path_get_basename(op->filename));
-                    } else if (ret == OUTPUT_PLUGIN_INIT_FAIL) {
-		        printf("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n",
-		          g_path_get_basename(op->filename));
-                    } else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES) {
-		        goto found_output;
-                    } else {
-		        printf("Plugin %s did not report status. Do you still need to convert it? Will proceed for now.\n",
-		          g_path_get_basename(op->filename));
-		        goto found_output;
+		        g_message("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n",
+                                  g_path_get_basename(op->filename));
                     }
-		} else {
-                   goto found_output;
-                }
+                    else if (ret == OUTPUT_PLUGIN_INIT_FAIL)
+                    {
+		        g_message("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n",
+		                  g_path_get_basename(op->filename));
+                    }
+                    else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+                    {
+                        if (!op_data.current_output_plugin)
+                            op_data.current_output_plugin = op;
+                    }
+                    else
+                    {
+		        g_message("Plugin %s did not report status, and no plugin has worked yet. Do you still need to convert it? Selecting for now...\n",
+		                  g_path_get_basename(op->filename));
+
+                        if (!op_data.current_output_plugin)
+                            op_data.current_output_plugin = op;
+                    }
+		}
             }
 
             if (op->init && op->probe_priority == prio)
 	    {
 	        plugin_set_current((Plugin *)op);
                 if (op->init() == OUTPUT_PLUGIN_INIT_FOUND_DEVICES && op_data.current_output_plugin == NULL)
-                {
                     op_data.current_output_plugin = op;
-                    goto found_output;
-                }
 	    }
         }
     }
 
-found_output:
     for (node = ip_data.input_list; node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip->init)
