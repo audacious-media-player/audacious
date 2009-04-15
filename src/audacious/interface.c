@@ -42,6 +42,12 @@ interface_common_update_vis(gpointer user_data)
 }
 
 static void
+interface_common_playback_seek(gpointer user_data, gpointer hook_data)
+{
+    free_vis_data();
+}
+
+static void
 interface_common_playback_begin(gpointer user_data, gpointer hook_data)
 {
     /* update vis info about 100 times a second */
@@ -64,6 +70,7 @@ interface_common_hooks_associate(void)
 {
     hook_associate("playback begin", (HookFunction) interface_common_playback_begin, NULL);
     hook_associate("playback stop", (HookFunction) interface_common_playback_stop, NULL);
+    hook_associate("playback seek", (HookFunction) interface_common_playback_seek, NULL);
 }
 
 static void
@@ -71,6 +78,7 @@ interface_common_hooks_dissociate(void)
 {
     hook_dissociate("playback begin", (HookFunction) interface_common_playback_begin);
     hook_dissociate("playback stop", (HookFunction) interface_common_playback_stop);
+    hook_dissociate("playback seek", (HookFunction) interface_common_playback_seek);
 }
 
 /* interface abstraction layer */
