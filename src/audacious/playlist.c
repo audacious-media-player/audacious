@@ -2436,9 +2436,8 @@ playlist_get_info_func(gpointer arg)
                          tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
                          tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1))
                 {
-                    update_playlistwin = FALSE;
-                    playlist_get_info_scan_active = FALSE;
-                    break; /* hmmm... --asphyx */
+                    update_playlistwin = TRUE;
+                    continue;
                 }
             }
 
