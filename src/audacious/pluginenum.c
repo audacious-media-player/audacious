@@ -1033,16 +1033,16 @@ plugin_system_cleanup(void)
 
     for (node = get_input_list(); node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
-        if (ip && ip->cleanup) {
+        if (ip) {
 	    plugin_set_current((Plugin *)ip);
-            ip->cleanup();
+
+            if (ip->cleanup)
+                ip->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (ip->handle)
-            g_module_close(ip->handle);
     }
 
     if (ip_data.input_list != NULL)
@@ -1053,16 +1053,16 @@ plugin_system_cleanup(void)
 
     for (node = get_output_list(); node; node = g_list_next(node)) {
         op = OUTPUT_PLUGIN(node->data);
-        if (op && op->cleanup) {
+        if (op) {
 	    plugin_set_current((Plugin *)op);
-            op->cleanup();
+
+            if (op->cleanup)
+                op->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (op->handle)
-            g_module_close(op->handle);
     }
 
     if (op_data.output_list != NULL)
@@ -1073,16 +1073,16 @@ plugin_system_cleanup(void)
 
     for (node = get_effect_list(); node; node = g_list_next(node)) {
         ep = EFFECT_PLUGIN(node->data);
-        if (ep && ep->cleanup) {
+        if (ep) {
 	    plugin_set_current((Plugin *)ep);
-            ep->cleanup();
+
+            if (ep->cleanup)
+                ep->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (ep->handle)
-            g_module_close(ep->handle);
     }
 
     if (ep_data.effect_list != NULL)
@@ -1093,16 +1093,16 @@ plugin_system_cleanup(void)
 
     for (node = get_general_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
-        if (gp && gp->cleanup) {
+        if (gp) {
 	    plugin_set_current((Plugin *)gp);
-            gp->cleanup();
+
+            if (gp->cleanup)
+                gp->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (gp->handle)
-            g_module_close(gp->handle);
     }
 
     if (gp_data.general_list != NULL)
@@ -1113,16 +1113,16 @@ plugin_system_cleanup(void)
 
     for (node = get_vis_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
-        if (vp && vp->cleanup) {
+        if (vp) {
 	    plugin_set_current((Plugin *)vp);
-            vp->cleanup();
+
+            if (vp->cleanup)
+                vp->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (vp->handle)
-            g_module_close(vp->handle);
     }
 
     if (vp_data.vis_list != NULL)
@@ -1134,16 +1134,16 @@ plugin_system_cleanup(void)
 
     for (node = get_discovery_list(); node; node = g_list_next(node)) {
         dp = DISCOVERY_PLUGIN(node->data);
-        if (dp && dp->cleanup) {
+        if (dp) {
 	    plugin_set_current((Plugin *)dp);
-            dp->cleanup();
+
+            if (dp->cleanup)
+                dp->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (dp->handle)
-            g_module_close(dp->handle);
     }
 
     if (dp_data.discovery_list != NULL)
@@ -1152,20 +1152,18 @@ plugin_system_cleanup(void)
         dp_data.discovery_list = NULL;
     }
 
-
-
     for (node = lowlevel_list; node; node = g_list_next(node)) {
         lp = LOWLEVEL_PLUGIN(node->data);
-        if (lp && lp->cleanup) {
+        if (lp) {
 	    plugin_set_current((Plugin *)lp);
-            lp->cleanup();
+
+            if (lp->cleanup)
+                lp->cleanup();
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-
-        if (lp->handle)
-            g_module_close(lp->handle);
     }
 
     if (lowlevel_list != NULL)
