@@ -2862,6 +2862,7 @@ prefswin_page_destroy(GtkWidget *container)
         {
             gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
             ret = gtk_tree_model_get_iter_first(model, &iter);
+            continue;
         }
 
         if (index > id)
