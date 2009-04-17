@@ -3207,7 +3207,7 @@ filter_by_extension(const gchar *uri)
 {
     gchar *base, *ext, *lext, *filename, *tmp_uri;
     gchar *tmp;
-    gint rv;
+    gint rv = EXT_FALSE;
     GList **lhandle, *node;
     InputPlugin *ip;
 
