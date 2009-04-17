@@ -60,7 +60,6 @@ _ui_playlist_widget_drag_begin(GtkTreeView *widget, GdkDragContext *context, gpo
     GtkTreePath *path;
     GtkTreeIter iter;
 
-    model = gtk_tree_view_get_model(widget);
     sel = gtk_tree_view_get_selection(widget);
 
     if (!gtk_tree_selection_get_selected(sel, NULL, &iter))
