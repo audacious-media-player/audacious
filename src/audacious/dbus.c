@@ -900,7 +900,6 @@ gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **er
 }
 
 gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error) {
-    GList *playlists = NULL;
     Playlist *new_pl = playlist_new();
     gchar *pl_name = NULL;
 
@@ -910,7 +909,6 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GE
     playlist_set_current_name(new_pl, pl_name);
     g_free(pl_name);
 
-    playlists = playlist_get_playlists();
     playlist_add_playlist(new_pl);
 
 //    DISABLE_MANAGER_UPDATE();
