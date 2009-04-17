@@ -85,7 +85,7 @@ vis_playback_start(void)
 void
 vis_playback_stop(void)
 {
-    GList *node = vp_data.enabled_list;
+    GList *node;
     VisPlugin *vp;
 
     if (!vp_data.playback_started)
