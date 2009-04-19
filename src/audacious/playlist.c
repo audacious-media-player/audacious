@@ -2139,14 +2139,8 @@ playlist_compare_date(PlaylistEntry * a,
     struct stat buf;
     time_t modtime;
 
-    gint rv;
-
-
-    rv = stat(a->filename, &buf);
-
-    if (rv == 0) {
+    if (stat(a->filename, &buf) == 0) {
         modtime = buf.st_mtime;
-        rv = stat(b->filename, &buf);
 
         if (stat(b->filename, &buf) == 0) {
             if (buf.st_mtime == modtime)
