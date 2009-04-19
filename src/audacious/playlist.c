@@ -1063,7 +1063,6 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     g_return_val_if_fail(string != NULL, 0);
 
     while (*string) {
-        GList *node;
         guint i = 0;
         tmp = strchr(string, '\n');
         if (tmp) {
@@ -1082,10 +1081,6 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
             i = 1;
 
         g_free(decoded);
-
-        PLAYLIST_LOCK(playlist);
-        node = g_list_nth(playlist->entries, pos);
-        PLAYLIST_UNLOCK(playlist);
 
         entries += i;
 
