@@ -2352,7 +2352,6 @@ static void
 playlist_generate_shuffle_list_nolock(Playlist *playlist)
 {
     GList *node;
-    gint numsongs;
 
     if (!cfg.shuffle || !playlist)
         return;
@@ -2365,7 +2364,6 @@ playlist_generate_shuffle_list_nolock(Playlist *playlist)
     }
 
     playlist->shuffle = playlist_shuffle_list(playlist, g_list_copy(playlist->entries));
-    numsongs = g_list_length(playlist->shuffle);
 
     if (playlist->position) {
         gint i = g_list_index(playlist->shuffle, playlist->position);
