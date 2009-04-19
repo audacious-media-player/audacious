@@ -946,7 +946,6 @@ playlist_dir_find_files(const gchar * path,
     while ((dir_entry = g_dir_read_name(dir))) {
         gchar *filename, *tmp;
         gint ext_flag;
-        gboolean http_flag;
 
         if (file_is_hidden(dir_entry))
             continue;
@@ -956,7 +955,6 @@ playlist_dir_find_files(const gchar * path,
         g_free(tmp);
 
         ext_flag = filter_by_extension(filename);
-        http_flag = is_http(filename);
 
         if (vfs_file_test(filename, G_FILE_TEST_IS_DIR)) { /* directory */
             GList *sub;
