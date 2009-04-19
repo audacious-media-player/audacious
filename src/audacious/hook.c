@@ -46,7 +46,7 @@ hook_register(const gchar *name)
 
     g_return_if_fail(name != NULL);
 
-    if ((hook = hook_find(name)) != NULL)
+    if (hook_find(name) != NULL)
         return;
 
     hook = g_new0(Hook, 1);
