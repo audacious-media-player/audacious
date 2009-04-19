@@ -113,17 +113,11 @@ void id3_parse_immediate(id3_byte_t const **ptr, unsigned int bytes,
 id3_latin1_t *id3_parse_latin1(id3_byte_t const **ptr, id3_length_t length,
 			       int full)
 {
-  id3_byte_t const *end;
   int terminated = 0;
   id3_latin1_t *latin1;
 
-  end = memchr(*ptr, 0, length);
-  if (end == 0)
-    end = *ptr + length;
-  else {
-    length = end - *ptr;
+  if (memchr(*ptr, 0, length) != 0)
     terminated = 1;
-  }
 
   latin1 = malloc(length + 1);
   if (latin1) {
