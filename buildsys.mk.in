@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2007 - 2008, Jonathan Schleifer <js-buildsys@webkeks.org>
+#  Copyright (c) 2007 - 2009, Jonathan Schleifer <js@webkeks.org>
 #
 #  https://webkeks.org/hg/buildsys/
 #
@@ -123,19 +123,18 @@ depend: pre-depend ${SRCS}
 	done; \
 	if test x"$$regen" = x"1" -a x"$$deps" != "x"; then \
 		${DEPEND_STATUS}; \
-		if ${MAKE} ${MFLAGS} $$deps; then \
-			test -f .deps && rm .deps; \
-			cat $$deps >.deps; \
+		if ${MAKE} ${MFLAGS} $$deps && cat $$deps >.deps; then \
 			rm -f $$deps; \
 			${DEPEND_OK}; \
 		else \
-			:> $$deps; \
+			:> .deps; \
+			touch -t 0001010000 .deps; \
 			${DEPEND_FAILED}; \
 		fi; \
 	fi
 
 .c.dep .cc.dep .cxx.dep .m.dep:
-	${CPP} ${CPPFLAGS} -M $< >$@
+	${CPP} ${CPPFLAGS} -M $< >$@ || (rm -f $@; exit 1)
 
 .d.dep:
 .xpm.dep:
@@ -151,12 +150,19 @@ ${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS}
 	fi
 
 ${LIB} ${LIB_NOINST}: ${EXT_DEPS} ${OBJS}
-	${LINK_STATUS}
-	if ${LD} -o $@ ${OBJS} ${LIB_LDFLAGS} ${LDFLAGS} ${LIBS}; then \
-		${LINK_OK}; \
-	else \
-		${LINK_FAILED}; \
-	fi
+	case $@ in \
+		*.a) \
+			${MAKE} ${MFLAGS} STATIC_LIB=${LIB} LIB= $@ || exit 1 \
+			;; \
+		*) \
+			${LINK_STATUS}; \
+			if ${LD} -o $@ ${OBJS} ${LIB_LDFLAGS} ${LDFLAGS} ${LIBS}; then \
+				${LINK_OK}; \
+			else \
+				${LINK_FAILED}; \
+			fi \
+			;; \
+	esac
 
 ${PLUGIN} ${PLUGIN_NOINST}: ${EXT_DEPS} ${OBJS}
 	${LINK_STATUS}
@@ -398,7 +404,7 @@ clean:
 		${MAKE} ${MFLAGS} clean || exit 1; \
 		${DIR_LEAVE}; \
 	done
-	
+
 	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} ${DEPS}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
@@ -415,7 +421,7 @@ distclean: clean
 		${MAKE} ${MFLAGS} distclean || exit 1; \
 		${DIR_LEAVE}; \
 	done
-	
+
 	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN} .deps *~; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
