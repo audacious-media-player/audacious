@@ -323,8 +323,8 @@ AC_CONFIG_FILES([
     audclient.pc
     buildsys.mk
     extra.mk
-    man/audtool.1
-    man/audacious.1
+    man/audtool2.1
+    man/audacious2.1
     applications/audacious.desktop
     po/Makefile.in
 ])

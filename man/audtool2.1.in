@@ -1,9 +1,9 @@
-.TH AUDTOOL 1 "November 2006" "Version @VERSION@"
+.TH AUDTOOL "1" "April 2009" "Version @VERSION@"
 .SH NAME
 .B audtool
-- a small tool to modify behavior of a running audacious instance.
+- a small tool to modify behavior of a running audacious2 instance.
 .SH SYNOPSIS
-.B audtool
+.B audtool2
 [\-\-[[handler [parameters]] [...]
 .SH DESCRIPTION
 .B audtool
@@ -53,6 +53,12 @@ Returns current song frequency in kilohertz.
 .TP
 .I --current-song-channels
 Returns current song channels.
+.TP
+.I --current-song-tuple-data <fieldname>
+Returns the value of a tuple field for the current song.
+.TP
+.I --current-song-info
+Returns current song bitrate, frequency and channels.
 .PP
 .B "Playlist manipulation:"
 .TP
@@ -64,6 +70,9 @@ Go to the previous song in the playlist.
 .TP
 .I --playlist-addurl <uri>
 Adds a uri to the playlist.
+.TP
+.I --playlist-insurl <uri> <position>
+Inserts a url at specified position in the playlist.
 .TP
 .I --playlist-delete <position>
 Deletes the song at <position> from the playlist.
@@ -109,6 +118,9 @@ Returns the status of playlist shuffle.
 .TP
 .I --playlist-shuffle-toggle
 Toggles playlist shuffle.
+.TP
+.I --playlist-tuple-data <fieldname> <position>
+Returns the value of a tuple field for a song in the playlist.
 .PP
 .B Playqueue manipulation:
 .TP
@@ -124,8 +136,11 @@ Returns OK if the song at <postion> in the playtlist is queued.
 .I --playqueue-get-position <position>
 Returns the playqueue position of the song at <position> in the playlist.
 .TP
-.I --playqueue-get-qposition <qposition>
-Returns the playlist position of the song at <qposition> in the playqueue.
+.I --playqueue-get-queue-position <position>
+Returns the playqueue position of a song in the given <position> in the playlist.
+.TP
+.I --playqueue-get-list-position <position>
+Returns the playlist position of a song in the given position in the playqueue.
 .TP
 .I --playqueue-length
 Returns the length of the playqueue.
@@ -176,13 +191,60 @@ Returns the current volume level in percent.
 .I --set-volume <level>
 Sets the current volume level in percent.
 .PP
+.B "Equalizer manipulation:"
+.TP
+.I --equalizer-activate <on/off>
+Activates/deactivates the equalizer.
+.TP
+.I --equalizer-get
+Gets the equalizer settings.
+.TP
+.I --equalizer-set <preamp> <band0> <band1> <band2> <band3> <band4> <band5> <band6> <band7> <band8> <band9>
+Sets the equalizer settings.
+.TP
+.I --equalizer-get-preamp
+Gets the equalizer pre-amplification.
+.TP
+.I --equalizer-set-preamp <preamp>
+Gets the equalizer pre-amplification.
+.TP
+.I --equalizer-get-band <band>
+Gets the equalizer value in specified band.
+.TP
+.I --equalizer-set-band <band> <value>
+Sets the equalizer value in specified band.
+.PP
 .B "Miscellaneous:"
 .TP
-.I --preferences
+.I --mainwin-show <on/off>
+Shows/hides the main window.
+.TP
+.I --playlist-show <on/off>
+Shows/hides the playlist window.
+.TP
+.I --equalizer-show <on/off>
+Shows/hides the equalizer window.
+.TP
+.I --filebrowser-show <on/off>
+Shows/hides the filebrowser.
+.TP
+.I --jumptofile-show <on/off>
+Shows/hides the jump to file window.
+.TP
+.I --preferences-show <on/off>
 Shows/hides the preferences window.
 .TP
-.I --jumptofile
-Shows the jump to file window.
+.I --about-show <on/off>
+Shows/hides the about window.
+.TP
+.I --activate
+Activates and raises audacious.
+.TP
+.I --always-on-top <on/off>
+Enables/disables always on top setting.
+.TP
+.I --version
+Displays version information for the Audacious2 core.
 .TP
 .I --shutdown
 Shuts down audacious.
@@ -198,7 +260,7 @@ Shows handlers list.
 Handlers may be prefixed with `\-\-' (GNU\-style long\-options) or not, your choice.
 .SH BUGS
 There are no known bugs in audtool at this time; if you find any please
-report them to <bugs+audtool@atheme.org>.
+report them on www.atheme.org in the Audacious issue tracker.
 .SH AUTHORS
 .B audtool
 was written by George Averill <nhjm@nhjm.net> and William 
@@ -206,7 +268,7 @@ Pitcock <nenolod@atheme.org>.
 .PP
 This manual page was written by Adam Cecile <gandalf@le-vert.net> and 
 Kiyoshi Aman <kiyoshi@atheme.org>. Some additional tweaks were done by 
-William Pitcock <nenolod@atheme.org>.
+William Pitcock <nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.
 .PP
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU General Public License, Version 2 or any
