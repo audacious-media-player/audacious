@@ -437,7 +437,9 @@ output_close_audio(void)
      */
     Playlist *pl = playlist_get_active();
     if (ip_data.stop == FALSE &&
-       (playlist_get_position_nolock(pl) < playlist_get_length(pl) - 1)) {
+       (playlist_get_position_nolock(pl) < playlist_get_length(pl) - 1) &&
+       !cfg.stopaftersong &&
+       !(cfg.no_playlist_advance && !cfg.repeat)) {
             AUDDBG("leaving audio opened\n");
             return;
         }
