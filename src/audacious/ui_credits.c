@@ -109,6 +109,7 @@ static const gchar *credit_text[] = {
     "Henrik Johansson",
     "Rodrigo Martins de Matos Ventura",
     "Diego Pettenò",
+    "Edward Sheldrake",
     "Kazuki Shimura",
     "Valentine Sinitsyn",
     "Johan Tavelin",
