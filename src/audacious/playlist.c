@@ -313,7 +313,7 @@ playlist_remove_playlist(Playlist *playlist)
 
     /* upon removal, a playlist should be cleared and freed */
     playlists = g_list_remove(playlists, playlist);
-    playlist_clear(playlist);
+    playlist_clear_only (playlist);
     playlist_free(playlist);
 
     if (playlists_iter == NULL)
@@ -883,7 +883,7 @@ devino_compare(gconstpointer a,
 }
 
 static gboolean
-devino_destroy(gpointer key, 
+devino_destroy(gpointer key,
                gpointer value,
                gpointer data)
 {
@@ -998,7 +998,7 @@ playlist_add(Playlist * playlist, const gchar * filename)
     return playlist_ins(playlist, filename, -1);
 }
 
-guint 
+guint
 playlist_add_dir(Playlist * playlist, const gchar * directory)
 {
     return playlist_ins_dir(playlist, directory, -1, TRUE);
@@ -1452,7 +1452,7 @@ playlist_eof_reached(Playlist *playlist)
     if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
         ip_data.stop = TRUE;
     playback_stop();
-    if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)  
+    if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
         ip_data.stop = FALSE;
 
     hook_call("playback end", playlist->position);
@@ -1882,7 +1882,7 @@ playlist_get_tuple(Playlist *playlist, guint pos)
         mtime = 0;
 
     // if no tuple or tuple with old mtime, get new one.
-    if (tuple == NULL || 
+    if (tuple == NULL ||
         (entry->tuple && mtime != 0 && (mtime == -1 || mtime != playlist_get_mtime(entry->filename))))
     {
         playlist_entry_get_info(entry);
@@ -2411,13 +2411,13 @@ playlist_get_info_func(gpointer arg)
                     continue;
                 }
 
-                if (!playlist_entry_get_info(entry) && 
+                if (!playlist_entry_get_info(entry) &&
                     g_list_index(playlist->entries, entry) == -1)
                     /* Entry disappeared while we looked it up.
                        Restart. */
                     node = playlist->entries;
                 else if ((entry->tuple != NULL) ||
-			 (entry->title != NULL && 
+			 (entry->title != NULL &&
                          tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
                          tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1))
                 {
@@ -2474,7 +2474,7 @@ playlist_stop_get_info_thread(void)
         g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
         return;
     }
-    
+
     playlist_get_info_going = FALSE;
     g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
 
@@ -2530,7 +2530,7 @@ playlist_remove_dead_files(Playlist *playlist)
             continue;
 
         /* FIXME: Should test for readability */
-        if (vfs_file_test(entry->filename, G_FILE_TEST_EXISTS))  
+        if (vfs_file_test(entry->filename, G_FILE_TEST_EXISTS))
             continue;
 
         if (entry == playlist->position) {
