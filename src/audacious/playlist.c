@@ -302,7 +302,7 @@ playlist_remove_playlist(Playlist *playlist)
     /* trying to free the last playlist simply clears and resets it */
     if (g_list_length(playlists) < 2) {
         playlist_clear(playlist);
-        playlist_set_current_name(playlist, NULL);
+        playlist_set_current_name(playlist, _("Untitled Playlist"));
         playlist_filename_set(playlist, NULL);
         return;
     }
