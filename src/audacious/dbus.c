@@ -89,10 +89,10 @@ void audacious_rc_init(RemoteObject *object) {
     guint request_ret;
 
     g_message("Registering remote D-Bus interfaces");
-    
+
     dbus_g_object_type_install_info(audacious_rc_get_type(),
                                     &dbus_glib_audacious_rc_object_info);
-    
+
     // Register DBUS path
     dbus_g_connection_register_g_object(dbus_conn,
                                         AUDACIOUS_DBUS_PATH, G_OBJECT(object));
@@ -121,7 +121,7 @@ void audacious_rc_init(RemoteObject *object) {
 void mpris_root_init(MprisRoot *object) {
     dbus_g_object_type_install_info(mpris_root_get_type(),
                                     &dbus_glib_mpris_root_object_info);
-    
+
     // Register DBUS path
     dbus_g_connection_register_g_object(dbus_conn,
                                         AUDACIOUS_DBUS_PATH_MPRIS_ROOT,
@@ -131,7 +131,7 @@ void mpris_root_init(MprisRoot *object) {
 void mpris_player_init(MprisPlayer *object) {
     dbus_g_object_type_install_info(mpris_player_get_type(),
                                     &dbus_glib_mpris_player_object_info);
-    
+
     // Register DBUS path
     dbus_g_connection_register_g_object(dbus_conn,
                                         AUDACIOUS_DBUS_PATH_MPRIS_PLAYER,
@@ -155,7 +155,7 @@ void mpris_player_init(MprisPlayer *object) {
 void mpris_tracklist_init(MprisTrackList *object) {
     dbus_g_object_type_install_info(mpris_tracklist_get_type(),
                                     &dbus_glib_mpris_tracklist_object_info);
-    
+
     // Register DBUS path
     dbus_g_connection_register_g_object(dbus_conn,
                                         AUDACIOUS_DBUS_PATH_MPRIS_TRACKLIST,
@@ -244,7 +244,7 @@ GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     value = tuple_value_to_gvalue(tuple, "track-number");
     if (value != NULL)
     {
-        g_hash_table_insert(md, "tracknumber", value); 
+        g_hash_table_insert(md, "tracknumber", value);
     }
 
     return md;
@@ -556,7 +556,7 @@ gboolean audacious_rc_get_tuple_fields(RemoteObject *obj, gchar ***fields,
         res[i] = g_strdup(tuple_fields[i].name);
     }
     *fields = res;
-    
+
     return TRUE;
 }
 
@@ -904,10 +904,7 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GE
     gchar *pl_name = NULL;
 
     pl_name = (gchar*)playlist_get_current_name(new_pl);
-    if(!pl_name)
-        pl_name = g_strdup("New Playlist");
-    playlist_set_current_name(new_pl, pl_name);
-    g_free(pl_name);
+    playlist_set_current_name (new_pl, pl_name ? pl_name : "New Playlist");
 
     playlist_add_playlist(new_pl);
 
@@ -920,7 +917,7 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GE
     return TRUE;
 }
 
-/* New on Nov 7: Equalizer */ 
+/* New on Nov 7: Equalizer */
 gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error)
 {
     int i;
@@ -952,7 +949,7 @@ gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, G
 {
     gdouble element;
     int i;
-    
+
     equalizer_set_preamp((gfloat)preamp);
 
     for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
