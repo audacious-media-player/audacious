@@ -123,10 +123,8 @@ hook_call(const gchar *name, gpointer hook_data)
 
     hook = hook_find(name);
 
-    if (hook == NULL) {
-        printf ("Warning: no hook found for \"%s\"\n", name);
+    if (hook == NULL)
         return;
-    }
 
     for (iter = hook->items; iter != NULL; iter = g_slist_next(iter))
     {
