@@ -69,6 +69,7 @@
 #include "ui_new.h"
 #include "ui_headless.h"
 #include "ui_preferences.h"
+#include "ui_misc.h"
 
 static const gchar *application_name = N_("Audacious");
 
@@ -574,6 +575,11 @@ main(gint argc, gchar ** argv)
     g_message("Populating included interfaces");
     ui_populate_default_interface();
     ui_populate_headless_interface();
+
+#ifndef NOT_ALPHA_RELEASE
+    g_message("Displaying unsupported version warning.");
+    ui_display_unsupported_version_warning();
+#endif
 
     g_message("Selecting interface %s", options.interface);
     i = interface_get(options.interface);

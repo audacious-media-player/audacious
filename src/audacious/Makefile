@@ -53,9 +53,10 @@ SRCS = af_equalizer.c							\
        ui_fileinfo.c						\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
+       ui_misc.c				\
        ui_playlist_manager.c				\
-       ui_urlopener.c					\
        ui_playlist_widget.c				\
+       ui_urlopener.c					\
        actions.c
 
 ifeq ($(USE_DBUS),yes)
