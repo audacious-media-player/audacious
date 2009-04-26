@@ -40,6 +40,7 @@
 #include "strings.h"
 #include "tuple.h"
 #include "ui_fileopener.h"
+#include "ui_jumptotrack.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -809,7 +810,10 @@ gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **
 }
 
 gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error) {
-    hook_call("ui jump to track show", &show);
+    if (show)
+       ui_jump_to_track ();
+    else
+       ui_jump_to_track_hide ();
     return TRUE;
 }
 
