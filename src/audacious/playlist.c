@@ -2129,25 +2129,14 @@ static gint
 playlist_compare_date(PlaylistEntry * a,
                       PlaylistEntry * b)
 {
-    struct stat buf;
-    time_t modtime;
-
-    if (stat(a->filename, &buf) == 0) {
-        modtime = buf.st_mtime;
-
-        if (stat(b->filename, &buf) == 0) {
-            if (buf.st_mtime == modtime)
-                return 0;
-            else
-                return (buf.st_mtime - modtime) > 0 ? -1 : 1;
-        }
-        else
-            return -1;
-    }
-    else if (!lstat(b->filename, &buf))
-        return 1;
-    else
-        return playlist_compare_filename(a, b);
+  time_t a_time, b_time;
+   a_time = playlist_get_mtime (a->filename);
+   b_time = playlist_get_mtime (b->filename);
+   if (a_time < b_time)
+      return -1;
+   if (a_time > b_time)
+      return 1;
+   return playlist_compare_filename (a, b);
 }
 
 
