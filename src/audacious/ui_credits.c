@@ -93,6 +93,7 @@ static const gchar *credit_text[] = {
     NULL,
 
     N_("Patch authors:"),
+    "Carlo Bramini",
     "Massimo Cavalleri",
     "Stefano D'Angelo",
     "Laszlo Dvornik",
