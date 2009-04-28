@@ -37,6 +37,46 @@
 
 #include "audconfig.h"
 
+/* Read, write, execute/search by group. */
+#ifndef S_IRWXG
+#define S_IRWXG     (S_IRGRP | S_IWGRP | S_IXGRP)
+#endif
+
+/* Read permission, group. */
+#ifndef S_IRGRP
+#define S_IRGRP     S_IRUSR
+#endif
+
+/* Write permission, group. */
+#ifndef S_IWGRP
+#define S_IWGRP     S_IWUSR
+#endif
+
+/* Execute/search permission, group. */
+#ifndef S_IXGRP
+#define S_IXGRP     S_IXUSR
+#endif
+
+/* Read, write, execute/search by others. */
+#ifndef S_IRWXO
+#define S_IRWXO     (S_IROTH | S_IWOTH | S_IXOTH)
+#endif
+
+/* Read permission, others. */
+#ifndef S_IROTH
+#define S_IROTH     S_IRUSR
+#endif
+
+/* Write permission, others. */
+#ifndef S_IWOTH
+#define S_IWOTH     S_IWUSR
+#endif
+
+/* Execute/search permission, others. */
+#ifndef S_IXOTH
+#define S_IXOTH     S_IXUSR
+#endif
+
 G_BEGIN_DECLS
 
 #define PLAYER_HEIGHT \

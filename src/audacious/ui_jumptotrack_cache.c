@@ -24,6 +24,9 @@
 #include <glib.h>
 #include <string.h>
 #include <assert.h>
+#ifdef HAVE_SYS_TYPES_H
+#  include "sys/types.h"
+#endif
 
 #if defined(USE_REGEX_ONIGURUMA)
   #include <onigposix.h>

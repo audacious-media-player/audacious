@@ -42,7 +42,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/errno.h>
+#ifdef HAVE_SYS_ERRNO_H
+#  include <sys/errno.h>
+#endif
 #include <time.h>
 #include <unistd.h>
 

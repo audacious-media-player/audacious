@@ -138,14 +138,14 @@ gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gbool
 
   /* Find fieldidx, if any */
   switch (type) {
-    case VAR_FIELD:
+    case TUPLE_VAR_FIELD:
       for (i = 0; i < FIELD_LAST && ref < 0; i++)
         if (strcmp(tuple_fields[i].name, name) == 0) ref = i;
 
         tmp->fieldidx = ref;
       break;
     
-    case VAR_CONST:
+    case TUPLE_VAR_CONST:
       if (ctype == TUPLE_INT)
         tmp->defvali = atoi(name);
       break;
@@ -293,11 +293,11 @@ static gint tc_get_variable(TupleEvalContext *ctx, gchar *name, gint type)
   
   if (isdigit(name[0])) {
     ctype = TUPLE_INT;
-    type = VAR_CONST;
+    type = TUPLE_VAR_CONST;
   } else
     ctype = TUPLE_STRING;
   
-  if (type != VAR_CONST) {
+  if (type != TUPLE_VAR_CONST) {
     for (i = 0; i < ctx->nvariables; i++)
       if (ctx->variables[i] && !strcmp(ctx->variables[i]->name, name))
         return i;
@@ -320,12 +320,12 @@ static gboolean tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, g
       (*c)++;
 
       tmp->opcode = opcode;
-      if ((tmp->var[0] = tc_get_variable(ctx, tmps1, literal1 ? VAR_CONST : VAR_FIELD)) < 0) {
+      if ((tmp->var[0] = tc_get_variable(ctx, tmps1, literal1 ? TUPLE_VAR_CONST : TUPLE_VAR_FIELD)) < 0) {
         tuple_evalnode_free(tmp);
         tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, item);
         return FALSE;
       }
-      if ((tmp->var[1] = tc_get_variable(ctx, tmps2, literal2 ? VAR_CONST : VAR_FIELD)) < 0) {
+      if ((tmp->var[1] = tc_get_variable(ctx, tmps2, literal2 ? TUPLE_VAR_CONST : TUPLE_VAR_FIELD)) < 0) {
         tuple_evalnode_free(tmp);
         tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps2, item);
         return FALSE;
@@ -376,7 +376,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
               c++;
               tmp = tuple_evalnode_new();
               tmp->opcode = OP_EXISTS;
-              if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
+              if ((tmp->var[0] = tc_get_variable(ctx, tmps1, TUPLE_VAR_FIELD)) < 0) {
                 tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                 goto ret_error;
               }
@@ -446,7 +446,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
                 c++;
                 tmp = tuple_evalnode_new();
                 tmp->opcode = OP_IS_EMPTY;
-                if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
+                if ((tmp->var[0] = tc_get_variable(ctx, tmps1, TUPLE_VAR_FIELD)) < 0) {
                   tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                   goto ret_error;
                 }
@@ -469,7 +469,7 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
               /* I HAS A FIELD - A field. You has it. */
               tmp = tuple_evalnode_new();
               tmp->opcode = OP_FIELD;
-              if ((tmp->var[0] = tc_get_variable(ctx, tmps1, VAR_FIELD)) < 0) {
+              if ((tmp->var[0] = tc_get_variable(ctx, tmps1, TUPLE_VAR_FIELD)) < 0) {
                 tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
                 goto ret_error;
               }
@@ -580,7 +580,7 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
  */
 static TupleValue * tf_get_fieldref(TupleEvalVar *var, Tuple *tuple)
 {
-  if (var->type == VAR_FIELD && var->fieldref == NULL) {
+  if (var->type == TUPLE_VAR_FIELD && var->fieldref == NULL) {
     if (var->fieldidx < 0)
       var->fieldref = mowgli_dictionary_retrieve(tuple->dict, var->name);
     else
@@ -601,7 +601,7 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
   *tmpi = 0;
   
   switch (var->type) {
-    case VAR_DEF:
+    case TUPLE_VAR_DEF:
       switch (var->ctype) {
         case TUPLE_STRING: *tmps = var->defvals; break;
         case TUPLE_INT: *tmpi = var->defvali; break;
@@ -610,7 +610,7 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
       type = var->ctype;
       break;
       
-    case VAR_CONST:
+    case TUPLE_VAR_CONST:
       switch (var->ctype) {
         case TUPLE_STRING: *tmps = var->name; break;
         case TUPLE_INT: *tmpi = var->defvali; break;
@@ -619,7 +619,7 @@ static TupleValueType tf_get_var(gchar **tmps, gint *tmpi, TupleEvalVar *var, Tu
       type = var->ctype;
       break;
     
-    case VAR_FIELD:
+    case TUPLE_VAR_FIELD:
       if (tf_get_fieldref(var, tuple)) {
         if (var->fieldref->type == TUPLE_STRING)
           *tmps = var->fieldref->value.string;
@@ -661,7 +661,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
         var0 = ctx->variables[curr->var[0]];
         
         switch (var0->type) {
-          case VAR_DEF:
+          case TUPLE_VAR_DEF:
             switch (var0->ctype) {
               case TUPLE_STRING:
                 str = var0->defvals;
@@ -677,7 +677,7 @@ static gboolean tuple_formatter_eval_do(TupleEvalContext *ctx, TupleEvalNode *ex
             }
             break;
           
-          case VAR_FIELD:
+          case TUPLE_VAR_FIELD:
             if (tf_get_fieldref(var0, tuple)) {
               switch (var0->fieldref->type) {
                 case TUPLE_STRING:
@@ -845,9 +845,9 @@ static void print_vars(FILE *f, TupleEvalContext *ctx, TupleEvalNode *node, gint
       if (v) {
         s = v->name;
 
-        if (v->type == VAR_CONST)
+        if (v->type == TUPLE_VAR_CONST)
           fprintf(f, "(const)");
-        else if (v->type == VAR_DEF)
+        else if (v->type == TUPLE_VAR_DEF)
           fprintf(f, "(def)");
       }
     }
