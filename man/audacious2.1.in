@@ -1,197 +1,222 @@
-.TH AUDACIOUS "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious2 Manual Pages"
+.TH AUDACIOUS2 "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious"
+
 .SH NAME
-Audacious \- an audio player for X.
+Audacious: an advanced audio player.
+
 .SH SYNOPSIS
 .B audacious2
-[\fB\-h\fP] [\fB\-\-help\fP] [\fB\-r\fP]
-[\fB\-\-rew\fP] [\fB\-p\fP] [\fB\-\-play\fP] [\fB\-u\fP] [\fB\-\-pause\fP] [\fB\-s\fP] [\fB\-\-stop\fP] [\fB\-f\fP]
-[\fB\-\-fwd\fP] [\fB\-e\fP] [\fB\-\-enqueue\fP] [\fB\-m\fP] [\fB\-\-show\-main\-window\fP] [\fB\-v\fP]
-[\fB\-\-version\fP] [\fB\-i\fP \fIinterface\fP] [\fB\-\-interface\fP \fIinterface\fP] [\fB\-\-display\fP=\fIDISPLAY\fP] [\fIfilename\fP]...
+[OPTION] ... [FILE] ...
+
 .SH DESCRIPTION
-\fIAudacious\fP is a media player, based on Beep Media Player, 
-which is in turn based on the X Multimedia System.
-It is used to play audio and other kinds of media files.  By default
-Audacious can play MPEG audio, Ogg Vorbis, RIFF wav, most module formats,
-and a few other formats.  Audacious can be extended through plugins to play
-a number of other audio and video formats.
+Audacious is a free advanced audio player for Linux and many other
+UNIX-compatible systems. It focuses on low resource usage, high audio quality,
+and support for a wide range of audio formats. It was originally based on Beep
+Media Player, which was in turn based on XMMS.
+
 .SH OPTIONS
-Audacious accepts the following options:
-.TP
-.B \-h, \-\-help
-Show summary of options.
-.TP
-.B \-r, \-\-rew
-Skip backwards in playlist.
-.TP
-.B \-p, \-\-play
-Start playing current playlist.
-.TP
-.B \-u, \-\-pause
-Pause current song.
-.TP
-.B \-s, \-\-stop
-Stop current song.
-.TP
-.B \-t, \-\-play\-pause
-Pause if playing, play otherwise.
-.TP
-.B \-f, \-\-fwd
-Skip forward in playlist.
-.TP
-.B \-e, \-\-enqueue
-Don't clear the playlist.
-.TP
-.B \-m, \-\-show\-main\-window
-Show the main window.
-.TP
-.B \-v, \-\-version
-Print version number and exit.
-.TP
-.B \-i, \-\-interface
-Select interface to use.
-.TP
-.B \-\-display=\fIDISPLAY\fP
-Select X display to use.
-.SH INTERFACES
-Audacious supports multiple interface plugins. Interface plugin determines Audacious look'n'feel.
+.B Getting help:
 
-The following interfaces are built in or provided by plugins in the default install:
+.TP
+.I -?, --help
+Show a brief list of options.
 
-.in +2
-default	Default interface that uses GTK+ widgets
-.br
-skinned	Interface that supports skinned interface
-.br
-headless	Headless mode
+.TP
+.I --help-all
+Show a complete list of options.
 
-.SH SKINS
-Audacious supports Winamp Classic style skins.  Skins may be stored in either
-archived (\fI.zip\fP, \fI.wsz\fP, \fI.tgz\fP, \fI.tar.gz\fP, 
-or \fI.tar.bz2\fP) or unarchived format.  Audacious looks for skinfiles in
-@datarootdir@/audacious/Skins, ~/.local/share/audacious/Skins, and locations specified by the
-\fBSKINSDIR\fP variable.
+.TP
+.I --help-gtk
+Show a list of GTK-related options.
+
+.TP
+.I --help-sm-client
+Show a list of session management options.
+
+.PP
+.B Opening files:
+
+.TP
+.I -e, --enqueue
+Do not clear the current playlist before adding the files on the command line to
+it.
+
+.TP
+.I -E, --enqueue-to-temp
+Add the files on the command line to a new playlist.
+
+.PP
+.B Controlling playback:
+
+.TP
+.I -p, --play
+If currently playing, go to the beginning of the song; otherwise, begin playing.
+
+.TP
+.I -u, --pause
+Stop playing.
+
+.TP
+.I -t, --play-pause
+If currently playing, stop playing; otherwise, begin playing.
+
+.TP
+.I -s, --stop
+Stop playing and go to the beginning of the song.
+
+.TP
+.I -r, --rew
+Go to the previous song in the playlist.
+
+.TP
+.I -f, --fwd
+Go to the next song in the playlist.
+
+.PP
+.B Miscellaneous:
+
+.TP
+.I -v, --version
+Show the installed version of Audacious.
+
+.TP
+.I -i, --interface default | skinned | headless
+Start Audacious with the given interface. "default" is the native GTK interface.
+"skinned" is an interface which uses Winamp Classic skins. (Skins can be placed
+in \fI@datarootdir@/audacious/Skins\fP, \fI~/.local/share/audacious/Skins\fP,
+and the folder specified by the environment variable \fISKINSDIR\fP. They can be
+unarchived or in the following archive formats: \fI.zip\fP, \fI.wsz\fP,
+\fI.tgz\fP, \fI.tar.gz\fP, and \fI.tar.bz2\fP.) In "headless" mode, Audacious
+starts without a user interface. In this mode, it can only be controlled from
+the command line or by a compatible client program.
+
+.TP
+.I -m, --show-main-window
+Show the Audacious window if it is hidden and bring it to the top.
+
+.PP
+.B GTK-related:
+
+.TP
+.I --display DISPLAY
+Start Audacious on the given X display.
+
+.TP
+.I --screen SCREEN
+Start Audacious on the given X screen.
+
+.TP
+.I --sync
+Use synchronous X calls.
+
+.TP
+.I --name NAME
+Set Audacious's program name (for use by the window manager).
+
+.TP
+.I --class CLASS
+Set Audacious's program class (for use by the window manager).
+
+.TP
+.I --gtk-module MODULE
+Load a GTK module manually.
+
+.TP
+.I --g-fatal-warnings
+Treat all warnings as fatal errors.
+
+.PP
+.B Session management:
+
+.TP
+.I --sm-client-disable
+Do not connect to the session manager.
+
+.TP
+.I --sm-client-id ID
+Set session management ID.
+
+.TP
+.I --sm-client-state-file FILE
+Load saved configuration from FILE.
+
 .SH KEYBINDINGS
-Global keybindings for Audacious:
+.ta 24
+.B Anywhere in Audacious:
 
-.in +2
-.ta \w'Shift + Control + w 'u
 z	Previous song
 .br
 x	Play
 .br
-c	Pause
+c, Space	Pause
 .br
 v	Stop
 .br
 b	Next song
 .br
-l	Play file
+s	Toggle shuffle
 .br
-j	Jump to file
+r	Toggle repeat
 .br
-r	Toggle Repeat
+l	Display Open dialog
 .br
-s	Toggle Shuffle
+j	Display Jump to Song dialog
 .br
-Shift + l	Play directory
+Control + e	Show elapsed time
 .br
-Control + l	Play location
+Control + r	Show time remaining
 .br
-Control + p	Preferences dialog
+Control + a	Select all songs in playlist
 .br
-Control + v	Visualization plugin dialog
+Control + z	Go to beginning of playlist
 .br
-Control + r	Time remaining
+Control + n	Toggle advancing in playlist
 .br
-Control + a	Always on top
+Control + w	Toggle rolling up main window
 .br
-Control + w	Winshade mode
+Control + d	Toggle double size
 .br
-Control + d	Doublesize mode
+Control + j	Display Jump to Time dialog
 .br
-Control + e	Easy move
+Control + l	Display Open Internet Address dialog
 .br
-Control + j	Jump to time
+Control + p	Display Preferences dialog
 .br
-Control + z	Start of list
+Shift + Control + w	Toggle rolling up playlist
 .br
-Control + n	No Playlist Advance
+Control + Alt + w	Toggle rolling up equalizer
 .br
-Control + 3	File info dialog
+Alt + i	Display Song Information dialog
 .br
-Control + Alt + w	Toggle Equalizer winshade mode
+Alt + e	Show/hide playlist
 .br
-Shift + Control + w	Playlist winshade mode
+Alt + g	Show/hide equalizer
 .br
-Alt + w	Hide/show mainwindow
-.br
-Alt + e	Hide/show playlistwindow
-.br
-Alt + g	Hide/show Equalizer
-.br
-Alt + s	Skin selecting window
-.in -2
 
-Main window specific:
+.B In the main window:
 
-.in +2
+Up arrow	Increase volume by 2 percent
 .br
-Arrow key up	Volume up 2%
+Down arrow	Decrease volume by 2 percent
 .br
-Arrow key down	Volume down 2%
+Right arrow	Seek forward 5 seconds
 .br
-Arrow key right	Skip 5 seconds forward in song
-.br
-Arrow key left	Skip 5 seconds back in song
-.in -2
+Left arrow	Seek backward 5 seconds
 
-Playlist window specific:
+.B In the playlist:
 
-.in +2
+Insert	Display Add dialog
 .br
-Arrow key up	Up one step in playlist
-.br
-Arrow key down	Down one step in playlist
-.br
-Delete	Remove selected songs from playlist
-.br
-Page Up	Move one page up
-.br
-Page Down	Move one page down
-.br
-Home	First page in playlist
-.br
-End	Last page in playlist
-.br
-Enter	Play selected song
-.br
-Insert	Add file dialog
-.br
-Shift + Insert	Add directory dialog
-.br
-Alt + Insert	Add url dialog
-.in -2 
 
-Equalizer shade mode specific:
+.B In the rolled up equalizer:
 
-.in +2
+Up arrow	Increase volume by 2 percent
 .br
-Arrow key up	Volume up 2%
+Down arrow	Decrease volume by 2 percent
 .br
-Arrow key down	Volume down 2%
+Right arrow	Shift balance 4 percent right
 .br
-Arrow key right	Balance 4% to right
-.br
-Arrow key left	Balance 4% to left
-.in -2
-.SH HEADLESS OPERATION
-Audacious supports a headless operation mode, where Audacious does not use
-X11 and instead operates as a daemon. You should note that you cannot switch
-between daemonized mode and X11 mode, and that if you wish to switch back
-and forth, that you need to do so when starting the program.
+Left arrow	Shift balance 4 percent left
 
-When using Audacious in headless mode, you will need a client. Clients
-compatible with Audacious are listed on the Audacious website.
 .SH FILES
 .TP
 ~/.config/audacious/config
@@ -200,7 +225,7 @@ User's Audacious configuration.
 ~/.config/audacious/playlist.xspf
 Default playlist usually loaded on startup.
 .TP
-~/.config/audacious/gtkrc 
+~/.config/audacious/gtkrc
 User's set of Audacious-specific GTK config settings. Options such as widget
 color and fonts sizes can be set here.
 .TP
@@ -220,7 +245,6 @@ unpacking gzip and bzip2 compressed skins.  Default is \fItar\fP.
 .TP
 .B UNZIPCMD
 Command for decompressing zip files (skins).  Default is \fIunzip\fP.
-.SH OTHER INFO
-The webpage for Audacious is at http://www.audacious-media-player.org.  
-Here you can find info about Audacious, download the latest version, 
-plugins, and skins.
+
+.SH WEBSITE
+.I http://audacious-media-player.org
