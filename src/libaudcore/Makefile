@@ -24,7 +24,7 @@ include ../../extra.mk
 
 includesubdir = libaudcore
 
-CPPFLAGS = ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
+CPPFLAGS += ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
 CFLAGS += ${LIB_CFLAGS} ${GLIB_CFLAGS} ${MOWGLI_CFLAGS}
 
 LIBS += ${GLIB_LIBS} ${MOWGLI_LIBS}
