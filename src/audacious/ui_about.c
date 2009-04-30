@@ -44,7 +44,7 @@ static GdkBitmap *mask_bitmap_window1 = NULL,
         *mask_bitmap_window2 = NULL;
 
 static const gchar *audacious_brief = N_("<big><b>Audacious %s</b></big>\n\n"
-			"Copyright (C) 2005-2008 Audacious Development Team");
+			"Copyright (C) 2005-2009 Audacious Development Team");
     
 static gboolean
 on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
