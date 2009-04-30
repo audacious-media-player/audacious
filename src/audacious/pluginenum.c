@@ -945,10 +945,14 @@ plugin_system_init(void)
     }
     else
     {
-        for (node = ip_data.input_list; node; node = g_list_next(node)) {
+        for (node = op_data.output_list; node; node = g_list_next(node)) {
             op = OUTPUT_PLUGIN(node->data);
-            plugin_set_current((Plugin *)op);
-            op->init();
+
+            if (op->init) {
+                plugin_set_current((Plugin *)op);
+                op->init();
+            }
+
             if (!g_ascii_strcasecmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
                 op_data.current_output_plugin = op;
         }
