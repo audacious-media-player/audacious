@@ -949,7 +949,7 @@ plugin_system_init(void)
             op = OUTPUT_PLUGIN(node->data);
             plugin_set_current((Plugin *)op);
             op->init();
-            if (!g_ascii_strcasecmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename))
+            if (!g_ascii_strcasecmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
                 op_data.current_output_plugin = op;
         }
     }
