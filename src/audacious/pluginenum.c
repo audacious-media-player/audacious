@@ -947,12 +947,10 @@ plugin_system_init(void)
     {
         for (node = ip_data.input_list; node; node = g_list_next(node)) {
             op = OUTPUT_PLUGIN(node->data);
+            plugin_set_current((Plugin *)op);
+            op->init();
             if (!g_ascii_strcasecmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename))
-            {
-                plugin_set_current((Plugin *)op);
-                op->init();
                 op_data.current_output_plugin = op;
-            }
         }
     }
 
