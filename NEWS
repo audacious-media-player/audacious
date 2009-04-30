@@ -1,3 +1,27 @@
+Audacious 2.0.0 (2009-??-??)
+============================
+This branch of Audacious represents a major restructuring of how the player
+itself works. Notably, the skinned UI is no longer part of core. There is an
+experimental 'skinless' UI which can be launched with 'audacious2 -i newui',
+but it is incomplete at this time. Patches accepted!
+
+Other notable enhancements include switching to GIO/GVFS from using stdio,
+which while raising our requirements to GLib 2.16, gives us the ability to
+do many things out of the box. This is a good thing.
+
+Enhancements
+------------
+* Everything between 1.5.0 and 1.5.1.
+* Lots of other stuff.
+
+Bugfixes
+--------
+* Tons
+
+New bugs
+--------
+* Probably a lot! Test and report.
+
 Audacious 1.5.0 (2008-03-13)
 ============================
 This is the last branch of Audacious that will support in Winamp2 skins
