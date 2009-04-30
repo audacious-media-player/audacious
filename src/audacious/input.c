@@ -42,7 +42,7 @@
 #include "output.h"
 #include "playback.h"
 #include "pluginenum.h"
-#include "strings.h"
+#include "audstrings.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
 #include "util.h"

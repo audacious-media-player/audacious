@@ -26,7 +26,7 @@
 #include "input.h"
 #include "main.h"
 #include "playback.h"
-#include "strings.h"
+#include "audstrings.h"
 
 static void
 filebrowser_add_files(GtkFileChooser * browser,

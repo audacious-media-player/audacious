@@ -64,7 +64,7 @@
 #include "ui_credits.h"
 #include "ui_fileopener.h"
 #include "ui_preferences.h"
-#include "strings.h"
+#include "audstrings.h"
 #include "util.h"
 #include "visualization.h"
 

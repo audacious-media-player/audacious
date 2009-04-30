@@ -63,7 +63,7 @@
 #include "playlist_container.h"
 #include "playlist_evmessages.h"
 #include "pluginenum.h"
-#include "strings.h"
+#include "audstrings.h"
 #include "util.h"
 #include "vfs.h"
 #include "debug.h"

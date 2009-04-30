@@ -47,7 +47,7 @@
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
-#include "strings.h"
+#include "audstrings.h"
 #include "util.h"
 #include "visualization.h"
 #include "preferences.h"

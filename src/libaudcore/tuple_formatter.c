@@ -24,7 +24,7 @@
 #include "config.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
-#include "strings.h"
+#include "audstrings.h"
 
 /*
  * TUPLE_USE_COMPILER:

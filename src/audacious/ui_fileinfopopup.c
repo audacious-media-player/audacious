@@ -31,7 +31,7 @@
 #include "main.h"
 #include "playlist.h"
 #include "playback.h"
-#include "strings.h"
+#include "audstrings.h"
 #include "ui_fileinfopopup.h"
 #include "ui_fileinfo.h"
 

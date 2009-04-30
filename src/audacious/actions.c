@@ -61,7 +61,7 @@
 #include "ui_playlist_manager.h"
 #include "equalizer_flow.h"
 #include "util.h"
-#include "strings.h"
+#include "audstrings.h"
 
 static GtkWidget *mainwin_jtt = NULL;
 

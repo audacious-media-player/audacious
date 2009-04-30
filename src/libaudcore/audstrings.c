@@ -27,7 +27,7 @@
 #  include "config.h"
 #endif
 
-#include "strings.h"
+#include "audstrings.h"
 
 #include <stdio.h>
 #include <glib.h>

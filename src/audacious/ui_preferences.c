@@ -46,7 +46,7 @@
 #include "visualization.h"
 #include "playlist.h"
 
-#include "strings.h"
+#include "audstrings.h"
 #include "util.h"
 #include "dnd.h"
 #include "configdb.h"

@@ -37,7 +37,7 @@
 #include "main.h"
 #include "playback.h"
 #include "playlist.h"
-#include "strings.h"
+#include "audstrings.h"
 #include "tuple.h"
 #include "ui_fileopener.h"
 #include "ui_jumptotrack.h"

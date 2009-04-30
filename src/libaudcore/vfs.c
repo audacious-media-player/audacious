@@ -18,7 +18,7 @@
  */
 
 #include "vfs.h"
-#include "strings.h"
+#include "audstrings.h"
 #include <stdio.h>
 
 #include <unistd.h>

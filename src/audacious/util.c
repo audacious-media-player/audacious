@@ -50,7 +50,7 @@
 
 #include "input.h"
 #include "playback.h"
-#include "strings.h"
+#include "audstrings.h"
 
 #include "libSAD.h"
 

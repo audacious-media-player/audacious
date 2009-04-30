@@ -43,7 +43,7 @@
 #include "input.h"
 #include "main.h"
 #include "playback.h"
-#include "strings.h"
+#include "audstrings.h"
 
 #ifdef USE_CHARDET
 #include "../libguess/libguess.h"

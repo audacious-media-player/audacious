@@ -2,7 +2,7 @@ LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-SRCS = strings.c \
+SRCS = audstrings.c \
        tuple.c \
        tuple_compiler.c \
        tuple_formatter.c \
@@ -11,7 +11,7 @@ SRCS = strings.c \
        vfs_buffered_file.c \
        vfs_common.c
 
-INCLUDES = strings.h \
+INCLUDES = audstrings.h \
            tuple.h \
            tuple_compiler.h \
            tuple_formatter.h \

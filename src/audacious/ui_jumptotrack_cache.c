@@ -37,7 +37,7 @@
 #endif
 
 #include "playlist.h"
-#include "strings.h"
+#include "audstrings.h"
 
 #include "ui_jumptotrack_cache.h"
 

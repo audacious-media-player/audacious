@@ -22,7 +22,7 @@
 #include <mowgli.h>
 
 #include "tuple.h"
-#include "strings.h"
+#include "audstrings.h"
 
 const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "artist",         TUPLE_STRING },
