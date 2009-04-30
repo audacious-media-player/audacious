@@ -114,6 +114,7 @@ static const gchar *credit_text[] = {
     "Kazuki Shimura",
     "Valentine Sinitsyn",
     "Johan Tavelin",
+    "Bret Towe",
     "John Wehle",
     "Tim Yamin",
     "Ivan N. Zlatev",
