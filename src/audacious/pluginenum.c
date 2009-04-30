@@ -905,18 +905,14 @@ plugin_system_init(void)
     g_free(cfg.enabled_dplugins);
     cfg.enabled_dplugins = NULL;
 
+    if (!cfg.outputplugin) {
+        for (prio = 10; prio >= 0; prio--) {
+            for (node = op_data.output_list; node; node = g_list_next(node)) {
+                op = OUTPUT_PLUGIN(node->data);
 
-    for (prio = 10; prio >= 0; prio--) {
-        for (node = op_data.output_list; node; node = g_list_next(node)) {
-            op = OUTPUT_PLUGIN(node->data);
+                if (op->probe_priority != prio)
+                    continue;
 
-            /*
-             * Only test basename to avoid problems when changing
-             * prefix.  We will only see one plugin with the same
-             * basename, so this is usually what the user want.
-             */
-            if (cfg.outputplugin && !strcmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
-            {
 		if (op->init)
 		{
 		    OutputPluginInitStatus ret = op->init();
@@ -935,7 +931,7 @@ plugin_system_init(void)
                         if (!op_data.current_output_plugin)
                             op_data.current_output_plugin = op;
                     }
-                    else
+                    else if (!op_data.current_output_plugin)
                     {
 		        g_message("Plugin %s did not report status, and no plugin has worked yet. Do you still need to convert it? Selecting for now...\n",
 		                  g_path_get_basename(op->filename));
@@ -945,13 +941,18 @@ plugin_system_init(void)
                     }
 		}
             }
-
-            if (op->init && op->probe_priority == prio)
-	    {
-	        plugin_set_current((Plugin *)op);
-                if (op->init() == OUTPUT_PLUGIN_INIT_FOUND_DEVICES && op_data.current_output_plugin == NULL)
-                    op_data.current_output_plugin = op;
-	    }
+        }
+    }
+    else
+    {
+        for (node = ip_data.input_list; node; node = g_list_next(node)) {
+            op = OUTPUT_PLUGIN(node->data);
+            if (!g_ascii_strcasecmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename))
+            {
+                plugin_set_current((Plugin *)op);
+                op->init();
+                op_data.current_output_plugin = op;
+            }
         }
     }
 
