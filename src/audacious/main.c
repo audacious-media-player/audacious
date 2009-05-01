@@ -250,6 +250,7 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 static void
 handle_cmd_line_filenames(gboolean is_running)
 {
+  char * working, * absolute, * uri;
     gchar **filenames = options.filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
@@ -262,28 +263,21 @@ handle_cmd_line_filenames(gboolean is_running)
     gint i = 0;
     GList *fns = NULL;
 
-    for (i = 0; filenames[i] != NULL; i++)
-    {
-        gchar *filename;
-        gchar *current_dir = g_get_current_dir();
-
-        if (!strstr(filenames[i], "://"))
-        {
-            if (filenames[i][0] == '/')
-                filename = g_strdup_printf("file:///%s", filenames[i]);
-            else
-                filename = g_strdup_printf("file:///%s/%s", current_dir,
-                                           filenames[i]);
-        }
-        else
-            filename = g_strdup(filenames[i]);
-
-        fns = g_list_prepend(fns, filename);
-
-        g_free(current_dir);
+    working = g_get_current_dir ();
+    for (i = 0; filenames [i]; i ++) {
+       if (strstr (filenames [i], "://"))
+          uri = g_strdup (filenames [i]);
+       else if (filenames [i] [0] == '/')
+          uri = g_filename_to_uri (filenames [i], 0, 0);
+       else {
+          absolute = g_strdup_printf ("/%s/%s", working, filenames [i]);
+          uri = g_filename_to_uri (absolute, 0, 0);
+          g_free (absolute);
+       }
+       fns = g_list_prepend (fns, uri);
     }
-
-    fns = g_list_reverse(fns);
+    fns = g_list_reverse (fns);
+    g_free (working);
 
 #ifdef USE_DBUS
     if (is_running)
