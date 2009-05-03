@@ -43,10 +43,10 @@ filebrowser_add_files(GtkFileChooser * browser,
             playlist_add_dir(playlist, filename ? filename : (const gchar *) cur->data);
         } else {
             playlist_add(playlist, filename ? filename : (const gchar *) cur->data);
-        }       
+        }
 
         g_free(filename);
-    } 
+    }
 
     hook_call("playlist update", playlist);
 
@@ -139,6 +139,7 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
     action_stock = play_button ? GTK_STOCK_OPEN : GTK_STOCK_ADD;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title(GTK_WINDOW(window), window_title);
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 450);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
