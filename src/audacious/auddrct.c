@@ -359,9 +359,7 @@ drct_pl_clear ( void )
 void
 drct_pl_delete ( gint pos )
 {
-    GDK_THREADS_ENTER();
     playlist_delete_index(playlist_get_active(), pos);
-    GDK_THREADS_LEAVE();
 }
 
 void
@@ -387,9 +385,7 @@ drct_pl_ins_url_string( gchar * string, gint pos )
 void
 drct_pl_add_url_string( gchar * string )
 {
-    GDK_THREADS_ENTER();
     playlist_add_url(playlist_get_active(), string);
-    GDK_THREADS_LEAVE();
 }
 
 void
