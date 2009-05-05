@@ -212,7 +212,7 @@ static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
     {WIDGET_CHK_BTN, N_("Enable peak info clipping prevention"), &cfg.enable_clipping_prevention, NULL,
                      N_("Use peak value from Replay Gain info for clipping prevention"), TRUE},
-    {WIDGET_CHK_BTN, N_("Dynamically adjust scale factor to prevent clipping"), &cfg.enable_adaptive_scaler, NULL, 
+    {WIDGET_CHK_BTN, N_("Dynamically adjust scale factor to prevent clipping"), &cfg.enable_adaptive_scaler, NULL,
                      N_("Decrease scale factor (gain) if clipping nevertheless occurred"), TRUE},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_rg_params},
 };
@@ -543,7 +543,7 @@ util_menu_position(GtkMenu * menu, gint * x, gint * y,
 
 static void
 on_titlestring_help_button_clicked(GtkButton * button,
-                                   gpointer data) 
+                                   gpointer data)
 {
     GtkMenu *menu;
     MenuPos *pos = g_new0(MenuPos, 1);
@@ -559,14 +559,14 @@ on_titlestring_help_button_clicked(GtkButton * button,
     parent = gtk_widget_get_parent_window(GTK_WIDGET(button));
 
     gdk_drawable_get_size(parent, &x_size, &y_size);
-    gdk_window_get_root_origin(GTK_WIDGET(button)->window, &x_ro, &y_ro); 
+    gdk_window_get_root_origin(GTK_WIDGET(button)->window, &x_ro, &y_ro);
     gdk_window_get_position(GTK_WIDGET(button)->window, &x_widget, &y_widget);
 
     pos->x = x_size + x_ro;
     pos->y = y_size + y_ro - 100;
 
     menu = GTK_MENU(data);
-    gtk_menu_popup (menu, NULL, NULL, util_menu_position, pos, 
+    gtk_menu_popup (menu, NULL, NULL, util_menu_position, pos,
                     0, GDK_CURRENT_TIME);
 }
 
@@ -594,7 +594,7 @@ titlestring_timeout_proc (gpointer data)
 
 static void
 on_titlestring_entry_changed(GtkWidget * entry,
-                             gpointer data) 
+                             gpointer data)
 {
     g_free(cfg.gentitle_format);
     cfg.gentitle_format = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
@@ -602,7 +602,7 @@ on_titlestring_entry_changed(GtkWidget * entry,
     if(titlestring_timeout_counter == 0) {
         g_timeout_add_seconds (1, (GSourceFunc) titlestring_timeout_proc, NULL);
     }
-    
+
     titlestring_timeout_counter = TITLESTRING_UPDATE_TIMEOUT;
 }
 
@@ -611,7 +611,7 @@ on_titlestring_cbox_realize(GtkWidget * cbox,
                             gpointer data)
 {
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbox), cfg.titlestring_preset);
-    gtk_widget_set_sensitive(GTK_WIDGET(data), 
+    gtk_widget_set_sensitive(GTK_WIDGET(data),
                              (cfg.titlestring_preset == (gint)n_titlestring_presets));
 }
 
@@ -1369,11 +1369,11 @@ ui_preferences_bit_depth(void)
     gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "16");
     gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "24");
     gtk_box_pack_start(GTK_BOX(box), combo, FALSE, FALSE, 0);
-    
+
     gint active = (cfg.output_bit_depth == 24) ? 1 : 0;
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), active);
     g_signal_connect(combo, "changed", G_CALLBACK(on_bit_depth_cbox_changed), NULL);
-    
+
     gtk_widget_set_tooltip_text(box,
                                 _("All streams will be converted to this bit depth.\n"
                                 "This should be the max supported bit depth of\nthe sound card or output plugin."));
@@ -1413,13 +1413,13 @@ ui_preferences_rg_params(void)
                      (GtkAttachOptions) (GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    
+
     label = gtk_label_new(_("Default gain:"));
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
                      (GtkAttachOptions) (GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    
+
     spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
     gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 1, 2,
                      (GtkAttachOptions) (GTK_FILL),
@@ -1427,21 +1427,21 @@ ui_preferences_rg_params(void)
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.default_gain);
     g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.default_gain);
     gtk_widget_set_tooltip_text (spin, _("This gain will be used if file doesn't contain Replay Gain metadata."));
-    
+
     label = gtk_label_new(_("dB"));
     gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
                      (GtkAttachOptions) (GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    
+
     gtk_container_add(GTK_CONTAINER(alignment), table);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-    
+
     GtkWidget *image = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
     gtk_table_attach (GTK_TABLE (table), image, 0, 1, 2, 3,
                       (GtkAttachOptions) (GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
-    
+
     label = gtk_label_new (_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use "
                              "positive values above.</span>"));
     gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
@@ -1632,7 +1632,7 @@ create_titlestring_tag_menu(void)
         menu_item = gtk_menu_item_new_with_label(_(title_field_tags[i].name));
         gtk_menu_shell_append(GTK_MENU_SHELL(titlestring_tag_menu), menu_item);
         g_signal_connect(menu_item, "activate",
-                         G_CALLBACK(titlestring_tag_menu_callback), 
+                         G_CALLBACK(titlestring_tag_menu_callback),
                          GINT_TO_POINTER(i));
     };
     gtk_widget_show_all(titlestring_tag_menu);
@@ -1891,7 +1891,7 @@ create_audio_category(void)
     GtkWidget *src_rate;
     GtkWidget *label91;
     GtkWidget *alignment4;
-    
+
     audio_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), audio_page_vbox);
 
@@ -2072,7 +2072,7 @@ create_audio_category(void)
     alignment4 = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment4, FALSE, FALSE, 0);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment4), 12, 12, 0, 0);
-    
+
     create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets2, G_N_ELEMENTS(audio_page_widgets2));
 
     g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
@@ -2639,6 +2639,7 @@ create_prefs_window(void)
     accel_group = gtk_accel_group_new ();
 
     prefswin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_type_hint (GTK_WINDOW (prefswin), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_container_set_border_width (GTK_CONTAINER (prefswin), 12);
     gtk_window_set_title (GTK_WINDOW (prefswin), _("Audacious Preferences"));
     gtk_window_set_position (GTK_WINDOW (prefswin), GTK_WIN_POS_CENTER);
@@ -2816,7 +2817,7 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
         img = gdk_pixbuf_new_from_file(imgurl, NULL);
 
     gtk_list_store_append(GTK_LIST_STORE(model), &iter);
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter, 
+    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                        CATEGORY_VIEW_COL_ICON, img,
                        CATEGORY_VIEW_COL_NAME,
                        name, CATEGORY_VIEW_COL_ID, id, -1);

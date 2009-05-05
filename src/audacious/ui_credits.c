@@ -104,6 +104,7 @@ static const gchar *credit_text[] = {
     "Chris Kehler",
     "John Lindgren",
     "Michał Lipski",
+    "Mark Loeser",
     "Alex Maclean",
     "Michael Hanselmann",
     "Joseph Jezak",
