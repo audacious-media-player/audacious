@@ -1754,6 +1754,8 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     playlist_recalc_total_time(playlist); //tentative --yaz
     PLAYLIST_INCR_SERIAL(playlist);
 
+    hook_call ("playlist load", playlist);
+
     return new_len - old_len;
 }
 
