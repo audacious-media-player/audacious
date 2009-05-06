@@ -26,6 +26,8 @@
 #ifndef AUDACIOUS_MAIN_H
 #define AUDACIOUS_MAIN_H
 
+#define NOT_ALPHA_RELEASE
+
 #ifdef _AUDACIOUS_CORE
 # ifdef USE_DBUS
 #  include "dbus-service.h"
