@@ -1554,15 +1554,7 @@ playlist_get_info_text(Playlist *playlist)
         g_free(basename);
     }
 
-    /*
-     * If the user don't want numbers in the playlist, don't
-     * display them in other parts of XMMS
-     */
-
-    if (cfg.show_numbers_in_pl)
-        numbers = g_strdup_printf("%d. ", playlist_get_position_nolock(playlist) + 1);
-    else
-        numbers = g_strdup("");
+    numbers = g_strdup_printf("%d. ", playlist_get_position_nolock(playlist) + 1);
 
     if (playlist->position->length != -1)
         length = g_strdup_printf(" (%d:%-2.2d)",
