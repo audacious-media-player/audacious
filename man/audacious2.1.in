@@ -26,7 +26,7 @@ Show a complete list of options.
 
 .TP
 .I --help-gtk
-Show a list of GTK-related options.
+Show a list of GTK+-related options.
 
 .TP
 .I --help-sm-client
@@ -79,8 +79,8 @@ Go to the next song in the playlist.
 Show the installed version of Audacious.
 
 .TP
-.I -i, --interface default | skinned | headless
-Start Audacious with the given interface. "default" is the native GTK interface.
+.I -i, --interface newui | skinned | headless
+Start Audacious with the given interface. "newui" is the native GTK+ interface.
 "skinned" is an interface which uses Winamp Classic skins. (Skins can be placed
 in \fI@datarootdir@/audacious/Skins\fP, \fI~/.local/share/audacious/Skins\fP,
 and the folder specified by the environment variable \fISKINSDIR\fP. They can be
@@ -94,7 +94,7 @@ the command line or by a compatible client program.
 Show the Audacious window if it is hidden and bring it to the top.
 
 .PP
-.B GTK-related:
+.B GTK+-related:
 
 .TP
 .I --display DISPLAY
@@ -118,7 +118,7 @@ Set Audacious's program class (for use by the window manager).
 
 .TP
 .I --gtk-module MODULE
-Load a GTK module manually.
+Load a GTK+ module manually.
 
 .TP
 .I --g-fatal-warnings
@@ -226,7 +226,7 @@ User's Audacious configuration.
 Default playlist usually loaded on startup.
 .TP
 ~/.config/audacious/gtkrc
-User's set of Audacious-specific GTK config settings. Options such as widget
+User's set of Audacious-specific GTK+ config settings. Options such as widget
 color and fonts sizes can be set here.
 .TP
 ~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
