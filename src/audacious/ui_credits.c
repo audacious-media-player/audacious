@@ -101,6 +101,7 @@ static const gchar *credit_text[] = {
     "Ralf Ertzinger",
     "Mike Frysinger",
     "Mark Glines",
+    "Hans de Goede",
     "Teru KAMOGASHIRA",
     "Chris Kehler",
     "John Lindgren",
