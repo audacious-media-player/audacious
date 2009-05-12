@@ -1,4 +1,4 @@
-Audacious 2.0.0 (2009-??-??)
+Audacious 2.0.0 (2009-05-12)
 ============================
 This branch of Audacious represents a major restructuring of how the player
 itself works. Notably, the skinned UI is no longer part of core. There is an
@@ -13,10 +13,24 @@ Enhancements
 ------------
 * Everything between 1.5.0 and 1.5.1.
 * Lots of other stuff.
+* Playing streams no longer edits the config preferences. This is a
+  behavioural trait from XMMS.
+* Many plugins have been added, including experimental support for PSF2.
+* The projectM plugin now works with libprojectM 1.2.
 
 Bugfixes
 --------
-* Tons
+* The equalizer preamp setting has been fixed.
+* --play-pause actually works correctly now, it broke a long time ago
+  when we started using DBus
+* MPRIS exported data now includes the track number
+* Behavioural issues while seeking when paused have been corrected.
+* `audtool help playback-seek-relative` no longer segfaults
+* The file information dialog is no longer destroyed when you close it,
+  but is hidden instead.
+* Many legacy XMMS behaviours have been corrected.
+* Handling of non-bitmap fonts have been corrected.
+* Tons of others which are less notable.
 
 New bugs
 --------
