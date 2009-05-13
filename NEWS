@@ -1,3 +1,15 @@
+Audacious 2.0.1 (2009-05-13)
+============================
+
+Bugfixes
+--------
+* Math dealing with the over-commitment of the equalizer values has been corrected.
+  However, please note that the equalizer goes from literal -12dB to +12dB, which
+  can be a very major boost. So yes, the highest settings causing distortion on really
+  loud audio is *not a bug*.
+  We may drop this down to 6dB in both ways in 2.1, depending on how many complaints
+  we get.
+
 Audacious 2.0.0 (2009-05-12)
 ============================
 This branch of Audacious represents a major restructuring of how the player
