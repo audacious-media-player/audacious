@@ -90,16 +90,16 @@ equalizer_flow_set_bands(gfloat pre, gfloat *bands)
         equalizer_open(eq);
     }
 
-    highest = - EQUALIZER_MAX_GAIN;
+    highest = EQUALIZER_MAX_GAIN;
     for (i = 0; i < 10; i ++) {
-       if (bands [i] > highest)
-          highest = bands [i];
+        if ((pre + bands[i]) > highest)
+            bands[i] -= (pre + bands[i]) - highest;
     }
     for (i = 0; i < 10; i ++)
-       adjusted [i] = pre + bands [i] - highest;
+        adjusted[i] = (bands[i] + pre);
 
     ctl.arg = adjusted;
-    for(i = 0; i < AF_NCH; i++) {
+    for (i = 0; i < AF_NCH; i++) {
         ctl.ch = i;
         eq->control(eq, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &ctl);
     }
