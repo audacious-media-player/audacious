@@ -121,23 +121,22 @@ gint
 playback_get_time(void)
 {
     InputPlayback *playback;
-    g_return_val_if_fail(playback_get_playing(), -1);
+
+    if (! playback_get_playing ())
+        return 0;
+
     playback = get_current_input_playback();
 
-    if (!playback) /* playback can be NULL during init even if playing is TRUE */
-        return -1;
-    plugin_set_current((Plugin *)(playback->plugin));
+    if (! playback || ! playback->playing || playback->error)
+        return 0;
+
     if (playback->plugin->get_time)
-    {
-        plugin_set_current((Plugin *)(playback->plugin));
         return playback->plugin->get_time(playback);
-    }
-    if (playback->error)
-        return -2;
-    if (!playback->playing ||
-    (playback->eof && !playback->output->buffer_playing()))
-        return -1;
-    return playback->output->output_time();
+
+    if (playback->output->buffer_playing () || playback_get_paused ())
+        return playback->output->output_time ();
+
+    return 0;
 }
 
 gint
@@ -223,7 +222,7 @@ void
 playback_stop(void)
 {
     InputPlayback *playback;
-    
+
     if ((playback = get_current_input_playback()) == NULL)
         return;
 
@@ -276,7 +275,7 @@ playback_stop(void)
 static void
 run_no_output_plugin_dialog(void)
 {
-    const gchar *markup = 
+    const gchar *markup =
         N_("<b><big>No output plugin selected.</big></b>\n"
            "You have not selected an output plugin.");
 
@@ -403,11 +402,11 @@ playback_play_file(PlaylistEntry *entry)
     ip_data.playing = TRUE;
 
     playback = playback_new();
-    
+
     playback->plugin = entry->decoder;
     playback->filename = g_strdup(entry->filename);
     playback->output = &psuedo_output_plugin;
-    
+
     set_current_input_playback(playback);
 
     playback_run(playback);

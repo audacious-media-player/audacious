@@ -155,12 +155,7 @@ drct_get_info( gint *rate, gint *freq, gint *nch)
 gint
 drct_get_time ( void )
 {
-    gint time;
-    if (playback_get_playing())
-        time = playback_get_time();
-    else
-        time = 0;
-    return time;
+    return playback_get_time ();
 }
 
 gint
