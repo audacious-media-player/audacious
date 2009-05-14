@@ -47,10 +47,6 @@
 /*#define CF  	{31.25,62.5,125,250,500,1000,2000,4000,8000,16000}*/
 #define CF {60, 170, 310, 600, 1000, 3000, 6000, 12000, 14000, 16000}
 
-// Maximum and minimum gain for the bands
-#define G_MAX	+12.0
-#define G_MIN	-12.0
-
 // Data for specific instances of this filter
 typedef struct af_equalizer_s
 {
@@ -122,19 +118,6 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
 
     return af_test_output(af,arg);
   }
-  case AF_CONTROL_COMMAND_LINE:{
-    float g[10]={0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-    int i,j;
-    sscanf((char*)arg,"%f:%f:%f:%f:%f:%f:%f:%f:%f:%f", &g[0], &g[1],
-	   &g[2], &g[3], &g[4], &g[5], &g[6], &g[7], &g[8] ,&g[9]);
-    for(i=0;i<AF_NCH;i++){
-      for(j=0;j<KM;j++){
-	((af_equalizer_t*)af->setup)->g[i][j] =
-	  pow(10.0,clamp(g[j],G_MIN,G_MAX)/20.0)-1.0;
-      }
-    }
-    return AF_OK;
-  }
   case AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET:{
     float* gain = ((af_control_ext_t*)arg)->arg;
     int    ch   = ((af_control_ext_t*)arg)->ch;
@@ -143,19 +126,7 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
       return AF_ERROR;
 
     for(k = 0 ; k<KM ; k++)
-      s->g[ch][k] = pow(10.0,clamp(gain[k],G_MIN,G_MAX)/20.0)-1.0;
-
-    return AF_OK;
-  }
-  case AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_GET:{
-    float* gain = ((af_control_ext_t*)arg)->arg;
-    int    ch   = ((af_control_ext_t*)arg)->ch;
-    int    k;
-    if(ch >= AF_NCH || ch < 0)
-      return AF_ERROR;
-
-    for(k = 0 ; k<KM ; k++)
-      gain[k] = log10(s->g[ch][k]+1.0) * 20.0;
+        s->g[ch][k] = pow (10, gain[k] / 20) - 1;
 
     return AF_OK;
   }
@@ -223,20 +194,3 @@ int equalizer_open(af_instance_t* af){
     return AF_ERROR;
   return AF_OK;
 }
-
-// Description of this filter
-/*af_info_t af_info_equalizer = {
-  "Equalizer audio filter",
-  "equalizer",
-  "Anders",
-  "",
-  AF_FLAGS_NOT_REENTRANT,
-  af_open
-};*/
-
-
-
-
-
-
-

@@ -82,19 +82,13 @@ equalizer_flow_set_bands(gfloat pre, gfloat *bands)
 {
     int i;
     af_control_ext_t ctl;
-    gfloat highest;
-    gfloat adjusted [10];
+    float adjusted [10]; /* ctl.arg is (float *), not (gfloat *) */
 
     if(eq == NULL) {
         eq = g_malloc(sizeof(af_instance_t));
         equalizer_open(eq);
     }
 
-    highest = EQUALIZER_MAX_GAIN;
-    for (i = 0; i < 10; i ++) {
-        if ((pre + bands[i]) > highest)
-            bands[i] -= (pre + bands[i]) - highest;
-    }
     for (i = 0; i < 10; i ++)
         adjusted[i] = (bands[i] + pre);
 

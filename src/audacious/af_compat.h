@@ -40,7 +40,6 @@
 #define AF_CONTROL_FILTER_SPECIFIC	0x40000000
 
 #define AF_CONTROL_REINIT  		0x00000100 | AF_CONTROL_MANDATORY
-#define AF_CONTROL_COMMAND_LINE		0x00000300 | AF_CONTROL_OPTIONAL
 #define AF_CONTROL_EQUALIZER_GAIN 	0x00001C00 | AF_CONTROL_FILTER_SPECIFIC
 
 /* Return values */
@@ -51,10 +50,6 @@
 #define AF_UNKNOWN -1
 #define AF_ERROR   -2
 #define AF_FATAL   -3
-
-/* Flags used for defining the behavior of an audio filter */
-#define AF_FLAGS_REENTRANT 	0x00000000
-#define AF_FLAGS_NOT_REENTRANT 	0x00000001
 
 /* Audio data chunk */
 typedef struct af_data_s
@@ -69,8 +64,8 @@ typedef struct af_data_s
 
 struct af_instance_s;
 /* Audio filter information not specific for current instance, but for
-   a specific filter */ 
-typedef struct af_info_s 
+   a specific filter */
+typedef struct af_info_s
 {
   const char *info;
   const char *name;
@@ -90,7 +85,7 @@ typedef struct af_instance_s
   void* setup;	  // setup data for this specific instance and filter
   af_data_t* data; // configuration for outgoing data stream
   struct af_instance_s* next;
-  struct af_instance_s* prev;  
+  struct af_instance_s* prev;
   double delay; /* Delay caused by the filter, in units of bytes read without
 		 * corresponding output */
   double mul; /* length multiplier: how much does this instance change
@@ -105,9 +100,5 @@ typedef struct af_control_ext_s{
   void* arg;	// Argument
   int	ch;	// Chanel number
 }af_control_ext_t;
-
-#ifndef clamp
-#define clamp(a,min,max) (((a)>(max))?(max):(((a)<(min))?(min):(a)))
-#endif
 
 #endif /* AUDACIOUS_AF_COMPAT_H */
