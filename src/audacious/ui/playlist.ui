@@ -15,13 +15,15 @@
 		</menu>
 
 		<menu action="dummy" name="add-menu">
+			<menuitem action="plugins-menu" />
+			<separator />
 			<menuitem action="playlist add url" />
 			<menuitem action="playlist add files" />
-			<separator />
-			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="del-menu">
+			<menuitem action="plugins-menu" />
+			<separator />
 			<menuitem action="playlist remove all" />
 			<menuitem action="playlist clear queue" />
 			<separator />
@@ -34,22 +36,22 @@
 			<separator />
 			<menuitem action="playlist remove unselected" />
 			<menuitem action="playlist remove selected" />
-			<separator />
-			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="select-menu">
+			<menuitem action="plugins-menu" />
+			<separator />
 			<menuitem action="playlist search and select" />
 			<separator />
 			<menuitem action="playlist invert selection" />
 			<separator />
 			<menuitem action="playlist select none" />
 			<menuitem action="playlist select all" />
-			<separator />
-			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="misc-menu">
+			<menuitem action="plugins-menu" />
+			<separator />
 			<menuitem action="playlist randomize list" />
 			<menuitem action="playlist reverse list" />
 			<separator />
@@ -71,11 +73,11 @@
 				<menuitem action="playlist sort selected by track number" />
 				<menuitem action="playlist sort selected by playlist entry" />
 			</menu>
-			<separator />
-			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="playlist-menu">
+			<menuitem action="plugins-menu" />
+			<separator />
 			<menuitem action="playlist new" />
 			<menuitem action="playlist delete" />
 			<separator />
@@ -88,11 +90,7 @@
 			<separator />
 			<menuitem action="playlist manager" />
 			<separator />
-			<menuitem action="plugins-menu" />
-			<separator />
 			<menuitem action="playlist refresh" />
-			<separator />
-<!--			<menuitem action="playlist delete" /> -->
 		</menu>
 	</menubar>
 </ui>
