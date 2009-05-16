@@ -97,6 +97,8 @@ GMutex *mutex_scan;
 MprisPlayer *mpris;
 #endif
 
+static char start_playback = 0;
+
 static void
 print_version(void)
 {
@@ -215,13 +217,6 @@ static GOptionEntry cmd_entries[] = {
     {NULL},
 };
 
-static gboolean
-aud_start_playback(gpointer unused)
-{
-    drct_play();
-    return FALSE;
-}
-
 static void
 parse_cmd_line_options(gint *argc, gchar ***argv)
 {
@@ -319,6 +314,7 @@ handle_cmd_line_filenames(gboolean is_running)
         {
             drct_pl_clear();
             drct_stop();
+            start_playback = 1;
         }
 
         drct_pl_add(fns);
@@ -326,9 +322,6 @@ handle_cmd_line_filenames(gboolean is_running)
         if (options.enqueue && options.play &&
             drct_pl_get_length() > pos)
             drct_pl_set_pos(pos);
-
-        if (!options.enqueue)
-            g_idle_add(aud_start_playback, NULL);
     } /* !is_running */
 
     g_list_foreach(fns, (GFunc) g_free, NULL);
@@ -381,7 +374,7 @@ static void handle_cmd_line_options (void) {
    if (options.rew)
       drct_pl_prev ();
    if (options.play || options.play_pause)
-      g_idle_add (aud_start_playback, NULL);
+       start_playback = 1;
    if (options.fwd)
       drct_pl_next ();
    if (options.show_jump_box)
@@ -562,6 +555,18 @@ main(gint argc, gchar ** argv)
     output_set_volume((cfg.saved_volume & 0xff00) >> 8,
                       (cfg.saved_volume & 0x00ff));
     init_equalizer ();
+
+    if (start_playback)
+        playback_initiate ();
+    else if (cfg.resume_playback_on_startup && cfg.resume_state)
+    {
+        playback_initiate ();
+
+        if (cfg.resume_state == 2)
+            playback_pause ();
+
+        playback_seek (cfg.resume_playback_on_startup_time);
+    }
 
     g_message("Setting default icon");
     aud_set_default_icon();

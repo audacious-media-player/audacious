@@ -114,7 +114,8 @@ AudConfig aud_default_config = {
     .eq_extra_filtering = TRUE,
     .scroll_pl_by = 3,
     .resume_playback_on_startup = FALSE,
-    .resume_playback_on_startup_time = -1,
+    .resume_state = 0,
+    .resume_playback_on_startup_time = 0,
     .show_separator_in_pl = TRUE,
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
@@ -288,6 +289,7 @@ static aud_cfg_nument aud_numents[] = {
     {"mouse_wheel_change", &cfg.mouse_change, TRUE},
     {"scroll_pl_by", &cfg.scroll_pl_by, TRUE},
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
+    {"resume_state", & cfg.resume_state, 1},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
     {"output_buffer_size", &cfg.output_buffer_size, TRUE},
     {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE},
@@ -570,13 +572,17 @@ aud_config_save(void)
 {
     GList *node;
     gchar *str;
-    gint i, cur_pb_time, vol_l, vol_r;
+    gint i, vol_l, vol_r;
     mcs_handle_t *db;
     GList *saved;
     Playlist *playlist = playlist_get_active();
 
     cfg.disabled_iplugins = input_stringify_disabled_list();
 
+    cfg.resume_state = playback_get_playing () ? playback_get_paused () ? 2 : 1
+     : 0;
+    cfg.resume_playback_on_startup_time = playback_get_playing () ?
+     playback_get_time () / 1000 : 0;
 
     db = cfg_db_open();
 
@@ -667,14 +673,6 @@ aud_config_save(void)
         cfg_db_set_string(db, NULL, str, node->data);
         g_free(str);
     }
-
-    if (playback_get_playing()) {
-        cur_pb_time = playback_get_time();
-    } else
-        cur_pb_time = -1;
-    cfg.resume_playback_on_startup_time = cur_pb_time;
-    cfg_db_set_int(db, NULL, "resume_playback_on_startup_time",
-               cfg.resume_playback_on_startup_time);
 
     cfg_db_close(db);
 

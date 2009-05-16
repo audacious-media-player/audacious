@@ -217,7 +217,7 @@ ui_playlist_created(Playlist *playlist, gpointer user_data)
 static void
 ui_playlist_destroyed(Playlist *playlist, gpointer user_data)
 {
-    ui_playlist_destroy_tab(playlist);    
+    ui_playlist_destroy_tab(playlist);
 }
 
 static void
@@ -519,6 +519,9 @@ _ui_initialize(void)
     gtk_widget_show_all(window);
 
     ui_clear_song_info();
+
+    if (playback_get_playing ())
+        ui_playback_begin (0, 0);
 
     gtk_main();
 

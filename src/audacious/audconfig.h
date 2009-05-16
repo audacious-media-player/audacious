@@ -94,6 +94,7 @@ struct _AudConfig {
     gboolean eq_extra_filtering;
     gint scroll_pl_by;
     gboolean resume_playback_on_startup;
+    gint resume_state;
     gint resume_playback_on_startup_time;
     gboolean show_separator_in_pl;
     gchar *chardet_detector;

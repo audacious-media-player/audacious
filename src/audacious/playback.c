@@ -120,23 +120,27 @@ playback_error(void)
 gint
 playback_get_time(void)
 {
+    static int time = 0;
     InputPlayback *playback;
 
     if (! playback_get_playing ())
-        return 0;
+        return (time = 0);
 
     playback = get_current_input_playback();
 
     if (! playback || ! playback->playing || playback->error)
-        return 0;
+        return (time = 0);
 
     if (playback->plugin->get_time)
-        return playback->plugin->get_time(playback);
+        return (time = playback->plugin->get_time (playback));
 
     if (playback->output->buffer_playing () || playback_get_paused ())
-        return playback->output->output_time ();
+        return (time = playback->output->output_time ());
 
-    return 0;
+    /* If we get to here, we are probably in the split second when playback has
+     just been started or unpaused but output has not yet begun, so we return
+     the value from the last call. */
+    return time;
 }
 
 gint

@@ -122,6 +122,9 @@ interface_run(Interface *i)
     /* do common initialization */
     interface_common_hooks_associate();
 
+    if (playback_get_playing ())
+        interface_common_playback_begin (0, 0);
+
     i->init();
 }
 
