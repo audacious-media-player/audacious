@@ -373,7 +373,7 @@ playback_run(InputPlayback *playback)
     /* Give playback a chance to initialize. Things work better this way. */
     for (count = 0; count < 20; count ++)
     {
-        if (playback->playing || playback->eof || playback->error)
+        if (playback->playing || ! playback->thread)
             break;
 
         g_usleep (50000);
