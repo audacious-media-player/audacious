@@ -23,6 +23,7 @@
 #include "interface.h"
 #include "playback.h"
 #include "playlist.h"
+#include "output.h"
 #include "ui_fileopener.h"
 #include "ui_new.h"
 #include "ui_manager.h"
@@ -31,10 +32,13 @@
 static GtkWidget *label_time;
 static GtkWidget *slider;
 static GtkWidget *playlist_notebook;
+static GtkWidget *volume;
 
 static gulong slider_change_handler_id;
 static gboolean slider_is_moving = FALSE;
 static gint update_song_timeout_source = 0;
+
+static gulong volume_change_handler_id;
 
 typedef struct {
     gint tab_id;
@@ -321,6 +325,15 @@ ui_slider_button_release_cb(GtkWidget *widget, GdkEventButton *event,
     return FALSE;
 }
 
+static gboolean
+ui_volume_value_changed_cb(GtkRange *range, gpointer user_data)
+{
+    gint vol = gtk_range_get_value(range);
+    output_set_volume(vol, vol);
+
+    return TRUE;
+}
+
 static void
 ui_playback_begin(gpointer hook_data, gpointer user_data)
 {
@@ -426,6 +439,7 @@ _ui_initialize(void)
     GtkWidget *tophbox;     /* box to contain toolbar and shbox */
     GtkWidget *buttonbox;   /* contains buttons like "open", "next" */
     GtkWidget *shbox;       /* box for slider + time combo --nenolod */
+    GtkWidget *plbox;       /* box for playlist and volume control */
     GtkWidget *button_open, *button_add,
               *button_play, *button_pause, *button_stop,
               *button_previous, *button_next;
@@ -433,6 +447,8 @@ _ui_initialize(void)
     GtkAccelGroup *accel;
     gint x = cfg.player_x;
     gint y = cfg.player_y;
+
+    gint lvol = 0, rvol = 0; /* Left and Right for the volume control */
 
     playlist = playlist_get_active();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -494,8 +510,23 @@ _ui_initialize(void)
     label_time = gtk_markup_label_new(NULL);
     gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 5);
 
+    plbox = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), plbox, TRUE, TRUE, 0);
+
+    volume = gtk_vscale_new(NULL);
+    gtk_range_set_update_policy(GTK_RANGE(volume), GTK_UPDATE_CONTINUOUS);
+    gtk_range_set_range(GTK_RANGE(volume), 0, 100);
+    gtk_range_set_inverted(GTK_RANGE(volume), TRUE);
+    gtk_range_set_increments(GTK_RANGE(volume), 1, 10);
+    gtk_scale_set_digits(GTK_SCALE(volume), 0);
+    /* Set the default volume to the balance average.
+        (I'll add balance control later) -Ryan */
+    output_get_volume(&lvol, &rvol);
+    gtk_range_set_value(GTK_RANGE(volume), (lvol+rvol)/2);
+    gtk_box_pack_start(GTK_BOX(plbox), volume, FALSE, TRUE, 0);
+
     playlist_notebook = gtk_notebook_new();
-    gtk_box_pack_end(GTK_BOX(vbox), playlist_notebook, TRUE, TRUE, 0);
+    gtk_box_pack_end(GTK_BOX(plbox), playlist_notebook, TRUE, TRUE, 0);
 
     ui_hooks_associate();
     ui_populate_playlist_notebook();
@@ -513,6 +544,10 @@ _ui_initialize(void)
                      G_CALLBACK(ui_slider_button_press_cb), NULL);
     g_signal_connect(slider, "button-release-event",
                      G_CALLBACK(ui_slider_button_release_cb), NULL);
+
+    volume_change_handler_id =
+    g_signal_connect(volume, "value-changed",
+                     G_CALLBACK(ui_volume_value_changed_cb), NULL);
 
     ui_playlist_update(playlist, NULL);
 
