@@ -226,6 +226,11 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
     memset(&options, '\0', sizeof(AudCmdLineOpt));
     options.session = -1;
 
+    /* If audacious2 is run with no arguments, bring it to the top. This is
+     handy when the user forgets that Audacious is already running. */
+    if (* argc == 1)
+        options.mainwin = 1;
+
     context = g_option_context_new(_("- play multimedia files"));
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
     g_option_context_add_group(context, gtk_get_option_group(FALSE));
