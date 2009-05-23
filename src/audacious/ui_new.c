@@ -23,6 +23,7 @@
 #include "interface.h"
 #include "playback.h"
 #include "playlist.h"
+#include "input.h"
 #include "output.h"
 #include "ui_fileopener.h"
 #include "ui_new.h"
@@ -160,10 +161,13 @@ button_add_pressed()
 static void
 button_play_pressed()
 {
-    if (playlist_get_length(playlist_get_active()))
+    if (playback_get_paused())
+        playback_pause();
+    else if (playlist_get_length(playlist_get_active()))
         playback_initiate();
     else
         button_open_pressed();
+    return;
 }
 
 static void
@@ -175,7 +179,10 @@ button_pause_pressed()
 static void
 button_stop_pressed()
 {
+    ip_data.stop = TRUE;
     playback_stop();
+    ip_data.stop = FALSE;
+    return;
 }
 
 static void
