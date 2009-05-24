@@ -148,14 +148,14 @@ AudConfig aud_default_config = {
     .replay_gain_preamp = 0.0,
     .default_gain = -9.0,
     .saved_volume = 0x6464,            /* for both channels; 0x64=100 */
+    .bypass_dsp = FALSE,
+    .player_width = 450,
+    .player_height = 150,
 #ifdef USE_SAMPLERATE
     .enable_src = FALSE,               /* enable resampling */
     .src_rate = 48000,                 /* samplerate */
     .src_type = SRC_SINC_BEST_QUALITY, /* default interpolation method */
 #endif
-    .bypass_dsp = FALSE,
-    .player_width = 450,
-    .player_height = 150,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -256,10 +256,10 @@ static aud_cfg_boolent aud_boolents[] = {
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
     {"enable_adaptive_scaler", &cfg.enable_adaptive_scaler, TRUE},
+    {"bypass_dsp", &cfg.bypass_dsp, TRUE},
 #ifdef USE_SAMPLERATE
     {"enable_src", &cfg.enable_src, TRUE},
 #endif
-    {"bypass_dsp", &cfg.bypass_dsp, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
@@ -300,12 +300,12 @@ static aud_cfg_nument aud_numents[] = {
     {"colorize_b", &cfg.colorize_b, TRUE},
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
     {"saved_volume", &cfg.saved_volume, TRUE},
+    {"player_width", &cfg.player_width, TRUE},
+    {"player_height", &cfg.player_height, TRUE},
 #ifdef USE_SAMPLERATE
     {"src_rate", &cfg.src_rate, TRUE},
     {"src_type", &cfg.src_type, TRUE},
 #endif
-    {"player_width", &cfg.player_width, TRUE},
-    {"player_height", &cfg.player_height, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);

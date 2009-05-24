@@ -127,13 +127,13 @@ struct _AudConfig {
     gfloat replay_gain_preamp;
     gfloat default_gain;
     gint saved_volume;
+    gboolean bypass_dsp;
+    gint player_width, player_height;
 #ifdef USE_SAMPLERATE
     gboolean enable_src;
     gint src_rate;
     gint src_type;
 #endif
-    gboolean bypass_dsp;
-    gint player_width, player_height;
 };
 
 typedef struct _AudConfig AudConfig;
