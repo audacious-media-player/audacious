@@ -246,5 +246,8 @@ unpacking gzip and bzip2 compressed skins.  Default is \fItar\fP.
 .B UNZIPCMD
 Command for decompressing zip files (skins).  Default is \fIunzip\fP.
 
+.SH "SEE ALSO"
+.BR audtool2 (1)
+
 .SH WEBSITE
 .I http://audacious-media-player.org

@@ -280,6 +280,9 @@ as well.
 .PP
 If installed with an operating system, see your Operating System's 
 documentation for licensing details.
-.SH SEE ALSO
-.B Homepage:
-http://audacious-media-player.org/
+
+.SH "SEE ALSO"
+.BR audacious2 (1)
+
+.SH WEBSITE
+.I http://audacious-media-player.org
