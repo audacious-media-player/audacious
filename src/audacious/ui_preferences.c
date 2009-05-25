@@ -546,7 +546,7 @@ on_titlestring_help_button_clicked(GtkButton * button,
                                    gpointer data)
 {
     GtkMenu *menu;
-    MenuPos *pos = g_new0(MenuPos, 1);
+    MenuPos *pos = g_newa(MenuPos, 1);
     GdkWindow *parent;
 
     gint x_ro, y_ro;
@@ -2753,7 +2753,7 @@ hide_prefs_window(void)
 static void
 prefswin_page_queue_new(GtkWidget *container, gchar *name, gchar *imgurl)
 {
-    CategoryQueueEntry *ent = g_malloc0(sizeof(CategoryQueueEntry));
+    CategoryQueueEntry *ent = g_new0(CategoryQueueEntry, 1);
 
     ent->container = container;
     ent->pg_name = name;
