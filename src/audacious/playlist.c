@@ -88,6 +88,7 @@ static gint path_compare(const gchar * a, const gchar * b);
 static gint playlist_compare_path(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_filename(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_title(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_album(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_artist(PlaylistEntry * a, PlaylistEntry * b);
 static time_t playlist_get_mtime(const gchar *filename);
 static gint playlist_compare_date(PlaylistEntry * a, PlaylistEntry * b);
@@ -102,6 +103,7 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_path,
     playlist_compare_filename,
     playlist_compare_title,
+    playlist_compare_album,
     playlist_compare_artist,
     playlist_compare_date,
     playlist_compare_track,
@@ -2039,6 +2041,47 @@ playlist_compare_artist(PlaylistEntry * a,
 
     if (a_artist != NULL && b_artist != NULL)
         return strcasecmp(a_artist, b_artist);
+
+    return 0;
+}
+
+static gint
+playlist_compare_album(PlaylistEntry * a,
+                       PlaylistEntry * b)
+{
+    const gchar *a_album = NULL, *b_album = NULL;
+
+    g_return_val_if_fail(a != NULL, 0);
+    g_return_val_if_fail(b != NULL, 0);
+
+    if (a->tuple != NULL)
+        playlist_entry_get_info(a);
+
+    if (b->tuple != NULL)
+        playlist_entry_get_info(b);
+
+    if (a->tuple != NULL) {
+        a_album = tuple_get_string(a->tuple, FIELD_ALBUM, NULL);
+
+        if (a_album == NULL)
+            return 0;
+
+        if (str_has_prefix_nocase(a_album, "the "))
+            a_album += 4;
+    }
+
+    if (b->tuple != NULL) {
+        b_album = tuple_get_string(b->tuple, FIELD_ALBUM, NULL);
+
+        if (b_album == NULL)
+            return 0;
+
+        if (str_has_prefix_nocase(b_album, "the "))
+            b_album += 4;
+    }
+
+    if (a_album != NULL && b_album != NULL)
+        return strcasecmp(a_album, b_album);
 
     return 0;
 }

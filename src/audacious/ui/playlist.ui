@@ -56,7 +56,8 @@
 			<menuitem action="playlist reverse list" />
 			<separator />
 			<menu action="playlist sort menu">
-				<menuitem action="playlist sort by title" />
+                                <menuitem action="playlist sort by title" />
+                                <menuitem action="playlist sort by album" />
 				<menuitem action="playlist sort by artist" />
 				<menuitem action="playlist sort by filename" />
 				<menuitem action="playlist sort by full path" />
@@ -64,8 +65,9 @@
 				<menuitem action="playlist sort by track number" />
 				<menuitem action="playlist sort by playlist entry" />
 			</menu>
-			<menu action="playlist sort selected menu">
-				<menuitem action="playlist sort selected by title" />
+                        <menu action="playlist sort selected menu">
+                                <menuitem action="playlist sort selected by title" />
+                                <menuitem action="playlist sort selected by album" />
 				<menuitem action="playlist sort selected by artist" />
 				<menuitem action="playlist sort selected by filename" />
 				<menuitem action="playlist sort selected by full path" />

@@ -211,6 +211,10 @@ static GtkActionEntry action_entries_playlist_sort[] = {
 	  N_("Sorts the list by title."),
 	  G_CALLBACK(action_playlist_sort_by_title) },
 
+        { "playlist sort by album", NULL, N_("By Album"), NULL,
+          N_("Sorts the list by album."),
+          G_CALLBACK(action_playlist_sort_by_album) },
+
 	{ "playlist sort by artist", NULL , N_("By Artist"), NULL,
 	  N_("Sorts the list by artist."),
 	  G_CALLBACK(action_playlist_sort_by_artist) },
@@ -240,6 +244,10 @@ static GtkActionEntry action_entries_playlist_sort[] = {
 	{ "playlist sort selected by title", NULL , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
 	  G_CALLBACK(action_playlist_sort_selected_by_title) },
+
+        { "playlist sort selected by album", NULL, N_("By Album"), NULL,
+          N_("Sorts the list by album."),
+          G_CALLBACK(action_playlist_sort_selected_by_album) },
 
 	{ "playlist sort selected by artist", NULL, N_("By Artist"), NULL,
 	  N_("Sorts the list by artist."),
