@@ -204,6 +204,8 @@ Left arrow	Seek backward 5 seconds
 
 .B In the playlist:
 
+Escape	Select currently playing song
+.br
 Insert	Display Add dialog
 .br
 
