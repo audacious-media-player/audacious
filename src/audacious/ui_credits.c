@@ -99,6 +99,7 @@ static const gchar *credit_text[] = {
     "Carlo Bramini",
     "Massimo Cavalleri",
     "Stefano D'Angelo",
+    "Jean-Louis Dupond",
     "Laszlo Dvornik",
     "Ralf Ertzinger",
     "Mike Frysinger",
