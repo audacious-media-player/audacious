@@ -808,7 +808,14 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 
             g_free(pr);
             playlist_generate_shuffle_list(playlist);
-            event_queue("playlist update", playlist);
+
+            if (! playlist->position)
+            {
+                playlist->position = playlist->entries->data;
+                hook_call ("playlist position", playlist);
+            }
+
+            hook_call ("playlist update", playlist);
             return TRUE;
         }
     }
@@ -1208,8 +1215,9 @@ playlist_next(Playlist *playlist)
 
     if (restart_playing)
         playback_initiate();
-    else
-        event_queue("playlist update", playlist);
+
+    hook_call ("playlist position", playlist);
+    hook_call ("playlist update", playlist);
 }
 
 void
@@ -1265,8 +1273,9 @@ playlist_prev(Playlist *playlist)
 
     if (restart_playing)
         playback_initiate();
-    else
-        event_queue("playlist update", playlist);
+
+    hook_call ("playlist position", playlist);
+    hook_call ("playlist update", playlist);
 }
 
 void
@@ -1509,7 +1518,9 @@ playlist_eof_reached(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playback_initiate();
-    event_queue("playlist update", playlist);
+
+    hook_call ("playlist position", playlist);
+    hook_call ("playlist update", playlist);
 }
 
 gint
