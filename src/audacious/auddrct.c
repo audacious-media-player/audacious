@@ -28,6 +28,7 @@
 #include "auddrct.h"
 #include "playlist.h"
 #include "ui_fileopener.h"
+#include "ui_jumptotrack.h"
 
 /* player */
 
@@ -47,8 +48,7 @@ drct_eject ( void )
 void
 drct_jtf_show ( void )
 {
-    gboolean show = TRUE;
-    hook_call("ui jump to track show", &show);
+    ui_jump_to_track ();
 }
 
 gboolean
