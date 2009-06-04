@@ -161,6 +161,7 @@ void playlist_set_position(Playlist *playlist, guint pos);
 gint playlist_get_length(Playlist *playlist);
 gint playlist_get_position(Playlist *playlist);
 gint playlist_get_position_nolock(Playlist *playlist);
+void playlist_generate_shuffle_list (Playlist * playlist);
 gchar *playlist_get_info_text(Playlist *playlist);
 gint playlist_get_current_length(Playlist *playlist);
 void playlist_shift(Playlist *playlist, gint delta);

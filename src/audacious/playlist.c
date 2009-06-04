@@ -71,9 +71,6 @@
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
-/* If we manually change the song, p_p_b_j will show us where to go back to */
-static PlaylistEntry *playlist_position_before_jump = NULL;
-
 static GList *playlists = NULL;
 static GList *playlists_iter;
 
@@ -112,7 +109,6 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
 
 static guint playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos);
 
-static void playlist_generate_shuffle_list(Playlist *);
 static void playlist_generate_shuffle_list_nolock(Playlist *);
 
 static void playlist_recalc_total_time_nolock(Playlist *);
@@ -809,12 +805,6 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
             g_free(pr);
             playlist_generate_shuffle_list(playlist);
 
-            if (! playlist->position)
-            {
-                playlist->position = playlist->entries->data;
-                hook_call ("playlist position", playlist);
-            }
-
             hook_call ("playlist update", playlist);
             return TRUE;
         }
@@ -1174,11 +1164,6 @@ playlist_next(Playlist *playlist)
 
     PLAYLIST_LOCK(playlist);
 
-    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL) {
-        playlist->position = playlist_position_before_jump;
-        playlist_position_before_jump = NULL;
-    }
-
     plist_pos_list = find_playlist_position_list(playlist);
 
     if (!cfg.repeat && !g_list_next(plist_pos_list) && playlist->queue == NULL)
@@ -1231,11 +1216,6 @@ playlist_prev(Playlist *playlist)
 
     PLAYLIST_LOCK(playlist);
 
-    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL) {
-        playlist->position = playlist_position_before_jump;
-        playlist_position_before_jump = NULL;
-    }
-
     plist_pos_list = find_playlist_position_list(playlist);
 
     if (!cfg.repeat && !g_list_previous(plist_pos_list)) {
@@ -1286,11 +1266,6 @@ playlist_queue(Playlist *playlist)
 
     PLAYLIST_LOCK(playlist);
 
-    if ((cfg.shuffle) && (playlist_position_before_jump == NULL)) {
-        /* Shuffling and this is our first manual jump. */
-        playlist_position_before_jump = playlist->position;
-    }
-
     while (it) {
         GList *next = g_list_next(it);
         GList *tmp;
@@ -1322,12 +1297,6 @@ playlist_queue_position(Playlist *playlist, guint pos)
     PlaylistEntry *entry;
 
     PLAYLIST_LOCK(playlist);
-
-    if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
-    {
-        /* Shuffling and this is our first manual jump. */
-        playlist_position_before_jump = playlist->position;
-    }
 
     entry = g_list_nth_data(playlist->entries, pos);
     if ((tmp = g_list_find(playlist->queue, entry))) {
@@ -1442,12 +1411,6 @@ playlist_set_position(Playlist *playlist, guint pos)
         restart_playing = TRUE;
     }
 
-    if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
-    {
-        /* Shuffling and this is our first manual jump. */
-        playlist_position_before_jump = playlist->position;
-    }
-
     playlist->position = node->data;
     PLAYLIST_UNLOCK(playlist);
 
@@ -1471,12 +1434,6 @@ playlist_eof_reached(Playlist *playlist)
     hook_call("playback end", playlist->position);
 
     PLAYLIST_LOCK(playlist);
-
-    if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
-    {
-        playlist->position = playlist_position_before_jump;
-        playlist_position_before_jump = NULL;
-    }
 
     plist_pos_list = find_playlist_position_list(playlist);
 
@@ -2376,9 +2333,7 @@ playlist_get_num_selected(Playlist *playlist)
     return num;
 }
 
-
-static void
-playlist_generate_shuffle_list(Playlist *playlist)
+void playlist_generate_shuffle_list (Playlist * playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist_generate_shuffle_list_nolock(playlist);
@@ -3098,8 +3053,6 @@ playlist_set_shuffle(gboolean shuffle)
 
     PLAYLIST_LOCK(playlist);
 
-    playlist_position_before_jump = NULL;
-
     cfg.shuffle = shuffle;
     playlist_generate_shuffle_list_nolock(playlist);
 
@@ -3189,6 +3142,8 @@ playlist_get_filename_to_play(Playlist *playlist)
 PlaylistEntry *
 playlist_get_entry_to_play(Playlist *playlist)
 {
+    char changed;
+
     if (!playlist)
         return NULL;
 
@@ -3199,9 +3154,16 @@ playlist_get_entry_to_play(Playlist *playlist)
             playlist->position = playlist->shuffle->data;
         else
             playlist->position = playlist->entries->data;
+
+        changed = 1;
     }
+    else
+        changed = 0;
 
     PLAYLIST_UNLOCK(playlist);
+
+    if (changed)
+        hook_call ("playlist position", playlist);
 
     return playlist->position;
 }
