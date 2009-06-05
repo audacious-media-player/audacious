@@ -141,8 +141,6 @@ Load saved configuration from FILE.
 
 .SH KEYBINDINGS
 .ta 24
-.B Anywhere in Audacious:
-
 z	Previous song
 .br
 x	Play
@@ -153,71 +151,63 @@ v	Stop
 .br
 b	Next song
 .br
+Right arrow	Seek forward 5 seconds
+.br
+Left arrow	Seek backward 5 seconds
+.br
+Control + z	Go to beginning of playlist
+.br
+Escape	Scroll to current song
+.br
+Control + a	Select all songs in playlist
+.br
+Shift + Control + a	Cancel selection
+.br
 s	Toggle shuffle
 .br
 r	Toggle repeat
 .br
-l	Display Open dialog
+Control + n	Toggle advancing in playlist
 .br
-j	Display Jump to Song dialog
+Control + m	Toggle stopping after current song
 .br
 Control + e	Show elapsed time
 .br
 Control + r	Show time remaining
 .br
-Control + a	Select all songs in playlist
-.br
-Control + z	Go to beginning of playlist
-.br
-Control + n	Toggle advancing in playlist
-.br
-Control + w	Toggle rolling up main window
-.br
-Control + d	Toggle double size
-.br
-Control + j	Display Jump to Time dialog
-.br
-Control + l	Display Open Internet Address dialog
-.br
-Control + p	Display Preferences dialog
-.br
-Shift + Control + w	Toggle rolling up playlist
-.br
-Control + Alt + w	Toggle rolling up equalizer
-.br
-Alt + i	Display Song Information dialog
-.br
 Alt + e	Show/hide playlist
 .br
 Alt + g	Show/hide equalizer
 .br
-
-.B In the main window:
-
-Up arrow	Increase volume by 2 percent
+Control + o	Toggle windows always on top
 .br
-Down arrow	Decrease volume by 2 percent
+Control + s	Toggle windows on all workspaces
 .br
-Right arrow	Seek forward 5 seconds
+Control + w	Toggle rolling up main window
 .br
-Left arrow	Seek backward 5 seconds
-
-.B In the playlist:
-
-Escape	Select currently playing song
+Control + Alt + w	Toggle rolling up equalizer
 .br
-Insert	Display Add dialog
+Shift + Control + w	Toggle rolling up playlist
 .br
-
-.B In the rolled up equalizer:
-
-Up arrow	Increase volume by 2 percent
+Control + d	Toggle double size
 .br
-Down arrow	Decrease volume by 2 percent
+i	Display Song Information dialog
 .br
-Right arrow	Shift balance 4 percent right
+Control + j	Display Jump to Time dialog
 .br
-Left arrow	Shift balance 4 percent left
+j	Display Jump to Song dialog
+.br
+Control + f	Display Search dialog
+.br
+l	Display Open dialog
+.br
+f	Display Add dialog
+.br
+Control + l	Display Open Internet Address dialog
+.br
+Control + h	Display Add Internet Address dialog
+.br
+Control + p	Display Preferences dialog
 
 .SH FILES
 .TP
