@@ -362,22 +362,16 @@ void playback_free(InputPlayback *playback)
 void
 playback_run(InputPlayback *playback)
 {
-    int count;
-
     playback->playing = 0;
     playback->eof = 0;
     playback->error = 0;
 
+    g_mutex_lock(playback->pb_ready_mutex);
+
     playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
+    g_cond_wait(playback->pb_ready_cond, playback->pb_ready_mutex);
 
-    /* Give playback a chance to initialize. Things work better this way. */
-    for (count = 0; count < 20; count ++)
-    {
-        if (playback->playing || ! playback->thread)
-            break;
-
-        g_usleep (50000);
-    }
+    g_mutex_unlock(playback->pb_ready_mutex);
 }
 
 gboolean
