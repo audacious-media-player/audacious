@@ -34,8 +34,10 @@
 #define FALSE 0
 #endif
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
+#ifdef _AUDACIOUS_CORE
+# ifdef HAVE_CONFIG_H
+#  include "config.h"
+# endif
 #endif
 
 typedef int SAD_error;
