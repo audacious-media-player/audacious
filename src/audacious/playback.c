@@ -124,12 +124,18 @@ playback_get_time(void)
     InputPlayback *playback;
 
     if (! playback_get_playing ())
-        return (time = 0);
+        return (time = -1);
 
     playback = get_current_input_playback();
 
-    if (! playback || ! playback->playing || playback->error)
-        return (time = 0);
+    if (!playback->playing && playback_get_playing())
+    {
+        g_warning("outdated plugin: %s (does not set playback::playing correctly)", playback->plugin->description);
+        playback->playing = playback_get_playing();
+    }
+
+    if (!playback || playback->error || playback->eof)
+        return (time = -1);
 
     if (playback->plugin->get_time)
         return (time = playback->plugin->get_time (playback));
