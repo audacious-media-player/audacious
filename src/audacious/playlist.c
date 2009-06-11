@@ -3038,6 +3038,8 @@ playlist_read_info(Playlist *playlist, guint pos)
 Playlist *
 playlist_get_active(void)
 {
+    if (playlists_iter == NULL)
+        return NULL;
     return playlists_iter->data;
 }
 
