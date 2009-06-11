@@ -209,7 +209,7 @@ static GOptionEntry cmd_entries[] = {
     {"activate", 'a', 0, G_OPTION_ARG_NONE, &options.activate, N_("Display all open Audacious windows"), NULL},
     {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
-    {"interface", 'i', 0, G_OPTION_ARG_STRING, &options.interface, N_("Interface to use"), NULL},
+    {"interface", 'i', 0, G_OPTION_ARG_STRING, &options.interface, N_("Interface to use (use -i list to view available interfaces)"), NULL},
 #ifdef GDK_WINDOWING_QUARTZ
     {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL}, /* Make this hidden */
 #endif
@@ -463,6 +463,14 @@ aud_quit(void)
     exit(EXIT_SUCCESS);
 }
 
+static
+int print_interface_info(mowgli_dictionary_elem_t *delem, void *privdata)
+{
+    Interface *i = (Interface *) delem->data;
+    g_print("  %-15s - %s\n", i->id, i->desc);
+    return 0;
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
@@ -548,6 +556,19 @@ main(gint argc, gchar ** argv)
     g_message("Initializing plugin subsystems...");
     plugin_system_init();
 
+    g_message("Populating included interfaces");
+    ui_populate_default_interface();
+    ui_populate_headless_interface();
+    
+    /* Check if user wants to list available interfaces */
+    if (!g_ascii_strcasecmp(options.interface, "list")) {
+        g_print(_("Available interfaces:\n\n"));
+        interface_foreach(print_interface_info, NULL);
+        g_print("\n");
+        plugin_system_cleanup();
+        exit(EXIT_SUCCESS);
+    }
+
     g_message("Setting up playlists");
     playlist_system_init();
 
@@ -576,9 +597,6 @@ main(gint argc, gchar ** argv)
     g_message("Setting default icon");
     aud_set_default_icon();
 
-    g_message("Populating included interfaces");
-    ui_populate_default_interface();
-    ui_populate_headless_interface();
 
 #ifndef NOT_ALPHA_RELEASE
     g_message("Displaying unsupported version warning.");
