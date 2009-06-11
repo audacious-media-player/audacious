@@ -335,7 +335,6 @@ ui_slider_button_release_cb(GtkWidget *widget, GdkEventButton *event,
 static gboolean
 ui_volume_value_changed_cb(GtkButton *button, gdouble volume, gpointer user_data)
 {
-    //gint vol = gtk_scale_button_get_value(GTK_SCALE_BUTTON(button));
     input_set_volume((gint)volume, (gint)volume);
 
     return TRUE;
