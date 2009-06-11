@@ -30,6 +30,7 @@
 #define __AUDACIOUS2_INTERFACE_H__
 
 #include <gtk/gtk.h>
+#include <mowgli.h>
 
 typedef struct {
 	void (*create_prefs_window)(void);
@@ -58,5 +59,6 @@ void interface_destroy(Interface *i);
 
 Interface *interface_get(gchar *id);
 const Interface *interface_get_current(void);
+void interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *privdata), void *privdata);
 
 #endif

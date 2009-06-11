@@ -20,7 +20,6 @@
  */
 
 #include <glib.h>
-#include <mowgli.h>
 
 #include "interface.h"
 #include "playback.h"
@@ -145,6 +144,15 @@ interface_get(gchar *id)
         return NULL;
 
     return mowgli_dictionary_retrieve(interface_dict_, id);
+}
+
+void
+interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *privdata), void *privdata)
+{
+    if (interface_dict_ == NULL)
+        return;
+
+    mowgli_dictionary_foreach(interface_dict_, foreach_cb, privdata);
 }
 
 const Interface *
