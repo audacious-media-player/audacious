@@ -1,6 +1,6 @@
 .TH AUDTOOL "1" "April 2009" "Version @VERSION@"
 .SH NAME
-.B audtool
+.B audtool2
 - a small tool to modify behavior of a running audacious2 instance.
 .SH SYNOPSIS
 .B audtool2
