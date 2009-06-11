@@ -77,7 +77,7 @@ static GList *playlists_iter;
 static gboolean playlist_get_info_scan_active = FALSE;
 static GStaticRWLock playlist_get_info_rwlock = G_STATIC_RW_LOCK_INIT;
 static gboolean playlist_get_info_going = FALSE;
-static GThread *playlist_get_info_thread;
+static GThread *playlist_get_info_thread = NULL;
 
 extern GHashTable *ext_hash;
 
@@ -2459,6 +2459,9 @@ playlist_start_get_info_thread(void)
 void
 playlist_stop_get_info_thread(void)
 {
+    if (playlist_get_info_thread == NULL && !playlist_get_info_going)
+        return;
+
     g_static_rw_lock_writer_lock(&playlist_get_info_rwlock);
     if (!playlist_get_info_going) {
         g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
