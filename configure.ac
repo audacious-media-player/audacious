@@ -32,9 +32,6 @@ BUILDSYS_SHARED_LIB
 IMPLIB_LIBS=""
 AC_SUBST([IMPLIB_LIBS])
 
-AUDLDFLAGS="-Wl,-rpath,${libdir}"
-AC_SUBST([AUDLDFLAGS])
-
 dnl Plugin stuff
 dnl ========================
 SHARED_SUFFIX="$PLUGIN_SUFFIX"
@@ -82,6 +79,13 @@ if test "x$enable_user_plugin_dir" = "xno"; then
     AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
 fi
 
+AUD_ARG_ENABLE([rpath], [yes], [disable rpath])
+
+if test "x$enable_rpath" = "xyes"; then
+    AUDLDFLAGS="-Wl,-rpath,${libdir}"
+fi
+
+AC_SUBST([AUDLDFLAGS])
 
 ### ---------------------------------------------------------------------------
 dnl Chardet support
@@ -279,7 +283,6 @@ AUD_CONDITIONAL([ARCH_X86], [arch_type], [ix86])
 AUD_CONDITIONAL([USE_X86ASM], [x86_asm])
 AUD_CONDITIONAL([HAVE_SOLARIS], [have_solaris])
 AUD_CONDITIONAL([HAVE_SUN], [have_sun])
-
 
 ### ---------------------------------------------------------------------------
 dnl Define plugin directories
