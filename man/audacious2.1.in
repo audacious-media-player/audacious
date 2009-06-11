@@ -1,7 +1,7 @@
 .TH AUDACIOUS2 "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
-Audacious: an advanced audio player.
+audacious2 \- an advanced audio player.
 
 .SH SYNOPSIS
 .B audacious2

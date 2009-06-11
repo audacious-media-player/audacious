@@ -6,7 +6,7 @@ dnl Require autoconf 2.59 or later
 AC_PREREQ([2.59])
 
 dnl Initialize
-AC_INIT([audacious], [2.0.1], [bugs+audacious@atheme.org])
+AC_INIT([audacious], [2.1-alpha1], [bugs+audacious@atheme.org])
 AC_COPYRIGHT([(C) 2005-2008 Audacious Development Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -31,9 +31,6 @@ BUILDSYS_PROG_IMPLIB
 BUILDSYS_SHARED_LIB
 IMPLIB_LIBS=""
 AC_SUBST([IMPLIB_LIBS])
-
-AUDLDFLAGS="-Wl,-rpath,${libdir}"
-AC_SUBST([AUDLDFLAGS])
 
 dnl Plugin stuff
 dnl ========================
@@ -82,6 +79,13 @@ if test "x$enable_user_plugin_dir" = "xno"; then
     AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
 fi
 
+AUD_ARG_ENABLE([rpath], [yes], [disable rpath])
+
+if test "x$enable_rpath" = "xyes"; then
+    AUDLDFLAGS="-Wl,-rpath,${libdir}"
+fi
+
+AC_SUBST([AUDLDFLAGS])
 
 ### ---------------------------------------------------------------------------
 dnl Chardet support
@@ -279,7 +283,6 @@ AUD_CONDITIONAL([ARCH_X86], [arch_type], [ix86])
 AUD_CONDITIONAL([USE_X86ASM], [x86_asm])
 AUD_CONDITIONAL([HAVE_SOLARIS], [have_solaris])
 AUD_CONDITIONAL([HAVE_SUN], [have_sun])
-
 
 ### ---------------------------------------------------------------------------
 dnl Define plugin directories
