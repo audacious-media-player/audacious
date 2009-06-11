@@ -321,6 +321,11 @@ ui_slider_button_press_cb(GtkWidget *widget, GdkEventButton *event,
                           gpointer user_data)
 {
     slider_is_moving = TRUE;
+    
+    /* HACK: clicking with the left mouse button moves the slider
+       to the location of the click. */
+    if (event->button == 1) event->button = 2;
+	
     return FALSE;
 }
 
@@ -328,6 +333,9 @@ static gboolean
 ui_slider_button_release_cb(GtkWidget *widget, GdkEventButton *event,
                             gpointer user_data)
 {
+    /* HACK: see ui_slider_button_press_cb */
+    if (event->button == 1) event->button = 2;
+    
     slider_is_moving = FALSE;
     return FALSE;
 }
