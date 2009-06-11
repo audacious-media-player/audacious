@@ -157,6 +157,7 @@ void
 ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
 {
     GtkTreeModel *model;
+    GtkTreePath *path;
     gint old_pos;
 
     model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
@@ -165,7 +166,16 @@ ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
     if (old_pos != -1)
         ui_playlist_widget_set_title_active(model, old_pos, FALSE);
     if (pos != -1)
+    {
         ui_playlist_widget_set_title_active(model, pos, TRUE);
+
+        if (!gtk_widget_is_focus(treeview))
+        {
+            path = gtk_tree_path_new_from_indices(pos, -1);
+            gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), path, NULL, TRUE, 0.5, 0);
+            gtk_tree_path_free(path);
+        }
+    }
 
     g_object_set_data(G_OBJECT(treeview), "current", GINT_TO_POINTER(pos));
 }
