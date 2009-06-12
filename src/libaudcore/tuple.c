@@ -180,7 +180,7 @@ tuple_new_from_filename(const gchar *filename)
         uri_to_display_basename(filename));
 
     _tuple_associate_raw_string(tuple, FIELD_FILE_PATH, NULL,
-        uri_to_display_basename(filename));
+      uri_to_display_dirname (filename));
 
     ext = strrchr(filename, '.');
     if (ext != NULL) {
