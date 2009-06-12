@@ -147,7 +147,6 @@ AudConfig aud_default_config = {
     .enable_adaptive_scaler = FALSE,
     .replay_gain_preamp = 0.0,
     .default_gain = -9.0,
-    .saved_volume = 0x6464,            /* for both channels; 0x64=100 */
 #ifdef USE_SAMPLERATE
     .enable_src = FALSE,               /* enable resampling */
     .src_rate = 48000,                 /* samplerate */
@@ -299,7 +298,6 @@ static aud_cfg_nument aud_numents[] = {
     {"colorize_g", &cfg.colorize_g, TRUE},
     {"colorize_b", &cfg.colorize_b, TRUE},
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
-    {"saved_volume", &cfg.saved_volume, TRUE},
 #ifdef USE_SAMPLERATE
     {"src_rate", &cfg.src_rate, TRUE},
     {"src_type", &cfg.src_type, TRUE},
@@ -499,8 +497,6 @@ aud_config_load(void)
         cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
     }
 
-    cfg_db_get_int(db,NULL, "saved_volume", &cfg.saved_volume);
-
     /* custom scale factor */
     cfg_db_get_float(db, NULL, "scale_factor", &cfg.scale_factor);
 
@@ -666,7 +662,6 @@ aud_config_save(void)
                        g_list_length(cfg.url_history));
 
     input_get_volume(&vol_l,&vol_r);
-    cfg_db_set_int(db, NULL, "saved_volume", (vol_l<<8) | vol_r );
 
     for (node = cfg.url_history, i = 1; node; node = g_list_next(node), i++) {
         str = g_strdup_printf("url_history%d", i);

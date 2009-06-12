@@ -126,7 +126,6 @@ struct _AudConfig {
     gboolean enable_adaptive_scaler;
     gfloat replay_gain_preamp;
     gfloat default_gain;
-    gint saved_volume;
 #ifdef USE_SAMPLERATE
     gboolean enable_src;
     gint src_rate;

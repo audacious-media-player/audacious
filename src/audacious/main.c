@@ -559,7 +559,7 @@ main(gint argc, gchar ** argv)
     g_message("Populating included interfaces");
     ui_populate_default_interface();
     ui_populate_headless_interface();
-    
+
     /* Check if user wants to list available interfaces */
     if (!g_ascii_strcasecmp(options.interface, "list")) {
         g_print(_("Available interfaces:\n\n"));
@@ -578,8 +578,6 @@ main(gint argc, gchar ** argv)
     g_message("Playlist scanner thread startup");
     playlist_start_get_info_thread();
 
-    output_set_volume((cfg.saved_volume & 0xff00) >> 8,
-                      (cfg.saved_volume & 0x00ff));
     init_equalizer ();
 
     if (start_playback)
