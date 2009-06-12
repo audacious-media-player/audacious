@@ -158,7 +158,11 @@ ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
 {
     GtkTreeModel *model;
     GtkTreePath *path;
+    GtkTreePath *start_path = gtk_tree_path_new();
+    GtkTreePath *end_path = gtk_tree_path_new();
     gint old_pos;
+    gint *start_pos;
+    gint *end_pos;
 
     model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
     old_pos = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(treeview), "current"));
@@ -171,11 +175,23 @@ ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
 
         if (!gtk_widget_is_focus(treeview))
         {
-            path = gtk_tree_path_new_from_indices(pos, -1);
-            gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), path, NULL, TRUE, 0.5, 0);
-            gtk_tree_path_free(path);
+            if (gtk_tree_view_get_visible_range(GTK_TREE_VIEW(treeview), &start_path, &end_path))
+            {
+                start_pos = gtk_tree_path_get_indices(start_path);
+                end_pos   = gtk_tree_path_get_indices(end_path);
+
+                /* autoscroll only if the current track is invisible */
+                if (pos >= *end_pos || pos <= *start_pos)
+                {
+                    path = gtk_tree_path_new_from_indices(pos, -1);
+                    gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), path, NULL, TRUE, 0.5, 0);
+                    gtk_tree_path_free(path);
+                }
+            }
         }
     }
+    gtk_tree_path_free(start_path);
+    gtk_tree_path_free(end_path);
 
     g_object_set_data(G_OBJECT(treeview), "current", GINT_TO_POINTER(pos));
 }
