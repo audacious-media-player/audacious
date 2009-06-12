@@ -316,6 +316,7 @@ playback_monitor_thread(gpointer data)
     else if (playback->error)
         playback_error();
 
+    ip_data.playing = 0;
     playback->thread = NULL;
     g_thread_exit(NULL);
     return NULL;
