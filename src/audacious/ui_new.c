@@ -30,6 +30,7 @@
 #include "ui_manager.h"
 #include "ui_playlist_widget.h"
 
+static GtkWidget *window;      /* the main window */
 static GtkWidget *label_time;
 static GtkWidget *slider;
 static GtkWidget *playlist_notebook;
@@ -250,6 +251,41 @@ ui_playlist_update(Playlist *playlist, gpointer user_data)
 }
 
 static void
+ui_mainwin_real_show()
+{
+    if (cfg.save_window_position)
+        gtk_window_move(GTK_WINDOW(window), cfg.player_x, cfg.player_y);
+    gtk_widget_show(window);
+    gtk_window_present(GTK_WINDOW(window));
+    cfg.player_visible = TRUE;
+}
+
+static void
+ui_mainwin_real_hide()
+{
+    if (cfg.save_window_position)
+        gtk_window_get_position(GTK_WINDOW(window), &cfg.player_x, &cfg.player_y);
+    gtk_widget_hide(window);
+    cfg.player_visible = FALSE;
+}
+
+
+static void
+ui_mainwin_show(gpointer hook_data, gpointer user_data)
+{
+    gboolean *show = (gboolean*)hook_data;
+
+    if (*show)
+    {
+        ui_mainwin_real_show();
+    }
+    else
+    {
+        ui_mainwin_real_hide();
+    }
+}
+
+static void
 ui_update_time_info(gint time)
 {
     gchar text[128];
@@ -429,6 +465,7 @@ ui_hooks_associate(void)
     hook_associate("playlist create", (HookFunction) ui_playlist_created, NULL);
     hook_associate("playlist destroy", (HookFunction) ui_playlist_destroyed, NULL);
     hook_associate("playlist update", (HookFunction) ui_playlist_update, NULL);
+    hook_associate("mainwin show", (HookFunction) ui_mainwin_show, NULL);
 }
 
 static void
@@ -442,13 +479,13 @@ ui_hooks_disassociate(void)
     hook_dissociate("playlist create", (HookFunction) ui_playlist_created);
     hook_dissociate("playlist destroy", (HookFunction) ui_playlist_destroyed);
     hook_dissociate("playlist update", (HookFunction) ui_playlist_update);
+    hook_dissociate("mainwin show", (HookFunction) ui_mainwin_show);
 }
 
 static gboolean
 _ui_initialize(void)
 {
     Playlist *playlist;
-    GtkWidget *window;      /* the main window */
     GtkWidget *vbox;        /* the main vertical box */
     GtkWidget *tophbox;     /* box to contain toolbar and shbox */
     GtkWidget *buttonbox;   /* contains buttons like "open", "next" */
@@ -565,8 +602,8 @@ _ui_initialize(void)
 
     ui_clear_song_info();
 
-    if (playback_get_playing ())
-        ui_playback_begin (0, 0);
+    if (playback_get_playing())
+        ui_playback_begin(0, 0);
 
     gtk_main();
 
