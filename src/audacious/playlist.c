@@ -490,7 +490,7 @@ playlist_shift(Playlist *playlist, gint delta)
     }
 
     /* do the remaining work. */
-    playlist_generate_shuffle_list(playlist);
+    playlist_generate_shuffle_list_nolock(playlist);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 
