@@ -54,6 +54,7 @@ static const gchar *credit_text[] = {
     "Christian Birchinger",
     "Michael Färber",
     "Matti Hämäläinen",
+    "John Lindgren",
     "Cristi Măgherușan",
     "Tomasz Moń",
     "William Pitcock",
