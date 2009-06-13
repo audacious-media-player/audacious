@@ -180,7 +180,6 @@ CategoryQueueEntry *category_queue = NULL;
 
 GtkWidget *ui_preferences_chardet_table_populate(void);
 static GtkWidget *ui_preferences_bit_depth(void);
-static GtkWidget *ui_preferences_rg_params(void);
 
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
@@ -203,6 +202,12 @@ static PreferencesWidget audio_page_widgets2[] = {
                         "(i.e. DSP plugins, equalizer, resampling, Replay Gain and software volume control)."), FALSE},
 };
 
+static PreferencesWidget rg_params_elements[] = {
+    {WIDGET_SPIN_BTN, N_("Preamp:"), &cfg.replay_gain_preamp, NULL, NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
+    {WIDGET_SPIN_BTN, N_("Default gain:"), &cfg.default_gain, NULL, N_("This gain will be used if file doesn't contain Replay Gain metadata."), FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
+    {WIDGET_LABEL, NULL, NULL, NULL, NULL, FALSE, {.label = {"gtk-info", N_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use positive values above.</span>")}}},
+};
+
 static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Replay Gain configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
@@ -214,7 +219,7 @@ static PreferencesWidget replay_gain_page_widgets[] = {
                      N_("Use peak value from Replay Gain info for clipping prevention"), TRUE},
     {WIDGET_CHK_BTN, N_("Dynamically adjust scale factor to prevent clipping"), &cfg.enable_adaptive_scaler, NULL,
                      N_("Decrease scale factor (gain) if clipping nevertheless occurred"), TRUE},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, {.populate = ui_preferences_rg_params}},
+    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {rg_params_elements, G_N_ELEMENTS(rg_params_elements)}}},
 };
 
 static PreferencesWidget playback_page_widgets[] = {
@@ -239,10 +244,14 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
 
-static PreferencesWidget mouse_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
+static PreferencesWidget mouse_params_elements[] = {
     {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("percent")}}, VALUE_INT},
     {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("lines")}}, VALUE_INT},
+};
+
+static PreferencesWidget mouse_page_widgets[] = {
+    {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {mouse_params_elements, G_N_ELEMENTS(mouse_params_elements)}}},
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
@@ -1394,77 +1403,95 @@ ui_preferences_bit_depth(void)
     return box;
 }
 
-static void
-on_rg_spin_changed(GtkSpinButton *spinbutton, gpointer user_data)
+void
+create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget **spin_btn, GtkWidget **label_past)
 {
-    *((gfloat*) user_data) = gtk_spin_button_get_value(spinbutton);
+     g_return_if_fail(widget->type == WIDGET_SPIN_BTN);
+
+     *label_pre = gtk_label_new(_(widget->label));
+     gtk_misc_set_alignment(GTK_MISC(*label_pre), 0, 0.5);
+     gtk_misc_set_padding(GTK_MISC(*label_pre), 4, 0);
+
+     *spin_btn = gtk_spin_button_new_with_range(widget->data.spin_btn.min,
+                                                widget->data.spin_btn.max,
+                                                widget->data.spin_btn.step);
+
+
+     if (widget->tooltip)
+         gtk_widget_set_tooltip_text(*spin_btn, _(widget->tooltip));
+
+     if (widget->data.spin_btn.right_label) {
+         *label_past = gtk_label_new(_(widget->data.spin_btn.right_label));
+         gtk_misc_set_alignment(GTK_MISC(*label_past), 0, 0.5);
+         gtk_misc_set_padding(GTK_MISC(*label_past), 4, 0);
+     }
+
+     switch (widget->cfg_type) {
+         case VALUE_INT:
+             g_signal_connect(G_OBJECT(*spin_btn), "value_changed",
+                              G_CALLBACK(on_spin_btn_changed_gint),
+                              widget->cfg);
+             g_signal_connect(G_OBJECT(*spin_btn), "realize",
+                              G_CALLBACK(on_spin_btn_realize_gint),
+                              widget->cfg);
+             break;
+         case VALUE_FLOAT:
+             g_signal_connect(G_OBJECT(*spin_btn), "value_changed",
+                              G_CALLBACK(on_spin_btn_changed_gfloat),
+                              widget->cfg);
+             g_signal_connect(G_OBJECT(*spin_btn), "realize",
+                              G_CALLBACK(on_spin_btn_realize_gfloat),
+                              widget->cfg);
+             break;
+         default:
+             g_warning("Unsupported value type for spin button");
+     }
 }
 
-static GtkWidget *
-ui_preferences_rg_params(void)
+void
+fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 {
-    GtkWidget *alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
-    GtkWidget *table = gtk_table_new(2, 3, FALSE);
-    gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+    int x;
+    GtkWidget *widget_left, *widget_middle, *widget_right;
 
-    GtkWidget *label = gtk_label_new(_("Preamp:"));
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-                     (GtkAttachOptions) (GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    for (x = 0; x < amt; ++x) {
+        widget_left = widget_middle = widget_right = NULL;
+        switch (elements[x].type) {
+            case WIDGET_SPIN_BTN:
+                create_spin_button(&elements[x], &widget_left, &widget_middle, &widget_right);
 
-    GtkWidget *spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
-    gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 0, 1,
-                     (GtkAttachOptions) (GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.replay_gain_preamp);
-    g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.replay_gain_preamp);
+                break;
+            case WIDGET_LABEL:
+                if (elements[x].data.label.stock_id)
+                    widget_left = gtk_image_new_from_stock(elements[x].data.label.stock_id, GTK_ICON_SIZE_BUTTON);
+                if (elements[x].data.label.markup) {
+                    widget_middle = gtk_label_new(N_(elements[x].data.label.markup));
+                    gtk_label_set_use_markup(GTK_LABEL(widget_middle), TRUE);
+                } else
+                    widget_middle = gtk_label_new(N_(elements[x].label));
 
-    label = gtk_label_new(_("dB"));
-    gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
-                     (GtkAttachOptions) (GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+                gtk_label_set_line_wrap (GTK_LABEL(widget_middle), TRUE);
+                gtk_misc_set_alignment (GTK_MISC(widget_middle), 0, 0.5);
+                break;
+            default:
+                g_message("Unsupported widget in table");
+        }
 
-    label = gtk_label_new(_("Default gain:"));
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
-                     (GtkAttachOptions) (GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+        if (widget_left)
+            gtk_table_attach(GTK_TABLE (table), widget_left, 0, 1, x, x+1,
+                             (GtkAttachOptions) (0),
+                             (GtkAttachOptions) (0), 0, 0);
 
-    spin = gtk_spin_button_new_with_range(-15, 15, 0.01);
-    gtk_table_attach(GTK_TABLE(table), spin, 1, 2, 1, 2,
-                     (GtkAttachOptions) (GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg.default_gain);
-    g_signal_connect(G_OBJECT(spin), "value_changed", G_CALLBACK(on_rg_spin_changed), &cfg.default_gain);
-    gtk_widget_set_tooltip_text (spin, _("This gain will be used if file doesn't contain Replay Gain metadata."));
+        if (widget_middle)
+            gtk_table_attach(GTK_TABLE(table), widget_middle, 1, 2, x, x+1,
+                             (GtkAttachOptions) (GTK_FILL),
+                             (GtkAttachOptions) (0), 4, 0);
 
-    label = gtk_label_new(_("dB"));
-    gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
-                     (GtkAttachOptions) (GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-
-    gtk_container_add(GTK_CONTAINER(alignment), table);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-
-    GtkWidget *image = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
-    gtk_table_attach (GTK_TABLE (table), image, 0, 1, 2, 3,
-                      (GtkAttachOptions) (GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label = gtk_label_new (_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use "
-                             "positive values above.</span>"));
-    gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
-                      (GtkAttachOptions) (GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-    gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-
-    return alignment;
+        if (widget_right)
+            gtk_table_attach(GTK_TABLE(table), widget_right, 2, 3, x, x+1,
+                             (GtkAttachOptions) (0),
+                             (GtkAttachOptions) (0), 0, 0);
+    }
 }
 
 /* it's at early stage */
@@ -1526,67 +1553,20 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                                  widgets[x].cfg);
                 break;
             case WIDGET_SPIN_BTN:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 12, 0);
 
-                if (x > 1 && widgets[x-1].type == WIDGET_SPIN_BTN) {
-                    table_line++;
-                } else {
-                    /* check how many WIDGET_SPIN_BTNs are there */
-                    gint lines = 0, i;
-                    for (i=x; i<amt && widgets[i].type == WIDGET_SPIN_BTN; i++)
-                        lines++;
+                widget = gtk_hbox_new(FALSE, 6);
 
-                    widget = gtk_table_new(lines, 3, FALSE);
-                    gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
-                    table_line=0;
-                }
+                GtkWidget *label_pre = NULL, *spin_btn = NULL, *label_past;
+                create_spin_button(&widgets[x], &label_pre, &spin_btn, &label_past);
 
-                GtkWidget *label_pre = gtk_label_new(_(widgets[x].label));
-                gtk_table_attach(GTK_TABLE (widget), label_pre, 0, 1, table_line, table_line+1,
-                                 (GtkAttachOptions) (0),
-                                 (GtkAttachOptions) (0), 0, 0);
-                gtk_misc_set_alignment(GTK_MISC(label_pre), 0, 0.5);
-                gtk_misc_set_padding(GTK_MISC(label_pre), 4, 0);
+                if (label_pre)
+                    gtk_box_pack_start(GTK_BOX(widget), label_pre, FALSE, FALSE, 0);
+                if (spin_btn)
+                    gtk_box_pack_start(GTK_BOX(widget), spin_btn, FALSE, FALSE, 0);
+                if (label_past)
+                    gtk_box_pack_start(GTK_BOX(widget), label_past, FALSE, FALSE, 0);
 
-                GtkWidget *spin_btn = gtk_spin_button_new_with_range(widgets[x].data.spin_btn.min,
-                                         widgets[x].data.spin_btn.max,
-                                         widgets[x].data.spin_btn.step);
-                gtk_table_attach(GTK_TABLE(widget), spin_btn, 1, 2, table_line, table_line+1,
-                                 (GtkAttachOptions) (0),
-                                 (GtkAttachOptions) (0), 4, 0);
-
-                if (widgets[x].tooltip)
-                    gtk_widget_set_tooltip_text(spin_btn, _(widgets[x].tooltip));
-
-                if (widgets[x].data.spin_btn.right_label) {
-                    GtkWidget *label_past = gtk_label_new(_(widgets[x].data.spin_btn.right_label));
-                    gtk_table_attach(GTK_TABLE(widget), label_past, 2, 3, table_line, table_line+1,
-                                     (GtkAttachOptions) (0),
-                                     (GtkAttachOptions) (0), 0, 0);
-                    gtk_misc_set_alignment(GTK_MISC(label_past), 0, 0.5);
-                    gtk_misc_set_padding(GTK_MISC(label_past), 4, 0);
-                }
-
-                switch (widgets[x].cfg_type) {
-                    case VALUE_INT:
-                        g_signal_connect(G_OBJECT(spin_btn), "value_changed",
-                                         G_CALLBACK(on_spin_btn_changed_gint),
-                                         widgets[x].cfg);
-                        g_signal_connect(G_OBJECT(spin_btn), "realize",
-                                         G_CALLBACK(on_spin_btn_realize_gint),
-                                         widgets[x].cfg);
-                        break;
-                    case VALUE_FLOAT:
-                        g_signal_connect(G_OBJECT(spin_btn), "value_changed",
-                                         G_CALLBACK(on_spin_btn_changed_gfloat),
-                                         widgets[x].cfg);
-                        g_signal_connect(G_OBJECT(spin_btn), "realize",
-                                         G_CALLBACK(on_spin_btn_realize_gfloat),
-                                         widgets[x].cfg);
-                        break;
-                    default:
-                        g_warning("Unsupported value type for spin button");
-                }
                 break;
             case WIDGET_CUSTOM:  /* custom widget. --nenolod */
                 if (widgets[x].data.populate)
@@ -1638,6 +1618,13 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 g_signal_connect(G_OBJECT(font_btn), "realize",
                                  G_CALLBACK(on_font_btn_realize),
                                  (char**)widgets[x].cfg);
+                break;
+            case WIDGET_TABLE:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
+
+                widget = gtk_table_new(widgets[x].data.table.rows, 3, FALSE);
+                fill_table(widget, widgets[x].data.table.elem, widgets[x].data.table.rows);
+                gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
                 break;
             default:
                 /* shouldn't ever happen - expect things to break */

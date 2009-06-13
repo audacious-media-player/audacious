@@ -28,6 +28,7 @@ typedef enum {
     WIDGET_SPIN_BTN,
     WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
     WIDGET_FONT_BTN,
+    WIDGET_TABLE,
 } WidgetType;
 
 typedef enum {
@@ -36,7 +37,7 @@ typedef enum {
     VALUE_BOOLEAN,
 } ValueType;
 
-typedef struct {
+typedef struct _PreferencesWidget {
     WidgetType type;         /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget) */
     gpointer cfg;            /* connected config value */
@@ -48,6 +49,16 @@ typedef struct {
             gdouble min, max, step;
             char *right_label;      /* text right to widget */
         } spin_btn;
+
+        struct {
+            struct _PreferencesWidget *elem;
+            gint rows;
+        } table;
+
+        struct {
+            char *stock_id;
+            char *markup;
+        } label;
 
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;
