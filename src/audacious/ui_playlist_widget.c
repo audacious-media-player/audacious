@@ -23,6 +23,7 @@
 #include "playlist.h"
 #include "playback.h"
 #include "audstrings.h"
+#include "ui_manager.h"
 
 enum {
     COLUMN_NUM = 0,
@@ -261,6 +262,18 @@ ui_playlist_widget_keypress_cb(GtkWidget * widget,
     };
 }
 
+static gboolean
+ui_playlist_widget_button_press_cb(GtkWidget *widget, GdkEventButton *event)
+{
+    if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+    {
+        ui_manager_popup_menu_show(GTK_MENU(playlistwin_popup_menu), event->x_root,
+                                   event->y_root + 2, 3, event->time);
+    }
+
+    return FALSE;
+}
+
 void
 ui_playlist_widget_update(GtkWidget *widget)
 {
@@ -438,6 +451,8 @@ ui_playlist_widget_new(Playlist *playlist)
 
     g_signal_connect(treeview, "key-press-event",
                      G_CALLBACK(ui_playlist_widget_keypress_cb), NULL);
+    g_signal_connect(treeview, "button-press-event",
+                     G_CALLBACK(ui_playlist_widget_button_press_cb), NULL);
 
     g_signal_connect(treeview, "drag-begin",
                      G_CALLBACK(_ui_playlist_widget_drag_begin), NULL);

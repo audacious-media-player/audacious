@@ -501,6 +501,17 @@ ui_manager_create_menus ( void )
    (AUDACIOUS_MENU_MAIN));
   gtk_widget_show (header);
 
+  gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/playlist.ui" , &gerr );
+
+  if ( gerr != NULL )
+  {
+    g_critical( "Error creating UI<ui/playlist.ui>: %s" , gerr->message );
+    g_error_free( gerr );
+    return NULL;
+  }
+
+  playlistwin_popup_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/playlist-rightclick-menu");
+
 #ifdef GDK_WINDOWING_QUARTZ
   sync_menu_takeover_menu(GTK_MENU_SHELL(menu));
 #endif
