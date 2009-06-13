@@ -62,8 +62,6 @@ _ui_playlist_widget_drag_begin(GtkTreeView *widget, GdkDragContext *context, gpo
     GtkTreeIter iter;
     gulong handler_id;
 
-    g_print("drag begin!!\n");
-
     sel = gtk_tree_view_get_selection(widget);
 
     handler_id = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "selection_changed_handler_id"));
@@ -154,7 +152,6 @@ _ui_playlist_widget_selection_update(GtkTreeModel *model, GtkTreePath *path, Gtk
 static void
 _ui_playlist_widget_selection_changed(GtkTreeSelection *selection, Playlist *playlist)
 {
-    g_print("selection changed !!\n");
     playlist_clear_selected(playlist);
 
     gtk_tree_selection_selected_foreach(selection, _ui_playlist_widget_selection_update, NULL);
