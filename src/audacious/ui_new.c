@@ -205,6 +205,9 @@ ui_set_song_info(gchar *text, gpointer user_data)
     UIPlaylistTab *tab;
     Playlist *playlist = playlist_get_active();
 
+    if (!g_signal_handler_is_connected(slider, slider_change_handler_id))
+        return;
+
     /* block "value-changed" signal handler to prevent skipping track
        if the next track is shorter than the previous one --desowin */
     g_signal_handler_block(slider, slider_change_handler_id);
@@ -314,6 +317,9 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
         return TRUE;
 
     gint time = playback_get_time();
+
+    if (!g_signal_handler_is_connected(slider, slider_change_handler_id))
+        return TRUE;
 
     g_signal_handler_block(slider, slider_change_handler_id);
     gtk_range_set_value(GTK_RANGE(slider), (gdouble)time);
