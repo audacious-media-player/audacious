@@ -29,6 +29,7 @@ enum {
     COLUMN_TEXT,
     COLUMN_TIME,
     COLUMN_WEIGHT,
+    COLUMN_ENTRYPTR,
     N_COLUMNS
 };
 
@@ -277,7 +278,8 @@ ui_playlist_widget_update(GtkWidget *widget)
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
                            COLUMN_NUM, row, COLUMN_TEXT, desc_buf,
                            COLUMN_TIME, length,
-                           COLUMN_WEIGHT, PANGO_WEIGHT_NORMAL, -1);
+                           COLUMN_WEIGHT, PANGO_WEIGHT_NORMAL,
+                           COLUMN_ENTRYPTR, entry, -1);
         row++;
 
         g_free(desc_buf);
@@ -343,7 +345,8 @@ ui_playlist_widget_fill(gpointer treeview)
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
                            COLUMN_NUM, row, COLUMN_TEXT, desc_buf,
                            COLUMN_TIME, length,
-                           COLUMN_WEIGHT, PANGO_WEIGHT_NORMAL, -1);
+                           COLUMN_WEIGHT, PANGO_WEIGHT_NORMAL,
+                           COLUMN_ENTRYPTR, entry, -1);
         row++;
 
         g_free(desc_buf);
@@ -369,7 +372,7 @@ ui_playlist_widget_new(Playlist *playlist)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
 
-    store = gtk_list_store_new(N_COLUMNS, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING, PANGO_TYPE_WEIGHT);
+    store = gtk_list_store_new(N_COLUMNS, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING, PANGO_TYPE_WEIGHT, G_TYPE_POINTER);
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
     g_object_unref(store);
 
