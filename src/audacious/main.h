@@ -23,6 +23,10 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#ifdef _AUDACIOUS_CORE
+#  include "config.h"
+#endif
+
 #ifndef AUDACIOUS_MAIN_H
 #define AUDACIOUS_MAIN_H
 

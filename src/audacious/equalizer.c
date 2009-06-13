@@ -17,10 +17,13 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#ifdef _AUDACIOUS_CORE
+#  include "config.h"
+#endif
+
 #include "equalizer.h"
 #include "hook.h"
 #include "output.h"
-
 #include "audconfig.h"
 
 static void change_equalizer (void) {
