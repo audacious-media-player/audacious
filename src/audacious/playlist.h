@@ -195,6 +195,7 @@ Tuple *playlist_get_tuple(Playlist *playlist, guint pos);
 gint playlist_get_songtime(Playlist *playlist, guint pos);
 
 GList *playlist_get_selected(Playlist *playlist);
+GList *playlist_get_selected_elems(Playlist *playlist);
 int playlist_get_num_selected(Playlist *playlist);
 
 void playlist_get_total_time(Playlist *playlist, gulong * total_time, gulong * selection_time,

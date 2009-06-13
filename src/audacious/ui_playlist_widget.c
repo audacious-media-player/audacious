@@ -60,8 +60,14 @@ _ui_playlist_widget_drag_begin(GtkTreeView *widget, GdkDragContext *context, gpo
     GtkTreeSelection *sel;
     GtkTreePath *path;
     GtkTreeIter iter;
+    gulong handler_id;
+
+    g_print("drag begin!!\n");
 
     sel = gtk_tree_view_get_selection(widget);
+
+    handler_id = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "selection_changed_handler_id"));
+    g_signal_handler_block(G_OBJECT(sel), handler_id);
 
     if (!gtk_tree_selection_get_selected(sel, NULL, &iter))
         return;
@@ -118,7 +124,9 @@ _ui_playlist_widget_drag_end(GtkTreeView *widget, GdkDragContext *context, gpoin
 {
     Playlist *playlist = g_object_get_data(G_OBJECT(widget), "my_playlist");
     gint delta;
+    gulong handler_id;
     UiPlaylistDragTracker *t;
+    GtkTreeSelection *sel;
 
     t = g_object_get_data(G_OBJECT(widget), "ui_playlist_drag_context");
 
@@ -126,6 +134,11 @@ _ui_playlist_widget_drag_end(GtkTreeView *widget, GdkDragContext *context, gpoin
 
     playlist_shift(playlist, delta);
     g_slice_free(UiPlaylistDragTracker, t);
+
+    sel = gtk_tree_view_get_selection(widget);
+
+    handler_id = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "selection_changed_handler_id"));
+    g_signal_handler_unblock(G_OBJECT(sel), handler_id);
 }
 
 static void
@@ -141,6 +154,7 @@ _ui_playlist_widget_selection_update(GtkTreeModel *model, GtkTreePath *path, Gtk
 static void
 _ui_playlist_widget_selection_changed(GtkTreeSelection *selection, Playlist *playlist)
 {
+    g_print("selection changed !!\n");
     playlist_clear_selected(playlist);
 
     gtk_tree_selection_selected_foreach(selection, _ui_playlist_widget_selection_update, NULL);
@@ -390,6 +404,7 @@ ui_playlist_widget_new(Playlist *playlist)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
     GtkTreeSelection *selection;
+    gulong selection_changed_handler_id;
 
     store = gtk_list_store_new(N_COLUMNS, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING, PANGO_TYPE_WEIGHT, G_TYPE_POINTER);
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
@@ -438,8 +453,9 @@ ui_playlist_widget_new(Playlist *playlist)
     g_object_set_data(G_OBJECT(treeview), "my_playlist", playlist);
 
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
-    g_signal_connect(selection, "changed",
-                     G_CALLBACK(_ui_playlist_widget_selection_changed), playlist);
+    selection_changed_handler_id = g_signal_connect(selection, "changed",
+                                                    G_CALLBACK(_ui_playlist_widget_selection_changed), playlist);
+    g_object_set_data(G_OBJECT(treeview), "selection_changed_handler_id", GINT_TO_POINTER(selection_changed_handler_id));
 
     ui_playlist_widget_fill(treeview);
 

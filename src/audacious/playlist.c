@@ -474,19 +474,22 @@ playlist_shift(Playlist *playlist, gint delta)
         return;
     }
 
-    MOWGLI_ITER_FOREACH_SAFE(n, tn, playlist->entries)
+    MOWGLI_ITER_FOREACH_SAFE(n, tn, playlist_get_selected_elems(playlist))
     {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(n->data);
+        GList *node = (GList *) n->data;
+        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
 
         if (!entry->selected)
             continue;
 
+        g_print("entry %p is selected\n", entry);
+
         if (orig_delta > 0)
             for (delta = orig_delta; delta > 0; delta--)
-                glist_movedown(n);
+                glist_movedown(node);
         else if (orig_delta < 0)
             for (delta = orig_delta; delta > 0; delta--)
-                glist_moveup(n);
+                glist_moveup(node);
     }
 
     /* do the remaining work. */
@@ -2289,6 +2292,21 @@ playlist_get_selected(Playlist *playlist)
             list = g_list_prepend(list, GINT_TO_POINTER(i));
     }
     PLAYLIST_UNLOCK(playlist);
+    return g_list_reverse(list);
+}
+
+GList *
+playlist_get_selected_elems(Playlist *playlist)
+{
+    GList *node, *list = NULL;
+    gint i = 0;
+
+    for (node = playlist->entries; node; node = g_list_next(node), i++) {
+        PlaylistEntry *entry = node->data;
+        if (entry->selected)
+            list = g_list_prepend(list, node);
+    }
+
     return g_list_reverse(list);
 }
 
