@@ -552,14 +552,6 @@ _ui_initialize(void)
     shbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(tophbox), shbox, TRUE, TRUE, 0);
 
-    volume = gtk_volume_button_new();
-    gtk_scale_button_set_adjustment(GTK_SCALE_BUTTON(volume), GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 100, 1, 5, 0)));
-    /* Set the default volume to the balance average.
-        (I'll add balance control later) -Ryan */
-    input_get_volume(&lvol, &rvol);
-    gtk_scale_button_set_value(GTK_SCALE_BUTTON(volume), (lvol+rvol)/2);
-    gtk_box_pack_start(GTK_BOX(shbox), volume, FALSE, FALSE, 0);
-
     slider = gtk_hscale_new(NULL);
     gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
     /* TODO: make this configureable */
@@ -568,6 +560,14 @@ _ui_initialize(void)
 
     label_time = gtk_markup_label_new(NULL);
     gtk_box_pack_start(GTK_BOX(shbox), label_time, FALSE, FALSE, 5);
+
+    volume = gtk_volume_button_new();
+    gtk_scale_button_set_adjustment(GTK_SCALE_BUTTON(volume), GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 100, 1, 5, 0)));
+    /* Set the default volume to the balance average.
+        (I'll add balance control later) -Ryan */
+    input_get_volume(&lvol, &rvol);
+    gtk_scale_button_set_value(GTK_SCALE_BUTTON(volume), (lvol+rvol)/2);
+    gtk_box_pack_start(GTK_BOX(shbox), volume, FALSE, FALSE, 0);
 
     plbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), plbox, TRUE, TRUE, 0);
