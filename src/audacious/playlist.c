@@ -1452,13 +1452,14 @@ playlist_eof_reached(Playlist *playlist)
             playback_initiate();
         else
             hook_call("playlist end reached", NULL);
-        return;
+
+        goto DONE;
     }
 
     if (cfg.stopaftersong) {
         PLAYLIST_UNLOCK(playlist);
         hook_call("playlist end reached", NULL);
-        return;
+        goto DONE;
     }
 
     if (playlist->queue != NULL) {
@@ -1475,7 +1476,7 @@ playlist_eof_reached(Playlist *playlist)
         if (!cfg.repeat) {
             PLAYLIST_UNLOCK(playlist);
             hook_call("playlist end reached", NULL);
-            return;
+            goto DONE;
         }
     }
     else
@@ -1485,6 +1486,7 @@ playlist_eof_reached(Playlist *playlist)
 
     playback_initiate();
 
+DONE:
     hook_call ("playlist position", playlist);
     hook_call ("playlist update", playlist);
 }
