@@ -455,7 +455,7 @@ void
 playlist_shift(Playlist *playlist, gint delta)
 {
     gint orig_delta;
-    GList *n, *tn;
+    GList *n;
     g_return_if_fail(playlist != NULL);
 
     if (delta == 0)
@@ -474,22 +474,35 @@ playlist_shift(Playlist *playlist, gint delta)
         return;
     }
 
-    MOWGLI_ITER_FOREACH_SAFE(n, tn, playlist_get_selected_elems(playlist))
+    if (orig_delta < 0)
     {
-        GList *node = (GList *) n->data;
-        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
+        for (delta = orig_delta; delta < 0; delta++)
+        {
+            MOWGLI_ITER_FOREACH(n, playlist->entries)
+            {
+                PlaylistEntry *entry = PLAYLIST_ENTRY(n->data);
 
-        if (!entry->selected)
-            continue;
+                if (!entry->selected)
+                    continue;
 
-        g_print("entry %p is selected\n", entry);
+                glist_moveup(n);
+            }
+        }
+    }
+    else
+    {
+        for (delta = orig_delta; delta > 0; delta--)
+        {
+            MOWGLI_ITER_FOREACH_PREV(n, playlist->tail)
+            {
+                PlaylistEntry *entry = PLAYLIST_ENTRY(n->data);
 
-        if (orig_delta > 0)
-            for (delta = orig_delta; delta > 0; delta--)
-                glist_movedown(node);
-        else if (orig_delta < 0)
-            for (delta = orig_delta; delta > 0; delta--)
-                glist_moveup(node);
+                if (!entry->selected)
+                    continue;
+
+                glist_movedown(n);
+            }
+        }
     }
 
     /* do the remaining work. */
