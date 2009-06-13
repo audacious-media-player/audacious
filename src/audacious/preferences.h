@@ -30,14 +30,28 @@ typedef enum {
     WIDGET_FONT_BTN,
 } WidgetType;
 
+typedef enum {
+    VALUE_INT,
+    VALUE_FLOAT,
+    VALUE_BOOLEAN,
+} ValueType;
+
 typedef struct {
     WidgetType type;         /* widget type */
-    char *label;             /* widget title (for SPIN_BTN it's text left to widget)*/
+    char *label;             /* widget title (for SPIN_BTN it's text left to widget) */
     gpointer cfg;            /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
-    char *tooltip;           /* widget tooltip (for SPIN_BTN it's text right to widget), can be NULL */
+    char *tooltip;           /* widget tooltip, can be NULL */
     gboolean child;
-    GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
+    union {
+        struct {
+            gdouble min, max, step;
+            char *right_label;      /* text right to widget */
+        } spin_btn;
+
+        GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
+    } data;
+    ValueType cfg_type;      /* connected value type */
 } PreferencesWidget;
 
 void create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt);

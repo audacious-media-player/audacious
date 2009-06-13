@@ -189,7 +189,7 @@ static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, FALSE, ui_preferences_bit_depth},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, FALSE, {.populate = ui_preferences_bit_depth}},
 };
 
 static PreferencesWidget audio_page_widgets2[] = {
@@ -214,7 +214,7 @@ static PreferencesWidget replay_gain_page_widgets[] = {
                      N_("Use peak value from Replay Gain info for clipping prevention"), TRUE},
     {WIDGET_CHK_BTN, N_("Dynamically adjust scale factor to prevent clipping"), &cfg.enable_adaptive_scaler, NULL,
                      N_("Decrease scale factor (gain) if clipping nevertheless occurred"), TRUE},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_rg_params},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, {.populate = ui_preferences_rg_params}},
 };
 
 static PreferencesWidget playback_page_widgets[] = {
@@ -224,7 +224,7 @@ static PreferencesWidget playback_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
         N_("When finished playing a song, don't automatically advance to the next."), FALSE},
     {WIDGET_CHK_BTN, N_("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
-    {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, N_("seconds"), TRUE},
+    {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, NULL, TRUE, {.spin_btn = {1, 100, 1, N_("seconds")}}, VALUE_INT},
 };
 
 static PreferencesWidget playlist_page_widgets[] = {
@@ -234,15 +234,15 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, N_("Load metadata (tag information) from music files."), FALSE},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, ui_preferences_chardet_table_populate},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, {.populate = ui_preferences_chardet_table_populate}},
     {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
 
 static PreferencesWidget mouse_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, N_("percent"), FALSE},
-    {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, N_("lines"), FALSE},
+    {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("percent")}}, VALUE_INT},
+    {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("lines")}}, VALUE_INT},
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
@@ -884,16 +884,29 @@ on_src_converter_type_changed(GtkComboBox * box,
 }
 
 static void
-on_spin_btn_realize(GtkSpinButton *button, gboolean *cfg)
+on_spin_btn_realize_gint(GtkSpinButton *button, gint *cfg)
 {
     gtk_spin_button_set_value(button, *cfg);
 }
 
 static void
-on_spin_btn_changed(GtkSpinButton *button, gboolean *cfg)
+on_spin_btn_changed_gint(GtkSpinButton *button, gint *cfg)
 {
     *cfg = gtk_spin_button_get_value_as_int(button);
 }
+
+static void
+on_spin_btn_realize_gfloat(GtkSpinButton *button, gfloat *cfg)
+{
+     gtk_spin_button_set_value(button, (gdouble) *cfg);
+}
+
+static void
+on_spin_btn_changed_gfloat(GtkSpinButton *button, gfloat *cfg)
+{
+    *cfg = (gfloat) gtk_spin_button_get_value(button);
+}
+
 
 static void
 on_category_treeview_realize(GtkTreeView * treeview,
@@ -1535,14 +1548,18 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 gtk_misc_set_alignment(GTK_MISC(label_pre), 0, 0.5);
                 gtk_misc_set_padding(GTK_MISC(label_pre), 4, 0);
 
-                GtkObject *adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
-                GtkWidget *spin_btn = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
+                GtkWidget *spin_btn = gtk_spin_button_new_with_range(widgets[x].data.spin_btn.min,
+                                         widgets[x].data.spin_btn.max,
+                                         widgets[x].data.spin_btn.step);
                 gtk_table_attach(GTK_TABLE(widget), spin_btn, 1, 2, table_line, table_line+1,
                                  (GtkAttachOptions) (0),
                                  (GtkAttachOptions) (0), 4, 0);
 
-                if (widgets[x].tooltip) {
-                    GtkWidget *label_past = gtk_label_new(_(widgets[x].tooltip));
+                if (widgets[x].tooltip)
+                    gtk_widget_set_tooltip_text(spin_btn, _(widgets[x].tooltip));
+
+                if (widgets[x].data.spin_btn.right_label) {
+                    GtkWidget *label_past = gtk_label_new(_(widgets[x].data.spin_btn.right_label));
                     gtk_table_attach(GTK_TABLE(widget), label_past, 2, 3, table_line, table_line+1,
                                      (GtkAttachOptions) (0),
                                      (GtkAttachOptions) (0), 0, 0);
@@ -1550,16 +1567,30 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     gtk_misc_set_padding(GTK_MISC(label_past), 4, 0);
                 }
 
-                g_signal_connect(G_OBJECT(spin_btn), "value_changed",
-                                 G_CALLBACK(on_spin_btn_changed),
-                                 widgets[x].cfg);
-                g_signal_connect(G_OBJECT(spin_btn), "realize",
-                                 G_CALLBACK(on_spin_btn_realize),
-                                 widgets[x].cfg);
+                switch (widgets[x].cfg_type) {
+                    case VALUE_INT:
+                        g_signal_connect(G_OBJECT(spin_btn), "value_changed",
+                                         G_CALLBACK(on_spin_btn_changed_gint),
+                                         widgets[x].cfg);
+                        g_signal_connect(G_OBJECT(spin_btn), "realize",
+                                         G_CALLBACK(on_spin_btn_realize_gint),
+                                         widgets[x].cfg);
+                        break;
+                    case VALUE_FLOAT:
+                        g_signal_connect(G_OBJECT(spin_btn), "value_changed",
+                                         G_CALLBACK(on_spin_btn_changed_gfloat),
+                                         widgets[x].cfg);
+                        g_signal_connect(G_OBJECT(spin_btn), "realize",
+                                         G_CALLBACK(on_spin_btn_realize_gfloat),
+                                         widgets[x].cfg);
+                        break;
+                    default:
+                        g_warning("Unsupported value type for spin button");
+                }
                 break;
             case WIDGET_CUSTOM:  /* custom widget. --nenolod */
-                if (widgets[x].populate)
-                    widget = widgets[x].populate();
+                if (widgets[x].data.populate)
+                    widget = widgets[x].data.populate();
                 else
                     widget = NULL;
 
