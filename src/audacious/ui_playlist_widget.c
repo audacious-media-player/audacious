@@ -212,7 +212,7 @@ ui_playlist_widget_set_current(GtkWidget *treeview, gint pos)
                 end_pos   = gtk_tree_path_get_indices(end_path);
 
                 /* autoscroll only if the current track is invisible */
-                if (pos >= *end_pos || pos <= *start_pos)
+                if (start_pos != NULL && end_pos != NULL && (pos >= *end_pos || pos <= *start_pos))
                 {
                     path = gtk_tree_path_new_from_indices(pos, -1);
                     gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), path, NULL, TRUE, 0.5, 0);
