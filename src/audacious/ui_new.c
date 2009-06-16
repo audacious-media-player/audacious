@@ -208,6 +208,9 @@ ui_set_song_info(gchar *text, gpointer user_data)
     if (!g_signal_handler_is_connected(slider, slider_change_handler_id))
         return;
 
+    if (length == -1)
+        return;
+
     /* block "value-changed" signal handler to prevent skipping track
        if the next track is shorter than the previous one --desowin */
     g_signal_handler_block(slider, slider_change_handler_id);
@@ -309,7 +312,7 @@ ui_update_song_info(gpointer hook_data, gpointer user_data)
 {
     if (!playback_get_playing())
     {
-        gtk_range_set_value(GTK_RANGE(slider), 0.0);
+        if (GTK_IS_WIDGET(slider)) gtk_range_set_value(GTK_RANGE(slider), 0.0);
         return FALSE;
     }
 
