@@ -2339,7 +2339,9 @@ playlist_clear_selected(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
 
-    hook_call ("playlist update", playlist);
+    /* commenting out for now,
+     * fix redraw playlist-widget in newui on every select - Michal
+    hook_call ("playlist update", playlist); */
 }
 
 gint
