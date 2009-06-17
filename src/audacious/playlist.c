@@ -2412,13 +2412,13 @@ playlist_get_info_func(gpointer arg)
     GList *node;
     gboolean update_playlistwin = FALSE;
 
-    while (playlist_get_info_is_going()) {
+    while (cfg.use_pl_metadata && playlist_get_info_is_going ())
+    {
         PlaylistEntry *entry;
         Playlist *playlist = playlist_get_active();
 
-        if (cfg.use_pl_metadata &&
-            playlist_get_info_scan_active) {
-
+        if (playlist_get_info_scan_active)
+        {
             for (node = playlist->entries; node; node = g_list_next(node)) {
                 entry = node->data;
 
