@@ -1701,6 +1701,20 @@ create_replay_gain_category(void)
     gtk_box_pack_start (GTK_BOX (rg_page_vbox), widgets_vbox, TRUE, TRUE, 0);
 }
 
+static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
+{
+    Playlist * playlist;
+    char * title;
+
+    cfg.show_numbers_in_pl = gtk_toggle_button_get_active (numbers);
+
+    playlist = playlist_get_active ();
+    hook_call ("playlist update", playlist);
+    title = playlist_get_info_text (playlist);
+    hook_call ("title change", title);
+    g_free (title);
+}
+
 static void
 create_playlist_category(void)
 {
@@ -1723,7 +1737,7 @@ create_playlist_category(void)
     GtkWidget *checkbutton10;
     GtkWidget *image8;
     GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
-
+    GtkWidget * numbers_alignment, * numbers;
 
     playlist_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), playlist_page_vbox);
@@ -1735,12 +1749,23 @@ create_playlist_category(void)
 
     alignment55 = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start (GTK_BOX (vbox5), alignment55, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment55), 12, 12, 0, 0);
+    gtk_alignment_set_padding ((GtkAlignment *) alignment55, 12, 3, 0, 0);
 
     label60 = gtk_label_new (_("<b>Song Display</b>"));
     gtk_container_add (GTK_CONTAINER (alignment55), label60);
     gtk_label_set_use_markup (GTK_LABEL (label60), TRUE);
     gtk_misc_set_alignment (GTK_MISC (label60), 0, 0.5);
+
+    numbers_alignment = gtk_alignment_new (0, 0, 0, 0);
+    gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
+    gtk_box_pack_start ((GtkBox *) vbox5, numbers_alignment, 0, 0, 3);
+
+    numbers = gtk_check_button_new_with_label (_ ("Show song numbers"));
+    gtk_toggle_button_set_active ((GtkToggleButton *) numbers,
+     cfg.show_numbers_in_pl);
+    g_signal_connect ((GObject *) numbers, "toggled", (GCallback)
+     show_numbers_cb, 0);
+    gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
 
     alignment56 = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start (GTK_BOX (vbox5), alignment56, FALSE, FALSE, 0);

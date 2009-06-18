@@ -1535,7 +1535,11 @@ playlist_get_info_text(Playlist *playlist)
         g_free(basename);
     }
 
-    numbers = g_strdup_printf("%d. ", playlist_get_position_nolock(playlist) + 1);
+    if (cfg.show_numbers_in_pl)
+       numbers = g_strdup_printf ("%d. ", 1 + g_list_index (playlist->entries,
+        playlist->position));
+    else
+       numbers = g_strdup ("");
 
     if (playlist->position->length != -1)
         length = g_strdup_printf(" (%d:%-2.2d)",
