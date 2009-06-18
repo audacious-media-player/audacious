@@ -100,55 +100,27 @@ get_current_output_plugin(void)
 void
 set_current_output_plugin(gint i)
 {
-    gboolean playing;
-    OutputPlugin *op = get_current_output_plugin();
+    char playing;
+    Playlist * playlist;
+    int time, position;
 
-    GList *node = g_list_nth(op_data.output_list, i);
-    if (!node) {
-        op_data.current_output_plugin = NULL;
-        return;
+    playing = playback_get_playing ();
+
+    if (playing)
+    {
+        playlist = playlist_get_active ();
+        position = playlist_get_position (playlist);
+        time = playback_get_time ();
+        playback_stop();
     }
 
-    op_data.current_output_plugin = node->data;
+    op_data.current_output_plugin = g_list_nth(op_data.output_list, i)->data;
 
-    playing = playback_get_playing();
-
-    if (playing == TRUE)
+    if (playing)
     {
-        guint time, pos;
-        PlaylistEntry *entry;
-
-	plugin_set_current((Plugin *)op);
-
-        /* don't stop yet, get the seek time and playlist position first */
-        pos = playlist_get_position(playlist_get_active());
-        time = op->output_time();
-
-        /* reset the audio system */
-        playback_stop();
-        op->close_audio();
-
-        g_usleep(300000);
-
-        /* wait for the playback thread to come online */
-        while (playback_get_playing())
-            g_message("waiting for audio system shutdown...");
-
-        /* wait for the playback thread to come online */
-        playlist_set_position(playlist_get_active(), pos);
-        entry = playlist_get_entry_to_play(playlist_get_active());
-        playback_play_file(entry);
-
-        while (!playback_get_playing())
-        {
-            gtk_main_iteration();
-                g_message("waiting for audio system startup...");
-        }
-
-        /* and signal a reseek */
-        if (playlist_get_current_length(playlist_get_active()) > -1 &&
-            time <= (playlist_get_current_length(playlist_get_active())))
-            playback_seek(time / 1000);
+        playlist_set_position (playlist, position);
+        playback_initiate ();
+        playback_seek (time / 1000);
     }
 }
 
