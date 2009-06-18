@@ -505,7 +505,7 @@ ui_jump_to_track(void)
     hbox = gtk_hbox_new(FALSE, 3);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
-    
+
     /* filter box */
     search_label = gtk_label_new(_("Filter: "));
     gtk_label_set_markup_with_mnemonic(GTK_LABEL(search_label), _("_Filter:"));
@@ -535,7 +535,9 @@ ui_jump_to_track(void)
                      toggle2);
 
     /* clear button */
-    rescan = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
+    rescan = gtk_button_new_with_mnemonic (_ ("Clea_r"));
+    gtk_button_set_image ((GtkButton *) rescan, gtk_image_new_from_stock
+     (GTK_STOCK_CLEAR, GTK_ICON_SIZE_BUTTON));
     gtk_box_pack_start(GTK_BOX(hbox), rescan, FALSE, FALSE, 0);
 
 
@@ -572,16 +574,16 @@ ui_jump_to_track(void)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
                                  cfg.close_jtf_dialog ? TRUE : FALSE);
     gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
-    g_signal_connect(toggle, "clicked", 
+    g_signal_connect(toggle, "clicked",
                      G_CALLBACK(ui_jump_to_track_toggle_cb),
                      toggle);
-    
+
     queue = gtk_button_new_with_mnemonic(_("_Queue"));
     gtk_button_set_image(GTK_BUTTON(queue),
                      gtk_image_new_from_stock(AUD_STOCK_QUEUETOGGLE, GTK_ICON_SIZE_BUTTON));
     gtk_box_pack_start(GTK_BOX(bbox), queue, FALSE, FALSE, 0);
     GTK_WIDGET_SET_FLAGS(queue, GTK_CAN_DEFAULT);
-    g_signal_connect(queue, "clicked", 
+    g_signal_connect(queue, "clicked",
                      G_CALLBACK(ui_jump_to_track_queue_cb),
                      treeview);
     g_signal_connect(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview)), "changed",
