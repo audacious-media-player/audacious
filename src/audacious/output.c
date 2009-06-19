@@ -314,7 +314,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         bit_depth = cfg.output_bit_depth;
 
         AUDDBG("bit depth: %d\n", bit_depth);
-        select (bit_depth) {
+        switch (bit_depth) {
             case 32:
                 output_fmt = FMT_S32_NE;
                 break;
