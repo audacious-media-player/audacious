@@ -12,9 +12,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
+"Report-Msgid-Bugs-To: http://redmine.atheme.org/\n"
 "POT-Creation-Date: 2009-06-18 17:44-0400\n"
-"PO-Revision-Date: 2008-07-08 12:25+0900\n"
+"PO-Revision-Date: 2009-06-19 12:22+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -165,7 +165,7 @@ msgstr "ヴァージョンを表示する"
 
 #: src/audacious/main.c:212
 msgid "Interface to use (use -i list to view available interfaces)"
-msgstr ""
+msgstr "使用するインタフェイス (利用可能なインタフェイスを見るには -i list とする)"
 
 #: src/audacious/main.c:214
 msgid "Used in macpacking"
@@ -199,11 +199,12 @@ msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: ディスプレイを開けません. 終了します.\n"
 
 #: src/audacious/main.c:565
-#, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
-msgstr "利用可能なプリセット(_P):"
+msgstr ""
+"利用可能なインタフェイス:\n"
+"\n"
 
 #: src/audacious/playback.c:289
 msgid ""
@@ -214,9 +215,8 @@ msgstr ""
 "出力プラグインを選択していません."
 
 #: src/audacious/playlist.c:300 src/audacious/playlist.c:3106
-#, fuzzy
 msgid "Untitled Playlist"
-msgstr "新しいプレイリスト"
+msgstr "タイトルなしプレイリスト"
 
 #: src/audacious/pluginenum.c:834
 msgid "Module loading not supported! Plugins will not be loaded.\n"
@@ -263,14 +263,13 @@ msgstr ""
 "Audacious を GDB 経由で起動して問題を再現させる必要があります．\n"
 
 #: src/audacious/signals.c:81
-#, fuzzy
 msgid ""
 "\n"
 "Bugs can be reported at http://redmine.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 "\n"
-"Audacious や Audacious プラグインのバグは http://bugzilla.atheme.org/ にレ"
+"Audacious や Audacious プラグインのバグは http://redmine.atheme.org/ にレ"
 "ポートしてください．\n"
 
 #: src/audacious/signals.c:353
@@ -282,7 +281,7 @@ msgstr ""
 "クラッシュレポートはおそらく利用できないでしょう．\n"
 
 #: src/audacious/ui_about.c:46
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
@@ -290,7 +289,7 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2005-2008 Audacious 開発チーム"
+"Copyright (C) 2005-2009 Audacious 開発チーム"
 
 #: src/audacious/ui_about.c:126 src/audacious/ui_credits.c:398
 #: src/audacious/ui_manager.c:293 src/audacious/ui_manager.c:294
@@ -302,7 +301,7 @@ msgid "Credits"
 msgstr "クレジット"
 
 #: src/audacious/ui_credits.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "A multimedia player for many platforms.\n"
@@ -310,14 +309,13 @@ msgid ""
 "Copyright (C) 2005-2009 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"多くのプラットフォームに対応したスキン機能付マルチメディアプレーヤ.\n"
+"多くのプラットフォームに対応したマルチメディアプレーヤ.\n"
 "\n"
-"Copyright (C) 2005-2008 Audacious 開発チーム\n"
+"Copyright (C) 2005-2009 Audacious 開発チーム\n"
 
 #: src/audacious/ui_credits.c:53
-#, fuzzy
 msgid "Core developers:"
-msgstr "0.1.x 開発者:"
+msgstr "主要開発者:"
 
 #: src/audacious/ui_credits.c:67
 msgid "Graphics:"
@@ -336,9 +334,8 @@ msgid "Patch authors:"
 msgstr "パッチ作者:"
 
 #: src/audacious/ui_credits.c:132
-#, fuzzy
 msgid "1.x developers:"
-msgstr "0.1.x 開発者:"
+msgstr "1.x 開発者:"
 
 #: src/audacious/ui_credits.c:154
 msgid "BMP Developers:"
@@ -346,7 +343,7 @@ msgstr "BMP 開発者:"
 
 #: src/audacious/ui_credits.c:186
 msgid "Basque:"
-msgstr ""
+msgstr "バスク語:"
 
 #: src/audacious/ui_credits.c:189
 msgid "Brazilian Portuguese:"
@@ -1210,7 +1207,7 @@ msgstr "追加したらダイアログを閉じる"
 
 #: src/audacious/ui_headless.c:37
 msgid "Headless Interface"
-msgstr ""
+msgstr "ヘッドレスインタフェイス"
 
 #: src/audacious/ui_jumptotrack.c:143
 msgid "Un_queue"
@@ -1237,9 +1234,8 @@ msgid "Remember"
 msgstr "記憶"
 
 #: src/audacious/ui_jumptotrack.c:538
-#, fuzzy
 msgid "Clea_r"
-msgstr "A-B をクリア"
+msgstr "クリア(_r)"
 
 #: src/audacious/ui_jumptotrack.c:573
 msgid "Close on Jump"
@@ -1536,14 +1532,12 @@ msgid "Sorts the list by title."
 msgstr "タイトル順でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:214 src/audacious/ui_manager.c:248
-#, fuzzy
 msgid "By Album"
-msgstr "アルバム名"
+msgstr "アルバム"
 
 #: src/audacious/ui_manager.c:215 src/audacious/ui_manager.c:249
-#, fuzzy
 msgid "Sorts the list by album."
-msgstr "タイトル順でプレイリストをソートします."
+msgstr "アルバム順でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:218 src/audacious/ui_manager.c:252
 msgid "By Artist"
@@ -1598,9 +1592,8 @@ msgid "Help"
 msgstr "ヘルプ"
 
 #: src/audacious/ui_manager.c:285
-#, fuzzy
 msgid "Components"
-msgstr "コメント"
+msgstr "コンポーネント"
 
 #: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:290
 msgid "View Track Details"
@@ -1781,19 +1774,19 @@ msgid "Delete auto-load preset"
 msgstr "自動読み込みのプリセットの削除"
 
 #: src/audacious/ui_misc.c:48
-#, fuzzy
 msgid "Audacious - Unsupported Version Warning"
-msgstr "Audacious - 壊れた GTK エンジンの使用警告"
+msgstr "Audacious - 未サポートヴァージョン警告"
 
 #: src/audacious/ui_misc.c:55
 msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-msgstr ""
+msgstr "<big><b>Audacious2 はまだ準備できていません!</b></big>"
 
 #: src/audacious/ui_misc.c:61
 msgid ""
 "<b>Please don't file bugs at this point unless they represent major problems."
 "</b>"
-msgstr ""
+msgstr "<b>重大な問題でない限り，この時点でバグを登録しないでください．"
+"</b>"
 
 #: src/audacious/ui_misc.c:64
 msgid ""
@@ -1829,7 +1822,7 @@ msgstr ""
 
 #: src/audacious/ui_new.c:631
 msgid "New Interface"
-msgstr ""
+msgstr "新しいインタフェイス"
 
 #: src/audacious/ui_playlist_manager.c:364
 msgid "Playlist Manager"
@@ -2262,7 +2255,7 @@ msgstr "<b>曲の表示</b>"
 
 #: src/audacious/ui_preferences.c:1763
 msgid "Show song numbers"
-msgstr ""
+msgstr "曲番号の表示"
 
 #: src/audacious/ui_preferences.c:1784
 msgid "Show information about titlestring format"
