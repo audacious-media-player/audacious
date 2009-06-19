@@ -60,6 +60,10 @@ typedef struct _PreferencesWidget {
             char *markup;
         } label;
 
+        struct {
+            char *title;
+        } font_btn;
+
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;
     ValueType cfg_type;      /* connected value type */

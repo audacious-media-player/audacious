@@ -1449,17 +1449,45 @@ create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget *
 }
 
 void
+create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_btn)
+{
+    *font_btn = gtk_font_button_new();
+    gtk_font_button_set_use_font(GTK_FONT_BUTTON(*font_btn), TRUE);
+    gtk_font_button_set_use_size(GTK_FONT_BUTTON(*font_btn), TRUE);
+    if (widget->label) {
+        *label = gtk_label_new_with_mnemonic(_(widget->label));
+        gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
+        gtk_misc_set_alignment(GTK_MISC(*label), 1, 0.5);
+        gtk_label_set_justify(GTK_LABEL(*label), GTK_JUSTIFY_RIGHT);
+        gtk_label_set_mnemonic_widget(GTK_LABEL(*label), *font_btn);
+    }
+
+    if (widget->data.font_btn.title)
+        gtk_font_button_set_title(GTK_FONT_BUTTON(*font_btn), _(widget->data.font_btn.title));
+
+    g_object_set_data(G_OBJECT(*font_btn), "callback", widget->callback);
+
+    g_signal_connect(G_OBJECT(*font_btn), "font_set",
+                     G_CALLBACK(on_font_btn_font_set),
+                     (char**)widget->cfg);
+    g_signal_connect(G_OBJECT(*font_btn), "realize",
+                     G_CALLBACK(on_font_btn_realize),
+                     (char**)widget->cfg);
+}
+
+void
 fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 {
     int x;
     GtkWidget *widget_left, *widget_middle, *widget_right;
+    GtkAttachOptions middle_policy = (GtkAttachOptions) (0);
 
     for (x = 0; x < amt; ++x) {
         widget_left = widget_middle = widget_right = NULL;
         switch (elements[x].type) {
             case WIDGET_SPIN_BTN:
                 create_spin_button(&elements[x], &widget_left, &widget_middle, &widget_right);
-
+                middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_LABEL:
                 if (elements[x].data.label.stock_id)
@@ -1472,6 +1500,11 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 
                 gtk_label_set_line_wrap (GTK_LABEL(widget_middle), TRUE);
                 gtk_misc_set_alignment (GTK_MISC(widget_middle), 0, 0.5);
+                middle_policy = (GtkAttachOptions) (GTK_FILL);
+                break;
+            case WIDGET_FONT_BTN:
+                create_font_btn(&elements[x], &widget_left, &widget_middle);
+                middle_policy = (GtkAttachOptions) (GTK_FILL | GTK_EXPAND);
                 break;
             default:
                 g_message("Unsupported widget in table");
@@ -1483,8 +1516,8 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
                              (GtkAttachOptions) (0), 0, 0);
 
         if (widget_middle)
-            gtk_table_attach(GTK_TABLE(table), widget_middle, 1, 2, x, x+1,
-                             (GtkAttachOptions) (GTK_FILL),
+            gtk_table_attach(GTK_TABLE(table), widget_middle, 1, widget_right ? 2 : 3, x, x+1,
+                             middle_policy,
                              (GtkAttachOptions) (0), 4, 0);
 
         if (widget_right)
@@ -1502,7 +1535,6 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
     GSList *radio_btn_group = NULL;
-    int table_line=0;  /* used for WIDGET_SPIN_BTN */
 
     for (x = 0; x < amt; ++x) {
         if (widgets[x].child) { /* perhaps this logic can be better */
@@ -1578,46 +1610,15 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
             case WIDGET_FONT_BTN:
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
 
-                if (x > 1 && widgets[x-1].type == WIDGET_FONT_BTN) {
-                    table_line++;
-                } else {
-                    /* check how many WIDGET_FONT_BTNs are there */
-                    gint lines = 0, i;
-                    for (i=x; i<amt && widgets[i].type == WIDGET_FONT_BTN; i++)
-                        lines++;
+                widget = gtk_hbox_new(FALSE, 6);
 
-                    widget = gtk_table_new(lines, 2, FALSE);
-                    gtk_table_set_row_spacings(GTK_TABLE(widget), 8);
-                    gtk_table_set_col_spacings(GTK_TABLE(widget), 2);
-                    table_line=0;
-                }
+                GtkWidget *label = NULL, *font_btn = NULL;
+                create_font_btn(&widgets[x], &label, &font_btn);
 
-                GtkWidget *label = gtk_label_new_with_mnemonic(_(widgets[x].label));
-                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-                gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-                gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
-                gtk_table_attach(GTK_TABLE (widget), label, 0, 1, table_line, table_line+1,
-                                 (GtkAttachOptions) (0),
-                                 (GtkAttachOptions) (0), 0, 0);
-
-                GtkWidget *font_btn = gtk_font_button_new();
-                gtk_table_attach(GTK_TABLE(widget), font_btn, 1, 2, table_line, table_line+1,
-                                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                                 (GtkAttachOptions) (0), 0, 0);
-
-                gtk_font_button_set_use_font(GTK_FONT_BUTTON(font_btn), TRUE);
-                gtk_font_button_set_use_size(GTK_FONT_BUTTON(font_btn), TRUE);
-                gtk_label_set_mnemonic_widget(GTK_LABEL(label), font_btn);
-                if (widgets[x].tooltip)
-                    gtk_font_button_set_title (GTK_FONT_BUTTON (font_btn), _(widgets[x].tooltip));
-                g_object_set_data(G_OBJECT(font_btn), "callback", widgets[x].callback);
-
-                g_signal_connect(G_OBJECT(font_btn), "font_set",
-                                 G_CALLBACK(on_font_btn_font_set),
-                                 (char**)widgets[x].cfg);
-                g_signal_connect(G_OBJECT(font_btn), "realize",
-                                 G_CALLBACK(on_font_btn_realize),
-                                 (char**)widgets[x].cfg);
+                if (label)
+                    gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
+                if (font_btn)
+                    gtk_box_pack_start(GTK_BOX(widget), font_btn, FALSE, FALSE, 0);
                 break;
             case WIDGET_TABLE:
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
