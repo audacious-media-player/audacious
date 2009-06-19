@@ -314,7 +314,21 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
         bit_depth = cfg.output_bit_depth;
 
         AUDDBG("bit depth: %d\n", bit_depth);
-        output_fmt = (bit_depth == 24) ? FMT_S24_NE : FMT_S16_NE;
+        select (bit_depth) {
+            case 32:
+                output_fmt = FMT_S32_NE;
+                break;
+            case 24:
+                output_fmt = FMT_S24_NE;
+                break;
+            case 16:
+                output_fmt = FMT_S16_NE;
+                break;
+            default:
+                AUDDBG("unsupported bit depth requested %d\n", bit_depth);
+                output_fmt = FMT_S16_NE;
+                break;
+        }
 
         freeSAD();
 

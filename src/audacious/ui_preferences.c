@@ -1376,7 +1376,17 @@ static void
 on_bit_depth_cbox_changed(GtkWidget *cbox, gpointer data)
 {
     gint active = gtk_combo_box_get_active(GTK_COMBO_BOX(cbox));
-    cfg.output_bit_depth = (active == 1) ? 24 : 16;
+    switch (active) {
+        case 0:
+            cfg.output_bit_depth = 16;
+            break;
+        case 1:
+            cfg.output_bit_depth = 24;
+            break;
+        case 2:
+            cfg.output_bit_depth = 32;
+            break;
+    }
 }
 
 GtkWidget *
@@ -1390,6 +1400,7 @@ ui_preferences_bit_depth(void)
     GtkWidget *combo = gtk_combo_box_new_text ();
     gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "16");
     gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "24");
+    gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "32");
     gtk_box_pack_start(GTK_BOX(box), combo, FALSE, FALSE, 0);
 
     gint active = (cfg.output_bit_depth == 24) ? 1 : 0;
