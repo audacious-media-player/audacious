@@ -120,33 +120,22 @@ playback_error(void)
 gint
 playback_get_time(void)
 {
-    static int time = 0;
-    InputPlayback *playback;
+    InputPlayback * playback;
 
-    if (! playback_get_playing ())
-        return (time = -1);
+    if (! ip_data.playing)
+        return 0;
 
-    playback = get_current_input_playback();
+    playback = ip_data.current_input_playback;
 
-    if (!playback->playing && playback_get_playing())
-    {
-        g_warning("outdated plugin: %s (does not set playback::playing correctly)", playback->plugin->description);
-        playback->playing = playback_get_playing();
-    }
-
-    if (!playback || playback->error || playback->eof)
-        return (time = -1);
+    if (! playback || ! playback->playing || playback->eof || playback->error)
+        return 0;
 
     if (playback->plugin->get_time)
-        return (time = playback->plugin->get_time (playback));
+        return playback->plugin->get_time (playback);
 
-    if (playback->output->buffer_playing () || playback_get_paused ())
-        return (time = playback->output->output_time ());
-
-    /* If we get to here, we are probably in the split second when playback has
-     just been started or unpaused but output has not yet begun, so we return
-     the value from the last call. */
-    return time;
+    /* Note: This assumes that output_time will return sanely (zero) even before
+     audio is opened. Not ideal, but what else can we do? -jlindgren */
+    return playback->output->output_time ();
 }
 
 gint
