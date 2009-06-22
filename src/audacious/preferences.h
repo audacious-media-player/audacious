@@ -29,12 +29,15 @@ typedef enum {
     WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
     WIDGET_FONT_BTN,
     WIDGET_TABLE,
+    WIDGET_ENTRY,
 } WidgetType;
 
 typedef enum {
     VALUE_INT,
     VALUE_FLOAT,
     VALUE_BOOLEAN,
+    VALUE_CFG_BOOLEAN,   /* cfg holds config database key for bool option */
+    VALUE_CFG_STRING,    /* cfg holds config database key for gchar* option */
 } ValueType;
 
 typedef struct _PreferencesWidget {
@@ -63,6 +66,10 @@ typedef struct _PreferencesWidget {
         struct {
             char *title;
         } font_btn;
+
+        struct {
+            gboolean password;
+        } entry;
 
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;

@@ -222,6 +222,25 @@ static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {rg_params_elements, G_N_ELEMENTS(rg_params_elements)}}},
 };
 
+static PreferencesWidget proxy_host_port_elements[] = {
+    {WIDGET_ENTRY, N_("Proxy hostname:"), "proxy_host", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
+    {WIDGET_ENTRY, N_("Proxy port:"), "proxy_port", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
+};
+
+static PreferencesWidget proxy_auth_elements[] = {
+    {WIDGET_ENTRY, N_("Proxy username:"), "proxy_user", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
+    {WIDGET_ENTRY, N_("Proxy password:"), "proxy_pass", NULL, NULL, FALSE, {.entry = {TRUE}}, VALUE_CFG_STRING},
+};
+
+static PreferencesWidget connectivity_page_widgets[] = {
+    {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Enable proxy usage"), "use_proxy", NULL, NULL, FALSE, {}, VALUE_CFG_BOOLEAN},
+    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_host_port_elements, G_N_ELEMENTS(proxy_host_port_elements)}}},
+    {WIDGET_CHK_BTN, N_("Use authentication with proxy"), "proxy_use_auth", NULL, NULL, FALSE, {}, VALUE_CFG_BOOLEAN},
+    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_auth_elements, G_N_ELEMENTS(proxy_auth_elements)}}},
+    {WIDGET_LABEL, NULL, NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning", N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>")}}},
+};
+
 static PreferencesWidget playback_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
@@ -650,67 +669,6 @@ on_font_btn_font_set(GtkFontButton * button, gchar **cfg)
     AUDDBG("Returned font name: \"%s\"\n", *cfg);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
     if (callback) callback();
-}
-
-/* proxy */
-static void
-on_proxy_button_realize(GtkToggleButton *button, gchar *cfg)
-{
-    g_return_if_fail(cfg != NULL);
-
-    mcs_handle_t *db;
-    gboolean ret;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_bool(db, NULL, cfg, &ret) != FALSE)
-        gtk_toggle_button_set_active(button, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_button_toggled(GtkToggleButton *button, gchar *cfg)
-{
-    g_return_if_fail(cfg != NULL);
-
-    mcs_handle_t *db;
-    gboolean ret = gtk_toggle_button_get_active(button);
-
-    db = cfg_db_open();
-    cfg_db_set_bool(db, NULL, cfg, ret);
-    cfg_db_close(db);
-}
-
-static void
-on_proxy_entry_changed(GtkEntry *entry, gchar *cfg)
-{
-    g_return_if_fail(cfg != NULL);
-
-    mcs_handle_t *db;
-    gchar *ret = g_strdup(gtk_entry_get_text(entry));
-
-    db = cfg_db_open();
-    cfg_db_set_string(db, NULL, cfg, ret);
-    cfg_db_close(db);
-
-    g_free(ret);
-}
-
-static void
-on_proxy_entry_realize(GtkEntry *entry, gchar *cfg)
-{
-    g_return_if_fail(cfg != NULL);
-
-    mcs_handle_t *db;
-    gchar *ret;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_string(db, NULL, cfg, &ret) != FALSE)
-        gtk_entry_set_text(entry, ret);
-
-    cfg_db_close(db);
 }
 
 static void
@@ -1164,6 +1122,66 @@ on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
     if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
 }
 
+static void
+on_toggle_button_cfg_toggled(GtkToggleButton *button, gchar *cfg)
+{
+    g_return_if_fail(cfg != NULL);
+
+    mcs_handle_t *db;
+    gboolean ret = gtk_toggle_button_get_active(button);
+
+    db = cfg_db_open();
+    cfg_db_set_bool(db, NULL, cfg, ret);
+    cfg_db_close(db);
+}
+
+static void
+on_toggle_button_cfg_realize(GtkToggleButton *button, gchar *cfg)
+{
+    g_return_if_fail(cfg != NULL);
+
+    mcs_handle_t *db;
+    gboolean ret;
+
+    db = cfg_db_open();
+
+    if (cfg_db_get_bool(db, NULL, cfg, &ret) != FALSE)
+        gtk_toggle_button_set_active(button, ret);
+
+    cfg_db_close(db);
+}
+
+static void
+on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
+{
+    g_return_if_fail(cfg != NULL);
+
+    mcs_handle_t *db;
+    gchar *ret;
+
+    db = cfg_db_open();
+
+    if (cfg_db_get_string(db, NULL, cfg, &ret) != FALSE)
+        gtk_entry_set_text(entry, ret);
+
+    cfg_db_close(db);
+}
+
+static void
+on_entry_cfg_changed(GtkEntry *entry, gchar *cfg)
+{
+    g_return_if_fail(cfg != NULL);
+
+    mcs_handle_t *db;
+    gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    db = cfg_db_open();
+    cfg_db_set_string(db, NULL, cfg, ret);
+    cfg_db_close(db);
+
+    g_free(ret);
+}
+
 void
 create_filepopup_settings(void)
 {
@@ -1487,6 +1505,43 @@ create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_b
 }
 
 void
+create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
+{
+    *entry = gtk_entry_new();
+    gtk_entry_set_visibility(GTK_ENTRY(*entry), !widget->data.entry.password);
+
+    if (widget->label)
+        *label = gtk_label_new(widget->label);
+
+    if (widget->cfg_type == VALUE_CFG_STRING) {
+        g_signal_connect(G_OBJECT(*entry), "realize",
+                         G_CALLBACK(on_entry_cfg_realize),
+                         widget->cfg);
+        g_signal_connect(G_OBJECT(*entry), "changed",
+                         G_CALLBACK(on_entry_cfg_changed),
+                         widget->cfg);
+    }
+}
+
+void
+create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
+{
+    if (widget->data.label.stock_id)
+        *icon = gtk_image_new_from_stock(widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
+    if (widget->data.label.markup) {
+        *label = gtk_label_new_with_mnemonic(N_(widget->data.label.markup));
+        gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
+    } else
+        *label = gtk_label_new_with_mnemonic(N_(widget->label));
+
+    /* temporary */
+    gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
+
+    gtk_label_set_line_wrap(GTK_LABEL(*label), TRUE);
+    gtk_misc_set_alignment(GTK_MISC(*label), 0, 0.5);
+}
+
+void
 fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 {
     int x;
@@ -1501,22 +1556,16 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
                 middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_LABEL:
-                if (elements[x].data.label.stock_id)
-                    widget_left = gtk_image_new_from_stock(elements[x].data.label.stock_id, GTK_ICON_SIZE_BUTTON);
-                if (elements[x].data.label.markup) {
-                    widget_middle = gtk_label_new(N_(elements[x].data.label.markup));
-                    gtk_label_set_use_markup(GTK_LABEL(widget_middle), TRUE);
-                } else
-                    widget_middle = gtk_label_new(N_(elements[x].label));
-
-                gtk_label_set_line_wrap (GTK_LABEL(widget_middle), TRUE);
-                gtk_misc_set_alignment (GTK_MISC(widget_middle), 0, 0.5);
+                create_label(&elements[x], &widget_middle, &widget_left);
                 middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_FONT_BTN:
                 create_font_btn(&elements[x], &widget_left, &widget_middle);
-                middle_policy = (GtkAttachOptions) (GTK_FILL | GTK_EXPAND);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
+            case WIDGET_ENTRY:
+                create_entry(&elements[x], &widget_left, &widget_middle);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
             default:
                 g_message("Unsupported widget in table");
         }
@@ -1571,18 +1620,36 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
                 widget = gtk_check_button_new_with_mnemonic(_(widgets[x].label));
                 g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
-                g_signal_connect(G_OBJECT(widget), "toggled",
-                                 G_CALLBACK(on_toggle_button_toggled),
-                                 widgets[x].cfg);
-                g_signal_connect(G_OBJECT(widget), "realize",
-                                 G_CALLBACK(on_toggle_button_realize),
-                                 widgets[x].cfg);
+
+                if (widgets[x].cfg_type == VALUE_CFG_BOOLEAN) {
+                    g_signal_connect(G_OBJECT(widget), "toggled",
+                                     G_CALLBACK(on_toggle_button_cfg_toggled),
+                                     widgets[x].cfg);
+                    g_signal_connect(G_OBJECT(widget), "realize",
+                                     G_CALLBACK(on_toggle_button_cfg_realize),
+                                     widgets[x].cfg);
+                } else {
+                    g_signal_connect(G_OBJECT(widget), "toggled",
+                                     G_CALLBACK(on_toggle_button_toggled),
+                                     widgets[x].cfg);
+                    g_signal_connect(G_OBJECT(widget), "realize",
+                                     G_CALLBACK(on_toggle_button_realize),
+                                     widgets[x].cfg);
+                }
                 break;
             case WIDGET_LABEL:
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
-                widget = gtk_label_new_with_mnemonic(_(widgets[x].label));
-                gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
-                gtk_misc_set_alignment(GTK_MISC(widget), 0, 0.5);
+
+                GtkWidget *label = NULL, *icon = NULL;
+                create_label(&widgets[x], &label, &icon);
+
+                if (icon == NULL)
+                    widget = label;
+                else {
+                    widget = gtk_hbox_new(FALSE, 6);
+                    gtk_box_pack_start(GTK_BOX(widget), icon, FALSE, FALSE, 0);
+                    gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
+                }
                 break;
             case WIDGET_RADIO_BTN:
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
@@ -1600,7 +1667,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 
                 widget = gtk_hbox_new(FALSE, 6);
 
-                GtkWidget *label_pre = NULL, *spin_btn = NULL, *label_past;
+                GtkWidget *label_pre = NULL, *spin_btn = NULL, *label_past = NULL;
                 create_spin_button(&widgets[x], &label_pre, &spin_btn, &label_past);
 
                 if (label_pre)
@@ -1623,7 +1690,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 
                 widget = gtk_hbox_new(FALSE, 6);
 
-                GtkWidget *label = NULL, *font_btn = NULL;
+                GtkWidget *font_btn = NULL;
                 create_font_btn(&widgets[x], &label, &font_btn);
 
                 if (label)
@@ -1637,6 +1704,19 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 widget = gtk_table_new(widgets[x].data.table.rows, 3, FALSE);
                 fill_table(widget, widgets[x].data.table.elem, widgets[x].data.table.rows);
                 gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
+                break;
+            case WIDGET_ENTRY:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 12, 0);
+
+                widget = gtk_hbox_new(FALSE, 6);
+
+                GtkWidget *entry = NULL;
+                create_entry(&widgets[x], &label, &entry);
+
+                if (label)
+                    gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
+                if (entry)
+                    gtk_box_pack_start(GTK_BOX(widget), entry, FALSE, FALSE, 0);
                 break;
             default:
                 /* shouldn't ever happen - expect things to break */
@@ -2181,28 +2261,6 @@ create_connectivity_category(void)
 {
     GtkWidget *connectivity_page_vbox;
     GtkWidget *vbox29;
-    GtkWidget *alignment63;
-    GtkWidget *connectivity_page_label;
-    GtkWidget *alignment68;
-    GtkWidget *vbox30;
-    GtkWidget *alignment65;
-    GtkWidget *proxy_use;
-    GtkWidget *table8;
-    GtkWidget *proxy_port;
-    GtkWidget *proxy_host;
-    GtkWidget *label69;
-    GtkWidget *label68;
-    GtkWidget *alignment67;
-    GtkWidget *proxy_auth;
-    GtkWidget *table9;
-    GtkWidget *proxy_pass;
-    GtkWidget *proxy_user;
-    GtkWidget *label71;
-    GtkWidget *label70;
-    GtkWidget *alignment72;
-    GtkWidget *hbox6;
-    GtkWidget *image4;
-    GtkWidget *label75;
 
     connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), connectivity_page_vbox);
@@ -2210,143 +2268,7 @@ create_connectivity_category(void)
     vbox29 = gtk_vbox_new (FALSE, 0);
     gtk_box_pack_start (GTK_BOX (connectivity_page_vbox), vbox29, TRUE, TRUE, 0);
 
-    alignment63 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox29), alignment63, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment63), 0, 12, 0, 0);
-
-    connectivity_page_label = gtk_label_new (_("<b>Proxy Configuration</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment63), connectivity_page_label);
-    gtk_label_set_use_markup (GTK_LABEL (connectivity_page_label), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (connectivity_page_label), 0, 0.5);
-
-    alignment68 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox29), alignment68, TRUE, TRUE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment68), 0, 0, 12, 0);
-
-    vbox30 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment68), vbox30);
-
-    alignment65 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox30), alignment65, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment65), 0, 12, 0, 0);
-
-    proxy_use = gtk_check_button_new_with_mnemonic (_("Enable proxy usage"));
-    gtk_container_add (GTK_CONTAINER (alignment65), proxy_use);
-
-    table8 = gtk_table_new (2, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox30), table8, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table8), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table8), 6);
-
-    proxy_port = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table8), proxy_port, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    proxy_host = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table8), proxy_host, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label69 = gtk_label_new (_("Proxy port:"));
-    gtk_table_attach (GTK_TABLE (table8), label69, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label69), 0, 0.5);
-
-    label68 = gtk_label_new (_("Proxy hostname:"));
-    gtk_table_attach (GTK_TABLE (table8), label68, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label68), 0, 0);
-
-    alignment67 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox30), alignment67, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment67), 12, 12, 0, 0);
-
-    proxy_auth = gtk_check_button_new_with_mnemonic (_("Use authentication with proxy"));
-    gtk_container_add (GTK_CONTAINER (alignment67), proxy_auth);
-
-    table9 = gtk_table_new (2, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox30), table9, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table9), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table9), 6);
-
-    proxy_pass = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table9), proxy_pass, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_entry_set_visibility (GTK_ENTRY (proxy_pass), FALSE);
-
-    proxy_user = gtk_entry_new ();
-    gtk_table_attach (GTK_TABLE (table9), proxy_user, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label71 = gtk_label_new (_("Proxy password:"));
-    gtk_table_attach (GTK_TABLE (table9), label71, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label71), 0, 0.5);
-
-    label70 = gtk_label_new (_("Proxy username:"));
-    gtk_table_attach (GTK_TABLE (table9), label70, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label70), 0, 0);
-
-    alignment72 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox30), alignment72, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment72), 6, 0, 0, 0);
-
-    hbox6 = gtk_hbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment72), hbox6);
-
-    image4 = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox6), image4, FALSE, FALSE, 0);
-    gtk_misc_set_padding (GTK_MISC (image4), 3, 0);
-
-    label75 = gtk_label_new (_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"));
-    gtk_box_pack_start (GTK_BOX (hbox6), label75, FALSE, FALSE, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label75), TRUE);
-
-
-    g_signal_connect(G_OBJECT(proxy_use), "toggled",
-                     G_CALLBACK(on_proxy_button_toggled),
-                     "use_proxy");
-    g_signal_connect(G_OBJECT(proxy_use), "realize",
-                     G_CALLBACK(on_proxy_button_realize),
-                     "use_proxy");
-    g_signal_connect(G_OBJECT(proxy_port), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_port");
-    g_signal_connect(G_OBJECT(proxy_port), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_port");
-    g_signal_connect(G_OBJECT(proxy_host), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_host");
-    g_signal_connect(G_OBJECT(proxy_host), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_host");
-    g_signal_connect(G_OBJECT(proxy_auth), "toggled",
-                     G_CALLBACK(on_proxy_button_toggled),
-                     "proxy_use_auth");
-    g_signal_connect(G_OBJECT(proxy_auth), "realize",
-                     G_CALLBACK(on_proxy_button_realize),
-                     "proxy_use_auth");
-    g_signal_connect(G_OBJECT(proxy_pass), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_pass");
-    g_signal_connect(G_OBJECT(proxy_pass), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_pass");
-    g_signal_connect(G_OBJECT(proxy_user), "changed",
-                     G_CALLBACK(on_proxy_entry_changed),
-                     "proxy_user");
-    g_signal_connect(G_OBJECT(proxy_user), "realize",
-                     G_CALLBACK(on_proxy_entry_realize),
-                     "proxy_user");
+    create_widgets(GTK_BOX(vbox29), connectivity_page_widgets, G_N_ELEMENTS(connectivity_page_widgets));
 }
 
 static void
