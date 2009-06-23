@@ -761,8 +761,8 @@ __playlist_ins_file(Playlist * playlist,
         // kick the scanner thread when tuple == NULL or mtime = -1 (uninitialized)
         g_mutex_lock(mutex_scan);
         playlist_get_info_scan_active = TRUE;
-        g_mutex_unlock(mutex_scan);
         g_cond_signal(cond_scan);
+        g_mutex_unlock(mutex_scan);
     }
     PLAYLIST_INCR_SERIAL(playlist);
 }
@@ -2508,9 +2508,9 @@ playlist_stop_get_info_thread(void)
     }
 
     playlist_get_info_going = FALSE;
+    g_cond_broadcast(cond_scan);
     g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
 
-    g_cond_broadcast(cond_scan);
     g_thread_join(playlist_get_info_thread);
 }
 
@@ -2520,9 +2520,9 @@ playlist_start_get_info_scan(void)
     AUDDBG("waking up scan thread\n");
     g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
-    g_mutex_unlock(mutex_scan);
 
     g_cond_signal(cond_scan);
+    g_mutex_unlock(mutex_scan);
 }
 
 void
