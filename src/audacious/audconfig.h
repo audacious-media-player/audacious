@@ -133,6 +133,7 @@ struct _AudConfig {
 #endif
     gboolean bypass_dsp;
     gint player_width, player_height;
+    gint sw_volume_left, sw_volume_right;
 };
 
 typedef struct _AudConfig AudConfig;

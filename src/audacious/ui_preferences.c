@@ -44,6 +44,7 @@
 #include "general.h"
 #include "output.h"
 #include "visualization.h"
+#include "volumecontrol.h"
 #include "playlist.h"
 
 #include "audstrings.h"
@@ -193,7 +194,8 @@ static PreferencesWidget audio_page_widgets[] = {
 
 static PreferencesWidget audio_page_widgets2[] = {
     {WIDGET_LABEL, N_("<b>Volume Control</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Use software volume control"), &cfg.software_volume_control, NULL,
+    {WIDGET_CHK_BTN, N_("Use software volume control"),
+     & cfg.software_volume_control, sw_volume_toggled,
                      N_("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), FALSE},
     {WIDGET_LABEL,   N_("<b>Advanced</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Bypass all of signal processing if possible"), &cfg.bypass_dsp, NULL,

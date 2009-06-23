@@ -67,7 +67,6 @@ InputPluginData ip_data = {
 };
 
 static GList *vis_list = NULL;
-static int volume_l = -1, volume_r = -1;
 static SAD_dither_t *sad_state = NULL;
 static gint sad_nch = -1;
 static AFormat sad_fmt = -1;
@@ -679,37 +678,29 @@ input_scan_dir(const gchar * path)
 void
 input_get_volume(gint * l, gint * r)
 {
-    if (volume_l == -1 || volume_r == -1)
-	output_get_volume(&volume_l, &volume_r);
+    if (ip_data.playing && ip_data.current_input_playback &&
+     ip_data.current_input_playback->plugin->get_volume &&
+     ip_data.current_input_playback->plugin->get_volume (l, r))
+        return;
 
-    *l = volume_l;
-    *r = volume_r;
+    output_get_volume (l, r);
 }
 
 void
 input_set_volume(gint l, gint r)
 {
-    InputPlayback *playback;
-
     gint h_vol[2];
 
     h_vol[0] = l;
     h_vol[1] = r;
     hook_call("volume set", h_vol);
 
-    if (playback_get_playing())
-        if ((playback = get_current_input_playback()) != NULL)
-	    if (playback->plugin->set_volume != NULL)
-	    {
-	        plugin_set_current((Plugin *)(playback->plugin));
-	        if (playback->plugin->set_volume(l, r))
-		    return;
-	    }
+    if (ip_data.playing && ip_data.current_input_playback &&
+     ip_data.current_input_playback->plugin->set_volume &&
+     ip_data.current_input_playback->plugin->set_volume (l, r))
+        return;
 
-    output_set_volume(l, r);
-
-    volume_l = l;
-    volume_r = r;
+    output_set_volume (l, r);
 }
 
 void

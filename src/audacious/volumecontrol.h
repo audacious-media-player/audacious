@@ -25,10 +25,7 @@
 #ifndef AUDACIOUS_VOLUMECONTROL_H
 #define AUDACIOUS_VOLUMECONTROL_H
 
-void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt, 
-    gint channels);
-void volumecontrol_get_volume_state(gint *l, gint *r);
-void volumecontrol_set_volume_state(gint l, gint r);
 void volumecontrol_flow(FlowContext *context);
+void sw_volume_toggled (void);
 
 #endif /* AUDACIOUS_VOLUMECONTROL_H */

@@ -155,39 +155,32 @@ output_configure(gint i)
 void
 output_get_volume(gint * l, gint * r)
 {
-    *l = *r = -1;
-
-    if (!op_data.current_output_plugin)
-        return;
-
-    if (!op_data.current_output_plugin->get_volume)
-        return;
-
     if (cfg.software_volume_control)
-        volumecontrol_get_volume_state(l, r);
+    {
+        * l = cfg.sw_volume_left;
+        * r = cfg.sw_volume_right;
+    }
+    else if (op_data.current_output_plugin &&
+     op_data.current_output_plugin->get_volume)
+        op_data.current_output_plugin->get_volume (l, r);
     else
     {
-        plugin_set_current((Plugin *)op_data.current_output_plugin);
-        op_data.current_output_plugin->get_volume(l, r);
+        * l = -1;
+        * r = -1;
     }
 }
 
 void
 output_set_volume(gint l, gint r)
 {
-    if (!op_data.current_output_plugin)
-        return;
-
-    if (!op_data.current_output_plugin->set_volume)
-        return;
-
     if (cfg.software_volume_control)
-        volumecontrol_set_volume_state(l, r);
-    else
     {
-        plugin_set_current((Plugin *)op_data.current_output_plugin);
-        op_data.current_output_plugin->set_volume(l, r);
+        cfg.sw_volume_left = l;
+        cfg.sw_volume_right = r;
     }
+    else if (op_data.current_output_plugin &&
+     op_data.current_output_plugin->set_volume)
+        op_data.current_output_plugin->set_volume (l, r);
 }
 
 void

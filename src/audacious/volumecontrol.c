@@ -34,30 +34,22 @@
 
 #include <math.h>
 
-typedef struct {
-    gint left;
-    gint right;
-} volumecontrol_req_t;
-
-static volumecontrol_req_t vc_state_ = { 100, 100 };
-
 #define GAIN -50.0 /* dB */
 
-void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt,
-    gint channels)
+static void pad_audio (void * data, int length, AFormat fmt, int channels)
 {
     gint i, k, samples;
     float vol, lvol, rvol;
     float lgain, rgain;
 
-    if (vc_state_.left == 100 && vc_state_.right == 100)
+    if (cfg.sw_volume_left == 100 && cfg.sw_volume_right == 100)
         return;
 
-    if (channels != 2 && (vc_state_.left == 100 || vc_state_.right == 100))
+    if (channels != 2 && MAX (cfg.sw_volume_left, cfg.sw_volume_right) == 100)
         return;
 
-    lgain = (float)(100 - vc_state_.left) * GAIN / 100.0;
-    rgain = (float)(100 - vc_state_.right) * GAIN / 100.0;
+    lgain = (float) (100 - cfg.sw_volume_left) * GAIN / 100;
+    rgain = (float) (100 - cfg.sw_volume_right) * GAIN / 100;
 
     lvol = pow(10.0, lgain / 20.0);
     rvol = pow(10.0, rgain / 20.0);
@@ -80,20 +72,6 @@ void volumecontrol_pad_audio(gpointer data, gint length, AFormat fmt,
 }
 
 void
-volumecontrol_get_volume_state(gint *l, gint *r)
-{
-    *l = vc_state_.left;
-    *r = vc_state_.right;
-}
-
-void
-volumecontrol_set_volume_state(gint l, gint r)
-{
-    vc_state_.left = l;
-    vc_state_.right = r;
-}
-
-void
 volumecontrol_flow(FlowContext *context)
 {
     if (!cfg.software_volume_control)
@@ -105,5 +83,20 @@ volumecontrol_flow(FlowContext *context)
         return;
     }
 
-    volumecontrol_pad_audio(context->data, context->len, context->fmt, context->channels);
+    pad_audio (context->data, context->len, context->fmt, context->channels);
+}
+
+void sw_volume_toggled (void)
+{
+    int vol[2];
+
+    if (cfg.software_volume_control)
+    {
+        vol[0] = cfg.sw_volume_left;
+        vol[1] = cfg.sw_volume_right;
+    }
+    else
+        input_get_volume (& vol[0], & vol[1]);
+
+    hook_call ("volume set", vol);
 }

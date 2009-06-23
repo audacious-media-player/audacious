@@ -155,6 +155,7 @@ AudConfig aud_default_config = {
     .bypass_dsp = FALSE,
     .player_width = 450,
     .player_height = 150,
+    .sw_volume_left = 100, .sw_volume_right = 100,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -304,6 +305,8 @@ static aud_cfg_nument aud_numents[] = {
 #endif
     {"player_width", &cfg.player_width, TRUE},
     {"player_height", &cfg.player_height, TRUE},
+    {"sw_volume_left", & cfg.sw_volume_left, 1},
+    {"sw_volume_right", & cfg.sw_volume_right, 1},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
@@ -568,7 +571,7 @@ aud_config_save(void)
 {
     GList *node;
     gchar *str;
-    gint i, vol_l, vol_r;
+    gint i;
     mcs_handle_t *db;
     GList *saved;
     Playlist *playlist = playlist_get_active();
@@ -660,8 +663,6 @@ aud_config_save(void)
 
     cfg_db_set_int(db, NULL, "url_history_length",
                        g_list_length(cfg.url_history));
-
-    input_get_volume(&vol_l,&vol_r);
 
     for (node = cfg.url_history, i = 1; node; node = g_list_next(node), i++) {
         str = g_strdup_printf("url_history%d", i);
