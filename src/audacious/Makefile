@@ -41,7 +41,6 @@ SRCS = af_equalizer.c							\
        ui_fileopener.c							\
        ui_headless.c							\
        ui_manager.c						\
-       ui_new.c									\
        ui_preferences.c							\
        util.c									\
        visualization.c							\
@@ -55,7 +54,6 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack_cache.c			\
        ui_misc.c				\
        ui_playlist_manager.c				\
-       ui_playlist_widget.c				\
        ui_urlopener.c					\
        actions.c
 

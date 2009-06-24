@@ -66,7 +66,6 @@
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
-#include "ui_new.h"
 #include "ui_headless.h"
 #include "ui_preferences.h"
 #include "ui_misc.h"
@@ -557,7 +556,6 @@ main(gint argc, gchar ** argv)
     plugin_system_init();
 
     g_message("Populating included interfaces");
-    ui_populate_default_interface();
     ui_populate_headless_interface();
 
     /* Check if user wants to list available interfaces */
