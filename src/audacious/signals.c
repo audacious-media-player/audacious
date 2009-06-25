@@ -39,6 +39,10 @@
 #include "eggsmclient.h"
 #endif
 
+/* The whole idea of catching signals from a separate thread and then quitting
+ is wrong until we have a thread-safe quit function. aud_quit is not
+ thread-safe. Hence Debian #531823. -jlindgren, 2009-6-25 */
+#if 0
 typedef void (*SignalHandler) (gint);
 
 gint linuxthread_signal_number = 0;
@@ -96,7 +100,7 @@ signal_process_signals (void *data)
 
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
-    sigaddset(&waitset, SIGSEGV);  
+    sigaddset(&waitset, SIGSEGV);
 //    sigaddset(&waitset, SIGINT);
     sigaddset(&waitset, SIGTERM);
 
@@ -186,7 +190,7 @@ signal_process_signals(gpointer data)
 
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
-    sigaddset(&waitset, SIGSEGV);  
+    sigaddset(&waitset, SIGSEGV);
 //    sigaddset(&waitset, SIGINT);
     sigaddset(&waitset, SIGTERM);
 
@@ -252,9 +256,9 @@ signal_install_handler_full (gint           signal_number,
     return old_action.sa_handler;
 }
 
-/* 
+/*
  * A version of signal() that works more reliably across different
- * platforms. It: 
+ * platforms. It:
  * a. restarts interrupted system calls
  * b. does not reset the handler
  * c. blocks the same signal within the handler
@@ -285,8 +289,8 @@ signal_check_for_broken_impl(void)
 }
 #endif
 
-/* sets up blocking signals for pthreads. 
- * linuxthreads sucks and needs this to make sigwait(2) work 
+/* sets up blocking signals for pthreads.
+ * linuxthreads sucks and needs this to make sigwait(2) work
  * correctly. --nenolod
  *
  * correction -- this trick does not work on linuxthreads.
@@ -299,48 +303,50 @@ signal_initialize_blockers(void)
 
     sigemptyset(&blockset);
     sigaddset(&blockset, SIGPIPE);
-    sigaddset(&blockset, SIGSEGV);  
+    sigaddset(&blockset, SIGSEGV);
 //    sigaddset(&blockset, SIGINT);
     sigaddset(&blockset, SIGTERM);
 
     if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
-        g_print("pthread_sigmask() failed.\n");    
+        g_print("pthread_sigmask() failed.\n");
 }
+#endif // 0
 
 #ifdef USE_EGGSM
 static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)
 {
-    g_print("Session quit requested. Saving state and shutting down.\n");    
+    g_print("Session quit requested. Saving state and shutting down.\n");
     aud_quit();
 }
 
 static void
 signal_session_save_cb(EggSMClient *client, const char *state_dir, gpointer user_data)
 {
-    g_print("Session save requested. Saving state.\n");    
+    g_print("Session save requested. Saving state.\n");
     aud_config_save();
 }
 #endif
 
-void 
+void
 signal_handlers_init(void)
 {
 #ifdef USE_EGGSM
     EggSMClient *client;
 
     client = egg_sm_client_get ();
-    if (client != NULL) 
+    if (client != NULL)
     {
         egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
         g_signal_connect (client, "quit",
                           G_CALLBACK (signal_session_quit_cb), NULL);
         g_signal_connect (client, "save-state",
                           G_CALLBACK (signal_session_save_cb), NULL);
-    
+
     }
 #endif
 
+#if 0
 #if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 
     if (signal_check_for_broken_impl() != TRUE)
@@ -370,4 +376,5 @@ signal_handlers_init(void)
     g_thread_create(signal_process_signals, NULL, FALSE, NULL);
 
 #endif
+#endif // 0
 }
