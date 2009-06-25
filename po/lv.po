@@ -1,0 +1,2587 @@
+# Copyright (C) 2009 Einars Sprugis <einars8@gmail.com>
+# This file is distributed under the same license as the audacious package.
+#
+# Einars Sprugis <einars8@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: audacious2_25062009\n"
+"Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
+"POT-Creation-Date: 2009-06-18 17:44-0400\n"
+"PO-Revision-Date: 2009-06-25 02:12+0300\n"
+"Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
+"Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: src/audacious/actions.c:223
+msgid "Can't jump to time when no track is being played.\n"
+msgstr "Nevar pāriet uz noteiktu laiku, ja nekas netiek atskaņots.\n"
+
+#: src/audacious/actions.c:238 src/audacious/ui_manager.c:322
+#: src/audacious/ui_manager.c:323
+msgid "Jump to Time"
+msgstr "Pāriet uz laiku"
+
+#: src/audacious/actions.c:257
+msgid "minutes:seconds"
+msgstr "minūtes:sekundes"
+
+#: src/audacious/actions.c:267
+msgid "Track length:"
+msgstr "Celiņa garums:"
+
+#: src/audacious/actions.c:637
+msgid "Save as Static Playlist"
+msgstr "Saglabāt kā statisko repertuāru"
+
+#: src/audacious/actions.c:644
+msgid "Use Relative Path"
+msgstr "Izmantot relatīvo ceļu"
+
+#: src/audacious/actions.c:675
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "Kļūda rakstot repertuāru \"%s\": %s"
+
+#: src/audacious/actions.c:697
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s jau pastāv. Turpināt?"
+
+#: src/audacious/actions.c:712
+#, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr ""
+"<b><big>Neizdevās saglabāt repertuāru.</big></b>\n"
+"\n"
+"Nezināms faila tips '%s'.\n"
+
+#: src/audacious/actions.c:764
+msgid "Save Playlist"
+msgstr "Saglabāt repertuāru"
+
+#: src/audacious/actions.c:843
+msgid "Load Playlist"
+msgstr "Ielādēt repertuāru"
+
+#: src/audacious/actions.c:1079
+msgid "Presets"
+msgstr "Gatavie regulējumi"
+
+#: src/audacious/equalizer_preset.c:178
+#, c-format
+msgid "Error importing Winamp EQF file '%s'"
+msgstr "Kļūda importējot Winamp EQF failu '%s'"
+
+#: src/audacious/input.c:553
+#, c-format
+msgid "audacious: %s"
+msgstr "audacious: %s"
+
+#: src/audacious/input.c:569
+msgid "Filename:"
+msgstr "Faila nosaukums:"
+
+#: src/audacious/input.c:588
+msgid "No input plugin recognized this file"
+msgstr "Neviens ievades spraudnis neatpazina šo failu"
+
+#: src/audacious/input.c:590
+#, c-format
+msgid "Input plugin: %s"
+msgstr "Ievades spraudnis: %s"
+
+#: src/audacious/logger.c:125
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Neizdevās izveidot žurnāla failu (%s)!\n"
+
+#: src/audacious/main.c:74
+msgid "Audacious"
+msgstr "Audacious"
+
+#: src/audacious/main.c:199
+msgid "Skip backwards in playlist"
+msgstr "Repertuārā izlaist atpakaļgaitā"
+
+#: src/audacious/main.c:200
+msgid "Start playing current playlist"
+msgstr "Sākt atskaņot pašreizējo repertuāru"
+
+#: src/audacious/main.c:201
+msgid "Pause current song"
+msgstr "Nopauzēt pašreizējo dziesmu"
+
+#: src/audacious/main.c:202
+msgid "Stop current song"
+msgstr "Apturēt pašreizējo dziesmu"
+
+#: src/audacious/main.c:203
+msgid "Pause if playing, play otherwise"
+msgstr "Nopauzēt, ja pašlaik atskaņo, citādi atskaņot"
+
+#: src/audacious/main.c:204
+msgid "Skip forward in playlist"
+msgstr "Repertuārā izlaist uz priekšu"
+
+#: src/audacious/main.c:205
+msgid "Display Jump to File dialog"
+msgstr "Parādīt 'Pāriet uz failu' dialogu"
+
+#: src/audacious/main.c:206
+msgid "Don't clear the playlist"
+msgstr "Neiztīrīt repertuāru"
+
+#: src/audacious/main.c:207
+msgid "Add new files to a temporary playlist"
+msgstr "Pievienot jaunus failus pagaidu repertuāram"
+
+#: src/audacious/main.c:208
+msgid "Display the main window"
+msgstr "Rādīt galveno logu"
+
+#: src/audacious/main.c:209
+msgid "Display all open Audacious windows"
+msgstr "Rādīt visus atvērtos Audacious logus"
+
+#: src/audacious/main.c:210
+msgid "Print all errors and warnings to stdout"
+msgstr "Izvadīt visas kļūdas un brīdinājumus uz standarta izvadi"
+
+#: src/audacious/main.c:211
+msgid "Show version"
+msgstr "Parādīt versiju"
+
+#: src/audacious/main.c:212
+msgid "Interface to use (use -i list to view available interfaces)"
+msgstr ""
+"Izmantojamā saskarne (lietojiet -i , lai apskatītu pieejamās saskarnes)"
+
+#: src/audacious/main.c:214
+msgid "Used in macpacking"
+msgstr "Izmantots 'Mac' pakotnēs"
+
+#: src/audacious/main.c:216
+msgid "FILE..."
+msgstr "FAILS..."
+
+#: src/audacious/main.c:234
+msgid "- play multimedia files"
+msgstr "- atskaņot multivides failus"
+
+#: src/audacious/main.c:244
+#, c-format
+msgid ""
+"%s: %s\n"
+"Try `%s --help' for more information.\n"
+msgstr ""
+"%s: %s\n"
+"Mēģiniet `%s --help', lai iegūtu vairāk informācijas.\n"
+
+#: src/audacious/main.c:483
+msgid "Sorry, threads aren't supported on your platform.\n"
+msgstr "Atvainojiet, jūsu platforma neatbalsta pavedienus.\n"
+
+#: src/audacious/main.c:518
+#, c-format
+msgid "%s: Unable to open display, exiting.\n"
+msgstr "%s: Neizdevās atvērt displeju, iziet.\n"
+
+#: src/audacious/main.c:565
+msgid ""
+"Available interfaces:\n"
+"\n"
+msgstr ""
+"Pieejamās saskarnes:\n"
+"\n"
+
+#: src/audacious/playback.c:289
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+"<b><big>Nav ieslēgts izvades spraudnis.</big></b>\n"
+"Jus neesat izvēlējies izvades spraudni."
+
+#: src/audacious/playlist.c:300 src/audacious/playlist.c:3106
+msgid "Untitled Playlist"
+msgstr "Nenosaukts repertuārs"
+
+#: src/audacious/pluginenum.c:834
+msgid "Module loading not supported! Plugins will not be loaded.\n"
+msgstr "Moduļu ielāde nav atbalstīta! Spraudņi netiks ielādēti.\n"
+
+#: src/audacious/signals.c:49
+msgid ""
+"\n"
+"Audacious has caught signal 11 (SIGSEGV).\n"
+"\n"
+"We apologize for the inconvenience, but Audacious has crashed.\n"
+"This is a bug in the program, and should never happen under normal "
+"circumstances.\n"
+"Your current configuration has been saved and should not be damaged.\n"
+"\n"
+"You can help improve the quality of Audacious by filing a bug at http://"
+"bugzilla.atheme.org/\n"
+"Please include the entire text of this message and a description of what you "
+"were doing when\n"
+"this crash occured in order to quickly expedite the handling of your bug "
+"report:\n"
+"\n"
+msgstr ""
+"\n"
+"Audacious notvēra signālu 11 (SIGSEGV).\n"
+"\n"
+"Atvainojamies par neērtībām, bet Audacious avarēja.\n"
+"Tā ir kļūda programmā, un tam normālos apstākļos nevajadzētu notikt.\n"
+"Jūsu pašreizējā konfigurācija tika saglabāta un  tajai navajadzētu būt "
+"bojātai.\n"
+"\n"
+"Jūs varat palīdzēt uzlabot Audacious, aizpildot kļūdas ziņojumu "
+"http://bugzilla.atheme.org\n"
+"Ziņojumā iekļaujiet visu šī ziņojuma tekstu un jūsu darbību aprakstu brīdī, "
+"kad programma avarēja, lai tādējādi paātrinātu jūsu ziņojuma izskatīšanu:\n"
+"\n"
+
+#: src/audacious/signals.c:77
+msgid ""
+"Stacktrace was unavailable. You might want to reproduce this problem while "
+"running Audacious under GDB to get a proper backtrace.\n"
+msgstr ""
+"Atpakaļtrasējums nebija pieejams. Varat atkārtot šīs problēmas rašanos, "
+"palaižot Audacious zem GDB, lai iegūtu derīgu atpakaļtrasējumu.\n"
+
+#: src/audacious/signals.c:81
+msgid ""
+"\n"
+"Bugs can be reported at http://redmine.atheme.org/ against the Audacious or "
+"Audacious Plugins product.\n"
+msgstr ""
+"\n"
+"Kļūdas var tikt ziņotas http://redmine.atheme.org/ 'Audacious' vai "
+"'Audacious "
+"plugins' sadaļā.\n"
+
+#: src/audacious/signals.c:353
+msgid ""
+"Your signaling implementation is broken.\n"
+"Expect unusable crash reports.\n"
+msgstr ""
+"Jūsu signalizēšanas implementācija ir bojāta.\n"
+"Gaidāmi nederīgi avāriju ziņojumi.\n"
+
+#: src/audacious/ui_about.c:46
+#, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2009 Audacious Development Team"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Autortiesības (C) 2005-2009, Audacious izstrādes komanda"
+
+#: src/audacious/ui_about.c:126 src/audacious/ui_credits.c:398
+#: src/audacious/ui_manager.c:293 src/audacious/ui_manager.c:294
+msgid "About Audacious"
+msgstr "Par Audacious"
+
+#: src/audacious/ui_about.c:175 src/audacious/ui_credits.c:441
+msgid "Credits"
+msgstr "Izstrādātāji"
+
+#: src/audacious/ui_credits.c:47
+#, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"A multimedia player for many platforms.\n"
+"\n"
+"Copyright (C) 2005-2009 Audacious Development Team\n"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"Multivides atskaņotājs daudzām platformām.\n"
+"\n"
+"Autortiesības 2005-2009, Audacious izstrādes komanda\n"
+
+#: src/audacious/ui_credits.c:53
+msgid "Core developers:"
+msgstr "Galvenie izstrādātāji:"
+
+#: src/audacious/ui_credits.c:67
+msgid "Graphics:"
+msgstr "Grafika:"
+
+#: src/audacious/ui_credits.c:72
+msgid "Default skin:"
+msgstr "Noklusētā apdare:"
+
+#: src/audacious/ui_credits.c:78
+msgid "Plugin development:"
+msgstr "Spraudņu izstrāde:"
+
+#: src/audacious/ui_credits.c:99
+msgid "Patch authors:"
+msgstr "Labojumu autori:"
+
+#: src/audacious/ui_credits.c:132
+msgid "1.x developers:"
+msgstr "1.x izstrādātāji:"
+
+#: src/audacious/ui_credits.c:154
+msgid "BMP Developers:"
+msgstr "BMP izstrādātāji:"
+
+#: src/audacious/ui_credits.c:186
+msgid "Basque:"
+msgstr "Basku:"
+
+#: src/audacious/ui_credits.c:189
+msgid "Brazilian Portuguese:"
+msgstr "Brazīlijas portugāļu:"
+
+#: src/audacious/ui_credits.c:193
+msgid "Breton:"
+msgstr "Bretoņu:"
+
+#: src/audacious/ui_credits.c:196
+msgid "Bulgarian:"
+msgstr "Bulgāru:"
+
+#: src/audacious/ui_credits.c:199
+msgid "Catalan:"
+msgstr "Kataloņu:"
+
+#: src/audacious/ui_credits.c:202
+msgid "Croatian:"
+msgstr "Horvātu:"
+
+#: src/audacious/ui_credits.c:205
+msgid "Czech:"
+msgstr "Čehu:"
+
+#: src/audacious/ui_credits.c:208
+msgid "Dutch:"
+msgstr "Holandiešu:"
+
+#: src/audacious/ui_credits.c:212
+msgid "Estonian:"
+msgstr "Igauņu:"
+
+#: src/audacious/ui_credits.c:215
+msgid "Finnish:"
+msgstr "Somu:"
+
+#: src/audacious/ui_credits.c:219
+msgid "French:"
+msgstr "Franču:"
+
+#: src/audacious/ui_credits.c:224
+msgid "German:"
+msgstr "Vācu:"
+
+#: src/audacious/ui_credits.c:229
+msgid "Georgian:"
+msgstr "Gruzīnu:"
+
+#: src/audacious/ui_credits.c:232
+msgid "Greek:"
+msgstr "Grieķu:"
+
+#: src/audacious/ui_credits.c:237
+msgid "Hindi:"
+msgstr "Hindu:"
+
+#: src/audacious/ui_credits.c:240
+msgid "Hungarian:"
+msgstr "Ungāru:"
+
+#: src/audacious/ui_credits.c:243
+msgid "Italian:"
+msgstr "Itāļu:"
+
+#: src/audacious/ui_credits.c:247
+msgid "Japanese:"
+msgstr "Japāņu:"
+
+#: src/audacious/ui_credits.c:250
+msgid "Korean:"
+msgstr "Korejiešu:"
+
+#: src/audacious/ui_credits.c:253
+msgid "Lithuanian:"
+msgstr "Lietuviešu:"
+
+#: src/audacious/ui_credits.c:256
+msgid "Macedonian:"
+msgstr "Maķedoniešu:"
+
+#: src/audacious/ui_credits.c:259
+msgid "Polish:"
+msgstr "Poļu:"
+
+#: src/audacious/ui_credits.c:262
+msgid "Romanian:"
+msgstr "Rumāņu:"
+
+#: src/audacious/ui_credits.c:266
+msgid "Russian:"
+msgstr "Krievu:"
+
+#: src/audacious/ui_credits.c:269
+msgid "Serbian (Latin):"
+msgstr "Serbu (latīņu):"
+
+#: src/audacious/ui_credits.c:272
+msgid "Serbian (Cyrillic):"
+msgstr "Serbu (kirilica):"
+
+#: src/audacious/ui_credits.c:275
+msgid "Simplified Chinese:"
+msgstr "Vienkāršotā ķīniešu:"
+
+#: src/audacious/ui_credits.c:278
+msgid "Slovak:"
+msgstr "Slovāku:"
+
+#: src/audacious/ui_credits.c:281
+msgid "Spanish:"
+msgstr "Spāņu:"
+
+#: src/audacious/ui_credits.c:284
+msgid "Swedish:"
+msgstr "Zviedru:"
+
+#: src/audacious/ui_credits.c:287
+msgid "Traditional Chinese:"
+msgstr "Tradiciionālā ķīniešu:"
+
+#: src/audacious/ui_credits.c:292
+msgid "Turkish:"
+msgstr "Turku:"
+
+#: src/audacious/ui_credits.c:296
+msgid "Ukrainian:"
+msgstr "Ukraiņu:"
+
+#: src/audacious/ui_credits.c:299
+msgid "Welsh:"
+msgstr "Velsiešu:"
+
+#: src/audacious/ui_credits.c:445
+msgid "Translators"
+msgstr "Tulkotāji"
+
+#: src/audacious/ui_fileinfo.c:98
+msgid "Blues"
+msgstr "Blūzs"
+
+#: src/audacious/ui_fileinfo.c:98
+msgid "Classic Rock"
+msgstr "Klasiskais roks"
+
+#: src/audacious/ui_fileinfo.c:98
+msgid "Country"
+msgstr "Kantrī"
+
+#: src/audacious/ui_fileinfo.c:98
+msgid "Dance"
+msgstr "Dance"
+
+#: src/audacious/ui_fileinfo.c:99
+msgid "Disco"
+msgstr "Disko"
+
+#: src/audacious/ui_fileinfo.c:99
+msgid "Funk"
+msgstr "Funk"
+
+#: src/audacious/ui_fileinfo.c:99
+msgid "Grunge"
+msgstr "Grunge"
+
+#: src/audacious/ui_fileinfo.c:99
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: src/audacious/ui_fileinfo.c:100
+msgid "Jazz"
+msgstr "Džezs"
+
+#: src/audacious/ui_fileinfo.c:100
+msgid "Metal"
+msgstr "Metāls"
+
+#: src/audacious/ui_fileinfo.c:100
+msgid "New Age"
+msgstr "New Age"
+
+#: src/audacious/ui_fileinfo.c:100
+msgid "Oldies"
+msgstr "Oldies"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Other"
+msgstr "Citi"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Pop"
+msgstr "Pops"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "R&B"
+msgstr "R&B"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Rap"
+msgstr "Reps"
+
+#: src/audacious/ui_fileinfo.c:101
+msgid "Reggae"
+msgstr "Regejs"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Rock"
+msgstr "Roks"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Techno"
+msgstr "Tehno"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Industrial"
+msgstr "Industrial"
+
+#: src/audacious/ui_fileinfo.c:102
+msgid "Alternative"
+msgstr "Alternative"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Ska"
+msgstr "Ska"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Death Metal"
+msgstr "Death Metal"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Pranks"
+msgstr "Pranks"
+
+#: src/audacious/ui_fileinfo.c:103
+msgid "Soundtrack"
+msgstr "Soundtrack"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Euro-Techno"
+msgstr "Euro-Techno"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Ambient"
+msgstr "Ambient"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Trip-Hop"
+msgstr "Trip-Hop"
+
+#: src/audacious/ui_fileinfo.c:104
+msgid "Vocal"
+msgstr "Vokāls"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Jazz+Funk"
+msgstr "Jazz+Funk"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Fusion"
+msgstr "Fusion"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Trance"
+msgstr "Trance"
+
+#: src/audacious/ui_fileinfo.c:105
+msgid "Classical"
+msgstr "Klasiskā mūzika"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "Instrumental"
+msgstr "Instrumentāls"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "Acid"
+msgstr "Acid"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "House"
+msgstr "House"
+
+#: src/audacious/ui_fileinfo.c:106
+msgid "Game"
+msgstr "Game"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Sound Clip"
+msgstr "Sound Clip"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Gospel"
+msgstr "Gospel"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "Noise"
+msgstr "Noise"
+
+#: src/audacious/ui_fileinfo.c:107
+msgid "AlternRock"
+msgstr "AlternRock"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Bass"
+msgstr "Bass"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Soul"
+msgstr "Soul"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Punk"
+msgstr "Punk"
+
+#: src/audacious/ui_fileinfo.c:108
+msgid "Space"
+msgstr "Space"
+
+#: src/audacious/ui_fileinfo.c:109
+msgid "Meditative"
+msgstr "Meditative"
+
+#: src/audacious/ui_fileinfo.c:109
+msgid "Instrumental Pop"
+msgstr "Instrumentāls pops"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "Instrumental Rock"
+msgstr "Instrumentāls roks"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "Ethnic"
+msgstr "Ethnic"
+
+#: src/audacious/ui_fileinfo.c:110
+msgid "Gothic"
+msgstr "Gothic"
+
+#: src/audacious/ui_fileinfo.c:111
+msgid "Darkwave"
+msgstr "Darkwave"
+
+#: src/audacious/ui_fileinfo.c:111
+msgid "Techno-Industrial"
+msgstr "Techno-Industrial"
+
+#: src/audacious/ui_fileinfo.c:111
+msgid "Electronic"
+msgstr "Elektronika"
+
+#: src/audacious/ui_fileinfo.c:112
+msgid "Pop-Folk"
+msgstr "Pop-Folk"
+
+#: src/audacious/ui_fileinfo.c:112
+msgid "Eurodance"
+msgstr "Eurodance"
+
+#: src/audacious/ui_fileinfo.c:112
+msgid "Dream"
+msgstr "Dream"
+
+#: src/audacious/ui_fileinfo.c:113
+msgid "Southern Rock"
+msgstr "Southern Rock"
+
+#: src/audacious/ui_fileinfo.c:113
+msgid "Comedy"
+msgstr "Comedy"
+
+#: src/audacious/ui_fileinfo.c:113
+msgid "Cult"
+msgstr "Cult"
+
+#: src/audacious/ui_fileinfo.c:114
+msgid "Gangsta Rap"
+msgstr "Gangsta Rap"
+
+#: src/audacious/ui_fileinfo.c:114
+msgid "Top 40"
+msgstr "Top 40"
+
+#: src/audacious/ui_fileinfo.c:114
+msgid "Christian Rap"
+msgstr "Kristiešu reps"
+
+#: src/audacious/ui_fileinfo.c:115
+msgid "Pop/Funk"
+msgstr "Pops/Funk"
+
+#: src/audacious/ui_fileinfo.c:115
+msgid "Jungle"
+msgstr "Jungle"
+
+#: src/audacious/ui_fileinfo.c:115
+msgid "Native American"
+msgstr "Native American"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "Cabaret"
+msgstr "Cabaret"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "New Wave"
+msgstr "New Wave"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "Psychedelic"
+msgstr "Psychedelic"
+
+#: src/audacious/ui_fileinfo.c:116
+msgid "Rave"
+msgstr "Rave"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Showtunes"
+msgstr "Showtunes"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Trailer"
+msgstr "Trailer"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Lo-Fi"
+msgstr "Lo-Fi"
+
+#: src/audacious/ui_fileinfo.c:117
+msgid "Tribal"
+msgstr "Tribal"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Acid Punk"
+msgstr "Acid Punk"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Polka"
+msgstr "Polka"
+
+#: src/audacious/ui_fileinfo.c:118
+msgid "Retro"
+msgstr "Retro"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Musical"
+msgstr "Musical"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Rock & Roll"
+msgstr "Rock & Roll"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Hard Rock"
+msgstr "Hard Rock"
+
+#: src/audacious/ui_fileinfo.c:119
+msgid "Folk"
+msgstr "Folk"
+
+#: src/audacious/ui_fileinfo.c:120
+msgid "Folk/Rock"
+msgstr "Folk/Rock"
+
+#: src/audacious/ui_fileinfo.c:120
+msgid "National Folk"
+msgstr "National Folk"
+
+#: src/audacious/ui_fileinfo.c:120
+msgid "Swing"
+msgstr "Swing"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Fast-Fusion"
+msgstr "Fast-Fusion"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Bebob"
+msgstr "Bebob"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Latin"
+msgstr "Latin"
+
+#: src/audacious/ui_fileinfo.c:121
+msgid "Revival"
+msgstr "Revival"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Celtic"
+msgstr "Celtic"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Bluegrass"
+msgstr "Bluegrass"
+
+#: src/audacious/ui_fileinfo.c:122
+msgid "Avantgarde"
+msgstr "Avantgarde"
+
+#: src/audacious/ui_fileinfo.c:123
+msgid "Gothic Rock"
+msgstr "Gothic Rock"
+
+#: src/audacious/ui_fileinfo.c:123
+msgid "Progressive Rock"
+msgstr "Progresīvais roks"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Psychedelic Rock"
+msgstr "Psihodēliskais roks"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Symphonic Rock"
+msgstr "Simfoniskais roks"
+
+#: src/audacious/ui_fileinfo.c:124
+msgid "Slow Rock"
+msgstr "Lēnais roks"
+
+#: src/audacious/ui_fileinfo.c:125
+msgid "Big Band"
+msgstr "Big Band"
+
+#: src/audacious/ui_fileinfo.c:125
+msgid "Chorus"
+msgstr "Koris"
+
+#: src/audacious/ui_fileinfo.c:125
+msgid "Easy Listening"
+msgstr "Easy Listening"
+
+#: src/audacious/ui_fileinfo.c:126
+msgid "Acoustic"
+msgstr "Akustiskais"
+
+#: src/audacious/ui_fileinfo.c:126
+msgid "Humour"
+msgstr "Humour"
+
+#: src/audacious/ui_fileinfo.c:126
+msgid "Speech"
+msgstr "Runa"
+
+#: src/audacious/ui_fileinfo.c:126
+msgid "Chanson"
+msgstr "Chanson"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Opera"
+msgstr "Opera"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Chamber Music"
+msgstr "Chamber Music"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Sonata"
+msgstr "Sonāte"
+
+#: src/audacious/ui_fileinfo.c:127
+msgid "Symphony"
+msgstr "Simfonija"
+
+#: src/audacious/ui_fileinfo.c:128
+msgid "Booty Bass"
+msgstr "Booty Bass"
+
+#: src/audacious/ui_fileinfo.c:128
+msgid "Primus"
+msgstr "Primus"
+
+#: src/audacious/ui_fileinfo.c:128
+msgid "Porn Groove"
+msgstr "Porn Groove"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Satire"
+msgstr "Satīra"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Slow Jam"
+msgstr "Slow Jam"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Club"
+msgstr "Club"
+
+#: src/audacious/ui_fileinfo.c:129
+msgid "Tango"
+msgstr "Tango"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Samba"
+msgstr "Samba"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Folklore"
+msgstr "Folklora"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Ballad"
+msgstr "Balāde"
+
+#: src/audacious/ui_fileinfo.c:130
+msgid "Power Ballad"
+msgstr "Power Ballad"
+
+#: src/audacious/ui_fileinfo.c:131
+msgid "Rhythmic Soul"
+msgstr "Rhythmic Soul"
+
+#: src/audacious/ui_fileinfo.c:131
+msgid "Freestyle"
+msgstr "Freestyle"
+
+#: src/audacious/ui_fileinfo.c:131
+msgid "Duet"
+msgstr "Duets"
+
+#: src/audacious/ui_fileinfo.c:132
+msgid "Punk Rock"
+msgstr "Pankroks"
+
+#: src/audacious/ui_fileinfo.c:132
+msgid "Drum Solo"
+msgstr "Drum Solo"
+
+#: src/audacious/ui_fileinfo.c:132
+msgid "A Cappella"
+msgstr "A Cappella"
+
+#: src/audacious/ui_fileinfo.c:133
+msgid "Euro-House"
+msgstr "Euro-House"
+
+#: src/audacious/ui_fileinfo.c:133
+msgid "Dance Hall"
+msgstr "Dance Hall"
+
+#: src/audacious/ui_fileinfo.c:133
+msgid "Goa"
+msgstr "Goa"
+
+#: src/audacious/ui_fileinfo.c:134
+msgid "Drum & Bass"
+msgstr "Drum & Bass"
+
+#: src/audacious/ui_fileinfo.c:134
+msgid "Club-House"
+msgstr "Club-House"
+
+#: src/audacious/ui_fileinfo.c:134
+msgid "Hardcore"
+msgstr "Hardcore"
+
+#: src/audacious/ui_fileinfo.c:135
+msgid "Terror"
+msgstr "Terror"
+
+#: src/audacious/ui_fileinfo.c:135
+msgid "Indie"
+msgstr "Indie"
+
+#: src/audacious/ui_fileinfo.c:135
+msgid "BritPop"
+msgstr "BritPop"
+
+#: src/audacious/ui_fileinfo.c:135
+msgid "Negerpunk"
+msgstr "Negerpunk"
+
+#: src/audacious/ui_fileinfo.c:136
+msgid "Polsk Punk"
+msgstr "Polsk Punk"
+
+#: src/audacious/ui_fileinfo.c:136
+msgid "Beat"
+msgstr "Beat"
+
+#: src/audacious/ui_fileinfo.c:136
+msgid "Christian Gangsta Rap"
+msgstr "Christian Gangsta Rap"
+
+#: src/audacious/ui_fileinfo.c:137
+msgid "Heavy Metal"
+msgstr "Heavy Metal"
+
+#: src/audacious/ui_fileinfo.c:137
+msgid "Black Metal"
+msgstr "Black Metal"
+
+#: src/audacious/ui_fileinfo.c:137
+msgid "Crossover"
+msgstr "Crossover"
+
+#: src/audacious/ui_fileinfo.c:138
+msgid "Contemporary Christian"
+msgstr "Contemporary Christian"
+
+#: src/audacious/ui_fileinfo.c:138
+msgid "Christian Rock"
+msgstr "Christian Rock"
+
+#: src/audacious/ui_fileinfo.c:139
+msgid "Merengue"
+msgstr "Merengue"
+
+#: src/audacious/ui_fileinfo.c:139
+msgid "Salsa"
+msgstr "Salsa"
+
+#: src/audacious/ui_fileinfo.c:139
+msgid "Thrash Metal"
+msgstr "Thrash Metal"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "Anime"
+msgstr "Anime"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "JPop"
+msgstr "JPop"
+
+#: src/audacious/ui_fileinfo.c:140
+msgid "Synthpop"
+msgstr "Synthpop"
+
+#: src/audacious/ui_fileinfo.c:218 src/audacious/ui_fileinfo.c:553
+#: src/audacious/ui_fileinfo.c:556 src/audacious/ui_fileinfo.c:559
+msgid "<span size=\"small\">n/a</span>"
+msgstr "<span size=\"small\">n/p</span>"
+
+#: src/audacious/ui_fileinfo.c:332
+msgid "Metadata updated successfully"
+msgstr "Metadati veiksmīgi atjaunināti"
+
+#: src/audacious/ui_fileinfo.c:338
+msgid "Metadata updating failed"
+msgstr "Metadatu atjaunināšana neizdevās"
+
+#: src/audacious/ui_fileinfo.c:490
+msgid "Track Information"
+msgstr "Celiņa informācija"
+
+#: src/audacious/ui_fileinfo.c:523
+msgid "<span size=\"small\">General</span>"
+msgstr "<span size=\"small\">Vispārēji</span>"
+
+#: src/audacious/ui_fileinfo.c:543
+msgid "<span size=\"small\">Format:</span>"
+msgstr "<span size=\"small\">Formāts:</span>"
+
+#: src/audacious/ui_fileinfo.c:546
+msgid "<span size=\"small\">Quality:</span>"
+msgstr "<span size=\"small\">Kvalitāte:</span>"
+
+#: src/audacious/ui_fileinfo.c:549
+msgid "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Bitātrums:</span>"
+
+#: src/audacious/ui_fileinfo.c:582
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">Nosaukums</span>"
+
+#: src/audacious/ui_fileinfo.c:594
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">Izpildītājs</span>"
+
+#: src/audacious/ui_fileinfo.c:606
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">Albums</span>"
+
+#: src/audacious/ui_fileinfo.c:618
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">Komentārs</span>"
+
+#: src/audacious/ui_fileinfo.c:630
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">Žanrs</span>"
+
+#: src/audacious/ui_fileinfo.c:661
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">Gads</span>"
+
+#: src/audacious/ui_fileinfo.c:674
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">Celiņa numurs</span>"
+
+#: src/audacious/ui_fileinfo.c:687
+msgid "<span size=\"small\">Location</span>"
+msgstr "<span size=\"small\">Vieta</span>"
+
+#: src/audacious/ui_fileinfo.c:707
+msgid "<span size=\"small\">Raw Metadata</span>"
+msgstr "<span size=\"small\">Neapstrādāti metadati</span>"
+
+#: src/audacious/ui_fileinfo.c:724
+msgid "Key"
+msgstr "Atslēga"
+
+#: src/audacious/ui_fileinfo.c:737
+msgid "Value"
+msgstr "Vērtība"
+
+#: src/audacious/ui_fileinfo.c:827
+#, c-format
+msgid "%d kb/s"
+msgstr "%d kb/s"
+
+#: src/audacious/ui_fileinfopopup.c:253 src/audacious/ui_fileinfopopup.c:365
+#: src/audacious/ui_preferences.c:140
+msgid "Title"
+msgstr "Nosaukums"
+
+#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:138
+msgid "Artist"
+msgstr "Izpildītājs"
+
+#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:139
+msgid "Album"
+msgstr "Albums"
+
+#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:142
+msgid "Genre"
+msgstr "Žanrs"
+
+#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:146
+msgid "Year"
+msgstr "Gads"
+
+#: src/audacious/ui_fileinfopopup.c:268
+msgid "Track Number"
+msgstr "Celiņa numurs"
+
+#: src/audacious/ui_fileinfopopup.c:272
+msgid "Track Length"
+msgstr "Celiņa garums"
+
+#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:445
+msgid "Filename"
+msgstr "Faila nosaukums"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Open Files"
+msgstr "Atvērt failus"
+
+#: src/audacious/ui_fileopener.c:136
+msgid "Add Files"
+msgstr "Pievienot failus"
+
+#: src/audacious/ui_fileopener.c:138
+msgid "Close dialog on Open"
+msgstr "Aizvērt dialogu atverot"
+
+#: src/audacious/ui_fileopener.c:138
+msgid "Close dialog on Add"
+msgstr "Aizvērt dialogu pievienojot"
+
+#: src/audacious/ui_headless.c:37
+msgid "Headless Interface"
+msgstr "'Bezgalvas' saskarne"
+
+#: src/audacious/ui_jumptotrack.c:143
+msgid "Un_queue"
+msgstr "Atrindot"
+
+#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:581
+msgid "_Queue"
+msgstr "Ierindot"
+
+#: src/audacious/ui_jumptotrack.c:467
+msgid "Jump to Track"
+msgstr "Pāriet uz celiņu"
+
+#: src/audacious/ui_jumptotrack.c:510
+msgid "Filter: "
+msgstr "Filtrs:"
+
+#: src/audacious/ui_jumptotrack.c:511
+msgid "_Filter:"
+msgstr "_Filtrs:"
+
+#: src/audacious/ui_jumptotrack.c:529
+msgid "Remember"
+msgstr "Atcerēties"
+
+#: src/audacious/ui_jumptotrack.c:538
+msgid "Clea_r"
+msgstr "Notī_rīt"
+
+#: src/audacious/ui_jumptotrack.c:573
+msgid "Close on Jump"
+msgstr "Aizvērt pārejot"
+
+#: src/audacious/ui_manager.c:42 src/audacious/ui_manager.c:43
+msgid "Stop after Current Song"
+msgstr "Apturēt pēc pašreizējās dziesmas"
+
+#: src/audacious/ui_manager.c:45 src/audacious/ui_manager.c:46
+msgid "Peaks"
+msgstr "Maksimumi"
+
+#: src/audacious/ui_manager.c:48 src/audacious/ui_manager.c:49
+msgid "Repeat"
+msgstr "Atkārtot"
+
+#: src/audacious/ui_manager.c:51 src/audacious/ui_manager.c:52
+msgid "Shuffle"
+msgstr "Jaukt"
+
+#: src/audacious/ui_manager.c:54 src/audacious/ui_manager.c:55
+msgid "No Playlist Advance"
+msgstr "Nevirzīties uz priekšu repertuārā"
+
+#: src/audacious/ui_manager.c:63 src/audacious/ui_preferences.c:130
+msgid "Playback"
+msgstr "Atskaņošana"
+
+#: src/audacious/ui_manager.c:65 src/audacious/ui_manager.c:66
+msgid "Play"
+msgstr "Atskaņot"
+
+#: src/audacious/ui_manager.c:68 src/audacious/ui_manager.c:69
+msgid "Pause"
+msgstr "Pauze"
+
+#: src/audacious/ui_manager.c:71 src/audacious/ui_manager.c:72
+msgid "Stop"
+msgstr "Stop"
+
+#: src/audacious/ui_manager.c:74 src/audacious/ui_manager.c:75
+msgid "Previous"
+msgstr "Iepriekšējais"
+
+#: src/audacious/ui_manager.c:77 src/audacious/ui_manager.c:78
+msgid "Next"
+msgstr "Nākamais"
+
+#: src/audacious/ui_manager.c:83
+msgid "Visualization"
+msgstr "Vizualizēšana"
+
+#: src/audacious/ui_manager.c:84
+msgid "Visualization Mode"
+msgstr "Vizualizēšanas režīms"
+
+#: src/audacious/ui_manager.c:85
+msgid "Analyzer Mode"
+msgstr "Analizatora režīms"
+
+#: src/audacious/ui_manager.c:86
+msgid "Scope Mode"
+msgstr "Loka režīms"
+
+#: src/audacious/ui_manager.c:87
+msgid "Voiceprint Mode"
+msgstr "Balss vizualizēšanas režīms"
+
+#: src/audacious/ui_manager.c:88
+msgid "WindowShade VU Mode"
+msgstr "Loga saritināšanas VU režīms"
+
+#: src/audacious/ui_manager.c:89
+msgid "Refresh Rate"
+msgstr "Atsvaidzes biežums"
+
+#: src/audacious/ui_manager.c:90
+msgid "Analyzer Falloff"
+msgstr "Analizatora krišana"
+
+#: src/audacious/ui_manager.c:91
+msgid "Peaks Falloff"
+msgstr "Maksimumu krišana"
+
+#: src/audacious/ui_manager.c:97 src/audacious/ui_playlist_manager.c:403
+#: src/audacious/ui_preferences.c:131
+msgid "Playlist"
+msgstr "Repertuārs"
+
+#: src/audacious/ui_manager.c:99 src/audacious/ui_manager.c:100
+msgid "New Playlist"
+msgstr "Jauns repertuārs"
+
+#: src/audacious/ui_manager.c:102 src/audacious/ui_manager.c:103
+msgid "Select Next Playlist"
+msgstr "Iezīmēt nākamo repertuāru"
+
+#: src/audacious/ui_manager.c:105 src/audacious/ui_manager.c:106
+msgid "Select Previous Playlist"
+msgstr "Iezīmēt iepriekšējo repertuāru"
+
+#: src/audacious/ui_manager.c:108 src/audacious/ui_manager.c:109
+msgid "Delete Playlist"
+msgstr "Dzēst repertuāru"
+
+#: src/audacious/ui_manager.c:111
+msgid "Load List"
+msgstr "Ielādēt repertuāru"
+
+#: src/audacious/ui_manager.c:112
+msgid "Loads a playlist file into the selected playlist."
+msgstr "Ielādē repertuāra failu izvēlētajā repertuārā."
+
+#: src/audacious/ui_manager.c:114
+msgid "Save List"
+msgstr "Saglabāt repertuāru"
+
+#: src/audacious/ui_manager.c:115
+msgid "Saves the selected playlist."
+msgstr "Saglabā izvēlēto repertuāru."
+
+#: src/audacious/ui_manager.c:117
+msgid "Save Default List"
+msgstr "Saglabāt noklusēto repertuāru"
+
+#: src/audacious/ui_manager.c:118
+msgid "Saves the selected playlist to the default location."
+msgstr "Saglabā izvēlēto repertuāru noklusētajā vietā."
+
+#: src/audacious/ui_manager.c:121
+msgid "Refresh List"
+msgstr "Atsvaidzināt repertuāru"
+
+#: src/audacious/ui_manager.c:122
+msgid "Refreshes metadata associated with a playlist entry."
+msgstr "Atsvaidzina ar repertuāra ierakstu saistītos metadatus."
+
+#: src/audacious/ui_manager.c:125
+msgid "List Manager"
+msgstr "Repertuāru pārvaldnieks"
+
+#: src/audacious/ui_manager.c:126
+msgid "Opens the playlist manager."
+msgstr "Atver repertuāru pārvaldnieku."
+
+#: src/audacious/ui_manager.c:132
+msgid "View"
+msgstr "Skats"
+
+#: src/audacious/ui_manager.c:136
+msgid "Add Internet Address..."
+msgstr "Pievienot interneta adresi..."
+
+#: src/audacious/ui_manager.c:137
+msgid "Adds a remote track to the playlist."
+msgstr "Pievieno repertuāram attālinātu celiņu."
+
+#: src/audacious/ui_manager.c:140
+msgid "Add Files..."
+msgstr "Pievienot failus..."
+
+#: src/audacious/ui_manager.c:141
+msgid "Adds files to the playlist."
+msgstr "Pievieno failus repertuāram."
+
+#: src/audacious/ui_manager.c:146
+msgid "Search and Select"
+msgstr "Meklēt un iezīmēt"
+
+#: src/audacious/ui_manager.c:147
+msgid ""
+"Searches the playlist and selects playlist entries based on specific "
+"criteria."
+msgstr ""
+"Meklē un atlasa repertuāra ierakstus, balstoties uz norādītajiem "
+"kritērijiem."
+
+#: src/audacious/ui_manager.c:150
+msgid "Invert Selection"
+msgstr "Apgrieztā iezīmēšana"
+
+#: src/audacious/ui_manager.c:151
+msgid "Inverts the selected and unselected entries."
+msgstr "Invertē iezīmētos un neiezīmētos ierakstus."
+
+#: src/audacious/ui_manager.c:154
+msgid "Select All"
+msgstr "Iezīmēt visus"
+
+#: src/audacious/ui_manager.c:155
+msgid "Selects all of the playlist entries."
+msgstr "Iezīmē visus repertuāra ierakstus."
+
+#: src/audacious/ui_manager.c:158
+msgid "Select None"
+msgstr "Notīrīt iezīmējumu"
+
+#: src/audacious/ui_manager.c:159
+msgid "Deselects all of the playlist entries."
+msgstr "Noņem iezīmējumu no visiem ierakstiem."
+
+#: src/audacious/ui_manager.c:164
+msgid "Remove All"
+msgstr "Izņemt visus"
+
+#: src/audacious/ui_manager.c:165
+msgid "Removes all entries from the playlist."
+msgstr "Izņem no repertuāra visus ierakstus."
+
+#: src/audacious/ui_manager.c:168
+msgid "Clear Queue"
+msgstr "Notīrīt ierindošanu"
+
+#: src/audacious/ui_manager.c:169
+msgid "Clears the queue associated with this playlist."
+msgstr "Notīra ar šo repertuāru saistīto ierindošanu."
+
+#: src/audacious/ui_manager.c:172
+msgid "Remove Unavailable Files"
+msgstr "Izņemt nepieejamos failus"
+
+#: src/audacious/ui_manager.c:173
+msgid "Removes unavailable files from the playlist."
+msgstr "Izņem no repertuāra nepieejamos failus."
+
+#: src/audacious/ui_manager.c:176
+msgid "Remove Duplicates"
+msgstr "Izņemt dublikātus"
+
+#: src/audacious/ui_manager.c:178 src/audacious/ui_manager.c:210
+#: src/audacious/ui_manager.c:244
+msgid "By Title"
+msgstr "Pēc nosaukuma"
+
+#: src/audacious/ui_manager.c:179
+msgid "Removes duplicate entries from the playlist by title."
+msgstr "Izņem no repertuāra dublikātus pēc nosaukuma."
+
+#: src/audacious/ui_manager.c:182 src/audacious/ui_manager.c:222
+#: src/audacious/ui_manager.c:256
+msgid "By Filename"
+msgstr "Pēc faila nosaukuma"
+
+#: src/audacious/ui_manager.c:183
+msgid "Removes duplicate entries from the playlist by filename."
+msgstr "Izņem no repertuāra dublikātus pēc faila nosaukuma."
+
+#: src/audacious/ui_manager.c:186 src/audacious/ui_manager.c:226
+#: src/audacious/ui_manager.c:260
+msgid "By Path + Filename"
+msgstr "Pēc ceļa + faila nosaukuma"
+
+#: src/audacious/ui_manager.c:187
+msgid "Removes duplicate entries from the playlist by their full path."
+msgstr "Izņem no repertuāra dublikātus pēc to pilna ceļa."
+
+#: src/audacious/ui_manager.c:190
+msgid "Remove Unselected"
+msgstr "Izņemt neiezīmētos"
+
+#: src/audacious/ui_manager.c:191
+msgid "Remove unselected entries from the playlist."
+msgstr "Izņem no repertuāra neiezīmētos ierakstus."
+
+#: src/audacious/ui_manager.c:194
+msgid "Remove Selected"
+msgstr "Izņemt iezīmētos"
+
+#: src/audacious/ui_manager.c:195
+msgid "Remove selected entries from the playlist."
+msgstr "Izņem no repertuāra iezīmētos ierakstus."
+
+#: src/audacious/ui_manager.c:200
+msgid "Randomize List"
+msgstr "Sajaukt repertuāru"
+
+#: src/audacious/ui_manager.c:201
+msgid "Randomizes the playlist."
+msgstr "Sajauc repertuāra ierakstu atskaņošanas kārtību."
+
+#: src/audacious/ui_manager.c:204
+msgid "Reverse List"
+msgstr "Apgriezt repertuāru"
+
+#: src/audacious/ui_manager.c:205
+msgid "Reverses the playlist."
+msgstr "Apgriež repertuāru."
+
+#: src/audacious/ui_manager.c:208
+msgid "Sort List"
+msgstr "Kārtot repertuāru"
+
+#: src/audacious/ui_manager.c:211 src/audacious/ui_manager.c:245
+msgid "Sorts the list by title."
+msgstr "Kārto repertuāru pēc nosaukuma."
+
+#: src/audacious/ui_manager.c:214 src/audacious/ui_manager.c:248
+msgid "By Album"
+msgstr "Pēc albuma"
+
+#: src/audacious/ui_manager.c:215 src/audacious/ui_manager.c:249
+msgid "Sorts the list by album."
+msgstr "Kārto sarakstu pēc albuma."
+
+#: src/audacious/ui_manager.c:218 src/audacious/ui_manager.c:252
+msgid "By Artist"
+msgstr "Pēc izpildītāja"
+
+#: src/audacious/ui_manager.c:219 src/audacious/ui_manager.c:253
+msgid "Sorts the list by artist."
+msgstr "Kārto repertuāru pēc izpildītāja."
+
+#: src/audacious/ui_manager.c:223 src/audacious/ui_manager.c:257
+msgid "Sorts the list by filename."
+msgstr "Kārto repertuāru pēc faila nosaukuma."
+
+#: src/audacious/ui_manager.c:227 src/audacious/ui_manager.c:261
+msgid "Sorts the list by full pathname."
+msgstr "Kārto repertuāru pēc pilnā ceļa."
+
+#: src/audacious/ui_manager.c:230 src/audacious/ui_manager.c:264
+msgid "By Date"
+msgstr "Pēc datuma"
+
+#: src/audacious/ui_manager.c:231 src/audacious/ui_manager.c:265
+msgid "Sorts the list by modification time."
+msgstr "Kārto repertuāru pēc izmaiņas datuma."
+
+#: src/audacious/ui_manager.c:234 src/audacious/ui_manager.c:268
+msgid "By Track Number"
+msgstr "Pēc celiņa numura"
+
+#: src/audacious/ui_manager.c:235 src/audacious/ui_manager.c:269
+msgid "Sorts the list by track number."
+msgstr "Kārto repertuāru pēc celiņa numura."
+
+#: src/audacious/ui_manager.c:238 src/audacious/ui_manager.c:272
+msgid "By Playlist Entry"
+msgstr "Pēc repertuāra ieraksta"
+
+#: src/audacious/ui_manager.c:239 src/audacious/ui_manager.c:273
+msgid "Sorts the list by playlist entry."
+msgstr "Kārto repertuāru pēc ieraksta."
+
+#: src/audacious/ui_manager.c:242
+msgid "Sort Selected"
+msgstr "Kārtot iezīmētos"
+
+#: src/audacious/ui_manager.c:282
+msgid "File"
+msgstr "Fails"
+
+#: src/audacious/ui_manager.c:283
+msgid "Help"
+msgstr "Palīdzība"
+
+#: src/audacious/ui_manager.c:285
+msgid "Components"
+msgstr "Komponentes"
+
+#: src/audacious/ui_manager.c:287 src/audacious/ui_manager.c:290
+msgid "View Track Details"
+msgstr "Skatīt celiņa detaļas"
+
+#: src/audacious/ui_manager.c:288 src/audacious/ui_manager.c:291
+msgid "View track details"
+msgstr "Skatīt celiņa detaļas"
+
+#: src/audacious/ui_manager.c:296
+msgid "Play File"
+msgstr "Atskaņot failu"
+
+#: src/audacious/ui_manager.c:297
+msgid "Load and play a file"
+msgstr "Ielādēt un atskaņot failu"
+
+#: src/audacious/ui_manager.c:299
+msgid "Play Location"
+msgstr "Atskaņot vietu"
+
+#: src/audacious/ui_manager.c:300
+msgid "Play media from the selected location"
+msgstr "Atskaņot multitvides failu no izvēlētās vietas"
+
+#: src/audacious/ui_manager.c:302
+msgid "Plugin services"
+msgstr "Spraudņu servisi"
+
+#: src/audacious/ui_manager.c:304
+msgid "Preferences"
+msgstr "Iestatījumi"
+
+#: src/audacious/ui_manager.c:305
+msgid "Open preferences window"
+msgstr "Atver iestatījumu logu"
+
+#: src/audacious/ui_manager.c:307
+msgid "_Quit"
+msgstr "I_ziet"
+
+#: src/audacious/ui_manager.c:308
+msgid "Quit Audacious"
+msgstr "Aizver Audacious"
+
+#: src/audacious/ui_manager.c:310 src/audacious/ui_manager.c:311
+msgid "Set A-B"
+msgstr "Uzstādīt A-B"
+
+#: src/audacious/ui_manager.c:313 src/audacious/ui_manager.c:314
+msgid "Clear A-B"
+msgstr "Notīrīt A-B"
+
+#: src/audacious/ui_manager.c:316 src/audacious/ui_manager.c:317
+msgid "Jump to Playlist Start"
+msgstr "Pāriet uz repertuāra sākumu"
+
+#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:320
+msgid "Jump to File"
+msgstr "Pāriet uz failu"
+
+#: src/audacious/ui_manager.c:325
+msgid "Queue Toggle"
+msgstr "Pārslēgt ierindošanau"
+
+#: src/audacious/ui_manager.c:326
+msgid "Enables/disables the entry in the playlist's queue."
+msgstr "Ieslēdz/izslēdz repertuāra ieraksta ierindošanu."
+
+#: src/audacious/ui_manager.c:333
+msgid "Load"
+msgstr "Ielādēt"
+
+#: src/audacious/ui_manager.c:334
+msgid "Import"
+msgstr "Importēt"
+
+#: src/audacious/ui_manager.c:335
+msgid "Save"
+msgstr "Saglabāt"
+
+#: src/audacious/ui_manager.c:336
+msgid "Delete"
+msgstr "Dzēst "
+
+#: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:359
+#: src/audacious/ui_manager.c:374
+msgid "Preset"
+msgstr "Sākumuzstādījumi"
+
+#: src/audacious/ui_manager.c:339
+msgid "Load preset"
+msgstr "Ielādēt sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:341 src/audacious/ui_manager.c:362
+#: src/audacious/ui_manager.c:377
+msgid "Auto-load preset"
+msgstr "Auto-ielādes sākumuzstādījums"
+
+#: src/audacious/ui_manager.c:342
+msgid "Load auto-load preset"
+msgstr "Ielādē auto-ielādes sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:344 src/audacious/ui_manager.c:365
+msgid "Default"
+msgstr "Noklusētais"
+
+#: src/audacious/ui_manager.c:345
+msgid "Load default preset into equalizer"
+msgstr "Ielādēt noklusēto sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:347
+msgid "Zero"
+msgstr "Nulle"
+
+#: src/audacious/ui_manager.c:348
+msgid "Set equalizer preset levels to zero"
+msgstr "Uzstādīt balansiera sākumuzstādījumu līmeņus uz 0"
+
+#: src/audacious/ui_manager.c:350
+msgid "From file"
+msgstr "No faila"
+
+#: src/audacious/ui_manager.c:351
+msgid "Load preset from file"
+msgstr "Ielādēt sākumuzstādījumu no faila"
+
+#: src/audacious/ui_manager.c:353
+msgid "From WinAMP EQF file"
+msgstr "No WinAMP EQF faila"
+
+#: src/audacious/ui_manager.c:354
+msgid "Load preset from WinAMP EQF file"
+msgstr "Ielādēt sākumuzstādījumu no WinAMP EQF faila"
+
+#: src/audacious/ui_manager.c:356
+msgid "WinAMP Presets"
+msgstr "WinAMP sākumuzstādījumi"
+
+#: src/audacious/ui_manager.c:357
+msgid "Import WinAMP presets"
+msgstr "Importēt WinAMP sākumuzstādījumus"
+
+#: src/audacious/ui_manager.c:360
+msgid "Save preset"
+msgstr "Saglabāt sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:363
+msgid "Save auto-load preset"
+msgstr "Saglabāt auto-ielādes sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:366
+msgid "Save default preset"
+msgstr "Saglabāt noklusēto sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:368
+msgid "To file"
+msgstr "Uz failu"
+
+#: src/audacious/ui_manager.c:369
+msgid "Save preset to file"
+msgstr "Saglabāt sākumuzstādījumu failā"
+
+#: src/audacious/ui_manager.c:371
+msgid "To WinAMP EQF file"
+msgstr "Uz WinAMP EQF failu"
+
+#: src/audacious/ui_manager.c:372
+msgid "Save preset to WinAMP EQF file"
+msgstr "Saglabāt sākumuzstādījumu WinAMP EQF failā"
+
+#: src/audacious/ui_manager.c:375
+msgid "Delete preset"
+msgstr "Dzēst sākumuzstādījumu"
+
+#: src/audacious/ui_manager.c:378
+msgid "Delete auto-load preset"
+msgstr "Dzēst auto-ielādes sākumuzstādījumu"
+
+#: src/audacious/ui_misc.c:48
+msgid "Audacious - Unsupported Version Warning"
+msgstr "Audacious - neatbalstītas versijas brīdinājums"
+
+#: src/audacious/ui_misc.c:55
+msgid "<big><b>Audacious2 is not ready yet!</b></big>"
+msgstr "<big><b>Audacious2 vēl nav gatavs!</b></big>"
+
+#: src/audacious/ui_misc.c:61
+msgid ""
+"<b>Please don't file bugs at this point unless they represent major problems."
+"</b>"
+msgstr ""
+"<b>Lūdzu, šobrīd vēl neaizpildiet kļūdu ziņojumus, ja vien tie neatspoguļo "
+"nozīmīgas problēmas.</b>"
+
+#: src/audacious/ui_misc.c:64
+msgid ""
+"This is an <i>alpha</i> build of Audacious2. It is still fairly incomplete "
+"and unpolished.\n"
+"We suspect that most minor bugs reported during this time will be resolved "
+"once more things\n"
+"stablize. However, if there is a major bug, such as a crash on playing a "
+"specific file, we\n"
+"need to know about it.\n"
+"\n"
+"However, we ask you to be aware that dealing with trivial bugs is "
+"distracting at this point,\n"
+"and to please refrain from doing so. Thanks in advance!"
+msgstr ""
+"Šī ir Audacious2 <i>alfa</i> versija. Tā ir visai nepabeigta un nepieslīpēta."
+"\n"
+"Mēs domājam, ka vairākums mazsvarīgo kļūdu, kas ziņotas šajā periodā,\n"
+"tiks izlabotas, tiklīdz vairāk lietu stabilizēsies. Tomēr, ja pamanāt "
+"nozīmīgu\n"
+"kļūdu, piemēram, programmas avārija, atskaņojot specifisku failu, mums par "
+"to "
+"ir jāzina.\n"
+"\n"
+"Tomēr mēs lūdzam jūs apzināties, ka triviālu kļūdu labošana šajā brīdī ir\n"
+"traucējoša, un atturēties no šādu kļūdu ziņošanas. Paldies jau iepriekš!"
+
+#: src/audacious/ui_misc.c:74
+msgid "<b>Blogging about bugs in it is also not helpful.</b>"
+msgstr "<b>Rakstīšana emuārā par programmas kļūdām arī nepalīdzēs.</b>"
+
+#: src/audacious/ui_misc.c:77
+msgid ""
+"Likewise, we're developers. We don't read blogs on a regular basis. If there "
+"is a major bug,\n"
+"we ask you to bring it to our attention via our bugtracking instance at "
+"redmine.atheme.org,\n"
+"or via the forums that are on the website.\n"
+"\n"
+"This will help us find out more information about your concerns, which we "
+"would likely\n"
+"not know about otherwise."
+msgstr ""
+"Turklāt, mēs esam izstrādātāji. Mēs neesam regulāri emuāru lasītāji. Ja "
+"pamanāt "
+"nopietnu kļūdu,\n"
+"lūdzam jums pievērst tajai mūsu uzmanību ar kļūdu izsekošanas instances "
+"palīdzību vietnē redmine.atheme.org,\n"
+"vai arī rakstiet vietnē esošajā forumā.\n"
+"\n"
+"Tas palīdzēs mums uzzināt vairāk informācijas par jūsu raizēm, par kurām mēs "
+"pretējā gadījumā,\n"
+"visticamāk, neko nezinātu."
+
+#: src/audacious/ui_new.c:631
+msgid "New Interface"
+msgstr "Jauna saskarne"
+
+#: src/audacious/ui_playlist_manager.c:364
+msgid "Playlist Manager"
+msgstr "Repertuāru pārvaldnieks"
+
+#: src/audacious/ui_playlist_manager.c:410
+msgid "Entries"
+msgstr "Ieraksti"
+
+#: src/audacious/ui_playlist_manager.c:425
+msgid "_Rename"
+msgstr "Pā_rdēvēt"
+
+#: src/audacious/ui_preferences.c:126
+msgid "Audio"
+msgstr "Skaņa"
+
+#: src/audacious/ui_preferences.c:127
+msgid "Replay Gain"
+msgstr "Normalizēšana"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Connectivity"
+msgstr "Savienojamība"
+
+#: src/audacious/ui_preferences.c:129
+msgid "Mouse"
+msgstr "Pele"
+
+#: src/audacious/ui_preferences.c:132
+msgid "Plugins"
+msgstr "Spraudņi"
+
+#: src/audacious/ui_preferences.c:141
+msgid "Tracknumber"
+msgstr "Celiņa numurs"
+
+#: src/audacious/ui_preferences.c:144
+msgid "Filepath"
+msgstr "Faila ceļš"
+
+#: src/audacious/ui_preferences.c:145
+msgid "Date"
+msgstr "Datums"
+
+#: src/audacious/ui_preferences.c:147
+msgid "Comment"
+msgstr "Komentārs"
+
+#: src/audacious/ui_preferences.c:148
+msgid "Codec"
+msgstr "Kodeks"
+
+#: src/audacious/ui_preferences.c:149
+msgid "Quality"
+msgstr "Kvalitāte"
+
+#: src/audacious/ui_preferences.c:155
+msgid "None"
+msgstr "Neviens"
+
+#: src/audacious/ui_preferences.c:156
+msgid "Japanese"
+msgstr "Japāņu"
+
+#: src/audacious/ui_preferences.c:157
+msgid "Taiwanese"
+msgstr "Taivānu"
+
+#: src/audacious/ui_preferences.c:158
+msgid "Chinese"
+msgstr "Ķīniešu"
+
+#: src/audacious/ui_preferences.c:159
+msgid "Korean"
+msgstr "Korejiešu"
+
+#: src/audacious/ui_preferences.c:160
+msgid "Russian"
+msgstr "Krievu"
+
+#: src/audacious/ui_preferences.c:161
+msgid "Greek"
+msgstr "Grieķu"
+
+#: src/audacious/ui_preferences.c:162
+msgid "Hebrew"
+msgstr "Ebreju"
+
+#: src/audacious/ui_preferences.c:163
+msgid "Turkish"
+msgstr "Turku"
+
+#: src/audacious/ui_preferences.c:164
+msgid "Arabic"
+msgstr "Arābu"
+
+#: src/audacious/ui_preferences.c:166
+msgid "Universal"
+msgstr "Univerāls"
+
+#: src/audacious/ui_preferences.c:185
+msgid "<b>Format Detection</b>"
+msgstr "<b>Formāta noteikšana</b>"
+
+#: src/audacious/ui_preferences.c:186
+msgid "Detect file formats on demand, instead of immediately."
+msgstr "Nosaka failu formātus pēc pieprasījuma nevis tūlīt."
+
+#: src/audacious/ui_preferences.c:187
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"Kad ieslēgts, Audacious noteiks failu formātus tikai pēc pieprasījuma. "
+"Rezultātā "
+"repertuārs varētu būt nesakārtotāks, tomēr ir arī ieguvums - lielāks "
+"programmas "
+"darbības ātrums."
+
+#: src/audacious/ui_preferences.c:188
+msgid "Detect file formats by extension."
+msgstr "Noteikt failu formātus pēc paplašinājuma."
+
+#: src/audacious/ui_preferences.c:189
+msgid ""
+"When checked, Audacious will detect file formats based by extension. Only "
+"files with extensions of supported formats will be loaded."
+msgstr ""
+"Kad ieslēgts, Audacious noteiks failu formātus, balstoties uz to "
+"paplašinājumiem. Tikai faili ar atbalstīto formātu paplašinājumiem tiks "
+"ielādēti."
+
+#: src/audacious/ui_preferences.c:190
+msgid "<b>Bit Depth</b>"
+msgstr "<b>Bitu dziļums</b>"
+
+#: src/audacious/ui_preferences.c:195
+msgid "<b>Volume Control</b>"
+msgstr "<b>Skaļuma kontrole</b>"
+
+#: src/audacious/ui_preferences.c:196
+msgid "Use software volume control"
+msgstr "Lietot programmatūras skaļuma kontroli"
+
+#: src/audacious/ui_preferences.c:197
+msgid ""
+"Use software volume control. This may be useful for situations where your "
+"audio system does not support controlling the playback volume."
+msgstr ""
+"Lietot programmatūras skaļuma kontroli. Tas var noderēt situācijās, kad "
+"jūsu skaņas sistēma neatbalsta atskaņošanas skaļuma kontroli."
+
+#: src/audacious/ui_preferences.c:198
+msgid "<b>Advanced</b>"
+msgstr "<b>Palašināti</b>"
+
+#: src/audacious/ui_preferences.c:199
+msgid "Bypass all of signal processing if possible"
+msgstr "Apiet visu signālu apstrādi, ja iespējams"
+
+#: src/audacious/ui_preferences.c:200
+msgid ""
+"Try to pass input plugin's output directly to output plugin, if the latter "
+"supports format produced by input plugin. If it's true, all signal "
+"processing will be disabled (i.e. DSP plugins, equalizer, resampling, Replay "
+"Gain and software volume control)."
+msgstr ""
+"Mēģināt padot ievades spraudņa izvadi tieši izvades spraudnim, ja tas "
+"atbalsta ievades spraudņa formātu. Ja atbalsta, visa signālu apstrāde "
+"tiks atslēgta (piem., DSA spraudņi, balansieris, iztveršanas tempa "
+"pārveidošana, normalizēšana un programmatūras skaļuma kontrole)."
+
+#: src/audacious/ui_preferences.c:206
+msgid "Preamp:"
+msgstr "Priekšpastiprinājums:"
+
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:207
+msgid "dB"
+msgstr "dB"
+
+#: src/audacious/ui_preferences.c:207
+msgid "Default gain:"
+msgstr "Noklusētais normalizējums:"
+
+#: src/audacious/ui_preferences.c:207
+msgid "This gain will be used if file doesn't contain Replay Gain metadata."
+msgstr ""
+"Šis normalizējums tiks izmantots, ja fails nesatur normalizēšanas "
+"metadatus."
+
+#: src/audacious/ui_preferences.c:208
+msgid ""
+"<span size=\"small\">Please remember that the most efficient way to prevent "
+"signal clipping is not to use positive values above.</span>"
+msgstr ""
+"<span size=\"small\">Lūdzu atcerieties, ka efektīvākais veids, kā nepieļaut "
+"signāla apgriešanu, ir pozitīvu vērtību nelietošana augšā esošajos laukos.<"
+"/span>"
+
+#: src/audacious/ui_preferences.c:212
+msgid "<b>Replay Gain configuration</b>"
+msgstr "<b>Normalizēšanas konfigurācija</b>"
+
+#: src/audacious/ui_preferences.c:213
+msgid "Enable Replay Gain"
+msgstr "Ieslēgt normalizēšanu"
+
+#: src/audacious/ui_preferences.c:214
+msgid "<b>Replay Gain mode</b>"
+msgstr "<b>Normalizēšanas režīms</b>"
+
+#: src/audacious/ui_preferences.c:215
+msgid "Track gain/peak"
+msgstr "Celiņa normalizēšana/maksimums"
+
+#: src/audacious/ui_preferences.c:216
+msgid "Album gain/peak"
+msgstr "Albuma normalizēšana/maksimums"
+
+#: src/audacious/ui_preferences.c:217 src/audacious/ui_preferences.c:1273
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>Dažādi</b>"
+
+#: src/audacious/ui_preferences.c:218
+msgid "Enable peak info clipping prevention"
+msgstr "Ieslēgt maksimumu info apgriešanas novēršanu"
+
+#: src/audacious/ui_preferences.c:219
+msgid "Use peak value from Replay Gain info for clipping prevention"
+msgstr ""
+"Izmantot maksimuma vērtību no normalizēšanas informācijas, "
+"lai novērstu apgriešanu"
+
+#: src/audacious/ui_preferences.c:220
+msgid "Dynamically adjust scale factor to prevent clipping"
+msgstr ""
+"Dinamiski regulēt mērogošanas reizinātāju, lai aizsargātos "
+"no apgriešanas"
+
+#: src/audacious/ui_preferences.c:221
+msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
+msgstr ""
+"Samazināt mērogošanas reizinātāju (normalizēšanu), ja apgriešana "
+"tomēr notika"
+
+#: src/audacious/ui_preferences.c:226
+msgid "<b>Playback</b>"
+msgstr "<b>Atskaņošana</b>"
+
+#: src/audacious/ui_preferences.c:227
+msgid "Continue playback on startup"
+msgstr "Turpināt atskaņošanu pēc programmas palaišanas"
+
+#: src/audacious/ui_preferences.c:228
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+"Startējot Audacity, automātiski turpināt atskaņošanu no vietas, kur tā "
+"iepriekš "
+"tika pārtraukta."
+
+#: src/audacious/ui_preferences.c:229
+msgid "Don't advance in the playlist"
+msgstr "Nepāriet uz priekšu repertuārā"
+
+#: src/audacious/ui_preferences.c:230
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Kad pabeigta dziesmas atskaņošana, nepāriet automātiski uz nākamo."
+
+#: src/audacious/ui_preferences.c:231
+msgid "Pause between songs"
+msgstr "Pauze starp dziesmām"
+
+#: src/audacious/ui_preferences.c:232
+msgid "Pause for"
+msgstr "Pauze"
+
+#: src/audacious/ui_preferences.c:232
+msgid "seconds"
+msgstr "sekundes"
+
+#: src/audacious/ui_preferences.c:236
+msgid "<b>Filename</b>"
+msgstr "<b>Faila nosaukums</b>"
+
+#: src/audacious/ui_preferences.c:237
+msgid "Convert underscores to blanks"
+msgstr "Pārveidot pasvītras uz atstarpēm"
+
+#: src/audacious/ui_preferences.c:238
+msgid "Convert %20 to blanks"
+msgstr "Pārveidot %20 uz atstarpēm"
+
+#: src/audacious/ui_preferences.c:239
+msgid "Convert backslash '\\' to forward slash '/'"
+msgstr "Pārveidot otrādo slīpsvītru '\\' uz slīpsvītru'/'"
+
+#: src/audacious/ui_preferences.c:240
+msgid "<b>Metadata</b>"
+msgstr "<b>Metadati</b>"
+
+#: src/audacious/ui_preferences.c:241
+msgid "Load metadata from playlists and files"
+msgstr "Ielādēt metadatus no repertuāriem un failiem"
+
+#: src/audacious/ui_preferences.c:241
+msgid "Load metadata (tag information) from music files."
+msgstr "Ielādēt metadatus (birku informāciju) no mūzikas failiem."
+
+#: src/audacious/ui_preferences.c:243
+msgid "<b>File Dialog</b>"
+msgstr "<b>Failu dialogs</b>"
+
+#: src/audacious/ui_preferences.c:244
+msgid "Always refresh directory when opening file dialog"
+msgstr "Vienmēr atsvaidzināt mapi, atverot failu dialogu"
+
+#: src/audacious/ui_preferences.c:244
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+"Vienmēr atsvaidzināt failu dialogu (tas palēninās lielu mapju atvēršanu, "
+"turklāt, ja tiek izmantota Gnome VFS, tas nav nepieciešams)."
+
+#: src/audacious/ui_preferences.c:248
+msgid "Changes volume by"
+msgstr "Izmaina skaļumu par"
+
+#: src/audacious/ui_preferences.c:248
+msgid "percent"
+msgstr "procentiem"
+
+#: src/audacious/ui_preferences.c:249
+msgid "Scrolls playlist by"
+msgstr "Ritina repertuāru par"
+
+#: src/audacious/ui_preferences.c:249
+msgid "lines"
+msgstr "rindām"
+
+#: src/audacious/ui_preferences.c:253
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Peles ritenis</b>"
+
+#: src/audacious/ui_preferences.c:415
+msgid "Enabled"
+msgstr "Ieslēgts"
+
+#: src/audacious/ui_preferences.c:431
+msgid "Description"
+msgstr "Apraksts"
+
+#: src/audacious/ui_preferences.c:934
+msgid "Category"
+msgstr "Kategorija"
+
+#: src/audacious/ui_preferences.c:1192
+msgid "Popup Information Settings"
+msgstr "Uzlecošās informācijas iestatījumi"
+
+#: src/audacious/ui_preferences.c:1201
+msgid "<b>Cover image retrieve</b>"
+msgstr "<b>Vāka attēla meklēšana</b>"
+
+#: src/audacious/ui_preferences.c:1206
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"Meklējot albumu vākus, Audacious pievērš uzmanību noteiktiem vārdiem "
+"failu nosaukumos. Jūs varat norādīt šos vārdus lejā esošajos sarakstos, "
+"atdalot atsevišķus vārdus ar komatiem."
+
+#: src/audacious/ui_preferences.c:1223
+msgid "Exclude:"
+msgstr "Izslēgt:"
+
+#: src/audacious/ui_preferences.c:1230
+msgid "Include:"
+msgstr "Iekļaut:"
+
+#: src/audacious/ui_preferences.c:1247
+msgid "Recursively search for cover"
+msgstr "Meklēt vāku rekursīvi"
+
+#: src/audacious/ui_preferences.c:1257
+msgid "Search depth: "
+msgstr "Meklēšanas dziļums: "
+
+#: src/audacious/ui_preferences.c:1270
+msgid "Use per-file cover"
+msgstr "Izmantot vienu vāku katram failam"
+
+#: src/audacious/ui_preferences.c:1282
+msgid "Show Progress bar for the current track"
+msgstr "Rādīt progresa indikatoru pašreizējajam celiņam"
+
+#: src/audacious/ui_preferences.c:1292
+msgid "Delay until filepopup comes up: "
+msgstr "Aizture pirms faila informācijas parādīšanās:"
+
+#: src/audacious/ui_preferences.c:1337
+msgid "Auto character encoding detector for:"
+msgstr "Automātiska rakstzīmju kodējuma noteikšana priekš:"
+
+#: src/audacious/ui_preferences.c:1356
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+"Rakstzīmju kodējumu saraksts, ko izmanto kā atkāpšanās variantu metadatu "
+"pārveidošanā. Ja automātiskā rakstzīmju kodējuma noteikšana neizdevās vai "
+"ir atslēgta, šajā sarakstā esošie kodējumi tiks uztverti kā kandidāti "
+"metadatu "
+"kodējumam, un tiks mēģināta pārveidošana no šiem kodējumiem uz UTF-8."
+
+#: src/audacious/ui_preferences.c:1358
+msgid "Fallback character encodings:"
+msgstr "Atkāpšanās rakstzīmju kodējumi:"
+
+#: src/audacious/ui_preferences.c:1386
+msgid "Output bit depth:"
+msgstr "Izvades bitu dziļums:"
+
+#: src/audacious/ui_preferences.c:1400
+msgid ""
+"All streams will be converted to this bit depth.\n"
+"This should be the max supported bit depth of\n"
+"the sound card or output plugin."
+msgstr ""
+"Visas straumes tiks pārveidotas uz šo bitu dziļumu.\n"
+"Tas būtu jāuzstāda uz lielāko bitu dziļuma vērtību,\n"
+"ko atbalsta jūsu skaņas karte vai izvades spraudnis."
+
+#: src/audacious/ui_preferences.c:1754
+msgid "<b>Song Display</b>"
+msgstr "<b>Dziesmu attēlojums</b>"
+
+#: src/audacious/ui_preferences.c:1763
+msgid "Show song numbers"
+msgstr "Rādīt dziesmu numurus"
+
+#: src/audacious/ui_preferences.c:1784
+msgid "Show information about titlestring format"
+msgstr "Rādīt informāciju par nosaukuma formātu"
+
+#: src/audacious/ui_preferences.c:1795
+msgid "TITLE"
+msgstr "NOSAUKUMS"
+
+#: src/audacious/ui_preferences.c:1796
+msgid "ARTIST - TITLE"
+msgstr "IZPILDĪTĀJS - NOSAUKUMS"
+
+#: src/audacious/ui_preferences.c:1797
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "IZPILDĪTĀJS - ALBUMS - NOSAUKUMS"
+
+#: src/audacious/ui_preferences.c:1798
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "IZPILDĪTĀJS - ALBUMS - CELIŅŠ. NOSAUKUMS"
+
+#: src/audacious/ui_preferences.c:1799
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "IZPILDĪTĀJS [ ALBUMS ] - CELIŅŠ. NOSAUKUMS"
+
+#: src/audacious/ui_preferences.c:1800
+msgid "ALBUM - TITLE"
+msgstr "ALBUMS - NOSAUKUMS"
+
+#: src/audacious/ui_preferences.c:1801
+msgid "Custom"
+msgstr "Pielāgots"
+
+#: src/audacious/ui_preferences.c:1808
+msgid "Custom string:"
+msgstr "Pielāgota virkne:"
+
+#: src/audacious/ui_preferences.c:1815
+msgid "Title format:"
+msgstr "Nosaukuma formāts:"
+
+#: src/audacious/ui_preferences.c:1826
+msgid "<b>Popup Information</b>"
+msgstr "<b>Uzlecošā informācija</b>"
+
+#: src/audacious/ui_preferences.c:1841
+msgid "Show popup information for playlist entries"
+msgstr "Rādīt uzlecošo informāciju repertuāra ierakstiem"
+
+#: src/audacious/ui_preferences.c:1843
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"Ieslēdz/izslēdz uzlecošās informācijas logu zem peles kursora esošajam "
+"repertuāra ierakstam. Logs rāda dziesmas nosaukumu, albuma nosaukumu, "
+"žanru, publicēšanas gadu, celiņa numuru, celiņa garumu un albuma vāka "
+"attēlu."
+
+#: src/audacious/ui_preferences.c:1848
+msgid "Edit settings for popup information"
+msgstr "Rediģēt iestatījumus uzlecošajai informācijai"
+
+#: src/audacious/ui_preferences.c:1945
+msgid "<b>Audio System</b>"
+msgstr "<b>Skaņas sistēma</b>"
+
+#: src/audacious/ui_preferences.c:1968
+msgid "Buffer size:"
+msgstr "Bufera izmērs:"
+
+#: src/audacious/ui_preferences.c:1974
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping.\n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+"<span size=\"small\">Šis ir skaņas straumes laika daudzums milisekundēs, "
+"ko ielādēt atmiņā pirms atskaņošanas.\n"
+"Palieliniet šo vērtību, ja atskaņošana notiek ar īsiem pārtraukumiem.\n"
+"Tomēr ievērojiet, ka lielas vērtības pazeminās programmas darbības "
+"ātrumu.</span>"
+
+#: src/audacious/ui_preferences.c:1993
+msgid "Current output plugin:"
+msgstr "Pašreizējais izvades spraudnis:"
+
+#: src/audacious/ui_preferences.c:2022
+msgid "Output Plugin Preferences"
+msgstr "Izvades spraudņa iestatījumi"
+
+#: src/audacious/ui_preferences.c:2039
+msgid "Output Plugin Information"
+msgstr "Izvades spraudņa informācija"
+
+#: src/audacious/ui_preferences.c:2048
+msgid "<b>Sampling Rate Converter</b>"
+msgstr "<b>Iztveršanas tempa pārveidotājs</b>"
+
+#: src/audacious/ui_preferences.c:2057
+msgid "Enable Sampling Rate Converter"
+msgstr "Ieslēgt iztveršanas tempa pārveidotāju"
+
+#: src/audacious/ui_preferences.c:2077
+msgid "Best Sinc Interpolation"
+msgstr "Labākā sinc interpolācija"
+
+#: src/audacious/ui_preferences.c:2078
+msgid "Medium Sinc Interpolation"
+msgstr "Vidējā sinc interpolācija"
+
+#: src/audacious/ui_preferences.c:2079
+msgid "Fastest Sinc Interpolation"
+msgstr "Ātrākā sinc interpolācija"
+
+#: src/audacious/ui_preferences.c:2080
+msgid "ZOH Interpolation"
+msgstr "ZOH interpolācija"
+
+#: src/audacious/ui_preferences.c:2081
+msgid "Linear Interpolation"
+msgstr "Lineārā interpolācija"
+
+#: src/audacious/ui_preferences.c:2083
+msgid "Interpolation Engine:"
+msgstr "Interpolācijas dzinējs:"
+
+#: src/audacious/ui_preferences.c:2089
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+"<span size=\"small\">Visas straumes tiks pārveidotas uz šo iztveršanas tempu."
+"\n"
+"Tas būtu jāuzstāda uz lielāko iztveršanas tempa vērtību, ko atbalsta jūsu "
+"skaņas "
+"karte vai izvades spraudnis.</span>"
+
+#: src/audacious/ui_preferences.c:2109
+msgid "Sampling Rate [Hz]:"
+msgstr "Iztveršanas temps [Hz]:"
+
+#: src/audacious/ui_preferences.c:2205
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Starpniekservera konfigurācija</b>"
+
+#: src/audacious/ui_preferences.c:2221
+msgid "Enable proxy usage"
+msgstr "Ieslēgt starpniekservera izmantošanu"
+
+#: src/audacious/ui_preferences.c:2239
+msgid "Proxy port:"
+msgstr "Starpniekservera ports:"
+
+#: src/audacious/ui_preferences.c:2245
+msgid "Proxy hostname:"
+msgstr "Starpniekservera nosaukums:"
+
+#: src/audacious/ui_preferences.c:2255
+msgid "Use authentication with proxy"
+msgstr "Savienojoties ar starpniekserveri, izmantot autentificēšanos"
+
+#: src/audacious/ui_preferences.c:2274
+msgid "Proxy password:"
+msgstr "Starpniekservera parole:"
+
+#: src/audacious/ui_preferences.c:2280
+msgid "Proxy username:"
+msgstr "Starpniekservera lietotājvārds:"
+
+#: src/audacious/ui_preferences.c:2297
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">Nomainot šos iestatījumus, vajadzēs pārstartēt "
+"Audacious.</span>"
+
+#: src/audacious/ui_preferences.c:2397
+msgid "_Decoder list:"
+msgstr "_Dekodētāju saraksts:"
+
+#: src/audacious/ui_preferences.c:2427
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>Dekodētāji</b></span>"
+
+#: src/audacious/ui_preferences.c:2440
+msgid "_General plugin list:"
+msgstr "Vispārī_go spraudņu saraksts:"
+
+#: src/audacious/ui_preferences.c:2470
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Vispārīgi</b></span>"
+
+#: src/audacious/ui_preferences.c:2482
+msgid "_Visualization plugin list:"
+msgstr "_Vizualizēšanas spraudņu saraksts:"
+
+#: src/audacious/ui_preferences.c:2512
+msgid "<b>Visualization</b>"
+msgstr "<b>Vizualizēšana</b>"
+
+#: src/audacious/ui_preferences.c:2524
+msgid "_Effect plugin list:"
+msgstr "_Efektu spraudņu saraksts:"
+
+#: src/audacious/ui_preferences.c:2554
+msgid "<b>Effects</b>"
+msgstr "<b>Efekti</b>"
+
+#: src/audacious/ui_preferences.c:2687
+msgid "Audacious Preferences"
+msgstr "Audacious iestatījumi"
+
+#: src/audacious/ui_urlopener.c:85
+msgid "Add/Open URL Dialog"
+msgstr "Pievienot/Atvērt URL dialogs"
+
+#: src/audacious/ui_urlopener.c:191
+msgid "Enter location to play:"
+msgstr "Ievadiet vietu, no kuras atskaņot:"
+
+#: src/audacious/util.c:987
+#, c-format
+msgid "Could not create directory (%s): %s\n"
+msgstr "Neizdevās izveidot mapi (%s): %s\n"
+
+#: src/libaudcore/audstrings.c:194
+msgid "  (invalid UTF-8)"
+msgstr " (nederīgs UTF-8)"
+
+#: src/libeggsmclient/eggdesktopfile.c:139
+msgid "File is not a valid .desktop file"
+msgstr "Fails nav atļauts '.desktop' fails"
+
+#: src/libeggsmclient/eggdesktopfile.c:161
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Neatpazīta darbvirsmas faila versija '%s'"
+
+#: src/libeggsmclient/eggdesktopfile.c:872
+#, c-format
+msgid "Starting %s"
+msgstr "Startē %s"
+
+#: src/libeggsmclient/eggdesktopfile.c:1008
+msgid "Application does not accept documents on command line"
+msgstr "Programma nepieņem failus no komandrindas"
+
+#: src/libeggsmclient/eggdesktopfile.c:1076
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Neatpazīta palaišanas opcija: %d"
+
+#: src/libeggsmclient/eggdesktopfile.c:1278
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Nevar padot dokumenta URI uz 'Tips=Saite' darbvirsmas ierakstu"
+
+#: src/libeggsmclient/eggdesktopfile.c:1297
+msgid "Not a launchable item"
+msgstr "Nav palaižams elements"
+
+#: src/libeggsmclient/eggsmclient.c:183
+msgid "Disable connection to session manager"
+msgstr "Atslēgt savienojumu ar sesiju pārvaldnieku"
+
+#: src/libeggsmclient/eggsmclient.c:186
+msgid "Specify file containing saved configuration"
+msgstr "Norādiet failu, kas satur saglabātu konfigurāciju"
+
+#: src/libeggsmclient/eggsmclient.c:186
+msgid "FILE"
+msgstr "FAILS"
+
+#: src/libeggsmclient/eggsmclient.c:189
+msgid "Specify session management ID"
+msgstr "Norādiet sesiju pārvaldīšanas ID"
+
+#: src/libeggsmclient/eggsmclient.c:189
+msgid "ID"
+msgstr "ID"
+
+#: src/libeggsmclient/eggsmclient.c:225
+msgid "Session Management Options"
+msgstr "Sesiju pārvaldīšanas opcijas"
+
+#: src/libeggsmclient/eggsmclient.c:226
+msgid "Show Session Management options"
+msgstr "Parādīt sesiju pārvaldīšanas opcijas"
+
