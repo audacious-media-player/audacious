@@ -8,7 +8,7 @@ G_BEGIN_DECLS
 #include <glib.h>
 #include "libaudcore/tuple.h"
 
-GList *tag_modules;
+mowgli_dictionary_t *tag_modules;
 
 typedef struct _module{
 	gboolean (*can_handle) (Tuple *tuple);

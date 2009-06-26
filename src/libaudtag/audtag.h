@@ -7,7 +7,7 @@ G_BEGIN_DECLS
 
 #include <glib.h>
 #include "libaudcore/tuple.h"
-
+#include <mowgli.h> 
 
 void audtag_init(void);
 void audtag_terminate(void);
