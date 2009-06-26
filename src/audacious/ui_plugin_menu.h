@@ -17,8 +17,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-/* these functions are currently implemented in ui_manager.c */
-
 #ifndef AUDACIOUS_UI_PLUGIN_MENU_H
 #define AUDACIOUS_UI_PLUGIN_MENU_H
 

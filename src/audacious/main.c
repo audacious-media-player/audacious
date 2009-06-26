@@ -59,7 +59,6 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "signals.h"
-#include "ui_manager.h"
 #include "util.h"
 #include "vfs.h"
 
@@ -535,15 +534,9 @@ main(gint argc, gchar ** argv)
     {
         g_message("Non-headless operation setup");
 
-        /* register icons in stock
-           NOTE: should be called before UIManager */
+        // register icons in stock
         register_aud_stock_icons();
 
-        /* UIManager
-           NOTE: this needs to be called before plugin init, cause
-           plugin init functions may want to add custom menu entries */
-        ui_manager_init();
-        ui_manager_create_menus();
         create_prefs_window();
     }
 

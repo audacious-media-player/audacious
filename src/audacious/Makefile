@@ -40,7 +40,7 @@ SRCS = af_equalizer.c							\
        ui_fileinfopopup.c						\
        ui_fileopener.c							\
        ui_headless.c							\
-       ui_manager.c						\
+       ui_plugin_menu.c \
        ui_preferences.c							\
        util.c									\
        visualization.c							\
