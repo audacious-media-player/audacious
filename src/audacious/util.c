@@ -119,29 +119,23 @@ sadfmt_from_afmt(AFormat fmt)
     return -1;
 }
 
-void s16_le_to_float (int16_t * i, float * f, int samples)
+void s16_to_float (int16_t * i, float * f, int samples)
 {
     int16_t * end = i + samples;
-    register int16_t itemp;
 
     while (i < end)
-    {
-        itemp = * i ++;
-        * f ++ = (float) GINT16_FROM_LE (itemp) / 32767;
-    }
+        * f ++ = (float) * i ++ / 32767;
 }
 
-void float_to_s16_le (float * f, int16_t * i, int samples)
+void float_to_s16 (float * f, int16_t * i, int samples)
 {
     float * end = f + samples;
     register float ftemp;
-    register int16_t itemp;
 
     while (f < end)
     {
         ftemp = * f ++;
-        itemp = CLAMP (ftemp, -1, 1) * 32767;
-        * i ++ = GINT16_TO_LE (itemp);
+        * i ++ = CLAMP (ftemp, -1, 1) * 32767;
     }
 }
 

@@ -43,8 +43,6 @@ G_BEGIN_DECLS
 #include "libSAD/libSAD.h"
 
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
-#define IS_S16_LE(a) ((a) == FMT_S16_LE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
- (a) == FMT_S16_NE))
 #define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
  (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
 
@@ -97,8 +95,8 @@ gchar *util_get_localdir(void);
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
 
 SAD_sample_format sadfmt_from_afmt(AFormat fmt);
-void s16_le_to_float (int16_t * i, float * f, int samples);
-void float_to_s16_le (float * f, int16_t * i, int samples);
+void s16_to_float (int16_t * i, float * f, int samples);
+void float_to_s16 (float * f, int16_t * i, int samples);
 
 /* minimizes number of realloc's */
 gpointer smart_realloc(gpointer ptr, gsize *size);

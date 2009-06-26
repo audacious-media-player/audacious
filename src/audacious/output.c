@@ -510,14 +510,15 @@ output_pass_audio(InputPlayback *playback,
     plugin_set_current((Plugin *)(playback->output));
     gint time = playback->output->written_time();
 
-    old_ptr = ptr;
-    flow_execute(visualization_flow, time, &ptr, length, fmt, decoder_srate, nch);
-    if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
-
-    if (!bypass_dsp) {
-
-        if(length <= 0 || sad_state_from_float == NULL || sad_state_to_float == NULL) return;
-
+    if (bypass_dsp)
+    {
+        old_ptr = ptr;
+        flow_execute (visualization_flow, time, & ptr, length, fmt,
+         decoder_srate, nch);
+        if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+    }
+    else
+    {
         if (legacy_flow == NULL)
         {
             legacy_flow = flow_new();
@@ -534,19 +535,25 @@ output_pass_audio(InputPlayback *playback,
             flow_link_element(postproc_flow, volumecontrol_flow);
         }
 
-        if (fmt != FMT_FLOAT)
+        if (IS_S16_NE (fmt))
         {
-            if (IS_S16_LE (fmt))
-            {
-                int samples = length >> 1;
+            int samples;
 
-                length = sizeof (float) * samples;
-                new_ptr = malloc (length);
-                s16_le_to_float (ptr, new_ptr, samples);
-                if (ptr != orig_ptr) free (ptr);
-                ptr = new_ptr;
-            }
-            else
+            old_ptr = ptr;
+            flow_execute (visualization_flow, time, & ptr, length, fmt,
+             decoder_srate, nch);
+            if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+
+            samples = length >> 1;
+            length = sizeof (float) * samples;
+            new_ptr = malloc (length);
+            s16_to_float (ptr, new_ptr, samples);
+            if (ptr != orig_ptr) free (ptr);
+            ptr = new_ptr;
+        }
+        else
+        {
+            if (fmt != FMT_FLOAT)
             {
                 int frames = length / nch / FMT_SIZEOF (fmt);
 
@@ -557,6 +564,11 @@ output_pass_audio(InputPlayback *playback,
                 if (ptr != orig_ptr) free (ptr);
                 ptr = new_ptr;
             }
+
+            old_ptr = ptr;
+            flow_execute (visualization_flow, time, & ptr, length, FMT_FLOAT,
+             decoder_srate, nch);
+            if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
         }
 
         old_ptr = ptr;
@@ -566,13 +578,13 @@ output_pass_audio(InputPlayback *playback,
 
         if (op_state.fmt != FMT_FLOAT)
         {
-            if (cfg.no_dithering && IS_S16_LE (op_state.fmt))
+            if (cfg.no_dithering && IS_S16_NE (op_state.fmt))
             {
                 int samples = length / sizeof (float);
 
                 length = samples << 1;
                 new_ptr = malloc (length);
-                float_to_s16_le (ptr, new_ptr, samples);
+                float_to_s16 (ptr, new_ptr, samples);
                 if (ptr != orig_ptr) free (ptr);
                 ptr = new_ptr;
             }
