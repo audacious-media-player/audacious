@@ -202,6 +202,8 @@ static PreferencesWidget audio_page_widgets2[] = {
                      N_("Try to pass input plugin's output directly to output plugin, if the latter supports "
                         "format produced by input plugin. If it's true, all signal processing will be disabled "
                         "(i.e. DSP plugins, equalizer, resampling, Replay Gain and software volume control)."), FALSE},
+    {WIDGET_CHK_BTN, N_("Use fast floating-point conversion (16-bit output "
+     "only)"), & cfg.no_dithering, 0, 0, 0},
 };
 
 static PreferencesWidget rg_params_elements[] = {
@@ -1994,9 +1996,7 @@ create_audio_category(void)
     GtkWidget *alignment73;
     GtkWidget *vbox33;
     GtkWidget *table11;
-    GtkWidget *image7;
     GtkWidget *label79;
-    GtkWidget *label82;
     GtkObject *output_plugin_bufsize_adj;
     GtkWidget *output_plugin_bufsize;
     GtkWidget *output_plugin_cbox;
@@ -2053,25 +2053,11 @@ create_audio_category(void)
     gtk_table_set_row_spacings (GTK_TABLE (table11), 6);
     gtk_table_set_col_spacings (GTK_TABLE (table11), 6);
 
-    image7 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
-    gtk_table_attach (GTK_TABLE (table11), image7, 0, 1, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (image7), 1, 0);
-
     label79 = gtk_label_new (_("Buffer size:"));
     gtk_table_attach (GTK_TABLE (table11), label79, 0, 1, 1, 2,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
-
-    label82 = gtk_label_new (_("<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\nIncrease this value if you are experiencing audio skipping.\nPlease note however, that high values will result in Audacious performing poorly.</span>"));
-    gtk_table_attach (GTK_TABLE (table11), label82, 1, 2, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label82), TRUE);
-    gtk_label_set_line_wrap (GTK_LABEL (label82), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label82), 0, 0.5);
 
     output_plugin_bufsize_adj = gtk_adjustment_new (0, 0, 600000, 100, 1000, 1000);
     output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 1, 0);

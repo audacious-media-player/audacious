@@ -32,6 +32,8 @@
 # endif
 #endif
 
+#include <stdint.h>
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -41,6 +43,10 @@ G_BEGIN_DECLS
 #include "libSAD/libSAD.h"
 
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
+#define IS_S16_LE(a) ((a) == FMT_S16_LE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
+ (a) == FMT_S16_NE))
+#define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
+ (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
 
 typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,
@@ -82,7 +88,7 @@ GtkWidget *make_filebrowser(const gchar *title, gboolean save);
 
 GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
     const gchar * button_text, gboolean modal, GCallback button_action,
-    gpointer action_data); 
+    gpointer action_data);
 
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
@@ -91,6 +97,8 @@ gchar *util_get_localdir(void);
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
 
 SAD_sample_format sadfmt_from_afmt(AFormat fmt);
+void s16_le_to_float (int16_t * i, float * f, int samples);
+void float_to_s16_le (float * f, int16_t * i, int samples);
 
 /* minimizes number of realloc's */
 gpointer smart_realloc(gpointer ptr, gsize *size);

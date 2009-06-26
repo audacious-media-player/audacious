@@ -91,7 +91,7 @@ static const struct {
     {FMT_S24_LE, SAD_SAMPLE_S24_LE},
     {FMT_S24_BE, SAD_SAMPLE_S24_BE},
     {FMT_S24_NE, SAD_SAMPLE_S24},
-    
+
     {FMT_U24_LE, SAD_SAMPLE_U24_LE},
     {FMT_U24_BE, SAD_SAMPLE_U24_BE},
     {FMT_U24_NE, SAD_SAMPLE_U24},
@@ -99,11 +99,11 @@ static const struct {
     {FMT_S32_LE, SAD_SAMPLE_S32_LE},
     {FMT_S32_BE, SAD_SAMPLE_S32_BE},
     {FMT_S32_NE, SAD_SAMPLE_S32},
-    
+
     {FMT_U32_LE, SAD_SAMPLE_U32_LE},
     {FMT_U32_BE, SAD_SAMPLE_U32_BE},
     {FMT_U32_NE, SAD_SAMPLE_U32},
-    
+
     {FMT_FLOAT, SAD_SAMPLE_FLOAT},
     {FMT_FIXED32, SAD_SAMPLE_FIXED32},
 };
@@ -119,6 +119,31 @@ sadfmt_from_afmt(AFormat fmt)
     return -1;
 }
 
+void s16_le_to_float (int16_t * i, float * f, int samples)
+{
+    int16_t * end = i + samples;
+    register int16_t itemp;
+
+    while (i < end)
+    {
+        itemp = * i ++;
+        * f ++ = (float) GINT16_FROM_LE (itemp) / 32767;
+    }
+}
+
+void float_to_s16_le (float * f, int16_t * i, int samples)
+{
+    float * end = f + samples;
+    register float ftemp;
+    register int16_t itemp;
+
+    while (f < end)
+    {
+        ftemp = * f ++;
+        itemp = CLAMP (ftemp, -1, 1) * 32767;
+        * i ++ = GINT16_TO_LE (itemp);
+    }
+}
 
 static gboolean
 find_file_func(const gchar * path, const gchar * basename, gpointer data)
@@ -669,7 +694,7 @@ read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
     gchar *value = NULL;
     gpointer section_hash, key_hash;
     GHashTable *section_table;
-    
+
     g_return_val_if_fail(inifile, NULL);
 
     section_string = g_string_new(section);
@@ -962,7 +987,7 @@ construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anythi
     return uri;
 }
 
-/* 
+/*
  * minimize number of realloc's:
  *  - set N to nearest power of 2 not less then N
  *  - double it

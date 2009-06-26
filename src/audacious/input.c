@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <stdint.h>
+
 /* #define AUD_DEBUG */
 
 #ifdef HAVE_CONFIG_H
@@ -191,11 +193,50 @@ input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
     vis_node->nch = nch;
     vis_node->length = max;
 
-    gint16 *tmp[2];
+    if (fmt == FMT_FLOAT)
+    {
+        int channel = nch;
 
-    tmp[0] = vis_node->data[0];
-    tmp[1] = vis_node->data[1];
-    SAD_dither_process_buffer(sad_state, ptr, tmp, max);
+        while (channel --)
+        {
+            float * from = (float *) ptr + channel;
+            float * end = from + nch * max;
+            int16_t * to = vis_node->data[channel];
+            register float ftemp;
+
+            while (from < end)
+            {
+                ftemp = * from;
+                * to ++ = CLAMP (ftemp, -1, 1) * 32767;
+                from += nch;
+            }
+        }
+    }
+    else if (IS_S16_NE (fmt))
+    {
+        int channel = nch;
+
+        while (channel --)
+        {
+            int16_t * from = (int16_t *) ptr + channel;
+            int16_t * end = from + nch * max;
+            int16_t * to = vis_node->data[channel];
+
+            while (from < end)
+            {
+                * to ++ = * from;
+                from += nch;
+            }
+        }
+    }
+    else
+    {
+        int16_t * tmp[2];
+
+        tmp[0] = vis_node->data[0];
+        tmp[1] = vis_node->data[1];
+        SAD_dither_process_buffer (sad_state, ptr, tmp, max);
+    }
 
     G_LOCK(vis_mutex);
     vis_list = g_list_append(vis_list, vis_node);

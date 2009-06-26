@@ -156,6 +156,7 @@ AudConfig aud_default_config = {
     .player_width = 450,
     .player_height = 150,
     .sw_volume_left = 100, .sw_volume_right = 100,
+    .no_dithering = 0,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -260,6 +261,7 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_src", &cfg.enable_src, TRUE},
 #endif
     {"bypass_dsp", &cfg.bypass_dsp, TRUE},
+    {"no_dithering", & cfg.no_dithering, 1},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);

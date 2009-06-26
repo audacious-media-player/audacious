@@ -25,6 +25,8 @@
 
 /*#define AUD_DEBUG*/
 
+#include <stdint.h>
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -214,10 +216,7 @@ get_output_time(void)
 
 static SAD_dither_t *sad_state_to_float = NULL;
 static SAD_dither_t *sad_state_from_float = NULL;
-static float *sad_float_buf = NULL;
-static void *sad_out_buf = NULL;
-static gsize sad_float_buf_length = 0;
-static gsize sad_out_buf_length = 0;
+
 static ReplayGainInfo replay_gain_info = {
     .track_gain = 0.0,
     .track_peak = 0.0,
@@ -499,7 +498,8 @@ output_pass_audio(InputPlayback *playback,
     static Flow *legacy_flow = NULL;
     OutputPlugin *op = playback->output;
     gint writeoffs;
-    gpointer float_ptr;
+    void * orig_ptr = ptr;
+    void * old_ptr, * new_ptr;
 
     if (visualization_flow == NULL)
     {
@@ -510,7 +510,9 @@ output_pass_audio(InputPlayback *playback,
     plugin_set_current((Plugin *)(playback->output));
     gint time = playback->output->written_time();
 
+    old_ptr = ptr;
     flow_execute(visualization_flow, time, &ptr, length, fmt, decoder_srate, nch);
+    if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
 
     if (!bypass_dsp) {
 
@@ -532,39 +534,66 @@ output_pass_audio(InputPlayback *playback,
             flow_link_element(postproc_flow, volumecontrol_flow);
         }
 
-        int frames = length / nch / FMT_SIZEOF(fmt);
-        int len = frames * nch * sizeof(float);
-        if(sad_float_buf == NULL || sad_float_buf_length < len) {
-            sad_float_buf_length = len;
-            sad_float_buf = smart_realloc(sad_float_buf, &sad_float_buf_length);
+        if (fmt != FMT_FLOAT)
+        {
+            if (IS_S16_LE (fmt))
+            {
+                int samples = length >> 1;
+
+                length = sizeof (float) * samples;
+                new_ptr = malloc (length);
+                s16_le_to_float (ptr, new_ptr, samples);
+                if (ptr != orig_ptr) free (ptr);
+                ptr = new_ptr;
+            }
+            else
+            {
+                int frames = length / nch / FMT_SIZEOF (fmt);
+
+                length = sizeof (float) * nch * frames;
+                new_ptr = malloc (length);
+                SAD_dither_process_buffer (sad_state_to_float, ptr, new_ptr,
+                 frames);
+                if (ptr != orig_ptr) free (ptr);
+                ptr = new_ptr;
+            }
         }
 
-        SAD_dither_process_buffer(sad_state_to_float, ptr, sad_float_buf, frames);
-        float_ptr = sad_float_buf;
+        old_ptr = ptr;
+        length = flow_execute (postproc_flow, time, & ptr, length,
+         FMT_FLOAT, decoder_srate, nch);
+        if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
 
-        length = flow_execute(postproc_flow,
-                              time,
-                              &float_ptr,
-                              len,
-                              FMT_FLOAT,
-                              decoder_srate,
-                              nch);
+        if (op_state.fmt != FMT_FLOAT)
+        {
+            if (cfg.no_dithering && IS_S16_LE (op_state.fmt))
+            {
+                int samples = length / sizeof (float);
 
-        frames = length / nch / sizeof(float);
-        len = frames * nch * FMT_SIZEOF(op_state.fmt);
-        if(sad_out_buf == NULL || sad_out_buf_length < len) {
-            sad_out_buf_length = len;
-            sad_out_buf = smart_realloc(sad_out_buf, &sad_out_buf_length);
+                length = samples << 1;
+                new_ptr = malloc (length);
+                float_to_s16_le (ptr, new_ptr, samples);
+                if (ptr != orig_ptr) free (ptr);
+                ptr = new_ptr;
+            }
+            else
+            {
+                int frames = length / nch / sizeof (float);
+
+                length = FMT_SIZEOF (op_state.fmt) * nch * frames;
+                new_ptr = malloc (length);
+                SAD_dither_process_buffer (sad_state_from_float, ptr, new_ptr,
+                 frames);
+                if (ptr != orig_ptr) free (ptr);
+                ptr = new_ptr;
+            }
         }
 
-        SAD_dither_process_buffer(sad_state_from_float, float_ptr, sad_out_buf, frames);
-
-        length = len;
-        ptr = sad_out_buf;
-
-        if (op_state.fmt == FMT_S16_NE || (op_state.fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN) ||
-                                          (op_state.fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)) {
+        if (IS_S16_NE (op_state.fmt))
+        {
+            old_ptr = ptr;
             length = flow_execute(legacy_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+            if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
         } else {
             AUDDBG("legacy_flow can deal only with S16_NE streams\n"); /*FIXME*/
         }
@@ -614,6 +643,8 @@ output_pass_audio(InputPlayback *playback,
 
         writeoffs += writable;
     }
+
+    if (ptr != orig_ptr) free (ptr);
 }
 
 /* called by input plugin when RG info available --asphyx */
