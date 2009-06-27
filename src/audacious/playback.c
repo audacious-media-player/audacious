@@ -453,7 +453,7 @@ playback_seek(gint time)
     playback->plugin->seek(playback, time);
     playback->set_pb_change(playback);
 
-    event_queue_timed(100, "playback seek", playback);
+    hook_call ("playback seek", playback);
 }
 
 void
