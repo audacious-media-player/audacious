@@ -1145,9 +1145,6 @@ playlist_set_info(Playlist * playlist, const gchar * title,
 
     text = playlist_get_info_text(playlist);
     event_queue_with_data_free("title change", text);
-
-    if ( playlist->position )
-        event_queue( "playlist set info" , playlist->position );
 }
 
 /* wrapper for playlist_set_info. this function is called by input plugins. */
@@ -2458,12 +2455,10 @@ playlist_get_info_func(gpointer arg)
             }
         } // on_load
 
-        if (update_playlistwin) {
-            Playlist *playlist = playlist_get_active();
-
-            // FIX ME: Do this properly.
-            // Storing pointers in the event queue is a horrible idea.
-            // event_queue ("playlist update", playlist);
+        if (update_playlistwin)
+        {
+            printf ("updating\n");
+            event_queue ("playlist update", 0);
 
             PLAYLIST_INCR_SERIAL(playlist);
             update_playlistwin = FALSE;

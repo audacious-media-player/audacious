@@ -108,7 +108,7 @@ playback_set_pb_title(InputPlayback *playback, gchar *title)
 void
 playback_eof(void)
 {
-    event_queue("playback eof", playlist_get_active());
+    hook_call ("playback eof", playlist_get_active ());
 }
 
 void
