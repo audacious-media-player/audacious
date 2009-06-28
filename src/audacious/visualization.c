@@ -26,6 +26,7 @@
 #include "visualization.h"
 
 #include <glib.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -36,12 +37,15 @@
 #include "playback.h"
 #include "pluginenum.h"
 #include "plugin.h"
+#include "vis_runner.h"
 
 VisPluginData vp_data = {
     NULL,
     NULL,
     FALSE
 };
+
+static void send_audio (void * hook_data, void * user_data);
 
 GList *
 get_vis_list(void)
@@ -112,7 +116,11 @@ enable_vis_plugin(gint i, gboolean enable)
         return;
     vp = node->data;
 
-    if (enable && !vp->enabled) {
+    if (enable && ! vp->enabled)
+    {
+        if (! vp_data.enabled_list)
+            vis_runner_add_hook (send_audio, 0);
+
         vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
         if (vp->init)
         {
@@ -137,6 +145,9 @@ enable_vis_plugin(gint i, gboolean enable)
             plugin_set_current((Plugin *)vp);
             vp->cleanup();
         }
+
+        if (! vp_data.enabled_list)
+            vis_runner_remove_hook (send_audio);
     }
 
     vp->enabled = enable;
@@ -167,7 +178,6 @@ vis_enable_from_stringified_list(gchar * list)
     gchar **plugins, *base;
     GList *node;
     gint i;
-    VisPlugin *vp;
 
     if (!list || !strcmp(list, ""))
         return;
@@ -175,22 +185,10 @@ vis_enable_from_stringified_list(gchar * list)
     for (i = 0; plugins[i]; i++) {
         for (node = vp_data.vis_list; node != NULL; node = g_list_next(node)) {
             base = g_path_get_basename(VIS_PLUGIN(node->data)->filename);
-            if (!strcmp(plugins[i], base)) {
-                vp = node->data;
-                vp_data.enabled_list =
-                    g_list_append(vp_data.enabled_list, vp);
-                if (vp->init)
-                {
-                    plugin_set_current((Plugin *)vp);
-                    vp->init();
-                }
-                if (playback_get_playing() && vp->playback_start)
-                {
-                    plugin_set_current((Plugin *)vp);
-                    vp->playback_start();
-                }
-                vp->enabled = TRUE;
-            }
+
+            if (! strcmp (plugins[i], base))
+                enable_vis_plugin (i, 1);
+
             g_free(base);
         }
     }
@@ -271,18 +269,20 @@ calc_stereo_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
         memcpy(dest[1], dest[0], 256 * sizeof(gint16));
 }
 
-void
-vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
+static void send_audio (void * hook_data, void * user_data)
 {
+    VisNode * vis_node = hook_data;
+    int16_t (* pcm_data) [512] = vis_node->data;
+    int nch = vis_node->nch;
+
+    // We ignore vis_node->length?! -jlindgren
+
     GList *node = vp_data.enabled_list;
     VisPlugin *vp;
     gint16 mono_freq[2][256], stereo_freq[2][256];
     gboolean mono_freq_calced = FALSE, stereo_freq_calced = FALSE;
     gint16 mono_pcm[2][512], stereo_pcm[2][512];
     gboolean mono_pcm_calced = FALSE, stereo_pcm_calced = FALSE;
-
-    if (!pcm_data || nch < 1)
-        return;
 
     while (node) {
         vp = node->data;
@@ -329,6 +329,9 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
 void
 vis_flow(FlowContext *context)
 {
-    input_add_vis_pcm(context->time, context->fmt, context->channels,
-        context->len, context->data);
+    if (context->fmt != FMT_FLOAT)
+        return;
+
+    vis_runner_pass_audio (context->time, context->data, context->len / sizeof
+     (float), context->channels);
 }

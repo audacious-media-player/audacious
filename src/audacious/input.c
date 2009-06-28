@@ -55,10 +55,6 @@
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
 
-#include "libSAD.h"
-
-G_LOCK_DEFINE_STATIC(vis_mutex);
-
 InputPluginData ip_data = {
     NULL,
     NULL,
@@ -67,11 +63,6 @@ InputPluginData ip_data = {
     FALSE,
     NULL
 };
-
-static GList *vis_list = NULL;
-static SAD_dither_t *sad_state = NULL;
-static gint sad_nch = -1;
-static AFormat sad_fmt = -1;
 
 InputPlayback *
 get_current_input_playback(void)
@@ -123,124 +114,10 @@ input_stringify_disabled_list(void)
     return g_string_free(list, FALSE);
 }
 
-void
-free_vis_data(void)
-{
-    GList *iter;
-
-    G_LOCK(vis_mutex);
-
-    MOWGLI_ITER_FOREACH(iter, vis_list)
-        g_slice_free(VisNode, iter->data);
-
-    g_list_free(vis_list);
-    vis_list = NULL;
-
-    G_UNLOCK(vis_mutex);
-}
-
 InputVisType
 input_get_vis_type()
 {
     return INPUT_VIS_OFF;
-}
-
-static SAD_dither_t*
-init_sad(AFormat fmt, gint nch)
-{
-    gint ret;
-
-    SAD_buffer_format in, out;
-    in.sample_format = sadfmt_from_afmt(fmt);
-    in.fracbits = FMT_FRACBITS(fmt);
-    in.channels = nch;
-    in.channels_order = SAD_CHORDER_INTERLEAVED;
-    in.samplerate = 0;
-
-    out.sample_format = SAD_SAMPLE_S16;
-    out.fracbits = 0;
-    out.channels = nch;
-    out.channels_order = SAD_CHORDER_SEPARATED; /* sic! --asphyx */
-    out.samplerate = 0;
-
-    AUDDBG("fmt=%d, nch=%d\n", fmt, nch);
-    SAD_dither_t *state = SAD_dither_init(&in, &out, &ret);
-    if (state != NULL) SAD_dither_set_dither(state, FALSE);
-    return state;
-}
-
-void
-input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
-{
-    VisNode *vis_node;
-    gint max;
-
-    if (nch > 2) return;
-
-    if (sad_state == NULL || nch != sad_nch || fmt != sad_fmt) {
-        if(sad_state != NULL) SAD_dither_free(sad_state);
-        sad_state = init_sad(fmt, nch);
-        if(sad_state == NULL) return;
-        sad_nch = nch;
-        sad_fmt = fmt;
-    }
-
-    max = length / nch / FMT_SIZEOF(fmt);
-    max = CLAMP(max, 0, 512);
-
-    vis_node = g_slice_new0(VisNode);
-    vis_node->time = time;
-    vis_node->nch = nch;
-    vis_node->length = max;
-
-    if (fmt == FMT_FLOAT)
-    {
-        int channel = nch;
-
-        while (channel --)
-        {
-            float * from = (float *) ptr + channel;
-            float * end = from + nch * max;
-            int16_t * to = vis_node->data[channel];
-            register float ftemp;
-
-            while (from < end)
-            {
-                ftemp = * from;
-                * to ++ = CLAMP (ftemp, -1, 1) * 32767;
-                from += nch;
-            }
-        }
-    }
-    else if (IS_S16_NE (fmt))
-    {
-        int channel = nch;
-
-        while (channel --)
-        {
-            int16_t * from = (int16_t *) ptr + channel;
-            int16_t * end = from + nch * max;
-            int16_t * to = vis_node->data[channel];
-
-            while (from < end)
-            {
-                * to ++ = * from;
-                from += nch;
-            }
-        }
-    }
-    else
-    {
-        int16_t * tmp[2];
-
-        tmp[0] = vis_node->data[0];
-        tmp[1] = vis_node->data[1];
-        SAD_dither_process_buffer (sad_state, ptr, tmp, max);
-    }
-
-    G_LOCK(vis_mutex);
-    vis_list = g_list_append(vis_list, vis_node);
-    G_UNLOCK(vis_mutex);
 }
 
 void
@@ -742,42 +619,6 @@ input_set_volume(gint l, gint r)
         return;
 
     output_set_volume (l, r);
-}
-
-void
-input_update_vis(gint time)
-{
-    GList *node;
-    VisNode *vis = NULL, *visnext = NULL;
-    gboolean found = FALSE;
-
-    G_LOCK(vis_mutex);
-    node = vis_list;
-    while (g_list_next(node) && !found) {
-        visnext = g_list_next(node)->data;
-        vis = node->data;
-
-        if (vis->time >= time)
-            break;
-
-        vis_list = g_list_delete_link(vis_list, node);
-
-        if (visnext->time >= time) {
-            found = TRUE;
-            break;
-        }
-        g_free(vis);
-        node = vis_list;
-    }
-    G_UNLOCK(vis_mutex);
-
-    if (found) {
-        vis_send_data(vis->data, vis->nch, vis->length);
-        hook_call("visualization timeout", vis);
-        g_free(vis);
-    }
-    else
-        hook_call("visualization timeout", NULL);
 }
 
 /* FIXME: move this somewhere else */

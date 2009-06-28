@@ -43,6 +43,7 @@ SRCS = af_equalizer.c							\
        ui_plugin_menu.c \
        ui_preferences.c							\
        util.c									\
+       vis_runner.c \
        visualization.c							\
        volumecontrol.c							\
        sync-menu.c								\
@@ -87,7 +88,8 @@ INCLUDES = auddrct.h			\
            ui_fileinfopopup.h	\
            ui_plugin_menu.h		\
            ui_preferences.h		\
-           util.h
+           util.h \
+           vis_runner.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\

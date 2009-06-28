@@ -60,6 +60,7 @@
 #include "pluginenum.h"
 #include "signals.h"
 #include "util.h"
+#include "vis_runner.h"
 #include "vfs.h"
 
 #include "icons-stock.h"
@@ -539,6 +540,8 @@ main(gint argc, gchar ** argv)
 
         create_prefs_window();
     }
+
+    vis_runner_init ();
 
 #ifdef USE_DBUS
     g_message("Initializing D-Bus");

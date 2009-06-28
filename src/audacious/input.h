@@ -53,7 +53,6 @@ InputPlayback *get_current_input_playback(void);
 void set_current_input_playback(InputPlayback * ip);
 void set_current_input_data(void * data);
 InputVisType input_get_vis_type();
-void free_vis_data(void);
 
 ProbeResult *input_check_file(const gchar * filename, gboolean loading);
 Tuple *input_get_song_tuple(const gchar * filename);
@@ -63,14 +62,6 @@ void input_stop(void);
 void input_pause(void);
 gint input_get_time(void);
 void input_seek(gint time);
-
-guchar *input_get_vis(gint time);
-void input_update_vis_plugin(gint time);
-
-void input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length,
-                       gpointer ptr);
-InputVisType input_get_vis_type();
-void input_update_vis(gint time);
 
 void input_set_info_text(gchar * text);
 

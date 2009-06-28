@@ -30,56 +30,6 @@
 #include "ui_jumptotrack.h"
 #include "ui_credits.h"
 
-/* common events. */
-static gint update_vis_timeout_source = 0;
-
-static gboolean
-interface_common_update_vis(gpointer user_data)
-{
-    input_update_vis(playback_get_time());
-    return TRUE;
-}
-
-static void
-interface_common_playback_seek(gpointer user_data, gpointer hook_data)
-{
-    free_vis_data();
-}
-
-static void
-interface_common_playback_begin(gpointer user_data, gpointer hook_data)
-{
-    /* update vis info about 100 times a second */
-    free_vis_data();
-    update_vis_timeout_source =
-        g_timeout_add(10, (GSourceFunc) interface_common_update_vis, NULL);
-}
-
-static void
-interface_common_playback_stop(gpointer user_data, gpointer hook_data)
-{
-    if (update_vis_timeout_source) {
-        g_source_remove(update_vis_timeout_source);
-        update_vis_timeout_source = 0;
-    }
-}
-
-static void
-interface_common_hooks_associate(void)
-{
-    hook_associate("playback begin", (HookFunction) interface_common_playback_begin, NULL);
-    hook_associate("playback stop", (HookFunction) interface_common_playback_stop, NULL);
-    hook_associate("playback seek", (HookFunction) interface_common_playback_seek, NULL);
-}
-
-static void
-interface_common_hooks_dissociate(void)
-{
-    hook_dissociate("playback begin", (HookFunction) interface_common_playback_begin);
-    hook_dissociate("playback stop", (HookFunction) interface_common_playback_stop);
-    hook_dissociate("playback seek", (HookFunction) interface_common_playback_seek);
-}
-
 /* interface abstraction layer */
 static mowgli_dictionary_t *interface_dict_ = NULL;
 static Interface *current_interface = NULL;
@@ -118,21 +68,12 @@ interface_run(Interface *i)
     current_interface = i;
     i->ops = &interface_ops;
 
-    /* do common initialization */
-    interface_common_hooks_associate();
-
-    if (playback_get_playing ())
-        interface_common_playback_begin (0, 0);
-
     i->init();
 }
 
 void
 interface_destroy(Interface *i)
 {
-    /* do common cleanups */
-    interface_common_hooks_dissociate();
-
     if (i->fini != NULL)
         i->fini();
 }

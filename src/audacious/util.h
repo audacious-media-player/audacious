@@ -43,8 +43,6 @@ G_BEGIN_DECLS
 #include "libSAD/libSAD.h"
 
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
-#define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
- (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
 
 typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,

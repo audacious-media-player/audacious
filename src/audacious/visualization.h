@@ -48,7 +48,6 @@ void vis_enable_from_stringified_list(gchar * list);
 void calc_stereo_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch);
 void calc_mono_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch);
 void calc_mono_freq(gint16 dest[2][256], gint16 src[2][512], gint nch);
-void vis_send_data(gint16 pcm_data[2][512], gint nch, gint length);
 void vis_flow(FlowContext *context);
 
 extern VisPluginData vp_data;

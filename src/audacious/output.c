@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2008  Audacious team
+ *  Copyright (C) 2005-2009  Audacious team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -58,6 +58,9 @@
 #ifdef USE_SAMPLERATE
 # include "src_flow.h"
 #endif
+
+#define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
+ (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
 
 OutputPluginData op_data = {
     NULL,
@@ -499,76 +502,54 @@ output_pass_audio(InputPlayback *playback,
     OutputPlugin *op = playback->output;
     gint writeoffs;
     void * orig_ptr = ptr;
+    int orig_length = length;
     void * old_ptr, * new_ptr;
+    int time = playback->output->written_time ();
 
-    if (visualization_flow == NULL)
+    if (fmt != FMT_FLOAT)
     {
-        visualization_flow = flow_new();
-        flow_link_element(visualization_flow, vis_flow);
+        int samples = length / FMT_SIZEOF (fmt);
+
+        length = sizeof (float) * samples;
+        new_ptr = malloc (length);
+
+        if (IS_S16_NE (fmt))
+            s16_to_float (ptr, new_ptr, samples);
+        else
+            SAD_dither_process_buffer (sad_state_to_float, ptr, new_ptr,
+             samples / nch);
+
+        if (ptr != orig_ptr) free (ptr);
+        ptr = new_ptr;
     }
 
-    plugin_set_current((Plugin *)(playback->output));
-    gint time = playback->output->written_time();
+    if (! visualization_flow)
+    {
+        visualization_flow = flow_new ();
+        flow_link_element (visualization_flow, vis_flow);
+    }
+
+    old_ptr = ptr;
+    flow_execute (visualization_flow, time, & ptr, length, FMT_FLOAT,
+     decoder_srate, nch);
+    if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
 
     if (bypass_dsp)
     {
-        old_ptr = ptr;
-        flow_execute (visualization_flow, time, & ptr, length, fmt,
-         decoder_srate, nch);
-        if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+        if (ptr != orig_ptr) free (ptr);
+        ptr = orig_ptr;
+        length = orig_length;
     }
     else
     {
-        if (legacy_flow == NULL)
+        if (! postproc_flow)
         {
-            legacy_flow = flow_new();
-            flow_link_element(legacy_flow, effect_flow);
-        }
-
-        if (postproc_flow == NULL)
-        {
-            postproc_flow = flow_new();
+            postproc_flow = flow_new ();
 #ifdef USE_SAMPLERATE
-            flow_link_element(postproc_flow, src_flow);
+            flow_link_element (postproc_flow, src_flow);
 #endif
-            flow_link_element(postproc_flow, equalizer_flow);
-            flow_link_element(postproc_flow, volumecontrol_flow);
-        }
-
-        if (IS_S16_NE (fmt))
-        {
-            int samples;
-
-            old_ptr = ptr;
-            flow_execute (visualization_flow, time, & ptr, length, fmt,
-             decoder_srate, nch);
-            if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
-
-            samples = length >> 1;
-            length = sizeof (float) * samples;
-            new_ptr = malloc (length);
-            s16_to_float (ptr, new_ptr, samples);
-            if (ptr != orig_ptr) free (ptr);
-            ptr = new_ptr;
-        }
-        else
-        {
-            if (fmt != FMT_FLOAT)
-            {
-                int frames = length / nch / FMT_SIZEOF (fmt);
-
-                length = sizeof (float) * nch * frames;
-                new_ptr = malloc (length);
-                SAD_dither_process_buffer (sad_state_to_float, ptr, new_ptr,
-                 frames);
-                if (ptr != orig_ptr) free (ptr);
-                ptr = new_ptr;
-            }
-
-            old_ptr = ptr;
-            flow_execute (visualization_flow, time, & ptr, length, FMT_FLOAT,
-             decoder_srate, nch);
-            if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+            flow_link_element (postproc_flow, equalizer_flow);
+            flow_link_element (postproc_flow, volumecontrol_flow);
         }
 
         old_ptr = ptr;
@@ -578,38 +559,35 @@ output_pass_audio(InputPlayback *playback,
 
         if (op_state.fmt != FMT_FLOAT)
         {
+            int samples = length / sizeof (float);
+
+            length = FMT_SIZEOF (op_state.fmt) * samples;
+            new_ptr = malloc (length);
+
             if (cfg.no_dithering && IS_S16_NE (op_state.fmt))
-            {
-                int samples = length / sizeof (float);
-
-                length = samples << 1;
-                new_ptr = malloc (length);
                 float_to_s16 (ptr, new_ptr, samples);
-                if (ptr != orig_ptr) free (ptr);
-                ptr = new_ptr;
-            }
             else
-            {
-                int frames = length / nch / sizeof (float);
-
-                length = FMT_SIZEOF (op_state.fmt) * nch * frames;
-                new_ptr = malloc (length);
                 SAD_dither_process_buffer (sad_state_from_float, ptr, new_ptr,
-                 frames);
-                if (ptr != orig_ptr) free (ptr);
-                ptr = new_ptr;
-            }
+                 samples / nch);
+
+            if (ptr != orig_ptr) free (ptr);
+            ptr = new_ptr;
         }
 
         if (IS_S16_NE (op_state.fmt))
         {
+            if (! legacy_flow)
+            {
+                legacy_flow = flow_new ();
+                flow_link_element (legacy_flow, effect_flow);
+            }
+
             old_ptr = ptr;
-            length = flow_execute(legacy_flow, time, &ptr, length, op_state.fmt, op_state.rate, op_state.nch);
+            length = flow_execute (legacy_flow, time, & ptr, length,
+             op_state.fmt, op_state.rate, op_state.nch);
             if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
-        } else {
-            AUDDBG("legacy_flow can deal only with S16_NE streams\n"); /*FIXME*/
         }
-    } /* !bypass_dsp */
+    }
 
     /**** write it out ****/
 
