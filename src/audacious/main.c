@@ -52,6 +52,7 @@
 #include "build_stamp.h"
 #include "configdb.h"
 #include "equalizer.h"
+#include "hook.h"
 #include "input.h"
 #include "logger.h"
 #include "output.h"
@@ -485,6 +486,8 @@ main(gint argc, gchar ** argv)
 
     gdk_threads_init();
     mowgli_init();
+
+    hook_init ();
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();

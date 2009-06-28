@@ -18,6 +18,8 @@
  * Audacious or using our public API to be a derived work.
  */
 
+#include <stdio.h>
+
 #include "eventqueue.h"
 
 static gboolean eventqueue_handle(gpointer udata)
@@ -39,7 +41,14 @@ void event_queue(const gchar *name, gpointer user_data)
 {
     HookCallQueue *hq;
 
-    g_return_if_fail(name != NULL);
+    // event_queue with a pointer is unsafe: the data may be freed or moved
+    // before the event is processed. -jlindgren
+    if (user_data)
+    {
+        fprintf (stderr, "Warning: Unsafe event_queue of \"%s\" with "
+         "pointer. (Use event_queue_with_data_free instead.)\n", name);
+        return;
+    }
 
     hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);
@@ -53,7 +62,14 @@ void event_queue_timed(gint time, const gchar *name, gpointer user_data)
 {
     HookCallQueue *hq;
 
-    g_return_if_fail(name != NULL);
+    // event_queue with a pointer is unsafe: the data may be freed or moved
+    // before the event is processed. -jlindgren
+    if (user_data)
+    {
+        fprintf (stderr, "Warning: Unsafe event_queue of \"%s\" with "
+         "pointer. (Use event_queue_with_data_free instead.)\n", name);
+        return;
+    }
 
     hq = g_slice_new0(HookCallQueue);
     hq->name = g_strdup(name);

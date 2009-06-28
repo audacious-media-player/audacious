@@ -25,7 +25,13 @@
 #include "plugin.h"
 #include "vis_runner.h"
 
+static GThread * hook_thread;
 static GSList *hook_list;
+
+void hook_init (void)
+{
+    hook_thread = g_thread_self ();
+}
 
 static Hook *
 hook_find(const gchar *name)
@@ -135,7 +141,15 @@ hook_call(const gchar *name, gpointer hook_data)
     Hook *hook;
     GSList *iter;
 
-    g_return_if_fail(name != NULL);
+    // Some plugins (skins, cdaudio-ng, maybe others) set up hooks that are not
+    // thread safe. We can disagree about whether that's the way it should be;
+    // but that's the way it is, so live with it. -jlindgren
+    if (g_thread_self () != hook_thread)
+    {
+        fprintf (stderr, "Warning: Unsafe hook_call of \"%s\" from secondary "
+         "thread. (Use event_queue instead.)\n", name);
+        return;
+    }
 
     hook = hook_find(name);
 

@@ -34,6 +34,7 @@ typedef struct {
     GSList *items;
 } Hook;
 
+void hook_init (void);
 void hook_register(const gchar *name);
 gint hook_associate(const gchar *name, HookFunction func, gpointer user_data);
 gint hook_dissociate(const gchar *name, HookFunction func);
