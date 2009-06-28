@@ -75,7 +75,6 @@ static GList *playlists = NULL;
 static GList *playlists_iter;
 
 static gboolean playlist_get_info_scan_active = FALSE;
-static GStaticRWLock playlist_get_info_rwlock = G_STATIC_RW_LOCK_INIT;
 static gboolean playlist_get_info_going = FALSE;
 static GThread *playlist_get_info_thread = NULL;
 
@@ -757,13 +756,9 @@ __playlist_ins_file(Playlist * playlist,
     if (parent_tuple)
         tuple_free(parent_tuple);
 
-    if (!tuple || (tuple && tuple_get_int(tuple, FIELD_MTIME, NULL) == -1)) {
-        // kick the scanner thread when tuple == NULL or mtime = -1 (uninitialized)
-        g_mutex_lock(mutex_scan);
-        playlist_get_info_scan_active = TRUE;
-        g_cond_signal(cond_scan);
-        g_mutex_unlock(mutex_scan);
-    }
+    if (! tuple || (tuple && tuple_get_int (tuple, FIELD_MTIME, 0) == -1))
+        playlist_start_get_info_scan ();
+
     PLAYLIST_INCR_SERIAL(playlist);
 }
 
@@ -2393,32 +2388,34 @@ playlist_generate_shuffle_list_nolock(Playlist *playlist)
     }
 }
 
-
-static gboolean
-playlist_get_info_is_going(void)
-{
-    gboolean result;
-
-    g_static_rw_lock_reader_lock(&playlist_get_info_rwlock);
-    result = playlist_get_info_going;
-    g_static_rw_lock_reader_unlock(&playlist_get_info_rwlock);
-
-    return result;
-}
-
-
 static gpointer
 playlist_get_info_func(gpointer arg)
 {
     GList *node;
     gboolean update_playlistwin = FALSE;
 
-    while (cfg.use_pl_metadata && playlist_get_info_is_going ())
+    while (cfg.use_pl_metadata)
     {
         PlaylistEntry *entry;
         Playlist *playlist = playlist_get_active();
 
-        if (playlist_get_info_scan_active)
+        g_mutex_lock (mutex_scan);
+
+        if (! playlist_get_info_going)
+        {
+            g_mutex_unlock (mutex_scan);
+            break;
+        }
+
+        if (! playlist_get_info_scan_active)
+        {
+            g_cond_wait (cond_scan, mutex_scan);
+            g_mutex_unlock (mutex_scan);
+            continue;
+        }
+
+        g_mutex_unlock (mutex_scan);
+
         {
             for (node = playlist->entries; node; node = g_list_next(node)) {
                 entry = node->data;
@@ -2453,7 +2450,7 @@ playlist_get_info_func(gpointer arg)
                 playlist_get_info_scan_active = FALSE;
                 g_mutex_unlock(mutex_scan);
             }
-        } // on_load
+        }
 
         if (update_playlistwin)
         {
@@ -2462,17 +2459,7 @@ playlist_get_info_func(gpointer arg)
             PLAYLIST_INCR_SERIAL(playlist);
             update_playlistwin = FALSE;
         }
-
-        if (playlist_get_info_scan_active)
-            continue;
-
-        g_mutex_lock(mutex_scan);
-        g_cond_wait(cond_scan, mutex_scan);
-        g_mutex_unlock(mutex_scan);
-
-        // AUDDBG("scanner invoked\n");
-
-    } // while
+    }
 
     g_thread_exit(NULL);
     return NULL;
@@ -2481,31 +2468,26 @@ playlist_get_info_func(gpointer arg)
 void
 playlist_start_get_info_thread(void)
 {
-    g_static_rw_lock_writer_lock(&playlist_get_info_rwlock);
-    playlist_get_info_going = TRUE;
-    g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
+    if (playlist_get_info_thread)
+        return;
 
-    playlist_get_info_thread = g_thread_create(playlist_get_info_func,
-                                               NULL, TRUE, NULL);
+    playlist_get_info_going = 1;
+    playlist_get_info_thread = g_thread_create (playlist_get_info_func, 0, 1, 0);
 }
 
 void
 playlist_stop_get_info_thread(void)
 {
-    if (playlist_get_info_thread == NULL && !playlist_get_info_going)
+    if (! playlist_get_info_thread)
         return;
 
-    g_static_rw_lock_writer_lock(&playlist_get_info_rwlock);
-    if (!playlist_get_info_going) {
-        g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
-        return;
-    }
+    g_mutex_lock (mutex_scan);
+    playlist_get_info_going = 0;
+    g_cond_broadcast (cond_scan);
+    g_mutex_unlock (mutex_scan);
 
-    playlist_get_info_going = FALSE;
-    g_cond_broadcast(cond_scan);
-    g_static_rw_lock_writer_unlock(&playlist_get_info_rwlock);
-
-    g_thread_join(playlist_get_info_thread);
+    g_thread_join (playlist_get_info_thread);
+    playlist_get_info_thread = 0;
 }
 
 void
