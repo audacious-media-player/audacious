@@ -26,7 +26,7 @@
 #include "playback.h"
 #include "plugin.h"
 
-#define INTERVAL 20 // milliseconds
+#define INTERVAL 30 // milliseconds
 
 static GMutex * mutex;
 static char active = 0;
@@ -36,33 +36,36 @@ static GList * hooks = 0, * vis_list = 0;
 static gboolean send_audio (void * user_data)
 {
     int outputted = playback_get_time ();
-    VisNode * vis_node;
-    GList * node;
+    VisNode * vis_node, * next;
+
+    vis_node = 0;
 
     g_mutex_lock (mutex);
 
     while (vis_list)
     {
-        vis_node = vis_list->data;
-        vis_list = g_list_delete_link (vis_list, vis_list);
+        next = vis_list->data;
 
-        if (vis_node->time >= outputted)
-            goto FOUND;
+        if (next->time > outputted)
+            break;
 
         free (vis_node);
+        vis_node = next;
+        vis_list = g_list_delete_link (vis_list, vis_list);
     }
 
     g_mutex_unlock (mutex);
-    return 1;
 
-  FOUND:
-    g_mutex_unlock (mutex);
-
-    for (node = hooks; node; node = node->next)
+    if (vis_node)
     {
-        HookItem * item = node->data;
+        GList * node;
 
-        item->func (vis_node, item->user_data);
+        for (node = hooks; node; node = node->next)
+        {
+            HookItem * item = node->data;
+
+            item->func (vis_node, item->user_data);
+        }
     }
 
     free (vis_node);

@@ -325,13 +325,3 @@ static void send_audio (void * hook_data, void * user_data)
         node = g_list_next(node);
     }
 }
-
-void
-vis_flow(FlowContext *context)
-{
-    if (context->fmt != FMT_FLOAT)
-        return;
-
-    vis_runner_pass_audio (context->time, context->data, context->len / sizeof
-     (float), context->channels);
-}

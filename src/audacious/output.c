@@ -46,8 +46,8 @@
 #include "pluginenum.h"
 
 #include "effect.h"
+#include "vis_runner.h"
 #include "volumecontrol.h"
-#include "visualization.h"
 
 #include "libSAD.h"
 #include "util.h"
@@ -496,7 +496,6 @@ output_pass_audio(InputPlayback *playback,
               int *going         /* 0 when time to stop  */
               )
 {
-    static Flow *visualization_flow = NULL;
     static Flow *postproc_flow = NULL;
     static Flow *legacy_flow = NULL;
     OutputPlugin *op = playback->output;
@@ -523,16 +522,7 @@ output_pass_audio(InputPlayback *playback,
         ptr = new_ptr;
     }
 
-    if (! visualization_flow)
-    {
-        visualization_flow = flow_new ();
-        flow_link_element (visualization_flow, vis_flow);
-    }
-
-    old_ptr = ptr;
-    flow_execute (visualization_flow, time, & ptr, length, FMT_FLOAT,
-     decoder_srate, nch);
-    if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+    vis_runner_pass_audio (time, ptr, length / sizeof (float), nch);
 
     if (bypass_dsp)
     {
