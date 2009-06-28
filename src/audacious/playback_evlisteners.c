@@ -27,11 +27,7 @@
 static void
 playback_evlistener_playback_eof(gpointer hook_data, gpointer user_data)
 {
-    Playlist *playlist = (Playlist *) hook_data;
-
-    g_return_if_fail(playlist != NULL);
-
-    playlist_eof_reached(playlist);
+    playlist_eof_reached (playlist_get_active ());
 }
 
 void

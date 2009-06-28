@@ -106,12 +106,6 @@ playback_set_pb_title(InputPlayback *playback, gchar *title)
 }
 
 void
-playback_eof(void)
-{
-    hook_call ("playback eof", playlist_get_active ());
-}
-
-void
 playback_error(void)
 {
     event_queue("playback audio error", NULL);
@@ -301,7 +295,7 @@ playback_monitor_thread(gpointer data)
     playback_set_pb_ready(playback);
 
     if (!playback->error && ip_data.playing)
-        playback_eof();
+        event_queue ("playback eof", 0);
     else if (playback->error)
         playback_error();
 
