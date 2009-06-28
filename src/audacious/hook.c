@@ -22,7 +22,6 @@
 
 #include <glib.h>
 #include "hook.h"
-#include "plugin.h"
 #include "vis_runner.h"
 
 static GThread * hook_thread;

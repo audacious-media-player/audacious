@@ -2457,7 +2457,6 @@ playlist_get_info_func(gpointer arg)
 
         if (update_playlistwin)
         {
-            printf ("updating\n");
             event_queue ("playlist update", 0);
 
             PLAYLIST_INCR_SERIAL(playlist);
