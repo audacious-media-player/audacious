@@ -471,6 +471,11 @@ int print_interface_info(mowgli_dictionary_elem_t *delem, void *privdata)
     return 0;
 }
 
+static void quit_cb (void * hook_data, void * user_data)
+{
+    aud_quit ();
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
@@ -488,6 +493,7 @@ main(gint argc, gchar ** argv)
     mowgli_init();
 
     hook_init ();
+    hook_associate ("quit", quit_cb, 0);
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();

@@ -32,6 +32,7 @@
 # include <execinfo.h>
 #endif
 
+#include "eventqueue.h"
 #include "main.h"
 #include "signals.h"
 #include "build_stamp.h"
@@ -39,10 +40,6 @@
 #include "eggsmclient.h"
 #endif
 
-/* The whole idea of catching signals from a separate thread and then quitting
- is wrong until we have a thread-safe quit function. aud_quit is not
- thread-safe. Hence Debian #531823. -jlindgren, 2009-6-25 */
-#if 0
 typedef void (*SignalHandler) (gint);
 
 gint linuxthread_signal_number = 0;
@@ -101,7 +98,8 @@ signal_process_signals (void *data)
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
     sigaddset(&waitset, SIGSEGV);
-//    sigaddset(&waitset, SIGINT);
+    sigaddset (& waitset, SIGINT);
+    sigaddset (& waitset, SIGQUIT);
     sigaddset(&waitset, SIGTERM);
 
     while(1) {
@@ -118,14 +116,10 @@ signal_process_signals (void *data)
             signal_process_segv();
             break;
 
-//        case SIGINT:
-//            g_print("Audacious has received SIGINT and is shutting down.\n");
-//            aud_quit();
-//            break;
-
+        case SIGINT:
+        case SIGQUIT:
         case SIGTERM:
-            g_print("Audacious has received SIGTERM and is shutting down.\n");
-            aud_quit();
+            event_queue ("quit", 0);
             break;
         }
     }
@@ -155,14 +149,10 @@ signal_process_signals_linuxthread (void *data)
             signal_process_segv();
             break;
 
-//        case SIGINT:
-//            g_print("Audacious has received SIGINT and is shutting down.\n");
-//            aud_quit();
-//            break;
-
+        case SIGINT:
+        case SIGQUIT:
         case SIGTERM:
-            g_print("Audacious has received SIGTERM and is shutting down.\n");
-            aud_quit();
+            event_queue ("quit", 0);
             break;
         }
     }
@@ -191,7 +181,8 @@ signal_process_signals(gpointer data)
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
     sigaddset(&waitset, SIGSEGV);
-//    sigaddset(&waitset, SIGINT);
+    sigaddset (& waitset, SIGINT);
+    sigaddset (& waitset, SIGQUIT);
     sigaddset(&waitset, SIGTERM);
 
     sigfd = signalfd(-1, &waitset, 0);
@@ -210,14 +201,10 @@ signal_process_signals(gpointer data)
             signal_process_segv();
             break;
 
-//        case SIGINT:
-//            g_print("Audacious has received SIGINT and is shutting down.\n");
-//            aud_quit();
-//            break;
-
+        case SIGINT:
+        case SIGQUIT:
         case SIGTERM:
-            g_print("Audacious has received SIGTERM and is shutting down.\n");
-            aud_quit();
+            event_queue ("quit", 0);
             break;
         }
     }
@@ -304,13 +291,13 @@ signal_initialize_blockers(void)
     sigemptyset(&blockset);
     sigaddset(&blockset, SIGPIPE);
     sigaddset(&blockset, SIGSEGV);
-//    sigaddset(&blockset, SIGINT);
+    sigaddset (& blockset, SIGINT);
+    sigaddset (& blockset, SIGQUIT);
     sigaddset(&blockset, SIGTERM);
 
     if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
         g_print("pthread_sigmask() failed.\n");
 }
-#endif // 0
 
 #ifdef USE_EGGSM
 static void
@@ -346,7 +333,6 @@ signal_handlers_init(void)
     }
 #endif
 
-#if 0
 #if (!defined(HAVE_SIGNALFD) || !defined(HAVE_SYS_SIGNALFD_H))
 
     if (signal_check_for_broken_impl() != TRUE)
@@ -362,7 +348,8 @@ signal_handlers_init(void)
         /* install special handler which catches signals and forwards to the signal handling thread */
         signal_install_handler(SIGPIPE, linuxthread_handler);
         signal_install_handler(SIGSEGV, linuxthread_handler);
-//        signal_install_handler(SIGINT, linuxthread_handler);
+        signal_install_handler (SIGINT, linuxthread_handler);
+        signal_install_handler (SIGQUIT, linuxthread_handler);
         signal_install_handler(SIGTERM, linuxthread_handler);
 
         /* create handler thread */
@@ -376,5 +363,4 @@ signal_handlers_init(void)
     g_thread_create(signal_process_signals, NULL, FALSE, NULL);
 
 #endif
-#endif // 0
 }
