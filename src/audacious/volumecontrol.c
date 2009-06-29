@@ -38,7 +38,7 @@
 
 static void pad_audio (void * data, int length, AFormat fmt, int channels)
 {
-    gint i, k, samples;
+    int i, k, frames;
     float vol, lvol, rvol;
     float lgain, rgain;
 
@@ -56,8 +56,8 @@ static void pad_audio (void * data, int length, AFormat fmt, int channels)
     vol = MAX(lvol, rvol);
 
     float *ptr = data;
-    samples = length / sizeof(float);
-    for (k = 0; k < samples; k++) {
+    frames = length / channels / sizeof(float);
+    for (k = 0; k < frames; k++) {
         if (channels == 2) {
             *ptr *= lvol;
             ptr++;
