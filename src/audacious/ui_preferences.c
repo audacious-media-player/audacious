@@ -43,6 +43,7 @@
 #include "effect.h"
 #include "general.h"
 #include "output.h"
+#include "scanner.h"
 #include "visualization.h"
 #include "volumecontrol.h"
 #include "playlist.h"
@@ -182,6 +183,11 @@ CategoryQueueEntry *category_queue = NULL;
 GtkWidget *ui_preferences_chardet_table_populate(void);
 static GtkWidget *ui_preferences_bit_depth(void);
 
+static void metadata_toggle (void)
+{
+    scanner_enable (cfg.use_pl_metadata);
+}
+
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
@@ -261,7 +267,9 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Load metadata from playlists and files"), &cfg.use_pl_metadata, NULL, N_("Load metadata (tag information) from music files."), FALSE},
+    {WIDGET_CHK_BTN, N_ ("Load metadata from playlists and files"),
+     & cfg.use_pl_metadata, metadata_toggle, N_ ("Load metadata (tag "
+     "information) from music files."), 0},
     {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, {.populate = ui_preferences_chardet_table_populate}},
     {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},

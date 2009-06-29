@@ -71,7 +71,7 @@ struct _PlaylistEntry {
     gboolean selected;
     InputPlugin *decoder;
     Tuple *tuple;		/* cached entry tuple, if available */
-    gboolean title_is_valid;    /* set it to FALSE after title format changing to update title even if tuple is present --asphyx */
+    char failed;
 };
 
 #define PLAYLIST(x)  ((Playlist *)(x))
@@ -114,6 +114,7 @@ PlaylistEntry *playlist_entry_new(const gchar * filename,
                                   const gchar * title, const gint len,
 				  InputPlugin * dec);
 void playlist_entry_free(PlaylistEntry * entry);
+void playlist_entry_get_info (PlaylistEntry * entry);
 
 void playlist_entry_associate(Playlist * playlist, PlaylistEntry * entry,
                               PlaylistAssociation assoc);
@@ -169,9 +170,6 @@ void playlist_shift(Playlist *playlist, gint delta);
 gboolean playlist_save(Playlist *playlist, const gchar * filename);
 gboolean playlist_load(Playlist *playlist, const gchar * filename);
 
-void playlist_start_get_info_thread(void);
-void playlist_stop_get_info_thread();
-void playlist_start_get_info_scan(void);
 void playlist_update_all_titles(void);
 
 void playlist_sort(Playlist *playlist, PlaylistSortType type);

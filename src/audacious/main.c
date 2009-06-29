@@ -59,6 +59,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "pluginenum.h"
+#include "scanner.h"
 #include "signals.h"
 #include "util.h"
 #include "vis_runner.h"
@@ -91,8 +92,6 @@ static AudCmdLineOpt options = {};
 
 gchar *aud_paths[BMP_PATH_COUNT] = {};
 
-GCond *cond_scan;
-GMutex *mutex_scan;
 #ifdef USE_DBUS
 MprisPlayer *mpris;
 #endif
@@ -438,7 +437,7 @@ aud_quit(void)
     GList *playlists = NULL, *playlists_top = NULL;
     Interface *i = interface_get(options.interface);
 
-    playlist_stop_get_info_thread();
+    scanner_end ();
 
     aud_config_save();
 
@@ -456,9 +455,6 @@ aud_quit(void)
         playlists = g_list_next(playlists);
     }
     g_list_free( playlists_top );
-
-    g_cond_free(cond_scan);
-    g_mutex_free(mutex_scan);
 
     exit(EXIT_SUCCESS);
 }
@@ -509,8 +505,6 @@ main(gint argc, gchar ** argv)
     aud_init_paths();
     aud_make_user_dir();
 
-    cond_scan = g_cond_new();
-    mutex_scan = g_mutex_new();
     gtk_rc_add_default_file(aud_paths[BMP_PATH_GTKRC_FILE]);
 
     parse_cmd_line_options(&argc, &argv);
@@ -572,14 +566,12 @@ main(gint argc, gchar ** argv)
         exit(EXIT_SUCCESS);
     }
 
-    g_message("Setting up playlists");
+    scanner_init ();
+    scanner_enable (cfg.use_pl_metadata);
     playlist_system_init();
 
     g_message("Handling commandline options, part #2");
     handle_cmd_line_options ();
-
-    g_message("Playlist scanner thread startup");
-    playlist_start_get_info_thread();
 
     init_equalizer ();
 

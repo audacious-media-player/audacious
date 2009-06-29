@@ -35,6 +35,7 @@ SRCS = af_equalizer.c							\
        playlist_container.c						\
        pluginenum.c								\
        rcfile.c									\
+       scanner.c \
        signals.c								\
        src_flow.c								\
        ui_fileinfopopup.c						\
@@ -85,6 +86,7 @@ INCLUDES = auddrct.h			\
            playlist_container.h	\
            plugin.h				\
            preferences.h		\
+           scanner.h \
            ui_fileinfopopup.h	\
            ui_plugin_menu.h		\
            ui_preferences.h		\

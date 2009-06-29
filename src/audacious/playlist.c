@@ -63,6 +63,7 @@
 #include "playlist_container.h"
 #include "playlist_evmessages.h"
 #include "pluginenum.h"
+#include "scanner.h"
 #include "audstrings.h"
 #include "util.h"
 #include "vfs.h"
@@ -72,11 +73,6 @@ typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
 static GList *playlists = NULL;
-static GList *playlists_iter;
-
-static gboolean playlist_get_info_scan_active = FALSE;
-static gboolean playlist_get_info_going = FALSE;
-static GThread *playlist_get_info_thread = NULL;
 
 extern GHashTable *ext_hash;
 
@@ -112,7 +108,6 @@ static void playlist_generate_shuffle_list_nolock(Playlist *);
 
 static void playlist_recalc_total_time_nolock(Playlist *);
 static void playlist_recalc_total_time(Playlist *);
-static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
 
 #define EXT_TRUE    1
@@ -154,9 +149,8 @@ playlist_entry_new(const gchar * filename,
     entry->selected = FALSE;
     entry->decoder = dec;
 
-    /* only do this if we have a decoder, otherwise it just takes too long */
-    if (entry->decoder)
-        playlist_entry_get_info(entry);
+    entry->tuple = 0;
+    entry->failed = 0;
 
     return entry;
 }
@@ -177,15 +171,12 @@ playlist_entry_free(PlaylistEntry * entry)
     mowgli_heap_free(playlist_entry_heap, entry);
 }
 
-static gboolean
-playlist_entry_get_info(PlaylistEntry * entry)
+void playlist_entry_get_info (PlaylistEntry * entry)
 {
     Tuple *tuple = NULL;
     ProbeResult *pr = NULL;
     time_t modtime;
     const gchar *formatter;
-
-    g_return_val_if_fail(entry != NULL, FALSE);
 
     if (entry->tuple == NULL || tuple_get_int(entry->tuple, FIELD_MTIME, NULL) > 0 ||
         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == -1)
@@ -193,37 +184,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
     else
         modtime = 0;  /* URI -nenolod */
 
-    if (str_has_prefix_nocase(entry->filename, "http:") &&
-        g_thread_self() != playlist_get_info_thread)
-        return FALSE;
-
     if (entry->decoder == NULL) {
         pr = input_check_file(entry->filename, FALSE);
         if (pr != NULL)
             entry->decoder = pr->ip;
-    }
-
-    /* renew tuple if file mtime is newer than tuple mtime. */
-    if (entry->tuple){
-        if (tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == modtime) {
-            if (pr != NULL) g_free(pr);
-
-            if (entry->title_is_valid == FALSE) { /* update title even tuple is present and up to date --asphyx */
-                AUDDBG("updating title from actual tuple\n");
-                formatter = tuple_get_string(entry->tuple, FIELD_FORMATTER, NULL);
-                if (entry->title != NULL) g_free(entry->title);
-                entry->title = tuple_formatter_make_title_string(entry->tuple, formatter ?
-                                                                 formatter : get_gentitle_format());
-                entry->title_is_valid = TRUE;
-                AUDDBG("new title: \"%s\"\n", entry->title);
-            }
-
-            return TRUE;
-        } else {
-            mowgli_object_unref(entry->tuple);
-            entry->tuple = NULL;
-            return TRUE;
-        }
     }
 
     if (pr != NULL && pr->tuple != NULL)
@@ -236,7 +200,8 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     if (tuple == NULL) {
         if (pr != NULL) g_free(pr);
-        return FALSE;
+        entry->failed = 1;
+        return;
     }
 
     /* attach mtime */
@@ -246,13 +211,13 @@ playlist_entry_get_info(PlaylistEntry * entry)
     formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
     entry->title = tuple_formatter_make_title_string(tuple, formatter ?
                                                      formatter : get_gentitle_format());
-    entry->title_is_valid = TRUE;
     entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
     entry->tuple = tuple;
 
     if (pr != NULL) g_free(pr);
 
-    return TRUE;
+    entry->failed = 0;
+    return;
 }
 
 /* *********************** playlist selector code ************************* */
@@ -268,7 +233,7 @@ playlist_init(void)
 
     initial_pl = playlist_new();
     playlists = g_list_append (0, initial_pl);
-    playlists_iter = playlists;
+    set_active_playlist (initial_pl);
 }
 
 void
@@ -277,14 +242,17 @@ playlist_add_playlist(Playlist *playlist)
     playlists = g_list_append(playlists, playlist);
 
     hook_call("playlist create", playlist);
-    hook_call ("playlist update", playlist);
+    hook_call ("playlist update", 0);
 }
 
 void
 playlist_remove_playlist(Playlist *playlist)
 {
     gboolean active;
-    active = (playlist && playlist == playlist_get_active());
+    GList * node;
+
+    active = (playlist == get_active_playlist ());
+
     /* users suppose playback will be stopped on removing playlist */
     if (active && playback_get_playing()) {
         ip_data.stop = TRUE;
@@ -304,15 +272,17 @@ playlist_remove_playlist(Playlist *playlist)
     hook_call("playlist destroy", playlist);
 
     if (active)
-        playlists_iter = playlists_iter->next ? playlists_iter->next :
-         playlists_iter->prev;
+    {
+        node = g_list_find (playlists, playlist);
+        set_active_playlist (node->next ? node->next->data : node->prev->data);
+    }
 
     /* upon removal, a playlist should be cleared and freed */
     playlists = g_list_remove(playlists, playlist);
     playlist_clear_only (playlist);
     playlist_free(playlist);
 
-    hook_call ("playlist update", playlists_iter->data);
+    hook_call ("playlist update", 0);
 }
 
 GList *
@@ -324,34 +294,41 @@ playlist_get_playlists(void)
 void
 playlist_select_next(void)
 {
-    if (! playlists_iter->next)
+    GList * node = g_list_find (playlists, get_active_playlist ());
+
+    if (! node->next)
         return;
 
-    playlists_iter = playlists_iter->next;
-
-    hook_call ("playlist update", playlists_iter->data);
+    set_active_playlist (node->next->data);
+    hook_call ("playlist update", 0);
 }
 
 void
 playlist_select_prev(void)
 {
-    if (! playlists_iter->prev)
+    GList * node = g_list_find (playlists, get_active_playlist ());
+
+    if (! node->prev)
         return;
 
-    playlists_iter = playlists_iter->prev;
-
-    hook_call ("playlist update", playlists_iter->data);
+    set_active_playlist (node->prev->data);
+    hook_call ("playlist update", 0);
 }
 
 void
 playlist_select_playlist(Playlist *playlist)
 {
-    playlists_iter = g_list_find(playlists, playlist);
-
-    hook_call ("playlist update", playlist);
+    set_active_playlist (playlist);
+    hook_call ("playlist update", 0);
 }
 
 /* *********************** playlist code ********************** */
+
+/* For compatibility with older code. -jlindgren */
+Playlist * playlist_get_active (void)
+{
+    return get_active_playlist ();
+}
 
 const gchar *
 playlist_get_current_name(Playlist *playlist)
@@ -364,19 +341,11 @@ playlist_get_current_name(Playlist *playlist)
 gboolean
 playlist_set_current_name(Playlist *playlist, const gchar * title)
 {
-    gchar *oldtitle = playlist->title;
+    g_free (playlist->title);
+    playlist->title = g_strdup (title);
 
-    if (!title) {
-        playlist->title = NULL;
-        g_free(oldtitle);
-        hook_call ("playlist update", playlist);
-        return FALSE;
-    }
-
-    playlist->title = str_assert_utf8(title);
-    g_free(oldtitle);
     hook_call ("playlist update", playlist);
-    return TRUE;
+    return 1;
 }
 
 /* Setting the filename allows the original playlist to be modified later */
@@ -740,24 +709,14 @@ __playlist_ins_file(Playlist * playlist,
             playlist->tail = g_list_last(playlist->entries);
         }
 
-        if (tuple != NULL) {
-            const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
-            g_free(entry->title);
-            entry->title = tuple_formatter_make_title_string(tuple,
-                                                             formatter ? formatter : get_gentitle_format());
-            entry->title_is_valid = TRUE;
-            entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-            entry->tuple = tuple;
-        }
-
         PLAYLIST_UNLOCK(playlist);
     }
 
     if (parent_tuple)
         tuple_free(parent_tuple);
 
-    if (! tuple || (tuple && tuple_get_int (tuple, FIELD_MTIME, 0) == -1))
-        playlist_start_get_info_scan ();
+    if (! tuple)
+        scanner_reset ();
 
     PLAYLIST_INCR_SERIAL(playlist);
 }
@@ -1046,7 +1005,6 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     playlist_generate_shuffle_list(playlist);
 
     hook_call ("playlist update", playlist);
-
     return entries;
 }
 
@@ -1096,7 +1054,6 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     playlist_generate_shuffle_list(playlist);
 
     hook_call ("playlist update", playlist);
-
     return entries;
 }
 
@@ -1147,8 +1104,7 @@ void
 playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
                           gint freq, gint nch)
 {
-    Playlist *playlist = playlist_get_active();
-    playlist_set_info(playlist, title, length, rate, freq, nch);
+    playlist_set_info (get_active_playlist (), title, length, rate, freq, nch);
 }
 
 void
@@ -1200,7 +1156,6 @@ playlist_next(Playlist *playlist)
         playback_initiate();
 
     hook_call ("playlist position", playlist);
-    hook_call ("playlist update", playlist);
 }
 
 void
@@ -1253,7 +1208,6 @@ playlist_prev(Playlist *playlist)
         playback_initiate();
 
     hook_call ("playlist position", playlist);
-    hook_call ("playlist update", playlist);
 }
 
 void
@@ -1418,7 +1372,7 @@ playlist_set_position(Playlist *playlist, guint pos)
     if (restart_playing)
         playback_initiate();
 
-    hook_call ("playlist update", playlist);
+    hook_call ("playlist position", playlist);
 }
 
 void
@@ -1480,7 +1434,6 @@ playlist_eof_reached(Playlist *playlist)
 
 DONE:
     hook_call ("playlist position", playlist);
-    hook_call ("playlist update", playlist);
 }
 
 gint
@@ -1569,8 +1522,8 @@ gboolean
 playlist_save(Playlist * playlist, const gchar * filename)
 {
     PlaylistContainer *plc = NULL;
-    GList *old_iter;
     gchar *ext;
+    Playlist * last;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
@@ -1583,15 +1536,11 @@ playlist_save(Playlist * playlist, const gchar * filename)
     if (plc->plc_write == NULL)
         return FALSE;
 
-    /* Save the right playlist to disk */
-    if (playlist != playlist_get_active()) {
-        old_iter = playlists_iter;
-        playlists_iter = g_list_find(playlists, playlist);
-        plc->plc_write(filename, 0);
-        playlists_iter = old_iter;
-    } else {
-        plc->plc_write(filename, 0);
-    }
+    /* Fix me: We shouldn't have to activate a playlist to save it. */
+    last = get_active_playlist ();
+    set_active_playlist (playlist);
+    plc->plc_write (filename, 0);
+    set_active_playlist (last);
 
     return TRUE;
 }
@@ -1690,9 +1639,9 @@ static guint
 playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 {
     PlaylistContainer *plc;
-    GList *old_iter;
     gchar *ext;
-    gint old_len, new_len;
+    gint old_len;
+    Playlist * last;
 
     g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(filename != NULL, 0);
@@ -1704,16 +1653,12 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     g_return_val_if_fail(plc->plc_read != NULL, 0);
 
     old_len = playlist_get_length(playlist);
-    /* make sure it adds files to the right playlist */
-    if (playlist != playlist_get_active()) {
-        old_iter = playlists_iter;
-        playlists_iter = g_list_find(playlists, playlist);
-        plc->plc_read(filename, pos);
-        playlists_iter = old_iter;
-    } else {
-        plc->plc_read(filename, pos);
-    }
-    new_len = playlist_get_length(playlist);
+
+    /* Fix me: We shouldn't have to activate a playlist to load into it. */
+    last = get_active_playlist ();
+    set_active_playlist (playlist);
+    plc->plc_read (filename, pos);
+    set_active_playlist (last);
 
     playlist_generate_shuffle_list(playlist);
 
@@ -1723,7 +1668,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     hook_call ("playlist load", playlist);
     hook_call ("playlist update", playlist);
 
-    return new_len - old_len;
+    return playlist_get_length (playlist) - old_len;
 }
 
 GList *
@@ -1784,7 +1729,6 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
     gchar *title = NULL;
     PlaylistEntry *entry;
     GList *node;
-    time_t mtime;
 
     if (!playlist)
         return NULL;
@@ -1798,22 +1742,10 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
 
     entry = node->data;
 
-    if (entry->tuple)
-        mtime = tuple_get_int(entry->tuple, FIELD_MTIME, NULL);
-    else
-        mtime = 0;
+    if (! entry->tuple && ! entry->failed)
+        playlist_entry_get_info (entry);
 
-    /* FIXME: simplify this logic */
-    if ((entry->title == NULL && entry->length == -1) ||
-        (entry->tuple && mtime != 0 &&
-         (mtime == -1 || mtime != playlist_get_mtime(entry->filename))))
-    {
-        if (playlist_entry_get_info(entry))
-            title = entry->title;
-    }
-    else {
-        title = entry->title;
-    }
+    title = entry->title;
 
     PLAYLIST_UNLOCK(playlist);
 
@@ -1832,9 +1764,7 @@ Tuple *
 playlist_get_tuple(Playlist *playlist, guint pos)
 {
     PlaylistEntry *entry;
-    Tuple *tuple = NULL;
     GList *node;
-    time_t mtime;
 
     if (!playlist)
         return NULL;
@@ -1845,54 +1775,27 @@ playlist_get_tuple(Playlist *playlist, guint pos)
 
     entry = (PlaylistEntry *) node->data;
 
-    tuple = entry->tuple;
+    if (! entry->tuple && ! entry->failed)
+        playlist_entry_get_info (entry);
 
-    if (tuple)
-        mtime = tuple_get_int(tuple, FIELD_MTIME, NULL);
-    else
-        mtime = 0;
-
-    // if no tuple or tuple with old mtime, get new one.
-    if (tuple == NULL ||
-        (entry->tuple && mtime != 0 && (mtime == -1 || mtime != playlist_get_mtime(entry->filename))))
-    {
-        playlist_entry_get_info(entry);
-        tuple = entry->tuple;
-    }
-
-    return tuple;
+    return entry->tuple;
 }
 
 gint
 playlist_get_songtime(Playlist *playlist, guint pos)
 {
-    gint song_time = -1;
     PlaylistEntry *entry;
     GList *node;
-    time_t mtime;
-
-    if (!playlist)
-        return -1;
 
     if (!(node = g_list_nth(playlist->entries, pos)))
         return -1;
 
     entry = node->data;
 
-    if (entry->tuple)
-        mtime = tuple_get_int(entry->tuple, FIELD_MTIME, NULL);
-    else
-        mtime = 0;
+    if (! entry->tuple && ! entry->failed)
+        playlist_entry_get_info (entry);
 
-    if (entry->tuple == NULL ||
-        (mtime != 0 && (mtime == -1 || mtime != playlist_get_mtime(entry->filename)))) {
-
-        if (playlist_entry_get_info(entry))
-            song_time = entry->length;
-    } else
-        song_time = entry->length;
-
-    return song_time;
+    return entry->length;
 }
 
 static gint
@@ -1904,10 +1807,10 @@ playlist_compare_track(PlaylistEntry * a, PlaylistEntry * b)
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if(!a->tuple)
-        playlist_entry_get_info(a);
-    if(!b->tuple)
-        playlist_entry_get_info(b);
+    if (! a->tuple && ! a->failed)
+        playlist_entry_get_info (a);
+    if (! b->tuple && ! b->failed)
+        playlist_entry_get_info (b);
 
     if (a->tuple == NULL)
         return 0;
@@ -1957,10 +1860,10 @@ playlist_compare_title(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (a->tuple == NULL)
-        playlist_entry_get_info(a);
-    if (b->tuple == NULL)
-        playlist_entry_get_info(b);
+    if (! a->tuple && ! a->failed)
+        playlist_entry_get_info (a);
+    if (! b->tuple && ! b->failed)
+        playlist_entry_get_info (b);
 
     if (a->tuple != NULL)
         a_title = tuple_get_string(a->tuple, FIELD_TITLE, NULL);
@@ -1986,11 +1889,10 @@ playlist_compare_artist(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (a->tuple != NULL)
-        playlist_entry_get_info(a);
-
-    if (b->tuple != NULL)
-        playlist_entry_get_info(b);
+    if (! a->tuple && ! a->failed)
+        playlist_entry_get_info (a);
+    if (! b->tuple && ! b->failed)
+        playlist_entry_get_info (b);
 
     if (a->tuple != NULL) {
         a_artist = tuple_get_string(a->tuple, FIELD_ARTIST, NULL);
@@ -2027,11 +1929,10 @@ playlist_compare_album(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (a->tuple != NULL)
-        playlist_entry_get_info(a);
-
-    if (b->tuple != NULL)
-        playlist_entry_get_info(b);
+    if (! a->tuple && ! a->failed)
+        playlist_entry_get_info (a);
+    if (! b->tuple && ! b->failed)
+        playlist_entry_get_info (b);
 
     if (a->tuple != NULL) {
         a_album = tuple_get_string(a->tuple, FIELD_ALBUM, NULL);
@@ -2336,8 +2237,9 @@ playlist_clear_selected(Playlist *playlist)
     playlist_recalc_total_time(playlist);
 
     /* commenting out for now,
-     * fix redraw playlist-widget in newui on every select - Michal
-    hook_call ("playlist update", playlist); */
+     * fix redraw playlist-widget in newui on every select - Michal */
+    /* Don't break skins just because gtkui is broken! -jlindgren */
+    hook_call ("playlist update", playlist);
 }
 
 gint
@@ -2388,134 +2290,27 @@ playlist_generate_shuffle_list_nolock(Playlist *playlist)
     }
 }
 
-static gpointer
-playlist_get_info_func(gpointer arg)
-{
-    GList *node;
-    gboolean update_playlistwin = FALSE;
-
-    while (cfg.use_pl_metadata)
-    {
-        PlaylistEntry *entry;
-        Playlist *playlist = playlist_get_active();
-
-        g_mutex_lock (mutex_scan);
-
-        if (! playlist_get_info_going)
-        {
-            g_mutex_unlock (mutex_scan);
-            break;
-        }
-
-        if (! playlist_get_info_scan_active)
-        {
-            g_cond_wait (cond_scan, mutex_scan);
-            g_mutex_unlock (mutex_scan);
-            continue;
-        }
-
-        g_mutex_unlock (mutex_scan);
-
-        {
-            for (node = playlist->entries; node; node = g_list_next(node)) {
-                entry = node->data;
-
-                if (playlist->attribute & PLAYLIST_STATIC || // live lock fix
-                    (entry->tuple &&
-                     tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                     tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1 &&
-                     entry->title_is_valid))
-                {
-                    update_playlistwin = TRUE;
-                    continue;
-                }
-
-                if (!playlist_entry_get_info(entry) &&
-                    g_list_index(playlist->entries, entry) == -1)
-                    /* Entry disappeared while we looked it up.
-                       Restart. */
-                    node = playlist->entries;
-                else if ((entry->tuple != NULL) ||
-			 (entry->title != NULL &&
-                         tuple_get_int(entry->tuple, FIELD_LENGTH, NULL) > -1 &&
-                         tuple_get_int(entry->tuple, FIELD_MTIME, NULL) != -1))
-                {
-                    update_playlistwin = TRUE;
-                    continue;
-                }
-            }
-
-            if (!node) {
-                g_mutex_lock(mutex_scan);
-                playlist_get_info_scan_active = FALSE;
-                g_mutex_unlock(mutex_scan);
-            }
-        }
-
-        if (update_playlistwin)
-        {
-            event_queue ("playlist update", 0);
-
-            PLAYLIST_INCR_SERIAL(playlist);
-            update_playlistwin = FALSE;
-        }
-    }
-
-    g_thread_exit(NULL);
-    return NULL;
-}
-
-void
-playlist_start_get_info_thread(void)
-{
-    if (playlist_get_info_thread)
-        return;
-
-    playlist_get_info_going = 1;
-    playlist_get_info_thread = g_thread_create (playlist_get_info_func, 0, 1, 0);
-}
-
-void
-playlist_stop_get_info_thread(void)
-{
-    if (! playlist_get_info_thread)
-        return;
-
-    g_mutex_lock (mutex_scan);
-    playlist_get_info_going = 0;
-    g_cond_broadcast (cond_scan);
-    g_mutex_unlock (mutex_scan);
-
-    g_thread_join (playlist_get_info_thread);
-    playlist_get_info_thread = 0;
-}
-
-void
-playlist_start_get_info_scan(void)
-{
-    AUDDBG("waking up scan thread\n");
-    g_mutex_lock(mutex_scan);
-    playlist_get_info_scan_active = TRUE;
-
-    g_cond_signal(cond_scan);
-    g_mutex_unlock(mutex_scan);
-}
-
 void
 playlist_update_all_titles(void) /* update titles after format changing --asphyx */
 {
     PlaylistEntry *entry;
     GList *node;
-    Playlist *playlist = playlist_get_active();
+    Playlist * playlist = get_active_playlist ();
+    const char * format;
 
-    AUDDBG("invalidating titles\n");
     PLAYLIST_LOCK(playlist);
     for (node = playlist->entries; node; node = g_list_next(node)) {
         entry = node->data;
-        entry->title_is_valid = FALSE;
+
+        if (! entry->tuple)
+            continue;
+
+        g_free (entry->title);
+        format = tuple_get_string (entry->tuple, FIELD_FORMATTER, 0);
+        entry->title = tuple_formatter_make_title_string (entry->tuple, format ?
+         format : get_gentitle_format ());
     }
     PLAYLIST_UNLOCK(playlist);
-    playlist_start_get_info_scan();
 }
 
 void
@@ -3011,11 +2806,7 @@ playlist_read_info_selection(Playlist *playlist)
         if (entry->tuple != NULL)
             tuple_associate_int(entry->tuple, FIELD_MTIME, NULL, -1); /* -1 denotes "non-initialized". now 0 is for stream etc. yaz */
 
-        if (!playlist_entry_get_info(entry)) {
-            if (g_list_index(playlist->entries, entry) == -1)
-                /* Entry disappeared while we looked it up. Restart. */
-                node = playlist->entries;
-        }
+        playlist_entry_get_info (entry);
     }
 
     PLAYLIST_UNLOCK(playlist);
@@ -3024,7 +2815,6 @@ playlist_read_info_selection(Playlist *playlist)
     PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
     hook_call ("playlist update", playlist);
-
     return retval;
 }
 
@@ -3050,18 +2840,10 @@ playlist_read_info(Playlist *playlist, guint pos)
     hook_call ("playlist update", playlist);
 }
 
-Playlist *
-playlist_get_active(void)
-{
-    if (playlists_iter == NULL)
-        return NULL;
-    return playlists_iter->data;
-}
-
 void
 playlist_set_shuffle(gboolean shuffle)
 {
-    Playlist *playlist = playlist_get_active();
+    Playlist * playlist = get_active_playlist ();
     if (!playlist)
         return;
 
@@ -3106,7 +2888,7 @@ Playlist *
 playlist_new_from_selected(void)
 {
     Playlist *newpl = playlist_new();
-    Playlist *playlist = playlist_get_active();
+    Playlist * playlist = get_active_playlist ();
     GList *list = playlist_get_selected(playlist);
 
     playlist_add_playlist( newpl );
@@ -3125,8 +2907,7 @@ playlist_new_from_selected(void)
 
     playlist_recalc_total_time(newpl);
 
-    hook_call ("playlist update", playlist);
-
+    hook_call ("playlist update", 0);
     return newpl;
 }
 
