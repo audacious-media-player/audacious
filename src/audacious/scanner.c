@@ -35,7 +35,7 @@ static GThread * thread;
 static Playlist * active;
 static gboolean enabled, reset, quit;
 
-void * scanner (void * unused)
+static void * scanner (void * unused)
 {
     gboolean done = FALSE;
     GList * node;
