@@ -19,5 +19,6 @@
 
 void vis_runner_init (void);
 void vis_runner_pass_audio (int time, float * data, int samples, int channels);
+void vis_runner_flush (void);
 void vis_runner_add_hook (HookFunction func, void * user_data);
 void vis_runner_remove_hook (HookFunction func);

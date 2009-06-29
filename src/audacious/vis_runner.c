@@ -72,19 +72,6 @@ static gboolean send_audio (void * user_data)
     return 1;
 }
 
-static void clear (void * hook_data, void * user_data)
-{
-    g_mutex_lock (mutex);
-
-    while (vis_list)
-    {
-        free (vis_list->data);
-        vis_list = g_list_delete_link (vis_list, vis_list);
-    }
-
-    g_mutex_unlock (mutex);
-}
-
 static void start_stop (void * hook_data, void * user_data)
 {
     if (hooks && playback_get_playing () && ! playback_get_paused ())
@@ -103,7 +90,6 @@ static void start_stop (void * hook_data, void * user_data)
         }
 
         active = 0;
-        clear (0, 0);
     }
 }
 
@@ -114,7 +100,6 @@ void vis_runner_init (void)
     hook_associate ("playback pause", start_stop, 0);
     hook_associate ("playback unpause", start_stop, 0);
     hook_associate ("playback stop", start_stop, 0);
-    hook_associate ("playback seek", clear, 0);
 }
 
 void vis_runner_pass_audio (int time, float * data, int samples, int channels)
@@ -150,6 +135,19 @@ void vis_runner_pass_audio (int time, float * data, int samples, int channels)
         vis_list = g_list_append (vis_list, vis_node);
     else
         free (vis_node);
+
+    g_mutex_unlock (mutex);
+}
+
+void vis_runner_flush (void)
+{
+    g_mutex_lock (mutex);
+
+    while (vis_list)
+    {
+        free (vis_list->data);
+        vis_list = g_list_delete_link (vis_list, vis_list);
+    }
 
     g_mutex_unlock (mutex);
 }

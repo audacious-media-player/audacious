@@ -402,6 +402,7 @@ output_close_audio(void)
 {
     OutputPlugin *op = get_current_output_plugin();
 
+    vis_runner_flush ();
     freeSAD();
 
     AUDDBG("clearing RG settings\n");
@@ -442,6 +443,8 @@ void
 output_flush(gint time)
 {
     OutputPlugin *op = get_current_output_plugin();
+
+    vis_runner_flush ();
 
     if (op == NULL)
         return;
