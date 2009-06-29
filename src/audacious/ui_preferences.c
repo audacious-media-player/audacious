@@ -215,7 +215,7 @@ static PreferencesWidget audio_page_widgets2[] = {
 static PreferencesWidget rg_params_elements[] = {
     {WIDGET_SPIN_BTN, N_("Preamp:"), &cfg.replay_gain_preamp, NULL, NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
     {WIDGET_SPIN_BTN, N_("Default gain:"), &cfg.default_gain, NULL, N_("This gain will be used if file doesn't contain Replay Gain metadata."), FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
-    {WIDGET_LABEL, NULL, NULL, NULL, NULL, FALSE, {.label = {"gtk-info", N_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use positive values above.</span>")}}},
+    {WIDGET_LABEL, N_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use positive values above.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-info"}}},
 };
 
 static PreferencesWidget replay_gain_page_widgets[] = {
@@ -248,7 +248,7 @@ static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_host_port_elements, G_N_ELEMENTS(proxy_host_port_elements)}}},
     {WIDGET_CHK_BTN, N_("Use authentication with proxy"), "proxy_use_auth", NULL, NULL, FALSE, {}, VALUE_CFG_BOOLEAN},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_auth_elements, G_N_ELEMENTS(proxy_auth_elements)}}},
-    {WIDGET_LABEL, NULL, NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning", N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>")}}},
+    {WIDGET_LABEL, N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning"}}},
 };
 
 static PreferencesWidget playback_page_widgets[] = {
@@ -1540,13 +1540,8 @@ create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
 {
     if (widget->data.label.stock_id)
         *icon = gtk_image_new_from_stock(widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
-    if (widget->data.label.markup) {
-        *label = gtk_label_new_with_mnemonic(N_(widget->data.label.markup));
-        gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
-    } else
-        *label = gtk_label_new_with_mnemonic(N_(widget->label));
 
-    /* temporary */
+    *label = gtk_label_new_with_mnemonic(N_(widget->label));
     gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
 
     gtk_label_set_line_wrap(GTK_LABEL(*label), TRUE);
