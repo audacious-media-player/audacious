@@ -104,8 +104,10 @@ void scanner_init (void)
 
 void scanner_enable (char enable)
 {
+    g_mutex_lock (mutex);
     enabled = enable;
     g_cond_signal (wake);
+    g_mutex_unlock (mutex);
 }
 
 void scanner_reset (void)
@@ -118,8 +120,10 @@ void scanner_reset (void)
 
 void scanner_end (void)
 {
+    g_mutex_lock (mutex);
     quit = 1;
     g_cond_signal (wake);
+    g_mutex_unlock (mutex);
 
     g_thread_join (thread);
 
