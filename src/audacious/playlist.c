@@ -2311,6 +2311,8 @@ playlist_update_all_titles(void) /* update titles after format changing --asphyx
          format : get_gentitle_format ());
     }
     PLAYLIST_UNLOCK(playlist);
+
+    hook_call ("playlist update", playlist);
 }
 
 void
