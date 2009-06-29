@@ -60,7 +60,6 @@ typedef struct _PreferencesWidget {
 
         struct {
             char *stock_id;
-            char *markup;
         } label;
 
         struct {
