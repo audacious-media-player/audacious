@@ -57,7 +57,7 @@ void * scanner (void * unused)
             reset = FALSE;
         }
 
-        if (! active)
+        if (active == NULL)
             done = TRUE;
 
         if (! enabled || done)
@@ -69,7 +69,7 @@ void * scanner (void * unused)
 
         PLAYLIST_LOCK (active);
 
-        for (node = active->entries; node; node = node->next)
+        for (node = active->entries; node != NULL; node = node->next)
         {
             entry = node->data;
 
@@ -127,7 +127,7 @@ void scanner_reset (void)
 void scanner_end (void)
 {
     g_mutex_lock (mutex);
-    quit = 1;
+    quit = TRUE;
     g_cond_signal (wake);
     g_mutex_unlock (mutex);
 
