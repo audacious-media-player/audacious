@@ -208,6 +208,7 @@ gboolean playlist_select_invert(Playlist *playlist, guint pos);
 
 gboolean playlist_read_info_selection(Playlist *playlist);
 void playlist_read_info(Playlist *playlist, guint pos);
+void playlist_rescan (Playlist * playlist);
 
 void playlist_set_shuffle(gboolean shuffle);
 

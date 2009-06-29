@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2007  Audacious team.
+ *  Copyright (C) 2005-2009  Audacious team.
  *
  *  BMP (C) GPL 2003 $top_src_dir/AUTHORS
  *
@@ -175,14 +175,10 @@ void playlist_entry_get_info (PlaylistEntry * entry)
 {
     Tuple *tuple = NULL;
     ProbeResult *pr = NULL;
-    time_t modtime;
     const gchar *formatter;
 
-    if (entry->tuple == NULL || tuple_get_int(entry->tuple, FIELD_MTIME, NULL) > 0 ||
-        tuple_get_int(entry->tuple, FIELD_MTIME, NULL) == -1)
-        modtime = playlist_get_mtime(entry->filename);
-    else
-        modtime = 0;  /* URI -nenolod */
+    if (entry->tuple)
+        tuple_free (entry->tuple);
 
     if (entry->decoder == NULL) {
         pr = input_check_file(entry->filename, FALSE);
@@ -203,9 +199,6 @@ void playlist_entry_get_info (PlaylistEntry * entry)
         entry->failed = 1;
         return;
     }
-
-    /* attach mtime */
-    tuple_associate_int(tuple, FIELD_MTIME, NULL, modtime);
 
     /* entry is still around */
     formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
@@ -2840,6 +2833,30 @@ playlist_read_info(Playlist *playlist, guint pos)
     PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
     hook_call ("playlist update", playlist);
+}
+
+void playlist_rescan (Playlist * playlist)
+{
+    GList * node;
+    PlaylistEntry * entry;
+
+    PLAYLIST_LOCK (playlist);
+
+    for (node = playlist->entries; node; node = node->next)
+    {
+        entry = node->data;
+
+        if (entry->tuple)
+        {
+            tuple_free (entry->tuple);
+            entry->tuple = 0;
+        }
+    }
+
+    PLAYLIST_UNLOCK (playlist);
+
+    hook_call ("playlist update", playlist);
+    scanner_reset ();
 }
 
 void
