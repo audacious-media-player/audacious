@@ -41,9 +41,15 @@ void * scanner (void * unused)
     GList * node;
     PlaylistEntry * entry;
 
-    while (! quit)
+    while (1)
     {
         g_mutex_lock (mutex);
+
+        if (quit)
+        {
+            g_mutex_unlock (mutex);
+            break;
+        }
 
         if (reset)
         {
