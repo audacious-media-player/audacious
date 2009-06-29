@@ -33,11 +33,11 @@ static GMutex * mutex;
 static GCond * wake;
 static GThread * thread;
 static Playlist * active;
-static char enabled, reset, quit;
+static gboolean enabled, reset, quit;
 
 void * scanner (void * unused)
 {
-    char done = 0;
+    gboolean done = FALSE;
     GList * node;
     PlaylistEntry * entry;
 
@@ -53,12 +53,12 @@ void * scanner (void * unused)
 
         if (reset)
         {
-            done = 0;
-            reset = 0;
+            done = FALSE;
+            reset = FALSE;
         }
 
         if (! active)
-            done = 1;
+            done = TRUE;
 
         if (! enabled || done)
         {
@@ -80,7 +80,7 @@ void * scanner (void * unused)
         PLAYLIST_UNLOCK (active);
         g_mutex_unlock (mutex);
 
-        done = 1;
+        done = TRUE;
         continue;
 
       FOUND:
@@ -89,10 +89,10 @@ void * scanner (void * unused)
         PLAYLIST_UNLOCK (active);
         g_mutex_unlock (mutex);
 
-        event_queue ("playlist update", 0);
+        event_queue ("playlist update", NULL);
     }
 
-    return 0;
+    return NULL;
 }
 
 void scanner_init (void)
@@ -100,15 +100,15 @@ void scanner_init (void)
     mutex = g_mutex_new ();
     wake = g_cond_new ();
 
-    active = 0;
-    enabled = 0;
-    reset = 0;
-    quit = 0;
+    active = FALSE;
+    enabled = FALSE;
+    reset = FALSE;
+    quit = FALSE;
 
-    thread = g_thread_create (scanner, 0, 1, 0);
+    thread = g_thread_create (scanner, NULL, TRUE, NULL);
 }
 
-void scanner_enable (char enable)
+void scanner_enable (gboolean enable)
 {
     g_mutex_lock (mutex);
     enabled = enable;
@@ -119,7 +119,7 @@ void scanner_enable (char enable)
 void scanner_reset (void)
 {
     g_mutex_lock (mutex);
-    reset = 1;
+    reset = TRUE;
     g_cond_signal (wake);
     g_mutex_unlock (mutex);
 }
@@ -149,7 +149,7 @@ void set_active_playlist (Playlist * playlist)
 
     g_mutex_lock (mutex);
     active = playlist;
-    reset = 1;
+    reset = TRUE;
     g_cond_signal (wake);
     g_mutex_unlock (mutex);
 }

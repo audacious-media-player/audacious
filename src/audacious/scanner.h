@@ -20,7 +20,7 @@
  */
 
 void scanner_init (void);
-void scanner_enable (char enable);
+void scanner_enable (gboolean enable);
 void scanner_reset (void);
 void scanner_end (void);
 
