@@ -25,6 +25,7 @@
 #include "input.h"
 #include "playback.h"
 #include "plugin.h"
+#include "vis_runner.h"
 
 #define INTERVAL 30 // milliseconds
 
@@ -90,6 +91,7 @@ static void start_stop (void * hook_data, void * user_data)
         }
 
         active = 0;
+        vis_runner_flush ();
     }
 }
 
