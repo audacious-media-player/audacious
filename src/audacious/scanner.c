@@ -29,10 +29,10 @@
  * code, though, be careful not to create any race conditions. -jlindgren
  */
 
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
-static GCond * wake = NULL;
+static GMutex * mutex;
+static GCond * wake;
 static GThread * thread;
-static Playlist * active = NULL;
+static Playlist * active;
 static gboolean enabled, reset, quit;
 
 static void * scanner (void * unused)
@@ -41,13 +41,13 @@ static void * scanner (void * unused)
     GList * node;
     PlaylistEntry * entry;
 
-    while (1)
+    while (TRUE)
     {
-        g_static_mutex_lock (&mutex);
+        g_mutex_lock (mutex);
 
         if (quit)
         {
-            g_static_mutex_unlock (&mutex);
+            g_mutex_unlock (mutex);
             break;
         }
 
@@ -62,8 +62,8 @@ static void * scanner (void * unused)
 
         if (! enabled || done)
         {
-            g_cond_wait (wake, g_static_mutex_get_mutex(&mutex));
-            g_static_mutex_unlock (&mutex);
+            g_cond_wait (wake, mutex);
+            g_mutex_unlock (mutex);
             continue;
         }
 
@@ -73,12 +73,12 @@ static void * scanner (void * unused)
         {
             entry = node->data;
 
-            if (! entry->tuple && ! entry->failed)
+            if (entry->tuple == NULL && ! entry->failed)
                 goto FOUND;
         }
 
         PLAYLIST_UNLOCK (active);
-        g_static_mutex_unlock (&mutex);
+        g_mutex_unlock (mutex);
 
         done = TRUE;
         continue;
@@ -87,7 +87,7 @@ static void * scanner (void * unused)
         playlist_entry_get_info (entry);
 
         PLAYLIST_UNLOCK (active);
-        g_static_mutex_unlock (&mutex);
+        g_mutex_unlock (mutex);
 
         event_queue ("playlist update", NULL);
     }
@@ -97,6 +97,7 @@ static void * scanner (void * unused)
 
 void scanner_init (void)
 {
+    mutex = g_mutex_new ();
     wake = g_cond_new ();
 
     active = NULL;
@@ -109,38 +110,36 @@ void scanner_init (void)
 
 void scanner_enable (gboolean enable)
 {
-    g_static_mutex_lock (&mutex);
+    g_mutex_lock (mutex);
     enabled = enable;
     g_cond_signal (wake);
-    g_static_mutex_unlock (&mutex);
+    g_mutex_unlock (mutex);
 }
 
 void scanner_reset (void)
 {
-    g_static_mutex_lock (&mutex);
+    g_mutex_lock (mutex);
     reset = TRUE;
     g_cond_signal (wake);
-    g_static_mutex_unlock (&mutex);
+    g_mutex_unlock (mutex);
 }
 
 void scanner_end (void)
 {
-    g_static_mutex_lock (&mutex);
+    g_mutex_lock (mutex);
     quit = TRUE;
     g_cond_signal (wake);
-    g_static_mutex_unlock (&mutex);
+    g_mutex_unlock (mutex);
 
     g_thread_join (thread);
+
+    g_mutex_free (mutex);
     g_cond_free (wake);
 }
 
 Playlist * get_active_playlist (void)
 {
-    Playlist *tmp;
-    g_static_mutex_lock (&mutex);
-    tmp = active;
-    g_static_mutex_unlock (&mutex);
-    return tmp;
+    return active;
 }
 
 void set_active_playlist (Playlist * playlist)
@@ -148,11 +147,9 @@ void set_active_playlist (Playlist * playlist)
     if (playlist == active)
         return;
 
-    g_static_mutex_lock (&mutex);
+    g_mutex_lock (mutex);
     active = playlist;
-    if (!quit) {
-        reset = TRUE;
-        g_cond_signal (wake);
-    }
-    g_static_mutex_unlock (&mutex);
+    reset = TRUE;
+    g_cond_signal (wake);
+    g_mutex_unlock (mutex);
 }

@@ -215,18 +215,29 @@ void playlist_entry_get_info (PlaylistEntry * entry)
 
 /* *********************** playlist selector code ************************* */
 
-void
-playlist_init(void)
+void playlist_init (void)
 {
-    Playlist *initial_pl;
+    Playlist * playlist;
 
     /* create a heap with 1024 playlist entry nodes preallocated. --nenolod */
     playlist_entry_heap = mowgli_heap_create(sizeof(PlaylistEntry), 1024,
                                              BH_NOW);
 
-    initial_pl = playlist_new();
-    playlists = g_list_append (0, initial_pl);
-    set_active_playlist (initial_pl);
+    playlist = playlist_new ();
+    playlists = g_list_append (NULL, playlist);
+    set_active_playlist (playlist);
+}
+
+void playlist_end (void)
+{
+    set_active_playlist (NULL);
+
+    while (playlists != NULL)
+    {
+        playlist_clear (playlists->data);
+        playlist_free (playlists->data);
+        playlists = g_list_delete_link (playlists, playlists);
+    }
 }
 
 void

@@ -1,23 +1,23 @@
-// vis_runner.c
-// Copyright 2009 John Lindgren
-
-// This file is part of Audacious.
-
-// Audacious is free software: you can redistribute it and/or modify it under
-// the terms of the GNU General Public License as published by the Free Software
-// Foundation, version 3 of the License.
-
-// Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
-// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-// A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License along with
-// Audacious. If not, see <http://www.gnu.org/licenses/>.
-
-// The Audacious team does not consider modular code linking to Audacious or
-// using our public API to be a derived work.
-
-#include <stdint.h>
+/*
+ * vis_runner.c
+ * Copyright 2009 John Lindgren
+ *
+ * This file is part of Audacious.
+ *
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 3 of the License.
+ *
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
+ */
 
 #include <glib.h>
 
@@ -27,23 +27,23 @@
 #include "plugin.h"
 #include "vis_runner.h"
 
-#define INTERVAL 30 // milliseconds
+#define INTERVAL 30 /* milliseconds */
 
 static GMutex * mutex;
-static gboolean active = FALSE;
-static int source = 0;
-static GList * hooks = 0, * vis_list = 0;
+static gboolean active;
+static GList * vis_list, * hooks;
+static gint source;
 
 static gboolean send_audio (gpointer user_data)
 {
-    int outputted = playback_get_time ();
+    gint outputted = playback_get_time ();
     VisNode * vis_node, * next;
 
-    vis_node = 0;
+    vis_node = NULL;
 
     g_mutex_lock (mutex);
 
-    while (vis_list)
+    while (vis_list != NULL)
     {
         next = vis_list->data;
 
@@ -57,11 +57,11 @@ static gboolean send_audio (gpointer user_data)
 
     g_mutex_unlock (mutex);
 
-    if (vis_node)
+    if (vis_node != NULL)
     {
         GList * node;
 
-        for (node = hooks; node; node = node->next)
+        for (node = hooks; node != NULL; node = node->next)
         {
             HookItem * item = node->data;
 
@@ -75,7 +75,7 @@ static gboolean send_audio (gpointer user_data)
 
 static void start_stop (gpointer hook_data, gpointer user_data)
 {
-    if (hooks && playback_get_playing () && ! playback_get_paused ())
+    if (hooks != NULL && playback_get_playing () && ! playback_get_paused ())
     {
         active = TRUE;
 
@@ -98,18 +98,24 @@ static void start_stop (gpointer hook_data, gpointer user_data)
 void vis_runner_init (void)
 {
     mutex = g_mutex_new ();
-    hook_associate ("playback begin", start_stop, 0);
-    hook_associate ("playback pause", start_stop, 0);
-    hook_associate ("playback unpause", start_stop, 0);
-    hook_associate ("playback stop", start_stop, 0);
+    active = FALSE;
+    hooks = NULL;
+    vis_list = NULL;
+    source = 0;
+
+    hook_associate ("playback begin", start_stop, NULL);
+    hook_associate ("playback pause", start_stop, NULL);
+    hook_associate ("playback unpause", start_stop, NULL);
+    hook_associate ("playback stop", start_stop, NULL);
 }
 
-void vis_runner_pass_audio (int time, float * data, int samples, int channels)
+void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
+ channels)
 {
     VisNode * vis_node;
-    int channel;
+    gint channel;
 
-    if (active == FALSE)
+    if (! active)
         return;
 
     vis_node = malloc (sizeof (VisNode));
@@ -119,13 +125,13 @@ void vis_runner_pass_audio (int time, float * data, int samples, int channels)
 
     for (channel = 0; channel < vis_node->nch; channel ++)
     {
-        float * from = data + channel;
-        float * end = from + channels * vis_node->length;
-        int16_t * to = vis_node->data[channel];
+        gfloat * from = data + channel;
+        gfloat * end = from + channels * vis_node->length;
+        gint16 * to = vis_node->data[channel];
 
         while (from < end)
         {
-            register float temp = * from;
+            register gfloat temp = * from;
             * to ++ = CLAMP (temp, -1, 1) * 32767;
             from += channels;
         }
@@ -133,7 +139,7 @@ void vis_runner_pass_audio (int time, float * data, int samples, int channels)
 
     g_mutex_lock (mutex);
 
-    if (active == TRUE)
+    if (active)
         vis_list = g_list_append (vis_list, vis_node);
     else
         free (vis_node);
@@ -145,7 +151,7 @@ void vis_runner_flush (void)
 {
     g_mutex_lock (mutex);
 
-    while (vis_list)
+    while (vis_list != NULL)
     {
         free (vis_list->data);
         vis_list = g_list_delete_link (vis_list, vis_list);
@@ -161,7 +167,7 @@ void vis_runner_add_hook (HookFunction func, gpointer user_data)
     item->func = func;
     item->user_data = user_data;
     hooks = g_list_prepend (hooks, item);
-    start_stop (0, 0);
+    start_stop (NULL, NULL);
 }
 
 void vis_runner_remove_hook (HookFunction func)
@@ -169,7 +175,7 @@ void vis_runner_remove_hook (HookFunction func)
     GList * node;
     HookItem * item;
 
-    for (node = hooks; node; node = node->next)
+    for (node = hooks; node != NULL; node = node->next)
     {
         item = node->data;
 
@@ -182,5 +188,5 @@ void vis_runner_remove_hook (HookFunction func)
   FOUND:
     hooks = g_list_delete_link (hooks, node);
     free (item);
-    start_stop (0, 0);
+    start_stop (NULL, NULL);
 }

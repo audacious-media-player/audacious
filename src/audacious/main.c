@@ -434,11 +434,7 @@ playlist_system_init()
 void
 aud_quit(void)
 {
-    GList *playlists = NULL, *playlists_top = NULL;
     Interface *i = interface_get(options.interface);
-
-    g_message("Stopping scanner thread");
-    scanner_end ();
 
     g_message("Saving configuration");
     aud_config_save();
@@ -449,17 +445,8 @@ aud_quit(void)
     g_message("Plugin subsystem shutdown");
     plugin_system_cleanup();
 
-    /* free and clear each playlist */
-    g_message("Playlist data cleanup");
-    playlists = playlist_get_playlists();
-    playlists_top = playlists;
-    while ( playlists != NULL )
-    {
-        playlist_clear((Playlist*)playlists->data);
-        playlist_free((Playlist*)playlists->data);
-        playlists = g_list_next(playlists);
-    }
-    g_list_free( playlists_top );
+    playlist_end ();
+    scanner_end ();
 
     g_message("Shutdown finished, bye.");
     exit(EXIT_SUCCESS);
