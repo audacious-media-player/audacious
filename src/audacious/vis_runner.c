@@ -30,11 +30,11 @@
 #define INTERVAL 30 // milliseconds
 
 static GMutex * mutex;
-static char active = 0;
+static gboolean active = FALSE;
 static int source = 0;
 static GList * hooks = 0, * vis_list = 0;
 
-static gboolean send_audio (void * user_data)
+static gboolean send_audio (gpointer user_data)
 {
     int outputted = playback_get_time ();
     VisNode * vis_node, * next;
@@ -73,14 +73,14 @@ static gboolean send_audio (void * user_data)
     return 1;
 }
 
-static void start_stop (void * hook_data, void * user_data)
+static void start_stop (gpointer hook_data, gpointer user_data)
 {
     if (hooks && playback_get_playing () && ! playback_get_paused ())
     {
-        active = 1;
+        active = TRUE;
 
         if (! source)
-            source = g_timeout_add (INTERVAL, send_audio, 0);
+            source = g_timeout_add (INTERVAL, send_audio, NULL);
     }
     else
     {
@@ -90,7 +90,7 @@ static void start_stop (void * hook_data, void * user_data)
             source = 0;
         }
 
-        active = 0;
+        active = FALSE;
         vis_runner_flush ();
     }
 }
@@ -109,7 +109,7 @@ void vis_runner_pass_audio (int time, float * data, int samples, int channels)
     VisNode * vis_node;
     int channel;
 
-    if (! active)
+    if (active == FALSE)
         return;
 
     vis_node = malloc (sizeof (VisNode));
@@ -133,7 +133,7 @@ void vis_runner_pass_audio (int time, float * data, int samples, int channels)
 
     g_mutex_lock (mutex);
 
-    if (active)
+    if (active == TRUE)
         vis_list = g_list_append (vis_list, vis_node);
     else
         free (vis_node);
@@ -154,7 +154,7 @@ void vis_runner_flush (void)
     g_mutex_unlock (mutex);
 }
 
-void vis_runner_add_hook (HookFunction func, void * user_data)
+void vis_runner_add_hook (HookFunction func, gpointer user_data)
 {
     HookItem * item = malloc (sizeof (HookItem));
 
