@@ -30,15 +30,22 @@ typedef enum {
     WIDGET_FONT_BTN,
     WIDGET_TABLE,
     WIDGET_ENTRY,
+    WIDGET_COMBO_BOX,
 } WidgetType;
 
 typedef enum {
     VALUE_INT,
     VALUE_FLOAT,
     VALUE_BOOLEAN,
+    VALUE_STRING,
     VALUE_CFG_BOOLEAN,   /* cfg holds config database key for bool option */
     VALUE_CFG_STRING,    /* cfg holds config database key for gchar* option */
 } ValueType;
+
+typedef struct {
+    gpointer value;
+    const gchar *label;
+} ComboBoxElements;
 
 typedef struct _PreferencesWidget {
     WidgetType type;         /* widget type */
@@ -69,6 +76,12 @@ typedef struct _PreferencesWidget {
         struct {
             gboolean password;
         } entry;
+
+        struct {
+            ComboBoxElements *elements;
+            gint n_elements;
+            gboolean enabled;
+        } combo;
 
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;

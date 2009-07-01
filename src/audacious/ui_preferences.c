@@ -152,24 +152,21 @@ static TitleFieldTag title_field_tags[] = {
 };
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
-
-const gchar *chardet_detector_presets[] = {
-    N_("None"),
-    N_("Japanese"),
-    N_("Taiwanese"),
-    N_("Chinese"),
-    N_("Korean"),
-    N_("Russian"),
-    N_("Greek"),
-    N_("Hebrew"),
-    N_("Turkish"),
-    N_("Arabic"),
+static ComboBoxElements chardet_detector_presets[] = {
+    { N_("None")     , N_("None") },
+    { N_("Japanese") , N_("Japanese") },
+    { N_("Taiwanese"), N_("Taiwanese") },
+    { N_("Chinese")  , N_("Chinese") },
+    { N_("Korean")   , N_("Korean") },
+    { N_("Russian")  , N_("Russian") },
+    { N_("Greek")    , N_("Greek") },
+    { N_("Hebrew")   , N_("Hebrew") },
+    { N_("Turkish")  , N_("Turkish") },
+    { N_("Arabic")   , N_("Arabic") },
 #ifdef HAVE_UDET
-    N_("Universal")
+    { N_("Universal"), N_("Universal") }
 #endif
 };
-const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);
-
 
 typedef struct {
     void *next;
@@ -180,7 +177,6 @@ typedef struct {
 
 CategoryQueueEntry *category_queue = NULL;
 
-GtkWidget *ui_preferences_chardet_table_populate(void);
 static GtkWidget *ui_preferences_bit_depth(void);
 
 static void metadata_toggle (void)
@@ -261,6 +257,18 @@ static PreferencesWidget playback_page_widgets[] = {
     {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, NULL, TRUE, {.spin_btn = {1, 100, 1, N_("seconds")}}, VALUE_INT},
 };
 
+static PreferencesWidget chardet_elements[] = {
+    {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"), &cfg.chardet_detector, NULL, NULL, TRUE,
+        {.combo = {chardet_detector_presets, G_N_ELEMENTS(chardet_detector_presets),
+                   #ifdef USE_CHARDET
+                   TRUE
+                   #else
+                   FALSE
+                   #endif
+                   }}, VALUE_STRING},
+    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, NULL, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
+};
+
 static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
@@ -270,7 +278,7 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_ ("Load metadata from playlists and files"),
      & cfg.use_pl_metadata, metadata_toggle, N_ ("Load metadata (tag "
      "information) from music files."), 0},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, TRUE, {.populate = ui_preferences_chardet_table_populate}},
+    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
     {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
@@ -951,109 +959,6 @@ on_category_treeview_realize(GtkTreeView * treeview,
 }
 
 static void
-on_chardet_detector_cbox_changed(GtkComboBox * combobox, gpointer data)
-{
-    mcs_handle_t *db;
-    gint position = 0;
-
-    position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-    cfg.chardet_detector = (char *)chardet_detector_presets[position];
-
-    db = cfg_db_open();
-    cfg_db_set_string(db, NULL, "chardet_detector", cfg.chardet_detector);
-    cfg_db_close(db);
-    if (data != NULL)
-        gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
-}
-
-static void
-on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
-{
-    mcs_handle_t *db;
-    gchar *ret=NULL;
-    guint i=0,index=0;
-
-    for(i=0; i<n_chardet_detector_presets; i++) {
-        gtk_combo_box_append_text(combobox, _(chardet_detector_presets[i]));
-    }
-
-    db = cfg_db_open();
-    if(cfg_db_get_string(db, NULL, "chardet_detector", &ret) != FALSE) {
-        for(i=0; i<n_chardet_detector_presets; i++) {
-            if(!strcmp(chardet_detector_presets[i], ret)) {
-                cfg.chardet_detector = (char *)chardet_detector_presets[i];
-                index = i;
-            }
-        }
-    }
-    cfg_db_close(db);
-
-#ifdef USE_CHARDET
-    gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
-
-    if (data != NULL)
-        gtk_widget_set_sensitive(GTK_WIDGET(data), TRUE);
-
-    g_signal_connect(combobox, "changed",
-                     G_CALLBACK(on_chardet_detector_cbox_changed), NULL);
-#else
-    gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
-    gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
-#endif
-    if(ret)
-        g_free(ret);
-}
-
-static void
-on_chardet_fallback_realize(GtkEntry *entry, gpointer data)
-{
-    mcs_handle_t *db;
-    gchar *ret = NULL;
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_string(db, NULL, "chardet_fallback", &ret) != FALSE) {
-        if(cfg.chardet_fallback)
-            g_free(cfg.chardet_fallback);
-
-        if(ret && strncasecmp(ret, "None", sizeof("None"))) {
-            cfg.chardet_fallback = ret;
-        } else {
-            cfg.chardet_fallback = g_strdup("");
-        }
-        gtk_entry_set_text(entry, cfg.chardet_fallback);
-    }
-
-    cfg_db_close(db);
-}
-
-static void
-on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
-{
-    mcs_handle_t *db;
-    gchar *ret = NULL;
-
-    if(cfg.chardet_fallback)
-        g_free(cfg.chardet_fallback);
-
-    ret = g_strdup(gtk_entry_get_text(entry));
-
-    if(ret == NULL)
-        cfg.chardet_fallback = g_strdup("");
-    else
-        cfg.chardet_fallback = ret;
-
-    db = cfg_db_open();
-
-    if(cfg.chardet_fallback == NULL || !strcmp(cfg.chardet_fallback, ""))
-        cfg_db_set_string(db, NULL, "chardet_fallback", "None");
-    else
-        cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);
-
-    cfg_db_close(db);
-}
-
-static void
 on_show_filepopup_for_tuple_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.show_filepopup_for_tuple);
@@ -1164,6 +1069,33 @@ on_toggle_button_cfg_realize(GtkToggleButton *button, gchar *cfg)
 }
 
 static void
+on_entry_realize(GtkEntry *entry, gchar **cfg)
+{
+    g_return_if_fail(cfg != NULL);
+
+    if (*cfg)
+        gtk_entry_set_text(entry, *cfg);
+}
+
+static void
+on_entry_changed(GtkEntry *entry, gchar **cfg)
+{
+    g_return_if_fail(cfg != NULL);
+
+    gchar *ret;
+
+    if (*cfg)
+        g_free(*cfg);
+
+    ret = g_strdup(gtk_entry_get_text(entry));
+
+    if (ret == NULL)
+        *cfg = g_strdup("");
+    else
+        *cfg = ret;
+}
+
+static void
 on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
 {
     g_return_if_fail(cfg != NULL);
@@ -1192,6 +1124,43 @@ on_entry_cfg_changed(GtkEntry *entry, gchar *cfg)
     cfg_db_close(db);
 
     g_free(ret);
+}
+
+static void
+on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
+{
+    gint position = 0;
+
+    position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
+    *((gchar **)widget->cfg) = (gchar *)widget->data.combo.elements[position].value;
+}
+
+static void
+on_cbox_realize(GtkComboBox *combobox, PreferencesWidget * widget)
+{
+    guint i=0,index=0;
+
+    for(i=0; i<widget->data.combo.n_elements; i++) {
+        gtk_combo_box_append_text(combobox, _(widget->data.combo.elements[i].label));
+    }
+
+    if (widget->cfg_type == VALUE_STRING)
+        for(i=0; i<widget->data.combo.n_elements; i++) {
+            if(!strcmp((gchar *)widget->data.combo.elements[i].value, *((gchar **)widget->cfg))) {
+                index = i;
+            }
+        }
+
+    if (widget->data.combo.enabled) {
+        gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
+
+        if (widget->cfg_type == VALUE_STRING)
+            g_signal_connect(combobox, "changed",
+                             G_CALLBACK(on_cbox_changed_string), widget);
+    } else {
+        gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
+        gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
+    }
 }
 
 void
@@ -1358,50 +1327,6 @@ create_filepopup_settings(void)
     gtk_widget_show_all(vbox);
 }
 
-GtkWidget *
-ui_preferences_chardet_table_populate(void)
-{
-    GtkWidget *widget = gtk_table_new(2, 2, FALSE);
-    GtkWidget *label;
-
-    label = gtk_label_new(_("Auto character encoding detector for:"));
-    gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 0, 1,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-
-    GtkWidget *combobox = gtk_combo_box_new_text();
-    gtk_table_attach(GTK_TABLE(widget), combobox, 1, 2, 0, 1,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    g_signal_connect_after(G_OBJECT(combobox), "realize",
-                           G_CALLBACK(on_chardet_detector_cbox_realize),
-                           NULL);
-
-    GtkWidget *entry = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(widget), entry, 1, 2, 1, 2,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_widget_set_tooltip_text (entry, _("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."));
-
-    label = gtk_label_new(_("Fallback character encodings:"));
-    gtk_table_attach(GTK_TABLE(widget), label, 0, 1, 1, 2,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-
-    g_signal_connect(G_OBJECT(entry), "changed",
-                     G_CALLBACK(on_chardet_fallback_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(entry), "realize",
-                           G_CALLBACK(on_chardet_fallback_realize),
-                           NULL);
-
-    return widget;
-}
-
 static void
 on_bit_depth_cbox_changed(GtkWidget *cbox, gpointer data)
 {
@@ -1523,15 +1448,30 @@ create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
     gtk_entry_set_visibility(GTK_ENTRY(*entry), !widget->data.entry.password);
 
     if (widget->label)
-        *label = gtk_label_new(widget->label);
+        *label = gtk_label_new(_(widget->label));
 
-    if (widget->cfg_type == VALUE_CFG_STRING) {
-        g_signal_connect(G_OBJECT(*entry), "realize",
-                         G_CALLBACK(on_entry_cfg_realize),
-                         widget->cfg);
-        g_signal_connect(G_OBJECT(*entry), "changed",
-                         G_CALLBACK(on_entry_cfg_changed),
-                         widget->cfg);
+    if (widget->tooltip)
+        gtk_widget_set_tooltip_text(*entry, _(widget->tooltip));
+
+    switch (widget->cfg_type) {
+        case VALUE_STRING:
+            g_signal_connect(G_OBJECT(*entry), "realize",
+                             G_CALLBACK(on_entry_realize),
+                             widget->cfg);
+            g_signal_connect(G_OBJECT(*entry), "changed",
+                             G_CALLBACK(on_entry_changed),
+                             widget->cfg);
+            break;
+        case VALUE_CFG_STRING:
+            g_signal_connect(G_OBJECT(*entry), "realize",
+                             G_CALLBACK(on_entry_cfg_realize),
+                             widget->cfg);
+            g_signal_connect(G_OBJECT(*entry), "changed",
+                             G_CALLBACK(on_entry_cfg_changed),
+                             widget->cfg);
+            break;
+        default:
+            g_message("Unhandled entry value type");
     }
 }
 
@@ -1546,6 +1486,19 @@ create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
 
     gtk_label_set_line_wrap(GTK_LABEL(*label), TRUE);
     gtk_misc_set_alignment(GTK_MISC(*label), 0, 0.5);
+}
+
+void
+create_cbox(PreferencesWidget *widget, GtkWidget **label, GtkWidget **combobox)
+{
+    *combobox = gtk_combo_box_new_text();
+
+    if (widget->label)
+        *label = gtk_label_new(_(widget->label));
+
+    g_signal_connect_after(G_OBJECT(*combobox), "realize",
+                           G_CALLBACK(on_cbox_realize),
+                           widget);
 }
 
 void
@@ -1573,6 +1526,11 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
             case WIDGET_ENTRY:
                 create_entry(&elements[x], &widget_left, &widget_middle);
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
+                break;
+            case WIDGET_COMBO_BOX:
+                create_cbox(&elements[x], &widget_left, &widget_middle);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
+                break;
             default:
                 g_message("Unsupported widget in table");
         }
@@ -1724,6 +1682,19 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
                 if (entry)
                     gtk_box_pack_start(GTK_BOX(widget), entry, FALSE, FALSE, 0);
+                break;
+            case WIDGET_COMBO_BOX:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 12, 0);
+
+                widget = gtk_hbox_new(FALSE, 6);
+
+                GtkWidget *combo = NULL;
+                create_cbox(&widgets[x], &label, &combo);
+
+                if (label)
+                    gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
+                if (combo)
+                    gtk_box_pack_start(GTK_BOX(widget), combo, FALSE, FALSE, 0);
                 break;
             default:
                 /* shouldn't ever happen - expect things to break */
