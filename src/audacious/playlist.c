@@ -1380,70 +1380,68 @@ playlist_set_position(Playlist *playlist, guint pos)
     hook_call ("playlist position", playlist);
 }
 
-void
-playlist_eof_reached(Playlist *playlist)
+void playlist_eof_reached (Playlist * playlist)
 {
-    GList *plist_pos_list;
+    gboolean play;
 
-    /* Don't overlook the possibility that something else has already started
-     playback; as when, for example, cdaudio-ng is called on "cdda://". */
     if (playback_get_playing ())
         return;
 
-    if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
-        ip_data.stop = TRUE;
-    playback_stop();
-    if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
-        ip_data.stop = FALSE;
+    PLAYLIST_LOCK (playlist);
 
-    hook_call("playback end", playlist->position);
+    playlist->queue = g_list_remove (playlist->queue, playlist->position);
 
-    PLAYLIST_LOCK(playlist);
-
-    plist_pos_list = find_playlist_position_list(playlist);
-
-    if (cfg.no_playlist_advance) {
-        PLAYLIST_UNLOCK(playlist);
-        if (cfg.repeat)
-            playback_initiate();
-        else
-            hook_call("playlist end reached", NULL);
-
-        goto DONE;
+    if (playlist->queue != NULL)
+    {
+        playlist->position = playlist->queue->data;
+        play = TRUE;
     }
-
-    if (cfg.stopaftersong) {
-        PLAYLIST_UNLOCK(playlist);
-        hook_call("playlist end reached", NULL);
-        goto DONE;
-    }
-
-    if (playlist->queue != NULL) {
-        play_queued(playlist);
-    }
-    else if (!g_list_next(plist_pos_list)) {
-        if (cfg.shuffle) {
-            playlist->position = NULL;
-            playlist_generate_shuffle_list_nolock(playlist);
-        }
-        else if (playlist->entries != NULL)
-            playlist->position = playlist->entries->data;
-
-        if (!cfg.repeat) {
-            PLAYLIST_UNLOCK(playlist);
-            hook_call("playlist end reached", NULL);
-            goto DONE;
-        }
-    }
+    else if (cfg.no_playlist_advance)
+        play = cfg.repeat;
     else
-        playlist->position = g_list_next(plist_pos_list)->data;
+    {
+        GList * node;
+
+        play = ! cfg.stopaftersong;
+
+        if (cfg.shuffle)
+        {
+            node = g_list_find (playlist->shuffle, playlist->position);
+
+            if (node != NULL)
+                node = node->next;
+
+            if (node == NULL && cfg.repeat)
+            {
+                playlist_generate_shuffle_list_nolock (playlist);
+                node = playlist->shuffle;
+            }
+        }
+        else
+        {
+            node = g_list_find (playlist->entries, playlist->position);
+
+            if (node != NULL)
+                node = node->next;
+
+            if (node == NULL && cfg.repeat)
+                node = playlist->entries;
+        }
+
+        if (node != NULL)
+            playlist->position = node->data;
+        else
+            play = FALSE;
+    }
 
     PLAYLIST_UNLOCK(playlist);
 
-    playback_initiate();
-
-DONE:
     hook_call ("playlist position", playlist);
+
+    if (play)
+        playback_initiate ();
+    else
+        hook_call ("playback stop", NULL);
 }
 
 gint
@@ -2867,6 +2865,7 @@ void playlist_rescan (Playlist * playlist)
         {
             tuple_free (entry->tuple);
             entry->tuple = 0;
+            entry->failed = FALSE;
         }
     }
 
