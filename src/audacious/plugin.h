@@ -661,7 +661,6 @@ struct _AudaciousFuncTableV1 {
 
     /* Added after all the nicely organized ones... */
     GtkWidget * (* get_plugin_menu) (int id);
-    void (* playlist_shuffle) (Playlist * playlist);
     void (*playlist_shift)(Playlist *playlist, gint delta);
     void (* playlist_rescan) (Playlist * playlist);
 };
@@ -1014,7 +1013,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_output_plugin_reinit    _audvt->output_plugin_reinit
 
 #define aud_get_plugin_menu		_audvt->get_plugin_menu
-#define aud_playlist_shuffle		_audvt->playlist_shuffle
 #define aud_playlist_shift		_audvt->playlist_shift
 #define aud_playlist_rescan             _audvt->playlist_rescan
 

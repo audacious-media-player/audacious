@@ -1371,6 +1371,7 @@ playlist_set_position(Playlist *playlist, guint pos)
     }
 
     playlist->position = node->data;
+    playlist_generate_shuffle_list_nolock (playlist);
     PLAYLIST_UNLOCK(playlist);
 
     if (restart_playing)

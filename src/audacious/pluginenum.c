@@ -400,7 +400,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .output_plugin_reinit = output_plugin_reinit,
 
     .get_plugin_menu = get_plugin_menu,
-    .playlist_shuffle = playlist_generate_shuffle_list,
     .playlist_shift = playlist_shift,
     .playlist_rescan = playlist_rescan,
 };
