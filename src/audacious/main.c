@@ -445,7 +445,10 @@ aud_quit(void)
     g_message("Plugin subsystem shutdown");
     plugin_system_cleanup();
 
+    g_message("Playlist cleanup");
     playlist_end ();
+    
+    g_message("Playlist scanner shutdown");
     scanner_end ();
 
     g_message("Shutdown finished, bye.");
