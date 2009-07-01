@@ -1385,6 +1385,11 @@ playlist_eof_reached(Playlist *playlist)
 {
     GList *plist_pos_list;
 
+    /* Don't overlook the possibility that something else has already started
+     playback; as when, for example, cdaudio-ng is called on "cdda://". */
+    if (playback_get_playing ())
+        return;
+
     if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
         ip_data.stop = TRUE;
     playback_stop();

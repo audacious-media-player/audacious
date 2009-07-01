@@ -285,6 +285,7 @@ run_no_output_plugin_dialog(void)
 static gpointer
 playback_monitor_thread(gpointer data)
 {
+    gboolean restart;
     InputPlayback *playback = (InputPlayback *) data;
 
     plugin_set_current((Plugin *)(playback->plugin));
@@ -294,14 +295,16 @@ playback_monitor_thread(gpointer data)
        occurred), set the playback ready value to 1 now, to allow for proper stop */
     playback_set_pb_ready(playback);
 
-    if (!playback->error && ip_data.playing)
-        event_queue ("playback eof", 0);
-    else if (playback->error)
-        playback_error();
+    restart = ip_data.playing;
 
-    ip_data.playing = 0;
     playback->thread = NULL;
-    g_thread_exit(NULL);
+    ip_data.playing = FALSE;
+
+    if (playback->error)
+        playback_error ();
+    else if (restart)
+        event_queue ("playback eof", NULL);
+
     return NULL;
 }
 
