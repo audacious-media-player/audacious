@@ -168,6 +168,12 @@ static ComboBoxElements chardet_detector_presets[] = {
 #endif
 };
 
+static ComboBoxElements bitdepth_elements[] = {
+    { GINT_TO_POINTER(16), "16" },
+    { GINT_TO_POINTER(24), "24" },
+    { GINT_TO_POINTER(32), "32" },
+};
+
 typedef struct {
     void *next;
     GtkWidget *container;
@@ -176,8 +182,6 @@ typedef struct {
 } CategoryQueueEntry;
 
 CategoryQueueEntry *category_queue = NULL;
-
-static GtkWidget *ui_preferences_bit_depth(void);
 
 static void metadata_toggle (void)
 {
@@ -191,7 +195,10 @@ static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, FALSE, {.populate = ui_preferences_bit_depth}},
+    {WIDGET_COMBO_BOX, N_("Output bit depth:"), &cfg.output_bit_depth, NULL,
+                       N_("All streams will be converted to this bit depth.\n"
+                          "This should be the max supported bit depth of\nthe sound card or output plugin."), FALSE,
+                       {.combo = {bitdepth_elements, G_N_ELEMENTS(bitdepth_elements), TRUE}}, VALUE_INT},
 };
 
 static PreferencesWidget audio_page_widgets2[] = {
@@ -1127,6 +1134,15 @@ on_entry_cfg_changed(GtkEntry *entry, gchar *cfg)
 }
 
 static void
+on_cbox_changed_int(GtkComboBox * combobox, PreferencesWidget *widget)
+{
+    gint position = 0;
+
+    position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
+    *((gint *)widget->cfg) = GPOINTER_TO_INT(widget->data.combo.elements[position].value);
+}
+
+static void
 on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
 {
     gint position = 0;
@@ -1144,19 +1160,33 @@ on_cbox_realize(GtkComboBox *combobox, PreferencesWidget * widget)
         gtk_combo_box_append_text(combobox, _(widget->data.combo.elements[i].label));
     }
 
-    if (widget->cfg_type == VALUE_STRING)
-        for(i=0; i<widget->data.combo.n_elements; i++) {
-            if(!strcmp((gchar *)widget->data.combo.elements[i].value, *((gchar **)widget->cfg))) {
-                index = i;
-            }
-        }
-
     if (widget->data.combo.enabled) {
+        switch (widget->cfg_type) {
+            case VALUE_INT:
+                g_signal_connect(combobox, "changed",
+                                 G_CALLBACK(on_cbox_changed_int), widget);
+                for(i=0; i<widget->data.combo.n_elements; i++) {
+                    if (GPOINTER_TO_INT(widget->data.combo.elements[i].value) == *((gint *) widget->cfg)) {
+                        index = i;
+                        break;
+                    }
+                }
+                break;
+            case VALUE_STRING:
+                g_signal_connect(combobox, "changed",
+                                 G_CALLBACK(on_cbox_changed_string), widget);
+                for(i=0; i<widget->data.combo.n_elements; i++) {
+                    if(!strcmp((gchar *)widget->data.combo.elements[i].value, *((gchar **)widget->cfg))) {
+                        index = i;
+                        break;
+                    }
+                }
+                break;
+            default:
+                g_message("Unhandled cbox value type");
+                break;
+        }
         gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
-
-        if (widget->cfg_type == VALUE_STRING)
-            g_signal_connect(combobox, "changed",
-                             G_CALLBACK(on_cbox_changed_string), widget);
     } else {
         gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
         gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
@@ -1327,48 +1357,6 @@ create_filepopup_settings(void)
     gtk_widget_show_all(vbox);
 }
 
-static void
-on_bit_depth_cbox_changed(GtkWidget *cbox, gpointer data)
-{
-    gint active = gtk_combo_box_get_active(GTK_COMBO_BOX(cbox));
-    switch (active) {
-        case 0:
-            cfg.output_bit_depth = 16;
-            break;
-        case 1:
-            cfg.output_bit_depth = 24;
-            break;
-        case 2:
-            cfg.output_bit_depth = 32;
-            break;
-    }
-}
-
-GtkWidget *
-ui_preferences_bit_depth(void)
-{
-    GtkWidget *box = gtk_hbox_new(FALSE, 10);
-    GtkWidget *label = gtk_label_new(_("Output bit depth:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-    gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
-
-    GtkWidget *combo = gtk_combo_box_new_text ();
-    gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "16");
-    gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "24");
-    gtk_combo_box_append_text(GTK_COMBO_BOX (combo), "32");
-    gtk_box_pack_start(GTK_BOX(box), combo, FALSE, FALSE, 0);
-
-    gint active = (cfg.output_bit_depth == 24) ? 1 : 0;
-    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), active);
-    g_signal_connect(combo, "changed", G_CALLBACK(on_bit_depth_cbox_changed), NULL);
-
-    gtk_widget_set_tooltip_text(box,
-                                _("All streams will be converted to this bit depth.\n"
-                                "This should be the max supported bit depth of\nthe sound card or output plugin."));
-
-    return box;
-}
-
 void
 create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget **spin_btn, GtkWidget **label_past)
 {
@@ -1493,8 +1481,10 @@ create_cbox(PreferencesWidget *widget, GtkWidget **label, GtkWidget **combobox)
 {
     *combobox = gtk_combo_box_new_text();
 
-    if (widget->label)
+    if (widget->label) {
         *label = gtk_label_new(_(widget->label));
+        gtk_misc_set_alignment(GTK_MISC(*label), 1, 0.5);
+    }
 
     g_signal_connect_after(G_OBJECT(*combobox), "realize",
                            G_CALLBACK(on_cbox_realize),
@@ -1684,9 +1674,9 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     gtk_box_pack_start(GTK_BOX(widget), entry, FALSE, FALSE, 0);
                 break;
             case WIDGET_COMBO_BOX:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 12, 0);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
 
-                widget = gtk_hbox_new(FALSE, 6);
+                widget = gtk_hbox_new(FALSE, 10);
 
                 GtkWidget *combo = NULL;
                 create_cbox(&widgets[x], &label, &combo);
