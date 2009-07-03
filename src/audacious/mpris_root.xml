@@ -22,5 +22,8 @@
         <method name="Identity">
             <arg type="s" direction="out" />
         </method>
+        <method name="Quit">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
     </interface>
 </node>

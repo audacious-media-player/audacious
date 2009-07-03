@@ -39,9 +39,6 @@
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" />
         </method>
-        <method name="Quit">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
         <method name="GetStatus">
             <arg type="(iiii)" direction="out" />
         </method>

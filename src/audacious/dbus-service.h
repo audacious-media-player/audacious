@@ -62,6 +62,8 @@ typedef enum {
 // MPRIS /
 gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
                              GError **error);
+gboolean mpris_root_quit(MprisPlayer *obj, GError **error);
+
 // MPRIS /Player
 gboolean mpris_player_next(MprisPlayer *obj, GError **error);
 gboolean mpris_player_prev(MprisPlayer *obj, GError **error);
@@ -69,7 +71,6 @@ gboolean mpris_player_pause(MprisPlayer *obj, GError **error);
 gboolean mpris_player_stop(MprisPlayer *obj, GError **error);
 gboolean mpris_player_play(MprisPlayer *obj, GError **error);
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error);
-gboolean mpris_player_quit(MprisPlayer *obj, GError **error);
 gboolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
                                  GError **error);
 gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,

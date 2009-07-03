@@ -259,6 +259,11 @@ gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
     return TRUE;
 }
 
+gboolean mpris_root_quit(MprisPlayer *obj, GError **error) {
+    aud_quit();
+    return TRUE;
+}
+
 // MPRIS /Player
 gboolean mpris_player_next(MprisPlayer *obj, GError **error) {
     playlist_next(playlist_get_active());
@@ -289,10 +294,6 @@ gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
 }
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
     g_message("implement me");
-    return TRUE;
-}
-gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
-    aud_quit();
     return TRUE;
 }
 
