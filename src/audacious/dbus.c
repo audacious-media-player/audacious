@@ -298,10 +298,11 @@ gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
 
 static void append_int_value(GValueArray *ar, gint tmp)
 {
-    GValue *value = g_new0(GValue, 1);
-    g_value_init(value, G_TYPE_INT);
-    g_value_set_int(value, tmp);
-    g_value_array_append(ar, value);
+    GValue value;
+    memset(&value, 0, sizeof(value));
+    g_value_init(&value, G_TYPE_INT);
+    g_value_set_int(&value, tmp);
+    g_value_array_append(ar, &value);
 }
 
 gboolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
