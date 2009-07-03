@@ -43,7 +43,7 @@
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
         <method name="GetStatus">
-            <arg type="i" direction="out" />
+            <arg type="(iiii)" direction="out" />
         </method>
         <method name="GetMetadata">
             <arg type="a{sv}" direction="out" />
@@ -70,7 +70,7 @@
             <arg type="a{sv}" />
         </signal>
         <signal name="StatusChange">
-            <arg type="i" />
+            <arg type="(iiii)" />
         </signal>
         <signal name="CapsChange">
             <arg type="i" />

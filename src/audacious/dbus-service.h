@@ -70,7 +70,7 @@ gboolean mpris_player_stop(MprisPlayer *obj, GError **error);
 gboolean mpris_player_play(MprisPlayer *obj, GError **error);
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error);
 gboolean mpris_player_quit(MprisPlayer *obj, GError **error);
-gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
+gboolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
                                  GError **error);
 gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
                                    GError **error);

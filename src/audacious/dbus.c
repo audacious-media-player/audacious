@@ -144,7 +144,7 @@ void mpris_player_init(MprisPlayer *object) {
         dbus_g_proxy_add_signal(proxy, "StatusChange",
             G_TYPE_INT, G_TYPE_INVALID);
         dbus_g_proxy_add_signal(proxy, "CapsChange",
-            G_TYPE_INT, G_TYPE_INVALID);
+            dbus_g_type_get_struct ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID), G_TYPE_INVALID);
         dbus_g_proxy_add_signal(proxy, "TrackChange",
             DBUS_TYPE_G_STRING_VALUE_HASHTABLE, G_TYPE_INVALID);
     } else {
@@ -295,18 +295,38 @@ gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
     aud_quit();
     return TRUE;
 }
-gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
+
+static void append_int_value(GValueArray *ar, gint tmp)
+{
+    GValue *value = g_new0(GValue, 1);
+    g_value_init(value, G_TYPE_INT);
+    g_value_set_int(value, tmp);
+    g_value_array_append(ar, value);
+}
+
+gboolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
                                  GError **error) {
+    gint tmp;
+
     // check paused before playing because playback_get_playing() is true when
     // paused as well as when playing
     if (playback_get_paused())
-        *status = MPRIS_STATUS_PAUSE;
+        tmp = MPRIS_STATUS_PAUSE;
     else if (playback_get_playing())
-        *status = MPRIS_STATUS_PLAY;
+        tmp = MPRIS_STATUS_PLAY;
     else
-        *status = MPRIS_STATUS_STOP;
+        tmp = MPRIS_STATUS_STOP;
+
+    if ((*status = g_value_array_new(4)) == NULL)
+        return FALSE;
+
+    append_int_value(*status, tmp);
+    append_int_value(*status, (gint) cfg.shuffle);
+    append_int_value(*status, (gint) cfg.no_playlist_advance);
+    append_int_value(*status, (gint) cfg.repeat);
     return TRUE;
 }
+
 gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
                                    GError **error) {
     GHashTable *md = NULL;
@@ -426,7 +446,15 @@ gboolean mpris_emit_track_change(MprisPlayer *obj) {
 }
 
 gboolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status) {
-    g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, status);
+    GValueArray *ar = g_value_array_new(4);
+
+    append_int_value(ar, (gint) status);
+    append_int_value(ar, (gint) cfg.shuffle);
+    append_int_value(ar, (gint) cfg.no_playlist_advance);
+    append_int_value(ar, (gint) cfg.repeat);
+
+    g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, ar);
+    g_value_array_free(ar);
     return TRUE;
 }
 
