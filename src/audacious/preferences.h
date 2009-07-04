@@ -40,6 +40,7 @@ typedef enum {
     VALUE_STRING,
     VALUE_CFG_BOOLEAN,   /* cfg holds config database key for bool option */
     VALUE_CFG_STRING,    /* cfg holds config database key for gchar* option */
+    VALUE_NULL,
 } ValueType;
 
 typedef struct {

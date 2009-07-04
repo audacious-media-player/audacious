@@ -37,6 +37,10 @@
 #include <sys/stat.h>
 #include <gdk/gdkkeysyms.h>
 
+#ifdef USE_SAMPLERATE
+#  include <samplerate.h>
+#endif
+
 #include "plugin.h"
 #include "pluginenum.h"
 #include "input.h"
@@ -174,6 +178,16 @@ static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(32), "32" },
 };
 
+static ComboBoxElements conventer_types[] = {
+#ifdef USE_SAMPLERATE
+    { GINT_TO_POINTER(SRC_SINC_BEST_QUALITY), N_("Best Sinc Interpolation") },
+    { GINT_TO_POINTER(SRC_SINC_MEDIUM_QUALITY), N_("Medium Sinc Interpolation") },
+    { GINT_TO_POINTER(SRC_SINC_FASTEST), N_("Fastest Sinc Interpolation") },
+    { GINT_TO_POINTER(SRC_ZERO_ORDER_HOLD), N_("ZOH Interpolation") },
+    { GINT_TO_POINTER(SRC_LINEAR), N_("Linear Interpolation") },
+#endif
+};
+
 typedef struct {
     void *next;
     GtkWidget *container;
@@ -188,6 +202,18 @@ static void metadata_toggle (void)
     scanner_enable (cfg.use_pl_metadata);
 }
 
+static PreferencesWidget sample_rate_elements[] = {
+#ifdef USE_SAMPLERATE
+    {WIDGET_SPIN_BTN, N_("Sampling Rate [Hz]:"), &cfg.src_rate, NULL, NULL, FALSE, {.spin_btn = {1000, 768000, 1000, NULL}}, VALUE_INT},
+    {WIDGET_COMBO_BOX, N_("Interpolation Engine:"), &cfg.src_type, NULL, NULL, FALSE, {.combo = {conventer_types, G_N_ELEMENTS(conventer_types), TRUE}}, VALUE_INT},
+#else
+    {WIDGET_SPIN_BTN, N_("Sampling Rate [Hz]:"), NULL, NULL, NULL, FALSE, {.spin_btn = {1000, 768000, 1000, NULL}}, VALUE_NULL},
+    {WIDGET_COMBO_BOX, N_("Interpolation Engine:"), NULL, NULL, NULL, FALSE, {.combo = {conventer_types, G_N_ELEMENTS(conventer_types), TRUE}}, VALUE_NULL},
+#endif
+    {WIDGET_LABEL, N_("<span size=\"small\">All streams will be converted to this sampling rate.\nThis should be the max supported sampling rate of\n"
+	                  "the sound card or output plugin.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-info"}}},
+};
+
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
@@ -199,9 +225,13 @@ static PreferencesWidget audio_page_widgets[] = {
                        N_("All streams will be converted to this bit depth.\n"
                           "This should be the max supported bit depth of\nthe sound card or output plugin."), FALSE,
                        {.combo = {bitdepth_elements, G_N_ELEMENTS(bitdepth_elements), TRUE}}, VALUE_INT},
-};
-
-static PreferencesWidget audio_page_widgets2[] = {
+    {WIDGET_LABEL, N_("<b>Sampling Rate Converter</b>"), NULL, NULL, NULL, FALSE},
+#ifdef USE_SAMPLERATE
+    {WIDGET_CHK_BTN, N_("Enable Sampling Rate Converter"), &cfg.enable_src, NULL, NULL, FALSE},
+#else
+    {WIDGET_CHK_BTN, N_("Enable Sampling Rate Converter"), NULL, NULL, NULL, FALSE},
+#endif
+    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {sample_rate_elements, G_N_ELEMENTS(sample_rate_elements)}}},
     {WIDGET_LABEL, N_("<b>Volume Control</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Use software volume control"),
      & cfg.software_volume_control, sw_volume_toggled,
@@ -818,66 +848,6 @@ on_output_plugin_bufsize_value_changed(GtkSpinButton *button,
 }
 
 static void
-on_enable_src_realize(GtkToggleButton * button,
-                      gpointer data)
-{
-#ifdef USE_SAMPLERATE
-    gtk_toggle_button_set_active(button, cfg.enable_src);
-#else
-    gtk_toggle_button_set_active(button, FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
-#endif
-}
-
-static void
-on_enable_src_toggled(GtkToggleButton * button, gpointer data)
-{
-#ifdef USE_SAMPLERATE
-    cfg.enable_src = gtk_toggle_button_get_active(button);
-#endif
-}
-
-static void
-on_src_rate_realize(GtkSpinButton * button,
-                    gpointer data)
-{
-#ifdef USE_SAMPLERATE
-    gtk_spin_button_set_value(button, (gdouble)cfg.src_rate);
-#else
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
-#endif
-}
-
-static void
-on_src_rate_value_changed(GtkSpinButton * button,
-                          gpointer data)
-{
-#ifdef USE_SAMPLERATE
-    cfg.src_rate = gtk_spin_button_get_value_as_int(button);
-#endif
-}
-
-static void
-on_src_converter_type_realize(GtkComboBox * box,
-                              gpointer data)
-{
-#ifdef USE_SAMPLERATE
-    gtk_combo_box_set_active(box, cfg.src_type);
-#else
-    gtk_widget_set_sensitive(GTK_WIDGET(box), FALSE);
-#endif
-}
-
-static void
-on_src_converter_type_changed(GtkComboBox * box,
-                              gpointer data)
-{
-#ifdef USE_SAMPLERATE
-    cfg.src_type = gtk_combo_box_get_active(box);
-#endif
-}
-
-static void
 on_spin_btn_realize_gint(GtkSpinButton *button, gint *cfg)
 {
     gtk_spin_button_set_value(button, *cfg);
@@ -1041,9 +1011,9 @@ on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
 static void
 on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
 {
-    gtk_toggle_button_set_active(button, *cfg);
+    gtk_toggle_button_set_active(button, cfg ? *cfg : FALSE);
     GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
-    if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
+    if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), cfg ? *cfg : FALSE);
 }
 
 static void
@@ -1182,8 +1152,10 @@ on_cbox_realize(GtkComboBox *combobox, PreferencesWidget * widget)
                     }
                 }
                 break;
+			case VALUE_NULL:
+			    break;
             default:
-                g_message("Unhandled cbox value type");
+                g_warning("Unhandled cbox value type");
                 break;
         }
         gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
@@ -1397,6 +1369,8 @@ create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget *
                               G_CALLBACK(on_spin_btn_realize_gfloat),
                               widget->cfg);
              break;
+		 case VALUE_NULL:
+		     break;
          default:
              g_warning("Unsupported value type for spin button");
      }
@@ -1584,9 +1558,13 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                                      G_CALLBACK(on_toggle_button_cfg_realize),
                                      widgets[x].cfg);
                 } else {
-                    g_signal_connect(G_OBJECT(widget), "toggled",
-                                     G_CALLBACK(on_toggle_button_toggled),
-                                     widgets[x].cfg);
+                    if (widgets[x].cfg) {
+                        g_signal_connect(G_OBJECT(widget), "toggled",
+                                         G_CALLBACK(on_toggle_button_toggled),
+                                         widgets[x].cfg);
+					} else {
+                        gtk_widget_set_sensitive(widget, FALSE);
+					}
                     g_signal_connect(G_OBJECT(widget), "realize",
                                      G_CALLBACK(on_toggle_button_realize),
                                      widgets[x].cfg);
@@ -1977,21 +1955,6 @@ create_audio_category(void)
     GtkWidget *hbox8;
     GtkWidget *image6;
     GtkWidget *label81;
-    GtkWidget *alignment90;
-    GtkWidget *label93;
-    GtkWidget *alignment92;
-    GtkWidget *enable_src;
-    GtkWidget *alignment91;
-    GtkWidget *vbox36;
-    GtkWidget *table13;
-    GtkWidget *src_converter_type;
-    GtkWidget *label94;
-    GtkWidget *label92;
-    GtkWidget *image9;
-    GtkObject *src_rate_adj;
-    GtkWidget *src_rate;
-    GtkWidget *label91;
-    GtkWidget *alignment4;
 
     audio_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), audio_page_vbox);
@@ -2085,83 +2048,6 @@ create_audio_category(void)
 
     create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
 
-    alignment90 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment90, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment90), 12, 12, 0, 0);
-
-    label93 = gtk_label_new (_("<b>Sampling Rate Converter</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment90), label93);
-    gtk_label_set_use_markup (GTK_LABEL (label93), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label93), 0, 0.5);
-
-    alignment92 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment92, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment92), 0, 0, 12, 0);
-
-    enable_src = gtk_check_button_new_with_mnemonic (_("Enable Sampling Rate Converter"));
-    gtk_container_add (GTK_CONTAINER (alignment92), enable_src);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_src), TRUE);
-
-    alignment91 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment91, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment91), 0, 6, 12, 0);
-
-    vbox36 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment91), vbox36);
-
-    table13 = gtk_table_new (3, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox36), table13, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table13), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table13), 6);
-
-    src_converter_type = gtk_combo_box_new_text ();
-    gtk_table_attach (GTK_TABLE (table13), src_converter_type, 1, 2, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Best Sinc Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Medium Sinc Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Fastest Sinc Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("ZOH Interpolation"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (src_converter_type), _("Linear Interpolation"));
-
-    label94 = gtk_label_new (_("Interpolation Engine:"));
-    gtk_table_attach (GTK_TABLE (table13), label94, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label94), 0, 0.5);
-
-    label92 = gtk_label_new (_("<span size=\"small\">All streams will be converted to this sampling rate.\nThis should be the max supported sampling rate of\nthe sound card or output plugin.</span>"));
-    gtk_table_attach (GTK_TABLE (table13), label92, 1, 2, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_use_markup (GTK_LABEL (label92), TRUE);
-    gtk_label_set_line_wrap (GTK_LABEL (label92), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label92), 0, 0.5);
-
-    image9 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_BUTTON);
-    gtk_table_attach (GTK_TABLE (table13), image9, 0, 1, 2, 3,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (image9), 1, 0);
-
-    src_rate_adj = gtk_adjustment_new (96000, 1000, 768000, 1000, 1000, 1000);
-    src_rate = gtk_spin_button_new (GTK_ADJUSTMENT (src_rate_adj), 1, 0);
-    gtk_table_attach (GTK_TABLE (table13), src_rate, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label91 = gtk_label_new (_("Sampling Rate [Hz]:"));
-    gtk_table_attach (GTK_TABLE (table13), label91, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label91), 0, 0.5);
-
-    alignment4 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment4, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment4), 12, 12, 0, 0);
-
-    create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets2, G_N_ELEMENTS(audio_page_widgets2));
-
     g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
                      G_CALLBACK(on_output_plugin_bufsize_value_changed),
                      NULL);
@@ -2171,24 +2057,6 @@ create_audio_category(void)
     g_signal_connect_after(G_OBJECT(output_plugin_cbox), "realize",
                            G_CALLBACK(on_output_plugin_cbox_realize),
                            NULL);
-    g_signal_connect(G_OBJECT(enable_src), "toggled",
-                     G_CALLBACK(on_enable_src_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(enable_src), "realize",
-                     G_CALLBACK(on_enable_src_realize),
-                     NULL);
-    g_signal_connect(G_OBJECT(src_converter_type), "changed",
-                     G_CALLBACK(on_src_converter_type_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(src_converter_type), "realize",
-                           G_CALLBACK(on_src_converter_type_realize),
-                           NULL);
-    g_signal_connect(G_OBJECT(src_rate), "value_changed",
-                     G_CALLBACK(on_src_rate_value_changed),
-                     NULL);
-    g_signal_connect(G_OBJECT(src_rate), "realize",
-                     G_CALLBACK(on_src_rate_realize),
-                     NULL);
 
     /* plugin->output page */
 
