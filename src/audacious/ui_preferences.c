@@ -211,7 +211,7 @@ static PreferencesWidget sample_rate_elements[] = {
     {WIDGET_COMBO_BOX, N_("Interpolation Engine:"), NULL, NULL, NULL, FALSE, {.combo = {conventer_types, G_N_ELEMENTS(conventer_types), TRUE}}, VALUE_NULL},
 #endif
     {WIDGET_LABEL, N_("<span size=\"small\">All streams will be converted to this sampling rate.\nThis should be the max supported sampling rate of\n"
-	                  "the sound card or output plugin.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-info"}}},
+                      "the sound card or output plugin.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-info"}}},
 };
 
 static PreferencesWidget audio_page_widgets[] = {
@@ -1152,8 +1152,8 @@ on_cbox_realize(GtkComboBox *combobox, PreferencesWidget * widget)
                     }
                 }
                 break;
-			case VALUE_NULL:
-			    break;
+            case VALUE_NULL:
+                break;
             default:
                 g_warning("Unhandled cbox value type");
                 break;
@@ -1369,8 +1369,8 @@ create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget *
                               G_CALLBACK(on_spin_btn_realize_gfloat),
                               widget->cfg);
              break;
-		 case VALUE_NULL:
-		     break;
+         case VALUE_NULL:
+             break;
          default:
              g_warning("Unsupported value type for spin button");
      }
@@ -1562,9 +1562,9 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                         g_signal_connect(G_OBJECT(widget), "toggled",
                                          G_CALLBACK(on_toggle_button_toggled),
                                          widgets[x].cfg);
-					} else {
+                    } else {
                         gtk_widget_set_sensitive(widget, FALSE);
-					}
+                    }
                     g_signal_connect(G_OBJECT(widget), "realize",
                                      G_CALLBACK(on_toggle_button_realize),
                                      widgets[x].cfg);
