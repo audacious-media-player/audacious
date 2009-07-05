@@ -42,7 +42,7 @@ gboolean str_has_suffix_nocase(const gchar * str, const gchar * suffix);
 gboolean str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes);
 
 gchar *str_assert_utf8(const gchar *str);
-gchar *str_to_utf8(const gchar * str);
+extern gchar *(*str_to_utf8)(const gchar * str);
 gchar *str_to_utf8_fallback(const gchar * str);
 
 gchar *filename_to_utf8(const gchar * filename);
@@ -54,7 +54,7 @@ const gchar *str_skip_chars(const gchar * str, const gchar * chars);
 gchar *convert_title_text(gchar * text);
 gchar *convert_dos_path(gchar * text);
 
-gchar *chardet_to_utf8(const gchar *str, gssize len,
+extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 

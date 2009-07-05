@@ -35,13 +35,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#ifdef USE_CHARDET
-#include "../libguess/libguess.h"
-#  ifdef HAVE_UDET
-#    include <libudet_c.h>
-#  endif
-#endif
-
 /*
  * escape_shell_chars()
  *
@@ -196,6 +189,11 @@ str_to_utf8_fallback(const gchar * str)
 
     return out_str;
 }
+
+gchar *(*str_to_utf8)(const gchar * str) = str_to_utf8_fallback;
+gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
+                       gsize *arg_bytes_read, gsize *arg_bytes_write,
+                       GError **arg_error) = NULL;
 
 /* convert name of absolute path in local file system encoding into utf8 string */
 gchar *

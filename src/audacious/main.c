@@ -64,6 +64,7 @@
 #include "util.h"
 #include "vis_runner.h"
 #include "vfs.h"
+#include "chardet.h"
 
 #include "icons-stock.h"
 #include "images/audacious_player.xpm"
@@ -483,6 +484,7 @@ main(gint argc, gchar ** argv)
 
     gdk_threads_init();
     mowgli_init();
+    chardet_init();
 
     hook_init ();
     hook_associate ("quit", quit_cb, 0);
