@@ -71,7 +71,7 @@ struct _PlaylistEntry {
     gboolean selected;
     InputPlugin *decoder;
     Tuple *tuple;		/* cached entry tuple, if available */
-    char failed;
+    gboolean failed;
 };
 
 #define PLAYLIST(x)  ((Playlist *)(x))
