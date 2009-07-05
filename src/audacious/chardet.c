@@ -37,7 +37,56 @@
 #include "main.h"
 
 gchar *
-cd_chardet_to_utf8(const gchar *str, gssize len,
+str_to_utf8(const gchar *str)
+{
+    gchar *out_str;
+
+    /* NULL in NULL out */
+    /* g_return_val_if_fail(str != NULL, NULL); */
+    if (!str)
+        return NULL;
+
+    /* Note: Currently, playlist calls this function repeatedly, even
+     * if the string is already converted into utf-8.
+     * chardet_to_utf8() would convert a valid utf-8 string into a
+     * different utf-8 string, if fallback encodings were supplied and
+     * the given string could be treated as a string in one of
+     * fallback encodings. To avoid this, g_utf8_validate() had been
+     * used at the top of evaluation.
+     */
+
+    /* Note 2: g_utf8_validate() has so called encapsulated utf-8
+     * problem, thus chardet_to_utf8() took the place of that.
+     */
+
+    /* Note 3: As introducing madplug, the problem of conversion from
+     * ISO-8859-1 to UTF-8 arose. This may be coped with g_convert()
+     * located near the end of chardet_to_utf8(), but it requires utf8
+     * validation guard where g_utf8_validate() was. New
+     * dfa_validate_utf8() employs libguess' DFA engine to validate
+     * utf-8 and can properly distinguish examples of encapsulated
+     * utf-8. It is considered to be safe to use as a guard.
+     */
+
+    /* already UTF-8? */
+    if (dfa_validate_utf8(str, strlen(str)))
+        return g_strdup(str);
+
+    /* chardet encoding detector */
+    if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
+        return out_str;
+
+    /* assume encoding associated with locale */
+    if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)))
+        return out_str;
+
+    /* all else fails, we mask off character codes >= 128,
+       replace with '?' */
+    return str_to_utf8_fallback(str);
+}
+
+gchar *
+chardet_to_utf8(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
 					   GError **arg_error)
 {
@@ -101,9 +150,4 @@ fallback:
 	}
 	
 	return NULL;	/* if I have no idea, return NULL. */
-}
-
-void chardet_init(void)
-{
-	chardet_to_utf8 = cd_chardet_to_utf8;
 }
