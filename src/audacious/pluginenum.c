@@ -44,6 +44,7 @@
 #include "general.h"
 #include "input.h"
 #include "main.h"
+#include "chardet.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
@@ -165,11 +166,11 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .str_has_suffix_nocase = str_has_suffix_nocase,
     .str_has_suffixes_nocase = str_has_suffixes_nocase,
     .str_to_utf8_fallback = str_to_utf8_fallback,
-    .str_to_utf8 = str_to_utf8,
+    .str_to_utf8 = cd_str_to_utf8,
     .filename_to_utf8 = filename_to_utf8,
     .str_skip_chars = str_skip_chars,
     .convert_title_text = convert_title_text,
-    .chardet_to_utf8 = chardet_to_utf8,
+    .chardet_to_utf8 = cd_chardet_to_utf8,
 
     .playlist_container_register = playlist_container_register,
     .playlist_container_unregister = playlist_container_unregister,

@@ -34,7 +34,7 @@
 #include "main.h"
 
 gchar *
-str_to_utf8(const gchar *str)
+cd_str_to_utf8(const gchar *str)
 {
     gchar *out_str;
 
@@ -65,13 +65,17 @@ str_to_utf8(const gchar *str)
      * utf-8. It is considered to be safe to use as a guard.
      */
 
+#ifdef USE_CHARDET
     /* already UTF-8? */
     if (dfa_validate_utf8(str, strlen(str)))
         return g_strdup(str);
 
+#  ifdef HAVE_UDET
     /* chardet encoding detector */
     if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
         return out_str;
+#  endif
+#endif
 
     /* assume encoding associated with locale */
     if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)))
@@ -83,7 +87,7 @@ str_to_utf8(const gchar *str)
 }
 
 gchar *
-chardet_to_utf8(const gchar *str, gssize len,
+cd_chardet_to_utf8(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
 					   GError **arg_error)
 {
@@ -147,4 +151,11 @@ fallback:
 	}
 	
 	return NULL;	/* if I have no idea, return NULL. */
+}
+
+
+void chardet_init(void)
+{
+	str_to_utf8 = cd_str_to_utf8;
+	chardet_to_utf8 = cd_chardet_to_utf8;
 }
