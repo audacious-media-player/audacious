@@ -19,10 +19,8 @@
 
 #include "config.h"
 #include "audstrings.h"
-
 #include <glib/gi18n.h>
-#include <string.h>
-#include <ctype.h>
+#include "main.h"
 
 #ifdef USE_CHARDET
 #include "../libguess/libguess.h"
@@ -30,8 +28,6 @@
 #    include <libudet_c.h>
 #  endif
 #endif
-
-#include "main.h"
 
 gchar *
 cd_str_to_utf8(const gchar *str)
