@@ -258,7 +258,7 @@ gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
 }
 
 gboolean mpris_root_quit(MprisPlayer *obj, GError **error) {
-    aud_quit();
+    event_queue("quit", NULL);
     return TRUE;
 }
 
