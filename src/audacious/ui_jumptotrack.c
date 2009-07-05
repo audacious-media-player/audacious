@@ -51,9 +51,6 @@
 #endif
 
 #include "icons-stock.h"
-
-#include "actions-mainwin.h"
-
 #include "main.h"
 
 #include "dnd.h"

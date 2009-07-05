@@ -46,12 +46,6 @@
 					<menuitem action="wshmode normal" />
 					<menuitem action="wshmode smooth" />
 				</menu>
-				<menu action="refrate">
-					<menuitem action="refrate full" />
-					<menuitem action="refrate half" />
-					<menuitem action="refrate quarter" />
-					<menuitem action="refrate eighth" />
-				</menu>
 				<menu action="anafoff">
 					<menuitem action="anafoff slowest" />
 					<menuitem action="anafoff slow" />
