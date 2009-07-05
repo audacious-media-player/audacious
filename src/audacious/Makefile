@@ -156,6 +156,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		-I../libaudcore
 
 LIBS += ${LDADD}						\
+		-L../libaudcore -laudcore	\
 		${LIBINTL}						\
 		${SAMPLERATE_LIBS}				\
 		../libguess/libguess.a			\
@@ -167,8 +168,7 @@ LIBS += ${LDADD}						\
 		${DBUS_LIBS}					\
 		${MOWGLI_LIBS}					\
 		${LIBMCS_LIBS}					\
-		${REGEX_LIBS}					\
-		-L../libaudcore -laudcore
+		${REGEX_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
 
