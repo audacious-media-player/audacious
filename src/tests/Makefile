@@ -1,9 +1,9 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-include ../../mk/objective.mk
+include ../../buildsys.mk
+include ../../extra.mk
 
 OBJECTIVE_LIBS_NOINST = tuple_formatter_test \
-	tuple_formatter_functor_test
+	tuple_formatter_functor_test \
+	wma_test
 
 LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
@@ -34,3 +34,12 @@ tuple_formatter_functor_test: $(TFFT_OBJS)
 	@printf "%10s     %-20s\n" LINK $@
 	./$@
 	@printf "%10s     %-20s\n" TEST-PASS $@
+
+WMA_OBJS = $(COMMON_OBJS) wma_test.o ../libaudtag/wma.o 
+wma_test: $(WMA_OBJS)
+	$(CC) $(LDFLAGS) $(WMA_OBJS) $(LDADD) -o $@
+	@printf "%10s     %-20s\n" LINK $@
+	./$@
+	@printf "%10s     %-20s\n" TEST-PASS $@
+
+
