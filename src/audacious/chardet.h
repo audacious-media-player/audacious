@@ -20,12 +20,6 @@
 #ifndef AUDACIOUS_CHARDET_H
 #define AUDACIOUS_CHARDET_H
 
-#ifdef _AUDACIOUS_CORE
-# ifdef HAVE_CONFIG_H
-#  include "config.h"
-# endif
-#endif
-
 #include <glib.h>
 
 G_BEGIN_DECLS
