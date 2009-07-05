@@ -17,10 +17,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
+#include "config.h"
 #include "audstrings.h"
 
 #include <glib/gi18n.h>

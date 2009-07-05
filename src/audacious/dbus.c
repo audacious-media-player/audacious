@@ -18,9 +18,7 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#    include "config.h"
-#endif
+#include "config.h"
 
 #include <glib.h>
 #include <dbus/dbus.h>
@@ -260,7 +258,7 @@ gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
 }
 
 gboolean mpris_root_quit(MprisPlayer *obj, GError **error) {
-    aud_quit();
+    event_queue("quit", NULL);
     return TRUE;
 }
 

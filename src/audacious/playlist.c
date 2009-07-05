@@ -149,8 +149,8 @@ playlist_entry_new(const gchar * filename,
     entry->selected = FALSE;
     entry->decoder = dec;
 
-    entry->tuple = 0;
-    entry->failed = 0;
+    entry->tuple = NULL;
+    entry->failed = FALSE;
 
     return entry;
 }
@@ -196,7 +196,7 @@ void playlist_entry_get_info (PlaylistEntry * entry)
 
     if (tuple == NULL) {
         if (pr != NULL) g_free(pr);
-        entry->failed = 1;
+        entry->failed = TRUE;
         return;
     }
 
@@ -209,7 +209,7 @@ void playlist_entry_get_info (PlaylistEntry * entry)
 
     if (pr != NULL) g_free(pr);
 
-    entry->failed = 0;
+    entry->failed = FALSE;
     return;
 }
 
@@ -1750,7 +1750,7 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
 
     entry = node->data;
 
-    if (! entry->tuple && ! entry->failed)
+    if (entry->tuple == NULL && !entry->failed)
         playlist_entry_get_info (entry);
 
     title = entry->title;
@@ -1783,7 +1783,7 @@ playlist_get_tuple(Playlist *playlist, guint pos)
 
     entry = (PlaylistEntry *) node->data;
 
-    if (! entry->tuple && ! entry->failed)
+    if (entry->tuple == NULL && !entry->failed)
         playlist_entry_get_info (entry);
 
     return entry->tuple;
@@ -1800,7 +1800,7 @@ playlist_get_songtime(Playlist *playlist, guint pos)
 
     entry = node->data;
 
-    if (! entry->tuple && ! entry->failed)
+    if (entry->tuple == NULL && !entry->failed)
         playlist_entry_get_info (entry);
 
     return entry->length;
@@ -1815,9 +1815,9 @@ playlist_compare_track(PlaylistEntry * a, PlaylistEntry * b)
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (! a->tuple && ! a->failed)
+    if (a->tuple == NULL && !a->failed)
         playlist_entry_get_info (a);
-    if (! b->tuple && ! b->failed)
+    if (b->tuple == NULL && !b->failed)
         playlist_entry_get_info (b);
 
     if (a->tuple == NULL)
@@ -1868,9 +1868,9 @@ playlist_compare_title(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (! a->tuple && ! a->failed)
+    if (a->tuple == NULL && !a->failed)
         playlist_entry_get_info (a);
-    if (! b->tuple && ! b->failed)
+    if (b->tuple == NULL && !b->failed)
         playlist_entry_get_info (b);
 
     if (a->tuple != NULL)
@@ -1897,9 +1897,9 @@ playlist_compare_artist(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (! a->tuple && ! a->failed)
+    if (a->tuple == NULL && !a->failed)
         playlist_entry_get_info (a);
-    if (! b->tuple && ! b->failed)
+    if (b->tuple == NULL && !b->failed)
         playlist_entry_get_info (b);
 
     if (a->tuple != NULL) {
@@ -1937,9 +1937,9 @@ playlist_compare_album(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (! a->tuple && ! a->failed)
+    if (a->tuple == NULL && !a->failed)
         playlist_entry_get_info (a);
-    if (! b->tuple && ! b->failed)
+    if (b->tuple == NULL && !b->failed)
         playlist_entry_get_info (b);
 
     if (a->tuple != NULL) {
@@ -2864,7 +2864,7 @@ void playlist_rescan (Playlist * playlist)
         if (entry->tuple)
         {
             tuple_free (entry->tuple);
-            entry->tuple = 0;
+            entry->tuple = NULL;
             entry->failed = FALSE;
         }
     }
