@@ -233,6 +233,7 @@ playback_stop(void)
         }
 
         ip_data.playing = FALSE;
+        ip_data.stop = TRUE; /* So that audio is really closed. */
 
         /* TODO: i'm unsure if this will work. we might have to
            signal the change in stop() (e.g. in the plugins
@@ -251,7 +252,7 @@ playback_stop(void)
             playback->thread = NULL;
         }
 
-        ip_data.paused = FALSE;
+        ip_data.stop = FALSE;
 
         playback_free(playback);
         set_current_input_playback(NULL);
@@ -259,8 +260,6 @@ playback_stop(void)
         mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
 #endif
     }
-
-    ip_data.playing = FALSE;
 
     hook_call("playback stop", NULL);
 }
