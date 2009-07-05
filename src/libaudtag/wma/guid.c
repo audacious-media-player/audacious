@@ -43,7 +43,7 @@ GUID *guid_convert_from_string(const gchar* s)
 		return NULL;
 	}
 	GUID *gg = g_new0(GUID, 1);
-	sscanf ( s,"%8x-%x-%x-%llx",&gg->le32,&gg->le16_1,&gg->le16_2, (long long unsigned int*)&gg->be64 );
+	sscanf ( s,"%8x-%hx-%hx-%llx",&gg->le32,&gg->le16_1,&gg->le16_2, (long long unsigned int*)&gg->be64 );
 	return gg;
 }
 

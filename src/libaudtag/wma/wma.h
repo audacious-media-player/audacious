@@ -4,16 +4,17 @@
 /* defines functions for WMA file handling */
 #ifndef AUDTAG_WMA_H
 #define AUDTAG_WMA_H
-#define TEST 
-#ifdef TEST
-#define VFSFile FILE
-#define vfs_fopen(...) fopen(__VA_ARGS__)
-#define vfs_fread(...) fread(__VA_ARGS__)
-#define vfs_fwrite(...) fwrite(__VA_ARGS__)
-#define vfs_fseek(...) fseek(__VA_ARGS__)
-#define vfs_fclose(...) fclose(__VA_ARGS__)
-#define vfs_feof(...)   feof(__VA_ARGS__)
-#endif
+// #define TEST 
+// #ifdef TEST
+// #define VFSFile FILE
+// #define vfs_fopen(...) fopen(__VA_ARGS__)
+// #define vfs_fread(...) fread(__VA_ARGS__)
+// #define vfs_fwrite(...) fwrite(__VA_ARGS__)
+// #define vfs_fseek(...) fseek(__VA_ARGS__)
+// #define vfs_fclose(...) fclose(__VA_ARGS__)
+// #define vfs_feof(...)   feof(__VA_ARGS__)
+// #define vfs_ftell(...) feof(__VA_ARGS__)
+// #endif
 
 #define WMA_DEBUG
 
@@ -29,6 +30,11 @@ typedef struct headerObj
 }HeaderObject;
 
 
+typedef struct contentField
+{
+	guint16 size;
+	gunichar2 *strValue;
+}ContentField;
 
 gboolean wma_can_handle_file(const gchar *file_path);
 
