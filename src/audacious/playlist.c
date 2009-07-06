@@ -171,7 +171,7 @@ playlist_entry_new_from_tuple(const gchar * filename,
     entry->selected = FALSE;
     entry->decoder = dec;
 
-    entry->tuple = NULL;
+    entry->tuple = tuple;
     entry->failed = FALSE;
 
     return entry;
@@ -695,13 +695,11 @@ __playlist_ins_file(Playlist * playlist,
             plugin_set_current((Plugin *)dec);
             tuple = dec->get_song_tuple(filename_entry);
             entry = playlist_entry_new_from_tuple(filename_entry, tuple, dec);
-            tuple_free(tuple);
         } else {
             filename_entry = g_strdup(filename);
 
             if (tuple != NULL) {
                 entry = playlist_entry_new_from_tuple(filename_entry, tuple, dec);
-                tuple_free(tuple);
             } else
                 entry = playlist_entry_new(filename_entry, title, len, dec);
         }
