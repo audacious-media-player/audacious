@@ -39,6 +39,10 @@ void init_dbus();
 void free_dbus();
 DBusGProxy *audacious_get_dbus_proxy();
 
+/* Version of the MPRIS API we implement */
+#define AUDACIOUS_MPRIS_VERSION_MAJ (1)
+#define AUDACIOUS_MPRIS_VERSION_MIN (0)
+
 /* MPRIS API */
 // Capabilities
 enum {
@@ -61,6 +65,8 @@ typedef enum {
 
 // MPRIS /
 gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
+                             GError **error);
+gboolean mpris_root_mpris_version(MprisRoot *obj, GValueArray **value,
                              GError **error);
 gboolean mpris_root_quit(MprisPlayer *obj, GError **error);
 

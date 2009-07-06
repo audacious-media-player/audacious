@@ -257,6 +257,25 @@ gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
     return TRUE;
 }
 
+static void append_uint16_value(GValueArray *ar, guint16 tmp)
+{
+    GValue value;
+    memset(&value, 0, sizeof(value));
+    g_value_init(&value, G_TYPE_UINT);
+    g_value_set_uint(&value, tmp);
+    g_value_array_append(ar, &value);
+}
+
+gboolean mpris_root_mpris_version(MprisRoot *obj, GValueArray **value,
+                             GError **error) {
+    if ((*value = g_value_array_new(2)) == NULL)
+        return FALSE;
+
+    append_uint16_value(*value, AUDACIOUS_MPRIS_VERSION_MAJ);
+    append_uint16_value(*value, AUDACIOUS_MPRIS_VERSION_MIN);
+    return TRUE;
+}
+
 gboolean mpris_root_quit(MprisPlayer *obj, GError **error) {
     event_queue("quit", NULL);
     return TRUE;
@@ -267,14 +286,17 @@ gboolean mpris_player_next(MprisPlayer *obj, GError **error) {
     playlist_next(playlist_get_active());
     return TRUE;
 }
+
 gboolean mpris_player_prev(MprisPlayer *obj, GError **error) {
     playlist_prev(playlist_get_active());
     return TRUE;
 }
+
 gboolean mpris_player_pause(MprisPlayer *obj, GError **error) {
     playback_pause();
     return TRUE;
 }
+
 gboolean mpris_player_stop(MprisPlayer *obj, GError **error) {
     ip_data.stop = TRUE;
     playback_stop();
