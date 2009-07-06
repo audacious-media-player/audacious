@@ -9,3 +9,7 @@ time_t unix_time(guint64 win_time);
 guint16 get_year(guint64 win_time);
 
 void printTuple(Tuple *tuple);
+Tuple *makeTuple(Tuple *tuple, const gchar* title, const gchar* artist,  
+							   const gchar* comment, const gchar* album, 
+							   const gchar * genre, const gchar* year, 
+							   const gchar* filePath,int tracnr);

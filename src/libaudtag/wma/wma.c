@@ -317,7 +317,7 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
 
 	printTuple(tuple);
 	vfs_fclose(file);
-	wma_write_tuple_to_file(tuple);
+	//wma_write_tuple_to_file(tuple);
 	return tuple;
 }
 
@@ -331,6 +331,7 @@ void copyHeaderObject(VFSFile *from, VFSFile *to)
 	/*read and copy total size */
 	vfs_fread(&newHeader.size,8,1,from);
 	vfs_fwrite(&newHeader.size,8,1,to);
+	DEBUG_TAG("HEADER %d\n",newHeader.size);
 	/* read and copy number of header objects */
 	vfs_fread(&newHeader.objectsNr,4,1,from);
 		
@@ -489,7 +490,8 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	size = 24;
 
 	if(title.size != 0)
-	{
+	{	
+		
 		size += writeContentFieldSizeToFile(to,title,newfilePosition);
  		/* read the size and  advance in the from file */ 
 		vfs_fread(&(ititle.size),2,1,from);
@@ -498,7 +500,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 		vfs_fread(&(ititle.size),2,1,from);
 		int tmp = writeContentFieldSizeToFile(to,ititle,newfilePosition);
 	}
-	
+
 	filePosition += 2;	
 	
 	if(author.size != 0)
@@ -546,6 +548,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 		filePosition += ititle.size;
 	}else
 	{
+			
 		vfs_fread(ititle.strValue,ititle.size,1,from);
 		size += writeContentFieldValueToFile(to,ititle,newfilePosition);
 		filePosition += ititle.size;
@@ -559,12 +562,15 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 		filePosition += iauthor.size;
 	}else
 	{
+		
 		vfs_fread(iauthor.strValue,iauthor.size,1,from);
 		size += writeContentFieldValueToFile(to,iauthor,newfilePosition);
 		filePosition += iauthor.size;
 	}	
-	
-		vfs_fread(icopyright.strValue,icopyright.size,1,from);
+
+		
+		vfs_fseek(from,filePosition,SEEK_SET);
+		vfs_fread(&icopyright.strValue,icopyright.size,1,from);
 		size += writeContentFieldValueToFile(to,icopyright,newfilePosition);
 		filePosition += icopyright.size;
 
@@ -591,8 +597,9 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	//write the new size
 	if(filePosition != newfilePosition)
 	{
-		vfs_fseek(to,newfilePosition-2,SEEK_SET);
-		vfs_fwrite(size,2,1,to);
+		
+		vfs_fseek(to,newfilePosition-size+16,SEEK_SET);
+		vfs_fwrite(&size,2,1,to);
 		vfs_fseek(to,newfilePosition,SEEK_SET);
 	}
 	
@@ -662,8 +669,10 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			genre_tuple_len += 2;
 			vfs_fwrite(&genre_tuple_len,2,1,to);
 			vfs_fwrite(genre,genre_tuple_len,1,to);
-			
-			vfs_fseek(from,genre_tuple_len+2, SEEK_CUR);
+			guint16 l;
+			vfs_fread(&l,2,1,from);
+			vfs_fseek(from,l, SEEK_CUR);
+			filePosition += 4+l;
 			newsize += 2+name_len+2+2+genre_tuple_len;
 			continue;
 		
@@ -687,8 +696,11 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			album_tuple_len +=2;
 			vfs_fwrite(&album_tuple_len,2,1,to);
 			vfs_fwrite(album,album_tuple_len,1,to);
-			
-			vfs_fseek(from,album_tuple_len+4, SEEK_CUR);
+			vfs_fseek(from,2,SEEK_CUR);
+			guint16 l;
+			vfs_fread(&l,2,1,from);
+			vfs_fseek(from,l, SEEK_CUR);
+			filePosition += 4+l;
 			newsize += 2+name_len+2+2+album_tuple_len;
 			continue;
 		}
@@ -711,7 +723,10 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			vfs_fwrite(&tracknr_tuple_len,2,1,to);
 			vfs_fwrite(&tracknr,tracknr_tuple_len,1,to);
 			newsize += 2+name_len+2+2+tracknr_tuple_len;
-			vfs_fseek(from,tracknr_tuple_len+2, SEEK_CUR);
+			guint16 l;
+			vfs_fread(&l,2,1,from);
+			vfs_fseek(from,l, SEEK_CUR);
+			filePosition += 4+l;
 			continue;
 		}
 		
@@ -773,10 +788,8 @@ void writeAudioData(VFSFile *from, VFSFile *to)
 	printf("audio data %d\n",ftell(from));
 	while(vfs_feof(from) == 0)
 	{
-		printf("zzz %d\n",ftell(from));
 		gchar buf[4096];
 		gint n = vfs_fread(buf,1,4096,from);
-		printf("copy %d bytes \n",n);
 		vfs_fwrite(buf,n,1,to);
 	}
 }
@@ -837,8 +850,16 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 			}
         }
     }
-	/* write the rest of the file */
+
+	/* we must update the total header size and number of objects */
+	guint64 total_size = newfilePosition;
+	DEBUG_TAG("new header %d\n",newfilePosition);
+	vfs_fseek(tmpFile,16,SEEK_SET);
+	vfs_fwrite(&total_size,8,1,tmpFile);
 	
+	/* go back to the end of file */
+	vfs_fseek(tmpFile,total_size,SEEK_SET);
+	/* write the rest of the file */	
 	writeAudioData(file,tmpFile);
 	
 	vfs_fclose(file);

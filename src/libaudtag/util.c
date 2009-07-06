@@ -19,6 +19,22 @@ guint16 get_year(guint64 win_time)
 	g_date_free(d);
 	return year;
 }
+Tuple *makeTuple(Tuple *tuple, const gchar* title, const gchar* artist,  
+							   const gchar* comment, const gchar* album, 
+							   const gchar * genre, const gchar* year, 
+							   const gchar* filePath,int tracnr)
+{
+
+	tuple_associate_string(tuple,FIELD_ARTIST, NULL,artist);
+	tuple_associate_string(tuple,FIELD_TITLE, NULL, title);
+	tuple_associate_string(tuple, FIELD_COMMENT,NULL, comment);
+	tuple_associate_string(tuple, FIELD_ALBUM,NULL, album);
+	tuple_associate_string(tuple, FIELD_GENRE,NULL, genre);
+	tuple_associate_string(tuple, FIELD_YEAR,NULL, year);
+	tuple_associate_int(tuple, FIELD_TRACK_NUMBER,NULL, tracnr);
+	tuple_associate_string(tuple, FIELD_FILE_PATH,NULL, filePath);
+	return tuple;
+}
 
 void printTuple(Tuple *tuple)
 {
