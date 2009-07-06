@@ -155,6 +155,29 @@ playlist_entry_new(const gchar * filename,
     return entry;
 }
 
+
+PlaylistEntry *
+playlist_entry_new_from_tuple(const gchar * filename,
+                              Tuple *tuple, InputPlugin *dec)
+{
+    PlaylistEntry *entry;
+    const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
+
+    entry = mowgli_heap_alloc(playlist_entry_heap);
+    entry->filename = g_strdup(filename);
+    entry->title = tuple_formatter_make_title_string(tuple,
+        formatter ? formatter : get_gentitle_format());
+    entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
+    entry->selected = FALSE;
+    entry->decoder = dec;
+
+    entry->tuple = NULL;
+    entry->failed = FALSE;
+
+    return entry;
+}
+
+
 void
 playlist_entry_free(PlaylistEntry * entry)
 {
@@ -663,7 +686,7 @@ __playlist_ins_file(Playlist * playlist,
 
         if (nsubtunes > 0) {
             filename_entry = g_strdup_printf("%s?%d", filename,
-                                             parent_tuple->subtunes ? parent_tuple->subtunes[subtune - 1] : subtune);
+                parent_tuple->subtunes ? parent_tuple->subtunes[subtune - 1] : subtune);
 
             /* We're dealing with subtune, let's ask again tuple information
              * to plugin, by passing the ?subtune suffix; this way we get
@@ -671,16 +694,16 @@ __playlist_ins_file(Playlist * playlist,
              */
             plugin_set_current((Plugin *)dec);
             tuple = dec->get_song_tuple(filename_entry);
-        } else
+            entry = playlist_entry_new_from_tuple(filename_entry, tuple, dec);
+            tuple_free(tuple);
+        } else {
             filename_entry = g_strdup(filename);
 
-        if (tuple != NULL) {
-            entry = playlist_entry_new(filename_entry,
-                                       tuple_get_string(tuple, FIELD_TITLE, NULL),
-                                       tuple_get_int(tuple, FIELD_LENGTH, NULL), dec);
-        }
-        else {
-            entry = playlist_entry_new(filename_entry, title, len, dec);
+            if (tuple != NULL) {
+                entry = playlist_entry_new_from_tuple(filename_entry, tuple, dec);
+                tuple_free(tuple);
+            } else
+                entry = playlist_entry_new(filename_entry, title, len, dec);
         }
 
         g_free(filename_entry);
