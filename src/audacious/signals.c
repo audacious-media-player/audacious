@@ -55,7 +55,7 @@ signal_process_segv(void)
          "Please include the entire text of this message and a description of what you were doing when\n"
          "this crash occured in order to quickly expedite the handling of your bug report:\n\n"));
 
-    g_printerr("Program version: Audacious %s (buildid: %s)\n\n", VERSION, svn_stamp);
+    g_printerr("Program version: Audacious %s (buildid: %s)\n\n", VERSION, build_stamp);
 
 #ifdef HAVE_EXECINFO_H
     {

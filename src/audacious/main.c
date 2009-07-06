@@ -102,7 +102,7 @@ static char start_playback = 0;
 static void
 print_version(void)
 {
-    g_printf("%s %s [%s]\n", _(application_name), VERSION, svn_stamp);
+    g_printf("%s %s [%s]\n", _(application_name), VERSION, build_stamp);
 }
 
 static void
