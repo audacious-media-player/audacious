@@ -189,7 +189,7 @@ void init_dbus() {
     dbus_connection_set_exit_on_disconnect(local_conn, FALSE);
 }
 
-GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
+static GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
     GValue *val;
     TupleValueType type;
     type = tuple_get_value_type(tuple, -1, key);
@@ -222,7 +222,7 @@ static void remove_metadata_value(gpointer value)
     g_free((GValue*)value);
 }
 
-GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
+static GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
     GHashTable *md = NULL;
     gpointer value;
 
