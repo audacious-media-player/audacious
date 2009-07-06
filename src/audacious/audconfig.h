@@ -86,13 +86,11 @@ struct _AudConfig {
     gint pause_between_songs_time;
     gboolean pause_between_songs;
     gboolean show_wm_decorations;
-    gint mouse_change;
     gboolean playlist_transparent;
     gint titlestring_preset;
     gchar *gentitle_format;
     gboolean softvolume_enable;
     gboolean eq_extra_filtering;
-    gint scroll_pl_by;
     gboolean resume_playback_on_startup;
     gint resume_state;
     gint resume_playback_on_startup_time;

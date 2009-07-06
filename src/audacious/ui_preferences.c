@@ -132,7 +132,6 @@ static Category categories[] = {
     {DATA_DIR "/images/audio.png",        N_("Audio")},
     {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
     {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
-    {DATA_DIR "/images/mouse.png",        N_("Mouse")},
     {DATA_DIR "/images/playback.png",     N_("Playback")},
     {DATA_DIR "/images/playlist.png",     N_("Playlist")},
     {DATA_DIR "/images/plugins.png",      N_("Plugins")},
@@ -318,16 +317,6 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
     {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
-};
-
-static PreferencesWidget mouse_params_elements[] = {
-    {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("percent")}}, VALUE_INT},
-    {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("lines")}}, VALUE_INT},
-};
-
-static PreferencesWidget mouse_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {mouse_params_elements, G_N_ELEMENTS(mouse_params_elements)}}},
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
@@ -1697,21 +1686,6 @@ create_titlestring_tag_menu(void)
 }
 
 static void
-create_mouse_category(void)
-{
-    GtkWidget *mouse_page_vbox;
-    GtkWidget *vbox20;
-
-    mouse_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), mouse_page_vbox);
-
-    vbox20 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (mouse_page_vbox), vbox20, TRUE, TRUE, 0);
-
-    create_widgets(GTK_BOX(vbox20), mouse_page_widgets, G_N_ELEMENTS(mouse_page_widgets));
-}
-
-static void
 create_playback_category(void)
 {
     GtkWidget *playback_page_vbox;
@@ -2470,7 +2444,6 @@ create_prefs_window(void)
     create_audio_category();
     create_replay_gain_category();
     create_connectivity_category();
-    create_mouse_category();
     create_playback_category();
     create_playlist_category();
     create_plugin_category();
