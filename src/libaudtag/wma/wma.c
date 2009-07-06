@@ -383,11 +383,19 @@ ContentField getStringContentFromTuple(Tuple *tuple, int nfield)
 	return content;
 }
 
-gint writeContentFieldToFile(VFSFile *to,ContentField c,int filepos)
+gint writeContentFieldSizeToFile(VFSFile *to,ContentField c,int filepos)
 {
 		vfs_fwrite(&c.size,2,1,to);
+		newfilePosition += 2;
+		return 2;
+}
+
+gint writeContentFieldValueToFile(VFSFile *to,ContentField c,int filepos)
+{
+
 		vfs_fwrite(c.strValue,c.size,1,to);
-		newfilePosition += c.size+2;
+		newfilePosition += c.size;
+
 		return c.size;
 }
 
@@ -401,12 +409,11 @@ void printContentField(ContentField c)
 
 void copyData(VFSFile *from, VFSFile *to, int posFrom, int posTo,gint size)
 {
-	gchar buf[size];
-	// 	/* copy guid */ 
+	gchar bufer[size];
 	vfs_fseek(from,posFrom,SEEK_SET);
 	vfs_fseek(to,posTo,SEEK_SET);
- 	vfs_fread(buf,size,1,from);
- 	vfs_fwrite(buf,size,1,to);
+ 	vfs_fread(bufer,size,1,from);
+ 	vfs_fwrite(bufer,size,1,to);
 	
 	filePosition += size;
 	newfilePosition += size;
@@ -425,15 +432,13 @@ void copySize(VFSFile *from, VFSFile *to, int posFrom, int posTo)
 
 }
 
-void skipObjectFromFile(VFSFile *from)
+void skipObjectSizeFromFile(VFSFile *from)
 {
-	/* read the size of the obj */
-	guint16 s;
-	vfs_fread(&s,2,1,from);
-	vfs_fseek(from,s,SEEK_CUR);
-	
-	filePosition += s+2;	
+	vfs_fseek(from,2,SEEK_CUR);
+	filePosition += 2;	
 }
+
+
 
 gint copyContentObject(VFSFile * from, VFSFile *to)
 {
@@ -456,12 +461,16 @@ gint copyContentObject(VFSFile * from, VFSFile *to)
 
 void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 {
-
 	guint64 size;
 
 	ContentField title;
 	ContentField author ;
 	ContentField description;
+	ContentField ititle;
+	ContentField iauthor;
+	ContentField idescription;
+	ContentField icopyright;
+	ContentField irating;
 	
 	title  = getStringContentFromTuple(tuple,FIELD_TITLE);
 	author = getStringContentFromTuple(tuple, FIELD_ARTIST);
@@ -470,59 +479,123 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	printContentField(title);
 	printContentField(author);
 	printContentField(description);
-	
- 	copyData(from, to, filePosition, newfilePosition,16);
- 	copyData(from, to, filePosition, newfilePosition,8);
+
+ 	copyData(from, to, filePosition, newfilePosition,24);
+	DEBUG_TAG("1111from pos %d\n",filePosition);
+	DEBUG_TAG("11111to pos %d\n",newfilePosition);
+
 	
 
 	size = 24;
 
 	if(title.size != 0)
 	{
-		size += writeContentFieldToFile(to,title,newfilePosition);
+		size += writeContentFieldSizeToFile(to,title,newfilePosition);
  		/* read the size and  advance in the from file */ 
-		skipObjectFromFile(from);
+		vfs_fread(&(ititle.size),2,1,from);
 	}else
 	{
-		size += copyContentObject(from,to);
+		vfs_fread(&(ititle.size),2,1,from);
+		int tmp = writeContentFieldSizeToFile(to,ititle,newfilePosition);
 	}
-	DEBUG_TAG("from pos %d\n",filePosition);
-	DEBUG_TAG("to pos %d\n",newfilePosition);	
-
+	
+	filePosition += 2;	
 	
 	if(author.size != 0)
 	{
-		size += writeContentFieldToFile(to,author,newfilePosition);
+		size += writeContentFieldSizeToFile(to,author,newfilePosition);
  		/* read the size and  advance in the from file */ 
-		skipObjectFromFile(from);
+		vfs_fread(&(iauthor.size),2,1,from);
 	}else
 	{
-		size += copyContentObject(from,to);
+		vfs_fread(&(iauthor.size),2,1,from);
+		int tmp = writeContentFieldSizeToFile(to,iauthor,newfilePosition);
 	}
+	filePosition += 2;
+
+	
+	/* copyright */
+	vfs_fread(&(icopyright.size),2,1,from);
+	filePosition += 2;
+	int k = writeContentFieldSizeToFile(to,icopyright,newfilePosition);
+
+	if(description.size != 0)
+	{
+		size += writeContentFieldSizeToFile(to,description,newfilePosition);
+ 		/* read the size and  advance in the from file */ 
+		vfs_fread(&(idescription.size),2,1,from);
+	}else
+	{
+		vfs_fread(&(idescription.size),2,1,from);
+		int tmp = writeContentFieldSizeToFile(to,idescription,newfilePosition);
+	}
+	filePosition += 2;
+	
+	/* rating */
+	vfs_fread(&(irating.size),2,1,from);
+	filePosition += 2;
+	k = writeContentFieldSizeToFile(to,irating,newfilePosition);
+	
+	/* write the content */
+	
+	if(title.size != 0 )
+	{
+		size += writeContentFieldValueToFile(to,title,newfilePosition);
+		//skip this on the from file 
+		vfs_fseek(from,ititle.size,SEEK_CUR);
+		filePosition += ititle.size;
+	}else
+	{
+		vfs_fread(ititle.strValue,ititle.size,1,from);
+		size += writeContentFieldValueToFile(to,ititle,newfilePosition);
+		filePosition += ititle.size;
+	}
+	
+	if(author.size != 0 )
+	{
+		size += writeContentFieldValueToFile(to,author,newfilePosition);
+		//skip this on the from file 
+		vfs_fseek(from,iauthor.size,SEEK_CUR);
+		filePosition += iauthor.size;
+	}else
+	{
+		vfs_fread(iauthor.strValue,iauthor.size,1,from);
+		size += writeContentFieldValueToFile(to,iauthor,newfilePosition);
+		filePosition += iauthor.size;
+	}	
+	
+		vfs_fread(icopyright.strValue,icopyright.size,1,from);
+		size += writeContentFieldValueToFile(to,icopyright,newfilePosition);
+		filePosition += icopyright.size;
+
+	if(description.size != 0 )
+	{
+		size += writeContentFieldValueToFile(to,description,newfilePosition);
+		//skip this on the from file 
+		vfs_fseek(from,idescription.size,SEEK_CUR);
+		filePosition += idescription.size;
+	}else
+	{
+		vfs_fread(idescription.strValue,idescription.size,1,from);
+		size += writeContentFieldValueToFile(to,idescription,newfilePosition);
+		filePosition += idescription.size;
+	}
+
+	vfs_fread(irating.strValue,irating.size,1,from);
+	size += writeContentFieldValueToFile(to,irating,newfilePosition);
+	filePosition += irating.size;
 	
 	DEBUG_TAG("from pos %d\n",filePosition);
 	DEBUG_TAG("to pos %d\n",newfilePosition);
 	
-	size += copyContentObject(from, to);
-
-
-
-	if(description.size != 0)
+	//write the new size
+	if(filePosition != newfilePosition)
 	{
-		size += writeContentFieldToFile(to,description,newfilePosition);
- 		/* read the size and  advance in the from file */ 
-		skipObjectFromFile(from);
-	}else
-	{
-		size += copyContentObject(from,to);
+		vfs_fseek(to,newfilePosition-2,SEEK_SET);
+		vfs_fwrite(size,2,1,to);
+		vfs_fseek(to,newfilePosition,SEEK_SET);
 	}
 	
-	size += copyContentObject(from,to);
-
- 	/* write the corect total size to header */
-	vfs_fseek(to,newfilePosition-size ,SEEK_SET);
- 	vfs_fwrite(&size,8,1,to);
-
 }
 
 
@@ -697,8 +770,8 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)
 /* TODO move this to util since it can be used for all the other formats */
 void writeAudioData(VFSFile *from, VFSFile *to)
 {
-	printf("zzz %d\n",ftell(from));
-	while(vfs_feof(from) != 0)
+	printf("audio data %d\n",ftell(from));
+	while(vfs_feof(from) == 0)
 	{
 		printf("zzz %d\n",ftell(from));
 		gchar buf[4096];
@@ -721,7 +794,7 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 	file_path = "/home/paula/test.wma";
 	gchar *tmp_path = "/tmp/tmpwma.wma";    
 	file = vfs_fopen(file_path,"r");
-	tmpFile = vfs_fopen(tmp_path, "w");
+	tmpFile = vfs_fopen(tmp_path, "w+");
     
     if(tmpFile == NULL)
         DEBUG_TAG("fopen error\n");
