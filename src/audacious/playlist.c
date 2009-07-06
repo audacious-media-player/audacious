@@ -639,7 +639,29 @@ playlist_delete(Playlist * playlist, gboolean crop)
 static void __playlist_ins_file (Playlist * playlist, const gchar * filename,
  gint pos, Tuple * tuple, const gchar * title, gint len, InputPlugin * dec)
 {
-    PlaylistEntry * entry = playlist_entry_new (filename, title, len, dec);
+    PlaylistEntry * entry;
+
+    /* This is WRONG. In most cases, we don't even have a tuple yet. */
+    if (tuple && tuple->nsubtunes > 0)
+    {
+        gint subtune;
+
+        for (subtune = 0; subtune < tuple->nsubtunes; subtune ++)
+        {
+            gint number = tuple->subtunes ? tuple->subtunes[subtune] : 1 +
+             subtune;
+            gchar * name = g_strdup_printf ("%s?%d", filename, number);
+
+            __playlist_ins_file (playlist, name, pos == -1 ? -1 : pos + subtune,
+             NULL, NULL, -1, NULL);
+            g_free (name);
+        }
+
+        tuple_free (tuple);
+        return;
+    }
+
+    entry = playlist_entry_new (filename, title, len, dec);
 
     if (tuple != NULL)
         playlist_entry_set_tuple (entry, tuple);
