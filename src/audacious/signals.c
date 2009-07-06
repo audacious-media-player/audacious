@@ -51,7 +51,7 @@ signal_process_segv(void)
          "We apologize for the inconvenience, but Audacious has crashed.\n"
          "This is a bug in the program, and should never happen under normal circumstances.\n"
 	 "Your current configuration has been saved and should not be damaged.\n\n"
-	 "You can help improve the quality of Audacious by filing a bug at http://bugzilla.atheme.org/\n"
+	 "You can help improve the quality of Audacious by filing a bug at http://jira.atheme.org/\n"
          "Please include the entire text of this message and a description of what you were doing when\n"
          "this crash occured in order to quickly expedite the handling of your bug report:\n\n"));
 
@@ -79,7 +79,7 @@ signal_process_segv(void)
     "problem while running Audacious under GDB to get a proper backtrace.\n"));
 #endif
 
-    g_printerr(_("\nBugs can be reported at http://redmine.atheme.org/ against "
+    g_printerr(_("\nBugs can be reported at http://jira.atheme.org/ against "
         "the Audacious or Audacious Plugins product.\n"));
 
     g_critical("Received SIGSEGV -- Audacious has crashed.");

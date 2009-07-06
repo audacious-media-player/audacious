@@ -75,7 +75,7 @@ ui_display_unsupported_version_warning(void)
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 4);
 
     label = ui_markup_label_new(_("Likewise, we're developers. We don't read blogs on a regular basis. If there is a major bug,\n"
-                                  "we ask you to bring it to our attention via our bugtracking instance at redmine.atheme.org,\n"
+                                  "we ask you to bring it to our attention via our bugtracking instance at http://jira.atheme.org/,\n"
                                   "or via the forums that are on the website.\n"
                                   "\n"
                                   "This will help us find out more information about your concerns, which we would likely\n"
