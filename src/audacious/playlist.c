@@ -155,29 +155,6 @@ playlist_entry_new(const gchar * filename,
     return entry;
 }
 
-
-PlaylistEntry *
-playlist_entry_new_from_tuple(const gchar * filename,
-                              Tuple *tuple, InputPlugin *dec)
-{
-    PlaylistEntry *entry;
-    const gchar *formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
-
-    entry = mowgli_heap_alloc(playlist_entry_heap);
-    entry->filename = g_strdup(filename);
-    entry->title = tuple_formatter_make_title_string(tuple,
-        formatter ? formatter : get_gentitle_format());
-    entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-    entry->selected = FALSE;
-    entry->decoder = dec;
-
-    entry->tuple = tuple;
-    entry->failed = FALSE;
-
-    return entry;
-}
-
-
 void
 playlist_entry_free(PlaylistEntry * entry)
 {
@@ -194,45 +171,50 @@ playlist_entry_free(PlaylistEntry * entry)
     mowgli_heap_free(playlist_entry_heap, entry);
 }
 
-void playlist_entry_get_info (PlaylistEntry * entry)
+static void playlist_entry_set_tuple (PlaylistEntry * entry, Tuple * tuple)
 {
-    Tuple *tuple = NULL;
-    ProbeResult *pr = NULL;
-    const gchar *formatter;
+    const gchar * format = tuple_get_string (tuple, FIELD_FORMATTER, NULL);
 
-    if (entry->tuple)
+    if (entry->tuple != NULL)
         tuple_free (entry->tuple);
 
-    if (entry->decoder == NULL) {
-        pr = input_check_file(entry->filename, FALSE);
-        if (pr != NULL)
-            entry->decoder = pr->ip;
-    }
+    g_free (entry->title);
 
-    if (pr != NULL && pr->tuple != NULL)
-        tuple = pr->tuple;
-    else if (entry->decoder != NULL && entry->decoder->get_song_tuple != NULL)
-    {
-        plugin_set_current((Plugin *)(entry->decoder));
-        tuple = entry->decoder->get_song_tuple(entry->filename);
-    }
-
-    if (tuple == NULL) {
-        if (pr != NULL) g_free(pr);
-        entry->failed = TRUE;
-        return;
-    }
-
-    /* entry is still around */
-    formatter = tuple_get_string(tuple, FIELD_FORMATTER, NULL);
-    entry->title = tuple_formatter_make_title_string(tuple, formatter ?
-                                                     formatter : get_gentitle_format());
-    entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
     entry->tuple = tuple;
-
-    if (pr != NULL) g_free(pr);
-
     entry->failed = FALSE;
+    entry->title = tuple_formatter_make_title_string (tuple, format ? format :
+     get_gentitle_format ());
+    entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
+}
+
+void playlist_entry_get_info (PlaylistEntry * entry)
+{
+    Tuple * tuple;
+
+    if (entry->decoder == NULL)
+    {
+        ProbeResult * pr = input_check_file (entry->filename, TRUE);
+
+        if (pr == NULL || pr->ip == NULL)
+            goto ERROR;
+
+        entry->decoder = pr->ip;
+        g_free (pr);
+    }
+
+    if (entry->decoder->get_song_tuple == NULL)
+        goto ERROR;
+
+    tuple = entry->decoder->get_song_tuple (entry->filename);
+
+    if (tuple == NULL)
+        goto ERROR;
+
+    playlist_entry_set_tuple (entry, tuple);
+    return;
+
+ERROR:
+    entry->failed = TRUE;
     return;
 }
 
@@ -439,7 +421,6 @@ playlist_clear_only(Playlist *playlist)
     g_list_free(playlist->entries);
     playlist->position = NULL;
     playlist->entries = NULL;
-    playlist->tail = NULL;
     playlist->attribute = PLAYLIST_PLAIN;
     playlist->serial = 0;
 
@@ -488,7 +469,7 @@ playlist_shift(Playlist *playlist, gint delta)
     {
         for (delta = orig_delta; delta > 0; delta--)
         {
-            MOWGLI_ITER_FOREACH_PREV(n, playlist->tail)
+            MOWGLI_ITER_FOREACH_PREV (n, g_list_last (playlist->entries))
             {
                 PlaylistEntry *entry = PLAYLIST_ENTRY(n->data);
 
@@ -573,7 +554,6 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
     playlist->shuffle = g_list_remove(playlist->shuffle, entry);
     playlist->queue = g_list_remove(playlist->queue, entry);
     playlist->entries = g_list_remove_link(playlist->entries, node);
-    playlist->tail = g_list_last(playlist->entries);
     playlist_entry_free(entry);
     g_list_free_1(node);
 
@@ -656,94 +636,25 @@ playlist_delete(Playlist * playlist, gboolean crop)
     hook_call ("playlist update", playlist);
 }
 
-static void
-__playlist_ins_file(Playlist * playlist,
-                    const gchar * filename,
-                    gint pos,
-                    Tuple *tuple,
-                    const gchar *title, // may NULL
-                    gint len,
-                    InputPlugin * dec)
+static void __playlist_ins_file (Playlist * playlist, const gchar * filename,
+ gint pos, Tuple * tuple, const gchar * title, gint len, InputPlugin * dec)
 {
-    PlaylistEntry *entry;
-    Tuple *parent_tuple = NULL;
-    gint nsubtunes = 0, subtune = 0;
-    gboolean add_flag = TRUE;
+    PlaylistEntry * entry = playlist_entry_new (filename, title, len, dec);
 
-    g_return_if_fail(playlist != NULL);
-    g_return_if_fail(filename != NULL);
+    if (tuple != NULL)
+        playlist_entry_set_tuple (entry, tuple);
 
-    if (tuple != NULL) {
-        nsubtunes = tuple->nsubtunes;
-        if (nsubtunes > 0) {
-            parent_tuple = tuple;
-            subtune = 1;
-        }
-    }
+    PLAYLIST_LOCK (playlist);
 
-    for (; add_flag && subtune <= nsubtunes; subtune++) {
-        gchar *filename_entry;
+    if (pos == -1)
+        playlist->entries = g_list_append (playlist->entries, entry);
+    else
+        playlist->entries = g_list_insert (playlist->entries, entry, pos);
 
-        if (nsubtunes > 0) {
-            filename_entry = g_strdup_printf("%s?%d", filename,
-                parent_tuple->subtunes ? parent_tuple->subtunes[subtune - 1] : subtune);
-
-            /* We're dealing with subtune, let's ask again tuple information
-             * to plugin, by passing the ?subtune suffix; this way we get
-             * specific subtune information in the tuple, if available.
-             */
-            plugin_set_current((Plugin *)dec);
-            tuple = dec->get_song_tuple(filename_entry);
-            entry = playlist_entry_new_from_tuple(filename_entry, tuple, dec);
-        } else {
-            filename_entry = g_strdup(filename);
-
-            if (tuple != NULL) {
-                entry = playlist_entry_new_from_tuple(filename_entry, tuple, dec);
-            } else
-                entry = playlist_entry_new(filename_entry, title, len, dec);
-        }
-
-        g_free(filename_entry);
-
-
-        PLAYLIST_LOCK(playlist);
-
-        if (playlist->tail == NULL)
-            playlist->tail = g_list_last(playlist->entries);
-
-        if (pos == -1) { // the common case
-            GList *element;
-            element = g_list_alloc();
-            element->data = entry;
-            element->prev = playlist->tail; // NULL is allowed here.
-            element->next = NULL;
-
-            if (playlist->entries == NULL) { // this is the first element
-                playlist->entries = element;
-                playlist->tail = element;
-            } else { // the rests
-                if (playlist->tail != NULL) {
-                    playlist->tail->next = element;
-                    playlist->tail = element;
-                } else
-                    add_flag = FALSE;
-            }
-        } else {
-            playlist->entries = g_list_insert(playlist->entries, entry, pos++);
-            playlist->tail = g_list_last(playlist->entries);
-        }
-
-        PLAYLIST_UNLOCK(playlist);
-    }
-
-    if (parent_tuple != NULL)
-        tuple_free(parent_tuple);
+    PLAYLIST_UNLOCK (playlist);
 
     if (tuple == NULL)
         scanner_reset ();
-
-    PLAYLIST_INCR_SERIAL(playlist);
 }
 
 gboolean
@@ -2090,7 +2001,6 @@ playlist_sort(Playlist *playlist, PlaylistSortType type)
     playlist->entries =
         g_list_sort(playlist->entries,
                     (GCompareFunc) playlist_compare_func_table[type]);
-    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2151,7 +2061,6 @@ playlist_sort_selected(Playlist *playlist, PlaylistSortType type)
     playlist->entries = playlist_sort_selected_generic(playlist->entries, (GCompareFunc)
                                                        playlist_compare_func_table
                                                        [type]);
-    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2161,7 +2070,6 @@ playlist_reverse(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist->entries = g_list_reverse(playlist->entries);
-    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2215,7 +2123,6 @@ playlist_random(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist);
     playlist->entries = playlist_shuffle_list(playlist, playlist->entries);
-    playlist->tail = g_list_last(playlist->entries);
     PLAYLIST_INCR_SERIAL(playlist);
     PLAYLIST_UNLOCK(playlist);
 }
@@ -2920,7 +2827,6 @@ playlist_new(void)
     playlist->title = g_strdup(_("Untitled Playlist"));
     playlist->filename = NULL;
     playlist_clear(playlist);
-    playlist->tail = NULL;
     playlist->attribute = PLAYLIST_PLAIN;
     playlist->serial = 0;
 
