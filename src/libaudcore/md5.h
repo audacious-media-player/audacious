@@ -1,5 +1,5 @@
-#ifndef AUDACIOUS_AUDUTIL_H
-#define AUDACIOUS_AUDUTIL_H
+#ifndef AUDACIOUS_MD5_H
+#define AUDACIOUS_MD5_H
 
 #include <glib.h>
 
@@ -24,4 +24,4 @@ void aud_md5_finish(aud_md5state_t *ctx, aud_md5hash_t digest);
 
 G_END_DECLS
 
-#endif /* AUDACIOUS_AUDUTIL_H */
+#endif /* AUDACIOUS_MD5_H */

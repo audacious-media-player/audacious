@@ -7,7 +7,7 @@
  * written by Colin Plumb in 1993, no copyright is claimed.
  * This code is in the public domain; do with it what you wish.
  */
-#include "audutil.h"
+#include "md5.h"
 #include <string.h>
 
 

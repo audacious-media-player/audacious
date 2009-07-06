@@ -1,4 +1,4 @@
-SUBDIRS = libaudcore libguess libSAD audacious libid3tag libaudutil libaudtag
+SUBDIRS = libaudcore libguess libSAD audacious libid3tag libaudtag
 
 include ../extra.mk
 
