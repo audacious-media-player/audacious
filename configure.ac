@@ -7,7 +7,7 @@ AC_PREREQ([2.59])
 
 dnl Initialize
 AC_INIT([audacious], [2.1-beta1], [bugs+audacious@atheme.org])
-AC_COPYRIGHT([(C) 2005-2008 Audacious Development Team])
+AC_COPYRIGHT([(C) 2005-2009 Audacious Development Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AC_GNU_SOURCE
