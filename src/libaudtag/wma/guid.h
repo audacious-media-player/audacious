@@ -8,7 +8,7 @@ typedef struct _guid
 }GUID;
 
 
-GUID *guid_read_from_file(const gchar* file_path);
+GUID *guid_read_from_file(const gchar* file_path, int offset);
 GUID *guid_convert_from_string(const gchar *s);
 gboolean guid_equal(GUID *g1, GUID *g2);
 int get_guid_type(GUID *g);
