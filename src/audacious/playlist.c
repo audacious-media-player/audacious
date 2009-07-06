@@ -674,7 +674,7 @@ __playlist_ins_file(Playlist * playlist,
         } else
             filename_entry = g_strdup(filename);
 
-        if (tuple) {
+        if (tuple != NULL) {
             entry = playlist_entry_new(filename_entry,
                                        tuple_get_string(tuple, FIELD_TITLE, NULL),
                                        tuple_get_int(tuple, FIELD_LENGTH, NULL), dec);
@@ -688,7 +688,7 @@ __playlist_ins_file(Playlist * playlist,
 
         PLAYLIST_LOCK(playlist);
 
-        if (!playlist->tail)
+        if (playlist->tail == NULL)
             playlist->tail = g_list_last(playlist->entries);
 
         if (pos == -1) { // the common case
@@ -698,7 +698,7 @@ __playlist_ins_file(Playlist * playlist,
             element->prev = playlist->tail; // NULL is allowed here.
             element->next = NULL;
 
-            if(!playlist->entries) { // this is the first element
+            if (playlist->entries == NULL) { // this is the first element
                 playlist->entries = element;
                 playlist->tail = element;
             } else { // the rests
@@ -716,10 +716,10 @@ __playlist_ins_file(Playlist * playlist,
         PLAYLIST_UNLOCK(playlist);
     }
 
-    if (parent_tuple)
+    if (parent_tuple != NULL)
         tuple_free(parent_tuple);
 
-    if (! tuple)
+    if (tuple == NULL)
         scanner_reset ();
 
     PLAYLIST_INCR_SERIAL(playlist);
