@@ -515,12 +515,12 @@ It is accessible from the Playlist menu.
 
 Currently, we only provide source tarballs at:
 
-   http://audacious-media-player.org/Downloads
+   http://audacious-media-player.org/downloads
 
 Audacious source is managed and also available via Atheme.org
 Mercurial repository, refer to following web-page for information:
 
-   http://audacious-media-player.org/index.php?title=Mercurial_Information
+   http://audacious-media-player.org/developers
 
 You may also want to read file "Mercurial-Access".
 
@@ -528,15 +528,8 @@ You may also want to read file "Mercurial-Access".
 4.1. Obtaining Skins
 --------------------
 
-You can find Audacious/XMMS skins made by Audacious/XMMS users at:
-
-   http://www.xmms.org/skins.html
-   http://themes.org/skins/xmms
-
-You can find more places on our website, at:
-
-   http://audacious-media-player.org/Skins
-
+You can find skins for Audacious by Googling for WinAmp 2.x skins
+or XMMS skins. You may be also able to find Audacious specific skins.
 
 5. Bugs
 -------
@@ -544,7 +537,7 @@ You can find more places on our website, at:
 Audacious is under heavy development and as such, has quite a number of
 bugs. Our bug tracker page is maintained at:
 
-  http://bugzilla.atheme.org/
+  http://jira.atheme.org/
 
 It will continue to have bugs as we fix and introduce new ones through
 rewriting and enhancement. Help us along by reporting new bugs, and
@@ -554,14 +547,14 @@ verifying existing ones.
 6. Contact
 ----------
 
-Primarily any end-user type questions should be directed to the
-Audacious web forums:
+We do not currently have any official forum or other method of end-user
+related communication. Primarily any end-user type questions should be
+directed to your distribution-related forums.
 
-  http://boards.nenolod.net/
 
-There is also an IRC channel at irc.atheme.org #audacious. You should note
+There exists an IRC channel at irc.atheme.org #audacious. You should note
 that this IRC presence is mainly for development issues and internal project
-use, but that doesn't seem to stop 50-someodd people from visiting there.
+use. It is not meant for end-user support or questions.
 
 Project admins:
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.1.0\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-06-27 21:29-0400\n"
+"POT-Creation-Date: 2009-07-06 22:49-0400\n"
 "PO-Revision-Date: 2006-07-18 20:56+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg2002@freemail.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -17,64 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,1,-1\n"
-
-#: src/audacious/actions.c:223
-msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
-
-#: src/audacious/actions.c:238
-msgid "Jump to Time"
-msgstr "Μετάβαση σε χρόνο"
-
-#: src/audacious/actions.c:257
-msgid "minutes:seconds"
-msgstr "λεπτά:δευτερόλεπτα"
-
-#: src/audacious/actions.c:267
-msgid "Track length:"
-msgstr "Διάρκεια κομματιού:"
-
-#: src/audacious/actions.c:637
-#, fuzzy
-msgid "Save as Static Playlist"
-msgstr "Αποθήκευση λίστας αναπαραγωγής"
-
-#: src/audacious/actions.c:644
-msgid "Use Relative Path"
-msgstr ""
-
-#: src/audacious/actions.c:675
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "Σφάλμα εγγραφής της λίστας αναπαραγωγής \"%s\": %s"
-
-#: src/audacious/actions.c:697
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr "%s υπάρχει ήδη. Συνέχεια ;"
-
-#: src/audacious/actions.c:712
-#, c-format
-msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr ""
-"<b><big>Αδύνατη η αποθήκευση της λίστας αναπαραγωγής.</big></b>\n"
-"\n"
-"Άγνωστος τύπος αρχείου '%s'.\n"
-
-#: src/audacious/actions.c:764
-msgid "Save Playlist"
-msgstr "Αποθήκευση λίστας αναπαραγωγής"
-
-#: src/audacious/actions.c:843
-msgid "Load Playlist"
-msgstr "Φόρτωση λίστας αναπαραγωγής"
-
-#: src/audacious/actions.c:1079
-msgid "Presets"
-msgstr "Προκαθορισμένα"
 
 #: src/audacious/equalizer_preset.c:178
 #, fuzzy, c-format
@@ -104,106 +46,106 @@ msgstr "Άρθρωμα εισόδου: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Δεν είναι δυνατή η δημιουργία του αρχείου καταγραφής (%s)!\n"
 
-#: src/audacious/main.c:73
+#: src/audacious/main.c:76
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:198
+#: src/audacious/main.c:199
 msgid "Skip backwards in playlist"
 msgstr "Μετάβαση πίσω στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:199
+#: src/audacious/main.c:200
 msgid "Start playing current playlist"
 msgstr "Έναρξη αναπαραγωγής της τρέχουσας λίστας"
 
-#: src/audacious/main.c:200
+#: src/audacious/main.c:201
 msgid "Pause current song"
 msgstr "Παύση τρέχοντος κομματιού"
 
-#: src/audacious/main.c:201
+#: src/audacious/main.c:202
 msgid "Stop current song"
 msgstr "Σταμάτημα τρέχοντος κομματιού"
 
-#: src/audacious/main.c:202
+#: src/audacious/main.c:203
 msgid "Pause if playing, play otherwise"
 msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
-#: src/audacious/main.c:203
+#: src/audacious/main.c:204
 msgid "Skip forward in playlist"
 msgstr "Μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:204
+#: src/audacious/main.c:205
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Μετάβαση σε αρχείο"
 
-#: src/audacious/main.c:205
-msgid "Don't clear the playlist"
-msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
-
 #: src/audacious/main.c:206
-#, fuzzy
-msgid "Add new files to a temporary playlist"
+msgid "Don't clear the playlist"
 msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
 
 #: src/audacious/main.c:207
 #, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
+
+#: src/audacious/main.c:208
+#, fuzzy
 msgid "Display the main window"
 msgstr "Εμφάνιση του κυρίως παραθύρου"
 
-#: src/audacious/main.c:208
+#: src/audacious/main.c:209
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:209
+#: src/audacious/main.c:210
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:210
+#: src/audacious/main.c:211
 #, fuzzy
 msgid "Show version"
 msgstr "/Εμφάνιση λίστας αναπαραγωγής"
 
-#: src/audacious/main.c:211
+#: src/audacious/main.c:212
 msgid "Interface to use (use -i list to view available interfaces)"
 msgstr ""
 
-#: src/audacious/main.c:213
+#: src/audacious/main.c:214
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:215
+#: src/audacious/main.c:216
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:482
+#: src/audacious/main.c:481
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:517
+#: src/audacious/main.c:518
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious: Αδύνατο το άνοιγμα της οθόνης, έξοδος.\n"
 
-#: src/audacious/main.c:559
+#: src/audacious/main.c:560
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "Διαθέσιμες _ρυθμίσεις:"
 
-#: src/audacious/playback.c:278
+#: src/audacious/playback.c:271
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -211,7 +153,7 @@ msgstr ""
 "<b><big>Δεν επιλέχτηκε πρόσθετο εξόδου.</big></b>\n"
 "Δεν έχετε επιλέξει κάποιο πρόσθετο εξόδου."
 
-#: src/audacious/playlist.c:300 src/audacious/playlist.c:3106
+#: src/audacious/playlist.c:276 src/audacious/playlist.c:2847
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Αποθήκευση λίστας αναπαραγωγής"
@@ -220,7 +162,7 @@ msgstr "Αποθήκευση λίστας αναπαραγωγής"
 msgid "Module loading not supported! Plugins will not be loaded.\n"
 msgstr ""
 
-#: src/audacious/signals.c:53
+#: src/audacious/signals.c:50
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -230,8 +172,8 @@ msgid ""
 "circumstances.\n"
 "Your current configuration has been saved and should not be damaged.\n"
 "\n"
-"You can help improve the quality of Audacious by filing a bug at http://"
-"bugzilla.atheme.org/\n"
+"You can help improve the quality of Audacious by filing a bug at http://jira."
+"atheme.org/\n"
 "Please include the entire text of this message and a description of what you "
 "were doing when\n"
 "this crash occured in order to quickly expedite the handling of your bug "
@@ -239,20 +181,20 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/signals.c:81
+#: src/audacious/signals.c:78
 msgid ""
 "Stacktrace was unavailable. You might want to reproduce this problem while "
 "running Audacious under GDB to get a proper backtrace.\n"
 msgstr ""
 
-#: src/audacious/signals.c:85
+#: src/audacious/signals.c:82
 msgid ""
 "\n"
-"Bugs can be reported at http://redmine.atheme.org/ against the Audacious or "
+"Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 
-#: src/audacious/signals.c:359
+#: src/audacious/signals.c:345
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
@@ -1165,23 +1107,23 @@ msgid "%d kb/s"
 msgstr "%d Kb/s"
 
 #: src/audacious/ui_fileinfopopup.c:253 src/audacious/ui_fileinfopopup.c:365
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:145
 msgid "Title"
 msgstr "Τίτλος"
 
-#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:139
+#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:143
 msgid "Artist"
 msgstr "Καλλιτέχνης"
 
-#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:140
+#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:144
 msgid "Album"
 msgstr "Άλμπουμ"
 
-#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:147
 msgid "Genre"
 msgstr "Γένος"
 
-#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:147
+#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:151
 msgid "Year"
 msgstr "Έτος"
 
@@ -1195,8 +1137,8 @@ msgstr "Νούμερο κομματιού"
 msgid "Track Length"
 msgstr "Διάρκεια κομματιού:"
 
-#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:144
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:501
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
@@ -1220,38 +1162,38 @@ msgstr "Κλείσιμο του διαλόγου κατά την προσθήκ�
 msgid "Headless Interface"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:143
+#: src/audacious/ui_jumptotrack.c:140
 #, fuzzy
 msgid "Un_queue"
 msgstr "Στην _ουρά"
 
-#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:581
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:578
 msgid "_Queue"
 msgstr "Στην _ουρά"
 
-#: src/audacious/ui_jumptotrack.c:467
+#: src/audacious/ui_jumptotrack.c:464
 msgid "Jump to Track"
 msgstr "Μεταπήδηση στο κομμάτι"
 
-#: src/audacious/ui_jumptotrack.c:510
+#: src/audacious/ui_jumptotrack.c:507
 msgid "Filter: "
 msgstr "Φίλτρο:"
 
-#: src/audacious/ui_jumptotrack.c:511
+#: src/audacious/ui_jumptotrack.c:508
 #, fuzzy
 msgid "_Filter:"
 msgstr "Φίλτρο:"
 
-#: src/audacious/ui_jumptotrack.c:529
+#: src/audacious/ui_jumptotrack.c:526
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:538
+#: src/audacious/ui_jumptotrack.c:535
 #, fuzzy
 msgid "Clea_r"
 msgstr "/Καθαρισμός ουράς"
 
-#: src/audacious/ui_jumptotrack.c:573
+#: src/audacious/ui_jumptotrack.c:570
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Κλείσιμο παραθύρου διαλόγου κατά το άνοιγμα"
@@ -1294,7 +1236,7 @@ msgid ""
 "Likewise, we're developers. We don't read blogs on a regular basis. If there "
 "is a major bug,\n"
 "we ask you to bring it to our attention via our bugtracking instance at "
-"redmine.atheme.org,\n"
+"http://jira.atheme.org/,\n"
 "or via the forums that are on the website.\n"
 "\n"
 "This will help us find out more information about your concerns, which we "
@@ -1307,7 +1249,7 @@ msgstr ""
 msgid "Playlist Manager"
 msgstr "Μη αυτόματη μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:132
+#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:136
 msgid "Playlist"
 msgstr "Λίστα αναπαραγωγής"
 
@@ -1320,117 +1262,149 @@ msgstr ""
 msgid "_Rename"
 msgstr "Όνομα αρχείου"
 
-#: src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:132
 msgid "Audio"
 msgstr "Ήχος"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:133
 #, fuzzy
 msgid "Replay Gain"
 msgstr "ReplayGain"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:134
 msgid "Connectivity"
 msgstr "Συνδεσιμότητα"
 
-#: src/audacious/ui_preferences.c:130
-msgid "Mouse"
-msgstr "Ποντίκι"
-
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:135
 #, fuzzy
 msgid "Playback"
 msgstr "/Αναπαραγωγή"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:137
 msgid "Plugins"
 msgstr "Πρόσθετα"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:146
 msgid "Tracknumber"
 msgstr "Νούμερο κομματιού"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:149
 msgid "Filepath"
 msgstr "Διαδρομή αρχείου"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:150
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:152
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:153
 #, fuzzy
 msgid "Codec"
 msgstr "Κλείσιμο"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 msgid "Quality"
 msgstr "Ποιότητα"
 
-#: src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:159
 msgid "None"
 msgstr "Κανένα"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:160
 #, fuzzy
 msgid "Japanese"
 msgstr "Ιαπωνικά:"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:161
 #, fuzzy
 msgid "Taiwanese"
 msgstr "Ιαπωνικά:"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Chinese"
 msgstr "Κινέζικα:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:163
 #, fuzzy
 msgid "Korean"
 msgstr "Κορεάτικα:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:164
 #, fuzzy
 msgid "Russian"
 msgstr "Ρώσικα:"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Greek"
 msgstr "Ελληνικά:"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:166
 msgid "Hebrew"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:167
 msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:168
 msgid "Arabic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "Universal"
 msgstr "Γενικά"
 
+#: src/audacious/ui_preferences.c:182
+msgid "Best Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:183
+msgid "Medium Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:184
+msgid "Fastest Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:185
+msgid "ZOH Interpolation"
+msgstr ""
+
 #: src/audacious/ui_preferences.c:186
+msgid "Linear Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:209
+#, fuzzy
+msgid "Sampling Rate [Hz]:"
+msgstr "Ρυθμός δειγματοληψίας"
+
+#: src/audacious/ui_preferences.c:207 src/audacious/ui_preferences.c:210
+msgid "Interpolation Engine:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:212
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Format Detection</b>"
 msgstr "<b>Αναγνώριση μορφής</b>"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:218
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "Εντοπισμός μορφής αρχείων όταν χρειαστεί, αντί αμέσως."
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:219
 #, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
@@ -1440,12 +1414,12 @@ msgstr ""
 "χρειαστεί. Αυτό μπορεί να οδηγήσει σε πιο χάλια λίστα αναπαραγωγής αλλά "
 "οδηγεί σε ουσιαστικό κέρδος σε ταχύτητα."
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:220
 #, fuzzy
 msgid "Detect file formats by extension."
 msgstr "Να μη γίνεται απόκρυψη της επέκτασης"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:221
 #, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
@@ -1455,36 +1429,57 @@ msgstr ""
 "χρειαστεί. Αυτό μπορεί να οδηγήσει σε πιο χάλια λίστα αναπαραγωγής αλλά "
 "οδηγεί σε ουσιαστικό κέρδος σε ταχύτητα."
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:222
 #, fuzzy
 msgid "<b>Bit Depth</b>"
 msgstr "<b>Bitrate:</b>"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:223
+msgid "Output bit depth:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:224
+msgid ""
+"All streams will be converted to this bit depth.\n"
+"This should be the max supported bit depth of\n"
+"the sound card or output plugin."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:227
+#, fuzzy
+msgid "<b>Sampling Rate Converter</b>"
+msgstr "<b>Ρυθμός δειγματοληψίας:</b>"
+
+#: src/audacious/ui_preferences.c:229 src/audacious/ui_preferences.c:231
+#, fuzzy
+msgid "Enable Sampling Rate Converter"
+msgstr "Ρυθμός δειγματοληψίας"
+
+#: src/audacious/ui_preferences.c:234
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "Έλεγχος έντασης:"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:235
 msgid "Use software volume control"
 msgstr "Χρήση ελεγκτή ήχου λογισμικού"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:237
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:238
 #, fuzzy
 msgid "<b>Advanced</b>"
 msgstr "<b>Όνομα:</b>"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:239
 msgid "Bypass all of signal processing if possible"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:202
+#: src/audacious/ui_preferences.c:240
 msgid ""
 "Try to pass input plugin's output directly to output plugin, if the latter "
 "supports format produced by input plugin. If it's true, all signal "
@@ -1492,110 +1487,105 @@ msgid ""
 "Gain and software volume control)."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:243
 msgid "Use fast floating-point conversion (16-bit output only)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:248
 #, fuzzy
 msgid "Preamp:"
 msgstr "Προενίσχυση"
 
-#: src/audacious/ui_preferences.c:210 src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:248 src/audacious/ui_preferences.c:249
 #, fuzzy
 msgid "dB"
 msgstr "0 dB"
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:249
 #, fuzzy
 msgid "Default gain:"
 msgstr "Προκαθορισμένο skin:"
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:249
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:250
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:254
 #, fuzzy
 msgid "<b>Replay Gain configuration</b>"
 msgstr "<b>Ρύθμιση διαμεσολαβητή</b>"
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:255
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "Ενεργοποίηση ReplayGain"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:256
 #, fuzzy
 msgid "<b>Replay Gain mode</b>"
 msgstr "<b>Διάρκεια:</b>"
 
-#: src/audacious/ui_preferences.c:219
-#, fuzzy
-msgid "Track gain/peak"
-msgstr "Όνομα κομματιού"
-
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:257
 msgid "Album gain/peak"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:221 src/audacious/ui_preferences.c:1295
+#: src/audacious/ui_preferences.c:258 src/audacious/ui_preferences.c:1254
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Διάφορα</b>"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:259
 #, fuzzy
 msgid "Enable peak info clipping prevention"
 msgstr "Ενεργοποίηση πρόληψης σκρατσαρίσματος"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:260
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:261
 msgid "Dynamically adjust scale factor to prevent clipping"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:262
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:230
+#: src/audacious/ui_preferences.c:267
 msgid "Proxy hostname:"
 msgstr "Διεύθυνση διαμεσολαβητή:"
 
-#: src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:268
 msgid "Proxy port:"
 msgstr "Θύρα διαμεσολαβητή:"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:272
 msgid "Proxy username:"
 msgstr "Όνομα χρήστη διαμεσολαβητή:"
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:273
 msgid "Proxy password:"
 msgstr "Κωδικός πρόσβασης διαμεσολαβητή:"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:277
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Ρύθμιση διαμεσολαβητή</b>"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:278
 msgid "Enable proxy usage"
 msgstr "Χρήση διαμεσολαβητή"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:280
 msgid "Use authentication with proxy"
 msgstr "Χρήση πιστοποίησης με το διαμεσολαβητή"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:282
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -1603,15 +1593,15 @@ msgstr ""
 "<span size=\"small\">Η αλλαγή αυτών των ρυθμίσεων απαιτεί επανεκκίνηση του "
 "Audacious.</span>"
 
-#: src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:286
 msgid "<b>Playback</b>"
 msgstr "<b>Αναπαραγωγή</b>"
 
-#: src/audacious/ui_preferences.c:250
+#: src/audacious/ui_preferences.c:287
 msgid "Continue playback on startup"
 msgstr "Συνέχεια αναπαραγωγής στην εκκίνηση"
 
-#: src/audacious/ui_preferences.c:251
+#: src/audacious/ui_preferences.c:288
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
@@ -1619,113 +1609,64 @@ msgstr ""
 "Αυτόματη έναρξη της αναπαραγωγής από το σημείο που σταμάτησε πριν όταν "
 "ξεκινά το Audacious."
 
-#: src/audacious/ui_preferences.c:252
+#: src/audacious/ui_preferences.c:289
 msgid "Don't advance in the playlist"
 msgstr "Μη αυτόματη μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/ui_preferences.c:253
+#: src/audacious/ui_preferences.c:290
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "Μετά την ολοκλήρωση ενός τραγουδιού, μη μεταβείς αυτόματα στο επόμενο."
 
-#: src/audacious/ui_preferences.c:254
-msgid "Pause between songs"
-msgstr "Παύση μεταξύ των τραγουδιών"
+#: src/audacious/ui_preferences.c:294
+msgid "Auto character encoding detector for:"
+msgstr "Αυτόματη αναγνώριση κωδικοσελίδας για:"
 
-#: src/audacious/ui_preferences.c:255
-msgid "Pause for"
-msgstr "Παύση για"
-
-#: src/audacious/ui_preferences.c:255
-msgid "seconds"
-msgstr "δευτερόλεπτα"
-
-#: src/audacious/ui_preferences.c:259
-msgid "<b>Filename</b>"
-msgstr "<b>Όνομα αρχείου</b>"
-
-#: src/audacious/ui_preferences.c:260
-msgid "Convert underscores to blanks"
-msgstr "Μετατροπή κάτω παύλας σε κενό"
-
-#: src/audacious/ui_preferences.c:261
-msgid "Convert %20 to blanks"
-msgstr "Μετατροπή %20 σε κενό"
-
-#: src/audacious/ui_preferences.c:262
-msgid "Convert backslash '\\' to forward slash '/'"
+#: src/audacious/ui_preferences.c:302
+msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:263
+#: src/audacious/ui_preferences.c:302
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:306
 msgid "<b>Metadata</b>"
 msgstr "<b>Μεταπληροφορίες</b>"
 
-#: src/audacious/ui_preferences.c:264
+#: src/audacious/ui_preferences.c:307
 msgid "Load metadata from playlists and files"
 msgstr "Φόρτωση μεταδεδομένων από τις λίστες αναπαραγωγής και τα αρχεία"
 
-#: src/audacious/ui_preferences.c:264
+#: src/audacious/ui_preferences.c:308
 msgid "Load metadata (tag information) from music files."
 msgstr "Φόρτωση μεταδεδομένων (πληροφορίες ετικετών) από τα μουσικά αρχεία."
 
-#: src/audacious/ui_preferences.c:266
-msgid "<b>File Dialog</b>"
-msgstr "<b>Διάλογος αρχείου</b>"
-
-#: src/audacious/ui_preferences.c:267
-msgid "Always refresh directory when opening file dialog"
-msgstr "Πάντα ανανέωση των καταλόγων κατά το άνοιγμα του διαλόγου αρχείων"
-
-#: src/audacious/ui_preferences.c:267
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-"Να γίνεται πάντα ανανέωση του διαλόγου αρχείων (αυτό μπορεί να καθυστερήσει "
-"το άνοιγμα του διαλόγου σε μεγάλους καταλόγους, και το Gnome VFS θα πρέπει "
-"να το χειριστεί αυτόματα)."
-
-#: src/audacious/ui_preferences.c:271
-msgid "Changes volume by"
-msgstr "Αλλάζει την ένταση κατά"
-
-#: src/audacious/ui_preferences.c:271
-msgid "percent"
-msgstr "ποσοστό"
-
-#: src/audacious/ui_preferences.c:272
-msgid "Scrolls playlist by"
-msgstr "Προχωρά τη λίστα τραγουδιών κατά"
-
-#: src/audacious/ui_preferences.c:272
-msgid "lines"
-msgstr "γραμμές"
-
-#: src/audacious/ui_preferences.c:276
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>Ροδάκι ποντικιού</b>"
-
-#: src/audacious/ui_preferences.c:438
+#: src/audacious/ui_preferences.c:471
 msgid "Enabled"
 msgstr "Ενεργοποιημένο"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:487
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: src/audacious/ui_preferences.c:896
+#: src/audacious/ui_preferences.c:869
 msgid "Category"
 msgstr "Κατηγορία"
 
-#: src/audacious/ui_preferences.c:1214
+#: src/audacious/ui_preferences.c:1173
 msgid "Popup Information Settings"
 msgstr "Ρυθμίσεις αναδυόμενων πληροφοριών"
 
-#: src/audacious/ui_preferences.c:1223
+#: src/audacious/ui_preferences.c:1182
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Αναγνώριση μορφής</b>"
 
-#: src/audacious/ui_preferences.c:1228
+#: src/audacious/ui_preferences.c:1187
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1735,119 +1676,92 @@ msgstr ""
 "συγκεκριμένες λέξεις στο όνομα του αρχείου. Μπορείτε να εισάγετε τις λέξεις "
 "αυτές στις λίστες παρακάτω, χωρισμένες με κόμματα."
 
-#: src/audacious/ui_preferences.c:1245
+#: src/audacious/ui_preferences.c:1204
 msgid "Exclude:"
 msgstr "Αποκλεισμός:"
 
-#: src/audacious/ui_preferences.c:1252
+#: src/audacious/ui_preferences.c:1211
 msgid "Include:"
 msgstr "Περίληψη:"
 
-#: src/audacious/ui_preferences.c:1269
+#: src/audacious/ui_preferences.c:1228
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1279
+#: src/audacious/ui_preferences.c:1238
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1251
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1304
+#: src/audacious/ui_preferences.c:1263
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1314
+#: src/audacious/ui_preferences.c:1273
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1359
-msgid "Auto character encoding detector for:"
-msgstr "Αυτόματη αναγνώριση κωδικοσελίδας για:"
-
-#: src/audacious/ui_preferences.c:1378
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1380
-msgid "Fallback character encodings:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1418
-msgid "Output bit depth:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1433
-msgid ""
-"All streams will be converted to this bit depth.\n"
-"This should be the max supported bit depth of\n"
-"the sound card or output plugin."
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1850
+#: src/audacious/ui_preferences.c:1757
 msgid "<b>Song Display</b>"
 msgstr "<b>Προβολή τραγουδιού</b>"
 
-#: src/audacious/ui_preferences.c:1859
+#: src/audacious/ui_preferences.c:1766
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1880
+#: src/audacious/ui_preferences.c:1787
 msgid "Show information about titlestring format"
 msgstr "Εμφάνιση πληροφοριών για τη μορφή του τίτλου"
 
-#: src/audacious/ui_preferences.c:1891
+#: src/audacious/ui_preferences.c:1798
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1892
+#: src/audacious/ui_preferences.c:1799
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1893
+#: src/audacious/ui_preferences.c:1800
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1894
+#: src/audacious/ui_preferences.c:1801
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1802
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1896
+#: src/audacious/ui_preferences.c:1803
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1897
+#: src/audacious/ui_preferences.c:1804
 #, fuzzy
 msgid "Custom"
 msgstr "Προσαρμοσμένο αλφαριθμητικό:"
 
-#: src/audacious/ui_preferences.c:1904
+#: src/audacious/ui_preferences.c:1811
 msgid "Custom string:"
 msgstr "Προσαρμοσμένο αλφαριθμητικό:"
 
-#: src/audacious/ui_preferences.c:1911
+#: src/audacious/ui_preferences.c:1818
 msgid "Title format:"
 msgstr "Μορφή τίτλου:"
 
-#: src/audacious/ui_preferences.c:1922
+#: src/audacious/ui_preferences.c:1829
 msgid "<b>Popup Information</b>"
 msgstr "<b>Αναδυόμενες πληροφορίες</b>"
 
-#: src/audacious/ui_preferences.c:1937
+#: src/audacious/ui_preferences.c:1844
 msgid "Show popup information for playlist entries"
 msgstr "Εμφάνιση αναδυόμενων πληροφοριών στη λίστα αναπαραγωγής"
 
-#: src/audacious/ui_preferences.c:1939
+#: src/audacious/ui_preferences.c:1846
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -1858,111 +1772,65 @@ msgstr ""
 "του δίσκου, το είδος, το έτος κυκλοφορίας, τον αριθμό, το μήκος του "
 "τραγουδιού και το εξώφυλλο."
 
-#: src/audacious/ui_preferences.c:1944
+#: src/audacious/ui_preferences.c:1851
 msgid "Edit settings for popup information"
 msgstr "Επεξεργασία ρυθμίσεων για τις αναδυόμενες πληροφορίες"
 
-#: src/audacious/ui_preferences.c:2039
+#: src/audacious/ui_preferences.c:1931
 msgid "<b>Audio System</b>"
 msgstr "<b>Σύστημα ήχου</b>"
 
-#: src/audacious/ui_preferences.c:2056
+#: src/audacious/ui_preferences.c:1948
 msgid "Buffer size:"
 msgstr "Μέγεθος προσωρινής μνήμης:"
 
-#: src/audacious/ui_preferences.c:2073
+#: src/audacious/ui_preferences.c:1965
 msgid "Current output plugin:"
 msgstr "Τρέχον πρόσθετο εξόδου:"
 
-#: src/audacious/ui_preferences.c:2102
+#: src/audacious/ui_preferences.c:1994
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "Άρθρωμα εξόδου OSS"
 
-#: src/audacious/ui_preferences.c:2119
+#: src/audacious/ui_preferences.c:2011
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "Ρυθμίσεις αρθρώματος εξόδου ESD"
 
-#: src/audacious/ui_preferences.c:2128
-#, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "<b>Ρυθμός δειγματοληψίας:</b>"
-
-#: src/audacious/ui_preferences.c:2137
-#, fuzzy
-msgid "Enable Sampling Rate Converter"
-msgstr "Ρυθμός δειγματοληψίας"
-
-#: src/audacious/ui_preferences.c:2157
-msgid "Best Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2158
-msgid "Medium Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2159
-msgid "Fastest Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2160
-msgid "ZOH Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2161
-msgid "Linear Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2163
-msgid "Interpolation Engine:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2169
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2189
-#, fuzzy
-msgid "Sampling Rate [Hz]:"
-msgstr "Ρυθμός δειγματοληψίας"
-
-#: src/audacious/ui_preferences.c:2319
+#: src/audacious/ui_preferences.c:2116
 msgid "_Decoder list:"
 msgstr "Λίστα αποκωδικοποιητών:"
 
-#: src/audacious/ui_preferences.c:2349
+#: src/audacious/ui_preferences.c:2146
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Αποκωδικοποιητές</b></span>"
 
-#: src/audacious/ui_preferences.c:2362
+#: src/audacious/ui_preferences.c:2159
 msgid "_General plugin list:"
 msgstr "Λίστα _γενικών αρθρωμάτων:"
 
-#: src/audacious/ui_preferences.c:2392
+#: src/audacious/ui_preferences.c:2189
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
 
-#: src/audacious/ui_preferences.c:2404
+#: src/audacious/ui_preferences.c:2201
 msgid "_Visualization plugin list:"
 msgstr "Λίστα αρθρωμάτων _οπτικοποίησης:"
 
-#: src/audacious/ui_preferences.c:2434
+#: src/audacious/ui_preferences.c:2231
 msgid "<b>Visualization</b>"
 msgstr "<b>Οπτικοποίηση</b>"
 
-#: src/audacious/ui_preferences.c:2446
+#: src/audacious/ui_preferences.c:2243
 msgid "_Effect plugin list:"
 msgstr "Λίστα αρθρωμάτων _εφφέ:"
 
-#: src/audacious/ui_preferences.c:2476
+#: src/audacious/ui_preferences.c:2273
 msgid "<b>Effects</b>"
 msgstr "<b>Εφέ</b>"
 
-#: src/audacious/ui_preferences.c:2609
+#: src/audacious/ui_preferences.c:2406
 msgid "Audacious Preferences"
 msgstr "Προτιμήσεις του Audacious"
 
@@ -1980,7 +1848,7 @@ msgstr "Εισάγετε τοποθεσία για αναπαραγωγή:"
 msgid "Could not create directory (%s): %s\n"
 msgstr "Δεν ήταν δυνατή η δημιουργία του καταλόγου (%s): %s"
 
-#: src/libaudcore/audstrings.c:194
+#: src/libaudcore/audstrings.c:187
 msgid "  (invalid UTF-8)"
 msgstr "  (μη έγκυρο UTF-8)"
 
@@ -2042,6 +1910,97 @@ msgstr ""
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr ""
+
+#~ msgid "Jump to Time"
+#~ msgstr "Μετάβαση σε χρόνο"
+
+#~ msgid "minutes:seconds"
+#~ msgstr "λεπτά:δευτερόλεπτα"
+
+#~ msgid "Track length:"
+#~ msgstr "Διάρκεια κομματιού:"
+
+#, fuzzy
+#~ msgid "Save as Static Playlist"
+#~ msgstr "Αποθήκευση λίστας αναπαραγωγής"
+
+#~ msgid "Error writing playlist \"%s\": %s"
+#~ msgstr "Σφάλμα εγγραφής της λίστας αναπαραγωγής \"%s\": %s"
+
+#~ msgid "%s already exist. Continue?"
+#~ msgstr "%s υπάρχει ήδη. Συνέχεια ;"
+
+#~ msgid ""
+#~ "<b><big>Unable to save playlist.</big></b>\n"
+#~ "\n"
+#~ "Unknown file type for '%s'.\n"
+#~ msgstr ""
+#~ "<b><big>Αδύνατη η αποθήκευση της λίστας αναπαραγωγής.</big></b>\n"
+#~ "\n"
+#~ "Άγνωστος τύπος αρχείου '%s'.\n"
+
+#~ msgid "Save Playlist"
+#~ msgstr "Αποθήκευση λίστας αναπαραγωγής"
+
+#~ msgid "Load Playlist"
+#~ msgstr "Φόρτωση λίστας αναπαραγωγής"
+
+#~ msgid "Presets"
+#~ msgstr "Προκαθορισμένα"
+
+#~ msgid "Mouse"
+#~ msgstr "Ποντίκι"
+
+#, fuzzy
+#~ msgid "Track gain/peak"
+#~ msgstr "Όνομα κομματιού"
+
+#~ msgid "Pause between songs"
+#~ msgstr "Παύση μεταξύ των τραγουδιών"
+
+#~ msgid "Pause for"
+#~ msgstr "Παύση για"
+
+#~ msgid "seconds"
+#~ msgstr "δευτερόλεπτα"
+
+#~ msgid "<b>Filename</b>"
+#~ msgstr "<b>Όνομα αρχείου</b>"
+
+#~ msgid "Convert underscores to blanks"
+#~ msgstr "Μετατροπή κάτω παύλας σε κενό"
+
+#~ msgid "Convert %20 to blanks"
+#~ msgstr "Μετατροπή %20 σε κενό"
+
+#~ msgid "<b>File Dialog</b>"
+#~ msgstr "<b>Διάλογος αρχείου</b>"
+
+#~ msgid "Always refresh directory when opening file dialog"
+#~ msgstr "Πάντα ανανέωση των καταλόγων κατά το άνοιγμα του διαλόγου αρχείων"
+
+#~ msgid ""
+#~ "Always refresh the file dialog (this will slow opening the dialog on "
+#~ "large directories, and Gnome VFS should handle automatically)."
+#~ msgstr ""
+#~ "Να γίνεται πάντα ανανέωση του διαλόγου αρχείων (αυτό μπορεί να "
+#~ "καθυστερήσει το άνοιγμα του διαλόγου σε μεγάλους καταλόγους, και το Gnome "
+#~ "VFS θα πρέπει να το χειριστεί αυτόματα)."
+
+#~ msgid "Changes volume by"
+#~ msgstr "Αλλάζει την ένταση κατά"
+
+#~ msgid "percent"
+#~ msgstr "ποσοστό"
+
+#~ msgid "Scrolls playlist by"
+#~ msgstr "Προχωρά τη λίστα τραγουδιών κατά"
+
+#~ msgid "lines"
+#~ msgstr "γραμμές"
+
+#~ msgid "<b>Mouse wheel</b>"
+#~ msgstr "<b>Ροδάκι ποντικιού</b>"
 
 #, fuzzy
 #~ msgid "Stop after Current Song"

@@ -94,9 +94,7 @@ struct _Playlist {
     gulong         pl_selection_time;
     gboolean       pl_total_more;
     gboolean       pl_selection_more;
-    gboolean       loading_playlist;
     GMutex        *mutex;       /* this is required for multiple playlist */
-    GList         *tail; /* marker for the last element in playlist->entries */
     gint           attribute; /* PlaylistAttribute */
     gulong         serial;     /* serial number */
     gpointer       ui_data;    /* pointer to UI data */

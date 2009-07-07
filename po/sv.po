@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-06-27 21:29-0400\n"
+"POT-Creation-Date: 2009-07-06 22:49-0400\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -17,64 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "NPOT-Creation-Date: 2004-02-21 19:35+0200\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-
-#: src/audacious/actions.c:223
-msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
-
-#: src/audacious/actions.c:238
-#, fuzzy
-msgid "Jump to Time"
-msgstr "/Hoppa till tiden"
-
-#: src/audacious/actions.c:257
-msgid "minutes:seconds"
-msgstr "minuter:sekunder"
-
-#: src/audacious/actions.c:267
-msgid "Track length:"
-msgstr "Spårlängd:"
-
-#: src/audacious/actions.c:637
-#, fuzzy
-msgid "Save as Static Playlist"
-msgstr "Spara spellista"
-
-#: src/audacious/actions.c:644
-msgid "Use Relative Path"
-msgstr ""
-
-#: src/audacious/actions.c:675
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "Fel vid skrivning av spellista \"%s\": %s"
-
-#: src/audacious/actions.c:697
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr "%s finns redan. Fortsätt?"
-
-#: src/audacious/actions.c:712
-#, fuzzy, c-format
-msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr "Kunde ej spara spellista! Okänd filtyp för %s."
-
-#: src/audacious/actions.c:764
-#, fuzzy
-msgid "Save Playlist"
-msgstr "Spara spellista"
-
-#: src/audacious/actions.c:843
-#, fuzzy
-msgid "Load Playlist"
-msgstr "Ladda spellista"
-
-#: src/audacious/actions.c:1079
-msgid "Presets"
-msgstr "Förinställningar"
 
 #: src/audacious/equalizer_preset.c:178
 #, c-format
@@ -104,111 +46,111 @@ msgstr "Insticksmodul: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Kunde ej skapa loggfil (%s)!\n"
 
-#: src/audacious/main.c:73
+#: src/audacious/main.c:76
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/main.c:198
+#: src/audacious/main.c:199
 msgid "Skip backwards in playlist"
 msgstr "Hoppa båket i spellista"
 
-#: src/audacious/main.c:199
+#: src/audacious/main.c:200
 msgid "Start playing current playlist"
 msgstr "Börja spela nuvarande spellista"
 
-#: src/audacious/main.c:200
+#: src/audacious/main.c:201
 msgid "Pause current song"
 msgstr "Pausa nuvarande sång"
 
-#: src/audacious/main.c:201
+#: src/audacious/main.c:202
 msgid "Stop current song"
 msgstr "Stoppa nuvarande sång"
 
-#: src/audacious/main.c:202
+#: src/audacious/main.c:203
 msgid "Pause if playing, play otherwise"
 msgstr "Pausa om spelandes, spela annars"
 
-#: src/audacious/main.c:203
+#: src/audacious/main.c:204
 msgid "Skip forward in playlist"
 msgstr "Hoppas framåt i spellistan"
 
-#: src/audacious/main.c:204
+#: src/audacious/main.c:205
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Hoppa till fil"
 
-#: src/audacious/main.c:205
+#: src/audacious/main.c:206
 msgid "Don't clear the playlist"
 msgstr "Rensa inte spellistan"
 
-#: src/audacious/main.c:206
+#: src/audacious/main.c:207
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Kunde ej skriva spellista!"
 
-#: src/audacious/main.c:207
+#: src/audacious/main.c:208
 #, fuzzy
 msgid "Display the main window"
 msgstr "Visa huvudfönstret."
 
-#: src/audacious/main.c:208
+#: src/audacious/main.c:209
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:209
+#: src/audacious/main.c:210
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:210
+#: src/audacious/main.c:211
 #, fuzzy
 msgid "Show version"
 msgstr "/Visa spellistredigeraren"
 
-#: src/audacious/main.c:211
+#: src/audacious/main.c:212
 msgid "Interface to use (use -i list to view available interfaces)"
 msgstr ""
 
-#: src/audacious/main.c:213
+#: src/audacious/main.c:214
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:215
+#: src/audacious/main.c:216
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:482
+#: src/audacious/main.c:481
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:517
+#: src/audacious/main.c:518
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "BMP: Kunde ej öppna för visning, avslutar."
 
-#: src/audacious/main.c:559
+#: src/audacious/main.c:560
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr ""
 
-#: src/audacious/playback.c:278
+#: src/audacious/playback.c:271
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
 
-#: src/audacious/playlist.c:300 src/audacious/playlist.c:3106
+#: src/audacious/playlist.c:276 src/audacious/playlist.c:2847
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "/Ny spellista"
@@ -217,7 +159,7 @@ msgstr "/Ny spellista"
 msgid "Module loading not supported! Plugins will not be loaded.\n"
 msgstr ""
 
-#: src/audacious/signals.c:53
+#: src/audacious/signals.c:50
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -227,8 +169,8 @@ msgid ""
 "circumstances.\n"
 "Your current configuration has been saved and should not be damaged.\n"
 "\n"
-"You can help improve the quality of Audacious by filing a bug at http://"
-"bugzilla.atheme.org/\n"
+"You can help improve the quality of Audacious by filing a bug at http://jira."
+"atheme.org/\n"
 "Please include the entire text of this message and a description of what you "
 "were doing when\n"
 "this crash occured in order to quickly expedite the handling of your bug "
@@ -236,20 +178,20 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/signals.c:81
+#: src/audacious/signals.c:78
 msgid ""
 "Stacktrace was unavailable. You might want to reproduce this problem while "
 "running Audacious under GDB to get a proper backtrace.\n"
 msgstr ""
 
-#: src/audacious/signals.c:85
+#: src/audacious/signals.c:82
 msgid ""
 "\n"
-"Bugs can be reported at http://redmine.atheme.org/ against the Audacious or "
+"Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 
-#: src/audacious/signals.c:359
+#: src/audacious/signals.c:345
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
@@ -1152,24 +1094,24 @@ msgid "%d kb/s"
 msgstr "%d kbit/s"
 
 #: src/audacious/ui_fileinfopopup.c:253 src/audacious/ui_fileinfopopup.c:365
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:145
 msgid "Title"
 msgstr "Titel"
 
-#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:139
+#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:143
 #, fuzzy
 msgid "Artist"
 msgstr "Artist:"
 
-#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:140
+#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:144
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:147
 msgid "Genre"
 msgstr "Genre"
 
-#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:147
+#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:151
 msgid "Year"
 msgstr "År"
 
@@ -1183,8 +1125,8 @@ msgstr "Spårnummer"
 msgid "Track Length"
 msgstr "Spårlängd:"
 
-#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:144
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:501
 msgid "Filename"
 msgstr "Filnamn"
 
@@ -1211,40 +1153,40 @@ msgstr ""
 msgid "Headless Interface"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:143
+#: src/audacious/ui_jumptotrack.c:140
 #, fuzzy
 msgid "Un_queue"
 msgstr "/_Lägg i väntelista"
 
-#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:581
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:578
 #, fuzzy
 msgid "_Queue"
 msgstr "Kö"
 
-#: src/audacious/ui_jumptotrack.c:467
+#: src/audacious/ui_jumptotrack.c:464
 #, fuzzy
 msgid "Jump to Track"
 msgstr "bmp: Hoppa till spår"
 
-#: src/audacious/ui_jumptotrack.c:510
+#: src/audacious/ui_jumptotrack.c:507
 msgid "Filter: "
 msgstr "Filter:"
 
-#: src/audacious/ui_jumptotrack.c:511
+#: src/audacious/ui_jumptotrack.c:508
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filter:"
 
-#: src/audacious/ui_jumptotrack.c:529
+#: src/audacious/ui_jumptotrack.c:526
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:538
+#: src/audacious/ui_jumptotrack.c:535
 #, fuzzy
 msgid "Clea_r"
 msgstr "/Rensa kön"
 
-#: src/audacious/ui_jumptotrack.c:573
+#: src/audacious/ui_jumptotrack.c:570
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Stäng"
@@ -1287,7 +1229,7 @@ msgid ""
 "Likewise, we're developers. We don't read blogs on a regular basis. If there "
 "is a major bug,\n"
 "we ask you to bring it to our attention via our bugtracking instance at "
-"redmine.atheme.org,\n"
+"http://jira.atheme.org/,\n"
 "or via the forums that are on the website.\n"
 "\n"
 "This will help us find out more information about your concerns, which we "
@@ -1300,7 +1242,7 @@ msgstr ""
 msgid "Playlist Manager"
 msgstr "/Fortsätt ej i spellista"
 
-#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:132
+#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:136
 #, fuzzy
 msgid "Playlist"
 msgstr "/Spellista"
@@ -1314,168 +1256,223 @@ msgstr ""
 msgid "_Rename"
 msgstr "/Byt namn"
 
-#: src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:132
 #, fuzzy
 msgid "Audio"
 msgstr "Om MPEG-ljudinsticksmodulen"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:133
 #, fuzzy
 msgid "Replay Gain"
 msgstr "ReplayGain"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:134
 msgid "Connectivity"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:130
-#, fuzzy
-msgid "Mouse"
-msgstr "House"
-
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:135
 #, fuzzy
 msgid "Playback"
 msgstr "/Kontroll"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:137
 #, fuzzy
 msgid "Plugins"
 msgstr "Insticksmoduler"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:146
 #, fuzzy
 msgid "Tracknumber"
 msgstr "Spårnummer"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:149
 #, fuzzy
 msgid "Filepath"
 msgstr "Sökväg"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:150
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:152
 msgid "Comment"
 msgstr "Kommentar"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:153
 #, fuzzy
 msgid "Codec"
 msgstr "Stäng"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 #, fuzzy
 msgid "Quality"
 msgstr "/_Avsluta"
 
-#: src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:159
 msgid "None"
 msgstr "Ingen"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:160
 msgid "Japanese"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:161
 msgid "Taiwanese"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Chinese"
 msgstr "Kanaler:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:163
 #, fuzzy
 msgid "Korean"
 msgstr "Genre"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:164
 #, fuzzy
 msgid "Russian"
 msgstr "Fusion"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Greek"
 msgstr "Genre"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:166
 msgid "Hebrew"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:167
 msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:168
 msgid "Arabic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "Universal"
 msgstr "Genre"
 
+#: src/audacious/ui_preferences.c:182
+msgid "Best Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:183
+msgid "Medium Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:184
+msgid "Fastest Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:185
+#, fuzzy
+msgid "ZOH Interpolation"
+msgstr "Använd autentisering"
+
 #: src/audacious/ui_preferences.c:186
+#, fuzzy
+msgid "Linear Interpolation"
+msgstr "Använd autentisering"
+
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:209
+#, fuzzy
+msgid "Sampling Rate [Hz]:"
+msgstr "Uppsamlingstakt:"
+
+#: src/audacious/ui_preferences.c:207 src/audacious/ui_preferences.c:210
+#, fuzzy
+msgid "Interpolation Engine:"
+msgstr "Använd autentisering"
+
+#: src/audacious/ui_preferences.c:212
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:217
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "Automatiskt upptäckande"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:218
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:219
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:220
 msgid "Detect file formats by extension."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:221
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:222
 #, fuzzy
 msgid "<b>Bit Depth</b>"
 msgstr "_Filter:"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:223
+msgid "Output bit depth:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:224
+msgid ""
+"All streams will be converted to this bit depth.\n"
+"This should be the max supported bit depth of\n"
+"the sound card or output plugin."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:227
+#, fuzzy
+msgid "<b>Sampling Rate Converter</b>"
+msgstr "Uppsamlingstakt:"
+
+#: src/audacious/ui_preferences.c:229 src/audacious/ui_preferences.c:231
+#, fuzzy
+msgid "Enable Sampling Rate Converter"
+msgstr "Uppsamlingstakt:"
+
+#: src/audacious/ui_preferences.c:234
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "Volymkontrol:"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:235
 #, fuzzy
 msgid "Use software volume control"
 msgstr "Volymkontrol:"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:237
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:238
 #, fuzzy
 msgid "<b>Advanced</b>"
 msgstr "Avancerade inställningar"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:239
 msgid "Bypass all of signal processing if possible"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:202
+#: src/audacious/ui_preferences.c:240
 msgid ""
 "Try to pass input plugin's output directly to output plugin, if the latter "
 "supports format produced by input plugin. If it's true, all signal "
@@ -1483,296 +1480,148 @@ msgid ""
 "Gain and software volume control)."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:243
 msgid "Use fast floating-point conversion (16-bit output only)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:248
 #, fuzzy
 msgid "Preamp:"
 msgstr "Dream"
 
-#: src/audacious/ui_preferences.c:210 src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:248 src/audacious/ui_preferences.c:249
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:249
 #, fuzzy
 msgid "Default gain:"
 msgstr "Förinställning (%s)"
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:249
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:250
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:254
 #, fuzzy
 msgid "<b>Replay Gain configuration</b>"
 msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:255
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "Aktivera ReplayGain"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:256
 #, fuzzy
 msgid "<b>Replay Gain mode</b>"
 msgstr "Police de la liste d'écoute:"
 
-#: src/audacious/ui_preferences.c:219
-#, fuzzy
-msgid "Track gain/peak"
-msgstr "Spårtopp:"
-
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:257
 #, fuzzy
 msgid "Album gain/peak"
 msgstr "Albumsökning:"
 
-#: src/audacious/ui_preferences.c:221 src/audacious/ui_preferences.c:1295
+#: src/audacious/ui_preferences.c:258 src/audacious/ui_preferences.c:1254
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "_Filter:"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:259
 #, fuzzy
 msgid "Enable peak info clipping prevention"
 msgstr "Aktivera klippskydd"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:260
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:261
 msgid "Dynamically adjust scale factor to prevent clipping"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:262
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:230
+#: src/audacious/ui_preferences.c:267
 msgid "Proxy hostname:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:268
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Proxy:"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:272
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Användarnamn:"
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:273
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Lösenord:"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:277
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:278
 msgid "Enable proxy usage"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:280
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Använd autentisering"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:282
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:286
 #, fuzzy
 msgid "<b>Playback</b>"
 msgstr "/Kontroll"
 
-#: src/audacious/ui_preferences.c:250
+#: src/audacious/ui_preferences.c:287
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:251
+#: src/audacious/ui_preferences.c:288
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:252
+#: src/audacious/ui_preferences.c:289
 #, fuzzy
 msgid "Don't advance in the playlist"
 msgstr "Rensa inte spellistan"
 
-#: src/audacious/ui_preferences.c:253
+#: src/audacious/ui_preferences.c:290
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:254
-#, fuzzy
-msgid "Pause between songs"
-msgstr "Pausa mellan sånger i"
-
-#: src/audacious/ui_preferences.c:255
-#, fuzzy
-msgid "Pause for"
-msgstr "/Paus"
-
-#: src/audacious/ui_preferences.c:255
-msgid "seconds"
-msgstr "sekunder"
-
-#: src/audacious/ui_preferences.c:259
-#, fuzzy
-msgid "<b>Filename</b>"
-msgstr "_Filter:"
-
-#: src/audacious/ui_preferences.c:260
-#, fuzzy
-msgid "Convert underscores to blanks"
-msgstr "Konvertera nedsatt streck till tomrum"
-
-#: src/audacious/ui_preferences.c:261
-#, fuzzy
-msgid "Convert %20 to blanks"
-msgstr "Konvertera %20 till tomrum"
-
-#: src/audacious/ui_preferences.c:262
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:263
-#, fuzzy
-msgid "<b>Metadata</b>"
-msgstr "_Filter:"
-
-#: src/audacious/ui_preferences.c:264
-#, fuzzy
-msgid "Load metadata from playlists and files"
-msgstr "Använd metadata i spellistor"
-
-#: src/audacious/ui_preferences.c:264
-#, fuzzy
-msgid "Load metadata (tag information) from music files."
-msgstr "Läs markeringsinformation från fil vid:"
-
-#: src/audacious/ui_preferences.c:266
-#, fuzzy
-msgid "<b>File Dialog</b>"
-msgstr "_Filter:"
-
-#: src/audacious/ui_preferences.c:267
-msgid "Always refresh directory when opening file dialog"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:267
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-
-#: src/audacious/ui_preferences.c:271
-#, fuzzy
-msgid "Changes volume by"
-msgstr "Mushjulet justerar volymen med (%)"
-
-#: src/audacious/ui_preferences.c:271
-msgid "percent"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:272
-#, fuzzy
-msgid "Scrolls playlist by"
-msgstr "Ladda spellista"
-
-#: src/audacious/ui_preferences.c:272
-#, fuzzy
-msgid "lines"
-msgstr "Oldies"
-
-#: src/audacious/ui_preferences.c:276
-#, fuzzy
-msgid "<b>Mouse wheel</b>"
-msgstr "_Filter:"
-
-#: src/audacious/ui_preferences.c:438
-#, fuzzy
-msgid "Enabled"
-msgstr "(aktiverad)"
-
-#: src/audacious/ui_preferences.c:454
-#, fuzzy
-msgid "Description"
-msgstr "Beskrivning:"
-
-#: src/audacious/ui_preferences.c:896
-msgid "Category"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1214
-#, fuzzy
-msgid "Popup Information Settings"
-msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
-
-#: src/audacious/ui_preferences.c:1223
-#, fuzzy
-msgid "<b>Cover image retrieve</b>"
-msgstr "Automatiskt upptäckande"
-
-#: src/audacious/ui_preferences.c:1228
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1245
-msgid "Exclude:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1252
-#, fuzzy
-msgid "Include:"
-msgstr "Indisk"
-
-#: src/audacious/ui_preferences.c:1269
-msgid "Recursively search for cover"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1279
-msgid "Search depth: "
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1292
-msgid "Use per-file cover"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1304
-msgid "Show Progress bar for the current track"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1314
-msgid "Delay until filepopup comes up: "
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1359
+#: src/audacious/ui_preferences.c:294
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1378
+#: src/audacious/ui_preferences.c:302
+msgid "Fallback character encodings:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:302
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1780,204 +1629,215 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1380
-msgid "Fallback character encodings:"
+#: src/audacious/ui_preferences.c:306
+#, fuzzy
+msgid "<b>Metadata</b>"
+msgstr "_Filter:"
+
+#: src/audacious/ui_preferences.c:307
+#, fuzzy
+msgid "Load metadata from playlists and files"
+msgstr "Använd metadata i spellistor"
+
+#: src/audacious/ui_preferences.c:308
+#, fuzzy
+msgid "Load metadata (tag information) from music files."
+msgstr "Läs markeringsinformation från fil vid:"
+
+#: src/audacious/ui_preferences.c:471
+#, fuzzy
+msgid "Enabled"
+msgstr "(aktiverad)"
+
+#: src/audacious/ui_preferences.c:487
+#, fuzzy
+msgid "Description"
+msgstr "Beskrivning:"
+
+#: src/audacious/ui_preferences.c:869
+msgid "Category"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1418
-msgid "Output bit depth:"
-msgstr ""
+#: src/audacious/ui_preferences.c:1173
+#, fuzzy
+msgid "Popup Information Settings"
+msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: src/audacious/ui_preferences.c:1433
+#: src/audacious/ui_preferences.c:1182
+#, fuzzy
+msgid "<b>Cover image retrieve</b>"
+msgstr "Automatiskt upptäckande"
+
+#: src/audacious/ui_preferences.c:1187
 msgid ""
-"All streams will be converted to this bit depth.\n"
-"This should be the max supported bit depth of\n"
-"the sound card or output plugin."
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1850
+#: src/audacious/ui_preferences.c:1204
+msgid "Exclude:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1211
+#, fuzzy
+msgid "Include:"
+msgstr "Indisk"
+
+#: src/audacious/ui_preferences.c:1228
+msgid "Recursively search for cover"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1238
+msgid "Search depth: "
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1251
+msgid "Use per-file cover"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1263
+msgid "Show Progress bar for the current track"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1273
+msgid "Delay until filepopup comes up: "
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1757
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "_Filter:"
 
-#: src/audacious/ui_preferences.c:1859
+#: src/audacious/ui_preferences.c:1766
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1880
+#: src/audacious/ui_preferences.c:1787
 msgid "Show information about titlestring format"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1891
+#: src/audacious/ui_preferences.c:1798
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1892
+#: src/audacious/ui_preferences.c:1799
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1893
+#: src/audacious/ui_preferences.c:1800
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1894
+#: src/audacious/ui_preferences.c:1801
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1802
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1896
+#: src/audacious/ui_preferences.c:1803
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1897
+#: src/audacious/ui_preferences.c:1804
 #, fuzzy
 msgid "Custom"
 msgstr "Bufferttid (ms):"
 
-#: src/audacious/ui_preferences.c:1904
+#: src/audacious/ui_preferences.c:1811
 msgid "Custom string:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1911
+#: src/audacious/ui_preferences.c:1818
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: src/audacious/ui_preferences.c:1922
+#: src/audacious/ui_preferences.c:1829
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: src/audacious/ui_preferences.c:1937
+#: src/audacious/ui_preferences.c:1844
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1939
+#: src/audacious/ui_preferences.c:1846
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1944
+#: src/audacious/ui_preferences.c:1851
 msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2039
+#: src/audacious/ui_preferences.c:1931
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "Förinställningar"
 
-#: src/audacious/ui_preferences.c:2056
+#: src/audacious/ui_preferences.c:1948
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Buffertstorlek (kB):"
 
-#: src/audacious/ui_preferences.c:2073
+#: src/audacious/ui_preferences.c:1965
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "eSound-uppspelningsinsticksmodul"
 
-#: src/audacious/ui_preferences.c:2102
+#: src/audacious/ui_preferences.c:1994
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS-uppspelningsinsticksmodul"
 
-#: src/audacious/ui_preferences.c:2119
+#: src/audacious/ui_preferences.c:2011
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "Konfiguration av ESD-uppspelningsinsticksmodul"
 
-#: src/audacious/ui_preferences.c:2128
-#, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "Uppsamlingstakt:"
-
-#: src/audacious/ui_preferences.c:2137
-#, fuzzy
-msgid "Enable Sampling Rate Converter"
-msgstr "Uppsamlingstakt:"
-
-#: src/audacious/ui_preferences.c:2157
-msgid "Best Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2158
-msgid "Medium Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2159
-msgid "Fastest Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2160
-#, fuzzy
-msgid "ZOH Interpolation"
-msgstr "Använd autentisering"
-
-#: src/audacious/ui_preferences.c:2161
-#, fuzzy
-msgid "Linear Interpolation"
-msgstr "Använd autentisering"
-
-#: src/audacious/ui_preferences.c:2163
-#, fuzzy
-msgid "Interpolation Engine:"
-msgstr "Använd autentisering"
-
-#: src/audacious/ui_preferences.c:2169
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2189
-#, fuzzy
-msgid "Sampling Rate [Hz]:"
-msgstr "Uppsamlingstakt:"
-
-#: src/audacious/ui_preferences.c:2319
+#: src/audacious/ui_preferences.c:2116
 #, fuzzy
 msgid "_Decoder list:"
 msgstr "Avkodare"
 
-#: src/audacious/ui_preferences.c:2349
+#: src/audacious/ui_preferences.c:2146
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2362
+#: src/audacious/ui_preferences.c:2159
 #, fuzzy
 msgid "_General plugin list:"
 msgstr "Generella insticksmoduler"
 
-#: src/audacious/ui_preferences.c:2392
+#: src/audacious/ui_preferences.c:2189
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2404
+#: src/audacious/ui_preferences.c:2201
 #, fuzzy
 msgid "_Visualization plugin list:"
 msgstr "Visualiseringsinsticksmoduler"
 
-#: src/audacious/ui_preferences.c:2434
+#: src/audacious/ui_preferences.c:2231
 #, fuzzy
 msgid "<b>Visualization</b>"
 msgstr "/Visualiseringsläge"
 
-#: src/audacious/ui_preferences.c:2446
+#: src/audacious/ui_preferences.c:2243
 #, fuzzy
 msgid "_Effect plugin list:"
 msgstr "Effektinsticksmoduler"
 
-#: src/audacious/ui_preferences.c:2476
+#: src/audacious/ui_preferences.c:2273
 #, fuzzy
 msgid "<b>Effects</b>"
 msgstr "Förinställningar"
 
-#: src/audacious/ui_preferences.c:2609
+#: src/audacious/ui_preferences.c:2406
 #, fuzzy
 msgid "Audacious Preferences"
 msgstr "/Inställningar"
@@ -1996,7 +1856,7 @@ msgstr ""
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kunde ej skapa mapp (%s): %s"
 
-#: src/libaudcore/audstrings.c:194
+#: src/libaudcore/audstrings.c:187
 msgid "  (invalid UTF-8)"
 msgstr "  (invalid UTF-8)"
 
@@ -2059,6 +1919,95 @@ msgstr ""
 #, fuzzy
 msgid "Show Session Management options"
 msgstr "Visa fönsterhanterarens dekorationer"
+
+#, fuzzy
+#~ msgid "Jump to Time"
+#~ msgstr "/Hoppa till tiden"
+
+#~ msgid "minutes:seconds"
+#~ msgstr "minuter:sekunder"
+
+#~ msgid "Track length:"
+#~ msgstr "Spårlängd:"
+
+#, fuzzy
+#~ msgid "Save as Static Playlist"
+#~ msgstr "Spara spellista"
+
+#~ msgid "Error writing playlist \"%s\": %s"
+#~ msgstr "Fel vid skrivning av spellista \"%s\": %s"
+
+#~ msgid "%s already exist. Continue?"
+#~ msgstr "%s finns redan. Fortsätt?"
+
+#, fuzzy
+#~ msgid ""
+#~ "<b><big>Unable to save playlist.</big></b>\n"
+#~ "\n"
+#~ "Unknown file type for '%s'.\n"
+#~ msgstr "Kunde ej spara spellista! Okänd filtyp för %s."
+
+#, fuzzy
+#~ msgid "Save Playlist"
+#~ msgstr "Spara spellista"
+
+#, fuzzy
+#~ msgid "Load Playlist"
+#~ msgstr "Ladda spellista"
+
+#~ msgid "Presets"
+#~ msgstr "Förinställningar"
+
+#, fuzzy
+#~ msgid "Mouse"
+#~ msgstr "House"
+
+#, fuzzy
+#~ msgid "Track gain/peak"
+#~ msgstr "Spårtopp:"
+
+#, fuzzy
+#~ msgid "Pause between songs"
+#~ msgstr "Pausa mellan sånger i"
+
+#, fuzzy
+#~ msgid "Pause for"
+#~ msgstr "/Paus"
+
+#~ msgid "seconds"
+#~ msgstr "sekunder"
+
+#, fuzzy
+#~ msgid "<b>Filename</b>"
+#~ msgstr "_Filter:"
+
+#, fuzzy
+#~ msgid "Convert underscores to blanks"
+#~ msgstr "Konvertera nedsatt streck till tomrum"
+
+#, fuzzy
+#~ msgid "Convert %20 to blanks"
+#~ msgstr "Konvertera %20 till tomrum"
+
+#, fuzzy
+#~ msgid "<b>File Dialog</b>"
+#~ msgstr "_Filter:"
+
+#, fuzzy
+#~ msgid "Changes volume by"
+#~ msgstr "Mushjulet justerar volymen med (%)"
+
+#, fuzzy
+#~ msgid "Scrolls playlist by"
+#~ msgstr "Ladda spellista"
+
+#, fuzzy
+#~ msgid "lines"
+#~ msgstr "Oldies"
+
+#, fuzzy
+#~ msgid "<b>Mouse wheel</b>"
+#~ msgstr "_Filter:"
 
 #, fuzzy
 #~ msgid "Stop after Current Song"

@@ -31,6 +31,7 @@ typedef enum {
     WIDGET_TABLE,
     WIDGET_ENTRY,
     WIDGET_COMBO_BOX,
+    WIDGET_BOX,
 } WidgetType;
 
 typedef enum {
@@ -83,6 +84,14 @@ typedef struct _PreferencesWidget {
             gint n_elements;
             gboolean enabled;
         } combo;
+
+        struct {
+            struct _PreferencesWidget *elem;
+            gint n_elem;
+
+            gboolean horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */ 
+            gboolean frame;       /* whether to draw frame around box */
+        } box;
 
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;

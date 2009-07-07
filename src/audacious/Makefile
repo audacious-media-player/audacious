@@ -56,8 +56,7 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack_cache.c			\
        ui_misc.c				\
        ui_playlist_manager.c				\
-       ui_urlopener.c					\
-       actions.c
+       ui_urlopener.c
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
@@ -173,11 +172,12 @@ LIBS += ${LDADD}						\
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
 
 build_stamp.c:
+	echo "#include <glib.h>" > build_stamp.c ; \
 	if test -d ../../.hg ; then \
-		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
-		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
+		revh=`hg tip --template 'const gchar *build_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
+		[ -z "$$revh" ] || echo "$$revh" >> build_stamp.c; \
 	else \
-		echo "const char *svn_stamp = \"UNSUPPORTED VERSION\";" > build_stamp.c; \
+		echo "const gchar *build_stamp = \"UNSUPPORTED VERSION\";" >> build_stamp.c; \
 	fi
 
 DBUS_BINDINGS_SOURCES = objects.xml				\

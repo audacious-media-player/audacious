@@ -9,7 +9,8 @@ SRCS = audstrings.c \
        vfs.c \
        vfs_buffer.c \
        vfs_buffered_file.c \
-       vfs_common.c
+       vfs_common.c \
+       md5.c
 
 INCLUDES = audstrings.h \
            tuple.h \
@@ -17,7 +18,8 @@ INCLUDES = audstrings.h \
            tuple_formatter.h \
            vfs.h \
 	   vfs_buffer.h \
-	   vfs_buffered_file.h
+	   vfs_buffered_file.h \
+	   md5.h
 
 include ../../buildsys.mk
 include ../../extra.mk

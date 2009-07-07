@@ -709,7 +709,6 @@ read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
     g_string_free(section_string, TRUE);
     g_string_free(key_string, TRUE);
 
-    g_return_val_if_fail(value, NULL);
     return value;
 }
 
@@ -719,7 +718,8 @@ read_ini_array(INIFile *inifile, const gchar *section, const gchar *key)
     gchar *temp;
     GArray *a;
 
-    g_return_val_if_fail((temp = read_ini_string(inifile, section, key)), NULL);
+    if ((temp = read_ini_string(inifile, section, key)) == NULL)
+        return NULL;
 
     a = string_to_garray(temp);
     g_free(temp);

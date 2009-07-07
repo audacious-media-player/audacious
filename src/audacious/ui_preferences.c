@@ -132,7 +132,6 @@ static Category categories[] = {
     {DATA_DIR "/images/audio.png",        N_("Audio")},
     {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
     {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
-    {DATA_DIR "/images/mouse.png",        N_("Mouse")},
     {DATA_DIR "/images/playback.png",     N_("Playback")},
     {DATA_DIR "/images/playlist.png",     N_("Playlist")},
     {DATA_DIR "/images/plugins.png",      N_("Plugins")},
@@ -216,8 +215,6 @@ static PreferencesWidget sample_rate_elements[] = {
 
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
-        N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
@@ -255,7 +252,6 @@ static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Replay Gain configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Replay Gain mode</b>"), NULL, NULL, NULL, TRUE},
-    {WIDGET_RADIO_BTN, N_("Track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
     {WIDGET_RADIO_BTN, N_("Album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
     {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
     {WIDGET_CHK_BTN, N_("Enable peak info clipping prevention"), &cfg.enable_clipping_prevention, NULL,
@@ -290,8 +286,6 @@ static PreferencesWidget playback_page_widgets[] = {
         N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
         N_("When finished playing a song, don't automatically advance to the next."), FALSE},
-    {WIDGET_CHK_BTN, N_("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
-    {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, NULL, TRUE, {.spin_btn = {1, 100, 1, N_("seconds")}}, VALUE_INT},
 };
 
 static PreferencesWidget chardet_elements[] = {
@@ -307,27 +301,11 @@ static PreferencesWidget chardet_elements[] = {
 };
 
 static PreferencesWidget playlist_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_ ("Load metadata from playlists and files"),
      & cfg.use_pl_metadata, metadata_toggle, N_ ("Load metadata (tag "
      "information) from music files."), 0},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
-    {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
-};
-
-static PreferencesWidget mouse_params_elements[] = {
-    {WIDGET_SPIN_BTN, N_("Changes volume by"), &cfg.mouse_change, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("percent")}}, VALUE_INT},
-    {WIDGET_SPIN_BTN, N_("Scrolls playlist by"), &cfg.scroll_pl_by, NULL, NULL, FALSE, {.spin_btn = {1, 100, 1, N_("lines")}}, VALUE_INT},
-};
-
-static PreferencesWidget mouse_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Mouse wheel</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {mouse_params_elements, G_N_ELEMENTS(mouse_params_elements)}}},
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
@@ -1664,6 +1642,25 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 if (combo)
                     gtk_box_pack_start(GTK_BOX(widget), combo, FALSE, FALSE, 0);
                 break;
+            case WIDGET_BOX:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 3, 0);
+
+                if (widgets[x].data.box.horizontal) {
+                    widget = gtk_hbox_new(FALSE, 0);
+                } else {
+                    widget = gtk_vbox_new(FALSE, 0);
+                }
+
+                create_widgets(GTK_BOX(widget), widgets[x].data.box.elem, widgets[x].data.box.n_elem);
+
+                if (widgets[x].data.box.frame) {
+                    GtkWidget *tmp;
+                    tmp = widget;
+
+                    widget = gtk_frame_new(_(widgets[x].label));
+                    gtk_container_add(GTK_CONTAINER(widget), tmp);
+                }
+                break;
             default:
                 /* shouldn't ever happen - expect things to break */
                 continue;
@@ -1694,21 +1691,6 @@ create_titlestring_tag_menu(void)
     gtk_widget_show_all(titlestring_tag_menu);
 
     return titlestring_tag_menu;
-}
-
-static void
-create_mouse_category(void)
-{
-    GtkWidget *mouse_page_vbox;
-    GtkWidget *vbox20;
-
-    mouse_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), mouse_page_vbox);
-
-    vbox20 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (mouse_page_vbox), vbox20, TRUE, TRUE, 0);
-
-    create_widgets(GTK_BOX(vbox20), mouse_page_widgets, G_N_ELEMENTS(mouse_page_widgets));
 }
 
 static void
@@ -2470,7 +2452,6 @@ create_prefs_window(void)
     create_audio_category();
     create_replay_gain_category();
     create_connectivity_category();
-    create_mouse_category();
     create_playback_category();
     create_playlist_category();
     create_plugin_category();
@@ -2526,7 +2507,7 @@ create_prefs_window(void)
 
     aud_version_string = g_strdup_printf("<span size='small'>%s (%s) (%s@%s)</span>",
                                          "Audacious " PACKAGE_VERSION ,
-                                         svn_stamp ,
+                                         build_stamp ,
                                          g_get_user_name() , g_get_host_name() );
 
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
