@@ -3,11 +3,12 @@
 
 #include "libaudcore/vfs.h"
 #include "guid.h"
-#include "wma.h"
 #include "wma_fmt.h"
-#include "wma_fmt.h"
+#include "../util.h"
 
 GStaticRWLock file_lock = G_STATIC_RW_LOCK_INIT;
+void writeGuidToFile(VFSFile *f,int guid_type);
+
 
 GUID *guid_read_from_file(const gchar* file_path, int offset)
 {
@@ -75,10 +76,11 @@ void writeGuidToFile(VFSFile * f,int guid_type)
 {
 
 	gchar * strGuid = object_types_map[guid_type].guid_value;
-	GUID *g = guid_convert_from_string(strGuid);
+	GUID *g  = g_new(GUID,1);
+	memcpy(g,guid_convert_from_string(strGuid),sizeof(GUID));
 	g->be64 =  GUINT64_SWAP_LE_BE(g->be64);
-	vfs_fwrite(&g->le32,4,1,f);
-	vfs_fwrite(&g->le16_1,2,1,f);
-	vfs_fwrite(&g->le16_2,2,1,f);
-	vfs_fwrite(&g->be64,8,1,f);
+	vfs_fwrite(&(g->le32),4,1,f);
+	vfs_fwrite(&(g->le16_1),2,1,f);
+	vfs_fwrite(&(g->le16_2),2,1,f);
+	vfs_fwrite(&(g->be64),8,1,f);
 }

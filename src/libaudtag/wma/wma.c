@@ -1,6 +1,6 @@
 /* functions for WMA file handling */
 
-#include <glib-2.0/glib.h>
+#include <glib.h>
 #include "wma.h"
 #include "guid.h"
 #include "wma_fmt.h"
@@ -10,9 +10,10 @@
 int filePosition = 0;
 int newfilePosition = 0;
 
+
 HeaderObject header;
 HeaderObject newHeader;
-
+void writeGuidToFile(VFSFile *f,int guid_type);
 gboolean wma_can_handle_file(const char *file_path)
 {	
 	DEBUG_TAG("can handle file\n");
@@ -106,7 +107,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple )
 	filePosition += size;
 	
 	tuple_associate_int(tuple,FIELD_LENGTH,NULL,playDuration/1000);
-	DEBUG_TAG("length = %d\n",playDuration/10000);
+// 	DEBUG_TAG("length = %d\n",playDuration/10000);
 	tuple_associate_int(tuple,FIELD_YEAR,NULL,year);
 
 	return tuple;
@@ -259,10 +260,9 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
     DEBUG_TAG("wma populate tuple from file\n");
     VFSFile *file;
     /*open the file with the path received in tuple */
-    const  gchar *file_path ;//= tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
+    const  gchar *file_path = tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
     /*   -------------- FOR TESTING ONLY ---------------- */
-	file_path = "/home/paula/test.wma";
-    
+   
 	file = vfs_fopen(file_path,"r");
     
     if(file == NULL)
@@ -275,7 +275,7 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
 
     for(i=0;i<header.objectsNr;i++)
     {
-        const GUID *guid  = g_new0(GUID,1);
+        GUID *guid  = g_new0(GUID,1);
 		memcpy(guid,guid_read_from_file(file_path, filePosition),sizeof(GUID));
         int guid_type = get_guid_type(guid);
         switch(guid_type)
@@ -331,7 +331,7 @@ void copyHeaderObject(VFSFile *from, VFSFile *to)
 	/*read and copy total size */
 	vfs_fread(&newHeader.size,8,1,from);
 	vfs_fwrite(&newHeader.size,8,1,to);
-	DEBUG_TAG("HEADER %d\n",newHeader.size);
+// 	DEBUG_TAG("HEADER %d\n",newHeader.size);
 	/* read and copy number of header objects */
 	vfs_fread(&newHeader.objectsNr,4,1,from);
 		
@@ -361,7 +361,7 @@ void copyASFObject(VFSFile *from, VFSFile *to)
 	vfs_fread(&totalSize,8,1,from);
 	vfs_fwrite(&totalSize,8,1,to);
 				
-	DEBUG_TAG("total size = %d\n",totalSize);
+// 	DEBUG_TAG("total size = %d\n",totalSize);
 	/*read and copy the rest of the object */
 	char buf2[totalSize];
 	vfs_fread(buf2,totalSize-24,1,from);
@@ -377,10 +377,10 @@ ContentField getStringContentFromTuple(Tuple *tuple, int nfield)
 	glong length = 0;
 	content.strValue = g_utf8_to_utf16(tuple_get_string(tuple,nfield,NULL),-1, NULL,&length,NULL);
 	length *= sizeof(gunichar2);
-	DEBUG_TAG("len 1 = %d\n",length);
+// 	DEBUG_TAG("len 1 = %d\n",length);
 	length +=2;
 	content.size = length;
-	DEBUG_TAG("len 2 = %d\n",length);
+// 	DEBUG_TAG("len 2 = %d\n",length);
 	return content;
 }
 
@@ -397,8 +397,8 @@ gint writeContentFieldValueToFile(VFSFile *to,ContentField c,int filepos)
 		{
 			c.strValue = g_new0(gunichar2,2);
 		}
-		DEBUG_TAG("STR VAL = %s\n",g_utf16_to_utf8(c.strValue,-1,NULL,NULL,NULL) );
-		DEBUG_TAG("C Size = %d\n",c.size);
+// 		DEBUG_TAG("STR VAL = %s\n",g_utf16_to_utf8(c.strValue,-1,NULL,NULL,NULL) );
+// 		DEBUG_TAG("C Size = %d\n",c.size);
 		vfs_fwrite(c.strValue,c.size,1,to);
 		newfilePosition += c.size;
 
@@ -487,11 +487,6 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	printContentField(description);
 
  	copyData(from, to, filePosition, newfilePosition,24);
-	DEBUG_TAG("1111from pos %d\n",filePosition);
-	DEBUG_TAG("11111to pos %d\n",newfilePosition);
-
-	
-
 	size = 24;
 
 	if(title.size != 0)
@@ -504,6 +499,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	{
 		vfs_fread(&(ititle.size),2,1,from);
 		int tmp = writeContentFieldSizeToFile(to,ititle,newfilePosition);
+		tmp =0;
 	}
 
 	filePosition += 2;	
@@ -517,6 +513,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	{
 		vfs_fread(&(iauthor.size),2,1,from);
 		int tmp = writeContentFieldSizeToFile(to,iauthor,newfilePosition);
+		tmp = 0;
 	}
 	filePosition += 2;
 
@@ -535,6 +532,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	{
 		vfs_fread(&(idescription.size),2,1,from);
 		int tmp = writeContentFieldSizeToFile(to,idescription,newfilePosition);
+		tmp = 0;
 	}
 	filePosition += 2;
 	
@@ -619,7 +617,6 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 	int found_album = 0;
 	int found_genre = 0;
 	int found_tracknr = 0;
-	int found_year = 0;
 	int i;
 	gchar buf[16];
 	
@@ -696,7 +693,9 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			//skip 2 in the original file */
 
 			guint16 album_tuple_len;
-			gunichar2 *album = g_utf8_to_utf16(tuple_get_string(tuple,FIELD_ALBUM,NULL),-1, NULL,&album_tuple_len,NULL);
+			glong tl;
+			gunichar2 *album = g_utf8_to_utf16(tuple_get_string(tuple,FIELD_ALBUM,NULL),-1, NULL,&tl,NULL);
+			album_tuple_len = tl;
 			album_tuple_len *= sizeof(gunichar2);
 			album_tuple_len +=2;
 			vfs_fwrite(&album_tuple_len,2,1,to);
@@ -735,7 +734,6 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			continue;
 		}
 		
-			gchar buf[2];
 			guint16 valueSize;
 			DEBUG_TAG("copy datA \n");
 			vfs_fwrite(&name_len,2,1,to);
@@ -775,7 +773,7 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)
 	/* size  - we will change this later */
 	vfs_fread(&size,8,1,from);	
 	vfs_fwrite(&size,8,1,to);
-	DEBUG_TAG("extension size = %d\n",size);
+// 	DEBUG_TAG("extension size = %d\n",size);
 	gchar buf2[size];
 	vfs_fread(buf2,size,1,from);
 	vfs_fwrite(buf2,size,1,to);
@@ -864,8 +862,8 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	}
  			DEBUG_TAG("***\n");	
 	
-	DEBUG_TAG("size %d\n",size);
-	DEBUG_TAG("to pos %d\n",newfilePosition);
+// 	DEBUG_TAG("size %d\n",size);
+// 	DEBUG_TAG("to pos %d\n",newfilePosition);
 
 		vfs_fseek(to,newfilePosition-size+16,SEEK_SET);
 		vfs_fwrite(&size,8,1,to);
@@ -873,7 +871,7 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	newfilePosition +=24;
 }
 
-int writeContentDescriptor(VFSFile*to, gchar* fieldName,gchar* value)
+int writeContentDescriptor(VFSFile*to, gchar* fieldName,const gchar* value)
 {
 	if(value == NULL || fieldName == NULL)
 		return 0;
@@ -907,6 +905,7 @@ int writeContentDescriptor(VFSFile*to, gchar* fieldName,gchar* value)
 	vfs_fwrite(val,valSize,1,to);
 	
 	newfilePosition += valSize+2;	
+	return 0;
 }
 
 void addExtendedContentObj(VFSFile *to, Tuple *tuple)
@@ -914,12 +913,8 @@ void addExtendedContentObj(VFSFile *to, Tuple *tuple)
 	guint64 size;
 	guint64 newsize;
 	guint16 content_count = 3;
-	int found_album = 0;
-	int found_genre = 0;
-	int found_tracknr = 0;
-	int found_year = 0;
-	int i;
-	gchar buf[16];
+
+
 	
 	vfs_fseek(to,newfilePosition,SEEK_SET);
 		
@@ -936,7 +931,7 @@ void addExtendedContentObj(VFSFile *to, Tuple *tuple)
 	newsize = 16+8+2;
 	gchar * name = "WM/Genre";
 
-	gchar *genre = tuple_get_string(tuple,FIELD_GENRE,NULL);
+	const gchar *genre = tuple_get_string(tuple,FIELD_GENRE,NULL);
 	DEBUG_TAG("genre = %s\n",genre);
 	
 	newsize += writeContentDescriptor(to,name,
@@ -945,8 +940,8 @@ void addExtendedContentObj(VFSFile *to, Tuple *tuple)
 	newsize += writeContentDescriptor(to,"WM/AlbumTitle",
 				tuple_get_string(tuple,FIELD_ALBUM,NULL));
 	
-	gchar* track ;
-	 g_sprintf(track,"%d",tuple_get_int(tuple,FIELD_TRACK_NUMBER,NULL));
+	gchar track[3];
+	 sprintf(track,"%d",tuple_get_int(tuple,FIELD_TRACK_NUMBER,NULL));
 	newsize += writeContentDescriptor(to,"WM/TrackNumber",track);
 
 }
@@ -963,9 +958,8 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 	int HeaderObjNr = 0;
 	int i;
     /*open the file with the path received in tuple */
-    const  gchar *file_path ;//= tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
+    const  gchar *file_path = tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
     /*   -------------- FOR TESTING ONLY ---------------- */
-	file_path = "/home/paula/test.wma";
 	gchar *tmp_path = "/tmp/tmpwma.wma";    
 	file = vfs_fopen(file_path,"r");
 	tmpFile = vfs_fopen(tmp_path, "w+");
@@ -980,7 +974,7 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 
     for(i=0;i<newHeader.objectsNr;i++)
     {
-        const GUID *guid  = g_new0(GUID,1);
+        GUID *guid  = g_new0(GUID,1);
 		memcpy(guid,guid_read_from_file(file_path, filePosition),sizeof(GUID));
         int guid_type = get_guid_type(guid);
 		DEBUG_TAG("guid type = %d\n",guid_type);
@@ -1045,5 +1039,12 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 	
 	vfs_fclose(file);
 	vfs_fclose(tmpFile);
-	
+	if ( rename ( tmp_path, file_path ) )
+		{
+			g_print ( "an error has occured\n" );
+			return 1;
+		}
+		else
+			g_print ( "the tag was updated successfully\n" );
+	return TRUE;
 }
