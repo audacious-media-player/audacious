@@ -1,5 +1,6 @@
+PROGS=test-write test-read
 SRCS =  ../audtag.c         \
-		../util.c           \
+	../util.c           \
         ../tag_module.c     \
         ../wma/wma.c        \
         ../wma/module.c     \
@@ -16,9 +17,11 @@ CPPFLAGS += -I.. -I../.. -I../intl ${GLIB_CFLAGS} ${GTK_CFLAGS} ${MOWGLI_CFLAGS}
 LIBS += -L../../libaudcore -laudcore ${GTK_LIBS} ${MOWGLI_LIBS} ${LIBMCS_LIBS}
 LDFLAGS += ${AUDLDFLAGS}
 
+all: $(PROGS)
+
+
 test-write: $(SRCS) wma_test.c
-	gcc -o test_write wma_test.c $(SRCS) $(LDFLAGS) $(LIBS) $(CPPFLAGS)
+	$(CC) -o $@ wma_test.c $(SRCS) $(LDFLAGS) $(LIBS) $(CPPFLAGS)
 
 test-read: $(SRCS) wmaReadTuple.c
-	gcc -o test_read wmaReadTuple.c $(SRCS) $(LDFLAGS) $(LIBS) $(CPPFLAGS)
-	
+	$(CC) -o $@ wmaReadTuple.c $(SRCS) $(LDFLAGS) $(LIBS) $(CPPFLAGS)

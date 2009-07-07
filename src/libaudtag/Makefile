@@ -1,3 +1,4 @@
+SUBDIRS=tests
 LIB = ${LIB_PREFIX}audtag${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
