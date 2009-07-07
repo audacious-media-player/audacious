@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious VERSION\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-06-27 21:29-0400\n"
+"POT-Creation-Date: 2009-07-06 22:49-0400\n"
 "PO-Revision-Date: 2007-01-31 00:46+0800\n"
 "Last-Translator: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
 "Language-Team: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
@@ -17,64 +17,6 @@ msgstr ""
 "X-Poedit-Language: Chinese\n"
 "X-Poedit-Country: TAIWAN\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-#: src/audacious/actions.c:223
-msgid "Can't jump to time when no track is being played.\n"
-msgstr ""
-
-#: src/audacious/actions.c:238
-msgid "Jump to Time"
-msgstr "跳至時刻"
-
-#: src/audacious/actions.c:257
-msgid "minutes:seconds"
-msgstr "分：秒"
-
-#: src/audacious/actions.c:267
-msgid "Track length:"
-msgstr "音軌長度："
-
-#: src/audacious/actions.c:637
-#, fuzzy
-msgid "Save as Static Playlist"
-msgstr "儲存播放清單"
-
-#: src/audacious/actions.c:644
-msgid "Use Relative Path"
-msgstr ""
-
-#: src/audacious/actions.c:675
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "寫入播放清單 \"%s\"：%s 時發生錯誤"
-
-#: src/audacious/actions.c:697
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr "%s 已經存在。是否繼續？"
-
-#: src/audacious/actions.c:712
-#, c-format
-msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr ""
-"<b><big>無法儲存播放清單。</big></b>\n"
-"\n"
-"'%s' 是未知的檔案型別。\n"
-
-#: src/audacious/actions.c:764
-msgid "Save Playlist"
-msgstr "儲存播放清單"
-
-#: src/audacious/actions.c:843
-msgid "Load Playlist"
-msgstr "載入播放清單"
-
-#: src/audacious/actions.c:1079
-msgid "Presets"
-msgstr "設定組合"
 
 #: src/audacious/equalizer_preset.c:178
 #, c-format
@@ -104,106 +46,106 @@ msgstr "輸入插件：%s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "無法建立紀錄檔 (%s)！\n"
 
-#: src/audacious/main.c:73
+#: src/audacious/main.c:76
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:198
+#: src/audacious/main.c:199
 msgid "Skip backwards in playlist"
 msgstr "跳至播放清單開頭"
 
-#: src/audacious/main.c:199
+#: src/audacious/main.c:200
 msgid "Start playing current playlist"
 msgstr "開始播放目前的播放清單"
 
-#: src/audacious/main.c:200
+#: src/audacious/main.c:201
 msgid "Pause current song"
 msgstr "暫停目前的歌曲"
 
-#: src/audacious/main.c:201
+#: src/audacious/main.c:202
 msgid "Stop current song"
 msgstr "停止目前的歌曲"
 
-#: src/audacious/main.c:202
+#: src/audacious/main.c:203
 msgid "Pause if playing, play otherwise"
 msgstr "播放/暫停"
 
-#: src/audacious/main.c:203
+#: src/audacious/main.c:204
 msgid "Skip forward in playlist"
 msgstr "跳至播放清單結尾"
 
-#: src/audacious/main.c:204
+#: src/audacious/main.c:205
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "顯示跳至檔案對話框"
 
-#: src/audacious/main.c:205
+#: src/audacious/main.c:206
 msgid "Don't clear the playlist"
 msgstr "不要清除此播放清單"
 
-#: src/audacious/main.c:206
+#: src/audacious/main.c:207
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "加入檔案至播放清單。"
 
-#: src/audacious/main.c:207
+#: src/audacious/main.c:208
 #, fuzzy
 msgid "Display the main window"
 msgstr "顯示主視窗"
 
-#: src/audacious/main.c:208
+#: src/audacious/main.c:209
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:209
+#: src/audacious/main.c:210
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:210
+#: src/audacious/main.c:211
 #, fuzzy
 msgid "Show version"
 msgstr "顯示播放器"
 
-#: src/audacious/main.c:211
+#: src/audacious/main.c:212
 msgid "Interface to use (use -i list to view available interfaces)"
 msgstr ""
 
-#: src/audacious/main.c:213
+#: src/audacious/main.c:214
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:215
+#: src/audacious/main.c:216
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:482
+#: src/audacious/main.c:481
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:517
+#: src/audacious/main.c:518
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious：無法顯示，正在結束。\n"
 
-#: src/audacious/main.c:559
+#: src/audacious/main.c:560
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "可用的設定組合 (_P)："
 
-#: src/audacious/playback.c:278
+#: src/audacious/playback.c:271
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -211,7 +153,7 @@ msgstr ""
 "<b><big>未選取輸出插件。</big></b>\n"
 "您尚未選取一種輸出插件。"
 
-#: src/audacious/playlist.c:300 src/audacious/playlist.c:3106
+#: src/audacious/playlist.c:276 src/audacious/playlist.c:2847
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "新增播放清單"
@@ -220,7 +162,7 @@ msgstr "新增播放清單"
 msgid "Module loading not supported! Plugins will not be loaded.\n"
 msgstr ""
 
-#: src/audacious/signals.c:53
+#: src/audacious/signals.c:50
 msgid ""
 "\n"
 "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -230,8 +172,8 @@ msgid ""
 "circumstances.\n"
 "Your current configuration has been saved and should not be damaged.\n"
 "\n"
-"You can help improve the quality of Audacious by filing a bug at http://"
-"bugzilla.atheme.org/\n"
+"You can help improve the quality of Audacious by filing a bug at http://jira."
+"atheme.org/\n"
 "Please include the entire text of this message and a description of what you "
 "were doing when\n"
 "this crash occured in order to quickly expedite the handling of your bug "
@@ -239,20 +181,20 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/signals.c:81
+#: src/audacious/signals.c:78
 msgid ""
 "Stacktrace was unavailable. You might want to reproduce this problem while "
 "running Audacious under GDB to get a proper backtrace.\n"
 msgstr ""
 
-#: src/audacious/signals.c:85
+#: src/audacious/signals.c:82
 msgid ""
 "\n"
-"Bugs can be reported at http://redmine.atheme.org/ against the Audacious or "
+"Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
 "Audacious Plugins product.\n"
 msgstr ""
 
-#: src/audacious/signals.c:359
+#: src/audacious/signals.c:345
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
@@ -1197,23 +1139,23 @@ msgid "%d kb/s"
 msgstr "%d KBit/s"
 
 #: src/audacious/ui_fileinfopopup.c:253 src/audacious/ui_fileinfopopup.c:365
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:145
 msgid "Title"
 msgstr "標題"
 
-#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:139
+#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:143
 msgid "Artist"
 msgstr "藝人"
 
-#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:140
+#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:144
 msgid "Album"
 msgstr "專輯"
 
-#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:147
 msgid "Genre"
 msgstr "樂曲類型"
 
-#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:147
+#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:151
 msgid "Year"
 msgstr "年份"
 
@@ -1227,8 +1169,8 @@ msgstr "音軌編號"
 msgid "Track Length"
 msgstr "音軌長度："
 
-#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:144
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:501
 msgid "Filename"
 msgstr "檔案名稱"
 
@@ -1252,36 +1194,36 @@ msgstr "加入後關閉對話框"
 msgid "Headless Interface"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:143
+#: src/audacious/ui_jumptotrack.c:140
 msgid "Un_queue"
 msgstr "移出佇列 (_q)"
 
-#: src/audacious/ui_jumptotrack.c:145 src/audacious/ui_jumptotrack.c:581
+#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:578
 msgid "_Queue"
 msgstr "排入佇列 (_Q)"
 
-#: src/audacious/ui_jumptotrack.c:467
+#: src/audacious/ui_jumptotrack.c:464
 msgid "Jump to Track"
 msgstr "跳至音軌"
 
-#: src/audacious/ui_jumptotrack.c:510
+#: src/audacious/ui_jumptotrack.c:507
 msgid "Filter: "
 msgstr "濾波器："
 
-#: src/audacious/ui_jumptotrack.c:511
+#: src/audacious/ui_jumptotrack.c:508
 msgid "_Filter:"
 msgstr "濾波器 (_F)："
 
-#: src/audacious/ui_jumptotrack.c:529
+#: src/audacious/ui_jumptotrack.c:526
 msgid "Remember"
 msgstr ""
 
-#: src/audacious/ui_jumptotrack.c:538
+#: src/audacious/ui_jumptotrack.c:535
 #, fuzzy
 msgid "Clea_r"
 msgstr "清除播放區段"
 
-#: src/audacious/ui_jumptotrack.c:573
+#: src/audacious/ui_jumptotrack.c:570
 #, fuzzy
 msgid "Close on Jump"
 msgstr "開啟後關閉對話框"
@@ -1324,7 +1266,7 @@ msgid ""
 "Likewise, we're developers. We don't read blogs on a regular basis. If there "
 "is a major bug,\n"
 "we ask you to bring it to our attention via our bugtracking instance at "
-"redmine.atheme.org,\n"
+"http://jira.atheme.org/,\n"
 "or via the forums that are on the website.\n"
 "\n"
 "This will help us find out more information about your concerns, which we "
@@ -1336,7 +1278,7 @@ msgstr ""
 msgid "Playlist Manager"
 msgstr "播放清單管理員"
 
-#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:132
+#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:136
 msgid "Playlist"
 msgstr "播放清單"
 
@@ -1348,117 +1290,149 @@ msgstr "項目"
 msgid "_Rename"
 msgstr "重新命名 (_R)"
 
-#: src/audacious/ui_preferences.c:127
+#: src/audacious/ui_preferences.c:132
 msgid "Audio"
 msgstr "音訊"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:133
 #, fuzzy
 msgid "Replay Gain"
 msgstr "播放增益"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:134
 msgid "Connectivity"
 msgstr "連線"
 
-#: src/audacious/ui_preferences.c:130
-msgid "Mouse"
-msgstr "滑鼠"
-
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:135
 msgid "Playback"
 msgstr "播放"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:137
 msgid "Plugins"
 msgstr "插件"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:146
 msgid "Tracknumber"
 msgstr "音軌編號"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:149
 msgid "Filepath"
 msgstr "檔案路徑"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:150
 msgid "Date"
 msgstr "日期"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:152
 msgid "Comment"
 msgstr "註解"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:153
 #, fuzzy
 msgid "Codec"
 msgstr "/關閉"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 #, fuzzy
 msgid "Quality"
 msgstr "/離開(_Q)"
 
-#: src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:159
 msgid "None"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:160
 #, fuzzy
 msgid "Japanese"
 msgstr "日語："
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:161
 #, fuzzy
 msgid "Taiwanese"
 msgstr "日語："
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Chinese"
 msgstr "中文："
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:163
 #, fuzzy
 msgid "Korean"
 msgstr "韓語："
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:164
 #, fuzzy
 msgid "Russian"
 msgstr "俄語："
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Greek"
 msgstr "希臘語："
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:166
 msgid "Hebrew"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:167
 msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:168
 msgid "Arabic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "Universal"
 msgstr "樂曲類型"
 
+#: src/audacious/ui_preferences.c:182
+msgid "Best Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:183
+msgid "Medium Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:184
+msgid "Fastest Sinc Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:185
+msgid "ZOH Interpolation"
+msgstr ""
+
 #: src/audacious/ui_preferences.c:186
+msgid "Linear Interpolation"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:209
+#, fuzzy
+msgid "Sampling Rate [Hz]:"
+msgstr "取樣率:"
+
+#: src/audacious/ui_preferences.c:207 src/audacious/ui_preferences.c:210
+msgid "Interpolation Engine:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:212
+msgid ""
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Format Detection</b>"
 msgstr "<b>自動偵測檔案格式</b>"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:218
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "視情況才偵測檔案格式而不立即偵測。"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:219
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
@@ -1466,11 +1440,11 @@ msgstr ""
 "一旦勾選，Audacious 將視需要偵測檔案格式。這會造成一個比較混亂的播放清單，但"
 "是有顯著的速度提升。"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:220
 msgid "Detect file formats by extension."
 msgstr "依副檔名偵測檔案格式。"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:221
 #, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
@@ -1480,37 +1454,58 @@ msgstr ""
 "供最小等級的檔案格式偵測。"
 
 # No good translation of bit rate can be found. -- Abel
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:222
 #, fuzzy
 msgid "<b>Bit Depth</b>"
 msgstr "位元率:"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:223
+msgid "Output bit depth:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:224
+msgid ""
+"All streams will be converted to this bit depth.\n"
+"This should be the max supported bit depth of\n"
+"the sound card or output plugin."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:227
+#, fuzzy
+msgid "<b>Sampling Rate Converter</b>"
+msgstr "取樣率:"
+
+#: src/audacious/ui_preferences.c:229 src/audacious/ui_preferences.c:231
+#, fuzzy
+msgid "Enable Sampling Rate Converter"
+msgstr "取樣率:"
+
+#: src/audacious/ui_preferences.c:234
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "<b>字型(_F)</b>"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:235
 #, fuzzy
 msgid "Use software volume control"
 msgstr "音量控制:"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:237
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:238
 #, fuzzy
 msgid "<b>Advanced</b>"
 msgstr "進階設定"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:239
 msgid "Bypass all of signal processing if possible"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:202
+#: src/audacious/ui_preferences.c:240
 msgid ""
 "Try to pass input plugin's output directly to output plugin, if the latter "
 "supports format produced by input plugin. If it's true, all signal "
@@ -1518,277 +1513,141 @@ msgid ""
 "Gain and software volume control)."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:243
 msgid "Use fast floating-point conversion (16-bit output only)"
 msgstr ""
 
 # This entry is taken from Sun. -- Abel
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:248
 #, fuzzy
 msgid "Preamp:"
 msgstr "夢幻音樂(Dream)"
 
-#: src/audacious/ui_preferences.c:210 src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:248 src/audacious/ui_preferences.c:249
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:249
 #, fuzzy
 msgid "Default gain:"
 msgstr "預設面板："
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:249
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:250
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:254
 #, fuzzy
 msgid "<b>Replay Gain configuration</b>"
 msgstr "<b>代理伺服器設定</b>"
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:255
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "啟用播放增益"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:256
 #, fuzzy
 msgid "<b>Replay Gain mode</b>"
 msgstr "<b>檔案名稱</b>"
 
-#: src/audacious/ui_preferences.c:219
-#, fuzzy
-msgid "Track gain/peak"
-msgstr "音軌尖峰:"
-
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:257
 #, fuzzy
 msgid "Album gain/peak"
 msgstr "專輯增益:"
 
-#: src/audacious/ui_preferences.c:221 src/audacious/ui_preferences.c:1295
+#: src/audacious/ui_preferences.c:258 src/audacious/ui_preferences.c:1254
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>其他 (_M)</b>"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:259
 msgid "Enable peak info clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:260
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:261
 msgid "Dynamically adjust scale factor to prevent clipping"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:262
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:230
+#: src/audacious/ui_preferences.c:267
 msgid "Proxy hostname:"
 msgstr "代理伺服器主機名稱："
 
-#: src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:268
 msgid "Proxy port:"
 msgstr "代理伺服器埠號："
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:272
 msgid "Proxy username:"
 msgstr "使用者名稱："
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:273
 msgid "Proxy password:"
 msgstr "密碼："
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:277
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理伺服器設定</b>"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:278
 msgid "Enable proxy usage"
 msgstr "啟用透過代理伺服器連線"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:280
 msgid "Use authentication with proxy"
 msgstr "使用驗證"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:282
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr "<span size=\"small\">變更這些設定必須重新啟動 Audacious。</span>"
 
-#: src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:286
 msgid "<b>Playback</b>"
 msgstr "<b>播放</b>"
 
-#: src/audacious/ui_preferences.c:250
+#: src/audacious/ui_preferences.c:287
 msgid "Continue playback on startup"
 msgstr "啟動後接續播放"
 
-#: src/audacious/ui_preferences.c:251
+#: src/audacious/ui_preferences.c:288
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr "Audacious 啟動時，自動從上次停止的地方開始播放。"
 
-#: src/audacious/ui_preferences.c:252
+#: src/audacious/ui_preferences.c:289
 msgid "Don't advance in the playlist"
 msgstr "不捲動播放清單"
 
-#: src/audacious/ui_preferences.c:253
+#: src/audacious/ui_preferences.c:290
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "播完一首歌曲後，不要自動前往下一首。"
 
-#: src/audacious/ui_preferences.c:254
-msgid "Pause between songs"
-msgstr "歌曲間稍作暫停"
-
-#: src/audacious/ui_preferences.c:255
-msgid "Pause for"
-msgstr "暫停"
-
-#: src/audacious/ui_preferences.c:255
-msgid "seconds"
-msgstr "秒"
-
-#: src/audacious/ui_preferences.c:259
-msgid "<b>Filename</b>"
-msgstr "<b>檔案名稱</b>"
-
-#: src/audacious/ui_preferences.c:260
-msgid "Convert underscores to blanks"
-msgstr "轉換下劃線為空白"
-
-#: src/audacious/ui_preferences.c:261
-msgid "Convert %20 to blanks"
-msgstr "轉換 %20 為空白"
-
-#: src/audacious/ui_preferences.c:262
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr "轉換反斜線 '\\' 為斜線 '/'"
-
-#: src/audacious/ui_preferences.c:263
-msgid "<b>Metadata</b>"
-msgstr "<b>歌曲資訊</b>"
-
-#: src/audacious/ui_preferences.c:264
-msgid "Load metadata from playlists and files"
-msgstr "從播放清單與檔案載入歌曲資訊"
-
-#: src/audacious/ui_preferences.c:264
-msgid "Load metadata (tag information) from music files."
-msgstr "載入音樂檔的歌曲資訊 (標籤資訊)。"
-
-#: src/audacious/ui_preferences.c:266
-msgid "<b>File Dialog</b>"
-msgstr "<b>檔案對話框</b>"
-
-#: src/audacious/ui_preferences.c:267
-msgid "Always refresh directory when opening file dialog"
-msgstr "開啟檔案對話框時總是重新整理目錄"
-
-#: src/audacious/ui_preferences.c:267
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-"總是重新整理檔案對話框 (在大量目錄下開啟對話框會變慢，而且 Gnome VFS 應該會自"
-"動處理)。"
-
-#: src/audacious/ui_preferences.c:271
-msgid "Changes volume by"
-msgstr "滑鼠滾輪改變音量以"
-
-#: src/audacious/ui_preferences.c:271
-msgid "percent"
-msgstr "百分比"
-
-#: src/audacious/ui_preferences.c:272
-msgid "Scrolls playlist by"
-msgstr "滑鼠捲動播放清單以"
-
-#: src/audacious/ui_preferences.c:272
-msgid "lines"
-msgstr "列"
-
-#: src/audacious/ui_preferences.c:276
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>滑鼠滾輪</b>"
-
-#: src/audacious/ui_preferences.c:438
-msgid "Enabled"
-msgstr "已啟用"
-
-#: src/audacious/ui_preferences.c:454
-msgid "Description"
-msgstr "描述"
-
-#: src/audacious/ui_preferences.c:896
-msgid "Category"
-msgstr "分類"
-
-#: src/audacious/ui_preferences.c:1214
-msgid "Popup Information Settings"
-msgstr "彈出式資訊設定"
-
-#: src/audacious/ui_preferences.c:1223
-#, fuzzy
-msgid "<b>Cover image retrieve</b>"
-msgstr "<b>自動偵測檔案格式</b>"
-
-#: src/audacious/ui_preferences.c:1228
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-"搜尋專輯封面時，Audacious 會查詢檔案名稱中的特定字詞。您可以在下列清單中指定"
-"這些字，並以逗號 (,) 隔開。"
-
-#: src/audacious/ui_preferences.c:1245
-msgid "Exclude:"
-msgstr "排除："
-
-# This entry is taken from Sun. -- Abel
-#: src/audacious/ui_preferences.c:1252
-msgid "Include:"
-msgstr "包含："
-
-#: src/audacious/ui_preferences.c:1269
-msgid "Recursively search for cover"
-msgstr "遞迴地搜尋封面"
-
-#: src/audacious/ui_preferences.c:1279
-msgid "Search depth: "
-msgstr "搜尋深度："
-
-#: src/audacious/ui_preferences.c:1292
-msgid "Use per-file cover"
-msgstr "為每個檔案指定封面"
-
-#: src/audacious/ui_preferences.c:1304
-msgid "Show Progress bar for the current track"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1314
-msgid "Delay until filepopup comes up: "
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1359
+#: src/audacious/ui_preferences.c:294
 msgid "Auto character encoding detector for:"
 msgstr "字元編碼自動偵測於："
 
-#: src/audacious/ui_preferences.c:1378
+#: src/audacious/ui_preferences.c:302
+msgid "Fallback character encodings:"
+msgstr "備用字元編碼："
+
+#: src/audacious/ui_preferences.c:302
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1798,79 +1657,135 @@ msgstr ""
 "歌曲資訊轉碼失敗時所用的字元編碼清單。如果字元編碼自動偵測失敗，或被停用，清"
 "單裡的編碼就會被當成歌曲資訊的候選編碼，而從這些編碼轉到 UTF-8 時將會提示。"
 
-#: src/audacious/ui_preferences.c:1380
-msgid "Fallback character encodings:"
-msgstr "備用字元編碼："
+#: src/audacious/ui_preferences.c:306
+msgid "<b>Metadata</b>"
+msgstr "<b>歌曲資訊</b>"
 
-#: src/audacious/ui_preferences.c:1418
-msgid "Output bit depth:"
-msgstr ""
+#: src/audacious/ui_preferences.c:307
+msgid "Load metadata from playlists and files"
+msgstr "從播放清單與檔案載入歌曲資訊"
 
-#: src/audacious/ui_preferences.c:1433
+#: src/audacious/ui_preferences.c:308
+msgid "Load metadata (tag information) from music files."
+msgstr "載入音樂檔的歌曲資訊 (標籤資訊)。"
+
+#: src/audacious/ui_preferences.c:471
+msgid "Enabled"
+msgstr "已啟用"
+
+#: src/audacious/ui_preferences.c:487
+msgid "Description"
+msgstr "描述"
+
+#: src/audacious/ui_preferences.c:869
+msgid "Category"
+msgstr "分類"
+
+#: src/audacious/ui_preferences.c:1173
+msgid "Popup Information Settings"
+msgstr "彈出式資訊設定"
+
+#: src/audacious/ui_preferences.c:1182
+#, fuzzy
+msgid "<b>Cover image retrieve</b>"
+msgstr "<b>自動偵測檔案格式</b>"
+
+#: src/audacious/ui_preferences.c:1187
 msgid ""
-"All streams will be converted to this bit depth.\n"
-"This should be the max supported bit depth of\n"
-"the sound card or output plugin."
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"搜尋專輯封面時，Audacious 會查詢檔案名稱中的特定字詞。您可以在下列清單中指定"
+"這些字，並以逗號 (,) 隔開。"
+
+#: src/audacious/ui_preferences.c:1204
+msgid "Exclude:"
+msgstr "排除："
+
+# This entry is taken from Sun. -- Abel
+#: src/audacious/ui_preferences.c:1211
+msgid "Include:"
+msgstr "包含："
+
+#: src/audacious/ui_preferences.c:1228
+msgid "Recursively search for cover"
+msgstr "遞迴地搜尋封面"
+
+#: src/audacious/ui_preferences.c:1238
+msgid "Search depth: "
+msgstr "搜尋深度："
+
+#: src/audacious/ui_preferences.c:1251
+msgid "Use per-file cover"
+msgstr "為每個檔案指定封面"
+
+#: src/audacious/ui_preferences.c:1263
+msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1850
+#: src/audacious/ui_preferences.c:1273
+msgid "Delay until filepopup comes up: "
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1757
 msgid "<b>Song Display</b>"
 msgstr "<b>歌曲顯示</b>"
 
-#: src/audacious/ui_preferences.c:1859
+#: src/audacious/ui_preferences.c:1766
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1880
+#: src/audacious/ui_preferences.c:1787
 msgid "Show information about titlestring format"
 msgstr "顯示關於標題字串格式的資訊"
 
-#: src/audacious/ui_preferences.c:1891
+#: src/audacious/ui_preferences.c:1798
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1892
+#: src/audacious/ui_preferences.c:1799
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1893
+#: src/audacious/ui_preferences.c:1800
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1894
+#: src/audacious/ui_preferences.c:1801
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1802
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1896
+#: src/audacious/ui_preferences.c:1803
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1897
+#: src/audacious/ui_preferences.c:1804
 #, fuzzy
 msgid "Custom"
 msgstr "自訂字串:"
 
-#: src/audacious/ui_preferences.c:1904
+#: src/audacious/ui_preferences.c:1811
 msgid "Custom string:"
 msgstr "自訂字串："
 
-#: src/audacious/ui_preferences.c:1911
+#: src/audacious/ui_preferences.c:1818
 msgid "Title format:"
 msgstr "標題格式："
 
-#: src/audacious/ui_preferences.c:1922
+#: src/audacious/ui_preferences.c:1829
 msgid "<b>Popup Information</b>"
 msgstr "<b>彈出資訊</b>"
 
-#: src/audacious/ui_preferences.c:1937
+#: src/audacious/ui_preferences.c:1844
 msgid "Show popup information for playlist entries"
 msgstr "顯示清單項目的彈出資訊"
 
-#: src/audacious/ui_preferences.c:1939
+#: src/audacious/ui_preferences.c:1846
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -1879,109 +1794,63 @@ msgstr ""
 "切換播放清單裡指到的項目的彈出式資訊視窗。視窗會顯示歌曲標題，專輯名稱，歌曲"
 "種類，發行年份，音軌編號，音軌長度，以及封面。"
 
-#: src/audacious/ui_preferences.c:1944
+#: src/audacious/ui_preferences.c:1851
 msgid "Edit settings for popup information"
 msgstr "編輯彈出式資訊的設定"
 
-#: src/audacious/ui_preferences.c:2039
+#: src/audacious/ui_preferences.c:1931
 msgid "<b>Audio System</b>"
 msgstr "<b>音效系統</b>"
 
-#: src/audacious/ui_preferences.c:2056
+#: src/audacious/ui_preferences.c:1948
 msgid "Buffer size:"
 msgstr "緩衝區大小："
 
-#: src/audacious/ui_preferences.c:2073
+#: src/audacious/ui_preferences.c:1965
 msgid "Current output plugin:"
 msgstr "目前的輸出插件："
 
-#: src/audacious/ui_preferences.c:2102
+#: src/audacious/ui_preferences.c:1994
 msgid "Output Plugin Preferences"
 msgstr "輸出插件偏好設定"
 
-#: src/audacious/ui_preferences.c:2119
+#: src/audacious/ui_preferences.c:2011
 msgid "Output Plugin Information"
 msgstr "輸出插件資訊"
 
-#: src/audacious/ui_preferences.c:2128
-#, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "取樣率:"
-
-#: src/audacious/ui_preferences.c:2137
-#, fuzzy
-msgid "Enable Sampling Rate Converter"
-msgstr "取樣率:"
-
-#: src/audacious/ui_preferences.c:2157
-msgid "Best Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2158
-msgid "Medium Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2159
-msgid "Fastest Sinc Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2160
-msgid "ZOH Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2161
-msgid "Linear Interpolation"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2163
-msgid "Interpolation Engine:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2169
-msgid ""
-"<span size=\"small\">All streams will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:2189
-#, fuzzy
-msgid "Sampling Rate [Hz]:"
-msgstr "取樣率:"
-
-#: src/audacious/ui_preferences.c:2319
+#: src/audacious/ui_preferences.c:2116
 msgid "_Decoder list:"
 msgstr "解碼器清單 (_D)："
 
-#: src/audacious/ui_preferences.c:2349
+#: src/audacious/ui_preferences.c:2146
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>解碼器</b></span>"
 
-#: src/audacious/ui_preferences.c:2362
+#: src/audacious/ui_preferences.c:2159
 msgid "_General plugin list:"
 msgstr "一般插件清單 (_G)："
 
-#: src/audacious/ui_preferences.c:2392
+#: src/audacious/ui_preferences.c:2189
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>一般</b></span>"
 
-#: src/audacious/ui_preferences.c:2404
+#: src/audacious/ui_preferences.c:2201
 msgid "_Visualization plugin list:"
 msgstr "視覺化插件清單 (_V)："
 
-#: src/audacious/ui_preferences.c:2434
+#: src/audacious/ui_preferences.c:2231
 msgid "<b>Visualization</b>"
 msgstr "<b>視覺化</b>"
 
-#: src/audacious/ui_preferences.c:2446
+#: src/audacious/ui_preferences.c:2243
 msgid "_Effect plugin list:"
 msgstr "特效插件清單 (_E)："
 
-#: src/audacious/ui_preferences.c:2476
+#: src/audacious/ui_preferences.c:2273
 msgid "<b>Effects</b>"
 msgstr "<b>特效</b>"
 
-#: src/audacious/ui_preferences.c:2609
+#: src/audacious/ui_preferences.c:2406
 msgid "Audacious Preferences"
 msgstr "Audacious 偏好設定"
 
@@ -1998,7 +1867,7 @@ msgstr "請輸入欲播放的位置"
 msgid "Could not create directory (%s): %s\n"
 msgstr "無法建立目錄 (%s)：%s\n"
 
-#: src/libaudcore/audstrings.c:194
+#: src/libaudcore/audstrings.c:187
 msgid "  (invalid UTF-8)"
 msgstr "  (無效的 UTF-8 字元)"
 
@@ -2061,6 +1930,99 @@ msgstr ""
 #, fuzzy
 msgid "Show Session Management options"
 msgstr "顯示視窗管理員裝飾"
+
+#~ msgid "Jump to Time"
+#~ msgstr "跳至時刻"
+
+#~ msgid "minutes:seconds"
+#~ msgstr "分：秒"
+
+#~ msgid "Track length:"
+#~ msgstr "音軌長度："
+
+#, fuzzy
+#~ msgid "Save as Static Playlist"
+#~ msgstr "儲存播放清單"
+
+#~ msgid "Error writing playlist \"%s\": %s"
+#~ msgstr "寫入播放清單 \"%s\"：%s 時發生錯誤"
+
+#~ msgid "%s already exist. Continue?"
+#~ msgstr "%s 已經存在。是否繼續？"
+
+#~ msgid ""
+#~ "<b><big>Unable to save playlist.</big></b>\n"
+#~ "\n"
+#~ "Unknown file type for '%s'.\n"
+#~ msgstr ""
+#~ "<b><big>無法儲存播放清單。</big></b>\n"
+#~ "\n"
+#~ "'%s' 是未知的檔案型別。\n"
+
+#~ msgid "Save Playlist"
+#~ msgstr "儲存播放清單"
+
+#~ msgid "Load Playlist"
+#~ msgstr "載入播放清單"
+
+#~ msgid "Presets"
+#~ msgstr "設定組合"
+
+#~ msgid "Mouse"
+#~ msgstr "滑鼠"
+
+#, fuzzy
+#~ msgid "Track gain/peak"
+#~ msgstr "音軌尖峰:"
+
+#~ msgid "Pause between songs"
+#~ msgstr "歌曲間稍作暫停"
+
+#~ msgid "Pause for"
+#~ msgstr "暫停"
+
+#~ msgid "seconds"
+#~ msgstr "秒"
+
+#~ msgid "<b>Filename</b>"
+#~ msgstr "<b>檔案名稱</b>"
+
+#~ msgid "Convert underscores to blanks"
+#~ msgstr "轉換下劃線為空白"
+
+#~ msgid "Convert %20 to blanks"
+#~ msgstr "轉換 %20 為空白"
+
+#~ msgid "Convert backslash '\\' to forward slash '/'"
+#~ msgstr "轉換反斜線 '\\' 為斜線 '/'"
+
+#~ msgid "<b>File Dialog</b>"
+#~ msgstr "<b>檔案對話框</b>"
+
+#~ msgid "Always refresh directory when opening file dialog"
+#~ msgstr "開啟檔案對話框時總是重新整理目錄"
+
+#~ msgid ""
+#~ "Always refresh the file dialog (this will slow opening the dialog on "
+#~ "large directories, and Gnome VFS should handle automatically)."
+#~ msgstr ""
+#~ "總是重新整理檔案對話框 (在大量目錄下開啟對話框會變慢，而且 Gnome VFS 應該"
+#~ "會自動處理)。"
+
+#~ msgid "Changes volume by"
+#~ msgstr "滑鼠滾輪改變音量以"
+
+#~ msgid "percent"
+#~ msgstr "百分比"
+
+#~ msgid "Scrolls playlist by"
+#~ msgstr "滑鼠捲動播放清單以"
+
+#~ msgid "lines"
+#~ msgstr "列"
+
+#~ msgid "<b>Mouse wheel</b>"
+#~ msgstr "<b>滑鼠滾輪</b>"
 
 #~ msgid "Stop after Current Song"
 #~ msgstr "播完目前的歌曲後停止"

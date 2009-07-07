@@ -254,7 +254,6 @@ static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Replay Gain configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Replay Gain mode</b>"), NULL, NULL, NULL, TRUE},
-    {WIDGET_RADIO_BTN, N_("Track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
     {WIDGET_RADIO_BTN, N_("Album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
     {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
     {WIDGET_CHK_BTN, N_("Enable peak info clipping prevention"), &cfg.enable_clipping_prevention, NULL,
@@ -289,8 +288,6 @@ static PreferencesWidget playback_page_widgets[] = {
         N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
         N_("When finished playing a song, don't automatically advance to the next."), FALSE},
-    {WIDGET_CHK_BTN, N_("Pause between songs"), &cfg.pause_between_songs, NULL, NULL, FALSE},
-    {WIDGET_SPIN_BTN, N_("Pause for"), &cfg.pause_between_songs_time, NULL, NULL, TRUE, {.spin_btn = {1, 100, 1, N_("seconds")}}, VALUE_INT},
 };
 
 static PreferencesWidget chardet_elements[] = {
@@ -306,17 +303,11 @@ static PreferencesWidget chardet_elements[] = {
 };
 
 static PreferencesWidget playlist_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Filename</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Convert underscores to blanks"), &cfg.convert_underscore, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Convert %20 to blanks"), &cfg.convert_twenty, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Convert backslash '\\' to forward slash '/'"), &cfg.convert_slash, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_ ("Load metadata from playlists and files"),
      & cfg.use_pl_metadata, metadata_toggle, N_ ("Load metadata (tag "
      "information) from music files."), 0},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
-    {WIDGET_LABEL, N_("<b>File Dialog</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Always refresh directory when opening file dialog"), &cfg.refresh_file_list, NULL, N_("Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."), FALSE},
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);

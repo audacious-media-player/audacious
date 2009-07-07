@@ -1,5 +1,4 @@
 # Please don't update this file manually - use ./update-potfiles.sh instead!
-src/audacious/actions.c
 src/audacious/equalizer_preset.c
 src/audacious/input.c
 src/audacious/intl/os2compat.c

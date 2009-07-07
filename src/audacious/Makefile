@@ -56,8 +56,7 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack_cache.c			\
        ui_misc.c				\
        ui_playlist_manager.c				\
-       ui_urlopener.c					\
-       actions.c
+       ui_urlopener.c
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
