@@ -364,8 +364,8 @@ void copyASFObject(VFSFile *from, VFSFile *to)
 	DEBUG_TAG("total size = %d\n",totalSize);
 	/*read and copy the rest of the object */
 	char buf2[totalSize];
-	vfs_fread(buf2,totalSize,1,from);
-	vfs_fwrite(buf2,totalSize,1,to);
+	vfs_fread(buf2,totalSize-24,1,from);
+	vfs_fwrite(buf2,totalSize-24,1,to);
 	
 	newfilePosition += totalSize;
 	filePosition += totalSize;
@@ -814,7 +814,7 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	description = getStringContentFromTuple(tuple, FIELD_COMMENT);
 	copyright = getStringContentFromTuple(tuple, FIELD_COPYRIGHT);
 	//we dont have rating in tuple so make up a dummy one
-	rating.size = 0;
+	rating.size = 2;
 
 	printContentField(title);
 	printContentField(author);
@@ -839,6 +839,7 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	size += writeContentFieldSizeToFile(to,description,newfilePosition);
 
 	size += writeContentFieldSizeToFile(to,rating,newfilePosition);
+	
 	
 	size += writeContentFieldValueToFile(to,title,newfilePosition);
 	
@@ -931,8 +932,7 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 				HeaderObjNr ++;
 			}break;
 			default:
-			{
-				
+			{			
 				DEBUG_TAG("default\n");
 				DEBUG_TAG("asf object = %d\n",guid_type);
 				copyASFObject(file,tmpFile);
@@ -941,18 +941,19 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
         }
     }
 
-	if(foundContentDesc == 0)
-	{
-	DEBUG_TAG("Content Description not found\n");
-		addContentDescriptionObj(tmpFile,tuple);
-	}
+// 	if(foundContentDesc == 0)
+// 	{
+// 	DEBUG_TAG("Content Description not found\n");
+// 		addContentDescriptionObj(tmpFile,tuple);
+// 	}
 
 	/* we must update the total header size and number of objects */
 	guint64 total_size = newfilePosition;
 	DEBUG_TAG("new header %d\n",newfilePosition);
 	vfs_fseek(tmpFile,16,SEEK_SET);
 	vfs_fwrite(&total_size,8,1,tmpFile);
-
+	newHeader.objectsNr+=1;
+	vfs_fwrite(&HeaderObjNr,4,1,tmpFile);
 	/* go back to the end of file */
 	vfs_fseek(tmpFile,newfilePosition,SEEK_SET);
 	DEBUG_TAG("new header %d\n",newfilePosition);
