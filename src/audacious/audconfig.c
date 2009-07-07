@@ -76,7 +76,6 @@ AudConfig aud_default_config = {
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
     .output_buffer_size = 500,
-    .playlist_detect = TRUE,           /* whether or not to postpone format detection on initial add */
     .show_filepopup_for_tuple = TRUE,
     .cover_name_include = NULL,        /* words identifying covers */
     .cover_name_exclude = NULL,        /* words that might not show up in cover names */
@@ -154,7 +153,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"equalizer_autoload", &cfg.equalizer_autoload, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
-    {"playlist_detect", &cfg.playlist_detect, TRUE},
     {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
     {"recurse_for_cover", &cfg.recurse_for_cover, TRUE},
     {"use_file_cover", &cfg.use_file_cover, TRUE},

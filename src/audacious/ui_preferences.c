@@ -215,8 +215,6 @@ static PreferencesWidget sample_rate_elements[] = {
 
 static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Detect file formats on demand, instead of immediately."), &cfg.playlist_detect, NULL,
-        N_("When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."), FALSE},
     {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
         N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},

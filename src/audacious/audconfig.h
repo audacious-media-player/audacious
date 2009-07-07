@@ -57,7 +57,6 @@ struct _AudConfig {
     gchar *chardet_detector;
     gchar *chardet_fallback;
     gint output_buffer_size;
-    gboolean playlist_detect;
     gboolean show_filepopup_for_tuple;
     gchar *cover_name_include, *cover_name_exclude;
     gboolean recurse_for_cover;
