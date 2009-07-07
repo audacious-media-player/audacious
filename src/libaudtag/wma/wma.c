@@ -393,7 +393,12 @@ gint writeContentFieldSizeToFile(VFSFile *to,ContentField c,int filepos)
 
 gint writeContentFieldValueToFile(VFSFile *to,ContentField c,int filepos)
 {
-
+		if(c.strValue == NULL)
+		{
+			c.strValue = g_new0(gunichar2,2);
+		}
+		DEBUG_TAG("STR VAL = %s\n",g_utf16_to_utf8(c.strValue,-1,NULL,NULL,NULL) );
+		DEBUG_TAG("C Size = %d\n",c.size);
 		vfs_fwrite(c.strValue,c.size,1,to);
 		newfilePosition += c.size;
 
@@ -734,8 +739,7 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			guint16 valueSize;
 			DEBUG_TAG("copy datA \n");
 			vfs_fwrite(&name_len,2,1,to);
-			vfs_fwrite(name,name_len,1,to);
-			
+			vfs_fwrite(name,name_len,1,to);		
 
 			
 			vfs_fread(&data_type,2,1,from);
@@ -785,11 +789,13 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)
 /* TODO move this to util since it can be used for all the other formats */
 void writeAudioData(VFSFile *from, VFSFile *to)
 {
-	printf("audio data %d\n",ftell(from));
+	printf("audio data %d\n",ftell(to));
+	vfs_fseek(to,newfilePosition+20,SEEK_SET);
 	while(vfs_feof(from) == 0)
 	{
 		gchar buf[4096];
 		gint n = vfs_fread(buf,1,4096,from);
+		DEBUG_TAG("copy %d\n",n);
 		vfs_fwrite(buf,n,1,to);
 	}
 }
@@ -810,28 +816,31 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	copyright = getStringContentFromTuple(tuple, FIELD_COPYRIGHT);
 	//we dont have rating in tuple so make up a dummy one
 	rating.size = 0;
-	
+
 	printContentField(title);
 	printContentField(author);
 	printContentField(description);
+	printContentField(copyright);
 	
 	/* write guid and size to file */
 	size = 24;
  	writeGuidToFile(to,ASF_CONTENT_DESCRIPTION_OBJECT);
 	vfs_fwrite(&size,8,1,to);
-	
+
 	newfilePosition +=24;
 
 
 	size += writeContentFieldSizeToFile(to,title,newfilePosition);
+
 	size += writeContentFieldSizeToFile(to,author,newfilePosition);
- 		
+	
 	/* copyright */
 	size += writeContentFieldSizeToFile(to,copyright,newfilePosition);
 
 	size += writeContentFieldSizeToFile(to,description,newfilePosition);
-	size += writeContentFieldSizeToFile(to,rating,newfilePosition);
 
+	size += writeContentFieldSizeToFile(to,rating,newfilePosition);
+	
 	size += writeContentFieldValueToFile(to,title,newfilePosition);
 	
 	if(author.size != 0 )
@@ -839,29 +848,32 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 		size += writeContentFieldValueToFile(to,author,newfilePosition);
 
 	}
+
 	if(copyright.size != 0)
 	{
 		size += writeContentFieldValueToFile(to,copyright,newfilePosition);
 	}
-
 	if(description.size != 0 )
 	{
+		
+		printContentField(description);
 		size += writeContentFieldValueToFile(to,description,newfilePosition);
 	}
 
 	if(rating.size != 0)
 	{
+		DEBUG_TAG("xx\n");
 		size += writeContentFieldValueToFile(to,rating,newfilePosition);
 	}
-
+ 			DEBUG_TAG("***\n");	
 	
-	DEBUG_TAG("from pos %d\n",filePosition);
+	DEBUG_TAG("size %d\n",size);
 	DEBUG_TAG("to pos %d\n",newfilePosition);
 
 		vfs_fseek(to,newfilePosition-size+16,SEEK_SET);
-		vfs_fwrite(&size,2,1,to);
+		vfs_fwrite(&size,8,1,to);
 		vfs_fseek(to,newfilePosition,SEEK_SET);
-
+	newfilePosition +=24;
 }
 
 gboolean wma_write_tuple_to_file (Tuple* tuple)
@@ -932,6 +944,7 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 
 	if(foundContentDesc == 0)
 	{
+	DEBUG_TAG("Content Description not found\n");
 		addContentDescriptionObj(tmpFile,tuple);
 	}
 
@@ -940,13 +953,16 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 	DEBUG_TAG("new header %d\n",newfilePosition);
 	vfs_fseek(tmpFile,16,SEEK_SET);
 	vfs_fwrite(&total_size,8,1,tmpFile);
-	
+
 	/* go back to the end of file */
-	vfs_fseek(tmpFile,total_size,SEEK_SET);
+	vfs_fseek(tmpFile,newfilePosition,SEEK_SET);
+	DEBUG_TAG("new header %d\n",newfilePosition);
+
 	/* write the rest of the file */	
 	writeAudioData(file,tmpFile);
 	
 	vfs_fclose(file);
 	vfs_fclose(tmpFile);
+	exit(0);
 	
 }
