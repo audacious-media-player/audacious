@@ -759,9 +759,6 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 	}
 	filePosition = ftell(from);
 	newfilePosition += newsize;
-	
-// 	DEBUG_TAG("from pos %d\n",filePosition);
-// 	DEBUG_TAG("to pos %d\n",newfilePosition);
 }
 void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)
 {
@@ -876,6 +873,85 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	newfilePosition +=24;
 }
 
+int writeContentDescriptor(VFSFile*to, gchar* fieldName,gchar* value)
+{
+	if(value == NULL || fieldName == NULL)
+		return 0;
+	glong nameSize;
+	guint16 nSize;
+	guint16 dataType = 0;
+	gunichar2 *name = g_utf8_to_utf16(fieldName,-1,NULL,&nameSize,NULL);
+	nameSize *= sizeof(gunichar2);
+	nameSize += 2;
+	nSize = nameSize;
+	//write the name size and name
+	
+	vfs_fwrite(&nSize,2,1,to);
+	vfs_fwrite(name,nameSize,1,to);
+	
+	newfilePosition += nameSize+2;
+	
+	//write data type - string in our case 
+	vfs_fwrite(&dataType,2,1,to);
+	
+	newfilePosition += 2;
+	
+	//write value length 
+	glong valSize = 0;
+	gunichar2 *val = g_utf8_to_utf16(value,-1,NULL,&valSize,NULL);
+	valSize *= sizeof(gunichar2);
+	valSize += 2;
+	guint16 vSize = valSize;
+	//write value size
+	vfs_fwrite(&vSize,2,1,to);
+	vfs_fwrite(val,valSize,1,to);
+	
+	newfilePosition += valSize+2;	
+}
+
+void addExtendedContentObj(VFSFile *to, Tuple *tuple)
+{
+	guint64 size;
+	guint64 newsize;
+	guint16 content_count = 3;
+	int found_album = 0;
+	int found_genre = 0;
+	int found_tracknr = 0;
+	int found_year = 0;
+	int i;
+	gchar buf[16];
+	
+	vfs_fseek(to,newfilePosition,SEEK_SET);
+		
+	/* write guid and size to file */
+	size = 24;
+ 	writeGuidToFile(to,ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT);
+	vfs_fwrite(&size,8,1,to);
+
+	newfilePosition +=24;
+	
+
+	vfs_fwrite(&content_count,2,1,to);
+//	newfilePosition += 16+8+2;	
+	newsize = 16+8+2;
+	gchar * name = "WM/Genre";
+
+	gchar *genre = tuple_get_string(tuple,FIELD_GENRE,NULL);
+	DEBUG_TAG("genre = %s\n",genre);
+	
+	newsize += writeContentDescriptor(to,name,
+				tuple_get_string(tuple,FIELD_GENRE,NULL));	
+	
+	newsize += writeContentDescriptor(to,"WM/AlbumTitle",
+				tuple_get_string(tuple,FIELD_ALBUM,NULL));
+	
+	gchar* track ;
+	 g_sprintf(track,"%d",tuple_get_int(tuple,FIELD_TRACK_NUMBER,NULL));
+	newsize += writeContentDescriptor(to,"WM/TrackNumber",track);
+
+}
+
+
 gboolean wma_write_tuple_to_file (Tuple* tuple)
 {
 	newfilePosition = 0;
@@ -933,20 +1009,26 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 			}break;
 			default:
 			{			
-				DEBUG_TAG("default\n");
-				DEBUG_TAG("asf object = %d\n",guid_type);
+				DEBUG_TAG("default guid= %d\n",guid_type);
 				copyASFObject(file,tmpFile);
 				HeaderObjNr ++;
 			}
         }
     }
 
-// 	if(foundContentDesc == 0)
-// 	{
-// 	DEBUG_TAG("Content Description not found\n");
-// 		addContentDescriptionObj(tmpFile,tuple);
-// 	}
+	if(foundContentDesc == 0)
+	{
+	DEBUG_TAG("Content Description not found\n");
+		addContentDescriptionObj(tmpFile,tuple);
+		HeaderObjNr ++;
+	}
 
+	if(foundExtendedHeader == 0)
+	{
+		DEBUG_TAG("add exteded header \n");
+		addExtendedContentObj(tmpFile,tuple);
+		HeaderObjNr ++;
+	}
 	/* we must update the total header size and number of objects */
 	guint64 total_size = newfilePosition;
 	DEBUG_TAG("new header %d\n",newfilePosition);
@@ -963,6 +1045,5 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 	
 	vfs_fclose(file);
 	vfs_fclose(tmpFile);
-	exit(0);
 	
 }
