@@ -70,3 +70,18 @@ int get_guid_type(GUID *g)
 	}
 	return -1;
 }
+
+void writeGuidToFile(VFSFile * f,int guid_type)
+{
+
+	gchar * strGuid = object_types_map[guid_type].guid_value;
+	GUID *g = guid_convert_from_string(strGuid);
+	
+	g->be64 =  GUINT64_SWAP_LE_BE(g->be64);
+	
+	vfs_fwrite(g->le32,4,1,f);
+	vfs_fwrite(g->le16_1,2,1,f);
+	vfs_fwrite(g->le16_2,2,1,f);
+	vfs_fwrite(g->be64,8,1,f);
+	
+}

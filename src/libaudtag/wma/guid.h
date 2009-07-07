@@ -1,3 +1,4 @@
+
 /* operations on GUIDs */
 typedef struct _guid
 {
@@ -12,5 +13,5 @@ GUID *guid_read_from_file(const gchar* file_path, int offset);
 GUID *guid_convert_from_string(const gchar *s);
 gboolean guid_equal(GUID *g1, GUID *g2);
 int get_guid_type(GUID *g);
-
+//void writeGuidToFile(VFSFile * f,int guid_type);
 

@@ -374,7 +374,7 @@ void copyASFObject(VFSFile *from, VFSFile *to)
 ContentField getStringContentFromTuple(Tuple *tuple, int nfield)
 {
 	ContentField content;
-	glong length;
+	glong length = 0;
 	content.strValue = g_utf8_to_utf16(tuple_get_string(tuple,nfield,NULL),-1, NULL,&length,NULL);
 	length *= sizeof(gunichar2);
 	DEBUG_TAG("len 1 = %d\n",length);
@@ -794,12 +794,85 @@ void writeAudioData(VFSFile *from, VFSFile *to)
 	}
 }
 
+void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
+{
+	guint64 size;
+
+	ContentField title;
+	ContentField author ;
+	ContentField description;
+	ContentField copyright;
+	ContentField rating;
+	
+	title  = getStringContentFromTuple(tuple,FIELD_TITLE);
+	author = getStringContentFromTuple(tuple, FIELD_ARTIST);
+	description = getStringContentFromTuple(tuple, FIELD_COMMENT);
+	copyright = getStringContentFromTuple(tuple, FIELD_COPYRIGHT);
+	//we dont have rating in tuple so make up a dummy one
+	rating.size = 0;
+	
+	printContentField(title);
+	printContentField(author);
+	printContentField(description);
+	
+	/* write guid and size to file */
+	size = 24;
+ 	writeGuidToFile(to,ASF_CONTENT_DESCRIPTION_OBJECT);
+	vfs_fwrite(&size,8,1,to);
+	
+	newfilePosition +=24;
+
+
+	size += writeContentFieldSizeToFile(to,title,newfilePosition);
+	size += writeContentFieldSizeToFile(to,author,newfilePosition);
+ 		
+	/* copyright */
+	size += writeContentFieldSizeToFile(to,copyright,newfilePosition);
+
+	size += writeContentFieldSizeToFile(to,description,newfilePosition);
+	size += writeContentFieldSizeToFile(to,rating,newfilePosition);
+
+	size += writeContentFieldValueToFile(to,title,newfilePosition);
+	
+	if(author.size != 0 )
+	{
+		size += writeContentFieldValueToFile(to,author,newfilePosition);
+
+	}
+	if(copyright.size != 0)
+	{
+		size += writeContentFieldValueToFile(to,copyright,newfilePosition);
+	}
+
+	if(description.size != 0 )
+	{
+		size += writeContentFieldValueToFile(to,description,newfilePosition);
+	}
+
+	if(rating.size != 0)
+	{
+		size += writeContentFieldValueToFile(to,rating,newfilePosition);
+	}
+
+	
+	DEBUG_TAG("from pos %d\n",filePosition);
+	DEBUG_TAG("to pos %d\n",newfilePosition);
+
+		vfs_fseek(to,newfilePosition-size+16,SEEK_SET);
+		vfs_fwrite(&size,2,1,to);
+		vfs_fseek(to,newfilePosition,SEEK_SET);
+
+}
+
 gboolean wma_write_tuple_to_file (Tuple* tuple)
 {
 	newfilePosition = 0;
 	filePosition = 0;
 	VFSFile *file;
 	VFSFile *tmpFile;
+	int foundContentDesc = 0;
+	int foundExtendedHeader = 0;
+	int HeaderObjNr = 0;
 	int i;
     /*open the file with the path received in tuple */
     const  gchar *file_path ;//= tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
@@ -829,17 +902,22 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
             {
                 DEBUG_TAG("content description\n");
 				writeContentDescriptionObject(file,tmpFile, tuple);
+				HeaderObjNr ++;
+				foundContentDesc = 1;
             } break;
 		
 			case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
 			{
 				DEBUG_TAG("asf extended content description object\n");
 				writeExtendedContentObj(file,tmpFile, tuple);
+				HeaderObjNr ++;
+				foundExtendedHeader = 1;
 			}break;
 			case ASF_HEADER_EXTENSION_OBJECT:
 			{
 				DEBUG_TAG("header extension \n");
 				writeHeaderExtensionObject(file, tmpFile);
+				HeaderObjNr ++;
 			}break;
 			default:
 			{
@@ -847,9 +925,15 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 				DEBUG_TAG("default\n");
 				DEBUG_TAG("asf object = %d\n",guid_type);
 				copyASFObject(file,tmpFile);
+				HeaderObjNr ++;
 			}
         }
     }
+
+	if(foundContentDesc == 0)
+	{
+		addContentDescriptionObj(tmpFile,tuple);
+	}
 
 	/* we must update the total header size and number of objects */
 	guint64 total_size = newfilePosition;
