@@ -789,13 +789,12 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)
 /* TODO move this to util since it can be used for all the other formats */
 void writeAudioData(VFSFile *from, VFSFile *to)
 {
-	printf("audio data %d\n",ftell(to));
-	vfs_fseek(to,newfilePosition+20,SEEK_SET);
+
+//	vfs_fseek(to,newfilePosition,SEEK_SET);
 	while(vfs_feof(from) == 0)
 	{
 		gchar buf[4096];
 		gint n = vfs_fread(buf,1,4096,from);
-		DEBUG_TAG("copy %d\n",n);
 		vfs_fwrite(buf,n,1,to);
 	}
 }
