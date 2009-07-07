@@ -1642,6 +1642,25 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 if (combo)
                     gtk_box_pack_start(GTK_BOX(widget), combo, FALSE, FALSE, 0);
                 break;
+            case WIDGET_BOX:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 3, 0);
+
+                if (widgets[x].data.box.horizontal) {
+                    widget = gtk_hbox_new(FALSE, 0);
+                } else {
+                    widget = gtk_vbox_new(FALSE, 0);
+                }
+
+                create_widgets(GTK_BOX(widget), widgets[x].data.box.elem, widgets[x].data.box.n_elem);
+
+                if (widgets[x].data.box.frame) {
+                    GtkWidget *tmp;
+                    tmp = widget;
+
+                    widget = gtk_frame_new(_(widgets[x].label));
+                    gtk_container_add(GTK_CONTAINER(widget), tmp);
+                }
+                break;
             default:
                 /* shouldn't ever happen - expect things to break */
                 continue;
