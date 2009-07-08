@@ -10,8 +10,8 @@ syntax: regexp
 ^config\.status
 ^configure
 ^extra\.mk
-^man/audacious\.1
-^man/audtool\.1
+^man/audacious2\.1
+^man/audtool2\.1
 ^mk/rules\.mk
 ^po/Makefile
 ^po/Makefile\.in
@@ -19,10 +19,13 @@ syntax: regexp
 ^po/stamp-po
 ^src/audacious/audacious
 ^src/audacious/audacious\.desktop
+^applications/audacious\.desktop
 ^src/audacious/build_stamp\.c
 ^src/audacious/dbus-client-bindings\.h
 ^src/audacious/dbus-server-bindings\.h
 ^src/audtool/audtool
+^src/libaudtag/tests/read/aud-taglib-test-wma-read
+^src/libaudtag/tests/write/aud-taglib-test-wma-write
 ^cscope\.out
 ^tags
 syntax: glob
