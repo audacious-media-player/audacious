@@ -41,6 +41,8 @@
 #  include <samplerate.h>
 #endif
 
+#include "compatibility.h"
+
 #include "plugin.h"
 #include "pluginenum.h"
 #include "input.h"

@@ -33,19 +33,16 @@ GUID *guid_read_from_file(const gchar* file_path, int offset)
 
 GUID *guid_convert_from_string(const gchar* s)
 {
-	/* make sure the string is in the right format */
-	GRegex *regex = 
-		g_regex_new("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{16}",
-			    0, 0, NULL);
+    GUID * gg = g_malloc (sizeof * gg);
 
-	if(!g_regex_match(regex, s, 0, NULL))
-	{
-		g_regex_unref(regex);
-		return NULL;
-	}
-	GUID *gg = g_new0(GUID, 1);
-	sscanf ( s,"%8x-%hx-%hx-%llx",&gg->le32,&gg->le16_1,&gg->le16_2, (long long unsigned int*)&gg->be64 );
-	return gg;
+    if (sscanf (s, "%8x-%hx-%hx-%llx", & gg->le32, & gg->le16_1, & gg->le16_2,
+     & gg->be64) != 4)
+    {
+        g_free (gg);
+        return NULL;
+    }
+
+    return gg;
 }
 
 gboolean guid_equal(GUID *g1, GUID *g2)

@@ -18,7 +18,7 @@ dnl ** Works like PKG_CHECK_MODULES, but provides an informative
 dnl ** error message if the package is not found. NOTICE! Unlike
 dnl ** PKG_C_M, this macro ONLY supports one module name!
 dnl **
-dnl ** AUD_CHECK_MODULE([GLIB], [gtk+-2.0], [>= 2.10.0], [Gtk+2], [See http://www.gtk.org/])
+dnl ** AUD_CHECK_MODULE([GLIB], [gtk+-2.0], [>= 2.8.0], [Gtk+2], [See http://www.gtk.org/])
 AC_DEFUN([AUD_CHECK_MODULE], [
     PKG_CHECK_MODULES([$1], [$2 $3], [
         ADD_PC_REQUIRES([$2 $3])
@@ -176,11 +176,11 @@ AC_PATH_PROG([RANLIB], [ranlib])
 
 dnl Check for Gtk+/GLib and pals
 dnl ============================
-AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.14.0], [Glib2])
-AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.14.0], [gthread-2.0])
-AUD_CHECK_MODULE([GTK], [gtk+-2.0], [>= 2.10.0], [Gtk+2])
+AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.12.0], [Glib2])
+AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.12.0], [gthread-2.0])
+AUD_CHECK_MODULE([GTK], [gtk+-2.0], [>= 2.8.0], [Gtk+2])
 AUD_CHECK_MODULE([PANGO], [pango], [>= 1.8.0], [Pango])
-AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.2.6], [Cairo])
+AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.2.4], [Cairo])
 
 
 dnl Check for libmowgli
@@ -222,7 +222,7 @@ int main()
     CFLAGS="$aud_my_save_CFLAGS"
 ])
 
-dnl AltiVec support 
+dnl AltiVec support
 dnl ===============
 AUD_ARG_ENABLE([altivec], [yes], [AltiVec support],
 [
@@ -243,7 +243,7 @@ AUD_ARG_ENABLE([altivec], [yes], [AltiVec support],
     ],[
         enable_altivec="no"
     ])
-])    
+])
 
 ])
 

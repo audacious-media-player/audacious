@@ -28,6 +28,8 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#include "compatibility.h"
+
 #include "main.h"
 #include "playlist.h"
 #include "playback.h"
@@ -75,7 +77,7 @@ filepopup_entry_set_image(GtkWidget *filepopup_win, const gchar *entry_name,
             height = cfg.filepopup_pixelsize;
             width = (int)(cfg.filepopup_pixelsize / aspect);
         }
-        
+
         pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height,
                                           GDK_INTERP_BILINEAR);
         g_object_unref(G_OBJECT(pixbuf));
@@ -190,7 +192,7 @@ fileinfopopup_add_category(GtkWidget *filepopup_win,
     gtk_misc_set_alignment(GTK_MISC(filepopup_data_info_label), 0, 0.5);
     gtk_misc_set_padding(GTK_MISC(filepopup_data_info_header), 0, 3);
     gtk_misc_set_padding(GTK_MISC(filepopup_data_info_label), 0, 3);
-    
+
     markup =
         g_markup_printf_escaped("<span style=\"italic\">%s</span>", category);
 
@@ -272,7 +274,7 @@ fileinfopopup_create(void)
                                          _("Track Length"),
                                          "header_tracklen", "label_tracklen",
                                          6);
-    
+
     gtk_table_set_row_spacing(GTK_TABLE(filepopup_data_table), 6, 6);
 
     /* track progress */
@@ -286,7 +288,7 @@ fileinfopopup_create(void)
     g_object_set_data(G_OBJECT(filepopup_win), "progressbar",
                       filepopup_progress);
     fileinfopopup_progress_init(filepopup_win);
-    
+
     /* this will realize all widgets contained in filepopup_hbox */
     gtk_widget_show_all(filepopup_hbox);
 
@@ -353,7 +355,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     }
     if (tuple_get_string(tuple, FIELD_FILE_PATH, NULL) && tuple_get_string(tuple, FIELD_FILE_NAME, NULL))
         g_object_set_data(G_OBJECT(filepopup_win), "file",
-                          g_build_filename(tuple_get_string(tuple, FIELD_FILE_PATH, NULL), 
+                          g_build_filename(tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
                                            tuple_get_string(tuple, FIELD_FILE_NAME, NULL),
                                            NULL));
 
@@ -405,7 +407,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     fileinfopupup_update_data(filepopup_win, track_string,
                                         "label_tracknum", "header_tracknum");
     g_free(track_string);
-    
+
     if (tuple_get_string(tuple, FIELD_FILE_NAME, NULL) && tuple_get_string(tuple, FIELD_FILE_PATH, NULL)) {
         tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, FIELD_FILE_PATH, NULL), tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
         if (tmp) { // picture found
@@ -433,7 +435,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
     if (fileinfopopup_progress_check_active(filepopup_win) == FALSE)
-    { 
+    {
         fileinfopopup_progress_start(filepopup_win);
         /* immediately run the callback once to update progressbar status */
         fileinfopopup_progress_cb(filepopup_win);

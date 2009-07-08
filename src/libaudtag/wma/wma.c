@@ -15,7 +15,7 @@ HeaderObject header;
 HeaderObject newHeader;
 void writeGuidToFile(VFSFile *f,int guid_type);
 gboolean wma_can_handle_file(const char *file_path)
-{	
+{
 	DEBUG_TAG("can handle file\n");
 	int retval = FALSE;
 	GUID *guid1 = guid_read_from_file(file_path,0);
@@ -44,7 +44,7 @@ void readHeaderObject(VFSFile *f)
     vfs_fread(&ho,4,1,f);
     header.objectsNr = ho;
     filePosition += 4;
-    //8+8 reserved bytes 
+    //8+8 reserved bytes
 
     filePosition += 2;
     return;
@@ -56,7 +56,7 @@ Tuple *readCodecName(VFSFile *f, Tuple *tuple)
     guint32 entriesCount;
     guint16 codec_name_length;
     gunichar2* codec_name;
-    
+
 	vfs_fseek(f, filePosition +16, SEEK_SET);
 	vfs_fread(&object_size, 8,1,f);
 	/* skip reserved bytes */
@@ -75,7 +75,7 @@ Tuple *readCodecName(VFSFile *f, Tuple *tuple)
     }
 
 	filePosition += object_size;
-   
+
     return tuple;
 }
 
@@ -84,28 +84,28 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple )
 	guint64  size ;
 	guint64 creationDate;
 	guint64 playDuration;
-	guint16 year;	
-	
+	guint16 year;
+
 	/*jump over the GUID */
 	vfs_fseek(f,filePosition + 16, SEEK_SET);
 	/* read the object size */
-	
+
 	vfs_fread(&size,8,1,f);
 	/* ignore file id and file size 16 + 8 = 24*/
 	vfs_fseek(f,24,SEEK_CUR);
 	/*read creadtion date -   given as the number of 100-nanosecond
 	intervals since January 1, 1601  */
-	vfs_fread(&creationDate,8,1,f);	
-	year = get_year(creationDate);	
-	DEBUG_TAG("Year = %d\n",year);		
-	vfs_fseek(f,8,SEEK_CUR);	
-	/* read play duration - time needed to play the file in 100-nanosecond 
-	units */	
+	vfs_fread(&creationDate,8,1,f);
+	year = get_year(creationDate);
+	DEBUG_TAG("Year = %d\n",year);
+	vfs_fseek(f,8,SEEK_CUR);
+	/* read play duration - time needed to play the file in 100-nanosecond
+	units */
 	vfs_fread(&playDuration,8,1,f);
-	DEBUG_TAG("play duration = %zd\n",playDuration);	
-	/* increment filePosition */	
+	DEBUG_TAG("play duration = %zd\n",playDuration);
+	/* increment filePosition */
 	filePosition += size;
-	
+
 	tuple_associate_int(tuple,FIELD_LENGTH,NULL,playDuration/1000);
 // 	DEBUG_TAG("length = %d\n",playDuration/10000);
 	tuple_associate_int(tuple,FIELD_YEAR,NULL,year);
@@ -120,15 +120,15 @@ Tuple *readContentDescriptionObject(VFSFile *f, Tuple *tuple)
 	guint16 authorLen;
 	guint16 copyrightLen;
 	guint16 descLen;
-	
+
 	gunichar2 *title;
 	gunichar2 *author;
 	gunichar2 *copyright;
-	gunichar2 *desc;	
-	
-	
+	gunichar2 *desc;
+
+
 	vfs_fseek(f, filePosition +16, SEEK_SET);
-	
+
 	vfs_fread(&size,8,1,f);
 	vfs_fread(&titleLen,2,1,f);
 	vfs_fread(&authorLen,2,1,f);
@@ -136,7 +136,7 @@ Tuple *readContentDescriptionObject(VFSFile *f, Tuple *tuple)
 	vfs_fread(&descLen,2,1,f);
 	/* ignore rating length */
 	vfs_fseek(f,2,SEEK_CUR);
-	
+
 // 	title = g_new0(gunichar2,titleLen/sizeof(gunichar2));
 // 	author = g_new0(gunichar2,authorLen/sizeof(gunichar2));
 // 	copyright = g_new0(gunichar2,copyrightLen/sizeof(gunichar2));
@@ -146,20 +146,20 @@ Tuple *readContentDescriptionObject(VFSFile *f, Tuple *tuple)
 	author = g_new0(gunichar2,authorLen);
 	copyright = g_new0(gunichar2,copyrightLen);
 	desc = g_new0(gunichar2,descLen);
-	
+
 	vfs_fread(title, titleLen, 1, f);
 	vfs_fread(author, authorLen, 1, f);
 	vfs_fread(copyright, copyrightLen, 1, f);
 	vfs_fread(desc, descLen, 1, f);
-	
+
 	filePosition += size;
 	g_utf16_to_utf8(title,titleLen,NULL,NULL,NULL);
 	tuple_associate_string(tuple,FIELD_TITLE,NULL,g_utf16_to_utf8(title,titleLen,NULL,NULL,NULL));
 	tuple_associate_string(tuple,FIELD_ARTIST,NULL,g_utf16_to_utf8(author,authorLen,NULL,NULL,NULL));
 	tuple_associate_string(tuple,FIELD_COPYRIGHT,NULL,g_utf16_to_utf8(copyright,copyrightLen,NULL,NULL,NULL));
-	
+
 	tuple_associate_string(tuple,FIELD_COMMENT,NULL,g_utf16_to_utf8(desc,descLen,NULL,NULL,NULL));
-	
+
 	return tuple;
 }
 
@@ -168,7 +168,7 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple)
 {
 	guint64 size;
 	guint16 countDescriptors;
-	int i;	
+	int i;
 	vfs_fseek(f,filePosition+16, SEEK_SET);
 	vfs_fread(&size,8,1,f);
 	vfs_fread(&countDescriptors,2,1,f);
@@ -184,13 +184,13 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple)
 		guint32 valueDW;
 		guint32 valueBool;
 		vfs_fread(&nameLen,2,1,f);
-	
+
 		name = g_new0(gunichar2,nameLen/sizeof(gunichar2));
-		
+
 		vfs_fread(name,nameLen,1,f);
 		utf8Name =  g_utf16_to_utf8 (name,nameLen,NULL,NULL,NULL);
 		DEBUG_TAG("name = %s\n",utf8Name);
-	
+
 		vfs_fread(&valueDataType,2,1,f);
 		vfs_fread(&valueLen,2,1,f);
 		switch(valueDataType)
@@ -199,47 +199,51 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple)
 			{
 				valueStr = g_new0(gunichar2,valueLen/sizeof(gunichar2));
 				vfs_fread(valueStr,valueLen,1,f);
-				
+
 				gchar* utf8Value = g_utf16_to_utf8(valueStr,valueLen,NULL,NULL,NULL);
 				DEBUG_TAG("value = %s\n", utf8Value);
-				
-				if(!g_strcmp0(utf8Name,"WM/Genre"))
+
+                            if (utf8Name != NULL)
+                            {
+				if (! strcmp (utf8Name, "WM/Genre"))
 				{
 					tuple_associate_string(tuple,FIELD_GENRE,NULL,utf8Value);
-					
+
 				}
-				if(!g_strcmp0(utf8Name,"WM/AlbumTitle"))
+
+				if (! strcmp (utf8Name, "WM/AlbumTitle"))
 				{
 					tuple_associate_string(tuple,FIELD_ALBUM,NULL,utf8Value);
 				}
-				
-				if(!g_strcmp0(utf8Name,"WM/TrackNumber"))
+
+				if (! strcmp (utf8Name, "WM/TrackNumber"))
 				{
 					DEBUG_TAG("track number \n");
 					tuple_associate_int(tuple,FIELD_TRACK_NUMBER,NULL,atoi(utf8Value));
 				}
-				
+                            }
+
 			}break;
-			
+
 			case 1:
 			{
 				vfs_fseek(f,valueLen,SEEK_CUR);
 			}break;
-			
+
 			case 2:
 			{
 				vfs_fread(&valueBool,4,1,f);
 			}break;
-			
+
 			case 3:
 			{
 				vfs_fread(&valueDW,4,1,f);
 			}break;
-			
+
 		}
 
 	}
-	
+
 	filePosition += size;
 	return tuple;
 }
@@ -249,7 +253,7 @@ void readASFObject(VFSFile *f)
 	vfs_fseek(f, filePosition + 16, SEEK_SET);
 	guint64 size;
 	vfs_fread(&size,8,1,f);
-	
+
 	filePosition += size;
 }
 
@@ -262,9 +266,9 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
     /*open the file with the path received in tuple */
     const  gchar *file_path = tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
     /*   -------------- FOR TESTING ONLY ---------------- */
-   
+
 	file = vfs_fopen(file_path,"r");
-    
+
     if(file == NULL)
         DEBUG_TAG("fopen error\n");
     else
@@ -296,15 +300,15 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
 				DEBUG_TAG("file properties object\n");
 				/* get year and play duration from here */
 				tuple = readFilePropObject(file, tuple);
-			
+
 			}break;
-			
+
 			case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
 			{
 				DEBUG_TAG("asf extended content description object\n");
 				tuple = readExtendedContentObj(file, tuple);
 			}break;
-			
+
 			default:
 			{
 				DEBUG_TAG("default\n");
@@ -324,7 +328,7 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
 void copyHeaderObject(VFSFile *from, VFSFile *to)
 {
 	/*copy guid */
-	gchar buf[16];	
+	gchar buf[16];
 	vfs_fread(buf,16,1,from);
 	vfs_fwrite(buf,16,1,to);
 	gchar buf2[2];
@@ -334,13 +338,13 @@ void copyHeaderObject(VFSFile *from, VFSFile *to)
 // 	DEBUG_TAG("HEADER %d\n",newHeader.size);
 	/* read and copy number of header objects */
 	vfs_fread(&newHeader.objectsNr,4,1,from);
-		
+
 	vfs_fwrite(&newHeader.objectsNr,4,1,to);
 
 	/* copy the next 2 reserved bytes */
 	vfs_fread(buf2,2,1,from);
 	vfs_fwrite(buf2,2,1,to);
-	
+
 	newfilePosition += 30;
 	filePosition += 30;
 }
@@ -350,23 +354,23 @@ void copyASFObject(VFSFile *from, VFSFile *to)
 	/* copy GUID */
 	gchar buf[16];
 	guint64 totalSize;
-	
+
 	vfs_fseek(to,newfilePosition,SEEK_SET);
 	vfs_fseek(from,filePosition,SEEK_SET);
-	
+
 	vfs_fread(buf,16,1,from);
 	vfs_fwrite(buf,16,1,to);
 
 	/*read and copy total size */
 	vfs_fread(&totalSize,8,1,from);
 	vfs_fwrite(&totalSize,8,1,to);
-				
+
 // 	DEBUG_TAG("total size = %d\n",totalSize);
 	/*read and copy the rest of the object */
 	char buf2[totalSize];
 	vfs_fread(buf2,totalSize-24,1,from);
 	vfs_fwrite(buf2,totalSize-24,1,to);
-	
+
 	newfilePosition += totalSize;
 	filePosition += totalSize;
 }
@@ -420,7 +424,7 @@ void copyData(VFSFile *from, VFSFile *to, int posFrom, int posTo,gint size)
 	vfs_fseek(to,posTo,SEEK_SET);
  	vfs_fread(bufer,size,1,from);
  	vfs_fwrite(bufer,size,1,to);
-	
+
 	filePosition += size;
 	newfilePosition += size;
 }
@@ -428,7 +432,7 @@ void copyData(VFSFile *from, VFSFile *to, int posFrom, int posTo,gint size)
 void copySize(VFSFile *from, VFSFile *to, int posFrom, int posTo)
 {
 	gchar buf[8];
-	// 	/* copy guid */ 
+	// 	/* copy guid */
 	vfs_fseek(from,posFrom,SEEK_SET);
 	vfs_fseek(to,posTo,SEEK_SET);
  	vfs_fread(buf,8,1,from);
@@ -441,7 +445,7 @@ void copySize(VFSFile *from, VFSFile *to, int posFrom, int posTo)
 void skipObjectSizeFromFile(VFSFile *from)
 {
 	vfs_fseek(from,2,SEEK_CUR);
-	filePosition += 2;	
+	filePosition += 2;
 }
 
 
@@ -451,16 +455,16 @@ gint copyContentObject(VFSFile * from, VFSFile *to)
 	guint16 s;
 	vfs_fread(&s,2,1,from);
 	vfs_fwrite(&s,2,1,to);
-	
+
 	gunichar2 t[s];
-	
+
 	vfs_fread(t,s,1,from);
 	vfs_fwrite(t,s,1,to);
-	
+
 	filePosition += s+2;
 	newfilePosition += s+2;
-	
-	return s+2;	
+
+	return s+2;
 }
 
 
@@ -477,11 +481,11 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	ContentField idescription;
 	ContentField icopyright;
 	ContentField irating;
-	
+
 	title  = getStringContentFromTuple(tuple,FIELD_TITLE);
 	author = getStringContentFromTuple(tuple, FIELD_ARTIST);
 	description = getStringContentFromTuple(tuple, FIELD_COMMENT);
-	
+
 	printContentField(title);
 	printContentField(author);
 	printContentField(description);
@@ -490,10 +494,10 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	size = 24;
 
 	if(title.size != 0)
-	{	
-		
+	{
+
 		size += writeContentFieldSizeToFile(to,title,newfilePosition);
- 		/* read the size and  advance in the from file */ 
+ 		/* read the size and  advance in the from file */
 		vfs_fread(&(ititle.size),2,1,from);
 	}else
 	{
@@ -502,12 +506,12 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 		tmp =0;
 	}
 
-	filePosition += 2;	
-	
+	filePosition += 2;
+
 	if(author.size != 0)
 	{
 		size += writeContentFieldSizeToFile(to,author,newfilePosition);
- 		/* read the size and  advance in the from file */ 
+ 		/* read the size and  advance in the from file */
 		vfs_fread(&(iauthor.size),2,1,from);
 	}else
 	{
@@ -517,7 +521,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	}
 	filePosition += 2;
 
-	
+
 	/* copyright */
 	vfs_fread(&(icopyright.size),2,1,from);
 	filePosition += 2;
@@ -526,7 +530,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	if(description.size != 0)
 	{
 		size += writeContentFieldSizeToFile(to,description,newfilePosition);
- 		/* read the size and  advance in the from file */ 
+ 		/* read the size and  advance in the from file */
 		vfs_fread(&(idescription.size),2,1,from);
 	}else
 	{
@@ -535,43 +539,43 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 		tmp = 0;
 	}
 	filePosition += 2;
-	
+
 	/* rating */
 	vfs_fread(&(irating.size),2,1,from);
 	filePosition += 2;
 	k = writeContentFieldSizeToFile(to,irating,newfilePosition);
-	
+
 	/* write the content */
-	
+
 	if(title.size != 0 )
 	{
 		size += writeContentFieldValueToFile(to,title,newfilePosition);
-		//skip this on the from file 
+		//skip this on the from file
 		vfs_fseek(from,ititle.size,SEEK_CUR);
 		filePosition += ititle.size;
 	}else
 	{
-			
+
 		vfs_fread(ititle.strValue,ititle.size,1,from);
 		size += writeContentFieldValueToFile(to,ititle,newfilePosition);
 		filePosition += ititle.size;
 	}
-	
+
 	if(author.size != 0 )
 	{
 		size += writeContentFieldValueToFile(to,author,newfilePosition);
-		//skip this on the from file 
+		//skip this on the from file
 		vfs_fseek(from,iauthor.size,SEEK_CUR);
 		filePosition += iauthor.size;
 	}else
 	{
-		
+
 		vfs_fread(iauthor.strValue,iauthor.size,1,from);
 		size += writeContentFieldValueToFile(to,iauthor,newfilePosition);
 		filePosition += iauthor.size;
-	}	
+	}
 
-		
+
 		vfs_fseek(from,filePosition,SEEK_SET);
 		vfs_fread(&icopyright.strValue,icopyright.size,1,from);
 		size += writeContentFieldValueToFile(to,icopyright,newfilePosition);
@@ -580,7 +584,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	if(description.size != 0 )
 	{
 		size += writeContentFieldValueToFile(to,description,newfilePosition);
-		//skip this on the from file 
+		//skip this on the from file
 		vfs_fseek(from,idescription.size,SEEK_CUR);
 		filePosition += idescription.size;
 	}else
@@ -593,19 +597,19 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple)
 	vfs_fread(irating.strValue,irating.size,1,from);
 	size += writeContentFieldValueToFile(to,irating,newfilePosition);
 	filePosition += irating.size;
-	
+
 	DEBUG_TAG("from pos %d\n",filePosition);
 	DEBUG_TAG("to pos %d\n",newfilePosition);
-	
+
 	//write the new size
 	if(filePosition != newfilePosition)
 	{
-		
+
 		vfs_fseek(to,newfilePosition-size+16,SEEK_SET);
 		vfs_fwrite(&size,2,1,to);
 		vfs_fseek(to,newfilePosition,SEEK_SET);
 	}
-	
+
 }
 
 
@@ -619,46 +623,49 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 	int found_tracknr = 0;
 	int i;
 	gchar buf[16];
-	
+
 	vfs_fseek(to,newfilePosition,SEEK_SET);
 	vfs_fseek(from,filePosition,SEEK_SET);
-		
-	/* copy guid */ 
+
+	/* copy guid */
 	vfs_fread(buf,16,1,from);
 	vfs_fwrite(buf,16,1,to);
 	/* size  - we will change this later */
-	vfs_fread(&size,8,1,from);	
+	vfs_fread(&size,8,1,from);
 	filePosition += size;
 	vfs_fwrite(&size,8,1,to);
-	
+
 	/* content count - we might change this later */
 	vfs_fread(&content_count,2,1,from);
 	vfs_fwrite(&content_count,2,1,to);
-//	newfilePosition += 16+8+2;	
+//	newfilePosition += 16+8+2;
 	newsize = 16+8+2;
-	
+
 	for(i = 0; i<content_count; i++)
 	{
 		guint16 name_len;
 		guint16 data_type;
-		
+
 		/* read the name */
 		vfs_fread(&name_len,2,1,from);
 		gunichar2 *name;
-		
-		name = g_new0(gunichar2,name_len/sizeof(gunichar2));		
+
+		name = g_new0(gunichar2,name_len/sizeof(gunichar2));
 		vfs_fread(name,name_len,1,from);
-		
+
 		gchar *utf8Name =  g_utf16_to_utf8 (name,name_len,NULL,NULL,NULL);
-		
+
 		DEBUG_TAG("NAME = %s\n",utf8Name);
-		if(!g_strcmp0(utf8Name,"WM/Genre"))
+
+		if (utf8Name != NULL)
 		{
+		    if (! strcmp (utf8Name, "WM/Genre"))
+                    {
 			found_genre = 1;
 			/* write the name to the tmp file */
 			vfs_fwrite(&name_len,2,1,to);
 			vfs_fwrite(name,name_len,1,to);
-			
+
 			/*write the value data type and len we will write */
 			/* genre = string */
 			data_type = 0;
@@ -677,15 +684,15 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			filePosition += 4+l;
 			newsize += 2+name_len+2+2+genre_tuple_len;
 			continue;
-		
-		}
-		if(!g_strcmp0(utf8Name,"WM/AlbumTitle"))
-		{
+                    }
+
+                    if (! strcmp (utf8Name, "WM/AlbumTitle"))
+                    {
 			found_album = 1;
 			/* write the name to the tmp file */
 			vfs_fwrite(&name_len,2,1,to);
 			vfs_fwrite(name,name_len,1,to);
-			
+
 			/*write the value data type and len we will write */
 			/* album = string */
 			data_type = 0;
@@ -707,14 +714,15 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			filePosition += 4+l;
 			newsize += 2+name_len+2+2+album_tuple_len;
 			continue;
-		}
-		if(!g_strcmp0(utf8Name,"WM/TrackNumber"))
-		{
+                    }
+
+                    if (! strcmp (utf8Name, "WM/TrackNumber"))
+                    {
 			found_tracknr = 1;
 			/* write the name to the tmp file */
 			vfs_fwrite(&name_len,2,1,to);
 			vfs_fwrite(name,name_len,1,to);
-			
+
 			/*write the value data type and len we will write */
 			/* tracknumber  = int */
 			data_type = 3;
@@ -732,28 +740,29 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 			vfs_fseek(from,l, SEEK_CUR);
 			filePosition += 4+l;
 			continue;
-		}
-		
+                    }
+                }
+
 			guint16 valueSize;
 			DEBUG_TAG("copy datA \n");
 			vfs_fwrite(&name_len,2,1,to);
-			vfs_fwrite(name,name_len,1,to);		
+			vfs_fwrite(name,name_len,1,to);
 
-			
+
 			vfs_fread(&data_type,2,1,from);
 			vfs_fwrite(&data_type,2,1,to);
 
-			
+
 			vfs_fread(&valueSize,2,1,from);
 			vfs_fwrite(&valueSize,2,1,to);
-			
+
 			valueSize = valueSize;
 			gchar value[valueSize];
 			vfs_fread(value,valueSize,1,from);
-			vfs_fwrite(value,valueSize,1,to);			
+			vfs_fwrite(value,valueSize,1,to);
 			newsize += 2+name_len+2+2+valueSize;
-			
-			
+
+
 	}
 	filePosition = ftell(from);
 	newfilePosition += newsize;
@@ -766,12 +775,12 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)
 	DEBUG_TAG("file position = %d\n",filePosition);
 	vfs_fseek(to,newfilePosition,SEEK_SET);
 	vfs_fseek(from,filePosition,SEEK_SET);
-	/* copy guid */ 
+	/* copy guid */
 	vfs_fread(buf,16,1,from);
 	vfs_fwrite(buf,16,1,to);
-	
+
 	/* size  - we will change this later */
-	vfs_fread(&size,8,1,from);	
+	vfs_fread(&size,8,1,from);
 	vfs_fwrite(&size,8,1,to);
 // 	DEBUG_TAG("extension size = %d\n",size);
 	gchar buf2[size];
@@ -803,7 +812,7 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	ContentField description;
 	ContentField copyright;
 	ContentField rating;
-	
+
 	title  = getStringContentFromTuple(tuple,FIELD_TITLE);
 	author = getStringContentFromTuple(tuple, FIELD_ARTIST);
 	description = getStringContentFromTuple(tuple, FIELD_COMMENT);
@@ -815,7 +824,7 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	printContentField(author);
 	printContentField(description);
 	printContentField(copyright);
-	
+
 	/* write guid and size to file */
 	size = 24;
  	writeGuidToFile(to,ASF_CONTENT_DESCRIPTION_OBJECT);
@@ -827,17 +836,17 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	size += writeContentFieldSizeToFile(to,title,newfilePosition);
 
 	size += writeContentFieldSizeToFile(to,author,newfilePosition);
-	
+
 	/* copyright */
 	size += writeContentFieldSizeToFile(to,copyright,newfilePosition);
 
 	size += writeContentFieldSizeToFile(to,description,newfilePosition);
 
 	size += writeContentFieldSizeToFile(to,rating,newfilePosition);
-	
-	
+
+
 	size += writeContentFieldValueToFile(to,title,newfilePosition);
-	
+
 	if(author.size != 0 )
 	{
 		size += writeContentFieldValueToFile(to,author,newfilePosition);
@@ -850,7 +859,7 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 	}
 	if(description.size != 0 )
 	{
-		
+
 		printContentField(description);
 		size += writeContentFieldValueToFile(to,description,newfilePosition);
 	}
@@ -860,8 +869,8 @@ void addContentDescriptionObj(VFSFile *to,Tuple *tuple)
 		DEBUG_TAG("xx\n");
 		size += writeContentFieldValueToFile(to,rating,newfilePosition);
 	}
- 			DEBUG_TAG("***\n");	
-	
+ 			DEBUG_TAG("***\n");
+
 // 	DEBUG_TAG("size %d\n",size);
 // 	DEBUG_TAG("to pos %d\n",newfilePosition);
 
@@ -883,18 +892,18 @@ int writeContentDescriptor(VFSFile*to, gchar* fieldName,const gchar* value)
 	nameSize += 2;
 	nSize = nameSize;
 	//write the name size and name
-	
+
 	vfs_fwrite(&nSize,2,1,to);
 	vfs_fwrite(name,nameSize,1,to);
-	
+
 	newfilePosition += nameSize+2;
-	
-	//write data type - string in our case 
+
+	//write data type - string in our case
 	vfs_fwrite(&dataType,2,1,to);
-	
+
 	newfilePosition += 2;
-	
-	//write value length 
+
+	//write value length
 	glong valSize = 0;
 	gunichar2 *val = g_utf8_to_utf16(value,-1,NULL,&valSize,NULL);
 	valSize *= sizeof(gunichar2);
@@ -903,8 +912,8 @@ int writeContentDescriptor(VFSFile*to, gchar* fieldName,const gchar* value)
 	//write value size
 	vfs_fwrite(&vSize,2,1,to);
 	vfs_fwrite(val,valSize,1,to);
-	
-	newfilePosition += valSize+2;	
+
+	newfilePosition += valSize+2;
 	return 0;
 }
 
@@ -915,31 +924,31 @@ void addExtendedContentObj(VFSFile *to, Tuple *tuple)
 	guint16 content_count = 3;
 
 
-	
+
 	vfs_fseek(to,newfilePosition,SEEK_SET);
-		
+
 	/* write guid and size to file */
 	size = 24;
  	writeGuidToFile(to,ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT);
 	vfs_fwrite(&size,8,1,to);
 
 	newfilePosition +=24;
-	
+
 
 	vfs_fwrite(&content_count,2,1,to);
-//	newfilePosition += 16+8+2;	
+//	newfilePosition += 16+8+2;
 	newsize = 16+8+2;
 	gchar * name = "WM/Genre";
 
 	const gchar *genre = tuple_get_string(tuple,FIELD_GENRE,NULL);
 	DEBUG_TAG("genre = %s\n",genre);
-	
+
 	newsize += writeContentDescriptor(to,name,
-				tuple_get_string(tuple,FIELD_GENRE,NULL));	
-	
+				tuple_get_string(tuple,FIELD_GENRE,NULL));
+
 	newsize += writeContentDescriptor(to,"WM/AlbumTitle",
 				tuple_get_string(tuple,FIELD_ALBUM,NULL));
-	
+
 	gchar track[3];
 	 sprintf(track,"%d",tuple_get_int(tuple,FIELD_TRACK_NUMBER,NULL));
 	newsize += writeContentDescriptor(to,"WM/TrackNumber",track);
@@ -960,15 +969,15 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
     /*open the file with the path received in tuple */
     const  gchar *file_path = tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
     /*   -------------- FOR TESTING ONLY ---------------- */
-	gchar *tmp_path = "/tmp/tmpwma.wma";    
+	gchar *tmp_path = "/tmp/tmpwma.wma";
 	file = vfs_fopen(file_path,"r");
 	tmpFile = vfs_fopen(tmp_path, "w+");
-    
+
     if(tmpFile == NULL)
         DEBUG_TAG("fopen error\n");
     else
         DEBUG_TAG("fopen ok\n");
-	
+
     copyHeaderObject(file, tmpFile);
 
 
@@ -987,7 +996,7 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 				HeaderObjNr ++;
 				foundContentDesc = 1;
             } break;
-		
+
 			case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
 			{
 				DEBUG_TAG("asf extended content description object\n");
@@ -1002,7 +1011,7 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 				HeaderObjNr ++;
 			}break;
 			default:
-			{			
+			{
 				DEBUG_TAG("default guid= %d\n",guid_type);
 				copyASFObject(file,tmpFile);
 				HeaderObjNr ++;
@@ -1034,9 +1043,9 @@ gboolean wma_write_tuple_to_file (Tuple* tuple)
 	vfs_fseek(tmpFile,newfilePosition,SEEK_SET);
 	DEBUG_TAG("new header %d\n",newfilePosition);
 
-	/* write the rest of the file */	
+	/* write the rest of the file */
 	writeAudioData(file,tmpFile);
-	
+
 	vfs_fclose(file);
 	vfs_fclose(tmpFile);
 	if ( rename ( tmp_path, file_path ) )
