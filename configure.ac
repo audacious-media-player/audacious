@@ -224,6 +224,17 @@ AUD_ARG_ENABLE([sm], [yes],
 ])
 AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
 
+### ---------------------------------------------------------------------------
+dnl Tagging library tests
+dnl =====================
+AUD_ARG_ENABLE([taglib_tests], [no],
+[building the tagging library tests],
+[
+if test "x$enable_taglib_tests" = "xyes"; then
+        AC_DEFINE([USE_TAGLIB_TESTS], 1, [Define if tagging library tests should be built.])
+    fi
+])
+AUD_CONDITIONAL([USE_TAGLIB_TESTS], [enable_taglib_tests])
 
 ### ---------------------------------------------------------------------------
 dnl Ugly system checks
@@ -355,6 +366,7 @@ echo "  Sample rate conversion:                 $enable_samplerate"
 echo "  D-Bus support:                          $enable_dbus"
 echo "  Session management (eggsm)              $enable_sm"
 echo "  XSPF playlists                          $enable_xspf"
+echo "  Tagging library tests                   $enable_taglib_tests"
 echo ""
 echo "  SSE2:                                   $enable_sse2"
 echo "  AltiVec:                                $enable_altivec"

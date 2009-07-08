@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
-#include "../util.h"
-#include "../wma/wma.h"
+#include "../../util.h"
+#include "../../wma/wma.h"
 
 int main(int argc, char** argv)
 {
