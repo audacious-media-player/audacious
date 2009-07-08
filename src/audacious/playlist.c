@@ -169,7 +169,7 @@ playlist_entry_new(const gchar * filename,
 
     entry = mowgli_heap_alloc(playlist_entry_heap);
     entry->filename = g_strdup(filename);
-    entry->title = str_assert_utf8(title);
+    entry->title = g_strdup ((title != NULL) ? title : filename);
     entry->length = length;
     entry->selected = FALSE;
     entry->decoder = dec;
