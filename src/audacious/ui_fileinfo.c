@@ -279,12 +279,12 @@ fileinfo_hide(gpointer unused)
     fileinfo_label_set_text(label_format_name, NULL);
     fileinfo_label_set_text(label_quality, NULL);
     fileinfo_label_set_text(label_bitrate, NULL);
-    
+
     if (label_mini_status != NULL) {
         gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
         gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
     }
-    
+
     something_changed = FALSE;
     gtk_widget_set_sensitive(btn_apply, FALSE);
 
@@ -396,7 +396,7 @@ themed_icon_lookup(gint size, const gchar *name, ...)
 
     if (pixbuf != NULL)
         return pixbuf;
-    
+
     if (error != NULL)
         g_error_free(error);
 
@@ -414,7 +414,7 @@ themed_icon_lookup(gint size, const gchar *name, ...)
         if (error != NULL)
             g_error_free(error);
     }
-    
+
     return NULL;
 }
 
@@ -519,12 +519,12 @@ create_fileinfo_window(void)
 
     vbox3 = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(alignment), vbox3);
-    
+
     label_general = gtk_label_new(_("<span size=\"small\">General</span>"));
     gtk_box_pack_start (GTK_BOX (vbox2), label_general, FALSE, FALSE, 0);
     gtk_label_set_use_markup(GTK_LABEL(label_general), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_general), 0, 0.5);
-    
+
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 6, 0, 0);
     gtk_box_pack_start (GTK_BOX (vbox2), alignment, FALSE, FALSE, 0);
@@ -534,7 +534,7 @@ create_fileinfo_window(void)
 
     image_fileicon = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG);
     gtk_box_pack_start (GTK_BOX (codec_hbox), image_fileicon, FALSE, FALSE, 0);
-    
+
     codec_table = gtk_table_new(3, 2, FALSE);
     gtk_table_set_row_spacings (GTK_TABLE(codec_table), 6);
     gtk_table_set_col_spacings (GTK_TABLE(codec_table), 12);
@@ -559,7 +559,7 @@ create_fileinfo_window(void)
     label_bitrate = gtk_label_new(_("<span size=\"small\">n/a</span>"));
     gtk_label_set_use_markup(GTK_LABEL(label_bitrate), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_bitrate), 0, 0.5);
-    
+
     gtk_table_attach(GTK_TABLE(codec_table), label_format, 0, 1, 0, 1,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
@@ -745,7 +745,7 @@ create_fileinfo_window(void)
     gtk_tree_view_column_set_attributes(column, renderer,
                                         "text", RAWDATA_VALUE, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_rawdata), column);
-    
+
     hbox_status_and_bbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox0), hbox_status_and_bbox, FALSE, FALSE, 0);
 
@@ -753,7 +753,7 @@ create_fileinfo_window(void)
     gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_mini_status), 0, 0.5);
     gtk_box_pack_start (GTK_BOX (hbox_status_and_bbox), label_mini_status, TRUE, TRUE, 0);
-    
+
     bbox_close = gtk_hbutton_box_new();
     gtk_box_set_spacing(GTK_BOX(bbox_close), 6);
     gtk_box_pack_start(GTK_BOX(hbox_status_and_bbox), bbox_close, FALSE, FALSE, 0);
@@ -774,7 +774,7 @@ create_fileinfo_window(void)
     gtk_widget_show_all (vbox0);
 }
 
-static void 
+static void
 fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
     gchar *tmp = NULL;
@@ -807,7 +807,7 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
     set_entry_str_from_field(entry_comment, tuple, FIELD_COMMENT, updating_enabled);
     set_entry_str_from_field(gtk_bin_get_child(GTK_BIN(entry_genre)), tuple, FIELD_GENRE, updating_enabled);
 
-    tmp = g_strdup_printf("%s/%s",
+    tmp = g_strdup_printf ("%s%s",
             tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
             tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
 
@@ -815,7 +815,7 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         fileinfo_entry_set_text(entry_location, tmp);
         g_free(tmp);
     }
-        
+
     /* set empty string if field not availaible. --eugene */
     set_entry_int_from_field(entry_year, tuple, FIELD_YEAR, updating_enabled);
     set_entry_int_from_field(entry_track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
@@ -840,14 +840,14 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
     tmp = fileinfo_recursive_get_image(
             tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
             tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
-        
+
     if (tmp) {
         fileinfo_entry_set_image(image_artwork, tmp);
         g_free(tmp);
     }
 
     gtk_widget_set_sensitive(btn_apply, FALSE);
-    
+
     if (label_mini_status != NULL) {
         gtk_label_set_text(GTK_LABEL(label_mini_status), "<span size=\"small\"></span>");
         gtk_label_set_use_markup(GTK_LABEL(label_mini_status), TRUE);

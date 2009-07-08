@@ -168,7 +168,7 @@ _tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field,
 Tuple *
 tuple_new_from_filename(const gchar *filename)
 {
-    gchar *ext;
+    gchar * slash, * path, * name, * ext;
     Tuple *tuple;
 
     g_return_val_if_fail(filename != NULL, NULL);
@@ -176,11 +176,21 @@ tuple_new_from_filename(const gchar *filename)
     tuple = tuple_new();
     g_return_val_if_fail(tuple != NULL, NULL);
 
-    _tuple_associate_raw_string(tuple, FIELD_FILE_NAME, NULL,
-        uri_to_display_basename(filename));
+    slash = strrchr (filename, '/');
 
-    _tuple_associate_raw_string(tuple, FIELD_FILE_PATH, NULL,
-      uri_to_display_dirname (filename));
+    if (slash != NULL)
+    {
+        path = g_strndup (filename, slash + 1 - filename);
+        name = g_strdup (slash + 1);
+    }
+    else
+    {
+        path = g_strdup ("");
+        name = g_strdup (filename);
+    }
+
+    _tuple_associate_raw_string (tuple, FIELD_FILE_PATH, NULL, path);
+    _tuple_associate_raw_string (tuple, FIELD_FILE_NAME, NULL, name);
 
     ext = strrchr(filename, '.');
     if (ext != NULL) {
