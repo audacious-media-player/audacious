@@ -1,9 +1,5 @@
 include ../../extra.mk
 
-ifeq ($(USE_TAGLIB_TESTS),yes)
-SUBDIRS := tests
-endif
-
 LIB = ${LIB_PREFIX}audtag${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
