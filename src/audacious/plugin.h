@@ -173,6 +173,7 @@ typedef GHashTable INIFile;
     void (*cleanup) (void);		\
     void (*about) (void);		\
     void (*configure) (void);		\
+    PluginPreferences *settings;	\
     gboolean enabled;
 
 

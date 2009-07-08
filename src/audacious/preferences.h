@@ -98,6 +98,26 @@ typedef struct _PreferencesWidget {
     ValueType cfg_type;      /* connected value type */
 } PreferencesWidget;
 
+typedef struct {
+    gchar *name;
+    PreferencesWidget *settings;
+    gint n_settings;
+} PreferencesTab;
+
+typedef struct {
+    gchar *title;
+
+    PreferencesTab *tabs;
+    gint n_tabs;
+
+    void (*init)(void);
+    void (*apply)(void);
+    void (*cancel)(void);
+    void (*cleanup)(void);
+
+    gpointer data;    /* for internal interface use only */
+} PluginPreferences;
+
 void create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt);
 
 #endif /* AUDACIOUS_PREFERENCES_H */

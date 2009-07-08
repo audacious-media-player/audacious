@@ -729,6 +729,127 @@ plugin_treeview_open_prefs(GtkTreeView *treeview)
 }
 
 static void
+plugin_preferences_ok(GtkWidget *widget, PluginPreferences *settings)
+{
+    if (settings->apply)
+        settings->apply();
+	
+    gtk_widget_destroy(GTK_WIDGET(settings->data));
+}
+
+static void
+plugin_preferences_apply(GtkWidget *widget, PluginPreferences *settings)
+{
+    if (settings->apply)
+        settings->apply();
+}
+
+static void
+plugin_preferences_cancel(GtkWidget *widget, PluginPreferences *settings)
+{
+    if (settings->cancel)
+        settings->cancel();
+	
+    gtk_widget_destroy(GTK_WIDGET(settings->data));
+}
+
+static void
+plugin_preferences_destroy(GtkWidget *widget, PluginPreferences *settings)
+{
+    gtk_widget_destroy(widget);
+	
+    if (settings->cleanup)
+        settings->cleanup();
+
+    settings->data = NULL;
+}
+
+static void
+create_plugin_preferences(PluginPreferences *settings)
+{
+    GtkWidget *window;
+    GtkWidget *vbox, *bbox, *ok, *apply, *cancel;
+    GtkWidget *notebook;
+    gint i;
+	
+    if (settings->data != NULL) {
+        gtk_widget_show(GTK_WIDGET(settings->data));
+        return;
+    }
+	
+    if (settings->init)
+        settings->init();
+	
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_type_hint(GTK_WINDOW(window), GDK_WINDOW_TYPE_HINT_DIALOG);
+    gtk_window_set_title(GTK_WINDOW(window), _(settings->title));
+    gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+    gtk_container_border_width(GTK_CONTAINER(window), 10);
+	
+    g_signal_connect(G_OBJECT(window), "destroy",
+                     G_CALLBACK(plugin_preferences_destroy), settings);
+	
+    vbox = gtk_vbox_new(FALSE, 10);
+    gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    notebook = gtk_notebook_new();
+    gtk_box_pack_start(GTK_BOX(vbox), notebook, FALSE, FALSE, 0);
+	
+    for (i = 0; i<settings->n_tabs; i++) {
+        GtkWidget *vbox;
+        vbox = gtk_vbox_new(FALSE, 5);
+        create_widgets(GTK_BOX(vbox), settings->tabs[i].settings, settings->tabs[i].n_settings);
+		
+        gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, gtk_label_new(_(settings->tabs[i].name)));
+    }
+	
+    bbox = gtk_hbutton_box_new();
+    gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
+    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
+    gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
+
+    ok = gtk_button_new_from_stock(GTK_STOCK_OK);
+    g_signal_connect(G_OBJECT(ok), "clicked",
+                     G_CALLBACK(plugin_preferences_ok), settings);
+    gtk_box_pack_start(GTK_BOX(bbox), ok, TRUE, TRUE, 0);
+    gtk_widget_grab_default(ok);
+
+    apply = gtk_button_new_from_stock(GTK_STOCK_APPLY);
+    g_signal_connect(G_OBJECT(apply), "clicked",
+                     G_CALLBACK(plugin_preferences_apply), settings);
+    gtk_box_pack_start(GTK_BOX(bbox), apply, TRUE, TRUE, 0);
+	
+    cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
+    g_signal_connect(G_OBJECT(cancel), "clicked",
+                     G_CALLBACK(plugin_preferences_cancel), settings);
+    gtk_box_pack_start(GTK_BOX(bbox), cancel, TRUE, TRUE, 0);
+
+    gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(prefswin));
+    gtk_widget_show_all(window);
+    settings->data = (gpointer)window;
+}
+
+static void
+plugin_treeview_open_new_prefs(GtkTreeView *treeview)
+{
+    GtkTreeSelection *selection;
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    Plugin *plugin = NULL;
+
+    selection = gtk_tree_view_get_selection(treeview);
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
+
+    g_return_if_fail(plugin != NULL);
+    g_return_if_fail(plugin->settings != NULL);
+
+    plugin_set_current(plugin);
+    create_plugin_preferences(plugin->settings);
+}
+
+static void
 plugin_treeview_open_info(GtkTreeView *treeview)
 {
     GtkTreeSelection *selection;
@@ -764,6 +885,25 @@ plugin_treeview_enable_prefs(GtkTreeView * treeview, GtkButton * button)
     g_return_if_fail(plugin != NULL);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->configure != NULL);
+}
+
+static void
+plugin_treeview_enable_new_prefs(GtkTreeView * treeview, GtkButton * button)
+{
+    GtkTreeSelection *selection;
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    Plugin *plugin = NULL;
+
+    selection = gtk_tree_view_get_selection(treeview);
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
+
+    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
+
+    g_return_if_fail(plugin != NULL);
+
+    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings != NULL);
 }
 
 static void
@@ -2087,6 +2227,7 @@ create_plugin_category(void)
     GtkWidget *input_plugin_view;
     GtkWidget *input_plugin_button_box;
     GtkWidget *input_plugin_prefs;
+    GtkWidget *input_plugin_new_prefs;
     GtkWidget *input_plugin_info;
     GtkWidget *plugin_input_label;
     GtkWidget *plugin_general_vbox;
@@ -2161,6 +2302,11 @@ create_plugin_category(void)
     gtk_container_add (GTK_CONTAINER (input_plugin_button_box), input_plugin_info);
     gtk_widget_set_sensitive (input_plugin_info, FALSE);
     GTK_WIDGET_SET_FLAGS (input_plugin_info, GTK_CAN_DEFAULT);
+
+    input_plugin_new_prefs = gtk_button_new_from_stock ("gtk-preferences");
+    gtk_container_add (GTK_CONTAINER (input_plugin_button_box), input_plugin_new_prefs);
+    gtk_widget_set_sensitive (input_plugin_new_prefs, FALSE);
+    GTK_WIDGET_SET_FLAGS (input_plugin_new_prefs, GTK_CAN_DEFAULT);
 
     plugin_input_label = gtk_label_new (_("<span size=\"medium\"><b>Decoders</b></span>"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 0), plugin_input_label);
@@ -2337,6 +2483,13 @@ create_plugin_category(void)
                              G_CALLBACK(plugin_treeview_open_info),
                              input_plugin_view);
 
+    g_signal_connect(G_OBJECT(input_plugin_view), "cursor-changed",
+                     G_CALLBACK(plugin_treeview_enable_new_prefs),
+                     input_plugin_new_prefs);
+
+    g_signal_connect_swapped(G_OBJECT(input_plugin_new_prefs), "clicked",
+                             G_CALLBACK(plugin_treeview_open_new_prefs),
+                             input_plugin_view);
 
     /* plugin->general page */
 
