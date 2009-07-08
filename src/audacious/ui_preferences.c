@@ -733,7 +733,7 @@ plugin_preferences_ok(GtkWidget *widget, PluginPreferences *settings)
 {
     if (settings->apply)
         settings->apply();
-	
+
     gtk_widget_destroy(GTK_WIDGET(settings->data));
 }
 
@@ -749,7 +749,7 @@ plugin_preferences_cancel(GtkWidget *widget, PluginPreferences *settings)
 {
     if (settings->cancel)
         settings->cancel();
-	
+
     gtk_widget_destroy(GTK_WIDGET(settings->data));
 }
 
@@ -757,7 +757,7 @@ static void
 plugin_preferences_destroy(GtkWidget *widget, PluginPreferences *settings)
 {
     gtk_widget_destroy(widget);
-	
+
     if (settings->cleanup)
         settings->cleanup();
 
@@ -771,38 +771,38 @@ create_plugin_preferences(PluginPreferences *settings)
     GtkWidget *vbox, *bbox, *ok, *apply, *cancel;
     GtkWidget *notebook;
     gint i;
-	
+
     if (settings->data != NULL) {
         gtk_widget_show(GTK_WIDGET(settings->data));
         return;
     }
-	
+
     if (settings->init)
         settings->init();
-	
+
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(window), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title(GTK_WINDOW(window), _(settings->title));
     gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
     gtk_container_border_width(GTK_CONTAINER(window), 10);
-	
+
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(plugin_preferences_destroy), settings);
-	
+
     vbox = gtk_vbox_new(FALSE, 10);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     notebook = gtk_notebook_new();
     gtk_box_pack_start(GTK_BOX(vbox), notebook, FALSE, FALSE, 0);
-	
+
     for (i = 0; i<settings->n_tabs; i++) {
         GtkWidget *vbox;
         vbox = gtk_vbox_new(FALSE, 5);
         create_widgets(GTK_BOX(vbox), settings->tabs[i].settings, settings->tabs[i].n_settings);
-		
+
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, gtk_label_new(_(settings->tabs[i].name)));
     }
-	
+
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
@@ -818,7 +818,7 @@ create_plugin_preferences(PluginPreferences *settings)
     g_signal_connect(G_OBJECT(apply), "clicked",
                      G_CALLBACK(plugin_preferences_apply), settings);
     gtk_box_pack_start(GTK_BOX(bbox), apply, TRUE, TRUE, 0);
-	
+
     cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
     g_signal_connect(G_OBJECT(cancel), "clicked",
                      G_CALLBACK(plugin_preferences_cancel), settings);
