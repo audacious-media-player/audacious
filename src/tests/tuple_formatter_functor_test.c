@@ -21,8 +21,8 @@
 #include <glib.h>
 #include <mowgli.h>
 
-#include "tuple.h"
-#include "tuple_formatter.h"
+#include <libaudcore/tuple.h>
+#include <libaudcore/tuple_formatter.h>
 
 static gboolean
 test_functor(Tuple *tuple, const char *expr)
@@ -39,7 +39,7 @@ test_run(int argc, const char *argv[])
     tuple_formatter_register_expression("(true)", test_functor);
 
     tuple = tuple_new();
-    tuple_associate_string(tuple, "splork", "moo");
+    tuple_associate_string(tuple, FIELD_ARTIST, "splork", "moo");
 
     tstr = tuple_formatter_process_string(tuple, "${(true):${splork}}");
     if (g_ascii_strcasecmp(tstr, "moo"))

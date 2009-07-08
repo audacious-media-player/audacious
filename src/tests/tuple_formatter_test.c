@@ -21,8 +21,8 @@
 #include <glib.h>
 #include <mowgli.h>
 
-#include "tuple.h"
-#include "tuple_formatter.h"
+#include <libaudcore/tuple.h>
+#include <libaudcore/tuple_formatter.h>
 
 int
 test_run(int argc, const char *argv[])
@@ -31,8 +31,8 @@ test_run(int argc, const char *argv[])
     gchar *tstr;
 
     tuple = tuple_new();
-    tuple_associate_string(tuple, "splork", "moo");
-    tuple_associate_int(tuple, "splorkerz", 42);
+    tuple_associate_string(tuple, FIELD_ARTIST, "splork", "moo");
+    tuple_associate_int(tuple, FIELD_TRACK_NUMBER, "splorkerz", 42);
 
     tstr = tuple_formatter_process_string(tuple, "${splork} ${splorkerz}");
     if (g_ascii_strcasecmp(tstr, "moo 42"))
@@ -130,7 +130,7 @@ test_run(int argc, const char *argv[])
     }
     g_free(tstr);
 
-    tuple_associate_string(tuple, "sheep", "");
+    tuple_associate_string(tuple, FIELD_ARTIST, "sheep", "");
 
     tstr = tuple_formatter_process_string(tuple, "${?splork:${splork} - }${?sheep:${sheep} - }${splork}");
     if (g_ascii_strcasecmp(tstr, "moo -  - moo"))
