@@ -98,6 +98,7 @@ signal_process_signals (void *data)
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
     sigaddset(&waitset, SIGSEGV);
+    sigaddset (& waitset, SIGHUP);
     sigaddset (& waitset, SIGINT);
     sigaddset (& waitset, SIGQUIT);
     sigaddset(&waitset, SIGTERM);
@@ -116,6 +117,7 @@ signal_process_signals (void *data)
             signal_process_segv();
             break;
 
+        case SIGHUP:
         case SIGINT:
         case SIGQUIT:
         case SIGTERM:
@@ -149,6 +151,7 @@ signal_process_signals_linuxthread (void *data)
             signal_process_segv();
             break;
 
+        case SIGHUP:
         case SIGINT:
         case SIGQUIT:
         case SIGTERM:
@@ -181,6 +184,7 @@ signal_process_signals(gpointer data)
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGPIPE);
     sigaddset(&waitset, SIGSEGV);
+    sigaddset (& waitset, SIGHUP);
     sigaddset (& waitset, SIGINT);
     sigaddset (& waitset, SIGQUIT);
     sigaddset(&waitset, SIGTERM);
@@ -201,6 +205,7 @@ signal_process_signals(gpointer data)
             signal_process_segv();
             break;
 
+        case SIGHUP:
         case SIGINT:
         case SIGQUIT:
         case SIGTERM:
@@ -291,6 +296,7 @@ signal_initialize_blockers(void)
     sigemptyset(&blockset);
     sigaddset(&blockset, SIGPIPE);
     sigaddset(&blockset, SIGSEGV);
+    sigaddset (& blockset, SIGHUP);
     sigaddset (& blockset, SIGINT);
     sigaddset (& blockset, SIGQUIT);
     sigaddset(&blockset, SIGTERM);
@@ -348,6 +354,7 @@ signal_handlers_init(void)
         /* install special handler which catches signals and forwards to the signal handling thread */
         signal_install_handler(SIGPIPE, linuxthread_handler);
         signal_install_handler(SIGSEGV, linuxthread_handler);
+        signal_install_handler (SIGHUP, linuxthread_handler);
         signal_install_handler (SIGINT, linuxthread_handler);
         signal_install_handler (SIGQUIT, linuxthread_handler);
         signal_install_handler(SIGTERM, linuxthread_handler);
