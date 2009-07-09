@@ -1267,9 +1267,6 @@ void playlist_eof_reached (Playlist * playlist)
 {
     gboolean play;
 
-    if (playback_get_playing ())
-        return;
-
     PLAYLIST_LOCK (playlist);
 
     playlist->queue = g_list_remove (playlist->queue, playlist->position);
