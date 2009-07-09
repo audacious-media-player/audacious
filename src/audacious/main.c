@@ -97,7 +97,7 @@ gchar *aud_paths[BMP_PATH_COUNT] = {};
 MprisPlayer *mpris;
 #endif
 
-static char start_playback = 0;
+static gboolean start_playback = FALSE;
 
 static void
 print_version(void)
@@ -319,7 +319,7 @@ handle_cmd_line_filenames(gboolean is_running)
         {
             drct_pl_clear();
             drct_stop();
-            start_playback = 1;
+            start_playback = TRUE;
         }
 
         drct_pl_add(fns);
@@ -384,7 +384,7 @@ handle_cmd_line_options (void) {
    if (options.rew)
       drct_pl_prev ();
    if (options.play || options.play_pause)
-       start_playback = 1;
+       start_playback = TRUE;
    if (options.fwd)
       drct_pl_next ();
    if (options.show_jump_box)
