@@ -2525,8 +2525,8 @@ playlist_select_search( Playlist *playlist , Tuple *tuple , gint action )
 
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
-    //    PLAYLIST_INCR_SERIAL(playlist); //unnecessary? --yaz
 
+    hook_call ("playlist update", playlist);
     return num_of_entries_found;
 }
 
@@ -2544,6 +2544,8 @@ playlist_select_all(Playlist *playlist, gboolean set)
 
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
+
+    hook_call ("playlist update", playlist);
 }
 
 void
@@ -2560,6 +2562,8 @@ playlist_select_invert_all(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
+
+    hook_call ("playlist update", playlist);
 }
 
 gboolean
@@ -2579,6 +2583,7 @@ playlist_select_invert(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist);
     playlist_recalc_total_time(playlist);
 
+    hook_call ("playlist update", playlist);
     return invert_ok;
 }
 
@@ -2602,8 +2607,9 @@ playlist_select_range(Playlist *playlist, gint min_pos, gint max_pos, gboolean s
     }
 
     PLAYLIST_UNLOCK(playlist);
-
     playlist_recalc_total_time(playlist);
+
+    hook_call ("playlist update", playlist);
 }
 
 gboolean
@@ -2634,7 +2640,6 @@ playlist_read_info_selection(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist);
 
     playlist_recalc_total_time(playlist);
-    PLAYLIST_INCR_SERIAL(playlist); //tentative --yaz
 
     hook_call ("playlist update", playlist);
     return retval;
