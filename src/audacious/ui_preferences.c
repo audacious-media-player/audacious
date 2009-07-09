@@ -2722,6 +2722,9 @@ create_plugin_preferences_page(PluginPreferences *settings)
     if (settings->data != NULL)
         return;
 
+    if (settings->init)
+        settings->init();
+
     GtkWidget *vbox;
     vbox = gtk_vbox_new(FALSE, 5);
 
@@ -2736,8 +2739,14 @@ void
 destroy_plugin_preferences_page(PluginPreferences *settings)
 {
     if (settings->data) {
+        if (settings->apply)
+            settings->apply();
+
         prefswin_page_destroy(GTK_WIDGET(settings->data));
         settings->data = NULL;
+
+        if (settings->cleanup)
+            settings->cleanup();
     }
 }
 
