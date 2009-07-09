@@ -97,7 +97,7 @@ gchar *aud_paths[BMP_PATH_COUNT] = {};
 MprisPlayer *mpris;
 #endif
 
-static char start_playback = 0;
+static gboolean start_playback = FALSE;
 
 static void
 print_version(void)
@@ -120,7 +120,7 @@ aud_make_user_dir(void)
 static void
 aud_free_paths(void)
 {
-    int i;
+    gint i;
 
     for (i = 0; i < BMP_PATH_COUNT; i++)
     {
@@ -132,9 +132,9 @@ aud_free_paths(void)
 static void
 aud_init_paths()
 {
-    char *xdg_config_home;
-    char *xdg_data_home;
-    char *xdg_cache_home;
+    gchar *xdg_config_home;
+    gchar *xdg_data_home;
+    gchar *xdg_cache_home;
 
     xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL
         ? g_build_filename(g_get_home_dir(), ".config", NULL)
@@ -250,7 +250,7 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 static void
 handle_cmd_line_filenames(gboolean is_running)
 {
-  char * working, * absolute, * uri;
+    gchar *working, *absolute, *uri;
     gchar **filenames = options.filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
@@ -319,7 +319,7 @@ handle_cmd_line_filenames(gboolean is_running)
         {
             drct_pl_clear();
             drct_stop();
-            start_playback = 1;
+            start_playback = TRUE;
         }
 
         drct_pl_add(fns);
@@ -333,14 +333,17 @@ handle_cmd_line_filenames(gboolean is_running)
     g_list_free(fns);
 }
 
-static void handle_cmd_line_options_first (void) {
+static void
+handle_cmd_line_options_first (void) {
 #ifdef USE_DBUS
-  DBusGProxy * session;
+   DBusGProxy * session;
 #endif
+
    if (options.version) {
       print_version ();
       exit (EXIT_SUCCESS);
    }
+
 #ifdef USE_DBUS
    session = audacious_get_dbus_proxy ();
    if (audacious_remote_is_running (session)) {
@@ -366,20 +369,22 @@ static void handle_cmd_line_options_first (void) {
       exit (EXIT_SUCCESS);
    }
 #endif
+
    if (options.interface == NULL) {
-     mcs_handle_t * db = cfg_db_open ();
+      mcs_handle_t * db = cfg_db_open ();
       cfg_db_get_string (db, NULL, "interface", & options.interface);
       if (options.interface == NULL)
          options.interface = g_strdup ("skinned");
    }
 }
 
-static void handle_cmd_line_options (void) {
+static void
+handle_cmd_line_options (void) {
    handle_cmd_line_filenames (FALSE);
    if (options.rew)
       drct_pl_prev ();
    if (options.play || options.play_pause)
-       start_playback = 1;
+       start_playback = TRUE;
    if (options.fwd)
       drct_pl_next ();
    if (options.show_jump_box)
