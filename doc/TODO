@@ -72,9 +72,8 @@ It's been determined that the playlist code should be completely refactored.
 ATTENTION! Add more stuff here! Issues that you can think of, suggestions
 for solutions, etc. References to algorithms...
 
-
 - code (mostly in playlist.c) is unnecessarily complex in some places and
-  there is lots of useless duplication.
+  there is lots of completely useless duplication.
 
 - what data structures should be used? things that factor in are
   efficiency and scalability -  memory usage and speed.
@@ -94,18 +93,13 @@ for solutions, etc. References to algorithms...
   * storing the playlist as a GtkTreeModel seems to be fairly fast (at least
     in mudkip-player it is) --nenolod
 
-- current implementation has a nasty racecondition in scanner thread vs. playlist
-  manipulation (playlist_clear(), free, etc.)
-
-  * new code should be water-tight when it comes to locking. simpler code
-  with more "atomic operations" should help.
-
 
 ccr rants:
 ----------
 I suggest that the whole playlist manipulation should be moved into separate
 thread. What I mean, is that the playlist scanning (e.g. probing for
-metadata) AND adding files into playlist should be in a thread.
+metadata) AND adding files into playlist should be in a separate thread.
+Operations on playlist would be somewhat asynchronic.
 
 Adding files would work like this:
   1) feed URIs to playlist handler thread
