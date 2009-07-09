@@ -37,13 +37,6 @@ Long-term "TODO"
 - document the different APIs via Doxygen
 
 
-- unified debugging/message system, for core and plugins
-  * something like glib logging system, with logging levels
-  * hardcoded "debugging" levels and/or macro-wrappers that would
-    disable superfluous debugging output compile-time.
-  --- being planned by ccr
-
-
 - audacious VFS is not 64-bit offset safe, breakage will most likely occur,
   if files larger than 2^31 are used (rather unlikely, tho, but still...)
 
@@ -62,7 +55,7 @@ Long-term "TODO"
 - plugin rewrites:
   * madplug
   * modplug (in progress by ccr)
-  * scrobbler
+  * scrobbler (in progress by ccr)
 
 
 Playlist code issues
