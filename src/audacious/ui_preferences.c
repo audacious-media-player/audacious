@@ -311,6 +311,8 @@ static PreferencesWidget playlist_page_widgets[] = {
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
+void create_plugin_preferences_page(PluginPreferences *settings);
+void destroy_plugin_preferences_page(PluginPreferences *settings);
 
 static void
 change_category(GtkNotebook * notebook,
@@ -357,6 +359,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
     GtkTreeModel *model = GTK_TREE_MODEL(data);
     GtkTreeIter iter;
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+    Plugin *plugin = NULL;
     gint pluginnr;
     gint plugin_type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(data), "plugin_type"));
 
@@ -364,7 +367,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
     gtk_tree_model_get_iter(model, &iter, path);
 
     if (plugin_type == PLUGIN_VIEW_TYPE_INPUT) {
-        Plugin *plugin;
         /*GList *diplist, *tmplist; */
 
         gtk_tree_model_get(model, &iter,
@@ -378,6 +380,8 @@ plugin_toggle(GtkCellRendererToggle * cell,
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                            PLUGIN_VIEW_COL_ACTIVE, plugin->enabled, -1);
     } else {
+        GList *list;
+
         gboolean fixed;
         gtk_tree_model_get(model, &iter,
                            PLUGIN_VIEW_COL_ACTIVE, &fixed,
@@ -389,20 +393,37 @@ plugin_toggle(GtkCellRendererToggle * cell,
         switch (plugin_type) {
             case PLUGIN_VIEW_TYPE_GENERAL:
                 enable_general_plugin(pluginnr, fixed);
+                list = get_general_list();
                 break;
             case PLUGIN_VIEW_TYPE_VIS:
                 enable_vis_plugin(pluginnr, fixed);
+                list = get_vis_list();
                 break;
             case PLUGIN_VIEW_TYPE_EFFECT:
                 enable_effect_plugin(pluginnr, fixed);
+                list = get_effect_list();
                 break;
+            default:
+                list = NULL;
         }
 
         /* set new value */
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                            PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
+
+        list = g_list_nth(list, pluginnr);
+        if (list && list->data) {
+            plugin = PLUGIN(list->data);
+        }
     }
 
+    if (plugin && plugin->settings && plugin->settings->type == PREFERENCES_PAGE) {
+        if (plugin->enabled) {
+            create_plugin_preferences_page(plugin->settings);
+        } else {
+            destroy_plugin_preferences_page(plugin->settings);
+        }
+    }
     /* clean up */
     gtk_tree_path_free(path);
 }
@@ -844,6 +865,7 @@ plugin_treeview_open_new_prefs(GtkTreeView *treeview)
 
     g_return_if_fail(plugin != NULL);
     g_return_if_fail(plugin->settings != NULL);
+    g_return_if_fail(plugin->settings->type == PREFERENCES_TAB);
 
     plugin_set_current(plugin);
     create_plugin_preferences(plugin->settings);
@@ -902,8 +924,9 @@ plugin_treeview_enable_new_prefs(GtkTreeView * treeview, GtkButton * button)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
+    g_return_if_fail(plugin->settings != NULL);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings != NULL);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings->type == PREFERENCES_TAB);
 }
 
 static void
@@ -2553,6 +2576,29 @@ create_plugin_category(void)
 
 }
 
+static void
+create_plugin_page(GList *list)
+{
+    GList *iter;
+
+    MOWGLI_ITER_FOREACH(iter, list)
+    {
+        Plugin *plugin = PLUGIN(iter->data);
+        if (plugin->settings && plugin->settings->type == PREFERENCES_PAGE) {
+            create_plugin_preferences_page(plugin->settings);
+        }
+    }
+}
+
+static void
+create_plugin_pages(void)
+{
+    create_plugin_page(get_input_list());
+    create_plugin_page(get_general_enabled_list());
+    create_plugin_page(get_vis_enabled_list());
+    create_plugin_page(get_effect_enabled_list());
+}
+
 void
 create_prefs_window(void)
 {
@@ -2610,9 +2656,7 @@ create_prefs_window(void)
     create_playback_category();
     create_playlist_category();
     create_plugin_category();
-
-
-
+    create_plugin_pages();
 
     hseparator1 = gtk_hseparator_new ();
     gtk_box_pack_start (GTK_BOX (vbox), hseparator1, FALSE, FALSE, 6);
@@ -2668,6 +2712,33 @@ create_prefs_window(void)
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
+}
+
+void
+create_plugin_preferences_page(PluginPreferences *settings)
+{
+    g_return_if_fail(settings->type == PREFERENCES_PAGE);
+
+    if (settings->data != NULL)
+        return;
+
+    GtkWidget *vbox;
+    vbox = gtk_vbox_new(FALSE, 5);
+
+    create_widgets(GTK_BOX(vbox), settings->tabs[0].settings, settings->tabs[0].n_settings);
+    gtk_widget_show_all(vbox);
+    prefswin_page_new(vbox, settings->title, settings->imgurl);
+
+    settings->data = (gpointer) vbox;
+}
+
+void
+destroy_plugin_preferences_page(PluginPreferences *settings)
+{
+    if (settings->data) {
+        prefswin_page_destroy(GTK_WIDGET(settings->data));
+        settings->data = NULL;
+    }
 }
 
 void

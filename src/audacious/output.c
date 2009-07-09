@@ -503,17 +503,17 @@ output_pass_audio(InputPlayback *playback,
     static Flow *legacy_flow = NULL;
     OutputPlugin *op = playback->output;
     gint writeoffs;
-    void * orig_ptr = ptr;
-    int orig_length = length;
-    void * old_ptr, * new_ptr;
-    int time = playback->output->written_time ();
+    gpointer orig_ptr = ptr;
+    gint orig_length = length;
+    gpointer old_ptr, new_ptr;
+    gint time = playback->output->written_time ();
 
     if (fmt != FMT_FLOAT)
     {
-        int samples = length / FMT_SIZEOF (fmt);
+        gint samples = length / FMT_SIZEOF (fmt);
 
-        length = sizeof (float) * samples;
-        new_ptr = malloc (length);
+        length = sizeof (gfloat) * samples;
+        new_ptr = g_malloc (length);
 
         if (IS_S16_NE (fmt))
             s16_to_float (ptr, new_ptr, samples);
@@ -521,21 +521,21 @@ output_pass_audio(InputPlayback *playback,
             SAD_dither_process_buffer (sad_state_to_float, ptr, new_ptr,
              samples / nch);
 
-        if (ptr != orig_ptr) free (ptr);
+        if (ptr != orig_ptr) g_free (ptr);
         ptr = new_ptr;
     }
 
-    vis_runner_pass_audio (time, ptr, length / sizeof (float), nch);
+    vis_runner_pass_audio (time, ptr, length / sizeof (gfloat), nch);
 
     if (bypass_dsp)
     {
-        if (ptr != orig_ptr) free (ptr);
+        if (ptr != orig_ptr) g_free (ptr);
         ptr = orig_ptr;
         length = orig_length;
     }
     else
     {
-        if (! postproc_flow)
+        if (postproc_flow == NULL)
         {
             postproc_flow = flow_new ();
 #ifdef USE_SAMPLERATE
@@ -548,14 +548,14 @@ output_pass_audio(InputPlayback *playback,
         old_ptr = ptr;
         length = flow_execute (postproc_flow, time, & ptr, length,
          FMT_FLOAT, decoder_srate, nch);
-        if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+        if (ptr != old_ptr && old_ptr != orig_ptr) g_free (old_ptr);
 
         if (op_state.fmt != FMT_FLOAT)
         {
-            int samples = length / sizeof (float);
+            gint samples = length / sizeof (gfloat);
 
             length = FMT_SIZEOF (op_state.fmt) * samples;
-            new_ptr = malloc (length);
+            new_ptr = g_malloc (length);
 
             if (cfg.no_dithering && IS_S16_NE (op_state.fmt))
                 float_to_s16 (ptr, new_ptr, samples);
@@ -563,13 +563,13 @@ output_pass_audio(InputPlayback *playback,
                 SAD_dither_process_buffer (sad_state_from_float, ptr, new_ptr,
                  samples / nch);
 
-            if (ptr != orig_ptr) free (ptr);
+            if (ptr != orig_ptr) g_free (ptr);
             ptr = new_ptr;
         }
 
         if (IS_S16_NE (op_state.fmt))
         {
-            if (! legacy_flow)
+            if (legacy_flow == NULL)
             {
                 legacy_flow = flow_new ();
                 flow_link_element (legacy_flow, effect_flow);
@@ -578,7 +578,7 @@ output_pass_audio(InputPlayback *playback,
             old_ptr = ptr;
             length = flow_execute (legacy_flow, time, & ptr, length,
              op_state.fmt, op_state.rate, op_state.nch);
-            if (ptr != old_ptr && old_ptr != orig_ptr) free (old_ptr);
+            if (ptr != old_ptr && old_ptr != orig_ptr) g_free (old_ptr);
         }
     }
 
@@ -627,7 +627,7 @@ output_pass_audio(InputPlayback *playback,
         writeoffs += writable;
     }
 
-    if (ptr != orig_ptr) free (ptr);
+    if (ptr != orig_ptr) g_free (ptr);
 }
 
 /* called by input plugin when RG info available --asphyx */

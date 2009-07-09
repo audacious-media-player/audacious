@@ -98,6 +98,11 @@ typedef struct _PreferencesWidget {
     ValueType cfg_type;      /* connected value type */
 } PreferencesWidget;
 
+typedef enum {
+    PREFERENCES_TAB,  /* displayed in seperate window */
+    PREFERENCES_PAGE, /* added as new page in main preferences window */
+} PreferencesType;
+
 typedef struct {
     gchar *name;
     PreferencesWidget *settings;
@@ -106,9 +111,12 @@ typedef struct {
 
 typedef struct {
     gchar *title;
+    gchar *imgurl;        /* Optional */
 
     PreferencesTab *tabs;
     gint n_tabs;
+
+    PreferencesType type;
 
     void (*init)(void);
     void (*apply)(void);

@@ -175,6 +175,7 @@ static aud_cfg_boolent aud_boolents[] = {
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
 
 static aud_cfg_nument aud_numents[] = {
+    {"playlist_position", & cfg.playlist_position, TRUE},
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
     {"resume_state", & cfg.resume_state, 1},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},

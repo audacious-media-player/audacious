@@ -50,7 +50,7 @@ static gboolean send_audio (gpointer user_data)
         if (next->time > outputted)
             break;
 
-        free (vis_node);
+        g_free (vis_node);
         vis_node = next;
         vis_list = g_list_delete_link (vis_list, vis_list);
     }
@@ -69,7 +69,7 @@ static gboolean send_audio (gpointer user_data)
         }
     }
 
-    free (vis_node);
+    g_free (vis_node);
     return 1;
 }
 
@@ -118,7 +118,7 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
     if (! active)
         return;
 
-    vis_node = malloc (sizeof (VisNode));
+    vis_node = g_malloc (sizeof (VisNode));
     vis_node->time = time;
     vis_node->nch = MIN (channels, 2);
     vis_node->length = MIN (samples / channels, 512);
@@ -142,7 +142,7 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
     if (active)
         vis_list = g_list_append (vis_list, vis_node);
     else
-        free (vis_node);
+        g_free (vis_node);
 
     g_mutex_unlock (mutex);
 }
@@ -153,7 +153,7 @@ void vis_runner_flush (void)
 
     while (vis_list != NULL)
     {
-        free (vis_list->data);
+        g_free (vis_list->data);
         vis_list = g_list_delete_link (vis_list, vis_list);
     }
 
@@ -162,7 +162,7 @@ void vis_runner_flush (void)
 
 void vis_runner_add_hook (HookFunction func, gpointer user_data)
 {
-    HookItem * item = malloc (sizeof (HookItem));
+    HookItem * item = g_malloc (sizeof (HookItem));
 
     item->func = func;
     item->user_data = user_data;
@@ -187,6 +187,6 @@ void vis_runner_remove_hook (HookFunction func)
 
   FOUND:
     hooks = g_list_delete_link (hooks, node);
-    free (item);
+    g_free (item);
     start_stop (NULL, NULL);
 }
