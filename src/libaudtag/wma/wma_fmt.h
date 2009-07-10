@@ -21,62 +21,60 @@
 #define ASF_DIGITAL_SIGNATURE_OBJECT_GUID		"2211B3FC-BD23-11D2-B4B700A0C955FC6E"
 #define ASF_PADDING_OBJECT_GUID				"1806D474-CADF-4509-A4BA9AABCB96AAE8"
 
-typedef enum{
-	ASF_HEADER_OBJECT = 0,
-	ASF_FILE_PROPERTIES_OBJECT = 1,
-	ASF_STREAM_PROPERTIES_OBJECT = 2 ,
-	ASF_HEADER_EXTENSION_OBJECT = 3 ,
-	ASF_CODEC_LIST_OBJECT = 4,
-	ASF_SCRIPT_COMMAND_OBJECT = 5,
-	ASF_MARKER_OBJECT = 6, 
-	ASF_BITRATE_MUTUAL_EXCLUSION_OBJECT = 7,
-	ASF_ERROR_CORRECTION_OBJECT = 8,
-	ASF_CONTENT_DESCRIPTION_OBJECT = 9,
-	ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT = 10,
-	ASF_CONTENT_BRANDING_OBJECT = 11,
-	ASF_STREAM_BITRATE_PROPERTIES_OBJECT =12,
-	ASF_CONTENT_ENCRYPTION_OBJECT = 13,
-	ASF_EXTENDED_CONTENT_ENCRYPTION_OBJECT = 14,
-	ASF_DIGITAL_SIGNATURE_OBJECT = 15,
-	ASF_PADDING_OBJECT =16,
-	ASF_OBJECT_LAST /* dummy */
-}obj_type;
+typedef enum {
+    ASF_HEADER_OBJECT = 0,
+    ASF_FILE_PROPERTIES_OBJECT = 1,
+    ASF_STREAM_PROPERTIES_OBJECT = 2,
+    ASF_HEADER_EXTENSION_OBJECT = 3,
+    ASF_CODEC_LIST_OBJECT = 4,
+    ASF_SCRIPT_COMMAND_OBJECT = 5,
+    ASF_MARKER_OBJECT = 6,
+    ASF_BITRATE_MUTUAL_EXCLUSION_OBJECT = 7,
+    ASF_ERROR_CORRECTION_OBJECT = 8,
+    ASF_CONTENT_DESCRIPTION_OBJECT = 9,
+    ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT = 10,
+    ASF_CONTENT_BRANDING_OBJECT = 11,
+    ASF_STREAM_BITRATE_PROPERTIES_OBJECT = 12,
+    ASF_CONTENT_ENCRYPTION_OBJECT = 13,
+    ASF_EXTENDED_CONTENT_ENCRYPTION_OBJECT = 14,
+    ASF_DIGITAL_SIGNATURE_OBJECT = 15,
+    ASF_PADDING_OBJECT = 16,
+    ASF_OBJECT_LAST /* dummy */
+} obj_type;
 
-typedef struct _object_type{
-obj_type object_type;
-gchar *guid_value;
-} ObjectType; 
+typedef struct _object_type {
+    obj_type object_type;
+    gchar *guid_value;
+} ObjectType;
 
 extern const ObjectType object_types_map[ASF_OBJECT_LAST];
 
-typedef struct contentDescriptionObjUTF8
-{
-	guint64 size;
-	guint16 title_length;
-	guint16 author_length;
-	guint16 copyright_length;
-	guint16 desc_length;
-	guint16 rating_length;
-	gchar *title; //wchar 16 bit
-	gchar *author;
-	gchar *copyright;
-	gchar *description;
-	gchar *rating;
-}ContentDescriptionUTF8;
+typedef struct contentDescriptionObjUTF8 {
+    guint64 size;
+    guint16 title_length;
+    guint16 author_length;
+    guint16 copyright_length;
+    guint16 desc_length;
+    guint16 rating_length;
+    gchar *title; //wchar 16 bit
+    gchar *author;
+    gchar *copyright;
+    gchar *description;
+    gchar *rating;
+} ContentDescriptionUTF8;
 
-typedef struct contentDescriptionObjUTF16
-{
-	guint64 size;
-	guint16 title_length;
-	guint16 author_length;
-	guint16 copyright_length;
-	guint16 desc_length;
-	guint16 rating_length;
-	gunichar2 *title;
-	gunichar2 *author;
-	gunichar2 *copyright;
-	gunichar2 *description;
-	gunichar2 *rating;
-}ContentDescriptionUTF16;
+typedef struct contentDescriptionObjUTF16 {
+    guint64 size;
+    guint16 title_length;
+    guint16 author_length;
+    guint16 copyright_length;
+    guint16 desc_length;
+    guint16 rating_length;
+    gunichar2 *title;
+    gunichar2 *author;
+    gunichar2 *copyright;
+    gunichar2 *description;
+    gunichar2 *rating;
+} ContentDescriptionUTF16;
 
 #endif /* WMA_FMT_H */
