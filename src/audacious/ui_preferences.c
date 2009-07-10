@@ -924,9 +924,8 @@ plugin_treeview_enable_new_prefs(GtkTreeView * treeview, GtkButton * button)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
-    g_return_if_fail(plugin->settings != NULL);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings->type == PREFERENCES_TAB);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings ? (plugin->settings->type == PREFERENCES_TAB) : FALSE);
 }
 
 static void
