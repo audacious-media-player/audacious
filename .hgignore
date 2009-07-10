@@ -24,8 +24,9 @@ syntax: regexp
 ^src/audacious/dbus-client-bindings\.h
 ^src/audacious/dbus-server-bindings\.h
 ^src/audtool/audtool
-^src/libaudtag/tests/read/aud-taglib-test-wma-read
-^src/libaudtag/tests/write/aud-taglib-test-wma-write
+^src/tests/tag_wma_test
+^src/tests/tuple_formatter_functor_test
+^src/tests/tuple_formatter_test
 ^cscope\.out
 ^tags
 syntax: glob
