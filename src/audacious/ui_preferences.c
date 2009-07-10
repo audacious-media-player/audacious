@@ -2428,9 +2428,8 @@ create_plugin_category(void)
     gtk_box_pack_start (GTK_BOX (vbox25), alignment58, FALSE, FALSE, 4);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment58), 0, 6, 0, 0);
 
-    label64 = gtk_label_new_with_mnemonic (_("_Effect plugin list:"));
+    label64 = gtk_label_new (_ ("Effect plugins (for 16-bit output only):"));
     gtk_container_add (GTK_CONTAINER (alignment58), label64);
-    gtk_label_set_use_markup (GTK_LABEL (label64), TRUE);
     gtk_misc_set_alignment (GTK_MISC (label64), 0, 0.5);
 
     scrolledwindow9 = gtk_scrolled_window_new (NULL, NULL);
