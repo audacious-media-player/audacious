@@ -274,9 +274,6 @@ static void send_audio (void * hook_data, void * user_data)
     VisNode * vis_node = hook_data;
     int16_t (* pcm_data) [512] = vis_node->data;
     int nch = vis_node->nch;
-
-    // We ignore vis_node->length?! -jlindgren
-
     GList *node = vp_data.enabled_list;
     VisPlugin *vp;
     gint16 mono_freq[2][256], stereo_freq[2][256];
