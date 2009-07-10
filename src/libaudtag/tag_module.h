@@ -9,12 +9,14 @@ G_BEGIN_DECLS
 #include "libaudcore/tuple.h"
 
 mowgli_dictionary_t *tag_modules;
-
-typedef struct _module{
+int number_of_modules;
+typedef Tuple* pTuple;
+typedef struct _module
+{
 	gboolean (*can_handle) (Tuple *tuple);
-	Tuple *(*populate_tuple_from_file)(Tuple* tuple);
+	pTuple (*populate_tuple_from_file)(Tuple* tuple);
 	gboolean (*write_tuple_to_file) (Tuple* tuple);
-	} tag_module_t;
+} tag_module_t;
 
 /* this function must be modified when including new modules */
 void init_tag_modules(void);

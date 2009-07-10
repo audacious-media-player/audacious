@@ -15,7 +15,7 @@
 
 /* defines functions for WMA file handling */
 
-#define TEST 
+//#define TEST
 #ifdef TEST
 #define VFSFile FILE
 #define vfs_fopen(...)  fopen(__VA_ARGS__)
@@ -45,5 +45,5 @@ Tuple *makeTuple(Tuple *tuple, const gchar* title, const gchar* artist,
 							   const gchar* filePath,int tracnr);
 							   
 							   
-							   
+const gchar* get_complete_filepath(Tuple *tuple);
 #endif							   

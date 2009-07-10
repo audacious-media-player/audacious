@@ -37,6 +37,21 @@ Tuple *makeTuple(Tuple *tuple, const gchar* title, const gchar* artist,
 	return tuple;
 }
 
+
+const gchar* get_complete_filepath(Tuple *tuple)
+{
+    const gchar* filepath;
+    const gchar* dir;
+    const gchar* file;
+
+    dir = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
+    file = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
+    filepath = g_strdup_printf("%s/%s",dir,file);
+    printf("file path = %s\n",filepath);
+    return filepath;
+}
+
+
 void printTuple(Tuple *tuple)
 {
 printf("--------------TUPLE PRINT --------------------\n");

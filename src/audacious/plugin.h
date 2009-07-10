@@ -48,6 +48,7 @@
 #include "audacious/interface.h"
 #include "audacious/equalizer_preset.h"
 #include "libSAD/libSAD.h"
+#include "libaudtag/audtag.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -660,6 +661,10 @@ struct _AudaciousFuncTableV1 {
     void (*output_plugin_cleanup)(void);
     void (*output_plugin_reinit)(void);
 
+//    /* Audtag lib functions */
+//    Tuple *(*tag_tuple_read)(Tuple* tuple);
+//    gint (*tag_tuple_write_to_file)(Tuple *tuple);
+
     /* Added after all the nicely organized ones... */
     GtkWidget * (* get_plugin_menu) (int id);
     void (*playlist_shift)(Playlist *playlist, gint delta);
@@ -1016,6 +1021,9 @@ struct _AudaciousFuncTableV1 {
 #define aud_get_plugin_menu		_audvt->get_plugin_menu
 #define aud_playlist_shift		_audvt->playlist_shift
 #define aud_playlist_rescan             _audvt->playlist_rescan
+
+//#define aud_tag_tuple_read                  _audvt->tag_tuple_read
+//#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write
 
 #include "audacious/auddrct.h"
 

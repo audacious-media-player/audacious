@@ -1,19 +1,19 @@
 #include "libaudcore/tuple.h"
 #include "../tag_module.h"
-
+#include "../util.h"
 #include "module.h"
-
 #include "wma.h"
 
 gboolean can_handle (Tuple *tuple)
 {	
-	const char *file_path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
+	char *file_path =get_complete_filepath(tuple);
 	return wma_can_handle_file(file_path);
 }
 
-Tuple *populate_tuple_from_file(Tuple* tuple)
+Tuple *populate_tuple_from_file(Tuple *tuple)
 {
-	return NULL;
+    printf("populate tuple from file - return");
+    return wma_populate_tuple_from_file(tuple);
 }
 
 gboolean write_tuple_to_file (Tuple* tuple)

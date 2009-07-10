@@ -17,13 +17,14 @@ void writeGuidToFile(VFSFile *f,int guid_type);
 gboolean wma_can_handle_file(const char *file_path)
 {
 	DEBUG_TAG("can handle file\n");
+
 	int retval = FALSE;
-	GUID *guid1 = guid_read_from_file(file_path,0);
+        DEBUG_TAG("PATH = %s\n",file_path);
+	GUID *guid1  = g_new0(GUID,1);
+		memcpy(guid1,guid_read_from_file(file_path, 0),sizeof(GUID));
 	GUID *guid2 = guid_convert_from_string(ASF_HEADER_OBJECT_GUID);
 	if(guid_equal(guid1, guid2))
 		retval = TRUE;
-	g_free(guid1);
-	g_free(guid2);
 	return retval;
 }
 
@@ -102,7 +103,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple )
 	/* read play duration - time needed to play the file in 100-nanosecond
 	units */
 	vfs_fread(&playDuration,8,1,f);
-	DEBUG_TAG("play duration = %zd\n",playDuration);
+	DEBUG_TAG("play duration = %Lud\n",playDuration);
 	/* increment filePosition */
 	filePosition += size;
 
@@ -262,11 +263,12 @@ void readASFObject(VFSFile *f)
 Tuple *wma_populate_tuple_from_file(Tuple* tuple)
 {
     DEBUG_TAG("wma populate tuple from file\n");
+   
     VFSFile *file;
     /*open the file with the path received in tuple */
-    const  gchar *file_path = tuple_get_string(tuple,FIELD_FILE_PATH,NULL);
+    const gchar *file_path = get_complete_filepath(tuple);
     /*   -------------- FOR TESTING ONLY ---------------- */
-
+ printf("\nALLLLLLLLLOOOOOOOOOOOO - %s\n", file_path);
 	file = vfs_fopen(file_path,"r");
 
     if(file == NULL)
@@ -764,7 +766,7 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple)
 
 
 	}
-	filePosition = ftell(from);
+	filePosition = vfs_ftell(from);
 	newfilePosition += newsize;
 }
 void writeHeaderExtensionObject(VFSFile *from, VFSFile *to)

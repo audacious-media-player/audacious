@@ -9,12 +9,12 @@ G_BEGIN_DECLS
 #include "libaudcore/tuple.h"
 #include <mowgli.h> 
 
-void audtag_init(void);
-void audtag_terminate(void);
+void tag_init(void);
+void tag_terminate(void);
 
-Tuple *audtag_tuple_read(Tuple* tuple);
+Tuple *tag_tuple_read(Tuple* tuple);
 
-gint audtag_tuple_write_to_file(Tuple *tuple);
+gint tag_tuple_write_to_file(Tuple *tuple);
 
 G_END_DECLS
 #endif /* AUDTAG_H */
