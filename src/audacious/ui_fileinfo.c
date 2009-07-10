@@ -489,7 +489,6 @@ create_fileinfo_window(void)
     gtk_container_set_border_width(GTK_CONTAINER(fileinfo_win), 6);
     gtk_window_set_title(GTK_WINDOW(fileinfo_win), _("Track Information"));
     gtk_window_set_position(GTK_WINDOW(fileinfo_win), GTK_WIN_POS_CENTER);
-    gtk_window_set_resizable(GTK_WINDOW(fileinfo_win), FALSE);
     gtk_window_set_type_hint(GTK_WINDOW(fileinfo_win), GDK_WINDOW_TYPE_HINT_DIALOG);
 
     vbox0 = gtk_vbox_new(FALSE, 0);
