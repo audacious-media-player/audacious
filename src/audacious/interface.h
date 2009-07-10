@@ -33,7 +33,7 @@
 #include <mowgli.h>
 
 typedef struct {
-	void (*create_prefs_window)(void);
+	GtkWidget** (*create_prefs_window)(void);
 	void (*show_prefs_window)(void);
 	void (*hide_prefs_window)(void);
 

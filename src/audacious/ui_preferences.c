@@ -110,11 +110,6 @@ static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
 
-/* colorize settings scales */
-GtkWidget *green_scale;
-GtkWidget *red_scale;
-GtkWidget *blue_scale;
-
 /* filepopup settings widgets */
 GtkWidget *filepopup_settings_cover_name_include;
 GtkWidget *filepopup_settings_cover_name_exclude;
@@ -790,8 +785,6 @@ create_plugin_preferences(PluginPreferences *settings)
 {
     GtkWidget *window;
     GtkWidget *vbox, *bbox, *ok, *apply, *cancel;
-    GtkWidget *notebook;
-    gint i;
 
     if (settings->data != NULL) {
         gtk_widget_show(GTK_WIDGET(settings->data));
@@ -811,18 +804,8 @@ create_plugin_preferences(PluginPreferences *settings)
                      G_CALLBACK(plugin_preferences_destroy), settings);
 
     vbox = gtk_vbox_new(FALSE, 10);
+    create_widgets(GTK_BOX(vbox), settings->prefs, settings->n_prefs);
     gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    notebook = gtk_notebook_new();
-    gtk_box_pack_start(GTK_BOX(vbox), notebook, FALSE, FALSE, 0);
-
-    for (i = 0; i<settings->n_tabs; i++) {
-        GtkWidget *vbox;
-        vbox = gtk_vbox_new(FALSE, 5);
-        create_widgets(GTK_BOX(vbox), settings->tabs[i].settings, settings->tabs[i].n_settings);
-
-        gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, gtk_label_new(_(settings->tabs[i].name)));
-    }
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
@@ -865,7 +848,7 @@ plugin_treeview_open_new_prefs(GtkTreeView *treeview)
 
     g_return_if_fail(plugin != NULL);
     g_return_if_fail(plugin->settings != NULL);
-    g_return_if_fail(plugin->settings->type == PREFERENCES_TAB);
+    g_return_if_fail(plugin->settings->type == PREFERENCES_WINDOW);
 
     plugin_set_current(plugin);
     create_plugin_preferences(plugin->settings);
@@ -924,9 +907,8 @@ plugin_treeview_enable_new_prefs(GtkTreeView * treeview, GtkButton * button)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
-    g_return_if_fail(plugin->settings != NULL);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings->type == PREFERENCES_TAB);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->settings ? (plugin->settings->type == PREFERENCES_WINDOW) : FALSE);
 }
 
 static void
@@ -1826,6 +1808,20 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     gtk_container_add(GTK_CONTAINER(widget), tmp);
                 }
                 break;
+            case WIDGET_NOTEBOOK:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 3, 0);
+
+                widget = gtk_notebook_new();
+
+                gint i;
+                for (i = 0; i<widgets[x].data.notebook.n_tabs; i++) {
+                    GtkWidget *vbox;
+                    vbox = gtk_vbox_new(FALSE, 5);
+                    create_widgets(GTK_BOX(vbox), widgets[x].data.notebook.tabs[i].settings, widgets[x].data.notebook.tabs[i].n_settings);
+
+                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), vbox, gtk_label_new(_(widgets[x].data.notebook.tabs[i].name)));
+                }
+                break;
             default:
                 /* shouldn't ever happen - expect things to break */
                 continue;
@@ -2428,9 +2424,8 @@ create_plugin_category(void)
     gtk_box_pack_start (GTK_BOX (vbox25), alignment58, FALSE, FALSE, 4);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment58), 0, 6, 0, 0);
 
-    label64 = gtk_label_new_with_mnemonic (_("_Effect plugin list:"));
+    label64 = gtk_label_new (_ ("Effect plugins (for 16-bit output only):"));
     gtk_container_add (GTK_CONTAINER (alignment58), label64);
-    gtk_label_set_use_markup (GTK_LABEL (label64), TRUE);
     gtk_misc_set_alignment (GTK_MISC (label64), 0, 0.5);
 
     scrolledwindow9 = gtk_scrolled_window_new (NULL, NULL);
@@ -2577,6 +2572,45 @@ create_plugin_category(void)
 }
 
 static void
+destroy_plugin_page(GList *list)
+{
+    GList *iter;
+
+    MOWGLI_ITER_FOREACH(iter, list)
+    {
+        Plugin *plugin = PLUGIN(iter->data);
+        if (plugin->settings && plugin->settings->data) {
+            plugin->settings->data = NULL;
+            if (plugin->settings->apply)
+                plugin->settings->apply();
+            if (plugin->settings->cleanup)
+                plugin->settings->cleanup();
+        }
+    }
+}
+
+static void
+destroy_plugin_pages(void)
+{
+    destroy_plugin_page(get_input_list());
+    destroy_plugin_page(get_general_enabled_list());
+    destroy_plugin_page(get_vis_enabled_list());
+    destroy_plugin_page(get_effect_enabled_list());
+}
+
+static gboolean
+prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
+{
+    destroy_plugin_pages();
+    prefswin = NULL;
+    category_notebook = NULL;
+    gtk_widget_destroy(filepopup_settings);
+    filepopup_settings = NULL;
+    gtk_widget_destroy(window);
+    return TRUE;
+}
+
+static void
 create_plugin_page(GList *list)
 {
     GList *iter;
@@ -2599,7 +2633,7 @@ create_plugin_pages(void)
     create_plugin_page(get_effect_enabled_list());
 }
 
-void
+GtkWidget **
 create_prefs_window(void)
 {
     gchar *aud_version_string;
@@ -2690,10 +2724,10 @@ create_prefs_window(void)
 
     /* connect signals */
     g_signal_connect(G_OBJECT(prefswin), "delete_event",
-                     G_CALLBACK(gtk_widget_hide_on_delete),
+                     G_CALLBACK(prefswin_destroy),
                      NULL);
     g_signal_connect_swapped(G_OBJECT(close), "clicked",
-                             G_CALLBACK(gtk_widget_hide),
+                             G_CALLBACK(prefswin_destroy),
                              GTK_OBJECT (prefswin));
 
     /* create category view */
@@ -2712,6 +2746,8 @@ create_prefs_window(void)
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
+
+    return &prefswin;
 }
 
 void
@@ -2728,7 +2764,7 @@ create_plugin_preferences_page(PluginPreferences *settings)
     GtkWidget *vbox;
     vbox = gtk_vbox_new(FALSE, 5);
 
-    create_widgets(GTK_BOX(vbox), settings->tabs[0].settings, settings->tabs[0].n_settings);
+    create_widgets(GTK_BOX(vbox), settings->prefs, settings->n_prefs);
     gtk_widget_show_all(vbox);
     prefswin_page_new(vbox, settings->title, settings->imgurl);
 

@@ -32,6 +32,7 @@ typedef enum {
     WIDGET_ENTRY,
     WIDGET_COMBO_BOX,
     WIDGET_BOX,
+    WIDGET_NOTEBOOK,
 } WidgetType;
 
 typedef enum {
@@ -48,6 +49,8 @@ typedef struct {
     gpointer value;
     const gchar *label;
 } ComboBoxElements;
+
+struct _NotebookTab;
 
 typedef struct _PreferencesWidget {
     WidgetType type;         /* widget type */
@@ -93,28 +96,33 @@ typedef struct _PreferencesWidget {
             gboolean frame;       /* whether to draw frame around box */
         } box;
 
+        struct {
+            struct _NotebookTab *tabs;
+            gint n_tabs;
+        } notebook;
+
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;
     ValueType cfg_type;      /* connected value type */
 } PreferencesWidget;
 
-typedef enum {
-    PREFERENCES_TAB,  /* displayed in seperate window */
-    PREFERENCES_PAGE, /* added as new page in main preferences window */
-} PreferencesType;
-
-typedef struct {
+typedef struct _NotebookTab {
     gchar *name;
     PreferencesWidget *settings;
     gint n_settings;
-} PreferencesTab;
+} NotebookTab;
+
+typedef enum {
+    PREFERENCES_WINDOW,  /* displayed in seperate window */
+    PREFERENCES_PAGE,    /* added as new page in main preferences window */
+} PreferencesType;
 
 typedef struct {
     gchar *title;
     gchar *imgurl;        /* Optional */
 
-    PreferencesTab *tabs;
-    gint n_tabs;
+    PreferencesWidget *prefs;
+    gint n_prefs;
 
     PreferencesType type;
 

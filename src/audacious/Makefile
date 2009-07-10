@@ -104,7 +104,6 @@ DATA = images/about-logo.png				\
        images/menu_plugin.png				\
        images/menu_queue_toggle.png			\
        images/menu_randomize_playlist.png	\
-       images/mouse.png						\
        images/playback.png					\
        images/playlist.png					\
        images/plugins.png					\
