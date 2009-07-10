@@ -20,7 +20,7 @@
 #ifndef AUDACIOUS_UI_PREFERENCES_H
 #define AUDACIOUS_UI_PREFERENCES_H
 
-void create_prefs_window(void);
+GtkWidget** create_prefs_window(void);
 void show_prefs_window(void);
 void hide_prefs_window(void);
 

@@ -543,8 +543,6 @@ main(gint argc, gchar ** argv)
 
         // register icons in stock
         register_aud_stock_icons();
-
-        create_prefs_window();
     }
 
     vis_runner_init ();

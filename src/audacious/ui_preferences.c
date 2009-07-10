@@ -2577,6 +2577,43 @@ create_plugin_category(void)
 }
 
 static void
+destroy_plugin_page(GList *list)
+{
+    GList *iter;
+
+    MOWGLI_ITER_FOREACH(iter, list)
+    {
+        Plugin *plugin = PLUGIN(iter->data);
+        if (plugin->settings && plugin->settings->data) {
+            plugin->settings->data = NULL;
+            if (plugin->settings->apply)
+                plugin->settings->apply();
+            if (plugin->settings->cleanup)
+                plugin->settings->cleanup();
+        }
+    }
+}
+
+static void
+destroy_plugin_pages(void)
+{
+    destroy_plugin_page(get_input_list());
+    destroy_plugin_page(get_general_enabled_list());
+    destroy_plugin_page(get_vis_enabled_list());
+    destroy_plugin_page(get_effect_enabled_list());
+}
+
+static gboolean
+prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
+{
+    destroy_plugin_pages();
+    prefswin = NULL;
+    
+    gtk_widget_destroy(window);
+    return TRUE;
+}
+
+static void
 create_plugin_page(GList *list)
 {
     GList *iter;
@@ -2599,7 +2636,7 @@ create_plugin_pages(void)
     create_plugin_page(get_effect_enabled_list());
 }
 
-void
+GtkWidget **
 create_prefs_window(void)
 {
     gchar *aud_version_string;
@@ -2690,10 +2727,10 @@ create_prefs_window(void)
 
     /* connect signals */
     g_signal_connect(G_OBJECT(prefswin), "delete_event",
-                     G_CALLBACK(gtk_widget_hide_on_delete),
+                     G_CALLBACK(prefswin_destroy),
                      NULL);
     g_signal_connect_swapped(G_OBJECT(close), "clicked",
-                             G_CALLBACK(gtk_widget_hide),
+                             G_CALLBACK(prefswin_destroy),
                              GTK_OBJECT (prefswin));
 
     /* create category view */
@@ -2712,6 +2749,8 @@ create_prefs_window(void)
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
+    
+    return &prefswin;
 }
 
 void
