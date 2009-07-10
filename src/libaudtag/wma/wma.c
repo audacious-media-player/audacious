@@ -147,11 +147,22 @@ Tuple *readContentDescriptionObject(VFSFile *f, Tuple *tuple)
 	author = g_new0(gunichar2,authorLen);
 	copyright = g_new0(gunichar2,copyrightLen);
 	desc = g_new0(gunichar2,descLen);
-
-	vfs_fread(title, titleLen, 1, f);
-	vfs_fread(author, authorLen, 1, f);
-	vfs_fread(copyright, copyrightLen, 1, f);
-	vfs_fread(desc, descLen, 1, f);
+        if(titleLen !=  0)
+        {
+            vfs_fread(title, titleLen, 1, f);
+        }
+        if(authorLen != 0)
+        {
+            vfs_fread(author, authorLen, 1, f);
+        }
+        if(copyrightLen != 0)
+        {
+            vfs_fread(copyright, copyrightLen, 1, f);
+        }
+        if(descLen != 0)
+        {
+            vfs_fread(desc, descLen, 1, f);
+        }
 
 	filePosition += size;
 	g_utf16_to_utf8(title,titleLen,NULL,NULL,NULL);
