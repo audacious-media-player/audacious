@@ -5,7 +5,7 @@
 #include "guid.h"
 #include "wma_fmt.h"
 #include "../util.h"
-
+#include <inttypes.h>
 
 int filePosition = 0;
 int newfilePosition = 0;
@@ -103,7 +103,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple )
 	/* read play duration - time needed to play the file in 100-nanosecond
 	units */
 	vfs_fread(&playDuration,8,1,f);
-	DEBUG_TAG("play duration = %Lud\n",playDuration);
+	DEBUG_TAG("play duration = %"PRId64"\n",playDuration);
 	/* increment filePosition */
 	filePosition += size;
 
