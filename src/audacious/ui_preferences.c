@@ -110,11 +110,6 @@ static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
 
-/* colorize settings scales */
-GtkWidget *green_scale;
-GtkWidget *red_scale;
-GtkWidget *blue_scale;
-
 /* filepopup settings widgets */
 GtkWidget *filepopup_settings_cover_name_include;
 GtkWidget *filepopup_settings_cover_name_exclude;
@@ -1815,7 +1810,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 break;
             case WIDGET_NOTEBOOK:
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 3, 0);
-                
+
                 widget = gtk_notebook_new();
 
                 gint i;
@@ -2608,7 +2603,9 @@ prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
 {
     destroy_plugin_pages();
     prefswin = NULL;
-    
+    category_notebook = NULL;
+    gtk_widget_destroy(filepopup_settings);
+    filepopup_settings = NULL;
     gtk_widget_destroy(window);
     return TRUE;
 }
@@ -2749,7 +2746,7 @@ create_prefs_window(void)
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
-    
+
     return &prefswin;
 }
 
