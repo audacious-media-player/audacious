@@ -3,7 +3,7 @@ include ../../extra.mk
 
 OBJECTIVE_LIBS_NOINST = tuple_formatter_test \
 	tuple_formatter_functor_test \
-	wma_test
+	tag_wma_test
 
 LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
@@ -20,24 +20,33 @@ CFLAGS += \
 	-I.. -I../..   \
 	-I../intl -I../audacious
 
-COMMON_OBJS = test_harness.o
-TFT_OBJS = $(COMMON_OBJS) tuple_formatter_test.o ../audacious/tuple.o ../audacious/tuple_formatter.o
+
+AUDCORE_OBJS = ../libaudcore/tuple.o ../libaudcore/tuple_formatter.o \
+		../libaudcore/audstrings.o ../libaudcore/tuple_compiler.o
+
+AUDTAG_OBJS =  ../libaudtag/util.o ../libaudtag/wma/guid.o \
+		../libaudtag/wma/wma.o ../libaudtag/wma/wma_fmt.o
+
+COMMON_OBJS = test_harness.o $(AUDCORE_OBJS)
+
+TFT_OBJS = $(COMMON_OBJS) tuple_formatter_test.o
+
 tuple_formatter_test: $(TFT_OBJS)
 	$(CC) $(LDFLAGS) $(TFT_OBJS) $(LDADD) -o $@
 	@printf "%10s     %-20s\n" LINK $@
 	./$@
 	@printf "%10s     %-20s\n" TEST-PASS $@
 
-TFFT_OBJS = $(COMMON_OBJS) tuple_formatter_functor_test.o ../audacious/tuple.o ../audacious/tuple_formatter.o
+TFFT_OBJS = $(COMMON_OBJS) tuple_formatter_functor_test.o
 tuple_formatter_functor_test: $(TFFT_OBJS)
 	$(CC) $(LDFLAGS) $(TFFT_OBJS) $(LDADD) -o $@
 	@printf "%10s     %-20s\n" LINK $@
 	./$@
 	@printf "%10s     %-20s\n" TEST-PASS $@
 
-WMA_OBJS = $(COMMON_OBJS) wma_test.o ../libaudtag/wma.o 
-wma_test: $(WMA_OBJS)
-	$(CC) $(LDFLAGS) $(WMA_OBJS) $(LDADD) -o $@
+TAG_WMA_OBJS = $(COMMON_OBJS) $(AUDTAG_OBJS) tag_wma_test.o
+tag_wma_test: $(TAG_WMA_OBJS)
+	$(CC) $(LDFLAGS) $(TAG_WMA_OBJS) $(LDADD) -o $@
 	@printf "%10s     %-20s\n" LINK $@
 	./$@
 	@printf "%10s     %-20s\n" TEST-PASS $@

@@ -31,7 +31,6 @@ build ?= @build@
 CPPFLAGS ?= @CPPFLAGS@
 SHELL ?= @SHELL@
 USE_EGGSM ?= @USE_EGGSM@
-USE_TAGLIB_TESTS ?= @USE_TAGLIB_TESTS@
 GLIB_GENMARSHAL ?= @GLIB_GENMARSHAL@
 LIBMCS_LIBS ?= @LIBMCS_LIBS@
 am__leading_dot ?= @am__leading_dot@
