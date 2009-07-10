@@ -9,7 +9,7 @@ SRCS = audtag.c		\
        wma/module.c	\
        wma/wma_fmt.c	\
        wma/wma.c
-INCLUDES = audtag.h 
+INCLUDES = audtag.h util.h
 
 include ../../buildsys.mk
 include ../../extra.mk

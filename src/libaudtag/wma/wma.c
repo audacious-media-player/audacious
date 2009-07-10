@@ -268,8 +268,7 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple)
     /*open the file with the path received in tuple */
     const gchar *file_path = get_complete_filepath(tuple);
     /*   -------------- FOR TESTING ONLY ---------------- */
- printf("\nALLLLLLLLLOOOOOOOOOOOO - %s\n", file_path);
-	file = vfs_fopen(file_path,"r");
+    file = vfs_fopen(file_path,"r");
 
     if(file == NULL)
         DEBUG_TAG("fopen error\n");
