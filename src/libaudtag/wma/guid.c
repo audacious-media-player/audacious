@@ -26,7 +26,7 @@ GUID *guid_read_from_file(const gchar* file_path, int offset) {
     g = (GUID*) buf;
     g->be64 = GUINT64_SWAP_LE_BE(g->be64);
 
-    printf("GUID = %8x-%hx-%hx-%"PRId64"\n", g->le32, g->le16_1, g->le16_2, g->be64);
+    printf("GUID = %8x-%hx-%hx-%Lx\n", g->le32, g->le16_1, g->le16_2, g->be64);
     printf("end guid read from file \n");
     return g;
 }
@@ -34,7 +34,7 @@ GUID *guid_read_from_file(const gchar* file_path, int offset) {
 GUID *guid_convert_from_string(const gchar* s) {
     GUID * gg = g_malloc(sizeof * gg);
 
-    if (sscanf(s, "%8x-%hx-%hx-%"PRId64, & gg->le32, & gg->le16_1, & gg->le16_2,
+    if (sscanf(s, "%8x-%hx-%hx-%Lx", & gg->le32, & gg->le16_1, & gg->le16_2,
             & gg->be64) != 4) {
         return NULL;
     }
