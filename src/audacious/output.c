@@ -489,145 +489,124 @@ output_buffer_playing(void)
     return op->buffer_playing();
 }
 
-/* called by input plugin when data is ready */
-void
-output_pass_audio(InputPlayback *playback,
-              AFormat fmt,       /* output format        */
-              gint nch,          /* channels             */
-              gint length,       /* length of sample     */
-              gpointer ptr,      /* data                 */
-              int *going         /* 0 when time to stop  */
-              )
+static Flow * get_postproc_flow (void)
 {
-    static Flow *postproc_flow = NULL;
-    static Flow *legacy_flow = NULL;
-    OutputPlugin *op = playback->output;
-    gint writeoffs;
-    gpointer orig_ptr = ptr;
-    gint orig_length = length;
-    gpointer old_ptr, new_ptr;
+    static Flow * flow = NULL;
+
+    if (flow == NULL)
+    {
+        flow = flow_new ();
+
+        #ifdef USE_SAMPLERATE
+            flow_link_element (flow, src_flow);
+        #endif
+
+        flow_link_element (flow, equalizer_flow);
+        flow_link_element (flow, volumecontrol_flow);
+    }
+
+    return flow;
+}
+
+static Flow * get_legacy_flow (void)
+{
+    static Flow * flow = NULL;
+
+    if (flow == NULL)
+    {
+        flow = flow_new ();
+        flow_link_element (flow, effect_flow);
+    }
+
+    return flow;
+}
+
+void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
+ gint size, void * data, gint * going)
+{
+    gint samples = size / FMT_SIZEOF (fmt);
+    void * pristine = data, * allocated = NULL;
     gint time = playback->output->written_time ();
 
     if (fmt != FMT_FLOAT)
     {
-        gint samples = length / FMT_SIZEOF (fmt);
-
-        length = sizeof (gfloat) * samples;
-        new_ptr = g_malloc (length);
+        gfloat * new = g_malloc (sizeof (gfloat) * samples);
 
         if (IS_S16_NE (fmt))
-            s16_to_float (ptr, new_ptr, samples);
+            s16_to_float (data, new, samples);
         else
-            SAD_dither_process_buffer (sad_state_to_float, ptr, new_ptr,
-             samples / nch);
+            SAD_dither_process_buffer (sad_state_to_float, data, new, samples /
+             channels);
 
-        if (ptr != orig_ptr) g_free (ptr);
-        ptr = new_ptr;
+        data = new;
+        g_free (allocated);
+        allocated = new;
     }
 
-    vis_runner_pass_audio (time, ptr, length / sizeof (gfloat), nch);
+    vis_runner_pass_audio (time, data, samples, channels);
 
     if (bypass_dsp)
     {
-        if (ptr != orig_ptr) g_free (ptr);
-        ptr = orig_ptr;
-        length = orig_length;
+        data = pristine;
+        g_free (allocated);
+        allocated = NULL;
     }
     else
     {
-        if (postproc_flow == NULL)
-        {
-            postproc_flow = flow_new ();
-#ifdef USE_SAMPLERATE
-            flow_link_element (postproc_flow, src_flow);
-#endif
-            flow_link_element (postproc_flow, equalizer_flow);
-            flow_link_element (postproc_flow, volumecontrol_flow);
-        }
+        samples = flow_execute (get_postproc_flow (), time, & data, sizeof
+         (gfloat) * samples, FMT_FLOAT, decoder_srate, channels) / sizeof
+         (gfloat);
 
-        old_ptr = ptr;
-        length = flow_execute (postproc_flow, time, & ptr, length,
-         FMT_FLOAT, decoder_srate, nch);
-        if (ptr != old_ptr && old_ptr != orig_ptr) g_free (old_ptr);
+        if (data != allocated)
+        {
+            g_free (allocated);
+            allocated = NULL;
+        }
 
         if (op_state.fmt != FMT_FLOAT)
         {
-            gint samples = length / sizeof (gfloat);
-
-            length = FMT_SIZEOF (op_state.fmt) * samples;
-            new_ptr = g_malloc (length);
+            void * new = g_malloc (FMT_SIZEOF (op_state.fmt) * samples);
 
             if (cfg.no_dithering && IS_S16_NE (op_state.fmt))
-                float_to_s16 (ptr, new_ptr, samples);
+                float_to_s16 (data, new, samples);
             else
-                SAD_dither_process_buffer (sad_state_from_float, ptr, new_ptr,
-                 samples / nch);
+                SAD_dither_process_buffer (sad_state_from_float, data, new,
+                 samples / channels);
 
-            if (ptr != orig_ptr) g_free (ptr);
-            ptr = new_ptr;
+            data = new;
+            g_free (allocated);
+            allocated = new;
         }
 
         if (IS_S16_NE (op_state.fmt))
         {
-            if (legacy_flow == NULL)
+            samples = flow_execute (get_legacy_flow (), time, & data, 2 *
+             samples, op_state.fmt, op_state.rate, op_state.nch) / 2;
+
+            if (data != allocated)
             {
-                legacy_flow = flow_new ();
-                flow_link_element (legacy_flow, effect_flow);
+                g_free (allocated);
+                allocated = NULL;
             }
-
-            old_ptr = ptr;
-            length = flow_execute (legacy_flow, time, & ptr, length,
-             op_state.fmt, op_state.rate, op_state.nch);
-            if (ptr != old_ptr && old_ptr != orig_ptr) g_free (old_ptr);
         }
     }
 
-    /**** write it out ****/
-
-    writeoffs = 0;
-    while (writeoffs < length)
+    while (1)
     {
-        int writable = length - writeoffs;
+        gint ready = playback->output->buffer_free () / FMT_SIZEOF (op_state.fmt);
 
-        if (writable > 2048)
-            writable = 2048;
+        ready = MIN (ready, samples);
+        playback->output->write_audio (data, FMT_SIZEOF (op_state.fmt) * ready);
+        data = (char *) data + FMT_SIZEOF (op_state.fmt) * ready;
+        samples -= ready;
 
-        if (writable == 0)
-            return;
+        if (! samples)
+            break;
 
-        while (op->buffer_free() < writable)   /* wait output buf */
-        {
-            GTimeVal pb_abs_time;
-
-            g_get_current_time(&pb_abs_time);
-            g_time_val_add(&pb_abs_time, 10000);
-
-            if (going && !*going)              /* thread stopped? */
-                return;                        /* so finish */
-
-            if (ip_data.stop)                  /* has a stop been requested? */
-                return;                        /* yes, so finish */
-
-            /* else sleep for retry */
-            g_mutex_lock(playback->pb_change_mutex);
-            g_cond_timed_wait(playback->pb_change_cond, playback->pb_change_mutex, &pb_abs_time);
-            g_mutex_unlock(playback->pb_change_mutex);
-        }
-
-        if (ip_data.stop)
-            return;
-
-        if (going && !*going)                  /* thread stopped? */
-            return;                            /* so finish */
-
-        /* do output */
-	plugin_set_current((Plugin *)op);
-        op->write_audio(((guint8 *) ptr) + writeoffs, writable);
-
-        writeoffs += writable;
+        g_usleep (50000);
     }
 
-    if (ptr != orig_ptr) g_free (ptr);
+    g_free (allocated);
 }
 
 /* called by input plugin when RG info available --asphyx */

@@ -62,7 +62,8 @@ void output_pause(gshort);
 gint output_buffer_free(void);
 gint output_buffer_playing(void);
 
-void output_pass_audio(InputPlayback *, AFormat, gint, gint, gpointer, int *);
+void output_pass_audio (InputPlayback * playback, AFormat format, gint channels,
+ gint size, void * data, gint * going);
 void output_set_replaygain_info(InputPlayback *, ReplayGainInfo *);
 
 gint get_written_time(void);
