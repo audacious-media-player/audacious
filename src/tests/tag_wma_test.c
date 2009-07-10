@@ -1,5 +1,6 @@
 #include <glib.h>
 #include <libaudcore/tuple.h>
+#define TEST
 #include <libaudtag/util.h>
 #include <libaudtag/wma/wma.h>
 

@@ -46,7 +46,7 @@ tuple_formatter_functor_test: $(TFFT_OBJS)
 
 TAG_WMA_OBJS = $(COMMON_OBJS) $(AUDTAG_OBJS) tag_wma_test.o
 tag_wma_test: $(TAG_WMA_OBJS)
-	$(CC) $(LDFLAGS) $(TAG_WMA_OBJS) $(LDADD) -o $@
+	$(CC) $(LDFLAGS) $(TAG_WMA_OBJS) $(LDADD) -o $@ -laudcore
 	@printf "%10s     %-20s\n" LINK $@
 	./$@
 	@printf "%10s     %-20s\n" TEST-PASS $@
