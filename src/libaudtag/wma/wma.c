@@ -916,11 +916,17 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
     int foundExtendedHeader = 0;
     int HeaderObjNr = 0;
     int i;
+
     /*open the file with the path received in tuple */
     const gchar *file_path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
-    /*   -------------- FOR TESTING ONLY ---------------- */
-    gchar *tmp_path = "/tmp/tmpwma.wma";
     file = vfs_fopen(file_path, "r");
+
+    /* create a temporary file, with random name */
+    const gchar *tmpdir = g_get_tmp_dir();
+    printf("tmpdir: '%s'\n", tmpdir);
+    guint32 n =  g_random_int();
+    gchar *tmp_path = g_strdup_printf("%s/%d", tmpdir,n);
+
     tmpFile = vfs_fopen(tmp_path, "w+");
 
     if (tmpFile == NULL)
