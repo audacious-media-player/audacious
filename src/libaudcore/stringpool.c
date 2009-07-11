@@ -98,6 +98,13 @@ typedef struct {
 static mowgli_patricia_t *stringpool_tree = NULL;
 static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
+gboolean
+stringpool_should_cache(const gchar *string, gsize maxlen)
+{
+    const gchar *end = memchr(string, '\0', maxlen);
+    return end ? TRUE : FALSE;
+}
+
 /* allocate a string if needed. */
 gchar *
 stringpool_get(const gchar *str)
@@ -108,6 +115,9 @@ stringpool_get(const gchar *str)
 
     if (!*str)
         return NULL;
+
+    if (!stringpool_should_cache(str, 100))
+        return str_to_utf8(str);
 
     g_static_mutex_lock(&stringpool_mutex);
 
@@ -144,6 +154,9 @@ stringpool_unref(const gchar *str)
 
     g_return_if_fail(stringpool_tree != NULL);
     g_return_if_fail(str != NULL);
+
+    if (!stringpool_should_cache(str, 100))
+        return g_free(str);
 
     g_static_mutex_lock(&stringpool_mutex);
 
