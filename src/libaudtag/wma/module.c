@@ -13,8 +13,8 @@ Tuple *populate_tuple_from_file(Tuple *tuple) {
     return wma_populate_tuple_from_file(tuple);
 }
 
-gboolean write_tuple_to_file(Tuple* tuple) {
-    return TRUE;
+gboolean write_tuple_to_file(Tuple *tuple) {
+    return wma_write_tuple_to_file(tuple);
 }
 
 tag_module_t wma = {can_handle, populate_tuple_from_file, write_tuple_to_file};

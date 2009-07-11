@@ -14,7 +14,7 @@ void tag_terminate(void);
 
 Tuple *tag_tuple_read(Tuple* tuple);
 
-gint tag_tuple_write_to_file(Tuple *tuple);
+gboolean tag_tuple_write_to_file(Tuple *tuple);
 
 G_END_DECLS
 #endif /* AUDTAG_H */
