@@ -148,7 +148,7 @@ stringpool_get(const gchar *str)
 }
 
 void
-stringpool_unref(const gchar *str)
+stringpool_unref(gchar *str)
 {
     PooledString *ps;
 

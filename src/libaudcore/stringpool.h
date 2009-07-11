@@ -22,7 +22,7 @@
 #define __AUDACIOUS__LIBAUDCORE__STRINGPOOL_H__GUARD
 
 gchar *stringpool_get(const gchar *str);
-void stringpool_unref(const gchar *str);
+void stringpool_unref(gchar *str);
 
 #endif
 
