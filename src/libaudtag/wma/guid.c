@@ -10,15 +10,12 @@ GStaticRWLock file_lock = G_STATIC_RW_LOCK_INIT;
 void writeGuidToFile(VFSFile *f, int guid_type);
 
 GUID *guid_read_from_file(const gchar* file_path, int offset) {
-    /*    printf("offset = %d\n",offset);   */
+    DEBUG("offset = %d\n",offset);
     VFSFile *f;
     gchar buf[16];
     GUID *g = g_new0(GUID, 1);
-    f = vfs_fopen(file_path, "r");
-    if (f == NULL)
-        DEBUG("fopen error\n");
-    else
-        DEBUG("fopen ok\n");
+    f = vfs_fopen(file_path, "r"); 
+    DEBUG("fopen %s\n", (f != NULL)?"success":"failure");
     if (offset != 0)
         vfs_fseek(f, offset, SEEK_SET);
 
@@ -26,8 +23,8 @@ GUID *guid_read_from_file(const gchar* file_path, int offset) {
     g = (GUID*) buf;
     g->be64 = GUINT64_SWAP_LE_BE(g->be64);
 
-    printf("GUID = %8x-%hx-%hx-%Lx\n", g->le32, g->le16_1, g->le16_2, g->be64);
-    printf("end guid read from file \n");
+    DEBUG("GUID = %8x-%hx-%hx-%Lx\n", g->le32, g->le16_1, g->le16_2, g->be64);
+    DEBUG("end guid read from file \n");
     return g;
 }
 
@@ -38,19 +35,19 @@ GUID *guid_convert_from_string(const gchar* s) {
             & gg->be64) != 4) {
         return NULL;
     }
-    printf("GUID FOMR STRING= %8x-%hx-%hx-%"PRId64"\n", gg->le32, gg->le16_1, gg->le16_2, gg->be64);
+    DEBUG("GUID FOMR STRING= %8x-%hx-%hx-%"PRId64"\n", gg->le32, gg->le16_1, gg->le16_2, gg->be64);
     return gg;
 }
 
 gboolean guid_equal(GUID *g1, GUID *g2) {
-    printf("GUID 1 = %8x-%hx-%hx-%"PRId64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
-    printf("GUID 2 = %8x-%hx-%hx-%"PRId64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
+    DEBUG("GUID 1 = %8x-%hx-%hx-%"PRId64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
+    DEBUG("GUID 2 = %8x-%hx-%hx-%"PRId64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
     g_return_val_if_fail((g1 != NULL) && (g2 != NULL), FALSE);
     if (!memcmp(g1, g2, 16)) {
-        printf("equal\n");
+        DEBUG("equal\n");
         return TRUE;
     }
-    printf("not equal\n");
+    DEBUG("not equal\n");
     return FALSE;
 }
 

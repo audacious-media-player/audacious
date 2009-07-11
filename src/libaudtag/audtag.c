@@ -1,8 +1,7 @@
-
-#include <glib.h>
 #include "libaudcore/tuple.h"
 #include "audtag.h"
 #include "tag_module.h"
+#include "util.h"
 
 void tag_init(void) {
     init_tag_modules();
@@ -15,9 +14,8 @@ Tuple *tag_tuple_read(Tuple* tuple) {
 
     tag_module_t *mod = find_tag_module(tuple);
     g_return_val_if_fail(mod != NULL, NULL);
-    printf("OK\n");
+    DEBUG("OK\n");
     return mod->populate_tuple_from_file(tuple);
-
 }
 
 gboolean tag_tuple_write_to_file(Tuple *tuple) {

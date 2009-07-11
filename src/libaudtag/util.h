@@ -2,21 +2,22 @@
 
 #define TAGUTIL_H
 
-#include <glib-2.0/glib.h>
+#include <glib.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
-#define WMA_DEBUG
+#define WMA_DEBUG 1
 
-#ifdef WMA_DEBUG
-#define DEBUG(...) printf(__VA_ARGS__)
+#if WMA_DEBUG
+#define DEBUG(...) printf("TAG %25s:\t", __func__); printf(__VA_ARGS__)
+#else
+#define DEBUG(...)
 #endif
 
 
 /* defines functions for WMA file handling */
 
-//#define TEST
-#ifdef TEST
+#ifdef TEST /* this should only be defined by the tests, so that VFS won't be used */
 #define VFSFile FILE
 #define vfs_fopen(...)  fopen(__VA_ARGS__)
 #define vfs_fread(...)  bla = fread(__VA_ARGS__)
