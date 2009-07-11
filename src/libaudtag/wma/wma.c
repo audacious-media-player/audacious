@@ -16,7 +16,6 @@ void writeGuidToFile(VFSFile *f, int guid_type);
 
 gboolean wma_can_handle_file(const char *file_path) {
     DEBUG("can handle file\n");
-
     int retval = FALSE;
     DEBUG("PATH = %s\n", file_path);
     GUID *guid1 = g_new0(GUID, 1);

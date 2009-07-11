@@ -9,9 +9,9 @@
 #define WMA_DEBUG 1
 
 #if WMA_DEBUG
-#define DEBUG(...) printf("TAG %25s:\t", __func__); printf(__VA_ARGS__)
+#define DEBUG(...) printf("TAG %25s:\t", __func__); printf(__VA_ARGS__);
 #else
-#define DEBUG(...)
+#define DEBUG(...) ;
 #endif
 
 

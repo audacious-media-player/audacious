@@ -6,8 +6,8 @@
 G_BEGIN_DECLS
 
 #include <glib.h>
-#include "libaudcore/tuple.h"
 #include <mowgli.h> 
+#include "libaudcore/tuple.h"
 
 void tag_init(void);
 void tag_terminate(void);
