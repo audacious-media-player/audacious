@@ -591,6 +591,8 @@ main(gint argc, gchar ** argv)
     g_message("Setting default icon");
     aud_set_default_icon();
 
+    g_message("Registering interface hooks");
+    register_interface_hooks();
 
 #ifndef NOT_ALPHA_RELEASE
     g_message("Displaying unsupported version warning.");

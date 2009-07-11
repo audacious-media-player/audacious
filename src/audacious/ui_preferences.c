@@ -2751,6 +2751,12 @@ create_prefs_window(void)
 }
 
 void
+destroy_prefs_window(void)
+{
+    prefswin_destroy(prefswin, NULL, NULL);
+}
+
+void
 create_plugin_preferences_page(PluginPreferences *settings)
 {
     g_return_if_fail(settings->type == PREFERENCES_PAGE);

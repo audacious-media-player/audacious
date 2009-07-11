@@ -38,11 +38,16 @@ static InterfaceOps interface_ops = {
     .create_prefs_window = create_prefs_window,
     .show_prefs_window = show_prefs_window,
     .hide_prefs_window = hide_prefs_window,
+    .destroy_prefs_window = destroy_prefs_window,
 
     .filebrowser_show = run_filebrowser,
     .urlopener_show = show_add_url_window,
     .jump_to_track_show = ui_jump_to_track,
     .aboutwin_show = show_about_window,
+};
+
+static InterfaceCbs interface_cbs = {
+    .show_prefs_window = NULL,
 };
 
 void
@@ -68,7 +73,7 @@ interface_run(Interface *i)
     current_interface = i;
     i->ops = &interface_ops;
 
-    i->init();
+    i->init(&interface_cbs);
 }
 
 void
@@ -101,3 +106,28 @@ interface_get_current(void)
 {
     return current_interface;
 }
+
+void
+interface_show_prefs_window(gboolean show)
+{
+    if (interface_cbs.show_prefs_window != NULL)
+        interface_cbs.show_prefs_window(show);
+    else
+        g_message("Interface didn't register show_prefs_window function");
+}
+
+void
+interface_show_prefs_handler(gpointer hook_data, gpointer user_data)
+{
+    gboolean show = GPOINTER_TO_INT(hook_data);
+    interface_show_prefs_window(show);
+}
+
+void
+register_interface_hooks(void)
+{
+    hook_associate("prefswin show",
+                   (HookFunction) interface_show_prefs_handler,
+                   NULL);
+}
+

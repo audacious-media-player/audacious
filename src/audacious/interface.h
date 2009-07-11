@@ -33,23 +33,28 @@
 #include <mowgli.h>
 
 typedef struct {
-	GtkWidget** (*create_prefs_window)(void);
-	void (*show_prefs_window)(void);
-	void (*hide_prefs_window)(void);
+    GtkWidget** (*create_prefs_window)(void);
+    void (*show_prefs_window)(void);
+    void (*hide_prefs_window)(void);
+    void (*destroy_prefs_window)(void);
 
-	void (*filebrowser_show)(gboolean play_button);
-	void (*urlopener_show)(void);
-	void (*jump_to_track_show)(void);
-	void (*aboutwin_show)(void);
+    void (*filebrowser_show)(gboolean play_button);
+    void (*urlopener_show)(void);
+    void (*jump_to_track_show)(void);
+    void (*aboutwin_show)(void);
 } InterfaceOps;
 
-typedef struct _Interface {
-	gchar *id;		/* simple ID like 'skinned' */
-	gchar *desc;		/* description like 'Skinned Interface' */
-	gboolean (*init)(void); /* init UI */
-	gboolean (*fini)(void); /* shutdown UI */
+typedef struct {
+    void (*show_prefs_window)(gboolean show);
+} InterfaceCbs;
 
-	InterfaceOps *ops;
+typedef struct _Interface {
+    gchar *id;                           /* simple ID like 'skinned' */
+    gchar *desc;                         /* description like 'Skinned Interface' */
+    gboolean (*init)(InterfaceCbs *cbs); /* init UI */
+    gboolean (*fini)(void);              /* shutdown UI */
+
+    InterfaceOps *ops;
 } Interface;
 
 void interface_register(Interface *i);
@@ -60,5 +65,8 @@ void interface_destroy(Interface *i);
 Interface *interface_get(gchar *id);
 const Interface *interface_get_current(void);
 void interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *privdata), void *privdata);
+
+void interface_show_prefs_window(gboolean show);
+void register_interface_hooks(void);
 
 #endif

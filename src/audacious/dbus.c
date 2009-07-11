@@ -828,7 +828,7 @@ gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
 
 /* New on Oct 5 */
 gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **error) {
-    hook_call("prefswin show", &show);
+    hook_call("prefswin show", GINT_TO_POINTER(show));
     return TRUE;
 }
 

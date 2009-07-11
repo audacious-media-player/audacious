@@ -25,7 +25,7 @@
 #include "input.h"
 
 static gboolean
-_ui_initialize(void)
+_ui_initialize(InterfaceCbs *cbs)
 {
     g_main_loop_run(g_main_loop_new(NULL, TRUE));
 
