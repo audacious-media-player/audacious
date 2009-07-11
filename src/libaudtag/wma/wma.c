@@ -16,10 +16,10 @@ HeaderObject newHeader;
 void writeGuidToFile(VFSFile *f, int guid_type);
 
 gboolean wma_can_handle_file(const char *file_path) {
-    DEBUG_TAG("can handle file\n");
+    DEBUG("can handle file\n");
 
     int retval = FALSE;
-    DEBUG_TAG("PATH = %s\n", file_path);
+    DEBUG("PATH = %s\n", file_path);
     GUID *guid1 = g_new0(GUID, 1);
     memcpy(guid1, guid_read_from_file(file_path, 0), sizeof (GUID));
     GUID *guid2 = guid_convert_from_string(ASF_HEADER_OBJECT_GUID);
@@ -29,7 +29,7 @@ gboolean wma_can_handle_file(const char *file_path) {
 }
 
 void readHeaderObject(VFSFile *f) {
-    DEBUG_TAG("read header object\n");
+    DEBUG("read header object\n");
 
     //we have allready read the GUID so increase filePositions with 16
     filePosition = 16;
@@ -94,12 +94,12 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
     intervals since January 1, 1601  */
     vfs_fread(&creationDate, 8, 1, f);
     year = get_year(creationDate);
-    DEBUG_TAG("Year = %d\n", year);
+    DEBUG("Year = %d\n", year);
     vfs_fseek(f, 8, SEEK_CUR);
     /* read play duration - time needed to play the file in 100-nanosecond
     units */
     vfs_fread(&playDuration, 8, 1, f);
-    DEBUG_TAG("play duration = %"PRId64"\n", playDuration);
+    DEBUG("play duration = %"PRId64"\n", playDuration);
     /* increment filePosition */
     filePosition += size;
 
@@ -189,7 +189,7 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
 
         vfs_fread(name, nameLen, 1, f);
         utf8Name = g_utf16_to_utf8(name, nameLen, NULL, NULL, NULL);
-        DEBUG_TAG("name = %s\n", utf8Name);
+        DEBUG("name = %s\n", utf8Name);
 
         vfs_fread(&valueDataType, 2, 1, f);
         vfs_fread(&valueLen, 2, 1, f);
@@ -200,7 +200,7 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
                 vfs_fread(valueStr, valueLen, 1, f);
 
                 gchar* utf8Value = g_utf16_to_utf8(valueStr, valueLen, NULL, NULL, NULL);
-                DEBUG_TAG("value = %s\n", utf8Value);
+                DEBUG("value = %s\n", utf8Value);
 
                 if (utf8Name != NULL) {
                     if (!strcmp(utf8Name, "WM/Genre")) {
@@ -213,7 +213,7 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
                     }
 
                     if (!strcmp(utf8Name, "WM/TrackNumber")) {
-                        DEBUG_TAG("track number \n");
+                        DEBUG("track number \n");
                         tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, atoi(utf8Value));
                     }
                 }
@@ -256,7 +256,7 @@ void readASFObject(VFSFile *f) {
 }
 
 Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
-    DEBUG_TAG("wma populate tuple from file\n");
+    DEBUG("wma populate tuple from file\n");
 
     VFSFile *file;
     /*open the file with the path received in tuple */
@@ -265,9 +265,9 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
     file = vfs_fopen(file_path, "r");
 
     if (file == NULL)
-        DEBUG_TAG("fopen error\n");
+        DEBUG("fopen error\n");
     else
-        DEBUG_TAG("fopen ok\n");
+        DEBUG("fopen ok\n");
 
     readHeaderObject(file);
     int i;
@@ -279,20 +279,20 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
         switch (guid_type) {
             case ASF_CODEC_LIST_OBJECT:
             {
-                DEBUG_TAG("codec header  \n");
+                DEBUG("codec header  \n");
                 tuple = readCodecName(file, tuple);
             }
             break;
 
             case ASF_CONTENT_DESCRIPTION_OBJECT:
             {
-                DEBUG_TAG("content description\n");
+                DEBUG("content description\n");
                 tuple = readContentDescriptionObject(file, tuple);
             }
             break;
             case ASF_FILE_PROPERTIES_OBJECT:
             {
-                DEBUG_TAG("file properties object\n");
+                DEBUG("file properties object\n");
                 /* get year and play duration from here */
                 tuple = readFilePropObject(file, tuple);
 
@@ -301,14 +301,14 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
 
             case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
             {
-                DEBUG_TAG("asf extended content description object\n");
+                DEBUG("asf extended content description object\n");
                 tuple = readExtendedContentObj(file, tuple);
             }
             break;
 
             default:
             {
-                DEBUG_TAG("default\n");
+                DEBUG("default\n");
                 readASFObject(file);
             }
         }
@@ -401,10 +401,10 @@ gint writeContentFieldValueToFile(VFSFile *to, ContentField c, int filepos) {
 }
 
 void printContentField(ContentField c) {
-    DEBUG_TAG("------------- ContentField ------------------\n");
-    DEBUG_TAG("ContentField size : %d\n", c.size);
-    DEBUG_TAG("ContentField value : %s\n", g_utf16_to_utf8(c.strValue, c.size, NULL, NULL, NULL));
-    DEBUG_TAG("------------- END ---------------------------\n");
+    DEBUG("------------- ContentField ------------------\n");
+    DEBUG("ContentField size : %d\n", c.size);
+    DEBUG("ContentField value : %s\n", g_utf16_to_utf8(c.strValue, c.size, NULL, NULL, NULL));
+    DEBUG("------------- END ---------------------------\n");
 }
 
 void copyData(VFSFile *from, VFSFile *to, int posFrom, int posTo, gint size) {
@@ -567,8 +567,8 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple) {
     size += writeContentFieldValueToFile(to, irating, newfilePosition);
     filePosition += irating.size;
 
-    DEBUG_TAG("from pos %d\n", filePosition);
-    DEBUG_TAG("to pos %d\n", newfilePosition);
+    DEBUG("from pos %d\n", filePosition);
+    DEBUG("to pos %d\n", newfilePosition);
 
     //write the new size
     if (filePosition != newfilePosition) {
@@ -620,7 +620,7 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple) {
 
         gchar *utf8Name = g_utf16_to_utf8(name, name_len, NULL, NULL, NULL);
 
-        DEBUG_TAG("NAME = %s\n", utf8Name);
+        DEBUG("NAME = %s\n", utf8Name);
 
         if (utf8Name != NULL) {
             if (!strcmp(utf8Name, "WM/Genre")) {
@@ -705,7 +705,7 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple) {
         }
 
         guint16 valueSize;
-        DEBUG_TAG("copy datA \n");
+        DEBUG("copy datA \n");
         vfs_fwrite(&name_len, 2, 1, to);
         vfs_fwrite(name, name_len, 1, to);
 
@@ -733,7 +733,7 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to) {
 
     gchar buf[16];
     guint64 size;
-    DEBUG_TAG("file position = %d\n", filePosition);
+    DEBUG("file position = %d\n", filePosition);
     vfs_fseek(to, newfilePosition, SEEK_SET);
     vfs_fseek(from, filePosition, SEEK_SET);
     /* copy guid */
@@ -820,10 +820,10 @@ void addContentDescriptionObj(VFSFile *to, Tuple *tuple) {
     }
 
     if (rating.size != 0) {
-        DEBUG_TAG("xx\n");
+        DEBUG("xx\n");
         size += writeContentFieldValueToFile(to, rating, newfilePosition);
     }
-    DEBUG_TAG("***\n");
+    DEBUG("***\n");
 
     // 	DEBUG_TAG("size %d\n",size);
     // 	DEBUG_TAG("to pos %d\n",newfilePosition);
@@ -893,7 +893,7 @@ void addExtendedContentObj(VFSFile *to, Tuple *tuple) {
     gchar * name = "WM/Genre";
 
     const gchar *genre = tuple_get_string(tuple, FIELD_GENRE, NULL);
-    DEBUG_TAG("genre = %s\n", genre);
+    DEBUG("genre = %s\n", genre);
 
     newsize += writeContentDescriptor(to, name,
             tuple_get_string(tuple, FIELD_GENRE, NULL));
@@ -930,9 +930,9 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
     tmpFile = vfs_fopen(tmp_path, "w+");
 
     if (tmpFile == NULL)
-        DEBUG_TAG("fopen error\n");
+        DEBUG("fopen error\n");
     else
-        DEBUG_TAG("fopen ok\n");
+        DEBUG("fopen ok\n");
 
     copyHeaderObject(file, tmpFile);
 
@@ -941,11 +941,11 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
         GUID *guid = g_new0(GUID, 1);
         memcpy(guid, guid_read_from_file(file_path, filePosition), sizeof (GUID));
         int guid_type = get_guid_type(guid);
-        DEBUG_TAG("guid type = %d\n", guid_type);
+        DEBUG("guid type = %d\n", guid_type);
         switch (guid_type) {
             case ASF_CONTENT_DESCRIPTION_OBJECT:
             {
-                DEBUG_TAG("content description\n");
+                DEBUG("content description\n");
                 writeContentDescriptionObject(file, tmpFile, tuple);
                 HeaderObjNr++;
                 foundContentDesc = 1;
@@ -954,7 +954,7 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
 
             case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
             {
-                DEBUG_TAG("asf extended content description object\n");
+                DEBUG("asf extended content description object\n");
                 writeExtendedContentObj(file, tmpFile, tuple);
                 HeaderObjNr++;
                 foundExtendedHeader = 1;
@@ -962,14 +962,14 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
             break;
             case ASF_HEADER_EXTENSION_OBJECT:
             {
-                DEBUG_TAG("header extension \n");
+                DEBUG("header extension \n");
                 writeHeaderExtensionObject(file, tmpFile);
                 HeaderObjNr++;
             }
             break;
             default:
             {
-                DEBUG_TAG("default guid= %d\n", guid_type);
+                DEBUG("default guid= %d\n", guid_type);
                 copyASFObject(file, tmpFile);
                 HeaderObjNr++;
             }
@@ -977,26 +977,26 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
     }
 
     if (foundContentDesc == 0) {
-        DEBUG_TAG("Content Description not found\n");
+        DEBUG("Content Description not found\n");
         addContentDescriptionObj(tmpFile, tuple);
         HeaderObjNr++;
     }
 
     if (foundExtendedHeader == 0) {
-        DEBUG_TAG("add exteded header \n");
+        DEBUG("add exteded header \n");
         addExtendedContentObj(tmpFile, tuple);
         HeaderObjNr++;
     }
     /* we must update the total header size and number of objects */
     guint64 total_size = newfilePosition;
-    DEBUG_TAG("new header %d\n", newfilePosition);
+    DEBUG("new header %d\n", newfilePosition);
     vfs_fseek(tmpFile, 16, SEEK_SET);
     vfs_fwrite(&total_size, 8, 1, tmpFile);
     newHeader.objectsNr += 1;
     vfs_fwrite(&HeaderObjNr, 4, 1, tmpFile);
     /* go back to the end of file */
     vfs_fseek(tmpFile, newfilePosition, SEEK_SET);
-    DEBUG_TAG("new header %d\n", newfilePosition);
+    DEBUG("new header %d\n", newfilePosition);
 
     /* write the rest of the file */
     writeAudioData(file, tmpFile);

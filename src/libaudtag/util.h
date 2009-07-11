@@ -9,7 +9,7 @@
 #define WMA_DEBUG
 
 #ifdef WMA_DEBUG
-#define DEBUG_TAG(...) printf(__VA_ARGS__)
+#define DEBUG(...) printf(__VA_ARGS__)
 #endif
 
 

@@ -16,9 +16,9 @@ GUID *guid_read_from_file(const gchar* file_path, int offset) {
     GUID *g = g_new0(GUID, 1);
     f = vfs_fopen(file_path, "r");
     if (f == NULL)
-        DEBUG_TAG("fopen error\n");
+        DEBUG("fopen error\n");
     else
-        DEBUG_TAG("fopen ok\n");
+        DEBUG("fopen ok\n");
     if (offset != 0)
         vfs_fseek(f, offset, SEEK_SET);
 
