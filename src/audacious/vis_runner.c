@@ -121,12 +121,12 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
     vis_node = g_malloc (sizeof (VisNode));
     vis_node->time = time;
     vis_node->nch = MIN (channels, 2);
-    vis_node->length = MIN (samples / channels, 512);
+    vis_node->length = 512;
 
     for (channel = 0; channel < vis_node->nch; channel ++)
     {
         gfloat * from = data + channel;
-        gfloat * end = from + channels * vis_node->length;
+        gfloat * end = from + channels * MIN (samples / channels, 512);
         gint16 * to = vis_node->data[channel];
 
         while (from < end)
@@ -135,6 +135,8 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
             * to ++ = CLAMP (temp, -1, 1) * 32767;
             from += channels;
         }
+
+        memset (to, 0, 2 * (vis_node->data[channel] + 512 - to));
     }
 
     g_mutex_lock (mutex);

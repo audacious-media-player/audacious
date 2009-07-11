@@ -42,7 +42,7 @@ struct _InputPluginData {
 struct _VisNode {
     gint time;
     gint nch;
-    gint length;                /* number of samples per channel */
+    gint length; /* In frames. Always 512. */
     gint16 data[2][512];
 };
 

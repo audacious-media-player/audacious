@@ -3,6 +3,7 @@ LIB_MAJOR = 1
 LIB_MINOR = 0
 
 SRCS = audstrings.c \
+       stringpool.c \
        tuple.c \
        tuple_compiler.c \
        tuple_formatter.c \
@@ -13,6 +14,7 @@ SRCS = audstrings.c \
        md5.c
 
 INCLUDES = audstrings.h \
+           stringpool.h \
            tuple.h \
            tuple_compiler.h \
            tuple_formatter.h \
