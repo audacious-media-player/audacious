@@ -166,8 +166,12 @@ tuple_new_from_filename(const gchar *filename)
 
     if (slash != NULL)
     {
-        *slash = '\0';
+        gchar c = *(slash + 1);
+
+        *(slash + 1) = '\0';
         tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, filename);
+        *(slash + 1) = c;
+
         tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
     }
     else
