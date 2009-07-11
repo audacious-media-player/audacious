@@ -23,6 +23,7 @@
 
 #include "tuple.h"
 #include "audstrings.h"
+#include "stringpool.h"
 
 const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "artist",         TUPLE_STRING },
@@ -91,7 +92,7 @@ tuple_value_destroy(mowgli_dictionary_elem_t *delem, gpointer privdata)
     TupleValue *value = (TupleValue *) delem->data;
 
     if (value->type == TUPLE_STRING)
-        g_free(value->value.string);
+        stringpool_unref(value->value.string);
 
     mowgli_heap_free(tuple_value_heap, value);
 }
@@ -110,7 +111,7 @@ tuple_destroy(gpointer data)
             TupleValue *value = tuple->values[i];
 
             if (value->type == TUPLE_STRING)
-                g_free(value->value.string);
+                stringpool_unref(value->value.string);
 
             mowgli_heap_free(tuple_value_heap, value);
         }
@@ -150,25 +151,10 @@ tuple_new(void)
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype);
 
-static gboolean
-_tuple_associate_raw_string(Tuple *tuple, const gint nfield, const gchar *field, gchar *string)
-{
-    TupleValue *value;
-
-    TUPLE_LOCK_WRITE();
-    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
-        return FALSE;
-
-    value->value.string = string;
-
-    TUPLE_UNLOCK_WRITE();
-    return TRUE;
-}
-
 Tuple *
 tuple_new_from_filename(const gchar *filename)
 {
-    gchar * slash, * path, * name, * ext;
+    gchar *slash, *ext;
     Tuple *tuple;
 
     g_return_val_if_fail(filename != NULL, NULL);
@@ -180,23 +166,17 @@ tuple_new_from_filename(const gchar *filename)
 
     if (slash != NULL)
     {
-        path = g_strndup (filename, slash + 1 - filename);
-        name = g_strdup (slash + 1);
+        *slash = '\0';
+        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, filename);
+        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
     }
     else
-    {
-        path = g_strdup ("");
-        name = g_strdup (filename);
-    }
-
-    _tuple_associate_raw_string (tuple, FIELD_FILE_PATH, NULL, path);
-    _tuple_associate_raw_string (tuple, FIELD_FILE_NAME, NULL, name);
+        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, filename);
 
     ext = strrchr(filename, '.');
     if (ext != NULL) {
         ++ext;
-        _tuple_associate_raw_string(tuple, FIELD_FILE_EXT, NULL,
-            g_strdup(ext));
+        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, ext);
     }
 
     return tuple;
@@ -250,7 +230,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     if (value != NULL) {
         /* Value exists, just delete old associated data */
         if (value->type == TUPLE_STRING) {
-            g_free(value->value.string);
+            stringpool_unref(value->value.string);
             value->value.string = NULL;
         }
     } else {
@@ -278,7 +258,7 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
     if (string == NULL)
         value->value.string = NULL;
     else
-        value->value.string = str_to_utf8(string);
+        value->value.string = stringpool_get(string);
 
     TUPLE_UNLOCK_WRITE();
     return TRUE;
@@ -327,7 +307,7 @@ tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
 
     /* Free associated data */
     if (value->type == TUPLE_STRING) {
-        g_free(value->value.string);
+        stringpool_unref(value->value.string);
         value->value.string = NULL;
     }
 
