@@ -96,6 +96,7 @@ typedef struct {
 } PooledString;
 
 static mowgli_patricia_t *stringpool_tree = NULL;
+static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
 /* allocate a string if needed. */
 gchar *
@@ -107,6 +108,8 @@ stringpool_get(const gchar *str)
 
     if (!*str)
         return NULL;
+
+    g_static_mutex_lock(&stringpool_mutex);
 
     if (stringpool_tree == NULL)
     {
@@ -120,6 +123,8 @@ stringpool_get(const gchar *str)
     if ((ps = mowgli_patricia_retrieve(stringpool_tree, str)) != NULL)
     {
         ps->refcount++;
+
+        g_static_mutex_unlock(&stringpool_mutex);
         return ps->str;
     }
 
@@ -128,6 +133,7 @@ stringpool_get(const gchar *str)
     ps->str = str_to_utf8(str);
     mowgli_patricia_add(stringpool_tree, str, ps);
 
+    g_static_mutex_unlock(&stringpool_mutex);
     return ps->str;
 }
 
@@ -139,6 +145,8 @@ stringpool_unref(const gchar *str)
     g_return_if_fail(stringpool_tree != NULL);
     g_return_if_fail(str != NULL);
 
+    g_static_mutex_lock(&stringpool_mutex);
+
     ps = mowgli_patricia_retrieve(stringpool_tree, str);
     if (ps != NULL && --ps->refcount <= 0)
     {
@@ -146,6 +154,8 @@ stringpool_unref(const gchar *str)
         g_free(ps->str);
         g_slice_free(PooledString, ps);
     }
+
+    g_static_mutex_unlock(&stringpool_mutex);
 }
 
 #else
