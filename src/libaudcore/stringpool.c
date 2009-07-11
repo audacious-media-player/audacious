@@ -23,6 +23,10 @@
 
 #include "audstrings.h"
 
+/* XXX: Ugly check to see if we actually have mowgli.patricia.  Remove this when
+   we require at least Mowgli 0.7 to build. */
+#ifdef __MOWGLI_PATRICIA_H__
+
 /*
  * Canonization mode:
  *
@@ -36,11 +40,8 @@
  *
  * TODO:                    make this runtime configurable.
  */
-
+#define NO_CANON
 #undef CASE_INSENSITIVE_CANON
-#ifndef CASE_INSENSITIVE_CANON
-# define NO_CANON
-#endif
 
 #ifdef NO_CANON
 
@@ -87,10 +88,6 @@ strcasecanon(gchar *str)
 
 #endif
 #endif
-
-/* XXX: Ugly check to see if we actually have mowgli.patricia.  Remove this when
-   we require at least Mowgli 0.7 to build. */
-#ifdef __MOWGLI_PATRICIA_H__
 
 /* structure to handle string refcounting. */
 typedef struct {
