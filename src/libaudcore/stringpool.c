@@ -153,7 +153,9 @@ stringpool_unref(gchar *str)
     PooledString *ps;
 
     g_return_if_fail(stringpool_tree != NULL);
-    g_return_if_fail(str != NULL);
+
+    if (str == NULL)
+        return;
 
     if (!stringpool_should_cache(str, 100))
         return g_free(str);
