@@ -519,10 +519,6 @@ struct _AudaciousFuncTableV1 {
                                          const gchar * playlist_name, gint pos,
                                          Tuple *tuple);
 
-    GList* (*playlist_load_ins_file_tuple_after_node)(Playlist * playlist, const gchar * filename_p,
-                                         const gchar * playlist_name, GList * node,
-                                         Tuple * tuple);
-
     Playlist *(*playlist_get_active)(void);
 
     gboolean (*playlist_playlists_equal)(Playlist *p1, Playlist *p2);
@@ -879,8 +875,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_is_playlist_name			_audvt->is_playlist_name
 
 #define aud_playlist_load_ins_file		_audvt->playlist_load_ins_file
-#define aud_playlist_load_ins_file_tuple    _audvt->playlist_load_ins_file_tuple
-#define aud_playlist_load_ins_file_tuple_after_node    _audvt->playlist_load_ins_file_tuple_after_node
+#define aud_playlist_load_ins_file_tuple	_audvt->playlist_load_ins_file_tuple
 
 #define aud_playlist_get_active			_audvt->playlist_get_active
 #define aud_playlist_playlists_equal		_audvt->playlist_playlists_equal

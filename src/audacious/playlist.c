@@ -647,13 +647,10 @@ playlist_delete(Playlist * playlist, gboolean crop)
     hook_call ("playlist update", playlist);
 }
 
-/* Returns the last node inserted. Use NULL for node to insert at the end.
-The playlist must be locked beforehand. */
-static GList * insert_file (Playlist * playlist, const gchar * uri, GList * node,
+static void insert_file (Playlist * playlist, const gchar * uri, gint position,
  Tuple * tuple, const gchar * title, gint length, InputPlugin * decoder)
 {
     PlaylistEntry * entry;
-    GList * new_node = NULL;
 
     if (tuple == NULL && decoder == NULL)
         decoder = find_decoder (uri);
@@ -671,15 +668,13 @@ static GList * insert_file (Playlist * playlist, const gchar * uri, GList * node
             gchar * name = g_strdup_printf ("%s?%d", uri, (tuple->subtunes ==
              NULL) ? 1 + subtune : tuple->subtunes[subtune]);
 
-            node = insert_file (playlist, name, node, NULL, NULL, -1, decoder);
+            insert_file (playlist, name, position == -1 ? -1 : position +
+             subtune, NULL, NULL, -1, decoder);
             g_free (name);
         }
-        
-        if (!playlist->entries)
-            playlist->entries = node;
 
         tuple_free (tuple);
-        return node;
+        return;
     }
 
     entry = playlist_entry_new (uri, title, length, decoder);
@@ -687,35 +682,17 @@ static GList * insert_file (Playlist * playlist, const gchar * uri, GList * node
     if (tuple != NULL)
         playlist_entry_set_tuple (entry, tuple);
 
-    if (!node) {
-        node = g_list_last(playlist->entries);
-    }
+    PLAYLIST_LOCK (playlist);
 
-    new_node = g_list_alloc();
-    new_node->data = entry;
-    new_node->prev = node;
-    new_node->next = (node ? node->next : NULL);
-    if (node)
-        node->next = new_node;
-    if (new_node->next)
-        new_node->next->prev = new_node;
+    if (position == -1)
+        playlist->entries = g_list_append (playlist->entries, entry);
+    else
+        playlist->entries = g_list_insert (playlist->entries, entry, position);
 
-    if (!playlist->entries)
-        playlist->entries = (node ? node : new_node);
+    PLAYLIST_UNLOCK (playlist);
 
     if (tuple == NULL)
         scanner_reset ();
-
-    return new_node;
-}
-
-static void insert_file_at_pos (Playlist * playlist, const gchar * uri, gint position,
- Tuple * tuple, const gchar * title, gint length, InputPlugin * decoder)
-{
-    PLAYLIST_LOCK (playlist);
-    insert_file(playlist, uri, g_list_nth(playlist->entries, position),
-        tuple, title, length, decoder);
-    PLAYLIST_UNLOCK (playlist);
 }
 
 gboolean playlist_ins (Playlist * playlist, const gchar * filename, gint pos)
@@ -726,7 +703,7 @@ gboolean playlist_ins (Playlist * playlist, const gchar * filename, gint pos)
         return TRUE;
     }
 
-    insert_file_at_pos (playlist, filename, pos, NULL, NULL, -1, NULL);
+    insert_file (playlist, filename, pos, NULL, NULL, -1, NULL);
     playlist_generate_shuffle_list (playlist);
 
     hook_call ("playlist update", playlist);
@@ -1470,21 +1447,13 @@ playlist_load(Playlist * playlist, const gchar * filename)
 void playlist_load_ins_file (Playlist * playlist, const gchar * uri, const gchar
  * playlist_name, gint pos, const gchar * title, gint len)
 {
-    insert_file_at_pos (playlist, uri, pos, NULL, title, len, NULL);
+    insert_file (playlist, uri, pos, NULL, title, len, NULL);
 }
 
 void playlist_load_ins_file_tuple (Playlist * playlist, const gchar * uri, const
  gchar * playlist_name, gint pos, Tuple * tuple)
 {
-    insert_file_at_pos (playlist, uri, pos, tuple, NULL, -1, NULL);
-}
-
-/* Inserts a tuple after node, returning the newly created node.
-The playlist must be locked beforehand. */
-GList* playlist_load_ins_file_tuple_after_node (Playlist * playlist, const gchar * uri, const
- gchar * playlist_name, GList* node, Tuple * tuple)
-{
-    return insert_file (playlist, uri, node, tuple, NULL, -1, NULL);
+    insert_file (playlist, uri, pos, tuple, NULL, -1, NULL);
 }
 
 static guint
@@ -1526,6 +1495,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 GList *
 get_playlist_nth(Playlist *playlist, guint nth)
 {
+    g_warning("deprecated function get_playlist_nth() was called");
     REQUIRE_LOCK(playlist->mutex);
     return g_list_nth(playlist->entries, nth);
 }
