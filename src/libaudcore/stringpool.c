@@ -102,7 +102,7 @@ gboolean
 stringpool_should_cache(const gchar *string, gsize maxlen)
 {
     const gchar *end = memchr(string, '\0', maxlen);
-    return end ? TRUE : FALSE;
+    return end != NULL ? TRUE : FALSE;
 }
 
 /* allocate a string if needed. */
