@@ -277,6 +277,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .playlist_load_ins_file = playlist_load_ins_file,
     .playlist_load_ins_file_tuple = playlist_load_ins_file_tuple,
+    .playlist_load_ins_file_tuple_after_node = playlist_load_ins_file_tuple_after_node,
 
     .playlist_get_active = playlist_get_active,
     .playlist_playlists_equal = playlist_playlists_equal,

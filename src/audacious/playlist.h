@@ -239,8 +239,12 @@ extern void playlist_load_ins_file(Playlist *playlist, const gchar * filename,
                                    const gchar * title, gint len);
 
 extern void playlist_load_ins_file_tuple(Playlist *playlist, const gchar * filename_p,
-					 const gchar * playlist_name, gint pos,
-					 Tuple *tuple);
+                     const gchar * playlist_name, gint pos,
+                     Tuple *tuple);
+
+extern GList * playlist_load_ins_file_tuple_after_node(Playlist * playlist, const gchar * filename_p,
+                     const gchar * playlist_name, GList * node,
+                     Tuple *tuple);
 
 Playlist *playlist_get_active(void);
 
