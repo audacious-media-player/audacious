@@ -2129,7 +2129,7 @@ create_audio_category(void)
                       (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
 
-    output_plugin_bufsize_adj = gtk_adjustment_new (0, 0, 600000, 100, 1000, 1000);
+    output_plugin_bufsize_adj = gtk_adjustment_new (0, 500, 600000, 100, 1000, 1000);
     output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 1, 0);
     gtk_table_attach (GTK_TABLE (table11), output_plugin_bufsize, 1, 2, 1, 2,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
