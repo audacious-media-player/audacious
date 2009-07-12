@@ -7,17 +7,12 @@
 #include "../util.h"
 #include <inttypes.h>
 GStaticRWLock file_lock = G_STATIC_RW_LOCK_INIT;
-void writeGuidToFile(VFSFile *f, int guid_type);
 
-GUID *guid_read_from_file(const gchar* file_path, int offset) {
+GUID *guid_read_from_file(VFSFile *f, int offset) {
     DEBUG("offset = %d\n",offset);
-    VFSFile *f;
     gchar buf[16];
     GUID *g = g_new0(GUID, 1);
-    f = vfs_fopen(file_path, "r"); 
-    DEBUG("fopen %s\n", (f != NULL)?"success":"failure");
-    if (offset != 0)
-        vfs_fseek(f, offset, SEEK_SET);
+    vfs_fseek(f, offset, SEEK_SET);
 
     vfs_fread(buf, 16, 1, f);
     g = (GUID*) buf;

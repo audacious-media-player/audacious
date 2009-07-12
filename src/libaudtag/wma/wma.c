@@ -1,5 +1,7 @@
 /* functions for WMA file handling */
 #include <glib.h>
+#include <glib/gstdio.h>
+
 #include "wma.h"
 #include "guid.h"
 #include "wma_fmt.h"
@@ -14,12 +16,11 @@ HeaderObject header;
 HeaderObject newHeader;
 void writeGuidToFile(VFSFile *f, int guid_type);
 
-gboolean wma_can_handle_file(const char *file_path) {
+gboolean wma_can_handle_file(VFSFile *fd) {
     DEBUG("can handle file\n");
     int retval = FALSE;
-    DEBUG("PATH = %s\n", file_path);
     GUID *guid1 = g_new0(GUID, 1);
-    memcpy(guid1, guid_read_from_file(file_path, 0), sizeof (GUID));
+    memcpy(guid1, guid_read_from_file(fd, 0), sizeof (GUID));
     GUID *guid2 = guid_convert_from_string(ASF_HEADER_OBJECT_GUID);
     if (guid_equal(guid1, guid2))
         retval = TRUE;
@@ -88,7 +89,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
     vfs_fread(&size, 8, 1, f);
     /* ignore file id and file size 16 + 8 = 24*/
     vfs_fseek(f, 24, SEEK_CUR);
-    /*read creadtion date -   given as the number of 100-nanosecond
+    /*read creawma_tion date -   given as the number of 100-nanosecond
     intervals since January 1, 1601  */
     vfs_fread(&creationDate, 8, 1, f);
     year = get_year(creationDate);
@@ -102,7 +103,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
     filePosition += size;
 
     tuple_associate_int(tuple, FIELD_LENGTH, NULL, playDuration / 1000);
-    DEBUG("length = %"PRId64"\n",playDuration/10000);
+    DEBUG("length = %"PRId64"\n", playDuration / 10000);
     tuple_associate_int(tuple, FIELD_YEAR, NULL, year);
 
     return tuple;
@@ -253,43 +254,36 @@ void readASFObject(VFSFile *f) {
     filePosition += size;
 }
 
-Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
+Tuple *wma_populate_tuple_from_file(VFSFile *fd) {
     DEBUG("wma populate tuple from file\n");
 
-    VFSFile *file;
-    /*open the file with the path received in tuple */
-    const gchar *file_path = get_complete_filepath(tuple);
-    /*   -------------- FOR TESTING ONLY ---------------- */
-    file = vfs_fopen(file_path, "r");
-
-    DEBUG("fopen %s\n", file ? "success" : "failure");
-
-    readHeaderObject(file);
+    Tuple *tuple = NULL;
+    readHeaderObject(fd);
     int i;
 
     for (i = 0; i < header.objectsNr; i++) {
         GUID *guid = g_new0(GUID, 1);
-        memcpy(guid, guid_read_from_file(file_path, filePosition), sizeof (GUID));
+        memcpy(guid, guid_read_from_file(fd, filePosition), sizeof (GUID));
         int guid_type = get_guid_type(guid);
         switch (guid_type) {
             case ASF_CODEC_LIST_OBJECT:
             {
                 DEBUG("codec header  \n");
-                tuple = readCodecName(file, tuple);
+                tuple = readCodecName(fd, tuple);
             }
                 break;
 
             case ASF_CONTENT_DESCRIPTION_OBJECT:
             {
                 DEBUG("content description\n");
-                tuple = readContentDescriptionObject(file, tuple);
+                tuple = readContentDescriptionObject(fd, tuple);
             }
                 break;
             case ASF_FILE_PROPERTIES_OBJECT:
             {
                 DEBUG("file properties object\n");
                 /* get year and play duration from here */
-                tuple = readFilePropObject(file, tuple);
+                tuple = readFilePropObject(fd, tuple);
 
             }
                 break;
@@ -297,14 +291,14 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
             case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
             {
                 DEBUG("asf extended content description object\n");
-                tuple = readExtendedContentObj(file, tuple);
+                tuple = readExtendedContentObj(fd, tuple);
             }
                 break;
 
             default:
             {
                 DEBUG("default\n");
-                readASFObject(file);
+                readASFObject(fd);
             }
         }
     }
@@ -312,7 +306,7 @@ Tuple *wma_populate_tuple_from_file(Tuple* tuple) {
     tuple_associate_string(tuple, FIELD_QUALITY, NULL, "lossy");
 
     printTuple(tuple);
-    vfs_fclose(file);
+    vfs_fclose(fd);
     //wma_write_tuple_to_file(tuple);
     return tuple;
 }
@@ -326,7 +320,7 @@ void copyHeaderObject(VFSFile *from, VFSFile *to) {
     /*read and copy total size */
     vfs_fread(&newHeader.size, 8, 1, from);
     vfs_fwrite(&newHeader.size, 8, 1, to);
-    DEBUG("HEADER %"PRId64"\n",newHeader.size);
+    DEBUG("HEADER %"PRId64"\n", newHeader.size);
     /* read and copy number of header objects */
     vfs_fread(&newHeader.objectsNr, 4, 1, from);
 
@@ -355,7 +349,7 @@ void copyASFObject(VFSFile *from, VFSFile *to) {
     vfs_fread(&totalSize, 8, 1, from);
     vfs_fwrite(&totalSize, 8, 1, to);
 
-    DEBUG("total size = %"PRId64"\n",totalSize);
+    DEBUG("total size = %"PRId64"\n", totalSize);
     /*read and copy the rest of the object */
     char buf2[totalSize];
     vfs_fread(buf2, totalSize - 24, 1, from);
@@ -387,8 +381,8 @@ gint writeContentFieldValueToFile(VFSFile *to, ContentField c, int filepos) {
     if (c.strValue == NULL) {
         c.strValue = g_new0(gunichar2, 2);
     }
-    DEBUG("STR VAL = %s\n",g_utf16_to_utf8(c.strValue,-1,NULL,NULL,NULL) );
-    DEBUG("C Size = %d\n",c.size);
+    DEBUG("STR VAL = %s\n", g_utf16_to_utf8(c.strValue, -1, NULL, NULL, NULL));
+    DEBUG("C Size = %d\n", c.size);
     vfs_fwrite(c.strValue, c.size, 1, to);
     newfilePosition += c.size;
 
@@ -738,7 +732,7 @@ void writeHeaderExtensionObject(VFSFile *from, VFSFile *to) {
     /* size  - we will change this later */
     vfs_fread(&size, 8, 1, from);
     vfs_fwrite(&size, 8, 1, to);
-    DEBUG("extension size = %"PRId64"\n",size);
+    DEBUG("extension size = %"PRId64"\n", size);
     gchar buf2[size];
     vfs_fread(buf2, size, 1, from);
     vfs_fwrite(buf2, size, 1, to);
@@ -820,8 +814,8 @@ void addContentDescriptionObj(VFSFile *to, Tuple *tuple) {
     }
     DEBUG("***\n");
 
-    DEBUG("size %"PRId64"\n",size);
-    DEBUG("to pos %d\n",newfilePosition);
+    DEBUG("size %"PRId64"\n", size);
+    DEBUG("to pos %d\n", newfilePosition);
 
     vfs_fseek(to, newfilePosition - size + 16, SEEK_SET);
     vfs_fwrite(&size, 8, 1, to);
@@ -901,19 +895,14 @@ void addExtendedContentObj(VFSFile *to, Tuple *tuple) {
 
 }
 
-gboolean wma_write_tuple_to_file(Tuple* tuple) {
+gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     newfilePosition = 0;
     filePosition = 0;
-    VFSFile *file;
     VFSFile *tmpFile;
     int foundContentDesc = 0;
     int foundExtendedHeader = 0;
     int HeaderObjNr = 0;
     int i;
-
-    /*open the file with the path received in tuple */
-    const gchar *file_path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
-    file = vfs_fopen(file_path, "r");
 
     /* create a temporary file, with random name */
     const gchar *tmpdir = g_get_tmp_dir();
@@ -925,19 +914,19 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
 
     DEBUG("fopen %s\n", tmpfile != NULL ? "success" : "failure");
 
-    copyHeaderObject(file, tmpFile);
+    copyHeaderObject(fd, tmpFile);
 
 
     for (i = 0; i < newHeader.objectsNr; i++) {
         GUID *guid = g_new0(GUID, 1);
-        memcpy(guid, guid_read_from_file(file_path, filePosition), sizeof (GUID));
+        memcpy(guid, guid_read_from_file(fd, filePosition), sizeof (GUID));
         int guid_type = get_guid_type(guid);
         DEBUG("guid type = %d\n", guid_type);
         switch (guid_type) {
             case ASF_CONTENT_DESCRIPTION_OBJECT:
             {
                 DEBUG("content description\n");
-                writeContentDescriptionObject(file, tmpFile, tuple);
+                writeContentDescriptionObject(fd, tmpFile, tuple);
                 HeaderObjNr++;
                 foundContentDesc = 1;
             }
@@ -946,7 +935,7 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
             case ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT:
             {
                 DEBUG("asf extended content description object\n");
-                writeExtendedContentObj(file, tmpFile, tuple);
+                writeExtendedContentObj(fd, tmpFile, tuple);
                 HeaderObjNr++;
                 foundExtendedHeader = 1;
             }
@@ -954,14 +943,14 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
             case ASF_HEADER_EXTENSION_OBJECT:
             {
                 DEBUG("header extension \n");
-                writeHeaderExtensionObject(file, tmpFile);
+                writeHeaderExtensionObject(fd, tmpFile);
                 HeaderObjNr++;
             }
                 break;
             default:
             {
                 DEBUG("default guid= %d\n", guid_type);
-                copyASFObject(file, tmpFile);
+                copyASFObject(fd, tmpFile);
                 HeaderObjNr++;
             }
         }
@@ -990,14 +979,16 @@ gboolean wma_write_tuple_to_file(Tuple* tuple) {
     DEBUG("new header %d\n", newfilePosition);
 
     /* write the rest of the file */
-    writeAudioData(file, tmpFile);
+    writeAudioData(fd, tmpFile);
 
-    vfs_fclose(file);
+    vfs_fclose(fd);
     vfs_fclose(tmpFile);
-    if (rename(tmp_path, file_path)) {
-        DEBUG("an error has occured\n");
-        return 1;
-    } else
+
+    if (g_rename(tmp_path, fd -> uri) == 0) {
         DEBUG("the tag was updated successfully\n");
+    } else {
+        DEBUG("an error has occured\n");
+    }
+    return 1;
     return TRUE;
 }
