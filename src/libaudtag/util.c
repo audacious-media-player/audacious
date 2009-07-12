@@ -90,6 +90,14 @@ void printTuple(Tuple *tuple) {
     const gchar* quality = tuple_get_string(tuple, FIELD_QUALITY, NULL);
     DEBUG("quality = %s\n", quality);
 
+    /* path */
+    const gchar* path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
+    DEBUG("path = %s\n", path);
+
+    /* filename */
+    const gchar* filename = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
+    DEBUG("filename = %s\n", filename);
+
     DEBUG("-----------------END---------------------\n");
 #endif
 }
