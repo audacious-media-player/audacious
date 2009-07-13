@@ -16,11 +16,11 @@ typedef struct contentField {
     gunichar2 *strValue;
 } ContentField;
 
-gboolean wma_can_handle_file(const gchar *file_path);
+gboolean wma_can_handle_file(VFSFile *f);
 
-Tuple *wma_populate_tuple_from_file(Tuple* tuple);
+Tuple *wma_populate_tuple_from_file(VFSFile *f);
 
-gboolean wma_write_tuple_to_file(Tuple* tuple);
+gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
 
 #endif
