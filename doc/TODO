@@ -82,7 +82,7 @@ for solutions, etc. References to algorithms...
 
   possible solutions?
   * mempools for playlist data? not sure if possible, the tuple heaps
-    should then somehow be collected into pools...
+    should then somehow be collected into pools...  (done, see stringpools. --nenolod)
   * storing the playlist as a GtkTreeModel seems to be fairly fast (at least
     in mudkip-player it is) --nenolod
 
