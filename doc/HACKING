@@ -106,6 +106,10 @@ Additional style guidelines
 
   if (b == d && !strcmp(a, c)) ...
 
+  gchar *foo, *bar;
+
+  void hello(const gchar *baz);
+
 - Blocks:
 
   while (...)
