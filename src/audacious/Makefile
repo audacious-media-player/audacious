@@ -56,7 +56,8 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack_cache.c			\
        ui_misc.c				\
        ui_playlist_manager.c				\
-       ui_urlopener.c
+       ui_urlopener.c				\
+       ui_gtk.c
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
@@ -90,7 +91,8 @@ INCLUDES = auddrct.h			\
            ui_plugin_menu.h		\
            ui_preferences.h		\
            util.h \
-           vis_runner.h
+           vis_runner.h \
+           icons-stock.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\

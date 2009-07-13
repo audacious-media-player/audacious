@@ -29,6 +29,8 @@
 #include "ui_preferences.h"
 #include "ui_jumptotrack.h"
 #include "ui_credits.h"
+#include "icons-stock.h"
+#include "ui_gtk.h"
 
 /* interface abstraction layer */
 static mowgli_dictionary_t *interface_dict_ = NULL;
@@ -44,6 +46,9 @@ static InterfaceOps interface_ops = {
     .urlopener_show = show_add_url_window,
     .jump_to_track_show = ui_jump_to_track,
     .aboutwin_show = show_about_window,
+
+    .set_default_icon = aud_set_default_icon,
+    .register_stock_icons = register_aud_stock_icons,
 };
 
 static InterfaceCbs interface_cbs = {

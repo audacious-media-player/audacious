@@ -66,11 +66,7 @@
 #include "vfs.h"
 #include "chardet.h"
 
-#include "icons-stock.h"
-#include "images/audacious_player.xpm"
-
 #include "ui_headless.h"
-#include "ui_preferences.h"
 #include "ui_misc.h"
 
 static const gchar *application_name = N_("Audacious");
@@ -183,16 +179,6 @@ aud_init_paths()
     g_free(xdg_cache_home);
 
     g_atexit(aud_free_paths);
-}
-
-static void
-aud_set_default_icon(void)
-{
-    GdkPixbuf *icon;
-
-    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_player_xpm);
-    gtk_window_set_default_icon(icon);
-    g_object_unref(icon);
 }
 
 static GOptionEntry cmd_entries[] = {
@@ -537,14 +523,6 @@ main(gint argc, gchar ** argv)
     g_message("Handling commandline options, part #1");
     handle_cmd_line_options_first ();
 
-    if (g_ascii_strcasecmp(options.interface, "headless")) /* XXX */
-    {
-        g_message("Non-headless operation setup");
-
-        // register icons in stock
-        register_aud_stock_icons();
-    }
-
     vis_runner_init ();
 
 #ifdef USE_DBUS
@@ -587,9 +565,6 @@ main(gint argc, gchar ** argv)
 
         playback_seek (cfg.resume_playback_on_startup_time);
     }
-
-    g_message("Setting default icon");
-    aud_set_default_icon();
 
     g_message("Registering interface hooks");
     register_interface_hooks();

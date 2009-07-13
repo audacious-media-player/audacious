@@ -42,6 +42,9 @@ typedef struct {
     void (*urlopener_show)(void);
     void (*jump_to_track_show)(void);
     void (*aboutwin_show)(void);
+
+    void (*set_default_icon)(void);
+    void (*register_stock_icons)(void);
 } InterfaceOps;
 
 typedef struct {
