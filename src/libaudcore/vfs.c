@@ -225,7 +225,7 @@ vfs_ungetc(gint c, VFSFile *stream)
  *
  * Seeks through a VFS stream.
  *
- * Return value: On success, 1. Otherwise, 0.
+ * Return value: On success, 0. Otherwise, -1.
  **/
 gint
 vfs_fseek(VFSFile * file,
