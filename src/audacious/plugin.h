@@ -777,32 +777,26 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_container_read		_audvt->playlist_container_read
 #define aud_playlist_container_write		_audvt->playlist_container_write
 #define aud_playlist_container_find		_audvt->playlist_container_find
-
 #define aud_playlist_entry_new			_audvt->playlist_entry_new
 #define aud_playlist_entry_free			_audvt->playlist_entry_free
-
 #define aud_playlist_add_playlist		_audvt->playlist_add_playlist
 #define aud_playlist_remove_playlist		_audvt->playlist_remove_playlist
 #define aud_playlist_select_playlist		_audvt->playlist_select_playlist
 #define aud_playlist_select_next		_audvt->playlist_select_next
 #define aud_playlist_select_prev		_audvt->playlist_select_prev
 #define aud_playlist_get_playlists		_audvt->playlist_get_playlists
-
 #define aud_playlist_clear_only			_audvt->playlist_clear_only
 #define aud_playlist_clear			_audvt->playlist_clear
 #define aud_playlist_delete			_audvt->playlist_delete
-
 #define aud_playlist_add			_audvt->playlist_add
 #define aud_playlist_ins			_audvt->playlist_ins
 #define aud_playlist_add_dir			_audvt->playlist_add_dir
 #define aud_playlist_ins_dir			_audvt->playlist_ins_dir
 #define aud_playlist_add_url			_audvt->playlist_add_url
 #define aud_playlist_ins_url			_audvt->playlist_ins_url
-
 #define aud_playlist_check_pos_current		_audvt->playlist_check_pos_current
 #define aud_playlist_next			_audvt->playlist_next
 #define aud_playlist_prev			_audvt->playlist_prev
-
 #define aud_playlist_queue			_audvt->playlist_queue
 #define aud_playlist_queue_position		_audvt->playlist_queue_position
 #define aud_playlist_queue_remove		_audvt->playlist_queue_remove
@@ -819,68 +813,51 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_get_position_nolock	_audvt->playlist_get_position_nolock
 #define aud_playlist_get_info_text		_audvt->playlist_get_info_text
 #define aud_playlist_get_current_length		_audvt->playlist_get_current_length
-
 #define aud_playlist_save			_audvt->playlist_save
 #define aud_playlist_load			_audvt->playlist_load
-
 #define aud_playlist_sort			_audvt->playlist_sort
 #define aud_playlist_sort_selected		_audvt->playlist_sort_selected
-
 #define aud_playlist_reverse			_audvt->playlist_reverse
 #define aud_playlist_random			_audvt->playlist_random
 #define aud_playlist_remove_duplicates		_audvt->playlist_remove_duplicates
 #define aud_playlist_remove_dead_files		_audvt->playlist_remove_dead_files
-
 #define aud_playlist_fileinfo_current		_audvt->playlist_fileinfo_current
 #define aud_playlist_fileinfo			_audvt->playlist_fileinfo
-
 #define aud_playlist_delete_index		_audvt->playlist_delete_index
 #define aud_playlist_delete_filenames		_audvt->playlist_delete_filenames
-
 #define aud_playlist_get_entry_to_play		_audvt->playlist_get_entry_to_play
-
 #define aud_playlist_get_filename		_audvt->playlist_get_filename
 #define aud_playlist_get_songtitle		_audvt->playlist_get_songtitle
 #define aud_playlist_get_tuple			_audvt->playlist_get_tuple
 #define aud_playlist_get_songtime		_audvt->playlist_get_songtime
-
 #define aud_playlist_get_selected		_audvt->playlist_get_selected
 #define aud_playlist_get_num_selected		_audvt->playlist_get_num_selected
-
 #define aud_playlist_get_total_time		_audvt->playlist_get_total_time
-
 #define aud_playlist_select_search		_audvt->playlist_select_search
 #define aud_playlist_select_all			_audvt->playlist_select_all
 #define aud_playlist_select_range		_audvt->playlist_select_range
 #define aud_playlist_select_invert_all		_audvt->playlist_select_invert_all
 #define aud_playlist_select_invert		_audvt->playlist_select_invert
-
 #define aud_playlist_read_info_selection	_audvt->playlist_read_info_selection
 #define aud_playlist_read_info			_audvt->playlist_read_info
-
 #define aud_playlist_set_shuffle		_audvt->playlist_set_shuffle
-
 #define aud_playlist_clear_selected		_audvt->playlist_clear_selected
-
 #define aud_get_playlist_nth			_audvt->get_playlist_nth
-
 #define aud_playlist_set_current_name		_audvt->playlist_set_current_name
 #define aud_playlist_get_current_name		_audvt->playlist_get_current_name
-
 #define aud_playlist_filename_set		_audvt->playlist_filename_set
 #define aud_playlist_filename_get		_audvt->playlist_filename_get
-
 #define aud_playlist_new			_audvt->playlist_new
 #define aud_playlist_free			_audvt->playlist_free
 #define aud_playlist_new_from_selected		_audvt->playlist_new_from_selected
-
 #define aud_is_playlist_name			_audvt->is_playlist_name
-
 #define aud_playlist_load_ins_file		_audvt->playlist_load_ins_file
 #define aud_playlist_load_ins_file_tuple	_audvt->playlist_load_ins_file_tuple
-
 #define aud_playlist_get_active			_audvt->playlist_get_active
 #define aud_playlist_playlists_equal		_audvt->playlist_playlists_equal
+#define aud_playlist_shift		_audvt->playlist_shift
+#define aud_playlist_rescan             _audvt->playlist_rescan
+
 
 #define aud_ip_state				_audvt->ip_state
 #define aud_cfg					_audvt->_cfg
@@ -911,7 +888,6 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_pl_win_toggle		_audvt->drct_pl_win_toggle
 #define audacious_drct_set_skin			_audvt->drct_set_skin
 #define audacious_drct_activate			_audvt->drct_activate
-
 #define audacious_drct_initiate                 _audvt->drct_initiate
 #define audacious_drct_play			_audvt->drct_play
 #define audacious_drct_pause			_audvt->drct_pause
@@ -929,7 +905,6 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_set_volume_main		_audvt->drct_set_volume_main
 #define audacious_drct_get_volume_balance	_audvt->drct_get_volume_balance
 #define audacious_drct_set_volume_balance	_audvt->drct_set_volume_balance
-
 #define audacious_drct_pl_next			_audvt->drct_pl_next
 #define audacious_drct_pl_prev			_audvt->drct_pl_prev
 #define audacious_drct_pl_repeat_is_enabled	_audvt->drct_pl_repeat_is_enabled
@@ -1021,8 +996,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_output_plugin_reinit    _audvt->output_plugin_reinit
 
 #define aud_get_plugin_menu		_audvt->get_plugin_menu
-#define aud_playlist_shift		_audvt->playlist_shift
-#define aud_playlist_rescan             _audvt->playlist_rescan
 
 //#define aud_tag_tuple_read                  _audvt->tag_tuple_read
 //#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write
