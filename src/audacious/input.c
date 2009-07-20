@@ -252,11 +252,9 @@ input_check_file(const gchar *filename, gboolean loading)
     VFSFile *fd;
     GList *node;
     InputPlugin *ip;
-    gchar *filename_proxy;
+    gchar *filename_proxy, *ext, *tmp, *tmp_uri, *mimetype;
     gint ret = 1;
-    gchar *ext, *tmp, *tmp_uri;
     gboolean use_ext_filter = FALSE;
-    gchar *mimetype;
     ProbeResult *pr = NULL;
     GList **list_hdr = NULL;
     extern GHashTable *ext_hash;
@@ -265,7 +263,7 @@ input_check_file(const gchar *filename, gboolean loading)
     tmp_uri = g_strdup(filename);
     tmp = strrchr(tmp_uri, '?');
 
-    if (tmp && g_ascii_isdigit(*(tmp + 1)))
+    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
         *tmp = '\0';
 
     filename_proxy = g_strdup(tmp_uri);
@@ -274,12 +272,10 @@ input_check_file(const gchar *filename, gboolean loading)
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */
     if ((ip = uri_get_plugin(filename_proxy)) != NULL && ip->enabled) {
-        if (ip->is_our_file != NULL)
-	{
-	    plugin_set_current((Plugin *)ip);
+        if (ip->is_our_file != NULL) {
+            plugin_set_current((Plugin *)ip);
             ret = ip->is_our_file(filename_proxy);
-	}
-        else
+        } else
             ret = 0;
         if (ret > 0) {
             g_free(filename_proxy);
@@ -299,7 +295,7 @@ input_check_file(const gchar *filename, gboolean loading)
     //fd = vfs_buffered_file_new_from_uri(filename_proxy);
     fd = vfs_fopen(filename_proxy, "rb");
 
-    if (!fd) {
+    if (fd == NULL) {
         printf("Unable to read from %s, giving up.\n", filename_proxy);
         g_free(filename_proxy);
         return NULL;
@@ -325,13 +321,13 @@ input_check_file(const gchar *filename, gboolean loading)
 
 
     // apply ext_hash check
-    if(cfg.use_extension_probing) {
+    if (cfg.use_extension_probing) {
         use_ext_filter =
-            (fd && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
+            (fd != NULL && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
                     !g_ascii_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
     }
 
-    if(use_ext_filter) {
+    if (use_ext_filter) {
         gchar *base, *lext;
         gchar *tmp2 = g_filename_from_uri(filename_proxy, NULL, NULL);
         gchar *realfn = g_strdup(tmp2 ? tmp2 : filename_proxy);
