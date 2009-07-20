@@ -252,7 +252,7 @@ input_check_file(const gchar *filename, gboolean loading)
     VFSFile *fd;
     GList *node;
     InputPlugin *ip;
-    gchar *filename_proxy, *ext, *tmp, *tmp_uri, *mimetype;
+    gchar *filename_proxy, *ext, *mimetype;
     gint ret = 1;
     gboolean use_ext_filter = FALSE;
     ProbeResult *pr = NULL;
@@ -260,14 +260,7 @@ input_check_file(const gchar *filename, gboolean loading)
     extern GHashTable *ext_hash;
 
     /* Some URIs will end in ?<subsong> to determine the subsong requested. */
-    tmp_uri = g_strdup(filename);
-    tmp = strrchr(tmp_uri, '?');
-
-    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
-        *tmp = '\0';
-
-    filename_proxy = g_strdup(tmp_uri);
-    g_free(tmp_uri);
+    filename_proxy = filename_split_subtune(filename, NULL);
 
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */

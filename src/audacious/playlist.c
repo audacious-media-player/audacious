@@ -121,39 +121,33 @@ const guint n_titlestring_presets = G_N_ELEMENTS(aud_titlestring_presets);
 
 static mowgli_heap_t *playlist_entry_heap = NULL;
 
-static InputPlugin * find_decoder (const gchar * uri)
+static InputPlugin *
+find_decoder(const gchar * uri)
 {
-    InputPlugin * decoder = NULL;
-    gchar * temp = g_strdup (uri);
-    gchar * temp2;
-    GList * * index;
+    InputPlugin *decoder = NULL;
+    gchar *temp = filename_split_subtune(uri, NULL);
+    gchar *temp2;
+    GList **index;
 
-    decoder = uri_get_plugin (temp);
-
+    decoder = uri_get_plugin(temp);
     if (decoder != NULL)
         goto DONE;
 
-    temp2 = strrchr (temp, '?');
-
-    if (temp2 != NULL)
-        * temp2 = 0;
-
-    temp2 = strrchr (temp, '.');
-
+    temp2 = strrchr(temp, '.');
     if (temp2 == NULL)
         goto DONE;
 
-    temp2 = g_utf8_strdown (temp2 + 1, -1);
-    g_free (temp);
+    temp2 = g_utf8_strdown(temp2 + 1, -1);
+    g_free(temp);
     temp = temp2;
 
-    index = g_hash_table_lookup (ext_hash, temp);
+    index = g_hash_table_lookup(ext_hash, temp);
 
     if (index != NULL)
-        decoder = (* index)->data;
+        decoder = (*index)->data;
 
 DONE:
-     g_free (temp);
+     g_free(temp);
      return decoder;
 }
 

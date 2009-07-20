@@ -323,3 +323,27 @@ convert_dos_path(gchar * path)
 
     return path;
 }
+
+gchar *
+filename_split_subtune(const gchar * filename, gint * track)
+{
+    gchar *result, *pos;
+
+    g_return_val_if_fail(filename != NULL, NULL);
+
+    result = g_strdup(filename);
+    g_return_val_if_fail(result != NULL, NULL);
+
+    if ((pos = strrchr(result, '?')) != NULL)
+    {
+        gchar *s = pos + 1;
+        while (*s != '\0' && g_ascii_isdigit(*s)) s++;
+        if (*s == '\0') {
+            *pos = '\0';
+            if (track != NULL)
+                *track = atoi(pos + 1);
+        }
+    }
+
+    return result;
+}
