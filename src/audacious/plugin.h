@@ -409,6 +409,8 @@ struct _AudaciousFuncTableV1 {
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 
+    gchar *(*filename_split_subtune)(const gchar * filename, gint * track);
+
     /* PlaylistContainer API. */
     void (*playlist_container_register)(PlaylistContainer *plc);
     void (*playlist_container_unregister)(PlaylistContainer *plc);
@@ -771,6 +773,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_str_skip_chars		_audvt->str_skip_chars
 #define aud_convert_title_text		_audvt->convert_title_text
 #define aud_chardet_to_utf8		_audvt->chardet_to_utf8
+#define aud_filename_split_subtune _audvt->filename_split_subtune
 
 #define aud_playlist_container_register		_audvt->playlist_container_register
 #define aud_playlist_container_unregister	_audvt->playlist_container_unregister
