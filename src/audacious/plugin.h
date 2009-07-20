@@ -258,6 +258,14 @@ struct _AudaciousFuncTableV1 {
     VFSFile *(*vfs_buffered_file_new_from_uri)(const gchar *uri);
     VFSFile *(*vfs_buffered_file_release_live_fd)(VFSFile *fd);
 
+    /* VFS endianess helper functions */
+    gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
+    gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
+    gboolean (*vfs_fget_le64)(guint64 *value, VFSFile *stream);
+    gboolean (*vfs_fget_be16)(guint16 *value, VFSFile *stream);
+    gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
+    gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
+    
     /* ConfigDb */
     mcs_handle_t *(*cfg_db_open)(void);
     void (*cfg_db_close)(mcs_handle_t *db);
@@ -522,6 +530,8 @@ struct _AudaciousFuncTableV1 {
     Playlist *(*playlist_get_active)(void);
 
     gboolean (*playlist_playlists_equal)(Playlist *p1, Playlist *p2);
+    void (*playlist_shift)(Playlist *playlist, gint delta);
+    void (*playlist_rescan) (Playlist * playlist);
 
     /* state vars */
     InputPluginData *ip_state;
@@ -651,13 +661,6 @@ struct _AudaciousFuncTableV1 {
     EqualizerPreset *(*equalizer_read_aud_preset)(const gchar * filename);
     EqualizerPreset *(*load_preset_file)(const gchar *filename);
 
-    /* VFS endianess helper functions */
-    gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
-    gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
-    gboolean (*vfs_fget_le64)(guint64 *value, VFSFile *stream);
-    gboolean (*vfs_fget_be16)(guint16 *value, VFSFile *stream);
-    gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
-    gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
     void (*output_plugin_cleanup)(void);
     void (*output_plugin_reinit)(void);
 
@@ -666,10 +669,9 @@ struct _AudaciousFuncTableV1 {
 //    gint (*tag_tuple_write_to_file)(Tuple *tuple);
 
     /* Added after all the nicely organized ones... */
-    GtkWidget * (* get_plugin_menu) (int id);
-    void (*playlist_shift)(Playlist *playlist, gint delta);
-    void (* playlist_rescan) (Playlist * playlist);
+    GtkWidget * (*get_plugin_menu) (gint id);
 };
+
 
 /* Convenience macros for accessing the public API. */
 /*	public name			vtable mapping      */
