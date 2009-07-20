@@ -193,6 +193,10 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
 
         vfs_fread(&valueDataType, 2, 1, f);
         vfs_fread(&valueLen, 2, 1, f);
+
+        if (valueLen == 0)
+            break;
+
         switch (valueDataType) {
             case 0:
             {
