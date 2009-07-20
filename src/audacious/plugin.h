@@ -1142,7 +1142,7 @@ struct _InputPlayback {
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
-    gint (*is_our_file) (gchar * filename);
+    gint (*is_our_file) (const gchar * filename);
     GList *(*scan_dir) (gchar * dirname);
 
     void (*play_file) (InputPlayback * playback);
@@ -1164,15 +1164,15 @@ struct _InputPlugin {
     void (*file_info_box) (gchar * filename);
 
     /* Added in Audacious 1.1.0 */
-    Tuple *(*get_song_tuple) (gchar * filename);
+    Tuple *(*get_song_tuple) (const gchar * filename);
 
     /* Added in Audacious 1.3.0 */
-    gint (*is_our_file_from_vfs) (gchar *filename, VFSFile *fd);
+    gint (*is_our_file_from_vfs) (const gchar *filename, VFSFile *fd);
     gchar **vfs_extensions;
 
     /* Added in Audacious 1.4.0 */
     void (*mseek) (InputPlayback * playback, gulong millisecond);
-    Tuple *(*probe_for_tuple)(gchar *uri, VFSFile *fd);
+    Tuple *(*probe_for_tuple)(const gchar *uri, VFSFile *fd);
 
     /* Added in Audacious 1.4.1 */
     gboolean have_subtune;

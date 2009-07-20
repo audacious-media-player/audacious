@@ -651,7 +651,7 @@ static void insert_file (Playlist * playlist, const gchar * uri, gint position,
 
     if (tuple == NULL && decoder != NULL && decoder->have_subtune &&
      decoder->get_song_tuple != NULL)
-        tuple = decoder->get_song_tuple ((gchar *) uri);
+        tuple = decoder->get_song_tuple(uri);
 
     if (tuple != NULL && tuple->nsubtunes > 0)
     {
