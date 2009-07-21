@@ -13,26 +13,31 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-
 #include "vfs.h"
 #include <string.h>
 #include <stdlib.h>
 #include <glib/gprintf.h>
+/**
+ * @file vfs_common.c
+ * Contains code for various common VFS-stream related operations,
+ * which do not need specific VFS backend implementations. Provides
+ * routines for string reading and writing and functions for
+ * reading and writing endianess-dependant integer values.
+ */
+
 
 /**
- * vfs_fputc:
- * @c: A character to write to the stream.
- * @stream: A #VFSFile object representing the stream.
- *
  * Writes a character to a stream.
  *
- * Return value: The character on success, or EOF.
- **/
+ * @param c A character to write to the stream.
+ * @param stream A #VFSFile object representing the stream.
+ * @return The character on success, or EOF.
+ */
 gint vfs_fputc(gint c, VFSFile *stream)
 {
     guchar uc = (guchar) c;
 
-    if (! vfs_fwrite(&uc, 1, 1, stream)) {
+    if (!vfs_fwrite(&uc, 1, 1, stream)) {
         return EOF;
     }
 
@@ -40,15 +45,13 @@ gint vfs_fputc(gint c, VFSFile *stream)
 }
 
 /**
- * vfs_fgets:
- * @s: A buffer to put the string in.
- * @n: The amount of characters to read.
- * @stream: A #VFSFile object representing the stream.
+ * Reads a string of characters from a stream, ending in newline or EOF.
  *
- * Reads a set of characters from a stream.
- *
- * Return value: The string on success, or NULL.
- **/
+ * @param s A buffer to put the string in.
+ * @param n The amount of characters to read.
+ * @param stream A #VFSFile object representing the stream.
+ * @return The string on success, or NULL.
+ */
 gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
 {
     gint c;
@@ -75,14 +78,12 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
 }
 
 /**
- * vfs_fputc:
- * @s: A string to write to the stream.
- * @stream: A #VFSFile object representing the stream.
- *
  * Writes a string to a VFS stream.
  *
- * Return value: The amount of bytes written.
- **/
+ * @param s A string to write to the stream.
+ * @param stream A #VFSFile object representing the stream.
+ * @eturn The amount of bytes written.
+ */
 gint vfs_fputs(const gchar *s, VFSFile *stream)
 {
 	size_t n = strlen(s);
@@ -91,15 +92,13 @@ gint vfs_fputs(const gchar *s, VFSFile *stream)
 }
 
 /**
- * vfs_vfprintf:
- * @stream: A #VFSFile object representing the stream.
- * @format: A printf-style format string.
- * @args: A va_list of args to use.
- *
  * Writes a formatted string to a VFS stream via a va_list of args.
  *
- * Return value: The amount of bytes written.
- **/
+ * @param stream A #VFSFile object representing the stream.
+ * @param format A printf-style format string.
+ * @param args A va_list of args to use.
+ * @return value The amount of bytes written.
+ */
 gint vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
 {
     gchar *string;
@@ -111,15 +110,13 @@ gint vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
 }
 
 /**
- * vfs_fprintf:
- * @stream: A #VFSFile object representing the stream.
- * @format: A printf-style format string.
- * @...: A list of args to use.
- *
  * Writes a formatted string to a VFS stream.
  *
- * Return value: The amount of bytes written.
- **/
+ * @param stream A #VFSFile object representing the stream.
+ * @param format A printf-style format string.
+ * @param ... Optional list of arguments.
+ * @return The amount of bytes written.
+ */
 gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
 {
     va_list arg;
@@ -133,11 +130,14 @@ gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
 }
 
 /**
- * vfs_file_get_contents
- * @filename: the filename to read in
- * @buf: pointer to pointer of buffer
- * @sz: pointer to integer that is the size
- **/
+ * Gets contents of the file into a buffer. Buffer of filesize bytes
+ * is allocated by this function as necessary.
+ *
+ * @param filename URI of the file to read in.
+ * @param buf Pointer to a pointer variable of buffer.
+ * @param sz Pointer to gsize variable that will hold the amount of
+ * read data e.g. filesize.
+ */
 void
 vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size)
 {
@@ -199,14 +199,13 @@ vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size)
 
 
 /**
- * vfs_fget_le16:
- * @value: Pointer to the variable to read the value into.
- * @stream: A #VFSFile object representing the stream.
+ * Reads an unsigned 16-bit Little Endian value from the stream
+ * into native endian format.
  *
- * Reads an unsigned 16-bit Little Endian value from the stream into native endian format.
- *
- * Return value: TRUE if read was succesful, FALSE if there was an error.
- **/
+ * @param value Pointer to the variable to read the value into.
+ * @param stream A #VFSFile object representing the stream.
+ * @return TRUE if read was succesful, FALSE if there was an error.
+ */
 gboolean vfs_fget_le16(guint16 *value, VFSFile *stream)
 {
     guint16 tmp;
@@ -217,14 +216,12 @@ gboolean vfs_fget_le16(guint16 *value, VFSFile *stream)
 }
 
 /**
- * vfs_fget_le32:
- * @value: Pointer to the variable to read the value into.
- * @stream: A #VFSFile object representing the stream.
- *
  * Reads an unsigned 32-bit Little Endian value from the stream into native endian format.
  *
- * Return value: TRUE if read was succesful, FALSE if there was an error.
- **/
+ * @param value Pointer to the variable to read the value into.
+ * @param stream A #VFSFile object representing the stream.
+ * @return TRUE if read was succesful, FALSE if there was an error.
+ */
 gboolean vfs_fget_le32(guint32 *value, VFSFile *stream)
 {
     guint32 tmp;
@@ -235,14 +232,12 @@ gboolean vfs_fget_le32(guint32 *value, VFSFile *stream)
 }
 
 /**
- * vfs_fget_le64:
- * @value: Pointer to the variable to read the value into.
- * @stream: A #VFSFile object representing the stream.
- *
  * Reads an unsigned 64-bit Little Endian value from the stream into native endian format.
  *
- * Return value: TRUE if read was succesful, FALSE if there was an error.
- **/
+ * @param value Pointer to the variable to read the value into.
+ * @param stream A #VFSFile object representing the stream.
+ * @return TRUE if read was succesful, FALSE if there was an error.
+ */
 gboolean vfs_fget_le64(guint64 *value, VFSFile *stream)
 {
     guint64 tmp;
@@ -254,14 +249,12 @@ gboolean vfs_fget_le64(guint64 *value, VFSFile *stream)
 
 
 /**
- * vfs_fget_be16:
- * @value: Pointer to the variable to read the value into.
- * @stream: A #VFSFile object representing the stream.
- *
  * Reads an unsigned 16-bit Big Endian value from the stream into native endian format.
  *
- * Return value: TRUE if read was succesful, FALSE if there was an error.
- **/
+ * @param value Pointer to the variable to read the value into.
+ * @param stream A #VFSFile object representing the stream.
+ * @return TRUE if read was succesful, FALSE if there was an error.
+ */
 gboolean vfs_fget_be16(guint16 *value, VFSFile *stream)
 {
     guint16 tmp;
@@ -272,14 +265,12 @@ gboolean vfs_fget_be16(guint16 *value, VFSFile *stream)
 }
 
 /**
- * vfs_fget_be32:
- * @value: Pointer to the variable to read the value into.
- * @stream: A #VFSFile object representing the stream.
- *
  * Reads an unsigned 32-bit Big Endian value from the stream into native endian format.
  *
- * Return value: TRUE if read was succesful, FALSE if there was an error.
- **/
+ * @param value Pointer to the variable to read the value into.
+ * @param stream A #VFSFile object representing the stream.
+ * @return TRUE if read was succesful, FALSE if there was an error.
+ */
 gboolean vfs_fget_be32(guint32 *value, VFSFile *stream)
 {
     guint32 tmp;
@@ -290,14 +281,12 @@ gboolean vfs_fget_be32(guint32 *value, VFSFile *stream)
 }
 
 /**
- * vfs_fget_be64:
- * @value: Pointer to the variable to read the value into.
- * @stream: A #VFSFile object representing the stream.
- *
  * Reads an unsigned 64-bit Big Endian value from the stream into native endian format.
  *
- * Return value: TRUE if read was succesful, FALSE if there was an error.
- **/
+ * @param value Pointer to the variable to read the value into.
+ * @param stream A #VFSFile object representing the stream.
+ * @return TRUE if read was succesful, FALSE if there was an error.
+ */
 gboolean vfs_fget_be64(guint64 *value, VFSFile *stream)
 {
     guint64 tmp;
@@ -306,5 +295,4 @@ gboolean vfs_fget_be64(guint64 *value, VFSFile *stream)
     *value = GUINT64_FROM_BE(tmp);
     return TRUE;
 }
-
 
