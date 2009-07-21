@@ -467,6 +467,7 @@ struct _AudaciousFuncTableV1 {
     void (* playlist_select_all) (gint playlist, gboolean selected);
 
     gint (* playlist_shift) (gint playlist, gint position, gint distance);
+    gint (* playlist_shift_selected) (gint playlist, gint distance);
     void (* playlist_delete_selected) (gint playlist);
     void (* playlist_reverse) (gint playlist);
     void (* playlist_randomize) (gint playlist);
@@ -795,6 +796,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_select_all _audvt->playlist_select_all
 
 #define aud_playlist_shift _audvt->playlist_shift
+#define aud_playlist_shift_selected _audvt->playlist_shift_selected
 #define aud_playlist_delete_selected _audvt->playlist_delete_selected
 #define aud_playlist_reverse _audvt->playlist_reverse
 #define aud_playlist_randomize _audvt->playlist_randomize

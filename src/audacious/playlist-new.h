@@ -72,6 +72,7 @@ gint playlist_selected_count (gint playlist);
 void playlist_select_all (gint playlist, gboolean selected);
 
 gint playlist_shift (gint playlist, gint position, gint distance);
+gint playlist_shift_selected (gint playlist, gint distance);
 void playlist_delete_selected (gint playlist);
 void playlist_reverse (gint playlist);
 void playlist_randomize (gint playlist);

@@ -973,6 +973,71 @@ gint playlist_shift (gint playlist_num, gint position, gint distance)
     return shift;
 }
 
+gint playlist_shift_selected (gint playlist_num, gint distance)
+{
+    struct playlist * playlist = lookup_playlist (playlist_num);
+    gint entries, shifted, count;
+    struct entry * entry;
+
+    if (playlist == NULL)
+        return 0;
+
+    entries = index_count (playlist->entries);
+
+    if (entries == 0)
+        return 0;
+
+    for (shifted = 0; shifted > distance; shifted --)
+    {
+        entry = index_get (playlist->entries, 0);
+
+        if (entry->selected)
+            break;
+
+        for (count = 1; count < entries; count ++)
+        {
+            entry = index_get (playlist->entries, count);
+
+            if (! entry->selected)
+                continue;
+
+            index_set (playlist->entries, count, index_get (playlist->entries,
+             count - 1));
+            index_set (playlist->entries, count - 1, entry);
+        }
+    }
+
+    for (; shifted < distance; shifted ++)
+    {
+        entry = index_get (playlist->entries, entries - 1);
+
+        if (entry->selected)
+            break;
+
+        for (count = entries - 1; count --; )
+        {
+            entry = index_get (playlist->entries, count);
+
+            if (! entry->selected)
+                continue;
+
+            index_set (playlist->entries, count, index_get (playlist->entries,
+             count + 1));
+            index_set (playlist->entries, count + 1, entry);
+        }
+    }
+
+    number_entries (playlist, 0, entries);
+
+    if (playlist == active_playlist)
+    {
+        queue_update ();
+        queue_scan ();
+    }
+
+    return shifted;
+}
+
 void playlist_delete_selected (gint playlist_num)
 {
     struct playlist * playlist = lookup_playlist (playlist_num);

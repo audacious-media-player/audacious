@@ -213,6 +213,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_select_all = playlist_select_all,
 
     .playlist_shift = playlist_shift,
+    .playlist_shift_selected = playlist_shift_selected,
     .playlist_delete_selected = playlist_delete_selected,
     .playlist_reverse = playlist_reverse,
     .playlist_randomize = playlist_randomize,
