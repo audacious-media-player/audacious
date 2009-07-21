@@ -20,20 +20,17 @@
 #include "vfs.h"
 #include "audstrings.h"
 #include <stdio.h>
-
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
 #include <string.h>
 
-GList *vfs_transports = NULL; /* temporary. -nenolod */
+/**
+ * #GList of #VFSConstructor objects holding all the registered
+ * VFS transports.
+ */
+static GList *vfs_transports = NULL; /* temporary. -nenolod */
 
-#ifdef VFS_DEBUG
-# define DBG(x, args...) g_print(x, ## args);
-#else
-# define DBG(x, args...)
-#endif
 
 /**
  * Registers a #VFSConstructor vtable with the VFS system.
