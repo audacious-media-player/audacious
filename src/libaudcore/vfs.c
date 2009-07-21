@@ -46,6 +46,33 @@ vfs_register_transport(VFSConstructor *vtable)
     return TRUE;
 }
 
+static VFSConstructor *
+vfs_get_constructor(const gchar *path)
+{
+    VFSConstructor *vtable = NULL
+
+    if (path == NULL)
+        return NULL;
+
+    for (node = vfs_transports; node != NULL; node = g_list_next(node))
+    {
+        VFSConstructor *vtptr = (VFSConstructor *) node->data;
+
+        if (!strncasecmp(path, vtptr->uri_id, strlen(vtptr->uri_id)))
+        {
+            vtable = vtptr;
+            break;
+        }
+    }
+
+    /* No transport vtable has been registered, bail. */
+    if (vtable == NULL)
+    {
+        g_warning("Could not open '%s', no transport plugin available.", path);
+        return NULL;
+    }
+}
+
 /**
  * Opens a stream from a VFS transport using one of the registered
  * #VFSConstructor handlers.
@@ -61,34 +88,11 @@ vfs_fopen(const gchar * path,
     VFSFile *file;
     VFSConstructor *vtable = NULL;
     GList *node;
-    gchar *decpath;
 
-    if (path == NULL || mode == NULL)
+    if (path == NULL || mode == NULL || (vtable = vfs_get_constructor(path)) == NULL)
         return NULL;
-
-    decpath = g_strdup(path);
-
-    for (node = vfs_transports; node != NULL; node = g_list_next(node))
-    {
-        VFSConstructor *vtptr = (VFSConstructor *) node->data;
-
-        if (!strncasecmp(decpath, vtptr->uri_id, strlen(vtptr->uri_id)))
-        {
-            vtable = vtptr;
-            break;
-        }
-    }
-
-    /* No transport vtable has been registered, bail. */
-    if (vtable == NULL)
-    {
-        g_warning("Could not open '%s', no transport plugin available.", decpath);
-        g_free(decpath);
-        return NULL;
-    }
-
-    file = vtable->vfs_fopen_impl(decpath, mode);
-    g_free(decpath);
+    
+    file = vtable->vfs_fopen_impl(path, mode);
 
     if (file == NULL)
         return NULL;
@@ -390,32 +394,9 @@ vfs_is_remote(const gchar * path)
 {
     VFSConstructor *vtable = NULL;
     GList *node;
-    gchar *decpath;
 
-    if (path == NULL) return FALSE;
-
-    decpath = g_strdup(path);
-
-    for (node = vfs_transports; node != NULL; node = g_list_next(node))
-    {
-        VFSConstructor *vtptr = (VFSConstructor *) node->data;
-
-        if (!strncasecmp(decpath, vtptr->uri_id, strlen(vtptr->uri_id)))
-        {
-            vtable = vtptr;
-            break;
-        }
-    }
-
-    /* no transport vtable has been registered, bail. */
-    if (vtable == NULL)
-    {
-        g_warning("Could not open '%s', no transport plugin available.", decpath);
-        g_free(decpath);
+    if (path == NULL || (vtable = vfs_get_constructor(path)) == NULL)
         return FALSE;
-    }
-
-    g_free(decpath);
 
     /* check if vtable->uri_id is file:// or not, for now. */
     if (!strncasecmp("file://", vtable->uri_id, strlen(vtable->uri_id)))
