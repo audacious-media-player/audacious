@@ -346,11 +346,9 @@ static void queue_scan (void)
 void playlist_init (void)
 {
     playlists = index_new ();
+    playlist_insert (0);
 
-    active_playlist = playlist_new ();
-    active_playlist->number = 0;
-    index_append (playlists, active_playlist);
-
+    active_playlist = index_get (playlists, 0);
     playing_playlist = NULL;
 
     update_source = 0;
@@ -380,30 +378,26 @@ gint playlist_count (void)
 
 void playlist_insert (gint at)
 {
-    gint n_playlists = index_count (playlists);
+    if (at < 0 || at > index_count (playlists))
+        at = index_count (playlists);
 
-    if (at < 0 || at > n_playlists)
-        at = n_playlists;
-
-    if (at == n_playlists)
+    if (at == index_count (playlists))
         index_append (playlists, playlist_new ());
     else
         index_insert (playlists, at, playlist_new ());
 
-    number_playlists (at, n_playlists + 1 - at);
+    number_playlists (at, index_count (playlists) - at);
 
+    hook_call ("playlist insert", GINT_TO_POINTER (at));
     queue_update ();
 }
 
 void playlist_delete (gint playlist_num)
 {
-    gint n_playlists = index_count (playlists);
-    struct playlist * playlist;
+    struct playlist * playlist = lookup_playlist (playlist_num);
 
-    if (playlist_num < 0 || playlist_num >= n_playlists)
+    if (playlist == NULL)
         return;
-
-    playlist = index_get (playlists, playlist_num);
 
     if (playlist == active_playlist)
         active_playlist = NULL;
@@ -414,26 +408,19 @@ void playlist_delete (gint playlist_num)
         playing_playlist = NULL;
     }
 
+    hook_call ("playlist delete", GINT_TO_POINTER (playlist_num));
+
     playlist_free (playlist);
     index_delete (playlists, playlist_num, 1);
-    n_playlists --;
-
-    if (n_playlists < 1)
-    {
-        index_append (playlists, playlist_new ());
-        n_playlists ++;
-    }
-
-    number_playlists (playlist_num, n_playlists - playlist_num);
+    number_playlists (playlist_num, index_count (playlists) - playlist_num);
 
     queue_update ();
 
+    if (index_count (playlists) == 0)
+        playlist_insert (0);
+
     if (active_playlist == NULL)
-    {
-        active_playlist = index_get (playlists, MIN (playlist_num, n_playlists -
-         1));
-        queue_scan ();
-    }
+        playlist_set_active (MIN (playlist_num, index_count (playlists) - 1));
 }
 
 void playlist_set_filename (gint playlist_num, const gchar * filename)
