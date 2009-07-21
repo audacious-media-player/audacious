@@ -36,13 +36,11 @@ GList *vfs_transports = NULL; /* temporary. -nenolod */
 #endif
 
 /**
- * vfs_register_transport:
- * @vtable: The #VFSConstructor vtable to register.
- *
  * Registers a #VFSConstructor vtable with the VFS system.
  *
- * Return value: TRUE on success, FALSE on failure.
- **/
+ * @param vtable The #VFSConstructor vtable to register.
+ * @return TRUE on success, FALSE on failure.
+ */
 gboolean
 vfs_register_transport(VFSConstructor *vtable)
 {
@@ -52,14 +50,13 @@ vfs_register_transport(VFSConstructor *vtable)
 }
 
 /**
- * vfs_fopen:
- * @path: The path or URI to open.
- * @mode: The preferred access privileges (not guaranteed).
+ * Opens a stream from a VFS transport using one of the registered
+ * #VFSConstructor handlers.
  *
- * Opens a stream from a VFS transport using a #VFSConstructor.
- *
- * Return value: On success, a #VFSFile object representing the stream.
- **/
+ * @param path The path or URI to open.
+ * @param mode The preferred access privileges (not guaranteed).
+ * @return On success, a #VFSFile object representing the stream.
+ */
 VFSFile *
 vfs_fopen(const gchar * path,
           const gchar * mode)
@@ -69,8 +66,8 @@ vfs_fopen(const gchar * path,
     GList *node;
     gchar *decpath;
 
-    if (!path || !mode)
-	return NULL;
+    if (path == NULL || mode == NULL)
+        return NULL;
 
     decpath = g_strdup(path);
 
@@ -85,10 +82,10 @@ vfs_fopen(const gchar * path,
         }
     }
 
-    /* no transport vtable has been registered, bail. */
+    /* No transport vtable has been registered, bail. */
     if (vtable == NULL)
     {
-        g_warning("could not open '%s', no transport plugin available", decpath);
+        g_warning("Could not open '%s', no transport plugin available.", decpath);
         g_free(decpath);
         return NULL;
     }
@@ -107,13 +104,11 @@ vfs_fopen(const gchar * path,
 }
 
 /**
- * vfs_fclose:
- * @file: A #VFSFile object to destroy.
- *
  * Closes a VFS stream and destroys a #VFSFile object.
  *
- * Return value: -1 on failure, 0 on success.
- **/
+ * @param file A #VFSFile object to destroy.
+ * @return -1 on failure, 0 on success.
+ */
 gint
 vfs_fclose(VFSFile * file)
 {
@@ -128,25 +123,21 @@ vfs_fclose(VFSFile * file)
     if (file->base->vfs_fclose_impl(file) != 0)
         ret = -1;
 
-    if (file->uri != NULL)
-        g_free(file->uri);
-
+    g_free(file->uri);
     g_free(file);
 
     return ret;
 }
 
 /**
- * vfs_fread:
- * @ptr: A pointer to the destination buffer.
- * @size: The size of each element to read.
- * @nmemb: The number of elements to read.
- * @file: #VFSFile object that represents the VFS stream.
- *
  * Reads from a VFS stream.
  *
- * Return value: The amount of elements succesfully read.
- **/
+ * @param ptr A pointer to the destination buffer.
+ * @param size The size of each element to read.
+ * @param nmemb The number of elements to read.
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return The number of elements succesfully read.
+ */
 size_t
 vfs_fread(gpointer ptr,
           size_t size,
@@ -160,16 +151,14 @@ vfs_fread(gpointer ptr,
 }
 
 /**
- * vfs_fwrite:
- * @ptr: A const pointer to the source buffer.
- * @size: The size of each element to write.
- * @nmemb: The number of elements to write.
- * @file: #VFSFile object that represents the VFS stream.
- *
  * Writes to a VFS stream.
  *
- * Return value: The amount of elements succesfully written.
- **/
+ * @param ptr A const pointer to the source buffer.
+ * @param size The size of each element to write.
+ * @param nmemb The number of elements to write.
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return The number of elements succesfully written.
+ */
 size_t
 vfs_fwrite(gconstpointer ptr,
            size_t size,
@@ -183,50 +172,48 @@ vfs_fwrite(gconstpointer ptr,
 }
 
 /**
- * vfs_getc:
- * @stream: #VFSFile object that represents the VFS stream.
- *
  * Reads a character from a VFS stream.
  *
- * Return value: On success, a character. Otherwise, -1.
- **/
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return On success, a character. Otherwise, -1.
+ */
 gint
-vfs_getc(VFSFile *stream)
+vfs_getc(VFSFile *file)
 {
-    if (stream == NULL)
+    if (file == NULL)
         return -1;
 
-    return stream->base->vfs_getc_impl(stream);
+    return file->base->vfs_getc_impl(file);
 }
 
 /**
- * vfs_ungetc:
- * @c: The character to push back.
- * @stream: #VFSFile object that represents the VFS stream.
- *
  * Pushes a character back to the VFS stream.
  *
- * Return value: On success, 0. Otherwise, -1.
- **/
+ * @param c The character to push back.
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return On success, 0. Otherwise, -1.
+ */
 gint
-vfs_ungetc(gint c, VFSFile *stream)
+vfs_ungetc(gint c, VFSFile *file)
 {
-    if (stream == NULL)
+    if (file == NULL)
         return -1;
 
-    return stream->base->vfs_ungetc_impl(c, stream);
+    return file->base->vfs_ungetc_impl(c, file);
 }
 
 /**
- * vfs_fseek:
- * @file: #VFSFile object that represents the VFS stream.
- * @offset: The offset to seek to.
- * @whence: Whether or not the seek is absolute or not.
+ * Performs a seek in given VFS stream. Standard C-style values
+ * of #whence can be used to indicate desired action.
+ * #SEEK_CUR seeks relative to current stream position.
+ * #SEEK_SET seeks to given absolute position (relative to stream beginning).
+ * #SEEK_END sets stream position to current file end.
  *
- * Seeks through a VFS stream.
- *
- * Return value: On success, 0. Otherwise, -1.
- **/
+ * @param file #VFSFile object that represents the VFS stream.
+ * @param offset The offset to seek to.
+ * @param whence Type of the seek: SEEK_CUR, SEEK_SET or SEEK_END.
+ * @return On success, 0. Otherwise, -1.
+ */
 gint
 vfs_fseek(VFSFile * file,
           glong offset,
@@ -239,11 +226,10 @@ vfs_fseek(VFSFile * file,
 }
 
 /**
- * vfs_rewind:
- * @file: #VFSFile object that represents the VFS stream.
- *
  * Rewinds a VFS stream.
- **/
+ *
+ * @param file #VFSFile object that represents the VFS stream.
+ */
 void
 vfs_rewind(VFSFile * file)
 {
@@ -254,13 +240,11 @@ vfs_rewind(VFSFile * file)
 }
 
 /**
- * vfs_ftell:
- * @file: #VFSFile object that represents the VFS stream.
- *
  * Returns the current position in the VFS stream's buffer.
  *
- * Return value: On success, the current position. Otherwise, -1.
- **/
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return On success, the current position. Otherwise, -1.
+ */
 glong
 vfs_ftell(VFSFile * file)
 {
@@ -271,13 +255,11 @@ vfs_ftell(VFSFile * file)
 }
 
 /**
- * vfs_feof:
- * @file: #VFSFile object that represents the VFS stream.
- *
  * Returns whether or not the VFS stream has reached EOF.
  *
- * Return value: On success, whether or not the VFS stream is at EOF. Otherwise, FALSE.
- **/
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return On success, whether or not the VFS stream is at EOF. Otherwise, FALSE.
+ */
 gboolean
 vfs_feof(VFSFile * file)
 {
@@ -288,14 +270,12 @@ vfs_feof(VFSFile * file)
 }
 
 /**
- * vfs_truncate:
- * @file: #VFSFile object that represents the VFS stream.
- * @length: The length to truncate at.
- *
  * Truncates a VFS stream to a certain size.
  *
- * Return value: On success, 0. Otherwise, -1.
- **/
+ * @param file #VFSFile object that represents the VFS stream.
+ * @param length The length to truncate at.
+ * @return On success, 0. Otherwise, -1.
+ */
 gint
 vfs_truncate(VFSFile * file, glong length)
 {
@@ -306,13 +286,10 @@ vfs_truncate(VFSFile * file, glong length)
 }
 
 /**
- * vfs_fsize:
- * @file: #VFSFile object that represents the VFS stream.
+ * Returns size of the file.
  *
- * Returns te size of the file
- *
- * Return value: On success, the size of the file in bytes.
- * Otherwise, -1.
+ * @param file #VFSFile object that represents the VFS stream.
+ * @return On success, the size of the file in bytes. Otherwise, -1.
  */
 off_t
 vfs_fsize(VFSFile * file)
@@ -324,15 +301,12 @@ vfs_fsize(VFSFile * file)
 }
 
 /**
- * vfs_get_metadata:
- * @file: #VFSFile object that represents the VFS stream.
- * @field: The string constant field name to get.
- *
  * Returns metadata about the stream.
  *
- * Return value: On success, a copy of the value of the
- * field. Otherwise, NULL.
- **/
+ * @param file #VFSFile object that represents the VFS stream.
+ * @param field The string constant field name to get.
+ * @return On success, a copy of the value of the field. Otherwise, NULL.
+ */
 gchar *
 vfs_get_metadata(VFSFile * file, const gchar * field)
 {
@@ -345,14 +319,12 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
 }
 
 /**
- * vfs_file_test:
- * @path: A path to test.
- * @test: A GFileTest to run.
- *
  * Wrapper for g_file_test().
  *
- * Return value: The result of g_file_test().
- **/
+ * @param path A path to test.
+ * @param test A GFileTest to run.
+ * @return The result of g_file_test().
+ */
 gboolean
 vfs_file_test(const gchar * path, GFileTest test)
 {
@@ -372,13 +344,11 @@ vfs_file_test(const gchar * path, GFileTest test)
 }
 
 /**
- * vfs_is_writeable:
- * @path: A path to test.
- *
  * Tests if a file is writeable.
  *
- * Return value: TRUE if the file is writeable, otherwise FALSE.
- **/
+ * @param path A path to test.
+ * @return TRUE if the file is writeable, otherwise FALSE.
+ */
 gboolean
 vfs_is_writeable(const gchar * path)
 {
@@ -394,15 +364,14 @@ vfs_is_writeable(const gchar * path)
 }
 
 /**
- * vfs_dup:
- * @in: The VFSFile handle to mark as duplicated.
- *
  * Increments the amount of references that are using this FD.
  * References are removed by calling vfs_fclose on the handle returned
- * from this function.
- * If the amount of references reaches zero, then the file will be
- * closed.
- **/
+ * from this function. If the amount of references reaches zero, then
+ * the file will be closed.
+ *
+ * @param in The VFSFile handle to mark as duplicated.
+ * @return VFSFile handle, which is same as given input.
+ */
 VFSFile *
 vfs_dup(VFSFile *in)
 {
@@ -414,13 +383,11 @@ vfs_dup(VFSFile *in)
 }
 
 /**
- * vfs_is_remote:
- * @path: A path to test.
- *
  * Tests if a path is remote uri.
  *
- * Return value: TRUE if the file is remote, otherwise FALSE.
- **/
+ * @param path A path to test.
+ * @return TRUE if the file is remote, otherwise FALSE.
+ */
 gboolean
 vfs_is_remote(const gchar * path)
 {
@@ -428,8 +395,7 @@ vfs_is_remote(const gchar * path)
     GList *node;
     gchar *decpath;
 
-    if (!path)
-	return FALSE;
+    if (path == NULL) return FALSE;
 
     decpath = g_strdup(path);
 
@@ -447,7 +413,7 @@ vfs_is_remote(const gchar * path)
     /* no transport vtable has been registered, bail. */
     if (vtable == NULL)
     {
-        g_warning("could not open '%s', no transport plugin available", decpath);
+        g_warning("Could not open '%s', no transport plugin available.", decpath);
         g_free(decpath);
         return FALSE;
     }
@@ -455,31 +421,29 @@ vfs_is_remote(const gchar * path)
     g_free(decpath);
 
     /* check if vtable->uri_id is file:// or not, for now. */
-    if(!strncasecmp("file://", vtable->uri_id, strlen(vtable->uri_id)))
+    if (!strncasecmp("file://", vtable->uri_id, strlen(vtable->uri_id)))
         return FALSE;
     else
         return TRUE;
 }
 
 /**
- * vfs_is_streaming:
- * @file: A #VFSFile object to test.
- *
  * Tests if a file is associated to streaming.
  *
- * Return value: TRUE if the file is streaming, otherwise FALSE.
- **/
+ * @param file A #VFSFile object to test.
+ * @return TRUE if the file is streaming, otherwise FALSE.
+ */
 gboolean
 vfs_is_streaming(VFSFile *file)
 {
     off_t size = 0;
 
-    if(!file)
+    if (file == NULL)
         return FALSE;
 
     size = file->base->vfs_fsize_impl(file);
 
-    if(size == -1)
+    if (size == -1)
         return TRUE;
     else
         return FALSE;

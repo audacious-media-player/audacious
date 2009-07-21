@@ -27,59 +27,54 @@
 
 G_BEGIN_DECLS
 
+/*! \struct VFSFile */
 typedef struct _VFSFile VFSFile;
+/*! \struct VFSConstructor */
 typedef struct _VFSConstructor VFSConstructor;
 
-/**
- * VFSFile:
- * @uri: The URI of the stream.
- * @handle: Opaque data used by the transport plugins.
- * @base: The base vtable used for VFS functions.
- * @ref: The amount of references that the VFSFile object has.
- *
- * #VFSFile objects describe a VFS stream.
- **/
+/*! \struct _VFSFile
+ * #VFSFile objects describe an opened VFS stream, basically being
+ * similar in purpose as stdio #FILE
+ */
 struct _VFSFile {
-	gchar *uri;
-	gpointer handle;
-	VFSConstructor *base;
-	gint ref;
+	gchar *uri;             /**< The URI of the stream */
+	gpointer handle;        /**< Opaque data used by the transport plugins */
+	VFSConstructor *base;   /**< The base vtable used for VFS functions */
+	gint ref;               /**< The amount of references that the VFSFile object has */
 };
 
-/**
- * VFSConstructor:
- * @uri_id: The uri identifier, e.g. "file" would handle "file://" streams.
- * @vfs_fopen_impl: A function pointer which points to a fopen implementation.
- * @vfs_fclose_impl: A function pointer which points to a fclose implementation.
- * @vfs_fread_impl: A function pointer which points to a fread implementation.
- * @vfs_fwrite_impl: A function pointer which points to a fwrite implementation.
- * @vfs_getc_impl: A function pointer which points to a getc implementation.
- * @vfs_ungetc_impl: A function pointer which points to an ungetc implementation.
- * @vfs_fseek_impl: A function pointer which points to a fseek implementation.
- * @vfs_rewind_impl: A function pointer which points to a rewind implementation.
- * @vfs_ftell_impl: A function pointer which points to a ftell implementation.
- * @vfs_feof_impl: A function pointer which points to a feof implementation.
- * @vfs_truncate_impl: A function pointer which points to a ftruncate implementation.
- *
+/*! \struct _VFSConstructor
  * #VFSConstructor objects contain the base vtables used for extrapolating
  * a VFS stream. #VFSConstructor objects should be considered %virtual in
  * nature. VFS base vtables are registered via vfs_register_transport().
  **/
 struct _VFSConstructor {
+    /** The URI identifier, e.g. "file" would handle "file://" streams. */
 	gchar *uri_id;
+	/** A function pointer which points to a fopen implementation. */
 	VFSFile *(*vfs_fopen_impl)(const gchar *path,
 		const gchar *mode);
+    /** A function pointer which points to a fclose implementation. */
 	gint (*vfs_fclose_impl)(VFSFile * file);
+	/** A function pointer which points to a fread implementation. */
 	size_t (*vfs_fread_impl)(gpointer ptr, size_t size,
 		size_t nmemb, VFSFile *file);
+    /** A function pointer which points to a fwrite implementation. */
 	size_t (*vfs_fwrite_impl)(gconstpointer ptr, size_t size,
 		size_t nmemb, VFSFile *file);
+    /** A function pointer which points to a getc implementation. */
 	gint (*vfs_getc_impl)(VFSFile *stream);
+    /** A function pointer which points to an ungetc implementation. */
 	gint (*vfs_ungetc_impl)(gint c, VFSFile *stream);
+    /** A function pointer which points to a fseek implementation. */
 	gint (*vfs_fseek_impl)(VFSFile *file, glong offset, gint whence);
+	/** function pointer which points to a rewind implementation. */
 	void (*vfs_rewind_impl)(VFSFile *file);
+    /** A function pointer which points to a ftell implementation. */
 	glong (*vfs_ftell_impl)(VFSFile *file);
+	/** A function pointer which points to a feof implementation. */
 	gboolean (*vfs_feof_impl)(VFSFile *file);
+	/** A function pointer which points to a ftruncate implementation. */
 	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
 	off_t (*vfs_fsize_impl)(VFSFile *file);
 	gchar *(*vfs_get_metadata_impl)(VFSFile *file, const gchar * field);
