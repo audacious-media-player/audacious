@@ -23,7 +23,6 @@
 
 #include "interface.h"
 #include "playback.h"
-#include "playlist.h"
 #include "ui_urlopener.h"
 #include "ui_preferences.h"
 #include "ui_jumptotrack.h"

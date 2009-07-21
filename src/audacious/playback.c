@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2009  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -39,19 +39,17 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
+#include "audstrings.h"
 #include "configdb.h"
 #include "eventqueue.h"
 #include "hook.h"
 #include "input.h"
 #include "output.h"
-#include "playlist.h"
+#include "playlist-new.h"
 #include "pluginenum.h"
 #include "util.h"
 
 #include "playback.h"
-#include "playback_evlisteners.h"
-
-static PlaybackInfo playback_info = { 0, 0, 0 };
 
 static gint
 playback_set_pb_ready(InputPlayback *playback)
@@ -155,28 +153,39 @@ playback_get_length(void)
 void
 playback_initiate(void)
 {
-    PlaylistEntry *entry = NULL;
-    Playlist *playlist = playlist_get_active();
+    gint playlist, entry;
 
-    g_return_if_fail(playlist_get_length(playlist) != 0);
+    playlist = playlist_get_playing ();
 
-    /* initialize playback event listeners if not done already */
-    playback_evlistener_init();
+    if (playlist == -1)
+    {
+        playlist = playlist_get_active ();
+        playlist_set_playing (playlist);
+    }
+
+    entry = playlist_get_position (playlist);
+
+    if (entry == -1)
+    {
+        playlist_next_song (playlist, FALSE);
+        entry = playlist_get_position (playlist);
+
+        if (entry == -1)
+            return;
+    }
 
     if (playback_get_playing())
         playback_stop();
-
-    entry = playlist_get_entry_to_play(playlist);
-    g_return_if_fail(entry != NULL);
 
 #ifdef USE_DBUS
     mpris_emit_track_change(mpris);
 #endif
 
-    if (!playback_play_file(entry))
+    if (! playback_play_file (playlist_entry_get_filename (playlist, entry),
+     playlist_entry_get_decoder (playlist, entry)))
         return;
 
-    hook_call("playback begin", entry);
+    hook_call ("playback begin", NULL);
 }
 
 void
@@ -281,6 +290,24 @@ run_no_output_plugin_dialog(void)
     gtk_widget_destroy(dialog);
 }
 
+static gboolean on_to_the_next (void * user_data)
+{
+    if (cfg.no_playlist_advance)
+    {
+        if (cfg.repeat)
+            playback_initiate ();
+        else
+            hook_call ("playback stop", NULL);
+    }
+    else if (playlist_next_song (playlist_get_playing (), cfg.repeat) &&
+     ! cfg.stopaftersong)
+        playback_initiate ();
+    else
+        hook_call ("playback stop", NULL);
+
+    return FALSE;
+}
+
 static gpointer
 playback_monitor_thread(gpointer data)
 {
@@ -302,7 +329,7 @@ playback_monitor_thread(gpointer data)
     if (playback->error)
         playback_error ();
     else if (restart)
-        event_queue ("playback eof", NULL);
+        g_timeout_add (0, on_to_the_next, NULL);
 
     return NULL;
 }
@@ -366,12 +393,9 @@ playback_run(InputPlayback *playback)
     g_mutex_unlock(playback->pb_ready_mutex);
 }
 
-gboolean
-playback_play_file(PlaylistEntry *entry)
+gboolean playback_play_file (const gchar * filename, InputPlugin * decoder)
 {
     InputPlayback *playback;
-
-    g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
         run_no_output_plugin_dialog();
@@ -379,15 +403,13 @@ playback_play_file(PlaylistEntry *entry)
         return FALSE;
     }
 
-    if (!entry->decoder)
+    if (decoder == NULL)
     {
-        ProbeResult *pr = input_check_file(entry->filename, FALSE);
+        ProbeResult * pr = input_check_file (filename);
 
         if (pr != NULL)
         {
-            entry->decoder = pr->ip;
-            entry->tuple = pr->tuple;
-
+            decoder = pr->ip;
             g_free(pr);
         }
         else
@@ -397,7 +419,7 @@ playback_play_file(PlaylistEntry *entry)
         }
     }
 
-    if (!entry->decoder || !entry->decoder->enabled)
+    if (decoder == NULL || ! decoder->enabled)
     {
         set_current_input_playback(NULL);
 
@@ -408,8 +430,8 @@ playback_play_file(PlaylistEntry *entry)
 
     playback = playback_new();
 
-    playback->plugin = entry->decoder;
-    playback->filename = g_strdup(entry->filename);
+    playback->plugin = decoder;
+    playback->filename = g_strdup (filename);
     playback->output = &psuedo_output_plugin;
 
     set_current_input_playback(playback);
@@ -446,7 +468,7 @@ playback_seek(gint time)
     g_return_if_fail(playback != NULL);
 
     plugin_set_current((Plugin *)(playback->plugin));
-    playback->plugin->seek(playback, time);
+    playback->plugin->seek (playback, CLAMP (time, 0, playback->length / 1000));
     playback->set_pb_change(playback);
 
     hook_call ("playback seek", playback);
@@ -455,37 +477,70 @@ playback_seek(gint time)
 void
 playback_seek_relative(gint offset)
 {
-    gint time = CLAMP(playback_get_time() / 1000 + offset,
-                      0, playlist_get_current_length(playlist_get_active()) / 1000 - 1);
-    playback_seek(time);
+    playback_seek (playback_get_time () / 1000 + offset);
 }
 
-void
-playback_get_sample_params(gint * bitrate,
-                           gint * frequency,
-                           gint * n_channels)
+void playback_set_info (gchar * title, gint length, gint bitrate, gint
+ samplerate, gint channels)
 {
-    if (bitrate)
-        *bitrate = playback_info.bitrate;
+    InputPlayback * playback = get_current_input_playback ();
 
-    if (frequency)
-        *frequency = playback_info.frequency;
+    if (playback == NULL)
+        return;
 
-    if (n_channels)
-        *n_channels = playback_info.n_channels;
+    g_free (playback->title);
+    playback->title = convert_title_text (g_strdup (title));
+    playback->length = length;
+    playback->rate = bitrate;
+    playback->freq = samplerate;
+    playback->nch = channels;
+
+    event_queue ("title change", NULL);
+    event_queue ("info change", NULL);
 }
 
-void
-playback_set_sample_params(gint bitrate,
-                           gint frequency,
-                           gint n_channels)
+void playback_set_title (gchar * title)
 {
-    if (bitrate >= 0)
-        playback_info.bitrate = bitrate;
+    InputPlayback * playback = get_current_input_playback ();
 
-    if (frequency >= 0)
-        playback_info.frequency = frequency;
+    if (playback == NULL)
+        return;
 
-    if (n_channels >= 0)
-        playback_info.n_channels = n_channels;
+    g_free (playback->title);
+    playback->title = convert_title_text (g_strdup (title));
+
+    event_queue ("title change", NULL);
+}
+
+void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
+{
+    InputPlayback * playback = get_current_input_playback ();
+
+    if (playback == NULL)
+    {
+        * bitrate = 0;
+        * samplerate = 0;
+        * channels = 0;
+        return;
+    }
+
+    * bitrate = playback->rate;
+    * samplerate = playback->freq;
+    * channels = playback->nch;
+}
+
+gchar * playback_get_title (void)
+{
+    InputPlayback * playback = get_current_input_playback ();
+
+    if (playback == NULL)
+        return NULL;
+
+    if (cfg.show_numbers_in_pl)
+        return g_strdup_printf ("%d. %s (%d:%02d)", playlist_get_position
+         (playlist_get_playing ()), playback->title, playback->length / 60000,
+         playback->length / 1000 % 60);
+    else
+        return g_strdup_printf ("%s (%d:%02d)", playback->title,
+         playback->length / 60000, playback->length / 1000 % 60);
 }

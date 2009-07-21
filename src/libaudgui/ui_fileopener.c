@@ -35,21 +35,27 @@ filebrowser_add_files(GtkFileChooser * browser,
 {
     GSList *cur;
     gchar *ptr;
-    Playlist *playlist = aud_playlist_get_active();
+    gint playlist = aud_playlist_get_active ();
+    struct index * add = index_new ();
 
     for (cur = files; cur; cur = g_slist_next(cur)) {
         gchar *filename = g_filename_to_uri((const gchar *) cur->data, NULL, NULL);
 
-        if (aud_vfs_file_test(cur->data, G_FILE_TEST_IS_DIR)) {
-            aud_playlist_add_dir(playlist, filename ? filename : (const gchar *) cur->data);
-        } else {
-            aud_playlist_add(playlist, filename ? filename : (const gchar *) cur->data);
-        }
+        if (filename == NULL)
+            continue;
 
-        g_free(filename);
+        if (vfs_file_test (filename, G_FILE_TEST_IS_DIR))
+        {
+            aud_playlist_add_folder (filename);
+            g_free (filename);
+        }
+        else if (aud_filename_is_playlist (filename))
+            aud_playlist_insert_playlist (playlist, -1, filename);
+        else
+            index_append (add, filename);
     }
 
-    aud_hook_call("playlist update", playlist);
+    aud_playlist_entry_insert_batch (playlist, -1, add, NULL);
 
     ptr = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(browser));
 
@@ -75,7 +81,12 @@ action_button_cb(GtkWidget *widget, gpointer data)
     if (!files) return;
 
     if (play_button)
-        aud_playlist_clear(aud_playlist_get_active());
+    {
+        gint playlist = aud_playlist_get_active ();
+
+        aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count
+         (playlist));
+    }
 
     filebrowser_add_files(GTK_FILE_CHOOSER(chooser), files);
     g_slist_foreach(files, (GFunc) g_free, NULL);

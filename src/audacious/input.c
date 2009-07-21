@@ -148,8 +148,8 @@ input_get_mtime(const gchar *filename)
 
 
 /* do actual probing. this function is called from input_check_file() */
-static ProbeResult *
-input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolean loading)
+static ProbeResult * input_do_check_file (InputPlugin * ip, VFSFile * fd, gchar
+ * filename_proxy)
 {
     ProbeResult *pr = NULL;
     gint result = 0;
@@ -158,11 +158,8 @@ input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolea
 
     vfs_rewind(fd);
 
-    /* some input plugins provide probe_for_tuple() only. */
-    if ( (ip->probe_for_tuple && !ip->is_our_file_from_vfs && !ip->is_our_file) ||
-         (ip->probe_for_tuple && ip->have_subtune == TRUE) ||
-         (ip->probe_for_tuple && (cfg.use_pl_metadata && (!loading || (loading && cfg.get_info_on_load)))) ) {
-
+    if (ip->probe_for_tuple != NULL)
+    {
         plugin_set_current((Plugin *)ip);
         Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
@@ -245,9 +242,7 @@ input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolea
  * --yaz, Nov 16 2007
  */
 
-/* if loading is TRUE, tuple probing can be skipped as regards configuration. */
-ProbeResult *
-input_check_file(const gchar *filename, gboolean loading)
+ProbeResult * input_check_file (const gchar * filename)
 {
     VFSFile *fd;
     GList *node;
@@ -304,7 +299,7 @@ input_check_file(const gchar *filename, gboolean loading)
         ip = NULL;
 
     if (ip && ip->enabled) {
-        pr = input_do_check_file(ip, fd, filename_proxy, loading);
+        pr = input_do_check_file (ip, fd, filename_proxy);
         if (pr) {
             g_free(filename_proxy);
             vfs_fclose(fd);
@@ -344,7 +339,7 @@ input_check_file(const gchar *filename, gboolean loading)
                 if (!ip || !ip->enabled)
                     continue;
 
-                pr = input_do_check_file(ip, fd, filename_proxy, loading);
+                pr = input_do_check_file (ip, fd, filename_proxy);
 
                 if(pr) {
                     g_free(filename_proxy);
@@ -367,7 +362,7 @@ input_check_file(const gchar *filename, gboolean loading)
         if (!ip || !ip->enabled)
             continue;
 
-        pr = input_do_check_file(ip, fd, filename_proxy, loading);
+        pr = input_do_check_file (ip, fd, filename_proxy);
 
         if(pr) {
             g_free(filename_proxy);
@@ -397,7 +392,7 @@ input_get_song_tuple(const gchar * filename)
 
     filename_proxy = g_strdup(filename);
 
-    pr = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file (filename_proxy);
 
     if (!pr) {
         g_free(filename_proxy);
@@ -524,7 +519,7 @@ input_file_info_box(const gchar * filename)
 
     filename_proxy = g_strdup(filename);
 
-    pr = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file (filename_proxy);
 
     if (!pr)
         return;
@@ -608,12 +603,4 @@ input_set_volume(gint l, gint r)
         return;
 
     output_set_volume (l, r);
-}
-
-/* FIXME: move this somewhere else */
-void
-input_set_info_text(gchar *text)
-{
-    gchar *title = g_strdup(text);
-    event_queue_with_data_free("title change", title);
 }

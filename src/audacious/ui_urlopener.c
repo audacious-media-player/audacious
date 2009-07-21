@@ -43,6 +43,7 @@
 #include "input.h"
 #include "main.h"
 #include "playback.h"
+#include "playlist-new.h"
 #include "audstrings.h"
 
 #ifdef USE_CHARDET
@@ -77,7 +78,7 @@ GtkWidget *
 util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                         GCallback enqueue_func)
 {
-    GtkWidget *win, *vbox, *bbox, *cancel, *enqueue, *ok, *combo, *entry, 
+    GtkWidget *win, *vbox, *bbox, *cancel, *enqueue, *ok, *combo, *entry,
               *label;
     GList *url;
 
@@ -163,21 +164,22 @@ on_add_url_add_clicked(GtkWidget * widget,
 {
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
-        playlist_add_url(playlist_get_active(), text);
+        playlist_entry_insert (playlist_get_active (), -1, g_strdup (text), NULL);
 }
 
 static void
 on_add_url_ok_clicked(GtkWidget * widget,
                       GtkWidget * entry)
 {
-    Playlist *playlist = playlist_get_active();
+    gint playlist = playlist_get_active ();
 
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
     {
-        playlist_clear(playlist);
-        playlist_add_url(playlist, text);
-        playback_initiate();
+        playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
+        playlist_entry_insert (playlist, 0, g_strdup (text), NULL);
+        playlist_set_playing (playlist);
+        playback_initiate ();
     }
 }
 

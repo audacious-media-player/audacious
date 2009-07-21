@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2009  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -47,7 +47,8 @@
 #include "chardet.h"
 #include "output.h"
 #include "playback.h"
-#include "playlist.h"
+#include "playlist-new.h"
+#include "playlist-utils.h"
 #include "audstrings.h"
 #include "util.h"
 #include "visualization.h"
@@ -153,7 +154,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .uri_set_plugin = uri_set_plugin,
 
     .util_info_dialog = util_info_dialog,
-    .get_gentitle_format = get_gentitle_format,
 
     .smart_realloc = smart_realloc,
     .sadfmt_from_afmt = sadfmt_from_afmt,
@@ -179,110 +179,79 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_container_write = playlist_container_write,
     .playlist_container_find = playlist_container_find,
 
-    .playlist_entry_new = playlist_entry_new,
-    .playlist_entry_free = playlist_entry_free,
-
-    .playlist_add_playlist = playlist_add_playlist,
-    .playlist_remove_playlist = playlist_remove_playlist,
-    .playlist_select_playlist = playlist_select_playlist,
-    .playlist_select_next = playlist_select_next,
-    .playlist_select_prev = playlist_select_prev,
-    .playlist_get_playlists = playlist_get_playlists,
-
-    .playlist_clear_only = playlist_clear_only,
-    .playlist_clear = playlist_clear,
+    .playlist_count = playlist_count,
+    .playlist_insert = playlist_insert,
     .playlist_delete = playlist_delete,
 
-    .playlist_add = playlist_add,
-    .playlist_ins = playlist_ins,
-    .playlist_add_dir = playlist_add_dir,
-    .playlist_ins_dir = playlist_ins_dir,
-    .playlist_add_url = playlist_add_url,
-    .playlist_ins_url = playlist_ins_url,
-
-    .playlist_next = playlist_next,
-    .playlist_prev = playlist_prev,
-
-    .playlist_queue = playlist_queue,
-    .playlist_queue_position = playlist_queue_position,
-    .playlist_queue_remove = playlist_queue_remove,
-    .playlist_queue_get_length = playlist_queue_get_length,
-    .playlist_is_position_queued = playlist_is_position_queued,
-    .playlist_clear_queue = playlist_clear_queue,
-    .playlist_get_queue_position = playlist_get_queue_position,
-    .playlist_get_queue_position_number = playlist_get_queue_position_number,
-    .playlist_get_queue_qposition_number = playlist_get_queue_qposition_number,
-
-    .playlist_eof_reached = playlist_eof_reached,
-    .playlist_set_position = playlist_set_position,
-
-    .playlist_get_length = playlist_get_length,
-    .playlist_get_position = playlist_get_position,
-    .playlist_get_position_nolock = playlist_get_position_nolock,
-    .playlist_get_info_text = playlist_get_info_text,
-    .playlist_get_current_length = playlist_get_current_length,
-
-    .playlist_save = playlist_save,
-    .playlist_load = playlist_load,
-
-    .playlist_sort = playlist_sort,
-    .playlist_sort_selected = playlist_sort_selected,
-
-    .playlist_reverse = playlist_reverse,
-    .playlist_random = playlist_random,
-    .playlist_remove_duplicates = playlist_remove_duplicates,
-    .playlist_remove_dead_files = playlist_remove_dead_files,
-
-    .playlist_fileinfo_current = ui_fileinfo_show_current,
-    .playlist_fileinfo = ui_fileinfo_show,
-
-    .playlist_delete_index = playlist_delete_index,
-
-    .playlist_get_entry_to_play = playlist_get_entry_to_play,
-
+    .playlist_set_filename = playlist_set_filename,
     .playlist_get_filename = playlist_get_filename,
-    .playlist_get_songtitle = playlist_get_songtitle,
-    .playlist_get_tuple = playlist_get_tuple,
-    .playlist_get_songtime = playlist_get_songtime,
+    .playlist_set_title = playlist_set_title,
+    .playlist_get_title = playlist_get_title,
 
-    .playlist_get_selected = playlist_get_selected,
-    .playlist_get_num_selected = playlist_get_num_selected,
+    .playlist_set_active = playlist_set_active,
+    .playlist_get_active = playlist_get_active,
+    .playlist_set_playing = playlist_set_playing,
+    .playlist_get_playing = playlist_get_playing,
 
-    .playlist_get_total_time = playlist_get_total_time,
-    .playlist_select_search = playlist_select_search,
+    .playlist_entry_count = playlist_entry_count,
+    .playlist_entry_insert = playlist_entry_insert,
+    .playlist_entry_insert_batch = playlist_entry_insert_batch,
+    .playlist_entry_delete = playlist_entry_delete,
+
+    .playlist_entry_get_filename = playlist_entry_get_filename,
+    .playlist_entry_get_decoder = playlist_entry_get_decoder,
+    .playlist_entry_get_tuple = playlist_entry_get_tuple,
+    .playlist_entry_get_title = playlist_entry_get_title,
+    .playlist_entry_get_length = playlist_entry_get_length,
+
+    .playlist_set_position = playlist_set_position,
+    .playlist_get_position = playlist_get_position,
+
+    .playlist_entry_set_selected = playlist_entry_set_selected,
+    .playlist_entry_get_selected = playlist_entry_get_selected,
+    .playlist_selected_count = playlist_selected_count,
     .playlist_select_all = playlist_select_all,
-    .playlist_select_range = playlist_select_range,
-    .playlist_select_invert_all = playlist_select_invert_all,
-    .playlist_select_invert = playlist_select_invert,
 
-    .playlist_read_info_selection = playlist_read_info_selection,
-    .playlist_read_info = playlist_read_info,
+    .playlist_shift = playlist_shift,
+    .playlist_delete_selected = playlist_delete_selected,
+    .playlist_reverse = playlist_reverse,
+    .playlist_randomize = playlist_randomize,
+
+    .playlist_sort_by_filename = playlist_sort_by_filename,
+    .playlist_sort_by_tuple = playlist_sort_by_tuple,
+    .playlist_sort_selected_by_filename = playlist_sort_selected_by_filename,
+    .playlist_sort_selected_by_tuple = playlist_sort_selected_by_tuple,
+
+    .playlist_rescan = playlist_rescan,
+
+    .playlist_get_total_length = playlist_get_total_length,
+    .playlist_get_selected_length = playlist_get_selected_length,
 
     .playlist_set_shuffle = playlist_set_shuffle,
 
-    .playlist_clear_selected = playlist_clear_selected,
+    .playlist_queue_count = playlist_queue_count,
+    .playlist_queue_insert = playlist_queue_insert,
+    .playlist_queue_insert_selected = playlist_queue_insert_selected,
+    .playlist_queue_get_entry = playlist_queue_get_entry,
+    .playlist_queue_find_entry = playlist_queue_find_entry,
+    .playlist_queue_delete = playlist_queue_delete,
 
-    .get_playlist_nth = get_playlist_nth,
+    .playlist_prev_song = playlist_prev_song,
+    .playlist_next_song = playlist_next_song,
 
-    .playlist_set_current_name = playlist_set_current_name,
-    .playlist_get_current_name = playlist_get_current_name,
+    .get_gentitle_format = get_gentitle_format,
 
-    .playlist_filename_set = playlist_filename_set,
-    .playlist_filename_get = playlist_filename_get,
+    .playlist_sort_by_scheme = playlist_sort_by_scheme,
+    .playlist_sort_selected_by_scheme = playlist_sort_selected_by_scheme,
+    .playlist_remove_duplicates_by_scheme = playlist_remove_duplicates_by_scheme,
+    .playlist_remove_failed = playlist_remove_failed,
+    .playlist_select_by_patterns = playlist_select_by_patterns,
 
-    .playlist_new = playlist_new,
-    .playlist_free = playlist_free,
-    .playlist_new_from_selected = playlist_new_from_selected,
+    .filename_is_playlist = filename_is_playlist,
 
-    .is_playlist_name = is_playlist_name,
-
-    .playlist_load_ins_file = playlist_load_ins_file,
-    .playlist_load_ins_file_tuple = playlist_load_ins_file_tuple,
-
-    .playlist_get_active = playlist_get_active,
-    .playlist_playlists_equal = playlist_playlists_equal,
-    .playlist_shift = playlist_shift,
-    .playlist_rescan = playlist_rescan,
+    .playlist_insert_playlist = playlist_insert_playlist,
+    .playlist_save = playlist_save,
+    .playlist_add_folder = playlist_add_folder,
 
     .ip_state = &ip_data,
     ._cfg = &cfg,
@@ -318,9 +287,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_get_playing = drct_get_playing,
     .drct_get_paused = drct_get_paused,
     .drct_get_stopped = drct_get_stopped,
-    .drct_get_info = drct_get_info,
-    .drct_get_time = drct_get_time,
-    .drct_get_length = drct_get_length,
+    .drct_get_info = playback_get_info,
+    .drct_get_time = playback_get_time,
+    .drct_get_length = playback_get_length,
     .drct_seek = drct_seek,
     .drct_get_volume = drct_get_volume,
     .drct_set_volume = drct_set_volume,
@@ -404,6 +373,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .output_plugin_reinit = output_plugin_reinit,
 
     .get_plugin_menu = get_plugin_menu,
+    .playback_get_title = playback_get_title,
+    .fileinfo_show = ui_fileinfo_show,
+    .fileinfo_show_current = ui_fileinfo_show_current,
 };
 
 /*****************************************************************/
@@ -560,11 +532,8 @@ input_plugin_init(Plugin * plugin)
     p->get_vis_type = input_get_vis_type;
     p->add_vis_pcm = add_vis_pcm_dummy;
 
-    /* Pretty const casts courtesy of XMMS's plugin.h legacy. Anyone
-       else thinks we could use a CONST macro to solve the warnings?
-       - descender */
-    p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info_old_abi;
-    p->set_info_text = input_set_info_text;
+    p->set_info = playback_set_info;
+    p->set_info_text = playback_set_title;
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
 

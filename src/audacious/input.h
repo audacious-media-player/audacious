@@ -54,7 +54,7 @@ void set_current_input_playback(InputPlayback * ip);
 void set_current_input_data(void * data);
 InputVisType input_get_vis_type();
 
-ProbeResult *input_check_file(const gchar * filename, gboolean loading);
+ProbeResult * input_check_file (const gchar * filename);
 Tuple *input_get_song_tuple(const gchar * filename);
 
 void input_play(gchar * filename);
@@ -62,8 +62,6 @@ void input_stop(void);
 void input_pause(void);
 gint input_get_time(void);
 void input_seek(gint time);
-
-void input_set_info_text(gchar * text);
 
 GList *input_scan_dir(const gchar * dir);
 void input_get_volume(gint * l, gint * r);

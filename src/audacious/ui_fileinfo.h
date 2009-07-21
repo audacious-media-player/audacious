@@ -26,7 +26,7 @@
 void create_fileinfo_window(void);
 gchar* fileinfo_recursive_get_image(const gchar* path, const gchar* file_name, gint depth);
 
-void ui_fileinfo_show(Playlist *playlist, guint pos);
-void ui_fileinfo_show_current(Playlist *playlist);
+void ui_fileinfo_show (gint playlist, gint entry);
+void ui_fileinfo_show_current (void);
 
 #endif /* AUDACIOUS_UI_FILEINFO_H */

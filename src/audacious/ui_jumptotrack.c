@@ -56,7 +56,7 @@
 #include "dnd.h"
 #include "input.h"
 #include "playback.h"
-#include "playlist.h"
+#include "playlist-new.h"
 #include "pluginenum.h"
 #include "ui_credits.h"
 #include "ui_preferences.h"
@@ -66,10 +66,12 @@
 
 #include "ui_jumptotrack_cache.h"
 
-static GtkWidget *jump_to_track_win = NULL;
-static gulong serial = 0;
+static void watchdog (void * hook_data, void * user_data);
 
+static GtkWidget *jump_to_track_win = NULL;
 static JumpToTrackCache* cache = NULL;
+static void * storage = NULL;
+static gboolean watching = FALSE;
 
 static void
 change_song(guint pos)
@@ -84,8 +86,20 @@ change_song(guint pos)
 void
 ui_jump_to_track_hide(void)
 {
-    g_return_if_fail(jump_to_track_win != NULL);
-    gtk_widget_hide(jump_to_track_win);
+    if (watching)
+    {
+        hook_dissociate ("playlist update", watchdog);
+        watching = FALSE;
+    }
+
+    if (jump_to_track_win != NULL)
+        gtk_widget_hide (jump_to_track_win);
+
+    if (cache != NULL)
+    {
+        ui_jump_to_track_cache_free (cache);
+        cache = NULL;
+    }
 }
 
 static void
@@ -135,7 +149,7 @@ static void
 ui_jump_to_track_set_queue_button_label(GtkButton * button,
                                       guint pos)
 {
-    if (playlist_is_position_queued(playlist_get_active(), pos))
+    if (playlist_queue_find_entry (playlist_get_active (), pos) != -1)
         gtk_button_set_label(button, _("Un_queue"));
     else
         gtk_button_set_label(button, _("_Queue"));
@@ -160,7 +174,7 @@ ui_jump_to_track_queue_cb(GtkButton * button,
 
     gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    playlist_queue_position(playlist_get_active(), (pos - 1));
+    playlist_queue_insert (playlist_get_active (), -1, pos - 1);
 
     ui_jump_to_track_set_queue_button_label(button, (pos - 1));
 }
@@ -228,13 +242,9 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
 void
 ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
 {
-    guint row;
-    GList *playlist_glist;
-    gchar *desc_buf = NULL;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
-    Playlist *playlist;
-
+    gint playlist, entries, entry;
     GtkTreeModel *store;
 
     GtkTreeView *tree = GTK_TREE_VIEW(g_object_get_data(user_data, "treeview"));
@@ -251,37 +261,19 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
     store = gtk_tree_view_get_model(tree);
     gtk_list_store_clear(GTK_LIST_STORE(store));
 
-    row = 1;
-    playlist = playlist_get_active();
-    for (playlist_glist = playlist->entries; playlist_glist;
-         playlist_glist = g_list_next(playlist_glist)) {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
+    playlist = playlist_get_active ();
+    entries = playlist_entry_count (playlist);
 
-        if (entry->title)
-            desc_buf = g_strdup(entry->title);
-        else {
-            gchar *realfn = NULL;
-            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
-            if (strchr(realfn ? realfn : entry->filename, '/'))
-                desc_buf = str_assert_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
-            else
-                desc_buf = str_assert_utf8(realfn ? realfn : entry->filename);
-            g_free(realfn); realfn = NULL;
-        }
-
+    for (entry = 0; entry < entries; entry ++)
+    {
         gtk_list_store_append(GTK_LIST_STORE(store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
-                           0, row, 1, desc_buf, -1);
-        row++;
-
-        g_free(desc_buf);
-        desc_buf = NULL;
+         0, 1 + entry, 1, playlist_entry_get_title (playlist, entry), -1);
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
     selection = gtk_tree_view_get_selection(tree);
     gtk_tree_selection_select_iter(selection, &iter);
-    serial = playlist->serial; // important. --yaz
 }
 
 static void
@@ -290,11 +282,10 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     GtkTreeView *treeview = GTK_TREE_VIEW(user_data);
     GtkTreeSelection *selection;
     GtkTreeIter iter;
-
+    gint playlist;
     GtkListStore *store;
 
     const GArray *search_matches;
-    Playlist *playlist;
     int i;
 
     if (cache == NULL) {
@@ -310,37 +301,22 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 
     gtk_list_store_clear(store);
 
-    playlist = playlist_get_active();
-
-    PLAYLIST_LOCK(playlist);
-
     search_matches = ui_jump_to_track_cache_search(cache,
-                                                   playlist,
                                                    gtk_entry_get_text(entry));
+
+    playlist = playlist_get_active ();
 
     for (i = 0; i < search_matches->len; i++)
     {
-        JumpToTrackEntry *jttentry = g_array_index(search_matches, JumpToTrackEntry*, i);
-        PlaylistEntry* entry = jttentry->entry;
-        gchar *title = NULL;
+        gint entry = g_array_index (search_matches, gint, i);
+        const gchar * title = playlist_entry_get_title (playlist, entry);
 
-        if (entry->title)
-            title = g_strdup(entry->title);
-        else {
-            gchar *realfn = NULL;
-            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
-            if (strchr(realfn ? realfn : entry->filename, '/'))
-                title = str_assert_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
-            else
-                title = str_assert_utf8(realfn ? realfn : entry->filename);
-            g_free(realfn); realfn = NULL;
-        }
+        if (title == NULL)
+            continue;
+
         gtk_list_store_append(store, &iter);
-        gtk_list_store_set(store, &iter, 0, jttentry->playlist_position + 1 , 1, title, -1);
-        g_free(title);
+        gtk_list_store_set (store, & iter, 0, 1 + entry, 1, title, -1);
     }
-
-    PLAYLIST_UNLOCK(playlist);
 
     /* attach the model again to the treeview */
     gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , GTK_TREE_MODEL(store) );
@@ -355,10 +331,7 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 static gboolean
 ui_jump_to_track_fill(gpointer treeview)
 {
-    GList *playlist_glist;
-    Playlist *playlist;
-    gchar *desc_buf = NULL;
-    guint row;
+    gint playlist, entries, entry;
     GtkTreeIter iter;
     GtkListStore *jtf_store = (GtkListStore*)gtk_tree_view_get_model( GTK_TREE_VIEW(treeview) );
 
@@ -368,56 +341,31 @@ ui_jump_to_track_fill(gpointer treeview)
 
     gtk_list_store_clear(jtf_store);
 
-    row = 1;
-    playlist = playlist_get_active();
+    playlist = playlist_get_active ();
+    entries = playlist_entry_count (playlist);
 
-    PLAYLIST_LOCK(playlist);
-    for (playlist_glist = playlist->entries; playlist_glist;
-         playlist_glist = g_list_next(playlist_glist)) {
-
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
-
-        if (entry->title)
-            desc_buf = g_strdup(entry->title);
-        else {
-            gchar *realfn = NULL;
-            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
-            if (strchr(realfn ? realfn : entry->filename, '/'))
-                desc_buf = str_assert_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
-            else
-                desc_buf = str_assert_utf8(realfn ? realfn : entry->filename);
-            g_free(realfn); realfn = NULL;
-        }
-
+    for (entry = 0; entry < entries; entry ++)
+    {
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
-                           0, row, 1, desc_buf, -1);
-        row++;
-
-        g_free(desc_buf);
-        desc_buf = NULL;
+         0, 1 + entry, 1, playlist_entry_get_title (playlist, entry), -1);
     }
-    PLAYLIST_UNLOCK(playlist);
 
     /* attach liststore to treeview */
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(jtf_store));
     g_object_unref(jtf_store);
-    serial = playlist->serial;
     return FALSE;
 }
 
-static gboolean
-watchdog(gpointer storage)
+static void watchdog (void * hook_data, void * user_data)
 {
     GtkWidget *widget;
-    Playlist *playlist = playlist_get_active();
 
-    if(serial == playlist->serial)
-        return TRUE;
+    if (storage == NULL)
+        return;
 
     widget = g_object_get_data(storage, "widget");
     ui_jump_to_track_update(widget, storage);
-    return TRUE;
 }
 
 void
@@ -437,7 +385,14 @@ ui_jump_to_track(void)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
 
-    gpointer storage;
+    if (cache == NULL)
+        cache = ui_jump_to_track_cache_new ();
+
+    if (! watching)
+    {
+        hook_associate ("playlist update", watchdog, NULL);
+        watching = TRUE;
+    }
 
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
@@ -604,7 +559,6 @@ ui_jump_to_track(void)
     GTK_WIDGET_SET_FLAGS(close, GTK_CAN_DEFAULT);
 
     g_timeout_add(100, (GSourceFunc)ui_jump_to_track_fill, treeview);
-    g_timeout_add(500, (GSourceFunc)watchdog, storage);
 
     gtk_widget_show_all(jump_to_track_win);
     gtk_widget_grab_focus(edit);

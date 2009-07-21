@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "interface.h"
-#include "playlist.h"
 #include "input.h"
 #include "general.h"
 #include "visualization.h"

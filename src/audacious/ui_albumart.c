@@ -30,7 +30,6 @@
 
 #include "ui_fileinfopopup.h"
 #include "main.h"
-#include "playlist.h"
 #include "playback.h"
 
 static gboolean
@@ -126,7 +125,7 @@ fileinfo_recursive_get_image(const gchar* path,
 
 	if (cfg.recurse_for_cover && depth > cfg.recurse_for_cover_depth)
 		return NULL;
-	
+
 	d = g_dir_open(path, 0, NULL);
 
 	if (d) {
@@ -134,7 +133,7 @@ fileinfo_recursive_get_image(const gchar* path,
 
 		if (cfg.use_file_cover && file_name) {
 			/* Look for images matching file name */
-			while((f = g_dir_read_name(d))) { 
+			while((f = g_dir_read_name(d))) {
 				gchar *newpath = g_strconcat(path, "/", f, NULL);
 
 				if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
@@ -148,7 +147,7 @@ fileinfo_recursive_get_image(const gchar* path,
 			}
 			g_dir_rewind(d);
 		}
-		
+
 		/* Search for files using filter */
 		while ((f = g_dir_read_name(d))) {
 			gchar *newpath = g_strconcat(path, "/", f, NULL);
@@ -173,7 +172,7 @@ fileinfo_recursive_get_image(const gchar* path,
 		/* Descend into directories recursively. */
 		while ((f = g_dir_read_name(d))) {
 			gchar *newpath = g_strconcat(path, "/", f, NULL);
-			
+
 			if(g_file_test(newpath, G_FILE_TEST_IS_DIR)) {
 				gchar *tmp = fileinfo_recursive_get_image(newpath,
 					NULL, depth + 1);

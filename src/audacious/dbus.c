@@ -1,6 +1,7 @@
 /*
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2007 Ben Tucker
+ * Copyright 2009 John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,14 +35,62 @@
 #include "input.h"
 #include "main.h"
 #include "playback.h"
-#include "playlist.h"
 #include "audstrings.h"
+#include "playlist-new.h"
 #include "tuple.h"
 #include "interface.h"
 #include "ui_jumptotrack.h"
 
+struct status_request
+{
+    gboolean playing, paused;
+    glong time, length;
+    gint bitrate, samplerate, channels;
+};
+
+struct position_request
+{
+    gint playlist; /* -1 = active, -2 = playing */
+    gint entry; /* -1 = current */
+    gint entry_count, queue_count;
+};
+
+struct info_request
+{
+    gint playlist; /* -1 = active, -2 = playing */
+    gint entry; /* -1 = current */
+    gchar * filename, * title;
+    glong length;
+};
+
+struct field_request
+{
+    gint playlist; /* -1 = active, -2 = playing */
+    gint entry; /* -1 = current */
+    const gchar * field;
+    GValue * value;
+};
+
+struct add_request
+{
+    gint position; /* -1 = at end */
+    gchar * filename;
+    gboolean play;
+};
+
+struct mpris_metadata_request
+{
+    gint playlist; /* -1 = active, -2 = playing */
+    gint entry; /* -1 = current */
+    GHashTable * metadata;
+};
+
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
+
+static GThread * main_thread;
+static GMutex * info_mutex;
+static GCond * info_cond;
 
 G_DEFINE_TYPE(RemoteObject, audacious_rc, G_TYPE_OBJECT);
 G_DEFINE_TYPE(MprisRoot, mpris_root, G_TYPE_OBJECT);
@@ -164,6 +213,11 @@ void mpris_tracklist_init(MprisTrackList *object) {
 void init_dbus() {
     GError *error = NULL;
     DBusConnection *local_conn;
+
+    main_thread = g_thread_self ();
+    info_mutex = g_mutex_new ();
+    info_cond = g_cond_new ();
+
     // Initialize the DBus connection
     g_message("Trying to initialize D-Bus");
     dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
@@ -189,31 +243,33 @@ void init_dbus() {
     dbus_connection_set_exit_on_disconnect(local_conn, FALSE);
 }
 
-static GValue *tuple_value_to_gvalue(Tuple *tuple, const gchar *key) {
+static GValue * tuple_value_to_gvalue (const Tuple * tuple, const gchar * key)
+{
     GValue *val;
-    TupleValueType type;
-    type = tuple_get_value_type(tuple, -1, key);
-    if (type == TUPLE_STRING) {
-        gchar *result = g_strdup(tuple_get_string(tuple, -1, key));
+    TupleValueType type = tuple_get_value_type ((Tuple *) tuple, -1, key);
 
+    if (type == TUPLE_STRING)
+    {
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_STRING);
-        g_value_take_string(val, result);
+        g_value_take_string (val, g_strdup (tuple_get_string ((Tuple *) tuple,
+         -1, key)));
         return val;
     } else if (type == TUPLE_INT) {
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_INT);
-        g_value_set_int(val, tuple_get_int(tuple, -1, key));
+        g_value_set_int (val, tuple_get_int ((Tuple *) tuple, -1, key));
         return val;
     }
     return NULL;
 }
 
-static void tuple_insert_to_hash(GHashTable *md, Tuple *tuple, gchar *key)
+static void tuple_insert_to_hash (GHashTable * md, const Tuple * tuple, const
+ gchar * key)
 {
     GValue *value = tuple_value_to_gvalue(tuple, key);
     if (value != NULL)
-        g_hash_table_insert(md, key, value);
+        g_hash_table_insert (md, g_strdup (key), value);
 }
 
 static void remove_metadata_value(gpointer value)
@@ -222,31 +278,366 @@ static void remove_metadata_value(gpointer value)
     g_free((GValue*)value);
 }
 
-static GHashTable *mpris_metadata_from_tuple(Tuple *tuple) {
+static GHashTable * make_mpris_metadata (const gchar * filename, const Tuple *
+ tuple)
+{
     GHashTable *md = NULL;
     gpointer value;
-
-    if (tuple == NULL)
-        return NULL;
 
     md = g_hash_table_new_full(g_str_hash, g_str_equal,
                                NULL, remove_metadata_value);
 
-    tuple_insert_to_hash(md, tuple, "length");
-    tuple_insert_to_hash(md, tuple, "title");
-    tuple_insert_to_hash(md, tuple, "artist");
-    tuple_insert_to_hash(md, tuple, "album");
-    tuple_insert_to_hash(md, tuple, "genre");
-    tuple_insert_to_hash(md, tuple, "codec");
-    tuple_insert_to_hash(md, tuple, "quality");
+    value = g_malloc (sizeof (GValue));
+    memset (value, 0, sizeof (GValue));
+    g_value_init (value, G_TYPE_STRING);
+    g_value_take_string (value, g_strdup (filename));
+    g_hash_table_insert (md, "location", value);
 
-    value = tuple_value_to_gvalue(tuple, "track-number");
-    if (value != NULL)
+    if (tuple != NULL)
     {
-        g_hash_table_insert(md, "tracknumber", value);
+        tuple_insert_to_hash (md, tuple, "length");
+        tuple_insert_to_hash (md, tuple, "title");
+        tuple_insert_to_hash (md, tuple, "artist");
+        tuple_insert_to_hash (md, tuple, "album");
+        tuple_insert_to_hash (md, tuple, "genre");
+        tuple_insert_to_hash (md, tuple, "codec");
+        tuple_insert_to_hash (md, tuple, "quality");
+
+        value = tuple_value_to_gvalue (tuple, "track-number");
+
+        if (value != NULL)
+            g_hash_table_insert (md, "tracknumber", value);
     }
 
     return md;
+}
+
+static void real_position (gint * playlist, gint * entry)
+{
+    if (* playlist == -2)
+        * playlist = playlist_get_playing ();
+    if (* playlist == -1)
+        * playlist = playlist_get_active ();
+    if (* entry == -1)
+        * entry = playlist_get_position (* playlist);
+}
+
+static gboolean get_status_cb (void * data)
+{
+    struct status_request * request = data;
+
+    g_mutex_lock (info_mutex);
+
+    request->playing = playback_get_playing ();
+    request->paused = playback_get_paused ();
+    request->time = playback_get_time ();
+    request->length = playback_get_length ();
+    playback_get_info (& request->bitrate, & request->samplerate,
+     & request->channels);
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static void get_status (struct status_request * request)
+{
+    if (g_thread_self () == main_thread)
+        get_status_cb (request);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, get_status_cb, request);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
+}
+
+static gboolean get_position_cb (void * data)
+{
+    struct position_request * request = data;
+
+    g_mutex_lock (info_mutex);
+
+    real_position (& request->playlist, & request->entry);
+    request->entry_count = playlist_entry_count (request->playlist);
+    request->queue_count = playlist_queue_count (request->playlist);
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static void get_position (struct position_request * request)
+{
+    if (g_thread_self () == main_thread)
+        get_position_cb (request);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, get_position_cb, request);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
+}
+
+static gboolean get_info_cb (void * data)
+{
+    struct info_request * request = data;
+    const gchar * filename, * title;
+
+    g_mutex_lock (info_mutex);
+
+    real_position (& request->playlist, & request->entry);
+    filename = playlist_entry_get_filename (request->playlist, request->entry);
+    request->filename = (filename == NULL) ? NULL : g_strdup (filename);
+    title = playlist_entry_get_title (request->playlist, request->entry);
+    request->title = (title == NULL) ? NULL : g_strdup (title);
+    request->length = playlist_entry_get_length (request->playlist,
+     request->entry);
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static void get_info (struct info_request * request)
+{
+    if (g_thread_self () == main_thread)
+        get_info_cb (request);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, get_info_cb, request);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
+}
+
+static gboolean get_field_cb (void * data)
+{
+    struct field_request * request = data;
+    const Tuple * tuple;
+
+    g_mutex_lock (info_mutex);
+
+    real_position (& request->playlist, & request->entry);
+    tuple = playlist_entry_get_tuple (request->playlist, request->entry);
+    request->value = (tuple == NULL) ? NULL : tuple_value_to_gvalue (tuple,
+     request->field);
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static void get_field (struct field_request * request)
+{
+    if (g_thread_self () == main_thread)
+        get_field_cb (request);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, get_field_cb, request);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
+}
+
+static gboolean play_cb (void * unused)
+{
+    drct_play ();
+    return FALSE;
+}
+
+static gboolean pause_cb (void * unused)
+{
+    playback_pause ();
+    return FALSE;
+}
+
+static gboolean play_pause_cb (void * unused)
+{
+    if (playback_get_playing ())
+        playback_pause ();
+    else
+        playback_initiate ();
+
+    return FALSE;
+}
+
+static gboolean seek_cb (void * data)
+{
+    playback_seek (GPOINTER_TO_INT (data) / 1000);
+    return FALSE;
+}
+
+static gboolean stop_cb (void * unused)
+{
+    playback_stop ();
+    return FALSE;
+}
+
+static gboolean prev_cb (void * unused)
+{
+    drct_pl_prev ();
+    return FALSE;
+}
+
+static gboolean next_cb (void * unused)
+{
+    drct_pl_next ();
+    return FALSE;
+}
+
+static gboolean jump_cb (void * data)
+{
+    drct_pl_set_pos (GPOINTER_TO_INT (data));
+    return FALSE;
+}
+
+static gboolean add_cb (void * data)
+{
+    struct add_request * request = data;
+    gint playlist = playlist_get_active ();
+
+    if (request->position == -1)
+        request->position = playlist_entry_count (playlist);
+
+    playlist_entry_insert (playlist, request->position, request->filename, NULL);
+
+    if (request->play)
+    {
+        playlist_set_playing (playlist);
+        playlist_set_position (playlist, request->position);
+        playback_initiate ();
+    }
+
+    g_free (request);
+    return FALSE;
+}
+
+static gboolean delete_cb (void * data)
+{
+    drct_pl_delete (GPOINTER_TO_INT (data));
+    return FALSE;
+}
+
+static gboolean clear_cb (void * unused)
+{
+    drct_pl_clear ();
+    return FALSE;
+}
+
+static gboolean add_to_queue_cb (void * data)
+{
+    drct_pq_add (GPOINTER_TO_INT (data));
+    return FALSE;
+}
+
+static gboolean remove_from_queue_cb (void * data)
+{
+    drct_pq_remove (GPOINTER_TO_INT (data));
+    return FALSE;
+}
+
+static gboolean clear_queue_cb (void * unused)
+{
+    drct_pq_clear ();
+    return FALSE;
+}
+
+static gboolean queue_get_entry_cb (void * data)
+{
+    g_mutex_lock (info_mutex);
+
+    * (gint *) data = drct_pq_get_position (* (gint *) data);
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static gint queue_get_entry (gint position)
+{
+    if (g_thread_self () == main_thread)
+        queue_get_entry_cb (& position);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, queue_get_entry_cb, & position);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
+
+    return position;
+}
+
+static gboolean queue_find_entry_cb (void * data)
+{
+    g_mutex_lock (info_mutex);
+
+    * (gint *) data = drct_pq_get_queue_position (* (gint *) data);
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static gint queue_find_entry (gint position)
+{
+    if (g_thread_self () == main_thread)
+        queue_find_entry_cb (& position);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, queue_find_entry_cb, & position);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
+
+    return position;
+}
+
+gboolean add_to_new_playlist_cb (void * data)
+{
+    drct_pl_enqueue_to_temp (data);
+    g_free (data);
+    return FALSE;
+}
+
+static gboolean get_mpris_metadata_cb (void * data)
+{
+    struct mpris_metadata_request * request = data;
+    const gchar * filename;
+
+    g_mutex_lock (info_mutex);
+
+    real_position (& request->playlist, & request->entry);
+    filename = playlist_entry_get_filename (request->playlist, request->entry);
+
+    if (filename == NULL)
+        request->metadata = NULL;
+    else
+        request->metadata = make_mpris_metadata (filename,
+         playlist_entry_get_tuple (request->playlist, request->entry));
+
+    g_cond_signal (info_cond);
+    g_mutex_unlock (info_mutex);
+    return FALSE;
+}
+
+static void get_mpris_metadata (struct mpris_metadata_request * request)
+{
+    if (g_thread_self () == main_thread)
+        get_mpris_metadata_cb (request);
+    else
+    {
+        g_mutex_lock (info_mutex);
+        g_timeout_add (0, get_mpris_metadata_cb, request);
+        g_cond_wait (info_cond, info_mutex);
+        g_mutex_unlock (info_mutex);
+    }
 }
 
 /* MPRIS API */
@@ -263,33 +654,37 @@ gboolean mpris_root_quit(MprisPlayer *obj, GError **error) {
 }
 
 // MPRIS /Player
-gboolean mpris_player_next(MprisPlayer *obj, GError **error) {
-    playlist_next(playlist_get_active());
+
+gboolean mpris_player_next (MprisPlayer * obj, GError * * error)
+{
+    g_timeout_add (0, next_cb, NULL);
     return TRUE;
 }
-gboolean mpris_player_prev(MprisPlayer *obj, GError **error) {
-    playlist_prev(playlist_get_active());
+
+gboolean mpris_player_prev (MprisPlayer * obj, GError * * error)
+{
+    g_timeout_add (0, prev_cb, NULL);
     return TRUE;
 }
-gboolean mpris_player_pause(MprisPlayer *obj, GError **error) {
-    playback_pause();
+
+gboolean mpris_player_pause (MprisPlayer * obj, GError * * error)
+{
+    g_timeout_add (0, pause_cb, NULL);
     return TRUE;
 }
-gboolean mpris_player_stop(MprisPlayer *obj, GError **error) {
-    ip_data.stop = TRUE;
-    playback_stop();
-    ip_data.stop = FALSE;
+
+gboolean mpris_player_stop (MprisPlayer * obj, GError * * error)
+{
+    g_timeout_add (0, stop_cb, NULL);
     return TRUE;
 }
-gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
-    if (playback_get_paused())
-        playback_pause();
-    else if (playlist_get_length(playlist_get_active()))
-        playback_initiate();
-    else
-        interface_run_filebrowser(TRUE);
+
+gboolean mpris_player_play (MprisPlayer * obj, GError * * error)
+{
+    g_timeout_add (0, play_cb, NULL);
     return TRUE;
 }
+
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
     g_message("implement me");
     return TRUE;
@@ -304,58 +699,33 @@ static void append_int_value(GValueArray *ar, gint tmp)
     g_value_array_append(ar, &value);
 }
 
-gboolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
-                                 GError **error) {
-    gint tmp;
+gboolean mpris_player_get_status (MprisPlayer * obj, GValueArray * * status,
+ GError * * error)
+{
+    struct status_request request;
 
-    // check paused before playing because playback_get_playing() is true when
-    // paused as well as when playing
-    if (playback_get_paused())
-        tmp = MPRIS_STATUS_PAUSE;
-    else if (playback_get_playing())
-        tmp = MPRIS_STATUS_PLAY;
-    else
-        tmp = MPRIS_STATUS_STOP;
+    * status = g_value_array_new (4);
 
-    if ((*status = g_value_array_new(4)) == NULL)
-        return FALSE;
+    get_status (& request);
+    append_int_value (* status, ! request.playing ? MPRIS_STATUS_STOP :
+     request.paused ? MPRIS_STATUS_PAUSE : MPRIS_STATUS_PLAY);
 
-    append_int_value(*status, tmp);
     append_int_value(*status, (gint) cfg.shuffle);
     append_int_value(*status, (gint) cfg.no_playlist_advance);
     append_int_value(*status, (gint) cfg.repeat);
     return TRUE;
 }
 
-gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
-                                   GError **error) {
-    GHashTable *md = NULL;
-    Tuple *tuple = NULL;
-    GValue *value;
-    Playlist *active;
+gboolean mpris_player_get_metadata (MprisPlayer * obj, GHashTable * * metadata,
+ GError * * error)
+{
+    struct mpris_metadata_request request = {.playlist = -2, .entry = -1};
 
-    active = playlist_get_active();
-    gint pos = playlist_get_position(active);
-    tuple = playlist_get_tuple(active, pos);
-
-    md = mpris_metadata_from_tuple(tuple);
-
-    if (md == NULL) {
-        // there's no metadata for this track
-        return TRUE;
-    }
-
-    // Song location
-    value = g_new0(GValue, 1);
-    g_value_init(value, G_TYPE_STRING);
-    g_value_take_string(value, playlist_get_filename(active, pos));
-
-    g_hash_table_insert(md, "location", value);
-
-    *metadata = md;
-
+    get_mpris_metadata (& request);
+    * metadata = request.metadata;
     return TRUE;
 }
+
 gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
                                  GError **error) {
     *capabilities = MPRIS_CAPS_CAN_GO_NEXT |
@@ -396,49 +766,45 @@ gboolean mpris_player_volume_get(MprisPlayer *obj, gint *vol,
     *vol = MAX(vl, vr);
     return TRUE;
 }
-gboolean mpris_player_position_set(MprisPlayer *obj, gint pos,
-                                   GError **error) {
-    gint time = CLAMP(pos / 1000, 0,
-            playlist_get_current_length(playlist_get_active()) / 1000 - 1);
-    playback_seek(time);
+
+gboolean mpris_player_position_set (MprisPlayer * obj, gint pos, GError * *
+ error)
+{
+    g_timeout_add (0, seek_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
-gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
-                                   GError **error) {
-    if (playback_get_playing())
-        *pos = playback_get_time();
-    else
-        *pos = 0;
+
+gboolean mpris_player_position_get (MprisPlayer * obj, gint * pos, GError * *
+ error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * pos = request.time;
     return TRUE;
 }
+
 // MPRIS /Player signals
 gboolean mpris_emit_caps_change(MprisPlayer *obj) {
     g_signal_emit(obj, signals[CAPS_CHANGE_SIG], 0, 0);
     return TRUE;
 }
 
-gboolean mpris_emit_track_change(MprisPlayer *obj) {
-    GHashTable *metadata;
-    Tuple *tuple = NULL;
-    GValue *value;
-    Playlist *active;
+gboolean mpris_emit_track_change (MprisPlayer * obj)
+{
+    gint playlist, entry;
+    const gchar * filename;
+    GHashTable * metadata;
 
-    active = playlist_get_active();
-    gint pos = playlist_get_position(active);
-    tuple = playlist_get_tuple(active, pos);
+    playlist = playlist_get_playing ();
+    entry = playlist_get_position (playlist);
+    filename = playlist_entry_get_filename (playlist, entry);
 
-    metadata = mpris_metadata_from_tuple(tuple);
+    if (filename == NULL)
+        return FALSE;
 
-    if (!metadata)
-        metadata = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                         NULL, remove_metadata_value);
-
-    // Song location
-    value = g_new0(GValue, 1);
-    g_value_init(value, G_TYPE_STRING);
-    g_value_take_string(value, playlist_get_filename(active, pos));
-
-    g_hash_table_insert(metadata, "location", value);
+    metadata = make_mpris_metadata (filename, playlist_entry_get_tuple
+     (playlist, entry));
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     g_hash_table_destroy(metadata);
@@ -459,61 +825,57 @@ gboolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status) {
 }
 
 // MPRIS /TrackList
-gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
-                                      GHashTable **metadata, GError **error) {
-    GHashTable *md = NULL;
-    Tuple *tuple = NULL;
-    GValue *value;
-    Playlist *active;
 
-    active = playlist_get_active();
-    tuple = playlist_get_tuple(active, pos);
+gboolean mpris_tracklist_get_metadata (MprisTrackList * obj, gint pos,
+ GHashTable * * metadata, GError * * error)
+{
+    struct mpris_metadata_request request = {.playlist = -1, .entry = pos};
 
-    md = mpris_metadata_from_tuple(tuple);
-
-    if (md == NULL) {
-        // there's no metadata for this track
-        return TRUE;
-    }
-
-    // Song location
-    value = g_new0(GValue, 1);
-    g_value_init(value, G_TYPE_STRING);
-    g_value_take_string(value, playlist_get_filename(active, pos));
-
-    g_hash_table_insert(md, "location", value);
-
-    *metadata = md;
-
+    get_mpris_metadata (& request);
+    * metadata = request.metadata;
     return TRUE;
 }
-gboolean mpris_tracklist_get_current_track(MprisTrackList *obj, gint *pos,
-                                           GError **error) {
-    *pos = playlist_get_position(playlist_get_active());
+
+gboolean mpris_tracklist_get_current_track (MprisTrackList * obj, gint * pos,
+ GError * * error)
+{
+    struct position_request request = {.playlist = -1, .entry = -1};
+
+    get_position (& request);
+    * pos = request.entry;
     return TRUE;
 }
-gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *length,
-                                    GError **error) {
-    *length = playlist_get_length(playlist_get_active());
+
+gboolean mpris_tracklist_get_length (MprisTrackList * obj, gint * length,
+ GError * * error)
+{
+    struct position_request request = {.playlist = -1, .entry = -1};
+
+    get_position (& request);
+    * length = request.entry_count;
     return TRUE;
 }
-gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
-                                   gboolean play, GError **error) {
-    guint num_added;
-    num_added = playlist_add_url(playlist_get_active(), uri);
-    if (play && num_added > 0) {
-        gint pos = playlist_get_length(playlist_get_active()) - 1;
-        playlist_set_position(playlist_get_active(), pos);
-        playback_initiate();
-    }
-    // TODO: set an error if num_added == 0
+
+gboolean mpris_tracklist_add_track (MprisTrackList * obj, gchar * uri, gboolean
+ play, GError * * error)
+{
+    struct add_request * request = g_malloc (sizeof (struct add_request));
+
+    request->position = -1;
+    request->filename = g_strdup (uri);
+    request->play = play;
+
+    g_timeout_add (0, add_cb, request);
     return TRUE;
 }
-gboolean mpris_tracklist_del_track(MprisTrackList *obj, gint pos,
-                                   GError **error) {
-    playlist_delete_index(playlist_get_active(), pos);
+
+gboolean mpris_tracklist_del_track (MprisTrackList * obj, gint pos, GError * *
+ error)
+{
+    g_timeout_add (0, delete_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
+
 gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
                               GError **error) {
     g_message("implement me");
@@ -531,8 +893,9 @@ gboolean audacious_rc_version(RemoteObject *obj, gchar **version, GError **error
     return TRUE;
 }
 
-gboolean audacious_rc_quit(RemoteObject *obj, GError **error) {
-    aud_quit();
+gboolean audacious_rc_quit (RemoteObject * obj, GError * * error)
+{
+    event_queue ("quit", NULL);
     return TRUE;
 }
 
@@ -591,76 +954,90 @@ gboolean audacious_rc_get_tuple_fields(RemoteObject *obj, gchar ***fields,
 
 
 // Playback Information/Manipulation
-gboolean audacious_rc_play(RemoteObject *obj, GError **error) {
-    if (playback_get_paused())
-        playback_pause();
-    else if (playlist_get_length(playlist_get_active()))
-        playback_initiate();
-    else
-        interface_run_filebrowser(TRUE);
+
+gboolean audacious_rc_play (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, play_cb, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_pause(RemoteObject *obj, GError **error) {
-    playback_pause();
+gboolean audacious_rc_pause (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, pause_cb, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_stop(RemoteObject *obj, GError **error) {
-    ip_data.stop = TRUE;
-    playback_stop();
-    ip_data.stop = FALSE;
+gboolean audacious_rc_stop (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, stop_cb, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_playing(RemoteObject *obj, gboolean *is_playing,
-                              GError **error) {
-    *is_playing = playback_get_playing();
+gboolean audacious_rc_playing (RemoteObject * obj, gboolean * is_playing,
+ GError * * error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * is_playing = request.playing;
     return TRUE;
 }
 
-gboolean audacious_rc_paused(RemoteObject *obj, gboolean *is_paused,
-                             GError **error) {
-    *is_paused = playback_get_paused();
+gboolean audacious_rc_paused (RemoteObject * obj, gboolean * is_paused,
+ GError * * error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * is_paused = request.paused;
     return TRUE;
 }
 
-gboolean audacious_rc_stopped(RemoteObject *obj, gboolean *is_stopped,
-                              GError **error) {
-    *is_stopped = !playback_get_playing();
+gboolean audacious_rc_stopped (RemoteObject * obj, gboolean * is_stopped,
+ GError * * error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * is_stopped = ! request.playing;
     return TRUE;
 }
 
-gboolean audacious_rc_status(RemoteObject *obj, gchar **status,
-                             GError **error) {
-    if (playback_get_paused())
-        *status = g_strdup("paused");
-    else if (playback_get_playing())
-        *status = g_strdup("playing");
-    else
-        *status = g_strdup("stopped");
+gboolean audacious_rc_status (RemoteObject * obj, gchar * * status, GError * *
+ error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * status = g_strdup (! request.playing ? "stopped" : request.paused ?
+     "paused" : "playing");
     return TRUE;
 }
 
-gboolean audacious_rc_info(RemoteObject *obj, gint *rate, gint *freq,
-                           gint *nch, GError **error) {
-    playback_get_sample_params(rate, freq, nch);
+gboolean audacious_rc_info (RemoteObject * obj, gint * rate, gint * freq, gint *
+ nch, GError * * error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * rate = request.bitrate;
+    * freq = request.samplerate;
+    * nch = request.channels;
     return TRUE;
 }
 
-gboolean audacious_rc_time(RemoteObject *obj, gint *time, GError **error) {
-    if (playback_get_playing())
-        *time = playback_get_time();
-    else
-        *time = 0;
+gboolean audacious_rc_time (RemoteObject * obj, gint * time, GError * * error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * time = request.time;
     return TRUE;
 }
 
-gboolean audacious_rc_seek(RemoteObject *obj, guint pos, GError **error) {
-    if (playlist_get_current_length(playlist_get_active()) > 0 &&
-            pos < (guint)playlist_get_current_length(playlist_get_active()))
-            playback_seek(pos / 1000);
-
+gboolean audacious_rc_seek (RemoteObject * obj, guint pos, GError * * error)
+{
+    g_timeout_add (0, seek_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
 
@@ -696,100 +1073,123 @@ gboolean audacious_rc_balance(RemoteObject *obj, gint *balance,
 }
 
 // Playlist Information/Manipulation
-gboolean audacious_rc_position(RemoteObject *obj, gint *pos, GError **error) {
-    *pos = playlist_get_position(playlist_get_active());
+
+gboolean audacious_rc_position (RemoteObject * obj, gint * pos, GError * * error)
+{
+    struct position_request request = {.playlist = -1, .entry = -1};
+
+    get_position (& request);
+    * pos = request.entry;
     return TRUE;
 }
 
-gboolean audacious_rc_advance(RemoteObject *obj, GError **error) {
-    playlist_next(playlist_get_active());
+gboolean audacious_rc_advance (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, next_cb, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_reverse(RemoteObject *obj, GError **error) {
-    playlist_prev(playlist_get_active());
+gboolean audacious_rc_reverse (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, prev_cb, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_length(RemoteObject *obj, gint *length,
-                             GError **error) {
-    *length = playlist_get_length(playlist_get_active());
+gboolean audacious_rc_length (RemoteObject * obj, gint * length, GError * *
+ error)
+{
+    struct position_request request = {.playlist = -1, .entry = -1};
+
+    get_position (& request);
+    * length = request.entry_count;
     return TRUE;
 }
 
-gboolean audacious_rc_song_title(RemoteObject *obj, guint pos,
-                                 gchar **title, GError **error) {
-    *title = playlist_get_songtitle(playlist_get_active(), pos);
+gboolean audacious_rc_song_title (RemoteObject * obj, guint pos, gchar * *
+ title, GError * * error)
+{
+    struct info_request request = {.playlist = -1, .entry = pos};
+
+    get_info (& request);
+    g_free (request.filename);
+    * title = request.title;
     return TRUE;
 }
 
-gboolean audacious_rc_song_filename(RemoteObject *obj, guint pos,
-                                    gchar **filename, GError **error) {
-    *filename = playlist_get_filename(playlist_get_active(), pos);
+gboolean audacious_rc_song_filename (RemoteObject * obj, guint pos, gchar * *
+ filename, GError * * error)
+{
+    struct info_request request = {.playlist = -1, .entry = pos};
+
+    get_info (& request);
+    * filename = request.filename;
+    g_free (request.title);
     return TRUE;
 }
 
-gboolean audacious_rc_song_length(RemoteObject *obj, guint pos, gint *length,
-                                  GError **error) {
-    *length = playlist_get_songtime(playlist_get_active(), pos) / 1000;
+gboolean audacious_rc_song_length (RemoteObject * obj, guint pos, gint * length,
+ GError * * error)
+{
+    audacious_rc_song_frames (obj, pos, length, error);
+    * length /= 1000;
     return TRUE;
 }
 
-gboolean audacious_rc_song_frames(RemoteObject *obj, guint pos, gint *length,
-                                  GError **error) {
-    *length = playlist_get_songtime(playlist_get_active(), pos);
+gboolean audacious_rc_song_frames (RemoteObject * obj, guint pos, gint * length,
+ GError * * error)
+{
+    struct info_request request = {.playlist = -1, .entry = pos};
+
+    get_info (& request);
+    g_free (request.filename);
+    g_free (request.title);
+    * length = request.length;
     return TRUE;
 }
 
-gboolean audacious_rc_song_tuple(RemoteObject *obj, guint pos, gchar *field,
-                                 GValue *value, GError **error) {
-    Tuple *tuple;
-    tuple = playlist_get_tuple(playlist_get_active(), pos);
-    if (!tuple) {
+gboolean audacious_rc_song_tuple (RemoteObject * obj, guint pos, gchar * field,
+ GValue * value, GError * * error)
+{
+    struct field_request request = {.playlist = -1, .entry = pos, .field = field};
+
+    get_field (& request);
+
+    if (request.value == NULL)
         return FALSE;
-    } else {
-        TupleValueType type = tuple_get_value_type(tuple, -1, field);
 
-        switch(type)
-        {
-        case TUPLE_STRING:
-            g_value_init(value, G_TYPE_STRING);
-            g_value_set_string(value, tuple_get_string(tuple, -1, field));
-            break;
-        case TUPLE_INT:
-            g_value_init(value, G_TYPE_INT);
-            g_value_set_int(value, tuple_get_int(tuple, -1, field));
-            break;
-        default:
-            return FALSE;
-            break;
-        }
-    }
+    memset (value, 0, sizeof (GValue));
+    g_value_init (value, G_VALUE_TYPE (request.value));
+    g_value_copy (request.value, value);
+    g_value_unset (request.value);
+    g_free (request.value);
     return TRUE;
 }
 
-gboolean audacious_rc_jump(RemoteObject *obj, guint pos, GError **error) {
-    if (pos < (guint)playlist_get_length(playlist_get_active()))
-                playlist_set_position(playlist_get_active(), pos);
+gboolean audacious_rc_jump (RemoteObject * obj, guint pos, GError * * error)
+{
+    g_timeout_add (0, jump_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
 
-gboolean audacious_rc_add(RemoteObject *obj, gchar *file, GError **error) {
-    playlist_add_url(playlist_get_active(), file);
-    return TRUE;
+gboolean audacious_rc_add (RemoteObject * obj, gchar * file, GError * * error)
+{
+    return audacious_rc_playlist_ins_url_string (obj, file, -1, error);
 }
-gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url, GError **error) {
-    playlist_add_url(playlist_get_active(), url);
+
+gboolean audacious_rc_add_url (RemoteObject * obj, gchar * url, GError * * error)
+{
+    return audacious_rc_playlist_ins_url_string (obj, url, -1, error);
+}
+
+gboolean audacious_rc_delete (RemoteObject * obj, guint pos, GError * * error)
+{
+    g_timeout_add (0, delete_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
 
-gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error) {
-    playlist_delete_index(playlist_get_active(), pos);
-    return TRUE;
-}
-
-gboolean audacious_rc_clear(RemoteObject *obj, GError **error) {
-    playlist_clear(playlist_get_active());
+gboolean audacious_rc_clear (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, clear_cb, NULL);
     return TRUE;
 }
 
@@ -854,11 +1254,9 @@ gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError 
     return TRUE;
 }
 
-gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error) {
-    if (playback_get_playing())
-        playback_pause();
-    else
-        playback_initiate();
+gboolean audacious_rc_play_pause (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, play_pause_cb, NULL);
     return TRUE;
 }
 
@@ -867,8 +1265,15 @@ gboolean audacious_rc_activate(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
-gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error) {
-    playback_get_sample_params(rate, freq, nch);
+gboolean audacious_rc_get_info (RemoteObject * obj, gint * rate, gint * freq,
+ gint * nch, GError * * error)
+{
+    struct status_request request;
+
+    get_status (& request);
+    * rate = request.bitrate;
+    * freq = request.samplerate;
+    * nch = request.channels;
     return TRUE;
 }
 
@@ -877,74 +1282,80 @@ gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **err
     return TRUE;
 }
 
-/* New on Oct 9: Queue */
-gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error) {
-    if (pos < (guint)playlist_get_length(playlist_get_active()))
-        playlist_queue_position(playlist_get_active(), pos);
+gboolean audacious_rc_playqueue_add (RemoteObject * obj, gint pos, GError * *
+ error)
+{
+    g_timeout_add (0, add_to_queue_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
 
-gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **error) {
-    if (pos < (guint)playlist_get_length(playlist_get_active()))
-        playlist_queue_remove(playlist_get_active(), pos);
+gboolean audacious_rc_playqueue_remove (RemoteObject * obj, gint pos, GError * *
+ error)
+{
+    g_timeout_add (0, remove_from_queue_cb, GINT_TO_POINTER (pos));
     return TRUE;
 }
 
-gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error) {
-    playlist_clear_queue(playlist_get_active());
+gboolean audacious_rc_playqueue_clear (RemoteObject * obj, GError * * error)
+{
+    g_timeout_add (0, clear_queue_cb, NULL);
     return TRUE;
 }
 
-gboolean audacious_rc_get_playqueue_length(RemoteObject *obj, gint *length, GError **error) {
-    *length = playlist_queue_get_length(playlist_get_active());
+gboolean audacious_rc_get_playqueue_length (RemoteObject * obj, gint * length,
+ GError * * error)
+{
+    struct position_request request = {.playlist = -1, .entry = -1};
+
+    get_position (& request);
+    * length = request.queue_count;
     return TRUE;
 }
 
-gboolean audacious_rc_queue_get_list_pos(RemoteObject *obj, gint qpos, gint *pos, GError **error) {
-    if (playback_get_playing())
-        *pos = playlist_get_queue_qposition_number(playlist_get_active(), qpos);
-
+gboolean audacious_rc_queue_get_list_pos (RemoteObject * obj, gint qpos, gint *
+ pos, GError * * error)
+{
+    * pos = queue_get_entry (qpos);
     return TRUE;
 }
 
-gboolean audacious_rc_queue_get_queue_pos(RemoteObject *obj, gint pos, gint *qpos, GError **error) {
-    if (playback_get_playing())
-        *qpos = playlist_get_queue_position_number(playlist_get_active(), pos);
-
+gboolean audacious_rc_queue_get_queue_pos (RemoteObject * obj, gint pos, gint *
+ qpos, GError * * error)
+{
+    * qpos = queue_find_entry (pos);
     return TRUE;
 }
 
-gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error) {
-    *is_queued = playlist_is_position_queued(playlist_get_active(), pos);
+gboolean audacious_rc_playqueue_is_queued (RemoteObject * obj, gint pos,
+ gboolean * is_queued, GError * * error)
+{
+    * is_queued = (queue_find_entry (pos) != -1);
     return TRUE;
 }
 
-gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint pos, GError **error) {
-    if (pos >= 0 && url && strlen(url)) {
-        playlist_ins_url(playlist_get_active(), url, pos);
-    }
+gboolean audacious_rc_playlist_ins_url_string (RemoteObject * obj, gchar * url,
+ gint pos, GError * * error)
+{
+    struct add_request * request = g_malloc (sizeof (struct add_request));
+
+    request->position = pos;
+    request->filename = g_strdup (url);
+    request->play = FALSE;
+
+    g_timeout_add (0, add_cb, request);
     return TRUE;
 }
 
-gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error) {
-    return playlist_add_url(playlist_get_active(), (gchar *) list) > 0;
+gboolean audacious_rc_playlist_add (RemoteObject * obj, void * list, GError * *
+ error)
+{
+    return audacious_rc_playlist_ins_url_string (obj, list, -1, error);
 }
 
-gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error) {
-    Playlist *new_pl = playlist_new();
-    gchar *pl_name = NULL;
-
-    pl_name = (gchar*)playlist_get_current_name(new_pl);
-    playlist_set_current_name (new_pl, pl_name ? pl_name : "New Playlist");
-
-    playlist_add_playlist(new_pl);
-
-//    DISABLE_MANAGER_UPDATE();
-    playlist_select_playlist(new_pl);
-//    ENABLE_MANAGER_UPDATE();
-
-    playlist_add_url(new_pl, url);
-
+gboolean audacious_rc_playlist_enqueue_to_temp (RemoteObject * obj, gchar * url,
+ GError * * error)
+{
+    g_timeout_add (0, add_to_new_playlist_cb, g_strdup (url));
     return TRUE;
 }
 

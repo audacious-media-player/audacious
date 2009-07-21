@@ -1,6 +1,7 @@
 /*
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2007 Giacomo Lozito
+ * Copyright 2009 John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +27,7 @@
 #include "input.h"
 #include "playback.h"
 #include "auddrct.h"
-#include "playlist.h"
-#include "interface.h"
+#include "playlist-new.h"
 #include "ui_jumptotrack.h"
 
 /* player */
@@ -38,10 +38,9 @@ drct_quit ( void )
     aud_quit();
 }
 
-void
-drct_eject ( void )
+void drct_eject (void)
 {
-    hook_call("filebrowser show", GPOINTER_TO_INT(TRUE));
+    hook_call ("filebrowser show", GINT_TO_POINTER (TRUE));
 }
 
 void
@@ -104,10 +103,9 @@ drct_play ( void )
 {
     if (playback_get_paused())
         playback_pause();
-    else if (playlist_get_length(playlist_get_active()))
-        playback_initiate ();
     else
-        interface_run_filebrowser(TRUE);
+        playback_initiate ();
+
     return;
 }
 
@@ -145,34 +143,9 @@ drct_get_stopped ( void )
     return !playback_get_playing();
 }
 
-void
-drct_get_info( gint *rate, gint *freq, gint *nch)
+void drct_seek (gint pos)
 {
-    playback_get_sample_params(rate, freq, nch);
-}
-
-gint
-drct_get_time ( void )
-{
-    return playback_get_time ();
-}
-
-gint
-drct_get_length ( void )
-{
-    if (playback_get_playing())
-        return playback_get_length();
-    else
-        return -1;
-}
-
-void
-drct_seek ( guint pos )
-{
-    if (playlist_get_current_length(playlist_get_active()) > 0 &&
-        pos < (guint)playlist_get_current_length(playlist_get_active()))
-        playback_seek(pos / 1000);
-    return;
+    playback_seek (pos / 1000);
 }
 
 void
@@ -265,18 +238,20 @@ drct_set_volume_balance ( gint b )
 
 /* playlist */
 
-void
-drct_pl_next ( void )
+void drct_pl_next (void)
 {
-    playlist_next(playlist_get_active());
-    return;
+    gboolean play = playback_get_playing ();
+
+    if (playlist_next_song (playlist_get_playing (), cfg.repeat) && play)
+        playback_initiate ();
 }
 
-void
-drct_pl_prev ( void )
+void drct_pl_prev (void)
 {
-    playlist_prev(playlist_get_active());
-    return;
+    gboolean play = playback_get_playing ();
+
+    if (playlist_prev_song (playlist_get_playing ()) && play)
+        playback_initiate ();
 }
 
 gboolean
@@ -305,139 +280,130 @@ drct_pl_shuffle_toggle( void )
     return;
 }
 
-gchar *
-drct_pl_get_title( gint pos )
+gchar * drct_pl_get_title (gint pos)
 {
-    return playlist_get_songtitle(playlist_get_active(), pos);
+    const gchar * title = playlist_entry_get_title (playlist_get_active (), pos);
+
+    return (title == NULL) ? NULL : g_strdup (title);
 }
 
-gint
-drct_pl_get_time( gint pos )
+gint drct_pl_get_time (gint pos)
 {
-    return playlist_get_songtime(playlist_get_active(), pos);
+    return playlist_entry_get_length (playlist_get_active (), pos);
 }
 
-gint
-drct_pl_get_pos( void )
+gint drct_pl_get_pos (void)
 {
-    return playlist_get_position_nolock(playlist_get_active());
+    return playlist_get_position (playlist_get_active ());
 }
 
-gchar *
-drct_pl_get_file( gint pos )
+gchar * drct_pl_get_file (gint pos)
 {
-    return playlist_get_filename(playlist_get_active(), pos);
+    const gchar * filename = playlist_entry_get_filename
+     (playlist_get_active (), pos);
+
+    return (filename == NULL) ? NULL : g_strdup (filename);
 }
 
-void
-drct_pl_add ( GList * list )
+void drct_pl_add (GList * list)
 {
-    GList *node = list;
-    while ( node != NULL )
+    struct index * filenames = index_new ();
+
+    for (; list != NULL; list = list->next)
+        index_append (filenames, g_strdup (list->data));
+
+    playlist_entry_insert_batch (playlist_get_active (), -1, filenames, NULL);
+}
+
+void drct_pl_clear (void)
+{
+    gint playlist = playlist_get_active ();
+
+    playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
+}
+
+void drct_pl_delete (gint pos)
+{
+    playlist_entry_delete (playlist_get_active (), pos, 1);
+}
+
+void drct_pl_set_pos (gint pos)
+{
+    gboolean play = playback_get_playing ();
+    gint playlist = playlist_get_active ();
+
+    playlist_set_position (playlist, pos);
+
+    if (play)
     {
-        playlist_add_url(playlist_get_active(), (gchar*)node->data);
-        node = g_list_next(node);
+        playlist_set_playing (playlist);
+        playback_initiate ();
     }
-    return;
 }
 
-void
-drct_pl_clear ( void )
+gint drct_pl_get_length (void)
 {
-    playlist_clear(playlist_get_active());
-    return;
+    return playlist_entry_count (playlist_get_active ());
 }
 
-
-/* following functions are not tested yet. be careful. --yaz */
-void
-drct_pl_delete ( gint pos )
+void drct_pl_ins_url_string (gchar * string, gint pos)
 {
-    playlist_delete_index(playlist_get_active(), pos);
+    playlist_entry_insert (playlist_get_active (), pos, g_strdup (string), NULL);
 }
 
-void
-drct_pl_set_pos( gint pos )
+void drct_pl_add_url_string (gchar * string)
 {
-    Playlist *playlist = playlist_get_active();
-    if (pos < (guint)playlist_get_length(playlist))
-        playlist_set_position(playlist, pos);
+    playlist_entry_insert (playlist_get_active (), -1, g_strdup (string), NULL);
 }
 
-gint
-drct_pl_get_length( void )
+void drct_pl_enqueue_to_temp (gchar * string)
 {
-    return playlist_get_length(playlist_get_active());
+    gint playlist = playlist_count ();
+
+    playlist_insert (playlist);
+    playlist_set_active (playlist);
+    playlist_set_playing (playlist);
+    playlist_entry_insert (playlist, 0, g_strdup (string), NULL);
 }
-
-void
-drct_pl_ins_url_string( gchar * string, gint pos )
-{
-    playlist_ins_url(playlist_get_active(), string, pos);
-}
-
-void
-drct_pl_add_url_string( gchar * string )
-{
-    playlist_add_url(playlist_get_active(), string);
-}
-
-void
-drct_pl_enqueue_to_temp( gchar * string )
-{
-    Playlist *new_pl = playlist_new();
-
-    GDK_THREADS_ENTER();
-    playlist_select_playlist(new_pl);
-    playlist_add_url(new_pl, string);
-    GDK_THREADS_LEAVE();
-}
-
 
 /* playqueue */
-gint
-drct_pq_get_length( void )
+
+gint drct_pq_get_length (void)
 {
-    return playlist_queue_get_length(playlist_get_active());
+    return playlist_queue_count (playlist_get_active ());
 }
 
-void
-drct_pq_add( gint pos )
+void drct_pq_add (gint pos)
 {
-    Playlist *playlist = playlist_get_active();
-    if (pos < (guint)playlist_get_length(playlist))
-        playlist_queue_position(playlist, pos);
+    playlist_queue_insert (playlist_get_active (), -1, pos);
 }
 
-void
-drct_pq_remove( gint pos )
+void drct_pq_remove (gint pos)
 {
-    Playlist *playlist = playlist_get_active();
-    if (pos < (guint)playlist_get_length(playlist))
-        playlist_queue_remove(playlist_get_active(), pos);
+    gint playlist = playlist_get_active ();
+
+    playlist_queue_delete (playlist, playlist_queue_find_entry (playlist, pos),
+     1);
 }
 
-void
-drct_pq_clear( void )
+void drct_pq_clear (void)
 {
-    playlist_clear_queue(playlist_get_active());
+    gint playlist = playlist_get_active ();
+
+    playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
 }
 
-gboolean
-drct_pq_is_queued( gint pos )
+gboolean drct_pq_is_queued (gint pos)
 {
-    return playlist_is_position_queued(playlist_get_active(), pos);
+    return (playlist_queue_find_entry (playlist_get_active (), pos) != -1);
 }
 
-gint
-drct_pq_get_position( gint pos )
+gint drct_pq_get_position (gint pos)
 {
-    return playlist_get_queue_position_number(playlist_get_active(), pos);
+    return playlist_queue_get_entry (playlist_get_active (), pos);
 }
 
-gint
-drct_pq_get_queue_position( gint pos )
+gint drct_pq_get_queue_position (gint pos)
 {
-    return playlist_get_queue_position_number(playlist_get_active(), pos);
+    return playlist_queue_find_entry (playlist_get_active (), pos);
 }
-

@@ -30,12 +30,11 @@ SRCS = af_equalizer.c							\
        output.c									\
        pixbuf_effects.c							\
        playback.c								\
-       playback_evlisteners.c					\
-       playlist.c								\
        playlist_container.c						\
+       playlist-new.c \
+       playlist-utils.c \
        pluginenum.c								\
        rcfile.c									\
-       scanner.c \
        signals.c								\
        src_flow.c								\
        ui_fileinfopopup.c						\
@@ -54,7 +53,6 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack.c					\
        ui_jumptotrack_cache.c			\
        ui_misc.c				\
-       ui_playlist_manager.c				\
        ui_urlopener.c
 
 ifeq ($(USE_DBUS),yes)
@@ -80,11 +78,9 @@ INCLUDES = auddrct.h			\
            mime.h				\
            output.h				\
            playback.h			\
-           playlist.h			\
            playlist_container.h	\
            plugin.h				\
            preferences.h		\
-           scanner.h \
            ui_fileinfopopup.h	\
            ui_plugin_menu.h		\
            ui_preferences.h		\

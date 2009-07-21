@@ -25,23 +25,14 @@
 
 #include <glib.h>
 
-#include "playlist.h"
 #include "plugin.h"
-
-typedef struct _PlaybackInfo PlaybackInfo;
-
-struct _PlaybackInfo {
-    gint bitrate;
-    gint frequency;
-    gint n_channels;
-};
 
 gint playback_get_time(void);
 gint playback_get_length(void);
 void playback_initiate(void);
 void playback_pause(void);
 void playback_stop(void);
-gboolean playback_play_file(PlaylistEntry *entry);
+gboolean playback_play_file (const gchar * filename, InputPlugin * decoder);
 gboolean playback_get_playing(void);
 gboolean playback_get_paused(void);
 void playback_seek(gint time);
@@ -50,7 +41,11 @@ void playback_error(void);
 InputPlayback *playback_new(void);
 void playback_free(InputPlayback *);
 void playback_run(InputPlayback *);
-void playback_get_sample_params(gint *bitrate, gint *frequency, gint *n_channels);
-void playback_set_sample_params(gint bitrate, gint frequency, gint n_channels);
+
+void playback_set_info (gchar * title, gint length, gint bitrate, gint
+ samplerate, gint channels);
+void playback_set_title (gchar * title);
+void playback_get_info (gint * bitrate, gint * samplerate, gint * channels);
+gchar * playback_get_title (void);
 
 #endif /* AUDACIOUS_PLAYBACK_H */

@@ -57,9 +57,9 @@
 #include "logger.h"
 #include "output.h"
 #include "playback.h"
-#include "playlist.h"
+#include "playlist-new.h"
+#include "playlist-utils.h"
 #include "pluginenum.h"
-#include "scanner.h"
 #include "signals.h"
 #include "util.h"
 #include "vis_runner.h"
@@ -394,15 +394,10 @@ static gboolean
 load_extra_playlist(const gchar * path, const gchar * basename,
         gpointer def)
 {
-    Playlist *playlist = playlist_new();
+    gint playlist = playlist_count ();
 
-    if (!playlist) {
-        g_warning("Couldn't create new playlist for %s / %s\n", path, basename);
-        return FALSE;
-    }
-
-    playlist_add_playlist(playlist);
-    playlist_load(playlist, path);
+    playlist_insert (playlist);
+    playlist_insert_playlist (playlist, 0, path);
 
     return FALSE; /* keep loading other playlists */
 }
@@ -410,17 +405,15 @@ load_extra_playlist(const gchar * path, const gchar * basename,
 static void
 playlist_system_init()
 {
-    Playlist *playlist;
-
-    playlist_init();
-    playlist = playlist_get_active();
-    playlist_load(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]);
-    playlist_set_position(playlist, cfg.playlist_position);
+    playlist_init ();
+    playlist_insert_playlist (0, 0, aud_paths[BMP_PATH_PLAYLIST_FILE]);
 
     /* Load extra playlists */
     if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
-                     playlist, NULL))
+     NULL, NULL))
         g_warning("Could not load extra playlists\n");
+
+    playlist_set_shuffle (cfg.shuffle);
 }
 
 void
@@ -439,9 +432,6 @@ aud_quit(void)
 
     g_message("Playlist cleanup");
     playlist_end ();
-    
-    g_message("Playlist scanner shutdown");
-    scanner_end ();
 
     g_message("Shutdown finished, bye.");
     exit(EXIT_SUCCESS);
@@ -545,8 +535,6 @@ main(gint argc, gchar ** argv)
         exit(EXIT_SUCCESS);
     }
 
-    scanner_init ();
-    scanner_enable (cfg.use_pl_metadata);
     playlist_system_init();
 
     g_message("Handling commandline options, part #2");
@@ -556,14 +544,20 @@ main(gint argc, gchar ** argv)
 
     if (start_playback)
         playback_initiate ();
-    else if (cfg.resume_playback_on_startup && cfg.resume_state)
+    else if (cfg.resume_playback_on_startup)
     {
-        playback_initiate ();
+        playlist_set_playing (cfg.resume_playlist);
+        playlist_set_position (cfg.resume_playlist, cfg.resume_entry);
 
-        if (cfg.resume_state == 2)
-            playback_pause ();
+        if (cfg.resume_state > 0)
+        {
+            playback_initiate ();
 
-        playback_seek (cfg.resume_playback_on_startup_time);
+            if (cfg.resume_state == 2)
+                playback_pause ();
+
+            playback_seek (cfg.resume_playback_on_startup_time);
+        }
     }
 
     g_message("Registering interface hooks");

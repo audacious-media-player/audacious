@@ -31,8 +31,8 @@
 #include "compatibility.h"
 
 #include "main.h"
-#include "playlist.h"
 #include "playback.h"
+#include "playlist-new.h"
 #include "audstrings.h"
 #include "ui_fileinfopopup.h"
 #include "ui_fileinfo.h"
@@ -94,23 +94,22 @@ fileinfopopup_progress_cb(gpointer filepopup_win)
     GtkWidget *progressbar =
         g_object_get_data(G_OBJECT(filepopup_win), "progressbar");
     gchar *tooltip_file = g_object_get_data(G_OBJECT(filepopup_win), "file");
-    gchar *current_file_u, *current_file;
-    Playlist *pl;
+    gchar * current_file;
     gint length =
         GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win), "length"));
-    gint pos, time;
+    gint playlist, entry, time;
+    const gchar * filename;
 
     g_return_val_if_fail(progressbar != NULL, FALSE);
 
-    pl = playlist_get_active();
-    g_return_val_if_fail(pl != NULL, FALSE);
+    playlist = playlist_get_active ();
+    entry = playlist_get_position (playlist);
+    filename = playlist_entry_get_filename (playlist, entry);
 
-    pos = playlist_get_position(pl);
+    if (filename == NULL)
+        return FALSE;
 
-    current_file_u = playlist_get_filename(pl , pos);
-    g_return_val_if_fail(current_file_u != NULL, FALSE);
-    current_file = g_filename_from_uri(current_file_u, NULL, NULL);
-    g_free(current_file_u);
+    current_file = g_filename_from_uri (filename, NULL, NULL);
 
     if (playback_get_playing() && length != -1 &&
         current_file != NULL && tooltip_file != NULL &&

@@ -45,6 +45,7 @@
 #include "audstrings.h"
 #include "general.h"
 #include "output.h"
+#include "playlist-new.h"
 #include "visualization.h"
 
 #include "main.h"
@@ -52,8 +53,6 @@
 #include "dnd.h"
 #include "tuple.h"
 #include "vfs.h"
-
-#include "playlist.h"
 
 #include "build_stamp.h"
 #include "ui_fileinfo.h"
@@ -907,8 +906,7 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         gtk_widget_show(fileinfo_win);
 }
 
-static void
-fileinfo_show_for_path(gchar *path)
+static void fileinfo_show_for_path (const gchar * path)
 {
     Tuple *tuple = input_get_song_tuple(path);
 
@@ -922,8 +920,7 @@ fileinfo_show_for_path(gchar *path)
     mowgli_object_unref(tuple);
 }
 
-static void
-fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
+static void fileinfo_show_editor_for_path (const gchar * path, InputPlugin * ip)
 {
     G_FREE_CLEAR(current_file);
     current_file = g_strdup(path);
@@ -941,77 +938,40 @@ fileinfo_show_editor_for_path(gchar *path, InputPlugin *ip)
     mowgli_object_unref(tuple);
 }
 
-static void
-ui_fileinfo_show_entry(Playlist *playlist, PlaylistEntry *entry)
+void ui_fileinfo_show (gint playlist, gint entry)
 {
-    gchar *path = g_strdup(entry->filename);
-    Tuple *tuple = entry->tuple;
+    const gchar * filename = playlist_entry_get_filename (playlist, entry);
+    InputPlugin * decoder = playlist_entry_get_decoder (playlist, entry);
 
-    /* plugin is capable of updating tags. we need to bypass tuple cache. --eugene */
-    /* maybe code cleanup required... */
-    if (entry != NULL &&
-        entry->decoder != NULL &&
-        entry->decoder->update_song_tuple != NULL &&
-        entry->decoder->file_info_box == NULL &&
-        path != NULL && !vfs_is_remote(path))
+    if (filename == NULL || decoder == NULL)
+        return;
+
+    if (decoder->file_info_box != NULL)
     {
-        fileinfo_show_editor_for_path(path, entry->decoder);
-        g_free(path);
+        gchar * temp = g_strdup (filename);
+
+        decoder->file_info_box (temp);
+        g_free (temp);
     }
+    else if (decoder->update_song_tuple != NULL && ! vfs_is_remote (filename))
+        fileinfo_show_editor_for_path (filename, decoder);
     else
     {
+        const Tuple * tuple = playlist_entry_get_tuple (playlist, entry);
+
         if (tuple != NULL)
-        {
-            if (entry->decoder != NULL)
-            {
-                if (entry->decoder->file_info_box == NULL)
-                    fileinfo_show_for_tuple(tuple, FALSE);
-                else
-                {
-                    plugin_set_current((Plugin *)(entry->decoder));
-                    entry->decoder->file_info_box(path);
-                }
-            }
-            else
-                fileinfo_show_for_path(path);
-            g_free(path);
-        }
-        else if (path != NULL)
-        {
-            if (entry != NULL &&
-                entry->decoder != NULL &&
-                entry->decoder->file_info_box != NULL)
-            {
-                plugin_set_current((Plugin *)(entry->decoder));
-                entry->decoder->file_info_box(path);
-            }
-            else
-                fileinfo_show_for_path(path);
-            g_free(path);
-        }
+            fileinfo_show_for_tuple ((Tuple *) tuple, FALSE);
+        else
+            fileinfo_show_for_path (filename);
     }
 }
 
-void
-ui_fileinfo_show(Playlist *playlist, guint pos)
+void ui_fileinfo_show_current (void)
 {
-    GList *node = NULL;
+    gint playlist = playlist_get_playing ();
 
-    PLAYLIST_LOCK(playlist);
+    if (playlist == -1)
+        playlist = playlist_get_active ();
 
-    if ((node = g_list_nth(playlist->entries, pos)))
-        ui_fileinfo_show_entry(playlist, node->data);
-
-    PLAYLIST_UNLOCK(playlist);
-}
-
-void
-ui_fileinfo_show_current(Playlist *playlist)
-{
-    PLAYLIST_LOCK(playlist);
-
-    if (playlist->entries && playlist->position)
-        ui_fileinfo_show_entry(playlist, playlist->position);
-
-    PLAYLIST_UNLOCK(playlist);
+    ui_fileinfo_show (playlist, playlist_get_position (playlist));
 }

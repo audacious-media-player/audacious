@@ -1,5 +1,5 @@
 /*
- * scanner.h
+ * index.h
  * Copyright 2009 John Lindgren
  *
  * This file is part of Audacious.
@@ -19,10 +19,22 @@
  * using our public API to be a derived work.
  */
 
-void scanner_init (void);
-void scanner_enable (gboolean enable);
-void scanner_reset (void);
-void scanner_end (void);
+#ifndef AUDACIOUS_INDEX_H
+#define AUDACIOUS_INDEX_H
 
-Playlist * get_active_playlist (void);
-void set_active_playlist (Playlist * playlist);
+struct index;
+
+struct index * index_new (void);
+void index_free (struct index * index);
+gint index_count (struct index * index);
+void index_set (struct index * index, gint at, void * value);
+void * index_get (struct index * index, gint at);
+void index_insert (struct index * index, gint at, void * value);
+void index_append (struct index * index, void * value);
+void index_merge_insert (struct index * first, gint at, struct index * second);
+void index_merge_append (struct index * first, struct index * second);
+void index_delete (struct index * index, gint at, gint length);
+void index_sort (struct index * index, gint (* compare) (const void * *, const
+ void * *));
+
+#endif

@@ -37,8 +37,6 @@
 #include "main.h"
 #include "input.h"
 #include "playback.h"
-
-#include "playlist.h"
 #include "configdb.h"
 
 #include "flow.h"
@@ -105,25 +103,19 @@ get_current_output_plugin(void)
 void
 set_current_output_plugin(gint i)
 {
-    char playing;
-    Playlist * playlist;
-    int time, position;
-
-    playing = playback_get_playing ();
+    gboolean playing = playback_get_playing ();
+    gint time;
 
     if (playing)
     {
-        playlist = playlist_get_active ();
-        position = playlist_get_position (playlist);
         time = playback_get_time ();
-        playback_stop();
+        playback_stop ();
     }
 
     op_data.current_output_plugin = g_list_nth(op_data.output_list, i)->data;
 
     if (playing)
     {
-        playlist_set_position (playlist, position);
         playback_initiate ();
         playback_seek (time / 1000);
     }
@@ -416,7 +408,10 @@ output_close_audio(void)
 #endif
     /* Do not close if there are still songs to play and the user has
      * not requested a stop.  --nenolod
+     *
+     * Broken: This doesn't take into account shuffle or queue. -jlindgren
      */
+#if 0
     Playlist *pl = playlist_get_active();
     if (ip_data.stop == FALSE &&
        (playlist_get_position_nolock(pl) < playlist_get_length(pl) - 1) &&
@@ -425,6 +420,7 @@ output_close_audio(void)
             AUDDBG("leaving audio opened\n");
             return;
         }
+#endif
 
     /* Sanity check. */
     if (op == NULL)
