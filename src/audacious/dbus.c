@@ -37,7 +37,7 @@
 #include "playlist.h"
 #include "audstrings.h"
 #include "tuple.h"
-#include "ui_fileopener.h"
+#include "interface.h"
 #include "ui_jumptotrack.h"
 
 static DBusGConnection *dbus_conn = NULL;
@@ -287,7 +287,7 @@ gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
     else if (playlist_get_length(playlist_get_active()))
         playback_initiate();
     else
-        run_filebrowser(TRUE);
+        interface_run_filebrowser(TRUE);
     return TRUE;
 }
 gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
@@ -597,7 +597,7 @@ gboolean audacious_rc_play(RemoteObject *obj, GError **error) {
     else if (playlist_get_length(playlist_get_active()))
         playback_initiate();
     else
-        run_filebrowser(TRUE);
+        interface_run_filebrowser(TRUE);
     return TRUE;
 }
 
@@ -847,11 +847,10 @@ gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **er
 
 gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError **error)
 {
-    gboolean play_button = FALSE;
     if (show)
-        hook_call("filebrowser show", &play_button);
+        event_queue("filebrowser show", GINT_TO_POINTER(FALSE));
     else
-        hook_call("filebrowser hide", NULL);
+        event_queue("filebrowser hide", NULL);
     return TRUE;
 }
 

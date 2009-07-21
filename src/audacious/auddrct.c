@@ -27,7 +27,7 @@
 #include "playback.h"
 #include "auddrct.h"
 #include "playlist.h"
-#include "ui_fileopener.h"
+#include "interface.h"
 #include "ui_jumptotrack.h"
 
 /* player */
@@ -41,8 +41,7 @@ drct_quit ( void )
 void
 drct_eject ( void )
 {
-    gboolean play_button = TRUE;
-    hook_call("filebrowser show", &play_button);
+    hook_call("filebrowser show", GPOINTER_TO_INT(TRUE));
 }
 
 void
@@ -108,7 +107,7 @@ drct_play ( void )
     else if (playlist_get_length(playlist_get_active()))
         playback_initiate ();
     else
-        run_filebrowser(TRUE);
+        interface_run_filebrowser(TRUE);
     return;
 }
 

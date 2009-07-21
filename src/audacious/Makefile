@@ -39,7 +39,6 @@ SRCS = af_equalizer.c							\
        signals.c								\
        src_flow.c								\
        ui_fileinfopopup.c						\
-       ui_fileopener.c							\
        ui_headless.c							\
        ui_plugin_menu.c \
        ui_preferences.c							\
@@ -56,8 +55,7 @@ SRCS = af_equalizer.c							\
        ui_jumptotrack_cache.c			\
        ui_misc.c				\
        ui_playlist_manager.c				\
-       ui_urlopener.c				\
-       ui_gtk.c
+       ui_urlopener.c
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c

@@ -24,13 +24,11 @@
 #include "interface.h"
 #include "playback.h"
 #include "playlist.h"
-#include "ui_fileopener.h"
 #include "ui_urlopener.h"
 #include "ui_preferences.h"
 #include "ui_jumptotrack.h"
 #include "ui_credits.h"
 #include "icons-stock.h"
-#include "ui_gtk.h"
 
 /* interface abstraction layer */
 static mowgli_dictionary_t *interface_dict_ = NULL;
@@ -42,12 +40,10 @@ static InterfaceOps interface_ops = {
     .hide_prefs_window = hide_prefs_window,
     .destroy_prefs_window = destroy_prefs_window,
 
-    .filebrowser_show = run_filebrowser,
     .urlopener_show = show_add_url_window,
     .jump_to_track_show = ui_jump_to_track,
     .aboutwin_show = show_about_window,
 
-    .set_default_icon = aud_set_default_icon,
     .register_stock_icons = register_aud_stock_icons,
 };
 
@@ -121,18 +117,73 @@ interface_show_prefs_window(gboolean show)
         g_message("Interface didn't register show_prefs_window function");
 }
 
+/*
+ * gboolean play_button
+ *       TRUE  - open files
+ *       FALSE - add files
+ */
 void
-interface_show_prefs_handler(gpointer hook_data, gpointer user_data)
+interface_run_filebrowser(gboolean play_button)
 {
-    gboolean show = GPOINTER_TO_INT(hook_data);
-    interface_show_prefs_window(show);
+    if (interface_cbs.run_filebrowser != NULL)
+        interface_cbs.run_filebrowser(play_button);
+    else
+        g_message("Interface didn't register run_filebrowser function");
 }
+
+void
+interface_hide_filebrowser(void)
+{
+    if (interface_cbs.hide_filebrowser != NULL)
+        interface_cbs.hide_filebrowser();
+    else
+        g_message("Interface didn't register hide_filebrowser function");
+
+}
+
+typedef enum {
+    HOOK_PREFSWIN_SHOW,
+    HOOK_FILEBROWSER_SHOW,
+    HOOK_FILEBROWSER_HIDE,
+} InterfaceHookID;
+
+void
+interface_hook_handler(gpointer hook_data, gpointer user_data)
+{
+    switch (GPOINTER_TO_INT(user_data)) {
+        case HOOK_PREFSWIN_SHOW:
+            interface_show_prefs_window(GPOINTER_TO_INT(hook_data));
+            break;
+        case HOOK_FILEBROWSER_SHOW:
+            interface_run_filebrowser(GPOINTER_TO_INT(hook_data));
+            break;
+        case HOOK_FILEBROWSER_HIDE:
+            interface_hide_filebrowser();
+            break;
+        default:
+            break;
+    }
+}
+
+typedef struct {
+    const gchar *name;
+    InterfaceHookID id;
+} InterfaceHooks;
+
+static InterfaceHooks hooks[] = {
+    {"prefswin show", HOOK_PREFSWIN_SHOW},
+    {"filebrowser show", HOOK_FILEBROWSER_SHOW},
+    {"filebrowser hide", HOOK_FILEBROWSER_HIDE},
+};
 
 void
 register_interface_hooks(void)
 {
-    hook_associate("prefswin show",
-                   (HookFunction) interface_show_prefs_handler,
-                   NULL);
+    gint i;
+    for (i=0; i<G_N_ELEMENTS(hooks); i++)
+        hook_associate(hooks[i].name,
+                       (HookFunction) interface_hook_handler,
+                       GINT_TO_POINTER(hooks[i].id));
+
 }
 
