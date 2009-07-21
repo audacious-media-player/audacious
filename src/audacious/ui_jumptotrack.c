@@ -59,7 +59,6 @@
 #include "playlist.h"
 #include "pluginenum.h"
 #include "ui_credits.h"
-#include "ui_fileopener.h"
 #include "ui_preferences.h"
 #include "audstrings.h"
 #include "util.h"
