@@ -57,7 +57,7 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
     gint c;
     register gchar *p;
 
-    if(n<=0) return NULL;
+    if (n <= 0) return NULL;
 
     p = s;
 
@@ -103,9 +103,9 @@ gint vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
 {
     gchar *string;
     gint rv = g_vasprintf(&string, format, args);
-    if (rv<0) return rv;
+    if (rv < 0) return rv;
     rv = vfs_fputs(string, stream);
-    free (string);
+    g_free(string);
     return rv;
 }
 
@@ -142,21 +142,20 @@ void
 vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size)
 {
     VFSFile *fd;
-    size_t filled_size = 0;
-    size_t buf_size = 4096;
+    gsize filled_size = 0, buf_size = 4096;
     gchar *ptr;
     
-    fd = vfs_fopen(filename, "rb");
-
-    if (fd == NULL)
+    if ((fd = vfs_fopen(filename, "rb")) == NULL)
         return;
 
-    if ( vfs_fseek(fd, 0, SEEK_END) == 0) { // seeking supported by VFS backend
-	    *size = vfs_ftell(fd);
+    if (vfs_fseek(fd, 0, SEEK_END) == 0) { // seeking supported by VFS backend
+	    glong tmpsize = vfs_ftell(fd);
+	    if (tmpsize <= 0)
+	        goto close_handle;
 
-	    *buf = g_new(gchar, *size);
-    
-	    if (*buf == NULL)
+        *size = tmpsize;
+
+	    if ((*buf = g_malloc(*size)) == NULL)
     		goto close_handle;
 
 	    vfs_fseek(fd, 0, SEEK_SET);
@@ -166,34 +165,32 @@ vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size)
     }
 
 
-    *buf = g_new(gchar, buf_size);
-    
-    if (*buf == NULL)
+    if ((*buf = g_malloc(buf_size)) == NULL)
     	goto close_handle;
 
-    ptr=*buf;
-    while ( 1 ) {
-	    size_t read_size = vfs_fread(ptr, 1, buf_size - filled_size, fd);
-	    if ( read_size == 0 ) break;
+    ptr = *buf;
+    while (TRUE) {
+	    gsize read_size = vfs_fread(ptr, 1, buf_size - filled_size, fd);
+	    if (read_size == 0) break;
 	    
-	    filled_size+=read_size;
-	    ptr+=read_size;
+	    filled_size += read_size;
+	    ptr += read_size;
 	    
-	    if ( filled_size == buf_size ) {
-		    buf_size+=4096;
+	    if (filled_size == buf_size) {
+		    buf_size += 4096;
 		    
 		    *buf = g_realloc(*buf, buf_size);
 		    
-		    if ( *buf == NULL )
-			goto close_handle;
+		    if (*buf == NULL)
+		        goto close_handle;
 			
-		    ptr=*buf + filled_size;
+		    ptr = *buf + filled_size;
 	    }
     }
 
     *size = filled_size;
     
-    close_handle:
+close_handle:
     vfs_fclose(fd);    
 }
 
