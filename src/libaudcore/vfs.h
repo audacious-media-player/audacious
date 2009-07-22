@@ -19,7 +19,7 @@
  */
 /**
  * @file vfs.h
- * Main header API for accessing Audacious VFS functionality.
+ * Main API header for accessing Audacious VFS functionality.
  * Provides functions for VFS transport registration and
  * file access.
  */

@@ -16,6 +16,10 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
+/**
+ * @file vfs_buffered_file.h
+ * Functions and structures for buffered file access over VFS.
+ */
 
 #ifndef AUDACIOUS_VFS_BUFFERED_FILE_H
 #define AUDACIOUS_VFS_BUFFERED_FILE_H
