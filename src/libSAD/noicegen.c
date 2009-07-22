@@ -1,23 +1,11 @@
 #include <stdio.h>
-#include <assert.h>
-#include "../../config.h"
-
-#ifdef HAVE_SSE2
-#  define SSE2 1
-#endif
-
-#ifdef HAVE_ALTIVEC
-#  define ALTIVEC 1
-#endif
+#include "config.h"
 
 #define MEXP 19937
 
 #include "SFMT.h"
 #include "SFMT.c"
-
 #include "noicegen.h"
-
-#include "debug.h"
 
 int triangular_dither_noise(int nbits)
 {
