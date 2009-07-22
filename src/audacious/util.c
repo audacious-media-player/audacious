@@ -51,15 +51,7 @@
 #include "input.h"
 #include "playback.h"
 #include "audstrings.h"
-
 #include "libSAD.h"
-
-#ifdef USE_CHARDET
-#  include "../libguess/libguess.h"
-#  ifdef HAVE_UDET
-#    include <libudet_c.h>
-#  endif
-#endif
 
 /*
  * find <file> in directory <dirname> or subdirectories.  return
