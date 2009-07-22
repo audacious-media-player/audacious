@@ -354,7 +354,7 @@ convert_dos_path(gchar * path)
 
 /**
  * If given file path/URI contains ending indicating subtune number
- * "?<number>", split the string. If given #track pointer is non-NULL,
+ * "?<number>", split the string. If given track pointer is non-NULL,
  * subtune number is assigned into it.
  *
  * @param filename Filename/URI to split.
