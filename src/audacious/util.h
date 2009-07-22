@@ -32,8 +32,6 @@
 # endif
 #endif
 
-#include <stdint.h>
-
 #include <glib.h>
 #include <gtk/gtk.h>
 

@@ -23,8 +23,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <stdint.h>
-
 /* #define AUD_DEBUG */
 
 #ifdef HAVE_CONFIG_H
