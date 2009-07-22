@@ -94,11 +94,6 @@ AUD_ARG_ENABLE([chardet], [yes],
 [charset detection support],
 [
     AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
-    AC_CHECK_LIB([udet_c], [detectCharset], [
-        AC_DEFINE([HAVE_UDET], 1, [Define if the system has Mozilla universal character detector library])
-        CHARDET_LIBS="$CHARDET_LIBS -ludet -ludet_c"
-        AC_SUBST([CHARDET_LIBS])
-    ])
 ])
 AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
 

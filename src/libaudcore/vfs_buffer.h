@@ -25,45 +25,29 @@
 
 G_BEGIN_DECLS
 
-/**
- * VFSBuffer:
- * @data: The data inside the VFSBuffer.
- * @iter: The current position of the VFS buffer iterator.
- * @begin: The beginning of the memory segment that the VFS buffer uses.
- * @end: The end of the memory segment that the VFS buffer uses.
- * @size: The size of the memory segment.
- *
- * Private data for the VFS memorybuffer class.
- **/
-
+/** Private data for the VFS memorybuffer class. */
 typedef struct {
-	guchar *data;
-	guchar *iter;
-	guchar *end;
-	gsize   size;
+	guchar *data;   /**< The data inside the VFSBuffer. */
+	guchar *iter;   /**< The current position of the VFS buffer iterator. */
+	guchar *end;    /**< The end of the memory segment that the VFS buffer uses. */
+	gsize   size;   /**< The size of the memory segment. */
 } VFSBuffer;
 
 /**
- * vfs_buffer_new:
- * @data: Pointer to data to use.
- * @size: Size of data to use.
- *
  * Creates a VFS buffer for reading/writing to a memory segment.
  *
- * Return value: A VFSFile handle for the memory segment's stream 
- *               representation.
- **/
+ * @param data Pointer to data to use.
+ * @param size Size of data to use.
+ * @return A VFSFile handle for the memory segment's stream representation.
+ */
 VFSFile *vfs_buffer_new(gpointer data, gsize size);
 
 /**
- * vfs_buffer_new_from_string:
- * @str: String to use.
- *
  * Creates a VFS buffer for reading/writing to a string.
  *
- * Return value: A VFSFile handle for the memory segment's stream 
- *               representation.
- **/
+ * @param str String to use.
+ * @return A VFSFile handle for the memory segment's stream representation.
+ */
 VFSFile *vfs_buffer_new_from_string(gchar *str);
 
 G_END_DECLS

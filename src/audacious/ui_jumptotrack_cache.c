@@ -36,9 +36,8 @@
   #include <regex.h>
 #endif
 
-#include "playlist.h"
 #include "audstrings.h"
-
+#include "playlist-new.h"
 #include "ui_jumptotrack_cache.h"
 
 // Struct to keep information about matches from searches.
@@ -47,6 +46,8 @@ typedef struct
     GArray* track_entries; // JumpToTrackEntry*
     GArray* normalized_titles; // gchar*
 } KeywordMatches;
+
+static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
 
 /**
  * Creates an regular expression list usable in searches from search keyword.
@@ -145,7 +146,7 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
                                      const GString* keyword)
 {
     GSList* regex_list = ui_jump_to_track_cache_regex_list_create(keyword);
-    GArray* track_entries = g_array_new(FALSE, FALSE, sizeof(JumpToTrackEntry*));
+    GArray * track_entries = g_array_new (FALSE, FALSE, sizeof (gint));
     GArray* normalized_titles = g_array_new(FALSE, FALSE, sizeof(gchar*));
     gboolean match = FALSE;
     int i = 0;
@@ -160,9 +161,8 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
             match = TRUE;
 
         if (match) {
-            JumpToTrackEntry* entry = g_array_index(search_space->track_entries,
-                                                    JumpToTrackEntry*, i);
-            g_array_append_val(track_entries, entry);
+            g_array_append_val (track_entries, g_array_index
+             (search_space->track_entries, gint, i));
             g_array_append_val(normalized_titles, title);
         }
     }
@@ -206,10 +206,7 @@ ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
     int i = 0;
     assert(match_entry->normalized_titles->len == match_entry->track_entries->len);
     for (i = 0; i < match_entry->normalized_titles->len; i++)
-    {
         g_free(g_array_index(match_entry->normalized_titles, gchar*, i));
-        g_free(g_array_index(match_entry->track_entries, PlaylistEntry*, i));
-    }
 }
 
 /**
@@ -232,9 +229,10 @@ JumpToTrackCache*
 ui_jump_to_track_cache_new()
 {
     JumpToTrackCache* cache = g_new(JumpToTrackCache, 1);
-    cache->playlist_serial = -1;
+
     cache->keywords = g_hash_table_new_full(NULL, NULL, NULL,
                                             ui_jump_to_track_cache_free_cache_entry);
+    ui_jump_to_track_cache_init (cache);
     return cache;
 }
 
@@ -246,8 +244,6 @@ ui_jump_to_track_cache_clear(JumpToTrackCache* cache)
 {
     GString* empty_keyword = g_string_new("");
     gpointer found_keyword = NULL;
-
-    cache->playlist_serial = -1;
 
     // All normalized titles reside in an empty key "" so we'll free them
     // first.
@@ -268,61 +264,29 @@ ui_jump_to_track_cache_clear(JumpToTrackCache* cache)
 /**
  * Initializes the search cache if cache is empty or has wrong playlist.
  */
-static void
-ui_jump_to_track_cache_init(JumpToTrackCache* cache,
-                            const Playlist* playlist)
+static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 {
-    if (cache->playlist_serial != playlist->serial)
-    {
-        GList* playlist_entries = NULL;
-        GArray* track_entries = g_array_new(FALSE, FALSE, sizeof(JumpToTrackEntry*));
+        gint playlist, entries, entry;
+        GArray * track_entries = g_array_new (FALSE, FALSE, sizeof (gint));
         GArray* normalized_titles = g_array_new(FALSE, FALSE, sizeof(gchar*));
         GString* empty_keyword = g_string_new("");
-        gulong song_index = 0;
 
         // Reset cache state
         ui_jump_to_track_cache_clear(cache);
 
-        cache->playlist_serial = playlist->serial;
-
         // Initialize cache with playlist data
-        for (playlist_entries = playlist->entries;
-             playlist_entries;
-             playlist_entries = g_list_next(playlist_entries))
+        playlist = playlist_get_active ();
+        entries = playlist_entry_count (playlist);
+
+        for (entry = 0; entry < entries; entry ++)
         {
-            PlaylistEntry* playlist_entry = PLAYLIST_ENTRY(playlist_entries->data);
+            gchar * title = normalize_search_string (playlist_entry_get_title
+             (playlist, entry));
 
-            gchar *title = NULL;
-            /*we are matching all the path not just the filename or title*/
-
-            /*
-             * FIXME: The search string should be adapted to the
-             * current display setting, e.g. if the user has set it to
-             * "%p - %t" then build the match string like that too, or
-             * even better, search for each of the tags seperatly.
-             *
-             * In any case the string to match should _never_ contain
-             * something the user can't actually see in the playlist.
-             */
-            if (playlist_entry->title) {
-                title = normalize_search_string(playlist_entry->title);
-            } else {
-                gchar *realfn = NULL;
-                realfn = g_filename_from_uri(playlist_entry->filename, NULL, NULL);
-                gchar *tmp_title = str_assert_utf8(realfn ? realfn : playlist_entry->filename);
-                title = normalize_search_string(tmp_title);
-                g_free(tmp_title);
-                g_free(realfn); realfn = NULL;
-            }
-
-            JumpToTrackEntry* search_entry = g_new(JumpToTrackEntry, 1);
-            search_entry->entry = playlist_entry;
-            search_entry->playlist_position = song_index;
-            g_array_append_val(track_entries, search_entry);
-            g_array_append_val(normalized_titles, title);
-            // We need to manually keep track of the current playlist index.
-            song_index++;
+            g_array_append_val (track_entries, entry);
+            g_array_append_val (normalized_titles, title);
         }
+
         // Finally insert all titles into cache into an empty key "" so that
         // the matchable data has specified place to be.
         KeywordMatches* keyword_data = g_new(KeywordMatches, 1);
@@ -333,7 +297,6 @@ ui_jump_to_track_cache_init(JumpToTrackCache* cache,
                             keyword_data);
         g_string_free(empty_keyword,
                       TRUE);
-    }
 }
 
 /**
@@ -384,19 +347,15 @@ ui_jump_to_track_cache_init(JumpToTrackCache* cache,
  * after a few letters typed on playlists with thousands of songs and
  * reduce useless iteration quite a lot.
  *
- * Return: GArray of JumpToTrackEntry*
+ * Return: GArray of gint
  */
-const GArray*
-ui_jump_to_track_cache_search(JumpToTrackCache* cache,
-                              const Playlist* playlist,
-                              const gchar* keyword)
+const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
+ gchar * keyword)
 {
     gchar* normalized_keyword = normalize_search_string(keyword);
     GString* keyword_string = g_string_new(normalized_keyword);
     GString* match_string = g_string_new(normalized_keyword);
     gsize match_string_length = keyword_string->len;
-
-    ui_jump_to_track_cache_init(cache, playlist);
 
     while (match_string_length >= 0)
     {
@@ -436,3 +395,9 @@ cache->keywords hash table.");
     g_return_val_if_fail(FALSE, (GArray*)-1);
 }
 
+void ui_jump_to_track_cache_free (JumpToTrackCache * cache)
+{
+    ui_jump_to_track_cache_clear (cache);
+    g_hash_table_unref (cache->keywords);
+    g_free (cache);
+}

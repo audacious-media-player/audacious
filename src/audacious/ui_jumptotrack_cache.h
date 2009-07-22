@@ -22,26 +22,16 @@
 
 #include <glib.h>
 
-#include "playlist.h"
-
 typedef struct _JumpToTrackCache JumpToTrackCache;
-typedef struct _JumpToTrackEntry JumpToTrackEntry;
 
 struct _JumpToTrackCache
 {
-    gulong playlist_serial;
     GHashTable* keywords;
 };
 
-struct _JumpToTrackEntry
-{
-    PlaylistEntry* entry;
-    // We need to manually keep information about current playlist position.
-    gulong playlist_position;
-};
-
 extern JumpToTrackCache* ui_jump_to_track_cache_new(void);
-extern const GArray* ui_jump_to_track_cache_search(JumpToTrackCache* cache, const Playlist* playlist, const gchar* keyword);
+extern const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache,
+ const gchar * keyword);
 extern void ui_jump_to_track_cache_free(JumpToTrackCache* cache);
 
 #endif /* AUDACIOUS_UI_JUMPTOTRACK_CACHE_H */

@@ -38,17 +38,17 @@ typedef struct {
     void (*hide_prefs_window)(void);
     void (*destroy_prefs_window)(void);
 
-    void (*filebrowser_show)(gboolean play_button);
     void (*urlopener_show)(void);
     void (*jump_to_track_show)(void);
     void (*aboutwin_show)(void);
 
-    void (*set_default_icon)(void);
     void (*register_stock_icons)(void);
 } InterfaceOps;
 
 typedef struct {
     void (*show_prefs_window)(gboolean show);
+    void (*run_filebrowser)(gboolean play_button);
+    void (*hide_filebrowser)(void);
 } InterfaceCbs;
 
 typedef struct _Interface {
@@ -70,6 +70,8 @@ const Interface *interface_get_current(void);
 void interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *privdata), void *privdata);
 
 void interface_show_prefs_window(gboolean show);
+void interface_run_filebrowser(gboolean play_button);
+void interface_hide_filebrowser(void);
 void register_interface_hooks(void);
 
 #endif

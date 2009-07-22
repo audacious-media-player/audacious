@@ -18,7 +18,7 @@
  */
 
 #include <gtk/gtk.h>
-#include "images/audacious_player.xpm"
+#include "audacious/images/audacious_player.xpm"
 
 void
 aud_set_default_icon(void)

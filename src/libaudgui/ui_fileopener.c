@@ -23,10 +23,11 @@
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "input.h"
-#include "main.h"
-#include "playback.h"
-#include "audstrings.h"
+#include "audacious/plugin.h"
+#include "audacious/input.h"
+#include "audacious/main.h"
+#include "audacious/playback.h"
+#include "libaudcore/audstrings.h"
 
 static void
 filebrowser_add_files(GtkFileChooser * browser,
@@ -34,26 +35,32 @@ filebrowser_add_files(GtkFileChooser * browser,
 {
     GSList *cur;
     gchar *ptr;
-    Playlist *playlist = playlist_get_active();
+    gint playlist = aud_playlist_get_active ();
+    struct index * add = index_new ();
 
     for (cur = files; cur; cur = g_slist_next(cur)) {
         gchar *filename = g_filename_to_uri((const gchar *) cur->data, NULL, NULL);
 
-        if (vfs_file_test(cur->data, G_FILE_TEST_IS_DIR)) {
-            playlist_add_dir(playlist, filename ? filename : (const gchar *) cur->data);
-        } else {
-            playlist_add(playlist, filename ? filename : (const gchar *) cur->data);
-        }
+        if (filename == NULL)
+            continue;
 
-        g_free(filename);
+        if (vfs_file_test (filename, G_FILE_TEST_IS_DIR))
+        {
+            aud_playlist_add_folder (filename);
+            g_free (filename);
+        }
+        else if (aud_filename_is_playlist (filename))
+            aud_playlist_insert_playlist (playlist, -1, filename);
+        else
+            index_append (add, filename);
     }
 
-    hook_call("playlist update", playlist);
+    aud_playlist_entry_insert_batch (playlist, -1, add, NULL);
 
     ptr = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(browser));
 
-    g_free(cfg.filesel_path);
-    cfg.filesel_path = ptr;
+    g_free(aud_cfg->filesel_path);
+    aud_cfg->filesel_path = ptr;
 }
 
 static void
@@ -64,7 +71,7 @@ action_button_cb(GtkWidget *widget, gpointer data)
     GtkWidget *toggle = g_object_get_data(data, "toggle-button");
     gboolean play_button;
     GSList *files;
-    cfg.close_dialog_open =
+    aud_cfg->close_dialog_open =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 
     play_button =
@@ -74,16 +81,22 @@ action_button_cb(GtkWidget *widget, gpointer data)
     if (!files) return;
 
     if (play_button)
-        playlist_clear(playlist_get_active());
+    {
+        gint playlist = aud_playlist_get_active ();
+
+        aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count
+         (playlist));
+        aud_playlist_set_playing (playlist);
+    }
 
     filebrowser_add_files(GTK_FILE_CHOOSER(chooser), files);
     g_slist_foreach(files, (GFunc) g_free, NULL);
     g_slist_free(files);
 
     if (play_button)
-        playback_initiate();
+        audacious_drct_initiate();
 
-    if (cfg.close_dialog_open)
+    if (aud_cfg->close_dialog_open)
         gtk_widget_destroy(window);
 }
 
@@ -150,9 +163,9 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 
     chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
     gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
-    if (cfg.filesel_path)
+    if (aud_cfg->filesel_path)
         gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser),
-                                            cfg.filesel_path);
+                                            aud_cfg->filesel_path);
     gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
 
     hbox = gtk_hbox_new(TRUE, 0);
@@ -160,7 +173,7 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 
     toggle = gtk_check_button_new_with_label(toggle_text);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
-                                 cfg.close_dialog_open ? TRUE : FALSE);
+                                 aud_cfg->close_dialog_open ? TRUE : FALSE);
     gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
 
     bbox = gtk_hbutton_box_new();

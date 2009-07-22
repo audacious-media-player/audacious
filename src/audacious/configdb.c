@@ -1,4 +1,5 @@
-/*  This program is free software; you can redistribute it and/or modify
+/*
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; under version 3 of the License.
  *
@@ -29,29 +30,47 @@
 static gboolean mcs_initted = FALSE;
 
 
+/**
+ * Opens the configuration database.
+ *
+ * @return A configuration database handle pointer.
+ */
 mcs_handle_t *
 cfg_db_open()
 {
     if (!mcs_initted)
     {
-	mcs_init();
+        mcs_init();
         mcs_initted = TRUE;
     }
 
     return mcs_new(RCFILE_DEFAULT_SECTION_NAME);
 }
 
+/**
+ * Closes the configuration database.
+ * @param[in] db A configuration database handle pointer.
+ */
 void
 cfg_db_close(mcs_handle_t * db)
 {
     mcs_destroy(db);
 }
 
+/**
+ * Fetches a string from the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database to search.
+ * @param[in] key The name of the field in the configuration database to look up.
+ * @param[out] value Pointer to a buffer to put the data in.
+ * @return TRUE if successful, FALSE otherwise.
+ */
 gboolean
 cfg_db_get_string(mcs_handle_t * db,
-                      const gchar * section,
-                      const gchar * key,
-                      gchar ** value)
+                  const gchar * section,
+                  const gchar * key,
+                  gchar ** value)
 {
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
@@ -59,9 +78,18 @@ cfg_db_get_string(mcs_handle_t * db,
     return mcs_get_string(db, section, key, value);
 }
 
+/**
+ * Fetches a integer value from the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database to search.
+ * @param[in] key The name of the field in the configuration database to look up.
+ * @param[out] value Pointer to a buffer to put the data in.
+ * @return TRUE if successful, FALSE otherwise.
+ */
 gboolean
 cfg_db_get_int(mcs_handle_t * db,
-                   const gchar * section, const gchar * key, gint * value)
+               const gchar * section, const gchar * key, gint * value)
 {
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
@@ -69,6 +97,15 @@ cfg_db_get_int(mcs_handle_t * db,
     return mcs_get_int(db, section, key, value);
 }
 
+/**
+ * Fetches a boolean value from the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database to search.
+ * @param[in] key The name of the field in the configuration database to look up.
+ * @param[out] value Pointer to a buffer to put the data in.
+ * @return TRUE if successful, FALSE otherwise.
+ */
 gboolean
 cfg_db_get_bool(mcs_handle_t * db,
                     const gchar * section,
@@ -81,6 +118,16 @@ cfg_db_get_bool(mcs_handle_t * db,
     return mcs_get_bool(db, section, key, value);
 }
 
+/**
+ * Fetches a single precision floating point value from the
+ * configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database to search.
+ * @param[in] key The name of the field in the configuration database to look up.
+ * @param[out] value Pointer to a buffer to put the data in.
+ * @return TRUE if successful, FALSE otherwise.
+ */
 gboolean
 cfg_db_get_float(mcs_handle_t * db,
                      const gchar * section,
@@ -93,6 +140,16 @@ cfg_db_get_float(mcs_handle_t * db,
     return mcs_get_float(db, section, key, value);
 }
 
+/**
+ * Fetches a double precision floating point value from the
+ * configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database to search.
+ * @param[in] key The name of the field in the configuration database to look up.
+ * @param[out] value Pointer to a buffer to put the data in.
+ * @return TRUE if successful, FALSE otherwise.
+ */
 gboolean
 cfg_db_get_double(mcs_handle_t * db,
                       const gchar * section,
@@ -105,6 +162,15 @@ cfg_db_get_double(mcs_handle_t * db,
     return mcs_get_double(db, section, key, value);
 }
 
+/**
+ * Sets string value in given key of given section in
+ * the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database.
+ * @param[in] key The name of the field in the configuration database to set.
+ * @param[in] value A double precision floating point value.
+ */
 void
 cfg_db_set_string(mcs_handle_t * db,
                       const gchar * section,
@@ -117,6 +183,15 @@ cfg_db_set_string(mcs_handle_t * db,
     mcs_set_string(db, section, key, value);
 }
 
+/**
+ * Sets integer value in given key of given section in
+ * the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database.
+ * @param[in] key The name of the field in the configuration database to set.
+ * @param[in] value A double precision floating point value.
+ */
 void
 cfg_db_set_int(mcs_handle_t * db,
                    const gchar * section,
@@ -129,6 +204,15 @@ cfg_db_set_int(mcs_handle_t * db,
     mcs_set_int(db, section, key, value);
 }
 
+/**
+ * Sets boolean value in given key of given section in
+ * the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database.
+ * @param[in] key The name of the field in the configuration database to set.
+ * @param[in] value A double precision floating point value.
+ */
 void
 cfg_db_set_bool(mcs_handle_t * db,
                     const gchar * section,
@@ -141,6 +225,15 @@ cfg_db_set_bool(mcs_handle_t * db,
     mcs_set_bool(db, section, key, value);
 }
 
+/**
+ * Sets single precision floating point value in given key
+ * of given section in the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database.
+ * @param[in] key The name of the field in the configuration database to set.
+ * @param[in] value A double precision floating point value.
+ */
 void
 cfg_db_set_float(mcs_handle_t * db,
                      const gchar * section,
@@ -153,6 +246,15 @@ cfg_db_set_float(mcs_handle_t * db,
     mcs_set_float(db, section, key, value);
 }
 
+/**
+ * Sets double precision floating point value in given key
+ * of given section in the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database.
+ * @param[in] key The name of the field in the configuration database to set.
+ * @param[in] value A double precision floating point value.
+ */
 void
 cfg_db_set_double(mcs_handle_t * db,
                       const gchar * section,
@@ -165,6 +267,13 @@ cfg_db_set_double(mcs_handle_t * db,
     mcs_set_double(db, section, key, value);
 }
 
+/**
+ * Removes a value from the configuration database.
+ *
+ * @param[in] db A configuration database handle pointer.
+ * @param[in] section The section of the configuration database to search.
+ * @param[in] key The name of the field in the configuration database to set.
+ */
 void
 cfg_db_unset_key(mcs_handle_t * db,
                      const gchar * section,

@@ -24,8 +24,6 @@
 #include "main.h"
 #include "input.h"
 #include "playback.h"
-
-#include "playlist.h"
 #include "configdb.h"
 
 #include "effect.h"

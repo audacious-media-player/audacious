@@ -61,7 +61,6 @@
 				<menuitem action="playlist sort by full path" />
 				<menuitem action="playlist sort by date" />
 				<menuitem action="playlist sort by track number" />
-				<menuitem action="playlist sort by playlist entry" />
 			</menu>
                         <menu action="playlist sort selected menu">
                                 <menuitem action="playlist sort selected by title" />
@@ -71,7 +70,6 @@
 				<menuitem action="playlist sort selected by full path" />
 				<menuitem action="playlist sort selected by date" />
 				<menuitem action="playlist sort selected by track number" />
-				<menuitem action="playlist sort selected by playlist entry" />
 			</menu>
 		</menu>
 

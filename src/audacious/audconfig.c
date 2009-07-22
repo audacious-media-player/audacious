@@ -36,6 +36,8 @@
 #include "effect.h"
 #include "general.h"
 #include "playback.h"
+#include "playlist-new.h"
+#include "playlist-utils.h"
 #include "pluginenum.h"
 #include "util.h"
 #include "visualization.h"
@@ -51,10 +53,8 @@ AudConfig aud_default_config = {
     .equalizer_visible = FALSE,
     .player_visible = TRUE,
     .show_numbers_in_pl = TRUE,
-    .get_info_on_load = FALSE,         /* get playlist info on load */
     .no_playlist_advance = FALSE,
     .stopaftersong = FALSE,
-    .use_pl_metadata = TRUE,
     .close_dialog_open = TRUE,
     .equalizer_preamp = 0.0,
     .equalizer_bands = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
@@ -69,9 +69,8 @@ AudConfig aud_default_config = {
     .eqpreset_default_file = NULL,
     .eqpreset_extension = NULL,
     .url_history = NULL,
-    .playlist_position = 0,
     .resume_playback_on_startup = FALSE,
-    .resume_state = 0,
+    .resume_playlist = -1, .resume_entry = -1, .resume_state = 0,
     .resume_playback_on_startup_time = 0,
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
@@ -140,9 +139,7 @@ static gchar *pl_candidates[] = {
 
 static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
-    {"get_info_on_load", &cfg.get_info_on_load, TRUE},
     {"no_playlist_advance", &cfg.no_playlist_advance, TRUE},
-    {"use_pl_metadata", &cfg.use_pl_metadata, TRUE},
     {"player_visible", &cfg.player_visible, TRUE},
     {"shuffle", &cfg.shuffle, TRUE},
     {"repeat", &cfg.repeat, TRUE},
@@ -175,9 +172,10 @@ static aud_cfg_boolent aud_boolents[] = {
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
 
 static aud_cfg_nument aud_numents[] = {
-    {"playlist_position", & cfg.playlist_position, TRUE},
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
-    {"resume_state", & cfg.resume_state, 1},
+    {"resume_playlist", & cfg.resume_playlist, TRUE},
+    {"resume_entry", & cfg.resume_entry, TRUE},
+    {"resume_state", & cfg.resume_state, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
     {"output_buffer_size", &cfg.output_buffer_size, TRUE},
     {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE},
@@ -218,30 +216,33 @@ static gboolean
 save_extra_playlist(const gchar * path, const gchar * basename,
         gpointer savedlist)
 {
-    GList *playlists, *iter;
+    gint playlists, playlist;
     GList **saved;
-    Playlist *playlist;
     int found;
-    gchar *filename;
+    const gchar * filename;
 
-    playlists = playlist_get_playlists();
+    playlists = playlist_count ();
     saved = (GList **) savedlist;
 
     found = 0;
-    for (iter = playlists; iter; iter = iter->next) {
-        playlist = (Playlist *) iter->data;
-        if (g_list_find(*saved, playlist)) continue;
-        filename = playlist_filename_get(playlist);
-        if (!filename) continue;
+
+    for (playlist = 0; playlist < playlists; playlist ++)
+    {
+        if (g_list_find (* saved, GINT_TO_POINTER (playlist)) != NULL)
+            continue;
+
+        filename = playlist_get_filename (playlist);
+
+        if (filename == NULL)
+            continue;
+
         if (strcmp(filename, path) == 0) {
             /* Save playlist */
             playlist_save(playlist, path);
-            *saved = g_list_prepend(*saved, playlist);
+            * saved = g_list_prepend (* saved, GINT_TO_POINTER (playlist));
             found = 1;
-            g_free(filename);
             break;
         }
-        g_free(filename);
     }
 
     if(!found) {
@@ -255,18 +256,22 @@ save_extra_playlist(const gchar * path, const gchar * basename,
 static void
 save_other_playlists(GList *saved)
 {
-    GList *playlists, *iter;
-    Playlist *playlist;
-    gchar *pos, *ext, *basename, *filename, *newbasename;
+    gint playlists, playlist;
+    gchar * pos, * ext, * basename, * newbasename, * new_filename;
+    const gchar * filename;
     int i, num, isdigits;
 
-    playlists = playlist_get_playlists();
-    for(iter = playlists; iter; iter = iter->next) {
-        playlist = (Playlist *) iter->data;
-        if (g_list_find(saved, playlist)) continue;
-        filename = playlist_filename_get(playlist);
-        if (!filename || !filename[0]
-                || g_file_test(filename, G_FILE_TEST_IS_DIR)) {
+    playlists = playlist_count ();
+
+    for (playlist = 0; playlist < playlists; playlist ++)
+    {
+        if (g_list_find (saved, GINT_TO_POINTER (playlist)) != NULL)
+            continue;
+
+        filename = playlist_get_filename (playlist);
+
+        if (filename == NULL || g_file_test (filename, G_FILE_TEST_IS_DIR))
+        {
             /* default basename */
 #ifdef HAVE_XSPF_PLAYLIST
             basename = g_strdup("playlist_01.xspf");
@@ -276,7 +281,7 @@ save_other_playlists(GList *saved)
         } else {
             basename = g_path_get_basename(filename);
         }
-        g_free(filename);
+
         if ((pos = strrchr(basename, '.'))) {
             *pos = '\0';
         }
@@ -301,9 +306,11 @@ save_other_playlists(GList *saved)
             }
         }
         /* attempt to generate unique filename */
-        filename = NULL;
+        new_filename = NULL;
+
         do {
-            g_free(filename);
+            g_free (new_filename);
+
             if (num < 0) {
                 /* try saving without number first */
                 newbasename = g_strdup_printf("%s%s", basename, ext);
@@ -317,14 +324,16 @@ save_other_playlists(GList *saved)
                     goto cleanup;
                 }
             }
-            filename = g_build_filename(aud_paths[BMP_PATH_PLAYLISTS_DIR],
+
+            new_filename = g_build_filename (aud_paths[BMP_PATH_PLAYLISTS_DIR],
                     newbasename, NULL);
             g_free(newbasename);
-        } while (g_file_test(filename, G_FILE_TEST_EXISTS));
+        }
+        while (g_file_test (new_filename, G_FILE_TEST_EXISTS));
 
-        playlist_save(playlist, filename);
+        playlist_save (playlist, new_filename);
 cleanup:
-        g_free(filename);
+        g_free (new_filename);
         g_free(basename);
     }
 }
@@ -429,13 +438,14 @@ aud_config_save(void)
 {
     GList *node;
     gchar *str;
-    gint i;
+    gint i, playlist;
     mcs_handle_t *db;
     GList *saved;
-    Playlist *playlist = playlist_get_active();
 
     cfg.disabled_iplugins = input_stringify_disabled_list();
 
+    cfg.resume_playlist = playlist_get_playing ();
+    cfg.resume_entry = playlist_get_position (cfg.resume_playlist);
     cfg.resume_state = playback_get_playing () ? playback_get_paused () ? 2 : 1
      : 0;
     cfg.resume_playback_on_startup_time = playback_get_playing () ?
@@ -454,13 +464,6 @@ aud_config_save(void)
             cfg_db_set_int(db, NULL,
                                aud_numents[i].ie_vname,
                                *aud_numents[i].ie_vloc);
-
-    /* This is a bit lame .. it'll end up being written twice,
-     * could do with being done a bit neater.  -larne   */
-    if (playlist) {
-        cfg_db_set_int(db, NULL, "playlist_position",
-                       playlist_get_position(playlist));
-    }
 
     hook_call("config save", db);
 
@@ -530,13 +533,15 @@ aud_config_save(void)
 
     cfg_db_close(db);
 
-    if (!playlist_save(playlist, aud_paths[BMP_PATH_PLAYLIST_FILE])) {
+    /* Main playlist becomes #0 at load, so save #0 as main. -jlindgren */
+    playlist = 0;
+
+    if (! playlist_save (playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]))
         g_warning("Could not save main playlist\n");
-    }
 
     /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
-    saved = NULL;
-    saved = g_list_prepend(saved, playlist); /* don't save default again */
+    saved = g_list_append (NULL, GINT_TO_POINTER (playlist));
+
     if(!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
             &saved, NULL)) {
         g_warning("Could not save extra playlists\n");

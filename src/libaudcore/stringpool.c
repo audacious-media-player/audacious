@@ -89,7 +89,7 @@ strcasecanon(gchar *str)
 #endif
 #endif
 
-/* structure to handle string refcounting. */
+/** Structure to handle string refcounting. */
 typedef struct {
     gint refcount;
     gchar *str;
@@ -98,14 +98,13 @@ typedef struct {
 static mowgli_patricia_t *stringpool_tree = NULL;
 static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
-gboolean
+static gboolean
 stringpool_should_cache(const gchar *string, gsize maxlen)
 {
     const gchar *end = memchr(string, '\0', maxlen);
     return end != NULL ? TRUE : FALSE;
 }
 
-/* allocate a string if needed. */
 gchar *
 stringpool_get(const gchar *str)
 {
@@ -177,7 +176,7 @@ stringpool_unref(gchar *str)
 
 /* compatibility for libmowgli without a patricia class. */
 gchar *
-stringpool_get(gchar *str)
+stringpool_get(const gchar *str)
 {
     return str_to_utf8(str);
 }

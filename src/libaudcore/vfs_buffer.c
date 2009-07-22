@@ -22,33 +22,33 @@
 #include "vfs.h"
 #include "vfs_buffer.h"
 
-VFSFile *
+
+static VFSFile *
 buffer_vfs_fopen_impl(const gchar * path,
           const gchar * mode)
 {
     return NULL;
 }
 
-gint
+static gint
 buffer_vfs_fclose_impl(VFSFile * file)
 {
     g_return_val_if_fail(file != NULL, -1);
 
-    if (file->handle)
-        g_free(file->handle);
+    g_free(file->handle);
 
     return 0;
 }
 
-size_t
+static gsize
 buffer_vfs_fread_impl(gpointer i_ptr,
-          size_t size,
-          size_t nmemb,
+          gsize size,
+          gsize nmemb,
           VFSFile * file)
 {
     VFSBuffer *handle;
     guchar *i;
-    size_t read = 0;
+    gsize read = 0;
     guchar *ptr = (guchar *) i_ptr;
 
     if (file == NULL)
@@ -67,15 +67,15 @@ buffer_vfs_fread_impl(gpointer i_ptr,
     return (read / size);
 }
 
-size_t
+static gsize
 buffer_vfs_fwrite_impl(gconstpointer i_ptr,
-           size_t size,
-           size_t nmemb,
+           gsize size,
+           gsize nmemb,
            VFSFile * file)
 {
     VFSBuffer *handle;
     const guchar *i;
-    size_t written = 0;
+    gsize written = 0;
     const guchar *ptr = (const guchar *) i_ptr;
 
     if (file == NULL)
@@ -94,25 +94,25 @@ buffer_vfs_fwrite_impl(gconstpointer i_ptr,
     return (written / size);
 }
 
-gint
+static gint
 buffer_vfs_getc_impl(VFSFile *stream)
 {
-  VFSBuffer *handle = (VFSBuffer *) stream->handle;
-  gint c;
+    VFSBuffer *handle = (VFSBuffer *) stream->handle;
+    gint c;
 
-  c = *handle->iter;
-  handle->iter++;
+    c = *handle->iter;
+    handle->iter++;
 
-  return c;
+    return c;
 }
 
-gint
+static gint
 buffer_vfs_ungetc_impl(gint c, VFSFile *stream)
 {
-  return -1;
+    return -1;
 }
 
-gint
+static gint
 buffer_vfs_fseek_impl(VFSFile * file,
           glong offset,
           gint whence)
@@ -141,7 +141,7 @@ buffer_vfs_fseek_impl(VFSFile * file,
     return 0;
 }
 
-void
+static void
 buffer_vfs_rewind_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -154,7 +154,7 @@ buffer_vfs_rewind_impl(VFSFile * file)
     handle->iter = handle->data;
 }
 
-glong
+static glong
 buffer_vfs_ftell_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -167,7 +167,7 @@ buffer_vfs_ftell_impl(VFSFile * file)
     return handle->iter - handle->data;
 }
 
-gboolean
+static gboolean
 buffer_vfs_feof_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -180,13 +180,13 @@ buffer_vfs_feof_impl(VFSFile * file)
     return (gboolean) (handle->iter == handle->end);
 }
 
-gint
+static gint
 buffer_vfs_truncate_impl(VFSFile * file, glong size)
 {
     return 0;
 }
 
-off_t
+static off_t
 buffer_vfs_fsize_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -199,7 +199,7 @@ buffer_vfs_fsize_impl(VFSFile * file)
     return (off_t)handle->end;
 }
 
-VFSConstructor buffer_const = {
+static VFSConstructor buffer_const = {
 	NULL,			// not a normal VFS class
 	buffer_vfs_fopen_impl,
 	buffer_vfs_fclose_impl,
@@ -225,9 +225,15 @@ vfs_buffer_new(gpointer data, gsize size)
     g_return_val_if_fail(data != NULL, NULL);
     g_return_val_if_fail(size > 0, NULL);
 
-    handle = g_new0(VFSFile, 1);
+    if ((handle = g_new0(VFSFile, 1)) == NULL)
+        return NULL;
 
-    buffer = g_new0(VFSBuffer, 1);
+    if ((buffer = g_new0(VFSBuffer, 1)) == NULL)
+    {
+        g_free(handle);
+        return NULL;
+    }
+    
     buffer->data = data;
     buffer->iter = data;
     buffer->end = (guchar *) data + size;

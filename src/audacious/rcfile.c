@@ -19,6 +19,13 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
+/**
+ * @file rcfile.c
+ * Functions for handling INI-style sectionized resource files.
+ *
+ * @warning Many functions of this API are NOT thread-safe due
+ * to use of setlocale()!
+ */
 
 #include "rcfile.h"
 
@@ -26,9 +33,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>
-
 #include <unistd.h>
-#include <sys/stat.h>
 
 
 static RcSection *aud_rcfile_create_section(RcFile * file,
@@ -40,12 +45,10 @@ static RcSection *aud_rcfile_find_section(RcFile * file, const gchar * name);
 static RcLine *aud_rcfile_find_string(RcSection * section, const gchar * key);
 
 /**
- * aud_rcfile_new:
- *
  * #RcFile object factory.
  *
- * Return value: A #RcFile object.
- **/
+ * @return A newly allocated empty #RcFile object.
+ */
 RcFile *
 aud_rcfile_new(void)
 {
@@ -53,11 +56,11 @@ aud_rcfile_new(void)
 }
 
 /**
- * aud_rcfile_free:
- * @file: A #RcFile object to destroy.
+ * #RcFile object destructor. Deallocates all contents
+ * of the RcFile object.
  *
- * #RcFile object destructor.
- **/
+ * @param[in] file A #RcFile object to destroy.
+ */
 void
 aud_rcfile_free(RcFile * file)
 {
@@ -91,18 +94,15 @@ aud_rcfile_free(RcFile * file)
 }
 
 /**
- * aud_rcfile_open:
- * @filename: Path to rcfile to open.
- *
  * Opens an rcfile and returns an #RcFile object representing it.
  *
- * Return value: An #RcFile object representing the rcfile given.
- **/
+ * @param[in] filename Path to rcfile to open.
+ * @return An #RcFile object representing the rcfile given.
+ */
 RcFile *
 aud_rcfile_open(const gchar * filename)
 {
     RcFile *file;
-
     gchar *buffer, **lines, *tmp;
     gint i;
     RcSection *section = NULL;
@@ -141,14 +141,12 @@ aud_rcfile_open(const gchar * filename)
 }
 
 /**
- * aud_rcfile_write:
- * @file: A #RcFile object to write to disk.
- * @filename: A path to write the #RcFile object's data to.
+ * Writes the contents of a #RcFile object to given file.
  *
- * Writes the contents of a #RcFile object to disk.
- *
- * Return value: TRUE on success, FALSE otherwise.
- **/
+ * @param[in] file A #RcFile object to write to disk.
+ * @param[in] filename A path to write the #RcFile object's data to.
+ * @return TRUE on success, FALSE otherwise.
+ */
 gboolean
 aud_rcfile_write(RcFile * file, const gchar * filename)
 {
@@ -183,16 +181,14 @@ aud_rcfile_write(RcFile * file, const gchar * filename)
 }
 
 /**
- * aud_rcfile_read_string:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to look in.
- * @key: The name of the identifier to look up.
- * @value: A pointer to a memory location to place the data.
+ * Looks up a string in an RcFile and places it in %value.
  *
- * Looks up a value in an RcFile and places it in %value.
- *
- * Return value: TRUE on success, FALSE otherwise.
- **/
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to look in.
+ * @param[in] key The name of the identifier to look up.
+ * @param[out] value A pointer to a string pointer (gchar *) variable to place the data.
+ * @return value: TRUE on success, FALSE otherwise.
+ */
 gboolean
 aud_rcfile_read_string(RcFile * file, const gchar * section,
                        const gchar * key, gchar ** value)
@@ -214,16 +210,14 @@ aud_rcfile_read_string(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_read_int:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to look in.
- * @key: The name of the identifier to look up.
- * @value: A pointer to a memory location to place the data.
+ * Looks up a integer value in an RcFile and places it in %value.
  *
- * Looks up a value in an RcFile and places it in %value.
- *
- * Return value: TRUE on success, FALSE otherwise.
- **/
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to look in.
+ * @param[in] key The name of the identifier to look up.
+ * @param[out] value A pointer to a integer variable to place the data.
+ * @return value: TRUE on success, FALSE otherwise.
+ */
 gboolean
 aud_rcfile_read_int(RcFile * file, const gchar * section,
                     const gchar * key, gint * value)
@@ -244,16 +238,14 @@ aud_rcfile_read_int(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_read_bool:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to look in.
- * @key: The name of the identifier to look up.
- * @value: A pointer to a memory location to place the data.
+ * Looks up a boolean value in an RcFile and places it in %value.
  *
- * Looks up a value in an RcFile and places it in %value.
- *
- * Return value: TRUE on success, FALSE otherwise.
- **/
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to look in.
+ * @param[in] key The name of the identifier to look up.
+ * @param[out] value A pointer to a boolean variable to place the data.
+ * @return TRUE on success, FALSE otherwise.
+ */
 gboolean
 aud_rcfile_read_bool(RcFile * file, const gchar * section,
                      const gchar * key, gboolean * value)
@@ -276,16 +268,17 @@ aud_rcfile_read_bool(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_read_float:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to look in.
- * @key: The name of the identifier to look up.
- * @value: A pointer to a memory location to place the data.
+ * Looks up a single precision floating point value in
+ * an RcFile and places it in %value.
  *
- * Looks up a value in an RcFile and places it in %value.
+ * @bug This functions is not thread-safe due to use of setlocale().
  *
- * Return value: TRUE on success, FALSE otherwise.
- **/
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to look in.
+ * @param[in] key The name of the identifier to look up.
+ * @param[out] value A pointer to a variable of type gfloat to place the data.
+ * @return value: TRUE on success, FALSE otherwise.
+ */
 gboolean
 aud_rcfile_read_float(RcFile * file, const gchar * section,
                       const gchar * key, gfloat * value)
@@ -311,16 +304,17 @@ aud_rcfile_read_float(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_read_double:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to look in.
- * @key: The name of the identifier to look up.
- * @value: A pointer to a memory location to place the data.
+ * Looks up a double precision floating point value in
+ * an RcFile and places it in %value.
  *
- * Looks up a value in an RcFile and places it in %value.
+ * @bug This functions is not thread-safe due to use of setlocale().
  *
- * Return value: TRUE on success, FALSE otherwise.
- **/
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to look in.
+ * @param[in] key The name of the identifier to look up.
+ * @param[out] value A pointer to a variable of type gdouble to place the data.
+ * @return value: TRUE on success, FALSE otherwise.
+ */
 gboolean
 aud_rcfile_read_double(RcFile * file, const gchar * section,
                        const gchar * key, gdouble * value)
@@ -346,14 +340,15 @@ aud_rcfile_read_double(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_write_string:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to set the key in.
- * @key: The name of the identifier to set.
- * @value: The value to set for that identifier.
+ * Sets a string value in an RcFile for %key.
  *
- * Sets a value in an RcFile for %key.
- **/
+ * @bug This functions is not thread-safe due to use of setlocale().
+ *
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to set the key in.
+ * @param[in] key The name of the identifier to set.
+ * @param[in] value The value to set for that identifier.
+ */
 void
 aud_rcfile_write_string(RcFile * file, const gchar * section,
                         const gchar * key, const gchar * value)
@@ -378,14 +373,13 @@ aud_rcfile_write_string(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_write_int:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to set the key in.
- * @key: The name of the identifier to set.
- * @value: The value to set for that identifier.
+ * Sets a integer value in an RcFile for %key.
  *
- * Sets a value in an RcFile for %key.
- **/
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to set the key in.
+ * @param[in] key The name of the identifier to set.
+ * @param[in] value The value to set for that identifier.
+ */
 void
 aud_rcfile_write_int(RcFile * file, const gchar * section,
                      const gchar * key, gint value)
@@ -402,14 +396,15 @@ aud_rcfile_write_int(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_write_boolean:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to set the key in.
- * @key: The name of the identifier to set.
- * @value: The value to set for that identifier.
+ * Sets a boolean value in an RcFile for %key.
  *
- * Sets a value in an RcFile for %key.
- **/
+ * @bug This functions is not thread-safe due to use of setlocale().
+ *
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to set the key in.
+ * @param[in] key The name of the identifier to set.
+ * @param[in] value The value to set for that identifier.
+ */
 void
 aud_rcfile_write_boolean(RcFile * file, const gchar * section,
                          const gchar * key, gboolean value)
@@ -425,14 +420,15 @@ aud_rcfile_write_boolean(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_write_float:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to set the key in.
- * @key: The name of the identifier to set.
- * @value: The value to set for that identifier.
+ * Sets a single precision floating point value in an RcFile for %key.
  *
- * Sets a value in an RcFile for %key.
- **/
+ * @bug This functions is not thread-safe due to use of setlocale().
+ *
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to set the key in.
+ * @param[in] key The name of the identifier to set.
+ * @param[in] value The value to set for that identifier.
+ */
 void
 aud_rcfile_write_float(RcFile * file, const gchar * section,
                        const gchar * key, gfloat value)
@@ -453,14 +449,15 @@ aud_rcfile_write_float(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_write_double:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to set the key in.
- * @key: The name of the identifier to set.
- * @value: The value to set for that identifier.
+ * Sets a double precision floating point value in an RcFile for %key.
  *
- * Sets a value in an RcFile for %key.
- **/
+ * @bug This functions is not thread-safe due to use of setlocale().
+ *
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to set the key in.
+ * @param[in] key The name of the identifier to set.
+ * @param[in] value The value to set for that identifier.
+ */
 void
 aud_rcfile_write_double(RcFile * file, const gchar * section,
                         const gchar * key, gdouble value)
@@ -481,13 +478,12 @@ aud_rcfile_write_double(RcFile * file, const gchar * section,
 }
 
 /**
- * aud_rcfile_remove_key:
- * @file: A #RcFile object to write to disk.
- * @section: The section of the RcFile to set the key in.
- * @key: The name of the identifier to remove.
- *
  * Removes %key from an #RcFile object.
- **/
+ *
+ * @param[in] file A #RcFile object.
+ * @param[in] section The section of the RcFile to set the key in.
+ * @param[in] key The name of the identifier to remove.
+ */
 void
 aud_rcfile_remove_key(RcFile * file, const gchar * section, const gchar * key)
 {

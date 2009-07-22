@@ -17,11 +17,32 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
+/**
+ * @file stringpool.h
+ * String pool API for "pooling" identical strings into references
+ * instead of keeping multiple copies around.
+ */
 
-#ifndef __AUDACIOUS__LIBAUDCORE__STRINGPOOL_H__GUARD
-#define __AUDACIOUS__LIBAUDCORE__STRINGPOOL_H__GUARD
+#ifndef AUDACIOUS_STRINGPOOL_H
+#define AUDACIOUS_STRINGPOOL_H
 
+/**
+ * Fetches or allocates a given string from the stringpool.
+ * If string already exists in the pool, reference to it is returned.
+ * Otherwise, a new string is created in the pool with one reference.
+ *
+ * @param[in] str String to be poolified.
+ * @return Reference to the pooled string, or NULL if the given
+ * string was NULL or an error occured.
+ */
 gchar *stringpool_get(const gchar *str);
+
+/**
+ * Unreference a pooled string. When there are no references left,
+ * the string is unallocated and removed from the pool.
+ *
+ * @param[in] str Pointer to a string in the pool.
+ */
 void stringpool_unref(gchar *str);
 
 #endif

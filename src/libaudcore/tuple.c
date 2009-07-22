@@ -25,6 +25,8 @@
 #include "audstrings.h"
 #include "stringpool.h"
 
+/** Ordered table of basic #Tuple field names and their #TupleValueType.
+ */
 const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "artist",         TUPLE_STRING },
     { "title",          TUPLE_STRING },
@@ -56,7 +58,11 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "bitrate",        TUPLE_INT },
 };
 
+
+/** A mowgli heap containing all the allocated tuples. */
 static mowgli_heap_t *tuple_heap = NULL;
+
+/** A mowgli heap containing values contained by tuples. */
 static mowgli_heap_t *tuple_value_heap = NULL;
 static mowgli_object_class_t tuple_klass;
 
@@ -122,6 +128,12 @@ tuple_destroy(gpointer data)
     TUPLE_UNLOCK_WRITE();
 }
 
+/**
+ * Allocates a new empty #Tuple structure. Must be freed
+ * via tuple_free().
+ *
+ * @return Pointer to newly allocated Tuple.
+ */
 Tuple *
 tuple_new(void)
 {
@@ -151,6 +163,15 @@ tuple_new(void)
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype);
 
+
+/**
+ * Allocates a new #Tuple structure, setting filename/URI related
+ * fields based on the given filename argument. The fields set are:
+ * #FIELD_FILE_PATH, #FIELD_FILE_NAME and #FIELD_FILE_EXT.
+ *
+ * @param[in] filename Filename URI.
+ * @return Pointer to newly allocated Tuple.
+ */
 Tuple *
 tuple_new_from_filename(const gchar *filename)
 {
@@ -250,6 +271,17 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     return value;
 }
 
+/**
+ * Associates copy of given string to a field in specified #Tuple.
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] nfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @param[in] string String to be associated to given field in Tuple.
+ * @return TRUE if operation was succesful, FALSE if not.
+ */
 gboolean
 tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
 {
@@ -268,6 +300,17 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
     return TRUE;
 }
 
+/**
+ * Associates given integer to a field in specified #Tuple.
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] nfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @param[in] integer Integer to be associated to given field in Tuple.
+ * @return TRUE if operation was succesful, FALSE if not.
+ */
 gboolean
 tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer)
 {
@@ -283,6 +326,15 @@ tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint in
     return TRUE;
 }
 
+/**
+ * Disassociates given field from specified #Tuple structure.
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ */
 void
 tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
 {
@@ -319,6 +371,16 @@ tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
     TUPLE_UNLOCK_WRITE();
 }
 
+/**
+ * Returns #TupleValueType of given #Tuple field.
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @return #TupleValueType of the field or TUPLE_UNKNOWN if there was an error.
+ */
 TupleValueType
 tuple_get_value_type(Tuple *tuple, const gint cnfield, const gchar *field)
 {
@@ -345,6 +407,17 @@ tuple_get_value_type(Tuple *tuple, const gint cnfield, const gchar *field)
     return type;
 }
 
+/**
+ * Returns pointer to a string associated to #Tuple field.
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @return Pointer to string or NULL if the field/key did not exist.
+ * The returned string is const, and must not be freed or modified.
+ */
 const gchar *
 tuple_get_string(Tuple *tuple, const gint cnfield, const gchar *field)
 {
@@ -375,6 +448,18 @@ tuple_get_string(Tuple *tuple, const gint cnfield, const gchar *field)
     }
 }
 
+/**
+ * Returns integer associated to #Tuple field.
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @return Integer value or 0 if the field/key did not exist.
+ *
+ * @bug There is no way to distinguish error situations if the associated value is zero.
+ */
 gint
 tuple_get_int(Tuple *tuple, const gint cnfield, const gchar *field)
 {

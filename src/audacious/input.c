@@ -23,8 +23,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <stdint.h>
-
 /* #define AUD_DEBUG */
 
 #ifdef HAVE_CONFIG_H
@@ -148,8 +146,8 @@ input_get_mtime(const gchar *filename)
 
 
 /* do actual probing. this function is called from input_check_file() */
-static ProbeResult *
-input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolean loading)
+static ProbeResult * input_do_check_file (InputPlugin * ip, VFSFile * fd, gchar
+ * filename_proxy)
 {
     ProbeResult *pr = NULL;
     gint result = 0;
@@ -158,11 +156,8 @@ input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolea
 
     vfs_rewind(fd);
 
-    /* some input plugins provide probe_for_tuple() only. */
-    if ( (ip->probe_for_tuple && !ip->is_our_file_from_vfs && !ip->is_our_file) ||
-         (ip->probe_for_tuple && ip->have_subtune == TRUE) ||
-         (ip->probe_for_tuple && (cfg.use_pl_metadata && (!loading || (loading && cfg.get_info_on_load)))) ) {
-
+    if (ip->probe_for_tuple != NULL)
+    {
         plugin_set_current((Plugin *)ip);
         Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
@@ -245,41 +240,28 @@ input_do_check_file(InputPlugin *ip, VFSFile *fd, gchar *filename_proxy, gboolea
  * --yaz, Nov 16 2007
  */
 
-/* if loading is TRUE, tuple probing can be skipped as regards configuration. */
-ProbeResult *
-input_check_file(const gchar *filename, gboolean loading)
+ProbeResult * input_check_file (const gchar * filename)
 {
     VFSFile *fd;
     GList *node;
     InputPlugin *ip;
-    gchar *filename_proxy;
+    gchar *filename_proxy, *ext, *mimetype;
     gint ret = 1;
-    gchar *ext, *tmp, *tmp_uri;
     gboolean use_ext_filter = FALSE;
-    gchar *mimetype;
     ProbeResult *pr = NULL;
     GList **list_hdr = NULL;
     extern GHashTable *ext_hash;
 
     /* Some URIs will end in ?<subsong> to determine the subsong requested. */
-    tmp_uri = g_strdup(filename);
-    tmp = strrchr(tmp_uri, '?');
-
-    if (tmp && g_ascii_isdigit(*(tmp + 1)))
-        *tmp = '\0';
-
-    filename_proxy = g_strdup(tmp_uri);
-    g_free(tmp_uri);
+    filename_proxy = filename_split_subtune(filename, NULL);
 
     /* Check for plugins with custom URI:// strings */
     /* cue:// cdda:// tone:// tact:// */
     if ((ip = uri_get_plugin(filename_proxy)) != NULL && ip->enabled) {
-        if (ip->is_our_file != NULL)
-	{
-	    plugin_set_current((Plugin *)ip);
+        if (ip->is_our_file != NULL) {
+            plugin_set_current((Plugin *)ip);
             ret = ip->is_our_file(filename_proxy);
-	}
-        else
+        } else
             ret = 0;
         if (ret > 0) {
             g_free(filename_proxy);
@@ -299,7 +281,7 @@ input_check_file(const gchar *filename, gboolean loading)
     //fd = vfs_buffered_file_new_from_uri(filename_proxy);
     fd = vfs_fopen(filename_proxy, "rb");
 
-    if (!fd) {
+    if (fd == NULL) {
         printf("Unable to read from %s, giving up.\n", filename_proxy);
         g_free(filename_proxy);
         return NULL;
@@ -315,7 +297,7 @@ input_check_file(const gchar *filename, gboolean loading)
         ip = NULL;
 
     if (ip && ip->enabled) {
-        pr = input_do_check_file(ip, fd, filename_proxy, loading);
+        pr = input_do_check_file (ip, fd, filename_proxy);
         if (pr) {
             g_free(filename_proxy);
             vfs_fclose(fd);
@@ -325,13 +307,13 @@ input_check_file(const gchar *filename, gboolean loading)
 
 
     // apply ext_hash check
-    if(cfg.use_extension_probing) {
+    if (cfg.use_extension_probing) {
         use_ext_filter =
-            (fd && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
+            (fd != NULL && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
                     !g_ascii_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
     }
 
-    if(use_ext_filter) {
+    if (use_ext_filter) {
         gchar *base, *lext;
         gchar *tmp2 = g_filename_from_uri(filename_proxy, NULL, NULL);
         gchar *realfn = g_strdup(tmp2 ? tmp2 : filename_proxy);
@@ -355,7 +337,7 @@ input_check_file(const gchar *filename, gboolean loading)
                 if (!ip || !ip->enabled)
                     continue;
 
-                pr = input_do_check_file(ip, fd, filename_proxy, loading);
+                pr = input_do_check_file (ip, fd, filename_proxy);
 
                 if(pr) {
                     g_free(filename_proxy);
@@ -378,7 +360,7 @@ input_check_file(const gchar *filename, gboolean loading)
         if (!ip || !ip->enabled)
             continue;
 
-        pr = input_do_check_file(ip, fd, filename_proxy, loading);
+        pr = input_do_check_file (ip, fd, filename_proxy);
 
         if(pr) {
             g_free(filename_proxy);
@@ -408,7 +390,7 @@ input_get_song_tuple(const gchar * filename)
 
     filename_proxy = g_strdup(filename);
 
-    pr = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file (filename_proxy);
 
     if (!pr) {
         g_free(filename_proxy);
@@ -535,7 +517,7 @@ input_file_info_box(const gchar * filename)
 
     filename_proxy = g_strdup(filename);
 
-    pr = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file (filename_proxy);
 
     if (!pr)
         return;
@@ -619,12 +601,4 @@ input_set_volume(gint l, gint r)
         return;
 
     output_set_volume (l, r);
-}
-
-/* FIXME: move this somewhere else */
-void
-input_set_info_text(gchar *text)
-{
-    gchar *title = g_strdup(text);
-    event_queue_with_data_free("title change", title);
 }

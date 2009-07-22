@@ -51,15 +51,7 @@
 #include "input.h"
 #include "playback.h"
 #include "audstrings.h"
-
 #include "libSAD.h"
-
-#ifdef USE_CHARDET
-#  include "../libguess/libguess.h"
-#  ifdef HAVE_UDET
-#    include <libudet_c.h>
-#  endif
-#endif
 
 /*
  * find <file> in directory <dirname> or subdirectories.  return
@@ -441,11 +433,11 @@ del_directory_func(const gchar * path, const gchar * basename,
 
     if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
         dir_foreach(path, del_directory_func, NULL, NULL);
-        rmdir(path);
+        g_rmdir(path);
         return FALSE;
     }
 
-    unlink(path);
+    g_unlink(path);
 
     return FALSE;
 }
@@ -454,7 +446,7 @@ void
 del_directory(const gchar * path)
 {
     dir_foreach(path, del_directory_func, NULL, NULL);
-    rmdir(path);
+    g_rmdir(path);
 }
 
 #endif                          /* ifdef HAVE_FTS */

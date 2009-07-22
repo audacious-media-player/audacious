@@ -35,10 +35,8 @@ struct _AudConfig {
     gboolean equalizer_autoload, equalizer_active;
     gboolean playlist_visible, equalizer_visible, player_visible;
     gboolean show_numbers_in_pl;
-    gboolean get_info_on_load;
     gboolean no_playlist_advance;
     gboolean stopaftersong;
-    gboolean use_pl_metadata;
     gboolean close_dialog_open;
     gfloat equalizer_preamp, equalizer_bands[AUD_EQUALIZER_NBANDS];
     gchar *outputplugin;
@@ -48,11 +46,10 @@ struct _AudConfig {
     gchar *enabled_gplugins, *enabled_vplugins, *enabled_eplugins, *enabled_dplugins ;
     gchar *eqpreset_default_file, *eqpreset_extension;
     GList *url_history;
-    gint playlist_position;
     gint titlestring_preset;
     gchar *gentitle_format;
     gboolean resume_playback_on_startup;
-    gint resume_state;
+    gint resume_playlist, resume_entry, resume_state;
     gint resume_playback_on_startup_time;
     gchar *chardet_detector;
     gchar *chardet_fallback;

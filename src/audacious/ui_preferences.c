@@ -49,11 +49,10 @@
 #include "effect.h"
 #include "general.h"
 #include "output.h"
-#include "scanner.h"
+#include "playlist-new.h"
+#include "playlist-utils.h"
 #include "visualization.h"
 #include "volumecontrol.h"
-#include "playlist.h"
-
 #include "audstrings.h"
 #include "util.h"
 #include "dnd.h"
@@ -163,9 +162,7 @@ static ComboBoxElements chardet_detector_presets[] = {
     { N_("Hebrew")   , N_("Hebrew") },
     { N_("Turkish")  , N_("Turkish") },
     { N_("Arabic")   , N_("Arabic") },
-#ifdef HAVE_UDET
     { N_("Universal"), N_("Universal") }
-#endif
 };
 
 static ComboBoxElements bitdepth_elements[] = {
@@ -192,11 +189,6 @@ typedef struct {
 } CategoryQueueEntry;
 
 CategoryQueueEntry *category_queue = NULL;
-
-static void metadata_toggle (void)
-{
-    scanner_enable (cfg.use_pl_metadata);
-}
 
 static PreferencesWidget sample_rate_elements[] = {
 #ifdef USE_SAMPLERATE
@@ -299,9 +291,6 @@ static PreferencesWidget chardet_elements[] = {
 
 static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_ ("Load metadata from playlists and files"),
-     & cfg.use_pl_metadata, metadata_toggle, N_ ("Load metadata (tag "
-     "information) from music files."), 0},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
 };
 
@@ -666,7 +655,7 @@ titlestring_timeout_proc (gpointer data)
 
     if(titlestring_timeout_counter <= 0) {
         titlestring_timeout_counter = 0;
-        playlist_update_all_titles();
+        playlist_reformat_titles ();
         return FALSE;
     } else {
         return TRUE;
@@ -705,7 +694,7 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
     cfg.titlestring_preset = position;
     gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
 
-    playlist_update_all_titles(); /* update titles */
+    playlist_reformat_titles ();
 }
 
 static void
@@ -1884,16 +1873,10 @@ create_replay_gain_category(void)
 
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
-    Playlist * playlist;
-    char * title;
-
     cfg.show_numbers_in_pl = gtk_toggle_button_get_active (numbers);
 
-    playlist = playlist_get_active ();
-    hook_call ("playlist update", playlist);
-    title = playlist_get_info_text (playlist);
-    hook_call ("title change", title);
-    g_free (title);
+    hook_call ("playlist update", NULL);
+    hook_call ("title change", NULL);
 }
 
 static void

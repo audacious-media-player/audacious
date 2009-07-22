@@ -79,14 +79,3 @@ void playlist_container_write(gchar *filename, gint pos)
 
 	plc->plc_write(filename, pos);
 }
-
-gboolean is_playlist_name(gchar *filename)
-{
-	gchar *ext = strrchr(filename, '.') + 1;	/* optimization: skip past the dot -nenolod */
-	PlaylistContainer *plc = playlist_container_find(ext);
-
-	if (plc != NULL)
-		return TRUE;
-
-	return FALSE;
-}

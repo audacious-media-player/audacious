@@ -58,6 +58,8 @@ extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 
+gchar *filename_split_subtune(const gchar * filename, gint * track);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_STRINGS_H */
