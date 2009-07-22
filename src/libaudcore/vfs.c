@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <string.h>
 
+
 /**
  * #GList of #VFSConstructor objects holding all the registered
  * VFS transports.
@@ -49,7 +50,8 @@ vfs_register_transport(VFSConstructor *vtable)
 static VFSConstructor *
 vfs_get_constructor(const gchar *path)
 {
-    VFSConstructor *vtable = NULL
+    VFSConstructor *vtable = NULL;
+    GList *node;
 
     if (path == NULL)
         return NULL;
@@ -67,10 +69,9 @@ vfs_get_constructor(const gchar *path)
 
     /* No transport vtable has been registered, bail. */
     if (vtable == NULL)
-    {
         g_warning("Could not open '%s', no transport plugin available.", path);
-        return NULL;
-    }
+    
+    return vtable;
 }
 
 /**
@@ -87,9 +88,8 @@ vfs_fopen(const gchar * path,
 {
     VFSFile *file;
     VFSConstructor *vtable = NULL;
-    GList *node;
 
-    if (path == NULL || mode == NULL || (vtable = vfs_get_constructor(path)) == NULL)
+    if (path == NULL || mode == NULL || (vtable = vfs_get_constructor(path)) == NULL)
         return NULL;
     
     file = vtable->vfs_fopen_impl(path, mode);
@@ -394,9 +394,8 @@ gboolean
 vfs_is_remote(const gchar * path)
 {
     VFSConstructor *vtable = NULL;
-    GList *node;
 
-    if (path == NULL || (vtable = vfs_get_constructor(path)) == NULL)
+    if (path == NULL || (vtable = vfs_get_constructor(path)) == NULL)
         return FALSE;
 
     /* check if vtable->uri_id is file:// or not, for now. */
