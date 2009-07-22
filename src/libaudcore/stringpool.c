@@ -89,7 +89,7 @@ strcasecanon(gchar *str)
 #endif
 #endif
 
-/* structure to handle string refcounting. */
+/** Structure to handle string refcounting. */
 typedef struct {
     gint refcount;
     gchar *str;

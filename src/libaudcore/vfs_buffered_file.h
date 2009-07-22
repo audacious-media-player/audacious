@@ -26,35 +26,16 @@
 
 G_BEGIN_DECLS
 
-/**
- * VFSBufferedFile:
- * @fd: The VFS handle for the active FD.
- * @buffer: The first 32kb read from the FD.
- * @mem: The memory for the buffer.
- * @which: Whether to use the live FD or the buffer.
- *
- * Private data for the VFS memorybuffer class.
- **/
-
+/** Private data for the VFS memorybuffer class. */
 typedef struct {
-	VFSFile    *fd;
-	VFSFile    *buffer;
-	gchar      *mem;
-	gboolean    which;
+	VFSFile    *fd;     /**< VFS handle for the active FD. */
+	VFSFile    *buffer; /**< First 32kb read from the FD. */
+	gchar      *mem;    /**< The memory for the buffer. */
+	gboolean    which;  /**< Whether to use the live FD or the buffer. */
 } VFSBufferedFile;
 
-/**
- * vfs_buffered_file_new_from_uri:
- * @uri: The location to read from.
- *
- * Creates a VFSBufferedFile. VFSBufferedFile is read-only.
- *
- * Return value: A VFSFile handle for the VFSBufferedFile.
- **/
 VFSFile *vfs_buffered_file_new_from_uri(const gchar *uri);
-
 VFSFile *vfs_buffered_file_release_live_fd(VFSFile *fd);
-
 
 G_END_DECLS
 

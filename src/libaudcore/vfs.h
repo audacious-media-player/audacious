@@ -41,7 +41,7 @@ typedef struct _VFSConstructor VFSConstructor;
 /**
  * @struct _VFSFile
  * #VFSFile objects describe an opened VFS stream, basically being
- * similar in purpose as stdio #FILE
+ * similar in purpose as stdio FILE
  */
 struct _VFSFile {
 	gchar *uri;             /**< The URI of the stream */

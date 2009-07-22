@@ -1,4 +1,4 @@
-/*  Audacious
+/*
  *  Copyright (c) 2006-2007 William Pitcock
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -210,6 +210,12 @@ VFSConstructor buffered_file_const = {
 	buffered_file_vfs_metadata_impl
 };
 
+/**
+ * Creates a VFSBufferedFile. VFSBufferedFile is read-only.
+ *
+ * @param uri URI locator pointing to the file to open.
+ * @return A VFSFile handle for the VFSBufferedFile.
+ **/
 VFSFile *
 vfs_buffered_file_new_from_uri(const gchar *uri)
 {
@@ -256,6 +262,10 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
     return handle;
 }
 
+/**
+ * @bug Is this function used for anything? -- ccr
+ * @deprecated This function probably should not be used.
+ */
 VFSFile *
 vfs_buffered_file_release_live_fd(VFSFile *fd)
 {

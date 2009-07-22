@@ -27,7 +27,7 @@
 
 
 /**
- * #GList of #VFSConstructor objects holding all the registered
+ * GList of #VFSConstructor objects holding all the registered
  * VFS transports.
  */
 static GList *vfs_transports = NULL; /* temporary. -nenolod */
@@ -205,7 +205,7 @@ vfs_ungetc(gint c, VFSFile *file)
 
 /**
  * Performs a seek in given VFS stream. Standard C-style values
- * of #whence can be used to indicate desired action.
+ * of whence can be used to indicate desired action.
  *
  * - SEEK_CUR seeks relative to current stream position.
  * - SEEK_SET seeks to given absolute position (relative to stream beginning).

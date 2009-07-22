@@ -19,9 +19,8 @@
 #include <glib/gprintf.h>
 /**
  * @file vfs_common.c
- * Contains code for various common VFS-stream related operations,
- * which do not need specific VFS backend implementations. Provides
- * routines for string reading and writing and functions for
+ * Common code for various VFS-stream related operations.
+ * Routines for string reading and writing and functions for
  * reading and writing endianess-dependant integer values.
  */
 
@@ -82,7 +81,7 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
  *
  * @param s A string to write to the stream.
  * @param stream A #VFSFile object representing the stream.
- * @eturn The amount of bytes written.
+ * @return The amount of bytes written.
  */
 gint vfs_fputs(const gchar *s, VFSFile *stream)
 {
@@ -135,7 +134,7 @@ gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
  *
  * @param filename URI of the file to read in.
  * @param buf Pointer to a pointer variable of buffer.
- * @param sz Pointer to gsize variable that will hold the amount of
+ * @param size Pointer to gsize variable that will hold the amount of
  * read data e.g. filesize.
  */
 void
