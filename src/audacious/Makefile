@@ -28,7 +28,6 @@ SRCS = af_equalizer.c							\
        main.c									\
        mime.c									\
        output.c									\
-       pixbuf_effects.c							\
        playback.c								\
        playlist_container.c						\
        playlist-new.c \
