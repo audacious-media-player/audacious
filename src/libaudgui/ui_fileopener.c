@@ -86,6 +86,7 @@ action_button_cb(GtkWidget *widget, gpointer data)
 
         aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count
          (playlist));
+        aud_playlist_set_playing (playlist);
     }
 
     filebrowser_add_files(GTK_FILE_CHOOSER(chooser), files);
