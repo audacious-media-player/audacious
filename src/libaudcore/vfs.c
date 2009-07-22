@@ -206,9 +206,10 @@ vfs_ungetc(gint c, VFSFile *file)
 /**
  * Performs a seek in given VFS stream. Standard C-style values
  * of #whence can be used to indicate desired action.
- * #SEEK_CUR seeks relative to current stream position.
- * #SEEK_SET seeks to given absolute position (relative to stream beginning).
- * #SEEK_END sets stream position to current file end.
+ *
+ * - SEEK_CUR seeks relative to current stream position.
+ * - SEEK_SET seeks to given absolute position (relative to stream beginning).
+ * - SEEK_END sets stream position to current file end.
  *
  * @param file #VFSFile object that represents the VFS stream.
  * @param offset The offset to seek to.

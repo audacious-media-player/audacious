@@ -35,12 +35,12 @@
 #include <string.h>
 #include <ctype.h>
 
-/*
- * escape_shell_chars()
- *
+/**
  * Escapes characters that are special to the shell inside double quotes.
+ *
+ * @param string String to be escaped.
+ * @return Given string with special characters escaped. Must be freed with g_free().
  */
-
 gchar *
 escape_shell_chars(const gchar * string)
 {
@@ -68,7 +68,13 @@ escape_shell_chars(const gchar * string)
     return escaped;
 }
 
-/* replace %20 with ' ' in place */
+/**
+ * Performs in place replacement of %20 sequences with whitespace character.
+ * Notice that the operation is "in place", thus the given string is modified.
+ *
+ * @param str String to be manipulated.
+ * @return Pointer to the string if succesful, NULL if failed or if input was NULL.
+ */
 static gchar *
 str_twenty_to_space(gchar * str)
 {
@@ -76,7 +82,7 @@ str_twenty_to_space(gchar * str)
 
     g_return_val_if_fail(str != NULL, NULL);
 
-    while ((match = strstr(str, "%20"))) {
+    while ((match = strstr(str, "%20")) != NULL) {
         match_end = match + 3;
         *match++ = ' ';
         while (*match_end)
@@ -87,7 +93,12 @@ str_twenty_to_space(gchar * str)
     return str;
 }
 
-/* replace drive letter with '/' in place */
+/**
+ * Performs in place replacement of Windows-style drive letter with '/' (slash).
+ *
+ * @param str String to be manipulated.
+ * @return Pointer to the string if succesful, NULL if failed or if input was NULL.
+ */
 static gchar *
 str_replace_drive_letter(gchar * str)
 {
@@ -95,7 +106,7 @@ str_replace_drive_letter(gchar * str)
 
     g_return_val_if_fail(str != NULL, NULL);
 
-    while ((match = strstr(str, ":\\"))) {
+    while ((match = strstr(str, ":\\")) != NULL) {
         match--;
         match_end = match + 3;
         *match++ = '/';
@@ -108,15 +119,15 @@ str_replace_drive_letter(gchar * str)
 }
 
 static gchar *
-str_replace_char(gchar * str, gchar old, gchar new)
+str_replace_char(gchar * str, gchar o, gchar n)
 {
     gchar *match;
 
     g_return_val_if_fail(str != NULL, NULL);
 
     match = str;
-    while ((match = strchr(match, old)))
-        *match = new;
+    while ((match = strchr(match, o)) != NULL)
+        *match = n;
 
     return str;
 }
@@ -139,7 +150,6 @@ str_replace_in(gchar ** str, gchar * new_str)
 {
     *str = str_replace(*str, new_str);
 }
-
 
 gboolean
 str_has_prefix_nocase(const gchar * str, const gchar * prefix)
@@ -174,7 +184,6 @@ str_to_utf8_fallback(const gchar * str)
 {
     gchar *out_str, *convert_str, *chr;
 
-    /* NULL in NULL out */
     if (!str)
         return NULL;
 
@@ -190,19 +199,32 @@ str_to_utf8_fallback(const gchar * str)
     return out_str;
 }
 
+/**
+ * Convert given string from nearly any encoding to UTF-8 encoding.
+ *
+ * @param str Local filename/path to convert.
+ * @return String in UTF-8 encoding. Must be freed with g_free().
+ */
 gchar *(*str_to_utf8)(const gchar * str) = str_to_utf8_fallback;
+
 gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error) = NULL;
 
-/* convert name of absolute path in local file system encoding into utf8 string */
+/**
+ * Convert name of absolute path in local file system encoding
+ * into UTF-8 string.
+ *
+ * @param filename Local filename/path to convert.
+ * @return Filename converted to UTF-8 encoding.
+ */
 gchar *
 filename_to_utf8(const gchar * filename)
 {
     gchar *out_str;
 
     /* NULL in NULL out */
-    if (!filename)
+    if (filename == NULL)
         return NULL;
 
     if ((out_str = g_filename_to_utf8(filename, -1, NULL, NULL, NULL)))
@@ -223,7 +245,8 @@ uri_to_display_basename(const gchar * uri)
     utf8fn = g_filename_display_name(realfn ? realfn : uri); // guaranteed to be non-NULL
     basename = g_path_get_basename(utf8fn);
 
-    g_free(realfn); g_free(utf8fn);
+    g_free(realfn);
+    g_free(utf8fn);
 
     return basename;
 }
@@ -240,31 +263,36 @@ uri_to_display_dirname(const gchar * uri)
     utf8fn = g_filename_display_name(realfn ? realfn : uri);  // guaranteed to be non-NULL
     dirname = g_path_get_dirname(utf8fn);
 
-    g_free(realfn); g_free(utf8fn);
+    g_free(realfn);
+    g_free(utf8fn);
 
     return dirname;
 }
 
-/* This function is here to ASSERT that a given string IS valid UTF-8.
- * If it is, a copy of the string is returned (use g_free() to deallocate it.)
- *
- * However, if the string is NOT valid UTF-8, a warning is printed and a
- * callstack backtrace is printed in order to see where the problem occured.
- *
- * This is a temporary measure for removing useless str_to_utf8 etc. calls
- * and will be eventually removed...
- * -- ccr
- */
 #if defined(__GLIBC__) && (__GLIBC__ >= 2)
 #define HAVE_EXECINFO 1
 #include <execinfo.h>
 #endif
 
+/**
+ * This function can be used to assert that a given string is valid UTF-8.
+ * If it is, a copy of the string is returned. However, if the string is NOT
+ * valid UTF-8, a warning and a callstack backtrace is printed in order to
+ * see where the problem occured.
+ *
+ * This is a temporary measure for removing useless str_to_utf8 etc. calls
+ * and will be eventually removed. This function should be used in place of
+ * #str_to_utf8() calls when it can be reasonably assumed that the input
+ * should already be in unicode encoding.
+ *
+ * @param str String to be tested and converted to UTF-8 encoding.
+ * @return String in UTF-8 encoding, or NULL if conversion failed or input was NULL.
+ */
 gchar *
 str_assert_utf8(const gchar * str)
 {
     /* NULL in NULL out */
-    if (!str)
+    if (str == NULL)
         return NULL;
 
     /* already UTF-8? */
@@ -293,7 +321,7 @@ str_assert_utf8(const gchar * str)
 const gchar *
 str_skip_chars(const gchar * str, const gchar * chars)
 {
-    while (strchr(chars, *str))
+    while (strchr(chars, *str) != NULL)
         str++;
     return str;
 }
@@ -324,6 +352,18 @@ convert_dos_path(gchar * path)
     return path;
 }
 
+/**
+ * If given file path/URI contains ending indicating subtune number
+ * "?<number>", split the string. If given #track pointer is non-NULL,
+ * subtune number is assigned into it.
+ *
+ * @param filename Filename/URI to split.
+ * @param track Pointer to variable where subtune number should be
+ * assigned or NULL if it is not needed.
+ * @return Newly allocated splitted filename without the subtune indicator.
+ * This string must be freed with g_free(). NULL will be returned if
+ * there was any failure.
+ */
 gchar *
 filename_split_subtune(const gchar * filename, gint * track)
 {

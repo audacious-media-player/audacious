@@ -12,9 +12,9 @@
 
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
-#define aud_md5_bytereverse(buf, len)    /* Nothing */
+#  define aud_md5_bytereverse(buf, len) do { } while (0)
 #else
-#if G_BYTE_ORDER == G_BIG_ENDIAN
+#  if G_BYTE_ORDER == G_BIG_ENDIAN
 static void aud_md5_bytereverse(guint8 *buf, guint l)
 {
     guint32 t;
@@ -24,14 +24,17 @@ static void aud_md5_bytereverse(guint8 *buf, guint l)
         buf += sizeof(guint32);
     } while (--l);
 }
-#else
-#error Unsupported endianess!
-#endif
+#  else
+#    error Unsupported endianess, not G_LITTLE_ENDIAN or G_BIG_ENDIAN!
+#  endif
 #endif
 
 
-/* Start MD5 accumulation.  Set bit count to 0 and buffer to mysterious
- * initialization constants.
+/**
+ * Start MD5 accumulation. Set bit count to 0 and buffer to mysterious
+ * initialization constants. Initializes the given state context.
+ *
+ * @param ctx Context structure to initialize.
  */
 void aud_md5_init(aud_md5state_t *ctx)
 {
@@ -140,8 +143,13 @@ static void aud_md5_transform(guint32 buf[4], guint32 const in[16])
 }
 
 
-/* Update context to reflect the concatenation of another buffer full
- * of bytes.
+/**
+ * Appends more data to the MD5 state context. Updates context to
+ * reflect the concatenation of another buffer full of bytes.
+ *
+ * @param ctx State context to add data in.
+ * @param buf Pointer to buffer of data.
+ * @param len Length/size of the data in buffer.
  */
 void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
 {
@@ -184,8 +192,11 @@ void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
     memcpy(ctx->in, buf, len);
 }
 
-/* Final wrapup - pad to 64-byte boundary with the bit pattern 
- * 1 0* (64-bit count of bits processed, MSB-first)
+/**
+ * Calculates a MD5 hash digest from the given context.
+ *
+ * @param ctx State context to be hashed.
+ * @param digest Variable where computed MD5 digest is placed.
  */
 void aud_md5_finish(aud_md5state_t *ctx, aud_md5hash_t digest)
 {

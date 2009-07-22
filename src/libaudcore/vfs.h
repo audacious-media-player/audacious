@@ -17,6 +17,12 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
+/**
+ * @file vfs.h
+ * Main header API for accessing Audacious VFS functionality.
+ * Provides functions for VFS transport registration and
+ * file access.
+ */
 
 #ifndef AUDACIOUS_VFS_H
 #define AUDACIOUS_VFS_H
@@ -27,12 +33,13 @@
 
 G_BEGIN_DECLS
 
-/*! \struct VFSFile */
+/** @struct VFSFile */
 typedef struct _VFSFile VFSFile;
-/*! \struct VFSConstructor */
+/** @struct VFSConstructor */
 typedef struct _VFSConstructor VFSConstructor;
 
-/*! \struct _VFSFile
+/**
+ * @struct _VFSFile
  * #VFSFile objects describe an opened VFS stream, basically being
  * similar in purpose as stdio #FILE
  */
@@ -43,11 +50,12 @@ struct _VFSFile {
 	gint ref;               /**< The amount of references that the VFSFile object has */
 };
 
-/*! \struct _VFSConstructor
+/** 
+ * @struct _VFSConstructor
  * #VFSConstructor objects contain the base vtables used for extrapolating
  * a VFS stream. #VFSConstructor objects should be considered %virtual in
  * nature. VFS base vtables are registered via vfs_register_transport().
- **/
+ */
 struct _VFSConstructor {
     /** The URI identifier, e.g. "file" would handle "file://" streams. */
 	gchar *uri_id;
@@ -76,7 +84,9 @@ struct _VFSConstructor {
 	gboolean (*vfs_feof_impl)(VFSFile *file);
 	/** A function pointer which points to a ftruncate implementation. */
 	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
+	/** A function pointer which points to a fsize implementation. */
 	off_t (*vfs_fsize_impl)(VFSFile *file);
+	/** A function pointer which points to a (stream) metadata fetching implementation. */
 	gchar *(*vfs_get_metadata_impl)(VFSFile *file, const gchar * field);
 };
 
