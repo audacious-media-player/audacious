@@ -177,7 +177,7 @@ stringpool_unref(gchar *str)
 
 /* compatibility for libmowgli without a patricia class. */
 gchar *
-stringpool_get(gchar *str)
+stringpool_get(const gchar *str)
 {
     return str_to_utf8(str);
 }
