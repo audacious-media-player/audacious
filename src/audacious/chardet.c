@@ -24,9 +24,6 @@
 
 #ifdef USE_CHARDET
 #include "../libguess/libguess.h"
-#  ifdef HAVE_UDET
-#    include <libudet_c.h>
-#  endif
 #endif
 
 gchar *
@@ -66,11 +63,9 @@ cd_str_to_utf8(const gchar *str)
     if (dfa_validate_utf8(str, strlen(str)))
         return g_strdup(str);
 
-#  ifdef HAVE_UDET
     /* chardet encoding detector */
     if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
         return out_str;
-#  endif
 #endif
 
     /* assume encoding associated with locale */
@@ -145,7 +140,7 @@ fallback:
 			ret = NULL;
 		}
 	}
-	
+
 	return NULL;	/* if I have no idea, return NULL. */
 }
 
