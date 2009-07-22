@@ -412,17 +412,11 @@ gboolean playback_play_file (const gchar * filename, InputPlugin * decoder)
             decoder = pr->ip;
             g_free(pr);
         }
-        else
-        {
-            playback_stop();
-            return FALSE;
-        }
     }
 
     if (decoder == NULL || ! decoder->enabled)
     {
-        set_current_input_playback(NULL);
-
+        fprintf (stderr, "Cannot play %s: no decoder found.\n", filename);
         return FALSE;
     }
 
