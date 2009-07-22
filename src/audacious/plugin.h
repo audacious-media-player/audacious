@@ -59,7 +59,6 @@
 #define GENERAL_PLUGIN(x) ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)     ((VisPlugin *)(x))
 #define DISCOVERY_PLUGIN(x)     ((DiscoveryPlugin *)(x))
-
 #define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
@@ -177,18 +176,6 @@ typedef GHashTable INIFile;
 #include "audacious/custom_uri.h"
 #include "audacious/hook.h"
 #include "audacious/flow.h"
-
-#define PLUGIN_COMMON_FIELDS		\
-    gpointer handle;			\
-    gchar *filename;			\
-    gchar *description;			\
-    void (*init) (void);		\
-    void (*cleanup) (void);		\
-    void (*about) (void);		\
-    void (*configure) (void);		\
-    PluginPreferences *settings;	\
-    gboolean enabled;
-
 
 /*
  * The v2 Module header.
@@ -1025,6 +1012,19 @@ G_END_DECLS
 #define SIMPLE_INTERFACE_PLUGIN(name, interface) \
     DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
 
+
+#define PLUGIN_COMMON_FIELDS		\
+    gpointer handle;			\
+    gchar *filename;			\
+    gchar *description;			\
+    void (*init) (void);		\
+    void (*cleanup) (void);		\
+    void (*about) (void);		\
+    void (*configure) (void);		\
+    PluginPreferences *settings;	\
+    gboolean enabled;
+
+
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
 struct _Plugin {
@@ -1053,10 +1053,12 @@ struct _OutputPlugin {
     gpointer handle;
     gchar *filename;
     gchar *description;
+    
     OutputPluginInitStatus (*init) (void);
     void (*cleanup) (void);
     void (*about) (void);
     void (*configure) (void);
+
     gboolean enabled;
 
     void (*get_volume) (gint * l, gint * r);
@@ -1087,14 +1089,14 @@ struct _EffectPlugin {
 
 struct _InputPlayback {
     gchar *filename;
-    InputPlugin *plugin;
     void *data;
-    OutputPlugin *output;
 
-    int playing;
+    gint playing;
     gboolean error;
     gboolean eof;
 
+    InputPlugin *plugin;
+    OutputPlugin *output;
     GThread *thread;
 
     GMutex *pb_ready_mutex;
@@ -1104,7 +1106,7 @@ struct _InputPlayback {
 
     GMutex *pb_change_mutex;
     GCond *pb_change_cond;
-    void (*set_pb_change)(InputPlayback *self);
+    void (*set_pb_change) (InputPlayback *self);
 
     gint nch;
     gint rate;
@@ -1125,13 +1127,19 @@ struct _InputPlayback {
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
-    gint (*is_our_file) (const gchar * filename);
+    gboolean have_subtune;
+    gchar **vfs_extensions;
+
     GList *(*scan_dir) (gchar * dirname);
+    gint (*is_our_file) (const gchar * filename);
+    gint (*is_our_file_from_vfs) (const gchar *filename, VFSFile *fd);
+    Tuple *(*probe_for_tuple) (const gchar *uri, VFSFile *fd);
 
     void (*play_file) (InputPlayback * playback);
     void (*stop) (InputPlayback * playback);
     void (*pause) (InputPlayback * playback, gshort paused);
     void (*seek) (InputPlayback * playback, gint time);
+    void (*mseek) (InputPlayback * playback, gulong millisecond);
 
     gint (*get_time) (InputPlayback * playback);
 
@@ -1143,35 +1151,17 @@ struct _InputPlugin {
     void (*get_song_info) (gchar * filename, gchar ** title, gint * length);
     void (*file_info_box) (gchar * filename);
 
-    /* Added in Audacious 1.1.0 */
     Tuple *(*get_song_tuple) (const gchar * filename);
 
-    /* Added in Audacious 1.3.0 */
-    gint (*is_our_file_from_vfs) (const gchar *filename, VFSFile *fd);
-    gchar **vfs_extensions;
-
-    /* Added in Audacious 1.4.0 */
-    void (*mseek) (InputPlayback * playback, gulong millisecond);
-    Tuple *(*probe_for_tuple)(const gchar *uri, VFSFile *fd);
-
-    /* Added in Audacious 1.4.1 */
-    gboolean have_subtune;
-
-    /* Added in Audacious 1.5.0 */
-    gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
-    /*
-     * Plugin can provide this function for file metadata (aka tag) writing functionality
+    /* Plugin can provide this function for file metadata (aka tag) writing functionality
      * in case when no reason to provide its own custom file info dialog. Thus in most cases.
      *
-     * Some notes:
-     *
-     * 1. In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
-     * 2. Each field in tuple means operation on one and only one tag's filed:
-     *     2.1. Set this field to appropriate value, if non-empty string or positive number provided.
-     *     2.2. Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
-     *
-     * -- eugene.
+     * - In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
+     * - Each field in tuple means operation on one and only one tag's filed:
+     *   - Set this field to appropriate value, if non-empty string or positive number provided.
+     *   - Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
      */
+    gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
 };
 
 struct _GeneralPlugin {
