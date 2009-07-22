@@ -30,7 +30,7 @@
  * GList of #VFSConstructor objects holding all the registered
  * VFS transports.
  */
-static GList *vfs_transports = NULL; /* temporary. -nenolod */
+GList *vfs_transports = NULL; /* temporary. -nenolod */
 
 
 /**
