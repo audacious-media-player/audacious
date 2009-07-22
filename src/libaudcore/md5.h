@@ -1,3 +1,7 @@
+/**
+ * @file md5.h
+ * Functions for computing MD5 hashes of given data.
+ */
 #ifndef AUDACIOUS_MD5_H
 #define AUDACIOUS_MD5_H
 
@@ -5,15 +9,20 @@
 
 G_BEGIN_DECLS
 
+/** State context structure for MD5 hash calculation */
 typedef struct {
-    guint32 bits[2];    /* message length in bits, lsw first */
-    guint32 buf[4];     /* digest buffer */
-    guint8 in[64];      /* accumulate block */
+    guint32 bits[2];    /**< Message length in bits, lsw first */
+    guint32 buf[4];     /**< Message digest buffer */
+    guint8 in[64];      /**< Data accumulation block */
 } aud_md5state_t;
 
+/** Length of MD5 hash in bytes */
 #define AUD_MD5HASH_LENGTH       (16)
+
+/** Length of MD5 hash in ASCII characters */
 #define AUD_MD5HASH_LENGTH_CH    (AUD_MD5HASH_LENGTH * 2)
 
+/** Type for holding calculated MD5 hash digest */
 typedef guint8 aud_md5hash_t[AUD_MD5HASH_LENGTH];
 
 
