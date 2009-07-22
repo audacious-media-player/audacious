@@ -60,32 +60,6 @@ Long-term "TODO"
 
 Playlist code issues
 ====================
-It's been determined that the playlist code should be completely refactored.
-
-ATTENTION! Add more stuff here! Issues that you can think of, suggestions
-for solutions, etc. References to algorithms...
-
-- code (mostly in playlist.c) is unnecessarily complex in some places and
-  there is lots of completely useless duplication.
-
-- what data structures should be used? things that factor in are
-  efficiency and scalability -  memory usage and speed.
-  see also below and notice the manipulation bottleneck(s).
-
-  (different structures typically have bottlenecks in different places.)
-
-- playlist_clear() is VERY slow with large playlists, possible reasons?
-  * GList scalability sucks? (it does, but is it the real reason here? need
-  to profile this...)
-  * maybe playlist_entry_free() is at fault instead? (see also below)
-  * mowgli_heap_free()?
-
-  possible solutions?
-  * mempools for playlist data? not sure if possible, the tuple heaps
-    should then somehow be collected into pools...  (done, see stringpools. --nenolod)
-  * storing the playlist as a GtkTreeModel seems to be fairly fast (at least
-    in mudkip-player it is) --nenolod
-
 
 ccr rants:
 ----------
@@ -112,5 +86,3 @@ Bad sides:
   - requires careful design and thread locking .. but that we need anyway.
   - possibly might make playlist GUI representation harder. I am not sure
     what effects this might have, feel free to pitch in thoughts...
-
-    
