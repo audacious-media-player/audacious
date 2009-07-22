@@ -520,18 +520,10 @@ plugin_get_plugin(const gchar *filename)
     return mowgli_dictionary_retrieve(plugin_dict, filename);
 }
 
-static void add_vis_pcm_dummy (gint time, AFormat format, gint channels, gint
- length, void * data)
-{
-}
-
 static void
 input_plugin_init(Plugin * plugin)
 {
     InputPlugin *p = INPUT_PLUGIN(plugin);
-
-    p->get_vis_type = input_get_vis_type;
-    p->add_vis_pcm = add_vis_pcm_dummy;
 
     p->set_info = playback_set_info;
     p->set_info_text = playback_set_title;

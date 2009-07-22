@@ -1138,9 +1138,6 @@ struct _InputPlugin {
     gint (*get_volume) (gint * l, gint * r);
     gint (*set_volume) (gint l, gint r);
 
-    InputVisType (*get_vis_type) (void);
-    void (*add_vis_pcm) (gint time, AFormat fmt, gint nch, gint length, gpointer ptr);
-
     void (*set_info) (gchar * title, gint length, gint rate, gint freq, gint nch);
     void (*set_info_text) (gchar * text);
     void (*get_song_info) (gchar * filename, gchar ** title, gint * length);
