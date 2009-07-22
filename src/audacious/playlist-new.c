@@ -399,9 +399,6 @@ void playlist_delete (gint playlist_num)
     if (playlist == NULL)
         return;
 
-    if (playlist == active_playlist)
-        active_playlist = NULL;
-
     if (playlist == playing_playlist)
     {
         playback_stop ();
@@ -419,7 +416,7 @@ void playlist_delete (gint playlist_num)
     if (index_count (playlists) == 0)
         playlist_insert (0);
 
-    if (active_playlist == NULL)
+    if (playlist == active_playlist)
         playlist_set_active (MIN (playlist_num, index_count (playlists) - 1));
 }
 
