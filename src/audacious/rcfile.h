@@ -26,13 +26,13 @@
 
 G_BEGIN_DECLS
 
-/** RcLine objects contain key->value mappings.
+/** RcLine objects contain key->value mappings. */
 typedef struct {
     gchar *key;     /**< Key for the key->value mapping. */
     gchar *value;   /**< Value for the key->value mapping. */
 } RcLine;
 
-/** RcSection objects contain collections of key->value mappings.
+/** RcSection objects contain collections of key->value mappings. */
 typedef struct {
     gchar *name;    /**< Name for the #RcSection. */
     GList *lines;   /**< List of key->value mappings for the #RcSection.*/
