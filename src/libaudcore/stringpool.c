@@ -98,14 +98,13 @@ typedef struct {
 static mowgli_patricia_t *stringpool_tree = NULL;
 static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
-gboolean
+static gboolean
 stringpool_should_cache(const gchar *string, gsize maxlen)
 {
     const gchar *end = memchr(string, '\0', maxlen);
     return end != NULL ? TRUE : FALSE;
 }
 
-/* allocate a string if needed. */
 gchar *
 stringpool_get(const gchar *str)
 {
