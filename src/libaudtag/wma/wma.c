@@ -11,9 +11,6 @@
 int filePosition = 0;
 int newfilePosition = 0;
 
-
-HeaderObject header;
-HeaderObject newHeader;
 void writeGuidToFile(VFSFile *f, int guid_type);
 
 gboolean wma_can_handle_file(VFSFile *fd) {
@@ -27,8 +24,9 @@ gboolean wma_can_handle_file(VFSFile *fd) {
     return retval;
 }
 
-void readHeaderObject(VFSFile *f) {
+HeaderObject *readHeaderObject(VFSFile *f) {
     DEBUG("read header object\n");
+    HeaderObject *header = g_new0(HeaderObject, 1);
 
     //we have allready read the GUID so increase filePositions with 16
     filePosition = 16;
@@ -36,17 +34,17 @@ void readHeaderObject(VFSFile *f) {
     //read the header size
     guint64 hs;
     vfs_fread(&hs, 8, 1, f);
-    header.size = hs;
+    header->size = hs;
     filePosition += 8;
     //read  the number of objects
     guint32 ho;
     vfs_fread(&ho, 4, 1, f);
-    header.objectsNr = ho;
+    header->objectsNr = ho;
     filePosition += 4;
     //8+8 reserved bytes
 
     filePosition += 2;
-    return;
+    return header;
 }
 
 Tuple *readCodecName(VFSFile *f, Tuple *tuple) {
@@ -89,7 +87,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
     vfs_fread(&size, 8, 1, f);
     /* ignore file id and file size 16 + 8 = 24*/
     vfs_fseek(f, 24, SEEK_CUR);
-    /*read creawma_tion date -   given as the number of 100-nanosecond
+    /*read creation date - given as the number of 100-nanosecond
     intervals since January 1, 1601  */
     vfs_fread(&creationDate, 8, 1, f);
     year = get_year(creationDate);
@@ -104,7 +102,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
 
     tuple_associate_int(tuple, FIELD_LENGTH, NULL, playDuration / 1000);
     DEBUG("length = %"PRId64"\n", playDuration / 10000);
-    tuple_associate_int(tuple, FIELD_YEAR, NULL, year);
+    //tuple_associate_int(tuple, FIELD_YEAR, NULL, year);
 
     return tuple;
 }
@@ -242,6 +240,7 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
 
     }
 
+    exit(0);
     filePosition += size;
     return tuple;
 }
@@ -258,10 +257,11 @@ Tuple *wma_populate_tuple_from_file(VFSFile *fd) {
     DEBUG("wma populate tuple from file\n");
 
     Tuple *tuple = NULL;
-    readHeaderObject(fd);
+
+    HeaderObject *header = readHeaderObject(fd);
     int i;
 
-    for (i = 0; i < header.objectsNr; i++) {
+    for (i = 0; i < header->objectsNr; i++) {
         GUID *guid = g_new0(GUID, 1);
         memcpy(guid, guid_read_from_file(fd, filePosition), sizeof (GUID));
         int guid_type = get_guid_type(guid);
@@ -306,25 +306,26 @@ Tuple *wma_populate_tuple_from_file(VFSFile *fd) {
     tuple_associate_string(tuple, FIELD_QUALITY, NULL, "lossy");
 
     printTuple(tuple);
-    vfs_fclose(fd);
     //wma_write_tuple_to_file(tuple);
     return tuple;
 }
 
-void copyHeaderObject(VFSFile *from, VFSFile *to) {
+HeaderObject *copyHeaderObject(VFSFile *from, VFSFile *to) {
     /*copy guid */
     gchar buf[16];
+    HeaderObject *newHeader = g_new0(HeaderObject, 1);
+
     vfs_fread(buf, 16, 1, from);
     vfs_fwrite(buf, 16, 1, to);
     gchar buf2[2];
     /*read and copy total size */
-    vfs_fread(&newHeader.size, 8, 1, from);
-    vfs_fwrite(&newHeader.size, 8, 1, to);
-    DEBUG("HEADER %"PRId64"\n", newHeader.size);
+    vfs_fread(&newHeader->size, 8, 1, from);
+    vfs_fwrite(&newHeader->size, 8, 1, to);
+    DEBUG("HEADER %"PRId64"\n", newHeader->size);
     /* read and copy number of header objects */
-    vfs_fread(&newHeader.objectsNr, 4, 1, from);
+    vfs_fread(&newHeader->objectsNr, 4, 1, from);
 
-    vfs_fwrite(&newHeader.objectsNr, 4, 1, to);
+    vfs_fwrite(&newHeader->objectsNr, 4, 1, to);
 
     /* copy the next 2 reserved bytes */
     vfs_fread(buf2, 2, 1, from);
@@ -332,6 +333,7 @@ void copyHeaderObject(VFSFile *from, VFSFile *to) {
 
     newfilePosition += 30;
     filePosition += 30;
+    return newHeader;
 }
 
 void copyASFObject(VFSFile *from, VFSFile *to) {
@@ -902,6 +904,7 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     int foundContentDesc = 0;
     int foundExtendedHeader = 0;
     int HeaderObjNr = 0;
+    HeaderObject *newHeader;
     int i;
 
     /* create a temporary file, with random name */
@@ -914,10 +917,10 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
 
     DEBUG("fopen %s\n", tmpfile != NULL ? "success" : "failure");
 
-    copyHeaderObject(fd, tmpFile);
+    newHeader = copyHeaderObject(fd, tmpFile);
 
 
-    for (i = 0; i < newHeader.objectsNr; i++) {
+    for (i = 0; i < newHeader->objectsNr; i++) {
         GUID *guid = g_new0(GUID, 1);
         memcpy(guid, guid_read_from_file(fd, filePosition), sizeof (GUID));
         int guid_type = get_guid_type(guid);
@@ -972,7 +975,7 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     DEBUG("new header %d\n", newfilePosition);
     vfs_fseek(tmpFile, 16, SEEK_SET);
     vfs_fwrite(&total_size, 8, 1, tmpFile);
-    newHeader.objectsNr += 1;
+    newHeader->objectsNr += 1;
     vfs_fwrite(&HeaderObjNr, 4, 1, tmpFile);
     /* go back to the end of file */
     vfs_fseek(tmpFile, newfilePosition, SEEK_SET);
@@ -981,14 +984,15 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     /* write the rest of the file */
     writeAudioData(fd, tmpFile);
 
+    gchar *uri = g_strdup(fd -> uri);
     vfs_fclose(fd);
     vfs_fclose(tmpFile);
 
-    if (g_rename(tmp_path, fd -> uri) == 0) {
+    if (g_rename(tmp_path, uri) == 0) {
         DEBUG("the tag was updated successfully\n");
     } else {
         DEBUG("an error has occured\n");
     }
-    return 1;
+    g_free(uri);
     return TRUE;
 }
