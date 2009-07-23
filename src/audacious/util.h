@@ -49,7 +49,6 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
 
 gchar *find_file_recursively(const gchar * dirname, const gchar * file);
 gchar *find_path_recursively(const gchar * dirname, const gchar * file);
-void del_directory(const gchar * dirname);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
 
@@ -70,10 +69,6 @@ void util_set_cursor(GtkWidget * window);
 gboolean text_get_extents(const gchar * fontname, const gchar * text,
                           gint * width, gint * height, gint * ascent,
                           gint * descent);
-
-gboolean file_is_archive(const gchar * filename);
-gchar *archive_decompress(const gchar * path);
-gchar *archive_basename(const gchar * path);
 
 guint gint_count_digits(gint n);
 

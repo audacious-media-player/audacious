@@ -27,28 +27,15 @@
 #  include "config.h"
 #endif
 
-#define NEED_GLADE
-#include "util.h"
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
 #include "platform/smartinclude.h"
-#include <errno.h>
 
-#include "input.h"
-#include "main.h"
 #include "playback.h"
 #include "playlist-new.h"
-#include "audstrings.h"
-
-#ifdef USE_CHARDET
-#include "../libguess/libguess.h"
-#endif
+#include "audconfig.h"
 
 #define URL_HISTORY_MAX_SIZE 30
 
