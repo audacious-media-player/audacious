@@ -712,7 +712,9 @@ add_plugin(const gchar * filename)
 
     g_message("Loaded plugin (%s)", filename);
 
-    if (!(module = g_module_open(filename, G_MODULE_BIND_LOCAL))) {
+    if (!(module = g_module_open(filename, G_MODULE_BIND_LAZY |
+     G_MODULE_BIND_LOCAL)))
+    {
         printf("Failed to load plugin (%s): %s\n",
                   filename, g_module_error());
         return;
