@@ -531,7 +531,7 @@ gchar * playback_get_title (void)
         return NULL;
 
     if (cfg.show_numbers_in_pl)
-        return g_strdup_printf ("%d. %s (%d:%02d)", playlist_get_position
+        return g_strdup_printf ("%d. %s (%d:%02d)", 1 + playlist_get_position
          (playlist_get_playing ()), playback->title, playback->length / 60000,
          playback->length / 1000 % 60);
     else
