@@ -582,6 +582,9 @@ struct _AudaciousFuncTableV1 {
     gchar * (* playback_get_title) (void);
     void (* fileinfo_show) (gint playlist, gint entry);
     void (* fileinfo_show_current) (void);
+
+    /* Interface API */
+    const Interface * (* interface_get_current) (void);
 };
 
 
@@ -915,6 +918,8 @@ struct _AudaciousFuncTableV1 {
 
 //#define aud_tag_tuple_read                  _audvt->tag_tuple_read
 //#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write
+
+#define aud_interface_get_current       _audvt->interface_get_current
 
 #include "audacious/auddrct.h"
 
