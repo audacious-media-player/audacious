@@ -739,3 +739,20 @@ make_directory(const gchar * path, mode_t mode)
     g_printerr(_("Could not create directory (%s): %s\n"), path,
                g_strerror(errno));
 }
+
+#define URL_HISTORY_MAX_SIZE 30
+
+void
+util_add_url_history_entry(const gchar * url)
+{
+    if (g_list_find_custom(cfg.url_history, url, (GCompareFunc) strcasecmp))
+        return;
+
+    cfg.url_history = g_list_prepend(cfg.url_history, g_strdup(url));
+
+    while (g_list_length(cfg.url_history) > URL_HISTORY_MAX_SIZE) {
+        GList *node = g_list_last(cfg.url_history);
+        g_free(node->data);
+        cfg.url_history = g_list_delete_link(cfg.url_history, node);
+    }
+}

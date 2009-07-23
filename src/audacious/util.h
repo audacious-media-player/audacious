@@ -92,6 +92,8 @@ gpointer smart_realloc(gpointer ptr, gsize *size);
 
 void make_directory(const gchar * path, mode_t mode);
 
+void util_add_url_history_entry(const gchar * url);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_UTIL_H */

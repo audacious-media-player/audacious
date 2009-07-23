@@ -35,31 +35,20 @@
 
 #include "playback.h"
 #include "playlist-new.h"
-#include "audconfig.h"
-
-#define URL_HISTORY_MAX_SIZE 30
+#include "util.h"
 
 static void
-util_add_url_callback(GtkWidget * widget,
+urlopener_add_url_callback(GtkWidget * widget,
                       GtkEntry * entry)
 {
     const gchar *text;
 
     text = gtk_entry_get_text(entry);
-    if (g_list_find_custom(cfg.url_history, text, (GCompareFunc) strcasecmp))
-        return;
-
-    cfg.url_history = g_list_prepend(cfg.url_history, g_strdup(text));
-
-    while (g_list_length(cfg.url_history) > URL_HISTORY_MAX_SIZE) {
-        GList *node = g_list_last(cfg.url_history);
-        g_free(node->data);
-        cfg.url_history = g_list_delete_link(cfg.url_history, node);
-    }
+    util_add_url_history_entry(text);
 }
 
 GtkWidget *
-util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
+urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                         GCallback enqueue_func)
 {
     GtkWidget *win, *vbox, *bbox, *cancel, *enqueue, *ok, *combo, *entry,
@@ -92,7 +81,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                                   (const gchar *) url->data);
 
     g_signal_connect(entry, "activate",
-                     G_CALLBACK(util_add_url_callback),
+                     G_CALLBACK(urlopener_add_url_callback),
                      entry);
     g_signal_connect(entry, "activate",
                      G_CALLBACK(ok_func),
@@ -118,7 +107,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     gtk_box_pack_start(GTK_BOX(bbox), enqueue, FALSE, FALSE, 0);
 
     g_signal_connect(enqueue, "clicked",
-                     G_CALLBACK(util_add_url_callback),
+                     G_CALLBACK(urlopener_add_url_callback),
                      entry);
     g_signal_connect(enqueue, "clicked",
                      G_CALLBACK(enqueue_func),
@@ -129,7 +118,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
     ok = gtk_button_new_from_stock(GTK_STOCK_OPEN);
     g_signal_connect(ok, "clicked",
-                     G_CALLBACK(util_add_url_callback), entry);
+                     G_CALLBACK(urlopener_add_url_callback), entry);
     g_signal_connect(ok, "clicked",
                      G_CALLBACK(ok_func), entry);
     g_signal_connect_swapped(ok, "clicked",
@@ -174,9 +163,9 @@ show_add_url_window(void)
 
     if (!url_window) {
         url_window =
-            util_add_url_dialog_new(_("Enter location to play:"),
-                                    G_CALLBACK(on_add_url_ok_clicked),
-                                    G_CALLBACK(on_add_url_add_clicked));
+            urlopener_add_url_dialog_new(_("Enter location to play:"),
+                                         G_CALLBACK(on_add_url_ok_clicked),
+                                         G_CALLBACK(on_add_url_add_clicked));
 
         g_signal_connect(url_window, "destroy",
                          G_CALLBACK(gtk_widget_destroyed),

@@ -26,21 +26,6 @@
 #ifndef AUDACIOUS_UI_URLOPENER_H
 #define AUDACIOUS_UI_URLOPENER_H
 
-#ifdef _AUDACIOUS_CORE
-# ifdef HAVE_CONFIG_H
-#  include "config.h"
-# endif
-#endif
-
-#include <glib.h>
-#include <gtk/gtk.h>
-
-G_BEGIN_DECLS
-
-GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
-                                   GCallback enqueue_func);
 void show_add_url_window(void);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_UI_URLOPENER_H */
