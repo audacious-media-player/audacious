@@ -163,6 +163,39 @@ tuple_new(void)
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype);
 
+void tuple_set_filename(Tuple *tuple, const gchar *filename)
+{
+    const gchar *slash = strrchr(filename, '/');
+    const gchar *period = strrchr(filename, '.');
+    const gchar *question = strrchr(filename, '?');
+
+    if (slash != NULL)
+    {
+        gchar *path = g_strndup(filename, slash + 1 - filename);
+
+        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, path);
+        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
+        g_free(path);
+    }
+
+    if (question != NULL)
+    {
+        gint subtune;
+
+        if (period != NULL && period < question)
+        {
+            gchar *extension = g_strndup(period + 1, question - period - 1);
+
+            tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, extension);
+            g_free(extension);
+        }
+
+        if (sscanf(question + 1, "%d", &subtune) == 1)
+            tuple_associate_int(tuple, FIELD_SUBSONG_ID, NULL, subtune);
+    }
+    else if (period != NULL)
+        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, period + 1);
+}
 
 /**
  * Allocates a new #Tuple structure, setting filename/URI related
@@ -172,38 +205,11 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
  * @param[in] filename Filename URI.
  * @return Pointer to newly allocated Tuple.
  */
-Tuple *
-tuple_new_from_filename(const gchar *filename)
+Tuple *tuple_new_from_filename(const gchar *filename)
 {
-    gchar *slash, *ext;
-    Tuple *tuple;
+    Tuple *tuple = tuple_new();
 
-    g_return_val_if_fail(filename != NULL, NULL);
-
-    tuple = tuple_new();
-    g_return_val_if_fail(tuple != NULL, NULL);
-
-    slash = strrchr (filename, '/');
-
-    if (slash != NULL)
-    {
-        gchar c = *(slash + 1);
-
-        *(slash + 1) = '\0';
-        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, filename);
-        *(slash + 1) = c;
-
-        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
-    }
-    else
-        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, filename);
-
-    ext = strrchr(filename, '.');
-    if (ext != NULL) {
-        ++ext;
-        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, ext);
-    }
-
+    tuple_set_filename(tuple, filename);
     return tuple;
 }
 

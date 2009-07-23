@@ -51,7 +51,6 @@ gchar *uri_to_display_dirname(const gchar * uri);
 
 const gchar *str_skip_chars(const gchar * str, const gchar * chars);
 
-gchar *convert_title_text(gchar * text);
 gchar *convert_dos_path(gchar * text);
 
 extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
@@ -59,6 +58,9 @@ extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        GError **arg_error);
 
 gchar *filename_split_subtune(const gchar * filename, gint * track);
+
+void string_percent_decode(gchar *string);
+void string_cut_extension(gchar *string);
 
 G_END_DECLS
 

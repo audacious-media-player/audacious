@@ -169,7 +169,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .str_to_utf8 = cd_str_to_utf8,
     .filename_to_utf8 = filename_to_utf8,
     .str_skip_chars = str_skip_chars,
-    .convert_title_text = convert_title_text,
     .chardet_to_utf8 = cd_chardet_to_utf8,
     .filename_split_subtune = filename_split_subtune,
 
