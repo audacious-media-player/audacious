@@ -130,23 +130,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .cfg_db_unset_key = cfg_db_unset_key,
 
-    .tuple_new = tuple_new,
-    .tuple_new_from_filename = tuple_new_from_filename,
-    .tuple_associate_string = tuple_associate_string,
-    .tuple_associate_int = tuple_associate_int,
-    .tuple_disassociate = tuple_disassociate,
-    .tuple_get_value_type = tuple_get_value_type,
-    .tuple_get_string = tuple_get_string,
-    .tuple_get_int = tuple_get_int,
-
-    .tuple_formatter_process_string = tuple_formatter_process_string,
-    .tuple_formatter_process_function = tuple_formatter_process_function,
-    .tuple_formatter_process_construct = tuple_formatter_process_construct,
-    .tuple_formatter_process_expr = tuple_formatter_process_expr,
-    .tuple_formatter_register_function = tuple_formatter_register_function,
-    .tuple_formatter_register_expression = tuple_formatter_register_expression,
-    .tuple_formatter_make_title_string = tuple_formatter_make_title_string,
-
     .mime_get_plugin = mime_get_plugin,
     .mime_set_plugin = mime_set_plugin,
 
@@ -160,19 +143,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .util_add_url_history_entry = util_add_url_history_entry,
 
-    .escape_shell_chars = escape_shell_chars,
-    .str_append = str_append,
-    .str_replace = str_replace,
-    .str_replace_in = str_replace_in,
-    .str_has_prefix_nocase = str_has_prefix_nocase,
-    .str_has_suffix_nocase = str_has_suffix_nocase,
-    .str_has_suffixes_nocase = str_has_suffixes_nocase,
-    .str_to_utf8_fallback = str_to_utf8_fallback,
     .str_to_utf8 = cd_str_to_utf8,
-    .filename_to_utf8 = filename_to_utf8,
-    .str_skip_chars = str_skip_chars,
     .chardet_to_utf8 = cd_chardet_to_utf8,
-    .filename_split_subtune = filename_split_subtune,
 
     .playlist_container_register = playlist_container_register,
     .playlist_container_unregister = playlist_container_unregister,

@@ -38,6 +38,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "libaudcore/audstrings.h"
 #include "libaudcore/index.h"
 #include "libaudcore/vfs.h"
 #include "libaudcore/tuple.h"
@@ -314,47 +315,6 @@ struct _AudaciousFuncTableV1 {
                              const gchar *section,
                              const gchar *key);
 
-    /* Tuple manipulation API */
-    Tuple *(*tuple_new)(void);
-    Tuple *(*tuple_new_from_filename)(const gchar *filename);
-
-    gboolean (*tuple_associate_string)(Tuple *tuple,
-                                       const gint nfield,
-                                       const gchar *field,
-                                       const gchar *string);
-    gboolean (*tuple_associate_int)(Tuple *tuple,
-                                    const gint nfield,
-                                    const gchar *field,
-                                    gint integer);
-
-    void (*tuple_disassociate)(Tuple *tuple,
-                               const gint nfield,
-                               const gchar *field);
-
-    TupleValueType (*tuple_get_value_type)(Tuple *tuple,
-                                           const gint nfield,
-                                           const gchar *field);
-
-    const gchar *(*tuple_get_string)(Tuple *tuple,
-                                     const gint nfield,
-                                     const gchar *field);
-    gint (*tuple_get_int)(Tuple *tuple,
-                       const gint nfield,
-                       const gchar *field);
-
-    /* tuple formatter API */
-    gchar *(*tuple_formatter_process_string)(Tuple *tuple, const gchar *string);
-    gchar *(*tuple_formatter_make_title_string)(Tuple *tuple, const gchar *string);
-    void (*tuple_formatter_register_expression)(const gchar *keyword,
-           gboolean (*func)(Tuple *tuple, const gchar *argument));
-    void (*tuple_formatter_register_function)(const gchar *keyword,
-           gchar *(*func)(Tuple *tuple, gchar **argument));
-    gchar *(*tuple_formatter_process_expr)(Tuple *tuple, const gchar *expression,
-           const gchar *argument);
-    gchar *(*tuple_formatter_process_function)(Tuple *tuple, const gchar *expression,
-           const gchar *argument);
-    gchar *(*tuple_formatter_process_construct)(Tuple *tuple, const gchar *string);
-
     /* MIME types */
     InputPlugin *(*mime_get_plugin)(const gchar *mimetype);
     void (*mime_set_plugin)(const gchar *mimetype, InputPlugin *ip);
@@ -385,27 +345,10 @@ struct _AudaciousFuncTableV1 {
 
 
     /* strings API */
-    gchar *(*escape_shell_chars)(const gchar * string);
-
-    gchar *(*str_append)(gchar * str, const gchar * add_str);
-    gchar *(*str_replace)(gchar * str, gchar * new_str);
-    void (*str_replace_in)(gchar ** str, gchar * new_str);
-
-    gboolean (*str_has_prefix_nocase)(const gchar * str, const gchar * prefix);
-    gboolean (*str_has_suffix_nocase)(const gchar * str, const gchar * suffix);
-    gboolean (*str_has_suffixes_nocase)(const gchar * str, gchar * const *suffixes);
-
-    gchar *(*str_to_utf8_fallback)(const gchar * str);
-    gchar *(*filename_to_utf8)(const gchar * filename);
     gchar *(*str_to_utf8)(const gchar * str);
-
-    const gchar *(*str_skip_chars)(const gchar * str, const gchar * chars);
-
     gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
-
-    gchar *(*filename_split_subtune)(const gchar * filename, gint * track);
 
     /* PlaylistContainer API. */
     void (*playlist_container_register)(PlaylistContainer *plc);
@@ -696,24 +639,26 @@ struct _AudaciousFuncTableV1 {
 #define aud_cfg_db_get_double           _audvt->cfg_db_get_double
 #define aud_cfg_db_unset_key            _audvt->cfg_db_unset_key
 
-#define aud_tuple_new                   _audvt->tuple_new
-#define aud_tuple_new_from_filename     _audvt->tuple_new_from_filename
-#define aud_tuple_associate_string      _audvt->tuple_associate_string
-#define aud_tuple_associate_int         _audvt->tuple_associate_int
-#define aud_tuple_disassociate          _audvt->tuple_disassociate
-#define aud_tuple_disassociate_now      _audvt->tuple_disassociate_now
-#define aud_tuple_get_value_type        _audvt->tuple_get_value_type
-#define aud_tuple_get_string            _audvt->tuple_get_string
-#define aud_tuple_get_int               _audvt->tuple_get_int
-#define aud_tuple_free                  mowgli_object_unref
+/* These functions are in libaudcore; macros here for compatibility. */
+#define aud_tuple_new                tuple_new
+#define aud_tuple_new_from_filename  tuple_new_from_filename
+#define aud_tuple_associate_string   tuple_associate_string
+#define aud_tuple_associate_int      tuple_associate_int
+#define aud_tuple_disassociate       tuple_disassociate
+#define aud_tuple_disassociate_now   tuple_disassociate_now
+#define aud_tuple_get_value_type     tuple_get_value_type
+#define aud_tuple_get_string         tuple_get_string
+#define aud_tuple_get_int            tuple_get_int
+#define aud_tuple_free               mowgli_object_unref
 
-#define aud_tuple_formatter_process_string      _audvt->tuple_formatter_process_string
-#define aud_tuple_formatter_make_title_string   _audvt->tuple_formatter_make_title_string
-#define aud_tuple_formatter_register_expression _audvt->tuple_formatter_register_expression
-#define aud_tuple_formatter_register_function   _audvt->tuple_formatter_register_function
-#define aud_tuple_formatter_process_expr        _audvt->tuple_formatter_process_expr
-#define aud_tuple_formatter_process_function    _audvt->tuple_formatter_process_function
-#define aud_tuple_formatter_process_construct   _audvt->tuple_formatter_process_construct
+/* These functions are in libaudcore; macros here for compatibility. */
+#define aud_tuple_formatter_process_string       tuple_formatter_process_string
+#define aud_tuple_formatter_make_title_string    tuple_formatter_make_title_string
+#define aud_tuple_formatter_register_expression  tuple_formatter_register_expression
+#define aud_tuple_formatter_register_function    tuple_formatter_register_function
+#define aud_tuple_formatter_process_expr         tuple_formatter_process_expr
+#define aud_tuple_formatter_process_function     tuple_formatter_process_function
+#define aud_tuple_formatter_process_construct    tuple_formatter_process_construct
 
 #define aud_mime_get_plugin             _audvt->mime_get_plugin
 #define aud_mime_set_plugin             _audvt->mime_set_plugin
@@ -727,19 +672,21 @@ struct _AudaciousFuncTableV1 {
 #define aud_sadfmt_from_afmt            _audvt->sadfmt_from_afmt
 #define aud_util_add_url_history_entry  _audvt->util_add_url_history_entry
 
-#define aud_escape_shell_chars          _audvt->escape_shell_chars
-#define aud_str_append                  _audvt->str_append
-#define aud_str_replace                 _audvt->str_replace
-#define aud_str_replace_in              _audvt->str_replace_in
-#define aud_str_has_prefix_nocase       _audvt->str_has_prefix_nocase
-#define aud_str_has_suffix_nocase       _audvt->str_has_suffix_nocase
-#define aud_str_has_suffixes_nocase     _audvt->str_has_suffixes_nocase
-#define aud_str_to_utf8_fallback        _audvt->str_to_utf8_fallback
-#define aud_filename_to_utf8            _audvt->filename_to_utf8
 #define aud_str_to_utf8                 _audvt->str_to_utf8
-#define aud_str_skip_chars              _audvt->str_skip_chars
 #define aud_chardet_to_utf8             _audvt->chardet_to_utf8
-#define aud_filename_split_subtune      _audvt->filename_split_subtune
+
+/* These functions are in libaudcore; macros here for compatibility. */
+#define aud_escape_shell_chars       escape_shell_chars
+#define aud_str_append               str_append
+#define aud_str_replace              str_replace
+#define aud_str_replace_in           str_replace_in
+#define aud_str_has_prefix_nocase    str_has_prefix_nocase
+#define aud_str_has_suffix_nocase    str_has_suffix_nocase
+#define aud_str_has_suffixes_nocase  str_has_suffixes_nocase
+#define aud_str_to_utf8_fallback     str_to_utf8_fallback
+#define aud_filename_to_utf8         filename_to_utf8
+#define aud_str_skip_chars           str_skip_chars
+#define aud_filename_split_subtune   filename_split_subtune
 
 #define aud_playlist_container_register     _audvt->playlist_container_register
 #define aud_playlist_container_unregister   _audvt->playlist_container_unregister
