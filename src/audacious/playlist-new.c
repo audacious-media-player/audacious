@@ -61,7 +61,7 @@ static struct playlist *playing_playlist;
 
 static gint update_source;
 static gint scan_source;
-static gint scan_position;
+static gint scan_position, updated_ago;
 
 static gint(*current_filename_compare) (const gchar * a, const gchar * b);
 static gint(*current_tuple_compare) (const Tuple * a, const Tuple * b);
@@ -292,9 +292,6 @@ static void scan_entry(struct playlist *playlist, struct entry *entry)
 
         if (entry->selected)
             playlist->selected_length += entry->length;
-
-        if (playlist == active_playlist)
-            queue_update();
     }
 
     return;
@@ -305,36 +302,46 @@ static void scan_entry(struct playlist *playlist, struct entry *entry)
 
 static gboolean scan(void *unused)
 {
-    gint entries, scanned = 0;
+    gint entries;
 
     if (active_playlist == NULL)
         goto DONE;
 
     entries = index_count(active_playlist->entries);
 
-    while (scan_position < entries && scanned < 10)
+    while (scan_position < entries)
     {
         struct entry *entry = index_get(active_playlist->entries,
                                         scan_position++);
 
-        if (entry->tuple != NULL || entry->failed)
-            continue;
-
-        scan_entry(active_playlist, entry);
-        scanned++;
+        if (entry->tuple == NULL && !entry->failed)
+        {
+            scan_entry(active_playlist, entry);
+            goto FOUND;
+        }
     }
 
-    if (scan_position < entries)
-        return TRUE;
-
   DONE:
+    if (updated_ago)
+        queue_update();
+
     scan_source = 0;
     return FALSE;
+
+  FOUND:
+    if (++updated_ago >= 10)
+    {
+        queue_update();
+        updated_ago = 0;
+    }
+
+    return TRUE;
 }
 
 static void queue_scan(void)
 {
     scan_position = 0;
+    updated_ago = 0;
 
     if (scan_source == 0)
         scan_source = g_idle_add_full(G_PRIORITY_LOW, scan, NULL, NULL);
@@ -350,7 +357,6 @@ void playlist_init(void)
 
     update_source = 0;
     scan_source = 0;
-    scan_position = 0;
 }
 
 void playlist_end(void)
