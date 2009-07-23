@@ -265,7 +265,7 @@ typedef struct {
 
 /* processes an expression and optional argument pair. */
 gchar *
-tuple_formatter_process_expr(Tuple *tuple, const gchar *expression, 
+tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
     const gchar *argument)
 {
     TupleFormatterExpression *expr = NULL;
@@ -321,7 +321,7 @@ typedef struct {
 
 /* processes a function */
 gchar *
-tuple_formatter_process_function(Tuple *tuple, const gchar *expression, 
+tuple_formatter_process_function(Tuple *tuple, const gchar *expression,
     const gchar *argument)
 {
     TupleFormatterFunction *expr = NULL;
@@ -421,7 +421,7 @@ tuple_formatter_expression_match(Tuple *tuple, const gchar *expression)
         g_strfreev(args);
         return FALSE;
     }
-    
+
     if (args[1][0] == '\"') /* check if arg2 is "raw text" */
     {
         if ( strlen(args[1]) > 1 )
@@ -585,31 +585,19 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 #endif
 }
 
-/* wrapper function for making title string. it falls back to filename
- * if process_string returns NULL or a blank string. */
-gchar *
-tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
+gchar *tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 {
-    gchar *rv;
+    gchar *title = tuple_formatter_process_string(tuple, string);
 
-    g_return_val_if_fail(tuple != NULL, NULL);
+    if (title == NULL || !title[0])
+    {
+        const char *filename = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
 
-    rv = tuple_formatter_process_string(tuple, string);
-
-    if(!rv || !strcmp(rv, "")) {
-        const gchar *file_name = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
-
-        if(file_name) {
-            gchar *realfn = g_filename_from_uri(file_name, NULL, NULL);
-            g_free(rv);
-            rv = str_assert_utf8(realfn ? realfn : file_name);
-            g_free(realfn);
-        }
-        else {
-            g_free(rv);
-            rv = g_strdup("<unknown>");
-        }
+        g_free(title);
+        title = g_strdup((filename != NULL) ? filename : "");
+        string_decode_percent(title);
+        string_cut_extension(title);
     }
 
-    return rv;
+    return title;
 }

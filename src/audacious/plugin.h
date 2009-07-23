@@ -401,8 +401,6 @@ struct _AudaciousFuncTableV1 {
 
     const gchar *(*str_skip_chars)(const gchar * str, const gchar * chars);
 
-    gchar *(*convert_title_text)(gchar * text);
-
     gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
@@ -739,7 +737,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_filename_to_utf8		_audvt->filename_to_utf8
 #define aud_str_to_utf8			_audvt->str_to_utf8
 #define aud_str_skip_chars		_audvt->str_skip_chars
-#define aud_convert_title_text		_audvt->convert_title_text
 #define aud_chardet_to_utf8		_audvt->chardet_to_utf8
 #define aud_filename_split_subtune _audvt->filename_split_subtune
 
@@ -1053,7 +1050,7 @@ struct _OutputPlugin {
     gpointer handle;
     gchar *filename;
     gchar *description;
-    
+
     OutputPluginInitStatus (*init) (void);
     void (*cleanup) (void);
     void (*about) (void);

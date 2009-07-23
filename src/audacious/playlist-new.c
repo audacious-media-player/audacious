@@ -73,7 +73,7 @@ static gchar * title_from_tuple (Tuple * tuple)
     if (format == NULL)
         format = get_gentitle_format ();
 
-    return convert_title_text (tuple_formatter_make_title_string (tuple, format));
+    return tuple_formatter_make_title_string (tuple, format);
 }
 
 static void entry_set_tuple (struct entry * entry, Tuple * tuple)

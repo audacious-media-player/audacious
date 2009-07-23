@@ -483,7 +483,7 @@ void playback_set_info (gchar * title, gint length, gint bitrate, gint
         return;
 
     g_free (playback->title);
-    playback->title = convert_title_text (g_strdup (title));
+    playback->title = g_strdup (title);
     playback->length = length;
     playback->rate = bitrate;
     playback->freq = samplerate;
@@ -501,7 +501,7 @@ void playback_set_title (gchar * title)
         return;
 
     g_free (playback->title);
-    playback->title = convert_title_text (g_strdup (title));
+    playback->title = g_strdup (title);
 
     event_queue ("title change", NULL);
 }
