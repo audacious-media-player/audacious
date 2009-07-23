@@ -79,8 +79,6 @@ GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
     const gchar * button_text, gboolean modal, GCallback button_action,
     gpointer action_data);
 
-GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
-
 gchar *util_get_localdir(void);
 
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
