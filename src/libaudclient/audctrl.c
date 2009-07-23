@@ -30,13 +30,13 @@
 static GError *error = NULL; //it must be hidden from outside, otherwise symbol conflict likely to happen.
 
 /**
- * audacious_remote_playlist:
- * @proxy: DBus proxy for audacious
- * @list: A list of URIs to play.
- * @num: Number of URIs to play.
- * @enqueue: Whether or not the new playlist should be added on, or replace the current playlist.
+ * Sends a list of URIs to Audacious, either replacing current
+ * playlist or enqueuing them.
  *
- * Sends a playlist to audacious.
+ * @param[in] proxy DBus proxy for Audacious
+ * @param[in] list An array of URI strings to add.
+ * @param[in] num Number of URIs to add.
+ * @param[in] enqueue Whether or not the new playlist should be added on, or replace the current playlist.
  **/
 void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num, gboolean enqueue) {
     GList *glist = NULL;
@@ -64,12 +64,10 @@ void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num, gboole
 }
 
 /**
- * audacious_remote_get_version:
- * @proxy: DBus proxy for audacious
+ * Queries Audacious for its version identifier.
  *
- * Queries audacious for it's version.
- *
- * Return value: The version of Audacious.
+ * @param[in] proxy DBus proxy for audacious
+ * @return String describing the version of Audacious.
  **/
 gchar *audacious_remote_get_version(DBusGProxy *proxy) {
     char *string = NULL;
@@ -80,11 +78,10 @@ gchar *audacious_remote_get_version(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_playlist_add:
- * @proxy: DBus proxy for audacious
- * @list: A GList of URIs to add to the playlist.
- *
  * Sends a list of URIs to Audacious to add to the playlist.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] list A GList of URIs to add to the playlist.
  **/
 void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
 	GList *iter;

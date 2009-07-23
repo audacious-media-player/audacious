@@ -1057,6 +1057,7 @@ struct _OutputPlugin {
     void (*configure) (void);
 
     gboolean enabled;
+    gint probe_priority;
 
     void (*get_volume) (gint * l, gint * r);
     void (*set_volume) (gint l, gint r);
@@ -1073,8 +1074,6 @@ struct _OutputPlugin {
     gint (*written_time) (void);
 
     void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch);
-
-    gint probe_priority;
 };
 
 struct _EffectPlugin {
@@ -1085,12 +1084,12 @@ struct _EffectPlugin {
 };
 
 struct _InputPlayback {
-    gchar *filename;
+    gchar *filename;    /**< Filename URI */
     void *data;
 
-    gint playing;
-    gboolean error;
-    gboolean eof;
+    gint playing;       /**< 1 = Playing, 0 = Stopped. */
+    gboolean error;     /**< TRUE if there has been an error. */
+    gboolean eof;       /**< TRUE if end of file has been reached- */
 
     InputPlugin *plugin;
     OutputPlugin *output;
@@ -1105,9 +1104,9 @@ struct _InputPlayback {
     GCond *pb_change_cond;
     void (*set_pb_change) (InputPlayback *self);
 
-    gint nch;
-    gint rate;
-    gint freq;
+    gint nch;           /**< */
+    gint rate;          /**< */
+    gint freq;          /**< */
     gint length;
     gchar *title;
 
@@ -1121,6 +1120,9 @@ struct _InputPlayback {
     void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 };
 
+/**
+ * Input plugin structure.
+ */
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
@@ -1150,13 +1152,18 @@ struct _InputPlugin {
 
     Tuple *(*get_song_tuple) (const gchar * filename);
 
-    /* Plugin can provide this function for file metadata (aka tag) writing functionality
-     * in case when no reason to provide its own custom file info dialog. Thus in most cases.
+    /**
+     * Plugin can provide this function for file metadata (aka tag)
+     * writing functionality when there is no reason to provide its
+     * own custom file info dialog.
      *
      * - In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
-     * - Each field in tuple means operation on one and only one tag's filed:
+     * - Each field in tuple means operation on one and only one tag field:
      *   - Set this field to appropriate value, if non-empty string or positive number provided.
      *   - Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
+     *
+     * @param[in] tuple Tuple with the desired metadata.
+     * @param[in] fd VFS file descriptor pointing to file to modify.
      */
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
 };
