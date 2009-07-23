@@ -17,6 +17,5 @@ SRCS = eggsmclient.c         \
 include ../../buildsys.mk
 include ../../extra.mk
 
-CFLAGS += ${INCLUDES} ${GLIB_CFLAGS} ${GTK_CFLAGS} -I../.. -I. ${platform_defines}
+CPPFLAGS += ${INCLUDES} ${GLIB_CFLAGS} ${GTK_CFLAGS} -I../.. -I. -I../audacious/platform ${platform_defines}
 LIBS += ${GLIB_LIBS} ${GTK_LIBS} ${platform_libs}
-CPPFLAGS += ${CFLAGS}

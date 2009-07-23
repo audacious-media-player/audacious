@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2007  Audacious development team.
+ *  Copyright (C) 2005-2009  Audacious development team.
  *
  *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
@@ -66,31 +66,6 @@ escape_shell_chars(const gchar * string)
     *out = '\0';
 
     return escaped;
-}
-
-/**
- * Performs in place replacement of %20 sequences with whitespace character.
- * Notice that the operation is "in place", thus the given string is modified.
- *
- * @param str String to be manipulated.
- * @return Pointer to the string if succesful, NULL if failed or if input was NULL.
- */
-static gchar *
-str_twenty_to_space(gchar * str)
-{
-    gchar *match, *match_end;
-
-    g_return_val_if_fail(str != NULL, NULL);
-
-    while ((match = strstr(str, "%20")) != NULL) {
-        match_end = match + 3;
-        *match++ = ' ';
-        while (*match_end)
-            *match++ = *match_end++;
-        *match = 0;
-    }
-
-    return str;
 }
 
 /**
@@ -309,7 +284,7 @@ str_assert_utf8(const gchar * str)
 
 		for (i = 0; i < nsymbols; i++)
 			fprintf(stderr, "#%d > %s\n", i, symbols[i]);
-		
+
 		free(symbols);
 #endif
 		return str_to_utf8(str);
@@ -324,18 +299,6 @@ str_skip_chars(const gchar * str, const gchar * chars)
     while (strchr(chars, *str) != NULL)
         str++;
     return str;
-}
-
-gchar *
-convert_title_text(gchar * title)
-{
-    g_return_val_if_fail(title != NULL, NULL);
-
-    str_replace_char(title, '\\', '/');
-    str_replace_char(title, '_', ' ');
-    str_twenty_to_space(title);
-
-    return title;
 }
 
 gchar *
@@ -386,4 +349,46 @@ filename_split_subtune(const gchar * filename, gint * track)
     }
 
     return result;
+}
+
+static gchar get_hex_digit(gchar **get)
+{
+    gchar c = **get;
+
+    if (! c)
+        return 0;
+
+    (*get)++;
+
+    if (c >= 'a')
+        return c - 'a' + 10;
+    if (c >= 'A')
+        return c - 'A' + 10;
+
+    return c - '0';
+}
+
+void string_decode_percent(gchar *string)
+{
+    gchar *get = string;
+    gchar *set = string;
+    gchar c;
+
+    while ((c = *get++))
+    {
+        if (c == '%')
+            *set++ = (get_hex_digit(&get) << 4) | get_hex_digit(&get);
+        else
+            *set++ = c;
+    }
+
+    *set = 0;
+}
+
+void string_cut_extension(gchar *string)
+{
+    gchar *period = strrchr(string, '.');
+
+    if (period != NULL)
+        *period = 0;
 }

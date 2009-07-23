@@ -162,9 +162,7 @@ static ComboBoxElements chardet_detector_presets[] = {
     { N_("Hebrew")   , N_("Hebrew") },
     { N_("Turkish")  , N_("Turkish") },
     { N_("Arabic")   , N_("Arabic") },
-#ifdef HAVE_UDET
     { N_("Universal"), N_("Universal") }
-#endif
 };
 
 static ComboBoxElements bitdepth_elements[] = {
