@@ -59,7 +59,7 @@ extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
 
 gchar *filename_split_subtune(const gchar * filename, gint * track);
 
-void string_percent_decode(gchar *string);
+void string_decode_percent(gchar *string);
 void string_cut_extension(gchar *string);
 
 G_END_DECLS
