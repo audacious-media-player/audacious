@@ -38,7 +38,6 @@ typedef struct {
     void (*hide_prefs_window)(void);
     void (*destroy_prefs_window)(void);
 
-    void (*urlopener_show)(void);
     void (*jump_to_track_show)(void);
     void (*aboutwin_show)(void);
 

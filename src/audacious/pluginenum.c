@@ -158,6 +158,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .smart_realloc = smart_realloc,
     .sadfmt_from_afmt = sadfmt_from_afmt,
 
+    .util_add_url_history_entry = util_add_url_history_entry,
+
     .escape_shell_chars = escape_shell_chars,
     .str_append = str_append,
     .str_replace = str_replace,

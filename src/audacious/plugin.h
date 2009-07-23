@@ -373,6 +373,7 @@ struct _AudaciousFuncTableV1 {
 
     gpointer (*smart_realloc)(gpointer ptr, gsize *size);
     SAD_sample_format (*sadfmt_from_afmt)(AFormat fmt);
+    void (*util_add_url_history_entry)(const gchar * url);
 
     /* INI funcs */
     INIFile *(*open_ini_file)(const gchar *filename);
@@ -724,6 +725,7 @@ struct _AudaciousFuncTableV1 {
 #define audacious_info_dialog           _audvt->util_info_dialog
 #define aud_smart_realloc               _audvt->smart_realloc
 #define aud_sadfmt_from_afmt            _audvt->sadfmt_from_afmt
+#define aud_util_add_url_history_entry  _audvt->util_add_url_history_entry
 
 #define aud_escape_shell_chars          _audvt->escape_shell_chars
 #define aud_str_append                  _audvt->str_append

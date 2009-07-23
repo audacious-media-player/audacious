@@ -31,8 +31,6 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include "platform/smartinclude.h"
-
 #include "playback.h"
 #include "playlist-new.h"
 #include "util.h"
@@ -44,7 +42,7 @@ urlopener_add_url_callback(GtkWidget * widget,
     const gchar *text;
 
     text = gtk_entry_get_text(entry);
-    util_add_url_history_entry(text);
+    aud_util_add_url_history_entry(text);
 }
 
 GtkWidget *
@@ -76,7 +74,7 @@ urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     gtk_window_set_focus(GTK_WINDOW(win), entry);
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 
-    for (url = cfg.url_history; url; url = g_list_next(url))
+    for (url = aud_cfg->url_history; url; url = g_list_next(url))
         gtk_combo_box_append_text(GTK_COMBO_BOX(combo),
                                   (const gchar *) url->data);
 
@@ -137,22 +135,22 @@ on_add_url_add_clicked(GtkWidget * widget,
 {
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
-        playlist_entry_insert (playlist_get_active (), -1, g_strdup (text), NULL);
+        aud_playlist_entry_insert (aud_playlist_get_active (), -1, g_strdup (text), NULL);
 }
 
 static void
 on_add_url_ok_clicked(GtkWidget * widget,
                       GtkWidget * entry)
 {
-    gint playlist = playlist_get_active ();
+    gint playlist = aud_playlist_get_active ();
 
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
     {
-        playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
-        playlist_entry_insert (playlist, 0, g_strdup (text), NULL);
-        playlist_set_playing (playlist);
-        playback_initiate ();
+        aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
+        aud_playlist_entry_insert (playlist, 0, g_strdup (text), NULL);
+        aud_playlist_set_playing (playlist);
+        audacious_drct_initiate ();
     }
 }
 
