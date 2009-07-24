@@ -268,7 +268,8 @@ static void queue_update(void)
         update_source = g_idle_add_full(G_PRIORITY_HIGH_IDLE, update, NULL, NULL);
 }
 
-static void scan_entry(struct playlist *playlist, struct entry *entry)
+static void scan_entry_no_update (struct playlist * playlist, struct entry *
+ entry)
 {
     if (entry->decoder == NULL)
     {
@@ -300,6 +301,14 @@ static void scan_entry(struct playlist *playlist, struct entry *entry)
     entry->failed = TRUE;
 }
 
+static void scan_entry (struct playlist * playlist, struct entry * entry)
+{
+    scan_entry_no_update (playlist, entry);
+
+    if (playlist == active_playlist)
+        queue_update ();
+}
+
 static gboolean scan(void *unused)
 {
     gint entries;
@@ -316,7 +325,7 @@ static gboolean scan(void *unused)
 
         if (entry->tuple == NULL && !entry->failed)
         {
-            scan_entry(active_playlist, entry);
+            scan_entry_no_update (active_playlist, entry);
             goto FOUND;
         }
     }
