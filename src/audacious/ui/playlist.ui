@@ -10,6 +10,8 @@
 			<menuitem action="playlist remove all" />
 			<separator />
 			<menuitem action="queue toggle" />
+			<separator />
+			<menuitem action="plugins-menu" />
 		</menu>
 
 		<menu action="dummy" name="add-menu">
