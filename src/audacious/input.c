@@ -245,14 +245,13 @@ ProbeResult * input_check_file (const gchar * filename)
     VFSFile *fd;
     GList *node;
     InputPlugin *ip;
-    gchar *filename_proxy, *ext, *mimetype;
+    gchar *filename_proxy, *mimetype;
     gint ret = 1;
     gboolean use_ext_filter = FALSE;
     ProbeResult *pr = NULL;
-    GList **list_hdr = NULL;
     extern GHashTable *ext_hash;
 
-    /* Some URIs will end in ?<subsong> to determine the subsong requested. */
+    /* Some URIs have special subsong identifier to determine the subsong requested. */
     filename_proxy = filename_split_subtune(filename, NULL);
 
     /* Check for plugins with custom URI:// strings */
@@ -274,7 +273,7 @@ ProbeResult * input_check_file (const gchar * filename)
     }
 
 
-    /* open the file with vfs sub-system
+    /* Open the file with vfs sub-system.
      * FIXME! XXX! buffered VFS file does not handle mixed seeks and reads/writes
      * correctly! As a temporary workaround, switching to unbuffered ... -ccr
      */
@@ -282,23 +281,23 @@ ProbeResult * input_check_file (const gchar * filename)
     fd = vfs_fopen(filename_proxy, "rb");
 
     if (fd == NULL) {
-        printf("Unable to read from %s, giving up.\n", filename_proxy);
+        g_warning("Unable to read from %s, giving up.\n", filename_proxy);
         g_free(filename_proxy);
         return NULL;
     }
 
 
-    // apply mimetype check. note that stdio does not support mimetype check.
+    /* Apply mimetype check. note that stdio does not support mimetype check. */
     mimetype = vfs_get_metadata(fd, "content-type");
-    if (mimetype) {
+    if (mimetype != NULL) {
         ip = mime_get_plugin(mimetype);
         g_free(mimetype);
     } else
         ip = NULL;
 
-    if (ip && ip->enabled) {
+    if (ip != NULL && ip->enabled) {
         pr = input_do_check_file (ip, fd, filename_proxy);
-        if (pr) {
+        if (pr != NULL) {
             g_free(filename_proxy);
             vfs_fclose(fd);
             return pr;
@@ -306,15 +305,16 @@ ProbeResult * input_check_file (const gchar * filename)
     }
 
 
-    // apply ext_hash check
+    /* Apply ext_hash check */
     if (cfg.use_extension_probing) {
         use_ext_filter =
             (fd != NULL && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
-                    !g_ascii_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
+            !g_ascii_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
     }
 
     if (use_ext_filter) {
-        gchar *base, *lext;
+        GList **list_hdr = NULL;
+        gchar *base, *lext, *ext;
         gchar *tmp2 = g_filename_from_uri(filename_proxy, NULL, NULL);
         gchar *realfn = g_strdup(tmp2 ? tmp2 : filename_proxy);
         g_free(tmp2);
@@ -323,14 +323,14 @@ ProbeResult * input_check_file (const gchar * filename)
         g_free(realfn);
         ext = strrchr(base, '.');
 
-        if(ext) {
+        if (ext) {
             lext = g_ascii_strdown(ext+1, -1);
             list_hdr = g_hash_table_lookup(ext_hash, lext);
             g_free(lext);
         }
         g_free(base);
 
-        if(list_hdr) {
+        if (list_hdr != NULL) {
             for(node = *list_hdr; node != NULL; node = g_list_next(node)) {
                 ip = INPUT_PLUGIN(node->data);
 
@@ -349,20 +349,20 @@ ProbeResult * input_check_file (const gchar * filename)
 
         g_free(filename_proxy);
         vfs_fclose(fd);
-        return NULL; // no plugin found.
+        return NULL;
     }
 
 
-    // do full scan when extension match isn't specified.
+    /* Do full scan when extension match isn't specified. */
     for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
 
-        if (!ip || !ip->enabled)
+        if (ip == NULL || !ip->enabled)
             continue;
 
         pr = input_do_check_file (ip, fd, filename_proxy);
 
-        if(pr) {
+        if (pr != NULL) {
             g_free(filename_proxy);
             vfs_fclose(fd);
             return pr;
@@ -370,7 +370,7 @@ ProbeResult * input_check_file (const gchar * filename)
     }
 
 
-    // all probing failed. return NULL
+    /* All probing failed, return NULL. */
     g_free(filename_proxy);
     vfs_fclose(fd);
     return NULL;
