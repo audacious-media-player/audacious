@@ -1319,6 +1319,9 @@ void playlist_rescan(gint playlist_num)
         entry->failed = FALSE;
     }
 
+    playlist->total_length = 0;
+    playlist->selected_length = 0;
+
     if (playlist == active_playlist)
     {
         queue_update();
