@@ -34,10 +34,9 @@ TABLE OF CONTENTS
    3.4. Menu
    3.5. Preferences
         3.5.1. Appearance
-        3.5.2. Mouse
-        3.5.3. Playlist
-        3.5.4. Plugins
-        3.5.5. Audio
+        3.5.2. Playlist
+        3.5.3. Plugins
+        3.5.4. Audio
    3.6. Plugins
    3.7. Playlist Manager
 4. Obtaining Audacious
@@ -66,22 +65,20 @@ its own.
 Audacious requires the following libraries and their development
 packages installed:
 
-  Glib 2.14.0
-    http://www.gtk.org/download/
+  Glib 2, GTK+ 2, Pango, Cairo, libmcs, libmowgli
 
-  GTK+ 2.10.0
-    http://www.gtk.org/download/
+The 'configure' script detects the presence of the required and
+optional depencies and their versions. Additional external libraries
+are required for much of Audacious functionality and plugins.
 
-  mcs >= 0.7
-    http://www.atheme.org/projects/mcs.shtml
+You should always carefully check the output of 'configure' script
+to see if the options you wish to have become enabled, and see what
+requiremenst you may be missing if they are not.
 
-  libmowgli >= 0.4
-    http://www.atheme.org/projects/mowgli.shtml
 
-  GNU Make >= 3.80
-
-If you compile Audacious from a fresh Mercurial checkout, you will also
-need the following tools:
+For building, GNU Make 3.80 or later is required. If you compile
+Audacious from a fresh Mercurial checkout, you will also need the
+following tools:
 
   autoconf >= 2.59
 
@@ -178,7 +175,7 @@ or emulated to properly support those skins.
 3. Documentation
 ----------------
 
-This file or http://audacious-media-player.org/
+This file and / or http://audacious-media-player.org/
 
 
 3.1. Controlling Audacious
@@ -432,14 +429,7 @@ Use custom cursors             - Enable/disable custom cursors set by the
                                  skin.
 
 
-3.5.2. Mouse
-------------
-
-Mouse wheel
-Change how Audacious handles scroll behaviours.
-
-
-3.5.3. Playlist
+3.5.2. Playlist
 ---------------
 
 Filename
@@ -462,7 +452,7 @@ Title format  - Choose the format to display the song names in the playlist.
 Custom string - When the above option is set to 'Custom' insert a string of
                 substitutes here.
 
-3.5.4. Plugins
+3.5.3. Plugins
 --------------
 
 Enable/disable and configure plugins in this section.
@@ -473,7 +463,7 @@ Choose a tab to list one of the types of plugins:
   - Visualization (visualization plugins)
   - Effects (effect plugins)
 
-3.5.5. Audio
+3.5.4. Audio
 ------------
 
 The settings in this section are related to the audio system.
@@ -490,11 +480,7 @@ However to promote maximum flexibility of the platform itself, we no longer
 include any plugins with the Audacious core.
 
 You will need to download and install our plugin pack for Audacious if you
-expect it to do anything useful (or install someone else's plugin pack if
-one should exist).
-
-Additionally, you can find a list of plugins at:
-  http://audacious-media-player.org/Plugins
+expect it to do anything useful (like actually play any files).
 
 You should note that third-party plugins are not supported by the Audacious
 development team, and that you should report any issues with them on our
