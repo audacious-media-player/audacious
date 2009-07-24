@@ -416,7 +416,7 @@ gboolean playback_play_file (const gchar * filename, InputPlugin * decoder)
 
     if (decoder == NULL || ! decoder->enabled)
     {
-        fprintf (stderr, "Cannot play %s: no decoder found.\n", filename);
+        g_warning("Cannot play %s: no decoder found.\n", filename);
         return FALSE;
     }
 
