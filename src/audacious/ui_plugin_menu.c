@@ -19,18 +19,43 @@
  * using our public API to be a derived work.
  */
 
-#include <string.h>
-
 #include <glib.h>
 #include <gtk/gtk.h>
 
 #include "ui_plugin_menu.h"
 
-/*
- * Note: These functions were originally intended as temporary for Audacious
- * 2.0. They are quick and dirty, and they are only useful for a GTK-based
- * interface plugin. -jlindgren
- */
+/* A StaticMenu is simply a GtkMenu that is created with a (normal, not
+ * floating) reference count of 1 and resists the "destroy" signal. Thus, it can
+ * be added into an interface and remain after the interface is destroyed. */
+
+typedef struct
+{
+    GtkMenuClass parent;
+}
+StaticMenuClass;
+
+typedef struct
+{
+    GtkMenu parent;
+}
+StaticMenu;
+
+G_DEFINE_TYPE (StaticMenu, static_menu, GTK_TYPE_MENU);
+
+static void static_menu_destroy (GtkObject * object)
+{
+    /* Do NOT chain to the parent class! */
+}
+
+static void static_menu_class_init (StaticMenuClass * class)
+{
+    ((GtkObjectClass *) class)->destroy = static_menu_destroy;
+}
+
+static void static_menu_init (StaticMenu * menu)
+{
+    g_object_ref (menu);
+}
 
 GtkWidget * get_plugin_menu (gint id)
 {
@@ -49,8 +74,7 @@ GtkWidget * get_plugin_menu (gint id)
 
     if (menus[id] == NULL)
     {
-        menus[id] = gtk_menu_new ();
-        g_object_ref ((GObject *) menus[id]);
+        menus[id] = g_object_new (static_menu_get_type (), NULL);
         gtk_widget_show (menus[id]);
     }
 
