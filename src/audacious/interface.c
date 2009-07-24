@@ -135,7 +135,15 @@ interface_hide_filebrowser(void)
         interface_cbs.hide_filebrowser();
     else
         g_message("Interface didn't register hide_filebrowser function");
+}
 
+void
+interface_toggle_visibility(void)
+{
+    if (interface_cbs.toggle_visibility != NULL)
+        interface_cbs.toggle_visibility();
+    else
+        g_message("Interface didn't register toggle_visibility function");
 }
 
 typedef enum {

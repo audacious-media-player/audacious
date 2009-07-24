@@ -58,7 +58,7 @@ drct_main_win_is_visible ( void )
 void
 drct_main_win_toggle ( gboolean show )
 {
-    hook_call("mainwin show", &show);
+    hook_call("mainwin show", GINT_TO_POINTER(show));
 }
 
 gboolean

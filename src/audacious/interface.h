@@ -48,6 +48,7 @@ typedef struct {
     void (*show_prefs_window)(gboolean show);
     void (*run_filebrowser)(gboolean play_button);
     void (*hide_filebrowser)(void);
+    void (*toggle_visibility)(void);
 } InterfaceCbs;
 
 typedef struct _Interface {
@@ -71,6 +72,8 @@ void interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *
 void interface_show_prefs_window(gboolean show);
 void interface_run_filebrowser(gboolean play_button);
 void interface_hide_filebrowser(void);
+void interface_toggle_visibility(void);
+
 void register_interface_hooks(void);
 
 #endif
