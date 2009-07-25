@@ -129,8 +129,7 @@ tuple_destroy(gpointer data)
 }
 
 /**
- * Allocates a new empty #Tuple structure. Must be freed
- * via tuple_free().
+ * Allocates a new empty #Tuple structure. Must be freed via tuple_free().
  *
  * @return Pointer to newly allocated Tuple.
  */
@@ -163,7 +162,17 @@ tuple_new(void)
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype);
 
-void tuple_set_filename(Tuple *tuple, const gchar *filename)
+
+/**
+ * Sets filename/URI related fields of a #Tuple structure, based
+ * on the given filename argument. The fields set are:
+ * #FIELD_FILE_PATH, #FIELD_FILE_NAME and #FIELD_FILE_EXT.
+ *
+ * @param[in] filename Filename URI.
+ * @return Pointer to newly allocated Tuple.
+ */
+void
+tuple_set_filename(Tuple *tuple, const gchar *filename)
 {
     const gchar *slash = strrchr(filename, '/');
     const gchar *period = strrchr(filename, '.');
@@ -199,13 +208,13 @@ void tuple_set_filename(Tuple *tuple, const gchar *filename)
 
 /**
  * Allocates a new #Tuple structure, setting filename/URI related
- * fields based on the given filename argument. The fields set are:
- * #FIELD_FILE_PATH, #FIELD_FILE_NAME and #FIELD_FILE_EXT.
+ * fields based on the given filename argument by calling #tuple_set_filename.
  *
  * @param[in] filename Filename URI.
  * @return Pointer to newly allocated Tuple.
  */
-Tuple *tuple_new_from_filename(const gchar *filename)
+Tuple *
+tuple_new_from_filename(const gchar *filename)
 {
     Tuple *tuple = tuple_new();
 
@@ -214,7 +223,8 @@ Tuple *tuple_new_from_filename(const gchar *filename)
 }
 
 
-static gint tuple_get_nfield(const gchar *field)
+static gint
+tuple_get_nfield(const gchar *field)
 {
     gint i;
     for (i = 0; i < FIELD_LAST; i++)
