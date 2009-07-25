@@ -316,9 +316,40 @@ convert_dos_path(gchar * path)
 }
 
 /**
- * If given file path/URI contains ending indicating subtune number
- * "?<number>", split the string. If given track pointer is non-NULL,
- * subtune number is assigned into it.
+ * Checks if given URI contains a subtune indicator/number.
+ * If it does, track is set to to it, and position of subtune
+ * separator in the URI string is returned.
+ *
+ * @param filename Filename/URI to split.
+ * @param track Pointer to variable where subtune number should be
+ * assigned or NULL if it is not needed.
+ * @return Position of subtune separator character in filename
+ * or NULL if none found. Notice that this value should NOT be modified,
+ * even though it is not declared const for technical reasons.
+ */
+gchar *
+filename_get_subtune(const gchar * filename, gint * track)
+{
+    gchar *pos;
+
+    if ((pos = strrchr(filename, '?')) != NULL)
+    {
+        const gchar *s = pos + 1;
+        while (*s != '\0' && g_ascii_isdigit(*s)) s++;
+        if (*s == '\0') {
+            if (track != NULL)
+                *track = atoi(pos + 1);
+            return pos;
+        }
+    }
+
+    return NULL;
+}
+
+/**
+ * Given file path/URI contains ending indicating subtune number
+ * "?<number>", splits the string into filename without subtune value.
+ * If given track pointer is non-NULL, subtune number is assigned into it.
  *
  * @param filename Filename/URI to split.
  * @param track Pointer to variable where subtune number should be
@@ -330,23 +361,16 @@ convert_dos_path(gchar * path)
 gchar *
 filename_split_subtune(const gchar * filename, gint * track)
 {
-    gchar *result, *pos;
+    gchar *result;
+    gchar *pos;
 
     g_return_val_if_fail(filename != NULL, NULL);
 
     result = g_strdup(filename);
     g_return_val_if_fail(result != NULL, NULL);
 
-    if ((pos = strrchr(result, '?')) != NULL)
-    {
-        gchar *s = pos + 1;
-        while (*s != '\0' && g_ascii_isdigit(*s)) s++;
-        if (*s == '\0') {
-            *pos = '\0';
-            if (track != NULL)
-                *track = atoi(pos + 1);
-        }
-    }
+    if ((pos = filename_get_subtune(result, track)) != NULL)
+        *pos = '\0';
 
     return result;
 }

@@ -57,6 +57,7 @@ extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 
+gchar *filename_get_subtune(const gchar * filename, gint * track);
 gchar *filename_split_subtune(const gchar * filename, gint * track);
 
 void string_decode_percent(gchar *string);
