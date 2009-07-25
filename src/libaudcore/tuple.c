@@ -169,7 +169,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
  * #FIELD_FILE_PATH, #FIELD_FILE_NAME and #FIELD_FILE_EXT.
  *
  * @param[in] filename Filename URI.
- * @return Pointer to newly allocated Tuple.
+ * @param[in,out] tuple Tuple structure to manipulate.
  */
 void
 tuple_set_filename(Tuple *tuple, const gchar *filename)
@@ -234,6 +234,18 @@ tuple_get_nfield(const gchar *field)
 }
 
 
+/**
+ * (Re)associates data into given #Tuple field.
+ * @attention This function has (unbalanced) Tuple structure unlocking,
+ * so please make sure you use it only exactly like it is used in
+ * #tuple_associate_string(), etc.
+ *
+ * @param[in] tuple Tuple structure to be manipulated.
+ * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @param[in] ftype Type of the field to be associated.
+ * @return Pointer to newly associated TupleValue structure.
+ */
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype)
 {
