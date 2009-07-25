@@ -237,9 +237,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     /* Check for known fields */
     if (nfield < 0) {
         nfield = tuple_get_nfield(field);
-        if (nfield >= 0) {
-            fprintf(stderr, "WARNING! FIELD_* not used for '%s'!\n", field);
-        }
+        if (nfield >= 0)
+            g_warning("Tuple FIELD_* not used for '%s'!\n", field);
     }
 
     /* Check if field was known */
@@ -248,8 +247,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
         value = tuple->values[nfield];
 
         if (ftype != tuple_fields[nfield].type) {
-            /* FIXME! Convert values perhaps .. or not? */
-            fprintf(stderr, "Invalid type for [%s](%d->%d), %d != %d\n", tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
+            g_warning("Invalid type for [%s](%d->%d), %d != %d\n",
+                tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
             //mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
             TUPLE_UNLOCK_WRITE();
             return NULL;
