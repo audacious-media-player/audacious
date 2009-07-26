@@ -125,8 +125,8 @@ playback_get_time(void)
     if (playback->plugin->get_time)
         return playback->plugin->get_time (playback);
 
-    /* Note: This assumes that output_time will return sanely (zero) even before
-     audio is opened. Not ideal, but what else can we do? -jlindgren */
+    /** @attention This assumes that output_time will return sanely (zero)
+     * even before audio is opened. Not ideal, but what else can we do? -jlindgren */
     return playback->output->output_time ();
 }
 
