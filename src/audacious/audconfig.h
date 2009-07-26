@@ -53,6 +53,7 @@ struct _AudConfig {
     gint resume_playback_on_startup_time;
     gchar *chardet_detector;
     gchar *chardet_fallback;
+    gchar **chardet_fallback_s;
     gint output_buffer_size;
     gboolean show_filepopup_for_tuple;
     gchar *cover_name_include, *cover_name_exclude;
@@ -91,5 +92,7 @@ extern AudConfig aud_default_config;
 void aud_config_free(void);
 void aud_config_load(void);
 void aud_config_save(void);
+
+void aud_config_chardet_update(void);
 
 #endif /* AUDACIOUS_AUDCONFIG_H */

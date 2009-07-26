@@ -112,18 +112,14 @@ fallback:
 #endif
 
     /* If detection failed or was not enabled, try fallbacks (if there are any) */
-    if (ret == NULL && cfg.chardet_fallback)
+    if (ret == NULL && cfg.chardet_fallback_s != NULL)
     {
-        gchar **enc, **encs = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
-        if (encs != NULL)
+        gchar **enc;
+        for (enc = cfg.chardet_fallback_s; *enc != NULL; enc++)
         {
-            for (enc = encs; *enc != NULL; enc++)
-            {
-                ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
-                if (len == *bytes_read)
-                    break;
-            }
-            g_strfreev(encs);
+            ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
+            if (len == *bytes_read)
+                break;
         }
     }
 

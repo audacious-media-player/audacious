@@ -286,7 +286,7 @@ static PreferencesWidget chardet_elements[] = {
                    FALSE
                    #endif
                    }}, VALUE_STRING},
-    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, NULL, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
+    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, aud_config_chardet_update, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
 };
 
 static PreferencesWidget playlist_page_widgets[] = {
