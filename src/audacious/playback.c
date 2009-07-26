@@ -134,20 +134,26 @@ gint
 playback_get_length(void)
 {
     InputPlayback *playback;
+    gint ret = -1;
     g_return_val_if_fail(playback_get_playing(), -1);
     playback = get_current_input_playback();
 
     if (playback->length)
         return playback->length;
 
-    if (playback && playback->plugin->get_song_tuple) {
+    if (playback != NULL && playback->plugin->get_song_tuple != NULL) {
+        Tuple *tuple;
         plugin_set_current((Plugin *)(playback->plugin));
-        Tuple *tuple = playback->plugin->get_song_tuple(playback->filename);
-        if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
-            return tuple_get_int(tuple, FIELD_LENGTH, NULL);
+        tuple = playback->plugin->get_song_tuple(playback->filename);
+        if (tuple != NULL)
+        {
+            if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
+                ret = tuple_get_int(tuple, FIELD_LENGTH, NULL);
+            tuple_free(tuple);
+        }
     }
 
-    return -1;
+    return ret;
 }
 
 void
