@@ -17,12 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef DITHER_OPS_H
-#define DITHER_OPS_H
+#ifndef LIBSAD_DITHER_OPS_H
+#define LIBSAD_DITHER_OPS_H
 
 #include "common.h"
 #include "dither.h"
 
-SAD_buffer_ops* SAD_assign_buf_ops (SAD_buffer_format *format);
+SAD_buffer_ops *SAD_assign_buf_ops(SAD_buffer_format * format);
 
-#endif /*DITHER_OPS_H*/
+#endif /* LIBSAD_DITHER_OPS_H */

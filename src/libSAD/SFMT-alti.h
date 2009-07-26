@@ -17,10 +17,7 @@
 #ifndef LIBSAD_SFMT_ALTI_H
 #define LIBSAD_SFMT_ALTI_H
 
-inline static vector guint vec_recursion(vector guint a,
-						vector guint b,
-						vector guint c,
-						vector guint d) ALWAYSINLINE;
+inline static vector guint vec_recursion(vector guint a, vector guint b, vector guint c, vector guint d) ALWAYSINLINE;
 
 /**
  * This function represents the recursion formula in AltiVec and BIG ENDIAN.
@@ -30,10 +27,7 @@ inline static vector guint vec_recursion(vector guint a,
  * @param d a 128-bit part of the interal state array
  * @return output
  */
-inline static vector guint vec_recursion(vector guint a,
-						vector guint b,
-						vector guint c,
-						vector guint d)
+     inline static vector guint vec_recursion(vector guint a, vector guint b, vector guint c, vector guint d)
 {
 
     const vector guint sl1 = ALTI_SL1;
@@ -65,23 +59,26 @@ inline static vector guint vec_recursion(vector guint a,
  * This function fills the internal state array with pseudorandom
  * integers.
  */
-inline static void gen_rand_all(void) {
+inline static void gen_rand_all(void)
+{
     gint i;
     vector guint r, r1, r2;
 
     r1 = sfmt[N - 2].s;
     r2 = sfmt[N - 1].s;
-    for (i = 0; i < N - POS1; i++) {
-	r = vec_recursion(sfmt[i].s, sfmt[i + POS1].s, r1, r2);
-	sfmt[i].s = r;
-	r1 = r2;
-	r2 = r;
+    for (i = 0; i < N - POS1; i++)
+    {
+        r = vec_recursion(sfmt[i].s, sfmt[i + POS1].s, r1, r2);
+        sfmt[i].s = r;
+        r1 = r2;
+        r2 = r;
     }
-    for (; i < N; i++) {
-	r = vec_recursion(sfmt[i].s, sfmt[i + POS1 - N].s, r1, r2);
-	sfmt[i].s = r;
-	r1 = r2;
-	r2 = r;
+    for (; i < N; i++)
+    {
+        r = vec_recursion(sfmt[i].s, sfmt[i + POS1 - N].s, r1, r2);
+        sfmt[i].s = r;
+        r1 = r2;
+        r2 = r;
     }
 }
 
@@ -92,40 +89,46 @@ inline static void gen_rand_all(void) {
  * @param array an 128-bit array to be filled by pseudorandom numbers.  
  * @param size number of 128-bit pesudorandom numbers to be generated.
  */
-inline static void gen_rand_array(w128_t *array, gint size) {
+inline static void gen_rand_array(w128_t * array, gint size)
+{
     gint i, j;
     vector guint r, r1, r2;
 
     r1 = sfmt[N - 2].s;
     r2 = sfmt[N - 1].s;
-    for (i = 0; i < N - POS1; i++) {
-	r = vec_recursion(sfmt[i].s, sfmt[i + POS1].s, r1, r2);
-	array[i].s = r;
-	r1 = r2;
-	r2 = r;
+    for (i = 0; i < N - POS1; i++)
+    {
+        r = vec_recursion(sfmt[i].s, sfmt[i + POS1].s, r1, r2);
+        array[i].s = r;
+        r1 = r2;
+        r2 = r;
     }
-    for (; i < N; i++) {
-	r = vec_recursion(sfmt[i].s, array[i + POS1 - N].s, r1, r2);
-	array[i].s = r;
-	r1 = r2;
-	r2 = r;
+    for (; i < N; i++)
+    {
+        r = vec_recursion(sfmt[i].s, array[i + POS1 - N].s, r1, r2);
+        array[i].s = r;
+        r1 = r2;
+        r2 = r;
     }
     /* main loop */
-    for (; i < size - N; i++) {
-	r = vec_recursion(array[i - N].s, array[i + POS1 - N].s, r1, r2);
-	array[i].s = r;
-	r1 = r2;
-	r2 = r;
+    for (; i < size - N; i++)
+    {
+        r = vec_recursion(array[i - N].s, array[i + POS1 - N].s, r1, r2);
+        array[i].s = r;
+        r1 = r2;
+        r2 = r;
     }
-    for (j = 0; j < 2 * N - size; j++) {
-	sfmt[j].s = array[j + size - N].s;
+    for (j = 0; j < 2 * N - size; j++)
+    {
+        sfmt[j].s = array[j + size - N].s;
     }
-    for (; i < size; i++) {
-	r = vec_recursion(array[i - N].s, array[i + POS1 - N].s, r1, r2);
-	array[i].s = r;
-	sfmt[j++].s = r;
-	r1 = r2;
-	r2 = r;
+    for (; i < size; i++)
+    {
+        r = vec_recursion(array[i - N].s, array[i + POS1 - N].s, r1, r2);
+        array[i].s = r;
+        sfmt[j++].s = r;
+        r1 = r2;
+        r2 = r;
     }
 }
 
@@ -142,12 +145,14 @@ inline static void gen_rand_array(w128_t *array, gint size) {
  * @param array an 128-bit array to be swaped.
  * @param size size of 128-bit array.
  */
-inline static void swap(w128_t *array, gint size) {
+inline static void swap(w128_t * array, gint size)
+{
     gint i;
     const vector unsigned char perm = ALTI_SWAP;
 
-    for (i = 0; i < size; i++) {
-	array[i].s = vec_perm(array[i].s, (vector unsigned int)perm, perm);
+    for (i = 0; i < size; i++)
+    {
+        array[i].s = vec_perm(array[i].s, (vector unsigned int)perm, perm);
     }
 }
 #endif

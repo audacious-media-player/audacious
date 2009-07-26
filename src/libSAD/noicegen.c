@@ -20,7 +20,7 @@ gint triangular_dither_noise(gint nbits)
      * Refer to "The Theory of Dithered Quantization" by Robert Alexander
      * Wannamaker for complete proof of why that's optimal.
      */
-    gint v = (gen_rand32() / 2 - gen_rand32() / 2);   // in ]-2^31, 2^31[
+    gint v = (gen_rand32() / 2 - gen_rand32() / 2);     // in ]-2^31, 2^31[
     //gint signe = (v>0) ? 1 : -1;
     gint P = 1 << (32 - nbits); // the power of 2
     v /= P;
