@@ -102,7 +102,7 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     if (det)
     {
         encoding = (gchar *) guess_encoding(str, strlen(str), det);
-        if (encoding != NULL)
+        if (encoding == NULL)
             goto fallback;
 
         ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
