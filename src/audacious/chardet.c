@@ -61,11 +61,11 @@ cd_str_to_utf8(const gchar * str)
     /* already UTF-8? */
     if (dfa_validate_utf8(str, strlen(str)))
         return g_strdup(str);
+#endif
 
     /* chardet encoding detector */
     if ((out_str = cd_chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)) != NULL)
         return out_str;
-#endif
 
     /* assume encoding associated with locale */
     if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)) != NULL)
