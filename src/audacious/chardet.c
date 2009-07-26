@@ -23,17 +23,15 @@
 #include "main.h"
 
 #ifdef USE_CHARDET
-#include "../libguess/libguess.h"
+#  include "../libguess/libguess.h"
 #endif
 
 gchar *
-cd_str_to_utf8(const gchar *str)
+cd_str_to_utf8(const gchar * str)
 {
     gchar *out_str;
 
-    /* NULL in NULL out */
-    /* g_return_val_if_fail(str != NULL, NULL); */
-    if (!str)
+    if (str == NULL)
         return NULL;
 
     /* Note: Currently, playlist calls this function repeatedly, even
@@ -64,89 +62,92 @@ cd_str_to_utf8(const gchar *str)
         return g_strdup(str);
 
     /* chardet encoding detector */
-    if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
+    if ((out_str = cd_chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)) != NULL)
         return out_str;
 #endif
 
     /* assume encoding associated with locale */
-    if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)))
+    if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)) != NULL)
         return out_str;
 
-    /* all else fails, we mask off character codes >= 128,
-       replace with '?' */
+    /* all else fails, we mask off character codes >= 128, replace with '?' */
     return str_to_utf8_fallback(str);
 }
 
 gchar *
-cd_chardet_to_utf8(const gchar *str, gssize len,
-                       gsize *arg_bytes_read, gsize *arg_bytes_write,
-					   GError **arg_error)
+cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
+                   gsize * arg_bytes_write, GError ** arg_error)
 {
 #ifdef USE_CHARDET
-	char  *det = NULL, *encoding = NULL;
+    gchar *det = NULL, *encoding = NULL;
 #endif
-	gchar *ret = NULL;
-	gsize *bytes_read, *bytes_write;
-	GError **error;
-	gsize my_bytes_read, my_bytes_write;
+    gchar *ret = NULL;
+    gsize *bytes_read, *bytes_write;
+    GError **error;
+    gsize my_bytes_read, my_bytes_write;
 
-	bytes_read  = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
-	bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
-	error       = arg_error ? arg_error : NULL;
+    bytes_read = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
+    bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
+    error = arg_error ? arg_error : NULL;
 
-	g_return_val_if_fail(str != NULL, NULL);
+    g_return_val_if_fail(str != NULL, NULL);
 
 #ifdef USE_CHARDET
-	if(cfg.chardet_detector)
-		det = cfg.chardet_detector;
+    if (cfg.chardet_detector)
+        det = cfg.chardet_detector;
 
-	guess_init();
+    guess_init();
 
-	if(det){
-		encoding = (char *) guess_encoding(str, strlen(str), det);
-		if (!encoding)
-			goto fallback;
+    if (det)
+    {
+        encoding = (gchar *) guess_encoding(str, strlen(str), det);
+        if (encoding != NULL)
+            goto fallback;
 
-		ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
-	}
+        ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
+    }
 
 fallback:
 #endif
-	if(!ret && cfg.chardet_fallback){
-		gchar **encs=NULL, **enc=NULL;
-		encs = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
 
-		if(encs){
-			enc = encs;
-			for(enc=encs; *enc ; enc++){
-				ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
-				if(len == *bytes_read){
-					break;
-				}
-			}
-			g_strfreev(encs);
-		}
-	}
+    /* If detection failed or was not enabled, try fallbacks (if there are any) */
+    if (ret == NULL && cfg.chardet_fallback)
+    {
+        gchar **enc, **encs = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
+        if (encs != NULL)
+        {
+            for (enc = encs; *enc != NULL; enc++)
+            {
+                ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
+                if (len == *bytes_read)
+                    break;
+            }
+            g_strfreev(encs);
+        }
+    }
 
-	if(!ret){
-		ret = g_convert(str, len, "UTF-8", "ISO-8859-1", bytes_read, bytes_write, error);
-	}
+    /* The final fallback is ISO-8859-1, if no other is specified or conversions fail */
+    if (ret == NULL)
+        ret = g_convert(str, len, "UTF-8", "ISO-8859-1", bytes_read, bytes_write, error);
 
-	if(ret){
-		if(g_utf8_validate(ret, -1, NULL))
-			return ret;
-		else {
-			g_free(ret);
-			ret = NULL;
-		}
-	}
+    if (ret != NULL)
+    {
+        if (g_utf8_validate(ret, -1, NULL))
+            return ret;
+        else
+        {
+            g_warning("g_utf8_validate() failed for converted string in cd_chardet_to_utf8: '%s'", ret);
+            g_free(ret);
+            return NULL;
+        }
+    }
 
-	return NULL;	/* if I have no idea, return NULL. */
+    return NULL; /* If we have no idea, return NULL. */
 }
 
 
 void chardet_init(void)
 {
-	str_to_utf8 = cd_str_to_utf8;
-	chardet_to_utf8 = cd_chardet_to_utf8;
+    str_to_utf8 = cd_str_to_utf8;
+    chardet_to_utf8 = cd_chardet_to_utf8;
 }
