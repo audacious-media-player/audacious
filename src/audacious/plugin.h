@@ -1100,6 +1100,7 @@ struct _InputPlugin {
 
     void (*set_info) (gchar * title, gint length, gint rate, gint freq, gint nch);
     void (*set_info_text) (gchar * text);
+    void (*get_song_info) (gchar * filename, gchar ** title, gint * length);
     void (*file_info_box) (gchar * filename);
 
     Tuple *(*get_song_tuple) (const gchar * filename);
