@@ -85,7 +85,7 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
  */
 gint vfs_fputs(const gchar *s, VFSFile *stream)
 {
-	size_t n = strlen(s);
+	gsize n = strlen(s);
 
 	return ((vfs_fwrite(s, 1, n, stream) == n) ? n : EOF);
 }

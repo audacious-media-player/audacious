@@ -210,13 +210,13 @@ struct _AudaciousFuncTableV1 {
     VFSFile *(*vfs_fopen)(const gchar *uri, const gchar *mode);
     gint (*vfs_fclose)(VFSFile *fd);
     VFSFile *(*vfs_dup)(VFSFile *in);
-    size_t (*vfs_fread)(gpointer ptr,
-                 size_t size,
-                 size_t nmemb,
+    gsize (*vfs_fread)(gpointer ptr,
+                 gsize size,
+                 gsize nmemb,
                  VFSFile * file);
-    size_t (*vfs_fwrite)(gconstpointer ptr,
-                  size_t size,
-                  size_t nmemb,
+    gsize (*vfs_fwrite)(gconstpointer ptr,
+                  gsize size,
+                  gsize nmemb,
                   VFSFile *file);
 
     gint (*vfs_getc)(VFSFile *stream);

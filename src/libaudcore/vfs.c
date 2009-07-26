@@ -139,10 +139,10 @@ vfs_fclose(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully read.
  */
-size_t
+gsize
 vfs_fread(gpointer ptr,
-          size_t size,
-          size_t nmemb,
+          gsize size,
+          gsize nmemb,
           VFSFile * file)
 {
     if (file == NULL)
@@ -160,10 +160,10 @@ vfs_fread(gpointer ptr,
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully written.
  */
-size_t
+gsize
 vfs_fwrite(gconstpointer ptr,
-           size_t size,
-           size_t nmemb,
+           gsize size,
+           gsize nmemb,
            VFSFile * file)
 {
     if (file == NULL)
