@@ -430,12 +430,12 @@ on_output_plugin_cbox_realize(GtkComboBox * cbox,
     OutputPlugin *op, *cp = get_current_output_plugin();
     gint i = 0, selected = 0;
 
-    if (!olist) {
+    if (olist == NULL) {
         gtk_widget_set_sensitive(GTK_WIDGET(cbox), FALSE);
         return;
     }
 
-    for (i = 0; olist; i++, olist = g_list_next(olist)) {
+    for (i = 0; olist != NULL; i++, olist = g_list_next(olist)) {
         op = OUTPUT_PLUGIN(olist->data);
 
         if (olist->data == cp)
@@ -710,7 +710,7 @@ on_font_btn_font_set(GtkFontButton * button, gchar **cfg)
     *cfg = g_strdup(gtk_font_button_get_font_name(button));
     AUDDBG("Returned font name: \"%s\"\n", *cfg);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
-    if (callback) callback();
+    if (callback != NULL) callback();
 }
 
 static void
@@ -1117,7 +1117,7 @@ on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
 {
     *cfg = gtk_toggle_button_get_active(button);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
-    if (callback) callback();
+    if (callback != NULL) callback();
     GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
     if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
 }
@@ -1146,10 +1146,10 @@ on_toggle_button_cfg_toggled(GtkToggleButton *button, gchar *cfg)
 static void
 on_toggle_button_cfg_realize(GtkToggleButton *button, gchar *cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     mcs_handle_t *db;
     gboolean ret;
+
+    g_return_if_fail(cfg != NULL);
 
     db = cfg_db_open();
 
@@ -1171,10 +1171,10 @@ on_entry_realize(GtkEntry *entry, gchar **cfg)
 static void
 on_entry_changed(GtkEntry *entry, gchar **cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     void (*callback) (void) = g_object_get_data(G_OBJECT(entry), "callback");
     const gchar *ret;
+
+    g_return_if_fail(cfg != NULL);
 
     g_free(*cfg);
 
@@ -1191,10 +1191,10 @@ on_entry_changed(GtkEntry *entry, gchar **cfg)
 static void
 on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     mcs_handle_t *db;
     gchar *ret;
+
+    g_return_if_fail(cfg != NULL);
 
     db = cfg_db_open();
 
@@ -1207,10 +1207,10 @@ on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
 static void
 on_entry_cfg_changed(GtkEntry *entry, gchar *cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     mcs_handle_t *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    g_return_if_fail(cfg != NULL);
 
     db = cfg_db_open();
     cfg_db_set_string(db, NULL, cfg, ret);
@@ -1513,10 +1513,10 @@ create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_b
 
     g_signal_connect(G_OBJECT(*font_btn), "font_set",
                      G_CALLBACK(on_font_btn_font_set),
-                     (char**)widget->cfg);
+                     (gchar**)widget->cfg);
     g_signal_connect(G_OBJECT(*font_btn), "realize",
                      G_CALLBACK(on_font_btn_realize),
-                     (char**)widget->cfg);
+                     (gchar**)widget->cfg);
 }
 
 void
@@ -1551,7 +1551,7 @@ create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
                              widget->cfg);
             break;
         default:
-            g_message("Unhandled entry value type");
+            g_warning("Unhandled entry value type %d", widget->cfg_type);
     }
 }
 
@@ -1586,7 +1586,7 @@ create_cbox(PreferencesWidget *widget, GtkWidget **label, GtkWidget **combobox)
 void
 fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 {
-    int x;
+    gint x;
     GtkWidget *widget_left, *widget_middle, *widget_right;
     GtkAttachOptions middle_policy = (GtkAttachOptions) (0);
 
@@ -1614,7 +1614,7 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             default:
-                g_message("Unsupported widget in table");
+                g_warning("Unsupported widget type %d in table", elements[x].type);
         }
 
         if (widget_left)
@@ -1638,7 +1638,7 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 void
 create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 {
-    int x;
+    gint x;
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
     GSList *radio_btn_group = NULL;
@@ -1817,6 +1817,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 break;
             default:
                 /* shouldn't ever happen - expect things to break */
+                g_error("This shouldn't ever happen - expect things to break.");
                 continue;
         }
 
