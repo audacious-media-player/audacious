@@ -18,6 +18,7 @@
  */
 
 #include "config.h"
+#include "chardet.h"
 #include "audstrings.h"
 #include <glib/gi18n.h>
 #include "main.h"
