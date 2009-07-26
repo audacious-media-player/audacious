@@ -1173,17 +1173,19 @@ on_entry_changed(GtkEntry *entry, gchar **cfg)
 {
     g_return_if_fail(cfg != NULL);
 
-    gchar *ret;
+    void (*callback) (void) = g_object_get_data(G_OBJECT(entry), "callback");
+    const gchar *ret;
 
-    if (*cfg)
-        g_free(*cfg);
+    g_free(*cfg);
 
-    ret = g_strdup(gtk_entry_get_text(entry));
+    ret = gtk_entry_get_text(entry);
 
     if (ret == NULL)
         *cfg = g_strdup("");
     else
-        *cfg = ret;
+        *cfg = g_strdup(ret);
+    
+    if (callback != NULL) callback();
 }
 
 static void
@@ -1528,6 +1530,8 @@ create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
 
     if (widget->tooltip)
         gtk_widget_set_tooltip_text(*entry, _(widget->tooltip));
+
+    g_object_set_data(G_OBJECT(*entry), "callback", widget->callback);
 
     switch (widget->cfg_type) {
         case VALUE_STRING:
