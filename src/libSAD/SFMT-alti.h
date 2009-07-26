@@ -14,14 +14,13 @@
  * see LICENSE.txt
  */
 
-#ifndef SFMT_ALTI_H
-#define SFMT_ALTI_H
+#ifndef LIBSAD_SFMT_ALTI_H
+#define LIBSAD_SFMT_ALTI_H
 
-inline static vector unsigned int vec_recursion(vector unsigned int a,
-						vector unsigned int b,
-						vector unsigned int c,
-						vector unsigned int d)
-    ALWAYSINLINE;
+inline static vector guint vec_recursion(vector guint a,
+						vector guint b,
+						vector guint c,
+						vector guint d) ALWAYSINLINE;
 
 /**
  * This function represents the recursion formula in AltiVec and BIG ENDIAN.
@@ -31,23 +30,24 @@ inline static vector unsigned int vec_recursion(vector unsigned int a,
  * @param d a 128-bit part of the interal state array
  * @return output
  */
-inline static vector unsigned int vec_recursion(vector unsigned int a,
-						vector unsigned int b,
-						vector unsigned int c,
-						vector unsigned int d) {
+inline static vector guint vec_recursion(vector guint a,
+						vector guint b,
+						vector guint c,
+						vector guint d)
+{
 
-    const vector unsigned int sl1 = ALTI_SL1;
-    const vector unsigned int sr1 = ALTI_SR1;
+    const vector guint sl1 = ALTI_SL1;
+    const vector guint sr1 = ALTI_SR1;
 #ifdef ONLY64
-    const vector unsigned int mask = ALTI_MSK64;
+    const vector guint mask = ALTI_MSK64;
     const vector unsigned char perm_sl = ALTI_SL2_PERM64;
     const vector unsigned char perm_sr = ALTI_SR2_PERM64;
 #else
-    const vector unsigned int mask = ALTI_MSK;
+    const vector guint mask = ALTI_MSK;
     const vector unsigned char perm_sl = ALTI_SL2_PERM;
     const vector unsigned char perm_sr = ALTI_SR2_PERM;
 #endif
-    vector unsigned int v, w, x, y, z;
+    vector guint v, w, x, y, z;
     x = vec_perm(a, (vector unsigned int)perm_sl, perm_sl);
     v = a;
     y = vec_sr(b, sr1);
@@ -66,8 +66,8 @@ inline static vector unsigned int vec_recursion(vector unsigned int a,
  * integers.
  */
 inline static void gen_rand_all(void) {
-    int i;
-    vector unsigned int r, r1, r2;
+    gint i;
+    vector guint r, r1, r2;
 
     r1 = sfmt[N - 2].s;
     r2 = sfmt[N - 1].s;
@@ -92,9 +92,9 @@ inline static void gen_rand_all(void) {
  * @param array an 128-bit array to be filled by pseudorandom numbers.  
  * @param size number of 128-bit pesudorandom numbers to be generated.
  */
-inline static void gen_rand_array(w128_t *array, int size) {
-    int i, j;
-    vector unsigned int r, r1, r2;
+inline static void gen_rand_array(w128_t *array, gint size) {
+    gint i, j;
+    vector guint r, r1, r2;
 
     r1 = sfmt[N - 2].s;
     r2 = sfmt[N - 1].s;
@@ -130,12 +130,11 @@ inline static void gen_rand_array(w128_t *array, int size) {
 }
 
 #ifndef ONLY64
-#if defined(__APPLE__)
-#define ALTI_SWAP (vector unsigned char) \
-	(4, 5, 6, 7, 0, 1, 2, 3, 12, 13, 14, 15, 8, 9, 10, 11)
-#else
-#define ALTI_SWAP {4, 5, 6, 7, 0, 1, 2, 3, 12, 13, 14, 15, 8, 9, 10, 11}
-#endif
+#  if defined(__APPLE__)
+#    define ALTI_SWAP (vector guchar) (4, 5, 6, 7, 0, 1, 2, 3, 12, 13, 14, 15, 8, 9, 10, 11)
+#  else
+#    define ALTI_SWAP {4, 5, 6, 7, 0, 1, 2, 3, 12, 13, 14, 15, 8, 9, 10, 11}
+#  endif
 /**
  * This function swaps high and low 32-bit of 64-bit integers in user
  * specified array.
@@ -143,8 +142,8 @@ inline static void gen_rand_array(w128_t *array, int size) {
  * @param array an 128-bit array to be swaped.
  * @param size size of 128-bit array.
  */
-inline static void swap(w128_t *array, int size) {
-    int i;
+inline static void swap(w128_t *array, gint size) {
+    gint i;
     const vector unsigned char perm = ALTI_SWAP;
 
     for (i = 0; i < size; i++) {
@@ -153,4 +152,4 @@ inline static void swap(w128_t *array, int size) {
 }
 #endif
 
-#endif
+#endif /* LIBSAD_SFMT_ALTI_H */

@@ -1,10 +1,10 @@
-#ifndef NOICEGEN_H
-#define NOICEGEN_H
+#ifndef LIBSAD_NOICEGEN_H
+#define LIBSAD_NOICEGEN_H
 
-#include <inttypes.h>
+#include <glib.h>
 
-int triangular_dither_noise(int nbits);
-double triangular_dither_noise_f(void);
-void noicegen_init_rand(uint32_t seed);
+gint triangular_dither_noise(gint nbits);
+gdouble triangular_dither_noise_f(void);
+void noicegen_init_rand(guint32 seed);
 
-#endif /*NOICEGEN_H*/
+#endif /* LIBSAD_NOICEGEN_H */

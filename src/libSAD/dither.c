@@ -1,4 +1,5 @@
-/* Scale & Dither library (libSAD)
+/*
+ * Scale & Dither library (libSAD)
  * High-precision bit depth converter with ReplayGain support
  *
  * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
@@ -24,7 +25,6 @@
 #include "common.h"
 #include "dither_ops.h"
 #include "noicegen.h"
-
 #include "debug.h"
 
 #include <assert.h>
@@ -60,29 +60,30 @@
 typedef struct {
   SAD_sample_format input_sample_format;
   SAD_sample_format output_sample_format;
-  int input_bits;
-  int input_fracbits;
-  int output_bits;
-  int output_fracbits;
-  int channels;
+  gint input_bits;
+  gint input_fracbits;
+  gint output_bits;
+  gint output_fracbits;
+  gint channels;
   SAD_channels_order input_chorder;
   SAD_channels_order output_chorder;
   SAD_get_sample_proc get_sample;
   SAD_put_sample_proc put_sample;
-  int dither;
-  int hardlimit;
-  double scale;
-  double rg_scale;
-  int adaptive_scaler;
+  gint dither;
+  gint hardlimit;
+  gdouble scale;
+  gdouble rg_scale;
+  gint adaptive_scaler;
 } SAD_state_priv;
 
 /* error code */
 
 //static SAD_error SAD_last_error = SAD_ERROR_OK;
 
-static inline double compute_hardlimit (double sample, double scale) {
+static inline gdouble compute_hardlimit (gdouble sample, gdouble scale)
+{
   sample *= scale;
-  const double k = 0.5;    /* -6dBFS */
+  const gdouble k = 0.5;    /* -6dBFS */
   if (sample > k) {
     return tanh((sample - k) / (1 - k)) * (1 - k) + k;
   }
@@ -97,11 +98,11 @@ static inline double compute_hardlimit (double sample, double scale) {
  * samples < -1 and > 1 will be clipped
  */
 
-static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, int fracbits, int outbits, double *scale, int dither,
-							int hardlimit, int adaptive_scale)
+static inline gint32 __dither_sample_fixed_to_int (gint32 sample, gint inbits, gint fracbits, gint outbits, gdouble *scale, gint dither,
+				gint hardlimit, gint adaptive_scale)
 {
-  int n_bits_to_loose, bitwidth, precision_loss;
-  int32_t maxint = MAXINT(outbits);
+  gint n_bits_to_loose, bitwidth, precision_loss;
+  gint32 maxint = MAXINT(outbits);
 
   n_bits_to_loose = 0;
   bitwidth = inbits;
@@ -140,8 +141,8 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
   
   /* adaptive scaler */
   if (adaptive_scale) {
-    int sam = sample >> n_bits_to_loose;
-    double d_sam = fabs((double)sam) / (double)(maxint - 1);
+    gint sam = sample >> n_bits_to_loose;
+    gdouble d_sam = fabs((double)sam) / (double)(maxint - 1);
     if (d_sam * *scale > 1.0) {
 #ifdef CLIPPING_DEBUG
       printf("sample val %d, scale factor adjusted %f --> ", sam, *scale);
@@ -155,7 +156,7 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
   } else
   /*****************/
   if (hardlimit) {
-    sample = (int32_t)(compute_hardlimit((double)sample/(double)MAXINT(bitwidth), *scale) * (double)MAXINT(bitwidth));
+    sample = (gint32)(compute_hardlimit((double)sample/(double)MAXINT(bitwidth), *scale) * (double)MAXINT(bitwidth));
 #ifdef PRECISION_DEBUG
     printf("Precision loss, reason: hard limiter\n", inbits, outbits);
 #endif
@@ -174,11 +175,11 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
   if (precision_loss && (n_bits_to_loose >= 1) && (inbits < 32 || fracbits != 0)) sample += (1L << (n_bits_to_loose - 1));
 
 #ifdef DITHER_DEBUG
-  int32_t val_wo_dither = sample >> n_bits_to_loose;
+  gint32 val_wo_dither = sample >> n_bits_to_loose;
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
   if (dither && precision_loss && (n_bits_to_loose >= 1) && (inbits < 32 || fracbits != 0)) {
-    int32_t dither_num = triangular_dither_noise(n_bits_to_loose + 1);
+    gint32 dither_num = triangular_dither_noise(n_bits_to_loose + 1);
     sample += dither_num;
   }
 
@@ -186,7 +187,7 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
 
   /* Clipping */
 #ifdef CLIPPING_DEBUG
-  int32_t val_wo_clip = sample;
+  gint32 val_wo_clip = sample;
 #endif
   sample = CLIP(sample, maxint);
 #ifdef CLIPPING_DEBUG
@@ -204,13 +205,13 @@ static inline int32_t __dither_sample_fixed_to_int (int32_t sample, int inbits, 
  * Dither floating-point normalized sample to n-bits integer
  * samples < -1 and > 1 will be clipped
  */
-static inline int32_t __dither_sample_float_to_int (float sample, int nbits, double *scale, int dither, int hardlimit, int adaptive_scale) {
-
+static inline gint32 __dither_sample_float_to_int (gfloat sample, gint nbits, gdouble *scale, gint dither, gint hardlimit, gint adaptive_scale)
+{
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_float_to_int\n");
 #endif
 
-  int32_t maxint = MAXINT(nbits);
+  gint32 maxint = MAXINT(nbits);
   
   /* adaptive scaler */
   if (adaptive_scale) {
@@ -237,18 +238,18 @@ static inline int32_t __dither_sample_float_to_int (float sample, int nbits, dou
   sample = (sample < 0 ? sample - 0.5 : sample + 0.5);
 
 #ifdef DITHER_DEBUG
-  int32_t val_wo_dither = (int32_t) sample;
+  gint32 val_wo_dither = (gint32) sample;
   val_wo_dither = CLIP(val_wo_dither, maxint);
 #endif
   if (dither) {
-    double dither_num = triangular_dither_noise_f();
+    gdouble dither_num = triangular_dither_noise_f();
     sample += dither_num;
   }
 
   /* Round and clipping */
-  int32_t value = (int32_t) sample;
+  gint32 value = (gint32) sample;
 #ifdef CLIPPING_DEBUG
-  int32_t val_wo_clip = value;
+  gint32 val_wo_clip = value;
 #endif
   value = CLIP(value, maxint);
 #ifdef CLIPPING_DEBUG
@@ -263,7 +264,8 @@ static inline int32_t __dither_sample_float_to_int (float sample, int nbits, dou
   return value;
 }
 
-static inline float __dither_sample_float_to_float (float sample, double scale, int hardlimit) {
+static inline gfloat __dither_sample_float_to_float (gfloat sample, gdouble scale, gint hardlimit)
+{
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_float_to_float\n");
 #endif
@@ -275,8 +277,9 @@ static inline float __dither_sample_float_to_float (float sample, double scale, 
   return sample;
 }
 
-static inline float __dither_sample_fixed_to_float (int32_t sample, int inbits, int fracbits, double scale, int hardlimit) {
-  float fsample;
+static inline gfloat __dither_sample_fixed_to_float (gint32 sample, gint inbits, gint fracbits, gdouble scale, gint hardlimit)
+{
+  gfloat fsample;
 
 #ifdef DEEP_DEBUG
   printf("f: __dither_sample_fixed_to_float\n");
@@ -290,15 +293,13 @@ static inline float __dither_sample_fixed_to_float (int32_t sample, int inbits, 
 }
 
 
-
-
-
-SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format *outbuf_format, int *error) {
+SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format *outbuf_format, gint *error)
+{
   SAD_state_priv *priv;
 
   DEBUG_MSG("f: SAD_dither_init\n",0);
 
-  priv = calloc(sizeof(SAD_state_priv), 1);
+  priv = g_new0(SAD_state_priv, 1);
 
   /* Check buffer formats and assign buffer ops */
   SAD_buffer_ops* inops = SAD_assign_buf_ops(inbuf_format);
@@ -307,7 +308,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     if (inops != NULL) {
       priv->get_sample = inops->get_sample;
     } else {
-      free(priv);
+      g_free(priv);
       *error = SAD_ERROR_INCORRECT_INPUT_SAMPLEFORMAT;
       return NULL;
     }
@@ -319,7 +320,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     if (outops != NULL) {
       priv->put_sample = outops->put_sample;
     } else {
-      free(priv);
+      g_free(priv);
       *error = SAD_ERROR_INCORRECT_OUTPUT_SAMPLEFORMAT;
       return NULL;
     }
@@ -361,7 +362,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_U32_BE: priv->output_bits = 32; break;
     case SAD_SAMPLE_FLOAT: break;
     default:
-      free(priv);
+      g_free(priv);
       *error = SAD_ERROR_INCORRECT_OUTPUT_SAMPLEFORMAT;
       return NULL;
   }
@@ -390,7 +391,7 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
     case SAD_SAMPLE_FIXED32: priv->input_fracbits = inbuf_format->fracbits; break;
     case SAD_SAMPLE_FLOAT: break;
     default:
-      free(priv);
+      g_free(priv);
       *error = SAD_ERROR_INCORRECT_INPUT_SAMPLEFORMAT;
       return NULL;
   }
@@ -399,9 +400,10 @@ SAD_dither_t* SAD_dither_init(SAD_buffer_format *inbuf_format, SAD_buffer_format
   return (SAD_dither_t*)priv;
 }
 
-int SAD_dither_free(SAD_dither_t* state) {
+gint SAD_dither_free(SAD_dither_t* state)
+{
   DEBUG_MSG("f: SAD_dither_free\n",0);
-  free(state);
+  g_free(state);
   return SAD_ERROR_OK;
 }
 
@@ -413,28 +415,30 @@ int SAD_dither_free(SAD_dither_t* state) {
  * frame is aggregate of format->channels samples
  */
 
-#define GET_FLOAT_SAMPLE(b,o,n,c,i) (o == SAD_CHORDER_INTERLEAVED ? (((float*)b)[i*n+c]) : (((float**)b)[c][i]))
+#define GET_FLOAT_SAMPLE(b,o,n,c,i)     \
+    (o == SAD_CHORDER_INTERLEAVED ? (((gfloat*)b)[i*n+c]) : (((gfloat**)b)[c][i]))
+
 #define PUT_FLOAT_SAMPLE(b,o,n,c,i,s) { \
     if (o == SAD_CHORDER_INTERLEAVED) { \
-      ((float*)b)[i*n+c] = s;		\
-    } else {				\
-      ((float**)b)[c][i] = s;		\
-    }					\
-  }
+        ((float*)b)[i*n+c] = s;		    \
+    } else {				            \
+        ((float**)b)[c][i] = s;		    \
+    }					                \
+}
 
-int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, int frames)
+gint SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, gint frames)
 {
   SAD_state_priv *priv = (SAD_state_priv*) state;
-  int i, ch;
-  int channels = priv->channels;
-  int inbits = priv->input_bits;
-  int outbits = priv->output_bits;
-  int fracbits = priv->input_fracbits;
-  double scale = priv->scale * priv->rg_scale;
-  double oldscale = scale;
-  int dither = priv->dither;
-  int hardlimit = priv->hardlimit;
-  int adaptive_scale = priv->adaptive_scaler;
+  gint i, ch;
+  gint channels = priv->channels;
+  gint inbits = priv->input_bits;
+  gint outbits = priv->output_bits;
+  gint fracbits = priv->input_fracbits;
+  gdouble scale = priv->scale * priv->rg_scale;
+  gdouble oldscale = scale;
+  gint dither = priv->dither;
+  gint hardlimit = priv->hardlimit;
+  gint adaptive_scale = priv->adaptive_scaler;
   SAD_channels_order input_chorder = priv->input_chorder;
   SAD_channels_order output_chorder = priv->output_chorder;
 
@@ -450,7 +454,7 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           /* process buffer */
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++) {
-	          float sample = GET_FLOAT_SAMPLE(inbuf, input_chorder, channels, ch ,i);
+	          gfloat sample = GET_FLOAT_SAMPLE(inbuf, input_chorder, channels, ch ,i);
 	          sample = __dither_sample_float_to_float(sample, scale, hardlimit);
                   PUT_FLOAT_SAMPLE(outbuf, output_chorder, channels, ch ,i, sample);
 	      }
@@ -460,8 +464,8 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           /* process buffer */
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++) {
-	          float sample = GET_FLOAT_SAMPLE(inbuf, input_chorder, channels, ch ,i);
-	          int32_t isample = __dither_sample_float_to_int(sample, outbits, &scale, dither, hardlimit, adaptive_scale);
+	          gfloat sample = GET_FLOAT_SAMPLE(inbuf, input_chorder, channels, ch ,i);
+	          gint32 isample = __dither_sample_float_to_int(sample, outbits, &scale, dither, hardlimit, adaptive_scale);
                   put_sample (outbuf, isample, channels, ch, i);
 	      }
 	  }
@@ -472,8 +476,8 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           /* process buffer */
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++) {
-  	          int32_t sample = get_sample (inbuf, channels, ch, i);
-                  float fsample = __dither_sample_fixed_to_float (sample, inbits, fracbits, scale, hardlimit);
+  	          gint32 sample = get_sample (inbuf, channels, ch, i);
+                  gfloat fsample = __dither_sample_fixed_to_float (sample, inbits, fracbits, scale, hardlimit);
                   PUT_FLOAT_SAMPLE(outbuf, output_chorder, channels, ch ,i, fsample);
 	      }
 	  }
@@ -482,8 +486,8 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
           /* process buffer */
           for(i=0; i<frames; i++) {
 	      for(ch=0; ch<channels; ch++){
-  	          int32_t sample = get_sample (inbuf, channels, ch, i);
-	          int32_t isample = __dither_sample_fixed_to_int (sample, inbits, fracbits, outbits, &scale, dither, hardlimit, adaptive_scale);
+  	          gint32 sample = get_sample (inbuf, channels, ch, i);
+	          gint32 isample = __dither_sample_fixed_to_int (sample, inbits, fracbits, outbits, &scale, dither, hardlimit, adaptive_scale);
                   put_sample (outbuf, isample, channels, ch, i);
 	      }
 	  }
@@ -496,9 +500,10 @@ int SAD_dither_process_buffer (SAD_dither_t *state, void *inbuf, void *outbuf, i
   return SAD_ERROR_OK;
 }
 
-int SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_info, SAD_replaygain_mode *mode) {
+gint SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_info, SAD_replaygain_mode *mode)
+{
   SAD_state_priv *priv = (SAD_state_priv*) state;
-  double scale = -1.0, peak = 0.0;
+  gdouble scale = -1.0, peak = 0.0;
 
   DEBUG_MSG("f: SAD_dither_apply_replaygain\n",0);
   
@@ -555,18 +560,21 @@ int SAD_dither_apply_replaygain (SAD_dither_t *state, SAD_replaygain_info *rg_in
   return SAD_ERROR_OK;
 }
 
-int SAD_dither_set_scale (SAD_dither_t *state, float scale) {
+gint SAD_dither_set_scale (SAD_dither_t *state, gfloat scale)
+{
   SAD_state_priv *priv = (SAD_state_priv*) state;
   priv->scale = scale;
   return SAD_ERROR_OK;
 }
 
-int SAD_dither_set_dither (SAD_dither_t *state, int dither) {
+gint SAD_dither_set_dither (SAD_dither_t *state, gint dither)
+{
   SAD_state_priv *priv = (SAD_state_priv*) state;
   priv->dither = dither;
   return SAD_ERROR_OK;
 }
 
-void SAD_dither_init_rand(uint32_t seed) {
+void SAD_dither_init_rand(guint32 seed)
+{
   noicegen_init_rand(seed);
 }

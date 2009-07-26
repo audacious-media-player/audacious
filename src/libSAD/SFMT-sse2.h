@@ -50,7 +50,7 @@ inline static __m128i mm_recursion(__m128i *a, __m128i *b,
  * integers.
  */
 inline static void gen_rand_all(void) {
-    int i;
+    gint i;
     __m128i r, r1, r2, mask;
     mask = _mm_set_epi32(MSK4, MSK3, MSK2, MSK1);
 
@@ -77,8 +77,8 @@ inline static void gen_rand_all(void) {
  * @param array an 128-bit array to be filled by pseudorandom numbers.  
  * @param size number of 128-bit pesudorandom numbers to be generated.
  */
-inline static void gen_rand_array(w128_t *array, int size) {
-    int i, j;
+inline static void gen_rand_array(w128_t *array, gint size) {
+    gint i, j;
     __m128i r, r1, r2, mask;
     mask = _mm_set_epi32(MSK4, MSK3, MSK2, MSK1);
 

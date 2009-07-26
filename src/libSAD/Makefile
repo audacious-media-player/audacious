@@ -14,5 +14,5 @@ include ../../buildsys.mk
 include ../../extra.mk
 
 PACKAGE = libSAD
-CPPFLAGS += ${SIMD_CFLAGS} -I../..
-CFLAGS += ${LIB_CFLAGS}
+CPPFLAGS += ${SIMD_CFLAGS} ${GLIB_CFLAGS} -I../..
+CFLAGS += ${LIB_CFLAGS} ${GLIB_LIBS}
