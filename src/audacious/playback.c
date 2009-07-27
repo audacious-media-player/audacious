@@ -80,7 +80,7 @@ playback_set_pb_change(InputPlayback *playback)
 }
 
 static void
-playback_set_pb_params(InputPlayback *playback, gchar *title,
+playback_set_pb_params(InputPlayback *playback, const gchar *title,
     gint length, gint rate, gint freq, gint nch)
 {
     playback->title = g_strdup(title);
@@ -95,7 +95,7 @@ playback_set_pb_params(InputPlayback *playback, gchar *title,
 }
 
 static void
-playback_set_pb_title(InputPlayback *playback, gchar *title)
+playback_set_pb_title(InputPlayback *playback, const gchar *title)
 {
     playback->title = g_strdup(title);
 
@@ -480,7 +480,7 @@ playback_seek_relative(gint offset)
     playback_seek (playback_get_time () / 1000 + offset);
 }
 
-void playback_set_info (gchar * title, gint length, gint bitrate, gint
+void playback_set_info (const gchar * title, gint length, gint bitrate, gint
  samplerate, gint channels)
 {
     InputPlayback * playback = get_current_input_playback ();
@@ -499,7 +499,7 @@ void playback_set_info (gchar * title, gint length, gint bitrate, gint
     event_queue ("info change", NULL);
 }
 
-void playback_set_title (gchar * title)
+void playback_set_title (const gchar * title)
 {
     InputPlayback * playback = get_current_input_playback ();
 

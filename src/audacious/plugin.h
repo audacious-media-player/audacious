@@ -1063,8 +1063,8 @@ struct _InputPlayback {
     gint length;
     gchar *title;
 
-    void (*set_params) (InputPlayback *, gchar * title, gint length, gint rate, gint freq, gint nch);
-    void (*set_title) (InputPlayback *, gchar * text);
+    void (*set_params) (InputPlayback *, const gchar * title, gint length, gint rate, gint freq, gint nch);
+    void (*set_title) (InputPlayback *, const gchar * text);
 
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 
@@ -1098,9 +1098,9 @@ struct _InputPlugin {
     gint (*get_volume) (gint * l, gint * r);
     gint (*set_volume) (gint l, gint r);
 
-    void (*set_info) (gchar * title, gint length, gint rate, gint freq, gint nch);
-    void (*set_info_text) (gchar * text);
-    void (*file_info_box) (gchar * filename);
+    void (*set_info) (const gchar * title, gint length, gint rate, gint freq, gint nch);
+    void (*set_info_text) (const gchar * text);
+    void (*file_info_box) (const gchar * filename);
 
     Tuple *(*get_song_tuple) (const gchar * filename);
 
