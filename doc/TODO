@@ -1,22 +1,23 @@
 Long-term "TODO"
 ================
+- improve error handling:
+  * plugin init() should be able to return error codes.
+  * InputPlugin play_file also should return error codes (not only through
+  InputPlayback->error)
+  * OutputPlugin ?
+
+
 - output plugins should have some kind of (optional) "query available formats"
   function, so that the core could determine what should be used. perhaps
   offer users this info?
 
 - remove the idiotic XMMS compatibility output plugin hack.
 
-- all audio plugins (input, output, effect) should be made completely
+- maybe all audio plugins (input, output, effect) could be made completely
   re-entrant. this probably means severely breaking the API. not very
-  trivial either :(
+  trivial either .. some plugins are probably impossible.
   * basically plugin init() should allocate / init a state struct to
     be used in all operations, etc.
-
-
-- the equalizer should be fixed .. in more than one way:
-  * equalizer was broken by asphyx's libSAD
-  * lots of things are hardcoded, like number of EQ bands. this should
-    be changed.
 
 
 - URIs with "?" are stripped (the subtune support uses that), which is bad,
@@ -43,6 +44,7 @@ Long-term "TODO"
   * nenolod says: current vfs sucks, it needs a "rewrite":
     - buffering support
     - non-blocking I/O support
+    - better error handling (e.g. unified error codes, etc.)
 
 
 - {core,plugins}/configure.ac need some cleanup loving.
