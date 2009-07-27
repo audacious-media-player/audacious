@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2007  Audacious development team.
+ *  Copyright (C) 2005-2009  Audacious development team.
  *
  *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
@@ -66,31 +66,6 @@ escape_shell_chars(const gchar * string)
     *out = '\0';
 
     return escaped;
-}
-
-/**
- * Performs in place replacement of %20 sequences with whitespace character.
- * Notice that the operation is "in place", thus the given string is modified.
- *
- * @param str String to be manipulated.
- * @return Pointer to the string if succesful, NULL if failed or if input was NULL.
- */
-static gchar *
-str_twenty_to_space(gchar * str)
-{
-    gchar *match, *match_end;
-
-    g_return_val_if_fail(str != NULL, NULL);
-
-    while ((match = strstr(str, "%20")) != NULL) {
-        match_end = match + 3;
-        *match++ = ' ';
-        while (*match_end)
-            *match++ = *match_end++;
-        *match = 0;
-    }
-
-    return str;
 }
 
 /**
@@ -309,7 +284,7 @@ str_assert_utf8(const gchar * str)
 
 		for (i = 0; i < nsymbols; i++)
 			fprintf(stderr, "#%d > %s\n", i, symbols[i]);
-		
+
 		free(symbols);
 #endif
 		return str_to_utf8(str);
@@ -327,18 +302,6 @@ str_skip_chars(const gchar * str, const gchar * chars)
 }
 
 gchar *
-convert_title_text(gchar * title)
-{
-    g_return_val_if_fail(title != NULL, NULL);
-
-    str_replace_char(title, '\\', '/');
-    str_replace_char(title, '_', ' ');
-    str_twenty_to_space(title);
-
-    return title;
-}
-
-gchar *
 convert_dos_path(gchar * path)
 {
     g_return_val_if_fail(path != NULL, NULL);
@@ -353,9 +316,40 @@ convert_dos_path(gchar * path)
 }
 
 /**
- * If given file path/URI contains ending indicating subtune number
- * "?<number>", split the string. If given track pointer is non-NULL,
- * subtune number is assigned into it.
+ * Checks if given URI contains a subtune indicator/number.
+ * If it does, track is set to to it, and position of subtune
+ * separator in the URI string is returned.
+ *
+ * @param filename Filename/URI to split.
+ * @param track Pointer to variable where subtune number should be
+ * assigned or NULL if it is not needed.
+ * @return Position of subtune separator character in filename
+ * or NULL if none found. Notice that this value should NOT be modified,
+ * even though it is not declared const for technical reasons.
+ */
+gchar *
+filename_get_subtune(const gchar * filename, gint * track)
+{
+    gchar *pos;
+
+    if ((pos = strrchr(filename, '?')) != NULL)
+    {
+        const gchar *s = pos + 1;
+        while (*s != '\0' && g_ascii_isdigit(*s)) s++;
+        if (*s == '\0') {
+            if (track != NULL)
+                *track = atoi(pos + 1);
+            return pos;
+        }
+    }
+
+    return NULL;
+}
+
+/**
+ * Given file path/URI contains ending indicating subtune number
+ * "?<number>", splits the string into filename without subtune value.
+ * If given track pointer is non-NULL, subtune number is assigned into it.
  *
  * @param filename Filename/URI to split.
  * @param track Pointer to variable where subtune number should be
@@ -367,23 +361,58 @@ convert_dos_path(gchar * path)
 gchar *
 filename_split_subtune(const gchar * filename, gint * track)
 {
-    gchar *result, *pos;
+    gchar *result;
+    gchar *pos;
 
     g_return_val_if_fail(filename != NULL, NULL);
 
     result = g_strdup(filename);
     g_return_val_if_fail(result != NULL, NULL);
 
-    if ((pos = strrchr(result, '?')) != NULL)
-    {
-        gchar *s = pos + 1;
-        while (*s != '\0' && g_ascii_isdigit(*s)) s++;
-        if (*s == '\0') {
-            *pos = '\0';
-            if (track != NULL)
-                *track = atoi(pos + 1);
-        }
-    }
+    if ((pos = filename_get_subtune(result, track)) != NULL)
+        *pos = '\0';
 
     return result;
+}
+
+static gchar get_hex_digit(gchar **get)
+{
+    gchar c = **get;
+
+    if (! c)
+        return 0;
+
+    (*get)++;
+
+    if (c >= 'a')
+        return c - 'a' + 10;
+    if (c >= 'A')
+        return c - 'A' + 10;
+
+    return c - '0';
+}
+
+void string_decode_percent(gchar *string)
+{
+    gchar *get = string;
+    gchar *set = string;
+    gchar c;
+
+    while ((c = *get++))
+    {
+        if (c == '%')
+            *set++ = (get_hex_digit(&get) << 4) | get_hex_digit(&get);
+        else
+            *set++ = c;
+    }
+
+    *set = 0;
+}
+
+void string_cut_extension(gchar *string)
+{
+    gchar *period = strrchr(string, '.');
+
+    if (period != NULL)
+        *period = 0;
 }

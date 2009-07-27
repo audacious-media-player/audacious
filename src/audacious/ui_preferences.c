@@ -286,7 +286,7 @@ static PreferencesWidget chardet_elements[] = {
                    FALSE
                    #endif
                    }}, VALUE_STRING},
-    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, NULL, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
+    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, aud_config_chardet_update, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
 };
 
 static PreferencesWidget playlist_page_widgets[] = {
@@ -430,12 +430,12 @@ on_output_plugin_cbox_realize(GtkComboBox * cbox,
     OutputPlugin *op, *cp = get_current_output_plugin();
     gint i = 0, selected = 0;
 
-    if (!olist) {
+    if (olist == NULL) {
         gtk_widget_set_sensitive(GTK_WIDGET(cbox), FALSE);
         return;
     }
 
-    for (i = 0; olist; i++, olist = g_list_next(olist)) {
+    for (i = 0; olist != NULL; i++, olist = g_list_next(olist)) {
         op = OUTPUT_PLUGIN(olist->data);
 
         if (olist->data == cp)
@@ -710,7 +710,7 @@ on_font_btn_font_set(GtkFontButton * button, gchar **cfg)
     *cfg = g_strdup(gtk_font_button_get_font_name(button));
     AUDDBG("Returned font name: \"%s\"\n", *cfg);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
-    if (callback) callback();
+    if (callback != NULL) callback();
 }
 
 static void
@@ -1117,7 +1117,7 @@ on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
 {
     *cfg = gtk_toggle_button_get_active(button);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
-    if (callback) callback();
+    if (callback != NULL) callback();
     GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
     if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
 }
@@ -1146,10 +1146,10 @@ on_toggle_button_cfg_toggled(GtkToggleButton *button, gchar *cfg)
 static void
 on_toggle_button_cfg_realize(GtkToggleButton *button, gchar *cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     mcs_handle_t *db;
     gboolean ret;
+
+    g_return_if_fail(cfg != NULL);
 
     db = cfg_db_open();
 
@@ -1171,28 +1171,30 @@ on_entry_realize(GtkEntry *entry, gchar **cfg)
 static void
 on_entry_changed(GtkEntry *entry, gchar **cfg)
 {
+    void (*callback) (void) = g_object_get_data(G_OBJECT(entry), "callback");
+    const gchar *ret;
+
     g_return_if_fail(cfg != NULL);
 
-    gchar *ret;
+    g_free(*cfg);
 
-    if (*cfg)
-        g_free(*cfg);
-
-    ret = g_strdup(gtk_entry_get_text(entry));
+    ret = gtk_entry_get_text(entry);
 
     if (ret == NULL)
         *cfg = g_strdup("");
     else
-        *cfg = ret;
+        *cfg = g_strdup(ret);
+    
+    if (callback != NULL) callback();
 }
 
 static void
 on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     mcs_handle_t *db;
     gchar *ret;
+
+    g_return_if_fail(cfg != NULL);
 
     db = cfg_db_open();
 
@@ -1205,10 +1207,10 @@ on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
 static void
 on_entry_cfg_changed(GtkEntry *entry, gchar *cfg)
 {
-    g_return_if_fail(cfg != NULL);
-
     mcs_handle_t *db;
     gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    g_return_if_fail(cfg != NULL);
 
     db = cfg_db_open();
     cfg_db_set_string(db, NULL, cfg, ret);
@@ -1511,10 +1513,10 @@ create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_b
 
     g_signal_connect(G_OBJECT(*font_btn), "font_set",
                      G_CALLBACK(on_font_btn_font_set),
-                     (char**)widget->cfg);
+                     (gchar**)widget->cfg);
     g_signal_connect(G_OBJECT(*font_btn), "realize",
                      G_CALLBACK(on_font_btn_realize),
-                     (char**)widget->cfg);
+                     (gchar**)widget->cfg);
 }
 
 void
@@ -1528,6 +1530,8 @@ create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
 
     if (widget->tooltip)
         gtk_widget_set_tooltip_text(*entry, _(widget->tooltip));
+
+    g_object_set_data(G_OBJECT(*entry), "callback", widget->callback);
 
     switch (widget->cfg_type) {
         case VALUE_STRING:
@@ -1547,7 +1551,7 @@ create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
                              widget->cfg);
             break;
         default:
-            g_message("Unhandled entry value type");
+            g_warning("Unhandled entry value type %d", widget->cfg_type);
     }
 }
 
@@ -1582,7 +1586,7 @@ create_cbox(PreferencesWidget *widget, GtkWidget **label, GtkWidget **combobox)
 void
 fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 {
-    int x;
+    gint x;
     GtkWidget *widget_left, *widget_middle, *widget_right;
     GtkAttachOptions middle_policy = (GtkAttachOptions) (0);
 
@@ -1610,7 +1614,7 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             default:
-                g_message("Unsupported widget in table");
+                g_warning("Unsupported widget type %d in table", elements[x].type);
         }
 
         if (widget_left)
@@ -1634,7 +1638,7 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
 void
 create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
 {
-    int x;
+    gint x;
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
     GSList *radio_btn_group = NULL;
@@ -1813,6 +1817,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 break;
             default:
                 /* shouldn't ever happen - expect things to break */
+                g_error("This shouldn't ever happen - expect things to break.");
                 continue;
         }
 
@@ -2112,7 +2117,8 @@ create_audio_category(void)
                       (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
 
-    output_plugin_bufsize_adj = gtk_adjustment_new (0, 500, 600000, 100, 1000, 1000);
+    output_plugin_bufsize_adj =
+        gtk_adjustment_new (0, 100, 10000, 100, 1000, 1000);
     output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 1, 0);
     gtk_table_attach (GTK_TABLE (table11), output_plugin_bufsize, 1, 2, 1, 2,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),

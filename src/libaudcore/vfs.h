@@ -65,11 +65,11 @@ struct _VFSConstructor {
     /** A function pointer which points to a fclose implementation. */
 	gint (*vfs_fclose_impl)(VFSFile * file);
 	/** A function pointer which points to a fread implementation. */
-	size_t (*vfs_fread_impl)(gpointer ptr, size_t size,
-		size_t nmemb, VFSFile *file);
+	gsize (*vfs_fread_impl)(gpointer ptr, gsize size,
+		gsize nmemb, VFSFile *file);
     /** A function pointer which points to a fwrite implementation. */
-	size_t (*vfs_fwrite_impl)(gconstpointer ptr, size_t size,
-		size_t nmemb, VFSFile *file);
+	gsize (*vfs_fwrite_impl)(gconstpointer ptr, gsize size,
+		gsize nmemb, VFSFile *file);
     /** A function pointer which points to a getc implementation. */
 	gint (*vfs_getc_impl)(VFSFile *stream);
     /** A function pointer which points to an ungetc implementation. */
@@ -97,13 +97,13 @@ extern gint vfs_fclose(VFSFile * file);
 
 extern VFSFile * vfs_dup(VFSFile *in);
 
-extern size_t vfs_fread(gpointer ptr,
-                 size_t size,
-                 size_t nmemb,
+extern gsize vfs_fread(gpointer ptr,
+                 gsize size,
+                 gsize nmemb,
                  VFSFile * file);
-extern size_t vfs_fwrite(gconstpointer ptr,
-                  size_t size,
-                  size_t nmemb,
+extern gsize vfs_fwrite(gconstpointer ptr,
+                  gsize size,
+                  gsize nmemb,
                   VFSFile *file);
 
 extern gint vfs_getc(VFSFile *stream);

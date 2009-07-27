@@ -74,6 +74,7 @@ AudConfig aud_default_config = {
     .resume_playback_on_startup_time = 0,
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
+    .chardet_fallback_s = NULL,
     .output_buffer_size = 500,
     .show_filepopup_for_tuple = TRUE,
     .cover_name_include = NULL,        /* words identifying covers */
@@ -352,6 +353,14 @@ aud_config_free(void)
   }
 }
 
+void aud_config_chardet_update(void)
+{
+    if (cfg.chardet_fallback_s != NULL)
+        g_strfreev(cfg.chardet_fallback_s);
+    cfg.chardet_fallback_s = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
+}
+
+
 void
 aud_config_load(void)
 {
@@ -425,6 +434,8 @@ aud_config_load(void)
 
     if (!cfg.chardet_fallback)
         cfg.chardet_fallback = g_strdup("");
+    
+    aud_config_chardet_update();
 
     if (!cfg.cover_name_include)
         cfg.cover_name_include = g_strdup("");

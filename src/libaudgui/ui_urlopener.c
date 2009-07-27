@@ -27,52 +27,26 @@
 #  include "config.h"
 #endif
 
-#define NEED_GLADE
-#include "util.h"
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
-#include "platform/smartinclude.h"
-#include <errno.h>
-
-#include "input.h"
-#include "main.h"
 #include "playback.h"
 #include "playlist-new.h"
-#include "audstrings.h"
-
-#ifdef USE_CHARDET
-#include "../libguess/libguess.h"
-#endif
-
-#define URL_HISTORY_MAX_SIZE 30
+#include "util.h"
 
 static void
-util_add_url_callback(GtkWidget * widget,
+urlopener_add_url_callback(GtkWidget * widget,
                       GtkEntry * entry)
 {
     const gchar *text;
 
     text = gtk_entry_get_text(entry);
-    if (g_list_find_custom(cfg.url_history, text, (GCompareFunc) strcasecmp))
-        return;
-
-    cfg.url_history = g_list_prepend(cfg.url_history, g_strdup(text));
-
-    while (g_list_length(cfg.url_history) > URL_HISTORY_MAX_SIZE) {
-        GList *node = g_list_last(cfg.url_history);
-        g_free(node->data);
-        cfg.url_history = g_list_delete_link(cfg.url_history, node);
-    }
+    aud_util_add_url_history_entry(text);
 }
 
 GtkWidget *
-util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
+urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                         GCallback enqueue_func)
 {
     GtkWidget *win, *vbox, *bbox, *cancel, *enqueue, *ok, *combo, *entry,
@@ -100,12 +74,12 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     gtk_window_set_focus(GTK_WINDOW(win), entry);
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 
-    for (url = cfg.url_history; url; url = g_list_next(url))
+    for (url = aud_cfg->url_history; url; url = g_list_next(url))
         gtk_combo_box_append_text(GTK_COMBO_BOX(combo),
                                   (const gchar *) url->data);
 
     g_signal_connect(entry, "activate",
-                     G_CALLBACK(util_add_url_callback),
+                     G_CALLBACK(urlopener_add_url_callback),
                      entry);
     g_signal_connect(entry, "activate",
                      G_CALLBACK(ok_func),
@@ -131,7 +105,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     gtk_box_pack_start(GTK_BOX(bbox), enqueue, FALSE, FALSE, 0);
 
     g_signal_connect(enqueue, "clicked",
-                     G_CALLBACK(util_add_url_callback),
+                     G_CALLBACK(urlopener_add_url_callback),
                      entry);
     g_signal_connect(enqueue, "clicked",
                      G_CALLBACK(enqueue_func),
@@ -142,7 +116,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
     ok = gtk_button_new_from_stock(GTK_STOCK_OPEN);
     g_signal_connect(ok, "clicked",
-                     G_CALLBACK(util_add_url_callback), entry);
+                     G_CALLBACK(urlopener_add_url_callback), entry);
     g_signal_connect(ok, "clicked",
                      G_CALLBACK(ok_func), entry);
     g_signal_connect_swapped(ok, "clicked",
@@ -161,22 +135,22 @@ on_add_url_add_clicked(GtkWidget * widget,
 {
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
-        playlist_entry_insert (playlist_get_active (), -1, g_strdup (text), NULL);
+        aud_playlist_entry_insert (aud_playlist_get_active (), -1, g_strdup (text), NULL);
 }
 
 static void
 on_add_url_ok_clicked(GtkWidget * widget,
                       GtkWidget * entry)
 {
-    gint playlist = playlist_get_active ();
+    gint playlist = aud_playlist_get_active ();
 
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
     {
-        playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
-        playlist_entry_insert (playlist, 0, g_strdup (text), NULL);
-        playlist_set_playing (playlist);
-        playback_initiate ();
+        aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
+        aud_playlist_entry_insert (playlist, 0, g_strdup (text), NULL);
+        aud_playlist_set_playing (playlist);
+        audacious_drct_initiate ();
     }
 }
 
@@ -187,9 +161,9 @@ show_add_url_window(void)
 
     if (!url_window) {
         url_window =
-            util_add_url_dialog_new(_("Enter location to play:"),
-                                    G_CALLBACK(on_add_url_ok_clicked),
-                                    G_CALLBACK(on_add_url_add_clicked));
+            urlopener_add_url_dialog_new(_("Enter location to play:"),
+                                         G_CALLBACK(on_add_url_ok_clicked),
+                                         G_CALLBACK(on_add_url_add_clicked));
 
         g_signal_connect(url_window, "destroy",
                          G_CALLBACK(gtk_widget_destroyed),

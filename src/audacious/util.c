@@ -192,265 +192,6 @@ find_path_recursively(const gchar * path, const gchar * filename)
     return context.match;
 }
 
-
-typedef enum {
-    ARCHIVE_UNKNOWN = 0,
-    ARCHIVE_DIR,
-    ARCHIVE_TAR,
-    ARCHIVE_TGZ,
-    ARCHIVE_ZIP,
-    ARCHIVE_TBZ2
-} ArchiveType;
-
-typedef gchar *(*ArchiveExtractFunc) (const gchar *, const gchar *);
-
-typedef struct {
-    ArchiveType type;
-    const gchar *ext;
-} ArchiveExtensionType;
-
-static ArchiveExtensionType archive_extensions[] = {
-    {ARCHIVE_TAR, ".tar"},
-    {ARCHIVE_ZIP, ".wsz"},
-    {ARCHIVE_ZIP, ".zip"},
-    {ARCHIVE_TGZ, ".tar.gz"},
-    {ARCHIVE_TGZ, ".tgz"},
-    {ARCHIVE_TBZ2, ".tar.bz2"},
-    {ARCHIVE_TBZ2, ".bz2"},
-    {ARCHIVE_UNKNOWN, NULL}
-};
-
-static gchar *archive_extract_tar(const gchar * archive, const gchar * dest);
-static gchar *archive_extract_zip(const gchar * archive, const gchar * dest);
-static gchar *archive_extract_tgz(const gchar * archive, const gchar * dest);
-static gchar *archive_extract_tbz2(const gchar * archive, const gchar * dest);
-
-static ArchiveExtractFunc archive_extract_funcs[] = {
-    NULL,
-    NULL,
-    archive_extract_tar,
-    archive_extract_tgz,
-    archive_extract_zip,
-    archive_extract_tbz2
-};
-
-
-/* FIXME: these functions can be generalised into a function using a
- * command lookup table */
-
-static const gchar *
-get_tar_command(void)
-{
-    static const gchar *command = NULL;
-
-    if (!command) {
-        if (!(command = getenv("TARCMD")))
-            command = "tar";
-    }
-
-    return command;
-}
-
-static const gchar *
-get_unzip_command(void)
-{
-    static const gchar *command = NULL;
-
-    if (!command) {
-        if (!(command = getenv("UNZIPCMD")))
-            command = "unzip";
-    }
-
-    return command;
-}
-
-
-static gchar *
-archive_extract_tar(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("%s >/dev/null xf \"%s\" -C %s",
-                           get_tar_command(), archive, dest);
-}
-
-static gchar *
-archive_extract_zip(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("%s >/dev/null -o -j \"%s\" -d %s",
-                           get_unzip_command(), archive, dest);
-}
-
-static gchar *
-archive_extract_tgz(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("%s >/dev/null xzf \"%s\" -C %s",
-                           get_tar_command(), archive, dest);
-}
-
-static gchar *
-archive_extract_tbz2(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("bzip2 -dc \"%s\" | %s >/dev/null xf - -C %s",
-                           archive, get_tar_command(), dest);
-}
-
-
-ArchiveType
-archive_get_type(const gchar * filename)
-{
-    gint i = 0;
-
-    if (g_file_test(filename, G_FILE_TEST_IS_DIR))
-        return ARCHIVE_DIR;
-
-    while (archive_extensions[i].ext) {
-        if (g_str_has_suffix(filename, archive_extensions[i].ext)) {
-            return archive_extensions[i].type;
-        }
-        i++;
-    }
-
-    return ARCHIVE_UNKNOWN;
-}
-
-gboolean
-file_is_archive(const gchar * filename)
-{
-    return (archive_get_type(filename) > ARCHIVE_DIR);
-}
-
-gchar *
-archive_basename(const gchar * str)
-{
-    gint i = 0;
-
-    while (archive_extensions[i].ext) {
-        if (str_has_suffix_nocase(str, archive_extensions[i].ext)) {
-            const gchar *end = g_strrstr(str, archive_extensions[i].ext);
-            if (end) {
-                return g_strndup(str, end - str);
-            }
-            break;
-        }
-        i++;
-    }
-
-    return NULL;
-}
-
-/*
-   decompress_archive
-
-   Decompresses the archive "filename" to a temporary directory,
-   returns the path to the temp dir, or NULL if failed,
-   watch out tho, doesn't actually check if the system command succeeds :-|
-*/
-
-gchar *
-archive_decompress(const gchar * filename)
-{
-    gchar *tmpdir, *cmd, *escaped_filename;
-    ArchiveType type;
-#ifndef HAVE_MKDTEMP
-    mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
-#endif
-
-    if ((type = archive_get_type(filename)) <= ARCHIVE_DIR)
-        return NULL;
-
-#ifdef HAVE_MKDTEMP
-    tmpdir = g_build_filename(g_get_tmp_dir(), "audacious.XXXXXXXX", NULL);
-    if (!mkdtemp(tmpdir)) {
-        g_free(tmpdir);
-        AUDDBG("Unable to load skin: Failed to create temporary "
-                  "directory: %s\n", g_strerror(errno));
-        return NULL;
-    }
-#else
-    tmpdir = g_strdup_printf("%s/audacious.%ld", g_get_tmp_dir(), (long) rand());
-    make_directory(tmpdir, mode755);
-#endif
-
-    escaped_filename = escape_shell_chars(filename);
-    cmd = archive_extract_funcs[type] (escaped_filename, tmpdir);
-    g_free(escaped_filename);
-
-    if (!cmd) {
-        AUDDBG("extraction function is NULL!\n");
-        g_free(tmpdir);
-        return NULL;
-    }
-
-    AUDDBG("Attempt to execute \"%s\"\n", cmd);
-
-    if(system(cmd) != 0)
-    {
-        AUDDBG("could not execute cmd %s\n",cmd);
-        g_free(cmd);
-        return NULL;
-    }
-    g_free(cmd);
-
-    return tmpdir;
-}
-
-
-#ifdef HAVE_FTS_H
-
-void
-del_directory(const gchar * dirname)
-{
-    gchar *const argv[2] = { (gchar *) dirname, NULL };
-    FTS *fts;
-    FTSENT *p;
-
-    fts = fts_open(argv, FTS_PHYSICAL, (gint(*)())NULL);
-    while ((p = fts_read(fts))) {
-        switch (p->fts_info) {
-        case FTS_D:
-            break;
-        case FTS_DNR:
-        case FTS_ERR:
-            break;
-        case FTS_DP:
-            rmdir(p->fts_accpath);
-            break;
-        default:
-            unlink(p->fts_accpath);
-            break;
-        }
-    }
-    fts_close(fts);
-}
-
-#else                           /* !HAVE_FTS */
-
-gboolean
-del_directory_func(const gchar * path, const gchar * basename,
-                   gpointer params)
-{
-    if (!strcmp(basename, ".") || !strcmp(path, ".."))
-        return FALSE;
-
-    if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
-        dir_foreach(path, del_directory_func, NULL, NULL);
-        g_rmdir(path);
-        return FALSE;
-    }
-
-    g_unlink(path);
-
-    return FALSE;
-}
-
-void
-del_directory(const gchar * path)
-{
-    dir_foreach(path, del_directory_func, NULL, NULL);
-    g_rmdir(path);
-}
-
-#endif                          /* ifdef HAVE_FTS */
-
 static void
 strip_string(GString *string)
 {
@@ -997,4 +738,21 @@ make_directory(const gchar * path, mode_t mode)
 
     g_printerr(_("Could not create directory (%s): %s\n"), path,
                g_strerror(errno));
+}
+
+#define URL_HISTORY_MAX_SIZE 30
+
+void
+util_add_url_history_entry(const gchar * url)
+{
+    if (g_list_find_custom(cfg.url_history, url, (GCompareFunc) strcasecmp))
+        return;
+
+    cfg.url_history = g_list_prepend(cfg.url_history, g_strdup(url));
+
+    while (g_list_length(cfg.url_history) > URL_HISTORY_MAX_SIZE) {
+        GList *node = g_list_last(cfg.url_history);
+        g_free(node->data);
+        cfg.url_history = g_list_delete_link(cfg.url_history, node);
+    }
 }

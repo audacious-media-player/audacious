@@ -49,7 +49,6 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
 
 gchar *find_file_recursively(const gchar * dirname, const gchar * file);
 gchar *find_path_recursively(const gchar * dirname, const gchar * file);
-void del_directory(const gchar * dirname);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
 
@@ -71,10 +70,6 @@ gboolean text_get_extents(const gchar * fontname, const gchar * text,
                           gint * width, gint * height, gint * ascent,
                           gint * descent);
 
-gboolean file_is_archive(const gchar * filename);
-gchar *archive_decompress(const gchar * path);
-gchar *archive_basename(const gchar * path);
-
 guint gint_count_digits(gint n);
 
 
@@ -83,8 +78,6 @@ GtkWidget *make_filebrowser(const gchar *title, gboolean save);
 GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
     const gchar * button_text, gboolean modal, GCallback button_action,
     gpointer action_data);
-
-GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
 gchar *util_get_localdir(void);
 
@@ -98,6 +91,8 @@ void float_to_s16 (float * f, int16_t * i, int samples);
 gpointer smart_realloc(gpointer ptr, gsize *size);
 
 void make_directory(const gchar * path, mode_t mode);
+
+void util_add_url_history_entry(const gchar * url);
 
 G_END_DECLS
 

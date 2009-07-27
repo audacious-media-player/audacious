@@ -38,6 +38,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "libaudcore/audstrings.h"
 #include "libaudcore/index.h"
 #include "libaudcore/vfs.h"
 #include "libaudcore/tuple.h"
@@ -52,14 +53,14 @@
 #include "libSAD/libSAD.h"
 #include "libaudtag/audtag.h"
 
-#define PLUGIN(x)         ((Plugin *)(x))
-#define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
-#define OUTPUT_PLUGIN(x)  ((OutputPlugin *)(x))
-#define EFFECT_PLUGIN(x)  ((EffectPlugin *)(x))
-#define GENERAL_PLUGIN(x) ((GeneralPlugin *)(x))
-#define VIS_PLUGIN(x)     ((VisPlugin *)(x))
+#define PLUGIN(x)               ((Plugin *)(x))
+#define INPUT_PLUGIN(x)         ((InputPlugin *)(x))
+#define OUTPUT_PLUGIN(x)        ((OutputPlugin *)(x))
+#define EFFECT_PLUGIN(x)        ((EffectPlugin *)(x))
+#define GENERAL_PLUGIN(x)       ((GeneralPlugin *)(x))
+#define VIS_PLUGIN(x)           ((VisPlugin *)(x))
 #define DISCOVERY_PLUGIN(x)     ((DiscoveryPlugin *)(x))
-#define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
+#define LOWLEVEL_PLUGIN(x)      ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
 #define __AUDACIOUS_PLUGIN_API__ 10
@@ -134,8 +135,7 @@ typedef enum {
     INPUT_VIS_OFF
 } InputVisType;
 
-enum
-{
+enum {
     PLAYLIST_SORT_PATH,
     PLAYLIST_SORT_FILENAME,
     PLAYLIST_SORT_TITLE,
@@ -210,13 +210,13 @@ struct _AudaciousFuncTableV1 {
     VFSFile *(*vfs_fopen)(const gchar *uri, const gchar *mode);
     gint (*vfs_fclose)(VFSFile *fd);
     VFSFile *(*vfs_dup)(VFSFile *in);
-    size_t (*vfs_fread)(gpointer ptr,
-                 size_t size,
-                 size_t nmemb,
+    gsize (*vfs_fread)(gpointer ptr,
+                 gsize size,
+                 gsize nmemb,
                  VFSFile * file);
-    size_t (*vfs_fwrite)(gconstpointer ptr,
-                  size_t size,
-                  size_t nmemb,
+    gsize (*vfs_fwrite)(gconstpointer ptr,
+                  gsize size,
+                  gsize nmemb,
                   VFSFile *file);
 
     gint (*vfs_getc)(VFSFile *stream);
@@ -315,47 +315,6 @@ struct _AudaciousFuncTableV1 {
                              const gchar *section,
                              const gchar *key);
 
-    /* Tuple manipulation API */
-    Tuple *(*tuple_new)(void);
-    Tuple *(*tuple_new_from_filename)(const gchar *filename);
-
-    gboolean (*tuple_associate_string)(Tuple *tuple,
-                                       const gint nfield,
-                                       const gchar *field,
-                                       const gchar *string);
-    gboolean (*tuple_associate_int)(Tuple *tuple,
-                                    const gint nfield,
-                                    const gchar *field,
-                                    gint integer);
-
-    void (*tuple_disassociate)(Tuple *tuple,
-                               const gint nfield,
-                               const gchar *field);
-
-    TupleValueType (*tuple_get_value_type)(Tuple *tuple,
-                                           const gint nfield,
-                                           const gchar *field);
-
-    const gchar *(*tuple_get_string)(Tuple *tuple,
-                                     const gint nfield,
-                                     const gchar *field);
-    gint (*tuple_get_int)(Tuple *tuple,
-                       const gint nfield,
-                       const gchar *field);
-
-    /* tuple formatter API */
-    gchar *(*tuple_formatter_process_string)(Tuple *tuple, const gchar *string);
-    gchar *(*tuple_formatter_make_title_string)(Tuple *tuple, const gchar *string);
-    void (*tuple_formatter_register_expression)(const gchar *keyword,
-           gboolean (*func)(Tuple *tuple, const gchar *argument));
-    void (*tuple_formatter_register_function)(const gchar *keyword,
-           gchar *(*func)(Tuple *tuple, gchar **argument));
-    gchar *(*tuple_formatter_process_expr)(Tuple *tuple, const gchar *expression,
-           const gchar *argument);
-    gchar *(*tuple_formatter_process_function)(Tuple *tuple, const gchar *expression,
-           const gchar *argument);
-    gchar *(*tuple_formatter_process_construct)(Tuple *tuple, const gchar *string);
-
     /* MIME types */
     InputPlugin *(*mime_get_plugin)(const gchar *mimetype);
     void (*mime_set_plugin)(const gchar *mimetype, InputPlugin *ip);
@@ -374,6 +333,7 @@ struct _AudaciousFuncTableV1 {
 
     gpointer (*smart_realloc)(gpointer ptr, gsize *size);
     SAD_sample_format (*sadfmt_from_afmt)(AFormat fmt);
+    void (*util_add_url_history_entry)(const gchar * url);
 
     /* INI funcs */
     INIFile *(*open_ini_file)(const gchar *filename);
@@ -385,29 +345,10 @@ struct _AudaciousFuncTableV1 {
 
 
     /* strings API */
-    gchar *(*escape_shell_chars)(const gchar * string);
-
-    gchar *(*str_append)(gchar * str, const gchar * add_str);
-    gchar *(*str_replace)(gchar * str, gchar * new_str);
-    void (*str_replace_in)(gchar ** str, gchar * new_str);
-
-    gboolean (*str_has_prefix_nocase)(const gchar * str, const gchar * prefix);
-    gboolean (*str_has_suffix_nocase)(const gchar * str, const gchar * suffix);
-    gboolean (*str_has_suffixes_nocase)(const gchar * str, gchar * const *suffixes);
-
-    gchar *(*str_to_utf8_fallback)(const gchar * str);
-    gchar *(*filename_to_utf8)(const gchar * filename);
     gchar *(*str_to_utf8)(const gchar * str);
-
-    const gchar *(*str_skip_chars)(const gchar * str, const gchar * chars);
-
-    gchar *(*convert_title_text)(gchar * text);
-
     gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
-
-    gchar *(*filename_split_subtune)(const gchar * filename, gint * track);
 
     /* PlaylistContainer API. */
     void (*playlist_container_register)(PlaylistContainer *plc);
@@ -641,337 +582,346 @@ struct _AudaciousFuncTableV1 {
     gchar * (* playback_get_title) (void);
     void (* fileinfo_show) (gint playlist, gint entry);
     void (* fileinfo_show_current) (void);
+
+    /* Interface API */
+    const Interface * (* interface_get_current) (void);
+    void (* interface_toggle_visibility) (void);
 };
 
 
 /* Convenience macros for accessing the public API. */
-/*	public name			vtable mapping      */
-#define aud_vfs_fopen			_audvt->vfs_fopen
-#define aud_vfs_fclose			_audvt->vfs_fclose
-#define aud_vfs_dup			_audvt->vfs_dup
-#define aud_vfs_fread			_audvt->vfs_fread
-#define aud_vfs_fwrite			_audvt->vfs_fwrite
-#define aud_vfs_getc			_audvt->vfs_getc
-#define aud_vfs_ungetc			_audvt->vfs_ungetc
-#define aud_vfs_fgets			_audvt->vfs_fgets
-#define aud_vfs_fseek			_audvt->vfs_fseek
-#define aud_vfs_rewind			_audvt->vfs_rewind
-#define aud_vfs_ftell			_audvt->vfs_ftell
-#define aud_vfs_feof			_audvt->vfs_feof
-#define aud_vfs_file_test		_audvt->vfs_file_test
-#define aud_vfs_is_writeable		_audvt->vfs_is_writeable
-#define aud_vfs_truncate		_audvt->vfs_truncate
-#define aud_vfs_fsize			_audvt->vfs_fsize
-#define aud_vfs_get_metadata		_audvt->vfs_get_metadata
-#define aud_vfs_fprintf			_audvt->vfs_fprintf
-#define aud_vfs_register_transport	_audvt->vfs_register_transport
-#define aud_vfs_file_get_contents	_audvt->vfs_file_get_contents
-#define aud_vfs_is_remote		_audvt->vfs_is_remote
-#define aud_vfs_is_streaming		_audvt->vfs_is_streaming
+/*    public name            vtable mapping      */
+#define aud_vfs_fopen                   _audvt->vfs_fopen
+#define aud_vfs_fclose                  _audvt->vfs_fclose
+#define aud_vfs_dup                     _audvt->vfs_dup
+#define aud_vfs_fread                   _audvt->vfs_fread
+#define aud_vfs_fwrite                  _audvt->vfs_fwrite
+#define aud_vfs_getc                    _audvt->vfs_getc
+#define aud_vfs_ungetc                  _audvt->vfs_ungetc
+#define aud_vfs_fgets                   _audvt->vfs_fgets
+#define aud_vfs_fseek                   _audvt->vfs_fseek
+#define aud_vfs_rewind                  _audvt->vfs_rewind
+#define aud_vfs_ftell                   _audvt->vfs_ftell
+#define aud_vfs_feof                    _audvt->vfs_feof
+#define aud_vfs_file_test               _audvt->vfs_file_test
+#define aud_vfs_is_writeable            _audvt->vfs_is_writeable
+#define aud_vfs_truncate                _audvt->vfs_truncate
+#define aud_vfs_fsize                   _audvt->vfs_fsize
+#define aud_vfs_get_metadata            _audvt->vfs_get_metadata
+#define aud_vfs_fprintf                 _audvt->vfs_fprintf
+#define aud_vfs_register_transport      _audvt->vfs_register_transport
+#define aud_vfs_file_get_contents       _audvt->vfs_file_get_contents
+#define aud_vfs_is_remote               _audvt->vfs_is_remote
+#define aud_vfs_is_streaming            _audvt->vfs_is_streaming
 
-#define aud_vfs_buffer_new		_audvt->vfs_buffer_new
-#define aud_vfs_buffer_new_from_string	_audvt->vfs_buffer_new_from_string
+#define aud_vfs_buffer_new              _audvt->vfs_buffer_new
+#define aud_vfs_buffer_new_from_string  _audvt->vfs_buffer_new_from_string
 
-#define aud_vfs_buffered_file_new_from_uri	_audvt->vfs_buffered_file_new_from_uri
-#define aud_vfs_buffered_file_release_live_fd	_audvt->vfs_buffered_file_release_live_fd
+#define aud_vfs_buffered_file_new_from_uri      _audvt->vfs_buffered_file_new_from_uri
+#define aud_vfs_buffered_file_release_live_fd   _audvt->vfs_buffered_file_release_live_fd
 
-#define aud_vfs_fget_le16		_audvt->vfs_fget_le16
-#define aud_vfs_fget_le32		_audvt->vfs_fget_le32
-#define aud_vfs_fget_le64		_audvt->vfs_fget_le64
-#define aud_vfs_fget_be16		_audvt->vfs_fget_be16
-#define aud_vfs_fget_be32		_audvt->vfs_fget_be32
-#define aud_vfs_fget_be64		_audvt->vfs_fget_be64
+#define aud_vfs_fget_le16               _audvt->vfs_fget_le16
+#define aud_vfs_fget_le32               _audvt->vfs_fget_le32
+#define aud_vfs_fget_le64               _audvt->vfs_fget_le64
+#define aud_vfs_fget_be16               _audvt->vfs_fget_be16
+#define aud_vfs_fget_be32               _audvt->vfs_fget_be32
+#define aud_vfs_fget_be64               _audvt->vfs_fget_be64
 
 /* XXX: deprecation warnings */
-#define ConfigDb mcs_handle_t		/* Alias for compatibility -- ccr */
-#define aud_cfg_db_open			_audvt->cfg_db_open
-#define aud_cfg_db_close		_audvt->cfg_db_close
-#define aud_cfg_db_set_string		_audvt->cfg_db_set_string
-#define aud_cfg_db_set_int		_audvt->cfg_db_set_int
-#define aud_cfg_db_set_bool		_audvt->cfg_db_set_bool
-#define aud_cfg_db_set_float		_audvt->cfg_db_set_float
-#define aud_cfg_db_set_double		_audvt->cfg_db_set_double
-#define aud_cfg_db_get_string		_audvt->cfg_db_get_string
-#define aud_cfg_db_get_int		_audvt->cfg_db_get_int
-#define aud_cfg_db_get_bool		_audvt->cfg_db_get_bool
-#define aud_cfg_db_get_float		_audvt->cfg_db_get_float
-#define aud_cfg_db_get_double		_audvt->cfg_db_get_double
-#define aud_cfg_db_unset_key		_audvt->cfg_db_unset_key
+#define ConfigDb mcs_handle_t        /* Alias for compatibility -- ccr */
+#define aud_cfg_db_open                 _audvt->cfg_db_open
+#define aud_cfg_db_close                _audvt->cfg_db_close
+#define aud_cfg_db_set_string           _audvt->cfg_db_set_string
+#define aud_cfg_db_set_int              _audvt->cfg_db_set_int
+#define aud_cfg_db_set_bool             _audvt->cfg_db_set_bool
+#define aud_cfg_db_set_float            _audvt->cfg_db_set_float
+#define aud_cfg_db_set_double           _audvt->cfg_db_set_double
+#define aud_cfg_db_get_string           _audvt->cfg_db_get_string
+#define aud_cfg_db_get_int              _audvt->cfg_db_get_int
+#define aud_cfg_db_get_bool             _audvt->cfg_db_get_bool
+#define aud_cfg_db_get_float            _audvt->cfg_db_get_float
+#define aud_cfg_db_get_double           _audvt->cfg_db_get_double
+#define aud_cfg_db_unset_key            _audvt->cfg_db_unset_key
 
-#define aud_tuple_new			_audvt->tuple_new
-#define aud_tuple_new_from_filename	_audvt->tuple_new_from_filename
-#define aud_tuple_associate_string	_audvt->tuple_associate_string
-#define aud_tuple_associate_int		_audvt->tuple_associate_int
-#define aud_tuple_disassociate		_audvt->tuple_disassociate
-#define aud_tuple_disassociate_now	_audvt->tuple_disassociate_now
-#define aud_tuple_get_value_type	_audvt->tuple_get_value_type
-#define aud_tuple_get_string		_audvt->tuple_get_string
-#define aud_tuple_get_int		_audvt->tuple_get_int
-#define aud_tuple_free			mowgli_object_unref
+/* These functions are in libaudcore; macros here for compatibility. */
+#define aud_tuple_new                tuple_new
+#define aud_tuple_new_from_filename  tuple_new_from_filename
+#define aud_tuple_associate_string   tuple_associate_string
+#define aud_tuple_associate_int      tuple_associate_int
+#define aud_tuple_disassociate       tuple_disassociate
+#define aud_tuple_disassociate_now   tuple_disassociate_now
+#define aud_tuple_get_value_type     tuple_get_value_type
+#define aud_tuple_get_string         tuple_get_string
+#define aud_tuple_get_int            tuple_get_int
+#define aud_tuple_free               mowgli_object_unref
 
-#define aud_tuple_formatter_process_string		_audvt->tuple_formatter_process_string
-#define aud_tuple_formatter_make_title_string		_audvt->tuple_formatter_make_title_string
-#define aud_tuple_formatter_register_expression		_audvt->tuple_formatter_register_expression
-#define aud_tuple_formatter_register_function		_audvt->tuple_formatter_register_function
-#define aud_tuple_formatter_process_expr		_audvt->tuple_formatter_process_expr
-#define aud_tuple_formatter_process_function		_audvt->tuple_formatter_process_function
-#define aud_tuple_formatter_process_construct		_audvt->tuple_formatter_process_construct
+/* These functions are in libaudcore; macros here for compatibility. */
+#define aud_tuple_formatter_process_string       tuple_formatter_process_string
+#define aud_tuple_formatter_make_title_string    tuple_formatter_make_title_string
+#define aud_tuple_formatter_register_expression  tuple_formatter_register_expression
+#define aud_tuple_formatter_register_function    tuple_formatter_register_function
+#define aud_tuple_formatter_process_expr         tuple_formatter_process_expr
+#define aud_tuple_formatter_process_function     tuple_formatter_process_function
+#define aud_tuple_formatter_process_construct    tuple_formatter_process_construct
 
-#define aud_mime_get_plugin		_audvt->mime_get_plugin
-#define aud_mime_set_plugin		_audvt->mime_set_plugin
+#define aud_mime_get_plugin             _audvt->mime_get_plugin
+#define aud_mime_set_plugin             _audvt->mime_set_plugin
 
-#define aud_uri_get_plugin		_audvt->uri_get_plugin
-#define aud_uri_set_plugin		_audvt->uri_set_plugin
+#define aud_uri_get_plugin              _audvt->uri_get_plugin
+#define aud_uri_set_plugin              _audvt->uri_set_plugin
 
-#define aud_info_dialog			_audvt->util_info_dialog
-#define audacious_info_dialog		_audvt->util_info_dialog
+#define aud_info_dialog                 _audvt->util_info_dialog
+#define audacious_info_dialog           _audvt->util_info_dialog
 #define aud_smart_realloc               _audvt->smart_realloc
 #define aud_sadfmt_from_afmt            _audvt->sadfmt_from_afmt
+#define aud_util_add_url_history_entry  _audvt->util_add_url_history_entry
 
-#define aud_escape_shell_chars		_audvt->escape_shell_chars
-#define aud_str_append			_audvt->str_append
-#define aud_str_replace			_audvt->str_replace
-#define aud_str_replace_in		_audvt->str_replace_in
-#define aud_str_has_prefix_nocase	_audvt->str_has_prefix_nocase
-#define aud_str_has_suffix_nocase	_audvt->str_has_suffix_nocase
-#define aud_str_has_suffixes_nocase	_audvt->str_has_suffixes_nocase
-#define aud_str_to_utf8_fallback	_audvt->str_to_utf8_fallback
-#define aud_filename_to_utf8		_audvt->filename_to_utf8
-#define aud_str_to_utf8			_audvt->str_to_utf8
-#define aud_str_skip_chars		_audvt->str_skip_chars
-#define aud_convert_title_text		_audvt->convert_title_text
-#define aud_chardet_to_utf8		_audvt->chardet_to_utf8
-#define aud_filename_split_subtune _audvt->filename_split_subtune
+#define aud_str_to_utf8                 _audvt->str_to_utf8
+#define aud_chardet_to_utf8             _audvt->chardet_to_utf8
 
-#define aud_playlist_container_register		_audvt->playlist_container_register
-#define aud_playlist_container_unregister	_audvt->playlist_container_unregister
-#define aud_playlist_container_read		_audvt->playlist_container_read
-#define aud_playlist_container_write		_audvt->playlist_container_write
-#define aud_playlist_container_find		_audvt->playlist_container_find
+/* These functions are in libaudcore; macros here for compatibility. */
+#define aud_escape_shell_chars       escape_shell_chars
+#define aud_str_append               str_append
+#define aud_str_replace              str_replace
+#define aud_str_replace_in           str_replace_in
+#define aud_str_has_prefix_nocase    str_has_prefix_nocase
+#define aud_str_has_suffix_nocase    str_has_suffix_nocase
+#define aud_str_has_suffixes_nocase  str_has_suffixes_nocase
+#define aud_str_to_utf8_fallback     str_to_utf8_fallback
+#define aud_filename_to_utf8         filename_to_utf8
+#define aud_str_skip_chars           str_skip_chars
+#define aud_filename_split_subtune   filename_split_subtune
 
-#define aud_playlist_count _audvt->playlist_count
-#define aud_playlist_insert _audvt->playlist_insert
-#define aud_playlist_delete _audvt->playlist_delete
+#define aud_playlist_container_register     _audvt->playlist_container_register
+#define aud_playlist_container_unregister   _audvt->playlist_container_unregister
+#define aud_playlist_container_read         _audvt->playlist_container_read
+#define aud_playlist_container_write        _audvt->playlist_container_write
+#define aud_playlist_container_find         _audvt->playlist_container_find
 
-#define aud_playlist_set_filename _audvt->playlist_set_filename
-#define aud_playlist_get_filename _audvt->playlist_get_filename
-#define aud_playlist_set_title _audvt->playlist_set_title
-#define aud_playlist_get_title _audvt->playlist_get_title
+#define aud_playlist_count              _audvt->playlist_count
+#define aud_playlist_insert             _audvt->playlist_insert
+#define aud_playlist_delete             _audvt->playlist_delete
 
-#define aud_playlist_set_active _audvt->playlist_set_active
-#define aud_playlist_get_active _audvt->playlist_get_active
-#define aud_playlist_set_playing _audvt->playlist_set_playing
-#define aud_playlist_get_playing _audvt->playlist_get_playing
+#define aud_playlist_set_filename       _audvt->playlist_set_filename
+#define aud_playlist_get_filename       _audvt->playlist_get_filename
+#define aud_playlist_set_title          _audvt->playlist_set_title
+#define aud_playlist_get_title          _audvt->playlist_get_title
 
-#define aud_playlist_entry_count _audvt->playlist_entry_count
-#define aud_playlist_entry_insert _audvt->playlist_entry_insert
+#define aud_playlist_set_active         _audvt->playlist_set_active
+#define aud_playlist_get_active         _audvt->playlist_get_active
+#define aud_playlist_set_playing        _audvt->playlist_set_playing
+#define aud_playlist_get_playing        _audvt->playlist_get_playing
+
+#define aud_playlist_entry_count        _audvt->playlist_entry_count
+#define aud_playlist_entry_insert       _audvt->playlist_entry_insert
 #define aud_playlist_entry_insert_batch _audvt->playlist_entry_insert_batch
-#define aud_playlist_entry_delete _audvt->playlist_entry_delete
+#define aud_playlist_entry_delete       _audvt->playlist_entry_delete
 
 #define aud_playlist_entry_get_filename _audvt->playlist_entry_get_filename
-#define aud_playlist_entry_get_decoder _audvt->playlist_entry_get_decoder
-#define aud_playlist_entry_get_tuple _audvt->playlist_entry_get_tuple
-#define aud_playlist_entry_get_title _audvt->playlist_entry_get_title
-#define aud_playlist_entry_get_length _audvt->playlist_entry_get_length
+#define aud_playlist_entry_get_decoder  _audvt->playlist_entry_get_decoder
+#define aud_playlist_entry_get_tuple    _audvt->playlist_entry_get_tuple
+#define aud_playlist_entry_get_title    _audvt->playlist_entry_get_title
+#define aud_playlist_entry_get_length   _audvt->playlist_entry_get_length
 
-#define aud_playlist_set_position _audvt->playlist_set_position
-#define aud_playlist_get_position _audvt->playlist_get_position
+#define aud_playlist_set_position       _audvt->playlist_set_position
+#define aud_playlist_get_position       _audvt->playlist_get_position
 
 #define aud_playlist_entry_set_selected _audvt->playlist_entry_set_selected
 #define aud_playlist_entry_get_selected _audvt->playlist_entry_get_selected
-#define aud_playlist_selected_count _audvt->playlist_selected_count
-#define aud_playlist_select_all _audvt->playlist_select_all
+#define aud_playlist_selected_count     _audvt->playlist_selected_count
+#define aud_playlist_select_all         _audvt->playlist_select_all
 
-#define aud_playlist_shift _audvt->playlist_shift
-#define aud_playlist_shift_selected _audvt->playlist_shift_selected
-#define aud_playlist_delete_selected _audvt->playlist_delete_selected
-#define aud_playlist_reverse _audvt->playlist_reverse
-#define aud_playlist_randomize _audvt->playlist_randomize
+#define aud_playlist_shift              _audvt->playlist_shift
+#define aud_playlist_shift_selected     _audvt->playlist_shift_selected
+#define aud_playlist_delete_selected    _audvt->playlist_delete_selected
+#define aud_playlist_reverse            _audvt->playlist_reverse
+#define aud_playlist_randomize          _audvt->playlist_randomize
 
-#define aud_playlist_sort_by_filename _audvt->playlist_sort_by_filename
-#define aud_playlist_sort_by_tuple _audvt->playlist_sort_by_tuple
+#define aud_playlist_sort_by_filename   _audvt->playlist_sort_by_filename
+#define aud_playlist_sort_by_tuple      _audvt->playlist_sort_by_tuple
 #define aud_playlist_sort_selected_by_filename \
- _audvt->playlist_sort_selected_by_filename
+    _audvt->playlist_sort_selected_by_filename
 #define aud_playlist_sort_selected_by_tuple \
- _audvt->playlist_sort_selected_by_tuple
+    _audvt->playlist_sort_selected_by_tuple
 
-#define aud_playlist_rescan _audvt->playlist_rescan
-
-#define aud_playlist_get_total_length _audvt->playlist_get_total_length
+#define aud_playlist_rescan             _audvt->playlist_rescan
+#define aud_playlist_get_total_length   _audvt->playlist_get_total_length
 #define aud_playlist_get_selected_length _audvt->playlist_get_selected_length
+#define aud_playlist_set_shuffle        _audvt->playlist_set_shuffle
 
-#define aud_playlist_set_shuffle _audvt->playlist_set_shuffle
-
-#define aud_playlist_queue_count _audvt->playlist_queue_count
-#define aud_playlist_queue_insert _audvt->playlist_queue_insert
+#define aud_playlist_queue_count        _audvt->playlist_queue_count
+#define aud_playlist_queue_insert       _audvt->playlist_queue_insert
 #define aud_playlist_queue_insert_selected \
- _audvt->playlist_queue_insert_selected
-#define aud_playlist_queue_get_entry _audvt->playlist_queue_get_entry
-#define aud_playlist_queue_find_entry _audvt->playlist_queue_find_entry
-#define aud_playlist_queue_delete _audvt->playlist_queue_delete
+    _audvt->playlist_queue_insert_selected
+#define aud_playlist_queue_get_entry    _audvt->playlist_queue_get_entry
+#define aud_playlist_queue_find_entry   _audvt->playlist_queue_find_entry
+#define aud_playlist_queue_delete       _audvt->playlist_queue_delete
 
-#define aud_playlist_prev_song _audvt->playlist_prev_song
-#define aud_playlist_next_song _audvt->playlist_next_song
+#define aud_playlist_prev_song          _audvt->playlist_prev_song
+#define aud_playlist_next_song          _audvt->playlist_next_song
 
-#define aud_get_gentitle_format _audvt->get_gentitle_format
+#define aud_get_gentitle_format         _audvt->get_gentitle_format
 
-#define aud_playlist_sort_by_scheme _audvt->playlist_sort_by_scheme
+#define aud_playlist_sort_by_scheme     _audvt->playlist_sort_by_scheme
 #define aud_playlist_sort_selected_by_scheme \
- _audvt->playlist_sort_selected_by_scheme
+    _audvt->playlist_sort_selected_by_scheme
 #define aud_playlist_remove_duplicates_by_scheme \
  _audvt->playlist_remove_duplicates_by_scheme
-#define aud_playlist_remove_failed _audvt->playlist_remove_failed
+#define aud_playlist_remove_failed      _audvt->playlist_remove_failed
 #define aud_playlist_select_by_patterns _audvt->playlist_select_by_patterns
 
-#define aud_filename_is_playlist _audvt->filename_is_playlist
+#define aud_filename_is_playlist        _audvt->filename_is_playlist
 
-#define aud_playlist_insert_playlist _audvt->playlist_insert_playlist
-#define aud_playlist_save _audvt->playlist_save
-#define aud_playlist_add_folder _audvt->playlist_add_folder
+#define aud_playlist_insert_playlist    _audvt->playlist_insert_playlist
+#define aud_playlist_save               _audvt->playlist_save
+#define aud_playlist_add_folder         _audvt->playlist_add_folder
 
-#define aud_ip_state				_audvt->ip_state
-#define aud_cfg					_audvt->_cfg
+#define aud_ip_state                    _audvt->ip_state
+#define aud_cfg                         _audvt->_cfg
 
-#define aud_hook_associate			_audvt->hook_associate
-#define aud_hook_dissociate			_audvt->hook_dissociate
-#define aud_hook_register			_audvt->hook_register
-#define aud_hook_call				_audvt->hook_call
+#define aud_hook_associate              _audvt->hook_associate
+#define aud_hook_dissociate             _audvt->hook_dissociate
+#define aud_hook_register               _audvt->hook_register
+#define aud_hook_call                   _audvt->hook_call
 
-#define aud_open_ini_file			_audvt->open_ini_file
-#define aud_close_ini_file			_audvt->close_ini_file
-#define aud_read_ini_string			_audvt->read_ini_string
-#define aud_read_ini_array			_audvt->read_ini_array
+#define aud_open_ini_file               _audvt->open_ini_file
+#define aud_close_ini_file              _audvt->close_ini_file
+#define aud_read_ini_string             _audvt->read_ini_string
+#define aud_read_ini_array              _audvt->read_ini_array
 
-#define audacious_menu_plugin_item_add		_audvt->menu_plugin_item_add
-#define audacious_menu_plugin_item_remove	_audvt->menu_plugin_item_remove
-#define aud_menu_plugin_item_add		_audvt->menu_plugin_item_add
-#define aud_menu_plugin_item_remove		_audvt->menu_plugin_item_remove
+#define audacious_menu_plugin_item_add  _audvt->menu_plugin_item_add
+#define audacious_menu_plugin_item_remove _audvt->menu_plugin_item_remove
+#define aud_menu_plugin_item_add        _audvt->menu_plugin_item_add
+#define aud_menu_plugin_item_remove     _audvt->menu_plugin_item_remove
 
-#define audacious_drct_quit			_audvt->drct_quit
-#define audacious_drct_eject			_audvt->drct_eject
-#define audacious_drct_jtf_show			_audvt->drct_jtf_show
-#define audacious_drct_main_win_is_visible	_audvt->drct_main_win_is_visible
-#define audacious_drct_main_win_toggle		_audvt->drct_main_win_toggle
-#define audacious_drct_eq_win_is_visible	_audvt->drct_eq_win_is_visible
-#define audacious_drct_eq_win_toggle		_audvt->drct_eq_win_toggle
-#define audacious_drct_pl_win_is_visible	_audvt->drct_pl_win_is_visible
-#define audacious_drct_pl_win_toggle		_audvt->drct_pl_win_toggle
-#define audacious_drct_set_skin			_audvt->drct_set_skin
-#define audacious_drct_activate			_audvt->drct_activate
-#define audacious_drct_initiate                 _audvt->drct_initiate
-#define audacious_drct_play			_audvt->drct_play
-#define audacious_drct_pause			_audvt->drct_pause
-#define audacious_drct_stop			_audvt->drct_stop
-#define audacious_drct_get_playing		_audvt->drct_get_playing
-#define audacious_drct_get_paused		_audvt->drct_get_paused
-#define audacious_drct_get_stopped		_audvt->drct_get_stopped
-#define audacious_drct_get_info			_audvt->drct_get_info
-#define audacious_drct_get_time			_audvt->drct_get_time
-#define audacious_drct_get_length               _audvt->drct_get_length
-#define audacious_drct_seek			_audvt->drct_seek
-#define audacious_drct_get_volume		_audvt->drct_get_volume
-#define audacious_drct_set_volume		_audvt->drct_set_volume
-#define audacious_drct_get_volume_main		_audvt->drct_get_volume_main
-#define audacious_drct_set_volume_main		_audvt->drct_set_volume_main
-#define audacious_drct_get_volume_balance	_audvt->drct_get_volume_balance
-#define audacious_drct_set_volume_balance	_audvt->drct_set_volume_balance
-#define audacious_drct_pl_next			_audvt->drct_pl_next
-#define audacious_drct_pl_prev			_audvt->drct_pl_prev
-#define audacious_drct_pl_repeat_is_enabled	_audvt->drct_pl_repeat_is_enabled
-#define audacious_drct_pl_repeat_toggle		_audvt->drct_pl_repeat_toggle
-#define audacious_drct_pl_repeat_is_shuffled	_audvt->drct_pl_repeat_is_shuffled
-#define audacious_drct_pl_shuffle_toggle	_audvt->drct_pl_shuffle_toggle
-#define audacious_drct_pl_get_title		_audvt->drct_pl_get_title
-#define audacious_drct_pl_get_time		_audvt->drct_pl_get_time
-#define audacious_drct_pl_get_pos		_audvt->drct_pl_get_pos
-#define audacious_drct_pl_get_file		_audvt->drct_pl_get_file
-#define audacious_drct_pl_add			_audvt->drct_pl_add
-#define audacious_drct_pl_clear			_audvt->drct_pl_clear
-#define audacious_drct_pl_get_length		_audvt->drct_pl_get_length
-#define audacious_drct_pl_delete		_audvt->drct_pl_delete
-#define audacious_drct_pl_set_pos		_audvt->drct_pl_set_pos
-#define audacious_drct_pl_ins_url_string	_audvt->drct_pl_ins_url_string
-#define audacious_drct_pl_add_url_string	_audvt->drct_pl_add_url_string
-#define audacious_drct_pl_enqueue_to_temp	_audvt->drct_pl_enqueue_to_temp
+#define audacious_drct_quit                 _audvt->drct_quit
+#define audacious_drct_eject                _audvt->drct_eject
+#define audacious_drct_jtf_show             _audvt->drct_jtf_show
+#define audacious_drct_main_win_is_visible  _audvt->drct_main_win_is_visible
+#define audacious_drct_main_win_toggle      _audvt->drct_main_win_toggle
+#define audacious_drct_eq_win_is_visible    _audvt->drct_eq_win_is_visible
+#define audacious_drct_eq_win_toggle        _audvt->drct_eq_win_toggle
+#define audacious_drct_pl_win_is_visible    _audvt->drct_pl_win_is_visible
+#define audacious_drct_pl_win_toggle        _audvt->drct_pl_win_toggle
+#define audacious_drct_set_skin             _audvt->drct_set_skin
+#define audacious_drct_activate             _audvt->drct_activate
+#define audacious_drct_initiate             _audvt->drct_initiate
+#define audacious_drct_play                 _audvt->drct_play
+#define audacious_drct_pause                _audvt->drct_pause
+#define audacious_drct_stop                 _audvt->drct_stop
+#define audacious_drct_get_playing          _audvt->drct_get_playing
+#define audacious_drct_get_paused           _audvt->drct_get_paused
+#define audacious_drct_get_stopped          _audvt->drct_get_stopped
+#define audacious_drct_get_info             _audvt->drct_get_info
+#define audacious_drct_get_time             _audvt->drct_get_time
+#define audacious_drct_get_length           _audvt->drct_get_length
+#define audacious_drct_seek                 _audvt->drct_seek
+#define audacious_drct_get_volume           _audvt->drct_get_volume
+#define audacious_drct_set_volume           _audvt->drct_set_volume
+#define audacious_drct_get_volume_main      _audvt->drct_get_volume_main
+#define audacious_drct_set_volume_main      _audvt->drct_set_volume_main
+#define audacious_drct_get_volume_balance   _audvt->drct_get_volume_balance
+#define audacious_drct_set_volume_balance   _audvt->drct_set_volume_balance
+#define audacious_drct_pl_next              _audvt->drct_pl_next
+#define audacious_drct_pl_prev              _audvt->drct_pl_prev
+#define audacious_drct_pl_repeat_is_enabled _audvt->drct_pl_repeat_is_enabled
+#define audacious_drct_pl_repeat_toggle     _audvt->drct_pl_repeat_toggle
+#define audacious_drct_pl_repeat_is_shuffled _audvt->drct_pl_repeat_is_shuffled
+#define audacious_drct_pl_shuffle_toggle    _audvt->drct_pl_shuffle_toggle
+#define audacious_drct_pl_get_title         _audvt->drct_pl_get_title
+#define audacious_drct_pl_get_time          _audvt->drct_pl_get_time
+#define audacious_drct_pl_get_pos           _audvt->drct_pl_get_pos
+#define audacious_drct_pl_get_file          _audvt->drct_pl_get_file
+#define audacious_drct_pl_add               _audvt->drct_pl_add
+#define audacious_drct_pl_clear             _audvt->drct_pl_clear
+#define audacious_drct_pl_get_length        _audvt->drct_pl_get_length
+#define audacious_drct_pl_delete            _audvt->drct_pl_delete
+#define audacious_drct_pl_set_pos           _audvt->drct_pl_set_pos
+#define audacious_drct_pl_ins_url_string    _audvt->drct_pl_ins_url_string
+#define audacious_drct_pl_add_url_string    _audvt->drct_pl_add_url_string
+#define audacious_drct_pl_enqueue_to_temp   _audvt->drct_pl_enqueue_to_temp
 
-#define audacious_drct_pq_get_length		_audvt->drct_pq_get_length
-#define audacious_drct_pq_add			_audvt->drct_pq_add
-#define audacious_drct_pq_remove		_audvt->drct_pq_remove
-#define audacious_drct_pq_clear			_audvt->drct_pq_clear
-#define audacious_drct_pq_is_queued		_audvt->drct_pq_is_queued
-#define audacious_drct_pq_get_position		_audvt->drct_pq_get_position
-#define audacious_drct_pq_get_queue_position	_audvt->drct_pq_get_queue_position
+#define audacious_drct_pq_get_length        _audvt->drct_pq_get_length
+#define audacious_drct_pq_add               _audvt->drct_pq_add
+#define audacious_drct_pq_remove            _audvt->drct_pq_remove
+#define audacious_drct_pq_clear             _audvt->drct_pq_clear
+#define audacious_drct_pq_is_queued         _audvt->drct_pq_is_queued
+#define audacious_drct_pq_get_position      _audvt->drct_pq_get_position
+#define audacious_drct_pq_get_queue_position _audvt->drct_pq_get_queue_position
 
-#define aud_prefswin_page_new			_audvt->prefswin_page_new
-#define aud_prefswin_page_destroy		_audvt->prefswin_page_destroy
+#define aud_prefswin_page_new               _audvt->prefswin_page_new
+#define aud_prefswin_page_destroy           _audvt->prefswin_page_destroy
 
-#define audacious_fileinfopopup_create			_audvt->fileinfopopup_create
-#define audacious_fileinfopopup_destroy			_audvt->fileinfopopup_destroy
-#define audacious_fileinfopopup_show_from_tuple		_audvt->fileinfopopup_show_from_tuple
-#define audacious_fileinfopopup_show_from_title		_audvt->fileinfopopup_show_from_title
-#define audacious_fileinfopopup_hide			_audvt->fileinfopopup_hide
+#define audacious_fileinfopopup_create          _audvt->fileinfopopup_create
+#define audacious_fileinfopopup_destroy         _audvt->fileinfopopup_destroy
+#define audacious_fileinfopopup_show_from_tuple _audvt->fileinfopopup_show_from_tuple
+#define audacious_fileinfopopup_show_from_title _audvt->fileinfopopup_show_from_title
+#define audacious_fileinfopopup_hide            _audvt->fileinfopopup_hide
 
-#define audacious_get_localdir			_audvt->util_get_localdir
+#define audacious_get_localdir          _audvt->util_get_localdir
 
-#define aud_input_check_file			_audvt->input_check_file
+#define aud_input_check_file            _audvt->input_check_file
 
-#define aud_playback_new			_audvt->playback_new
-#define aud_playback_run			_audvt->playback_run
-#define aud_playback_free(x)			_audvt->playback_free
+#define aud_playback_new                _audvt->playback_new
+#define aud_playback_run                _audvt->playback_run
+#define aud_playback_free(x)            _audvt->playback_free
 
-#define aud_flow_execute			_audvt->flow_execute
-#define aud_flow_new				_audvt->flow_new
-#define aud_flow_link_element			_audvt->flow_link_element
-#define aud_flow_unlink_element			_audvt->flow_unlink_element
-#define aud_effect_flow				_audvt->effect_flow
-#define aud_volumecontrol_flow			_audvt->volumecontrol_flow
-#define aud_flow_destroy(flow)			mowgli_object_unref(flow)
+#define aud_flow_execute                _audvt->flow_execute
+#define aud_flow_new                    _audvt->flow_new
+#define aud_flow_link_element           _audvt->flow_link_element
+#define aud_flow_unlink_element         _audvt->flow_unlink_element
+#define aud_effect_flow                 _audvt->effect_flow
+#define aud_volumecontrol_flow          _audvt->volumecontrol_flow
+#define aud_flow_destroy(flow)          mowgli_object_unref(flow)
 
-#define audacious_menu_main_show		_audvt->util_menu_main_show
+#define audacious_menu_main_show        _audvt->util_menu_main_show
 
-#define aud_get_dock_window_list                _audvt->get_dock_window_list
-#define aud_dock_add_window                     _audvt->dock_add_window
-#define aud_dock_remove_window                  _audvt->dock_remove_window
-#define aud_dock_move_press                     _audvt->dock_move_press
-#define aud_dock_move_motion                    _audvt->dock_move_motion
-#define aud_dock_move_release                   _audvt->dock_move_release
-#define aud_dock_is_moving                      _audvt->dock_is_moving
+#define aud_get_dock_window_list        _audvt->get_dock_window_list
+#define aud_dock_add_window             _audvt->dock_add_window
+#define aud_dock_remove_window          _audvt->dock_remove_window
+#define aud_dock_move_press             _audvt->dock_move_press
+#define aud_dock_move_motion            _audvt->dock_move_motion
+#define aud_dock_move_release           _audvt->dock_move_release
+#define aud_dock_is_moving              _audvt->dock_is_moving
 
-#define aud_get_output_list			_audvt->get_output_list
+#define aud_get_output_list             _audvt->get_output_list
 
-#define aud_input_get_volume			_audvt->input_get_volume
+#define aud_input_get_volume            _audvt->input_get_volume
 
-#define aud_construct_uri        _audvt->construct_uri
-#define aud_uri_to_display_basename _audvt->uri_to_display_basename
-#define aud_uri_to_display_dirname _audvt->uri_to_display_dirname
+#define aud_construct_uri               _audvt->construct_uri
+#define aud_uri_to_display_basename     _audvt->uri_to_display_basename
+#define aud_uri_to_display_dirname      _audvt->uri_to_display_dirname
 
-#define aud_set_pvt_data			_audvt->set_pvt_data
-#define aud_get_pvt_data			_audvt->get_pvt_data
+#define aud_set_pvt_data                _audvt->set_pvt_data
+#define aud_get_pvt_data                _audvt->get_pvt_data
 
-#define aud_event_queue             _audvt->event_queue
+#define aud_event_queue                 _audvt->event_queue
 
-#define aud_calc_mono_freq          _audvt->calc_mono_freq
-#define aud_calc_mono_pcm           _audvt->calc_mono_pcm
-#define aud_calc_stereo_pcm         _audvt->calc_stereo_pcm
+#define aud_calc_mono_freq              _audvt->calc_mono_freq
+#define aud_calc_mono_pcm               _audvt->calc_mono_pcm
+#define aud_calc_stereo_pcm             _audvt->calc_stereo_pcm
 
-#define aud_create_widgets          _audvt->create_widgets
+#define aud_create_widgets              _audvt->create_widgets
 
-#define aud_equalizer_read_presets  _audvt->equalizer_read_presets
+#define aud_equalizer_read_presets      _audvt->equalizer_read_presets
 #define aud_equalizer_write_preset_file _audvt->equalizer_write_preset_file
-#define aud_import_winamp_eqf       _audvt->import_winamp_eqf
-#define aud_save_preset_file        _audvt->save_preset_file
-#define aud_equalizer_read_aud_preset _audvt->equalizer_read_aud_preset
-#define aud_load_preset_file        _audvt->load_preset_file
-#define aud_output_plugin_cleanup   _audvt->output_plugin_cleanup
-#define aud_output_plugin_reinit    _audvt->output_plugin_reinit
+#define aud_import_winamp_eqf           _audvt->import_winamp_eqf
+#define aud_save_preset_file            _audvt->save_preset_file
+#define aud_equalizer_read_aud_preset   _audvt->equalizer_read_aud_preset
+#define aud_load_preset_file            _audvt->load_preset_file
+#define aud_output_plugin_cleanup       _audvt->output_plugin_cleanup
+#define aud_output_plugin_reinit        _audvt->output_plugin_reinit
 
-#define aud_get_plugin_menu		_audvt->get_plugin_menu
-#define aud_playback_get_title _audvt->playback_get_title
-#define aud_fileinfo_show _audvt->fileinfo_show
-#define aud_fileinfo_show_current _audvt->fileinfo_show_current
+#define aud_get_plugin_menu             _audvt->get_plugin_menu
+#define aud_playback_get_title          _audvt->playback_get_title
+#define aud_fileinfo_show               _audvt->fileinfo_show
+#define aud_fileinfo_show_current       _audvt->fileinfo_show_current
 
 //#define aud_tag_tuple_read                  _audvt->tag_tuple_read
 //#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write
+
+#define aud_interface_get_current       _audvt->interface_get_current
+#define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
 
 #include "audacious/auddrct.h"
 
@@ -981,15 +931,15 @@ extern struct _AudaciousFuncTableV1 *_audvt;
 G_END_DECLS
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
-	G_BEGIN_DECLS \
-	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
-		(gchar *)#name, init, fini, NULL, __VA_ARGS__ }; \
-	struct _AudaciousFuncTableV1 *_audvt = NULL; \
-	G_MODULE_EXPORT PluginHeader *get_plugin_info(struct _AudaciousFuncTableV1 *_vt) { \
-		_audvt = _vt; \
-		return &_pluginInfo; \
-	} \
-	G_END_DECLS
+    G_BEGIN_DECLS \
+    static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
+        (gchar *)#name, init, fini, NULL, __VA_ARGS__ }; \
+    struct _AudaciousFuncTableV1 *_audvt = NULL; \
+    G_MODULE_EXPORT PluginHeader *get_plugin_info(struct _AudaciousFuncTableV1 *_vt) { \
+        _audvt = _vt; \
+        return &_pluginInfo; \
+    } \
+    G_END_DECLS
 
 #define SIMPLE_INPUT_PLUGIN(name, ip_list) \
     DECLARE_PLUGIN(name, NULL, NULL, ip_list)
@@ -1013,15 +963,15 @@ G_END_DECLS
     DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
 
 
-#define PLUGIN_COMMON_FIELDS		\
-    gpointer handle;			\
-    gchar *filename;			\
-    gchar *description;			\
-    void (*init) (void);		\
-    void (*cleanup) (void);		\
-    void (*about) (void);		\
-    void (*configure) (void);		\
-    PluginPreferences *settings;	\
+#define PLUGIN_COMMON_FIELDS        \
+    gpointer handle;            \
+    gchar *filename;            \
+    gchar *description;            \
+    void (*init) (void);        \
+    void (*cleanup) (void);        \
+    void (*about) (void);        \
+    void (*configure) (void);        \
+    PluginPreferences *settings;    \
     gboolean enabled;
 
 
@@ -1053,13 +1003,14 @@ struct _OutputPlugin {
     gpointer handle;
     gchar *filename;
     gchar *description;
-    
+
     OutputPluginInitStatus (*init) (void);
     void (*cleanup) (void);
     void (*about) (void);
     void (*configure) (void);
 
     gboolean enabled;
+    gint probe_priority;
 
     void (*get_volume) (gint * l, gint * r);
     void (*set_volume) (gint l, gint r);
@@ -1076,8 +1027,6 @@ struct _OutputPlugin {
     gint (*written_time) (void);
 
     void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch);
-
-    gint probe_priority;
 };
 
 struct _EffectPlugin {
@@ -1088,12 +1037,12 @@ struct _EffectPlugin {
 };
 
 struct _InputPlayback {
-    gchar *filename;
+    gchar *filename;    /**< Filename URI */
     void *data;
 
-    gint playing;
-    gboolean error;
-    gboolean eof;
+    gint playing;       /**< 1 = Playing, 0 = Stopped. */
+    gboolean error;     /**< TRUE if there has been an error. */
+    gboolean eof;       /**< TRUE if end of file has been reached- */
 
     InputPlugin *plugin;
     OutputPlugin *output;
@@ -1108,14 +1057,14 @@ struct _InputPlayback {
     GCond *pb_change_cond;
     void (*set_pb_change) (InputPlayback *self);
 
-    gint nch;
-    gint rate;
-    gint freq;
+    gint nch;           /**< */
+    gint rate;          /**< */
+    gint freq;          /**< */
     gint length;
     gchar *title;
 
-    void (*set_params) (InputPlayback *, gchar * title, gint length, gint rate, gint freq, gint nch);
-    void (*set_title) (InputPlayback *, gchar * text);
+    void (*set_params) (InputPlayback *, const gchar * title, gint length, gint rate, gint freq, gint nch);
+    void (*set_title) (InputPlayback *, const gchar * text);
 
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 
@@ -1124,6 +1073,9 @@ struct _InputPlayback {
     void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 };
 
+/**
+ * Input plugin structure.
+ */
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
@@ -1146,20 +1098,24 @@ struct _InputPlugin {
     gint (*get_volume) (gint * l, gint * r);
     gint (*set_volume) (gint l, gint r);
 
-    void (*set_info) (gchar * title, gint length, gint rate, gint freq, gint nch);
-    void (*set_info_text) (gchar * text);
-    void (*get_song_info) (gchar * filename, gchar ** title, gint * length);
-    void (*file_info_box) (gchar * filename);
+    void (*set_info) (const gchar * title, gint length, gint rate, gint freq, gint nch);
+    void (*set_info_text) (const gchar * text);
+    void (*file_info_box) (const gchar * filename);
 
     Tuple *(*get_song_tuple) (const gchar * filename);
 
-    /* Plugin can provide this function for file metadata (aka tag) writing functionality
-     * in case when no reason to provide its own custom file info dialog. Thus in most cases.
+    /**
+     * Plugin can provide this function for file metadata (aka tag)
+     * writing functionality when there is no reason to provide its
+     * own custom file info dialog.
      *
      * - In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
-     * - Each field in tuple means operation on one and only one tag's filed:
+     * - Each field in tuple means operation on one and only one tag field:
      *   - Set this field to appropriate value, if non-empty string or positive number provided.
      *   - Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
+     *
+     * @param[in] tuple Tuple with the desired metadata.
+     * @param[in] fd VFS file descriptor pointing to file to modify.
      */
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
 };

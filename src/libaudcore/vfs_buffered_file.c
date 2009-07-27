@@ -50,10 +50,10 @@ buffered_file_vfs_fclose_impl(VFSFile * file)
     return 0;
 }
 
-size_t
+gsize
 buffered_file_vfs_fread_impl(gpointer i_ptr,
-          size_t size,
-          size_t nmemb,
+          gsize size,
+          gsize nmemb,
           VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -72,10 +72,10 @@ buffered_file_vfs_fread_impl(gpointer i_ptr,
     return vfs_fread(i_ptr, size, nmemb, handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
-size_t
+gsize
 buffered_file_vfs_fwrite_impl(gconstpointer i_ptr,
-           size_t size,
-           size_t nmemb,
+           gsize size,
+           gsize nmemb,
            VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;

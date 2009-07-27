@@ -42,9 +42,9 @@ InputPlayback *playback_new(void);
 void playback_free(InputPlayback *);
 void playback_run(InputPlayback *);
 
-void playback_set_info (gchar * title, gint length, gint bitrate, gint
+void playback_set_info (const gchar * title, gint length, gint bitrate, gint
  samplerate, gint channels);
-void playback_set_title (gchar * title);
+void playback_set_title (const gchar * title);
 void playback_get_info (gint * bitrate, gint * samplerate, gint * channels);
 gchar * playback_get_title (void);
 

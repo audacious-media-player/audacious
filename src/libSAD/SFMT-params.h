@@ -1,12 +1,12 @@
-#ifndef SFMT_PARAMS_H
-#define SFMT_PARAMS_H
+#ifndef LIBSAD_SFMT_PARAMS_H
+#define LIBSAD_SFMT_PARAMS_H
 
 #if !defined(MEXP)
-#ifdef __GNUC__
-  #warning "MEXP is not defined. I assume MEXP is 19937."
-#endif
-  #define MEXP 19937
-#endif
+#  ifdef __GNUC__
+#    warning "MEXP is not defined. I assume MEXP is 19937."
+#  endif
+#    define MEXP 19937
+#  endif
 /*-----------------
   BASIC DEFINITIONS
   -----------------*/
@@ -58,40 +58,39 @@
 */
 
 /** These definitions are part of a 128-bit period certification vector.
-#define PARITY1	0x00000001U
-#define PARITY2	0x00000000U
-#define PARITY3	0x00000000U
-#define PARITY4	0xc98e126aU
+#define PARITY1    0x00000001U
+#define PARITY2    0x00000000U
+#define PARITY3    0x00000000U
+#define PARITY4    0xc98e126aU
 */
 
 #if MEXP == 607
-  #include "SFMT-params607.h"
+#include "SFMT-params607.h"
 #elif MEXP == 1279
-  #include "SFMT-params1279.h"
+#include "SFMT-params1279.h"
 #elif MEXP == 2281
-  #include "SFMT-params2281.h"
+#include "SFMT-params2281.h"
 #elif MEXP == 4253
-  #include "SFMT-params4253.h"
+#include "SFMT-params4253.h"
 #elif MEXP == 11213
-  #include "SFMT-params11213.h"
+#include "SFMT-params11213.h"
 #elif MEXP == 19937
-  #include "SFMT-params19937.h"
+#include "SFMT-params19937.h"
 #elif MEXP == 44497
-  #include "SFMT-params44497.h"
+#include "SFMT-params44497.h"
 #elif MEXP == 86243
-  #include "SFMT-params86243.h"
+#include "SFMT-params86243.h"
 #elif MEXP == 132049
-  #include "SFMT-params132049.h"
+#include "SFMT-params132049.h"
 #elif MEXP == 216091
-  #include "SFMT-params216091.h"
+#include "SFMT-params216091.h"
 #else
-#ifdef __GNUC__
-  #error "MEXP is not valid."
-  #undef MEXP
-#else
-  #undef MEXP
+#  ifdef __GNUC__
+#    error "MEXP is not valid."
+#    undef MEXP
+#  else
+#    undef MEXP
+#  endif
 #endif
 
-#endif
-
-#endif /* SFMT_PARAMS_H */
+#endif /* LIBSAD_SFMT_PARAMS_H */

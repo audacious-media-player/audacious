@@ -544,12 +544,12 @@ main(gint argc, gchar ** argv)
 
     if (start_playback)
         playback_initiate ();
-    else if (cfg.resume_playback_on_startup)
+    else
     {
         playlist_set_playing (cfg.resume_playlist);
         playlist_set_position (cfg.resume_playlist, cfg.resume_entry);
 
-        if (cfg.resume_state > 0)
+        if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
         {
             playback_initiate ();
 

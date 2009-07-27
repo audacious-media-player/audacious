@@ -80,7 +80,7 @@ playback_set_pb_change(InputPlayback *playback)
 }
 
 static void
-playback_set_pb_params(InputPlayback *playback, gchar *title,
+playback_set_pb_params(InputPlayback *playback, const gchar *title,
     gint length, gint rate, gint freq, gint nch)
 {
     playback->title = g_strdup(title);
@@ -95,7 +95,7 @@ playback_set_pb_params(InputPlayback *playback, gchar *title,
 }
 
 static void
-playback_set_pb_title(InputPlayback *playback, gchar *title)
+playback_set_pb_title(InputPlayback *playback, const gchar *title)
 {
     playback->title = g_strdup(title);
 
@@ -125,8 +125,8 @@ playback_get_time(void)
     if (playback->plugin->get_time)
         return playback->plugin->get_time (playback);
 
-    /* Note: This assumes that output_time will return sanely (zero) even before
-     audio is opened. Not ideal, but what else can we do? -jlindgren */
+    /** @attention This assumes that output_time will return sanely (zero)
+     * even before audio is opened. Not ideal, but what else can we do? -jlindgren */
     return playback->output->output_time ();
 }
 
@@ -134,20 +134,26 @@ gint
 playback_get_length(void)
 {
     InputPlayback *playback;
+    gint ret = -1;
     g_return_val_if_fail(playback_get_playing(), -1);
     playback = get_current_input_playback();
 
     if (playback->length)
         return playback->length;
 
-    if (playback && playback->plugin->get_song_tuple) {
+    if (playback != NULL && playback->plugin->get_song_tuple != NULL) {
+        Tuple *tuple;
         plugin_set_current((Plugin *)(playback->plugin));
-        Tuple *tuple = playback->plugin->get_song_tuple(playback->filename);
-        if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
-            return tuple_get_int(tuple, FIELD_LENGTH, NULL);
+        tuple = playback->plugin->get_song_tuple(playback->filename);
+        if (tuple != NULL)
+        {
+            if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
+                ret = tuple_get_int(tuple, FIELD_LENGTH, NULL);
+            tuple_free(tuple);
+        }
     }
 
-    return -1;
+    return ret;
 }
 
 void
@@ -416,7 +422,7 @@ gboolean playback_play_file (const gchar * filename, InputPlugin * decoder)
 
     if (decoder == NULL || ! decoder->enabled)
     {
-        fprintf (stderr, "Cannot play %s: no decoder found.\n", filename);
+        g_warning("Cannot play %s: no decoder found.\n", filename);
         return FALSE;
     }
 
@@ -474,7 +480,7 @@ playback_seek_relative(gint offset)
     playback_seek (playback_get_time () / 1000 + offset);
 }
 
-void playback_set_info (gchar * title, gint length, gint bitrate, gint
+void playback_set_info (const gchar * title, gint length, gint bitrate, gint
  samplerate, gint channels)
 {
     InputPlayback * playback = get_current_input_playback ();
@@ -483,7 +489,7 @@ void playback_set_info (gchar * title, gint length, gint bitrate, gint
         return;
 
     g_free (playback->title);
-    playback->title = convert_title_text (g_strdup (title));
+    playback->title = g_strdup (title);
     playback->length = length;
     playback->rate = bitrate;
     playback->freq = samplerate;
@@ -493,7 +499,7 @@ void playback_set_info (gchar * title, gint length, gint bitrate, gint
     event_queue ("info change", NULL);
 }
 
-void playback_set_title (gchar * title)
+void playback_set_title (const gchar * title)
 {
     InputPlayback * playback = get_current_input_playback ();
 
@@ -501,7 +507,7 @@ void playback_set_title (gchar * title)
         return;
 
     g_free (playback->title);
-    playback->title = convert_title_text (g_strdup (title));
+    playback->title = g_strdup (title);
 
     event_queue ("title change", NULL);
 }
@@ -531,7 +537,7 @@ gchar * playback_get_title (void)
         return NULL;
 
     if (cfg.show_numbers_in_pl)
-        return g_strdup_printf ("%d. %s (%d:%02d)", playlist_get_position
+        return g_strdup_printf ("%d. %s (%d:%02d)", 1 + playlist_get_position
          (playlist_get_playing ()), playback->title, playback->length / 60000,
          playback->length / 1000 % 60);
     else

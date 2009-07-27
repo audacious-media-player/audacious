@@ -51,14 +51,17 @@ gchar *uri_to_display_dirname(const gchar * uri);
 
 const gchar *str_skip_chars(const gchar * str, const gchar * chars);
 
-gchar *convert_title_text(gchar * text);
 gchar *convert_dos_path(gchar * text);
 
 extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error);
 
+gchar *filename_get_subtune(const gchar * filename, gint * track);
 gchar *filename_split_subtune(const gchar * filename, gint * track);
+
+void string_decode_percent(gchar *string);
+void string_cut_extension(gchar *string);
 
 G_END_DECLS
 

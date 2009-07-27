@@ -33,7 +33,8 @@
 #include <glib/gi18n.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
+
+#include "smartinclude.h"
 
 struct EggDesktopFile {
   GKeyFile           *key_file;

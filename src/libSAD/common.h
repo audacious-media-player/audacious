@@ -20,134 +20,138 @@
 #ifndef LIBSAD_COMMON_H
 #define LIBSAD_COMMON_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
+#include <glib.h>
 #include <math.h>
-#include <inttypes.h>
-
-#ifndef TRUE
-#define TRUE 1
-#endif
-
-#ifndef FALSE
-#define FALSE 0
-#endif
 
 #ifdef _AUDACIOUS_CORE
-# ifdef HAVE_CONFIG_H
-#  include "config.h"
-# endif
+#  ifdef HAVE_CONFIG_H
+#    include "config.h"
+#  endif
 #endif
 
-typedef int SAD_error;
+typedef gint SAD_error;
 
-typedef enum {
-  SAD_SAMPLE_S8,
-  SAD_SAMPLE_U8,
-  SAD_SAMPLE_S16, 
-  SAD_SAMPLE_S16_LE, 
-  SAD_SAMPLE_S16_BE, 
-  SAD_SAMPLE_U16,
-  SAD_SAMPLE_U16_LE,
-  SAD_SAMPLE_U16_BE,
-  SAD_SAMPLE_S24,
-  SAD_SAMPLE_S24_LE,
-  SAD_SAMPLE_S24_BE,
-  SAD_SAMPLE_U24,
-  SAD_SAMPLE_U24_LE,
-  SAD_SAMPLE_U24_BE,
-  SAD_SAMPLE_S32,
-  SAD_SAMPLE_S32_LE,
-  SAD_SAMPLE_S32_BE,
-  SAD_SAMPLE_U32,
-  SAD_SAMPLE_U32_LE,
-  SAD_SAMPLE_U32_BE,
-  SAD_SAMPLE_FIXED32,
-  SAD_SAMPLE_FLOAT,
-  SAD_SAMPLE_MAX /*EOF*/
+typedef enum
+{
+    SAD_SAMPLE_S8,
+    SAD_SAMPLE_U8,
+    SAD_SAMPLE_S16,
+    SAD_SAMPLE_S16_LE,
+    SAD_SAMPLE_S16_BE,
+    SAD_SAMPLE_U16,
+    SAD_SAMPLE_U16_LE,
+    SAD_SAMPLE_U16_BE,
+    SAD_SAMPLE_S24,
+    SAD_SAMPLE_S24_LE,
+    SAD_SAMPLE_S24_BE,
+    SAD_SAMPLE_U24,
+    SAD_SAMPLE_U24_LE,
+    SAD_SAMPLE_U24_BE,
+    SAD_SAMPLE_S32,
+    SAD_SAMPLE_S32_LE,
+    SAD_SAMPLE_S32_BE,
+    SAD_SAMPLE_U32,
+    SAD_SAMPLE_U32_LE,
+    SAD_SAMPLE_U32_BE,
+    SAD_SAMPLE_FIXED32,
+    SAD_SAMPLE_FLOAT,
+    SAD_SAMPLE_MAX /*EOF*/
 } SAD_sample_format;
 
 /* sample format -> sample size */
-static inline unsigned sf2ss(SAD_sample_format fmt) {
-  switch(fmt) {
-    case SAD_SAMPLE_S8:
-    case SAD_SAMPLE_U8: return sizeof(int8_t);
-    case SAD_SAMPLE_S16:
-    case SAD_SAMPLE_S16_LE:
-    case SAD_SAMPLE_S16_BE:
-    case SAD_SAMPLE_U16:
-    case SAD_SAMPLE_U16_LE:
-    case SAD_SAMPLE_U16_BE: return sizeof(int16_t);
-    case SAD_SAMPLE_S24:
-    case SAD_SAMPLE_S24_LE:
-    case SAD_SAMPLE_S24_BE:
-    case SAD_SAMPLE_U24:
-    case SAD_SAMPLE_U24_LE:
-    case SAD_SAMPLE_U24_BE:
-    case SAD_SAMPLE_S32:
-    case SAD_SAMPLE_S32_LE:
-    case SAD_SAMPLE_S32_BE:
-    case SAD_SAMPLE_U32:
-    case SAD_SAMPLE_U32_LE:
-    case SAD_SAMPLE_U32_BE:
-    case SAD_SAMPLE_FIXED32: return sizeof(int32_t);
-    case SAD_SAMPLE_FLOAT: return sizeof(float);
-    default: return 0;
-  }
+static inline guint sf2ss(SAD_sample_format fmt)
+{
+    switch (fmt)
+    {
+      case SAD_SAMPLE_S8:
+      case SAD_SAMPLE_U8:
+          return sizeof(gint8);
+      case SAD_SAMPLE_S16:
+      case SAD_SAMPLE_S16_LE:
+      case SAD_SAMPLE_S16_BE:
+      case SAD_SAMPLE_U16:
+      case SAD_SAMPLE_U16_LE:
+      case SAD_SAMPLE_U16_BE:
+          return sizeof(gint16);
+      case SAD_SAMPLE_S24:
+      case SAD_SAMPLE_S24_LE:
+      case SAD_SAMPLE_S24_BE:
+      case SAD_SAMPLE_U24:
+      case SAD_SAMPLE_U24_LE:
+      case SAD_SAMPLE_U24_BE:
+      case SAD_SAMPLE_S32:
+      case SAD_SAMPLE_S32_LE:
+      case SAD_SAMPLE_S32_BE:
+      case SAD_SAMPLE_U32:
+      case SAD_SAMPLE_U32_LE:
+      case SAD_SAMPLE_U32_BE:
+      case SAD_SAMPLE_FIXED32:
+          return sizeof(gint32);
+      case SAD_SAMPLE_FLOAT:
+          return sizeof(float);
+      default:
+          return 0;
+    }
 }
 
-typedef enum {
-  SAD_CHORDER_INTERLEAVED,
-  SAD_CHORDER_SEPARATED,
-  SAD_CHORDER_MAX /*EOF*/
+typedef enum
+{
+    SAD_CHORDER_INTERLEAVED,
+    SAD_CHORDER_SEPARATED,
+    SAD_CHORDER_MAX /*EOF*/
 } SAD_channels_order;
 
-typedef struct {
-  SAD_sample_format sample_format;
-  int fracbits; /* for fixed-point only */
-  int channels;
-  SAD_channels_order channels_order;
-  int samplerate;
+typedef struct
+{
+    SAD_sample_format sample_format;
+    gint fracbits;              /* for fixed-point only */
+    gint channels;
+    SAD_channels_order channels_order;
+    gint samplerate;
 } SAD_buffer_format;
 
-static inline unsigned bytes2frames(SAD_buffer_format *fmt, unsigned bytes) {
-  return bytes / sf2ss(fmt->sample_format) / fmt->channels;
+static inline guint bytes2frames(SAD_buffer_format * fmt, guint bytes)
+{
+    return bytes / sf2ss(fmt->sample_format) / fmt->channels;
 }
 
-static inline unsigned frames2bytes(SAD_buffer_format *fmt, unsigned frames) {
-  return frames * sf2ss(fmt->sample_format) * fmt->channels;
+static inline guint frames2bytes(SAD_buffer_format * fmt, guint frames)
+{
+    return frames * sf2ss(fmt->sample_format) * fmt->channels;
 }
 
-static inline float db2scale(float db) {
-  return pow(10, db / 20);
+static inline gfloat db2scale(gfloat db)
+{
+    return pow(10, db / 20);
 }
 
-enum {
-  SAD_RG_NONE,
-  SAD_RG_TRACK,
-  SAD_RG_ALBUM
+enum
+{
+    SAD_RG_NONE,
+    SAD_RG_TRACK,
+    SAD_RG_ALBUM
 };
 
 #define SAD_ERROR_OK 0
 #define SAD_ERROR_FAIL -1
 
-typedef struct {
-  int present;
-  float track_gain; /* in dB !!! */
-  float track_peak;
-  float album_gain;
-  float album_peak;
+typedef struct
+{
+    gint present;
+    gfloat track_gain;          /* in dB !!! */
+    gfloat track_peak;
+    gfloat album_gain;
+    gfloat album_peak;
 } SAD_replaygain_info;
 
-typedef struct {
-  int mode;
-  int clipping_prevention;
-  int hard_limit;
-  int adaptive_scaler;
-  float preamp; /* in dB ! */
+typedef struct
+{
+    gint mode;
+    gint clipping_prevention;
+    gint hard_limit;
+    gint adaptive_scaler;
+    gfloat preamp;              /* in dB ! */
 } SAD_replaygain_mode;
 
 
-#endif /* COMMON_H */
-
+#endif /* LIBSAD_COMMON_H */

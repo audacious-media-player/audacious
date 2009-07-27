@@ -23,7 +23,6 @@
 
 #include "interface.h"
 #include "playback.h"
-#include "ui_urlopener.h"
 #include "ui_preferences.h"
 #include "ui_jumptotrack.h"
 #include "ui_credits.h"
@@ -39,7 +38,6 @@ static InterfaceOps interface_ops = {
     .hide_prefs_window = hide_prefs_window,
     .destroy_prefs_window = destroy_prefs_window,
 
-    .urlopener_show = show_add_url_window,
     .jump_to_track_show = ui_jump_to_track,
     .aboutwin_show = show_about_window,
 
@@ -137,7 +135,15 @@ interface_hide_filebrowser(void)
         interface_cbs.hide_filebrowser();
     else
         g_message("Interface didn't register hide_filebrowser function");
+}
 
+void
+interface_toggle_visibility(void)
+{
+    if (interface_cbs.toggle_visibility != NULL)
+        interface_cbs.toggle_visibility();
+    else
+        g_message("Interface didn't register toggle_visibility function");
 }
 
 typedef enum {

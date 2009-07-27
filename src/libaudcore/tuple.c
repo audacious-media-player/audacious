@@ -74,15 +74,15 @@ static mowgli_object_class_t tuple_klass;
 static GStaticRWLock tuple_rwlock = G_STATIC_RW_LOCK_INIT;
 #  ifdef TUPLE_DEBUG
 #    define TUPDEB(X) fprintf(stderr, "TUPLE_" X "(%s:%d)\n", __FUNCTION__, __LINE__)
-#    define TUPLE_LOCK_WRITE(XX)   { TUPDEB("LOCK_WRITE"); g_static_rw_lock_writer_lock(&tuple_rwlock); }
-#    define TUPLE_UNLOCK_WRITE(XX) { TUPDEB("UNLOCK_WRITE"); g_static_rw_lock_writer_unlock(&tuple_rwlock); }
-#    define TUPLE_LOCK_READ(XX)    { TUPDEB("LOCK_READ"); g_static_rw_lock_reader_lock(&tuple_rwlock); }
-#    define TUPLE_UNLOCK_READ(XX)  { TUPDEB("UNLOCK_READ"); g_static_rw_lock_reader_unlock(&tuple_rwlock); }
+#    define TUPLE_LOCK_WRITE(XX)    do { TUPDEB("LOCK_WRITE"); g_static_rw_lock_writer_lock(&tuple_rwlock); } while (0)
+#    define TUPLE_UNLOCK_WRITE(XX)  do { TUPDEB("UNLOCK_WRITE"); g_static_rw_lock_writer_unlock(&tuple_rwlock); } while (0)
+#    define TUPLE_LOCK_READ(XX)     do { TUPDEB("LOCK_READ"); g_static_rw_lock_reader_lock(&tuple_rwlock); } while (0)
+#    define TUPLE_UNLOCK_READ(XX)   do { TUPDEB("UNLOCK_READ"); g_static_rw_lock_reader_unlock(&tuple_rwlock); } while(0)
 #  else
-#    define TUPLE_LOCK_WRITE(XX) g_static_rw_lock_writer_lock(&tuple_rwlock)
-#    define TUPLE_UNLOCK_WRITE(XX) g_static_rw_lock_writer_unlock(&tuple_rwlock)
-#    define TUPLE_LOCK_READ(XX) g_static_rw_lock_reader_lock(&tuple_rwlock)
-#    define TUPLE_UNLOCK_READ(XX) g_static_rw_lock_reader_unlock(&tuple_rwlock)
+#    define TUPLE_LOCK_WRITE(XX)    g_static_rw_lock_writer_lock(&tuple_rwlock)
+#    define TUPLE_UNLOCK_WRITE(XX)  g_static_rw_lock_writer_unlock(&tuple_rwlock)
+#    define TUPLE_LOCK_READ(XX)     g_static_rw_lock_reader_lock(&tuple_rwlock)
+#    define TUPLE_UNLOCK_READ(XX)   g_static_rw_lock_reader_unlock(&tuple_rwlock)
 #  endif
 #else
 #  define TUPLE_LOCK_WRITE(XX)
@@ -129,8 +129,7 @@ tuple_destroy(gpointer data)
 }
 
 /**
- * Allocates a new empty #Tuple structure. Must be freed
- * via tuple_free().
+ * Allocates a new empty #Tuple structure. Must be freed via tuple_free().
  *
  * @return Pointer to newly allocated Tuple.
  */
@@ -165,9 +164,51 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 
 
 /**
- * Allocates a new #Tuple structure, setting filename/URI related
- * fields based on the given filename argument. The fields set are:
+ * Sets filename/URI related fields of a #Tuple structure, based
+ * on the given filename argument. The fields set are:
  * #FIELD_FILE_PATH, #FIELD_FILE_NAME and #FIELD_FILE_EXT.
+ *
+ * @param[in] filename Filename URI.
+ * @param[in,out] tuple Tuple structure to manipulate.
+ */
+void
+tuple_set_filename(Tuple *tuple, const gchar *filename)
+{
+    const gchar *slash = strrchr(filename, '/');
+    const gchar *period = strrchr(filename, '.');
+    const gchar *question = strrchr(filename, '?');
+
+    if (slash != NULL)
+    {
+        gchar *path = g_strndup(filename, slash + 1 - filename);
+
+        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, path);
+        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
+        g_free(path);
+    }
+
+    if (question != NULL)
+    {
+        gint subtune;
+
+        if (period != NULL && period < question)
+        {
+            gchar *extension = g_strndup(period + 1, question - period - 1);
+
+            tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, extension);
+            g_free(extension);
+        }
+
+        if (sscanf(question + 1, "%d", &subtune) == 1)
+            tuple_associate_int(tuple, FIELD_SUBSONG_ID, NULL, subtune);
+    }
+    else if (period != NULL)
+        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, period + 1);
+}
+
+/**
+ * Allocates a new #Tuple structure, setting filename/URI related
+ * fields based on the given filename argument by calling #tuple_set_filename.
  *
  * @param[in] filename Filename URI.
  * @return Pointer to newly allocated Tuple.
@@ -175,40 +216,15 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 Tuple *
 tuple_new_from_filename(const gchar *filename)
 {
-    gchar *slash, *ext;
-    Tuple *tuple;
+    Tuple *tuple = tuple_new();
 
-    g_return_val_if_fail(filename != NULL, NULL);
-
-    tuple = tuple_new();
-    g_return_val_if_fail(tuple != NULL, NULL);
-
-    slash = strrchr (filename, '/');
-
-    if (slash != NULL)
-    {
-        gchar c = *(slash + 1);
-
-        *(slash + 1) = '\0';
-        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, filename);
-        *(slash + 1) = c;
-
-        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
-    }
-    else
-        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, filename);
-
-    ext = strrchr(filename, '.');
-    if (ext != NULL) {
-        ++ext;
-        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, ext);
-    }
-
+    tuple_set_filename(tuple, filename);
     return tuple;
 }
 
 
-static gint tuple_get_nfield(const gchar *field)
+static gint
+tuple_get_nfield(const gchar *field)
 {
     gint i;
     for (i = 0; i < FIELD_LAST; i++)
@@ -218,6 +234,18 @@ static gint tuple_get_nfield(const gchar *field)
 }
 
 
+/**
+ * (Re)associates data into given #Tuple field.
+ * @attention This function has (unbalanced) Tuple structure unlocking,
+ * so please make sure you use it only exactly like it is used in
+ * #tuple_associate_string(), etc.
+ *
+ * @param[in] tuple Tuple structure to be manipulated.
+ * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @param[in] ftype Type of the field to be associated.
+ * @return Pointer to newly associated TupleValue structure.
+ */
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype)
 {
@@ -231,9 +259,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     /* Check for known fields */
     if (nfield < 0) {
         nfield = tuple_get_nfield(field);
-        if (nfield >= 0) {
-            fprintf(stderr, "WARNING! FIELD_* not used for '%s'!\n", field);
-        }
+        if (nfield >= 0)
+            g_warning("Tuple FIELD_* not used for '%s'!\n", field);
     }
 
     /* Check if field was known */
@@ -242,8 +269,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
         value = tuple->values[nfield];
 
         if (ftype != tuple_fields[nfield].type) {
-            /* FIXME! Convert values perhaps .. or not? */
-            fprintf(stderr, "Invalid type for [%s](%d->%d), %d != %d\n", tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
+            g_warning("Invalid type for [%s](%d->%d), %d != %d\n",
+                tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
             //mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
             TUPLE_UNLOCK_WRITE();
             return NULL;
