@@ -9,9 +9,7 @@ void tag_init(void) {
 
 /* The tuple's file-related attributes are already set */
 
-Tuple *tag_tuple_read(const gchar* filename) {
-    g_return_val_if_fail((filename != NULL), NULL);
-    VFSFile *fd = vfs_fopen(filename, "r");
+Tuple *tag_tuple_read(VFSFile *fd) {
     tag_module_t *mod = find_tag_module(fd);
     g_return_val_if_fail(mod != NULL, NULL);
     DEBUG("OK\n");

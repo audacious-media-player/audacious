@@ -15,6 +15,8 @@ void writeGuidToFile(VFSFile *f, int guid_type);
 
 gboolean wma_can_handle_file(VFSFile *fd) {
     DEBUG("can handle file\n");
+        if(fd == NULL)
+        DEBUG("F NULLL\n");
     int retval = FALSE;
     GUID *guid1 = g_new0(GUID, 1);
     memcpy(guid1, guid_read_from_file(fd, 0), sizeof (GUID));
@@ -53,8 +55,15 @@ Tuple *readCodecName(VFSFile *f, Tuple *tuple) {
     guint16 codec_name_length;
     gunichar2* codec_name;
 
+    if(f==NULL)
+    {
+        DEBUG("fd null\n");
+        return NULL;
+    }
+
     vfs_fseek(f, filePosition + 16, SEEK_SET);
     vfs_fread(&object_size, 8, 1, f);
+
     /* skip reserved bytes */
     vfs_fseek(f, 16, SEEK_CUR);
     vfs_fread(&entriesCount, 4, 1, f);
@@ -67,10 +76,11 @@ Tuple *readCodecName(VFSFile *f, Tuple *tuple) {
         vfs_fread(codec_name, codec_name_length * 2, 1, f);
         gchar* cnameUTF8 = g_utf16_to_utf8(codec_name, codec_name_length, NULL, NULL, NULL);
         tuple_associate_string(tuple, FIELD_CODEC, NULL, cnameUTF8);
+            DEBUG("sdasfas\n");
     }
-
+     DEBUG("sdasfas\n");
     filePosition += object_size;
-
+    DEBUG("after read codec name\n");
     return tuple;
 }
 
@@ -100,7 +110,7 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
     /* increment filePosition */
     filePosition += size;
 
-    tuple_associate_int(tuple, FIELD_LENGTH, NULL, playDuration / 1000);
+    tuple_associate_int(tuple, FIELD_LENGTH, NULL, (int) playDuration / 1000);
     DEBUG("length = %"PRId64"\n", playDuration / 10000);
     //tuple_associate_int(tuple, FIELD_YEAR, NULL, year);
 
@@ -244,7 +254,6 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
 
     }
 
-    exit(0);
     filePosition += size;
     return tuple;
 }
@@ -260,8 +269,8 @@ void readASFObject(VFSFile *f) {
 Tuple *wma_populate_tuple_from_file(VFSFile *fd) {
     DEBUG("wma populate tuple from file\n");
 
-    Tuple *tuple = NULL;
-
+  
+    Tuple *tuple = tuple_new_from_filename(fd->uri);
     HeaderObject *header = readHeaderObject(fd);
     int i;
 
