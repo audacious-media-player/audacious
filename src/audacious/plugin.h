@@ -556,6 +556,7 @@ struct _AudaciousFuncTableV1 {
     gpointer (*get_pvt_data)(void);
 
     void (*event_queue)(const gchar *name, gpointer user_data);
+    void (*event_queue_with_data_free)(const gchar *name, gpointer user_data);
 
     void (*calc_mono_freq)(gint16 dest[2][256], gint16 src[2][512], gint nch);
     void (*calc_mono_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
@@ -897,6 +898,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_get_pvt_data                _audvt->get_pvt_data
 
 #define aud_event_queue                 _audvt->event_queue
+#define aud_event_queue_with_data_free  _audvt->event_queue_with_data_free
 
 #define aud_calc_mono_freq              _audvt->calc_mono_freq
 #define aud_calc_mono_pcm               _audvt->calc_mono_pcm
