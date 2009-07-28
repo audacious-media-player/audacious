@@ -1,7 +1,7 @@
 /*
  * Audacious2
  * Copyright (c) 2008 William Pitcock <nenolod@dereferenced.org>
- * Copyright (c) 2008 Tomasz Moń <desowin@gmail.com>
+ * Copyright (c) 2008-2009 Tomasz Moń <desowin@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,8 @@ Interface *interface_get(gchar *id);
 const Interface *interface_get_current(void);
 void interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *privdata), void *privdata);
 
+/* These functions have to be called from main thread
+   Use event_queue if you need to call those from other threads */
 void interface_show_prefs_window(gboolean show);
 void interface_run_filebrowser(gboolean play_button);
 void interface_hide_filebrowser(void);

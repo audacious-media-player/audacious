@@ -1,7 +1,7 @@
 /*
  * Audacious2
  * Copyright (c) 2008 William Pitcock <nenolod@dereferenced.org>
- * Copyright (c) 2008 Tomasz Moń <desowin@gmail.com>
+ * Copyright (c) 2008-2009 Tomasz Moń <desowin@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -159,6 +159,8 @@ typedef enum {
     HOOK_PREFSWIN_SHOW,
     HOOK_FILEBROWSER_SHOW,
     HOOK_FILEBROWSER_HIDE,
+    HOOK_TOGGLE_VISIBILITY,
+    HOOK_SHOW_ERROR,
 } InterfaceHookID;
 
 void
@@ -174,6 +176,12 @@ interface_hook_handler(gpointer hook_data, gpointer user_data)
         case HOOK_FILEBROWSER_HIDE:
             interface_hide_filebrowser();
             break;
+        case HOOK_TOGGLE_VISIBILITY:
+            interface_toggle_visibility();
+            break;
+        case HOOK_SHOW_ERROR:
+            interface_show_error_message((const gchar *) hook_data);
+            break;
         default:
             break;
     }
@@ -188,6 +196,8 @@ static InterfaceHooks hooks[] = {
     {"prefswin show", HOOK_PREFSWIN_SHOW},
     {"filebrowser show", HOOK_FILEBROWSER_SHOW},
     {"filebrowser hide", HOOK_FILEBROWSER_HIDE},
+    {"interface toggle visibility", HOOK_TOGGLE_VISIBILITY},
+    {"interface show error", HOOK_SHOW_ERROR},
 };
 
 void
