@@ -53,7 +53,6 @@
 #include "icons-stock.h"
 #include "main.h"
 
-#include "dnd.h"
 #include "input.h"
 #include "playback.h"
 #include "playlist-new.h"
