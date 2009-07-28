@@ -353,6 +353,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .interface_get_current = interface_get_current,
     .interface_toggle_visibility = interface_toggle_visibility,
+    .interface_show_error = interface_show_error_message,
 };
 
 /*****************************************************************/

@@ -49,6 +49,7 @@ typedef struct {
     void (*run_filebrowser)(gboolean play_button);
     void (*hide_filebrowser)(void);
     void (*toggle_visibility)(void);
+    void (*show_error)(const gchar * markup);
 } InterfaceCbs;
 
 typedef struct _Interface {
@@ -73,6 +74,7 @@ void interface_show_prefs_window(gboolean show);
 void interface_run_filebrowser(gboolean play_button);
 void interface_hide_filebrowser(void);
 void interface_toggle_visibility(void);
+void interface_show_error_message(const gchar * markup);
 
 void register_interface_hooks(void);
 

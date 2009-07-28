@@ -146,6 +146,15 @@ interface_toggle_visibility(void)
         g_message("Interface didn't register toggle_visibility function");
 }
 
+void
+interface_show_error_message(const gchar * markup)
+{
+    if (interface_cbs.show_error != NULL)
+        interface_cbs.show_error(markup);
+    else
+        g_message("Interface didn't register show_error function");
+}
+
 typedef enum {
     HOOK_PREFSWIN_SHOW,
     HOOK_FILEBROWSER_SHOW,

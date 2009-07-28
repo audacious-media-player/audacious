@@ -586,6 +586,7 @@ struct _AudaciousFuncTableV1 {
     /* Interface API */
     const Interface * (* interface_get_current) (void);
     void (* interface_toggle_visibility) (void);
+    void (* interface_show_error) (const gchar * markup);
 };
 
 
@@ -922,6 +923,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_interface_get_current       _audvt->interface_get_current
 #define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
+#define aud_interface_show_error        _audct->interface_show_error
 
 #include "audacious/auddrct.h"
 
