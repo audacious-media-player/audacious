@@ -138,7 +138,7 @@ import_winamp_eqf(VFSFile * file)
     gint i = 0;
     EqualizerPreset *preset = NULL;
     GList *list = NULL;
-    GtkWidget *dialog;
+    gchar *markup;
     gchar *realfn;
     gchar preset_name[0xb4];
 
@@ -171,14 +171,12 @@ import_winamp_eqf(VFSFile * file)
 
 error:
     realfn = g_filename_from_uri(file->uri, NULL, NULL);
-    dialog = gtk_message_dialog_new (NULL,
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     GTK_MESSAGE_ERROR,
-                                     GTK_BUTTONS_CLOSE,
-                                     _("Error importing Winamp EQF file '%s'"),
-                                     realfn);
-    gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (dialog);
+    markup = g_strdup_printf(_("Error importing Winamp EQF file '%s'"),
+                             realfn);
+
+    interface_show_error_message(markup);
+
+    g_free(markup);
     g_free(realfn);
     return NULL;
 }

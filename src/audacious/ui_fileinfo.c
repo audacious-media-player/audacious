@@ -50,7 +50,6 @@
 
 #include "main.h"
 #include "util.h"
-#include "dnd.h"
 #include "tuple.h"
 #include "vfs.h"
 

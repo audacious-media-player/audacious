@@ -55,7 +55,6 @@
 #include "volumecontrol.h"
 #include "audstrings.h"
 #include "util.h"
-#include "dnd.h"
 #include "configdb.h"
 #include "preferences.h"
 

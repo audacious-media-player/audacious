@@ -2,11 +2,13 @@
 
 #define TAG_WMA_MODULE_H
 
-gboolean can_handle(Tuple *tuple);
+#include <libaudcore/vfs.h>
 
-Tuple *populate_tuple_from_file(Tuple* tuple);
+gboolean can_handle(VFSFile *fd);
 
-gboolean write_tuple_to_file(Tuple* tuple);
+Tuple *populate_tuple_from_file(VFSFile *fd);
+
+gboolean write_tuple_to_file(Tuple* tuple, VFSFile *fd);
 
 extern tag_module_t wma;
 #endif

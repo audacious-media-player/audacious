@@ -286,14 +286,7 @@ run_no_output_plugin_dialog(void)
         N_("<b><big>No output plugin selected.</big></b>\n"
            "You have not selected an output plugin.");
 
-    GtkWidget *dialog =
-        gtk_message_dialog_new_with_markup(NULL,
-                                           GTK_DIALOG_DESTROY_WITH_PARENT,
-                                           GTK_MESSAGE_ERROR,
-                                           GTK_BUTTONS_OK,
-                                           _(markup));
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    interface_show_error_message(markup);
 }
 
 static gboolean on_to_the_next (void * user_data)

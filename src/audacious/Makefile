@@ -11,7 +11,6 @@ SRCS = af_equalizer.c							\
        configdb.c								\
        custom_uri.c								\
        discovery.c								\
-       dnd.c									\
        effect.c									\
        equalizer.c								\
        equalizer_flow.c							\
