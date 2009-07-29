@@ -20,7 +20,8 @@ gboolean wma_can_handle_file(VFSFile *fd) {
     int retval = FALSE;
     GUID *guid1 = g_new0(GUID, 1);
     memcpy(guid1, guid_read_from_file(fd, 0), sizeof (GUID));
-    GUID *guid2 = guid_convert_from_string(ASF_HEADER_OBJECT_GUID);
+    GUID *guid2 = g_new0(GUID, 1);
+          memcpy(guid2,guid_convert_from_string(ASF_HEADER_OBJECT_GUID),sizeof(GUID));
     if (guid_equal(guid1, guid2))
         retval = TRUE;
     return retval;
@@ -269,7 +270,7 @@ void readASFObject(VFSFile *f) {
 Tuple *wma_populate_tuple_from_file(VFSFile *fd) {
     DEBUG("wma populate tuple from file\n");
 
-  
+
     Tuple *tuple = tuple_new_from_filename(fd->uri);
     HeaderObject *header = readHeaderObject(fd);
     int i;
@@ -377,7 +378,15 @@ void copyASFObject(VFSFile *from, VFSFile *to) {
 ContentField getStringContentFromTuple(Tuple *tuple, int nfield) {
     ContentField content;
     glong length = 0;
-    content.strValue = g_utf8_to_utf16(tuple_get_string(tuple, nfield, NULL), -1, NULL, &length, NULL);
+    gchar *tuplestr = tuple_get_string(tuple, nfield, NULL);
+    if(tuplestr == NULL)
+    {
+        content.size = 0;
+        content.strValue = NULL;
+        return content;
+    }
+
+    content.strValue = g_utf8_to_utf16(tuplestr, -1, NULL, &length, NULL);
     length *= sizeof (gunichar2);
     DEBUG("len 1 = %ld\n", length);
     length += 2;
@@ -477,7 +486,6 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple) {
 
     copyData(from, to, filePosition, newfilePosition, 24);
     size = 24;
-
     if (title.size != 0) {
 
         size += writeContentFieldSizeToFile(to, title, newfilePosition);
@@ -531,7 +539,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple) {
         //skip this on the from file
         vfs_fseek(from, ititle.size, SEEK_CUR);
         filePosition += ititle.size;
-    } else {
+    } else if(ititle.size != 0) {
 
         vfs_fread(ititle.strValue, ititle.size, 1, from);
         size += writeContentFieldValueToFile(to, ititle, newfilePosition);
@@ -543,8 +551,7 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple) {
         //skip this on the from file
         vfs_fseek(from, iauthor.size, SEEK_CUR);
         filePosition += iauthor.size;
-    } else {
-
+    } else if (iauthor.size != 0){
         vfs_fread(iauthor.strValue, iauthor.size, 1, from);
         size += writeContentFieldValueToFile(to, iauthor, newfilePosition);
         filePosition += iauthor.size;
@@ -552,24 +559,33 @@ void writeContentDescriptionObject(VFSFile *from, VFSFile *to, Tuple *tuple) {
 
 
     vfs_fseek(from, filePosition, SEEK_SET);
-    vfs_fread(&icopyright.strValue, icopyright.size, 1, from);
-    size += writeContentFieldValueToFile(to, icopyright, newfilePosition);
-    filePosition += icopyright.size;
-
+    if(icopyright.size != 0)
+    {
+        vfs_fread(icopyright.strValue, icopyright.size, 1, from);
+        size += writeContentFieldValueToFile(to, icopyright, newfilePosition);
+        filePosition += icopyright.size;
+    }
+//TODO daca size-ul din tuple e 2 (null termination) sa nu mai scriu din tuple ci sa citesc din fisierul initial
     if (description.size != 0) {
         size += writeContentFieldValueToFile(to, description, newfilePosition);
         //skip this on the from file
         vfs_fseek(from, idescription.size, SEEK_CUR);
         filePosition += idescription.size;
-    } else {
+    } else if (idescription.size != 0) {
         vfs_fread(idescription.strValue, idescription.size, 1, from);
         size += writeContentFieldValueToFile(to, idescription, newfilePosition);
         filePosition += idescription.size;
     }
 
-    vfs_fread(irating.strValue, irating.size, 1, from);
-    size += writeContentFieldValueToFile(to, irating, newfilePosition);
-    filePosition += irating.size;
+
+    if(irating.size != 0)
+    {
+        vfs_fread(irating.strValue, irating.size, 1, from);
+        size += writeContentFieldValueToFile(to, irating, newfilePosition);
+        filePosition += irating.size;
+    }
+
+
 
     DEBUG("from pos %d\n", filePosition);
     DEBUG("to pos %d\n", newfilePosition);
@@ -624,7 +640,7 @@ void writeExtendedContentObj(VFSFile *from, VFSFile *to, Tuple *tuple) {
 
         gchar *utf8Name = g_utf16_to_utf8(name, name_len, NULL, NULL, NULL);
 
-        DEBUG("NAME = %s\n", utf8Name);
+//        DEBUG("NAME = %s\n", utf8Name);
 
         if (utf8Name != NULL) {
             if (!strcmp(utf8Name, "WM/Genre")) {
@@ -919,12 +935,12 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     int HeaderObjNr = 0;
     HeaderObject *newHeader;
     int i;
-
+    vfs_fseek(fd,0,SEEK_SET);
     /* create a temporary file, with random name */
     const gchar *tmpdir = g_get_tmp_dir();
     DEBUG("tmpdir: '%s'\n", tmpdir);
-    guint32 n = g_random_int();
-    gchar *tmp_path = g_strdup_printf("%s/%d", tmpdir, n);
+    gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "wmatmp.wma");
+
 
     tmpFile = vfs_fopen(tmp_path, "w+");
 
@@ -998,14 +1014,13 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     writeAudioData(fd, tmpFile);
 
     gchar *uri = g_strdup(fd -> uri);
-    vfs_fclose(fd);
     vfs_fclose(tmpFile);
-
-    if (g_rename(tmp_path, uri) == 0) {
+    gchar* f1 = g_filename_from_uri(tmp_path,NULL,NULL);
+    gchar* f2 = g_filename_from_uri(uri,NULL,NULL);
+    if (g_rename(f1,f2 ) == 0) {
         DEBUG("the tag was updated successfully\n");
     } else {
         DEBUG("an error has occured\n");
     }
-    g_free(uri);
     return TRUE;
 }
