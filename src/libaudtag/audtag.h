@@ -6,15 +6,16 @@
 G_BEGIN_DECLS
 
 #include <glib.h>
-#include "libaudcore/tuple.h"
 #include <mowgli.h> 
+#include "libaudcore/tuple.h"
+#include "libaudcore/vfs.h"
 
 void tag_init(void);
 void tag_terminate(void);
 
-Tuple *tag_tuple_read(Tuple* tuple);
+Tuple *tag_tuple_read(VFSFile *fd);
 
-gint tag_tuple_write_to_file(Tuple *tuple);
+gboolean tag_tuple_write_to_file(Tuple *tuple, VFSFile *fd);
 
 G_END_DECLS
 #endif /* AUDTAG_H */
