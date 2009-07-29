@@ -223,6 +223,7 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 #ifdef USE_EGGSM
     g_option_context_add_group(context, egg_sm_client_get_option_group());
 #endif
+
     if (!g_option_context_parse(context, argc, argv, &error))
         /* checking for MacOS X -psn_0_* errors*/
         if (error->message && !g_strrstr(error->message,"-psn_0_"))
@@ -236,8 +237,9 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 static void
 handle_cmd_line_filenames(gboolean is_running)
 {
-    gchar *working, *absolute, *uri;
-    gchar **filenames = options.filenames;
+    gint i, pos = 0;
+    gchar *working, **filenames = options.filenames;
+    GList *fns = NULL;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
 #endif
@@ -245,25 +247,22 @@ handle_cmd_line_filenames(gboolean is_running)
     if (filenames == NULL)
         return;
 
-    gint pos = 0;
-    gint i = 0;
-    GList *fns = NULL;
-
-    working = g_get_current_dir ();
-    for (i = 0; filenames [i]; i ++) {
-       if (strstr (filenames [i], "://"))
-          uri = g_strdup (filenames [i]);
-       else if (filenames [i] [0] == '/')
-          uri = g_filename_to_uri (filenames [i], 0, 0);
-       else {
-          absolute = g_strdup_printf ("/%s/%s", working, filenames [i]);
-          uri = g_filename_to_uri (absolute, 0, 0);
-          g_free (absolute);
-       }
-       fns = g_list_prepend (fns, uri);
+    working = g_get_current_dir();
+    for (i = 0; filenames[i] != NULL; i++) {
+        gchar *uri;
+        if (strstr(filenames[i], "://"))
+            uri = g_strdup(filenames [i]);
+        else if (g_path_is_absolute(filenames[i]))
+            uri = g_filename_to_uri(filenames [i], NULL, NULL);
+        else {
+            gchar *absolute = g_build_filename(working, filenames[i], NULL);
+            uri = g_filename_to_uri(absolute, NULL, NULL);
+            g_free(absolute);
+        }
+        fns = g_list_prepend(fns, uri);
     }
-    fns = g_list_reverse (fns);
-    g_free (working);
+    fns = g_list_reverse(fns);
+    g_free(working);
 
 #ifdef USE_DBUS
     if (is_running)
