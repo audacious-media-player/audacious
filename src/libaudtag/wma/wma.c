@@ -378,15 +378,12 @@ void copyASFObject(VFSFile *from, VFSFile *to) {
 ContentField getStringContentFromTuple(Tuple *tuple, int nfield) {
     ContentField content;
     glong length = 0;
-    gchar *tuplestr = tuple_get_string(tuple, nfield, NULL);
-    if(tuplestr == NULL)
+    content.strValue = g_utf8_to_utf16(tuple_get_string(tuple, nfield, NULL), -1, NULL, &length, NULL);
+    if(content.strValue == NULL)
     {
         content.size = 0;
-        content.strValue = NULL;
         return content;
     }
-
-    content.strValue = g_utf8_to_utf16(tuplestr, -1, NULL, &length, NULL);
     length *= sizeof (gunichar2);
     DEBUG("len 1 = %ld\n", length);
     length += 2;

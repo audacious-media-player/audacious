@@ -27,7 +27,7 @@ GUID *guid_read_from_file(VFSFile *f, int offset) {
 GUID *guid_convert_from_string(const gchar* s) {
     GUID * gg = g_malloc(sizeof * gg);
 
-    if (sscanf(s, "%8x-%hx-%hx-%Lx", & gg->le32, & gg->le16_1, & gg->le16_2,
+    if (sscanf(s, "%8x-%hx-%hx-%"PRIx64"x", & gg->le32, & gg->le16_1, & gg->le16_2,
             & gg->be64) != 4) {
         return NULL;
     }
