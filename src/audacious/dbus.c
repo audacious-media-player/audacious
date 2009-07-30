@@ -37,6 +37,7 @@
 #include "playback.h"
 #include "audstrings.h"
 #include "playlist-new.h"
+#include "playlist-utils.h"
 #include "tuple.h"
 #include "interface.h"
 #include "ui_jumptotrack.h"
@@ -501,10 +502,8 @@ static gboolean add_cb (void * data)
     struct add_request * request = data;
     gint playlist = playlist_get_active ();
 
-    if (request->position == -1)
-        request->position = playlist_entry_count (playlist);
-
-    playlist_entry_insert (playlist, request->position, request->filename, NULL);
+    if (!playlist_insert_playlist(playlist, request->position, request->filename))
+        playlist_entry_insert (playlist, request->position, request->filename, NULL);
 
     if (request->play)
     {

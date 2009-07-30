@@ -28,6 +28,7 @@
 #include "playback.h"
 #include "auddrct.h"
 #include "playlist-new.h"
+#include "playlist-utils.h"
 #include "ui_jumptotrack.h"
 
 /* player */
@@ -308,11 +309,13 @@ gchar * drct_pl_get_file (gint pos)
 void drct_pl_add (GList * list)
 {
     struct index * filenames = index_new ();
+    gint playlist = playlist_get_active ();
 
     for (; list != NULL; list = list->next)
+    if (!playlist_insert_playlist(playlist, -1, list->data))
         index_append (filenames, g_strdup (list->data));
 
-    playlist_entry_insert_batch (playlist_get_active (), -1, filenames, NULL);
+    playlist_entry_insert_batch (playlist, -1, filenames, NULL);
 }
 
 void drct_pl_clear (void)
