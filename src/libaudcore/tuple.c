@@ -181,7 +181,7 @@ tuple_set_filename(Tuple *tuple, const gchar *filename)
 
     slash = strrchr(local, '/');
     period = strrchr(local, '.');
-    question = strrchr(filename, '?');
+    question = strrchr(local, '?');
 
     if (slash != NULL)
     {
