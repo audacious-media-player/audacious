@@ -104,4 +104,7 @@ void playlist_queue_delete (gint playlist, gint at, gint number);
 gboolean playlist_prev_song (gint playlist);
 gboolean playlist_next_song (gint playlist, gboolean repeat);
 
+/* TRUE if called within "playlist update" hook */
+gboolean playlist_update_pending (void);
+
 #endif

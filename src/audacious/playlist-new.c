@@ -1604,3 +1604,8 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
 
     return TRUE;
 }
+
+gboolean playlist_update_pending (void)
+{
+    return (update_source != 0);
+}

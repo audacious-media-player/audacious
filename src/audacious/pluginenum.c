@@ -213,6 +213,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_prev_song = playlist_prev_song,
     .playlist_next_song = playlist_next_song,
 
+    .playlist_update_pending = playlist_update_pending,
+
     .get_gentitle_format = get_gentitle_format,
 
     .playlist_sort_by_scheme = playlist_sort_by_scheme,

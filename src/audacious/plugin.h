@@ -426,6 +426,8 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_prev_song) (gint playlist);
     gboolean (* playlist_next_song) (gint playlist, gboolean repeat);
 
+    gboolean (* playlist_update_pending) (void);
+
     /* Playlist API II (extra) */
     const gchar * (* get_gentitle_format) (void);
 
@@ -761,6 +763,8 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_playlist_prev_song          _audvt->playlist_prev_song
 #define aud_playlist_next_song          _audvt->playlist_next_song
+
+#define aud_playlist_update_pending     _audvt->playlist_update_pending
 
 #define aud_get_gentitle_format         _audvt->get_gentitle_format
 
