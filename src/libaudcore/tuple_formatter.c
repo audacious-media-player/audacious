@@ -274,8 +274,6 @@ tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
     g_return_val_if_fail(tuple != NULL, NULL);
     g_return_val_if_fail(expression != NULL, NULL);
 
-    printf ("expression = %s\n", expression);
-
     for (iter = tuple_formatter_expr_list; iter != NULL; iter = iter->next)
     {
         TupleFormatterExpression *tmp = (TupleFormatterExpression *) iter->data;
