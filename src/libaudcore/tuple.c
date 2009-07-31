@@ -174,36 +174,39 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 void
 tuple_set_filename(Tuple *tuple, const gchar *filename)
 {
-    const gchar *slash = strrchr(filename, '/');
-    const gchar *period = strrchr(filename, '.');
-    const gchar *question = strrchr(filename, '?');
+    gchar *local = g_strdup(filename);
+    gchar *slash, *period, *question;
+
+    string_decode_percent(local);
+
+    slash = strrchr(local, '/');
+    period = strrchr(local, '.');
+    question = strrchr(filename, '?');
 
     if (slash != NULL)
     {
-        gchar *path = g_strndup(filename, slash + 1 - filename);
+        gchar temp = *(slash + 1);
 
-        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, path);
+        *(slash + 1) = 0;
+        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, local);
+        *(slash + 1) = temp;
         tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
-        g_free(path);
     }
 
     if (question != NULL)
     {
         gint subtune;
 
-        if (period != NULL && period < question)
-        {
-            gchar *extension = g_strndup(period + 1, question - period - 1);
-
-            tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, extension);
-            g_free(extension);
-        }
+        *question = 0;
 
         if (sscanf(question + 1, "%d", &subtune) == 1)
             tuple_associate_int(tuple, FIELD_SUBSONG_ID, NULL, subtune);
     }
-    else if (period != NULL)
+
+    if (period != NULL)
         tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, period + 1);
+
+    g_free(local);
 }
 
 /**

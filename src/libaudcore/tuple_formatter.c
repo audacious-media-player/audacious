@@ -274,6 +274,8 @@ tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
     g_return_val_if_fail(tuple != NULL, NULL);
     g_return_val_if_fail(expression != NULL, NULL);
 
+    printf ("expression = %s\n", expression);
+
     for (iter = tuple_formatter_expr_list; iter != NULL; iter = iter->next)
     {
         TupleFormatterExpression *tmp = (TupleFormatterExpression *) iter->data;
@@ -595,7 +597,6 @@ gchar *tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
 
         g_free(title);
         title = g_strdup((filename != NULL) ? filename : "");
-        string_decode_percent(title);
         string_cut_extension(title);
     }
 
