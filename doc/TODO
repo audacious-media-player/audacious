@@ -1,5 +1,9 @@
 Long-term "TODO"
 ================
+- add generic debugging code in plugin/playback handling to see what
+  plugin gets to handle the given file.
+
+
 - improve error handling:
   * plugin init() should be able to return error codes.
   * InputPlugin play_file also should return error codes (not only through
