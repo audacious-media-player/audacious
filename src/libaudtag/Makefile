@@ -6,9 +6,9 @@ SRCS = audtag.c		\
        util.c		\
        tag_module.c	\
        wma/guid.c	\
-       wma/module.c	\
        wma/wma_fmt.c	\
-       wma/wma.c
+       wma/wma.c	\
+       id3/id3.c
 INCLUDES = audtag.h util.h
 
 include ../../buildsys.mk

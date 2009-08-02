@@ -7,9 +7,13 @@
 #include "wma_fmt.h"
 #include "../util.h"
 #include <inttypes.h>
+#include "../tag_module.h"
+
 
 int filePosition = 0;
 int newfilePosition = 0;
+
+tag_module_t wma = {wma_can_handle_file, wma_populate_tuple_from_file, wma_write_tuple_to_file};
 
 void writeGuidToFile(VFSFile *f, int guid_type);
 
