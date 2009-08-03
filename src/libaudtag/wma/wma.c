@@ -1,13 +1,14 @@
 /* functions for WMA file handling */
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <inttypes.h>
 
 #include "wma.h"
 #include "guid.h"
 #include "wma_fmt.h"
 #include "../util.h"
-#include <inttypes.h>
 #include "../tag_module.h"
+
 
 
 int filePosition = 0;

@@ -5,6 +5,15 @@
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 #include "../tag_module.h"
+
+typedef struct id3v2
+{
+    gchar *id3;
+    guint16 version;
+    gchar  flags;
+    guint32 size;
+} ID3v2Header;
+
 gboolean id3_can_handle_file(VFSFile *f);
 
 Tuple *id3_populate_tuple_from_file(VFSFile *f);

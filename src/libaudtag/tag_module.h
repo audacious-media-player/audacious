@@ -6,6 +6,7 @@
 G_BEGIN_DECLS
 
 #include <glib.h>
+#include <libmowgli/mowgli.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
         

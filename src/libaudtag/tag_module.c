@@ -1,15 +1,14 @@
 #include <glib.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
-#include <libmowgli/mowgli.h>
+#include "util.h"
 #include "tag_module.h"
 #include "wma/module.h"
 #include "id3/id3.h"
-#include "util.h"
 
 void init_tag_modules(void)
 {
-    mowgli_list_t tag_modules = { NULL, NULL, 0 };
+    tag_modules;// = { NULL, NULL, 0 };
     mowgli_node_add(&wma, mowgli_node_create(), &tag_modules);
     mowgli_node_add(&id3, mowgli_node_create(), &tag_modules);
 
