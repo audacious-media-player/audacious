@@ -15,6 +15,14 @@ guint32 read_int32(VFSFile *fd)
     return a;
 }
 
+guint32 read_int16(VFSFile *fd)
+{
+    guint16 a;
+    vfs_fread(&a,2,1,fd);
+    return a;
+}
+
+
 gchar *read_ASCII(VFSFile *fd, int size)
 {
     gchar *value= g_new0(gchar,size);
@@ -34,17 +42,58 @@ guint32 read_syncsafe_int32(VFSFile *fd)
 }
 
 
+gboolean isExtendedHeader(ID3v2Header header)
+{
+    if((header->flags & 0x40) == 0x40)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+gboolean isUnsynchronisation(ID3v2Header header)
+{
+        if((header->flags & 0x80) == 0x80)
+            return TRUE;
+        else
+            return FALSE;
+}
+
+gboolean isExperimental(ID3v2Header header)
+{
+        if((header->flags & 0x20) == 0x20)
+            return TRUE;
+        else
+            return FALSE;
+}
+
+
+
 ID3v2Header *readHeader(VFSFile *fd)
 {
     ID3v2Header *header = g_new0(ID3v2Header,1);
     header->id3 = read_ASCII(fd,3);
     header->flags = *read_ASCII(fd,1);
     header->size = read_syncsafe_int32(fd);
-
     return header;
 }
 
+ExtendedHeader *readExtendedHeader(VFSFile *fd)
+{
+    ExtendedHeader *header = g_new0(ExtendedHeader,1);
+    header->header_size = read_int32(fd);
+    header->flags = read_int16(fd);
+    header->padding_size = read_int32(fd);
+    return header;
+}
 
+ID3v2FrameHeader *readID3v2Frame(VFSFile *fd)
+{
+    ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader,1);
+    frameheader->frame_id = read_ASCII(fd,4);
+    frameheader->size = read_int32(fd);
+    frameheader->flags = read_int16(fd);
+    return frameheader;
+}
 
 gboolean id3_can_handle_file(VFSFile *f)
 {
@@ -53,6 +102,8 @@ gboolean id3_can_handle_file(VFSFile *f)
         return TRUE;
     return FALSE;
 }
+
+
 
 Tuple *id3_populate_tuple_from_file(VFSFile *f)
 {

@@ -14,6 +14,20 @@ typedef struct id3v2
     guint32 size;
 } ID3v2Header;
 
+typedef struct extHeader
+{
+    guint32 header_size;
+    guint16 flags;
+    guint32 padding_size;
+}ExtendedHeader;
+
+typedef struct frame
+{
+    gchar* frame_id;
+    guint32 size;
+    guint32 flags;
+}ID3v2FrameHeader;
+
 gboolean id3_can_handle_file(VFSFile *f);
 
 Tuple *id3_populate_tuple_from_file(VFSFile *f);
