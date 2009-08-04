@@ -51,18 +51,8 @@
 #endif
 
 #include "icons-stock.h"
-#include "main.h"
-
-#include "input.h"
-#include "playback.h"
-#include "playlist-new.h"
-#include "pluginenum.h"
-#include "ui_credits.h"
-#include "ui_preferences.h"
 #include "audstrings.h"
-#include "util.h"
-#include "visualization.h"
-
+#include "plugin.h"
 #include "ui_jumptotrack_cache.h"
 
 static void watchdog (void * hook_data, void * user_data);
@@ -75,11 +65,11 @@ static gboolean watching = FALSE;
 static void
 change_song(guint pos)
 {
-    if (playback_get_playing())
-        playback_stop();
+    if (audacious_drct_get_playing())
+        audacious_drct_stop();
 
-    playlist_set_position(playlist_get_active(), pos);
-    playback_initiate();
+    aud_playlist_set_position(aud_playlist_get_active(), pos);
+    audacious_drct_initiate();
 }
 
 void
@@ -87,7 +77,7 @@ ui_jump_to_track_hide(void)
 {
     if (watching)
     {
-        hook_dissociate ("playlist update", watchdog);
+        aud_hook_dissociate ("playlist update", watchdog);
         watching = FALSE;
     }
 
@@ -119,21 +109,21 @@ ui_jump_to_track_jump(GtkTreeView * treeview)
 
     change_song(pos - 1);
 
-    if(cfg.close_jtf_dialog)
+    if(aud_cfg->close_jtf_dialog)
         ui_jump_to_track_hide();
 }
 
 static void
 ui_jump_to_track_toggle_cb(GtkWidget * toggle)
 {
-    cfg.close_jtf_dialog =
+    aud_cfg->close_jtf_dialog =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 }
 
 static void
 ui_jump_to_track_toggle2_cb(GtkWidget * toggle)
 {
-    cfg.remember_jtf_entry =
+    aud_cfg->remember_jtf_entry =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 }
 
@@ -148,7 +138,7 @@ static void
 ui_jump_to_track_set_queue_button_label(GtkButton * button,
                                       guint pos)
 {
-    if (playlist_queue_find_entry (playlist_get_active (), pos) != -1)
+    if (aud_playlist_queue_find_entry (aud_playlist_get_active (), pos) != -1)
         gtk_button_set_label(button, _("Un_queue"));
     else
         gtk_button_set_label(button, _("_Queue"));
@@ -173,7 +163,7 @@ ui_jump_to_track_queue_cb(GtkButton * button,
 
     gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    playlist_queue_insert (playlist_get_active (), -1, pos - 1);
+    aud_playlist_queue_insert (aud_playlist_get_active (), -1, pos - 1);
 
     ui_jump_to_track_set_queue_button_label(button, (pos - 1));
 }
@@ -260,14 +250,14 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
     store = gtk_tree_view_get_model(tree);
     gtk_list_store_clear(GTK_LIST_STORE(store));
 
-    playlist = playlist_get_active ();
-    entries = playlist_entry_count (playlist);
+    playlist = aud_playlist_get_active ();
+    entries = aud_playlist_entry_count (playlist);
 
     for (entry = 0; entry < entries; entry ++)
     {
         gtk_list_store_append(GTK_LIST_STORE(store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
-         0, 1 + entry, 1, playlist_entry_get_title (playlist, entry), -1);
+         0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry), -1);
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
@@ -303,12 +293,12 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     search_matches = ui_jump_to_track_cache_search(cache,
                                                    gtk_entry_get_text(entry));
 
-    playlist = playlist_get_active ();
+    playlist = aud_playlist_get_active ();
 
     for (i = 0; i < search_matches->len; i++)
     {
         gint entry = g_array_index (search_matches, gint, i);
-        const gchar * title = playlist_entry_get_title (playlist, entry);
+        const gchar * title = aud_playlist_entry_get_title (playlist, entry);
 
         if (title == NULL)
             continue;
@@ -340,14 +330,14 @@ ui_jump_to_track_fill(gpointer treeview)
 
     gtk_list_store_clear(jtf_store);
 
-    playlist = playlist_get_active ();
-    entries = playlist_entry_count (playlist);
+    playlist = aud_playlist_get_active ();
+    entries = aud_playlist_entry_count (playlist);
 
     for (entry = 0; entry < entries; entry ++)
     {
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
-         0, 1 + entry, 1, playlist_entry_get_title (playlist, entry), -1);
+         0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry), -1);
     }
 
     /* attach liststore to treeview */
@@ -389,14 +379,14 @@ ui_jump_to_track(void)
 
     if (! watching)
     {
-        hook_associate ("playlist update", watchdog, NULL);
+        aud_hook_associate ("playlist update", watchdog, NULL);
         watching = TRUE;
     }
 
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
 
-        if(!cfg.remember_jtf_entry)
+        if(!aud_cfg->remember_jtf_entry)
             gtk_entry_set_text(GTK_ENTRY(edit), "");
 
         gtk_widget_grab_focus(edit);
@@ -478,7 +468,7 @@ ui_jump_to_track(void)
     /* remember text entry */
     toggle2 = gtk_check_button_new_with_label(_("Remember"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
-                                 cfg.remember_jtf_entry ? TRUE : FALSE);
+                                 aud_cfg->remember_jtf_entry ? TRUE : FALSE);
     gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
     g_signal_connect(toggle2, "clicked",
                      G_CALLBACK(ui_jump_to_track_toggle2_cb),
@@ -522,7 +512,7 @@ ui_jump_to_track(void)
     /* close dialog toggle */
     toggle = gtk_check_button_new_with_label(_("Close on Jump"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
-                                 cfg.close_jtf_dialog ? TRUE : FALSE);
+                                 aud_cfg->close_jtf_dialog ? TRUE : FALSE);
     gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
     g_signal_connect(toggle, "clicked",
                      G_CALLBACK(ui_jump_to_track_toggle_cb),

@@ -24,9 +24,7 @@
 #include "interface.h"
 #include "playback.h"
 #include "ui_preferences.h"
-#include "ui_jumptotrack.h"
 #include "ui_credits.h"
-#include "icons-stock.h"
 
 /* interface abstraction layer */
 static mowgli_dictionary_t *interface_dict_ = NULL;
@@ -38,15 +36,10 @@ static InterfaceOps interface_ops = {
     .hide_prefs_window = hide_prefs_window,
     .destroy_prefs_window = destroy_prefs_window,
 
-    .jump_to_track_show = ui_jump_to_track,
     .aboutwin_show = show_about_window,
-
-    .register_stock_icons = register_aud_stock_icons,
 };
 
-static InterfaceCbs interface_cbs = {
-    .show_prefs_window = NULL,
-};
+static InterfaceCbs interface_cbs = { NULL };
 
 void
 interface_register(Interface *i)
@@ -155,12 +148,32 @@ interface_show_error_message(const gchar * markup)
         g_message("Interface didn't register show_error function");
 }
 
+void
+interface_show_jump_to_track(void)
+{
+    if (interface_cbs.show_jump_to_track != NULL)
+        interface_cbs.show_jump_to_track();
+    else
+        g_message("Interface didn't register show_jump_to_track function");
+}
+
+void
+interface_hide_jump_to_track(void)
+{
+    if (interface_cbs.hide_jump_to_track != NULL)
+        interface_cbs.hide_jump_to_track();
+    else
+        g_message("Interface didn't register hide_jump_to_track function");
+}
+
 typedef enum {
     HOOK_PREFSWIN_SHOW,
     HOOK_FILEBROWSER_SHOW,
     HOOK_FILEBROWSER_HIDE,
     HOOK_TOGGLE_VISIBILITY,
     HOOK_SHOW_ERROR,
+    HOOK_JUMPTOTRACK_SHOW,
+    HOOK_JUMPTOTRACK_HIDE,
 } InterfaceHookID;
 
 void
@@ -182,6 +195,12 @@ interface_hook_handler(gpointer hook_data, gpointer user_data)
         case HOOK_SHOW_ERROR:
             interface_show_error_message((const gchar *) hook_data);
             break;
+        case HOOK_JUMPTOTRACK_SHOW:
+            interface_show_jump_to_track();
+            break;
+        case HOOK_JUMPTOTRACK_HIDE:
+            interface_hide_jump_to_track();
+            break;
         default:
             break;
     }
@@ -198,6 +217,8 @@ static InterfaceHooks hooks[] = {
     {"filebrowser hide", HOOK_FILEBROWSER_HIDE},
     {"interface toggle visibility", HOOK_TOGGLE_VISIBILITY},
     {"interface show error", HOOK_SHOW_ERROR},
+    {"interface show jump to track", HOOK_JUMPTOTRACK_SHOW},
+    {"interface hide jump to track", HOOK_JUMPTOTRACK_HIDE},
 };
 
 void

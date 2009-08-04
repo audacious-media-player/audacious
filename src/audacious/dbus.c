@@ -40,7 +40,6 @@
 #include "playlist-utils.h"
 #include "tuple.h"
 #include "interface.h"
-#include "ui_jumptotrack.h"
 
 struct status_request
 {
@@ -1238,9 +1237,9 @@ gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **
 
 gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error) {
     if (show)
-       ui_jump_to_track ();
+       event_queue("interface show jump to track", NULL);
     else
-       ui_jump_to_track_hide ();
+       event_queue("interface hide jump to track", NULL);
     return TRUE;
 }
 

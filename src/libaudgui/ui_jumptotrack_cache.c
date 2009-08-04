@@ -37,7 +37,7 @@
 #endif
 
 #include "audstrings.h"
-#include "playlist-new.h"
+#include "plugin.h"
 #include "ui_jumptotrack_cache.h"
 
 // Struct to keep information about matches from searches.
@@ -275,12 +275,12 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
         ui_jump_to_track_cache_clear(cache);
 
         // Initialize cache with playlist data
-        playlist = playlist_get_active ();
-        entries = playlist_entry_count (playlist);
+        playlist = aud_playlist_get_active ();
+        entries = aud_playlist_entry_count (playlist);
 
         for (entry = 0; entry < entries; entry ++)
         {
-            gchar * title = normalize_search_string (playlist_entry_get_title
+            gchar * title = normalize_search_string (aud_playlist_entry_get_title
              (playlist, entry));
 
             g_array_append_val (track_entries, entry);
