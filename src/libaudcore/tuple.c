@@ -97,8 +97,10 @@ tuple_value_destroy(mowgli_dictionary_elem_t *delem, gpointer privdata)
 {
     TupleValue *value = (TupleValue *) delem->data;
 
-    if (value->type == TUPLE_STRING)
+    if (value->type == TUPLE_STRING) {
         stringpool_unref(value->value.string);
+        value->value.string = NULL;
+    }
 
     mowgli_heap_free(tuple_value_heap, value);
 }
@@ -116,8 +118,10 @@ tuple_destroy(gpointer data)
         if (tuple->values[i]) {
             TupleValue *value = tuple->values[i];
 
-            if (value->type == TUPLE_STRING)
+            if (value->type == TUPLE_STRING) {
                 stringpool_unref(value->value.string);
+                value->value.string = NULL;
+            }
 
             mowgli_heap_free(tuple_value_heap, value);
         }
