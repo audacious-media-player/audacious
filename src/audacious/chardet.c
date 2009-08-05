@@ -100,8 +100,6 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     if (cfg.chardet_detector)
         det = cfg.chardet_detector;
 
-    guess_init();
-
     if (det)
     {
         encoding = (gchar *) guess_encoding(str, strlen(str), det);
@@ -150,4 +148,7 @@ void chardet_init(void)
 {
     str_to_utf8 = cd_str_to_utf8;
     chardet_to_utf8 = cd_chardet_to_utf8;
+#ifdef USE_CHARDET
+    guess_init();
+#endif
 }
