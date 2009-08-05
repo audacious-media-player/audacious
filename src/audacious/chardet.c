@@ -57,9 +57,12 @@ cd_str_to_utf8(const gchar * str)
      * utf-8. It is considered to be safe to use as a guard.
      */
 
+    /* Already UTF-8? */
 #ifdef USE_CHARDET
-    /* already UTF-8? */
     if (dfa_validate_utf8(str, strlen(str)))
+        return g_strdup(str);
+#else
+    if (g_utf8_validate(str, strlen(str)))
         return g_strdup(str);
 #endif
 
