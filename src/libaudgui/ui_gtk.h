@@ -20,6 +20,6 @@
 #ifndef AUDACIOUS_UI_GTK_H
 #define AUDACIOUS_UI_GTK_H
 
-void aud_set_default_icon(void);
+void audgui_set_default_icon(void);
 
 #endif /* AUDACIOUS_UI_GTK_H */

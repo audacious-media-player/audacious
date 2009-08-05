@@ -9,11 +9,7 @@ SRCS = ui_gtk.c \
        ui_jumptotrack_cache.c \
        icons-stock.c
 
-INCLUDES = ui_gtk.h \
-           ui_fileopener.h \
-           ui_urlopener.h \
-           ui_jumptotrack.h \
-           icons-stock.h
+INCLUDES = libaudgui.h
 
 include ../../buildsys.mk
 include ../../extra.mk

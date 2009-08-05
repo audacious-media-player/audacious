@@ -1,11 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2006  Audacious development team.
- *
- *  BMP - Cross-platform multimedia player
- *  Copyright (C) 2003-2004  BMP development team.
- *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team.
+ *  Copyright (C) 2005-2009  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,11 +17,27 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_UI_JUMPTOTRACK_H
-#define AUDACIOUS_UI_JUMPTOTRACK_H
+#ifndef LIBAUDGUI_H
+#define LIBAUDGUI_H
 
-void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
+#include <glib.h>
+
+/* macro defines for Audacious stock icons */
+#define AUD_STOCK_PLAYLIST    "aud-playlist"
+#define AUD_STOCK_PLUGIN      "aud-plugin"
+#define AUD_STOCK_QUEUETOGGLE "aud-queuetoggle"
+#define AUD_STOCK_RANDOMIZEPL "aud-randomizepl"
+
+void audgui_register_stock_icons(void);
+
+void audgui_show_add_url_window(void);
+
 void audgui_jump_to_track(void);
 void audgui_jump_to_track_hide(void);
 
-#endif /* AUDACIOUS_UI_JUMPTOTRACK_H */
+void audgui_set_default_icon(void);
+
+void audgui_run_filebrowser(gboolean clear_pl_on_ok);
+void audgui_hide_filebrowser(void);
+
+#endif /* LIBAUDGUI_H */

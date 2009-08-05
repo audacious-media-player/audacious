@@ -20,7 +20,7 @@
 #ifndef AUDACIOUS_ICONS_STOCK_H
 #define AUDACIOUS_ICONS_STOCK_H
 
-void register_aud_stock_icons(void);
+void audgui_register_stock_icons(void);
 
 /* this header contains macro defines for Audacious stock icons */
 

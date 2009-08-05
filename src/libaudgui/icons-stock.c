@@ -41,7 +41,7 @@ load_stock_icon(gchar *id, gchar *filename, GtkIconFactory *iconfactory)
 }
 
 void
-register_aud_stock_icons(void)
+audgui_register_stock_icons(void)
 {
     GtkIconFactory *iconfactory = gtk_icon_factory_new();
 

@@ -73,7 +73,7 @@ change_song(guint pos)
 }
 
 void
-ui_jump_to_track_hide(void)
+audgui_jump_to_track_hide(void)
 {
     if (watching)
     {
@@ -110,7 +110,7 @@ ui_jump_to_track_jump(GtkTreeView * treeview)
     change_song(pos - 1);
 
     if(aud_cfg->close_jtf_dialog)
-        ui_jump_to_track_hide();
+        audgui_jump_to_track_hide();
 }
 
 static void
@@ -216,7 +216,7 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
 {
     switch (event->keyval) {
     case GDK_Escape:
-        ui_jump_to_track_hide();
+        audgui_jump_to_track_hide();
         return TRUE;
     case GDK_KP_Enter:
         ui_jump_to_track_queue_cb(NULL, data);
@@ -358,7 +358,7 @@ static void watchdog (void * hook_data, void * user_data)
 }
 
 void
-ui_jump_to_track(void)
+audgui_jump_to_track(void)
 {
     GtkWidget *scrollwin;
     GtkWidget *vbox, *bbox, *sep;

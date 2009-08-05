@@ -21,7 +21,7 @@
 #include "audacious/images/audacious_player.xpm"
 
 void
-aud_set_default_icon(void)
+audgui_set_default_icon(void)
 {
     GdkPixbuf *icon;
 
