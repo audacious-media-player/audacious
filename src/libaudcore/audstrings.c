@@ -286,6 +286,8 @@ str_assert_utf8(const gchar * str)
 			fprintf(stderr, "#%d > %s\n", i, symbols[i]);
 
 		free(symbols);
+#else
+		fprintf(stderr, "WARNING! String '%s' was not UTF-8!\n", str);
 #endif
 		return str_to_utf8(str);
     } else
