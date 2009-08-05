@@ -28,11 +28,11 @@
 #  include "config.h"
 #endif
 
-#include "ui_credits.h"
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include "ui_credits.h"
+#include "credits.h"
 
 #include "platform/smartinclude.h"
 
@@ -43,9 +43,6 @@ static GdkPixmap *mask_pixmap_window1 = NULL,
 static GdkBitmap *mask_bitmap_window1 = NULL,
         *mask_bitmap_window2 = NULL;
 
-static const gchar *audacious_brief = N_("<big><b>Audacious %s</b></big>\n\n"
-			"Copyright (C) 2005-2009 Audacious Development Team");
-    
 static gboolean
 on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
 {
@@ -102,12 +99,15 @@ show_about_window(void)
     gchar *text;
     PangoAttrList *brief_label_attrs;
     PangoAttribute *brief_label_foreground;
+    static const gchar *audacious_brief;
 
     if (about_window != NULL)
     {
         gtk_window_present(GTK_WINDOW(about_window));
         return;
     }
+
+    get_audacious_credits(&audacious_brief, NULL, NULL);
 
     about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 

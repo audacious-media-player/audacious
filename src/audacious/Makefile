@@ -9,6 +9,7 @@ SRCS = af_equalizer.c							\
        build_stamp.c							\
        chardet.c								\
        configdb.c								\
+       credits.c							\
        custom_uri.c								\
        discovery.c								\
        effect.c									\
