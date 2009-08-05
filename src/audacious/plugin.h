@@ -590,6 +590,8 @@ struct _AudaciousFuncTableV1 {
     const Interface * (* interface_get_current) (void);
     void (* interface_toggle_visibility) (void);
     void (* interface_show_error) (const gchar * markup);
+
+    void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
 };
 
 
@@ -930,6 +932,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_interface_get_current       _audvt->interface_get_current
 #define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
 #define aud_interface_show_error        _audct->interface_show_error
+
+#define aud_get_audacious_credits       _audvt->get_audacious_credits
 
 #include "audacious/auddrct.h"
 

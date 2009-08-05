@@ -24,7 +24,6 @@
 #include "interface.h"
 #include "playback.h"
 #include "ui_preferences.h"
-#include "ui_credits.h"
 
 /* interface abstraction layer */
 static mowgli_dictionary_t *interface_dict_ = NULL;
@@ -35,8 +34,6 @@ static InterfaceOps interface_ops = {
     .show_prefs_window = show_prefs_window,
     .hide_prefs_window = hide_prefs_window,
     .destroy_prefs_window = destroy_prefs_window,
-
-    .aboutwin_show = show_about_window,
 };
 
 static InterfaceCbs interface_cbs = { NULL };
@@ -166,6 +163,22 @@ interface_hide_jump_to_track(void)
         g_message("Interface didn't register hide_jump_to_track function");
 }
 
+void
+interface_show_about_window(gboolean show)
+{
+    if (show == FALSE) {
+        if (interface_cbs.hide_about_window != NULL)
+            interface_cbs.hide_about_window();
+        else
+            g_message("Interface didn't register hide_about_window function");
+    } else {
+        if (interface_cbs.show_about_window != NULL)
+            interface_cbs.show_about_window();
+        else
+            g_message("Interface didn't register show_about_window function");
+    }
+}
+
 typedef enum {
     HOOK_PREFSWIN_SHOW,
     HOOK_FILEBROWSER_SHOW,
@@ -174,6 +187,7 @@ typedef enum {
     HOOK_SHOW_ERROR,
     HOOK_JUMPTOTRACK_SHOW,
     HOOK_JUMPTOTRACK_HIDE,
+    HOOK_ABOUTWIN_SHOW,
 } InterfaceHookID;
 
 void
@@ -201,6 +215,9 @@ interface_hook_handler(gpointer hook_data, gpointer user_data)
         case HOOK_JUMPTOTRACK_HIDE:
             interface_hide_jump_to_track();
             break;
+        case HOOK_ABOUTWIN_SHOW:
+            interface_show_about_window(GPOINTER_TO_INT(hook_data));
+            break;
         default:
             break;
     }
@@ -219,6 +236,7 @@ static InterfaceHooks hooks[] = {
     {"interface show error", HOOK_SHOW_ERROR},
     {"interface show jump to track", HOOK_JUMPTOTRACK_SHOW},
     {"interface hide jump to track", HOOK_JUMPTOTRACK_HIDE},
+    {"aboutwin show", HOOK_ABOUTWIN_SHOW},
 };
 
 void

@@ -31,9 +31,8 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include "ui_credits.h"
-#include "credits.h"
+#include "plugin.h"
 #include "audacious_logo.xpm"
-
 
 enum {
     COL_LEFT,
@@ -109,7 +108,7 @@ generate_credit_list(const gchar * text[], gboolean sec_space)
 }
 
 void
-show_credits_window(void)
+audgui_show_credits_window(void)
 {
     static GtkWidget *about_window = NULL;
 
@@ -129,7 +128,7 @@ show_credits_window(void)
     if (about_window)
         return;
 
-    get_audacious_credits(&audacious_brief, &credit_text, &translators);
+    aud_get_audacious_credits(&audacious_brief, &credit_text, &translators);
 
     about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(about_window),

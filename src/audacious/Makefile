@@ -44,9 +44,7 @@ SRCS = af_equalizer.c							\
        visualization.c							\
        volumecontrol.c							\
        sync-menu.c								\
-       ui_about.c						\
        ui_albumart.c						\
-       ui_credits.c						\
        ui_fileinfo.c						\
        ui_misc.c
 

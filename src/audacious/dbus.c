@@ -1231,7 +1231,7 @@ gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **
 }
 
 gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **error) {
-    hook_call("aboutwin show", &show);
+    event_queue("aboutwin show", GINT_TO_POINTER(show));
     return TRUE;
 }
 

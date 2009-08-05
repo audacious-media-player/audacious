@@ -7,7 +7,9 @@ SRCS = ui_gtk.c \
        ui_urlopener.c \
        ui_jumptotrack.c \
        ui_jumptotrack_cache.c \
-       icons-stock.c
+       icons-stock.c \
+       ui_about.c \
+       ui_credits.c
 
 INCLUDES = libaudgui.h
 
@@ -16,7 +18,7 @@ include ../../extra.mk
 
 includesubdir = libaudgui
 
-CPPFLAGS += ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../.. -I../libaudcore -I../audacious
+CPPFLAGS += -DHAVE_CONFIG_H ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../.. -I../libaudcore -I../audacious
 CFLAGS += ${LIB_CFLAGS} ${GLIB_CFLAGS} ${GTK_CFLAGS} ${DBUS_CFLAGS} ${MOWGLI_CFLAGS} $(AUDACIOUS_DEFINES) ${REGEX_CFLAGS}
 LDFLAGS += $(AUDLDFLAGS)
 LIBS += ${GLIB_LIBS} ${MOWGLI_LIBS} ${GTK_LIBS} ${REGEX_LIBS} -L../libaudcore -laudcore

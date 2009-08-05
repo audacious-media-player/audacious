@@ -40,4 +40,7 @@ void audgui_set_default_icon(void);
 void audgui_run_filebrowser(gboolean clear_pl_on_ok);
 void audgui_hide_filebrowser(void);
 
+void audgui_show_about_window(void);
+void audgui_hide_about_window(void);
+
 #endif /* LIBAUDGUI_H */

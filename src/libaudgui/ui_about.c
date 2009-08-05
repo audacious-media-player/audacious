@@ -32,7 +32,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include "ui_credits.h"
-#include "credits.h"
+#include "plugin.h"
 
 #include "platform/smartinclude.h"
 
@@ -83,13 +83,13 @@ on_credits_button_clicked (GtkWidget *widget, gpointer data)
 {
 	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
 
-	show_credits_window();
+	audgui_show_credits_window();
 
 	return FALSE;
 }
 
 void
-show_about_window(void)
+audgui_show_about_window(void)
 {
     GtkWidget *about_fixedbox;
     GtkWidget *close_button;
@@ -107,7 +107,7 @@ show_about_window(void)
         return;
     }
 
-    get_audacious_credits(&audacious_brief, NULL, NULL);
+    aud_get_audacious_credits(&audacious_brief, NULL, NULL);
 
     about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -206,7 +206,7 @@ show_about_window(void)
 }
 
 void
-hide_about_window(void)
+audgui_hide_about_window(void)
 {
     g_return_if_fail(about_window);
     gtk_widget_hide(GTK_WIDGET(about_window));

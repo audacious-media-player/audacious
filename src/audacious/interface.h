@@ -37,8 +37,6 @@ typedef struct {
     void (*show_prefs_window)(void);
     void (*hide_prefs_window)(void);
     void (*destroy_prefs_window)(void);
-
-    void (*aboutwin_show)(void);
 } InterfaceOps;
 
 typedef struct {
@@ -49,6 +47,8 @@ typedef struct {
     void (*show_error)(const gchar * markup);
     void (*show_jump_to_track)(void);
     void (*hide_jump_to_track)(void);
+    void (*show_about_window)(void);
+    void (*hide_about_window)(void);
 } InterfaceCbs;
 
 typedef struct _Interface {
