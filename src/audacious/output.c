@@ -521,8 +521,18 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
     gint samples = size / FMT_SIZEOF (fmt);
     void * pristine = data, * allocated = NULL;
     gint time = playback->output->written_time ();
+    gboolean can_pass_audio = FALSE;
 
-    if (fmt != FMT_FLOAT)
+    if (bypass_dsp)
+    {
+        if (fmt == FMT_FLOAT)
+            can_pass_audio = TRUE;
+
+        data = pristine;
+        g_free (allocated);
+        allocated = NULL;
+    }
+    else if (fmt != FMT_FLOAT)
     {
         gfloat * new = g_malloc (sizeof (gfloat) * samples);
 
@@ -535,17 +545,14 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
         data = new;
         g_free (allocated);
         allocated = new;
+
+        can_pass_audio = TRUE;
     }
 
-    vis_runner_pass_audio (time, data, samples, channels);
+    if (can_pass_audio == TRUE)
+        vis_runner_pass_audio (time, data, samples, channels);
 
-    if (bypass_dsp)
-    {
-        data = pristine;
-        g_free (allocated);
-        allocated = NULL;
-    }
-    else
+    if (bypass_dsp == FALSE)
     {
         samples = flow_execute (get_postproc_flow (), time, & data, sizeof
          (gfloat) * samples, FMT_FLOAT, decoder_srate, channels) / sizeof
