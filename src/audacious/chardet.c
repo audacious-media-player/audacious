@@ -121,6 +121,10 @@ fallback:
             ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
             if (len == *bytes_read)
                 break;
+            else {
+                g_free(ret);
+                ret = NULL;
+            }
         }
     }
 
