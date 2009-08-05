@@ -274,9 +274,9 @@ playback_stop(void)
 #ifdef USE_DBUS
         mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
 #endif
-    }
 
-    hook_call("playback stop", NULL);
+        hook_call("playback stop", NULL);
+    }
 }
 
 static void
@@ -291,15 +291,23 @@ run_no_output_plugin_dialog(void)
 
 static gboolean on_to_the_next (void * user_data)
 {
+    gint playlist = playlist_get_playing ();
+    gboolean play;
+
     if (cfg.no_playlist_advance)
+        play = cfg.repeat;
+    else
     {
-        if (cfg.repeat)
-            playback_initiate ();
-        else
-            hook_call ("playback stop", NULL);
+        play = playlist_next_song (playlist, FALSE);
+
+        if (! play)
+            play = playlist_next_song (playlist, TRUE) && cfg.repeat;
     }
-    else if (playlist_next_song (playlist_get_playing (), cfg.repeat) &&
-     ! cfg.stopaftersong)
+
+    if (cfg.stopaftersong)
+        play = FALSE;
+
+    if (play)
         playback_initiate ();
     else
         hook_call ("playback stop", NULL);
