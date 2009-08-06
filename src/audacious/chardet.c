@@ -80,19 +80,17 @@ cd_str_to_utf8(const gchar * str)
 
 gchar *
 cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
-                   gsize * arg_bytes_write, GError ** arg_error)
+                   gsize * arg_bytes_write, GError ** error)
 {
 #ifdef USE_CHARDET
     gchar *det = NULL, *encoding = NULL;
 #endif
     gchar *ret = NULL;
     gsize *bytes_read, *bytes_write;
-    GError **error;
     gsize my_bytes_read, my_bytes_write;
 
     bytes_read = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
     bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
-    error = arg_error ? arg_error : NULL;
 
     g_return_val_if_fail(str != NULL, NULL);
 
