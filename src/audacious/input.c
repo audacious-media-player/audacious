@@ -118,13 +118,6 @@ input_get_vis_type()
     return INPUT_VIS_OFF;
 }
 
-void
-input_dont_show_warning(GtkObject * object, gpointer user_data)
-{
-    *((gboolean *) user_data) =
-        !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object));
-}
-
 static time_t
 input_get_mtime(const gchar *filename)
 {
