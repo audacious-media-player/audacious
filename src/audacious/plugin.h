@@ -265,6 +265,13 @@ struct _AudaciousFuncTableV1 {
     gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
     gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
 
+    gboolean (*vfs_fput_le16)(guint16 value, VFSFile *stream);
+    gboolean (*vfs_fput_le32)(guint32 value, VFSFile *stream);
+    gboolean (*vfs_fput_le64)(guint64 value, VFSFile *stream);
+    gboolean (*vfs_fput_be16)(guint16 value, VFSFile *stream);
+    gboolean (*vfs_fput_be32)(guint32 value, VFSFile *stream);
+    gboolean (*vfs_fput_be64)(guint64 value, VFSFile *stream);
+
     /* ConfigDb */
     mcs_handle_t *(*cfg_db_open)(void);
     void (*cfg_db_close)(mcs_handle_t *db);
@@ -632,6 +639,13 @@ struct _AudaciousFuncTableV1 {
 #define aud_vfs_fget_be16               _audvt->vfs_fget_be16
 #define aud_vfs_fget_be32               _audvt->vfs_fget_be32
 #define aud_vfs_fget_be64               _audvt->vfs_fget_be64
+
+#define aud_vfs_fput_le16               _audvt->vfs_fput_le16
+#define aud_vfs_fput_le32               _audvt->vfs_fput_le32
+#define aud_vfs_fput_le64               _audvt->vfs_fput_le64
+#define aud_vfs_fput_be16               _audvt->vfs_fput_be16
+#define aud_vfs_fput_be32               _audvt->vfs_fput_be32
+#define aud_vfs_fput_be64               _audvt->vfs_fput_be64
 
 /* XXX: deprecation warnings */
 #define ConfigDb mcs_handle_t        /* Alias for compatibility -- ccr */
