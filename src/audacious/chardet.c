@@ -62,7 +62,7 @@ cd_str_to_utf8(const gchar * str)
     if (dfa_validate_utf8(str, strlen(str)))
         return g_strdup(str);
 #else
-    if (g_utf8_validate(str, strlen(str)))
+    if (g_utf8_validate(str, strlen(str), NULL))
         return g_strdup(str);
 #endif
 
