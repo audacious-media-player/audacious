@@ -205,7 +205,7 @@ close_handle:
 gboolean vfs_fget_le16(guint16 *value, VFSFile *stream)
 {
     guint16 tmp;
-    if (vfs_fread(&tmp, sizeof(guint16), 1, stream) != 1)
+    if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT16_FROM_LE(tmp);
     return TRUE;
@@ -221,7 +221,7 @@ gboolean vfs_fget_le16(guint16 *value, VFSFile *stream)
 gboolean vfs_fget_le32(guint32 *value, VFSFile *stream)
 {
     guint32 tmp;
-    if (vfs_fread(&tmp, sizeof(guint32), 1, stream) != 1)
+    if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT32_FROM_LE(tmp);
     return TRUE;
@@ -237,7 +237,7 @@ gboolean vfs_fget_le32(guint32 *value, VFSFile *stream)
 gboolean vfs_fget_le64(guint64 *value, VFSFile *stream)
 {
     guint64 tmp;
-    if (vfs_fread(&tmp, sizeof(guint64), 1, stream) != 1)
+    if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT64_FROM_LE(tmp);
     return TRUE;
@@ -254,7 +254,7 @@ gboolean vfs_fget_le64(guint64 *value, VFSFile *stream)
 gboolean vfs_fget_be16(guint16 *value, VFSFile *stream)
 {
     guint16 tmp;
-    if (vfs_fread(&tmp, sizeof(guint16), 1, stream) != 1)
+    if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT16_FROM_BE(tmp);
     return TRUE;
@@ -270,7 +270,7 @@ gboolean vfs_fget_be16(guint16 *value, VFSFile *stream)
 gboolean vfs_fget_be32(guint32 *value, VFSFile *stream)
 {
     guint32 tmp;
-    if (vfs_fread(&tmp, sizeof(guint32), 1, stream) != 1)
+    if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT32_FROM_BE(tmp);
     return TRUE;
@@ -286,7 +286,7 @@ gboolean vfs_fget_be32(guint32 *value, VFSFile *stream)
 gboolean vfs_fget_be64(guint64 *value, VFSFile *stream)
 {
     guint64 tmp;
-    if (vfs_fread(&tmp, sizeof(guint64), 1, stream) != 1)
+    if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT64_FROM_BE(tmp);
     return TRUE;
