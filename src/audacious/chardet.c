@@ -89,8 +89,8 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     gsize *bytes_read, *bytes_write;
     gsize my_bytes_read, my_bytes_write;
 
-    bytes_read = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
-    bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
+    bytes_read = arg_bytes_read != NULL ? arg_bytes_read : &my_bytes_read;
+    bytes_write = arg_bytes_write != NULL ? arg_bytes_write : &my_bytes_write;
 
     g_return_val_if_fail(str != NULL, NULL);
 
