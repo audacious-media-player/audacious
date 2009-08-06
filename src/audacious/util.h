@@ -73,8 +73,6 @@ gboolean text_get_extents(const gchar * fontname, const gchar * text,
 guint gint_count_digits(gint n);
 
 
-GtkWidget *make_filebrowser(const gchar *title, gboolean save);
-
 GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
     const gchar * button_text, gboolean modal, GCallback button_action,
     gpointer action_data);
