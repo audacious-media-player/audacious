@@ -713,6 +713,19 @@ InputPlugin *playlist_entry_get_decoder(gint playlist_num, gint entry_num)
     return entry->decoder;
 }
 
+void playlist_entry_set_tuple (gint playlist_num, gint entry_num, Tuple * tuple)
+{
+    struct playlist * playlist;
+    struct entry * entry;
+
+    playlist = lookup_playlist (playlist_num);
+    g_return_if_fail (playlist != NULL);
+    entry = lookup_entry (playlist, entry_num);
+    g_return_if_fail (entry != NULL);
+
+    entry_set_tuple (entry, tuple);
+}
+
 const Tuple *playlist_entry_get_tuple(gint playlist_num, gint entry_num)
 {
     struct playlist *playlist = lookup_playlist(playlist_num);

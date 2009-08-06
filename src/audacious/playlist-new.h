@@ -28,9 +28,9 @@
 /*
  * "Insert at position -1" means "append". Strings passed to
  * playlist_set_filename and playlist_set_title are duplicated. Strings, tuples,
- * and indexes passed to playlist_entry_insert and playlist_entry_insert_batch
- * will be freed when no longer needed. Returned pointers refer to static data
- * which should not be freed.
+ * and indexes passed to playlist_entry_insert, playlist_entry_insert_batch and
+ * playlist_entry_set_tuple will be freed when no longer needed. Returned
+ * pointers refer to static data which should not be freed.
  */
 
 void playlist_init (void);
@@ -59,6 +59,7 @@ void playlist_entry_delete (gint playlist, gint at, gint number);
 
 const gchar * playlist_entry_get_filename (gint playlist, gint entry);
 InputPlugin * playlist_entry_get_decoder (gint playlist, gint entry);
+void playlist_entry_set_tuple (gint playlist, gint entry, Tuple * tuple);
 const Tuple * playlist_entry_get_tuple (gint playlist, gint entry);
 const gchar * playlist_entry_get_title (gint playlist, gint entry);
 glong playlist_entry_get_length (gint playlist, gint entry);

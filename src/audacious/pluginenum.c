@@ -181,6 +181,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .playlist_entry_get_filename = playlist_entry_get_filename,
     .playlist_entry_get_decoder = playlist_entry_get_decoder,
+    .playlist_entry_set_tuple = playlist_entry_set_tuple,
     .playlist_entry_get_tuple = playlist_entry_get_tuple,
     .playlist_entry_get_title = playlist_entry_get_title,
     .playlist_entry_get_length = playlist_entry_get_length,
