@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-07-06 22:49-0400\n"
+"POT-Creation-Date: 2009-08-07 19:40-0400\n"
 "PO-Revision-Date: 2008-07-19 11:56+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -18,228 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: src/audacious/equalizer_preset.c:178
-#, c-format
-msgid "Error importing Winamp EQF file '%s'"
-msgstr "Greška prilikom uvozenja Winamp EQF datoteke '%s'"
-
-#: src/audacious/input.c:470
-#, c-format
-msgid "audacious: %s"
-msgstr "audacious: %s"
-
-#: src/audacious/input.c:486
-msgid "Filename:"
-msgstr "Ime datoteke:"
-
-#: src/audacious/input.c:505
-msgid "No input plugin recognized this file"
-msgstr "Nijedan ulazni dodatak nije prepoznao ovu datoteku"
-
-#: src/audacious/input.c:507
-#, c-format
-msgid "Input plugin: %s"
-msgstr "Ulazni dodatak: %s"
-
-#: src/audacious/logger.c:125
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr "Nije moguće napraviti datoteku evidencije (%s)!\n"
-
-#: src/audacious/main.c:76
-msgid "Audacious"
-msgstr "Audacious"
-
-#: src/audacious/main.c:199
-msgid "Skip backwards in playlist"
-msgstr "Skoči unazad u listi numera"
-
-#: src/audacious/main.c:200
-msgid "Start playing current playlist"
-msgstr "Pusti tekuću listu numera"
-
-#: src/audacious/main.c:201
-msgid "Pause current song"
-msgstr "Pauziraj tekuću pesmu"
-
-#: src/audacious/main.c:202
-msgid "Stop current song"
-msgstr "Zaustavi tekuću pesmu"
-
-#: src/audacious/main.c:203
-msgid "Pause if playing, play otherwise"
-msgstr "Pauziraj ako svira, inače pusti"
-
-#: src/audacious/main.c:204
-msgid "Skip forward in playlist"
-msgstr "Skoči unapred u listi numera"
-
-#: src/audacious/main.c:205
-msgid "Display Jump to File dialog"
-msgstr "Prikaži Pređi na datoteku okvir"
-
-#: src/audacious/main.c:206
-msgid "Don't clear the playlist"
-msgstr "Nemoj obrisati listu numera"
-
-#: src/audacious/main.c:207
-msgid "Add new files to a temporary playlist"
-msgstr "Dodaje nove datoteke u privremenu listu numera"
-
-#: src/audacious/main.c:208
-msgid "Display the main window"
-msgstr "Prikaži glavni prozor"
-
-#: src/audacious/main.c:209
-msgid "Display all open Audacious windows"
-msgstr "Prikaži sve otvorene Audacious prozore"
-
-#: src/audacious/main.c:210
-msgid "Print all errors and warnings to stdout"
-msgstr "Štampaj sve greške i upozorenja u stdout"
-
-#: src/audacious/main.c:211
-msgid "Show version"
-msgstr "Prikaži verziju"
-
-#: src/audacious/main.c:212
-msgid "Interface to use (use -i list to view available interfaces)"
-msgstr ""
-
-#: src/audacious/main.c:214
-msgid "Used in macpacking"
-msgstr "Koristi se za makpakovanje"
-
-#: src/audacious/main.c:216
-msgid "FILE..."
-msgstr "DATOTEKA..."
-
-#: src/audacious/main.c:234
-msgid "- play multimedia files"
-msgstr "- pusti multimedijalne datoteke"
-
-#: src/audacious/main.c:244
-#, c-format
-msgid ""
-"%s: %s\n"
-"Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Probajte `%s --help' za više informacija.\n"
-
-#: src/audacious/main.c:481
-msgid "Sorry, threads aren't supported on your platform.\n"
-msgstr "Žao mi je, ali vaša platforma ne podržava niti.\n"
-
-#: src/audacious/main.c:518
-#, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr "%s: Nije moguće otvoriti prikaz, izlazim.\n"
-
-#: src/audacious/main.c:560
-msgid ""
-"Available interfaces:\n"
-"\n"
-msgstr ""
-
-#: src/audacious/playback.c:271
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
-msgstr ""
-"<b><big>Nije izabran izlazni dodatak.</big></b>\n"
-"Niste izabrali izlazni dodatak."
-
-#: src/audacious/playlist.c:276 src/audacious/playlist.c:2847
-#, fuzzy
-msgid "Untitled Playlist"
-msgstr "Nova lista numera"
-
-#: src/audacious/pluginenum.c:841
-msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr "Učitavanje modula nije podržano! Dodaci neće biti učitani.\n"
-
-#: src/audacious/signals.c:50
-#, fuzzy
-msgid ""
-"\n"
-"Audacious has caught signal 11 (SIGSEGV).\n"
-"\n"
-"We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal "
-"circumstances.\n"
-"Your current configuration has been saved and should not be damaged.\n"
-"\n"
-"You can help improve the quality of Audacious by filing a bug at http://jira."
-"atheme.org/\n"
-"Please include the entire text of this message and a description of what you "
-"were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug "
-"report:\n"
-"\n"
-msgstr ""
-"\n"
-"Audacious je uhvatio signal 11 (SIGSEGV).\n"
-"\n"
-"Izvinjavamo se zbog neprilika, ali Audacious je otkazao.\n"
-"Ovo je greška u programu, i nikad ne bi trebala da se desi pod normalnim "
-"okolnostima.\n"
-"Vaša trenutna konfiguracija je sačuvana i nebi trebala biti oštećena.\n"
-"\n"
-"Možete poboljšati kvalitet Audacious-a prijavljivanjem greške na http://bugs-"
-"meta.atheme.org\n"
-"Molim vas uključite celokupan tekst ove poruke i opišite nam šta ste radili "
-"kad se ovaj\n"
-"otkaz dogodio, da bismo brzo mogli obraditi Vaš izveštaj greške:\n"
-"\n"
-
-#: src/audacious/signals.c:78
-msgid ""
-"Stacktrace was unavailable. You might want to reproduce this problem while "
-"running Audacious under GDB to get a proper backtrace.\n"
-msgstr ""
-"Trag steka nije dostupan. Mogli biste da reprodukujete ovaj problem dok "
-"pokrećete Audacious u GDB-u da biste dobili ispravno stablo pozivanja.\n"
-
-#: src/audacious/signals.c:82
-#, fuzzy
-msgid ""
-"\n"
-"Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
-"Audacious Plugins product.\n"
-msgstr ""
-"\n"
-"Greške za proizvode Audacious i Audacious Plugins se mogu prijaviti na "
-"http://bugs-meta.atheme.org\n"
-
-#: src/audacious/signals.c:345
-msgid ""
-"Your signaling implementation is broken.\n"
-"Expect unusable crash reports.\n"
-msgstr ""
-"Vaša implementacija signala je pokvarena.\n"
-"Očekujte neiskoristive izveštaje o greškama.\n"
-
-#: src/audacious/ui_about.c:46
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Copyright (C) 2005-2009 Audacious Development Team"
-msgstr ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Sva prava zadržana, 2005-2008 Audacious Razvojni Tim"
-
-#: src/audacious/ui_about.c:126 src/audacious/ui_credits.c:398
-msgid "About Audacious"
-msgstr "O Audacious-u"
-
-#: src/audacious/ui_about.c:175 src/audacious/ui_credits.c:441
-msgid "Credits"
-msgstr "Zasluge"
-
-#: src/audacious/ui_credits.c:47
+#: src/audacious/credits.c:34
 #, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -252,936 +31,1029 @@ msgstr ""
 "\n"
 "Sva prava zadržana, 2005-2008 Audacious Razvojni Tim\n"
 
-#: src/audacious/ui_credits.c:53
+#: src/audacious/credits.c:40
 #, fuzzy
 msgid "Core developers:"
 msgstr "0.1.x stvaraoci:"
 
-#: src/audacious/ui_credits.c:67
+#: src/audacious/credits.c:54
 msgid "Graphics:"
 msgstr "Grafika:"
 
-#: src/audacious/ui_credits.c:72
+#: src/audacious/credits.c:59
 msgid "Default skin:"
 msgstr "Podrazumevana maska:"
 
-#: src/audacious/ui_credits.c:78
+#: src/audacious/credits.c:65
 msgid "Plugin development:"
 msgstr "Razvoj dodataka:"
 
-#: src/audacious/ui_credits.c:99
+#: src/audacious/credits.c:86
 msgid "Patch authors:"
 msgstr "Autori zakrpa:"
 
-#: src/audacious/ui_credits.c:132
+#: src/audacious/credits.c:119
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x stvaraoci:"
 
-#: src/audacious/ui_credits.c:154
+#: src/audacious/credits.c:141
 msgid "BMP Developers:"
 msgstr "BMP stvaraoci:"
 
-#: src/audacious/ui_credits.c:186
+#: src/audacious/credits.c:173
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:189
+#: src/audacious/credits.c:176
 msgid "Brazilian Portuguese:"
 msgstr "Brazilsko Portugalski:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/credits.c:180
 msgid "Breton:"
 msgstr "Bretonski:"
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/credits.c:183
 msgid "Bulgarian:"
 msgstr "Bugarski:"
 
-#: src/audacious/ui_credits.c:199
+#: src/audacious/credits.c:186
 msgid "Catalan:"
 msgstr "Katalonski:"
 
-#: src/audacious/ui_credits.c:202
+#: src/audacious/credits.c:189
 msgid "Croatian:"
 msgstr "Hrvatski:"
 
-#: src/audacious/ui_credits.c:205
+#: src/audacious/credits.c:192
 msgid "Czech:"
 msgstr "Češki:"
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/credits.c:195
 msgid "Dutch:"
 msgstr "Holandski:"
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/credits.c:199
 msgid "Estonian:"
 msgstr "Estonski:"
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/credits.c:202
 msgid "Finnish:"
 msgstr "Finski:"
 
-#: src/audacious/ui_credits.c:219
+#: src/audacious/credits.c:206
 msgid "French:"
 msgstr "Francuski:"
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/credits.c:211
 msgid "German:"
 msgstr "Nemački:"
 
-#: src/audacious/ui_credits.c:229
+#: src/audacious/credits.c:216
 msgid "Georgian:"
 msgstr "Armenski:"
 
-#: src/audacious/ui_credits.c:232
+#: src/audacious/credits.c:219
 msgid "Greek:"
 msgstr "Grčki:"
 
-#: src/audacious/ui_credits.c:237
+#: src/audacious/credits.c:224
 msgid "Hindi:"
 msgstr "Indijski:"
 
-#: src/audacious/ui_credits.c:240
+#: src/audacious/credits.c:227
 msgid "Hungarian:"
 msgstr "Mađarski:"
 
-#: src/audacious/ui_credits.c:243
+#: src/audacious/credits.c:230
 msgid "Italian:"
 msgstr "Italijanski:"
 
-#: src/audacious/ui_credits.c:247
+#: src/audacious/credits.c:234
 msgid "Japanese:"
 msgstr "Japanski:"
 
-#: src/audacious/ui_credits.c:250
+#: src/audacious/credits.c:237
 msgid "Korean:"
 msgstr "Koreanski:"
 
-#: src/audacious/ui_credits.c:253
+#: src/audacious/credits.c:240
 msgid "Lithuanian:"
 msgstr "Litvanski:"
 
-#: src/audacious/ui_credits.c:256
+#: src/audacious/credits.c:243
 msgid "Macedonian:"
 msgstr "Makedonski:"
 
-#: src/audacious/ui_credits.c:259
+#: src/audacious/credits.c:246
 msgid "Polish:"
 msgstr "Poljski:"
 
-#: src/audacious/ui_credits.c:262
+#: src/audacious/credits.c:249
 msgid "Romanian:"
 msgstr "Rumunski:"
 
-#: src/audacious/ui_credits.c:266
+#: src/audacious/credits.c:253
 msgid "Russian:"
 msgstr "Ruski:"
 
-#: src/audacious/ui_credits.c:269
+#: src/audacious/credits.c:256
 msgid "Serbian (Latin):"
 msgstr "Srpski (Latinica):"
 
-#: src/audacious/ui_credits.c:272
+#: src/audacious/credits.c:259
 msgid "Serbian (Cyrillic):"
 msgstr "Srpski (Ćirilica):"
 
-#: src/audacious/ui_credits.c:275
+#: src/audacious/credits.c:262
 msgid "Simplified Chinese:"
 msgstr "Uprošten Kineski:"
 
-#: src/audacious/ui_credits.c:278
+#: src/audacious/credits.c:265
 msgid "Slovak:"
 msgstr "Slovenački:"
 
-#: src/audacious/ui_credits.c:281
+#: src/audacious/credits.c:268
 msgid "Spanish:"
 msgstr "Španski:"
 
-#: src/audacious/ui_credits.c:284
+#: src/audacious/credits.c:271
 msgid "Swedish:"
 msgstr "Švedski:"
 
-#: src/audacious/ui_credits.c:287
+#: src/audacious/credits.c:274
 msgid "Traditional Chinese:"
 msgstr "Tradicionalni Kineski:"
 
-#: src/audacious/ui_credits.c:292
+#: src/audacious/credits.c:279
 msgid "Turkish:"
 msgstr "Turski:"
 
-#: src/audacious/ui_credits.c:296
+#: src/audacious/credits.c:283
 msgid "Ukrainian:"
 msgstr "Ukrainski:"
 
-#: src/audacious/ui_credits.c:299
+#: src/audacious/credits.c:286
 msgid "Welsh:"
 msgstr "Velšanski:"
 
-#: src/audacious/ui_credits.c:445
-msgid "Translators"
-msgstr "Prevodioci"
+#: src/audacious/equalizer_preset.c:174
+#, c-format
+msgid "Error importing Winamp EQF file '%s'"
+msgstr "Greška prilikom uvozenja Winamp EQF datoteke '%s'"
 
-#: src/audacious/ui_fileinfo.c:98
+#: src/audacious/input.c:445
+#, c-format
+msgid "audacious: %s"
+msgstr "audacious: %s"
+
+#: src/audacious/input.c:461
+msgid "Filename:"
+msgstr "Ime datoteke:"
+
+#: src/audacious/input.c:480
+msgid "No input plugin recognized this file"
+msgstr "Nijedan ulazni dodatak nije prepoznao ovu datoteku"
+
+#: src/audacious/input.c:482
+#, c-format
+msgid "Input plugin: %s"
+msgstr "Ulazni dodatak: %s"
+
+#: src/audacious/logger.c:125
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Nije moguće napraviti datoteku evidencije (%s)!\n"
+
+#: src/audacious/main.c:72
+msgid "Audacious"
+msgstr "Audacious"
+
+#: src/audacious/main.c:185
+msgid "Skip backwards in playlist"
+msgstr "Skoči unazad u listi numera"
+
+#: src/audacious/main.c:186
+msgid "Start playing current playlist"
+msgstr "Pusti tekuću listu numera"
+
+#: src/audacious/main.c:187
+msgid "Pause current song"
+msgstr "Pauziraj tekuću pesmu"
+
+#: src/audacious/main.c:188
+msgid "Stop current song"
+msgstr "Zaustavi tekuću pesmu"
+
+#: src/audacious/main.c:189
+msgid "Pause if playing, play otherwise"
+msgstr "Pauziraj ako svira, inače pusti"
+
+#: src/audacious/main.c:190
+msgid "Skip forward in playlist"
+msgstr "Skoči unapred u listi numera"
+
+#: src/audacious/main.c:191
+msgid "Display Jump to File dialog"
+msgstr "Prikaži Pređi na datoteku okvir"
+
+#: src/audacious/main.c:192
+msgid "Don't clear the playlist"
+msgstr "Nemoj obrisati listu numera"
+
+#: src/audacious/main.c:193
+msgid "Add new files to a temporary playlist"
+msgstr "Dodaje nove datoteke u privremenu listu numera"
+
+#: src/audacious/main.c:194
+msgid "Display the main window"
+msgstr "Prikaži glavni prozor"
+
+#: src/audacious/main.c:195
+msgid "Display all open Audacious windows"
+msgstr "Prikaži sve otvorene Audacious prozore"
+
+#: src/audacious/main.c:196
+msgid "Print all errors and warnings to stdout"
+msgstr "Štampaj sve greške i upozorenja u stdout"
+
+#: src/audacious/main.c:197
+msgid "Show version"
+msgstr "Prikaži verziju"
+
+#: src/audacious/main.c:198
+msgid "Interface to use (use -i list to view available interfaces)"
+msgstr ""
+
+#: src/audacious/main.c:200
+msgid "Used in macpacking"
+msgstr "Koristi se za makpakovanje"
+
+#: src/audacious/main.c:202
+msgid "FILE..."
+msgstr "DATOTEKA..."
+
+#: src/audacious/main.c:220
+msgid "- play multimedia files"
+msgstr "- pusti multimedijalne datoteke"
+
+#: src/audacious/main.c:231
+#, c-format
+msgid ""
+"%s: %s\n"
+"Try `%s --help' for more information.\n"
+msgstr ""
+"%s: %s\n"
+"Probajte `%s --help' za više informacija.\n"
+
+#: src/audacious/main.c:461
+msgid "Sorry, threads aren't supported on your platform.\n"
+msgstr "Žao mi je, ali vaša platforma ne podržava niti.\n"
+
+#: src/audacious/main.c:498
+#, c-format
+msgid "%s: Unable to open display, exiting.\n"
+msgstr "%s: Nije moguće otvoriti prikaz, izlazim.\n"
+
+#: src/audacious/main.c:530
+msgid ""
+"Available interfaces:\n"
+"\n"
+msgstr ""
+
+#: src/audacious/playback.c:286
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+"<b><big>Nije izabran izlazni dodatak.</big></b>\n"
+"Niste izabrali izlazni dodatak."
+
+#: src/audacious/playlist-new.c:168
+#, fuzzy
+msgid "Untitled Playlist"
+msgstr "Nova lista numera"
+
+#: src/audacious/pluginenum.c:799
+msgid "Module loading not supported! Plugins will not be loaded.\n"
+msgstr "Učitavanje modula nije podržano! Dodaci neće biti učitani.\n"
+
+#: src/audacious/ui_fileinfo.c:96
 msgid "Blues"
 msgstr "Bluz"
 
-#: src/audacious/ui_fileinfo.c:98
+#: src/audacious/ui_fileinfo.c:96
 msgid "Classic Rock"
 msgstr "Klasični rok"
 
-#: src/audacious/ui_fileinfo.c:98
+#: src/audacious/ui_fileinfo.c:96
 msgid "Country"
 msgstr "Kantri"
 
-#: src/audacious/ui_fileinfo.c:98
+#: src/audacious/ui_fileinfo.c:96
 msgid "Dance"
 msgstr "Dens"
 
-#: src/audacious/ui_fileinfo.c:99
+#: src/audacious/ui_fileinfo.c:97
 msgid "Disco"
 msgstr "Disko"
 
-#: src/audacious/ui_fileinfo.c:99
+#: src/audacious/ui_fileinfo.c:97
 msgid "Funk"
 msgstr "Fanki"
 
-#: src/audacious/ui_fileinfo.c:99
+#: src/audacious/ui_fileinfo.c:97
 msgid "Grunge"
 msgstr "Grandž"
 
-#: src/audacious/ui_fileinfo.c:99
+#: src/audacious/ui_fileinfo.c:97
 msgid "Hip-Hop"
 msgstr "Hip hop"
 
-#: src/audacious/ui_fileinfo.c:100
+#: src/audacious/ui_fileinfo.c:98
 msgid "Jazz"
 msgstr "Džez"
 
-#: src/audacious/ui_fileinfo.c:100
+#: src/audacious/ui_fileinfo.c:98
 msgid "Metal"
 msgstr "Metal"
 
-#: src/audacious/ui_fileinfo.c:100
+#: src/audacious/ui_fileinfo.c:98
 msgid "New Age"
 msgstr "Nju Ejdž"
 
-#: src/audacious/ui_fileinfo.c:100
+#: src/audacious/ui_fileinfo.c:98
 msgid "Oldies"
 msgstr "Evergrin"
 
-#: src/audacious/ui_fileinfo.c:101
+#: src/audacious/ui_fileinfo.c:99
 msgid "Other"
 msgstr "Ostalo"
 
-#: src/audacious/ui_fileinfo.c:101
+#: src/audacious/ui_fileinfo.c:99
 msgid "Pop"
 msgstr "Pop"
 
-#: src/audacious/ui_fileinfo.c:101
+#: src/audacious/ui_fileinfo.c:99
 msgid "R&B"
 msgstr "R&B"
 
-#: src/audacious/ui_fileinfo.c:101
+#: src/audacious/ui_fileinfo.c:99
 msgid "Rap"
 msgstr "Rep"
 
-#: src/audacious/ui_fileinfo.c:101
+#: src/audacious/ui_fileinfo.c:99
 msgid "Reggae"
 msgstr "Rege"
 
-#: src/audacious/ui_fileinfo.c:102
+#: src/audacious/ui_fileinfo.c:100
 msgid "Rock"
 msgstr "Rok"
 
-#: src/audacious/ui_fileinfo.c:102
+#: src/audacious/ui_fileinfo.c:100
 msgid "Techno"
 msgstr "Tehno"
 
-#: src/audacious/ui_fileinfo.c:102
+#: src/audacious/ui_fileinfo.c:100
 msgid "Industrial"
 msgstr "Industrija"
 
-#: src/audacious/ui_fileinfo.c:102
+#: src/audacious/ui_fileinfo.c:100
 msgid "Alternative"
 msgstr "Alternativa"
 
-#: src/audacious/ui_fileinfo.c:103
+#: src/audacious/ui_fileinfo.c:101
 msgid "Ska"
 msgstr "Ska"
 
-#: src/audacious/ui_fileinfo.c:103
+#: src/audacious/ui_fileinfo.c:101
 msgid "Death Metal"
 msgstr "Det metal"
 
-#: src/audacious/ui_fileinfo.c:103
+#: src/audacious/ui_fileinfo.c:101
 msgid "Pranks"
 msgstr "Šale"
 
-#: src/audacious/ui_fileinfo.c:103
+#: src/audacious/ui_fileinfo.c:101
 msgid "Soundtrack"
 msgstr "Tema iz filma"
 
-#: src/audacious/ui_fileinfo.c:104
+#: src/audacious/ui_fileinfo.c:102
 msgid "Euro-Techno"
 msgstr "Euro-tehno"
 
-#: src/audacious/ui_fileinfo.c:104
+#: src/audacious/ui_fileinfo.c:102
 msgid "Ambient"
 msgstr "Ambijentalna"
 
-#: src/audacious/ui_fileinfo.c:104
+#: src/audacious/ui_fileinfo.c:102
 msgid "Trip-Hop"
 msgstr "Trip-Hop"
 
-#: src/audacious/ui_fileinfo.c:104
+#: src/audacious/ui_fileinfo.c:102
 msgid "Vocal"
 msgstr "Vokal"
 
-#: src/audacious/ui_fileinfo.c:105
+#: src/audacious/ui_fileinfo.c:103
 msgid "Jazz+Funk"
 msgstr "Džez i Fanki"
 
-#: src/audacious/ui_fileinfo.c:105
+#: src/audacious/ui_fileinfo.c:103
 msgid "Fusion"
 msgstr "Fuzija"
 
-#: src/audacious/ui_fileinfo.c:105
+#: src/audacious/ui_fileinfo.c:103
 msgid "Trance"
 msgstr "Trens"
 
-#: src/audacious/ui_fileinfo.c:105
+#: src/audacious/ui_fileinfo.c:103
 msgid "Classical"
 msgstr "Klasična"
 
-#: src/audacious/ui_fileinfo.c:106
+#: src/audacious/ui_fileinfo.c:104
 msgid "Instrumental"
 msgstr "Instrumental"
 
-#: src/audacious/ui_fileinfo.c:106
+#: src/audacious/ui_fileinfo.c:104
 msgid "Acid"
 msgstr "Asid"
 
-#: src/audacious/ui_fileinfo.c:106
+#: src/audacious/ui_fileinfo.c:104
 msgid "House"
 msgstr "Haus"
 
-#: src/audacious/ui_fileinfo.c:106
+#: src/audacious/ui_fileinfo.c:104
 msgid "Game"
 msgstr "Muzika iz igre"
 
-#: src/audacious/ui_fileinfo.c:107
+#: src/audacious/ui_fileinfo.c:105
 msgid "Sound Clip"
 msgstr "Tonski zapis"
 
-#: src/audacious/ui_fileinfo.c:107
+#: src/audacious/ui_fileinfo.c:105
 msgid "Gospel"
 msgstr "Verska"
 
-#: src/audacious/ui_fileinfo.c:107
+#: src/audacious/ui_fileinfo.c:105
 msgid "Noise"
 msgstr "Šum"
 
-#: src/audacious/ui_fileinfo.c:107
+#: src/audacious/ui_fileinfo.c:105
 msgid "AlternRock"
 msgstr "AlternRok"
 
-#: src/audacious/ui_fileinfo.c:108
+#: src/audacious/ui_fileinfo.c:106
 msgid "Bass"
 msgstr "Bas"
 
-#: src/audacious/ui_fileinfo.c:108
+#: src/audacious/ui_fileinfo.c:106
 msgid "Soul"
 msgstr "Sol"
 
-#: src/audacious/ui_fileinfo.c:108
+#: src/audacious/ui_fileinfo.c:106
 msgid "Punk"
 msgstr "Pank"
 
-#: src/audacious/ui_fileinfo.c:108
+#: src/audacious/ui_fileinfo.c:106
 msgid "Space"
 msgstr "Spejs"
 
-#: src/audacious/ui_fileinfo.c:109
+#: src/audacious/ui_fileinfo.c:107
 msgid "Meditative"
 msgstr "Meditaciona"
 
-#: src/audacious/ui_fileinfo.c:109
+#: src/audacious/ui_fileinfo.c:107
 msgid "Instrumental Pop"
 msgstr "Instrumentalni pop"
 
-#: src/audacious/ui_fileinfo.c:110
+#: src/audacious/ui_fileinfo.c:108
 msgid "Instrumental Rock"
 msgstr "Instrumentalni rok"
 
-#: src/audacious/ui_fileinfo.c:110
+#: src/audacious/ui_fileinfo.c:108
 msgid "Ethnic"
 msgstr "Etno"
 
-#: src/audacious/ui_fileinfo.c:110
+#: src/audacious/ui_fileinfo.c:108
 msgid "Gothic"
 msgstr "Gotska"
 
-#: src/audacious/ui_fileinfo.c:111
+#: src/audacious/ui_fileinfo.c:109
 msgid "Darkwave"
 msgstr "Crni talas"
 
-#: src/audacious/ui_fileinfo.c:111
+#: src/audacious/ui_fileinfo.c:109
 msgid "Techno-Industrial"
 msgstr "Tehno-Industrija"
 
-#: src/audacious/ui_fileinfo.c:111
+#: src/audacious/ui_fileinfo.c:109
 msgid "Electronic"
 msgstr "Elektronska"
 
-#: src/audacious/ui_fileinfo.c:112
+#: src/audacious/ui_fileinfo.c:110
 msgid "Pop-Folk"
 msgstr "Pop-Folk"
 
-#: src/audacious/ui_fileinfo.c:112
+#: src/audacious/ui_fileinfo.c:110
 msgid "Eurodance"
 msgstr "Eurodens"
 
-#: src/audacious/ui_fileinfo.c:112
+#: src/audacious/ui_fileinfo.c:110
 msgid "Dream"
 msgstr "Drim"
 
-#: src/audacious/ui_fileinfo.c:113
+#: src/audacious/ui_fileinfo.c:111
 msgid "Southern Rock"
 msgstr "Južnjački rok"
 
-#: src/audacious/ui_fileinfo.c:113
+#: src/audacious/ui_fileinfo.c:111
 msgid "Comedy"
 msgstr "Komedija"
 
-#: src/audacious/ui_fileinfo.c:113
+#: src/audacious/ui_fileinfo.c:111
 msgid "Cult"
 msgstr "Kultna"
 
-#: src/audacious/ui_fileinfo.c:114
+#: src/audacious/ui_fileinfo.c:112
 msgid "Gangsta Rap"
 msgstr "Gangsterski rep"
 
-#: src/audacious/ui_fileinfo.c:114
+#: src/audacious/ui_fileinfo.c:112
 msgid "Top 40"
 msgstr "Najpopularnijih 40"
 
-#: src/audacious/ui_fileinfo.c:114
+#: src/audacious/ui_fileinfo.c:112
 msgid "Christian Rap"
 msgstr "Hrišćanski rep"
 
-#: src/audacious/ui_fileinfo.c:115
+#: src/audacious/ui_fileinfo.c:113
 msgid "Pop/Funk"
 msgstr "Pop/Fanki"
 
-#: src/audacious/ui_fileinfo.c:115
+#: src/audacious/ui_fileinfo.c:113
 msgid "Jungle"
 msgstr "Džangl"
 
-#: src/audacious/ui_fileinfo.c:115
+#: src/audacious/ui_fileinfo.c:113
 msgid "Native American"
 msgstr "Tradicionalna američka"
 
-#: src/audacious/ui_fileinfo.c:116
+#: src/audacious/ui_fileinfo.c:114
 msgid "Cabaret"
 msgstr "Kabare"
 
-#: src/audacious/ui_fileinfo.c:116
+#: src/audacious/ui_fileinfo.c:114
 msgid "New Wave"
 msgstr "Novi talas"
 
-#: src/audacious/ui_fileinfo.c:116
+#: src/audacious/ui_fileinfo.c:114
 msgid "Psychedelic"
 msgstr "Psihodelično"
 
-#: src/audacious/ui_fileinfo.c:116
+#: src/audacious/ui_fileinfo.c:114
 msgid "Rave"
 msgstr "Rejv"
 
-#: src/audacious/ui_fileinfo.c:117
+#: src/audacious/ui_fileinfo.c:115
 msgid "Showtunes"
 msgstr "Muzika iz predstave"
 
-#: src/audacious/ui_fileinfo.c:117
+#: src/audacious/ui_fileinfo.c:115
 msgid "Trailer"
 msgstr "Trejler"
 
-#: src/audacious/ui_fileinfo.c:117
+#: src/audacious/ui_fileinfo.c:115
 msgid "Lo-Fi"
 msgstr "Lo-Fi"
 
-#: src/audacious/ui_fileinfo.c:117
+#: src/audacious/ui_fileinfo.c:115
 msgid "Tribal"
 msgstr "Plemenska"
 
-#: src/audacious/ui_fileinfo.c:118
+#: src/audacious/ui_fileinfo.c:116
 msgid "Acid Punk"
 msgstr "Asid pank"
 
-#: src/audacious/ui_fileinfo.c:118
+#: src/audacious/ui_fileinfo.c:116
 msgid "Acid Jazz"
 msgstr "Asid džez"
 
-#: src/audacious/ui_fileinfo.c:118
+#: src/audacious/ui_fileinfo.c:116
 msgid "Polka"
 msgstr "Polka"
 
-#: src/audacious/ui_fileinfo.c:118
+#: src/audacious/ui_fileinfo.c:116
 msgid "Retro"
 msgstr "Retro"
 
-#: src/audacious/ui_fileinfo.c:119
+#: src/audacious/ui_fileinfo.c:117
 msgid "Musical"
 msgstr "Muzička"
 
-#: src/audacious/ui_fileinfo.c:119
+#: src/audacious/ui_fileinfo.c:117
 msgid "Rock & Roll"
 msgstr "Rokenrol"
 
-#: src/audacious/ui_fileinfo.c:119
+#: src/audacious/ui_fileinfo.c:117
 msgid "Hard Rock"
 msgstr "Hard rok"
 
-#: src/audacious/ui_fileinfo.c:119
+#: src/audacious/ui_fileinfo.c:117
 msgid "Folk"
 msgstr "Narodna"
 
-#: src/audacious/ui_fileinfo.c:120
+#: src/audacious/ui_fileinfo.c:118
 msgid "Folk/Rock"
 msgstr "Narodna/Rok"
 
-#: src/audacious/ui_fileinfo.c:120
+#: src/audacious/ui_fileinfo.c:118
 msgid "National Folk"
 msgstr "Nacionalna"
 
-#: src/audacious/ui_fileinfo.c:120
+#: src/audacious/ui_fileinfo.c:118
 msgid "Swing"
 msgstr "Sving"
 
-#: src/audacious/ui_fileinfo.c:121
+#: src/audacious/ui_fileinfo.c:119
 msgid "Fast-Fusion"
 msgstr "Fast-Fjužn"
 
-#: src/audacious/ui_fileinfo.c:121
+#: src/audacious/ui_fileinfo.c:119
 msgid "Bebob"
 msgstr "Bibop"
 
-#: src/audacious/ui_fileinfo.c:121
+#: src/audacious/ui_fileinfo.c:119
 msgid "Latin"
 msgstr "Latino"
 
-#: src/audacious/ui_fileinfo.c:121
+#: src/audacious/ui_fileinfo.c:119
 msgid "Revival"
 msgstr "Oživljenje"
 
-#: src/audacious/ui_fileinfo.c:122
+#: src/audacious/ui_fileinfo.c:120
 msgid "Celtic"
 msgstr "Keltska"
 
-#: src/audacious/ui_fileinfo.c:122
+#: src/audacious/ui_fileinfo.c:120
 msgid "Bluegrass"
 msgstr "Blu-gras"
 
-#: src/audacious/ui_fileinfo.c:122
+#: src/audacious/ui_fileinfo.c:120
 msgid "Avantgarde"
 msgstr "Avangardna"
 
-#: src/audacious/ui_fileinfo.c:123
+#: src/audacious/ui_fileinfo.c:121
 msgid "Gothic Rock"
 msgstr "Gotski rok"
 
-#: src/audacious/ui_fileinfo.c:123
+#: src/audacious/ui_fileinfo.c:121
 msgid "Progressive Rock"
 msgstr "Progresivni rok"
 
-#: src/audacious/ui_fileinfo.c:124
+#: src/audacious/ui_fileinfo.c:122
 msgid "Psychedelic Rock"
 msgstr "Psihodelični rok"
 
-#: src/audacious/ui_fileinfo.c:124
+#: src/audacious/ui_fileinfo.c:122
 msgid "Symphonic Rock"
 msgstr "Simfonijski rok"
 
-#: src/audacious/ui_fileinfo.c:124
+#: src/audacious/ui_fileinfo.c:122
 msgid "Slow Rock"
 msgstr "Lagani rok"
 
-#: src/audacious/ui_fileinfo.c:125
+#: src/audacious/ui_fileinfo.c:123
 msgid "Big Band"
 msgstr "Big Bend"
 
-#: src/audacious/ui_fileinfo.c:125
+#: src/audacious/ui_fileinfo.c:123
 msgid "Chorus"
 msgstr "Horska"
 
-#: src/audacious/ui_fileinfo.c:125
+#: src/audacious/ui_fileinfo.c:123
 msgid "Easy Listening"
 msgstr "Laka za slušanje"
 
-#: src/audacious/ui_fileinfo.c:126
+#: src/audacious/ui_fileinfo.c:124
 msgid "Acoustic"
 msgstr "Akustična"
 
-#: src/audacious/ui_fileinfo.c:126
+#: src/audacious/ui_fileinfo.c:124
 msgid "Humour"
 msgstr "Humor"
 
-#: src/audacious/ui_fileinfo.c:126
+#: src/audacious/ui_fileinfo.c:124
 msgid "Speech"
 msgstr "Govor"
 
-#: src/audacious/ui_fileinfo.c:126
+#: src/audacious/ui_fileinfo.c:124
 msgid "Chanson"
 msgstr "Šansona"
 
-#: src/audacious/ui_fileinfo.c:127
+#: src/audacious/ui_fileinfo.c:125
 msgid "Opera"
 msgstr "Opera"
 
-#: src/audacious/ui_fileinfo.c:127
+#: src/audacious/ui_fileinfo.c:125
 msgid "Chamber Music"
 msgstr "Kamerna muzika"
 
-#: src/audacious/ui_fileinfo.c:127
+#: src/audacious/ui_fileinfo.c:125
 msgid "Sonata"
 msgstr "Sonata"
 
-#: src/audacious/ui_fileinfo.c:127
+#: src/audacious/ui_fileinfo.c:125
 msgid "Symphony"
 msgstr "Simfonija"
 
-#: src/audacious/ui_fileinfo.c:128
+#: src/audacious/ui_fileinfo.c:126
 msgid "Booty Bass"
 msgstr "Buti Bas"
 
-#: src/audacious/ui_fileinfo.c:128
+#: src/audacious/ui_fileinfo.c:126
 msgid "Primus"
 msgstr "Primus"
 
-#: src/audacious/ui_fileinfo.c:128
+#: src/audacious/ui_fileinfo.c:126
 msgid "Porn Groove"
 msgstr "Erotska"
 
-#: src/audacious/ui_fileinfo.c:129
+#: src/audacious/ui_fileinfo.c:127
 msgid "Satire"
 msgstr "Satirična"
 
-#: src/audacious/ui_fileinfo.c:129
+#: src/audacious/ui_fileinfo.c:127
 msgid "Slow Jam"
 msgstr "Lagani džem"
 
-#: src/audacious/ui_fileinfo.c:129
+#: src/audacious/ui_fileinfo.c:127
 msgid "Club"
 msgstr "Klubska"
 
-#: src/audacious/ui_fileinfo.c:129
+#: src/audacious/ui_fileinfo.c:127
 msgid "Tango"
 msgstr "Tango"
 
-#: src/audacious/ui_fileinfo.c:130
+#: src/audacious/ui_fileinfo.c:128
 msgid "Samba"
 msgstr "Samba"
 
-#: src/audacious/ui_fileinfo.c:130
+#: src/audacious/ui_fileinfo.c:128
 msgid "Folklore"
 msgstr "Folklor"
 
-#: src/audacious/ui_fileinfo.c:130
+#: src/audacious/ui_fileinfo.c:128
 msgid "Ballad"
 msgstr "Balada"
 
-#: src/audacious/ui_fileinfo.c:130
+#: src/audacious/ui_fileinfo.c:128
 msgid "Power Ballad"
 msgstr "Brža balada"
 
-#: src/audacious/ui_fileinfo.c:131
+#: src/audacious/ui_fileinfo.c:129
 msgid "Rhythmic Soul"
 msgstr "Ritmični soul"
 
-#: src/audacious/ui_fileinfo.c:131
+#: src/audacious/ui_fileinfo.c:129
 msgid "Freestyle"
 msgstr "Fristajl"
 
-#: src/audacious/ui_fileinfo.c:131
+#: src/audacious/ui_fileinfo.c:129
 msgid "Duet"
 msgstr "Duet"
 
-#: src/audacious/ui_fileinfo.c:132
+#: src/audacious/ui_fileinfo.c:130
 msgid "Punk Rock"
 msgstr "Pank rok"
 
-#: src/audacious/ui_fileinfo.c:132
+#: src/audacious/ui_fileinfo.c:130
 msgid "Drum Solo"
 msgstr "Solo bubnjevi"
 
-#: src/audacious/ui_fileinfo.c:132
+#: src/audacious/ui_fileinfo.c:130
 msgid "A Cappella"
 msgstr "A kapela"
 
-#: src/audacious/ui_fileinfo.c:133
+#: src/audacious/ui_fileinfo.c:131
 msgid "Euro-House"
 msgstr "Euro-Haus"
 
-#: src/audacious/ui_fileinfo.c:133
+#: src/audacious/ui_fileinfo.c:131
 msgid "Dance Hall"
 msgstr "Dens"
 
-#: src/audacious/ui_fileinfo.c:133
+#: src/audacious/ui_fileinfo.c:131
 msgid "Goa"
 msgstr "Goa"
 
-#: src/audacious/ui_fileinfo.c:134
+#: src/audacious/ui_fileinfo.c:132
 msgid "Drum & Bass"
 msgstr "Dramenbejs"
 
-#: src/audacious/ui_fileinfo.c:134
+#: src/audacious/ui_fileinfo.c:132
 msgid "Club-House"
 msgstr "Klab-Haus"
 
-#: src/audacious/ui_fileinfo.c:134
+#: src/audacious/ui_fileinfo.c:132
 msgid "Hardcore"
 msgstr "Hardkor"
 
-#: src/audacious/ui_fileinfo.c:135
+#: src/audacious/ui_fileinfo.c:133
 msgid "Terror"
 msgstr "Teror"
 
-#: src/audacious/ui_fileinfo.c:135
+#: src/audacious/ui_fileinfo.c:133
 msgid "Indie"
 msgstr "Indi"
 
-#: src/audacious/ui_fileinfo.c:135
+#: src/audacious/ui_fileinfo.c:133
 msgid "BritPop"
 msgstr "BritPop"
 
-#: src/audacious/ui_fileinfo.c:135
+#: src/audacious/ui_fileinfo.c:133
 msgid "Negerpunk"
 msgstr "Nigerpank"
 
-#: src/audacious/ui_fileinfo.c:136
+#: src/audacious/ui_fileinfo.c:134
 msgid "Polsk Punk"
 msgstr "Poljski pank"
 
-#: src/audacious/ui_fileinfo.c:136
+#: src/audacious/ui_fileinfo.c:134
 msgid "Beat"
 msgstr "Bit"
 
-#: src/audacious/ui_fileinfo.c:136
+#: src/audacious/ui_fileinfo.c:134
 msgid "Christian Gangsta Rap"
 msgstr "Hrišćanski gangsterski rep"
 
-#: src/audacious/ui_fileinfo.c:137
+#: src/audacious/ui_fileinfo.c:135
 msgid "Heavy Metal"
 msgstr "Hevi metal"
 
-#: src/audacious/ui_fileinfo.c:137
+#: src/audacious/ui_fileinfo.c:135
 msgid "Black Metal"
 msgstr "Crni metal"
 
-#: src/audacious/ui_fileinfo.c:137
+#: src/audacious/ui_fileinfo.c:135
 msgid "Crossover"
 msgstr "Prelazna"
 
-#: src/audacious/ui_fileinfo.c:138
+#: src/audacious/ui_fileinfo.c:136
 msgid "Contemporary Christian"
 msgstr "Savremena hrišćanska"
 
-#: src/audacious/ui_fileinfo.c:138
+#: src/audacious/ui_fileinfo.c:136
 msgid "Christian Rock"
 msgstr "Hrišćanski rok"
 
-#: src/audacious/ui_fileinfo.c:139
+#: src/audacious/ui_fileinfo.c:137
 msgid "Merengue"
 msgstr "Miringva"
 
-#: src/audacious/ui_fileinfo.c:139
+#: src/audacious/ui_fileinfo.c:137
 msgid "Salsa"
 msgstr "Salsa"
 
-#: src/audacious/ui_fileinfo.c:139
+#: src/audacious/ui_fileinfo.c:137
 msgid "Thrash Metal"
 msgstr "Treš metal"
 
-#: src/audacious/ui_fileinfo.c:140
+#: src/audacious/ui_fileinfo.c:138
 msgid "Anime"
 msgstr "Anime"
 
-#: src/audacious/ui_fileinfo.c:140
+#: src/audacious/ui_fileinfo.c:138
 msgid "JPop"
 msgstr "DžejPop"
 
-#: src/audacious/ui_fileinfo.c:140
+#: src/audacious/ui_fileinfo.c:138
 msgid "Synthpop"
 msgstr "Sintpop"
 
-#: src/audacious/ui_fileinfo.c:218 src/audacious/ui_fileinfo.c:553
-#: src/audacious/ui_fileinfo.c:556 src/audacious/ui_fileinfo.c:559
+#: src/audacious/ui_fileinfo.c:216 src/audacious/ui_fileinfo.c:550
+#: src/audacious/ui_fileinfo.c:553 src/audacious/ui_fileinfo.c:556
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">nedostupno</span>"
 
-#: src/audacious/ui_fileinfo.c:332
+#: src/audacious/ui_fileinfo.c:330
 msgid "Metadata updated successfully"
 msgstr "Meta podaci su uspešno osveženi"
 
-#: src/audacious/ui_fileinfo.c:338
+#: src/audacious/ui_fileinfo.c:336
 msgid "Metadata updating failed"
 msgstr "Osvežavanje meta podataka neuspešno"
 
-#: src/audacious/ui_fileinfo.c:490
+#: src/audacious/ui_fileinfo.c:488
 msgid "Track Information"
 msgstr "Informacije o numeri"
 
-#: src/audacious/ui_fileinfo.c:523
+#: src/audacious/ui_fileinfo.c:520
 msgid "<span size=\"small\">General</span>"
 msgstr "<span size=\"small\">Opšte</span>"
 
-#: src/audacious/ui_fileinfo.c:543
+#: src/audacious/ui_fileinfo.c:540
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Format:</span>"
 
-#: src/audacious/ui_fileinfo.c:546
+#: src/audacious/ui_fileinfo.c:543
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kvalitet:</span>"
 
-#: src/audacious/ui_fileinfo.c:549
+#: src/audacious/ui_fileinfo.c:546
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Brzina u bitovima:</span>"
 
-#: src/audacious/ui_fileinfo.c:582
+#: src/audacious/ui_fileinfo.c:579
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Naslov</span>"
 
-#: src/audacious/ui_fileinfo.c:594
+#: src/audacious/ui_fileinfo.c:591
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Izvođač</span>"
 
-#: src/audacious/ui_fileinfo.c:606
+#: src/audacious/ui_fileinfo.c:603
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/audacious/ui_fileinfo.c:618
+#: src/audacious/ui_fileinfo.c:615
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Komentar</span>"
 
-#: src/audacious/ui_fileinfo.c:630
+#: src/audacious/ui_fileinfo.c:627
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Žanr</span>"
 
-#: src/audacious/ui_fileinfo.c:661
+#: src/audacious/ui_fileinfo.c:658
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Godina</span>"
 
-#: src/audacious/ui_fileinfo.c:674
+#: src/audacious/ui_fileinfo.c:671
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Broj numere</span>"
 
-#: src/audacious/ui_fileinfo.c:687
+#: src/audacious/ui_fileinfo.c:684
 msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Lokacija</span>"
 
-#: src/audacious/ui_fileinfo.c:707
+#: src/audacious/ui_fileinfo.c:704
 msgid "<span size=\"small\">Raw Metadata</span>"
 msgstr "<span size=\"small\">Sirovi metapodaci</span>"
 
-#: src/audacious/ui_fileinfo.c:724
+#: src/audacious/ui_fileinfo.c:721
 msgid "Key"
 msgstr "Ključ"
 
-#: src/audacious/ui_fileinfo.c:737
+#: src/audacious/ui_fileinfo.c:734
 msgid "Value"
 msgstr "Vrednost"
 
-#: src/audacious/ui_fileinfo.c:827
+#: src/audacious/ui_fileinfo.c:824
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/audacious/ui_fileinfopopup.c:253 src/audacious/ui_fileinfopopup.c:365
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_fileinfopopup.c:254 src/audacious/ui_fileinfopopup.c:366
+#: src/audacious/ui_preferences.c:140
 msgid "Title"
 msgstr "Naslov"
 
-#: src/audacious/ui_fileinfopopup.c:256 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_fileinfopopup.c:257 src/audacious/ui_preferences.c:138
 msgid "Artist"
 msgstr "Izvođač"
 
-#: src/audacious/ui_fileinfopopup.c:259 src/audacious/ui_preferences.c:144
+#: src/audacious/ui_fileinfopopup.c:260 src/audacious/ui_preferences.c:139
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_fileinfopopup.c:262 src/audacious/ui_preferences.c:147
+#: src/audacious/ui_fileinfopopup.c:263 src/audacious/ui_preferences.c:142
 msgid "Genre"
 msgstr "Žanr"
 
-#: src/audacious/ui_fileinfopopup.c:265 src/audacious/ui_preferences.c:151
+#: src/audacious/ui_fileinfopopup.c:266 src/audacious/ui_preferences.c:146
 msgid "Year"
 msgstr "Godina"
 
-#: src/audacious/ui_fileinfopopup.c:268
+#: src/audacious/ui_fileinfopopup.c:269
 msgid "Track Number"
 msgstr "Broj numere"
 
-#: src/audacious/ui_fileinfopopup.c:272
+#: src/audacious/ui_fileinfopopup.c:273
 msgid "Track Length"
 msgstr "Dužina numere"
 
-#: src/audacious/ui_fileinfopopup.c:374 src/audacious/ui_preferences.c:148
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:505
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: src/audacious/ui_fileopener.c:136
-msgid "Open Files"
-msgstr "Otvori datoteke"
+#: src/audacious/ui_headless.c:132
+#, fuzzy, c-format
+msgid "Available Plugin Preferences:\n"
+msgstr "Postavke izlaznog dodatka"
 
-#: src/audacious/ui_fileopener.c:136
-msgid "Add Files"
-msgstr "Dodaj datoteke"
-
-#: src/audacious/ui_fileopener.c:138
-msgid "Close dialog on Open"
-msgstr "Zatvori okvir klikom na Otvori"
-
-#: src/audacious/ui_fileopener.c:138
-msgid "Close dialog on Add"
-msgstr "Zatvori okvir klikom na Dodaj"
-
-#: src/audacious/ui_headless.c:37
+#: src/audacious/ui_headless.c:150
 msgid "Headless Interface"
 msgstr ""
-
-#: src/audacious/ui_jumptotrack.c:140
-msgid "Un_queue"
-msgstr "Izbaci iz _reda"
-
-#: src/audacious/ui_jumptotrack.c:142 src/audacious/ui_jumptotrack.c:578
-msgid "_Queue"
-msgstr "Stavi u _red"
-
-#: src/audacious/ui_jumptotrack.c:464
-msgid "Jump to Track"
-msgstr "Pređi na numeru"
-
-#: src/audacious/ui_jumptotrack.c:507
-msgid "Filter: "
-msgstr "Filter: "
-
-#: src/audacious/ui_jumptotrack.c:508
-msgid "_Filter:"
-msgstr "_Filter:"
-
-#: src/audacious/ui_jumptotrack.c:526
-msgid "Remember"
-msgstr "Zapamti"
-
-#: src/audacious/ui_jumptotrack.c:535
-#, fuzzy
-msgid "Clea_r"
-msgstr "Obriši A-B"
-
-#: src/audacious/ui_jumptotrack.c:570
-msgid "Close on Jump"
-msgstr "Zatvori posle skoka"
 
 #: src/audacious/ui_misc.c:48
 #, fuzzy
@@ -1230,139 +1102,127 @@ msgid ""
 "not know about otherwise."
 msgstr ""
 
-#: src/audacious/ui_playlist_manager.c:364
-msgid "Playlist Manager"
-msgstr "Menadžer liste numera"
-
-#: src/audacious/ui_playlist_manager.c:403 src/audacious/ui_preferences.c:136
-msgid "Playlist"
-msgstr "Lista numera"
-
-#: src/audacious/ui_playlist_manager.c:410
-msgid "Entries"
-msgstr "Stavke"
-
-#: src/audacious/ui_playlist_manager.c:425
-msgid "_Rename"
-msgstr "_Preimenuj"
-
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:127
 msgid "Audio"
 msgstr "Audio"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:128
 msgid "Replay Gain"
 msgstr "Replay Gain"
 
-#: src/audacious/ui_preferences.c:134
+#: src/audacious/ui_preferences.c:129
 msgid "Connectivity"
 msgstr "Povezanost"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:130
 msgid "Playback"
 msgstr "Reprodukovanje"
 
-#: src/audacious/ui_preferences.c:137
+#: src/audacious/ui_preferences.c:131
+msgid "Playlist"
+msgstr "Lista numera"
+
+#: src/audacious/ui_preferences.c:132
 msgid "Plugins"
 msgstr "Dodaci"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:141
 msgid "Tracknumber"
 msgstr "Broj numere"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:144
 msgid "Filepath"
 msgstr "Putanja datoteke"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:145
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:147
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:148
 msgid "Codec"
 msgstr "Kodek"
 
-#: src/audacious/ui_preferences.c:154
+#: src/audacious/ui_preferences.c:149
 msgid "Quality"
 msgstr "Kvalitet"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:154
 msgid "None"
 msgstr "Nijedan"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:155
 msgid "Japanese"
 msgstr "Japanski"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:156
 msgid "Taiwanese"
 msgstr "Tajvanski"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:157
 msgid "Chinese"
 msgstr "Kineski"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:158
 msgid "Korean"
 msgstr "Koreanski"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:159
 msgid "Russian"
 msgstr "Ruski"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:160
 msgid "Greek"
 msgstr "Grčki"
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:161
 msgid "Hebrew"
 msgstr "Jevrejski"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:162
 msgid "Turkish"
 msgstr "Turski"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:163
 msgid "Arabic"
 msgstr "Arapski"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:164
 msgid "Universal"
 msgstr "Univerzalan"
 
-#: src/audacious/ui_preferences.c:182
+#: src/audacious/ui_preferences.c:175
 msgid "Best Sinc Interpolation"
 msgstr "Najbolja Sinc interpolacija"
 
-#: src/audacious/ui_preferences.c:183
+#: src/audacious/ui_preferences.c:176
 msgid "Medium Sinc Interpolation"
 msgstr "Srednja Sinc interpolacija"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:177
 msgid "Fastest Sinc Interpolation"
 msgstr "Nabrža Sinc interpolacija"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:178
 msgid "ZOH Interpolation"
 msgstr "ZOH interpolacija"
 
-#: src/audacious/ui_preferences.c:186
+#: src/audacious/ui_preferences.c:179
 msgid "Linear Interpolation"
 msgstr "Linearna interpolacija"
 
-#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:194 src/audacious/ui_preferences.c:197
 msgid "Sampling Rate [Hz]:"
 msgstr "Učestalost odabiranja uzoraka [Hz]:"
 
-#: src/audacious/ui_preferences.c:207 src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
 msgid "Interpolation Engine:"
 msgstr "Interpolaciona mašina:"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:200
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
@@ -1373,27 +1233,15 @@ msgstr ""
 "Ovo bi trebala da bude maksimalna podržana učestalost odabiranja uzoraka\n"
 "muzičke kartice ili izlaznog dodatka.</span>"
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:205
 msgid "<b>Format Detection</b>"
 msgstr "<b>Prepoznavanje formata</b>"
 
-#: src/audacious/ui_preferences.c:218
-msgid "Detect file formats on demand, instead of immediately."
-msgstr "Prepoznaj format datoteke na zahtev, umesto odma."
-
-#: src/audacious/ui_preferences.c:219
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-"Ako je potvrđeno, Audacious će prepoznati format datoteke na zahtev. Ovo "
-"može dovesti do zbrkanije liste numera, ali obezbeđuje veći dobitak u brzini."
-
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:206
 msgid "Detect file formats by extension."
 msgstr "Prepoznaj format datoteke na osnovu oznake tipa."
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:207
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
@@ -1401,15 +1249,15 @@ msgstr ""
 "Ako je potvrđeno, Audacious će prepoznati format datoteke prema oznaci tipa. "
 "Samo datoteke sa podržanim oznakama tipa će biti učitane."
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:208
 msgid "<b>Bit Depth</b>"
 msgstr "<b>Dubina bita</b>"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:209
 msgid "Output bit depth:"
 msgstr "Dubina bita izlaza:"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:210
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
@@ -1419,23 +1267,23 @@ msgstr ""
 "Ovo bi trebala da bude maksimalna podržana dubina bita\n"
 "muzičke kartice ili izlaznog dodatka."
 
-#: src/audacious/ui_preferences.c:227
+#: src/audacious/ui_preferences.c:213
 msgid "<b>Sampling Rate Converter</b>"
 msgstr "<b>Pretvarač učestalosti odabiranja uzoraka</b>"
 
-#: src/audacious/ui_preferences.c:229 src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:215 src/audacious/ui_preferences.c:217
 msgid "Enable Sampling Rate Converter"
 msgstr "Uključi pretvarač učestalosti odabiranja uzoraka"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:220
 msgid "<b>Volume Control</b>"
 msgstr "<b>Kontrola jačine zvuka</b>"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:221
 msgid "Use software volume control"
 msgstr "Koristi softversku kontrolu zvuka"
 
-#: src/audacious/ui_preferences.c:237
+#: src/audacious/ui_preferences.c:223
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
@@ -1443,15 +1291,15 @@ msgstr ""
 "Koristi softversku kontrolu zvuka. Ovo može biti korisno u situacijama gde "
 "vaš audio sistem ne podržava kontrolu jačine zvuka reprodukcije."
 
-#: src/audacious/ui_preferences.c:238
+#: src/audacious/ui_preferences.c:224
 msgid "<b>Advanced</b>"
 msgstr "<b>Napredno</b>"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:225
 msgid "Bypass all of signal processing if possible"
 msgstr "Zaobiđi sve obrade signala, ako je moguće"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:226
 msgid ""
 "Try to pass input plugin's output directly to output plugin, if the latter "
 "supports format produced by input plugin. If it's true, all signal "
@@ -1463,28 +1311,28 @@ msgstr ""
 "obrada signala će biti isključena (npr. DSP dodaci, ekvilajzer, Replay Gain "
 "i ostala softverska kontrola jačine zvuka)."
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:229
 msgid "Use fast floating-point conversion (16-bit output only)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:248
+#: src/audacious/ui_preferences.c:234
 msgid "Preamp:"
 msgstr "Predpojačalo:"
 
-#: src/audacious/ui_preferences.c:248 src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:234 src/audacious/ui_preferences.c:235
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:235
 msgid "Default gain:"
 msgstr "Podrazumevano pojačanje:"
 
-#: src/audacious/ui_preferences.c:249
+#: src/audacious/ui_preferences.c:235
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 "Ovo pojačanje će se koristiti ako datoteka ne sadrži Replay Gain metapodatke."
 
-#: src/audacious/ui_preferences.c:250
+#: src/audacious/ui_preferences.c:236
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
@@ -1492,71 +1340,71 @@ msgstr ""
 "<span size=\"small\">Zapamtite da najefikasniji način da sprečite odsecanje "
 "signala je da ne koristite pozitivne vrednosti iznad.</span>"
 
-#: src/audacious/ui_preferences.c:254
+#: src/audacious/ui_preferences.c:240
 msgid "<b>Replay Gain configuration</b>"
 msgstr "<b>Replay Gain konfiguracija</b>"
 
-#: src/audacious/ui_preferences.c:255
+#: src/audacious/ui_preferences.c:241
 msgid "Enable Replay Gain"
 msgstr "Uključi Replay Gain"
 
-#: src/audacious/ui_preferences.c:256
+#: src/audacious/ui_preferences.c:242
 msgid "<b>Replay Gain mode</b>"
 msgstr "<b>Replay Gain režim</b>"
 
-#: src/audacious/ui_preferences.c:257
+#: src/audacious/ui_preferences.c:243
 msgid "Album gain/peak"
 msgstr "Pojačanje/vrhunac albuma"
 
-#: src/audacious/ui_preferences.c:258 src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:244 src/audacious/ui_preferences.c:1389
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Ostalo</b>"
 
-#: src/audacious/ui_preferences.c:259
+#: src/audacious/ui_preferences.c:245
 msgid "Enable peak info clipping prevention"
 msgstr "Uključi zaštitu od odsecanja vrhunaca"
 
-#: src/audacious/ui_preferences.c:260
+#: src/audacious/ui_preferences.c:246
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr "Koristi vrednost vrhunca iz Replay Gain-a kao zaštitu od odsecanja"
 
-#: src/audacious/ui_preferences.c:261
+#: src/audacious/ui_preferences.c:247
 msgid "Dynamically adjust scale factor to prevent clipping"
 msgstr "Dinamički podesi faktor skaliranja da bi se sprečilo odsecanje"
 
-#: src/audacious/ui_preferences.c:262
+#: src/audacious/ui_preferences.c:248
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
 msgstr "Ako dođe do odsecanja, smanji faktor skaliranja"
 
-#: src/audacious/ui_preferences.c:267
+#: src/audacious/ui_preferences.c:253
 msgid "Proxy hostname:"
 msgstr "Ime domaćina posrednika:"
 
-#: src/audacious/ui_preferences.c:268
+#: src/audacious/ui_preferences.c:254
 msgid "Proxy port:"
 msgstr "Posrednički port:"
 
-#: src/audacious/ui_preferences.c:272
+#: src/audacious/ui_preferences.c:258
 msgid "Proxy username:"
 msgstr "Posredničko korisničko ime:"
 
-#: src/audacious/ui_preferences.c:273
+#: src/audacious/ui_preferences.c:259
 msgid "Proxy password:"
 msgstr "Posrednička lozinka:"
 
-#: src/audacious/ui_preferences.c:277
+#: src/audacious/ui_preferences.c:263
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Konfiguracija posrednika</b>"
 
-#: src/audacious/ui_preferences.c:278
+#: src/audacious/ui_preferences.c:264
 msgid "Enable proxy usage"
 msgstr "Uključi korišćenje posrednika"
 
-#: src/audacious/ui_preferences.c:280
+#: src/audacious/ui_preferences.c:266
 msgid "Use authentication with proxy"
 msgstr "Koristi proveru identiteta sa posrednikom"
 
-#: src/audacious/ui_preferences.c:282
+#: src/audacious/ui_preferences.c:268
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -1564,15 +1412,15 @@ msgstr ""
 "<span size=\"small\">Menjanje ovih podešavanja će zahtevati ponovno "
 "pokretanje Audacious-a.</span>"
 
-#: src/audacious/ui_preferences.c:286
+#: src/audacious/ui_preferences.c:272
 msgid "<b>Playback</b>"
 msgstr "<b>Reprodukovanje</b>"
 
-#: src/audacious/ui_preferences.c:287
+#: src/audacious/ui_preferences.c:273
 msgid "Continue playback on startup"
 msgstr "Nastavi reprodukovanje na početku"
 
-#: src/audacious/ui_preferences.c:288
+#: src/audacious/ui_preferences.c:274
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
@@ -1580,23 +1428,23 @@ msgstr ""
 "Kad se Audacious pokrene, automatski nastavi da reprodukuje od trenutka gde "
 "smo zaustavili puštanje."
 
-#: src/audacious/ui_preferences.c:289
+#: src/audacious/ui_preferences.c:275
 msgid "Don't advance in the playlist"
 msgstr "Nemoj napredovati u listi numera"
 
-#: src/audacious/ui_preferences.c:290
+#: src/audacious/ui_preferences.c:276
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "Kad se završi pesma, nemoj automatski preći na sledeću."
 
-#: src/audacious/ui_preferences.c:294
+#: src/audacious/ui_preferences.c:280
 msgid "Auto character encoding detector for:"
 msgstr "Auto-prepoznavanje kodiranja karaktera za:"
 
-#: src/audacious/ui_preferences.c:302
+#: src/audacious/ui_preferences.c:288
 msgid "Fallback character encodings:"
 msgstr "Rezervno kodiranje karaktera:"
 
-#: src/audacious/ui_preferences.c:302
+#: src/audacious/ui_preferences.c:288
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1608,39 +1456,31 @@ msgstr ""
 "isključeno, kodiranja u ovoj listi će biti kandidati za šifrovanje meta-"
 "poataka, i rezervna konverzija iz ovih kodiranja u UTF-8 će biti pokušana."
 
-#: src/audacious/ui_preferences.c:306
+#: src/audacious/ui_preferences.c:292
 msgid "<b>Metadata</b>"
 msgstr "<b>Meta-podaci</b>"
 
-#: src/audacious/ui_preferences.c:307
-msgid "Load metadata from playlists and files"
-msgstr "Učitaj meta-podatke iz lista numera i datoteka"
-
-#: src/audacious/ui_preferences.c:308
-msgid "Load metadata (tag information) from music files."
-msgstr "Učitaj meta-podatke (informacije oznaka) iz muzičkih datoteka."
-
-#: src/audacious/ui_preferences.c:471
+#: src/audacious/ui_preferences.c:475
 msgid "Enabled"
 msgstr "Uključen"
 
-#: src/audacious/ui_preferences.c:487
+#: src/audacious/ui_preferences.c:491
 msgid "Description"
 msgstr "Opis"
 
-#: src/audacious/ui_preferences.c:869
+#: src/audacious/ui_preferences.c:1002
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:1173
+#: src/audacious/ui_preferences.c:1308
 msgid "Popup Information Settings"
 msgstr "Podešavanja iskačućih informacija"
 
-#: src/audacious/ui_preferences.c:1182
+#: src/audacious/ui_preferences.c:1317
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Učitavanje naslovne slike</b>"
 
-#: src/audacious/ui_preferences.c:1187
+#: src/audacious/ui_preferences.c:1322
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1649,91 +1489,91 @@ msgstr ""
 "Dok traži naslovne slike albuma, Audacious traži određene reči u imenu "
 "datoteke. Možete navesti te reči dole u listi, razdvojene zapetama."
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1339
 msgid "Exclude:"
 msgstr "Isključi:"
 
-#: src/audacious/ui_preferences.c:1211
+#: src/audacious/ui_preferences.c:1346
 msgid "Include:"
 msgstr "Uključi:"
 
-#: src/audacious/ui_preferences.c:1228
+#: src/audacious/ui_preferences.c:1363
 msgid "Recursively search for cover"
 msgstr "Rekurzivno traži naslovnu sliku"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1373
 msgid "Search depth: "
 msgstr "Dubina pretrage: "
 
-#: src/audacious/ui_preferences.c:1251
+#: src/audacious/ui_preferences.c:1386
 msgid "Use per-file cover"
 msgstr "Koristi jednu naslovnu sliku po datoteci"
 
-#: src/audacious/ui_preferences.c:1263
+#: src/audacious/ui_preferences.c:1398
 msgid "Show Progress bar for the current track"
 msgstr "Prikaži indikator napredovanja za tekuću numeru"
 
-#: src/audacious/ui_preferences.c:1273
+#: src/audacious/ui_preferences.c:1408
 msgid "Delay until filepopup comes up: "
 msgstr "Zakašnjenje pojavljivanja iskačućeg proz. datoteke: "
 
-#: src/audacious/ui_preferences.c:1757
+#: src/audacious/ui_preferences.c:1922
 msgid "<b>Song Display</b>"
 msgstr "<b>Prikaz pesme</b>"
 
-#: src/audacious/ui_preferences.c:1766
+#: src/audacious/ui_preferences.c:1931
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1952
 msgid "Show information about titlestring format"
 msgstr "Prikaži informacije o formatu znakovnog niza naslova"
 
-#: src/audacious/ui_preferences.c:1798
+#: src/audacious/ui_preferences.c:1963
 msgid "TITLE"
 msgstr "NASLOV"
 
-#: src/audacious/ui_preferences.c:1799
+#: src/audacious/ui_preferences.c:1964
 msgid "ARTIST - TITLE"
 msgstr "IZVOĐAČ - NASLOV"
 
-#: src/audacious/ui_preferences.c:1800
+#: src/audacious/ui_preferences.c:1965
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "IZVOĐAČ - ALBUM - NASLOV"
 
-#: src/audacious/ui_preferences.c:1801
+#: src/audacious/ui_preferences.c:1966
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "IZVOĐAČ - ALBUM - BROJ. NASLOV"
 
-#: src/audacious/ui_preferences.c:1802
+#: src/audacious/ui_preferences.c:1967
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "IZVOĐAČ [ ALBUM ] - BROJ. NASLOV"
 
-#: src/audacious/ui_preferences.c:1803
+#: src/audacious/ui_preferences.c:1968
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - NASLOV"
 
-#: src/audacious/ui_preferences.c:1804
+#: src/audacious/ui_preferences.c:1969
 msgid "Custom"
 msgstr "Sopstveni"
 
-#: src/audacious/ui_preferences.c:1811
+#: src/audacious/ui_preferences.c:1976
 msgid "Custom string:"
 msgstr "Sopstveni znakovni niz:"
 
-#: src/audacious/ui_preferences.c:1818
+#: src/audacious/ui_preferences.c:1983
 msgid "Title format:"
 msgstr "Format naslova:"
 
-#: src/audacious/ui_preferences.c:1829
+#: src/audacious/ui_preferences.c:1994
 msgid "<b>Popup Information</b>"
 msgstr "<b>Iskačuće informacije</b>"
 
-#: src/audacious/ui_preferences.c:1844
+#: src/audacious/ui_preferences.c:2009
 msgid "Show popup information for playlist entries"
 msgstr "Prikaži iskačuće informacije za stavke u listi numera"
 
-#: src/audacious/ui_preferences.c:1846
+#: src/audacious/ui_preferences.c:2011
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -1743,112 +1583,173 @@ msgstr ""
 "listi numera. Prozor prikazuje ime pesme, ime albuma, žanr, godinu "
 "izdavanja, broj numere, dužinu numere i sliku."
 
-#: src/audacious/ui_preferences.c:1851
+#: src/audacious/ui_preferences.c:2016
 msgid "Edit settings for popup information"
 msgstr "Uredi podešavanja za iskačuće informacije"
 
-#: src/audacious/ui_preferences.c:1931
+#: src/audacious/ui_preferences.c:2096
 msgid "<b>Audio System</b>"
 msgstr "<b>Audio sistem</b>"
 
-#: src/audacious/ui_preferences.c:1948
+#: src/audacious/ui_preferences.c:2113
 msgid "Buffer size:"
 msgstr "Veličina bafera:"
 
-#: src/audacious/ui_preferences.c:1965
+#: src/audacious/ui_preferences.c:2131
 msgid "Current output plugin:"
 msgstr "Tekući izlazni dodatak:"
 
-#: src/audacious/ui_preferences.c:1994
+#: src/audacious/ui_preferences.c:2160
 msgid "Output Plugin Preferences"
 msgstr "Postavke izlaznog dodatka"
 
-#: src/audacious/ui_preferences.c:2011
+#: src/audacious/ui_preferences.c:2177
 msgid "Output Plugin Information"
 msgstr "Informacije o izlaznom dodatku"
 
-#: src/audacious/ui_preferences.c:2116
+#: src/audacious/ui_preferences.c:2283
 msgid "_Decoder list:"
 msgstr "Lista _dekodera:"
 
-#: src/audacious/ui_preferences.c:2146
+#: src/audacious/ui_preferences.c:2318
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Dekoderi</b></span>"
 
-#: src/audacious/ui_preferences.c:2159
+#: src/audacious/ui_preferences.c:2331
 msgid "_General plugin list:"
 msgstr "_Opšta lista dodataka:"
 
-#: src/audacious/ui_preferences.c:2189
+#: src/audacious/ui_preferences.c:2361
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Opšte</b></span>"
 
-#: src/audacious/ui_preferences.c:2201
+#: src/audacious/ui_preferences.c:2373
 msgid "_Visualization plugin list:"
 msgstr "Lista _vizuelizacionih dodataka:"
 
-#: src/audacious/ui_preferences.c:2231
+#: src/audacious/ui_preferences.c:2403
 msgid "<b>Visualization</b>"
 msgstr "<b>Vizuelizacija</b>"
 
-#: src/audacious/ui_preferences.c:2243
-msgid "_Effect plugin list:"
-msgstr "Lista _efektnih dodataka:"
+#: src/audacious/ui_preferences.c:2415
+msgid "Effect plugins (for 16-bit output only):"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:2273
+#: src/audacious/ui_preferences.c:2444
 msgid "<b>Effects</b>"
 msgstr "<b>Efekti</b>"
 
-#: src/audacious/ui_preferences.c:2406
+#: src/audacious/ui_preferences.c:2646
 msgid "Audacious Preferences"
 msgstr "Audacious podešavanja"
 
-#: src/audacious/ui_urlopener.c:85
-msgid "Add/Open URL Dialog"
-msgstr "Okvir dodaj/otvori URL"
-
-#: src/audacious/ui_urlopener.c:191
-msgid "Enter location to play:"
-msgstr "Unesite lokaciju za reprodukovanje:"
-
-#: src/audacious/util.c:1006
+#: src/audacious/util.c:708
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nije moguće napraviti direktorijum (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:187
+#: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"
 msgstr "  (neispravan UTF-8)"
 
-#: src/libeggsmclient/eggdesktopfile.c:139
+#: src/libaudgui/ui_about.c:126 src/libaudgui/ui_credits.c:138
+msgid "About Audacious"
+msgstr "O Audacious-u"
+
+#: src/libaudgui/ui_about.c:175 src/libaudgui/ui_credits.c:181
+msgid "Credits"
+msgstr "Zasluge"
+
+#: src/libaudgui/ui_credits.c:185
+msgid "Translators"
+msgstr "Prevodioci"
+
+#: src/libaudgui/ui_fileopener.c:149
+msgid "Open Files"
+msgstr "Otvori datoteke"
+
+#: src/libaudgui/ui_fileopener.c:149
+msgid "Add Files"
+msgstr "Dodaj datoteke"
+
+#: src/libaudgui/ui_fileopener.c:151
+msgid "Close dialog on Open"
+msgstr "Zatvori okvir klikom na Otvori"
+
+#: src/libaudgui/ui_fileopener.c:151
+msgid "Close dialog on Add"
+msgstr "Zatvori okvir klikom na Dodaj"
+
+#: src/libaudgui/ui_jumptotrack.c:142
+msgid "Un_queue"
+msgstr "Izbaci iz _reda"
+
+#: src/libaudgui/ui_jumptotrack.c:144 src/libaudgui/ui_jumptotrack.c:521
+msgid "_Queue"
+msgstr "Stavi u _red"
+
+#: src/libaudgui/ui_jumptotrack.c:407
+msgid "Jump to Track"
+msgstr "Pređi na numeru"
+
+#: src/libaudgui/ui_jumptotrack.c:450
+msgid "Filter: "
+msgstr "Filter: "
+
+#: src/libaudgui/ui_jumptotrack.c:451
+msgid "_Filter:"
+msgstr "_Filter:"
+
+#: src/libaudgui/ui_jumptotrack.c:469
+msgid "Remember"
+msgstr "Zapamti"
+
+#: src/libaudgui/ui_jumptotrack.c:478
+#, fuzzy
+msgid "Clea_r"
+msgstr "Obriši A-B"
+
+#: src/libaudgui/ui_jumptotrack.c:513
+msgid "Close on Jump"
+msgstr "Zatvori posle skoka"
+
+#: src/libaudgui/ui_urlopener.c:57
+msgid "Add/Open URL Dialog"
+msgstr "Okvir dodaj/otvori URL"
+
+#: src/libaudgui/ui_urlopener.c:164
+msgid "Enter location to play:"
+msgstr "Unesite lokaciju za reprodukovanje:"
+
+#: src/libeggsmclient/eggdesktopfile.c:140
 msgid "File is not a valid .desktop file"
 msgstr "Datoteka nije validna .desktop datoteka"
 
-#: src/libeggsmclient/eggdesktopfile.c:161
+#: src/libeggsmclient/eggdesktopfile.c:162
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Nepoznata verzija datoteke radne površi (.desktop) '%s'"
 
-#: src/libeggsmclient/eggdesktopfile.c:872
+#: src/libeggsmclient/eggdesktopfile.c:873
 #, c-format
 msgid "Starting %s"
 msgstr "Pokrećem %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:1008
+#: src/libeggsmclient/eggdesktopfile.c:1009
 msgid "Application does not accept documents on command line"
 msgstr "Aplikacija ne podržava dokumente u komandnoj liniji"
 
-#: src/libeggsmclient/eggdesktopfile.c:1076
+#: src/libeggsmclient/eggdesktopfile.c:1077
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Nepoznata opcija pokretanja: %d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1278
+#: src/libeggsmclient/eggdesktopfile.c:1279
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "Ne mogu da prosledim adrese dokumenta u stavku radne površi 'Tip=Link' "
 
-#: src/libeggsmclient/eggdesktopfile.c:1297
+#: src/libeggsmclient/eggdesktopfile.c:1298
 msgid "Not a launchable item"
 msgstr "Stavka ne može da se pokrene"
 
@@ -1879,6 +1780,102 @@ msgstr "Opcije upravljanja sesije"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Prikaži opcije upravljanja sesije"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Audacious has caught signal 11 (SIGSEGV).\n"
+#~ "\n"
+#~ "We apologize for the inconvenience, but Audacious has crashed.\n"
+#~ "This is a bug in the program, and should never happen under normal "
+#~ "circumstances.\n"
+#~ "Your current configuration has been saved and should not be damaged.\n"
+#~ "\n"
+#~ "You can help improve the quality of Audacious by filing a bug at http://"
+#~ "jira.atheme.org/\n"
+#~ "Please include the entire text of this message and a description of what "
+#~ "you were doing when\n"
+#~ "this crash occured in order to quickly expedite the handling of your bug "
+#~ "report:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Audacious je uhvatio signal 11 (SIGSEGV).\n"
+#~ "\n"
+#~ "Izvinjavamo se zbog neprilika, ali Audacious je otkazao.\n"
+#~ "Ovo je greška u programu, i nikad ne bi trebala da se desi pod normalnim "
+#~ "okolnostima.\n"
+#~ "Vaša trenutna konfiguracija je sačuvana i nebi trebala biti oštećena.\n"
+#~ "\n"
+#~ "Možete poboljšati kvalitet Audacious-a prijavljivanjem greške na http://"
+#~ "bugs-meta.atheme.org\n"
+#~ "Molim vas uključite celokupan tekst ove poruke i opišite nam šta ste "
+#~ "radili kad se ovaj\n"
+#~ "otkaz dogodio, da bismo brzo mogli obraditi Vaš izveštaj greške:\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "Stacktrace was unavailable. You might want to reproduce this problem "
+#~ "while running Audacious under GDB to get a proper backtrace.\n"
+#~ msgstr ""
+#~ "Trag steka nije dostupan. Mogli biste da reprodukujete ovaj problem dok "
+#~ "pokrećete Audacious u GDB-u da biste dobili ispravno stablo pozivanja.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
+#~ "Audacious Plugins product.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Greške za proizvode Audacious i Audacious Plugins se mogu prijaviti na "
+#~ "http://bugs-meta.atheme.org\n"
+
+#~ msgid ""
+#~ "Your signaling implementation is broken.\n"
+#~ "Expect unusable crash reports.\n"
+#~ msgstr ""
+#~ "Vaša implementacija signala je pokvarena.\n"
+#~ "Očekujte neiskoristive izveštaje o greškama.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "\n"
+#~ "Copyright (C) 2005-2009 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "\n"
+#~ "Sva prava zadržana, 2005-2008 Audacious Razvojni Tim"
+
+#~ msgid "Playlist Manager"
+#~ msgstr "Menadžer liste numera"
+
+#~ msgid "Entries"
+#~ msgstr "Stavke"
+
+#~ msgid "_Rename"
+#~ msgstr "_Preimenuj"
+
+#~ msgid "Detect file formats on demand, instead of immediately."
+#~ msgstr "Prepoznaj format datoteke na zahtev, umesto odma."
+
+#~ msgid ""
+#~ "When checked, Audacious will detect file formats on demand. This can "
+#~ "result in a messier playlist, but delivers a major speed benefit."
+#~ msgstr ""
+#~ "Ako je potvrđeno, Audacious će prepoznati format datoteke na zahtev. Ovo "
+#~ "može dovesti do zbrkanije liste numera, ali obezbeđuje veći dobitak u "
+#~ "brzini."
+
+#~ msgid "Load metadata from playlists and files"
+#~ msgstr "Učitaj meta-podatke iz lista numera i datoteka"
+
+#~ msgid "Load metadata (tag information) from music files."
+#~ msgstr "Učitaj meta-podatke (informacije oznaka) iz muzičkih datoteka."
+
+#~ msgid "_Effect plugin list:"
+#~ msgstr "Lista _efektnih dodataka:"
 
 #~ msgid "Can't jump to time when no track is being played.\n"
 #~ msgstr "Ne mogu da skočim na vreme kad nijedna numera nije puštena.\n"
