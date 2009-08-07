@@ -434,7 +434,7 @@ aud_config_load(void)
 
     if (!cfg.chardet_fallback)
         cfg.chardet_fallback = g_strdup("");
-    
+
     aud_config_chardet_update();
 
     if (!cfg.cover_name_include)
@@ -444,14 +444,33 @@ aud_config_load(void)
         cfg.cover_name_exclude = g_strdup("back");
 }
 
+void save_all_playlists (void)
+{
+    GList * saved;
+
+    /* Main playlist becomes #0 at load, so save #0 as main. -jlindgren */
+    if (! playlist_save (0, aud_paths[BMP_PATH_PLAYLIST_FILE]))
+        g_warning ("Could not save main playlist\n");
+
+    /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
+    saved = g_list_append (NULL, GINT_TO_POINTER (0));
+
+    if (! dir_foreach (aud_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
+     & saved, NULL))
+        g_warning ("Could not save extra playlists\n");
+
+    /* Save other playlists to PLAYLISTS_DIR */
+    save_other_playlists (saved);
+    g_list_free (saved);
+}
+
 void
 aud_config_save(void)
 {
     GList *node;
     gchar *str;
-    gint i, playlist;
+    gint i;
     mcs_handle_t *db;
-    GList *saved;
 
     cfg.disabled_iplugins = input_stringify_disabled_list();
 
@@ -544,21 +563,5 @@ aud_config_save(void)
 
     cfg_db_close(db);
 
-    /* Main playlist becomes #0 at load, so save #0 as main. -jlindgren */
-    playlist = 0;
-
-    if (! playlist_save (playlist, aud_paths[BMP_PATH_PLAYLIST_FILE]))
-        g_warning("Could not save main playlist\n");
-
-    /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
-    saved = g_list_append (NULL, GINT_TO_POINTER (playlist));
-
-    if(!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
-            &saved, NULL)) {
-        g_warning("Could not save extra playlists\n");
-    }
-
-    /* Save other playlists to PLAYLISTS_DIR */
-    save_other_playlists(saved);
-    g_list_free(saved);
+    save_all_playlists ();
 }

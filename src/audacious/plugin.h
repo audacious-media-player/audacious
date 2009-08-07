@@ -600,8 +600,9 @@ struct _AudaciousFuncTableV1 {
 
     void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
 
-    /* move this where it belongs next time the API is broken */
+    /* move these where they belong next time the API is broken */
     void (* playlist_entry_set_tuple) (gint playlist, gint entry, Tuple * tuple);
+    void (* save_all_playlists) (void);
 };
 
 
@@ -943,6 +944,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_playback_get_title          _audvt->playback_get_title
 #define aud_fileinfo_show               _audvt->fileinfo_show
 #define aud_fileinfo_show_current       _audvt->fileinfo_show_current
+#define aud_save_all_playlists          _audvt->save_all_playlists
 
 //#define aud_tag_tuple_read                  _audvt->tag_tuple_read
 //#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write

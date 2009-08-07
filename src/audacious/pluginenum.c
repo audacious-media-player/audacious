@@ -39,6 +39,7 @@
 
 #include "pluginenum.h"
 
+#include "audconfig.h"
 #include "credits.h"
 #include "discovery.h"
 #include "effect.h"
@@ -362,6 +363,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playback_get_title = playback_get_title,
     .fileinfo_show = ui_fileinfo_show,
     .fileinfo_show_current = ui_fileinfo_show_current,
+    .save_all_playlists = save_all_playlists,
 
     .interface_get_current = interface_get_current,
     .interface_toggle_visibility = interface_toggle_visibility,
