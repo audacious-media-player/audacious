@@ -29,25 +29,38 @@
 
 #define DECLARE_PLAYLIST \
     struct playlist * playlist
+
 #define DECLARE_PLAYLIST_ENTRY \
     struct playlist * playlist; \
     struct entry * entry
+
 #define LOOKUP_PLAYLIST \
+{ \
     playlist = lookup_playlist (playlist_num); \
-    g_return_if_fail (playlist != NULL)
+    g_return_if_fail (playlist != NULL); \
+}
+
 #define LOOKUP_PLAYLIST_RET(ret) \
+{ \
     playlist = lookup_playlist (playlist_num); \
-    g_return_val_if_fail (playlist != NULL, ret)
+    g_return_val_if_fail (playlist != NULL, ret); \
+}
+
 #define LOOKUP_PLAYLIST_ENTRY \
+{ \
     playlist = lookup_playlist (playlist_num); \
     g_return_if_fail (playlist != NULL); \
     entry = lookup_entry (playlist, entry_num); \
-    g_return_if_fail (entry != NULL)
+    g_return_if_fail (entry != NULL); \
+}
+
 #define LOOKUP_PLAYLIST_ENTRY_RET(ret) \
+{ \
     playlist = lookup_playlist (playlist_num); \
     g_return_val_if_fail (playlist != NULL, ret); \
     entry = lookup_entry (playlist, entry_num); \
-    g_return_val_if_fail (entry != NULL, ret)
+    g_return_val_if_fail (entry != NULL, ret); \
+}
 
 struct entry
 {
@@ -762,7 +775,14 @@ void playlist_set_position (gint playlist_num, gint entry_num)
     DECLARE_PLAYLIST_ENTRY;
     gboolean shuffle;
 
-    LOOKUP_PLAYLIST_ENTRY;
+    if (entry_num == -1)
+    {
+        LOOKUP_PLAYLIST;
+        entry = NULL;
+    }
+    else
+        LOOKUP_PLAYLIST_ENTRY;
+
     shuffle = (playlist->shuffled != NULL);
 
     if (shuffle)
