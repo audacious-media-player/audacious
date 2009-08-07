@@ -77,8 +77,7 @@ INCLUDES = auddrct.h			\
            ui_fileinfopopup.h	\
            ui_plugin_menu.h		\
            ui_preferences.h		\
-           util.h \
-           vis_runner.h
+           util.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\
