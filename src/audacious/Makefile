@@ -56,7 +56,6 @@ INCLUDES = auddrct.h			\
            configdb.h			\
            custom_uri.h			\
            dbus.h				\
-           discovery.h			\
            dbus-service.h		\
            equalizer_preset.h			\
            eventqueue.h			\
