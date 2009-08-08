@@ -312,14 +312,6 @@ change_category(GtkNotebook * notebook,
     gtk_notebook_set_current_page(notebook, index);
 }
 
-void
-prefswin_set_category(gint index)
-{
-    g_return_if_fail(index >= 0 && index < n_categories);
-
-    gtk_notebook_set_current_page(GTK_NOTEBOOK(category_treeview), index);
-}
-
 static void
 output_plugin_open_prefs(GtkComboBox * cbox,
                          gpointer data)
