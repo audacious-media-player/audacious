@@ -985,11 +985,8 @@ G_END_DECLS
 #define SIMPLE_VISUAL_PLUGIN(name, vp_list) \
     DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, vp_list)
 
-#define SIMPLE_DISCOVER_PLUGIN(name, dp_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, dp_list)
-
 #define SIMPLE_INTERFACE_PLUGIN(name, interface) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
 
 
 #define PLUGIN_COMMON_FIELDS        \
