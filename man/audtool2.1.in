@@ -1,4 +1,4 @@
-.TH AUDTOOL "1" "April 2009" "Version @VERSION@"
+.TH AUDTOOL2 "1" "April 2009" "Version @VERSION@"
 .SH NAME
 .B audtool2
 - a small tool to modify behavior of a running audacious2 instance.
@@ -6,7 +6,7 @@
 .B audtool2
 [\-\-[[handler [parameters]] [...]
 .SH DESCRIPTION
-.B audtool
+.B audtool2
 is designed to send commands to a running audacious.
 .PP
 It can handle various things like jumping to the next track in playlist
@@ -259,10 +259,10 @@ Shows handlers list.
 .PP
 Handlers may be prefixed with `\-\-' (GNU\-style long\-options) or not, your choice.
 .SH BUGS
-There are no known bugs in audtool at this time; if you find any please
+There are no known bugs in audtool2 at this time; if you find any please
 report them on www.atheme.org in the Audacious issue tracker.
 .SH AUTHORS
-.B audtool
+.B audtool2
 was written by George Averill <nhjm@nhjm.net> and William 
 Pitcock <nenolod@atheme.org>.
 .PP

@@ -189,7 +189,8 @@ main(gint argc, gchar **argv)
 	mowgli_error_context_push(e, "While processing the commandline");
 
 	if (argc < 2)
-		mowgli_error_context_display_with_error(e, ":\n  * ", "not enough parameters, use \'audtool help\' for more information.");
+		mowgli_error_context_display_with_error (e, ":\n  * ", "not enough "
+         "parameters, use \'audtool2 help\' for more information.");
 
 	for (j = 1; j < argc; j++)
 	{
@@ -210,7 +211,9 @@ main(gint argc, gchar **argv)
 	}
 
 	if (k == 0)
-		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command '%s' encountered, use \'audtool help\' for a command list.", argv[1]));
+		mowgli_error_context_display_with_error (e, ":\n  * ", g_strdup_printf
+         ("Unknown command '%s' encountered, use \'audtool2 help\' for a "
+         "command list.", argv[1]));
 
 	audtool_disconnect();
 
