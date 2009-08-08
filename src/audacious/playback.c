@@ -349,7 +349,9 @@ playback_monitor_thread(gpointer data)
        occurred), set the playback ready value to 1 now, to allow for proper stop */
     playback_set_pb_ready(playback);
 
-    g_timeout_add (0, playback_ended, NULL);
+    if (! ip_data.stop)
+        g_timeout_add (0, playback_ended, NULL);
+
     return NULL;
 }
 
