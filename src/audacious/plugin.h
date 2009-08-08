@@ -59,7 +59,6 @@
 #define EFFECT_PLUGIN(x)        ((EffectPlugin *)(x))
 #define GENERAL_PLUGIN(x)       ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)           ((VisPlugin *)(x))
-#define DISCOVERY_PLUGIN(x)     ((DiscoveryPlugin *)(x))
 #define LOWLEVEL_PLUGIN(x)      ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
@@ -152,7 +151,6 @@ typedef struct _OutputPlugin  OutputPlugin;
 typedef struct _EffectPlugin  EffectPlugin;
 typedef struct _GeneralPlugin GeneralPlugin;
 typedef struct _VisPlugin     VisPlugin;
-typedef struct _DiscoveryPlugin DiscoveryPlugin;
 typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
@@ -196,7 +194,6 @@ typedef struct {
     EffectPlugin **ep_list;
     GeneralPlugin **gp_list;
     VisPlugin **vp_list;
-    DiscoveryPlugin **dp_list;
     Interface *interface;
 } PluginHeader;
 
@@ -1174,12 +1171,6 @@ struct _VisPlugin {
      * If output is mono, only freq_data[0] is filled.
      */
     void (*render_freq) (gint16 freq_data[2][256]);
-};
-
-struct _DiscoveryPlugin {
-    PLUGIN_COMMON_FIELDS
-
-    GList *(*get_devices);
 };
 
 /* undefine the macro -- struct Plugin should be used instead. */

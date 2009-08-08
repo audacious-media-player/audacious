@@ -41,7 +41,6 @@
 
 #include "audconfig.h"
 #include "credits.h"
-#include "discovery.h"
 #include "effect.h"
 #include "general.h"
 #include "input.h"
@@ -459,16 +458,6 @@ vislist_compare_func(gconstpointer a, gconstpointer b)
         return 0;
 }
 
-static gint
-discoverylist_compare_func(gconstpointer a, gconstpointer b)
-{
-    const DiscoveryPlugin *ap = a, *bp = b;
-    if(ap->description && bp->description)
-        return strcasecmp(ap->description, bp->description);
-    else
-        return 0;
-}
-
 static gboolean
 plugin_is_duplicate(const gchar * filename)
 {
@@ -584,15 +573,6 @@ vis_plugin_init(Plugin * plugin)
     mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
 }
 
-static void
-discovery_plugin_init(Plugin * plugin)
-{
-    DiscoveryPlugin *p = DISCOVERY_PLUGIN(plugin);
-    dp_data.discovery_list = g_list_append(dp_data.discovery_list, p);
-
-    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
-}
-
 /*******************************************************************/
 
 static void
@@ -679,15 +659,6 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
         {
             PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             vis_plugin_init(PLUGIN((header->vp_list)[i]));
-        }
-    }
-
-    if (header->dp_list)
-    {
-        for (i = 0; (header->dp_list)[i] != NULL; i++, n++)
-        {
-            PLUGIN((header->dp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
-            discovery_plugin_init(PLUGIN((header->dp_list)[i]));
         }
     }
 
@@ -785,7 +756,6 @@ plugin_system_init(void)
     OutputPlugin *op;
     InputPlugin *ip;
     LowlevelPlugin *lp;
-    DiscoveryPlugin *dp;
     GtkWidget *dialog;
     gint dirsel = 0, i = 0;
     gint prio;
@@ -813,8 +783,7 @@ plugin_system_init(void)
 #ifndef DISABLE_USER_PLUGIN_DIR
     scan_plugins(aud_paths[BMP_PATH_USER_PLUGIN_DIR]);
     /*
-     * This is in a separate lo
-     * DiscoveryPlugin *dpop so if the user puts them in the
+     * This is in a separate loop so if the user puts them in the
      * wrong dir we'll still get them in the right order (home dir
      * first)                                                - Zinx
      */
@@ -850,14 +819,9 @@ plugin_system_init(void)
     vp_data.vis_list = g_list_sort(vp_data.vis_list, vislist_compare_func);
     vp_data.enabled_list = NULL;
 
-    dp_data.discovery_list = g_list_sort(dp_data.discovery_list, discoverylist_compare_func);
-    dp_data.enabled_list = NULL;
-
-
     general_enable_from_stringified_list(cfg.enabled_gplugins);
     vis_enable_from_stringified_list(cfg.enabled_vplugins);
     effect_enable_from_stringified_list(cfg.enabled_eplugins);
-    discovery_enable_from_stringified_list(cfg.enabled_dplugins);
 
     g_free(cfg.enabled_gplugins);
     cfg.enabled_gplugins = NULL;
@@ -933,16 +897,6 @@ plugin_system_init(void)
 	}
     }
 
-    for (node = dp_data.discovery_list; node; node = g_list_next(node)) {
-        dp = DISCOVERY_PLUGIN(node->data);
-        if (dp->init)
-	{
-	    plugin_set_current((Plugin *)dp);
-            dp->init();
-	}
-    }
-
-
     for (node = lowlevel_list; node; node = g_list_next(node)) {
         lp = LOWLEVEL_PLUGIN(node->data);
         if (lp->init)
@@ -985,7 +939,6 @@ plugin_system_cleanup(void)
     GeneralPlugin *gp;
     VisPlugin *vp;
     LowlevelPlugin *lp;
-    DiscoveryPlugin *dp;
     GList *node;
     mowgli_node_t *hlist_node;
 
@@ -1098,27 +1051,6 @@ plugin_system_cleanup(void)
     {
         g_list_free(vp_data.vis_list);
         vp_data.vis_list = NULL;
-    }
-
-
-    for (node = get_discovery_list(); node; node = g_list_next(node)) {
-        dp = DISCOVERY_PLUGIN(node->data);
-        if (dp) {
-	    plugin_set_current((Plugin *)dp);
-
-            if (dp->cleanup)
-                dp->cleanup();
-
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
-        }
-    }
-
-    if (dp_data.discovery_list != NULL)
-    {
-        g_list_free(dp_data.discovery_list);
-        dp_data.discovery_list = NULL;
     }
 
     for (node = lowlevel_list; node; node = g_list_next(node)) {
