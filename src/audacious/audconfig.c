@@ -475,11 +475,15 @@ aud_config_save(void)
     cfg.disabled_iplugins = input_stringify_disabled_list();
 
     cfg.resume_playlist = playlist_get_playing ();
-    cfg.resume_entry = playlist_get_position (cfg.resume_playlist);
-    cfg.resume_state = playback_get_playing () ? playback_get_paused () ? 2 : 1
-     : 0;
-    cfg.resume_playback_on_startup_time = playback_get_playing () ?
-     playback_get_time () / 1000 : 0;
+
+    if (cfg.resume_playlist != -1)
+    {
+        cfg.resume_entry = playlist_get_position (cfg.resume_playlist);
+        cfg.resume_state = playback_get_playing () ? (playback_get_paused () ? 2
+         : 1) : 0;
+        cfg.resume_playback_on_startup_time = playback_get_playing () ?
+         playback_get_time () / 1000 : 0;
+    }
 
     db = cfg_db_open();
 
