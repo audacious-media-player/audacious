@@ -182,6 +182,9 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
 
 install-extra:
+	if [ -h ${bindir}/audacious ] ; then rm ${bindir}/audacious ; fi
+	ln -s ${bindir}/audacious2 ${bindir}/audacious
+
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \
@@ -195,6 +198,8 @@ install-extra:
 	fi
 
 uninstall-extra:
+	if [ -h ${bindir}/audacious ] ; then rm ${bindir}/audacious ; fi
+
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \

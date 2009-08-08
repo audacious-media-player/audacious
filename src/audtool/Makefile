@@ -25,3 +25,10 @@ LIBS += ${DBUS_LIBS}				\
 	${GTK_LIBS}						\
 	${MOWGLI_LIBS}					\
 	${LIBMCS_LIBS}
+
+install-extra:
+	if [ -h ${bindir}/audtool ] ; then rm ${bindir}/audtool ; fi
+	ln -s ${bindir}/audtool2 ${bindir}/audtool
+
+uninstall-extra:
+	if [ -h ${bindir}/audtool ] ; then rm ${bindir}/audtool ; fi
