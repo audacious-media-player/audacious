@@ -164,10 +164,10 @@ build_stamp.c:
 		echo "const gchar *build_stamp = \"UNSUPPORTED VERSION\";" >> build_stamp.c; \
 	fi
 
-DBUS_BINDINGS_SOURCES = objects.xml				\
-						mpris_root.xml			\
-						mpris_tracklist.xml		\
-						mpris_player.xml
+DBUS_BINDINGS_SOURCES = objects.xml			\
+			mpris_root.xml			\
+			mpris_tracklist.xml		\
+			mpris_player.xml
 
 desktop_DATA = audacious.desktop
 desktopdir = ${datadir}/applications
@@ -182,11 +182,14 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
 
 install-extra:
+	if test -h "${DESTDIR}${bindir}/audacious" ; then ${RM} "${DESTDIR}${bindir}/audacious" ; fi
+	${LN_S} "${bindir}/audacious2" "${DESTDIR}${bindir}/audacious"
+
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \
 			${INSTALL_STATUS}; \
-			if ${MKDIR_P} ${DESTDIR}${libdir} && install -m 644 $$i ${DESTDIR}${libdir}/$$i; then \
+			if ${MKDIR_P} "${DESTDIR}${libdir}" && ${INSTALL} -m 644 "$$i" "${DESTDIR}${libdir}/$$i"; then \
 				${INSTALL_OK}; \
 			else \
 				${INSTALL_FAILED}; \
@@ -195,11 +198,13 @@ install-extra:
 	fi
 
 uninstall-extra:
+	if test -h "${bindir}/audacious" ; then ${RM} "${bindir}/audacious" ; fi
+
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \
-			if test -f ${DESTDIR}${libdir}/$$i; then \
-				if rm -f ${DESTDIR}${libdir}/$$i; then \
+			if test -f "${DESTDIR}${libdir}/$$i"; then \
+				if ${RM} -f "${DESTDIR}${libdir}/$$i"; then \
 					${DELETE_OK}; \
 				else \
 					${DELETE_FAILED}; \

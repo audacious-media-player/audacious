@@ -543,7 +543,7 @@ main(gint argc, gchar ** argv)
 
     if (start_playback)
         playback_initiate ();
-    else
+    else if (cfg.resume_playlist != -1)
     {
         playlist_set_playing (cfg.resume_playlist);
         playlist_set_position (cfg.resume_playlist, cfg.resume_entry);

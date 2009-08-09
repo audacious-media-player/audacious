@@ -289,23 +289,45 @@ run_no_output_plugin_dialog(void)
     interface_show_error_message(markup);
 }
 
-static gboolean on_to_the_next (void * user_data)
+static gboolean playback_ended (void * user_data)
 {
-    gint playlist = playlist_get_playing ();
-    gboolean play;
+    gboolean error, play;
 
-    if (cfg.no_playlist_advance)
-        play = cfg.repeat;
+    /* Unlikely but possible */
+    if (! ip_data.playing)
+        return FALSE;
+
+    g_return_val_if_fail (ip_data.current_input_playback != NULL, FALSE);
+    g_return_val_if_fail (ip_data.current_input_playback->thread != NULL, FALSE);
+
+    ip_data.playing = FALSE;
+    g_thread_join (ip_data.current_input_playback->thread);
+    error = ip_data.current_input_playback->error;
+    playback_free (ip_data.current_input_playback);
+    ip_data.current_input_playback = NULL;
+
+    if (error)
+    {
+        playback_error ();
+        play = FALSE;
+    }
     else
     {
-        play = playlist_next_song (playlist, FALSE);
+        if (cfg.no_playlist_advance)
+            play = cfg.repeat;
+        else
+        {
+            gint playlist = playlist_get_playing ();
 
-        if (! play)
-            play = playlist_next_song (playlist, TRUE) && cfg.repeat;
+            play = playlist_next_song (playlist, FALSE);
+
+            if (! play)
+                play = playlist_next_song (playlist, TRUE) && cfg.repeat;
+        }
+
+        if (cfg.stopaftersong)
+            play = FALSE;
     }
-
-    if (cfg.stopaftersong)
-        play = FALSE;
 
     if (play)
         playback_initiate ();
@@ -318,7 +340,6 @@ static gboolean on_to_the_next (void * user_data)
 static gpointer
 playback_monitor_thread(gpointer data)
 {
-    gboolean restart;
     InputPlayback *playback = (InputPlayback *) data;
 
     plugin_set_current((Plugin *)(playback->plugin));
@@ -328,15 +349,8 @@ playback_monitor_thread(gpointer data)
        occurred), set the playback ready value to 1 now, to allow for proper stop */
     playback_set_pb_ready(playback);
 
-    restart = ip_data.playing;
-
-    playback->thread = NULL;
-    ip_data.playing = FALSE;
-
-    if (playback->error)
-        playback_error ();
-    else if (restart)
-        g_timeout_add (0, on_to_the_next, NULL);
+    if (! ip_data.stop)
+        g_timeout_add (0, playback_ended, NULL);
 
     return NULL;
 }
