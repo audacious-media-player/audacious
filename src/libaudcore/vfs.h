@@ -149,6 +149,13 @@ extern gboolean vfs_fget_be16(guint16 *value, VFSFile *stream);
 extern gboolean vfs_fget_be32(guint32 *value, VFSFile *stream);
 extern gboolean vfs_fget_be64(guint64 *value, VFSFile *stream);
 
+extern gboolean vfs_fput_le16(guint16 value, VFSFile *stream);
+extern gboolean vfs_fput_le32(guint32 value, VFSFile *stream);
+extern gboolean vfs_fput_le64(guint64 value, VFSFile *stream);
+extern gboolean vfs_fput_be16(guint16 value, VFSFile *stream);
+extern gboolean vfs_fput_be32(guint32 value, VFSFile *stream);
+extern gboolean vfs_fput_be64(guint64 value, VFSFile *stream);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_VFS_H */

@@ -9,8 +9,8 @@ SRCS = af_equalizer.c							\
        build_stamp.c							\
        chardet.c								\
        configdb.c								\
+       credits.c							\
        custom_uri.c								\
-       discovery.c								\
        effect.c									\
        equalizer.c								\
        equalizer_flow.c							\
@@ -20,7 +20,6 @@ SRCS = af_equalizer.c							\
        flow.c									\
        general.c								\
        hook.c									\
-       icons-stock.c							\
        interface.c								\
        input.c									\
        logger.c									\
@@ -44,12 +43,8 @@ SRCS = af_equalizer.c							\
        visualization.c							\
        volumecontrol.c							\
        sync-menu.c								\
-       ui_about.c						\
        ui_albumart.c						\
-       ui_credits.c						\
        ui_fileinfo.c						\
-       ui_jumptotrack.c					\
-       ui_jumptotrack_cache.c			\
        ui_misc.c
 
 ifeq ($(USE_DBUS),yes)
@@ -61,7 +56,6 @@ INCLUDES = auddrct.h			\
            configdb.h			\
            custom_uri.h			\
            dbus.h				\
-           discovery.h			\
            dbus-service.h		\
            equalizer_preset.h			\
            eventqueue.h			\
@@ -81,9 +75,7 @@ INCLUDES = auddrct.h			\
            ui_fileinfopopup.h	\
            ui_plugin_menu.h		\
            ui_preferences.h		\
-           util.h \
-           vis_runner.h \
-           icons-stock.h
+           util.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\

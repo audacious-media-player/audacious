@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2009  Audacious development team.
+ *  Copyright (C) 2005-2007  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,16 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_UI_GTK_H
-#define AUDACIOUS_UI_GTK_H
+#ifndef AUDACIOUS_ICONS_STOCK_H
+#define AUDACIOUS_ICONS_STOCK_H
 
-void audgui_set_default_icon(void);
+void audgui_register_stock_icons(void);
 
-#endif /* AUDACIOUS_UI_GTK_H */
+/* this header contains macro defines for Audacious stock icons */
+
+#define AUD_STOCK_PLAYLIST			"aud-playlist"
+#define AUD_STOCK_PLUGIN			"aud-plugin"
+#define AUD_STOCK_QUEUETOGGLE		"aud-queuetoggle"
+#define AUD_STOCK_RANDOMIZEPL		"aud-randomizepl"
+
+#endif /* AUDACIOUS_ICONS_STOCK_H */

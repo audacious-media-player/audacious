@@ -29,7 +29,7 @@
 #include "auddrct.h"
 #include "playlist-new.h"
 #include "playlist-utils.h"
-#include "ui_jumptotrack.h"
+#include "interface.h"
 
 /* player */
 
@@ -47,7 +47,7 @@ void drct_eject (void)
 void
 drct_jtf_show ( void )
 {
-    ui_jump_to_track ();
+    interface_show_jump_to_track();
 }
 
 gboolean

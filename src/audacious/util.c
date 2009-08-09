@@ -551,37 +551,6 @@ dir_foreach(const gchar * path, DirForeachFunc function,
     return TRUE;
 }
 
-GtkWidget *
-make_filebrowser(const gchar *title, gboolean save)
-{
-    GtkWidget *dialog;
-    GtkWidget *button;
-
-    g_return_val_if_fail(title != NULL, NULL);
-
-    dialog = gtk_file_chooser_dialog_new(title, NULL,
-                                         save ?
-                                         GTK_FILE_CHOOSER_ACTION_SAVE :
-                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         NULL, NULL);
-
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                   GTK_RESPONSE_REJECT);
-
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), save ?
-                                   GTK_STOCK_SAVE : GTK_STOCK_OPEN,
-                                   GTK_RESPONSE_ACCEPT);
-
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
-
-    return dialog;
-}
-
 /**
  * util_info_dialog:
  * @title: The title of the message to show.

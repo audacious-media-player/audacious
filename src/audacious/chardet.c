@@ -57,9 +57,12 @@ cd_str_to_utf8(const gchar * str)
      * utf-8. It is considered to be safe to use as a guard.
      */
 
+    /* Already UTF-8? */
 #ifdef USE_CHARDET
-    /* already UTF-8? */
     if (dfa_validate_utf8(str, strlen(str)))
+        return g_strdup(str);
+#else
+    if (g_utf8_validate(str, strlen(str), NULL))
         return g_strdup(str);
 #endif
 
@@ -77,27 +80,23 @@ cd_str_to_utf8(const gchar * str)
 
 gchar *
 cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
-                   gsize * arg_bytes_write, GError ** arg_error)
+                   gsize * arg_bytes_write, GError ** error)
 {
 #ifdef USE_CHARDET
     gchar *det = NULL, *encoding = NULL;
 #endif
     gchar *ret = NULL;
     gsize *bytes_read, *bytes_write;
-    GError **error;
     gsize my_bytes_read, my_bytes_write;
 
-    bytes_read = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
-    bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
-    error = arg_error ? arg_error : NULL;
+    bytes_read = arg_bytes_read != NULL ? arg_bytes_read : &my_bytes_read;
+    bytes_write = arg_bytes_write != NULL ? arg_bytes_write : &my_bytes_write;
 
     g_return_val_if_fail(str != NULL, NULL);
 
 #ifdef USE_CHARDET
     if (cfg.chardet_detector)
         det = cfg.chardet_detector;
-
-    guess_init();
 
     if (det)
     {
@@ -120,6 +119,10 @@ fallback:
             ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
             if (len == *bytes_read)
                 break;
+            else {
+                g_free(ret);
+                ret = NULL;
+            }
         }
     }
 
@@ -147,4 +150,7 @@ void chardet_init(void)
 {
     str_to_utf8 = cd_str_to_utf8;
     chardet_to_utf8 = cd_chardet_to_utf8;
+#ifdef USE_CHARDET
+    guess_init();
+#endif
 }

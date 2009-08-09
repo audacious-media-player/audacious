@@ -223,13 +223,13 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
  *     - none
  */
 void
-run_filebrowser(gboolean play_button)
+audgui_run_filebrowser(gboolean play_button)
 {
     run_filebrowser_gtk2style(play_button, TRUE);
 }
 
 void
-hide_filebrowser(void)
+audgui_hide_filebrowser(void)
 {
     run_filebrowser_gtk2style(FALSE, FALSE);
 }

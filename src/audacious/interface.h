@@ -37,11 +37,6 @@ typedef struct {
     void (*show_prefs_window)(void);
     void (*hide_prefs_window)(void);
     void (*destroy_prefs_window)(void);
-
-    void (*jump_to_track_show)(void);
-    void (*aboutwin_show)(void);
-
-    void (*register_stock_icons)(void);
 } InterfaceOps;
 
 typedef struct {
@@ -50,6 +45,10 @@ typedef struct {
     void (*hide_filebrowser)(void);
     void (*toggle_visibility)(void);
     void (*show_error)(const gchar * markup);
+    void (*show_jump_to_track)(void);
+    void (*hide_jump_to_track)(void);
+    void (*show_about_window)(void);
+    void (*hide_about_window)(void);
 } InterfaceCbs;
 
 typedef struct _Interface {
@@ -77,6 +76,7 @@ void interface_run_filebrowser(gboolean play_button);
 void interface_hide_filebrowser(void);
 void interface_toggle_visibility(void);
 void interface_show_error_message(const gchar * markup);
+void interface_show_jump_to_track(void);
 
 void register_interface_hooks(void);
 

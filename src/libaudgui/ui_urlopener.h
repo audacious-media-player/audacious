@@ -26,6 +26,6 @@
 #ifndef AUDACIOUS_UI_URLOPENER_H
 #define AUDACIOUS_UI_URLOPENER_H
 
-void show_add_url_window(void);
+void audgui_show_add_url_window(void);
 
 #endif /* AUDACIOUS_UI_URLOPENER_H */

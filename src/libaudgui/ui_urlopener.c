@@ -155,7 +155,7 @@ on_add_url_ok_clicked(GtkWidget * widget,
 }
 
 void
-show_add_url_window(void)
+audgui_show_add_url_window(void)
 {
     static GtkWidget *url_window = NULL;
 

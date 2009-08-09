@@ -59,11 +59,10 @@
 #define EFFECT_PLUGIN(x)        ((EffectPlugin *)(x))
 #define GENERAL_PLUGIN(x)       ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)           ((VisPlugin *)(x))
-#define DISCOVERY_PLUGIN(x)     ((DiscoveryPlugin *)(x))
 #define LOWLEVEL_PLUGIN(x)      ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
-#define __AUDACIOUS_PLUGIN_API__ 10
+#define __AUDACIOUS_PLUGIN_API__ 11
 #define __AUDACIOUS_INPUT_PLUGIN_API__ 8
 
 typedef enum {
@@ -152,7 +151,6 @@ typedef struct _OutputPlugin  OutputPlugin;
 typedef struct _EffectPlugin  EffectPlugin;
 typedef struct _GeneralPlugin GeneralPlugin;
 typedef struct _VisPlugin     VisPlugin;
-typedef struct _DiscoveryPlugin DiscoveryPlugin;
 typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
@@ -196,7 +194,6 @@ typedef struct {
     EffectPlugin **ep_list;
     GeneralPlugin **gp_list;
     VisPlugin **vp_list;
-    DiscoveryPlugin **dp_list;
     Interface *interface;
 } PluginHeader;
 
@@ -264,6 +261,13 @@ struct _AudaciousFuncTableV1 {
     gboolean (*vfs_fget_be16)(guint16 *value, VFSFile *stream);
     gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
     gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
+
+    gboolean (*vfs_fput_le16)(guint16 value, VFSFile *stream);
+    gboolean (*vfs_fput_le32)(guint32 value, VFSFile *stream);
+    gboolean (*vfs_fput_le64)(guint64 value, VFSFile *stream);
+    gboolean (*vfs_fput_be16)(guint16 value, VFSFile *stream);
+    gboolean (*vfs_fput_be32)(guint32 value, VFSFile *stream);
+    gboolean (*vfs_fput_be64)(guint64 value, VFSFile *stream);
 
     /* ConfigDb */
     mcs_handle_t *(*cfg_db_open)(void);
@@ -590,6 +594,12 @@ struct _AudaciousFuncTableV1 {
     const Interface * (* interface_get_current) (void);
     void (* interface_toggle_visibility) (void);
     void (* interface_show_error) (const gchar * markup);
+
+    void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
+
+    /* move these where they belong next time the API is broken */
+    void (* playlist_entry_set_tuple) (gint playlist, gint entry, Tuple * tuple);
+    void (* save_all_playlists) (void);
 };
 
 
@@ -630,6 +640,13 @@ struct _AudaciousFuncTableV1 {
 #define aud_vfs_fget_be16               _audvt->vfs_fget_be16
 #define aud_vfs_fget_be32               _audvt->vfs_fget_be32
 #define aud_vfs_fget_be64               _audvt->vfs_fget_be64
+
+#define aud_vfs_fput_le16               _audvt->vfs_fput_le16
+#define aud_vfs_fput_le32               _audvt->vfs_fput_le32
+#define aud_vfs_fput_le64               _audvt->vfs_fput_le64
+#define aud_vfs_fput_be16               _audvt->vfs_fput_be16
+#define aud_vfs_fput_be32               _audvt->vfs_fput_be32
+#define aud_vfs_fput_be64               _audvt->vfs_fput_be64
 
 /* XXX: deprecation warnings */
 #define ConfigDb mcs_handle_t        /* Alias for compatibility -- ccr */
@@ -723,6 +740,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_playlist_entry_get_filename _audvt->playlist_entry_get_filename
 #define aud_playlist_entry_get_decoder  _audvt->playlist_entry_get_decoder
+#define aud_playlist_entry_set_tuple    _audvt->playlist_entry_set_tuple
 #define aud_playlist_entry_get_tuple    _audvt->playlist_entry_get_tuple
 #define aud_playlist_entry_get_title    _audvt->playlist_entry_get_title
 #define aud_playlist_entry_get_length   _audvt->playlist_entry_get_length
@@ -923,6 +941,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_playback_get_title          _audvt->playback_get_title
 #define aud_fileinfo_show               _audvt->fileinfo_show
 #define aud_fileinfo_show_current       _audvt->fileinfo_show_current
+#define aud_save_all_playlists          _audvt->save_all_playlists
 
 //#define aud_tag_tuple_read                  _audvt->tag_tuple_read
 //#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write
@@ -930,6 +949,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_interface_get_current       _audvt->interface_get_current
 #define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
 #define aud_interface_show_error        _audct->interface_show_error
+
+#define aud_get_audacious_credits       _audvt->get_audacious_credits
 
 #include "audacious/auddrct.h"
 
@@ -964,11 +985,8 @@ G_END_DECLS
 #define SIMPLE_VISUAL_PLUGIN(name, vp_list) \
     DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, vp_list)
 
-#define SIMPLE_DISCOVER_PLUGIN(name, dp_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, dp_list)
-
 #define SIMPLE_INTERFACE_PLUGIN(name, interface) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
+    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
 
 
 #define PLUGIN_COMMON_FIELDS        \
@@ -1150,12 +1168,6 @@ struct _VisPlugin {
      * If output is mono, only freq_data[0] is filled.
      */
     void (*render_freq) (gint16 freq_data[2][256]);
-};
-
-struct _DiscoveryPlugin {
-    PLUGIN_COMMON_FIELDS
-
-    GList *(*get_devices);
 };
 
 /* undefine the macro -- struct Plugin should be used instead. */

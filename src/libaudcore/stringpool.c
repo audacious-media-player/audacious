@@ -116,7 +116,7 @@ stringpool_get(const gchar *str)
         return NULL;
 
     if (!stringpool_should_cache(str, 100))
-        return str_to_utf8(str);
+        return str_assert_utf8(str);
 
     g_static_mutex_lock(&stringpool_mutex);
 
@@ -139,7 +139,7 @@ stringpool_get(const gchar *str)
 
     ps = g_slice_new0(PooledString);
     ps->refcount++;
-    ps->str = str_to_utf8(str);
+    ps->str = str_assert_utf8(str);
     mowgli_patricia_add(stringpool_tree, str, ps);
 
     g_static_mutex_unlock(&stringpool_mutex);
@@ -178,7 +178,7 @@ stringpool_unref(gchar *str)
 gchar *
 stringpool_get(const gchar *str)
 {
-    return str_to_utf8(str);
+    return str_assert_utf8(str);
 }
 
 void

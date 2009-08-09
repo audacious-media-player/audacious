@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-void run_filebrowser(gboolean clear_pl_on_ok);
-void hide_filebrowser(void);
+void audgui_run_filebrowser(gboolean clear_pl_on_ok);
+void audgui_hide_filebrowser(void);
 
 #endif /* AUDACIOUS_UI_FILEOPENER_H */

@@ -43,7 +43,7 @@
 			<separator />
 			<menuitem action="playlist load" />
 			<menuitem action="playlist save" />
-			<menuitem action="playlist save default" />
+			<menuitem action="playlist save all" />
 			<separator />
 			<menuitem action="playlist manager" />
 			<separator />

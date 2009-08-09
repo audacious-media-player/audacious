@@ -1,5 +1,11 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team.
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
+ *  Copyright (C) 2003-2004  BMP development team.
+ *
+ *  Based on XMMS:
+ *  Copyright (C) 1998-2003  XMMS development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,16 +23,11 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_ICONS_STOCK_H
-#define AUDACIOUS_ICONS_STOCK_H
+#ifndef AUDACIOUS_UI_JUMPTOTRACK_H
+#define AUDACIOUS_UI_JUMPTOTRACK_H
 
-void register_aud_stock_icons(void);
+void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
+void audgui_jump_to_track(void);
+void audgui_jump_to_track_hide(void);
 
-/* this header contains macro defines for Audacious stock icons */
-
-#define AUD_STOCK_PLAYLIST			"aud-playlist"
-#define AUD_STOCK_PLUGIN			"aud-plugin"
-#define AUD_STOCK_QUEUETOGGLE		"aud-queuetoggle"
-#define AUD_STOCK_RANDOMIZEPL		"aud-randomizepl"
-
-#endif /* AUDACIOUS_ICONS_STOCK_H */
+#endif /* AUDACIOUS_UI_JUMPTOTRACK_H */

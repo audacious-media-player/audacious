@@ -1,11 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2006  Audacious development team.
- *
- *  BMP - Cross-platform multimedia player
- *  Copyright (C) 2003-2004  BMP development team.
- *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team.
+ *  Copyright (C) 2009  Audacious Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,11 +17,13 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_UI_JUMPTOTRACK_H
-#define AUDACIOUS_UI_JUMPTOTRACK_H
+#ifndef AUDACIOUS_CREDITS_H
+#define AUDACIOUS_CREDITS_H
 
-void ui_jump_to_track_update(GtkWidget * widget, gpointer user_data);
-void ui_jump_to_track(void);
-void ui_jump_to_track_hide(void);
+#include <glib.h>
 
-#endif /* AUDACIOUS_UI_JUMPTOTRACK_H */
+void get_audacious_credits(const gchar **brief, const gchar *** credits,
+                           const gchar *** translators);
+
+#endif /* AUDACIOUS_UI_CREDITS_H */
+
