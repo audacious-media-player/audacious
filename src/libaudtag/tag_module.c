@@ -8,7 +8,6 @@
 
 void init_tag_modules(void)
 {
-    tag_modules;// = { NULL, NULL, 0 };
     mowgli_node_add(&wma, mowgli_node_create(), &tag_modules);
     mowgli_node_add(&id3, mowgli_node_create(), &tag_modules);
 

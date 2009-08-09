@@ -6,6 +6,7 @@
 #include <libaudcore/vfs.h>
 #include "../tag_module.h"
 
+
 typedef struct id3v2
 {
     gchar *id3;
@@ -21,12 +22,26 @@ typedef struct extHeader
     guint32 padding_size;
 }ExtendedHeader;
 
-typedef struct frame
+typedef struct frameheader
 {
     gchar* frame_id;
     guint32 size;
     guint32 flags;
 }ID3v2FrameHeader;
+
+typedef struct genericframe
+{
+    ID3v2FrameHeader header;
+    gchar*           frame_body;
+}GenericFrame;
+
+typedef struct textframe
+{
+    ID3v2FrameHeader header;
+    gchar encoding;
+    gchar* text;
+}TextInformationFrame;
+
 
 gboolean id3_can_handle_file(VFSFile *f);
 
