@@ -139,13 +139,16 @@ input_get_mtime(const gchar *filename)
 
 
 /* do actual probing. this function is called from input_check_file() */
-static ProbeResult * input_do_check_file (InputPlugin * ip, VFSFile * fd, gchar
- * filename_proxy)
+static ProbeResult * input_do_check_file (InputPlugin * ip,
+    VFSFile * fd, gchar * filename_proxy)
 {
     ProbeResult *pr = NULL;
     gint result = 0;
 
     g_return_val_if_fail(fd != NULL, NULL);
+
+    pr = g_new0(ProbeResult, 1);
+    pr->ip = ip;
 
     vfs_rewind(fd);
 
@@ -155,38 +158,29 @@ static ProbeResult * input_do_check_file (InputPlugin * ip, VFSFile * fd, gchar
         Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
         if (tuple != NULL) {
-            pr = g_new0(ProbeResult, 1);
-            pr->ip = ip;
             pr->tuple = tuple;
             tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
-
             return pr;
         }
     }
-
-    else if (ip->is_our_file_from_vfs != NULL) {
-	plugin_set_current((Plugin *)ip);
+    else if (ip->is_our_file_from_vfs != NULL)
+    {
+        plugin_set_current((Plugin *)ip);
         result = ip->is_our_file_from_vfs(filename_proxy, fd);
 
-        if (result > 0) {
-            pr = g_new0(ProbeResult, 1);
-            pr->ip = ip;
-
+        if (result > 0)
             return pr;
-        }
     }
-
-    else if (ip->is_our_file != NULL) {
-	plugin_set_current((Plugin *)ip);
+    else if (ip->is_our_file != NULL)
+    {
+        plugin_set_current((Plugin *)ip);
         result = ip->is_our_file(filename_proxy);
 
-        if (result > 0) {
-            pr = g_new0(ProbeResult, 1);
-            pr->ip = ip;
-
+        if (result > 0)
             return pr;
-        }
     }
+
+    g_free(pr);
 
     return NULL;
 }
