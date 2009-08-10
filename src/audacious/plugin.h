@@ -523,9 +523,6 @@ struct _AudaciousFuncTableV1 {
     gint (*drct_pq_get_position)( gint pos );
     gint (*drct_pq_get_queue_position)( gint pos );
 
-    gint (*prefswin_page_new)(GtkWidget *container, gchar *name, gchar *imgurl);
-    void (*prefswin_page_destroy)(GtkWidget *container);
-
     /* FileInfoPopup API */
     GtkWidget *(*fileinfopopup_create)(void);
     void (*fileinfopopup_destroy)(GtkWidget* fileinfopopup_win);
@@ -872,9 +869,6 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_pq_is_queued         _audvt->drct_pq_is_queued
 #define audacious_drct_pq_get_position      _audvt->drct_pq_get_position
 #define audacious_drct_pq_get_queue_position _audvt->drct_pq_get_queue_position
-
-#define aud_prefswin_page_new               _audvt->prefswin_page_new
-#define aud_prefswin_page_destroy           _audvt->prefswin_page_destroy
 
 #define audacious_fileinfopopup_create          _audvt->fileinfopopup_create
 #define audacious_fileinfopopup_destroy         _audvt->fileinfopopup_destroy

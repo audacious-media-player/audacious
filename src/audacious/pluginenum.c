@@ -310,9 +310,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_pq_get_position = drct_pq_get_position,
     .drct_pq_get_queue_position = drct_pq_get_queue_position,
 
-    .prefswin_page_new = prefswin_page_new,
-    .prefswin_page_destroy = prefswin_page_destroy,
-
     .fileinfopopup_create = fileinfopopup_create,
     .fileinfopopup_destroy = fileinfopopup_destroy,
     .fileinfopopup_show_from_title = fileinfopopup_show_from_title,
