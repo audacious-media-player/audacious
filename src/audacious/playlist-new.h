@@ -31,6 +31,12 @@
  * and indexes passed to playlist_entry_insert, playlist_entry_insert_batch and
  * playlist_entry_set_tuple will be freed when no longer needed. Returned
  * pointers refer to static data which should not be freed.
+ *
+ * Clarification: Code calling the functions mentioned above must own a
+ * reference to each tuple passed. Passing a tuple to one of these functions
+ * means that the reference is given to the playlist. Tuples returned by
+ * playlist functions, in contrast, are read-only, and no reference is given to
+ * the calling code.
  */
 
 void playlist_init (void);
