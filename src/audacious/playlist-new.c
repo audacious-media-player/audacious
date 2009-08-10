@@ -113,7 +113,7 @@ static gchar *title_from_tuple(Tuple * tuple)
 
 static void entry_set_tuple(struct entry *entry, Tuple * tuple)
 {
-    if (entry->tuple != NULL && entry->tuple != tuple)
+    if (entry->tuple != NULL)
         tuple_free(entry->tuple);
 
     entry->tuple = tuple;
