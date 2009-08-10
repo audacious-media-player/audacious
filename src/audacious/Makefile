@@ -183,7 +183,7 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 
 install-extra:
 	if test -h "${DESTDIR}${bindir}/audacious" ; then ${RM} "${DESTDIR}${bindir}/audacious" ; fi
-	${LN_S} "${bindir}/audacious2" "${DESTDIR}${bindir}/audacious"
+	${LN_S} "${DESTDIR}${bindir}/audacious2" "${DESTDIR}${bindir}/audacious"
 
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
@@ -198,7 +198,7 @@ install-extra:
 	fi
 
 uninstall-extra:
-	if test -h "${bindir}/audacious" ; then ${RM} "${bindir}/audacious" ; fi
+	if test -h "${DESTDIR}${bindir}/audacious" ; then ${RM} "${DESTDIR}${bindir}/audacious" ; fi
 
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \

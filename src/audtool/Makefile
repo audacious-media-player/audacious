@@ -27,9 +27,8 @@ LIBS += ${DBUS_LIBS}				\
 	${LIBMCS_LIBS}
 
 install-extra:
-	if [ -h ${DESTDIR}${bindir}/audtool ] ; then ${RM} ${DESTDIR}${bindir}/audtool ; fi
-	mkdir -p ${DESTDIR}${bindir}
-	${LN_S} ${bindir}/audtool2 ${DESTDIR}${bindir}/audtool
+	if test -h "${DESTDIR}${bindir}/audtool" ; then ${RM} "${DESTDIR}${bindir}/audtool" ; fi
+	${LN_S} "${DESTDIR}${bindir}/audtool2" "${DESTDIR}${bindir}/audtool"
 
 uninstall-extra:
-	if [ -h ${DESTDIR}${bindir}/audtool ] ; then ${RM} ${DESTDIR}${bindir}/audtool ; fi
+	if test -h "${DESTDIR}${bindir}/audtool" ; then ${RM} "${DESTDIR}${bindir}/audtool" ; fi
