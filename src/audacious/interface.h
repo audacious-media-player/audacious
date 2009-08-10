@@ -37,6 +37,7 @@ typedef struct {
     void (*show_prefs_window)(void);
     void (*hide_prefs_window)(void);
     void (*destroy_prefs_window)(void);
+    gint (*prefswin_page_new)(GtkWidget *container, gchar *name, gchar *imgurl);
 } InterfaceOps;
 
 typedef struct {

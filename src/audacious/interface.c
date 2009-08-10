@@ -34,6 +34,7 @@ static InterfaceOps interface_ops = {
     .show_prefs_window = show_prefs_window,
     .hide_prefs_window = hide_prefs_window,
     .destroy_prefs_window = destroy_prefs_window,
+    .prefswin_page_new = prefswin_page_new,
 };
 
 static InterfaceCbs interface_cbs = { NULL };
