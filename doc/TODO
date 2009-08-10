@@ -64,33 +64,3 @@ Long-term "TODO"
   * madplug
   * modplug (in progress by ccr)
   * scrobbler (in progress by ccr)
-
-
-Playlist code issues
-====================
-
-ccr rants:
-----------
-I suggest that the whole playlist manipulation should be moved into separate
-thread. What I mean, is that the playlist scanning (e.g. probing for
-metadata) AND adding files into playlist should be in a separate thread.
-Operations on playlist would be somewhat asynchronic.
-
-Adding files would work like this:
-  1) feed URIs to playlist handler thread
-  2) playlist handler notices new URIs and starts checking if they are valid
-     aka probing or other checks.
-  3) valid files/URIs get added to the playlist. unsupported files get discarded.
-
-Possible benefits of this approach:
-  - checking for "can we play this?", which currently happens in main
-     thread and blocks the GUI etc, would now happen asynchronously.
-  - improved user experience: less blocking generally, and it would be even
-     possible to _parallelize_ probing, if we wanted to, getting metadata
-     for multiple files at the same time. (this could be a user-settable
-     option.)
-
-Bad sides:
-  - requires careful design and thread locking .. but that we need anyway.
-  - possibly might make playlist GUI representation harder. I am not sure
-    what effects this might have, feel free to pitch in thoughts...

@@ -5,6 +5,6 @@
       - sending visualization messages to vis plugins
       - GTK
       - DBus
-[1] Playlist rewrite
+[x] Playlist rewrite
 [x] Output plugin API revisit
       - init failure/success
