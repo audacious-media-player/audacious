@@ -43,6 +43,16 @@ gchar *read_iso8859_1(VFSFile *fd, int size)
     return retVal;
 }
 
+gboolean write_utf8(VFSFile *fd, int size,gchar* value)
+{
+/*
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* isoVal = g_convert(value,size,"UTF-8","ISO-8859-1",&bytes_read,&bytes_write,&error);
+    DEBUG("iso 8859-1 : %s\n",retVal);
+*/
+    return FALSE;
+}
 
 gchar* read_unicode(VFSFile *fd, int size)
 {
@@ -252,7 +262,6 @@ Tuple *id3_populate_tuple_from_file(VFSFile *f)
             }
         }
     }
-  //  printTuple(tuple);
     return tuple;
 }
 
