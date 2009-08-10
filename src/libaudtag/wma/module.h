@@ -4,11 +4,11 @@
 
 #include <libaudcore/vfs.h>
 
-gboolean can_handle(VFSFile *fd);
+gboolean wma_can_handle(VFSFile *fd);
 
-Tuple *populate_tuple_from_file(VFSFile *fd);
+Tuple *wma_populate_tuple_from_file(VFSFile *fd);
 
-gboolean write_tuple_to_file(Tuple* tuple, VFSFile *fd);
+gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd);
 
 extern tag_module_t wma;
 #endif

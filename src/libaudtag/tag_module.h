@@ -6,15 +6,16 @@
 G_BEGIN_DECLS
 
 #include <glib.h>
+#include <libmowgli/mowgli.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
         
-mowgli_dictionary_t *tag_modules;
+mowgli_list_t tag_modules;
 int number_of_modules;
 typedef Tuple* pTuple;
 
 typedef struct _module {
-    gboolean(*can_handle) (VFSFile *fd);
+    gboolean(*can_handle_file) (VFSFile *fd);
     pTuple(*populate_tuple_from_file)(VFSFile* fd);
     gboolean(*write_tuple_to_file) (Tuple * tuple, VFSFile *fd);
 } tag_module_t;
