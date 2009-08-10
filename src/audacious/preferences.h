@@ -33,6 +33,7 @@ typedef enum {
     WIDGET_COMBO_BOX,
     WIDGET_BOX,
     WIDGET_NOTEBOOK,
+    WIDGET_SEPARATOR,
 } WidgetType;
 
 typedef enum {
@@ -72,6 +73,7 @@ typedef struct _PreferencesWidget {
 
         struct {
             char *stock_id;
+            gboolean single_line; /* FALSE to enable line wrap */
         } label;
 
         struct {
@@ -100,6 +102,10 @@ typedef struct _PreferencesWidget {
             struct _NotebookTab *tabs;
             gint n_tabs;
         } notebook;
+
+        struct {
+            gboolean horizontal; /* FALSE gives vertical, TRUE gives horizontal separator */
+        } separator;
 
         GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
     } data;

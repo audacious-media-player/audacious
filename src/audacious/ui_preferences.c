@@ -1175,7 +1175,7 @@ on_entry_changed(GtkEntry *entry, gchar **cfg)
         *cfg = g_strdup("");
     else
         *cfg = g_strdup(ret);
-    
+
     if (callback != NULL) callback();
 }
 
@@ -1555,7 +1555,9 @@ create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
     *label = gtk_label_new_with_mnemonic(N_(widget->label));
     gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
 
-    gtk_label_set_line_wrap(GTK_LABEL(*label), TRUE);
+    if (widget->data.label.single_line == FALSE)
+        gtk_label_set_line_wrap(GTK_LABEL(*label), TRUE);
+
     gtk_misc_set_alignment(GTK_MISC(*label), 0, 0.5);
 }
 
@@ -1748,7 +1750,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
                 break;
             case WIDGET_ENTRY:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 12, 0);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 6, 12);
 
                 widget = gtk_hbox_new(FALSE, 6);
 
@@ -1758,7 +1760,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 if (label)
                     gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
                 if (entry)
-                    gtk_box_pack_start(GTK_BOX(widget), entry, FALSE, FALSE, 0);
+                    gtk_box_pack_start(GTK_BOX(widget), entry, TRUE, TRUE, 0);
                 break;
             case WIDGET_COMBO_BOX:
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
@@ -1804,6 +1806,15 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     create_widgets(GTK_BOX(vbox), widgets[x].data.notebook.tabs[i].settings, widgets[x].data.notebook.tabs[i].n_settings);
 
                     gtk_notebook_append_page(GTK_NOTEBOOK(widget), vbox, gtk_label_new(_(widgets[x].data.notebook.tabs[i].name)));
+                }
+                break;
+            case WIDGET_SEPARATOR:
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 6, 0, 0);
+
+                if (widgets[x].data.separator.horizontal == TRUE) {
+                    widget = gtk_hseparator_new();
+                } else {
+                    widget = gtk_vseparator_new();
                 }
                 break;
             default:
