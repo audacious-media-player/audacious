@@ -84,7 +84,7 @@ struct entry
     InputPlugin *decoder;
     Tuple *tuple;
     gchar *title;
-    glong length;
+    gint length;
     gboolean failed;
     gboolean selected;
     gboolean queued;
@@ -101,8 +101,8 @@ struct playlist
     struct index *shuffled;
     gint shuffle_position;
     GList *queued;
-    glong total_length;
-    glong selected_length;
+    gint64 total_length;
+    gint64 selected_length;
 };
 
 static struct index *playlists;
@@ -838,7 +838,7 @@ const gchar *playlist_entry_get_title(gint playlist_num, gint entry_num)
     return (entry->title == NULL) ? entry->filename : entry->title;
 }
 
-glong playlist_entry_get_length(gint playlist_num, gint entry_num)
+gint playlist_entry_get_length(gint playlist_num, gint entry_num)
 {
     DECLARE_PLAYLIST_ENTRY;
 
@@ -1367,7 +1367,7 @@ void playlist_rescan(gint playlist_num)
     PLAYLIST_HAS_CHANGED;
 }
 
-glong playlist_get_total_length(gint playlist_num)
+gint64 playlist_get_total_length(gint playlist_num)
 {
     DECLARE_PLAYLIST;
 
@@ -1376,7 +1376,7 @@ glong playlist_get_total_length(gint playlist_num)
     return playlist->total_length;
 }
 
-glong playlist_get_selected_length(gint playlist_num)
+gint64 playlist_get_selected_length(gint playlist_num)
 {
     DECLARE_PLAYLIST;
 

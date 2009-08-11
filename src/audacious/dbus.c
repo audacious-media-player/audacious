@@ -44,7 +44,7 @@
 struct status_request
 {
     gboolean playing, paused;
-    glong time, length;
+    gint time, length;
     gint bitrate, samplerate, channels;
 };
 
@@ -60,7 +60,7 @@ struct info_request
     gint playlist; /* -1 = active, -2 = playing */
     gint entry; /* -1 = current */
     gchar * filename, * title;
-    glong length;
+    gint length;
 };
 
 struct field_request

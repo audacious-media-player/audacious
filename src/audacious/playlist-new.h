@@ -68,7 +68,7 @@ InputPlugin * playlist_entry_get_decoder (gint playlist, gint entry);
 void playlist_entry_set_tuple (gint playlist, gint entry, Tuple * tuple);
 const Tuple * playlist_entry_get_tuple (gint playlist, gint entry);
 const gchar * playlist_entry_get_title (gint playlist, gint entry);
-glong playlist_entry_get_length (gint playlist, gint entry);
+gint playlist_entry_get_length (gint playlist, gint entry);
 
 void playlist_set_position (gint playlist, gint position);
 gint playlist_get_position (gint playlist);
@@ -96,8 +96,8 @@ void playlist_sort_selected_by_tuple (gint playlist, gint (* compare) (const
 void playlist_reformat_titles ();
 void playlist_rescan (gint playlist);
 
-glong playlist_get_total_length (gint playlist);
-glong playlist_get_selected_length (gint playlist);
+gint64 playlist_get_total_length (gint playlist);
+gint64 playlist_get_selected_length (gint playlist);
 
 void playlist_set_shuffle (gboolean shuffle);
 

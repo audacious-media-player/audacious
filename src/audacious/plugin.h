@@ -386,8 +386,9 @@ struct _AudaciousFuncTableV1 {
     const gchar * (* playlist_entry_get_filename) (gint playlist, gint entry);
     InputPlugin * (* playlist_entry_get_decoder) (gint playlist, gint entry);
     const Tuple * (* playlist_entry_get_tuple) (gint playlist, gint entry);
+    void (* playlist_entry_set_tuple) (gint playlist, gint entry, Tuple * tuple);
     const gchar * (* playlist_entry_get_title) (gint playlist, gint entry);
-    glong (* playlist_entry_get_length) (gint playlist, gint entry);
+    gint (* playlist_entry_get_length) (gint playlist, gint entry);
 
     void (* playlist_set_position) (gint playlist, gint position);
     gint (* playlist_get_position) (gint playlist);
@@ -415,8 +416,8 @@ struct _AudaciousFuncTableV1 {
 
     void (* playlist_rescan) (gint playlist);
 
-    glong (* playlist_get_total_length) (gint playlist);
-    glong (* playlist_get_selected_length) (gint playlist);
+    gint64 (* playlist_get_total_length) (gint playlist);
+    gint64 (* playlist_get_selected_length) (gint playlist);
 
     void (* playlist_set_shuffle) (gboolean shuffle);
 
@@ -447,6 +448,7 @@ struct _AudaciousFuncTableV1 {
      filename);
     gboolean (* playlist_save) (gint playlist, const gchar * filename);
     void (* playlist_add_folder) (const gchar * folder);
+    void (* save_all_playlists) (void);
 
     /* state vars */
     InputPluginData *ip_state;
@@ -594,9 +596,6 @@ struct _AudaciousFuncTableV1 {
 
     void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
 
-    /* move these where they belong next time the API is broken */
-    void (* playlist_entry_set_tuple) (gint playlist, gint entry, Tuple * tuple);
-    void (* save_all_playlists) (void);
 };
 
 
