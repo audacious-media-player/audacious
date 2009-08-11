@@ -105,6 +105,7 @@ typedef struct _Tuple {
 
 
 Tuple *tuple_new(void);
+Tuple *tuple_copy(const Tuple *);
 void tuple_set_filename(Tuple *tuple, const gchar *filename);
 Tuple *tuple_new_from_filename(const gchar *filename);
 gboolean tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string);

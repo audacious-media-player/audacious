@@ -345,7 +345,10 @@ static gboolean update(void *unused)
 static void queue_update(void)
 {
     if (update_source == 0)
+    {
+        fprintf(stderr, "queue_update()\n");
         update_source = g_idle_add_full(G_PRIORITY_HIGH_IDLE, update, NULL, NULL);
+    }
 }
 
 static Tuple * get_tuple (const gchar * filename, InputPlugin * decoder)

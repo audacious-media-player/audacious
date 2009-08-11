@@ -116,17 +116,10 @@ tuple_destroy(gpointer data)
     TUPLE_UNLOCK_WRITE();
 }
 
-/**
- * Allocates a new empty #Tuple structure. Must be freed via tuple_free().
- *
- * @return Pointer to newly allocated Tuple.
- */
-Tuple *
-tuple_new(void)
+static Tuple *
+tuple_new_unlocked(void)
 {
     Tuple *tuple;
-
-    TUPLE_LOCK_WRITE();
 
     if (tuple_heap == NULL)
     {
@@ -142,6 +135,23 @@ tuple_new(void)
     mowgli_object_init(mowgli_object(tuple), NULL, &tuple_klass, NULL);
 
     tuple->dict = mowgli_dictionary_create(g_ascii_strcasecmp);
+
+    return tuple;
+}
+
+/**
+ * Allocates a new empty #Tuple structure. Must be freed via tuple_free().
+ *
+ * @return Pointer to newly allocated Tuple.
+ */
+Tuple *
+tuple_new(void)
+{
+    Tuple *tuple;
+
+    TUPLE_LOCK_WRITE();
+    
+    tuple = tuple_new_unlocked();
 
     TUPLE_UNLOCK_WRITE();
     return tuple;
@@ -195,6 +205,69 @@ tuple_set_filename(Tuple *tuple, const gchar *filename)
         tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, period + 1);
 
     g_free(local);
+}
+
+/**
+ * Creates a copy of given Tuple structure, with copied data.
+ *
+ * @param[in] orig Original tuple to be copied.
+ * @return Pointer to newly allocated Tuple.
+ */
+static TupleValue *
+tuple_copy_value(TupleValue *src)
+{
+    TupleValue *res;
+
+    if (src == NULL) return NULL;
+
+    res = mowgli_heap_alloc(tuple_value_heap);
+    switch (src->type) {
+    case TUPLE_STRING:
+        res->value.string = stringpool_get(src->value.string);
+        break;
+    case TUPLE_INT:
+        res->value.integer = src->value.integer;
+        break;
+    default:
+        return NULL;
+    }
+    return res;
+}
+
+Tuple *
+tuple_copy(const Tuple *src)
+{
+    Tuple *dst;
+    mowgli_dictionary_iteration_state_t state;
+    mowgli_dictionary_elem_t *elem;
+    gint i;
+
+    TUPLE_LOCK_WRITE();
+
+    dst = tuple_new_unlocked();
+
+    /* Copy basic fields */
+    for (i = 0; i < FIELD_LAST; i++)
+        dst->values[i] = tuple_copy_value(src->values[i]);
+
+    /* Copy dictionary contents */
+    MOWGLI_DICTIONARY_FOREACH(elem, &state, src->dict)
+    {
+        TupleValue *value = tuple_copy_value(elem->data);
+        if (value != NULL && elem->key != NULL)
+            mowgli_dictionary_add(dst->dict, elem->key, value);
+    }
+
+    /* Copy subtune number information */
+    if (src->subtunes && src->nsubtunes > 0)
+    {
+        dst->nsubtunes = src->nsubtunes;
+        dst->subtunes = g_new(gint, dst->nsubtunes);
+        memcpy(dst->subtunes, src->subtunes, sizeof(gint) * dst->nsubtunes);
+    }
+
+    TUPLE_UNLOCK_WRITE();
+    return dst;
 }
 
 /**
