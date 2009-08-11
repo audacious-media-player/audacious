@@ -66,30 +66,14 @@ static mowgli_heap_t *tuple_heap = NULL;
 static mowgli_heap_t *tuple_value_heap = NULL;
 static mowgli_object_class_t tuple_klass;
 
-
-#define TUPLE_LOCKING
-//#define TUPLE_DEBUG
-
-#ifdef TUPLE_LOCKING
+/** Global R/W lock for preserve data consistency of heaps */
 static GStaticRWLock tuple_rwlock = G_STATIC_RW_LOCK_INIT;
-#  ifdef TUPLE_DEBUG
-#    define TUPDEB(X) fprintf(stderr, "TUPLE_" X "(%s:%d)\n", __FUNCTION__, __LINE__)
-#    define TUPLE_LOCK_WRITE(XX)    do { TUPDEB("LOCK_WRITE"); g_static_rw_lock_writer_lock(&tuple_rwlock); } while (0)
-#    define TUPLE_UNLOCK_WRITE(XX)  do { TUPDEB("UNLOCK_WRITE"); g_static_rw_lock_writer_unlock(&tuple_rwlock); } while (0)
-#    define TUPLE_LOCK_READ(XX)     do { TUPDEB("LOCK_READ"); g_static_rw_lock_reader_lock(&tuple_rwlock); } while (0)
-#    define TUPLE_UNLOCK_READ(XX)   do { TUPDEB("UNLOCK_READ"); g_static_rw_lock_reader_unlock(&tuple_rwlock); } while(0)
-#  else
-#    define TUPLE_LOCK_WRITE(XX)    g_static_rw_lock_writer_lock(&tuple_rwlock)
-#    define TUPLE_UNLOCK_WRITE(XX)  g_static_rw_lock_writer_unlock(&tuple_rwlock)
-#    define TUPLE_LOCK_READ(XX)     g_static_rw_lock_reader_lock(&tuple_rwlock)
-#    define TUPLE_UNLOCK_READ(XX)   g_static_rw_lock_reader_unlock(&tuple_rwlock)
-#  endif
-#else
-#  define TUPLE_LOCK_WRITE(XX)
-#  define TUPLE_UNLOCK_WRITE(XX)
-#  define TUPLE_LOCK_READ(XX)
-#  define TUPLE_UNLOCK_READ(XX)
-#endif
+
+#define TUPLE_LOCK_WRITE(X)     g_static_rw_lock_writer_lock(&tuple_rwlock)
+#define TUPLE_UNLOCK_WRITE(X)   g_static_rw_lock_writer_unlock(&tuple_rwlock)
+#define TUPLE_LOCK_READ(X)      g_static_rw_lock_reader_lock(&tuple_rwlock)
+#define TUPLE_UNLOCK_READ(X)    g_static_rw_lock_reader_unlock(&tuple_rwlock)
+
 
 /* iterative destructor of tuple values. */
 static void
