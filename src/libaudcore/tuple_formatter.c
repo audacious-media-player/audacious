@@ -42,6 +42,7 @@
 
 #ifdef TUPLE_USE_COMPILER
 # include "tuple_compiler.h"
+static GStaticRWLock tuplec_rwlock = G_STATIC_RW_LOCK_INIT;
 #endif
 
 #ifdef _DEBUG
@@ -544,6 +545,7 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
     }
 
 #ifdef TUPLE_USE_COMPILER
+    g_static_rw_lock_writer_lock(&tuplec_rwlock);
     if (last_string == NULL ||
         (last_string != NULL && strcmp(last_string, string)))
     {
@@ -559,10 +561,10 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
         last_string = g_strdup(string);
         last_ev = tuple_formatter_compile(last_ctx, last_string);
         if (last_ctx->iserror) {
-            fprintf(stderr, "[TuplezCC]: %s", last_ctx->errmsg);
+            g_warning("[TuplezCC]: %s", last_ctx->errmsg);
         }
         if (!last_ev) {
-            fprintf(stderr, "[TuplezCC]: Compilation failed!\n");
+            g_warning("[TuplezCC]: Compilation failed!\n");
         }
     }
 
@@ -575,10 +577,15 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 #endif
 
     tuple_evalctx_reset(last_ctx);
+    g_static_rw_lock_writer_unlock(&tuplec_rwlock);
+
+    g_static_rw_lock_reader_lock(&tuplec_rwlock);
     result = tuple_formatter_eval(last_ctx, last_ev, tuple);
     if (last_ctx->iserror) {
-        fprintf(stderr, "[TuplezEV]: %s", last_ctx->errmsg);
+        g_warning("[TuplezEV]: %s", last_ctx->errmsg);
     }
+    g_static_rw_lock_reader_unlock(&tuplec_rwlock);
+
     return result;
 #else
     return tuple_formatter_process_construct(tuple, string);
