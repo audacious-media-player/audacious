@@ -480,8 +480,13 @@ static void check_scanned (struct playlist * playlist, struct entry * entry)
     METADATA_WILL_CHANGE;
 
     if (entry->tuple == NULL && ! entry->failed) /* scanner did it for us? */
+    {
         entry_set_tuple (playlist, entry, get_tuple (entry->filename,
          entry->decoder));
+
+        if (entry->tuple == NULL)
+            entry->failed = TRUE;
+    }
 
     METADATA_HAS_CHANGED;
 }
