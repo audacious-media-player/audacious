@@ -362,6 +362,10 @@ void scan_receive (void)
     struct entry * entry = index_get (active_playlist->entries, scan_position);
 
     entry_set_tuple (active_playlist, entry, scan_tuple);
+
+    if (scan_tuple == NULL)
+        entry->failed = TRUE;
+
     scan_filename = NULL;
     scan_decoder = NULL;
     scan_tuple = NULL;
