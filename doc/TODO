@@ -24,6 +24,9 @@ Long-term "TODO"
   trivial either .. some plugins are probably impossible.
   * basically plugin init() should allocate / init a state struct to
     be used in all operations, etc.
+  * context support should be added to plugin functions.
+  * question: issues with plugins that use non-re-entrant library backends
+    etc?
 
 
 - URIs with "?" are stripped (the subtune support uses that), which is bad,
