@@ -14,7 +14,7 @@ APEv2Header *readAPEHeader(VFSFile *fd)
 {
     APEv2Header *header = g_new0(APEv2Header,1);
     header->preamble = read_ASCII(fd,8);
-    
+    return NULL;
 }
 
 gboolean ape_can_handle_file(VFSFile *f)
