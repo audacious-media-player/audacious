@@ -27,4 +27,7 @@ void printTuple(Tuple *tuple);
 
 
 const gchar* get_complete_filepath(Tuple *tuple);
+
+gchar *read_ASCII(VFSFile *fd, int size);
+
 #endif		   

@@ -46,8 +46,6 @@ guint32 read_int32(VFSFile *fd);
 
 guint32 read_int16(VFSFile *fd);
 
-gchar *read_ASCII(VFSFile *fd, int size);
-
 gchar *read_iso8859_1(VFSFile *fd, int size);
 
 gchar* read_unicode(VFSFile *fd, int size);
