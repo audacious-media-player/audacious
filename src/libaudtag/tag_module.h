@@ -16,7 +16,7 @@ typedef Tuple* pTuple;
 
 typedef struct _module {
     gboolean(*can_handle_file) (VFSFile *fd);
-    pTuple(*populate_tuple_from_file)(VFSFile* fd);
+    pTuple(*populate_tuple_from_file)(Tuple *tuple, VFSFile* fd);
     gboolean(*write_tuple_to_file) (Tuple * tuple, VFSFile *fd);
 } tag_module_t;
 

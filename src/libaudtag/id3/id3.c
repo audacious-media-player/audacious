@@ -221,12 +221,12 @@ gboolean id3_can_handle_file(VFSFile *f)
 
 
 
-Tuple *id3_populate_tuple_from_file(VFSFile *f)
+Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
 {
     //reset file position
     vfs_fseek(f,0,SEEK_SET);
     DEBUG("id3 populate tuple \n");
-    Tuple *tuple = tuple_new_from_filename(f->uri);
+//    Tuple *tuple = tuple_new_from_filename(f->uri);
     ExtendedHeader *extHeader;
     ID3v2Header *header = readHeader(f);
     int pos = 0;
@@ -263,7 +263,7 @@ Tuple *id3_populate_tuple_from_file(VFSFile *f)
             }break;
             case ID3_TIME:
             {
-                //tuple = assocIntInfo(tuple,f,FIELD_T,*header);
+             //   tuple = assocIntInfo(tuple,f,FIELD_LENGTH,*header);
             }break;
             case ID3_LENGTH:
             {
@@ -344,9 +344,8 @@ void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids)
     
 }
 
-void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
+void add_newISO5589_1FrameFromString(const gchar *value,int id3_field)
 {
-    const gchar *value = tuple_get_string(tuple,field,NULL);
     GError *error = NULL;
     gsize bytes_read = 0 , bytes_write = 0;
     gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
@@ -362,9 +361,48 @@ void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
     mowgli_dictionary_add(frames,header->frame_id,frame);
 }
 
+
+void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
+{
+    const gchar *value = tuple_get_string(tuple,field,NULL);
+    add_newISO5589_1FrameFromString(value,id3_field);
+}
+
+
+void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field)
+{
+    int intvalue = tuple_get_int(tuple,field,NULL);
+    gchar *value = g_strdup_printf("%d",intvalue);
+    add_newISO5589_1FrameFromString(value,id3_field);
+
+}
+
+
+
 void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field)
 {
     const gchar *value = tuple_get_string(tuple,field,NULL);
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
+
+    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
+    if(frame != NULL)
+    {
+        frame->header->size = strlen(retVal)+1;
+        gchar* buf = g_new0(gchar,frame->header->size+1);
+        memcpy(buf+1,retVal,frame->header->size);
+        frame->frame_body = buf;
+    }
+    else
+        add_newFrameFromTupleStr(tuple,field,id3_field);
+
+}
+
+void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field)
+{
+    int intvalue = tuple_get_int(tuple,field,NULL);
+    gchar *value = g_strdup_printf("%d",intvalue);
     GError *error = NULL;
     gsize bytes_read = 0 , bytes_write = 0;
     gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
@@ -477,10 +515,13 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
        add_frameFromTupleStr(tuple,FIELD_COMMENT,ID3_COMMENT);
 
     if(tuple_get_string(tuple,FIELD_GENRE,NULL))
-        add_frameFromTupleStr(tuple,FIELD_GENRE,ID3_GENRE);
-    
+        add_frameFromTupleStr(tuple,FIELD_GENRE,ID3_GENRE);   
 
+    if(tuple_get_int(tuple,FIELD_YEAR,NULL) !=0 )
+        add_frameFromTupleInt(tuple,FIELD_YEAR,ID3_YEAR);
 
+    if(tuple_get_int(tuple,FIELD_LENGTH,NULL) != 0)
+        add_frameFromTupleInt(tuple,FIELD_LENGTH,ID3_LENGTH);
 
     VFSFile *tmp = vfs_fopen("file:///home/paula/musepack/tmp.mpc","w+");
     int oldSize = header->size;
@@ -494,5 +535,5 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     copyAudioToFile(f,tmp,oldSize);
 
     vfs_fclose(tmp);
-    return FALSE;
+    return TRUE;
 }

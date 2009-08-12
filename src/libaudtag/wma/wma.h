@@ -18,7 +18,7 @@ typedef struct contentField {
 
 gboolean wma_can_handle_file(VFSFile *f);
 
-Tuple *wma_populate_tuple_from_file(VFSFile *f);
+Tuple *wma_populate_tuple_from_file(Tuple *tuple, VFSFile *f);
 
 gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
