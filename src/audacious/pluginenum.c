@@ -393,19 +393,29 @@ static Plugin *plugin_get_current(void)
 static void set_pvt_data(Plugin * plugin, gpointer data)
 {
     mowgli_dictionary_elem_t *elem;
+    gchar *base_filename;
 
-    elem = mowgli_dictionary_find(pvt_data_dict, g_path_get_basename(plugin->filename));
+    base_filename = g_path_get_basename(plugin->filename);
+    elem = mowgli_dictionary_find(pvt_data_dict, base_filename);
     if (elem == NULL)
-        mowgli_dictionary_add(pvt_data_dict, g_path_get_basename(plugin->filename), data);
+        mowgli_dictionary_add(pvt_data_dict, base_filename, data);
     else
         elem->data = data;
+
+    g_free(base_filename);
 }
 
 static gpointer get_pvt_data(void)
 {
     Plugin *cur_p = plugin_get_current();
+    gchar *base_filename;
+    gpointer result;
 
-    return mowgli_dictionary_retrieve(pvt_data_dict, g_path_get_basename(cur_p->filename));
+    base_filename = g_path_get_basename(cur_p->filename);
+
+    result = mowgli_dictionary_retrieve(pvt_data_dict, base_filename);
+    g_free(base_filename);
+    return result;
 }
 
 static gint inputlist_compare_func(gconstpointer a, gconstpointer b)
@@ -493,6 +503,9 @@ Plugin *plugin_get_plugin(const gchar * filename)
 static void input_plugin_init(Plugin * plugin)
 {
     InputPlugin *p = INPUT_PLUGIN(plugin);
+    gchar *base_filename;
+
+    base_filename = g_path_get_basename(p->filename);
 
     p->set_info = playback_set_info;
     p->set_info_text = playback_set_title;
@@ -503,7 +516,8 @@ static void input_plugin_init(Plugin * plugin)
 
     /* XXX: we need something better than p->filename if plugins
        will eventually provide multiple plugins --nenolod */
-    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, base_filename, p);
+    g_free(base_filename);
 
     /* build the extension hash table */
     gint i;
@@ -528,34 +542,58 @@ static void input_plugin_init(Plugin * plugin)
 static void output_plugin_init(Plugin * plugin)
 {
     OutputPlugin *p = OUTPUT_PLUGIN(plugin);
+    gchar *base_filename;
+
+    base_filename = g_path_get_basename(p->filename);
+
     op_data.output_list = g_list_append(op_data.output_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, base_filename, p);
+
+    g_free(base_filename);
 }
 
 static void effect_plugin_init(Plugin * plugin)
 {
     EffectPlugin *p = EFFECT_PLUGIN(plugin);
+    gchar *base_filename;
+
+    base_filename = g_path_get_basename(p->filename);
+
     ep_data.effect_list = g_list_append(ep_data.effect_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, base_filename, p);
+
+    g_free(base_filename);
 }
 
 static void general_plugin_init(Plugin * plugin)
 {
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
+    gchar *base_filename;
+
+    base_filename = g_path_get_basename(plugin->filename);
+
     gp_data.general_list = g_list_append(gp_data.general_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, base_filename, p);
+
+    g_free(base_filename);
 }
 
 static void vis_plugin_init(Plugin * plugin)
 {
     VisPlugin *p = VIS_PLUGIN(plugin);
+    gchar *base_filename;
+
+    base_filename = g_path_get_basename(plugin->filename);
+
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
 
-    mowgli_dictionary_add(plugin_dict, g_path_get_basename(p->filename), p);
+    mowgli_dictionary_add(plugin_dict, base_filename, p);
+
+    g_free(base_filename);
 }
 
 /*******************************************************************/
@@ -821,26 +859,29 @@ void plugin_system_init(void)
                 if (op->init)
                 {
                     OutputPluginInitStatus ret = op->init();
+                    ghcar *base_filename = g_path_get_basename(op->filename);
                     if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
-                    {
-                        g_message("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n", g_path_get_basename(op->filename));
-                    }
-                    else if (ret == OUTPUT_PLUGIN_INIT_FAIL)
-                    {
-                        g_message("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n", g_path_get_basename(op->filename));
-                    }
-                    else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-                    {
-                        if (!op_data.current_output_plugin)
-                            op_data.current_output_plugin = op;
-                    }
-                    else if (!op_data.current_output_plugin)
-                    {
-                        g_message("Plugin %s did not report status, and no plugin has worked yet. Do you still need to convert it? Selecting for now...\n", g_path_get_basename(op->filename));
+                        if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
+                        {
+                            g_message("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n", base_filename);
+                        }
+                        else if (ret == OUTPUT_PLUGIN_INIT_FAIL)
+                        {
+                            g_message("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n", base_filename);
+                        }
+                        else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+                        {
+                            if (!op_data.current_output_plugin)
+                                op_data.current_output_plugin = op;
+                        }
+                        else if (!op_data.current_output_plugin)
+                        {
+                            g_message("Plugin %s did not report status, and no plugin has worked yet. Do you still need to convert it? Selecting for now...\n", base_filename);
 
-                        if (!op_data.current_output_plugin)
-                            op_data.current_output_plugin = op;
-                    }
+                            if (!op_data.current_output_plugin)
+                                op_data.current_output_plugin = op;
+                        }
+                    g_free(base_filename);
                 }
             }
         }
@@ -849,6 +890,8 @@ void plugin_system_init(void)
     {
         for (node = op_data.output_list; node; node = g_list_next(node))
         {
+            gchar *plugin_base_filename;
+            gchar *op_base_filename;
             op = OUTPUT_PLUGIN(node->data);
 
             if (op->init)
@@ -857,8 +900,12 @@ void plugin_system_init(void)
                 op->init();
             }
 
-            if (!g_ascii_strcasecmp(g_path_get_basename(cfg.outputplugin), g_path_get_basename(op->filename)))
+            plugin_base_filename = g_path_get_basename(cfg.outputplugin);
+            op_base_filename = g_path_get_basename(op->filename);
+            if (!g_ascii_strcasecmp(plugin_base_filename, op_base_filename))
                 op_data.current_output_plugin = op;
+            g_free(plugin_base_filename);
+            g_free(op_base_filename);
         }
     }
 

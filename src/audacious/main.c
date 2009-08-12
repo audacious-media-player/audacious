@@ -208,6 +208,8 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
             g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"), (*argv)[0], error->message, (*argv)[0]);
             exit(EXIT_FAILURE);
         }
+
+    g_free(context);
 }
 
 static void handle_cmd_line_filenames(gboolean is_running)
