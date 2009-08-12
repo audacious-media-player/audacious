@@ -17,6 +17,10 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
+/**
+ * @file tuple.c
+ * @brief Basic Tuple handling API.
+ */
 
 #include <glib.h>
 #include <mowgli.h>
@@ -69,11 +73,16 @@ static mowgli_object_class_t tuple_klass;
 /** Global R/W lock for preserve data consistency of heaps */
 static GStaticRWLock tuple_rwlock = G_STATIC_RW_LOCK_INIT;
 
+//@{
+/**
+ * Convenience macro for read/write locking of the globally
+ * used internal Tuple system structures.
+ */
 #define TUPLE_LOCK_WRITE(X)     g_static_rw_lock_writer_lock(&tuple_rwlock)
 #define TUPLE_UNLOCK_WRITE(X)   g_static_rw_lock_writer_unlock(&tuple_rwlock)
 #define TUPLE_LOCK_READ(X)      g_static_rw_lock_reader_lock(&tuple_rwlock)
 #define TUPLE_UNLOCK_READ(X)    g_static_rw_lock_reader_unlock(&tuple_rwlock)
-
+//@}
 
 /* iterative destructor of tuple values. */
 static void
