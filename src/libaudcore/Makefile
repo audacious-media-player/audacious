@@ -12,7 +12,8 @@ SRCS = audstrings.c \
        vfs_buffer.c \
        vfs_buffered_file.c \
        vfs_common.c \
-       md5.c
+       md5.c \
+       log.c
 
 INCLUDES = audstrings.h \
            index.h \
@@ -23,7 +24,8 @@ INCLUDES = audstrings.h \
            vfs.h \
 	   vfs_buffer.h \
 	   vfs_buffered_file.h \
-	   md5.h
+	   md5.h \
+	   log.h
 
 include ../../buildsys.mk
 include ../../extra.mk
