@@ -859,28 +859,29 @@ void plugin_system_init(void)
                 if (op->init)
                 {
                     OutputPluginInitStatus ret = op->init();
-                    ghcar *base_filename = g_path_get_basename(op->filename);
-                    if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
-                        if (ret == OUTPUT_PLUGIN_INIT_NO_DEVICES)
-                        {
-                            g_message("Plugin %s reports no devices. Attempting to avert disaster, trying others.\n", base_filename);
-                        }
-                        else if (ret == OUTPUT_PLUGIN_INIT_FAIL)
-                        {
-                            g_message("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.\n", base_filename);
-                        }
-                        else if (ret == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-                        {
-                            if (!op_data.current_output_plugin)
-                                op_data.current_output_plugin = op;
-                        }
-                        else if (!op_data.current_output_plugin)
-                        {
-                            g_message("Plugin %s did not report status, and no plugin has worked yet. Do you still need to convert it? Selecting for now...\n", base_filename);
-
-                            if (!op_data.current_output_plugin)
-                                op_data.current_output_plugin = op;
-                        }
+                    gchar *base_filename = g_path_get_basename(op->filename);
+                    switch (ret) {
+                    case OUTPUT_PLUGIN_INIT_NO_DEVICES:
+                        g_message("Plugin %s reports no devices. Attempting to avert disaster, trying others.",
+                            base_filename);
+                        break;
+                    case OUTPUT_PLUGIN_INIT_FAIL:
+                        g_message("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.",
+                            base_filename);
+                        break;
+                    case OUTPUT_PLUGIN_INIT_FOUND_DEVICES:
+                        g_message("Plugin %s found devices.", base_filename);
+                        if (!op_data.current_output_plugin)
+                            op_data.current_output_plugin = op;
+                        break;
+                    default:
+                        g_message("Plugin %s did not report status, and no plugin has worked yet. "
+                            "Do you still need to convert it? Selecting for now...",
+                            base_filename);
+                        if (!op_data.current_output_plugin)
+                            op_data.current_output_plugin = op;
+                        break;
+                    }
                     g_free(base_filename);
                 }
             }
