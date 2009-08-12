@@ -389,7 +389,7 @@ aud_log_line(const gchar *ctx, gint level, const gchar *file, const gchar *func,
     va_list ap;
 
     va_start(ap, fmt);
-    msg = g_strdup_printf(fmt, ap);
+    msg = g_strdup_vprintf(fmt, ap);
     va_end(ap);
 
     str = g_strconcat(info, msg, NULL);
