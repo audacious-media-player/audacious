@@ -71,7 +71,8 @@
 
 static const gchar *application_name = N_("Audacious");
 
-struct _AudCmdLineOpt {
+struct _AudCmdLineOpt
+{
     gchar **filenames;
     gint session;
     gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
@@ -85,9 +86,9 @@ struct _AudCmdLineOpt {
 };
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
-static AudCmdLineOpt options = {};
+static AudCmdLineOpt options = { };
 
-gchar *aud_paths[BMP_PATH_COUNT] = {};
+gchar *aud_paths[BMP_PATH_COUNT] = { };
 
 #ifdef USE_DBUS
 MprisPlayer *mpris;
@@ -95,14 +96,12 @@ MprisPlayer *mpris;
 
 static gboolean start_playback = FALSE;
 
-static void
-print_version(void)
+static void print_version(void)
 {
     g_printf("%s %s [%s]\n", _(application_name), VERSION, build_stamp);
 }
 
-static void
-aud_make_user_dir(void)
+static void aud_make_user_dir(void)
 {
     const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 
@@ -113,8 +112,7 @@ aud_make_user_dir(void)
     make_directory(aud_paths[BMP_PATH_PLAYLISTS_DIR], mode755);
 }
 
-static void
-aud_free_paths(void)
+static void aud_free_paths(void)
 {
     gint i;
 
@@ -125,54 +123,34 @@ aud_free_paths(void)
     }
 }
 
-static void
-aud_init_paths()
+static void aud_init_paths()
 {
     gchar *xdg_config_home;
     gchar *xdg_data_home;
     gchar *xdg_cache_home;
 
-    xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL
-        ? g_build_filename(g_get_home_dir(), ".config", NULL)
-        : g_strdup(getenv("XDG_CONFIG_HOME")));
-    xdg_data_home = (getenv("XDG_DATA_HOME") == NULL
-        ? g_build_filename(g_get_home_dir(), ".local", "share", NULL)
-        : g_strdup(getenv("XDG_DATA_HOME")));
-    xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL
-        ? g_build_filename(g_get_home_dir(), ".cache", NULL)
-        : g_strdup(getenv("XDG_CACHE_HOME")));
+    xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".config", NULL) : g_strdup(getenv("XDG_CONFIG_HOME")));
+    xdg_data_home = (getenv("XDG_DATA_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".local", "share", NULL) : g_strdup(getenv("XDG_DATA_HOME")));
+    xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".cache", NULL) : g_strdup(getenv("XDG_CACHE_HOME")));
 
-    aud_paths[BMP_PATH_USER_DIR] =
-        g_build_filename(xdg_config_home, "audacious", NULL);
-    aud_paths[BMP_PATH_USER_SKIN_DIR] =
-        g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
-    aud_paths[BMP_PATH_USER_PLUGIN_DIR] =
-        g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
+    aud_paths[BMP_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
+    aud_paths[BMP_PATH_USER_SKIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
+    aud_paths[BMP_PATH_USER_PLUGIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
 
-    aud_paths[BMP_PATH_SKIN_THUMB_DIR] =
-        g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
+    aud_paths[BMP_PATH_SKIN_THUMB_DIR] = g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
 
-    aud_paths[BMP_PATH_PLAYLISTS_DIR] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlists", NULL);
+    aud_paths[BMP_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlists", NULL);
 
-    aud_paths[BMP_PATH_CONFIG_FILE] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "config", NULL);
+    aud_paths[BMP_PATH_CONFIG_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "config", NULL);
 #ifdef HAVE_XSPF_PLAYLIST
-    aud_paths[BMP_PATH_PLAYLIST_FILE] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR],
-        "playlist.xspf", NULL);
+    aud_paths[BMP_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlist.xspf", NULL);
 #else
-    aud_paths[BMP_PATH_PLAYLIST_FILE] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR],
-        "playlist.m3u", NULL);
+    aud_paths[BMP_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlist.m3u", NULL);
 #endif
-    aud_paths[BMP_PATH_ACCEL_FILE] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "accels", NULL);
-    aud_paths[BMP_PATH_LOG_FILE] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "log", NULL);
+    aud_paths[BMP_PATH_ACCEL_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "accels", NULL);
+    aud_paths[BMP_PATH_LOG_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "log", NULL);
 
-    aud_paths[BMP_PATH_GTKRC_FILE] =
-        g_build_filename(aud_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
+    aud_paths[BMP_PATH_GTKRC_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
 
     g_free(xdg_config_home);
     g_free(xdg_data_home);
@@ -197,14 +175,13 @@ static GOptionEntry cmd_entries[] = {
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
     {"interface", 'i', 0, G_OPTION_ARG_STRING, &options.interface, N_("Interface to use (use -i list to view available interfaces)"), NULL},
 #ifdef GDK_WINDOWING_QUARTZ
-    {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL}, /* Make this hidden */
+    {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL},   /* Make this hidden */
 #endif
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
     {NULL},
 };
 
-static void
-parse_cmd_line_options(gint *argc, gchar ***argv)
+static void parse_cmd_line_options(gint * argc, gchar *** argv)
 {
     GOptionContext *context;
     GError *error = NULL;
@@ -213,8 +190,8 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
     options.session = -1;
 
     /* If audacious2 is run with no arguments, bring it to the top. This is
-     handy when the user forgets that Audacious is already running. */
-    if (* argc == 1)
+       handy when the user forgets that Audacious is already running. */
+    if (*argc == 1)
         options.mainwin = 1;
 
     context = g_option_context_new(_("- play multimedia files"));
@@ -225,17 +202,15 @@ parse_cmd_line_options(gint *argc, gchar ***argv)
 #endif
 
     if (!g_option_context_parse(context, argc, argv, &error))
-        /* checking for MacOS X -psn_0_* errors*/
-        if (error->message && !g_strrstr(error->message,"-psn_0_"))
+        /* checking for MacOS X -psn_0_* errors */
+        if (error->message && !g_strrstr(error->message, "-psn_0_"))
         {
-            g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
-                       (*argv)[0], error->message, (*argv)[0]);
+            g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"), (*argv)[0], error->message, (*argv)[0]);
             exit(EXIT_FAILURE);
         }
 }
 
-static void
-handle_cmd_line_filenames(gboolean is_running)
+static void handle_cmd_line_filenames(gboolean is_running)
 {
     gint i, pos = 0;
     gchar *working, **filenames = options.filenames;
@@ -248,13 +223,15 @@ handle_cmd_line_filenames(gboolean is_running)
         return;
 
     working = g_get_current_dir();
-    for (i = 0; filenames[i] != NULL; i++) {
+    for (i = 0; filenames[i] != NULL; i++)
+    {
         gchar *uri;
         if (strstr(filenames[i], "://"))
-            uri = g_strdup(filenames [i]);
+            uri = g_strdup(filenames[i]);
         else if (g_path_is_absolute(filenames[i]))
-            uri = g_filename_to_uri(filenames [i], NULL, NULL);
-        else {
+            uri = g_filename_to_uri(filenames[i], NULL, NULL);
+        else
+        {
             gchar *absolute = g_build_filename(working, filenames[i], NULL);
             uri = g_filename_to_uri(absolute, NULL, NULL);
             g_free(absolute);
@@ -284,14 +261,13 @@ handle_cmd_line_filenames(gboolean is_running)
         for (i = fns; i != NULL; i = i->next)
             audacious_remote_playlist_add_url_string(session, i->data);
 
-        if (options.enqueue && options.play &&
-            audacious_remote_get_playlist_length(session) > pos)
+        if (options.enqueue && options.play && audacious_remote_get_playlist_length(session) > pos)
             audacious_remote_set_playlist_pos(session, pos);
 
         if (!options.enqueue)
             audacious_remote_play(session);
     }
-    else /* !is_running */
+    else                        /* !is_running */
 #endif
     {
         if (options.enqueue_to_temp)
@@ -309,79 +285,80 @@ handle_cmd_line_filenames(gboolean is_running)
 
         drct_pl_add(fns);
 
-        if (options.enqueue && options.play &&
-            drct_pl_get_length() > pos)
+        if (options.enqueue && options.play && drct_pl_get_length() > pos)
             drct_pl_set_pos(pos);
-    } /* !is_running */
+    }                           /* !is_running */
 
     g_list_foreach(fns, (GFunc) g_free, NULL);
     g_list_free(fns);
 }
 
-static void
-handle_cmd_line_options_first (void) {
+static void handle_cmd_line_options_first(void)
+{
 #ifdef USE_DBUS
-   DBusGProxy * session;
+    DBusGProxy *session;
 #endif
 
-   if (options.version) {
-      print_version ();
-      exit (EXIT_SUCCESS);
-   }
+    if (options.version)
+    {
+        print_version();
+        exit(EXIT_SUCCESS);
+    }
 
 #ifdef USE_DBUS
-   session = audacious_get_dbus_proxy ();
-   if (audacious_remote_is_running (session)) {
-      handle_cmd_line_filenames (TRUE);
-      if (options.rew)
-         audacious_remote_playlist_prev (session);
-      if (options.play)
-         audacious_remote_play (session);
-      if (options.pause)
-         audacious_remote_pause (session);
-      if (options.stop)
-         audacious_remote_stop (session);
-      if (options.fwd)
-         audacious_remote_playlist_next (session);
-      if (options.play_pause)
-         audacious_remote_play_pause (session);
-      if (options.show_jump_box)
-         audacious_remote_show_jtf_box (session);
-      if (options.mainwin)
-         audacious_remote_main_win_toggle (session, 1);
-      if (options.activate)
-         audacious_remote_activate (session);
-      exit (EXIT_SUCCESS);
-   }
+    session = audacious_get_dbus_proxy();
+    if (audacious_remote_is_running(session))
+    {
+        handle_cmd_line_filenames(TRUE);
+        if (options.rew)
+            audacious_remote_playlist_prev(session);
+        if (options.play)
+            audacious_remote_play(session);
+        if (options.pause)
+            audacious_remote_pause(session);
+        if (options.stop)
+            audacious_remote_stop(session);
+        if (options.fwd)
+            audacious_remote_playlist_next(session);
+        if (options.play_pause)
+            audacious_remote_play_pause(session);
+        if (options.show_jump_box)
+            audacious_remote_show_jtf_box(session);
+        if (options.mainwin)
+            audacious_remote_main_win_toggle(session, 1);
+        if (options.activate)
+            audacious_remote_activate(session);
+        exit(EXIT_SUCCESS);
+    }
 #endif
 
-   if (options.interface == NULL) {
-      mcs_handle_t * db = cfg_db_open ();
-      cfg_db_get_string (db, NULL, "interface", & options.interface);
-      if (options.interface == NULL)
-         options.interface = g_strdup ("skinned");
-   }
+    if (options.interface == NULL)
+    {
+        mcs_handle_t *db = cfg_db_open();
+        cfg_db_get_string(db, NULL, "interface", &options.interface);
+        if (options.interface == NULL)
+            options.interface = g_strdup("skinned");
+    }
 }
 
-static void
-handle_cmd_line_options (void) {
-   handle_cmd_line_filenames (FALSE);
-   if (options.rew)
-      drct_pl_prev ();
-   if (options.play || options.play_pause)
-       start_playback = TRUE;
-   if (options.fwd)
-      drct_pl_next ();
-   if (options.show_jump_box)
-      drct_jtf_show ();
-   if (options.mainwin)
-      drct_main_win_toggle (TRUE);
-   if (options.activate)
-      drct_activate ();
+static void handle_cmd_line_options(void)
+{
+    handle_cmd_line_filenames(FALSE);
+    if (options.rew)
+        drct_pl_prev();
+    if (options.play || options.play_pause)
+        start_playback = TRUE;
+    if (options.fwd)
+        drct_pl_next();
+    if (options.show_jump_box)
+        drct_jtf_show();
+    if (options.mainwin)
+        drct_main_win_toggle(TRUE);
+    if (options.activate)
+        drct_activate();
 }
 
-static void
-aud_setup_logger(void)
+static void aud_setup_logger(void)
 {
     if (!aud_logger_start(aud_paths[BMP_PATH_LOG_FILE]))
         return;
@@ -389,34 +366,29 @@ aud_setup_logger(void)
     g_atexit(aud_logger_stop);
 }
 
-static gboolean
-load_extra_playlist(const gchar * path, const gchar * basename,
-        gpointer def)
+static gboolean load_extra_playlist(const gchar * path, const gchar * basename, gpointer def)
 {
-    gint playlist = playlist_count ();
+    gint playlist = playlist_count();
 
-    playlist_insert (playlist);
-    playlist_insert_playlist (playlist, 0, path);
+    playlist_insert(playlist);
+    playlist_insert_playlist(playlist, 0, path);
 
-    return FALSE; /* keep loading other playlists */
+    return FALSE;               /* keep loading other playlists */
 }
 
-static void
-playlist_system_init()
+static void playlist_system_init()
 {
-    playlist_init ();
-    playlist_insert_playlist (0, 0, aud_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_init();
+    playlist_insert_playlist(0, 0, aud_paths[BMP_PATH_PLAYLIST_FILE]);
 
     /* Load extra playlists */
-    if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist,
-     NULL, NULL))
+    if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist, NULL, NULL))
         g_warning("Could not load extra playlists\n");
 
-    playlist_set_shuffle (cfg.shuffle);
+    playlist_set_shuffle(cfg.shuffle);
 }
 
-void
-aud_quit(void)
+void aud_quit(void)
 {
     Interface *i = interface_get(options.interface);
 
@@ -430,34 +402,33 @@ aud_quit(void)
     plugin_system_cleanup();
 
     g_message("Playlist cleanup");
-    playlist_end ();
+    playlist_end();
 
     g_message("Shutdown finished, bye.");
     exit(EXIT_SUCCESS);
 }
 
-static
-int print_interface_info(mowgli_dictionary_elem_t *delem, void *privdata)
+static int print_interface_info(mowgli_dictionary_elem_t * delem, void *privdata)
 {
     Interface *i = (Interface *) delem->data;
     g_print("  %-15s - %s\n", i->id, i->desc);
     return 0;
 }
 
-static void quit_cb (void * hook_data, void * user_data)
+static void quit_cb(void *hook_data, void *user_data)
 {
-    aud_quit ();
+    aud_quit();
 }
 
-gint
-main(gint argc, gchar ** argv)
+gint main(gint argc, gchar ** argv)
 {
     Interface *i;
 
     /* glib-2.13.0 requires g_thread_init() to be called before all
        other GLib functions */
     g_thread_init(NULL);
-    if (!g_thread_supported()) {
+    if (!g_thread_supported())
+    {
         g_printerr(_("Sorry, threads aren't supported on your platform.\n"));
         exit(EXIT_FAILURE);
     }
@@ -466,8 +437,8 @@ main(gint argc, gchar ** argv)
     mowgli_init();
     chardet_init();
 
-    hook_init ();
-    hook_associate ("quit", quit_cb, 0);
+    hook_init();
+    hook_associate("quit", quit_cb, 0);
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
@@ -491,7 +462,8 @@ main(gint argc, gchar ** argv)
         aud_setup_logger();
 
     g_message("Initializing Gtk+");
-    if (!gtk_init_check(&argc, &argv)) { /* XXX */
+    if (!gtk_init_check(&argc, &argv))
+    {                           /* XXX */
         /* GTK check failed, and no arguments passed to indicate
            that user is intending to only remote control a running
            session */
@@ -501,7 +473,7 @@ main(gint argc, gchar ** argv)
 
     g_message("Setting up libSAD");
     g_random_set_seed(time(NULL));
-    SAD_dither_init_rand((gint32)time(NULL));
+    SAD_dither_init_rand((gint32) time(NULL));
 
     g_message("Loading configuration");
     aud_config_load();
@@ -510,9 +482,9 @@ main(gint argc, gchar ** argv)
     signal_handlers_init();
 
     g_message("Handling commandline options, part #1");
-    handle_cmd_line_options_first ();
+    handle_cmd_line_options_first();
 
-    vis_runner_init ();
+    vis_runner_init();
 
 #ifdef USE_DBUS
     g_message("Initializing D-Bus");
@@ -526,7 +498,8 @@ main(gint argc, gchar ** argv)
     ui_populate_headless_interface();
 
     /* Check if user wants to list available interfaces */
-    if (!g_ascii_strcasecmp(options.interface, "list")) {
+    if (!g_ascii_strcasecmp(options.interface, "list"))
+    {
         g_print(_("Available interfaces:\n\n"));
         interface_foreach(print_interface_info, NULL);
         g_print("\n");
@@ -537,25 +510,25 @@ main(gint argc, gchar ** argv)
     playlist_system_init();
 
     g_message("Handling commandline options, part #2");
-    handle_cmd_line_options ();
+    handle_cmd_line_options();
 
-    init_equalizer ();
+    init_equalizer();
 
     if (start_playback)
-        playback_initiate ();
+        playback_initiate();
     else if (cfg.resume_playlist != -1)
     {
-        playlist_set_playing (cfg.resume_playlist);
-        playlist_set_position (cfg.resume_playlist, cfg.resume_entry);
+        playlist_set_playing(cfg.resume_playlist);
+        playlist_set_position(cfg.resume_playlist, cfg.resume_entry);
 
         if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
         {
-            playback_initiate ();
+            playback_initiate();
 
             if (cfg.resume_state == 2)
-                playback_pause ();
+                playback_pause();
 
-            playback_seek (cfg.resume_playback_on_startup_time);
+            playback_seek(cfg.resume_playback_on_startup_time);
         }
     }
 
