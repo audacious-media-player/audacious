@@ -247,7 +247,6 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
             case ID3_TITLE:
             {
                 tuple = assocStrInfo(tuple,f,FIELD_TITLE,*header);
-                printTuple(tuple);
             }break;
             case ID3_COMPOSER:
             {
@@ -480,6 +479,7 @@ void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos)
 
 gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
 {
+    VFSFile *tmp;
     vfs_fseek(f,0,SEEK_SET);
 
     ExtendedHeader *extHeader;
@@ -523,7 +523,10 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     if(tuple_get_int(tuple,FIELD_LENGTH,NULL) != 0)
         add_frameFromTupleInt(tuple,FIELD_LENGTH,ID3_LENGTH);
 
-    VFSFile *tmp = vfs_fopen("file:///home/paula/musepack/tmp.mpc","w+");
+    const gchar *tmpdir = g_get_tmp_dir();
+    gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "wmatmp.wma");
+    tmp = vfs_fopen(tmp_path, "w+");
+
     int oldSize = header->size;
     header->size = TAG_SIZE*1024;
 
@@ -534,6 +537,15 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
 
     copyAudioToFile(f,tmp,oldSize);
 
+
+    gchar *uri = g_strdup(f -> uri);
     vfs_fclose(tmp);
+    gchar* f1 = g_filename_from_uri(tmp_path,NULL,NULL);
+    gchar* f2 = g_filename_from_uri(uri,NULL,NULL);
+    if (g_rename(f1,f2 ) == 0) {
+        DEBUG("the tag was updated successfully\n");
+    } else {
+        DEBUG("an error has occured\n");
+    }
     return TRUE;
 }
