@@ -5,12 +5,13 @@
 #include "tag_module.h"
 #include "wma/module.h"
 #include "id3/id3.h"
+#include "ape/ape.h"
 
 void init_tag_modules(void)
 {
     mowgli_node_add(&wma, mowgli_node_create(), &tag_modules);
     mowgli_node_add(&id3, mowgli_node_create(), &tag_modules);
-
+    mowgli_node_add(&ape, mowgli_node_create(), &tag_modules);
 }
 
 tag_module_t *find_tag_module(VFSFile * fd)

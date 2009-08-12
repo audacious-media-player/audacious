@@ -8,7 +8,8 @@ SRCS = audtag.c		\
        wma/guid.c	\
        wma/wma_fmt.c	\
        wma/wma.c	\
-       id3/id3.c
+       id3/id3.c	\
+       ape/ape.c
 INCLUDES = audtag.h util.h
 
 include ../../buildsys.mk
