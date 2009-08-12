@@ -91,11 +91,10 @@ void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
 }
 
 /**
- * audacious_remote_playlist_delete:
- * @proxy: DBus proxy for audacious
- * @pos: The playlist position to delete.
+ * Deletes a playlist entry from current playlist in given position.
  *
- * Deletes a playlist entry.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The playlist position to delete.
  **/
 void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos) {
     org_atheme_audacious_delete(proxy, pos, &error);
@@ -103,10 +102,9 @@ void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_play:
- * @proxy: DBus proxy for audacious
+ * Requests audacious to begin playback.
  *
- * Tells audacious to begin playback.
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_play(DBusGProxy *proxy) {
     org_atheme_audacious_play(proxy, &error);
@@ -114,10 +112,9 @@ void audacious_remote_play(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_pause:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to pause.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_pause(DBusGProxy *proxy) {
     org_atheme_audacious_pause(proxy, &error);
@@ -125,10 +122,9 @@ void audacious_remote_pause(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_stop:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to stop.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_stop(DBusGProxy *proxy) {
     org_atheme_audacious_stop(proxy, &error);
@@ -136,12 +132,10 @@ void audacious_remote_stop(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_is_playing:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about whether it is playing or not.
  *
- * Return value: TRUE if playing, FALSE otherwise.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if playing, FALSE otherwise.
  **/
 gboolean audacious_remote_is_playing(DBusGProxy *proxy) {
     gboolean is_playing = FALSE;
@@ -152,11 +146,11 @@ gboolean audacious_remote_is_playing(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_is_paused:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Queries audacious about whether it is paused or not.
  *
- * Return value: TRUE if playing, FALSE otherwise.
+ * @return TRUE if playing, FALSE otherwise.
  **/
 gboolean audacious_remote_is_paused(DBusGProxy *proxy) {
     gboolean is_paused = FALSE;
@@ -167,11 +161,11 @@ gboolean audacious_remote_is_paused(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_get_playlist_pos:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Queries audacious about the current playlist position.
  *
- * Return value: The current playlist position.
+ * @return The current playlist position.
  **/
 gint audacious_remote_get_playlist_pos(DBusGProxy *proxy) {
     guint pos = 0;
@@ -182,8 +176,8 @@ gint audacious_remote_get_playlist_pos(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_set_playlist_pos:
- * @proxy: DBus proxy for audacious
- * @pos: Playlist position to jump to.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos Playlist position to jump to.
  *
  * Tells audacious to jump to a different playlist position.
  **/
@@ -194,11 +188,11 @@ void audacious_remote_set_playlist_pos(DBusGProxy *proxy, guint pos) {
 
 /**
  * audacious_remote_get_playlist_length:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Queries audacious about the current playlist length.
  *
- * Return value: The amount of entries in the playlist.
+ * @return The amount of entries in the playlist.
  **/
 gint audacious_remote_get_playlist_length(DBusGProxy *proxy) {
     gint len = 0;
@@ -209,7 +203,7 @@ gint audacious_remote_get_playlist_length(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_playlist_clear:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Clears the playlist.
  **/
@@ -220,11 +214,11 @@ void audacious_remote_playlist_clear(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_get_output_time:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Queries audacious about the current output position.
  *
- * Return value: The current output position.
+ * @return The current output position.
  **/
 gint audacious_remote_get_output_time(DBusGProxy *proxy) {
     guint time = 0;
@@ -235,8 +229,8 @@ gint audacious_remote_get_output_time(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_jump_to_time:
- * @proxy: DBus proxy for audacious
- * @pos: The time (in milliseconds) to jump to.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The time (in milliseconds) to jump to.
  *
  * Tells audacious to seek to a new time position.
  **/
@@ -246,12 +240,11 @@ void audacious_remote_jump_to_time(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_get_volume:
- * @proxy: DBus proxy for audacious
- * @vl: Pointer to integer containing the left channel's volume.
- * @vr: Pointer to integer containing the right channel's volume.
+ * Queries audacious for the current volume settings.
  *
- * Queries audacious about the current volume.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[out] vl Pointer to integer containing the left channel's volume (0-100).
+ * @param[out] vr Pointer to integer containing the right channel's volume (0-100).
  **/
 void audacious_remote_get_volume(DBusGProxy *proxy, gint * vl, gint * vr) {
     org_atheme_audacious_volume(proxy, vl, vr, &error);
@@ -259,12 +252,10 @@ void audacious_remote_get_volume(DBusGProxy *proxy, gint * vl, gint * vr) {
 }
 
 /**
- * audacious_remote_get_main_volume:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about the current volume.
  *
- * Return value: The current volume.
+ * @param[in] proxy DBus proxy for audacious
+ * @return The current volume (0-100).
  **/
 gint audacious_remote_get_main_volume(DBusGProxy *proxy) {
     gint vl = 0, vr = 0;
@@ -275,12 +266,10 @@ gint audacious_remote_get_main_volume(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_get_balance:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about the current balance.
  *
- * Return value: The current balance.
+ * @param[in] proxy DBus proxy for audacious
+ * @return The current balance.
  **/
 gint audacious_remote_get_balance(DBusGProxy *proxy) {
     gint balance = 50;
@@ -290,12 +279,11 @@ gint audacious_remote_get_balance(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_set_volume:
- * @proxy: DBus proxy for audacious
- * @vl: The volume for the left channel.
- * @vr: The volume for the right channel.
- *
  * Sets the volume for the left and right channels in Audacious.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] vl The volume for the left channel (0-100).
+ * @param[in] vr The volume for the right channel (0-100).
  **/
 void audacious_remote_set_volume(DBusGProxy *proxy, gint vl, gint vr) {
     org_atheme_audacious_set_volume(proxy, vl, vr,  &error);
@@ -304,11 +292,10 @@ void audacious_remote_set_volume(DBusGProxy *proxy, gint vl, gint vr) {
 
 
 /**
- * audacious_remote_set_main_volume:
- * @proxy: DBus proxy for audacious
- * @v: The volume to set.
- *
  * Sets the volume in Audacious.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] v The volume to set (0-100).
  **/
 void audacious_remote_set_main_volume(DBusGProxy *proxy, gint v) {
     gint b = 50, vl = 0, vr = 0;
@@ -327,11 +314,10 @@ void audacious_remote_set_main_volume(DBusGProxy *proxy, gint v) {
 }
 
 /**
- * audacious_remote_set_balance:
- * @proxy: DBus proxy for audacious
- * @b: The balance to set.
- *
  * Sets the balance in Audacious.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] b The balance to set.
  **/
 void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
     gint v = 0, vl = 0, vr = 0;
@@ -355,13 +341,11 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
 }
 
 /**
- * audacious_remote_get_playlist_file:
- * @proxy: DBus proxy for audacious
- * @pos: The playlist position to query for.
- *
  * Queries Audacious about a playlist entry's file.
  *
- * Return value: A path to the file in the playlist at %pos position.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The playlist position to query for.
+ * @return A path to the file in the playlist at %pos position.
  **/
 gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, guint pos) {
     gchar *out = NULL;
@@ -371,13 +355,11 @@ gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_get_playlist_title:
- * @proxy: DBus proxy for audacious
- * @pos: The playlist position to query for.
- *
  * Queries Audacious about a playlist entry's title.
  *
- * Return value: The title for the entry in the playlist at %pos position.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The playlist position to query for.
+ * @return The title for the entry in the playlist at %pos position.
  **/
 gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, guint pos) {
     gchar *out = NULL;
@@ -387,13 +369,11 @@ gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_get_playlist_time:
- * @proxy: DBus proxy for audacious
- * @pos: The playlist position to query for.
- *
  * Queries Audacious about a playlist entry's length.
  *
- * Return value: The length of the entry in the playlist at %pos position.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The playlist position to query for.
+ * @return The length of the entry in the playlist at %pos position.
  **/
 gint audacious_remote_get_playlist_time(DBusGProxy *proxy, guint pos) {
     gint out = 0;
@@ -403,13 +383,12 @@ gint audacious_remote_get_playlist_time(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_get_info:
- * @proxy: DBus proxy for audacious
- * @rate: Pointer to an integer containing the bitrate.
- * @freq: Pointer to an integer containing the frequency.
- * @nch: Pointer to an integer containing the number of channels.
- *
  * Queries Audacious about the current audio format.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[out] rate Pointer to an integer containing the bitrate.
+ * @param[out] freq Pointer to an integer containing the frequency.
+ * @param[out] nch Pointer to an integer containing the number of channels.
  **/
 void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,
                                gint *nch) {
@@ -418,11 +397,10 @@ void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,
 }
 
 /**
- * audacious_remote_main_win_toggle:
- * @proxy: DBus proxy for audacious
- * @show: Whether or not to show the main window.
- *
  * Toggles the main window's visibility.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show Whether or not to show the main window.
  **/
 void audacious_remote_main_win_toggle(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_main_win(proxy, show, &error);
@@ -430,11 +408,10 @@ void audacious_remote_main_win_toggle(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * audacious_remote_pl_win_toggle:
- * @proxy: DBus proxy for audacious
- * @show: Whether or not to show the playlist window.
- *
  * Toggles the playlist window's visibility.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show Whether or not to show the playlist window.
  **/
 void audacious_remote_pl_win_toggle(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_playlist(proxy, show, &error);
@@ -442,11 +419,10 @@ void audacious_remote_pl_win_toggle(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * audacious_remote_eq_win_toggle:
- * @proxy: DBus proxy for audacious
- * @show: Whether or not to show the equalizer window.
- *
  * Toggles the equalizer window's visibility.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show Whether or not to show the equalizer window.
  **/
 void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_equalizer(proxy, show, &error);
@@ -454,12 +430,10 @@ void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * audacious_remote_is_main_win:
- * @proxy: DBus proxy for audacious
- *
  * Queries Audacious about the main window's visibility.
  *
- * Return value: TRUE if visible, FALSE otherwise.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if visible, FALSE otherwise.
  **/
 gboolean audacious_remote_is_main_win(DBusGProxy *proxy) {
     gboolean visible = TRUE;
@@ -469,12 +443,10 @@ gboolean audacious_remote_is_main_win(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_is_pl_win:
- * @proxy: DBus proxy for audacious
- *
  * Queries Audacious about the playlist window's visibility.
  *
- * Return value: TRUE if visible, FALSE otherwise.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if visible, FALSE otherwise.
  **/
 gboolean audacious_remote_is_pl_win(DBusGProxy *proxy) {
     gboolean visible = TRUE;
@@ -484,12 +456,10 @@ gboolean audacious_remote_is_pl_win(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_is_eq_win:
- * @proxy: DBus proxy for audacious
- *
  * Queries Audacious about the equalizer window's visibility.
  *
- * Return value: TRUE if visible, FALSE otherwise.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if visible, FALSE otherwise.
  **/
 gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
     gboolean visible = FALSE;
@@ -499,21 +469,19 @@ gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_show_prefs_box:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to show the preferences pane.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
     audacious_remote_toggle_prefs_box(proxy, TRUE);
 }
 
 /**
- * audacious_remote_toggle_prefs_box:
- * @proxy: DBus proxy for audacious
- * @show: shows/hides
- *
  * Tells audacious to show/hide the preferences pane.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show shows/hides
  **/
 void audacious_remote_toggle_prefs_box(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_prefs_box(proxy, show, &error);
@@ -521,21 +489,19 @@ void audacious_remote_toggle_prefs_box(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * audacious_remote_show_about_box:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to show the about box.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_show_about_box(DBusGProxy *proxy) {
     audacious_remote_toggle_about_box(proxy, TRUE);
 }
 
 /**
- * audacious_remote_toggle_about_box:
- * @proxy: DBus proxy for audacious
- * @show: shows/hides
- *
  * Tells audacious to show/hide the about box.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show shows/hides
  **/
 void audacious_remote_toggle_about_box(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_about_box(proxy, show, &error);
@@ -543,11 +509,10 @@ void audacious_remote_toggle_about_box(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * audacious_remote_toggle_aot:
- * @proxy: DBus proxy for audacious
- * @ontop: Whether or not Audacious should be always-on-top.
+ * Tells audacious to set the always-on-top feature.
  *
- * Tells audacious to toggle the always-on-top feature.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] ontop Boolean value whether or not Audacious should be always-on-top.
  **/
 void audacious_remote_toggle_aot(DBusGProxy *proxy, gboolean ontop) {
     org_atheme_audacious_toggle_aot(proxy, ontop, &error);
@@ -555,10 +520,9 @@ void audacious_remote_toggle_aot(DBusGProxy *proxy, gboolean ontop) {
 }
 
 /**
- * audacious_remote_eject:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to display the open files pane.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_eject(DBusGProxy *proxy) {
     org_atheme_audacious_eject(proxy, &error);
@@ -567,7 +531,7 @@ void audacious_remote_eject(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_playlist_prev:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Tells audacious to move backwards in the playlist.
  **/
@@ -577,10 +541,9 @@ void audacious_remote_playlist_prev(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_playlist_next:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to move forward in the playlist.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_playlist_next(DBusGProxy *proxy) {
     org_atheme_audacious_advance(proxy, &error);
@@ -588,11 +551,10 @@ void audacious_remote_playlist_next(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_playlist_add_url_string:
- * @proxy: DBus proxy for audacious
- * @string: The URI to add.
- *
  * Tells audacious to add an URI to the playlist.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] string The URI to add.
  **/
 void audacious_remote_playlist_add_url_string(DBusGProxy *proxy,
                                               gchar *string) {
@@ -601,12 +563,10 @@ void audacious_remote_playlist_add_url_string(DBusGProxy *proxy,
 }
 
 /**
- * audacious_remote_is_running:
- * @proxy: DBus proxy for audacious
+ * Check if an Audacious instance is running.
  *
- * Checks to see if an Audacious server is running.
- *
- * Return value: TRUE if yes, otherwise FALSE.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_running(DBusGProxy *proxy) {
     char *string = NULL;
@@ -621,10 +581,9 @@ gboolean audacious_remote_is_running(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_toggle_repeat:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to toggle the repeat feature.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_toggle_repeat(DBusGProxy *proxy) {
     org_atheme_audacious_toggle_repeat(proxy, &error);
@@ -632,10 +591,9 @@ void audacious_remote_toggle_repeat(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_toggle_shuffle:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to toggle the shuffle feature.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_toggle_shuffle(DBusGProxy *proxy) {
     org_atheme_audacious_toggle_shuffle (proxy, &error);
@@ -643,12 +601,10 @@ void audacious_remote_toggle_shuffle(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_is_repeat:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about whether or not the repeat feature is active.
  *
- * Return value: TRUE if yes, otherwise FALSE.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_repeat(DBusGProxy *proxy) {
     gboolean is_repeat;
@@ -658,12 +614,10 @@ gboolean audacious_remote_is_repeat(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_is_shuffle:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about whether or not the shuffle feature is active.
  *
- * Return value: TRUE if yes, otherwise FALSE.
+ * @param[in] proxy DBus proxy for audacious
+ * @return TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
     gboolean is_shuffle;
@@ -673,12 +627,11 @@ gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_get_eq:
- * @proxy: DBus proxy for audacious
- * @preamp: Pointer to value for preamp setting.
- * @bands: Pointer to array of band settings.
- *
  * Queries audacious about the equalizer settings.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[out] preamp Pointer to value for preamp setting.
+ * @param[out] bands Pointer to array of band settings.
  **/
 void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp, GArray **bands) {
     org_atheme_audacious_get_eq(proxy, preamp, bands, &error);
@@ -686,12 +639,10 @@ void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp, GArray **bands)
 }
 
 /**
- * audacious_remote_get_eq_preamp:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about the equalizer preamp's setting.
  *
- * Return value: The equalizer preamp's setting.
+ * @param[in] proxy DBus proxy for audacious
+ * @return The equalizer preamp's setting.
  **/
 gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
     gdouble preamp = 0.0;
@@ -703,13 +654,11 @@ gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_get_eq_band:
- * @proxy: DBus proxy for audacious
- * @band: Which band to lookup the value for.
- *
  * Queries audacious about an equalizer band's value.
  *
- * Return value: The equalizer band's value.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] band Which band to lookup the value for.
+ * @return The equalizer band's value.
  **/
 gdouble audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
     gdouble value = 0.0;
@@ -721,12 +670,11 @@ gdouble audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
 }
 
 /**
- * audacious_remote_set_eq:
- * @proxy: DBus proxy for audacious
- * @preamp: Value for preamp setting.
- * @bands: Array of band settings.
- *
  * Tells audacious to set the equalizer up using the provided values.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] preamp Value for preamp setting.
+ * @param[in] bands Array of band settings.
  **/
 void audacious_remote_set_eq(DBusGProxy *proxy, gdouble preamp, GArray *bands) {
     org_atheme_audacious_set_eq(proxy, preamp, bands, &error);
@@ -734,11 +682,10 @@ void audacious_remote_set_eq(DBusGProxy *proxy, gdouble preamp, GArray *bands) {
 }
 
 /**
- * audacious_remote_set_eq_preamp:
- * @proxy: DBus proxy for audacious
- * @preamp: Value for preamp setting.
- *
  * Tells audacious to set the equalizer's preamp setting.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] preamp Value for preamp setting.
  **/
 void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gdouble preamp) {
     org_atheme_audacious_set_eq_preamp(proxy, preamp, &error);
@@ -746,12 +693,11 @@ void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gdouble preamp) {
 }
 
 /**
- * audacious_remote_set_eq_band:
- * @proxy: DBus proxy for audacious
- * @band: The band to set the value for.
- * @value: The value to set that band to.
- *
  * Tells audacious to set an equalizer band's setting.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] band The band to set the value for.
+ * @param[in] value The value to set that band to.
  **/
 void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band, gdouble value) {
     org_atheme_audacious_set_eq_band(proxy, band, value, &error);
@@ -759,10 +705,9 @@ void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band, gdouble value) {
 }
 
 /**
- * audacious_remote_quit:
- * @proxy: DBus proxy for audacious
+ * Requests audacious to quit.
  *
- * Tells audacious to quit.
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_quit(DBusGProxy *proxy) {
     org_atheme_audacious_quit(proxy, &error);
@@ -770,22 +715,20 @@ void audacious_remote_quit(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_play_pause:
- * @proxy: DBus proxy for audacious
+ * Tells audacious to toggle between play and pause.
  *
- * Tells audacious to either play or pause.
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_play_pause(DBusGProxy *proxy) {
     org_atheme_audacious_play_pause(proxy, &error);
 }
 
 /**
- * audacious_remote_playlist_ins_url_string:
- * @proxy: DBus proxy for audacious
- * @string: The URI to add.
- * @pos: The position to add the URI at.
- *
  * Tells audacious to add an URI to the playlist at a specific position.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] string The URI to add.
+ * @param[in] pos The position to add the URI at.
  **/
 void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
                                               gchar *string, guint pos) {
@@ -794,11 +737,10 @@ void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
 }
 
 /**
- * audacious_remote_playqueue_add:
- * @proxy: DBus proxy for audacious
- * @pos: The playlist position to add to the queue.
- *
  * Tells audacious to add a playlist entry to the playqueue.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The playlist position to add to the queue.
  **/
 void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
     org_atheme_audacious_playqueue_add (proxy, pos, &error);
@@ -806,11 +748,10 @@ void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_playqueue_remove:
- * @proxy: DBus proxy for audacious
- * @pos: The playlist position to remove from the queue.
- *
  * Tells audacious to remove a playlist entry from the playqueue.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos The playlist position to remove from the queue.
  **/
 void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos) {
     org_atheme_audacious_playqueue_remove (proxy, pos, &error);
@@ -818,26 +759,24 @@ void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_get_playqueue_length:
- * @proxy: DBus proxy for audacious
- *
  * Queries audacious about the playqueue's length.
  *
- * Return value: The number of entries in the playqueue.
+ * @bug This returns the length of the playlist, NOT the length of the playqueue.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @return The number of entries in the playqueue.
  **/
 gint audacious_remote_get_playqueue_length(DBusGProxy *proxy) {
     gint len = 0;
-    // this returns the lenght of the playlist, NOT the length of the playqueue
     org_atheme_audacious_length(proxy, &len, &error);
     g_clear_error(&error);
     return len;
 }
 
 /**
- * audacious_remote_toggle_advance:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to toggle the no-playlist-advance feature.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_toggle_advance(DBusGProxy *proxy) {
     org_atheme_audacious_toggle_auto_advance(proxy, &error);
@@ -846,11 +785,11 @@ void audacious_remote_toggle_advance(DBusGProxy *proxy) {
 
 /**
  * audacious_remote_is_advance:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Queries audacious about whether or not the no-playlist-advance feature is active.
  *
- * Return value: TRUE if yes, otherwise FALSE.
+ * @return TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
     gboolean is_advance = FALSE;
@@ -860,10 +799,9 @@ gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_activate:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to display the main window and become the selected window.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_activate(DBusGProxy *proxy) {
     org_atheme_audacious_activate(proxy, &error);
@@ -871,21 +809,19 @@ void audacious_remote_activate(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_show_jtf_box:
- * @proxy: DBus proxy for audacious
- *
  * Tells audacious to show the Jump-to-File pane.
+ *
+ * @param[in] proxy DBus proxy for audacious
  **/
 void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
     audacious_remote_toggle_jtf_box(proxy, TRUE);
 }
 
 /**
- * audacious_remote_toggle_jtf_box:
- * @proxy: DBus proxy for audacious
- * @show: shows/hides jtf pane
- *
  * Tells audacious to show/hide the Jump-to-File pane.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show shows/hides jtf pane
  **/
 void audacious_remote_toggle_jtf_box(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_jtf_box(proxy, show, &error);
@@ -893,11 +829,10 @@ void audacious_remote_toggle_jtf_box(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * audacious_remote_toggle_filebrowser:
- * @proxy: DBus proxy for audacious
- * @show: shows/hides filebrowser
- *
  * Tells audacious to show the filebrowser dialog.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] show shows/hides filebrowser
  **/
 void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show) {
     org_atheme_audacious_show_filebrowser(proxy, show, &error);
@@ -906,7 +841,7 @@ void audacious_remote_toggle_filebrowser(DBusGProxy *proxy, gboolean show) {
 
 /**
  * audacious_remote_playqueue_clear:
- * @proxy: DBus proxy for audacious
+ * @param[in] proxy DBus proxy for audacious
  *
  * Tells audacious to clear the playqueue.
  **/
@@ -916,13 +851,11 @@ void audacious_remote_playqueue_clear(DBusGProxy *proxy) {
 }
 
 /**
- * audacious_remote_playqueue_is_queued:
- * @proxy: DBus proxy for audacious
- * @pos: Position to check queue for.
- *
  * Queries audacious about whether or not a playlist entry is in the playqueue.
  *
- * Return value: TRUE if yes, FALSE otherwise.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos Position to check queue for.
+ * @return TRUE if yes, FALSE otherwise.
  **/
 gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos) {
     gboolean is_queued;
@@ -932,13 +865,11 @@ gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos) {
 }
 
 /**
- * audacious_remote_get_playqueue_queue_position:
- * @proxy: DBus proxy for audacious
- * @pos: Position to check queue for.
- *
  * Queries audacious about what the playqueue position is for a playlist entry.
  *
- * Return value: the playqueue position for a playlist entry
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] pos Position to check queue for.
+ * @return the playqueue position for a playlist entry
  **/
 gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy, guint pos) {
     guint qpos = 0;
@@ -948,13 +879,12 @@ gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy, guint pos)
 }
 
 /**
- * audacious_remote_get_playqueue_list_position:
- * @proxy: DBus proxy for audacious
- * @pos: Position to check queue for.
+ * Queries audacious what is the playlist position for given a playqueue entry index.
  *
- * Queries audacious about what the playlist position is for a playqueue entry.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] qpos Position to check queue for.
  *
- * Return value: the playlist position for a playqueue entry
+ * @return the playlist position for a playqueue entry
  **/
 gint audacious_remote_get_playqueue_list_position(DBusGProxy *proxy, guint qpos) {
     guint pos = 0;
@@ -964,11 +894,10 @@ gint audacious_remote_get_playqueue_list_position(DBusGProxy *proxy, guint qpos)
 }
 
 /**
- * audacious_remote_playlist_enqueue_to_temp:
- * @proxy: DBus proxy for audacious
- * @string: The URI to enqueue to a temporary playlist.
- *
  * Tells audacious to add an URI to a temporary playlist.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] string The URI to enqueue to a temporary playlist.
  **/
 void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
                                                gchar *string) {
@@ -977,14 +906,12 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
 }
 
 /**
- * audacious_get_tuple_field_data:
- * @proxy: DBus proxy for audacious
- * @field: The name of the tuple field to retrieve.
- * @pos: The playlist position to query for.
- *
  * Queries Audacious about a playlist entry's tuple information.
  *
- * Return value: The requested field's data for the entry in the playlist at %pos position.
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] field The name of the tuple field to retrieve.
+ * @param[in] pos The playlist position to query for.
+ * @return The requested field's data for the entry in the playlist at %pos position.
  **/
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                       guint pos) {
@@ -1026,11 +953,10 @@ gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
 }
 
 /**
- * audacious_remote_eq_activate:
- * @proxy: DBus proxy for audacious
- * @active: Whether or not to activate the equalizer.
- *
  * Toggles the equalizer.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] active Whether or not to activate the equalizer.
  **/
 void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active) {
     org_atheme_audacious_equalizer_activate (proxy, active, &error);
@@ -1038,12 +964,10 @@ void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active) {
 }
 
 /**
- * audacious_remote_get_tuple_fields:
- * @proxy: DBus proxy for audacious
- *
  * Returns a array of strings with available tuple field names.
  *
- * Return value: Array of strings.
+ * @param[in] proxy DBus proxy for audacious
+ * @return Array of strings.
  **/
 gchar **audacious_remote_get_tuple_fields(DBusGProxy *proxy) {
     gchar **res = NULL;

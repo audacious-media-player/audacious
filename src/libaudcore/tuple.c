@@ -208,10 +208,11 @@ tuple_set_filename(Tuple *tuple, const gchar *filename)
 }
 
 /**
- * Creates a copy of given Tuple structure, with copied data.
+ * Creates a copy of given TupleValue structure, with copied data.
  *
- * @param[in] orig Original tuple to be copied.
- * @return Pointer to newly allocated Tuple.
+ * @param[in] src TupleValue structure to be made a copy of.
+ * @return Pointer to newly allocated TupleValue or NULL
+ *         if error occured or source was NULL.
  */
 static TupleValue *
 tuple_copy_value(TupleValue *src)
@@ -234,6 +235,12 @@ tuple_copy_value(TupleValue *src)
     return res;
 }
 
+/**
+ * Creates a copy of given Tuple structure, with copied data.
+ *
+ * @param[in] src Tuple structure to be made a copy of.
+ * @return Pointer to newly allocated Tuple.
+ */
 Tuple *
 tuple_copy(const Tuple *src)
 {
