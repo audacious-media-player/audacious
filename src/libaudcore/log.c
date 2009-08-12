@@ -83,25 +83,36 @@ aud_log_timestr(const gchar *fmt)
  * automatically for compatibility with g_log().
  *
  * @param[in] f File handle to write into.
- * @param[in] ctx_p FIXME 
+ * @param[in] ctx Logging context or NULL if no context / global context.
  * @param[in] level Message's log level setting.
  * @param[in] msg Log message string.
  */
 static void
-aud_log_msg(FILE *f, void *ctx_p, gint level, const gchar *msg)
+aud_log_msg(FILE *f, const gchar *ctx, gint level, const gchar *msg)
 {
     gchar *timestamp;
-    AudLogContext *ctx = ctx_p != NULL ? *(AudLogContext **) ctx_p : NULL;
+    GThread *thread = g_thread_self();
+    gchar *name = (log_thread_hash != NULL) ?
+        g_hash_table_lookup(log_thread_hash, thread) : NULL;
 
     timestamp = aud_log_timestr(AUD_LOG_LTIME_FMT);
-    fprintf(f, "%s [%s]", timestamp,
-        level >= 0 ? log_level_names[level] : log_level_names[AUD_LOG_INFO]);
+    fprintf(f, "%s <", timestamp);
     g_free(timestamp);
 
-    if (ctx != NULL)
-        fprintf(f, " (%s): %s", ctx->name, msg);
+    if (name != NULL)
+    {
+        if (ctx != NULL)
+            fprintf(f, "%s|%s", ctx, name);
+        else
+            fprintf(f, "%s", name);
+    }
     else
-        fprintf(f, ": %s", msg);
+    {
+        fprintf(f, "%s|%p", ctx != NULL ? ctx : "global", thread);
+    }
+
+    fprintf(f, "> [%s]: %s", (level >= 0) ? log_level_names[level] :
+        log_level_names[AUD_LOG_INFO], msg);
 
     /* A small hack here to ease transition from g_log() etc. */
     if (msg[strlen(msg) - 1] != '\n')
@@ -115,13 +126,13 @@ aud_log_msg(FILE *f, void *ctx_p, gint level, const gchar *msg)
  * Varargs version of internal non-locked logging function.
  *
  * @param[in] f File handle to write into.
- * @param[in] ctx Logging context.
+ * @param[in] ctx Logging context or NULL if no context / global context.
  * @param[in] level Message's log level setting.
  * @param[in] fmt Message printf() style format string.
  * @param[in] args Argument structure.
  */
 static void
-aud_do_logv(FILE *f, void *ctx, gint level, const gchar *fmt, va_list args)
+aud_do_logv(FILE *f, const gchar *ctx, gint level, const gchar *fmt, va_list args)
 {
     gchar *msg = g_strdup_vprintf(fmt, args);
     aud_log_msg(f, ctx, level, msg);
@@ -132,13 +143,13 @@ aud_do_logv(FILE *f, void *ctx, gint level, const gchar *fmt, va_list args)
  * Internal message logging function that does take the global lock.
  *
  * @param[in] f File handle to write into.
- * @param[in] ctx Logging context.
+ * @param[in] ctx Logging context or NULL if no context / global context.
  * @param[in] level Message's log level setting.
  * @param[in] fmt Message printf() style format string.
  * @param[in] ... Printf() style arguments, if any.
  */
 static void
-aud_do_log(FILE *f, void *ctx, gint level, const gchar *fmt, ...)
+aud_do_log(FILE *f, const gchar *ctx, gint level, const gchar *fmt, ...)
 {
     va_list ap;
     
@@ -192,8 +203,6 @@ aud_log_init(const gchar *filename, const gchar *mode, gint level)
     timestamp = aud_log_timestr(AUD_LOG_CTIME_FMT);
     aud_do_log(log_file, NULL, -1, "Logfile opened %s.\n", timestamp);
     g_free(timestamp);
-    aud_do_log(log_file, NULL, -1, "Current thread context = %p\n",
-        g_thread_self());
 
     /* Setup thread context hash table */
     if (log_thread_hash != NULL)
@@ -245,8 +254,8 @@ aud_log_close(void)
                 aud_log_print_hash, &found);
 
             g_hash_table_destroy(log_thread_hash);
-            log_thread_hash = NULL;
         }
+        log_thread_hash = NULL;
 
         timestamp = aud_log_timestr(AUD_LOG_CTIME_FMT);
         aud_do_log(log_file, NULL, -1, "Logfile closed %s.\n", timestamp);
@@ -324,13 +333,13 @@ aud_log_delete_thread_context(GThread *thread)
 /**
  * Write a log entry with variable arguments structure.
  *
- * @param[in] ctx Logging context pointer or NULL if no context / global context.
+ * @param[in] ctx Logging context or NULL if no context / global context.
  * @param[in] level Message's log level setting.
  * @param[in] fmt Message printf() style format string.
  * @param[in] args Argument structure.
  */
 void
-aud_logv(void *ctx, gint level, const gchar *fmt, va_list args)
+aud_logv(const gchar *ctx, gint level, const gchar *fmt, va_list args)
 {
     if (log_mutex == NULL || log_file == NULL)
         aud_do_log(stderr, ctx, level, fmt, args);
@@ -346,13 +355,13 @@ aud_logv(void *ctx, gint level, const gchar *fmt, va_list args)
 /**
  * Write a log entry.
  *
- * @param[in] ctx Logging context pointer or NULL if no context / global context.
+ * @param[in] ctx Logging context or NULL if no context / global context.
  * @param[in] level Message's log level setting.
  * @param[in] fmt Message printf() style format string.
  * @param[in] ... Optional printf() arguments.
  */
 void
-aud_log(void *ctx, gint level, const gchar *fmt, ...)
+aud_log(const gchar *ctx, gint level, const gchar *fmt, ...)
 {
     va_list ap;
     
@@ -373,7 +382,7 @@ aud_log(void *ctx, gint level, const gchar *fmt, ...)
  * @param[in] ... Optional printf() arguments.
  */
 void
-aud_log_line(void *ctx, gint level, const gchar *file, const gchar *func,
+aud_log_line(const gchar *ctx, gint level, const gchar *file, const gchar *func,
     gint line, const gchar *fmt, ...)
 {
     gchar *msg, *str, *info = g_strdup_printf("(%s:%s:%d) ", file, func, line);
@@ -386,9 +395,7 @@ aud_log_line(void *ctx, gint level, const gchar *file, const gchar *func,
     str = g_strconcat(info, msg, NULL);
 
     if (log_mutex == NULL || log_file == NULL)
-    {
         aud_log_msg(stderr, ctx, level, str);
-    }
     else
     {
         g_mutex_lock(log_mutex);

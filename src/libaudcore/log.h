@@ -48,24 +48,15 @@ typedef enum {
     AUD_LOG_ALL             /**< Pseudo log-level for full logging */
 } AudLogLevel;
 
-/**
- * Logging context structure. Holds information about in what
- * "context" the log originates from.
- */
-typedef struct _AudLogContext {
-    gchar *name;
-    gint refcount;
-} AudLogContext;
-
 gint aud_log_init(const gchar *filename, const gchar *mode, gint level);
 void aud_log_close(void);
 
 void aud_log_add_thread_context(GThread *thread, const gchar *name);
 void aud_log_delete_thread_context(GThread *thread);
 
-void aud_logv(void *ctx, gint level, const gchar *fmt, va_list args) __attribute__ ((format(printf, 3, 0)));
-void aud_log(void *ctx, gint level, const gchar *fmt, ...)  __attribute__ ((format(printf, 3, 4)));
-void aud_log_line(void *ctx, gint level, const gchar *file, const gchar *func, gint line, const gchar *fmt, ...)  __attribute__ ((format(printf, 6, 7)));
+void aud_logv(const gchar *ctx, gint level, const gchar *fmt, va_list args) __attribute__ ((format(printf, 3, 0)));
+void aud_log(const gchar *ctx, gint level, const gchar *fmt, ...)  __attribute__ ((format(printf, 3, 4)));
+void aud_log_line(const gchar *ctx, gint level, const gchar *file, const gchar *func, gint line, const gchar *fmt, ...)  __attribute__ ((format(printf, 6, 7)));
 
 
 /* These are here as a quick hack for transition from glib message system */
