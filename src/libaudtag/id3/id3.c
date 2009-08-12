@@ -10,39 +10,13 @@
 #define TAG_SIZE 1
 
 tag_module_t id3 = {id3_can_handle_file, id3_populate_tuple_from_file, id3_write_tuple_to_file};
-
+/* reading stuff */
 guint32 read_int32(VFSFile *fd)
 {
     guint32 a;
     vfs_fread(&a,4,1,fd);
     a = GUINT32_FROM_BE(a);
     return a;
-}
-
-void write_int32(VFSFile *fd, guint32 val)
-{
-    guint32 be_val = GUINT32_TO_BE(val);
-    vfs_fwrite(&be_val,4,1,fd);
-}
-void  write_syncsafe_int32(VFSFile *fd, guint32 val)
-{
-    //TODO write the corrent function - this is just for testing
-    int i = 0;
-    guint32 tmp =0x0;
-    guint32 mask =0x7f;
-    guint32 syncVal = 0;
-    tmp = val & mask;
-    syncVal = tmp;
-    for(i = 0;i<3;i++)
-    {
-        tmp = 0;
-        mask <<= 7;
-        tmp = val & mask;
-        tmp <<=1;
-        syncVal |=tmp;
-    }
-    guint32 be_val = GUINT32_TO_BE(syncVal);
-    vfs_fwrite(&be_val,4,1,fd);
 }
 
 guint32 read_int16(VFSFile *fd)
@@ -59,11 +33,6 @@ gchar *read_ASCII(VFSFile *fd, int size)
     return value;
 }
 
-void write_ASCII(VFSFile *fd, int size, gchar* value)
-{
-    vfs_fwrite(value,size,1,fd);
-}
-
 gchar *read_iso8859_1(VFSFile *fd, int size)
 {
     gchar *value= g_new0(gchar,size);
@@ -75,17 +44,18 @@ gchar *read_iso8859_1(VFSFile *fd, int size)
     return retVal;
 }
 
-void write_utf8(VFSFile *fd, int size,gchar* value)
-{
-    GError *error = NULL;
-    gsize bytes_read = 0 , bytes_write = 0;
-    gchar* isoVal = g_convert(value,size,"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
-    vfs_fwrite(isoVal,size,1,fd);
-}
-
+/*
+ * Read UTF-16 from the tag and return an uft-8 string for the tuple
+ */
 gchar* read_unicode(VFSFile *fd, int size)
 {
-    return NULL;
+    gchar *value= g_new0(gchar,size);
+    vfs_fread(value,size,1,fd);
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* retVal = g_convert(value,size,"UTF-8","UTF-16",&bytes_read,&bytes_write,&error);
+    g_free(value);
+    return retVal;
 }
 
 guint32 read_syncsafe_int32(VFSFile *fd)
@@ -103,31 +73,6 @@ guint32 read_syncsafe_int32(VFSFile *fd)
         intVal = intVal | tmp;
     };
     return intVal;
-}
-
-
-gboolean isExtendedHeader(ID3v2Header *header)
-{
-    if( (header->flags & 0x40) == (0x40))
-        return TRUE;
-    else
-        return FALSE;
-}
-
-gboolean isUnsynchronisation(ID3v2Header *header)
-{
-        if((header->flags & 0x80) == 0x80)
-            return TRUE;
-        else
-            return FALSE;
-}
-
-gboolean isExperimental(ID3v2Header *header)
-{
-        if((header->flags & 0x20) == 0x20)
-            return TRUE;
-        else
-            return FALSE;
 }
 
 ID3v2Header *readHeader(VFSFile *fd)
@@ -170,6 +115,160 @@ TextInformationFrame *readTextFrame(VFSFile *fd, TextInformationFrame *frame)
     return frame;
 }
 
+
+gchar* readFrameBody(VFSFile *fd,int size)
+{
+    if(size == 0)
+        return NULL;
+    gchar *b = g_new0(gchar,size);
+    vfs_fread(b,size,1,fd);
+    return b;
+}
+
+GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf)
+{
+    gf->header = readID3v2FrameHeader(fd);
+    gf->frame_body = readFrameBody(fd,gf->header->size);
+
+    return gf;
+}
+
+
+void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids)
+{
+    int pos = 0;
+    int i = 0;
+    while(pos < framesSize)
+    {
+        GenericFrame *gframe = g_new0(GenericFrame,1);
+        gframe = readGenericFrame(fd,gframe);
+        if(isValidFrame(gframe))
+        {
+            mowgli_dictionary_add(frames, gframe->header->frame_id, gframe);
+            mowgli_node_add(gframe->header->frame_id, mowgli_node_create(), frameids);
+            pos += gframe->header->size;
+            i++;
+        }else
+            break;
+    }
+
+}
+
+
+/* writing stuff */
+void write_int32(VFSFile *fd, guint32 val)
+{
+    guint32 be_val = GUINT32_TO_BE(val);
+    vfs_fwrite(&be_val,4,1,fd);
+}
+
+void  write_syncsafe_int32(VFSFile *fd, guint32 val)
+{
+    //TODO write the corrent function - this is just for testing
+    int i = 0;
+    guint32 tmp =0x0;
+    guint32 mask =0x7f;
+    guint32 syncVal = 0;
+    tmp = val & mask;
+    syncVal = tmp;
+    for(i = 0;i<3;i++)
+    {
+        tmp = 0;
+        mask <<= 7;
+        tmp = val & mask;
+        tmp <<=1;
+        syncVal |=tmp;
+    }
+    guint32 be_val = GUINT32_TO_BE(syncVal);
+    vfs_fwrite(&be_val,4,1,fd);
+}
+
+
+void write_ASCII(VFSFile *fd, int size, gchar* value)
+{
+    vfs_fwrite(value,size,1,fd);
+}
+
+
+void write_utf8(VFSFile *fd, int size,gchar* value)
+{
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* isoVal = g_convert(value,size,"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
+    vfs_fwrite(isoVal,size,1,fd);
+}
+
+guint32 writeAllFramesToFile(VFSFile *fd,mowgli_list_t framesList)
+{
+   guint32 size = 0;
+   mowgli_node_t *n, *tn;
+   MOWGLI_LIST_FOREACH_SAFE(n, tn, framesList.head)
+   {
+       GenericFrame *frame = (GenericFrame*)mowgli_dictionary_retrieve(frames,(gchar*)(n->data));
+       if(frame)
+       {
+           writeGenericFrame(fd,frame);
+           size += frame->header->size+10;
+       }
+   }
+   return size;
+}
+
+void writeID3HeaderToFile(VFSFile *fd,ID3v2Header *header)
+{
+    vfs_fwrite(header->id3,3,1,fd);
+    vfs_fwrite(&header->version,2,1,fd);
+    vfs_fwrite(&header->flags,1,1,fd);
+    write_syncsafe_int32(fd,header->size);
+}
+
+void writePaddingToFile(VFSFile *fd, int ksize)
+{
+    gchar padding = 0;
+    int i = 0;
+    for(i=0; i<ksize;i++)
+        vfs_fwrite(&padding,1,1,fd);
+}
+
+
+void writeID3FrameHeaderToFile(VFSFile *fd, ID3v2FrameHeader *header)
+{
+    vfs_fwrite(header->frame_id,4,1,fd);
+    write_int32(fd,header->size);
+    vfs_fwrite(&header->flags,2,1,fd);
+}
+
+void writeGenericFrame(VFSFile *fd,GenericFrame *frame)
+{
+    writeID3FrameHeaderToFile(fd,frame->header);
+    vfs_fwrite(frame->frame_body,frame->header->size,1,fd);
+}
+
+gboolean isExtendedHeader(ID3v2Header *header)
+{
+    if( (header->flags & 0x40) == (0x40))
+        return TRUE;
+    else
+        return FALSE;
+}
+
+gboolean isUnsynchronisation(ID3v2Header *header)
+{
+        if((header->flags & 0x80) == 0x80)
+            return TRUE;
+        else
+            return FALSE;
+}
+
+gboolean isExperimental(ID3v2Header *header)
+{
+        if((header->flags & 0x20) == 0x20)
+            return TRUE;
+        else
+            return FALSE;
+}
+
+
 int getFrameID(ID3v2FrameHeader *header)
 {
     int i=0;
@@ -206,6 +305,107 @@ Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header
   tuple_associate_int(tuple, field, NULL, atoi(frame->text));
   return tuple;
 }
+
+gboolean isValidFrame(GenericFrame *frame)
+{
+    if(strlen(frame->header->frame_id) != 0)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+
+
+void add_newISO8859_1FrameFromString(const gchar *value,int id3_field)
+{
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
+    ID3v2FrameHeader *header = g_new0(ID3v2FrameHeader,1);
+    header->frame_id = id3_frames[id3_field];
+    header->flags = 0;
+    header->size = strlen(retVal)+1;
+    gchar* buf = g_new0(gchar,header->size+1);
+    memcpy(buf+1,retVal,header->size);
+    GenericFrame *frame = g_new0(GenericFrame,1);
+    frame->header = header;
+    frame->frame_body  = buf;
+    mowgli_dictionary_add(frames,header->frame_id,frame);
+}
+
+
+void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
+{
+    const gchar *value = tuple_get_string(tuple,field,NULL);
+    add_newISO8859_1FrameFromString(value,id3_field);
+}
+
+
+void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field)
+{
+    int intvalue = tuple_get_int(tuple,field,NULL);
+    gchar *value = g_strdup_printf("%d",intvalue);
+    add_newISO8859_1FrameFromString(value,id3_field);
+
+}
+
+
+
+void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field)
+{
+    const gchar *value = tuple_get_string(tuple,field,NULL);
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
+
+    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
+    if(frame != NULL)
+    {
+        frame->header->size = strlen(retVal)+1;
+        gchar* buf = g_new0(gchar,frame->header->size+1);
+        memcpy(buf+1,retVal,frame->header->size);
+        frame->frame_body = buf;
+    }
+    else
+        add_newFrameFromTupleStr(tuple,field,id3_field);
+
+}
+
+void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field)
+{
+    int intvalue = tuple_get_int(tuple,field,NULL);
+    gchar *value = g_strdup_printf("%d",intvalue);
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
+
+    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
+    if(frame != NULL)
+    {
+        frame->header->size = strlen(retVal)+1;
+        gchar* buf = g_new0(gchar,frame->header->size+1);
+        memcpy(buf+1,retVal,frame->header->size);
+        frame->frame_body = buf;
+    }
+    else
+        add_newFrameFromTupleStr(tuple,field,id3_field);
+
+}
+
+
+
+
+void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos)
+{
+    vfs_fseek(from,pos,SEEK_SET);
+    while (vfs_feof(from) == 0)
+    {
+        gchar buf[4096];
+        gint n = vfs_fread(buf, 1, 4096, from);
+        vfs_fwrite(buf, n, 1, to);
+    }
+}
+
 
 gboolean id3_can_handle_file(VFSFile *f)
 {
@@ -293,184 +493,6 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
     return tuple;
 }
 
-gchar* readFrameBody(VFSFile *fd,int size)
-{
-    if(size == 0)
-        return NULL;
-    gchar *b = g_new0(gchar,size);
-    vfs_fread(b,size,1,fd);
-    return b;
-}
-
-GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf)
-{
-    gf->header = readID3v2FrameHeader(fd);
-    gf->frame_body = readFrameBody(fd,gf->header->size);
-
-    return gf;
-}
-
-gboolean isValidFrame(GenericFrame *frame)
-{
-    if(strlen(frame->header->frame_id) != 0)
-        return TRUE;
-    else
-        return FALSE;
-}
-
-void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids)
-{
-    int pos = 0;
-    int i = 0;
-    while(pos < framesSize)
-    {
-        GenericFrame *gframe = g_new0(GenericFrame,1);
-        gframe = readGenericFrame(fd,gframe);
-        if(isValidFrame(gframe))
-        {
-            mowgli_dictionary_add(frames, gframe->header->frame_id, gframe);
-            mowgli_node_add(gframe->header->frame_id, mowgli_node_create(), frameids);
-            pos += gframe->header->size;
-            i++;
-        }else
-            break;
-    }
-    
-}
-
-void add_newISO8859_1FrameFromString(const gchar *value,int id3_field)
-{
-    GError *error = NULL;
-    gsize bytes_read = 0 , bytes_write = 0;
-    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
-    ID3v2FrameHeader *header = g_new0(ID3v2FrameHeader,1);
-    header->frame_id = id3_frames[id3_field];
-    header->flags = 0;
-    header->size = strlen(retVal)+1;
-    gchar* buf = g_new0(gchar,header->size+1);
-    memcpy(buf+1,retVal,header->size);
-    GenericFrame *frame = g_new0(GenericFrame,1);
-    frame->header = header;
-    frame->frame_body  = buf;
-    mowgli_dictionary_add(frames,header->frame_id,frame);
-}
-
-
-void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
-{
-    const gchar *value = tuple_get_string(tuple,field,NULL);
-    add_newISO8859_1FrameFromString(value,id3_field);
-}
-
-
-void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field)
-{
-    int intvalue = tuple_get_int(tuple,field,NULL);
-    gchar *value = g_strdup_printf("%d",intvalue);
-    add_newISO8859_1FrameFromString(value,id3_field);
-
-}
-
-
-
-void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field)
-{
-    const gchar *value = tuple_get_string(tuple,field,NULL);
-    GError *error = NULL;
-    gsize bytes_read = 0 , bytes_write = 0;
-    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
-
-    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
-    if(frame != NULL)
-    {
-        frame->header->size = strlen(retVal)+1;
-        gchar* buf = g_new0(gchar,frame->header->size+1);
-        memcpy(buf+1,retVal,frame->header->size);
-        frame->frame_body = buf;
-    }
-    else
-        add_newFrameFromTupleStr(tuple,field,id3_field);
-
-}
-
-void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field)
-{
-    int intvalue = tuple_get_int(tuple,field,NULL);
-    gchar *value = g_strdup_printf("%d",intvalue);
-    GError *error = NULL;
-    gsize bytes_read = 0 , bytes_write = 0;
-    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
-
-    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
-    if(frame != NULL)
-    {
-        frame->header->size = strlen(retVal)+1;
-        gchar* buf = g_new0(gchar,frame->header->size+1);
-        memcpy(buf+1,retVal,frame->header->size);
-        frame->frame_body = buf;
-    }
-    else
-        add_newFrameFromTupleStr(tuple,field,id3_field);
-
-}
-
-
-
-void writeID3FrameHeaderToFile(VFSFile *fd, ID3v2FrameHeader *header)
-{
-    vfs_fwrite(header->frame_id,4,1,fd);
-    write_int32(fd,header->size);
-    vfs_fwrite(&header->flags,2,1,fd);
-}
-
-void writeGenericFrame(VFSFile *fd,GenericFrame *frame)
-{
-    writeID3FrameHeaderToFile(fd,frame->header);
-    vfs_fwrite(frame->frame_body,frame->header->size,1,fd);
-}
-
-guint32 writeAllFramesToFile(VFSFile *fd,mowgli_list_t framesList)
-{
-   guint32 size = 0;
-   mowgli_node_t *n, *tn;
-   MOWGLI_LIST_FOREACH_SAFE(n, tn, framesList.head)
-   {
-       GenericFrame *frame = (GenericFrame*)mowgli_dictionary_retrieve(frames,(gchar*)(n->data));
-       if(frame)
-       {
-           writeGenericFrame(fd,frame);
-           size += frame->header->size+10;
-       }
-   }
-   return size;
-}
-
-void writeID3HeaderToFile(VFSFile *fd,ID3v2Header *header)
-{
-    vfs_fwrite(header->id3,3,1,fd);
-    vfs_fwrite(&header->version,2,1,fd);
-    vfs_fwrite(&header->flags,1,1,fd);
-    write_syncsafe_int32(fd,header->size);
-}
-
-void writePaddingToFile(VFSFile *fd, int ksize)
-{
-    gchar padding = 0;
-    int i = 0;
-    for(i=0; i<ksize;i++)
-        vfs_fwrite(&padding,1,1,fd);
-}
-
-void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos)
-{
-    vfs_fseek(from,pos,SEEK_SET);
-    while (vfs_feof(from) == 0)
-    {
-        gchar buf[4096];
-        gint n = vfs_fread(buf, 1, 4096, from);
-        vfs_fwrite(buf, n, 1, to);
-    }
-}
 
 gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
 {

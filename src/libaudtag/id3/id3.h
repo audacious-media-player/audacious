@@ -42,6 +42,78 @@ typedef struct textframe
     gchar* text;
 }TextInformationFrame;
 
+guint32 read_int32(VFSFile *fd);
+
+guint32 read_int16(VFSFile *fd);
+
+gchar *read_ASCII(VFSFile *fd, int size);
+
+gchar *read_iso8859_1(VFSFile *fd, int size);
+
+gchar* read_unicode(VFSFile *fd, int size);
+
+guint32 read_syncsafe_int32(VFSFile *fd);
+
+ID3v2Header *readHeader(VFSFile *fd);
+
+ExtendedHeader *readExtendedHeader(VFSFile *fd);
+
+ID3v2FrameHeader *readID3v2FrameHeader(VFSFile *fd);
+
+TextInformationFrame *readTextFrame(VFSFile *fd, TextInformationFrame *frame);
+
+gchar* readFrameBody(VFSFile *fd,int size);
+
+GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf);
+
+void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids);
+
+void write_int32(VFSFile *fd, guint32 val);
+
+void  write_syncsafe_int32(VFSFile *fd, guint32 val);
+
+void write_ASCII(VFSFile *fd, int size, gchar* value);
+
+void write_utf8(VFSFile *fd, int size,gchar* value);
+
+guint32 writeAllFramesToFile(VFSFile *fd,mowgli_list_t framesList);
+
+void writeID3HeaderToFile(VFSFile *fd,ID3v2Header *header);
+
+void writePaddingToFile(VFSFile *fd, int ksize);
+
+void writeID3FrameHeaderToFile(VFSFile *fd, ID3v2FrameHeader *header);
+
+void writeGenericFrame(VFSFile *fd,GenericFrame *frame);
+
+gboolean isExtendedHeader(ID3v2Header *header);
+
+gboolean isUnsynchronisation(ID3v2Header *header);
+
+gboolean isExperimental(ID3v2Header *header);
+
+int getFrameID(ID3v2FrameHeader *header);
+
+void skipFrame(VFSFile *fd, guint32 size);
+
+Tuple *assocStrInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header);
+
+Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header);
+
+gboolean isValidFrame(GenericFrame *frame);
+
+void add_newISO8859_1FrameFromString(const gchar *value,int id3_field);
+
+void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field);
+
+void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field);
+
+void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field);
+
+void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field);
+
+void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos);
+
 
 gboolean id3_can_handle_file(VFSFile *f);
 
