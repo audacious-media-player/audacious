@@ -340,6 +340,7 @@ static void handle_cmd_line_options_first(void)
         cfg_db_get_string(db, NULL, "interface", &options.interface);
         if (options.interface == NULL)
             options.interface = g_strdup("skinned");
+        cfg_db_close(db);
     }
 }
 
