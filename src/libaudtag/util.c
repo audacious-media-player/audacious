@@ -172,3 +172,10 @@ void seek(VFSFile *f, long pos) {
 void skip(VFSFile *f, int amount) {
     vfs_fseek(f, amount, SEEK_CUR);
 }
+
+gchar *read_ASCII(VFSFile *fd, int size)
+{
+    gchar *value= g_new0(gchar,size);
+    vfs_fread(value,size,1,fd);
+    return value;
+}
