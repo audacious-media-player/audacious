@@ -316,6 +316,12 @@ tuple_get_nfield(const gchar *field)
 
 /**
  * (Re)associates data into given #Tuple field.
+ * If specified field already exists in the #Tuple, any data from it
+ * is freed and this current TupleValue struct is returned.
+ *
+ * If field does NOT exist, a new structure is allocated from global
+ * heap, added to Tuple and returned.
+ *
  * @attention This function has (unbalanced) Tuple structure unlocking,
  * so please make sure you use it only exactly like it is used in
  * #tuple_associate_string(), etc.
@@ -324,7 +330,7 @@ tuple_get_nfield(const gchar *field)
  * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
  * @param[in] field String acting as key name or NULL if nfield is used.
  * @param[in] ftype Type of the field to be associated.
- * @return Pointer to newly associated TupleValue structure.
+ * @return Pointer to associated TupleValue structure.
  */
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype)
@@ -380,6 +386,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 
 /**
  * Associates copy of given string to a field in specified #Tuple.
+ * If field already exists, old value is freed and replaced.
+ * 
  * Desired field can be specified either by key name or if it is
  * one of basic fields, by #TupleBasicType index.
  *
@@ -409,6 +417,8 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
 
 /**
  * Associates given integer to a field in specified #Tuple.
+ * If field already exists, old value is freed and replaced.
+ *
  * Desired field can be specified either by key name or if it is
  * one of basic fields, by #TupleBasicType index.
  *
