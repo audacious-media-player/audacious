@@ -26,13 +26,6 @@ guint32 read_int16(VFSFile *fd)
     return a;
 }
 
-gchar *read_ASCII(VFSFile *fd, int size)
-{
-    gchar *value= g_new0(gchar,size);
-    vfs_fread(value,size,1,fd);
-    return value;
-}
-
 gchar *read_iso8859_1(VFSFile *fd, int size)
 {
     gchar *value= g_new0(gchar,size);
