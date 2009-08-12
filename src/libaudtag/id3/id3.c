@@ -285,6 +285,10 @@ Tuple *id3_populate_tuple_from_file(VFSFile *f)
             {
                 tuple = assocStrInfo(tuple,f,FIELD_GENRE,*header);
             }break;
+            case ID3_COMMENT:
+            {
+                tuple = assocStrInfo(tuple,f,FIELD_COMMENT,*header);
+            }break;
             default:
             {
                 //we a a frame that I dont need so skip it
@@ -340,24 +344,6 @@ void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids)
     
 }
 
-
-void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field)
-{
-    const gchar *value = tuple_get_string(tuple,field,NULL);
-    GError *error = NULL;
-    gsize bytes_read = 0 , bytes_write = 0;
-    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
-
-    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
-    if(frame != NULL)
-    {
-        frame->header->size = strlen(retVal)+1;
-        gchar* buf = g_new0(gchar,frame->header->size+1);
-        memcpy(buf+1,retVal,frame->header->size);
-        frame->frame_body = buf;
-    }
-}
-
 void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
 {
     const gchar *value = tuple_get_string(tuple,field,NULL);
@@ -375,6 +361,28 @@ void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
     frame->frame_body  = buf;
     mowgli_dictionary_add(frames,header->frame_id,frame);
 }
+
+void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field)
+{
+    const gchar *value = tuple_get_string(tuple,field,NULL);
+    GError *error = NULL;
+    gsize bytes_read = 0 , bytes_write = 0;
+    gchar* retVal = g_convert(value,strlen(value),"ISO-8859-1","UTF-8",&bytes_read,&bytes_write,&error);
+
+    GenericFrame *frame = mowgli_dictionary_retrieve(frames,id3_frames[id3_field]);
+    if(frame != NULL)
+    {
+        frame->header->size = strlen(retVal)+1;
+        gchar* buf = g_new0(gchar,frame->header->size+1);
+        memcpy(buf+1,retVal,frame->header->size);
+        frame->frame_body = buf;
+    }
+    else
+        add_newFrameFromTupleStr(tuple,field,id3_field);
+
+}
+
+
 
 void writeID3FrameHeaderToFile(VFSFile *fd, ID3v2FrameHeader *header)
 {
@@ -456,18 +464,23 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     //make the new frames from tuple and replace in the dictinonary the old frames with the new ones
     if(tuple_get_string(tuple, FIELD_ARTIST, NULL))
         add_frameFromTupleStr(tuple, FIELD_ARTIST,ID3_ARTIST);
-    else
-        add_newFrameFromTupleStr(tuple,FIELD_ARTIST,ID3_ARTIST);
+
 
    if(tuple_get_string(tuple, FIELD_TITLE, NULL))
         add_frameFromTupleStr(tuple, FIELD_TITLE,ID3_TITLE);
-    else
-        add_newFrameFromTupleStr(tuple,FIELD_TITLE,ID3_TITLE);
+
 
    if(tuple_get_string(tuple, FIELD_ALBUM, NULL))
         add_frameFromTupleStr(tuple, FIELD_ALBUM,ID3_ALBUM);
-    else
-        add_newFrameFromTupleStr(tuple,FIELD_ALBUM,ID3_ALBUM);
+
+   if(tuple_get_string(tuple,FIELD_COMMENT,NULL))
+       add_frameFromTupleStr(tuple,FIELD_COMMENT,ID3_COMMENT);
+
+    if(tuple_get_string(tuple,FIELD_GENRE,NULL))
+        add_frameFromTupleStr(tuple,FIELD_GENRE,ID3_GENRE);
+    
+
+
 
     VFSFile *tmp = vfs_fopen("file:///home/paula/musepack/tmp.mpc","w+");
     int oldSize = header->size;
