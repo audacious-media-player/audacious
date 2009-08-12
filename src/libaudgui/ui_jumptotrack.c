@@ -237,15 +237,9 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
     GtkTreeModel *store;
 
     GtkTreeView *tree = GTK_TREE_VIEW(g_object_get_data(user_data, "treeview"));
-    GtkEntry *edit = g_object_get_data(user_data, "edit");
 
     if (!jump_to_track_win)
         return;
-
-    /* clear edit widget */
-    if(edit){
-        gtk_entry_set_text(edit, "");
-    }
 
     store = gtk_tree_view_get_model(tree);
     gtk_list_store_clear(GTK_LIST_STORE(store));
@@ -348,13 +342,13 @@ ui_jump_to_track_fill(gpointer treeview)
 
 static void watchdog (void * hook_data, void * user_data)
 {
-    GtkWidget *widget;
-
-    if (storage == NULL)
+    if (GPOINTER_TO_INT (hook_data) <= PLAYLIST_UPDATE_SELECTION || storage ==
+     NULL)
         return;
 
-    widget = g_object_get_data(storage, "widget");
-    ui_jump_to_track_update(widget, storage);
+    ui_jump_to_track_update (g_object_get_data (storage, "widget"), storage);
+    ui_jump_to_track_edit_cb (g_object_get_data (storage, "edit"),
+     g_object_get_data (storage, "treeview"));
 }
 
 void
