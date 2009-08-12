@@ -97,8 +97,10 @@ typedef struct _Tuple {
     mowgli_object_t parent;
     mowgli_dictionary_t *dict;      /**< Mowgli dictionary for holding other than basic values. */
     TupleValue *values[FIELD_LAST]; /**< Basic #Tuple values, entry is NULL if not set. */
-    gint nsubtunes;                 /**< Number of subtunes, if any. */
-    gint *subtunes;                 /**< Array of gint containing subtune numbers.
+    gint nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
+                                         mean that there are subtunes and #subtunes array
+                                         may be set. */
+    gint *subtunes;                 /**< Array of gint containing subtune index numbers.
                                          Can be NULL if indexing is linear or if
                                          there are no subtunes. */
 } Tuple;

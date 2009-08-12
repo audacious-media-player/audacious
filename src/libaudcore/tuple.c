@@ -17,6 +17,10 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
+/**
+ * @file tuple.c
+ * @brief Basic Tuple handling API.
+ */
 
 #include <glib.h>
 #include <mowgli.h>
@@ -69,11 +73,16 @@ static mowgli_object_class_t tuple_klass;
 /** Global R/W lock for preserve data consistency of heaps */
 static GStaticRWLock tuple_rwlock = G_STATIC_RW_LOCK_INIT;
 
+//@{
+/**
+ * Convenience macro for read/write locking of the globally
+ * used internal Tuple system structures.
+ */
 #define TUPLE_LOCK_WRITE(X)     g_static_rw_lock_writer_lock(&tuple_rwlock)
 #define TUPLE_UNLOCK_WRITE(X)   g_static_rw_lock_writer_unlock(&tuple_rwlock)
 #define TUPLE_LOCK_READ(X)      g_static_rw_lock_reader_lock(&tuple_rwlock)
 #define TUPLE_UNLOCK_READ(X)    g_static_rw_lock_reader_unlock(&tuple_rwlock)
-
+//@}
 
 /* iterative destructor of tuple values. */
 static void
@@ -208,10 +217,11 @@ tuple_set_filename(Tuple *tuple, const gchar *filename)
 }
 
 /**
- * Creates a copy of given Tuple structure, with copied data.
+ * Creates a copy of given TupleValue structure, with copied data.
  *
- * @param[in] orig Original tuple to be copied.
- * @return Pointer to newly allocated Tuple.
+ * @param[in] src TupleValue structure to be made a copy of.
+ * @return Pointer to newly allocated TupleValue or NULL
+ *         if error occured or source was NULL.
  */
 static TupleValue *
 tuple_copy_value(TupleValue *src)
@@ -234,6 +244,12 @@ tuple_copy_value(TupleValue *src)
     return res;
 }
 
+/**
+ * Creates a copy of given Tuple structure, with copied data.
+ *
+ * @param[in] src Tuple structure to be made a copy of.
+ * @return Pointer to newly allocated Tuple.
+ */
 Tuple *
 tuple_copy(const Tuple *src)
 {
@@ -300,6 +316,12 @@ tuple_get_nfield(const gchar *field)
 
 /**
  * (Re)associates data into given #Tuple field.
+ * If specified field already exists in the #Tuple, any data from it
+ * is freed and this current TupleValue struct is returned.
+ *
+ * If field does NOT exist, a new structure is allocated from global
+ * heap, added to Tuple and returned.
+ *
  * @attention This function has (unbalanced) Tuple structure unlocking,
  * so please make sure you use it only exactly like it is used in
  * #tuple_associate_string(), etc.
@@ -308,7 +330,7 @@ tuple_get_nfield(const gchar *field)
  * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
  * @param[in] field String acting as key name or NULL if nfield is used.
  * @param[in] ftype Type of the field to be associated.
- * @return Pointer to newly associated TupleValue structure.
+ * @return Pointer to associated TupleValue structure.
  */
 static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype)
@@ -364,6 +386,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 
 /**
  * Associates copy of given string to a field in specified #Tuple.
+ * If field already exists, old value is freed and replaced.
+ * 
  * Desired field can be specified either by key name or if it is
  * one of basic fields, by #TupleBasicType index.
  *
@@ -393,6 +417,8 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
 
 /**
  * Associates given integer to a field in specified #Tuple.
+ * If field already exists, old value is freed and replaced.
+ *
  * Desired field can be specified either by key name or if it is
  * one of basic fields, by #TupleBasicType index.
  *
