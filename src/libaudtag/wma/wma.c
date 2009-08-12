@@ -18,9 +18,11 @@ tag_module_t wma = {wma_can_handle_file, wma_populate_tuple_from_file, wma_write
 void writeGuidToFile(VFSFile *f, int guid_type);
 
 gboolean wma_can_handle_file(VFSFile *fd) {
+/*
     DEBUG("can handle file\n");
         if(fd == NULL)
         DEBUG("F NULLL\n");
+*/
     int retval = FALSE;
     GUID *guid1 = g_new0(GUID, 1);
     memcpy(guid1, guid_read_from_file(fd, 0), sizeof (GUID));

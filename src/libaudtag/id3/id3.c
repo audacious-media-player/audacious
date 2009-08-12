@@ -71,7 +71,6 @@ gchar *read_iso8859_1(VFSFile *fd, int size)
     GError *error = NULL;
     gsize bytes_read = 0 , bytes_write = 0;
     gchar* retVal = g_convert(value,size,"UTF-8","ISO-8859-1",&bytes_read,&bytes_write,&error);
-    DEBUG("iso 8859-1 : %s\n",retVal);
     g_free(value);
     return retVal;
 }
@@ -92,7 +91,6 @@ gchar* read_unicode(VFSFile *fd, int size)
 guint32 read_syncsafe_int32(VFSFile *fd)
 {
     guint32 val = read_int32(fd);
-    DEBUG("hex size = %x\n",val);
     guint32 mask = 0x7f;
     guint32 intVal = 0;
     intVal = ((intVal)  |  (val & mask));
@@ -103,8 +101,7 @@ guint32 read_syncsafe_int32(VFSFile *fd)
         guint32 tmp = (val  & mask);
         tmp = tmp >> 1;
         intVal = intVal | tmp;
-    }
-    DEBUG("header  size = %d\n",intVal);
+    };
     return intVal;
 }
 
@@ -212,7 +209,6 @@ Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header
 
 gboolean id3_can_handle_file(VFSFile *f)
 {
-    DEBUG("id3 can handle file \n");
     ID3v2Header *header = readHeader(f);
     if(!g_strcmp0(header->id3,"ID3"))
         return TRUE;
@@ -225,7 +221,6 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
 {
     //reset file position
     vfs_fseek(f,0,SEEK_SET);
-    DEBUG("id3 populate tuple \n");
 //    Tuple *tuple = tuple_new_from_filename(f->uri);
     ExtendedHeader *extHeader;
     ID3v2Header *header = readHeader(f);
@@ -343,7 +338,7 @@ void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids)
     
 }
 
-void add_newISO5589_1FrameFromString(const gchar *value,int id3_field)
+void add_newISO8859_1FrameFromString(const gchar *value,int id3_field)
 {
     GError *error = NULL;
     gsize bytes_read = 0 , bytes_write = 0;
@@ -364,7 +359,7 @@ void add_newISO5589_1FrameFromString(const gchar *value,int id3_field)
 void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field)
 {
     const gchar *value = tuple_get_string(tuple,field,NULL);
-    add_newISO5589_1FrameFromString(value,id3_field);
+    add_newISO8859_1FrameFromString(value,id3_field);
 }
 
 
@@ -372,7 +367,7 @@ void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field)
 {
     int intvalue = tuple_get_int(tuple,field,NULL);
     gchar *value = g_strdup_printf("%d",intvalue);
-    add_newISO5589_1FrameFromString(value,id3_field);
+    add_newISO8859_1FrameFromString(value,id3_field);
 
 }
 
