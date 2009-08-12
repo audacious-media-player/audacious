@@ -26,12 +26,12 @@ typedef struct frameheader
 {
     gchar* frame_id;
     guint32 size;
-    guint32 flags;
+    guint16 flags;
 }ID3v2FrameHeader;
 
 typedef struct genericframe
 {
-    ID3v2FrameHeader header;
+    ID3v2FrameHeader *header;
     gchar*           frame_body;
 }GenericFrame;
 
@@ -45,10 +45,10 @@ typedef struct textframe
 
 gboolean id3_can_handle_file(VFSFile *f);
 
-Tuple *id3_populate_tuple_from_file(VFSFile *f);
+Tuple *id3_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
 
 gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
 extern tag_module_t id3;
-
+mowgli_dictionary_t *frames ;
 #endif

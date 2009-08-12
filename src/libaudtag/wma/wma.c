@@ -10,7 +10,6 @@
 #include "../tag_module.h"
 
 
-
 int filePosition = 0;
 int newfilePosition = 0;
 
@@ -272,11 +271,8 @@ void readASFObject(VFSFile *f) {
     filePosition += size;
 }
 
-Tuple *wma_populate_tuple_from_file(VFSFile *fd) {
+Tuple *wma_populate_tuple_from_file(Tuple *tuple, VFSFile *fd) {
     DEBUG("wma populate tuple from file\n");
-
-
-    Tuple *tuple = tuple_new_from_filename(fd->uri);
     HeaderObject *header = readHeaderObject(fd);
     int i;
 

@@ -15,9 +15,10 @@ enum {
     ID3_TRACKNR,
     ID3_YEAR,
     ID3_GENRE,
+    ID3_COMMENT,
     ID3_TAGS_NO
 };
 
-char * id3_frames[] = {"TALB","TIT2","TCOM", "TCOP", "TDAT", "TIME", "TLEN", "TPE1", "TRCK", "TYER","TCON"};
+char * id3_frames[] = {"TALB","TIT2","TCOM", "TCOP", "TDAT", "TIME", "TLEN", "TPE1", "TRCK", "TYER","TCON", "COMM"};
 
 #endif
