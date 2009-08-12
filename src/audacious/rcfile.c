@@ -271,7 +271,7 @@ aud_rcfile_read_bool(RcFile * file, const gchar * section,
  * Looks up a single precision floating point value in
  * an RcFile and places it in %value.
  *
- * @bug This functions is not thread-safe due to use of setlocale().
+ * @bug This function is not thread-safe due to use of setlocale().
  *
  * @param[in] file A #RcFile object.
  * @param[in] section The section of the RcFile to look in.
@@ -307,7 +307,7 @@ aud_rcfile_read_float(RcFile * file, const gchar * section,
  * Looks up a double precision floating point value in
  * an RcFile and places it in %value.
  *
- * @bug This functions is not thread-safe due to use of setlocale().
+ * @bug This function is not thread-safe due to use of setlocale().
  *
  * @param[in] file A #RcFile object.
  * @param[in] section The section of the RcFile to look in.
@@ -342,7 +342,7 @@ aud_rcfile_read_double(RcFile * file, const gchar * section,
 /**
  * Sets a string value in an RcFile for %key.
  *
- * @bug This functions is not thread-safe due to use of setlocale().
+ * @bug This function is not thread-safe due to use of setlocale().
  *
  * @param[in] file A #RcFile object.
  * @param[in] section The section of the RcFile to set the key in.
@@ -398,7 +398,7 @@ aud_rcfile_write_int(RcFile * file, const gchar * section,
 /**
  * Sets a boolean value in an RcFile for %key.
  *
- * @bug This functions is not thread-safe due to use of setlocale().
+ * @bug This function is not thread-safe due to use of setlocale().
  *
  * @param[in] file A #RcFile object.
  * @param[in] section The section of the RcFile to set the key in.
@@ -422,7 +422,7 @@ aud_rcfile_write_boolean(RcFile * file, const gchar * section,
 /**
  * Sets a single precision floating point value in an RcFile for %key.
  *
- * @bug This functions is not thread-safe due to use of setlocale().
+ * @bug This function is not thread-safe due to use of setlocale().
  *
  * @param[in] file A #RcFile object.
  * @param[in] section The section of the RcFile to set the key in.
@@ -451,7 +451,7 @@ aud_rcfile_write_float(RcFile * file, const gchar * section,
 /**
  * Sets a double precision floating point value in an RcFile for %key.
  *
- * @bug This functions is not thread-safe due to use of setlocale().
+ * @bug This function is not thread-safe due to use of setlocale().
  *
  * @param[in] file A #RcFile object.
  * @param[in] section The section of the RcFile to set the key in.

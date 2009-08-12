@@ -30,7 +30,7 @@
 
 /**
  * Global log level setting, this determines what is logged in
- * the logfile. Anything "above" this levle will not get logged.
+ * the logfile. Anything "above" this level will not be logged.
  */
 static gint log_level = AUD_LOG_INFO;
 
