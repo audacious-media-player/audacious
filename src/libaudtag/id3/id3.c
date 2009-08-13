@@ -267,7 +267,7 @@ int getFrameID(ID3v2FrameHeader *header)
     int i=0;
     for(i = 0; i<ID3_TAGS_NO;i++)
     {
-        if(!g_strcmp0(header->frame_id,id3_frames[i]))
+        if(!strcmp(header->frame_id,id3_frames[i]))
             return i;
     }
     return -1;
@@ -403,7 +403,7 @@ void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos)
 gboolean id3_can_handle_file(VFSFile *f)
 {
     ID3v2Header *header = readHeader(f);
-    if(!g_strcmp0(header->id3,"ID3"))
+    if(!strcmp(header->id3,"ID3"))
         return TRUE;
     return FALSE;
 }
@@ -525,7 +525,7 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
        add_frameFromTupleStr(tuple,FIELD_COMMENT,ID3_COMMENT);
 
     if(tuple_get_string(tuple,FIELD_GENRE,NULL))
-        add_frameFromTupleStr(tuple,FIELD_GENRE,ID3_GENRE);   
+        add_frameFromTupleStr(tuple,FIELD_GENRE,ID3_GENRE);
 
     if(tuple_get_int(tuple,FIELD_YEAR,NULL) !=0 )
         add_frameFromTupleInt(tuple,FIELD_YEAR,ID3_YEAR);
