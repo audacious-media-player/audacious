@@ -106,19 +106,13 @@ Tuple *readFilePropObject(VFSFile *f, Tuple *tuple) {
     DEBUG("Year = %d\n", year);
 */
     vfs_fseek(f, 8, SEEK_CUR);
-    /* read play duration - time needed to play the file in 100-nanosecond
-    units */
-    vfs_fread(&playDuration, 8, 1, f);
-/*
-    DEBUG("play duration = %"PRId64"\n", playDuration);
-*/
+
+    if (vfs_fread (& playDuration, 8, 1, f) == 1)
+        tuple_associate_int (tuple, FIELD_LENGTH, NULL, playDuration / 10000);
+
     /* increment filePosition */
     filePosition += size;
 
-    tuple_associate_int(tuple, FIELD_LENGTH, NULL, (int) playDuration / 1000);
-/*
-    DEBUG("length = %"PRId64"\n", playDuration / 10000);
-*/
     //tuple_associate_int(tuple, FIELD_YEAR, NULL, year);
 
     return tuple;
