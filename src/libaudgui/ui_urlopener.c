@@ -135,7 +135,13 @@ on_add_url_add_clicked(GtkWidget * widget,
 {
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
     if (text && *text)
-        aud_playlist_entry_insert (aud_playlist_get_active (), -1, g_strdup (text), NULL);
+    {
+        if (aud_filename_is_playlist (text))
+            aud_playlist_insert_playlist (aud_playlist_get_active (), -1, text);
+        else
+            aud_playlist_entry_insert (aud_playlist_get_active (), -1, g_strdup
+             (text), NULL);
+    }
 }
 
 static void
@@ -148,7 +154,13 @@ on_add_url_ok_clicked(GtkWidget * widget,
     if (text && *text)
     {
         aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
-        aud_playlist_entry_insert (playlist, 0, g_strdup (text), NULL);
+
+        if (aud_filename_is_playlist (text))
+            aud_playlist_insert_playlist (aud_playlist_get_active (), 0, text);
+        else
+            aud_playlist_entry_insert (aud_playlist_get_active (), 0, g_strdup
+             (text), NULL);
+
         aud_playlist_set_playing (playlist);
         audacious_drct_initiate ();
     }
