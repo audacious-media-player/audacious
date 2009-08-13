@@ -17,20 +17,15 @@ tag_module_t wma = {wma_can_handle_file, wma_populate_tuple_from_file, wma_write
 
 void writeGuidToFile(VFSFile *f, int guid_type);
 
-gboolean wma_can_handle_file(VFSFile *fd) {
-/*
-    DEBUG("can handle file\n");
-        if(fd == NULL)
-        DEBUG("F NULLL\n");
-*/
-    int retval = FALSE;
-    GUID *guid1 = g_new0(GUID, 1);
-    memcpy(guid1, guid_read_from_file(fd, 0), sizeof (GUID));
-    GUID *guid2 = g_new0(GUID, 1);
-          memcpy(guid2,guid_convert_from_string(ASF_HEADER_OBJECT_GUID),sizeof(GUID));
-    if (guid_equal(guid1, guid2))
-        retval = TRUE;
-    return retval;
+gboolean wma_can_handle_file (VFSFile * handle)
+{
+    GUID * guid1 = guid_read_from_file (handle);
+    GUID * guid2 = guid_convert_from_string (ASF_HEADER_OBJECT_GUID);
+    gboolean equal = (guid1 != NULL && guid_equal (guid1, guid2));
+
+    g_free (guid1);
+    g_free (guid2);
+    return equal;
 }
 
 HeaderObject *readHeaderObject(VFSFile *f) {
@@ -136,12 +131,6 @@ Tuple *readContentDescriptionObject(VFSFile *f, Tuple *tuple) {
     guint16 copyrightLen;
     guint16 descLen;
 
-    gunichar2 *title;
-    gunichar2 *author;
-    gunichar2 *copyright;
-    gunichar2 *desc;
-
-
     vfs_fseek(f, filePosition + 16, SEEK_SET);
 
     vfs_fread(&size, 8, 1, f);
@@ -152,36 +141,43 @@ Tuple *readContentDescriptionObject(VFSFile *f, Tuple *tuple) {
     /* ignore rating length */
     vfs_fseek(f, 2, SEEK_CUR);
 
-    // 	title = g_new0(gunichar2,titleLen/sizeof(gunichar2));
-    // 	author = g_new0(gunichar2,authorLen/sizeof(gunichar2));
-    // 	copyright = g_new0(gunichar2,copyrightLen/sizeof(gunichar2));
-    // 	desc = g_new0(gunichar2,descLen/sizeof(gunichar2));
+    if (titleLen > 0)
+    {
+        gunichar2 title[titleLen / 2];
 
-    title = g_new0(gunichar2, titleLen);
-    author = g_new0(gunichar2, authorLen);
-    copyright = g_new0(gunichar2, copyrightLen);
-    desc = g_new0(gunichar2, descLen);
-    if (titleLen != 0) {
-        vfs_fread(title, titleLen, 1, f);
+        vfs_fread (title, 1, titleLen, f);
+        tuple_associate_string (tuple, FIELD_TITLE, NULL, g_utf16_to_utf8
+         (title, titleLen / 2, NULL, NULL, NULL));
     }
-    if (authorLen != 0) {
-        vfs_fread(author, authorLen, 1, f);
+
+    if (authorLen > 0)
+    {
+        gunichar2 author[authorLen / 2];
+
+        vfs_fread (author, 1, authorLen, f);
+        tuple_associate_string (tuple, FIELD_ARTIST, NULL, g_utf16_to_utf8
+         (author, authorLen / 2, NULL, NULL, NULL));
     }
-    if (copyrightLen != 0) {
-        vfs_fread(copyright, copyrightLen, 1, f);
+
+    if (copyrightLen > 0)
+    {
+        gunichar2 copyright[copyrightLen / 2];
+
+        vfs_fread (copyright, 1, copyrightLen, f);
+        tuple_associate_string (tuple, FIELD_COPYRIGHT, NULL, g_utf16_to_utf8
+         (copyright, copyrightLen / 2, NULL, NULL, NULL));
     }
-    if (descLen != 0) {
-        vfs_fread(desc, descLen, 1, f);
+
+    if (descLen > 0)
+    {
+        gunichar2 desc[descLen / 2];
+
+        vfs_fread (desc, 1, descLen, f);
+        tuple_associate_string (tuple, FIELD_COMMENT, NULL, g_utf16_to_utf8
+         (desc, descLen / 2, NULL, NULL, NULL));
     }
 
     filePosition += size;
-    g_utf16_to_utf8(title, titleLen, NULL, NULL, NULL);
-    tuple_associate_string(tuple, FIELD_TITLE, NULL, g_utf16_to_utf8(title, titleLen, NULL, NULL, NULL));
-    tuple_associate_string(tuple, FIELD_ARTIST, NULL, g_utf16_to_utf8(author, authorLen, NULL, NULL, NULL));
-    tuple_associate_string(tuple, FIELD_COPYRIGHT, NULL, g_utf16_to_utf8(copyright, copyrightLen, NULL, NULL, NULL));
-
-    tuple_associate_string(tuple, FIELD_COMMENT, NULL, g_utf16_to_utf8(desc, descLen, NULL, NULL, NULL));
-
     return tuple;
 }
 
@@ -266,6 +262,9 @@ Tuple *readExtendedContentObj(VFSFile *f, Tuple *tuple) {
             }
                 break;
 
+            default:
+                vfs_fseek (f, valueLen, SEEK_CUR);
+                break;
         }
 
     }
@@ -289,9 +288,11 @@ Tuple *wma_populate_tuple_from_file(Tuple *tuple, VFSFile *fd) {
     HeaderObject *header = readHeaderObject(fd);
     int i;
 
-    for (i = 0; i < header->objectsNr; i++) {
-        GUID *guid = g_new0(GUID, 1);
-        memcpy(guid, guid_read_from_file(fd, filePosition), sizeof (GUID));
+    for (i = 0; i < header->objectsNr; i ++)
+    {
+        vfs_fseek (fd, filePosition, SEEK_SET);
+
+        GUID * guid = guid_read_from_file (fd);
         int guid_type = get_guid_type(guid);
         switch (guid_type) {
             case ASF_CODEC_LIST_OBJECT:
@@ -999,9 +1000,11 @@ gboolean wma_write_tuple_to_file(Tuple* tuple, VFSFile *fd) {
     newHeader = copyHeaderObject(fd, tmpFile);
 
 
-    for (i = 0; i < newHeader->objectsNr; i++) {
-        GUID *guid = g_new0(GUID, 1);
-        memcpy(guid, guid_read_from_file(fd, filePosition), sizeof (GUID));
+    for (i = 0; i < newHeader->objectsNr; i ++)
+    {
+        vfs_fseek (fd, filePosition, SEEK_SET);
+
+        GUID * guid = guid_read_from_file (fd);
         int guid_type = get_guid_type(guid);
 /*
         DEBUG("guid type = %d\n", guid_type);

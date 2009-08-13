@@ -12,7 +12,7 @@ typedef struct _guid
 }GUID;
 
 
-GUID *guid_read_from_file(VFSFile *f, int offset);
+GUID * guid_read_from_file (VFSFile * handle);
 void writeGuidToFile(VFSFile *f, int guid_type);
 
 GUID *guid_convert_from_string(const gchar *s);
