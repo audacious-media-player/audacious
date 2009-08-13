@@ -521,7 +521,6 @@ input_file_info_box(const gchar * filename)
     else
         input_general_file_info_box(filename, ip);
 
-    input_general_file_info_box(filename, NULL);
     g_free(filename_proxy);
 }
 
