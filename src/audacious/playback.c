@@ -482,6 +482,9 @@ playback_seek(gint time)
     g_return_if_fail(ip_data.playing);
     g_return_if_fail(playback != NULL);
 
+    if (playback->length <= 0)
+        return;
+
     plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->seek (playback, CLAMP (time, 0, playback->length / 1000));
     playback->set_pb_change(playback);
