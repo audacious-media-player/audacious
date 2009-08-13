@@ -547,15 +547,22 @@ void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
 gchar * playback_get_title (void)
 {
     InputPlayback * playback = get_current_input_playback ();
+    gchar * suffix, * title;
 
     if (playback == NULL)
         return NULL;
 
+    suffix = (playback->length > 0) ? g_strdup_printf (" (%d:%02d)",
+     playback->length / 60000, playback->length / 1000 % 60) : NULL;
+
     if (cfg.show_numbers_in_pl)
-        return g_strdup_printf ("%d. %s (%d:%02d)", 1 + playlist_get_position
-         (playlist_get_playing ()), playback->title, playback->length / 60000,
-         playback->length / 1000 % 60);
+        title = g_strdup_printf ("%d. %s%s", 1 + playlist_get_position
+         (playlist_get_playing ()), playback->title, (suffix != NULL) ? suffix :
+          "");
     else
-        return g_strdup_printf ("%s (%d:%02d)", playback->title,
-         playback->length / 60000, playback->length / 1000 % 60);
+        title = g_strdup_printf ("%s%s", playback->title, (suffix !=
+         NULL) ? suffix : "");
+
+    g_free (suffix);
+    return title;
 }
