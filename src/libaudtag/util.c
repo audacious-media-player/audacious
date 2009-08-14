@@ -179,3 +179,28 @@ gchar *read_ASCII(VFSFile *fd, int size)
     vfs_fread(value,size,1,fd);
     return value;
 }
+
+guint32 read_int32(VFSFile *fd)
+{
+    guint32 val = 0;
+    vfs_fread(&val,4,1,fd);
+    return val;
+}
+
+guint64 read_int64(VFSFile *fd)
+{
+    guint64 val = 0;
+    vfs_fread(&val,8,1,fd);
+    return val;
+}
+
+void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos)
+{
+    vfs_fseek(from,pos,SEEK_SET);
+    while (vfs_feof(from) == 0)
+    {
+        gchar buf[4096];
+        gint n = vfs_fread(buf, 1, 4096, from);
+        vfs_fwrite(buf, n, 1, to);
+    }
+}

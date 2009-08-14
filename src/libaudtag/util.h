@@ -29,5 +29,7 @@ void printTuple(Tuple *tuple);
 const gchar* get_complete_filepath(Tuple *tuple);
 
 gchar *read_ASCII(VFSFile *fd, int size);
-
+guint32 read_int32(VFSFile *fd);
+guint64 read_int64(VFSFile *fd);
+void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos);
 #endif		   
