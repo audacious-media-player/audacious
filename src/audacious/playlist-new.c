@@ -1629,6 +1629,7 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
 
             playlist->position = NULL;  /* start from random position */
             create_shuffle(playlist);
+            playlist->shuffle_position = 0;
         }
         else
             playlist->shuffle_position++;
