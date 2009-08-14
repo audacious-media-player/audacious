@@ -243,6 +243,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .hook_associate = hook_associate,
     .hook_dissociate = hook_dissociate,
+    .hook_dissociate_full = hook_dissociate_full,
     .hook_register = hook_register,
     .hook_call = hook_call,
 

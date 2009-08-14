@@ -465,6 +465,7 @@ struct _AudaciousFuncTableV1 {
     void (*hook_register)(const gchar *name);
     gint (*hook_associate)(const gchar *name, HookFunction func, gpointer user_data);
     gint (*hook_dissociate)(const gchar *name, HookFunction func);
+    gint (*hook_dissociate_full)(const gchar *name, HookFunction func, gpointer user_data);
     void (*hook_call)(const gchar *name, gpointer hook_data);
 
     /* PluginMenu API */
@@ -808,6 +809,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_hook_associate              _audvt->hook_associate
 #define aud_hook_dissociate             _audvt->hook_dissociate
+#define aud_hook_dissociate_full        _audvt->hook_dissociate_full
 #define aud_hook_register               _audvt->hook_register
 #define aud_hook_call                   _audvt->hook_call
 

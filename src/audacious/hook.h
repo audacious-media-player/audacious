@@ -38,6 +38,7 @@ void hook_init (void);
 void hook_register(const gchar *name);
 gint hook_associate(const gchar *name, HookFunction func, gpointer user_data);
 gint hook_dissociate(const gchar *name, HookFunction func);
+gint hook_dissociate_full(const gchar *name, HookFunction func, gpointer user_data);
 void hook_call(const gchar *name, gpointer hook_data);
 
 #endif /* AUDACIOUS_HOOK_H */

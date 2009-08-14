@@ -134,6 +134,41 @@ hook_dissociate(const gchar *name, HookFunction func)
     return -1;
 }
 
+gint
+hook_dissociate_full(const gchar *name, HookFunction func, gpointer user_data)
+{
+    Hook *hook;
+    GSList *iter;
+
+    g_return_val_if_fail(name != NULL, -1);
+    g_return_val_if_fail(func != NULL, -1);
+
+    if (! strcmp (name, "visualization timeout"))
+    {
+        vis_runner_remove_hook (func);
+        return 0;
+    }
+
+    hook = hook_find(name);
+
+    if (hook == NULL)
+        return -1;
+
+    iter = hook->items;
+    while (iter != NULL)
+    {
+        HookItem *hookitem = (HookItem*)iter->data;
+        if (hookitem->func == func && hookitem->user_data == user_data)
+        {
+            hook->items = g_slist_delete_link(hook->items, iter);
+            g_free( hookitem );
+            return 0;
+        }
+        iter = g_slist_next(iter);
+    }
+    return -1;
+}
+
 void
 hook_call(const gchar *name, gpointer hook_data)
 {
