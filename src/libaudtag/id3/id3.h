@@ -74,7 +74,7 @@ void write_ASCII(VFSFile *fd, int size, gchar* value);
 
 void write_utf8(VFSFile *fd, int size,gchar* value);
 
-guint32 writeAllFramesToFile(VFSFile *fd,mowgli_list_t framesList);
+guint32 writeAllFramesToFile(VFSFile *fd);
 
 void writeID3HeaderToFile(VFSFile *fd,ID3v2Header *header);
 
@@ -118,5 +118,5 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
 extern tag_module_t id3;
 mowgli_dictionary_t *frames ;
-mowgli_list_t frameIDs;
+mowgli_list_t *frameIDs;
 #endif

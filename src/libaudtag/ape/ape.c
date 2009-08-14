@@ -80,7 +80,7 @@ void write_apeHeaderToFile(VFSFile *fd, APEv2Header *header) {
 void write_allTagsToFile(VFSFile *fd, APEv2Header *header) {
     mowgli_node_t *n, *tn;
 
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys.head) {
+    MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys->head) {
         APETagItem *tagItem = (APETagItem*) mowgli_dictionary_retrieve(tagItems, (gchar*) (n->data));
         write_tagItemToFile(fd, tagItem);
     }
@@ -91,7 +91,7 @@ APEv2Header *computeNewHeader() {
     mowgli_node_t *n, *tn;
     APEv2Header *header = g_new0(APEv2Header, 1);
 
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys.head) {
+    MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys->head) {
         APETagItem *tagItem = (APETagItem*) mowgli_dictionary_retrieve(tagItems, (gchar*) (n->data));
         size += (tagItem->size + 4 + 4 + strlen(tagItem->key));
     }
@@ -99,7 +99,7 @@ APEv2Header *computeNewHeader() {
     header->preamble = APE_IDENTIFIER;
     header->reserved = 0;
     header->version = 2000;
-    header->itemCount = tagKeys.count;
+    header->itemCount = tagKeys->count;
     header->tagSize = size + 32 ; //(32 - the size of the footer)
 
     return header;
@@ -136,7 +136,7 @@ void add_tagItemFromTuple(Tuple *tuple, int tuple_field, int ape_field) {
     tagItem->value = value;
     tagItem->size = strlen(value) + 1;
     if (new) {
-        mowgli_node_add(tagItem->key, mowgli_node_create(), &tagKeys);
+        mowgli_node_add(tagItem->key, mowgli_node_create(), tagKeys);
         mowgli_dictionary_add(tagItems, tagItem->key, tagItem);
     }
 }
@@ -194,12 +194,20 @@ Tuple *ape_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
             return NULL;
     } else
         return NULL;
+    if(tagKeys != NULL)
+    {
+        mowgli_node_t *n, *tn;
+        MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys->head)
+        {
+            mowgli_node_delete(n,tagKeys);
+        }
+    }
+    tagKeys = mowgli_list_create();
     tagItems = mowgli_dictionary_create(strcasecmp);
     for (i = 0; i < header->itemCount; i++) {
         APETagItem *tagitem = readAPETagItem(f);
         int tagid = getTagItemID(tagitem);
-
-        mowgli_node_add(tagitem->key, mowgli_node_create(), &tagKeys);
+        mowgli_node_add(tagitem->key, mowgli_node_create(), tagKeys);
         mowgli_dictionary_add(tagItems, tagitem->key, tagitem);
 
         switch (tagid) {
@@ -251,15 +259,17 @@ Tuple *ape_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
 
 gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f) {
     VFSFile *tmp;
-    tmp = vfs_fopen("file:///home/paula/musepack/tmp.mpc", "w+");
+    const gchar *tmpdir = g_get_tmp_dir();
+    gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "tmp.mpc");
+    tmp = vfs_fopen(tmp_path, "w");
+
 
     if (tuple_get_string(tuple, FIELD_ARTIST, NULL))
         add_tagItemFromTuple(tuple, FIELD_ARTIST, APE_ARTIST);
 
-/*
     if (tuple_get_string(tuple, FIELD_TITLE, NULL))
         add_tagItemFromTuple(tuple, FIELD_TITLE, APE_TITLE);
-*/
+
 
     if (tuple_get_string(tuple, FIELD_ALBUM, NULL))
         add_tagItemFromTuple(tuple, FIELD_ALBUM, APE_ALBUM);
@@ -285,6 +295,15 @@ gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f) {
     write_apeHeaderToFile(tmp, header);
 
 
+    gchar *uri = g_strdup(f -> uri);
+    vfs_fclose(tmp);
+    gchar* f1 = g_filename_from_uri(tmp_path,NULL,NULL);
+    gchar* f2 = g_filename_from_uri(uri,NULL,NULL);
+    if (g_rename(f1,f2 ) == 0) {
+        DEBUG("the tag was updated successfully\n");
+    } else {
+        DEBUG("an error has occured\n");
+    }
     //skip the tag at the end - add the new tag
     return TRUE;
 }

@@ -138,7 +138,7 @@ void readAllFrames(VFSFile *fd,int framesSize)
         if(isValidFrame(gframe))
         {
             mowgli_dictionary_add(frames, gframe->header->frame_id, gframe);
-            mowgli_node_add(gframe->header->frame_id, mowgli_node_create(), &frameIDs);
+            mowgli_node_add(gframe->header->frame_id, mowgli_node_create(), frameIDs);
             pos += gframe->header->size;
             i++;
         }else
@@ -191,11 +191,11 @@ void write_utf8(VFSFile *fd, int size,gchar* value)
     vfs_fwrite(isoVal,size,1,fd);
 }
 
-guint32 writeAllFramesToFile(VFSFile *fd,mowgli_list_t framesList)
+guint32 writeAllFramesToFile(VFSFile *fd)
 {
    guint32 size = 0;
    mowgli_node_t *n, *tn;
-   MOWGLI_LIST_FOREACH_SAFE(n, tn, framesList.head)
+   MOWGLI_LIST_FOREACH_SAFE(n, tn, frameIDs->head)
    {
        GenericFrame *frame = (GenericFrame*)mowgli_dictionary_retrieve(frames,(gchar*)(n->data));
        if(frame)
@@ -324,7 +324,7 @@ void add_newISO8859_1FrameFromString(const gchar *value,int id3_field)
     frame->header = header;
     frame->frame_body  = buf;
     mowgli_dictionary_add(frames,header->frame_id,frame);
-    mowgli_node_add(frame->header->frame_id, mowgli_node_create(), &frameIDs);
+    mowgli_node_add(frame->header->frame_id, mowgli_node_create(), frameIDs);
 
 }
 
@@ -480,8 +480,15 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     vfs_fseek(f,0,SEEK_SET);
 
     ExtendedHeader *extHeader;
-    
-    mowgli_node_add("dummy",mowgli_node_create(), &frameIDs);
+    if(frameIDs != NULL)
+    {
+        mowgli_node_t *n, *tn;
+        MOWGLI_LIST_FOREACH_SAFE(n, tn, frameIDs->head)
+        {
+            mowgli_node_delete(n,frameIDs);
+        }
+    }
+    frameIDs = mowgli_list_create();
     ID3v2Header *header = readHeader(f);
     int framesSize = header->size;
 
@@ -521,7 +528,7 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
         add_frameFromTupleInt(tuple,FIELD_LENGTH,ID3_LENGTH);
 
     const gchar *tmpdir = g_get_tmp_dir();
-    gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "wmatmp.wma");
+    gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "tmp.mpc");
     tmp = vfs_fopen(tmp_path, "w+");
 
     int oldSize = header->size;
@@ -529,7 +536,7 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
 
     writeID3HeaderToFile(tmp,header);
 
-    int size = writeAllFramesToFile(tmp,frameIDs);
+    int size = writeAllFramesToFile(tmp);
     writePaddingToFile(tmp,TAG_SIZE*1024-size-10);
 
     copyAudioToFile(f,tmp,oldSize);
