@@ -42,7 +42,7 @@ typedef struct textframe
     gchar* text;
 }TextInformationFrame;
 
-guint32 read_int32(VFSFile *fd);
+guint32 read_BEint32(VFSFile *fd);
 
 guint32 read_int16(VFSFile *fd);
 
@@ -64,7 +64,7 @@ gchar* readFrameBody(VFSFile *fd,int size);
 
 GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf);
 
-void readAllFrames(VFSFile *fd,int framesSize,mowgli_list_t *frameids);
+void readAllFrames(VFSFile *fd,int framesSize);
 
 void write_int32(VFSFile *fd, guint32 val);
 
@@ -110,9 +110,6 @@ void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field);
 
 void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field);
 
-void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos);
-
-
 gboolean id3_can_handle_file(VFSFile *f);
 
 Tuple *id3_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
@@ -121,4 +118,5 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
 extern tag_module_t id3;
 mowgli_dictionary_t *frames ;
+mowgli_list_t frameIDs;
 #endif
