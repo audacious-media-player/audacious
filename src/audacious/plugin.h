@@ -1089,14 +1089,22 @@ struct _InputPlayback {
     gint length;
     gchar *title;
 
-    void (*set_params) (InputPlayback *, const gchar * title, gint length, gint rate, gint freq, gint nch);
-    void (*set_title) (InputPlayback *, const gchar * text);
+    /* title should be NULL and length should be 0 */
+    void (* set_params) (InputPlayback * playback, const gchar * title, gint
+     length, gint bitrate, gint samplerate, gint channels);
+
+    /* deprecated */
+    void (* set_title) (InputPlayback * playback, const gchar * title);
 
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 
     /* added in Audacious 1.5 */
     /* called by input plugin when RG info available --asphyx */
     void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
+
+    /* added in Audacious 2.2 */
+    /* caller gives up ownership of one reference to the tuple */
+    void (* set_tuple) (InputPlayback * playback, Tuple * tuple);
 };
 
 /**

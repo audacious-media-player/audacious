@@ -507,8 +507,9 @@ static void input_plugin_init(Plugin * plugin)
 
     base_filename = g_path_get_basename(p->filename);
 
-    p->set_info = playback_set_info;
-    p->set_info_text = playback_set_title;
+    /* deprecated */
+    p->set_info = ip_set_info;
+    p->set_info_text = ip_set_info_text;
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
 

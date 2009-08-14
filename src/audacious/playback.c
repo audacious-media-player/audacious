@@ -51,6 +51,14 @@
 
 #include "playback.h"
 
+static void set_params (InputPlayback * playback, const gchar * title, gint
+ length, gint bitrate, gint samplerate, gint channels);
+static void set_title (InputPlayback * playback, const gchar * title);
+static void set_tuple (InputPlayback * playback, Tuple * tuple);
+
+static gboolean playback_play_file (const gchar * filename, InputPlugin *
+ decoder, const gchar * title, gint length);
+
 static gint
 playback_set_pb_ready(InputPlayback *playback)
 {
@@ -79,30 +87,6 @@ playback_set_pb_change(InputPlayback *playback)
     g_mutex_unlock(playback->pb_change_mutex);
 }
 
-static void
-playback_set_pb_params(InputPlayback *playback, const gchar *title,
-    gint length, gint rate, gint freq, gint nch)
-{
-    playback->title = g_strdup(title);
-    playback->length = length;
-    playback->rate = rate;
-    playback->freq = freq;
-    playback->nch = nch;
-
-    /* XXX: this can be removed/merged here someday */
-    plugin_set_current((Plugin *)(playback->plugin));
-    playback->plugin->set_info(title, length, rate, freq, nch);
-}
-
-static void
-playback_set_pb_title(InputPlayback *playback, const gchar *title)
-{
-    playback->title = g_strdup(title);
-
-    plugin_set_current((Plugin *)(playback->plugin));
-    playback->plugin->set_info_text(title);
-}
-
 void
 playback_error(void)
 {
@@ -128,32 +112,6 @@ playback_get_time(void)
     /** @attention This assumes that output_time will return sanely (zero)
      * even before audio is opened. Not ideal, but what else can we do? -jlindgren */
     return playback->output->output_time ();
-}
-
-gint
-playback_get_length(void)
-{
-    InputPlayback *playback;
-    gint ret = -1;
-    g_return_val_if_fail(playback_get_playing(), -1);
-    playback = get_current_input_playback();
-
-    if (playback->length)
-        return playback->length;
-
-    if (playback != NULL && playback->plugin->get_song_tuple != NULL) {
-        Tuple *tuple;
-        plugin_set_current((Plugin *)(playback->plugin));
-        tuple = playback->plugin->get_song_tuple(playback->filename);
-        if (tuple != NULL)
-        {
-            if (tuple_get_value_type(tuple, FIELD_LENGTH, NULL) == TUPLE_INT)
-                ret = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-            tuple_free(tuple);
-        }
-    }
-
-    return ret;
 }
 
 void
@@ -188,7 +146,8 @@ playback_initiate(void)
 #endif
 
     if (! playback_play_file (playlist_entry_get_filename (playlist, entry),
-     playlist_entry_get_decoder (playlist, entry)))
+     playlist_entry_get_decoder (playlist, entry), playlist_entry_get_title
+     (playlist, entry), playlist_entry_get_length (playlist, entry)))
         return;
 
     hook_call ("playback begin", NULL);
@@ -370,10 +329,11 @@ playback_new(void)
     /* init vtable functors */
     playback->set_pb_ready = playback_set_pb_ready;
     playback->set_pb_change = playback_set_pb_change;
-    playback->set_params = playback_set_pb_params;
-    playback->set_title = playback_set_pb_title;
+    playback->set_params = set_params;
+    playback->set_title = set_title;
     playback->pass_audio = output_pass_audio;
     playback->set_replaygain_info = output_set_replaygain_info;
+    playback->set_tuple = set_tuple;
 
     return playback;
 }
@@ -414,7 +374,8 @@ playback_run(InputPlayback *playback)
     g_mutex_unlock(playback->pb_ready_mutex);
 }
 
-gboolean playback_play_file (const gchar * filename, InputPlugin * decoder)
+static gboolean playback_play_file (const gchar * filename, InputPlugin *
+ decoder, const gchar * title, gint length)
 {
     InputPlayback *playback;
 
@@ -447,6 +408,8 @@ gboolean playback_play_file (const gchar * filename, InputPlugin * decoder)
 
     playback->plugin = decoder;
     playback->filename = g_strdup (filename);
+    playback->title = g_strdup ((title != NULL) ? title : filename);
+    playback->length = length;
     playback->output = &psuedo_output_plugin;
 
     set_current_input_playback(playback);
@@ -498,62 +461,91 @@ playback_seek_relative(gint offset)
     playback_seek (playback_get_time () / 1000 + offset);
 }
 
-void playback_set_info (const gchar * title, gint length, gint bitrate, gint
- samplerate, gint channels)
+static void set_title_and_length (InputPlayback * playback, const gchar * title,
+ gint length)
 {
-    InputPlayback * playback = get_current_input_playback ();
+    g_return_if_fail (playback != NULL);
+    g_warning ("Setting playback title or length manually is deprecated. Use "
+     "InputPlayback::update_tuple instead.");
 
-    if (playback == NULL)
-        return;
+    if (title != NULL)
+    {
+        g_free (playback->title);
+        playback->title = g_strdup (title);
+        event_queue ("title change", NULL);
+    }
 
-    g_free (playback->title);
-    playback->title = g_strdup (title);
-    playback->length = length;
+    if (playback->length != 0)
+        playback->length = 0;
+}
+
+static void set_params (InputPlayback * playback, const gchar * title, gint
+ length, gint bitrate, gint samplerate, gint channels)
+{
+    g_return_if_fail (playback != NULL);
+
+    /* deprecated usage */
+    if (title != NULL || length != 0)
+        set_title_and_length (playback, title, length);
+
     playback->rate = bitrate;
     playback->freq = samplerate;
     playback->nch = channels;
 
-    event_queue ("title change", NULL);
     event_queue ("info change", NULL);
 }
 
-void playback_set_title (const gchar * title)
+static void set_title (InputPlayback * playback, const gchar * title)
 {
-    InputPlayback * playback = get_current_input_playback ();
+    set_title_and_length (playback, title, 0);
+}
 
-    if (playback == NULL)
-        return;
+static void set_tuple (InputPlayback * playback, Tuple * tuple)
+{
+    gint playlist, entry;
+    const gchar * title;
+
+    g_return_if_fail (playback != NULL);
+
+    playlist = playlist_get_playing ();
+    entry = playlist_get_position (playlist);
+    playlist_entry_set_tuple (playlist, entry, tuple);
+
+    title = playlist_entry_get_title (playlist, entry);
+
+    if (title == NULL)
+        title = playlist_entry_get_filename (playlist, entry);
 
     g_free (playback->title);
     playback->title = g_strdup (title);
+    playback->length = playlist_entry_get_length (playlist, entry);
 
     event_queue ("title change", NULL);
 }
 
-void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
+void ip_set_info (const gchar * title, gint length, gint bitrate, gint
+ samplerate, gint channels)
 {
-    InputPlayback * playback = get_current_input_playback ();
+    g_warning ("InputPlugin::set_info is deprecated. Use "
+     "InputPlayback::update_tuple and/or InputPlayback::set_params instead.");
+    set_params (ip_data.current_input_playback, title, length, bitrate,
+     samplerate, channels);
+}
 
-    if (playback == NULL)
-    {
-        * bitrate = 0;
-        * samplerate = 0;
-        * channels = 0;
-        return;
-    }
-
-    * bitrate = playback->rate;
-    * samplerate = playback->freq;
-    * channels = playback->nch;
+void ip_set_info_text (const gchar * title)
+{
+    g_warning ("InputPlugin::set_info_text is deprecated. Use "
+     "InputPlayback::update_tuple instead.\n");
+    set_title (ip_data.current_input_playback, title);
 }
 
 gchar * playback_get_title (void)
 {
-    InputPlayback * playback = get_current_input_playback ();
+    InputPlayback * playback;
     gchar * suffix, * title;
 
-    if (playback == NULL)
-        return NULL;
+    playback = ip_data.current_input_playback;
+    g_return_val_if_fail (playback != NULL, NULL);
 
     suffix = (playback->length > 0) ? g_strdup_printf (" (%d:%02d)",
      playback->length / 60000, playback->length / 1000 % 60) : NULL;
@@ -568,4 +560,23 @@ gchar * playback_get_title (void)
 
     g_free (suffix);
     return title;
+}
+
+gint playback_get_length (void)
+{
+    g_return_val_if_fail (ip_data.current_input_playback != NULL, 0);
+
+    return ip_data.current_input_playback->length;
+}
+
+void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
+{
+    InputPlayback * playback;
+
+    playback = ip_data.current_input_playback;
+    g_return_if_fail (playback != NULL);
+
+    * bitrate = playback->rate;
+    * samplerate = playback->freq;
+    * channels = playback->nch;
 }

@@ -28,11 +28,9 @@
 #include "plugin.h"
 
 gint playback_get_time(void);
-gint playback_get_length(void);
 void playback_initiate(void);
 void playback_pause(void);
 void playback_stop(void);
-gboolean playback_play_file (const gchar * filename, InputPlugin * decoder);
 gboolean playback_get_playing(void);
 gboolean playback_get_paused(void);
 void playback_seek(gint time);
@@ -42,10 +40,13 @@ InputPlayback *playback_new(void);
 void playback_free(InputPlayback *);
 void playback_run(InputPlayback *);
 
-void playback_set_info (const gchar * title, gint length, gint bitrate, gint
+/* deprecated */
+void ip_set_info (const gchar * title, gint length, gint bitrate, gint
  samplerate, gint channels);
-void playback_set_title (const gchar * title);
-void playback_get_info (gint * bitrate, gint * samplerate, gint * channels);
+void ip_set_info_text (const gchar * title);
+
 gchar * playback_get_title (void);
+gint playback_get_length (void);
+void playback_get_info (gint * bitrate, gint * samplerate, gint * channels);
 
 #endif /* AUDACIOUS_PLAYBACK_H */
