@@ -466,7 +466,7 @@ static void set_title_and_length (InputPlayback * playback, const gchar * title,
 {
     g_return_if_fail (playback != NULL);
     g_warning ("Setting playback title or length manually is deprecated. Use "
-     "InputPlayback::update_tuple instead.");
+     "InputPlayback::set_tuple instead.");
 
     if (title != NULL)
     {
@@ -500,12 +500,14 @@ static void set_title (InputPlayback * playback, const gchar * title)
     set_title_and_length (playback, title, 0);
 }
 
-static void set_tuple (InputPlayback * playback, Tuple * tuple)
+static gboolean set_tuple_cb (void * tuple)
 {
+    InputPlayback * playback;
     gint playlist, entry;
     const gchar * title;
 
-    g_return_if_fail (playback != NULL);
+    playback = ip_data.current_input_playback;
+    g_return_val_if_fail (playback != NULL, FALSE);
 
     playlist = playlist_get_playing ();
     entry = playlist_get_position (playlist);
@@ -520,14 +522,21 @@ static void set_tuple (InputPlayback * playback, Tuple * tuple)
     playback->title = g_strdup (title);
     playback->length = playlist_entry_get_length (playlist, entry);
 
-    event_queue ("title change", NULL);
+    hook_call ("title change", NULL);
+    return FALSE;
+}
+
+static void set_tuple (InputPlayback * playback, Tuple * tuple)
+{
+    /* playlist_entry_set_tuple must execute in main thread */
+    g_timeout_add (0, set_tuple_cb, tuple);
 }
 
 void ip_set_info (const gchar * title, gint length, gint bitrate, gint
  samplerate, gint channels)
 {
     g_warning ("InputPlugin::set_info is deprecated. Use "
-     "InputPlayback::update_tuple and/or InputPlayback::set_params instead.");
+     "InputPlayback::set_tuple and/or InputPlayback::set_params instead.");
     set_params (ip_data.current_input_playback, title, length, bitrate,
      samplerate, channels);
 }
@@ -535,7 +544,7 @@ void ip_set_info (const gchar * title, gint length, gint bitrate, gint
 void ip_set_info_text (const gchar * title)
 {
     g_warning ("InputPlugin::set_info_text is deprecated. Use "
-     "InputPlayback::update_tuple instead.\n");
+     "InputPlayback::set_tuple instead.\n");
     set_title (ip_data.current_input_playback, title);
 }
 
