@@ -36,9 +36,7 @@ gchar* read_NULLterminatedString(VFSFile *fd) {
         } else
             break;
     }
-    gchar *ret = g_new0(gchar, size + 1);
-    g_strlcpy(ret, buf, size + 1);
-
+   gchar* ret = g_strndup(buf, size);
     return ret;
 }
 
@@ -148,7 +146,7 @@ void copyAudioData(VFSFile* from, VFSFile *to,int pos_from,int pos_to)
     while (bytes_read < pos_to-4096)
     {
         gchar buf[4096];
-        gint n = vfs_fread(buf, 1, 4096, from);
+        guint32 n = vfs_fread(buf, 1, 4096, from);
         vfs_fwrite(buf, n, 1, to);
         bytes_read +=n;
     }
@@ -166,7 +164,8 @@ gboolean ape_can_handle_file(VFSFile *f) {
         return TRUE;
     else {
         //maybe the tag is at the end of the file
-        vfs_fseek(f, -32, SEEK_END);
+        guint64 filesize = vfs_fsize(f);
+        vfs_fseek(f, filesize-32, SEEK_SET);
         APEv2Header *header = readAPEHeader(f);
         if (!g_strcmp0(header->preamble, APE_IDENTIFIER))
             return TRUE;
@@ -178,16 +177,21 @@ Tuple *ape_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
     int i;
     vfs_fseek(f, 0, SEEK_SET);
     headerPosition = 0;
+    guint64 filesize = vfs_fsize(f);
     APEv2Header *header = readAPEHeader(f);
     if (g_strcmp0(header->preamble, APE_IDENTIFIER)) {
         g_free(header);
         //maybe the tag is at the end of the file
-        vfs_fseek(f, -32, SEEK_END);
+        vfs_fseek(f, filesize-32, SEEK_SET);
         header = readAPEHeader(f);
         if (!g_strcmp0(header->preamble, APE_IDENTIFIER)) {
             //read all the items from the end of the file
-            //   if(tagContainsHeader(header))
-            vfs_fseek(f, -(header->tagSize), SEEK_END);
+            //   if(tagContainsHeader(header))            
+            gchar* path = g_strdup(f->uri);
+            vfs_fclose(f);
+            f = vfs_fopen(path,"r");           
+            long offset = filesize - (header->tagSize);
+            vfs_fseek(f, offset, SEEK_SET);
             headerPosition = vfs_ftell(f);
             //   else vfs_fseek(f,-(header->tagSize),SEEK_END);
         } else
