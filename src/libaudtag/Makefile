@@ -17,7 +17,6 @@ include ../../buildsys.mk
 include ../../extra.mk
 includesubdir = libaudtag
 
-CPPFLAGS += ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
-CFLAGS += ${LIB_CFLAGS} ${GLIB_CFLAGS} ${MOWGLI_CFLAGS}
-
+CPPFLAGS += ${LIB_CPPFLAGS} ${GLIB_CFLAGS} ${MOWGLI_CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
+CFLAGS += ${LIB_CFLAGS}
 LIBS += ${GLIB_LIBS} ${MOWGLI_LIBS}
