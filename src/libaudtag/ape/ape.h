@@ -47,6 +47,6 @@ gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 extern tag_module_t ape;
 mowgli_dictionary_t *tagItems;
 mowgli_list_t *tagKeys;
-int headerPosition ;
+guint32 headerPosition ;
 
 #endif

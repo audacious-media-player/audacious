@@ -4,7 +4,7 @@
 #include <libaudcore/vfs.h>
 #include "../tag_module.h"
 
-
+#define FTYP    "ftyp"
 #define MOOV    "moov"
 #define ILST    "ilst"
 #define UDTA    "udta"
@@ -30,6 +30,7 @@ typedef struct mp4atom
     guint32 size;
     gchar* name; //4 bytes
     gchar* body;
+    int type;
 }Atom;
 
 
@@ -42,6 +43,7 @@ typedef struct strdataatom
     guint32 vflag;
     guint32 nullData;
     gchar*  data;
+    int type;
 }StrDataAtom;
 
 
@@ -57,5 +59,7 @@ extern tag_module_t aac;
 Atom *ilstAtom;
 long ilstFileOffset;
 mowgli_list_t *dataAtoms;
+mowgli_dictionary_t *ilstAtoms;
+
 #endif
 

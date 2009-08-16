@@ -34,16 +34,18 @@ static const char* ID3v1GenreList[] = {
     "SynthPop",
 };
 
+gchar* atom_types[] = {"\251alb", "\251nam", "cprt", "\251art", "\251ART", "trkn", "\251day", "gnre", "desc"};
+
 tag_module_t aac = {aac_can_handle_file, aac_populate_tuple_from_file, aac_write_tuple_to_file};
 
-gchar* atom_types[] = {"\251alb", "\251nam", "cprt", "\251art", "\251ART", "trkn", "\251day", "gnre", "desc"};
+
 
 Atom *readAtom(VFSFile *fd,Atom *atom)
 {    
     atom->size = read_BEint32(fd);
     atom->name = read_ASCII(fd,4);  
     atom->body = read_ASCII(fd,atom->size-8);
-
+    atom->type = 0;
     return atom;
 }
 
@@ -69,7 +71,7 @@ StrDataAtom *readStrDataAtom(VFSFile *fd,StrDataAtom *atom)
     atom->vflag = read_BEint32(fd);
     atom->nullData = read_BEint32(fd);
     atom->data = read_ASCII(fd,atom->datasize-16);
-
+    atom->type = 1;
     return atom;
 }
 
@@ -102,7 +104,6 @@ Atom *findAtom(VFSFile *fd,gchar* name)
 
 Atom *getilstAtom(VFSFile *fd)
 {
-
     Atom *moov = findAtom(fd,MOOV);
     //jump back the body of this atom and search his childs
     vfs_fseek(fd,-(moov->size-7), SEEK_CUR);
@@ -112,21 +113,11 @@ Atom *getilstAtom(VFSFile *fd)
     Atom *meta = findAtom(fd,META);
     vfs_fseek(fd,-(meta->size-11), SEEK_CUR);
     Atom *ilst = findAtom(fd,ILST);
+    ilstFileOffset = vfs_ftell(fd) -ilst->size;
     vfs_fseek(fd,-(ilst->size-7),SEEK_CUR);
 
     return ilst;
 
-}
-
-
-gboolean aac_can_handle_file(VFSFile *f)
-{
-/*
-    Atom *ilst  = g_new0(Atom,1);
-    ilst = getilstAtom(f);
-    printAtom(ilst);
-*/
-    return TRUE;
 }
 
 int getAtomID(gchar* name) {
@@ -138,9 +129,54 @@ int getAtomID(gchar* name) {
     return -1;
 }
 
+StrDataAtom *makeAtomWithData(const gchar* data,StrDataAtom *atom,int field)
+{
+    guint32 charsize = strlen(data);
+    atom->atomsize = charsize + 24;
+    atom->name = atom_types[field];
+    atom->datasize = charsize+16;
+    atom->dataname = "data";
+    atom->vflag = 0x0;
+    atom->nullData = 0x0;
+    atom->data = (gchar*)data;
+    atom->type = 1;
+    return atom;
+
+}
+
+void writeAtomListToFile(VFSFile* fd, int offset, mowgli_list_t *list)
+{
+    //read free atom if we have any :D
+    vfs_fseek(fd,ilstFileOffset+ilstAtom->size,SEEK_SET);
+    Atom *free_atom = g_new0(Atom,1);
+    free_atom = readAtom(fd,free_atom);
+/*
+    if(!g_strcom0(free_atom->name,"free"))
+*/
+
+
+
+    mowgli_node_t *n, *tn;
+    MOWGLI_LIST_FOREACH_SAFE(n, tn, list->head)
+    {
+
+    }
+}
+
+gboolean aac_can_handle_file(VFSFile *f)
+{
+    Atom *first_atom  = g_new0(Atom,1);
+    if(!g_strcmp0(first_atom->name,FTYP))
+        return TRUE;
+    return FALSE;
+}
+
+
 Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f)
 {
-    Atom *atom = getilstAtom(f);
+    if(ilstAtom)
+        g_free(ilstAtom);
+    ilstAtom = getilstAtom(f);
     int size_read = 0;
 
     if(dataAtoms != NULL)
@@ -153,24 +189,21 @@ Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f)
     }
     dataAtoms = mowgli_list_create();
 
-    while (size_read < atom->size)
+    while (size_read < ilstAtom->size)
     {
         StrDataAtom *a = g_new0(StrDataAtom,1);
         Atom *at = g_new0(Atom,1);
-        at = readAtom(f,at);        
+        at = readAtom(f,at);
+        mowgli_node_add(at, mowgli_node_create(), dataAtoms);
         int atomtype = getAtomID(at->name);
         if(atomtype == -1)
         {
-            size_read += at->size;
-            mowgli_node_add(at, mowgli_node_create(), dataAtoms);
+            size_read += at->size;           
             continue;
         }
         vfs_fseek(f,-(at->size),SEEK_CUR);
         a = readStrDataAtom(f,a);
         size_read += a->atomsize;
-/*
-        mowgli_node_add(a, mowgli_node_create(), dataAtoms);
-*/
 
         switch (atomtype)
         {
@@ -216,5 +249,128 @@ Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f)
 
 gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f)
 {
+    guint32 newilstSize = 0;
+    mowgli_node_t *n, *tn;
+    mowgli_list_t *newdataAtoms;
+    newdataAtoms = mowgli_list_create();
+    
+    MOWGLI_LIST_FOREACH_SAFE(n, tn, dataAtoms->head)
+    {
+        int atomtype = getAtomID(((StrDataAtom*)(n->data))->name);
+        switch (atomtype)
+        {
+            case MP4_ALBUM:
+            {
+               const gchar* strVal = tuple_get_string(tuple,FIELD_ALBUM,NULL);
+                if(strVal != NULL)
+                {
+                    StrDataAtom *atom = g_new0(StrDataAtom,1);
+                    atom = makeAtomWithData(strVal,atom,MP4_ALBUM);
+                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                    newilstSize += atom->atomsize;
+                }else
+                {
+                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                    newilstSize += ((Atom*)(n->data))->size;
+                }
+            }break;
+            case MP4_TITLE:
+            {
+               const gchar* strVal = tuple_get_string(tuple,FIELD_TITLE,NULL);
+                if(strVal != NULL)
+                {
+                    StrDataAtom *atom = g_new0(StrDataAtom,1);
+                    atom = makeAtomWithData(strVal,atom,MP4_TITLE);
+                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                    newilstSize += atom->atomsize;
+                }else
+                {
+                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                    newilstSize += ((Atom*)(n->data))->size;
+                }
+            }break;
+            case MP4_COPYRIGHT:
+            {
+               const gchar* strVal = tuple_get_string(tuple,FIELD_COPYRIGHT,NULL);
+                if(strVal != NULL)
+                {
+                    StrDataAtom *atom = g_new0(StrDataAtom,1);
+                    atom = makeAtomWithData(strVal,atom,MP4_COPYRIGHT);
+                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                    newilstSize += atom->atomsize;
+                }else
+                {
+                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                    newilstSize += ((Atom*)(n->data))->size;
+                }
+            }break;
+            case MP4_ARTIST:
+            case MP4_ARTIST2:
+            {
+               const gchar* strVal = tuple_get_string(tuple,FIELD_ARTIST,NULL);
+                if(strVal != NULL)
+                {
+                    StrDataAtom *atom = g_new0(StrDataAtom,1);
+                    atom = makeAtomWithData(strVal,atom,MP4_ARTIST2);
+                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                    newilstSize += atom->atomsize;
+                }else
+                {
+                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                    newilstSize += ((Atom*)(n->data))->size;
+                }
+            }break;
+            case MP4_TRACKNR:
+            {
+                //tuple_associate_string(tuple,FIELD_ALBUM,NULL,a->data);
+            }break;
+            case MP4_YEAR:
+            {
+                int iyear = tuple_get_int(tuple,FIELD_YEAR,NULL);
+                gchar* strVal = g_strdup_printf("%d",iyear);
+                if(strVal != NULL)
+                {
+                    StrDataAtom *atom = g_new0(StrDataAtom,1);
+                    atom = makeAtomWithData(strVal,atom,MP4_YEAR);
+                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                    newilstSize += atom->atomsize;
+                }else
+                {
+                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                    newilstSize += ((Atom*)(n->data))->size;
+                }
+            }break;
+            case MP4_GENRE:
+            {
+/*
+                guint8 *val = (guint8*)(a->data + (a->datasize-17));
+                const gchar* genre = ID3v1GenreList[*val-1];
+                tuple_associate_string(tuple,FIELD_GENRE,NULL,genre);
+*/
+            }break;
+            case MP4_COMMENT:
+            {
+              const  gchar* strVal = tuple_get_string(tuple,FIELD_COMMENT,NULL);
+                if(strVal != NULL)
+                {
+                    StrDataAtom *atom = g_new0(StrDataAtom,1);
+                    atom = makeAtomWithData(strVal,atom,MP4_COMMENT);
+                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                    newilstSize += atom->atomsize;
+                }else
+                {
+                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                    newilstSize += ((Atom*)(n->data))->size;
+                }
+            }break;
+            default:
+            {
+                mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                newilstSize += ((Atom*)(n->data))->size;
+            }break;
+        }
+    }
+
+ //   writeAtomListToFile(f,offset,newdataAtoms);
     return FALSE;
 }

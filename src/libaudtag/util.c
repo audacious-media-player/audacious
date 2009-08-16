@@ -104,7 +104,7 @@ void printTuple(Tuple *tuple) {
 
 guint16 fread_16(VFSFile *f) {
     guint16 i;
-    if (vfs_fread(&i, 2, 1, f) == 2) {
+    if (vfs_fread(&i, 2, 1, f) == 1) {
         return i;
     }
     return -1;
@@ -112,7 +112,7 @@ guint16 fread_16(VFSFile *f) {
 
 guint32 fread_32(VFSFile *f) {
     guint32 i;
-    if (vfs_fread(&i, 4, 1, f) == 4) {
+    if (vfs_fread(&i, 4, 1, f) == 1) {
         return i;
     }
     return -1;
@@ -182,7 +182,7 @@ gchar *read_ASCII(VFSFile *fd, int size)
 
 guint32 read_int32(VFSFile *fd)
 {
-    guint32 val = 0;
+    guint32 val;
     vfs_fread(&val,4,1,fd);
     return val;
 }
