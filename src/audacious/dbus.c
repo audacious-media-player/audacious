@@ -114,7 +114,7 @@ void mpris_player_class_init(MprisPlayerClass * klass)
         g_signal_new("track_change",
                      G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__BOXED, G_TYPE_NONE, 1, DBUS_TYPE_G_STRING_VALUE_HASHTABLE);
     signals[STATUS_CHANGE_SIG] =
-        g_signal_new("status_change", G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+        g_signal_new("status_change", G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_VALUE_ARRAY);
 }
 
 void mpris_tracklist_class_init(MprisTrackListClass * klass)
@@ -683,8 +683,8 @@ gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GErro
     *status = g_value_array_new(4);
 
     get_status(&request);
-    append_int_value(*status, !request.playing ? MPRIS_STATUS_STOP : request.paused ? MPRIS_STATUS_PAUSE : MPRIS_STATUS_PLAY);
 
+    append_int_value(*status, !request.playing ? MPRIS_STATUS_STOP : request.paused ? MPRIS_STATUS_PAUSE : MPRIS_STATUS_PLAY);
     append_int_value(*status, (gint) cfg.shuffle);
     append_int_value(*status, (gint) cfg.no_playlist_advance);
     append_int_value(*status, (gint) cfg.repeat);
