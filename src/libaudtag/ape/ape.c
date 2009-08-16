@@ -257,7 +257,8 @@ Tuple *ape_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
     return tuple;
 }
 
-gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f) {
+gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f)
+{
     VFSFile *tmp;
     const gchar *tmpdir = g_get_tmp_dir();
     gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "tmp.mpc");

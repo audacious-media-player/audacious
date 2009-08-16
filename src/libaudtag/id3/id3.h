@@ -42,8 +42,6 @@ typedef struct textframe
     gchar* text;
 }TextInformationFrame;
 
-guint32 read_BEint32(VFSFile *fd);
-
 guint32 read_int16(VFSFile *fd);
 
 gchar *read_iso8859_1(VFSFile *fd, int size);

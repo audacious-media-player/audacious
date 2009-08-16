@@ -187,6 +187,20 @@ guint32 read_int32(VFSFile *fd)
     return val;
 }
 
+guint32 read_BEint32(VFSFile *fd)
+{
+    guint32 a;
+    vfs_fget_be32(&a,fd);
+    
+    return a;
+}
+
+void write_BEint32(VFSFile *fd,guint32 val)
+{
+     vfs_fput_be32(val,fd);
+}
+
+
 guint64 read_int64(VFSFile *fd)
 {
     guint64 val = 0;

@@ -11,13 +11,7 @@
 
 tag_module_t id3 = {id3_can_handle_file, id3_populate_tuple_from_file, id3_write_tuple_to_file};
 /* reading stuff */
-guint32 read_BEint32(VFSFile *fd)
-{
-    guint32 a;
-    vfs_fread(&a,4,1,fd);
-    a = GUINT32_FROM_BE(a);
-    return a;
-}
+
 
 guint32 read_int16(VFSFile *fd)
 {
@@ -524,8 +518,8 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     if(tuple_get_int(tuple,FIELD_YEAR,NULL) !=0 )
         add_frameFromTupleInt(tuple,FIELD_YEAR,ID3_YEAR);
 
-    if(tuple_get_int(tuple,FIELD_LENGTH,NULL) != 0)
-        add_frameFromTupleInt(tuple,FIELD_LENGTH,ID3_LENGTH);
+    if(tuple_get_int(tuple,FIELD_TRACK_NUMBER,NULL) != 0)
+        add_frameFromTupleInt(tuple,FIELD_TRACK_NUMBER,ID3_TRACKNR);
 
     const gchar *tmpdir = g_get_tmp_dir();
     gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "tmp.mpc");
