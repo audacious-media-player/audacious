@@ -41,21 +41,21 @@
 #include "tuple.h"
 #include "interface.h"
 
-struct status_request
+struct StatusRequest
 {
     gboolean playing, paused;
     gint time, length;
     gint bitrate, samplerate, channels;
 };
 
-struct position_request
+struct PositionRequest
 {
     gint playlist;              /* -1 = active, -2 = playing */
     gint entry;                 /* -1 = current */
     gint entry_count, queue_count;
 };
 
-struct info_request
+struct InfoRequest
 {
     gint playlist;              /* -1 = active, -2 = playing */
     gint entry;                 /* -1 = current */
@@ -63,7 +63,7 @@ struct info_request
     gint length;
 };
 
-struct field_request
+struct FieldRequest
 {
     gint playlist;              /* -1 = active, -2 = playing */
     gint entry;                 /* -1 = current */
@@ -71,14 +71,14 @@ struct field_request
     GValue *value;
 };
 
-struct add_request
+struct AddRequest
 {
     gint position;              /* -1 = at end */
     gchar *filename;
     gboolean play;
 };
 
-struct mpris_metadata_request
+struct MprisMetadataRequest
 {
     gint playlist;              /* -1 = active, -2 = playing */
     gint entry;                 /* -1 = current */
@@ -305,7 +305,7 @@ static void real_position(gint * playlist, gint * entry)
 
 static gboolean get_status_cb(void *data)
 {
-    struct status_request *request = data;
+    struct StatusRequest *request = data;
 
     g_mutex_lock(info_mutex);
 
@@ -320,7 +320,7 @@ static gboolean get_status_cb(void *data)
     return FALSE;
 }
 
-static void get_status(struct status_request *request)
+static void get_status(struct StatusRequest *request)
 {
     if (g_thread_self() == main_thread)
         get_status_cb(request);
@@ -335,7 +335,7 @@ static void get_status(struct status_request *request)
 
 static gboolean get_position_cb(void *data)
 {
-    struct position_request *request = data;
+    struct PositionRequest *request = data;
 
     g_mutex_lock(info_mutex);
 
@@ -348,7 +348,7 @@ static gboolean get_position_cb(void *data)
     return FALSE;
 }
 
-static void get_position(struct position_request *request)
+static void get_position(struct PositionRequest *request)
 {
     if (g_thread_self() == main_thread)
         get_position_cb(request);
@@ -363,7 +363,7 @@ static void get_position(struct position_request *request)
 
 static gboolean get_info_cb(void *data)
 {
-    struct info_request *request = data;
+    struct InfoRequest *request = data;
     const gchar *filename, *title;
 
     g_mutex_lock(info_mutex);
@@ -380,7 +380,7 @@ static gboolean get_info_cb(void *data)
     return FALSE;
 }
 
-static void get_info(struct info_request *request)
+static void get_info(struct InfoRequest *request)
 {
     if (g_thread_self() == main_thread)
         get_info_cb(request);
@@ -395,7 +395,7 @@ static void get_info(struct info_request *request)
 
 static gboolean get_field_cb(void *data)
 {
-    struct field_request *request = data;
+    struct FieldRequest *request = data;
     const Tuple *tuple;
 
     g_mutex_lock(info_mutex);
@@ -409,7 +409,7 @@ static gboolean get_field_cb(void *data)
     return FALSE;
 }
 
-static void get_field(struct field_request *request)
+static void get_field(struct FieldRequest *request)
 {
     if (g_thread_self() == main_thread)
         get_field_cb(request);
@@ -476,7 +476,7 @@ static gboolean jump_cb(void *data)
 
 static gboolean add_cb(void *data)
 {
-    struct add_request *request = data;
+    struct AddRequest *request = data;
     gint playlist = playlist_get_active();
 
     if (!playlist_insert_playlist(playlist, request->position, request->filename))
@@ -584,7 +584,7 @@ gboolean add_to_new_playlist_cb(void *data)
 
 static gboolean get_mpris_metadata_cb(void *data)
 {
-    struct mpris_metadata_request *request = data;
+    struct MprisMetadataRequest *request = data;
     const gchar *filename;
 
     g_mutex_lock(info_mutex);
@@ -602,7 +602,7 @@ static gboolean get_mpris_metadata_cb(void *data)
     return FALSE;
 }
 
-static void get_mpris_metadata(struct mpris_metadata_request *request)
+static void get_mpris_metadata(struct MprisMetadataRequest *request)
 {
     if (g_thread_self() == main_thread)
         get_mpris_metadata_cb(request);
@@ -678,7 +678,7 @@ static void append_int_value(GValueArray * ar, gint tmp)
 
 gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     *status = g_value_array_new(4);
 
@@ -693,7 +693,7 @@ gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GErro
 
 gboolean mpris_player_get_metadata(MprisPlayer * obj, GHashTable * *metadata, GError * *error)
 {
-    struct mpris_metadata_request request = {.playlist = -2,.entry = -1 };
+    struct MprisMetadataRequest request = {.playlist = -2,.entry = -1 };
 
     get_mpris_metadata(&request);
     *metadata = request.metadata;
@@ -751,7 +751,7 @@ gboolean mpris_player_position_set(MprisPlayer * obj, gint pos, GError * *error)
 
 gboolean mpris_player_position_get(MprisPlayer * obj, gint * pos, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *pos = request.time;
@@ -803,7 +803,7 @@ gboolean mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)
 
 gboolean mpris_tracklist_get_metadata(MprisTrackList * obj, gint pos, GHashTable * *metadata, GError * *error)
 {
-    struct mpris_metadata_request request = {.playlist = -1,.entry = pos };
+    struct MprisMetadataRequest request = {.playlist = -1,.entry = pos };
 
     get_mpris_metadata(&request);
     *metadata = request.metadata;
@@ -812,7 +812,7 @@ gboolean mpris_tracklist_get_metadata(MprisTrackList * obj, gint pos, GHashTable
 
 gboolean mpris_tracklist_get_current_track(MprisTrackList * obj, gint * pos, GError * *error)
 {
-    struct position_request request = {.playlist = -1,.entry = -1 };
+    struct PositionRequest request = {.playlist = -1,.entry = -1 };
 
     get_position(&request);
     *pos = request.entry;
@@ -821,7 +821,7 @@ gboolean mpris_tracklist_get_current_track(MprisTrackList * obj, gint * pos, GEr
 
 gboolean mpris_tracklist_get_length(MprisTrackList * obj, gint * length, GError * *error)
 {
-    struct position_request request = {.playlist = -1,.entry = -1 };
+    struct PositionRequest request = {.playlist = -1,.entry = -1 };
 
     get_position(&request);
     *length = request.entry_count;
@@ -830,7 +830,7 @@ gboolean mpris_tracklist_get_length(MprisTrackList * obj, gint * length, GError 
 
 gboolean mpris_tracklist_add_track(MprisTrackList * obj, gchar * uri, gboolean play, GError * *error)
 {
-    struct add_request *request = g_malloc(sizeof(struct add_request));
+    struct AddRequest *request = g_malloc(sizeof(struct AddRequest));
 
     request->position = -1;
     request->filename = g_strdup(uri);
@@ -949,7 +949,7 @@ gboolean audacious_rc_stop(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_playing(RemoteObject * obj, gboolean * is_playing, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *is_playing = request.playing;
@@ -958,7 +958,7 @@ gboolean audacious_rc_playing(RemoteObject * obj, gboolean * is_playing, GError 
 
 gboolean audacious_rc_paused(RemoteObject * obj, gboolean * is_paused, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *is_paused = request.paused;
@@ -967,7 +967,7 @@ gboolean audacious_rc_paused(RemoteObject * obj, gboolean * is_paused, GError * 
 
 gboolean audacious_rc_stopped(RemoteObject * obj, gboolean * is_stopped, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *is_stopped = !request.playing;
@@ -976,7 +976,7 @@ gboolean audacious_rc_stopped(RemoteObject * obj, gboolean * is_stopped, GError 
 
 gboolean audacious_rc_status(RemoteObject * obj, gchar * *status, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *status = g_strdup(!request.playing ? "stopped" : request.paused ? "paused" : "playing");
@@ -985,7 +985,7 @@ gboolean audacious_rc_status(RemoteObject * obj, gchar * *status, GError * *erro
 
 gboolean audacious_rc_info(RemoteObject * obj, gint * rate, gint * freq, gint * nch, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *rate = request.bitrate;
@@ -996,7 +996,7 @@ gboolean audacious_rc_info(RemoteObject * obj, gint * rate, gint * freq, gint * 
 
 gboolean audacious_rc_time(RemoteObject * obj, gint * time, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *time = request.time;
@@ -1044,7 +1044,7 @@ gboolean audacious_rc_balance(RemoteObject * obj, gint * balance, GError ** erro
 
 gboolean audacious_rc_position(RemoteObject * obj, gint * pos, GError * *error)
 {
-    struct position_request request = {.playlist = -1,.entry = -1 };
+    struct PositionRequest request = {.playlist = -1,.entry = -1 };
 
     get_position(&request);
     *pos = request.entry;
@@ -1065,7 +1065,7 @@ gboolean audacious_rc_reverse(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_length(RemoteObject * obj, gint * length, GError * *error)
 {
-    struct position_request request = {.playlist = -1,.entry = -1 };
+    struct PositionRequest request = {.playlist = -1,.entry = -1 };
 
     get_position(&request);
     *length = request.entry_count;
@@ -1074,7 +1074,7 @@ gboolean audacious_rc_length(RemoteObject * obj, gint * length, GError * *error)
 
 gboolean audacious_rc_song_title(RemoteObject * obj, guint pos, gchar * *title, GError * *error)
 {
-    struct info_request request = {.playlist = -1,.entry = pos };
+    struct InfoRequest request = {.playlist = -1,.entry = pos };
 
     get_info(&request);
     g_free(request.filename);
@@ -1084,7 +1084,7 @@ gboolean audacious_rc_song_title(RemoteObject * obj, guint pos, gchar * *title, 
 
 gboolean audacious_rc_song_filename(RemoteObject * obj, guint pos, gchar * *filename, GError * *error)
 {
-    struct info_request request = {.playlist = -1,.entry = pos };
+    struct InfoRequest request = {.playlist = -1,.entry = pos };
 
     get_info(&request);
     *filename = request.filename;
@@ -1101,7 +1101,7 @@ gboolean audacious_rc_song_length(RemoteObject * obj, guint pos, gint * length, 
 
 gboolean audacious_rc_song_frames(RemoteObject * obj, guint pos, gint * length, GError * *error)
 {
-    struct info_request request = {.playlist = -1,.entry = pos };
+    struct InfoRequest request = {.playlist = -1,.entry = pos };
 
     get_info(&request);
     g_free(request.filename);
@@ -1112,7 +1112,7 @@ gboolean audacious_rc_song_frames(RemoteObject * obj, guint pos, gint * length, 
 
 gboolean audacious_rc_song_tuple(RemoteObject * obj, guint pos, gchar * field, GValue * value, GError * *error)
 {
-    struct field_request request = {.playlist = -1,.entry = pos,.field = field };
+    struct FieldRequest request = {.playlist = -1,.entry = pos,.field = field };
 
     get_field(&request);
 
@@ -1236,7 +1236,7 @@ gboolean audacious_rc_activate(RemoteObject * obj, GError ** error)
 
 gboolean audacious_rc_get_info(RemoteObject * obj, gint * rate, gint * freq, gint * nch, GError * *error)
 {
-    struct status_request request;
+    struct StatusRequest request;
 
     get_status(&request);
     *rate = request.bitrate;
@@ -1271,7 +1271,7 @@ gboolean audacious_rc_playqueue_clear(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_get_playqueue_length(RemoteObject * obj, gint * length, GError * *error)
 {
-    struct position_request request = {.playlist = -1,.entry = -1 };
+    struct PositionRequest request = {.playlist = -1,.entry = -1 };
 
     get_position(&request);
     *length = request.queue_count;
@@ -1298,7 +1298,7 @@ gboolean audacious_rc_playqueue_is_queued(RemoteObject * obj, gint pos, gboolean
 
 gboolean audacious_rc_playlist_ins_url_string(RemoteObject * obj, gchar * url, gint pos, GError * *error)
 {
-    struct add_request *request = g_malloc(sizeof(struct add_request));
+    struct AddRequest *request = g_malloc(sizeof(struct AddRequest));
 
     request->position = pos;
     request->filename = g_strdup(url);
