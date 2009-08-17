@@ -128,14 +128,14 @@ guint64 fread_64(VFSFile *f) {
 
 /*
  * Returns a UTF8 string converted from UTF16(as read from the file)
- * 
+ *
  * size is the number of bytes we should read from the file
- * 
+ *
  * The string may or may not be NULL-terminated
- * 
+ *
  * Valid string representations:
  * "ABC" = [65 00, 66 00, 67 00,00 00], size=8 (NULL-terminated)
- * or                           ^^^^^ 
+ * or                           ^^^^^
  * "ABC" = [65 00, 66 00, 67 00], size=6 (not NULL-terminated)
  */
 gchar* fread_str(VFSFile *f, int size) {
@@ -191,7 +191,7 @@ guint32 read_BEint32(VFSFile *fd)
 {
     guint32 a;
     vfs_fget_be32(&a,fd);
-    
+
     return a;
 }
 

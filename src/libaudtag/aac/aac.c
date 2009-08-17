@@ -41,16 +41,16 @@ tag_module_t aac = {aac_can_handle_file, aac_populate_tuple_from_file, aac_write
 
 
 Atom *readAtom(VFSFile *fd,Atom *atom)
-{    
+{
     atom->size = read_BEint32(fd);
-    atom->name = read_ASCII(fd,4);  
+    atom->name = read_ASCII(fd,4);
     atom->body = read_ASCII(fd,atom->size-8);
     atom->type = 0;
     return atom;
 }
 
 void writeAtom(VFSFile *fd, Atom *atom)
-{     
+{
     write_BEint32(fd,atom->size);
     vfs_fwrite(atom->name,4,1,fd);
     vfs_fwrite(atom->body,atom->size-8,1,fd);
@@ -58,7 +58,7 @@ void writeAtom(VFSFile *fd, Atom *atom)
 
 void printAtom(Atom *atom)
 {
-     DEBUG("size = %x\n",atom->size); 
+     DEBUG("size = %x\n",atom->size);
      DEBUG("name = %s\n",atom->name);
 }
 
@@ -90,7 +90,7 @@ Atom *findAtom(VFSFile *fd,gchar* name)
 {
     Atom *atom  = g_new0(Atom,1);
     atom = readAtom(fd,atom);
-    while(g_strcmp0(atom->name,name) && !vfs_feof(fd))
+    while(strcmp(atom->name,name) && !vfs_feof(fd))
     {
         g_free(atom);
         atom = g_new0(Atom,1);
@@ -123,7 +123,7 @@ Atom *getilstAtom(VFSFile *fd)
 int getAtomID(gchar* name) {
     int i = 0;
     for (i = 0; i < MP4_ITEMS_NO; i++) {
-        if (!g_strcmp0(name, atom_types[i]))
+        if (!strcmp(name, atom_types[i]))
             return i;
     }
     return -1;
@@ -166,7 +166,7 @@ void writeAtomListToFile(VFSFile* fd, int offset, mowgli_list_t *list)
 gboolean aac_can_handle_file(VFSFile *f)
 {
     Atom *first_atom  = g_new0(Atom,1);
-    if(!g_strcmp0(first_atom->name,FTYP))
+    if(!strcmp(first_atom->name,FTYP))
         return TRUE;
     return FALSE;
 }
@@ -198,7 +198,7 @@ Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f)
         int atomtype = getAtomID(at->name);
         if(atomtype == -1)
         {
-            size_read += at->size;           
+            size_read += at->size;
             continue;
         }
         vfs_fseek(f,-(at->size),SEEK_CUR);
@@ -253,7 +253,7 @@ gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     mowgli_node_t *n, *tn;
     mowgli_list_t *newdataAtoms;
     newdataAtoms = mowgli_list_create();
-    
+
     MOWGLI_LIST_FOREACH_SAFE(n, tn, dataAtoms->head)
     {
         int atomtype = getAtomID(((StrDataAtom*)(n->data))->name);

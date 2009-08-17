@@ -34,4 +34,4 @@ guint32 read_BEint32(VFSFile *fd);
 void write_BEint32(VFSFile *fd,guint32 val);
 guint64 read_int64(VFSFile *fd);
 void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos);
-#endif		   
+#endif
