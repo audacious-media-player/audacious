@@ -168,6 +168,7 @@ static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(16), "16" },
     { GINT_TO_POINTER(24), "24" },
     { GINT_TO_POINTER(32), "32" },
+    {GINT_TO_POINTER (0), "Floating point"},
 };
 
 static ComboBoxElements conventer_types[] = {

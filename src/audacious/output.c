@@ -309,6 +309,9 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
             case 16:
                 output_fmt = FMT_S16_NE;
                 break;
+            case 0:
+                output_fmt = FMT_FLOAT;
+                break;
             default:
                 AUDDBG("unsupported bit depth requested %d\n", bit_depth);
                 output_fmt = FMT_S16_NE;
