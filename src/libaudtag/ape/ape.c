@@ -160,14 +160,14 @@ void copyAudioData(VFSFile* from, VFSFile *to,int pos_from,int pos_to)
 
 gboolean ape_can_handle_file(VFSFile *f) {
     APEv2Header *header = readAPEHeader(f);
-    if (!g_strcmp0(header->preamble, APE_IDENTIFIER))
+    if (!strcmp(header->preamble, APE_IDENTIFIER))
         return TRUE;
     else {
         //maybe the tag is at the end of the file
         guint64 filesize = vfs_fsize(f);
         vfs_fseek(f, filesize-32, SEEK_SET);
         APEv2Header *header = readAPEHeader(f);
-        if (!g_strcmp0(header->preamble, APE_IDENTIFIER))
+        if (!strcmp(header->preamble, APE_IDENTIFIER))
             return TRUE;
     }
     return FALSE;
@@ -179,17 +179,17 @@ Tuple *ape_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
     headerPosition = 0;
     guint64 filesize = vfs_fsize(f);
     APEv2Header *header = readAPEHeader(f);
-    if (g_strcmp0(header->preamble, APE_IDENTIFIER)) {
+    if (strcmp(header->preamble, APE_IDENTIFIER)) {
         g_free(header);
         //maybe the tag is at the end of the file
         vfs_fseek(f, filesize-32, SEEK_SET);
         header = readAPEHeader(f);
-        if (!g_strcmp0(header->preamble, APE_IDENTIFIER)) {
+        if (!strcmp(header->preamble, APE_IDENTIFIER)) {
             //read all the items from the end of the file
-            //   if(tagContainsHeader(header))            
+            //   if(tagContainsHeader(header))
             gchar* path = g_strdup(f->uri);
             vfs_fclose(f);
-            f = vfs_fopen(path,"r");           
+            f = vfs_fopen(path,"r");
             long offset = filesize - (header->tagSize);
             vfs_fseek(f, offset, SEEK_SET);
             headerPosition = vfs_ftell(f);
