@@ -59,22 +59,48 @@ static void set_tuple (InputPlayback * playback, Tuple * tuple);
 static gboolean playback_play_file (const gchar * filename, InputPlugin *
  decoder, const gchar * title, gint length);
 
+static gboolean pause_when_ready;
+static gint seek_when_ready;
+static gint ready_source;
+
+static gboolean ready_cb (void * data)
+{
+    InputPlayback * playback = data;
+
+    g_return_val_if_fail (playback != NULL, FALSE);
+
+    g_mutex_lock (playback->pb_ready_mutex);
+    ready_source = 0;
+    g_mutex_unlock (playback->pb_ready_mutex);
+
+    if (pause_when_ready)
+        playback_pause ();
+
+    if (seek_when_ready > 0)
+        playback_seek (seek_when_ready);
+
+    return FALSE;
+}
+
+static gboolean playback_is_ready (InputPlayback * playback)
+{
+    gboolean ready;
+
+    g_return_val_if_fail (playback != NULL, FALSE);
+
+    g_mutex_lock (playback->pb_ready_mutex);
+    ready = (playback->pb_ready_val && ! ready_source);
+    g_mutex_unlock (playback->pb_ready_mutex);
+    return ready;
+}
+
 static gint
 playback_set_pb_ready(InputPlayback *playback)
 {
     g_mutex_lock(playback->pb_ready_mutex);
     playback->pb_ready_val = 1;
+    ready_source = g_timeout_add (0, ready_cb, playback);
     g_cond_signal(playback->pb_ready_cond);
-    g_mutex_unlock(playback->pb_ready_mutex);
-    return 0;
-}
-
-static gint
-playback_wait_for_pb_ready(InputPlayback *playback)
-{
-    g_mutex_lock(playback->pb_ready_mutex);
-    while (playback->pb_ready_val != 1)
-        g_cond_wait(playback->pb_ready_cond, playback->pb_ready_mutex);
     g_mutex_unlock(playback->pb_ready_mutex);
     return 0;
 }
@@ -93,20 +119,20 @@ playback_error(void)
     event_queue("playback audio error", NULL);
 }
 
-gint
-playback_get_time(void)
+gint playback_get_time (void)
 {
     InputPlayback * playback;
 
-    if (! ip_data.playing)
-        return 0;
-
     playback = ip_data.current_input_playback;
+    g_return_val_if_fail (playback != NULL, 0);
 
-    if (! playback || ! playback->playing || playback->eof || playback->error)
+    if (! playback_is_ready (playback))
+        return seek_when_ready;
+
+    if (! playback->playing || playback->eof || playback->error)
         return 0;
 
-    if (playback->plugin->get_time)
+    if (playback->plugin->get_time != NULL)
         return playback->plugin->get_time (playback);
 
     /** @attention This assumes that output_time will return sanely (zero)
@@ -153,52 +179,64 @@ playback_initiate(void)
     hook_call ("playback begin", NULL);
 }
 
-void
-playback_pause(void)
+void playback_pause (void)
 {
-    InputPlayback *playback;
+    InputPlayback * playback;
+    gboolean paused;
 
-    if (!playback_get_playing())
-        return;
+    playback = ip_data.current_input_playback;
+    g_return_if_fail (playback != NULL);
 
-    if ((playback = get_current_input_playback()) == NULL)
-        return;
-
-    ip_data.paused = !ip_data.paused;
-
-    if (playback->plugin->pause)
+    if (playback_is_ready (playback))
     {
-        plugin_set_current((Plugin *)(playback->plugin));
-        playback->plugin->pause(playback, ip_data.paused);
+        paused = ! ip_data.paused;
+
+        g_return_if_fail (playback->plugin->pause != NULL);
+        playback->plugin->pause (playback, paused);
+
+        ip_data.paused = paused;
+    }
+    else
+    {
+        paused = ! pause_when_ready;
+        pause_when_ready = paused;
     }
 
-    if (ip_data.paused)
+    if (paused)
         hook_call("playback pause", NULL);
     else
         hook_call("playback unpause", NULL);
 
 #ifdef USE_DBUS
-    if (ip_data.paused)
+    if (paused)
         mpris_emit_status_change(mpris, MPRIS_STATUS_PAUSE);
     else
         mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
 #endif
 }
 
-void
-playback_stop(void)
+void playback_stop (void)
 {
-    InputPlayback *playback;
+    InputPlayback * playback;
 
-    if ((playback = get_current_input_playback()) == NULL)
-        return;
+    playback = ip_data.current_input_playback;
+    g_return_if_fail (playback != NULL);
+
+    g_mutex_lock (playback->pb_ready_mutex);
+
+    while (! playback->pb_ready_val)
+        g_cond_wait (playback->pb_ready_cond, playback->pb_ready_mutex);
+
+    if (ready_source)
+    {
+        g_source_remove (ready_source);
+        ready_source = 0;
+    }
+
+    g_mutex_unlock (playback->pb_ready_mutex);
 
     if (ip_data.playing)
     {
-        /* wait for plugin to signal it has reached
-           the 'playback safe state' before stopping */
-        playback_wait_for_pb_ready(playback);
-
         if (playback_get_paused() == TRUE)
         {
             if (get_written_time() > 0)
@@ -304,9 +342,17 @@ playback_monitor_thread(gpointer data)
     plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->play_file(playback);
 
-    /* if play_file has not reached the 'safe state' before returning (an error
-       occurred), set the playback ready value to 1 now, to allow for proper stop */
-    playback_set_pb_ready(playback);
+    g_mutex_lock (playback->pb_ready_mutex);
+    playback->pb_ready_val = TRUE;
+
+    if (ready_source != 0)
+    {
+        g_source_remove (ready_source);
+        ready_source = 0;
+    }
+
+    g_cond_signal (playback->pb_ready_cond);
+    g_mutex_unlock (playback->pb_ready_mutex);
 
     if (! ip_data.stop)
         g_timeout_add (0, playback_ended, NULL);
@@ -366,12 +412,11 @@ playback_run(InputPlayback *playback)
     playback->eof = 0;
     playback->error = 0;
 
-    g_mutex_lock(playback->pb_ready_mutex);
+    pause_when_ready = FALSE;
+    seek_when_ready = 0;
+    ready_source = 0;
 
     playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
-    g_cond_wait(playback->pb_ready_cond, playback->pb_ready_mutex);
-
-    g_mutex_unlock(playback->pb_ready_mutex);
 }
 
 static gboolean playback_play_file (const gchar * filename, InputPlugin *
@@ -425,32 +470,40 @@ static gboolean playback_play_file (const gchar * filename, InputPlugin *
     return TRUE;
 }
 
-gboolean
-playback_get_playing(void)
+gboolean playback_get_playing (void)
 {
-    return ip_data.playing;
+    return (ip_data.current_input_playback != NULL);
 }
 
-gboolean
-playback_get_paused(void)
+gboolean playback_get_paused (void)
 {
-    return ip_data.paused;
+    InputPlayback * playback;
+
+    playback = ip_data.current_input_playback;
+    g_return_val_if_fail (playback != NULL, FALSE);
+
+    if (playback_is_ready (playback))
+        return ip_data.paused;
+    else
+        return pause_when_ready;
 }
 
-void
-playback_seek(gint time)
+void playback_seek (gint time)
 {
-    InputPlayback *playback = get_current_input_playback();
+    InputPlayback * playback;
 
-    g_return_if_fail(ip_data.playing);
-    g_return_if_fail(playback != NULL);
+    playback = ip_data.current_input_playback;
+    g_return_if_fail (playback != NULL);
 
     if (playback->length <= 0)
         return;
 
-    plugin_set_current((Plugin *)(playback->plugin));
-    playback->plugin->seek (playback, CLAMP (time, 0, playback->length / 1000));
-    playback->set_pb_change(playback);
+    time = CLAMP (time, 0, playback->length / 1000);
+
+    if (playback_is_ready (playback))
+        playback->plugin->seek (playback, time);
+    else
+        seek_when_ready = time;
 
     hook_call ("playback seek", playback);
 }
