@@ -3,18 +3,18 @@
  * High-precision bit depth converter with ReplayGain support
  *
  * Copyright (c) 2007-2008 Eugene Zagidullin (e.asphyx@gmail.com)
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software 
+ * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -50,7 +50,7 @@
  */
 
 #define SAD_SCALE(x,s) (s != 1.0 ? x * s : x)
-#define SAD_MAXINT(a) (1L << ((a)-1))
+#define SAD_MAXINT(a) ((1 << ((a) - 1)) - 1)
 #define SAD_CLIP(x,m) (x > m-1 ? m-1 : (x < -m ? -m : x))
 
 #define ADJUSTMENT_COEFFICIENT 0.1
@@ -95,7 +95,7 @@ static inline gdouble compute_hardlimit(gdouble sample, gdouble scale)
     return sample;
 }
 
-/* 
+/*
  * Dither fixed-point normalized or integer sample to n-bits integer
  * samples < -1 and > 1 will be clipped
  */
@@ -218,7 +218,7 @@ static inline gint32 __dither_sample_fixed_to_int(gint32 sample, gint inbits, gi
     return sample;
 }
 
-/* 
+/*
  * Dither floating-point normalized sample to n-bits integer
  * samples < -1 and > 1 will be clipped
  */
@@ -468,7 +468,7 @@ gint SAD_dither_free(SAD_dither_t * state)
     return SAD_ERROR_OK;
 }
 
-/* 
+/*
  * Depend on format->channels_order inbuf and outbuf will be treated as
  * smth* or smth** if channels_order = SAD_CHORDER_INTERLEAVED or SAD_CHORDER_SEPARATED
  * accordingly
