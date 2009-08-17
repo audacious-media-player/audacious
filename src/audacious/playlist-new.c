@@ -569,7 +569,9 @@ void playlist_delete (gint playlist_num)
 
     if (playlist == playing_playlist)
     {
-        playback_stop ();
+        if (playback_get_playing ())
+            playback_stop ();
+
         playing_playlist = NULL;
     }
 
@@ -656,7 +658,7 @@ void playlist_set_playing(gint playlist_num)
 
     LOOKUP_PLAYLIST;
 
-    if (playing_playlist != NULL)
+    if (playing_playlist != NULL && playback_get_playing ())
         playback_stop();
 
     playing_playlist = playlist;
@@ -820,7 +822,7 @@ void playlist_entry_delete(gint playlist_num, gint at, gint number)
     if (shuffle)
         create_shuffle (playlist);
 
-    if (stop)
+    if (stop && playback_get_playing ())
         playback_stop ();
 
     PLAYLIST_HAS_CHANGED;
@@ -899,7 +901,7 @@ void playlist_set_position (gint playlist_num, gint entry_num)
     else
         LOOKUP_PLAYLIST_ENTRY;
 
-    if (playlist == playing_playlist)
+    if (playlist == playing_playlist && playback_get_playing ())
         playback_stop ();
 
     shuffle = (playlist->shuffled != NULL);
@@ -1181,7 +1183,7 @@ void playlist_delete_selected(gint playlist_num)
     if (shuffle)
         create_shuffle (playlist);
 
-    if (stop)
+    if (stop && playback_get_playing ())
         playback_stop ();
 
     PLAYLIST_HAS_CHANGED;
@@ -1589,7 +1591,7 @@ gboolean playlist_prev_song(gint playlist_num)
         playlist->position = index_get(playlist->entries, playlist->position->number - 1);
     }
 
-    if (playlist == playing_playlist)
+    if (playlist == playing_playlist && playback_get_playing ())
         playback_stop();
 
     SELECTION_HAS_CHANGED;
@@ -1648,7 +1650,7 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
             playlist->position = index_get(playlist->entries, playlist->position->number + 1);
     }
 
-    if (playlist == playing_playlist)
+    if (playlist == playing_playlist && playback_get_playing ())
         playback_stop();
 
     SELECTION_HAS_CHANGED;
