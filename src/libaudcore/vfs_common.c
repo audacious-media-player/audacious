@@ -303,7 +303,7 @@ gboolean vfs_fget_be64(guint64 *value, VFSFile *stream)
 gboolean vfs_fput_le16(guint16 value, VFSFile *stream)
 {
     guint16 tmp = GUINT16_TO_LE(value);
-    return vfs_fread(&tmp, sizeof(tmp), 1, stream) == 1;
+    return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
 /**
@@ -317,7 +317,7 @@ gboolean vfs_fput_le16(guint16 value, VFSFile *stream)
 gboolean vfs_fput_le32(guint32 value, VFSFile *stream)
 {
     guint32 tmp = GUINT32_TO_LE(value);
-    return vfs_fread(&tmp, sizeof(tmp), 1, stream) == 1;
+    return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
 /**
@@ -331,7 +331,7 @@ gboolean vfs_fput_le32(guint32 value, VFSFile *stream)
 gboolean vfs_fput_le64(guint64 value, VFSFile *stream)
 {
     guint64 tmp = GUINT64_TO_LE(value);
-    return vfs_fread(&tmp, sizeof(tmp), 1, stream) == 1;
+    return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
 /**
@@ -345,7 +345,7 @@ gboolean vfs_fput_le64(guint64 value, VFSFile *stream)
 gboolean vfs_fput_be16(guint16 value, VFSFile *stream)
 {
     guint16 tmp = GUINT16_TO_BE(value);
-    return vfs_fread(&tmp, sizeof(tmp), 1, stream) == 1;
+    return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
 /**
@@ -359,7 +359,7 @@ gboolean vfs_fput_be16(guint16 value, VFSFile *stream)
 gboolean vfs_fput_be32(guint32 value, VFSFile *stream)
 {
     guint32 tmp = GUINT32_TO_BE(value);
-    return vfs_fread(&tmp, sizeof(tmp), 1, stream) == 1;
+    return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
 /**
@@ -373,5 +373,5 @@ gboolean vfs_fput_be32(guint32 value, VFSFile *stream)
 gboolean vfs_fput_be64(guint64 value, VFSFile *stream)
 {
     guint64 tmp = GUINT64_TO_BE(value);
-    return vfs_fread(&tmp, sizeof(tmp), 1, stream) == 1;
+    return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
