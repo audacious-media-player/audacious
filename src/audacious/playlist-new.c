@@ -914,8 +914,7 @@ void playlist_set_position (gint playlist_num, gint entry_num)
 
     SELECTION_HAS_CHANGED;
 
-    if (playlist == active_playlist)
-        hook_call ("playlist position", NULL);
+    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
 }
 
 gint playlist_get_position(gint playlist_num)
@@ -1595,9 +1594,7 @@ gboolean playlist_prev_song(gint playlist_num)
 
     SELECTION_HAS_CHANGED;
 
-    if (playlist == active_playlist)
-        hook_call ("playlist position", NULL);
-
+    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
     return TRUE;
 }
 
@@ -1656,9 +1653,7 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
 
     SELECTION_HAS_CHANGED;
 
-    if (playlist == active_playlist)
-        hook_call ("playlist position", NULL);
-
+    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
     return TRUE;
 }
 
