@@ -99,11 +99,10 @@ drct_initiate ( void )
     playback_initiate();
 }
 
-void
-drct_play ( void )
+void drct_play (void)
 {
-    if (playback_get_paused())
-        playback_pause();
+    if (playback_get_playing () && playback_get_paused ())
+        playback_pause ();
     else
         playback_initiate ();
 
