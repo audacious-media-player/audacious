@@ -528,7 +528,7 @@ static void set_title_and_length (InputPlayback * playback, const gchar * title,
         event_queue ("title change", NULL);
     }
 
-    if (playback->length != 0)
+    if (length != 0)
         playback->length = 0;
 }
 
