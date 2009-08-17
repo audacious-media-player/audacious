@@ -529,7 +529,7 @@ static void set_title_and_length (InputPlayback * playback, const gchar * title,
     }
 
     if (length != 0)
-        playback->length = 0;
+        playback->length = length;
 }
 
 static void set_params (InputPlayback * playback, const gchar * title, gint
