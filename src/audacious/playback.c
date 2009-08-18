@@ -56,12 +56,12 @@ static void set_params (InputPlayback * playback, const gchar * title, gint
 static void set_title (InputPlayback * playback, const gchar * title);
 static void set_tuple (InputPlayback * playback, Tuple * tuple);
 
-static gboolean playback_play_file (const gchar * filename, InputPlugin *
- decoder, const gchar * title, gint length);
+static gboolean playback_play_file (gint playlist, gint entry);
 
 static gboolean pause_when_ready;
 static gint seek_when_ready;
 static gint ready_source;
+static gint playback_entry;
 
 static gboolean ready_cb (void * data)
 {
@@ -111,6 +111,21 @@ playback_set_pb_change(InputPlayback *playback)
     g_mutex_lock(playback->pb_change_mutex);
     g_cond_signal(playback->pb_change_cond);
     g_mutex_unlock(playback->pb_change_mutex);
+}
+
+static void update_cb (void * hook_data, void * user_data)
+{
+    InputPlayback * playback;
+    gint old_entry;
+
+    playback = ip_data.current_input_playback;
+    g_return_if_fail (playback != NULL);
+
+    old_entry = playback_entry;
+    playback_entry = playlist_get_position (playlist_get_playing ());
+
+    if (cfg.show_numbers_in_pl && playback_entry != old_entry)
+        hook_call ("title change", NULL);
 }
 
 void
@@ -171,12 +186,7 @@ playback_initiate(void)
     mpris_emit_track_change(mpris);
 #endif
 
-    if (! playback_play_file (playlist_entry_get_filename (playlist, entry),
-     playlist_entry_get_decoder (playlist, entry), playlist_entry_get_title
-     (playlist, entry), playlist_entry_get_length (playlist, entry)))
-        return;
-
-    hook_call ("playback begin", NULL);
+    playback_play_file (playlist, entry);
 }
 
 void playback_pause (void)
@@ -215,12 +225,9 @@ void playback_pause (void)
 #endif
 }
 
-void playback_stop (void)
+static void playback_finalize (InputPlayback * playback)
 {
-    InputPlayback * playback;
-
-    playback = ip_data.current_input_playback;
-    g_return_if_fail (playback != NULL);
+    hook_dissociate ("playlist update", update_cb);
 
     g_mutex_lock (playback->pb_ready_mutex);
 
@@ -235,8 +242,30 @@ void playback_stop (void)
 
     g_mutex_unlock (playback->pb_ready_mutex);
 
+    if (playback->playing)
+    {
+        g_return_if_fail (playback->plugin->stop != NULL);
+        playback->plugin->stop (playback);
+
+        /* some plugins do this themselves */
+        if (playback->thread != NULL)
+            g_thread_join (playback->thread);
+    }
+
+    playback_free (playback);
+    ip_data.current_input_playback = NULL;
+}
+
+void playback_stop (void)
+{
+    InputPlayback * playback;
+
+    playback = ip_data.current_input_playback;
+    g_return_if_fail (playback != NULL);
+
     if (ip_data.playing)
     {
+        /* FIX ME: update plugins to handle stopping while paused */
         if (playback_get_paused() == TRUE)
         {
             if (get_written_time() > 0)
@@ -252,22 +281,10 @@ void playback_stop (void)
            directly.) --nenolod */
         playback->set_pb_change(playback);
 
-        if (playback->plugin->stop)
-        {
-            plugin_set_current((Plugin *)(playback->plugin));
-            playback->plugin->stop(playback);
-        }
-
-        if (playback->thread != NULL)
-        {
-            g_thread_join(playback->thread);
-            playback->thread = NULL;
-        }
+        playback_finalize (playback);
 
         ip_data.stop = FALSE;
 
-        playback_free(playback);
-        set_current_input_playback(NULL);
 #ifdef USE_DBUS
         mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
 #endif
@@ -290,18 +307,10 @@ static gboolean playback_ended (void * user_data)
 {
     gboolean error, play;
 
-    /* Unlikely but possible */
-    if (! ip_data.playing)
-        return FALSE;
-
     g_return_val_if_fail (ip_data.current_input_playback != NULL, FALSE);
-    g_return_val_if_fail (ip_data.current_input_playback->thread != NULL, FALSE);
 
-    ip_data.playing = FALSE;
-    g_thread_join (ip_data.current_input_playback->thread);
     error = ip_data.current_input_playback->error;
-    playback_free (ip_data.current_input_playback);
-    ip_data.current_input_playback = NULL;
+    playback_finalize (ip_data.current_input_playback);
 
     if (error)
     {
@@ -419,9 +428,11 @@ playback_run(InputPlayback *playback)
     playback->thread = g_thread_create(playback_monitor_thread, playback, TRUE, NULL);
 }
 
-static gboolean playback_play_file (const gchar * filename, InputPlugin *
- decoder, const gchar * title, gint length)
+static gboolean playback_play_file (gint playlist, gint entry)
 {
+    const gchar * filename = playlist_entry_get_filename (playlist, entry);
+    const gchar * title = playlist_entry_get_title (playlist, entry);
+    InputPlugin * decoder = playlist_entry_get_decoder (playlist, entry);
     InputPlayback *playback;
 
     if (!get_current_output_plugin()) {
@@ -454,10 +465,11 @@ static gboolean playback_play_file (const gchar * filename, InputPlugin *
     playback->plugin = decoder;
     playback->filename = g_strdup (filename);
     playback->title = g_strdup ((title != NULL) ? title : filename);
-    playback->length = length;
+    playback->length = playlist_entry_get_length (playlist, entry);
     playback->output = &psuedo_output_plugin;
 
     set_current_input_playback(playback);
+    playback_entry = entry;
 
     playback_run(playback);
 
@@ -465,8 +477,8 @@ static gboolean playback_play_file (const gchar * filename, InputPlugin *
     mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
 #endif
 
-    hook_call("playback play file", NULL);
-
+    hook_associate ("playlist update", update_cb, NULL);
+    hook_call ("playback begin", NULL);
     return TRUE;
 }
 
@@ -613,9 +625,8 @@ gchar * playback_get_title (void)
      playback->length / 60000, playback->length / 1000 % 60) : NULL;
 
     if (cfg.show_numbers_in_pl)
-        title = g_strdup_printf ("%d. %s%s", 1 + playlist_get_position
-         (playlist_get_playing ()), playback->title, (suffix != NULL) ? suffix :
-          "");
+        title = g_strdup_printf ("%d. %s%s", 1 + playback_entry,
+         playback->title, (suffix != NULL) ? suffix : "");
     else
         title = g_strdup_printf ("%s%s", playback->title, (suffix !=
          NULL) ? suffix : "");
