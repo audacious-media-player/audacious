@@ -31,7 +31,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
+/**
+ * @file plugin.h
+ * @brief Main Audacious plugin API header file.
+ * 
+ */
 #ifndef AUDACIOUS_PLUGIN_H
 #define AUDACIOUS_PLUGIN_H
 
@@ -53,6 +57,8 @@
 #include "libSAD/libSAD.h"
 #include "libaudtag/audtag.h"
 
+//@{
+/** Plugin type cast macros */
 #define PLUGIN(x)               ((Plugin *)(x))
 #define INPUT_PLUGIN(x)         ((InputPlugin *)(x))
 #define OUTPUT_PLUGIN(x)        ((OutputPlugin *)(x))
@@ -60,11 +66,16 @@
 #define GENERAL_PLUGIN(x)       ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)           ((VisPlugin *)(x))
 #define LOWLEVEL_PLUGIN(x)      ((LowlevelPlugin *)(x))
+//@}
 
-#define __AUDACIOUS_NEWVFS__
-#define __AUDACIOUS_PLUGIN_API__ 12
-#define __AUDACIOUS_INPUT_PLUGIN_API__ 8
+//@{
+/** Preprocessor defines for different API features */
+#define __AUDACIOUS_NEWVFS__                /**< @deprecated define for availability of VFS API. */
+#define __AUDACIOUS_PLUGIN_API__ 12         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
+#define __AUDACIOUS_INPUT_PLUGIN_API__ 8    /**< Input plugin API version. */
+//@}
 
+/** Available audio formats */
 typedef enum {
     FMT_U8,
     FMT_S8,
@@ -95,7 +106,8 @@ typedef enum {
     FMT_FIXED32 /* equivalent of libmad's mad_fixed_t explained below */
 } AFormat;
 
-/* From mad.h:
+/**
+ * From mad.h:
  *
  * Fixed-point format: 0xABBBBBBB
  * A == whole part      (sign + 3 bits)
@@ -115,9 +127,9 @@ typedef enum {
  * integers, but multiplication requires shifting the 64-bit result
  * from 56 fractional bits back to 28 (and rounding.)
  */
-
 #define __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ 28 /* useful for build time check for plugins linked against libmad, i.e. madplug */
 
+/** Get byte size of one sample of specified audio format */
 #define FMT_SIZEOF(a) ( \
     (a == FMT_S8 || a == FMT_U8) ? sizeof(gint8) : (                                                                   \
     (a == FMT_S16_NE || a == FMT_S16_LE || a == FMT_S16_BE || a == FMT_U16_NE || a == FMT_U16_LE || a == FMT_U16_BE) ? sizeof(gint16) : ( \
@@ -134,11 +146,12 @@ typedef enum {
     INPUT_VIS_OFF
 } InputVisType;
 
+/** Playlist update signal types */
 enum
 {
-    PLAYLIST_UPDATE_SELECTION = 1,
-    PLAYLIST_UPDATE_METADATA,
-    PLAYLIST_UPDATE_STRUCTURE,
+    PLAYLIST_UPDATE_SELECTION = 1,  /**< */
+    PLAYLIST_UPDATE_METADATA,       /**< */
+    PLAYLIST_UPDATE_STRUCTURE,      /**< */
 };
 
 enum {
@@ -167,8 +180,9 @@ typedef struct {
     InputPlugin *ip;
 } ProbeResult;
 
+/** ReplayGain information structure */
 typedef struct {
-    gfloat track_gain; /* in dB !!! --asphyx */
+    gfloat track_gain;  /**< Track gain in decibels (dB) */
     gfloat track_peak;
     gfloat album_gain;
     gfloat album_peak;
@@ -182,21 +196,19 @@ typedef GHashTable INIFile;
 #include "audacious/hook.h"
 #include "audacious/flow.h"
 
-/*
- * The v2 Module header.
- *
- * _list fields contain a null-terminated list of "plugins" to register.
- * A single library can provide multiple plugins.
- *     --nenolod
+/**
+ * The plugin module header. Each module can contain several plugins,
+ * of any supported type.
  */
 typedef struct {
-    gint magic;
-    gint api_version;
-    gchar *name;
+    gint magic;             /**< Audacious plugin module magic ID */
+    gint api_version;       /**< API version plugin has been compiled for,
+                                 this is checked against __AUDACIOUS_PLUGIN_API__ */
+    gchar *name;            /**< Module name */
     GCallback init;
     GCallback fini;
     Plugin *priv_assoc;
-    InputPlugin **ip_list;
+    InputPlugin **ip_list;  /**< List of InputPlugin(s) in this module */
     OutputPlugin **op_list;
     EffectPlugin **ep_list;
     GeneralPlugin **gp_list;
@@ -206,8 +218,16 @@ typedef struct {
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
-/* define the public API here */
-/* add new functions to the bottom of this list!!!! --nenolod */
+
+/** 
+ * Audacious plugin API vtable.
+ * This table defines the functions available for plugins through
+ * Audacious API. Any Audacious functions NOT defined here will not
+ * be exported to plugins, and are considered "internal".
+ *
+ * @attention Only add new functions to the bottom of this list
+ * unless API/ABI breakage is planned!
+ */
 struct _AudaciousFuncTableV1 {
 
     /* VFS */
@@ -1115,8 +1135,8 @@ struct _InputPlayback {
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
-    gboolean have_subtune;
-    gchar **vfs_extensions;
+    gboolean have_subtune;      /**< Plugin supports/uses subtunes. */
+    gchar **vfs_extensions;     /**< Filename extension to be associated to this plugin. */
 
     GList *(*scan_dir) (gchar * dirname);
     gint (*is_our_file) (const gchar * filename);
