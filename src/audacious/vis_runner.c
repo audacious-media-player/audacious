@@ -62,7 +62,14 @@ static gboolean send_audio (gpointer user_data)
 
     if (vis_node != NULL)
     {
+        gint channel;
         GList * node;
+
+        for (channel = 0; channel < vis_node->nch; channel ++)
+            memset (vis_node->data[channel] + vis_node->length, 0, 2 * (512 -
+             vis_node->length));
+
+        vis_node->length = 512;
 
         for (node = hooks; node != NULL; node = node->next)
         {
@@ -119,19 +126,47 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
     VisNode * vis_node;
     gint channel;
 
-    if (! active)
-        return;
+    g_mutex_lock (mutex);
 
-    vis_node = g_malloc (sizeof (VisNode));
-    vis_node->time = time;
-    vis_node->nch = MIN (channels, 2);
-    vis_node->length = 512;
+    if (! active)
+        goto UNLOCK;
+
+    time -= time % INTERVAL;
+
+    if (vis_tail == NULL)
+        vis_node = NULL;
+    else
+    {
+        vis_node = vis_tail->data;
+
+        if (vis_node->time != time || vis_node->nch != MIN (channels, 2))
+            vis_node = NULL;
+    }
+
+    if (vis_node == NULL)
+    {
+        vis_node = g_malloc (sizeof (VisNode));
+        vis_node->time = time;
+        vis_node->nch = MIN (channels, 2);
+        vis_node->length = 0;
+
+        if (vis_tail == NULL)
+        {
+            vis_tail = g_list_append (NULL, vis_node);
+            vis_list = vis_tail;
+        }
+        else
+            vis_tail = g_list_append (vis_tail, vis_node)->next;
+    }
+
+    if (samples > channels * (512 - vis_node->length))
+        samples = channels * (512 - vis_node->length);
 
     for (channel = 0; channel < vis_node->nch; channel ++)
     {
         gfloat * from = data + channel;
-        gfloat * end = from + channels * MIN (samples / channels, 512);
-        gint16 * to = vis_node->data[channel];
+        gfloat * end = from + samples;
+        gint16 * to = vis_node->data[channel] + vis_node->length;
 
         while (from < end)
         {
@@ -139,25 +174,11 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
             * to ++ = CLAMP (temp, -1, 1) * 32767;
             from += channels;
         }
-
-        memset (to, 0, 2 * (vis_node->data[channel] + 512 - to));
     }
 
-    g_mutex_lock (mutex);
+    vis_node->length += samples / channels;
 
-    if (active)
-    {
-        if (vis_list == NULL)
-        {
-            vis_list = g_list_append (NULL, vis_node);
-            vis_tail = vis_list;
-        }
-        else
-            vis_tail = g_list_append (vis_tail, vis_node)->next;
-    }
-    else
-        g_free (vis_node);
-
+UNLOCK:
     g_mutex_unlock (mutex);
 }
 
