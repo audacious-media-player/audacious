@@ -689,16 +689,16 @@ struct _AudaciousFuncTableV1 {
 #define aud_cfg_db_unset_key            _audvt->cfg_db_unset_key
 
 /* These functions are in libaudcore; macros here for compatibility. */
-#define aud_tuple_new                tuple_new
-#define aud_tuple_new_from_filename  tuple_new_from_filename
-#define aud_tuple_associate_string   tuple_associate_string
-#define aud_tuple_associate_int      tuple_associate_int
-#define aud_tuple_disassociate       tuple_disassociate
-#define aud_tuple_disassociate_now   tuple_disassociate_now
-#define aud_tuple_get_value_type     tuple_get_value_type
-#define aud_tuple_get_string         tuple_get_string
-#define aud_tuple_get_int            tuple_get_int
-#define aud_tuple_free               mowgli_object_unref
+#define aud_tuple_new                   tuple_new
+#define aud_tuple_new_from_filename     tuple_new_from_filename
+#define aud_tuple_associate_string      tuple_associate_string
+#define aud_tuple_associate_int         tuple_associate_int
+#define aud_tuple_disassociate          tuple_disassociate
+#define aud_tuple_disassociate_now      tuple_disassociate_now
+#define aud_tuple_get_value_type        tuple_get_value_type
+#define aud_tuple_get_string            tuple_get_string
+#define aud_tuple_get_int               tuple_get_int
+#define aud_tuple_free                  mowgli_object_unref
 
 /* These functions are in libaudcore; macros here for compatibility. */
 #define aud_tuple_formatter_process_string       tuple_formatter_process_string
@@ -725,17 +725,17 @@ struct _AudaciousFuncTableV1 {
 #define aud_chardet_to_utf8             _audvt->chardet_to_utf8
 
 /* These functions are in libaudcore; macros here for compatibility. */
-#define aud_escape_shell_chars       escape_shell_chars
-#define aud_str_append               str_append
-#define aud_str_replace              str_replace
-#define aud_str_replace_in           str_replace_in
-#define aud_str_has_prefix_nocase    str_has_prefix_nocase
-#define aud_str_has_suffix_nocase    str_has_suffix_nocase
-#define aud_str_has_suffixes_nocase  str_has_suffixes_nocase
-#define aud_str_to_utf8_fallback     str_to_utf8_fallback
-#define aud_filename_to_utf8         filename_to_utf8
-#define aud_str_skip_chars           str_skip_chars
-#define aud_filename_split_subtune   filename_split_subtune
+#define aud_escape_shell_chars          escape_shell_chars
+#define aud_str_append                  str_append
+#define aud_str_replace                 str_replace
+#define aud_str_replace_in              str_replace_in
+#define aud_str_has_prefix_nocase       str_has_prefix_nocase
+#define aud_str_has_suffix_nocase       str_has_suffix_nocase
+#define aud_str_has_suffixes_nocase     str_has_suffixes_nocase
+#define aud_str_to_utf8_fallback        str_to_utf8_fallback
+#define aud_filename_to_utf8            filename_to_utf8
+#define aud_str_skip_chars              str_skip_chars
+#define aud_filename_split_subtune      filename_split_subtune
 
 #define aud_playlist_container_register     _audvt->playlist_container_register
 #define aud_playlist_container_unregister   _audvt->playlist_container_unregister
@@ -1111,22 +1111,31 @@ struct _InputPlayback {
     gint length;
     gchar *title;
 
-    /* title should be NULL and length should be 0 */
-    void (* set_params) (InputPlayback * playback, const gchar * title, gint
+    /**
+     * Set playback parameters. Title should be NULL and length should be 0.
+     * @deprecated Use of this function to set title or length is deprecated,
+     * please use #set_tuple() for information other than bitrate/samplerate/channels.
+     */
+    void (*set_params) (InputPlayback * playback, const gchar * title, gint
      length, gint bitrate, gint samplerate, gint channels);
 
-    /* deprecated */
-    void (* set_title) (InputPlayback * playback, const gchar * title);
+    /**
+     * Set playback entry title.
+     * @deprecated This function is deprecated, use #set_tuple() instead.
+     */
+    void (*set_title) (InputPlayback * playback, const gchar * title);
 
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 
-    /* added in Audacious 1.5 */
     /* called by input plugin when RG info available --asphyx */
     void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 
-    /* added in Audacious 2.2 */
-    /* caller gives up ownership of one reference to the tuple */
-    void (* set_tuple) (InputPlayback * playback, Tuple * tuple);
+    /**
+     * Sets / updates playback entry #Tuple.
+     * @attention Caller gives up ownership of one reference to the tuple.
+     * @since Added in Audacious 2.2.
+     */
+    void (*set_tuple) (InputPlayback * playback, Tuple * tuple);
 };
 
 /**
@@ -1139,6 +1148,11 @@ struct _InputPlugin {
     gchar **vfs_extensions;     /**< Filename extension to be associated to this plugin. */
 
     GList *(*scan_dir) (gchar * dirname);
+
+    /**
+     * Check if this plugin can handle given file/filename.
+     * @deprecated Use 3is_our_file_from_vfs() or #probe_for_tuple().
+     */
     gint (*is_our_file) (const gchar * filename);
     gint (*is_our_file_from_vfs) (const gchar *filename, VFSFile *fd);
     Tuple *(*probe_for_tuple) (const gchar *uri, VFSFile *fd);
