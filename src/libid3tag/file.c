@@ -46,17 +46,17 @@
 //#undef AUDACIOUS
 
 #ifdef AUDACIOUS
-  #include <audacious/plugin.h>
+  #include <libaudcore/vfs.h>
 #else
   #define VFSFile FILE
-  #define aud_vfs_fopen fopen
-  #define aud_vfs_fclose fclose
-  #define aud_vfs_fseek fseek
-  #define aud_vfs_ftell ftell
-  #define aud_vfs_rewind rewind
-  #define aud_vfs_fread fread
-  #define aud_vfs_fwrite fwrite
-  #define aud_vfs_truncate(x, y) ftruncate((fileno(x)), (y))
+  #define vfs_fopen fopen
+  #define vfs_fclose fclose
+  #define vfs_fseek fseek
+  #define vfs_ftell ftell
+  #define vfs_rewind rewind
+  #define vfs_fread fread
+  #define vfs_fwrite fwrite
+  #define vfs_truncate(x, y) ftruncate((fileno(x)), (y))
 #endif
 
 struct filetag {
@@ -93,13 +93,13 @@ signed long query_tag(VFSFile *iofile)
   id3_byte_t query[ID3_TAG_QUERYSIZE];
   signed long size;
 
-  save_position = aud_vfs_ftell(iofile);
+  save_position = vfs_ftell(iofile);
   if (save_position == -1)
     return 0;
 
-  size = id3_tag_query(query, aud_vfs_fread(query, 1, sizeof(query), iofile));
+  size = id3_tag_query(query, vfs_fread(query, 1, sizeof(query), iofile));
 
-  if(aud_vfs_fseek(iofile, save_position, SEEK_SET) == -1)
+  if(vfs_fseek(iofile, save_position, SEEK_SET) == -1)
     return 0;
 
   return size;
@@ -117,7 +117,7 @@ struct id3_tag *read_tag(VFSFile *iofile, id3_length_t size)
 
   data = malloc(size);
   if (data) {
-    if (aud_vfs_fread(data, size, 1, iofile) == 1)
+    if (vfs_fread(data, size, 1, iofile) == 1)
       tag = id3_tag_parse(data, size);
 
     free(data);
@@ -222,7 +222,7 @@ struct id3_tag *add_tag(struct id3_file *file, id3_length_t length)
   struct filetag filetag;
   struct id3_tag *tag;
 
-  location = aud_vfs_ftell(file->iofile);
+  location = vfs_ftell(file->iofile);
   if (location == -1)
     return 0;
 
@@ -285,14 +285,14 @@ int search_tags(struct id3_file *file)
 
 //  if (fgetpos(file->iofile, &save_position) == -1 ||
 //      fsetpos(file->iofile, &save_position) == -1)
-//  if (save_position = aud_vfs_ftell(file->iofile) == -1 ||
-//      aud_vfs_fseek(file->iofile, save_position, SEEK_SET) == -1)
-  if((save_position = aud_vfs_ftell(file->iofile)) == -1)
+//  if (save_position = vfs_ftell(file->iofile) == -1 ||
+//      vfs_fseek(file->iofile, save_position, SEEK_SET) == -1)
+  if((save_position = vfs_ftell(file->iofile)) == -1)
     return -1;
 
   /* look for an ID3v1 tag */
 
-  if (aud_vfs_fseek(file->iofile, -128, SEEK_END) == 0) {
+  if (vfs_fseek(file->iofile, -128, SEEK_END) == 0) {
     size = query_tag(file->iofile);
     if (size > 0) {
       struct id3_tag const *tag;
@@ -308,7 +308,7 @@ int search_tags(struct id3_file *file)
 
   /* look for a tag at the beginning of the file */
 
-  aud_vfs_rewind(file->iofile);
+  vfs_rewind(file->iofile);
 
   size = query_tag(file->iofile);
   if (size > 0) {
@@ -323,7 +323,7 @@ int search_tags(struct id3_file *file)
       long seek;
 
       seek = id3_field_getint(id3_frame_field(frame, 0));
-      if (seek < 0 || aud_vfs_fseek(file->iofile, seek, SEEK_CUR) == -1)
+      if (seek < 0 || vfs_fseek(file->iofile, seek, SEEK_CUR) == -1)
 	break;
 
       size = query_tag(file->iofile);
@@ -333,10 +333,10 @@ int search_tags(struct id3_file *file)
 
   /* look for a tag at the end of the file (before any ID3v1 tag) */
 
-  if (aud_vfs_fseek(file->iofile, ((file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0) +
+  if (vfs_fseek(file->iofile, ((file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0) +
 	    -10, SEEK_END) == 0) {
     size = query_tag(file->iofile);
-    if (size < 0 && aud_vfs_fseek(file->iofile, size, SEEK_CUR) == 0) {
+    if (size < 0 && vfs_fseek(file->iofile, size, SEEK_CUR) == 0) {
       size = query_tag(file->iofile);
       if (size > 0)
 	add_tag(file, size);
@@ -349,7 +349,7 @@ int search_tags(struct id3_file *file)
 
   /* restore seek position */
 
-  if (aud_vfs_fseek(file->iofile, save_position, SEEK_SET) == -1)
+  if (vfs_fseek(file->iofile, save_position, SEEK_SET) == -1)
     return -1;
 
   /* set primary tag options and target padded length for convenience */
@@ -458,7 +458,7 @@ struct id3_file *id3_file_open(char const *path, enum id3_file_mode mode)
 
   assert(path);
 
-  iofile = aud_vfs_fopen(path, (mode == ID3_FILE_MODE_READWRITE) ? "r+b" : "rb");
+  iofile = vfs_fopen(path, (mode == ID3_FILE_MODE_READWRITE) ? "r+b" : "rb");
   if (iofile == 0){
     printf("id3_file_open: iofile failed\n");
     return 0;
@@ -466,7 +466,7 @@ struct id3_file *id3_file_open(char const *path, enum id3_file_mode mode)
   file = new_file(iofile, mode, path);
   if (file == 0){
     printf("id3_file_open: file failed\n");
-    aud_vfs_fclose(iofile);
+    vfs_fclose(iofile);
   }
 
   return file;
@@ -483,21 +483,21 @@ struct id3_file *id3_file_vfsopen(VFSFile *iofile, enum id3_file_mode mode)
   gchar *path;
 
   assert(iofile);
-  
+
   path = iofile->uri;
 
-  aud_vfs_dup(iofile);
+  vfs_dup(iofile);
 
-  curpos = aud_vfs_ftell(iofile);
-  aud_vfs_fseek(iofile, 0, SEEK_SET);
+  curpos = vfs_ftell(iofile);
+  vfs_fseek(iofile, 0, SEEK_SET);
 
   file = new_file(iofile, mode, path);
   if (file == 0){
     printf("id3_file_vfsopen: file failed\n");
-    aud_vfs_fclose(iofile);
+    vfs_fclose(iofile);
   }
 
-  aud_vfs_fseek(iofile, curpos, SEEK_SET);
+  vfs_fseek(iofile, curpos, SEEK_SET);
 
   return file;
 }
@@ -548,7 +548,7 @@ int id3_file_close(struct id3_file *file)
 
   assert(file);
 
-  if (aud_vfs_fclose(file->iofile) == EOF)
+  if (vfs_fclose(file->iofile) == EOF)
     result = -1;
 
   finish_file(file);
@@ -580,13 +580,13 @@ int v1_write(struct id3_file *file,
   if (data) {
     long location;
 
-    if (aud_vfs_fseek(file->iofile, (file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0,
+    if (vfs_fseek(file->iofile, (file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0,
 	      SEEK_END) == -1 ||
-	(location = aud_vfs_ftell(file->iofile)) == -1 ||
+	(location = vfs_ftell(file->iofile)) == -1 ||
 #ifdef AUDACIOUS
-	aud_vfs_fwrite(data, 128, 1, file->iofile) != 1 )
+	vfs_fwrite(data, 128, 1, file->iofile) != 1 )
 #else
-	aud_vfs_fwrite(data, 128, 1, file->iofile) != 1 ||
+	vfs_fwrite(data, 128, 1, file->iofile) != 1 ||
 	fflush(file->iofile) == EOF) //XXX
 #endif
       return -1;
@@ -610,15 +610,15 @@ int v1_write(struct id3_file *file,
   else if (file->flags & ID3_FILE_FLAG_ID3V1) {
     long length;
 
-    if (aud_vfs_fseek(file->iofile, 0, SEEK_END) == -1)
+    if (vfs_fseek(file->iofile, 0, SEEK_END) == -1)
       return -1;
 
-    length = aud_vfs_ftell(file->iofile);
+    length = vfs_ftell(file->iofile);
     if (length == -1 ||
 	(length >= 0 && length < 128))
       return -1;
 
-    if (aud_vfs_truncate(file->iofile, length - 128) == -1)
+    if (vfs_truncate(file->iofile, length - 128) == -1)
       return -1;
 
     /* delete file tag reference */
@@ -649,20 +649,20 @@ int v2_write(struct id3_file *file,
         char *remainder;
 
         /* read in the remainder of the file */
-        aud_vfs_fseek(file->iofile, 0, SEEK_END);
-        file_size = aud_vfs_ftell(file->iofile);
+        vfs_fseek(file->iofile, 0, SEEK_END);
+        file_size = vfs_ftell(file->iofile);
         remainder_size = file_size - file->tags[0].location - file->tags[0].length;
         remainder = (char*)malloc(remainder_size);
 
-        if (aud_vfs_fseek(file->iofile, file->tags[0].location + file->tags[0].length, SEEK_SET) == -1 ||
-            aud_vfs_fread(remainder, remainder_size, 1, file->iofile) != 1) {
+        if (vfs_fseek(file->iofile, file->tags[0].location + file->tags[0].length, SEEK_SET) == -1 ||
+            vfs_fread(remainder, remainder_size, 1, file->iofile) != 1) {
             free(remainder);
             return -1;
         }
 
         /* write the remainder where the old tag was */
-        if (aud_vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
-            aud_vfs_fwrite(remainder, remainder_size, 1, file->iofile) != 1) {
+        if (vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
+            vfs_fwrite(remainder, remainder_size, 1, file->iofile) != 1) {
             free(remainder);
             return -1;
         }
@@ -675,8 +675,8 @@ int v2_write(struct id3_file *file,
             return -1;
 #endif
         /* truncate if required */
-        if (aud_vfs_ftell(file->iofile) < file_size)
-            aud_vfs_truncate(file->iofile, aud_vfs_ftell(file->iofile));
+        if (vfs_ftell(file->iofile) < file_size)
+            vfs_truncate(file->iofile, vfs_ftell(file->iofile));
 
     }
 
@@ -692,7 +692,7 @@ int v2_write(struct id3_file *file,
       filetag.tag = 0;
       filetag.location = 0; // begining of the file.
       filetag.length = 0;
-      
+
       if(add_filetag(file, &filetag) == -1)
           return -1;
 
@@ -703,7 +703,7 @@ int v2_write(struct id3_file *file,
   }
 
   if (!data
-      ||  (!(file->ntags == 1 && !(file->flags & ID3_FILE_FLAG_ID3V1)) && 
+      ||  (!(file->ntags == 1 && !(file->flags & ID3_FILE_FLAG_ID3V1)) &&
            !(file->ntags == 2 &&  (file->flags & ID3_FILE_FLAG_ID3V1)))) {
     /* no v2 tag. nothing to do */
     goto done;
@@ -712,11 +712,11 @@ int v2_write(struct id3_file *file,
   if (file->tags[0].length == length) {
     /* easy special case: rewrite existing tag in-place */
 
-    if (aud_vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
+    if (vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
 #ifdef AUDACIOUS
-	aud_vfs_fwrite(data, length, 1, file->iofile) != 1)
+	vfs_fwrite(data, length, 1, file->iofile) != 1)
 #else
-	aud_vfs_fwrite(data, length, 1, file->iofile) != 1 ||
+	vfs_fwrite(data, length, 1, file->iofile) != 1 ||
 	fflush(file->iofile) == EOF)
 #endif
       return -1;
@@ -729,25 +729,25 @@ int v2_write(struct id3_file *file,
     char *remainder;
 
     /* read in the remainder of the file */
-    aud_vfs_fseek(file->iofile, 0, SEEK_END);
-    file_size = aud_vfs_ftell(file->iofile);
+    vfs_fseek(file->iofile, 0, SEEK_END);
+    file_size = vfs_ftell(file->iofile);
     remainder_size = file_size - file->tags[0].location - file->tags[0].length;
     remainder = (char*)malloc(remainder_size);
-    if (aud_vfs_fseek(file->iofile, file->tags[0].location + file->tags[0].length, SEEK_SET) == -1 ||
-	aud_vfs_fread(remainder, remainder_size, 1, file->iofile) != 1) {
+    if (vfs_fseek(file->iofile, file->tags[0].location + file->tags[0].length, SEEK_SET) == -1 ||
+	vfs_fread(remainder, remainder_size, 1, file->iofile) != 1) {
 	    free(remainder);
       return -1;
     }
 
     /* write the tag where the old one was */
-    if (aud_vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
-	aud_vfs_fwrite(data, length, 1, file->iofile) != 1) {
+    if (vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
+	vfs_fwrite(data, length, 1, file->iofile) != 1) {
 	    free(remainder);
       return -1;
     }
 
     /* write the reaminder */
-    if (aud_vfs_fwrite(remainder, remainder_size, 1, file->iofile) != 1) {
+    if (vfs_fwrite(remainder, remainder_size, 1, file->iofile) != 1) {
       free(remainder);
       return -1;
   }
@@ -760,8 +760,8 @@ int v2_write(struct id3_file *file,
       return -1;
 #endif
     /* truncate if required */
-    if (aud_vfs_ftell(file->iofile) < file_size)
-      aud_vfs_truncate(file->iofile, aud_vfs_ftell(file->iofile));
+    if (vfs_ftell(file->iofile) < file_size)
+      vfs_truncate(file->iofile, vfs_ftell(file->iofile));
   }
 
  done:
@@ -823,7 +823,7 @@ int id3_file_update(struct id3_file *file)
       v1_write(file, id3v1, v1size) == -1)
     goto fail;
 
-  aud_vfs_rewind(file->iofile);
+  vfs_rewind(file->iofile);
 
   /* update file tags array? ... */
 
