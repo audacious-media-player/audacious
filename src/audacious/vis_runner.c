@@ -31,7 +31,7 @@
 
 static GMutex * mutex;
 static gboolean active;
-static GList * vis_list, * hooks;
+static GList * vis_list, * vis_tail, * hooks;
 static gint source;
 
 static gboolean send_audio (gpointer user_data)
@@ -53,6 +53,9 @@ static gboolean send_audio (gpointer user_data)
         g_free (vis_node);
         vis_node = next;
         vis_list = g_list_delete_link (vis_list, vis_list);
+
+        if (vis_list == NULL)
+            vis_tail = NULL;
     }
 
     g_mutex_unlock (mutex);
@@ -101,6 +104,7 @@ void vis_runner_init (void)
     active = FALSE;
     hooks = NULL;
     vis_list = NULL;
+    vis_tail = NULL;
     source = 0;
 
     hook_associate ("playback begin", start_stop, NULL);
@@ -142,7 +146,15 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
     g_mutex_lock (mutex);
 
     if (active)
-        vis_list = g_list_append (vis_list, vis_node);
+    {
+        if (vis_list == NULL)
+        {
+            vis_list = g_list_append (NULL, vis_node);
+            vis_tail = vis_list;
+        }
+        else
+            vis_tail = g_list_append (vis_tail, vis_node)->next;
+    }
     else
         g_free (vis_node);
 
@@ -158,6 +170,8 @@ void vis_runner_flush (void)
         g_free (vis_list->data);
         vis_list = g_list_delete_link (vis_list, vis_list);
     }
+
+    vis_tail = NULL;
 
     g_mutex_unlock (mutex);
 }
