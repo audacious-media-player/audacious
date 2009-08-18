@@ -70,6 +70,7 @@ struct _AudConfig {
     gint output_bit_depth;
     gboolean enable_replay_gain;
     gboolean enable_clipping_prevention;
+    gboolean replay_gain_track;
     gboolean replay_gain_album;
     gboolean enable_adaptive_scaler;
     gfloat replay_gain_preamp;

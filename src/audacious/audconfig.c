@@ -92,6 +92,7 @@ AudConfig aud_default_config = {
     .output_bit_depth = 16,
     .enable_replay_gain = TRUE,
     .enable_clipping_prevention = TRUE,
+    .replay_gain_track = TRUE,         /* track mode */
     .replay_gain_album = FALSE,        /* album mode */
     .enable_adaptive_scaler = FALSE,
     .replay_gain_preamp = 0.0,
@@ -161,6 +162,7 @@ static aud_cfg_boolent aud_boolents[] = {
     {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
     {"enable_replay_gain", &cfg.enable_replay_gain, TRUE},
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
+    {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
     {"enable_adaptive_scaler", &cfg.enable_adaptive_scaler, TRUE},
 #ifdef USE_SAMPLERATE
