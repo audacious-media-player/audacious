@@ -6,7 +6,6 @@ SRCS = audtag.c		\
        util.c		\
        tag_module.c	\
        wma/guid.c	\
-       wma/wma_fmt.c	\
        wma/wma.c	\
        id3/id3.c	\
        ape/ape.c	\
