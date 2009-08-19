@@ -48,7 +48,8 @@ static gboolean send_audio (gpointer user_data)
     {
         next = vis_list->data;
 
-        if (next->time > outputted)
+        if ((vis_node != NULL) ? (next->time > outputted) : (next->time >
+         outputted + INTERVAL))
             break;
 
         #if DEBUG
