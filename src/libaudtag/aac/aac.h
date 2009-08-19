@@ -57,7 +57,8 @@ gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 extern tag_module_t aac;
 
 Atom *ilstAtom;
-long ilstFileOffset;
+guint64 ilstFileOffset;
+guint32 newilstSize ;
 mowgli_list_t *dataAtoms;
 mowgli_dictionary_t *ilstAtoms;
 
