@@ -16,11 +16,11 @@ gchar* ape_items[] = {"Album", "Title", "Copyright", "Artist", "Track", "Year", 
 
 APEv2Header *readAPEHeader(VFSFile *fd) {
     APEv2Header *header = g_new0(APEv2Header, 1);
-    header->preamble = read_ASCII(fd, 8);
-    header->version = read_int32(fd);
-    header->tagSize = read_int32(fd);
-    header->itemCount = read_int32(fd);
-    header->reserved = read_int64(fd);
+    header->preamble = read_char_data(fd, 8);
+    header->version = read_LEuint32(fd);
+    header->tagSize = read_LEuint32(fd);
+    header->itemCount = read_LEuint32(fd);
+    header->reserved = read_LEuint64(fd);
     return header;
 }
 
@@ -35,8 +35,9 @@ gchar* read_NULLterminatedString(VFSFile *fd) {
             size++;
         } else
             break;
-    }
+    }    
    gchar* ret = g_strndup(buf, size);
+
     return ret;
 }
 
@@ -48,8 +49,8 @@ gchar* readUTF_8(VFSFile *fd, int size) {
 
 APETagItem *readAPETagItem(VFSFile *fd) {
     APETagItem *tagitem = g_new0(APETagItem, 1);
-    tagitem->size = read_int32(fd);
-    tagitem->flags = read_int32(fd);
+    tagitem->size = read_LEuint32(fd);
+    tagitem->flags = read_LEuint32(fd);
     tagitem->key = read_NULLterminatedString(fd);
     tagitem->value = readUTF_8(fd, tagitem->size);
 
@@ -139,24 +140,7 @@ void add_tagItemFromTuple(Tuple *tuple, int tuple_field, int ape_field) {
     }
 }
 
-void copyAudioData(VFSFile* from, VFSFile *to,int pos_from,int pos_to)
-{
-    vfs_fseek(from,pos_from,SEEK_SET);
-    int bytes_read = 0;
-    while (bytes_read < pos_to-4096)
-    {
-        gchar buf[4096];
-        guint32 n = vfs_fread(buf, 1, 4096, from);
-        vfs_fwrite(buf, n, 1, to);
-        bytes_read +=n;
-    }
-    if(bytes_read < pos_to)
-    {
-        gchar buf2[pos_to - bytes_read];
-        int nn = vfs_fread(buf2,pos_to-bytes_read,1,from);
-        vfs_fwrite(buf2,nn,1,to);
-    }
-}
+
 
 gboolean ape_can_handle_file(VFSFile *f) {
     APEv2Header *header = readAPEHeader(f);
@@ -266,7 +250,7 @@ gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     VFSFile *tmp;
     const gchar *tmpdir = g_get_tmp_dir();
     gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "tmp.mpc");
-    tmp = vfs_fopen(tmp_path, "w");
+    tmp = vfs_fopen(tmp_path, "w+");
 
 
     if (tuple_get_string(tuple, FIELD_ARTIST, NULL))
