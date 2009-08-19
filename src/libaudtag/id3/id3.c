@@ -12,14 +12,6 @@
 tag_module_t id3 = {id3_can_handle_file, id3_populate_tuple_from_file, id3_write_tuple_to_file};
 /* reading stuff */
 
-
-guint32 read_int16(VFSFile *fd)
-{
-    guint16 a;
-    vfs_fread(&a,2,1,fd);
-    return a;
-}
-
 gchar *read_iso8859_1(VFSFile *fd, int size)
 {
     gchar *value= g_new0(gchar,size);
@@ -47,7 +39,7 @@ gchar* read_unicode(VFSFile *fd, int size)
 
 guint32 read_syncsafe_int32(VFSFile *fd)
 {
-    guint32 val = read_BEint32(fd);
+    guint32 val = read_BEuint32(fd);
     guint32 mask = 0x7f;
     guint32 intVal = 0;
     intVal = ((intVal)  |  (val & mask));
@@ -65,9 +57,9 @@ guint32 read_syncsafe_int32(VFSFile *fd)
 ID3v2Header *readHeader(VFSFile *fd)
 {
     ID3v2Header *header = g_new0(ID3v2Header,1);
-    header->id3 = read_ASCII(fd,3);
-    header->version = read_int16(fd);
-    header->flags = *read_ASCII(fd,1);
+    header->id3 = read_char_data(fd,3);
+    header->version = read_LEuint16(fd);
+    header->flags = *read_char_data(fd,1);
     header->size = read_syncsafe_int32(fd);
     return header;
 }
@@ -75,24 +67,24 @@ ID3v2Header *readHeader(VFSFile *fd)
 ExtendedHeader *readExtendedHeader(VFSFile *fd)
 {
     ExtendedHeader *header = g_new0(ExtendedHeader,1);
-    header->header_size = read_BEint32(fd);
-    header->flags = read_int16(fd);
-    header->padding_size = read_BEint32(fd);
+    header->header_size = read_BEuint32(fd);
+    header->flags = read_LEuint16(fd);
+    header->padding_size = read_BEuint32(fd);
     return header;
 }
 
 ID3v2FrameHeader *readID3v2FrameHeader(VFSFile *fd)
 {
     ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader,1);
-    frameheader->frame_id = read_ASCII(fd,4);
-    frameheader->size = read_BEint32(fd);
-    frameheader->flags = read_int16(fd);
+    frameheader->frame_id = read_char_data(fd,4);
+    frameheader->size = read_BEuint32(fd);
+    frameheader->flags = read_LEuint16(fd);
     return frameheader;
 }
 
 TextInformationFrame *readTextFrame(VFSFile *fd, TextInformationFrame *frame)
 {
-    frame->encoding = read_ASCII(fd,1)[0];
+    frame->encoding = read_char_data(fd,1)[0];
 
     if(frame->encoding == 0)
         frame->text = read_iso8859_1(fd,frame->header.size - 1);

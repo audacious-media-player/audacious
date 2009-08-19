@@ -1,57 +1,81 @@
-#include <string.h>
-#include <glib-2.0/glib.h>
+/* this stuff may be moved to ../util.h if needed by other formats */
+
+#include <inttypes.h>
 
 #include "libaudcore/vfs.h"
+#include "../util.h"
 #include "guid.h"
 #include "wma_fmt.h"
-#include "../util.h"
-#include <inttypes.h>
-GStaticRWLock file_lock = G_STATIC_RW_LOCK_INIT;
 
-GUID * guid_read_from_file (VFSFile * handle)
-{
+GUID * guid_read_from_file(VFSFile * f) {
     GUID temp;
 
-    if (vfs_fread (& temp, sizeof (GUID), 1, handle) != 1)
+    if ((f == NULL) || (vfs_fread(&temp, sizeof (GUID), 1, f) != 1))
         return NULL;
 
-    temp.be64 = GUINT64_SWAP_LE_BE (temp.be64);
-    return g_memdup (& temp, sizeof (GUID));
+    temp.le32 = GUINT32_FROM_LE(temp.le32);
+    temp.le16_1 = GUINT16_FROM_LE(temp.le16_1);
+    temp.le16_2 = GUINT16_FROM_LE(temp.le16_2);
+    temp.be64 = GUINT64_FROM_BE(temp.be64);
+
+    return g_memdup(& temp, sizeof (GUID));
 }
 
-GUID * guid_convert_from_string (const gchar * string)
-{
+gboolean guid_write_to_file(VFSFile * f, int guid_type) {
+    g_return_val_if_fail(f != NULL, FALSE);
+
+    GUID *g = guid_convert_from_string(wma_guid_map(guid_type));
+
+    gboolean ret = write_LEuint32(f, g->le32) &&
+            write_LEuint16(f, g->le16_1) &&
+            write_LEuint16(f, g->le16_1) &&
+            write_LEuint64(f, g->be64);
+    g_free(g);
+    return ret;
+}
+
+GUID *guid_convert_from_string(const gchar * string) {
     GUID temp;
 
-    if (sscanf (string, "%" SCNx32 "-%" SCNx16 "-%" SCNx16 "-%" SCNx64,
-     & temp.le32, & temp.le16_1, & temp.le16_2, & temp.be64) != 4)
+    if (sscanf(string, "%" SCNx32 "-%" SCNx16 "-%" SCNx16 "-%" SCNx64,
+               & temp.le32, & temp.le16_1, & temp.le16_2, & temp.be64) != 4)
         return NULL;
+    return g_memdup(& temp, sizeof (GUID));
+}
 
-    return g_memdup (& temp, sizeof (GUID));
+gchar *guid_convert_to_string(const GUID* g) {
+
+    return g_strdup_printf("%8x-%hx-%hx-%"PRIx64"\n", GUINT32_TO_LE(g->le32),
+                           GUINT16_TO_LE(g->le16_1), GUINT16_TO_LE(g->le16_2),
+                           GUINT64_TO_BE(g->be64));
 }
 
 gboolean guid_equal(GUID *g1, GUID *g2) {
-/*
-
+    /*
     DEBUG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
     DEBUG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
-*/
+     */
 
     g_return_val_if_fail((g1 != NULL) && (g2 != NULL), FALSE);
-    if (!memcmp(g1, g2, 16)) {
-//        DEBUG("equal\n");
+    if (!memcmp(g1, g2, 16))
+    {
+        //        DEBUG("equal\n");
+
         return TRUE;
     }
-//    DEBUG("not equal\n");
+    /* DEBUG("not equal\n"); */
     return FALSE;
 }
 
 int get_guid_type(GUID *g) {
     GUID *g1;
     int i;
-    for (i = 0; i < ASF_OBJECT_LAST - 1; i++) {
-        g1 = guid_convert_from_string(object_types_map[i].guid_value);
-        if (guid_equal(g, g1)) {
+    for (i = 0; i < ASF_OBJECT_LAST - 1; i++)
+    {
+        g1 = guid_convert_from_string(wma_guid_map(i));
+        if (guid_equal(g, g1))
+        {
+
             g_free(g1);
             return i;
         }
@@ -59,16 +83,25 @@ int get_guid_type(GUID *g) {
     return -1;
 }
 
-void writeGuidToFile(VFSFile * f, int guid_type) {
-
-    gchar * strGuid = object_types_map[guid_type].guid_value;
-    GUID * g = guid_convert_from_string (strGuid);
-
-    g->be64 = GUINT64_SWAP_LE_BE(g->be64);
-    vfs_fwrite(&(g->le32), 4, 1, f);
-    vfs_fwrite(&(g->le16_1), 2, 1, f);
-    vfs_fwrite(&(g->le16_2), 2, 1, f);
-    vfs_fwrite(&(g->be64), 8, 1, f);
-
-    g_free (g);
+const gchar *wma_guid_map(int i) {
+    const gchar * _guid_map[ASF_OBJECT_LAST] = {
+                                                ASF_HEADER_OBJECT_GUID,
+                                                ASF_FILE_PROPERTIES_OBJECT_GUID,
+                                                ASF_STREAM_PROPERTIES_OBJECT_GUID,
+                                                ASF_HEADER_EXTENSION_OBJECT_GUID,
+                                                ASF_CODEC_LIST_OBJECT_GUID,
+                                                ASF_SCRIPT_COMMAND_OBJECT_GUID,
+                                                ASF_MARKER_OBJECT_GUID,
+                                                ASF_BITRATE_MUTUAL_EXCLUSION_OBJECT_GUID,
+                                                ASF_ERROR_CORRECTION_OBJECT_GUID,
+                                                ASF_CONTENT_DESCRIPTION_OBJECT_GUID,
+                                                ASF_EXTENDED_CONTENT_DESCRIPTION_OBJECT_GUID,
+                                                ASF_CONTENT_BRANDING_OBJECT_GUID,
+                                                ASF_STREAM_BITRATE_PROPERTIES_OBJECT_GUID,
+                                                ASF_CONTENT_ENCRYPTION_OBJECT_GUID,
+                                                ASF_EXTENDED_CONTENT_ENCRYPTION_OBJECT_GUID,
+                                                ASF_DIGITAL_SIGNATURE_OBJECT_GUID,
+                                                ASF_PADDING_OBJECT_GUID
+    };
+    return _guid_map[i];
 }
