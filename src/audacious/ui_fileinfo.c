@@ -905,20 +905,6 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
         gtk_widget_show(fileinfo_win);
 }
 
-static void fileinfo_show_for_path (const gchar * path)
-{
-    Tuple *tuple = input_get_song_tuple(path);
-
-    if (tuple == NULL) {
-         input_file_info_box(path);
-         return;
-    }
-
-    fileinfo_show_for_tuple(tuple, FALSE);
-
-    mowgli_object_unref(tuple);
-}
-
 static void fileinfo_show_editor_for_path (const gchar * path, InputPlugin * ip)
 {
     G_FREE_CLEAR(current_file);
@@ -941,27 +927,53 @@ void ui_fileinfo_show (gint playlist, gint entry)
 {
     const gchar * filename = playlist_entry_get_filename (playlist, entry);
     InputPlugin * decoder = playlist_entry_get_decoder (playlist, entry);
+    Tuple * tuple;
 
-    if (filename == NULL || decoder == NULL)
+    g_return_if_fail (filename != NULL);
+
+    if (decoder == NULL)
+    {
+        ProbeResult * probe = input_check_file (filename);
+
+        if (probe != NULL && probe->ip != NULL)
+            decoder = probe->ip;
+
+        if (probe != NULL && probe->tuple != NULL)
+            playlist_entry_set_tuple (playlist, entry, probe->tuple);
+
+        g_free (probe);
+    }
+
+    if (decoder == NULL)
+    {
+        gchar * message = g_strdup_printf ("No decoder found for %s.\n",
+         filename);
+
+        hook_call ("interface show error", message);
+        g_free (message);
         return;
+    }
 
     if (decoder->file_info_box != NULL)
-    {
-        gchar * temp = g_strdup (filename);
-
-        decoder->file_info_box (temp);
-        g_free (temp);
-    }
+        decoder->file_info_box (filename);
     else if (decoder->update_song_tuple != NULL && ! vfs_is_remote (filename))
         fileinfo_show_editor_for_path (filename, decoder);
+    else if ((tuple = (Tuple *) playlist_entry_get_tuple (playlist, entry)) !=
+     NULL)
+        fileinfo_show_for_tuple (tuple, FALSE);
+    else if (decoder->get_song_tuple != NULL && (tuple = decoder->get_song_tuple
+     (filename)) != NULL)
+    {
+        fileinfo_show_for_tuple (tuple, FALSE);
+        playlist_entry_set_tuple (playlist, entry, tuple);
+    }
     else
     {
-        const Tuple * tuple = playlist_entry_get_tuple (playlist, entry);
+        gchar * message = g_strdup_printf ("No info available for "
+         "%s.\n", filename);
 
-        if (tuple != NULL)
-            fileinfo_show_for_tuple ((Tuple *) tuple, FALSE);
-        else
-            fileinfo_show_for_path (filename);
+        hook_call ("interface show error", message);
+        g_free (message);
     }
 }
 
