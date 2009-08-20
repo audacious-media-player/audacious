@@ -281,7 +281,6 @@ static void handle_cmd_line_filenames(gboolean is_running)
         if (!options.enqueue)
         {
             drct_pl_clear();
-            drct_stop();
             start_playback = TRUE;
         }
 
