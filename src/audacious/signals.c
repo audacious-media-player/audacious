@@ -22,6 +22,7 @@
 #include <signal.h>
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
 #include <config.h>
 
@@ -39,7 +40,7 @@ static sigset_t signal_set;
 static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)
 {
-    gchar *argv[2];
+    const gchar * argv[2];
 
     g_print("Session quit requested. Saving state and shutting down.\n");
 
@@ -53,7 +54,7 @@ signal_session_quit_cb(EggSMClient *client, gpointer user_data)
 static void
 signal_session_save_cb(EggSMClient *client, GKeyFile *state_file, gpointer user_data)
 {
-    gchar *argv[2];
+    const gchar * argv[2];
 
     g_print("Session save requested. Saving state.\n");
 
