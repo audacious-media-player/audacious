@@ -100,10 +100,19 @@ static gboolean send_audio (gpointer user_data)
 
 static void start_stop (gpointer hook_data, gpointer user_data)
 {
-    if (hooks != NULL && playback_get_playing () && ! playback_get_paused ())
-    {
-        active = TRUE;
+    gboolean collect = (hooks != NULL && playback_get_playing ());
+    gboolean send = (collect && ! playback_get_paused ());
 
+    if (collect)
+        active = TRUE;
+    else
+    {
+        active = FALSE;
+        vis_runner_flush ();
+    }
+
+    if (send)
+    {
         if (! source)
             source = g_timeout_add (INTERVAL, send_audio, NULL);
     }
@@ -114,9 +123,6 @@ static void start_stop (gpointer hook_data, gpointer user_data)
             g_source_remove (source);
             source = 0;
         }
-
-        active = FALSE;
-        vis_runner_flush ();
     }
 }
 
