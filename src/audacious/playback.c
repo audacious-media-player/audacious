@@ -258,39 +258,20 @@ static void playback_finalize (InputPlayback * playback)
 
 void playback_stop (void)
 {
-    InputPlayback * playback;
+    g_return_if_fail (ip_data.current_input_playback != NULL);
 
-    playback = ip_data.current_input_playback;
-    g_return_if_fail (playback != NULL);
+    ip_data.stop = TRUE;
 
-    if (ip_data.playing)
-    {
-        /* FIX ME: update plugins to handle stopping while paused */
-        if (playback_get_paused() == TRUE)
-        {
-            if (get_written_time() > 0)
-              output_flush(get_written_time()); /* to avoid noise */
-            playback_pause();
-        }
+    playback_finalize (ip_data.current_input_playback);
 
-        ip_data.playing = FALSE;
-        ip_data.stop = TRUE; /* So that audio is really closed. */
+    ip_data.playing = FALSE;
+    ip_data.stop = FALSE;
 
-        /* TODO: i'm unsure if this will work. we might have to
-           signal the change in stop() (e.g. in the plugins
-           directly.) --nenolod */
-        playback->set_pb_change(playback);
+    #ifdef USE_DBUS
+    mpris_emit_status_change (mpris, MPRIS_STATUS_STOP);
+    #endif
 
-        playback_finalize (playback);
-
-        ip_data.stop = FALSE;
-
-#ifdef USE_DBUS
-        mpris_emit_status_change(mpris, MPRIS_STATUS_STOP);
-#endif
-
-        hook_call("playback stop", NULL);
-    }
+    hook_call ("playback stop", NULL);
 }
 
 static void
