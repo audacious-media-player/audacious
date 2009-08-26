@@ -440,6 +440,8 @@ static gboolean playback_play_file (gint playlist, gint entry)
     }
 
     ip_data.playing = TRUE;
+    ip_data.paused = FALSE;
+    ip_data.stop = FALSE;
 
     playback = playback_new();
 
