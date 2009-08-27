@@ -23,10 +23,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
@@ -216,13 +212,6 @@ void playback_pause (void)
         hook_call("playback pause", NULL);
     else
         hook_call("playback unpause", NULL);
-
-#ifdef USE_DBUS
-    if (paused)
-        mpris_emit_status_change(mpris, MPRIS_STATUS_PAUSE);
-    else
-        mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
-#endif
 }
 
 static void playback_finalize (InputPlayback * playback)
@@ -266,10 +255,6 @@ void playback_stop (void)
 
     ip_data.playing = FALSE;
     ip_data.stop = FALSE;
-
-#ifdef USE_DBUS
-    mpris_emit_status_change (mpris, MPRIS_STATUS_STOP);
-#endif
 
     hook_call ("playback stop", NULL);
 }
@@ -455,10 +440,6 @@ static gboolean playback_play_file (gint playlist, gint entry)
     playback_entry = entry;
 
     playback_run(playback);
-
-#ifdef USE_DBUS
-    mpris_emit_status_change(mpris, MPRIS_STATUS_PLAY);
-#endif
 
     hook_associate ("playlist update", update_cb, NULL);
     hook_call ("playback begin", NULL);

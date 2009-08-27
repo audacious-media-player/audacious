@@ -422,6 +422,30 @@ static void quit_cb(void *hook_data, void *user_data)
     aud_quit();
 }
 
+#ifdef USE_DBUS
+static void mpris_status_cb1(gpointer hook_data, gpointer user_data)
+{
+    mpris_emit_status_change(mpris, GPOINTER_TO_INT(user_data));
+}
+
+static void mpris_status_cb2(gpointer hook_data, gpointer user_data)
+{
+    mpris_emit_status_change(mpris, -1);
+}
+
+void init_playback_hooks(void)
+{
+    hook_associate("playback begin", mpris_status_cb1, GINT_TO_POINTER(MPRIS_STATUS_PLAY));
+    hook_associate("playback pause", mpris_status_cb1, GINT_TO_POINTER(MPRIS_STATUS_PAUSE));
+    hook_associate("playback unpause", mpris_status_cb1, GINT_TO_POINTER(MPRIS_STATUS_PLAY));
+    hook_associate("playback stop", mpris_status_cb1, GINT_TO_POINTER(MPRIS_STATUS_STOP));
+
+    hook_associate("playback shuffle", mpris_status_cb2, NULL);
+    hook_associate("playback repeat", mpris_status_cb2, NULL);
+    hook_associate("playback no playlist advance", mpris_status_cb2, NULL);
+}
+#endif
+
 gint main(gint argc, gchar ** argv)
 {
     Interface *i;
@@ -491,6 +515,7 @@ gint main(gint argc, gchar ** argv)
 #ifdef USE_DBUS
     g_message("Initializing D-Bus");
     init_dbus();
+    init_playback_hooks();
 #endif
 
     g_message("Initializing plugin subsystems...");

@@ -23,8 +23,11 @@
 #ifndef AUDACIOUS_PLAYBACK_H
 #define AUDACIOUS_PLAYBACK_H
 
-#include <glib.h>
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
 
+#include <glib.h>
 #include "plugin.h"
 
 gint playback_get_time(void);
