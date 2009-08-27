@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-07 19:40-0400\n"
+"POT-Creation-Date: 2009-08-27 11:36-0400\n"
 "PO-Revision-Date: 2007-01-31 16:16+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: Brezhoneg <LL@li.org>\n"
@@ -17,32 +17,31 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
-"A multimedia player for many platforms.\n"
-"\n"
-"Copyright (C) 2005-2009 Audacious Development Team\n"
+"An audio player for many platforms.\n"
+"Copyright (C) 2005-2009 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
 "Copyright (C) 2005-2007 Skipailh Audacious "
 
-#: src/audacious/credits.c:40
+#: src/audacious/credits.c:39
 #, fuzzy
 msgid "Core developers:"
 msgstr "Diorroerien 0.1.x :"
 
-#: src/audacious/credits.c:54
+#: src/audacious/credits.c:53
 msgid "Graphics:"
 msgstr "Grafikoù :"
 
-#: src/audacious/credits.c:59
+#: src/audacious/credits.c:58
 msgid "Default skin:"
 msgstr "Default skin:"
 
-#: src/audacious/credits.c:65
+#: src/audacious/credits.c:64
 msgid "Plugin development:"
 msgstr ""
 
-#: src/audacious/credits.c:86
+#: src/audacious/credits.c:85
 msgid "Patch authors:"
 msgstr ""
 
@@ -199,20 +198,20 @@ msgstr "Kembraeg :"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
 
-#: src/audacious/input.c:445
+#: src/audacious/input.c:439
 #, c-format
 msgid "audacious: %s"
 msgstr ""
 
-#: src/audacious/input.c:461
+#: src/audacious/input.c:455
 msgid "Filename:"
 msgstr "Anv ar restr :"
 
-#: src/audacious/input.c:480
+#: src/audacious/input.c:474
 msgid "No input plugin recognized this file"
 msgstr ""
 
-#: src/audacious/input.c:482
+#: src/audacious/input.c:476
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Lugent engas : %s"
@@ -228,113 +227,113 @@ msgstr ""
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/main.c:185
+#: src/audacious/main.c:163
 msgid "Skip backwards in playlist"
 msgstr ""
 
-#: src/audacious/main.c:186
+#: src/audacious/main.c:164
 msgid "Start playing current playlist"
 msgstr ""
 
-#: src/audacious/main.c:187
+#: src/audacious/main.c:165
 msgid "Pause current song"
 msgstr ""
 
-#: src/audacious/main.c:188
+#: src/audacious/main.c:166
 msgid "Stop current song"
 msgstr ""
 
-#: src/audacious/main.c:189
+#: src/audacious/main.c:167
 msgid "Pause if playing, play otherwise"
 msgstr ""
 
-#: src/audacious/main.c:190
+#: src/audacious/main.c:168
 msgid "Skip forward in playlist"
 msgstr ""
 
-#: src/audacious/main.c:191
+#: src/audacious/main.c:169
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Lammat d'ar restr"
 
-#: src/audacious/main.c:192
+#: src/audacious/main.c:170
 msgid "Don't clear the playlist"
 msgstr "Ne c'houllonderit ket ar roll tonioù"
 
-#: src/audacious/main.c:193
+#: src/audacious/main.c:171
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
 
-#: src/audacious/main.c:194
+#: src/audacious/main.c:172
 msgid "Display the main window"
 msgstr ""
 
-#: src/audacious/main.c:195
+#: src/audacious/main.c:173
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:196
+#: src/audacious/main.c:174
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:197
+#: src/audacious/main.c:175
 #, fuzzy
 msgid "Show version"
 msgstr "Diskouez ar soner"
 
-#: src/audacious/main.c:198
+#: src/audacious/main.c:176
 msgid "Interface to use (use -i list to view available interfaces)"
 msgstr ""
 
-#: src/audacious/main.c:200
+#: src/audacious/main.c:178
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:202
+#: src/audacious/main.c:180
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:220
+#: src/audacious/main.c:197
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:231
+#: src/audacious/main.c:208
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:461
+#: src/audacious/main.c:434
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:498
+#: src/audacious/main.c:472
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr ""
 "%s\n"
 "Ne m'eus ket digeriñ ar restr : %s"
 
-#: src/audacious/main.c:530
+#: src/audacious/main.c:505
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr ""
 
-#: src/audacious/playback.c:286
+#: src/audacious/playback.c:281
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
 
-#: src/audacious/playlist-new.c:168
+#: src/audacious/playlist-new.c:227
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Roll tonioù nevez"
 
-#: src/audacious/pluginenum.c:799
+#: src/audacious/pluginenum.c:780
 msgid "Module loading not supported! Plugins will not be loaded.\n"
 msgstr ""
 
@@ -1092,7 +1091,7 @@ msgid "Track Length"
 msgstr "Hirder ar roudenn :"
 
 #: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:143
-#: src/audacious/ui_preferences.c:505
+#: src/audacious/ui_preferences.c:499
 msgid "Filename"
 msgstr "Anv ar restr"
 
@@ -1253,108 +1252,108 @@ msgstr ""
 msgid "Universal"
 msgstr "Rumm"
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:176
 msgid "Best Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:177
 msgid "Medium Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:177
+#: src/audacious/ui_preferences.c:178
 msgid "Fastest Sinc Interpolation"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:178
+#: src/audacious/ui_preferences.c:179
 #, fuzzy
 msgid "ZOH Interpolation"
 msgstr "Implijit dilesadur"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:180
 #, fuzzy
 msgid "Linear Interpolation"
 msgstr "Implijit dilesadur"
 
-#: src/audacious/ui_preferences.c:194 src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
 msgid "Sampling Rate [Hz]:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:196 src/audacious/ui_preferences.c:199
 #, fuzzy
 msgid "Interpolation Engine:"
 msgstr "Implijit dilesadur"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:201
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:206
 msgid "<b>Format Detection</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:207
 msgid "Detect file formats by extension."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:208
 msgid ""
 "When checked, Audacious will detect file formats based by extension. Only "
 "files with extensions of supported formats will be loaded."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:209
 #, fuzzy
 msgid "<b>Bit Depth</b>"
 msgstr "<b>Anv ar restr</b>"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:210
 msgid "Output bit depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:211
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:214
 #, fuzzy
 msgid "<b>Sampling Rate Converter</b>"
 msgstr "<b>Anv ar restr</b>"
 
-#: src/audacious/ui_preferences.c:215 src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:216 src/audacious/ui_preferences.c:218
 msgid "Enable Sampling Rate Converter"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:221
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "<b>_Nodrezhoù</b>"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:222
 msgid "Use software volume control"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:224
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:225
 #, fuzzy
 msgid "<b>Advanced</b>"
 msgstr "Kefluniadur barek"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:226
 msgid "Bypass all of signal processing if possible"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:226
+#: src/audacious/ui_preferences.c:227
 msgid ""
 "Try to pass input plugin's output directly to output plugin, if the latter "
 "supports format produced by input plugin. If it's true, all signal "
@@ -1362,139 +1361,144 @@ msgid ""
 "Gain and software volume control)."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:229
+#: src/audacious/ui_preferences.c:230
 msgid "Use fast floating-point conversion (16-bit output only)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:235
 #, fuzzy
 msgid "Preamp:"
 msgstr "Hunvre"
 
-#: src/audacious/ui_preferences.c:234 src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:235 src/audacious/ui_preferences.c:236
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:236
 #, fuzzy
 msgid "Default gain:"
 msgstr "Default skin:"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:236
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:237
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:241
 #, fuzzy
 msgid "<b>Replay Gain configuration</b>"
 msgstr "<b>Kefluniadur ar proksi</b>"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:242
 msgid "Enable Replay Gain"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:243
 #, fuzzy
 msgid "<b>Replay Gain mode</b>"
 msgstr "<b>Anv ar restr</b>"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:244
+#, fuzzy
+msgid "Track gain/peak"
+msgstr "Anv ar roudenn"
+
+#: src/audacious/ui_preferences.c:245
 msgid "Album gain/peak"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:244 src/audacious/ui_preferences.c:1389
+#: src/audacious/ui_preferences.c:246 src/audacious/ui_preferences.c:1383
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_A bep seurt</b>"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:247
 msgid "Enable peak info clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:246
+#: src/audacious/ui_preferences.c:248
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:247
+#: src/audacious/ui_preferences.c:249
 msgid "Dynamically adjust scale factor to prevent clipping"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:248
+#: src/audacious/ui_preferences.c:250
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:253
+#: src/audacious/ui_preferences.c:255
 msgid "Proxy hostname:"
 msgstr "Anv ostiz ar proksi :"
 
-#: src/audacious/ui_preferences.c:254
+#: src/audacious/ui_preferences.c:256
 msgid "Proxy port:"
 msgstr "Porzh ar proksi :"
 
-#: src/audacious/ui_preferences.c:258
+#: src/audacious/ui_preferences.c:260
 msgid "Proxy username:"
 msgstr "Anv arveriad ar proksi :"
 
-#: src/audacious/ui_preferences.c:259
+#: src/audacious/ui_preferences.c:261
 msgid "Proxy password:"
 msgstr "Tremenger ar proksi :"
 
-#: src/audacious/ui_preferences.c:263
+#: src/audacious/ui_preferences.c:265
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Kefluniadur ar proksi</b>"
 
-#: src/audacious/ui_preferences.c:264
+#: src/audacious/ui_preferences.c:266
 msgid "Enable proxy usage"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:266
+#: src/audacious/ui_preferences.c:268
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Implijit dilesadur"
 
-#: src/audacious/ui_preferences.c:268
+#: src/audacious/ui_preferences.c:270
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:272
+#: src/audacious/ui_preferences.c:274
 msgid "<b>Playback</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:273
+#: src/audacious/ui_preferences.c:275
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:274
+#: src/audacious/ui_preferences.c:276
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:275
+#: src/audacious/ui_preferences.c:277
 msgid "Don't advance in the playlist"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:276
+#: src/audacious/ui_preferences.c:278
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:280
+#: src/audacious/ui_preferences.c:282
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:288
+#: src/audacious/ui_preferences.c:290
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:288
+#: src/audacious/ui_preferences.c:290
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1502,189 +1506,189 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:292
+#: src/audacious/ui_preferences.c:294
 msgid "<b>Metadata</b>"
 msgstr "<b>Meta-roadoù</b>"
 
-#: src/audacious/ui_preferences.c:475
+#: src/audacious/ui_preferences.c:469
 msgid "Enabled"
 msgstr "Bev"
 
-#: src/audacious/ui_preferences.c:491
+#: src/audacious/ui_preferences.c:485
 msgid "Description"
 msgstr "Deskrivadur"
 
-#: src/audacious/ui_preferences.c:1002
+#: src/audacious/ui_preferences.c:996
 msgid "Category"
 msgstr "Rumm"
 
-#: src/audacious/ui_preferences.c:1308
+#: src/audacious/ui_preferences.c:1302
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "Kefluniadur al lugent MPEG son"
 
-#: src/audacious/ui_preferences.c:1317
+#: src/audacious/ui_preferences.c:1311
 msgid "<b>Cover image retrieve</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1322
+#: src/audacious/ui_preferences.c:1316
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1333
 msgid "Exclude:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1346
+#: src/audacious/ui_preferences.c:1340
 msgid "Include:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1363
+#: src/audacious/ui_preferences.c:1357
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1373
+#: src/audacious/ui_preferences.c:1367
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1386
+#: src/audacious/ui_preferences.c:1380
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1398
+#: src/audacious/ui_preferences.c:1392
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1408
+#: src/audacious/ui_preferences.c:1402
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1922
+#: src/audacious/ui_preferences.c:1927
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>_Nodrezhoù</b>"
 
-#: src/audacious/ui_preferences.c:1931
+#: src/audacious/ui_preferences.c:1936
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1952
+#: src/audacious/ui_preferences.c:1957
 msgid "Show information about titlestring format"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1963
+#: src/audacious/ui_preferences.c:1968
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1964
+#: src/audacious/ui_preferences.c:1969
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1965
+#: src/audacious/ui_preferences.c:1970
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1966
+#: src/audacious/ui_preferences.c:1971
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1967
+#: src/audacious/ui_preferences.c:1972
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1968
+#: src/audacious/ui_preferences.c:1973
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1969
+#: src/audacious/ui_preferences.c:1974
 msgid "Custom"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1976
+#: src/audacious/ui_preferences.c:1981
 msgid "Custom string:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1983
+#: src/audacious/ui_preferences.c:1988
 msgid "Title format:"
 msgstr "Furmad an titl :"
 
-#: src/audacious/ui_preferences.c:1994
+#: src/audacious/ui_preferences.c:1999
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "Kefluniadur al lugent MPEG son"
 
-#: src/audacious/ui_preferences.c:2009
+#: src/audacious/ui_preferences.c:2014
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2011
+#: src/audacious/ui_preferences.c:2016
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2016
+#: src/audacious/ui_preferences.c:2021
 msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2096
+#: src/audacious/ui_preferences.c:2101
 msgid "<b>Audio System</b>"
 msgstr "<b>Reiziad klevet</b>"
 
-#: src/audacious/ui_preferences.c:2113
+#: src/audacious/ui_preferences.c:2118
 msgid "Buffer size:"
 msgstr "Ment ar skurzer :"
 
-#: src/audacious/ui_preferences.c:2131
+#: src/audacious/ui_preferences.c:2136
 msgid "Current output plugin:"
 msgstr "Lugent ezkas red :"
 
-#: src/audacious/ui_preferences.c:2160
+#: src/audacious/ui_preferences.c:2165
 msgid "Output Plugin Preferences"
 msgstr "Dibaboù al lugent ezkas"
 
-#: src/audacious/ui_preferences.c:2177
+#: src/audacious/ui_preferences.c:2182
 msgid "Output Plugin Information"
 msgstr "Titouroù war al lugent ezkas"
 
-#: src/audacious/ui_preferences.c:2283
+#: src/audacious/ui_preferences.c:2288
 msgid "_Decoder list:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2318
+#: src/audacious/ui_preferences.c:2323
 #, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"xx-large\"><b>Logodenn</b></span>"
 
-#: src/audacious/ui_preferences.c:2331
+#: src/audacious/ui_preferences.c:2336
 msgid "_General plugin list:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2361
+#: src/audacious/ui_preferences.c:2366
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2373
+#: src/audacious/ui_preferences.c:2378
 msgid "_Visualization plugin list:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2403
+#: src/audacious/ui_preferences.c:2408
 msgid "<b>Visualization</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2415
+#: src/audacious/ui_preferences.c:2420
 msgid "Effect plugins (for 16-bit output only):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2444
+#: src/audacious/ui_preferences.c:2449
 msgid "<b>Effects</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2646
+#: src/audacious/ui_preferences.c:2651
 msgid "Audacious Preferences"
 msgstr "Dibaboù Audacious"
 
@@ -1730,32 +1734,32 @@ msgstr ""
 msgid "Un_queue"
 msgstr "Di_lost"
 
-#: src/libaudgui/ui_jumptotrack.c:144 src/libaudgui/ui_jumptotrack.c:521
+#: src/libaudgui/ui_jumptotrack.c:144 src/libaudgui/ui_jumptotrack.c:515
 msgid "_Queue"
 msgstr "_Lost"
 
-#: src/libaudgui/ui_jumptotrack.c:407
+#: src/libaudgui/ui_jumptotrack.c:401
 msgid "Jump to Track"
 msgstr "Lammat d'ar roudenn"
 
-#: src/libaudgui/ui_jumptotrack.c:450
+#: src/libaudgui/ui_jumptotrack.c:444
 msgid "Filter: "
 msgstr "Sil : "
 
-#: src/libaudgui/ui_jumptotrack.c:451
+#: src/libaudgui/ui_jumptotrack.c:445
 msgid "_Filter:"
 msgstr "_Sil : "
 
-#: src/libaudgui/ui_jumptotrack.c:469
+#: src/libaudgui/ui_jumptotrack.c:463
 msgid "Remember"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:478
+#: src/libaudgui/ui_jumptotrack.c:472
 #, fuzzy
 msgid "Clea_r"
 msgstr "Goullonderiñ A-B"
 
-#: src/libaudgui/ui_jumptotrack.c:513
+#: src/libaudgui/ui_jumptotrack.c:507
 #, fuzzy
 msgid "Close on Jump"
 msgstr "/Serriñ"
@@ -1764,7 +1768,7 @@ msgstr "/Serriñ"
 msgid "Add/Open URL Dialog"
 msgstr "Prenestr Ouzhpennañ/Digeriñ URL"
 
-#: src/libaudgui/ui_urlopener.c:164
+#: src/libaudgui/ui_urlopener.c:176
 msgid "Enter location to play:"
 msgstr ""
 
@@ -1865,10 +1869,6 @@ msgstr ""
 
 #~ msgid "Mouse"
 #~ msgstr "Logodenn"
-
-#, fuzzy
-#~ msgid "Track gain/peak"
-#~ msgstr "Anv ar roudenn"
 
 #~ msgid "seconds"
 #~ msgstr "eilennoù"
