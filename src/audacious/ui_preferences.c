@@ -1933,7 +1933,7 @@ create_playlist_category(void)
     gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
     gtk_box_pack_start ((GtkBox *) vbox5, numbers_alignment, 0, 0, 3);
 
-    numbers = gtk_check_button_new_with_label (_ ("Show song numbers"));
+    numbers = gtk_check_button_new_with_label (_("Show song numbers"));
     gtk_toggle_button_set_active ((GtkToggleButton *) numbers,
      cfg.show_numbers_in_pl);
     g_signal_connect ((GObject *) numbers, "toggled", (GCallback)
@@ -2417,7 +2417,7 @@ create_plugin_category(void)
     gtk_box_pack_start (GTK_BOX (vbox25), alignment58, FALSE, FALSE, 4);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment58), 0, 6, 0, 0);
 
-    label64 = gtk_label_new (_ ("Effect plugins (for 16-bit output only):"));
+    label64 = gtk_label_new (_("Effect plugins (for 16-bit output only):"));
     gtk_container_add (GTK_CONTAINER (alignment58), label64);
     gtk_misc_set_alignment (GTK_MISC (label64), 0, 0.5);
 

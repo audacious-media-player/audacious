@@ -61,7 +61,7 @@ void get_current_song_filename (gint argc, gchar * * argv)
     filename = (uri != NULL) ? g_filename_from_uri (uri, NULL, NULL) : NULL;
 
     audtool_report ("%s", (filename != NULL) ? filename : (uri != NULL) ? uri :
-     _ ("No song playing."));
+     _("No song playing."));
 
     g_free (uri);
     g_free (filename);
