@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -314,23 +314,23 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "_Galimi šablonai:"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1701,6 +1701,14 @@ msgstr "BMP nustatymai"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepavyko sukurti aplanko (%s): %s"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2007-01-13 12:01+0200\n"
 "Last-Translator: Andrew Ivanov <aa.ivanov@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -308,24 +308,24 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr ""
 "audacious: Грешка при инициализиране на дисплея. Спиране на програмата.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "Налични _фиксирани настройки"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1701,6 +1701,14 @@ msgstr "Настройки на Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Не може да бъде създадена директория (%s): %s"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

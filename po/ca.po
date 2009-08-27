@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.5.1\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2009-04-11 16:00+0200\n"
 "Last-Translator: Ernest Adrogué <eadrogue@gmx.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -303,23 +303,23 @@ msgstr ""
 "%s: %s\n"
 "Proveu ‘%s --help’ per a més informació.\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr "Aquesta plataforma no suporta fils.\n"
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: No s'ha pogut obrir la pantalla, sortint.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "_Valors programats disponibles:"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1657,6 +1657,14 @@ msgstr "Preferències de l'Audacious"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "No s'ha pogut crear el directori (%s): %s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

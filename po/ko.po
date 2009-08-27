@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.4.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2008-02-14 22:00+0900\n"
 "Last-Translator: ChoSeongWoo <syn333@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -307,23 +307,23 @@ msgstr ""
 "%s: %s\n"
 "'%s --help'를 실행하면 더 많은 정보를 볼 수 있습니다.\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: 디스플레이를 열 수 없어 종료합니다.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "사용 가능한 프리셋(_P):"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1691,6 +1691,14 @@ msgstr "Audacious 환경 설정"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "(%s) 디렉터리를 만들 수 없음: %s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

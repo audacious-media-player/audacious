@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2008-04-05 21:45+0800\n"
 "Last-Translator: sylecn <sylecn@yahoo.com.cn>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -298,23 +298,23 @@ msgstr ""
 "%s: %s\n"
 "尝试 `%s --help' 来获得更多信息.\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr "对不起，您的平台不支持多线程。\n"
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s： 无法使用显示器设备，正在退出。\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "可用预设(_P)："
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1629,6 +1629,14 @@ msgstr "Audacious 首选项"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "新建目录 %s 失败，错误：%s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

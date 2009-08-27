@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2009-06-19 12:22+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -307,17 +307,17 @@ msgstr ""
 "%s: %s\n"
 "詳しくは `%s --help' を実行して下さい.\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 "申し訳ありません, このプラットフォームではスレッドがサポートされていません.\n"
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: ディスプレイを開けません. 終了します.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 msgid ""
 "Available interfaces:\n"
 "\n"
@@ -325,7 +325,7 @@ msgstr ""
 "利用可能なインタフェイス:\n"
 "\n"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1657,6 +1657,14 @@ msgstr "Audacious の設定"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

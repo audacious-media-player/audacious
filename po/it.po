@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2007-02-19 19:12+0100\n"
 "Last-Translator: Diego 'Flameeyes' Pettenò <flameeyes@gmail.com>\n"
 "Language-Team: Italian\n"
@@ -313,23 +313,23 @@ msgstr ""
 "%s: %s\n"
 "Per maggiori informazioni si veda `%s --help' .\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Impossibile aprire display, uscita in corso.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "_Preset Disponibili:"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1702,6 +1702,14 @@ msgstr "Impostazioni di Audacious"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Impossibile creare la directory (%s): %s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

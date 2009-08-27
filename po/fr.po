@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 2.1\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2009-07-07 06:22+0100\n"
 "Last-Translator: Stany Henry <StrassBoy@gmail.com>\n"
 "Language-Team: \n"
@@ -308,17 +308,17 @@ msgstr ""
 "%s: %s\n"
 "Essayez '%s --help' pour davantage d'informations.\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr "Désolé, mais votre plate-forme ne gère pas les processus multiples.\n"
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr ""
 "%s: Impossible d'accéder à la session d'affichage : processus interrompu.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 msgid ""
 "Available interfaces:\n"
 "\n"
@@ -326,7 +326,7 @@ msgstr ""
 "Interfaces disponibles :\n"
 "\n"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1712,6 +1712,14 @@ msgstr "Préférences d'Audacious"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Impossible de créer le répertoire suivant (%s): %s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"

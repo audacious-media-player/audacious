@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 11:36-0400\n"
+"POT-Creation-Date: 2009-08-27 12:02-0400\n"
 "PO-Revision-Date: 2008-04-15 04:17-0600\n"
 "Last-Translator: William Pitcock <nenolod+i18n@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
@@ -312,23 +312,23 @@ msgstr ""
 "%s: %s\n"
 "Ceisio `%s --help' am ychwaneg gwybodaeth.\n"
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:458
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:472
+#: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Methu agor dangosydd, yn gadael.\n"
 
-#: src/audacious/main.c:505
+#: src/audacious/main.c:530
 #, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
 msgstr "_Rhagosodiadau ar gael:"
 
-#: src/audacious/playback.c:281
+#: src/audacious/playback.c:266
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1662,6 +1662,14 @@ msgstr "Ffurfwedd Audacious"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Methu Creu Cyfrifiadur (%s): %s\n"
+
+#: src/audtool/handlers_playlist.c:241
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"
