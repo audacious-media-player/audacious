@@ -14,6 +14,8 @@ src/audacious/ui_headless.c
 src/audacious/ui_misc.c
 src/audacious/ui_preferences.c
 src/audacious/util.c
+src/audtool/handlers_playlist.c
+src/audtool/handlers_vitals.c
 src/libaudcore/audstrings.c
 src/libaudgui/ui_about.c
 src/libaudgui/ui_credits.c

@@ -469,7 +469,7 @@ audgui_jump_to_track(void)
                      toggle2);
 
     /* clear button */
-    rescan = gtk_button_new_with_mnemonic (_ ("Clea_r"));
+    rescan = gtk_button_new_with_mnemonic (_("Clea_r"));
     gtk_button_set_image ((GtkButton *) rescan, gtk_image_new_from_stock
      (GTK_STOCK_CLEAR, GTK_ICON_SIZE_BUTTON));
     gtk_box_pack_start(GTK_BOX(hbox), rescan, FALSE, FALSE, 0);
