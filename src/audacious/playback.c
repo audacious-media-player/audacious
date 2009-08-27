@@ -267,9 +267,9 @@ void playback_stop (void)
     ip_data.playing = FALSE;
     ip_data.stop = FALSE;
 
-    #ifdef USE_DBUS
+#ifdef USE_DBUS
     mpris_emit_status_change (mpris, MPRIS_STATUS_STOP);
-    #endif
+#endif
 
     hook_call ("playback stop", NULL);
 }

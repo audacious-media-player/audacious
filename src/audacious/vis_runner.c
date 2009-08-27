@@ -52,10 +52,10 @@ static gboolean send_audio (gpointer user_data)
          outputted + INTERVAL))
             break;
 
-        #if DEBUG
+#if DEBUG
         if (vis_node != NULL)
             printf ("DISCARD %d\n", vis_node->time);
-        #endif
+#endif
 
         g_free (vis_node);
         vis_node = next;
@@ -72,9 +72,9 @@ static gboolean send_audio (gpointer user_data)
         gint channel;
         GList * node;
 
-        #if DEBUG
+#if DEBUG
         printf ("SEND %d/%d\n", outputted, vis_node->time);
-        #endif
+#endif
 
         for (channel = 0; channel < vis_node->nch; channel ++)
             memset (vis_node->data[channel] + vis_node->length, 0, 2 * (512 -
@@ -89,10 +89,10 @@ static gboolean send_audio (gpointer user_data)
             item->func (vis_node, item->user_data);
         }
     }
-    #if DEBUG
+#if DEBUG
     else
         printf ("MISS %d\n", outputted);
-    #endif
+#endif
 
     g_free (vis_node);
     return 1;
@@ -146,9 +146,9 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
 {
     VisNode * vis_node;
     gint channel;
-    #if DEBUG
+#if DEBUG
     gint old_time = time;
-    #endif
+#endif
 
     g_mutex_lock (mutex);
 
@@ -169,9 +169,9 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
 
     if (vis_node == NULL)
     {
-        #if DEBUG
+#if DEBUG
         printf ("GET %d/%d\n", old_time, time);
-        #endif
+#endif
 
         vis_node = g_malloc (sizeof (VisNode));
         vis_node->time = time;
@@ -186,10 +186,10 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
         else
             vis_tail = g_list_append (vis_tail, vis_node)->next;
     }
-    #if DEBUG
+#if DEBUG
     else
         printf ("COMBINE %d/%d\n", old_time, time);
-    #endif
+#endif
 
     if (samples > channels * (512 - vis_node->length))
         samples = channels * (512 - vis_node->length);
