@@ -692,6 +692,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_tuple_new                   tuple_new
 #define aud_tuple_new_from_filename     tuple_new_from_filename
 #define aud_tuple_associate_string      tuple_associate_string
+#define aud_tuple_associate_string_rel  tuple_associate_string_rel
 #define aud_tuple_associate_int         tuple_associate_int
 #define aud_tuple_disassociate          tuple_disassociate
 #define aud_tuple_disassociate_now      tuple_disassociate_now
