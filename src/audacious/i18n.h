@@ -21,14 +21,7 @@
 #define AUDACIOUS_I18N_H
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <libintl.h>
-
-#define _(String) dgettext (PACKAGE, String)
-#define Q_(String) g_strip_context ((String), dgettext (PACKAGE, String))
-#ifdef gettext_noop
-#define N_(String) gettext_noop (String)
-#else
-#define N_(String) (String)
-#endif
 
 #endif /* AUDACIOUS_I18N_H */
