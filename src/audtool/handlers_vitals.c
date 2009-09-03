@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
@@ -51,18 +52,19 @@ void get_current_song(gint argc, gchar **argv)
 	audtool_report("%s", song);
 }
 
-void get_current_song_filename(gint argc, gchar **argv)
+void get_current_song_filename (gint argc, gchar * * argv)
 {
-	gint playpos = audacious_remote_get_playlist_pos(dbus_proxy);
-	gchar *file = audacious_remote_get_playlist_file(dbus_proxy, playpos);
+    gint playpos = audacious_remote_get_playlist_pos (dbus_proxy);
+    gchar * uri, * filename;
 
-	if (!file)
-	{
-		audtool_report("No song playing.");
-		return;
-	}
-        
-	audtool_report("%s", file);
+    uri = audacious_remote_get_playlist_file (dbus_proxy, playpos);
+    filename = (uri != NULL) ? g_filename_from_uri (uri, NULL, NULL) : NULL;
+
+    audtool_report ("%s", (filename != NULL) ? filename : (uri != NULL) ? uri :
+     _("No song playing."));
+
+    g_free (uri);
+    g_free (filename);
 }
 
 void get_current_song_output_length(gint argc, gchar **argv)
@@ -174,7 +176,7 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 	{
 		return;
 	}
-	
+
 	audtool_report("%s", data);
 
 	g_free(data);

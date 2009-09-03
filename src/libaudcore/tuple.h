@@ -110,6 +110,7 @@ Tuple *tuple_new(void);
 Tuple *tuple_copy(const Tuple *);
 void tuple_set_filename(Tuple *tuple, const gchar *filename);
 Tuple *tuple_new_from_filename(const gchar *filename);
+gboolean tuple_associate_string_rel(Tuple *tuple, const gint nfield, const gchar *field, gchar *string);
 gboolean tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string);
 gboolean tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer);
 void tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field);

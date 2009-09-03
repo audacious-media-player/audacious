@@ -152,16 +152,16 @@ void
 drct_get_volume ( gint *vl, gint *vr )
 {
     input_get_volume(vl, vr);
+    *vl = CLAMP(*vl, 0, 100);
+    *vr = CLAMP(*vr, 0, 100);
     return;
 }
 
 void
 drct_set_volume ( gint vl, gint vr )
 {
-    if (vl > 100)
-        vl = 100;
-    if (vr > 100)
-        vr = 100;
+    vl = CLAMP(vl, 0, 100);
+    vr = CLAMP(vr, 0, 100);
     input_set_volume(vl, vr);
     return;
 }

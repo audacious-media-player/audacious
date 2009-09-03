@@ -416,6 +416,41 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
 }
 
 /**
+ * Associates given string to a field in specified #Tuple. The caller
+ * gives up ownership of the string. If field already exists, old
+ * value is freed and replaced.
+ * 
+ * Desired field can be specified either by key name or if it is
+ * one of basic fields, by #TupleBasicType index.
+ *
+ * @param[in] tuple #Tuple structure pointer.
+ * @param[in] nfield #TupleBasicType index or -1 if key name is to be used instead.
+ * @param[in] field String acting as key name or NULL if nfield is used.
+ * @param[in] string String to be associated to given field in Tuple.
+ * @return TRUE if operation was succesful, FALSE if not.
+ */
+gboolean
+tuple_associate_string_rel(Tuple *tuple, const gint nfield, const gchar *field, gchar *string)
+{
+    TupleValue *value;
+
+    TUPLE_LOCK_WRITE();
+    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
+        return FALSE;
+
+    if (string == NULL)
+        value->value.string = NULL;
+    else
+    {
+        value->value.string = stringpool_get(string);
+        g_free(string);
+    }
+
+    TUPLE_UNLOCK_WRITE();
+    return TRUE;
+}
+
+/**
  * Associates given integer to a field in specified #Tuple.
  * If field already exists, old value is freed and replaced.
  *

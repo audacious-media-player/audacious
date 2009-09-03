@@ -676,15 +676,19 @@ static void append_int_value(GValueArray * ar, gint tmp)
     g_value_array_append(ar, &value);
 }
 
-gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GError * *error)
+static gint get_playback_status(void)
 {
     struct StatusRequest request;
-
-    *status = g_value_array_new(4);
-
     get_status(&request);
 
-    append_int_value(*status, !request.playing ? MPRIS_STATUS_STOP : request.paused ? MPRIS_STATUS_PAUSE : MPRIS_STATUS_PLAY);
+    return (!request.playing ? MPRIS_STATUS_STOP : request.paused ? MPRIS_STATUS_PAUSE : MPRIS_STATUS_PLAY);
+}
+
+gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GError * *error)
+{
+    *status = g_value_array_new(4);
+
+    append_int_value(*status, (gint) get_playback_status());
     append_int_value(*status, (gint) cfg.shuffle);
     append_int_value(*status, (gint) cfg.no_playlist_advance);
     append_int_value(*status, (gint) cfg.repeat);
@@ -789,6 +793,7 @@ gboolean mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)
 {
     GValueArray *ar = g_value_array_new(4);
 
+    if (status < 0) status = get_playback_status();
     append_int_value(ar, (gint) status);
     append_int_value(ar, (gint) cfg.shuffle);
     append_int_value(ar, (gint) cfg.no_playlist_advance);

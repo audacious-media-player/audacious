@@ -93,7 +93,7 @@ gint drct_pq_get_queue_position( gint pos );
 #define audacious_drct_jump_to_time audacious_drct_seek
 #define audacious_drct_get_main_volume audacious_drct_get_volume_main
 #define audacious_drct_set_main_volume audacious_drct_set_volume_main
-#define audacious_drct_get__balance audacious_drct_get_volume_balance
+#define audacious_drct_get_balance audacious_drct_get_volume_balance
 #define audacious_drct_set_balance audacious_drct_set_volume_balance
 #define audacious_drct_playlist_next audacious_drct_pl_next
 #define audacious_drct_playlist_prev audacious_drct_pl_prev

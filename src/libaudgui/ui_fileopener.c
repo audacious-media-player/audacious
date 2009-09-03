@@ -116,6 +116,11 @@ filebrowser_on_keypress(GtkWidget * browser,
         gtk_widget_destroy(browser);
         return TRUE;
     }
+    else if (event->keyval == GDK_Return)
+    {
+        action_button_cb (browser, data);
+        return TRUE;
+    }
 
     return FALSE;
 }
@@ -195,8 +200,6 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
     g_object_set_data(storage, "toggle-button", toggle);
     g_object_set_data(storage, "play-button", GINT_TO_POINTER(play_button));
 
-    g_signal_connect(chooser, "file-activated",
-                     G_CALLBACK(action_button_cb), storage);
     g_signal_connect(action_button, "clicked",
                      G_CALLBACK(action_button_cb), storage);
     g_signal_connect(close_button, "clicked",
@@ -206,7 +209,7 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 
     g_signal_connect(window, "key_press_event",
                      G_CALLBACK(filebrowser_on_keypress),
-                     NULL);
+                     storage);
 
     gtk_widget_show_all(window);
 }

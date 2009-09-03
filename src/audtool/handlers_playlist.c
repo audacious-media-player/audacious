@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
@@ -65,7 +66,7 @@ gint check_args_playlist_pos(gint argc, gchar **argv)
 		audtool_whine("invalid playlist position %d ('%s')\n", playpos, argv[1]);
 		exit(2);
 	}
-	
+
 	return playpos;
 }
 
@@ -228,11 +229,19 @@ void playlist_position(gint argc, gchar **argv)
 	audtool_report("%d", i + 1);
 }
 
-void playlist_song_filename(gint argc, gchar **argv)
+void playlist_song_filename (gint argc, gchar * * argv)
 {
-    gint playpos = check_args_playlist_pos(argc, argv);
+    gint playpos = check_args_playlist_pos (argc, argv);
+    gchar * uri, * filename;
 
-	audtool_report("%s", audacious_remote_get_playlist_file(dbus_proxy, playpos - 1));
+    uri = audacious_remote_get_playlist_file (dbus_proxy, playpos - 1);
+    filename = (uri != NULL) ? g_filename_from_uri (uri, NULL, NULL) : NULL;
+
+    audtool_report ("%s", (filename != NULL) ? filename : (uri != NULL) ? uri :
+     _("Position not found."));
+
+    g_free (uri);
+    g_free (filename);
 }
 
 void playlist_jump(gint argc, gchar **argv)
@@ -306,7 +315,7 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 	{
 		return;
 	}
-	
+
 	audtool_report("%s", data);
 
 	g_free(data);
