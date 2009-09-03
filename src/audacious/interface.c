@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <glib/gi18n.h>
 
 #include "interface.h"
 #include "playback.h"
@@ -177,6 +178,41 @@ interface_show_about_window(gboolean show)
             interface_cbs.show_about_window();
         else
             g_message("Interface didn't register show_about_window function");
+    }
+}
+
+void
+interface_run_gtk_plugin(GtkWidget *parent, const gchar *name)
+{
+    if (interface_cbs.run_gtk_plugin != NULL)
+        interface_cbs.run_gtk_plugin(parent, name);
+    else {
+        GtkWidget *win;
+
+        g_return_if_fail(parent != NULL);
+        g_return_if_fail(name != NULL);
+
+        win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_title(GTK_WINDOW(win), _(name));
+        gtk_container_add(GTK_CONTAINER(win), parent);
+        gtk_widget_show_all(win);
+
+        g_object_set_data(G_OBJECT(parent), "parentwin", win);
+    }
+}
+
+void
+interface_stop_gtk_plugin(GtkWidget *parent)
+{
+    if (interface_cbs.stop_gtk_plugin != NULL)
+        interface_cbs.stop_gtk_plugin(parent);
+    else {
+        GtkWidget *win;
+
+        g_return_if_fail(parent != NULL);
+
+        win = g_object_get_data(G_OBJECT(parent), "parentwin");
+        gtk_widget_destroy(win);
     }
 }
 

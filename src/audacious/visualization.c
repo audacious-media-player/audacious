@@ -114,16 +114,23 @@ enable_vis_plugin(gint i, gboolean enable)
         return;
     vp = node->data;
 
-    if (enable && ! vp->enabled)
+    if (enable && !vp->enabled)
     {
-        if (! vp_data.enabled_list)
-            vis_runner_add_hook (send_audio, 0);
+        if (vp_data.enabled_list == NULL)
+            vis_runner_add_hook(send_audio, 0);
 
         vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
         if (vp->init)
         {
             plugin_set_current((Plugin *)vp);
             vp->init();
+
+            if (vp->get_widget != NULL)
+            {
+                GtkWidget *w = vp->get_widget();
+
+                interface_run_gtk_plugin(w, vp->description);
+            }
         }
         if (playback_get_playing() && vp->playback_start)
         {
@@ -138,14 +145,20 @@ enable_vis_plugin(gint i, gboolean enable)
             plugin_set_current((Plugin *)vp);
             vp->playback_stop();
         }
+        if (vp->get_widget != NULL)
+        {
+            GtkWidget *w = vp->get_widget();
+
+            interface_stop_gtk_plugin(w);
+        }
         if (vp->cleanup)
         {
             plugin_set_current((Plugin *)vp);
             vp->cleanup();
         }
 
-        if (! vp_data.enabled_list)
-            vis_runner_remove_hook (send_audio);
+        if (vp_data.enabled_list == NULL)
+            vis_runner_remove_hook(send_audio);
     }
 
     vp->enabled = enable;
