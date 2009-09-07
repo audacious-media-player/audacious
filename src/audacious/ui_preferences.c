@@ -362,7 +362,8 @@ plugin_toggle(GtkCellRendererToggle * cell,
         gboolean fixed;
         gtk_tree_model_get(model, &iter,
                            PLUGIN_VIEW_COL_ACTIVE, &fixed,
-                           PLUGIN_VIEW_COL_ID, &pluginnr, -1);
+                           PLUGIN_VIEW_COL_ID, &pluginnr,
+                           PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
         /* do something with the value */
         fixed ^= 1;
@@ -373,7 +374,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
                 list = get_general_list();
                 break;
             case PLUGIN_VIEW_TYPE_VIS:
-                enable_vis_plugin(pluginnr, fixed);
+                vis_enable_plugin(VIS_PLUGIN(plugin), fixed);
                 list = get_vis_list();
                 break;
             case PLUGIN_VIEW_TYPE_EFFECT:
