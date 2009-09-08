@@ -84,6 +84,7 @@ static const gchar *credit_text[] = {
 
     N_("Patch authors:"),
     "Chris Arepantis",
+    "Eric Barch",
     "Carlo Bramini",
     "Massimo Cavalleri",
     "Stefano D'Angelo",
