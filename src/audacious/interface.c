@@ -216,6 +216,24 @@ interface_stop_gtk_plugin(GtkWidget *parent)
     }
 }
 
+void
+interface_toggle_shuffle(void)
+{
+    if (interface_cbs.toggle_shuffle != NULL)
+        interface_cbs.toggle_shuffle();
+    else
+        g_message("Interface didn't register toggle_shuffle function");
+}
+
+void
+interface_toggle_repeat(void)
+{
+    if (interface_cbs.toggle_repeat != NULL)
+        interface_cbs.toggle_repeat();
+    else
+        g_message("Interface didn't register toggle_repeat function");
+}
+
 typedef enum {
     HOOK_PREFSWIN_SHOW,
     HOOK_FILEBROWSER_SHOW,
@@ -225,6 +243,8 @@ typedef enum {
     HOOK_JUMPTOTRACK_SHOW,
     HOOK_JUMPTOTRACK_HIDE,
     HOOK_ABOUTWIN_SHOW,
+    HOOK_TOGGLE_SHUFFLE,
+    HOOK_TOGGLE_REPEAT,
 } InterfaceHookID;
 
 void
@@ -255,6 +275,12 @@ interface_hook_handler(gpointer hook_data, gpointer user_data)
         case HOOK_ABOUTWIN_SHOW:
             interface_show_about_window(GPOINTER_TO_INT(hook_data));
             break;
+	case HOOK_TOGGLE_SHUFFLE:
+            interface_toggle_shuffle();
+            break;
+	case HOOK_TOGGLE_REPEAT:
+            interface_toggle_repeat();
+            break;
         default:
             break;
     }
@@ -274,6 +300,8 @@ static InterfaceHooks hooks[] = {
     {"interface show jump to track", HOOK_JUMPTOTRACK_SHOW},
     {"interface hide jump to track", HOOK_JUMPTOTRACK_HIDE},
     {"aboutwin show", HOOK_ABOUTWIN_SHOW},
+    {"toggle shuffle", HOOK_TOGGLE_SHUFFLE},
+    {"toggle repeat", HOOK_TOGGLE_REPEAT},
 };
 
 void

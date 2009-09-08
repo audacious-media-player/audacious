@@ -50,6 +50,8 @@ typedef struct {
     void (*hide_jump_to_track)(void);
     void (*show_about_window)(void);
     void (*hide_about_window)(void);
+    void (*toggle_shuffle)(void);
+    void (*toggle_repeat)(void);
     GtkWidget *(*run_gtk_plugin)(GtkWidget *parent, const gchar *name);
     GtkWidget *(*stop_gtk_plugin)(GtkWidget *parent);
 } InterfaceCbs;
@@ -82,6 +84,8 @@ void interface_show_error_message(const gchar * markup);
 void interface_show_jump_to_track(void);
 void interface_run_gtk_plugin(GtkWidget *parent, const gchar *name);
 void interface_stop_gtk_plugin(GtkWidget *parent);
+void interface_toggle_shuffle(void);
+void interface_toggle_repeat(void);
 
 void register_interface_hooks(void);
 
