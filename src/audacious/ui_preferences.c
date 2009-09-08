@@ -337,7 +337,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
     GtkTreeIter iter;
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     Plugin *plugin = NULL;
-    gint pluginnr;
     gint plugin_type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(data), "plugin_type"));
 
     /* get toggled iter */
@@ -347,7 +346,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
         /*GList *diplist, *tmplist; */
 
         gtk_tree_model_get(model, &iter,
-                           PLUGIN_VIEW_COL_ID, &pluginnr,
                            PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
         /* do something with the value */
@@ -362,7 +360,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
         gboolean fixed;
         gtk_tree_model_get(model, &iter,
                            PLUGIN_VIEW_COL_ACTIVE, &fixed,
-                           PLUGIN_VIEW_COL_ID, &pluginnr,
                            PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
         /* do something with the value */
@@ -378,7 +375,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
                 list = get_vis_list();
                 break;
             case PLUGIN_VIEW_TYPE_EFFECT:
-                enable_effect_plugin(pluginnr, fixed);
+                effect_enable_plugin(EFFECT_PLUGIN(plugin), fixed);
                 list = get_effect_list();
                 break;
             default:
@@ -388,11 +385,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
         /* set new value */
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                            PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
-
-        list = g_list_nth(list, pluginnr);
-        if (list && list->data) {
-            plugin = PLUGIN(list->data);
-        }
     }
 
     if (plugin && plugin->settings && plugin->settings->type == PREFERENCES_PAGE) {
