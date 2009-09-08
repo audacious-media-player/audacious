@@ -370,7 +370,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
 
         switch (plugin_type) {
             case PLUGIN_VIEW_TYPE_GENERAL:
-                enable_general_plugin(pluginnr, fixed);
+                general_enable_plugin(GENERAL_PLUGIN(plugin), fixed);
                 list = get_general_list();
                 break;
             case PLUGIN_VIEW_TYPE_VIS:
