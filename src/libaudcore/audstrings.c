@@ -280,10 +280,10 @@ str_assert_utf8(const gchar * str)
 		nsymbols = backtrace(addrbuf, nsymmax);
 		symbols = backtrace_symbols(addrbuf, nsymbols);
 
-		g_warning("String '%s' was not UTF-8! Backtrace (%d):", str, nsymbols);
+		fprintf(stderr, "String '%s' was not UTF-8! Backtrace (%d):\n", str, nsymbols);
 
 		for (i = 0; i < nsymbols; i++)
-			g_warning("#%d > %s", i, symbols[i]);
+			fprintf(stderr, "  #%d: %s\n", i, symbols[i]);
 
 		free(symbols);
 #else
