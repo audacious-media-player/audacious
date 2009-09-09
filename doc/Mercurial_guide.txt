@@ -41,7 +41,8 @@ Rollback and what it does
 _one_ action performed in the local repository clone. Basically it is
 like rewinding the commit clock back by one commit, erasing that one
 commit/action from history completely. This is why it should NOT be
-used on repositories other people might have access to.
+used on repositories other people might have access to. (Your local
+clone is usually ok, of course.)
 
 Rollback function is sometimes useful, if you make some mistake that
 you immediately realize after committing, like a typo in commit message
@@ -126,16 +127,16 @@ it works similarly in most version control systems like CVS, Subversion,
 GIT, etc.
 
 0) When a conflict occurs, Mercurial will inform you about it with a message
-   resembling something like this (when using 'fetch' extension, if you are
-   using plain 'hg pull', you will need to do 'hg merge' to get to this:
+   resembling something like (when using 'fetch' extension; if you are
+   using plain 'hg pull', you will need to do 'hg merge' too):
 
    |There are unresolved merges, you can redo the full merge using:
    |  hg update -C 5589
    |  hg merge 5587
 
-   One important thing this message actually tells us is that (along the
-   fact that automatic merging failed), is that you can return to _current_
-   state by issuing 'hg update -C 5589'.
+   One important thing this message actually tells us (beside the fact that
+   automatic merging failed), is that you can return to _current_ state by
+   issuing 'hg update -C 5589'.
 
    This may be helpful, if you fumble while editing the files you are trying
    to merge manually. Additionally, you don't actually need to usually
