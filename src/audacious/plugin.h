@@ -1213,6 +1213,8 @@ struct _VisPlugin {
      * If output is mono, only freq_data[0] is filled.
      */
     void (*render_freq) (gint16 freq_data[2][256]);
+
+    GtkWidget *(*get_widget) (void);
 };
 
 /* undefine the macro -- struct Plugin should be used instead. */

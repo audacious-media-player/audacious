@@ -40,7 +40,7 @@ struct _EffectPluginData {
 
 GList *get_effect_list(void);
 GList *get_effect_enabled_list(void);
-void enable_effect_plugin(gint i, gboolean enable);
+void effect_enable_plugin(EffectPlugin *ep, gboolean enable);
 gchar *effect_stringify_enabled_list(void);
 void effect_enable_from_stringified_list(const gchar * list);
 gint effect_do_mod_samples(gpointer * data, gint length, AFormat fmt, 

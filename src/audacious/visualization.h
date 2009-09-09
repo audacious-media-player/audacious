@@ -39,8 +39,8 @@ struct _VisPluginData {
 
 GList *get_vis_list(void);
 GList *get_vis_enabled_list(void);
-void enable_vis_plugin(gint i, gboolean enable);
-void vis_disable_plugin(VisPlugin * vp);
+void vis_enable_plugin(VisPlugin *vp, gboolean enable);
+void vis_disable_plugin(VisPlugin *vp);
 void vis_playback_start(void);
 void vis_playback_stop(void);
 gchar *vis_stringify_enabled_list(void);
