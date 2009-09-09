@@ -14,6 +14,24 @@ Tricks of the trade
    about creating new heads in the remote repository if you haven't
    merged the remote changes to your own before the push.
 
+ - Learn to utilize local clones of repositories for temporary
+   testing, etc. Cloning a local repository is fast (under Linux
+   the files are initially hardlinked.)
+
+   For example, if you wish to quickly test something, but have
+   just been editing files in your working repository, just clone it
+   to another, 'hg clone orig tmp'. Tmp will be a copy of the
+   repository state, so any non-committed changes from 'orig' will
+   not be there.
+
+ - Did some silly edits in your repo, that you don't want to commit?
+   'hg revert file.c' will get rid of the changes in 'file.c' or
+   just nuke all the non-committed changes via 'hg revert -a'.
+
+   Oh, those reverts will actually be backed up to files ending to
+   '.orig' (e.g. 'file.c.orig'), so you can usually recover from
+   accidental reverts too.
+
  - Strive to write good commit messages. ;)
 
 
