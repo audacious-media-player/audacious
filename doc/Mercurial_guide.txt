@@ -75,11 +75,11 @@ Backing out a changeset
 
     However, if there were no conflicts, you can commit:
 
-    $ hg ci
+    $ hg ci
 
     And then push to upstream:
 
-    $ hg push
+    $ hg push
 
     If there are complaints about multiple heads, you need to 'pull'
     or preferably 'fetch', as there have been changes in the upstream
@@ -111,7 +111,7 @@ Backing out a changeset
     came to regret this. The solution is to backout the backed out
     changeset.
 
-    $ hg backout --merge <backout changeset id>
+    $ hg backout --merge <backout changeset id>
     $ hg fetch && hg push
 
     As usual, normal rules for merge conflicts apply.
