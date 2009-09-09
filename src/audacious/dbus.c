@@ -1180,7 +1180,8 @@ gboolean audacious_rc_repeat(RemoteObject * obj, gboolean * is_repeating, GError
 
 gboolean audacious_rc_toggle_repeat(RemoteObject * obj, GError ** error)
 {
-    g_message("implement me");
+    cfg.repeat = !cfg.repeat;
+    event_queue("toggle repeat", NULL);
     return TRUE;
 }
 
@@ -1192,7 +1193,9 @@ gboolean audacious_rc_shuffle(RemoteObject * obj, gboolean * is_shuffling, GErro
 
 gboolean audacious_rc_toggle_shuffle(RemoteObject * obj, GError ** error)
 {
-    g_message("implement me");
+    cfg.shuffle = !cfg.shuffle;
+    playlist_set_shuffle(cfg.shuffle);
+    event_queue("toggle shuffle", NULL);
     return TRUE;
 }
 

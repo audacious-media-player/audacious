@@ -82,15 +82,8 @@ get_effect_enabled_list(void)
 }
 
 void
-enable_effect_plugin(int i, gboolean enable)
+effect_enable_plugin(EffectPlugin *ep, gboolean enable)
 {
-    GList *node = g_list_nth(ep_data.effect_list, i);
-    EffectPlugin *ep;
-
-    if (!node || !(node->data))
-        return;
-    ep = node->data;
-
     if (enable && !ep->enabled) {
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
         if (ep->init)

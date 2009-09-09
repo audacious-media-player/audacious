@@ -43,24 +43,10 @@ get_general_enabled_list(void)
     return gp_data.enabled_list;
 }
 
-static GeneralPlugin *
-get_general_plugin(gint i)
-{
-    GList *node = g_list_nth(get_general_list(), i);
-
-    if (!node)
-        return NULL;
-
-    return GENERAL_PLUGIN(node->data);
-}
-
 void
-enable_general_plugin(gint i, gboolean enable)
+general_enable_plugin(GeneralPlugin *plugin, gboolean enable)
 {
-    GeneralPlugin *plugin = get_general_plugin(i);
-
-    if (!plugin)
-        return;
+    g_return_if_fail(plugin != NULL);
 
     if (enable && !plugin->enabled) {
         gp_data.enabled_list = g_list_append(gp_data.enabled_list, plugin);
