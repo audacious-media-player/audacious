@@ -186,3 +186,25 @@ diff -r c55af7b7242c src/libaudgui/ui_fileopener.c
    have pushed before you, and you may need to 'fetch' again before pushing.
    Maybe not so amusing, but it is just the way DVCS's work.
 
+
+Update and revert
+=================
+These two Mercurial commands may sometimes seem bit confusing, after all
+you can use 'hg update' to change the repository to any given
+revision/changeset. This happens by reparenting, so for example after
+'updating' to old revision, the history after that revision is to be
+considered "future" from our viewpoint.
+
+Indeed, revert does a bit similar thing, it goes back to the _parent_ of
+the current working repository, effectively reverting the changes non-
+committed changes in your working directories/repo.
+
+In Subversion terms, 'hg update' can be thought as 'svn co' and actually
+Mercurial considers checkout/co as aliases to 'update'. Revert then
+is canonical to Subversion's revert.
+
+But unlike in Subversion, in Mercurial you can actually go back to a given
+revision (via 'hg update [-C] <rev>'), make changes, commit them and then
+_merge_ those changes from the viewpoint of the old revision vs. later ones.
+
+Yes, it's a kind of magic.
