@@ -460,7 +460,7 @@ static void scan_stop (void)
 /* scan_mutex must be locked! */
 static void * scanner (void * unused)
 {
-    while (1)
+    for (;;)
     {
         g_cond_wait (scan_cond, scan_mutex);
 

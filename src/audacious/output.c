@@ -582,7 +582,7 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
         }
     }
 
-    while (1)
+    for (;;)
     {
         gint ready = playback->output->buffer_free () / FMT_SIZEOF (op_state.fmt);
 
