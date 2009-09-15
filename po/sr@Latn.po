@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
-"POT-Creation-Date: 2009-08-27 12:02-0400\n"
+"POT-Creation-Date: 2009-09-16 02:06+0300\n"
 "PO-Revision-Date: 2008-07-19 11:56+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -51,148 +51,148 @@ msgstr "Razvoj dodataka:"
 msgid "Patch authors:"
 msgstr "Autori zakrpa:"
 
-#: src/audacious/credits.c:119
+#: src/audacious/credits.c:120
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x stvaraoci:"
 
-#: src/audacious/credits.c:141
+#: src/audacious/credits.c:142
 msgid "BMP Developers:"
 msgstr "BMP stvaraoci:"
 
-#: src/audacious/credits.c:173
+#: src/audacious/credits.c:174
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:176
+#: src/audacious/credits.c:177
 msgid "Brazilian Portuguese:"
 msgstr "Brazilsko Portugalski:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Breton:"
 msgstr "Bretonski:"
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Bulgarian:"
 msgstr "Bugarski:"
 
-#: src/audacious/credits.c:186
+#: src/audacious/credits.c:187
 msgid "Catalan:"
 msgstr "Katalonski:"
 
-#: src/audacious/credits.c:189
+#: src/audacious/credits.c:190
 msgid "Croatian:"
 msgstr "Hrvatski:"
 
-#: src/audacious/credits.c:192
+#: src/audacious/credits.c:193
 msgid "Czech:"
 msgstr "Češki:"
 
-#: src/audacious/credits.c:195
+#: src/audacious/credits.c:196
 msgid "Dutch:"
 msgstr "Holandski:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:200
 msgid "Estonian:"
 msgstr "Estonski:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:203
 msgid "Finnish:"
 msgstr "Finski:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:207
 msgid "French:"
 msgstr "Francuski:"
 
-#: src/audacious/credits.c:211
+#: src/audacious/credits.c:212
 msgid "German:"
 msgstr "Nemački:"
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:217
 msgid "Georgian:"
 msgstr "Armenski:"
 
-#: src/audacious/credits.c:219
+#: src/audacious/credits.c:220
 msgid "Greek:"
 msgstr "Grčki:"
 
-#: src/audacious/credits.c:224
+#: src/audacious/credits.c:225
 msgid "Hindi:"
 msgstr "Indijski:"
 
-#: src/audacious/credits.c:227
+#: src/audacious/credits.c:228
 msgid "Hungarian:"
 msgstr "Mađarski:"
 
-#: src/audacious/credits.c:230
+#: src/audacious/credits.c:231
 msgid "Italian:"
 msgstr "Italijanski:"
 
-#: src/audacious/credits.c:234
+#: src/audacious/credits.c:235
 msgid "Japanese:"
 msgstr "Japanski:"
 
-#: src/audacious/credits.c:237
+#: src/audacious/credits.c:238
 msgid "Korean:"
 msgstr "Koreanski:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:241
 msgid "Lithuanian:"
 msgstr "Litvanski:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:244
 msgid "Macedonian:"
 msgstr "Makedonski:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:247
 msgid "Polish:"
 msgstr "Poljski:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:250
 msgid "Romanian:"
 msgstr "Rumunski:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:254
 msgid "Russian:"
 msgstr "Ruski:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:257
 msgid "Serbian (Latin):"
 msgstr "Srpski (Latinica):"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:260
 msgid "Serbian (Cyrillic):"
 msgstr "Srpski (Ćirilica):"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:263
 msgid "Simplified Chinese:"
 msgstr "Uprošten Kineski:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:266
 msgid "Slovak:"
 msgstr "Slovenački:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:269
 msgid "Spanish:"
 msgstr "Španski:"
 
-#: src/audacious/credits.c:271
+#: src/audacious/credits.c:272
 msgid "Swedish:"
 msgstr "Švedski:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:275
 msgid "Traditional Chinese:"
 msgstr "Tradicionalni Kineski:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:280
 msgid "Turkish:"
 msgstr "Turski:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:284
 msgid "Ukrainian:"
 msgstr "Ukrainski:"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:287
 msgid "Welsh:"
 msgstr "Velšanski:"
 
@@ -1041,7 +1041,7 @@ msgid "Track Length"
 msgstr "Dužina numere"
 
 #: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:143
-#: src/audacious/ui_preferences.c:499
+#: src/audacious/ui_preferences.c:492
 msgid "Filename"
 msgstr "Ime datoteke"
 
@@ -1359,7 +1359,7 @@ msgstr "Pojačanje/vrhunac numere"
 msgid "Album gain/peak"
 msgstr "Pojačanje/vrhunac albuma"
 
-#: src/audacious/ui_preferences.c:246 src/audacious/ui_preferences.c:1383
+#: src/audacious/ui_preferences.c:246 src/audacious/ui_preferences.c:1342
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Ostalo</b>"
 
@@ -1463,27 +1463,27 @@ msgstr ""
 msgid "<b>Metadata</b>"
 msgstr "<b>Meta-podaci</b>"
 
-#: src/audacious/ui_preferences.c:469
+#: src/audacious/ui_preferences.c:462
 msgid "Enabled"
 msgstr "Uključen"
 
-#: src/audacious/ui_preferences.c:485
+#: src/audacious/ui_preferences.c:478
 msgid "Description"
 msgstr "Opis"
 
-#: src/audacious/ui_preferences.c:996
+#: src/audacious/ui_preferences.c:955
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:1302
+#: src/audacious/ui_preferences.c:1261
 msgid "Popup Information Settings"
 msgstr "Podešavanja iskačućih informacija"
 
-#: src/audacious/ui_preferences.c:1311
+#: src/audacious/ui_preferences.c:1270
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Učitavanje naslovne slike</b>"
 
-#: src/audacious/ui_preferences.c:1316
+#: src/audacious/ui_preferences.c:1275
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1492,91 +1492,91 @@ msgstr ""
 "Dok traži naslovne slike albuma, Audacious traži određene reči u imenu "
 "datoteke. Možete navesti te reči dole u listi, razdvojene zapetama."
 
-#: src/audacious/ui_preferences.c:1333
+#: src/audacious/ui_preferences.c:1292
 msgid "Exclude:"
 msgstr "Isključi:"
 
-#: src/audacious/ui_preferences.c:1340
+#: src/audacious/ui_preferences.c:1299
 msgid "Include:"
 msgstr "Uključi:"
 
-#: src/audacious/ui_preferences.c:1357
+#: src/audacious/ui_preferences.c:1316
 msgid "Recursively search for cover"
 msgstr "Rekurzivno traži naslovnu sliku"
 
-#: src/audacious/ui_preferences.c:1367
+#: src/audacious/ui_preferences.c:1326
 msgid "Search depth: "
 msgstr "Dubina pretrage: "
 
-#: src/audacious/ui_preferences.c:1380
+#: src/audacious/ui_preferences.c:1339
 msgid "Use per-file cover"
 msgstr "Koristi jednu naslovnu sliku po datoteci"
 
-#: src/audacious/ui_preferences.c:1392
+#: src/audacious/ui_preferences.c:1351
 msgid "Show Progress bar for the current track"
 msgstr "Prikaži indikator napredovanja za tekuću numeru"
 
-#: src/audacious/ui_preferences.c:1402
+#: src/audacious/ui_preferences.c:1361
 msgid "Delay until filepopup comes up: "
 msgstr "Zakašnjenje pojavljivanja iskačućeg proz. datoteke: "
 
-#: src/audacious/ui_preferences.c:1927
+#: src/audacious/ui_preferences.c:1886
 msgid "<b>Song Display</b>"
 msgstr "<b>Prikaz pesme</b>"
 
-#: src/audacious/ui_preferences.c:1936
+#: src/audacious/ui_preferences.c:1895
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1957
+#: src/audacious/ui_preferences.c:1916
 msgid "Show information about titlestring format"
 msgstr "Prikaži informacije o formatu znakovnog niza naslova"
 
-#: src/audacious/ui_preferences.c:1968
+#: src/audacious/ui_preferences.c:1927
 msgid "TITLE"
 msgstr "NASLOV"
 
-#: src/audacious/ui_preferences.c:1969
+#: src/audacious/ui_preferences.c:1928
 msgid "ARTIST - TITLE"
 msgstr "IZVOĐAČ - NASLOV"
 
-#: src/audacious/ui_preferences.c:1970
+#: src/audacious/ui_preferences.c:1929
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "IZVOĐAČ - ALBUM - NASLOV"
 
-#: src/audacious/ui_preferences.c:1971
+#: src/audacious/ui_preferences.c:1930
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "IZVOĐAČ - ALBUM - BROJ. NASLOV"
 
-#: src/audacious/ui_preferences.c:1972
+#: src/audacious/ui_preferences.c:1931
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "IZVOĐAČ [ ALBUM ] - BROJ. NASLOV"
 
-#: src/audacious/ui_preferences.c:1973
+#: src/audacious/ui_preferences.c:1932
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - NASLOV"
 
-#: src/audacious/ui_preferences.c:1974
+#: src/audacious/ui_preferences.c:1933
 msgid "Custom"
 msgstr "Sopstveni"
 
-#: src/audacious/ui_preferences.c:1981
+#: src/audacious/ui_preferences.c:1940
 msgid "Custom string:"
 msgstr "Sopstveni znakovni niz:"
 
-#: src/audacious/ui_preferences.c:1988
+#: src/audacious/ui_preferences.c:1947
 msgid "Title format:"
 msgstr "Format naslova:"
 
-#: src/audacious/ui_preferences.c:1999
+#: src/audacious/ui_preferences.c:1958
 msgid "<b>Popup Information</b>"
 msgstr "<b>Iskačuće informacije</b>"
 
-#: src/audacious/ui_preferences.c:2014
+#: src/audacious/ui_preferences.c:1973
 msgid "Show popup information for playlist entries"
 msgstr "Prikaži iskačuće informacije za stavke u listi numera"
 
-#: src/audacious/ui_preferences.c:2016
+#: src/audacious/ui_preferences.c:1975
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -1586,63 +1586,63 @@ msgstr ""
 "listi numera. Prozor prikazuje ime pesme, ime albuma, žanr, godinu "
 "izdavanja, broj numere, dužinu numere i sliku."
 
-#: src/audacious/ui_preferences.c:2021
+#: src/audacious/ui_preferences.c:1980
 msgid "Edit settings for popup information"
 msgstr "Uredi podešavanja za iskačuće informacije"
 
-#: src/audacious/ui_preferences.c:2101
+#: src/audacious/ui_preferences.c:2060
 msgid "<b>Audio System</b>"
 msgstr "<b>Audio sistem</b>"
 
-#: src/audacious/ui_preferences.c:2118
+#: src/audacious/ui_preferences.c:2077
 msgid "Buffer size:"
 msgstr "Veličina bafera:"
 
-#: src/audacious/ui_preferences.c:2136
+#: src/audacious/ui_preferences.c:2095
 msgid "Current output plugin:"
 msgstr "Tekući izlazni dodatak:"
 
-#: src/audacious/ui_preferences.c:2165
+#: src/audacious/ui_preferences.c:2124
 msgid "Output Plugin Preferences"
 msgstr "Postavke izlaznog dodatka"
 
-#: src/audacious/ui_preferences.c:2182
+#: src/audacious/ui_preferences.c:2141
 msgid "Output Plugin Information"
 msgstr "Informacije o izlaznom dodatku"
 
-#: src/audacious/ui_preferences.c:2288
+#: src/audacious/ui_preferences.c:2246
 msgid "_Decoder list:"
 msgstr "Lista _dekodera:"
 
-#: src/audacious/ui_preferences.c:2323
+#: src/audacious/ui_preferences.c:2276
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Dekoderi</b></span>"
 
-#: src/audacious/ui_preferences.c:2336
+#: src/audacious/ui_preferences.c:2289
 msgid "_General plugin list:"
 msgstr "_Opšta lista dodataka:"
 
-#: src/audacious/ui_preferences.c:2366
+#: src/audacious/ui_preferences.c:2319
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Opšte</b></span>"
 
-#: src/audacious/ui_preferences.c:2378
+#: src/audacious/ui_preferences.c:2331
 msgid "_Visualization plugin list:"
 msgstr "Lista _vizuelizacionih dodataka:"
 
-#: src/audacious/ui_preferences.c:2408
+#: src/audacious/ui_preferences.c:2361
 msgid "<b>Visualization</b>"
 msgstr "<b>Vizuelizacija</b>"
 
-#: src/audacious/ui_preferences.c:2420
+#: src/audacious/ui_preferences.c:2373
 msgid "Effect plugins (for 16-bit output only):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2449
+#: src/audacious/ui_preferences.c:2402
 msgid "<b>Effects</b>"
 msgstr "<b>Efekti</b>"
 
-#: src/audacious/ui_preferences.c:2651
+#: src/audacious/ui_preferences.c:2597
 msgid "Audacious Preferences"
 msgstr "Audacious podešavanja"
 
