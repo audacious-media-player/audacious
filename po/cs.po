@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious 7dec224d79af\n"
+"Project-Id-Version: audacious b855e3a57caf\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
 "POT-Creation-Date: 2009-09-16 02:06+0300\n"
-"PO-Revision-Date: 2009-03-29 20:16+0200\n"
+"PO-Revision-Date: 2009-09-16 12:00+0200\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,21 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/audacious/credits.c:34
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "An audio player for many platforms.\n"
 "Copyright (C) 2005-2009 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Přehrávač multimédií s měnitelným vzhledem a pro různé platformy\n"
-"\n"
-"Copyright © 2005–2008 vývojový tým Audacious\n"
+"Přehrávač zvuku pro mnoho platforem.\n"
+"Copyright © 2005–2009 vývojový tým Audacious"
 
 #: src/audacious/credits.c:39
-#, fuzzy
 msgid "Core developers:"
-msgstr "Vývojáři:"
+msgstr "Vývojáři jádra:"
 
 #: src/audacious/credits.c:53
 msgid "Graphics:"
@@ -50,9 +48,8 @@ msgid "Patch authors:"
 msgstr "Autoři záplat:"
 
 #: src/audacious/credits.c:120
-#, fuzzy
 msgid "1.x developers:"
-msgstr "Vývojáři v. 0.1.x:"
+msgstr "Vývojáři řady 1.x:"
 
 #: src/audacious/credits.c:142
 msgid "BMP Developers:"
@@ -60,7 +57,7 @@ msgstr "Vývojáři Audacious:"
 
 #: src/audacious/credits.c:174
 msgid "Basque:"
-msgstr ""
+msgstr "Baskičtina:"
 
 #: src/audacious/credits.c:177
 msgid "Brazilian Portuguese:"
@@ -280,7 +277,7 @@ msgstr "Zobrazit verzi"
 
 #: src/audacious/main.c:176
 msgid "Interface to use (use -i list to view available interfaces)"
-msgstr ""
+msgstr "Použít dané rozhraní (možná rozhraní lze vypsat pomocí „-i list“)"
 
 #: src/audacious/main.c:178
 msgid "Used in macpacking"
@@ -313,11 +310,12 @@ msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Nepodařilo se otevřít displej, končím.\n"
 
 #: src/audacious/main.c:530
-#, fuzzy
 msgid ""
 "Available interfaces:\n"
 "\n"
-msgstr "Dostupné _předvolby:"
+msgstr ""
+"Dostupná rozhraní:\n"
+"\n"
 
 #: src/audacious/playback.c:266
 msgid ""
@@ -328,9 +326,8 @@ msgstr ""
 "Musíte vybrat výstupní modul."
 
 #: src/audacious/playlist-new.c:227
-#, fuzzy
 msgid "Untitled Playlist"
-msgstr "Nový seznam skladeb"
+msgstr "Nepojmenovaný seznam skladeb"
 
 #: src/audacious/pluginenum.c:780
 msgid "Module loading not supported! Plugins will not be loaded.\n"
@@ -1045,28 +1042,29 @@ msgid "Filename"
 msgstr "Jméno souboru"
 
 #: src/audacious/ui_headless.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Available Plugin Preferences:\n"
-msgstr "Dostupné _předvolby:"
+msgstr "Nastavení dostupných modulů:\n"
 
 #: src/audacious/ui_headless.c:150
 msgid "Headless Interface"
-msgstr ""
+msgstr "Bezhlavé rozhraní"
 
 #: src/audacious/ui_misc.c:48
-#, fuzzy
 msgid "Audacious - Unsupported Version Warning"
-msgstr "Audacious – varování před rozbitým jádrem GTK"
+msgstr "Audacious – varování před nepodporovanou verzí"
 
 #: src/audacious/ui_misc.c:55
 msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-msgstr ""
+msgstr "<big><b>Audacious2 ještě není hotový!</b></big>"
 
 #: src/audacious/ui_misc.c:61
 msgid ""
 "<b>Please don't file bugs at this point unless they represent major problems."
 "</b>"
 msgstr ""
+"<b>Prosíme, abyste v ŧento okamžik nehlásili chyby, pokud nepředstavují "
+"závažný problém.</b>"
 
 #: src/audacious/ui_misc.c:64
 msgid ""
@@ -1082,10 +1080,21 @@ msgid ""
 "distracting at this point,\n"
 "and to please refrain from doing so. Thanks in advance!"
 msgstr ""
+"Toto je <i>alfa</i> sestavení Audacious2. Stále je poměrně nedokončené "
+"a neutříděné.\n"
+"Očekáváme, že většina drobných chyb nahlášených v této době bude vyřešena, "
+"jakmile se více\n"
+"věcí stabilizuje. Avšak, je-li zde zásadní chyba, jako je pád při přehrávání "
+"určitého souboru,\n"
+"potřebujeme o ní vědět.\n"
+"\n"
+"Žádáme vás, abyste chápali, že zaobírání se triviálními chybami je v tento "
+"okamžik rozptylující,\n"
+"a abyste se zdrželi takového chování. Děkujeme za pochopení!"
 
 #: src/audacious/ui_misc.c:74
 msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-msgstr ""
+msgstr "<b>Blogování o takových chybách také nepomůže.</b>"
 
 #: src/audacious/ui_misc.c:77
 msgid ""
@@ -1099,6 +1108,13 @@ msgid ""
 "would likely\n"
 "not know about otherwise."
 msgstr ""
+"My jsme vývojáři a blogy nečteme pravidelně. Existuje-li závažná chyba,\n"
+"žádáme vás, abyste si naši pozornost získali prostřednictvím systému na\n"
+"sledování chyb na adrese http://jira.atheme.org/ nebo prostřednictvím fór,\n"
+"které se nacházejí na našem webu.\n"
+"\n"
+"Toto nám pomůže zjistit více informací o vašich problémech, které bychom\n"
+"pravděpodobně jinak nezjistili."
 
 #: src/audacious/ui_preferences.c:127
 msgid "Audio"
@@ -1112,11 +1128,11 @@ msgstr "Zesílené přehrávání"
 msgid "Connectivity"
 msgstr "Připojení"
 
-# FIXME: This require context. "Přehrávání" In preferences, "Přhrát" in
-# manager.
+# FIXME: This requires context. "Přehrávání" In preferences, "Přehrát" in
+# manager. Still?
 #: src/audacious/ui_preferences.c:130
 msgid "Playback"
-msgstr "Přehrát"
+msgstr "Přehrávání"
 
 #: src/audacious/ui_preferences.c:131
 msgid "Playlist"
@@ -1313,7 +1329,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:230
 msgid "Use fast floating-point conversion (16-bit output only)"
-msgstr ""
+msgstr "Použít rychlý převod v plovoucí řádové čárce (pouze u 16b výstupu)"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Preamp:"
@@ -1530,7 +1546,7 @@ msgstr "<b>Zobrazení skladby</b>"
 
 #: src/audacious/ui_preferences.c:1895
 msgid "Show song numbers"
-msgstr ""
+msgstr "Zobrazovat čísla skladeb"
 
 #: src/audacious/ui_preferences.c:1916
 msgid "Show information about titlestring format"
@@ -1640,7 +1656,7 @@ msgstr "<b>Vizualizační</b>"
 
 #: src/audacious/ui_preferences.c:2373
 msgid "Effect plugins (for 16-bit output only):"
-msgstr ""
+msgstr "Moduly efektů (pouze pro 16b výstup):"
 
 #: src/audacious/ui_preferences.c:2402
 msgid "<b>Effects</b>"
@@ -1657,11 +1673,11 @@ msgstr "Nepodařilo se vytvořit adresář (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:241
 msgid "Position not found."
-msgstr ""
+msgstr "Pozice nenalezena."
 
 #: src/audtool/handlers_vitals.c:64
 msgid "No song playing."
-msgstr ""
+msgstr "Žádná skladba nehraje."
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"
@@ -1720,9 +1736,8 @@ msgid "Remember"
 msgstr "Zapamatovat si"
 
 #: src/libaudgui/ui_jumptotrack.c:472
-#, fuzzy
 msgid "Clea_r"
-msgstr "Vyprázdnit A-B"
+msgstr "Vyp_rázdnit"
 
 #: src/libaudgui/ui_jumptotrack.c:507
 msgid "Close on Jump"
@@ -1789,13 +1804,12 @@ msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:225
 msgid "Session Management Options"
-msgstr "Volby správy relace"
+msgstr "Přepínače správy relace"
 
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Zobrazovat volby správy relace"
 
-#, fuzzy
 #~ msgid ""
 #~ "\n"
 #~ "Audacious has caught signal 11 (SIGSEGV).\n"
@@ -1822,7 +1836,7 @@ msgstr "Zobrazovat volby správy relace"
 #~ "Vaše současná konfigurace byla uložena a neměla by být poškozena.\n"
 #~ "\n"
 #~ "I vy můžete pomoci zlepšit Audacious tím, že vyplníte chybové hlášení na "
-#~ "http://bugzilla.atheme.org/\n"
+#~ "http://jira.atheme.org/\n"
 #~ "Prosím, zahrňte celý text této hlášky a popis toho, co jste dělali, když\n"
 #~ "došlo k pádu. Pomůžete tím k rychlejšímu odbavení svého chybového "
 #~ "hlášení:\n"
@@ -1832,18 +1846,17 @@ msgstr "Zobrazovat volby správy relace"
 #~ "Stacktrace was unavailable. You might want to reproduce this problem "
 #~ "while running Audacious under GDB to get a proper backtrace.\n"
 #~ msgstr ""
-#~ "Mapa zásobníku nebyla k dispozi. Možná byste mohli chtít zreprodukovat "
+#~ "Mapa zásobníku nebyla k dispozici. Možná byste mohli chtít zreprodukovat "
 #~ "tento problém v Audicous běžícím pod GDB, aby jste tak získali správnou "
 #~ "posloupnost volání.\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "\n"
 #~ "Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
 #~ "Audacious Plugins product.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby mohou být hlášeny na http://bugzilla.atheme.org/ pod výrobkem\n"
+#~ "Chyby mohou být hlášeny na http://jira.atheme.org/ pod výrobkem\n"
 #~ "„Audacious“ nebo „Audacious Plugins“.\n"
 
 #~ msgid ""
@@ -1853,7 +1866,6 @@ msgstr "Zobrazovat volby správy relace"
 #~ "Vaše implementace signálů je rozbitá.\n"
 #~ "Očekávejte nepoužitelné hlášení o pádu.\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "<big><b>Audacious %s</b></big>\n"
 #~ "\n"
@@ -1861,7 +1873,7 @@ msgstr "Zobrazovat volby správy relace"
 #~ msgstr ""
 #~ "<big><b>Audacious %s</b></big>\n"
 #~ "\n"
-#~ "Copyright © 2005–2008 vývojový tým Audacious"
+#~ "Copyright © 2005–2009 vývojový tým Audacious"
 
 #~ msgid "Playlist Manager"
 #~ msgstr "Správce seznamů skladeb"
@@ -2197,13 +2209,11 @@ msgstr "Zobrazovat volby správy relace"
 #~ msgid "Sorts the list by title."
 #~ msgstr "Seřadí seznam podle názvu."
 
-#, fuzzy
 #~ msgid "By Album"
-#~ msgstr "Album"
+#~ msgstr "Podle alba"
 
-#, fuzzy
 #~ msgid "Sorts the list by album."
-#~ msgstr "Seřadí seznam podle názvu."
+#~ msgstr "Seřadí seznam podle alba."
 
 #~ msgid "By Artist"
 #~ msgstr "Podle umělce"
@@ -2245,9 +2255,8 @@ msgstr "Zobrazovat volby správy relace"
 #~ msgid "Help"
 #~ msgstr "Nápověda"
 
-#, fuzzy
 #~ msgid "Components"
-#~ msgstr "Komentář"
+#~ msgstr "Součásti"
 
 #~ msgid "View Track Details"
 #~ msgstr "Zobrazit informace o skladbě"
@@ -3738,7 +3747,7 @@ msgstr "Zobrazovat volby správy relace"
 #~ msgstr "řečtiny (MacGreek)"
 
 #~ msgid "Gujarati (MacGujarati)"
-#~ msgstr "gujarantštiny (MacGujarati)"
+#~ msgstr "gudžáratštiny (MacGujarati)"
 
 #~ msgid "Gurmukhi (MacGurmukhi)"
 #~ msgstr "gurmukhi (MacGurmukhi)"
