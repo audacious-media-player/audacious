@@ -248,11 +248,26 @@ static GValue *tuple_value_to_gvalue(const Tuple * tuple, const gchar * key)
     return NULL;
 }
 
-static void tuple_insert_to_hash(GHashTable * md, const Tuple * tuple, const gchar * key)
+/**
+ * Retrieves value named tuple_key and inserts it inside hash table.
+ *
+ * @param[in,out] md GHashTable to insert into
+ * @param[in] tuple Tuple to read data from
+ * @param[in] tuple_key Tuple field key
+ * @param[in] key key used for inserting into hash table.
+ */
+static void tuple_insert_to_hash_full(GHashTable * md, const Tuple * tuple,
+                                      const gchar * tuple_key, const gchar *key)
 {
-    GValue *value = tuple_value_to_gvalue(tuple, key);
+    GValue *value = tuple_value_to_gvalue(tuple, tuple_key);
     if (value != NULL)
         g_hash_table_insert(md, g_strdup(key), value);
+}
+
+static void tuple_insert_to_hash(GHashTable * md, const Tuple * tuple,
+                                 const gchar *key)
+{
+    tuple_insert_to_hash_full(md, tuple, key, key);
 }
 
 static void remove_metadata_value(gpointer value)
@@ -276,18 +291,17 @@ static GHashTable *make_mpris_metadata(const gchar * filename, const Tuple * tup
 
     if (tuple != NULL)
     {
-        tuple_insert_to_hash(md, tuple, "length");
+        tuple_insert_to_hash_full(md, tuple, "length", "mtime");
         tuple_insert_to_hash(md, tuple, "title");
         tuple_insert_to_hash(md, tuple, "artist");
         tuple_insert_to_hash(md, tuple, "album");
+        tuple_insert_to_hash(md, tuple, "comment");
         tuple_insert_to_hash(md, tuple, "genre");
+        tuple_insert_to_hash(md, tuple, "year");
         tuple_insert_to_hash(md, tuple, "codec");
         tuple_insert_to_hash(md, tuple, "quality");
-
-        value = tuple_value_to_gvalue(tuple, "track-number");
-
-        if (value != NULL)
-            g_hash_table_insert(md, "tracknumber", value);
+        tuple_insert_to_hash_full(md, tuple, "track-number", "tracknumber");
+        tuple_insert_to_hash_full(md, tuple, "bitrate", "audio-bitrate");
     }
 
     return md;
