@@ -438,6 +438,11 @@ static void get_field(struct FieldRequest *request)
 
 static gboolean play_cb(void *unused)
 {
+    /* Only the active playlist is visible through DBUS interface, so make sure
+     * to play from it, not another playlist. --jlindgren */
+    if (playlist_get_playing () != playlist_get_active ())
+        playlist_set_playing (playlist_get_active ());
+
     drct_play();
     return FALSE;
 }
