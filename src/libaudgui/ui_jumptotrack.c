@@ -542,9 +542,8 @@ audgui_jump_to_track(void)
 
     close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
-    g_signal_connect_swapped(close, "clicked",
-                             G_CALLBACK(gtk_widget_hide),
-                             jump_to_track_win); // just hide --yaz
+    g_signal_connect (close, "clicked", (GCallback) audgui_jump_to_track_hide,
+     NULL);
     GTK_WIDGET_SET_FLAGS(close, GTK_CAN_DEFAULT);
 
     g_timeout_add(100, (GSourceFunc)ui_jump_to_track_fill, treeview);
