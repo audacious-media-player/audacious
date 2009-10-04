@@ -232,14 +232,11 @@ static void playback_finalize (InputPlayback * playback)
     g_mutex_unlock (playback->pb_ready_mutex);
 
     if (playback->playing)
-    {
-        g_return_if_fail (playback->plugin->stop != NULL);
         playback->plugin->stop (playback);
 
-        /* some plugins do this themselves */
-        if (playback->thread != NULL)
-            g_thread_join (playback->thread);
-    }
+    /* some plugins do this themselves */
+    if (playback->thread != NULL)
+        g_thread_join (playback->thread);
 
     playback_free (playback);
     ip_data.current_input_playback = NULL;
