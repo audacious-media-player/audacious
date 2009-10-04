@@ -351,6 +351,12 @@ static void watchdog (void * hook_data, void * user_data)
      g_object_get_data (storage, "treeview"));
 }
 
+static gboolean delete_cb (GtkWidget * widget, GdkEvent * event, void * unused)
+{
+    audgui_jump_to_track_hide ();
+    return TRUE;
+}
+
 void
 audgui_jump_to_track(void)
 {
@@ -401,8 +407,8 @@ audgui_jump_to_track(void)
     gtk_window_set_title(GTK_WINDOW(jump_to_track_win), _("Jump to Track"));
 
     gtk_window_set_position(GTK_WINDOW(jump_to_track_win), GTK_WIN_POS_CENTER);
-    g_signal_connect(jump_to_track_win, "destroy",
-                     G_CALLBACK(gtk_widget_destroyed), &jump_to_track_win);
+    g_signal_connect (jump_to_track_win, "delete-event", (GCallback) delete_cb,
+     NULL);
 
     gtk_container_set_border_width(GTK_CONTAINER(jump_to_track_win), 10);
     gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
