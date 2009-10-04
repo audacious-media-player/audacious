@@ -311,8 +311,14 @@ void drct_pl_add (GList * list)
     gint playlist = playlist_get_active ();
 
     for (; list != NULL; list = list->next)
-    if (!playlist_insert_playlist(playlist, -1, list->data))
-        index_append (filenames, g_strdup (list->data));
+    {
+        if (filename_is_playlist (list->data))
+            playlist_insert_playlist (playlist, -1, list->data);
+        else if (vfs_file_test (list->data, G_FILE_TEST_IS_DIR))
+            playlist_add_folder (list->data);
+        else
+            index_append (filenames, g_strdup (list->data));
+    }
 
     playlist_entry_insert_batch (playlist, -1, filenames, NULL);
 }
@@ -350,12 +356,18 @@ gint drct_pl_get_length (void)
 
 void drct_pl_ins_url_string (gchar * string, gint pos)
 {
-    playlist_entry_insert (playlist_get_active (), pos, g_strdup (string), NULL);
+    if (filename_is_playlist (string))
+        playlist_insert_playlist (playlist_get_active (), pos, string);
+    else if (vfs_file_test (string, G_FILE_TEST_IS_DIR))
+        playlist_add_folder (string);
+    else
+        playlist_entry_insert (playlist_get_active (), pos, g_strdup (string),
+         NULL);
 }
 
 void drct_pl_add_url_string (gchar * string)
 {
-    playlist_entry_insert (playlist_get_active (), -1, g_strdup (string), NULL);
+    drct_pl_ins_url_string (string, -1);
 }
 
 void drct_pl_enqueue_to_temp (gchar * string)
@@ -365,7 +377,7 @@ void drct_pl_enqueue_to_temp (gchar * string)
     playlist_insert (playlist);
     playlist_set_active (playlist);
     playlist_set_playing (playlist);
-    playlist_entry_insert (playlist, 0, g_strdup (string), NULL);
+    drct_pl_add_url_string (string);
 }
 
 /* playqueue */
