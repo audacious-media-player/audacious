@@ -411,7 +411,11 @@ static gboolean playback_play_file (gint playlist, gint entry)
         if (pr != NULL)
         {
             decoder = pr->ip;
-            g_free(pr);
+
+            if (pr->tuple != NULL)
+                mowgli_object_unref (pr->tuple);
+
+            g_free (pr);
         }
     }
 

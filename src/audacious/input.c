@@ -118,26 +118,6 @@ input_get_vis_type()
     return INPUT_VIS_OFF;
 }
 
-static time_t
-input_get_mtime(const gchar *filename)
-{
-    struct stat buf;
-    gint rv;
-    gchar *realfn = NULL;
-
-    /* stat() does not accept file:// --yaz */
-    realfn = g_filename_from_uri(filename, NULL, NULL);
-    rv = stat(realfn ? realfn : filename, &buf);
-    g_free(realfn); realfn = NULL;
-
-    if (rv == 0) {
-        return buf.st_mtime;
-    } else {
-        return 0; //error
-    }
-}
-
-
 /* do actual probing. this function is called from input_check_file() */
 static ProbeResult * input_do_check_file (InputPlugin * ip,
     VFSFile * fd, gchar * filename_proxy)
@@ -152,18 +132,7 @@ static ProbeResult * input_do_check_file (InputPlugin * ip,
 
     vfs_rewind(fd);
 
-    if (ip->probe_for_tuple != NULL)
-    {
-        plugin_set_current((Plugin *)ip);
-        Tuple *tuple = ip->probe_for_tuple(filename_proxy, fd);
-
-        if (tuple != NULL) {
-            pr->tuple = tuple;
-            tuple_associate_int(pr->tuple, FIELD_MTIME, NULL, input_get_mtime(filename_proxy));
-            return pr;
-        }
-    }
-    else if (ip->is_our_file_from_vfs != NULL)
+    if (ip->is_our_file_from_vfs != NULL)
     {
         plugin_set_current((Plugin *)ip);
         result = ip->is_our_file_from_vfs(filename_proxy, fd);
@@ -333,10 +302,6 @@ ProbeResult * input_check_file (const gchar * filename)
                 }
             }
         }
-
-        g_free(filename_proxy);
-        vfs_fclose(fd);
-        return NULL;
     }
 
 
@@ -523,44 +488,6 @@ input_file_info_box(const gchar * filename)
 
     g_free(filename_proxy);
 }
-
-GList *
-input_scan_dir(const gchar * path)
-{
-    GList *node, *result = NULL;
-    InputPlugin *ip;
-    gchar *path_proxy;
-
-    g_return_val_if_fail(path != NULL, NULL);
-
-    if (*path == '/')
-        while (path[1] == '/')
-            path++;
-
-    path_proxy = g_strdup(path);
-
-    for (node = get_input_list(); node; node = g_list_next(node)) {
-        ip = INPUT_PLUGIN(node->data);
-
-        if (!ip)
-            continue;
-
-        if (!ip->scan_dir)
-            continue;
-
-        if (!ip->enabled)
-            continue;
-
-        plugin_set_current((Plugin *)ip);
-        if ((result = ip->scan_dir(path_proxy)))
-            break;
-    }
-
-    g_free(path_proxy);
-
-    return result;
-}
-
 void
 input_get_volume(gint * l, gint * r)
 {
