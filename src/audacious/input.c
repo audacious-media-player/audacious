@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2008  Audacious development team
+ *  Copyright (C) 2005-2009  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -25,10 +25,6 @@
 
 /* #define AUD_DEBUG */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -36,22 +32,7 @@
 
 #include <mowgli.h>
 
-#include "fft.h"
 #include "input.h"
-#include "main.h"
-#include "output.h"
-#include "playback.h"
-#include "pluginenum.h"
-#include "audstrings.h"
-#include "tuple.h"
-#include "tuple_formatter.h"
-#include "util.h"
-#include "visualization.h"
-#include "hook.h"
-
-#include "vfs.h"
-#include "vfs_buffer.h"
-#include "vfs_buffered_file.h"
 
 InputPluginData ip_data = {
     NULL,
@@ -112,12 +93,6 @@ input_stringify_disabled_list(void)
     return g_string_free(list, FALSE);
 }
 
-InputVisType
-input_get_vis_type()
-{
-    return INPUT_VIS_OFF;
-}
-
 /* do actual probing. this function is called from input_check_file() */
 static ProbeResult * input_do_check_file (InputPlugin * ip,
     VFSFile * fd, gchar * filename_proxy)
@@ -134,7 +109,6 @@ static ProbeResult * input_do_check_file (InputPlugin * ip,
 
     if (ip->is_our_file_from_vfs != NULL)
     {
-        plugin_set_current((Plugin *)ip);
         result = ip->is_our_file_from_vfs(filename_proxy, fd);
 
         if (result > 0)
@@ -142,7 +116,6 @@ static ProbeResult * input_do_check_file (InputPlugin * ip,
     }
     else if (ip->is_our_file != NULL)
     {
-        plugin_set_current((Plugin *)ip);
         result = ip->is_our_file(filename_proxy);
 
         if (result > 0)
@@ -214,7 +187,6 @@ ProbeResult * input_check_file (const gchar * filename)
     /* cue:// cdda:// tone:// tact:// */
     if ((ip = uri_get_plugin(filename_proxy)) != NULL && ip->enabled) {
         if (ip->is_our_file != NULL) {
-            plugin_set_current((Plugin *)ip);
             ret = ip->is_our_file(filename_proxy);
         } else
             ret = 0;
@@ -354,10 +326,7 @@ input_get_song_tuple(const gchar * filename)
     g_free(pr);
 
     if (ip && ip->get_song_tuple)
-    {
-        plugin_set_current((Plugin *)ip);
         input = ip->get_song_tuple(filename_proxy);
-    }
     else
     {
         gchar *scratch;
@@ -479,10 +448,7 @@ input_file_info_box(const gchar * filename)
     g_free(pr);
 
     if (ip->file_info_box)
-    {
-        plugin_set_current((Plugin *)ip);
         ip->file_info_box(filename_proxy);
-    }
     else
         input_general_file_info_box(filename, ip);
 
