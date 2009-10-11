@@ -63,7 +63,6 @@ void input_pause(void);
 gint input_get_time(void);
 void input_seek(gint time);
 
-GList *input_scan_dir(const gchar * dir);
 void input_get_volume(gint * l, gint * r);
 void input_set_volume(gint l, gint r);
 void input_file_info_box(const gchar * filename);
