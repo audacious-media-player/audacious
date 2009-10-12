@@ -7,18 +7,18 @@ msgstr ""
 "Project-Id-Version: audacious2_25062009\n"
 "Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
 "POT-Creation-Date: 2009-09-16 02:06+0300\n"
-"PO-Revision-Date: 2009-06-25 02:12+0300\n"
+"PO-Revision-Date: 2009-10-10 16:37+0300\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.3\n"
+"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
 #: src/audacious/credits.c:34
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "An audio player for many platforms.\n"
@@ -27,7 +27,7 @@ msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Multivides atskaņotājs daudzām platformām.\n"
 "\n"
-"Autortiesības 2005-2009, Audacious izstrādes komanda\n"
+"Autortiesības 2005-2009, Audacious izstrādes komanda"
 
 #: src/audacious/credits.c:39
 msgid "Core developers:"
@@ -1045,11 +1045,9 @@ msgid "Filename"
 msgstr "Faila nosaukums"
 
 #: src/audacious/ui_headless.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Available Plugin Preferences:\n"
-msgstr ""
-"Pieejamās saskarnes:\n"
-"\n"
+msgstr "Pieejamo spraudņu iestatījumi:\n"
 
 #: src/audacious/ui_headless.c:150
 msgid "Headless Interface"
@@ -1101,7 +1099,6 @@ msgid "<b>Blogging about bugs in it is also not helpful.</b>"
 msgstr "<b>Rakstīšana emuārā par programmas kļūdām arī nepalīdzēs.</b>"
 
 #: src/audacious/ui_misc.c:77
-#, fuzzy
 msgid ""
 "Likewise, we're developers. We don't read blogs on a regular basis. If there "
 "is a major bug,\n"
@@ -1116,7 +1113,7 @@ msgstr ""
 "Turklāt, mēs esam izstrādātāji. Mēs neesam regulāri emuāru lasītāji. Ja "
 "pamanāt nopietnu kļūdu,\n"
 "lūdzam jums pievērst tajai mūsu uzmanību ar kļūdu izsekošanas instances "
-"palīdzību vietnē redmine.atheme.org,\n"
+"palīdzību vietnē http://jira.atheme.org,\n"
 "vai arī rakstiet vietnē esošajā forumā.\n"
 "\n"
 "Tas palīdzēs mums uzzināt vairāk informācijas par jūsu raizēm, par kurām mēs "
@@ -1335,7 +1332,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:230
 msgid "Use fast floating-point conversion (16-bit output only)"
-msgstr ""
+msgstr "Izmantot peldošā punkta pārveidi (tikai 16 bitu izvadei)"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Preamp:"
@@ -1665,7 +1662,7 @@ msgstr "<b>Vizualizēšana</b>"
 
 #: src/audacious/ui_preferences.c:2373
 msgid "Effect plugins (for 16-bit output only):"
-msgstr ""
+msgstr "Efektu spraudņi (tikai 16 bitu izvadei):"
 
 #: src/audacious/ui_preferences.c:2402
 msgid "<b>Effects</b>"
@@ -1682,11 +1679,11 @@ msgstr "Neizdevās izveidot mapi (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:241
 msgid "Position not found."
-msgstr ""
+msgstr "Pozīcija nav atrasta."
 
 #: src/audtool/handlers_vitals.c:64
 msgid "No song playing."
-msgstr ""
+msgstr "Netiek atskaņota neviena dziesma."
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"
