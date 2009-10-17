@@ -37,7 +37,6 @@ void playback_stop(void);
 gboolean playback_get_playing(void);
 gboolean playback_get_paused(void);
 void playback_seek(gint time);
-void playback_seek_relative(gint offset);
 void playback_error(void);
 InputPlayback *playback_new(void);
 void playback_free(InputPlayback *);

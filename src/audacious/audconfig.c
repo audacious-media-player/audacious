@@ -484,7 +484,7 @@ aud_config_save(void)
         cfg.resume_state = playback_get_playing () ? (playback_get_paused () ? 2
          : 1) : 0;
         cfg.resume_playback_on_startup_time = playback_get_playing () ?
-         playback_get_time () / 1000 : 0;
+         playback_get_time () : 0;
     }
 
     db = cfg_db_open();

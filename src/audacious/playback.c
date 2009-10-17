@@ -475,20 +475,19 @@ void playback_seek (gint time)
     if (playback->length <= 0)
         return;
 
-    time = CLAMP (time, 0, playback->length / 1000);
+    time = CLAMP (time, 0, playback->length);
 
     if (playback_is_ready (playback))
-        playback->plugin->seek (playback, time);
+    {
+        if (playback->plugin->mseek != NULL)
+            playback->plugin->mseek (playback, time);
+        else if (playback->plugin->seek != NULL)
+            playback->plugin->seek (playback, time / 1000);
+    }
     else
         seek_when_ready = time;
 
     hook_call ("playback seek", playback);
-}
-
-void
-playback_seek_relative(gint offset)
-{
-    playback_seek (playback_get_time () / 1000 + offset);
 }
 
 static void set_title_and_length (InputPlayback * playback, const gchar * title,

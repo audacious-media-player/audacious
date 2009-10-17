@@ -98,14 +98,15 @@ get_current_output_plugin(void)
     return op_data.current_output_plugin;
 }
 
-void
-set_current_output_plugin(gint i)
+void set_current_output_plugin (gint i)
 {
     gboolean playing = playback_get_playing ();
+    gboolean paused;
     gint time;
 
     if (playing)
     {
+        paused = playback_get_paused ();
         time = playback_get_time ();
         playback_stop ();
     }
@@ -115,7 +116,11 @@ set_current_output_plugin(gint i)
     if (playing)
     {
         playback_initiate ();
-        playback_seek (time / 1000);
+
+        if (paused)
+            playback_pause ();
+
+        playback_seek (time);
     }
 }
 

@@ -143,11 +143,6 @@ drct_get_stopped ( void )
     return !playback_get_playing();
 }
 
-void drct_seek (gint pos)
-{
-    playback_seek (pos / 1000);
-}
-
 void
 drct_get_volume ( gint *vl, gint *vr )
 {

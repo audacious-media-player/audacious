@@ -465,7 +465,7 @@ static gboolean play_pause_cb(void *unused)
 
 static gboolean seek_cb(void *data)
 {
-    playback_seek(GPOINTER_TO_INT(data) / 1000);
+    playback_seek (GPOINTER_TO_INT (data));
     return FALSE;
 }
 
