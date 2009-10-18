@@ -633,6 +633,21 @@ static void get_mpris_metadata(struct MprisMetadataRequest *request)
     }
 }
 
+static gboolean set_shuffle_cb (void * shuffle)
+{
+    cfg.shuffle = GPOINTER_TO_INT (shuffle);
+    playlist_set_shuffle (cfg.shuffle);
+    event_queue ("toggle shuffle", NULL);
+    return FALSE;
+}
+
+static gboolean set_repeat_cb (void * repeat)
+{
+    cfg.repeat = GPOINTER_TO_INT (repeat);
+    event_queue ("toggle repeat", NULL);
+    return FALSE;
+}
+
 /* MPRIS API */
 // MPRIS /
 gboolean mpris_root_identity(MprisRoot * obj, gchar ** identity, GError ** error)
@@ -869,15 +884,17 @@ gboolean mpris_tracklist_del_track(MprisTrackList * obj, gint pos, GError * *err
     return TRUE;
 }
 
-gboolean mpris_tracklist_loop(MprisTrackList * obj, gboolean loop, GError ** error)
+gboolean mpris_tracklist_loop (MprisTrackList * obj, gboolean loop, GError * *
+ error)
 {
-    g_message("implement me");
+    g_timeout_add (0, set_repeat_cb, GINT_TO_POINTER (loop));
     return TRUE;
 }
 
-gboolean mpris_tracklist_random(MprisTrackList * obj, gboolean random, GError ** error)
+gboolean mpris_tracklist_random (MprisTrackList * obj, gboolean random,
+ GError * * error)
 {
-    g_message("implement me");
+    g_timeout_add (0, set_shuffle_cb, GINT_TO_POINTER (random));
     return TRUE;
 }
 
@@ -1196,10 +1213,9 @@ gboolean audacious_rc_repeat(RemoteObject * obj, gboolean * is_repeating, GError
     return TRUE;
 }
 
-gboolean audacious_rc_toggle_repeat(RemoteObject * obj, GError ** error)
+gboolean audacious_rc_toggle_repeat (RemoteObject * obj, GError * * error)
 {
-    cfg.repeat = !cfg.repeat;
-    event_queue("toggle repeat", NULL);
+    g_timeout_add (0, set_repeat_cb, GINT_TO_POINTER (! cfg.repeat));
     return TRUE;
 }
 
@@ -1209,11 +1225,9 @@ gboolean audacious_rc_shuffle(RemoteObject * obj, gboolean * is_shuffling, GErro
     return TRUE;
 }
 
-gboolean audacious_rc_toggle_shuffle(RemoteObject * obj, GError ** error)
+gboolean audacious_rc_toggle_shuffle (RemoteObject * obj, GError * * error)
 {
-    cfg.shuffle = !cfg.shuffle;
-    playlist_set_shuffle(cfg.shuffle);
-    event_queue("toggle shuffle", NULL);
+    g_timeout_add (0, set_shuffle_cb, GINT_TO_POINTER (! cfg.shuffle));
     return TRUE;
 }
 
