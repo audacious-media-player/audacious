@@ -119,7 +119,7 @@ aud_rcfile_open(const gchar * filename)
     i = 0;
     while (lines[i]) {
         if (lines[i][0] == '[') {
-            if ((tmp = strchr(lines[i], ']'))) {
+            if ((tmp = strrchr(lines[i], ']'))) {
                 *tmp = '\0';
                 section = aud_rcfile_create_section(file, &lines[i][1]);
             }
