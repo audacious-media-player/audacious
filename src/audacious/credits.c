@@ -252,6 +252,7 @@ static const gchar *translators_text[] = {
     "Cristi Măgherușan",
     NULL,
     N_("Russian:"),
+    "Sergey V. Mironov",
     "Alexandr Orlov",
     NULL,
     N_("Serbian (Latin):"),
