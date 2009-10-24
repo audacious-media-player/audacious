@@ -101,6 +101,9 @@ struct entry
     gboolean failed;
     gboolean selected;
     gboolean queued;
+    gboolean segmented;
+    gint start;
+    gint end;
 };
 
 struct playlist
@@ -202,6 +205,8 @@ static struct entry *entry_new(gchar * filename, InputPlugin * decoder, Tuple * 
     entry->number = -1;
     entry->selected = FALSE;
     entry->queued = FALSE;
+    entry->segmented = FALSE;
+    entry->start = entry->end = -1;
 
     entry_set_tuple_real (entry, tuple);
     return entry;
@@ -886,6 +891,54 @@ gint playlist_entry_get_length(gint playlist_num, gint entry_num)
 
     check_scanned (playlist, entry);
     return entry->length;
+}
+
+void playlist_entry_set_segmentation(gint playlist_num, gint entry_num, gint start, gint end)
+{
+    DECLARE_PLAYLIST_ENTRY;
+
+    LOOKUP_PLAYLIST_ENTRY;
+    if (entry == NULL)
+        return;
+
+    if (start != -1)
+    {
+        entry->segmented = TRUE;
+        entry->start = start;
+        entry->end = end;
+    }
+    else
+    {
+        entry->segmented = FALSE;
+        entry->start = entry->end = -1;
+    }
+}
+
+gboolean playlist_entry_is_segmented(gint playlist_num, gint entry_num)
+{
+    DECLARE_PLAYLIST_ENTRY;
+
+    LOOKUP_PLAYLIST_ENTRY_RET (FALSE);
+
+    return entry->segmented;
+}
+
+gint playlist_entry_get_start_time (gint playlist_num, gint entry_num)
+{
+    DECLARE_PLAYLIST_ENTRY;
+
+    LOOKUP_PLAYLIST_ENTRY_RET (-1);
+
+    return entry->start;
+}
+
+gint playlist_entry_get_end_time (gint playlist_num, gint entry_num)
+{
+    DECLARE_PLAYLIST_ENTRY;
+
+    LOOKUP_PLAYLIST_ENTRY_RET (-1);
+
+    return entry->end;
 }
 
 void playlist_set_position (gint playlist_num, gint entry_num)

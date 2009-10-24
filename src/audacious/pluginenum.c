@@ -367,6 +367,12 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .interface_show_error = interface_show_error_message,
 
     .get_audacious_credits = get_audacious_credits,
+
+    /* playlist segmentation -- added in Audacious 2.2. */
+    .playlist_entry_set_segmentation = playlist_entry_set_segmentation,
+    .playlist_entry_is_segmented = playlist_entry_is_segmented,
+    .playlist_entry_get_start_time = playlist_entry_get_start_time,
+    .playlist_entry_get_end_time = playlist_entry_get_end_time,
 };
 
 /*****************************************************************/

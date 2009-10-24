@@ -69,6 +69,10 @@ void playlist_entry_set_tuple (gint playlist, gint entry, Tuple * tuple);
 const Tuple * playlist_entry_get_tuple (gint playlist, gint entry);
 const gchar * playlist_entry_get_title (gint playlist, gint entry);
 gint playlist_entry_get_length (gint playlist, gint entry);
+void playlist_entry_set_segmentation (gint playlist, gint entry, gint start, gint end);
+gboolean playlist_entry_is_segmented (gint playlist, gint entry);
+gint playlist_entry_get_start_time (gint playlist, gint entry);
+gint playlist_entry_get_end_time (gint playlist, gint entry);
 
 void playlist_set_position (gint playlist, gint position);
 gint playlist_get_position (gint playlist);

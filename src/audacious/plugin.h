@@ -624,6 +624,10 @@ struct _AudaciousFuncTableV1 {
 
     void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
 
+    void (* playlist_entry_set_segmentation)(gint playlist_num, gint entry_num, gint start, gint end);
+    gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
+    gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
+    gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
 };
 
 
@@ -971,9 +975,14 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_interface_get_current       _audvt->interface_get_current
 #define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
-#define aud_interface_show_error        _audct->interface_show_error
+#define aud_interface_show_error        _audvt->interface_show_error
 
 #define aud_get_audacious_credits       _audvt->get_audacious_credits
+
+#define aud_playlist_entry_set_segmentation		_audvt->playlist_entry_set_segmentation
+#define aud_playlist_entry_is_segmented			_audvt->playlist_entry_is_segmented
+#define aud_playlist_entry_get_start_time		_audvt->playlist_entry_get_start_time
+#define aud_playlist_entry_get_end_time			_audvt->playlist_entry_get_end_time
 
 #include "audacious/auddrct.h"
 
