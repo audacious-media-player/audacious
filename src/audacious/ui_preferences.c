@@ -802,7 +802,7 @@ plugin_treeview_open_prefs(GtkTreeView *treeview)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
-    g_return_if_fail((plugin->configure != NULL) || 
+    g_return_if_fail((plugin->configure != NULL) ||
                      ((plugin->settings != NULL) && (plugin->settings->type == PREFERENCES_WINDOW)));
 
     plugin_set_current(plugin);
@@ -1327,7 +1327,7 @@ create_filepopup_settings(void)
     gtk_box_pack_start(GTK_BOX(filepopup_settings_recurse_for_cover_depth_box), label_search_depth, TRUE, TRUE, 0);
     gtk_misc_set_padding(GTK_MISC(label_search_depth), 4, 0);
 
-    recurse_for_cover_depth_adj = gtk_adjustment_new(0, 0, 100, 1, 10, 10);
+    recurse_for_cover_depth_adj = gtk_adjustment_new(0, 0, 100, 1, 10, 0);
     filepopup_settings_recurse_for_cover_depth = gtk_spin_button_new(GTK_ADJUSTMENT(recurse_for_cover_depth_adj), 1, 0);
     gtk_box_pack_start(GTK_BOX(filepopup_settings_recurse_for_cover_depth_box), filepopup_settings_recurse_for_cover_depth, TRUE, TRUE, 0);
     gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_settings_recurse_for_cover_depth), TRUE);
@@ -1363,7 +1363,7 @@ create_filepopup_settings(void)
     gtk_misc_set_alignment(GTK_MISC(label_delay), 0, 0.5);
     gtk_misc_set_padding(GTK_MISC(label_delay), 12, 0);
 
-    delay_adj = gtk_adjustment_new(0, 0, 100, 1, 10, 10);
+    delay_adj = gtk_adjustment_new(0, 0, 100, 1, 10, 0);
     filepopup_settings_delay = gtk_spin_button_new(GTK_ADJUSTMENT(delay_adj), 1, 0);
     gtk_box_pack_start(GTK_BOX(hbox), filepopup_settings_delay, TRUE, TRUE, 0);
     gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_settings_delay), TRUE);
@@ -2081,8 +2081,8 @@ create_audio_category(void)
     gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
 
     output_plugin_bufsize_adj =
-        gtk_adjustment_new (0, 100, 10000, 100, 1000, 1000);
-    output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 1, 0);
+        gtk_adjustment_new (0, 100, 10000, 100, 1000, 0);
+    output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 100, 0);
     gtk_table_attach (GTK_TABLE (table11), output_plugin_bufsize, 1, 2, 1, 2,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
