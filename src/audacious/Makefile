@@ -18,6 +18,7 @@ SRCS = af_equalizer.c							\
        eventqueue.c								\
        fft.c									\
        flow.c									\
+       folder-add.c \
        general.c								\
        hook.c									\
        interface.c								\

@@ -6,7 +6,7 @@
  *
  * Audacious is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
- * Foundation, version 3 of the License.
+ * Foundation, version 2 or version 3 of the License.
  *
  * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
@@ -360,94 +360,4 @@ gboolean playlist_save (gint playlist, const gchar * filename)
     container->plc_write (filename, 0);
     playlist_set_active (last);
     return TRUE;
-}
-
-static gboolean add_folder_cb (void * data)
-{
-    GList * * stack_ptr = data;
-    GList * stack = * stack_ptr;
-    struct index * add = index_new ();
-    gint count;
-
-    for (count = 0; count < 30; count ++)
-    {
-        struct stat info;
-        struct dirent * entry;
-
-        if (stat (stack->data, & info) == 0)
-        {
-            if (S_ISREG (info.st_mode))
-            {
-                gchar * filename = g_filename_to_uri (stack->data, NULL, NULL);
-
-                if (filename != NULL && filename_find_decoder (filename) != NULL)
-                    index_append (add, filename);
-                else
-                    g_free (filename);
-            }
-            else if (S_ISDIR (info.st_mode))
-            {
-                DIR * folder = opendir (stack->data);
-
-                if (folder != NULL)
-                {
-                    stack = g_list_prepend (stack, folder);
-                    goto READ;
-                }
-            }
-        }
-
-        g_free (stack->data);
-        stack = g_list_delete_link (stack, stack);
-
-    READ:
-        if (stack == NULL)
-            break;
-
-        entry = readdir (stack->data);
-
-        if (entry != NULL)
-        {
-            if (entry->d_name[0] == '.')
-                goto READ;
-
-            stack = g_list_prepend (stack, g_strdup_printf ("%s/%s", (gchar *)
-             stack->next->data, entry->d_name));
-        }
-        else
-        {
-            closedir (stack->data);
-            stack = g_list_delete_link (stack, stack);
-            g_free (stack->data);
-            stack = g_list_delete_link (stack, stack);
-            goto READ;
-        }
-    }
-
-    if (index_count (add) > 0)
-        playlist_entry_insert_batch (playlist_get_active (), -1, add, NULL);
-    else
-        index_free (add);
-
-    if (stack == NULL)
-    {
-        g_free (stack_ptr);
-        return FALSE;
-    }
-
-    * stack_ptr = stack;
-    return TRUE;
-}
-
-void playlist_add_folder (const gchar * folder)
-{
-    gchar * unix_name = g_filename_from_uri (folder, NULL, NULL);
-    GList * * stack_ptr;
-
-    if (unix_name == NULL)
-        return;
-
-    stack_ptr = g_malloc (sizeof (GList *));
-    * stack_ptr = g_list_prepend (NULL, unix_name);
-    g_idle_add (add_folder_cb, stack_ptr);
 }
