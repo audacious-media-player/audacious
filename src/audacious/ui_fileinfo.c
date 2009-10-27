@@ -24,6 +24,7 @@
 #  include "config.h"
 #endif
 
+#include <gdk/gdkkeysyms.h>
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -450,6 +451,18 @@ mime_icon_lookup(gint size, const gchar *mime_type) /* smart icon resolving rout
     return icon;
 }
 
+static gboolean fileinfo_keypress (GtkWidget * widget, GdkEventKey * event,
+ void * unused)
+{
+    if (event->keyval == GDK_Escape)
+    {
+        fileinfo_hide (NULL);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 void
 create_fileinfo_window(void)
 {
@@ -765,8 +778,10 @@ create_fileinfo_window(void)
     gtk_container_add(GTK_CONTAINER(bbox_close), btn_close);
     GTK_WIDGET_SET_FLAGS(btn_close, GTK_CAN_DEFAULT);
     g_signal_connect(G_OBJECT(btn_close), "clicked", (GCallback) fileinfo_hide, NULL);
-    g_signal_connect ((GObject *) fileinfo_win, "delete-event",
-     (GCallback) fileinfo_hide, 0);
+    g_signal_connect ((GObject *) fileinfo_win, "delete-event", (GCallback)
+     fileinfo_hide, NULL);
+    g_signal_connect ((GObject *) fileinfo_win, "key-press-event", (GCallback)
+     fileinfo_keypress, NULL);
 
     gtk_widget_show_all (vbox0);
 }
