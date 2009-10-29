@@ -494,8 +494,8 @@ static void set_title_and_length (InputPlayback * playback, const gchar * title,
  gint length)
 {
     g_return_if_fail (playback != NULL);
-    g_warning ("Setting playback title or length manually is deprecated. Use "
-     "InputPlayback::set_tuple instead.");
+    g_warning ("Plugin %s failed to use InputPlayback::set_tuple "
+     "for a length/title adjustment.", playback->plugin->filename);
 
     if (title != NULL)
     {
