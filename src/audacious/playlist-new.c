@@ -155,8 +155,18 @@ static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
     gint start;
     gint end;
 
-    if (entry->segmented == TRUE)
+    if (entry->segmented == TRUE && entry->tuple)
+    {
+        if (entry->end > 0)
+            return;
+
+        entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
+        entry->length -= entry->start;
+
+        tuple_associate_int(entry->tuple, FIELD_LENGTH, NULL, entry->length);
+
         return;
+    }
 
     if (entry->tuple != NULL)
         tuple_free (entry->tuple);
@@ -181,6 +191,9 @@ static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
         {
             start = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
             end = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
+
+            if (start == end)
+                end = 0;
 
             entry->segmented = TRUE;
             entry->start = start ? start : 0;
