@@ -60,6 +60,9 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "subsong-num",    TUPLE_INT },
     { "mime-type",      TUPLE_STRING },
     { "bitrate",        TUPLE_INT },
+
+    { "segment-start",  TUPLE_INT },
+    { "segment-end",    TUPLE_INT },
 };
 
 

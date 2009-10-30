@@ -64,6 +64,9 @@ enum {
     FIELD_MIMETYPE,
     FIELD_BITRATE,      /**< Bitrate in kbps */
 
+    FIELD_SEGMENT_START,
+    FIELD_SEGMENT_END,
+
     /* Special field, must always be last */
     FIELD_LAST
 };

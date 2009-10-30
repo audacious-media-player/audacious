@@ -152,6 +152,9 @@ static gchar *title_from_tuple(Tuple * tuple)
 
 static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
 {
+    gint start;
+    gint end;
+
     if (entry->segmented == TRUE)
         return;
 
@@ -165,12 +168,24 @@ static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
     {
         entry->title = NULL;
         entry->length = 0;
+        entry->segmented = FALSE;
+        entry->start = entry->end = -1;
     }
     else
     {
         entry->title = title_from_tuple (tuple);
         entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
         entry->length = MAX (entry->length, 0);
+
+        if ((tuple_get_int (tuple, FIELD_SEGMENT_START, NULL)) || (tuple_get_int (tuple, FIELD_SEGMENT_END, NULL)))
+        {
+            start = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
+            end = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
+
+            entry->segmented = TRUE;
+            entry->start = start ? start : 0;
+            entry->end = end ? end : -1;
+        }
     }
 }
 
