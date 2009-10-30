@@ -197,9 +197,10 @@ gint
 get_written_time(void)
 {
     OutputPlugin *op = get_current_output_plugin();
+    InputPlayback *ip = get_current_input_playback();
 
     plugin_set_current((Plugin *)op);
-    return op->written_time();
+    return op->written_time() - ip->start;
 }
 
 /* called by input plugin to peek at the output plugin's output progress */

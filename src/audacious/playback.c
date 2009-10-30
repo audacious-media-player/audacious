@@ -131,7 +131,8 @@ playback_error(void)
     event_queue("playback audio error", NULL);
 }
 
-gint playback_get_time (void)
+static gint
+playback_get_time_real(void)
 {
     InputPlayback * playback;
 
@@ -150,6 +151,17 @@ gint playback_get_time (void)
     /** @attention This assumes that output_time will return sanely (zero)
      * even before audio is opened. Not ideal, but what else can we do? -jlindgren */
     return playback->output->output_time ();
+}
+
+gint
+playback_get_time(void)
+{
+    InputPlayback * playback;
+
+    playback = ip_data.current_input_playback;
+    g_return_val_if_fail (playback != NULL, 0);
+
+    return playback_get_time_real() - playback->start;
 }
 
 void
@@ -219,7 +231,7 @@ void playback_pause (void)
         hook_call("playback unpause", NULL);
 
         if (playback->end)
-            playback->end_timeout = g_timeout_add(playback_get_time() - playback->start, playback_segmented_end, playback);
+            playback->end_timeout = g_timeout_add(playback_get_time_real() - playback->start, playback_segmented_end, playback);
     }
 }
 
@@ -526,9 +538,9 @@ void playback_seek (gint time)
     if (playback_is_ready (playback))
     {
         if (playback->plugin->mseek != NULL)
-            playback->plugin->mseek (playback, time);
+            playback->plugin->mseek (playback, playback->start + time);
         else if (playback->plugin->seek != NULL)
-            playback->plugin->seek (playback, time / 1000);
+            playback->plugin->seek (playback, (playback->start + time) / 1000);
 
         if (playback->end != 0 || playback->end != -1)
         {
