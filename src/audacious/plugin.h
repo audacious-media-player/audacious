@@ -1156,6 +1156,7 @@ struct _InputPlayback {
     gboolean segmented;
     gint start;
     gint end;
+    gint end_timeout;
 };
 
 /**

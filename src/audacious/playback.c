@@ -51,6 +51,7 @@ static void set_params (InputPlayback * playback, const gchar * title, gint
  length, gint bitrate, gint samplerate, gint channels);
 static void set_title (InputPlayback * playback, const gchar * title);
 static void set_tuple (InputPlayback * playback, Tuple * tuple);
+static gboolean playback_segmented_end(gpointer data);
 
 static gboolean playback_play_file (gint playlist, gint entry);
 
@@ -197,6 +198,9 @@ void playback_pause (void)
     {
         paused = ! ip_data.paused;
 
+        if (playback->end_timeout)
+            g_source_remove(playback->end_timeout);
+
         g_return_if_fail (playback->plugin->pause != NULL);
         playback->plugin->pause (playback, paused);
 
@@ -211,7 +215,12 @@ void playback_pause (void)
     if (paused)
         hook_call("playback pause", NULL);
     else
+    {
         hook_call("playback unpause", NULL);
+
+        if (playback->end)
+            playback->end_timeout = g_timeout_add(playback_get_time() - playback->start, playback_segmented_end, playback);
+    }
 }
 
 static void playback_finalize (InputPlayback * playback)
@@ -240,6 +249,9 @@ static void playback_finalize (InputPlayback * playback)
 
     playback_free (playback);
     ip_data.current_input_playback = NULL;
+
+    if (playback->end_timeout)
+        g_source_remove(playback->end_timeout);
 }
 
 void playback_stop (void)
@@ -282,10 +294,14 @@ static gboolean playback_ended (void * user_data)
     }
     else
     {
+        g_print("no error\n");
+
         if (cfg.no_playlist_advance)
             play = cfg.repeat;
         else
         {
+            g_print("advance\n");
+
             gint playlist = playlist_get_playing ();
 
             play = playlist_next_song (playlist, FALSE);
@@ -294,8 +310,10 @@ static gboolean playback_ended (void * user_data)
                 play = playlist_next_song (playlist, TRUE) && cfg.repeat;
         }
 
-        if (cfg.stopaftersong)
+        if (cfg.stopaftersong) {
+            g_print("stop after song\n");
             play = FALSE;
+        }
     }
 
     if (play)
@@ -307,12 +325,23 @@ static gboolean playback_ended (void * user_data)
 }
 
 static gboolean
+playback_segmented_end(gpointer data)
+{
+    if (playlist_next_song (playlist_get_playing (), cfg.repeat))
+        playback_initiate ();
+
+    return FALSE;
+}
+
+static gboolean
 playback_segmented_start(gpointer data)
 {
     InputPlayback *playback = (InputPlayback *) data;
 
-    g_print("Segmented start [%ld] ms\n", playback->start);
     playback->plugin->mseek(playback, playback->start);
+
+    if (playback->end != 0 && playback->end != -1)
+        playback->end_timeout = g_timeout_add(playback->end - playback->start, playback_segmented_end, playback);
 
     return FALSE;
 }
@@ -500,6 +529,12 @@ void playback_seek (gint time)
             playback->plugin->mseek (playback, time);
         else if (playback->plugin->seek != NULL)
             playback->plugin->seek (playback, time / 1000);
+
+        if (playback->end != 0 || playback->end != -1)
+        {
+            g_source_remove(playback->end_timeout);
+            playback->end_timeout = g_timeout_add(playback->end - time, playback_segmented_end, playback);
+        }
     }
     else
         seek_when_ready = time;
