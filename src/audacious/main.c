@@ -394,7 +394,9 @@ static gboolean load_extra_playlist(const gchar * path, const gchar * basename, 
 static void playlist_system_init()
 {
     playlist_init();
-    playlist_insert_playlist(0, 0, aud_paths[BMP_PATH_PLAYLIST_FILE]);
+
+    if (vfs_file_test (aud_paths[BMP_PATH_PLAYLIST_FILE], G_FILE_TEST_EXISTS))
+        playlist_insert_playlist (0, 0, aud_paths[BMP_PATH_PLAYLIST_FILE]);
 
     /* Load extra playlists */
     if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist, NULL, NULL))
