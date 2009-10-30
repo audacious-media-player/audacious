@@ -152,6 +152,9 @@ static gchar *title_from_tuple(Tuple * tuple)
 
 static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
 {
+    if (entry->segmented == TRUE)
+        return;
+
     if (entry->tuple != NULL)
         tuple_free (entry->tuple);
 
