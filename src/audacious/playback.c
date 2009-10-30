@@ -306,14 +306,10 @@ static gboolean playback_ended (void * user_data)
     }
     else
     {
-        g_print("no error\n");
-
         if (cfg.no_playlist_advance)
             play = cfg.repeat;
         else
         {
-            g_print("advance\n");
-
             gint playlist = playlist_get_playing ();
 
             play = playlist_next_song (playlist, FALSE);
@@ -322,10 +318,8 @@ static gboolean playback_ended (void * user_data)
                 play = playlist_next_song (playlist, TRUE) && cfg.repeat;
         }
 
-        if (cfg.stopaftersong) {
-            g_print("stop after song\n");
+        if (cfg.stopaftersong)
             play = FALSE;
-        }
     }
 
     if (play)
@@ -542,9 +536,11 @@ void playback_seek (gint time)
         else if (playback->plugin->seek != NULL)
             playback->plugin->seek (playback, (playback->start + time) / 1000);
 
-        if (playback->end != 0 || playback->end != -1)
+        if (playback->end != 0 && playback->end != -1)
         {
-            g_source_remove(playback->end_timeout);
+            if (playback->end_timeout)
+                g_source_remove(playback->end_timeout);
+
             playback->end_timeout = g_timeout_add(playback->end - time, playback_segmented_end, playback);
         }
     }
