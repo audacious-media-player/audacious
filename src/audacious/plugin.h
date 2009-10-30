@@ -1152,6 +1152,10 @@ struct _InputPlayback {
      * @since Added in Audacious 2.2.
      */
     void (*set_tuple) (InputPlayback * playback, Tuple * tuple);
+
+    gboolean segmented;
+    gint start;
+    gint end;
 };
 
 /**

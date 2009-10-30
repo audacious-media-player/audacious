@@ -306,10 +306,24 @@ static gboolean playback_ended (void * user_data)
     return FALSE;
 }
 
+static gboolean
+playback_segmented_start(gpointer data)
+{
+    InputPlayback *playback = (InputPlayback *) data;
+
+    g_print("Segmented start [%ld] ms\n", playback->start);
+    playback->plugin->mseek(playback, playback->start);
+
+    return FALSE;
+}
+
 static gpointer
 playback_monitor_thread(gpointer data)
 {
     InputPlayback *playback = (InputPlayback *) data;
+
+    if (playback->segmented)
+        g_idle_add(playback_segmented_start, playback); 
 
     plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->play_file(playback);
@@ -436,6 +450,9 @@ static gboolean playback_play_file (gint playlist, gint entry)
     playback->title = g_strdup ((title != NULL) ? title : filename);
     playback->length = playlist_entry_get_length (playlist, entry);
     playback->output = &psuedo_output_plugin;
+    playback->segmented = playlist_entry_is_segmented (playlist, entry);
+    playback->start = playlist_entry_get_start_time (playlist, entry);
+    playback->end = playlist_entry_get_end_time (playlist, entry);
 
     set_current_input_playback(playback);
     playback_entry = entry;
