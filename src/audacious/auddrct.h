@@ -65,13 +65,15 @@ gchar *drct_pl_get_title( gint pos );
 gint drct_pl_get_time( gint pos );
 gint drct_pl_get_pos( void );
 gchar *drct_pl_get_file( gint pos );
+void drct_pl_open (const gchar * filename);
+void drct_pl_open_list (GList * list);
 void drct_pl_add ( GList * list );
 void drct_pl_clear ( void );
 gint drct_pl_get_length( void );
 void drct_pl_delete ( gint pos );
 void drct_pl_set_pos( gint pos );
-void drct_pl_ins_url_string( gchar * string, gint pos );
-void drct_pl_add_url_string( gchar * string );
+void drct_pl_ins_url_string (const gchar * string, gint pos);
+void drct_pl_add_url_string (const gchar * string);
 void drct_pl_enqueue_to_temp( gchar * string );
 
 /* playqueue */

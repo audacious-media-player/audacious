@@ -94,8 +94,6 @@ gchar *aud_paths[BMP_PATH_COUNT] = { };
 MprisPlayer *mpris;
 #endif
 
-static gboolean start_playback = FALSE;
-
 static void print_version(void)
 {
     g_printf("%s %s [%s]\n", _(application_name), VERSION, build_stamp);
@@ -216,7 +214,7 @@ static void handle_cmd_line_filenames(gboolean is_running)
 {
     gint i, pos = 0;
     gchar *working, **filenames = options.filenames;
-    GList *fns = NULL;
+    GList * fns = NULL, * node;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
 #endif
@@ -246,48 +244,44 @@ static void handle_cmd_line_filenames(gboolean is_running)
 #ifdef USE_DBUS
     if (is_running)
     {
-        GList *i;
-
         if (options.enqueue_to_temp)
             audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
-
-        if (options.enqueue && options.play)
-            pos = audacious_remote_get_playlist_length(session);
-
-        if (!options.enqueue)
+        else if (options.enqueue)
         {
-            audacious_remote_playlist_clear(session);
-            audacious_remote_stop(session);
+            for (node = fns; node != NULL; node = node->next)
+                audacious_remote_playlist_add_url_string (session, node->data);
         }
+        else
+        {
+            if (cfg.clear_playlist)
+                audacious_remote_playlist_clear (session);
+            else
+                audacious_remote_playqueue_clear (session);
 
-        for (i = fns; i != NULL; i = i->next)
-            audacious_remote_playlist_add_url_string(session, i->data);
+            pos = audacious_remote_get_playlist_length (session);
 
-        if (options.enqueue && options.play && audacious_remote_get_playlist_length(session) > pos)
-            audacious_remote_set_playlist_pos(session, pos);
+            for (node = fns; node != NULL; node = node->next)
+                audacious_remote_playlist_add_url_string (session, node->data);
 
-        if (!options.enqueue)
-            audacious_remote_play(session);
+            if (audacious_remote_get_playlist_length (session) > pos)
+            {
+                audacious_remote_set_playlist_pos (session, pos);
+                audacious_remote_play (session);
+            }
+        }
     }
     else                        /* !is_running */
 #endif
     {
         if (options.enqueue_to_temp)
             drct_pl_enqueue_to_temp(filenames[0]);
-
-        if (options.enqueue && options.play)
-            pos = drct_pl_get_length();
-
-        if (!options.enqueue)
+        else if (options.enqueue)
+            drct_pl_add (fns);
+        else
         {
-            drct_pl_clear();
-            start_playback = TRUE;
+            drct_pl_open_list (fns);
+            cfg.resume_playlist = -1;
         }
-
-        drct_pl_add(fns);
-
-        if (options.enqueue && options.play && drct_pl_get_length() > pos)
-            drct_pl_set_pos(pos);
     }                           /* !is_running */
 
     g_list_foreach(fns, (GFunc) g_free, NULL);
@@ -346,12 +340,31 @@ static void handle_cmd_line_options_first(void)
 static void handle_cmd_line_options(void)
 {
     handle_cmd_line_filenames(FALSE);
-    if (options.rew)
-        drct_pl_prev();
+
+    if (cfg.resume_playlist != -1)
+    {
+        playlist_set_playing (cfg.resume_playlist);
+        playlist_set_position (cfg.resume_playlist, cfg.resume_entry);
+
+        if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
+        {
+            playback_initiate ();
+
+            if (cfg.resume_state == 2)
+                playback_pause ();
+
+            playback_seek (cfg.resume_playback_on_startup_time);
+        }
+    }
+
     if (options.play || options.play_pause)
-        start_playback = TRUE;
-    if (options.fwd)
-        drct_pl_next();
+    {
+        if (! playback_get_playing ())
+            playback_initiate ();
+        else if (playback_get_paused ())
+            playback_pause ();
+    }
+
     if (options.show_jump_box)
         drct_jtf_show();
     if (options.mainwin)
@@ -535,29 +548,10 @@ gint main(gint argc, gchar ** argv)
     }
 
     playlist_system_init();
+    init_equalizer ();
 
     g_message("Handling commandline options, part #2");
     handle_cmd_line_options();
-
-    init_equalizer();
-
-    if (start_playback)
-        playback_initiate();
-    else if (cfg.resume_playlist != -1)
-    {
-        playlist_set_playing(cfg.resume_playlist);
-        playlist_set_position(cfg.resume_playlist, cfg.resume_entry);
-
-        if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
-        {
-            playback_initiate();
-
-            if (cfg.resume_state == 2)
-                playback_pause();
-
-            playback_seek(cfg.resume_playback_on_startup_time);
-        }
-    }
 
     g_message("Registering interface hooks");
     register_interface_hooks();

@@ -300,6 +300,38 @@ gchar * drct_pl_get_file (gint pos)
     return (filename == NULL) ? NULL : g_strdup (filename);
 }
 
+void drct_pl_open (const gchar * filename)
+{
+    GList * list = g_list_prepend (NULL, (gchar *) filename);
+
+    drct_pl_open_list (list);
+    g_list_free (list);
+}
+
+void drct_pl_open_list (GList * list)
+{
+    gint playlist = playlist_get_active ();
+    gint entries;
+
+    if (playback_get_playing ())
+        playback_stop ();
+
+    if (cfg.clear_playlist)
+        playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
+    else
+        playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
+
+    entries = playlist_entry_count (playlist);
+    drct_pl_add (list);
+
+    if (playlist_entry_count (playlist) > entries)
+    {
+        playlist_set_playing (playlist);
+        playlist_set_position (playlist, entries);
+        playback_initiate ();
+    }
+}
+
 void drct_pl_add (GList * list)
 {
     struct index * filenames = index_new ();
@@ -349,7 +381,7 @@ gint drct_pl_get_length (void)
     return playlist_entry_count (playlist_get_active ());
 }
 
-void drct_pl_ins_url_string (gchar * string, gint pos)
+void drct_pl_ins_url_string (const gchar * string, gint pos)
 {
     if (filename_is_playlist (string))
         playlist_insert_playlist (playlist_get_active (), pos, string);
@@ -360,7 +392,7 @@ void drct_pl_ins_url_string (gchar * string, gint pos)
          NULL);
 }
 
-void drct_pl_add_url_string (gchar * string)
+void drct_pl_add_url_string (const gchar * string)
 {
     drct_pl_ins_url_string (string, -1);
 }

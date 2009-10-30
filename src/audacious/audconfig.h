@@ -83,6 +83,7 @@ struct _AudConfig {
     gboolean bypass_dsp;
     gint sw_volume_left, sw_volume_right;
     gboolean no_dithering;
+    gboolean clear_playlist;
 };
 
 typedef struct _AudConfig AudConfig;

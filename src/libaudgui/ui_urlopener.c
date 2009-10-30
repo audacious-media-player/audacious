@@ -134,36 +134,19 @@ on_add_url_add_clicked(GtkWidget * widget,
                        GtkWidget * entry)
 {
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
-    if (text && *text)
-    {
-        if (aud_filename_is_playlist (text))
-            aud_playlist_insert_playlist (aud_playlist_get_active (), -1, text);
-        else
-            aud_playlist_entry_insert (aud_playlist_get_active (), -1, g_strdup
-             (text), NULL);
-    }
+
+    if (text != NULL && * text)
+        audacious_drct_pl_add_url_string (text);
 }
 
 static void
 on_add_url_ok_clicked(GtkWidget * widget,
                       GtkWidget * entry)
 {
-    gint playlist = aud_playlist_get_active ();
-
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
-    if (text && *text)
-    {
-        aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
 
-        if (aud_filename_is_playlist (text))
-            aud_playlist_insert_playlist (aud_playlist_get_active (), 0, text);
-        else
-            aud_playlist_entry_insert (aud_playlist_get_active (), 0, g_strdup
-             (text), NULL);
-
-        aud_playlist_set_playing (playlist);
-        audacious_drct_initiate ();
-    }
+    if (text != NULL && * text)
+        audacious_drct_pl_open (text);
 }
 
 void

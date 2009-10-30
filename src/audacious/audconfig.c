@@ -104,7 +104,8 @@ AudConfig aud_default_config = {
 #endif
     .bypass_dsp = FALSE,
     .sw_volume_left = 100, .sw_volume_right = 100,
-    .no_dithering = 0,
+    .no_dithering = FALSE,
+    .clear_playlist = FALSE,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -169,7 +170,8 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_src", &cfg.enable_src, TRUE},
 #endif
     {"bypass_dsp", &cfg.bypass_dsp, TRUE},
-    {"no_dithering", & cfg.no_dithering, 1},
+    {"no_dithering", & cfg.no_dithering, TRUE},
+    {"clear_playlist", & cfg.clear_playlist, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);

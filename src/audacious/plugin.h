@@ -34,7 +34,7 @@
 /**
  * @file plugin.h
  * @brief Main Audacious plugin API header file.
- * 
+ *
  */
 #ifndef AUDACIOUS_PLUGIN_H
 #define AUDACIOUS_PLUGIN_H
@@ -219,7 +219,7 @@ typedef struct {
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
 
-/** 
+/**
  * Audacious plugin API vtable.
  * This table defines the functions available for plugins through
  * Audacious API. Any Audacious functions NOT defined here will not
@@ -540,8 +540,8 @@ struct _AudaciousFuncTableV1 {
     gint (*drct_pl_get_length)( void );
     void (*drct_pl_delete) ( gint pos );
     void (*drct_pl_set_pos)( gint pos );
-    void (*drct_pl_ins_url_string)( gchar * string, gint pos );
-    void (*drct_pl_add_url_string)( gchar * string );
+    void (* drct_pl_ins_url_string) (const gchar * string, gint pos);
+    void (* drct_pl_add_url_string) (const gchar * string);
     void (*drct_pl_enqueue_to_temp)( gchar * string );
 
     /* DRCT API: playqueue */
@@ -628,6 +628,10 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
+
+    /* Put these before drct_pl_add when it's safe to break the API. */
+    void (* drct_pl_open) (const gchar * filename);
+    void (* drct_pl_open_list) (GList * list);
 };
 
 
@@ -886,6 +890,8 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_pl_get_time          _audvt->drct_pl_get_time
 #define audacious_drct_pl_get_pos           _audvt->drct_pl_get_pos
 #define audacious_drct_pl_get_file          _audvt->drct_pl_get_file
+#define audacious_drct_pl_open              _audvt->drct_pl_open
+#define audacious_drct_pl_open_list         _audvt->drct_pl_open_list
 #define audacious_drct_pl_add               _audvt->drct_pl_add
 #define audacious_drct_pl_clear             _audvt->drct_pl_clear
 #define audacious_drct_pl_get_length        _audvt->drct_pl_get_length
