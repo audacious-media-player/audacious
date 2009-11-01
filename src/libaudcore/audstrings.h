@@ -62,6 +62,7 @@ gchar *filename_split_subtune(const gchar * filename, gint * track);
 
 void string_decode_percent(gchar *string);
 void string_cut_extension(gchar *string);
+gint string_compare (const gchar * a, const gchar * b);
 
 G_END_DECLS
 

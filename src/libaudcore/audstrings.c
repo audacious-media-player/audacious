@@ -418,3 +418,47 @@ void string_cut_extension(gchar *string)
     if (period != NULL)
         *period = 0;
 }
+
+/* Like strcmp, but orders numbers correctly: "2" before "10" */
+
+gint string_compare (const gchar * a, const gchar * b)
+{
+    while (* a || * b)
+    {
+        if (* a >= '0' && * a <= '9' && * b >= '0' && * b <= '9')
+        {
+            gint x = 0, y = 0;
+
+            while (* a >= '0' && * a <= '9')
+            {
+                x = x * 10 + * a - '0';
+                a ++;
+            }
+
+            while (* b >= '0' && * b <= '9')
+            {
+                y = y * 10 + * b - '0';
+                b ++;
+            }
+
+            if (x > y)
+                return 1;
+
+            if (x < y)
+                return -1;
+        }
+        else
+        {
+            if (* a > * b)
+                return 1;
+
+            if (* a < * b)
+                return -1;
+
+            a ++;
+            b ++;
+        }
+    }
+
+    return 0;
+}

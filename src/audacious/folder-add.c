@@ -80,7 +80,7 @@ static void show_done (void)
 
 static gint compare (const void * * a, const void * * b)
 {
-    return strcmp (* (gchar * *) a, * (gchar * *) b);
+    return string_compare (* (const gchar * *) a, * (const gchar * *) b);
 }
 
 static gboolean add_cb (void * unused)

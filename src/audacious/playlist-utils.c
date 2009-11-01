@@ -56,7 +56,7 @@ static const gchar * get_basename (const gchar * filename)
 
 static gint filename_compare_basename (const gchar * a, const gchar * b)
 {
-    return strcmp (get_basename (a), get_basename (b));
+    return string_compare (get_basename (a), get_basename (b));
 }
 
 static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
@@ -69,7 +69,7 @@ static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
     if (string_b == NULL)
         return 1;
 
-    return strcmp (string_a, string_b);
+    return string_compare (string_a, string_b);
 }
 
 static gint tuple_compare_int (const Tuple * a, const Tuple * b, gint field)
@@ -108,7 +108,7 @@ static gint tuple_compare_track (const Tuple * a, const Tuple * b)
 static gint (* filename_comparisons[PLAYLIST_SORT_SCHEMES]) (const gchar * a,
  const gchar * b) =
 {
-    strcmp,
+    string_compare,
     filename_compare_basename,
     NULL,
     NULL,
