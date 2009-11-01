@@ -125,12 +125,6 @@ static void update_cb (void * hook_data, void * user_data)
         hook_call ("title change", NULL);
 }
 
-void
-playback_error(void)
-{
-    event_queue("playback audio error", NULL);
-}
-
 static gint
 playback_get_time_real(void)
 {
@@ -300,10 +294,7 @@ static gboolean playback_ended (void * user_data)
     playback_finalize (ip_data.current_input_playback);
 
     if (error)
-    {
-        playback_error ();
         play = FALSE;
-    }
     else
     {
         if (cfg.no_playlist_advance)
@@ -358,7 +349,7 @@ playback_monitor_thread(gpointer data)
     InputPlayback *playback = (InputPlayback *) data;
 
     if (playback->segmented)
-        g_idle_add(playback_segmented_start, playback); 
+        g_idle_add(playback_segmented_start, playback);
 
     plugin_set_current((Plugin *)(playback->plugin));
     playback->plugin->play_file(playback);
