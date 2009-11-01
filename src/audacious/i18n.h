@@ -23,6 +23,8 @@
 #include <glib.h>
 #include <libintl.h>
 
+#include "config.h"
+
 #define _(String) dgettext (PACKAGE, String)
 #define Q_(String) g_strip_context ((String), dgettext (PACKAGE, String))
 #ifdef gettext_noop
