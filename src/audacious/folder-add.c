@@ -43,34 +43,34 @@ static void show_progress (const gchar * path, gint count)
         GtkWidget * vbox;
 
         add_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_type_hint ((GtkWindow *) add_window,
+        gtk_window_set_type_hint (GTK_WINDOW(add_window),
          GDK_WINDOW_TYPE_HINT_DIALOG);
-        gtk_window_set_title ((GtkWindow *) add_window, _("Searching ..."));
-        gtk_window_set_resizable ((GtkWindow *) add_window, FALSE);
-        gtk_container_set_border_width ((GtkContainer *) add_window, 6);
+        gtk_window_set_title (GTK_WINDOW(add_window), _("Searching ..."));
+        gtk_window_set_resizable (GTK_WINDOW(add_window), FALSE);
+        gtk_container_set_border_width (GTK_CONTAINER(add_window), 6);
 
         vbox = gtk_vbox_new (FALSE, 6);
-        gtk_container_add ((GtkContainer *) add_window, vbox);
+        gtk_container_add (GTK_CONTAINER(add_window), vbox);
 
         add_progress_path = gtk_label_new ("");
         gtk_widget_set_size_request (add_progress_path, 320, -1);
-        gtk_label_set_ellipsize ((GtkLabel *) add_progress_path,
+        gtk_label_set_ellipsize (GTK_LABEL(add_progress_path),
          PANGO_ELLIPSIZE_MIDDLE);
-        gtk_box_pack_start ((GtkBox *) vbox, add_progress_path, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX(vbox), add_progress_path, FALSE, FALSE, 0);
 
         add_progress_count = gtk_label_new ("");
         gtk_widget_set_size_request (add_progress_count, 320, -1);
-        gtk_box_pack_start ((GtkBox *) vbox, add_progress_count, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX(vbox), add_progress_count, FALSE, FALSE, 0);
 
         gtk_widget_show_all (add_window);
 
-        g_signal_connect ((GObject *) add_window, "destroy", (GCallback)
-         gtk_widget_destroyed, & add_window);
+        g_signal_connect (G_OBJECT(add_window), "destroy",
+         G_CALLBACK(gtk_widget_destroyed), & add_window);
     }
 
-    gtk_label_set_text ((GtkLabel *) add_progress_path, path);
+    gtk_label_set_text (GTK_LABEL(add_progress_path), path);
     snprintf (scratch, sizeof scratch, _("%d files found"), count);
-    gtk_label_set_text ((GtkLabel *) add_progress_count, scratch);
+    gtk_label_set_text (GTK_LABEL(add_progress_count), scratch);
 }
 
 static void show_done (void)
