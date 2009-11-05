@@ -313,9 +313,6 @@ void drct_pl_open_list (GList * list)
     gint playlist = playlist_get_active ();
     gint entries;
 
-    if (playback_get_playing ())
-        playback_stop ();
-
     if (cfg.clear_playlist)
         playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
     else
@@ -324,12 +321,14 @@ void drct_pl_open_list (GList * list)
     entries = playlist_entry_count (playlist);
     drct_pl_add (list);
 
-    if (playlist_entry_count (playlist) > entries)
-    {
-        playlist_set_playing (playlist);
+    if (playlist_entry_count (playlist) == entries)
+        return;
+
+    if (! cfg.clear_playlist)
         playlist_set_position (playlist, entries);
-        playback_initiate ();
-    }
+
+    playlist_set_playing (playlist);
+    playback_initiate ();
 }
 
 void drct_pl_add (GList * list)

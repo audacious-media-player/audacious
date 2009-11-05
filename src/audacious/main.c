@@ -210,9 +210,33 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
     g_free(context);
 }
 
+/* FIX ME: Make this a single DBUS call */
+static void remote_open_list (DBusGProxy * session, GList * list)
+{
+    gint entries;
+
+    if (cfg.clear_playlist)
+        audacious_remote_playlist_clear (session);
+    else
+        audacious_remote_playqueue_clear (session);
+
+    entries = audacious_remote_get_playlist_length (session);
+
+    for (; list != NULL; list = list->next)
+        audacious_remote_playlist_add_url_string (session, list->data);
+
+    if (audacious_remote_get_playlist_length (session) == entries)
+        return;
+
+    if (! cfg.clear_playlist)
+        audacious_remote_set_playlist_pos (session, entries);
+
+    audacious_remote_play (session);
+}
+
 static void handle_cmd_line_filenames(gboolean is_running)
 {
-    gint i, pos = 0;
+    gint i;
     gchar *working, **filenames = options.filenames;
     GList * fns = NULL, * node;
 #ifdef USE_DBUS
@@ -252,23 +276,7 @@ static void handle_cmd_line_filenames(gboolean is_running)
                 audacious_remote_playlist_add_url_string (session, node->data);
         }
         else
-        {
-            if (cfg.clear_playlist)
-                audacious_remote_playlist_clear (session);
-            else
-                audacious_remote_playqueue_clear (session);
-
-            pos = audacious_remote_get_playlist_length (session);
-
-            for (node = fns; node != NULL; node = node->next)
-                audacious_remote_playlist_add_url_string (session, node->data);
-
-            if (audacious_remote_get_playlist_length (session) > pos)
-            {
-                audacious_remote_set_playlist_pos (session, pos);
-                audacious_remote_play (session);
-            }
-        }
+            remote_open_list (session, fns);
     }
     else                        /* !is_running */
 #endif
