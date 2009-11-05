@@ -124,6 +124,7 @@ struct playlist
 static struct index *playlists;
 static struct playlist *active_playlist;
 static struct playlist *playing_playlist;
+static gboolean shuffle;
 
 static gint update_source, update_level;
 static gint scan_source;
@@ -254,6 +255,58 @@ static void entry_free(struct entry *entry)
     g_free(entry);
 }
 
+static void clear_shuffle(struct playlist *playlist)
+{
+    if (playlist->shuffled == NULL)
+        return;
+
+    index_free(playlist->shuffled);
+    playlist->shuffled = NULL;
+    playlist->shuffle_position = -1;
+}
+
+static void create_shuffle(struct playlist *playlist)
+{
+    gint entries = index_count(playlist->entries);
+    gint count;
+
+    if (playlist->shuffled != NULL)
+        clear_shuffle(playlist);
+
+    playlist->shuffled = index_new();
+
+    if (playlist->position == NULL)
+    {
+        index_merge_append(playlist->shuffled, playlist->entries);
+        playlist->shuffle_position = -1;
+        count = 0;
+    }
+    else
+    {
+        index_append(playlist->shuffled, playlist->position);
+        playlist->shuffle_position = 0;
+
+        for (count = 0; count < entries; count++)
+        {
+            struct entry *entry = index_get(playlist->entries, count);
+
+            if (entry != playlist->position)
+                index_append(playlist->shuffled, entry);
+        }
+
+        count = 1;
+    }
+
+    for (; count < entries; count++)
+    {
+        gint replace = count + random() % (entries - count);
+        struct entry *entry = index_get(playlist->shuffled, replace);
+
+        index_set(playlist->shuffled, replace, index_get(playlist->shuffled, count));
+        index_set(playlist->shuffled, count, entry);
+    }
+}
+
 static struct playlist *playlist_new(void)
 {
     struct playlist *playlist = g_malloc(sizeof(struct playlist));
@@ -269,6 +322,9 @@ static struct playlist *playlist_new(void)
     playlist->queued = NULL;
     playlist->total_length = 0;
     playlist->selected_length = 0;
+
+    if (shuffle)
+        create_shuffle (playlist);
 
     return playlist;
 }
@@ -330,58 +386,6 @@ static struct entry *lookup_entry(struct playlist *playlist, gint entry_num)
         return NULL;
 
     return index_get(playlist->entries, entry_num);
-}
-
-static void clear_shuffle(struct playlist *playlist)
-{
-    if (playlist->shuffled == NULL)
-        return;
-
-    index_free(playlist->shuffled);
-    playlist->shuffled = NULL;
-    playlist->shuffle_position = -1;
-}
-
-static void create_shuffle(struct playlist *playlist)
-{
-    gint entries = index_count(playlist->entries);
-    gint count;
-
-    if (playlist->shuffled != NULL)
-        clear_shuffle(playlist);
-
-    playlist->shuffled = index_new();
-
-    if (playlist->position == NULL)
-    {
-        index_merge_append(playlist->shuffled, playlist->entries);
-        playlist->shuffle_position = -1;
-        count = 0;
-    }
-    else
-    {
-        index_append(playlist->shuffled, playlist->position);
-        playlist->shuffle_position = 0;
-
-        for (count = 0; count < entries; count++)
-        {
-            struct entry *entry = index_get(playlist->entries, count);
-
-            if (entry != playlist->position)
-                index_append(playlist->shuffled, entry);
-        }
-
-        count = 1;
-    }
-
-    for (; count < entries; count++)
-    {
-        gint replace = count + random() % (entries - count);
-        struct entry *entry = index_get(playlist->shuffled, replace);
-
-        index_set(playlist->shuffled, replace, index_get(playlist->shuffled, count));
-        index_set(playlist->shuffled, count, entry);
-    }
 }
 
 static gboolean update (void * unused)
@@ -537,6 +541,7 @@ void playlist_init (void)
     playlist->number = 0;
     active_playlist = playlist;
     playing_playlist = NULL;
+    shuffle = FALSE;
 
     update_source = 0;
     update_level = 0;
@@ -755,17 +760,11 @@ void playlist_entry_insert(gint playlist_num, gint at, gchar * filename, Tuple *
 void playlist_entry_insert_batch(gint playlist_num, gint at, struct index *filenames, struct index *tuples)
 {
     DECLARE_PLAYLIST;
-    gboolean shuffle;
     gint entries, number, count;
     struct index *add;
 
     LOOKUP_PLAYLIST;
     PLAYLIST_WILL_CHANGE;
-
-    shuffle = (playlist->shuffled != NULL);
-
-    if (shuffle)
-        clear_shuffle (playlist);
 
     entries = index_count (playlist->entries);
 
@@ -810,16 +809,11 @@ void playlist_entry_insert_batch(gint playlist_num, gint at, struct index *filen
 void playlist_entry_delete(gint playlist_num, gint at, gint number)
 {
     DECLARE_PLAYLIST;
-    gboolean shuffle, stop = FALSE;
+    gboolean stop = FALSE;
     gint entries, count;
 
     LOOKUP_PLAYLIST;
     PLAYLIST_WILL_CHANGE;
-
-    shuffle = (playlist->shuffled != NULL);
-
-    if (shuffle)
-        clear_shuffle (playlist);
 
     entries = index_count (playlist->entries);
 
@@ -975,7 +969,6 @@ gint playlist_entry_get_end_time (gint playlist_num, gint entry_num)
 void playlist_set_position (gint playlist_num, gint entry_num)
 {
     DECLARE_PLAYLIST_ENTRY;
-    gboolean shuffle;
 
     if (entry_num == -1)
     {
@@ -987,11 +980,6 @@ void playlist_set_position (gint playlist_num, gint entry_num)
 
     if (playlist == playing_playlist && playback_get_playing ())
         playback_stop ();
-
-    shuffle = (playlist->shuffled != NULL);
-
-    if (shuffle)
-        clear_shuffle(playlist);
 
     playlist->position = entry;
 
@@ -1220,17 +1208,12 @@ gint playlist_shift_selected(gint playlist_num, gint distance)
 void playlist_delete_selected(gint playlist_num)
 {
     DECLARE_PLAYLIST;
-    gboolean shuffle, stop = FALSE;
+    gboolean stop = FALSE;
     gint entries, count;
     struct index *others;
 
     LOOKUP_PLAYLIST;
     PLAYLIST_WILL_CHANGE;
-
-    shuffle = (playlist->shuffled != NULL);
-
-    if (shuffle)
-        clear_shuffle (playlist);
 
     entries = index_count (playlist->entries);
     others = index_new();
@@ -1508,9 +1491,11 @@ gint64 playlist_get_selected_length(gint playlist_num)
     return playlist->selected_length;
 }
 
-void playlist_set_shuffle(gboolean shuffle)
+void playlist_set_shuffle (gboolean on)
 {
     gint playlist_num;
+
+    shuffle = on;
 
     for (playlist_num = 0; playlist_num < index_count(playlists); playlist_num++)
     {
