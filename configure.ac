@@ -6,7 +6,7 @@ dnl Require autoconf 2.59 or later
 AC_PREREQ([2.59])
 
 dnl Initialize
-AC_INIT([audacious], [2.2-beta1], [bugs+audacious@atheme.org])
+AC_INIT([audacious], [2.2-beta2], [bugs+audacious@atheme.org])
 AC_COPYRIGHT([(C) 2005-2009 Audacious Development Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -323,7 +323,6 @@ AC_CONFIG_FILES([
     man/audtool2.1
     man/audacious2.1
     applications/audacious.desktop
-    po/Makefile.in
 ])
 
 BUILDSYS_TOUCH_DEPS
