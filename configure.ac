@@ -323,6 +323,7 @@ AC_CONFIG_FILES([
     man/audtool2.1
     man/audacious2.1
     applications/audacious.desktop
+    po/Makefile.in
 ])
 
 BUILDSYS_TOUCH_DEPS
