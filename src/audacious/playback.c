@@ -224,7 +224,7 @@ void playback_pause (void)
     {
         hook_call("playback unpause", NULL);
 
-        if (playback->end)
+        if (playback->end > 0)
             playback->end_timeout = g_timeout_add(playback_get_time_real() - playback->start, playback_segmented_end, playback);
     }
 }
@@ -337,7 +337,7 @@ playback_segmented_start(gpointer data)
 
     playback->plugin->mseek(playback, playback->start);
 
-    if (playback->end != 0 && playback->end != -1)
+    if (playback->end > 0)
         playback->end_timeout = g_timeout_add(playback->end - playback->start, playback_segmented_end, playback);
 
     return FALSE;
@@ -527,7 +527,7 @@ void playback_seek (gint time)
         else if (playback->plugin->seek != NULL)
             playback->plugin->seek (playback, (playback->start + time) / 1000);
 
-        if (playback->end != 0 && playback->end != -1)
+        if (playback->end > 0)
         {
             if (playback->end_timeout)
                 g_source_remove(playback->end_timeout);
