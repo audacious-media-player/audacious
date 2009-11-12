@@ -1516,7 +1516,7 @@ create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
     if (widget->data.label.stock_id)
         *icon = gtk_image_new_from_stock(widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
 
-    *label = gtk_label_new_with_mnemonic(N_(widget->label));
+    *label = gtk_label_new_with_mnemonic(_(widget->label));
     gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
 
     if (widget->data.label.single_line == FALSE)
