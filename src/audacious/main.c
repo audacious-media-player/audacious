@@ -211,6 +211,7 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
 }
 
 /* FIX ME: Make this a single DBUS call */
+#ifdef USE_DBUS
 static void remote_open_list (DBusGProxy * session, GList * list)
 {
     gint entries;
@@ -233,6 +234,7 @@ static void remote_open_list (DBusGProxy * session, GList * list)
 
     audacious_remote_play (session);
 }
+#endif
 
 static void handle_cmd_line_filenames(gboolean is_running)
 {
