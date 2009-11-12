@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <time.h>
 
 #include "audstrings.h"
 #include "playback.h"
@@ -534,6 +535,8 @@ static void check_scanned (struct playlist * playlist, struct entry * entry)
 void playlist_init (void)
 {
     struct playlist * playlist;
+
+    srandom (time (NULL));
 
     playlists = index_new ();
     playlist = playlist_new ();
