@@ -76,6 +76,7 @@ static gboolean ready_cb (void * data)
     if (seek_when_ready > 0)
         playback_seek (seek_when_ready);
 
+    hook_call ("title change", NULL);
     return FALSE;
 }
 
@@ -602,7 +603,9 @@ static gboolean set_tuple_cb (void * tuple)
     playback->title = g_strdup (title);
     playback->length = playlist_entry_get_length (playlist, entry);
 
-    hook_call ("title change", NULL);
+    if (playback_is_ready (playback))
+        hook_call ("title change", NULL);
+
     return FALSE;
 }
 
@@ -635,6 +638,9 @@ gchar * playback_get_title (void)
 
     playback = ip_data.current_input_playback;
     g_return_val_if_fail (playback != NULL, NULL);
+
+    if (! playback_is_ready (playback))
+        return g_strdup (_("Buffering ..."));
 
     suffix = (playback->length > 0) ? g_strdup_printf (" (%d:%02d)",
      playback->length / 60000, playback->length / 1000 % 60) : NULL;
