@@ -336,7 +336,10 @@ playback_segmented_start(gpointer data)
 {
     InputPlayback *playback = (InputPlayback *) data;
 
-    playback->plugin->mseek(playback, playback->start);
+    if (playback->plugin->mseek != NULL)
+        playback->plugin->mseek (playback, playback->start);
+    else if (playback->plugin->seek != NULL)
+        playback->plugin->seek (playback, playback->start / 1000);
 
     if (playback->end > 0)
         playback->end_timeout = g_timeout_add(playback->end - playback->start, playback_segmented_end, playback);
