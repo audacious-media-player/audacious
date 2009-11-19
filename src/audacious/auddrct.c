@@ -23,7 +23,7 @@
    plugins, originally intended for migration from xmms_remote_* calls */
 
 
-#include "main.h"
+#include "i18n.h"
 #include "input.h"
 #include "playback.h"
 #include "auddrct.h"
@@ -396,14 +396,31 @@ void drct_pl_add_url_string (const gchar * string)
     drct_pl_ins_url_string (string, -1);
 }
 
-void drct_pl_enqueue_to_temp (gchar * string)
+void drct_pl_enqueue_to_temp (const gchar * filename)
 {
-    gint playlist = playlist_count ();
+    GList * list = g_list_prepend (NULL, (gchar *) filename);
+
+    drct_pl_temp_open_list (list);
+    g_list_free (list);
+}
+
+void drct_pl_temp_open_list (GList * list)
+{
+    gint playlist, playlists = playlist_count ();
+    const gchar * title = _("Temporary Playlist");
+
+    for (playlist = 0; playlist < playlists; playlist ++)
+    {
+        if (! strcmp (playlist_get_title (playlist), title))
+            goto FOUND;
+    }
 
     playlist_insert (playlist);
+    playlist_set_title (playlist, title);
+
+FOUND:
     playlist_set_active (playlist);
-    playlist_set_playing (playlist);
-    drct_pl_add_url_string (string);
+    drct_pl_open_list (list);
 }
 
 /* playqueue */

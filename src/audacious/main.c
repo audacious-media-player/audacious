@@ -210,7 +210,7 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
     g_free(context);
 }
 
-/* FIX ME: Make this a single DBUS call */
+/* FIX ME: Make these into single DBUS calls */
 #ifdef USE_DBUS
 static void remote_open_list (DBusGProxy * session, GList * list)
 {
@@ -233,6 +233,19 @@ static void remote_open_list (DBusGProxy * session, GList * list)
         audacious_remote_set_playlist_pos (session, entries);
 
     audacious_remote_play (session);
+}
+
+static void remote_temp_open_list (DBusGProxy * session, GList * list)
+{
+    if (list == NULL)
+        return;
+
+    /* always starts with the first song, ignoring shuffle :( */
+    audacious_remote_playlist_enqueue_to_temp (session, list->data);
+    list = list->next;
+
+    for (; list != NULL; list = list->next)
+        audacious_remote_playlist_add_url_string (session, list->data);
 }
 #endif
 
@@ -271,7 +284,7 @@ static void handle_cmd_line_filenames(gboolean is_running)
     if (is_running)
     {
         if (options.enqueue_to_temp)
-            audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
+            remote_temp_open_list (session, fns);
         else if (options.enqueue)
         {
             for (node = fns; node != NULL; node = node->next)
@@ -284,7 +297,10 @@ static void handle_cmd_line_filenames(gboolean is_running)
 #endif
     {
         if (options.enqueue_to_temp)
-            drct_pl_enqueue_to_temp(filenames[0]);
+        {
+            drct_pl_temp_open_list (fns);
+            cfg.resume_playlist = -1;
+        }
         else if (options.enqueue)
             drct_pl_add (fns);
         else

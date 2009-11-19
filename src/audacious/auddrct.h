@@ -74,7 +74,8 @@ void drct_pl_delete ( gint pos );
 void drct_pl_set_pos( gint pos );
 void drct_pl_ins_url_string (const gchar * string, gint pos);
 void drct_pl_add_url_string (const gchar * string);
-void drct_pl_enqueue_to_temp( gchar * string );
+void drct_pl_enqueue_to_temp (const gchar * filename);
+void drct_pl_temp_open_list (GList * list);
 
 /* playqueue */
 gint drct_pq_get_length( void );
