@@ -542,7 +542,7 @@ struct _AudaciousFuncTableV1 {
     void (*drct_pl_set_pos)( gint pos );
     void (* drct_pl_ins_url_string) (const gchar * string, gint pos);
     void (* drct_pl_add_url_string) (const gchar * string);
-    void (*drct_pl_enqueue_to_temp)( gchar * string );
+    void (* drct_pl_enqueue_to_temp) (const gchar * filename);
 
     /* DRCT API: playqueue */
     gint (*drct_pq_get_length)( void );
