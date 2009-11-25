@@ -21,12 +21,13 @@
 
 #include <dirent.h>
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 
-#include "libaudcore/index.h"
+#include "config.h"
+#include "i18n.h"
 #include "playlist-new.h"
 #include "playlist-utils.h"
 
@@ -69,7 +70,8 @@ static void show_progress (const gchar * path, gint count)
     }
 
     gtk_label_set_text (GTK_LABEL(add_progress_path), path);
-    snprintf (scratch, sizeof scratch, _("%d files found"), count);
+    snprintf (scratch, sizeof scratch, count == 1 ? _("%d file found") :
+     _("%d files found"), count);
     gtk_label_set_text (GTK_LABEL(add_progress_count), scratch);
 }
 

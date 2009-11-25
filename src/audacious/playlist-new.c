@@ -20,10 +20,12 @@
  */
 
 #include <glib.h>
-#include <glib/gi18n.h>
+#include <stdlib.h>
 #include <time.h>
 
+#include "config.h"
 #include "audstrings.h"
+#include "i18n.h"
 #include "playback.h"
 #include "playlist-new.h"
 #include "playlist-utils.h"
