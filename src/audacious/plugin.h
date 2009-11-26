@@ -54,7 +54,6 @@
 #include "audacious/preferences.h"
 #include "audacious/interface.h"
 #include "audacious/equalizer_preset.h"
-#include "libSAD/libSAD.h"
 #include "libaudtag/audtag.h"
 
 //@{

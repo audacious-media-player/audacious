@@ -101,7 +101,7 @@ DATA = images/about-logo.png				\
        ui/carbon-menubar.ui
 
 CLEAN = build_stamp.c libaudacious.exe.a
-EXT_DEPS = ../libguess/libguess.a ../libSAD/${LIB_PREFIX}SAD${LIB_SUFFIX}
+EXT_DEPS = ../libguess/libguess.a
 
 ifeq ($(USE_EGGSM),yes)
 EXT_DEPS += ../libeggsmclient/libeggsmclient.a
@@ -136,7 +136,6 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		-I.. -I../..			\
 		-I./intl			\
 		-I.				\
-		-I../libSAD			\
 		-I../libaudcore
 
 LIBS += ${LDADD}						\
@@ -144,7 +143,6 @@ LIBS += ${LDADD}						\
 		${LIBINTL}						\
 		${SAMPLERATE_LIBS}				\
 		../libguess/libguess.a			\
-		-L../libSAD -lSAD			\
 		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\
 		${GTHREAD_LIBS}					\

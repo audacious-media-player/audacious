@@ -47,8 +47,6 @@
 #include "eggdesktopfile.h"
 #endif
 
-#include "libSAD.h"
-
 #include "build_stamp.h"
 #include "configdb.h"
 #include "equalizer.h"
@@ -537,10 +535,6 @@ gint main(gint argc, gchar ** argv)
         g_printerr(_("%s: Unable to open display, exiting.\n"), argv[0]);
         exit(EXIT_FAILURE);
     }
-
-    g_message("Setting up libSAD");
-    g_random_set_seed(time(NULL));
-    SAD_dither_init_rand((gint32) time(NULL));
 
     g_message("Loading configuration");
     aud_config_load();
