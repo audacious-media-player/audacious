@@ -1400,12 +1400,13 @@ create_filepopup_settings(void)
     gtk_widget_show_all(vbox);
 }
 
-void
-create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget **spin_btn, GtkWidget **label_past)
+static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
+ label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past, const gchar *
+ domain)
 {
      g_return_if_fail(widget->type == WIDGET_SPIN_BTN);
 
-     *label_pre = gtk_label_new(_(widget->label));
+     * label_pre = gtk_label_new (dgettext (domain, widget->label));
      gtk_misc_set_alignment(GTK_MISC(*label_pre), 0, 0.5);
      gtk_misc_set_padding(GTK_MISC(*label_pre), 4, 0);
 
@@ -1415,10 +1416,12 @@ create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget *
 
 
      if (widget->tooltip)
-         gtk_widget_set_tooltip_text(*spin_btn, _(widget->tooltip));
+         gtk_widget_set_tooltip_text (* spin_btn, dgettext (domain,
+          widget->tooltip));
 
      if (widget->data.spin_btn.right_label) {
-         *label_past = gtk_label_new(_(widget->data.spin_btn.right_label));
+         * label_past = gtk_label_new (dgettext (domain,
+          widget->data.spin_btn.right_label));
          gtk_misc_set_alignment(GTK_MISC(*label_past), 0, 0.5);
          gtk_misc_set_padding(GTK_MISC(*label_past), 4, 0);
      }
@@ -1447,14 +1450,14 @@ create_spin_button(PreferencesWidget *widget, GtkWidget **label_pre, GtkWidget *
      }
 }
 
-void
-create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_btn)
+void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
+ GtkWidget * * font_btn, const gchar * domain)
 {
     *font_btn = gtk_font_button_new();
     gtk_font_button_set_use_font(GTK_FONT_BUTTON(*font_btn), TRUE);
     gtk_font_button_set_use_size(GTK_FONT_BUTTON(*font_btn), TRUE);
     if (widget->label) {
-        *label = gtk_label_new_with_mnemonic(_(widget->label));
+        * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
         gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
         gtk_misc_set_alignment(GTK_MISC(*label), 1, 0.5);
         gtk_label_set_justify(GTK_LABEL(*label), GTK_JUSTIFY_RIGHT);
@@ -1462,7 +1465,8 @@ create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_b
     }
 
     if (widget->data.font_btn.title)
-        gtk_font_button_set_title(GTK_FONT_BUTTON(*font_btn), _(widget->data.font_btn.title));
+        gtk_font_button_set_title (GTK_FONT_BUTTON (* font_btn),
+         dgettext (domain, widget->data.font_btn.title));
 
     g_object_set_data(G_OBJECT(*font_btn), "callback", widget->callback);
 
@@ -1474,17 +1478,17 @@ create_font_btn(PreferencesWidget *widget, GtkWidget **label, GtkWidget **font_b
                      (gchar**)widget->cfg);
 }
 
-void
-create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
+static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
+ GtkWidget * * entry, const gchar * domain)
 {
     *entry = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(*entry), !widget->data.entry.password);
 
     if (widget->label)
-        *label = gtk_label_new(_(widget->label));
+        * label = gtk_label_new (dgettext (domain, widget->label));
 
     if (widget->tooltip)
-        gtk_widget_set_tooltip_text(*entry, _(widget->tooltip));
+        gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
     g_object_set_data(G_OBJECT(*entry), "callback", widget->callback);
 
@@ -1510,13 +1514,13 @@ create_entry(PreferencesWidget *widget, GtkWidget **label, GtkWidget **entry)
     }
 }
 
-void
-create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
+static void create_label (PreferencesWidget * widget, GtkWidget * * label,
+ GtkWidget * * icon, const gchar * domain)
 {
     if (widget->data.label.stock_id)
         *icon = gtk_image_new_from_stock(widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
 
-    *label = gtk_label_new_with_mnemonic(_(widget->label));
+    * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
     gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
 
     if (widget->data.label.single_line == FALSE)
@@ -1525,13 +1529,13 @@ create_label(PreferencesWidget *widget, GtkWidget **label, GtkWidget **icon)
     gtk_misc_set_alignment(GTK_MISC(*label), 0, 0.5);
 }
 
-void
-create_cbox(PreferencesWidget *widget, GtkWidget **label, GtkWidget **combobox)
+static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
+ GtkWidget * * combobox, const gchar * domain)
 {
     *combobox = gtk_combo_box_new_text();
 
     if (widget->label) {
-        *label = gtk_label_new(_(widget->label));
+        * label = gtk_label_new (dgettext (domain, widget->label));
         gtk_misc_set_alignment(GTK_MISC(*label), 1, 0.5);
     }
 
@@ -1540,8 +1544,8 @@ create_cbox(PreferencesWidget *widget, GtkWidget **label, GtkWidget **combobox)
                            widget);
 }
 
-void
-fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
+static void fill_table (GtkWidget * table, PreferencesWidget * elements, gint
+ amt, const gchar * domain)
 {
     gint x;
     GtkWidget *widget_left, *widget_middle, *widget_right;
@@ -1551,23 +1555,28 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
         widget_left = widget_middle = widget_right = NULL;
         switch (elements[x].type) {
             case WIDGET_SPIN_BTN:
-                create_spin_button(&elements[x], &widget_left, &widget_middle, &widget_right);
+                create_spin_button (& elements[x], & widget_left,
+                 & widget_middle, & widget_right, domain);
                 middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_LABEL:
-                create_label(&elements[x], &widget_middle, &widget_left);
+                create_label (& elements[x], & widget_middle, & widget_left,
+                 domain);
                 middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_FONT_BTN:
-                create_font_btn(&elements[x], &widget_left, &widget_middle);
+                create_font_btn (& elements[x], & widget_left, & widget_middle,
+                 domain);
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             case WIDGET_ENTRY:
-                create_entry(&elements[x], &widget_left, &widget_middle);
+                create_entry (& elements[x], & widget_left, & widget_middle,
+                 domain);
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             case WIDGET_COMBO_BOX:
-                create_cbox(&elements[x], &widget_left, &widget_middle);
+                create_cbox (& elements[x], & widget_left, & widget_middle,
+                 domain);
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             default:
@@ -1591,9 +1600,8 @@ fill_table(GtkWidget *table, PreferencesWidget *elements, gint amt)
     }
 }
 
-/* it's at early stage */
-void
-create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
+void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets, gint
+ amt, const gchar * domain)
 {
     gint x;
     GtkWidget *alignment = NULL, *widget = NULL;
@@ -1622,7 +1630,8 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
         switch(widgets[x].type) {
             case WIDGET_CHK_BTN:
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-                widget = gtk_check_button_new_with_mnemonic(_(widgets[x].label));
+                widget = gtk_check_button_new_with_mnemonic (dgettext (domain,
+                 widgets[x].label));
                 g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
 
                 if (widgets[x].cfg_type == VALUE_CFG_BOOLEAN) {
@@ -1649,7 +1658,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
 
                 GtkWidget *label = NULL, *icon = NULL;
-                create_label(&widgets[x], &label, &icon);
+                create_label (& widgets[x], & label, & icon, domain);
 
                 if (icon == NULL)
                     widget = label;
@@ -1661,7 +1670,8 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 break;
             case WIDGET_RADIO_BTN:
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-                widget = gtk_radio_button_new_with_mnemonic(radio_btn_group, _(widgets[x].label));
+                widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
+                 dgettext (domain, widgets[x].label));
                 radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
                 g_signal_connect(G_OBJECT(widget), "toggled",
                                  G_CALLBACK(on_toggle_button_toggled),
@@ -1676,7 +1686,8 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *label_pre = NULL, *spin_btn = NULL, *label_past = NULL;
-                create_spin_button(&widgets[x], &label_pre, &spin_btn, &label_past);
+                create_spin_button (& widgets[x], & label_pre, & spin_btn,
+                 & label_past, domain);
 
                 if (label_pre)
                     gtk_box_pack_start(GTK_BOX(widget), label_pre, FALSE, FALSE, 0);
@@ -1699,7 +1710,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *font_btn = NULL;
-                create_font_btn(&widgets[x], &label, &font_btn);
+                create_font_btn (& widgets[x], & label, & font_btn, domain);
 
                 if (label)
                     gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
@@ -1710,7 +1721,8 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
 
                 widget = gtk_table_new(widgets[x].data.table.rows, 3, FALSE);
-                fill_table(widget, widgets[x].data.table.elem, widgets[x].data.table.rows);
+                fill_table (widget, widgets[x].data.table.elem,
+                 widgets[x].data.table.rows, domain);
                 gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
                 break;
             case WIDGET_ENTRY:
@@ -1719,7 +1731,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *entry = NULL;
-                create_entry(&widgets[x], &label, &entry);
+                create_entry (& widgets[x], & label, & entry, domain);
 
                 if (label)
                     gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
@@ -1732,7 +1744,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                 widget = gtk_hbox_new(FALSE, 10);
 
                 GtkWidget *combo = NULL;
-                create_cbox(&widgets[x], &label, &combo);
+                create_cbox (& widgets[x], & label, & combo, domain);
 
                 if (label)
                     gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
@@ -1754,7 +1766,7 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     GtkWidget *tmp;
                     tmp = widget;
 
-                    widget = gtk_frame_new(_(widgets[x].label));
+                    widget = gtk_frame_new (dgettext (domain, widgets[x].label));
                     gtk_container_add(GTK_CONTAINER(widget), tmp);
                 }
                 break;
@@ -1769,7 +1781,9 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
                     vbox = gtk_vbox_new(FALSE, 5);
                     create_widgets(GTK_BOX(vbox), widgets[x].data.notebook.tabs[i].settings, widgets[x].data.notebook.tabs[i].n_settings);
 
-                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), vbox, gtk_label_new(_(widgets[x].data.notebook.tabs[i].name)));
+                    gtk_notebook_append_page (GTK_NOTEBOOK (widget), vbox,
+                     gtk_label_new (dgettext (domain,
+                     widgets[x].data.notebook.tabs[i].name)));
                 }
                 break;
             case WIDGET_SEPARATOR:
@@ -1790,7 +1804,8 @@ create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt)
         if (widget && !gtk_widget_get_parent(widget))
             gtk_container_add(GTK_CONTAINER(alignment), widget);
         if (widget && widgets[x].tooltip && widgets[x].type != WIDGET_SPIN_BTN)
-            gtk_widget_set_tooltip_text(widget, _(widgets[x].tooltip));
+            gtk_widget_set_tooltip_text (widget, dgettext (domain,
+             widgets[x].tooltip));
     }
 
 }

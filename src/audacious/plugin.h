@@ -595,7 +595,8 @@ struct _AudaciousFuncTableV1 {
     void (*calc_mono_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
     void (*calc_stereo_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
 
-    void (*create_widgets)(GtkBox *box, PreferencesWidget *widgets, gint amt);
+    void (* create_widgets_with_domain) (GtkBox * box, PreferencesWidget *
+     widgets, gint amt, const gchar * domain);
 
     GList *(*equalizer_read_presets)(const gchar * basename);
     void (*equalizer_write_preset_file)(GList * list, const gchar * basename);
@@ -959,7 +960,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_calc_mono_pcm               _audvt->calc_mono_pcm
 #define aud_calc_stereo_pcm             _audvt->calc_stereo_pcm
 
-#define aud_create_widgets              _audvt->create_widgets
+#define aud_create_widgets(b, w, a) \
+ _audvt->create_widgets_with_domain (b, w, a, PACKAGE);
 
 #define aud_equalizer_read_presets      _audvt->equalizer_read_presets
 #define aud_equalizer_write_preset_file _audvt->equalizer_write_preset_file

@@ -94,7 +94,7 @@ typedef struct _PreferencesWidget {
             struct _PreferencesWidget *elem;
             gint n_elem;
 
-            gboolean horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */ 
+            gboolean horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
             gboolean frame;       /* whether to draw frame around box */
         } box;
 
@@ -140,6 +140,9 @@ typedef struct {
     gpointer data;    /* for internal interface use only */
 } PluginPreferences;
 
-void create_widgets(GtkBox *box, PreferencesWidget *widgets, gint amt);
+void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets, gint
+ amt, const gchar * domain);
+
+#define create_widgets(b, w, a) create_widgets_with_domain (b, w, a, PACKAGE);
 
 #endif /* AUDACIOUS_PREFERENCES_H */

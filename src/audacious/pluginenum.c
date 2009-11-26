@@ -347,7 +347,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .calc_mono_pcm = calc_mono_pcm,
     .calc_stereo_pcm = calc_stereo_pcm,
 
-    .create_widgets = create_widgets,
+    .create_widgets_with_domain = create_widgets_with_domain,
 
     .equalizer_read_presets = equalizer_read_presets,
     .equalizer_write_preset_file = equalizer_write_preset_file,
