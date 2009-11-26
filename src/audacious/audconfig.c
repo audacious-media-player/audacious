@@ -94,9 +94,8 @@ AudConfig aud_default_config = {
     .enable_clipping_prevention = TRUE,
     .replay_gain_track = TRUE,         /* track mode */
     .replay_gain_album = FALSE,        /* album mode */
-    .enable_adaptive_scaler = FALSE,
-    .replay_gain_preamp = 0.0,
-    .default_gain = -9.0,
+    .replay_gain_preamp = 0,
+    .default_gain = 0,
 #ifdef USE_SAMPLERATE
     .enable_src = FALSE,               /* enable resampling */
     .src_rate = 48000,                 /* samplerate */
@@ -165,7 +164,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
-    {"enable_adaptive_scaler", &cfg.enable_adaptive_scaler, TRUE},
 #ifdef USE_SAMPLERATE
     {"enable_src", &cfg.enable_src, TRUE},
 #endif

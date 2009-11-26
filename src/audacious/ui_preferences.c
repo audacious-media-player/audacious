@@ -52,7 +52,6 @@
 #include "playlist-new.h"
 #include "playlist-utils.h"
 #include "visualization.h"
-#include "volumecontrol.h"
 #include "audstrings.h"
 #include "util.h"
 #include "configdb.h"
@@ -63,6 +62,8 @@
 #include "build_stamp.h"
 
 #define TITLESTRING_UPDATE_TIMEOUT 3
+
+static void sw_volume_toggled (void);
 
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
@@ -246,8 +247,6 @@ static PreferencesWidget replay_gain_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
     {WIDGET_CHK_BTN, N_("Enable peak info clipping prevention"), &cfg.enable_clipping_prevention, NULL,
                      N_("Use peak value from Replay Gain info for clipping prevention"), TRUE},
-    {WIDGET_CHK_BTN, N_("Dynamically adjust scale factor to prevent clipping"), &cfg.enable_adaptive_scaler, NULL,
-                     N_("Decrease scale factor (gain) if clipping nevertheless occurred"), TRUE},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {rg_params_elements, G_N_ELEMENTS(rg_params_elements)}}},
 };
 
@@ -2886,4 +2885,19 @@ prefswin_page_destroy(GtkWidget *container)
 
         ret = gtk_tree_model_iter_next(model, &iter);
     }
+}
+
+static void sw_volume_toggled (void)
+{
+    gint vol[2];
+
+    if (cfg.software_volume_control)
+    {
+        vol[0] = cfg.sw_volume_left;
+        vol[1] = cfg.sw_volume_right;
+    }
+    else
+        input_get_volume (& vol[0], & vol[1]);
+
+    hook_call ("volume set", vol);
 }

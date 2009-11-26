@@ -72,7 +72,6 @@ struct _AudConfig {
     gboolean enable_clipping_prevention;
     gboolean replay_gain_track;
     gboolean replay_gain_album;
-    gboolean enable_adaptive_scaler;
     gfloat replay_gain_preamp;
     gfloat default_gain;
 #ifdef USE_SAMPLERATE

@@ -6,6 +6,7 @@ PROG = audacious2${PROG_SUFFIX}
 SRCS = af_equalizer.c							\
        auddrct.c								\
        audconfig.c								\
+       audio.c \
        build_stamp.c							\
        chardet.c								\
        configdb.c								\
@@ -42,7 +43,6 @@ SRCS = af_equalizer.c							\
        util.c									\
        vis_runner.c \
        visualization.c							\
-       volumecontrol.c							\
        sync-menu.c								\
        ui_albumart.c						\
        ui_fileinfo.c						\

@@ -29,6 +29,7 @@
 #  include "config.h"
 #endif
 
+#include "audio.h"
 #include "audconfig.h"
 #include "equalizer.h"
 #include "output.h"
@@ -43,7 +44,6 @@
 
 #include "effect.h"
 #include "vis_runner.h"
-#include "volumecontrol.h"
 
 #include "libSAD.h"
 #include "util.h"
@@ -54,6 +54,8 @@
 #ifdef USE_SAMPLERATE
 # include "src_flow.h"
 #endif
+
+#define SW_VOLUME_RANGE 40 /* decibels */
 
 #define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
  (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
@@ -71,6 +73,8 @@ OutputPluginState op_state = {
 
 static gint decoder_srate = 0;
 static gboolean bypass_dsp = FALSE;
+static gboolean have_replay_gain;
+static ReplayGainInfo replay_gain_info;
 
 OutputPlugin psuedo_output_plugin = {
     .description = "XMMS reverse compatibility output plugin",
@@ -89,8 +93,6 @@ OutputPlugin psuedo_output_plugin = {
     .output_time = get_output_time,
     .written_time = get_written_time,
 };
-
-static void apply_replaygain_info (ReplayGainInfo *rg_info);
 
 OutputPlugin *
 get_current_output_plugin(void)
@@ -216,13 +218,6 @@ get_output_time(void)
 static SAD_dither_t *sad_state_to_float = NULL;
 static SAD_dither_t *sad_state_from_float = NULL;
 
-static ReplayGainInfo replay_gain_info = {
-    .track_gain = 0.0,
-    .track_peak = 0.0,
-    .album_gain = 0.0,
-    .album_peak = 0.0,
-};
-
 static void
 freeSAD()
 {
@@ -288,6 +283,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
     decoder_srate = rate;
     bypass_dsp = cfg.bypass_dsp;
+    have_replay_gain = FALSE;
 
     if (bypass_dsp) {
         AUDDBG("trying to open audio in native format\n");
@@ -370,15 +366,6 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
         fmt = output_fmt;
 
-        if(replay_gain_info.album_peak == 0.0 && replay_gain_info.track_peak == 0.0) {
-            AUDDBG("RG info isn't set yet. Filling replay_gain_info with default values.\n");
-            replay_gain_info.track_gain = cfg.default_gain;
-            replay_gain_info.track_peak = 0.01;
-            replay_gain_info.album_gain = cfg.default_gain;
-            replay_gain_info.album_peak = 0.01;
-        }
-        apply_replaygain_info(&replay_gain_info);
-
         return reopen_audio(fmt, rate, nch);
     } /* bypass_dsp */
 }
@@ -403,12 +390,6 @@ output_close_audio(void)
 
     vis_runner_flush ();
     freeSAD();
-
-    AUDDBG("clearing RG settings\n");
-    replay_gain_info.track_gain = 0.0;
-    replay_gain_info.track_peak = 0.0;
-    replay_gain_info.album_gain = 0.0;
-    replay_gain_info.album_peak = 0.0;
 
 #ifdef USE_SAMPLERATE
     src_flow_free();
@@ -490,7 +471,6 @@ static Flow * get_postproc_flow (void)
         #endif
 
         flow_link_element (flow, equalizer_flow);
-        flow_link_element (flow, volumecontrol_flow);
     }
 
     return flow;
@@ -507,6 +487,88 @@ static Flow * get_legacy_flow (void)
     }
 
     return flow;
+}
+
+void output_set_replaygain_info (InputPlayback * playback, ReplayGainInfo * info)
+{
+    AUDDBG ("Replay Gain info:\n");
+    AUDDBG (" album gain: %f dB\n", info->album_gain);
+    AUDDBG (" album peak: %f\n", info->album_peak);
+    AUDDBG (" track gain: %f dB\n", info->track_gain);
+    AUDDBG (" track peak: %f\n", info->track_peak);
+
+    have_replay_gain = TRUE;
+    memcpy (& replay_gain_info, info, sizeof (ReplayGainInfo));
+}
+
+static void adjust_volume (gfloat * data, gint channels, gint frames)
+{
+    gboolean amplify = FALSE;
+    gfloat factors[channels];
+    gint channel;
+
+    for (channel = 0; channel < channels; channel ++)
+        factors[channel] = 1;
+
+    if (cfg.enable_replay_gain)
+    {
+        gfloat factor = powf (10, (gfloat) cfg.replay_gain_preamp / 20);
+
+        if (have_replay_gain)
+        {
+            if (cfg.replay_gain_album)
+            {
+                factor *= powf (10, replay_gain_info.album_gain / 20);
+
+                if (cfg.enable_clipping_prevention &&
+                 replay_gain_info.album_peak * factor > 1)
+                    factor = 1 / replay_gain_info.album_peak;
+            }
+            else
+            {
+                factor *= powf (10, replay_gain_info.track_gain / 20);
+
+                if (cfg.enable_clipping_prevention &&
+                 replay_gain_info.track_peak * factor > 1)
+                    factor = 1 / replay_gain_info.track_peak;
+            }
+        }
+        else
+            factor *= powf (10, (gfloat) cfg.default_gain / 20);
+
+        if (factor < 0.99 || factor > 1.01)
+        {
+            amplify = TRUE;
+
+            for (channel = 0; channel < channels; channel ++)
+                factors[channel] *= factor;
+        }
+    }
+
+    if (cfg.software_volume_control && (cfg.sw_volume_left != 100 ||
+     cfg.sw_volume_right != 100))
+    {
+        gfloat left_factor = powf (10, (gfloat) SW_VOLUME_RANGE *
+         (cfg.sw_volume_left - 100) / 100 / 20);
+        gfloat right_factor = powf (10, (gfloat) SW_VOLUME_RANGE *
+         (cfg.sw_volume_right - 100) / 100 / 20);
+
+        amplify = TRUE;
+
+        if (channels == 2)
+        {
+            factors[0] *= left_factor;
+            factors[1] *= right_factor;
+        }
+        else
+        {
+            for (channel = 0; channel < channels; channel ++)
+                factors[channel] *= MAX (left_factor, right_factor);
+        }
+    }
+
+    if (amplify)
+        audio_amplify (data, channels, frames, factors);
 }
 
 void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
@@ -534,6 +596,7 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
         }
 
         vis_runner_pass_audio (time, data, samples, channels);
+        adjust_volume (data, channels, samples / channels);
 
         samples = flow_execute (get_postproc_flow (), time, & data, sizeof
          (gfloat) * samples, FMT_FLOAT, decoder_srate, channels) / sizeof
@@ -589,58 +652,6 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
     }
 
     g_free (allocated);
-}
-
-/* called by input plugin when RG info available --asphyx */
-void
-output_set_replaygain_info (InputPlayback *pb, ReplayGainInfo *rg_info)
-{
-    replay_gain_info = *rg_info;
-    apply_replaygain_info(rg_info);
-}
-
-static void
-apply_replaygain_info (ReplayGainInfo *rg_info)
-{
-    SAD_replaygain_mode mode;
-    SAD_replaygain_info info;
-    gboolean rg_enabled;
-    gboolean album_mode;
-
-    if(sad_state_from_float == NULL) {
-        AUDDBG("SAD not initialized!\n");
-        return;
-    }
-
-    rg_enabled = cfg.enable_replay_gain;
-    album_mode = cfg.replay_gain_album;
-    mode.clipping_prevention = cfg.enable_clipping_prevention;
-    mode.hard_limit = FALSE;
-    mode.adaptive_scaler = cfg.enable_adaptive_scaler;
-
-    if(!rg_enabled) return;
-
-    mode.mode = album_mode ? SAD_RG_ALBUM : SAD_RG_TRACK;
-    mode.preamp = cfg.replay_gain_preamp;
-
-    info.present = TRUE;
-    info.track_gain = rg_info->track_gain;
-    info.track_peak = rg_info->track_peak;
-    info.album_gain = rg_info->album_gain;
-    info.album_peak = rg_info->album_peak;
-
-    AUDDBG("Applying Replay Gain settings:\n");
-    AUDDBG("* mode:                %s\n",     mode.mode == SAD_RG_ALBUM ? "album" : "track");
-    AUDDBG("* clipping prevention: %s\n",     mode.clipping_prevention ? "yes" : "no");
-    AUDDBG("* adaptive scaler      %s\n",     mode.adaptive_scaler ? "yes" : "no");
-    AUDDBG("* preamp:              %+f dB\n", mode.preamp);
-    AUDDBG("Replay Gain info for current track:\n");
-    AUDDBG("* track gain:          %+f dB\n", info.track_gain);
-    AUDDBG("* track peak:          %f\n",     info.track_peak);
-    AUDDBG("* album gain:          %+f dB\n", info.album_gain);
-    AUDDBG("* album peak:          %f\n",     info.album_peak);
-
-    SAD_dither_apply_replaygain(sad_state_from_float, &info, &mode);
 }
 
 void output_plugin_cleanup(void)

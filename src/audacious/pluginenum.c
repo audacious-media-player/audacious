@@ -56,7 +56,6 @@
 #include "preferences.h"
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
-#include "volumecontrol.h"
 #include "equalizer_preset.h"
 
 #include "ui_fileinfo.h"
@@ -328,7 +327,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .flow_link_element = flow_link_element,
     .flow_unlink_element = flow_unlink_element,
     .effect_flow = effect_flow,
-    .volumecontrol_flow = volumecontrol_flow,
 
     .get_output_list = get_output_list,
 

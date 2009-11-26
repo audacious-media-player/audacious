@@ -575,7 +575,6 @@ struct _AudaciousFuncTableV1 {
     void (*flow_link_element)(Flow *flow, FlowFunction func);
     void (*flow_unlink_element)(Flow *flow, FlowFunction func);
     void (*effect_flow)(FlowContext *context);
-    void (*volumecontrol_flow)(FlowContext *context);
 
     GList *(*get_output_list)(void);
 
@@ -929,7 +928,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_flow_link_element           _audvt->flow_link_element
 #define aud_flow_unlink_element         _audvt->flow_unlink_element
 #define aud_effect_flow                 _audvt->effect_flow
-#define aud_volumecontrol_flow          _audvt->volumecontrol_flow
 #define aud_flow_destroy(flow)          mowgli_object_unref(flow)
 
 #define audacious_menu_main_show        _audvt->util_menu_main_show
