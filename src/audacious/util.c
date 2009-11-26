@@ -51,7 +51,6 @@
 #include "input.h"
 #include "playback.h"
 #include "audstrings.h"
-#include "libSAD.h"
 
 /*
  * find <file> in directory <dirname> or subdirectories.  return
@@ -64,52 +63,6 @@ typedef struct {
     gchar *match;
     gboolean found;
 } FindFileContext;
-
-static const struct {
-    AFormat afmt;
-    SAD_sample_format sadfmt;
-} format_table[] = {
-    {FMT_U8, SAD_SAMPLE_U8},
-    {FMT_S8, SAD_SAMPLE_S8},
-
-    {FMT_S16_LE, SAD_SAMPLE_S16_LE},
-    {FMT_S16_BE, SAD_SAMPLE_S16_BE},
-    {FMT_S16_NE, SAD_SAMPLE_S16},
-
-    {FMT_U16_LE, SAD_SAMPLE_U16_LE},
-    {FMT_U16_BE, SAD_SAMPLE_U16_BE},
-    {FMT_U16_NE, SAD_SAMPLE_U16},
-
-    {FMT_S24_LE, SAD_SAMPLE_S24_LE},
-    {FMT_S24_BE, SAD_SAMPLE_S24_BE},
-    {FMT_S24_NE, SAD_SAMPLE_S24},
-
-    {FMT_U24_LE, SAD_SAMPLE_U24_LE},
-    {FMT_U24_BE, SAD_SAMPLE_U24_BE},
-    {FMT_U24_NE, SAD_SAMPLE_U24},
-
-    {FMT_S32_LE, SAD_SAMPLE_S32_LE},
-    {FMT_S32_BE, SAD_SAMPLE_S32_BE},
-    {FMT_S32_NE, SAD_SAMPLE_S32},
-
-    {FMT_U32_LE, SAD_SAMPLE_U32_LE},
-    {FMT_U32_BE, SAD_SAMPLE_U32_BE},
-    {FMT_U32_NE, SAD_SAMPLE_U32},
-
-    {FMT_FLOAT, SAD_SAMPLE_FLOAT},
-    {FMT_FIXED32, SAD_SAMPLE_FIXED32},
-};
-
-SAD_sample_format
-sadfmt_from_afmt(AFormat fmt)
-{
-    int i;
-    for (i = 0; i < sizeof(format_table) / sizeof(format_table[0]); i++) {
-        if (format_table[i].afmt == fmt) return format_table[i].sadfmt;
-    }
-
-    return -1;
-}
 
 static gboolean
 find_file_func(const gchar * path, const gchar * basename, gpointer data)

@@ -38,7 +38,6 @@
 G_BEGIN_DECLS
 
 #include "audacious/plugin.h"
-#include "libSAD/libSAD.h"
 
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
 
@@ -80,8 +79,6 @@ GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
 gchar *util_get_localdir(void);
 
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
-
-SAD_sample_format sadfmt_from_afmt(AFormat fmt);
 
 /* minimizes number of realloc's */
 gpointer smart_realloc(gpointer ptr, gsize *size);

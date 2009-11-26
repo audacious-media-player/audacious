@@ -103,39 +103,15 @@ typedef enum {
     FMT_S32_NE,
 
     FMT_FLOAT,
-    FMT_FIXED32 /* equivalent of libmad's mad_fixed_t explained below */
 } AFormat;
-
-/**
- * From mad.h:
- *
- * Fixed-point format: 0xABBBBBBB
- * A == whole part      (sign + 3 bits)
- * B == fractional part (28 bits)
- *
- * Values are signed two's complement, so the effective range is:
- * 0x80000000 to 0x7fffffff
- *       -8.0 to +7.9999999962747097015380859375
- *
- * The smallest representable value is:
- * 0x00000001 == 0.0000000037252902984619140625 (i.e. about 3.725e-9)
- *
- * 28 bits of fractional accuracy represent about
- * 8.6 digits of decimal accuracy.
- *
- * Fixed-point numbers can be added or subtracted as normal
- * integers, but multiplication requires shifting the 64-bit result
- * from 56 fractional bits back to 28 (and rounding.)
- */
-#define __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ 28 /* useful for build time check for plugins linked against libmad, i.e. madplug */
 
 /** Get byte size of one sample of specified audio format */
 #define FMT_SIZEOF(a) ( \
     (a == FMT_S8 || a == FMT_U8) ? sizeof(gint8) : (                                                                   \
     (a == FMT_S16_NE || a == FMT_S16_LE || a == FMT_S16_BE || a == FMT_U16_NE || a == FMT_U16_LE || a == FMT_U16_BE) ? sizeof(gint16) : ( \
     (a == FMT_S24_NE || a == FMT_S24_LE || a == FMT_S24_BE || a == FMT_U24_NE || a == FMT_U24_LE || a == FMT_U24_BE || \
-     a == FMT_S32_NE || a == FMT_S32_LE || a == FMT_S32_BE || a == FMT_U32_NE || a == FMT_U32_LE || a == FMT_U32_BE || \
-     a == FMT_FIXED32) ? sizeof(gint32) : sizeof(float))))
+     a == FMT_S32_NE || a == FMT_S32_LE || a == FMT_S32_BE || a == FMT_U32_NE \
+     || a == FMT_U32_LE || a == FMT_U32_BE) ? sizeof(gint32) : sizeof(float))))
 
 #define FMT_FRACBITS(a) ( (a) == FMT_FIXED32 ? __AUDACIOUS_ASSUMED_MAD_F_FRACBITS__ : 0 )
 
@@ -363,7 +339,6 @@ struct _AudaciousFuncTableV1 {
     void (*util_menu_main_show)(gint x, gint y, guint button, guint time);
 
     gpointer (*smart_realloc)(gpointer ptr, gsize *size);
-    SAD_sample_format (*sadfmt_from_afmt)(AFormat fmt);
     void (*util_add_url_history_entry)(const gchar * url);
 
     /* INI funcs */
@@ -727,7 +702,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_info_dialog                 _audvt->util_info_dialog
 #define audacious_info_dialog           _audvt->util_info_dialog
 #define aud_smart_realloc               _audvt->smart_realloc
-#define aud_sadfmt_from_afmt            _audvt->sadfmt_from_afmt
 #define aud_util_add_url_history_entry  _audvt->util_add_url_history_entry
 
 #define aud_str_to_utf8                 _audvt->str_to_utf8
