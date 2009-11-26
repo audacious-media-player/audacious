@@ -111,26 +111,6 @@ sadfmt_from_afmt(AFormat fmt)
     return -1;
 }
 
-void s16_to_float (int16_t * i, float * f, int samples)
-{
-    int16_t * end = i + samples;
-
-    while (i < end)
-        * f ++ = (float) * i ++ / 32767;
-}
-
-void float_to_s16 (float * f, int16_t * i, int samples)
-{
-    float * end = f + samples;
-    register float ftemp;
-
-    while (f < end)
-    {
-        ftemp = * f ++;
-        * i ++ = CLAMP (ftemp, -1, 1) * 32767;
-    }
-}
-
 static gboolean
 find_file_func(const gchar * path, const gchar * basename, gpointer data)
 {

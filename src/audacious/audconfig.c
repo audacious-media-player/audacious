@@ -103,7 +103,6 @@ AudConfig aud_default_config = {
 #endif
     .bypass_dsp = FALSE,
     .sw_volume_left = 100, .sw_volume_right = 100,
-    .no_dithering = FALSE,
     .clear_playlist = FALSE,
 };
 
@@ -168,7 +167,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_src", &cfg.enable_src, TRUE},
 #endif
     {"bypass_dsp", &cfg.bypass_dsp, TRUE},
-    {"no_dithering", & cfg.no_dithering, TRUE},
     {"clear_playlist", & cfg.clear_playlist, TRUE},
 };
 

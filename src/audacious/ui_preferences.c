@@ -228,8 +228,6 @@ static PreferencesWidget audio_page_widgets[] = {
                      N_("Try to pass input plugin's output directly to output plugin, if the latter supports "
                         "format produced by input plugin. If it's true, all signal processing will be disabled "
                         "(i.e. DSP plugins, equalizer, resampling, Replay Gain and software volume control)."), FALSE},
-    {WIDGET_CHK_BTN, N_("Use fast floating-point conversion (16-bit output "
-     "only)"), & cfg.no_dithering, 0, 0, 0},
 };
 
 static PreferencesWidget rg_params_elements[] = {

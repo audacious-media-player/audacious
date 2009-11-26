@@ -23,6 +23,148 @@
 
 #include "audio.h"
 
+#define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
+static void NAME (TYPE * in, gfloat * out, gint samples) \
+{ \
+    TYPE * end = in + samples; \
+    while (in < end) \
+        * out ++ = (gfloat) (SWAP (* in ++) - OFFSET) / RANGE; \
+}
+
+#define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
+static void NAME (gfloat * in, TYPE * out, gint samples) \
+{ \
+    gfloat * end = in + samples; \
+    while (in < end) \
+    { \
+        float f = * in ++; \
+        * out ++ = SWAP (OFFSET + (TYPE) (CLAMP (f, -1, 1) * RANGE)); \
+    } \
+}
+
+static inline gint8 noop_s8 (gint8 i) {return i;}
+static inline guint8 noop_u8 (guint8 i) {return i;}
+static inline gint16 noop_s16 (gint16 i) {return i;}
+static inline guint16 noop_u16 (guint16 i) {return i;}
+static inline gint32 noop_s32 (gint32 i) {return i;}
+static inline guint32 noop_u32 (guint32 i) {return i;}
+
+static inline gint16 swap_s16 (gint16 i) {return GUINT16_SWAP_LE_BE (i);}
+static inline guint16 swap_u16 (guint16 i) {return GUINT16_SWAP_LE_BE (i);}
+static inline gint32 swap_s32 (gint32 i) {return GUINT32_SWAP_LE_BE (i);}
+static inline guint32 swap_u32 (guint32 i) {return GUINT32_SWAP_LE_BE (i);}
+
+FROM_INT_LOOP (from_s8, gint8, noop_s8, 0x00, 0x7f)
+FROM_INT_LOOP (from_u8, guint8, noop_u8, 0x80, 0x7f)
+FROM_INT_LOOP (from_s16, gint16, noop_s16, 0x0000, 0x7fff)
+FROM_INT_LOOP (from_u16, guint16, noop_u16, 0x8000, 0x7fff)
+FROM_INT_LOOP (from_s24, gint32, noop_s32, 0x000000, 0x7fffff)
+FROM_INT_LOOP (from_u24, guint32, noop_u32, 0x800000, 0x7fffff)
+FROM_INT_LOOP (from_s32, gint32, noop_s32, 0x00000000, 0x7fffffff)
+FROM_INT_LOOP (from_u32, guint32, noop_u32, 0x80000000, 0x7fffffff)
+
+TO_INT_LOOP (to_s8, gint8, noop_s8, 0x00, 0x7f)
+TO_INT_LOOP (to_u8, guint8, noop_u8, 0x80, 0x7f)
+TO_INT_LOOP (to_s16, gint16, noop_s16, 0x0000, 0x7fff)
+TO_INT_LOOP (to_u16, guint16, noop_u16, 0x8000, 0x7fff)
+TO_INT_LOOP (to_s24, gint32, noop_s32, 0x000000, 0x7fffff)
+TO_INT_LOOP (to_u24, guint32, noop_u32, 0x800000, 0x7fffff)
+TO_INT_LOOP (to_s32, gint32, noop_s32, 0x00000000, 0x7fffffff)
+TO_INT_LOOP (to_u32, guint32, noop_u32, 0x80000000, 0x7fffffff)
+
+FROM_INT_LOOP (from_s16_swap, gint16, swap_s16, 0x0000, 0x7fff)
+FROM_INT_LOOP (from_u16_swap, guint16, swap_u16, 0x8000, 0x7fff)
+FROM_INT_LOOP (from_s24_swap, gint32, swap_s32, 0x000000, 0x7fffff)
+FROM_INT_LOOP (from_u24_swap, guint32, swap_u32, 0x800000, 0x7fffff)
+FROM_INT_LOOP (from_s32_swap, gint32, swap_s32, 0x00000000, 0x7fffffff)
+FROM_INT_LOOP (from_u32_swap, guint32, swap_u32, 0x80000000, 0x7fffffff)
+
+TO_INT_LOOP (to_s16_swap, gint16, swap_s16, 0x0000, 0x7fff)
+TO_INT_LOOP (to_u16_swap, guint16, swap_u16, 0x8000, 0x7fff)
+TO_INT_LOOP (to_s24_swap, gint32, swap_s32, 0x000000, 0x7fffff)
+TO_INT_LOOP (to_u24_swap, guint32, swap_u32, 0x800000, 0x7fffff)
+TO_INT_LOOP (to_s32_swap, gint32, swap_s32, 0x00000000, 0x7fffffff)
+TO_INT_LOOP (to_u32_swap, guint32, swap_u32, 0x80000000, 0x7fffffff)
+
+typedef void (* FromFunc) (void * in, gfloat * out, gint samples);
+typedef void (* ToFunc) (gfloat * in, void * out, gint samples);
+
+struct
+{
+    AFormat format;
+    FromFunc from;
+    ToFunc to;
+}
+convert_table [] =
+{
+    {FMT_S8, (FromFunc) from_s8, (ToFunc) to_s8},
+    {FMT_U8, (FromFunc) from_u8, (ToFunc) to_u8},
+    {FMT_S16_NE, (FromFunc) from_s16, (ToFunc) to_s16},
+    {FMT_U16_NE, (FromFunc) from_u16, (ToFunc) to_u16},
+    {FMT_S24_NE, (FromFunc) from_s24, (ToFunc) to_s24},
+    {FMT_U24_NE, (FromFunc) from_u24, (ToFunc) to_u24},
+    {FMT_S32_NE, (FromFunc) from_s32, (ToFunc) to_s32},
+    {FMT_U32_NE, (FromFunc) from_u32, (ToFunc) to_u32},
+
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+    {FMT_S16_LE, (FromFunc) from_s16, (ToFunc) to_s16},
+    {FMT_U16_LE, (FromFunc) from_u16, (ToFunc) to_u16},
+    {FMT_S24_LE, (FromFunc) from_s24, (ToFunc) to_s24},
+    {FMT_U24_LE, (FromFunc) from_u24, (ToFunc) to_u24},
+    {FMT_S32_LE, (FromFunc) from_s32, (ToFunc) to_s32},
+    {FMT_U32_LE, (FromFunc) from_u32, (ToFunc) to_u32},
+
+    {FMT_S16_BE, (FromFunc) from_s16_swap, (ToFunc) to_s16_swap},
+    {FMT_U16_BE, (FromFunc) from_u16_swap, (ToFunc) to_u16_swap},
+    {FMT_S24_BE, (FromFunc) from_s24_swap, (ToFunc) to_s24_swap},
+    {FMT_U24_BE, (FromFunc) from_u24_swap, (ToFunc) to_u24_swap},
+    {FMT_S32_BE, (FromFunc) from_s32_swap, (ToFunc) to_s32_swap},
+    {FMT_U32_BE, (FromFunc) from_u32_swap, (ToFunc) to_u32_swap},
+#else
+    {FMT_S16_BE, (FromFunc) from_s16, (ToFunc) to_s16},
+    {FMT_U16_BE, (FromFunc) from_u16, (ToFunc) to_u16},
+    {FMT_S24_BE, (FromFunc) from_s24, (ToFunc) to_s24},
+    {FMT_U24_BE, (FromFunc) from_u24, (ToFunc) to_u24},
+    {FMT_S32_BE, (FromFunc) from_s32, (ToFunc) to_s32},
+    {FMT_U32_BE, (FromFunc) from_u32, (ToFunc) to_u32},
+
+    {FMT_S16_LE, (FromFunc) from_s16_swap, (ToFunc) to_s16_swap},
+    {FMT_U16_LE, (FromFunc) from_u16_swap, (ToFunc) to_u16_swap},
+    {FMT_S24_LE, (FromFunc) from_s24_swap, (ToFunc) to_s24_swap},
+    {FMT_U24_LE, (FromFunc) from_u24_swap, (ToFunc) to_u24_swap},
+    {FMT_S32_LE, (FromFunc) from_s32_swap, (ToFunc) to_s32_swap},
+    {FMT_U32_LE, (FromFunc) from_u32_swap, (ToFunc) to_u32_swap},
+#endif
+};
+
+void audio_from_int (void * in, AFormat format, gfloat * out, gint samples)
+{
+    gint entry;
+
+    for (entry = 0; entry < G_N_ELEMENTS (convert_table); entry ++)
+    {
+        if (convert_table[entry].format == format)
+        {
+            convert_table[entry].from (in, out, samples);
+            return;
+        }
+    }
+}
+
+void audio_to_int (gfloat * in, void * out, AFormat format, gint samples)
+{
+    gint entry;
+
+    for (entry = 0; entry < G_N_ELEMENTS (convert_table); entry ++)
+    {
+        if (convert_table[entry].format == format)
+        {
+            convert_table[entry].to (in, out, samples);
+            return;
+        }
+    }
+}
+
 void audio_amplify (gfloat * data, gint channels, gint frames, gfloat * factors)
 {
     gfloat * end = data + channels * frames;

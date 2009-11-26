@@ -24,6 +24,10 @@
 
 #include <glib.h>
 
+#include "plugin.h"
+
+void audio_from_int (void * in, AFormat format, gfloat * out, gint samples);
+void audio_to_int (gfloat * in, void * out, AFormat format, gint samples);
 void audio_amplify (gfloat * data, gint channels, gint frames, gfloat * factors);
 
 #endif

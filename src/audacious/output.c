@@ -45,7 +45,6 @@
 #include "effect.h"
 #include "vis_runner.h"
 
-#include "libSAD.h"
 #include "util.h"
 #include "equalizer_flow.h"
 
@@ -215,16 +214,6 @@ get_output_time(void)
     return op->output_time();
 }
 
-static SAD_dither_t *sad_state_to_float = NULL;
-static SAD_dither_t *sad_state_from_float = NULL;
-
-static void
-freeSAD()
-{
-    if (sad_state_from_float != NULL) {SAD_dither_free(sad_state_from_float); sad_state_from_float = NULL;}
-    if (sad_state_to_float != NULL)   {SAD_dither_free(sad_state_to_float);   sad_state_to_float = NULL;}
-}
-
 static gboolean
 reopen_audio(AFormat fmt, gint rate, gint nch)
 {
@@ -273,13 +262,10 @@ reopen_audio(AFormat fmt, gint rate, gint nch)
 gint
 output_open_audio(AFormat fmt, gint rate, gint nch)
 {
-    gint ret;
     AUDDBG("requested: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
 
     AFormat output_fmt;
     int bit_depth;
-    SAD_buffer_format input_sad_fmt;
-    SAD_buffer_format output_sad_fmt;
 
     decoder_srate = rate;
     bypass_dsp = cfg.bypass_dsp;
@@ -320,50 +306,6 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
                 break;
         }
 
-        freeSAD();
-
-        AUDDBG("initializing dithering engine for 2 stage conversion: fmt%d --> float -->fmt%d\n", fmt, output_fmt);
-        input_sad_fmt.sample_format = sadfmt_from_afmt(fmt);
-        if (input_sad_fmt.sample_format < 0) return FALSE;
-        input_sad_fmt.fracbits = FMT_FRACBITS(fmt);
-        input_sad_fmt.channels = nch;
-        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        input_sad_fmt.samplerate = 0;
-
-        output_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
-        output_sad_fmt.fracbits = 0;
-        output_sad_fmt.channels = nch;
-        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        output_sad_fmt.samplerate = 0;
-
-        sad_state_to_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
-        if (sad_state_to_float == NULL) {
-            AUDDBG("ditherer init failed (decoder's native --> float)\n");
-            return FALSE;
-        }
-        SAD_dither_set_dither (sad_state_to_float, FALSE);
-
-        input_sad_fmt.sample_format = SAD_SAMPLE_FLOAT;
-        input_sad_fmt.fracbits = 0;
-        input_sad_fmt.channels = nch;
-        input_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        input_sad_fmt.samplerate = 0;
-
-        output_sad_fmt.sample_format = sadfmt_from_afmt(output_fmt);
-        if (output_sad_fmt.sample_format < 0) return FALSE;
-        output_sad_fmt.fracbits = FMT_FRACBITS(output_fmt);
-        output_sad_fmt.channels = nch;
-        output_sad_fmt.channels_order = SAD_CHORDER_INTERLEAVED;
-        output_sad_fmt.samplerate = 0;
-
-        sad_state_from_float = SAD_dither_init(&input_sad_fmt, &output_sad_fmt, &ret);
-        if (sad_state_from_float == NULL) {
-            SAD_dither_free(sad_state_to_float);
-            AUDDBG("ditherer init failed (float --> output)\n");
-            return FALSE;
-        }
-        SAD_dither_set_dither (sad_state_from_float, TRUE);
-
         fmt = output_fmt;
 
         return reopen_audio(fmt, rate, nch);
@@ -389,7 +331,6 @@ output_close_audio(void)
     OutputPlugin *op = get_current_output_plugin();
 
     vis_runner_flush ();
-    freeSAD();
 
 #ifdef USE_SAMPLERATE
     src_flow_free();
@@ -584,11 +525,7 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
         {
             gfloat * new = g_malloc (sizeof (gfloat) * samples);
 
-            if (IS_S16_NE (fmt))
-                s16_to_float (data, new, samples);
-            else
-                SAD_dither_process_buffer (sad_state_to_float, data, new,
-                 samples / channels);
+            audio_from_int (data, fmt, new, samples);
 
             data = new;
             g_free (allocated);
@@ -612,11 +549,7 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
         {
             void * new = g_malloc (FMT_SIZEOF (op_state.fmt) * samples);
 
-            if (cfg.no_dithering && IS_S16_NE (op_state.fmt))
-                float_to_s16 (data, new, samples);
-            else
-                SAD_dither_process_buffer (sad_state_from_float, data, new,
-                 samples / channels);
+            audio_to_int (data, new, op_state.fmt, samples);
 
             data = new;
             g_free (allocated);
