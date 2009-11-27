@@ -42,6 +42,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "libaudcore/audio.h"
 #include "libaudcore/audstrings.h"
 #include "libaudcore/index.h"
 #include "libaudcore/vfs.h"
@@ -73,44 +74,6 @@
 #define __AUDACIOUS_PLUGIN_API__ 12         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
 #define __AUDACIOUS_INPUT_PLUGIN_API__ 8    /**< Input plugin API version. */
 //@}
-
-/** Available audio formats */
-typedef enum {
-    FMT_U8,
-    FMT_S8,
-
-    FMT_U16_LE,
-    FMT_U16_BE,
-    FMT_U16_NE,
-    FMT_S16_LE,
-    FMT_S16_BE,
-    FMT_S16_NE,
-
-    /* added in Audacious 1.5 */
-    FMT_U24_LE, /* stored in lower 3 bytes of 32-bit value, highest byte must be always set to 0 --asphyx */
-    FMT_U24_BE,
-    FMT_U24_NE,
-    FMT_S24_LE,
-    FMT_S24_BE,
-    FMT_S24_NE,
-
-    FMT_U32_LE,
-    FMT_U32_BE,
-    FMT_U32_NE,
-    FMT_S32_LE,
-    FMT_S32_BE,
-    FMT_S32_NE,
-
-    FMT_FLOAT,
-} AFormat;
-
-/** Get byte size of one sample of specified audio format */
-#define FMT_SIZEOF(a) ( \
-    (a == FMT_S8 || a == FMT_U8) ? sizeof(gint8) : (                                                                   \
-    (a == FMT_S16_NE || a == FMT_S16_LE || a == FMT_S16_BE || a == FMT_U16_NE || a == FMT_U16_LE || a == FMT_U16_BE) ? sizeof(gint16) : ( \
-    (a == FMT_S24_NE || a == FMT_S24_LE || a == FMT_S24_BE || a == FMT_U24_NE || a == FMT_U24_LE || a == FMT_U24_BE || \
-     a == FMT_S32_NE || a == FMT_S32_LE || a == FMT_S32_BE || a == FMT_U32_NE \
-     || a == FMT_U32_LE || a == FMT_U32_BE) ? sizeof(gint32) : sizeof(float))))
 
 typedef enum {
     INPUT_VIS_ANALYZER,

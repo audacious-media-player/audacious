@@ -2,7 +2,8 @@ LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-SRCS = audstrings.c \
+SRCS = audio.c \
+       audstrings.c \
        index.c \
        stringpool.c \
        tuple.c \
@@ -15,7 +16,8 @@ SRCS = audstrings.c \
        md5.c \
        log.c
 
-INCLUDES = audstrings.h \
+INCLUDES = audio.h \
+           audstrings.h \
            index.h \
            stringpool.h \
            tuple.h \
