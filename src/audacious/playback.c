@@ -526,10 +526,13 @@ void playback_seek (gint time)
 
     if (playback_is_ready (playback))
     {
+        if (playback->start > 0)
+            time += playback->start;
+
         if (playback->plugin->mseek != NULL)
-            playback->plugin->mseek (playback, playback->start + time);
+            playback->plugin->mseek (playback, time);
         else if (playback->plugin->seek != NULL)
-            playback->plugin->seek (playback, (playback->start + time) / 1000);
+            playback->plugin->seek (playback, time / 1000);
 
         if (playback->end > 0)
         {
