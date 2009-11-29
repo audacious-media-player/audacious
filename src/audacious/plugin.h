@@ -1143,6 +1143,8 @@ struct _InputPlugin {
      * @param[in] fd VFS file descriptor pointing to file to modify.
      */
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
+
+    gint priority; /* 0 = first, 10 = last */
 };
 
 struct _GeneralPlugin {

@@ -179,6 +179,7 @@ ProbeResult * input_check_file (const gchar * filename)
     gboolean use_ext_filter = FALSE;
     ProbeResult *pr = NULL;
     extern GHashTable *ext_hash;
+    gint priority;
 
     /* Some URIs have special subsong identifier to determine the subsong requested. */
     filename_proxy = filename_split_subtune(filename, NULL);
@@ -276,28 +277,28 @@ ProbeResult * input_check_file (const gchar * filename)
         }
     }
 
+    pr = NULL;
 
-    /* Do full scan when extension match isn't specified. */
-    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
-        ip = INPUT_PLUGIN(node->data);
+    for (priority = 0; priority <= 10; priority ++)
+    {
+        for (node = get_input_list (); node != NULL; node = node->next)
+        {
+            ip = node->data;
 
-        if (ip == NULL || !ip->enabled)
-            continue;
+            if (ip->enabled && ip->priority == priority)
+            {
+                pr = input_do_check_file (ip, fd, filename_proxy);
 
-        pr = input_do_check_file (ip, fd, filename_proxy);
-
-        if (pr != NULL) {
-            g_free(filename_proxy);
-            vfs_fclose(fd);
-            return pr;
+                if (pr != NULL)
+                    goto FOUND;
+            }
         }
     }
 
-
-    /* All probing failed, return NULL. */
-    g_free(filename_proxy);
-    vfs_fclose(fd);
-    return NULL;
+FOUND:
+    g_free (filename_proxy);
+    vfs_fclose (fd);
+    return pr;
 }
 
 Tuple *
