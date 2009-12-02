@@ -258,6 +258,17 @@ static void entry_free(struct entry *entry)
     g_free(entry);
 }
 
+static void entry_check_has_decoder (struct entry * entry)
+{
+    if (entry->decoder != NULL || entry->failed)
+        return;
+
+    entry->decoder = filename_find_decoder (entry->filename);
+
+    if (entry->decoder == NULL)
+        entry->failed = TRUE;
+}
+
 static void clear_shuffle(struct playlist *playlist)
 {
     if (playlist->shuffled == NULL)
@@ -452,7 +463,12 @@ static gboolean scan_next (void * unused)
         struct entry * entry = index_get (active_playlist->entries,
          scan_position);
 
-        if (entry->tuple == NULL && ! entry->failed)
+        if (entry->tuple != NULL)
+            continue;
+
+        entry_check_has_decoder (entry);
+
+        if (! entry->failed)
         {
             scan_filename = entry->filename;
             scan_decoder = entry->decoder;
@@ -521,6 +537,8 @@ static void check_scanned (struct playlist * playlist, struct entry * entry)
         return;
 
     METADATA_WILL_CHANGE;
+
+    entry_check_has_decoder (entry);
 
     if (entry->tuple == NULL && ! entry->failed) /* scanner did it for us? */
     {
@@ -727,7 +745,7 @@ gint playlist_entry_count(gint playlist_num)
 static void make_entries (gchar * filename, InputPlugin * decoder, Tuple *
  tuple, struct index * list)
 {
-    if (decoder == NULL)
+    if (tuple == NULL && decoder == NULL)
         decoder = filename_find_decoder (filename);
 
     if (tuple == NULL && decoder != NULL && decoder->have_subtune &&
@@ -877,6 +895,8 @@ InputPlugin *playlist_entry_get_decoder(gint playlist_num, gint entry_num)
     DECLARE_PLAYLIST_ENTRY;
 
     LOOKUP_PLAYLIST_ENTRY_RET (NULL);
+
+    entry_check_has_decoder (entry);
 
     return entry->decoder;
 }

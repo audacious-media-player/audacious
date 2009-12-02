@@ -127,8 +127,6 @@ typedef struct {
 typedef GHashTable INIFile;
 
 #include "audacious/input.h"
-#include "audacious/mime.h"
-#include "audacious/custom_uri.h"
 #include "audacious/hook.h"
 #include "audacious/flow.h"
 
@@ -282,13 +280,9 @@ struct _AudaciousFuncTableV1 {
                              const gchar *section,
                              const gchar *key);
 
-    /* MIME types */
-    InputPlugin *(*mime_get_plugin)(const gchar *mimetype);
-    void (*mime_set_plugin)(const gchar *mimetype, InputPlugin *ip);
-
-    /* Custom URI registry */
-    InputPlugin *(*uri_get_plugin)(const gchar *filename);
-    void (*uri_set_plugin)(const gchar *uri, InputPlugin *ip);
+    /* Plugin registry */
+    void (* uri_set_plugin) (const gchar * uri, InputPlugin * ip);
+    void (* mime_set_plugin) (const gchar * mimetype, InputPlugin * ip);
 
     /* Util funcs */
     GtkWidget *(*util_info_dialog)(const gchar * title, const gchar * text,
@@ -413,7 +407,6 @@ struct _AudaciousFuncTableV1 {
     void (* save_all_playlists) (void);
 
     /* state vars */
-    InputPluginData *ip_state;
     AudConfig *_cfg;
 
     /* hook API */
@@ -470,6 +463,8 @@ struct _AudaciousFuncTableV1 {
     gint (*drct_pl_get_time)( gint pos );
     gint (*drct_pl_get_pos)( void );
     gchar *(*drct_pl_get_file)( gint pos );
+    void (* drct_pl_open) (const gchar * filename);
+    void (* drct_pl_open_list) (GList * list);
     void (*drct_pl_add) ( GList * list );
     void (*drct_pl_clear) ( void );
     gint (*drct_pl_get_length)( void );
@@ -563,10 +558,6 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
-
-    /* Put these before drct_pl_add when it's safe to break the API. */
-    void (* drct_pl_open) (const gchar * filename);
-    void (* drct_pl_open_list) (GList * list);
 };
 
 
@@ -969,9 +960,7 @@ G_END_DECLS
     void (*cleanup) (void);        \
     void (*about) (void);        \
     void (*configure) (void);        \
-    PluginPreferences *settings;    \
-    gboolean enabled;
-
+    PluginPreferences *settings;
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
@@ -1030,6 +1019,7 @@ struct _OutputPlugin {
 struct _EffectPlugin {
     PLUGIN_COMMON_FIELDS
 
+    gboolean enabled;
     gint (*mod_samples) (gpointer * data, gint length, AFormat fmt, gint srate, gint nch);
     void (*query_format) (AFormat * fmt, gint * rate, gint * nch);
 };
@@ -1123,8 +1113,6 @@ struct _InputPlugin {
     gint (*get_volume) (gint * l, gint * r);
     gint (*set_volume) (gint l, gint r);
 
-    void (*set_info) (const gchar * title, gint length, gint rate, gint freq, gint nch);
-    void (*set_info_text) (const gchar * text);
     void (*file_info_box) (const gchar * filename);
 
     Tuple *(*get_song_tuple) (const gchar * filename);
@@ -1149,11 +1137,14 @@ struct _InputPlugin {
 
 struct _GeneralPlugin {
     PLUGIN_COMMON_FIELDS
+
+    gboolean enabled;
 };
 
 struct _VisPlugin {
     PLUGIN_COMMON_FIELDS
 
+    gboolean enabled;
     gint num_pcm_chs_wanted;
     gint num_freq_chs_wanted;
 

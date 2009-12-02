@@ -463,7 +463,7 @@ static gboolean playback_play_file (gint playlist, gint entry)
         }
     }
 
-    if (decoder == NULL || ! decoder->enabled)
+    if (decoder == NULL)
     {
         g_warning("Cannot play %s: no decoder found.\n", filename);
         return FALSE;

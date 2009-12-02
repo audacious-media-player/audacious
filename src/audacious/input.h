@@ -26,18 +26,17 @@
 #ifndef AUDACIOUS_INPUT_H
 #define AUDACIOUS_INPUT_H
 
-typedef struct _InputPluginData InputPluginData;
-
 #include "plugin.h"
 
-struct _InputPluginData {
-    GList *input_list;
+typedef struct
+{
     InputPlayback *current_input_playback;
     gboolean playing;
     gboolean paused;
     gboolean stop;
     GMutex *playback_mutex;
-};
+}
+PlaybackData;
 
 struct _VisNode {
     gint time;
@@ -60,9 +59,6 @@ void input_get_volume(gint * l, gint * r);
 void input_set_volume(gint l, gint r);
 void input_file_info_box(const gchar * filename);
 
-gchar *input_stringify_disabled_list(void);
-
-extern InputPluginData ip_data;
-
+extern PlaybackData ip_data;
 
 #endif /* AUDACIOUS_INPUT_H */

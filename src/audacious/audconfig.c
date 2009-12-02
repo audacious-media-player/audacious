@@ -61,7 +61,6 @@ AudConfig aud_default_config = {
     .outputplugin = NULL,
     .filesel_path = NULL,
     .playlist_path = NULL,
-    .disabled_iplugins = NULL,         /* disabled input plugins */
     .enabled_gplugins = NULL,          /* enabled general plugins */
     .enabled_vplugins = NULL,          /* enabled visualization plugins */
     .enabled_eplugins = NULL,          /* enabled effect plugins */
@@ -197,7 +196,6 @@ static aud_cfg_strent aud_strents[] = {
     {"eqpreset_default_file", &cfg.eqpreset_default_file, TRUE},
     {"eqpreset_extension", &cfg.eqpreset_extension, TRUE},
     {"output_plugin", &cfg.outputplugin, FALSE},
-    {"disabled_iplugins", &cfg.disabled_iplugins, TRUE},
     {"enabled_gplugins", &cfg.enabled_gplugins, FALSE},
     {"enabled_vplugins", &cfg.enabled_vplugins, FALSE},
     {"enabled_eplugins", &cfg.enabled_eplugins, FALSE},
@@ -471,8 +469,6 @@ aud_config_save(void)
     gchar *str;
     gint i;
     mcs_handle_t *db;
-
-    cfg.disabled_iplugins = input_stringify_disabled_list();
 
     cfg.resume_playlist = playlist_get_playing ();
 

@@ -10,7 +10,6 @@ SRCS = af_equalizer.c							\
        chardet.c								\
        configdb.c								\
        credits.c							\
-       custom_uri.c								\
        effect.c									\
        equalizer.c								\
        equalizer_flow.c							\
@@ -25,13 +24,13 @@ SRCS = af_equalizer.c							\
        input.c									\
        logger.c									\
        main.c									\
-       mime.c									\
        output.c									\
        playback.c								\
        playlist_container.c						\
        playlist-new.c \
        playlist-utils.c \
        pluginenum.c								\
+       plugin-registry.c \
        rcfile.c									\
        signals.c								\
        src_flow.c								\
@@ -54,7 +53,6 @@ endif
 INCLUDES = auddrct.h			\
            audconfig.h			\
            configdb.h			\
-           custom_uri.h			\
            dbus.h				\
            dbus-service.h		\
            equalizer_preset.h			\
@@ -66,7 +64,6 @@ INCLUDES = auddrct.h			\
            hook.h				\
            interface.h			\
            main.h				\
-           mime.h				\
            output.h				\
            playback.h			\
            playlist_container.h	\

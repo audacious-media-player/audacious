@@ -30,8 +30,7 @@
 #include "playlist-new.h"
 #include "playlist-utils.h"
 #include "plugin.h"
-
-extern GHashTable * ext_hash;
+#include "plugin-registry.h"
 
 const gchar * aud_titlestring_presets[] =
 {
@@ -288,12 +287,22 @@ InputPlugin * filename_find_decoder (const gchar * filename)
     InputPlugin * decoder = NULL;
     gchar * temp = g_strdup (filename);
     gchar * temp2;
-    GList * * index;
+    gchar c;
 
-    decoder = uri_get_plugin (temp);
+    temp2 = strstr (temp, "://");
 
-    if (decoder != NULL)
-        goto DONE;
+    if (temp2 != NULL)
+    {
+        c = temp2[3];
+        temp2[3] = 0;
+
+        decoder = input_plugin_for_key (INPUT_KEY_SCHEME, temp);
+
+        if (decoder != NULL)
+            goto DONE;
+
+        temp2[3] = c;
+    }
 
     temp2 = strrchr (temp, '?');
 
@@ -309,14 +318,11 @@ InputPlugin * filename_find_decoder (const gchar * filename)
     g_free (temp);
     temp = temp2;
 
-    index = g_hash_table_lookup (ext_hash, temp);
-
-    if (index != NULL)
-        decoder = (* index)->data;
+    decoder = input_plugin_for_key (INPUT_KEY_EXTENSION, temp);
 
 DONE:
-     g_free (temp);
-     return decoder;
+    g_free (temp);
+    return decoder;
 }
 
 gboolean playlist_insert_playlist (gint playlist, gint at, const gchar *

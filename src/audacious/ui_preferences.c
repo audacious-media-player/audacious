@@ -45,6 +45,7 @@
 
 #include "plugin.h"
 #include "pluginenum.h"
+#include "plugin-registry.h"
 #include "input.h"
 #include "effect.h"
 #include "general.h"
@@ -338,61 +339,39 @@ plugin_toggle(GtkCellRendererToggle * cell,
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     Plugin *plugin = NULL;
     gint plugin_type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(data), "plugin_type"));
+    gboolean enabled;
 
     /* get toggled iter */
     gtk_tree_model_get_iter(model, &iter, path);
 
-    if (plugin_type == PLUGIN_VIEW_TYPE_INPUT) {
-        /*GList *diplist, *tmplist; */
+    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_ACTIVE, & enabled,
+     PLUGIN_VIEW_COL_PLUGIN_PTR, & plugin, -1);
+    enabled = ! enabled;
 
-        gtk_tree_model_get(model, &iter,
-                           PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
-
-        /* do something with the value */
-        plugin->enabled ^= 1;
-
-        /* set new value */
-        gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                           PLUGIN_VIEW_COL_ACTIVE, plugin->enabled, -1);
-    } else {
-        GList *list;
-
-        gboolean fixed;
-        gtk_tree_model_get(model, &iter,
-                           PLUGIN_VIEW_COL_ACTIVE, &fixed,
-                           PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
-
-        /* do something with the value */
-        fixed ^= 1;
-
-        switch (plugin_type) {
-            case PLUGIN_VIEW_TYPE_GENERAL:
-                general_enable_plugin(GENERAL_PLUGIN(plugin), fixed);
-                list = get_general_list();
-                break;
-            case PLUGIN_VIEW_TYPE_VIS:
-                vis_enable_plugin(VIS_PLUGIN(plugin), fixed);
-                list = get_vis_list();
-                break;
-            case PLUGIN_VIEW_TYPE_EFFECT:
-                effect_enable_plugin(EFFECT_PLUGIN(plugin), fixed);
-                list = get_effect_list();
-                break;
-            default:
-                list = NULL;
-        }
-
-        /* set new value */
-        gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                           PLUGIN_VIEW_COL_ACTIVE, fixed, -1);
+    switch (plugin_type)
+    {
+    case PLUGIN_VIEW_TYPE_INPUT:
+        input_plugin_set_enabled ((InputPlugin *) plugin, enabled);
+        break;
+    case PLUGIN_VIEW_TYPE_GENERAL:
+        general_enable_plugin ((GeneralPlugin *) plugin, enabled);
+        break;
+    case PLUGIN_VIEW_TYPE_VIS:
+        vis_enable_plugin ((VisPlugin *) plugin, enabled);
+        break;
+    case PLUGIN_VIEW_TYPE_EFFECT:
+        effect_enable_plugin ((EffectPlugin *) plugin, enabled);
+        break;
     }
 
+    gtk_list_store_set ((GtkListStore *) model, & iter, PLUGIN_VIEW_COL_ACTIVE,
+     enabled, -1);
+
     if (plugin && plugin->settings && plugin->settings->type == PREFERENCES_PAGE) {
-        if (plugin->enabled) {
+        if (enabled)
             create_plugin_preferences_page(plugin->settings);
-        } else {
+        else
             destroy_plugin_preferences_page(plugin->settings);
-        }
     }
     /* clean up */
     gtk_tree_path_free(path);
@@ -504,13 +483,30 @@ on_plugin_view_realize(GtkTreeView * treeview,
     MOWGLI_ITER_FOREACH(ilist, list)
     {
         Plugin *plugin = PLUGIN(ilist->data);
+        gboolean enabled = FALSE;
+
+        switch (plugin_type)
+        {
+        case PLUGIN_VIEW_TYPE_INPUT:
+            enabled = input_plugin_get_enabled ((InputPlugin *) plugin);
+            break;
+        case PLUGIN_VIEW_TYPE_GENERAL:
+            enabled = ((GeneralPlugin *) plugin)->enabled;
+            break;
+        case PLUGIN_VIEW_TYPE_VIS:
+            enabled = ((VisPlugin *) plugin)->enabled;
+            break;
+        case PLUGIN_VIEW_TYPE_EFFECT:
+            enabled = ((EffectPlugin *) plugin)->enabled;
+            break;
+        }
 
         description[0] = g_strdup(plugin->description);
         description[1] = g_strdup(plugin->filename);
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter,
-                           PLUGIN_VIEW_COL_ACTIVE, plugin->enabled,
+                           PLUGIN_VIEW_COL_ACTIVE, enabled,
                            PLUGIN_VIEW_COL_DESC, description[0],
                            PLUGIN_VIEW_COL_FILENAME, description[1],
                            PLUGIN_VIEW_COL_ID, id++,
@@ -527,7 +523,8 @@ static void
 on_input_plugin_view_realize(GtkTreeView * treeview,
                              gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), ip_data.input_list, PLUGIN_VIEW_TYPE_INPUT);
+    on_plugin_view_realize (treeview, (GCallback) plugin_toggle,
+     get_input_list (), PLUGIN_VIEW_TYPE_INPUT);
 }
 
 static void

@@ -42,7 +42,6 @@ struct _AudConfig {
     gchar *outputplugin;
     gchar *filesel_path;
     gchar *playlist_path;
-    gchar *disabled_iplugins;
     gchar *enabled_gplugins, *enabled_vplugins, *enabled_eplugins, *enabled_dplugins ;
     gchar *eqpreset_default_file, *eqpreset_extension;
     GList *url_history;

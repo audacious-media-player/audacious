@@ -33,9 +33,10 @@
 #include <mowgli.h>
 
 #include "input.h"
+#include "plugin-registry.h"
 
-InputPluginData ip_data = {
-    NULL,
+PlaybackData ip_data =
+{
     NULL,
     FALSE,
     FALSE,
@@ -55,47 +56,27 @@ set_current_input_playback(InputPlayback * ip)
     ip_data.current_input_playback = ip;
 }
 
-GList *
-get_input_list(void)
+static gboolean plugin_list_func (void * plugin, void * data)
 {
-    return ip_data.input_list;
+    GList * * list = data;
+
+    * list = g_list_prepend (* list, plugin);
+    return TRUE;
 }
 
-/*
- * TODO: move this to utility as something like
- *   plugin_generate_list(GList *plugin_list, gboolean enabled_state)
- *
- *   -nenolod
- */
-gchar *
-input_stringify_disabled_list(void)
+GList * get_input_list (void)
 {
-    GList *node;
-    GString *list = g_string_new("");
+    static GList * list = NULL;
 
-    MOWGLI_ITER_FOREACH(node, ip_data.input_list)
-    {
-        Plugin *plugin = (Plugin *) node->data;
-        gchar *filename;
+    if (list == NULL)
+        plugin_for_each (PLUGIN_TYPE_INPUT, plugin_list_func, & list);
 
-        if (plugin->enabled)
-            continue;
-
-        filename = g_path_get_basename(plugin->filename);
-
-        if (list->len > 0)
-            g_string_append(list, ":");
-
-        g_string_append(list, filename);
-        g_free(filename);
-    }
-
-    return g_string_free(list, FALSE);
+    return list;
 }
 
 /* do actual probing. this function is called from input_check_file() */
-static ProbeResult * input_do_check_file (InputPlugin * ip,
-    VFSFile * fd, gchar * filename_proxy)
+static ProbeResult * input_do_check_file (InputPlugin * ip, VFSFile * fd,
+ const gchar * filename_proxy)
 {
     ProbeResult *pr = NULL;
     gint result = 0;
@@ -127,80 +108,34 @@ static ProbeResult * input_do_check_file (InputPlugin * ip,
     return NULL;
 }
 
+typedef struct
+{
+    const gchar * filename;
+    VFSFile * handle;
+    ProbeResult * * result;
+}
+ProbeState;
 
-/*
- * input_check_file()
- *
- * Inputs:
- *       filename to check recursively against input plugins
- *       whether or not to show an error
- *
- * Outputs:
- *       pointer to input plugin which can handle this file
- *       otherwise, NULL
- *
- *       (the previous code returned a boolean of whether or not we can
- *        play the file... even WORSE for performance)
- *
- * Side Effects:
- *       various input plugins open the file and probe it
- *       -- this can have very ugly effects performance wise on streams
- *
- * --nenolod, Dec 31 2005
- *
- * Rewritten to use NewVFS probing, semantics are still basically the same.
- *
- * --nenolod, Dec  5 2006
- *
- * Adapted to use the NewVFS extension probing system if enabled.
- *
- * --nenolod, Dec 12 2006
- *
- * Adapted to use the mimetype system.
- *
- * --nenolod, Jul  9 2007
- *
- * Adapted to return ProbeResult structure.
- *
- * --nenolod, Jul 20 2007
- *
- * Make use of ext_hash to avoid full scan in input list.
- *
- * --yaz, Nov 16 2007
- */
+static gboolean probe_func (InputPlugin * plugin, void * data)
+{
+    ProbeState * state = data;
+
+    * state->result = input_do_check_file (plugin, state->handle,
+     state->filename);
+
+    return (* state->result == NULL);
+}
 
 ProbeResult * input_check_file (const gchar * filename)
 {
     VFSFile *fd;
-    GList *node;
     InputPlugin *ip;
     gchar *filename_proxy, *mimetype;
-    gint ret = 1;
-    gboolean use_ext_filter = FALSE;
     ProbeResult *pr = NULL;
-    extern GHashTable *ext_hash;
-    gint priority;
+    ProbeState state;
 
     /* Some URIs have special subsong identifier to determine the subsong requested. */
     filename_proxy = filename_split_subtune(filename, NULL);
-
-    /* Check for plugins with custom URI:// strings */
-    /* cue:// cdda:// tone:// tact:// */
-    if ((ip = uri_get_plugin(filename_proxy)) != NULL && ip->enabled) {
-        if (ip->is_our_file != NULL) {
-            ret = ip->is_our_file(filename_proxy);
-        } else
-            ret = 0;
-        if (ret > 0) {
-            g_free(filename_proxy);
-            pr = g_new0(ProbeResult, 1);
-            pr->ip = ip;
-            return pr;
-        }
-        g_free(filename_proxy);
-        return NULL;
-    }
-
 
     /* Open the file with vfs sub-system.
      * FIXME! XXX! buffered VFS file does not handle mixed seeks and reads/writes
@@ -219,12 +154,13 @@ ProbeResult * input_check_file (const gchar * filename)
     /* Apply mimetype check. note that stdio does not support mimetype check. */
     mimetype = vfs_get_metadata(fd, "content-type");
     if (mimetype != NULL) {
-        ip = mime_get_plugin(mimetype);
+        ip = input_plugin_for_key (INPUT_KEY_MIME, mimetype);
         g_free(mimetype);
     } else
         ip = NULL;
 
-    if (ip != NULL && ip->enabled) {
+    if (ip != NULL)
+    {
         pr = input_do_check_file (ip, fd, filename_proxy);
         if (pr != NULL) {
             g_free(filename_proxy);
@@ -233,69 +169,11 @@ ProbeResult * input_check_file (const gchar * filename)
         }
     }
 
+    state.filename = filename;
+    state.handle = fd;
+    state.result = & pr;
+    input_plugin_by_priority (probe_func, & state);
 
-    /* Apply ext_hash check */
-    if (cfg.use_extension_probing) {
-        use_ext_filter =
-            (fd != NULL && (!g_ascii_strncasecmp(filename_proxy, "/", 1) ||
-            !g_ascii_strncasecmp(filename_proxy, "file://", 7))) ? TRUE : FALSE;
-    }
-
-    if (use_ext_filter) {
-        GList **list_hdr = NULL;
-        gchar *base, *lext, *ext;
-        gchar *tmp2 = g_filename_from_uri(filename_proxy, NULL, NULL);
-        gchar *realfn = g_strdup(tmp2 ? tmp2 : filename_proxy);
-        g_free(tmp2);
-
-        base = g_path_get_basename(realfn);
-        g_free(realfn);
-        ext = strrchr(base, '.');
-
-        if (ext) {
-            lext = g_ascii_strdown(ext+1, -1);
-            list_hdr = g_hash_table_lookup(ext_hash, lext);
-            g_free(lext);
-        }
-        g_free(base);
-
-        if (list_hdr != NULL) {
-            for(node = *list_hdr; node != NULL; node = g_list_next(node)) {
-                ip = INPUT_PLUGIN(node->data);
-
-                if (!ip || !ip->enabled)
-                    continue;
-
-                pr = input_do_check_file (ip, fd, filename_proxy);
-
-                if(pr) {
-                    g_free(filename_proxy);
-                    vfs_fclose(fd);
-                    return pr;
-                }
-            }
-        }
-    }
-
-    pr = NULL;
-
-    for (priority = 0; priority <= 10; priority ++)
-    {
-        for (node = get_input_list (); node != NULL; node = node->next)
-        {
-            ip = node->data;
-
-            if (ip->enabled && ip->priority == priority)
-            {
-                pr = input_do_check_file (ip, fd, filename_proxy);
-
-                if (pr != NULL)
-                    goto FOUND;
-            }
-        }
-    }
-
-FOUND:
     g_free (filename_proxy);
     vfs_fclose (fd);
     return pr;

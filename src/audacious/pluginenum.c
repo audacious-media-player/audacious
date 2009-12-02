@@ -38,6 +38,7 @@
 #include <string.h>
 
 #include "pluginenum.h"
+#include "plugin-registry.h"
 
 #include "audconfig.h"
 #include "credits.h"
@@ -68,8 +69,6 @@ const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
     NULL
 };
-
-GHashTable *ext_hash = NULL;
 
 static void set_pvt_data(Plugin * plugin, gpointer data);
 static gpointer get_pvt_data(void);
@@ -137,11 +136,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .cfg_db_unset_key = cfg_db_unset_key,
 
-    .mime_get_plugin = mime_get_plugin,
-    .mime_set_plugin = mime_set_plugin,
-
-    .uri_get_plugin = uri_get_plugin,
-    .uri_set_plugin = uri_set_plugin,
+    .uri_set_plugin = input_plugin_add_scheme_compat,
+    .mime_set_plugin = input_plugin_add_mime_compat,
 
     .util_info_dialog = util_info_dialog,
 
@@ -236,7 +232,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_save = playlist_save,
     .playlist_add_folder = playlist_add_folder,
 
-    .ip_state = &ip_data,
     ._cfg = &cfg,
 
     .hook_associate = hook_associate,
@@ -379,8 +374,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 GList *lowlevel_list = NULL;
 extern GList *vfs_transports;
 
-static mowgli_dictionary_t *plugin_dict = NULL;
-
 static GStaticPrivate cur_plugin_key = G_STATIC_PRIVATE_INIT;
 static mowgli_dictionary_t *pvt_data_dict = NULL;
 
@@ -424,15 +417,6 @@ static gpointer get_pvt_data(void)
     return result;
 }
 
-static gint inputlist_compare_func(gconstpointer a, gconstpointer b)
-{
-    const InputPlugin *ap = a, *bp = b;
-    if (ap->description && bp->description)
-        return strcasecmp(ap->description, bp->description);
-    else
-        return 0;
-}
-
 static gint outputlist_compare_func(gconstpointer a, gconstpointer b)
 {
     const OutputPlugin *ap = a, *bp = b;
@@ -466,141 +450,56 @@ static gint vislist_compare_func(gconstpointer a, gconstpointer b)
         return 0;
 }
 
-static gboolean plugin_is_duplicate(const gchar * filename)
-{
-    gchar *base_filename = g_path_get_basename(filename);
-
-    if (mowgli_dictionary_retrieve(plugin_dict, base_filename) != NULL)
-    {
-        g_free(base_filename);
-        return TRUE;
-    }
-
-    g_free(base_filename);
-
-    return FALSE;
-}
-
-gboolean plugin_is_enabled(const gchar * filename)
-{
-    Plugin *plugin = mowgli_dictionary_retrieve(plugin_dict, filename);
-
-    if (!plugin)
-        return FALSE;
-
-    return plugin->enabled;
-}
-
-void plugin_set_enabled(const gchar * filename, gboolean enabled)
-{
-    Plugin *plugin = mowgli_dictionary_retrieve(plugin_dict, filename);
-
-    if (!plugin)
-        return;
-
-    plugin->enabled = enabled;
-}
-
-Plugin *plugin_get_plugin(const gchar * filename)
-{
-    return mowgli_dictionary_retrieve(plugin_dict, filename);
-}
-
 static void input_plugin_init(Plugin * plugin)
 {
     InputPlugin *p = INPUT_PLUGIN(plugin);
-    gchar *base_filename;
 
-    base_filename = g_path_get_basename(p->filename);
-
-    /* deprecated */
-    p->set_info = ip_set_info;
-    p->set_info_text = ip_set_info_text;
-
-    ip_data.input_list = g_list_append(ip_data.input_list, p);
-
-    p->enabled = TRUE;
-
-    /* XXX: we need something better than p->filename if plugins
-       will eventually provide multiple plugins --nenolod */
-    mowgli_dictionary_add(plugin_dict, base_filename, p);
-    g_free(base_filename);
+    input_plugin_set_priority (p, p->priority);
 
     /* build the extension hash table */
     gint i;
     if (p->vfs_extensions)
     {
-        for (i = 0; p->vfs_extensions[i] != NULL; i++)
-        {
-            GList *hdr = NULL;
-            GList **handle = NULL;      //allocated as auto in stack.
-            GList **handle2 = g_malloc(sizeof(GList **));
+        GList * extensions = NULL;
 
-            handle = g_hash_table_lookup(ext_hash, p->vfs_extensions[i]);
-            if (handle)
-                hdr = *handle;
-            hdr = g_list_append(hdr, p);        //returned hdr is non-volatile
-            *handle2 = hdr;
-            g_hash_table_replace(ext_hash, g_strdup(p->vfs_extensions[i]), handle2);
-        }
+        for (i = 0; p->vfs_extensions[i] != NULL; i++)
+            extensions = g_list_prepend (extensions, g_strdup
+             (p->vfs_extensions[i]));
+
+        input_plugin_add_keys (p, INPUT_KEY_EXTENSION, extensions);
     }
+
+    if (p->init != NULL)
+        p->init ();
 }
 
 static void output_plugin_init(Plugin * plugin)
 {
     OutputPlugin *p = OUTPUT_PLUGIN(plugin);
-    gchar *base_filename;
-
-    base_filename = g_path_get_basename(p->filename);
 
     op_data.output_list = g_list_append(op_data.output_list, p);
-
-    mowgli_dictionary_add(plugin_dict, base_filename, p);
-
-    g_free(base_filename);
 }
 
 static void effect_plugin_init(Plugin * plugin)
 {
     EffectPlugin *p = EFFECT_PLUGIN(plugin);
-    gchar *base_filename;
-
-    base_filename = g_path_get_basename(p->filename);
 
     ep_data.effect_list = g_list_append(ep_data.effect_list, p);
-
-    mowgli_dictionary_add(plugin_dict, base_filename, p);
-
-    g_free(base_filename);
 }
 
 static void general_plugin_init(Plugin * plugin)
 {
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
-    gchar *base_filename;
-
-    base_filename = g_path_get_basename(plugin->filename);
 
     gp_data.general_list = g_list_append(gp_data.general_list, p);
-
-    mowgli_dictionary_add(plugin_dict, base_filename, p);
-
-    g_free(base_filename);
 }
 
 static void vis_plugin_init(Plugin * plugin)
 {
     VisPlugin *p = VIS_PLUGIN(plugin);
-    gchar *base_filename;
-
-    base_filename = g_path_get_basename(plugin->filename);
 
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
-
-    mowgli_dictionary_add(plugin_dict, base_filename, p);
-
-    g_free(base_filename);
 }
 
 /*******************************************************************/
@@ -635,7 +534,10 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     mowgli_node_add(header, hlist_node, headers_list);
 
     if (header->init)
+    {
+        plugin_register (filename, PLUGIN_TYPE_BASIC, 0, NULL);
         header->init();
+    }
 
     header->priv_assoc = g_new0(Plugin, 1);
     header->priv_assoc->handle = module;
@@ -647,6 +549,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->ip_list)[i] != NULL; i++, n++)
         {
+            plugin_register (filename, PLUGIN_TYPE_INPUT, i, header->ip_list[i]);
             PLUGIN((header->ip_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             input_plugin_init(PLUGIN((header->ip_list)[i]));
         }
@@ -656,6 +559,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->op_list)[i] != NULL; i++, n++)
         {
+            plugin_register (filename, PLUGIN_TYPE_OUTPUT, i, header->op_list[i]);
             PLUGIN((header->op_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             output_plugin_init(PLUGIN((header->op_list)[i]));
         }
@@ -665,6 +569,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->ep_list)[i] != NULL; i++, n++)
         {
+            plugin_register (filename, PLUGIN_TYPE_EFFECT, i, header->ep_list[i]);
             PLUGIN((header->ep_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             effect_plugin_init(PLUGIN((header->ep_list)[i]));
         }
@@ -675,6 +580,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->gp_list)[i] != NULL; i++, n++)
         {
+            plugin_register (filename, PLUGIN_TYPE_GENERAL, i, header->gp_list[i]);
             PLUGIN((header->gp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             general_plugin_init(PLUGIN((header->gp_list)[i]));
         }
@@ -684,20 +590,34 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->vp_list)[i] != NULL; i++, n++)
         {
+            plugin_register (filename, PLUGIN_TYPE_VIS, i, header->gp_list[i]);
             PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             vis_plugin_init(PLUGIN((header->vp_list)[i]));
         }
     }
 
     if (header->interface)
+    {
+        plugin_register (filename, PLUGIN_TYPE_IFACE, 0, header->interface);
         interface_register(header->interface);
+    }
 }
 
 void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 {
     GModule *module;
+    gint i;
 
     g_return_if_fail(header->priv_assoc != NULL);
+
+    if (header->ip_list != NULL)
+    {
+        for (i = 0; header->ip_list[i] != NULL; i ++)
+        {
+            if (header->ip_list[i]->cleanup != NULL)
+                header->ip_list[i]->cleanup ();
+        }
+    }
 
     if (header->interface)
         interface_deregister(header->interface);
@@ -718,13 +638,10 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 
 /******************************************************************/
 
-static void add_plugin(const gchar * filename)
+void module_load (const gchar * filename)
 {
     GModule *module;
     gpointer func;
-
-    if (plugin_is_duplicate(filename))
-        return;
 
     g_message("Loaded plugin (%s)", filename);
 
@@ -759,7 +676,7 @@ static gboolean scan_plugin_func(const gchar * path, const gchar * basename, gpo
     if (!g_file_test(path, G_FILE_TEST_IS_REGULAR))
         return FALSE;
 
-    add_plugin(path);
+    module_register (path);
 
     return FALSE;
 }
@@ -771,13 +688,12 @@ static void scan_plugins(const gchar * path)
 
 void plugin_system_init(void)
 {
-    gchar *dir, **disabled;
+    gchar *dir;
     GList *node;
     OutputPlugin *op;
-    InputPlugin *ip;
     LowlevelPlugin *lp;
     GtkWidget *dialog;
-    gint dirsel = 0, i = 0;
+    gint dirsel = 0;
     gint prio;
 
     if (!g_module_supported())
@@ -788,13 +704,11 @@ void plugin_system_init(void)
         return;
     }
 
-    plugin_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
+    plugin_registry_load ();
+
     pvt_data_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
 
     headers_list = mowgli_list_create();
-
-    /* make extension hash */
-    ext_hash = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
 
 #ifndef DISABLE_USER_PLUGIN_DIR
     scan_plugins(aud_paths[BMP_PATH_USER_PLUGIN_DIR]);
@@ -824,8 +738,6 @@ void plugin_system_init(void)
     {
         op_data.current_output_plugin = op_data.output_list->data;
     }
-
-    ip_data.input_list = g_list_sort(ip_data.input_list, inputlist_compare_func);
 
     ep_data.effect_list = g_list_sort(ep_data.effect_list, effectlist_compare_func);
     ep_data.enabled_list = NULL;
@@ -917,16 +829,6 @@ void plugin_system_init(void)
         }
     }
 
-    for (node = ip_data.input_list; node; node = g_list_next(node))
-    {
-        ip = INPUT_PLUGIN(node->data);
-        if (ip->init)
-        {
-            plugin_set_current((Plugin *) ip);
-            ip->init();
-        }
-    }
-
     for (node = lowlevel_list; node; node = g_list_next(node))
     {
         lp = LOWLEVEL_PLUGIN(node->data);
@@ -936,35 +838,10 @@ void plugin_system_init(void)
             lp->init();
         }
     }
-
-    if (cfg.disabled_iplugins)
-    {
-        disabled = g_strsplit(cfg.disabled_iplugins, ":", 0);
-
-        while (disabled[i])
-        {
-            Plugin *plugintmp = plugin_get_plugin(disabled[i]);
-            g_free(disabled[i]);
-            if (plugintmp)
-                INPUT_PLUGIN(plugintmp)->enabled = FALSE;
-            i++;
-        }
-
-        g_free(disabled);
-
-        g_free(cfg.disabled_iplugins);
-        cfg.disabled_iplugins = NULL;
-    }
-}
-
-static void remove_list(gpointer key, gpointer value, gpointer data)
-{
-    g_list_free(*(GList **) value);
 }
 
 void plugin_system_cleanup(void)
 {
-    InputPlugin *ip;
     OutputPlugin *op;
     EffectPlugin *ep;
     GeneralPlugin *gp;
@@ -982,30 +859,10 @@ void plugin_system_cleanup(void)
         ip_data.stop = FALSE;
     }
 
+    plugin_registry_save ();
+
     /* FIXME: race condition -nenolod */
     op_data.current_output_plugin = NULL;
-
-    for (node = get_input_list(); node; node = g_list_next(node))
-    {
-        ip = INPUT_PLUGIN(node->data);
-        if (ip)
-        {
-            plugin_set_current((Plugin *) ip);
-
-            if (ip->cleanup)
-                ip->cleanup();
-
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
-        }
-    }
-
-    if (ip_data.input_list != NULL)
-    {
-        g_list_free(ip_data.input_list);
-        ip_data.input_list = NULL;
-    }
 
     for (node = get_output_list(); node; node = g_list_next(node))
     {
@@ -1126,11 +983,7 @@ void plugin_system_cleanup(void)
 
     MOWGLI_LIST_FOREACH(hlist_node, headers_list->head) plugin2_unload(hlist_node->data, hlist_node);
 
-    mowgli_dictionary_destroy(plugin_dict, NULL, NULL);
     mowgli_dictionary_destroy(pvt_data_dict, NULL, NULL);
 
     mowgli_list_free(headers_list);
-
-    g_hash_table_foreach(ext_hash, remove_list, NULL);
-    g_hash_table_remove_all(ext_hash);
 }
