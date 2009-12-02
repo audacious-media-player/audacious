@@ -28,7 +28,7 @@ static void NAME (TYPE * in, gfloat * out, gint samples) \
 { \
     TYPE * end = in + samples; \
     while (in < end) \
-        * out ++ = (gfloat) (SWAP (* in ++) - OFFSET) / RANGE; \
+        * out ++ = (gfloat) (TYPE) (SWAP (* in ++) - OFFSET) / RANGE; \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
@@ -42,49 +42,44 @@ static void NAME (gfloat * in, TYPE * out, gint samples) \
     } \
 }
 
-static inline gint8 noop_s8 (gint8 i) {return i;}
-static inline guint8 noop_u8 (guint8 i) {return i;}
-static inline gint16 noop_s16 (gint16 i) {return i;}
-static inline guint16 noop_u16 (guint16 i) {return i;}
-static inline gint32 noop_s32 (gint32 i) {return i;}
-static inline guint32 noop_u32 (guint32 i) {return i;}
+static inline gint8 noop8 (gint8 i) {return i;}
+static inline gint16 noop16 (gint16 i) {return i;}
+static inline gint32 noop32 (gint32 i) {return i;}
 
-static inline gint16 swap_s16 (gint16 i) {return GUINT16_SWAP_LE_BE (i);}
-static inline guint16 swap_u16 (guint16 i) {return GUINT16_SWAP_LE_BE (i);}
-static inline gint32 swap_s32 (gint32 i) {return GUINT32_SWAP_LE_BE (i);}
-static inline guint32 swap_u32 (guint32 i) {return GUINT32_SWAP_LE_BE (i);}
+FROM_INT_LOOP (from_s8, gint8, noop8, 0x00, 0x7f)
+FROM_INT_LOOP (from_u8, gint8, noop8, 0x80, 0x7f)
+FROM_INT_LOOP (from_s16, gint16, noop16, 0x0000, 0x7fff)
+FROM_INT_LOOP (from_u16, gint16, noop16, 0x8000, 0x7fff)
+FROM_INT_LOOP (from_s24, gint32, noop32, 0x000000, 0x7fffff)
+FROM_INT_LOOP (from_u24, gint32, noop32, 0x800000, 0x7fffff)
+FROM_INT_LOOP (from_s32, gint32, noop32, 0x00000000, 0x7fffffff)
+FROM_INT_LOOP (from_u32, gint32, noop32, 0x80000000, 0x7fffffff)
 
-FROM_INT_LOOP (from_s8, gint8, noop_s8, 0x00, 0x7f)
-FROM_INT_LOOP (from_u8, guint8, noop_u8, 0x80, 0x7f)
-FROM_INT_LOOP (from_s16, gint16, noop_s16, 0x0000, 0x7fff)
-FROM_INT_LOOP (from_u16, guint16, noop_u16, 0x8000, 0x7fff)
-FROM_INT_LOOP (from_s24, gint32, noop_s32, 0x000000, 0x7fffff)
-FROM_INT_LOOP (from_u24, guint32, noop_u32, 0x800000, 0x7fffff)
-FROM_INT_LOOP (from_s32, gint32, noop_s32, 0x00000000, 0x7fffffff)
-FROM_INT_LOOP (from_u32, guint32, noop_u32, 0x80000000, 0x7fffffff)
+TO_INT_LOOP (to_s8, gint8, noop8, 0x00, 0x7f)
+TO_INT_LOOP (to_u8, gint8, noop8, 0x80, 0x7f)
+TO_INT_LOOP (to_s16, gint16, noop16, 0x0000, 0x7fff)
+TO_INT_LOOP (to_u16, gint16, noop16, 0x8000, 0x7fff)
+TO_INT_LOOP (to_s24, gint32, noop32, 0x000000, 0x7fffff)
+TO_INT_LOOP (to_u24, gint32, noop32, 0x800000, 0x7fffff)
+TO_INT_LOOP (to_s32, gint32, noop32, 0x00000000, 0x7fffffff)
+TO_INT_LOOP (to_u32, gint32, noop32, 0x80000000, 0x7fffffff)
 
-TO_INT_LOOP (to_s8, gint8, noop_s8, 0x00, 0x7f)
-TO_INT_LOOP (to_u8, guint8, noop_u8, 0x80, 0x7f)
-TO_INT_LOOP (to_s16, gint16, noop_s16, 0x0000, 0x7fff)
-TO_INT_LOOP (to_u16, guint16, noop_u16, 0x8000, 0x7fff)
-TO_INT_LOOP (to_s24, gint32, noop_s32, 0x000000, 0x7fffff)
-TO_INT_LOOP (to_u24, guint32, noop_u32, 0x800000, 0x7fffff)
-TO_INT_LOOP (to_s32, gint32, noop_s32, 0x00000000, 0x7fffffff)
-TO_INT_LOOP (to_u32, guint32, noop_u32, 0x80000000, 0x7fffffff)
+static inline gint16 swap16 (gint16 i) {return GUINT16_SWAP_LE_BE (i);}
+static inline gint32 swap32 (gint32 i) {return GUINT32_SWAP_LE_BE (i);}
 
-FROM_INT_LOOP (from_s16_swap, gint16, swap_s16, 0x0000, 0x7fff)
-FROM_INT_LOOP (from_u16_swap, guint16, swap_u16, 0x8000, 0x7fff)
-FROM_INT_LOOP (from_s24_swap, gint32, swap_s32, 0x000000, 0x7fffff)
-FROM_INT_LOOP (from_u24_swap, guint32, swap_u32, 0x800000, 0x7fffff)
-FROM_INT_LOOP (from_s32_swap, gint32, swap_s32, 0x00000000, 0x7fffffff)
-FROM_INT_LOOP (from_u32_swap, guint32, swap_u32, 0x80000000, 0x7fffffff)
+FROM_INT_LOOP (from_s16_swap, gint16, swap16, 0x0000, 0x7fff)
+FROM_INT_LOOP (from_u16_swap, gint16, swap16, 0x8000, 0x7fff)
+FROM_INT_LOOP (from_s24_swap, gint32, swap32, 0x000000, 0x7fffff)
+FROM_INT_LOOP (from_u24_swap, gint32, swap32, 0x800000, 0x7fffff)
+FROM_INT_LOOP (from_s32_swap, gint32, swap32, 0x00000000, 0x7fffffff)
+FROM_INT_LOOP (from_u32_swap, gint32, swap32, 0x80000000, 0x7fffffff)
 
-TO_INT_LOOP (to_s16_swap, gint16, swap_s16, 0x0000, 0x7fff)
-TO_INT_LOOP (to_u16_swap, guint16, swap_u16, 0x8000, 0x7fff)
-TO_INT_LOOP (to_s24_swap, gint32, swap_s32, 0x000000, 0x7fffff)
-TO_INT_LOOP (to_u24_swap, guint32, swap_u32, 0x800000, 0x7fffff)
-TO_INT_LOOP (to_s32_swap, gint32, swap_s32, 0x00000000, 0x7fffffff)
-TO_INT_LOOP (to_u32_swap, guint32, swap_u32, 0x80000000, 0x7fffffff)
+TO_INT_LOOP (to_s16_swap, gint16, swap16, 0x0000, 0x7fff)
+TO_INT_LOOP (to_u16_swap, gint16, swap16, 0x8000, 0x7fff)
+TO_INT_LOOP (to_s24_swap, gint32, swap32, 0x000000, 0x7fffff)
+TO_INT_LOOP (to_u24_swap, gint32, swap32, 0x800000, 0x7fffff)
+TO_INT_LOOP (to_s32_swap, gint32, swap32, 0x00000000, 0x7fffffff)
+TO_INT_LOOP (to_u32_swap, gint32, swap32, 0x80000000, 0x7fffffff)
 
 typedef void (* FromFunc) (void * in, gfloat * out, gint samples);
 typedef void (* ToFunc) (gfloat * in, void * out, gint samples);
