@@ -644,10 +644,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_tuple_formatter_process_function     tuple_formatter_process_function
 #define aud_tuple_formatter_process_construct    tuple_formatter_process_construct
 
-#define aud_mime_get_plugin             _audvt->mime_get_plugin
 #define aud_mime_set_plugin             _audvt->mime_set_plugin
-
-#define aud_uri_get_plugin              _audvt->uri_get_plugin
 #define aud_uri_set_plugin              _audvt->uri_set_plugin
 
 #define aud_info_dialog                 _audvt->util_info_dialog
