@@ -590,7 +590,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->vp_list)[i] != NULL; i++, n++)
         {
-            plugin_register (filename, PLUGIN_TYPE_VIS, i, header->gp_list[i]);
+            plugin_register (filename, PLUGIN_TYPE_VIS, i, header->vp_list[i]);
             PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
             vis_plugin_init(PLUGIN((header->vp_list)[i]));
         }
