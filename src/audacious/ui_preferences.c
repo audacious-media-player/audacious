@@ -128,7 +128,7 @@ static gint titlestring_timeout_counter = 0;
 static Category categories[] = {
     {DATA_DIR "/images/audio.png",        N_("Audio")},
     {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
-    {DATA_DIR "/images/connectivity.png", N_("Connectivity")},
+    {DATA_DIR "/images/connectivity.png", N_("Network")},
     {DATA_DIR "/images/playback.png",     N_("Playback")},
     {DATA_DIR "/images/playlist.png",     N_("Playlist")},
     {DATA_DIR "/images/plugins.png",      N_("Plugins")},
@@ -173,15 +173,15 @@ static ComboBoxElements bitdepth_elements[] = {
     {GINT_TO_POINTER (0), "Floating point"},
 };
 
-static ComboBoxElements conventer_types[] = {
 #ifdef USE_SAMPLERATE
+static ComboBoxElements conventer_types[] = {
     { GINT_TO_POINTER(SRC_SINC_BEST_QUALITY), N_("Best Sinc Interpolation") },
     { GINT_TO_POINTER(SRC_SINC_MEDIUM_QUALITY), N_("Medium Sinc Interpolation") },
     { GINT_TO_POINTER(SRC_SINC_FASTEST), N_("Fastest Sinc Interpolation") },
     { GINT_TO_POINTER(SRC_ZERO_ORDER_HOLD), N_("ZOH Interpolation") },
     { GINT_TO_POINTER(SRC_LINEAR), N_("Linear Interpolation") },
-#endif
 };
+#endif
 
 typedef struct {
     void *next;
@@ -192,34 +192,26 @@ typedef struct {
 
 CategoryQueueEntry *category_queue = NULL;
 
-static PreferencesWidget sample_rate_elements[] = {
 #ifdef USE_SAMPLERATE
+static PreferencesWidget sample_rate_elements[] = {
     {WIDGET_SPIN_BTN, N_("Sampling Rate [Hz]:"), &cfg.src_rate, NULL, NULL, FALSE, {.spin_btn = {1000, 768000, 1000, NULL}}, VALUE_INT},
     {WIDGET_COMBO_BOX, N_("Interpolation Engine:"), &cfg.src_type, NULL, NULL, FALSE, {.combo = {conventer_types, G_N_ELEMENTS(conventer_types), TRUE}}, VALUE_INT},
-#else
-    {WIDGET_SPIN_BTN, N_("Sampling Rate [Hz]:"), NULL, NULL, NULL, FALSE, {.spin_btn = {1000, 768000, 1000, NULL}}, VALUE_NULL},
-    {WIDGET_COMBO_BOX, N_("Interpolation Engine:"), NULL, NULL, NULL, FALSE, {.combo = {conventer_types, G_N_ELEMENTS(conventer_types), TRUE}}, VALUE_NULL},
-#endif
     {WIDGET_LABEL, N_("<span size=\"small\">All streams will be converted to this sampling rate.\nThis should be the max supported sampling rate of\n"
                       "the sound card or output plugin.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-info"}}},
 };
+#endif
 
 static PreferencesWidget audio_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Format Detection</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Detect file formats by extension."), &cfg.use_extension_probing, NULL,
-        N_("When checked, Audacious will detect file formats based by extension. Only files with extensions of supported formats will be loaded."), FALSE},
     {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_COMBO_BOX, N_("Output bit depth:"), &cfg.output_bit_depth, NULL,
                        N_("All streams will be converted to this bit depth.\n"
                           "This should be the max supported bit depth of\nthe sound card or output plugin."), FALSE,
                        {.combo = {bitdepth_elements, G_N_ELEMENTS(bitdepth_elements), TRUE}}, VALUE_INT},
-    {WIDGET_LABEL, N_("<b>Sampling Rate Converter</b>"), NULL, NULL, NULL, FALSE},
 #ifdef USE_SAMPLERATE
+    {WIDGET_LABEL, N_("<b>Sampling Rate Converter</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable Sampling Rate Converter"), &cfg.enable_src, NULL, NULL, FALSE},
-#else
-    {WIDGET_CHK_BTN, N_("Enable Sampling Rate Converter"), NULL, NULL, NULL, FALSE},
-#endif
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {sample_rate_elements, G_N_ELEMENTS(sample_rate_elements)}}},
+#endif
     {WIDGET_LABEL, N_("<b>Volume Control</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Use software volume control"),
      & cfg.software_volume_control, sw_volume_toggled,
@@ -963,7 +955,8 @@ on_category_treeview_realize(GtkTreeView * treeview,
 
     gint width, height;
     gtk_widget_get_size_request(GTK_WIDGET(treeview), &width, &height);
-    g_object_set(G_OBJECT(renderer), "wrap-width", width - 64 - 20, "wrap-mode", PANGO_WRAP_WORD, NULL);
+    g_object_set(G_OBJECT(renderer), "wrap-width", width - 64 - 24, "wrap-mode",
+     PANGO_WRAP_WORD_CHAR, NULL);
 
     store = gtk_list_store_new(CATEGORY_VIEW_N_COLS,
                                GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
@@ -2682,10 +2675,8 @@ create_prefs_window(void)
                              GTK_OBJECT (prefswin));
 
     /* create category view */
-    g_signal_connect_after(G_OBJECT(category_treeview), "realize",
-                           G_CALLBACK(on_category_treeview_realize),
-                           category_notebook);
-
+    on_category_treeview_realize ((GtkTreeView *) category_treeview,
+     (GtkNotebook *) category_notebook);
 
     /* audacious version label */
 

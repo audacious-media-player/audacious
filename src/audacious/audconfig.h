@@ -61,7 +61,6 @@ struct _AudConfig {
     gint filepopup_pixelsize;
     gint filepopup_delay;
     gboolean use_file_cover;
-    gboolean use_extension_probing;
     gboolean filepopup_showprogressbar;
     gboolean close_jtf_dialog;
     gboolean software_volume_control;
