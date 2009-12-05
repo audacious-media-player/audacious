@@ -33,6 +33,7 @@
 #include <mowgli.h>
 
 #include "input.h"
+#include "playlist-utils.h"
 #include "plugin-registry.h"
 
 PlaybackData ip_data =
@@ -185,27 +186,26 @@ input_get_song_tuple(const gchar * filename)
     InputPlugin *ip = NULL;
     Tuple *input = NULL;
     gchar *ext = NULL;
-    gchar *filename_proxy;
     ProbeResult *pr;
 
     if (filename == NULL)
         return NULL;
 
-    filename_proxy = g_strdup(filename);
+    ip = filename_find_decoder (filename);
 
-    pr = input_check_file (filename_proxy);
+    if (ip == NULL)
+    {
+        pr = input_check_file (filename);
 
-    if (!pr) {
-        g_free(filename_proxy);
-        return NULL;
+        if (pr == NULL)
+            return NULL;
+
+        ip = pr->ip;
+        g_free (pr);
     }
 
-    ip = pr->ip;
-
-    g_free(pr);
-
     if (ip && ip->get_song_tuple)
-        input = ip->get_song_tuple(filename_proxy);
+        input = ip->get_song_tuple (filename);
     else
     {
         gchar *scratch;
@@ -227,7 +227,6 @@ input_get_song_tuple(const gchar * filename)
         tuple_associate_int(input, FIELD_LENGTH, NULL, -1);
     }
 
-    g_free(filename_proxy);
     return input;
 }
 
