@@ -32,6 +32,7 @@ enum {PLUGIN_TYPE_BASIC, PLUGIN_TYPE_INPUT, PLUGIN_TYPE_OUTPUT,
 enum {INPUT_KEY_SCHEME, INPUT_KEY_EXTENSION, INPUT_KEY_MIME, INPUT_KEYS};
 
 void plugin_registry_load (void);
+void plugin_registry_prune (void);
 void plugin_registry_save (void);
 
 void module_register (const gchar * path);

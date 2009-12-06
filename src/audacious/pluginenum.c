@@ -733,6 +733,8 @@ void plugin_system_init(void)
         g_free(dir);
     }
 
+    plugin_registry_prune ();
+
     op_data.output_list = g_list_sort(op_data.output_list, outputlist_compare_func);
     if (!op_data.current_output_plugin && g_list_length(op_data.output_list))
     {

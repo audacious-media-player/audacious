@@ -632,6 +632,17 @@ smart_realloc(gpointer ptr, gsize *size)
     return g_realloc(ptr, *size);
 }
 
+/* local files -- not URI's */
+gint file_get_mtime (const gchar * filename)
+{
+    struct stat info;
+
+    if (stat (filename, & info))
+        return -1;
+
+    return info.st_mtime;
+}
+
 void
 make_directory(const gchar * path, mode_t mode)
 {

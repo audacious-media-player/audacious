@@ -27,12 +27,21 @@
 #include "main.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"
+#include "util.h"
+
+#if 0
+#define DEBUG printf
+#else
+#define DEBUG(...)
+#endif
 
 #define REGISTRY_FILE "plugin-registry"
 
 typedef struct
 {
     gchar * path;
+    gboolean confirmed;
+    gint timestamp;
     gboolean loaded;
     GList * plugin_list;
 }
@@ -49,6 +58,7 @@ InputPluginData;
 typedef struct
 {
     gint type, number;
+    gboolean confirmed;
     void * header;
 
     union
@@ -62,6 +72,67 @@ PluginData;
 const gchar * input_key_names[INPUT_KEYS] = {"scheme", "ext", "mime"};
 
 static GList * module_list = NULL;
+
+static ModuleData * module_new (gchar * path, gboolean confirmed,
+ gint timestamp, gboolean loaded)
+{
+    ModuleData * module = g_malloc (sizeof (ModuleData));
+
+    module->path = path;
+    module->confirmed = confirmed;
+    module->timestamp = timestamp;
+    module->loaded = loaded;
+    module->plugin_list = NULL;
+
+    return module;
+}
+
+static PluginData * plugin_new (gint type, gint number, gboolean confirmed,
+ void * header)
+{
+    PluginData * plugin = g_malloc (sizeof (PluginData));
+    gint key;
+
+    plugin->type = type;
+    plugin->number = number;
+    plugin->confirmed = confirmed;
+    plugin->header = header;
+
+    if (type == PLUGIN_TYPE_INPUT)
+    {
+        plugin->u.i.enabled = TRUE;
+        plugin->u.i.priority = 0;
+
+        for (key = 0; key < INPUT_KEYS; key ++)
+            plugin->u.i.keys[key] = NULL;
+    }
+
+    return plugin;
+}
+
+static void plugin_free (PluginData * plugin)
+{
+    gint key;
+
+    if (plugin->type == PLUGIN_TYPE_INPUT)
+    {
+        for (key = 0; key < INPUT_KEYS; key ++)
+        {
+            g_list_foreach (plugin->u.i.keys[key], (GFunc) g_free, NULL);
+            g_list_free (plugin->u.i.keys[key]);
+        }
+    }
+
+    g_free (plugin);
+}
+
+static void module_free (ModuleData * module)
+{
+    g_free (module->path);
+    g_list_foreach (module->plugin_list, (GFunc) plugin_free, NULL);
+    g_list_free (module->plugin_list);
+    g_free (module);
+}
 
 static void input_plugin_save (PluginData * plugin, FILE * handle)
 {
@@ -94,6 +165,7 @@ static void module_save (ModuleData * module, FILE * handle)
     }
 
     fprintf (handle, "module %s\n", module->path);
+    fprintf (handle, "stamp %d\n", module->timestamp);
 
     for (node = module->plugin_list; node != NULL; node = node->next)
     {
@@ -121,6 +193,10 @@ void plugin_registry_save (void)
         module_save (node->data, handle);
 
     fclose (handle);
+
+    g_list_foreach (module_list, (GFunc) module_free, NULL);
+    g_list_free (module_list);
+    module_list = NULL;
 }
 
 static gchar parse_key[512];
@@ -180,17 +256,9 @@ static gboolean input_plugin_parse (ModuleData * module, FILE * handle)
 
     parse_next (handle);
 
-    plugin = g_malloc (sizeof (PluginData));
-    plugin->type = PLUGIN_TYPE_INPUT;
-    plugin->number = number;
-    plugin->header = NULL;
+    plugin = plugin_new (PLUGIN_TYPE_INPUT, number, FALSE, NULL);
     plugin->u.i.enabled = enabled;
     plugin->u.i.priority = priority;
-
-    for (key = 0; key < INPUT_KEYS; key ++)
-        plugin->u.i.keys[key] = NULL;
-
-    module->plugin_list = g_list_prepend (module->plugin_list, plugin);
 
     for (key = 0; key < INPUT_KEYS; key ++)
     {
@@ -202,28 +270,38 @@ static gboolean input_plugin_parse (ModuleData * module, FILE * handle)
         }
     }
 
+    module->plugin_list = g_list_prepend (module->plugin_list, plugin);
     return TRUE;
 }
 
 static gboolean module_parse (FILE * handle)
 {
     ModuleData * module;
+    gchar * path = NULL;
+    gint timestamp;
 
     if (! parse_string ("module"))
-        return FALSE;
+        goto ERROR;
 
-    module = g_malloc (sizeof (ModuleData));
-    module->path = g_strdup (parse_value);
-    module->loaded = FALSE;
-    module->plugin_list = NULL;
-
-    module_list = g_list_prepend (module_list, module);
+    path = g_strdup (parse_value);
 
     parse_next (handle);
 
+    if (! parse_integer ("stamp", & timestamp))
+        goto ERROR;
+
+    parse_next (handle);
+
+    module = module_new (path, FALSE, timestamp, FALSE);
+
     while (input_plugin_parse (module, handle));
 
+    module_list = g_list_prepend (module_list, module);
     return TRUE;
+
+ERROR:
+    g_free (path);
+    return FALSE;
 }
 
 void plugin_registry_load (void)
@@ -243,6 +321,44 @@ void plugin_registry_load (void)
     while (module_parse (handle));
 
     fclose (handle);
+}
+
+void plugin_registry_prune (void)
+{
+    GList * node, * next, * node2, * next2;
+    ModuleData * module;
+    PluginData * plugin;
+
+    for (node = module_list; node != NULL; node = next)
+    {
+        module = node->data;
+        next = node->next;
+
+        if (! module->confirmed)
+        {
+            DEBUG ("Module not found: %s\n", module->path);
+            module_free (module);
+            module_list = g_list_delete_link (module_list, node);
+            continue;
+        }
+
+        if (! module->loaded)
+            continue;
+
+        for (node2 = module->plugin_list; node2 != NULL; node2 = next2)
+        {
+            plugin = node2->data;
+            next2 = node2->next;
+
+            if (plugin->confirmed)
+                continue;
+
+            DEBUG ("Plugin not found: %s %d:%d\n", module->path, plugin->type,
+             plugin->number);
+            plugin_free (plugin);
+            module->plugin_list = g_list_delete_link (module->plugin_list, node2);
+        }
+    }
 }
 
 static ModuleData * module_lookup (const gchar * path)
@@ -273,18 +389,32 @@ static void module_check_loaded (ModuleData * module)
 void module_register (const gchar * path)
 {
     ModuleData * module;
+    gint timestamp = file_get_mtime (path);
 
-    if (module_lookup (path) != NULL)
+    if (timestamp < 0)
         return;
 
-    module = g_malloc (sizeof (ModuleData));
-    module->path = g_strdup (path);
-    module->loaded = TRUE;
-    module->plugin_list = NULL;
+    module = module_lookup (path);
 
-    module_list = g_list_prepend (module_list, module);
+    if (module != NULL)
+    {
+        module->confirmed = TRUE;
 
-    module_load (path);
+        if (module->timestamp != timestamp)
+        {
+            DEBUG ("Module rescan: %s\n", path);
+            module->timestamp = timestamp;
+            module->loaded = TRUE;
+            module_load (path);
+        }
+    }
+    else
+    {
+        DEBUG ("New module: %s\n", path);
+        module = module_new (g_strdup (path), TRUE, timestamp, TRUE);
+        module_list = g_list_prepend (module_list, module);
+        module_load (path);
+    }
 }
 
 static PluginData * plugin_lookup (ModuleData * module, gint type, gint number)
@@ -339,6 +469,7 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
 
     if (plugin != NULL)
     {
+        plugin->confirmed = TRUE;
         plugin->header = header;
 
         if (type == PLUGIN_TYPE_INPUT)
@@ -353,20 +484,8 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     }
     else
     {
-        plugin = g_malloc (sizeof (PluginData));
-        plugin->type = type;
-        plugin->number = number;
-        plugin->header = header;
-
-        if (type == PLUGIN_TYPE_INPUT)
-        {
-            plugin->u.i.enabled = TRUE;
-            plugin->u.i.priority = 0;
-
-            for (key = 0; key < INPUT_KEYS; key ++)
-                plugin->u.i.keys[key] = NULL;
-        }
-
+        DEBUG ("New plugin: %s %d:%d\n", path, type, number);
+        plugin = plugin_new (type, number, TRUE, header);
         module->plugin_list = g_list_prepend (module->plugin_list, plugin);
     }
 }

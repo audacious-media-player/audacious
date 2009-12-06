@@ -83,6 +83,7 @@ gchar *construct_uri(gchar *string, const gchar *playlist_name);
 /* minimizes number of realloc's */
 gpointer smart_realloc(gpointer ptr, gsize *size);
 
+gint file_get_mtime (const gchar * filename);
 void make_directory(const gchar * path, mode_t mode);
 
 void util_add_url_history_entry(const gchar * url);
