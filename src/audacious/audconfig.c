@@ -39,6 +39,7 @@
 #include "playlist-new.h"
 #include "playlist-utils.h"
 #include "pluginenum.h"
+#include "plugin-registry.h"
 #include "util.h"
 #include "visualization.h"
 
@@ -58,7 +59,6 @@ AudConfig aud_default_config = {
     .close_dialog_open = TRUE,
     .equalizer_preamp = 0.0,
     .equalizer_bands = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-    .outputplugin = NULL,
     .filesel_path = NULL,
     .playlist_path = NULL,
     .enabled_gplugins = NULL,          /* enabled general plugins */
@@ -102,6 +102,8 @@ AudConfig aud_default_config = {
     .bypass_dsp = FALSE,
     .sw_volume_left = 100, .sw_volume_right = 100,
     .clear_playlist = FALSE,
+    .output_path = NULL,
+    .output_number = -1,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -121,20 +123,6 @@ typedef struct aud_cfg_strent_t {
     char **se_vloc;
     gboolean se_wrt;
 } aud_cfg_strent;
-
-
-/* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */
-static gchar *pl_candidates[] = {
-    PLUGIN_FILENAME("ALSA"),
-    PLUGIN_FILENAME("coreaudio"),
-    PLUGIN_FILENAME("OSS"),
-    PLUGIN_FILENAME("sun"),
-    PLUGIN_FILENAME("ESD"),
-    PLUGIN_FILENAME("pulse_audio"),
-    PLUGIN_FILENAME("disk_writer"),
-    NULL
-};
-
 
 static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
@@ -184,8 +172,9 @@ static aud_cfg_nument aud_numents[] = {
     {"src_rate", &cfg.src_rate, TRUE},
     {"src_type", &cfg.src_type, TRUE},
 #endif
-    {"sw_volume_left", & cfg.sw_volume_left, 1},
-    {"sw_volume_right", & cfg.sw_volume_right, 1},
+    {"sw_volume_left", & cfg.sw_volume_left, TRUE},
+    {"sw_volume_right", & cfg.sw_volume_right, TRUE},
+    {"output_number", & cfg.output_number, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
@@ -193,7 +182,6 @@ static gint ncfgient = G_N_ELEMENTS(aud_numents);
 static aud_cfg_strent aud_strents[] = {
     {"eqpreset_default_file", &cfg.eqpreset_default_file, TRUE},
     {"eqpreset_extension", &cfg.eqpreset_extension, TRUE},
-    {"output_plugin", &cfg.outputplugin, FALSE},
     {"enabled_gplugins", &cfg.enabled_gplugins, FALSE},
     {"enabled_vplugins", &cfg.enabled_vplugins, FALSE},
     {"enabled_eplugins", &cfg.enabled_eplugins, FALSE},
@@ -204,6 +192,7 @@ static aud_cfg_strent aud_strents[] = {
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
     {"cover_name_include", &cfg.cover_name_include, TRUE},
     {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
+    {"output_path", & cfg.output_path, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);
@@ -413,18 +402,6 @@ aud_config_load(void)
     if (!cfg.gentitle_format)
         cfg.gentitle_format = g_strdup("${?artist:${artist} - }${?album:${album} - }${title}");
 
-    if (!cfg.outputplugin) {
-    gint iter;
-        gchar *pl_path = g_build_filename(PLUGIN_DIR, plugin_dir_list[0], NULL);
-
-        for (iter = 0; pl_candidates[iter] != NULL && cfg.outputplugin == NULL; iter++)
-    {
-         cfg.outputplugin = find_file_recursively(pl_path, pl_candidates[iter]);
-    }
-
-        g_free(pl_path);
-    }
-
     if (!cfg.chardet_detector)
         cfg.chardet_detector = g_strdup("");
 
@@ -460,6 +437,18 @@ void save_all_playlists (void)
     g_list_free (saved);
 }
 
+static void save_output_path (void)
+{
+    const gchar * path = NULL;
+    gint type, number = -1;
+
+    if (current_output_plugin != NULL)
+        plugin_get_path (current_output_plugin, & path, & type, & number);
+
+    cfg.output_path = (path != NULL) ? g_strdup (path) : NULL;
+    cfg.output_number = number;
+}
+
 void
 aud_config_save(void)
 {
@@ -478,6 +467,8 @@ aud_config_save(void)
         cfg.resume_playback_on_startup_time = playback_get_playing () ?
          playback_get_time () : 0;
     }
+
+    save_output_path ();
 
     db = cfg_db_open();
 
@@ -513,12 +504,6 @@ aud_config_save(void)
         cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
         g_free(str);
     }
-
-    if (get_current_output_plugin())
-        cfg_db_set_string(db, NULL, "output_plugin",
-                              get_current_output_plugin()->filename);
-    else
-        cfg_db_unset_key(db, NULL, "output_plugin");
 
     str = general_stringify_enabled_list();
     if (str) {

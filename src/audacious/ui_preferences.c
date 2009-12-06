@@ -307,18 +307,16 @@ change_category(GtkNotebook * notebook,
     gtk_notebook_set_current_page(notebook, index);
 }
 
-static void
-output_plugin_open_prefs(GtkComboBox * cbox,
-                         gpointer data)
+static void output_plugin_open_prefs (GtkComboBox * combo, void * unused)
 {
-    output_configure(gtk_combo_box_get_active(cbox));
+    output_configure (g_list_nth_data (get_output_list (),
+     gtk_combo_box_get_active (combo)));
 }
 
-static void
-output_plugin_open_info(GtkComboBox * cbox,
-                        gpointer data)
+static void output_plugin_open_info (GtkComboBox * combo, void * unused)
 {
-    output_about(gtk_combo_box_get_active(cbox));
+    output_about (g_list_nth_data (get_output_list (), gtk_combo_box_get_active
+     (combo)));
 }
 
 static void
@@ -369,14 +367,10 @@ plugin_toggle(GtkCellRendererToggle * cell,
     gtk_tree_path_free(path);
 }
 
-static void
-on_output_plugin_cbox_changed(GtkComboBox * combobox,
-                              gpointer data)
+static void on_output_plugin_cbox_changed (GtkComboBox * combo, void * unused)
 {
-    gint selected;
-    selected = gtk_combo_box_get_active(combobox);
-
-    set_current_output_plugin(selected);
+    set_current_output_plugin (g_list_nth_data (get_output_list (),
+     gtk_combo_box_get_active (combo)));
 }
 
 static void
@@ -384,7 +378,7 @@ on_output_plugin_cbox_realize(GtkComboBox * cbox,
                               gpointer data)
 {
     GList *olist = get_output_list();
-    OutputPlugin *op, *cp = get_current_output_plugin();
+    OutputPlugin * op;
     gint i = 0, selected = 0;
 
     if (olist == NULL) {
@@ -395,7 +389,7 @@ on_output_plugin_cbox_realize(GtkComboBox * cbox,
     for (i = 0; olist != NULL; i++, olist = g_list_next(olist)) {
         op = OUTPUT_PLUGIN(olist->data);
 
-        if (olist->data == cp)
+        if (olist->data == current_output_plugin)
             selected = i;
 
         gtk_combo_box_append_text(cbox, op->description);

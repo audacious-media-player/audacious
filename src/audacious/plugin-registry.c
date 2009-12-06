@@ -57,6 +57,12 @@ InputPluginData;
 
 typedef struct
 {
+    gint priority;
+}
+OutputPluginData;
+
+typedef struct
+{
     gint type, number;
     gboolean confirmed;
     void * header;
@@ -64,6 +70,7 @@ typedef struct
     union
     {
         InputPluginData i;
+        OutputPluginData o;
     }
     u;
 }
@@ -106,6 +113,8 @@ static PluginData * plugin_new (gint type, gint number, gboolean confirmed,
         for (key = 0; key < INPUT_KEYS; key ++)
             plugin->u.i.keys[key] = NULL;
     }
+    else if (type == PLUGIN_TYPE_OUTPUT)
+        plugin->u.o.priority = 0;
 
     return plugin;
 }
@@ -151,6 +160,12 @@ static void input_plugin_save (PluginData * plugin, FILE * handle)
     }
 }
 
+static void output_plugin_save (PluginData * plugin, FILE * handle)
+{
+    fprintf (handle, "output %d\n", plugin->number);
+    fprintf (handle, "priority %d\n", plugin->u.o.priority);
+}
+
 static void module_save (ModuleData * module, FILE * handle)
 {
     GList * node;
@@ -160,7 +175,8 @@ static void module_save (ModuleData * module, FILE * handle)
     {
         plugin = node->data;
 
-        if (plugin->type != PLUGIN_TYPE_INPUT)
+        if (plugin->type != PLUGIN_TYPE_INPUT && plugin->type !=
+         PLUGIN_TYPE_OUTPUT)
             return; /* we can't handle any other type (yet) */
     }
 
@@ -173,6 +189,8 @@ static void module_save (ModuleData * module, FILE * handle)
 
         if (plugin->type == PLUGIN_TYPE_INPUT)
             input_plugin_save (plugin, handle);
+        else if (plugin->type == PLUGIN_TYPE_OUTPUT)
+            output_plugin_save (plugin, handle);
     }
 }
 
@@ -274,6 +292,28 @@ static gboolean input_plugin_parse (ModuleData * module, FILE * handle)
     return TRUE;
 }
 
+static gboolean output_plugin_parse (ModuleData * module, FILE * handle)
+{
+    PluginData * plugin;
+    gint number, priority;
+
+    if (! parse_integer ("output", & number))
+        return FALSE;
+
+    parse_next (handle);
+
+    if (! parse_integer ("priority", & priority))
+        return FALSE;
+
+    parse_next (handle);
+
+    plugin = plugin_new (PLUGIN_TYPE_OUTPUT, number, FALSE, NULL);
+    plugin->u.o.priority = priority;
+
+    module->plugin_list = g_list_prepend (module->plugin_list, plugin);
+    return TRUE;
+}
+
 static gboolean module_parse (FILE * handle)
 {
     ModuleData * module;
@@ -294,7 +334,8 @@ static gboolean module_parse (FILE * handle)
 
     module = module_new (path, FALSE, timestamp, FALSE);
 
-    while (input_plugin_parse (module, handle));
+    while (input_plugin_parse (module, handle) || output_plugin_parse (module,
+     handle));
 
     module_list = g_list_prepend (module_list, module);
     return TRUE;
@@ -490,6 +531,37 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     }
 }
 
+void plugin_get_path (void * header, const gchar * * path, gint * type, gint *
+ number)
+{
+    ModuleData * module;
+    PluginData * plugin;
+
+    plugin_find (header, & module, & plugin);
+    * path = module->path;
+    * type = plugin->type;
+    * number = plugin->number;
+}
+
+void * plugin_by_path (const gchar * path, gint type, gint number)
+{
+    ModuleData * module;
+    PluginData * plugin;
+
+    module = module_lookup (path);
+
+    if (module == NULL)
+        return NULL;
+
+    plugin = plugin_lookup (module, type, number);
+
+    if (plugin == NULL)
+        return NULL;
+
+    module_check_loaded (module);
+    return plugin->header;
+}
+
 void plugin_for_each (gint type, gboolean (* func) (void * header, void * data),
  void * data)
 {
@@ -632,4 +704,47 @@ void input_plugin_add_mime_compat (const gchar * mime, InputPlugin * header)
 {
     input_plugin_add_keys (header, INPUT_KEY_MIME, g_list_prepend (NULL,
      g_strdup (mime)));
+}
+
+void output_plugin_set_priority (OutputPlugin * header, gint priority)
+{
+    ModuleData * module;
+    PluginData * plugin;
+
+    plugin_find (header, & module, & plugin);
+    plugin->u.o.priority = priority;
+}
+
+void output_plugin_by_priority (gboolean (* func) (OutputPlugin * header, void *
+ data), void * data)
+{
+    gint priority;
+    GList * node, * node2;
+    ModuleData * module;
+    PluginData * plugin;
+
+    for (priority = 10; priority >= 0; priority --)
+    {
+        for (node = module_list; node != NULL; node = node->next)
+        {
+            module = node->data;
+
+            for (node2 = module->plugin_list; node2 != NULL; node2 = node2->next)
+            {
+                plugin = node2->data;
+
+                if (plugin->type != PLUGIN_TYPE_OUTPUT || plugin->u.o.priority
+                 != priority)
+                    continue;
+
+                module_check_loaded (module);
+
+                if (plugin->header == NULL)
+                    continue;
+
+                if (! func (plugin->header, data))
+                    return;
+            }
+        }
+    }
 }

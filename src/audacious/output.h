@@ -30,13 +30,6 @@
 
 #include "plugin.h"
 
-typedef struct _OutputPluginData OutputPluginData;
-
-struct _OutputPluginData {
-    GList *output_list;
-    OutputPlugin *current_output_plugin;
-};
-
 typedef struct _OutputPluginState OutputPluginState;
 
 struct _OutputPluginState {
@@ -45,11 +38,12 @@ struct _OutputPluginState {
     gint nch;
 };
 
+extern OutputPlugin * current_output_plugin;
+
 GList *get_output_list(void);
-OutputPlugin *get_current_output_plugin(void);
-void set_current_output_plugin(gint i);
-void output_about(gint i);
-void output_configure(gint i);
+void set_current_output_plugin (OutputPlugin * plugin);
+void output_about (OutputPlugin * plugin);
+void output_configure (OutputPlugin * plugin);
 void output_get_volume(gint * l, gint * r);
 void output_set_volume(gint l, gint r);
 void output_set_eq(gboolean, gfloat, gfloat *);
@@ -70,7 +64,4 @@ gint get_written_time(void);
 gint get_output_time(void);
 
 extern OutputPlugin psuedo_output_plugin;
-extern OutputPluginData op_data;
-void output_plugin_cleanup(void);
-void output_plugin_reinit(void);
 #endif /* AUDACIOUS_OUTPUT_H */

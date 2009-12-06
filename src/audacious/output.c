@@ -41,6 +41,7 @@
 #include "flow.h"
 
 #include "pluginenum.h"
+#include "plugin-registry.h"
 
 #include "effect.h"
 #include "vis_runner.h"
@@ -59,10 +60,7 @@
 #define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
  (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
 
-OutputPluginData op_data = {
-    NULL,
-    NULL
-};
+OutputPlugin * current_output_plugin = NULL;
 
 OutputPluginState op_state = {
     0,
@@ -93,14 +91,9 @@ OutputPlugin psuedo_output_plugin = {
     .written_time = get_written_time,
 };
 
-OutputPlugin *
-get_current_output_plugin(void)
+void set_current_output_plugin (OutputPlugin * plugin)
 {
-    return op_data.current_output_plugin;
-}
-
-void set_current_output_plugin (gint i)
-{
+    OutputPlugin * old = current_output_plugin;
     gboolean playing = playback_get_playing ();
     gboolean paused;
     gint time;
@@ -112,7 +105,23 @@ void set_current_output_plugin (gint i)
         playback_stop ();
     }
 
-    op_data.current_output_plugin = g_list_nth(op_data.output_list, i)->data;
+    current_output_plugin = NULL;
+
+    if (old != NULL)
+        old->cleanup ();
+
+    if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+        current_output_plugin = plugin;
+    else
+    {
+        fprintf (stderr, "Output failed to load: %s\n", plugin->description);
+
+        if (old == NULL || old->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+            return;
+
+        fprintf (stderr, "Falling back to: %s\n", old->description);
+        current_output_plugin = old;
+    }
 
     if (playing)
     {
@@ -125,32 +134,34 @@ void set_current_output_plugin (gint i)
     }
 }
 
-GList *
-get_output_list(void)
+static gboolean plugin_list_func (void * plugin, void * data)
 {
-    return op_data.output_list;
+    GList * * list = data;
+
+    * list = g_list_prepend (* list, plugin);
+    return TRUE;
 }
 
-void
-output_about(gint i)
+GList * get_output_list (void)
 {
-    OutputPlugin *out = g_list_nth(op_data.output_list, i)->data;
-    if (out && out->about)
-    {
-	plugin_set_current((Plugin *)out);
-        out->about();
-    }
+    static GList * list = NULL;
+
+    if (list == NULL)
+        plugin_for_each (PLUGIN_TYPE_OUTPUT, plugin_list_func, & list);
+
+    return list;
 }
 
-void
-output_configure(gint i)
+void output_about (OutputPlugin * plugin)
 {
-    OutputPlugin *out = g_list_nth(op_data.output_list, i)->data;
-    if (out && out->configure)
-    {
-	plugin_set_current((Plugin *)out);
-        out->configure();
-    }
+    if (plugin->about != NULL)
+        plugin->about ();
+}
+
+void output_configure (OutputPlugin * plugin)
+{
+    if (plugin->configure != NULL)
+        plugin->configure ();
 }
 
 void
@@ -161,9 +172,9 @@ output_get_volume(gint * l, gint * r)
         * l = cfg.sw_volume_left;
         * r = cfg.sw_volume_right;
     }
-    else if (op_data.current_output_plugin &&
-     op_data.current_output_plugin->get_volume)
-        op_data.current_output_plugin->get_volume (l, r);
+    else if (current_output_plugin != NULL && current_output_plugin->get_volume
+     != NULL)
+        current_output_plugin->get_volume (l, r);
     else
     {
         * l = -1;
@@ -179,9 +190,9 @@ output_set_volume(gint l, gint r)
         cfg.sw_volume_left = l;
         cfg.sw_volume_right = r;
     }
-    else if (op_data.current_output_plugin &&
-     op_data.current_output_plugin->set_volume)
-        op_data.current_output_plugin->set_volume (l, r);
+    else if (current_output_plugin != NULL && current_output_plugin->set_volume
+     != NULL)
+        current_output_plugin->set_volume (l, r);
 }
 
 void
@@ -193,31 +204,20 @@ output_set_eq(gboolean active, gfloat pre, gfloat * bands)
     equalizer_flow_set_bands(pre, bands);
 }
 
-/* called by input plugin to peek at the output plugin's write progress */
-gint
-get_written_time(void)
+gint get_written_time (void)
 {
-    OutputPlugin *op = get_current_output_plugin();
-    InputPlayback *ip = get_current_input_playback();
-
-    plugin_set_current((Plugin *)op);
-    return op->written_time() - ip->start;
+    return current_output_plugin->written_time ();
 }
 
-/* called by input plugin to peek at the output plugin's output progress */
-gint
-get_output_time(void)
+gint get_output_time (void)
 {
-    OutputPlugin *op = get_current_output_plugin();
-
-    plugin_set_current((Plugin *)op);
-    return op->output_time();
+    return current_output_plugin->output_time ();
 }
 
 static gboolean
 reopen_audio(AFormat fmt, gint rate, gint nch)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     if (op == NULL)
         return FALSE;
@@ -315,7 +315,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 void
 output_write_audio(gpointer ptr, gint length)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     /* Sanity check. */
     if (op == NULL)
@@ -328,7 +328,7 @@ output_write_audio(gpointer ptr, gint length)
 void
 output_close_audio(void)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     vis_runner_flush ();
 
@@ -352,7 +352,7 @@ output_close_audio(void)
 void
 output_flush(gint time)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     vis_runner_flush ();
 
@@ -366,7 +366,7 @@ output_flush(gint time)
 void
 output_pause(gshort paused)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     if (op == NULL)
         return;
@@ -378,7 +378,7 @@ output_pause(gshort paused)
 gint
 output_buffer_free(void)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     if (op == NULL)
         return 0;
@@ -390,7 +390,7 @@ output_buffer_free(void)
 gint
 output_buffer_playing(void)
 {
-    OutputPlugin *op = get_current_output_plugin();
+    OutputPlugin * op = current_output_plugin;
 
     if (op == NULL)
         return 0;
@@ -585,17 +585,4 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
     }
 
     g_free (allocated);
-}
-
-void output_plugin_cleanup(void)
-{
-  OutputPlugin *op = get_current_output_plugin();
-   op->init();
-   output_close_audio();
-   printf("output plugin cleanupn\n");
-}
-void output_plugin_reinit(void)
-{
-
-    printf("output plugin reinit \n");
 }

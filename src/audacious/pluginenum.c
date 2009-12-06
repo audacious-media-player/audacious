@@ -347,8 +347,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .save_preset_file = save_preset_file,
     .equalizer_read_aud_preset = equalizer_read_aud_preset,
     .load_preset_file = load_preset_file,
-    .output_plugin_cleanup = output_plugin_cleanup,
-    .output_plugin_reinit = output_plugin_reinit,
 
     .get_plugin_menu = get_plugin_menu,
     .playback_get_title = playback_get_title,
@@ -417,12 +415,6 @@ static gpointer get_pvt_data(void)
     return result;
 }
 
-static gint outputlist_compare_func(gconstpointer a, gconstpointer b)
-{
-    const OutputPlugin *ap = a, *bp = b;
-    return (bp->probe_priority - ap->probe_priority);
-}
-
 static gint effectlist_compare_func(gconstpointer a, gconstpointer b)
 {
     const EffectPlugin *ap = a, *bp = b;
@@ -471,13 +463,6 @@ static void input_plugin_init(Plugin * plugin)
 
     if (p->init != NULL)
         p->init ();
-}
-
-static void output_plugin_init(Plugin * plugin)
-{
-    OutputPlugin *p = OUTPUT_PLUGIN(plugin);
-
-    op_data.output_list = g_list_append(op_data.output_list, p);
 }
 
 static void effect_plugin_init(Plugin * plugin)
@@ -559,9 +544,11 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         for (i = 0; (header->op_list)[i] != NULL; i++, n++)
         {
-            plugin_register (filename, PLUGIN_TYPE_OUTPUT, i, header->op_list[i]);
-            PLUGIN((header->op_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
-            output_plugin_init(PLUGIN((header->op_list)[i]));
+            OutputPlugin * plugin = header->op_list[i];
+
+            plugin->filename = g_strdup_printf ("%s (#%d)", filename, n);
+            plugin_register (filename, PLUGIN_TYPE_OUTPUT, i, plugin);
+            output_plugin_set_priority (plugin, plugin->probe_priority);
         }
     }
 
@@ -686,15 +673,52 @@ static void scan_plugins(const gchar * path)
     dir_foreach(path, scan_plugin_func, NULL, NULL);
 }
 
+static OutputPlugin * output_load_selected (void)
+{
+    OutputPlugin * plugin;
+
+    if (cfg.output_path == NULL)
+        return NULL;
+
+    plugin = plugin_by_path (cfg.output_path, PLUGIN_TYPE_OUTPUT,
+     cfg.output_number);
+
+    if (plugin == NULL || plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+        return NULL;
+
+    return plugin;
+}
+
+static gboolean output_probe_func (OutputPlugin * plugin, void * data)
+{
+    OutputPlugin * * result = data;
+
+    if (plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+        return TRUE;
+
+    * result = plugin;
+    return FALSE;
+}
+
+static OutputPlugin * output_probe (void)
+{
+    OutputPlugin * plugin = NULL;
+
+    output_plugin_by_priority (output_probe_func, & plugin);
+
+    if (plugin == NULL)
+        fprintf (stderr, "ALL OUTPUT PLUGINS FAILED TO INITIALIZE.\n");
+
+    return plugin;
+}
+
 void plugin_system_init(void)
 {
     gchar *dir;
     GList *node;
-    OutputPlugin *op;
     LowlevelPlugin *lp;
     GtkWidget *dialog;
     gint dirsel = 0;
-    gint prio;
 
     if (!g_module_supported())
     {
@@ -735,12 +759,6 @@ void plugin_system_init(void)
 
     plugin_registry_prune ();
 
-    op_data.output_list = g_list_sort(op_data.output_list, outputlist_compare_func);
-    if (!op_data.current_output_plugin && g_list_length(op_data.output_list))
-    {
-        op_data.current_output_plugin = op_data.output_list->data;
-    }
-
     ep_data.effect_list = g_list_sort(ep_data.effect_list, effectlist_compare_func);
     ep_data.enabled_list = NULL;
 
@@ -766,70 +784,10 @@ void plugin_system_init(void)
     g_free(cfg.enabled_dplugins);
     cfg.enabled_dplugins = NULL;
 
-    if (!cfg.outputplugin)
-    {
-        for (prio = 10; prio >= 0; prio--)
-        {
-            for (node = op_data.output_list; node; node = g_list_next(node))
-            {
-                op = OUTPUT_PLUGIN(node->data);
+    current_output_plugin = output_load_selected ();
 
-                if (op->probe_priority != prio)
-                    continue;
-
-                if (op->init)
-                {
-                    OutputPluginInitStatus ret = op->init();
-                    gchar *base_filename = g_path_get_basename(op->filename);
-                    switch (ret) {
-                    case OUTPUT_PLUGIN_INIT_NO_DEVICES:
-                        g_message("Plugin %s reports no devices. Attempting to avert disaster, trying others.",
-                            base_filename);
-                        break;
-                    case OUTPUT_PLUGIN_INIT_FAIL:
-                        g_message("Plugin %s was unable to initialise. Attemping to avert disaster, trying others.",
-                            base_filename);
-                        break;
-                    case OUTPUT_PLUGIN_INIT_FOUND_DEVICES:
-                        g_message("Plugin %s found devices.", base_filename);
-                        if (!op_data.current_output_plugin)
-                            op_data.current_output_plugin = op;
-                        break;
-                    default:
-                        g_message("Plugin %s did not report status, and no plugin has worked yet. "
-                            "Do you still need to convert it? Selecting for now...",
-                            base_filename);
-                        if (!op_data.current_output_plugin)
-                            op_data.current_output_plugin = op;
-                        break;
-                    }
-                    g_free(base_filename);
-                }
-            }
-        }
-    }
-    else
-    {
-        for (node = op_data.output_list; node; node = g_list_next(node))
-        {
-            gchar *plugin_base_filename;
-            gchar *op_base_filename;
-            op = OUTPUT_PLUGIN(node->data);
-
-            if (op->init)
-            {
-                plugin_set_current((Plugin *) op);
-                op->init();
-            }
-
-            plugin_base_filename = g_path_get_basename(cfg.outputplugin);
-            op_base_filename = g_path_get_basename(op->filename);
-            if (!g_ascii_strcasecmp(plugin_base_filename, op_base_filename))
-                op_data.current_output_plugin = op;
-            g_free(plugin_base_filename);
-            g_free(op_base_filename);
-        }
-    }
+    if (current_output_plugin == NULL)
+        current_output_plugin = output_probe ();
 
     for (node = lowlevel_list; node; node = g_list_next(node))
     {
@@ -844,7 +802,6 @@ void plugin_system_init(void)
 
 void plugin_system_cleanup(void)
 {
-    OutputPlugin *op;
     EffectPlugin *ep;
     GeneralPlugin *gp;
     VisPlugin *vp;
@@ -854,39 +811,18 @@ void plugin_system_cleanup(void)
 
     g_message("Shutting down plugin system");
 
-    if (playback_get_playing())
+    if (playback_get_playing ())
+        playback_stop ();
+
+    if (current_output_plugin != NULL)
     {
-        ip_data.stop = TRUE;
-        playback_stop();
-        ip_data.stop = FALSE;
+        if (current_output_plugin->cleanup != NULL)
+            current_output_plugin->cleanup ();
+
+        current_output_plugin = NULL;
     }
 
     plugin_registry_save ();
-
-    /* FIXME: race condition -nenolod */
-    op_data.current_output_plugin = NULL;
-
-    for (node = get_output_list(); node; node = g_list_next(node))
-    {
-        op = OUTPUT_PLUGIN(node->data);
-        if (op)
-        {
-            plugin_set_current((Plugin *) op);
-
-            if (op->cleanup)
-                op->cleanup();
-
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
-        }
-    }
-
-    if (op_data.output_list != NULL)
-    {
-        g_list_free(op_data.output_list);
-        op_data.output_list = NULL;
-    }
 
     for (node = get_effect_list(); node; node = g_list_next(node))
     {

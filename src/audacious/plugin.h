@@ -534,9 +534,6 @@ struct _AudaciousFuncTableV1 {
     EqualizerPreset *(*equalizer_read_aud_preset)(const gchar * filename);
     EqualizerPreset *(*load_preset_file)(const gchar *filename);
 
-    void (*output_plugin_cleanup)(void);
-    void (*output_plugin_reinit)(void);
-
 //    /* Audtag lib functions */
 //    Tuple *(*tag_tuple_read)(Tuple* tuple);
 //    gint (*tag_tuple_write_to_file)(Tuple *tuple);

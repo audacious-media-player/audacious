@@ -37,6 +37,9 @@ void plugin_registry_save (void);
 
 void module_register (const gchar * path);
 void plugin_register (const gchar * path, gint type, gint number, void * plugin);
+void plugin_get_path (void * plugin, const gchar * * path, gint * type, gint *
+ number);
+void * plugin_by_path (const gchar * path, gint type, gint number);
 void plugin_for_each (gint type, gboolean (* func) (void * plugin, void * data),
  void * data);
 
@@ -50,5 +53,9 @@ InputPlugin * input_plugin_for_key (gint key, const gchar * value);
 
 void input_plugin_add_scheme_compat (const gchar * scheme, InputPlugin * plugin);
 void input_plugin_add_mime_compat (const gchar * mime, InputPlugin * plugin);
+
+void output_plugin_set_priority (OutputPlugin * plugin, gint priority);
+void output_plugin_by_priority (gboolean (* func) (OutputPlugin * plugin, void *
+ data), void * data);
 
 #endif

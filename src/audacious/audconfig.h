@@ -39,7 +39,6 @@ struct _AudConfig {
     gboolean stopaftersong;
     gboolean close_dialog_open;
     gfloat equalizer_preamp, equalizer_bands[AUD_EQUALIZER_NBANDS];
-    gchar *outputplugin;
     gchar *filesel_path;
     gchar *playlist_path;
     gchar *enabled_gplugins, *enabled_vplugins, *enabled_eplugins, *enabled_dplugins ;
@@ -80,6 +79,8 @@ struct _AudConfig {
     gboolean bypass_dsp;
     gint sw_volume_left, sw_volume_right;
     gboolean clear_playlist;
+    gchar * output_path;
+    gint output_number;
 };
 
 typedef struct _AudConfig AudConfig;

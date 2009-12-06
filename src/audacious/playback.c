@@ -442,9 +442,9 @@ static gboolean playback_play_file (gint playlist, gint entry)
     InputPlugin * decoder = playlist_entry_get_decoder (playlist, entry);
     InputPlayback *playback;
 
-    if (!get_current_output_plugin()) {
-        run_no_output_plugin_dialog();
-        playback_stop();
+    if (current_output_plugin == NULL)
+    {
+        run_no_output_plugin_dialog ();
         return FALSE;
     }
 
