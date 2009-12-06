@@ -107,7 +107,7 @@ void set_current_output_plugin (OutputPlugin * plugin)
 
     current_output_plugin = NULL;
 
-    if (old != NULL)
+    if (old != NULL && old->cleanup != NULL)
         old->cleanup ();
 
     if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
