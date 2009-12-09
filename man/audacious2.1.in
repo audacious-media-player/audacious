@@ -53,11 +53,11 @@ If currently playing, go to the beginning of the song; otherwise, begin playing.
 
 .TP
 .I -u, --pause
-Stop playing.
+If currently playing, pause; if paused, resume playing.
 
 .TP
 .I -t, --play-pause
-If currently playing, stop playing; otherwise, begin playing.
+If currently playing, pause; otherwise, begin playing.
 
 .TP
 .I -s, --stop
