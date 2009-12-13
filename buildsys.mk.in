@@ -21,23 +21,28 @@
 #
 
 PACKAGE = @PACKAGE@
+AS = @AS@
 CC = @CC@
 CXX = @CXX@
 CPP = @CPP@
 DC = @DC@
 ERLC = @ERLC@
 OBJC = @OBJC@
+OBJCXX = @OBJCXX@
 AR = @AR@
 LD = ${CC}
 RANLIB = @RANLIB@
 PYTHON = @PYTHON@
+ASFLAGS = @ASFLAGS@
 CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@
 CPPFLAGS = @CPPFLAGS@
 DFLAGS = @DFLAGS@
 ERLCFLAGS = @ERLCFLAGS@
 OBJCFLAGS = @OBJCFLAGS@
+OBJCXXFLAGS = @OBJCXXFLAGS@
 LDFLAGS = @LDFLAGS@
+LDFLAGS_RPATH = @LDFLAGS_RPATH@
 LIBS = @LIBS@
 PYTHON_FLAGS = @PYTHON_FLAGS@
 PROG_IMPLIB_NEEDED = @PROG_IMPLIB_NEEDED@
@@ -52,7 +57,6 @@ PLUGIN_CPPFLAGS = @PLUGIN_CPPFLAGS@
 PLUGIN_CFLAGS = @PLUGIN_CFLAGS@
 PLUGIN_LDFLAGS = @PLUGIN_LDFLAGS@
 PLUGIN_SUFFIX = @PLUGIN_SUFFIX@
-RPATH_LDFLAGS = @RPATH_LDFLAGS@
 INSTALL_LIB = @INSTALL_LIB@
 UNINSTALL_LIB = @UNINSTALL_LIB@
 CLEAN_LIB = @CLEAN_LIB@
@@ -60,6 +64,7 @@ LN_S = @LN_S@
 MKDIR_P = mkdir -p
 INSTALL = @INSTALL@
 SHELL = @SHELL@
+MSGFMT = @MSGFMT@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 bindir = @bindir@
@@ -72,18 +77,21 @@ includesubdir ?= ${PACKAGE}
 mandir = @mandir@
 mansubdir ?= man1
 
-OBJS1 = ${SRCS:.c=.o}
-OBJS2 = ${OBJS1:.cc=.o}
-OBJS3 = ${OBJS2:.cxx=.o}
-OBJS4 = ${OBJS3:.d=.o}
-OBJS5 = ${OBJS4:.erl=.beam}
-OBJS6 = ${OBJS5:.m=.o}
-OBJS7 = ${OBJS6:.py=.pyc}
-OBJS += ${OBJS7:.xpm=.o}
+OBJS1  = ${SRCS:.c=.o}
+OBJS2  = ${OBJS1:.cc=.o}
+OBJS3  = ${OBJS2:.cxx=.o}
+OBJS4  = ${OBJS3:.d=.o}
+OBJS5  = ${OBJS4:.erl=.beam}
+OBJS6  = ${OBJS5:.m=.o}
+OBJS7  = ${OBJS6:.mm=.o}
+OBJS8  = ${OBJS7:.py=.pyc}
+OBJS9  = ${OBJS8:.xpm=.o}
+OBJS10 = ${OBJS9:.S=.o}
+OBJS  += ${OBJS10:.po=.gmo}
 
 .SILENT:
 .SUFFIXES:
-.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .m .o .py .pyc .xpm
+.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .gmo .m .mm .o .po .py .pyc .xpm .S
 .PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean
 
 all:
@@ -120,6 +128,14 @@ depend: pre-depend ${SRCS}
 				test $$i -nt .deps && regen=1; \
 				deps="$$deps $${i%.m}.dep"; \
 				;; \
+			*.mm) \
+				test $$i -nt .deps && regen=1; \
+				deps="$$deps $${i%.mm}.dep"; \
+				;; \
+			*.S) \
+				test $$i -nt .deps && regen=1; \
+				deps="$$deps $${i%.S}.dep"; \
+				;; \
 		esac; \
 	done; \
 	if test x"$$regen" = x"1" -a x"$$deps" != "x"; then \
@@ -134,7 +150,7 @@ depend: pre-depend ${SRCS}
 		fi; \
 	fi
 
-.c.dep .cc.dep .cxx.dep .m.dep:
+.c.dep .cc.dep .cxx.dep .m.dep .mm.dep .S.dep:
 	${CPP} ${CPPFLAGS} -M $< >$@ || (rm -f $@; exit 1)
 
 .d.dep:
@@ -230,6 +246,22 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 		${COMPILE_FAILED}; \
 	fi
 
+.mm.o:
+	${COMPILE_STATUS}
+	if ${OBJCXX} ${OBJCXXFLAGS} ${OBJCFLAGS} ${CXXFLAGS} ${CPPFLAGS} -c -o $@ $<; then \
+		${COMPILE_OK}; \
+	else \
+		${COMPILE_FAILED}; \
+	fi
+
+.po.gmo:
+	${COMPILE_STATUS}
+	if ${MSGFMT} -c -o $@ $<; then \
+		${COMPILE_OK}; \
+	else \
+		${COMPILE_FAILED}; \
+	fi
+
 .py.pyc:
 	${COMPILE_STATUS}
 	if ${PYTHON} ${PYTHON_FLAGS} -c "import py_compile; py_compile.compile('$<')"; then \
@@ -241,6 +273,14 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 .xpm.o:
 	${COMPILE_STATUS}
 	if ${CC} ${CFLAGS} ${CPPFLAGS} -x c -c -o $@ $<; then \
+		${COMPILE_OK}; \
+	else \
+		${COMPILE_FAILED}; \
+	fi
+
+.S.o:
+	${COMPILE_STATUS}
+	if ${AS} ${ASFLAGS} ${CPPFLAGS} -c -o $@ $<; then \
 		${COMPILE_OK}; \
 	else \
 		${COMPILE_FAILED}; \
@@ -406,7 +446,7 @@ clean:
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${OBJS} ${CLEAN} ${CLEAN_LIB} ${DEPS}; do \
+	for i in ${DEPS} ${OBJS} ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN} ${CLEAN_LIB}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
@@ -423,7 +463,7 @@ distclean: clean
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${DISTCLEAN} .deps *~; do \
+	for i in ${DISTCLEAN} .deps *~; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
