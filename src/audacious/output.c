@@ -95,8 +95,8 @@ void set_current_output_plugin (OutputPlugin * plugin)
 {
     OutputPlugin * old = current_output_plugin;
     gboolean playing = playback_get_playing ();
-    gboolean paused;
-    gint time;
+    gboolean paused = FALSE;
+    gint time = 0;
 
     if (playing)
     {
