@@ -422,10 +422,23 @@ static void queue_update (gint level)
 
 static Tuple * get_tuple (const gchar * filename, InputPlugin * decoder)
 {
-    if (decoder == NULL || decoder->get_song_tuple == NULL)
-        return NULL;
+    if (decoder->get_song_tuple != NULL)
+        return decoder->get_song_tuple (filename);
 
-    return decoder->get_song_tuple (filename);
+    if (decoder->probe_for_tuple != NULL)
+    {
+        VFSFile * handle = vfs_fopen (filename, "r");
+        Tuple * tuple;
+
+        if (handle == NULL)
+            return NULL;
+
+        tuple = decoder->probe_for_tuple (filename, handle);
+        vfs_fclose (handle);
+        return tuple;
+    }
+
+    return NULL;
 }
 
 /* scan_mutex must be locked! */
