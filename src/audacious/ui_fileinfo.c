@@ -41,12 +41,12 @@
 
 #include "plugin.h"
 #include "pluginenum.h"
-#include "input.h"
 #include "effect.h"
 #include "audstrings.h"
 #include "general.h"
 #include "output.h"
 #include "playlist-new.h"
+#include "probe.h"
 #include "visualization.h"
 
 #include "main.h"
@@ -947,17 +947,7 @@ void ui_fileinfo_show (gint playlist, gint entry)
     g_return_if_fail (filename != NULL);
 
     if (decoder == NULL)
-    {
-        ProbeResult * probe = input_check_file (filename);
-
-        if (probe != NULL && probe->ip != NULL)
-            decoder = probe->ip;
-
-        if (probe != NULL && probe->tuple != NULL)
-            playlist_entry_set_tuple (playlist, entry, probe->tuple);
-
-        g_free (probe);
-    }
+        decoder = file_probe (filename, FALSE);
 
     if (decoder == NULL)
     {

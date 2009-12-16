@@ -33,8 +33,8 @@
 #include <mowgli.h>
 
 #include "input.h"
-#include "playlist-utils.h"
 #include "plugin-registry.h"
+#include "probe.h"
 
 PlaybackData ip_data =
 {
@@ -75,134 +75,17 @@ GList * get_input_list (void)
     return list;
 }
 
-/* do actual probing. this function is called from input_check_file() */
-static ProbeResult * input_do_check_file (InputPlugin * ip, VFSFile * fd,
- const gchar * filename_proxy)
-{
-    ProbeResult *pr = NULL;
-    gint result = 0;
-
-    g_return_val_if_fail(fd != NULL, NULL);
-
-    pr = g_new0(ProbeResult, 1);
-    pr->ip = ip;
-
-    vfs_rewind(fd);
-
-    if (ip->is_our_file_from_vfs != NULL)
-    {
-        result = ip->is_our_file_from_vfs(filename_proxy, fd);
-
-        if (result > 0)
-            return pr;
-    }
-    else if (ip->is_our_file != NULL)
-    {
-        result = ip->is_our_file(filename_proxy);
-
-        if (result > 0)
-            return pr;
-    }
-
-    g_free(pr);
-
-    return NULL;
-}
-
-typedef struct
-{
-    const gchar * filename;
-    VFSFile * handle;
-    ProbeResult * * result;
-}
-ProbeState;
-
-static gboolean probe_func (InputPlugin * plugin, void * data)
-{
-    ProbeState * state = data;
-
-    * state->result = input_do_check_file (plugin, state->handle,
-     state->filename);
-
-    return (* state->result == NULL);
-}
-
-ProbeResult * input_check_file (const gchar * filename)
-{
-    VFSFile *fd;
-    InputPlugin *ip;
-    gchar *filename_proxy, *mimetype;
-    ProbeResult *pr = NULL;
-    ProbeState state;
-
-    /* Some URIs have special subsong identifier to determine the subsong requested. */
-    filename_proxy = filename_split_subtune(filename, NULL);
-
-    /* Open the file with vfs sub-system.
-     * FIXME! XXX! buffered VFS file does not handle mixed seeks and reads/writes
-     * correctly! As a temporary workaround, switching to unbuffered ... -ccr
-     */
-    //fd = vfs_buffered_file_new_from_uri(filename_proxy);
-    fd = vfs_fopen(filename_proxy, "rb");
-
-    if (fd == NULL) {
-        g_warning("Unable to read from %s, giving up.\n", filename_proxy);
-        g_free(filename_proxy);
-        return NULL;
-    }
-
-
-    /* Apply mimetype check. note that stdio does not support mimetype check. */
-    mimetype = vfs_get_metadata(fd, "content-type");
-    if (mimetype != NULL) {
-        ip = input_plugin_for_key (INPUT_KEY_MIME, mimetype);
-        g_free(mimetype);
-    } else
-        ip = NULL;
-
-    if (ip != NULL)
-    {
-        pr = input_do_check_file (ip, fd, filename_proxy);
-        if (pr != NULL) {
-            g_free(filename_proxy);
-            vfs_fclose(fd);
-            return pr;
-        }
-    }
-
-    state.filename = filename;
-    state.handle = fd;
-    state.result = & pr;
-    input_plugin_by_priority (probe_func, & state);
-
-    g_free (filename_proxy);
-    vfs_fclose (fd);
-    return pr;
-}
-
 Tuple *
 input_get_song_tuple(const gchar * filename)
 {
     InputPlugin *ip = NULL;
     Tuple *input = NULL;
     gchar *ext = NULL;
-    ProbeResult *pr;
 
     if (filename == NULL)
         return NULL;
 
-    ip = filename_find_decoder (filename);
-
-    if (ip == NULL)
-    {
-        pr = input_check_file (filename);
-
-        if (pr == NULL)
-            return NULL;
-
-        ip = pr->ip;
-        g_free (pr);
-    }
+    ip = file_probe (filename, FALSE);
 
     if (ip && ip->get_song_tuple)
         input = ip->get_song_tuple (filename);
@@ -307,31 +190,18 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
     gtk_widget_show_all(window);
 }
 
-void
-input_file_info_box(const gchar * filename)
+void input_file_info_box (const gchar * filename)
 {
-    InputPlugin *ip;
-    gchar *filename_proxy;
-    ProbeResult *pr;
+    InputPlugin * decoder;
 
-    filename_proxy = g_strdup(filename);
+    decoder = file_probe (filename, FALSE);
 
-    pr = input_check_file (filename_proxy);
-
-    if (!pr)
-        return;
-
-    ip = pr->ip;
-
-    g_free(pr);
-
-    if (ip->file_info_box)
-        ip->file_info_box(filename_proxy);
+    if (decoder != NULL && decoder->file_info_box != NULL)
+        decoder->file_info_box (filename);
     else
-        input_general_file_info_box(filename, ip);
-
-    g_free(filename_proxy);
+        input_general_file_info_box (filename, decoder);
 }
+
 void
 input_get_volume(gint * l, gint * r)
 {

@@ -52,7 +52,6 @@ InputPlayback *get_current_input_playback(void);
 void set_current_input_playback(InputPlayback * ip);
 void set_current_input_data(void * data);
 
-ProbeResult * input_check_file (const gchar * filename);
 Tuple *input_get_song_tuple(const gchar * filename);
 
 void input_get_volume(gint * l, gint * r);

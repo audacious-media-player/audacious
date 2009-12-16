@@ -31,6 +31,7 @@ SRCS = af_equalizer.c							\
        playlist-utils.c \
        pluginenum.c								\
        plugin-registry.c \
+       probe.c \
        rcfile.c									\
        signals.c								\
        src_flow.c								\

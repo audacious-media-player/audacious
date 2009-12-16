@@ -43,6 +43,7 @@
 #include "output.h"
 #include "playlist-new.h"
 #include "pluginenum.h"
+#include "probe.h"
 #include "util.h"
 
 #include "playback.h"
@@ -449,19 +450,7 @@ static gboolean playback_play_file (gint playlist, gint entry)
     }
 
     if (decoder == NULL)
-    {
-        ProbeResult * pr = input_check_file (filename);
-
-        if (pr != NULL)
-        {
-            decoder = pr->ip;
-
-            if (pr->tuple != NULL)
-                mowgli_object_unref (pr->tuple);
-
-            g_free (pr);
-        }
-    }
+        decoder = file_probe (filename, FALSE);
 
     if (decoder == NULL)
     {

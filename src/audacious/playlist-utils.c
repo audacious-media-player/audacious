@@ -19,18 +19,13 @@
  * using our public API to be a derived work.
  */
 
-#include <dirent.h>
 #include <glib.h>
 #include <regex.h>
 #include <string.h>
-#include <sys/stat.h>
 
-#include "input.h"
 #include "playlist_container.h"
 #include "playlist-new.h"
 #include "playlist-utils.h"
-#include "plugin.h"
-#include "plugin-registry.h"
 
 const gchar * aud_titlestring_presets[] =
 {
@@ -280,49 +275,6 @@ gboolean filename_is_playlist (const gchar * filename)
 
     return (period != NULL && playlist_container_find ((gchar *) period + 1) !=
      NULL);
-}
-
-InputPlugin * filename_find_decoder (const gchar * filename)
-{
-    InputPlugin * decoder = NULL;
-    gchar * temp = g_strdup (filename);
-    gchar * temp2;
-    gchar c;
-
-    temp2 = strstr (temp, "://");
-
-    if (temp2 != NULL)
-    {
-        c = temp2[3];
-        temp2[3] = 0;
-
-        decoder = input_plugin_for_key (INPUT_KEY_SCHEME, temp);
-
-        if (decoder != NULL)
-            goto DONE;
-
-        temp2[3] = c;
-    }
-
-    temp2 = strrchr (temp, '?');
-
-    if (temp2 != NULL)
-        * temp2 = 0;
-
-    temp2 = strrchr (temp, '.');
-
-    if (temp2 == NULL)
-        goto DONE;
-
-    temp2 = g_ascii_strdown (temp2 + 1, -1);
-    g_free (temp);
-    temp = temp2;
-
-    decoder = input_plugin_for_key (INPUT_KEY_EXTENSION, temp);
-
-DONE:
-    g_free (temp);
-    return decoder;
 }
 
 gboolean playlist_insert_playlist (gint playlist, gint at, const gchar *

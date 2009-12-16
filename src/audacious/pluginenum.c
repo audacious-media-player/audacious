@@ -314,8 +314,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .util_get_localdir = util_get_localdir,
 
-    .input_check_file = input_check_file,
-
     .flow_new = flow_new,
     .flow_execute = flow_execute,
     .flow_link_element = flow_link_element,

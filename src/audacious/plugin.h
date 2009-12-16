@@ -111,11 +111,6 @@ typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
-typedef struct {
-    Tuple *tuple;
-    InputPlugin *ip;
-} ProbeResult;
-
 /** ReplayGain information structure */
 typedef struct {
     gfloat track_gain;  /**< Track gain in decibels (dB) */
@@ -490,9 +485,6 @@ struct _AudaciousFuncTableV1 {
     void (*fileinfopopup_show_from_title)(GtkWidget *fileinfopopup_win, gchar *title);
     void (*fileinfopopup_hide)(GtkWidget *filepopup_win, gpointer unused);
 
-    /* Probe */
-    ProbeResult * (* input_check_file) (const gchar * filename);
-
     /* InputPlayback */
     InputPlayback *(*playback_new)(void);
     void (*playback_free)(InputPlayback *);
@@ -752,7 +744,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_save               _audvt->playlist_save
 #define aud_playlist_add_folder         _audvt->playlist_add_folder
 
-#define aud_ip_state                    _audvt->ip_state
 #define aud_cfg                         _audvt->_cfg
 
 #define aud_hook_associate              _audvt->hook_associate
@@ -835,8 +826,6 @@ struct _AudaciousFuncTableV1 {
 #define audacious_fileinfopopup_hide            _audvt->fileinfopopup_hide
 
 #define audacious_get_localdir          _audvt->util_get_localdir
-
-#define aud_input_check_file            _audvt->input_check_file
 
 #define aud_playback_new                _audvt->playback_new
 #define aud_playback_run                _audvt->playback_run

@@ -30,6 +30,7 @@
 #include "playlist-new.h"
 #include "playlist-utils.h"
 #include "plugin.h"
+#include "probe.h"
 
 #define DECLARE_PLAYLIST \
     struct playlist * playlist
@@ -263,7 +264,7 @@ static void entry_check_has_decoder (struct entry * entry)
     if (entry->decoder != NULL || entry->failed)
         return;
 
-    entry->decoder = filename_find_decoder (entry->filename);
+    entry->decoder = file_probe (entry->filename, TRUE);
 
     if (entry->decoder == NULL)
         entry->failed = TRUE;
@@ -759,7 +760,7 @@ static void make_entries (gchar * filename, InputPlugin * decoder, Tuple *
  tuple, struct index * list)
 {
     if (tuple == NULL && decoder == NULL)
-        decoder = filename_find_decoder (filename);
+        decoder = file_probe (filename, TRUE);
 
     if (tuple == NULL && decoder != NULL && decoder->have_subtune &&
      decoder->get_song_tuple != NULL)

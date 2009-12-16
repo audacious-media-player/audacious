@@ -29,7 +29,7 @@
 #include "config.h"
 #include "i18n.h"
 #include "playlist-new.h"
-#include "playlist-utils.h"
+#include "probe.h"
 
 static GList * add_queue = NULL;
 static gint add_source = 0;
@@ -110,7 +110,7 @@ static gboolean add_cb (void * unused)
             {
                 gchar * filename = g_filename_to_uri (stack->data, NULL, NULL);
 
-                if (filename != NULL && filename_find_decoder (filename) != NULL)
+                if (filename != NULL && file_probe (filename, TRUE) != NULL)
                     index_append (index, filename);
                 else
                     g_free (filename);

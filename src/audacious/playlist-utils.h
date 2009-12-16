@@ -33,7 +33,6 @@ void playlist_remove_failed (gint playlist);
 void playlist_select_by_patterns (gint playlist, const Tuple * patterns);
 
 gboolean filename_is_playlist (const gchar * filename);
-InputPlugin * filename_find_decoder (const gchar * filename);
 
 gboolean playlist_insert_playlist (gint playlist, gint at, const gchar *
  filename);
