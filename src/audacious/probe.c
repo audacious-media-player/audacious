@@ -33,7 +33,7 @@ static InputPlugin * probe_by_scheme (gchar * filename)
 
     c = s[3];
     s[3] = 0;
-    decoder = input_plugin_for_key (INPUT_KEY_SCHEME, s);
+    decoder = input_plugin_for_key (INPUT_KEY_SCHEME, filename);
     s[3] = c;
     return decoder;
 }
