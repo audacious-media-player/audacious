@@ -74,28 +74,31 @@ datarootdir = @datarootdir@
 datadir = @datadir@
 includedir = @includedir@
 includesubdir ?= ${PACKAGE}
+localedir = @localedir@
+localename ?= ${PACKAGE}
 mandir = @mandir@
 mansubdir ?= man1
 
-OBJS1  = ${SRCS:.c=.o}
-OBJS2  = ${OBJS1:.cc=.o}
-OBJS3  = ${OBJS2:.cxx=.o}
-OBJS4  = ${OBJS3:.d=.o}
-OBJS5  = ${OBJS4:.erl=.beam}
-OBJS6  = ${OBJS5:.m=.o}
-OBJS7  = ${OBJS6:.mm=.o}
-OBJS8  = ${OBJS7:.py=.pyc}
-OBJS9  = ${OBJS8:.xpm=.o}
-OBJS10 = ${OBJS9:.S=.o}
-OBJS  += ${OBJS10:.po=.gmo}
+OBJS1 = ${SRCS:.c=.o}
+OBJS2 = ${OBJS1:.cc=.o}
+OBJS3 = ${OBJS2:.cxx=.o}
+OBJS4 = ${OBJS3:.d=.o}
+OBJS5 = ${OBJS4:.erl=.beam}
+OBJS6 = ${OBJS5:.m=.o}
+OBJS7 = ${OBJS6:.mm=.o}
+OBJS8 = ${OBJS7:.py=.pyc}
+OBJS9 = ${OBJS8:.xpm=.o}
+OBJS += ${OBJS9:.S=.o}
+
+MO_FILES = ${LOCALES:.po=.mo}
 
 .SILENT:
 .SUFFIXES:
-.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .gmo .m .mm .o .po .py .pyc .xpm .S
+.SUFFIXES: .beam .c .cc .cxx .d .dep .erl .mo .m .mm .o .po .py .pyc .xpm .S
 .PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean
 
 all:
-	for i in subdirs depend ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST}; do \
+	for i in subdirs depend ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST} locales; do \
 		${MAKE} ${MFLAGS} $$i || exit 1; \
 	done
 
@@ -198,6 +201,8 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 		rm -f $@; \
 	fi
 
+locales: ${MO_FILES}
+
 .c.o:
 	${COMPILE_STATUS}
 	if ${CC} ${CFLAGS} ${CPPFLAGS} -c -o $@ $<; then \
@@ -254,7 +259,7 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 		${COMPILE_FAILED}; \
 	fi
 
-.po.gmo:
+.po.mo:
 	${COMPILE_STATUS}
 	if ${MSGFMT} -c -o $@ $<; then \
 		${COMPILE_OK}; \
@@ -347,6 +352,15 @@ install: ${LIB} ${STATIC_LIB} ${PLUGIN} ${PROG} install-extra
 		fi \
 	done
 
+	for i in ${MO_FILES}; do \
+		${INSTALL_STATUS}; \
+		if ${MKDIR_P} ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES && ${INSTALL} -m 644 $$i ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES/${localename}.mo; then \
+			${INSTALL_OK}; \
+		else \
+			${INSTALL_FAILED}; \
+		fi \
+	done
+
 	for i in ${MAN}; do \
 		${INSTALL_STATUS}; \
 		if ${MKDIR_P} ${DESTDIR}${mandir}/${mansubdir} && ${INSTALL} -m 644 $$i ${DESTDIR}${mandir}/${mansubdir}/$$i; then \
@@ -427,6 +441,16 @@ uninstall: uninstall-extra
 	done
 	-rmdir ${DESTDIR}${includedir}/${includesubdir} >/dev/null 2>&1
 
+	for i in ${MO_FILES}; do \
+		if test -f ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES/${localename}.mo; then \
+			if rm -f ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES/${localename}.mo; then \
+				${DELETE_OK}; \
+			else \
+				${DELETE_FAILED}; \
+			fi \
+		fi \
+	done
+
 	for i in ${MAN}; do \
 		if test -f ${DESTDIR}${mandir}/${mansubdir}/$$i; then \
 			if rm -f ${DESTDIR}${mandir}/${mansubdir}/$$i; then \
@@ -446,7 +470,7 @@ clean:
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${DEPS} ${OBJS} ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN} ${CLEAN_LIB}; do \
+	for i in ${DEPS} ${OBJS} ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
