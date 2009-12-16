@@ -59,7 +59,7 @@ static gboolean playback_play_file (gint playlist, gint entry);
 static gboolean pause_when_ready;
 static gint seek_when_ready;
 static gint ready_source;
-static gint playback_entry;
+static gint playback_entry, failed_entries;
 
 static gboolean ready_cb (void * data)
 {
@@ -191,6 +191,7 @@ playback_initiate(void)
     mpris_emit_track_change(mpris);
 #endif
 
+    failed_entries = 0;
     playback_play_file (playlist, entry);
 }
 
@@ -288,37 +289,47 @@ run_no_output_plugin_dialog(void)
 
 static gboolean playback_ended (void * user_data)
 {
-    gboolean error, play;
+    gint playlist = playlist_get_playing ();
+    gboolean play;
 
     g_return_val_if_fail (ip_data.current_input_playback != NULL, FALSE);
 
-    error = ip_data.current_input_playback->error;
+    if (ip_data.current_input_playback->error)
+        failed_entries ++;
+    else
+        failed_entries = 0;
+
     playback_finalize (ip_data.current_input_playback);
 
-    if (error)
-        play = FALSE;
-    else
+    while (1)
     {
         if (cfg.no_playlist_advance)
-            play = cfg.repeat;
+            play = cfg.repeat && ! failed_entries;
         else
         {
-            gint playlist = playlist_get_playing ();
-
             play = playlist_next_song (playlist, FALSE);
 
             if (! play)
                 play = playlist_next_song (playlist, TRUE) && cfg.repeat;
+
+            if (failed_entries >= playlist_entry_count (playlist) * 2)
+                play = FALSE;
         }
 
         if (cfg.stopaftersong)
             play = FALSE;
-    }
 
-    if (play)
-        playback_initiate ();
-    else
-        hook_call ("playback stop", NULL);
+        if (! play)
+        {
+            hook_call ("playback stop", NULL);
+            break;
+        }
+
+        if (playback_play_file (playlist, playlist_get_position (playlist)))
+            break;
+
+        failed_entries ++;
+    }
 
     return FALSE;
 }
