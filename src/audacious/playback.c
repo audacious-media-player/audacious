@@ -131,6 +131,7 @@ static gint
 playback_get_time_real(void)
 {
     InputPlayback * playback;
+    gint time = -1;
 
     playback = ip_data.current_input_playback;
     g_return_val_if_fail (playback != NULL, 0);
@@ -142,11 +143,12 @@ playback_get_time_real(void)
         return 0;
 
     if (playback->plugin->get_time != NULL)
-        return playback->plugin->get_time (playback);
+        time = playback->plugin->get_time (playback);
 
-    /** @attention This assumes that output_time will return sanely (zero)
-     * even before audio is opened. Not ideal, but what else can we do? -jlindgren */
-    return playback->output->output_time ();
+    if (time == -1)
+        time = get_output_time ();
+
+    return time;
 }
 
 gint
@@ -388,6 +390,20 @@ playback_monitor_thread(gpointer data)
     return NULL;
 }
 
+/* compatibility */
+static void playback_set_replaygain_info (InputPlayback * playback,
+ ReplayGainInfo * info)
+{
+    playback->output->set_replaygain_info (info);
+}
+
+/* compatibility */
+static void playback_pass_audio (InputPlayback * playback, AFormat format, gint
+ channels, gint size, void * data, gint * going)
+{
+    playback->output->write_audio (data, size);
+}
+
 InputPlayback *
 playback_new(void)
 {
@@ -400,14 +416,18 @@ playback_new(void)
     playback->pb_change_mutex = g_mutex_new();
     playback->pb_change_cond = g_cond_new();
 
+    playback->output = & output_api;
+
     /* init vtable functors */
     playback->set_pb_ready = playback_set_pb_ready;
     playback->set_pb_change = playback_set_pb_change;
     playback->set_params = set_params;
     playback->set_title = set_title;
-    playback->pass_audio = output_pass_audio;
-    playback->set_replaygain_info = output_set_replaygain_info;
     playback->set_tuple = set_tuple;
+
+    /* compatibility */
+    playback->set_replaygain_info = playback_set_replaygain_info;
+    playback->pass_audio = playback_pass_audio;
 
     return playback;
 }
@@ -479,7 +499,6 @@ static gboolean playback_play_file (gint playlist, gint entry)
     playback->filename = g_strdup (filename);
     playback->title = g_strdup ((title != NULL) ? title : filename);
     playback->length = playlist_entry_get_length (playlist, entry);
-    playback->output = &psuedo_output_plugin;
     playback->segmented = playlist_entry_is_segmented (playlist, entry);
     playback->start = playlist_entry_get_start_time (playlist, entry);
     playback->end = playlist_entry_get_end_time (playlist, entry);

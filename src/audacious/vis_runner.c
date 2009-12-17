@@ -23,21 +23,20 @@
 
 #include "hook.h"
 #include "input.h"
-#include "playback.h"
-#include "plugin.h"
+#include "output.h"
 #include "vis_runner.h"
 
 #define INTERVAL 30 /* milliseconds */
 #define DEBUG 0
 
 static GMutex * mutex;
-static gboolean active;
+static gboolean playing, paused, active;
 static GList * vis_list, * vis_tail, * hooks;
 static gint source;
 
-static gboolean send_audio (gpointer user_data)
+static gboolean send_audio (void * unused)
 {
-    gint outputted = playback_get_time ();
+    gint outputted = current_output_plugin->output_time ();
     VisNode * vis_node, * next;
 
     vis_node = NULL;
@@ -95,50 +94,47 @@ static gboolean send_audio (gpointer user_data)
 #endif
 
     g_free (vis_node);
-    return 1;
+    return TRUE;
 }
 
-static void start_stop (gpointer hook_data, gpointer user_data)
+static gboolean send_clear (void * unused)
 {
-    gboolean collect = (hooks != NULL && playback_get_playing ());
-    gboolean send = (collect && ! playback_get_paused ());
-
-    if (collect)
-        active = TRUE;
-    else
-    {
-        active = FALSE;
-        vis_runner_flush ();
-    }
-
-    if (send)
-    {
-        if (! source)
-            source = g_timeout_add (INTERVAL, send_audio, NULL);
-    }
-    else
-    {
-        if (source)
-        {
-            g_source_remove (source);
-            source = 0;
-        }
-    }
+    hook_call ("visualization clear", NULL);
+    source = 0;
+    return FALSE;
 }
 
 void vis_runner_init (void)
 {
     mutex = g_mutex_new ();
+    playing = FALSE;
+    paused = FALSE;
     active = FALSE;
     hooks = NULL;
     vis_list = NULL;
     vis_tail = NULL;
     source = 0;
+}
 
-    hook_associate ("playback begin", start_stop, NULL);
-    hook_associate ("playback pause", start_stop, NULL);
-    hook_associate ("playback unpause", start_stop, NULL);
-    hook_associate ("playback stop", start_stop, NULL);
+void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
+{
+    playing = new_playing;
+    paused = new_paused;
+    active = playing && hooks != NULL;
+
+    if (source != 0)
+    {
+        g_source_remove (source);
+        source = 0;
+    }
+
+    if (! active)
+    {
+        vis_runner_flush ();
+        source = g_timeout_add (0, send_clear, NULL);
+    }
+    else if (! paused)
+        source = g_timeout_add (INTERVAL, send_audio, NULL);
 }
 
 void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
@@ -214,8 +210,28 @@ UNLOCK:
     g_mutex_unlock (mutex);
 }
 
+void vis_runner_time_offset (gint offset)
+{
+    GList * node;
+
+#if DEBUG
+    printf ("OFFSET %d\n", offset);
+#endif
+
+    g_mutex_lock (mutex);
+
+    for (node = vis_list; node != NULL; node = node->next)
+        ((VisNode *) (node->data))->time += offset;
+
+    g_mutex_unlock (mutex);
+}
+
 void vis_runner_flush (void)
 {
+#if DEBUG
+    printf ("FLUSH\n");
+#endif
+
     g_mutex_lock (mutex);
 
     while (vis_list != NULL)
@@ -236,7 +252,7 @@ void vis_runner_add_hook (HookFunction func, gpointer user_data)
     item->func = func;
     item->user_data = user_data;
     hooks = g_list_prepend (hooks, item);
-    start_stop (NULL, NULL);
+    vis_runner_start_stop (playing, paused);
 }
 
 void vis_runner_remove_hook (HookFunction func)
@@ -254,8 +270,8 @@ void vis_runner_remove_hook (HookFunction func)
 
     return;
 
-  FOUND:
+FOUND:
     hooks = g_list_delete_link (hooks, node);
     g_free (item);
-    start_stop (NULL, NULL);
+    vis_runner_start_stop (playing, paused);
 }

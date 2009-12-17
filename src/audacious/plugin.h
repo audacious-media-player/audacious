@@ -989,6 +989,7 @@ struct _OutputPlugin {
     void (*write_audio) (gpointer ptr, gint length);
     void (*close_audio) (void);
 
+    void (* set_written_time) (gint time);
     void (*flush) (gint time);
     void (*pause) (gshort paused);
     gint (*buffer_free) (void);
@@ -1007,6 +1008,19 @@ struct _EffectPlugin {
     void (*query_format) (AFormat * fmt, gint * rate, gint * nch);
 };
 
+struct OutputAPI
+{
+    gint (* open_audio) (AFormat fmt, gint rate, gint nch);
+    void (* set_replaygain_info) (ReplayGainInfo * info);
+    void (* write_audio) (gpointer ptr, gint length);
+    void (* close_audio) (void);
+
+    void (* pause) (gboolean pause);
+    void (* flush) (gint time);
+    gint (* written_time) (void);
+    gboolean (* buffer_playing) (void);
+};
+
 struct _InputPlayback {
     gchar *filename;    /**< Filename URI */
     void *data;
@@ -1016,7 +1030,7 @@ struct _InputPlayback {
     gboolean eof;       /**< TRUE if end of file has been reached- */
 
     InputPlugin *plugin;
-    OutputPlugin *output;
+    struct OutputAPI * output;
     GThread *thread;
 
     GMutex *pb_ready_mutex;

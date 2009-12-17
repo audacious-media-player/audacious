@@ -20,8 +20,10 @@
  */
 
 void vis_runner_init (void);
+void vis_runner_start_stop (gboolean playing, gboolean paused);
 void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
  channels);
+void vis_runner_time_offset (gint offset);
 void vis_runner_flush (void);
 void vis_runner_add_hook (HookFunction func, gpointer user_data);
 void vis_runner_remove_hook (HookFunction func);

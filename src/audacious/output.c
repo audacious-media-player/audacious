@@ -1,58 +1,41 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2009  Audacious team
+/*
+ * output.c
+ * Copyright 2009 John Lindgren
  *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team.
+ * This file is part of Audacious.
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team.
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
- *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
-
-/*#define AUD_DEBUG*/
-
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#include "audio.h"
-#include "audconfig.h"
-#include "equalizer.h"
-#include "output.h"
-#include "main.h"
-#include "input.h"
-#include "playback.h"
-#include "configdb.h"
-
-#include "flow.h"
-
-#include "pluginenum.h"
-#include "plugin-registry.h"
-
-#include "effect.h"
-#include "vis_runner.h"
-
-#include "util.h"
-#include "equalizer_flow.h"
 
 #include <math.h>
 
+#include "config.h"
+
+#include "audio.h"
+#include "audconfig.h"
+#include "effect.h"
+#include "equalizer_flow.h"
+#include "flow.h"
+#include "output.h"
+#include "playback.h"
+#include "pluginenum.h"
+#include "plugin-registry.h"
+#include "vis_runner.h"
+
 #ifdef USE_SAMPLERATE
-# include "src_flow.h"
+#include "src_flow.h"
 #endif
 
 #define SW_VOLUME_RANGE 40 /* decibels */
@@ -61,78 +44,7 @@
  (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
 
 OutputPlugin * current_output_plugin = NULL;
-
-OutputPluginState op_state = {
-    0,
-    0,
-    0
-};
-
-static gint decoder_srate = 0;
-static gboolean bypass_dsp = FALSE;
-static gboolean have_replay_gain;
-static ReplayGainInfo replay_gain_info;
-
-OutputPlugin psuedo_output_plugin = {
-    .description = "XMMS reverse compatibility output plugin",
-    .get_volume = output_get_volume,
-    .set_volume = output_set_volume,
-
-    .open_audio = output_open_audio,
-    .write_audio = output_write_audio,
-    .close_audio = output_close_audio,
-
-    .flush = output_flush,
-    .pause = output_pause,
-
-    .buffer_free = output_buffer_free,
-    .buffer_playing = output_buffer_playing,
-    .output_time = get_output_time,
-    .written_time = get_written_time,
-};
-
-void set_current_output_plugin (OutputPlugin * plugin)
-{
-    OutputPlugin * old = current_output_plugin;
-    gboolean playing = playback_get_playing ();
-    gboolean paused = FALSE;
-    gint time = 0;
-
-    if (playing)
-    {
-        paused = playback_get_paused ();
-        time = playback_get_time ();
-        playback_stop ();
-    }
-
-    current_output_plugin = NULL;
-
-    if (old != NULL && old->cleanup != NULL)
-        old->cleanup ();
-
-    if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-        current_output_plugin = plugin;
-    else
-    {
-        fprintf (stderr, "Output failed to load: %s\n", plugin->description);
-
-        if (old == NULL || old->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-            return;
-
-        fprintf (stderr, "Falling back to: %s\n", old->description);
-        current_output_plugin = old;
-    }
-
-    if (playing)
-    {
-        playback_initiate ();
-
-        if (paused)
-            playback_pause ();
-
-        playback_seek (time);
-    }
-}
+#define COP current_output_plugin
 
 static gboolean plugin_list_func (void * plugin, void * data)
 {
@@ -152,251 +64,241 @@ GList * get_output_list (void)
     return list;
 }
 
-void output_about (OutputPlugin * plugin)
-{
-    if (plugin->about != NULL)
-        plugin->about ();
-}
-
-void output_configure (OutputPlugin * plugin)
-{
-    if (plugin->configure != NULL)
-        plugin->configure ();
-}
-
-void
-output_get_volume(gint * l, gint * r)
+void output_get_volume (gint * l, gint * r)
 {
     if (cfg.software_volume_control)
     {
         * l = cfg.sw_volume_left;
         * r = cfg.sw_volume_right;
     }
-    else if (current_output_plugin != NULL && current_output_plugin->get_volume
-     != NULL)
-        current_output_plugin->get_volume (l, r);
+    else if (COP != NULL && COP->get_volume != NULL)
+        COP->get_volume (l, r);
     else
     {
-        * l = -1;
-        * r = -1;
+        * l = 0;
+        * r = 0;
     }
 }
 
-void
-output_set_volume(gint l, gint r)
+void output_set_volume (gint l, gint r)
 {
     if (cfg.software_volume_control)
     {
         cfg.sw_volume_left = l;
         cfg.sw_volume_right = r;
     }
-    else if (current_output_plugin != NULL && current_output_plugin->set_volume
-     != NULL)
-        current_output_plugin->set_volume (l, r);
+    else if (COP != NULL && COP->set_volume != NULL)
+        COP->set_volume (l, r);
 }
 
-void
-output_set_eq(gboolean active, gfloat pre, gfloat * bands)
-{
-    AUDDBG("preamp: %f, bands: %f:%f:%f:%f:%f:%f:%f:%f:%f:%f\n", pre, bands[0], bands[1], bands[2], bands[3], bands[4],
-            bands[5], bands[6], bands[7], bands[8], bands[9]);
+static GMutex * output_mutex;
+static gboolean output_opened, output_leave_open, output_paused;
+static gint output_close_source;
 
-    equalizer_flow_set_bands(pre, bands);
+static AFormat decoder_format, output_format;
+static gint output_channels, decoder_rate, output_rate;
+static gboolean bypass_dsp, resampling, have_replay_gain;
+static ReplayGainInfo replay_gain_info;
+
+#define REMOVE_SOURCE(s) \
+do { \
+    if (s != 0) { \
+        g_source_remove (s); \
+        s = 0; \
+    } \
+} while (0)
+
+#define LOCK g_mutex_lock (output_mutex)
+#define UNLOCK g_mutex_unlock (output_mutex)
+
+/* output_mutex must be locked */
+static void drain (void)
+{
+    if (output_opened || ! output_leave_open)
+        return;
+
+    REMOVE_SOURCE (output_close_source);
+
+    while (COP->buffer_playing ())
+    {
+        UNLOCK;
+        g_usleep (30000);
+        LOCK;
+
+        if (output_opened || ! output_leave_open)
+            return;
+    }
+
+    COP->close_audio ();
+    vis_runner_start_stop (FALSE, FALSE);
+    output_leave_open = FALSE;
 }
 
-gint get_written_time (void)
+void output_init (void)
 {
-    return current_output_plugin->written_time ();
+    output_mutex = g_mutex_new ();
+    output_opened = FALSE;
+    output_leave_open = FALSE;
+    vis_runner_init ();
 }
 
-gint get_output_time (void)
+void output_cleanup (void)
 {
-    return current_output_plugin->output_time ();
+    if (playback_get_playing ())
+        playback_stop ();
+
+    LOCK;
+    drain ();
+    UNLOCK;
+
+    g_mutex_free (output_mutex);
 }
 
-static gboolean
-reopen_audio(AFormat fmt, gint rate, gint nch)
+static gboolean output_open_audio (AFormat format, gint rate, gint channels)
 {
-    OutputPlugin * op = current_output_plugin;
-
-    if (op == NULL)
+    if (COP == NULL)
+    {
+        fprintf (stderr, "No output plugin selected.\n");
         return FALSE;
+    }
 
-    /* Is our output port already open? */
-    if ((op_state.rate != 0 && op_state.nch != 0) &&
-        (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
+    LOCK;
+
+    if (output_leave_open)
     {
-        /* Yes, and it's the correct sampling rate. Reset the counter and go. */
-	AUDDBG("flushing output instead of reopening\n");
-	plugin_set_current((Plugin *)op);
-        op->flush(0);
-        return TRUE;
-    }
-    else if (op_state.rate != 0 && op_state.nch != 0)
-    {
-        plugin_set_current((Plugin *)op);
-        op->close_audio();
-	op_state.fmt = 0;
-	op_state.rate = 0;
-	op_state.nch = 0;
-    }
-
-    plugin_set_current((Plugin *)op);
-    gint ret = op->open_audio(fmt, rate, nch);
-
-    if (ret == 1)            /* Success? */
-    {
-        AUDDBG("opened audio: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
-        op_state.fmt = fmt;
-        op_state.rate = rate;
-        op_state.nch = nch;
-
-        output_set_eq (cfg.equalizer_active, cfg.equalizer_preamp,
-         cfg.equalizer_bands);
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
-
-gint
-output_open_audio(AFormat fmt, gint rate, gint nch)
-{
-    AUDDBG("requested: fmt=%d, rate=%d, nch=%d\n", fmt, rate, nch);
-
-    AFormat output_fmt;
-    int bit_depth;
-
-    decoder_srate = rate;
-    bypass_dsp = cfg.bypass_dsp;
-    have_replay_gain = FALSE;
-
-    if (bypass_dsp) {
-        AUDDBG("trying to open audio in native format\n");
-        bypass_dsp = reopen_audio(fmt, rate, nch);
-        AUDDBG("opening in native fmt %s\n", bypass_dsp ? "succeeded" : "failed");
-    }
-
-    if (bypass_dsp) {
-        return TRUE;
-    } else {
-#ifdef USE_SAMPLERATE
-        rate = src_flow_init(rate, nch); /* returns sample rate unchanged if resampling switched off */
-#endif
-
-        bit_depth = cfg.output_bit_depth;
-
-        AUDDBG("bit depth: %d\n", bit_depth);
-        switch (bit_depth) {
-            case 32:
-                output_fmt = FMT_S32_NE;
-                break;
-            case 24:
-                output_fmt = FMT_S24_NE;
-                break;
-            case 16:
-                output_fmt = FMT_S16_NE;
-                break;
-            case 0:
-                output_fmt = FMT_FLOAT;
-                break;
-            default:
-                AUDDBG("unsupported bit depth requested %d\n", bit_depth);
-                output_fmt = FMT_S16_NE;
-                break;
+        if (channels == output_channels && (resampling || rate == output_rate)
+         && COP->set_written_time != NULL)
+        {
+            REMOVE_SOURCE (output_close_source);
+            vis_runner_time_offset (- COP->written_time ());
+            COP->set_written_time (0);
+            output_opened = TRUE;
         }
+        else
+            drain ();
+    }
 
-        fmt = output_fmt;
+    decoder_format = format;
+    decoder_rate = rate;
+    output_leave_open = FALSE;
+    output_paused = FALSE;
 
-        return reopen_audio(fmt, rate, nch);
-    } /* bypass_dsp */
-}
-
-void
-output_write_audio(gpointer ptr, gint length)
-{
-    OutputPlugin * op = current_output_plugin;
-
-    /* Sanity check. */
-    if (op == NULL)
-        return;
-
-    plugin_set_current((Plugin *)op);
-    op->write_audio(ptr, length);
-}
-
-void
-output_close_audio(void)
-{
-    OutputPlugin * op = current_output_plugin;
-
-    vis_runner_flush ();
+    if (! output_opened)
+    {
+        bypass_dsp = cfg.bypass_dsp;
+        output_format = bypass_dsp ? format : cfg.output_bit_depth == 32 ?
+         FMT_S32_NE : cfg.output_bit_depth == 24 ? FMT_S24_NE :
+         cfg.output_bit_depth == 16 ? FMT_S16_NE : FMT_FLOAT;
+        output_channels = channels;
 
 #ifdef USE_SAMPLERATE
-    src_flow_free();
+        if (cfg.enable_src && ! bypass_dsp)
+        {
+            src_flow_init (rate, channels);
+            resampling = TRUE;
+            output_rate = cfg.src_rate;
+        }
+        else
+        {
+            src_flow_free ();
+            resampling = FALSE;
+            output_rate = rate;
+        }
+#else
+        resampling = FALSE;
+        output_rate = rate;
 #endif
 
-    /* Sanity check. */
-    if (op == NULL)
-        return;
+        if (COP->open_audio (output_format, output_rate, output_channels) > 0)
+        {
+            vis_runner_start_stop (TRUE, FALSE);
+            output_opened = TRUE;
+        }
+        else
+        {
+            UNLOCK;
+            return FALSE;
+        }
+    }
 
-    plugin_set_current((Plugin *)op);
-    op->close_audio();
-    AUDDBG("done\n");
-
-    /* Reset the op_state. */
-    op_state.fmt = op_state.rate = op_state.nch = 0;
-    equalizer_flow_free();
+    UNLOCK;
+    return TRUE;
 }
 
-void
-output_flush(gint time)
+static gboolean close_cb (void * unused)
 {
-    OutputPlugin * op = current_output_plugin;
+    gboolean playing;
 
+    LOCK;
+    playing = COP->buffer_playing ();
+
+    if (! playing)
+    {
+        output_close_source = 0;
+        COP->close_audio ();
+        vis_runner_start_stop (FALSE, FALSE);
+        output_leave_open = FALSE;
+    }
+
+    UNLOCK;
+    return playing;
+}
+
+static void output_close_audio (void)
+{
+    LOCK;
+
+    if (output_paused)
+        output_leave_open = FALSE;
+
+    if (output_leave_open)
+        output_close_source = g_timeout_add (30, close_cb, NULL);
+    else
+    {
+        COP->close_audio ();
+        vis_runner_start_stop (FALSE, FALSE);
+    }
+
+    output_opened = FALSE;
+    UNLOCK;
+}
+
+static void output_flush (gint time)
+{
+    LOCK;
+    COP->flush (time);
     vis_runner_flush ();
-
-    if (op == NULL)
-        return;
-
-    plugin_set_current((Plugin *)op);
-    op->flush(time);
+    UNLOCK;
 }
 
-void
-output_pause(gshort paused)
+static void output_pause (gboolean pause)
 {
-    OutputPlugin * op = current_output_plugin;
-
-    if (op == NULL)
-        return;
-
-    plugin_set_current((Plugin *)op);
-    op->pause(paused);
+    LOCK;
+    COP->pause (pause);
+    vis_runner_start_stop (TRUE, pause);
+    output_paused = pause;
+    UNLOCK;
 }
 
-gint
-output_buffer_free(void)
+static gint get_written_time (void)
 {
-    OutputPlugin * op = current_output_plugin;
+    gint time = 0;
 
-    if (op == NULL)
-        return 0;
+    LOCK;
 
-    plugin_set_current((Plugin *)op);
-    return op->buffer_free();
+    if (output_opened)
+        time = COP->written_time ();
+
+    UNLOCK;
+    return time;
 }
 
-gint
-output_buffer_playing(void)
+static gboolean output_buffer_playing (void)
 {
-    OutputPlugin * op = current_output_plugin;
-
-    if (op == NULL)
-        return 0;
-
-    plugin_set_current((Plugin *)op);
-    return op->buffer_playing();
+    LOCK;
+    output_leave_open = TRUE;
+    UNLOCK;
+    return FALSE;
 }
 
 static Flow * get_postproc_flow (void)
@@ -407,9 +309,9 @@ static Flow * get_postproc_flow (void)
     {
         flow = flow_new ();
 
-        #ifdef USE_SAMPLERATE
+#ifdef USE_SAMPLERATE
             flow_link_element (flow, src_flow);
-        #endif
+#endif
 
         flow_link_element (flow, equalizer_flow);
     }
@@ -430,7 +332,7 @@ static Flow * get_legacy_flow (void)
     return flow;
 }
 
-void output_set_replaygain_info (InputPlayback * playback, ReplayGainInfo * info)
+static void output_set_replaygain_info (ReplayGainInfo * info)
 {
     AUDDBG ("Replay Gain info:\n");
     AUDDBG (" album gain: %f dB\n", info->album_gain);
@@ -512,31 +414,30 @@ static void adjust_volume (gfloat * data, gint channels, gint frames)
         audio_amplify (data, channels, frames, factors);
 }
 
-void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
- gint size, void * data, gint * going)
+static void output_write_audio (void * data, gint size)
 {
-    gint samples = size / FMT_SIZEOF (fmt);
+    gint samples = size / FMT_SIZEOF (decoder_format);
     void * allocated = NULL;
-    gint time = playback->output->written_time ();
+    gint time = COP->written_time ();
 
     if (! bypass_dsp)
     {
-        if (fmt != FMT_FLOAT)
+        if (decoder_format != FMT_FLOAT)
         {
             gfloat * new = g_malloc (sizeof (gfloat) * samples);
 
-            audio_from_int (data, fmt, new, samples);
+            audio_from_int (data, decoder_format, new, samples);
 
             data = new;
             g_free (allocated);
             allocated = new;
         }
 
-        vis_runner_pass_audio (time, data, samples, channels);
-        adjust_volume (data, channels, samples / channels);
+        vis_runner_pass_audio (time, data, samples, output_channels);
+        adjust_volume (data, output_channels, samples / output_channels);
 
         samples = flow_execute (get_postproc_flow (), time, & data, sizeof
-         (gfloat) * samples, FMT_FLOAT, decoder_srate, channels) / sizeof
+         (gfloat) * samples, FMT_FLOAT, decoder_rate, output_channels) / sizeof
          (gfloat);
 
         if (data != allocated)
@@ -545,21 +446,21 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
             allocated = NULL;
         }
 
-        if (op_state.fmt != FMT_FLOAT)
+        if (output_format != FMT_FLOAT)
         {
-            void * new = g_malloc (FMT_SIZEOF (op_state.fmt) * samples);
+            void * new = g_malloc (FMT_SIZEOF (output_format) * samples);
 
-            audio_to_int (data, new, op_state.fmt, samples);
+            audio_to_int (data, new, output_format, samples);
 
             data = new;
             g_free (allocated);
             allocated = new;
         }
 
-        if (IS_S16_NE (op_state.fmt))
+        if (IS_S16_NE (output_format))
         {
             samples = flow_execute (get_legacy_flow (), time, & data, 2 *
-             samples, op_state.fmt, op_state.rate, op_state.nch) / 2;
+             samples, output_format, output_rate, output_channels) / 2;
 
             if (data != allocated)
             {
@@ -569,20 +470,99 @@ void output_pass_audio (InputPlayback * playback, AFormat fmt, gint channels,
         }
     }
 
-    for (;;)
+    if (COP->buffer_free == NULL)
+        COP->write_audio (data, FMT_SIZEOF (output_format) * samples);
+    else
     {
-        gint ready = playback->output->buffer_free () / FMT_SIZEOF (op_state.fmt);
+        while (1)
+        {
+            gint ready = COP->buffer_free () / FMT_SIZEOF (output_format);
 
-        ready = MIN (ready, samples);
-        playback->output->write_audio (data, FMT_SIZEOF (op_state.fmt) * ready);
-        data = (char *) data + FMT_SIZEOF (op_state.fmt) * ready;
-        samples -= ready;
+            ready = MIN (ready, samples);
+            COP->write_audio (data, FMT_SIZEOF (output_format) * ready);
+            data = (char *) data + FMT_SIZEOF (output_format) * ready;
+            samples -= ready;
 
-        if (! samples)
-            break;
+            if (samples == 0)
+                break;
 
-        g_usleep (50000);
+            g_usleep (50000);
+        }
     }
 
     g_free (allocated);
+}
+
+struct OutputAPI output_api =
+{
+    .open_audio = output_open_audio,
+    .set_replaygain_info = output_set_replaygain_info,
+    .write_audio = output_write_audio,
+    .close_audio = output_close_audio,
+
+    .pause = output_pause,
+    .flush = output_flush,
+    .written_time = get_written_time,
+    .buffer_playing = output_buffer_playing,
+};
+
+gint get_output_time (void)
+{
+    gint time = 0;
+
+    LOCK;
+
+    if (output_opened)
+    {
+        time = COP->output_time ();
+        time = MAX (0, time);
+    }
+
+    UNLOCK;
+    return time;
+}
+
+void set_current_output_plugin (OutputPlugin * plugin)
+{
+    OutputPlugin * old = COP;
+    gboolean playing = playback_get_playing ();
+    gboolean paused = FALSE;
+    gint time = 0;
+
+    if (playing)
+    {
+        paused = playback_get_paused ();
+        time = playback_get_time ();
+        playback_stop ();
+    }
+
+    drain ();
+    COP = NULL;
+
+    if (old != NULL && old->cleanup != NULL)
+        old->cleanup ();
+
+    if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+        COP = plugin;
+    else
+    {
+        fprintf (stderr, "Output plugin failed to load: %s\n",
+         plugin->description);
+
+        if (old == NULL || old->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+            return;
+
+        fprintf (stderr, "Falling back to: %s\n", old->description);
+        COP = old;
+    }
+
+    if (playing)
+    {
+        playback_initiate ();
+
+        if (paused)
+            playback_pause ();
+
+        playback_seek (time);
+    }
 }

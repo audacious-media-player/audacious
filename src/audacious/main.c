@@ -60,7 +60,6 @@
 #include "pluginenum.h"
 #include "signals.h"
 #include "util.h"
-#include "vis_runner.h"
 #include "vfs.h"
 #include "chardet.h"
 
@@ -439,6 +438,8 @@ void aud_quit(void)
     g_message("Shutting down user interface subsystem");
     interface_destroy(i);
 
+    output_cleanup ();
+
     g_message("Plugin subsystem shutdown");
     plugin_system_cleanup();
 
@@ -545,7 +546,7 @@ gint main(gint argc, gchar ** argv)
     g_message("Handling commandline options, part #1");
     handle_cmd_line_options_first();
 
-    vis_runner_init();
+    output_init ();
 
 #ifdef USE_DBUS
     g_message("Initializing D-Bus");

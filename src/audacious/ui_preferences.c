@@ -292,6 +292,18 @@ static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 void create_plugin_preferences_page(PluginPreferences *settings);
 void destroy_plugin_preferences_page(PluginPreferences *settings);
 
+static void output_about (OutputPlugin * plugin)
+{
+    if (plugin->about != NULL)
+        plugin->about ();
+}
+
+static void output_configure (OutputPlugin * plugin)
+{
+    if (plugin->configure != NULL)
+        plugin->configure ();
+}
+
 static void
 change_category(GtkNotebook * notebook,
                 GtkTreeSelection * selection)

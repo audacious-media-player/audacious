@@ -184,6 +184,8 @@ effect_flow(FlowContext *context)
     if (new_format != context->fmt ||
         new_rate != context->srate ||
         new_nch != context->channels)
+#if 0 /* Trying to reopen audio in the middle of a pass_audio call is a
+       * horrendous idea. -jlindgren */
     {
         /*
          * The effect plugin changes the stream format. Reopen the
@@ -196,6 +198,9 @@ effect_flow(FlowContext *context)
         context->srate = new_rate;
         context->channels = new_nch;
     }
+#else
+    return;
+#endif
 
     context->len = effect_do_mod_samples(&context->data, context->len,
         context->fmt, context->srate, context->channels);

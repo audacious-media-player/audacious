@@ -22,9 +22,15 @@
 #endif
 
 #include "equalizer.h"
+#include "equalizer_flow.h"
 #include "hook.h"
 #include "output.h"
 #include "audconfig.h"
+
+static void output_set_eq (gboolean active, gfloat pre, gfloat * bands)
+{
+    equalizer_flow_set_bands (pre, bands);
+}
 
 static void change_equalizer (void) {
    output_set_eq (cfg.equalizer_active, cfg.equalizer_preamp,
