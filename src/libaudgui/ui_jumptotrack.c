@@ -62,14 +62,13 @@ static JumpToTrackCache* cache = NULL;
 static void * storage = NULL;
 static gboolean watching = FALSE;
 
-static void
-change_song(guint pos)
+static void change_song (guint pos)
 {
-    if (audacious_drct_get_playing())
-        audacious_drct_stop();
+    gint playlist = aud_playlist_get_active ();
 
-    aud_playlist_set_position(aud_playlist_get_active(), pos);
-    audacious_drct_initiate();
+    aud_playlist_set_playing (playlist);
+    aud_playlist_set_position (playlist, pos);
+    audacious_drct_initiate ();
 }
 
 void
