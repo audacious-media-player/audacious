@@ -27,20 +27,15 @@
 #include "output.h"
 #include "audconfig.h"
 
-static void output_set_eq (gboolean active, gfloat pre, gfloat * bands)
+static void eq_update (void * hook_data, void * user_data)
 {
-    equalizer_flow_set_bands (pre, bands);
+    equalizer_flow_set_bands (cfg.equalizer_preamp, cfg.equalizer_bands);
 }
 
-static void change_equalizer (void) {
-   output_set_eq (cfg.equalizer_active, cfg.equalizer_preamp,
-    cfg.equalizer_bands);
-}
-
-void init_equalizer (void) {
-   hook_register ("equalizer changed");
-   if (hook_associate ("equalizer changed", (HookFunction) change_equalizer, 0))
-      abort ();
+void init_equalizer (void)
+{
+    hook_associate ("equalizer changed", eq_update, NULL);
+    eq_update (NULL, NULL);
 }
 
 gfloat
@@ -53,8 +48,7 @@ void
 equalizer_set_preamp(gfloat preamp)
 {
     cfg.equalizer_preamp = preamp;
-    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                  cfg.equalizer_bands);
+    eq_update (NULL, NULL);
 }
 
 gfloat
@@ -67,8 +61,7 @@ void
 equalizer_set_band(gint band, gfloat value)
 {
     cfg.equalizer_bands[band] = value;
-    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                  cfg.equalizer_bands);
+    eq_update (NULL, NULL);
 }
 
 gboolean equalizer_get_active(gboolean active)
@@ -80,6 +73,5 @@ void
 equalizer_set_active(gboolean active)
 {
     cfg.equalizer_active = active;
-    output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
-                  cfg.equalizer_bands);
+    eq_update (NULL, NULL);
 }
