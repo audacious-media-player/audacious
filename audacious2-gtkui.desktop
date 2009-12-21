@@ -1,12 +1,13 @@
+
 [Desktop Entry]
-Name=Audacious (GTKui)
+Name=Audacious (GTK+ interface)
 GenericName=Audio Player
 Comment=Play music
 Comment[hu]=Zene lejátszása
 Comment[de]=Musik abspielen
 Exec=audacious2 -i gtkui %U
 Icon=audacious2
-MimeType=application/x-ogg;audio/mp3;audio/mpeg;audio/mpegurl;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-wav;audio/x-xm;application/ogg;audio/x-vorbis+ogg
+MimeType=audio/ogg;audio/mp3;audio/mpeg;audio/mpegurl;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-wav;audio/x-xm;
 Categories=Application;GTK;AudioVideo;Player;
 Terminal=false
 Type=Application
