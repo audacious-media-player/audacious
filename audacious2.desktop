@@ -10,6 +10,7 @@ GenericName[de]=Musikspieler
 GenericName[es]=Reproductor de Música
 GenericName[fr]=Lecteur de Musique
 GenericName[it]=Lettore di Musica
+GenericName[lt]=Muzikos grotuvas
 GenericName[nl]=Muziekspeler
 GenericName[no]=Lydavspiller
 GenericName[pt]=Leitor de Música
@@ -20,6 +21,7 @@ Comment[de]=Musik hören
 Comment[fr]=Écouter de la musique
 Comment[hu]=Hallgasson zenét
 Comment[it]=Ascoltare musica
+Comment[lt]=Klausyti muzikos
 Icon=audacious2
 
 Categories=GTK;Audio;Player;
