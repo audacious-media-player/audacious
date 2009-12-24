@@ -241,6 +241,7 @@ static const gchar *translators_text[] = {
     "DongCheon Park",
     NULL,
     N_("Lithuanian:"),
+    "Paul Daukas",
     "Rimas Kudelis",
     NULL,
     N_("Macedonian:"),
