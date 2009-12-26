@@ -341,7 +341,7 @@ void drct_pl_add (GList * list)
         if (filename_is_playlist (list->data))
             playlist_insert_playlist (playlist, -1, list->data);
         else if (vfs_file_test (list->data, G_FILE_TEST_IS_DIR))
-            playlist_add_folder (list->data);
+            playlist_insert_folder (playlist, -1, list->data);
         else
             index_append (filenames, g_strdup (list->data));
     }
@@ -385,7 +385,7 @@ void drct_pl_ins_url_string (const gchar * string, gint pos)
     if (filename_is_playlist (string))
         playlist_insert_playlist (playlist_get_active (), pos, string);
     else if (vfs_file_test (string, G_FILE_TEST_IS_DIR))
-        playlist_add_folder (string);
+        playlist_insert_folder (playlist_get_active (), pos, string);
     else
         playlist_entry_insert (playlist_get_active (), pos, g_strdup (string),
          NULL);

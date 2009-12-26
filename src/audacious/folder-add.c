@@ -33,6 +33,7 @@
 
 static GList * add_queue = NULL;
 static gint add_source = 0;
+static gint add_playlist, add_at;
 static GtkWidget * add_window = NULL, * add_progress_path, * add_progress_count;
 
 static void show_progress (const gchar * path, gint count)
@@ -157,7 +158,20 @@ static gboolean add_cb (void * unused)
     if (stack == NULL)
     {
         index_sort (index, compare);
-        playlist_entry_insert_batch (playlist_get_active (), -1, index, NULL);
+
+        count = playlist_count ();
+
+        if (add_playlist > count - 1)
+            add_playlist = count - 1;
+
+        count = playlist_entry_count (add_playlist);
+
+        if (add_at < 0 || add_at > count)
+            add_at = count;
+
+        playlist_entry_insert_batch (add_playlist, add_at, index, NULL);
+        add_at += playlist_entry_count (add_playlist) - count;
+
         add_queue = g_list_delete_link (add_queue, add_queue);
 
         if (add_queue == NULL)
@@ -171,9 +185,12 @@ static gboolean add_cb (void * unused)
     return TRUE;
 }
 
-void playlist_add_folder (const gchar * folder)
+void playlist_insert_folder (gint playlist, gint at, const gchar * folder)
 {
     gchar * unix_name = g_filename_from_uri (folder, NULL, NULL);
+
+    add_playlist = playlist;
+    add_at = at;
 
     if (unix_name == NULL)
         return;
