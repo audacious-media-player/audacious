@@ -1,4 +1,5 @@
-LOCALES = bg.po \
+LOCALES = be.po \
+	  bg.po \
 	  br.po \
 	  ca.po \
 	  cs.po \
