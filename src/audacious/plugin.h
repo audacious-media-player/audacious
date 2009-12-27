@@ -398,7 +398,8 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_insert_playlist) (gint playlist, gint at, const gchar *
      filename);
     gboolean (* playlist_save) (gint playlist, const gchar * filename);
-    void (* playlist_add_folder) (const gchar * folder);
+    void (* playlist_insert_folder) (gint playlist, gint at, const gchar *
+     folder);
     void (* save_all_playlists) (void);
 
     /* state vars */
@@ -742,7 +743,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_playlist_insert_playlist    _audvt->playlist_insert_playlist
 #define aud_playlist_save               _audvt->playlist_save
-#define aud_playlist_add_folder         _audvt->playlist_add_folder
+#define aud_playlist_insert_folder      _audvt->playlist_insert_folder
 
 #define aud_cfg                         _audvt->_cfg
 
