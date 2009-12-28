@@ -1,7 +1,6 @@
-# Copyright (C) YEAR Translator <translator@invalid>
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the Audacious package.
 #
-# Darafei Praliaskouski <komzpa@gmail.com>, 2009.
+# Copyright (C) 2009 Darafei Praliaskouski <komzpa@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -1030,7 +1029,7 @@ msgstr "Працягласць"
 #: src/audacious/ui_fileinfopopup.c:375 src/audacious/ui_preferences.c:143
 #: src/audacious/ui_preferences.c:492
 msgid "Filename"
-msgstr "Назва файла"
+msgstr "Імя файла"
 
 #: src/audacious/ui_headless.c:132
 #, c-format
