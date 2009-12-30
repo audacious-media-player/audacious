@@ -40,7 +40,6 @@ equalizer_flow_reinit(gint rate, gint nch)
 {
     af_data_t data;
 
-    AUDDBG("\n");
     if(eq == NULL) return;
 
     data.rate = rate;
