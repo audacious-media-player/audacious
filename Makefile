@@ -35,7 +35,7 @@ uninstall-extra:
 			fi \
 		fi; \
 	done
-	for i in audacious2.desktop; do \
+	for i in audacious2.desktop audacious2-gtkui.desktop; do \
 		if test -f ${DESTDIR}${datadir}/applications/$$i; then \
 			if rm -f ${DESTDIR}${datadir}/applications/$$i; then \
 				${DELETE_OK}; \
