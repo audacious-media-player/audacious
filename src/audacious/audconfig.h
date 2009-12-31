@@ -76,7 +76,6 @@ struct _AudConfig {
     gint src_rate;
     gint src_type;
 #endif
-    gboolean bypass_dsp;
     gint sw_volume_left, sw_volume_right;
     gboolean clear_playlist;
     gchar * output_path;

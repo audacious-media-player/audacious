@@ -206,3 +206,96 @@ effect_flow(FlowContext *context)
         context->fmt, context->srate, context->channels);
 }
 
+static GList * new_effect_list = NULL;
+
+void new_effect_start (gint * channels, gint * rate)
+{
+    GList * node;
+    EffectPlugin * effect;
+
+    g_list_free (new_effect_list);
+    new_effect_list = NULL;
+
+    /* FIXME: Let the user define in what order the effects are applied. */
+    for (node = ep_data.enabled_list; node != NULL; node = node->next)
+    {
+        effect = node->data;
+
+        if (effect->start != NULL)
+            new_effect_list = g_list_prepend (new_effect_list, effect);
+        else
+            printf ("Please update %s to new API.\n", effect->description);
+    }
+
+    new_effect_list = g_list_reverse (new_effect_list);
+
+    for (node = new_effect_list; node != NULL; node = node->next)
+    {
+        effect = node->data;
+        effect->start (channels, rate);
+    }
+}
+
+void new_effect_process (gfloat * * data, gint * samples)
+{
+    GList * node;
+    EffectPlugin * effect;
+
+    for (node = new_effect_list; node != NULL; node = node->next)
+    {
+        effect = node->data;
+        effect->process (data, samples);
+    }
+}
+
+void new_effect_flush (void)
+{
+    GList * node;
+    EffectPlugin * effect;
+
+    for (node = new_effect_list; node != NULL; node = node->next)
+    {
+        effect = node->data;
+        effect->flush ();
+    }
+}
+
+void new_effect_finish (gfloat * * data, gint * samples)
+{
+    GList * node;
+    EffectPlugin * effect;
+
+    for (node = new_effect_list; node != NULL; node = node->next)
+    {
+        effect = node->data;
+        effect->finish (data, samples);
+    }
+}
+
+gint new_effect_decoder_to_output_time (gint time)
+{
+    GList * node;
+    EffectPlugin * effect;
+
+    for (node = new_effect_list; node != NULL; node = node->next)
+    {
+        effect = node->data;
+        time = effect->decoder_to_output_time (time);
+    }
+
+    return time;
+}
+
+gint new_effect_output_to_decoder_time (gint time)
+{
+    GList * node;
+    EffectPlugin * effect;
+
+    for (node = g_list_last (new_effect_list); node != NULL; node = node->prev)
+    {
+        effect = node->data;
+        time = effect->output_to_decoder_time (time);
+    }
+
+    return time;
+}

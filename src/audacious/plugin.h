@@ -1005,8 +1005,35 @@ struct _EffectPlugin {
     PLUGIN_COMMON_FIELDS
 
     gboolean enabled;
+
+    /* old API */
     gint (*mod_samples) (gpointer * data, gint length, AFormat fmt, gint srate, gint nch);
     void (*query_format) (AFormat * fmt, gint * rate, gint * nch);
+
+    /* new API */
+
+    /* All processing is done in floating point.  If the effect plugin wants to
+     * change the channel count or sample rate, it can change the parameters
+     * passed to start().  They cannot be changed in the middle of a song. */
+    void (* start) (gint * channels, gint * rate);
+
+    /* process() can either modify the samples in place or allocate a new chunk
+     * of memory.  Based on whether the pointer has changed, the caller will
+     * free the memory appropriately.  process() may return different lengths of
+     * audio than it is passed, even a zero length. */
+    void (* process) (gfloat * * data, gint * samples);
+
+    /* A seek is taking place; any buffers should be discarded. */
+    void (* flush) ();
+
+    /* Exactly like process() except that any buffers should be drained (i.e.
+     * the data processed and returned). */
+    void (* finish) (gfloat * * data, gint * samples);
+
+    /* For effects that change the length of the song, these functions allow the
+     * correct time to be displayed. */
+    gint (* decoder_to_output_time) (gint time);
+    gint (* output_to_decoder_time) (gint time);
 };
 
 struct OutputAPI

@@ -99,7 +99,6 @@ AudConfig aud_default_config = {
     .src_rate = 48000,                 /* samplerate */
     .src_type = SRC_SINC_BEST_QUALITY, /* default interpolation method */
 #endif
-    .bypass_dsp = FALSE,
     .sw_volume_left = 100, .sw_volume_right = 100,
     .clear_playlist = FALSE,
     .output_path = NULL,
@@ -151,7 +150,6 @@ static aud_cfg_boolent aud_boolents[] = {
 #ifdef USE_SAMPLERATE
     {"enable_src", &cfg.enable_src, TRUE},
 #endif
-    {"bypass_dsp", &cfg.bypass_dsp, TRUE},
     {"clear_playlist", & cfg.clear_playlist, TRUE},
 };
 

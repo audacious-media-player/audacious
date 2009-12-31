@@ -96,8 +96,9 @@ static gboolean output_opened, output_leave_open, output_paused;
 static gint output_close_source;
 
 static AFormat decoder_format, output_format;
-static gint output_channels, decoder_rate, output_rate;
-static gboolean bypass_dsp, resampling, have_replay_gain;
+static gint decoder_channels, decoder_rate, effect_channels, effect_rate,
+ output_channels, output_rate;
+static gboolean have_replay_gain;
 static ReplayGainInfo replay_gain_info;
 
 #define REMOVE_SOURCE(s) \
@@ -111,26 +112,17 @@ do { \
 #define LOCK g_mutex_lock (output_mutex)
 #define UNLOCK g_mutex_unlock (output_mutex)
 
+static void write_buffers (void);
+static void drain (void);
+
 /* output_mutex must be locked */
-static void drain (void)
+static void real_close (void)
 {
-    if (output_opened || ! output_leave_open)
-        return;
-
     REMOVE_SOURCE (output_close_source);
-
-    while (COP->buffer_playing ())
-    {
-        UNLOCK;
-        g_usleep (30000);
-        LOCK;
-
-        if (output_opened || ! output_leave_open)
-            return;
-    }
-
-    COP->close_audio ();
+    new_effect_flush ();
     vis_runner_start_stop (FALSE, FALSE);
+    COP->close_audio ();
+    output_opened = FALSE;
     output_leave_open = FALSE;
 }
 
@@ -148,7 +140,10 @@ void output_cleanup (void)
         playback_stop ();
 
     LOCK;
-    drain ();
+
+    if (output_leave_open)
+        real_close ();
+
     UNLOCK;
 
     g_mutex_free (output_mutex);
@@ -166,47 +161,54 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
 
     if (output_leave_open)
     {
-        if (channels == output_channels && (resampling || rate == output_rate)
-         && COP->set_written_time != NULL)
+        REMOVE_SOURCE (output_close_source);
+
+        if (channels == decoder_channels && rate == decoder_rate &&
+         COP->set_written_time != NULL)
         {
-            REMOVE_SOURCE (output_close_source);
             vis_runner_time_offset (- COP->written_time ());
             COP->set_written_time (0);
             output_opened = TRUE;
         }
         else
+        {
+            UNLOCK;
             drain ();
+            LOCK;
+            real_close ();
+        }
     }
 
     decoder_format = format;
+    decoder_channels = channels;
     decoder_rate = rate;
     output_leave_open = FALSE;
     output_paused = FALSE;
 
     if (! output_opened)
     {
-        bypass_dsp = cfg.bypass_dsp;
-        output_format = bypass_dsp ? format : cfg.output_bit_depth == 32 ?
-         FMT_S32_NE : cfg.output_bit_depth == 24 ? FMT_S24_NE :
-         cfg.output_bit_depth == 16 ? FMT_S16_NE : FMT_FLOAT;
-        output_channels = channels;
+        effect_channels = channels;
+        effect_rate = rate;
+        new_effect_start (& effect_channels, & effect_rate);
+
+        output_format = cfg.output_bit_depth == 32 ? FMT_S32_NE :
+         cfg.output_bit_depth == 24 ? FMT_S24_NE : cfg.output_bit_depth == 16 ?
+         FMT_S16_NE : FMT_FLOAT;
+        output_channels = effect_channels;
 
 #ifdef USE_SAMPLERATE
-        if (cfg.enable_src && ! bypass_dsp)
+        if (cfg.enable_src)
         {
-            src_flow_init (rate, channels);
-            resampling = TRUE;
+            src_flow_init (effect_rate, effect_channels);
             output_rate = cfg.src_rate;
         }
         else
         {
             src_flow_free ();
-            resampling = FALSE;
-            output_rate = rate;
+            output_rate = effect_rate;
         }
 #else
-        resampling = FALSE;
-        output_rate = rate;
+        output_rate = effect_rate;
 #endif
 
         if (COP->open_audio (output_format, output_rate, output_channels) > 0)
@@ -214,15 +216,10 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
             vis_runner_start_stop (TRUE, FALSE);
             output_opened = TRUE;
         }
-        else
-        {
-            UNLOCK;
-            return FALSE;
-        }
     }
 
     UNLOCK;
-    return TRUE;
+    return output_opened;
 }
 
 static gboolean close_cb (void * unused)
@@ -233,12 +230,7 @@ static gboolean close_cb (void * unused)
     playing = COP->buffer_playing ();
 
     if (! playing)
-    {
-        output_close_source = 0;
-        COP->close_audio ();
-        vis_runner_start_stop (FALSE, FALSE);
-        output_leave_open = FALSE;
-    }
+        real_close ();
 
     UNLOCK;
     return playing;
@@ -252,22 +244,23 @@ static void output_close_audio (void)
         output_leave_open = FALSE;
 
     if (output_leave_open)
-        output_close_source = g_timeout_add (30, close_cb, NULL);
-    else
     {
-        COP->close_audio ();
-        vis_runner_start_stop (FALSE, FALSE);
+        write_buffers ();
+        output_close_source = g_timeout_add (30, close_cb, NULL);
+        output_opened = FALSE;
     }
+    else
+        real_close ();
 
-    output_opened = FALSE;
     UNLOCK;
 }
 
 static void output_flush (gint time)
 {
     LOCK;
-    COP->flush (time);
+    new_effect_flush ();
     vis_runner_flush ();
+    COP->flush (new_effect_decoder_to_output_time (time));
     UNLOCK;
 }
 
@@ -287,7 +280,7 @@ static gint get_written_time (void)
     LOCK;
 
     if (output_opened)
-        time = COP->written_time ();
+        time = new_effect_output_to_decoder_time (COP->written_time ());
 
     UNLOCK;
     return time;
@@ -414,59 +407,43 @@ static void adjust_volume (gfloat * data, gint channels, gint frames)
         audio_amplify (data, channels, frames, factors);
 }
 
-static void output_write_audio (void * data, gint size)
+static void do_write (void * data, gint samples)
 {
-    gint samples = size / FMT_SIZEOF (decoder_format);
-    void * allocated = NULL;
     gint time = COP->written_time ();
+    void * allocated = NULL;
 
-    if (! bypass_dsp)
+    vis_runner_pass_audio (time, data, samples, effect_channels);
+    adjust_volume (data, effect_channels, samples / effect_channels);
+
+    samples = flow_execute (get_postproc_flow (), time, & data, sizeof (gfloat)
+     * samples, FMT_FLOAT, effect_rate, effect_channels) / sizeof (gfloat);
+
+    if (data != allocated)
     {
-        if (decoder_format != FMT_FLOAT)
-        {
-            gfloat * new = g_malloc (sizeof (gfloat) * samples);
+        g_free (allocated);
+        allocated = NULL;
+    }
 
-            audio_from_int (data, decoder_format, new, samples);
+    if (output_format != FMT_FLOAT)
+    {
+        void * new = g_malloc (FMT_SIZEOF (output_format) * samples);
 
-            data = new;
-            g_free (allocated);
-            allocated = new;
-        }
+        audio_to_int (data, new, output_format, samples);
 
-        vis_runner_pass_audio (time, data, samples, output_channels);
-        adjust_volume (data, output_channels, samples / output_channels);
+        data = new;
+        g_free (allocated);
+        allocated = new;
+    }
 
-        samples = flow_execute (get_postproc_flow (), time, & data, sizeof
-         (gfloat) * samples, FMT_FLOAT, decoder_rate, output_channels) / sizeof
-         (gfloat);
+    if (IS_S16_NE (output_format))
+    {
+        samples = flow_execute (get_legacy_flow (), time, & data, 2 * samples,
+         output_format, output_rate, output_channels) / 2;
 
         if (data != allocated)
         {
             g_free (allocated);
             allocated = NULL;
-        }
-
-        if (output_format != FMT_FLOAT)
-        {
-            void * new = g_malloc (FMT_SIZEOF (output_format) * samples);
-
-            audio_to_int (data, new, output_format, samples);
-
-            data = new;
-            g_free (allocated);
-            allocated = new;
-        }
-
-        if (IS_S16_NE (output_format))
-        {
-            samples = flow_execute (get_legacy_flow (), time, & data, 2 *
-             samples, output_format, output_rate, output_channels) / 2;
-
-            if (data != allocated)
-            {
-                g_free (allocated);
-                allocated = NULL;
-            }
         }
     }
 
@@ -493,6 +470,53 @@ static void output_write_audio (void * data, gint size)
     g_free (allocated);
 }
 
+static void output_write_audio (void * data, gint size)
+{
+    gint samples = size / FMT_SIZEOF (decoder_format);
+    void * allocated = NULL, * old;
+
+    if (decoder_format != FMT_FLOAT)
+    {
+        gfloat * new = g_malloc (sizeof (gfloat) * samples);
+
+        audio_from_int (data, decoder_format, new, samples);
+
+        data = new;
+        g_free (allocated);
+        allocated = new;
+    }
+
+    old = data;
+    new_effect_process ((gfloat * *) & data, & samples);
+
+    if (data != old)
+    {
+        g_free (allocated);
+        allocated = data;
+    }
+
+    do_write (data, samples);
+    g_free (allocated);
+}
+
+static void write_buffers (void)
+{
+    gfloat * data = NULL;
+    gint samples = 0;
+
+    new_effect_finish (& data, & samples);
+    do_write (data, samples);
+    g_free (data);
+}
+
+static void drain (void)
+{
+    write_buffers ();
+
+    while (COP->buffer_playing ())
+        g_usleep (30000);
+}
+
 struct OutputAPI output_api =
 {
     .open_audio = output_open_audio,
@@ -514,7 +538,7 @@ gint get_output_time (void)
 
     if (output_opened)
     {
-        time = COP->output_time ();
+        time = new_effect_output_to_decoder_time (COP->output_time ());
         time = MAX (0, time);
     }
 

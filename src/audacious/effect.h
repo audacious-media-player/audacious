@@ -43,11 +43,18 @@ GList *get_effect_enabled_list(void);
 void effect_enable_plugin(EffectPlugin *ep, gboolean enable);
 gchar *effect_stringify_enabled_list(void);
 void effect_enable_from_stringified_list(const gchar * list);
-gint effect_do_mod_samples(gpointer * data, gint length, AFormat fmt, 
+gint effect_do_mod_samples(gpointer * data, gint length, AFormat fmt,
 	gint srate, gint nch);
 void effect_do_query_format(AFormat * fmt, gint * rate, gint * nch);
 void effect_flow(FlowContext *context);
 
 extern EffectPluginData ep_data;
+
+void new_effect_start (gint * channels, gint * rate);
+void new_effect_process (gfloat * * data, gint * samples);
+void new_effect_flush (void);
+void new_effect_finish (gfloat * * data, gint * samples);
+gint new_effect_decoder_to_output_time (gint time);
+gint new_effect_output_to_decoder_time (gint time);
 
 #endif /* AUDACIOUS_EFFECT_H */

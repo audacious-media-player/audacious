@@ -216,11 +216,6 @@ static PreferencesWidget audio_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Use software volume control"),
      & cfg.software_volume_control, sw_volume_toggled,
                      N_("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), FALSE},
-    {WIDGET_LABEL,   N_("<b>Advanced</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Bypass all of signal processing if possible"), &cfg.bypass_dsp, NULL,
-                     N_("Try to pass input plugin's output directly to output plugin, if the latter supports "
-                        "format produced by input plugin. If it's true, all signal processing will be disabled "
-                        "(i.e. DSP plugins, equalizer, resampling, Replay Gain and software volume control)."), FALSE},
 };
 
 static PreferencesWidget rg_params_elements[] = {
