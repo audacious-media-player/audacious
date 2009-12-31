@@ -174,6 +174,9 @@ static const gchar *credit_text[] = {
 };
 
 static const gchar *translators_text[] = {
+    N_("Belarusian:"),
+    "Darafei Praliaskouski",
+    NULL,
     N_("Basque:"),
     "Iñaki Larrañaga Murgoitio",
     NULL,
