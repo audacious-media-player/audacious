@@ -1017,10 +1017,11 @@ struct _EffectPlugin {
      * passed to start().  They cannot be changed in the middle of a song. */
     void (* start) (gint * channels, gint * rate);
 
-    /* process() can either modify the samples in place or allocate a new chunk
-     * of memory.  Based on whether the pointer has changed, the caller will
-     * free the memory appropriately.  process() may return different lengths of
-     * audio than it is passed, even a zero length. */
+    /* process() has two options: modify the samples in place and leave the data
+     * pointer unchanged or copy them into a buffer of its own.  If it sets the
+     * pointer to dynamically allocated memory, it is the plugin's job to free
+     * that memory.  process() may return different lengths of audio than it is
+     * passed, even a zero length. */
     void (* process) (gfloat * * data, gint * samples);
 
     /* A seek is taking place; any buffers should be discarded. */

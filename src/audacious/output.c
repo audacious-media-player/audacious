@@ -473,7 +473,7 @@ static void do_write (void * data, gint samples)
 static void output_write_audio (void * data, gint size)
 {
     gint samples = size / FMT_SIZEOF (decoder_format);
-    void * allocated = NULL, * old;
+    void * allocated = NULL;
 
     if (decoder_format != FMT_FLOAT)
     {
@@ -486,13 +486,12 @@ static void output_write_audio (void * data, gint size)
         allocated = new;
     }
 
-    old = data;
     new_effect_process ((gfloat * *) & data, & samples);
 
-    if (data != old)
+    if (data != allocated)
     {
         g_free (allocated);
-        allocated = data;
+        allocated = NULL;
     }
 
     do_write (data, samples);
@@ -506,7 +505,6 @@ static void write_buffers (void)
 
     new_effect_finish (& data, & samples);
     do_write (data, samples);
-    g_free (data);
 }
 
 static void drain (void)
