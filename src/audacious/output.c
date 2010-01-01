@@ -98,6 +98,7 @@ static gint output_close_source;
 static AFormat decoder_format, output_format;
 static gint decoder_channels, decoder_rate, effect_channels, effect_rate,
  output_channels, output_rate;
+static gint64 frames_written;
 static gboolean have_replay_gain;
 static ReplayGainInfo replay_gain_info;
 
@@ -166,7 +167,7 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
         if (channels == decoder_channels && rate == decoder_rate &&
          COP->set_written_time != NULL)
         {
-            vis_runner_time_offset (- COP->written_time ());
+            vis_runner_time_offset (- frames_written * 1000 / decoder_rate);
             COP->set_written_time (0);
             output_opened = TRUE;
         }
@@ -182,6 +183,7 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
     decoder_format = format;
     decoder_channels = channels;
     decoder_rate = rate;
+    frames_written = 0;
     output_leave_open = FALSE;
     output_paused = FALSE;
 
@@ -258,8 +260,9 @@ static void output_close_audio (void)
 static void output_flush (gint time)
 {
     LOCK;
-    new_effect_flush ();
+    frames_written = time * (gint64) decoder_rate / 1000;
     vis_runner_flush ();
+    new_effect_flush ();
     COP->flush (new_effect_decoder_to_output_time (time));
     UNLOCK;
 }
@@ -280,7 +283,7 @@ static gint get_written_time (void)
     LOCK;
 
     if (output_opened)
-        time = new_effect_output_to_decoder_time (COP->written_time ());
+        time = frames_written * 1000 / decoder_rate;
 
     UNLOCK;
     return time;
@@ -337,92 +340,82 @@ static void output_set_replaygain_info (ReplayGainInfo * info)
     memcpy (& replay_gain_info, info, sizeof (ReplayGainInfo));
 }
 
-static void adjust_volume (gfloat * data, gint channels, gint frames)
+static void apply_replay_gain (gfloat * data, gint samples)
 {
-    gboolean amplify = FALSE;
+    gfloat factor = powf (10, (gfloat) cfg.replay_gain_preamp / 20);
+
+    if (! cfg.enable_replay_gain)
+        return;
+
+    if (have_replay_gain)
+    {
+        if (cfg.replay_gain_album)
+        {
+            factor *= powf (10, replay_gain_info.album_gain / 20);
+
+            if (cfg.enable_clipping_prevention &&
+             replay_gain_info.album_peak * factor > 1)
+                factor = 1 / replay_gain_info.album_peak;
+        }
+        else
+        {
+            factor *= powf (10, replay_gain_info.track_gain / 20);
+
+            if (cfg.enable_clipping_prevention &&
+             replay_gain_info.track_peak * factor > 1)
+                factor = 1 / replay_gain_info.track_peak;
+        }
+    }
+    else
+        factor *= powf (10, (gfloat) cfg.default_gain / 20);
+
+    if (factor < 0.99 || factor > 1.01)
+        audio_amplify (data, 1, samples, & factor);
+}
+
+static void apply_software_volume (gfloat * data, gint channels, gint frames)
+{
+    gfloat left_factor, right_factor;
     gfloat factors[channels];
     gint channel;
 
-    for (channel = 0; channel < channels; channel ++)
-        factors[channel] = 1;
+    if (! cfg.software_volume_control || (cfg.sw_volume_left == 100 &&
+     cfg.sw_volume_right == 100))
+        return;
 
-    if (cfg.enable_replay_gain)
+    left_factor = powf (10, (gfloat) SW_VOLUME_RANGE * (cfg.sw_volume_left -
+     100) / 100 / 20);
+    right_factor = powf (10, (gfloat) SW_VOLUME_RANGE * (cfg.sw_volume_right -
+     100) / 100 / 20);
+
+    if (channels == 2)
     {
-        gfloat factor = powf (10, (gfloat) cfg.replay_gain_preamp / 20);
-
-        if (have_replay_gain)
-        {
-            if (cfg.replay_gain_album)
-            {
-                factor *= powf (10, replay_gain_info.album_gain / 20);
-
-                if (cfg.enable_clipping_prevention &&
-                 replay_gain_info.album_peak * factor > 1)
-                    factor = 1 / replay_gain_info.album_peak;
-            }
-            else
-            {
-                factor *= powf (10, replay_gain_info.track_gain / 20);
-
-                if (cfg.enable_clipping_prevention &&
-                 replay_gain_info.track_peak * factor > 1)
-                    factor = 1 / replay_gain_info.track_peak;
-            }
-        }
-        else
-            factor *= powf (10, (gfloat) cfg.default_gain / 20);
-
-        if (factor < 0.99 || factor > 1.01)
-        {
-            amplify = TRUE;
-
-            for (channel = 0; channel < channels; channel ++)
-                factors[channel] *= factor;
-        }
+        factors[0] = left_factor;
+        factors[1] = right_factor;
+    }
+    else
+    {
+        for (channel = 0; channel < channels; channel ++)
+            factors[channel] = MAX (left_factor, right_factor);
     }
 
-    if (cfg.software_volume_control && (cfg.sw_volume_left != 100 ||
-     cfg.sw_volume_right != 100))
-    {
-        gfloat left_factor = powf (10, (gfloat) SW_VOLUME_RANGE *
-         (cfg.sw_volume_left - 100) / 100 / 20);
-        gfloat right_factor = powf (10, (gfloat) SW_VOLUME_RANGE *
-         (cfg.sw_volume_right - 100) / 100 / 20);
-
-        amplify = TRUE;
-
-        if (channels == 2)
-        {
-            factors[0] *= left_factor;
-            factors[1] *= right_factor;
-        }
-        else
-        {
-            for (channel = 0; channel < channels; channel ++)
-                factors[channel] *= MAX (left_factor, right_factor);
-        }
-    }
-
-    if (amplify)
-        audio_amplify (data, channels, frames, factors);
+    audio_amplify (data, channels, frames, factors);
 }
 
 static void do_write (void * data, gint samples)
 {
-    gint time = COP->written_time ();
     void * allocated = NULL;
 
-    vis_runner_pass_audio (time, data, samples, effect_channels);
-    adjust_volume (data, effect_channels, samples / effect_channels);
-
-    samples = flow_execute (get_postproc_flow (), time, & data, sizeof (gfloat)
-     * samples, FMT_FLOAT, effect_rate, effect_channels) / sizeof (gfloat);
+    samples = flow_execute (get_postproc_flow (), 0, & data, sizeof (gfloat) *
+     samples, FMT_FLOAT, effect_rate, effect_channels) / sizeof (gfloat);
 
     if (data != allocated)
     {
         g_free (allocated);
         allocated = NULL;
     }
+
+    apply_software_volume (data, output_channels, samples / output_channels);
 
     if (output_format != FMT_FLOAT)
     {
@@ -437,7 +430,7 @@ static void do_write (void * data, gint samples)
 
     if (IS_S16_NE (output_format))
     {
-        samples = flow_execute (get_legacy_flow (), time, & data, 2 * samples,
+        samples = flow_execute (get_legacy_flow (), 0, & data, 2 * samples,
          output_format, output_rate, output_channels) / 2;
 
         if (data != allocated)
@@ -475,6 +468,10 @@ static void output_write_audio (void * data, gint size)
     gint samples = size / FMT_SIZEOF (decoder_format);
     void * allocated = NULL;
 
+    LOCK;
+    frames_written += samples / decoder_channels;
+    UNLOCK;
+
     if (decoder_format != FMT_FLOAT)
     {
         gfloat * new = g_malloc (sizeof (gfloat) * samples);
@@ -486,6 +483,9 @@ static void output_write_audio (void * data, gint size)
         allocated = new;
     }
 
+    apply_replay_gain (data, samples);
+    vis_runner_pass_audio (frames_written * 1000 / decoder_rate, data, samples,
+     decoder_channels);
     new_effect_process ((gfloat * *) & data, & samples);
 
     if (data != allocated)
@@ -558,7 +558,13 @@ void set_current_output_plugin (OutputPlugin * plugin)
         playback_stop ();
     }
 
-    drain ();
+    LOCK;
+
+    if (output_leave_open)
+        real_close ();
+
+    UNLOCK;
+
     COP = NULL;
 
     if (old != NULL && old->cleanup != NULL)

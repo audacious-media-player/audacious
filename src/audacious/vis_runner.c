@@ -36,7 +36,7 @@ static gint source;
 
 static gboolean send_audio (void * unused)
 {
-    gint outputted = current_output_plugin->output_time ();
+    gint outputted = get_output_time ();
     VisNode * vis_node, * next;
 
     vis_node = NULL;
