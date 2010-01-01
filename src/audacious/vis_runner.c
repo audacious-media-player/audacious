@@ -21,6 +21,7 @@
 
 #include <glib.h>
 
+#include "effect.h"
 #include "hook.h"
 #include "input.h"
 #include "output.h"
@@ -36,7 +37,8 @@ static gint source;
 
 static gboolean send_audio (void * unused)
 {
-    gint outputted = get_output_time ();
+    gint outputted = new_effect_output_to_decoder_time
+     (current_output_plugin->output_time ());
     VisNode * vis_node, * next;
 
     vis_node = NULL;
