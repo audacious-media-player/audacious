@@ -247,10 +247,6 @@ static void output_close_audio (void)
 
     if (output_leave_open)
     {
-        UNLOCK;
-        write_buffers ();
-        LOCK;
-
         output_close_source = g_timeout_add (30, close_cb, NULL);
         output_opened = FALSE;
     }
@@ -294,6 +290,7 @@ static gint get_written_time (void)
 
 static gboolean output_buffer_playing (void)
 {
+    write_buffers ();
     LOCK;
     output_leave_open = TRUE;
     UNLOCK;
