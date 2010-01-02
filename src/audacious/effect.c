@@ -84,22 +84,10 @@ get_effect_enabled_list(void)
 void
 effect_enable_plugin(EffectPlugin *ep, gboolean enable)
 {
-    if (enable && !ep->enabled) {
+    if (enable && !ep->enabled)
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
-        if (ep->init)
-	{
-	    plugin_set_current((Plugin *)ep);
-            ep->init();
-	}
-    }
-    else if (!enable && ep->enabled) {
+    else if (!enable && ep->enabled)
         ep_data.enabled_list = g_list_remove(ep_data.enabled_list, ep);
-        if (ep->cleanup)
-	{
-	    plugin_set_current((Plugin *)ep);
-            ep->cleanup();
-	}
-    }
 
     ep->enabled = enable;
 }
@@ -155,11 +143,6 @@ effect_enable_from_stringified_list(const gchar * list)
                 ep->enabled = TRUE;
                 ep_data.enabled_list =
                     g_list_append(ep_data.enabled_list, ep);
-                if (ep->init)
-		{
-		    plugin_set_current((Plugin *)ep);
-                    ep->init();
-		}
             }
             g_free(base);
             node = node->next;

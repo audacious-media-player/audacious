@@ -468,6 +468,9 @@ static void effect_plugin_init(Plugin * plugin)
     EffectPlugin *p = EFFECT_PLUGIN(plugin);
 
     ep_data.effect_list = g_list_append(ep_data.effect_list, p);
+
+    if (p->init != NULL)
+        p->init ();
 }
 
 static void general_plugin_init(Plugin * plugin)
