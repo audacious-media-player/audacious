@@ -206,6 +206,7 @@ void playlist_remove_failed (gint playlist)
     gint entries = playlist_entry_count (playlist);
     gint count;
 
+    playlist_rescan (playlist);
     playlist_select_all (playlist, FALSE);
 
     for (count = 0; count < entries; count ++)
