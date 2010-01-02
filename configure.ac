@@ -322,7 +322,6 @@ AC_CONFIG_FILES([
     extra.mk
     man/audtool2.1
     man/audacious2.1
-    applications/audacious.desktop
 ])
 
 BUILDSYS_TOUCH_DEPS
