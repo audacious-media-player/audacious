@@ -406,20 +406,28 @@ static void aud_setup_logger(void)
 
 static gboolean load_extra_playlist(const gchar * path, const gchar * basename, gpointer def)
 {
+    gchar * filename = g_filename_to_uri (path, NULL, NULL);
     gint playlist = playlist_count();
 
     playlist_insert(playlist);
-    playlist_insert_playlist(playlist, 0, path);
+    playlist_insert_playlist(playlist, 0, filename);
+
+    g_free (filename);
 
     return FALSE;               /* keep loading other playlists */
 }
 
 static void playlist_system_init()
 {
+    gchar * filename = g_filename_to_uri (aud_paths[BMP_PATH_PLAYLIST_FILE],
+     NULL, NULL);
+
     playlist_init();
 
-    if (vfs_file_test (aud_paths[BMP_PATH_PLAYLIST_FILE], G_FILE_TEST_EXISTS))
-        playlist_insert_playlist (0, 0, aud_paths[BMP_PATH_PLAYLIST_FILE]);
+    if (vfs_file_test (filename, G_FILE_TEST_EXISTS))
+        playlist_insert_playlist (0, 0, filename);
+
+    g_free (filename);
 
     /* Load extra playlists */
     if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist, NULL, NULL))
