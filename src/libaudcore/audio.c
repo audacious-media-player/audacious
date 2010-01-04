@@ -94,12 +94,6 @@ convert_table [] =
 {
     {FMT_S8, (FromFunc) from_s8, (ToFunc) to_s8},
     {FMT_U8, (FromFunc) from_u8, (ToFunc) to_u8},
-    {FMT_S16_NE, (FromFunc) from_s16, (ToFunc) to_s16},
-    {FMT_U16_NE, (FromFunc) from_u16, (ToFunc) to_u16},
-    {FMT_S24_NE, (FromFunc) from_s24, (ToFunc) to_s24},
-    {FMT_U24_NE, (FromFunc) from_u24, (ToFunc) to_u24},
-    {FMT_S32_NE, (FromFunc) from_s32, (ToFunc) to_s32},
-    {FMT_U32_NE, (FromFunc) from_u32, (ToFunc) to_u32},
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
     {FMT_S16_LE, (FromFunc) from_s16, (ToFunc) to_s16},

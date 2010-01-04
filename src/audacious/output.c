@@ -40,9 +40,6 @@
 
 #define SW_VOLUME_RANGE 40 /* decibels */
 
-#define IS_S16_NE(a) ((a) == FMT_S16_NE || (G_BYTE_ORDER == G_LITTLE_ENDIAN && \
- (a) == FMT_S16_LE) || (G_BYTE_ORDER == G_BIG_ENDIAN && (a) == FMT_S16_BE))
-
 OutputPlugin * current_output_plugin = NULL;
 #define COP current_output_plugin
 
@@ -428,7 +425,7 @@ static void do_write (void * data, gint samples)
         allocated = new;
     }
 
-    if (IS_S16_NE (output_format))
+    if (output_format == FMT_S16_NE)
     {
         samples = flow_execute (get_legacy_flow (), 0, & data, 2 * samples,
          output_format, output_rate, output_channels) / 2;
