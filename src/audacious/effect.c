@@ -28,6 +28,8 @@
 
 #include <glib.h>
 #include <string.h>
+
+#include "output.h"
 #include "plugin.h"
 #include "pluginenum.h"
 
@@ -90,6 +92,10 @@ effect_enable_plugin(EffectPlugin *ep, gboolean enable)
         ep_data.enabled_list = g_list_remove(ep_data.enabled_list, ep);
 
     ep->enabled = enable;
+
+    /* new-API effects require playback to be restarted */
+    if (ep->start != NULL)
+        set_current_output_plugin (current_output_plugin);
 }
 
 GList *

@@ -321,6 +321,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .effect_flow = effect_flow,
 
     .get_output_list = get_output_list,
+    .get_effect_list = get_effect_list,
+    .enable_effect = effect_enable_plugin,
 
     .input_get_volume = input_get_volume,
     .construct_uri = construct_uri,

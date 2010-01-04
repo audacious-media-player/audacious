@@ -500,6 +500,8 @@ struct _AudaciousFuncTableV1 {
     void (*effect_flow)(FlowContext *context);
 
     GList *(*get_output_list)(void);
+    GList * (* get_effect_list) (void);
+    void (* enable_effect) (EffectPlugin * effect, gboolean enable);
 
     void (*input_get_volume)(gint * l, gint * r);
 
@@ -850,6 +852,8 @@ struct _AudaciousFuncTableV1 {
 #define aud_dock_is_moving              _audvt->dock_is_moving
 
 #define aud_get_output_list             _audvt->get_output_list
+#define aud_get_effect_list             _audvt->get_effect_list
+#define aud_enable_effect               _audvt->enable_effect
 
 #define aud_input_get_volume            _audvt->input_get_volume
 

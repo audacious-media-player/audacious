@@ -2,7 +2,8 @@ LIB = ${LIB_PREFIX}audgui${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-SRCS = ui_gtk.c \
+SRCS = effects-menu.c \
+       ui_gtk.c \
        ui_fileopener.c \
        ui_urlopener.c \
        ui_jumptotrack.c \
@@ -11,7 +12,8 @@ SRCS = ui_gtk.c \
        ui_about.c \
        ui_credits.c
 
-INCLUDES = libaudgui.h
+INCLUDES = libaudgui.h \
+           libaudgui-gtk.h
 
 include ../../buildsys.mk
 include ../../extra.mk
