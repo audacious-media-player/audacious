@@ -37,12 +37,18 @@ AFormat;
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define FMT_S16_NE FMT_S16_LE
+#define FMT_U16_NE FMT_U16_LE
 #define FMT_S24_NE FMT_S24_LE
+#define FMT_U24_NE FMT_U24_LE
 #define FMT_S32_NE FMT_S32_LE
+#define FMT_U32_NE FMT_U32_LE
 #else
 #define FMT_S16_NE FMT_S16_BE
+#define FMT_U16_NE FMT_U16_BE
 #define FMT_S24_NE FMT_S24_BE
+#define FMT_U24_NE FMT_U24_BE
 #define FMT_S32_NE FMT_S32_BE
+#define FMT_U32_NE FMT_U32_BE
 #endif
 
 #define FMT_SIZEOF(f) \
