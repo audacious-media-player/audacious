@@ -340,6 +340,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     gchar *last_artwork;
     const static gchar default_artwork[] = DATA_DIR "/images/audio.png";
     gint length;
+    const gchar * path, * name;
 
     last_artwork =
         g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
@@ -352,11 +353,17 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
         tmp = NULL;
         g_object_set_data(G_OBJECT(filepopup_win), "file", NULL);
     }
-    if (tuple_get_string(tuple, FIELD_FILE_PATH, NULL) && tuple_get_string(tuple, FIELD_FILE_NAME, NULL))
-        g_object_set_data(G_OBJECT(filepopup_win), "file",
-                          g_build_filename(tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
-                                           tuple_get_string(tuple, FIELD_FILE_NAME, NULL),
-                                           NULL));
+
+    path = tuple_get_string (tuple, FIELD_FILE_PATH, NULL);
+
+    if (strncmp (path, "file://", 7)) /* remote files not handled */
+        return;
+
+    path += 7;
+    name = tuple_get_string (tuple, FIELD_FILE_NAME, NULL);
+
+    g_object_set_data ((GObject *) filepopup_win, "file", g_build_filename
+     (path, name, NULL));
 
     gtk_widget_realize(filepopup_win);
 
@@ -375,7 +382,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
             g_markup_printf_escaped("<span style=\"italic\">%s</span>", _("Filename"));
         gtk_label_set_markup(GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win), "header_title")), markup);
         g_free(markup);
-        filepopup_entry_set_text(filepopup_win, "label_title", tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
+        filepopup_entry_set_text (filepopup_win, "label_title", name);
     }
 
     fileinfopupup_update_data(filepopup_win, tuple_get_string(tuple, FIELD_ARTIST, NULL),
@@ -407,8 +414,9 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
                                         "label_tracknum", "header_tracknum");
     g_free(track_string);
 
-    if (tuple_get_string(tuple, FIELD_FILE_NAME, NULL) && tuple_get_string(tuple, FIELD_FILE_PATH, NULL)) {
-        tmp = fileinfo_recursive_get_image(tuple_get_string(tuple, FIELD_FILE_PATH, NULL), tuple_get_string(tuple, FIELD_FILE_NAME, NULL), 0);
+    tmp = fileinfo_recursive_get_image (path, name, 0);
+
+    /* { */
         if (tmp) { // picture found
             if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
                 filepopup_entry_set_image(filepopup_win, "image_artwork", tmp);
@@ -429,7 +437,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
             else {
             }
         }
-    }
+    /* } */
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
