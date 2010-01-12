@@ -115,6 +115,7 @@ static const gchar *credit_text[] = {
     "Johan Tavelin",
     "Christoph J. Thompson",
     "Bret Towe",
+    "Peter Wagner",
     "John Wehle",
     "Tim Yamin",
     "Ivan N. Zlatev",
