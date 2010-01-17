@@ -37,13 +37,20 @@ static gint source;
 
 static gboolean send_audio (void * unused)
 {
-    gint outputted = new_effect_output_to_decoder_time
-     (current_output_plugin->output_time ());
+    gint outputted;
     VisNode * vis_node, * next;
 
-    vis_node = NULL;
-
     g_mutex_lock (mutex);
+
+    if (! source) /* stopped by another thread? */
+    {
+        g_mutex_unlock (mutex);
+        return FALSE;
+    }
+
+    vis_node = NULL;
+    outputted = new_effect_output_to_decoder_time
+     (current_output_plugin->output_time ());
 
     while (vis_list != NULL)
     {
