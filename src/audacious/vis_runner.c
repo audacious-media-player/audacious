@@ -33,7 +33,7 @@
 static GMutex * mutex;
 static gboolean playing, paused, active;
 static GList * vis_list, * vis_tail, * hooks;
-static gint source;
+static gint send_source, clear_source;
 
 static gboolean send_audio (void * unused)
 {
@@ -42,7 +42,7 @@ static gboolean send_audio (void * unused)
 
     g_mutex_lock (mutex);
 
-    if (! source) /* stopped by another thread? */
+    if (! send_source)
     {
         g_mutex_unlock (mutex);
         return FALSE;
@@ -108,8 +108,11 @@ static gboolean send_audio (void * unused)
 
 static gboolean send_clear (void * unused)
 {
+    g_mutex_lock (mutex);
+    clear_source = 0;
+    g_mutex_unlock (mutex);
+
     hook_call ("visualization clear", NULL);
-    source = 0;
     return FALSE;
 }
 
@@ -133,7 +136,8 @@ void vis_runner_init (void)
     hooks = NULL;
     vis_list = NULL;
     vis_tail = NULL;
-    source = 0;
+    send_source = 0;
+    clear_source = 0;
 }
 
 void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
@@ -144,19 +148,27 @@ void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
     paused = new_paused;
     active = playing && hooks != NULL;
 
-    if (source != 0)
+    if (send_source)
     {
-        g_source_remove (source);
-        source = 0;
+        g_source_remove (send_source);
+        send_source = 0;
+    }
+
+    if (clear_source)
+    {
+        g_source_remove (clear_source);
+        clear_source = 0;
     }
 
     if (! active)
     {
         flush_locked ();
-        source = g_timeout_add (0, send_clear, NULL);
+        clear_source = g_timeout_add (0, send_clear, NULL);
     }
     else if (! paused)
-        source = g_timeout_add (INTERVAL, send_audio, NULL);
+    {
+        send_source = g_timeout_add (INTERVAL, send_audio, NULL);
+    }
 
     g_mutex_unlock (mutex);
 }
