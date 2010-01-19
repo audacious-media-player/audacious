@@ -83,9 +83,9 @@ struct _AudCmdLineOpt
 };
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
-static AudCmdLineOpt options = { };
+static AudCmdLineOpt options;
 
-gchar *aud_paths[BMP_PATH_COUNT] = { };
+gchar * aud_paths[BMP_PATH_COUNT];
 
 #ifdef USE_DBUS
 MprisPlayer *mpris;
@@ -597,7 +597,7 @@ gint main(gint argc, gchar ** argv)
 
     if (i != NULL)
     {
-        g_message("Running interface %s@%p", options.interface, i);
+        g_message("Running interface %s@%p", options.interface, (void *) i);
         interface_run(i);
     }
     else

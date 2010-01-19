@@ -513,10 +513,19 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     mowgli_node_t *hlist_node;
 
     if (header->magic != PLUGIN_MAGIC)
-        return plugin2_dispose(module, "plugin <%s> discarded, invalid module magic", filename);
+    {
+        plugin2_dispose (module, "plugin <%s> discarded, invalid module magic",
+         filename);
+        return;
+    }
 
     if (header->api_version != __AUDACIOUS_PLUGIN_API__)
-        return plugin2_dispose(module, "plugin <%s> discarded, wanting API version %d, we implement API version %d", filename, header->api_version, __AUDACIOUS_PLUGIN_API__);
+    {
+        plugin2_dispose (module, "plugin <%s> discarded, wanting API version "
+         "%d, we implement API version %d", filename, header->api_version,
+         __AUDACIOUS_PLUGIN_API__);
+        return;
+    }
 
     hlist_node = mowgli_node_create();
     mowgli_node_add(header, hlist_node, headers_list);

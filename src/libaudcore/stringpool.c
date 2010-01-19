@@ -157,7 +157,10 @@ stringpool_unref(gchar *str)
         return;
 
     if (!stringpool_should_cache(str, 100))
-        return g_free(str);
+    {
+        g_free (str);
+        return;
+    }
 
     g_static_mutex_lock(&stringpool_mutex);
 

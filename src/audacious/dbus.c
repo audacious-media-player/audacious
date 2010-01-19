@@ -92,10 +92,10 @@ static GThread *main_thread;
 static GMutex *info_mutex;
 static GCond *info_cond;
 
-G_DEFINE_TYPE(RemoteObject, audacious_rc, G_TYPE_OBJECT);
-G_DEFINE_TYPE(MprisRoot, mpris_root, G_TYPE_OBJECT);
-G_DEFINE_TYPE(MprisPlayer, mpris_player, G_TYPE_OBJECT);
-G_DEFINE_TYPE(MprisTrackList, mpris_tracklist, G_TYPE_OBJECT);
+G_DEFINE_TYPE (RemoteObject, audacious_rc, G_TYPE_OBJECT)
+G_DEFINE_TYPE (MprisRoot, mpris_root, G_TYPE_OBJECT)
+G_DEFINE_TYPE (MprisPlayer, mpris_player, G_TYPE_OBJECT)
+G_DEFINE_TYPE (MprisTrackList, mpris_tracklist, G_TYPE_OBJECT)
 
 #define DBUS_TYPE_G_STRING_VALUE_HASHTABLE (dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE))
 
@@ -217,7 +217,7 @@ void init_dbus()
     g_object_new(mpris_root_get_type(), NULL);
     g_message("D-Bus MPRIS player");
     mpris = g_object_new(mpris_player_get_type(), NULL);
-    g_message("result=%p", mpris);
+    g_message("result=%p", (void *) mpris);
     g_message("D-Bus MPRIS tracklist");
     g_object_new(mpris_tracklist_get_type(), NULL);
     g_message("D-Bus support has been activated");

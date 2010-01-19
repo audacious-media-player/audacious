@@ -40,7 +40,7 @@ typedef struct
 }
 StaticMenu;
 
-G_DEFINE_TYPE (StaticMenu, static_menu, GTK_TYPE_MENU);
+G_DEFINE_TYPE (StaticMenu, static_menu, GTK_TYPE_MENU)
 
 static void static_menu_destroy (GtkObject * object)
 {

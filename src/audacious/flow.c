@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses>.
  *
  * The Audacious team does not consider modular code linking to
- * Audacious or using our public API to be a derived work. 
+ * Audacious or using our public API to be a derived work.
  */
 
 #define AUD_DEBUG
@@ -37,15 +37,15 @@ flow_destructor(Flow *flow)
     MOWGLI_ITER_FOREACH_SAFE(element, element2, flow->head)
         g_slice_free(FlowElement, element);
 
-    g_slice_free(Flow, flow);    
+    g_slice_free(Flow, flow);
 }
 
 gsize
-flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt, 
+flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt,
      gint srate, gint channels)
 {
     FlowElement *element;
-    FlowContext context = {};
+    FlowContext context;
 
     g_return_val_if_fail(flow != NULL, 0);
     g_return_val_if_fail(data != NULL, 0);
@@ -106,8 +106,8 @@ flow_link_element(Flow *flow, FlowFunction func)
 
     if (flow->tail)
         flow->tail->next = element;
-    
-    flow->tail = element;        
+
+    flow->tail = element;
 
     if (!flow->head)
         flow->head = element;

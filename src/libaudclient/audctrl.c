@@ -236,7 +236,7 @@ gint audacious_remote_get_output_time(DBusGProxy *proxy) {
  **/
 void audacious_remote_jump_to_time(DBusGProxy *proxy, guint pos) {
     org_atheme_audacious_seek (proxy, pos, &error);
-    g_clear_error(&error);    
+    g_clear_error(&error);
 }
 
 /**
@@ -597,7 +597,7 @@ void audacious_remote_toggle_repeat(DBusGProxy *proxy) {
  **/
 void audacious_remote_toggle_shuffle(DBusGProxy *proxy) {
     org_atheme_audacious_toggle_shuffle (proxy, &error);
-    g_clear_error(&error);    
+    g_clear_error(&error);
 }
 
 /**
@@ -915,7 +915,7 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
  **/
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                       guint pos) {
-    GValue value = {};
+    GValue value = {0};
     gchar *s = NULL;
 
     org_atheme_audacious_song_tuple(proxy, pos, field, &value, &error);
@@ -939,7 +939,7 @@ gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
 
         g_value_init(&tmp_value, G_TYPE_STRING);
         g_value_transform(&value, &tmp_value);
-        
+
         //s = g_strescape(g_value_get_string(&tmp_value), NULL);
         s = g_strdup(g_value_get_string(&tmp_value));
 

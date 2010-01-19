@@ -71,7 +71,7 @@ aud_log_timestr(const gchar *fmt)
 
     if (stamp >= 0 && localtime_r(&stamp, &stamp_tm) != NULL)
         strftime(tmp, sizeof(tmp), fmt, &stamp_tm);
-    
+
     return g_strdup(tmp);
 }
 
@@ -108,7 +108,7 @@ aud_log_msg(FILE *f, const gchar *ctx, gint level, const gchar *msg)
     }
     else
     {
-        fprintf(f, "%s|%p", ctx != NULL ? ctx : "global", thread);
+        fprintf(f, "%s|%p", ctx != NULL ? ctx : "global", (void *) thread);
     }
 
     fprintf(f, "> [%s]: %s", (level >= 0) ? log_level_names[level] :
@@ -152,7 +152,7 @@ static void
 aud_do_log(FILE *f, const gchar *ctx, gint level, const gchar *fmt, ...)
 {
     va_list ap;
-    
+
     va_start(ap, fmt);
     aud_do_logv(f, ctx, level, fmt, ap);
     va_end(ap);
@@ -242,7 +242,7 @@ aud_log_close(void)
 {
     GMutex *tmp;
     gchar *timestamp;
-    
+
     if ((tmp = log_mutex) != NULL)
     {
         g_mutex_lock(tmp);
@@ -313,7 +313,7 @@ aud_log_delete_thread_context(GThread *thread)
 {
     gchar *old;
     g_mutex_lock(log_mutex);
-    
+
     old = g_hash_table_lookup(log_thread_hash, thread);
     if (old == NULL)
     {
@@ -364,7 +364,7 @@ void
 aud_log(const gchar *ctx, gint level, const gchar *fmt, ...)
 {
     va_list ap;
-    
+
     va_start(ap, fmt);
     aud_logv(ctx, level, fmt, ap);
     va_end(ap);

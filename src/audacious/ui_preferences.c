@@ -248,9 +248,11 @@ static PreferencesWidget proxy_auth_elements[] = {
 
 static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Enable proxy usage"), "use_proxy", NULL, NULL, FALSE, {}, VALUE_CFG_BOOLEAN},
+    {WIDGET_CHK_BTN, N_("Enable proxy usage"), "use_proxy", NULL, NULL, FALSE,
+     .cfg_type = VALUE_CFG_BOOLEAN},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_host_port_elements, G_N_ELEMENTS(proxy_host_port_elements)}}},
-    {WIDGET_CHK_BTN, N_("Use authentication with proxy"), "proxy_use_auth", NULL, NULL, FALSE, {}, VALUE_CFG_BOOLEAN},
+    {WIDGET_CHK_BTN, N_("Use authentication with proxy"), "proxy_use_auth",
+     NULL, NULL, FALSE, .cfg_type = VALUE_CFG_BOOLEAN},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_auth_elements, G_N_ELEMENTS(proxy_auth_elements)}}},
     {WIDGET_LABEL, N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning"}}},
 };
@@ -1456,7 +1458,8 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title (GTK_FONT_BUTTON (* font_btn),
          dgettext (domain, widget->data.font_btn.title));
 
-    g_object_set_data(G_OBJECT(*font_btn), "callback", widget->callback);
+    g_object_set_data ((GObject *) font_btn, "callback", (void *)
+     widget->callback);
 
     g_signal_connect(G_OBJECT(*font_btn), "font_set",
                      G_CALLBACK(on_font_btn_font_set),
@@ -1478,7 +1481,7 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
     if (widget->tooltip)
         gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
-    g_object_set_data(G_OBJECT(*entry), "callback", widget->callback);
+    g_object_set_data ((GObject *) entry, "callback", (void *) widget->callback);
 
     switch (widget->cfg_type) {
         case VALUE_STRING:
@@ -1620,7 +1623,8 @@ void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets, gint
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
                 widget = gtk_check_button_new_with_mnemonic (dgettext (domain,
                  widgets[x].label));
-                g_object_set_data(G_OBJECT(widget), "callback", widgets[x].callback);
+                g_object_set_data ((GObject *) widget, "callback",
+                 (void *) widgets[x].callback);
 
                 if (widgets[x].cfg_type == VALUE_CFG_BOOLEAN) {
                     g_signal_connect(G_OBJECT(widget), "toggled",
