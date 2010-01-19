@@ -1458,7 +1458,7 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title (GTK_FONT_BUTTON (* font_btn),
          dgettext (domain, widget->data.font_btn.title));
 
-    g_object_set_data ((GObject *) font_btn, "callback", (void *)
+    g_object_set_data ((GObject *) (* font_btn), "callback", (void *)
      widget->callback);
 
     g_signal_connect(G_OBJECT(*font_btn), "font_set",
@@ -1481,7 +1481,8 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
     if (widget->tooltip)
         gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
-    g_object_set_data ((GObject *) entry, "callback", (void *) widget->callback);
+    g_object_set_data ((GObject *) (* entry), "callback", (void *)
+     widget->callback);
 
     switch (widget->cfg_type) {
         case VALUE_STRING:
