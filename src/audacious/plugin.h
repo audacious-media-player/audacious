@@ -71,7 +71,7 @@
 //@{
 /** Preprocessor defines for different API features */
 #define __AUDACIOUS_NEWVFS__                /**< @deprecated define for availability of VFS API. */
-#define __AUDACIOUS_PLUGIN_API__ 12         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
+#define __AUDACIOUS_PLUGIN_API__ 13         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
 #define __AUDACIOUS_INPUT_PLUGIN_API__ 8    /**< Input plugin API version. */
 //@}
 
