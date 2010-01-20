@@ -71,8 +71,8 @@ static void show_progress (const gchar * path, gint count)
     }
 
     gtk_label_set_text (GTK_LABEL(add_progress_path), path);
-    snprintf (scratch, sizeof scratch, count == 1 ? _("%d file found") :
-     _("%d files found"), count);
+    snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
+     "%d files found", count), count);
     gtk_label_set_text (GTK_LABEL(add_progress_count), scratch);
 }
 
