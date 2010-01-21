@@ -1,6 +1,6 @@
 /*
  * probe.c
- * Copyright 2009 John Lindgren
+ * Copyright 2009-2010 John Lindgren
  *
  * This file is part of Audacious.
  *

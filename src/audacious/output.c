@@ -1,6 +1,6 @@
 /*
  * output.c
- * Copyright 2009 John Lindgren
+ * Copyright 2009-2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -380,10 +380,10 @@ static void apply_software_volume (gfloat * data, gint channels, gint frames)
      cfg.sw_volume_right == 100))
         return;
 
-    left_factor = powf (10, (gfloat) SW_VOLUME_RANGE * (cfg.sw_volume_left -
-     100) / 100 / 20);
-    right_factor = powf (10, (gfloat) SW_VOLUME_RANGE * (cfg.sw_volume_right -
-     100) / 100 / 20);
+    left_factor = (cfg.sw_volume_left == 0) ? 0 : powf (10, (gfloat)
+     SW_VOLUME_RANGE * (cfg.sw_volume_left - 100) / 100 / 20);
+    right_factor = (cfg.sw_volume_right == 0) ? 0 : powf (10, (gfloat)
+     SW_VOLUME_RANGE * (cfg.sw_volume_right - 100) / 100 / 20);
 
     if (channels == 2)
     {
