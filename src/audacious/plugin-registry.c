@@ -661,37 +661,42 @@ void input_plugin_add_keys (InputPlugin * header, gint key, GList * values)
     plugin->u.i.keys[key] = g_list_concat (plugin->u.i.keys[key], values);
 }
 
-InputPlugin * input_plugin_for_key (gint key, const gchar * value)
+void input_plugin_for_key (gint key, const gchar * value, gboolean (* func)
+ (InputPlugin * plugin, void * data), void * data)
 {
+    gint priority;
     GList * node, * node2, * node3;
     ModuleData * module;
     PluginData * plugin;
 
-    for (node = module_list; node != NULL; node = node->next)
+    for (priority = 0; priority <= 10; priority ++)
     {
-        module = node->data;
-
-        for (node2 = module->plugin_list; node2 != NULL; node2 = node2->next)
+        for (node = module_list; node != NULL; node = node->next)
         {
-            plugin = node2->data;
+            module = node->data;
 
-            if (plugin->type != PLUGIN_TYPE_INPUT || ! plugin->u.i.enabled)
-                continue;
-
-            for (node3 = plugin->u.i.keys[key]; node3 != NULL; node3 =
-             node3->next)
+            for (node2 = module->plugin_list; node2 != NULL; node2 = node2->next)
             {
-                if (strcmp (node3->data, value))
+                plugin = node2->data;
+
+                if (plugin->type != PLUGIN_TYPE_INPUT || ! plugin->u.i.enabled
+                 || plugin->u.i.priority != priority)
                     continue;
 
-                module_check_loaded (module);
+                for (node3 = plugin->u.i.keys[key]; node3 != NULL; node3 =
+                 node3->next)
+                {
+                    if (strcmp (node3->data, value))
+                        continue;
 
-                return plugin->header;
+                    module_check_loaded (module);
+
+                    if (! func (plugin->header, data))
+                        return;
+                }
             }
         }
     }
-
-    return NULL;
 }
 
 void input_plugin_add_scheme_compat (const gchar * scheme, InputPlugin * header)

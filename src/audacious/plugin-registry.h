@@ -49,7 +49,8 @@ void input_plugin_set_priority (InputPlugin * plugin, gint priority);
 void input_plugin_by_priority (gboolean (* func) (InputPlugin * plugin, void *
  data), void * data);
 void input_plugin_add_keys (InputPlugin * plugin, gint key, GList * values);
-InputPlugin * input_plugin_for_key (gint key, const gchar * value);
+void input_plugin_for_key (gint key, const gchar * value, gboolean (* func)
+ (InputPlugin * plugin, void * data), void * data);
 
 void input_plugin_add_scheme_compat (const gchar * scheme, InputPlugin * plugin);
 void input_plugin_add_mime_compat (const gchar * mime, InputPlugin * plugin);

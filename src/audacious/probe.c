@@ -19,74 +19,53 @@
  * using our public API to be a derived work.
  */
 
+#include <libaudcore/audstrings.h>
+#include <libaudcore/vfs.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "plugin-registry.h"
 #include "probe.h"
 
-static InputPlugin * probe_by_scheme (gchar * filename)
-{
-    InputPlugin * decoder;
-    gchar * s = strstr (filename, "://");
-    gchar c;
-
-    if (s == NULL)
-        return NULL;
-
-    c = s[3];
-    s[3] = 0;
-    decoder = input_plugin_for_key (INPUT_KEY_SCHEME, filename);
-    s[3] = c;
-    return decoder;
-}
-
-static void cut_subtune (gchar * filename)
-{
-    gchar * s = strrchr (filename, '?');
-
-    if (s != NULL)
-        * s = 0;
-}
-
-static InputPlugin * probe_by_extension (gchar * filename)
-{
-    InputPlugin * decoder;
-    gchar * s = strrchr (filename, '.');
-
-    if (s == NULL)
-        return NULL;
-
-    s = g_ascii_strdown (s + 1, -1);
-    decoder = input_plugin_for_key (INPUT_KEY_EXTENSION, s);
-    g_free (s);
-    return decoder;
-}
-
-static InputPlugin * probe_by_mime (VFSFile * handle)
-{
-    InputPlugin * decoder;
-    gchar * mime = vfs_get_metadata (handle, "content-type");
-
-    if (mime == NULL)
-        return NULL;
-
-    decoder = input_plugin_for_key (INPUT_KEY_MIME, mime);
-    g_free (mime);
-    return decoder;
-}
+#if 0
+#define DEBUG printf
+#else
+#define DEBUG(...)
+#endif
 
 typedef struct
 {
-    const gchar * filename;
+    gchar * filename;
     VFSFile * handle;
     InputPlugin * decoder;
 }
 ProbeState;
 
+static gboolean check_opened (ProbeState * state)
+{
+    if (state->handle != NULL)
+        return TRUE;
+
+    DEBUG ("Opening %s.\n", state->filename);
+
+    if ((state->handle = vfs_fopen (state->filename, "r")) != NULL)
+        return TRUE;
+
+    DEBUG ("FAILED.\n");
+    return FALSE;
+}
+
 static gboolean probe_func (InputPlugin * decoder, void * data)
 {
     ProbeState * state = data;
 
+    DEBUG ("Trying %s.\n", decoder->description);
+
     if (decoder->is_our_file_from_vfs != NULL)
     {
+        if (! check_opened (state))
+            return FALSE;
+
         if (decoder->is_our_file_from_vfs (state->filename, state->handle))
             state->decoder = decoder;
 
@@ -101,48 +80,126 @@ static gboolean probe_func (InputPlugin * decoder, void * data)
     return (state->decoder == NULL);
 }
 
-static InputPlugin * probe_by_content (gchar * filename, VFSFile * handle)
+static gboolean probe_func_fast (InputPlugin * decoder, void * data)
 {
-    ProbeState state = {filename, handle, NULL};
+    ProbeState * state = data;
 
-    input_plugin_by_priority (probe_func, & state);
-    return state.decoder;
+    /* For the sake of speed, we do not call is_our_file[_from_vfs] nor do we
+       open the file until the second call, when we know we have to decide
+       between at least two decoders. */
+    if (state->decoder != NULL)
+    {
+        DEBUG ("Checking %s.\n", state->decoder->description);
+
+        if (state->decoder->is_our_file_from_vfs != NULL)
+        {
+            if (! check_opened (state))
+            {
+                state->decoder = NULL;
+                return FALSE;
+            }
+
+            if (state->decoder->is_our_file_from_vfs (state->filename,
+             state->handle))
+                return FALSE;
+
+            vfs_fseek (state->handle, 0, SEEK_SET);
+        }
+        else if (state->decoder->is_our_file != NULL)
+        {
+            if (state->decoder->is_our_file (state->filename))
+                return FALSE;
+        }
+    }
+
+    /* The last decoder didn't work; we'll try this one next time.  If we don't
+       get called again, we'll assume that this is the right one. */
+    DEBUG ("Guessing %s.\n", decoder->description);
+    state->decoder = decoder;
+    return TRUE;
+}
+
+static void probe_by_scheme (ProbeState * state)
+{
+    gchar * s = strstr (state->filename, "://");
+    gchar c;
+
+    if (s == NULL)
+        return;
+
+    DEBUG ("Probing by scheme.\n");
+    c = s[3];
+    s[3] = 0;
+    input_plugin_for_key (INPUT_KEY_SCHEME, state->filename, probe_func_fast,
+     state);
+    s[3] = c;
+}
+
+static void probe_by_extension (ProbeState * state)
+{
+    gchar * s = strrchr (state->filename, '.');
+
+    if (s == NULL)
+        return;
+
+    DEBUG ("Probing by extension.\n");
+    s = g_ascii_strdown (s + 1, -1);
+    input_plugin_for_key (INPUT_KEY_EXTENSION, s, probe_func_fast, state);
+    g_free (s);
+}
+
+static void probe_by_mime (ProbeState * state)
+{
+    gchar * mime;
+
+    if (! check_opened (state))
+        return;
+
+    if ((mime = vfs_get_metadata (state->handle, "content-type")) == NULL)
+        return;
+
+    DEBUG ("Probing by MIME type.\n");
+    input_plugin_for_key (INPUT_KEY_MIME, mime, probe_func_fast, state);
+    g_free (mime);
+}
+
+static void probe_by_content (ProbeState * state)
+{
+    DEBUG ("Probing by content.\n");
+    input_plugin_by_priority (probe_func, state);
 }
 
 InputPlugin * file_probe (const gchar * filename, gboolean fast)
 {
-    InputPlugin * decoder = NULL;
-    gchar * temp = g_strdup (filename);
-    VFSFile * handle;
+    ProbeState state;
 
-    decoder = probe_by_scheme (temp);
+    DEBUG ("Probing %s.\n", filename);
+    state.decoder = NULL;
+    state.filename = filename_split_subtune (filename, NULL);
+    state.handle = NULL;
 
-    if (decoder != NULL)
+    probe_by_scheme (& state);
+
+    if (state.decoder != NULL)
         goto DONE;
 
-    cut_subtune (temp);
+    probe_by_extension (& state);
 
-    decoder = probe_by_extension (temp);
-
-    if (decoder != NULL || fast)
+    if (state.decoder != NULL || fast)
         goto DONE;
 
-    handle = vfs_fopen (temp, "r");
+    probe_by_mime (& state);
 
-    if (handle == NULL)
+    if (state.decoder != NULL)
         goto DONE;
 
-    decoder = probe_by_mime (handle);
-
-    if (decoder != NULL)
-        goto CLOSE;
-
-    decoder = probe_by_content (temp, handle);
-
-CLOSE:
-    vfs_fclose (handle);
+    probe_by_content (& state);
 
 DONE:
-    g_free (temp);
-    return decoder;
+    g_free (state.filename);
+
+    if (state.handle != NULL)
+        vfs_fclose (state.handle);
+
+    return state.decoder;
 }
