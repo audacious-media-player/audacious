@@ -162,7 +162,10 @@ ui_jump_to_track_queue_cb(GtkButton * button,
 
     gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    aud_playlist_queue_insert (aud_playlist_get_active (), -1, pos - 1);
+    if (audacious_drct_pq_is_queued (pos - 1))
+        audacious_drct_pq_remove (pos - 1);
+    else
+        audacious_drct_pq_add (pos - 1);
 
     ui_jump_to_track_set_queue_button_label(button, (pos - 1));
 }
