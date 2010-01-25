@@ -314,7 +314,8 @@ static gboolean playback_ended (void * user_data)
             if (! play)
                 play = playlist_next_song (playlist, TRUE) && cfg.repeat;
 
-            if (failed_entries >= playlist_entry_count (playlist) * 2)
+            if (failed_entries >= 100 || failed_entries >= playlist_entry_count
+             (playlist) * 2)
                 play = FALSE;
         }
 
