@@ -230,44 +230,6 @@ ui_jump_to_track_keypress_cb(GtkWidget * object,
     return FALSE;
 }
 
-void
-ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
-{
-    GtkTreeIter iter;
-    gint playlist, entries, entry;
-    GtkTreeModel *store;
-    GtkTreeView *tree = GTK_TREE_VIEW(g_object_get_data(user_data, "treeview"));
-    GtkTreePath * current_selection = NULL;
-
-    if (!jump_to_track_win)
-        return;
-
-    store = gtk_tree_view_get_model(tree);
-
-    if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (tree),
-     NULL, & iter))
-        current_selection = gtk_tree_model_get_path (store, & iter);
-
-    gtk_list_store_clear(GTK_LIST_STORE(store));
-
-    playlist = aud_playlist_get_active ();
-    entries = aud_playlist_entry_count (playlist);
-
-    for (entry = 0; entry < entries; entry ++)
-    {
-        gtk_list_store_append(GTK_LIST_STORE(store), &iter);
-        gtk_list_store_set(GTK_LIST_STORE(store), &iter,
-         0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry), -1);
-    }
-
-    if (current_selection != NULL)
-    {
-        gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree),
-         current_selection);
-        gtk_tree_path_free (current_selection);
-    }
-}
-
 static void
 ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 {
@@ -348,15 +310,41 @@ ui_jump_to_track_fill(gpointer treeview)
     return FALSE;
 }
 
+static void clear_cb (GtkWidget * widget, void * data)
+{
+    GtkWidget * entry = g_object_get_data (data, "edit");
+
+    gtk_entry_set_text ((GtkEntry *) entry, "");
+    gtk_widget_grab_focus (entry);
+}
+
 static void watchdog (void * hook_data, void * user_data)
 {
+    GtkTreeView * tree;
+    GtkTreeModel * model;
+    GtkTreeIter iter;
+    GtkTreePath * path = NULL;
+
     if (GPOINTER_TO_INT (hook_data) <= PLAYLIST_UPDATE_SELECTION || storage ==
      NULL)
         return;
 
-    ui_jump_to_track_update (g_object_get_data (storage, "widget"), storage);
-    ui_jump_to_track_edit_cb (g_object_get_data (storage, "edit"),
-     g_object_get_data (storage, "treeview"));
+    tree = g_object_get_data (storage, "treeview");
+
+    /* If it's only a metadata update, save and restore the cursor position. */
+    if (GPOINTER_TO_INT (hook_data) <= PLAYLIST_UPDATE_METADATA &&
+     gtk_tree_selection_get_selected (gtk_tree_view_get_selection (tree),
+     & model, & iter))
+        path = gtk_tree_model_get_path (model, & iter);
+
+    /* Redo the search. */
+    ui_jump_to_track_edit_cb (g_object_get_data (storage, "edit"), tree);
+
+    if (path != NULL)
+    {
+        gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree), path);
+        gtk_tree_path_free (path);
+    }
 }
 
 static gboolean delete_cb (GtkWidget * widget, GdkEvent * event, void * unused)
@@ -495,8 +483,7 @@ audgui_jump_to_track(void)
     g_object_set_data(storage, "treeview", treeview);
     g_object_set_data(storage, "edit", edit);
 
-    g_signal_connect(rescan, "clicked",
-                     G_CALLBACK(ui_jump_to_track_update), storage);
+    g_signal_connect (rescan, "clicked", (GCallback) clear_cb, storage);
 
     GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
     gtk_widget_grab_default(rescan);
