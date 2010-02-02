@@ -691,6 +691,9 @@ void input_plugin_for_key (gint key, const gchar * value, gboolean (* func)
 
                     module_check_loaded (module);
 
+                    if (plugin->header == NULL)
+                        continue;
+
                     if (! func (plugin->header, data))
                         return;
                 }
