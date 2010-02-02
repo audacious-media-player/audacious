@@ -234,16 +234,20 @@ void
 ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
 {
     GtkTreeIter iter;
-    GtkTreeSelection *selection;
     gint playlist, entries, entry;
     GtkTreeModel *store;
-
     GtkTreeView *tree = GTK_TREE_VIEW(g_object_get_data(user_data, "treeview"));
+    GtkTreePath * current_selection = NULL;
 
     if (!jump_to_track_win)
         return;
 
     store = gtk_tree_view_get_model(tree);
+
+    if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (tree),
+     NULL, & iter))
+        current_selection = gtk_tree_model_get_path (store, & iter);
+
     gtk_list_store_clear(GTK_LIST_STORE(store));
 
     playlist = aud_playlist_get_active ();
@@ -256,9 +260,12 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
          0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry), -1);
     }
 
-    gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
-    selection = gtk_tree_view_get_selection(tree);
-    gtk_tree_selection_select_iter(selection, &iter);
+    if (current_selection != NULL)
+    {
+        gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree),
+         current_selection);
+        gtk_tree_path_free (current_selection);
+    }
 }
 
 static void
@@ -270,6 +277,8 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     gint playlist;
     GtkListStore *store;
 
+    GtkTreePath* current_selection=NULL;
+
     const GArray *search_matches;
     int i;
 
@@ -280,6 +289,11 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     /* FIXME: Remove the connected signals before clearing
      * (row-selected will still eventually arrive once) */
     store = GTK_LIST_STORE(gtk_tree_view_get_model(treeview));
+
+    selection = gtk_tree_view_get_selection(treeview);
+    if (gtk_tree_selection_get_selected(selection, NULL, &iter))
+	current_selection = gtk_tree_model_get_path(GTK_TREE_MODEL(store),&iter);
+
     /* detach model from treeview */
     g_object_ref( store );
     gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , NULL );
@@ -307,9 +321,11 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , GTK_TREE_MODEL(store) );
     g_object_unref( store );
 
-    if (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter)) {
-        selection = gtk_tree_view_get_selection(treeview);
-        gtk_tree_selection_select_iter(selection, &iter);
+    if (current_selection){
+	selection = gtk_tree_view_get_selection(treeview);
+	gtk_tree_selection_select_path (selection, current_selection);
+	gtk_tree_view_scroll_to_cell(treeview,current_selection,NULL,TRUE,0.5,0);
+	gtk_tree_path_free(current_selection);
     }
 }
 
