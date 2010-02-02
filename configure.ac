@@ -285,13 +285,13 @@ plugindir="$libdir/audacious"
 AC_SUBST([plugindir])
 AC_SUBST([pluginsubs])
 
+AUD_DEFINE_PLUGIN_DIR([Transport])
 AUD_DEFINE_PLUGIN_DIR([Input])
 AUD_DEFINE_PLUGIN_DIR([Output])
 AUD_DEFINE_PLUGIN_DIR([Effect])
 AUD_DEFINE_PLUGIN_DIR([General])
 AUD_DEFINE_PLUGIN_DIR([Visualization])
 AUD_DEFINE_PLUGIN_DIR([Container])
-AUD_DEFINE_PLUGIN_DIR([Transport])
 AUD_DEFINE_PLUGIN_DIR([Discovery])
 
 
