@@ -272,12 +272,9 @@ static void
 ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 {
     GtkTreeView *treeview = GTK_TREE_VIEW(user_data);
-    GtkTreeSelection *selection;
     GtkTreeIter iter;
     gint playlist;
     GtkListStore *store;
-
-    GtkTreePath* current_selection=NULL;
 
     const GArray *search_matches;
     int i;
@@ -289,10 +286,6 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     /* FIXME: Remove the connected signals before clearing
      * (row-selected will still eventually arrive once) */
     store = GTK_LIST_STORE(gtk_tree_view_get_model(treeview));
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (gtk_tree_selection_get_selected(selection, NULL, &iter))
-	current_selection = gtk_tree_model_get_path(GTK_TREE_MODEL(store),&iter);
 
     /* detach model from treeview */
     g_object_ref( store );
@@ -321,12 +314,9 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , GTK_TREE_MODEL(store) );
     g_object_unref( store );
 
-    if (current_selection){
-	selection = gtk_tree_view_get_selection(treeview);
-	gtk_tree_selection_select_path (selection, current_selection);
-	gtk_tree_view_scroll_to_cell(treeview,current_selection,NULL,TRUE,0.5,0);
-	gtk_tree_path_free(current_selection);
-    }
+    if (gtk_tree_model_get_iter_first ((GtkTreeModel *) store, & iter))
+        gtk_tree_selection_select_iter (gtk_tree_view_get_selection (treeview),
+         & iter);
 }
 
 static gboolean
