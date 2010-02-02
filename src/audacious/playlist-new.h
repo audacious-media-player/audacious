@@ -37,6 +37,10 @@
  * means that the reference is given to the playlist. Tuples returned by
  * playlist functions, in contrast, are read-only, and no reference is given to
  * the calling code.
+ *
+ * IMPORTANT: The playlist is not thread-safe.  If you want to examine or
+ * manipulate it, you must do so in the main thread.  Not following this rule
+ * will (and has) led to crashes.
  */
 
 void playlist_init (void);
