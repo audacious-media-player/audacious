@@ -40,6 +40,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <complex.h>
 #ifndef PI
 #ifdef M_PI
 #define PI M_PI
@@ -279,7 +280,7 @@ fft_calculate(float *re, float *im)
                 im[k] += tmp_imag;
 #ifdef DEBUG
                 for (k1 = 0; k1 < FFT_BUFFER_SIZE; k1++) {
-                    printf("%5d = %8f + i * %8f\n", k1, real[k1], imag[k1]);
+                    printf("%5d = %8f + i * %8f\n", k1, creal(k1), cimag(k1));
                 }
 #endif
             }
