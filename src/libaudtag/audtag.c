@@ -12,7 +12,7 @@ void tag_init(void) {
 Tuple *tag_tuple_read(Tuple *tuple,VFSFile *fd) {
     tag_module_t *mod = find_tag_module(fd);
     g_return_val_if_fail(mod != NULL, NULL);
-    DEBUG("OK\n");
+    AUDDBG("OK\n");
     return mod->populate_tuple_from_file(tuple,fd);
 }
 

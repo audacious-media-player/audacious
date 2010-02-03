@@ -26,6 +26,6 @@ tag_module_t *find_tag_module(VFSFile * fd)
        return (tag_module_t*)(mod->data);
    }
 
-    DEBUG("no module found\n");
+    AUDDBG("no module found\n");
     return NULL;
 }

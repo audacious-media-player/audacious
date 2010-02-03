@@ -44,66 +44,66 @@ const gchar* get_complete_filepath(Tuple *tuple)
     dir = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
     file = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
     filepath = g_strdup_printf("%s/%s", dir, file);
-    DEBUG("file path = %s\n", filepath);
+    AUDDBG("file path = %s\n", filepath);
     return filepath;
 }
 
 void print_tuple(Tuple *tuple)
 {
 #if WMA_DEBUG
-    DEBUG("--------------TUPLE PRINT --------------------\n");
+    AUDDBG("--------------TUPLE PRINT --------------------\n");
     const gchar* title = tuple_get_string(tuple, FIELD_TITLE, NULL);
-    DEBUG("title = %s\n", title);
+    AUDDBG("title = %s\n", title);
     /* artist */
     const gchar* artist = tuple_get_string(tuple, FIELD_ARTIST, NULL);
-    DEBUG("artist = %s\n", artist);
+    AUDDBG("artist = %s\n", artist);
 
     /* copyright */
     const gchar* copyright = tuple_get_string(tuple, FIELD_COPYRIGHT, NULL);
-    DEBUG("copyright = %s\n", copyright);
+    AUDDBG("copyright = %s\n", copyright);
 
     /* comment / description */
 
     const gchar* comment = tuple_get_string(tuple, FIELD_COMMENT, NULL);
-    DEBUG("comment = %s\n", comment);
+    AUDDBG("comment = %s\n", comment);
 
     /* codec name */
     const gchar* codec_name = tuple_get_string(tuple, FIELD_CODEC, NULL);
-    DEBUG("codec = %s\n", codec_name);
+    AUDDBG("codec = %s\n", codec_name);
 
     /* album */
     const gchar* album = tuple_get_string(tuple, FIELD_ALBUM, NULL);
-    DEBUG("Album = %s\n", album);
+    AUDDBG("Album = %s\n", album);
 
     /*track number */
     gint track_nr = tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL);
-    DEBUG("Track nr = %d\n", track_nr);
+    AUDDBG("Track nr = %d\n", track_nr);
 
     /* genre */
     const gchar* genre = tuple_get_string(tuple, FIELD_GENRE, NULL);
-    DEBUG("Genre = %s \n", genre);
+    AUDDBG("Genre = %s \n", genre);
 
     /* length */
     gint length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-    DEBUG("Length = %d\n", length);
+    AUDDBG("Length = %d\n", length);
 
     /* year */
     gint year = tuple_get_int(tuple, FIELD_YEAR, NULL);
-    DEBUG("Year = %d\n", year);
+    AUDDBG("Year = %d\n", year);
 
     /* quality */
     const gchar* quality = tuple_get_string(tuple, FIELD_QUALITY, NULL);
-    DEBUG("quality = %s\n", quality);
+    AUDDBG("quality = %s\n", quality);
 
     /* path */
     const gchar* path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
-    DEBUG("path = %s\n", path);
+    AUDDBG("path = %s\n", path);
 
     /* filename */
     const gchar* filename = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
-    DEBUG("filename = %s\n", filename);
+    AUDDBG("filename = %s\n", filename);
 
-    DEBUG("-----------------END---------------------\n");
+    AUDDBG("-----------------END---------------------\n");
 #endif
 }
 
@@ -144,7 +144,7 @@ gunichar2 *fread_utf16(VFSFile* f, guint64 size)
         p = NULL;
     }
     gchar * s = utf8(p);
-    DEBUG("Converted to UTF8: '%s'\n", s);
+    AUDDBG("Converted to UTF8: '%s'\n", s);
     g_free(s);
     return p;
 }
@@ -169,7 +169,7 @@ guint16 read_LEuint16(VFSFile *fd)
     guint16 a;
     if (vfs_fget_le16(&a, fd))
     {
-        DEBUG("read_LEuint16 %d\n", a);
+        AUDDBG("read_LEuint16 %d\n", a);
         return a;
     } else
         return -1;
@@ -180,7 +180,7 @@ guint16 read_BEuint16(VFSFile *fd)
     guint16 a;
     if (vfs_fget_be16(&a, fd))
     {
-        DEBUG("read_BEuint16 %d\n", a);
+        AUDDBG("read_BEuint16 %d\n", a);
         return a;
     } else
         return -1;
@@ -191,7 +191,7 @@ guint32 read_LEuint32(VFSFile *fd)
     guint32 a;
     if (vfs_fget_le32(&a, fd))
     {
-        DEBUG("read_LEuint32 %d\n", a);
+        AUDDBG("read_LEuint32 %d\n", a);
         return a;
     } else
         return -1;
@@ -202,7 +202,7 @@ guint32 read_BEuint32(VFSFile *fd)
     guint32 a;
     if (vfs_fget_be32(&a, fd))
     {
-        DEBUG("read_BEuint32 %d\n", a);
+        AUDDBG("read_BEuint32 %d\n", a);
         return a;
     } else
         return -1;
@@ -213,7 +213,7 @@ guint64 read_LEuint64(VFSFile *fd)
     guint64 a;
     if (vfs_fget_le64(&a, fd))
     {
-        DEBUG("read_LEuint64 %"PRId64"\n", a);
+        AUDDBG("read_LEuint64 %"PRId64"\n", a);
         return a;
     } else
         return -1;
@@ -224,7 +224,7 @@ guint64 read_BEuint64(VFSFile *fd)
     guint64 a;
     if (vfs_fget_be64(&a, fd))
     {
-        DEBUG("read_BEuint14 %"PRId64"\n", a);
+        AUDDBG("read_BEuint14 %"PRId64"\n", a);
         return a;
     } else
         return 1;

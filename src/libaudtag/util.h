@@ -6,6 +6,8 @@
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
+#define WMA_DEBUG 1
+
 #define BROKEN 1
 
 time_t unix_time(guint64 win_time);
@@ -48,4 +50,12 @@ gboolean write_LEuint64(VFSFile *fd, guint64 val);
 guint64 read_LEint64(VFSFile *fd);
 void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos);
 void copyAudioData(VFSFile* from, VFSFile *to, guint32 pos_from, guint32 pos_to);
+
+/* macro for debug print */
+#ifdef WMA_DEBUG
+#  define AUDDBG(...) do { g_print("%s:%d %s(): ", __FILE__, (int)__LINE__, __FUNCTION__); g_print(__VA_ARGS__); } while (0)
+#else
+#  define AUDDBG(...) do { } while (0)
+#endif
+
 #endif
