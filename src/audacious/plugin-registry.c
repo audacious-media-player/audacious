@@ -29,12 +29,6 @@
 #include "plugin-registry.h"
 #include "util.h"
 
-#if 0
-#define DEBUG printf
-#else
-#define DEBUG(...)
-#endif
-
 #define REGISTRY_FILE "plugin-registry"
 
 typedef struct
@@ -377,7 +371,7 @@ void plugin_registry_prune (void)
 
         if (! module->confirmed)
         {
-            DEBUG ("Module not found: %s\n", module->path);
+            AUDDBG ("Module not found: %s\n", module->path);
             module_free (module);
             module_list = g_list_delete_link (module_list, node);
             continue;
@@ -394,7 +388,7 @@ void plugin_registry_prune (void)
             if (plugin->confirmed)
                 continue;
 
-            DEBUG ("Plugin not found: %s %d:%d\n", module->path, plugin->type,
+            AUDDBG ("Plugin not found: %s %d:%d\n", module->path, plugin->type,
              plugin->number);
             plugin_free (plugin);
             module->plugin_list = g_list_delete_link (module->plugin_list, node2);
@@ -443,7 +437,7 @@ void module_register (const gchar * path)
 
         if (module->timestamp != timestamp)
         {
-            DEBUG ("Module rescan: %s\n", path);
+            AUDDBG ("Module rescan: %s\n", path);
             module->timestamp = timestamp;
             module->loaded = TRUE;
             module_load (path);
@@ -451,7 +445,7 @@ void module_register (const gchar * path)
     }
     else
     {
-        DEBUG ("New module: %s\n", path);
+        AUDDBG ("New module: %s\n", path);
         module = module_new (g_strdup (path), TRUE, timestamp, TRUE);
         module_list = g_list_prepend (module_list, module);
         module_load (path);
@@ -525,7 +519,7 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     }
     else
     {
-        DEBUG ("New plugin: %s %d:%d\n", path, type, number);
+        AUDDBG ("New plugin: %s %d:%d\n", path, type, number);
         plugin = plugin_new (type, number, TRUE, header);
         module->plugin_list = g_list_prepend (module->plugin_list, plugin);
     }

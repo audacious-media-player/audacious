@@ -28,7 +28,6 @@
 #include "vis_runner.h"
 
 #define INTERVAL 30 /* milliseconds */
-#define DEBUG 0
 
 static GMutex * mutex;
 static gboolean playing, paused, active;

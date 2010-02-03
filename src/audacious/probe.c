@@ -27,12 +27,6 @@
 #include "plugin-registry.h"
 #include "probe.h"
 
-#if 0
-#define DEBUG printf
-#else
-#define DEBUG(...)
-#endif
-
 typedef struct
 {
     gchar * filename;
@@ -46,12 +40,12 @@ static gboolean check_opened (ProbeState * state)
     if (state->handle != NULL)
         return TRUE;
 
-    DEBUG ("Opening %s.\n", state->filename);
+    AUDDBG ("Opening %s.\n", state->filename);
 
     if ((state->handle = vfs_fopen (state->filename, "r")) != NULL)
         return TRUE;
 
-    DEBUG ("FAILED.\n");
+    AUDDBG ("FAILED.\n");
     return FALSE;
 }
 
@@ -59,7 +53,7 @@ static gboolean probe_func (InputPlugin * decoder, void * data)
 {
     ProbeState * state = data;
 
-    DEBUG ("Trying %s.\n", decoder->description);
+    AUDDBG ("Trying %s.\n", decoder->description);
 
     if (decoder->is_our_file_from_vfs != NULL)
     {
@@ -89,7 +83,7 @@ static gboolean probe_func_fast (InputPlugin * decoder, void * data)
        between at least two decoders. */
     if (state->decoder != NULL)
     {
-        DEBUG ("Checking %s.\n", state->decoder->description);
+        AUDDBG ("Checking %s.\n", state->decoder->description);
 
         if (state->decoder->is_our_file_from_vfs != NULL)
         {
@@ -114,7 +108,7 @@ static gboolean probe_func_fast (InputPlugin * decoder, void * data)
 
     /* The last decoder didn't work; we'll try this one next time.  If we don't
        get called again, we'll assume that this is the right one. */
-    DEBUG ("Guessing %s.\n", decoder->description);
+    AUDDBG ("Guessing %s.\n", decoder->description);
     state->decoder = decoder;
     return TRUE;
 }
@@ -127,7 +121,7 @@ static void probe_by_scheme (ProbeState * state)
     if (s == NULL)
         return;
 
-    DEBUG ("Probing by scheme.\n");
+    AUDDBG ("Probing by scheme.\n");
     c = s[3];
     s[3] = 0;
     input_plugin_for_key (INPUT_KEY_SCHEME, state->filename, probe_func_fast,
@@ -142,7 +136,7 @@ static void probe_by_extension (ProbeState * state)
     if (s == NULL)
         return;
 
-    DEBUG ("Probing by extension.\n");
+    AUDDBG ("Probing by extension.\n");
     s = g_ascii_strdown (s + 1, -1);
     input_plugin_for_key (INPUT_KEY_EXTENSION, s, probe_func_fast, state);
     g_free (s);
@@ -158,14 +152,14 @@ static void probe_by_mime (ProbeState * state)
     if ((mime = vfs_get_metadata (state->handle, "content-type")) == NULL)
         return;
 
-    DEBUG ("Probing by MIME type.\n");
+    AUDDBG ("Probing by MIME type.\n");
     input_plugin_for_key (INPUT_KEY_MIME, mime, probe_func_fast, state);
     g_free (mime);
 }
 
 static void probe_by_content (ProbeState * state)
 {
-    DEBUG ("Probing by content.\n");
+    AUDDBG ("Probing by content.\n");
     input_plugin_by_priority (probe_func, state);
 }
 
@@ -173,7 +167,7 @@ InputPlugin * file_probe (const gchar * filename, gboolean fast)
 {
     ProbeState state;
 
-    DEBUG ("Probing %s.\n", filename);
+    AUDDBG ("Probing %s.\n", filename);
     state.decoder = NULL;
     state.filename = filename_split_subtune (filename, NULL);
     state.handle = NULL;
