@@ -6,15 +6,7 @@
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
-#define WMA_DEBUG 1
-
 #define BROKEN 1
-
-#if WMA_DEBUG
-#define DEBUG(...) printf("TAG %25s:\t", __func__); printf(__VA_ARGS__);
-#else
-#define DEBUG(...) ;
-#endif
 
 time_t unix_time(guint64 win_time);
 
