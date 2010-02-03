@@ -38,9 +38,7 @@
 
 #include <glib.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
-#include <complex.h>
 #ifndef PI
 #ifdef M_PI
 #define PI M_PI
@@ -196,10 +194,6 @@ fft_output(const float *re, const float *im, float *output)
     const float *imagptr = im;
     float *endptr = output + FFT_BUFFER_SIZE / 2;
 
-#ifdef DEBUG
-    unsigned int i, j;
-#endif
-
     while (outputptr <= endptr) {
         *outputptr = (*realptr * *realptr) + (*imagptr * *imagptr);
         outputptr++;
@@ -210,23 +204,6 @@ fft_output(const float *re, const float *im, float *output)
      * with the other terms. */
     *output /= 4;
     *endptr /= 4;
-
-#ifdef DEBUG
-    printf("Recalculated input:\n");
-    for (i = 0; i < FFT_BUFFER_SIZE; i++) {
-        float val_real = 0;
-        float val_imag = 0;
-        for (j = 0; j < FFT_BUFFER_SIZE; j++) {
-            float fact_real = cos(-2 * j * i * PI / FFT_BUFFER_SIZE);
-            float fact_imag = sin(-2 * j * i * PI / FFT_BUFFER_SIZE);
-            val_real += fact_real * re[j] - fact_imag * im[j];
-            val_imag += fact_real * im[j] + fact_imag * re[j];
-        }
-        printf("%5d = %8f + i * %8f\n", i,
-               val_real / FFT_BUFFER_SIZE, val_imag / FFT_BUFFER_SIZE);
-    }
-    printf("\n");
-#endif
 }
 
 /*
@@ -266,11 +243,6 @@ fft_calculate(float *re, float *im)
                 /* newval[k]  := val[k] + factor * val[k1]
                  * newval[k1] := val[k] - factor * val[k1]
                  **/
-#ifdef DEBUG
-                printf("%d %d %d\n", i, j, k);
-                printf("Exchange %d with %d\n", k, k1);
-                printf("Factor %9f + i * %8f\n", fact_real, fact_imag);
-#endif
                 /* FIXME - potential scope for more optimization here? */
                 tmp_real = fact_real * re[k1] - fact_imag * im[k1];
                 tmp_imag = fact_real * im[k1] + fact_imag * re[k1];
@@ -278,11 +250,6 @@ fft_calculate(float *re, float *im)
                 im[k1] = im[k] - tmp_imag;
                 re[k] += tmp_real;
                 im[k] += tmp_imag;
-#ifdef DEBUG
-                for (k1 = 0; k1 < FFT_BUFFER_SIZE; k1++) {
-                    printf("%5d = %8f + i * %8f\n", k1, creal(k1), cimag(k1));
-                }
-#endif
             }
         }
         exchanges <<= 1;
