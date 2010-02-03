@@ -20,8 +20,6 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#define AUD_DEBUG
-
 #include "main.h"
 #include "flow.h"
 

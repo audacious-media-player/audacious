@@ -21,8 +21,6 @@
 #  include "config.h"
 #endif
 
-/* #define AUD_DEBUG */
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>

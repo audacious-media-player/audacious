@@ -23,8 +23,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-/* #define AUD_DEBUG */
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
