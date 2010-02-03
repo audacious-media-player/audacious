@@ -55,8 +55,8 @@ void writeAtom(VFSFile *fd, Atom *atom) {
 }
 
 void printAtom(Atom *atom) {
-    DEBUG("size = %x\n", atom->size);
-    DEBUG("name = %s\n", atom->name);
+    AUDDBG("size = %x\n", atom->size);
+    AUDDBG("name = %s\n", atom->name);
 }
 
 StrDataAtom *readStrDataAtom(VFSFile *fd) {
@@ -92,7 +92,7 @@ Atom *findAtom(VFSFile *fd, gchar* name) {
     if (vfs_feof(fd))
     {
         g_free(atom);
-        DEBUG("The atom %s could not be found\n", name);
+        AUDDBG("The atom %s could not be found\n", name);
         return NULL;
     }
     return atom;
@@ -113,7 +113,7 @@ Atom *getilstAtom(VFSFile *fd) {
     Atom *ilst = findAtom(fd, ILST);
 
     int zz = vfs_ftell(fd);
-    DEBUG("zzz = %d\n", zz);
+    AUDDBG("zzz = %d\n", zz);
     ilstFileOffset = vfs_ftell(fd) - ilst->size;
     vfs_fseek(fd, -(ilst->size - 7), SEEK_CUR);
 
@@ -161,7 +161,7 @@ void writeAtomListToFile(VFSFile* from, VFSFile *to, int offset, mowgli_list_t *
     g_free(atom);
     if (vfs_feof(from))
     {
-        DEBUG("No free atoms\n");
+        AUDDBG("No free atoms\n");
         g_free(atom);
         atom = NULL;
     }

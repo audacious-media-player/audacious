@@ -52,18 +52,18 @@ gchar *guid_convert_to_string(const GUID* g) {
 
 gboolean guid_equal(GUID *g1, GUID *g2) {
     /*
-    DEBUG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
-    DEBUG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
+    AUDDBG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
+    AUDDBG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
      */
 
     g_return_val_if_fail((g1 != NULL) && (g2 != NULL), FALSE);
     if (!memcmp(g1, g2, 16))
     {
-        //        DEBUG("equal\n");
+        //        AUDDBG("equal\n");
 
         return TRUE;
     }
-    /* DEBUG("not equal\n"); */
+    /* AUDDBG("not equal\n"); */
     return FALSE;
 }
 

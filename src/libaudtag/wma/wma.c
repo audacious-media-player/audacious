@@ -12,7 +12,7 @@ tag_module_t wma = {wma_can_handle_file, wma_populate_tuple_from_file, wma_write
 
 /* static functions */
 static GenericHeader *read_generic_header(VFSFile*f, gboolean read_data) {
-    DEBUG("read top-level header object\n");
+    AUDDBG("read top-level header object\n");
     g_return_val_if_fail((f != NULL), NULL);
     GenericHeader *header = g_new0(GenericHeader, 1);
     header->guid = guid_read_from_file(f);
@@ -23,14 +23,14 @@ static GenericHeader *read_generic_header(VFSFile*f, gboolean read_data) {
         header->data = NULL;
 
     gchar *s = guid_convert_to_string(header->guid);
-    DEBUG("read GUID: %s\n", s);
+    AUDDBG("read GUID: %s\n", s);
     g_free(s);
 
     return header;
 }
 
 static HeaderObj *read_top_header_object(VFSFile *f) {
-    DEBUG("read top-level header object\n");
+    AUDDBG("read top-level header object\n");
     g_return_val_if_fail((f != NULL), NULL);
     HeaderObj *header = g_new0(HeaderObj, 1);
 
@@ -39,7 +39,7 @@ static HeaderObj *read_top_header_object(VFSFile *f) {
 
     header->size = read_LEuint64(f);
     header->objectsNr = read_LEuint32(f);
-    DEBUG("Number of child objects: %d\n", header->objectsNr);
+    AUDDBG("Number of child objects: %d\n", header->objectsNr);
 
     header->res1 = read_uint8(f);
     header->res2 = read_uint8(f);
@@ -79,14 +79,14 @@ static ExtContentDescrObj *read_ext_content_descr_obj(VFSFile *f, Tuple* t, gboo
 }
 
 static guint find_descriptor_id(gchar* s) {
-    DEBUG("finding descriptor id for '%s'\n", s);
+    AUDDBG("finding descriptor id for '%s'\n", s);
     g_return_val_if_fail(s != NULL, -1);
     gchar * l[DESC_LAST] = {DESC_ALBUM_STR, DESC_YEAR_STR, DESC_GENRE_STR, DESC_TRACK_STR};
     guint i;
     for (i = 0; i < DESC_LAST; i++)
         if (!strcmp(l[i], s))
         {
-            DEBUG("found descriptor %s\n", s);
+            AUDDBG("found descriptor %s\n", s);
             return i;
         }
     return -1;
@@ -97,20 +97,20 @@ static ContentDescriptor *read_descriptor(VFSFile *f, Tuple *t, gboolean populat
     gchar *val = NULL, *name = NULL;
     guint32 intval = -1;
     gint dtype;
-    DEBUG("reading name_len\n");
+    AUDDBG("reading name_len\n");
     cd->name_len = read_LEuint16(f);
-    DEBUG("reading name\n");
+    AUDDBG("reading name\n");
     cd->name = fread_utf16(f, cd->name_len);
-    DEBUG("reading val_type\n");
+    AUDDBG("reading val_type\n");
     cd->val_type = read_LEuint16(f);
-    DEBUG("reading val_len\n");
+    AUDDBG("reading val_len\n");
     cd->val_len = read_LEuint16(f);
 
     name = utf8(cd->name);
     dtype = find_descriptor_id(name);
     g_free(name);
 
-    DEBUG("reading val\n");
+    AUDDBG("reading val\n");
 
     if (populate_tuple)
     {
@@ -119,7 +119,7 @@ static ContentDescriptor *read_descriptor(VFSFile *f, Tuple *t, gboolean populat
         {/*UTF16*/
             cd->val = read_char_data(f, cd->val_len);
             val = utf8((gunichar2 *) cd->val);
-            DEBUG("val: '%s' dtype: %d\n", val, dtype);
+            AUDDBG("val: '%s' dtype: %d\n", val, dtype);
             if (dtype == DESC_ALBUM)
                 tuple_associate_string(t, FIELD_ALBUM, NULL, val);
             if (dtype == DESC_GENRE)
@@ -133,7 +133,7 @@ static ContentDescriptor *read_descriptor(VFSFile *f, Tuple *t, gboolean populat
             if (cd->val_type == 3)
             {
                 intval = read_LEuint32(f);
-                DEBUG("intval: %d, dtype: %d\n", intval, dtype);
+                AUDDBG("intval: %d, dtype: %d\n", intval, dtype);
                 if (dtype == DESC_TRACK)
                     tuple_associate_int(t, FIELD_TRACK_NUMBER, NULL, intval);
             } else
@@ -141,8 +141,8 @@ static ContentDescriptor *read_descriptor(VFSFile *f, Tuple *t, gboolean populat
         }
     } else
         cd->val = read_char_data(f, cd->val_len);
-    DEBUG("read str_val: '%s', intval: %d\n", val, intval);
-    DEBUG("exiting read_descriptor \n\n");
+    AUDDBG("read str_val: '%s', intval: %d\n", val, intval);
+    AUDDBG("exiting read_descriptor \n\n");
     return cd;
 }
 
@@ -182,7 +182,7 @@ void free_ext_content_descr_obj(ExtContentDescrObj *ecdo) {
 
 /* returns the offset of the object in the file */
 static long ftell_object_by_guid(VFSFile *f, GUID *g) {
-    DEBUG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
+    AUDDBG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
     HeaderObj *h = read_top_header_object(f);
     g_return_val_if_fail((f != NULL) && (g != NULL) && (h != NULL), -1);
 
@@ -190,20 +190,20 @@ static long ftell_object_by_guid(VFSFile *f, GUID *g) {
     while (i < h->objectsNr)
     {
         GenericHeader *gen_hdr = read_generic_header(f, FALSE);
-        DEBUG("encountered GUID %s, with ID %d\n",
+        AUDDBG("encountered GUID %s, with ID %d\n",
               guid_convert_to_string(gen_hdr->guid), get_guid_type(gen_hdr->guid));
         if (guid_equal(gen_hdr->guid, g))
         {
             g_free(h);
             g_free(gen_hdr);
             guint64 ret = vfs_ftell(f) - 24;
-            DEBUG("at offset %"PRIx64"\n", ret);
+            AUDDBG("at offset %"PRIx64"\n", ret);
             return ret;
         }
         vfs_fseek(f, gen_hdr->size - 24, SEEK_CUR); //most headers have a size as their second field"
         i++;
     }
-    DEBUG("The object was not found\n");
+    AUDDBG("The object was not found\n");
 
     return -1;
 }
@@ -266,7 +266,7 @@ static void write_content_descr_obj_from_tuple(VFSFile *f, ContentDescrObj *cdo,
 static void write_ext_content_descr_obj_from_tuple(VFSFile *f, ExtContentDescrObj* ecdo, Tuple* tuple) { }
 
 static gboolean write_generic_header(VFSFile *f, GenericHeader *gh) {
-    DEBUG("Writing generic header\n");
+    AUDDBG("Writing generic header\n");
     guid_write_to_file(f, get_guid_type(gh->guid));
     return write_char_data(f, gh->data, gh->size);
 }
@@ -278,7 +278,7 @@ static void free_generic_header(GenericHeader *gh) {
 }
 
 static gboolean write_top_header_object(VFSFile *f, HeaderObj *header) {
-    DEBUG("write header object\n");
+    AUDDBG("write header object\n");
     vfs_fseek(f, 0, SEEK_SET);
     return (guid_write_to_file(f, ASF_HEADER_OBJECT) &&
             write_LEuint64(f, header->size) &&
@@ -336,7 +336,7 @@ gboolean wma_write_tuple_to_file(Tuple *tuple, VFSFile *f) {
     GUID* g;
     /*read all the headers and write them to the new file*/
     /*the headers that contain tuple data will be overwritten*/
-    DEBUG("Header Object size: %"PRId64"\n", top_ho->size);
+    AUDDBG("Header Object size: %"PRId64"\n", top_ho->size);
     //vfs_fseek(tmpfile, )
     for (i = 0; i < top_ho->objectsNr; i++)
     {
@@ -380,11 +380,11 @@ gboolean wma_write_tuple_to_file(Tuple *tuple, VFSFile *f) {
     /*
      if (g_rename(f1, f2) == 0)
     {
-        DEBUG("the tag was updated successfully\n");
+        AUDDBG("the tag was updated successfully\n");
     }
     else
     {
-        DEBUG("an error has occured\n");
+        AUDDBG("an error has occured\n");
     }
      */
     g_free(f1);

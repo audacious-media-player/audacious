@@ -270,7 +270,7 @@ Tuple *assocStrInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header
   TextInformationFrame *frame = g_new0(TextInformationFrame,1);
   frame->header = header;
   frame = readTextFrame(fd,frame);
-/*  DEBUG("field = %s\n",frame->text);*/
+/*  AUDDBG("field = %s\n",frame->text);*/
   tuple_associate_string(tuple, field, NULL, frame->text);
   return tuple;
 }
@@ -280,7 +280,7 @@ Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header
   TextInformationFrame *frame = g_new0(TextInformationFrame,1);
   frame->header = header;
   frame = readTextFrame(fd,frame);
-/*  DEBUG("field = %s\n",frame->text);*/
+/*  AUDDBG("field = %s\n",frame->text);*/
   tuple_associate_int(tuple, field, NULL, atoi(frame->text));
   return tuple;
 }
@@ -533,9 +533,9 @@ gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     gchar* f1 = g_filename_from_uri(tmp_path,NULL,NULL);
     gchar* f2 = g_filename_from_uri(uri,NULL,NULL);
     if (g_rename(f1,f2 ) == 0) {
-        DEBUG("the tag was updated successfully\n");
+        AUDDBG("the tag was updated successfully\n");
     } else {
-        DEBUG("an error has occured\n");
+        AUDDBG("an error has occured\n");
     }
     return TRUE;
 }

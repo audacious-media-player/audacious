@@ -289,9 +289,9 @@ gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f)
     gchar* f1 = g_filename_from_uri(tmp_path,NULL,NULL);
     gchar* f2 = g_filename_from_uri(uri,NULL,NULL);
     if (g_rename(f1,f2 ) == 0) {
-        DEBUG("the tag was updated successfully\n");
+        AUDDBG("the tag was updated successfully\n");
     } else {
-        DEBUG("an error has occured\n");
+        AUDDBG("an error has occured\n");
     }
     //skip the tag at the end - add the new tag
     return TRUE;
