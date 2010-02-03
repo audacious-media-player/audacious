@@ -1,3 +1,4 @@
+DEBUG ?= @DEBUG@
 XML_CPPFLAGS ?= @XML_CPPFLAGS@
 XGETTEXT ?= @XGETTEXT@
 pdfdir ?= @pdfdir@

@@ -32,6 +32,18 @@ BUILDSYS_SHARED_LIB
 IMPLIB_LIBS=""
 AC_SUBST([IMPLIB_LIBS])
 
+dnl Debug support
+dnl ========================
+AC_ARG_WITH(debug, [  --with-debug            Enables additional debugging output], DEBUG=1)
+AC_SUBST(DEBUG)
+AUD_ARG_ENABLE([debug], [no],
+[additional debugging output],
+[
+    AC_DEFINE([DEBUG], 1, [Define if debugging output is required])
+])
+AUD_CONDITIONAL([DEBUG], [enable_debug])
+
+
 dnl Plugin stuff
 dnl ========================
 SHARED_SUFFIX="$PLUGIN_SUFFIX"
@@ -342,6 +354,7 @@ fi
 echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
+echo "  Additional debugging output:            $enable_debug"
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  Sample rate conversion:                 $enable_samplerate"
 echo "  D-Bus support:                          $enable_dbus"
