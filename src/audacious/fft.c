@@ -38,6 +38,7 @@
 
 #include <glib.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #ifndef PI
 #ifdef M_PI
