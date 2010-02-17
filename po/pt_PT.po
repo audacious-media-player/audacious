@@ -155,7 +155,7 @@ msgstr "Sérvio (Latino):"
 
 #: src/audacious/credits.c:260
 msgid "Serbian (Cyrillic):"
-msgstr "Sérvio (Cirílico)"
+msgstr "Sérvio (Cirílico):"
 
 #: src/audacious/credits.c:263
 msgid "Simplified Chinese:"
@@ -205,7 +205,7 @@ msgstr "Ficheiro:"
 
 #: src/audacious/input.c:474
 msgid "No input plugin recognized this file"
-msgstr "Este ficheiro não é reconhecido por nenhum plugin de entrada"
+msgstr "Nenhum plugin de entrada reconheceu este ficheiro"
 
 #: src/audacious/input.c:476
 #, c-format
@@ -215,7 +215,7 @@ msgstr "Plugin de entrada: %s"
 #: src/audacious/logger.c:125
 #, c-format
 msgid "Unable to create log file (%s)!\n"
-msgstr "Impossível criar ficheiro de relatório (%s)!\n"
+msgstr "Incapaz de criar ficheiro de relatório (%s)!\n"
 
 #: src/audacious/main.c:72
 msgid "Audacious"
@@ -223,11 +223,11 @@ msgstr "Audacious"
 
 #: src/audacious/main.c:163
 msgid "Skip backwards in playlist"
-msgstr "Voltar para trás na playlist"
+msgstr "Saltar para trás na lista de reprodução"
 
 #: src/audacious/main.c:164
 msgid "Start playing current playlist"
-msgstr "Começar a reproduzir a playlist actual"
+msgstr "Começar a reproduzir a lista de reprodução actual"
 
 #: src/audacious/main.c:165
 msgid "Pause current song"
@@ -243,19 +243,19 @@ msgstr "Colocar em pausa se estiver a reproduzir. Caso contrário, reproduzir"
 
 #: src/audacious/main.c:168
 msgid "Skip forward in playlist"
-msgstr "Passar à frente na playlist"
+msgstr "Passar à frente na lista de reprodução"
 
 #: src/audacious/main.c:169
 msgid "Display Jump to File dialog"
-msgstr "Mostrar caixa 'Ir Para Ficheiro'"
+msgstr "Mostrar diálogo 'Ir Para Faixa'"
 
 #: src/audacious/main.c:170
 msgid "Don't clear the playlist"
-msgstr "Não limpar a playlist"
+msgstr "Não limpar a lista de reprodução"
 
 #: src/audacious/main.c:171
 msgid "Add new files to a temporary playlist"
-msgstr "Adicionar novos ficheiros a uma playlist temporária"
+msgstr "Adicionar novos ficheiros a uma lista de reprodução temporária"
 
 #: src/audacious/main.c:172
 msgid "Display the main window"
@@ -267,7 +267,7 @@ msgstr "Mostrar todas as janelas do Audacious"
 
 #: src/audacious/main.c:174
 msgid "Print all errors and warnings to stdout"
-msgstr "Mostrar todos os erros e avisos no stdout"
+msgstr "Escrever todos os erros e avisos no stdout"
 
 #: src/audacious/main.c:175
 msgid "Show version"
@@ -305,7 +305,7 @@ msgstr "Infelizmente não é possível utilizar threads nesta plataforma.\n"
 #: src/audacious/main.c:496
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "%s: Impossível aceder ao ecrã, saíndo.\n"
+msgstr "%s: Impossível aceder ao ecrã, a terminar.\n"
 
 #: src/audacious/main.c:530
 msgid ""
@@ -321,11 +321,11 @@ msgid ""
 "You have not selected an output plugin."
 msgstr ""
 "<b><big>Nenhum plugin de saída seleccionado.</big></b>\n"
-"Não seleccionou nenhum output de saída."
+"Não seleccionou nenhum plugin de saída."
 
 #: src/audacious/playlist-new.c:227
 msgid "Untitled Playlist"
-msgstr "Playlist Sem Título"
+msgstr "Lista de Reprodução Sem Título"
 
 #: src/audacious/pluginenum.c:780
 msgid "Module loading not supported! Plugins will not be loaded.\n"
@@ -493,7 +493,7 @@ msgstr "Noise"
 
 #: src/audacious/ui_fileinfo.c:105
 msgid "AlternRock"
-msgstr "AlternRock"
+msgstr "Rock Alternativo"
 
 #: src/audacious/ui_fileinfo.c:106
 msgid "Bass"
@@ -801,7 +801,7 @@ msgstr "Balada"
 
 #: src/audacious/ui_fileinfo.c:128
 msgid "Power Ballad"
-msgstr "Ballad Pop/Rock"
+msgstr "Balada Pop/Rock"
 
 #: src/audacious/ui_fileinfo.c:129
 msgid "Rhythmic Soul"
@@ -1050,7 +1050,7 @@ msgstr "Interface Não-Visual"
 
 #: src/audacious/ui_misc.c:48
 msgid "Audacious - Unsupported Version Warning"
-msgstr "Auadcious - Aviso de Versão Não-Suportada"
+msgstr "Audacious - Aviso de Versão Não-Suportada"
 
 #: src/audacious/ui_misc.c:55
 msgid "<big><b>Audacious2 is not ready yet!</b></big>"
@@ -1078,24 +1078,21 @@ msgid ""
 "distracting at this point,\n"
 "and to please refrain from doing so. Thanks in advance!"
 msgstr ""
-"Esta é uma versão <i>alfa</i> do Audacious2. Ainda está muito incompleta e "
-"tem muitas\n"
+"Esta é uma versão <i>alfa</i> do Audacious2. Ainda está muito incompleta e tem muitas "
 "arestas por polir.\n"
-"A maior parte das falhas menores reportadas durante esta fase serão resolvidas "
-"numa versão\n"
-"mais estável. No entanto, se detectar uma falha grave, como a terminação do "
-"audacious\n"
+"A maior parte das falhas menores reportadas durante esta fase serão resolvidas numa "
+"versão\n"
+"mais estável. No entanto, se detectar uma falha grave, como o terminar do audacious\n"
 "enquanto ouve um dado ficheiro, agradecemos que nos avise\n"
 "(por favor reporte as falhas em inglês).\n"
 "\n"
-"Pedimos-lhe especial atenção uma vez que tratar de falhas triviais neste "
-"momento pode\n"
+"Pedimos-lhe especial atenção uma vez que tratar de falhas triviais neste momento pode\n"
 "causar muita distracção para detalhes irrelevantes, portanto evite fazê-lo.\n"
 "Obrigado desde já!"
 
 #: src/audacious/ui_misc.c:74
 msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-msgstr "<b>Fazer posts em blogs sobre falhas também não ajuda muito.</b>"
+msgstr "<b>Publicar sobre falhas em blogs também não ajuda muito.</b>"
 
 #: src/audacious/ui_misc.c:77
 msgid ""
@@ -1121,7 +1118,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:127
 msgid "Audio"
-msgstr "Audio"
+msgstr "Áudio"
 
 #: src/audacious/ui_preferences.c:128
 msgid "Replay Gain"
@@ -1137,7 +1134,7 @@ msgstr "Reprodução"
 
 #: src/audacious/ui_preferences.c:131
 msgid "Playlist"
-msgstr "Playlist"
+msgstr "Lista de Reprodução"
 
 #: src/audacious/ui_preferences.c:132
 msgid "Plugins"
@@ -1205,7 +1202,7 @@ msgstr "Turco"
 
 #: src/audacious/ui_preferences.c:163
 msgid "Arabic"
-msgstr "Arábico"
+msgstr "Árabe"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Universal"
@@ -1245,10 +1242,10 @@ msgid ""
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
-"<span size=\"small\">Todas as streams serão convertidas nesta taxa de "
+"<span size=\"small\">Todas as streams serão convertidas para esta taxa de "
 "amostragem.\n"
-"Esta deve corresponder à taxa de amostragem máxima entre\n"
-"a placa de som e o plugin de saída.</span>"
+"Esta deve corresponder à taxa de amostragem máxima suportada pela\n"
+"placa de som ou pelo plugin de saída.</span>"
 
 #: src/audacious/ui_preferences.c:206
 msgid "<b>Format Detection</b>"
@@ -1256,7 +1253,7 @@ msgstr "<b>Detecção do Formato</b>"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Detect file formats by extension."
-msgstr "Detectar formatos dos ficheiros pela extensão"
+msgstr "Detectar formatos dos ficheiros pela extensão."
 
 #: src/audacious/ui_preferences.c:208
 msgid ""
@@ -1280,7 +1277,7 @@ msgid ""
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
-"Todas as streams serão convertidas neste bit depth.\n"
+"Todas as streams serão convertidas para este bit depth.\n"
 "Este deve corresponder ao bit depth máximo suportado\n"
 "pela placa de som ou pelo plugin de saída."
 
@@ -1298,20 +1295,20 @@ msgstr "<b>Controlo de Volume</b>"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Use software volume control"
-msgstr "Utilizar controlo de volume por <i>software</i>"
+msgstr "Utilizar controlo de volume por software"
 
 #: src/audacious/ui_preferences.c:224
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
-"Utilizar controlo de volume por <i>software</i>. Isto pode ser útil em "
+"Utilizar controlo de volume por software. Isto pode ser útil em "
 "situações em que o seu sistema de som não suporte o controlo do volume de "
-"reprodução"
+"reprodução."
 
 #: src/audacious/ui_preferences.c:225
 msgid "<b>Advanced</b>"
-msgstr "<b>Advançadas</b>"
+msgstr "<b>Avançado</b>"
 
 #: src/audacious/ui_preferences.c:226
 msgid "Bypass all of signal processing if possible"
@@ -1326,18 +1323,16 @@ msgid ""
 msgstr ""
 "Tentar passar a saída do plugin de entrada directamente para o output de"
 "saída, se o último suportar o formato produzido pelo plugin de entrada. Se "
-"suceder, todo o processamento de sinal será desactivado (i.e. plugins de PSD, "
-"equalizador, resampling, Replay Gain e controlo de volume por "
-"<i>software</i>)."
+"suceder, todo o processamento de sinal será desactivado (i.e. plugins de DSP, "
+"equalizador, resampling, Replay Gain e controlo de volume por software)."
 
 #: src/audacious/ui_preferences.c:230
 msgid "Use fast floating-point conversion (16-bit output only)"
-msgstr "Utilizar conversão rápida de vírgula flutuante (apenas com saída de 16 "
-" bits)"
+msgstr "Utilizar conversão rápida de vírgula flutuante (apenas com saída de 16 bits)"
 
 #: src/audacious/ui_preferences.c:235
 msgid "Preamp:"
-msgstr "Preamp:"
+msgstr "Pré-amplificação:"
 
 #: src/audacious/ui_preferences.c:235 src/audacious/ui_preferences.c:236
 msgid "dB"
@@ -1349,7 +1344,8 @@ msgstr "Ganho pré-definido:"
 
 #: src/audacious/ui_preferences.c:236
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr "Será usado este agnho se o ficheiro não contiver metadados para Replay "
+msgstr ""
+"Será usado este ganho se o ficheiro não contiver metadados para Replay "
 "Gain."
 
 #: src/audacious/ui_preferences.c:237
@@ -1358,7 +1354,7 @@ msgid ""
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 "<span size=\"small\">Tenha em conta que a forma mais eficiente de evitar "
-"<i>clipping</i> do sinal passa por evitar os valores acima.</span>"
+"<i>clipping</i> do sinal passa por evitar usar aqui valores positivos.</span>"
 
 #: src/audacious/ui_preferences.c:241
 msgid "<b>Replay Gain configuration</b>"
@@ -1390,7 +1386,8 @@ msgstr "Activar prevenção de clipping de picos de informação"
 
 #: src/audacious/ui_preferences.c:248
 msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr "Utilizar valor de pico da informação do Replay Gain para prevenção de "
+msgstr ""
+"Utilizar valor de pico da informação do Replay Gain para prevenção de "
 "clipping"
 
 #: src/audacious/ui_preferences.c:249
@@ -1399,11 +1396,11 @@ msgstr "Ajustar o factor de escala dinamicamente para prevenir clipping"
 
 #: src/audacious/ui_preferences.c:250
 msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-msgstr "Reduzir o factor de escala (ganho) se mesmo assim ocorreu clipping"
+msgstr "Reduzir o factor de escala (ganho) se mesmo assim ocorrer clipping"
 
 #: src/audacious/ui_preferences.c:255
 msgid "Proxy hostname:"
-msgstr "Hostname do proxy:"
+msgstr "Nome de máquina do proxy:"
 
 #: src/audacious/ui_preferences.c:256
 msgid "Proxy port:"
@@ -1415,7 +1412,7 @@ msgstr "Nome de utilizador do proxy:"
 
 #: src/audacious/ui_preferences.c:261
 msgid "Proxy password:"
-msgstr "Password do proxy:"
+msgstr "Palavra-passe do proxy:"
 
 #: src/audacious/ui_preferences.c:265
 msgid "<b>Proxy Configuration</b>"
@@ -1434,7 +1431,7 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">Será necessário reiniciar o audacious depois de alterar "
+"<span size=\"small\">Será necessário reiniciar o Audacious depois de alterar "
 "estas opções.</span>"
 
 #: src/audacious/ui_preferences.c:274
@@ -1455,11 +1452,12 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:277
 msgid "Don't advance in the playlist"
-msgstr "Não avançar na playlist"
+msgstr "Não avançar na lista de reprodução"
 
 #: src/audacious/ui_preferences.c:278
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "Não avançar automaticamente para a faixa seguinte depois de acabar de "
+msgstr ""
+"Não avançar automaticamente para a faixa seguinte depois de acabar de "
 "reproduzir a anterior."
 
 #: src/audacious/ui_preferences.c:282
@@ -1519,7 +1517,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:1292
 msgid "Exclude:"
-msgstr "Excluír:"
+msgstr "Excluir:"
 
 #: src/audacious/ui_preferences.c:1299
 msgid "Include:"
@@ -1531,7 +1529,7 @@ msgstr "Pesquisar capa recursivamente"
 
 #: src/audacious/ui_preferences.c:1326
 msgid "Search depth: "
-msgstr "Profundidade da pesquisa:"
+msgstr "Profundidade da pesquisa: "
 
 #: src/audacious/ui_preferences.c:1339
 msgid "Use per-file cover"
@@ -1543,7 +1541,7 @@ msgstr "Mostrar barra de progresso para a faixa actual"
 
 #: src/audacious/ui_preferences.c:1361
 msgid "Delay until filepopup comes up: "
-msgstr "Atraso para o aparecimento da informação do ficheiro:"
+msgstr "Atraso para o aparecimento da informação do ficheiro: "
 
 #: src/audacious/ui_preferences.c:1886
 msgid "<b>Song Display</b>"
@@ -1587,11 +1585,11 @@ msgstr "Personalizado"
 
 #: src/audacious/ui_preferences.c:1940
 msgid "Custom string:"
-msgstr "Personalização:"
+msgstr "String de Personalização:"
 
 #: src/audacious/ui_preferences.c:1947
 msgid "Title format:"
-msgstr "Formato do título"
+msgstr "Formato do título:"
 
 #: src/audacious/ui_preferences.c:1958
 msgid "<b>Popup Information</b>"
@@ -1599,7 +1597,7 @@ msgstr "<b>Informação das Dicas</b>"
 
 #: src/audacious/ui_preferences.c:1973
 msgid "Show popup information for playlist entries"
-msgstr "Mostrar dicas com informação nas entradas da playlist"
+msgstr "Mostrar dicas com informação nas entradas da lista de reprodução"
 
 #: src/audacious/ui_preferences.c:1975
 msgid ""
@@ -1607,7 +1605,7 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"Activa a janela de informação para entradas apontadas na playlist. A janela "
+"Activa a janela de informação para entradas apontadas na lista de reprodução. A janela "
 "mostra o título da faixa, o nome do álbum, género, ano de publicação, número "
 "da faixa, tamanho da faixa e a capa."
 
@@ -1621,7 +1619,7 @@ msgstr "<b>Sistema de Som</b>"
 
 #: src/audacious/ui_preferences.c:2077
 msgid "Buffer size:"
-msgstr "Tamanho do <i>buffer</i>:"
+msgstr "Tamanho do buffer:"
 
 #: src/audacious/ui_preferences.c:2095
 msgid "Current output plugin:"
@@ -1665,7 +1663,7 @@ msgstr "Plugins de efeitos (apenas para saída de 16 bit):"
 
 #: src/audacious/ui_preferences.c:2402
 msgid "<b>Effects</b>"
-msgstr "<b>Effeitos</b>"
+msgstr "<b>Efeitos</b>"
 
 #: src/audacious/ui_preferences.c:2597
 msgid "Audacious Preferences"
@@ -1682,7 +1680,7 @@ msgstr "Posição não encontrada."
 
 #: src/audtool/handlers_vitals.c:64
 msgid "No song playing."
-msgstr "Nenhuma faixa em reprodução"
+msgstr "Nenhuma música em reprodução."
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"
@@ -1702,7 +1700,7 @@ msgstr "Tradutores"
 
 #: src/libaudgui/ui_fileopener.c:149
 msgid "Open Files"
-msgstr "Ficheiros Abertos"
+msgstr "Abrir Ficheiros"
 
 #: src/libaudgui/ui_fileopener.c:149
 msgid "Add Files"
@@ -1726,15 +1724,15 @@ msgstr "_Colocar na Fila"
 
 #: src/libaudgui/ui_jumptotrack.c:401
 msgid "Jump to Track"
-msgstr "Ir Para Ficheiro"
+msgstr "Ir Para Faixa"
 
 #: src/libaudgui/ui_jumptotrack.c:444
 msgid "Filter: "
-msgstr "Filtrar:"
+msgstr "Filtro: "
 
 #: src/libaudgui/ui_jumptotrack.c:445
 msgid "_Filter:"
-msgstr "_Filtrar:"
+msgstr "_Filtro:"
 
 #: src/libaudgui/ui_jumptotrack.c:463
 msgid "Remember"
@@ -1742,11 +1740,11 @@ msgstr "Lembrar"
 
 #: src/libaudgui/ui_jumptotrack.c:472
 msgid "Clea_r"
-msgstr "Apaga_r"
+msgstr "Limpa_r"
 
 #: src/libaudgui/ui_jumptotrack.c:507
 msgid "Close on Jump"
-msgstr "Fechar ao ir para ficheiro"
+msgstr "Fechar ao ir para a faixa"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Add/Open URL Dialog"
@@ -1754,7 +1752,7 @@ msgstr "Adicionar/Abrir URL"
 
 #: src/libaudgui/ui_urlopener.c:176
 msgid "Enter location to play:"
-msgstr "Indique localização a tocar:"
+msgstr "Indique localização para tocar:"
 
 #: src/libeggsmclient/eggdesktopfile.c:140
 msgid "File is not a valid .desktop file"
@@ -1781,7 +1779,8 @@ msgstr "Opção de arranque desconhecida: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1279
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Não é possível passar URIs de documentos para uma entrada de desktop "
+msgstr ""
+"Não é possível passar URIs de documentos para uma entrada de desktop "
 "'Type=Link'"
 
 #: src/libeggsmclient/eggdesktopfile.c:1298
@@ -1815,3 +1814,5 @@ msgstr "Opções de Gestão de Sessão"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Mostrar Opções de Gestão de Sessão"
+
+
