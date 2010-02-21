@@ -562,23 +562,29 @@ void set_current_output_plugin (OutputPlugin * plugin)
 
     UNLOCK;
 
-    COP = NULL;
-
-    if (old != NULL && old->cleanup != NULL)
-        old->cleanup ();
-
-    if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-        COP = plugin;
-    else
+    /* This function is also used to restart playback (for example, when
+     resampling is switched on or off), in which case we don't need to do an
+     init cycle. -jlindgren */
+    if (plugin != COP)
     {
-        fprintf (stderr, "Output plugin failed to load: %s\n",
-         plugin->description);
+        COP = NULL;
 
-        if (old == NULL || old->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-            return;
+        if (old != NULL && old->cleanup != NULL)
+            old->cleanup ();
 
-        fprintf (stderr, "Falling back to: %s\n", old->description);
-        COP = old;
+        if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+            COP = plugin;
+        else
+        {
+            fprintf (stderr, "Output plugin failed to load: %s\n",
+             plugin->description);
+
+            if (old == NULL || old->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+                return;
+
+            fprintf (stderr, "Falling back to: %s\n", old->description);
+            COP = old;
+        }
     }
 
     if (playing)
