@@ -34,10 +34,6 @@
 #include "plugin-registry.h"
 #include "vis_runner.h"
 
-#ifdef USE_SAMPLERATE
-#include "src_flow.h"
-#endif
-
 #define SW_VOLUME_RANGE 40 /* decibels */
 
 OutputPlugin * current_output_plugin = NULL;
@@ -194,21 +190,7 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
          cfg.output_bit_depth == 24 ? FMT_S24_NE : cfg.output_bit_depth == 16 ?
          FMT_S16_NE : FMT_FLOAT;
         output_channels = effect_channels;
-
-#ifdef USE_SAMPLERATE
-        if (cfg.enable_src)
-        {
-            src_flow_init (effect_rate, effect_channels);
-            output_rate = cfg.src_rate;
-        }
-        else
-        {
-            src_flow_free ();
-            output_rate = effect_rate;
-        }
-#else
         output_rate = effect_rate;
-#endif
 
         if (COP->open_audio (output_format, output_rate, output_channels) > 0)
         {
@@ -301,11 +283,6 @@ static Flow * get_postproc_flow (void)
     if (flow == NULL)
     {
         flow = flow_new ();
-
-#ifdef USE_SAMPLERATE
-            flow_link_element (flow, src_flow);
-#endif
-
         flow_link_element (flow, equalizer_flow);
     }
 

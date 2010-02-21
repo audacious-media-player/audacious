@@ -33,10 +33,6 @@
 
 #include <glib/gprintf.h>
 
-#ifdef USE_SAMPLERATE
-#  include <samplerate.h>
-#endif
-
 #ifdef USE_DBUS
 #  include "dbus-service.h"
 #  include "audctrl.h"

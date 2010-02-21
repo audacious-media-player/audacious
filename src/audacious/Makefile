@@ -34,7 +34,6 @@ SRCS = af_equalizer.c							\
        probe.c \
        rcfile.c									\
        signals.c								\
-       src_flow.c								\
        ui_fileinfopopup.c						\
        ui_headless.c							\
        ui_plugin_menu.c \
@@ -124,7 +123,6 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		${AUDACIOUS_DEFINES}	\
 		${ARCH_DEFINES}			\
 		${DBUS_CFLAGS}			\
-		${SAMPLERATE_CFLAGS}	\
 		${REGEX_CFLAGS}			\
 		${LIBMCS_CFLAGS}		\
 		${SIMD_CFLAGS}			\
@@ -138,7 +136,6 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 LIBS += ${LDADD}						\
 		-L../libaudcore -laudcore	\
 		${LIBINTL}						\
-		${SAMPLERATE_LIBS}				\
 		../libguess/libguess.a			\
 		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\

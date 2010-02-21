@@ -141,27 +141,6 @@ AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
 
 
 ### ---------------------------------------------------------------------------
-dnl libsamplerate support
-dnl =====================
-AUD_ARG_ENABLE([samplerate], [no],
-[libsamplerate support],
-[
-    AUD_CHECK_MODULE([SAMPLERATE], [samplerate],, [libsamplerate])
-    aud_save_LIBS="$LIBS"
-    AC_CHECK_LIB([samplerate], [src_process],[
-    	SAMPLERATE_LIBS="-lsamplerate"
-    ], [
-        AC_MSG_ERROR([*** Unable to link with libsamplerate!])
-    ])
-    LIBS="$aud_save_LIBS"
-    AC_DEFINE([USE_SAMPLERATE], 1, [Define if libsamplerate enabled])
-    AC_SUBST([USE_SAMPLERATE])
-    AC_SUBST([SAMPLERATE_CFLAGS])
-    AC_SUBST([SAMPLERATE_LIBS])
-])
-
-
-### ---------------------------------------------------------------------------
 dnl xspf playlist support
 dnl =====================
 AUD_ARG_ENABLE([xspf], [yes],
@@ -355,7 +334,6 @@ echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Additional debugging output:            $enable_debug"
 echo "  Automatic character code detection:     $enable_chardet"
-echo "  Sample rate conversion:                 $enable_samplerate"
 echo "  D-Bus support:                          $enable_dbus"
 echo "  Session management (eggsm)              $enable_sm"
 echo "  XSPF playlists                          $enable_xspf"

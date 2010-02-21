@@ -71,11 +71,6 @@ struct _AudConfig {
     gboolean replay_gain_album;
     gfloat replay_gain_preamp;
     gfloat default_gain;
-#ifdef USE_SAMPLERATE
-    gboolean enable_src;
-    gint src_rate;
-    gint src_type;
-#endif
     gint sw_volume_left, sw_volume_right;
     gboolean clear_playlist;
     gchar * output_path;

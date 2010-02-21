@@ -27,10 +27,6 @@
 #  include "config.h"
 #endif
 
-#ifdef USE_SAMPLERATE
-#  include <samplerate.h>
-#endif
-
 #include "audconfig.h"
 
 #include "effect.h"
@@ -94,11 +90,6 @@ AudConfig aud_default_config = {
     .replay_gain_album = FALSE,        /* album mode */
     .replay_gain_preamp = 0,
     .default_gain = 0,
-#ifdef USE_SAMPLERATE
-    .enable_src = FALSE,               /* enable resampling */
-    .src_rate = 48000,                 /* samplerate */
-    .src_type = SRC_SINC_BEST_QUALITY, /* default interpolation method */
-#endif
     .sw_volume_left = 100, .sw_volume_right = 100,
     .clear_playlist = FALSE,
     .output_path = NULL,
@@ -147,9 +138,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
-#ifdef USE_SAMPLERATE
-    {"enable_src", &cfg.enable_src, TRUE},
-#endif
     {"clear_playlist", & cfg.clear_playlist, TRUE},
 };
 
@@ -166,10 +154,6 @@ static aud_cfg_nument aud_numents[] = {
     {"filepopup_pixelsize", &cfg.filepopup_pixelsize, TRUE},
     {"filepopup_delay", &cfg.filepopup_delay, TRUE},
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
-#ifdef USE_SAMPLERATE
-    {"src_rate", &cfg.src_rate, TRUE},
-    {"src_type", &cfg.src_type, TRUE},
-#endif
     {"sw_volume_left", & cfg.sw_volume_left, TRUE},
     {"sw_volume_right", & cfg.sw_volume_right, TRUE},
     {"output_number", & cfg.output_number, TRUE},
