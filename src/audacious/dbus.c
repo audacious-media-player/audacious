@@ -323,11 +323,17 @@ static gboolean get_status_cb(void *data)
 
     g_mutex_lock(info_mutex);
 
+    memset (request, 0, sizeof (* request));
     request->playing = playback_get_playing();
-    request->paused = playback_get_paused();
-    request->time = playback_get_time();
-    request->length = playback_get_length();
-    playback_get_info(&request->bitrate, &request->samplerate, &request->channels);
+
+    if (request->playing)
+    {
+        request->paused = playback_get_paused ();
+        request->time = playback_get_time ();
+        request->length = playback_get_length ();
+        playback_get_info (& request->bitrate, & request->samplerate,
+         & request->channels);
+    }
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
