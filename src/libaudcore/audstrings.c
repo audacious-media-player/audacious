@@ -449,10 +449,12 @@ gint string_compare (const gchar * a, const gchar * b)
         }
         else
         {
-            if (* a > * b)
+            gchar la = tolower (* a), lb = tolower (* b);
+
+            if (la > lb)
                 return 1;
 
-            if (* a < * b)
+            if (la < lb)
                 return -1;
 
             a ++;
