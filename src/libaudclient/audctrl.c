@@ -83,11 +83,60 @@ gchar *audacious_remote_get_version(DBusGProxy *proxy) {
  * @param[in] proxy DBus proxy for audacious
  * @param[in] list A GList of URIs to add to the playlist.
  **/
-void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
-	GList *iter;
-	for (iter = list; iter != NULL; iter = g_list_next(iter))
-		org_atheme_audacious_playlist_add(proxy, iter->data, &error);
-	g_clear_error(&error);
+void audacious_remote_playlist_add (DBusGProxy * proxy, GList * list)
+{
+    const gchar * filenames[g_list_length (list) + 1];
+    int count;
+    
+    for (count = 0; list != NULL; count ++, list = list->next)
+        filenames[count] = list->data;
+    
+    filenames[count] = NULL;
+
+    org_atheme_audacious_add_list (proxy, filenames, & error);
+    g_clear_error (& error);
+}
+
+/**
+ * Sends a list of URIs for Audacious to open.  New in Audacious 2.3.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] list A GList of URIs to open
+ **/
+void audacious_remote_playlist_open_list (DBusGProxy * proxy, GList * list)
+{
+    const gchar * filenames[g_list_length (list) + 1];
+    int count;
+    
+    for (count = 0; list != NULL; count ++, list = list->next)
+        filenames[count] = list->data;
+    
+    filenames[count] = NULL;
+
+    org_atheme_audacious_open_list (proxy, filenames, & error);
+    g_clear_error (& error);
+}
+
+/**
+ * Sends a list of URIs for Audacious to open in a temporary playlist.  New in
+ * Audacious 2.3.
+ *
+ * @param[in] proxy DBus proxy for audacious
+ * @param[in] list A GList of URIs to open
+ **/
+void audacious_remote_playlist_open_list_to_temp (DBusGProxy * proxy, GList *
+ list)
+{
+    const gchar * filenames[g_list_length (list) + 1];
+    int count;
+    
+    for (count = 0; list != NULL; count ++, list = list->next)
+        filenames[count] = list->data;
+    
+    filenames[count] = NULL;
+
+    org_atheme_audacious_open_list_to_temp (proxy, filenames, & error);
+    g_clear_error (& error);
 }
 
 /**

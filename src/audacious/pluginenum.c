@@ -231,6 +231,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_insert_playlist = playlist_insert_playlist,
     .playlist_save = playlist_save,
     .playlist_insert_folder = playlist_insert_folder,
+    .playlist_insert_folder_v2 = playlist_insert_folder_v2,
 
     ._cfg = &cfg,
 

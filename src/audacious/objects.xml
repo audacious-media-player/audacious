@@ -324,6 +324,27 @@
             <!-- URL to add -->
             <arg type="s" name="url"/>
         </method>
+        
+        <!-- Add a list of files -->
+        <method name="AddList">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <!-- Array of filenames to add -->
+            <arg type="as" name="filenames"/>
+        </method>
+
+        <!-- Open a list of files -->
+        <method name="OpenList">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <!-- Array of filenames to open -->
+            <arg type="as" name="filenames"/>
+        </method>
+
+        <!-- Open a list of files in a temporary playlist -->
+        <method name="OpenListToTemp">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <!-- Array of filenames to open -->
+            <arg type="as" name="filenames"/>
+        </method>
 
         <!-- Delete some song from the playlist -->
         <method name="Delete">

@@ -203,50 +203,11 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
     g_free(context);
 }
 
-/* FIX ME: Make these into single DBUS calls */
-#ifdef USE_DBUS
-static void remote_open_list (DBusGProxy * session, GList * list)
-{
-    gint entries;
-
-    if (cfg.clear_playlist)
-        audacious_remote_playlist_clear (session);
-    else
-        audacious_remote_playqueue_clear (session);
-
-    entries = audacious_remote_get_playlist_length (session);
-
-    for (; list != NULL; list = list->next)
-        audacious_remote_playlist_add_url_string (session, list->data);
-
-    if (audacious_remote_get_playlist_length (session) == entries)
-        return;
-
-    if (! cfg.clear_playlist)
-        audacious_remote_set_playlist_pos (session, entries);
-
-    audacious_remote_play (session);
-}
-
-static void remote_temp_open_list (DBusGProxy * session, GList * list)
-{
-    if (list == NULL)
-        return;
-
-    /* always starts with the first song, ignoring shuffle :( */
-    audacious_remote_playlist_enqueue_to_temp (session, list->data);
-    list = list->next;
-
-    for (; list != NULL; list = list->next)
-        audacious_remote_playlist_add_url_string (session, list->data);
-}
-#endif
-
 static void handle_cmd_line_filenames(gboolean is_running)
 {
     gint i;
     gchar *working, **filenames = options.filenames;
-    GList * fns = NULL, * node;
+    GList * fns = NULL;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
 #endif
@@ -277,14 +238,11 @@ static void handle_cmd_line_filenames(gboolean is_running)
     if (is_running)
     {
         if (options.enqueue_to_temp)
-            remote_temp_open_list (session, fns);
+            audacious_remote_playlist_open_list_to_temp (session, fns);
         else if (options.enqueue)
-        {
-            for (node = fns; node != NULL; node = node->next)
-                audacious_remote_playlist_add_url_string (session, node->data);
-        }
+            audacious_remote_playlist_add (session, fns);
         else
-            remote_open_list (session, fns);
+            audacious_remote_playlist_open_list (session, fns);
     }
     else                        /* !is_running */
 #endif

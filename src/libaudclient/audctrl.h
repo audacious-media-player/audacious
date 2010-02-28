@@ -127,6 +127,12 @@ void audacious_remote_eq_activate(DBusGProxy *proxy, gboolean active);
 
 /* Added in Audacious 1.9 */
 gchar **audacious_remote_get_tuple_fields(DBusGProxy *proxy);
+
+/* Added in Audacious 2.3 */
+void audacious_remote_playlist_open_list (DBusGProxy * proxy, GList * list);
+void audacious_remote_playlist_open_list_to_temp (DBusGProxy * proxy, GList *
+ list);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_AUDCTRL_H */

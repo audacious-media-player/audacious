@@ -38,5 +38,7 @@ gboolean playlist_insert_playlist (gint playlist, gint at, const gchar *
  filename);
 gboolean playlist_save (gint playlist, const gchar * filename);
 void playlist_insert_folder (gint playlist, gint at, const gchar * folder);
+void playlist_insert_folder_v2 (gint playlist, gint at, const gchar * folder,
+ gboolean play);
 
 #endif

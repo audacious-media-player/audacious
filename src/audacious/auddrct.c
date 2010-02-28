@@ -308,45 +308,56 @@ void drct_pl_open (const gchar * filename)
     g_list_free (list);
 }
 
-void drct_pl_open_list (GList * list)
+static void add_list (GList * list, gboolean opening)
 {
     gint playlist = playlist_get_active ();
     gint entries;
+    struct index * filenames = index_new ();
 
-    if (cfg.clear_playlist)
-        playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
-    else
-        playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
+    if (opening)
+    {
+        /* insert_folder will not play if already playing */
+        if (playback_get_playing ())
+            playback_stop ();
+
+        if (cfg.clear_playlist)
+            playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
+        else
+            playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
+    }
 
     entries = playlist_entry_count (playlist);
-    drct_pl_add (list);
-
-    if (playlist_entry_count (playlist) == entries)
-        return;
-
-    if (! cfg.clear_playlist)
-        playlist_set_position (playlist, entries);
-
-    playlist_set_playing (playlist);
-    playback_initiate ();
-}
-
-void drct_pl_add (GList * list)
-{
-    struct index * filenames = index_new ();
-    gint playlist = playlist_get_active ();
 
     for (; list != NULL; list = list->next)
     {
         if (filename_is_playlist (list->data))
             playlist_insert_playlist (playlist, -1, list->data);
         else if (vfs_file_test (list->data, G_FILE_TEST_IS_DIR))
-            playlist_insert_folder (playlist, -1, list->data);
+            playlist_insert_folder_v2 (playlist, -1, list->data, opening);
         else
             index_append (filenames, g_strdup (list->data));
     }
 
     playlist_entry_insert_batch (playlist, -1, filenames, NULL);
+
+    if (opening && playlist_entry_count (playlist) > entries)
+    {
+        if (entries > 0)
+            playlist_set_position (playlist, entries);
+
+        playlist_set_playing (playlist);
+        playback_initiate ();
+    }
+}
+
+void drct_pl_open_list (GList * list)
+{
+    add_list (list, TRUE);
+}
+
+void drct_pl_add (GList * list)
+{
+    add_list (list, FALSE);
 }
 
 void drct_pl_clear (void)

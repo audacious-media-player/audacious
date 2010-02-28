@@ -1184,9 +1184,49 @@ gboolean audacious_rc_add(RemoteObject * obj, gchar * file, GError * *error)
     return audacious_rc_playlist_ins_url_string(obj, file, -1, error);
 }
 
-gboolean audacious_rc_add_url(RemoteObject * obj, gchar * url, GError * *error)
+gboolean audacious_rc_add_url(RemoteObject * obj, gchar * file, GError * *error)
 {
-    return audacious_rc_playlist_ins_url_string(obj, url, -1, error);
+    return audacious_rc_playlist_ins_url_string(obj, file, -1, error);
+}
+
+static GList * string_array_to_list (gchar * * strings)
+{
+    GList * list = NULL;
+    
+    while (* strings != NULL)
+        list = g_list_prepend (list, * strings ++);
+    
+    return g_list_reverse (list);
+}
+
+gboolean audacious_rc_add_list (RemoteObject * obj, gchar * * filenames,
+ GError * * error)
+{
+    GList * list = string_array_to_list (filenames);
+    
+    drct_pl_add (list);
+    g_list_free (list);
+    return TRUE;
+}
+
+gboolean audacious_rc_open_list (RemoteObject * obj, gchar * * filenames,
+ GError * * error)
+{
+    GList * list = string_array_to_list (filenames);
+    
+    drct_pl_open_list (list);
+    g_list_free (list);
+    return TRUE;
+}
+
+gboolean audacious_rc_open_list_to_temp (RemoteObject * obj, gchar * *
+ filenames, GError * * error)
+{
+    GList * list = string_array_to_list (filenames);
+    
+    drct_pl_temp_open_list (list);
+    g_list_free (list);
+    return TRUE;
 }
 
 gboolean audacious_rc_delete(RemoteObject * obj, guint pos, GError * *error)

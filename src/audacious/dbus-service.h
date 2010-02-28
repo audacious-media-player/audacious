@@ -174,6 +174,12 @@ gboolean audacious_rc_jump(RemoteObject *obj, guint pos, GError **error);
 gboolean audacious_rc_add(RemoteObject *obj, gchar *file, GError **error);
 gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url,
                               GError **error);
+gboolean audacious_rc_add_list (RemoteObject * obj, gchar * * filenames,
+ GError * * error);
+gboolean audacious_rc_open_list (RemoteObject * obj, gchar * * filenames,
+ GError * * error);
+gboolean audacious_rc_open_list_to_temp (RemoteObject * obj, gchar * *
+ filenames, GError * * error);
 gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error);
 gboolean audacious_rc_clear(RemoteObject *obj, GError **error);
 gboolean audacious_rc_auto_advance(RemoteObject *obj, gboolean *is_advance,

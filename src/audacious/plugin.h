@@ -550,6 +550,10 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
+
+    /* Move to proper place when API can be broken */
+    void (* playlist_insert_folder_v2) (gint playlist, gint at, const gchar *
+     folder, gboolean play);
 };
 
 
@@ -746,6 +750,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_insert_playlist    _audvt->playlist_insert_playlist
 #define aud_playlist_save               _audvt->playlist_save
 #define aud_playlist_insert_folder      _audvt->playlist_insert_folder
+#define aud_playlist_insert_folder_v2   _audvt->playlist_insert_folder_v2
 
 #define aud_cfg                         _audvt->_cfg
 
