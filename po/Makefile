@@ -37,3 +37,15 @@ LOCALES = be.po \
 	  zh_TW.po
 
 include ../buildsys.mk
+
+POTTEMPLATE=$(PACKAGE).pot
+
+update-pot:
+	@echo Updating $(POTTEMPLATE) ...
+	xgettext --default-domain=$(PACKAGE) --language=C \
+	--keyword=_ --keyword=N_ --from-code="utf-8" \
+	--directory=.. --files-from=POTFILES.in -o $(POTTEMPLATE)
+
+update-po: update-pot
+	@echo Updating .po -files ...
+	@for lang in $(LOCALES); do echo -n "$$lang : "; msgmerge --backup=simple --update "$$lang" $(POTTEMPLATE); done
