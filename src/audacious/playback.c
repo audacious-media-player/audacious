@@ -509,6 +509,10 @@ static gboolean playback_play_file (gint playlist, gint entry)
 
     playback_run(playback);
 
+#ifdef USE_DBUS
+    mpris_emit_track_change(mpris);
+#endif
+
     hook_associate ("playlist update", update_cb, NULL);
     hook_call ("playback begin", NULL);
     return TRUE;
