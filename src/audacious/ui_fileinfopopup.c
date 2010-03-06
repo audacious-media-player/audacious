@@ -356,7 +356,7 @@ fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
 
     path = tuple_get_string (tuple, FIELD_FILE_PATH, NULL);
 
-    if (strncmp (path, "file://", 7)) /* remote files not handled */
+    if (!path || strncmp (path, "file://", 7)) /* remote files not handled */
         return;
 
     path += 7;
