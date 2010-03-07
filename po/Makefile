@@ -1,3 +1,12 @@
+# Short KISS instructions:
+#
+# - To add new languages: Add *.po target to LOCALES Make variable below
+# - Update and merge .po-files: make update-po
+# - Only update the template .pot-file only: make update-pot
+# - Run update-potfiles.sh when any new sourcefiles with translatable strings
+#   have been introduced, and then continue with 'make update-po' or
+#   'make update-pot' respectively.
+#
 LOCALES = be.po \
 	  bg.po \
 	  br.po \
