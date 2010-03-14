@@ -307,7 +307,7 @@ msgstr "Zeige Version"
 
 #: src/audacious/main.c:167
 msgid "Interface to use (use -i list to view available interfaces)"
-msgstr ""
+msgstr "Zu benutzendes Interface (-i Liste um alle verfügbaren Interfaces aufzulisten)"
 
 #: src/audacious/main.c:169
 msgid "Used in macpacking"
@@ -1343,7 +1343,7 @@ msgstr "<b>Wiedergabe</b>"
 
 #: src/audacious/ui_preferences.c:232
 msgid "Continue playback on startup"
-msgstr "Wiedergabe am Start fortführen"
+msgstr "Wiedergabe beim Starten fortführen"
 
 #: src/audacious/ui_preferences.c:233
 msgid "When Audacious starts, automatically begin playing from the point where we stopped before."
@@ -1358,9 +1358,8 @@ msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "Nicht automatisch mit dem nächsten Titel fortfahren, wenn ein Titel zuende gespielt wurde."
 
 #: src/audacious/ui_preferences.c:236
-#, fuzzy
 msgid "Clear current playlist when opening new files"
-msgstr "Wiedergabeliste beim öffnen neuer Datein leeren"
+msgstr "Wiedergabeliste beim Öffnen neuer Dateien leeren"
 
 #: src/audacious/ui_preferences.c:241
 msgid "Auto character encoding detector for:"
@@ -1435,9 +1434,8 @@ msgid "<b>Song Display</b>"
 msgstr "<b>Titelanzeige</b>"
 
 #: src/audacious/ui_preferences.c:1875
-#, fuzzy
 msgid "Show song numbers"
-msgstr "Zeige Songnummern"
+msgstr "Zeige Titelnummern"
 
 #: src/audacious/ui_preferences.c:1896
 msgid "Show information about titlestring format"
@@ -1561,8 +1559,9 @@ msgid "Position not found."
 msgstr "Position nicht gefunden."
 
 #: src/audtool/handlers_vitals.c:64
+#, fuzzy
 msgid "No song playing."
-msgstr ""
+msgstr "Kein Titel."
 
 #: src/libaudcore/audstrings.c:171
 msgid "  (invalid UTF-8)"
@@ -1617,14 +1616,13 @@ msgstr "Filter: "
 
 #: src/libaudgui/ui_jumptotrack.c:448
 msgid "_Filter:"
-msgstr "_Filter: "
+msgstr "_Filter:"
 
 #: src/libaudgui/ui_jumptotrack.c:466
 msgid "Remember"
-msgstr "Erinnern"
+msgstr "Merken"
 
 #: src/libaudgui/ui_jumptotrack.c:475
-#, fuzzy
 msgid "Clea_r"
 msgstr "A-B löschen"
 
