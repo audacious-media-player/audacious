@@ -29,7 +29,7 @@ Comment[nl]=Muziek luisteren
 Comment[ru]=Слушайте музыку
 Icon=audacious2
 
-Categories=GTK;Audio;Player;
+Categories=AudioVideo;Audio;Player;GTK;
 
 Exec=audacious2 -i gtkui %U
 TryExec=audacious2
