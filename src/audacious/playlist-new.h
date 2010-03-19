@@ -45,6 +45,8 @@
 
 void playlist_init (void);
 void playlist_end (void);
+void playlist_load_state (void);
+void playlist_save_state (void);
 
 gint playlist_count (void);
 void playlist_insert (gint at);

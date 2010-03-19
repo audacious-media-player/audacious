@@ -65,7 +65,7 @@ AudConfig aud_default_config = {
     .eqpreset_extension = NULL,
     .url_history = NULL,
     .resume_playback_on_startup = FALSE,
-    .resume_playlist = -1, .resume_entry = -1, .resume_state = 0,
+    .resume_state = 0,
     .resume_playback_on_startup_time = 0,
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
@@ -145,8 +145,6 @@ static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
 
 static aud_cfg_nument aud_numents[] = {
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
-    {"resume_playlist", & cfg.resume_playlist, TRUE},
-    {"resume_entry", & cfg.resume_entry, TRUE},
     {"resume_state", & cfg.resume_state, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
     {"output_buffer_size", &cfg.output_buffer_size, TRUE},
@@ -439,16 +437,10 @@ aud_config_save(void)
     gint i;
     mcs_handle_t *db;
 
-    cfg.resume_playlist = playlist_get_playing ();
-
-    if (cfg.resume_playlist != -1)
-    {
-        cfg.resume_entry = playlist_get_position (cfg.resume_playlist);
-        cfg.resume_state = playback_get_playing () ? (playback_get_paused () ? 2
-         : 1) : 0;
-        cfg.resume_playback_on_startup_time = playback_get_playing () ?
-         playback_get_time () : 0;
-    }
+    cfg.resume_state = playback_get_playing () ? (playback_get_paused () ? 2 :
+     1) : 0;
+    cfg.resume_playback_on_startup_time = playback_get_playing () ?
+     playback_get_time () : 0;
 
     save_output_path ();
 

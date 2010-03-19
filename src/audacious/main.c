@@ -250,14 +250,14 @@ static void handle_cmd_line_filenames(gboolean is_running)
         if (options.enqueue_to_temp)
         {
             drct_pl_temp_open_list (fns);
-            cfg.resume_playlist = -1;
+            cfg.resume_state = 0;
         }
         else if (options.enqueue)
             drct_pl_add (fns);
         else
         {
             drct_pl_open_list (fns);
-            cfg.resume_playlist = -1;
+            cfg.resume_state = 0;
         }
     }                           /* !is_running */
 
@@ -318,20 +318,14 @@ static void handle_cmd_line_options(void)
 {
     handle_cmd_line_filenames(FALSE);
 
-    if (cfg.resume_playlist != -1)
+    if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
     {
-        playlist_set_playing (cfg.resume_playlist);
-        playlist_set_position (cfg.resume_playlist, cfg.resume_entry);
+        playback_initiate ();
 
-        if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
-        {
-            playback_initiate ();
+        if (cfg.resume_state == 2)
+            playback_pause ();
 
-            if (cfg.resume_state == 2)
-                playback_pause ();
-
-            playback_seek (cfg.resume_playback_on_startup_time);
-        }
+        playback_seek (cfg.resume_playback_on_startup_time);
     }
 
     if (options.play || options.play_pause)
@@ -387,6 +381,7 @@ static void playlist_system_init()
     if (!dir_foreach(aud_paths[BMP_PATH_PLAYLISTS_DIR], load_extra_playlist, NULL, NULL))
         g_warning("Could not load extra playlists\n");
 
+    playlist_load_state ();
     playlist_set_shuffle(cfg.shuffle);
 }
 
@@ -396,6 +391,10 @@ void aud_quit(void)
 
     g_message("Saving configuration");
     aud_config_save();
+    playlist_save_state ();
+
+    if (playback_get_playing ())
+        playback_stop ();
 
     g_message("Shutting down user interface subsystem");
     interface_destroy(i);

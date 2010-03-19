@@ -47,7 +47,8 @@ struct _AudConfig {
     gint titlestring_preset;
     gchar *gentitle_format;
     gboolean resume_playback_on_startup;
-    gint resume_playlist, resume_entry, resume_state;
+    gint unused, unused2; /* for compatibility with v2.3 binary API */
+    gint resume_state;
     gint resume_playback_on_startup_time;
     gchar *chardet_detector;
     gchar *chardet_fallback;

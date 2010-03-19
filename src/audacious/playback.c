@@ -179,7 +179,7 @@ playback_initiate(void)
 
     if (entry == -1)
     {
-        playlist_next_song (playlist, FALSE);
+        playlist_next_song (playlist, TRUE);
         entry = playlist_get_position (playlist);
 
         if (entry == -1)
