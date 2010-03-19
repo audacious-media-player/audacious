@@ -172,8 +172,10 @@ void mpris_player_init(MprisPlayer * object)
     DBusGProxy *proxy = object->proxy;
     if (proxy != NULL)
     {
-        dbus_g_proxy_add_signal(proxy, "StatusChange", G_TYPE_INT, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal(proxy, "CapsChange", dbus_g_type_get_struct("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID), G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (proxy, "StatusChange", dbus_g_type_get_struct
+         ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
+         G_TYPE_INVALID), G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (proxy, "CapsChange", G_TYPE_INT, G_TYPE_INVALID);
         dbus_g_proxy_add_signal(proxy, "TrackChange", DBUS_TYPE_G_STRING_VALUE_HASHTABLE, G_TYPE_INVALID);
     }
     else
@@ -1192,10 +1194,10 @@ gboolean audacious_rc_add_url(RemoteObject * obj, gchar * file, GError * *error)
 static GList * string_array_to_list (gchar * * strings)
 {
     GList * list = NULL;
-    
+
     while (* strings != NULL)
         list = g_list_prepend (list, * strings ++);
-    
+
     return g_list_reverse (list);
 }
 
@@ -1203,7 +1205,7 @@ gboolean audacious_rc_add_list (RemoteObject * obj, gchar * * filenames,
  GError * * error)
 {
     GList * list = string_array_to_list (filenames);
-    
+
     drct_pl_add (list);
     g_list_free (list);
     return TRUE;
@@ -1213,7 +1215,7 @@ gboolean audacious_rc_open_list (RemoteObject * obj, gchar * * filenames,
  GError * * error)
 {
     GList * list = string_array_to_list (filenames);
-    
+
     drct_pl_open_list (list);
     g_list_free (list);
     return TRUE;
@@ -1223,7 +1225,7 @@ gboolean audacious_rc_open_list_to_temp (RemoteObject * obj, gchar * *
  filenames, GError * * error)
 {
     GList * list = string_array_to_list (filenames);
-    
+
     drct_pl_temp_open_list (list);
     g_list_free (list);
     return TRUE;
