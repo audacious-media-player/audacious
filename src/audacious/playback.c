@@ -580,24 +580,6 @@ void playback_seek (gint time)
     hook_call ("playback seek", playback);
 }
 
-static void set_title_and_length (InputPlayback * playback, const gchar * title,
- gint length)
-{
-    g_return_if_fail (playback != NULL);
-    g_warning ("Plugin %s failed to use InputPlayback::set_tuple "
-     "for a length/title adjustment.", playback->plugin->filename);
-
-    if (title != NULL)
-    {
-        g_free (playback->title);
-        playback->title = g_strdup (title);
-        event_queue ("title change", NULL);
-    }
-
-    if (length != 0)
-        playback->length = length;
-}
-
 static void set_params (InputPlayback * playback, const gchar * title, gint
  length, gint bitrate, gint samplerate, gint channels)
 {
@@ -605,7 +587,8 @@ static void set_params (InputPlayback * playback, const gchar * title, gint
 
     /* deprecated usage */
     if (title != NULL || length != 0)
-        set_title_and_length (playback, title, length);
+        g_warning ("%s needs to be updated to use InputPlayback::set_tuple\n",
+         playback->plugin->description);
 
     playback->rate = bitrate;
     playback->freq = samplerate;
@@ -614,9 +597,11 @@ static void set_params (InputPlayback * playback, const gchar * title, gint
     event_queue ("info change", NULL);
 }
 
+/* deprecated */
 static void set_title (InputPlayback * playback, const gchar * title)
 {
-    set_title_and_length (playback, title, 0);
+    g_warning ("%s needs to be updated to use InputPlayback::set_tuple\n",
+     playback->plugin->description);
 }
 
 static gboolean set_tuple_cb (void * tuple)
@@ -631,22 +616,6 @@ static void set_tuple (InputPlayback * playback, Tuple * tuple)
 {
     /* playlist_entry_set_tuple must execute in main thread */
     g_timeout_add (0, set_tuple_cb, tuple);
-}
-
-void ip_set_info (const gchar * title, gint length, gint bitrate, gint
- samplerate, gint channels)
-{
-    g_warning ("InputPlugin::set_info is deprecated. Use "
-     "InputPlayback::set_tuple and/or InputPlayback::set_params instead.");
-    set_params (ip_data.current_input_playback, title, length, bitrate,
-     samplerate, channels);
-}
-
-void ip_set_info_text (const gchar * title)
-{
-    g_warning ("InputPlugin::set_info_text is deprecated. Use "
-     "InputPlayback::set_tuple instead.\n");
-    set_title (ip_data.current_input_playback, title);
 }
 
 gchar * playback_get_title (void)
