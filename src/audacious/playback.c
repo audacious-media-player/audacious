@@ -59,7 +59,7 @@ static gboolean playback_play_file (gint playlist, gint entry);
 static gboolean pause_when_ready;
 static gint seek_when_ready;
 static gint ready_source;
-static gint playback_entry, failed_entries;
+static gint failed_entries;
 
 static gboolean ready_cb (void * data)
 {
@@ -115,16 +115,27 @@ playback_set_pb_change(InputPlayback *playback)
 static void update_cb (void * hook_data, void * user_data)
 {
     InputPlayback * playback;
-    gint old_entry;
+    gint playlist, entry;
+    const gchar * title;
 
     playback = ip_data.current_input_playback;
     g_return_if_fail (playback != NULL);
 
-    old_entry = playback_entry;
-    playback_entry = playlist_get_position (playlist_get_playing ());
+    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA ||
+     ! playback_is_ready (playback))
+        return;
 
-    if (cfg.show_numbers_in_pl && playback_entry != old_entry)
-        hook_call ("title change", NULL);
+    playlist = playlist_get_playing ();
+    entry = playlist_get_position (playlist);
+
+    if ((title = playlist_entry_get_title (playlist, entry)) == NULL)
+        title = playlist_entry_get_filename (playlist, entry);
+
+    g_free (playback->title);
+    playback->title = g_strdup (title);
+    playback->length = playlist_entry_get_length (playlist, entry);
+
+    hook_call ("title change", NULL);
 }
 
 static gint
@@ -503,7 +514,6 @@ static gboolean playback_play_file (gint playlist, gint entry)
     playback->end = playlist_entry_get_end_time (playlist, entry);
 
     set_current_input_playback(playback);
-    playback_entry = entry;
 
     playback_run(playback);
 
@@ -611,29 +621,9 @@ static void set_title (InputPlayback * playback, const gchar * title)
 
 static gboolean set_tuple_cb (void * tuple)
 {
-    InputPlayback * playback;
-    gint playlist, entry;
-    const gchar * title;
+    gint playlist = playlist_get_playing ();
 
-    playback = ip_data.current_input_playback;
-    g_return_val_if_fail (playback != NULL, FALSE);
-
-    playlist = playlist_get_playing ();
-    entry = playlist_get_position (playlist);
-    playlist_entry_set_tuple (playlist, entry, tuple);
-
-    title = playlist_entry_get_title (playlist, entry);
-
-    if (title == NULL)
-        title = playlist_entry_get_filename (playlist, entry);
-
-    g_free (playback->title);
-    playback->title = g_strdup (title);
-    playback->length = playlist_entry_get_length (playlist, entry);
-
-    if (playback_is_ready (playback))
-        hook_call ("title change", NULL);
-
+    playlist_entry_set_tuple (playlist, playlist_get_position (playlist), tuple);
     return FALSE;
 }
 
@@ -674,8 +664,9 @@ gchar * playback_get_title (void)
      playback->length / 60000, playback->length / 1000 % 60) : NULL;
 
     if (cfg.show_numbers_in_pl)
-        title = g_strdup_printf ("%d. %s%s", 1 + playback_entry,
-         playback->title, (suffix != NULL) ? suffix : "");
+        title = g_strdup_printf ("%d. %s%s", 1 + playlist_get_position
+         (playlist_get_playing ()), playback->title, (suffix != NULL) ? suffix :
+         "");
     else
         title = g_strdup_printf ("%s%s", playback->title, (suffix !=
          NULL) ? suffix : "");
