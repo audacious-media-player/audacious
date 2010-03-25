@@ -107,7 +107,7 @@ struct entry
     gint length;
     gboolean failed;
     gboolean selected;
-    gboolean recent;
+    gboolean shuffle_num;
     gboolean queued;
     gboolean segmented;
     gint start;
@@ -122,6 +122,7 @@ struct playlist
     struct index *entries;
     struct entry *position;
     gint selected_count;
+    gint shuffle_num;
     GList *queued;
     gint64 total_length;
     gint64 selected_length;
@@ -241,7 +242,7 @@ static struct entry *entry_new(gchar * filename, InputPlugin * decoder, Tuple * 
     entry->failed = FALSE;
     entry->number = -1;
     entry->selected = FALSE;
-    entry->recent = FALSE;
+    entry->shuffle_num = 0;
     entry->queued = FALSE;
     entry->segmented = FALSE;
     entry->start = entry->end = -1;
@@ -282,6 +283,7 @@ static struct playlist *playlist_new(void)
     playlist->entries = index_new();
     playlist->position = NULL;
     playlist->selected_count = 0;
+    playlist->shuffle_num = 0;
     playlist->queued = NULL;
     playlist->total_length = 0;
     playlist->selected_length = 0;
@@ -939,6 +941,15 @@ gint playlist_entry_get_end_time (gint playlist_num, gint entry_num)
     return entry->end;
 }
 
+static void shuffle_to_top (struct playlist * playlist, struct entry * entry)
+{
+    if (entry->shuffle_num && entry->shuffle_num == playlist->shuffle_num)
+        return;
+
+    playlist->shuffle_num ++;
+    entry->shuffle_num = playlist->shuffle_num;
+}
+
 void playlist_set_position (gint playlist_num, gint entry_num)
 {
     DECLARE_PLAYLIST_ENTRY;
@@ -957,7 +968,7 @@ void playlist_set_position (gint playlist_num, gint entry_num)
     playlist->position = entry;
 
     if (entry != NULL)
-        entry->recent = TRUE;
+        shuffle_to_top (playlist, entry);
 
     SELECTION_HAS_CHANGED;
 
@@ -1585,6 +1596,31 @@ DONE:
     SELECTION_HAS_CHANGED;
 }
 
+static gboolean shuffle_prev (struct playlist * playlist)
+{
+    gint entries = index_count (playlist->entries), count;
+    struct entry * found = NULL;
+
+    for (count = 0; count < entries; count ++)
+    {
+        struct entry * entry = index_get (playlist->entries, count);
+
+        if (entry->shuffle_num > 0 && entry != playlist->position && (found ==
+         NULL || entry->shuffle_num > found->shuffle_num))
+            found = entry;
+    }
+
+    if (found == NULL)
+        return FALSE;
+
+    if (playlist->position != NULL)
+        playlist->position->shuffle_num = 0;
+
+    playlist->position = found;
+    playlist->shuffle_num = found->shuffle_num;
+    return TRUE;
+}
+
 gboolean playlist_prev_song(gint playlist_num)
 {
     DECLARE_PLAYLIST;
@@ -1601,6 +1637,11 @@ gboolean playlist_prev_song(gint playlist_num)
 
         playlist->position = playlist->queued->data;
     }
+    else if (cfg.shuffle)
+    {
+        if (! shuffle_prev (playlist))
+            return FALSE;
+    }
     else
     {
         if (playlist->position->number == 0)
@@ -1612,7 +1653,7 @@ gboolean playlist_prev_song(gint playlist_num)
     if (playlist == playing_playlist && playback_get_playing ())
         playback_stop();
 
-    playlist->position->recent = TRUE;
+    shuffle_to_top (playlist, playlist->position);
 
     SELECTION_HAS_CHANGED;
 
@@ -1620,7 +1661,7 @@ gboolean playlist_prev_song(gint playlist_num)
     return TRUE;
 }
 
-static struct entry * shuffle_next (struct playlist * playlist)
+static gboolean shuffle_next (struct playlist * playlist)
 {
     gint entries = index_count (playlist->entries), choice = 0, count;
 
@@ -1628,12 +1669,12 @@ static struct entry * shuffle_next (struct playlist * playlist)
     {
         struct entry * entry = index_get (playlist->entries, count);
 
-        if (! entry->recent)
+        if (! entry->shuffle_num)
             choice ++;
     }
 
     if (! choice)
-        return NULL;
+        return FALSE;
 
     choice = random () % choice;
 
@@ -1641,10 +1682,13 @@ static struct entry * shuffle_next (struct playlist * playlist)
     {
         struct entry * entry = index_get (playlist->entries, count);
 
-        if (! entry->recent)
+        if (! entry->shuffle_num)
         {
             if (! choice)
-                return entry;
+            {
+                playlist->position = entry;
+                return TRUE;
+            }
 
             choice --;
         }
@@ -1655,11 +1699,13 @@ static void shuffle_reset (struct playlist * playlist)
 {
     gint entries = index_count (playlist->entries), count;
 
+    playlist->shuffle_num = 0;
+
     for (count = 0; count < entries; count ++)
     {
         struct entry * entry = index_get (playlist->entries, count);
 
-        entry->recent = FALSE;
+        entry->shuffle_num = 0;
     }
 }
 
@@ -1684,18 +1730,16 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
         playlist->position = playlist->queued->data;
     else if (cfg.shuffle)
     {
-        struct entry * next = shuffle_next (playlist);
-
-        if (next == NULL)
+        if (! shuffle_next (playlist))
         {
             if (! repeat)
                 return FALSE;
 
             shuffle_reset (playlist);
-            next = shuffle_next (playlist);
-        }
 
-        playlist->position = next;
+            if (! shuffle_next (playlist))
+                return FALSE;
+        }
     }
     else
     {
@@ -1715,7 +1759,7 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
     if (playlist == playing_playlist && playback_get_playing ())
         playback_stop();
 
-    playlist->position->recent = TRUE;
+    shuffle_to_top (playlist, playlist->position);
 
     SELECTION_HAS_CHANGED;
 
@@ -1752,21 +1796,13 @@ void playlist_save_state (void)
 
         fprintf (handle, "playlist %d\n", playlist_num);
         fprintf (handle, "position %d\n", playlist_get_position (playlist_num));
+        fprintf (handle, "shuffled %d\n", playlist->shuffle_num);
 
-        for (count = 0; count < entries; count += 64)
+        for (count = 0; count < entries; count ++)
         {
-            guint64 code = 0;
-            gint count2;
+            struct entry * entry = index_get (playlist->entries, count);
 
-            for (count2 = 0; count2 < 64 && count + count2 < entries; count2 ++)
-            {
-                struct entry * entry = index_get (playlist->entries, count +
-                 count2);
-
-                code |= (guint64) entry->recent << count2;
-            }
-
-            fprintf (handle, "recent %" PRIx64 "\n", code);
+            fprintf (handle, "S %d\n", entry->shuffle_num);
         }
     }
 
@@ -1803,12 +1839,6 @@ static gboolean parse_integer (const gchar * key, gint * value)
 {
     return (parse_value != NULL && ! strcmp (parse_key, key) && sscanf
      (parse_value, "%d", value) == 1);
-}
-
-static gboolean parse_hex64 (const gchar * key, guint64 * value)
-{
-    return (parse_value != NULL && ! strcmp (parse_key, key) && sscanf
-     (parse_value, "%" PRIx64, value) == 1);
 }
 
 void playlist_load_state (void)
@@ -1852,22 +1882,18 @@ void playlist_load_state (void)
             parse_next (handle);
         }
 
-        for (count = 0; count < entries; count += 64)
+        if (parse_integer ("shuffled", & playlist->shuffle_num))
         {
-            guint64 code;
-            gint count2;
-
-            if (! parse_hex64 ("recent", & code))
-                break;
-
             parse_next (handle);
 
-            for (count2 = 0; count2 < 64 && count + count2 < entries; count2 ++)
+            for (count = 0; count < entries; count ++)
             {
-                struct entry * entry = index_get (playlist->entries, count +
-                 count2);
+                struct entry * entry = index_get (playlist->entries, count);
 
-                entry->recent = (code >> count2) & 1;
+                if (! parse_integer ("S", & entry->shuffle_num))
+                    break;
+
+                parse_next (handle);
             }
         }
     }
