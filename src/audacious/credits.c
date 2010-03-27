@@ -220,6 +220,7 @@ static const gchar *translators_text[] = {
     "Matthias Debus",
     "Michael Färber",
     "Michael Hanselmann",
+    "Thomas Lange",
     "Carl Trope",
     NULL,
     N_("Georgian:"),
