@@ -2,9 +2,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://bugzilla.atheme.org/\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
 "POT-Creation-Date: 2009-09-16 02:06+0300\n"
-"PO-Revision-Date: 2008-03-30 16:56+0100\n"
+"PO-Revision-Date: 2010-03-27 21:28+0100\n"
 "Last-Translator: Michael Färber <0102@gmx.at>\n"
 "Language-Team: german <psic4t@netbands.de>\n"
 "MIME-Version: 1.0\n"
@@ -1147,7 +1147,8 @@ msgstr "Wiedergabe"
 
 #: src/audacious/ui_preferences.c:127
 msgid "Playlist"
-msgstr "Wiedergabeliste"
+msgstr "Wiedergabe-\n"
+"Liste"
 
 #: src/audacious/ui_preferences.c:128
 msgid "Plugins"
@@ -1351,7 +1352,7 @@ msgstr "Mit der Wiedergabe am letzten Ort starten, wenn Audacious gestartet wird
 
 #: src/audacious/ui_preferences.c:234
 msgid "Don't advance in the playlist"
-msgstr "Nicht in der Wiedergabeliste weitergehen"
+msgstr "Nicht in der Wiedergabeliste fortfahren"
 
 #: src/audacious/ui_preferences.c:235
 msgid "When finished playing a song, don't automatically advance to the next."
