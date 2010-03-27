@@ -147,6 +147,12 @@ typedef struct {
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
+/* macro for debug print */
+#ifdef DEBUG
+#  define AUDDBG(...) do { g_print("%s:%d %s(): ", __FILE__, (int)__LINE__, __FUNCTION__); g_print(__VA_ARGS__); } while (0)
+#else
+#  define AUDDBG(...) do { } while (0)
+#endif
 
 /**
  * Audacious plugin API vtable.
