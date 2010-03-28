@@ -75,7 +75,17 @@ cfg_db_get_string(mcs_handle_t * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    return mcs_get_string(db, section, key, value);
+    if (! mcs_get_string (db, section, key, value))
+        return FALSE;
+
+    /* Prior to 2.3, NULL values were saved as "(null)". -jlindgren */
+    if (! strcmp (* value, "(null)"))
+    {
+        * value = NULL;
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 /**
@@ -180,7 +190,10 @@ cfg_db_set_string(mcs_handle_t * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_string(db, section, key, value);
+    if (value == NULL)
+        mcs_unset_key (db, section, key);
+    else
+        mcs_set_string (db, section, key, value);
 }
 
 /**
