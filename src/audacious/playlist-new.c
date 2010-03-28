@@ -122,7 +122,7 @@ struct playlist
     struct index *entries;
     struct entry *position;
     gint selected_count;
-    gint shuffle_num;
+    gint shuffle_num, last_shuffle_num;
     GList *queued;
     gint64 total_length;
     gint64 selected_length;
@@ -284,6 +284,7 @@ static struct playlist *playlist_new(void)
     playlist->position = NULL;
     playlist->selected_count = 0;
     playlist->shuffle_num = 0;
+    playlist->last_shuffle_num = 0;
     playlist->queued = NULL;
     playlist->total_length = 0;
     playlist->selected_length = 0;
@@ -689,6 +690,22 @@ gint playlist_get_playing(void)
     return (playing_playlist == NULL) ? -1 : playing_playlist->number;
 }
 
+static void set_position (struct playlist * playlist, struct entry * entry)
+{
+    playlist->position = entry;
+
+    if (entry == NULL)
+        return;
+
+    if (! entry->shuffle_num || entry->shuffle_num != playlist->last_shuffle_num)
+    {
+        playlist->last_shuffle_num ++;
+        entry->shuffle_num = playlist->last_shuffle_num;
+    }
+
+    playlist->shuffle_num = entry->shuffle_num;
+}
+
 gint playlist_entry_count(gint playlist_num)
 {
     DECLARE_PLAYLIST;
@@ -805,7 +822,7 @@ void playlist_entry_delete(gint playlist_num, gint at, gint number)
         if (entry == playlist->position)
         {
             stop = (playlist == playing_playlist);
-            playlist->position = NULL;
+            set_position (playlist, NULL);
         }
 
         if (entry->selected)
@@ -941,15 +958,6 @@ gint playlist_entry_get_end_time (gint playlist_num, gint entry_num)
     return entry->end;
 }
 
-static void shuffle_to_top (struct playlist * playlist, struct entry * entry)
-{
-    if (entry->shuffle_num && entry->shuffle_num == playlist->shuffle_num)
-        return;
-
-    playlist->shuffle_num ++;
-    entry->shuffle_num = playlist->shuffle_num;
-}
-
 void playlist_set_position (gint playlist_num, gint entry_num)
 {
     DECLARE_PLAYLIST_ENTRY;
@@ -965,10 +973,7 @@ void playlist_set_position (gint playlist_num, gint entry_num)
     if (playlist == playing_playlist && playback_get_playing ())
         playback_stop ();
 
-    playlist->position = entry;
-
-    if (entry != NULL)
-        shuffle_to_top (playlist, entry);
+    set_position (playlist, entry);
 
     SELECTION_HAS_CHANGED;
 
@@ -1211,7 +1216,7 @@ void playlist_delete_selected(gint playlist_num)
             if (entry == playlist->position)
             {
                 stop = (playlist == playing_playlist);
-                playlist->position = NULL;
+                set_position (playlist, NULL);
             }
 
             if (entry->queued)
@@ -1605,16 +1610,13 @@ static gboolean shuffle_prev (struct playlist * playlist)
     {
         struct entry * entry = index_get (playlist->entries, count);
 
-        if (entry->shuffle_num > 0 && entry != playlist->position && (found ==
-         NULL || entry->shuffle_num > found->shuffle_num))
+        if (entry->shuffle_num && entry->shuffle_num < playlist->shuffle_num &&
+         (found == NULL || entry->shuffle_num > found->shuffle_num))
             found = entry;
     }
 
     if (found == NULL)
         return FALSE;
-
-    if (playlist->position != NULL)
-        playlist->position->shuffle_num = 0;
 
     playlist->position = found;
     playlist->shuffle_num = found->shuffle_num;
@@ -1627,15 +1629,12 @@ gboolean playlist_prev_song(gint playlist_num)
 
     LOOKUP_PLAYLIST_RET (FALSE);
 
-    if (playlist->position == NULL)
-        return FALSE;
-
     if (playlist->queued != NULL)
     {
         if (playlist->position == playlist->queued->data)
             return FALSE;
 
-        playlist->position = playlist->queued->data;
+        set_position (playlist, playlist->queued->data);
     }
     else if (cfg.shuffle)
     {
@@ -1644,16 +1643,15 @@ gboolean playlist_prev_song(gint playlist_num)
     }
     else
     {
-        if (playlist->position->number == 0)
+        if (playlist->position == NULL || playlist->position->number == 0)
             return FALSE;
 
-        playlist->position = index_get(playlist->entries, playlist->position->number - 1);
+        set_position (playlist, index_get (playlist->entries,
+         playlist->position->number - 1));
     }
 
     if (playlist == playing_playlist && playback_get_playing ())
         playback_stop();
-
-    shuffle_to_top (playlist, playlist->position);
 
     SELECTION_HAS_CHANGED;
 
@@ -1664,6 +1662,7 @@ gboolean playlist_prev_song(gint playlist_num)
 static gboolean shuffle_next (struct playlist * playlist)
 {
     gint entries = index_count (playlist->entries), choice = 0, count;
+    struct entry * found = NULL;
 
     for (count = 0; count < entries; count ++)
     {
@@ -1671,6 +1670,16 @@ static gboolean shuffle_next (struct playlist * playlist)
 
         if (! entry->shuffle_num)
             choice ++;
+        else if (entry->shuffle_num > playlist->shuffle_num && (found == NULL ||
+         entry->shuffle_num < found->shuffle_num))
+            found = entry;
+    }
+
+    if (found != NULL)
+    {
+        playlist->position = found;
+        playlist->shuffle_num = found->shuffle_num;
+        return TRUE;
     }
 
     if (! choice)
@@ -1686,7 +1695,7 @@ static gboolean shuffle_next (struct playlist * playlist)
         {
             if (! choice)
             {
-                playlist->position = entry;
+                set_position (playlist, entry);
                 return TRUE;
             }
 
@@ -1700,6 +1709,7 @@ static void shuffle_reset (struct playlist * playlist)
     gint entries = index_count (playlist->entries), count;
 
     playlist->shuffle_num = 0;
+    playlist->last_shuffle_num = 0;
 
     for (count = 0; count < entries; count ++)
     {
@@ -1727,7 +1737,7 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
     }
 
     if (playlist->queued != NULL)
-        playlist->position = playlist->queued->data;
+        set_position (playlist, playlist->queued->data);
     else if (cfg.shuffle)
     {
         if (! shuffle_next (playlist))
@@ -1744,22 +1754,21 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
     else
     {
         if (playlist->position == NULL)
-            playlist->position = index_get(playlist->entries, 0);
+            set_position (playlist, index_get (playlist->entries, 0));
         else if (playlist->position->number == entries - 1)
         {
             if (!repeat)
                 return FALSE;
 
-            playlist->position = index_get(playlist->entries, 0);
+            set_position (playlist, index_get (playlist->entries, 0));
         }
         else
-            playlist->position = index_get(playlist->entries, playlist->position->number + 1);
+            set_position (playlist, index_get (playlist->entries,
+             playlist->position->number + 1));
     }
 
     if (playlist == playing_playlist && playback_get_playing ())
         playback_stop();
-
-    shuffle_to_top (playlist, playlist->position);
 
     SELECTION_HAS_CHANGED;
 
@@ -1797,6 +1806,7 @@ void playlist_save_state (void)
         fprintf (handle, "playlist %d\n", playlist_num);
         fprintf (handle, "position %d\n", playlist_get_position (playlist_num));
         fprintf (handle, "shuffled %d\n", playlist->shuffle_num);
+        fprintf (handle, "last-shuffled %d\n", playlist->last_shuffle_num);
 
         for (count = 0; count < entries; count ++)
         {
@@ -1877,24 +1887,25 @@ void playlist_load_state (void)
         parse_next (handle);
 
         if (parse_integer ("position", & position))
-        {
-            playlist_set_position (playlist_num, position);
             parse_next (handle);
-        }
+
+        if (position >= 0 && position < entries)
+            playlist->position = index_get (playlist->entries, position);
 
         if (parse_integer ("shuffled", & playlist->shuffle_num))
-        {
             parse_next (handle);
 
-            for (count = 0; count < entries; count ++)
-            {
-                struct entry * entry = index_get (playlist->entries, count);
+        if (parse_integer ("last-shuffled", & playlist->last_shuffle_num))
+            parse_next (handle);
+        else /* compatibility with 2.3 beta */
+            playlist->last_shuffle_num = playlist->shuffle_num;
 
-                if (! parse_integer ("S", & entry->shuffle_num))
-                    break;
+        for (count = 0; count < entries; count ++)
+        {
+            struct entry * entry = index_get (playlist->entries, count);
 
+            if (parse_integer ("S", & entry->shuffle_num))
                 parse_next (handle);
-            }
         }
     }
 
