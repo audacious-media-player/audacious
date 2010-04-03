@@ -41,5 +41,6 @@ void output_init (void);
 void output_cleanup (void);
 void set_current_output_plugin (OutputPlugin * plugin);
 gint get_output_time (void);
+void output_drain (void);
 
 #endif /* AUDACIOUS_OUTPUT_H */

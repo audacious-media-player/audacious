@@ -1008,12 +1008,13 @@ struct _OutputPlugin {
     void (* set_written_time) (gint time);
     void (*flush) (gint time);
     void (*pause) (gshort paused);
-    gint (*buffer_free) (void);
-    gint (*buffer_playing) (void);
+    gint (*buffer_free) (void); /* obsolete */
+    gint (*buffer_playing) (void); /* obsolete */
     gint (*output_time) (void);
     gint (*written_time) (void);
 
-    void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch);
+    void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch); /* obsolete */
+    void (* drain) (void);
 };
 
 struct _EffectPlugin {

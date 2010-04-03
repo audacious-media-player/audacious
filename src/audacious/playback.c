@@ -287,6 +287,7 @@ void playback_stop (void)
     ip_data.playing = FALSE;
     ip_data.stop = FALSE;
 
+    output_drain ();
     hook_call ("playback stop", NULL);
 }
 
@@ -333,6 +334,7 @@ static gboolean playback_ended (void * user_data)
 
         if (! play)
         {
+            output_drain ();
             hook_call ("playback stop", NULL);
             break;
         }

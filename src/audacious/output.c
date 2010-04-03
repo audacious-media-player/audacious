@@ -86,7 +86,6 @@ void output_set_volume (gint l, gint r)
 
 static GMutex * output_mutex;
 static gboolean output_opened, output_leave_open, output_paused;
-static gint output_close_source;
 
 static AFormat decoder_format, output_format;
 static gint decoder_channels, decoder_rate, effect_channels, effect_rate,
@@ -112,7 +111,6 @@ static void drain (void);
 /* output_mutex must be locked */
 static void real_close (void)
 {
-    REMOVE_SOURCE (output_close_source);
     new_effect_flush ();
     vis_runner_start_stop (FALSE, FALSE);
     COP->close_audio ();
@@ -130,9 +128,6 @@ void output_init (void)
 
 void output_cleanup (void)
 {
-    if (playback_get_playing ())
-        playback_stop ();
-
     LOCK;
 
     if (output_leave_open)
@@ -155,8 +150,6 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
 
     if (output_leave_open)
     {
-        REMOVE_SOURCE (output_close_source);
-
         if (channels == decoder_channels && rate == decoder_rate &&
          COP->set_written_time != NULL)
         {
@@ -203,33 +196,11 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
     return output_opened;
 }
 
-static gboolean close_cb (void * unused)
-{
-    gboolean playing;
-
-    LOCK;
-    playing = COP->buffer_playing ();
-
-    if (! playing)
-        real_close ();
-
-    UNLOCK;
-    return playing;
-}
-
 static void output_close_audio (void)
 {
     LOCK;
 
-    if (output_paused)
-        output_leave_open = FALSE;
-
-    if (output_leave_open)
-    {
-        output_close_source = g_timeout_add (30, close_cb, NULL);
-        output_opened = FALSE;
-    }
-    else
+    if (! output_leave_open)
         real_close ();
 
     UNLOCK;
@@ -269,9 +240,16 @@ static gint get_written_time (void)
 
 static gboolean output_buffer_playing (void)
 {
-    write_buffers ();
     LOCK;
-    output_leave_open = TRUE;
+
+    if (! output_paused)
+    {
+        UNLOCK;
+        write_buffers ();
+        LOCK;
+        output_leave_open = TRUE;
+    }
+
     UNLOCK;
     return FALSE;
 }
@@ -485,8 +463,13 @@ static void drain (void)
 {
     write_buffers ();
 
-    while (COP->buffer_playing ())
-        g_usleep (30000);
+    if (COP->buffer_playing != NULL)
+    {
+        while (COP->buffer_playing ())
+            g_usleep (30000);
+    }
+    else
+        COP->drain ();
 }
 
 struct OutputAPI output_api =
@@ -516,6 +499,21 @@ gint get_output_time (void)
 
     UNLOCK;
     return time;
+}
+
+void output_drain (void)
+{
+    LOCK;
+
+    if (output_leave_open)
+    {
+        UNLOCK;
+        drain ();
+        LOCK;
+        real_close ();
+    }
+
+    UNLOCK;
 }
 
 void set_current_output_plugin (OutputPlugin * plugin)
