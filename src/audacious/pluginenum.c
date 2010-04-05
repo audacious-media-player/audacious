@@ -859,7 +859,7 @@ void plugin_system_cleanup(void)
         ep_data.effect_list = NULL;
     }
 
-    for (node = get_general_list(); node; node = g_list_next(node))
+    for (node = get_general_enabled_list (); node; node = g_list_next (node))
     {
         gp = GENERAL_PLUGIN(node->data);
         if (gp)
