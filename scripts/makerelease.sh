@@ -30,7 +30,7 @@ if [ "x$2" = "x--automatic" ]; then
 	AUTOMATIC="yes"
 fi
 
-TIP=`hg tip --template "#rev#:#node|short#"`
+TIP=`hg tip --template "{rev}:{node|short}"`
 
 WRKDIR=`pwd`
 
@@ -46,7 +46,7 @@ echo "Building root: $RELEASENAME/"
 hg archive $RELEASENAME
 cd $RELEASENAME
 sh autogen.sh
-rm -rf autogen.sh autom4te.cache
+rm -rf autogen.sh autom4te.cache .hg_archival.txt .hgignore .hgtags .indent.pro
 
 # Run application specific instructions here.
 if [ -x "$WRKDIR/application.sh" ]; then
