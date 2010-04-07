@@ -26,8 +26,8 @@
 #include "main.h"
 #include "plugin.h"
 #include "rcfile.h"
+#include "equalizer.h"
 #include "equalizer_preset.h"
-#include "equalizer_flow.h"
 
 EqualizerPreset *
 equalizer_preset_new(const gchar * name)

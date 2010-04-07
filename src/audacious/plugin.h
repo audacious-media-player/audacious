@@ -55,7 +55,6 @@
 #include "audacious/preferences.h"
 #include "audacious/interface.h"
 #include "audacious/equalizer_preset.h"
-#include "libaudtag/audtag.h"
 
 //@{
 /** Plugin type cast macros */
@@ -100,6 +99,8 @@ enum {
     PLAYLIST_SORT_TRACK,
     PLAYLIST_SORT_SCHEMES
 };
+
+#define EQUALIZER_MAX_GAIN 12
 
 typedef struct _Plugin        Plugin;
 typedef struct _InputPlugin   InputPlugin;

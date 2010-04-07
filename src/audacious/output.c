@@ -26,7 +26,7 @@
 #include "audio.h"
 #include "audconfig.h"
 #include "effect.h"
-#include "equalizer_flow.h"
+#include "equalizer.h"
 #include "flow.h"
 #include "output.h"
 #include "playback.h"
@@ -179,6 +179,8 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
         effect_rate = rate;
         new_effect_start (& effect_channels, & effect_rate);
 
+        eq_set_format (effect_channels, effect_rate);
+
         output_format = cfg.output_bit_depth == 32 ? FMT_S32_NE :
          cfg.output_bit_depth == 24 ? FMT_S24_NE : cfg.output_bit_depth == 16 ?
          FMT_S16_NE : FMT_FLOAT;
@@ -252,19 +254,6 @@ static gboolean output_buffer_playing (void)
 
     UNLOCK;
     return FALSE;
-}
-
-static Flow * get_postproc_flow (void)
-{
-    static Flow * flow = NULL;
-
-    if (flow == NULL)
-    {
-        flow = flow_new ();
-        flow_link_element (flow, equalizer_flow);
-    }
-
-    return flow;
 }
 
 static Flow * get_legacy_flow (void)
@@ -358,8 +347,7 @@ static void do_write (void * data, gint samples)
 {
     void * allocated = NULL;
 
-    samples = flow_execute (get_postproc_flow (), 0, & data, sizeof (gfloat) *
-     samples, FMT_FLOAT, effect_rate, effect_channels) / sizeof (gfloat);
+    eq_filter (data, samples);
 
     if (data != allocated)
     {

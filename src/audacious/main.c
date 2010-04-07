@@ -532,7 +532,7 @@ gint main(gint argc, gchar ** argv)
     }
 
     playlist_system_init();
-    init_equalizer ();
+    eq_init ();
 
     g_message("Handling commandline options, part #2");
     handle_cmd_line_options();
