@@ -67,7 +67,7 @@ void eq_set_format (gint new_channels, gint new_rate)
         bp2 (a[k], b[k], CF[k] / (gfloat) rate, Q);
 
     /* Reset state */
-    memset (wqv[0][0], sizeof wqv, 0);
+    memset (wqv[0][0], 0, sizeof wqv);
 }
 
 static void eq_set_channel_bands (gint channel, gfloat * bands)
