@@ -3,8 +3,7 @@ include ../../extra.mk
 SUBDIRS = ${INTL_OBJECTIVE}
 
 PROG = audacious2${PROG_SUFFIX}
-SRCS = af_equalizer.c							\
-       auddrct.c								\
+SRCS = auddrct.c								\
        audconfig.c								\
        build_stamp.c							\
        chardet.c								\
@@ -12,7 +11,6 @@ SRCS = af_equalizer.c							\
        credits.c							\
        effect.c									\
        equalizer.c								\
-       equalizer_flow.c							\
        equalizer_preset.c						\
        eventqueue.c								\
        fft.c									\
