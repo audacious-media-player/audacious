@@ -363,10 +363,10 @@ filename_split_subtune(const gchar * filename, gint * track)
     return result;
 }
 
-void string_replace_char (gchar * string, gchar old, gchar new)
+void string_replace_char (gchar * string, gchar old_str, gchar new_str)
 {
-    while ((string = strchr (string, old)) != NULL)
-        * string = new;
+    while ((string = strchr (string, old_str)) != NULL)
+        * string = new_str;
 }
 
 static gchar get_hex_digit(gchar **get)
