@@ -129,10 +129,12 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		-I.. -I../..			\
 		-I./intl			\
 		-I.				\
-		-I../libaudcore
+		-I../libaudcore			\
+		-I../libaudtag
 
 LIBS += ${LDADD}						\
 		-L../libaudcore -laudcore	\
+		-L../libaudtag -laudtag		\
 		${LIBINTL}						\
 		../libguess/libguess.a			\
 		${EGGSM_LIBS}					\

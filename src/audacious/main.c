@@ -58,6 +58,7 @@
 #include "util.h"
 #include "vfs.h"
 #include "chardet.h"
+#include "audtag.h"
 
 #include "ui_headless.h"
 #include "ui_misc.h"
@@ -463,6 +464,7 @@ gint main(gint argc, gchar ** argv)
     gdk_threads_init();
     mowgli_init();
     chardet_init();
+    tag_init();
 
     hook_init();
     hook_associate("quit", quit_cb, 0);
