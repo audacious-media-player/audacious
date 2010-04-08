@@ -17,36 +17,14 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef LIBAUDGUI_H
-#define LIBAUDGUI_H
+#ifndef AUDACIOUS_UI_PLAYLIST_MANAGER_H
+#define AUDACIOUS_UI_PLAYLIST_MANAGER_H
 
-#include <glib.h>
-
-/* macro defines for Audacious stock icons */
-#define AUD_STOCK_PLAYLIST    "aud-playlist"
-#define AUD_STOCK_PLUGIN      "aud-plugin"
-#define AUD_STOCK_QUEUETOGGLE "aud-queuetoggle"
-#define AUD_STOCK_RANDOMIZEPL "aud-randomizepl"
-
-void audgui_register_stock_icons(void);
-
-void audgui_show_add_url_window(void);
-
-void audgui_jump_to_track(void);
-void audgui_jump_to_track_hide(void);
-
-void audgui_set_default_icon(void);
-
-void audgui_run_filebrowser(gboolean clear_pl_on_ok);
-void audgui_hide_filebrowser(void);
-
-void audgui_show_about_window(void);
-void audgui_hide_about_window(void);
+#include <gtk/gtk.h>
 
 void audgui_playlist_manager_update(void);
 void audgui_playlist_manager_ui_show(GtkWidget *mainwin);
 void audgui_playlist_manager_destroy(void);
-
 void audgui_confirm_playlist_delete(gint playlist);
 
-#endif /* LIBAUDGUI_H */
+#endif /* AUDACIOUS_UI_PLAYLIST_MANAGER_H */

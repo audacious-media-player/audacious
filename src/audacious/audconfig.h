@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2008  Audacious development team
+ *  Copyright (C) 2005-2010  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -76,6 +76,7 @@ struct _AudConfig {
     gboolean clear_playlist;
     gchar * output_path;
     gint output_number;
+    gboolean no_confirm_playlist_delete;
 };
 
 typedef struct _AudConfig AudConfig;
