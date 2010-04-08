@@ -10,11 +10,10 @@ SRCS = audtag.c		\
        id3/id3.c	\
        ape/ape.c	\
        aac/aac.c
-INCLUDES = audtag.h util.h
+INCLUDES = audtag.h
 
 include ../../buildsys.mk
 include ../../extra.mk
-includesubdir = libaudtag
 
 CPPFLAGS += ${LIB_CPPFLAGS} ${GLIB_CFLAGS} ${MOWGLI_CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
 CFLAGS += ${LIB_CFLAGS}
