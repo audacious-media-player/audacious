@@ -697,7 +697,10 @@ static void set_position (struct playlist * playlist, struct entry * entry)
     if (entry == NULL)
         return;
 
-    if (! entry->shuffle_num || entry->shuffle_num != playlist->last_shuffle_num)
+    /* If we are already at the song or it is already at the top of the shuffle
+     * list, we let it be.  Otherwise, we move it to the top. */
+    if (! entry->shuffle_num || (entry->shuffle_num != playlist->shuffle_num &&
+     playlist->last_shuffle_num))
     {
         playlist->last_shuffle_num ++;
         entry->shuffle_num = playlist->last_shuffle_num;
