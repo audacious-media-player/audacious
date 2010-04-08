@@ -149,7 +149,7 @@ LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
 build_stamp.c:
 	echo "#include <glib.h>" > build_stamp.c ; \
 	if test -d ../../.hg ; then \
-		revh=`hg tip --template 'const gchar *build_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
+		revh=`hg tip --template 'const gchar *build_stamp = "{rev}:{node|short}";\n' 2>/dev/null`; \
 		[ -z "$$revh" ] || echo "$$revh" >> build_stamp.c; \
 	else \
 		echo "const gchar *build_stamp = \"UNSUPPORTED VERSION\";" >> build_stamp.c; \
