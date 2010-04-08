@@ -93,20 +93,6 @@ str_replace_drive_letter(gchar * str)
     return str;
 }
 
-static gchar *
-str_replace_char(gchar * str, gchar o, gchar n)
-{
-    gchar *match;
-
-    g_return_val_if_fail(str != NULL, NULL);
-
-    match = str;
-    while ((match = strchr(match, o)) != NULL)
-        *match = n;
-
-    return str;
-}
-
 gchar *
 str_append(gchar * str, const gchar * add_str)
 {
@@ -312,7 +298,7 @@ convert_dos_path(gchar * path)
     str_replace_drive_letter(path);
 
     /* replace '\' with '/' */
-    str_replace_char(path, '\\', '/');
+    string_replace_char (path, '\\', '/');
 
     return path;
 }
@@ -375,6 +361,12 @@ filename_split_subtune(const gchar * filename, gint * track)
         *pos = '\0';
 
     return result;
+}
+
+void string_replace_char (gchar * string, gchar old, gchar new)
+{
+    while ((string = strchr (string, old)) != NULL)
+        * string = new;
 }
 
 static gchar get_hex_digit(gchar **get)

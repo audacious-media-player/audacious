@@ -31,6 +31,7 @@
 #include <string.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <sys/types.h>
 #include <dirent.h>
@@ -62,7 +63,7 @@
 
 GtkWidget *fileinfo_win = NULL;
 
-GtkWidget *entry_location;
+GtkWidget * location_text;
 GtkWidget *entry_title;
 GtkWidget *entry_artist;
 GtkWidget *entry_album;
@@ -273,7 +274,6 @@ fileinfo_hide(gpointer unused)
     fileinfo_entry_set_text(gtk_bin_get_child(GTK_BIN(entry_genre)), "");
     fileinfo_entry_set_text(entry_year, "");
     fileinfo_entry_set_text(entry_track, "");
-    fileinfo_entry_set_text(entry_location, "");
 
     fileinfo_label_set_text(label_format_name, NULL);
     fileinfo_label_set_text(label_quality, NULL);
@@ -699,13 +699,19 @@ create_fileinfo_window(void)
     gtk_label_set_use_markup(GTK_LABEL(label_location), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_location), 0, 0.5);
 
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox2), alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 0, 0);
+    alignment = gtk_alignment_new (0, 0, 0, 0);
+    gtk_alignment_set_padding ((GtkAlignment *) alignment, 3, 6, 25, 0);
+    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
 
-    entry_location = gtk_entry_new();
-    gtk_container_add(GTK_CONTAINER(alignment), entry_location);
-    gtk_editable_set_editable(GTK_EDITABLE(entry_location), FALSE);
+    location_text = gtk_label_new ("");
+    gtk_widget_set_size_request (location_text, 375, -1);
+    gtk_label_set_line_wrap ((GtkLabel *) location_text, TRUE);
+#if GTK_CHECK_VERSION (2, 10, 0)
+    gtk_label_set_line_wrap_mode ((GtkLabel *) location_text,
+     PANGO_WRAP_WORD_CHAR);
+#endif
+    gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
+    gtk_container_add ((GtkContainer *) alignment, location_text);
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     hbox = gtk_hbox_new(FALSE, 0);
@@ -786,6 +792,38 @@ create_fileinfo_window(void)
     gtk_widget_show_all (vbox0);
 }
 
+/*  Converts filenames (in place) for easy reading, thus:
+ *
+ *  file:///home/me/Music/My song.ogg  ->  Music
+ *                                         My song.ogg
+ *
+ *  file:///media/disk/My song.ogg  ->  /
+ *                                      media
+ *                                      disk
+ *                                      My song.ogg
+ */
+static gchar * easy_read_filename (gchar * file)
+{
+    const gchar * home;
+    gint len;
+
+    if (strncmp (file, "file:///", 8))
+        return file;
+
+    home = getenv ("HOME");
+    len = (home == NULL) ? 0 : strlen (home);
+    len = (len > 0 && home[len - 1] == '/') ? len - 1 : len;
+
+    if (len > 0 && ! strncmp (file + 7, home, len) && file[len + 7] == '/')
+    {
+        string_replace_char (file + len + 8, '/', '\n');
+        return file + len + 8;
+    }
+
+    string_replace_char (file + 7, '/', '\n');
+    return file + 6;
+}
+
 static void
 fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
 {
@@ -823,10 +861,8 @@ fileinfo_show_for_tuple(Tuple *tuple, gboolean updating_enabled)
             tuple_get_string(tuple, FIELD_FILE_PATH, NULL),
             tuple_get_string(tuple, FIELD_FILE_NAME, NULL));
 
-    if (tmp) {
-        fileinfo_entry_set_text(entry_location, tmp);
-        g_free(tmp);
-    }
+    gtk_label_set_text ((GtkLabel *) location_text, easy_read_filename (tmp));
+    g_free (tmp);
 
     /* set empty string if field not availaible. --eugene */
     set_entry_int_from_field(entry_year, tuple, FIELD_YEAR, updating_enabled);
