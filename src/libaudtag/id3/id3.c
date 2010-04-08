@@ -290,7 +290,7 @@ Tuple *assocStrInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header
   TextInformationFrame *frame = g_new0(TextInformationFrame,1);
   frame->header = header;
   frame = readTextFrame(fd,frame);
-/*  AUDDBG("field = %s\n",frame->text);*/
+  AUDDBG("field %i = %s\n",field,frame->text);
   tuple_associate_string(tuple, field, NULL, frame->text);
   return tuple;
 }
@@ -300,7 +300,7 @@ Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header
   TextInformationFrame *frame = g_new0(TextInformationFrame,1);
   frame->header = header;
   frame = readTextFrame(fd,frame);
-/*  AUDDBG("field = %s\n",frame->text);*/
+  AUDDBG("field %i = %s\n",field,frame->text);
   tuple_associate_int(tuple, field, NULL, atoi(frame->text));
   return tuple;
 }
@@ -422,58 +422,46 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
         switch(id)
         {
             case ID3_ALBUM:
-            {
                 tuple = assocStrInfo(tuple,f,FIELD_ALBUM,*header);
-            }break;
+                break;
             case ID3_TITLE:
-            {
                 tuple = assocStrInfo(tuple,f,FIELD_TITLE,*header);
-            }break;
+		break;
             case ID3_COMPOSER:
-            {
-             //   tuple = assocInfo(tuple,f,FIELD_ARTIST,*header);
-            }break;
-            case ID3_COPYRIGHT:
-            {
-                tuple = assocStrInfo(tuple,f,FIELD_COPYRIGHT,*header);
-            }break;
-            case ID3_DATE:
-            {
-                tuple = assocStrInfo(tuple,f,FIELD_DATE,*header);
-            }break;
-            case ID3_TIME:
-            {
-             //   tuple = assocIntInfo(tuple,f,FIELD_LENGTH,*header);
-            }break;
-            case ID3_LENGTH:
-            {
-                tuple = assocIntInfo(tuple,f,FIELD_LENGTH,*header);
-            }break;
-            case ID3_ARTIST:
-            {
                 tuple = assocStrInfo(tuple,f,FIELD_ARTIST,*header);
-            }break;
+                break;
+            case ID3_COPYRIGHT:
+                tuple = assocStrInfo(tuple,f,FIELD_COPYRIGHT,*header);
+                break;
+            case ID3_DATE:
+                tuple = assocStrInfo(tuple,f,FIELD_DATE,*header);
+                break;
+            case ID3_TIME:
+                tuple = assocIntInfo(tuple,f,FIELD_LENGTH,*header);
+                break;
+            case ID3_LENGTH:
+                tuple = assocIntInfo(tuple,f,FIELD_LENGTH,*header);
+                break;
+            case ID3_ARTIST:
+                tuple = assocStrInfo(tuple,f,FIELD_ARTIST,*header);
+                break;
             case ID3_TRACKNR:
-            {
                 tuple = assocIntInfo(tuple,f,FIELD_TRACK_NUMBER,*header);
-            }break;
+                break;
             case ID3_YEAR:
-            {
                 tuple = assocIntInfo(tuple,f,FIELD_YEAR,*header);
-            }break;
+                break;
             case ID3_GENRE:
-            {
                 tuple = assocStrInfo(tuple,f,FIELD_GENRE,*header);
-            }break;
+                break;
             case ID3_COMMENT:
-            {
                 tuple = assocStrInfo(tuple,f,FIELD_COMMENT,*header);
-            }break;
+                break;
             default:
-            {
+		AUDDBG("Unknown ID value %i\n", id);
+		AUDDBG("Skipping one frame worth %i bytes\n", header->size);
                 //we a a frame that I dont need so skip it
                 skipFrame(f,header->size);
-            }
         }
     }
     return tuple;
