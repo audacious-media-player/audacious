@@ -30,6 +30,8 @@
 static const gfloat CF[EQ_BANDS] = {60, 170, 310, 600, 1000, 3000, 6000, 12000,
  14000, 16000};
 
+static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static gboolean active;
 static gint channels, rate;
 static gfloat a[EQ_BANDS][2]; /* A weights */
 static gfloat b[EQ_BANDS][2]; /* B weights */
@@ -53,6 +55,8 @@ void eq_set_format (gint new_channels, gint new_rate)
 {
     gint k;
 
+    g_static_mutex_lock (& mutex);
+
     channels = new_channels;
     rate = new_rate;
 
@@ -68,6 +72,8 @@ void eq_set_format (gint new_channels, gint new_rate)
 
     /* Reset state */
     memset (wqv[0][0], 0, sizeof wqv);
+
+    g_static_mutex_unlock (& mutex);
 }
 
 static void eq_set_channel_bands (gint channel, gfloat * bands)
@@ -94,8 +100,13 @@ void eq_filter (gfloat * data, gint samples)
 {
     gint channel;
 
-    if (! cfg.equalizer_active)
+    g_static_mutex_lock (& mutex);
+
+    if (! active)
+    {
+        g_static_mutex_unlock (& mutex);
         return;
+    }
 
     for (channel = 0; channel < channels; channel ++)
     {
@@ -127,11 +138,18 @@ void eq_filter (gfloat * data, gint samples)
             * f = yt;
         }
     }
+
+    g_static_mutex_unlock (& mutex);
 }
 
 static void eq_update (void * data, void * user_data)
 {
+    g_static_mutex_lock (& mutex);
+
+    active = cfg.equalizer_active;
     eq_set_bands (cfg.equalizer_preamp, cfg.equalizer_bands);
+
+    g_static_mutex_unlock (& mutex);
 }
 
 void eq_init (void)
