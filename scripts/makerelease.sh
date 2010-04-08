@@ -46,7 +46,7 @@ echo "Building root: $RELEASENAME/"
 hg archive $RELEASENAME
 cd $RELEASENAME
 rm -rf .hg_archival.txt .hgignore .hgtags
-rm -rf .indent.pro scripts src/libaudacious++ src/libaudtag src/tests
+rm -rf .indent.pro scripts src/libaudacious++ src/tests
 sh autogen.sh
 rm -rf autogen.sh autom4te.cache
 
