@@ -10,7 +10,8 @@ SRCS = effects-menu.c \
        ui_jumptotrack_cache.c \
        icons-stock.c \
        ui_about.c \
-       ui_credits.c
+       ui_credits.c \
+       ui_playlist_manager.c
 
 INCLUDES = libaudgui.h \
            libaudgui-gtk.h

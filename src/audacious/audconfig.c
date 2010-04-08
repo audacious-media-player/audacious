@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2008  Audacious development team.
+ *  Copyright (C) 2005-2010  Audacious development team.
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -138,7 +138,8 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
-    {"clear_playlist", & cfg.clear_playlist, TRUE},
+    {"clear_playlist", &cfg.clear_playlist, TRUE},
+    {"no_confirm_playlist_delete", &cfg.no_confirm_playlist_delete, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
