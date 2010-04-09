@@ -417,6 +417,8 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
     while(pos < header->size)
     {
         ID3v2FrameHeader *header = readID3v2FrameHeader(f);
+        if (header->size == 0)
+            break;
         int id = getFrameID(header);
         pos = pos + header->size + 10;
         switch(id)
@@ -458,7 +460,7 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
                 tuple = assocStrInfo(tuple,f,FIELD_COMMENT,*header);
                 break;
             default:
-		AUDDBG("Unknown ID value %i\n", id);
+		AUDDBG("No mapping for ID3 tag %s\n", header->frame_id);
 		AUDDBG("Skipping one frame worth %i bytes\n", header->size);
                 //we a a frame that I dont need so skip it
                 skipFrame(f,header->size);
