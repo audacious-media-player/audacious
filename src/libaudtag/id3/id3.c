@@ -29,8 +29,6 @@
 
 #define TAG_SIZE 1
 
-/* reading stuff */
-
 gchar *read_iso8859_1(VFSFile * fd, int size)
 {
     gchar *value = g_new0(gchar, size);
@@ -43,7 +41,7 @@ gchar *read_iso8859_1(VFSFile * fd, int size)
 }
 
 /*
- * Read UTF-16 from the tag and return an uft-8 string for the tuple
+ * Read UTF-16 from the tag and return an UTF-8 string for the tuple
  */
 gchar *read_unicode(VFSFile * fd, int size)
 {
@@ -153,8 +151,6 @@ void readAllFrames(VFSFile * fd, int framesSize)
 
 }
 
-
-/* writing stuff */
 void write_int32(VFSFile * fd, guint32 val)
 {
     guint32 be_val = GUINT32_TO_BE(val);
@@ -163,7 +159,7 @@ void write_int32(VFSFile * fd, guint32 val)
 
 void write_syncsafe_int32(VFSFile * fd, guint32 val)
 {
-    //TODO write the corrent function - this is just for testing
+    //TODO write the correct function - this is just for testing
     int i = 0;
     guint32 tmp = 0x0;
     guint32 mask = 0x7f;
@@ -405,9 +401,7 @@ gboolean id3_can_handle_file(VFSFile * f)
 
 Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
 {
-    //reset file position
     vfs_fseek(f, 0, SEEK_SET);
-//    Tuple *tuple = tuple_new_from_filename(f->uri);
     ExtendedHeader *extHeader;
     ID3v2Header *header = readHeader(f);
     int pos = 0;
@@ -462,7 +456,6 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
           default:
               AUDDBG("No mapping for ID3 tag %s\n", header->frame_id);
               AUDDBG("Skipping one frame worth %i bytes\n", header->size);
-              //we a a frame that I dont need so skip it
               skipFrame(f, header->size);
         }
     }
@@ -499,14 +492,12 @@ gboolean id3_write_tuple_to_file(Tuple * tuple, VFSFile * f)
     frames = mowgli_dictionary_create(strcasecmp);
     readAllFrames(f, header->size);
 
-    //make the new frames from tuple and replace in the dictinonary the old frames with the new ones
+    //make the new frames from tuple and replace in the dictionary the old frames with the new ones
     if (tuple_get_string(tuple, FIELD_ARTIST, NULL))
         add_frameFromTupleStr(tuple, FIELD_ARTIST, ID3_ARTIST);
 
-
     if (tuple_get_string(tuple, FIELD_TITLE, NULL))
         add_frameFromTupleStr(tuple, FIELD_TITLE, ID3_TITLE);
-
 
     if (tuple_get_string(tuple, FIELD_ALBUM, NULL))
         add_frameFromTupleStr(tuple, FIELD_ALBUM, ID3_ALBUM);
