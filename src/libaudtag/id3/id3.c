@@ -31,8 +31,7 @@
 
 gchar *read_iso8859_1(VFSFile * fd, int size)
 {
-    gchar *value = g_new0(gchar, size);
-    vfs_fread(value, size, 1, fd);
+    gchar *value = read_char_data(fd, size);
     GError *error = NULL;
     gsize bytes_read = 0, bytes_write = 0;
     gchar *retVal = g_convert(value, size, "UTF-8", "ISO-8859-1", &bytes_read, &bytes_write, &error);
@@ -45,13 +44,21 @@ gchar *read_iso8859_1(VFSFile * fd, int size)
  */
 gchar *read_unicode(VFSFile * fd, int size)
 {
-    gchar *value = g_new0(gchar, size);
-    vfs_fread(value, size, 1, fd);
+    gchar *value = read_char_data(fd, size);
     GError *error = NULL;
     gsize bytes_read = 0, bytes_write = 0;
     gchar *retVal = g_convert(value, size, "UTF-8", "UTF-16", &bytes_read, &bytes_write, &error);
     g_free(value);
     return retVal;
+}
+
+/*
+ * Read UTF-8 from the tag
+ */
+gchar *read_utf8(VFSFile * fd, int size)
+{
+    gchar *value = read_char_data(fd, size);
+    return value;
 }
 
 guint32 read_syncsafe_int32(VFSFile * fd)
@@ -102,29 +109,28 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
 TextInformationFrame *readTextFrame(VFSFile * fd, TextInformationFrame * frame)
 {
     frame->encoding = read_char_data(fd, 1)[0];
-
-    if (frame->encoding == 0)
-        frame->text = read_iso8859_1(fd, frame->header.size - 1);
-
-    if (frame->encoding == 1)
-        frame->text = read_unicode(fd, frame->header.size - 1);
+    switch (frame->encoding) {
+        case 0:
+             frame->text = read_iso8859_1(fd, frame->header.size - 1);
+             break;
+        case 1:
+        case 2:
+             frame->text = read_unicode(fd, frame->header.size - 1);
+             break;
+        case 3:
+             frame->text = read_char_data(fd, frame->header.size - 1);
+             break;
+        default:
+             AUDDBG("Throwing away %i bytes of text due to invalid encoding schema %i", frame->header.size - 1, frame->encoding);
+    }
     return frame;
 }
 
 
-gchar *readFrameBody(VFSFile * fd, int size)
-{
-    if (size == 0)
-        return NULL;
-    gchar *b = g_new0(gchar, size);
-    vfs_fread(b, size, 1, fd);
-    return b;
-}
-
 GenericFrame *readGenericFrame(VFSFile * fd, GenericFrame * gf)
 {
     gf->header = readID3v2FrameHeader(fd);
-    gf->frame_body = readFrameBody(fd, gf->header->size);
+    gf->frame_body = read_char_data(fd, gf->header->size);
 
     return gf;
 }
