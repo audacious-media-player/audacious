@@ -34,7 +34,7 @@ Tuple *tag_tuple_read(Tuple * tuple, VFSFile * fd)
 {
     tag_module_t *mod = find_tag_module(fd);
     g_return_val_if_fail(mod != NULL, NULL);
-    AUDDBG("OK\n");
+    AUDDBG("Tag module %s has accepted %s\n", mod->name, fd->uri);
     return mod->populate_tuple_from_file(tuple, fd);
 }
 
