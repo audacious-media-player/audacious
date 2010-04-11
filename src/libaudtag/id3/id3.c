@@ -292,6 +292,8 @@ Tuple *assocStrInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield,
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
     frame = readTextFrame(fd, frame);
+    if (frame->text == NULL)
+        return tuple;
     if ((field == -1) && (customfield != NULL))
     {
         AUDDBG("custom field %s = %s\n", customfield, frame->text);
@@ -308,6 +310,8 @@ Tuple *assocIntInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield,
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
     frame = readTextFrame(fd, frame);
+    if (frame->text == NULL)
+        return tuple;
     if ((field == -1) && (customfield != NULL))
     {
         AUDDBG("custom field %s = %s\n", customfield, frame->text);
@@ -315,6 +319,18 @@ Tuple *assocIntInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield,
     } else {
         AUDDBG("field %i = %s\n", field, frame->text);
         tuple_associate_int(tuple, field, NULL, atoi(frame->text));
+    }
+    return tuple;
+}
+
+Tuple *decodePrivateInfo(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
+{
+    gchar *value = read_char_data(fd, header->size);
+    if (!strncmp(value, "WM/", 3))
+    {
+       AUDDBG("Windows Media tag: %s\n", value);
+    } else {
+       AUDDBG("Unable to decode private data, skipping: %s\n", value);
     }
     return tuple;
 }
@@ -475,6 +491,15 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               break;
           case ID3_COMMENT:
               tuple = assocStrInfo(tuple, f, FIELD_COMMENT, NULL, *frame);
+              break;
+          case ID3_PRIVATE:
+              tuple = decodePrivateInfo(tuple, f, frame);
+              break;
+          case ID3_ENCODER:
+              tuple = assocStrInfo(tuple, f, -1, "encoder", *frame);
+              break;
+          case ID3_RECORDING_TIME:
+              tuple = assocIntInfo(tuple, f, FIELD_YEAR, NULL, *frame);
               break;
           default:
               AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);
