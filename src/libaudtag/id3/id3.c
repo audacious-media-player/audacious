@@ -406,7 +406,10 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
     ID3v2Header *header = readHeader(f);
     int pos = 0;
     if (isExtendedHeader(header))
+    {
         extHeader = readExtendedHeader(f);
+        vfs_fseek(f, 10 + extHeader->header_size, SEEK_SET);
+    }
 
     while (pos < header->size)
     {
