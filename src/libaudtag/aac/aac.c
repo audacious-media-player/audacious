@@ -25,40 +25,41 @@
 #include "aac.h"
 #include "../util.h"
 
-static const char* ID3v1GenreList[] = {
-                                       "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk",
-                                       "Grunge", "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies",
-                                       "Other", "Pop", "R&B", "Rap", "Reggae", "Rock",
-                                       "Techno", "Industrial", "Alternative", "Ska", "Death Metal", "Pranks",
-                                       "Soundtrack", "Euro-Techno", "Ambient", "Trip-Hop", "Vocal", "Jazz+Funk",
-                                       "Fusion", "Trance", "Classical", "Instrumental", "Acid", "House",
-                                       "Game", "Sound Clip", "Gospel", "Noise", "AlternRock", "Bass",
-                                       "Soul", "Punk", "Space", "Meditative", "Instrumental Pop", "Instrumental Rock",
-                                       "Ethnic", "Gothic", "Darkwave", "Techno-Industrial", "Electronic", "Pop-Folk",
-                                       "Eurodance", "Dream", "Southern Rock", "Comedy", "Cult", "Gangsta",
-                                       "Top 40", "Christian Rap", "Pop/Funk", "Jungle", "Native American", "Cabaret",
-                                       "New Wave", "Psychadelic", "Rave", "Showtunes", "Trailer", "Lo-Fi",
-                                       "Tribal", "Acid Punk", "Acid Jazz", "Polka", "Retro", "Musical",
-                                       "Rock & Roll", "Hard Rock", "Folk", "Folk/Rock", "National Folk", "Swing",
-                                       "Fast-Fusion", "Bebob", "Latin", "Revival", "Celtic", "Bluegrass", "Avantgarde",
-                                       "Gothic Rock", "Progressive Rock", "Psychedelic Rock", "Symphonic Rock", "Slow Rock", "Big Band",
-                                       "Chorus", "Easy Listening", "Acoustic", "Humour", "Speech", "Chanson",
-                                       "Opera", "Chamber Music", "Sonata", "Symphony", "Booty Bass", "Primus",
-                                       "Porn Groove", "Satire", "Slow Jam", "Club", "Tango", "Samba",
-                                       "Folklore", "Ballad", "Power Ballad", "Rhythmic Soul", "Freestyle", "Duet",
-                                       "Punk Rock", "Drum Solo", "A capella", "Euro-House", "Dance Hall",
-                                       "Goa", "Drum & Bass", "Club House", "Hardcore", "Terror",
-                                       "Indie", "BritPop", "NegerPunk", "Polsk Punk", "Beat",
-                                       "Christian Gangsta", "Heavy Metal", "Black Metal", "Crossover", "Contemporary C",
-                                       "Christian Rock", "Merengue", "Salsa", "Thrash Metal", "Anime", "JPop",
-                                       "SynthPop",
+static const char *ID3v1GenreList[] = {
+    "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk",
+    "Grunge", "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies",
+    "Other", "Pop", "R&B", "Rap", "Reggae", "Rock",
+    "Techno", "Industrial", "Alternative", "Ska", "Death Metal", "Pranks",
+    "Soundtrack", "Euro-Techno", "Ambient", "Trip-Hop", "Vocal", "Jazz+Funk",
+    "Fusion", "Trance", "Classical", "Instrumental", "Acid", "House",
+    "Game", "Sound Clip", "Gospel", "Noise", "AlternRock", "Bass",
+    "Soul", "Punk", "Space", "Meditative", "Instrumental Pop", "Instrumental Rock",
+    "Ethnic", "Gothic", "Darkwave", "Techno-Industrial", "Electronic", "Pop-Folk",
+    "Eurodance", "Dream", "Southern Rock", "Comedy", "Cult", "Gangsta",
+    "Top 40", "Christian Rap", "Pop/Funk", "Jungle", "Native American", "Cabaret",
+    "New Wave", "Psychadelic", "Rave", "Showtunes", "Trailer", "Lo-Fi",
+    "Tribal", "Acid Punk", "Acid Jazz", "Polka", "Retro", "Musical",
+    "Rock & Roll", "Hard Rock", "Folk", "Folk/Rock", "National Folk", "Swing",
+    "Fast-Fusion", "Bebob", "Latin", "Revival", "Celtic", "Bluegrass", "Avantgarde",
+    "Gothic Rock", "Progressive Rock", "Psychedelic Rock", "Symphonic Rock", "Slow Rock", "Big Band",
+    "Chorus", "Easy Listening", "Acoustic", "Humour", "Speech", "Chanson",
+    "Opera", "Chamber Music", "Sonata", "Symphony", "Booty Bass", "Primus",
+    "Porn Groove", "Satire", "Slow Jam", "Club", "Tango", "Samba",
+    "Folklore", "Ballad", "Power Ballad", "Rhythmic Soul", "Freestyle", "Duet",
+    "Punk Rock", "Drum Solo", "A capella", "Euro-House", "Dance Hall",
+    "Goa", "Drum & Bass", "Club House", "Hardcore", "Terror",
+    "Indie", "BritPop", "NegerPunk", "Polsk Punk", "Beat",
+    "Christian Gangsta", "Heavy Metal", "Black Metal", "Crossover", "Contemporary C",
+    "Christian Rock", "Merengue", "Salsa", "Thrash Metal", "Anime", "JPop",
+    "SynthPop",
 };
 
-gchar* atom_types[] = {"\251alb", "\251nam", "cprt", "\251art", "\251ART", "trkn", "\251day", "gnre", "desc"};
+gchar *atom_types[] = { "\251alb", "\251nam", "cprt", "\251art", "\251ART", "trkn", "\251day", "gnre", "desc" };
 
-tag_module_t aac = {aac_can_handle_file, aac_populate_tuple_from_file, aac_write_tuple_to_file};
+tag_module_t aac = { aac_can_handle_file, aac_populate_tuple_from_file, aac_write_tuple_to_file };
 
-Atom *readAtom(VFSFile *fd) {
+Atom *readAtom(VFSFile * fd)
+{
     Atom *atom = g_new0(Atom, 1);
     atom->size = read_BEuint32(fd);
     atom->name = read_char_data(fd, 4);
@@ -67,18 +68,21 @@ Atom *readAtom(VFSFile *fd) {
     return atom;
 }
 
-void writeAtom(VFSFile *fd, Atom *atom) {
+void writeAtom(VFSFile * fd, Atom * atom)
+{
     write_BEuint32(fd, atom->size);
     vfs_fwrite(atom->name, 4, 1, fd);
     vfs_fwrite(atom->body, atom->size - 8, 1, fd);
 }
 
-void printAtom(Atom *atom) {
+void printAtom(Atom * atom)
+{
     AUDDBG("size = %x\n", atom->size);
     AUDDBG("name = %s\n", atom->name);
 }
 
-StrDataAtom *readStrDataAtom(VFSFile *fd) {
+StrDataAtom *readStrDataAtom(VFSFile * fd)
+{
     StrDataAtom *atom = g_new0(StrDataAtom, 1);
     atom->atomsize = read_BEuint32(fd);
     atom->name = read_char_data(fd, 4);
@@ -91,7 +95,8 @@ StrDataAtom *readStrDataAtom(VFSFile *fd) {
     return atom;
 }
 
-void writeStrDataAtom(VFSFile *fd, StrDataAtom *atom) {
+void writeStrDataAtom(VFSFile * fd, StrDataAtom * atom)
+{
     write_BEuint32(fd, atom->atomsize);
     vfs_fwrite(atom->name, 4, 1, fd);
     write_BEuint32(fd, atom->datasize);
@@ -101,7 +106,8 @@ void writeStrDataAtom(VFSFile *fd, StrDataAtom *atom) {
     vfs_fwrite(atom->data, atom->datasize - 16, 1, fd);
 }
 
-Atom *findAtom(VFSFile *fd, gchar* name) {
+Atom *findAtom(VFSFile * fd, gchar * name)
+{
     Atom *atom = readAtom(fd);
     while (strcmp(atom->name, name) && !vfs_feof(fd))
     {
@@ -117,7 +123,8 @@ Atom *findAtom(VFSFile *fd, gchar* name) {
     return atom;
 }
 
-Atom *getilstAtom(VFSFile *fd) {
+Atom *getilstAtom(VFSFile * fd)
+{
     Atom *moov = findAtom(fd, MOOV);
 
     // search atom childs
@@ -140,7 +147,8 @@ Atom *getilstAtom(VFSFile *fd) {
 
 }
 
-int getAtomID(gchar* name) {
+int getAtomID(gchar * name)
+{
     g_return_val_if_fail(name != NULL, -1);
     int i = 0;
     for (i = 0; i < MP4_ITEMS_NO; i++)
@@ -151,7 +159,8 @@ int getAtomID(gchar* name) {
     return -1;
 }
 
-StrDataAtom *makeAtomWithData(const gchar* data, StrDataAtom *atom, int field) {
+StrDataAtom *makeAtomWithData(const gchar * data, StrDataAtom * atom, int field)
+{
     guint32 charsize = strlen(data);
     atom->atomsize = charsize + 24;
     atom->name = atom_types[field];
@@ -159,13 +168,14 @@ StrDataAtom *makeAtomWithData(const gchar* data, StrDataAtom *atom, int field) {
     atom->dataname = "data";
     atom->vflag = 0x0;
     atom->nullData = 0x0;
-    atom->data = (gchar*) data;
+    atom->data = (gchar *) data;
     atom->type = 1;
     return atom;
 
 }
 
-void writeAtomListToFile(VFSFile* from, VFSFile *to, int offset, mowgli_list_t *list) {
+void writeAtomListToFile(VFSFile * from, VFSFile * to, int offset, mowgli_list_t * list)
+{
     //read free atom if we have any :D
     guint32 oset = ilstFileOffset + ilstAtom->size;
     vfs_fseek(from, oset, SEEK_SET);
@@ -193,13 +203,15 @@ void writeAtomListToFile(VFSFile* from, VFSFile *to, int offset, mowgli_list_t *
 
     mowgli_node_t *n, *tn;
 
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, list->head) {
-        if (((Atom*) (n->data))->type == 0)
+    MOWGLI_LIST_FOREACH_SAFE(n, tn, list->head)
+    {
+        if (((Atom *) (n->data))->type == 0)
         {
-            writeAtom(to, (Atom*) (n->data));
-        } else
+            writeAtom(to, (Atom *) (n->data));
+        }
+        else
         {
-            writeStrDataAtom(to, (StrDataAtom*) (n->data));
+            writeStrDataAtom(to, (StrDataAtom *) (n->data));
         }
     }
 
@@ -207,8 +219,9 @@ void writeAtomListToFile(VFSFile* from, VFSFile *to, int offset, mowgli_list_t *
     if (atoms_before_free->count != 0)
     {
 
-        MOWGLI_LIST_FOREACH_SAFE(n, tn, list->head) {
-            writeAtom(to, (Atom*) (n->data));
+        MOWGLI_LIST_FOREACH_SAFE(n, tn, list->head)
+        {
+            writeAtom(to, (Atom *) (n->data));
         }
     }
     if (atom != NULL)
@@ -218,14 +231,16 @@ void writeAtomListToFile(VFSFile* from, VFSFile *to, int offset, mowgli_list_t *
     writeAtom(to, atom);
 }
 
-gboolean aac_can_handle_file(VFSFile *f) {
+gboolean aac_can_handle_file(VFSFile * f)
+{
     Atom *first_atom = readAtom(f);
     if (!strcmp(first_atom->name, FTYP))
         return TRUE;
     return FALSE;
 }
 
-Tuple *aac_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
+Tuple *aac_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
+{
     if (ilstAtom)
         g_free(ilstAtom);
     ilstAtom = getilstAtom(f);
@@ -235,7 +250,8 @@ Tuple *aac_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
     {
         mowgli_node_t *n, *tn;
 
-        MOWGLI_LIST_FOREACH_SAFE(n, tn, dataAtoms->head) {
+        MOWGLI_LIST_FOREACH_SAFE(n, tn, dataAtoms->head)
+        {
             mowgli_node_delete(n, dataAtoms);
         }
     }
@@ -258,55 +274,56 @@ Tuple *aac_populate_tuple_from_file(Tuple *tuple, VFSFile *f) {
 
         switch (atomtype)
         {
-            case MP4_ALBUM:
-            {
-                tuple_associate_string(tuple, FIELD_ALBUM, NULL, a->data);
-            }
-                break;
-            case MP4_TITLE:
-            {
-                tuple_associate_string(tuple, FIELD_TITLE, NULL, a->data);
-            }
-                break;
-            case MP4_COPYRIGHT:
-            {
-                tuple_associate_string(tuple, FIELD_COPYRIGHT, NULL, a->data);
-            }
-                break;
-            case MP4_ARTIST:
-            case MP4_ARTIST2:
-            {
-                tuple_associate_string(tuple, FIELD_ARTIST, NULL, a->data);
-            }
-                break;
-            case MP4_TRACKNR:
-            {
-                //tuple_associate_string(tuple,FIELD_ALBUM,NULL,a->data);
-            }
-                break;
-            case MP4_YEAR:
-            {
-                tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(a->data));
-            }
-                break;
-            case MP4_GENRE:
-            {
-                guint8 *val = (guint8*) (a->data + (a->datasize - 17));
-                const gchar* genre = ID3v1GenreList[*val - 1];
-                tuple_associate_string(tuple, FIELD_GENRE, NULL, genre);
-            }
-                break;
-            case MP4_COMMENT:
-            {
-                tuple_associate_string(tuple, FIELD_COMMENT, NULL, a->data);
-            }
-                break;
+          case MP4_ALBUM:
+          {
+              tuple_associate_string(tuple, FIELD_ALBUM, NULL, a->data);
+          }
+              break;
+          case MP4_TITLE:
+          {
+              tuple_associate_string(tuple, FIELD_TITLE, NULL, a->data);
+          }
+              break;
+          case MP4_COPYRIGHT:
+          {
+              tuple_associate_string(tuple, FIELD_COPYRIGHT, NULL, a->data);
+          }
+              break;
+          case MP4_ARTIST:
+          case MP4_ARTIST2:
+          {
+              tuple_associate_string(tuple, FIELD_ARTIST, NULL, a->data);
+          }
+              break;
+          case MP4_TRACKNR:
+          {
+              //tuple_associate_string(tuple,FIELD_ALBUM,NULL,a->data);
+          }
+              break;
+          case MP4_YEAR:
+          {
+              tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(a->data));
+          }
+              break;
+          case MP4_GENRE:
+          {
+              guint8 *val = (guint8 *) (a->data + (a->datasize - 17));
+              const gchar *genre = ID3v1GenreList[*val - 1];
+              tuple_associate_string(tuple, FIELD_GENRE, NULL, genre);
+          }
+              break;
+          case MP4_COMMENT:
+          {
+              tuple_associate_string(tuple, FIELD_COMMENT, NULL, a->data);
+          }
+              break;
         }
     }
     return tuple;
 }
 
-gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f) {
+gboolean aac_write_tuple_to_file(Tuple * tuple, VFSFile * f)
+{
 #ifdef BROKEN
     return FALSE;
 #endif
@@ -315,129 +332,136 @@ gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f) {
     mowgli_list_t *newdataAtoms;
     newdataAtoms = mowgli_list_create();
 
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, dataAtoms->head) {
-        int atomtype = getAtomID(((StrDataAtom*) (n->data))->name);
+    MOWGLI_LIST_FOREACH_SAFE(n, tn, dataAtoms->head)
+    {
+        int atomtype = getAtomID(((StrDataAtom *) (n->data))->name);
         switch (atomtype)
         {
-            case MP4_ALBUM:
-            {
-                const gchar* strVal = tuple_get_string(tuple, FIELD_ALBUM, NULL);
-                if (strVal != NULL)
-                {
-                    StrDataAtom *atom = g_new0(StrDataAtom, 1);
-                    atom = makeAtomWithData(strVal, atom, MP4_ALBUM);
-                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
-                    newilstSize += atom->atomsize;
-                } else
-                {
-                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                    newilstSize += ((Atom*) (n->data))->size;
-                }
-            }
-                break;
-            case MP4_TITLE:
-            {
-                const gchar* strVal = tuple_get_string(tuple, FIELD_TITLE, NULL);
-                if (strVal != NULL)
-                {
-                    StrDataAtom *atom = g_new0(StrDataAtom, 1);
-                    atom = makeAtomWithData(strVal, atom, MP4_TITLE);
-                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
-                    newilstSize += atom->atomsize;
-                } else
-                {
-                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                    newilstSize += ((Atom*) (n->data))->size;
-                }
-            }
-                break;
-            case MP4_COPYRIGHT:
-            {
-                const gchar* strVal = tuple_get_string(tuple, FIELD_COPYRIGHT, NULL);
-                if (strVal != NULL)
-                {
-                    StrDataAtom *atom = g_new0(StrDataAtom, 1);
-                    atom = makeAtomWithData(strVal, atom, MP4_COPYRIGHT);
-                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
-                    newilstSize += atom->atomsize;
-                } else
-                {
-                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                    newilstSize += ((Atom*) (n->data))->size;
-                }
-            }
-                break;
-            case MP4_ARTIST:
-            case MP4_ARTIST2:
-            {
-                const gchar* strVal = tuple_get_string(tuple, FIELD_ARTIST, NULL);
-                if (strVal != NULL)
-                {
-                    StrDataAtom *atom = g_new0(StrDataAtom, 1);
-                    atom = makeAtomWithData(strVal, atom, MP4_ARTIST2);
-                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
-                    newilstSize += atom->atomsize;
-                } else
-                {
-                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                    newilstSize += ((Atom*) (n->data))->size;
-                }
-            }
-                break;
-            case MP4_TRACKNR:
-            {
-                //tuple_associate_string(tuple,FIELD_ALBUM,NULL,a->data);
-            }
-                break;
-            case MP4_YEAR:
-            {
-                int iyear = tuple_get_int(tuple, FIELD_YEAR, NULL);
-                gchar* strVal = g_strdup_printf("%d", iyear);
-                if (strVal != NULL)
-                {
-                    StrDataAtom *atom = g_new0(StrDataAtom, 1);
-                    atom = makeAtomWithData(strVal, atom, MP4_YEAR);
-                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
-                    newilstSize += atom->atomsize;
-                } else
-                {
-                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                    newilstSize += ((Atom*) (n->data))->size;
-                }
-            }
-                break;
-                /*
-                            case MP4_GENRE:
-                            {
+          case MP4_ALBUM:
+          {
+              const gchar *strVal = tuple_get_string(tuple, FIELD_ALBUM, NULL);
+              if (strVal != NULL)
+              {
+                  StrDataAtom *atom = g_new0(StrDataAtom, 1);
+                  atom = makeAtomWithData(strVal, atom, MP4_ALBUM);
+                  mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                  newilstSize += atom->atomsize;
+              }
+              else
+              {
+                  mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                  newilstSize += ((Atom *) (n->data))->size;
+              }
+          }
+              break;
+          case MP4_TITLE:
+          {
+              const gchar *strVal = tuple_get_string(tuple, FIELD_TITLE, NULL);
+              if (strVal != NULL)
+              {
+                  StrDataAtom *atom = g_new0(StrDataAtom, 1);
+                  atom = makeAtomWithData(strVal, atom, MP4_TITLE);
+                  mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                  newilstSize += atom->atomsize;
+              }
+              else
+              {
+                  mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                  newilstSize += ((Atom *) (n->data))->size;
+              }
+          }
+              break;
+          case MP4_COPYRIGHT:
+          {
+              const gchar *strVal = tuple_get_string(tuple, FIELD_COPYRIGHT, NULL);
+              if (strVal != NULL)
+              {
+                  StrDataAtom *atom = g_new0(StrDataAtom, 1);
+                  atom = makeAtomWithData(strVal, atom, MP4_COPYRIGHT);
+                  mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                  newilstSize += atom->atomsize;
+              }
+              else
+              {
+                  mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                  newilstSize += ((Atom *) (n->data))->size;
+              }
+          }
+              break;
+          case MP4_ARTIST:
+          case MP4_ARTIST2:
+          {
+              const gchar *strVal = tuple_get_string(tuple, FIELD_ARTIST, NULL);
+              if (strVal != NULL)
+              {
+                  StrDataAtom *atom = g_new0(StrDataAtom, 1);
+                  atom = makeAtomWithData(strVal, atom, MP4_ARTIST2);
+                  mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                  newilstSize += atom->atomsize;
+              }
+              else
+              {
+                  mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                  newilstSize += ((Atom *) (n->data))->size;
+              }
+          }
+              break;
+          case MP4_TRACKNR:
+          {
+              //tuple_associate_string(tuple,FIELD_ALBUM,NULL,a->data);
+          }
+              break;
+          case MP4_YEAR:
+          {
+              int iyear = tuple_get_int(tuple, FIELD_YEAR, NULL);
+              gchar *strVal = g_strdup_printf("%d", iyear);
+              if (strVal != NULL)
+              {
+                  StrDataAtom *atom = g_new0(StrDataAtom, 1);
+                  atom = makeAtomWithData(strVal, atom, MP4_YEAR);
+                  mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                  newilstSize += atom->atomsize;
+              }
+              else
+              {
+                  mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                  newilstSize += ((Atom *) (n->data))->size;
+              }
+          }
+              break;
+              /*
+                 case MP4_GENRE:
+                 {
 
-                                guint8 *val = (guint8*)(a->data + (a->datasize-17));
-                                const gchar* genre = ID3v1GenreList[*val-1];
-                                tuple_associate_string(tuple,FIELD_GENRE,NULL,genre);
+                 guint8 *val = (guint8*)(a->data + (a->datasize-17));
+                 const gchar* genre = ID3v1GenreList[*val-1];
+                 tuple_associate_string(tuple,FIELD_GENRE,NULL,genre);
 
-                            }break;
-                 */
-            case MP4_COMMENT:
-            {
-                const gchar* strVal = tuple_get_string(tuple, FIELD_COMMENT, NULL);
-                if (strVal != NULL)
-                {
-                    StrDataAtom *atom = g_new0(StrDataAtom, 1);
-                    atom = makeAtomWithData(strVal, atom, MP4_COMMENT);
-                    mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
-                    newilstSize += atom->atomsize;
-                } else
-                {
-                    mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                    newilstSize += ((Atom*) (n->data))->size;
-                }
-            }
-                break;
-            default:
-            {
-                mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
-                newilstSize += ((Atom*) (n->data))->size;
-            }
-                break;
+                 }break;
+               */
+          case MP4_COMMENT:
+          {
+              const gchar *strVal = tuple_get_string(tuple, FIELD_COMMENT, NULL);
+              if (strVal != NULL)
+              {
+                  StrDataAtom *atom = g_new0(StrDataAtom, 1);
+                  atom = makeAtomWithData(strVal, atom, MP4_COMMENT);
+                  mowgli_node_add(atom, mowgli_node_create(), newdataAtoms);
+                  newilstSize += atom->atomsize;
+              }
+              else
+              {
+                  mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+                  newilstSize += ((Atom *) (n->data))->size;
+              }
+          }
+              break;
+          default:
+          {
+              mowgli_node_add(n->data, mowgli_node_create(), newdataAtoms);
+              newilstSize += ((Atom *) (n->data))->size;
+          }
+              break;
         }
     }
 

@@ -38,13 +38,13 @@ void init_tag_modules(void)
 
 tag_module_t *find_tag_module(VFSFile * fd)
 {
-   mowgli_node_t *mod, *tmod;
-   MOWGLI_LIST_FOREACH_SAFE(mod, tmod, tag_modules.head)
-   {
-       vfs_fseek(fd,0,SEEK_SET);
-     if (((tag_module_t*)(mod->data))->can_handle_file(fd))
-       return (tag_module_t*)(mod->data);
-   }
+    mowgli_node_t *mod, *tmod;
+    MOWGLI_LIST_FOREACH_SAFE(mod, tmod, tag_modules.head)
+    {
+        vfs_fseek(fd, 0, SEEK_SET);
+        if (((tag_module_t *) (mod->data))->can_handle_file(fd))
+            return (tag_module_t *) (mod->data);
+    }
 
     AUDDBG("no module found\n");
     return NULL;
