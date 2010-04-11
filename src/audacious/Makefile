@@ -94,7 +94,7 @@ DATA = images/about-logo.png				\
        ui/playlist.ui						\
        ui/carbon-menubar.ui
 
-CLEAN = build_stamp.c libaudacious.exe.a
+CLEAN = build_stamp.c dbus-client-bindings.h dbus-server-bindings.h
 EXT_DEPS = ../libguess/libguess.a
 
 ifeq ($(USE_EGGSM),yes)
