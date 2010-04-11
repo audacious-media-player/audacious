@@ -84,7 +84,7 @@ ID3v2Header *readHeader(VFSFile * fd)
 ExtendedHeader *readExtendedHeader(VFSFile * fd)
 {
     ExtendedHeader *header = g_new0(ExtendedHeader, 1);
-    header->header_size = read_BEuint32(fd);
+    header->header_size = read_syncsafe_int32(fd);
     header->flags = read_LEuint16(fd);
     header->padding_size = read_BEuint32(fd);
     return header;
