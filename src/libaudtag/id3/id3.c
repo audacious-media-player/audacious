@@ -457,8 +457,7 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               tuple = assocStrInfo(tuple, f, FIELD_COMMENT, *header);
               break;
           default:
-              AUDDBG("No mapping for ID3 tag %s\n", header->frame_id);
-              AUDDBG("Skipping one frame worth %i bytes\n", header->size);
+              AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", header->size, header->frame_id);
               skipFrame(f, header->size);
         }
     }
