@@ -27,8 +27,6 @@
 
 #define APE_IDENTIFIER "APETAGEX"
 
-tag_module_t ape = { ape_can_handle_file, ape_populate_tuple_from_file, ape_write_tuple_to_file };
-
 gchar *ape_items[] = { "Album", "Title", "Copyright", "Artist", "Track", "Year", "Genre", "Comment" };
 
 /* reading fucntions */

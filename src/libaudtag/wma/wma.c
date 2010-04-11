@@ -28,8 +28,6 @@
 #include "module.h"
 #include "../util.h"
 
-tag_module_t wma = { wma_can_handle_file, wma_populate_tuple_from_file, wma_write_tuple_to_file };
-
 /* static functions */
 static GenericHeader *read_generic_header(VFSFile * f, gboolean read_data)
 {

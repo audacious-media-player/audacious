@@ -56,8 +56,6 @@ static const char *ID3v1GenreList[] = {
 
 gchar *atom_types[] = { "\251alb", "\251nam", "cprt", "\251art", "\251ART", "trkn", "\251day", "gnre", "desc" };
 
-tag_module_t aac = { aac_can_handle_file, aac_populate_tuple_from_file, aac_write_tuple_to_file };
-
 Atom *readAtom(VFSFile * fd)
 {
     Atom *atom = g_new0(Atom, 1);

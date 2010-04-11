@@ -35,6 +35,7 @@ int number_of_modules;
 typedef Tuple* pTuple;
 
 typedef struct _module {
+    gchar *name;
     gboolean(*can_handle_file) (VFSFile *fd);
     pTuple(*populate_tuple_from_file)(Tuple *tuple, VFSFile* fd);
     gboolean(*write_tuple_to_file) (Tuple * tuple, VFSFile *fd);

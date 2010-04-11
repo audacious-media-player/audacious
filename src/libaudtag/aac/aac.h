@@ -66,21 +66,21 @@ typedef struct strdataatom
     int type;
 }StrDataAtom;
 
-
-
-gboolean aac_can_handle_file(VFSFile *f);
-
-Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
-
-gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f);
-
-extern tag_module_t aac;
-
 Atom *ilstAtom;
 guint64 ilstFileOffset;
 guint32 newilstSize ;
 mowgli_list_t *dataAtoms;
 mowgli_dictionary_t *ilstAtoms;
 
-#endif
+/* TAG plugin API */
+gboolean aac_can_handle_file(VFSFile *f);
+Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
+gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
+static const tag_module_t aac = {
+    .name = "AAC",
+    .can_handle_file = aac_can_handle_file,
+    .populate_tuple_from_file = aac_populate_tuple_from_file,
+    .write_tuple_to_file = aac_write_tuple_to_file,
+};
+#endif

@@ -58,15 +58,19 @@ typedef struct tagitem
     gchar* value;
 }APETagItem;
 
-gboolean ape_can_handle_file(VFSFile *f);
-
-Tuple *ape_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
-
-gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f);
-
-extern tag_module_t ape;
 mowgli_dictionary_t *tagItems;
 mowgli_list_t *tagKeys;
 guint32 headerPosition ;
 
+/* TAG plugin API */
+gboolean ape_can_handle_file(VFSFile *f);
+Tuple *ape_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
+gboolean ape_write_tuple_to_file(Tuple* tuple, VFSFile *f);
+
+static const tag_module_t ape = {
+    .name = "APE",
+    .can_handle_file = ape_can_handle_file,
+    .populate_tuple_from_file = ape_populate_tuple_from_file,
+    .write_tuple_to_file = ape_write_tuple_to_file,
+};
 #endif

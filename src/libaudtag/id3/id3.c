@@ -29,8 +29,6 @@
 
 #define TAG_SIZE 1
 
-tag_module_t id3 = { id3_can_handle_file, id3_populate_tuple_from_file, id3_write_tuple_to_file };
-
 /* reading stuff */
 
 gchar *read_iso8859_1(VFSFile * fd, int size)
