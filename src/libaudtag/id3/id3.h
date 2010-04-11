@@ -135,7 +135,7 @@ Tuple *id3_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
 gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
 static const tag_module_t id3 = {
-    .name = "ID3",
+    .name = "ID3v2",
     .can_handle_file = id3_can_handle_file,
     .populate_tuple_from_file = id3_populate_tuple_from_file,
     .write_tuple_to_file = id3_write_tuple_to_file,
