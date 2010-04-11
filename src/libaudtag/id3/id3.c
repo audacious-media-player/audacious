@@ -109,7 +109,6 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
 TextInformationFrame *readTextFrame(VFSFile * fd, TextInformationFrame * frame)
 {
     frame->encoding = read_char_data(fd, 1)[0];
-    AUDDBG("Reading %i bytes of char data in encoding scheme %i from offset %i\n", frame->header.size - 1, frame->encoding, vfs_ftell(fd));
     switch (frame->encoding) {
         case 0:
              frame->text = read_iso8859_1(fd, frame->header.size - 1);
@@ -288,23 +287,35 @@ void skipFrame(VFSFile * fd, guint32 size)
     vfs_fseek(fd, size, SEEK_CUR);
 }
 
-Tuple *assocStrInfo(Tuple * tuple, VFSFile * fd, int field, ID3v2FrameHeader header)
+Tuple *assocStrInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield, ID3v2FrameHeader header)
 {
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
     frame = readTextFrame(fd, frame);
-    AUDDBG("field %i = %s\n", field, frame->text);
-    tuple_associate_string(tuple, field, NULL, frame->text);
+    if ((field == -1) && (customfield != NULL))
+    {
+        AUDDBG("custom field %s = %s\n", customfield, frame->text);
+        tuple_associate_string(tuple, -1, customfield, frame->text);
+    } else {
+        AUDDBG("field %i = %s\n", field, frame->text);
+        tuple_associate_string(tuple, field, NULL, frame->text);
+    }
     return tuple;
 }
 
-Tuple *assocIntInfo(Tuple * tuple, VFSFile * fd, int field, ID3v2FrameHeader header)
+Tuple *assocIntInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield, ID3v2FrameHeader header)
 {
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
     frame = readTextFrame(fd, frame);
-    AUDDBG("field %i = %s\n", field, frame->text);
-    tuple_associate_int(tuple, field, NULL, atoi(frame->text));
+    if ((field == -1) && (customfield != NULL))
+    {
+        AUDDBG("custom field %s = %s\n", customfield, frame->text);
+        tuple_associate_int(tuple, -1, customfield, atoi(frame->text));
+    } else {
+        AUDDBG("field %i = %s\n", field, frame->text);
+        tuple_associate_int(tuple, field, NULL, atoi(frame->text));
+    }
     return tuple;
 }
 
@@ -430,40 +441,40 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
         switch (id)
         {
           case ID3_ALBUM:
-              tuple = assocStrInfo(tuple, f, FIELD_ALBUM, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_ALBUM, NULL, *frame);
               break;
           case ID3_TITLE:
-              tuple = assocStrInfo(tuple, f, FIELD_TITLE, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_TITLE, NULL, *frame);
               break;
           case ID3_COMPOSER:
-              tuple = assocStrInfo(tuple, f, FIELD_ARTIST, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_ARTIST, NULL, *frame);
               break;
           case ID3_COPYRIGHT:
-              tuple = assocStrInfo(tuple, f, FIELD_COPYRIGHT, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_COPYRIGHT, NULL, *frame);
               break;
           case ID3_DATE:
-              tuple = assocStrInfo(tuple, f, FIELD_DATE, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_DATE, NULL, *frame);
               break;
           case ID3_TIME:
-              tuple = assocIntInfo(tuple, f, FIELD_LENGTH, *frame);
+              tuple = assocIntInfo(tuple, f, FIELD_LENGTH, NULL, *frame);
               break;
           case ID3_LENGTH:
-              tuple = assocIntInfo(tuple, f, FIELD_LENGTH, *frame);
+              tuple = assocIntInfo(tuple, f, FIELD_LENGTH, NULL, *frame);
               break;
           case ID3_ARTIST:
-              tuple = assocStrInfo(tuple, f, FIELD_ARTIST, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_ARTIST, NULL, *frame);
               break;
           case ID3_TRACKNR:
-              tuple = assocIntInfo(tuple, f, FIELD_TRACK_NUMBER, *frame);
+              tuple = assocIntInfo(tuple, f, FIELD_TRACK_NUMBER, NULL, *frame);
               break;
           case ID3_YEAR:
-              tuple = assocIntInfo(tuple, f, FIELD_YEAR, *frame);
+              tuple = assocIntInfo(tuple, f, FIELD_YEAR, NULL, *frame);
               break;
           case ID3_GENRE:
-              tuple = assocStrInfo(tuple, f, FIELD_GENRE, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_GENRE, NULL, *frame);
               break;
           case ID3_COMMENT:
-              tuple = assocStrInfo(tuple, f, FIELD_COMMENT, *frame);
+              tuple = assocStrInfo(tuple, f, FIELD_COMMENT, NULL, *frame);
               break;
           default:
               AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);

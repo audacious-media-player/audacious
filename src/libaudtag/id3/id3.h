@@ -110,9 +110,9 @@ int getFrameID(ID3v2FrameHeader *header);
 
 void skipFrame(VFSFile *fd, guint32 size);
 
-Tuple *assocStrInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header);
+Tuple *assocStrInfo(Tuple *tuple, VFSFile *fd, int field, gchar *customfield, ID3v2FrameHeader header);
 
-Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field,ID3v2FrameHeader header);
+Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field, gchar *customfield, ID3v2FrameHeader header);
 
 gboolean isValidFrame(GenericFrame *frame);
 
