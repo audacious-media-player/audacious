@@ -58,8 +58,12 @@ gchar *atom_types[] = { "\251alb", "\251nam", "cprt", "\251art", "\251ART", "trk
 
 Atom *readAtom(VFSFile * fd)
 {
+    guint32 size = read_BEuint32(fd);
+    if (size > vfs_fsize(fd))
+        return NULL;
+
     Atom *atom = g_new0(Atom, 1);
-    atom->size = read_BEuint32(fd);
+    atom->size = size;
     atom->name = read_char_data(fd, 4);
     atom->body = read_char_data(fd, atom->size - 8);
     atom->type = 0;
@@ -232,6 +236,8 @@ void writeAtomListToFile(VFSFile * from, VFSFile * to, int offset, mowgli_list_t
 gboolean aac_can_handle_file(VFSFile * f)
 {
     Atom *first_atom = readAtom(f);
+    if (first_atom == NULL)
+        return FALSE;
     if (!strcmp(first_atom->name, FTYP))
         return TRUE;
     return FALSE;
