@@ -213,7 +213,6 @@ Tuple *ape_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
         {
             //read all the items from the end of the file
             //   if(tagContainsHeader(header))
-            gchar *path = g_strdup(f->uri);
             long offset = filesize - (header->tagSize);
             vfs_fseek(f, offset, SEEK_SET);
             headerPosition = vfs_ftell(f);
