@@ -335,6 +335,23 @@ Tuple *decodePrivateInfo(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
     return tuple;
 }
 
+Tuple *decodeComment(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
+{
+    TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
+    frame->header = header;
+    frame = readTextFrame(fd, frame);
+    if (frame->text == NULL)
+        return tuple;
+    if (!strncmp(frame->text, "engiTunNORM", 11))
+    {
+        AUDDBG("iTunes normalisation info: %s\n", frame->text);
+    } else {
+        tuple_associate_string(tuple, FIELD_COMMENT, NULL, frame->text);
+    }
+    return tuple;
+}
+
+
 gboolean isValidFrame(GenericFrame * frame)
 {
     if (strlen(frame->header->frame_id) != 0)
@@ -490,7 +507,7 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               tuple = assocStrInfo(tuple, f, FIELD_GENRE, NULL, *frame);
               break;
           case ID3_COMMENT:
-              tuple = assocStrInfo(tuple, f, FIELD_COMMENT, NULL, *frame);
+              tuple = decodeComment(tuple, f, *frame);
               break;
           case ID3_PRIVATE:
               tuple = decodePrivateInfo(tuple, f, frame);
