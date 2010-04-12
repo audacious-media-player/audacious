@@ -37,12 +37,12 @@ Show a list of session management options.
 
 .TP
 .I -e, --enqueue
-Do not clear the current playlist before adding the files on the command line to
-it.
+Add the files on the command line to the current playlist but do not start
+playback.
 
 .TP
 .I -E, --enqueue-to-temp
-Add the files on the command line to a new playlist.
+Add the files on the command line to a temporary playlist and start playback.
 
 .PP
 .B Controlling playback:
