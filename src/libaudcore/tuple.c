@@ -63,6 +63,11 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
 
     { "segment-start",  TUPLE_INT },
     { "segment-end",    TUPLE_INT },
+
+    { "replaygain-album-gain", TUPLE_STRING },
+    { "replaygain-album-peak", TUPLE_STRING },
+    { "replaygain-track-gain", TUPLE_STRING },
+    { "replaygain-track-peak", TUPLE_STRING },
 };
 
 
