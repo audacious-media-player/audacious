@@ -452,7 +452,7 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
             break;
         int id = getFrameID(frame);
         pos = pos + frame->size + 10;
-        if (pos >= header->size)
+        if (pos > header->size)
             break;
         switch (id)
         {
