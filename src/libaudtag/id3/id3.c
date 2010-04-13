@@ -103,6 +103,8 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
     frameheader->frame_id = read_char_data(fd, 4);
     frameheader->size = read_syncsafe_int32(fd);
     frameheader->flags = read_LEuint16(fd);
+    if ((frameheader->flags & 0x100) == 0x100)
+        frameheader->size = read_syncsafe_int32(fd);
     return frameheader;
 }
 
