@@ -346,7 +346,13 @@ Tuple *decodeComment(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
         return tuple;
     if (!strncmp(frame->text, "engiTunNORM", 11))
     {
-        AUDDBG("iTunes normalisation info: %s\n", frame->text);
+        gchar *volumes = g_new0(gchar, 18);
+        strncpy(volumes, frame->text + 13, 17);
+        AUDDBG("iTunes normalisation, volume adjustment in milliWatt/dBm: %s\n", volumes);
+        strncpy(volumes, frame->text + 31, 17);
+        AUDDBG("iTunes normalisation, volume adjustment in dBm per 1/2500 Watt: %s\n", volumes);
+        strncpy(volumes, frame->text + 67, 17);
+        AUDDBG("iTunes normalisation, peak value: %s\n", volumes);
     } else {
         tuple_associate_string(tuple, FIELD_COMMENT, NULL, frame->text);
     }
