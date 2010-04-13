@@ -91,6 +91,8 @@ input_get_song_tuple(const gchar * filename)
     {
         gchar *scratch;
 
+        input = tuple_new ();
+
         scratch = uri_to_display_basename(filename);
         tuple_associate_string(input, FIELD_FILE_NAME, NULL, scratch);
         g_free(scratch);
