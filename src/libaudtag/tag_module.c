@@ -33,7 +33,9 @@ void init_tag_modules(void)
     mowgli_node_add((void *)&wma, mowgli_node_create(), &tag_modules);
     mowgli_node_add((void *)&id3, mowgli_node_create(), &tag_modules);
     mowgli_node_add((void *)&ape, mowgli_node_create(), &tag_modules);
+/*
     mowgli_node_add((void *)&aac, mowgli_node_create(), &tag_modules);
+*/
 }
 
 tag_module_t *find_tag_module(VFSFile * fd)
