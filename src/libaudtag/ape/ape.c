@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Paula Stanciu
+ * Copyright 2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -18,327 +18,415 @@
  * using our public API to be a derived work.
  */
 
+/* TODO:
+ * - ReplayGain info
+ * - Support updating files that have their tag at the beginning?
+ */
+
 #include <glib.h>
-#include <glib/gstdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <libaudcore/vfs.h>
+
 #include "ape.h"
-#include "../util.h"
-#include <inttypes.h>
-#include "../tag_module.h"
 
-#define APE_IDENTIFIER "APETAGEX"
+#define DEBUG(...) fprintf (stderr, "APE: " __VA_ARGS__)
 
-gchar *ape_items[] = { "Album", "Title", "Copyright", "Artist", "Track", "Year", "Genre", "Comment" };
-
-/* reading fucntions */
-
-
-APEv2Header *readAPEHeader(VFSFile * fd)
+typedef struct
 {
-    APEv2Header *header = g_new0(APEv2Header, 1);
-    header->preamble = read_char_data(fd, 8);
-    header->version = read_LEuint32(fd);
-    header->tagSize = read_LEuint32(fd);
-    header->itemCount = read_LEuint32(fd);
-    header->reserved = read_LEuint64(fd);
-    return header;
+    gchar magic[8];
+    guint32 version; /* LE */
+    guint32 length; /* LE */
+    guint32 items; /* LE */
+    guint32 flags; /* LE */
+    guint64 reserved;
+}
+APEHeader;
+
+typedef struct
+{
+    gchar * key, * value;
+}
+ValuePair;
+
+#define APE_MAGIC "APETAGEX"
+#define APE_FLAG_HAS_HEADER (1 << 31)
+#define APE_FLAG_HAS_NO_FOOTER (1 << 30)
+#define APE_FLAG_IS_HEADER (1 << 29)
+
+static gboolean ape_read_header (VFSFile * handle, APEHeader * header)
+{
+    if (vfs_fread (header, 1, sizeof (APEHeader), handle) != sizeof (APEHeader))
+        return FALSE;
+
+    if (strncmp (header->magic, "APETAGEX", 8))
+        return FALSE;
+
+    header->version = GUINT32_FROM_LE (header->version);
+    header->length = GUINT32_FROM_LE (header->length);
+    header->items = GUINT32_FROM_LE (header->items);
+    header->flags = GUINT32_FROM_LE (header->flags);
+
+    if (header->length < sizeof (APEHeader))
+        return FALSE;
+
+    return TRUE;
 }
 
-gchar *read_NULLterminatedString(VFSFile * fd)
+static gboolean ape_find_header (VFSFile * handle, APEHeader * header, gint *
+ start, gint * length, gint * data_start, gint * data_length)
 {
-    gchar buf[1024];
-    gchar ch;
-    int size = 0;
-    while (1)
+    APEHeader secondary;
+
+    if (vfs_fseek (handle, 0, SEEK_SET))
+        return FALSE;
+
+    if (ape_read_header (handle, header))
     {
-        vfs_fread(&ch, 1, 1, fd);
-        if (ch != 0)
+        DEBUG ("Found header at 0, length = %d, version = %d.\n", (gint)
+         header->length, (gint) header->version);
+        * start = 0;
+        * length = header->length;
+        * data_start = sizeof (APEHeader);
+        * data_length = header->length - sizeof (APEHeader);
+
+        if (! (header->flags & APE_FLAG_HAS_HEADER) || ! (header->flags &
+         APE_FLAG_IS_HEADER))
         {
-            buf[size] = ch;
-            size++;
+            DEBUG ("Invalid header flags (%u).\n", (guint) header->flags);
+            return FALSE;
         }
-        else
-            break;
-    }
-    gchar *ret = g_strndup(buf, size);
 
-    return ret;
-}
+        if (! (header->flags & APE_FLAG_HAS_NO_FOOTER))
+        {
+            if (vfs_fseek (handle, header->length, SEEK_CUR))
+                return FALSE;
 
-gchar *readUTF_8(VFSFile * fd, int size)
-{
-    gchar *buf = g_new0(gchar, size);
-    vfs_fread(buf, size, 1, fd);
-    return buf;
-}
+            if (! ape_read_header (handle, & secondary))
+            {
+                DEBUG ("Expected footer, but found none.\n");
+                return FALSE;
+            }
 
-APETagItem *readAPETagItem(VFSFile * fd)
-{
-    APETagItem *tagitem = g_new0(APETagItem, 1);
-    tagitem->size = read_LEuint32(fd);
-    tagitem->flags = read_LEuint32(fd);
-    tagitem->key = read_NULLterminatedString(fd);
-    tagitem->value = readUTF_8(fd, tagitem->size);
+            * length += sizeof (APEHeader);
+        }
 
-    return tagitem;
-}
-
-//writing functions
-
-void write_tagItemToFile(VFSFile * fd, APETagItem * item)
-{
-    item->size -= 1;
-    vfs_fwrite(&item->size, 4, 1, fd);
-    vfs_fwrite(&item->flags, 4, 1, fd);
-    vfs_fwrite(item->key, strlen(item->key) + 1, 1, fd);
-    vfs_fwrite(item->value, item->size, 1, fd);
-}
-
-void write_apeHeaderToFile(VFSFile * fd, APEv2Header * header)
-{
-    vfs_fwrite(header->preamble, 8, 1, fd);
-    vfs_fwrite(&header->version, 4, 1, fd);
-    vfs_fwrite(&header->tagSize, 4, 1, fd);
-    vfs_fwrite(&header->itemCount, 4, 1, fd);
-    vfs_fwrite(&header->flags, 4, 1, fd);
-    vfs_fwrite(&header->reserved, 8, 1, fd);
-}
-
-void write_allTagsToFile(VFSFile * fd, APEv2Header * header)
-{
-    mowgli_node_t *n, *tn;
-
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys->head)
-    {
-        APETagItem *tagItem = (APETagItem *) mowgli_dictionary_retrieve(tagItems, (gchar *) (n->data));
-        write_tagItemToFile(fd, tagItem);
-    }
-}
-
-APEv2Header *computeNewHeader()
-{
-    guint32 size = 0;
-    mowgli_node_t *n, *tn;
-    APEv2Header *header = g_new0(APEv2Header, 1);
-
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys->head)
-    {
-        APETagItem *tagItem = (APETagItem *) mowgli_dictionary_retrieve(tagItems, (gchar *) (n->data));
-        size += (tagItem->size + 4 + 4 + strlen(tagItem->key));
-    }
-    header->flags = 0;
-    header->preamble = APE_IDENTIFIER;
-    header->reserved = 0;
-    header->version = 2000;
-    header->itemCount = tagKeys->count;
-    header->tagSize = size + 32;        //(32 - the size of the footer)
-
-    return header;
-}
-
-int getTagItemID(APETagItem * tagitem)
-{
-    int i = 0;
-    for (i = 0; i < APE_ITEMS_NO; i++)
-    {
-        if (!g_utf8_collate(tagitem->key, ape_items[i]))
-            return i;
-    }
-    return -1;
-}
-
-gboolean tagContainsHeader(APEv2Header * header)
-{
-    return (header->flags & 0x0001);
-}
-
-void add_tagItemFromTuple(Tuple * tuple, int tuple_field, int ape_field)
-{
-    gboolean new = FALSE;
-    APETagItem *tagItem = (APETagItem *) mowgli_dictionary_retrieve(tagItems, ape_items[ape_field]);
-    if (tagItem == NULL)
-    {
-        tagItem = g_new0(APETagItem, 1);
-        new = TRUE;
-    }
-    gchar *value = 0;
-    if (tuple_get_value_type(tuple, tuple_field, NULL) == TUPLE_STRING)
-        value = g_strdup(tuple_get_string(tuple, tuple_field, NULL));
-    if (tuple_get_value_type(tuple, tuple_field, NULL) == TUPLE_INT)
-        value = g_strdup_printf("%d", tuple_get_int(tuple, tuple_field, NULL));
-
-    tagItem->flags = 0;
-    tagItem->key = g_strdup(ape_items[ape_field]);
-    tagItem->value = value;
-    tagItem->size = strlen(value) + 1;
-    if (new)
-    {
-        mowgli_node_add(tagItem->key, mowgli_node_create(), tagKeys);
-        mowgli_dictionary_add(tagItems, tagItem->key, tagItem);
-    }
-}
-
-
-
-gboolean ape_can_handle_file(VFSFile * f)
-{
-    APEv2Header *header = readAPEHeader(f);
-    if (!strcmp(header->preamble, APE_IDENTIFIER))
         return TRUE;
-    else
-    {
-        //maybe the tag is at the end of the file
-        guint64 filesize = vfs_fsize(f);
-        vfs_fseek(f, filesize - 32, SEEK_SET);
-        APEv2Header *header = readAPEHeader(f);
-        if (!strcmp(header->preamble, APE_IDENTIFIER))
-            return TRUE;
     }
+
+    if (vfs_fseek (handle, -sizeof (APEHeader), SEEK_END))
+        return FALSE;
+
+    if (ape_read_header (handle, header))
+    {
+        DEBUG ("Found footer at %d, length = %d, version = %d.\n", (gint)
+         vfs_ftell (handle) - (gint) sizeof (APEHeader), (gint) header->length,
+         (gint) header->version);
+        * start = vfs_ftell (handle) - header->length;
+        * length = header->length;
+        * data_start = vfs_ftell (handle) - header->length;
+        * data_length = header->length - sizeof (APEHeader);
+
+        if ((header->flags & APE_FLAG_HAS_NO_FOOTER) || (header->flags &
+         APE_FLAG_IS_HEADER))
+        {
+            DEBUG ("Invalid footer flags (%u).\n", (guint) header->flags);
+            return FALSE;
+        }
+
+        if (header->flags & APE_FLAG_HAS_HEADER)
+        {
+            if (vfs_fseek (handle, -(gint) header->length - sizeof (APEHeader),
+             SEEK_CUR))
+                return FALSE;
+
+            if (! ape_read_header (handle, & secondary))
+                DEBUG ("Expected header, but found none.\n");
+
+            * start -= sizeof (APEHeader);
+            * length += sizeof (APEHeader);
+        }
+
+        return TRUE;
+    }
+
+    DEBUG ("No header found.\n");
     return FALSE;
 }
 
-Tuple *ape_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
+static gboolean ape_is_our_file (VFSFile * handle)
 {
-    int i;
-    vfs_fseek(f, 0, SEEK_SET);
-    headerPosition = 0;
-    guint64 filesize = vfs_fsize(f);
-    APEv2Header *header = readAPEHeader(f);
-    if (strcmp(header->preamble, APE_IDENTIFIER))
+    APEHeader header;
+    gint start, length, data_start, data_length;
+
+    return ape_find_header (handle, & header, & start, & length, & data_start,
+     & data_length);
+}
+
+static ValuePair * ape_read_item (void * * data, gint length)
+{
+    guint32 * header = * data;
+    gint max_length;
+    gchar * key_start, * null, * value_start;
+    ValuePair * pair;
+
+    if (length < 9)
     {
-        g_free(header);
-        //maybe the tag is at the end of the file
-        vfs_fseek(f, filesize - 32, SEEK_SET);
-        header = readAPEHeader(f);
-        if (!strcmp(header->preamble, APE_IDENTIFIER))
-        {
-            //read all the items from the end of the file
-            //   if(tagContainsHeader(header))
-            long offset = filesize - (header->tagSize);
-            vfs_fseek(f, offset, SEEK_SET);
-            headerPosition = vfs_ftell(f);
-            //   else vfs_fseek(f,-(header->tagSize),SEEK_END);
-        }
-        else
-            return NULL;
-    }
-    else
+        DEBUG ("Expected item, but only %d bytes remain in tag.\n", length);
         return NULL;
-    if (tagKeys != NULL)
-    {
-        mowgli_node_t *n, *tn;
-        MOWGLI_LIST_FOREACH_SAFE(n, tn, tagKeys->head)
-        {
-            mowgli_node_delete(n, tagKeys);
-        }
     }
-    tagKeys = mowgli_list_create();
-    tagItems = mowgli_dictionary_create(strcasecmp);
-    for (i = 0; i < header->itemCount; i++)
+
+    key_start = (gchar *) (* data) + 8;
+    max_length = (gchar *) (* data) + length - key_start;
+    null = memchr (key_start, 0, max_length);
+
+    if (null == NULL)
     {
-        APETagItem *tagitem = readAPETagItem(f);
-        int tagid = getTagItemID(tagitem);
-        mowgli_node_add(tagitem->key, mowgli_node_create(), tagKeys);
-        mowgli_dictionary_add(tagItems, tagitem->key, tagitem);
-
-        switch (tagid)
-        {
-          case APE_ALBUM:
-          {
-              tuple_associate_string(tuple, FIELD_ALBUM, NULL, tagitem->value);
-          }
-              break;
-          case APE_TITLE:
-          {
-              tuple_associate_string(tuple, FIELD_TITLE, NULL, tagitem->value);
-          }
-              break;
-          case APE_COPYRIGHT:
-          {
-              tuple_associate_string(tuple, FIELD_COPYRIGHT, NULL, tagitem->value);
-
-          }
-              break;
-          case APE_ARTIST:
-          {
-              tuple_associate_string(tuple, FIELD_ARTIST, NULL, tagitem->value);
-          }
-              break;
-          case APE_TRACKNR:
-          {
-              tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, atoi(tagitem->value));
-          }
-              break;
-          case APE_YEAR:
-          {
-              tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(tagitem->value));
-          }
-              break;
-          case APE_GENRE:
-          {
-              tuple_associate_string(tuple, FIELD_GENRE, NULL, tagitem->value);
-          }
-              break;
-          case APE_COMMENT:
-          {
-              tuple_associate_string(tuple, FIELD_COMMENT, NULL, tagitem->value);
-          }
-              break;
-        }
+        DEBUG ("Unterminated item key (max length = %d).\n", max_length);
+        return NULL;
     }
+
+    value_start = null + 1;
+    max_length = (gchar *) (* data) + length - value_start;
+
+    if (header[0] > max_length)
+    {
+        DEBUG ("Item value of length %d, but only %d bytes remain in tag.\n",
+         (gint) header[0], max_length);
+        return NULL;
+    }
+
+    * data = value_start + header[0];
+
+    pair = g_malloc (sizeof (ValuePair));
+    pair->key = g_strdup (key_start);
+    pair->value = g_strndup (value_start, header[0]);
+    return pair;
+}
+
+static GList * ape_read_tag (VFSFile * handle)
+{
+    GList * list = NULL;
+    APEHeader header;
+    gint start, length, data_start, data_length;
+    void * data, * item;
+
+    if (! ape_find_header (handle, & header, & start, & length, & data_start,
+     & data_length))
+        return NULL;
+
+    if (vfs_fseek (handle, data_start, SEEK_SET))
+        return NULL;
+
+    data = g_malloc (data_length);
+
+    if (vfs_fread (data, 1, data_length, handle) != data_length)
+    {
+        g_free (data);
+        return NULL;
+    }
+
+    DEBUG ("Reading %d items:\n", header.items);
+    item = data;
+
+    while (header.items --)
+    {
+        ValuePair * pair = ape_read_item (& item, (gchar *) data + data_length -
+         (gchar *) item);
+
+        if (pair == NULL)
+            break;
+
+        DEBUG ("Read: %s = %s.\n", pair->key, pair->value);
+        list = g_list_prepend (list, pair);
+    }
+
+    g_free (data);
+    return g_list_reverse (list);
+}
+
+static void free_tag_list (GList * list)
+{
+    while (list != NULL)
+    {
+        g_free (((ValuePair *) list->data)->key);
+        g_free (((ValuePair *) list->data)->value);
+        g_free (list->data);
+        list = g_list_delete_link (list, list);
+    }
+}
+
+static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
+{
+    GList * list = ape_read_tag (handle), * node;
+
+    for (node = list; node != NULL; node = node->next)
+    {
+        gchar * key = ((ValuePair *) node->data)->key;
+        gchar * value = ((ValuePair *) node->data)->value;
+
+        if (! strcmp (key, "Artist"))
+            tuple_associate_string (tuple, FIELD_ARTIST, NULL, value);
+        else if (! strcmp (key, "Title"))
+            tuple_associate_string (tuple, FIELD_TITLE, NULL, value);
+        else if (! strcmp (key, "Album"))
+            tuple_associate_string (tuple, FIELD_ALBUM, NULL, value);
+        else if (! strcmp (key, "Comment"))
+            tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+        else if (! strcmp (key, "Genre"))
+            tuple_associate_string (tuple, FIELD_GENRE, NULL, value);
+        else if (! strcmp (key, "Track"))
+            tuple_associate_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
+        else if (! strcmp (key, "Date"))
+            tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi (value));
+    }
+
+    free_tag_list (list);
     return tuple;
 }
 
-gboolean ape_write_tuple_to_file(Tuple * tuple, VFSFile * f)
+static gboolean ape_write_item (VFSFile * handle, const gchar * key,
+ const gchar * value, int * written_length)
 {
-    VFSFile *tmp;
-    const gchar *tmpdir = g_get_tmp_dir();
-    gchar *tmp_path = g_strdup_printf("file://%s/%s", tmpdir, "tmp.mpc");
-    tmp = vfs_fopen(tmp_path, "w+");
+    guint32 header[2];
 
+    DEBUG ("Write: %s = %s.\n", key, value);
 
-    if (tuple_get_string(tuple, FIELD_ARTIST, NULL))
-        add_tagItemFromTuple(tuple, FIELD_ARTIST, APE_ARTIST);
+    header[0] = GUINT32_TO_LE (strlen (value));
+    header[1] = 0;
 
-    if (tuple_get_string(tuple, FIELD_TITLE, NULL))
-        add_tagItemFromTuple(tuple, FIELD_TITLE, APE_TITLE);
+    if (vfs_fwrite (header, 1, 8, handle) != 8)
+        return FALSE;
 
+    if (vfs_fwrite (key, 1, strlen (key) + 1, handle) != strlen (key) + 1)
+        return FALSE;
 
-    if (tuple_get_string(tuple, FIELD_ALBUM, NULL))
-        add_tagItemFromTuple(tuple, FIELD_ALBUM, APE_ALBUM);
+    if (vfs_fwrite (value, 1, strlen (value), handle) != strlen (value))
+        return FALSE;
 
-    if (tuple_get_string(tuple, FIELD_COMMENT, NULL))
-        add_tagItemFromTuple(tuple, FIELD_COMMENT, APE_COMMENT);
-
-    if (tuple_get_string(tuple, FIELD_GENRE, NULL))
-        add_tagItemFromTuple(tuple, FIELD_GENRE, APE_GENRE);
-
-    if (tuple_get_int(tuple, FIELD_YEAR, NULL) != -1)
-        add_tagItemFromTuple(tuple, FIELD_YEAR, APE_YEAR);
-
-    if (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL) != -1)
-        add_tagItemFromTuple(tuple, FIELD_TRACK_NUMBER, APE_TRACKNR);
-
-    copyAudioData(f, tmp, 0, headerPosition);
-
-    APEv2Header *header = computeNewHeader();
-    write_apeHeaderToFile(tmp, header);
-
-    write_allTagsToFile(tmp, header);
-    write_apeHeaderToFile(tmp, header);
-
-
-    gchar *uri = g_strdup(f->uri);
-    vfs_fclose(tmp);
-    gchar *f1 = g_filename_from_uri(tmp_path, NULL, NULL);
-    gchar *f2 = g_filename_from_uri(uri, NULL, NULL);
-    if (g_rename(f1, f2) == 0)
-    {
-        AUDDBG("the tag was updated successfully\n");
-    }
-    else
-    {
-        AUDDBG("an error has occured\n");
-    }
-    //skip the tag at the end - add the new tag
+    * written_length += 9 + strlen (key) + strlen (value);
     return TRUE;
 }
+
+static gboolean write_string_item (Tuple * tuple, int field, VFSFile * handle,
+ const gchar * key, int * written_length, int * written_items)
+{
+    const gchar * value = tuple_get_string (tuple, field, NULL);
+
+    if (value == NULL)
+        return TRUE;
+
+    if (! ape_write_item (handle, key, value, written_length))
+        return FALSE;
+
+    (* written_items) ++;
+    return TRUE;
+}
+
+static gboolean write_integer_item (Tuple * tuple, int field, VFSFile * handle,
+ const gchar * key, int * written_length, int * written_items)
+{
+    gint value = tuple_get_int (tuple, field, NULL);
+    gchar scratch[32];
+
+    if (! value)
+        return TRUE;
+
+    snprintf (scratch, sizeof scratch, "%d", value);
+
+    if (! ape_write_item (handle, key, scratch, written_length))
+        return FALSE;
+
+    (* written_items) ++;
+    return TRUE;
+}
+
+static gboolean write_header (gint data_length, gint items, gboolean is_header,
+ VFSFile * handle)
+{
+    APEHeader header;
+
+    memcpy (header.magic, "APETAGEX", 8);
+    header.version = GUINT32_TO_LE (2000);
+    header.length = GUINT32_TO_LE (data_length + sizeof (APEHeader));
+    header.items = GUINT32_TO_LE (items);
+    header.flags = is_header ? GUINT32_TO_LE (APE_FLAG_HAS_HEADER |
+     APE_FLAG_IS_HEADER) : GUINT32_TO_LE (APE_FLAG_HAS_HEADER);
+    header.reserved = 0;
+
+    return vfs_fwrite (& header, 1, sizeof (APEHeader), handle) == sizeof
+     (APEHeader);
+}
+
+static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
+{
+    GList * list = ape_read_tag (handle), * node;
+    APEHeader header;
+    gint start, length, data_start, data_length, items;
+
+    if (! ape_find_header (handle, & header, & start, & length, & data_start,
+     & data_length))
+        goto ERROR;
+
+    if (start + length != vfs_fsize (handle))
+    {
+        DEBUG ("Writing tags is only supported at end of file.\n");
+        goto ERROR;
+    }
+
+    if (vfs_truncate (handle, start) || vfs_fseek (handle, start, SEEK_SET) ||
+     ! write_header (0, 0, TRUE, handle))
+        goto ERROR;
+
+    length = 0;
+    items = 0;
+
+    if (! write_string_item (tuple, FIELD_ARTIST, handle, "Artist", & length,
+     & items) || ! write_string_item (tuple, FIELD_TITLE, handle, "Title",
+     & length, & items) || ! write_string_item (tuple, FIELD_ALBUM, handle,
+     "Album", & length, & items) || ! write_string_item (tuple, FIELD_COMMENT,
+     handle, "Comment", & length, & items) || ! write_string_item (tuple,
+     FIELD_GENRE, handle, "Genre", & length, & items) || ! write_integer_item
+     (tuple, FIELD_TRACK_NUMBER, handle, "Track", & length, & items) ||
+     ! write_integer_item (tuple, FIELD_YEAR, handle, "Date", & length, & items))
+        goto ERROR;
+
+    for (node = list; node != NULL; node = node->next)
+    {
+        gchar * key = ((ValuePair *) node->data)->key;
+        gchar * value = ((ValuePair *) node->data)->value;
+
+        if (! strcmp (key, "Artist") || ! strcmp (key, "Title") || ! strcmp
+         (key, "Album") || ! strcmp (key, "Comment") || ! strcmp (key, "Genre")
+         || ! strcmp (key, "Track") || ! strcmp (key, "Date"))
+            continue;
+
+        if (! ape_write_item (handle, key, value, & length))
+            goto ERROR;
+
+        items ++;
+    }
+
+    DEBUG ("Wrote %d items, %d bytes.\n", items, length);
+
+    if (write_header (length, items, FALSE, handle) || vfs_fseek (handle, start,
+     SEEK_SET) || ! write_header (length, items, TRUE, handle))
+        goto ERROR;
+
+    free_tag_list (list);
+    return TRUE;
+
+ERROR:
+    free_tag_list (list);
+    return FALSE;
+}
+
+const tag_module_t ape =
+{
+    .name = "APE",
+    .can_handle_file = ape_is_our_file,
+    .populate_tuple_from_file = ape_fill_tuple,
+    .write_tuple_to_file = ape_write_tag,
+};
