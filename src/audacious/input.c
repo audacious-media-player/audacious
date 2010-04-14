@@ -85,8 +85,8 @@ input_get_song_tuple(const gchar * filename)
 
     ip = file_probe (filename, FALSE);
 
-    if (ip && ip->get_song_tuple)
-        input = ip->get_song_tuple (filename);
+    if (ip != NULL)
+        input = file_get_tuple (filename, ip);
     else
     {
         gchar *scratch;

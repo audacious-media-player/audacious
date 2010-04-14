@@ -365,27 +365,6 @@ static void queue_update (gint level)
          NULL);
 }
 
-static Tuple * get_tuple (const gchar * filename, InputPlugin * decoder)
-{
-    if (decoder->get_song_tuple != NULL)
-        return decoder->get_song_tuple (filename);
-
-    if (decoder->probe_for_tuple != NULL)
-    {
-        VFSFile * handle = vfs_fopen (filename, "r");
-        Tuple * tuple;
-
-        if (handle == NULL)
-            return NULL;
-
-        tuple = decoder->probe_for_tuple (filename, handle);
-        vfs_fclose (handle);
-        return tuple;
-    }
-
-    return NULL;
-}
-
 /* scan_mutex must be locked! */
 void scan_receive (void)
 {
@@ -484,7 +463,7 @@ static void * scanner (void * unused)
         if (scan_filename == NULL)
             return NULL;
 
-        scan_tuple = get_tuple (scan_filename, scan_decoder);
+        scan_tuple = file_get_tuple (scan_filename, scan_decoder);
         scan_continue ();
     }
 }
@@ -500,7 +479,7 @@ static void check_scanned (struct playlist * playlist, struct entry * entry)
 
     if (entry->tuple == NULL && ! entry->failed) /* scanner did it for us? */
     {
-        entry_set_tuple (playlist, entry, get_tuple (entry->filename,
+        entry_set_tuple (playlist, entry, file_get_tuple (entry->filename,
          entry->decoder));
 
         if (entry->tuple == NULL)

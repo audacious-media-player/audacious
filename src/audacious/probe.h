@@ -25,5 +25,6 @@
 #include "plugin.h"
 
 InputPlugin * file_probe (const gchar * filename, gboolean fast);
+Tuple * file_get_tuple (const gchar * filename, InputPlugin * decoder);
 
 #endif

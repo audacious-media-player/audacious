@@ -197,3 +197,24 @@ DONE:
 
     return state.decoder;
 }
+
+Tuple * file_get_tuple (const gchar * filename, InputPlugin * decoder)
+{
+    if (decoder->get_song_tuple != NULL)
+        return decoder->get_song_tuple (filename);
+
+    if (decoder->probe_for_tuple != NULL)
+    {
+        VFSFile * handle = vfs_fopen (filename, "r");
+        Tuple * tuple;
+
+        if (handle == NULL)
+            return NULL;
+
+        tuple = decoder->probe_for_tuple (filename, handle);
+        vfs_fclose (handle);
+        return tuple;
+    }
+
+    return NULL;
+}
