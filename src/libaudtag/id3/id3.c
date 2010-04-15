@@ -359,6 +359,195 @@ Tuple *decodeComment(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
     return tuple;
 }
 
+Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
+{
+    TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
+    frame->header = header;
+    frame = readTextFrame(fd, frame);
+    if (frame->text == NULL)
+        return tuple;
+    gint numericgenre = atoi(frame->text);
+    if ((numericgenre == 0) && (!strncmp(frame->text, "(", 1)))
+    {
+        gchar *genre = g_new0(gchar, frame->header.size);
+        strncpy(genre, frame->text + 1, frame->header.size - 1);
+        numericgenre = atoi(genre);
+    }
+
+    if (numericgenre > 0)
+    {
+        gchar *genre = g_new0(gchar, 18);
+        switch(numericgenre)
+        {
+            case GENRE_BLUES:
+                genre = "Blues";
+            case GENRE_CLASSIC_ROCK:
+                genre = "Classic Rock";
+            case GENRE_COUNTRY:
+                genre = "Country";
+            case GENRE_DANCE:
+                genre = "Dance";
+            case GENRE_DISCO:
+                genre = "Disco";
+            case GENRE_FUNK:
+                genre = "Funk";
+            case GENRE_GRUNGE:
+                genre = "Grunge";
+            case GENRE_HIPHOP:
+                genre = "Hip-Hop";
+            case GENRE_JAZZ:
+                genre = "Jazz";
+            case GENRE_METAL:
+                genre = "Metal";
+            case GENRE_NEW_AGE:
+                genre = "New Age";
+            case GENRE_OLDIES:
+                genre = "Oldies";
+            case GENRE_OTHER:
+                genre = "Other";
+            case GENRE_POP:
+                genre = "Pop";
+            case GENRE_R_B:
+                genre = "R&B";
+            case GENRE_RAP:
+                genre = "Rap";
+            case GENRE_REGGAE:
+                genre = "Reggae";
+            case GENRE_ROCK:
+                genre = "Rock";
+            case GENRE_TECHNO:
+                genre = "Techno";
+            case GENRE_INDUSTRIAL:
+                genre = "Industrial";
+            case GENRE_ALTERNATIVE:
+                genre = "Alternative";
+            case GENRE_SKA:
+                genre = "Ska";
+            case GENRE_DEATH_METAL:
+                genre = "Death Metal";
+            case GENRE_PRANKS:
+                genre = "Pranks";
+            case GENRE_SOUNDTRACK:
+                genre = "Soundtrack";
+            case GENRE_EURO_TECHNO:
+                genre = "Euro-Techno";
+            case GENRE_AMBIENT:
+                genre = "Ambient";
+            case GENRE_TRIP_HOP:
+                genre = "Trip-Hop";
+            case GENRE_VOCAL:
+                genre = "Vocal";
+            case GENRE_JAZZ_FUNK:
+                genre = "Jazz+Funk";
+            case GENRE_FUSION:
+                genre = "Fusion";
+            case GENRE_TRANCE:
+                genre = "Trance";
+            case GENRE_CLASSICAL:
+                genre = "Classical";
+            case GENRE_INSTRUMENTAL:
+                genre = "Instrumental";
+            case GENRE_ACID:
+                genre = "Acid";
+            case GENRE_HOUSE:
+                genre = "House";
+            case GENRE_GAME:
+                genre = "Game";
+            case GENRE_SOUND_CLIP:
+                genre = "Sound Clip";
+            case GENRE_GOSPEL:
+                genre = "Gospel";
+            case GENRE_NOISE:
+                genre = "Noise";
+            case GENRE_ALTERNROCK:
+                genre = "AlternRock";
+            case GENRE_BASS:
+                genre = "Bass";
+            case GENRE_SOUL:
+                genre = "Soul";
+            case GENRE_PUNK:
+                genre = "Punk";
+            case GENRE_SPACE:
+                genre = "Space";
+            case GENRE_MEDITATIVE:
+                genre = "Meditative";
+            case GENRE_INSTRUMENTAL_POP:
+                genre = "Instrumental Pop";
+            case GENRE_INSTRUMENTAL_ROCK:
+                genre = "Instrumental Rock";
+            case GENRE_ETHNIC:
+                genre = "Ethnic";
+            case GENRE_GOTHIC:
+                genre = "Gothic";
+            case GENRE_DARKWAVE:
+                genre = "Darkwave";
+            case GENRE_TECHNO_INDUSTRIAL:
+                genre = "Techno-Industrial";
+            case GENRE_ELECTRONIC:
+                genre = "Electronic";
+            case GENRE_POP_FOLK:
+                genre = "Pop-Folk";
+            case GENRE_EURODANCE:
+                genre = "Eurodance";
+            case GENRE_DREAM:
+                genre = "Dream";
+            case GENRE_SOUTHERN_ROCK:
+                genre = "Southern Rock";
+            case GENRE_COMEDY:
+                genre = "Comedy";
+            case GENRE_CULT:
+                genre = "Cult";
+            case GENRE_GANGSTA:
+                genre = "Gangsta";
+            case GENRE_TOP40:
+                genre = "Top 40";
+            case GENRE_CHRISTIAN_RAP:
+                genre = "Christian Rap";
+            case GENRE_POP_FUNK:
+                genre = "Pop/Funk";
+            case GENRE_JUNGLE:
+                genre = "Jungle";
+            case GENRE_NATIVE_AMERICAN:
+                genre = "Native American";
+            case GENRE_CABARET:
+                genre = "Cabaret";
+            case GENRE_NEW_WAVE:
+                genre = "New Wave";
+            case GENRE_PSYCHADELIC:
+                genre = "Psychadelic";
+            case GENRE_RAVE:
+                genre = "Rave";
+            case GENRE_SHOWTUNES:
+                genre = "Showtunes";
+            case GENRE_TRAILER:
+                genre = "Trailer";
+            case GENRE_LO_FI:
+                genre = "Lo-Fi";
+            case GENRE_TRIBAL:
+                genre = "Tribal";
+            case GENRE_ACID_PUNK:
+                genre = "Acid Punk";
+            case GENRE_ACID_JAZZ:
+                genre = "Acid Jazz";
+            case GENRE_POLKA:
+                genre = "Polka";
+            case GENRE_RETRO:
+                genre = "Retro";
+            case GENRE_MUSICAL:
+                genre = "Musical";
+            case GENRE_ROCK_ROLL:
+                genre = "Rock & Roll";
+            case GENRE_HARD_ROCK:
+                genre = "Hard Rock";
+            default:
+                genre = "Unknown";
+        }
+        tuple_associate_string(tuple, FIELD_GENRE, NULL, genre);
+        return tuple;
+    }
+    tuple_associate_string(tuple, FIELD_GENRE, NULL, frame->text);
+    return tuple;
+}
 
 gboolean isValidFrame(GenericFrame * frame)
 {
@@ -512,7 +701,7 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               tuple = assocIntInfo(tuple, f, FIELD_YEAR, NULL, *frame);
               break;
           case ID3_GENRE:
-              tuple = assocStrInfo(tuple, f, FIELD_GENRE, NULL, *frame);
+              tuple = decodeGenre(tuple, f, *frame);
               break;
           case ID3_COMMENT:
               tuple = decodeComment(tuple, f, *frame);
