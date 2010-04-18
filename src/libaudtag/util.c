@@ -186,10 +186,7 @@ guint16 read_LEuint16(VFSFile * fd)
 {
     guint16 a;
     if (vfs_fget_le16(&a, fd))
-    {
-        AUDDBG("read_LEuint16 %d\n", a);
         return a;
-    }
     else
         return -1;
 }
@@ -198,10 +195,7 @@ guint16 read_BEuint16(VFSFile * fd)
 {
     guint16 a;
     if (vfs_fget_be16(&a, fd))
-    {
-        AUDDBG("read_BEuint16 %d\n", a);
         return a;
-    }
     else
         return -1;
 }
@@ -210,10 +204,7 @@ guint32 read_LEuint32(VFSFile * fd)
 {
     guint32 a;
     if (vfs_fget_le32(&a, fd))
-    {
-        AUDDBG("read_LEuint32 %d\n", a);
         return a;
-    }
     else
         return -1;
 }
@@ -222,10 +213,7 @@ guint32 read_BEuint32(VFSFile * fd)
 {
     guint32 a;
     if (vfs_fget_be32(&a, fd))
-    {
-        AUDDBG("read_BEuint32 %d\n", a);
         return a;
-    }
     else
         return -1;
 }
@@ -234,10 +222,7 @@ guint64 read_LEuint64(VFSFile * fd)
 {
     guint64 a;
     if (vfs_fget_le64(&a, fd))
-    {
-        AUDDBG("read_LEuint64 %" PRId64 "\n", a);
         return a;
-    }
     else
         return -1;
 }
@@ -246,10 +231,7 @@ guint64 read_BEuint64(VFSFile * fd)
 {
     guint64 a;
     if (vfs_fget_be64(&a, fd))
-    {
-        AUDDBG("read_BEuint14 %" PRId64 "\n", a);
         return a;
-    }
     else
         return 1;
 }

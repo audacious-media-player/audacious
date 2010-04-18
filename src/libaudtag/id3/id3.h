@@ -74,8 +74,6 @@ ExtendedHeader *readExtendedHeader(VFSFile *fd);
 
 ID3v2FrameHeader *readID3v2FrameHeader(VFSFile *fd);
 
-TextInformationFrame *readTextFrame(VFSFile *fd, TextInformationFrame *frame);
-
 gchar* readFrameBody(VFSFile *fd,int size);
 
 GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf);

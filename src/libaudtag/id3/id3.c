@@ -108,23 +108,78 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
     return frameheader;
 }
 
-TextInformationFrame *readTextFrame(VFSFile * fd, TextInformationFrame * frame)
+static gint unsync_data (gchar * data, gint size)
 {
-    frame->encoding = read_char_data(fd, 1)[0];
-    switch (frame->encoding) {
-        case 0:
-             frame->text = read_iso8859_1(fd, frame->header.size - 1);
-             break;
-        case 1:
-        case 2:
-             frame->text = read_unicode(fd, frame->header.size - 1);
-             break;
-        case 3:
-             frame->text = read_char_data(fd, frame->header.size - 1);
-             break;
-        default:
-             AUDDBG("Throwing away %i bytes of text due to invalid encoding schema %i", frame->header.size - 1, frame->encoding);
+    gchar * get = data, * set = data;
+
+    while (size --)
+    {
+        gchar c = * set ++ = * get ++;
+
+        if (c == (gchar) 0xff && size)
+        {
+            size --;
+            get ++;
+        }
     }
+
+    return set - data;
+}
+
+static void bswap16 (gchar * data, gint size)
+{
+    while (size >= 2)
+    {
+        gchar c = data[0];
+
+        data[0] = data[1];
+        data[1] = c;
+
+        data += 2;
+        size -= 2;
+    }
+}
+
+static TextInformationFrame * readTextFrame (VFSFile * fd,
+ TextInformationFrame * frame)
+{
+    gchar data[frame->header.size];
+    gint size = frame->header.size;
+
+    if (vfs_fread (data, 1, size, fd) != size)
+        return frame;
+
+    if (frame->header.flags & 0x200)
+        size = unsync_data (data, size);
+
+    switch (data[0])
+    {
+    case 0:
+        frame->text = g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1",
+         NULL, NULL, NULL);
+        break;
+    case 1:
+        if (data[1] == (gchar) 0xfe)
+            bswap16 (data + 1, size - 1);
+
+        frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16",
+         NULL, NULL, NULL);
+        break;
+    case 2:
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+        bswap16 (data + 1, size - 1);
+#endif
+        frame->text = g_convert (data + 1, size - 1, "UTF-8", "UTF-16",
+         NULL, NULL, NULL);
+        break;
+    case 3:
+         frame->text = g_strndup (data + 1, size - 1);
+         break;
+    default:
+         AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
+          size - 1, (gint) data[0]);
+    }
+
     return frame;
 }
 
