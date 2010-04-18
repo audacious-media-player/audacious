@@ -126,20 +126,6 @@ static gint unsyncsafe (gchar * data, gint size)
     return set - data;
 }
 
-static void bswap16 (gchar * data, gint size)
-{
-    while (size >= 2)
-    {
-        gchar c = data[0];
-
-        data[0] = data[1];
-        data[1] = c;
-
-        data += 2;
-        size -= 2;
-    }
-}
-
 static void readTextFrame (VFSFile * fd, TextInformationFrame * frame)
 {
     gint size = frame->header.size;
@@ -158,21 +144,15 @@ static void readTextFrame (VFSFile * fd, TextInformationFrame * frame)
          NULL, NULL, NULL);
         break;
     case 1:
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-        if (data[1] == (gchar) 0xfe)
-#else
         if (data[1] == (gchar) 0xff)
-#endif
-            bswap16 (data + 1, size - 1);
-
-        frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16", NULL,
-         NULL, NULL);
+            frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE",
+             NULL, NULL, NULL);
+        else
+            frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE",
+             NULL, NULL, NULL);
         break;
     case 2:
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-        bswap16 (data + 1, size - 1);
-#endif
-        frame->text = g_convert (data + 1, size - 1, "UTF-8", "UTF-16", NULL,
+        frame->text = g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL,
          NULL, NULL);
         break;
     case 3:
