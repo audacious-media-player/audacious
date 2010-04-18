@@ -29,38 +29,6 @@
 
 #define TAG_SIZE 1
 
-gchar *read_iso8859_1(VFSFile * fd, int size)
-{
-    gchar *value = read_char_data(fd, size);
-    GError *error = NULL;
-    gsize bytes_read = 0, bytes_write = 0;
-    gchar *retVal = g_convert(value, size, "UTF-8", "ISO-8859-1", &bytes_read, &bytes_write, &error);
-    g_free(value);
-    return retVal;
-}
-
-/*
- * Read UTF-16 from the tag and return an UTF-8 string for the tuple
- */
-gchar *read_unicode(VFSFile * fd, int size)
-{
-    gchar *value = read_char_data(fd, size);
-    GError *error = NULL;
-    gsize bytes_read = 0, bytes_write = 0;
-    gchar *retVal = g_convert(value, size, "UTF-8", "UTF-16", &bytes_read, &bytes_write, &error);
-    g_free(value);
-    return retVal;
-}
-
-/*
- * Read UTF-8 from the tag
- */
-gchar *read_utf8(VFSFile * fd, int size)
-{
-    gchar *value = read_char_data(fd, size);
-    return value;
-}
-
 guint32 read_syncsafe_int32(VFSFile * fd)
 {
     guint32 val = read_BEuint32(fd);
@@ -126,42 +94,95 @@ static gint unsyncsafe (gchar * data, gint size)
     return set - data;
 }
 
-static void readTextFrame (VFSFile * fd, TextInformationFrame * frame)
+static gchar * read_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
 {
-    gint size = frame->header.size;
+    gint size = header->size;
     gchar data[size];
 
-    if (vfs_fread (data, 1, size, fd) != size)
-        return;
+    if (vfs_fread (data, 1, size, handle) != size)
+        return NULL;
 
-    if (frame->header.flags & 0x200)
+    if (header->flags & 0x200)
         size = unsyncsafe (data, size);
 
     switch (data[0])
     {
     case 0:
-        frame->text = g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1",
-         NULL, NULL, NULL);
-        break;
+        return g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1", NULL, NULL,
+         NULL);
     case 1:
         if (data[1] == (gchar) 0xff)
-            frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE",
-             NULL, NULL, NULL);
+            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,
+             NULL, NULL);
         else
-            frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE",
-             NULL, NULL, NULL);
+            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE", NULL,
+             NULL, NULL);
+    case 2:
+        return g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL, NULL,
+         NULL);
+    case 3:
+        return g_strndup (data + 1, size - 1);
+    default:
+        AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
+         size - 1, (gint) data[0]);
+        return NULL;
+    }
+}
+
+static gboolean read_comment_frame (VFSFile * handle, ID3v2FrameHeader * header,
+ gchar * * lang, gchar * * type, gchar * * value)
+{
+    gint size = header->size;
+    gchar data[size];
+    gchar * pair, * sep;
+    gsize converted;
+
+    if (vfs_fread (data, 1, size, handle) != size)
+        return FALSE;
+
+    if (header->flags & 0x200)
+        size = unsyncsafe (data, size);
+
+    switch (data[0])
+    {
+    case 0:
+        pair = g_convert (data + 4, size - 4, "UTF-8", "ISO-8859-1", NULL,
+         & converted, NULL);
+        break;
+    case 1:
+        if (data[4] == (gchar) 0xff)
+            pair = g_convert (data + 6, size - 6, "UTF-8", "UTF-16LE", NULL,
+             & converted, NULL);
+        else
+            pair = g_convert (data + 6, size - 6, "UTF-8", "UTF-16BE", NULL,
+             & converted, NULL);
         break;
     case 2:
-        frame->text = g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL,
-         NULL, NULL);
+        pair = g_convert (data + 4, size - 4, "UTF-8", "UTF-16BE", NULL,
+         & converted, NULL);
         break;
     case 3:
-         frame->text = g_strndup (data + 1, size - 1);
-         break;
+        pair = g_malloc (size - 3);
+        memcpy (pair, data + 4, size - 4);
+        pair[size - 4] = 0;
+        converted = size - 4;
+        break;
     default:
-         AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
-          size - 1, (gint) data[0]);
+        AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
+         size - 4, (gint) data[0]);
+        pair = NULL;
+        break;
     }
+
+    if (pair == NULL || (sep = memchr (pair, 0, converted)) == NULL)
+        return FALSE;
+
+    * lang = g_strndup (data + 1, 3);
+    * type = g_strdup (pair);
+    * value = g_strdup (sep + 1);
+
+    g_free (pair);
+    return TRUE;
 }
 
 GenericFrame *readGenericFrame(VFSFile * fd, GenericFrame * gf)
@@ -324,40 +345,38 @@ void skipFrame(VFSFile * fd, guint32 size)
     vfs_fseek(fd, size, SEEK_CUR);
 }
 
-Tuple *assocStrInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield, ID3v2FrameHeader header)
+static void associate_string (Tuple * tuple, VFSFile * handle, gint field,
+ const gchar * customfield, ID3v2FrameHeader * header)
 {
-    TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
-    frame->header = header;
-    readTextFrame (fd, frame);
-    if (frame->text == NULL)
-        return tuple;
-    if ((field == -1) && (customfield != NULL))
-    {
-        AUDDBG("custom field %s = %s\n", customfield, frame->text);
-        tuple_associate_string(tuple, -1, customfield, frame->text);
-    } else {
-        AUDDBG("field %i = %s\n", field, frame->text);
-        tuple_associate_string(tuple, field, NULL, frame->text);
-    }
-    return tuple;
+    gchar * text = read_text_frame (handle, header);
+
+    if (text == NULL)
+        return;
+
+    if (customfield != NULL)
+        AUDDBG ("custom field %s = %s\n", customfield, text);
+    else
+        AUDDBG ("field %i = %s\n", field, text);
+
+    tuple_associate_string (tuple, field, customfield, text);
+    g_free (text);
 }
 
-Tuple *assocIntInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield, ID3v2FrameHeader header)
+static void associate_int (Tuple * tuple, VFSFile * handle, gint field,
+ const gchar * customfield, ID3v2FrameHeader * header)
 {
-    TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
-    frame->header = header;
-    readTextFrame (fd, frame);
-    if (frame->text == NULL)
-        return tuple;
-    if ((field == -1) && (customfield != NULL))
-    {
-        AUDDBG("custom field %s = %s\n", customfield, frame->text);
-        tuple_associate_int(tuple, -1, customfield, atoi(frame->text));
-    } else {
-        AUDDBG("field %i = %s\n", field, frame->text);
-        tuple_associate_int(tuple, field, NULL, atoi(frame->text));
-    }
-    return tuple;
+    gchar * text = read_text_frame (handle, header);
+
+    if (text == NULL)
+        return;
+
+    if (customfield != NULL)
+        AUDDBG ("custom field %s = %s\n", customfield, text);
+    else
+        AUDDBG ("field %i = %s\n", field, text);
+
+    tuple_associate_int (tuple, field, customfield, atoi (text));
+    g_free (text);
 }
 
 Tuple *decodePrivateInfo(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
@@ -372,46 +391,36 @@ Tuple *decodePrivateInfo(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
     return tuple;
 }
 
-Tuple *decodeComment(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
+static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
+ header)
 {
-    TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
-    frame->header = header;
-    readTextFrame (fd, frame);
-    if (frame->text == NULL)
-        return tuple;
-    if (!strncmp(frame->text, "engiTunNORM", 11))
-    {
-        gchar *volumes = g_new0(gchar, 18);
-        strncpy(volumes, frame->text + 13, 17);
-        AUDDBG("iTunes normalisation, volume adjustment in milliWatt/dBm: %s\n", volumes);
-        strncpy(volumes, frame->text + 31, 17);
-        AUDDBG("iTunes normalisation, volume adjustment in dBm per 1/2500 Watt: %s\n", volumes);
-        strncpy(volumes, frame->text + 67, 17);
-        AUDDBG("iTunes normalisation, peak value: %s\n", volumes);
-    } else {
-        tuple_associate_string(tuple, FIELD_COMMENT, NULL, frame->text);
-    }
-    return tuple;
+    gchar * lang, * type, * value;
+
+    if (! read_comment_frame (handle, header, & lang, & type, & value))
+        return;
+
+    AUDDBG ("comment: lang = %s, type = %s, value = %s\n", lang, type, value);
+
+    if (! type[0]) /* blank type == actual comment */
+        tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+
+    g_free (lang);
+    g_free (type);
+    g_free (value);
 }
 
 Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
 {
     gint numericgenre;
-    TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
-    frame->header = header;
-    readTextFrame (fd, frame);
+    gchar * text = read_text_frame (fd, & header);
 
-    if (frame->text == NULL)
+    if (text == NULL)
         return tuple;
 
-    numericgenre = atoi(frame->text);
-    if ((numericgenre == 0) && (!strncmp(frame->text, "(", 1)))
-    {
-        gchar *genre = g_new0(gchar, frame->header.size);
-        strncpy(genre, frame->text + 1, frame->header.size - 1);
-        numericgenre = atoi(genre);
-        g_free(genre);
-    }
+    if (text[0] == '(')
+        numericgenre = atoi (text + 1);
+    else
+        numericgenre = atoi (text);
 
     if (numericgenre > 0)
     {
@@ -563,7 +572,8 @@ Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
         tuple_associate_string(tuple, FIELD_GENRE, NULL, "Unknown");
         return tuple;
     }
-    tuple_associate_string(tuple, FIELD_GENRE, NULL, frame->text);
+    tuple_associate_string(tuple, FIELD_GENRE, NULL, text);
+    g_free (text);
     return tuple;
 }
 
@@ -689,49 +699,49 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
         switch (id)
         {
           case ID3_ALBUM:
-              tuple = assocStrInfo(tuple, f, FIELD_ALBUM, NULL, *frame);
+              associate_string (tuple, f, FIELD_ALBUM, NULL, frame);
               break;
           case ID3_TITLE:
-              tuple = assocStrInfo(tuple, f, FIELD_TITLE, NULL, *frame);
+              associate_string (tuple, f, FIELD_TITLE, NULL, frame);
               break;
           case ID3_COMPOSER:
-              tuple = assocStrInfo(tuple, f, FIELD_ARTIST, NULL, *frame);
+              associate_string (tuple, f, FIELD_ARTIST, NULL, frame);
               break;
           case ID3_COPYRIGHT:
-              tuple = assocStrInfo(tuple, f, FIELD_COPYRIGHT, NULL, *frame);
+              associate_string (tuple, f, FIELD_COPYRIGHT, NULL, frame);
               break;
           case ID3_DATE:
-              tuple = assocStrInfo(tuple, f, FIELD_DATE, NULL, *frame);
+              associate_string (tuple, f, FIELD_DATE, NULL, frame);
               break;
           case ID3_TIME:
-              tuple = assocIntInfo(tuple, f, FIELD_LENGTH, NULL, *frame);
+              associate_int (tuple, f, FIELD_LENGTH, NULL, frame);
               break;
           case ID3_LENGTH:
-              tuple = assocIntInfo(tuple, f, FIELD_LENGTH, NULL, *frame);
+              associate_int (tuple, f, FIELD_LENGTH, NULL, frame);
               break;
           case ID3_ARTIST:
-              tuple = assocStrInfo(tuple, f, FIELD_ARTIST, NULL, *frame);
+              associate_string (tuple, f, FIELD_ARTIST, NULL, frame);
               break;
           case ID3_TRACKNR:
-              tuple = assocIntInfo(tuple, f, FIELD_TRACK_NUMBER, NULL, *frame);
+              associate_int (tuple, f, FIELD_TRACK_NUMBER, NULL, frame);
               break;
           case ID3_YEAR:
-              tuple = assocIntInfo(tuple, f, FIELD_YEAR, NULL, *frame);
+              associate_int (tuple, f, FIELD_YEAR, NULL, frame);
               break;
           case ID3_GENRE:
               tuple = decodeGenre(tuple, f, *frame);
               break;
           case ID3_COMMENT:
-              tuple = decodeComment(tuple, f, *frame);
+              decode_comment (tuple, f, frame);
               break;
           case ID3_PRIVATE:
               tuple = decodePrivateInfo(tuple, f, frame);
               break;
           case ID3_ENCODER:
-              tuple = assocStrInfo(tuple, f, -1, "encoder", *frame);
+              associate_string (tuple, f, -1, "encoder", frame);
               break;
           case ID3_RECORDING_TIME:
-              tuple = assocIntInfo(tuple, f, FIELD_YEAR, NULL, *frame);
+              associate_int (tuple, f, FIELD_YEAR, NULL, frame);
               break;
           default:
               AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);

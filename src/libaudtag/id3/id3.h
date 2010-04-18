@@ -55,17 +55,6 @@ typedef struct genericframe
     gchar*           frame_body;
 }GenericFrame;
 
-typedef struct textframe
-{
-    ID3v2FrameHeader header;
-    gchar encoding;
-    gchar* text;
-}TextInformationFrame;
-
-gchar *read_iso8859_1(VFSFile *fd, int size);
-
-gchar* read_unicode(VFSFile *fd, int size);
-
 guint32 read_syncsafe_int32(VFSFile *fd);
 
 ID3v2Header *readHeader(VFSFile *fd);
@@ -107,10 +96,6 @@ gboolean isExperimental(ID3v2Header *header);
 int getFrameID(ID3v2FrameHeader *header);
 
 void skipFrame(VFSFile *fd, guint32 size);
-
-Tuple *assocStrInfo(Tuple *tuple, VFSFile *fd, int field, gchar *customfield, ID3v2FrameHeader header);
-
-Tuple *assocIntInfo(Tuple *tuple, VFSFile *fd, int field, gchar *customfield, ID3v2FrameHeader header);
 
 gboolean isValidFrame(GenericFrame *frame);
 
