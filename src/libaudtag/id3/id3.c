@@ -709,6 +709,7 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               associate_int (tuple, f, FIELD_TRACK_NUMBER, NULL, frame);
               break;
           case ID3_YEAR:
+          case ID3_RECORDING_TIME:
               associate_int (tuple, f, FIELD_YEAR, NULL, frame);
               break;
           case ID3_GENRE:
@@ -722,9 +723,6 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               break;
           case ID3_ENCODER:
               associate_string (tuple, f, -1, "encoder", frame);
-              break;
-          case ID3_RECORDING_TIME:
-              associate_int (tuple, f, FIELD_YEAR, NULL, frame);
               break;
           default:
               AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);
