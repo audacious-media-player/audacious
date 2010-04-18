@@ -38,6 +38,23 @@ gboolean id3v1_can_handle_file(VFSFile * f)
 
 Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
 {
+    gchar *title = g_new0(gchar, 30);
+    gchar *artist = g_new0(gchar, 30);
+    gchar *album = g_new0(gchar, 30);
+    gchar *year = g_new0(gchar, 4);
+    gchar *comment = g_new0(gchar, 28);
+    gchar *track = g_new0(gchar, 1);
+    vfs_fseek(f, -125, SEEK_END);
+    title = read_char_data(f, 30);
+    artist = read_char_data(f, 30);
+    album = read_char_data(f, 30);
+    year = read_char_data(f, 4);
+    comment = read_char_data(f, 28);
+    tuple_associate_string (tuple, FIELD_TITLE, NULL, title);
+    tuple_associate_string (tuple, FIELD_ARTIST, NULL, artist);
+    tuple_associate_string (tuple, FIELD_ALBUM, NULL, album);
+    tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi(year));
+    tuple_associate_string (tuple, FIELD_COMMENT, NULL, comment);
     return tuple;
 }
 
