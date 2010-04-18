@@ -89,10 +89,6 @@ void writeGenericFrame(VFSFile *fd,GenericFrame *frame);
 
 gboolean isExtendedHeader(ID3v2Header *header);
 
-gboolean isUnsynchronisation(ID3v2Header *header);
-
-gboolean isExperimental(ID3v2Header *header);
-
 int getFrameID(ID3v2FrameHeader *header);
 
 void skipFrame(VFSFile *fd, guint32 size);

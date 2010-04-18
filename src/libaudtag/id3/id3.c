@@ -311,23 +311,6 @@ gboolean isExtendedHeader(ID3v2Header * header)
         return FALSE;
 }
 
-gboolean isUnsynchronisation(ID3v2Header * header)
-{
-    if ((header->flags & 0x80) == 0x80)
-        return TRUE;
-    else
-        return FALSE;
-}
-
-gboolean isExperimental(ID3v2Header * header)
-{
-    if ((header->flags & 0x20) == 0x20)
-        return TRUE;
-    else
-        return FALSE;
-}
-
-
 int getFrameID(ID3v2FrameHeader * header)
 {
     int i = 0;
