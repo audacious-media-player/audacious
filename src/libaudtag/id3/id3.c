@@ -108,7 +108,7 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
     return frameheader;
 }
 
-static gint unsync_data (gchar * data, gint size)
+static gint unsyncsafe (gchar * data, gint size)
 {
     gchar * get = data, * set = data;
 
@@ -140,17 +140,16 @@ static void bswap16 (gchar * data, gint size)
     }
 }
 
-static TextInformationFrame * readTextFrame (VFSFile * fd,
- TextInformationFrame * frame)
+static void readTextFrame (VFSFile * fd, TextInformationFrame * frame)
 {
-    gchar data[frame->header.size];
     gint size = frame->header.size;
+    gchar data[size];
 
     if (vfs_fread (data, 1, size, fd) != size)
-        return frame;
+        return;
 
     if (frame->header.flags & 0x200)
-        size = unsync_data (data, size);
+        size = unsyncsafe (data, size);
 
     switch (data[0])
     {
@@ -159,18 +158,22 @@ static TextInformationFrame * readTextFrame (VFSFile * fd,
          NULL, NULL, NULL);
         break;
     case 1:
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
         if (data[1] == (gchar) 0xfe)
+#else
+        if (data[1] == (gchar) 0xff)
+#endif
             bswap16 (data + 1, size - 1);
 
-        frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16",
-         NULL, NULL, NULL);
+        frame->text = g_convert (data + 3, size - 3, "UTF-8", "UTF-16", NULL,
+         NULL, NULL);
         break;
     case 2:
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
         bswap16 (data + 1, size - 1);
 #endif
-        frame->text = g_convert (data + 1, size - 1, "UTF-8", "UTF-16",
-         NULL, NULL, NULL);
+        frame->text = g_convert (data + 1, size - 1, "UTF-8", "UTF-16", NULL,
+         NULL, NULL);
         break;
     case 3:
          frame->text = g_strndup (data + 1, size - 1);
@@ -179,10 +182,7 @@ static TextInformationFrame * readTextFrame (VFSFile * fd,
          AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
           size - 1, (gint) data[0]);
     }
-
-    return frame;
 }
-
 
 GenericFrame *readGenericFrame(VFSFile * fd, GenericFrame * gf)
 {
@@ -348,7 +348,7 @@ Tuple *assocStrInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield,
 {
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
-    frame = readTextFrame(fd, frame);
+    readTextFrame (fd, frame);
     if (frame->text == NULL)
         return tuple;
     if ((field == -1) && (customfield != NULL))
@@ -366,7 +366,7 @@ Tuple *assocIntInfo(Tuple * tuple, VFSFile * fd, int field, gchar * customfield,
 {
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
-    frame = readTextFrame(fd, frame);
+    readTextFrame (fd, frame);
     if (frame->text == NULL)
         return tuple;
     if ((field == -1) && (customfield != NULL))
@@ -396,7 +396,7 @@ Tuple *decodeComment(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
 {
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
-    frame = readTextFrame(fd, frame);
+    readTextFrame (fd, frame);
     if (frame->text == NULL)
         return tuple;
     if (!strncmp(frame->text, "engiTunNORM", 11))
@@ -419,7 +419,7 @@ Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
     gint numericgenre;
     TextInformationFrame *frame = g_new0(TextInformationFrame, 1);
     frame->header = header;
-    frame = readTextFrame(fd, frame);
+    readTextFrame (fd, frame);
 
     if (frame->text == NULL)
         return tuple;
