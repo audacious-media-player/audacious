@@ -21,7 +21,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include "id3.h"
+#include "id3v2.h"
 #include "../util.h"
 #include <inttypes.h>
 #include "../tag_module.h"
@@ -648,7 +648,7 @@ void add_frameFromTupleInt(Tuple * tuple, int field, int id3_field)
 
 }
 
-gboolean id3_can_handle_file(VFSFile * f)
+gboolean id3v2_can_handle_file(VFSFile * f)
 {
     ID3v2Header *header = readHeader(f);
     if (!strcmp(header->id3, "ID3"))
@@ -658,7 +658,7 @@ gboolean id3_can_handle_file(VFSFile * f)
 
 
 
-Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
+Tuple *id3v2_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
 {
     vfs_fseek(f, 0, SEEK_SET);
     ExtendedHeader *extHeader;
@@ -733,7 +733,7 @@ Tuple *id3_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
 }
 
 
-gboolean id3_write_tuple_to_file(Tuple * tuple, VFSFile * f)
+gboolean id3v2_write_tuple_to_file(Tuple * tuple, VFSFile * f)
 {
     VFSFile *tmp;
     vfs_fseek(f, 0, SEEK_SET);

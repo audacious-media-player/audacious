@@ -109,14 +109,14 @@ mowgli_dictionary_t *frames ;
 mowgli_list_t *frameIDs;
 
 /* TAG plugin API */
-gboolean id3_can_handle_file(VFSFile *f);
-Tuple *id3_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
-gboolean id3_write_tuple_to_file(Tuple* tuple, VFSFile *f);
+gboolean id3v2_can_handle_file(VFSFile *f);
+Tuple *id3v2_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
+gboolean id3v2_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
-static const tag_module_t id3 = {
+static const tag_module_t id3v2 = {
     .name = "ID3v2",
-    .can_handle_file = id3_can_handle_file,
-    .populate_tuple_from_file = id3_populate_tuple_from_file,
-    .write_tuple_to_file = id3_write_tuple_to_file,
+    .can_handle_file = id3v2_can_handle_file,
+    .populate_tuple_from_file = id3v2_populate_tuple_from_file,
+    .write_tuple_to_file = id3v2_write_tuple_to_file,
 };
 #endif
