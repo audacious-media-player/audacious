@@ -329,6 +329,12 @@ static void watchdog (void * hook_data, void * user_data)
      NULL)
         return;
 
+    if (cache != NULL)
+    {
+        ui_jump_to_track_cache_free (cache);
+        cache = NULL;
+    }
+
     tree = g_object_get_data (storage, "treeview");
 
     /* If it's only a metadata update, save and restore the cursor position. */
