@@ -30,12 +30,15 @@ void tag_init(void)
 
 /* The tuple's file-related attributes are already set */
 
-Tuple *tag_tuple_read(Tuple * tuple, VFSFile * fd)
+gboolean tag_tuple_read (Tuple * tuple, VFSFile * fd)
 {
     tag_module_t *mod = find_tag_module(fd);
-    g_return_val_if_fail(mod != NULL, NULL);
+
+    if (mod == NULL)
+        return FALSE;
+
     AUDDBG("Tag module %s has accepted %s\n", mod->name, fd->uri);
-    return mod->populate_tuple_from_file(tuple, fd);
+    return mod->populate_tuple_from_file (tuple, fd) != NULL;
 }
 
 gboolean tag_tuple_write_to_file(Tuple * tuple, VFSFile * fd)

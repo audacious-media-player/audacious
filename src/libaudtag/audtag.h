@@ -33,8 +33,7 @@ G_BEGIN_DECLS
 void tag_init(void);
 void tag_terminate(void);
 
-Tuple *tag_tuple_read(Tuple *tuple, VFSFile *fd);
-
+gboolean tag_tuple_read (Tuple * tuple, VFSFile *fd);
 gboolean tag_tuple_write_to_file(Tuple *tuple, VFSFile *fd);
 
 G_END_DECLS
