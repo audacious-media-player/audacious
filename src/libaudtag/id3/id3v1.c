@@ -25,6 +25,7 @@
 #include "../util.h"
 #include <inttypes.h>
 #include "../tag_module.h"
+#include "../../audacious/chardet.h"
 
 gboolean id3v1_can_handle_file(VFSFile * f)
 {
@@ -58,11 +59,11 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
         *track = comment[29];
     }
 
-    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
-    tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
-    tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
+    tuple_associate_string(tuple, FIELD_TITLE, NULL, cd_str_to_utf8(title));
+    tuple_associate_string(tuple, FIELD_ARTIST, NULL, cd_str_to_utf8(artist));
+    tuple_associate_string(tuple, FIELD_ALBUM, NULL, cd_str_to_utf8(album));
     tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
-    tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
+    tuple_associate_string(tuple, FIELD_COMMENT, NULL, cd_str_to_utf8(comment));
     tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, *track);
     tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
     return tuple;
