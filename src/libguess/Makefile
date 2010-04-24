@@ -5,6 +5,7 @@ SRCS = guess.c		\
        greek_impl.c	\
        hebrew_impl.c	\
        russian_impl.c	\
-       turkish_impl.c
+       turkish_impl.c   \
+       polish_impl.c
 
 include ../../buildsys.mk

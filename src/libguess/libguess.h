@@ -51,6 +51,7 @@ const char *guess_ar(const char *buf, int buflen);
 const char *guess_tr(const char *buf, int buflen);
 const char *guess_gr(const char *buf, int buflen);
 const char *guess_hw(const char *buf, int buflen);
+const char *guess_pl(const char *buf, int buflen);
 int dfa_validate_utf8(const char *buf, int buflen);
 
 #define GUESS_REGION_JP		"japanese"
@@ -62,6 +63,7 @@ int dfa_validate_utf8(const char *buf, int buflen);
 #define GUESS_REGION_TR		"turkish"
 #define GUESS_REGION_GR		"greek"
 #define GUESS_REGION_HW		"hebrew"
+#define GUESS_REGION_PL		"polish"
 
 const char *guess_encoding(const char *buf, int buflen, const char *lang);
 void guess_init(void);

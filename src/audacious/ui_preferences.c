@@ -157,6 +157,7 @@ static ComboBoxElements chardet_detector_presets[] = {
     { N_("Hebrew")   , N_("Hebrew") },
     { N_("Turkish")  , N_("Turkish") },
     { N_("Arabic")   , N_("Arabic") },
+    { N_("Polish")   , N_("Polish") },
     { N_("Universal"), N_("Universal") }
 };
 
