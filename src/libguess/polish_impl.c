@@ -30,7 +30,16 @@ static const char *_guess_pl(const unsigned char *ptr, int size)
             ptr[i] == 0xF3 || //ó
             ptr[i] == 0x9C || //ś
             ptr[i] == 0x9F || //ź
-            ptr[i] == 0xBF)   //ż
+            ptr[i] == 0xBF || //ż
+            ptr[i] == 0xA5 || //Ą
+            ptr[i] == 0xC6 || //Ć
+            ptr[i] == 0xCA || //Ę
+            ptr[i] == 0xA3 || //Ł
+            ptr[i] == 0xD1 || //Ń
+            ptr[i] == 0xD3 || //Ó
+            ptr[i] == 0x8C || //Ś
+            ptr[i] == 0x8F || //Ź
+            ptr[i] == 0xAF)   //Ż
 
             return "CP1250";
     }
