@@ -107,7 +107,7 @@ struct entry
     gint length;
     gboolean failed;
     gboolean selected;
-    gboolean shuffle_num;
+    gint shuffle_num;
     gboolean queued;
     gboolean segmented;
     gint start;
@@ -122,7 +122,7 @@ struct playlist
     struct index *entries;
     struct entry *position;
     gint selected_count;
-    gint shuffle_num, last_shuffle_num;
+    gint last_shuffle_num;
     GList *queued;
     gint64 total_length;
     gint64 selected_length;
@@ -283,7 +283,6 @@ static struct playlist *playlist_new(void)
     playlist->entries = index_new();
     playlist->position = NULL;
     playlist->selected_count = 0;
-    playlist->shuffle_num = 0;
     playlist->last_shuffle_num = 0;
     playlist->queued = NULL;
     playlist->total_length = 0;
@@ -669,23 +668,23 @@ gint playlist_get_playing(void)
     return (playing_playlist == NULL) ? -1 : playing_playlist->number;
 }
 
+/* If we are already at the song or it is already at the top of the shuffle
+ * list, we let it be.  Otherwise, we move it to the top. */
 static void set_position (struct playlist * playlist, struct entry * entry)
 {
+    if (entry == playlist->position)
+        return;
+
     playlist->position = entry;
 
     if (entry == NULL)
         return;
 
-    /* If we are already at the song or it is already at the top of the shuffle
-     * list, we let it be.  Otherwise, we move it to the top. */
-    if (! entry->shuffle_num || (entry->shuffle_num != playlist->shuffle_num &&
-     playlist->last_shuffle_num))
+    if (! entry->shuffle_num || entry->shuffle_num != playlist->last_shuffle_num)
     {
         playlist->last_shuffle_num ++;
         entry->shuffle_num = playlist->last_shuffle_num;
     }
-
-    playlist->shuffle_num = entry->shuffle_num;
 }
 
 gint playlist_entry_count(gint playlist_num)
@@ -1592,8 +1591,9 @@ static gboolean shuffle_prev (struct playlist * playlist)
     {
         struct entry * entry = index_get (playlist->entries, count);
 
-        if (entry->shuffle_num && entry->shuffle_num < playlist->shuffle_num &&
-         (found == NULL || entry->shuffle_num > found->shuffle_num))
+        if (entry->shuffle_num && (playlist->position == NULL ||
+         entry->shuffle_num < playlist->position->shuffle_num) && (found == NULL
+         || entry->shuffle_num > found->shuffle_num))
             found = entry;
     }
 
@@ -1601,7 +1601,6 @@ static gboolean shuffle_prev (struct playlist * playlist)
         return FALSE;
 
     playlist->position = found;
-    playlist->shuffle_num = found->shuffle_num;
     return TRUE;
 }
 
@@ -1652,15 +1651,15 @@ static gboolean shuffle_next (struct playlist * playlist)
 
         if (! entry->shuffle_num)
             choice ++;
-        else if (entry->shuffle_num > playlist->shuffle_num && (found == NULL ||
-         entry->shuffle_num < found->shuffle_num))
+        else if (playlist->position != NULL && entry->shuffle_num >
+         playlist->position->shuffle_num && (found == NULL || entry->shuffle_num
+         < found->shuffle_num))
             found = entry;
     }
 
     if (found != NULL)
     {
         playlist->position = found;
-        playlist->shuffle_num = found->shuffle_num;
         return TRUE;
     }
 
@@ -1690,7 +1689,6 @@ static void shuffle_reset (struct playlist * playlist)
 {
     gint entries = index_count (playlist->entries), count;
 
-    playlist->shuffle_num = 0;
     playlist->last_shuffle_num = 0;
 
     for (count = 0; count < entries; count ++)
@@ -1787,7 +1785,6 @@ void playlist_save_state (void)
 
         fprintf (handle, "playlist %d\n", playlist_num);
         fprintf (handle, "position %d\n", playlist_get_position (playlist_num));
-        fprintf (handle, "shuffled %d\n", playlist->shuffle_num);
         fprintf (handle, "last-shuffled %d\n", playlist->last_shuffle_num);
 
         for (count = 0; count < entries; count ++)
@@ -1837,7 +1834,7 @@ void playlist_load_state (void)
 {
     gchar scratch[512];
     FILE * handle;
-    gint playlist_num;
+    gint playlist_num, obsolete = 0;
 
     snprintf (scratch, sizeof scratch, "%s/" STATE_FILE,
      aud_paths[BMP_PATH_USER_DIR]);
@@ -1874,13 +1871,13 @@ void playlist_load_state (void)
         if (position >= 0 && position < entries)
             playlist->position = index_get (playlist->entries, position);
 
-        if (parse_integer ("shuffled", & playlist->shuffle_num))
+        if (parse_integer ("shuffled", & obsolete)) /* compatibility with 2.3 */
             parse_next (handle);
 
         if (parse_integer ("last-shuffled", & playlist->last_shuffle_num))
             parse_next (handle);
         else /* compatibility with 2.3 beta */
-            playlist->last_shuffle_num = playlist->shuffle_num;
+            playlist->last_shuffle_num = obsolete;
 
         for (count = 0; count < entries; count ++)
         {
