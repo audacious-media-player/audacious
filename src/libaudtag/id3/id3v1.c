@@ -64,6 +64,7 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
     tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
     tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
     tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, *track);
+    tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
     return tuple;
 }
 
