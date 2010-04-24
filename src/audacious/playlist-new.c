@@ -655,7 +655,10 @@ void playlist_set_playing(gint playlist_num)
 {
     DECLARE_PLAYLIST;
 
-    LOOKUP_PLAYLIST;
+    if (playlist_num == -1)
+        playlist = NULL;
+    else
+        LOOKUP_PLAYLIST;
 
     if (playing_playlist != NULL && playback_get_playing ())
         playback_stop();
