@@ -58,11 +58,11 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
         *track = comment[29];
     }
 
-    tuple_associate_string(tuple, FIELD_TITLE, NULL, g_strchomp(title));
-    tuple_associate_string(tuple, FIELD_ARTIST, NULL, g_strchomp(artist));
-    tuple_associate_string(tuple, FIELD_ALBUM, NULL, g_strchomp(album));
+    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
+    tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
+    tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
     tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
-    tuple_associate_string(tuple, FIELD_COMMENT, NULL, g_strchomp(comment));
+    tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
     tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, *track);
     tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
     return tuple;
