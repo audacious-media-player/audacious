@@ -32,8 +32,8 @@
 void init_tag_modules(void)
 {
     mowgli_node_add((void *)&wma, mowgli_node_create(), &tag_modules);
-    mowgli_node_add((void *)&id3v1, mowgli_node_create(), &tag_modules);
     mowgli_node_add((void *)&id3v2, mowgli_node_create(), &tag_modules);
+    mowgli_node_add((void *)&id3v1, mowgli_node_create(), &tag_modules);
     mowgli_node_add((void *)&ape, mowgli_node_create(), &tag_modules);
 /*
     mowgli_node_add((void *)&aac, mowgli_node_create(), &tag_modules);
