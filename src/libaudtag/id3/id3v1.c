@@ -30,7 +30,7 @@ gboolean id3v1_can_handle_file(VFSFile * f)
 {
     gchar *tag = g_new0(gchar, 4);
     vfs_fseek(f, -128, SEEK_END);
-    tag = read_char_data(f,3);
+    tag = read_char_data(f, 3);
     if (!strncmp(tag, "TAG", 3))
         return TRUE;
     return FALSE;
@@ -42,19 +42,28 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
     gchar *artist = g_new0(gchar, 30);
     gchar *album = g_new0(gchar, 30);
     gchar *year = g_new0(gchar, 4);
-    gchar *comment = g_new0(gchar, 28);
+    gchar *comment = g_new0(gchar, 30);
     gchar *track = g_new0(gchar, 1);
+    gchar *genre = g_new0(gchar, 1);
     vfs_fseek(f, -125, SEEK_END);
     title = read_char_data(f, 30);
     artist = read_char_data(f, 30);
     album = read_char_data(f, 30);
     year = read_char_data(f, 4);
-    comment = read_char_data(f, 28);
-    tuple_associate_string (tuple, FIELD_TITLE, NULL, title);
-    tuple_associate_string (tuple, FIELD_ARTIST, NULL, artist);
-    tuple_associate_string (tuple, FIELD_ALBUM, NULL, album);
-    tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi(year));
-    tuple_associate_string (tuple, FIELD_COMMENT, NULL, comment);
+    comment = read_char_data(f, 30);
+    genre = read_char_data(f, 1);
+
+    if (comment[28] == 0 && comment[29] != 0)
+    {
+        *track = comment[29];
+    }
+
+    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
+    tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
+    tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
+    tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
+    tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
+    tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, *track);
     return tuple;
 }
 
