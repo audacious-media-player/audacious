@@ -202,6 +202,8 @@ static void output_close_audio (void)
 {
     LOCK;
 
+    output_opened = FALSE;
+
     if (! output_leave_open)
         real_close ();
 
