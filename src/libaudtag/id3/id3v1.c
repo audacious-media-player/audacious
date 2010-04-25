@@ -33,7 +33,12 @@ gboolean id3v1_can_handle_file(VFSFile * f)
     vfs_fseek(f, -128, SEEK_END);
     tag = read_char_data(f, 3);
     if (!strncmp(tag, "TAG", 3))
+    {
+        g_free(tag);
         return TRUE;
+    }
+
+    g_free(tag);
     return FALSE;
 }
 
@@ -66,6 +71,14 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
     tuple_associate_string(tuple, FIELD_COMMENT, NULL, cd_str_to_utf8(comment));
     tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, *track);
     tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
+
+    g_free(title);
+    g_free(artist);
+    g_free(album);
+    g_free(year);
+    g_free(comment);
+    g_free(track);
+    g_free(genre);
     return tuple;
 }
 
