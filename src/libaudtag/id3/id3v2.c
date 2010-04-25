@@ -362,7 +362,7 @@ static void associate_int (Tuple * tuple, VFSFile * handle, gint field,
     g_free (text);
 }
 
-Tuple *decodePrivateInfo(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
+static void decode_private_info(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
 {
     gchar *value = read_char_data(fd, header->size);
     if (!strncmp(value, "WM/", 3))
@@ -371,7 +371,6 @@ Tuple *decodePrivateInfo(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
     } else {
        AUDDBG("Unable to decode private data, skipping: %s\n", value);
     }
-    return tuple;
 }
 
 static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
@@ -390,6 +389,25 @@ static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
     g_free (lang);
     g_free (type);
     g_free (value);
+}
+
+static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * header)
+{
+    gchar * text = read_text_frame (handle, header);
+
+    if (text == NULL)
+        return;
+
+    gchar * separator = strchr(text, 0);
+
+    if (separator == NULL)
+        return;
+
+    gchar * value = separator + 1;
+    AUDDBG ("Field '%s' has value '%s'\n", text, value);
+    tuple_associate_string (tuple, -1, text, value);
+
+    g_free (text);
 }
 
 Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
@@ -574,10 +592,13 @@ Tuple *id3v2_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               decode_comment (tuple, f, frame);
               break;
           case ID3_PRIVATE:
-              tuple = decodePrivateInfo(tuple, f, frame);
+              decode_private_info (tuple, f, frame);
               break;
           case ID3_ENCODER:
               associate_string (tuple, f, -1, "encoder", frame);
+              break;
+          case ID3_TXXX:
+              decode_txxx (tuple, f, frame);
               break;
           default:
               AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);

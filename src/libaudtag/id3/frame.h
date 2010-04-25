@@ -39,10 +39,11 @@ enum {
     ID3_PRIVATE,
     ID3_ENCODER,
     ID3_RECORDING_TIME,
+    ID3_TXXX,
     ID3_TAGS_NO
 };
 
 char * id3_frames[] = {"TALB","TIT2","TCOM", "TCOP", "TDAT", "TIME", "TLEN",
-"TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE","TDRC"};
+"TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE", "TDRC", "TXXX"};
 
 #endif
