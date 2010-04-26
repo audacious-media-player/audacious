@@ -27,7 +27,7 @@
 #include "../tag_module.h"
 #include "../../audacious/chardet.h"
 
-static gboolean has_id3v1_ext = FALSE;
+static gboolean has_id3v1_ext;
 
 gboolean id3v1_can_handle_file(VFSFile *f)
 {
@@ -37,6 +37,8 @@ gboolean id3v1_can_handle_file(VFSFile *f)
     tag = read_char_data(f, 4);
     if (!strncmp(tag, "TAG+", 4))
         has_id3v1_ext = TRUE;
+    else
+        has_id3v1_ext = FALSE;
     
     vfs_fseek(f, -128, SEEK_END);
     tag = read_char_data(f, 3);
