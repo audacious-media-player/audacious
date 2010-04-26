@@ -27,9 +27,17 @@
 #include "../tag_module.h"
 #include "../../audacious/chardet.h"
 
-gboolean id3v1_can_handle_file(VFSFile * f)
+static gboolean has_id3v1_ext = FALSE;
+
+gboolean id3v1_can_handle_file(VFSFile *f)
 {
     gchar *tag = g_new0(gchar, 4);
+
+    vfs_fseek(f, -355, SEEK_END);
+    tag = read_char_data(f, 4);
+    if (!strncmp(tag, "TAG+", 4))
+        has_id3v1_ext = TRUE;
+    
     vfs_fseek(f, -128, SEEK_END);
     tag = read_char_data(f, 3);
     if (!strncmp(tag, "TAG", 3))
@@ -42,7 +50,12 @@ gboolean id3v1_can_handle_file(VFSFile * f)
     return FALSE;
 }
 
-Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
+static gchar *convert_to_utf8(gchar *str)
+{
+    return g_strchomp(cd_str_to_utf8(str));
+}
+
+Tuple *id3v1_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
 {
     gchar *title = g_new0(gchar, 30);
     gchar *artist = g_new0(gchar, 30);
@@ -51,6 +64,7 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
     gchar *comment = g_new0(gchar, 30);
     gchar *track = g_new0(gchar, 1);
     gchar *genre = g_new0(gchar, 1);
+    gboolean genre_set = FALSE;
     vfs_fseek(f, -125, SEEK_END);
     title = read_char_data(f, 30);
     artist = read_char_data(f, 30);
@@ -64,13 +78,43 @@ Tuple *id3v1_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
         *track = comment[29];
     }
 
-    tuple_associate_string(tuple, FIELD_TITLE, NULL, g_strchomp(cd_str_to_utf8(title)));
-    tuple_associate_string(tuple, FIELD_ARTIST, NULL, g_strchomp(cd_str_to_utf8(artist)));
-    tuple_associate_string(tuple, FIELD_ALBUM, NULL, g_strchomp(cd_str_to_utf8(album)));
+    title = convert_to_utf8(title);
+    artist = convert_to_utf8(artist);
+    album = convert_to_utf8(album);
+    comment = convert_to_utf8(comment);
+
+    if (has_id3v1_ext)
+    {
+        vfs_fseek(f, -351, SEEK_END);
+        gchar *tmp_title = g_strconcat(title, convert_to_utf8(read_char_data(f, 60)), NULL);
+        gchar *tmp_artist = g_strconcat(artist, convert_to_utf8(read_char_data(f, 60)), NULL);
+        gchar *tmp_album = g_strconcat(album, convert_to_utf8(read_char_data(f, 60)), NULL);
+        vfs_fseek(f, -170, SEEK_END);
+        gchar *tmp_genre = g_new0(gchar, 30);
+        tmp_genre = convert_to_utf8(read_char_data(f, 30));
+        g_free(title);
+        g_free(artist);
+        g_free(album);
+        title = tmp_title;
+        artist = tmp_artist;
+        album = tmp_album;
+
+        if (g_strcmp0(tmp_genre, NULL) == 1)
+        {
+            tuple_associate_string(tuple, FIELD_GENRE, NULL, tmp_genre);
+            genre_set = TRUE;
+        }
+
+        g_free(tmp_genre);
+    }
+
+    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
+    tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
+    tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
     tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
-    tuple_associate_string(tuple, FIELD_COMMENT, NULL, g_strchomp(cd_str_to_utf8(comment)));
+    tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
     tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, *track);
-    tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
+    if (!genre_set) tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
 
     g_free(title);
     g_free(artist);
