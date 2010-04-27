@@ -51,7 +51,6 @@ typedef struct
 }
 ValuePair;
 
-#define APE_MAGIC "APETAGEX"
 #define APE_FLAG_HAS_HEADER (1 << 31)
 #define APE_FLAG_HAS_NO_FOOTER (1 << 30)
 #define APE_FLAG_IS_HEADER (1 << 29)
@@ -143,7 +142,10 @@ static gboolean ape_find_header (VFSFile * handle, APEHeader * header, gint *
                 return FALSE;
 
             if (! ape_read_header (handle, & secondary))
+            {
                 DEBUG ("Expected header, but found none.\n");
+                return FALSE;
+            }
 
             * start -= sizeof (APEHeader);
             * length += sizeof (APEHeader);
@@ -168,41 +170,38 @@ static gboolean ape_is_our_file (VFSFile * handle)
 static ValuePair * ape_read_item (void * * data, gint length)
 {
     guint32 * header = * data;
-    gint max_length;
-    gchar * key_start, * null, * value_start;
+    gchar * value;
     ValuePair * pair;
 
-    if (length < 9)
+    if (length < 8)
     {
         DEBUG ("Expected item, but only %d bytes remain in tag.\n", length);
         return NULL;
     }
 
-    key_start = (gchar *) (* data) + 8;
-    max_length = (gchar *) (* data) + length - key_start;
-    null = memchr (key_start, 0, max_length);
+    value = memchr ((gchar *) (* data) + 8, 0, length - 8);
 
-    if (null == NULL)
+    if (value == NULL)
     {
-        DEBUG ("Unterminated item key (max length = %d).\n", max_length);
+        DEBUG ("Unterminated item key (max length = %d).\n", length - 8);
         return NULL;
     }
 
-    value_start = null + 1;
-    max_length = (gchar *) (* data) + length - value_start;
+    value ++;
 
-    if (header[0] > max_length)
+    if (header[0] > (gchar *) (* data) + length - value)
     {
         DEBUG ("Item value of length %d, but only %d bytes remain in tag.\n",
-         (gint) header[0], max_length);
+         (gint) header[0], (gint) ((gchar *) (* data) + length - value));
         return NULL;
     }
 
-    * data = value_start + header[0];
-
     pair = g_malloc (sizeof (ValuePair));
-    pair->key = g_strdup (key_start);
-    pair->value = g_strndup (value_start, header[0]);
+    pair->key = g_strdup ((gchar *) (* data) + 8);
+    pair->value = g_strndup (value, header[0]);
+
+    * data = value + header[0];
+
     return pair;
 }
 
@@ -290,23 +289,25 @@ static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
 static gboolean ape_write_item (VFSFile * handle, const gchar * key,
  const gchar * value, int * written_length)
 {
+    gint key_len = strlen (key) + 1;
+    gint value_len = strlen (value);
     guint32 header[2];
 
     DEBUG ("Write: %s = %s.\n", key, value);
 
-    header[0] = GUINT32_TO_LE (strlen (value));
+    header[0] = GUINT32_TO_LE (value_len);
     header[1] = 0;
 
     if (vfs_fwrite (header, 1, 8, handle) != 8)
         return FALSE;
 
-    if (vfs_fwrite (key, 1, strlen (key) + 1, handle) != strlen (key) + 1)
+    if (vfs_fwrite (key, 1, key_len, handle) != key_len)
         return FALSE;
 
-    if (vfs_fwrite (value, 1, strlen (value), handle) != strlen (value))
+    if (vfs_fwrite (value, 1, value_len, handle) != value_len)
         return FALSE;
 
-    * written_length += 9 + strlen (key) + strlen (value);
+    * written_length += 8 + key_len + value_len;
     return TRUE;
 }
 
