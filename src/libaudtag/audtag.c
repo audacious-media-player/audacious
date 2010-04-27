@@ -43,9 +43,10 @@ gboolean tag_tuple_read (Tuple * tuple, VFSFile * fd)
 
 gboolean tag_tuple_write_to_file(Tuple * tuple, VFSFile * fd)
 {
-    g_return_val_if_fail((tuple != NULL) && (fd != NULL), FALSE);
     tag_module_t *mod = find_tag_module(fd);
-    g_return_val_if_fail(mod != NULL, -1);
+
+    if (mod == NULL)
+        return FALSE;
 
     return mod->write_tuple_to_file(tuple, fd);
 }
