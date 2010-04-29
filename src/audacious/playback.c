@@ -60,6 +60,23 @@ static gboolean pause_when_ready;
 static gint seek_when_ready;
 static gint ready_source;
 static gint failed_entries;
+static gint set_tuple_source = 0;
+static Tuple * tuple_to_be_set = NULL;
+
+static void cancel_set_tuple (void)
+{
+    if (set_tuple_source != 0)
+    {
+        g_source_remove (set_tuple_source);
+        set_tuple_source = 0;
+    }
+
+    if (tuple_to_be_set != NULL)
+    {
+        tuple_free (tuple_to_be_set);
+        tuple_to_be_set = NULL;
+    }
+}
 
 static gboolean ready_cb (void * data)
 {
@@ -162,19 +179,20 @@ playback_get_time_real(void)
     return time;
 }
 
-gint
-playback_get_time(void)
+gint playback_get_time (void)
 {
     InputPlayback * playback;
 
     playback = ip_data.current_input_playback;
     g_return_val_if_fail (playback != NULL, 0);
 
-    return playback_get_time_real() - playback->start;
+    if (playback->start > 0)
+        return playback_get_time_real () - playback->start;
+    else
+        return playback_get_time_real ();
 }
 
-void
-playback_initiate(void)
+void playback_initiate (void)
 {
     gint playlist, entry;
 
@@ -271,6 +289,7 @@ static void playback_finalize (InputPlayback * playback)
 
     playback_free (playback);
     ip_data.current_input_playback = NULL;
+    cancel_set_tuple ();
 
     if (playback->end_timeout)
         g_source_remove(playback->end_timeout);
@@ -324,8 +343,7 @@ static gboolean playback_ended (void * user_data)
             if (! (play = playlist_next_song (playlist, cfg.repeat)))
                 playlist_set_position (playlist, -1);
 
-            if (failed_entries >= 100 || failed_entries >= playlist_entry_count
-             (playlist) * 2)
+            if (failed_entries >= 10)
                 play = FALSE;
         }
 
@@ -606,18 +624,23 @@ static void set_title (InputPlayback * playback, const gchar * title)
      playback->plugin->description);
 }
 
-static gboolean set_tuple_cb (void * tuple)
+static gboolean set_tuple_cb (void * unused)
 {
     gint playlist = playlist_get_playing ();
 
-    playlist_entry_set_tuple (playlist, playlist_get_position (playlist), tuple);
+    playlist_entry_set_tuple (playlist, playlist_get_position (playlist),
+     tuple_to_be_set);
+    set_tuple_source = 0;
+    tuple_to_be_set = NULL;
     return FALSE;
 }
 
 static void set_tuple (InputPlayback * playback, Tuple * tuple)
 {
     /* playlist_entry_set_tuple must execute in main thread */
-    g_timeout_add (0, set_tuple_cb, tuple);
+    cancel_set_tuple ();
+    set_tuple_source = g_timeout_add (0, set_tuple_cb, NULL);
+    tuple_to_be_set = tuple;
 }
 
 gchar * playback_get_title (void)
