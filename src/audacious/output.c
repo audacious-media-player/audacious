@@ -148,38 +148,34 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
 
     LOCK;
 
-    if (output_leave_open)
+    if (output_leave_open && COP->set_written_time != NULL)
     {
-        if (channels == decoder_channels && rate == decoder_rate &&
-         COP->set_written_time != NULL)
-        {
-            vis_runner_time_offset (- frames_written * 1000 / decoder_rate);
-            COP->set_written_time (0);
-            output_opened = TRUE;
-        }
-        else
-        {
-            UNLOCK;
-            drain ();
-            LOCK;
-            real_close ();
-        }
+        vis_runner_time_offset (- frames_written * 1000 / decoder_rate);
+        COP->set_written_time (0);
     }
 
     decoder_format = format;
     decoder_channels = channels;
     decoder_rate = rate;
     frames_written = 0;
-    output_leave_open = FALSE;
-    output_paused = FALSE;
 
-    if (! output_opened)
+    effect_channels = channels;
+    effect_rate = rate;
+    new_effect_start (& effect_channels, & effect_rate);
+    eq_set_format (effect_channels, effect_rate);
+
+    if (output_leave_open && COP->set_written_time != NULL && effect_channels ==
+     output_channels && effect_rate == output_rate)
+        output_opened = TRUE;
+    else
     {
-        effect_channels = channels;
-        effect_rate = rate;
-        new_effect_start (& effect_channels, & effect_rate);
-
-        eq_set_format (effect_channels, effect_rate);
+        if (output_leave_open)
+        {
+            UNLOCK;
+            drain ();
+            LOCK;
+            real_close ();
+        }
 
         output_format = cfg.output_bit_depth == 32 ? FMT_S32_NE :
          cfg.output_bit_depth == 24 ? FMT_S24_NE : cfg.output_bit_depth == 16 ?
@@ -193,6 +189,9 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
             output_opened = TRUE;
         }
     }
+
+    output_leave_open = FALSE;
+    output_paused = FALSE;
 
     UNLOCK;
     return output_opened;
