@@ -5,7 +5,6 @@ SUBDIRS = ${INTL_OBJECTIVE}
 PROG = audacious2${PROG_SUFFIX}
 SRCS = auddrct.c								\
        audconfig.c								\
-       build_stamp.c							\
        chardet.c								\
        configdb.c								\
        credits.c							\

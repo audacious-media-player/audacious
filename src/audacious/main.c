@@ -43,7 +43,6 @@
 #include "eggdesktopfile.h"
 #endif
 
-#include "build_stamp.h"
 #include "configdb.h"
 #include "equalizer.h"
 #include "hook.h"
@@ -90,7 +89,7 @@ MprisPlayer *mpris;
 
 static void print_version(void)
 {
-    g_printf("%s %s [%s]\n", _(application_name), VERSION, build_stamp);
+    g_printf("%s %s (%s)\n", _(application_name), VERSION, BUILDSTAMP);
 }
 
 static void aud_make_user_dir(void)

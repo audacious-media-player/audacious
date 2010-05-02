@@ -32,6 +32,15 @@ BUILDSYS_SHARED_LIB
 IMPLIB_LIBS=""
 AC_SUBST([IMPLIB_LIBS])
 
+
+dnl Build stamp
+dnl ===========
+AC_ARG_WITH([buildstamp],
+ AS_HELP_STRING([--with-buildstamp=XXX], [Set build stamp to XXX]),
+ AC_DEFINE_UNQUOTED([BUILDSTAMP], "$withval", [Build stamp]),
+ AC_DEFINE_UNQUOTED([BUILDSTAMP], "UNSUPPORTED VERSION", [Build stamp]))
+
+
 dnl Debug support
 dnl ========================
 AC_SUBST(DEBUG)

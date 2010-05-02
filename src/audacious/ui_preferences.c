@@ -54,8 +54,6 @@
 
 #include "ui_preferences.h"
 
-#include "build_stamp.h"
-
 #define TITLESTRING_UPDATE_TIMEOUT 3
 
 static void sw_volume_toggled (void);
@@ -2658,10 +2656,9 @@ void * * create_prefs_window (void)
 
     /* audacious version label */
 
-    aud_version_string = g_strdup_printf("<span size='small'>%s (%s) (%s@%s)</span>",
-                                         "Audacious " PACKAGE_VERSION ,
-                                         build_stamp ,
-                                         g_get_user_name() , g_get_host_name() );
+    aud_version_string = g_strdup_printf
+     ("<span size='small'>%s (%s)</span>", "Audacious " PACKAGE_VERSION,
+     BUILDSTAMP);
 
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);
