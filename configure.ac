@@ -215,6 +215,10 @@ AUD_ARG_ENABLE([sm], [yes],
     ],[
         enable_sm="no"
     ])
+
+    PKG_CHECK_MODULES([ICE], [ice >= 1.0],
+     [enable_sm="${enable_sm}"],
+     [enable_sm="no"])
 ])
 AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
 
