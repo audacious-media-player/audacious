@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2009  Audacious team.
+ *  Copyright (C) 2005-2010  Audacious team.
  *
  *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
@@ -40,7 +40,7 @@
 #define AUDACIOUS_PLUGIN_H
 
 #include <glib.h>
-#include <gtk/gtk.h>
+#include <gmodule.h>
 
 #include "libaudcore/audio.h"
 #include "libaudcore/audstrings.h"
@@ -135,8 +135,8 @@ typedef struct {
     gint api_version;       /**< API version plugin has been compiled for,
                                  this is checked against __AUDACIOUS_PLUGIN_API__ */
     gchar *name;            /**< Module name */
-    GCallback init;
-    GCallback fini;
+    void (* init) (void);
+    void (* fini) (void);
     Plugin *priv_assoc;
     InputPlugin **ip_list;  /**< List of InputPlugin(s) in this module */
     OutputPlugin **op_list;
@@ -287,14 +287,8 @@ struct _AudaciousFuncTableV1 {
     void (* mime_set_plugin) (const gchar * mimetype, InputPlugin * ip);
 
     /* Util funcs */
-    GtkWidget *(*util_info_dialog)(const gchar * title, const gchar * text,
-                                   const gchar * button_text, gboolean modal,
-                                   GCallback button_action,
-                                   gpointer action_data);
     gchar *(*util_get_localdir)(void);
     void (*util_menu_main_show)(gint x, gint y, guint button, guint time);
-
-    gpointer (*smart_realloc)(gpointer ptr, gsize *size);
     void (*util_add_url_history_entry)(const gchar * url);
 
     /* INI funcs */
@@ -407,7 +401,8 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_save) (gint playlist, const gchar * filename);
     void (* playlist_insert_folder) (gint playlist, gint at, const gchar *
      folder);
-    void (* save_all_playlists) (void);
+    void (* playlist_insert_folder_v2) (gint playlist, gint at, const gchar *
+     folder, gboolean play);
 
     /* state vars */
     AudConfig *_cfg;
@@ -420,8 +415,10 @@ struct _AudaciousFuncTableV1 {
     void (*hook_call)(const gchar *name, gpointer hook_data);
 
     /* PluginMenu API */
-    gint (*menu_plugin_item_add)(gint, GtkWidget *);
-    gint (*menu_plugin_item_remove)(gint, GtkWidget *);
+    /* gint (* menu_plugin_item_add) (gint menu, GtkWidget * item); */
+    gint (* menu_plugin_item_add) (gint menu, void * item);
+    /* gint (* menu_plugin_item_remove) (gint, GtkWidget * item); */
+    gint (* menu_plugin_item_remove) (gint, void * item);
 
     /* DRCT API. */
     void (*drct_quit) ( void );
@@ -486,18 +483,6 @@ struct _AudaciousFuncTableV1 {
     gint (*drct_pq_get_position)( gint pos );
     gint (*drct_pq_get_queue_position)( gint pos );
 
-    /* FileInfoPopup API */
-    GtkWidget *(*fileinfopopup_create)(void);
-    void (*fileinfopopup_destroy)(GtkWidget* fileinfopopup_win);
-    void (*fileinfopopup_show_from_tuple)(GtkWidget *fileinfopopup_win, Tuple *tuple);
-    void (*fileinfopopup_show_from_title)(GtkWidget *fileinfopopup_win, gchar *title);
-    void (*fileinfopopup_hide)(GtkWidget *filepopup_win, gpointer unused);
-
-    /* InputPlayback */
-    InputPlayback *(*playback_new)(void);
-    void (*playback_free)(InputPlayback *);
-    void (*playback_run)(InputPlayback *);
-
     /* Flows */
     gsize (*flow_execute)(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt,
                           gint srate, gint channels);
@@ -526,7 +511,9 @@ struct _AudaciousFuncTableV1 {
     void (*calc_mono_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
     void (*calc_stereo_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
 
-    void (* create_widgets_with_domain) (GtkBox * box, PreferencesWidget *
+    /* void (* create_widgets_with_domain) (GtkBox * box, PreferencesWidget *
+     widgets, gint amt, const gchar * domain); */
+    void (* create_widgets_with_domain) (void * box, PreferencesWidget *
      widgets, gint amt, const gchar * domain);
 
     GList *(*equalizer_read_presets)(const gchar * basename);
@@ -536,15 +523,21 @@ struct _AudaciousFuncTableV1 {
     EqualizerPreset *(*equalizer_read_aud_preset)(const gchar * filename);
     EqualizerPreset *(*load_preset_file)(const gchar *filename);
 
-//    /* Audtag lib functions */
-//    Tuple *(*tag_tuple_read)(Tuple* tuple);
-//    gint (*tag_tuple_write_to_file)(Tuple *tuple);
+    /* File probing API */
+    InputPlugin * (* file_find_decoder) (const gchar * filename, gboolean fast);
+    Tuple * (* file_read_tuple) (const gchar * filename, InputPlugin * decoder);
+    gboolean (* file_can_write_tuple) (const gchar * filename, InputPlugin *
+     decoder);
+    gboolean (* file_write_tuple) (const gchar * filename, InputPlugin *
+     decoder, Tuple * tuple);
+    gboolean (* custom_infowin) (const gchar * filename, InputPlugin * decoder);
 
     /* Miscellaneous */
-    GtkWidget * (* get_plugin_menu) (gint id);
+    /* GtkWidget * (* get_plugin_menu) (gint id); */
+    void * (* get_plugin_menu) (gint id);
     gchar * (* playback_get_title) (void);
-    void (* fileinfo_show) (gint playlist, gint entry);
-    void (* fileinfo_show_current) (void);
+    void (* save_all_playlists) (void);
+    gchar * (* get_associated_image_file) (const gchar * filename);
 
     /* Interface API */
     const Interface * (* interface_get_current) (void);
@@ -557,10 +550,6 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
-
-    /* Move to proper place when API can be broken */
-    void (* playlist_insert_folder_v2) (gint playlist, gint at, const gchar *
-     folder, gboolean play);
 };
 
 
@@ -650,9 +639,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_mime_set_plugin             _audvt->mime_set_plugin
 #define aud_uri_set_plugin              _audvt->uri_set_plugin
 
-#define aud_info_dialog                 _audvt->util_info_dialog
-#define audacious_info_dialog           _audvt->util_info_dialog
-#define aud_smart_realloc               _audvt->smart_realloc
 #define aud_util_add_url_history_entry  _audvt->util_add_url_history_entry
 
 #define aud_str_to_utf8                 _audvt->str_to_utf8
@@ -834,17 +820,7 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_pq_get_position      _audvt->drct_pq_get_position
 #define audacious_drct_pq_get_queue_position _audvt->drct_pq_get_queue_position
 
-#define audacious_fileinfopopup_create          _audvt->fileinfopopup_create
-#define audacious_fileinfopopup_destroy         _audvt->fileinfopopup_destroy
-#define audacious_fileinfopopup_show_from_tuple _audvt->fileinfopopup_show_from_tuple
-#define audacious_fileinfopopup_show_from_title _audvt->fileinfopopup_show_from_title
-#define audacious_fileinfopopup_hide            _audvt->fileinfopopup_hide
-
 #define audacious_get_localdir          _audvt->util_get_localdir
-
-#define aud_playback_new                _audvt->playback_new
-#define aud_playback_run                _audvt->playback_run
-#define aud_playback_free(x)            _audvt->playback_free
 
 #define aud_flow_execute                _audvt->flow_execute
 #define aud_flow_new                    _audvt->flow_new
@@ -895,14 +871,16 @@ struct _AudaciousFuncTableV1 {
 #define aud_output_plugin_cleanup       _audvt->output_plugin_cleanup
 #define aud_output_plugin_reinit        _audvt->output_plugin_reinit
 
+#define aud_file_find_decoder           _audvt->file_find_decoder
+#define aud_file_read_tuple             _audvt->file_read_tuple
+#define aud_file_can_write_tuple        _audvt->file_can_write_tuple
+#define aud_file_write_tuple            _audvt->file_write_tuple
+#define aud_custom_infowin              _audvt->custom_infowin
+
 #define aud_get_plugin_menu             _audvt->get_plugin_menu
 #define aud_playback_get_title          _audvt->playback_get_title
-#define aud_fileinfo_show               _audvt->fileinfo_show
-#define aud_fileinfo_show_current       _audvt->fileinfo_show_current
 #define aud_save_all_playlists          _audvt->save_all_playlists
-
-//#define aud_tag_tuple_read                  _audvt->tag_tuple_read
-//#define aud_tag_tuple_write_to_file         _audvt->tag_tuple_write
+#define aud_get_associated_image_file   _audvt->get_associated_image_file
 
 #define aud_interface_get_current       _audvt->interface_get_current
 #define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
@@ -914,6 +892,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_entry_is_segmented			_audvt->playlist_entry_is_segmented
 #define aud_playlist_entry_get_start_time		_audvt->playlist_entry_get_start_time
 #define aud_playlist_entry_get_end_time			_audvt->playlist_entry_get_end_time
+
 
 #include "audacious/auddrct.h"
 
@@ -1204,7 +1183,8 @@ struct _VisPlugin {
      */
     void (*render_freq) (gint16 freq_data[2][256]);
 
-    GtkWidget *(*get_widget) (void);
+    /* GtkWidget * (* get_widget) (void); */
+    void * (* get_widget) (void);
 };
 
 /* undefine the macro -- struct Plugin should be used instead. */

@@ -51,6 +51,7 @@
 #include "playback.h"
 #include "playlist-new.h"
 #include "playlist-utils.h"
+#include "probe.h"
 #include "audstrings.h"
 #include "util.h"
 #include "visualization.h"
@@ -59,10 +60,11 @@
 #include "vfs_buffered_file.h"
 #include "equalizer_preset.h"
 
-#include "ui_fileinfo.h"
-#include "ui_fileinfopopup.h"
+#include "ui_albumart.h"
 #include "ui_plugin_menu.h"
 #include "ui_preferences.h"
+
+#include <libaudgui/init.h>
 
 
 const gchar *plugin_dir_list[] = {
@@ -138,10 +140,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .uri_set_plugin = input_plugin_add_scheme_compat,
     .mime_set_plugin = input_plugin_add_mime_compat,
-
-    .util_info_dialog = util_info_dialog,
-
-    .smart_realloc = smart_realloc,
 
     .util_add_url_history_entry = util_add_url_history_entry,
 
@@ -307,12 +305,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_pq_get_position = drct_pq_get_position,
     .drct_pq_get_queue_position = drct_pq_get_queue_position,
 
-    .fileinfopopup_create = fileinfopopup_create,
-    .fileinfopopup_destroy = fileinfopopup_destroy,
-    .fileinfopopup_show_from_title = fileinfopopup_show_from_title,
-    .fileinfopopup_show_from_tuple = fileinfopopup_show_from_tuple,
-    .fileinfopopup_hide = fileinfopopup_hide,
-
     .util_get_localdir = util_get_localdir,
 
     .flow_new = flow_new,
@@ -349,11 +341,16 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .equalizer_read_aud_preset = equalizer_read_aud_preset,
     .load_preset_file = load_preset_file,
 
+    .file_find_decoder = file_find_decoder,
+    .file_read_tuple = file_read_tuple,
+    .file_can_write_tuple = file_can_write_tuple,
+    .file_write_tuple = file_write_tuple,
+    .custom_infowin = custom_infowin,
+
     .get_plugin_menu = get_plugin_menu,
     .playback_get_title = playback_get_title,
-    .fileinfo_show = ui_fileinfo_show,
-    .fileinfo_show_current = ui_fileinfo_show_current,
     .save_all_playlists = save_all_playlists,
+    .get_associated_image_file = get_associated_image_file,
 
     .interface_get_current = interface_get_current,
     .interface_toggle_visibility = interface_toggle_visibility,
@@ -732,6 +729,9 @@ void plugin_system_init(void)
     LowlevelPlugin *lp;
     GtkWidget *dialog;
     gint dirsel = 0;
+
+    /* give libaudgui its pointer to the API vector table */
+    audgui_init (& _aud_papi_v1);
 
     if (!g_module_supported())
     {

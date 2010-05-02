@@ -32,16 +32,13 @@ SRCS = auddrct.c								\
        probe.c \
        rcfile.c									\
        signals.c								\
-       ui_fileinfopopup.c						\
        ui_headless.c							\
        ui_plugin_menu.c \
        ui_preferences.c							\
        util.c									\
        vis_runner.c \
        visualization.c							\
-       sync-menu.c								\
        ui_albumart.c						\
-       ui_fileinfo.c						\
        ui_misc.c
 
 ifeq ($(USE_DBUS),yes)
@@ -67,10 +64,7 @@ INCLUDES = auddrct.h			\
            playlist_container.h	\
            plugin.h				\
            preferences.h		\
-           ui_fileinfopopup.h	\
-           ui_plugin_menu.h		\
-           ui_preferences.h		\
-           util.h
+           ui_plugin_menu.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\
@@ -134,6 +128,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 
 LIBS += ${LDADD}						\
 		-L../libaudcore -laudcore	\
+		-L../libaudgui -laudgui \
 		-L../libaudtag -laudtag		\
 		${LIBINTL}						\
 		../libguess/libguess.a			\

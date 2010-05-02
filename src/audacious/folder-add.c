@@ -113,7 +113,8 @@ static gboolean add_cb (void * unused)
             {
                 gchar * filename = g_filename_to_uri (stack->data, NULL, NULL);
 
-                if (filename != NULL && file_probe (filename, TRUE) != NULL)
+                if (filename != NULL && file_find_decoder (filename, TRUE) !=
+                 NULL)
                     index_append (index, filename);
                 else
                     g_free (filename);
@@ -180,7 +181,7 @@ static gboolean add_cb (void * unused)
 
             if (add_at > 0)
                 playlist_set_position (add_playlist, add_at);
-            
+
             playback_initiate ();
         }
 

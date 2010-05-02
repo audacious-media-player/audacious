@@ -3,6 +3,9 @@ LIB_MAJOR = 1
 LIB_MINOR = 0
 
 SRCS = effects-menu.c \
+       infopopup.c \
+       infowin.c \
+       init.c \
        ui_gtk.c \
        ui_fileopener.c \
        ui_urlopener.c \
@@ -11,7 +14,8 @@ SRCS = effects-menu.c \
        icons-stock.c \
        ui_about.c \
        ui_credits.c \
-       ui_playlist_manager.c
+       ui_playlist_manager.c \
+       util.c
 
 INCLUDES = libaudgui.h \
            libaudgui-gtk.h

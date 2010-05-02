@@ -57,7 +57,8 @@ static void static_menu_init (StaticMenu * menu)
     g_object_ref (menu);
 }
 
-GtkWidget * get_plugin_menu (gint id)
+/* GtkWidget * get_plugin_menu (gint id) */
+void * get_plugin_menu (gint id)
 {
     static gboolean initted = FALSE;
     static GtkWidget * menus[TOTAL_PLUGIN_MENUS];
@@ -81,13 +82,15 @@ GtkWidget * get_plugin_menu (gint id)
     return menus[id];
 }
 
-gint menu_plugin_item_add (gint id, GtkWidget * item)
+/* gint menu_plugin_item_add (gint id, GtkWidget * item) */
+gint menu_plugin_item_add (gint id, void * item)
 {
     gtk_menu_shell_append ((GtkMenuShell *) get_plugin_menu (id), item);
     return 0;
 }
 
-gint menu_plugin_item_remove (gint id, GtkWidget * item)
+/* gint menu_plugin_item_remove (gint id, GtkWidget * item) */
+gint menu_plugin_item_remove (gint id, void * item)
 {
     gtk_container_remove ((GtkContainer *) get_plugin_menu (id), item);
     return 0;

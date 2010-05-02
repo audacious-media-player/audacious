@@ -1,6 +1,6 @@
 /*
  * probe.h
- * Copyright 2009 John Lindgren
+ * Copyright 2009-2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -24,7 +24,12 @@
 
 #include "plugin.h"
 
-InputPlugin * file_probe (const gchar * filename, gboolean fast);
-Tuple * file_get_tuple (const gchar * filename, InputPlugin * decoder);
+InputPlugin * file_find_decoder (const gchar * filename, gboolean fast);
+Tuple * file_read_tuple (const gchar * filename, InputPlugin * decoder);
+gboolean file_can_write_tuple (const gchar * filename, InputPlugin * decoder);
+gboolean file_write_tuple (const gchar * filename, InputPlugin * decoder,
+ Tuple * tuple);
+
+gboolean custom_infowin (const gchar * filename, InputPlugin * decoder);
 
 #endif

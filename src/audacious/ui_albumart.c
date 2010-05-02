@@ -28,9 +28,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include "ui_fileinfopopup.h"
-#include "main.h"
-#include "playback.h"
+#include "audconfig.h"
 
 static gboolean
 has_front_cover_extension(const gchar *name)
@@ -117,9 +115,8 @@ is_file_image(const gchar *imgfile, const gchar *file_name)
 	}
 }
 
-gchar*
-fileinfo_recursive_get_image(const gchar* path,
-	const gchar* file_name, gint depth)
+static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
+ file_name, gint depth)
 {
 	GDir *d;
 
@@ -190,4 +187,15 @@ fileinfo_recursive_get_image(const gchar* path,
 	}
 
 	return NULL;
+}
+
+gchar * get_associated_image_file (const gchar * filename)
+{
+    gchar * path = g_path_get_dirname (filename);
+    gchar * base = g_path_get_basename (filename);
+    gchar * image_file = fileinfo_recursive_get_image (path, base, 0);
+
+    g_free (path);
+    g_free (base);
+    return image_file;
 }

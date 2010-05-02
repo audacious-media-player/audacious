@@ -43,10 +43,15 @@ void audgui_hide_filebrowser(void);
 void audgui_show_about_window(void);
 void audgui_hide_about_window(void);
 
-void audgui_playlist_manager_update(void);
-void audgui_playlist_manager_ui_show(GtkWidget *mainwin);
-void audgui_playlist_manager_destroy(void);
-
 void audgui_confirm_playlist_delete(gint playlist);
+
+/* infopopup.c */
+void audgui_infopopup_show (gint playlist, gint entry);
+void audgui_infopopup_show_current (void);
+void audgui_infopopup_hide (void);
+
+/* infowin.c */
+void audgui_infowin_show (gint playlist, gint entry);
+void audgui_infowin_show_current (void);
 
 #endif /* LIBAUDGUI_H */

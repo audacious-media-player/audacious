@@ -107,7 +107,9 @@ typedef struct _PreferencesWidget {
             gboolean horizontal; /* FALSE gives vertical, TRUE gives horizontal separator */
         } separator;
 
-        GtkWidget *(*populate) (void); /* for WIDGET_CUSTOM --nenolod */
+        /* for WIDGET_CUSTOM --nenolod */
+        /* GtkWidget * (* populate) (void); */
+        void * (* populate) (void);
     } data;
     ValueType cfg_type;      /* connected value type */
 } PreferencesWidget;
@@ -140,7 +142,9 @@ typedef struct {
     gpointer data;    /* for internal interface use only */
 } PluginPreferences;
 
-void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets, gint
+/* void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets,
+ gint amt, const gchar * domain); */
+void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
  amt, const gchar * domain);
 
 #define create_widgets(b, w, a) create_widgets_with_domain (b, w, a, PACKAGE);

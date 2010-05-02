@@ -71,17 +71,9 @@ gboolean text_get_extents(const gchar * fontname, const gchar * text,
 
 guint gint_count_digits(gint n);
 
-
-GtkWidget *util_info_dialog(const gchar * title, const gchar * text,
-    const gchar * button_text, gboolean modal, GCallback button_action,
-    gpointer action_data);
-
 gchar *util_get_localdir(void);
 
 gchar *construct_uri(gchar *string, const gchar *playlist_name);
-
-/* minimizes number of realloc's */
-gpointer smart_realloc(gpointer ptr, gsize *size);
 
 gint file_get_mtime (const gchar * filename);
 void make_directory(const gchar * path, mode_t mode);

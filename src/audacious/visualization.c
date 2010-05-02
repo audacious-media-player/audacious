@@ -26,6 +26,7 @@
 #include "visualization.h"
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include <math.h>
 #include <string.h>
 

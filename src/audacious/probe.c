@@ -163,7 +163,7 @@ static void probe_by_content (ProbeState * state)
     input_plugin_by_priority (probe_func, state);
 }
 
-InputPlugin * file_probe (const gchar * filename, gboolean fast)
+InputPlugin * file_find_decoder (const gchar * filename, gboolean fast)
 {
     ProbeState state;
 
@@ -198,7 +198,7 @@ DONE:
     return state.decoder;
 }
 
-Tuple * file_get_tuple (const gchar * filename, InputPlugin * decoder)
+Tuple * file_read_tuple (const gchar * filename, InputPlugin * decoder)
 {
     if (decoder->get_song_tuple != NULL)
         return decoder->get_song_tuple (filename);
@@ -217,4 +217,37 @@ Tuple * file_get_tuple (const gchar * filename, InputPlugin * decoder)
     }
 
     return NULL;
+}
+
+gboolean file_can_write_tuple (const gchar * filename, InputPlugin * decoder)
+{
+    return (decoder->update_song_tuple != NULL);
+}
+
+gboolean file_write_tuple (const gchar * filename, InputPlugin * decoder,
+ Tuple * tuple)
+{
+    VFSFile * handle;
+    gboolean success;
+
+    if (decoder->update_song_tuple == NULL)
+        return FALSE;
+
+    handle = vfs_fopen (filename, "r+");
+
+    if (handle == NULL)
+        return FALSE;
+
+    success = decoder->update_song_tuple (tuple, handle);
+    vfs_fclose (handle);
+    return success;
+}
+
+gboolean custom_infowin (const gchar * filename, InputPlugin * decoder)
+{
+    if (decoder->file_info_box == NULL)
+        return FALSE;
+
+    decoder->file_info_box (filename);
+    return TRUE;
 }

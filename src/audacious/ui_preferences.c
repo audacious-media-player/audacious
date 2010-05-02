@@ -171,8 +171,8 @@ static ComboBoxElements bitdepth_elements[] = {
 typedef struct {
     void *next;
     GtkWidget *container;
-    char *pg_name;
-    char *img_url;
+    const gchar * pg_name;
+    const gchar * img_url;
 } CategoryQueueEntry;
 
 CategoryQueueEntry *category_queue = NULL;
@@ -1562,7 +1562,9 @@ static void fill_table (GtkWidget * table, PreferencesWidget * elements, gint
     }
 }
 
-void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets, gint
+/* void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets,
+ gint amt, const gchar * domain) */
+void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
  amt, const gchar * domain)
 {
     gint x;
@@ -2553,8 +2555,8 @@ create_plugin_pages(void)
     create_plugin_page(get_effect_enabled_list());
 }
 
-GtkWidget **
-create_prefs_window(void)
+/* GtkWidget * * create_prefs_window (void) */
+void * * create_prefs_window (void)
 {
     gchar *aud_version_string;
 
@@ -2665,7 +2667,7 @@ create_prefs_window(void)
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
 
-    return &prefswin;
+    return (void * *) & prefswin;
 }
 
 void
@@ -2723,8 +2725,8 @@ hide_prefs_window(void)
     gtk_widget_hide(GTK_WIDGET(prefswin));
 }
 
-static void
-prefswin_page_queue_new(GtkWidget *container, gchar *name, gchar *imgurl)
+static void prefswin_page_queue_new (GtkWidget * container, const gchar * name,
+ const gchar * imgurl)
 {
     CategoryQueueEntry *ent = g_new0(CategoryQueueEntry, 1);
 
@@ -2756,8 +2758,10 @@ prefswin_page_queue_destroy(CategoryQueueEntry *ent)
  *
  *    - nenolod
  */
-gint
-prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
+/* gint prefswin_page_new (GtkWidget * container, const gchar * name,
+ const gchar * imgurl) */
+gint prefswin_page_new (void * container, const gchar * name, const gchar *
+ imgurl)
 {
     GtkTreeModel *model;
     GtkTreeIter iter;

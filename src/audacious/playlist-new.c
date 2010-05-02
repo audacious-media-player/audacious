@@ -267,7 +267,7 @@ static void entry_check_has_decoder (struct entry * entry)
     if (entry->decoder != NULL || entry->failed)
         return;
 
-    entry->decoder = file_probe (entry->filename, TRUE);
+    entry->decoder = file_find_decoder (entry->filename, TRUE);
 
     if (entry->decoder == NULL)
         entry->failed = TRUE;
@@ -462,7 +462,7 @@ static void * scanner (void * unused)
         if (scan_filename == NULL)
             return NULL;
 
-        scan_tuple = file_get_tuple (scan_filename, scan_decoder);
+        scan_tuple = file_read_tuple (scan_filename, scan_decoder);
         scan_continue ();
     }
 }
@@ -478,7 +478,7 @@ static void check_scanned (struct playlist * playlist, struct entry * entry)
 
     if (entry->tuple == NULL && ! entry->failed) /* scanner did it for us? */
     {
-        entry_set_tuple (playlist, entry, file_get_tuple (entry->filename,
+        entry_set_tuple (playlist, entry, file_read_tuple (entry->filename,
          entry->decoder));
 
         if (entry->tuple == NULL)
@@ -703,11 +703,10 @@ static void make_entries (gchar * filename, InputPlugin * decoder, Tuple *
  tuple, struct index * list)
 {
     if (tuple == NULL && decoder == NULL)
-        decoder = file_probe (filename, TRUE);
+        decoder = file_find_decoder (filename, TRUE);
 
-    if (tuple == NULL && decoder != NULL && decoder->have_subtune &&
-     decoder->get_song_tuple != NULL)
-        tuple = decoder->get_song_tuple (filename);
+    if (tuple == NULL && decoder != NULL && decoder->have_subtune)
+        tuple = file_read_tuple (filename, decoder);
 
     if (tuple != NULL && tuple->nsubtunes > 0)
     {

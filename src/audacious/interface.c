@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gtk/gtk.h>
 
 #include "interface.h"
 #include "playback.h"
@@ -181,8 +182,8 @@ interface_show_about_window(gboolean show)
     }
 }
 
-void
-interface_run_gtk_plugin(GtkWidget *parent, const gchar *name)
+/* void interface_run_gtk_plugin (GtkWidget * parent, const gchar * name) */
+void interface_run_gtk_plugin (void * parent, const gchar * name)
 {
     if (interface_cbs.run_gtk_plugin != NULL)
         interface_cbs.run_gtk_plugin(parent, name);
@@ -201,8 +202,8 @@ interface_run_gtk_plugin(GtkWidget *parent, const gchar *name)
     }
 }
 
-void
-interface_stop_gtk_plugin(GtkWidget *parent)
+/* void interface_stop_gtk_plugin (GtkWidget * parent) */
+void interface_stop_gtk_plugin (void * parent)
 {
     if (interface_cbs.stop_gtk_plugin != NULL)
         interface_cbs.stop_gtk_plugin(parent);

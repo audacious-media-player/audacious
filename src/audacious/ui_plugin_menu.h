@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2009  Audacious development team.
+ *  Copyright (C) 2005-2010  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,9 +21,6 @@
 #define AUDACIOUS_UI_PLUGIN_MENU_H
 
 #include <glib.h>
-#include <gtk/gtk.h>
-
-G_BEGIN_DECLS
 
 #define AUDACIOUS_MENU_MAIN             0
 #define AUDACIOUS_MENU_PLAYLIST         1
@@ -34,10 +31,11 @@ G_BEGIN_DECLS
 #define AUDACIOUS_MENU_PLAYLIST_MISC    6
 #define TOTAL_PLUGIN_MENUS 7
 
-GtkWidget * get_plugin_menu (gint id);
-gint menu_plugin_item_add (gint id, GtkWidget * item);
-gint menu_plugin_item_remove (gint id, GtkWidget * item);
-
-G_END_DECLS
+/* GtkWidget * get_plugin_menu (gint id); */
+void * get_plugin_menu (gint id);
+/* gint menu_plugin_item_add (gint id, GtkWidget * item); */
+gint menu_plugin_item_add (gint id, void * item);
+/* gint menu_plugin_item_remove (gint id, GtkWidget * item); */
+gint menu_plugin_item_remove (gint id, void * item);
 
 #endif /* AUDACIOUS_UI_PLUGIN_MENU_H */

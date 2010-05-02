@@ -511,7 +511,7 @@ static gboolean playback_play_file (gint playlist, gint entry)
     }
 
     if (decoder == NULL)
-        decoder = file_probe (filename, FALSE);
+        decoder = file_find_decoder (filename, FALSE);
 
     if (decoder == NULL)
     {

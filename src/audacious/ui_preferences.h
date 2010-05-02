@@ -20,12 +20,16 @@
 #ifndef AUDACIOUS_UI_PREFERENCES_H
 #define AUDACIOUS_UI_PREFERENCES_H
 
-GtkWidget** create_prefs_window(void);
+/* GtkWidget * * create_prefs_window (void); */
+void * * create_prefs_window (void);
 void destroy_prefs_window(void);
 void show_prefs_window(void);
 void hide_prefs_window(void);
 
-gint prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl);
+/* gint prefswin_page_new (GtkWidget * container, const gchar * name,
+ const gchar * imgurl); */
+gint prefswin_page_new (void * container, const gchar * name, const gchar *
+ imgurl);
 void prefswin_page_destroy(GtkWidget *container);
 
 #endif /* AUDACIOUS_UI_PREFERENCES_H */

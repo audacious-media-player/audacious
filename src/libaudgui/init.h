@@ -1,6 +1,6 @@
 /*
- * libaudgui-gtk.h
- * Copyright 2010 Audacious Development Team
+ * libaudgui/init.h
+ * Copyright 2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -19,22 +19,6 @@
  * using our public API to be a derived work.
  */
 
-#ifndef LIBAUDGUI_GTK_H
-#define LIBAUDGUI_GTK_H
+#include <audacious/plugin.h>
 
-#include <gtk/gtk.h>
-
-GtkWidget * audgui_create_effects_menu (void);
-
-void audgui_playlist_manager_update(void);
-void audgui_playlist_manager_ui_show(GtkWidget *mainwin);
-void audgui_playlist_manager_destroy(void);
-
-/* util.c */
-void audgui_hide_on_delete (GtkWidget * widget);
-void audgui_hide_on_escape (GtkWidget * widget);
-void audgui_destroy_on_escape (GtkWidget * widget);
-void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
- const gchar * title, const gchar * text);
-
-#endif
+void audgui_init (struct _AudaciousFuncTableV1 * vtable);

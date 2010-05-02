@@ -18,7 +18,6 @@
  */
 
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
 
 #ifndef _AUDACIOUS_UI_MISC_H
 
