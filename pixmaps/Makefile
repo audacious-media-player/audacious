@@ -1,4 +1,5 @@
-DATA = audacious2.png
+DATA = audacious.png \
+       audacious.svg
 
 include ../buildsys.mk
 
