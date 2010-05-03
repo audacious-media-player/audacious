@@ -91,7 +91,7 @@ AudConfig aud_default_config = {
     .replay_gain_preamp = 0,
     .default_gain = 0,
     .sw_volume_left = 100, .sw_volume_right = 100,
-    .clear_playlist = FALSE,
+    .clear_playlist = TRUE,
     .output_path = NULL,
     .output_number = -1,
 };
