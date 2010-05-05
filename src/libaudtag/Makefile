@@ -9,7 +9,8 @@ SRCS = audtag.c		\
        wma/wma.c	\
        id3/id3v1.c	\
        id3/id3v2.c	\
-       ape/ape.c
+       ape/ape.c	\
+       aac/aac.c
 
 INCLUDES = audtag.h
 
