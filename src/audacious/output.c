@@ -149,7 +149,7 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
 
     if (output_leave_open && COP->set_written_time != NULL)
     {
-        vis_runner_time_offset (- frames_written * (gint64) 1000 / output_rate);
+        vis_runner_time_offset (- frames_written * (gint64) 1000 / decoder_rate);
         COP->set_written_time (0);
     }
 
@@ -214,7 +214,7 @@ static void output_close_audio (void)
 static void output_flush (gint time)
 {
     LOCK;
-    frames_written = time * (gint64) output_rate / 1000;
+    frames_written = time * (gint64) decoder_rate / 1000;
     vis_runner_flush ();
     new_effect_flush ();
     COP->flush (new_effect_decoder_to_output_time (time));
@@ -237,7 +237,7 @@ static gint get_written_time (void)
     LOCK;
 
     if (output_opened)
-        time = frames_written * (gint64) 1000 / output_rate;
+        time = frames_written * (gint64) 1000 / decoder_rate;
 
     UNLOCK;
     return time;
@@ -350,12 +350,6 @@ static void do_write (void * data, gint samples)
 {
     void * allocated = NULL;
 
-    LOCK;
-    frames_written += samples / output_channels;
-    vis_runner_pass_audio (frames_written * (gint64) 1000 / output_rate, data,
-     samples, output_channels);
-    UNLOCK;
-
     eq_filter (data, samples);
     apply_software_volume (data, output_channels, samples / output_channels);
 
@@ -410,6 +404,10 @@ static void output_write_audio (void * data, gint size)
     gint samples = size / FMT_SIZEOF (decoder_format);
     void * allocated = NULL;
 
+    LOCK;
+    frames_written += samples / decoder_channels;
+    UNLOCK;
+
     if (decoder_format != FMT_FLOAT)
     {
         gfloat * new = g_malloc (sizeof (gfloat) * samples);
@@ -422,6 +420,8 @@ static void output_write_audio (void * data, gint size)
     }
 
     apply_replay_gain (data, samples);
+    vis_runner_pass_audio (frames_written * (gint64) 1000 / decoder_rate, data,
+     samples, decoder_channels);
     new_effect_process ((gfloat * *) & data, & samples);
 
     if (data != allocated)
