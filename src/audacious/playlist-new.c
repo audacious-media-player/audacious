@@ -705,8 +705,7 @@ static void make_entries (gchar * filename, InputPlugin * decoder, Tuple *
     if (tuple == NULL && decoder == NULL)
         decoder = file_find_decoder (filename, TRUE);
 
-    if (tuple == NULL && decoder != NULL && decoder->have_subtune && strchr
-     (filename, '?') == NULL)
+    if (tuple == NULL && decoder != NULL && decoder->have_subtune)
         tuple = file_read_tuple (filename, decoder);
 
     if (tuple != NULL && tuple->nsubtunes > 0)
