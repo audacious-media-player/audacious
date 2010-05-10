@@ -562,7 +562,7 @@ Tuple *id3v2_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               associate_string (tuple, f, FIELD_TITLE, NULL, frame);
               break;
           case ID3_COMPOSER:
-              associate_string (tuple, f, FIELD_ARTIST, NULL, frame);
+              associate_string (tuple, f, FIELD_COMPOSER, NULL, frame);
               break;
           case ID3_COPYRIGHT:
               associate_string (tuple, f, FIELD_COPYRIGHT, NULL, frame);
