@@ -70,7 +70,7 @@ static const gchar *credit_text[] = {
     "Matti Hämäläinen",
     "Sascha Hlusiak",
     "John Lindgren",
-    "Michał Lipski"
+    "Michał Lipski",
     "Giacomo Lozito",
     "Cristi Măgherușan",
     "Boris Mikhaylov",
