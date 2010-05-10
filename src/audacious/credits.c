@@ -70,6 +70,7 @@ static const gchar *credit_text[] = {
     "Matti Hämäläinen",
     "Sascha Hlusiak",
     "John Lindgren",
+    "Michał Lipski"
     "Giacomo Lozito",
     "Cristi Măgherușan",
     "Boris Mikhaylov",
@@ -99,7 +100,6 @@ static const gchar *credit_text[] = {
     "Jussi Judin",
     "Teru KAMOGASHIRA",
     "Chris Kehler",
-    "Michał Lipski",
     "Mark Loeser",
     "Alex Maclean",
     "Michael Hanselmann",
