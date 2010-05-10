@@ -68,6 +68,8 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "replaygain-album-peak", TUPLE_INT },
     { "replaygain-track-gain", TUPLE_INT },
     { "replaygain-track-peak", TUPLE_INT },
+
+    { "composer",	TUPLE_STRING },
 };
 
 

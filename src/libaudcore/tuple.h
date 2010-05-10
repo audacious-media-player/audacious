@@ -72,6 +72,8 @@ enum {
     FIELD_REPLAYGAIN_TRACK_GAIN,
     FIELD_REPLAYGAIN_TRACK_PEAK,
 
+    FIELD_COMPOSER,	/**< Composer of song, if different than artist. */
+
     /* Special field, must always be last */
     FIELD_LAST
 };
