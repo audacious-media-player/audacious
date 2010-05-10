@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "playlist-new.h"
 #include "plugin-registry.h"
 #include "probe.h"
 
@@ -240,6 +241,10 @@ gboolean file_write_tuple (const gchar * filename, InputPlugin * decoder,
 
     success = decoder->update_song_tuple (tuple, handle);
     vfs_fclose (handle);
+
+    if (success)
+        playlist_rescan_file (filename);
+
     return success;
 }
 

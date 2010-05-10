@@ -105,6 +105,7 @@ void playlist_sort_selected_by_tuple (gint playlist, gint (* compare) (const
 
 void playlist_reformat_titles ();
 void playlist_rescan (gint playlist);
+void playlist_rescan_file (const gchar * filename);
 
 gint64 playlist_get_total_length (gint playlist);
 gint64 playlist_get_selected_length (gint playlist);

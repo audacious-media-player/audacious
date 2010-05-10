@@ -1021,16 +1021,20 @@ struct _EffectPlugin {
     void (* process) (gfloat * * data, gint * samples);
 
     /* A seek is taking place; any buffers should be discarded. */
-    void (* flush) ();
+    void (* flush) (void);
 
     /* Exactly like process() except that any buffers should be drained (i.e.
-     * the data processed and returned). */
+     * the data processed and returned).  finish() will be called a second time
+     * at the end of the last song in the playlist. */
     void (* finish) (gfloat * * data, gint * samples);
 
     /* For effects that change the length of the song, these functions allow the
      * correct time to be displayed. */
     gint (* decoder_to_output_time) (gint time);
     gint (* output_to_decoder_time) (gint time);
+
+    /* Effects with lowest order (0 to 9) are applied first. */
+    gint order;
 };
 
 struct OutputAPI

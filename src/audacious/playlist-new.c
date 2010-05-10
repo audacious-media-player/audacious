@@ -1442,6 +1442,34 @@ void playlist_rescan(gint playlist_num)
     METADATA_HAS_CHANGED;
 }
 
+void playlist_rescan_file (const gchar * filename)
+{
+    gint num_playlists = index_count (playlists);
+    gint playlist_num;
+
+    METADATA_WILL_CHANGE;
+
+    for (playlist_num = 0; playlist_num < num_playlists; playlist_num ++)
+    {
+        struct playlist * playlist = index_get (playlists, playlist_num);
+        gint num_entries = index_count (playlist->entries);
+        gint entry_num;
+
+        for (entry_num = 0; entry_num < num_entries; entry_num ++)
+        {
+            struct entry * entry = index_get (playlist->entries, entry_num);
+
+            if (! strcmp (entry->filename, filename))
+            {
+                entry_set_tuple (playlist, entry, NULL);
+                entry->failed = FALSE;
+            }
+        }
+    }
+
+    METADATA_HAS_CHANGED;
+}
+
 gint64 playlist_get_total_length(gint playlist_num)
 {
     DECLARE_PLAYLIST;

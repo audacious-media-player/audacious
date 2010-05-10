@@ -199,21 +199,27 @@ static GList * new_effect_list = NULL;
 
 void new_effect_start (gint * channels, gint * rate)
 {
+    gint order;
     GList * node;
     EffectPlugin * effect;
 
     g_list_free (new_effect_list);
     new_effect_list = NULL;
 
-    /* FIXME: Let the user define in what order the effects are applied. */
-    for (node = ep_data.enabled_list; node != NULL; node = node->next)
+    for (order = 0; order < 10; order ++)
     {
-        effect = node->data;
+        for (node = ep_data.enabled_list; node != NULL; node = node->next)
+        {
+            effect = node->data;
 
-        if (effect->start != NULL)
-            new_effect_list = g_list_prepend (new_effect_list, effect);
-        else
-            printf ("Please update %s to new API.\n", effect->description);
+            if (effect->order != order)
+                continue;
+
+            if (effect->start != NULL)
+                new_effect_list = g_list_prepend (new_effect_list, effect);
+            else
+                printf ("Please update %s to new API.\n", effect->description);
+        }
     }
 
     new_effect_list = g_list_reverse (new_effect_list);

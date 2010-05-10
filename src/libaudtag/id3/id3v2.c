@@ -26,6 +26,7 @@
 #include <inttypes.h>
 #include "../tag_module.h"
 #include "frame.h"
+#include <audacious/chardet.h>
 
 #define TAG_SIZE 1
 
@@ -108,8 +109,8 @@ static gchar * read_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
     switch (data[0])
     {
     case 0:
-        return g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1", NULL, NULL,
-         NULL);
+        data[size] = '\0';
+        return cd_str_to_utf8(data + 1);
     case 1:
         if (data[1] == (gchar) 0xff)
             return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,
