@@ -137,7 +137,7 @@ void skip(VFSFile * f, int amount)
 
 gchar *read_char_data(VFSFile * fd, int size)
 {
-    gchar *value = g_new0(gchar, size);
+    gchar *value = g_new0(gchar, size + 1);
     vfs_fread(value, size, 1, fd);
     return value;
 }
