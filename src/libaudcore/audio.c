@@ -28,7 +28,7 @@ static void NAME (TYPE * in, gfloat * out, gint samples) \
 { \
     TYPE * end = in + samples; \
     while (in < end) \
-        * out ++ = (gfloat) (TYPE) (SWAP (* in ++) - OFFSET) / RANGE; \
+        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) / (gdouble) RANGE; \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
@@ -38,7 +38,7 @@ static void NAME (gfloat * in, TYPE * out, gint samples) \
     while (in < end) \
     { \
         float f = * in ++; \
-        * out ++ = SWAP (OFFSET + (TYPE) (CLAMP (f, -1, 1) * RANGE)); \
+        * out ++ = SWAP (OFFSET + (TYPE) (CLAMP (f, -1, 1) * (gdouble) RANGE)); \
     } \
 }
 
