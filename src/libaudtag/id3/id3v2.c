@@ -394,12 +394,13 @@ static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
 
 static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * header)
 {
-    gchar * text = read_text_frame (handle, header);
+#if 0
+    gchar *text = read_text_frame (handle, header);
 
     if (text == NULL)
         return;
 
-    gchar * separator = strchr(text, 0);
+    gchar *separator = strchr(text, 0);
 
     if (separator == NULL)
         return;
@@ -409,6 +410,7 @@ static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * hea
     tuple_associate_string (tuple, -1, text, value);
 
     g_free (text);
+#endif
 }
 
 Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
