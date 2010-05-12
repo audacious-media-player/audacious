@@ -62,6 +62,8 @@
 #include "ui_headless.h"
 #include "ui_misc.h"
 
+#define AUTOSAVE_INTERVAL 300 /* seconds */
+
 static const gchar *application_name = N_("Audacious");
 
 struct _AudCmdLineOpt
@@ -391,7 +393,6 @@ void aud_quit(void)
 
     g_message("Saving configuration");
     aud_config_save();
-    playlist_save_state ();
 
     if (playback_get_playing ())
         playback_stop ();
@@ -446,6 +447,13 @@ void init_playback_hooks(void)
     hook_associate("playback no playlist advance", mpris_status_cb2, NULL);
 }
 #endif
+
+static gboolean autosave_cb (void * unused)
+{
+    g_message ("Saving configuration.\n");
+    aud_config_save ();
+    return TRUE;
+}
 
 gint main(gint argc, gchar ** argv)
 {
@@ -545,6 +553,8 @@ gint main(gint argc, gchar ** argv)
     g_message("Displaying unsupported version warning.");
     ui_display_unsupported_version_warning();
 #endif
+
+    g_timeout_add_seconds (AUTOSAVE_INTERVAL, autosave_cb, NULL);
 
     g_message("Selecting interface %s", options.interface);
     i = interface_get(options.interface);
