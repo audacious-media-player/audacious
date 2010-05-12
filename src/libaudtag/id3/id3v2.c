@@ -26,7 +26,6 @@
 #include <inttypes.h>
 #include "../tag_module.h"
 #include "frame.h"
-#include <audacious/chardet.h>
 
 #define TAG_SIZE 1
 

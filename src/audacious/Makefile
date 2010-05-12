@@ -46,7 +46,6 @@ endif
 
 INCLUDES = auddrct.h			\
            audconfig.h			\
-           chardet.h			\
            configdb.h			\
            dbus.h				\
            dbus-service.h		\

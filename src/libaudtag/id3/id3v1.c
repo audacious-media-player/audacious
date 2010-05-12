@@ -25,7 +25,6 @@
 #include "../util.h"
 #include <inttypes.h>
 #include "../tag_module.h"
-#include <libaudcore/audstrings.h>
 
 static gboolean has_id3v1_ext;
 

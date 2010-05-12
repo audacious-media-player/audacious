@@ -22,6 +22,7 @@
 
 #define ID3V1_H
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 #include "../tag_module.h"
