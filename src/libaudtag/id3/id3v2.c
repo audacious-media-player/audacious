@@ -129,6 +129,41 @@ static gchar * read_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
     }
 }
 
+static gchar * read_raw_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
+{
+    gint size = header->size;
+    gchar data[size];
+
+    if (vfs_fread (data, 1, size, handle) != size)
+        return NULL;
+
+    if (header->flags & 0x200)
+        size = unsyncsafe (data, size);
+
+    switch (data[0])
+    {
+    case 0:
+	return g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1", NULL,
+	 NULL, NULL);
+    case 1:
+        if (data[1] == (gchar) 0xff)
+            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,
+             NULL, NULL);
+        else
+            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE", NULL,
+             NULL, NULL);
+    case 2:
+        return g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL, NULL,
+         NULL);
+    case 3:
+        return g_strndup (data + 1, size - 1);
+    default:
+        AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
+         size - 1, (gint) data[0]);
+        return NULL;
+    }
+}
+
 static gboolean read_comment_frame (VFSFile * handle, ID3v2FrameHeader * header,
  gchar * * lang, gchar * * type, gchar * * value)
 {
@@ -393,8 +428,7 @@ static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
 
 static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * header)
 {
-#if 0
-    gchar *text = read_text_frame (handle, header);
+    gchar *text = read_raw_text_frame (handle, header);
 
     if (text == NULL)
         return;
@@ -409,7 +443,6 @@ static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * hea
     tuple_associate_string (tuple, -1, text, value);
 
     g_free (text);
-#endif
 }
 
 Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
