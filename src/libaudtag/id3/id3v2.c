@@ -110,7 +110,7 @@ static gchar * read_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
     {
     case 0:
         data[size] = '\0';
-        return cd_str_to_utf8(data + 1);
+        return str_to_utf8(data + 1);
     case 1:
         if (data[1] == (gchar) 0xff)
             return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,

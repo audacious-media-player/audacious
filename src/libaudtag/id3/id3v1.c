@@ -54,7 +54,7 @@ gboolean id3v1_can_handle_file(VFSFile *f)
 
 static gchar *convert_to_utf8(gchar *str)
 {
-    return g_strchomp(cd_str_to_utf8(str));
+    return g_strchomp(str_to_utf8(str));
 }
 
 Tuple *id3v1_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
