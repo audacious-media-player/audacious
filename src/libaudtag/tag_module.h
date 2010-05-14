@@ -39,6 +39,8 @@ typedef struct _module {
     gboolean(*can_handle_file) (VFSFile *fd);
     pTuple(*populate_tuple_from_file)(Tuple *tuple, VFSFile* fd);
     gboolean(*write_tuple_to_file) (Tuple * tuple, VFSFile *fd);
+
+    mowgli_node_t node;
 } tag_module_t;
 
 /* this function must be modified when including new modules */
