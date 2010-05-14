@@ -163,6 +163,10 @@ Control + a	Select all songs in playlist
 .br
 Shift + Control + a	Cancel selection
 .br
++ (plus)	Increase volume 5 percent
+.br
+- (minus)	Decrease volume 5 percent
+.br
 s	Toggle shuffle
 .br
 r	Toggle repeat
