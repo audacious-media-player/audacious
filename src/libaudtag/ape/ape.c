@@ -30,6 +30,7 @@
 
 #include <libaudcore/vfs.h>
 
+#include "../util.h"
 #include "ape.h"
 
 typedef struct
