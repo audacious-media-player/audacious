@@ -250,12 +250,6 @@ void readAllFrames(VFSFile * fd, int framesSize)
 
 }
 
-void write_int32(VFSFile * fd, guint32 val)
-{
-    guint32 be_val = GUINT32_TO_BE(val);
-    vfs_fwrite(&be_val, 4, 1, fd);
-}
-
 void write_syncsafe_int32(VFSFile * fd, guint32 val)
 {
     //TODO write the correct function - this is just for testing
@@ -328,7 +322,7 @@ void writePaddingToFile(VFSFile * fd, int ksize)
 void writeID3FrameHeaderToFile(VFSFile * fd, ID3v2FrameHeader * header)
 {
     vfs_fwrite(header->frame_id, 4, 1, fd);
-    write_int32(fd, header->size);
+    vfs_fput_be32(header->size, fd);
     vfs_fwrite(&header->flags, 2, 1, fd);
 }
 

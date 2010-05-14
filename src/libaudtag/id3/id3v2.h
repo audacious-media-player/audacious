@@ -70,8 +70,6 @@ GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf);
 
 void readAllFrames(VFSFile *fd,int framesSize);
 
-void write_int32(VFSFile *fd, guint32 val);
-
 void  write_syncsafe_int32(VFSFile *fd, guint32 val);
 
 void write_ASCII(VFSFile *fd, int size, gchar* value);
