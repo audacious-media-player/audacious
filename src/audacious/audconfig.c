@@ -522,4 +522,5 @@ aud_config_save(void)
     cfg_db_close(db);
 
     save_all_playlists ();
+    playlist_save_state ();
 }
