@@ -112,7 +112,7 @@ gboolean id3v2_can_handle_file(VFSFile *f);
 Tuple *id3v2_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
 gboolean id3v2_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
-static const tag_module_t id3v2 = {
+static tag_module_t id3v2 = {
     .name = "ID3v2",
     .can_handle_file = id3v2_can_handle_file,
     .populate_tuple_from_file = id3v2_populate_tuple_from_file,

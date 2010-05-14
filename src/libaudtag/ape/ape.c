@@ -424,7 +424,7 @@ ERROR:
     return FALSE;
 }
 
-const tag_module_t ape =
+tag_module_t ape =
 {
     .name = "APE",
     .can_handle_file = ape_is_our_file,

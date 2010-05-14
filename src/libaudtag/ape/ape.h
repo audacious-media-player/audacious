@@ -23,6 +23,6 @@
 
 #include "../tag_module.h"
 
-extern const tag_module_t ape;
+extern tag_module_t ape;
 
 #endif
