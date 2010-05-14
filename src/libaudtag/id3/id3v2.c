@@ -69,10 +69,13 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
 {
     ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader, 1);
     frameheader->frame_id = read_char_data(fd, 4);
-    frameheader->size = read_syncsafe_int32(fd);
+    frameheader->size = read_BEuint32(fd);
     frameheader->flags = read_LEuint16(fd);
     if ((frameheader->flags & 0x100) == 0x100)
         frameheader->size = read_syncsafe_int32(fd);
+
+    AUDDBG("got frame %s, size %d, flags %x\n", frameheader->frame_id, frameheader->size, frameheader->flags);
+
     return frameheader;
 }
 
@@ -225,6 +228,8 @@ GenericFrame *readGenericFrame(VFSFile * fd, GenericFrame * gf)
     gf->header = readID3v2FrameHeader(fd);
     gf->frame_body = read_char_data(fd, gf->header->size);
 
+    AUDDBG("got frame %s, size %d\n", gf->header->frame_id, gf->header->size);
+
     return gf;
 }
 
@@ -233,6 +238,9 @@ void readAllFrames(VFSFile * fd, int framesSize)
 {
     int pos = 0;
     int i = 0;
+
+    AUDDBG("readAllFrames\n");
+
     while (pos < framesSize)
     {
         GenericFrame *gframe = g_new0(GenericFrame, 1);
