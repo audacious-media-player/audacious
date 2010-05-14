@@ -23,10 +23,7 @@
 #define TAG_WMA_MODULE_H
 #include "../tag_module.h"
 #include "wma.h"
-static tag_module_t wma = {
-    .name = "WMA",
-    .can_handle_file = wma_can_handle_file,
-    .populate_tuple_from_file = wma_populate_tuple_from_file,
-    .write_tuple_to_file = wma_write_tuple_to_file,
-};
+
+extern tag_module_t wma;
+
 #endif

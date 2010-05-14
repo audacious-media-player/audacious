@@ -427,3 +427,11 @@ gboolean wma_write_tuple_to_file(Tuple * tuple, VFSFile * f)
 
     return TRUE;
 }
+
+tag_module_t wma = {
+    .name = "WMA",
+    .can_handle_file = wma_can_handle_file,
+    .populate_tuple_from_file = wma_populate_tuple_from_file,
+    .write_tuple_to_file = wma_write_tuple_to_file,
+};
+
