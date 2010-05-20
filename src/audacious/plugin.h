@@ -81,6 +81,12 @@ typedef enum {
     INPUT_VIS_OFF
 } InputVisType;
 
+typedef enum {
+    PLUGIN_MESSAGE_ERROR = 0,
+    PLUGIN_MESSAGE_OK = 1,
+    PLUGIN_MESSAGE_DEFERRED = 2
+} PluginMessageResponse;
+
 /** Playlist update signal types */
 enum
 {
@@ -939,7 +945,8 @@ G_END_DECLS
     void (*cleanup) (void);        \
     void (*about) (void);        \
     void (*configure) (void);        \
-    PluginPreferences *settings;
+    PluginPreferences *settings;     \
+    PluginMessageResponse (*sendmsg)(gint msgtype, gpointer msgdata);
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
