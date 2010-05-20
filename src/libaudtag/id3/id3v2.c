@@ -32,18 +32,9 @@
 guint32 read_syncsafe_int32(VFSFile * fd)
 {
     guint32 val = read_BEuint32(fd);
-    guint32 mask = 0x7f;
-    guint32 intVal = 0;
-    intVal = ((intVal) | (val & mask));
-    int i;
-    for (i = 0; i < 3; i++)
-    {
-        mask = mask << 8;
-        guint32 tmp = (val & mask);
-        tmp = tmp >> 1;
-        intVal = intVal | tmp;
-    };
-    return intVal;
+
+    return (val & 0x7f) | ((val & 0x7f00) >> 1) | ((val & 0x7f0000) >> 2) |
+     ((val & 0x7f000000) >> 3);
 }
 
 ID3v2Header *readHeader(VFSFile * fd)
@@ -69,7 +60,7 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
 {
     ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader, 1);
     frameheader->frame_id = read_char_data(fd, 4);
-    frameheader->size = read_BEuint32(fd);
+    frameheader->size = read_syncsafe_int32 (fd);
     frameheader->flags = read_LEuint16(fd);
     if ((frameheader->flags & 0x100) == 0x100)
         frameheader->size = read_syncsafe_int32(fd);
