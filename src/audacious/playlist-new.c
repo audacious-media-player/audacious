@@ -1641,14 +1641,7 @@ gboolean playlist_prev_song(gint playlist_num)
 
     LOOKUP_PLAYLIST_RET (FALSE);
 
-    if (playlist->queued != NULL)
-    {
-        if (playlist->position == playlist->queued->data)
-            return FALSE;
-
-        set_position (playlist, playlist->queued->data);
-    }
-    else if (cfg.shuffle)
+    if (cfg.shuffle)
     {
         if (! shuffle_prev (playlist))
             return FALSE;
