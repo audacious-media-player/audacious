@@ -28,6 +28,7 @@
 #include "frame.h"
 
 #define TAG_SIZE 1
+#define XXX_DONT_ASSUME_ID3_LENGTHS_ARE_SYNCSAFE
 
 guint32 read_syncsafe_int32(VFSFile * fd)
 {
@@ -60,7 +61,11 @@ ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
 {
     ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader, 1);
     frameheader->frame_id = read_char_data(fd, 4);
+#ifndef XXX_DONT_ASSUME_ID3_LENGTHS_ARE_SYNCSAFE
     frameheader->size = read_syncsafe_int32 (fd);
+#else
+    frameheader->size = read_BEuint32 (fd);
+#endif
     frameheader->flags = read_LEuint16(fd);
     if ((frameheader->flags & 0x100) == 0x100)
         frameheader->size = read_syncsafe_int32(fd);
