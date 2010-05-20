@@ -45,7 +45,7 @@ typedef struct extHeader
 
 typedef struct frameheader
 {
-    gchar* frame_id;
+    const gchar * frame_id;
     guint32 size;
     guint16 flags;
 }ID3v2FrameHeader;
@@ -62,13 +62,7 @@ ID3v2Header *readHeader(VFSFile *fd);
 
 ExtendedHeader *readExtendedHeader(VFSFile *fd);
 
-ID3v2FrameHeader *readID3v2FrameHeader(VFSFile *fd);
-
 gchar* readFrameBody(VFSFile *fd,int size);
-
-GenericFrame *readGenericFrame(VFSFile *fd,GenericFrame *gf);
-
-void readAllFrames(VFSFile *fd,int framesSize);
 
 void  write_syncsafe_int32(VFSFile *fd, guint32 val);
 

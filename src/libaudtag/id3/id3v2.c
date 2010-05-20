@@ -28,7 +28,6 @@
 #include "frame.h"
 
 #define TAG_SIZE 1
-#define XXX_DONT_ASSUME_ID3_LENGTHS_ARE_SYNCSAFE
 
 guint32 read_syncsafe_int32(VFSFile * fd)
 {
@@ -57,15 +56,16 @@ ExtendedHeader *readExtendedHeader(VFSFile * fd)
     return header;
 }
 
-ID3v2FrameHeader *readID3v2FrameHeader(VFSFile * fd)
+static ID3v2FrameHeader * readID3v2FrameHeader (VFSFile * fd, gint version)
 {
     ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader, 1);
     frameheader->frame_id = read_char_data(fd, 4);
-#ifndef XXX_DONT_ASSUME_ID3_LENGTHS_ARE_SYNCSAFE
-    frameheader->size = read_syncsafe_int32 (fd);
-#else
-    frameheader->size = read_BEuint32 (fd);
-#endif
+
+    if (version == 3)
+        frameheader->size = read_BEuint32 (fd);
+    else
+        frameheader->size = read_syncsafe_int32 (fd);
+
     frameheader->flags = read_LEuint16(fd);
     if ((frameheader->flags & 0x100) == 0x100)
         frameheader->size = read_syncsafe_int32(fd);
@@ -219,37 +219,40 @@ static gboolean read_comment_frame (VFSFile * handle, ID3v2FrameHeader * header,
     return TRUE;
 }
 
-GenericFrame *readGenericFrame(VFSFile * fd, GenericFrame * gf)
+static void readGenericFrame (VFSFile * fd, GenericFrame * gf, gint version)
 {
-    gf->header = readID3v2FrameHeader(fd);
+    gf->header = readID3v2FrameHeader (fd, version);
     gf->frame_body = read_char_data(fd, gf->header->size);
 
     AUDDBG("got frame %s, size %d\n", gf->header->frame_id, gf->header->size);
-
-    return gf;
 }
 
 
-void readAllFrames(VFSFile * fd, int framesSize)
+static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
 {
     int pos = 0;
-    int i = 0;
 
     AUDDBG("readAllFrames\n");
 
     while (pos < framesSize)
     {
         GenericFrame *gframe = g_new0(GenericFrame, 1);
-        gframe = readGenericFrame(fd, gframe);
+
+        readGenericFrame (fd, gframe, version);
+
         if (isValidFrame(gframe))
         {
-            mowgli_dictionary_add(frames, gframe->header->frame_id, gframe);
-            mowgli_node_add(gframe->header->frame_id, mowgli_node_create(), frameIDs);
+            mowgli_dictionary_add (frames, (void *) gframe->header->frame_id,
+             gframe);
+            mowgli_node_add ((void *) gframe->header->frame_id,
+             mowgli_node_create (), frameIDs);
             pos += gframe->header->size;
-            i++;
         }
         else
+        {
+            g_free (gframe);
             break;
+        }
     }
 
 }
@@ -443,6 +446,126 @@ static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * hea
     g_free (text);
 }
 
+static gboolean decode_rva2_block (guchar * * _data, gint * _size, gint *
+ channel, gint * adjustment, gint * adjustment_unit, gint * peak, gint *
+ peak_unit)
+{
+    guchar * data = * _data;
+    gint size = * _size;
+    gint peak_bits;
+
+    if (size < 4)
+        return FALSE;
+
+    * channel = data[0];
+    * adjustment = (gchar) data[1]; /* first byte is signed */
+    * adjustment = (* adjustment << 8) | data[2];
+    * adjustment_unit = 512;
+    peak_bits = data[3];
+
+    data += 4;
+    size -= 4;
+
+    AUDDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+     * channel, * adjustment, * adjustment_unit, peak_bits);
+
+    if (peak_bits > 0 && peak_bits < sizeof (gint) * 8)
+    {
+        gint bytes = (peak_bits + 7) / 8;
+        gint count;
+
+        if (bytes > size)
+            return FALSE;
+
+        * peak = 0;
+        * peak_unit = 1 << peak_bits;
+
+        for (count = 0; count < bytes; count ++)
+            * peak = (* peak << 8) | data[count];
+
+        data += bytes;
+        size -= count;
+
+        AUDDBG ("RVA2 block: peak = %d/%d\n", * peak, * peak_unit);
+    }
+    else
+    {
+        * peak = 0;
+        * peak_unit = 0;
+    }
+
+    * _data = data;
+    * _size = size;
+    return TRUE;
+}
+
+static void decode_rva2 (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
+ header)
+{
+    gint size = header->size;
+    guchar _data[size];
+    guchar * data = _data;
+    gchar * domain;
+    gint channel, adjustment, adjustment_unit, peak, peak_unit;
+
+    if (vfs_fread (data, 1, size, handle) != size)
+        return;
+
+    if (memchr (data, 0, size) == NULL)
+        return;
+
+    domain = (gchar *) data;
+
+    AUDDBG ("RVA2 domain: %s\n", domain);
+
+    size -= strlen (domain) + 1;
+    data += strlen (domain) + 1;
+
+    while (size > 0)
+    {
+        if (! decode_rva2_block (& data, & size, & channel, & adjustment,
+         & adjustment_unit, & peak, & peak_unit))
+            break;
+
+        if (channel != 1) /* specific channel? */
+            continue;
+
+        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT, NULL) ==
+         TUPLE_INT)
+            adjustment = adjustment * (gint64) tuple_get_int (tuple,
+             FIELD_GAIN_GAIN_UNIT, NULL) / adjustment_unit;
+        else
+            tuple_associate_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
+             adjustment_unit);
+
+        if (peak_unit)
+        {
+            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT, NULL) ==
+             TUPLE_INT)
+                peak = peak * (gint64) tuple_get_int (tuple,
+                 FIELD_GAIN_PEAK_UNIT, NULL) / peak_unit;
+            else
+                tuple_associate_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
+                 peak_unit);
+        }
+
+        if (! strcasecmp (domain, "album"))
+        {
+            tuple_associate_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
+
+            if (peak_unit)
+                tuple_associate_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
+        }
+        else if (! strcasecmp (domain, "track"))
+        {
+            tuple_associate_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
+
+            if (peak_unit)
+                tuple_associate_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
+        }
+    }
+}
+
 Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
 {
     gint numericgenre;
@@ -491,8 +614,8 @@ void add_newISO8859_1FrameFromString(const gchar * value, int id3_field)
     frame->header = header;
     frame->frame_body = buf;
     mowgli_dictionary_add(frames, header->frame_id, frame);
-    mowgli_node_add(frame->header->frame_id, mowgli_node_create(), frameIDs);
-
+    mowgli_node_add ((void *) frame->header->frame_id, mowgli_node_create (),
+     frameIDs);
 }
 
 
@@ -557,9 +680,11 @@ void add_frameFromTupleInt(Tuple * tuple, int field, int id3_field)
 gboolean id3v2_can_handle_file(VFSFile * f)
 {
     ID3v2Header *header = readHeader(f);
-    if (!strcmp(header->id3, "ID3"))
-        return TRUE;
-    return FALSE;
+    gboolean good = ! strcmp (header->id3, "ID3") && (header->version == 3 ||
+     header->version == 4);
+
+    g_free (header);
+    return good;
 }
 
 
@@ -567,8 +692,8 @@ gboolean id3v2_can_handle_file(VFSFile * f)
 Tuple *id3v2_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
 {
     vfs_fseek(f, 0, SEEK_SET);
-    ExtendedHeader *extHeader;
     ID3v2Header *header = readHeader(f);
+    ExtendedHeader * extHeader = NULL;
     int pos = 0;
     if (isExtendedHeader(header))
     {
@@ -578,13 +703,23 @@ Tuple *id3v2_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
 
     while (pos < header->size)
     {
-        ID3v2FrameHeader *frame = readID3v2FrameHeader(f);
+        ID3v2FrameHeader * frame = readID3v2FrameHeader (f, header->version);
+
         if (frame->size == 0)
+        {
+            g_free (frame);
             break;
+        }
+
         int id = getFrameID(frame);
         pos = pos + frame->size + 10;
+
         if (pos > header->size)
+        {
+            g_free (frame);
             break;
+        }
+
         switch (id)
         {
           case ID3_ALBUM:
@@ -633,11 +768,19 @@ Tuple *id3v2_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
           case ID3_TXXX:
               decode_txxx (tuple, f, frame);
               break;
+          case ID3_RVA2:
+              decode_rva2 (tuple, f, frame);
+              break;
           default:
               AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);
               skipFrame(f, frame->size);
         }
+
+        g_free (frame);
     }
+
+    g_free (header);
+    g_free (extHeader);
     return tuple;
 }
 
@@ -669,7 +812,7 @@ gboolean id3v2_write_tuple_to_file(Tuple * tuple, VFSFile * f)
 
     //read all frames into generic frames;
     frames = mowgli_dictionary_create(strcasecmp);
-    readAllFrames(f, header->size);
+    readAllFrames (f, header->size, header->version);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
     if (tuple_get_string(tuple, FIELD_ARTIST, NULL))

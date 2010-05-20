@@ -40,10 +40,12 @@ enum {
     ID3_ENCODER,
     ID3_RECORDING_TIME,
     ID3_TXXX,
+    ID3_RVA2,
     ID3_TAGS_NO
 };
 
-char * id3_frames[] = {"TALB","TIT2","TCOM", "TCOP", "TDAT", "TIME", "TLEN",
-"TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE", "TDRC", "TXXX"};
+static const gchar * id3_frames[ID3_TAGS_NO] = {"TALB","TIT2","TCOM", "TCOP",
+ "TDAT", "TIME", "TLEN", "TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE",
+ "TDRC", "TXXX", "RVA2"};
 
 #endif
