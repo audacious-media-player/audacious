@@ -1085,12 +1085,6 @@ struct _InputPlayback {
     void (*set_params) (InputPlayback * playback, const gchar * title, gint
      length, gint bitrate, gint samplerate, gint channels);
 
-    /**
-     * Set playback entry title.
-     * @deprecated This function is deprecated, use #set_tuple() instead.
-     */
-    void (*set_title) (InputPlayback * playback, const gchar * title);
-
     void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
 
     /* called by input plugin when RG info available --asphyx */
@@ -1107,6 +1101,12 @@ struct _InputPlayback {
     gint start;
     gint end;
     gint end_timeout;
+
+    /* If replay gain settings are stored in the tuple associated with the
+     * current song, this function can be called (after opening audio) to apply
+     * those settings.  If the settings are changed in a call to set_tuple, this
+     * function must be called again to apply the updated settings. */
+    void (* set_gain_from_playlist) (InputPlayback * playback);
 };
 
 /**

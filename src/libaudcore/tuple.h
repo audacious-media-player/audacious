@@ -67,10 +67,18 @@ enum {
     FIELD_SEGMENT_START,
     FIELD_SEGMENT_END,
 
-    FIELD_REPLAYGAIN_ALBUM_GAIN,
-    FIELD_REPLAYGAIN_ALBUM_PEAK,
-    FIELD_REPLAYGAIN_TRACK_GAIN,
-    FIELD_REPLAYGAIN_TRACK_PEAK,
+    /* Preserving replay gain information accurately is a challenge since there
+     * are several differents formats around.  We use an integer fraction, with
+     * the denominator stored in the *_UNIT fields.  For example, if ALBUM_GAIN
+     * is 512 and GAIN_UNIT is 256, then the album gain is +2 dB.  If TRACK_PEAK
+     * is 787 and PEAK_UNIT is 1000, then the peak volume is 0.787 in a -1.0 to
+     * 1.0 range. */
+    FIELD_GAIN_ALBUM_GAIN,
+    FIELD_GAIN_ALBUM_PEAK,
+    FIELD_GAIN_TRACK_GAIN,
+    FIELD_GAIN_TRACK_PEAK,
+    FIELD_GAIN_GAIN_UNIT,
+    FIELD_GAIN_PEAK_UNIT,
 
     FIELD_COMPOSER,	/**< Composer of song, if different than artist. */
 

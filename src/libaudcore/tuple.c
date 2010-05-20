@@ -64,10 +64,12 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "segment-start",  TUPLE_INT },
     { "segment-end",    TUPLE_INT },
 
-    { "replaygain-album-gain", TUPLE_INT },
-    { "replaygain-album-peak", TUPLE_INT },
-    { "replaygain-track-gain", TUPLE_INT },
-    { "replaygain-track-peak", TUPLE_INT },
+    { "gain-album-gain", TUPLE_INT },
+    { "gain-album-peak", TUPLE_INT },
+    { "gain-track-gain", TUPLE_INT },
+    { "gain-track-peak", TUPLE_INT },
+    { "gain-gain-unit", TUPLE_INT },
+    { "gain-peak-unit", TUPLE_INT },
 
     { "composer",	TUPLE_STRING },
 };
@@ -169,7 +171,7 @@ tuple_new(void)
     Tuple *tuple;
 
     TUPLE_LOCK_WRITE();
-    
+
     tuple = tuple_new_unlocked();
 
     TUPLE_UNLOCK_WRITE();
@@ -399,7 +401,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 /**
  * Associates copy of given string to a field in specified #Tuple.
  * If field already exists, old value is freed and replaced.
- * 
+ *
  * Desired field can be specified either by key name or if it is
  * one of basic fields, by #TupleBasicType index.
  *
@@ -431,7 +433,7 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
  * Associates given string to a field in specified #Tuple. The caller
  * gives up ownership of the string. If field already exists, old
  * value is freed and replaced.
- * 
+ *
  * Desired field can be specified either by key name or if it is
  * one of basic fields, by #TupleBasicType index.
  *
