@@ -325,7 +325,7 @@ static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
             tuple_associate_string (tuple, FIELD_GENRE, NULL, value);
         else if (! strcmp (key, "Track"))
             tuple_associate_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
-        else if (! strcmp (key, "Date"))
+        else if (! strcmp (key, "Year"))
             tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi (value));
         else if (! strcmp (key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT,
