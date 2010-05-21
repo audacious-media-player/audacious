@@ -19,7 +19,6 @@
  */
 
 /* TODO:
- * - ReplayGain info
  * - Support updating files that have their tag at the beginning?
  */
 
@@ -256,6 +255,55 @@ static void free_tag_list (GList * list)
     }
 }
 
+static void parse_gain_text (const gchar * text, gint * value, gint * unit)
+{
+    gint sign = 1;
+
+    * value = 0;
+    * unit = 1;
+
+    if (* text == '-')
+    {
+        sign = -1;
+        text ++;
+    }
+
+    while (* text >= '0' && * text <= '9')
+    {
+        * value = * value * 10 + (* text - '0');
+        text ++;
+    }
+
+    if (* text == '.')
+    {
+        text ++;
+
+        while (* text >= '0' && * text <= '9' && * value < G_MAXINT / 10)
+        {
+            * value = * value * 10 + (* text - '0');
+            * unit = * unit * 10;
+            text ++;
+        }
+    }
+
+    * value = * value * sign;
+}
+
+static void set_gain_info (Tuple * tuple, gint field, gint unit_field,
+ const gchar * text)
+{
+    gint value, unit;
+
+    parse_gain_text (text, & value, & unit);
+
+    if (tuple_get_value_type (tuple, unit_field, NULL) == TUPLE_INT)
+        value = value * (gint64) tuple_get_int (tuple, unit_field, NULL) / unit;
+    else
+        tuple_associate_int (tuple, unit_field, NULL, unit);
+
+    tuple_associate_int (tuple, field, NULL, value);
+}
+
 static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
 {
     GList * list = ape_read_tag (handle), * node;
@@ -279,6 +327,18 @@ static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
             tuple_associate_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
         else if (! strcmp (key, "Date"))
             tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi (value));
+        else if (! strcmp (key, "REPLAYGAIN_TRACK_GAIN"))
+            set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT,
+             value);
+        else if (! strcmp (key, "REPLAYGAIN_TRACK_PEAK"))
+            set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT,
+             value);
+        else if (! strcmp (key, "REPLAYGAIN_ALBUM_GAIN"))
+            set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT,
+             value);
+        else if (! strcmp (key, "REPLAYGAIN_ALBUM_PEAK"))
+            set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT,
+             value);
     }
 
     free_tag_list (list);
