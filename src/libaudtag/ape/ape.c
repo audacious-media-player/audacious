@@ -450,7 +450,7 @@ static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
      handle, "Comment", & length, & items) || ! write_string_item (tuple,
      FIELD_GENRE, handle, "Genre", & length, & items) || ! write_integer_item
      (tuple, FIELD_TRACK_NUMBER, handle, "Track", & length, & items) ||
-     ! write_integer_item (tuple, FIELD_YEAR, handle, "Date", & length, & items))
+     ! write_integer_item (tuple, FIELD_YEAR, handle, "Year", & length, & items))
         goto ERROR;
 
     for (node = list; node != NULL; node = node->next)
@@ -460,7 +460,7 @@ static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
 
         if (! strcmp (key, "Artist") || ! strcmp (key, "Title") || ! strcmp
          (key, "Album") || ! strcmp (key, "Comment") || ! strcmp (key, "Genre")
-         || ! strcmp (key, "Track") || ! strcmp (key, "Date"))
+         || ! strcmp (key, "Track") || ! strcmp (key, "Year"))
             continue;
 
         if (! ape_write_item (handle, key, value, & length))
