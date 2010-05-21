@@ -1,5 +1,6 @@
 /*
  * Copyright 2009 Paula Stanciu
+ * Copyright 2010 John Lindgren
  *
  * This file is part of Audacious.
  *
