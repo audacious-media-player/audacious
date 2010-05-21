@@ -150,18 +150,10 @@ AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
 
 
 ### ---------------------------------------------------------------------------
-dnl xspf playlist support
-dnl =====================
-AUD_ARG_ENABLE([xspf], [yes],
-[XSPF support],
-[
-    AM_PATH_XML2([2.0.0],, [
-       AC_MSG_WARN([*** libxml2 is not installed. XSPF playlist support will not be built. ***])
-       enable_xspf="no"
-    ])
-    if test "x$enable_xspf" = "xyes"; then
-        AC_DEFINE([HAVE_XSPF_PLAYLIST], 1, [Define if XSPF playlists are available.])
-    fi
+AM_PATH_XML2([2.0.0],, [
+    AC_MSG_ERROR([*** libxml2 is not installed. Audacious requires it now. Send hate mail to oliver@freebsd.org ***])
+], [
+    AC_DEFINE([HAVE_XSPF_PLAYLIST], 1, [Define if XSPF playlists are available.])
 ])
 
 
