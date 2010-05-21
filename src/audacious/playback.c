@@ -170,16 +170,12 @@ static void update_cb (void * hook_data, void * user_data)
     playback = ip_data.current_input_playback;
     g_return_if_fail (playback != NULL);
 
-    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA)
+    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA ||
+     ! playback_is_ready (playback))
         return;
 
     playlist = playlist_get_playing ();
     entry = playlist_get_position (playlist);
-
-    read_gain_from_tuple ((Tuple *) playlist_entry_get_tuple (playlist, entry));
-
-    if (! playback_is_ready (playback))
-        return;
 
     if ((title = playlist_entry_get_title (playlist, entry)) == NULL)
         title = playlist_entry_get_filename (playlist, entry);
@@ -675,8 +671,6 @@ static void set_tuple (InputPlayback * playback, Tuple * tuple)
     set_tuple_source = g_timeout_add (0, set_tuple_cb, NULL);
     tuple_to_be_set = tuple;
 
-    /* This will eventually be done again by update_cb, but we need the info
-     * right now, before set_gain_from_playlist is called. */
     read_gain_from_tuple (tuple);
 }
 
