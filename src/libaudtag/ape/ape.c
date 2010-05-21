@@ -278,7 +278,7 @@ static void parse_gain_text (const gchar * text, gint * value, gint * unit)
     {
         text ++;
 
-        while (* text >= '0' && * text <= '9' && abs (* value) < G_MAXINT / 10)
+        while (* text >= '0' && * text <= '9' && * value < G_MAXINT / 10)
         {
             * value = * value * 10 + (* text - '0');
             * unit = * unit * 10;
