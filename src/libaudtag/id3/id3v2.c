@@ -401,12 +401,38 @@ static void associate_int (Tuple * tuple, VFSFile * handle, gint field,
 
 static void decode_private_info(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
 {
-    gchar *value = read_char_data(fd, header->size);
-    if (!strncmp(value, "WM/", 3))
+    gchar *text = read_char_data(fd, header->size);
+    if (!strncmp(text, "WM/", 3))
     {
-       AUDDBG("Windows Media tag: %s\n", value);
+        gchar *separator = strchr(text, 0);
+        if (separator == NULL)
+            return;
+        gchar * value = separator + 1;
+        if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
+        {
+            if (!memcmp(value, PRIMARY_CLASS_MUSIC, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Music");
+            if (!memcmp(value, PRIMARY_CLASS_AUDIO, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Audio (non-music)");
+        } else if (!strncmp(text, "WM/MediaClassSecondaryID", 24))
+        {
+            if (!memcmp(value, SECONDARY_CLASS_AUDIOBOOK, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Audio Book");
+            if (!memcmp(value, SECONDARY_CLASS_SPOKENWORD, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Spoken Word");
+            if (!memcmp(value, SECONDARY_CLASS_NEWS, 16))
+                tuple_associate_string (tuple, -1, "media-class", "News");
+            if (!memcmp(value, SECONDARY_CLASS_TALKSHOW, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Talk Show");
+            if (!memcmp(value, SECONDARY_CLASS_GAMES_CLIP, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Game Audio (clip)");
+            if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
+                tuple_associate_string (tuple, -1, "media-class", "Game Soundtrack");
+        } else {
+            AUDDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
+        }
     } else {
-       AUDDBG("Unable to decode private data, skipping: %s\n", value);
+        AUDDBG("Unable to decode private data, skipping: %s\n", text);
     }
 }
 
