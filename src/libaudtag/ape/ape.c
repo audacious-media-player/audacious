@@ -471,8 +471,8 @@ static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
 
     AUDDBG ("Wrote %d items, %d bytes.\n", items, length);
 
-    if (write_header (length, items, FALSE, handle) || vfs_fseek (handle, start,
-     SEEK_SET) || ! write_header (length, items, TRUE, handle))
+    if (! write_header (length, items, FALSE, handle) || vfs_fseek (handle,
+     start, SEEK_SET) || ! write_header (length, items, TRUE, handle))
         goto ERROR;
 
     free_tag_list (list);
