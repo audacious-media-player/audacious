@@ -23,6 +23,7 @@
  */
 
 #include <glib.h>
+#include <glib/gprintf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -326,16 +327,16 @@ static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
             tuple_associate_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
         else if (! strcmp (key, "Year"))
             tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi (value));
-        else if (! strcmp (key, "REPLAYGAIN_TRACK_GAIN"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
-        else if (! strcmp (key, "REPLAYGAIN_TRACK_PEAK"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT,
              value);
-        else if (! strcmp (key, "REPLAYGAIN_ALBUM_GAIN"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
-        else if (! strcmp (key, "REPLAYGAIN_ALBUM_PEAK"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT,
              value);
     }
