@@ -21,6 +21,8 @@
 #include <glib.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
+
+#include "audtag.h"
 #include "util.h"
 #include "tag_module.h"
 #include "wma/module.h"
@@ -37,7 +39,7 @@ void init_tag_modules(void)
     mowgli_node_add((void *)&id3v1, &id3v1.node, &tag_modules);
 }
 
-tag_module_t *find_tag_module(VFSFile * fd)
+tag_module_t * find_tag_module (VFSFile * fd, gint new_type)
 {
     mowgli_node_t *mod, *tmod;
     MOWGLI_LIST_FOREACH_SAFE(mod, tmod, tag_modules.head)
@@ -45,6 +47,16 @@ tag_module_t *find_tag_module(VFSFile * fd)
         vfs_fseek(fd, 0, SEEK_SET);
         if (((tag_module_t *) (mod->data))->can_handle_file(fd))
             return (tag_module_t *) (mod->data);
+    }
+
+    /* No existing tag; see if we can create a new one. */
+    if (new_type != TAG_TYPE_NONE)
+    {
+        MOWGLI_LIST_FOREACH_SAFE (mod, tmod, tag_modules.head)
+        {
+            if (((tag_module_t *) (mod->data))->type == new_type)
+                return mod->data;
+        }
     }
 
     AUDDBG("no module found\n");

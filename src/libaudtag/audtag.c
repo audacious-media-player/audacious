@@ -32,7 +32,7 @@ void tag_init(void)
 
 gboolean tag_tuple_read (Tuple * tuple, VFSFile * fd)
 {
-    tag_module_t *mod = find_tag_module(fd);
+    tag_module_t * mod = find_tag_module (fd, TAG_TYPE_NONE);
 
     if (mod == NULL)
         return FALSE;
@@ -41,12 +41,18 @@ gboolean tag_tuple_read (Tuple * tuple, VFSFile * fd)
     return mod->populate_tuple_from_file (tuple, fd) != NULL;
 }
 
-gboolean tag_tuple_write_to_file(Tuple * tuple, VFSFile * fd)
+gboolean tag_tuple_write (Tuple * tuple, VFSFile * handle, gint new_type)
 {
-    tag_module_t *mod = find_tag_module(fd);
+    tag_module_t * module = find_tag_module (handle, new_type);
 
-    if (mod == NULL)
+    if (module == NULL)
         return FALSE;
 
-    return mod->write_tuple_to_file(tuple, fd);
+    return module->write_tuple_to_file (tuple, handle);
+}
+
+/* deprecated */
+gboolean tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle)
+{
+    return tag_tuple_write (tuple, handle, TAG_TYPE_NONE);
 }

@@ -30,13 +30,23 @@ G_BEGIN_DECLS
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
+enum
+{
+    TAG_TYPE_NONE = 0,
+    TAG_TYPE_APE,
+};
+
 void tag_init(void);
 void tag_terminate(void);
 
 gboolean tag_tuple_read (Tuple * tuple, VFSFile *fd);
-gboolean tag_tuple_write_to_file(Tuple *tuple, VFSFile *fd);
+
+/* new_type specifies the type of tag (see the TAG_TYPE_* enum) that should be
+ * written if the file does not have any existing tag. */
+gboolean tag_tuple_write (Tuple * tuple, VFSFile * handle, gint new_type);
+
+/* deprecated, use tag_tuple_write */
+gboolean tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle);
 
 G_END_DECLS
 #endif /* AUDTAG_H */
-
-

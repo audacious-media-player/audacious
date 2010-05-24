@@ -29,7 +29,6 @@
 
 #include <libaudcore/vfs.h>
 
-#include "../util.h"
 #include "ape.h"
 
 typedef struct
@@ -426,18 +425,28 @@ static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
     APEHeader header;
     gint start, length, data_start, data_length, items;
 
-    if (! ape_find_header (handle, & header, & start, & length, & data_start,
+    if (ape_find_header (handle, & header, & start, & length, & data_start,
      & data_length))
-        goto ERROR;
-
-    if (start + length != vfs_fsize (handle))
     {
-        AUDDBG ("Writing tags is only supported at end of file.\n");
-        goto ERROR;
+        if (start + length != vfs_fsize (handle))
+        {
+            AUDDBG ("Writing tags is only supported at end of file.\n");
+            goto ERROR;
+        }
+
+        if (vfs_truncate (handle, start))
+            goto ERROR;
+    }
+    else
+    {
+        start = vfs_fsize (handle);
+
+        if (start < 0)
+            goto ERROR;
     }
 
-    if (vfs_truncate (handle, start) || vfs_fseek (handle, start, SEEK_SET) ||
-     ! write_header (0, 0, TRUE, handle))
+    if (vfs_fseek (handle, start, SEEK_SET) || ! write_header (0, 0, TRUE,
+     handle))
         goto ERROR;
 
     length = 0;
@@ -486,6 +495,7 @@ ERROR:
 tag_module_t ape =
 {
     .name = "APE",
+    .type = TAG_TYPE_APE,
     .can_handle_file = ape_is_our_file,
     .populate_tuple_from_file = ape_fill_tuple,
     .write_tuple_to_file = ape_write_tag,

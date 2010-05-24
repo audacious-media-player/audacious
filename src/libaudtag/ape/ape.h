@@ -21,7 +21,9 @@
 #ifndef AUDTAG_APE_H
 #define AUDTAG_APE_H
 
+#include "../audtag.h"
 #include "../tag_module.h"
+#include "../util.h"
 
 extern tag_module_t ape;
 
