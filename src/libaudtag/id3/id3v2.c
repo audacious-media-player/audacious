@@ -398,7 +398,7 @@ static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
              gframe);
             mowgli_node_add ((void *) gframe->header->frame_id,
              mowgli_node_create (), frameIDs);
-            pos += gframe->header->size;
+            pos += 10 + gframe->header->size;
         }
         else
         {
