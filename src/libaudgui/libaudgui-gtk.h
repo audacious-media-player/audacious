@@ -37,4 +37,7 @@ void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const gchar * title, const gchar * text);
 
+GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size);
+void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size);
+
 #endif

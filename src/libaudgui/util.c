@@ -20,6 +20,7 @@
  */
 
 #include <gdk/gdkkeysyms.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 
 #include "libaudgui.h"
@@ -88,4 +89,44 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
     }
 
     gtk_window_present ((GtkWindow *) * widget);
+}
+
+GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
+{
+    GdkPixbuf * pixbuf = NULL;
+    GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
+
+    if (gdk_pixbuf_loader_write (loader, data, size, NULL))
+        pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+
+    gdk_pixbuf_loader_close (loader, NULL);
+    return pixbuf;
+}
+
+void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size)
+{
+    gint width = gdk_pixbuf_get_width (* pixbuf);
+    gint height = gdk_pixbuf_get_height (* pixbuf);
+    GdkPixbuf * pixbuf2;
+
+    if (width > height)
+    {
+        height = size * height / width;
+        width = size;
+    }
+    else
+    {
+        width = size * width / height;
+        height = size;
+    }
+
+    if (width < 1)
+        width = 1;
+    if (height < 1)
+        height = 1;
+
+    pixbuf2 = gdk_pixbuf_scale_simple (* pixbuf, width, height,
+     GDK_INTERP_BILINEAR);
+    g_object_unref (* pixbuf);
+    * pixbuf = pixbuf2;
 }

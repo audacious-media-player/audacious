@@ -182,37 +182,12 @@ static void infowin_label_set_text (GtkWidget * widget, const gchar * text)
 static void infowin_entry_set_image (GtkWidget * widget, const char * text)
 {
     GdkPixbuf * pixbuf;
-    gint width, height;
-    gfloat aspect;
 
     pixbuf = gdk_pixbuf_new_from_file (text, NULL);
     g_return_if_fail (pixbuf != NULL);
 
-    width = gdk_pixbuf_get_width (pixbuf);
-    height = gdk_pixbuf_get_height (pixbuf);
-
     if (strcmp (DATA_DIR "/images/audio.png", text))
-    {
-        GdkPixbuf * pixbuf2;
-
-        aspect = height / (gfloat) width;
-
-        if (aspect > 1)
-        {
-            height = aud_cfg->filepopup_pixelsize * aspect;
-            width = aud_cfg->filepopup_pixelsize;
-        }
-        else
-        {
-            height = aud_cfg->filepopup_pixelsize;
-            width = aud_cfg->filepopup_pixelsize / aspect;
-        }
-
-        pixbuf2 = gdk_pixbuf_scale_simple (pixbuf, width, height,
-         GDK_INTERP_BILINEAR);
-        g_object_unref (pixbuf);
-        pixbuf = pixbuf2;
-    }
+        audgui_pixbuf_scale_within (& pixbuf, aud_cfg->filepopup_pixelsize);
 
     gtk_image_set_from_pixbuf ((GtkImage *) widget, pixbuf);
     g_object_unref (pixbuf);
@@ -739,6 +714,28 @@ static gchar * easy_read_filename (gchar * file)
     return file + 6;
 }
 
+static gboolean set_image_from_album_art (const gchar * filename, InputPlugin *
+ decoder)
+{
+    GdkPixbuf * pixbuf = NULL;
+    void * data;
+    gint size;
+
+    if (aud_file_read_image (filename, decoder, & data, & size))
+    {
+        pixbuf = audgui_pixbuf_from_data (data, size);
+        g_free (data);
+    }
+
+    if (pixbuf == NULL)
+        return FALSE;
+
+    audgui_pixbuf_scale_within (& pixbuf, aud_cfg->filepopup_pixelsize);
+    gtk_image_set_from_pixbuf ((GtkImage *) image_artwork, pixbuf);
+    g_object_unref (pixbuf);
+    return TRUE;
+}
+
 static void infowin_show (const gchar * filename, Tuple * tuple, InputPlugin *
  decoder, gboolean updating_enabled)
 {
@@ -802,12 +799,15 @@ static void infowin_show (const gchar * filename, Tuple * tuple, InputPlugin *
         g_object_unref (icon);
     }
 
-    tmp = aud_get_associated_image_file (filename);
-
-    if (tmp != NULL)
+    if (! set_image_from_album_art (filename, decoder))
     {
-        infowin_entry_set_image (image_artwork, tmp);
-        g_free (tmp);
+        tmp = aud_get_associated_image_file (filename);
+
+        if (tmp != NULL)
+        {
+            infowin_entry_set_image (image_artwork, tmp);
+            g_free (tmp);
+        }
     }
 
     store = gtk_list_store_new (RAWDATA_N_COLS, G_TYPE_STRING, G_TYPE_STRING);
