@@ -456,3 +456,28 @@ gint string_compare (const gchar * a, const gchar * b)
 
     return 0;
 }
+
+const void * memfind (const void * mem, gint size, const void * token, gint
+ length)
+{
+    if (! length)
+        return mem;
+
+    size -= length - 1;
+
+    while (size > 0)
+    {
+        const void * maybe = memchr (mem, * (guchar *) token, size);
+
+        if (maybe == NULL)
+            return NULL;
+
+        if (! memcmp (maybe, token, length))
+            return maybe;
+
+        size -= (guchar *) maybe + 1 - (guchar *) mem;
+        mem = (guchar *) maybe + 1;
+    }
+
+    return NULL;
+}

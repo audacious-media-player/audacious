@@ -65,6 +65,9 @@ void string_decode_percent(gchar *string);
 void string_cut_extension(gchar *string);
 gint string_compare (const gchar * a, const gchar * b);
 
+const void * memfind (const void * mem, gint size, const void * token, gint
+ length);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_STRINGS_H */
