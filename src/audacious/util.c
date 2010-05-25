@@ -163,9 +163,9 @@ open_ini_file(const gchar *filename)
     GHashTable *section = NULL;
     GString *section_name, *key_name, *value;
     gpointer section_hash, key_hash;
-    gchar *buffer = NULL;
+    guchar * buffer = NULL;
     gsize off = 0;
-    gsize filesize = 0;
+    gint64 filesize = 0;
 
     unsigned char x[] = { 0xff, 0xfe, 0x00 };
 
@@ -181,7 +181,7 @@ open_ini_file(const gchar *filename)
      */
     if (filesize > 2 && !memcmp(&buffer[0],&x,2))
     {
-        gchar *outbuf = g_malloc (filesize);   /* it's safe to waste memory. */
+        guchar * outbuf = g_malloc (filesize); /* it's safe to waste memory. */
         guint counter;
 
         for (counter = 2; counter < filesize; counter += 2)

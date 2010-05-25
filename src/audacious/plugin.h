@@ -173,47 +173,62 @@ typedef struct {
 struct _AudaciousFuncTableV1 {
 
     /* VFS */
-    VFSFile *(*vfs_fopen)(const gchar *uri, const gchar *mode);
-    gint (*vfs_fclose)(VFSFile *fd);
-    VFSFile *(*vfs_dup)(VFSFile *in);
-    gsize (*vfs_fread)(gpointer ptr,
-                 gsize size,
-                 gsize nmemb,
-                 VFSFile * file);
-    gsize (*vfs_fwrite)(gconstpointer ptr,
-                  gsize size,
-                  gsize nmemb,
-                  VFSFile *file);
+#ifdef __GNUC__
+#define WARN_RETURN __attribute__ ((warn_unused_result))
+#else
+#define WARN_RETURN
+#endif
 
-    gint (*vfs_getc)(VFSFile *stream);
-    gint (*vfs_ungetc)(gint c,
-                       VFSFile *stream);
-    gchar *(*vfs_fgets)(gchar *s,
-                        gint n,
-                        VFSFile *stream);
+    VFSFile * (* vfs_fopen) (const gchar * path, const gchar * mode) WARN_RETURN;
+    VFSFile * (* vfs_dup) (VFSFile * in) WARN_RETURN;
+    gint (* vfs_fclose) (VFSFile * file);
 
-    gint (*vfs_fseek)(VFSFile * file,
-                      glong offset,
-                      gint whence);
-    void (*vfs_rewind)(VFSFile * file);
-    glong (*vfs_ftell)(VFSFile * file);
-    gboolean (*vfs_feof)(VFSFile * file);
+    gint64 (* vfs_fread) (void * ptr, gint64 size, gint64 nmemb, VFSFile *
+     file) WARN_RETURN;
+    gint64 (* vfs_fwrite) (const void * ptr, gint64 size, gint64 nmemb,
+     VFSFile * file) WARN_RETURN;
 
-    gboolean (*vfs_file_test)(const gchar * path,
-                              GFileTest test);
+    gint (* vfs_getc) (VFSFile * stream) WARN_RETURN;
+    gint (* vfs_ungetc) (gint c, VFSFile * stream) WARN_RETURN;
+    gchar * (* vfs_fgets) (gchar * s, gint n, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_feof) (VFSFile * file) WARN_RETURN;
+    gint (* vfs_fprintf) (VFSFile * stream, gchar const * format, ...)
+     __attribute__ ((__format__ (__printf__, 2, 3)));
 
-    gboolean (*vfs_is_writeable)(const gchar * path);
-    gboolean (*vfs_truncate)(VFSFile * file, glong length);
-    off_t (*vfs_fsize)(VFSFile * file);
-    gchar *(*vfs_get_metadata)(VFSFile * file, const gchar * field);
+    gint (* vfs_fseek) (VFSFile * file, gint64 offset, gint whence) WARN_RETURN;
+    void (* vfs_rewind) (VFSFile * file);
+    glong (* vfs_ftell) (VFSFile * file) WARN_RETURN;
+    gint64 (* vfs_fsize) (VFSFile * file) WARN_RETURN;
+    gint (* vfs_ftruncate) (VFSFile * file, gint64 length) WARN_RETURN;
 
-    int (*vfs_fprintf)(VFSFile *stream, gchar const *format, ...)
-        __attribute__ ((__format__ (__printf__, 2, 3)));
+    gboolean (* vfs_fget_le16) (guint16 * value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fget_le32) (guint32 * value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fget_le64) (guint64 * value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fget_be16) (guint16 * value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fget_be32) (guint32 * value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fget_be64) (guint64 * value, VFSFile * stream) WARN_RETURN;
 
-    gboolean (*vfs_register_transport)(VFSConstructor *vtable);
-    void (*vfs_file_get_contents)(const gchar *filename, gchar **buf, gsize *size);
-    gboolean (*vfs_is_remote)(const gchar * path);
-    gboolean (*vfs_is_streaming)(VFSFile *file);
+    gboolean (* vfs_fput_le16) (guint16 value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fput_le32) (guint32 value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fput_le64) (guint64 value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fput_be16) (guint16 value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fput_be32) (guint32 value, VFSFile * stream) WARN_RETURN;
+    gboolean (* vfs_fput_be64) (guint64 value, VFSFile * stream) WARN_RETURN;
+
+    gboolean (* vfs_is_streaming) (VFSFile * file) WARN_RETURN;
+    gchar * (* vfs_get_metadata) (VFSFile * file, const gchar * field)
+     WARN_RETURN;
+
+    gboolean (* vfs_file_test) (const gchar * path, GFileTest test) WARN_RETURN;
+    gboolean (* vfs_is_writeable) (const gchar * path) WARN_RETURN;
+    gboolean (* vfs_is_remote) (const gchar * path) WARN_RETURN;
+
+    void (* vfs_file_get_contents) (const gchar * filename, guchar * * buf,
+     gint64 * size);
+
+    void (* vfs_register_transport) (VFSConstructor * vtable);
+
+#undef WARN_RETURN
 
     /* VFS Buffer */
     VFSFile *(*vfs_buffer_new)(gpointer data, gsize size);
@@ -222,21 +237,6 @@ struct _AudaciousFuncTableV1 {
     /* VFS Buffered File */
     VFSFile *(*vfs_buffered_file_new_from_uri)(const gchar *uri);
     VFSFile *(*vfs_buffered_file_release_live_fd)(VFSFile *fd);
-
-    /* VFS endianess helper functions */
-    gboolean (*vfs_fget_le16)(guint16 *value, VFSFile *stream);
-    gboolean (*vfs_fget_le32)(guint32 *value, VFSFile *stream);
-    gboolean (*vfs_fget_le64)(guint64 *value, VFSFile *stream);
-    gboolean (*vfs_fget_be16)(guint16 *value, VFSFile *stream);
-    gboolean (*vfs_fget_be32)(guint32 *value, VFSFile *stream);
-    gboolean (*vfs_fget_be64)(guint64 *value, VFSFile *stream);
-
-    gboolean (*vfs_fput_le16)(guint16 value, VFSFile *stream);
-    gboolean (*vfs_fput_le32)(guint32 value, VFSFile *stream);
-    gboolean (*vfs_fput_le64)(guint64 value, VFSFile *stream);
-    gboolean (*vfs_fput_be16)(guint16 value, VFSFile *stream);
-    gboolean (*vfs_fput_be32)(guint32 value, VFSFile *stream);
-    gboolean (*vfs_fput_be64)(guint64 value, VFSFile *stream);
 
     /* ConfigDb */
     mcs_handle_t *(*cfg_db_open)(void);
@@ -560,49 +560,48 @@ struct _AudaciousFuncTableV1 {
 
 
 /* Convenience macros for accessing the public API. */
-/*    public name            vtable mapping      */
+/*      public name                     vtable mapping */
+
 #define aud_vfs_fopen                   _audvt->vfs_fopen
-#define aud_vfs_fclose                  _audvt->vfs_fclose
 #define aud_vfs_dup                     _audvt->vfs_dup
+#define aud_vfs_fclose                  _audvt->vfs_fclose
 #define aud_vfs_fread                   _audvt->vfs_fread
 #define aud_vfs_fwrite                  _audvt->vfs_fwrite
 #define aud_vfs_getc                    _audvt->vfs_getc
 #define aud_vfs_ungetc                  _audvt->vfs_ungetc
 #define aud_vfs_fgets                   _audvt->vfs_fgets
+#define aud_vfs_feof                    _audvt->vfs_feof
+#define aud_vfs_fprintf                 _audvt->vfs_fprintf
 #define aud_vfs_fseek                   _audvt->vfs_fseek
 #define aud_vfs_rewind                  _audvt->vfs_rewind
 #define aud_vfs_ftell                   _audvt->vfs_ftell
-#define aud_vfs_feof                    _audvt->vfs_feof
-#define aud_vfs_file_test               _audvt->vfs_file_test
-#define aud_vfs_is_writeable            _audvt->vfs_is_writeable
-#define aud_vfs_truncate                _audvt->vfs_truncate
 #define aud_vfs_fsize                   _audvt->vfs_fsize
-#define aud_vfs_get_metadata            _audvt->vfs_get_metadata
-#define aud_vfs_fprintf                 _audvt->vfs_fprintf
-#define aud_vfs_register_transport      _audvt->vfs_register_transport
-#define aud_vfs_file_get_contents       _audvt->vfs_file_get_contents
-#define aud_vfs_is_remote               _audvt->vfs_is_remote
-#define aud_vfs_is_streaming            _audvt->vfs_is_streaming
-
-#define aud_vfs_buffer_new              _audvt->vfs_buffer_new
-#define aud_vfs_buffer_new_from_string  _audvt->vfs_buffer_new_from_string
-
-#define aud_vfs_buffered_file_new_from_uri      _audvt->vfs_buffered_file_new_from_uri
-#define aud_vfs_buffered_file_release_live_fd   _audvt->vfs_buffered_file_release_live_fd
-
+#define aud_vfs_ftruncate               _audvt->vfs_ftruncate
 #define aud_vfs_fget_le16               _audvt->vfs_fget_le16
 #define aud_vfs_fget_le32               _audvt->vfs_fget_le32
 #define aud_vfs_fget_le64               _audvt->vfs_fget_le64
 #define aud_vfs_fget_be16               _audvt->vfs_fget_be16
 #define aud_vfs_fget_be32               _audvt->vfs_fget_be32
 #define aud_vfs_fget_be64               _audvt->vfs_fget_be64
-
 #define aud_vfs_fput_le16               _audvt->vfs_fput_le16
 #define aud_vfs_fput_le32               _audvt->vfs_fput_le32
 #define aud_vfs_fput_le64               _audvt->vfs_fput_le64
 #define aud_vfs_fput_be16               _audvt->vfs_fput_be16
 #define aud_vfs_fput_be32               _audvt->vfs_fput_be32
 #define aud_vfs_fput_be64               _audvt->vfs_fput_be64
+#define aud_vfs_is_streaming            _audvt->vfs_is_streaming
+#define aud_vfs_get_metadata            _audvt->vfs_get_metadata
+#define aud_vfs_file_test               _audvt->vfs_file_test
+#define aud_vfs_is_writeable            _audvt->vfs_is_writeable
+#define aud_vfs_is_remote               _audvt->vfs_is_remote
+#define aud_vfs_file_get_contents       _audvt->vfs_file_get_contents
+#define aud_vfs_register_transport      _audvt->vfs_register_transport
+
+#define aud_vfs_buffer_new              _audvt->vfs_buffer_new
+#define aud_vfs_buffer_new_from_string  _audvt->vfs_buffer_new_from_string
+
+#define aud_vfs_buffered_file_new_from_uri      _audvt->vfs_buffered_file_new_from_uri
+#define aud_vfs_buffered_file_release_live_fd   _audvt->vfs_buffered_file_release_live_fd
 
 /* XXX: deprecation warnings */
 #define ConfigDb mcs_handle_t        /* Alias for compatibility -- ccr */

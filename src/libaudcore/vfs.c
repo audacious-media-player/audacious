@@ -37,14 +37,10 @@ GList *vfs_transports = NULL; /* temporary. -nenolod */
  * Registers a #VFSConstructor vtable with the VFS system.
  *
  * @param vtable The #VFSConstructor vtable to register.
- * @return TRUE on success, FALSE on failure.
  */
-gboolean
-vfs_register_transport(VFSConstructor *vtable)
+void vfs_register_transport (VFSConstructor * vtable)
 {
-    vfs_transports = g_list_append(vfs_transports, vtable);
-
-    return TRUE;
+    vfs_transports = g_list_append (vfs_transports, vtable);
 }
 
 static VFSConstructor *
@@ -70,7 +66,7 @@ vfs_get_constructor(const gchar *path)
     /* No transport vtable has been registered, bail. */
     if (vtable == NULL)
         g_warning("Could not open '%s', no transport plugin available.", path);
-    
+
     return vtable;
 }
 
@@ -91,7 +87,7 @@ vfs_fopen(const gchar * path,
 
     if (path == NULL || mode == NULL || (vtable = vfs_get_constructor(path)) == NULL)
         return NULL;
-    
+
     file = vtable->vfs_fopen_impl(path, mode);
 
     if (file == NULL)
@@ -139,11 +135,7 @@ vfs_fclose(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully read.
  */
-gsize
-vfs_fread(gpointer ptr,
-          gsize size,
-          gsize nmemb,
-          VFSFile * file)
+gint64 vfs_fread (void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
 {
     if (file == NULL)
         return 0;
@@ -160,11 +152,7 @@ vfs_fread(gpointer ptr,
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully written.
  */
-gsize
-vfs_fwrite(gconstpointer ptr,
-           gsize size,
-           gsize nmemb,
-           VFSFile * file)
+gint64 vfs_fwrite (const void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
 {
     if (file == NULL)
         return 0;
@@ -278,13 +266,12 @@ vfs_feof(VFSFile * file)
  * @param length The length to truncate at.
  * @return On success, 0. Otherwise, -1.
  */
-gint
-vfs_truncate(VFSFile * file, glong length)
+gint vfs_ftruncate (VFSFile * file, gint64 length)
 {
     if (file == NULL)
         return -1;
 
-    return file->base->vfs_truncate_impl(file, length);
+    return file->base->vfs_ftruncate_impl(file, length);
 }
 
 /**
@@ -314,7 +301,7 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
 {
     if (file == NULL)
         return NULL;
-  
+
     if (file->base->vfs_get_metadata_impl)
         return file->base->vfs_get_metadata_impl(file, field);
     return NULL;
