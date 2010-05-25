@@ -50,19 +50,16 @@ buffered_file_vfs_fclose_impl(VFSFile * file)
     return 0;
 }
 
-gsize
-buffered_file_vfs_fread_impl(gpointer i_ptr,
-          gsize size,
-          gsize nmemb,
-          VFSFile * file)
+gint64 buffered_file_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
+ VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
-    /* is this request within the buffered area, or should we switch to 
+    /* is this request within the buffered area, or should we switch to
      * an FD? --nenolod
      */
-    if (handle->which == FALSE && 
-	(vfs_ftell(handle->buffer)) + (size * nmemb) > 
+    if (handle->which == FALSE &&
+	(vfs_ftell(handle->buffer)) + (size * nmemb) >
 	((VFSBuffer *) handle->buffer->handle)->size)
     {
         vfs_fseek(handle->fd, vfs_ftell(handle->buffer), SEEK_SET);
@@ -72,11 +69,8 @@ buffered_file_vfs_fread_impl(gpointer i_ptr,
     return vfs_fread(i_ptr, size, nmemb, handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
-gsize
-buffered_file_vfs_fwrite_impl(gconstpointer i_ptr,
-           gsize size,
-           gsize nmemb,
-           VFSFile * file)
+gint64 buffered_file_vfs_fwrite_impl (const void * i_ptr, gint64 size, gint64
+ nmemb, VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
@@ -88,7 +82,7 @@ buffered_file_vfs_getc_impl(VFSFile *stream)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) stream->handle;
 
-    /* is this request within the buffered area, or should we switch to 
+    /* is this request within the buffered area, or should we switch to
      * an FD? --nenolod
      */
     if ((vfs_ftell(handle->buffer)) + 1 >
@@ -127,7 +121,7 @@ buffered_file_vfs_fseek_impl(VFSFile * file,
             {
                 handle->which = TRUE;
                 vfs_fseek(handle->fd, offset, whence);
-            }                
+            }
             break;
         case SEEK_SET:
         default:

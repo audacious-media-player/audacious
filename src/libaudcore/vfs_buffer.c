@@ -40,11 +40,8 @@ buffer_vfs_fclose_impl(VFSFile * file)
     return 0;
 }
 
-static gsize
-buffer_vfs_fread_impl(gpointer i_ptr,
-          gsize size,
-          gsize nmemb,
-          VFSFile * file)
+static gint64 buffer_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
+ VFSFile * file)
 {
     VFSBuffer *handle;
     guchar *i;
@@ -56,7 +53,7 @@ buffer_vfs_fread_impl(gpointer i_ptr,
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; (gsize) (i - ptr) < nmemb * size && 
+    for (i = ptr; (gsize) (i - ptr) < nmemb * size &&
 	 (gsize) (i - ptr) <= handle->size;
 	 i++, handle->iter++)
     {
@@ -67,11 +64,8 @@ buffer_vfs_fread_impl(gpointer i_ptr,
     return (read / size);
 }
 
-static gsize
-buffer_vfs_fwrite_impl(gconstpointer i_ptr,
-           gsize size,
-           gsize nmemb,
-           VFSFile * file)
+static gint64 buffer_vfs_fwrite_impl (const void * i_ptr, gint64 size, gint64
+ nmemb, VFSFile * file)
 {
     VFSBuffer *handle;
     const guchar *i;
@@ -233,7 +227,7 @@ vfs_buffer_new(gpointer data, gsize size)
         g_free(handle);
         return NULL;
     }
-    
+
     buffer->data = data;
     buffer->iter = data;
     buffer->end = (guchar *) data + size;
