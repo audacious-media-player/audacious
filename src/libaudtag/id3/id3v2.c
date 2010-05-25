@@ -21,6 +21,8 @@
 
 #include <glib.h>
 
+#include <libaudcore/audstrings.h>
+
 #include "id3v2.h"
 #include "../util.h"
 
@@ -177,7 +179,6 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
     AUDDBG (" revision = %d\n", (gint) header->revision);
     AUDDBG (" flags = %x\n", (gint) header->flags);
     AUDDBG (" size = %d\n", (gint) header->size);
-
     return TRUE;
 }
 
@@ -355,71 +356,91 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     return TRUE;
 }
 
-static gchar * decode_text_frame (guchar * _data, gint size)
+static gchar * convert_text (const gchar * text, gint length, gint encoding,
+ gboolean nulled, gint * _converted, const gchar * * after)
 {
-    gchar * data = (gchar *) _data;
-    gchar * buffer;
+    gchar * buffer = NULL;
+    gsize converted = 0;
 
-    switch (data[0])
+    if (nulled)
+    {
+        const guchar null16[] = {0, 0};
+        const gchar * null;
+
+        switch (encoding)
+        {
+          case 0:
+          case 3:
+            if ((null = memchr (text, 0, length)) == NULL)
+                return NULL;
+
+            length = null - text;
+
+            if (after != NULL)
+                * after = null + 1;
+
+            break;
+          case 1:
+          case 2:
+            if ((null = memfind (text, length, null16, 2)) == NULL)
+                return NULL;
+
+            length = null - text;
+
+            if (after != NULL)
+                * after = null + 2;
+
+            break;
+        }
+    }
+
+    switch (encoding)
     {
       case 0:
-        return g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1", NULL, NULL,
-         NULL);
+        buffer = g_convert (text, length, "UTF-8", "ISO-8859-1", NULL,
+         & converted, NULL);
+        break;
       case 1:
-        if (data[1] == (gchar) 0xff)
-            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,
-             NULL, NULL);
+        if (text[0] == (gchar) 0xff)
+            buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16LE", NULL,
+             & converted, NULL);
         else
-            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE", NULL,
-             NULL, NULL);
+            buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16BE", NULL,
+             & converted, NULL);
+
+        break;
       case 2:
-        return g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL, NULL,
-         NULL);
+        buffer = g_convert (text, length, "UTF-8", "UTF-16BE", NULL,
+         & converted, NULL);
+        break;
       case 3:
-        buffer = g_malloc (size);
-        memcpy (buffer, data + 1, size - 1);
-        buffer[size - 1] = 0;
-        return buffer;
-      default:
-        return NULL;
+        buffer = g_malloc (length + 1);
+        memcpy (buffer, text, length);
+        buffer[length] = 0;
+        converted = length;
+        break;
     }
+
+    if (_converted != NULL)
+        * _converted = converted;
+
+    return buffer;
 }
 
-static gboolean decode_comment_frame (guchar * _data, gint size, gchar * * lang,
- gchar * * type, gchar * * value)
+static gchar * decode_text_frame (const guchar * data, gint size)
 {
-    gchar * data = (gchar *) _data;
-    gchar * pair, * sep;
-    gsize converted;
+    return convert_text ((const gchar *) data + 1, size - 1, data[0], FALSE,
+     NULL, NULL);
+}
 
-    switch (data[0])
-    {
-      case 0:
-        pair = g_convert (data + 4, size - 4, "UTF-8", "ISO-8859-1", NULL,
-         & converted, NULL);
-        break;
-      case 1:
-        if (data[4] == (gchar) 0xff)
-            pair = g_convert (data + 6, size - 6, "UTF-8", "UTF-16LE", NULL,
-             & converted, NULL);
-        else
-            pair = g_convert (data + 6, size - 6, "UTF-8", "UTF-16BE", NULL,
-             & converted, NULL);
-        break;
-      case 2:
-        pair = g_convert (data + 4, size - 4, "UTF-8", "UTF-16BE", NULL,
-         & converted, NULL);
-        break;
-      case 3:
-        pair = g_malloc (size - 3);
-        memcpy (pair, data + 4, size - 4);
-        pair[size - 4] = 0;
-        converted = size - 4;
-        break;
-      default:
-        pair = NULL;
-        break;
-    }
+static gboolean decode_comment_frame (const guchar * _data, gint size, gchar * *
+ lang, gchar * * type, gchar * * value)
+{
+    const gchar * data = (const gchar *) _data;
+    gchar * pair, * sep;
+    gint converted;
+
+    pair = convert_text (data + 4, size - 4, data[0], FALSE, & converted, NULL);
 
     if (pair == NULL || (sep = memchr (pair, 0, converted)) == NULL)
         return FALSE;
@@ -536,7 +557,7 @@ static gint get_frame_id (const gchar * key)
 }
 
 static void associate_string (Tuple * tuple, gint field, const gchar *
- customfield, guchar * data, gint size)
+ customfield, const guchar * data, gint size)
 {
     gchar * text = decode_text_frame (data, size);
 
@@ -553,7 +574,7 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
 }
 
 static void associate_int (Tuple * tuple, gint field, const gchar *
- customfield, guchar * data, gint size)
+ customfield, const guchar * data, gint size)
 {
     gchar * text = decode_text_frame (data, size);
 
@@ -569,9 +590,9 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
     g_free (text);
 }
 
-static void decode_private_info (Tuple * tuple, guchar * data, gint size)
+static void decode_private_info (Tuple * tuple, const guchar * data, gint size)
 {
-    gchar * text = g_strndup ((gchar *) data, size);
+    gchar * text = g_strndup ((const gchar *) data, size);
 
     if (!strncmp(text, "WM/", 3))
     {
@@ -611,7 +632,7 @@ DONE:
     g_free (text);
 }
 
-static void decode_comment (Tuple * tuple, guchar * data, gint size)
+static void decode_comment (Tuple * tuple, const guchar * data, gint size)
 {
     gchar * lang, * type, * value;
 
@@ -628,7 +649,7 @@ static void decode_comment (Tuple * tuple, guchar * data, gint size)
     g_free (value);
 }
 
-static void decode_txxx (Tuple * tuple, guchar * data, gint size)
+static void decode_txxx (Tuple * tuple, const guchar * data, gint size)
 {
     gchar * text = decode_text_frame (data, size);
 
@@ -647,11 +668,11 @@ static void decode_txxx (Tuple * tuple, guchar * data, gint size)
     g_free (text);
 }
 
-static gboolean decode_rva2_block (guchar * * _data, gint * _size, gint *
+static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
  channel, gint * adjustment, gint * adjustment_unit, gint * peak, gint *
  peak_unit)
 {
-    guchar * data = * _data;
+    const guchar * data = * _data;
     gint size = * _size;
     gint peak_bits;
 
@@ -700,15 +721,15 @@ static gboolean decode_rva2_block (guchar * * _data, gint * _size, gint *
     return TRUE;
 }
 
-static void decode_rva2 (Tuple * tuple, guchar * data, gint size)
+static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
 {
-    gchar * domain;
+    const gchar * domain;
     gint channel, adjustment, adjustment_unit, peak, peak_unit;
 
     if (memchr (data, 0, size) == NULL)
         return;
 
-    domain = (gchar *) data;
+    domain = (const gchar *) data;
 
     AUDDBG ("RVA2 domain: %s\n", domain);
 
@@ -760,7 +781,7 @@ static void decode_rva2 (Tuple * tuple, guchar * data, gint size)
     }
 }
 
-static void decode_genre (Tuple * tuple, guchar * data, gint size)
+static void decode_genre (Tuple * tuple, const guchar * data, gint size)
 {
     gint numericgenre;
     gchar * text = decode_text_frame (data, size);
@@ -930,6 +951,71 @@ static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * handle)
     return TRUE;
 }
 
+static gboolean parse_apic (const guchar * data, gint size, gchar * * mime,
+ gint * type, gchar * * desc, void * * image_data, gint * image_size)
+{
+    const guchar * sep;
+    const guchar * after;
+
+    if (size < 2 || (sep = memchr (data + 1, 0, size - 2)) == NULL)
+        return FALSE;
+
+    if ((* desc = convert_text ((const gchar *) sep + 2, data + size - sep - 2,
+     data[0], TRUE, NULL, (const gchar * *) & after)) == NULL)
+        return FALSE;
+
+    * mime = g_strdup ((const gchar *) data + 1);
+    * type = sep[1];
+    * image_data = g_memdup (after, data + size - after);
+    * image_size = data + size - after;
+
+    AUDDBG ("APIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
+     * type, * desc, * image_size);
+    return TRUE;
+}
+
+static gboolean id3v2_read_image (VFSFile * handle, void * * image_data, gint *
+ image_size)
+{
+    gint version, header_size, data_size, footer_size, parsed;
+    gboolean syncsafe;
+    gsize offset;
+    gboolean found = FALSE;
+
+    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
+     & data_size, & footer_size))
+        return FALSE;
+
+    for (parsed = 0; parsed < data_size && ! found; )
+    {
+        gint frame_size, size, type;
+        gchar key[5];
+        guchar * data;
+        gchar * mime, * desc;
+
+        if (! read_frame (handle, data_size - parsed, version, syncsafe,
+         & frame_size, key, & data, & size))
+            break;
+
+        if (! strcmp (key, "APIC") && parse_apic (data, size, & mime, & type,
+         & desc, image_data, image_size))
+        {
+            g_free (mime);
+            g_free (desc);
+
+            if (type == 3) /* album cover */
+                found = TRUE;
+            else
+                g_free (image_data);
+        }
+
+        g_free (data);
+        parsed += frame_size;
+    }
+
+    return found;
+}
+
 static void free_frame_cb (mowgli_dictionary_elem_t * element, void * unused)
 {
     free_generic_frame (element->data);
@@ -1022,5 +1108,6 @@ tag_module_t id3v2 =
     .name = "ID3v2",
     .can_handle_file = id3v2_can_handle_file,
     .read_tag = id3v2_read_tag,
+    .read_image = id3v2_read_image,
     .write_tag = id3v2_write_tag,
 };
