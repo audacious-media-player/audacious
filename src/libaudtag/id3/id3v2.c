@@ -19,14 +19,83 @@
  * using our public API to be a derived work.
  */
 
-#include <errno.h>
 #include <glib.h>
+
+#include <libaudcore/audstrings.h>
 
 #include "id3v2.h"
 #include "../util.h"
-#include <inttypes.h>
-#include "../tag_module.h"
-#include "frame.h"
+
+enum
+{
+    ID3_ALBUM = 0,
+    ID3_TITLE,
+    ID3_COMPOSER,
+    ID3_COPYRIGHT,
+    ID3_DATE,
+    ID3_TIME,
+    ID3_LENGTH,
+    ID3_ARTIST,
+    ID3_TRACKNR,
+    ID3_YEAR,
+    ID3_GENRE,
+    ID3_COMMENT,
+    ID3_PRIVATE,
+    ID3_ENCODER,
+    ID3_RECORDING_TIME,
+    ID3_TXXX,
+    ID3_RVA2,
+    ID3_TAGS_NO
+};
+
+static const gchar * id3_frames[ID3_TAGS_NO] = {"TALB","TIT2","TCOM", "TCOP",
+ "TDAT", "TIME", "TLEN", "TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE",
+ "TDRC", "TXXX", "RVA2"};
+
+static const guchar PRIMARY_CLASS_MUSIC[16] = {0xBC, 0x7D, 0x60, 0xD1, 0x23,
+ 0xE3, 0xE2, 0x4B, 0x86, 0xA1, 0x48, 0xA4, 0x2A, 0x28, 0x44, 0x1E};
+static const guchar PRIMARY_CLASS_AUDIO[16] = {0x29, 0x0F, 0xCD, 0x01, 0x4E,
+ 0xDA, 0x57, 0x41, 0x89, 0x7B, 0x62, 0x75, 0xD5, 0x0C, 0x4F, 0x11};
+static const guchar SECONDARY_CLASS_AUDIOBOOK[16] = {0xEB, 0x6B, 0x23, 0xE0,
+ 0x81, 0xC2, 0xDE, 0x4E, 0xA3, 0x6D, 0x7A, 0xF7, 0x6A, 0x3D, 0x45, 0xB5};
+static const guchar SECONDARY_CLASS_SPOKENWORD[16] = {0x13, 0x2A, 0x17, 0x3A,
+ 0xD9, 0x2B, 0x31, 0x48, 0x83, 0x5B, 0x11, 0x4F, 0x6A, 0x95, 0x94, 0x3F};
+static const guchar SECONDARY_CLASS_NEWS[16] = {0x9B, 0xDB, 0x77, 0x66, 0xA0,
+ 0xE5, 0x63, 0x40, 0xA1, 0xAD, 0xAC, 0xEB, 0x52, 0x84, 0x0C, 0xF1};
+static const guchar SECONDARY_CLASS_TALKSHOW[16] = {0x67, 0x4A, 0x82, 0x1B,
+ 0x80, 0x3F, 0x3E, 0x4E, 0x9C, 0xDE, 0xF7, 0x36, 0x1B, 0x0F, 0x5F, 0x1B};
+static const guchar SECONDARY_CLASS_GAMES_CLIP[16] = {0x68, 0x33, 0x03, 0x00,
+ 0x09, 0x50, 0xC3, 0x4A, 0xA8, 0x20, 0x5D, 0x2D, 0x09, 0xA4, 0xE7, 0xC1};
+static const guchar SECONDARY_CLASS_GAMES_SONG[16] = {0x31, 0xF7, 0x4F, 0xF2,
+ 0xFC, 0x96, 0x0F, 0x4D, 0xA2, 0xF5, 0x5A, 0x34, 0x83, 0x68, 0x2B, 0x1A};
+
+#pragma pack(push) /* must be byte-aligned */
+#pragma pack(1)
+typedef struct
+{
+    gchar magic[3];
+    guchar version;
+    guchar revision;
+    guchar flags;
+    guint32 size;
+}
+ID3v2Header;
+#pragma pack(pop)
+
+typedef struct
+{
+    gchar * frame_id;
+    guint32 size;
+    guint16 flags;
+}
+ID3v2FrameHeader;
+
+typedef struct
+{
+    ID3v2FrameHeader * header;
+    gchar * frame_body;
+}
+GenericFrame;
 
 #define ID3_FLAG_HAS_EXTENDED_HEADER 0x40
 #define ID3_FLAG_HAS_FOOTER          0x10
@@ -201,7 +270,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gsize * offset,
     return TRUE;
 }
 
-guint32 read_syncsafe_int32(VFSFile * fd)
+static guint32 read_syncsafe_int32 (VFSFile * fd)
 {
     guint32 val = read_BEuint32(fd);
 
@@ -392,6 +461,14 @@ static void free_generic_frame (GenericFrame * frame)
     g_free (frame);
 }
 
+static gboolean isValidFrame (GenericFrame * frame)
+{
+    if (strlen(frame->header->frame_id) != 0)
+        return TRUE;
+    else
+        return FALSE;
+}
+
 static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
 {
     int pos = 0;
@@ -421,21 +498,20 @@ static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
 
 }
 
-void write_ASCII(VFSFile * fd, int size, gchar * value)
+static void writeID3FrameHeaderToFile (VFSFile * fd, ID3v2FrameHeader * header)
 {
-    vfs_fwrite(value, size, 1, fd);
+    vfs_fwrite(header->frame_id, 4, 1, fd);
+    vfs_fput_be32 (syncsafe32 (header->size), fd);
+    vfs_fwrite(&header->flags, 2, 1, fd);
 }
 
-
-void write_utf8(VFSFile * fd, int size, gchar * value)
+static void writeGenericFrame (VFSFile * fd, GenericFrame * frame)
 {
-    GError *error = NULL;
-    gsize bytes_read = 0, bytes_write = 0;
-    gchar *isoVal = g_convert(value, size, "ISO-8859-1", "UTF-8", &bytes_read, &bytes_write, &error);
-    vfs_fwrite(isoVal, size, 1, fd);
+    writeID3FrameHeaderToFile(fd, frame->header);
+    vfs_fwrite(frame->frame_body, frame->header->size, 1, fd);
 }
 
-guint32 writeAllFramesToFile(VFSFile * fd)
+static guint32 writeAllFramesToFile (VFSFile * fd)
 {
     guint32 size = 0;
     mowgli_node_t *n, *tn;
@@ -466,28 +542,7 @@ static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
      (ID3v2Header);
 }
 
-void writeID3FrameHeaderToFile(VFSFile * fd, ID3v2FrameHeader * header)
-{
-    vfs_fwrite(header->frame_id, 4, 1, fd);
-    vfs_fput_be32 (syncsafe32 (header->size), fd);
-    vfs_fwrite(&header->flags, 2, 1, fd);
-}
-
-void writeGenericFrame(VFSFile * fd, GenericFrame * frame)
-{
-    writeID3FrameHeaderToFile(fd, frame->header);
-    vfs_fwrite(frame->frame_body, frame->header->size, 1, fd);
-}
-
-gboolean isExtendedHeader(ID3v2Header * header)
-{
-    if ((header->flags & 0x40) == (0x40))
-        return TRUE;
-    else
-        return FALSE;
-}
-
-int getFrameID(ID3v2FrameHeader * header)
+static int getFrameID (ID3v2FrameHeader * header)
 {
     int i = 0;
     for (i = 0; i < ID3_TAGS_NO; i++)
@@ -498,8 +553,7 @@ int getFrameID(ID3v2FrameHeader * header)
     return -1;
 }
 
-
-void skipFrame(VFSFile * fd, guint32 size)
+static void skipFrame (VFSFile * fd, guint32 size)
 {
     vfs_fseek(fd, size, SEEK_CUR);
 }
@@ -732,7 +786,7 @@ static void decode_rva2 (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
     }
 }
 
-Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
+static Tuple * decodeGenre (Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
 {
     gint numericgenre;
     gchar * text = read_text_frame (fd, & header);
@@ -753,14 +807,6 @@ Tuple *decodeGenre(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
     tuple_associate_string(tuple, FIELD_GENRE, NULL, text);
     g_free (text);
     return tuple;
-}
-
-gboolean isValidFrame(GenericFrame * frame)
-{
-    if (strlen(frame->header->frame_id) != 0)
-        return TRUE;
-    else
-        return FALSE;
 }
 
 static GenericFrame * add_generic_frame (gint id, gint size)
@@ -1003,7 +1049,8 @@ static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
     return TRUE;
 }
 
-tag_module_t id3v2 = {
+tag_module_t id3v2 =
+{
     .name = "ID3v2",
     .can_handle_file = id3v2_can_handle_file,
     .read_tag = id3v2_read_tag,
