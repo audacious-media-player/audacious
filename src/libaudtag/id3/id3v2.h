@@ -49,12 +49,13 @@ typedef struct
 ID3v2Header;
 #pragma pack(pop)
 
-typedef struct frameheader
+typedef struct
 {
-    const gchar * frame_id;
+    gchar * frame_id;
     guint32 size;
     guint16 flags;
-}ID3v2FrameHeader;
+}
+ID3v2FrameHeader;
 
 typedef struct genericframe
 {

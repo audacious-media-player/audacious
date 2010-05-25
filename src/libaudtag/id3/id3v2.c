@@ -227,6 +227,12 @@ static ID3v2FrameHeader * readID3v2FrameHeader (VFSFile * fd, gint version)
     return frameheader;
 }
 
+static void free_frame_header (ID3v2FrameHeader * header)
+{
+    g_free (header->frame_id);
+    g_free (header);
+}
+
 static gint unsyncsafe (gchar * data, gint size)
 {
     gchar * get = data, * set = data;
@@ -379,6 +385,12 @@ static void readGenericFrame (VFSFile * fd, GenericFrame * gf, gint version)
     AUDDBG("got frame %s, size %d\n", gf->header->frame_id, gf->header->size);
 }
 
+static void free_generic_frame (GenericFrame * frame)
+{
+    free_frame_header (frame->header);
+    g_free (frame->frame_body);
+    g_free (frame);
+}
 
 static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
 {
@@ -402,7 +414,7 @@ static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
         }
         else
         {
-            g_free (gframe);
+            free_generic_frame (gframe);
             break;
         }
     }
@@ -759,7 +771,7 @@ static GenericFrame * add_generic_frame (gint id, gint size)
     {
         frame = g_malloc (sizeof (GenericFrame));
         frame->header = g_malloc (sizeof (ID3v2FrameHeader));
-        frame->header->frame_id = id3_frames[id];
+        frame->header->frame_id = g_strdup (id3_frames[id]);
         mowgli_dictionary_add (frames, id3_frames[id], frame);
         mowgli_node_add ((void *) id3_frames[id], mowgli_node_create (),
          frameIDs);
@@ -830,7 +842,7 @@ static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * f)
 
         if (frame->size == 0)
         {
-            g_free (frame);
+            free_frame_header (frame);
             break;
         }
 
@@ -839,7 +851,7 @@ static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * f)
 
         if (pos > data_size)
         {
-            g_free (frame);
+            free_frame_header (frame);
             break;
         }
 
@@ -899,10 +911,21 @@ static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * f)
               skipFrame(f, frame->size);
         }
 
-        g_free (frame);
+        free_frame_header (frame);
     }
 
     return TRUE;
+}
+
+static void free_frame_cb (mowgli_dictionary_elem_t * element, void * unused)
+{
+    free_generic_frame (element->data);
+}
+
+static void free_frame_dictionary (void)
+{
+    mowgli_dictionary_destroy (frames, free_frame_cb, NULL);
+    frames = NULL;
 }
 
 static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
@@ -971,6 +994,7 @@ static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
         return FALSE;
 
     data_size = writeAllFramesToFile (f);
+    free_frame_dictionary ();
 
     if (! write_header (f, data_size, TRUE) || vfs_fseek (f, offset, SEEK_SET)
      || ! write_header (f, data_size, FALSE))
