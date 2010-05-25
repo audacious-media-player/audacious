@@ -585,7 +585,7 @@ static gboolean playback_play_file (gint playlist, gint entry)
 #endif
 
     hook_associate ("playlist update", update_cb, NULL);
-    hook_call ("playback begin", NULL);
+    hook_call ("playback begin", playback);
     return TRUE;
 }
 
