@@ -532,6 +532,8 @@ struct _AudaciousFuncTableV1 {
     /* File probing API */
     InputPlugin * (* file_find_decoder) (const gchar * filename, gboolean fast);
     Tuple * (* file_read_tuple) (const gchar * filename, InputPlugin * decoder);
+    gboolean (* file_read_image) (const gchar * filename, InputPlugin * decoder,
+     void * * data, gint * size);
     gboolean (* file_can_write_tuple) (const gchar * filename, InputPlugin *
      decoder);
     gboolean (* file_write_tuple) (const gchar * filename, InputPlugin *
@@ -878,6 +880,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_file_find_decoder           _audvt->file_find_decoder
 #define aud_file_read_tuple             _audvt->file_read_tuple
+#define aud_file_read_image             _audvt->file_read_image
 #define aud_file_can_write_tuple        _audvt->file_can_write_tuple
 #define aud_file_write_tuple            _audvt->file_write_tuple
 #define aud_custom_infowin              _audvt->custom_infowin
@@ -1165,6 +1168,11 @@ struct _InputPlugin {
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
 
     gint priority; /* 0 = first, 10 = last */
+
+    /* handle will be NULL if the file could not be opened.  This is normal in
+     * the case of custom URI schemes such as cdda://. */
+    gboolean (* get_song_image) (const gchar * filename, VFSFile * handle,
+     void * * data, gint * size);
 };
 
 struct _GeneralPlugin {

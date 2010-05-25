@@ -220,6 +220,24 @@ Tuple * file_read_tuple (const gchar * filename, InputPlugin * decoder)
     return NULL;
 }
 
+gboolean file_read_image (const gchar * filename, InputPlugin * decoder,
+ void * * data, gint * size)
+{
+    VFSFile * handle;
+    gboolean success;
+
+    if (decoder->get_song_image == NULL)
+        return FALSE;
+
+    handle = vfs_fopen (filename, "r");
+    success = decoder->get_song_image (filename, handle, data, size);
+
+    if (handle != NULL)
+        vfs_fclose (handle);
+
+    return success;
+}
+
 gboolean file_can_write_tuple (const gchar * filename, InputPlugin * decoder)
 {
     return (decoder->update_song_tuple != NULL);

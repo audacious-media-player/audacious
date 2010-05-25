@@ -26,6 +26,8 @@
 
 InputPlugin * file_find_decoder (const gchar * filename, gboolean fast);
 Tuple * file_read_tuple (const gchar * filename, InputPlugin * decoder);
+gboolean file_read_image (const gchar * filename, InputPlugin * decoder,
+ void * * data, gint * size);
 gboolean file_can_write_tuple (const gchar * filename, InputPlugin * decoder);
 gboolean file_write_tuple (const gchar * filename, InputPlugin * decoder,
  Tuple * tuple);

@@ -341,6 +341,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .file_find_decoder = file_find_decoder,
     .file_read_tuple = file_read_tuple,
+    .file_read_image = file_read_image,
     .file_can_write_tuple = file_can_write_tuple,
     .file_write_tuple = file_write_tuple,
     .custom_infowin = custom_infowin,
