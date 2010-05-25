@@ -74,13 +74,13 @@ mowgli_dictionary_t *ilstAtoms;
 
 /* TAG plugin API */
 gboolean aac_can_handle_file(VFSFile *f);
-Tuple *aac_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
-gboolean aac_write_tuple_to_file(Tuple* tuple, VFSFile *f);
+gboolean aac_read_tag (Tuple * tuple, VFSFile * handle);
+gboolean aac_write_tag (Tuple * tuple, VFSFile * handle);
 
 static const tag_module_t aac = {
     .name = "AAC",
     .can_handle_file = aac_can_handle_file,
-    .populate_tuple_from_file = aac_populate_tuple_from_file,
-    .write_tuple_to_file = aac_write_tuple_to_file,
+    .read_tag = aac_read_tag,
+    .write_tag = aac_write_tag,
 };
 #endif

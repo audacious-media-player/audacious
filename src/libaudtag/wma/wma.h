@@ -48,7 +48,7 @@ static long ftell_object_by_str(VFSFile *f, gchar *s);
 
 /* TAG plugin API */
 gboolean wma_can_handle_file(VFSFile *f);
-Tuple *wma_populate_tuple_from_file(Tuple *t, VFSFile *f);
-gboolean wma_write_tuple_to_file(Tuple *t, VFSFile *f);
+gboolean wma_read_tag (Tuple * tuple, VFSFile * handle);
+gboolean wma_write_tag (Tuple * tuple, VFSFile * handle);
 
 #endif /* _WMA_H */

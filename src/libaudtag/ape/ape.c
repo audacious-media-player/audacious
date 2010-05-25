@@ -23,7 +23,6 @@
  */
 
 #include <glib.h>
-#include <glib/gprintf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,6 +31,8 @@
 
 #include "ape.h"
 
+#pragma pack(push) /* must be byte-aligned */
+#pragma pack(1)
 typedef struct
 {
     gchar magic[8];
@@ -42,6 +43,7 @@ typedef struct
     guint64 reserved;
 }
 APEHeader;
+#pragma pack(pop)
 
 typedef struct
 {
@@ -203,7 +205,7 @@ static ValuePair * ape_read_item (void * * data, gint length)
     return pair;
 }
 
-static GList * ape_read_tag (VFSFile * handle)
+static GList * ape_read_items (VFSFile * handle)
 {
     GList * list = NULL;
     APEHeader header;
@@ -304,9 +306,9 @@ static void set_gain_info (Tuple * tuple, gint field, gint unit_field,
     tuple_associate_int (tuple, field, NULL, value);
 }
 
-static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
+static gboolean ape_read_tag (Tuple * tuple, VFSFile * handle)
 {
-    GList * list = ape_read_tag (handle), * node;
+    GList * list = ape_read_items (handle), * node;
 
     for (node = list; node != NULL; node = node->next)
     {
@@ -327,22 +329,22 @@ static Tuple * ape_fill_tuple (Tuple * tuple, VFSFile * handle)
             tuple_associate_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
         else if (! strcmp (key, "Year"))
             tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi (value));
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
+        else if (! strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_PEAK"))
+        else if (! strcasecmp (key, "REPLAYGAIN_TRACK_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT,
              value);
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_GAIN"))
+        else if (! strcasecmp (key, "REPLAYGAIN_ALBUM_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_PEAK"))
+        else if (! strcasecmp (key, "REPLAYGAIN_ALBUM_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT,
              value);
     }
 
     free_tag_list (list);
-    return tuple;
+    return TRUE;
 }
 
 static gboolean ape_write_item (VFSFile * handle, const gchar * key,
@@ -422,7 +424,7 @@ static gboolean write_header (gint data_length, gint items, gboolean is_header,
 
 static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
 {
-    GList * list = ape_read_tag (handle), * node;
+    GList * list = ape_read_items (handle), * node;
     APEHeader header;
     gint start, length, data_start, data_length, items;
 
@@ -435,7 +437,7 @@ static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
             goto ERROR;
         }
 
-        if (vfs_truncate (handle, start))
+        if (vfs_ftruncate (handle, start))
             goto ERROR;
     }
     else
@@ -498,6 +500,6 @@ tag_module_t ape =
     .name = "APE",
     .type = TAG_TYPE_APE,
     .can_handle_file = ape_is_our_file,
-    .populate_tuple_from_file = ape_fill_tuple,
-    .write_tuple_to_file = ape_write_tag,
+    .read_tag = ape_read_tag,
+    .write_tag = ape_write_tag,
 };

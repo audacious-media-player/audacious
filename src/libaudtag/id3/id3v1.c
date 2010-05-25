@@ -38,7 +38,7 @@ gboolean id3v1_can_handle_file(VFSFile *f)
         has_id3v1_ext = TRUE;
     else
         has_id3v1_ext = FALSE;
-    
+
     vfs_fseek(f, -128, SEEK_END);
     tag = read_char_data(f, 3);
     if (!strncmp(tag, "TAG", 3))
@@ -56,7 +56,7 @@ static gchar *convert_to_utf8(gchar *str)
     return g_strchomp(str_to_utf8(str));
 }
 
-Tuple *id3v1_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
+gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
 {
     gchar *title = g_new0(gchar, 30);
     gchar *artist = g_new0(gchar, 30);
@@ -124,10 +124,11 @@ Tuple *id3v1_populate_tuple_from_file(Tuple *tuple, VFSFile *f)
     g_free(comment);
     g_free(track);
     g_free(genre);
-    return tuple;
+
+    return TRUE;
 }
 
-gboolean id3v1_write_tuple_to_file(Tuple * tuple, VFSFile * f)
+gboolean id3v1_write_tag (Tuple * tuple, VFSFile * handle)
 {
     return FALSE;
 }
@@ -135,7 +136,7 @@ gboolean id3v1_write_tuple_to_file(Tuple * tuple, VFSFile * f)
 tag_module_t id3v1 = {
     .name = "ID3v1",
     .can_handle_file = id3v1_can_handle_file,
-    .populate_tuple_from_file = id3v1_populate_tuple_from_file,
-    .write_tuple_to_file = id3v1_write_tuple_to_file,
+    .read_tag = id3v1_read_tag,
+    .write_tag = id3v1_write_tag,
 };
 

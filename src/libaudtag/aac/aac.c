@@ -140,8 +140,7 @@ Atom *getilstAtom(VFSFile * fd)
     vfs_fseek(fd, -(meta->size - 11), SEEK_CUR);
     Atom *ilst = findAtom(fd, ILST);
 
-    int zz = vfs_ftell(fd);
-    AUDDBG("zzz = %d\n", zz);
+    AUDDBG("zzz = %d\n", vfs_ftell(fd));
     ilstFileOffset = vfs_ftell(fd) - ilst->size;
     vfs_fseek(fd, -(ilst->size - 7), SEEK_CUR);
 
@@ -243,7 +242,7 @@ gboolean aac_can_handle_file(VFSFile * f)
     return FALSE;
 }
 
-Tuple *aac_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
+gboolean aac_read_tag (Tuple * tuple, VFSFile * f)
 {
     if (ilstAtom)
         g_free(ilstAtom);
@@ -323,10 +322,11 @@ Tuple *aac_populate_tuple_from_file(Tuple * tuple, VFSFile * f)
               break;
         }
     }
-    return tuple;
+
+    return TRUE;
 }
 
-gboolean aac_write_tuple_to_file(Tuple * tuple, VFSFile * f)
+gboolean aac_write_tag (Tuple * tuple, VFSFile * f)
 {
 #ifdef BROKEN
     return FALSE;

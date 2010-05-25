@@ -30,15 +30,14 @@ void tag_init(void)
 
 /* The tuple's file-related attributes are already set */
 
-gboolean tag_tuple_read (Tuple * tuple, VFSFile * fd)
+gboolean tag_tuple_read (Tuple * tuple, VFSFile * handle)
 {
-    tag_module_t * mod = find_tag_module (fd, TAG_TYPE_NONE);
+    tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
-    if (mod == NULL)
+    if (module == NULL)
         return FALSE;
 
-    AUDDBG("Tag module %s has accepted %s\n", mod->name, fd->uri);
-    return mod->populate_tuple_from_file (tuple, fd) != NULL;
+    return module->read_tag (tuple, handle);
 }
 
 gboolean tag_tuple_write (Tuple * tuple, VFSFile * handle, gint new_type)
@@ -48,7 +47,7 @@ gboolean tag_tuple_write (Tuple * tuple, VFSFile * handle, gint new_type)
     if (module == NULL)
         return FALSE;
 
-    return module->write_tuple_to_file (tuple, handle);
+    return module->write_tag (tuple, handle);
 }
 
 /* deprecated */

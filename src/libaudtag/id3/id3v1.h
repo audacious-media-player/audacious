@@ -29,8 +29,8 @@
 
 /* TAG plugin API */
 gboolean id3v1_can_handle_file(VFSFile *f);
-Tuple *id3v1_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
-gboolean id3v1_write_tuple_to_file(Tuple* tuple, VFSFile *f);
+gboolean id3v1_read_tag (Tuple * tuple, VFSFile * handle);
+gboolean id3v1_write_tag (Tuple * tuple, VFSFile * handle);
 
 extern tag_module_t id3v1;
 #endif

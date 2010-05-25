@@ -331,7 +331,7 @@ gboolean wma_can_handle_file(VFSFile * f)
     return equal;
 }
 
-Tuple *wma_populate_tuple_from_file(Tuple * t, VFSFile * f)
+gboolean wma_read_tag (Tuple * t, VFSFile * f)
 {
     gchar *artist = NULL, *title = NULL, *comment = NULL;
 
@@ -353,13 +353,11 @@ Tuple *wma_populate_tuple_from_file(Tuple * t, VFSFile * f)
     ExtContentDescrObj *ecdo = read_ext_content_descr_obj(f, t, TRUE);
     free_ext_content_descr_obj(ecdo);
     print_tuple(t);
-    return t;
+    return TRUE;
 }
 
-gboolean wma_write_tuple_to_file(Tuple * tuple, VFSFile * f)
+gboolean wma_write_tag (Tuple * tuple, VFSFile * f)
 {
-
-
 #if BROKEN
     return FALSE;
 #endif
@@ -431,7 +429,7 @@ gboolean wma_write_tuple_to_file(Tuple * tuple, VFSFile * f)
 tag_module_t wma = {
     .name = "WMA",
     .can_handle_file = wma_can_handle_file,
-    .populate_tuple_from_file = wma_populate_tuple_from_file,
-    .write_tuple_to_file = wma_write_tuple_to_file,
+    .read_tag = wma_read_tag,
+    .write_tag = wma_write_tag,
 };
 

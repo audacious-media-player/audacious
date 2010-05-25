@@ -38,8 +38,8 @@ typedef struct _module {
     gchar *name;
     gint type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
     gboolean(*can_handle_file) (VFSFile *fd);
-    pTuple(*populate_tuple_from_file)(Tuple *tuple, VFSFile* fd);
-    gboolean(*write_tuple_to_file) (Tuple * tuple, VFSFile *fd);
+    gboolean (* read_tag) (Tuple * tuple, VFSFile * handle);
+    gboolean (* write_tag) (Tuple * tuple, VFSFile * handle);
 
     mowgli_node_t node;
 } tag_module_t;
