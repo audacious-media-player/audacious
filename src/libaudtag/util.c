@@ -296,6 +296,34 @@ void copyAudioData(VFSFile * from, VFSFile * to, guint32 pos_from, guint32 pos_t
     }
 }
 
+gboolean cut_beginning_tag (VFSFile * handle, gsize tag_size)
+{
+    guchar buffer[16384];
+    gsize offset = 0, readed;
+
+    if (! tag_size)
+        return TRUE;
+
+    do
+    {
+        if (vfs_fseek (handle, offset + tag_size, SEEK_SET))
+            return FALSE;
+
+        readed = vfs_fread (buffer, 1, sizeof buffer, handle);
+
+        if (vfs_fseek (handle, offset, SEEK_SET))
+            return FALSE;
+
+        if (vfs_fwrite (buffer, 1, readed, handle) != readed)
+            return FALSE;
+
+        offset += readed;
+    }
+    while (readed);
+
+    return vfs_ftruncate (handle, offset) == 0;
+}
+
 gchar *convert_numericgenre_to_text(gint numericgenre)
 {
     const struct

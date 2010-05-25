@@ -36,20 +36,18 @@
 #define SECONDARY_CLASS_GAMES_CLIP (unsigned char [16]) { 0x68, 0x33, 0x03, 0x00, 0x09, 0x50, 0xC3, 0x4A, 0xA8, 0x20, 0x5D, 0x2D, 0x09, 0xA4, 0xE7, 0xC1 }
 #define SECONDARY_CLASS_GAMES_SONG (unsigned char [16]) { 0x31, 0xF7, 0x4F, 0xF2, 0xFC, 0x96, 0x0F, 0x4D, 0xA2, 0xF5, 0x5A, 0x34, 0x83, 0x68, 0x2B, 0x1A }
 
-typedef struct id3v2
+#pragma pack(push) /* must be byte-aligned */
+#pragma pack(1)
+typedef struct
 {
-    gchar *id3;
-    guint16 version;
-    gchar  flags;
+    gchar magic[3];
+    guchar version;
+    guchar revision;
+    guchar flags;
     guint32 size;
-} ID3v2Header;
-
-typedef struct extHeader
-{
-    guint32 header_size;
-    guint16 flags;
-    guint32 padding_size;
-}ExtendedHeader;
+}
+ID3v2Header;
+#pragma pack(pop)
 
 typedef struct frameheader
 {
@@ -66,23 +64,13 @@ typedef struct genericframe
 
 guint32 read_syncsafe_int32(VFSFile *fd);
 
-ID3v2Header *readHeader(VFSFile *fd);
-
-ExtendedHeader *readExtendedHeader(VFSFile *fd);
-
 gchar* readFrameBody(VFSFile *fd,int size);
-
-void  write_syncsafe_int32(VFSFile *fd, guint32 val);
 
 void write_ASCII(VFSFile *fd, int size, gchar* value);
 
 void write_utf8(VFSFile *fd, int size,gchar* value);
 
 guint32 writeAllFramesToFile(VFSFile *fd);
-
-void writeID3HeaderToFile(VFSFile *fd,ID3v2Header *header);
-
-void writePaddingToFile(VFSFile *fd, int ksize);
 
 void writeID3FrameHeaderToFile(VFSFile *fd, ID3v2FrameHeader *header);
 
@@ -105,14 +93,6 @@ void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field);
 void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field);
 
 void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field);
-
-mowgli_dictionary_t *frames ;
-mowgli_list_t *frameIDs;
-
-/* TAG plugin API */
-gboolean id3v2_can_handle_file(VFSFile *f);
-Tuple *id3v2_populate_tuple_from_file(Tuple *tuple,VFSFile *f);
-gboolean id3v2_write_tuple_to_file(Tuple* tuple, VFSFile *f);
 
 extern tag_module_t id3v2;
 #endif
