@@ -751,110 +751,58 @@ gboolean isValidFrame(GenericFrame * frame)
         return FALSE;
 }
 
-
-
-void add_newISO8859_1FrameFromString(const gchar * value, int id3_field)
+static GenericFrame * add_generic_frame (gint id, gint size)
 {
-    GError *error = NULL;
-    gsize bytes_read = 0, bytes_write = 0;
-    gchar *retVal = g_convert(value, strlen(value), "ISO-8859-1", "UTF-8", &bytes_read, &bytes_write, &error);
-    ID3v2FrameHeader *header = g_new0(ID3v2FrameHeader, 1);
-    header->frame_id = id3_frames[id3_field];
-    header->flags = 0;
-    header->size = strlen(retVal) + 1;
-    gchar *buf = g_new0(gchar, header->size + 1);
-    memcpy(buf + 1, retVal, header->size);
-    GenericFrame *frame = g_new0(GenericFrame, 1);
-    frame->header = header;
-    frame->frame_body = buf;
-    mowgli_dictionary_add(frames, header->frame_id, frame);
-    mowgli_node_add ((void *) frame->header->frame_id, mowgli_node_create (),
-     frameIDs);
-}
-
-
-void add_newFrameFromTupleStr(Tuple * tuple, int field, int id3_field)
-{
-    const gchar *value = tuple_get_string(tuple, field, NULL);
-    add_newISO8859_1FrameFromString(value, id3_field);
-}
-
-
-void add_newFrameFromTupleInt(Tuple * tuple, int field, int id3_field)
-{
-    int intvalue = tuple_get_int(tuple, field, NULL);
-    gchar *value = g_strdup_printf("%d", intvalue);
-    add_newISO8859_1FrameFromString(value, id3_field);
-
-}
-
-
-
-void add_frameFromTupleStr(Tuple * tuple, int field, int id3_field)
-{
-    const gchar *value = tuple_get_string(tuple, field, NULL);
-    GError *error = NULL;
-    gsize bytes_read = 0, bytes_write = 0;
-    gchar *retVal = g_convert(value, strlen(value), "ISO-8859-1", "UTF-8", &bytes_read, &bytes_write, &error);
-
-    GenericFrame *frame = mowgli_dictionary_retrieve(frames, id3_frames[id3_field]);
-    if (frame != NULL)
-    {
-        frame->header->size = strlen(retVal) + 1;
-        gchar *buf = g_new0(gchar, frame->header->size + 1);
-        memcpy(buf + 1, retVal, frame->header->size);
-        frame->frame_body = buf;
-    }
-    else
-        add_newFrameFromTupleStr(tuple, field, id3_field);
-
-}
-
-static void add_comment_frame (const gchar * text)
-{
-    GenericFrame * frame = mowgli_dictionary_retrieve (frames,
-     id3_frames[ID3_COMMENT]);
-    gint length = strlen (text);
+    GenericFrame * frame = mowgli_dictionary_retrieve (frames, id3_frames[id]);
 
     if (frame == NULL)
     {
         frame = g_malloc (sizeof (GenericFrame));
         frame->header = g_malloc (sizeof (ID3v2FrameHeader));
-        frame->header->frame_id = id3_frames[ID3_COMMENT];
-        mowgli_dictionary_add (frames, id3_frames[ID3_COMMENT], frame);
-        mowgli_node_add ((void *) id3_frames[ID3_COMMENT], mowgli_node_create
-         (), frameIDs);
+        frame->header->frame_id = id3_frames[id];
+        mowgli_dictionary_add (frames, id3_frames[id], frame);
+        mowgli_node_add ((void *) id3_frames[id], mowgli_node_create (),
+         frameIDs);
     }
     else
         g_free (frame->frame_body);
 
-    frame->header->size = length + 5;
+    frame->header->size = size;
     frame->header->flags = 0;
-    frame->frame_body = g_malloc (length + 5);
+    frame->frame_body = g_malloc (size);
+    return frame;
+}
+
+static void add_text_frame (gint id, const gchar * text)
+{
+    gint length = strlen (text);
+    GenericFrame * frame = add_generic_frame (id, length + 1);
+
+    frame->frame_body[0] = 3; /* UTF-8 encoding */
+    memcpy (frame->frame_body + 1, text, length);
+}
+
+static void add_comment_frame (const gchar * text)
+{
+    gint length = strlen (text);
+    GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5);
+
     frame->frame_body[0] = 3; /* UTF-8 encoding */
     strcpy (frame->frame_body + 1, "eng"); /* well, it *might* be English */
     memcpy (frame->frame_body + 5, text, length);
 }
 
-void add_frameFromTupleInt(Tuple * tuple, int field, int id3_field)
+static void add_frameFromTupleStr (Tuple * tuple, int field, int id3_field)
 {
-    int intvalue = tuple_get_int(tuple, field, NULL);
-    gchar *value = g_strdup_printf("%d", intvalue);
-    GError *error = NULL;
-    gsize bytes_read = 0, bytes_write = 0;
-    gchar *retVal = g_convert(value, strlen(value), "ISO-8859-1", "UTF-8", &bytes_read, &bytes_write, &error);
+    add_text_frame (id3_field, tuple_get_string (tuple, field, NULL));
+}
 
-    GenericFrame *frame = mowgli_dictionary_retrieve(frames, id3_frames[id3_field]);
-    if (frame != NULL)
-    {
-        frame->header->size = strlen(retVal) + 1;
-        gchar *buf = g_new0(gchar, frame->header->size + 1);
-        memcpy(buf + 1, retVal, frame->header->size);
-        frame->frame_body = buf;
-    }
-    else
-        add_newFrameFromTupleInt(tuple, field, id3_field);
+static void add_frameFromTupleInt (Tuple * tuple, int field, int id3_field)
+{
+    gchar scratch[16];
 
+    snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field, NULL));
+    add_text_frame (id3_field, scratch);
 }
 
 static gboolean id3v2_can_handle_file (VFSFile * handle)

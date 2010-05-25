@@ -84,15 +84,5 @@ void skipFrame(VFSFile *fd, guint32 size);
 
 gboolean isValidFrame(GenericFrame *frame);
 
-void add_newISO8859_1FrameFromString(const gchar *value,int id3_field);
-
-void add_newFrameFromTupleStr(Tuple *tuple, int field,int id3_field);
-
-void add_newFrameFromTupleInt(Tuple *tuple,int field,int id3_field);
-
-void add_frameFromTupleStr(Tuple *tuple, int field,int id3_field);
-
-void add_frameFromTupleInt(Tuple *tuple, int field,int id3_field);
-
 extern tag_module_t id3v2;
 #endif
