@@ -287,7 +287,7 @@ static gint unsyncsafe (guchar * data, gint size)
     {
         guchar c = * set ++ = * get ++;
 
-        if (c == 0xff && size)
+        if (c == 0xff && size && ! get[0])
         {
             size --;
             get ++;
