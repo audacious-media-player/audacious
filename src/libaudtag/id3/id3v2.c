@@ -21,8 +21,6 @@
 
 #include <glib.h>
 
-#include <libaudcore/audstrings.h>
-
 #include "id3v2.h"
 #include "../util.h"
 
@@ -80,25 +78,33 @@ typedef struct
     guint32 size;
 }
 ID3v2Header;
-#pragma pack(pop)
 
 typedef struct
 {
-    gchar * frame_id;
+    gchar key[4];
     guint32 size;
     guint16 flags;
 }
 ID3v2FrameHeader;
+#pragma pack(pop)
 
 typedef struct
 {
-    ID3v2FrameHeader * header;
-    gchar * frame_body;
+    gchar key[5];
+    guchar * data;
+    gint size;
 }
 GenericFrame;
 
-#define ID3_FLAG_HAS_EXTENDED_HEADER 0x40
-#define ID3_FLAG_HAS_FOOTER          0x10
+#define ID3_HEADER_SYNCSAFE             0x80
+#define ID3_HEADER_HAS_EXTENDED_HEADER  0x40
+#define ID3_HEADER_HAS_FOOTER           0x10
+
+#define ID3_FRAME_HAS_GROUP   0x0040
+#define ID3_FRAME_COMPRESSED  0x0008
+#define ID3_FRAME_ENCRYPTED   0x0004
+#define ID3_FRAME_SYNCSAFE    0x0002
+#define ID3_FRAME_HAS_LENGTH  0x0001
 
 #define TAG_SIZE 1
 
@@ -175,8 +181,9 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
     return TRUE;
 }
 
-static gboolean read_header (VFSFile * handle, gint * version, gsize * offset,
- gint * header_size, gint * data_size, gint * footer_size)
+static gboolean read_header (VFSFile * handle, gint * version, gboolean *
+ syncsafe, gsize * offset, gint * header_size, gint * data_size, gint *
+ footer_size)
 {
     ID3v2Header header, footer;
 
@@ -194,7 +201,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gsize * offset,
         * header_size = sizeof (ID3v2Header);
         * data_size = header.size;
 
-        if (header.flags & ID3_FLAG_HAS_FOOTER)
+        if (header.flags & ID3_HEADER_HAS_FOOTER)
         {
             if (vfs_fseek (handle, header.size, SEEK_CUR))
                 return FALSE;
@@ -245,7 +252,9 @@ static gboolean read_header (VFSFile * handle, gint * version, gsize * offset,
             return FALSE;
     }
 
-    if (header.flags & ID3_FLAG_HAS_EXTENDED_HEADER)
+    * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
+
+    if (header.flags & ID3_HEADER_HAS_EXTENDED_HEADER)
     {
         gint extended_size = 0;
 
@@ -270,47 +279,15 @@ static gboolean read_header (VFSFile * handle, gint * version, gsize * offset,
     return TRUE;
 }
 
-static guint32 read_syncsafe_int32 (VFSFile * fd)
+static gint unsyncsafe (guchar * data, gint size)
 {
-    guint32 val = read_BEuint32(fd);
-
-    return unsyncsafe32 (val);
-}
-
-static ID3v2FrameHeader * readID3v2FrameHeader (VFSFile * fd, gint version)
-{
-    ID3v2FrameHeader *frameheader = g_new0(ID3v2FrameHeader, 1);
-    frameheader->frame_id = read_char_data(fd, 4);
-
-    if (version == 3)
-        frameheader->size = read_BEuint32 (fd);
-    else
-        frameheader->size = read_syncsafe_int32 (fd);
-
-    frameheader->flags = read_LEuint16(fd);
-    if ((frameheader->flags & 0x100) == 0x100)
-        frameheader->size = read_syncsafe_int32(fd);
-
-    AUDDBG("got frame %s, size %d, flags %x\n", frameheader->frame_id, frameheader->size, frameheader->flags);
-
-    return frameheader;
-}
-
-static void free_frame_header (ID3v2FrameHeader * header)
-{
-    g_free (header->frame_id);
-    g_free (header);
-}
-
-static gint unsyncsafe (gchar * data, gint size)
-{
-    gchar * get = data, * set = data;
+    guchar * get = data, * set = data;
 
     while (size --)
     {
-        gchar c = * set ++ = * get ++;
+        guchar c = * set ++ = * get ++;
 
-        if (c == (gchar) 0xff && size)
+        if (c == 0xff && size)
         {
             size --;
             get ++;
@@ -320,97 +297,108 @@ static gint unsyncsafe (gchar * data, gint size)
     return set - data;
 }
 
-static gchar * read_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
+static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
+ gboolean syncsafe, gint * frame_size, gchar * key, guchar * * data, gint * size)
 {
-    gint size = header->size;
-    gchar data[size];
+    ID3v2FrameHeader header;
+    gint skip = 0;
 
-    if (vfs_fread (data, 1, size, handle) != size)
-        return NULL;
+    if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
+        return FALSE;
 
-    if (header->flags & 0x200)
-        size = unsyncsafe (data, size);
+    if (vfs_fread (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
+     (ID3v2FrameHeader))
+        return FALSE;
+
+    if (! header.key[0]) /* padding */
+        return FALSE;
+
+    header.size = (version == 3) ? GUINT32_FROM_BE (header.size) : unsyncsafe32
+     (GUINT32_FROM_BE (header.size));
+    header.flags = GUINT16_FROM_BE (header.flags);
+
+    if (header.size > max_size)
+        return FALSE;
+
+    AUDDBG ("Found frame:\n");
+    AUDDBG (" key = %.4s\n", header.key);
+    AUDDBG (" size = %d\n", (gint) header.size);
+    AUDDBG (" flags = %x\n", (gint) header.flags);
+
+    * frame_size = sizeof (ID3v2FrameHeader) + header.size;
+    sprintf (key, "%.4s", header.key);
+
+    if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
+    {
+        AUDDBG ("Hit compressed/encrypted frame %s.\n", key);
+        return FALSE;
+    }
+
+    if (header.flags & ID3_FRAME_HAS_GROUP)
+        skip ++;
+    if (header.flags & ID3_FRAME_HAS_LENGTH)
+        skip += 4;
+
+    if (skip > 0 && vfs_fseek (handle, skip, SEEK_CUR))
+        return FALSE;
+
+    * size = header.size - skip;
+    * data = g_malloc (* size);
+
+    if (vfs_fread (* data, 1, * size, handle) != * size)
+        return FALSE;
+
+    if (syncsafe || (header.flags & ID3_FRAME_SYNCSAFE))
+        * size = unsyncsafe (* data, * size);
+
+    AUDDBG ("Data size = %d.\n", * size);
+    return TRUE;
+}
+
+static gchar * decode_text_frame (guchar * _data, gint size)
+{
+    gchar * data = (gchar *) _data;
+    gchar * buffer;
 
     switch (data[0])
     {
-    case 0:
-        data[size] = '\0';
-        return str_to_utf8(data + 1);
-    case 1:
+      case 0:
+        return g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1", NULL, NULL,
+         NULL);
+      case 1:
         if (data[1] == (gchar) 0xff)
             return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,
              NULL, NULL);
         else
             return g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE", NULL,
              NULL, NULL);
-    case 2:
+      case 2:
         return g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL, NULL,
          NULL);
-    case 3:
-        return g_strndup (data + 1, size - 1);
-    default:
-        AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
-         size - 1, (gint) data[0]);
+      case 3:
+        buffer = g_malloc (size);
+        memcpy (buffer, data + 1, size - 1);
+        buffer[size - 1] = 0;
+        return buffer;
+      default:
         return NULL;
     }
 }
 
-static gchar * read_raw_text_frame (VFSFile * handle, ID3v2FrameHeader * header)
+static gboolean decode_comment_frame (guchar * _data, gint size, gchar * * lang,
+ gchar * * type, gchar * * value)
 {
-    gint size = header->size;
-    gchar data[size];
-
-    if (vfs_fread (data, 1, size, handle) != size)
-        return NULL;
-
-    if (header->flags & 0x200)
-        size = unsyncsafe (data, size);
-
-    switch (data[0])
-    {
-    case 0:
-	return g_convert (data + 1, size - 1, "UTF-8", "ISO-8859-1", NULL,
-	 NULL, NULL);
-    case 1:
-        if (data[1] == (gchar) 0xff)
-            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16LE", NULL,
-             NULL, NULL);
-        else
-            return g_convert (data + 3, size - 3, "UTF-8", "UTF-16BE", NULL,
-             NULL, NULL);
-    case 2:
-        return g_convert (data + 1, size - 1, "UTF-8", "UTF-16BE", NULL, NULL,
-         NULL);
-    case 3:
-        return g_strndup (data + 1, size - 1);
-    default:
-        AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
-         size - 1, (gint) data[0]);
-        return NULL;
-    }
-}
-
-static gboolean read_comment_frame (VFSFile * handle, ID3v2FrameHeader * header,
- gchar * * lang, gchar * * type, gchar * * value)
-{
-    gint size = header->size;
-    gchar data[size];
+    gchar * data = (gchar *) _data;
     gchar * pair, * sep;
     gsize converted;
 
-    if (vfs_fread (data, 1, size, handle) != size)
-        return FALSE;
-
-    if (header->flags & 0x200)
-        size = unsyncsafe (data, size);
-
     switch (data[0])
     {
-    case 0:
+      case 0:
         pair = g_convert (data + 4, size - 4, "UTF-8", "ISO-8859-1", NULL,
          & converted, NULL);
         break;
-    case 1:
+      case 1:
         if (data[4] == (gchar) 0xff)
             pair = g_convert (data + 6, size - 6, "UTF-8", "UTF-16LE", NULL,
              & converted, NULL);
@@ -418,19 +406,17 @@ static gboolean read_comment_frame (VFSFile * handle, ID3v2FrameHeader * header,
             pair = g_convert (data + 6, size - 6, "UTF-8", "UTF-16BE", NULL,
              & converted, NULL);
         break;
-    case 2:
+      case 2:
         pair = g_convert (data + 4, size - 4, "UTF-8", "UTF-16BE", NULL,
          & converted, NULL);
         break;
-    case 3:
+      case 3:
         pair = g_malloc (size - 3);
         memcpy (pair, data + 4, size - 4);
         pair[size - 4] = 0;
         converted = size - 4;
         break;
-    default:
-        AUDDBG ("Throwing away %i bytes of text due to invalid encoding %d\n",
-         size - 4, (gint) data[0]);
+      default:
         pair = NULL;
         break;
     }
@@ -446,69 +432,59 @@ static gboolean read_comment_frame (VFSFile * handle, ID3v2FrameHeader * header,
     return TRUE;
 }
 
-static void readGenericFrame (VFSFile * fd, GenericFrame * gf, gint version)
-{
-    gf->header = readID3v2FrameHeader (fd, version);
-    gf->frame_body = read_char_data(fd, gf->header->size);
-
-    AUDDBG("got frame %s, size %d\n", gf->header->frame_id, gf->header->size);
-}
-
 static void free_generic_frame (GenericFrame * frame)
 {
-    free_frame_header (frame->header);
-    g_free (frame->frame_body);
+    g_free (frame->data);
     g_free (frame);
 }
 
-static gboolean isValidFrame (GenericFrame * frame)
+static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
+ gint data_size)
 {
-    if (strlen(frame->header->frame_id) != 0)
-        return TRUE;
-    else
-        return FALSE;
-}
+    gint pos;
 
-static void readAllFrames (VFSFile * fd, gint framesSize, gint version)
-{
-    int pos = 0;
-
-    AUDDBG("readAllFrames\n");
-
-    while (pos < framesSize)
+    for (pos = 0; pos < data_size; )
     {
-        GenericFrame *gframe = g_new0(GenericFrame, 1);
+        gint frame_size, size;
+        gchar key[5];
+        guchar * data;
+        GenericFrame * frame;
 
-        readGenericFrame (fd, gframe, version);
-
-        if (isValidFrame(gframe))
-        {
-            mowgli_dictionary_add (frames, (void *) gframe->header->frame_id,
-             gframe);
-            mowgli_node_add ((void *) gframe->header->frame_id,
-             mowgli_node_create (), frameIDs);
-            pos += 10 + gframe->header->size;
-        }
-        else
-        {
-            free_generic_frame (gframe);
+        if (! read_frame (handle, data_size - pos, version, syncsafe,
+         & frame_size, key, & data, & size))
             break;
-        }
+
+        frame = g_malloc (sizeof (GenericFrame));
+        strcpy (frame->key, key);
+        frame->data = data;
+        frame->size = size;
+
+        mowgli_dictionary_add (frames, frame->key, frame);
+        mowgli_node_add (frame->key, mowgli_node_create (), frameIDs);
+
+        pos += frame_size;
     }
-
 }
 
-static void writeID3FrameHeaderToFile (VFSFile * fd, ID3v2FrameHeader * header)
+static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
+ frame_size)
 {
-    vfs_fwrite(header->frame_id, 4, 1, fd);
-    vfs_fput_be32 (syncsafe32 (header->size), fd);
-    vfs_fwrite(&header->flags, 2, 1, fd);
-}
+    ID3v2FrameHeader header;
 
-static void writeGenericFrame (VFSFile * fd, GenericFrame * frame)
-{
-    writeID3FrameHeaderToFile(fd, frame->header);
-    vfs_fwrite(frame->frame_body, frame->header->size, 1, fd);
+    memcpy (header.key, frame->key, 4);
+    header.size = syncsafe32 (frame->size);
+    header.size = GUINT32_TO_BE (header.size);
+    header.flags = 0;
+
+    if (vfs_fwrite (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
+     (ID3v2FrameHeader))
+        return FALSE;
+
+    if (vfs_fwrite (frame->data, 1, frame->size, handle) != frame->size)
+        return FALSE;
+
+    * frame_size = sizeof (ID3v2FrameHeader) + frame->size;
+    return TRUE;
 }
 
 static guint32 writeAllFramesToFile (VFSFile * fd)
@@ -520,8 +496,12 @@ static guint32 writeAllFramesToFile (VFSFile * fd)
         GenericFrame *frame = (GenericFrame *) mowgli_dictionary_retrieve(frames, (gchar *) (n->data));
         if (frame)
         {
-            writeGenericFrame(fd, frame);
-            size += frame->header->size + 10;
+            gint frame_size;
+
+            if (! write_frame (fd, frame, & frame_size))
+                break;
+
+            size += frame_size;
         }
     }
     return size;
@@ -534,7 +514,7 @@ static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
     memcpy (header.magic, is_footer ? "3DI" : "ID3", 3);
     header.version = 4;
     header.revision = 0;
-    header.flags = ID3_FLAG_HAS_FOOTER;
+    header.flags = ID3_HEADER_HAS_FOOTER;
     header.size = syncsafe32 (size);
     header.size = GUINT32_TO_BE (header.size);
 
@@ -542,64 +522,63 @@ static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
      (ID3v2Header);
 }
 
-static int getFrameID (ID3v2FrameHeader * header)
+static gint get_frame_id (const gchar * key)
 {
-    int i = 0;
-    for (i = 0; i < ID3_TAGS_NO; i++)
+    gint id;
+
+    for (id = 0; id < ID3_TAGS_NO; id ++)
     {
-        if (!strcmp(header->frame_id, id3_frames[i]))
-            return i;
+        if (! strcmp (key, id3_frames[id]))
+            return id;
     }
+
     return -1;
 }
 
-static void skipFrame (VFSFile * fd, guint32 size)
+static void associate_string (Tuple * tuple, gint field, const gchar *
+ customfield, guchar * data, gint size)
 {
-    vfs_fseek(fd, size, SEEK_CUR);
-}
-
-static void associate_string (Tuple * tuple, VFSFile * handle, gint field,
- const gchar * customfield, ID3v2FrameHeader * header)
-{
-    gchar * text = read_text_frame (handle, header);
+    gchar * text = decode_text_frame (data, size);
 
     if (text == NULL)
         return;
 
     if (customfield != NULL)
-        AUDDBG ("custom field %s = %s\n", customfield, text);
+        AUDDBG ("Custom field %s = %s.\n", customfield, text);
     else
-        AUDDBG ("field %i = %s\n", field, text);
+        AUDDBG ("Field %i = %s.\n", field, text);
 
     tuple_associate_string (tuple, field, customfield, text);
     g_free (text);
 }
 
-static void associate_int (Tuple * tuple, VFSFile * handle, gint field,
- const gchar * customfield, ID3v2FrameHeader * header)
+static void associate_int (Tuple * tuple, gint field, const gchar *
+ customfield, guchar * data, gint size)
 {
-    gchar * text = read_text_frame (handle, header);
+    gchar * text = decode_text_frame (data, size);
 
     if (text == NULL)
         return;
 
     if (customfield != NULL)
-        AUDDBG ("custom field %s = %s\n", customfield, text);
+        AUDDBG ("Custom field %s = %s.\n", customfield, text);
     else
-        AUDDBG ("field %i = %s\n", field, text);
+        AUDDBG ("Field %i = %s.\n", field, text);
 
     tuple_associate_int (tuple, field, customfield, atoi (text));
     g_free (text);
 }
 
-static void decode_private_info(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * header)
+static void decode_private_info (Tuple * tuple, guchar * data, gint size)
 {
-    gchar *text = read_char_data(fd, header->size);
+    gchar * text = g_strndup ((gchar *) data, size);
+
     if (!strncmp(text, "WM/", 3))
     {
         gchar *separator = strchr(text, 0);
         if (separator == NULL)
-            return;
+            goto DONE;
+
         gchar * value = separator + 1;
         if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
         {
@@ -627,17 +606,19 @@ static void decode_private_info(Tuple * tuple, VFSFile * fd, ID3v2FrameHeader * 
     } else {
         AUDDBG("Unable to decode private data, skipping: %s\n", text);
     }
+
+DONE:
+    g_free (text);
 }
 
-static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
- header)
+static void decode_comment (Tuple * tuple, guchar * data, gint size)
 {
     gchar * lang, * type, * value;
 
-    if (! read_comment_frame (handle, header, & lang, & type, & value))
+    if (! decode_comment_frame (data, size, & lang, & type, & value))
         return;
 
-    AUDDBG ("comment: lang = %s, type = %s, value = %s\n", lang, type, value);
+    AUDDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
         tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
@@ -647,9 +628,9 @@ static void decode_comment (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
     g_free (value);
 }
 
-static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * header)
+static void decode_txxx (Tuple * tuple, guchar * data, gint size)
 {
-    gchar *text = read_raw_text_frame (handle, header);
+    gchar * text = decode_text_frame (data, size);
 
     if (text == NULL)
         return;
@@ -660,7 +641,7 @@ static void decode_txxx (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader * hea
         return;
 
     gchar * value = separator + 1;
-    AUDDBG ("Field '%s' has value '%s'\n", text, value);
+    AUDDBG ("TXXX: %s = %s.\n", text, value);
     tuple_associate_string (tuple, -1, text, value);
 
     g_free (text);
@@ -719,17 +700,10 @@ static gboolean decode_rva2_block (guchar * * _data, gint * _size, gint *
     return TRUE;
 }
 
-static void decode_rva2 (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
- header)
+static void decode_rva2 (Tuple * tuple, guchar * data, gint size)
 {
-    gint size = header->size;
-    guchar _data[size];
-    guchar * data = _data;
     gchar * domain;
     gint channel, adjustment, adjustment_unit, peak, peak_unit;
-
-    if (vfs_fread (data, 1, size, handle) != size)
-        return;
 
     if (memchr (data, 0, size) == NULL)
         return;
@@ -786,13 +760,13 @@ static void decode_rva2 (Tuple * tuple, VFSFile * handle, ID3v2FrameHeader *
     }
 }
 
-static Tuple * decodeGenre (Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header)
+static void decode_genre (Tuple * tuple, guchar * data, gint size)
 {
     gint numericgenre;
-    gchar * text = read_text_frame (fd, & header);
+    gchar * text = decode_text_frame (data, size);
 
     if (text == NULL)
-        return tuple;
+        return;
 
     if (text[0] == '(')
         numericgenre = atoi (text + 1);
@@ -802,11 +776,11 @@ static Tuple * decodeGenre (Tuple * tuple, VFSFile * fd, ID3v2FrameHeader header
     if (numericgenre > 0)
     {
         tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
-        return tuple;
+        return;
     }
     tuple_associate_string(tuple, FIELD_GENRE, NULL, text);
     g_free (text);
-    return tuple;
+    return;
 }
 
 static GenericFrame * add_generic_frame (gint id, gint size)
@@ -816,18 +790,15 @@ static GenericFrame * add_generic_frame (gint id, gint size)
     if (frame == NULL)
     {
         frame = g_malloc (sizeof (GenericFrame));
-        frame->header = g_malloc (sizeof (ID3v2FrameHeader));
-        frame->header->frame_id = g_strdup (id3_frames[id]);
-        mowgli_dictionary_add (frames, id3_frames[id], frame);
-        mowgli_node_add ((void *) id3_frames[id], mowgli_node_create (),
-         frameIDs);
+        strcpy (frame->key, id3_frames[id]);
+        mowgli_dictionary_add (frames, frame->key, frame);
+        mowgli_node_add (frame->key, mowgli_node_create (), frameIDs);
     }
     else
-        g_free (frame->frame_body);
+        g_free (frame->data);
 
-    frame->header->size = size;
-    frame->header->flags = 0;
-    frame->frame_body = g_malloc (size);
+    frame->data = g_malloc (size);
+    frame->size = size;
     return frame;
 }
 
@@ -836,8 +807,8 @@ static void add_text_frame (gint id, const gchar * text)
     gint length = strlen (text);
     GenericFrame * frame = add_generic_frame (id, length + 1);
 
-    frame->frame_body[0] = 3; /* UTF-8 encoding */
-    memcpy (frame->frame_body + 1, text, length);
+    frame->data[0] = 3; /* UTF-8 encoding */
+    memcpy (frame->data + 1, text, length);
 }
 
 static void add_comment_frame (const gchar * text)
@@ -845,9 +816,9 @@ static void add_comment_frame (const gchar * text)
     gint length = strlen (text);
     GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5);
 
-    frame->frame_body[0] = 3; /* UTF-8 encoding */
-    strcpy (frame->frame_body + 1, "eng"); /* well, it *might* be English */
-    memcpy (frame->frame_body + 5, text, length);
+    frame->data[0] = 3; /* UTF-8 encoding */
+    strcpy ((gchar *) frame->data + 1, "eng"); /* well, it *might* be English */
+    memcpy (frame->data + 5, text, length);
 }
 
 static void add_frameFromTupleStr (Tuple * tuple, int field, int id3_field)
@@ -866,98 +837,94 @@ static void add_frameFromTupleInt (Tuple * tuple, int field, int id3_field)
 static gboolean id3v2_can_handle_file (VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
+    gboolean syncsafe;
     gsize offset;
 
-    return read_header (handle, & version, & offset, & header_size, & data_size,
-     & footer_size);
+    return read_header (handle, & version, & syncsafe, & offset, & header_size,
+     & data_size, & footer_size);
 }
 
-static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * f)
+static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
+    gboolean syncsafe;
     gsize offset;
     gint pos;
 
-    if (! read_header (f, & version, & offset, & header_size, & data_size,
-     & footer_size))
+    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
+     & data_size, & footer_size))
         return FALSE;
 
     for (pos = 0; pos < data_size; )
     {
-        ID3v2FrameHeader * frame = readID3v2FrameHeader (f, version);
+        gint frame_size, size, id;
+        gchar key[5];
+        guchar * data;
 
-        if (frame->size == 0)
-        {
-            free_frame_header (frame);
+        if (! read_frame (handle, data_size - pos, version, syncsafe,
+         & frame_size, key, & data, & size))
             break;
-        }
 
-        int id = getFrameID(frame);
-        pos = pos + frame->size + 10;
-
-        if (pos > data_size)
-        {
-            free_frame_header (frame);
-            break;
-        }
+        id = get_frame_id (key);
 
         switch (id)
         {
           case ID3_ALBUM:
-              associate_string (tuple, f, FIELD_ALBUM, NULL, frame);
-              break;
+            associate_string (tuple, FIELD_ALBUM, NULL, data, size);
+            break;
           case ID3_TITLE:
-              associate_string (tuple, f, FIELD_TITLE, NULL, frame);
-              break;
+            associate_string (tuple, FIELD_TITLE, NULL, data, size);
+            break;
           case ID3_COMPOSER:
-              associate_string (tuple, f, FIELD_COMPOSER, NULL, frame);
-              break;
+            associate_string (tuple, FIELD_COMPOSER, NULL, data, size);
+            break;
           case ID3_COPYRIGHT:
-              associate_string (tuple, f, FIELD_COPYRIGHT, NULL, frame);
-              break;
+            associate_string (tuple, FIELD_COPYRIGHT, NULL, data, size);
+            break;
           case ID3_DATE:
-              associate_string (tuple, f, FIELD_DATE, NULL, frame);
-              break;
+            associate_string (tuple, FIELD_DATE, NULL, data, size);
+            break;
           case ID3_TIME:
-              associate_int (tuple, f, FIELD_LENGTH, NULL, frame);
-              break;
+            associate_int (tuple, FIELD_LENGTH, NULL, data, size);
+            break;
           case ID3_LENGTH:
-              associate_int (tuple, f, FIELD_LENGTH, NULL, frame);
-              break;
+            associate_int (tuple, FIELD_LENGTH, NULL, data, size);
+            break;
           case ID3_ARTIST:
-              associate_string (tuple, f, FIELD_ARTIST, NULL, frame);
-              break;
+            associate_string (tuple, FIELD_ARTIST, NULL, data, size);
+            break;
           case ID3_TRACKNR:
-              associate_int (tuple, f, FIELD_TRACK_NUMBER, NULL, frame);
-              break;
+            associate_int (tuple, FIELD_TRACK_NUMBER, NULL, data, size);
+            break;
           case ID3_YEAR:
           case ID3_RECORDING_TIME:
-              associate_int (tuple, f, FIELD_YEAR, NULL, frame);
-              break;
+            associate_int (tuple, FIELD_YEAR, NULL, data, size);
+            break;
           case ID3_GENRE:
-              tuple = decodeGenre(tuple, f, *frame);
-              break;
+            decode_genre (tuple, data, size);
+            break;
           case ID3_COMMENT:
-              decode_comment (tuple, f, frame);
-              break;
+            decode_comment (tuple, data, size);
+            break;
           case ID3_PRIVATE:
-              decode_private_info (tuple, f, frame);
-              break;
+            decode_private_info (tuple, data, size);
+            break;
           case ID3_ENCODER:
-              associate_string (tuple, f, -1, "encoder", frame);
-              break;
+            associate_string (tuple, -1, "encoder", data, size);
+            break;
           case ID3_TXXX:
-              decode_txxx (tuple, f, frame);
-              break;
+            decode_txxx (tuple, data, size);
+            break;
           case ID3_RVA2:
-              decode_rva2 (tuple, f, frame);
-              break;
+            decode_rva2 (tuple, data, size);
+            break;
           default:
-              AUDDBG("Skipping %i bytes over unsupported ID3 frame %s\n", frame->size, frame->frame_id);
-              skipFrame(f, frame->size);
+            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+            break;
         }
 
-        free_frame_header (frame);
+        g_free (data);
+        pos += frame_size;
     }
 
     return TRUE;
@@ -977,10 +944,11 @@ static void free_frame_dictionary (void)
 static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
 {
     gint version, header_size, data_size, footer_size;
+    gboolean syncsafe;
     gsize offset;
 
-    if (! read_header (f, & version, & offset, & header_size, & data_size,
-     & footer_size))
+    if (! read_header (f, & version, & syncsafe, & offset, & header_size,
+     & data_size, & footer_size))
         return FALSE;
 
     if (frameIDs != NULL)
@@ -995,7 +963,7 @@ static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
 
     //read all frames into generic frames;
     frames = mowgli_dictionary_create(strcasecmp);
-    readAllFrames (f, data_size, version);
+    read_all_frames (f, version, syncsafe, data_size);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
     if (tuple_get_string(tuple, FIELD_ARTIST, NULL))
