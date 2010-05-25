@@ -40,6 +40,7 @@ void tag_init(void);
 void tag_terminate(void);
 
 gboolean tag_tuple_read (Tuple * tuple, VFSFile *fd);
+gboolean tag_image_read (VFSFile * handle, void * * data, gint * size);
 
 /* new_type specifies the type of tag (see the TAG_TYPE_* enum) that should be
  * written if the file does not have any existing tag. */

@@ -39,6 +39,7 @@ typedef struct _module {
     gint type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
     gboolean(*can_handle_file) (VFSFile *fd);
     gboolean (* read_tag) (Tuple * tuple, VFSFile * handle);
+    gboolean (* read_image) (VFSFile * handle, void * * data, gint * size);
     gboolean (* write_tag) (Tuple * tuple, VFSFile * handle);
 
     mowgli_node_t node;

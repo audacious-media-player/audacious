@@ -40,6 +40,16 @@ gboolean tag_tuple_read (Tuple * tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
+gboolean tag_image_read (VFSFile * handle, void * * data, gint * size)
+{
+    tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
+
+    if (module == NULL || module->read_image == NULL)
+        return FALSE;
+
+    return module->read_image (handle, data, size);
+}
+
 gboolean tag_tuple_write (Tuple * tuple, VFSFile * handle, gint new_type)
 {
     tag_module_t * module = find_tag_module (handle, new_type);
