@@ -206,7 +206,7 @@ vfs_ungetc(gint c, VFSFile *file)
  */
 gint
 vfs_fseek(VFSFile * file,
-          glong offset,
+          gint64 offset,
           gint whence)
 {
     if (file == NULL)
@@ -280,7 +280,7 @@ gint vfs_ftruncate (VFSFile * file, gint64 length)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the size of the file in bytes. Otherwise, -1.
  */
-off_t
+gint64
 vfs_fsize(VFSFile * file)
 {
     if (file == NULL)
