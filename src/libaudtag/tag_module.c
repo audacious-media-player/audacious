@@ -33,7 +33,6 @@
 
 void init_tag_modules(void)
 {
-    mowgli_node_add((void *)&wma, &wma.node, &tag_modules);
     mowgli_node_add((void *)&id3v2, &id3v2.node, &tag_modules);
     mowgli_node_add((void *)&ape, &ape.node, &tag_modules);
     mowgli_node_add((void *)&id3v1, &id3v1.node, &tag_modules);
