@@ -1005,8 +1005,11 @@ static gboolean id3v2_read_image (VFSFile * handle, void * * image_data, gint *
 
             if (type == 3) /* album cover */
                 found = TRUE;
-            else
-                g_free (image_data);
+            else if (*image_data != NULL)
+            {
+                g_free(*image_data);
+                *image_data = NULL;
+            }
         }
 
         g_free (data);
