@@ -113,18 +113,6 @@ GenericFrame;
 static mowgli_dictionary_t * frames = NULL;
 static mowgli_list_t * frameIDs = NULL;
 
-static guint32 unsyncsafe32 (guint32 x)
-{
-    return (x & 0x7f) | ((x & 0x7f00) >> 1) | ((x & 0x7f0000) >> 2) | ((x &
-     0x7f000000) >> 3);
-}
-
-static guint32 syncsafe32 (guint32 x)
-{
-    return (x & 0x7f) | ((x & 0x3f80) << 1) | ((x & 0x1fc000) << 2) | ((x &
-     0xfe00000) << 3);
-}
-
 #define write_syncsafe_int32(x) vfs_fput_be32 (syncsafe32 (x))
 
 static gboolean skip_extended_header_3 (VFSFile * handle, gint * _size)
