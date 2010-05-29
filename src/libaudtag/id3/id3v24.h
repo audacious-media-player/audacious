@@ -25,6 +25,6 @@
 #include "../tag_module.h"
 #include "../util.h"
 
-extern tag_module_t id3v2;
+extern tag_module_t id3v24;
 
 #endif

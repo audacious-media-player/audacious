@@ -23,7 +23,7 @@
 
 #include <libaudcore/audstrings.h>
 
-#include "id3v2.h"
+#include "id3v24.h"
 #include "../util.h"
 
 enum
@@ -855,7 +855,7 @@ static void add_frameFromTupleInt (Tuple * tuple, int field, int id3_field)
     add_text_frame (id3_field, scratch);
 }
 
-static gboolean id3v2_can_handle_file (VFSFile * handle)
+static gboolean id3v24_can_handle_file (VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
@@ -865,7 +865,7 @@ static gboolean id3v2_can_handle_file (VFSFile * handle)
      & data_size, & footer_size);
 }
 
-static gboolean id3v2_read_tag (Tuple * tuple, VFSFile * handle)
+static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
@@ -974,7 +974,7 @@ static gboolean parse_apic (const guchar * data, gint size, gchar * * mime,
     return TRUE;
 }
 
-static gboolean id3v2_read_image (VFSFile * handle, void * * image_data, gint *
+static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
  image_size)
 {
     gint version, header_size, data_size, footer_size, parsed;
@@ -1032,7 +1032,7 @@ static void free_frame_dictionary (void)
     frames = NULL;
 }
 
-static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
+static gboolean id3v24_write_tag (Tuple * tuple, VFSFile * f)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
@@ -1108,11 +1108,11 @@ static gboolean id3v2_write_tag (Tuple * tuple, VFSFile * f)
     return TRUE;
 }
 
-tag_module_t id3v2 =
+tag_module_t id3v24 =
 {
-    .name = "ID3v2",
-    .can_handle_file = id3v2_can_handle_file,
-    .read_tag = id3v2_read_tag,
-    .read_image = id3v2_read_image,
-    .write_tag = id3v2_write_tag,
+    .name = "ID3v2.3/4",
+    .can_handle_file = id3v24_can_handle_file,
+    .read_tag = id3v24_read_tag,
+    .read_image = id3v24_read_image,
+    .write_tag = id3v24_write_tag,
 };
