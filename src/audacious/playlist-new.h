@@ -50,6 +50,7 @@ void playlist_save_state (void);
 
 gint playlist_count (void);
 void playlist_insert (gint at);
+void playlist_reorder (gint from, gint to, gint count);
 void playlist_delete (gint playlist);
 
 void playlist_set_filename (gint playlist, const gchar * filename);

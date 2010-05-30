@@ -152,6 +152,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .playlist_count = playlist_count,
     .playlist_insert = playlist_insert,
+    .playlist_reorder = playlist_reorder,
     .playlist_delete = playlist_delete,
 
     .playlist_set_filename = playlist_set_filename,

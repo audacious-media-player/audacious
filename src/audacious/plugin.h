@@ -322,6 +322,7 @@ struct _AudaciousFuncTableV1 {
     /* Playlist API II (core) */
     gint (* playlist_count) (void);
     void (* playlist_insert) (gint at);
+    void (* playlist_reorder) (gint from, gint to, gint count);
     void (* playlist_delete) (gint playlist);
 
     void (* playlist_set_filename) (gint playlist, const gchar * filename);
@@ -672,6 +673,7 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_playlist_count              _audvt->playlist_count
 #define aud_playlist_insert             _audvt->playlist_insert
+#define aud_playlist_reorder            _audvt->playlist_reorder
 #define aud_playlist_delete             _audvt->playlist_delete
 
 #define aud_playlist_set_filename       _audvt->playlist_set_filename

@@ -555,6 +555,35 @@ void playlist_insert(gint at)
     hook_call ("playlist insert", GINT_TO_POINTER (at));
 }
 
+void playlist_reorder (gint from, gint to, gint count)
+{
+    struct index * displaced;
+
+    g_return_if_fail (from >= 0 && from + count < index_count (playlists));
+    g_return_if_fail (to >= 0 && to + count < index_count (playlists));
+    g_return_if_fail (count >= 0);
+
+    PLAYLIST_WILL_CHANGE;
+
+    displaced = index_new ();
+
+    if (to < from)
+        index_copy_append (playlists, to, displaced, from - to);
+    else
+        index_copy_append (playlists, from + count, displaced, to - from);
+
+    index_move (playlists, from, to, count);
+
+    if (to < from)
+        index_copy_set (displaced, 0, playlists, to + count, from - to);
+    else
+        index_copy_set (displaced, 0, playlists, from, to - from);
+
+    index_free (displaced);
+
+    PLAYLIST_HAS_CHANGED;
+}
+
 void playlist_delete (gint playlist_num)
 {
     DECLARE_PLAYLIST;
