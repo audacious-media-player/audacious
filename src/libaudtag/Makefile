@@ -5,12 +5,9 @@ LIB_MINOR = 0
 SRCS = audtag.c		\
        util.c		\
        tag_module.c	\
-       wma/guid.c	\
-       wma/wma.c	\
        id3/id3v1.c	\
        id3/id3v24.c	\
-       ape/ape.c	\
-       aac/aac.c
+       ape/ape.c
 
 INCLUDES = audtag.h
 
