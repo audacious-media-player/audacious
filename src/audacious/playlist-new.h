@@ -103,7 +103,7 @@ void playlist_sort_selected_by_filename (gint playlist, gint (* compare) (const
 void playlist_sort_selected_by_tuple (gint playlist, gint (* compare) (const
  Tuple * a, const Tuple * b));
 
-void playlist_reformat_titles ();
+void playlist_reformat_titles (void);
 void playlist_rescan (gint playlist);
 void playlist_rescan_file (const gchar * filename);
 

@@ -142,9 +142,6 @@ static Tuple * scan_tuple;
 static GThread * scan_thread;
 static gint scan_position, updated_ago;
 
-static gint(*current_filename_compare) (const gchar * a, const gchar * b);
-static gint(*current_tuple_compare) (const Tuple * a, const Tuple * b);
-
 static void * scanner (void * unused);
 
 static gchar *title_from_tuple(Tuple * tuple)
@@ -1274,36 +1271,40 @@ void playlist_randomize(gint playlist_num)
     PLAYLIST_HAS_CHANGED;
 }
 
-static gint filename_compare(const void **a, const void **b)
+static gint filename_compare (const void * _a, const void * _b, void * _compare)
 {
-    const struct entry *entry_a = *a, *entry_b = *b;
+    const struct entry * a = _a, * b = _b;
+    gint (* compare) (const gchar * a, const gchar * b) = _compare;
 
-    return current_filename_compare(entry_a->filename, entry_b->filename);
+    return compare (a->filename, b->filename);
 }
 
-static gint tuple_compare(const void **a, const void **b)
+static gint tuple_compare (const void * _a, const void * _b, void * _compare)
 {
-    const struct entry *entry_a = *a, *entry_b = *b;
+    const struct entry * a = _a, * b = _b;
+    gint (* compare) (const Tuple * a, const Tuple * b) = _compare;
 
-    if (entry_a->tuple == NULL)
-        return (entry_b->tuple == NULL) ? 0 : -1;
-    if (entry_b->tuple == NULL)
+    if (a->tuple == NULL)
+        return (b->tuple == NULL) ? 0 : -1;
+    if (b->tuple == NULL)
         return 1;
 
-    return current_tuple_compare(entry_a->tuple, entry_b->tuple);
+    return compare (a->tuple, b->tuple);
 }
 
-static void sort(struct playlist *playlist, gint(*compare) (const void **a, const void **b))
+static void sort (struct playlist * playlist, gint (* compare) (const void * a,
+ const void * b, void * inner), void * inner)
 {
     PLAYLIST_WILL_CHANGE;
 
-    index_sort(playlist->entries, compare);
-    number_entries(playlist, 0, index_count(playlist->entries));
+    index_sort_with_data (playlist->entries, compare, inner);
+    number_entries (playlist, 0, index_count (playlist->entries));
 
     PLAYLIST_HAS_CHANGED;
 }
 
-static void sort_selected(struct playlist *playlist, gint(*compare) (const void **a, const void **b))
+static void sort_selected (struct playlist * playlist, gint (* compare)
+ (const void * a, const void * b, void * inner), void * inner)
 {
     gint entries, count, count2;
     struct index *selected;
@@ -1321,7 +1322,7 @@ static void sort_selected(struct playlist *playlist, gint(*compare) (const void 
             index_append(selected, entry);
     }
 
-    index_sort(selected, compare);
+    index_sort_with_data (selected, compare, inner);
 
     count2 = 0;
 
@@ -1339,17 +1340,18 @@ static void sort_selected(struct playlist *playlist, gint(*compare) (const void 
     PLAYLIST_HAS_CHANGED;
 }
 
-void playlist_sort_by_filename(gint playlist_num, gint(*compare) (const gchar * a, const gchar * b))
+void playlist_sort_by_filename (gint playlist_num, gint (* compare)
+ (const gchar * a, const gchar * b))
 {
     DECLARE_PLAYLIST;
 
     LOOKUP_PLAYLIST;
 
-    current_filename_compare = compare;
-    sort(playlist, filename_compare);
+    sort (playlist, filename_compare, compare);
 }
 
-void playlist_sort_by_tuple(gint playlist_num, gint(*compare) (const Tuple * a, const Tuple * b))
+void playlist_sort_by_tuple (gint playlist_num, gint (* compare)
+ (const Tuple * a, const Tuple * b))
 {
     DECLARE_PLAYLIST;
     gint entries, count;
@@ -1364,21 +1366,21 @@ void playlist_sort_by_tuple(gint playlist_num, gint(*compare) (const Tuple * a, 
         check_scanned (playlist, entry);
     }
 
-    current_tuple_compare = compare;
-    sort(playlist, tuple_compare);
+    sort (playlist, tuple_compare, compare);
 }
 
-void playlist_sort_selected_by_filename(gint playlist_num, gint(*compare) (const gchar * a, const gchar * b))
+void playlist_sort_selected_by_filename (gint playlist_num, gint (* compare)
+ (const gchar * a, const gchar * b))
 {
     DECLARE_PLAYLIST;
 
     LOOKUP_PLAYLIST;
 
-    current_filename_compare = compare;
-    sort_selected(playlist, filename_compare);
+    sort_selected (playlist, filename_compare, compare);
 }
 
-void playlist_sort_selected_by_tuple(gint playlist_num, gint(*compare) (const Tuple * a, const Tuple * b))
+void playlist_sort_selected_by_tuple (gint playlist_num, gint (* compare)
+ (const Tuple * a, const Tuple * b))
 {
     DECLARE_PLAYLIST;
     gint entries, count;
@@ -1394,11 +1396,10 @@ void playlist_sort_selected_by_tuple(gint playlist_num, gint(*compare) (const Tu
             check_scanned (playlist, entry);
     }
 
-    current_tuple_compare = compare;
-    sort_selected(playlist, tuple_compare);
+    sort_selected (playlist, tuple_compare, compare);
 }
 
-void playlist_reformat_titles()
+void playlist_reformat_titles (void)
 {
     gint playlist_num;
 

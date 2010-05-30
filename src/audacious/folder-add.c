@@ -83,11 +83,6 @@ static void show_done (void)
     gtk_widget_destroy (add_window);
 }
 
-static gint compare (const void * * a, const void * * b)
-{
-    return string_compare (* (const gchar * *) a, * (const gchar * *) b);
-}
-
 static gboolean add_cb (void * unused)
 {
     static GList * stack = NULL;
@@ -160,7 +155,8 @@ static gboolean add_cb (void * unused)
 
     if (stack == NULL)
     {
-        index_sort (index, compare);
+        index_sort (index, (gint (*) (const void *, const void *))
+         string_compare);
 
         count = playlist_count ();
 
