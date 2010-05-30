@@ -32,14 +32,16 @@ gboolean id3v1_can_handle_file(VFSFile *f)
 {
     gchar *tag = g_new0(gchar, 4);
 
-    vfs_fseek(f, -355, SEEK_END);
+    if (vfs_fseek(f, -355, SEEK_END))
+        return FALSE;
     tag = read_char_data(f, 4);
     if (!strncmp(tag, "TAG+", 4))
         has_id3v1_ext = TRUE;
     else
         has_id3v1_ext = FALSE;
 
-    vfs_fseek(f, -128, SEEK_END);
+    if (vfs_fseek(f, -128, SEEK_END))
+        return FALSE;
     tag = read_char_data(f, 3);
     if (!strncmp(tag, "TAG", 3))
     {
@@ -66,7 +68,8 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
     gchar *track = g_new0(gchar, 1);
     gchar *genre = g_new0(gchar, 1);
     gboolean genre_set = FALSE;
-    vfs_fseek(f, -125, SEEK_END);
+    if (vfs_fseek(f, -125, SEEK_END))
+        return FALSE;
     title = read_char_data(f, 30);
     artist = read_char_data(f, 30);
     album = read_char_data(f, 30);
