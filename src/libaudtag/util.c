@@ -124,17 +124,6 @@ void print_tuple(Tuple * tuple)
 #endif
 }
 
-void seek(VFSFile * f, long pos)
-{
-
-    vfs_fseek(f, pos, SEEK_SET);
-}
-
-void skip(VFSFile * f, int amount)
-{
-    vfs_fseek(f, amount, SEEK_CUR);
-}
-
 gchar *read_char_data(VFSFile * fd, int size)
 {
     gchar *value = g_new0(gchar, size + 1);
