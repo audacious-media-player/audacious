@@ -204,6 +204,61 @@ playlist_manager_cb_new ( gpointer listview )
     return;
 }
 
+static gint get_selected_row (GtkWidget * list)
+{
+    gint row = -1;
+    GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *)
+     list);
+    GtkTreeModel * model;
+    GtkTreeIter iter;
+
+    if (gtk_tree_selection_get_selected (selection, & model, & iter))
+    {
+        GtkTreePath * path = gtk_tree_model_get_path (model, & iter);
+
+        row = gtk_tree_path_get_indices (path)[0];
+        gtk_tree_path_free (path);
+    }
+
+    return row;
+}
+
+static void set_selected_row (GtkWidget * list, gint row)
+{
+    GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *)
+     list);
+    GtkTreePath * path = gtk_tree_path_new_from_indices (row, -1);
+
+    gtk_tree_selection_select_path (selection, path);
+    gtk_tree_path_free (path);
+}
+
+static void reorder (GtkWidget * list, gint offset)
+{
+    gint from = get_selected_row (list);
+    gint to;
+
+    if (from == -1)
+        return;
+
+    to = from + GPOINTER_TO_INT (offset);
+
+    if (to < 0 || to >= aud_playlist_count ())
+        return;
+
+    aud_playlist_reorder (from, to, 1);
+    set_selected_row (list, to);
+}
+
+static void up_cb (GtkButton * button, GtkWidget * list)
+{
+    reorder (list, -1);
+}
+
+static void down_cb (GtkButton * button, GtkWidget * list)
+{
+    reorder (list, 1);
+}
 
 static void
 playlist_manager_cb_del ( gpointer listview )
@@ -382,6 +437,7 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     GtkWidget *playman_pl_lv_pmenu, *playman_pl_lv_pmenu_rename;
     GtkWidget *playman_bbar_hbbox;
     GtkWidget *playman_bbar_bt_new, *playman_bbar_bt_del, *playman_bbar_bt_close;
+    GtkWidget * up_button, * down_button;
     GdkGeometry playman_win_hints;
     GtkTreeIter active_iter;
     GtkTreePath *active_path;
@@ -472,26 +528,38 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     playman_bbar_hbbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout( GTK_BUTTON_BOX(playman_bbar_hbbox) , GTK_BUTTONBOX_END );
     gtk_box_set_spacing(GTK_BOX(playman_bbar_hbbox), 5);
+
     playman_bbar_bt_close = gtk_button_new_from_stock( GTK_STOCK_CLOSE );
     playman_bbar_bt_del = gtk_button_new_from_stock( GTK_STOCK_DELETE );
     playman_bbar_bt_new = gtk_button_new_from_stock( GTK_STOCK_NEW );
+    up_button = gtk_button_new_from_stock (GTK_STOCK_GO_UP);
+    down_button = gtk_button_new_from_stock (GTK_STOCK_GO_DOWN);
+
     gtk_container_add( GTK_CONTAINER(playman_bbar_hbbox) , playman_bbar_bt_close );
+    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, up_button);
+    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, down_button);
     gtk_container_add( GTK_CONTAINER(playman_bbar_hbbox) , playman_bbar_bt_del );
     gtk_container_add( GTK_CONTAINER(playman_bbar_hbbox) , playman_bbar_bt_new );
     gtk_button_box_set_child_secondary( GTK_BUTTON_BOX(playman_bbar_hbbox) ,
                                         playman_bbar_bt_close , TRUE );
+
     gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_bbar_hbbox , FALSE , FALSE , 0 );
 
     g_signal_connect( G_OBJECT(playman_pl_lv) , "button-press-event" ,
                       G_CALLBACK(playlist_manager_cb_lv_btpress) , NULL );
     g_signal_connect( G_OBJECT(playman_pl_lv) , "row-activated" ,
                       G_CALLBACK(playlist_manager_cb_lv_dclick) , NULL );
+
     g_signal_connect_swapped( G_OBJECT(playman_bbar_bt_new) , "clicked" ,
                               G_CALLBACK(playlist_manager_cb_new) , playman_pl_lv );
     g_signal_connect_swapped( G_OBJECT(playman_bbar_bt_del) , "clicked" ,
                               G_CALLBACK(playlist_manager_cb_del) , playman_pl_lv );
     g_signal_connect_swapped( G_OBJECT(playman_bbar_bt_close) , "clicked" ,
                               G_CALLBACK(gtk_widget_destroy) , playman_win );
+    g_signal_connect ((GObject *) up_button, "clicked", (GCallback) up_cb,
+     playman_pl_lv);
+    g_signal_connect ((GObject *) down_button, "clicked", (GCallback) down_cb,
+     playman_pl_lv);
 
     /* have active playlist selected and scrolled to */
     active_path = gtk_tree_model_get_path( GTK_TREE_MODEL(pl_store) ,
@@ -524,8 +592,15 @@ audgui_playlist_manager_update ( void )
         GtkWidget *lv = (GtkWidget*)g_object_get_data( G_OBJECT(playman_win) , "lv" );
         if ( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(lv),"opt1")) == 0 )
         {
+            gint row = get_selected_row (lv);
             GtkListStore *store = (GtkListStore*)gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );
             playlist_manager_populate( store );
+
+            if (row >= aud_playlist_count ())
+                row = aud_playlist_count () - 1;
+
+            if (row != -1)
+                set_selected_row (lv, row);
         }
     }
 }
