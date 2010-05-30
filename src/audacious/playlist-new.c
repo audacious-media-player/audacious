@@ -559,8 +559,8 @@ void playlist_reorder (gint from, gint to, gint count)
 {
     struct index * displaced;
 
-    g_return_if_fail (from >= 0 && from + count < index_count (playlists));
-    g_return_if_fail (to >= 0 && to + count < index_count (playlists));
+    g_return_if_fail (from >= 0 && from + count <= index_count (playlists));
+    g_return_if_fail (to >= 0 && to + count <= index_count (playlists));
     g_return_if_fail (count >= 0);
 
     PLAYLIST_WILL_CHANGE;
@@ -575,9 +575,15 @@ void playlist_reorder (gint from, gint to, gint count)
     index_move (playlists, from, to, count);
 
     if (to < from)
+    {
         index_copy_set (displaced, 0, playlists, to + count, from - to);
+        number_playlists (to, from + count - to);
+    }
     else
+    {
         index_copy_set (displaced, 0, playlists, from, to - from);
+        number_playlists (from, to + count - from);
+    }
 
     index_free (displaced);
 
