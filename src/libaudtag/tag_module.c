@@ -29,7 +29,7 @@
 #include "id3/id3v1.h"
 #include "id3/id3v24.h"
 #include "ape/ape.h"
-#include "aac/aac.h"
+/* #include "aac/aac.h" */
 
 void init_tag_modules(void)
 {
