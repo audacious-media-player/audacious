@@ -1525,10 +1525,6 @@ gint64 playlist_get_selected_length(gint playlist_num)
     return playlist->selected_length;
 }
 
-void playlist_set_shuffle (gboolean on) /* currently not needed */
-{
-}
-
 gint playlist_queue_count(gint playlist_num)
 {
     DECLARE_PLAYLIST;

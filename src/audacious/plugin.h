@@ -378,8 +378,6 @@ struct _AudaciousFuncTableV1 {
     gint64 (* playlist_get_total_length) (gint playlist);
     gint64 (* playlist_get_selected_length) (gint playlist);
 
-    void (* playlist_set_shuffle) (gboolean shuffle);
-
     gint (* playlist_queue_count) (gint playlist);
     void (* playlist_queue_insert) (gint playlist, gint at, gint entry);
     void (* playlist_queue_insert_selected) (gint playlist, gint at);
@@ -722,7 +720,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_rescan             _audvt->playlist_rescan
 #define aud_playlist_get_total_length   _audvt->playlist_get_total_length
 #define aud_playlist_get_selected_length _audvt->playlist_get_selected_length
-#define aud_playlist_set_shuffle        _audvt->playlist_set_shuffle
 
 #define aud_playlist_queue_count        _audvt->playlist_queue_count
 #define aud_playlist_queue_insert       _audvt->playlist_queue_insert

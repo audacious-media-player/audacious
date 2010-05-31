@@ -644,7 +644,6 @@ static void get_mpris_metadata(struct MprisMetadataRequest *request)
 static gboolean set_shuffle_cb (void * shuffle)
 {
     cfg.shuffle = GPOINTER_TO_INT (shuffle);
-    playlist_set_shuffle (cfg.shuffle);
     event_queue ("toggle shuffle", NULL);
     return FALSE;
 }

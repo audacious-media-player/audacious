@@ -32,8 +32,6 @@
 #include "effect.h"
 #include "general.h"
 #include "playback.h"
-#include "playlist-new.h"
-#include "playlist-utils.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"
 #include "util.h"
@@ -178,134 +176,6 @@ static aud_cfg_strent aud_strents[] = {
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);
 
-
-static gboolean
-save_extra_playlist(const gchar * path, const gchar * basename,
-        gpointer savedlist)
-{
-    gint playlists, playlist;
-    GList **saved;
-    int found;
-    const gchar * filename;
-
-    playlists = playlist_count ();
-    saved = (GList **) savedlist;
-
-    found = 0;
-
-    for (playlist = 0; playlist < playlists; playlist ++)
-    {
-        if (g_list_find (* saved, GINT_TO_POINTER (playlist)) != NULL)
-            continue;
-
-        filename = playlist_get_filename (playlist);
-
-        if (filename == NULL)
-            continue;
-
-        if (strcmp(filename, path) == 0) {
-            /* Save playlist */
-            playlist_save(playlist, path);
-            * saved = g_list_prepend (* saved, GINT_TO_POINTER (playlist));
-            found = 1;
-            break;
-        }
-    }
-
-    if(!found) {
-        /* Remove playlist */
-        unlink(path);
-    }
-
-    return FALSE; /* process other playlists */
-}
-
-static void
-save_other_playlists(GList *saved)
-{
-    gint playlists, playlist;
-    gchar * pos, * ext, * basename, * newbasename, * new_filename;
-    const gchar * filename;
-    int i, num, isdigits;
-
-    playlists = playlist_count ();
-
-    for (playlist = 0; playlist < playlists; playlist ++)
-    {
-        if (g_list_find (saved, GINT_TO_POINTER (playlist)) != NULL)
-            continue;
-
-        filename = playlist_get_filename (playlist);
-
-        if (filename == NULL || g_file_test (filename, G_FILE_TEST_IS_DIR))
-        {
-            /* default basename */
-#ifdef HAVE_XSPF_PLAYLIST
-            basename = g_strdup("playlist_01.xspf");
-#else
-            basename = g_strdup("playlist_01.m3u");
-#endif
-        } else {
-            basename = g_path_get_basename(filename);
-        }
-
-        if ((pos = strrchr(basename, '.'))) {
-            *pos = '\0';
-        }
-#ifdef HAVE_XSPF_PLAYLIST
-        ext = ".xspf";
-#else
-        ext = ".m3u";
-#endif
-        num = -1;
-        if ((pos = strrchr(basename, '_'))) {
-            isdigits = 0;
-            for (i=1; pos[i]; i++) {
-                if (!g_ascii_isdigit(pos[i])) {
-                    isdigits = 0;
-                    break;
-                }
-                isdigits = 1;
-            }
-            if (isdigits) {
-                num = atoi(pos+1) + 1;
-                *pos = '\0';
-            }
-        }
-        /* attempt to generate unique filename */
-        new_filename = NULL;
-
-        do {
-            g_free (new_filename);
-
-            if (num < 0) {
-                /* try saving without number first */
-                newbasename = g_strdup_printf("%s%s", basename, ext);
-                num = 1;
-            } else {
-                newbasename = g_strdup_printf("%s_%02d%s", basename, num, ext);
-                num++;
-                if (num < 0) {
-                    g_warning("Playlist number in filename overflowed."
-                            " Not saving playlist.\n");
-                    goto cleanup;
-                }
-            }
-
-            new_filename = g_build_filename (aud_paths[BMP_PATH_PLAYLISTS_DIR],
-                    newbasename, NULL);
-            g_free(newbasename);
-        }
-        while (g_file_test (new_filename, G_FILE_TEST_EXISTS));
-
-        playlist_save (playlist, new_filename);
-cleanup:
-        g_free (new_filename);
-        g_free(basename);
-    }
-}
-
-
 void
 aud_config_free(void)
 {
@@ -396,26 +266,6 @@ aud_config_load(void)
 
     if (!cfg.cover_name_exclude)
         cfg.cover_name_exclude = g_strdup("back");
-}
-
-void save_all_playlists (void)
-{
-    GList * saved;
-
-    /* Main playlist becomes #0 at load, so save #0 as main. -jlindgren */
-    if (! playlist_save (0, aud_paths[BMP_PATH_PLAYLIST_FILE]))
-        g_warning ("Could not save main playlist\n");
-
-    /* Save extra playlists that were loaded from PLAYLISTS_DIR  */
-    saved = g_list_append (NULL, GINT_TO_POINTER (0));
-
-    if (! dir_foreach (aud_paths[BMP_PATH_PLAYLISTS_DIR], save_extra_playlist,
-     & saved, NULL))
-        g_warning ("Could not save extra playlists\n");
-
-    /* Save other playlists to PLAYLISTS_DIR */
-    save_other_playlists (saved);
-    g_list_free (saved);
 }
 
 static void save_output_path (void)
@@ -520,7 +370,4 @@ aud_config_save(void)
     }
 
     cfg_db_close(db);
-
-    save_all_playlists ();
-    playlist_save_state ();
 }

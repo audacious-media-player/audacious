@@ -111,8 +111,6 @@ void playlist_rescan_file (const gchar * filename);
 gint64 playlist_get_total_length (gint playlist);
 gint64 playlist_get_selected_length (gint playlist);
 
-void playlist_set_shuffle (gboolean shuffle);
-
 gint playlist_queue_count (gint playlist);
 void playlist_queue_insert (gint playlist, gint at, gint entry);
 void playlist_queue_insert_selected (gint playlist, gint at);

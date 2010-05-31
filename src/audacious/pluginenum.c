@@ -201,8 +201,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_get_total_length = playlist_get_total_length,
     .playlist_get_selected_length = playlist_get_selected_length,
 
-    .playlist_set_shuffle = playlist_set_shuffle,
-
     .playlist_queue_count = playlist_queue_count,
     .playlist_queue_insert = playlist_queue_insert,
     .playlist_queue_insert_selected = playlist_queue_insert_selected,
@@ -349,7 +347,7 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .get_plugin_menu = get_plugin_menu,
     .playback_get_title = playback_get_title,
-    .save_all_playlists = save_all_playlists,
+    .save_all_playlists = save_playlists,
     .get_associated_image_file = get_associated_image_file,
 
     .interface_get_current = interface_get_current,

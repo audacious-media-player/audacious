@@ -1,6 +1,6 @@
 /*
  * playlist-utils.c
- * Copyright 2009 John Lindgren
+ * Copyright 2009-2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -319,4 +319,70 @@ gboolean playlist_save (gint playlist, const gchar * filename)
     container->plc_write (filename, 0);
     playlist_set_active (last);
     return TRUE;
+}
+
+/* The algorithm is a bit quirky for historical reasons. -jlindgren */
+static gchar * make_playlist_path (gint playlist)
+{
+    if (! playlist)
+        return g_strdup (aud_paths[BMP_PATH_PLAYLIST_FILE]);
+
+    return g_strdup_printf ("%s/playlist_%02d.xspf",
+     aud_paths[BMP_PATH_PLAYLISTS_DIR], 1 + playlist);
+}
+
+void load_playlists (void)
+{
+    gboolean done = FALSE;
+    gint count;
+
+    for (count = 0; ! done; count ++)
+    {
+        gchar * path = make_playlist_path (count);
+
+        if (g_file_test (path, G_FILE_TEST_EXISTS))
+        {
+            gchar * uri = g_filename_to_uri (path, NULL, NULL);
+
+            if (count)
+                playlist_insert (count);
+
+            playlist_insert_playlist (count, 0, uri);
+            g_free (uri);
+        }
+        else
+            done = TRUE;
+
+        g_free (path);
+    }
+
+    playlist_load_state ();
+}
+
+void save_playlists (void)
+{
+    gint playlists = playlist_count ();
+    gboolean done = FALSE;
+    gint count;
+
+    for (count = 0; ! done; count ++)
+    {
+        gchar * path = make_playlist_path (count);
+
+        if (count < playlists)
+        {
+            gchar * uri = g_filename_to_uri (path, NULL, NULL);
+
+            playlist_save (count, uri);
+            g_free (uri);
+        }
+        else if (g_file_test (path, G_FILE_TEST_EXISTS))
+            remove (path);
+        else
+            done = TRUE;
+
+        g_free (path);
+    }
+
+    playlist_save_state ();
 }

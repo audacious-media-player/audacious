@@ -150,14 +150,6 @@ AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
 
 
 ### ---------------------------------------------------------------------------
-AM_PATH_XML2([2.0.0], [
-    AC_DEFINE([HAVE_XSPF_PLAYLIST], 1, [Define if XSPF playlists are available.])
-], [
-    AC_MSG_ERROR([*** libxml2 is not installed. Audacious requires it now. Send hate mail to oliver@freebsd.org ***]) 
-])
-
-
-### ---------------------------------------------------------------------------
 dnl regex support (gnu/oniguruma/pcre)
 dnl ==================================
 REGEX_LIBS=
