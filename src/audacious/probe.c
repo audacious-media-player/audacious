@@ -64,7 +64,8 @@ static gboolean probe_func (InputPlugin * decoder, void * data)
         if (decoder->is_our_file_from_vfs (state->filename, state->handle))
             state->decoder = decoder;
 
-        vfs_fseek (state->handle, 0, SEEK_SET);
+        if (vfs_fseek (state->handle, 0, SEEK_SET))
+            ; /* ignore errors; they are normal on streaming */
     }
     else if (decoder->is_our_file != NULL)
     {
@@ -98,7 +99,8 @@ static gboolean probe_func_fast (InputPlugin * decoder, void * data)
              state->handle))
                 return FALSE;
 
-            vfs_fseek (state->handle, 0, SEEK_SET);
+            if (vfs_fseek (state->handle, 0, SEEK_SET))
+                ; /* ignore errors; they are normal on streaming */
         }
         else if (state->decoder->is_our_file != NULL)
         {
