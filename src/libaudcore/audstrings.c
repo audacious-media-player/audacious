@@ -386,6 +386,7 @@ static gchar get_hex_digit(gchar **get)
     return c - '0';
 }
 
+/* modifies string in place */
 void string_decode_percent(gchar *string)
 {
     gchar *get = string;
@@ -401,6 +402,58 @@ void string_decode_percent(gchar *string)
     }
 
     *set = 0;
+}
+
+/* we encode any character except the "unreserved" characters of RFC 3986 and
+ * (optionally) the forward slash */
+static gboolean is_legal_char (gchar c, gboolean is_filename)
+{
+    return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <=
+     '9') || (strchr ("-_.~", c) != NULL) || (is_filename && c == '/');
+}
+
+static gchar make_hex_digit (gint i)
+{
+    if (i < 10)
+        return '0' + i;
+    else
+        return ('A' - 10) + i;
+}
+
+/* is_filename specifies whether the forward slash should be left intact */
+/* returns string allocated with g_malloc */
+gchar * string_encode_percent (const gchar * string, gboolean is_filename)
+{
+    gint length = 0;
+    const gchar * get;
+    gchar c;
+    gchar * new, * set;
+
+    for (get = string; (c = * get); get ++)
+    {
+        if (is_legal_char (c, is_filename))
+            length ++;
+        else
+            length += 3;
+    }
+
+    new = g_malloc (length + 1);
+    set = new;
+
+    for (get = string; (c = * get); get ++)
+    {
+        if (is_legal_char (c, is_filename))
+            * set ++ = c;
+        else
+        {
+            * set ++ = '%';
+            * set ++ = make_hex_digit (((guchar) c) >> 4);
+            * set ++ = make_hex_digit (c & 0xF);
+        }
+    }
+
+    * set = 0;
+    return new;
 }
 
 void string_cut_extension(gchar *string)
