@@ -64,7 +64,6 @@
 #define EFFECT_PLUGIN(x)        ((EffectPlugin *)(x))
 #define GENERAL_PLUGIN(x)       ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)           ((VisPlugin *)(x))
-#define LOWLEVEL_PLUGIN(x)      ((LowlevelPlugin *)(x))
 //@}
 
 //@{
@@ -114,7 +113,6 @@ typedef struct _OutputPlugin  OutputPlugin;
 typedef struct _EffectPlugin  EffectPlugin;
 typedef struct _GeneralPlugin GeneralPlugin;
 typedef struct _VisPlugin     VisPlugin;
-typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
@@ -952,18 +950,6 @@ G_END_DECLS
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
 struct _Plugin {
-    PLUGIN_COMMON_FIELDS
-};
-
-/*
- * LowlevelPlugin is used for lowlevel system services, such as PlaylistContainers,
- * VFSContainers and the like.
- *
- * They are not GUI visible at this time.
- *
- * XXX: Is this still in use in 1.4? --nenolod
- */
-struct _LowlevelPlugin {
     PLUGIN_COMMON_FIELDS
 };
 

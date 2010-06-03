@@ -365,7 +365,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
 /*****************************************************************/
 
-GList *lowlevel_list = NULL;
 extern GList *vfs_transports;
 
 static GStaticPrivate cur_plugin_key = G_STATIC_PRIVATE_INIT;
@@ -611,7 +610,15 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
         {
             if (header->ip_list[i]->cleanup != NULL)
                 header->ip_list[i]->cleanup ();
+
+            g_free (header->ip_list[i]->filename);
         }
+    }
+
+    if (header->op_list != NULL)
+    {
+        for (i = 0; header->op_list[i] != NULL; i ++)
+            g_free (header->op_list[i]->filename);
     }
 
     if (header->interface)
@@ -723,8 +730,6 @@ static OutputPlugin * output_probe (void)
 void plugin_system_init(void)
 {
     gchar *dir;
-    GList *node;
-    LowlevelPlugin *lp;
     GtkWidget *dialog;
     gint dirsel = 0;
 
@@ -799,16 +804,6 @@ void plugin_system_init(void)
 
     if (current_output_plugin == NULL)
         current_output_plugin = output_probe ();
-
-    for (node = lowlevel_list; node; node = g_list_next(node))
-    {
-        lp = LOWLEVEL_PLUGIN(node->data);
-        if (lp->init)
-        {
-            plugin_set_current((Plugin *) lp);
-            lp->init();
-        }
-    }
 }
 
 void plugin_system_cleanup(void)
@@ -816,7 +811,6 @@ void plugin_system_cleanup(void)
     EffectPlugin *ep;
     GeneralPlugin *gp;
     VisPlugin *vp;
-    LowlevelPlugin *lp;
     GList *node;
     mowgli_node_t *hlist_node;
 
@@ -844,6 +838,8 @@ void plugin_system_cleanup(void)
 
             if (ep->cleanup)
                 ep->cleanup();
+            
+            g_free (ep->filename);
 
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
@@ -867,6 +863,8 @@ void plugin_system_cleanup(void)
             if (gp->cleanup)
                 gp->cleanup();
 
+            g_free (gp->filename);
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
@@ -889,6 +887,8 @@ void plugin_system_cleanup(void)
             if (vp->cleanup)
                 vp->cleanup();
 
+            g_free (vp->filename);
+
             GDK_THREADS_LEAVE();
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
@@ -899,28 +899,6 @@ void plugin_system_cleanup(void)
     {
         g_list_free(vp_data.vis_list);
         vp_data.vis_list = NULL;
-    }
-
-    for (node = lowlevel_list; node; node = g_list_next(node))
-    {
-        lp = LOWLEVEL_PLUGIN(node->data);
-        if (lp)
-        {
-            plugin_set_current((Plugin *) lp);
-
-            if (lp->cleanup)
-                lp->cleanup();
-
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
-        }
-    }
-
-    if (lowlevel_list != NULL)
-    {
-        g_list_free(lowlevel_list);
-        lowlevel_list = NULL;
     }
 
     /* XXX: vfs will crash otherwise. -nenolod */

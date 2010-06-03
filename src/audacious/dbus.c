@@ -263,7 +263,7 @@ static void tuple_insert_to_hash_full(GHashTable * md, const Tuple * tuple,
 {
     GValue *value = tuple_value_to_gvalue(tuple, tuple_key);
     if (value != NULL)
-        g_hash_table_insert(md, g_strdup(key), value);
+        g_hash_table_insert (md, (void *) key, value);
 }
 
 static void tuple_insert_to_hash(GHashTable * md, const Tuple * tuple,

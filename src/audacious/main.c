@@ -198,7 +198,7 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
             exit(EXIT_FAILURE);
         }
 
-    g_free(context);
+    g_option_context_free (context);
 }
 
 static void handle_cmd_line_filenames(gboolean is_running)
@@ -474,6 +474,7 @@ gint main(gint argc, gchar ** argv)
 
     g_message("Loading configuration");
     aud_config_load();
+    atexit (aud_config_free);
 
     g_message("Initializing signal handlers");
     signal_handlers_init();
