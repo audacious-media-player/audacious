@@ -31,6 +31,7 @@
 #include <mowgli.h>
 
 #include "input.h"
+#include "output.h"
 #include "plugin-registry.h"
 
 PlaybackData ip_data =

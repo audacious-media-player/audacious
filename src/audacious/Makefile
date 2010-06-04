@@ -58,7 +58,6 @@ INCLUDES = auddrct.h			\
            hook.h				\
            interface.h			\
            main.h				\
-           output.h				\
            playback.h			\
            playlist_container.h	\
            plugin.h				\

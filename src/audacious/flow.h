@@ -20,13 +20,13 @@
  * Audacious or using our public API to be a derived work. 
  */
 
+#ifndef AUDACIOUS_FLOW_H
+#define AUDACIOUS_FLOW_H
+
 #include <glib.h>
 #include <mowgli.h>
 
-#include "output.h"
-
-#ifndef AUDACIOUS_FLOW_H
-#define AUDACIOUS_FLOW_H
+#include <libaudcore/audio.h>
 
 typedef struct {
     gint time;

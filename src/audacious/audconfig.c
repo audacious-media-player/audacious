@@ -31,6 +31,7 @@
 
 #include "effect.h"
 #include "general.h"
+#include "output.h"
 #include "playback.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"
