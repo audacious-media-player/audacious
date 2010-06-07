@@ -43,7 +43,8 @@ void audgui_hide_filebrowser(void);
 void audgui_show_about_window(void);
 void audgui_hide_about_window(void);
 
-void audgui_confirm_playlist_delete(gint playlist);
+/* confirm.c */
+void audgui_confirm_playlist_delete (gint playlist);
 
 /* infopopup.c */
 void audgui_infopopup_show (gint playlist, gint entry);

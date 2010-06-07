@@ -2,10 +2,12 @@ LIB = ${LIB_PREFIX}audgui${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-SRCS = effects-menu.c \
+SRCS = confirm.c \
+       effects-menu.c \
        infopopup.c \
        infowin.c \
        init.c \
+       library-store.c \
        ui_gtk.c \
        ui_fileopener.c \
        ui_urlopener.c \
