@@ -103,7 +103,7 @@ buffered_file_vfs_ungetc_impl(gint c, VFSFile *stream)
 
 gint
 buffered_file_vfs_fseek_impl(VFSFile * file,
-          glong offset,
+          gint64 offset,
           gint whence)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -149,7 +149,7 @@ buffered_file_vfs_rewind_impl(VFSFile * file)
     handle->which = FALSE;
 }
 
-glong
+gint64
 buffered_file_vfs_ftell_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -166,12 +166,12 @@ buffered_file_vfs_feof_impl(VFSFile * file)
 }
 
 gint
-buffered_file_vfs_truncate_impl(VFSFile * file, glong size)
+buffered_file_vfs_truncate_impl (VFSFile * file, gint64 size)
 {
     return 0;
 }
 
-off_t
+gint64
 buffered_file_vfs_fsize_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
