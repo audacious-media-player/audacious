@@ -24,11 +24,6 @@
 
 #include "libaudgui-gtk.h"
 
-static void check_button_toggled (GtkToggleButton * button, void * data)
-{
-    * (gboolean *) data = gtk_toggle_button_get_active (button);
-}
-
 static void confirm_delete_cb (GtkButton * button, void * data)
 {
     if (GPOINTER_TO_INT (data) < aud_playlist_count ())
@@ -77,9 +72,8 @@ void audgui_confirm_playlist_delete (gint playlist)
     button = gtk_check_button_new_with_mnemonic (_("_Don't show this message "
      "again"));
     gtk_box_pack_start ((GtkBox *) hbox, button, FALSE, FALSE, 0);
-    g_signal_connect ((GObject *) button, "toggled", (GCallback)
-     check_button_toggled, & aud_cfg->no_confirm_playlist_delete);
-
+    audgui_connect_check_box (button, & aud_cfg->no_confirm_playlist_delete);
+    
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 

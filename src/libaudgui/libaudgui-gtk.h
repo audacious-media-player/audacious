@@ -47,6 +47,7 @@ void audgui_hide_on_escape (GtkWidget * widget);
 void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const gchar * title, const gchar * text);
+void audgui_connect_check_box (GtkWidget * box, gboolean * setting);
 
 GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size);
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size);

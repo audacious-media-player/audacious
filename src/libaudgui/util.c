@@ -26,23 +26,18 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-static gboolean delete_hide (GtkWidget * widget, GdkEvent * event, void * unused)
-{
-    gtk_widget_hide (widget);
-    return TRUE;
-}
-
 void audgui_hide_on_delete (GtkWidget * widget)
 {
-    g_signal_connect (widget, "delete-event", (GCallback) delete_hide, NULL);
+    g_signal_connect (widget, "delete-event", (GCallback)
+     gtk_widget_hide_on_delete, NULL);
 }
 
-static gboolean keypress_hide (GtkWidget * widget, GdkEventKey * event, void *
- unused)
+static gboolean escape_cb (GtkWidget * widget, GdkEventKey * event, void
+ (* action) (GtkWidget * widget))
 {
     if (event->keyval == GDK_Escape)
     {
-        gtk_widget_hide (widget);
+        action (widget);
         return TRUE;
     }
 
@@ -51,25 +46,25 @@ static gboolean keypress_hide (GtkWidget * widget, GdkEventKey * event, void *
 
 void audgui_hide_on_escape (GtkWidget * widget)
 {
-    g_signal_connect (widget, "key-press-event", (GCallback) keypress_hide, NULL);
-}
-
-static gboolean keypress_destroy (GtkWidget * widget, GdkEventKey * event,
- void * unused)
-{
-    if (event->keyval == GDK_Escape)
-    {
-        gtk_widget_destroy (widget);
-        return TRUE;
-    }
-
-    return FALSE;
+    g_signal_connect (widget, "key-press-event", (GCallback) escape_cb,
+     gtk_widget_hide);
 }
 
 void audgui_destroy_on_escape (GtkWidget * widget)
 {
-    g_signal_connect (widget, "key-press-event", (GCallback) keypress_destroy,
-     NULL);
+    g_signal_connect (widget, "key-press-event", (GCallback) escape_cb,
+     gtk_widget_destroy);
+}
+
+static void toggle_cb (GtkToggleButton * toggle, gboolean * setting)
+{
+    * setting = gtk_toggle_button_get_active (toggle);
+}
+
+void audgui_connect_check_box (GtkWidget * box, gboolean * setting)
+{
+    gtk_toggle_button_set_active ((GtkToggleButton *) box, * setting);
+    g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);
 }
 
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
