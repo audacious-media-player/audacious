@@ -68,33 +68,6 @@ static void new_cb (GtkButton * button, void * unused)
     aud_playlist_insert (-1);
 }
 
-static void reorder (GtkWidget * list, gint offset)
-{
-    gint from = get_selected_row (list);
-    gint to;
-
-    if (from == -1)
-        return;
-
-    to = from + GPOINTER_TO_INT (offset);
-
-    if (to < 0 || to >= aud_playlist_count ())
-        return;
-
-    aud_playlist_reorder (from, to, 1);
-    set_selected_row (list, to);
-}
-
-static void up_cb (GtkButton * button, GtkWidget * list)
-{
-    reorder (list, -1);
-}
-
-static void down_cb (GtkButton * button, GtkWidget * list)
-{
-    reorder (list, 1);
-}
-
 static void delete_cb (GtkButton * button, GtkWidget * list)
 {
     gint playlist = get_selected_row (list);
@@ -163,7 +136,7 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     GtkWidget *playman_pl_lv_pmenu, *playman_pl_lv_pmenu_rename;
     GtkWidget *playman_bbar_hbbox;
     GtkWidget * playman_bbar_bt_close;
-    GtkWidget * new_button, * up_button, * down_button, * delete_button;
+    GtkWidget * new_button, * delete_button;
     GdkGeometry playman_win_hints;
 
     if ( playman_win != NULL )
@@ -240,16 +213,12 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 
     playman_bbar_bt_close = gtk_button_new_from_stock( GTK_STOCK_CLOSE );
     new_button = gtk_button_new_from_stock (GTK_STOCK_NEW);
-    up_button = gtk_button_new_from_stock (GTK_STOCK_GO_UP);
-    down_button = gtk_button_new_from_stock (GTK_STOCK_GO_DOWN);
     delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
 
     gtk_container_add( GTK_CONTAINER(playman_bbar_hbbox) , playman_bbar_bt_close );
     gtk_button_box_set_child_secondary( GTK_BUTTON_BOX(playman_bbar_hbbox) ,
                                         playman_bbar_bt_close , TRUE );
     gtk_container_add ((GtkContainer *) playman_bbar_hbbox, new_button);
-    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, up_button);
-    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, down_button);
     gtk_container_add ((GtkContainer *) playman_bbar_hbbox, delete_button);
 
     gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_bbar_hbbox , FALSE , FALSE , 0 );
@@ -262,10 +231,6 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     g_signal_connect_swapped( G_OBJECT(playman_bbar_bt_close) , "clicked" ,
                               G_CALLBACK(gtk_widget_destroy) , playman_win );
     g_signal_connect ((GObject *) new_button, "clicked", (GCallback) new_cb,
-     playman_pl_lv);
-    g_signal_connect ((GObject *) up_button, "clicked", (GCallback) up_cb,
-     playman_pl_lv);
-    g_signal_connect ((GObject *) down_button, "clicked", (GCallback) down_cb,
      playman_pl_lv);
     g_signal_connect ((GObject *) delete_button, "clicked", (GCallback)
      delete_cb, playman_pl_lv);
