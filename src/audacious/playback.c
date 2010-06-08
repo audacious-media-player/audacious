@@ -291,7 +291,8 @@ void playback_pause (void)
         hook_call("playback unpause", NULL);
 
         if (playback->end > 0)
-            playback->end_timeout = g_timeout_add(playback_get_time_real() - playback->start, playback_segmented_end, playback);
+            playback->end_timeout = g_timeout_add (playback->end -
+             playback_get_time_real (), playback_segmented_end, playback);
     }
 }
 
