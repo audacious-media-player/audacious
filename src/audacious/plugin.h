@@ -172,7 +172,7 @@ struct _AudaciousFuncTableV1 {
 
     /* VFS */
 #ifdef __GNUC__
-#define WARN_RETURN __attribute__ ((warn_unused_result))
+#define WARN_RETURN /* __attribute__ ((warn_unused_result)) */
 #else
 #define WARN_RETURN
 #endif
