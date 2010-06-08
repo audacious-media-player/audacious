@@ -192,6 +192,101 @@ static const GInterfaceInfo interface_info =
     .interface_data = NULL,
 };
 
+static gboolean library_store_drag_data_get (GtkTreeDragSource * source,
+ GtkTreePath * path, GtkSelectionData * data)
+{
+    return gtk_tree_set_row_drag_data (data, (GtkTreeModel *) source, path);
+}
+
+static gboolean library_store_drag_data_delete (GtkTreeDragSource * source,
+ GtkTreePath * path)
+{
+    return TRUE;
+}
+
+static void source_init (GtkTreeDragSourceIface * interface)
+{
+    interface->drag_data_get = library_store_drag_data_get;
+    interface->drag_data_delete = library_store_drag_data_delete;
+}
+
+static const GInterfaceInfo source_info =
+{
+    .interface_init = (GInterfaceInitFunc) source_init,
+    .interface_finalize = NULL,
+    .interface_data = NULL,
+};
+
+static gboolean library_store_drag_data_received (GtkTreeDragDest * dest,
+ GtkTreePath * dest_path, GtkSelectionData * data)
+{
+    LibraryStore * store = (LibraryStore *) dest;
+    GtkTreeModel * model;
+    GtkTreePath * source_path, * top;
+    gint from, to, count;
+    gint order[store->rows];
+    
+    if (! gtk_tree_get_row_drag_data (data, & model, & source_path))
+        return FALSE;
+    
+    from = gtk_tree_path_get_indices (source_path)[0];
+    to = gtk_tree_path_get_indices (dest_path)[0];
+
+    /* GTK gives us the number of the row before which we are to put the row.
+     * We want the number of the row where the row will end up. */
+    if (to > from)
+        to --;
+    
+    if (from < 0 || from >= store->rows || to < 0 || to >= store->rows)
+        return FALSE;
+
+    aud_playlist_reorder (from, to, 1);
+
+    for (count = 0; count < from; count ++)
+        order[count] = count;
+
+    if (from < to)
+    {
+        for (count = from; count < to; count ++)
+            order[count] = count + 1;
+    }
+    else
+    {
+        for (count = to; count < from; count ++)
+            order[count + 1] = count;
+    }
+    
+    order[to] = from;
+    
+    top = gtk_tree_path_new ();
+    gtk_tree_model_rows_reordered (model, top, NULL, order);
+    gtk_tree_path_free (top);
+
+    return TRUE;
+}
+
+gboolean library_store_row_drop_possible (GtkTreeDragDest * dest,
+ GtkTreePath * path, GtkSelectionData * selection_data)
+{
+    LibraryStore * store = (LibraryStore *) dest;
+    gint before = gtk_tree_path_get_indices (path)[0];
+
+    return (before >= 0 && before <= store->rows);
+}
+
+static void dest_init (GtkTreeDragDestIface * interface)
+{
+    interface->drag_data_received = library_store_drag_data_received;
+    interface->row_drop_possible = library_store_row_drop_possible;
+}
+
+static const GInterfaceInfo dest_info =
+{
+    .interface_init = (GInterfaceInitFunc) dest_init,
+    .interface_finalize = NULL,
+    .interface_data = NULL,
+};
+
 static GType library_store_get_type (void)
 {
     static GType type = 0;
@@ -202,6 +297,9 @@ static GType library_store_get_type (void)
          sizeof (LibraryStoreClass), NULL, sizeof (LibraryStore),
          (GInstanceInitFunc) library_store_init, 0);
         g_type_add_interface_static (type, GTK_TYPE_TREE_MODEL, & interface_info);
+        g_type_add_interface_static (type, GTK_TYPE_TREE_DRAG_SOURCE,
+         & source_info);
+        g_type_add_interface_static (type, GTK_TYPE_TREE_DRAG_DEST, & dest_info);
     }
 
     return type;

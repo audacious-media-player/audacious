@@ -191,6 +191,7 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 
     playman_pl_lv_frame = gtk_frame_new( NULL );
     playman_pl_lv = gtk_tree_view_new_with_model (audgui_get_library_store ());
+    gtk_tree_view_set_reorderable ((GtkTreeView *) playman_pl_lv, TRUE);
 
     playman_pl_lv_textrndr_entriesnum = gtk_cell_renderer_text_new(); /* uneditable */
     playman_pl_lv_textrndr_name = gtk_cell_renderer_text_new(); /* can become editable */
