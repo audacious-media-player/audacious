@@ -93,6 +93,14 @@ AudConfig aud_default_config = {
     .clear_playlist = TRUE,
     .output_path = NULL,
     .output_number = -1,
+
+    /* libaudgui stuff */
+    .no_confirm_playlist_delete = FALSE,
+    .playlist_manager_x = 0,
+    .playlist_manager_y = 0,
+    .playlist_manager_width = 0,
+    .playlist_manager_height = 0,
+    .playlist_manager_close_on_activate = FALSE,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -139,6 +147,8 @@ static aud_cfg_boolent aud_boolents[] = {
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
     {"clear_playlist", &cfg.clear_playlist, TRUE},
     {"no_confirm_playlist_delete", &cfg.no_confirm_playlist_delete, TRUE},
+    {"playlist_manager_close_on_activate",
+     & cfg.playlist_manager_close_on_activate, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
@@ -155,6 +165,10 @@ static aud_cfg_nument aud_numents[] = {
     {"sw_volume_left", & cfg.sw_volume_left, TRUE},
     {"sw_volume_right", & cfg.sw_volume_right, TRUE},
     {"output_number", & cfg.output_number, TRUE},
+    {"playlist_manager_x", & cfg.playlist_manager_x, TRUE},
+    {"playlist_manager_y", & cfg.playlist_manager_y, TRUE},
+    {"playlist_manager_width", & cfg.playlist_manager_width, TRUE},
+    {"playlist_manager_height", & cfg.playlist_manager_height, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
@@ -289,6 +303,8 @@ aud_config_save(void)
     gint i;
     mcs_handle_t *db;
 
+    hook_call ("config save", NULL);
+
     cfg.resume_state = playback_get_playing () ? (playback_get_paused () ? 2 :
      1) : 0;
     cfg.resume_playback_on_startup_time = playback_get_playing () ?
@@ -309,8 +325,6 @@ aud_config_save(void)
             cfg_db_set_int(db, NULL,
                                aud_numents[i].ie_vname,
                                *aud_numents[i].ie_vloc);
-
-    hook_call("config save", db);
 
     for (i = 0; i < ncfgsent; ++i) {
         if (aud_strents[i].se_wrt)

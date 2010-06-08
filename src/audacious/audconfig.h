@@ -76,7 +76,12 @@ struct _AudConfig {
     gboolean clear_playlist;
     gchar * output_path;
     gint output_number;
+
+    /* libaudgui stuff */
     gboolean no_confirm_playlist_delete;
+    gint playlist_manager_x, playlist_manager_y, playlist_manager_width,
+     playlist_manager_height;
+    gboolean playlist_manager_close_on_activate;
 };
 
 typedef struct _AudConfig AudConfig;
