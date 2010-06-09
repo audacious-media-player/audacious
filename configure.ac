@@ -11,7 +11,6 @@ AC_COPYRIGHT([(C) 2005-2010 Audacious Development Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AC_GNU_SOURCE
-AC_SYS_LARGEFILE
 
 AC_CONFIG_HEADERS([config.h])
 PKG_PROG_PKG_CONFIG
@@ -42,6 +41,10 @@ AC_ARG_WITH([buildstamp],
  AC_DEFINE_UNQUOTED([BUILDSTAMP], "$withval", [Build stamp]),
  AC_DEFINE_UNQUOTED([BUILDSTAMP], "UNSUPPORTED VERSION", [Build stamp]))
 
+
+dnl Large file support
+dnl ==================
+CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
 
 dnl Debug support
 dnl ========================
