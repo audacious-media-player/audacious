@@ -18,15 +18,9 @@
  */
 
 #include <gtk/gtk.h>
-#include "audacious/images/audacious_player.xpm"
 
-void
-audgui_set_default_icon(void)
+void audgui_set_default_icon (void)
 {
-    GdkPixbuf *icon;
-
-    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_player_xpm);
-    gtk_window_set_default_icon(icon);
-    g_object_unref(icon);
+    gtk_window_set_default_icon_name ("audacious");
 }
 
