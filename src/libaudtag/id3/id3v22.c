@@ -2,6 +2,7 @@
  * Copyright 2009 Paula Stanciu
  * Copyright 2010 John Lindgren
  * Copyright 2010 Tony Vroon
+ * Copyright 2010 William Pitcock
  *
  * This file is part of Audacious.
  *
@@ -20,6 +21,7 @@
  * using our public API to be a derived work.
  */
 
+#define DEBUG
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
@@ -44,11 +46,12 @@ enum
     ID3_ENCODER,
     ID3_TXX,
     ID3_RVA,
+    ID3_FUCKO_ARTIST,
     ID3_TAGS_NO
 };
 
 static const gchar * id3_frames[ID3_TAGS_NO] = {"TAL", "TT2", "TCM", "TCR",
-"TDA", "TIM", "TLE", "TPE", "TRK", "TYE", "TCO", "COM", "TSS", "TXX", "RVA"};
+"TDA", "TIM", "TLE", "TPE", "TRK", "TYE", "TCO", "COM", "TSS", "TXX", "RVA", "TP1"};
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
@@ -65,7 +68,7 @@ ID3v2Header;
 typedef struct
 {
     gchar key[3];
-    guint32 size;
+    gchar size[3];
 }
 ID3v2FrameHeader;
 #pragma pack(pop)
@@ -93,15 +96,14 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
     if (memcmp (header->magic, is_footer ? "3DI" : "ID3", 3))
         return FALSE;
 
-    if ((header->version != 2) || header->revision != 0)
+    if ((header->version != 2))
         return FALSE;
 
-    header->size = unsyncsafe32 (GUINT32_FROM_BE (header->size));
+    header->size = GUINT32_FROM_BE (header->size);
 
     AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
     AUDDBG (" magic = %.3s\n", header->magic);
     AUDDBG (" version = %d\n", (gint) header->version);
-    AUDDBG (" revision = %d\n", (gint) header->revision);
     AUDDBG (" flags = %x\n", (gint) header->flags);
     AUDDBG (" size = %d\n", (gint) header->size);
     return TRUE;
@@ -111,7 +113,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
  syncsafe, gsize * offset, gint * header_size, gint * data_size, gint *
  footer_size)
 {
-    ID3v2Header header, footer;
+    ID3v2Header header;
 
     if (vfs_fseek (handle, 0, SEEK_SET))
         return FALSE;
@@ -127,41 +129,9 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
         * header_size = sizeof (ID3v2Header);
         * data_size = header.size;
     }
-    else
-    {
-        gsize end = vfs_fsize (handle);
-
-        if (end < 0)
-            return FALSE;
-
-        if (vfs_fseek (handle, end - sizeof (ID3v2Header), SEEK_SET))
-            return FALSE;
-
-        if (vfs_fread (& footer, 1, sizeof (ID3v2Header), handle) != sizeof
-         (ID3v2Header))
-            return FALSE;
-
-        if (! validate_header (& footer, TRUE))
-            return FALSE;
-
-        * offset = end - 2 * sizeof (ID3v2Header) - footer.size;
-        * version = footer.version;
-        * header_size = sizeof (ID3v2Header);
-        * data_size = footer.size;
-        * footer_size = sizeof (ID3v2Header);
-
-        if (vfs_fseek (handle, * offset, SEEK_SET))
-            return FALSE;
-
-        if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
-         (ID3v2Header))
-            return FALSE;
-
-        if (! validate_header (& header, FALSE))
-            return FALSE;
-    }
 
     * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
+    * footer_size = 0;
 
     AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
      "%d.\n", (gint) * offset, * header_size, * data_size, * footer_size);
@@ -192,6 +162,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
 {
     ID3v2FrameHeader header;
     gint skip = 0;
+    guint32 hdrsz;
 
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
         return FALSE;
@@ -203,43 +174,29 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (! header.key[0]) /* padding */
         return FALSE;
 
-    header.size = (version == 3) ? GUINT32_FROM_BE (header.size) : unsyncsafe32
-     (GUINT32_FROM_BE (header.size));
-    header.flags = GUINT16_FROM_BE (header.flags);
+    hdrsz = (header.size[2] << 24 | header.size[1] << 16 | header.size[0] << 8);
+    hdrsz = GUINT32_FROM_BE(hdrsz);
 
-    if (header.size > max_size)
-        return FALSE;
-
-    AUDDBG ("Found frame:\n");
-    AUDDBG (" key = %.4s\n", header.key);
-    AUDDBG (" size = %d\n", (gint) header.size);
-    AUDDBG (" flags = %x\n", (gint) header.flags);
-
-    * frame_size = sizeof (ID3v2FrameHeader) + header.size;
-    sprintf (key, "%.4s", header.key);
-
-    if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
-    {
-        AUDDBG ("Hit compressed/encrypted frame %s.\n", key);
+    if (hdrsz > max_size) {
+        g_print("size = %d, max_size = %d\n", hdrsz, max_size);
         return FALSE;
     }
 
-    if (header.flags & ID3_FRAME_HAS_GROUP)
-        skip ++;
-    if (header.flags & ID3_FRAME_HAS_LENGTH)
-        skip += 4;
+    AUDDBG ("Found frame:\n");
+    AUDDBG (" key = %.3s\n", header.key);
+    AUDDBG (" size = %d\n", (gint) hdrsz);
+
+    * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
+    sprintf (key, "%.3s", header.key);
 
     if (skip > 0 && vfs_fseek (handle, skip, SEEK_CUR))
         return FALSE;
 
-    * size = header.size - skip;
+    * size = hdrsz - skip;
     * data = g_malloc (* size);
 
     if (vfs_fread (* data, 1, * size, handle) != * size)
         return FALSE;
-
-    if (syncsafe || (header.flags & ID3_FRAME_SYNCSAFE))
-        * size = unsyncsafe (* data, * size);
 
     AUDDBG ("Data size = %d.\n", * size);
     return TRUE;
@@ -360,9 +317,11 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
         guchar * data;
         GenericFrame * frame;
 
-        if (! read_frame (handle, data_size - pos, version, syncsafe,
+        if (!read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
             break;
+
+        g_print("read_all_frames\n");
 
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, key);
@@ -380,11 +339,16 @@ static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
  frame_size)
 {
     ID3v2FrameHeader header;
+    gint hdrsz;
 
     memcpy (header.key, frame->key, 4);
-    header.size = syncsafe32 (frame->size);
-    header.size = GUINT32_TO_BE (header.size);
-    header.flags = 0;
+    hdrsz = syncsafe32 (frame->size);
+    hdrsz = GUINT32_TO_BE (hdrsz);
+
+    /* i think this is right.  this is fucko. --nenolod */
+    header.size[0] = hdrsz & 0xFF;
+    header.size[1] = hdrsz & 0xFF00;
+    header.size[2] = hdrsz & 0xFF0000;
 
     if (vfs_fwrite (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
      (ID3v2FrameHeader))
@@ -422,9 +386,7 @@ static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
     ID3v2Header header;
 
     memcpy (header.magic, is_footer ? "3DI" : "ID3", 3);
-    header.version = 4;
-    header.revision = 0;
-    header.flags = ID3_HEADER_HAS_FOOTER;
+    header.version = 2;
     header.size = syncsafe32 (size);
     header.size = GUINT32_TO_BE (header.size);
 
@@ -712,12 +674,14 @@ static gboolean id3v22_can_handle_file (VFSFile * handle)
      & data_size, & footer_size);
 }
 
-static gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
+gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
     gsize offset;
     gint pos;
+
+    AUDDBG("read tag!\n");
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
@@ -734,6 +698,7 @@ static gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
             break;
 
         id = get_frame_id (key);
+        g_print("id = %d, data = %s\n", id, data);
 
         switch (id)
         {
@@ -758,6 +723,7 @@ static gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
           case ID3_LENGTH:
             associate_int (tuple, FIELD_LENGTH, NULL, data, size);
             break;
+          case ID3_FUCKO_ARTIST:
           case ID3_ARTIST:
             associate_string (tuple, FIELD_ARTIST, NULL, data, size);
             break;
@@ -880,7 +846,7 @@ static gboolean id3v22_write_tag (Tuple * tuple, VFSFile * f)
     return FALSE;
 }
 
-tag_module_t id3v24 =
+tag_module_t id3v22 =
 {
     .name = "ID3v2.2",
     .can_handle_file = id3v22_can_handle_file,

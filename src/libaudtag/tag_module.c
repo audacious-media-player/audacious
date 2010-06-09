@@ -27,12 +27,14 @@
 #include "tag_module.h"
 #include "wma/module.h"
 #include "id3/id3v1.h"
+#include "id3/id3v22.h"
 #include "id3/id3v24.h"
 #include "ape/ape.h"
 /* #include "aac/aac.h" */
 
 void init_tag_modules(void)
 {
+    mowgli_node_add((void *)&id3v22, &id3v22.node, &tag_modules);
     mowgli_node_add((void *)&id3v24, &id3v24.node, &tag_modules);
     mowgli_node_add((void *)&ape, &ape.node, &tag_modules);
     mowgli_node_add((void *)&id3v1, &id3v1.node, &tag_modules);

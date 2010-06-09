@@ -6,6 +6,7 @@ SRCS = audtag.c		\
        util.c		\
        tag_module.c	\
        id3/id3v1.c	\
+       id3/id3v22.c	\
        id3/id3v24.c	\
        ape/ape.c
 
