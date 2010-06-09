@@ -21,7 +21,6 @@
  * using our public API to be a derived work.
  */
 
-#define DEBUG
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
@@ -104,6 +103,7 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
     AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
     AUDDBG (" magic = %.3s\n", header->magic);
     AUDDBG (" version = %d\n", (gint) header->version);
+    AUDDBG (" revision = %d\n", (gint) header->revision);
     AUDDBG (" flags = %x\n", (gint) header->flags);
     AUDDBG (" size = %d\n", (gint) header->size);
     return TRUE;
@@ -177,10 +177,8 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     hdrsz = (header.size[2] << 24 | header.size[1] << 16 | header.size[0] << 8);
     hdrsz = GUINT32_FROM_BE(hdrsz);
 
-    if (hdrsz > max_size) {
-        g_print("size = %d, max_size = %d\n", hdrsz, max_size);
+    if (hdrsz > max_size)
         return FALSE;
-    }
 
     AUDDBG ("Found frame:\n");
     AUDDBG (" key = %.3s\n", header.key);
@@ -320,8 +318,6 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
         if (!read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
             break;
-
-        g_print("read_all_frames\n");
 
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, key);
@@ -698,7 +694,6 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
             break;
 
         id = get_frame_id (key);
-        g_print("id = %d, data = %s\n", id, data);
 
         switch (id)
         {
