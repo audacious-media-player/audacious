@@ -343,8 +343,8 @@ static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
 
     /* i think this is right.  this is fucko. --nenolod */
     header.size[0] = hdrsz & 0xFF;
-    header.size[1] = hdrsz & 0xFF00;
-    header.size[2] = hdrsz & 0xFF0000;
+    header.size[1] = (hdrsz & 0xFF00) >> 8;
+    header.size[2] = (hdrsz & 0xFF0000) >> 16;
 
     if (vfs_fwrite (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
      (ID3v2FrameHeader))
