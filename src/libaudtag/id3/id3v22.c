@@ -85,9 +85,6 @@ GenericFrame;
 
 #define TAG_SIZE 1
 
-static mowgli_dictionary_t * frames = NULL;
-static mowgli_list_t * frameIDs = NULL;
-
 #define write_syncsafe_int32(x) vfs_fput_be32 (syncsafe32 (x))
 
 static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
@@ -137,24 +134,6 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
      "%d.\n", (gint) * offset, * header_size, * data_size, * footer_size);
 
     return TRUE;
-}
-
-static gint unsyncsafe (guchar * data, gint size)
-{
-    guchar * get = data, * set = data;
-
-    while (size --)
-    {
-        guchar c = * set ++ = * get ++;
-
-        if (c == 0xff && size && ! get[0])
-        {
-            size --;
-            get ++;
-        }
-    }
-
-    return set - data;
 }
 
 static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
@@ -295,99 +274,6 @@ static gboolean decode_comment_frame (const guchar * _data, gint size, gchar * *
 
     g_free (pair);
     return TRUE;
-}
-
-static void free_generic_frame (GenericFrame * frame)
-{
-    g_free (frame->data);
-    g_free (frame);
-}
-
-static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
- gint data_size)
-{
-    gint pos;
-
-    for (pos = 0; pos < data_size; )
-    {
-        gint frame_size, size;
-        gchar key[5];
-        guchar * data;
-        GenericFrame * frame;
-
-        if (!read_frame (handle, data_size - pos, version, syncsafe,
-         & frame_size, key, & data, & size))
-            break;
-
-        frame = g_malloc (sizeof (GenericFrame));
-        strcpy (frame->key, key);
-        frame->data = data;
-        frame->size = size;
-
-        mowgli_dictionary_add (frames, frame->key, frame);
-        mowgli_node_add (frame->key, mowgli_node_create (), frameIDs);
-
-        pos += frame_size;
-    }
-}
-
-static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
- frame_size)
-{
-    ID3v2FrameHeader header;
-    gint hdrsz;
-
-    memcpy (header.key, frame->key, 4);
-    hdrsz = syncsafe32 (frame->size);
-    hdrsz = GUINT32_TO_BE (hdrsz);
-
-    /* i think this is right.  this is fucko. --nenolod */
-    header.size[0] = hdrsz & 0xFF;
-    header.size[1] = (hdrsz & 0xFF00) >> 8;
-    header.size[2] = (hdrsz & 0xFF0000) >> 16;
-
-    if (vfs_fwrite (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
-     (ID3v2FrameHeader))
-        return FALSE;
-
-    if (vfs_fwrite (frame->data, 1, frame->size, handle) != frame->size)
-        return FALSE;
-
-    * frame_size = sizeof (ID3v2FrameHeader) + frame->size;
-    return TRUE;
-}
-
-static guint32 writeAllFramesToFile (VFSFile * fd)
-{
-    guint32 size = 0;
-    mowgli_node_t *n, *tn;
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, frameIDs->head)
-    {
-        GenericFrame *frame = (GenericFrame *) mowgli_dictionary_retrieve(frames, (gchar *) (n->data));
-        if (frame)
-        {
-            gint frame_size;
-
-            if (! write_frame (fd, frame, & frame_size))
-                break;
-
-            size += frame_size;
-        }
-    }
-    return size;
-}
-
-static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
-{
-    ID3v2Header header;
-
-    memcpy (header.magic, is_footer ? "3DI" : "ID3", 3);
-    header.version = 2;
-    header.size = syncsafe32 (size);
-    header.size = GUINT32_TO_BE (header.size);
-
-    return vfs_fwrite (& header, 1, sizeof (ID3v2Header), handle) == sizeof
-     (ID3v2Header);
 }
 
 static gint get_frame_id (const gchar * key)
@@ -609,57 +495,6 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
     return;
 }
 
-static GenericFrame * add_generic_frame (gint id, gint size)
-{
-    GenericFrame * frame = mowgli_dictionary_retrieve (frames, id3_frames[id]);
-
-    if (frame == NULL)
-    {
-        frame = g_malloc (sizeof (GenericFrame));
-        strcpy (frame->key, id3_frames[id]);
-        mowgli_dictionary_add (frames, frame->key, frame);
-        mowgli_node_add (frame->key, mowgli_node_create (), frameIDs);
-    }
-    else
-        g_free (frame->data);
-
-    frame->data = g_malloc (size);
-    frame->size = size;
-    return frame;
-}
-
-static void add_text_frame (gint id, const gchar * text)
-{
-    gint length = strlen (text);
-    GenericFrame * frame = add_generic_frame (id, length + 1);
-
-    frame->data[0] = 3; /* UTF-8 encoding */
-    memcpy (frame->data + 1, text, length);
-}
-
-static void add_comment_frame (const gchar * text)
-{
-    gint length = strlen (text);
-    GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5);
-
-    frame->data[0] = 3; /* UTF-8 encoding */
-    strcpy ((gchar *) frame->data + 1, "eng"); /* well, it *might* be English */
-    memcpy (frame->data + 5, text, length);
-}
-
-static void add_frameFromTupleStr (Tuple * tuple, int field, int id3_field)
-{
-    add_text_frame (id3_field, tuple_get_string (tuple, field, NULL));
-}
-
-static void add_frameFromTupleInt (Tuple * tuple, int field, int id3_field)
-{
-    gchar scratch[16];
-
-    snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field, NULL));
-    add_text_frame (id3_field, scratch);
-}
-
 static gboolean id3v22_can_handle_file (VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
@@ -823,17 +658,6 @@ static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
     }
 
     return found;
-}
-
-static void free_frame_cb (mowgli_dictionary_elem_t * element, void * unused)
-{
-    free_generic_frame (element->data);
-}
-
-static void free_frame_dictionary (void)
-{
-    mowgli_dictionary_destroy (frames, free_frame_cb, NULL);
-    frames = NULL;
 }
 
 static gboolean id3v22_write_tag (Tuple * tuple, VFSFile * f)
