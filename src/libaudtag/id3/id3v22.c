@@ -512,11 +512,11 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
     gsize offset;
     gint pos;
 
-    AUDDBG("read tag!\n");
-
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
         return FALSE;
+
+    AUDDBG("Reading tags from %s\n", handle->uri);
 
     for (pos = 0; pos < data_size; )
     {
