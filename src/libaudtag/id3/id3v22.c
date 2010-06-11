@@ -125,7 +125,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
         * version = header.version;
         * header_size = sizeof (ID3v2Header);
         * data_size = header.size;
-    }
+    } else return FALSE;
 
     * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
     * footer_size = 0;
