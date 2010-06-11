@@ -15,6 +15,9 @@ AC_GNU_SOURCE
 AC_CONFIG_HEADERS([config.h])
 PKG_PROG_PKG_CONFIG
 
+dnl Build flags
+dnl ===========
+LDFLAGS="$LDFLAGS -z defs"
 
 dnl buildsystem bootstrap
 dnl =====================
@@ -205,9 +208,15 @@ AUD_ARG_ENABLE([sm], [yes],
         enable_sm="no"
     ])
 
+    AC_SUBST([SM_CFLAGS])
+    AC_SUBST([SM_LIBS])
+
     PKG_CHECK_MODULES([ICE], [ice >= 1.0],
      [enable_sm="${enable_sm}"],
      [enable_sm="no"])
+
+    AC_SUBST([ICE_CFLAGS])
+    AC_SUBST([ICE_LIBS])
 ])
 AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
 

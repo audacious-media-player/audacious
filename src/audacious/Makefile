@@ -91,8 +91,8 @@ EXT_DEPS = ../libguess/libguess.a
 
 ifeq ($(USE_EGGSM),yes)
 EXT_DEPS += ../libeggsmclient/libeggsmclient.a
-EGGSM_LIBS = ../libeggsmclient/libeggsmclient.a ${SM_LIBS}
-EGGSM_CFLAGS =  -I../libeggsmclient ${SM_CFLAGS}
+EGGSM_LIBS = ../libeggsmclient/libeggsmclient.a ${SM_LIBS} ${ICE_LIBS}
+EGGSM_CFLAGS =  -I../libeggsmclient ${SM_CFLAGS} ${ICE_CFLAGS}
 endif
 
 include ../../buildsys.mk
@@ -125,6 +125,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		-I../libaudtag
 
 LIBS += ${LDADD}						\
+        -lm \
 		-L../libaudcore -laudcore	\
 		-L../libaudgui -laudgui \
 		-L../libaudtag -laudtag		\
@@ -140,15 +141,6 @@ LIBS += ${LDADD}						\
 		${REGEX_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
-
-build_stamp.c:
-	echo "#include <glib.h>" > build_stamp.c ; \
-	if test -d ../../.hg ; then \
-		revh=`hg tip --template 'const gchar *build_stamp = "{rev}:{node|short}";\n' 2>/dev/null`; \
-		[ -z "$$revh" ] || echo "$$revh" >> build_stamp.c; \
-	else \
-		echo "const gchar *build_stamp = \"UNSUPPORTED VERSION\";" >> build_stamp.c; \
-	fi
 
 DBUS_BINDINGS_SOURCES = objects.xml			\
 			mpris_root.xml			\
