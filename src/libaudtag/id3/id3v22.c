@@ -87,9 +87,9 @@ GenericFrame;
 
 #define write_syncsafe_int32(x) vfs_fput_be32 (syncsafe32 (x))
 
-static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
+static gboolean validate_header (ID3v2Header * header)
 {
-    if (memcmp (header->magic, is_footer ? "3DI" : "ID3", 3))
+    if (memcmp (header->magic, "ID3", 3))
         return FALSE;
 
     if ((header->version != 2))
@@ -97,7 +97,7 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
 
     header->size = GUINT32_FROM_BE (header->size);
 
-    AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
+    AUDDBG ("Found ID3v2 header:\n");
     AUDDBG (" magic = %.3s\n", header->magic);
     AUDDBG (" version = %d\n", (gint) header->version);
     AUDDBG (" revision = %d\n", (gint) header->revision);
@@ -119,7 +119,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
      (ID3v2Header))
         return FALSE;
 
-    if (validate_header (& header, FALSE))
+    if (validate_header (& header))
     {
         * offset = 0;
         * version = header.version;
