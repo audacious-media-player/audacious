@@ -21,6 +21,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/vfs.h>
+#include <libaudcore/vfs_buffered_file.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -36,6 +37,8 @@ typedef struct
 }
 ProbeState;
 
+// #define XXX_USE_BUFFERING
+
 static gboolean check_opened (ProbeState * state)
 {
     if (state->handle != NULL)
@@ -43,8 +46,13 @@ static gboolean check_opened (ProbeState * state)
 
     AUDDBG ("Opening %s.\n", state->filename);
 
+#ifndef XXX_USE_BUFFERING
     if ((state->handle = vfs_fopen (state->filename, "r")) != NULL)
         return TRUE;
+#else
+    if ((state->handle = vfs_buffered_file_new_from_uri(state->filename)) != NULL)
+        return TRUE;
+#endif
 
     AUDDBG ("FAILED.\n");
     return FALSE;
