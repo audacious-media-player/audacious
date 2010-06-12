@@ -649,12 +649,12 @@ void playlist_set_title(gint playlist_num, const gchar * title)
     DECLARE_PLAYLIST;
 
     LOOKUP_PLAYLIST;
-    METADATA_WILL_CHANGE;
+    PLAYLIST_WILL_CHANGE;
 
     g_free(playlist->title);
     playlist->title = g_strdup(title);
 
-    METADATA_HAS_CHANGED;
+    PLAYLIST_HAS_CHANGED;
 }
 
 const gchar *playlist_get_title(gint playlist_num)
