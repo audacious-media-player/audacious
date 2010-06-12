@@ -153,6 +153,9 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (! header.key[0]) /* padding */
         return FALSE;
 
+    if (header.key[4]) /* should be NULL behind 3-character frame identifier */
+        return FALSE;
+
     hdrsz = (header.size[2] << 24 | header.size[1] << 16 | header.size[0] << 8);
     hdrsz = GUINT32_FROM_BE(hdrsz);
 
@@ -512,11 +515,11 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
     gsize offset;
     gint pos;
 
-    AUDDBG("read tag!\n");
-
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
         return FALSE;
+
+    AUDDBG("Reading tags from %s\n", handle->uri);
 
     for (pos = 0; pos < data_size; )
     {
