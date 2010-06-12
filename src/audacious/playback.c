@@ -658,21 +658,31 @@ static gboolean set_tuple_cb (void * unused)
 {
     gint playlist = playlist_get_playing ();
 
+    g_return_val_if_fail (ip_data.current_input_playback != NULL, FALSE);
+    g_mutex_lock (ip_data.current_input_playback->pb_ready_mutex);
+
     playlist_entry_set_tuple (playlist, playlist_get_position (playlist),
      tuple_to_be_set);
     set_tuple_source = 0;
     tuple_to_be_set = NULL;
+
+    g_mutex_unlock (ip_data.current_input_playback->pb_ready_mutex);
+
     return FALSE;
 }
 
 static void set_tuple (InputPlayback * playback, Tuple * tuple)
 {
+    g_mutex_lock (playback->pb_ready_mutex);
+
     /* playlist_entry_set_tuple must execute in main thread */
     cancel_set_tuple ();
     set_tuple_source = g_timeout_add (0, set_tuple_cb, NULL);
     tuple_to_be_set = tuple;
 
     read_gain_from_tuple (tuple);
+
+    g_mutex_unlock (playback->pb_ready_mutex);
 }
 
 static void set_gain_from_playlist (InputPlayback * playback)
