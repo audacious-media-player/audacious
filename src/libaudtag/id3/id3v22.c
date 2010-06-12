@@ -153,6 +153,9 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (! header.key[0]) /* padding */
         return FALSE;
 
+    if (header.key[4]) /* should be NULL behind 3-character frame identifier */
+        return FALSE;
+
     hdrsz = (header.size[2] << 24 | header.size[1] << 16 | header.size[0] << 8);
     hdrsz = GUINT32_FROM_BE(hdrsz);
 
