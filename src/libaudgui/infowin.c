@@ -368,7 +368,7 @@ gboolean genre_fill (GtkWidget * combo)
     g_list_free (list);
     return FALSE;
 }
-                                                        
+
 void create_infowin (void)
 {
     GtkWidget * hbox;
@@ -864,7 +864,7 @@ void audgui_infowin_show (gint playlist, gint entry)
 {
     const gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
     InputPlugin * decoder = aud_playlist_entry_get_decoder (playlist, entry);
-    Tuple * tuple;
+    Tuple * tuple = (Tuple *) aud_playlist_entry_get_tuple (playlist, entry);
 
     g_return_if_fail (filename != NULL);
 
@@ -879,23 +879,25 @@ void audgui_infowin_show (gint playlist, gint entry)
     if (aud_custom_infowin (filename, decoder))
         return;
 
-    tuple = aud_file_read_tuple (filename, decoder);
-
     if (tuple == NULL)
     {
-        gchar * message = g_strdup_printf (_("No info available for %s.\n"),
-         filename);
+        tuple = aud_file_read_tuple (filename, decoder);
 
-        aud_hook_call ("interface show error", message);
-        g_free (message);
-        return;
+        if (tuple == NULL)
+        {
+            gchar * message = g_strdup_printf (_("No info available for %s.\n"),
+             filename);
+
+            aud_hook_call ("interface show error", message);
+            g_free (message);
+            return;
+        }
+
+        aud_playlist_entry_set_tuple (playlist, entry, tuple);
     }
 
     infowin_show (filename, tuple, decoder, aud_file_can_write_tuple (filename,
      decoder));
-
-    aud_playlist_entry_set_tuple (playlist, entry, tuple);
-    /* We do not unref the tuple, as the playlist takes ownership. */
 }
 
 void audgui_infowin_show_current (void)
