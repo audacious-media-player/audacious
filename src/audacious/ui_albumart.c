@@ -29,6 +29,7 @@
 #include <string.h>
 
 #include "audconfig.h"
+#include <libaudcore/audstrings.h>
 
 static gboolean
 has_front_cover_extension(const gchar *name)
