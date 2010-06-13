@@ -739,7 +739,7 @@ gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GErro
 
 gboolean mpris_player_get_metadata(MprisPlayer * obj, GHashTable * *metadata, GError * *error)
 {
-    struct MprisMetadataRequest request = {.playlist = -2,.entry = -1 };
+    struct MprisMetadataRequest request = {.playlist = -1,.entry = -1 };
 
     get_mpris_metadata(&request);
     *metadata = request.metadata;
@@ -1471,9 +1471,9 @@ gboolean audacious_rc_equalizer_activate(RemoteObject * obj, gboolean active, GE
     return TRUE;
 }
 
-gboolean audacious_rc_get_active_playlist_name(RemoteObject * obj, guint pos, gchar * *title, GError * *error)
+gboolean audacious_rc_get_active_playlist_name(RemoteObject * obj, gchar * *title, GError * *error)
 {
-    struct InfoRequest request = {.playlist = -1,.entry = pos };
+    struct InfoRequest request = {.playlist = -2 };
 
     get_info(&request);
     g_free(request.title);
