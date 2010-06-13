@@ -1024,3 +1024,14 @@ gchar **audacious_remote_get_tuple_fields(DBusGProxy *proxy) {
     g_clear_error(&error);
     return res;
 }
+
+/**
+ * Returns the active playlist name.
+ */
+gchar *audacious_remote_playlist_get_active_name(DBusGProxy *proxy) {
+    char *string = NULL;
+    org_atheme_audacious_get_active_playlist_name (proxy, &string, &error);
+    g_clear_error(&error);
+
+    return (string ? string : NULL);
+}

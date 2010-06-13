@@ -59,7 +59,7 @@ struct InfoRequest
 {
     gint playlist;              /* -1 = active, -2 = playing */
     gint entry;                 /* -1 = current */
-    gchar *filename, *title;
+    gchar *filename, *title, *pltitle;
     gint length;
 };
 
@@ -386,7 +386,7 @@ static void get_position(struct PositionRequest *request)
 static gboolean get_info_cb(void *data)
 {
     struct InfoRequest *request = data;
-    const gchar *filename, *title;
+    const gchar *filename, *title, *pltitle;
 
     g_mutex_lock(info_mutex);
 
@@ -396,6 +396,8 @@ static gboolean get_info_cb(void *data)
     title = playlist_entry_get_title(request->playlist, request->entry);
     request->title = (title == NULL) ? NULL : g_strdup(title);
     request->length = playlist_entry_get_length(request->playlist, request->entry);
+    pltitle = playlist_get_title(request->playlist);
+    request->pltitle = (pltitle == NULL) ? NULL : g_strdup(pltitle);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -1125,6 +1127,7 @@ gboolean audacious_rc_song_title(RemoteObject * obj, guint pos, gchar * *title, 
 
     get_info(&request);
     g_free(request.filename);
+    g_free(request.pltitle);
     *title = request.title;
     return TRUE;
 }
@@ -1136,6 +1139,7 @@ gboolean audacious_rc_song_filename(RemoteObject * obj, guint pos, gchar * *file
     get_info(&request);
     *filename = request.filename;
     g_free(request.title);
+    g_free(request.pltitle);
     return TRUE;
 }
 
@@ -1153,6 +1157,7 @@ gboolean audacious_rc_song_frames(RemoteObject * obj, guint pos, gint * length, 
     get_info(&request);
     g_free(request.filename);
     g_free(request.title);
+    g_free(request.pltitle);
     *length = request.length;
     return TRUE;
 }
@@ -1466,6 +1471,16 @@ gboolean audacious_rc_equalizer_activate(RemoteObject * obj, gboolean active, GE
     return TRUE;
 }
 
+gboolean audacious_rc_get_active_playlist_name(RemoteObject * obj, guint pos, gchar * *title, GError * *error)
+{
+    struct InfoRequest request = {.playlist = -1,.entry = pos };
+
+    get_info(&request);
+    g_free(request.title);
+    g_free(request.filename);
+    *title = request.pltitle;
+    return TRUE;
+}
 
 DBusGProxy *audacious_get_dbus_proxy(void)
 {

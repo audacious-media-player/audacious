@@ -523,5 +523,8 @@
             <arg type="b" name="active"/>
         </method>
 
+        <method name="GetActivePlaylistName">
+            <arg type="s" direction="out" name="plname" />
+        </method>
     </interface>
 </node>

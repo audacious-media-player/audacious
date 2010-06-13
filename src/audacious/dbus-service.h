@@ -221,4 +221,7 @@ gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **
 gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error);
 gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error);
 
+/* new in 2.4 */
+gboolean audacious_rc_get_active_playlist_name(RemoteObject *obj, guint pos, gchar **title, GError **error);
+
 #endif /* AUDACIOUS_DBUS_SERVICE_H */
