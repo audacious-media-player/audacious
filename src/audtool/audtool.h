@@ -95,6 +95,7 @@ extern void playlist_tuple_field_data(gint, gchar **argv);
 extern void playlist_show(gint, gchar **);
 extern void playlist_enqueue_to_temp(gint argc, gchar **argv);
 extern void playlist_ins_url_string(gint argc, gchar **argv);
+extern void playlist_title(gint, gchar **);
 
 extern void playqueue_add(gint, gchar **);
 extern void playqueue_remove(gint, gchar **);

@@ -78,7 +78,7 @@ struct commandhandler handlers[] = {
 	{"playlist-shuffle-status", playlist_shuffle_status, "returns the status of playlist shuffle", 0},
 	{"playlist-shuffle-toggle", playlist_shuffle_toggle, "toggles playlist shuffle", 0},
 	{"playlist-tuple-data", playlist_tuple_field_data, "returns the value of a tuple field for a song in the playlist", 2},
-
+	{"current-playlist-name", playlist_title, "returns the playlist title of the active playlist", 0},
 
 	{"<sep>", NULL, "Playqueue manipulation", 0},
 	{"playqueue-add", playqueue_add, "adds a song to the playqueue", 1},

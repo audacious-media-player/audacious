@@ -139,6 +139,13 @@ void playlist_song(gint argc, gchar **argv)
 	audtool_report("%s", song);
 }
 
+void playlist_title(gint argc, gchar **argv)
+{
+	gchar *title;
+
+	title = audacious_remote_playlist_get_active_name(dbus_proxy);
+	audtool_report("%s", title);
+}
 
 void playlist_song_length(gint argc, gchar **argv)
 {
