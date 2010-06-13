@@ -134,7 +134,7 @@ void audacious_remote_playlist_open_list_to_temp (DBusGProxy * proxy, GList *
  list);
 
 /* Added in Audacious 2.4 */
-gchar *audacious_remove_playlist_get_active_name(DBusGProxy *proxy);
+gchar *audacious_remote_playlist_get_active_name(DBusGProxy *proxy);
 
 G_END_DECLS
 
