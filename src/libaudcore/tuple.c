@@ -273,6 +273,8 @@ tuple_copy(const Tuple *src)
     mowgli_dictionary_iteration_state_t state;
     gint i;
 
+    g_return_val_if_fail(src != NULL, NULL);
+
     TUPLE_LOCK_WRITE();
 
     dst = tuple_new_unlocked();
