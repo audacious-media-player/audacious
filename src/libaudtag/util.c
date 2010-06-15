@@ -389,7 +389,7 @@ gchar *convert_numericgenre_to_text(gint numericgenre)
         {GENRE_NATIVE_AMERICAN, "Native American"},
         {GENRE_CABARET, "Cabaret"},
         {GENRE_NEW_WAVE, "New Wave"},
-        {GENRE_PSYCHADELIC, "Psychadelic"},
+        {GENRE_PSYCHEDELIC, "Psychedelic"},
         {GENRE_RAVE, "Rave"},
         {GENRE_SHOWTUNES, "Showtunes"},
         {GENRE_TRAILER, "Trailer"},
