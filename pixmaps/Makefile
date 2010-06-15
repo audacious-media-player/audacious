@@ -1,8 +1,9 @@
+include ../buildsys.mk
+
+# These override variables in buildsys.mk and so must come after it.
 PACKAGE = pixmaps
 DATA = audacious.png \
        audacious.svg
-
-include ../buildsys.mk
 
 install-extra:
 	if test -h "${DESTDIR}${datadir}/icons/hicolor/48x48/apps/audacious.png" ; then ${RM} "${DESTDIR}${datadir}/icons/hicolor/48x48/apps/audacious.png" ; fi
