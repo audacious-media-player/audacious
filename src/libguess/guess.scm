@@ -44,6 +44,16 @@
 ;;;
 ;;; $ gosh guess.scm guess_tab.c
 ;;;
+;;; DFAs are defined such as:
+;;;
+;;; (define-dfa c-prefix-name
+;;;  (init
+;;;   (((byte sequence)) step-name  confidence-score)
+;;;   (((byte sequence)) step-name  confidence-score)))
+;;;
+;;; DFAs can have infinite steps, the table defines how the DFA behaves.
+;;; 'init' is the name of the first step.
+;;;
 
 (use srfi-1)
 (use gauche.sequence)
