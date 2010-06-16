@@ -38,6 +38,13 @@
 ;;;  $Id: guess.scm,v 1.3 2003/07/05 03:29:10 shirok Exp $
 ;;;
 
+;;;
+;;; To rebuild DFA tables, install Gauche and run the following in
+;;; the libguess source directory:
+;;;
+;;; $ gosh guess.scm guess_tab.c
+;;;
+
 (use srfi-1)
 (use gauche.sequence)
 
