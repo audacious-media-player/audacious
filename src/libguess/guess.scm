@@ -530,3 +530,40 @@
    ((#xb8)        init         1.0)
    ((#xba)        init         1.0)
    (((#xbc #xff)) init         1.0)))
+
+;;;
+;;; polish
+;;;
+
+(define-dfa iso8859_2
+ (init
+  (((#x20 #x7e)) init          1.0)
+  ((#xa1)        init          1.0)
+  ((#xa3)        init          1.0)
+  (((#xa5 #xa6)) init          1.0)
+  (((#xa9 #xac)) init          1.0)
+  (((#xae #xaf)) init          1.0)
+  ((#xb1)        init          1.0)
+  ((#xb3)        init          1.0)
+  (((#xb5 #xb6)) init          1.0)
+  (((#xb9 #xbc)) init          1.0)
+  (((#xbe #xbf)) init          1.0)
+  (((#xc0 #xd6)) init          1.0)
+  (((#xd8 #xf6)) init          1.0)
+  (((#xf8 #xfe)) init          1.0)))
+
+(define-dfa cp1250
+ (init
+  (((#x20 #x7e)) init          1.0)
+  ((#xa3)        init          1.0)
+  ((#xa5)        init          1.0)
+  ((#xaa)        init          1.0)
+  ((#xaf)        init          1.0)
+  ((#xb3)        init          1.0)
+  (((#xb9 #xba)) init          1.0)
+  ((#xbc)        init          1.0)
+  (((#xbe #xbf)) init          1.0)
+  (((#xc0 #xd6)) init          1.0)
+  (((#xd8 #xf6)) init          1.0)
+  (((#xf8 #xfe)) init          1.0)))
+
