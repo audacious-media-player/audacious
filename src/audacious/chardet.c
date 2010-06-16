@@ -95,12 +95,15 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     g_return_val_if_fail(str != NULL, NULL);
 
 #ifdef USE_CHARDET
+    if (dfa_validate_utf8(str, len))
+        goto fallback;
+
     if (cfg.chardet_detector)
         det = cfg.chardet_detector;
 
     if (det)
     {
-        encoding = (gchar *) guess_encoding(str, strlen(str), det);
+        encoding = (gchar *) guess_encoding(str, len, det);
         AUDDBG("encoding = %s\n", encoding);
         if (encoding == NULL)
             goto fallback;
