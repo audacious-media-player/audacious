@@ -108,8 +108,7 @@ static gboolean validate_header (ID3v2Header * header)
 }
 
 static gboolean read_header (VFSFile * handle, gint * version, gboolean *
- syncsafe, gsize * offset, gint * header_size, gint * data_size, gint *
- footer_size)
+ syncsafe, gsize * offset, gint * header_size, gint * data_size)
 {
     ID3v2Header header;
 
@@ -129,10 +128,9 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
     } else return FALSE;
 
     * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
-    * footer_size = 0;
 
-    AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
-     "%d.\n", (gint) * offset, * header_size, * data_size, * footer_size);
+    AUDDBG ("Offset = %d, header size = %d, data size = %d\n",
+     (gint) * offset, * header_size, * data_size);
 
     return TRUE;
 }
@@ -427,23 +425,23 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
 
 static gboolean id3v22_can_handle_file (VFSFile * handle)
 {
-    gint version, header_size, data_size, footer_size;
+    gint version, header_size, data_size;
     gboolean syncsafe;
     gsize offset;
 
     return read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size);
+     & data_size);
 }
 
 gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
 {
-    gint version, header_size, data_size, footer_size;
+    gint version, header_size, data_size;
     gboolean syncsafe;
     gsize offset;
     gint pos;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size))
+     & data_size))
         return FALSE;
 
     AUDDBG("Reading tags from %s\n", handle->uri);
@@ -546,13 +544,13 @@ static gboolean parse_pic (const guchar * data, gint size, gchar * * mime,
 static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
  image_size)
 {
-    gint version, header_size, data_size, footer_size, parsed;
+    gint version, header_size, data_size, parsed;
     gboolean syncsafe;
     gsize offset;
     gboolean found = FALSE;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size))
+     & data_size))
         return FALSE;
 
     for (parsed = 0; parsed < data_size && ! found; )
