@@ -68,6 +68,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
     switch (encoding)
     {
       case 0:
+      case 3:
         buffer = chardet_to_utf8 (text, length, NULL, & converted, NULL);
         break;
       case 1:
@@ -82,12 +83,6 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
       case 2:
         buffer = g_convert (text, length, "UTF-8", "UTF-16BE", NULL,
          & converted, NULL);
-        break;
-      case 3:
-        buffer = g_malloc (length + 1);
-        memcpy (buffer, text, length);
-        buffer[length] = 0;
-        converted = length;
         break;
     }
 
