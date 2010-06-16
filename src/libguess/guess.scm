@@ -120,10 +120,10 @@
 
 ;; Emit state table
 (define (emit-dfa-table dfa)
-  (format #t "signed char guess_~a_st[][256] = {\n" (name-of dfa))
+  (format #t "static signed char guess_~a_st[][256] = {\n" (name-of dfa))
   (for-each emit-state-table (states-of dfa))
   (print "};\n")
-  (format #t "guess_arc guess_~a_ar[] = {\n" (name-of dfa))
+  (format #t "static guess_arc guess_~a_ar[] = {\n" (name-of dfa))
   (for-each emit-arc-table
             (append-map arcs-of (states-of dfa)))
   (print "};\n")
