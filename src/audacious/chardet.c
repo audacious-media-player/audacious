@@ -150,7 +150,4 @@ void chardet_init(void)
 {
     str_to_utf8 = cd_str_to_utf8;
     chardet_to_utf8 = cd_chardet_to_utf8;
-#ifdef USE_CHARDET
-    guess_init();
-#endif
 }
