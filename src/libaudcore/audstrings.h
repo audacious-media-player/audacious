@@ -44,6 +44,8 @@ gboolean str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes);
 gchar *str_assert_utf8(const gchar *str);
 extern gchar *(*str_to_utf8)(const gchar * str);
 gchar *str_to_utf8_fallback(const gchar * str);
+extern gchar * (* chardet_to_utf8) (const gchar * string, gssize length, gsize *
+ bytes_read, gsize * bytes_written, GError * * error);
 
 gchar *filename_to_utf8(const gchar * filename);
 gchar *uri_to_display_basename(const gchar * uri);

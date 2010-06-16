@@ -5,6 +5,7 @@ LIB_MINOR = 0
 SRCS = audtag.c		\
        util.c		\
        tag_module.c	\
+       id3/id3-common.c \
        id3/id3v1.c	\
        id3/id3v22.c	\
        id3/id3v24.c	\

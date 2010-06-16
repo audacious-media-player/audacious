@@ -23,6 +23,7 @@
 
 #include <libaudcore/audstrings.h>
 
+#include "id3-common.h"
 #include "id3v24.h"
 #include "../util.h"
 
@@ -342,77 +343,6 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
 
     AUDDBG ("Data size = %d.\n", * size);
     return TRUE;
-}
-
-static gchar * convert_text (const gchar * text, gint length, gint encoding,
- gboolean nulled, gint * _converted, const gchar * * after)
-{
-    gchar * buffer = NULL;
-    gsize converted = 0;
-
-    if (nulled)
-    {
-        const guchar null16[] = {0, 0};
-        const gchar * null;
-
-        switch (encoding)
-        {
-          case 0:
-          case 3:
-            if ((null = memchr (text, 0, length)) == NULL)
-                return NULL;
-
-            length = null - text;
-
-            if (after != NULL)
-                * after = null + 1;
-
-            break;
-          case 1:
-          case 2:
-            if ((null = memfind (text, length, null16, 2)) == NULL)
-                return NULL;
-
-            length = null - text;
-
-            if (after != NULL)
-                * after = null + 2;
-
-            break;
-        }
-    }
-
-    switch (encoding)
-    {
-      case 0:
-        buffer = g_convert (text, length, "UTF-8", "ISO-8859-1", NULL,
-         & converted, NULL);
-        break;
-      case 1:
-        if (text[0] == (gchar) 0xff)
-            buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16LE", NULL,
-             & converted, NULL);
-        else
-            buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16BE", NULL,
-             & converted, NULL);
-
-        break;
-      case 2:
-        buffer = g_convert (text, length, "UTF-8", "UTF-16BE", NULL,
-         & converted, NULL);
-        break;
-      case 3:
-        buffer = g_malloc (length + 1);
-        memcpy (buffer, text, length);
-        buffer[length] = 0;
-        converted = length;
-        break;
-    }
-
-    if (_converted != NULL)
-        * _converted = converted;
-
-    return buffer;
 }
 
 static gchar * decode_text_frame (const guchar * data, gint size)
