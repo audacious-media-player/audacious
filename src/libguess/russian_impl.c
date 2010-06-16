@@ -5,20 +5,20 @@
 /* precedence order */
 #define ORDER &utf8, &cp1251, &koi8_u, &koi8_r, &cp866, &iso8859_5
 
-/* encodings */
-static guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
-static guess_dfa cp1251 = DFA_INIT(guess_cp1251_st, guess_cp1251_ar, "CP1251");
-static guess_dfa cp866 = DFA_INIT(guess_cp866_st, guess_cp866_ar, "CP866");
-static guess_dfa koi8_u = DFA_INIT(guess_koi8_u_st, guess_koi8_u_ar, "KOI8-U");
-static guess_dfa koi8_r = DFA_INIT(guess_koi8_r_st, guess_koi8_r_ar, "KOI8-R");
-static guess_dfa iso8859_5 = DFA_INIT(guess_iso8859_5_st, guess_iso8859_5_ar, "ISO-8859-5");
-
-
 /* common */
 const char *guess_ru(const char *buf, int buflen)
 {
     int i;
     const char *rv = NULL;
+
+    /* encodings */
+    guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
+    guess_dfa cp1251 = DFA_INIT(guess_cp1251_st, guess_cp1251_ar, "CP1251");
+    guess_dfa cp866 = DFA_INIT(guess_cp866_st, guess_cp866_ar, "CP866");
+    guess_dfa koi8_u = DFA_INIT(guess_koi8_u_st, guess_koi8_u_ar, "KOI8-U");
+    guess_dfa koi8_r = DFA_INIT(guess_koi8_r_st, guess_koi8_r_ar, "KOI8-R");
+    guess_dfa iso8859_5 = DFA_INIT(guess_iso8859_5_st, guess_iso8859_5_ar, "ISO-8859-5");
+
     guess_dfa *top = NULL;
     guess_dfa *order[] = { ORDER, NULL };
 
