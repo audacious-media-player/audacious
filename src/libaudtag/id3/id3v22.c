@@ -444,7 +444,7 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
      & data_size))
         return FALSE;
 
-    AUDDBG("Reading tags from %s\n", handle->uri);
+    AUDDBG("Reading tags from %i bytes of ID3 data in %s\n", data_size, handle->uri);
 
     for (pos = 0; pos < data_size; )
     {
@@ -454,7 +454,10 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
 
         if (! read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
+	{
+	    AUDDBG("read_frame failed at pos %i\n", pos);
             break;
+	}
 
         id = get_frame_id (key);
 
