@@ -1,53 +1,56 @@
-/*
- * Copyright 2010 Michał Lipski <tallica@o2.pl>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+#include "libguess.h"
+#include "dfa.h"
+#include "guess_tab.c"
 
-static const char *_guess_pl(const unsigned char *ptr, int size)
+/* precedence order */
+#define ORDER &utf8, &cp1250, &iso8859_2
+
+/* common */
+const char *guess_pl(const char *buf, int buflen)
 {
     int i;
+    const char *rv = NULL;
 
-    for (i = 0; i < size; i++)
-    {
-        if (ptr[i] == 0xB9 || //ą
-            ptr[i] == 0xE6 || //ć
-            ptr[i] == 0xEA || //ę
-            ptr[i] == 0xB3 || //ł
-            ptr[i] == 0xF1 || //ń
-            ptr[i] == 0xF3 || //ó
-            ptr[i] == 0x9C || //ś
-            ptr[i] == 0x9F || //ź
-            ptr[i] == 0xBF || //ż
-            ptr[i] == 0xA5 || //Ą
-            ptr[i] == 0xC6 || //Ć
-            ptr[i] == 0xCA || //Ę
-            ptr[i] == 0xA3 || //Ł
-            ptr[i] == 0xD1 || //Ń
-            ptr[i] == 0xD3 || //Ó
-            ptr[i] == 0x8C || //Ś
-            ptr[i] == 0x8F || //Ź
-            ptr[i] == 0xAF)   //Ż
+    /* encodings */
+    guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
+    guess_dfa cp1250 = DFA_INIT(guess_cp1250_st, guess_cp1250_ar, "CP1250");
+    guess_dfa iso8859_2 = DFA_INIT(guess_iso8859_2_st, guess_iso8859_2_ar, "ISO-8859-2");
 
-            return "CP1250";
+    guess_dfa *top = NULL;
+    guess_dfa *order[] = { ORDER, NULL };
+
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
+
+        /* special treatment of BOM */
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
+            }
+        }
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
+            }
+        }
+
+        rv = dfa_process(order, c);
+        if(rv)
+            return rv;
+
+        if (dfa_none(order)) {
+            /* we ran out the possibilities */
+            return NULL;
+        }
     }
 
-    return "ISO-8859-2";
-}
-
-const char *guess_pl(const char *ptr, int size)
-{
-    return _guess_pl((const unsigned char *) ptr, size);
+    top = dfa_top(order);
+    if (top)
+        return top->name;
+    else
+        return NULL;
 }
