@@ -3,7 +3,7 @@
 
 #include "dfa.h"
 
-static signed char guess_eucj_st[][256] = {
+signed char guess_eucj_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -78,7 +78,7 @@ static signed char guess_eucj_st[][256] = {
  },
 };
 
-static guess_arc guess_eucj_ar[] = {
+guess_arc guess_eucj_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 0.8   }, /* init -> jis0201_kana */
  {  3, 0.95  }, /* init -> jis0213_2 */
@@ -88,7 +88,7 @@ static guess_arc guess_eucj_ar[] = {
  {  0, 1.0   }, /* jis0213_2 -> init */
 };
 
-static signed char guess_sjis_st[][256] = {
+signed char guess_sjis_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -127,7 +127,7 @@ static signed char guess_sjis_st[][256] = {
  },
 };
 
-static guess_arc guess_sjis_ar[] = {
+guess_arc guess_sjis_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> jis0213 */
  {  0, 0.8   }, /* init -> init */
@@ -136,7 +136,7 @@ static guess_arc guess_sjis_ar[] = {
  {  0, 1.0   }, /* jis0213 -> init */
 };
 
-static signed char guess_utf8_st[][256] = {
+signed char guess_utf8_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -247,7 +247,7 @@ static signed char guess_utf8_st[][256] = {
  },
 };
 
-static guess_arc guess_utf8_ar[] = {
+guess_arc guess_utf8_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> 1byte_more */
  {  2, 1.0   }, /* init -> 2byte_more */
@@ -261,7 +261,7 @@ static guess_arc guess_utf8_ar[] = {
  {  4, 1.0   }, /* 5byte_more -> 4byte_more */
 };
 
-static signed char guess_ucs2le_st[][256] = {
+signed char guess_ucs2le_st[][256] = {
  { /* state init */
   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
@@ -336,7 +336,7 @@ static signed char guess_ucs2le_st[][256] = {
  },
 };
 
-static guess_arc guess_ucs2le_ar[] = {
+guess_arc guess_ucs2le_ar[] = {
  {  2, 1.0   }, /* init -> bom-be */
  {  1, 1.0   }, /* init -> bom-le */
  {  3, 1.0   }, /* init -> byte2 */
@@ -345,7 +345,7 @@ static guess_arc guess_ucs2le_ar[] = {
  {  0, 1.0   }, /* byte2 -> init */
 };
 
-static signed char guess_ucs2be_st[][256] = {
+signed char guess_ucs2be_st[][256] = {
  { /* state init */
   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
@@ -420,7 +420,7 @@ static signed char guess_ucs2be_st[][256] = {
  },
 };
 
-static guess_arc guess_ucs2be_ar[] = {
+guess_arc guess_ucs2be_ar[] = {
  {  2, 1.0   }, /* init -> bom-be */
  {  1, 1.0   }, /* init -> bom-le */
  {  3, 1.0   }, /* init -> byte2 */
@@ -430,7 +430,7 @@ static guess_arc guess_ucs2be_ar[] = {
  {  0, 1.0   }, /* byte2 -> init */
 };
 
-static signed char guess_utf16_st[][256] = {
+signed char guess_utf16_st[][256] = {
  { /* state init */
  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -523,7 +523,7 @@ static signed char guess_utf16_st[][256] = {
  },
 };
 
-static guess_arc guess_utf16_ar[] = {
+guess_arc guess_utf16_ar[] = {
  {  2, 1.0   }, /* init -> bom-be */
  {  3, 1.0   }, /* init -> bom-le */
  {  4, 1.0   }, /* init1 -> byte2 */
@@ -532,7 +532,7 @@ static guess_arc guess_utf16_ar[] = {
  {  1, 1.0   }, /* byte2 -> init1 */
 };
 
-static signed char guess_big5_st[][256] = {
+signed char guess_big5_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -571,13 +571,13 @@ static signed char guess_big5_st[][256] = {
  },
 };
 
-static guess_arc guess_big5_ar[] = {
+guess_arc guess_big5_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> 2byte */
  {  0, 1.0   }, /* 2byte -> init */
 };
 
-static signed char guess_gb2312_st[][256] = {
+signed char guess_gb2312_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -616,13 +616,13 @@ static signed char guess_gb2312_st[][256] = {
  },
 };
 
-static guess_arc guess_gb2312_ar[] = {
+guess_arc guess_gb2312_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> 2byte */
  {  0, 1.0   }, /* 2byte -> init */
 };
 
-static signed char guess_gb18030_st[][256] = {
+signed char guess_gb18030_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -715,7 +715,7 @@ static signed char guess_gb18030_st[][256] = {
  },
 };
 
-static guess_arc guess_gb18030_ar[] = {
+guess_arc guess_gb18030_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> 2byte */
  {  2, 1.0   }, /* init -> 4byte2 */
@@ -725,7 +725,7 @@ static guess_arc guess_gb18030_ar[] = {
  {  0, 1.0   }, /* 4byte4 -> init */
 };
 
-static signed char guess_euck_st[][256] = {
+signed char guess_euck_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -764,13 +764,13 @@ static signed char guess_euck_st[][256] = {
  },
 };
 
-static guess_arc guess_euck_ar[] = {
+guess_arc guess_euck_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> ks1001 */
  {  0, 1.0   }, /* ks1001 -> init */
 };
 
-static signed char guess_johab_st[][256] = {
+signed char guess_johab_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -827,7 +827,7 @@ static signed char guess_johab_st[][256] = {
  },
 };
 
-static guess_arc guess_johab_ar[] = {
+guess_arc guess_johab_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  1, 1.0   }, /* init -> jamo51 */
  {  2, 0.95  }, /* init -> jamo42 */
@@ -835,7 +835,7 @@ static guess_arc guess_johab_ar[] = {
  {  0, 1.0   }, /* jamo42 -> init */
 };
 
-static signed char guess_iso8859_6_st[][256] = {
+signed char guess_iso8859_6_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -856,7 +856,7 @@ static signed char guess_iso8859_6_st[][256] = {
  },
 };
 
-static guess_arc guess_iso8859_6_ar[] = {
+guess_arc guess_iso8859_6_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
@@ -868,7 +868,7 @@ static guess_arc guess_iso8859_6_ar[] = {
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_cp1256_st[][256] = {
+signed char guess_cp1256_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -889,12 +889,12 @@ static signed char guess_cp1256_st[][256] = {
  },
 };
 
-static guess_arc guess_cp1256_ar[] = {
+guess_arc guess_cp1256_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_iso8859_7_st[][256] = {
+signed char guess_iso8859_7_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -915,14 +915,14 @@ static signed char guess_iso8859_7_st[][256] = {
  },
 };
 
-static guess_arc guess_iso8859_7_ar[] = {
+guess_arc guess_iso8859_7_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_cp1253_st[][256] = {
+signed char guess_cp1253_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -943,7 +943,7 @@ static signed char guess_cp1253_st[][256] = {
  },
 };
 
-static guess_arc guess_cp1253_ar[] = {
+guess_arc guess_cp1253_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
@@ -957,7 +957,7 @@ static guess_arc guess_cp1253_ar[] = {
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_iso8859_8_st[][256] = {
+signed char guess_iso8859_8_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -978,7 +978,7 @@ static signed char guess_iso8859_8_st[][256] = {
  },
 };
 
-static guess_arc guess_iso8859_8_ar[] = {
+guess_arc guess_iso8859_8_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
@@ -986,7 +986,7 @@ static guess_arc guess_iso8859_8_ar[] = {
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_cp1255_st[][256] = {
+signed char guess_cp1255_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1007,7 +1007,7 @@ static signed char guess_cp1255_st[][256] = {
  },
 };
 
-static guess_arc guess_cp1255_ar[] = {
+guess_arc guess_cp1255_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
@@ -1020,7 +1020,7 @@ static guess_arc guess_cp1255_ar[] = {
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_iso8859_9_st[][256] = {
+signed char guess_iso8859_9_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1041,12 +1041,12 @@ static signed char guess_iso8859_9_st[][256] = {
  },
 };
 
-static guess_arc guess_iso8859_9_ar[] = {
+guess_arc guess_iso8859_9_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_cp1254_st[][256] = {
+signed char guess_cp1254_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1067,7 +1067,7 @@ static signed char guess_cp1254_st[][256] = {
  },
 };
 
-static guess_arc guess_cp1254_ar[] = {
+guess_arc guess_cp1254_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
@@ -1075,7 +1075,7 @@ static guess_arc guess_cp1254_ar[] = {
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_iso8859_5_st[][256] = {
+signed char guess_iso8859_5_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1096,12 +1096,12 @@ static signed char guess_iso8859_5_st[][256] = {
  },
 };
 
-static guess_arc guess_iso8859_5_ar[] = {
+guess_arc guess_iso8859_5_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_koi8_r_st[][256] = {
+signed char guess_koi8_r_st[][256] = {
  { /* state init */
  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -1122,14 +1122,14 @@ static signed char guess_koi8_r_st[][256] = {
  },
 };
 
-static guess_arc guess_koi8_r_ar[] = {
+guess_arc guess_koi8_r_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_koi8_u_st[][256] = {
+signed char guess_koi8_u_st[][256] = {
  { /* state init */
  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -1150,7 +1150,7 @@ static signed char guess_koi8_u_st[][256] = {
  },
 };
 
-static guess_arc guess_koi8_u_ar[] = {
+guess_arc guess_koi8_u_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
@@ -1161,7 +1161,7 @@ static guess_arc guess_koi8_u_ar[] = {
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_cp866_st[][256] = {
+signed char guess_cp866_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1182,13 +1182,13 @@ static signed char guess_cp866_st[][256] = {
  },
 };
 
-static guess_arc guess_cp866_ar[] = {
+guess_arc guess_cp866_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
 };
 
-static signed char guess_cp1251_st[][256] = {
+signed char guess_cp1251_st[][256] = {
  { /* state init */
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1209,7 +1209,7 @@ static signed char guess_cp1251_st[][256] = {
  },
 };
 
-static guess_arc guess_cp1251_ar[] = {
+guess_arc guess_cp1251_ar[] = {
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
  {  0, 1.0   }, /* init -> init */
