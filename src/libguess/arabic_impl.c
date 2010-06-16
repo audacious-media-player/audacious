@@ -5,15 +5,16 @@
 /* precedence order */
 #define ORDER &utf8, &iso8859_6, &cp1256
 
-/* encodings */
-static guess_dfa cp1256 = DFA_INIT(guess_cp1256_st, guess_cp1256_ar, "CP1256");
-static guess_dfa iso8859_6 = DFA_INIT(guess_iso8859_6_st, guess_iso8859_6_ar, "ISO-8859-6");
-static guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
-
 const char *guess_ar(const char *buf, int buflen)
 {
     int i;
     const char *rv = NULL;
+
+    /* encodings */
+    guess_dfa cp1256 = DFA_INIT(guess_cp1256_st, guess_cp1256_ar, "CP1256");
+    guess_dfa iso8859_6 = DFA_INIT(guess_iso8859_6_st, guess_iso8859_6_ar, "ISO-8859-6");
+    guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
+
     guess_dfa *top = NULL;
     guess_dfa *order[] = { ORDER, NULL };
 
