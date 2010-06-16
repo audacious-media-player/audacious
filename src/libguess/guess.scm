@@ -501,10 +501,10 @@
    (((#x20 #x7f)) init         1.0)     ; ascii
    (((#xa3 #xa4)) init         1.0)
    (((#xa6 #xa7)) init         1.0)
-   ((#xac)        init         1.0)
+   ((#xad)        init         1.0)
    (((#xb3 #xb4)) init         1.0)
    (((#xb6 #xb7)) init         1.0)
-   ((#xbc)        init         1.0)
+   ((#xbd)        init         1.0)
    (((#xc0 #xff)) init         1.0)))
 
 (define-dfa cp866
