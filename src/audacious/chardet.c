@@ -101,6 +101,7 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     if (det)
     {
         encoding = (gchar *) guess_encoding(str, strlen(str), det);
+        AUDDBG("encoding = %s\n", encoding);
         if (encoding == NULL)
             goto fallback;
 
