@@ -70,12 +70,6 @@ typedef struct guess_dfa_rec
 
 #define DFA_ALIVE_P(dfa)  (dfa->state >= 0)
 
-#define DFA_RESET(dfa) 					\
-    do {						\
-        dfa.state = 0;					\
-        dfa.score = 1.0;				\
-    } while (0)
-
 /* prototypes */
 boolean dfa_alone(guess_dfa *dfa, guess_dfa *order[]);
 boolean dfa_none(guess_dfa *order[]);
