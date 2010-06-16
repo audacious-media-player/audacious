@@ -1,22 +1,55 @@
-static const char *_guess_gr(const unsigned char *ptr, int size)
+#include "libguess.h"
+#include "dfa.h"
+#include "guess_tab.c"
+
+/* precedence order */
+#define ORDER &utf8, &iso8859_7, &cp1253
+
+/* encodings */
+static guess_dfa cp1253 = DFA_INIT(guess_cp1253_st, guess_cp1253_ar, "CP1253");
+static guess_dfa iso8859_7 = DFA_INIT(guess_iso8859_7_st, guess_iso8859_7_ar, "ISO-8859-7");
+static guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
+
+/* common */
+const char *guess_gr(const char *buf, int buflen)
 {
     int i;
+    const char *rv = NULL;
+    guess_dfa *top = NULL;
+    guess_dfa *order[] = { ORDER, NULL };
 
-    for (i = 0; i < size; i++)
-    {
-        if (ptr[i] == 0x80 ||
-            (ptr[i] >= 0x82 && ptr[i] <= 0x87) ||
-            ptr[i] == 0x89 || ptr[i] == 0x8B ||
-            (ptr[i] >= 0x91 && ptr[i] <= 0x97) ||
-            ptr[i] == 0x99 || ptr[i] == 0x9B || ptr[i] == 0xA4 ||
-            ptr[i] == 0xA5 || ptr[i] == 0xAE)
-            return "CP1253";
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
+
+        /* special treatment of BOM */
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
+            }
+        }
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
+            }
+        }
+
+        rv = dfa_process(order, c);
+        if(rv)
+            return rv;
+
+        if (dfa_none(order)) {
+            /* we ran out the possibilities */
+            return NULL;
+        }
     }
 
-    return "ISO-8859-7";
-}
-
-const char *guess_gr(const char *ptr, int size)
-{
-    return _guess_gr((const unsigned char *) ptr, size);
+    top = dfa_top(order);
+    if (top)
+        return top->name;
+    else
+        return NULL;
 }

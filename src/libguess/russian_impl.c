@@ -32,7 +32,7 @@ static int end_symbol(char ch) {
 static int start_symbol(char ch) {
     if ((ch=='\t')||ch=='\r'||ch=='\n'||(ch==' ')||(ch=='(')||(ch=='"')||(ch=='\'')) return 1;
     return 0;
-}    
+}
 
 typedef const struct lng_stat2 *lng_stat2_ptr;
 
@@ -48,7 +48,7 @@ static void bfind(const unsigned char *a, lng_stat2_ptr *w, lng_stat2_ptr *k, ln
     altptr=0;
     do{
       d>>=1;
-    
+
       if(!ws){
        if (wi>indexes2) wi-=d;
        else {
@@ -124,7 +124,7 @@ static const char *is_win_charset2(const unsigned char *txt, int len){
   double winstep,koistep,altstep,winestep,koiestep,altestep,winsstep,koisstep,altsstep;
   double winstat=0,koistat=0,altstat=0,winestat=0,koiestat=0,altestat=0,winsstat=0,koisstat=0,altsstat=0;
   long j;
-  
+
 #ifdef _AUTO_DEBUG
   fprintf(stderr,"Word: %s\n",txt);
 #endif
@@ -185,7 +185,7 @@ static const char *is_win_charset2(const unsigned char *txt, int len){
 	fprintf(stderr,", Win %lf, Koi %lf, Alt %lf\n",winstep,koistep,altstep);
 #endif
     }
-    
+
     winstat+=winstep;
     koistat+=koistep;
     altstat+=altstep;

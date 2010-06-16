@@ -1,23 +1,56 @@
-const char *_guess_hw(const unsigned char *ptr, int size)
+#include "libguess.h"
+#include "dfa.h"
+#include "guess_tab.c"
+
+/* precedence order */
+#define ORDER &utf8, &iso8859_8, &cp1255
+
+/* encodings */
+static guess_dfa cp1255 = DFA_INIT(guess_cp1255_st, guess_cp1255_ar, "CP1255");
+static guess_dfa iso8859_8 = DFA_INIT(guess_iso8859_8_st, guess_iso8859_8_ar, "ISO-8859-8-I");
+static guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar, "UTF-8");
+
+
+/* common */
+const char *guess_hw(const char *buf, int buflen)
 {
     int i;
+    const char *rv = NULL;
+    guess_dfa *top = NULL;
+    guess_dfa *order[] = { ORDER, NULL };
 
-    for (i = 0; i < size; i++)
-    {
-        if (ptr[i] == 0x80 || (ptr[i] >= 0x82 && ptr[i] <= 0x89) || ptr[i] == 0x8B ||
-            (ptr[i] >= 0x91 && ptr[i] <= 0x99) || ptr[i] == 0x9B || ptr[i] == 0xA1 ||
-            (ptr[i] >= 0xBF && ptr[i] <= 0xC9) ||
-            (ptr[i] >= 0xCB && ptr[i] <= 0xD8))
-            return "CP1255";
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
 
-        if (ptr[i] == 0xDF)
-            return "ISO-8859-8-I";
+        /* special treatment of BOM */
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
+            }
+        }
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
+            }
+        }
+
+        rv = dfa_process(order, c);
+        if(rv)
+            return rv;
+
+        if (dfa_none(order)) {
+            /* we ran out the possibilities */
+            return NULL;
+        }
     }
 
-    return "ISO-8859-8-I";
-}
-
-const char *guess_hw(const char *ptr, int size)
-{
-    return _guess_hw((const unsigned char *) ptr, size);
+    top = dfa_top(order);
+    if (top)
+        return top->name;
+    else
+        return NULL;
 }

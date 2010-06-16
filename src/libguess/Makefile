@@ -1,5 +1,6 @@
 STATIC_LIB_NOINST = libguess.a
 SRCS = guess.c		\
+       dfa.c		\
        arabic_impl.c	\
        cjk_impl.c	\
        greek_impl.c	\
