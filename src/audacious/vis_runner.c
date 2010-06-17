@@ -111,6 +111,8 @@ static void flush_locked (void)
     }
 
     vis_tail = NULL;
+
+    clear_source = g_timeout_add (0, send_clear, NULL);
 }
 
 void vis_runner_init (void)
@@ -147,14 +149,9 @@ void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
     }
 
     if (! active)
-    {
         flush_locked ();
-        clear_source = g_timeout_add (0, send_clear, NULL);
-    }
     else if (! paused)
-    {
         send_source = g_timeout_add (INTERVAL, send_audio, NULL);
-    }
 
     g_mutex_unlock (mutex);
 }
@@ -236,7 +233,6 @@ void vis_runner_time_offset (gint offset)
 
 void vis_runner_flush (void)
 {
-
     g_mutex_lock (mutex);
     flush_locked ();
     g_mutex_unlock (mutex);
