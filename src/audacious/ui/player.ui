@@ -55,6 +55,7 @@
 
 		<menu action="view">
 			<menuitem action="view playlists" />
+			<menuitem action="view infoarea" />
 		</menu>
 
 		<menu action="help">
