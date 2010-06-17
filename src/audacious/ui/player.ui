@@ -54,6 +54,7 @@
 		<menu action="plugins-menu" />
 
 		<menu action="view">
+			<menuitem action="view menu" />
 			<menuitem action="view playlists" />
 			<menuitem action="view infoarea" />
 		</menu>
