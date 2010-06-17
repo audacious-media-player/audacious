@@ -98,8 +98,19 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
 #ifdef USE_CHARDET
     if (dfa_validate_utf8(str, len))
     {
-        AUDDBG("encoding = UTF-8\n");
-        return g_strdup(str);
+        if (len < 0)
+            len = strlen (str);
+
+        ret = g_malloc (len + 1);
+        memcpy (ret, str, len);
+        ret[len] = 0;
+
+        if (arg_bytes_read != NULL)
+            * arg_bytes_read = len;
+        if (arg_bytes_write != NULL)
+            * arg_bytes_write = len;
+
+        return ret;
     }
 
     if (cfg.chardet_detector)
