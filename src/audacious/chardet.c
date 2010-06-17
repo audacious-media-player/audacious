@@ -17,6 +17,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#define DEBUG
 #include "config.h"
 #include "chardet.h"
 #include "audstrings.h"
@@ -96,7 +97,10 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
 
 #ifdef USE_CHARDET
     if (dfa_validate_utf8(str, len))
-        goto fallback;
+    {
+        AUDDBG("encoding = UTF-8\n");
+        return g_strdup(str);
+    }
 
     if (cfg.chardet_detector)
         det = cfg.chardet_detector;
