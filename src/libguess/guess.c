@@ -37,6 +37,7 @@ guess_init(void)
     guess_impl_register(GUESS_REGION_TR, guess_tr);
     guess_impl_register(GUESS_REGION_GR, guess_gr);
     guess_impl_register(GUESS_REGION_HW, guess_hw);
+    guess_impl_register(GUESS_REGION_PL, guess_pl);
 }
 
 const char *
