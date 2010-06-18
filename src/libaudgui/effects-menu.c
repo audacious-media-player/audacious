@@ -26,15 +26,6 @@
 
 #include "libaudgui-gtk.h"
 
-static GtkWidget * create_title (void)
-{
-    GtkWidget * title = gtk_menu_item_new_with_label (_("Effects"));
-
-    gtk_widget_set_sensitive (title, FALSE);
-    gtk_widget_show (title);
-    return title;
-}
-
 static void effect_item_toggled (GtkCheckMenuItem * item, void * data)
 {
     aud_enable_effect (data, gtk_check_menu_item_get_active (item));
@@ -70,9 +61,6 @@ GtkWidget * audgui_create_effects_menu (void)
     GtkWidget * menu = gtk_menu_new ();
     GList * list = aud_get_effect_list ();
     GList * node;
-
-    gtk_menu_shell_append ((GtkMenuShell *) menu, create_title ());
-    gtk_menu_shell_append ((GtkMenuShell *) menu, gtk_separator_menu_item_new ());
 
     for (node = list; node != NULL; node = node->next)
     {
