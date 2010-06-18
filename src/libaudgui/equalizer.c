@@ -149,6 +149,7 @@ static GtkWidget * create_window (void)
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     g_signal_connect ((GObject *) window, "delete-event", (GCallback)
      gtk_widget_hide_on_delete, NULL);
+    audgui_hide_on_escape (window);
 
     vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
