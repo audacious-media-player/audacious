@@ -79,12 +79,7 @@ DATA = images/about-logo.png				\
        images/playback.png					\
        images/playlist.png					\
        images/plugins.png					\
-       images/replay_gain.png				\
-       ui/equalizer.ui						\
-       ui/mainwin.ui						\
-       ui/player.ui						\
-       ui/playlist.ui						\
-       ui/carbon-menubar.ui
+       images/replay_gain.png
 
 CLEAN = build_stamp.c dbus-client-bindings.h dbus-server-bindings.h
 EXT_DEPS = ../libguess/libguess.a
