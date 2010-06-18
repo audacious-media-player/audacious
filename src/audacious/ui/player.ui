@@ -48,10 +48,12 @@
 			<menuitem action="playlist manager" />
 			<separator />
 			<menuitem action="playlist refresh" />
-			<separator />
-<!--				<menuitem action="playlist delete" /> -->
 		</menu>
 		<menu action="plugins-menu" />
+
+		<menu action="output">
+			<menuitem action="equalizer show" />
+		</menu>
 
 		<menu action="view">
 			<menuitem action="view menu" />
@@ -61,6 +63,24 @@
 
 		<menu action="help">
 			<menuitem action="about audacious" />
+		</menu>
+	</menubar>
+
+	<menubar name="playlist-menus">
+		<menu action="dummy" name="playlist-rightclick-menu">
+			<menuitem action="playlist track info" />
+			<separator />
+			<menuitem action="playlist copy"/>
+			<menuitem action="playlist cut"/>
+			<menuitem action="playlist paste"/>
+			<separator/>
+			<menuitem action="playlist remove selected" />
+			<menuitem action="playlist remove unselected" />
+			<menuitem action="playlist remove all" />
+			<separator />
+			<menuitem action="queue toggle" />
+			<separator />
+			<menuitem action="plugins-menu" />
 		</menu>
 	</menubar>
 </ui>
