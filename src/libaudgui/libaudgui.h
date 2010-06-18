@@ -46,6 +46,10 @@ void audgui_hide_about_window(void);
 /* confirm.c */
 void audgui_confirm_playlist_delete (gint playlist);
 
+/* equalizer.c */
+void audgui_show_equalizer_window (void);
+void audgui_hide_equalizer_window (void);
+
 /* infopopup.c */
 void audgui_infopopup_show (gint playlist, gint entry);
 void audgui_infopopup_show_current (void);

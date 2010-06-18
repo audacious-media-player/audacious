@@ -4,6 +4,7 @@ LIB_MINOR = 0
 
 SRCS = confirm.c \
        effects-menu.c \
+       equalizer.c \
        infopopup.c \
        infowin.c \
        init.c \
@@ -30,4 +31,4 @@ includesubdir = libaudgui
 CPPFLAGS += -DHAVE_CONFIG_H ${LIB_CPPFLAGS} -D_AUDACIOUS_CORE -I.. -I../.. -I../libaudcore -I../audacious ${GLIB_CFLASG} ${GTK_CFLAGS} ${DBUS_CFLAGS} ${LIBMCS_CFLAGS} ${AUDACIOUS_DEFINES} ${REGEX_CFLAGS}
 CFLAGS += ${LIB_CFLAGS}
 LDFLAGS += $(AUDLDFLAGS)
-LIBS += ${GLIB_LIBS} ${MOWGLI_LIBS} ${GTK_LIBS} ${REGEX_LIBS} -L../libaudcore -laudcore
+LIBS += -lm ${GLIB_LIBS} ${MOWGLI_LIBS} ${GTK_LIBS} ${REGEX_LIBS} -L../libaudcore -laudcore
