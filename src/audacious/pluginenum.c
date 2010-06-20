@@ -838,12 +838,8 @@ void plugin_system_cleanup(void)
 
             if (ep->cleanup)
                 ep->cleanup();
-            
-            g_free (ep->filename);
 
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
+            g_free (ep->filename);
         }
     }
 
@@ -864,10 +860,6 @@ void plugin_system_cleanup(void)
                 gp->cleanup();
 
             g_free (gp->filename);
-
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
         }
     }
 
@@ -888,10 +880,6 @@ void plugin_system_cleanup(void)
                 vp->cleanup();
 
             g_free (vp->filename);
-
-            GDK_THREADS_LEAVE();
-            while (g_main_context_iteration(NULL, FALSE));
-            GDK_THREADS_ENTER();
         }
     }
 
