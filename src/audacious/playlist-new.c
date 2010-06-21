@@ -33,6 +33,8 @@
 #include "plugin.h"
 #include "probe.h"
 
+#define SCAN_DEBUG(...)
+
 #define STATE_FILE "playlist-state"
 
 #define DECLARE_PLAYLIST \
@@ -139,6 +141,7 @@ static GCond * scan_cond;
 static const gchar * scan_filename;
 static InputPlugin * scan_decoder;
 static Tuple * scan_tuple;
+static gboolean scan_quit;
 static GThread * scan_thread;
 static gint scan_position, updated_ago;
 
@@ -366,6 +369,7 @@ void scan_receive (void)
 {
     struct entry * entry = index_get (active_playlist->entries, scan_position);
 
+    SCAN_DEBUG ("scan_receive\n");
     entry_set_tuple (active_playlist, entry, scan_tuple);
 
     if (scan_tuple == NULL)
@@ -380,7 +384,9 @@ static gboolean scan_next (void * unused)
 {
     gint entries;
 
+    SCAN_DEBUG ("scan_next: locking...\n");
     g_mutex_lock (scan_mutex);
+    SCAN_DEBUG (" ...ok\n");
 
     if (scan_filename != NULL)
     {
@@ -403,6 +409,7 @@ static gboolean scan_next (void * unused)
 
         if (! entry->failed)
         {
+            SCAN_DEBUG (" ...waking scanner\n");
             scan_filename = entry->filename;
             scan_decoder = entry->decoder;
             g_cond_signal (scan_cond);
@@ -412,10 +419,12 @@ static gboolean scan_next (void * unused)
 
     if (updated_ago >= 10 || (scan_position == entries && updated_ago > 0))
     {
+        SCAN_DEBUG (" ...queueing update\n");
         queue_update (PLAYLIST_UPDATE_METADATA);
         updated_ago = 0;
     }
 
+    SCAN_DEBUG (" ...unlocking\n");
     scan_source = 0;
     g_mutex_unlock (scan_mutex);
     return FALSE;
@@ -423,11 +432,13 @@ static gboolean scan_next (void * unused)
 
 static void scan_continue (void)
 {
+    SCAN_DEBUG ("scan_continue\n");
     scan_source = g_idle_add_full (G_PRIORITY_LOW, scan_next, NULL, NULL);
 }
 
 static void scan_reset (void)
 {
+    SCAN_DEBUG ("scan_reset\n");
     scan_position = 0;
     updated_ago = 0;
     scan_continue ();
@@ -435,7 +446,9 @@ static void scan_reset (void)
 
 static void scan_stop (void)
 {
+    SCAN_DEBUG ("scan_stop: locking...\n");
     g_mutex_lock (scan_mutex);
+    SCAN_DEBUG (" ...ok\n");
 
     if (scan_source != 0)
     {
@@ -446,6 +459,7 @@ static void scan_stop (void)
     if (scan_filename != NULL)
         scan_receive ();
 
+    SCAN_DEBUG (" ...unlocking\n");
     g_mutex_unlock (scan_mutex);
 }
 
@@ -454,11 +468,22 @@ static void * scanner (void * unused)
 {
     for (;;)
     {
+        SCAN_DEBUG ("scanner: waiting...\n");
         g_cond_wait (scan_cond, scan_mutex);
 
-        if (scan_filename == NULL)
+        if (scan_quit)
+        {
+            SCAN_DEBUG (" ...exiting\n");
             return NULL;
+        }
 
+        if (scan_filename == NULL)
+        {
+            SCAN_DEBUG (" ...nothing to scan\n");
+            continue;
+        }
+
+        SCAN_DEBUG (" ...scanning\n");
         scan_tuple = file_read_tuple (scan_filename, scan_decoder);
         scan_continue ();
     }
@@ -508,6 +533,7 @@ void playlist_init (void)
     scan_tuple = NULL;
     scan_source = 0;
     g_mutex_lock (scan_mutex);
+    scan_quit = FALSE;
     scan_thread = g_thread_create (scanner, NULL, TRUE, NULL);
     scan_reset ();
 }
@@ -518,7 +544,7 @@ void playlist_end(void)
 
     scan_stop ();
     g_mutex_lock (scan_mutex);
-    scan_filename = NULL; /* tell scanner to quit */
+    scan_quit = TRUE;
     g_cond_signal (scan_cond);
     g_mutex_unlock (scan_mutex);
     g_thread_join (scan_thread);
