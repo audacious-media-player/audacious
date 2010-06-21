@@ -34,27 +34,6 @@
 #include "output.h"
 #include "plugin-registry.h"
 
-PlaybackData ip_data =
-{
-    NULL,
-    FALSE,
-    FALSE,
-    FALSE,
-    NULL
-};
-
-InputPlayback *
-get_current_input_playback(void)
-{
-    return ip_data.current_input_playback;
-}
-
-void
-set_current_input_playback(InputPlayback * ip)
-{
-    ip_data.current_input_playback = ip;
-}
-
 static gboolean plugin_list_func (void * plugin, void * data)
 {
     GList * * list = data;
@@ -76,9 +55,8 @@ GList * get_input_list (void)
 void
 input_get_volume(gint * l, gint * r)
 {
-    if (ip_data.playing && ip_data.current_input_playback &&
-     ip_data.current_input_playback->plugin->get_volume &&
-     ip_data.current_input_playback->plugin->get_volume (l, r))
+    if (current_playback && current_playback->plugin->get_volume &&
+     current_playback->plugin->get_volume (l, r))
         return;
 
     output_get_volume (l, r);
@@ -87,15 +65,12 @@ input_get_volume(gint * l, gint * r)
 void
 input_set_volume(gint l, gint r)
 {
-    gint h_vol[2];
+    gint h_vol[2] = {l, r};
 
-    h_vol[0] = l;
-    h_vol[1] = r;
     hook_call("volume set", h_vol);
 
-    if (ip_data.playing && ip_data.current_input_playback &&
-     ip_data.current_input_playback->plugin->set_volume &&
-     ip_data.current_input_playback->plugin->set_volume (l, r))
+    if (current_playback && current_playback->plugin->set_volume &&
+     current_playback->plugin->set_volume (l, r))
         return;
 
     output_set_volume (l, r);

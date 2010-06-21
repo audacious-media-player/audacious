@@ -116,15 +116,6 @@ drct_pause ( void )
     return;
 }
 
-void
-drct_stop ( void )
-{
-    ip_data.stop = TRUE;
-    playback_stop();
-    ip_data.stop = FALSE;
-    return;
-}
-
 gboolean
 drct_get_playing ( void )
 {

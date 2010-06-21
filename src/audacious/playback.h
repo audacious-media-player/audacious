@@ -37,14 +37,6 @@ void playback_stop(void);
 gboolean playback_get_playing(void);
 gboolean playback_get_paused(void);
 void playback_seek(gint time);
-InputPlayback *playback_new(void);
-void playback_free(InputPlayback *);
-void playback_run(InputPlayback *);
-
-/* deprecated */
-void ip_set_info (const gchar * title, gint length, gint bitrate, gint
- samplerate, gint channels);
-void ip_set_info_text (const gchar * title);
 
 gchar * playback_get_title (void);
 gint playback_get_length (void);

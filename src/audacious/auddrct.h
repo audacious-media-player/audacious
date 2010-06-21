@@ -42,7 +42,6 @@ void drct_activate(void);
 void drct_initiate ( void );
 void drct_play ( void );
 void drct_pause ( void );
-void drct_stop ( void );
 gboolean drct_get_playing ( void );
 gboolean drct_get_paused ( void );
 gboolean drct_get_stopped ( void );

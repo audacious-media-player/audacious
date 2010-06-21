@@ -28,16 +28,6 @@
 
 #include "plugin.h"
 
-typedef struct
-{
-    InputPlayback *current_input_playback;
-    gboolean playing;
-    gboolean paused;
-    gboolean stop;
-    GMutex *playback_mutex;
-}
-PlaybackData;
-
 struct _VisNode {
     gint time;
     gint nch;
@@ -48,13 +38,10 @@ struct _VisNode {
 typedef struct _VisNode VisNode;
 
 GList *get_input_list(void);
-InputPlayback *get_current_input_playback(void);
-void set_current_input_playback(InputPlayback * ip);
-void set_current_input_data(void * data);
 
 void input_get_volume(gint * l, gint * r);
 void input_set_volume(gint l, gint r);
 
-extern PlaybackData ip_data;
+extern InputPlayback * current_playback;
 
 #endif /* AUDACIOUS_INPUT_H */
