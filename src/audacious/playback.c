@@ -330,6 +330,12 @@ static void complete_stop (void)
 {
     output_drain ();
     hook_call ("playback stop", NULL);
+
+    if (cfg.stopaftersong)
+    {
+        cfg.stopaftersong = FALSE;
+        hook_call ("toggle stop after song", NULL);
+    }
 }
 
 void playback_stop (void)
