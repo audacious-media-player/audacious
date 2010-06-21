@@ -133,9 +133,11 @@ gboolean tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *fi
 gboolean tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer);
 void tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field);
 void tuple_disassociate_now(TupleValue *value);
-TupleValueType tuple_get_value_type(Tuple *tuple, const gint nfield, const gchar *field);
-const gchar *tuple_get_string(Tuple *tuple, const gint nfield, const gchar *field);
-gint tuple_get_int(Tuple *tuple, const gint nfield, const gchar *field);
+TupleValueType tuple_get_value_type (const Tuple * tuple, gint nfield,
+ const gchar * field);
+const gchar * tuple_get_string (const Tuple * tuple, gint nfield, const gchar *
+ field);
+gint tuple_get_int (const Tuple * tuple, gint nfield, const gchar * field);
 #define tuple_free(x) mowgli_object_unref(x);
 
 G_END_DECLS
