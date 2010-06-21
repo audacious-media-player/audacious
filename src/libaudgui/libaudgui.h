@@ -59,4 +59,9 @@ void audgui_infopopup_hide (void);
 void audgui_infowin_show (gint playlist, gint entry);
 void audgui_infowin_show_current (void);
 
+/* urilist.c */
+void audgui_urilist_open (const gchar * list);
+void audgui_urilist_insert (gint playlist, gint position, const gchar * list);
+gchar * audgui_urilist_create_from_selected (gint playlist);
+
 #endif /* LIBAUDGUI_H */

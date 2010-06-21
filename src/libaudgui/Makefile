@@ -18,6 +18,7 @@ SRCS = confirm.c \
        ui_about.c \
        ui_credits.c \
        ui_playlist_manager.c \
+       urilist.c \
        util.c
 
 INCLUDES = libaudgui.h \
