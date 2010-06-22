@@ -155,7 +155,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     hdrsz = (header.size[2] << 24 | header.size[1] << 16 | header.size[0] << 8);
     hdrsz = GUINT32_FROM_BE(hdrsz);
 
-    if (hdrsz > max_size)
+    if (hdrsz > max_size || hdrsz == 0)
         return FALSE;
 
     AUDDBG ("Found frame:\n");
