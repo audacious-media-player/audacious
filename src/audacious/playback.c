@@ -205,8 +205,7 @@ playback_get_time_real(void)
     if (! playback_is_ready ())
         return seek_when_ready;
 
-    if (! current_playback->playing || current_playback->eof ||
-     current_playback->error)
+    if (! current_playback->playing || current_playback->error)
         return 0;
 
     if (current_playback->plugin->get_time != NULL)
