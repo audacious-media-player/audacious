@@ -104,7 +104,10 @@ void drct_play (void)
     if (playback_get_playing () && playback_get_paused ())
         playback_pause ();
     else
+    {
+        playlist_set_playing (playlist_get_active ());
         playback_initiate ();
+    }
 
     return;
 }
