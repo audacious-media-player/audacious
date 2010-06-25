@@ -103,6 +103,7 @@ static const gchar *credit_text[] = {
     "Mark Loeser",
     "Alex Maclean",
     "Michael Hanselmann",
+    "Juho Heikkinen",
     "Joseph Jezak",
     "Henrik Johansson",
     "Rodrigo Martins de Matos Ventura",
