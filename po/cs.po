@@ -7,17 +7,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: audacious 913e8e90bd3a\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-14 21:33+0200\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
+"POT-Creation-Date: 2010-06-27 16:07+0300\n"
 "PO-Revision-Date: 2010-06-14 21:50+0200\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/audacious/auddrct.c:421
+#: src/audacious/auddrct.c:415
 msgid "Temporary Playlist"
 msgstr "Dočasný seznam skladeb"
 
@@ -52,155 +53,155 @@ msgstr "Vývoj zásuvných modulů:"
 msgid "Patch authors:"
 msgstr "Autoři záplat:"
 
-#: src/audacious/credits.c:124
+#: src/audacious/credits.c:125
 msgid "1.x developers:"
 msgstr "Vývojáři řady 1.x:"
 
-#: src/audacious/credits.c:146
+#: src/audacious/credits.c:147
 msgid "BMP Developers:"
 msgstr "Vývojáři Audacious:"
 
-#: src/audacious/credits.c:178
+#: src/audacious/credits.c:179
 msgid "Belarusian:"
 msgstr "Běloruština:"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:182
 msgid "Basque:"
 msgstr "Baskičtina:"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:185
 msgid "Brazilian Portuguese:"
 msgstr "Brazilská portugalština:"
 
-#: src/audacious/credits.c:188
+#: src/audacious/credits.c:189
 msgid "Breton:"
 msgstr "Bretonština:"
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:192
 msgid "Bulgarian:"
 msgstr "Bulharština:"
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:195
 msgid "Catalan:"
 msgstr "Katalánština:"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:198
 msgid "Croatian:"
 msgstr "Chorvatština:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:201
 msgid "Czech:"
 msgstr "Čeština:"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:204
 msgid "Dutch:"
 msgstr "Holandština:"
 
-#: src/audacious/credits.c:207
+#: src/audacious/credits.c:208
 msgid "Estonian:"
 msgstr "Estonština:"
 
-#: src/audacious/credits.c:210
+#: src/audacious/credits.c:211
 msgid "Finnish:"
 msgstr "Finština:"
 
-#: src/audacious/credits.c:214
+#: src/audacious/credits.c:215
 msgid "French:"
 msgstr "Francouzština:"
 
-#: src/audacious/credits.c:219
+#: src/audacious/credits.c:220
 msgid "German:"
 msgstr "Němčina:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "Georgian:"
 msgstr "Gruzínština:"
 
-#: src/audacious/credits.c:229
+#: src/audacious/credits.c:230
 msgid "Greek:"
 msgstr "Řečtina:"
 
-#: src/audacious/credits.c:234
+#: src/audacious/credits.c:235
 msgid "Hindi:"
 msgstr "Hindština:"
 
-#: src/audacious/credits.c:237
+#: src/audacious/credits.c:238
 msgid "Hungarian:"
 msgstr "Maďarština:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:241
 msgid "Italian:"
 msgstr "Italština:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Japanese:"
 msgstr "Japonština:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:248
 msgid "Korean:"
 msgstr "Korejština:"
 
-#: src/audacious/credits.c:250
+#: src/audacious/credits.c:251
 msgid "Lithuanian:"
 msgstr "Litevština:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:255
 msgid "Macedonian:"
 msgstr "Makedonština:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:258
 msgid "Polish:"
 msgstr "Polština:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:261
 msgid "Portugese:"
 msgstr "Portugalština:"
 
-#: src/audacious/credits.c:263
+#: src/audacious/credits.c:264
 msgid "Romanian:"
 msgstr "Rumunština:"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:268
 msgid "Russian:"
 msgstr "Ruština:"
 
-#: src/audacious/credits.c:271
+#: src/audacious/credits.c:272
 msgid "Serbian (Latin):"
 msgstr "Srbština (latinka):"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:275
 msgid "Serbian (Cyrillic):"
 msgstr "Srbština (cyrilice):"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:278
 msgid "Simplified Chinese:"
 msgstr "Zjednodušená čínština:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:281
 msgid "Slovak:"
 msgstr "Slovenština:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:284
 msgid "Spanish:"
 msgstr "Španělština:"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:287
 msgid "Swedish:"
 msgstr "Švédština:"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:290
 msgid "Traditional Chinese:"
 msgstr "Tradiční čínština:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:295
 msgid "Turkish:"
 msgstr "Turečtina:"
 
-#: src/audacious/credits.c:298
+#: src/audacious/credits.c:299
 msgid "Ukrainian:"
 msgstr "Ukrajinština:"
 
-#: src/audacious/credits.c:301
+#: src/audacious/credits.c:302
 msgid "Welsh:"
 msgstr "Welština:"
 
@@ -324,16 +325,16 @@ msgstr ""
 "Dostupná rozhraní:\n"
 "\n"
 
-#: src/audacious/playback.c:549
+#: src/audacious/playback.c:552
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Pro %s nenalezen žádní dekodér."
 
-#: src/audacious/playback.c:702
+#: src/audacious/playback.c:688
 msgid "Buffering ..."
 msgstr "Načítá se…"
 
-#: src/audacious/playlist-new.c:279
+#: src/audacious/playlist-new.c:282
 msgid "Untitled Playlist"
 msgstr "Nepojmenovaný seznam skladeb"
 
@@ -934,13 +935,69 @@ msgstr ""
 msgid "_Don't show this message again"
 msgstr "_Příště již toto zprávu nezobrazovat"
 
-#: src/libaudgui/effects-menu.c:31
-msgid "Effects"
-msgstr "Efekty"
-
-#: src/libaudgui/effects-menu.c:60
+#: src/libaudgui/effects-menu.c:51
 msgid "settings ..."
 msgstr "nastavení…"
+
+#: src/libaudgui/equalizer.c:68
+#, fuzzy
+msgid "_Enable"
+msgstr "Povolit"
+
+#: src/libaudgui/equalizer.c:139
+msgid "60 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "170 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "310 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "600 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+#, fuzzy
+msgid "1 kHz"
+msgstr "11 kHz"
+
+#: src/libaudgui/equalizer.c:140
+#, fuzzy
+msgid "3 kHz"
+msgstr "44 kHz"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "6 kHz"
+msgstr "44 kHz"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "12 kHz"
+msgstr "22 kHz"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "14 kHz"
+msgstr "44 kHz"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "16 kHz"
+msgstr "11 kHz"
+
+#: src/libaudgui/equalizer.c:146
+msgid "Equalizer"
+msgstr "Ekvalizér"
+
+#: src/libaudgui/equalizer.c:162
+#, fuzzy
+msgid "Preamp"
+msgstr "Předzesílení:"
 
 #: src/libaudgui/infopopup.c:235
 msgid "Track Number"
@@ -1771,6 +1828,9 @@ msgstr "Přepínače správy relace"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Zobrazovat volby správy relace"
+
+#~ msgid "Effects"
+#~ msgstr "Efekty"
 
 #~ msgid "audacious: %s"
 #~ msgstr "audacious: %s"
@@ -2981,9 +3041,6 @@ msgstr "Zobrazovat volby správy relace"
 #~ msgid "Directory preset file:"
 #~ msgstr "Adresář s předvolbami:"
 
-#~ msgid "Equalizer"
-#~ msgstr "Ekvalizér"
-
 #~ msgid ""
 #~ "Best Sinc Interpolation\n"
 #~ "Medium Sinc Interpolation\n"
@@ -4030,15 +4087,6 @@ msgstr "Zobrazovat volby správy relace"
 #~ msgid "Channels"
 #~ msgstr "Kanálů"
 
-#~ msgid "44 kHz"
-#~ msgstr "44 kHz"
-
-#~ msgid "22 kHz"
-#~ msgstr "22 kHz"
-
-#~ msgid "11 kHz"
-#~ msgstr "11 kHz"
-
 #~ msgid "Resampling"
 #~ msgstr "Převzorkování"
 
@@ -4059,9 +4107,6 @@ msgstr "Zobrazovat volby správy relace"
 
 #~ msgid "Noise Reduction"
 #~ msgstr "Redukce šumu"
-
-#~ msgid "Enable"
-#~ msgstr "Povolit"
 
 #~ msgid "Bass Boost"
 #~ msgstr "Zvýraznění hlubokých tónů"
@@ -4425,8 +4470,8 @@ msgstr "Zobrazovat volby správy relace"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA."
 #~ msgstr ""
 #~ "Ovladač OSS programu Audacious\n"
@@ -4494,8 +4539,8 @@ msgstr "Zobrazovat volby správy relace"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA.\n"
 #~ "Author: Matthieu Sozeau (mattam@altern.org)"
 #~ msgstr ""
@@ -4587,8 +4632,8 @@ msgstr "Zobrazovat volby správy relace"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA."
 #~ msgstr ""
 #~ "Modul ESounD programu Audacious\n"
