@@ -10,39 +10,39 @@
 # Vitaly Lipatov <lav@etersoft.ru>, 2007.
 # Eugene Zagidullin <e.asphyx@gmail.com>, 2007.
 # serg0 <serg0@ulx.ru>, 2009.
+# Eugene Paskevich <eugene@raptor.kiev.ua>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious 1.5\n"
+"Project-Id-Version: audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2010-06-27 16:07+0300\n"
-"PO-Revision-Date: 2009-10-24 00:31+0400\n"
-"Last-Translator: serg0 <serg0@ulx.ru>\n"
+"PO-Revision-Date: 2010-06-27 17:28+0300\n"
+"Last-Translator: Eugene Paskevich <eugene@raptor.kiev.ua>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.0\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Basepath: /home/asphyx/ahinea/audacious\n"
 
 #: src/audacious/auddrct.c:415
-#, fuzzy
 msgid "Temporary Playlist"
-msgstr "Загрузка списка воспроизведения"
+msgstr "Временный список воспроизведения"
 
 #: src/audacious/credits.c:34
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "An audio player for many platforms.\n"
 "Copyright (C) 2005-2010 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Многофункциональный мультимедийный проигрыватель для различных платформ.\n"
-"Copyright (C) 2005-2009 команда разработчиков Audacious"
+"Аудио проигрыватель для различных платформ.\n"
+"Copyright (C) 2005-2010 команда разработчиков Audacious"
 
 #: src/audacious/credits.c:39
 msgid "Core developers:"
@@ -73,9 +73,8 @@ msgid "BMP Developers:"
 msgstr "Разработчики BMP:"
 
 #: src/audacious/credits.c:179
-#, fuzzy
 msgid "Belarusian:"
-msgstr "Болгарский:"
+msgstr "Белорусский:"
 
 #: src/audacious/credits.c:182
 msgid "Basque:"
@@ -95,7 +94,7 @@ msgstr "Болгарский:"
 
 #: src/audacious/credits.c:195
 msgid "Catalan:"
-msgstr "Каталанский:"
+msgstr "Каталонский:"
 
 #: src/audacious/credits.c:198
 msgid "Croatian:"
@@ -166,9 +165,8 @@ msgid "Polish:"
 msgstr "Польский:"
 
 #: src/audacious/credits.c:261
-#, fuzzy
 msgid "Portugese:"
-msgstr "Бразильский португальский:"
+msgstr "Португальский:"
 
 #: src/audacious/credits.c:264
 msgid "Romanian:"
@@ -225,15 +223,15 @@ msgstr "Невозможно импортировать Winamp EQF файл '%s'
 
 #: src/audacious/folder-add.c:52
 msgid "Searching ..."
-msgstr ""
+msgstr "Поиск ..."
 
 #: src/audacious/folder-add.c:76
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Найден %d файл"
+msgstr[1] "Найдено %d файла"
+msgstr[2] "Найдено %d файлов"
 
 #: src/audacious/logger.c:125
 #, c-format
@@ -262,7 +260,7 @@ msgstr "Остановить текущую дорожку"
 
 #: src/audacious/main.c:156
 msgid "Pause if playing, play otherwise"
-msgstr "Приостановить, если что-либо проигрывается, иначе воспроизводить"
+msgstr "Приостановить при проигрывании, иначе ― воспроизводить"
 
 #: src/audacious/main.c:157
 msgid "Skip forward in playlist"
@@ -312,7 +310,7 @@ msgstr "ФАЙЛ..."
 
 #: src/audacious/main.c:186
 msgid "- play multimedia files"
-msgstr "- мультимедийный проигрыватель"
+msgstr "- проиграть мультимедийные файлы"
 
 #: src/audacious/main.c:197
 #, c-format
@@ -321,7 +319,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Попробуйте `%s --help' для получения более подробного описания.\n"
+"Попробуйте `%s --help' для получения подробного описания.\n"
 
 #: src/audacious/main.c:432
 msgid "Sorry, threads aren't supported on your platform.\n"
@@ -343,11 +341,11 @@ msgstr ""
 #: src/audacious/playback.c:552
 #, c-format
 msgid "No decoder found for %s."
-msgstr ""
+msgstr "Не найден декодер для %s."
 
 #: src/audacious/playback.c:688
 msgid "Buffering ..."
-msgstr ""
+msgstr "Буферизация ..."
 
 #: src/audacious/playlist-new.c:282
 msgid "Untitled Playlist"
@@ -355,7 +353,7 @@ msgstr "Новый список воспроизведения"
 
 #: src/audacious/pluginenum.c:741
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr "Загружаемые модули не поддерживаются! Модули не будут использованы.\n"
+msgstr "Загрузка модулей не поддерживается! Модули не будут использованы.\n"
 
 #: src/audacious/ui_headless.c:132
 #, c-format
@@ -379,8 +377,9 @@ msgid ""
 "<b>Please don't file bugs at this point unless they represent major problems."
 "</b>"
 msgstr ""
-"<b>Пожалуйста, не направляйте сюда сообщения об ошибках, по меньшей мере, "
-"они создают большие проблемы.</b>"
+"<b>Пожалуйста, не уведомляйте пока что об ошибках, если они не являются "
+"критическими."
+"</b>"
 
 #: src/audacious/ui_misc.c:64
 msgid ""
@@ -401,11 +400,10 @@ msgstr ""
 "Мы ожидаем, что многие мелкие ошибки, о которых было сообщено за это время, "
 "будут устранены.\n"
 "Однако, если есть серьёзная ошибка, такая, как аварийное завершение во время "
-"воспроизведения особого файла, то мы\n"
+"воспроизведения конкретного файла, то мы\n"
 " хотели бы знать об этом.\n"
 "\n"
-"Однако, мы просим вас остерегаться от простых ошибок, отличающахся от "
-"описанных выше.\n"
+"Однако, мы просим вас воздержаться от уведомления о простых ошибках.\n"
 "Заранее благодарим!"
 
 #: src/audacious/ui_misc.c:74
@@ -424,7 +422,7 @@ msgid ""
 "would likely\n"
 "not know about otherwise."
 msgstr ""
-"Более того, мы -- разработчики. Мы не читаем блоги на регулярной основе. "
+"Более того, мы ― разработчики. Мы не читаем блоги на регулярной основе. "
 "Если обнаружена серьёзная ошибка,\n"
 "мы просим вас представить её нашему вниманию через систему отслеживания "
 "ошибок на сайте http://jira.atheme.org/,\n"
@@ -432,7 +430,7 @@ msgstr ""
 "\n"
 "Это поможет нам получить больше информации о ваших проблемах, о которых мы, "
 "вероятно,\n"
-" не узнаем иными способом."
+"не узнаем иным способом."
 
 #: src/audacious/ui_preferences.c:121
 msgid "Audio"
@@ -444,7 +442,7 @@ msgstr "Replay Gain"
 
 #: src/audacious/ui_preferences.c:123
 msgid "Network"
-msgstr ""
+msgstr "Сеть"
 
 #: src/audacious/ui_preferences.c:124
 msgid "Playback"
@@ -548,9 +546,8 @@ msgid "Arabic"
 msgstr "Арабский"
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Polish"
-msgstr "Польский:"
+msgstr "Польский"
 
 #: src/audacious/ui_preferences.c:159
 msgid "Universal"
@@ -614,7 +611,7 @@ msgid ""
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 "<span size=\"small\">Помните, что наиболее эффективный способ избежать "
-"срезания, -- не использовать положительные значения, указанные выше.</span>"
+"срезания, ― не использовать выше положительные значения.</span>"
 
 #: src/audacious/ui_preferences.c:197
 msgid "<b>Replay Gain configuration</b>"
@@ -692,14 +689,14 @@ msgstr "<b>Воспроизведение</b>"
 
 #: src/audacious/ui_preferences.c:231
 msgid "Continue playback on startup"
-msgstr "Продолжать проигрывание при запуске"
+msgstr "Продолжать воспроизведение при запуске"
 
 #: src/audacious/ui_preferences.c:232
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
-"После запуска Audacious автоматически продолжать проигрывание с момента "
+"После запуска Audacious, автоматически продолжать проигрывание с момента "
 "остановки."
 
 #: src/audacious/ui_preferences.c:233
@@ -714,7 +711,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:235
 msgid "Clear current playlist when opening new files"
-msgstr ""
+msgstr "Очистить текущий список воспроизведения при открытии новых файлов "
 
 #: src/audacious/ui_preferences.c:240
 msgid "Auto character encoding detector for:"
@@ -862,7 +859,7 @@ msgid ""
 "number, track length, and artwork."
 msgstr ""
 "Включить показ всплывающего окна с информацией о выбранной дорожке в списке "
-"воспроизведения. Окно содержит название песни, название альбома, стиль, год, "
+"воспроизведения. Окно содержит название песни, название альбома, жанр, год, "
 "номер дорожки, длительность песни и обложку альбома."
 
 #: src/audacious/ui_preferences.c:1961
@@ -948,70 +945,68 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
+"Вы уверены, что хотите закрыть %s?  В этом случае все изменения "
+"с момента экспорта списка воспроизведения будут утеряны."
 
 #: src/libaudgui/confirm.c:72
-#, fuzzy
 msgid "_Don't show this message again"
-msgstr "Больше не показывать это предупреждение"
+msgstr "Больше не _показывать это предупреждение"
 
 #: src/libaudgui/effects-menu.c:51
 msgid "settings ..."
-msgstr ""
+msgstr "настройки ..."
 
 #: src/libaudgui/equalizer.c:68
-#, fuzzy
 msgid "_Enable"
-msgstr "Включен"
+msgstr "_Включить"
 
 #: src/libaudgui/equalizer.c:139
 msgid "60 Hz"
-msgstr ""
+msgstr "60 Гц"
 
 #: src/libaudgui/equalizer.c:140
 msgid "170 Hz"
-msgstr ""
+msgstr "170 Гц"
 
 #: src/libaudgui/equalizer.c:140
 msgid "310 Hz"
-msgstr ""
+msgstr "310 Гц"
 
 #: src/libaudgui/equalizer.c:140
 msgid "600 Hz"
-msgstr ""
+msgstr "600 Гц"
 
 #: src/libaudgui/equalizer.c:140
 msgid "1 kHz"
-msgstr ""
+msgstr "1 кГц"
 
 #: src/libaudgui/equalizer.c:140
 msgid "3 kHz"
-msgstr ""
+msgstr "3 кГц"
 
 #: src/libaudgui/equalizer.c:141
 msgid "6 kHz"
-msgstr ""
+msgstr "6 кГц"
 
 #: src/libaudgui/equalizer.c:141
 msgid "12 kHz"
-msgstr ""
+msgstr "12 кГц"
 
 #: src/libaudgui/equalizer.c:141
 msgid "14 kHz"
-msgstr ""
+msgstr "14 кГц"
 
 #: src/libaudgui/equalizer.c:141
 msgid "16 kHz"
-msgstr ""
+msgstr "16 кГц"
 
 #: src/libaudgui/equalizer.c:146
-#, fuzzy
 msgid "Equalizer"
-msgstr "Показать эквалайзер"
+msgstr "Эквалайзер"
 
 #: src/libaudgui/equalizer.c:162
-#, fuzzy
 msgid "Preamp"
-msgstr "Предварительное усиление:"
+msgstr "Пред. усиление"
 
 #: src/libaudgui/infopopup.c:235
 msgid "Track Number"
@@ -1698,7 +1693,7 @@ msgstr "%d кб/с"
 #: src/libaudgui/infowin.c:888
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "Нет информации для %s.\n"
 
 #: src/libaudgui/ui_about.c:126 src/libaudgui/ui_credits.c:138
 msgid "About Audacious"
@@ -1730,11 +1725,11 @@ msgstr "Закрыть окно при добавлении"
 
 #: src/libaudgui/ui_jumptotrack.c:141
 msgid "Un_queue"
-msgstr "Убрать из очереди"
+msgstr "_Убрать из очереди"
 
 #: src/libaudgui/ui_jumptotrack.c:143 src/libaudgui/ui_jumptotrack.c:523
 msgid "_Queue"
-msgstr "В очередь"
+msgstr "В _очередь"
 
 #: src/libaudgui/ui_jumptotrack.c:410
 msgid "Jump to Track"
@@ -1746,7 +1741,7 @@ msgstr "Фильтр: "
 
 #: src/libaudgui/ui_jumptotrack.c:454
 msgid "_Filter:"
-msgstr "Фильтр:"
+msgstr "_Фильтр:"
 
 #: src/libaudgui/ui_jumptotrack.c:472
 msgid "Remember"
@@ -1754,7 +1749,7 @@ msgstr "Запомнить"
 
 #: src/libaudgui/ui_jumptotrack.c:481
 msgid "Clea_r"
-msgstr "Очистить"
+msgstr "О_чистить"
 
 #: src/libaudgui/ui_jumptotrack.c:515
 msgid "Close on Jump"
@@ -1773,9 +1768,8 @@ msgid "_Rename"
 msgstr "_Переименовать"
 
 #: src/libaudgui/ui_playlist_manager.c:249
-#, fuzzy
 msgid "_Close dialog on activating playlist"
-msgstr "Закрыть окно при открытии"
+msgstr "_Закрыть окно при выборе списка"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Add/Open URL Dialog"
