@@ -3,7 +3,6 @@ src/audacious/auddrct.c
 src/audacious/credits.c
 src/audacious/equalizer_preset.c
 src/audacious/folder-add.c
-src/audacious/input.c
 src/audacious/interface.c
 src/audacious/intl/os2compat.c
 src/audacious/logger.c
@@ -11,8 +10,6 @@ src/audacious/main.c
 src/audacious/playback.c
 src/audacious/playlist-new.c
 src/audacious/pluginenum.c
-src/audacious/ui_fileinfo.c
-src/audacious/ui_fileinfopopup.c
 src/audacious/ui_headless.c
 src/audacious/ui_misc.c
 src/audacious/ui_preferences.c
@@ -20,10 +17,16 @@ src/audacious/util.c
 src/audtool/handlers_playlist.c
 src/audtool/handlers_vitals.c
 src/libaudcore/audstrings.c
+src/libaudgui/confirm.c
+src/libaudgui/effects-menu.c
+src/libaudgui/equalizer.c
+src/libaudgui/infopopup.c
+src/libaudgui/infowin.c
 src/libaudgui/ui_about.c
 src/libaudgui/ui_credits.c
 src/libaudgui/ui_fileopener.c
 src/libaudgui/ui_jumptotrack.c
+src/libaudgui/ui_playlist_manager.c
 src/libaudgui/ui_urlopener.c
 src/libeggsmclient/eggdesktopfile.c
 src/libeggsmclient/eggsmclient.c
