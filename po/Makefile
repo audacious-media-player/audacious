@@ -54,6 +54,7 @@ update-pot:
 	@echo Updating $(POTTEMPLATE) ...
 	xgettext --default-domain=$(PACKAGE) --language=C \
 	--keyword=_ --keyword=N_ --from-code="utf-8" \
+	--msgid-bugs-address="http://jira.atheme.org/" \
 	--directory=.. --files-from=POTFILES.in -o $(POTTEMPLATE)
 
 update-po: update-pot
