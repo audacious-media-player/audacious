@@ -372,7 +372,7 @@ msgid ""
 "<b>Please don't file bugs at this point unless they represent major problems."
 "</b>"
 msgstr "<b>Bitte keine Bugreports erstellen, außer es handelt sich um einen schweren Bug."
-"</b>""
+"</b>"
 
 #: src/audacious/ui_misc.c:64
 msgid ""
