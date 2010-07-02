@@ -96,7 +96,7 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     g_return_val_if_fail(str != NULL, NULL);
 
 #ifdef USE_CHARDET
-    if (dfa_validate_utf8(str, len))
+    if (libguess_validate_utf8(str, len))
     {
         if (len < 0)
             len = strlen (str);
