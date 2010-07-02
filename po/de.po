@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2010-06-27 16:07+0300\n"
-"PO-Revision-Date: 2010-06-27 20:51+0100\n"
+"PO-Revision-Date: 2010-07-01 23:33+0100\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: german <psic4t@netbands.de>\n"
 "Language: \n"
@@ -682,7 +682,7 @@ msgstr "Nicht in der Wiedergabeliste fortfahren"
 #: src/audacious/ui_preferences.c:234
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
-"Nicht automatisch mit dem nächsten Titel fortfahren, wenn ein Titel zuende "
+"Nicht automatisch mit dem nächsten Titel fortfahren, wenn ein Titel zu Ende "
 "gespielt wurde."
 
 #: src/audacious/ui_preferences.c:235
@@ -848,11 +848,11 @@ msgstr "<b>Audio-System:</b>"
 
 #: src/audacious/ui_preferences.c:2058
 msgid "Buffer size:"
-msgstr "Puffergrösse:"
+msgstr "Puffergröße:"
 
 #: src/audacious/ui_preferences.c:2076
 msgid "Current output plugin:"
-msgstr "Aktives Ausgabe-Plugin"
+msgstr "Aktives Ausgabe-Plugin:"
 
 #: src/audacious/ui_preferences.c:2105
 msgid "Output Plugin Preferences"
@@ -922,11 +922,12 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
+"Wollen Sie wirklich %s löschen?  Alle seit der letzten Speicherung geänderten "
+"Einträge gehen dadurch verloren."
 
 #  -m, --show-main-window switch
 #  -m, --show-main-window switch
 #: src/libaudgui/confirm.c:72
-#, fuzzy
 msgid "_Don't show this message again"
 msgstr "Diese Warnung nicht mehr anzeigen"
 
@@ -936,9 +937,8 @@ msgid "settings ..."
 msgstr "Suche ..."
 
 #: src/libaudgui/equalizer.c:68
-#, fuzzy
 msgid "_Enable"
-msgstr "Aktiviert"
+msgstr "_Aktiv"
 
 #: src/libaudgui/equalizer.c:139
 msgid "60 Hz"
@@ -1750,9 +1750,8 @@ msgid "_Rename"
 msgstr "_Umbenennen"
 
 #: src/libaudgui/ui_playlist_manager.c:249
-#, fuzzy
 msgid "_Close dialog on activating playlist"
-msgstr "Dialog beim Öffnen schließen"
+msgstr "Dialog beim Öffnen einer Liste schließen"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Add/Open URL Dialog"
