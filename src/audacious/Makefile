@@ -82,7 +82,6 @@ DATA = images/about-logo.png				\
        images/replay_gain.png
 
 CLEAN = build_stamp.c dbus-client-bindings.h dbus-server-bindings.h
-EXT_DEPS = ../libguess/libguess.a
 
 ifeq ($(USE_EGGSM),yes)
 EXT_DEPS += ../libeggsmclient/libeggsmclient.a
@@ -126,7 +125,6 @@ LIBS += ${LDADD}						\
 		-L../libaudgui -laudgui \
 		-L../libaudtag -laudtag		\
 		${LIBINTL}						\
-		../libguess/libguess.a			\
 		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\
 		${GTHREAD_LIBS}					\
