@@ -121,7 +121,11 @@ dnl ===============
 AUD_ARG_ENABLE([chardet], [yes],
 [charset detection support],
 [
-    AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
+    PKG_CHECK_MODULES([LIBGUESS], [libguess], [enable_chardet=yes], [enable_chardet=no])
+
+    if test "x$enable_chardet" = "xyes"; then
+        AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
+    fi
 ])
 AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
 

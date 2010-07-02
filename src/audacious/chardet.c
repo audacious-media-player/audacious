@@ -25,7 +25,7 @@
 #include "main.h"
 
 #ifdef USE_CHARDET
-#  include "../libguess/libguess.h"
+#  include <libguess.h>
 #endif
 
 gchar *
@@ -60,7 +60,7 @@ cd_str_to_utf8(const gchar * str)
 
     /* Already UTF-8? */
 #ifdef USE_CHARDET
-    if (dfa_validate_utf8(str, strlen(str)))
+    if (libguess_validate_utf8(str, strlen(str)))
         return g_strdup(str);
 #else
     if (g_utf8_validate(str, strlen(str), NULL))
@@ -119,7 +119,7 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
     if (det)
     {
 	AUDDBG("guess encoding (%s) %s\n", det, str);
-        encoding = (gchar *) guess_encoding(str, len, det);
+        encoding = (gchar *) libguess_determine_encoding(str, len, det);
         AUDDBG("encoding = %s\n", encoding);
         if (encoding == NULL)
             goto fallback;

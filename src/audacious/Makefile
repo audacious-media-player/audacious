@@ -113,6 +113,7 @@ CPPFLAGS += -DHAVE_CONFIG_H		\
 		${SIMD_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
 		${EGGSM_CFLAGS}			\
+		${LIBGUESS_CFLAGS}		\
 		-I.. -I../..			\
 		-I./intl			\
 		-I.				\
@@ -133,7 +134,8 @@ LIBS += ${LDADD}						\
 		${DBUS_LIBS}					\
 		${MOWGLI_LIBS}					\
 		${LIBMCS_LIBS}					\
-		${REGEX_LIBS}
+		${REGEX_LIBS}					\
+		${LIBGUESS_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
 
