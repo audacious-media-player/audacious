@@ -19,10 +19,12 @@
  * using our public API to be a derived work.
  */
 
-#include <glib.h>
+#include <assert.h>
 #include <inttypes.h>
 #include <stdlib.h>
 #include <time.h>
+
+#include <glib.h>
 
 #include "config.h"
 #include "audstrings.h"
@@ -35,6 +37,7 @@
 
 #define SCAN_DEBUG(...)
 
+#define SCAN_THREADS 4
 #define STATE_FILE "playlist-state"
 
 #define DECLARE_PLAYLIST \
@@ -137,13 +140,14 @@ static struct playlist *playing_playlist;
 static gint update_source, update_level;
 static gint scan_source;
 static GMutex * scan_mutex;
-static GCond * scan_cond;
-static const gchar * scan_filename;
-static InputPlugin * scan_decoder;
-static Tuple * scan_tuple;
+static GCond * scan_conds[SCAN_THREADS];
+static const gchar * scan_filenames[SCAN_THREADS];
+static InputPlugin * scan_decoders[SCAN_THREADS];
+static Tuple * scan_tuples[SCAN_THREADS];
 static gboolean scan_quit;
-static GThread * scan_thread;
-static gint scan_position, updated_ago;
+static GThread * scan_threads[SCAN_THREADS];
+static gint scan_positions[SCAN_THREADS];
+gint updated_ago;
 
 static void * scanner (void * unused);
 
@@ -367,65 +371,80 @@ static void queue_update (gint level)
 /* scan_mutex must be locked! */
 void scan_receive (void)
 {
-    struct entry * entry = index_get (active_playlist->entries, scan_position);
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+    {
+        struct entry * entry;
 
-    SCAN_DEBUG ("scan_receive\n");
-    entry_set_tuple (active_playlist, entry, scan_tuple);
+        if (! scan_filenames[i] || scan_decoders[i])
+            continue; /* thread not in use or still working */
 
-    if (scan_tuple == NULL)
-        entry->failed = TRUE;
+        SCAN_DEBUG ("receive (#%d): %d\n", i, scan_positions[i]);
+        entry = index_get (active_playlist->entries, scan_positions[i]);
+        entry_set_tuple (active_playlist, entry, scan_tuples[i]);
 
-    scan_filename = NULL;
-    scan_decoder = NULL;
-    scan_tuple = NULL;
+        if (! scan_tuples[i])
+            entry->failed = TRUE;
+
+        scan_filenames[i] = NULL;
+        scan_tuples[i] = NULL;
+
+        updated_ago ++;
+    }
 }
 
 static gboolean scan_next (void * unused)
 {
-    gint entries;
+    gint entries = index_count (active_playlist->entries);
+    gint search = 0;
 
-    SCAN_DEBUG ("scan_next: locking...\n");
     g_mutex_lock (scan_mutex);
-    SCAN_DEBUG (" ...ok\n");
 
-    if (scan_filename != NULL)
+    if (scan_source)
     {
-        scan_receive ();
-        scan_position ++;
-        updated_ago ++;
+        g_source_remove (scan_source);
+        scan_source = 0;
     }
 
-    entries = index_count (active_playlist->entries);
+    scan_receive ();
 
-    for (; scan_position < entries; scan_position ++)
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+        search = MAX (search, scan_positions[i] + 1);
+
+    for (gint i = 0; i < SCAN_THREADS; i ++)
     {
-        struct entry * entry = index_get (active_playlist->entries,
-         scan_position);
+        if (scan_filenames[i])
+            continue; /* thread already in use */
 
-        if (entry->tuple != NULL)
-            continue;
-
-        entry_check_has_decoder (entry);
-
-        if (! entry->failed)
+        for (; search < entries; search ++)
         {
-            SCAN_DEBUG (" ...waking scanner\n");
-            scan_filename = entry->filename;
-            scan_decoder = entry->decoder;
-            g_cond_signal (scan_cond);
+            struct entry * entry = index_get (active_playlist->entries, search);
+
+            if (entry->tuple)
+                continue;
+
+            entry_check_has_decoder (entry);
+
+            if (entry->failed)
+                continue;
+
+            SCAN_DEBUG ("start (#%d): %d\n", i, search);
+            scan_positions[i] = search;
+            scan_filenames[i] = entry->filename;
+            scan_decoders[i] = entry->decoder;
+            g_cond_signal (scan_conds[i]);
+
+            search ++;
             break;
         }
     }
 
-    if (updated_ago >= 10 || (scan_position == entries && updated_ago > 0))
+    if (updated_ago >= 10 || (search == entries && updated_ago > 0))
     {
-        SCAN_DEBUG (" ...queueing update\n");
+        SCAN_DEBUG ("queue update\n");
         queue_update (PLAYLIST_UPDATE_METADATA);
         updated_ago = 0;
     }
 
-    SCAN_DEBUG (" ...unlocking\n");
-    scan_source = 0;
     g_mutex_unlock (scan_mutex);
     return FALSE;
 }
@@ -433,22 +452,28 @@ static gboolean scan_next (void * unused)
 static void scan_continue (void)
 {
     SCAN_DEBUG ("scan_continue\n");
-    scan_source = g_idle_add_full (G_PRIORITY_LOW, scan_next, NULL, NULL);
+    if (! scan_source)
+        scan_source = g_idle_add_full (G_PRIORITY_LOW, scan_next, NULL, NULL);
 }
 
 static void scan_reset (void)
 {
     SCAN_DEBUG ("scan_reset\n");
-    scan_position = 0;
+
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+    {
+        assert (! scan_filenames[i]); /* scan in progress == very, very bad */
+        scan_positions[i] = -1;
+    }
+
     updated_ago = 0;
     scan_continue ();
 }
 
 static void scan_stop (void)
 {
-    SCAN_DEBUG ("scan_stop: locking...\n");
+    SCAN_DEBUG ("scan_stop\n");
     g_mutex_lock (scan_mutex);
-    SCAN_DEBUG (" ...ok\n");
 
     if (scan_source != 0)
     {
@@ -456,58 +481,112 @@ static void scan_stop (void)
         scan_source = 0;
     }
 
-    if (scan_filename != NULL)
-        scan_receive ();
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+    {
+        if (! scan_filenames[i])
+            continue;
 
-    SCAN_DEBUG (" ...unlocking\n");
+        while (scan_decoders[i])
+        {
+            SCAN_DEBUG ("wait for stop (#%d)\n", i);
+            g_cond_wait (scan_conds[i], scan_mutex);
+        }
+    }
+
+    scan_receive ();
     g_mutex_unlock (scan_mutex);
 }
 
-/* scan_mutex must be locked! */
-static void * scanner (void * unused)
+static void * scanner (void * data)
 {
-    for (;;)
+    gint i = GPOINTER_TO_INT (data);
+
+    g_mutex_lock (scan_mutex);
+    g_cond_signal (scan_conds[i]);
+
+    while (1)
     {
-        SCAN_DEBUG ("scanner: waiting...\n");
-        g_cond_wait (scan_cond, scan_mutex);
+        SCAN_DEBUG ("scanner (#%d): wait\n", i);
+        g_cond_wait (scan_conds[i], scan_mutex);
 
         if (scan_quit)
-        {
-            SCAN_DEBUG (" ...exiting\n");
-            return NULL;
-        }
+            break;
 
-        if (scan_filename == NULL)
+        if (! scan_filenames[i])
         {
-            SCAN_DEBUG (" ...nothing to scan\n");
+            SCAN_DEBUG ("scanner (#%d): idle\n", i);
             continue;
         }
 
-        SCAN_DEBUG (" ...scanning\n");
-        scan_tuple = file_read_tuple (scan_filename, scan_decoder);
+        SCAN_DEBUG ("scanner (#%d): scan %s\n", i, scan_filenames[i]);
+        scan_tuples[i] = file_read_tuple (scan_filenames[i], scan_decoders[i]);
+        scan_decoders[i] = NULL;
+        g_cond_signal (scan_conds[i]);
         scan_continue ();
     }
+
+    SCAN_DEBUG ("scanner (#%d): exit\n", i);
+    g_mutex_unlock (scan_mutex);
+    return NULL;
+}
+
+/* As soon as we know the caller is looking for metadata, we start the threaded
+ * scanner.  Though it may be faster in the short run simply to scan the entry
+ * we are concerned with in the main thread, this is better in the long run
+ * because the scanner can work on the following entries while the caller is
+ * processing this one. */
+static gboolean scan_threaded (struct playlist * playlist, struct entry * entry)
+{
+    gint i;
+
+    if (playlist != active_playlist)
+        return FALSE;
+
+    scan_next (NULL);
+
+    if (entry->tuple != NULL || entry->failed)
+        return TRUE;
+
+    for (i = 0; i < SCAN_THREADS; i ++)
+    {
+        if (entry->number == scan_positions[i])
+            goto FOUND;
+    }
+
+    SCAN_DEBUG ("manual scan of %d\n", entry->number);
+    return FALSE;
+
+FOUND:
+    SCAN_DEBUG ("threaded scan (#%d) of %d\n", i, entry->number);
+    g_mutex_lock (scan_mutex);
+    scan_receive ();
+
+    while (scan_filenames[i])
+    {
+        SCAN_DEBUG ("wait (#%d) for %d\n", i, entry->number);
+        g_cond_wait (scan_conds[i], scan_mutex);
+        scan_receive ();
+    }
+
+    g_mutex_unlock (scan_mutex);
+    return TRUE;
 }
 
 static void check_scanned (struct playlist * playlist, struct entry * entry)
 {
     if (entry->tuple != NULL || entry->failed)
         return;
-
-    METADATA_WILL_CHANGE;
+    if (scan_threaded (playlist, entry))
+        return;
 
     entry_check_has_decoder (entry);
+    entry_set_tuple (playlist, entry, file_read_tuple (entry->filename,
+     entry->decoder));
 
-    if (entry->tuple == NULL && ! entry->failed) /* scanner did it for us? */
-    {
-        entry_set_tuple (playlist, entry, file_read_tuple (entry->filename,
-         entry->decoder));
+    if (! entry->tuple)
+        entry->failed = TRUE;
 
-        if (entry->tuple == NULL)
-            entry->failed = TRUE;
-    }
-
-    METADATA_HAS_CHANGED;
+    queue_update (PLAYLIST_UPDATE_METADATA);
 }
 
 void playlist_init (void)
@@ -527,14 +606,24 @@ void playlist_init (void)
     update_level = 0;
 
     scan_mutex = g_mutex_new ();
-    scan_cond = g_cond_new ();
-    scan_filename = NULL;
-    scan_decoder = NULL;
-    scan_tuple = NULL;
+    memset (scan_filenames, 0, sizeof scan_filenames);
+    memset (scan_decoders, 0, sizeof scan_decoders);
+    memset (scan_tuples, 0, sizeof scan_tuples);
     scan_source = 0;
-    g_mutex_lock (scan_mutex);
     scan_quit = FALSE;
-    scan_thread = g_thread_create (scanner, NULL, TRUE, NULL);
+
+    g_mutex_lock (scan_mutex);
+
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+    {
+        scan_conds[i] = g_cond_new ();
+        scan_threads[i] = g_thread_create (scanner, GINT_TO_POINTER (i), TRUE,
+         NULL);
+        g_cond_wait (scan_conds[i], scan_mutex);
+    }
+
+    g_mutex_unlock (scan_mutex);
+
     scan_reset ();
 }
 
@@ -543,11 +632,18 @@ void playlist_end(void)
     gint count;
 
     scan_stop ();
-    g_mutex_lock (scan_mutex);
     scan_quit = TRUE;
-    g_cond_signal (scan_cond);
-    g_mutex_unlock (scan_mutex);
-    g_thread_join (scan_thread);
+
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+    {
+        g_mutex_lock (scan_mutex);
+        g_cond_signal (scan_conds[i]);
+        g_mutex_unlock (scan_mutex);
+        g_thread_join (scan_threads[i]);
+        g_cond_free (scan_conds[i]);
+    }
+
+    g_mutex_free (scan_mutex);
 
     if (update_source != 0)
         g_source_remove(update_source);
