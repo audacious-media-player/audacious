@@ -37,7 +37,7 @@ static void NAME (gfloat * in, TYPE * out, gint samples) \
     gfloat * end = in + samples; \
     while (in < end) \
     { \
-        float f = * in ++; \
+        gdouble f = * in ++; \
         * out ++ = SWAP (OFFSET + (TYPE) (CLAMP (f, -1, 1) * (gdouble) RANGE)); \
     } \
 }
