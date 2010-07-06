@@ -344,14 +344,12 @@ if test "x$AUDACIOUS_PATH" != "xno"; then
 echo "  Current Audacious executable:           $AUDACIOUS_PATH"
 fi
 
-echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Additional debugging output:            $enable_debug"
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  D-Bus support:                          $enable_dbus"
 echo "  Session management (eggsm)              $enable_sm"
-echo "  XSPF playlists                          $enable_xspf"
 echo ""
 echo "  SSE2:                                   $enable_sse2"
 echo "  AltiVec:                                $enable_altivec"
