@@ -305,7 +305,8 @@ static void infopopup_show (const gchar * filename, Tuple * tuple, const gchar *
     gint x, y, h, w;
     gchar * last_artwork;
     gint length, value;
-    gchar * tmp, * markup;
+    gchar * tmp;
+    const gchar * title2;
 
     if (infopopup == NULL)
         infopopup_create ();
@@ -315,13 +316,11 @@ static void infopopup_show (const gchar * filename, Tuple * tuple, const gchar *
     g_free (g_object_get_data ((GObject *) infopopup, "file"));
     g_object_set_data ((GObject *) infopopup, "file", g_strdup (filename));
 
-    markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>",
-     _("Title"));
-    gtk_label_set_markup ((GtkLabel *) g_object_get_data ((GObject *) infopopup,
-     "header_title"), markup);
-    g_free (markup);
-    infopopup_entry_set_text ("label_title", title);
+    /* use title from tuple if possible */
+    if ((title2 = tuple_get_string (tuple, FIELD_TITLE, NULL)))
+        title = title2;
 
+    infopopup_update_data (title, "label_title", "header_title");
     infopopup_update_data (tuple_get_string (tuple, FIELD_ARTIST, NULL),
      "label_artist", "header_artist");
     infopopup_update_data (tuple_get_string (tuple, FIELD_ALBUM, NULL),
