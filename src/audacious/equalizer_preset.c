@@ -64,6 +64,7 @@ equalizer_read_presets(const gchar *basename)
         g_free(filename);
         filename = g_build_filename(DATA_DIR, basename, NULL);
 
+        error = NULL;
         if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, &error))
         {
            g_free(filename);
