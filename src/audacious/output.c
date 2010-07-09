@@ -122,7 +122,6 @@ void output_init (void)
     output_mutex = g_mutex_new ();
     output_opened = FALSE;
     output_leave_open = FALSE;
-    vis_runner_init ();
 }
 
 void output_cleanup (void)
@@ -149,7 +148,7 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
 
     if (output_leave_open && COP->set_written_time != NULL)
     {
-        vis_runner_time_offset (- frames_written * (gint64) 1000 / decoder_rate);
+        vis_runner_time_offset (- COP->written_time ());
         COP->set_written_time (0);
     }
 
@@ -348,8 +347,13 @@ static void apply_software_volume (gfloat * data, gint channels, gint frames)
 
 static void do_write (void * data, gint samples)
 {
+    if (! samples)
+        return;
+
     void * allocated = NULL;
 
+    vis_runner_pass_audio (COP->written_time (), data, samples, output_channels,
+     output_rate);
     eq_filter (data, samples);
     apply_software_volume (data, output_channels, samples / output_channels);
 
@@ -420,8 +424,6 @@ static void output_write_audio (void * data, gint size)
     }
 
     apply_replay_gain (data, samples);
-    vis_runner_pass_audio (frames_written * (gint64) 1000 / decoder_rate, data,
-     samples, decoder_channels);
     new_effect_process ((gfloat * *) & data, & samples);
 
     if (data != allocated)

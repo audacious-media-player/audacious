@@ -1,6 +1,6 @@
 /*
  * vis_runner.h
- * Copyright 2009 John Lindgren
+ * Copyright 2009-2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -19,11 +19,10 @@
  * using our public API to be a derived work.
  */
 
-void vis_runner_init (void);
 void vis_runner_start_stop (gboolean playing, gboolean paused);
 void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
- channels);
+ channels, gint rate);
 void vis_runner_time_offset (gint offset);
 void vis_runner_flush (void);
-void vis_runner_add_hook (HookFunction func, gpointer user_data);
+void vis_runner_add_hook (HookFunction func, void * user_data);
 void vis_runner_remove_hook (HookFunction func);
