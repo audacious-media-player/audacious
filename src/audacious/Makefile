@@ -29,7 +29,6 @@ SRCS = auddrct.c								\
        pluginenum.c								\
        plugin-registry.c \
        probe.c \
-       rcfile.c									\
        signals.c								\
        ui_headless.c							\
        ui_plugin_menu.c \
@@ -52,7 +51,6 @@ INCLUDES = auddrct.h			\
            equalizer_preset.h			\
            eventqueue.h			\
            flow.h				\
-           rcfile.h				\
            i18n.h				\
            input.h				\
            hook.h				\
