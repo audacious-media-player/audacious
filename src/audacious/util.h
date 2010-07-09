@@ -52,13 +52,6 @@ gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
 
 
-INIFile *open_ini_file(const gchar *filename);
-void close_ini_file(INIFile *key_file);
-gchar *read_ini_string(INIFile *key_file, const gchar *section,
-					   const gchar *key);
-GArray *read_ini_array(INIFile *key_file, const gchar *section,
-                       const gchar *key);
-
 GArray *string_to_garray(const gchar * str);
 
 void glist_movedown(GList * list);

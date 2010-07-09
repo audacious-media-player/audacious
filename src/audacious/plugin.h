@@ -124,8 +124,6 @@ typedef struct {
     gfloat album_peak;
 } ReplayGainInfo;
 
-typedef GHashTable INIFile;
-
 #include "audacious/input.h"
 #include "audacious/hook.h"
 #include "audacious/flow.h"
@@ -296,11 +294,11 @@ struct _AudaciousFuncTableV1 {
     void (*util_add_url_history_entry)(const gchar * url);
 
     /* INI funcs */
-    INIFile *(*open_ini_file)(const gchar *filename);
-    void (*close_ini_file)(INIFile *key_file);
-    gchar *(*read_ini_string)(INIFile *key_file, const gchar *section,
+    gpointer (*open_ini_file)(const gchar *filename);
+    void (*close_ini_file)(gpointer key_file);
+    gchar *(*read_ini_string)(gpointer key_file, const gchar *section,
                                            const gchar *key);
-    GArray *(*read_ini_array)(INIFile *key_file, const gchar *section,
+    GArray *(*read_ini_array)(gpointer key_file, const gchar *section,
                        const gchar *key);
 
 
@@ -756,11 +754,6 @@ struct _AudaciousFuncTableV1 {
 #define aud_hook_dissociate_full        _audvt->hook_dissociate_full
 #define aud_hook_register               _audvt->hook_register
 #define aud_hook_call                   _audvt->hook_call
-
-#define aud_open_ini_file               _audvt->open_ini_file
-#define aud_close_ini_file              _audvt->close_ini_file
-#define aud_read_ini_string             _audvt->read_ini_string
-#define aud_read_ini_array              _audvt->read_ini_array
 
 #define audacious_menu_plugin_item_add  _audvt->menu_plugin_item_add
 #define audacious_menu_plugin_item_remove _audvt->menu_plugin_item_remove

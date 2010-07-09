@@ -236,11 +236,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .hook_register = hook_register,
     .hook_call = hook_call,
 
-    .open_ini_file = open_ini_file,
-    .close_ini_file = close_ini_file,
-    .read_ini_string = read_ini_string,
-    .read_ini_array = read_ini_array,
-
     .menu_plugin_item_add = menu_plugin_item_add,
     .menu_plugin_item_remove = menu_plugin_item_remove,
 
