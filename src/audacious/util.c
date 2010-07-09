@@ -37,7 +37,6 @@
 #include <ctype.h>
 #include <math.h>
 
-#include "platform/smartinclude.h"
 #include <errno.h>
 
 #ifdef HAVE_FTS_H

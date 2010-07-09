@@ -34,8 +34,6 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#include "smartinclude.h"
-
 struct EggDesktopFile {
   GKeyFile           *key_file;
   char               *source;

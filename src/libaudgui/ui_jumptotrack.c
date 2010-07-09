@@ -33,8 +33,8 @@
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
 
-/* GDK including */
-#include "platform/smartinclude.h"
+#include <gdk/gdk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include <math.h>
 #include <stdlib.h>

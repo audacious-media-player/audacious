@@ -27,7 +27,7 @@
 #  include "config.h"
 #endif
 
-#include "platform/smartinclude.h"
+#include <gtk/gtk.h>
 
 #include "main.h"
 

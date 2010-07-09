@@ -173,7 +173,6 @@ AC_PATH_PROG([AR], [ar])
 AC_PATH_PROG([TR], [tr])
 AC_PATH_PROG([RANLIB], [ranlib])
 
-
 dnl Check for Gtk+/GLib and pals
 dnl ============================
 AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.12.0], [Glib2])
@@ -244,6 +243,8 @@ AUD_ARG_ENABLE([altivec], [yes], [AltiVec support],
         enable_altivec="no"
     ])
 ])
+
+AC_CHECK_FUNC([getrlimit])
 
 ])
 
