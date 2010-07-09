@@ -307,7 +307,7 @@ static void handle_cmd_line_options_first(void)
         mcs_handle_t *db = cfg_db_open();
         cfg_db_get_string(db, NULL, "interface", &options.interface);
         if (options.interface == NULL)
-            options.interface = g_strdup("skinned");
+            options.interface = g_strdup("gtkui");
         cfg_db_close(db);
     }
 }
