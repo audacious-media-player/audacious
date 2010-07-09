@@ -20,8 +20,6 @@
 #ifndef AUDACIOUS_EQUALIZER_PRESET_H
 #define AUDACIOUS_EQUALIZER_PRESET_H
 
-#include "audacious/rcfile.h"
-
 struct _EqualizerPreset {
     gchar *name;
     gfloat preamp, bands[10];
