@@ -369,6 +369,8 @@ void aud_quit(void)
     g_message("Plugin subsystem shutdown");
     plugin_system_cleanup();
 
+    cfg_db_flush (); /* must be after plugin cleanup */
+
     g_message("Playlist cleanup");
     playlist_end();
 
@@ -416,6 +418,7 @@ static gboolean autosave_cb (void * unused)
 {
     g_message ("Saving configuration.\n");
     aud_config_save ();
+    cfg_db_flush ();
     save_playlists ();
     return TRUE;
 }

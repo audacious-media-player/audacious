@@ -16,6 +16,7 @@ G_BEGIN_DECLS
 
 mcs_handle_t *cfg_db_open();
 void cfg_db_close(mcs_handle_t *db);
+void cfg_db_flush (void);
 
 gboolean cfg_db_get_string(mcs_handle_t *db, const gchar *section,
                     const gchar *key, gchar **value);

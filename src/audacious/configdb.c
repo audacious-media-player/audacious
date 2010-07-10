@@ -28,7 +28,8 @@
 #define RCFILE_DEFAULT_SECTION_NAME "audacious"
 
 static gboolean mcs_initted = FALSE;
-
+static mcs_handle_t * config_handle = NULL;
+static gint config_refcount = 0;
 
 /**
  * Opens the configuration database.
@@ -44,17 +45,32 @@ cfg_db_open()
         mcs_initted = TRUE;
     }
 
-    return mcs_new(RCFILE_DEFAULT_SECTION_NAME);
+    if (! config_handle)
+        config_handle = mcs_new (RCFILE_DEFAULT_SECTION_NAME);
+
+    config_refcount ++;
+    return config_handle;
 }
 
 /**
  * Closes the configuration database.
  * @param[in] db A configuration database handle pointer.
  */
-void
-cfg_db_close(mcs_handle_t * db)
+void cfg_db_close (mcs_handle_t * handle)
 {
-    mcs_destroy(db);
+    g_return_if_fail (handle == config_handle);
+    g_return_if_fail (config_refcount > 0);
+    config_refcount --;
+}
+
+void cfg_db_flush (void)
+{
+    if (! config_handle)
+        return; /* nothing to do */
+
+    g_return_if_fail (! config_refcount);
+    mcs_destroy (config_handle);
+    config_handle = NULL;
 }
 
 /**
