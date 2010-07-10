@@ -85,7 +85,7 @@ void output_set_volume (gint l, gint r)
 }
 
 static GMutex * output_mutex;
-static gboolean output_opened, output_leave_open, output_paused;
+static gboolean output_opened, output_aborted, output_leave_open, output_paused;
 
 static AFormat decoder_format, output_format;
 static gint decoder_channels, decoder_rate, effect_channels, effect_rate,
@@ -188,6 +188,7 @@ static gboolean output_open_audio (AFormat format, gint rate, gint channels)
         }
     }
 
+    output_aborted = FALSE;
     output_leave_open = FALSE;
     output_paused = FALSE;
 
@@ -213,10 +214,14 @@ static void output_close_audio (void)
 static void output_flush (gint time)
 {
     LOCK;
+
     frames_written = time * (gint64) decoder_rate / 1000;
+    output_aborted = FALSE;
+
     vis_runner_flush ();
     new_effect_flush ();
     COP->flush (new_effect_decoder_to_output_time (time));
+
     UNLOCK;
 }
 
@@ -380,24 +385,37 @@ static void do_write (void * data, gint samples)
         }
     }
 
-    if (COP->buffer_free == NULL)
-        COP->write_audio (data, FMT_SIZEOF (output_format) * samples);
-    else
+    while (1)
     {
-        while (1)
+        gint ready;
+
+        if (COP->buffer_free)
+            ready = COP->buffer_free () / FMT_SIZEOF (output_format);
+        else
+            ready = output_channels * (output_rate / 50);
+
+        LOCK;
+
+        if (output_aborted)
         {
-            gint ready = COP->buffer_free () / FMT_SIZEOF (output_format);
-
-            ready = MIN (ready, samples);
-            COP->write_audio (data, FMT_SIZEOF (output_format) * ready);
-            data = (char *) data + FMT_SIZEOF (output_format) * ready;
-            samples -= ready;
-
-            if (samples == 0)
-                break;
-
-            g_usleep (50000);
+            UNLOCK;
+            break;
         }
+
+        UNLOCK;
+
+        ready = MIN (ready, samples);
+        COP->write_audio (data, FMT_SIZEOF (output_format) * ready);
+        data = (char *) data + FMT_SIZEOF (output_format) * ready;
+        samples -= ready;
+
+        if (! samples)
+            break;
+
+        if (COP->period_wait)
+            COP->period_wait ();
+        else if (COP->buffer_free)
+            g_usleep (20000);
     }
 
     g_free (allocated);
@@ -445,6 +463,15 @@ static void write_buffers (void)
     do_write (data, samples);
 }
 
+static void abort_write (void)
+{
+    COP->flush (0); /* signal wait to return immediately */
+
+    LOCK;
+    output_aborted = TRUE;
+    UNLOCK;
+}
+
 static void drain (void)
 {
     if (COP->buffer_playing != NULL)
@@ -467,6 +494,7 @@ struct OutputAPI output_api =
     .flush = output_flush,
     .written_time = get_written_time,
     .buffer_playing = output_buffer_playing,
+    .abort_write = abort_write,
 };
 
 gint get_output_time (void)

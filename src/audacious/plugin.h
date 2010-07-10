@@ -69,7 +69,7 @@
 //@{
 /** Preprocessor defines for different API features */
 #define __AUDACIOUS_NEWVFS__                /**< @deprecated define for availability of VFS API. */
-#define __AUDACIOUS_PLUGIN_API__ 14         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
+#define __AUDACIOUS_PLUGIN_API__ 15         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
 #define __AUDACIOUS_INPUT_PLUGIN_API__ 8    /**< Input plugin API version. */
 //@}
 
@@ -292,15 +292,6 @@ struct _AudaciousFuncTableV1 {
     gchar *(*util_get_localdir)(void);
     void (*util_menu_main_show)(gint x, gint y, guint button, guint time);
     void (*util_add_url_history_entry)(const gchar * url);
-
-    /* INI funcs */
-    gpointer (*open_ini_file)(const gchar *filename);
-    void (*close_ini_file)(gpointer key_file);
-    gchar *(*read_ini_string)(gpointer key_file, const gchar *section,
-                                           const gchar *key);
-    GArray *(*read_ini_array)(gpointer key_file, const gchar *section,
-                       const gchar *key);
-
 
     /* strings API */
     gchar *(*str_to_utf8)(const gchar * str);
@@ -975,13 +966,14 @@ struct _OutputPlugin {
     void (* set_written_time) (gint time);
     void (*flush) (gint time);
     void (*pause) (gshort paused);
-    gint (*buffer_free) (void); /* obsolete */
+    gint (* buffer_free) (void);
     gint (*buffer_playing) (void); /* obsolete */
     gint (*output_time) (void);
     gint (*written_time) (void);
 
     void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch); /* obsolete */
     void (* drain) (void);
+    void (* period_wait) (void);
 };
 
 struct _EffectPlugin {
@@ -1026,15 +1018,69 @@ struct _EffectPlugin {
 
 struct OutputAPI
 {
-    gint (* open_audio) (AFormat fmt, gint rate, gint nch);
+    /* In a multi-thread plugin, only one of these functions may be called at
+     * once (but see pause and abort_write for exceptions to this rule). */
+
+    /* Prepare the output system for playback in the specified format.  Returns
+     * nonzero on success.  If the call fails, no other output functions may be
+     * called. */
+    gint (* open_audio) (AFormat format, gint rate, gint channels);
+
+    /* Informs the output system of replay gain values for the current song so
+     * that volume levels can be adjusted accordingly, if the user so desires.
+     * This may be called at any time during playback should the values change. */
     void (* set_replaygain_info) (ReplayGainInfo * info);
-    void (* write_audio) (gpointer ptr, gint length);
+
+    /* Pass audio data to the output system for playback.  The data must be in
+     * the format passed to open_audio, and the length (in bytes) must be an
+     * integral number of frames.  This function blocks until all the data has
+     * been written (though it may not yet be heard by the user); if the output
+     * system is paused; this may be indefinitely.  See abort_write for a way to
+     * interrupt a blocked call. */
+    void (* write_audio) (void * data, gint length);
+
+    /* End playback.  Any audio data currently buffered by the output system
+     * will be discarded.  After the call, no other output functions, except
+     * open_audio, may be called. */
     void (* close_audio) (void);
 
+    /* Pause or unpause playback.  This function may be called during a call to
+     * write_audio, in which write_audio will block until playback is unpaused
+     * (but see abort_write to prevent the call from blocking). */
     void (* pause) (gboolean pause);
+
+    /* Discard any audio data currently buffered by the output system, and set
+     * the time counter to a new value.  This function is intended to be used
+     * for seeking. */
     void (* flush) (gint time);
+
+    /* Returns the time counter.  Note that this represents the amount of audio
+     * data passed to the output system, not the amount actually heard by the
+     * user.  This function is useful for handling a changed audio format:
+     * First, save the time counter using this function.  Second, call
+     * close_audio and then open_audio with the new format (note that the call
+     * may fail).  Finally, restore the time counter using flush. */
     gint (* written_time) (void);
+
+    /* Returns TRUE if there is data remaining in the output buffer; FALSE if
+     * all data written to the output system has been heard by the user.  This
+     * function should be polled (1/50 second is a reasonable delay between
+     * calls) at the end of a song before calling close_audio.  Once it returns
+     * FALSE, close_audio can be called without cutting off any of the end of
+     * the song. */
     gboolean (* buffer_playing) (void);
+
+    /* Interrupt a call to write_audio so that it returns immediately.  This
+     * works even when the call is blocked by pause.  Buffered audio data is
+     * discarded as in flush.  Until flush is called or the output system is
+     * reset, further calls to write_audio will have no effect and return
+     * immediately.  This function is intended to be used in seeking or
+     * stopping in a multi-thread plugin.  To seek, the handler function (called
+     * in the main thread) should first set a flag for the decoding thread and
+     * then call abort_write.  When the decoding thread notices the flag, it
+     * should do the actual seek, call flush, and finally clear the flag.  Once
+     * the flag is cleared, the handler function may return. */
+    void (* abort_write) (void);
 };
 
 struct _InputPlayback {
