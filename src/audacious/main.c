@@ -416,7 +416,7 @@ void init_playback_hooks(void)
 
 static gboolean autosave_cb (void * unused)
 {
-    g_message ("Saving configuration.\n");
+    g_message ("Saving configuration.");
     aud_config_save ();
     cfg_db_flush ();
     save_playlists ();
