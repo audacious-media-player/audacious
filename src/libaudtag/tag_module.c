@@ -50,8 +50,13 @@ tag_module_t * find_tag_module (VFSFile * fd, gint new_type)
             AUDDBG("not a seekable file\n");
             return NULL;
         }
-        if (((tag_module_t *) (mod->data))->can_handle_file(fd))
-            return (tag_module_t *) (mod->data);
+
+        if (((tag_module_t *) mod->data)->can_handle_file (fd))
+        {
+            AUDDBG ("Module %s accepted file.\n", ((tag_module_t *)
+             mod->data)->name);
+            return mod->data;
+        }
     }
 
     /* No existing tag; see if we can create a new one. */

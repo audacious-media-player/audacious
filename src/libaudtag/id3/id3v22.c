@@ -36,7 +36,6 @@ enum
     ID3_COMPOSER,
     ID3_COPYRIGHT,
     ID3_DATE,
-    ID3_TIME,
     ID3_LENGTH,
     ID3_ARTIST,
     ID3_TRACKNR,
@@ -51,7 +50,7 @@ enum
 };
 
 static const gchar * id3_frames[ID3_TAGS_NO] = {"TAL", "TT2", "TCM", "TCR",
-"TDA", "TIM", "TLE", "TPE", "TRK", "TYE", "TCO", "COM", "TSS", "TXX", "RVA", "TP1"};
+"TDA", "TLE", "TPE", "TRK", "TYE", "TCO", "COM", "TSS", "TXX", "RVA", "TP1"};
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
@@ -477,9 +476,6 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
             break;
           case ID3_DATE:
             associate_string (tuple, FIELD_DATE, NULL, data, size);
-            break;
-          case ID3_TIME:
-            associate_int (tuple, FIELD_LENGTH, NULL, data, size);
             break;
           case ID3_LENGTH:
             associate_int (tuple, FIELD_LENGTH, NULL, data, size);
