@@ -20,24 +20,22 @@
  */
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/vfs.h>
-#include <libaudcore/vfs_buffered_file.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "playlist-new.h"
 #include "plugin-registry.h"
 #include "probe.h"
+#include "probe-buffer.h"
 
 typedef struct
 {
     gchar * filename;
     VFSFile * handle;
+    gboolean buffered;
     InputPlugin * decoder;
 }
 ProbeState;
-
-// #define XXX_USE_BUFFERING
 
 static gboolean check_opened (ProbeState * state)
 {
@@ -45,14 +43,13 @@ static gboolean check_opened (ProbeState * state)
         return TRUE;
 
     AUDDBG ("Opening %s.\n", state->filename);
+    if ((state->buffered = aud_vfs_is_remote (state->filename)))
+        state->handle = probe_buffer_new (state->filename);
+    else
+        state->handle = vfs_fopen (state->filename, "r");
 
-#ifndef XXX_USE_BUFFERING
-    if ((state->handle = vfs_fopen (state->filename, "r")) != NULL)
+    if (state->handle != NULL)
         return TRUE;
-#else
-    if ((state->handle = vfs_buffered_file_new_from_uri(state->filename)) != NULL)
-        return TRUE;
-#endif
 
     AUDDBG ("FAILED.\n");
     return FALSE;
@@ -69,11 +66,14 @@ static gboolean probe_func (InputPlugin * decoder, void * data)
         if (! check_opened (state))
             return FALSE;
 
+        if (state->buffered)
+            probe_buffer_set_decoder (state->handle, decoder->description);
+
         if (decoder->is_our_file_from_vfs (state->filename, state->handle))
             state->decoder = decoder;
 
-        if (vfs_fseek (state->handle, 0, SEEK_SET))
-            ; /* ignore errors; they are normal on streaming */
+        if (vfs_fseek (state->handle, 0, SEEK_SET) < 0)
+            return FALSE;
     }
     else if (decoder->is_our_file != NULL)
     {
@@ -103,12 +103,16 @@ static gboolean probe_func_fast (InputPlugin * decoder, void * data)
                 return FALSE;
             }
 
+            if (state->buffered)
+                probe_buffer_set_decoder (state->handle,
+                 state->decoder->description);
+
             if (state->decoder->is_our_file_from_vfs (state->filename,
              state->handle))
                 return FALSE;
 
-            if (vfs_fseek (state->handle, 0, SEEK_SET))
-                ; /* ignore errors; they are normal on streaming */
+            if (vfs_fseek (state->handle, 0, SEEK_SET) < 0)
+                return FALSE;
         }
         else if (state->decoder->is_our_file != NULL)
         {
