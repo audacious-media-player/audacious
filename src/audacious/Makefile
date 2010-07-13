@@ -44,8 +44,7 @@ ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
 endif
 
-INCLUDES = auddrct.h			\
-           audconfig.h			\
+INCLUDES = audconfig.h \
            configdb.h			\
            dbus.h				\
            dbus-service.h		\
