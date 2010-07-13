@@ -163,18 +163,12 @@ static gchar *title_from_tuple(Tuple * tuple)
 
 static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
 {
-    gint start;
-    gint end;
-
-    if (entry->segmented == TRUE && entry->tuple)
+    /* Hack: We cannot refresh segmented entries (since their info is read from
+     * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
+    if (entry->segmented)
     {
-        if (entry->end > 0)
-            return;
-
-        entry->length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-        entry->length -= entry->start;
-
-        tuple_associate_int(entry->tuple, FIELD_LENGTH, NULL, entry->length);
+        if (tuple != NULL)
+            tuple_free (tuple);
 
         return;
     }
@@ -198,18 +192,19 @@ static void entry_set_tuple_real (struct entry * entry, Tuple * tuple)
         entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
         entry->length = MAX (entry->length, 0);
 
-        if ((tuple_get_int (tuple, FIELD_SEGMENT_START, NULL)) || (tuple_get_int (tuple, FIELD_SEGMENT_END, NULL)))
+        if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
         {
-            start = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
-            end = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
-
-            if (start == end)
-                end = 0;
-
             entry->segmented = TRUE;
-            entry->start = start ? start : 0;
-            entry->end = end ? end : -1;
+            entry->start = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
+
+            if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) ==
+             TUPLE_INT)
+                entry->end = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
+            else
+                entry->end = -1;
         }
+        else
+            entry->segmented = FALSE;
     }
 }
 
@@ -1046,27 +1041,6 @@ gint playlist_entry_get_length(gint playlist_num, gint entry_num)
 
     check_scanned (playlist, entry);
     return entry->length;
-}
-
-void playlist_entry_set_segmentation(gint playlist_num, gint entry_num, gint start, gint end)
-{
-    DECLARE_PLAYLIST_ENTRY;
-
-    LOOKUP_PLAYLIST_ENTRY;
-    if (entry == NULL)
-        return;
-
-    if (start != -1)
-    {
-        entry->segmented = TRUE;
-        entry->start = start;
-        entry->end = end;
-    }
-    else
-    {
-        entry->segmented = FALSE;
-        entry->start = entry->end = -1;
-    }
 }
 
 gboolean playlist_entry_is_segmented(gint playlist_num, gint entry_num)

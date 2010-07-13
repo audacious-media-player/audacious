@@ -539,7 +539,6 @@ struct _AudaciousFuncTableV1 {
 
     void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
 
-    void (* playlist_entry_set_segmentation)(gint playlist_num, gint entry_num, gint start, gint end);
     gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
