@@ -143,7 +143,7 @@ gboolean vfs_file_test (const gchar * path, GFileTest test) WARN_RETURN;
 gboolean vfs_is_writeable (const gchar * path) WARN_RETURN;
 gboolean vfs_is_remote (const gchar * path) WARN_RETURN;
 
-void vfs_file_get_contents (const gchar * filename, guchar * * buf, gint64 *
+void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 *
  size);
 
 void vfs_register_transport (VFSConstructor * vtable);

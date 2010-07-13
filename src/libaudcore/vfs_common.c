@@ -137,8 +137,7 @@ gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
  * @param size Pointer to gsize variable that will hold the amount of
  * read data e.g. filesize.
  */
-void vfs_file_get_contents (const gchar * filename, guchar * * buf, gint64 *
- size)
+void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 * size)
 {
     VFSFile *fd;
     gsize filled_size = 0, buf_size = 4096;
