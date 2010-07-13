@@ -31,6 +31,8 @@
 #include "dbus-server-bindings.h"
 
 #include <math.h>
+
+#include "auddrct.h"
 #include "equalizer.h"
 #include "input.h"
 #include "main.h"
@@ -468,7 +470,7 @@ static gboolean play_pause_cb(void *unused)
     if (playback_get_playing())
         playback_pause();
     else
-        playback_initiate();
+        playback_play (0, FALSE);
 
     return FALSE;
 }
@@ -514,7 +516,7 @@ static gboolean add_cb(void *data)
     {
         playlist_set_playing(playlist);
         playlist_set_position(playlist, request->position);
-        playback_initiate();
+        playback_play (0, FALSE);
     }
 
     g_free(request);

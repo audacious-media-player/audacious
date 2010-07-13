@@ -24,45 +24,31 @@
  */
 
 #include <glib.h>
-#include <glib/gi18n.h>
-#include <glib/gprintf.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
 
 #include "audstrings.h"
-#include "configdb.h"
 #include "eventqueue.h"
 #include "hook.h"
+#include "i18n.h"
 #include "input.h"
 #include "output.h"
-#include "playlist-new.h"
-#include "pluginenum.h"
-#include "probe.h"
-#include "util.h"
-
 #include "playback.h"
+#include "playlist-new.h"
+#include "probe.h"
 
 static void set_params (InputPlayback * playback, const gchar * title, gint
  length, gint bitrate, gint samplerate, gint channels);
 static void set_tuple (InputPlayback * playback, Tuple * tuple);
 static void set_gain_from_playlist (InputPlayback * playback);
 
-static gboolean playback_segmented_end(gpointer data);
-
 static void playback_free (InputPlayback * playback);
-static gboolean playback_play_file (gint playlist, gint entry);
+static gboolean playback_play_file (gint playlist, gint entry, gint seek_time,
+ gboolean pause);
 
 InputPlayback * current_playback = NULL;
 
+static gint time_offset;
 static gboolean paused;
 static gboolean stopping;
-static gint seek_when_ready;
 static gint ready_source;
 static gint failed_entries;
 static gint set_tuple_source = 0;
@@ -122,15 +108,6 @@ static gboolean ready_cb (void * unused)
     ready_source = 0;
     g_mutex_unlock (current_playback->pb_ready_mutex);
 
-    if (paused)
-    {
-        paused = ! paused; /* playback_pause toggles it */
-        playback_pause ();
-    }
-
-    if (seek_when_ready > 0)
-        playback_seek (seek_when_ready);
-
     hook_call ("title change", NULL);
     return FALSE;
 }
@@ -156,14 +133,6 @@ playback_set_pb_ready(InputPlayback *playback)
     g_cond_signal(playback->pb_ready_cond);
     g_mutex_unlock(playback->pb_ready_mutex);
     return 0;
-}
-
-static void
-playback_set_pb_change(InputPlayback *playback)
-{
-    g_mutex_lock(playback->pb_change_mutex);
-    g_cond_signal(playback->pb_change_cond);
-    g_mutex_unlock(playback->pb_change_mutex);
 }
 
 static void update_cb (void * hook_data, void * user_data)
@@ -195,18 +164,12 @@ static void update_cb (void * hook_data, void * user_data)
     hook_call ("title change", NULL);
 }
 
-static gint
-playback_get_time_real(void)
+gint playback_get_time (void)
 {
-    gint time = -1;
-
-    g_return_val_if_fail (current_playback != NULL, 0);
-
     if (! playback_is_ready ())
-        return seek_when_ready;
-
-    if (! current_playback->playing || current_playback->error)
         return 0;
+
+    gint time = -1;
 
     if (current_playback->plugin->get_time != NULL)
         time = current_playback->plugin->get_time (current_playback);
@@ -214,20 +177,10 @@ playback_get_time_real(void)
     if (time < 0)
         time = get_output_time ();
 
-    return time;
+    return time - time_offset;
 }
 
-gint playback_get_time (void)
-{
-    g_return_val_if_fail (current_playback != NULL, 0);
-
-    if (current_playback->start > 0)
-        return playback_get_time_real () - current_playback->start;
-    else
-        return playback_get_time_real ();
-}
-
-void playback_initiate (void)
+void playback_play (gint seek_time, gboolean pause)
 {
     gint playlist, entry;
 
@@ -253,42 +206,24 @@ void playback_initiate (void)
     if (playback_get_playing())
         playback_stop();
 
-#ifdef USE_DBUS
-    mpris_emit_track_change(mpris);
-#endif
-
     failed_entries = 0;
-    playback_play_file (playlist, entry);
+    playback_play_file (playlist, entry, seek_time, pause);
 }
 
 void playback_pause (void)
 {
-    g_return_if_fail (current_playback != NULL);
+    if (! playback_is_ready ())
+        return;
 
     paused = ! paused;
 
-    if (playback_is_ready ())
-    {
-        if (current_playback->end_timeout)
-        {
-            g_source_remove(current_playback->end_timeout);
-            current_playback->end_timeout = 0;
-        }
-
-        g_return_if_fail (current_playback->plugin->pause != NULL);
-        current_playback->plugin->pause (current_playback, paused);
-    }
+    g_return_if_fail (current_playback->plugin->pause != NULL);
+    current_playback->plugin->pause (current_playback, paused);
 
     if (paused)
         hook_call("playback pause", NULL);
     else
-    {
         hook_call("playback unpause", NULL);
-
-        if (current_playback->end > 0)
-            current_playback->end_timeout = g_timeout_add (current_playback->end
-             - playback_get_time_real (), playback_segmented_end, NULL);
-    }
 }
 
 static void playback_finalize (void)
@@ -309,18 +244,13 @@ static void playback_finalize (void)
 
     g_mutex_unlock (current_playback->pb_ready_mutex);
 
-    if (current_playback->playing)
-        current_playback->plugin->stop (current_playback);
+    current_playback->plugin->stop (current_playback);
 
     /* some plugins do this themselves */
     if (current_playback->thread != NULL)
         g_thread_join (current_playback->thread);
 
     cancel_set_tuple ();
-
-    if (current_playback->end_timeout)
-        g_source_remove (current_playback->end_timeout);
-
     playback_free (current_playback);
     current_playback = NULL;
 }
@@ -348,7 +278,7 @@ void playback_stop (void)
     complete_stop ();
 }
 
-static gboolean playback_ended (void * user_data)
+static gboolean playback_ended (void * unused)
 {
     gint playlist = playlist_get_playing ();
     gboolean play;
@@ -384,7 +314,8 @@ static gboolean playback_ended (void * user_data)
             break;
         }
 
-        if (playback_play_file (playlist, playlist_get_position (playlist)))
+        if (playback_play_file (playlist, playlist_get_position (playlist), 0,
+         FALSE))
             break;
 
         failed_entries ++;
@@ -393,51 +324,34 @@ static gboolean playback_ended (void * user_data)
     return FALSE;
 }
 
-static gboolean playback_segmented_end (void * unused)
+typedef struct
 {
-    if (playlist_next_song (playlist_get_playing (), cfg.repeat))
-        playback_initiate ();
-
-    return FALSE;
+    gint start_time, stop_time;
+    gboolean pause;
 }
+PlayParams;
 
-static gboolean playback_segmented_start (void * unused)
+static void * playback_monitor_thread (void * data)
 {
-    g_return_val_if_fail (current_playback != NULL, FALSE);
-
-    if (current_playback->plugin->mseek != NULL)
-        current_playback->plugin->mseek (current_playback,
-         current_playback->start);
-    else if (current_playback->plugin->seek != NULL)
-        current_playback->plugin->seek (current_playback,
-         current_playback->start / 1000);
-
-    if (current_playback->end > 0)
-        current_playback->end_timeout = g_timeout_add (current_playback->end -
-         current_playback->start, playback_segmented_end, current_playback);
-
-    return FALSE;
-}
-
-static gpointer
-playback_monitor_thread(gpointer data)
-{
-    if (current_playback->segmented)
-        g_idle_add (playback_segmented_start, current_playback);
-
-    current_playback->plugin->play_file (current_playback);
-
-    g_mutex_lock (current_playback->pb_ready_mutex);
-    current_playback->pb_ready_val = TRUE;
-
-    if (ready_source != 0)
+    if (current_playback->plugin->play != NULL)
     {
-        g_source_remove (ready_source);
-        ready_source = 0;
-    }
+        PlayParams * params = data;
+        VFSFile * file = vfs_fopen (current_playback->filename, "r");
 
-    g_cond_signal (current_playback->pb_ready_cond);
-    g_mutex_unlock (current_playback->pb_ready_mutex);
+        current_playback->error = ! current_playback->plugin->play
+         (current_playback, current_playback->filename, file,
+         params->start_time, params->stop_time, params->pause);
+
+        if (file != NULL)
+            vfs_fclose (file);
+    }
+    else
+    {
+        fprintf (stderr, "%s should be updated to provide play().\n",
+         current_playback->plugin->description);
+        g_return_val_if_fail (current_playback->plugin->play_file != NULL, NULL);
+        current_playback->plugin->play_file (current_playback);
+    }
 
     if (! stopping)
         g_timeout_add (0, playback_ended, NULL);
@@ -480,14 +394,10 @@ static InputPlayback * playback_new (void)
     playback->pb_ready_cond = g_cond_new();
     playback->pb_ready_val = 0;
 
-    playback->pb_change_mutex = g_mutex_new();
-    playback->pb_change_cond = g_cond_new();
-
     playback->output = & output_api;
 
     /* init vtable functors */
     playback->set_pb_ready = playback_set_pb_ready;
-    playback->set_pb_change = playback_set_pb_change;
     playback->set_params = set_params;
     playback->set_tuple = set_tuple;
     playback->set_gain_from_playlist = set_gain_from_playlist;
@@ -514,28 +424,30 @@ static void playback_free (InputPlayback * playback)
     g_mutex_free(playback->pb_ready_mutex);
     g_cond_free(playback->pb_ready_cond);
 
-    g_mutex_free(playback->pb_change_mutex);
-    g_cond_free(playback->pb_change_cond);
-
     g_slice_free(InputPlayback, playback);
 }
 
-static void playback_run (void)
+static void playback_run (gint start_time, gint stop_time, gboolean pause)
 {
     current_playback->playing = FALSE;
     current_playback->eof = FALSE;
     current_playback->error = FALSE;
 
-    paused = FALSE;
+    paused = pause;
     stopping = FALSE;
-    seek_when_ready = 0;
     ready_source = 0;
 
+    static PlayParams params;
+    params.start_time = start_time;
+    params.stop_time = stop_time;
+    params.pause = pause;
+
     current_playback->thread = g_thread_create (playback_monitor_thread,
-     current_playback, TRUE, NULL);
+     & params, TRUE, NULL);
 }
 
-static gboolean playback_play_file (gint playlist, gint entry)
+static gboolean playback_play_file (gint playlist, gint entry, gint seek_time,
+ gboolean pause)
 {
     const gchar * filename = playlist_entry_get_filename (playlist, entry);
     const gchar * title = playlist_entry_get_title (playlist, entry);
@@ -571,13 +483,20 @@ static gboolean playback_play_file (gint playlist, gint entry)
     current_playback->filename = g_strdup (filename);
     current_playback->title = g_strdup ((title != NULL) ? title : filename);
     current_playback->length = playlist_entry_get_length (playlist, entry);
-    current_playback->segmented = playlist_entry_is_segmented (playlist, entry);
-    current_playback->start = playlist_entry_get_start_time (playlist, entry);
-    current_playback->end = playlist_entry_get_end_time (playlist, entry);
 
-    playback_run ();
+    if (playlist_entry_is_segmented (playlist, entry))
+    {
+        time_offset = playlist_entry_get_start_time (playlist, entry);
+        playback_run (time_offset + seek_time, playlist_entry_get_end_time
+         (playlist, entry), pause);
+    }
+    else
+    {
+        time_offset = 0;
+        playback_run (seek_time, -1, pause);
+    }
 
-#ifdef USE_DBUS
+#ifdef USE_DBUS /* Fix me: Use a "playback begin" hook in dbus.c. */
     mpris_emit_track_change(mpris);
 #endif
 
@@ -602,32 +521,21 @@ void playback_seek (gint time)
 {
     g_return_if_fail (current_playback != NULL);
 
-    if (current_playback->length <= 0)
+    if (! playback_is_ready ())
         return;
 
     time = CLAMP (time, 0, current_playback->length);
+    time += time_offset;
 
-    if (playback_is_ready ())
-    {
-        if (current_playback->start > 0)
-            time += current_playback->start;
-
-        if (current_playback->plugin->mseek != NULL)
-            current_playback->plugin->mseek (current_playback, time);
-        else if (current_playback->plugin->seek != NULL)
-            current_playback->plugin->seek (current_playback, time / 1000);
-
-        if (current_playback->end > 0)
-        {
-            if (current_playback->end_timeout)
-                g_source_remove (current_playback->end_timeout);
-
-            current_playback->end_timeout = g_timeout_add (current_playback->end
-             - time, playback_segmented_end, NULL);
-        }
-    }
+    if (current_playback->plugin->mseek != NULL)
+        current_playback->plugin->mseek (current_playback, time);
     else
-        seek_when_ready = time;
+    {
+        fprintf (stderr, "%s should be updated to provide mseek().\n",
+         current_playback->plugin->description);
+        g_return_if_fail (current_playback->plugin->seek != NULL);
+        current_playback->plugin->seek (current_playback, time / 1000);
+    }
 
     hook_call ("playback seek", NULL);
 }

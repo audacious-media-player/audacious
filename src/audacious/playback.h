@@ -30,8 +30,8 @@
 #include <glib.h>
 #include "plugin.h"
 
+void playback_play (gint seek_time, gboolean pause);
 gint playback_get_time(void);
-void playback_initiate(void);
 void playback_pause(void);
 void playback_stop(void);
 gboolean playback_get_playing(void);

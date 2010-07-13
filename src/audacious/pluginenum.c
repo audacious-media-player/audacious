@@ -41,6 +41,7 @@
 #include "plugin-registry.h"
 
 #include "audconfig.h"
+#include "auddrct.h"
 #include "credits.h"
 #include "effect.h"
 #include "general.h"
@@ -250,7 +251,6 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .drct_pl_win_toggle = drct_pl_win_toggle,
     .drct_activate = drct_activate,
 
-    .drct_initiate = drct_initiate,
     .drct_play = drct_play,
     .drct_pause = drct_pause,
     .drct_stop = playback_stop,

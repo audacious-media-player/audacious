@@ -43,6 +43,7 @@
 #include "eggdesktopfile.h"
 #endif
 
+#include "auddrct.h"
 #include "configdb.h"
 #include "equalizer.h"
 #include "hook.h"
@@ -317,19 +318,13 @@ static void handle_cmd_line_options(void)
     handle_cmd_line_filenames(FALSE);
 
     if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
-    {
-        playback_initiate ();
-
-        if (cfg.resume_state == 2)
-            playback_pause ();
-
-        playback_seek (cfg.resume_playback_on_startup_time);
-    }
+        playback_play (cfg.resume_playback_on_startup_time, cfg.resume_state ==
+         2);
 
     if (options.play || options.play_pause)
     {
         if (! playback_get_playing ())
-            playback_initiate ();
+            playback_play (0, FALSE);
         else if (playback_get_paused ())
             playback_pause ();
     }

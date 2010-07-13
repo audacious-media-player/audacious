@@ -569,12 +569,5 @@ void set_current_output_plugin (OutputPlugin * plugin)
     }
 
     if (playing)
-    {
-        playback_initiate ();
-
-        if (paused)
-            playback_pause ();
-
-        playback_seek (time);
-    }
+        playback_play (time, paused);
 }

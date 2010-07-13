@@ -69,7 +69,7 @@
 //@{
 /** Preprocessor defines for different API features */
 #define __AUDACIOUS_NEWVFS__                /**< @deprecated define for availability of VFS API. */
-#define __AUDACIOUS_PLUGIN_API__ 15         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
+#define __AUDACIOUS_PLUGIN_API__ 16         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
 #define __AUDACIOUS_INPUT_PLUGIN_API__ 8    /**< Input plugin API version. */
 //@}
 
@@ -426,7 +426,6 @@ struct _AudaciousFuncTableV1 {
     void (*drct_activate)(void);
 
     /* DRCT API: playback */
-    void (*drct_initiate) ( void );
     void (*drct_play) ( void );
     void (*drct_pause) ( void );
     void (*drct_stop) ( void );
@@ -762,7 +761,7 @@ struct _AudaciousFuncTableV1 {
 #define audacious_drct_pl_win_toggle        _audvt->drct_pl_win_toggle
 #define audacious_drct_set_skin             _audvt->drct_set_skin
 #define audacious_drct_activate             _audvt->drct_activate
-#define audacious_drct_initiate             _audvt->drct_initiate
+#define audacious_drct_initiate             _audvt->drct_play
 #define audacious_drct_play                 _audvt->drct_play
 #define audacious_drct_pause                _audvt->drct_pause
 #define audacious_drct_stop                 _audvt->drct_stop
@@ -877,13 +876,50 @@ struct _AudaciousFuncTableV1 {
 
 #define aud_get_audacious_credits       _audvt->get_audacious_credits
 
-#define aud_playlist_entry_set_segmentation		_audvt->playlist_entry_set_segmentation
 #define aud_playlist_entry_is_segmented			_audvt->playlist_entry_is_segmented
 #define aud_playlist_entry_get_start_time		_audvt->playlist_entry_get_start_time
 #define aud_playlist_entry_get_end_time			_audvt->playlist_entry_get_end_time
 
+/* obsolete names */
+#define audacious_drct_show_jtf_box audacious_drct_jtf_show
+#define audacious_drct_is_eq_win audacious_drct_eq_win_is_visible
+#define audacious_drct_is_pl_win audacious_drct_pl_win_is_visible
+#define audacious_drct_is_playing audacious_drct_get_playing
+#define audacious_drct_is_paused audacious_drct_get_paused
+#define audacious_drct_get_output_time audacious_drct_get_time
+#define audacious_drct_jump_to_time audacious_drct_seek
+#define audacious_drct_get_main_volume audacious_drct_get_volume_main
+#define audacious_drct_set_main_volume audacious_drct_set_volume_main
+#define audacious_drct_get_balance audacious_drct_get_volume_balance
+#define audacious_drct_set_balance audacious_drct_set_volume_balance
+#define audacious_drct_playlist_next audacious_drct_pl_next
+#define audacious_drct_playlist_prev audacious_drct_pl_prev
+#define audacious_drct_is_repeat audacious_drct_pl_repeat_is_enabled
 
-#include "audacious/auddrct.h"
+#define audacious_drct_toggle_repeat audacious_drct_pl_repeat_toggle
+#define audacious_drct_is_shuffle audacious_drct_pl_repeat_is_shuffled
+#define audacious_drct_toggle_shuffle audacious_drct_pl_shuffle_toggle
+#define audacious_drct_get_playlist_title audacious_drct_pl_get_title
+#define audacious_drct_get_playlist_time audacious_drct_pl_get_time
+#define audacious_drct_get_playlist_pos audacious_drct_pl_get_pos
+#define audacious_drct_get_playlist_file audacious_drct_pl_get_file
+#define audacious_drct_playlist_add audacious_drct_pl_add
+#define audacious_drct_playlist_clear audacious_drct_pl_clear
+#define audacious_drct_get_playlist_length audacious_drct_pl_get_length
+#define audacious_drct_playlist_delete audacious_drct_pl_delete
+#define audacious_drct_set_playlist_pos audacious_drct_pl_set_pos
+#define audacious_drct_playlist_ins_url_string audacious_drct_pl_ins_url_string
+#define audacious_drct_playlist_add_url_string audacious_drct_pl_add_url_string
+#define audacious_drct_playlist_enqueue_to_temp audacious_drct_pl_enqueue_to_temp
+
+#define audacious_drct_get_playqueue_length audacious_drct_pq_get_length
+#define audacious_drct_playqueue_add audacious_drct_pq_add
+#define audacious_drct_playqueue_remove audacious_drct_pq_remove
+#define audacious_drct_playqueue_clear audacious_drct_pq_clear
+#define audacious_drct_playqueue_is_queued audacious_drct_pq_is_queued
+#define audacious_drct_get_playqueue_position audacious_drct_pq_get_position
+#define audacious_drct_get_playqueue_queue_position audaciuos_drct_pq_get_queue_position
+
 
 /* for multi-file plugins :( */
 G_BEGIN_DECLS
@@ -1100,10 +1136,6 @@ struct _InputPlayback {
     gint pb_ready_val;
     gint (*set_pb_ready) (InputPlayback*);
 
-    GMutex *pb_change_mutex;
-    GCond *pb_change_cond;
-    void (*set_pb_change) (InputPlayback *self);
-
     gint nch;           /**< */
     gint rate;          /**< */
     gint freq;          /**< */
@@ -1118,11 +1150,6 @@ struct _InputPlayback {
     void (*set_params) (InputPlayback * playback, const gchar * title, gint
      length, gint bitrate, gint samplerate, gint channels);
 
-    void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
-
-    /* called by input plugin when RG info available --asphyx */
-    void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
-
     /**
      * Sets / updates playback entry #Tuple.
      * @attention Caller gives up ownership of one reference to the tuple.
@@ -1130,16 +1157,15 @@ struct _InputPlayback {
      */
     void (*set_tuple) (InputPlayback * playback, Tuple * tuple);
 
-    gboolean segmented;
-    gint start;
-    gint end;
-    gint end_timeout;
-
     /* If replay gain settings are stored in the tuple associated with the
      * current song, this function can be called (after opening audio) to apply
      * those settings.  If the settings are changed in a call to set_tuple, this
      * function must be called again to apply the updated settings. */
     void (* set_gain_from_playlist) (InputPlayback * playback);
+
+    /* deprecated */
+    void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
+    void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 };
 
 /**
@@ -1150,31 +1176,11 @@ struct _InputPlugin {
 
     gboolean have_subtune;      /**< Plugin supports/uses subtunes. */
     gchar **vfs_extensions;     /**< Filename extension to be associated to this plugin. */
+    gint priority; /* 0 = first, 10 = last */
 
-    GList *(*scan_dir) (gchar * dirname);
-
-    /**
-     * Check if this plugin can handle given file/filename.
-     * @deprecated Use 3is_our_file_from_vfs() or #probe_for_tuple().
-     */
-    gint (*is_our_file) (const gchar * filename);
     gint (*is_our_file_from_vfs) (const gchar *filename, VFSFile *fd);
-    Tuple *(*probe_for_tuple) (const gchar *uri, VFSFile *fd);
-
-    void (*play_file) (InputPlayback * playback);
-    void (*stop) (InputPlayback * playback);
-    void (*pause) (InputPlayback * playback, gshort paused);
-    void (*seek) (InputPlayback * playback, gint time);
-    void (*mseek) (InputPlayback * playback, gulong millisecond);
-
-    gint (*get_time) (InputPlayback * playback);
-
-    gint (*get_volume) (gint * l, gint * r);
-    gint (*set_volume) (gint l, gint r);
-
-    void (*file_info_box) (const gchar * filename);
-
     Tuple *(*get_song_tuple) (const gchar * filename);
+    Tuple *(*probe_for_tuple) (const gchar *uri, VFSFile *fd);
 
     /**
      * Plugin can provide this function for file metadata (aka tag)
@@ -1190,13 +1196,29 @@ struct _InputPlugin {
      * @param[in] fd VFS file descriptor pointing to file to modify.
      */
     gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
+    void (*file_info_box) (const gchar * filename);
 
-    gint priority; /* 0 = first, 10 = last */
-
-    /* handle will be NULL if the file could not be opened.  This is normal in
-     * the case of custom URI schemes such as cdda://. */
-    gboolean (* get_song_image) (const gchar * filename, VFSFile * handle,
+    /* Warning: Check for file == NULL. */
+    gboolean (* get_song_image) (const gchar * filename, VFSFile * file,
      void * * data, gint * size);
+
+    /* Warning: Check for file == NULL. */
+    gboolean (* play) (InputPlayback * playback, const gchar * filename,
+     VFSFile * file, gint start_time, gint stop_time, gboolean pause);
+
+    void (*pause) (InputPlayback * playback, gshort paused);
+    void (*mseek) (InputPlayback * playback, gulong millisecond);
+    void (*stop) (InputPlayback * playback);
+
+    /* advanced: for plugins that do not use Audacious's output system */
+    gint (*get_time) (InputPlayback * playback);
+    gint (*get_volume) (gint * l, gint * r);
+    gint (*set_volume) (gint l, gint r);
+
+    /* deprecated */
+    gint (*is_our_file) (const gchar * filename);
+    void (*play_file) (InputPlayback * playback);
+    void (*seek) (InputPlayback * playback, gint time);
 };
 
 struct _GeneralPlugin {

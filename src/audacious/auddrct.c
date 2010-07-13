@@ -93,23 +93,9 @@ void drct_activate(void)
 
 /* playback */
 
-void
-drct_initiate ( void )
-{
-    playback_initiate();
-}
-
 void drct_play (void)
 {
-    if (playback_get_playing () && playback_get_paused ())
-        playback_pause ();
-    else
-    {
-        playlist_set_playing (playlist_get_active ());
-        playback_initiate ();
-    }
-
-    return;
+    playback_play (0, FALSE);
 }
 
 void
@@ -232,7 +218,7 @@ void drct_pl_next (void)
     gboolean play = playback_get_playing ();
 
     if (playlist_next_song (playlist_get_playing (), cfg.repeat) && play)
-        playback_initiate ();
+        playback_play (0, FALSE);
 }
 
 void drct_pl_prev (void)
@@ -240,7 +226,7 @@ void drct_pl_prev (void)
     gboolean play = playback_get_playing ();
 
     if (playlist_prev_song (playlist_get_playing ()) && play)
-        playback_initiate ();
+        playback_play (0, FALSE);
 }
 
 gboolean
@@ -340,7 +326,7 @@ static void add_list (GList * list, gboolean opening)
             playlist_set_position (playlist, entries);
 
         playlist_set_playing (playlist);
-        playback_initiate ();
+        playback_play (0, FALSE);
     }
 }
 
@@ -376,7 +362,7 @@ void drct_pl_set_pos (gint pos)
     if (play)
     {
         playlist_set_playing (playlist);
-        playback_initiate ();
+        playback_play (0, FALSE);
     }
 }
 

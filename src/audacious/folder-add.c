@@ -178,7 +178,7 @@ static gboolean add_cb (void * unused)
             if (add_at > 0)
                 playlist_set_position (add_playlist, add_at);
 
-            playback_initiate ();
+            playback_play (0, FALSE);
         }
 
         add_at += playlist_entry_count (add_playlist) - count;
