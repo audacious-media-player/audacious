@@ -23,8 +23,8 @@
 
 #include <libaudcore/vfs.h>
 
-typedef gboolean (*VFSConsumer)(gpointer buf, gint64 size);
+typedef gboolean (*VFSConsumer)(gpointer buf, gint64 size, gpointer userdata);
 
-void vfs_async_file_get_contents(const gchar *filename, VFSConsumer cons_f);
+void vfs_async_file_get_contents(const gchar *filename, VFSConsumer cons_f, gpointer userdata);
 
 #endif

@@ -25,6 +25,7 @@ typedef struct {
     void *buf;
     gint64 size;
     GThread *thread;
+    gpointer userdata;
 
     VFSConsumer cons_f;
 } VFSAsyncTrampoline;
@@ -34,7 +35,7 @@ vfs_async_file_get_contents_trampoline(gpointer data)
 {
     VFSAsyncTrampoline *tr = data;
 
-    tr->cons_f(tr->buf, tr->size);
+    tr->cons_f(tr->buf, tr->size, tr->userdata);
     g_slice_free(VFSAsyncTrampoline, tr);
 
     return FALSE;
@@ -53,13 +54,13 @@ vfs_async_file_get_contents_worker(gpointer data)
 }
 
 void
-vfs_async_file_get_contents(const gchar *filename, VFSConsumer cons_f)
+vfs_async_file_get_contents(const gchar *filename, VFSConsumer cons_f, gpointer userdata)
 {
     VFSAsyncTrampoline *tr;
 
     tr = g_slice_new0(VFSAsyncTrampoline);
     tr->filename = g_strdup(filename);
     tr->cons_f = cons_f;
-
-    g_thread_create(vfs_async_file_get_contents_worker, tr, FALSE, NULL);
+    tr->userdata = userdata;
+    tr->thread = g_thread_create(vfs_async_file_get_contents_worker, tr, FALSE, NULL);
 }
