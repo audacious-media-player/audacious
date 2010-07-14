@@ -49,6 +49,7 @@
 #include "libaudcore/tuple.h"
 #include "libaudcore/tuple_formatter.h"
 #include "libaudcore/eventqueue.h"
+#include "libaudcore/hook.h"
 #include "audacious/configdb.h"
 #include "audacious/playlist_container.h"
 #include "audacious/main.h"
@@ -125,7 +126,6 @@ typedef struct {
 } ReplayGainInfo;
 
 #include "audacious/input.h"
-#include "audacious/hook.h"
 #include "audacious/flow.h"
 
 /**
