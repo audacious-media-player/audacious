@@ -542,6 +542,9 @@ struct _AudaciousFuncTableV1 {
     gboolean (* playlist_entry_is_segmented)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_start_time)(gint playlist_num, gint entry_num);
     gint (* playlist_entry_get_end_time)(gint playlist_num, gint entry_num);
+
+    void (*vis_runner_add_hook)(HookFunction func, void * user_data);
+    void (*vis_runner_remove_hook)(HookFunction func);
 };
 
 
@@ -878,6 +881,9 @@ struct _AudaciousFuncTableV1 {
 #define aud_playlist_entry_is_segmented			_audvt->playlist_entry_is_segmented
 #define aud_playlist_entry_get_start_time		_audvt->playlist_entry_get_start_time
 #define aud_playlist_entry_get_end_time			_audvt->playlist_entry_get_end_time
+
+#define aud_vis_runner_add_hook		_audvt->vis_runner_add_hook
+#define aud_vis_runner_remove_hook	_audvt->vis_runner_remove_hook
 
 /* obsolete names */
 #define audacious_drct_show_jtf_box audacious_drct_jtf_show

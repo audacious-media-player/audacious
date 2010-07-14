@@ -355,6 +355,10 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_entry_is_segmented = playlist_entry_is_segmented,
     .playlist_entry_get_start_time = playlist_entry_get_start_time,
     .playlist_entry_get_end_time = playlist_entry_get_end_time,
+
+    /* visrunner stuff -- added in Audacious 2.4. */
+    .vis_runner_add_hook = vis_runner_add_hook,
+    .vis_runner_remove_hook = vis_runner_remove_hook
 };
 
 /*****************************************************************/
