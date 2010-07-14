@@ -20,7 +20,7 @@
 
 #include <glib.h>
 
-#include "audacious/hook.h"
+#include "hook.h"
 
 #ifndef AUDACIOUS_EVENTQUEUE_H
 #define AUDACIOUS_EVENTQUEUE_H
