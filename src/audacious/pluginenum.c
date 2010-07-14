@@ -60,6 +60,7 @@
 #include "vfs_buffer.h"
 #include "vfs_buffered_file.h"
 #include "equalizer_preset.h"
+#include "vis_runner.h"
 
 #include "ui_albumart.h"
 #include "ui_plugin_menu.h"
