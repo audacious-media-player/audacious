@@ -48,7 +48,7 @@
 #include "libaudcore/vfs.h"
 #include "libaudcore/tuple.h"
 #include "libaudcore/tuple_formatter.h"
-#include "audacious/eventqueue.h"
+#include "libaudcore/eventqueue.h"
 #include "audacious/configdb.h"
 #include "audacious/playlist_container.h"
 #include "audacious/main.h"

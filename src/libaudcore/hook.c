@@ -22,7 +22,6 @@
 
 #include <glib.h>
 #include "hook.h"
-#include "vis_runner.h"
 
 static GThread * hook_thread;
 static GSList *hook_list;
@@ -74,11 +73,13 @@ hook_associate(const gchar *name, HookFunction func, gpointer user_data)
     g_return_val_if_fail(name != NULL, -1);
     g_return_val_if_fail(func != NULL, -1);
 
+#if 0
     if (! strcmp (name, "visualization timeout"))
     {
         vis_runner_add_hook (func, user_data);
         return 0;
     }
+#endif
 
     hook = hook_find(name);
 
@@ -108,11 +109,13 @@ hook_dissociate(const gchar *name, HookFunction func)
     g_return_val_if_fail(name != NULL, -1);
     g_return_val_if_fail(func != NULL, -1);
 
+#if 0
     if (! strcmp (name, "visualization timeout"))
     {
         vis_runner_remove_hook (func);
         return 0;
     }
+#endif
 
     hook = hook_find(name);
 
@@ -143,11 +146,13 @@ hook_dissociate_full(const gchar *name, HookFunction func, gpointer user_data)
     g_return_val_if_fail(name != NULL, -1);
     g_return_val_if_fail(func != NULL, -1);
 
+#if 0
     if (! strcmp (name, "visualization timeout"))
     {
         vis_runner_remove_hook (func);
         return 0;
     }
+#endif
 
     hook = hook_find(name);
 

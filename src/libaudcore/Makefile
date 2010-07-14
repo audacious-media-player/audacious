@@ -4,6 +4,8 @@ LIB_MINOR = 0
 
 SRCS = audio.c \
        audstrings.c \
+       eventqueue.c \
+       hook.c \
        index.c \
        stringpool.c \
        tuple.c \
@@ -18,6 +20,8 @@ SRCS = audio.c \
 
 INCLUDES = audio.h \
            audstrings.h \
+           eventqueue.h \
+           hook.h \
            index.h \
            stringpool.h \
            tuple.h \

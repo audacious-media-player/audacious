@@ -11,12 +11,10 @@ SRCS = auddrct.c								\
        effect.c									\
        equalizer.c								\
        equalizer_preset.c						\
-       eventqueue.c								\
        fft.c									\
        flow.c									\
        folder-add.c \
        general.c								\
-       hook.c									\
        interface.c								\
        input.c									\
        logger.c									\
@@ -49,11 +47,9 @@ INCLUDES = audconfig.h \
            dbus.h				\
            dbus-service.h		\
            equalizer_preset.h			\
-           eventqueue.h			\
            flow.h				\
            i18n.h				\
            input.h				\
-           hook.h				\
            interface.h			\
            main.h				\
            playback.h			\
