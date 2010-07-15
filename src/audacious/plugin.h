@@ -485,6 +485,7 @@ struct _AudaciousFuncTableV1 {
     GList *(*get_output_list)(void);
     GList * (* get_effect_list) (void);
     void (* enable_effect) (EffectPlugin * effect, gboolean enable);
+    void (* enable_general) (GeneralPlugin *plugin, gboolean enable);
 
     void (*input_get_volume)(gint * l, gint * r);
 
@@ -831,6 +832,7 @@ struct _AudaciousFuncTableV1 {
 #define aud_get_output_list             _audvt->get_output_list
 #define aud_get_effect_list             _audvt->get_effect_list
 #define aud_enable_effect               _audvt->enable_effect
+#define aud_enable_general              _audvt->enable_general
 
 #define aud_input_get_volume            _audvt->input_get_volume
 
