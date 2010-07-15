@@ -138,8 +138,8 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .cfg_db_unset_key = cfg_db_unset_key,
 
-    .uri_set_plugin = input_plugin_add_scheme_compat,
-    .mime_set_plugin = input_plugin_add_mime_compat,
+    .uri_set_plugin = input_plugin_add_scheme,
+    .mime_set_plugin = input_plugin_add_mime,
 
     .util_add_url_history_entry = util_add_url_history_entry,
 
@@ -440,21 +440,6 @@ static void input_plugin_init(Plugin * plugin)
 {
     InputPlugin *p = INPUT_PLUGIN(plugin);
 
-    input_plugin_set_priority (p, p->priority);
-
-    /* build the extension hash table */
-    gint i;
-    if (p->vfs_extensions)
-    {
-        GList * extensions = NULL;
-
-        for (i = 0; p->vfs_extensions[i] != NULL; i++)
-            extensions = g_list_prepend (extensions, g_strdup
-             (p->vfs_extensions[i]));
-
-        input_plugin_add_keys (p, INPUT_KEY_EXTENSION, extensions);
-    }
-
     if (p->init != NULL)
         p->init ();
 }
@@ -554,7 +539,6 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
 
             plugin->filename = g_strdup_printf ("%s (#%d)", filename, n);
             plugin_register (filename, PLUGIN_TYPE_OUTPUT, i, plugin);
-            output_plugin_set_priority (plugin, plugin->probe_priority);
         }
     }
 
@@ -689,25 +673,27 @@ static void scan_plugins(const gchar * path)
 
 static OutputPlugin * output_load_selected (void)
 {
-    OutputPlugin * plugin;
-
     if (cfg.output_path == NULL)
         return NULL;
 
-    plugin = plugin_by_path (cfg.output_path, PLUGIN_TYPE_OUTPUT,
+    PluginHandle * handle = plugin_by_path (cfg.output_path, PLUGIN_TYPE_OUTPUT,
      cfg.output_number);
+    if (handle == NULL)
+        return NULL;
 
+    OutputPlugin * plugin = plugin_get_header (handle);
     if (plugin == NULL || plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
         return NULL;
 
     return plugin;
 }
 
-static gboolean output_probe_func (OutputPlugin * plugin, void * data)
+static gboolean output_probe_func (PluginHandle * handle, OutputPlugin * * result)
 {
-    OutputPlugin * * result = data;
+    g_message ("Probing output plugin %s", plugin_get_name (handle));
+    OutputPlugin * plugin = plugin_get_header (handle);
 
-    if (plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+    if (plugin == NULL || plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
         return TRUE;
 
     * result = plugin;
@@ -717,8 +703,8 @@ static gboolean output_probe_func (OutputPlugin * plugin, void * data)
 static OutputPlugin * output_probe (void)
 {
     OutputPlugin * plugin = NULL;
-
-    output_plugin_by_priority (output_probe_func, & plugin);
+    plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) output_probe_func,
+     & plugin);
 
     if (plugin == NULL)
         fprintf (stderr, "ALL OUTPUT PLUGINS FAILED TO INITIALIZE.\n");

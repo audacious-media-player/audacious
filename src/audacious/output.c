@@ -39,11 +39,11 @@
 OutputPlugin * current_output_plugin = NULL;
 #define COP current_output_plugin
 
-static gboolean plugin_list_func (void * plugin, void * data)
+static gboolean plugin_list_func (PluginHandle * plugin, GList * * list)
 {
-    GList * * list = data;
-
-    * list = g_list_prepend (* list, plugin);
+    OutputPlugin * op = plugin_get_header (plugin);
+    g_return_val_if_fail (op != NULL, TRUE);
+    * list = g_list_prepend (* list, op);
     return TRUE;
 }
 
@@ -52,7 +52,11 @@ GList * get_output_list (void)
     static GList * list = NULL;
 
     if (list == NULL)
-        plugin_for_each (PLUGIN_TYPE_OUTPUT, plugin_list_func, & list);
+    {
+        plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc)
+         plugin_list_func, & list);
+        list = g_list_reverse (list);
+    }
 
     return list;
 }

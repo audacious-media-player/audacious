@@ -289,7 +289,8 @@ static void save_output_path (void)
     gint type, number = -1;
 
     if (current_output_plugin != NULL)
-        plugin_get_path (current_output_plugin, & path, & type, & number);
+        plugin_get_path (plugin_by_header (current_output_plugin), & path,
+         & type, & number);
 
     cfg.output_path = (path != NULL) ? g_strdup (path) : NULL;
     cfg.output_number = number;

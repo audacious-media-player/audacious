@@ -319,7 +319,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
     switch (plugin_type)
     {
     case PLUGIN_VIEW_TYPE_INPUT:
-        input_plugin_set_enabled ((InputPlugin *) plugin, enabled);
+        input_plugin_set_enabled (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_GENERAL:
         general_enable_plugin ((GeneralPlugin *) plugin, enabled);
@@ -452,7 +452,7 @@ on_plugin_view_realize(GtkTreeView * treeview,
         switch (plugin_type)
         {
         case PLUGIN_VIEW_TYPE_INPUT:
-            enabled = input_plugin_get_enabled ((InputPlugin *) plugin);
+            enabled = input_plugin_get_enabled (plugin_by_header (plugin));
             break;
         case PLUGIN_VIEW_TYPE_GENERAL:
             enabled = ((GeneralPlugin *) plugin)->enabled;
