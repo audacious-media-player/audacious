@@ -32,29 +32,6 @@
 
 #include "input.h"
 #include "output.h"
-#include "plugin-registry.h"
-
-static gboolean plugin_list_func (PluginHandle * plugin, GList * * list)
-{
-    InputPlugin * decoder = plugin_get_header (plugin);
-    g_return_val_if_fail (decoder != NULL, TRUE);
-    * list = g_list_prepend (* list, decoder);
-    return TRUE;
-}
-
-GList * get_input_list (void)
-{
-    static GList * list = NULL;
-
-    if (list == NULL)
-    {
-        plugin_for_each (PLUGIN_TYPE_INPUT, (PluginForEachFunc)
-         plugin_list_func, & list);
-        list = g_list_reverse (list);
-    }
-
-    return list;
-}
 
 void
 input_get_volume(gint * l, gint * r)

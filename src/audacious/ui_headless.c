@@ -130,9 +130,9 @@ static void
 show_preferenes(gboolean show)
 {
     printf(_("Available Plugin Preferences:\n"));
-    show_plugin_prefs(get_input_list());
+    show_plugin_prefs(plugin_get_list(PLUGIN_TYPE_INPUT));
     show_plugin_prefs(get_general_enabled_list());
-    show_plugin_prefs(get_vis_enabled_list());
+    show_plugin_prefs(plugin_get_list(PLUGIN_TYPE_VIS));
     show_plugin_prefs(get_effect_enabled_list());
 }
 

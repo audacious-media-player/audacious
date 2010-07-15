@@ -61,4 +61,9 @@ void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
 void input_plugin_add_scheme (const gchar * scheme, InputPlugin * plugin);
 void input_plugin_add_mime (const gchar * mime, InputPlugin * plugin);
 
+gboolean vis_plugin_get_enabled (PluginHandle * plugin);
+void vis_plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
+
+GList * plugin_get_list (gint type);
+
 #endif

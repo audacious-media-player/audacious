@@ -36,6 +36,7 @@
 #include "playback.h"
 #include "pluginenum.h"
 #include "plugin.h"
+#include "plugin-registry.h"
 #include "vis_runner.h"
 
 VisPluginData vp_data = {
@@ -59,9 +60,9 @@ get_vis_enabled_list(void)
 }
 
 void
-vis_disable_plugin(VisPlugin * vp)
+vis_disable_plugin(VisPlugin *vp)
 {
-    vis_enable_plugin(vp, FALSE);
+    vis_enable_plugin(plugin_by_header(vp), FALSE);
 }
 
 void
@@ -105,12 +106,18 @@ vis_playback_stop(void)
 }
 
 void
-vis_enable_plugin(VisPlugin *vp, gboolean enable)
+vis_enable_plugin(PluginHandle *ph, gboolean enable)
 {
-    if (!vp)
-        return;
+    VisPlugin *vp;
+    gboolean vis_enabled;
 
-    if (enable && !vp->enabled)
+    g_return_if_fail(ph != NULL);
+
+    vp = plugin_get_header(ph);
+    g_return_if_fail(vp != NULL);
+
+    vis_enabled = vis_plugin_get_enabled(ph);
+    if (enable && !vis_enabled)
     {
         if (vp_data.enabled_list == NULL)
             vis_runner_add_hook(send_audio, 0);
@@ -134,7 +141,7 @@ vis_enable_plugin(VisPlugin *vp, gboolean enable)
             vp->playback_start();
         }
     }
-    else if (!enable && vp->enabled) {
+    else if (!enable && vis_enabled) {
         vp_data.enabled_list = g_list_remove(vp_data.enabled_list, vp);
         if (playback_get_playing() && vp->playback_stop)
         {
@@ -157,7 +164,7 @@ vis_enable_plugin(VisPlugin *vp, gboolean enable)
             vis_runner_remove_hook(send_audio);
     }
 
-    vp->enabled = enable;
+    vis_plugin_set_enabled(ph, enable);
 }
 
 gchar *
@@ -182,9 +189,7 @@ vis_stringify_enabled_list(void)
 static gboolean
 vis_queued_enable_cb(gpointer vp)
 {
-    VisPlugin *p = vp;
-
-    vis_enable_plugin(p, TRUE);
+    vis_enable_plugin(plugin_by_header(vp), TRUE);
 
     return FALSE;
 }

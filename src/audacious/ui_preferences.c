@@ -325,7 +325,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
         general_enable_plugin ((GeneralPlugin *) plugin, enabled);
         break;
     case PLUGIN_VIEW_TYPE_VIS:
-        vis_enable_plugin ((VisPlugin *) plugin, enabled);
+        vis_enable_plugin (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_EFFECT:
         effect_enable_plugin ((EffectPlugin *) plugin, enabled);
@@ -458,7 +458,7 @@ on_plugin_view_realize(GtkTreeView * treeview,
             enabled = ((GeneralPlugin *) plugin)->enabled;
             break;
         case PLUGIN_VIEW_TYPE_VIS:
-            enabled = ((VisPlugin *) plugin)->enabled;
+            enabled = vis_plugin_get_enabled (plugin_by_header (plugin));
             break;
         case PLUGIN_VIEW_TYPE_EFFECT:
             enabled = ((EffectPlugin *) plugin)->enabled;
@@ -487,8 +487,7 @@ static void
 on_input_plugin_view_realize(GtkTreeView * treeview,
                              gpointer data)
 {
-    on_plugin_view_realize (treeview, (GCallback) plugin_toggle,
-     get_input_list (), PLUGIN_VIEW_TYPE_INPUT);
+    on_plugin_view_realize (treeview, (GCallback) plugin_toggle, plugin_get_list(PLUGIN_TYPE_INPUT), PLUGIN_VIEW_TYPE_INPUT);
 }
 
 static void
@@ -509,7 +508,7 @@ static void
 on_vis_plugin_view_realize(GtkTreeView * treeview,
                            gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), vp_data.vis_list, PLUGIN_VIEW_TYPE_VIS);
+    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), plugin_get_list(PLUGIN_TYPE_VIS), PLUGIN_VIEW_TYPE_VIS);
 }
 
 static void
@@ -2513,9 +2512,9 @@ destroy_plugin_page(GList *list)
 static void
 destroy_plugin_pages(void)
 {
-    destroy_plugin_page(get_input_list());
+    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_INPUT));
     destroy_plugin_page(get_general_enabled_list());
-    destroy_plugin_page(get_vis_enabled_list());
+    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_VIS));
     destroy_plugin_page(get_effect_enabled_list());
 }
 
@@ -2548,9 +2547,9 @@ create_plugin_page(GList *list)
 static void
 create_plugin_pages(void)
 {
-    create_plugin_page(get_input_list());
+    create_plugin_page(plugin_get_list(PLUGIN_TYPE_INPUT));
     create_plugin_page(get_general_enabled_list());
-    create_plugin_page(get_vis_enabled_list());
+    create_plugin_page(plugin_get_list(PLUGIN_TYPE_VIS));
     create_plugin_page(get_effect_enabled_list());
 }
 

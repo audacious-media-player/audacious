@@ -28,6 +28,7 @@
 #include <glib.h>
 #include "flow.h"
 #include "plugin.h"
+#include "plugin-registry.h"
 
 typedef struct _VisPluginData VisPluginData;
 
@@ -39,7 +40,7 @@ struct _VisPluginData {
 
 GList *get_vis_list(void);
 GList *get_vis_enabled_list(void);
-void vis_enable_plugin(VisPlugin *vp, gboolean enable);
+void vis_enable_plugin(PluginHandle *vp, gboolean enable);
 void vis_disable_plugin(VisPlugin *vp);
 void vis_playback_start(void);
 void vis_playback_stop(void);
