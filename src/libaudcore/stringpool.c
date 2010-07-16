@@ -23,10 +23,6 @@
 
 #include "audstrings.h"
 
-/* XXX: Ugly check to see if we actually have mowgli.patricia.  Remove this when
-   we require at least Mowgli 0.7 to build. */
-#ifdef __MOWGLI_PATRICIA_H__
-
 /*
  * Canonization mode:
  *
@@ -174,20 +170,3 @@ stringpool_unref(gchar *str)
 
     g_static_mutex_unlock(&stringpool_mutex);
 }
-
-#else
-
-/* compatibility for libmowgli without a patricia class. */
-gchar *
-stringpool_get(const gchar *str)
-{
-    return str_assert_utf8(str);
-}
-
-void
-stringpool_unref(gchar *str)
-{
-    g_free(str);
-}
-
-#endif
