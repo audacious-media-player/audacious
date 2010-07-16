@@ -21,6 +21,7 @@
  * using our public API to be a derived work.
  */
 
+//#define DEBUG
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
@@ -66,8 +67,8 @@ ID3v2Header;
 
 typedef struct
 {
-    gchar key[3];
-    gchar size[3];
+    guchar key[3];
+    guchar size[3];
 }
 ID3v2FrameHeader;
 #pragma pack(pop)
@@ -138,8 +139,8 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
  gboolean syncsafe, gint * frame_size, gchar * key, guchar * * data, gint * size)
 {
     ID3v2FrameHeader header;
-    gint skip = 0;
-    guint32 hdrsz;
+    gint skip = 0, i;
+    guint32 hdrsz = 0;
 
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
         return FALSE;
@@ -151,9 +152,13 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (! header.key[0]) /* padding */
         return FALSE;
 
-    hdrsz = (header.size[2] << 24 | header.size[1] << 16 | header.size[0] << 8);
-    hdrsz = GUINT32_FROM_BE(hdrsz);
+    for (i = 0; i < 3; i++)
+    {
+        hdrsz |= (guint32) header.size[i] << ((2 - i) * 8);
+        AUDDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
+    }
 
+//    hdrsz = GUINT32_TO_BE(hdrsz);
     if (hdrsz > max_size || hdrsz == 0)
         return FALSE;
 
