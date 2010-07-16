@@ -25,6 +25,7 @@
 #include "config.h"
 #include "i18n.h"
 #include "main.h"
+#include "debug.h"
 
 #ifdef USE_CHARDET
 #  include <libguess.h>
