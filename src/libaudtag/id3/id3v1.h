@@ -19,18 +19,10 @@
  */
 
 #ifndef ID3V1_H
-
 #define ID3V1_H
 
-#include <libaudcore/audstrings.h>
-#include <libaudcore/tuple.h>
-#include <libaudcore/vfs.h>
 #include "../tag_module.h"
 
-/* TAG plugin API */
-gboolean id3v1_can_handle_file(VFSFile *f);
-gboolean id3v1_read_tag (Tuple * tuple, VFSFile * handle);
-gboolean id3v1_write_tag (Tuple * tuple, VFSFile * handle);
-
 extern tag_module_t id3v1;
+
 #endif

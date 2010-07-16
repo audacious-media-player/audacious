@@ -21,6 +21,8 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
+#include <libaudcore/audstrings.h>
+
 #include "id3v1.h"
 #include "../util.h"
 #include <inttypes.h>
@@ -131,7 +133,7 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
     return TRUE;
 }
 
-gboolean id3v1_write_tag (Tuple * tuple, VFSFile * handle)
+static gboolean id3v1_write_tag (const Tuple * tuple, VFSFile * handle)
 {
     return FALSE;
 }

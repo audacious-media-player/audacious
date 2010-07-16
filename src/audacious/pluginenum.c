@@ -43,30 +43,20 @@
 #include "plugin-registry.h"
 
 #include "audconfig.h"
-#include "credits.h"
 #include "effect.h"
 #include "general.h"
 #include "i18n.h"
-#include "input.h"
+#include "interface.h"
 #include "main.h"
-#include "chardet.h"
 #include "output.h"
 #include "playback.h"
-#include "playlist-utils.h"
-#include "probe.h"
 #include "util.h"
 #include "visualization.h"
-#include "preferences.h"
-#include "equalizer_preset.h"
-#include "vis_runner.h"
-
-#include "ui_albumart.h"
-#include "ui_plugin_menu.h"
-#include "ui_preferences.h"
 
 #define AUD_API_DECLARE
 #include "configdb.h"
 #include "drct.h"
+#include "misc.h"
 #include "playlist.h"
 #undef AUD_API_DECLARE
 
@@ -75,89 +65,12 @@ const gchar *plugin_dir_list[] = {
     NULL
 };
 
-/*****************************************************************/
-
-static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
-    .uri_set_plugin = input_plugin_add_scheme,
-    .mime_set_plugin = input_plugin_add_mime,
-
-    .util_get_localdir = util_get_localdir,
-    .util_add_url_history_entry = util_add_url_history_entry,
-
-    .str_to_utf8 = cd_str_to_utf8,
-    .chardet_to_utf8 = cd_chardet_to_utf8,
-
-    .playlist_container_register = playlist_container_register,
-    .playlist_container_unregister = playlist_container_unregister,
-    .playlist_container_read = playlist_container_read,
-    .playlist_container_write = playlist_container_write,
-    .playlist_container_find = playlist_container_find,
-
-    .get_gentitle_format = get_gentitle_format,
-
-    ._cfg = &cfg,
-
-    .menu_plugin_item_add = menu_plugin_item_add,
-    .menu_plugin_item_remove = menu_plugin_item_remove,
-
-    .flow_new = flow_new,
-    .flow_execute = flow_execute,
-    .flow_link_element = flow_link_element,
-    .flow_unlink_element = flow_unlink_element,
-    .effect_flow = effect_flow,
-
-    .get_output_list = get_output_list,
-    .get_effect_list = get_effect_list,
-    .enable_effect = effect_enable_plugin,
-    .enable_general = general_enable_plugin,
-
-    .construct_uri = construct_uri,
-    .uri_to_display_basename = uri_to_display_basename,
-    .uri_to_display_dirname = uri_to_display_dirname,
-
-    .calc_mono_freq = calc_mono_freq,
-    .calc_mono_pcm = calc_mono_pcm,
-    .calc_stereo_pcm = calc_stereo_pcm,
-
-    .create_widgets_with_domain = create_widgets_with_domain,
-
-    .equalizer_read_presets = equalizer_read_presets,
-    .equalizer_write_preset_file = equalizer_write_preset_file,
-    .import_winamp_eqf = import_winamp_eqf,
-    .save_preset_file = save_preset_file,
-    .equalizer_read_aud_preset = equalizer_read_aud_preset,
-    .load_preset_file = load_preset_file,
-
-    .file_find_decoder = file_find_decoder,
-    .file_read_tuple = file_read_tuple,
-    .file_read_image = file_read_image,
-    .file_can_write_tuple = file_can_write_tuple,
-    .file_write_tuple = file_write_tuple,
-    .custom_infowin = custom_infowin,
-
-    .get_plugin_menu = get_plugin_menu,
-    .playback_get_title = playback_get_title,
-    .save_all_playlists = save_playlists,
-    .get_associated_image_file = get_associated_image_file,
-
-    .interface_get_current = interface_get_current,
-    .interface_toggle_visibility = interface_toggle_visibility,
-    .interface_show_error = interface_show_error_message,
-
-    .get_audacious_credits = get_audacious_credits,
-
-    /* visrunner stuff -- added in Audacious 2.4. */
-    .vis_runner_add_hook = vis_runner_add_hook,
-    .vis_runner_remove_hook = vis_runner_remove_hook
-};
-
 static AudAPITable api_table = {
- .vt = & _aud_papi_v1,
  .configdb_api = & configdb_api,
  .drct_api = & drct_api,
- .playlist_api = & playlist_api};
-
-/*****************************************************************/
+ .misc_api = & misc_api,
+ .playlist_api = & playlist_api,
+ .cfg = & cfg};
 
 extern GList *vfs_transports;
 static mowgli_list_t *headers_list = NULL;

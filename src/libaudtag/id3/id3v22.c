@@ -592,7 +592,7 @@ static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
     return found;
 }
 
-static gboolean id3v22_write_tag (Tuple * tuple, VFSFile * f)
+static gboolean id3v22_write_tag (const Tuple * tuple, VFSFile * f)
 {
     return FALSE;
 }

@@ -25,15 +25,12 @@
 #include <glib.h>
 
 /* 24-bit integer samples are padded to 32-bit; high byte is always 0 */
-typedef enum
-{
-    FMT_FLOAT,
-    FMT_S8, FMT_U8,
-    FMT_S16_LE, FMT_S16_BE, FMT_U16_LE, FMT_U16_BE,
-    FMT_S24_LE, FMT_S24_BE, FMT_U24_LE, FMT_U24_BE,
-    FMT_S32_LE, FMT_S32_BE, FMT_U32_LE, FMT_U32_BE,
-}
-AFormat;
+enum {
+ FMT_FLOAT,
+ FMT_S8, FMT_U8,
+ FMT_S16_LE, FMT_S16_BE, FMT_U16_LE, FMT_U16_BE,
+ FMT_S24_LE, FMT_S24_BE, FMT_U24_LE, FMT_U24_BE,
+ FMT_S32_LE, FMT_S32_BE, FMT_U32_LE, FMT_U32_BE};
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define FMT_S16_NE FMT_S16_LE
@@ -54,8 +51,8 @@ AFormat;
 #define FMT_SIZEOF(f) \
  (f == FMT_FLOAT ? sizeof (gfloat) : f <= FMT_U8 ? 1 : f <= FMT_U16_BE ? 2 : 4)
 
-void audio_from_int (void * in, AFormat format, gfloat * out, gint samples);
-void audio_to_int (gfloat * in, void * out, AFormat format, gint samples);
+void audio_from_int (void * in, gint format, gfloat * out, gint samples);
+void audio_to_int (gfloat * in, void * out, gint format, gint samples);
 void audio_amplify (gfloat * data, gint channels, gint frames, gfloat * factors);
 
 #endif

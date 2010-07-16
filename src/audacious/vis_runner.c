@@ -22,11 +22,16 @@
 #include <glib.h>
 #include <libaudcore/hook.h>
 
-#include "input.h"
+#include "misc.h"
 #include "output.h"
 #include "vis_runner.h"
 
 #define INTERVAL 30 /* milliseconds */
+
+typedef struct {
+    VisHookFunc func;
+    void * user;
+} VisHookItem;
 
 G_LOCK_DEFINE_STATIC (mutex);
 static gboolean playing = FALSE, paused = FALSE, active = FALSE;
@@ -71,8 +76,8 @@ static gboolean send_audio (void * unused)
 
     for (GList * node = hooks; node; node = node->next)
     {
-        HookItem * item = node->data;
-        item->func (vis_node, item->user_data);
+        VisHookItem * item = node->data;
+        item->func (vis_node, item->user);
     }
 
     g_free (vis_node);
@@ -219,26 +224,26 @@ void vis_runner_flush (void)
     G_UNLOCK (mutex);
 }
 
-void vis_runner_add_hook (HookFunction func, gpointer user_data)
+void vis_runner_add_hook (VisHookFunc func, void * user)
 {
     G_LOCK (mutex);
 
-    HookItem * item = g_malloc (sizeof (HookItem));
+    VisHookItem * item = g_malloc (sizeof (VisHookItem));
     item->func = func;
-    item->user_data = user_data;
+    item->user = user;
     hooks = g_list_prepend (hooks, item);
 
     G_UNLOCK (mutex);
     vis_runner_start_stop (playing, paused);
 }
 
-void vis_runner_remove_hook (HookFunction func)
+void vis_runner_remove_hook (VisHookFunc func)
 {
     G_LOCK (mutex);
 
     for (GList * node = hooks; node; node = node->next)
     {
-        if (((HookItem *) node->data)->func == func)
+        if (((VisHookItem *) node->data)->func == func)
         {
             g_free (node->data);
             hooks = g_list_delete_link (hooks, node);

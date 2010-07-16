@@ -30,18 +30,9 @@
 
 #define NOT_ALPHA_RELEASE
 
-#ifdef _AUDACIOUS_CORE
-# ifdef USE_DBUS
-#  include "dbus-service.h"
-# endif
+#ifdef USE_DBUS
+#include "dbus-service.h"
 #endif
-
-enum {
-    VOLSET_STARTUP,
-    VOLSET_UPDATE,
-    VOLUME_ADJUSTED,
-    VOLUME_SET
-};
 
 enum {
     BMP_PATH_LOG_FILE,
@@ -59,7 +50,7 @@ enum {
 
 extern gchar *aud_paths[];
 
-#if defined(USE_DBUS) && defined(_AUDACIOUS_CORE)
+#ifdef USE_DBUS
 extern MprisPlayer *mpris;
 #endif
 

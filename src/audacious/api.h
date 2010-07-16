@@ -23,10 +23,11 @@
 #define AUDACIOUS_API_H
 
 typedef const struct {
-    const struct _AudaciousFuncTableV1 * vt;
     const struct ConfigDBAPI * configdb_api;
     const struct DRCTAPI * drct_api;
+    const struct MiscAPI * misc_api;
     const struct PlaylistAPI * playlist_api;
+    struct _AudConfig * cfg;
 } AudAPITable;
 
 #ifndef _AUDACIOUS_CORE

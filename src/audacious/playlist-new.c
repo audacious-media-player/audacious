@@ -27,16 +27,18 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 #include <libaudcore/tuple_formatter.h>
 
+#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
 #include "main.h"
+#include "misc.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist-utils.h"
 #include "plugin.h"
-#include "probe.h"
 
 #define SCAN_DEBUG(...)
 

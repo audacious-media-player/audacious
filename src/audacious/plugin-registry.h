@@ -24,8 +24,6 @@
 
 #include <glib.h>
 
-#include "plugin.h"
-
 enum {PLUGIN_TYPE_BASIC, PLUGIN_TYPE_INPUT, PLUGIN_TYPE_OUTPUT,
  PLUGIN_TYPE_EFFECT, PLUGIN_TYPE_VIS, PLUGIN_TYPE_IFACE, PLUGIN_TYPE_GENERAL,
  PLUGIN_TYPES};
@@ -56,10 +54,6 @@ gboolean input_plugin_get_enabled (PluginHandle * plugin);
 void input_plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
 void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
  func, void * data);
-
-/* called from InputPlugin::init() */
-void input_plugin_add_scheme (const gchar * scheme, InputPlugin * plugin);
-void input_plugin_add_mime (const gchar * mime, InputPlugin * plugin);
 
 gboolean vis_plugin_get_enabled (PluginHandle * plugin);
 void vis_plugin_set_enabled (PluginHandle * plugin, gboolean enabled);

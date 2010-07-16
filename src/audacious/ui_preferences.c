@@ -34,13 +34,17 @@
 #include <sys/stat.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <libaudcore/hook.h>
+
+#include "audconfig.h"
 #include "compatibility.h"
 #include "debug.h"
 #include "i18n.h"
+#include "misc.h"
+#include "playback.h"
 #include "plugin.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"
-#include "input.h"
 #include "effect.h"
 #include "general.h"
 #include "output.h"
@@ -321,13 +325,13 @@ plugin_toggle(GtkCellRendererToggle * cell,
         input_plugin_set_enabled (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_GENERAL:
-        general_enable_plugin ((GeneralPlugin *) plugin, enabled);
+        enable_general ((GeneralPlugin *) plugin, enabled);
         break;
     case PLUGIN_VIEW_TYPE_VIS:
         vis_enable_plugin (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_EFFECT:
-        effect_enable_plugin ((EffectPlugin *) plugin, enabled);
+        enable_effect ((EffectPlugin *) plugin, enabled);
         break;
     }
 

@@ -23,6 +23,9 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <glib.h>
+#include <libaudcore/hook.h>
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif

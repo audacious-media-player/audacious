@@ -35,7 +35,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <audacious/i18n.h>
-#include <audacious/plugin.h>
+#include <audacious/misc.h>
 
 #include "ui_credits.h"
 

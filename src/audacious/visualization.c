@@ -31,8 +31,9 @@
 #include <string.h>
 
 #include "fft.h"
-#include "input.h"
+#include "interface.h"
 #include "main.h"
+#include "misc.h"
 #include "playback.h"
 #include "pluginenum.h"
 #include "plugin.h"
@@ -45,7 +46,7 @@ VisPluginData vp_data = {
     FALSE
 };
 
-static void send_audio (void * hook_data, void * user_data);
+static void send_audio (const VisNode * node, void * user);
 
 GList *
 get_vis_list(void)
@@ -202,8 +203,7 @@ vis_enable_from_stringified_list(gchar * list)
     g_strfreev(plugins);
 }
 
-void
-calc_stereo_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
+void calc_stereo_pcm (VisPCMData dest, const VisPCMData src, gint nch)
 {
     memcpy(dest[0], src[0], 512 * sizeof(gint16));
     if (nch == 1)
@@ -212,11 +212,11 @@ calc_stereo_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
         memcpy(dest[1], src[1], 512 * sizeof(gint16));
 }
 
-void
-calc_mono_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
+void calc_mono_pcm (VisPCMData dest, const VisPCMData src, gint nch)
 {
     gint i;
-    gint16 *d, *sl, *sr;
+    gint16 *d;
+    const gint16 *sl, *sr;
 
     if (nch == 1)
         memcpy(dest[0], src[0], 512 * sizeof(gint16));
@@ -230,8 +230,7 @@ calc_mono_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch)
     }
 }
 
-static void
-calc_freq(gint16 * dest, gint16 * src)
+static void calc_freq (gint16 * dest, const gint16 * src)
 {
     static fft_state *state = NULL;
     gfloat tmp_out[257];
@@ -246,11 +245,11 @@ calc_freq(gint16 * dest, gint16 * src)
         dest[i] = ((gint) sqrt(tmp_out[i + 1])) >> 8;
 }
 
-void
-calc_mono_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
+void calc_mono_freq (VisFreqData dest, const VisPCMData src, gint nch)
 {
     gint i;
-    gint16 *d, *sl, *sr, tmp[512];
+    gint16 *d, tmp[512];
+    const gint16 *sl, *sr;
 
     if (nch == 1)
         calc_freq(dest[0], src[0]);
@@ -265,8 +264,7 @@ calc_mono_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
     }
 }
 
-void
-calc_stereo_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
+void calc_stereo_freq (VisFreqData dest, const VisPCMData src, gint nch)
 {
     calc_freq(dest[0], src[0]);
 
@@ -276,10 +274,8 @@ calc_stereo_freq(gint16 dest[2][256], gint16 src[2][512], gint nch)
         memcpy(dest[1], dest[0], 256 * sizeof(gint16));
 }
 
-static void send_audio (void * hook_data, void * user_data)
+static void send_audio (const VisNode * vis_node, void * user_data)
 {
-    VisNode * vis_node = hook_data;
-    int16_t (* pcm_data) [512] = vis_node->data;
     int nch = vis_node->nch;
     GList *node = vp_data.enabled_list;
     VisPlugin *vp;
@@ -293,14 +289,14 @@ static void send_audio (void * hook_data, void * user_data)
         if (vp->num_pcm_chs_wanted > 0 && vp->render_pcm) {
             if (vp->num_pcm_chs_wanted == 1) {
                 if (!mono_pcm_calced) {
-                    calc_mono_pcm(mono_pcm, pcm_data, nch);
+                    calc_mono_pcm(mono_pcm, vis_node->data, nch);
                     mono_pcm_calced = TRUE;
                 }
                 vp->render_pcm(mono_pcm);
             }
             else {
                 if (!stereo_pcm_calced) {
-                    calc_stereo_pcm(stereo_pcm, pcm_data, nch);
+                    calc_stereo_pcm(stereo_pcm, vis_node->data, nch);
                     stereo_pcm_calced = TRUE;
                 }
                 vp->render_pcm(stereo_pcm);
@@ -309,14 +305,14 @@ static void send_audio (void * hook_data, void * user_data)
         if (vp->num_freq_chs_wanted > 0 && vp->render_freq) {
             if (vp->num_freq_chs_wanted == 1) {
                 if (!mono_freq_calced) {
-                    calc_mono_freq(mono_freq, pcm_data, nch);
+                    calc_mono_freq(mono_freq, vis_node->data, nch);
                     mono_freq_calced = TRUE;
                 }
                 vp->render_freq(mono_freq);
             }
             else {
                 if (!stereo_freq_calced) {
-                    calc_stereo_freq(stereo_freq, pcm_data, nch);
+                    calc_stereo_freq(stereo_freq, vis_node->data, nch);
                     stereo_freq_calced = TRUE;
                 }
                 vp->render_freq(stereo_freq);

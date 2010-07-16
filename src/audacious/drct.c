@@ -20,11 +20,13 @@
  */
 
 #include <glib.h>
+#include <libaudcore/hook.h>
+#include <libaudcore/vfs.h>
 
+#include "audconfig.h"
 #include "config.h"
 #include "drct.h"
 #include "i18n.h"
-#include "input.h"
 #include "main.h"
 #include "playback.h"
 #include "playlist.h"
@@ -61,6 +63,11 @@ gboolean drct_get_playing (void)
 gboolean drct_get_paused (void)
 {
     return playback_get_paused ();
+}
+
+gchar * drct_get_title (void)
+{
+    return playback_get_title ();
 }
 
 void drct_get_info (gint * bitrate, gint * samplerate, gint * channels)

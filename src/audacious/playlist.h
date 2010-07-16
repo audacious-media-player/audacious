@@ -24,6 +24,7 @@
 
 #include <glib.h>
 #include <audacious/api.h>
+#include <audacious/types.h>
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
@@ -64,8 +65,6 @@ typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 #define AUD_API_SYMBOL playlist_api
 
 #ifdef _AUDACIOUS_CORE
-
-#include <audacious/plugin.h>
 
 #include "api-local-begin.h"
 #include "playlist-api.h"

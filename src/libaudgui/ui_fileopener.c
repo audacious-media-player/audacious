@@ -19,9 +19,9 @@
 
 #include <gdk/gdkkeysyms.h>
 
+#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
 #include <audacious/drct.h>
-#include <audacious/plugin.h>
 
 #include "config.h"
 #include "ui_fileopener.h"

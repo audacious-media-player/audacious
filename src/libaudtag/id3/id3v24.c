@@ -760,12 +760,12 @@ static void add_comment_frame (const gchar * text)
     memcpy (frame->data + 5, text, length);
 }
 
-static void add_frameFromTupleStr (Tuple * tuple, int field, int id3_field)
+static void add_frameFromTupleStr (const Tuple * tuple, int field, int id3_field)
 {
     add_text_frame (id3_field, tuple_get_string (tuple, field, NULL));
 }
 
-static void add_frameFromTupleInt (Tuple * tuple, int field, int id3_field)
+static void add_frameFromTupleInt (const Tuple * tuple, int field, int id3_field)
 {
     gchar scratch[16];
 
@@ -950,7 +950,7 @@ static void free_frame_dictionary (void)
     frames = NULL;
 }
 
-static gboolean id3v24_write_tag (Tuple * tuple, VFSFile * f)
+static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;

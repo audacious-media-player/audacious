@@ -33,9 +33,9 @@
 #include <math.h>
 #include <libaudcore/eventqueue.h>
 
+#include "audconfig.h"
 #include "drct.h"
 #include "equalizer.h"
-#include "input.h"
 #include "main.h"
 #include "playback.h"
 #include "playlist.h"

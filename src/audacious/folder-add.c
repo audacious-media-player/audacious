@@ -28,11 +28,12 @@
 
 #include <libaudcore/audstrings.h>
 
+#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
+#include "misc.h"
 #include "playback.h"
 #include "playlist.h"
-#include "probe.h"
 
 static GList * add_queue = NULL;
 static gint add_source = 0;

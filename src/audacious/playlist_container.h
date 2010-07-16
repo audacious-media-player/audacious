@@ -24,21 +24,10 @@
 
 #include <glib.h>
 
-struct _PlaylistContainer {
-	gchar *name;					/* human-readable name */
-	gchar *ext;					/* extension */
-	void (*plc_read)(const gchar *filename, gint pos);	/* plc_load */
-	void (*plc_write)(const gchar *filename, gint pos);	/* plc_write */
-};
+#include "misc.h"
 
-typedef struct _PlaylistContainer PlaylistContainer;
-
-#define PLAYLIST_CONTAINER(x)		((PlaylistContainer *)(x))
-
-extern void playlist_container_register(PlaylistContainer *plc);
-extern void playlist_container_unregister(PlaylistContainer *plc);
-extern void playlist_container_read(gchar *filename, gint pos);
-extern void playlist_container_write(gchar *filename, gint pos);
-extern PlaylistContainer *playlist_container_find(gchar *ext);
+void playlist_container_read (gchar * filename, gint pos);
+void playlist_container_write (gchar * filename, gint pos);
+PlaylistContainer * playlist_container_find (gchar * ext);
 
 #endif /* AUDACIOUS_PLAYLIST_CONTAINER_H */

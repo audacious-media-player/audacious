@@ -42,55 +42,22 @@
 #include <glib.h>
 #include <gmodule.h>
 
-#include <libaudcore/audio.h>
-#include <libaudcore/hook.h>
-#include <libaudcore/tuple.h>
-
 #include <audacious/api.h>
-#include <audacious/audconfig.h>
-#include <audacious/playlist_container.h>
-#include <audacious/preferences.h>
-#include <audacious/interface.h>
-#include <audacious/equalizer_preset.h>
-
-//@{
-/** Plugin type cast macros */
-#define PLUGIN(x)               ((Plugin *)(x))
-#define INPUT_PLUGIN(x)         ((InputPlugin *)(x))
-#define OUTPUT_PLUGIN(x)        ((OutputPlugin *)(x))
-#define EFFECT_PLUGIN(x)        ((EffectPlugin *)(x))
-#define GENERAL_PLUGIN(x)       ((GeneralPlugin *)(x))
-#define VIS_PLUGIN(x)           ((VisPlugin *)(x))
-//@}
+#include <audacious/types.h>
+#include <libaudcore/audio.h>
+#include <libaudcore/tuple.h>
+#include <libaudcore/vfs.h>
 
 //@{
 /** Preprocessor defines for different API features */
-#define __AUDACIOUS_NEWVFS__                /**< @deprecated define for availability of VFS API. */
 #define __AUDACIOUS_PLUGIN_API__ 16         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
-#define __AUDACIOUS_INPUT_PLUGIN_API__ 8    /**< Input plugin API version. */
 //@}
-
-typedef enum {
-    INPUT_VIS_ANALYZER,
-    INPUT_VIS_SCOPE,
-    INPUT_VIS_VU,
-    INPUT_VIS_OFF
-} InputVisType;
 
 typedef enum {
     PLUGIN_MESSAGE_ERROR = 0,
     PLUGIN_MESSAGE_OK = 1,
     PLUGIN_MESSAGE_DEFERRED = 2
 } PluginMessageResponse;
-
-#define EQUALIZER_MAX_GAIN 12
-
-typedef struct _Plugin        Plugin;
-typedef struct _InputPlugin   InputPlugin;
-typedef struct _OutputPlugin  OutputPlugin;
-typedef struct _EffectPlugin  EffectPlugin;
-typedef struct _GeneralPlugin GeneralPlugin;
-typedef struct _VisPlugin     VisPlugin;
 
 typedef struct _InputPlayback InputPlayback;
 
@@ -101,9 +68,6 @@ typedef struct {
     gfloat album_gain;
     gfloat album_peak;
 } ReplayGainInfo;
-
-#include "audacious/input.h"
-#include "audacious/flow.h"
 
 /**
  * The plugin module header. Each module can contain several plugins,
@@ -126,188 +90,6 @@ typedef struct {
 } PluginHeader;
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
-
-/**
- * Audacious plugin API vtable.
- * This table defines the functions available for plugins through
- * Audacious API. Any Audacious functions NOT defined here will not
- * be exported to plugins, and are considered "internal".
- *
- * @attention Only add new functions to the bottom of this list
- * unless API/ABI breakage is planned!
- */
-struct _AudaciousFuncTableV1 {
-    /* Plugin registry */
-    void (* uri_set_plugin) (const gchar * uri, InputPlugin * ip);
-    void (* mime_set_plugin) (const gchar * mimetype, InputPlugin * ip);
-
-    /* Util funcs */
-    gchar *(*util_get_localdir)(void);
-    void (*util_add_url_history_entry)(const gchar * url);
-
-    /* strings API */
-    gchar *(*str_to_utf8)(const gchar * str);
-    gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
-                       gsize *arg_bytes_read, gsize *arg_bytes_write,
-                       GError **arg_error);
-
-    /* PlaylistContainer API. */
-    void (*playlist_container_register)(PlaylistContainer *plc);
-    void (*playlist_container_unregister)(PlaylistContainer *plc);
-    void (*playlist_container_read)(gchar *filename, gint pos);
-    void (*playlist_container_write)(gchar *filename, gint pos);
-    PlaylistContainer *(*playlist_container_find)(gchar *ext);
-
-    const gchar * (* get_gentitle_format) (void);
-
-    /* state vars */
-    AudConfig *_cfg;
-
-    /* PluginMenu API */
-    /* gint (* menu_plugin_item_add) (gint menu, GtkWidget * item); */
-    gint (* menu_plugin_item_add) (gint menu, void * item);
-    /* gint (* menu_plugin_item_remove) (gint, GtkWidget * item); */
-    gint (* menu_plugin_item_remove) (gint, void * item);
-
-    /* Flows */
-    gsize (*flow_execute)(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt,
-                          gint srate, gint channels);
-    Flow *(*flow_new)(void);
-    void (*flow_link_element)(Flow *flow, FlowFunction func);
-    void (*flow_unlink_element)(Flow *flow, FlowFunction func);
-    void (*effect_flow)(FlowContext *context);
-
-    GList *(*get_output_list)(void);
-    GList * (* get_effect_list) (void);
-    void (* enable_effect) (EffectPlugin * effect, gboolean enable);
-    void (* enable_general) (GeneralPlugin *plugin, gboolean enable);
-
-    gchar *(*construct_uri)(gchar *string, const gchar *playlist_name);
-    gchar *(*uri_to_display_basename)(const gchar * uri);
-    gchar *(*uri_to_display_dirname)(const gchar * uri);
-
-    void (*calc_mono_freq)(gint16 dest[2][256], gint16 src[2][512], gint nch);
-    void (*calc_mono_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
-    void (*calc_stereo_pcm)(gint16 dest[2][512], gint16 src[2][512], gint nch);
-
-    /* void (* create_widgets_with_domain) (GtkBox * box, PreferencesWidget *
-     widgets, gint amt, const gchar * domain); */
-    void (* create_widgets_with_domain) (void * box, PreferencesWidget *
-     widgets, gint amt, const gchar * domain);
-
-    GList *(*equalizer_read_presets)(const gchar * basename);
-    void (*equalizer_write_preset_file)(GList * list, const gchar * basename);
-    GList *(*import_winamp_eqf)(VFSFile * file);
-    void (*save_preset_file)(EqualizerPreset *preset, const gchar * filename);
-    EqualizerPreset *(*equalizer_read_aud_preset)(const gchar * filename);
-    EqualizerPreset *(*load_preset_file)(const gchar *filename);
-
-    /* File probing API */
-    InputPlugin * (* file_find_decoder) (const gchar * filename, gboolean fast);
-    Tuple * (* file_read_tuple) (const gchar * filename, InputPlugin * decoder);
-    gboolean (* file_read_image) (const gchar * filename, InputPlugin * decoder,
-     void * * data, gint * size);
-    gboolean (* file_can_write_tuple) (const gchar * filename, InputPlugin *
-     decoder);
-    gboolean (* file_write_tuple) (const gchar * filename, InputPlugin *
-     decoder, Tuple * tuple);
-    gboolean (* custom_infowin) (const gchar * filename, InputPlugin * decoder);
-
-    /* Miscellaneous */
-    /* GtkWidget * (* get_plugin_menu) (gint id); */
-    void * (* get_plugin_menu) (gint id);
-    gchar * (* playback_get_title) (void);
-    void (* save_all_playlists) (void);
-    gchar * (* get_associated_image_file) (const gchar * filename);
-
-    /* Interface API */
-    const Interface * (* interface_get_current) (void);
-    void (* interface_toggle_visibility) (void);
-    void (* interface_show_error) (const gchar * markup);
-
-    void (* get_audacious_credits)(const gchar **brief, const gchar *** credits, const gchar *** translators);
-
-    void (*vis_runner_add_hook)(HookFunction func, void * user_data);
-    void (*vis_runner_remove_hook)(HookFunction func);
-};
-
-/* Convenience macros for accessing the public API. */
-#define _audvt _aud_api_table->vt
-
-/*      public name                     vtable mapping */
-#define aud_mime_set_plugin             _audvt->mime_set_plugin
-#define aud_uri_set_plugin              _audvt->uri_set_plugin
-
-#define aud_util_get_localdir           _audvt->util_get_localdir
-#define aud_util_add_url_history_entry  _audvt->util_add_url_history_entry
-
-#define aud_str_to_utf8                 _audvt->str_to_utf8
-#define aud_chardet_to_utf8             _audvt->chardet_to_utf8
-
-#define aud_playlist_container_register     _audvt->playlist_container_register
-#define aud_playlist_container_unregister   _audvt->playlist_container_unregister
-#define aud_playlist_container_read         _audvt->playlist_container_read
-#define aud_playlist_container_write        _audvt->playlist_container_write
-#define aud_playlist_container_find         _audvt->playlist_container_find
-
-#define aud_get_gentitle_format         _audvt->get_gentitle_format
-
-#define aud_cfg                         _audvt->_cfg
-
-#define aud_menu_plugin_item_add        _audvt->menu_plugin_item_add
-#define aud_menu_plugin_item_remove     _audvt->menu_plugin_item_remove
-
-#define aud_flow_execute                _audvt->flow_execute
-#define aud_flow_new                    _audvt->flow_new
-#define aud_flow_link_element           _audvt->flow_link_element
-#define aud_flow_unlink_element         _audvt->flow_unlink_element
-#define aud_effect_flow                 _audvt->effect_flow
-#define aud_flow_destroy                mowgli_object_unref
-
-#define aud_get_output_list             _audvt->get_output_list
-#define aud_get_effect_list             _audvt->get_effect_list
-#define aud_enable_effect               _audvt->enable_effect
-#define aud_enable_general              _audvt->enable_general
-
-#define aud_construct_uri               _audvt->construct_uri
-#define aud_uri_to_display_basename     _audvt->uri_to_display_basename
-#define aud_uri_to_display_dirname      _audvt->uri_to_display_dirname
-
-#define aud_calc_mono_freq              _audvt->calc_mono_freq
-#define aud_calc_mono_pcm               _audvt->calc_mono_pcm
-#define aud_calc_stereo_pcm             _audvt->calc_stereo_pcm
-
-#define aud_create_widgets(b, w, a) \
- _audvt->create_widgets_with_domain (b, w, a, PACKAGE);
-
-#define aud_equalizer_read_presets      _audvt->equalizer_read_presets
-#define aud_equalizer_write_preset_file _audvt->equalizer_write_preset_file
-#define aud_import_winamp_eqf           _audvt->import_winamp_eqf
-#define aud_save_preset_file            _audvt->save_preset_file
-#define aud_equalizer_read_aud_preset   _audvt->equalizer_read_aud_preset
-#define aud_load_preset_file            _audvt->load_preset_file
-
-#define aud_file_find_decoder           _audvt->file_find_decoder
-#define aud_file_read_tuple             _audvt->file_read_tuple
-#define aud_file_read_image             _audvt->file_read_image
-#define aud_file_can_write_tuple        _audvt->file_can_write_tuple
-#define aud_file_write_tuple            _audvt->file_write_tuple
-#define aud_custom_infowin              _audvt->custom_infowin
-
-#define aud_get_plugin_menu             _audvt->get_plugin_menu
-#define aud_playback_get_title          _audvt->playback_get_title
-#define aud_save_all_playlists          _audvt->save_all_playlists
-#define aud_get_associated_image_file   _audvt->get_associated_image_file
-
-#define aud_interface_get_current       _audvt->interface_get_current
-#define aud_interface_toggle_visibility _audvt->interface_toggle_visibility
-#define aud_interface_show_error        _audvt->interface_show_error
-
-#define aud_get_audacious_credits       _audvt->get_audacious_credits
-
-#define aud_vis_runner_add_hook		_audvt->vis_runner_add_hook
-#define aud_vis_runner_remove_hook	_audvt->vis_runner_remove_hook
-
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
     G_BEGIN_DECLS \
@@ -378,7 +160,7 @@ struct _OutputPlugin {
     void (*get_volume) (gint * l, gint * r);
     void (*set_volume) (gint l, gint r);
 
-    gint (*open_audio) (AFormat fmt, gint rate, gint nch);
+    gint (*open_audio) (gint fmt, gint rate, gint nch);
     void (*write_audio) (gpointer ptr, gint length);
     void (*close_audio) (void);
 
@@ -390,7 +172,7 @@ struct _OutputPlugin {
     gint (*output_time) (void);
     gint (*written_time) (void);
 
-    void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch); /* obsolete */
+    void (*tell_audio) (gint * fmt, gint * rate, gint * nch); /* obsolete */
     void (* drain) (void);
     void (* period_wait) (void);
 };
@@ -401,8 +183,8 @@ struct _EffectPlugin {
     gboolean enabled;
 
     /* old API */
-    gint (*mod_samples) (gpointer * data, gint length, AFormat fmt, gint srate, gint nch);
-    void (*query_format) (AFormat * fmt, gint * rate, gint * nch);
+    gint (*mod_samples) (gpointer * data, gint length, gint fmt, gint srate, gint nch);
+    void (*query_format) (gint * fmt, gint * rate, gint * nch);
 
     /* new API */
 
@@ -443,7 +225,7 @@ struct OutputAPI
     /* Prepare the output system for playback in the specified format.  Returns
      * nonzero on success.  If the call fails, no other output functions may be
      * called. */
-    gint (* open_audio) (AFormat format, gint rate, gint channels);
+    gint (* open_audio) (gint format, gint rate, gint channels);
 
     /* Informs the output system of replay gain values for the current song so
      * that volume levels can be adjusted accordingly, if the user so desires.
@@ -547,7 +329,7 @@ struct _InputPlayback {
     void (* set_gain_from_playlist) (InputPlayback * playback);
 
     /* deprecated */
-    void (*pass_audio) (InputPlayback *, AFormat, gint, gint, gpointer, gint *);
+    void (*pass_audio) (InputPlayback *, gint, gint, gint, gpointer, gint *);
     void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 };
 
@@ -578,7 +360,7 @@ struct _InputPlugin {
      * @param[in] tuple Tuple with the desired metadata.
      * @param[in] fd VFS file descriptor pointing to file to modify.
      */
-    gboolean (*update_song_tuple)(Tuple *tuple, VFSFile *fd);
+    gboolean (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
     void (*file_info_box) (const gchar * filename);
 
     /* Warning: Check for file == NULL. */

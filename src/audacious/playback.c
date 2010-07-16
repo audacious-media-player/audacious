@@ -29,14 +29,14 @@
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 
+#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
-#include "input.h"
+#include "interface.h"
 #include "main.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
-#include "probe.h"
 
 static void set_params (InputPlayback * playback, const gchar * title, gint
  length, gint bitrate, gint samplerate, gint channels);
@@ -374,7 +374,7 @@ static void playback_set_replaygain_info (InputPlayback * playback,
 }
 
 /* compatibility */
-static void playback_pass_audio (InputPlayback * playback, AFormat format, gint
+static void playback_pass_audio (InputPlayback * playback, gint format, gint
  channels, gint size, void * data, gint * going)
 {
     static gboolean warned = FALSE;
@@ -617,4 +617,28 @@ void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
     * bitrate = current_playback->rate;
     * samplerate = current_playback->freq;
     * channels = current_playback->nch;
+}
+
+void
+input_get_volume(gint * l, gint * r)
+{
+    if (current_playback && current_playback->plugin->get_volume &&
+     current_playback->plugin->get_volume (l, r))
+        return;
+
+    output_get_volume (l, r);
+}
+
+void
+input_set_volume(gint l, gint r)
+{
+    gint h_vol[2] = {l, r};
+
+    hook_call("volume set", h_vol);
+
+    if (current_playback && current_playback->plugin->set_volume &&
+     current_playback->plugin->set_volume (l, r))
+        return;
+
+    output_set_volume (l, r);
 }

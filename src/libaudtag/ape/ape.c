@@ -372,8 +372,8 @@ static gboolean ape_write_item (VFSFile * handle, const gchar * key,
     return TRUE;
 }
 
-static gboolean write_string_item (Tuple * tuple, int field, VFSFile * handle,
- const gchar * key, int * written_length, int * written_items)
+static gboolean write_string_item (const Tuple * tuple, int field, VFSFile *
+ handle, const gchar * key, int * written_length, int * written_items)
 {
     const gchar * value = tuple_get_string (tuple, field, NULL);
 
@@ -387,8 +387,8 @@ static gboolean write_string_item (Tuple * tuple, int field, VFSFile * handle,
     return TRUE;
 }
 
-static gboolean write_integer_item (Tuple * tuple, int field, VFSFile * handle,
- const gchar * key, int * written_length, int * written_items)
+static gboolean write_integer_item (const Tuple * tuple, int field, VFSFile *
+ handle, const gchar * key, int * written_length, int * written_items)
 {
     gint value = tuple_get_int (tuple, field, NULL);
     gchar scratch[32];
@@ -422,7 +422,7 @@ static gboolean write_header (gint data_length, gint items, gboolean is_header,
      (APEHeader);
 }
 
-static gboolean ape_write_tag (Tuple * tuple, VFSFile * handle)
+static gboolean ape_write_tag (const Tuple * tuple, VFSFile * handle)
 {
     GList * list = ape_read_items (handle), * node;
     APEHeader header;

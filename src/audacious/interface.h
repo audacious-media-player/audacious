@@ -32,6 +32,8 @@
 #include <glib.h>
 #include <mowgli.h>
 
+#include <audacious/types.h>
+
 typedef struct {
     /* GtkWidget * * (* create_prefs_window) (void); */
     void * * (* create_prefs_window) (void);
@@ -62,14 +64,14 @@ typedef struct {
     void * (* stop_gtk_plugin) (void * parent);
 } InterfaceCbs;
 
-typedef struct _Interface {
+struct _Interface {
     gchar *id;                           /* simple ID like 'skinned' */
     gchar *desc;                         /* description like 'Skinned Interface' */
     gboolean (*init)(InterfaceCbs *cbs); /* init UI */
     gboolean (*fini)(void);              /* shutdown UI */
 
     InterfaceOps *ops;
-} Interface;
+};
 
 void interface_register(Interface *i);
 void interface_deregister(Interface *i);

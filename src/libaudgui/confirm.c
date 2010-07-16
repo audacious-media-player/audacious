@@ -19,9 +19,9 @@
  * using our public API to be a derived work.
  */
 
+#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
-#include <audacious/plugin.h>
 
 #include "config.h"
 #include "libaudgui-gtk.h"

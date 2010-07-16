@@ -22,7 +22,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "ui_plugin_menu.h"
+#include "misc.h"
 
 /* A StaticMenu is simply a GtkMenu that is created with a (normal, not
  * floating) reference count of 1 and resists the "destroy" signal. Thus, it can

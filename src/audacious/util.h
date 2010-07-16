@@ -36,13 +36,7 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
 
-gchar *util_get_localdir(void);
-
-gchar *construct_uri(gchar *string, const gchar *playlist_name);
-
 gint file_get_mtime (const gchar * filename);
 void make_directory(const gchar * path, mode_t mode);
-
-void util_add_url_history_entry(const gchar * url);
 
 #endif /* AUDACIOUS_UTIL_H */

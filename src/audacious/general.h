@@ -34,7 +34,6 @@ struct _GeneralPluginData {
 
 GList *get_general_list(void);
 GList *get_general_enabled_list(void);
-void general_enable_plugin(GeneralPlugin *plugin, gboolean enable);
 gchar *general_stringify_enabled_list(void);
 void general_enable_from_stringified_list(const gchar * list);
 

@@ -16,7 +16,6 @@ SRCS = audconfig.c								\
        folder-add.c \
        general.c								\
        interface.c								\
-       input.c									\
        logger.c									\
        main.c									\
        output.c									\
@@ -52,22 +51,18 @@ INCLUDES = api.h \
            configdb-api.h \
            dbus.h				\
            dbus-service.h		\
+           debug.h \
            drct.h \
            drct-api.h \
-           debug.h \
-           equalizer_preset.h			\
-           flow.h				\
            i18n.h				\
-           input.h				\
            interface.h			\
-           main.h				\
-           playback.h			\
+           misc.h \
+           misc-api.h \
            playlist.h \
            playlist-api.h \
-           playlist_container.h	\
            plugin.h				\
            preferences.h		\
-           ui_plugin_menu.h
+           types.h
 
 DATA = images/about-logo.png				\
        images/appearance.png				\

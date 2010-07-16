@@ -25,12 +25,14 @@
 
 #include <libaudcore/audstrings.h>
 
+#include "audconfig.h"
 #include "main.h"
+#include "misc.h"
 #include "playlist.h"
 #include "playlist_container.h"
 #include "playlist-utils.h"
 
-const gchar * aud_titlestring_presets[] =
+static const gchar * aud_titlestring_presets[] =
 {
     "${title}",
     "${?artist:${artist} - }${title}",

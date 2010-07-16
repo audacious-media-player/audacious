@@ -27,8 +27,12 @@
 #define AUDACIOUS_AUDCONFIG_H
 
 #include <glib.h>
+#include <audacious/types.h>
 
-#define AUD_EQUALIZER_NBANDS    (10)
+#ifndef _AUDACIOUS_CORE
+#include <audacious/api.h>
+#define aud_cfg (_aud_api_table->cfg)
+#endif
 
 struct _AudConfig {
     gboolean shuffle, repeat;

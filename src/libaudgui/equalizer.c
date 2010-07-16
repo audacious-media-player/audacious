@@ -27,13 +27,12 @@
 
 #include <math.h>
 
+#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
-#include <audacious/plugin.h>
+#include <libaudcore/hook.h>
 
 #include "config.h"
 #include "libaudgui-gtk.h"
-
-#define DB_RANGE 12
 
 typedef struct
 {
@@ -76,8 +75,8 @@ static GtkWidget * create_on_off (void)
 
 static void slider_cb (GtkRange * slider, gfloat * setting)
 {
-    gint old = rintf (* setting);
-    gint new = rint (-gtk_range_get_value (slider));
+    gint old = roundf (* setting);
+    gint new = round (-gtk_range_get_value (slider));
 
     if (old != new)
     {
@@ -88,8 +87,8 @@ static void slider_cb (GtkRange * slider, gfloat * setting)
 
 static void slider_update (void * unused, SliderPair * pair)
 {
-    gint old = rint (-gtk_range_get_value ((GtkRange *) pair->slider));
-    gint new = rintf (* pair->setting);
+    gint old = round (-gtk_range_get_value ((GtkRange *) pair->slider));
+    gint new = roundf (* pair->setting);
 
     if (old != new)
         gtk_range_set_value ((GtkRange *) pair->slider, -new);
@@ -121,7 +120,8 @@ static GtkWidget * create_slider (const gchar * name, gfloat * setting)
     gtk_label_set_angle ((GtkLabel *) label, 90);
     gtk_box_pack_start ((GtkBox *) vbox, label, TRUE, FALSE, 0);
 
-    slider = gtk_vscale_new_with_range (-DB_RANGE, DB_RANGE, 1);
+    slider = gtk_vscale_new_with_range (-EQUALIZER_MAX_GAIN, EQUALIZER_MAX_GAIN,
+     1);
     gtk_scale_set_draw_value ((GtkScale *) slider, TRUE);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
     gtk_widget_set_size_request (slider, -1, 120);

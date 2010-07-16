@@ -1,5 +1,5 @@
 /*
- * ui_albumart.h
+ * types.h
  * Copyright 2010 John Lindgren
  *
  * This file is part of Audacious.
@@ -19,11 +19,30 @@
  * using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_UI_ALBUMART_H
-#define AUDACIOUS_UI_ALBUMART_H
+#ifndef AUDACIOUS_TYPES_H
+#define AUDACIOUS_TYPES_H
 
 #include <glib.h>
 
-gchar * get_associated_image_file (const gchar * filename);
+#define AUD_EQUALIZER_NBANDS 10
+#define EQUALIZER_MAX_GAIN 12
+
+typedef struct _Plugin Plugin;
+typedef struct _InputPlugin InputPlugin;
+typedef struct _OutputPlugin OutputPlugin;
+typedef struct _EffectPlugin EffectPlugin;
+typedef struct _GeneralPlugin GeneralPlugin;
+typedef struct _VisPlugin VisPlugin;
+
+#define PLUGIN(x) ((Plugin *) (x))
+#define INPUT_PLUGIN(x) ((InputPlugin *) (x))
+#define OUTPUT_PLUGIN(x) ((OutputPlugin *) (x))
+#define EFFECT_PLUGIN(x) ((EffectPlugin *) (x))
+#define GENERAL_PLUGIN(x) ((GeneralPlugin *) (x))
+#define VIS_PLUGIN(x) ((VisPlugin *) (x))
+
+typedef struct _Interface Interface;
+typedef struct _PluginPreferences PluginPreferences;
+typedef struct _PreferencesWidget PreferencesWidget;
 
 #endif

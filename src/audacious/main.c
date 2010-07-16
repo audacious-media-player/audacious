@@ -46,11 +46,12 @@
 #include "eggdesktopfile.h"
 #endif
 
+#include "audconfig.h"
 #include "configdb.h"
 #include "drct.h"
 #include "equalizer.h"
 #include "i18n.h"
-#include "input.h"
+#include "interface.h"
 #include "logger.h"
 #include "output.h"
 #include "playback.h"

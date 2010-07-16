@@ -19,17 +19,16 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include <glib.h>
-#include "i18n.h"
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include "audconfig.h"
 #include <libaudcore/audstrings.h>
+
+#include "audconfig.h"
+#include "config.h"
+#include "i18n.h"
+#include "misc.h"
 
 static gboolean
 has_front_cover_extension(const gchar *name)

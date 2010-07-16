@@ -86,7 +86,7 @@ typedef void (* ToFunc) (gfloat * in, void * out, gint samples);
 
 struct
 {
-    AFormat format;
+    gint format;
     FromFunc from;
     ToFunc to;
 }
@@ -126,7 +126,7 @@ convert_table [] =
 #endif
 };
 
-void audio_from_int (void * in, AFormat format, gfloat * out, gint samples)
+void audio_from_int (void * in, gint format, gfloat * out, gint samples)
 {
     gint entry;
 
@@ -140,7 +140,7 @@ void audio_from_int (void * in, AFormat format, gfloat * out, gint samples)
     }
 }
 
-void audio_to_int (gfloat * in, void * out, AFormat format, gint samples)
+void audio_to_int (gfloat * in, void * out, gint format, gint samples)
 {
     gint entry;
 

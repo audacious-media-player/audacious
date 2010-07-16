@@ -26,9 +26,9 @@
 #define AUDACIOUS_VISUALIZATION_H
 
 #include <glib.h>
-#include "flow.h"
-#include "plugin.h"
+
 #include "plugin-registry.h"
+#include "types.h"
 
 typedef struct _VisPluginData VisPluginData;
 
@@ -46,9 +46,6 @@ void vis_playback_start(void);
 void vis_playback_stop(void);
 gchar *vis_stringify_enabled_list(void);
 void vis_enable_from_stringified_list(gchar * list);
-void calc_stereo_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch);
-void calc_mono_pcm(gint16 dest[2][512], gint16 src[2][512], gint nch);
-void calc_mono_freq(gint16 dest[2][256], gint16 src[2][512], gint nch);
 
 extern VisPluginData vp_data;
 

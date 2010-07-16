@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses>.
  *
  * The Audacious team does not consider modular code linking to
- * Audacious or using our public API to be a derived work. 
+ * Audacious or using our public API to be a derived work.
  */
 
 #ifndef AUDACIOUS_FLOW_H
@@ -32,7 +32,7 @@ typedef struct {
     gint time;
     gpointer data;
     gsize len;
-    AFormat fmt;
+    gint fmt;
     gint srate;
     gint channels;
     gboolean error;
@@ -50,7 +50,7 @@ typedef struct {
     FlowElement *head, *tail;
 } Flow;
 
-gsize flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt, 
+gsize flow_execute(Flow *flow, gint time, gpointer *data, gsize len, gint fmt,
      gint srate, gint channels);
 
 Flow *flow_new(void);

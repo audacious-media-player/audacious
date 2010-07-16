@@ -34,6 +34,7 @@ AUD_FUNC0 (void, drct_pause)
 AUD_FUNC0 (void, drct_stop)
 AUD_FUNC0 (gboolean, drct_get_playing)
 AUD_FUNC0 (gboolean, drct_get_paused)
+AUD_FUNC0 (gchar *, drct_get_title)
 AUD_FUNC3 (void, drct_get_info, gint *, bitrate, gint *, samplerate, gint *,
  channels)
 AUD_FUNC0 (gint, drct_get_time)

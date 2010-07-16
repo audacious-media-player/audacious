@@ -19,10 +19,13 @@
  * using our public API to be a derived work.
  */
 
+#ifndef AUD_VIS_RUNNER_H
+#define AUD_VIS_RUNNER_H
+
 void vis_runner_start_stop (gboolean playing, gboolean paused);
 void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
  channels, gint rate);
 void vis_runner_time_offset (gint offset);
 void vis_runner_flush (void);
-void vis_runner_add_hook (HookFunction func, void * user_data);
-void vis_runner_remove_hook (HookFunction func);
+
+#endif

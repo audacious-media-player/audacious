@@ -25,9 +25,10 @@
 #include <libaudcore/audstrings.h>
 
 #include "debug.h"
+#include "misc.h"
 #include "playlist.h"
+#include "plugin.h"
 #include "plugin-registry.h"
-#include "probe.h"
 #include "probe-buffer.h"
 
 typedef struct
@@ -259,7 +260,7 @@ gboolean file_can_write_tuple (const gchar * filename, InputPlugin * decoder)
 }
 
 gboolean file_write_tuple (const gchar * filename, InputPlugin * decoder,
- Tuple * tuple)
+ const Tuple * tuple)
 {
     VFSFile * handle;
     gboolean success;

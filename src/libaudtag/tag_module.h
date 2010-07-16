@@ -40,7 +40,7 @@ typedef struct _module {
     gboolean(*can_handle_file) (VFSFile *fd);
     gboolean (* read_tag) (Tuple * tuple, VFSFile * handle);
     gboolean (* read_image) (VFSFile * handle, void * * data, gint * size);
-    gboolean (* write_tag) (Tuple * tuple, VFSFile * handle);
+    gboolean (* write_tag) (const Tuple * tuple, VFSFile * handle);
 
     mowgli_node_t node;
 } tag_module_t;

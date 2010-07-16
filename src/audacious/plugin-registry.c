@@ -28,6 +28,8 @@
 
 #include "debug.h"
 #include "main.h"
+#include "misc.h"
+#include "plugin.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"
 #include "util.h"
@@ -119,11 +121,8 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
         plugin->u.i.enabled = TRUE;
         memset (plugin->u.i.keys, 0, sizeof plugin->u.i.keys);
     }
-
-    if (type == PLUGIN_TYPE_VIS)
-    {
+    else if (type == PLUGIN_TYPE_VIS)
         plugin->u.v.enabled = FALSE;
-    }
 
     plugin_list = g_list_prepend (plugin_list, plugin);
     module->plugin_list = g_list_prepend (module->plugin_list, plugin);
@@ -679,13 +678,13 @@ static void input_plugin_add_keys (InputPlugin * header, gint key, GList *
     plugin->u.i.keys[key] = g_list_concat (plugin->u.i.keys[key], values);
 }
 
-void input_plugin_add_scheme (const gchar * scheme, InputPlugin * header)
+void uri_set_plugin (const gchar * scheme, InputPlugin * header)
 {
     input_plugin_add_keys (header, INPUT_KEY_SCHEME, g_list_prepend (NULL,
      g_strdup (scheme)));
 }
 
-void input_plugin_add_mime (const gchar * mime, InputPlugin * header)
+void mime_set_plugin (const gchar * mime, InputPlugin * header)
 {
     input_plugin_add_keys (header, INPUT_KEY_MIME, g_list_prepend (NULL,
      g_strdup (mime)));

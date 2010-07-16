@@ -40,7 +40,7 @@ flow_destructor(Flow *flow)
 }
 
 gsize
-flow_execute(Flow *flow, gint time, gpointer *data, gsize len, AFormat fmt,
+flow_execute(Flow *flow, gint time, gpointer *data, gsize len, gint fmt,
      gint srate, gint channels)
 {
     FlowElement *element;

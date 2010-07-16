@@ -30,9 +30,10 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
 #include <audacious/drct.h>
-#include <audacious/plugin.h>
+#include <audacious/misc.h>
 
 static void
 urlopener_add_url_callback(GtkWidget * widget,

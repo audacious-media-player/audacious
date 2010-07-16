@@ -21,6 +21,7 @@
 #define AUDACIOUS_PREFERENCES_H
 
 #include <glib.h>
+#include <audacious/types.h>
 
 typedef enum {
     WIDGET_NONE,
@@ -55,7 +56,7 @@ typedef struct {
 
 struct _NotebookTab;
 
-typedef struct _PreferencesWidget {
+struct _PreferencesWidget {
     WidgetType type;         /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget) */
     gpointer cfg;            /* connected config value */
@@ -114,7 +115,7 @@ typedef struct _PreferencesWidget {
         void * (* populate) (void);
     } data;
     ValueType cfg_type;      /* connected value type */
-} PreferencesWidget;
+};
 
 typedef struct _NotebookTab {
     gchar *name;
@@ -127,7 +128,7 @@ typedef enum {
     PREFERENCES_PAGE,    /* added as new page in main preferences window */
 } PreferencesType;
 
-typedef struct {
+struct _PluginPreferences {
     gchar *title;
     gchar *imgurl;        /* Optional */
 
@@ -142,13 +143,6 @@ typedef struct {
     void (*cleanup)(void);
 
     gpointer data;    /* for internal interface use only */
-} PluginPreferences;
-
-/* void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets,
- gint amt, const gchar * domain); */
-void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
- amt, const gchar * domain);
-
-#define create_widgets(b, w, a) create_widgets_with_domain (b, w, a, PACKAGE);
+};
 
 #endif /* AUDACIOUS_PREFERENCES_H */

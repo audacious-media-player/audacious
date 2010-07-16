@@ -21,6 +21,8 @@
 
 #include <glib.h>
 #include <string.h>
+
+#include "misc.h"
 #include "playlist_container.h"
 
 /*
@@ -49,7 +51,7 @@ PlaylistContainer *playlist_container_find(gchar *ext)
 	g_return_val_if_fail(ext != NULL && ext != (void *)1, NULL);
 
 	for (node = registered_plcs; node != NULL; node = g_list_next(node)) {
-		plc = PLAYLIST_CONTAINER(node->data);
+		plc = node->data;
 
 		if (!g_ascii_strncasecmp(plc->ext, ext, strlen(plc->ext)))
 			return plc;

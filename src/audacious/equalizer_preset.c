@@ -17,35 +17,20 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-/*#define AUD_DEBUG*/
-
 #include <glib.h>
-#include <math.h>
 
 #include "config.h"
 #include "debug.h"
 #include "i18n.h"
+#include "interface.h"
 #include "main.h"
-#include "plugin.h"
-#include "equalizer.h"
-#include "equalizer_preset.h"
+#include "misc.h"
 
-EqualizerPreset *
-equalizer_preset_new(const gchar * name)
+static EqualizerPreset * equalizer_preset_new (const gchar * name)
 {
     EqualizerPreset *preset = g_new0(EqualizerPreset, 1);
     preset->name = g_strdup(name);
     return preset;
-}
-
-void
-equalizer_preset_free(EqualizerPreset * preset)
-{
-    if (!preset)
-        return;
-
-    g_free(preset->name);
-    g_free(preset);
 }
 
 GList *
@@ -235,8 +220,7 @@ save_preset_file(EqualizerPreset *preset, const gchar * filename)
     g_key_file_free(rcfile);
 }
 
-EqualizerPreset *
-equalizer_read_aud_preset(const gchar * filename)
+static EqualizerPreset * equalizer_read_aud_preset (const gchar * filename)
 {
     gint i;
     EqualizerPreset *preset;
@@ -275,4 +259,3 @@ load_preset_file(const gchar *filename)
     }
     return NULL;
 }
-

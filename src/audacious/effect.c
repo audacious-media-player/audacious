@@ -29,6 +29,7 @@
 #include <glib.h>
 #include <string.h>
 
+#include "misc.h"
 #include "output.h"
 #include "plugin.h"
 #include "pluginenum.h"
@@ -40,7 +41,7 @@ EffectPluginData ep_data = {
 
 gint
 effect_do_mod_samples(gpointer * data, gint length,
-                      AFormat fmt, gint srate, gint nch)
+                      gint fmt, gint srate, gint nch)
 {
     GList *l = ep_data.enabled_list;
 
@@ -57,7 +58,7 @@ effect_do_mod_samples(gpointer * data, gint length,
 }
 
 void
-effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
+effect_do_query_format(gint * fmt, gint * rate, gint * nch)
 {
     GList *l = ep_data.enabled_list;
 
@@ -77,8 +78,7 @@ get_effect_enabled_list(void)
     return ep_data.enabled_list;
 }
 
-void
-effect_enable_plugin(EffectPlugin *ep, gboolean enable)
+void enable_effect (EffectPlugin * ep, gboolean enable)
 {
     if (enable && !ep->enabled)
         ep_data.enabled_list = g_list_append(ep_data.enabled_list, ep);
@@ -154,7 +154,7 @@ effect_enable_from_stringified_list(const gchar * list)
 void
 effect_flow(FlowContext *context)
 {
-    AFormat new_format;
+    gint new_format;
     gint new_rate;
     gint new_nch;
 

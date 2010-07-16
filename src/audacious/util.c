@@ -29,11 +29,9 @@
 
 
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
 
 #include <errno.h>
 
@@ -45,10 +43,10 @@
 
 #include <libaudcore/audstrings.h>
 
+#include "audconfig.h"
 #include "debug.h"
 #include "i18n.h"
-#include "input.h"
-#include "playback.h"
+#include "misc.h"
 #include "util.h"
 
 /*
@@ -177,8 +175,7 @@ util_get_localdir(void)
 }
 
 
-gchar *
-construct_uri(gchar *string, const gchar *playlist_name) // uri, path and anything else
+gchar * construct_uri (const gchar * string, const gchar * playlist_name)
 {
     gchar *filename = g_strdup(string);
     gchar *tmp, *path;

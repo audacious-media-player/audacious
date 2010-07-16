@@ -90,7 +90,7 @@ void output_set_volume (gint l, gint r)
 static GMutex * output_mutex;
 static gboolean output_opened, output_aborted, output_leave_open, output_paused;
 
-static AFormat decoder_format, output_format;
+static gint decoder_format, output_format;
 static gint decoder_channels, decoder_rate, effect_channels, effect_rate,
  output_channels, output_rate;
 static gint64 frames_written;
@@ -139,7 +139,7 @@ void output_cleanup (void)
     g_mutex_free (output_mutex);
 }
 
-static gboolean output_open_audio (AFormat format, gint rate, gint channels)
+static gboolean output_open_audio (gint format, gint rate, gint channels)
 {
     if (COP == NULL)
     {

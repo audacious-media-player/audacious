@@ -26,6 +26,4 @@
 
 extern const gint n_titlestring_presets;
 
-const gchar * get_gentitle_format (void);
-
 #endif

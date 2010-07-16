@@ -22,6 +22,8 @@
 
 #include <glib.h>
 #include <string.h>
+
+#include "misc.h"
 #include "plugin.h"
 #include "pluginenum.h"
 #include "general.h"
@@ -43,8 +45,7 @@ get_general_enabled_list(void)
     return gp_data.enabled_list;
 }
 
-void
-general_enable_plugin(GeneralPlugin *plugin, gboolean enable)
+void enable_general (GeneralPlugin * plugin, gboolean enable)
 {
     g_return_if_fail(plugin != NULL);
 

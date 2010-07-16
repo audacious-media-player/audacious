@@ -25,10 +25,12 @@
 #include <gtk/gtk.h>
 #include <stdarg.h>
 
+#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
+#include <audacious/misc.h>
 #include <audacious/playlist.h>
-#include <audacious/plugin.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 
 #include "config.h"
 #include "libaudgui.h"

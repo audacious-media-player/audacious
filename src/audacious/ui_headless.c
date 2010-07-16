@@ -22,10 +22,10 @@
 #include "config.h"
 #include "i18n.h"
 #include "interface.h"
-#include "input.h"
 #include "general.h"
-#include "visualization.h"
 #include "effect.h"
+#include "plugin.h"
+#include "plugin-registry.h"
 #include "preferences.h"
 
 static void

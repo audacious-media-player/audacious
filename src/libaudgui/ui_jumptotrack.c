@@ -49,10 +49,10 @@
   #include <regex.h>
 #endif
 
+#include <audacious/audconfig.h>
 #include <audacious/drct.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
-#include <audacious/plugin.h>
 #include <libaudcore/hook.h>
 
 #include "icons-stock.h"
