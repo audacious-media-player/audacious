@@ -28,7 +28,7 @@
 #endif
 
 #include "audconfig.h"
-
+#include "configdb.h"
 #include "effect.h"
 #include "general.h"
 #include "output.h"

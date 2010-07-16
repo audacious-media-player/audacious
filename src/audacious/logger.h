@@ -25,8 +25,6 @@
 
 #include <glib.h>
 
-G_BEGIN_DECLS
-
 #define BMP_LOGGER_DEFAULT_LOG_LEVEL  G_LOG_LEVEL_MESSAGE
 
 /* default log file max size: 512kb */
@@ -35,7 +33,5 @@ G_BEGIN_DECLS
 
 gboolean aud_logger_start(const gchar * filename);
 void aud_logger_stop(void);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_LOGGER_H */

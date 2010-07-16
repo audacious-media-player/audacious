@@ -26,43 +26,15 @@
 #ifndef AUDACIOUS_UTIL_H
 #define AUDACIOUS_UTIL_H
 
-#ifdef _AUDACIOUS_CORE
-# ifdef HAVE_CONFIG_H
-#  include "config.h"
-# endif
-#endif
-
+#include <sys/types.h>
 #include <glib.h>
-#include <gtk/gtk.h>
-
-G_BEGIN_DECLS
-
-#include "audacious/plugin.h"
-
-#define SWAP(a, b)      { a^=b; b^=a; a^=b; }
 
 typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,
                                    gpointer user_data);
 
-
-gchar *find_file_recursively(const gchar * dirname, const gchar * file);
-gchar *find_path_recursively(const gchar * dirname, const gchar * file);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
-
-
-GArray *string_to_garray(const gchar * str);
-
-void glist_movedown(GList * list);
-void glist_moveup(GList * list);
-
-void util_set_cursor(GtkWidget * window);
-gboolean text_get_extents(const gchar * fontname, const gchar * text,
-                          gint * width, gint * height, gint * ascent,
-                          gint * descent);
-
-guint gint_count_digits(gint n);
 
 gchar *util_get_localdir(void);
 
@@ -72,7 +44,5 @@ gint file_get_mtime (const gchar * filename);
 void make_directory(const gchar * path, mode_t mode);
 
 void util_add_url_history_entry(const gchar * url);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_UTIL_H */

@@ -19,13 +19,14 @@
  * using our public API to be a derived work.
  */
 
-#define DEBUG
 #include <glib.h>
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "audstrings.h"
+#include <libaudcore/audstrings.h>
+
+#include "debug.h"
 #include "main.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"

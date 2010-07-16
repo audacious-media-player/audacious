@@ -22,6 +22,8 @@
 #ifndef AUDACIOUS_EQUALIZER_H
 #define AUDACIOUS_EQUALIZER_H
 
+#include <glib.h>
+
 void eq_init (void);
 void eq_set_format (gint new_channels, gint new_rate);
 void eq_filter (gfloat * data, gint samples);

@@ -20,6 +20,8 @@
 #ifndef AUDACIOUS_PREFERENCES_H
 #define AUDACIOUS_PREFERENCES_H
 
+#include <glib.h>
+
 typedef enum {
     WIDGET_NONE,
     WIDGET_CHK_BTN,

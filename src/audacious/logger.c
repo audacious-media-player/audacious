@@ -27,7 +27,7 @@
 #include "logger.h"
 
 #include <glib.h>
-#include <glib/gi18n.h>
+#include "i18n.h"
 #include <glib/gprintf.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,7 +97,7 @@ log_to_file(const gchar * domain, GLogLevelFlags level,
 
     if (domain)
         g_fprintf(file, "(%s) ", domain);
-    
+
     if (message)
         g_fprintf(file, "%s\n", message);
     else

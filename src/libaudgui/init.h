@@ -21,4 +21,4 @@
 
 #include <audacious/plugin.h>
 
-void audgui_init (struct _AudaciousFuncTableV1 * vtable);
+void audgui_init (AudAPITable * table);

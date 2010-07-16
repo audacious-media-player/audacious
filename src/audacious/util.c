@@ -27,10 +27,8 @@
 #  include "config.h"
 #endif
 
-#include "util.h"
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,9 +43,13 @@
 #  include <fts.h>
 #endif
 
+#include <libaudcore/audstrings.h>
+
+#include "debug.h"
+#include "i18n.h"
 #include "input.h"
 #include "playback.h"
-#include "audstrings.h"
+#include "util.h"
 
 /*
  * find <file> in directory <dirname> or subdirectories.  return
@@ -120,68 +122,6 @@ find_path_recursively(const gchar * path, const gchar * filename)
     dir_foreach(path, find_file_func, &context, NULL);
 
     return context.match;
-}
-
-GArray *
-string_to_garray(const gchar * str)
-{
-    GArray *array;
-    gint temp;
-    const gchar *ptr = str;
-    gchar *endptr;
-
-    array = g_array_new(FALSE, TRUE, sizeof(gint));
-    for (;;) {
-        temp = strtol(ptr, &endptr, 10);
-        if (ptr == endptr)
-            break;
-        g_array_append_val(array, temp);
-        ptr = endptr;
-        while (!isdigit((int) *ptr) && (*ptr) != '\0')
-            ptr++;
-        if (*ptr == '\0')
-            break;
-    }
-    return (array);
-}
-
-void
-glist_movedown(GList * list)
-{
-    gpointer temp;
-
-    if (g_list_next(list)) {
-        temp = list->data;
-        list->data = list->next->data;
-        list->next->data = temp;
-    }
-}
-
-void
-glist_moveup(GList * list)
-{
-    gpointer temp;
-
-    if (g_list_previous(list)) {
-        temp = list->data;
-        list->data = list->prev->data;
-        list->prev->data = temp;
-    }
-}
-
-/* counts number of digits in a gint */
-guint
-gint_count_digits(gint n)
-{
-    guint count = 0;
-
-    n = ABS(n);
-    do {
-        count++;
-        n /= 10;
-    } while (n > 0);
-
-    return count;
 }
 
 gboolean

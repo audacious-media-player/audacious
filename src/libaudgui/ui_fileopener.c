@@ -17,17 +17,14 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include "ui_fileopener.h"
-
-#include <glib/gi18n.h>
-#include <string.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "audacious/plugin.h"
-#include "audacious/input.h"
-#include "audacious/main.h"
-#include "audacious/playback.h"
-#include "libaudcore/audstrings.h"
+#include <audacious/i18n.h>
+#include <audacious/drct.h>
+#include <audacious/plugin.h>
+
+#include "config.h"
+#include "ui_fileopener.h"
 
 static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
  gboolean play)
@@ -41,9 +38,9 @@ static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
     list = g_list_reverse (list);
 
     if (play)
-        audacious_drct_pl_open_list (list);
+        aud_drct_pl_open_list (list);
     else
-        audacious_drct_pl_add (list);
+        aud_drct_pl_add_list (list, -1);
 
     g_list_free (list);
 

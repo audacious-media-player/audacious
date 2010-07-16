@@ -24,9 +24,12 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#include <audacious/drct.h>
 #include <audacious/i18n.h>
+#include <audacious/playlist.h>
 #include <audacious/plugin.h>
 
+#include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
@@ -98,7 +101,7 @@ static gboolean infopopup_progress_cb (void * unused)
     g_return_val_if_fail (tooltip_file != NULL, FALSE);
     g_return_val_if_fail (length > 0, FALSE);
 
-    if (! aud_cfg->filepopup_showprogressbar || ! audacious_drct_get_playing ())
+    if (! aud_cfg->filepopup_showprogressbar || ! aud_drct_get_playing ())
         goto HIDE;
 
     playlist = aud_playlist_get_playing ();
@@ -116,7 +119,7 @@ static gboolean infopopup_progress_cb (void * unused)
     if (strcmp (filename, tooltip_file))
         goto HIDE;
 
-    time = audacious_drct_get_time ();
+    time = aud_drct_get_time ();
     gtk_progress_bar_set_fraction ((GtkProgressBar *) progressbar, time /
      (gfloat) length);
     progress_time = g_strdup_printf ("%d:%02d", time / 60000, (time / 1000) % 60);
@@ -299,8 +302,8 @@ static void infopopup_clear (void)
     gtk_window_resize ((GtkWindow *) infopopup, 1, 1);
 }
 
-static void infopopup_show (const gchar * filename, Tuple * tuple, const gchar *
- title)
+static void infopopup_show (const gchar * filename, const Tuple * tuple,
+ const gchar * title)
 {
     gint x, y, h, w;
     gchar * last_artwork;
@@ -393,7 +396,7 @@ static void infopopup_show (const gchar * filename, Tuple * tuple, const gchar *
 void audgui_infopopup_show (gint playlist, gint entry)
 {
     const gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
-    Tuple * tuple = (Tuple *) aud_playlist_entry_get_tuple (playlist, entry);
+    const Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
     g_return_if_fail (filename != NULL);
 
@@ -401,7 +404,7 @@ void audgui_infopopup_show (gint playlist, gint entry)
         return;
 
     infopopup_show (filename, tuple, aud_playlist_entry_get_title (playlist,
-     entry));
+     entry, FALSE));
 }
 
 void audgui_infopopup_show_current (void)

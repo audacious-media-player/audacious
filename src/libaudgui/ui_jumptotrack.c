@@ -29,7 +29,6 @@
 
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
 
@@ -50,9 +49,13 @@
   #include <regex.h>
 #endif
 
+#include <audacious/drct.h>
+#include <audacious/i18n.h>
+#include <audacious/playlist.h>
+#include <audacious/plugin.h>
+#include <libaudcore/hook.h>
+
 #include "icons-stock.h"
-#include "audstrings.h"
-#include "plugin.h"
 #include "ui_jumptotrack_cache.h"
 
 static void watchdog (void * hook_data, void * user_data);
@@ -68,7 +71,7 @@ static void change_song (guint pos)
 
     aud_playlist_set_playing (playlist);
     aud_playlist_set_position (playlist, pos);
-    audacious_drct_initiate ();
+    aud_drct_play ();
 }
 
 void
@@ -76,7 +79,7 @@ audgui_jump_to_track_hide(void)
 {
     if (watching)
     {
-        aud_hook_dissociate ("playlist update", watchdog);
+        hook_dissociate ("playlist update", watchdog);
         watching = FALSE;
     }
 
@@ -162,10 +165,10 @@ ui_jump_to_track_queue_cb(GtkButton * button,
 
     gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    if (audacious_drct_pq_is_queued (pos - 1))
-        audacious_drct_pq_remove (pos - 1);
+    if (aud_drct_pq_is_queued (pos - 1))
+        aud_drct_pq_remove (pos - 1);
     else
-        audacious_drct_pq_add (pos - 1);
+        aud_drct_pq_add (pos - 1);
 
     ui_jump_to_track_set_queue_button_label(button, (pos - 1));
 }
@@ -263,7 +266,8 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     for (i = 0; i < search_matches->len; i++)
     {
         gint entry = g_array_index (search_matches, gint, i);
-        const gchar * title = aud_playlist_entry_get_title (playlist, entry);
+        const gchar * title = aud_playlist_entry_get_title (playlist, entry,
+         TRUE);
 
         if (title == NULL)
             continue;
@@ -301,7 +305,8 @@ ui_jump_to_track_fill(gpointer treeview)
     {
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
-         0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry), -1);
+         0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry, TRUE),
+          -1);
     }
 
     /* attach liststore to treeview */
@@ -382,7 +387,7 @@ audgui_jump_to_track(void)
 
     if (! watching)
     {
-        aud_hook_associate ("playlist update", watchdog, NULL);
+        hook_associate ("playlist update", watchdog, NULL);
         watching = TRUE;
     }
 

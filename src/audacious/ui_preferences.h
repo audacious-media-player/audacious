@@ -20,6 +20,8 @@
 #ifndef AUDACIOUS_UI_PREFERENCES_H
 #define AUDACIOUS_UI_PREFERENCES_H
 
+#include <glib.h>
+
 /* GtkWidget * * create_prefs_window (void); */
 void * * create_prefs_window (void);
 void destroy_prefs_window(void);

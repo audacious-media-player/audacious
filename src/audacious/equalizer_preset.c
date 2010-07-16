@@ -21,7 +21,9 @@
 
 #include <glib.h>
 #include <math.h>
+
 #include "config.h"
+#include "debug.h"
 #include "i18n.h"
 #include "main.h"
 #include "plugin.h"

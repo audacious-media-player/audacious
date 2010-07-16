@@ -22,7 +22,7 @@
 #ifndef AUDACIOUS_PLAYLIST_CONTAINER_H
 #define AUDACIOUS_PLAYLIST_CONTAINER_H
 
-G_BEGIN_DECLS
+#include <glib.h>
 
 struct _PlaylistContainer {
 	gchar *name;					/* human-readable name */
@@ -40,7 +40,5 @@ extern void playlist_container_unregister(PlaylistContainer *plc);
 extern void playlist_container_read(gchar *filename, gint pos);
 extern void playlist_container_write(gchar *filename, gint pos);
 extern PlaylistContainer *playlist_container_find(gchar *ext);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_PLAYLIST_CONTAINER_H */

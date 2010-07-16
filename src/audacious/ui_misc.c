@@ -17,8 +17,10 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
+
+#include "config.h"
+#include "i18n.h"
 
 GtkWidget *
 ui_markup_label_new(const gchar *text)

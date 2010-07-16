@@ -30,6 +30,7 @@
 #include <audacious/i18n.h>
 #include <audacious/plugin.h>
 
+#include "config.h"
 #include "libaudgui-gtk.h"
 
 #define DB_RANGE 12
@@ -48,7 +49,7 @@ static void on_off_cb (GtkToggleButton * on_off, void * unused)
     if (aud_cfg->equalizer_active != active)
     {
         aud_cfg->equalizer_active = active;
-        aud_hook_call ("equalizer changed", NULL);
+        hook_call ("equalizer changed", NULL);
     }
 }
 
@@ -67,7 +68,7 @@ static GtkWidget * create_on_off (void)
 
     on_off = gtk_check_button_new_with_mnemonic (_("_Enable"));
     g_signal_connect ((GObject *) on_off, "toggled", (GCallback) on_off_cb, NULL);
-    aud_hook_associate ("equalizer changed", (HookFunction) on_off_update, on_off);
+    hook_associate ("equalizer changed", (HookFunction) on_off_update, on_off);
 
     on_off_update (NULL, on_off);
     return on_off;
@@ -81,7 +82,7 @@ static void slider_cb (GtkRange * slider, gfloat * setting)
     if (old != new)
     {
         * setting = new;
-        aud_hook_call ("equalizer changed", NULL);
+        hook_call ("equalizer changed", NULL);
     }
 }
 
@@ -101,7 +102,7 @@ static void set_slider_update (GtkWidget * slider, gfloat * setting)
     pair->slider = slider;
     pair->setting = setting;
 
-    aud_hook_associate ("equalizer changed", (HookFunction) slider_update, pair);
+    hook_associate ("equalizer changed", (HookFunction) slider_update, pair);
     slider_update (NULL, pair);
 }
 

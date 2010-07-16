@@ -28,12 +28,11 @@
 #endif
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include "playback.h"
-#include "playlist-new.h"
-#include "util.h"
+#include <audacious/i18n.h>
+#include <audacious/drct.h>
+#include <audacious/plugin.h>
 
 static void
 urlopener_add_url_callback(GtkWidget * widget,
@@ -136,7 +135,7 @@ on_add_url_add_clicked(GtkWidget * widget,
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
     if (text != NULL && * text)
-        audacious_drct_pl_add_url_string (text);
+        aud_drct_pl_add (text, -1);
 }
 
 static void
@@ -146,7 +145,7 @@ on_add_url_ok_clicked(GtkWidget * widget,
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
     if (text != NULL && * text)
-        audacious_drct_pl_open (text);
+        aud_drct_pl_open (text);
 }
 
 void

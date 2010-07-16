@@ -91,7 +91,7 @@ typedef struct {
     gint nvariables, nfunctions, nexpressions;
     TupleEvalVar **variables;
     TupleEvalFunc **functions;
-    
+
     /* Error context */
     gboolean iserror;
     gchar *errmsg;
@@ -107,7 +107,8 @@ void tuple_evalnode_free(TupleEvalNode *expr);
 
 gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEvalNode *expr);
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
-gchar *tuple_formatter_eval(TupleEvalContext *ctx, TupleEvalNode *expr, Tuple *tuple);
+gchar * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
+ const Tuple * tuple);
 
 
 G_END_DECLS

@@ -20,8 +20,10 @@
  */
 
 #include <audacious/i18n.h>
+#include <audacious/playlist.h>
 #include <audacious/plugin.h>
 
+#include "config.h"
 #include "libaudgui-gtk.h"
 
 static void confirm_delete_cb (GtkButton * button, void * data)
@@ -73,7 +75,7 @@ void audgui_confirm_playlist_delete (gint playlist)
      "again"));
     gtk_box_pack_start ((GtkBox *) hbox, button, FALSE, FALSE, 0);
     audgui_connect_check_box (button, & aud_cfg->no_confirm_playlist_delete);
-    
+
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 

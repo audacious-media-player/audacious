@@ -1,57 +1,73 @@
-/**
- * @file configdb.h
- * Main API for handling Audacious configuration file/database.
- * Contains functions for getting and setting values in different
- * sections of the configuration.
+/*
+ * configdb.h
+ * Copyright 2010 John Lindgren
  *
- * @attention This API is mainly a thin wrapper on top of libmcs API.
+ * This file is part of Audacious.
+ *
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
+ *
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
+
 #ifndef AUDACIOUS_CONFIGDB_H
 #define AUDACIOUS_CONFIGDB_H
 
 #include <glib.h>
 #include <libmcs/mcs.h>
+#include <audacious/api.h>
 
-G_BEGIN_DECLS
+#define AUD_API_NAME ConfigDBAPI
+#define AUD_API_SYMBOL configdb_api
 
-mcs_handle_t *cfg_db_open();
-void cfg_db_close(mcs_handle_t *db);
+#ifdef _AUDACIOUS_CORE
+
+#include "api-local-begin.h"
+#include "configdb-api.h"
+#include "api-local-end.h"
+
 void cfg_db_flush (void);
 
-gboolean cfg_db_get_string(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gchar **value);
+#else
 
-gboolean cfg_db_get_int(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gint *value);
+#include <audacious/api-define-begin.h>
+#include <audacious/configdb-api.h>
+#include <audacious/api-define-end.h>
 
-gboolean cfg_db_get_bool(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gboolean *value);
+#include <audacious/api-alias-begin.h>
+#include <audacious/configdb-api.h>
+#include <audacious/api-alias-end.h>
 
-gboolean cfg_db_get_float(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gfloat *value);
+#endif
 
-gboolean cfg_db_get_double(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gdouble *value);
+#undef AUD_API_NAME
+#undef AUD_API_SYMBOL
 
-void cfg_db_set_string(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, const gchar *value);
+#endif
 
-void cfg_db_set_int(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gint value);
+#ifdef AUD_API_DECLARE
 
-void cfg_db_set_bool(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gboolean value);
+#define AUD_API_NAME ConfigDBAPI
+#define AUD_API_SYMBOL configdb_api
 
-void cfg_db_set_float(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gfloat value);
+#include "api-define-begin.h"
+#include "configdb-api.h"
+#include "api-define-end.h"
 
-void cfg_db_set_double(mcs_handle_t *db, const gchar *section,
-                    const gchar *key, gdouble value);
+#include "api-declare-begin.h"
+#include "configdb-api.h"
+#include "api-declare-end.h"
 
-void cfg_db_unset_key(mcs_handle_t *db, const gchar *section,
-                    const gchar *key);
+#undef AUD_API_NAME
+#undef AUD_API_SYMBOL
 
-G_END_DECLS
-
-#endif /* AUDACIOUS_CONFIGDB_H */
-
+#endif

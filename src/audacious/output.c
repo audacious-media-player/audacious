@@ -21,16 +21,15 @@
 
 #include <math.h>
 
-#include "config.h"
+#include <libaudcore/audio.h>
 
-#include "audio.h"
 #include "audconfig.h"
+#include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
 #include "flow.h"
 #include "output.h"
 #include "playback.h"
-#include "pluginenum.h"
 #include "plugin-registry.h"
 #include "vis_runner.h"
 

@@ -29,14 +29,15 @@
 #endif
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <audacious/i18n.h>
+#include <audacious/plugin.h>
+
 #include "ui_credits.h"
-#include "plugin.h"
 
 static GtkWidget *about_window = NULL;
 static GdkPixbuf *about_pixbuf = NULL;
@@ -63,7 +64,7 @@ on_about_window_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
 
 	if (event->keyval == GDK_Escape)
-	{      
+	{
 		gtk_widget_hide(widget);
 	}
 

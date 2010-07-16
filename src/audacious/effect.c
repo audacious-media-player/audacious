@@ -48,10 +48,7 @@ effect_do_mod_samples(gpointer * data, gint length,
         if (l->data) {
             EffectPlugin *ep = l->data;
             if (ep->mod_samples)
-	    {
-	        plugin_set_current((Plugin *)ep);
                 length = ep->mod_samples(data, length, fmt, srate, nch);
-	    }
         }
         l = g_list_next(l);
     }
@@ -68,10 +65,7 @@ effect_do_query_format(AFormat * fmt, gint * rate, gint * nch)
         if (l->data) {
             EffectPlugin *ep = l->data;
             if (ep->query_format)
-	    {
-	        plugin_set_current((Plugin *)ep);
                 ep->query_format(fmt, rate, nch);
-	    }
         }
         l = g_list_next(l);
     }

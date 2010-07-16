@@ -27,7 +27,7 @@
 #  include "config.h"
 #endif
 
-#include <glib/gi18n.h>
+#include "i18n.h"
 #include "credits.h"
 
 static const gchar *audacious_brief =

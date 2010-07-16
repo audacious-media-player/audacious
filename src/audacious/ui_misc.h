@@ -17,8 +17,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <glib/gi18n.h>
-
 #ifndef _AUDACIOUS_UI_MISC_H
 
 void ui_display_unsupported_version_warning(void);

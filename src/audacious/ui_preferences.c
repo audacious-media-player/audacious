@@ -22,7 +22,6 @@
 #endif
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stddef.h>
@@ -36,7 +35,8 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "compatibility.h"
-
+#include "debug.h"
+#include "i18n.h"
 #include "plugin.h"
 #include "pluginenum.h"
 #include "plugin-registry.h"
@@ -44,10 +44,9 @@
 #include "effect.h"
 #include "general.h"
 #include "output.h"
-#include "playlist-new.h"
+#include "playlist.h"
 #include "playlist-utils.h"
 #include "visualization.h"
-#include "audstrings.h"
 #include "util.h"
 #include "configdb.h"
 #include "preferences.h"
@@ -765,7 +764,6 @@ plugin_treeview_open_prefs(GtkTreeView *treeview)
     g_return_if_fail((plugin->configure != NULL) ||
                      ((plugin->settings != NULL) && (plugin->settings->type == PREFERENCES_WINDOW)));
 
-    plugin_set_current(plugin);
     if (plugin->configure != NULL)
         plugin->configure();
     else
@@ -786,8 +784,6 @@ plugin_treeview_open_info(GtkTreeView *treeview)
     gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
 
     g_return_if_fail(plugin != NULL);
-
-    plugin_set_current(plugin);
     plugin->about();
 }
 

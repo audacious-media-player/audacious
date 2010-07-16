@@ -36,8 +36,9 @@
   #include <regex.h>
 #endif
 
-#include "audstrings.h"
-#include "plugin.h"
+#include <audacious/debug.h>
+#include <audacious/playlist.h>
+
 #include "ui_jumptotrack_cache.h"
 
 // Struct to keep information about matches from searches.
@@ -281,7 +282,7 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
         for (entry = 0; entry < entries; entry ++)
         {
             gchar * title = normalize_search_string (aud_playlist_entry_get_title
-             (playlist, entry));
+             (playlist, entry, TRUE));
 
             g_array_append_val (track_entries, entry);
             g_array_append_val (normalized_titles, title);

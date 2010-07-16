@@ -26,9 +26,11 @@
 #include <stdarg.h>
 
 #include <audacious/i18n.h>
+#include <audacious/playlist.h>
 #include <audacious/plugin.h>
 #include <libaudcore/audstrings.h>
 
+#include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
@@ -114,7 +116,7 @@ static const gchar * genre_table[] =
     N_("Anime"), N_("JPop"), N_("Synthpop")
 };
 
-static void set_entry_str_from_field (GtkWidget * widget, Tuple * tuple,
+static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
  gint fieldn, gboolean editable)
 {
     const gchar * text = tuple_get_string (tuple, fieldn, NULL);
@@ -123,8 +125,8 @@ static void set_entry_str_from_field (GtkWidget * widget, Tuple * tuple,
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
-static void set_entry_int_from_field (GtkWidget * widget, Tuple * tuple, gint
- fieldn, gboolean editable)
+static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
+ gint fieldn, gboolean editable)
 {
     gchar scratch[32];
 
@@ -739,8 +741,8 @@ static gboolean set_image_from_album_art (const gchar * filename, InputPlugin *
     return TRUE;
 }
 
-static void infowin_show (const gchar * filename, Tuple * tuple, InputPlugin *
- decoder, gboolean updating_enabled)
+static void infowin_show (const gchar * filename, const Tuple * tuple,
+ InputPlugin * decoder, gboolean updating_enabled)
 {
     const gchar * string;
     gchar * tmp;
@@ -863,37 +865,24 @@ static void infowin_show (const gchar * filename, Tuple * tuple, InputPlugin *
 void audgui_infowin_show (gint playlist, gint entry)
 {
     const gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
-    InputPlugin * decoder = aud_playlist_entry_get_decoder (playlist, entry);
-    Tuple * tuple = (Tuple *) aud_playlist_entry_get_tuple (playlist, entry);
-
     g_return_if_fail (filename != NULL);
 
+    InputPlugin * decoder = aud_file_find_decoder (filename, FALSE);
     if (decoder == NULL)
-    {
-        decoder = aud_file_find_decoder (filename, FALSE);
-
-        if (decoder == NULL)
-            return;
-    }
+        return;
 
     if (aud_custom_infowin (filename, decoder))
         return;
 
+    const Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+
     if (tuple == NULL)
     {
-        tuple = aud_file_read_tuple (filename, decoder);
-
-        if (tuple == NULL)
-        {
-            gchar * message = g_strdup_printf (_("No info available for %s.\n"),
-             filename);
-
-            aud_hook_call ("interface show error", message);
-            g_free (message);
-            return;
-        }
-
-        aud_playlist_entry_set_tuple (playlist, entry, tuple);
+        gchar * message = g_strdup_printf (_("No info available for %s.\n"),
+         filename);
+        hook_call ("interface show error", message);
+        g_free (message);
+        return;
     }
 
     infowin_show (filename, tuple, decoder, aud_file_can_write_tuple (filename,

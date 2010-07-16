@@ -21,8 +21,12 @@
 
 #include <string.h>
 #include <glib.h>
-#include <audacious/plugin.h>
-#include "util.h"
+
+#include <audacious/drct.h>
+#include <audacious/playlist.h>
+#include <libaudcore/vfs.h>
+
+#include "libaudgui.h"
 
 typedef void (* ForEachFunc) (gchar *, void *);
 
@@ -74,7 +78,7 @@ void audgui_urilist_open (const gchar * list)
     urilist_for_each (list, (ForEachFunc) add_to_glist, & glist);
     glist = g_list_reverse (glist);
 
-    audacious_drct_pl_open_list (glist);
+    aud_drct_pl_open_list (glist);
 
     g_list_foreach (glist, (GFunc) g_free, NULL);
     g_list_free (glist);
@@ -82,9 +86,9 @@ void audgui_urilist_open (const gchar * list)
 
 static void add_full (gchar * name, AddState * state)
 {
-    if (aud_vfs_file_test (name, G_FILE_TEST_IS_DIR))
+    if (vfs_file_test (name, G_FILE_TEST_IS_DIR))
     {
-        aud_playlist_insert_folder (state->playlist, state->at, name);
+        aud_playlist_insert_folder (state->playlist, state->at, name, FALSE);
         g_free (name);
     }
     else if (aud_filename_is_playlist (name))

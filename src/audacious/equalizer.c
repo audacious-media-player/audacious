@@ -15,9 +15,10 @@
 #include <math.h>
 #include <string.h>
 
+#include <libaudcore/hook.h>
+
 #include "audconfig.h"
 #include "equalizer.h"
-#include "hook.h"
 
 #define EQ_BANDS AUD_EQUALIZER_NBANDS
 #define MAX_CHANNELS 10

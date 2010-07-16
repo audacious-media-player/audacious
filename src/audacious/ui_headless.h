@@ -17,8 +17,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include "interface.h"
-
 #ifndef UI_HEADLESS_H
 #define UI_HEADLESS_H
 

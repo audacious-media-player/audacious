@@ -31,16 +31,14 @@
 #include "dbus-server-bindings.h"
 
 #include <math.h>
+#include <libaudcore/eventqueue.h>
 
-#include "auddrct.h"
+#include "drct.h"
 #include "equalizer.h"
 #include "input.h"
 #include "main.h"
 #include "playback.h"
-#include "audstrings.h"
-#include "playlist-new.h"
-#include "playlist-utils.h"
-#include "tuple.h"
+#include "playlist.h"
 #include "interface.h"
 
 struct StatusRequest
@@ -395,9 +393,10 @@ static gboolean get_info_cb(void *data)
     real_position(&request->playlist, &request->entry);
     filename = playlist_entry_get_filename(request->playlist, request->entry);
     request->filename = (filename == NULL) ? NULL : g_strdup(filename);
-    title = playlist_entry_get_title(request->playlist, request->entry);
+    title = playlist_entry_get_title (request->playlist, request->entry, FALSE);
     request->title = (title == NULL) ? NULL : g_strdup(title);
-    request->length = playlist_entry_get_length(request->playlist, request->entry);
+    request->length = playlist_entry_get_length (request->playlist,
+     request->entry, FALSE);
     pltitle = playlist_get_title(request->playlist);
     request->pltitle = (pltitle == NULL) ? NULL : g_strdup(pltitle);
 
@@ -427,7 +426,7 @@ static gboolean get_field_cb(void *data)
     g_mutex_lock(info_mutex);
 
     real_position(&request->playlist, &request->entry);
-    tuple = playlist_entry_get_tuple(request->playlist, request->entry);
+    tuple = playlist_entry_get_tuple (request->playlist, request->entry, FALSE);
     request->value = (tuple == NULL) ? NULL : tuple_value_to_gvalue(tuple, request->field);
 
     g_cond_signal(info_cond);
@@ -510,7 +509,7 @@ static gboolean add_cb(void *data)
     struct AddRequest *request = data;
     gint playlist = playlist_get_active();
 
-    drct_pl_ins_url_string (request->filename, request->position);
+    drct_pl_add (request->filename, request->position);
 
     if (request->play)
     {
@@ -557,7 +556,7 @@ static gboolean queue_get_entry_cb(void *data)
 {
     g_mutex_lock(info_mutex);
 
-    *(gint *) data = drct_pq_get_position(*(gint *) data);
+    * (gint *) data = drct_pq_get_entry (* (gint *) data);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -607,7 +606,7 @@ static gint queue_find_entry(gint position)
 
 gboolean add_to_new_playlist_cb(void *data)
 {
-    drct_pl_enqueue_to_temp(data);
+    drct_pl_open_temp (data);
     g_free(data);
     return FALSE;
 }
@@ -625,7 +624,8 @@ static gboolean get_mpris_metadata_cb(void *data)
     if (filename == NULL)
         request->metadata = NULL;
     else
-        request->metadata = make_mpris_metadata(filename, playlist_entry_get_tuple(request->playlist, request->entry));
+        request->metadata = make_mpris_metadata (filename,
+         playlist_entry_get_tuple (request->playlist, request->entry, FALSE));
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -826,7 +826,8 @@ gboolean mpris_emit_track_change(MprisPlayer * obj)
     if (filename == NULL)
         return FALSE;
 
-    metadata = make_mpris_metadata(filename, playlist_entry_get_tuple(playlist, entry));
+    metadata = make_mpris_metadata (filename, playlist_entry_get_tuple
+     (playlist, entry, FALSE));
 
     g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
     g_hash_table_destroy(metadata);
@@ -924,7 +925,7 @@ gboolean audacious_rc_quit(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_eject(RemoteObject * obj, GError ** error)
 {
-    drct_eject();
+    interface_run_filebrowser (TRUE);
     return TRUE;
 }
 
@@ -936,7 +937,7 @@ gboolean audacious_rc_main_win_visible(RemoteObject * obj, gboolean * is_main_wi
 
 gboolean audacious_rc_show_main_win(RemoteObject * obj, gboolean show, GError ** error)
 {
-    drct_main_win_toggle(show);
+    interface_toggle_visibility ();
     return TRUE;
 }
 
@@ -948,7 +949,9 @@ gboolean audacious_rc_equalizer_visible(RemoteObject * obj, gboolean * is_eq_win
 
 gboolean audacious_rc_show_equalizer(RemoteObject * obj, gboolean show, GError ** error)
 {
+#if 0
     drct_eq_win_toggle(show);
+#endif
     return TRUE;
 }
 
@@ -960,7 +963,9 @@ gboolean audacious_rc_playlist_visible(RemoteObject * obj, gboolean * is_pl_win,
 
 gboolean audacious_rc_show_playlist(RemoteObject * obj, gboolean show, GError ** error)
 {
+#if 0
     drct_pl_win_toggle(show);
+#endif
     return TRUE;
 }
 
@@ -1212,7 +1217,7 @@ gboolean audacious_rc_add_list (RemoteObject * obj, gchar * * filenames,
 {
     GList * list = string_array_to_list (filenames);
 
-    drct_pl_add (list);
+    drct_pl_add_list (list, -1);
     g_list_free (list);
     return TRUE;
 }
@@ -1232,7 +1237,7 @@ gboolean audacious_rc_open_list_to_temp (RemoteObject * obj, gchar * *
 {
     GList * list = string_array_to_list (filenames);
 
-    drct_pl_temp_open_list (list);
+    drct_pl_open_temp_list (list);
     g_list_free (list);
     return TRUE;
 }

@@ -522,8 +522,7 @@ tuple_formatter_function_version(Tuple *tuple, gchar **args)
  *
  * TODO/1.5: Implement a more efficient use of the compiler.
  */
-gchar *
-tuple_formatter_process_string(Tuple *tuple, const gchar *string)
+gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar * string)
 {
     static gboolean initialized = FALSE;
     static gchar *last_string = NULL;
@@ -592,7 +591,8 @@ tuple_formatter_process_string(Tuple *tuple, const gchar *string)
 #endif
 }
 
-gchar *tuple_formatter_make_title_string(Tuple *tuple, const gchar *string)
+gchar * tuple_formatter_make_title_string (const Tuple * tuple, const gchar *
+ string)
 {
     gchar *title = tuple_formatter_process_string(tuple, string);
 

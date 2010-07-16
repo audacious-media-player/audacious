@@ -18,8 +18,10 @@
  */
 
 #include <audacious/i18n.h>
+#include <audacious/playlist.h>
 #include <audacious/plugin.h>
 
+#include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
@@ -27,7 +29,7 @@ static gint iter_to_row (GtkTreeModel * model, GtkTreeIter * iter)
 {
     GtkTreePath * path = gtk_tree_model_get_path (model, iter);
     gint row = gtk_tree_path_get_indices (path)[0];
-    
+
     gtk_tree_path_free (path);
     return row;
 }
@@ -41,7 +43,7 @@ static gint get_selected_row (GtkWidget * list)
 
     if (! gtk_tree_selection_get_selected (selection, & model, & iter))
         return -1;
-    
+
     return iter_to_row (model, & iter);
 }
 
@@ -74,7 +76,7 @@ static void activate_cb (GtkTreeView * list, GtkTreePath * path,
  GtkTreeViewColumn * column, GtkWidget * window)
 {
     aud_playlist_set_active (gtk_tree_path_get_indices (path)[0]);
-    
+
     if (aud_cfg->playlist_manager_close_on_activate)
         hide_cb (window);
 }
@@ -252,8 +254,8 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
      & aud_cfg->playlist_manager_close_on_activate);
 
     gtk_widget_show_all( playman_win );
-    
-    aud_hook_associate ("config save", save_config_cb, playman_win);
+
+    hook_associate ("config save", save_config_cb, playman_win);
 }
 
 void audgui_playlist_manager_destroy(void)

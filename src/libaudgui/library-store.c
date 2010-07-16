@@ -19,7 +19,8 @@
  * using our public API to be a derived work.
  */
 
-#include <audacious/plugin.h>
+#include <audacious/playlist.h>
+#include <libaudcore/hook.h>
 
 #include "libaudgui-gtk.h"
 
@@ -87,7 +88,7 @@ static void library_store_get_value (GtkTreeModel * model, GtkTreeIter * iter,
 {
     LibraryStore * store = (LibraryStore *) model;
     gint playlist = GPOINTER_TO_INT (iter->user_data);
-    
+
     switch (column)
     {
     case AUDGUI_LIBRARY_STORE_TITLE:
@@ -114,7 +115,7 @@ static gboolean library_store_iter_next (GtkTreeModel * model, GtkTreeIter *
         iter->user_data = GINT_TO_POINTER (GPOINTER_TO_INT (iter->user_data) + 1);
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
@@ -127,7 +128,7 @@ static gboolean library_store_iter_children (GtkTreeModel * model, GtkTreeIter *
         iter->user_data = GINT_TO_POINTER (0);
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
@@ -144,7 +145,7 @@ static gint library_store_iter_n_children (GtkTreeModel * model, GtkTreeIter *
 
     if (iter == NULL) /* top level */
         return store->rows;
-    
+
     return 0;
 }
 
@@ -225,10 +226,10 @@ static gboolean library_store_drag_data_received (GtkTreeDragDest * dest,
     GtkTreePath * source_path, * top;
     gint from, to, count;
     gint order[store->rows];
-    
+
     if (! gtk_tree_get_row_drag_data (data, & model, & source_path))
         return FALSE;
-    
+
     from = gtk_tree_path_get_indices (source_path)[0];
     to = gtk_tree_path_get_indices (dest_path)[0];
 
@@ -236,7 +237,7 @@ static gboolean library_store_drag_data_received (GtkTreeDragDest * dest,
      * We want the number of the row where the row will end up. */
     if (to > from)
         to --;
-    
+
     if (from < 0 || from >= store->rows || to < 0 || to >= store->rows)
         return FALSE;
 
@@ -255,9 +256,9 @@ static gboolean library_store_drag_data_received (GtkTreeDragDest * dest,
         for (count = to; count < from; count ++)
             order[count + 1] = count;
     }
-    
+
     order[to] = from;
-    
+
     top = gtk_tree_path_new ();
     gtk_tree_model_rows_reordered (model, top, NULL, order);
     gtk_tree_path_free (top);
@@ -312,7 +313,7 @@ static void library_store_update (GtkTreeModel * model)
     GtkTreePath * path;
     GtkTreeIter iter;
     gint row;
-    
+
     store->rows = aud_playlist_count ();
     store->active = aud_playlist_get_active ();
 
@@ -322,7 +323,7 @@ static void library_store_update (GtkTreeModel * model)
 
         for (row = store->rows; row < old_rows; row ++)
             gtk_tree_model_row_deleted (model, path);
-        
+
         gtk_tree_path_free (path);
         old_rows = store->rows;
     }
@@ -335,14 +336,14 @@ static void library_store_update (GtkTreeModel * model)
         gtk_tree_model_row_changed (model, path, & iter);
         gtk_tree_path_next (path);
     }
-    
+
     for (; row < store->rows; row ++)
     {
         iter.user_data = GINT_TO_POINTER (row);
         gtk_tree_model_row_inserted (model, path, & iter);
         gtk_tree_path_next (path);
     }
-    
+
     gtk_tree_path_free (path);
 }
 
@@ -355,12 +356,12 @@ static void update_cb (void * data, void * user_data)
 GtkTreeModel * audgui_get_library_store (void)
 {
     static GtkTreeModel * store = NULL;
-    
+
     if (store == NULL)
     {
         store = (GtkTreeModel *) g_object_new (library_store_get_type (), NULL);
-        aud_hook_associate ("playlist update", update_cb, store);
+        hook_associate ("playlist update", update_cb, store);
     }
-    
+
     return store;
 }

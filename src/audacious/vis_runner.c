@@ -20,9 +20,8 @@
  */
 
 #include <glib.h>
+#include <libaudcore/hook.h>
 
-#include "effect.h"
-#include "hook.h"
 #include "input.h"
 #include "output.h"
 #include "vis_runner.h"

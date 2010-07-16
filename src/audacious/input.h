@@ -26,7 +26,7 @@
 #ifndef AUDACIOUS_INPUT_H
 #define AUDACIOUS_INPUT_H
 
-#include "plugin.h"
+#include <audacious/plugin.h>
 
 struct _VisNode {
     gint time;

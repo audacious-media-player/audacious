@@ -77,10 +77,7 @@ vis_playback_start(void)
     for (node = vp_data.enabled_list; node; node = g_list_next(node)) {
         vp = node->data;
         if (vp->playback_start)
-        {
-            plugin_set_current((Plugin *)vp);
             vp->playback_start();
-        }
     }
     vp_data.playback_started = TRUE;
 }
@@ -97,10 +94,7 @@ vis_playback_stop(void)
     for (node = vp_data.enabled_list; node; node = g_list_next(node)) {
         vp = node->data;
         if (vp->playback_stop)
-        {
-            plugin_set_current((Plugin *)vp);
             vp->playback_stop();
-        }
     }
     vp_data.playback_started = FALSE;
 }
@@ -125,7 +119,6 @@ vis_enable_plugin(PluginHandle *ph, gboolean enable)
         vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
         if (vp->init)
         {
-            plugin_set_current((Plugin *)vp);
             vp->init();
 
             if (vp->get_widget != NULL)
@@ -136,18 +129,12 @@ vis_enable_plugin(PluginHandle *ph, gboolean enable)
             }
         }
         if (playback_get_playing() && vp->playback_start)
-        {
-            plugin_set_current((Plugin *)vp);
             vp->playback_start();
-        }
     }
     else if (!enable && vis_enabled) {
         vp_data.enabled_list = g_list_remove(vp_data.enabled_list, vp);
         if (playback_get_playing() && vp->playback_stop)
-        {
-            plugin_set_current((Plugin *)vp);
             vp->playback_stop();
-        }
         if (vp->get_widget != NULL)
         {
             GtkWidget *w = vp->get_widget();
@@ -155,10 +142,7 @@ vis_enable_plugin(PluginHandle *ph, gboolean enable)
             interface_stop_gtk_plugin(w);
         }
         if (vp->cleanup)
-        {
-            plugin_set_current((Plugin *)vp);
             vp->cleanup();
-        }
 
         if (vp_data.enabled_list == NULL)
             vis_runner_remove_hook(send_audio);
@@ -312,7 +296,6 @@ static void send_audio (void * hook_data, void * user_data)
                     calc_mono_pcm(mono_pcm, pcm_data, nch);
                     mono_pcm_calced = TRUE;
                 }
-                plugin_set_current((Plugin *)vp);
                 vp->render_pcm(mono_pcm);
             }
             else {
@@ -320,7 +303,6 @@ static void send_audio (void * hook_data, void * user_data)
                     calc_stereo_pcm(stereo_pcm, pcm_data, nch);
                     stereo_pcm_calced = TRUE;
                 }
-                plugin_set_current((Plugin *)vp);
                 vp->render_pcm(stereo_pcm);
             }
         }
@@ -330,7 +312,6 @@ static void send_audio (void * hook_data, void * user_data)
                     calc_mono_freq(mono_freq, pcm_data, nch);
                     mono_freq_calced = TRUE;
                 }
-                plugin_set_current((Plugin *)vp);
                 vp->render_freq(mono_freq);
             }
             else {
@@ -338,7 +319,6 @@ static void send_audio (void * hook_data, void * user_data)
                     calc_stereo_freq(stereo_freq, pcm_data, nch);
                     stereo_freq_calced = TRUE;
                 }
-                plugin_set_current((Plugin *)vp);
                 vp->render_freq(stereo_freq);
             }
         }

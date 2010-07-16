@@ -33,6 +33,9 @@
 
 #include <glib/gprintf.h>
 
+#include <libaudcore/hook.h>
+#include <libaudtag/audtag.h>
+
 #ifdef USE_DBUS
 #  include "dbus-service.h"
 #  include "audctrl.h"
@@ -43,22 +46,19 @@
 #include "eggdesktopfile.h"
 #endif
 
-#include "auddrct.h"
 #include "configdb.h"
+#include "drct.h"
 #include "equalizer.h"
-#include "hook.h"
+#include "i18n.h"
 #include "input.h"
 #include "logger.h"
 #include "output.h"
 #include "playback.h"
-#include "playlist-new.h"
-#include "playlist-utils.h"
+#include "playlist.h"
 #include "pluginenum.h"
 #include "signals.h"
 #include "util.h"
-#include "vfs.h"
 #include "chardet.h"
-#include "audtag.h"
 
 #include "ui_headless.h"
 #include "ui_misc.h"
@@ -248,11 +248,11 @@ static void handle_cmd_line_filenames(gboolean is_running)
     {
         if (options.enqueue_to_temp)
         {
-            drct_pl_temp_open_list (fns);
+            drct_pl_open_temp_list (fns);
             cfg.resume_state = 0;
         }
         else if (options.enqueue)
-            drct_pl_add (fns);
+            drct_pl_add_list (fns, -1);
         else
         {
             drct_pl_open_list (fns);
@@ -330,11 +330,9 @@ static void handle_cmd_line_options(void)
     }
 
     if (options.show_jump_box)
-        drct_jtf_show();
+        interface_show_jump_to_track ();
     if (options.mainwin)
-        drct_main_win_toggle(TRUE);
-    if (options.activate)
-        drct_activate();
+        interface_toggle_visibility ();
 }
 
 static void aud_setup_logger(void)

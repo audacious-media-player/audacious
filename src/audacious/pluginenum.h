@@ -29,8 +29,6 @@
 
 #include <glib.h>
 
-#include "plugin.h"
-
 #define PLUGIN_FILENAME(name) (name SHARED_SUFFIX)
 
 void plugin_system_init(void);
@@ -40,7 +38,5 @@ void module_load (const gchar * path);
 
 extern const gchar *plugin_dir_list[];
 extern GHashTable *plugin_matrix;
-
-void plugin_set_current(Plugin *plugin);
 
 #endif /* AUDACIOUS_PLUGINENUM_H */

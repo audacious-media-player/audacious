@@ -19,11 +19,13 @@
  * using our public API to be a derived work.
  */
 
-#include <libaudcore/audstrings.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "playlist-new.h"
+#include <libaudcore/audstrings.h>
+
+#include "debug.h"
+#include "playlist.h"
 #include "plugin-registry.h"
 #include "probe.h"
 #include "probe-buffer.h"
@@ -43,7 +45,7 @@ static gboolean check_opened (ProbeState * state)
         return TRUE;
 
     AUDDBG ("Opening %s.\n", state->filename);
-    if ((state->buffered = aud_vfs_is_remote (state->filename)))
+    if ((state->buffered = vfs_is_remote (state->filename)))
         state->handle = probe_buffer_new (state->filename);
     else
         state->handle = vfs_fopen (state->filename, "r");

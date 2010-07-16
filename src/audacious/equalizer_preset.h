@@ -20,6 +20,9 @@
 #ifndef AUDACIOUS_EQUALIZER_PRESET_H
 #define AUDACIOUS_EQUALIZER_PRESET_H
 
+#include <glib.h>
+#include <libaudcore/vfs.h>
+
 struct _EqualizerPreset {
     gchar *name;
     gfloat preamp, bands[10];

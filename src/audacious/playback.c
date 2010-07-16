@@ -25,14 +25,17 @@
 
 #include <glib.h>
 
-#include "audstrings.h"
-#include "eventqueue.h"
-#include "hook.h"
+#include <libaudcore/audstrings.h>
+#include <libaudcore/eventqueue.h>
+#include <libaudcore/hook.h>
+
+#include "config.h"
 #include "i18n.h"
 #include "input.h"
+#include "main.h"
 #include "output.h"
 #include "playback.h"
-#include "playlist-new.h"
+#include "playlist.h"
 #include "probe.h"
 
 static void set_params (InputPlayback * playback, const gchar * title, gint
@@ -149,10 +152,10 @@ static void update_cb (void * hook_data, void * user_data)
     playlist = playlist_get_playing ();
     entry = playlist_get_position (playlist);
 
-    if ((title = playlist_entry_get_title (playlist, entry)) == NULL)
+    if ((title = playlist_entry_get_title (playlist, entry, FALSE)) == NULL)
         title = playlist_entry_get_filename (playlist, entry);
 
-    length = playlist_entry_get_length (playlist, entry);
+    length = playlist_entry_get_length (playlist, entry, FALSE);
 
     if (! strcmp (title, current_playback->title) && length ==
      current_playback->length)
@@ -450,14 +453,11 @@ static gboolean playback_play_file (gint playlist, gint entry, gint seek_time,
  gboolean pause)
 {
     const gchar * filename = playlist_entry_get_filename (playlist, entry);
-    const gchar * title = playlist_entry_get_title (playlist, entry);
+    const gchar * title = playlist_entry_get_title (playlist, entry, FALSE);
     InputPlugin * decoder = playlist_entry_get_decoder (playlist, entry);
-    Tuple * tuple = (Tuple *) playlist_entry_get_tuple (playlist, entry);
+    Tuple * tuple = (Tuple *) playlist_entry_get_tuple (playlist, entry, FALSE);
 
     g_return_val_if_fail (current_playback == NULL, FALSE);
-
-    if (decoder == NULL)
-        decoder = file_find_decoder (filename, FALSE);
 
     if (decoder == NULL)
     {
@@ -468,21 +468,13 @@ static gboolean playback_play_file (gint playlist, gint entry, gint seek_time,
         return FALSE;
     }
 
-    if (tuple == NULL)
-    {
-        tuple = file_read_tuple (filename, decoder);
-
-        if (tuple != NULL)
-            playlist_entry_set_tuple (playlist, entry, tuple);
-    }
-
     read_gain_from_tuple (tuple); /* even if tuple == NULL */
 
     current_playback = playback_new ();
     current_playback->plugin = decoder;
     current_playback->filename = g_strdup (filename);
     current_playback->title = g_strdup ((title != NULL) ? title : filename);
-    current_playback->length = playlist_entry_get_length (playlist, entry);
+    current_playback->length = playlist_entry_get_length (playlist, entry, FALSE);
 
     if (playlist_entry_is_segmented (playlist, entry))
     {

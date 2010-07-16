@@ -3,11 +3,11 @@ include ../../extra.mk
 SUBDIRS = ${INTL_OBJECTIVE}
 
 PROG = audacious2${PROG_SUFFIX}
-SRCS = auddrct.c								\
-       audconfig.c								\
+SRCS = audconfig.c								\
        chardet.c								\
        configdb.c								\
        credits.c							\
+       drct.c \
        effect.c									\
        equalizer.c								\
        equalizer_preset.c						\
@@ -42,10 +42,19 @@ ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
 endif
 
-INCLUDES = audconfig.h \
+INCLUDES = api.h \
+           api-alias-begin.h \
+           api-alias-end.h \
+           api-define-begin.h \
+           api-define-end.h \
+           audconfig.h \
            configdb.h			\
+           configdb-api.h \
            dbus.h				\
            dbus-service.h		\
+           drct.h \
+           drct-api.h \
+           debug.h \
            equalizer_preset.h			\
            flow.h				\
            i18n.h				\
@@ -53,6 +62,8 @@ INCLUDES = audconfig.h \
            interface.h			\
            main.h				\
            playback.h			\
+           playlist.h \
+           playlist-api.h \
            playlist_container.h	\
            plugin.h				\
            preferences.h		\
@@ -109,10 +120,7 @@ CPPFLAGS += -std=gnu99 \
 		${EGGSM_CFLAGS}			\
 		${LIBGUESS_CFLAGS}		\
 		-I.. -I../..			\
-		-I./intl			\
-		-I.				\
-		-I../libaudcore			\
-		-I../libaudtag
+		-I./intl
 
 LIBS += ${LDADD}						\
         -lm \

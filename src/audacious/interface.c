@@ -20,9 +20,12 @@
  */
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/hook.h>
+
+#include "config.h"
+#include "i18n.h"
 #include "interface.h"
 #include "playback.h"
 #include "ui_preferences.h"

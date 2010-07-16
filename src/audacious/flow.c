@@ -20,6 +20,7 @@
  * Audacious or using our public API to be a derived work.
  */
 
+#include "debug.h"
 #include "main.h"
 #include "flow.h"
 

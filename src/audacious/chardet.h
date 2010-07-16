@@ -20,18 +20,12 @@
 #ifndef AUDACIOUS_CHARDET_H
 #define AUDACIOUS_CHARDET_H
 
-#include "config.h"
 #include <glib.h>
-
-G_BEGIN_DECLS
 
 gchar * cd_str_to_utf8(const gchar *str);
 gchar * cd_chardet_to_utf8(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
 					   GError **arg_error);
 void chardet_init(void);
-
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_CHARDET_H */

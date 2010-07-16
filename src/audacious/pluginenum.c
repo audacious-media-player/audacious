@@ -32,33 +32,31 @@
 #endif
 
 #include <glib.h>
-#include <glib/gi18n.h>
-#include <glib/gprintf.h>
 #include <gmodule.h>
+#include <gtk/gtk.h>
 #include <string.h>
+
+#include <libaudcore/audstrings.h>
+#include <libaudgui/init.h>
 
 #include "pluginenum.h"
 #include "plugin-registry.h"
 
 #include "audconfig.h"
-#include "auddrct.h"
 #include "credits.h"
 #include "effect.h"
 #include "general.h"
+#include "i18n.h"
 #include "input.h"
 #include "main.h"
 #include "chardet.h"
 #include "output.h"
 #include "playback.h"
-#include "playlist-new.h"
 #include "playlist-utils.h"
 #include "probe.h"
-#include "audstrings.h"
 #include "util.h"
 #include "visualization.h"
 #include "preferences.h"
-#include "vfs_buffer.h"
-#include "vfs_buffered_file.h"
 #include "equalizer_preset.h"
 #include "vis_runner.h"
 
@@ -66,81 +64,24 @@
 #include "ui_plugin_menu.h"
 #include "ui_preferences.h"
 
-#include <libaudgui/init.h>
-
+#define AUD_API_DECLARE
+#include "configdb.h"
+#include "drct.h"
+#include "playlist.h"
+#undef AUD_API_DECLARE
 
 const gchar *plugin_dir_list[] = {
     PLUGINSUBS,
     NULL
 };
 
-static void set_pvt_data(Plugin * plugin, gpointer data);
-static gpointer get_pvt_data(void);
-
 /*****************************************************************/
 
 static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
-    .vfs_fopen = vfs_fopen,
-    .vfs_dup = vfs_dup,
-    .vfs_fclose = vfs_fclose,
-    .vfs_fread = vfs_fread,
-    .vfs_fwrite = vfs_fwrite,
-    .vfs_getc = vfs_getc,
-    .vfs_ungetc = vfs_ungetc,
-    .vfs_fgets = vfs_fgets,
-    .vfs_feof = vfs_feof,
-    .vfs_fprintf = vfs_fprintf,
-    .vfs_fseek = vfs_fseek,
-    .vfs_rewind = vfs_rewind,
-    .vfs_ftell = vfs_ftell,
-    .vfs_fsize = vfs_fsize,
-    .vfs_ftruncate = vfs_ftruncate,
-    .vfs_fget_le16 = vfs_fget_le16,
-    .vfs_fget_le32 = vfs_fget_le32,
-    .vfs_fget_le64 = vfs_fget_le64,
-    .vfs_fget_be16 = vfs_fget_be16,
-    .vfs_fget_be32 = vfs_fget_be32,
-    .vfs_fget_be64 = vfs_fget_be64,
-    .vfs_fput_le16 = vfs_fput_le16,
-    .vfs_fput_le32 = vfs_fput_le32,
-    .vfs_fput_le64 = vfs_fput_le64,
-    .vfs_fput_be16 = vfs_fput_be16,
-    .vfs_fput_be32 = vfs_fput_be32,
-    .vfs_fput_be64 = vfs_fput_be64,
-    .vfs_is_streaming = vfs_is_streaming,
-    .vfs_get_metadata = vfs_get_metadata,
-    .vfs_file_test = vfs_file_test,
-    .vfs_is_writeable = vfs_is_writeable,
-    .vfs_is_remote = vfs_is_remote,
-    .vfs_file_get_contents = vfs_file_get_contents,
-    .vfs_register_transport = vfs_register_transport,
-
-    .vfs_buffer_new = vfs_buffer_new,
-    .vfs_buffer_new_from_string = vfs_buffer_new_from_string,
-
-    .vfs_buffered_file_new_from_uri = vfs_buffered_file_new_from_uri,
-    .vfs_buffered_file_release_live_fd = vfs_buffered_file_release_live_fd,
-
-    .cfg_db_open = cfg_db_open,
-    .cfg_db_close = cfg_db_close,
-
-    .cfg_db_get_string = cfg_db_get_string,
-    .cfg_db_get_int = cfg_db_get_int,
-    .cfg_db_get_bool = cfg_db_get_bool,
-    .cfg_db_get_float = cfg_db_get_float,
-    .cfg_db_get_double = cfg_db_get_double,
-
-    .cfg_db_set_string = cfg_db_set_string,
-    .cfg_db_set_int = cfg_db_set_int,
-    .cfg_db_set_bool = cfg_db_set_bool,
-    .cfg_db_set_float = cfg_db_set_float,
-    .cfg_db_set_double = cfg_db_set_double,
-
-    .cfg_db_unset_key = cfg_db_unset_key,
-
     .uri_set_plugin = input_plugin_add_scheme,
     .mime_set_plugin = input_plugin_add_mime,
 
+    .util_get_localdir = util_get_localdir,
     .util_add_url_history_entry = util_add_url_history_entry,
 
     .str_to_utf8 = cd_str_to_utf8,
@@ -152,153 +93,12 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .playlist_container_write = playlist_container_write,
     .playlist_container_find = playlist_container_find,
 
-    .playlist_count = playlist_count,
-    .playlist_insert = playlist_insert,
-    .playlist_reorder = playlist_reorder,
-    .playlist_delete = playlist_delete,
-
-    .playlist_set_filename = playlist_set_filename,
-    .playlist_get_filename = playlist_get_filename,
-    .playlist_set_title = playlist_set_title,
-    .playlist_get_title = playlist_get_title,
-
-    .playlist_set_active = playlist_set_active,
-    .playlist_get_active = playlist_get_active,
-    .playlist_set_playing = playlist_set_playing,
-    .playlist_get_playing = playlist_get_playing,
-
-    .playlist_entry_count = playlist_entry_count,
-    .playlist_entry_insert = playlist_entry_insert,
-    .playlist_entry_insert_batch = playlist_entry_insert_batch,
-    .playlist_entry_delete = playlist_entry_delete,
-
-    .playlist_entry_get_filename = playlist_entry_get_filename,
-    .playlist_entry_get_decoder = playlist_entry_get_decoder,
-    .playlist_entry_set_tuple = playlist_entry_set_tuple,
-    .playlist_entry_get_tuple = playlist_entry_get_tuple,
-    .playlist_entry_get_title = playlist_entry_get_title,
-    .playlist_entry_get_length = playlist_entry_get_length,
-
-    .playlist_set_position = playlist_set_position,
-    .playlist_get_position = playlist_get_position,
-
-    .playlist_entry_set_selected = playlist_entry_set_selected,
-    .playlist_entry_get_selected = playlist_entry_get_selected,
-    .playlist_selected_count = playlist_selected_count,
-    .playlist_select_all = playlist_select_all,
-
-    .playlist_shift = playlist_shift,
-    .playlist_shift_selected = playlist_shift_selected,
-    .playlist_delete_selected = playlist_delete_selected,
-    .playlist_reverse = playlist_reverse,
-    .playlist_randomize = playlist_randomize,
-
-    .playlist_sort_by_filename = playlist_sort_by_filename,
-    .playlist_sort_by_tuple = playlist_sort_by_tuple,
-    .playlist_sort_selected_by_filename = playlist_sort_selected_by_filename,
-    .playlist_sort_selected_by_tuple = playlist_sort_selected_by_tuple,
-
-    .playlist_rescan = playlist_rescan,
-
-    .playlist_get_total_length = playlist_get_total_length,
-    .playlist_get_selected_length = playlist_get_selected_length,
-
-    .playlist_queue_count = playlist_queue_count,
-    .playlist_queue_insert = playlist_queue_insert,
-    .playlist_queue_insert_selected = playlist_queue_insert_selected,
-    .playlist_queue_get_entry = playlist_queue_get_entry,
-    .playlist_queue_find_entry = playlist_queue_find_entry,
-    .playlist_queue_delete = playlist_queue_delete,
-
-    .playlist_prev_song = playlist_prev_song,
-    .playlist_next_song = playlist_next_song,
-
-    .playlist_update_pending = playlist_update_pending,
-
     .get_gentitle_format = get_gentitle_format,
-
-    .playlist_sort_by_scheme = playlist_sort_by_scheme,
-    .playlist_sort_selected_by_scheme = playlist_sort_selected_by_scheme,
-    .playlist_remove_duplicates_by_scheme = playlist_remove_duplicates_by_scheme,
-    .playlist_remove_failed = playlist_remove_failed,
-    .playlist_select_by_patterns = playlist_select_by_patterns,
-
-    .filename_is_playlist = filename_is_playlist,
-
-    .playlist_insert_playlist = playlist_insert_playlist,
-    .playlist_save = playlist_save,
-    .playlist_insert_folder = playlist_insert_folder,
-    .playlist_insert_folder_v2 = playlist_insert_folder_v2,
 
     ._cfg = &cfg,
 
-    .hook_associate = hook_associate,
-    .hook_dissociate = hook_dissociate,
-    .hook_dissociate_full = hook_dissociate_full,
-    .hook_register = hook_register,
-    .hook_call = hook_call,
-
     .menu_plugin_item_add = menu_plugin_item_add,
     .menu_plugin_item_remove = menu_plugin_item_remove,
-
-    .drct_quit = drct_quit,
-    .drct_eject = drct_eject,
-    .drct_jtf_show = drct_jtf_show,
-    .drct_main_win_is_visible = drct_main_win_is_visible,
-    .drct_main_win_toggle = drct_main_win_toggle,
-    .drct_eq_win_is_visible = drct_eq_win_is_visible,
-    .drct_eq_win_toggle = drct_eq_win_toggle,
-    .drct_pl_win_is_visible = drct_pl_win_is_visible,
-    .drct_pl_win_toggle = drct_pl_win_toggle,
-    .drct_activate = drct_activate,
-
-    .drct_play = drct_play,
-    .drct_pause = drct_pause,
-    .drct_stop = playback_stop,
-    .drct_get_playing = drct_get_playing,
-    .drct_get_paused = drct_get_paused,
-    .drct_get_stopped = drct_get_stopped,
-    .drct_get_info = playback_get_info,
-    .drct_get_time = playback_get_time,
-    .drct_get_length = playback_get_length,
-    .drct_seek = playback_seek,
-    .drct_get_volume = drct_get_volume,
-    .drct_set_volume = drct_set_volume,
-    .drct_get_volume_main = drct_get_volume_main,
-    .drct_set_volume_main = drct_set_volume_main,
-    .drct_get_volume_balance = drct_get_volume_balance,
-    .drct_set_volume_balance = drct_set_volume_balance,
-
-    .drct_pl_next = drct_pl_next,
-    .drct_pl_prev = drct_pl_prev,
-    .drct_pl_repeat_is_enabled = drct_pl_repeat_is_enabled,
-    .drct_pl_repeat_toggle = drct_pl_repeat_toggle,
-    .drct_pl_repeat_is_shuffled = drct_pl_repeat_is_shuffled,
-    .drct_pl_shuffle_toggle = drct_pl_shuffle_toggle,
-    .drct_pl_get_title = drct_pl_get_title,
-    .drct_pl_get_time = drct_pl_get_time,
-    .drct_pl_get_pos = drct_pl_get_pos,
-    .drct_pl_get_file = drct_pl_get_file,
-    .drct_pl_open = drct_pl_open,
-    .drct_pl_open_list = drct_pl_open_list,
-    .drct_pl_add = drct_pl_add,
-    .drct_pl_clear = drct_pl_clear,
-    .drct_pl_get_length = drct_pl_get_length,
-    .drct_pl_delete = drct_pl_delete,
-    .drct_pl_set_pos = drct_pl_set_pos,
-    .drct_pl_ins_url_string = drct_pl_ins_url_string,
-    .drct_pl_add_url_string = drct_pl_add_url_string,
-    .drct_pl_enqueue_to_temp = drct_pl_enqueue_to_temp,
-
-    .drct_pq_get_length = drct_pq_get_length,
-    .drct_pq_add = drct_pq_add,
-    .drct_pq_remove = drct_pq_remove,
-    .drct_pq_clear = drct_pq_clear,
-    .drct_pq_is_queued = drct_pq_is_queued,
-    .drct_pq_get_position = drct_pq_get_position,
-    .drct_pq_get_queue_position = drct_pq_get_queue_position,
-
-    .util_get_localdir = util_get_localdir,
 
     .flow_new = flow_new,
     .flow_execute = flow_execute,
@@ -311,16 +111,9 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
     .enable_effect = effect_enable_plugin,
     .enable_general = general_enable_plugin,
 
-    .input_get_volume = input_get_volume,
     .construct_uri = construct_uri,
     .uri_to_display_basename = uri_to_display_basename,
     .uri_to_display_dirname = uri_to_display_dirname,
-
-    .get_pvt_data = get_pvt_data,
-    .set_pvt_data = set_pvt_data,
-
-    .event_queue = event_queue,
-    .event_queue_with_data_free = event_queue_with_data_free,
 
     .calc_mono_freq = calc_mono_freq,
     .calc_mono_pcm = calc_mono_pcm,
@@ -353,62 +146,21 @@ static struct _AudaciousFuncTableV1 _aud_papi_v1 = {
 
     .get_audacious_credits = get_audacious_credits,
 
-    /* playlist segmentation -- added in Audacious 2.2. */
-    .playlist_entry_is_segmented = playlist_entry_is_segmented,
-    .playlist_entry_get_start_time = playlist_entry_get_start_time,
-    .playlist_entry_get_end_time = playlist_entry_get_end_time,
-
     /* visrunner stuff -- added in Audacious 2.4. */
     .vis_runner_add_hook = vis_runner_add_hook,
     .vis_runner_remove_hook = vis_runner_remove_hook
 };
 
+static AudAPITable api_table = {
+ .vt = & _aud_papi_v1,
+ .configdb_api = & configdb_api,
+ .drct_api = & drct_api,
+ .playlist_api = & playlist_api};
+
 /*****************************************************************/
 
 extern GList *vfs_transports;
-
-static GStaticPrivate cur_plugin_key = G_STATIC_PRIVATE_INIT;
-static mowgli_dictionary_t *pvt_data_dict = NULL;
-
 static mowgli_list_t *headers_list = NULL;
-
-void plugin_set_current(Plugin * plugin)
-{
-    g_static_private_set(&cur_plugin_key, plugin, NULL);
-}
-
-static Plugin *plugin_get_current(void)
-{
-    return g_static_private_get(&cur_plugin_key);
-}
-
-static void set_pvt_data(Plugin * plugin, gpointer data)
-{
-    mowgli_dictionary_elem_t *elem;
-    gchar *base_filename;
-
-    base_filename = g_path_get_basename(plugin->filename);
-    elem = mowgli_dictionary_find(pvt_data_dict, base_filename);
-    if (elem == NULL)
-        mowgli_dictionary_add(pvt_data_dict, base_filename, data);
-    else
-        elem->data = data;
-
-    g_free(base_filename);
-}
-
-static gpointer get_pvt_data(void)
-{
-    Plugin *cur_p = plugin_get_current();
-    gchar *base_filename;
-    gpointer result;
-
-    base_filename = g_path_get_basename(cur_p->filename);
-
-    result = mowgli_dictionary_retrieve(pvt_data_dict, base_filename);
-    g_free(base_filename);
-    return result;
-}
 
 static gint effectlist_compare_func(gconstpointer a, gconstpointer b)
 {
@@ -627,7 +379,7 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 void module_load (const gchar * filename)
 {
     GModule *module;
-    gpointer func;
+    PluginHeader * (* func) (AudAPITable * table);
 
     g_message("Loaded plugin (%s)", filename);
 
@@ -638,14 +390,10 @@ void module_load (const gchar * filename)
     }
 
     /* v2 plugin loading */
-    if (g_module_symbol(module, "get_plugin_info", &func))
+    if (g_module_symbol (module, "get_plugin_info", (void *) & func))
     {
-        PluginHeader *(*header_func_p) (struct _AudaciousFuncTableV1 *) = func;
-        PluginHeader *header;
-
-        /* this should never happen. */
-        g_return_if_fail((header = header_func_p(&_aud_papi_v1)) != NULL);
-
+        PluginHeader * header = func (& api_table);
+        g_return_if_fail (header != NULL);
         plugin2_process(header, module, filename);
         return;
     }
@@ -719,8 +467,7 @@ void plugin_system_init(void)
     GtkWidget *dialog;
     gint dirsel = 0;
 
-    /* give libaudgui its pointer to the API vector table */
-    audgui_init (& _aud_papi_v1);
+    audgui_init (& api_table);
 
     if (!g_module_supported())
     {
@@ -731,8 +478,6 @@ void plugin_system_init(void)
     }
 
     plugin_registry_load ();
-
-    pvt_data_dict = mowgli_dictionary_create(g_ascii_strcasecmp);
 
     headers_list = mowgli_list_create();
 
@@ -820,8 +565,6 @@ void plugin_system_cleanup(void)
         ep = EFFECT_PLUGIN(node->data);
         if (ep)
         {
-            plugin_set_current((Plugin *) ep);
-
             if (ep->cleanup)
                 ep->cleanup();
 
@@ -840,8 +583,6 @@ void plugin_system_cleanup(void)
         gp = GENERAL_PLUGIN(node->data);
         if (gp)
         {
-            plugin_set_current((Plugin *) gp);
-
             if (gp->cleanup)
                 gp->cleanup();
 
@@ -860,8 +601,6 @@ void plugin_system_cleanup(void)
         vp = VIS_PLUGIN(node->data);
         if (vp)
         {
-            plugin_set_current((Plugin *) vp);
-
             if (vp->cleanup)
                 vp->cleanup();
 
@@ -883,8 +622,6 @@ void plugin_system_cleanup(void)
     }
 
     MOWGLI_LIST_FOREACH(hlist_node, headers_list->head) plugin2_unload(hlist_node->data, hlist_node);
-
-    mowgli_dictionary_destroy(pvt_data_dict, NULL, NULL);
 
     mowgli_list_free(headers_list);
 }

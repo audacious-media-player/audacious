@@ -28,7 +28,7 @@
 
 #include <glib.h>
 
-#include "audacious/plugin.h"
+#include <audacious/plugin.h>
 
 typedef struct _EffectPluginData EffectPluginData;
 

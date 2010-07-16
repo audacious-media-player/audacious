@@ -17,11 +17,13 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#define DEBUG
-#include "config.h"
+#include <string.h>
+#include <libaudcore/audstrings.h>
+
+#include "audconfig.h"
 #include "chardet.h"
-#include "audstrings.h"
-#include <glib/gi18n.h>
+#include "config.h"
+#include "i18n.h"
 #include "main.h"
 
 #ifdef USE_CHARDET

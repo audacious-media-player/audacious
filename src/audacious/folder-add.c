@@ -26,16 +26,18 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include <libaudcore/audstrings.h>
+
 #include "config.h"
 #include "i18n.h"
 #include "playback.h"
-#include "playlist-new.h"
+#include "playlist.h"
 #include "probe.h"
 
 static GList * add_queue = NULL;
 static gint add_source = 0;
 static gint add_playlist, add_at;
-static gboolean add_play = FALSE;
+static gboolean add_play;
 static GtkWidget * add_window = NULL, * add_progress_path, * add_progress_count;
 
 static void show_progress (const gchar * path, gint count)
@@ -170,15 +172,13 @@ static gboolean add_cb (void * unused)
 
         playlist_entry_insert_batch (add_playlist, add_at, index, NULL);
 
-        if (add_play && playlist_entry_count (add_playlist) > count && !
-         playback_get_playing ())
+        if (add_play && playlist_entry_count (add_playlist) > count)
         {
             playlist_set_playing (add_playlist);
-
-            if (add_at > 0)
+            if (! cfg.shuffle)
                 playlist_set_position (add_playlist, add_at);
-
             playback_play (0, FALSE);
+            add_play = FALSE;
         }
 
         add_at += playlist_entry_count (add_playlist) - count;
@@ -189,7 +189,6 @@ static gboolean add_cb (void * unused)
         {
             show_done ();
             add_source = 0;
-            add_play = FALSE;
             return FALSE;
         }
     }
@@ -197,12 +196,14 @@ static gboolean add_cb (void * unused)
     return TRUE;
 }
 
-void playlist_insert_folder (gint playlist, gint at, const gchar * folder)
+void playlist_insert_folder (gint playlist, gint at, const gchar * folder,
+ gboolean play)
 {
     gchar * unix_name = g_filename_from_uri (folder, NULL, NULL);
 
     add_playlist = playlist;
     add_at = at;
+    add_play = play;
 
     if (unix_name == NULL)
         return;
@@ -214,11 +215,4 @@ void playlist_insert_folder (gint playlist, gint at, const gchar * folder)
 
     if (add_source == 0)
         add_source = g_idle_add (add_cb, NULL);
-}
-
-void playlist_insert_folder_v2 (gint playlist, gint at, const gchar * folder,
- gboolean play)
-{
-    playlist_insert_folder (playlist, at, folder);
-    add_play = play;
 }

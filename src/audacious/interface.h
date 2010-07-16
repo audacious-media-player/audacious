@@ -29,6 +29,7 @@
 #ifndef __AUDACIOUS2_INTERFACE_H__
 #define __AUDACIOUS2_INTERFACE_H__
 
+#include <glib.h>
 #include <mowgli.h>
 
 typedef struct {

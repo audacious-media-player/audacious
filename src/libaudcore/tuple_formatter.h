@@ -28,8 +28,10 @@
 
 G_BEGIN_DECLS
 
-gchar *tuple_formatter_process_string(Tuple *tuple, const gchar *string);
-gchar *tuple_formatter_make_title_string(Tuple *tuple, const gchar *string);
+gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar *
+ string);
+gchar * tuple_formatter_make_title_string (const Tuple * tuple, const gchar *
+ string);
 void tuple_formatter_register_expression(const gchar *keyword,
         gboolean (*func)(Tuple *tuple, const gchar *argument));
 void tuple_formatter_register_function(const gchar *keyword,

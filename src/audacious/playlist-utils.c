@@ -23,8 +23,11 @@
 #include <regex.h>
 #include <string.h>
 
+#include <libaudcore/audstrings.h>
+
+#include "main.h"
+#include "playlist.h"
 #include "playlist_container.h"
-#include "playlist-new.h"
 #include "playlist-utils.h"
 
 const gchar * aud_titlestring_presets[] =
@@ -55,11 +58,14 @@ static gint filename_compare_basename (const gchar * a, const gchar * b)
 
 static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
 {
-    const gchar * string_a = tuple_get_string ((Tuple *) a, field, NULL);
-    const gchar * string_b = tuple_get_string ((Tuple *) b, field, NULL);
+    const gchar * string_a = tuple_get_string (a, field, NULL);
+    const gchar * string_b = tuple_get_string (b, field, NULL);
 
+    /* This is technically inconsistent if both string_a == NULL and string_b ==
+     * NULL, but for the sake of removing duplicates we do not want blank fields
+     * to compare as equal. */
     if (string_a == NULL)
-        return (string_b == NULL) ? 0 : -1;
+        return -1;
     if (string_b == NULL)
         return 1;
 
@@ -68,8 +74,13 @@ static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
 
 static gint tuple_compare_int (const Tuple * a, const Tuple * b, gint field)
 {
-    gint int_a = tuple_get_int ((Tuple *) a, field, NULL);
-    gint int_b = tuple_get_int ((Tuple *) b, field, NULL);
+    /* technically inconsistent again */
+    if (tuple_get_value_type (a, field, NULL) != TUPLE_INT &&
+     tuple_get_value_type (b, field, NULL) != TUPLE_INT)
+        return -1;
+
+    gint int_a = tuple_get_int (a, field, NULL);
+    gint int_b = tuple_get_int (b, field, NULL);
 
     return (int_a < int_b) ? -1 : (int_a > int_b);
 }
@@ -99,29 +110,23 @@ static gint tuple_compare_track (const Tuple * a, const Tuple * b)
     return tuple_compare_int (a, b, FIELD_TRACK_NUMBER);
 }
 
-static gint (* filename_comparisons[PLAYLIST_SORT_SCHEMES]) (const gchar * a,
- const gchar * b) =
-{
-    string_compare,
-    filename_compare_basename,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-};
+static const PlaylistFilenameCompareFunc filename_comparisons[] = {
+ [PLAYLIST_SORT_PATH] = string_compare,
+ [PLAYLIST_SORT_FILENAME] = filename_compare_basename,
+ [PLAYLIST_SORT_TITLE] = NULL,
+ [PLAYLIST_SORT_ALBUM] = NULL,
+ [PLAYLIST_SORT_ARTIST] = NULL,
+ [PLAYLIST_SORT_DATE] = NULL,
+ [PLAYLIST_SORT_TRACK] = NULL};
 
-static gint (* tuple_comparisons[PLAYLIST_SORT_SCHEMES]) (const Tuple * a, const
- Tuple * b) =
-{
-    NULL,
-    NULL,
-    tuple_compare_title,
-    tuple_compare_album,
-    tuple_compare_artist,
-    tuple_compare_date,
-    tuple_compare_track,
-};
+static const PlaylistTupleCompareFunc tuple_comparisons[] = {
+ [PLAYLIST_SORT_PATH] = NULL,
+ [PLAYLIST_SORT_FILENAME] = NULL,
+ [PLAYLIST_SORT_TITLE] = tuple_compare_title,
+ [PLAYLIST_SORT_ALBUM] = tuple_compare_album,
+ [PLAYLIST_SORT_ARTIST] = tuple_compare_artist,
+ [PLAYLIST_SORT_DATE] = tuple_compare_date,
+ [PLAYLIST_SORT_TRACK] = tuple_compare_track};
 
 const gchar * get_gentitle_format (void)
 {
@@ -185,11 +190,11 @@ void playlist_remove_duplicates_by_scheme (gint playlist, gint scheme)
         const Tuple * last, * current;
 
         playlist_sort_by_tuple (playlist, compare);
-        last = playlist_entry_get_tuple (playlist, 0);
+        last = playlist_entry_get_tuple (playlist, 0, FALSE);
 
         for (count = 1; count < entries; count ++)
         {
-            current = playlist_entry_get_tuple (playlist, count);
+            current = playlist_entry_get_tuple (playlist, count, FALSE);
 
             if (last != NULL && current != NULL && compare (last, current) == 0)
                 playlist_entry_set_selected (playlist, count, TRUE);
@@ -212,7 +217,7 @@ void playlist_remove_failed (gint playlist)
     for (count = 0; count < entries; count ++)
     {
         if (playlist_entry_get_decoder (playlist, count) == NULL ||
-         playlist_entry_get_tuple (playlist, count) == NULL)
+         playlist_entry_get_tuple (playlist, count, FALSE) == NULL)
             playlist_entry_set_selected (playlist, count, TRUE);
     }
 
@@ -249,7 +254,7 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
             if (! playlist_entry_get_selected (playlist, entry))
                 continue;
 
-            tuple = playlist_entry_get_tuple (playlist, entry);
+            tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
 
             if (tuple == NULL)
                 goto NO_MATCH;

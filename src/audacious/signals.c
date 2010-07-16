@@ -24,9 +24,10 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <config.h>
+#include <libaudcore/eventqueue.h>
 
-#include "eventqueue.h"
+#include "audconfig.h"
+#include "config.h"
 #include "main.h"
 #include "signals.h"
 

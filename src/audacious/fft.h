@@ -26,8 +26,6 @@
 
 #include <glib.h>
 
-G_BEGIN_DECLS
-
 #define FFT_BUFFER_SIZE_LOG 9
 #define FFT_BUFFER_SIZE (1 << FFT_BUFFER_SIZE_LOG)
 
@@ -38,7 +36,5 @@ typedef struct _struct_fft_state fft_state;
 fft_state *fft_init(void);
 void fft_perform(const sound_sample * input, float *output, fft_state * state);
 void fft_close(fft_state * state);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_FFT_H */
