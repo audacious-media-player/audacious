@@ -371,7 +371,8 @@ static gboolean module_parse (FILE * handle)
 void plugin_registry_load (void)
 {
     FILE * handle = open_registry_file ("r");
-    g_return_if_fail (handle != NULL);
+    if (handle == NULL)
+        goto UNLOCK;
 
     parse_next (handle);
 
@@ -386,6 +387,7 @@ void plugin_registry_load (void)
 
 ERROR:
     fclose (handle);
+UNLOCK:
     registry_locked = FALSE;
 }
 
