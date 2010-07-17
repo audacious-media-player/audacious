@@ -21,7 +21,7 @@
  * using our public API to be a derived work.
  */
 
-//#define DEBUG
+#define DEBUG
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
@@ -523,7 +523,7 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
 }
 
 static gboolean parse_pic (const guchar * data, gint size, gchar * * mime,
- gint * type, gchar * * desc, void * * image_data, gint * image_size)
+ gint * type, void * * image_data, gint * image_size)
 {
     const guchar * sep;
     const guchar * after;
@@ -531,24 +531,21 @@ static gboolean parse_pic (const guchar * data, gint size, gchar * * mime,
     if (size < 2 || (sep = memchr (data + 1, 0, size - 2)) == NULL)
         return FALSE;
 
-    if ((* desc = convert_text ((const gchar *) sep + 2, data + size - sep - 2,
-     data[0], TRUE, NULL, (const gchar * *) & after)) == NULL)
-        return FALSE;
-
+    after = sep + 2;
     * mime = g_strdup ((const gchar *) data + 1);
     * type = sep[1];
     * image_data = g_memdup (after, data + size - after);
     * image_size = data + size - after;
 
-    AUDDBG ("PIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
-     * type, * desc, * image_size);
+    AUDDBG ("PIC: mime = %s, type = %d, size = %d.\n", * mime,
+     * type, * image_size);
     return TRUE;
 }
 
 static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
  image_size)
 {
-    gint version, header_size, data_size, parsed;
+    gint version, header_size, data_size, parsed, i;
     gboolean syncsafe;
     gsize offset;
     gboolean found = FALSE;
@@ -562,17 +559,19 @@ static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
         gint frame_size, size, type;
         gchar key[5];
         guchar * data;
-        gchar * mime, * desc;
+        gchar * mime;
+        gint frame_length;
 
         if (! read_frame (handle, data_size - parsed, version, syncsafe,
          & frame_size, key, & data, & size))
             break;
 
-        if (! strcmp (key, "PIC") && parse_pic (data, size, & mime, & type,
-         & desc, image_data, image_size))
+        frame_length = size;
+
+        if (! strcmp (key, "PIC") && parse_pic (data, frame_length, & mime, & type,
+         image_data, image_size))
         {
             g_free (mime);
-            g_free (desc);
 
             if (type == 3) /* album cover */
                 found = TRUE;
