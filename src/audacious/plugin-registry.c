@@ -35,9 +35,9 @@
 #include "util.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 1
+#define FORMAT 2
 
-typedef struct ModuleData {
+typedef struct {
     gchar * path;
     gboolean confirmed;
     gint timestamp;
@@ -45,14 +45,9 @@ typedef struct ModuleData {
     GList * plugin_list;
 } ModuleData;
 
-typedef struct InputPluginData {
-    gboolean enabled;
+typedef struct {
     GList * keys[INPUT_KEYS];
 } InputPluginData;
-
-typedef struct VisPluginData {
-    gboolean enabled;
-} VisPluginData;
 
 struct PluginHandle {
     ModuleData * module;
@@ -61,11 +56,10 @@ struct PluginHandle {
     void * header;
     gchar * name;
     gint priority;
-    gboolean has_about, has_configure;
+    gboolean has_about, has_configure, enabled;
 
     union {
         InputPluginData i;
-        VisPluginData v;
     } u;
 };
 
@@ -115,14 +109,13 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
     plugin->priority = 0;
     plugin->has_about = FALSE;
     plugin->has_configure = FALSE;
+    plugin->enabled = FALSE;
 
     if (type == PLUGIN_TYPE_INPUT)
     {
-        plugin->u.i.enabled = TRUE;
+        plugin->enabled = TRUE;
         memset (plugin->u.i.keys, 0, sizeof plugin->u.i.keys);
     }
-    else if (type == PLUGIN_TYPE_VIS)
-        plugin->u.v.enabled = FALSE;
 
     plugin_list = g_list_prepend (plugin_list, plugin);
     module->plugin_list = g_list_prepend (module->plugin_list, plugin);
@@ -148,27 +141,6 @@ static void plugin_free (PluginHandle * plugin, ModuleData * module)
     g_free (plugin);
 }
 
-static gboolean plugin_list_func (PluginHandle * plugin, GList * * list)
-{
-    gpointer p_hdr = plugin_get_header(plugin);
-    g_return_val_if_fail(p_hdr != NULL, TRUE);
-    *list = g_list_prepend (*list, p_hdr);
-    return TRUE;
-}
-
-GList * plugin_get_list (gint type)
-{
-    static GList *list[PLUGIN_TYPES] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
-
-    if (list[type] == NULL)
-    {
-        plugin_for_each (type, (PluginForEachFunc) plugin_list_func, & list[type]);
-        list[type] = g_list_reverse (list[type]);
-    }
-
-    return list[type];
-}
-
 static void module_free (ModuleData * module)
 {
     module_list = g_list_remove (module_list, module);
@@ -188,8 +160,6 @@ static FILE * open_registry_file (const gchar * mode)
 
 static void input_plugin_save (PluginHandle * plugin, FILE * handle)
 {
-    fprintf (handle, "enabled %d\n", plugin->u.i.enabled);
-
     for (gint key = 0; key < INPUT_KEYS; key ++)
     {
         for (GList * node = plugin->u.i.keys[key]; node != NULL; node =
@@ -199,11 +169,6 @@ static void input_plugin_save (PluginHandle * plugin, FILE * handle)
     }
 }
 
-static void vis_plugin_save (PluginHandle * plugin, FILE * handle)
-{
-    fprintf (handle, "enabled %d\n", plugin->u.v.enabled);
-}
-
 static void plugin_save (PluginHandle * plugin, FILE * handle)
 {
     fprintf (handle, "%s %d\n", plugin_type_names[plugin->type], plugin->number);
@@ -211,12 +176,10 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
     fprintf (handle, "priority %d\n", plugin->priority);
     fprintf (handle, "about %d\n", plugin->has_about);
     fprintf (handle, "config %d\n", plugin->has_configure);
+    fprintf (handle, "enabled %d\n", plugin->enabled);
 
     if (plugin->type == PLUGIN_TYPE_INPUT)
         input_plugin_save (plugin, handle);
-
-    if (plugin->type == PLUGIN_TYPE_VIS)
-        vis_plugin_save (plugin, handle);
 }
 
 /* If the module contains any plugins that we do not handle, we do not save it,
@@ -288,9 +251,6 @@ static gchar * parse_string (const gchar * key)
 
 static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
 {
-    if (parse_integer ("enabled", & plugin->u.i.enabled))
-        parse_next (handle);
-
     for (gint key = 0; key < INPUT_KEYS; key ++)
     {
         gchar * value;
@@ -301,12 +261,6 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
             parse_next (handle);
         }
     }
-}
-
-static void vis_plugin_parse (PluginHandle * plugin, FILE * handle)
-{
-    if (parse_integer ("enabled", & plugin->u.v.enabled))
-        parse_next (handle);
 }
 
 static gboolean plugin_parse (ModuleData * module, FILE * handle)
@@ -333,12 +287,11 @@ FOUND:;
         parse_next (handle);
     if (parse_integer ("config", & plugin->has_configure))
         parse_next (handle);
+    if (parse_integer ("enabled", & plugin->enabled))
+        parse_next (handle);
 
     if (type == PLUGIN_TYPE_INPUT)
         input_plugin_parse (plugin, handle);
-
-    if (type == PLUGIN_TYPE_VIS)
-        vis_plugin_parse (plugin, handle);
 
     return TRUE;
 }
@@ -484,7 +437,7 @@ void module_register (const gchar * path)
     module->loaded = TRUE;
 }
 
-typedef struct PluginLookupState {
+typedef struct {
     gint type, number;
 } PluginLookupState;
 
@@ -625,27 +578,36 @@ gboolean plugin_has_configure (PluginHandle * plugin)
     return plugin->has_configure;
 }
 
-void input_plugin_set_enabled (PluginHandle * plugin, gboolean enabled)
+gboolean plugin_get_enabled (PluginHandle * plugin)
 {
-    plugin->u.i.enabled = enabled;
+    return plugin->enabled;
 }
 
-gboolean input_plugin_get_enabled (PluginHandle * plugin)
+void plugin_set_enabled (PluginHandle * plugin, gboolean enabled)
 {
-    return plugin->u.i.enabled;
+    plugin->enabled = enabled;
 }
 
-void vis_plugin_set_enabled (PluginHandle * plugin, gboolean enabled)
+typedef struct {
+    PluginForEachFunc func;
+    void * data;
+} PluginForEnabledState;
+
+static gboolean plugin_for_enabled_cb (PluginHandle * plugin,
+ PluginForEnabledState * state)
 {
-    plugin->u.v.enabled = enabled;
+    if (! plugin->enabled)
+        return TRUE;
+    return state->func (plugin, state->data);
 }
 
-gboolean vis_plugin_get_enabled (PluginHandle * plugin)
+void plugin_for_enabled (gint type, PluginForEachFunc func, void * data)
 {
-    return plugin->u.v.enabled;
+    PluginForEnabledState state = {func, data};
+    plugin_for_each (type, (PluginForEachFunc) plugin_for_enabled_cb, & state);
 }
 
-typedef struct InputPluginForKeyState {
+typedef struct {
     gint key;
     const gchar * value;
     PluginForEachFunc func;
@@ -666,26 +628,25 @@ void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
  func, void * data)
 {
     InputPluginForKeyState state = {key, value, func, data};
-    plugin_for_each (PLUGIN_TYPE_INPUT, (PluginForEachFunc)
+    plugin_for_enabled (PLUGIN_TYPE_INPUT, (PluginForEachFunc)
      input_plugin_for_key_cb, & state);
 }
 
-static void input_plugin_add_keys (InputPlugin * header, gint key, GList *
- values)
+static void input_plugin_add_key (InputPlugin * header, gint key, const gchar *
+ value)
 {
     PluginHandle * plugin = plugin_by_header (header);
     g_return_if_fail (plugin != NULL);
-    plugin->u.i.keys[key] = g_list_concat (plugin->u.i.keys[key], values);
+    plugin->u.i.keys[key] = g_list_prepend (plugin->u.i.keys[key], g_strdup
+     (value));
 }
 
 void uri_set_plugin (const gchar * scheme, InputPlugin * header)
 {
-    input_plugin_add_keys (header, INPUT_KEY_SCHEME, g_list_prepend (NULL,
-     g_strdup (scheme)));
+    input_plugin_add_key (header, INPUT_KEY_SCHEME, scheme);
 }
 
 void mime_set_plugin (const gchar * mime, InputPlugin * header)
 {
-    input_plugin_add_keys (header, INPUT_KEY_MIME, g_list_prepend (NULL,
-     g_strdup (mime)));
+    input_plugin_add_key (header, INPUT_KEY_MIME, mime);
 }

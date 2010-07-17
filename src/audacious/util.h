@@ -39,4 +39,6 @@ gboolean dir_foreach(const gchar * path, DirForeachFunc function,
 gint file_get_mtime (const gchar * filename);
 void make_directory(const gchar * path, mode_t mode);
 
+GList * plugin_get_list (gint type);
+
 #endif /* AUDACIOUS_UTIL_H */

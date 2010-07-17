@@ -60,9 +60,6 @@ static gboolean check_opened (ProbeState * state)
 
 static gboolean probe_func (PluginHandle * plugin, ProbeState * state)
 {
-    if (! input_plugin_get_enabled (plugin))
-        return TRUE;
-
     AUDDBG ("Trying %s.\n", plugin_get_name (plugin));
     InputPlugin * decoder = plugin_get_header (plugin);
     if (decoder == NULL)
@@ -111,9 +108,6 @@ static gboolean probe_func (PluginHandle * plugin, ProbeState * state)
 
 static gboolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
 {
-    if (! input_plugin_get_enabled (plugin))
-        return TRUE;
-
     if (state->plugin != NULL)
     {
         PluginHandle * prev = state->plugin;

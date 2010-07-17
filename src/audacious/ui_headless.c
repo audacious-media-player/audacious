@@ -27,6 +27,7 @@
 #include "plugin.h"
 #include "plugin-registry.h"
 #include "preferences.h"
+#include "util.h"
 
 static void
 print_indent(gint indent)

@@ -50,14 +50,11 @@ const gchar * plugin_get_name (PluginHandle * plugin);
 gboolean plugin_has_about (PluginHandle * plugin);
 gboolean plugin_has_configure (PluginHandle * plugin);
 
-gboolean input_plugin_get_enabled (PluginHandle * plugin);
-void input_plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
+gboolean plugin_get_enabled (PluginHandle * plugin);
+void plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
+void plugin_for_enabled (gint type, PluginForEachFunc func, void * data);
+
 void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
  func, void * data);
-
-gboolean vis_plugin_get_enabled (PluginHandle * plugin);
-void vis_plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
-
-GList * plugin_get_list (gint type);
 
 #endif

@@ -111,7 +111,7 @@ vis_enable_plugin(PluginHandle *ph, gboolean enable)
     vp = plugin_get_header(ph);
     g_return_if_fail(vp != NULL);
 
-    vis_enabled = vis_plugin_get_enabled(ph);
+    vis_enabled = plugin_get_enabled(ph);
     if (enable && !vis_enabled)
     {
         if (vp_data.enabled_list == NULL)
@@ -149,7 +149,7 @@ vis_enable_plugin(PluginHandle *ph, gboolean enable)
             vis_runner_remove_hook(send_audio);
     }
 
-    vis_plugin_set_enabled(ph, enable);
+    plugin_set_enabled(ph, enable);
 }
 
 gchar *
