@@ -45,7 +45,7 @@ struct _AudConfig {
     gfloat equalizer_preamp, equalizer_bands[AUD_EQUALIZER_NBANDS];
     gchar *filesel_path;
     gchar *playlist_path;
-    gchar *enabled_gplugins, *enabled_vplugins, *enabled_eplugins, *enabled_dplugins ;
+    gchar *enabled_gplugins, *enabled_eplugins, *enabled_dplugins;
     gchar *eqpreset_default_file, *eqpreset_extension;
     GList *url_history;
     gint titlestring_preset;

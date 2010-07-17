@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2010  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -30,23 +30,9 @@
 #include "plugin-registry.h"
 #include "types.h"
 
-typedef struct _VisPluginData VisPluginData;
-
-struct _VisPluginData {
-    GList *vis_list;
-    GList *enabled_list;
-    gboolean playback_started;
-};
-
-GList *get_vis_list(void);
-GList *get_vis_enabled_list(void);
+void vis_init (void);
+void vis_cleanup (void);
 void vis_enable_plugin(PluginHandle *vp, gboolean enable);
 void vis_disable_plugin(VisPlugin *vp);
-void vis_playback_start(void);
-void vis_playback_stop(void);
-gchar *vis_stringify_enabled_list(void);
-void vis_enable_from_stringified_list(gchar * list);
-
-extern VisPluginData vp_data;
 
 #endif /* AUDACIOUS_VISUALIZATION_H */

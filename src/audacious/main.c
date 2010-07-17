@@ -47,6 +47,7 @@
 #endif
 
 #include "audconfig.h"
+#include "chardet.h"
 #include "configdb.h"
 #include "drct.h"
 #include "equalizer.h"
@@ -59,7 +60,7 @@
 #include "pluginenum.h"
 #include "signals.h"
 #include "util.h"
-#include "chardet.h"
+#include "visualization.h"
 
 #include "ui_headless.h"
 #include "ui_misc.h"
@@ -371,9 +372,6 @@ static void shut_down (Interface * i)
 
     g_message("Playlist cleanup");
     playlist_end();
-
-    g_message("Shutdown finished, bye.");
-    exit(EXIT_SUCCESS);
 }
 
 static int print_interface_info(mowgli_dictionary_elem_t * delem, void *privdata)
@@ -533,8 +531,14 @@ gint main(gint argc, gchar ** argv)
         return EXIT_FAILURE;
     }
 
+    g_message ("Loading visualizers.");
+    vis_init ();
+
     g_message ("Starting main loop.");
     gtk_main ();
+
+    g_message ("Unloading visualizers.");
+    vis_cleanup ();
 
     g_message ("Shutting down.");
     shut_down (i);

@@ -60,7 +60,6 @@ AudConfig aud_default_config = {
     .filesel_path = NULL,
     .playlist_path = NULL,
     .enabled_gplugins = NULL,          /* enabled general plugins */
-    .enabled_vplugins = NULL,          /* enabled visualization plugins */
     .enabled_eplugins = NULL,          /* enabled effect plugins */
     .enabled_dplugins = NULL,          /* enabled discovery plugins */
     .eqpreset_default_file = NULL,
@@ -180,7 +179,6 @@ static aud_cfg_strent aud_strents[] = {
     {"eqpreset_default_file", &cfg.eqpreset_default_file, TRUE},
     {"eqpreset_extension", &cfg.eqpreset_extension, TRUE},
     {"enabled_gplugins", &cfg.enabled_gplugins, FALSE},
-    {"enabled_vplugins", &cfg.enabled_vplugins, FALSE},
     {"enabled_eplugins", &cfg.enabled_eplugins, FALSE},
     {"filesel_path", &cfg.filesel_path, FALSE},
     {"playlist_path", &cfg.playlist_path, FALSE},
@@ -356,14 +354,6 @@ aud_config_save(void)
     }
     else
         cfg_db_unset_key(db, NULL, "enabled_gplugins");
-
-    str = vis_stringify_enabled_list();
-    if (str) {
-        cfg_db_set_string(db, NULL, "enabled_vplugins", str);
-        g_free(str);
-    }
-    else
-        cfg_db_unset_key(db, NULL, "enabled_vplugins");
 
     str = effect_stringify_enabled_list();
     if (str) {

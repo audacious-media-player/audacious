@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2010  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -23,185 +23,32 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include "visualization.h"
-
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <math.h>
 #include <string.h>
 
+#include <libaudcore/hook.h>
+
+#include "debug.h"
 #include "fft.h"
 #include "interface.h"
 #include "main.h"
 #include "misc.h"
 #include "playback.h"
-#include "pluginenum.h"
 #include "plugin.h"
 #include "plugin-registry.h"
 #include "vis_runner.h"
+#include "visualization.h"
 
-VisPluginData vp_data = {
-    NULL,
-    NULL,
-    FALSE
-};
+typedef struct {
+    PluginHandle * plugin;
+    VisPlugin * header;
+    GtkWidget * widget;
+    gboolean started;
+} LoadedVis;
 
-static void send_audio (const VisNode * node, void * user);
-
-GList *
-get_vis_list(void)
-{
-    return vp_data.vis_list;
-}
-
-GList *
-get_vis_enabled_list(void)
-{
-    return vp_data.enabled_list;
-}
-
-void
-vis_disable_plugin(VisPlugin *vp)
-{
-    vis_enable_plugin(plugin_by_header(vp), FALSE);
-}
-
-void
-vis_playback_start(void)
-{
-    GList *node;
-    VisPlugin *vp;
-
-    if (vp_data.playback_started)
-        return;
-
-    for (node = vp_data.enabled_list; node; node = g_list_next(node)) {
-        vp = node->data;
-        if (vp->playback_start)
-            vp->playback_start();
-    }
-    vp_data.playback_started = TRUE;
-}
-
-void
-vis_playback_stop(void)
-{
-    GList *node;
-    VisPlugin *vp;
-
-    if (!vp_data.playback_started)
-        return;
-
-    for (node = vp_data.enabled_list; node; node = g_list_next(node)) {
-        vp = node->data;
-        if (vp->playback_stop)
-            vp->playback_stop();
-    }
-    vp_data.playback_started = FALSE;
-}
-
-void
-vis_enable_plugin(PluginHandle *ph, gboolean enable)
-{
-    VisPlugin *vp;
-    gboolean vis_enabled;
-
-    g_return_if_fail(ph != NULL);
-
-    vp = plugin_get_header(ph);
-    g_return_if_fail(vp != NULL);
-
-    vis_enabled = plugin_get_enabled(ph);
-    if (enable && !vis_enabled)
-    {
-        if (vp_data.enabled_list == NULL)
-            vis_runner_add_hook(send_audio, 0);
-
-        vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
-        if (vp->init)
-        {
-            vp->init();
-
-            if (vp->get_widget != NULL)
-            {
-                GtkWidget *w = vp->get_widget();
-
-                interface_run_gtk_plugin(w, vp->description);
-            }
-        }
-        if (playback_get_playing() && vp->playback_start)
-            vp->playback_start();
-    }
-    else if (!enable && vis_enabled) {
-        vp_data.enabled_list = g_list_remove(vp_data.enabled_list, vp);
-        if (playback_get_playing() && vp->playback_stop)
-            vp->playback_stop();
-        if (vp->get_widget != NULL)
-        {
-            GtkWidget *w = vp->get_widget();
-
-            interface_stop_gtk_plugin(w);
-        }
-        if (vp->cleanup)
-            vp->cleanup();
-
-        if (vp_data.enabled_list == NULL)
-            vis_runner_remove_hook(send_audio);
-    }
-
-    plugin_set_enabled(ph, enable);
-}
-
-gchar *
-vis_stringify_enabled_list(void)
-{
-    gchar *enalist = NULL, *tmp, *tmp2;
-    GList *node = vp_data.enabled_list;
-
-    if (g_list_length(node)) {
-        enalist = g_path_get_basename(VIS_PLUGIN(node->data)->filename);
-        for (node = g_list_next(node); node != NULL; node = g_list_next(node)) {
-            tmp = enalist;
-            tmp2 = g_path_get_basename(VIS_PLUGIN(node->data)->filename);
-            enalist = g_strconcat(tmp, ",", tmp2, NULL);
-            g_free(tmp);
-            g_free(tmp2);
-        }
-    }
-    return enalist;
-}
-
-static gboolean
-vis_queued_enable_cb(gpointer vp)
-{
-    vis_enable_plugin(plugin_by_header(vp), TRUE);
-
-    return FALSE;
-}
-
-void
-vis_enable_from_stringified_list(gchar * list)
-{
-    gchar **plugins, *base;
-    GList *node;
-    gint i;
-
-    if (!list || !strcmp(list, ""))
-        return;
-    plugins = g_strsplit(list, ",", 0);
-    for (i = 0; plugins[i]; i++) {
-        for (node = vp_data.vis_list; node != NULL; node = g_list_next(node)) {
-            base = g_path_get_basename(VIS_PLUGIN(node->data)->filename);
-
-            /* don't start the vis plugin until our eventloop and interface is up. --nenolod */
-            if (!strcmp(plugins[i], base))
-                g_idle_add(vis_queued_enable_cb, node->data);
-
-            g_free(base);
-        }
-    }
-    g_strfreev(plugins);
-}
+static GList * loaded_vis_plugins = NULL;
 
 void calc_stereo_pcm (VisPCMData dest, const VisPCMData src, gint nch)
 {
@@ -274,29 +121,28 @@ void calc_stereo_freq (VisFreqData dest, const VisPCMData src, gint nch)
         memcpy(dest[1], dest[0], 256 * sizeof(gint16));
 }
 
-static void send_audio (const VisNode * vis_node, void * user_data)
+static void send_audio (const VisNode * vis_node)
 {
-    int nch = vis_node->nch;
-    GList *node = vp_data.enabled_list;
-    VisPlugin *vp;
     gint16 mono_freq[2][256], stereo_freq[2][256];
     gboolean mono_freq_calced = FALSE, stereo_freq_calced = FALSE;
     gint16 mono_pcm[2][512], stereo_pcm[2][512];
     gboolean mono_pcm_calced = FALSE, stereo_pcm_calced = FALSE;
 
-    while (node) {
-        vp = node->data;
+    for (GList * node = loaded_vis_plugins; node != NULL; node = node->next)
+    {
+        VisPlugin * vp = ((LoadedVis *) node->data)->header;
+
         if (vp->num_pcm_chs_wanted > 0 && vp->render_pcm) {
             if (vp->num_pcm_chs_wanted == 1) {
                 if (!mono_pcm_calced) {
-                    calc_mono_pcm(mono_pcm, vis_node->data, nch);
+                    calc_mono_pcm(mono_pcm, vis_node->data, vis_node->nch);
                     mono_pcm_calced = TRUE;
                 }
                 vp->render_pcm(mono_pcm);
             }
             else {
                 if (!stereo_pcm_calced) {
-                    calc_stereo_pcm(stereo_pcm, vis_node->data, nch);
+                    calc_stereo_pcm(stereo_pcm, vis_node->data, vis_node->nch);
                     stereo_pcm_calced = TRUE;
                 }
                 vp->render_pcm(stereo_pcm);
@@ -305,19 +151,157 @@ static void send_audio (const VisNode * vis_node, void * user_data)
         if (vp->num_freq_chs_wanted > 0 && vp->render_freq) {
             if (vp->num_freq_chs_wanted == 1) {
                 if (!mono_freq_calced) {
-                    calc_mono_freq(mono_freq, vis_node->data, nch);
+                    calc_mono_freq(mono_freq, vis_node->data, vis_node->nch);
                     mono_freq_calced = TRUE;
                 }
                 vp->render_freq(mono_freq);
             }
             else {
                 if (!stereo_freq_calced) {
-                    calc_stereo_freq(stereo_freq, vis_node->data, nch);
+                    calc_stereo_freq(stereo_freq, vis_node->data, vis_node->nch);
                     stereo_freq_calced = TRUE;
                 }
                 vp->render_freq(stereo_freq);
             }
         }
-        node = g_list_next(node);
     }
+}
+
+static void vis_start (LoadedVis * vis)
+{
+    if (vis->started)
+        return;
+    AUDDBG ("Starting %s.\n", plugin_get_name (vis->plugin));
+    if (vis->header->playback_start != NULL)
+        vis->header->playback_start ();
+    vis->started = TRUE;
+}
+
+static void vis_start_all (void)
+{
+    g_list_foreach (loaded_vis_plugins, (GFunc) vis_start, NULL);
+}
+
+static void vis_stop (LoadedVis * vis)
+{
+    if (! vis->started)
+        return;
+    AUDDBG ("Stopping %s.\n", plugin_get_name (vis->plugin));
+    if (vis->header->playback_stop != NULL)
+        vis->header->playback_stop ();
+    vis->started = FALSE;
+}
+
+static void vis_stop_all (void)
+{
+    g_list_foreach (loaded_vis_plugins, (GFunc) vis_stop, NULL);
+}
+
+static gint vis_find_cb (LoadedVis * vis, PluginHandle * plugin)
+{
+    return (vis->plugin == plugin) ? 0 : -1;
+}
+
+static void vis_load (PluginHandle * plugin)
+{
+    GList * node = g_list_find_custom (loaded_vis_plugins, plugin,
+     (GCompareFunc) vis_find_cb);
+    if (node != NULL)
+        return;
+
+    AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
+    VisPlugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header != NULL);
+
+    if (header->init != NULL)
+        header->init ();
+
+    LoadedVis * vis = g_slice_new (LoadedVis);
+    vis->plugin = plugin;
+    vis->header = header;
+    vis->widget = NULL;
+    vis->started = FALSE;
+
+    if (header->get_widget != NULL)
+        vis->widget = header->get_widget ();
+
+    if (vis->widget != NULL)
+    {
+        AUDDBG ("Adding %s to interface.\n", plugin_get_name (plugin));
+        g_signal_connect (vis->widget, "destroy", (GCallback)
+         gtk_widget_destroyed, & vis->widget);
+        interface_run_gtk_plugin (vis->widget, plugin_get_name (plugin));
+    }
+
+    if (playback_get_playing ())
+        vis_start (vis);
+
+    if (loaded_vis_plugins == NULL)
+        vis_runner_add_hook ((VisHookFunc) send_audio, NULL);
+
+    loaded_vis_plugins = g_list_prepend (loaded_vis_plugins, vis);
+}
+
+static void vis_unload (PluginHandle * plugin)
+{
+    GList * node = g_list_find_custom (loaded_vis_plugins, plugin,
+     (GCompareFunc) vis_find_cb);
+    if (node == NULL)
+        return;
+
+    AUDDBG ("Unloading %s.\n", plugin_get_name (plugin));
+    LoadedVis * vis = node->data;
+    loaded_vis_plugins = g_list_delete_link (loaded_vis_plugins, node);
+
+    if (loaded_vis_plugins == NULL)
+        vis_runner_remove_hook ((VisHookFunc) send_audio);
+
+    if (vis->widget != NULL)
+    {
+        AUDDBG ("Removing %s from interface.\n", plugin_get_name (plugin));
+        interface_stop_gtk_plugin (vis->widget);
+        g_return_if_fail (vis->widget == NULL); /* not destroyed? */
+    }
+
+    if (vis->header->cleanup != NULL)
+        vis->header->cleanup ();
+
+    g_slice_free (LoadedVis, vis);
+}
+
+static gboolean vis_init_cb (PluginHandle * plugin)
+{
+    vis_load (plugin);
+    return TRUE;
+}
+
+void vis_init (void)
+{
+    plugin_for_enabled (PLUGIN_TYPE_VIS, (PluginForEachFunc) vis_init_cb, NULL);
+
+    hook_associate ("playback begin", (HookFunction) vis_start_all, NULL);
+    hook_associate ("playback stop", (HookFunction) vis_stop_all, NULL);
+}
+
+void vis_cleanup (void)
+{
+    hook_dissociate ("playback begin", (HookFunction) vis_start_all);
+    hook_dissociate ("playback stop", (HookFunction) vis_stop_all);
+
+    g_list_foreach (loaded_vis_plugins, (GFunc) vis_unload, NULL);
+}
+
+void vis_enable_plugin (PluginHandle * plugin, gboolean enable)
+{
+    plugin_set_enabled (plugin, enable);
+
+    if (enable)
+        vis_load (plugin);
+    else
+        vis_unload (plugin);
+}
+
+void vis_disable_plugin (VisPlugin * header)
+{
+    vis_enable_plugin (plugin_by_header (header), FALSE);
 }

@@ -93,15 +93,6 @@ static gint generallist_compare_func(gconstpointer a, gconstpointer b)
         return 0;
 }
 
-static gint vislist_compare_func(gconstpointer a, gconstpointer b)
-{
-    const VisPlugin *ap = a, *bp = b;
-    if (ap->description && bp->description)
-        return strcasecmp(ap->description, bp->description);
-    else
-        return 0;
-}
-
 static void input_plugin_init(Plugin * plugin)
 {
     InputPlugin *p = INPUT_PLUGIN(plugin);
@@ -129,10 +120,7 @@ static void general_plugin_init(Plugin * plugin)
 
 static void vis_plugin_init(Plugin * plugin)
 {
-    VisPlugin *p = VIS_PLUGIN(plugin);
-
-    p->disable_plugin = vis_disable_plugin;
-    vp_data.vis_list = g_list_append(vp_data.vis_list, p);
+    ((VisPlugin *) plugin)->disable_plugin = vis_disable_plugin;
 }
 
 /*******************************************************************/
@@ -425,18 +413,11 @@ void plugin_system_init(void)
     gp_data.general_list = g_list_sort(gp_data.general_list, generallist_compare_func);
     gp_data.enabled_list = NULL;
 
-    vp_data.vis_list = g_list_sort(vp_data.vis_list, vislist_compare_func);
-    vp_data.enabled_list = NULL;
-
     general_enable_from_stringified_list(cfg.enabled_gplugins);
-    vis_enable_from_stringified_list(cfg.enabled_vplugins);
     effect_enable_from_stringified_list(cfg.enabled_eplugins);
 
     g_free(cfg.enabled_gplugins);
     cfg.enabled_gplugins = NULL;
-
-    g_free(cfg.enabled_vplugins);
-    cfg.enabled_vplugins = NULL;
 
     g_free(cfg.enabled_eplugins);
     cfg.enabled_eplugins = NULL;
@@ -454,7 +435,6 @@ void plugin_system_cleanup(void)
 {
     EffectPlugin *ep;
     GeneralPlugin *gp;
-    VisPlugin *vp;
     GList *node;
     mowgli_node_t *hlist_node;
 
@@ -507,24 +487,6 @@ void plugin_system_cleanup(void)
     {
         g_list_free(gp_data.general_list);
         gp_data.general_list = NULL;
-    }
-
-    for (node = get_vis_list(); node; node = g_list_next(node))
-    {
-        vp = VIS_PLUGIN(node->data);
-        if (vp)
-        {
-            if (vp->cleanup)
-                vp->cleanup();
-
-            g_free (vp->filename);
-        }
-    }
-
-    if (vp_data.vis_list != NULL)
-    {
-        g_list_free(vp_data.vis_list);
-        vp_data.vis_list = NULL;
     }
 
     /* XXX: vfs will crash otherwise. -nenolod */
