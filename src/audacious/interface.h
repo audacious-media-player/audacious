@@ -75,7 +75,7 @@ struct _Interface {
 
 void interface_register(Interface *i);
 void interface_deregister(Interface *i);
-void interface_run(Interface *i);
+gboolean interface_init (Interface * i);
 void interface_destroy(Interface *i);
 
 Interface *interface_get(gchar *id);

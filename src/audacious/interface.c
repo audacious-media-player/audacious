@@ -61,13 +61,11 @@ interface_deregister(Interface *i)
     mowgli_dictionary_delete(interface_dict_, i->id);
 }
 
-void
-interface_run(Interface *i)
+gboolean interface_init (Interface * i)
 {
     current_interface = i;
-    i->ops = &interface_ops;
-
-    i->init(&interface_cbs);
+    i->ops = & interface_ops;
+    return i->init (& interface_cbs);
 }
 
 void

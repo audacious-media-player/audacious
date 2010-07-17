@@ -344,10 +344,14 @@ static void aud_setup_logger(void)
     g_atexit(aud_logger_stop);
 }
 
-void aud_quit(void)
+void aud_quit (void)
 {
-    Interface *i = interface_get(options.interface);
+    g_message ("Ending main loop.");
+    gtk_main_quit ();
+}
 
+static void shut_down (Interface * i)
+{
     g_message("Saving configuration");
     aud_config_save();
     save_playlists ();
@@ -377,11 +381,6 @@ static int print_interface_info(mowgli_dictionary_elem_t * delem, void *privdata
     Interface *i = (Interface *) delem->data;
     g_print("  %-15s - %s\n", i->id, i->desc);
     return 0;
-}
-
-static void quit_cb(void *hook_data, void *user_data)
-{
-    aud_quit();
 }
 
 #ifdef USE_DBUS
@@ -419,8 +418,6 @@ static gboolean autosave_cb (void * unused)
 
 gint main(gint argc, gchar ** argv)
 {
-    Interface *i;
-
     /* glib-2.13.0 requires g_thread_init() to be called before all
        other GLib functions */
     g_thread_init(NULL);
@@ -436,7 +433,7 @@ gint main(gint argc, gchar ** argv)
     tag_init();
 
     hook_init();
-    hook_associate("quit", quit_cb, 0);
+    hook_associate ("quit", (HookFunction) gtk_main_quit, NULL);
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
@@ -521,19 +518,25 @@ gint main(gint argc, gchar ** argv)
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, autosave_cb, NULL);
 
     g_message("Selecting interface %s", options.interface);
-    i = interface_get(options.interface);
-
-    if (i != NULL)
+    Interface * i = interface_get (options.interface);
+    if (i == NULL)
     {
-        g_message("Running interface %s@%p", options.interface, (void *) i);
-        interface_run(i);
-    }
-    else
-    {
-        g_print("%s: unable to launch selected interface %s\n", argv[0], options.interface);
+        fprintf (stderr, "Cannot find interface %s.\n", options.interface);
         return EXIT_FAILURE;
     }
 
-    aud_quit();
+    g_message ("Initializing interface %s.", options.interface);
+    if (! interface_init (i))
+    {
+        fprintf (stderr, "Interface %s failed to initialize.\n",
+         options.interface);
+        return EXIT_FAILURE;
+    }
+
+    g_message ("Starting main loop.");
+    gtk_main ();
+
+    g_message ("Shutting down.");
+    shut_down (i);
     return EXIT_SUCCESS;
 }
