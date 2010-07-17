@@ -58,6 +58,7 @@
 #include "drct.h"
 #include "misc.h"
 #include "playlist.h"
+#include "plugins.h"
 #undef AUD_API_DECLARE
 
 const gchar *plugin_dir_list[] = {
@@ -70,6 +71,7 @@ static AudAPITable api_table = {
  .drct_api = & drct_api,
  .misc_api = & misc_api,
  .playlist_api = & playlist_api,
+ .plugins_api = & plugins_api,
  .cfg = & cfg};
 
 extern GList *vfs_transports;
