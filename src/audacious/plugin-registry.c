@@ -31,7 +31,7 @@
 #include "misc.h"
 #include "plugin.h"
 #include "pluginenum.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "util.h"
 
 #define FILENAME "plugin-registry"

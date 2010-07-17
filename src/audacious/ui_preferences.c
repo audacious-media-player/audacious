@@ -44,7 +44,7 @@
 #include "playback.h"
 #include "plugin.h"
 #include "pluginenum.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "effect.h"
 #include "general.h"
 #include "output.h"

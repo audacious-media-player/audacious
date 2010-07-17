@@ -47,7 +47,7 @@
 #include "debug.h"
 #include "i18n.h"
 #include "misc.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "util.h"
 
 /*

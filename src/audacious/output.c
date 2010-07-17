@@ -30,7 +30,7 @@
 #include "flow.h"
 #include "output.h"
 #include "playback.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "vis_runner.h"
 
 #define SW_VOLUME_RANGE 40 /* decibels */

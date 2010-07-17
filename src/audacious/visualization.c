@@ -37,7 +37,7 @@
 #include "misc.h"
 #include "playback.h"
 #include "plugin.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "vis_runner.h"
 #include "visualization.h"
 

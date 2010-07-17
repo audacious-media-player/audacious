@@ -27,7 +27,7 @@
 
 #include <glib.h>
 
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "types.h"
 
 void vis_init (void);

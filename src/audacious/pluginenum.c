@@ -40,7 +40,7 @@
 #include <libaudgui/init.h>
 
 #include "pluginenum.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 
 #include "audconfig.h"
 #include "effect.h"

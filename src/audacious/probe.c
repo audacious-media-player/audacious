@@ -28,7 +28,7 @@
 #include "misc.h"
 #include "playlist.h"
 #include "plugin.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "probe-buffer.h"
 
 typedef struct

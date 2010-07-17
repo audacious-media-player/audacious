@@ -61,6 +61,8 @@ INCLUDES = api.h \
            playlist.h \
            playlist-api.h \
            plugin.h				\
+           plugins.h \
+           plugins-api.h \
            preferences.h		\
            types.h
 

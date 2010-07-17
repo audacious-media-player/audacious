@@ -37,7 +37,7 @@
 #include "output.h"
 #include "playback.h"
 #include "pluginenum.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "util.h"
 #include "visualization.h"
 

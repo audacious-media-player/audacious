@@ -27,6 +27,7 @@ typedef const struct {
     const struct DRCTAPI * drct_api;
     const struct MiscAPI * misc_api;
     const struct PlaylistAPI * playlist_api;
+    const struct PluginsAPI * plugins_api;
     struct _AudConfig * cfg;
 } AudAPITable;
 

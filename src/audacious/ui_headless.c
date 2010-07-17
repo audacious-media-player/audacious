@@ -25,7 +25,7 @@
 #include "general.h"
 #include "effect.h"
 #include "plugin.h"
-#include "plugin-registry.h"
+#include "plugins.h"
 #include "preferences.h"
 #include "util.h"
 
