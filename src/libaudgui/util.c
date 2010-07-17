@@ -19,9 +19,12 @@
  * using our public API to be a derived work.
  */
 
+#define DEBUG
 #include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
+
+#include <audacious/debug.h>
 
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -90,9 +93,12 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
 {
     GdkPixbuf * pixbuf = NULL;
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
+    GError * error = NULL;
 
-    if (gdk_pixbuf_loader_write (loader, data, size, NULL))
+    if (gdk_pixbuf_loader_write (loader, data, size, &error))
         pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+    else
+        AUDDBG("error while loading pixbuf: %s\n", error->message);
 
     gdk_pixbuf_loader_close (loader, NULL);
     return pixbuf;
