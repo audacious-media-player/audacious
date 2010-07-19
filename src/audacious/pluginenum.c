@@ -77,24 +77,6 @@ static AudAPITable api_table = {
 extern GList *vfs_transports;
 static mowgli_list_t *headers_list = NULL;
 
-static gint effectlist_compare_func(gconstpointer a, gconstpointer b)
-{
-    const EffectPlugin *ap = a, *bp = b;
-    if (ap->description && bp->description)
-        return strcasecmp(ap->description, bp->description);
-    else
-        return 0;
-}
-
-static gint generallist_compare_func(gconstpointer a, gconstpointer b)
-{
-    const GeneralPlugin *ap = a, *bp = b;
-    if (ap->description && bp->description)
-        return strcasecmp(ap->description, bp->description);
-    else
-        return 0;
-}
-
 static void input_plugin_init(Plugin * plugin)
 {
     InputPlugin *p = INPUT_PLUGIN(plugin);
@@ -107,22 +89,18 @@ static void effect_plugin_init(Plugin * plugin)
 {
     EffectPlugin *p = EFFECT_PLUGIN(plugin);
 
-    ep_data.effect_list = g_list_append(ep_data.effect_list, p);
-
     if (p->init != NULL)
         p->init ();
 }
 
-static void general_plugin_init(Plugin * plugin)
+static void vis_plugin_disable_by_header (VisPlugin * header)
 {
-    GeneralPlugin *p = GENERAL_PLUGIN(plugin);
-
-    gp_data.general_list = g_list_append(gp_data.general_list, p);
+    vis_plugin_enable (plugin_by_header (header), FALSE);
 }
 
 static void vis_plugin_init(Plugin * plugin)
 {
-    ((VisPlugin *) plugin)->disable_plugin = vis_disable_plugin;
+    ((VisPlugin *) plugin)->disable_plugin = vis_plugin_disable_by_header;
 }
 
 /*******************************************************************/
@@ -215,7 +193,6 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         {
             plugin_register (filename, PLUGIN_TYPE_GENERAL, i, header->gp_list[i]);
             PLUGIN((header->gp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
-            general_plugin_init(PLUGIN((header->gp_list)[i]));
         }
     }
 
@@ -239,13 +216,12 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
 void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 {
     GModule *module;
-    gint i;
 
     g_return_if_fail(header->priv_assoc != NULL);
 
     if (header->ip_list != NULL)
     {
-        for (i = 0; header->ip_list[i] != NULL; i ++)
+        for (gint i = 0; header->ip_list[i] != NULL; i ++)
         {
             if (header->ip_list[i]->cleanup != NULL)
                 header->ip_list[i]->cleanup ();
@@ -256,8 +232,31 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 
     if (header->op_list != NULL)
     {
-        for (i = 0; header->op_list[i] != NULL; i ++)
+        for (gint i = 0; header->op_list[i] != NULL; i ++)
             g_free (header->op_list[i]->filename);
+    }
+
+    if (header->ep_list != NULL)
+    {
+        for (gint i = 0; header->ep_list[i] != NULL; i ++)
+        {
+            if (header->ep_list[i]->cleanup != NULL)
+                header->ep_list[i]->cleanup ();
+
+            g_free (header->ep_list[i]->filename);
+        }
+    }
+
+    if (header->vp_list != NULL)
+    {
+        for (gint i = 0; header->vp_list[i] != NULL; i ++)
+            g_free (header->vp_list[i]->filename);
+    }
+
+    if (header->gp_list != NULL)
+    {
+        for (gint i = 0; header->gp_list[i] != NULL; i ++)
+            g_free (header->gp_list[i]->filename);
     }
 
     if (header->interface)
@@ -345,7 +344,8 @@ static gboolean output_probe_func (PluginHandle * handle, OutputPlugin * * resul
     g_message ("Probing output plugin %s", plugin_get_name (handle));
     OutputPlugin * plugin = plugin_get_header (handle);
 
-    if (plugin == NULL || plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+    if (plugin == NULL || plugin->init == NULL || plugin->init () !=
+     OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
         return TRUE;
 
     * result = plugin;
@@ -409,35 +409,16 @@ void plugin_system_init(void)
 
     plugin_registry_prune ();
 
-    ep_data.effect_list = g_list_sort(ep_data.effect_list, effectlist_compare_func);
-    ep_data.enabled_list = NULL;
-
-    gp_data.general_list = g_list_sort(gp_data.general_list, generallist_compare_func);
-    gp_data.enabled_list = NULL;
-
-    general_enable_from_stringified_list(cfg.enabled_gplugins);
-    effect_enable_from_stringified_list(cfg.enabled_eplugins);
-
-    g_free(cfg.enabled_gplugins);
-    cfg.enabled_gplugins = NULL;
-
-    g_free(cfg.enabled_eplugins);
-    cfg.enabled_eplugins = NULL;
-
-    g_free(cfg.enabled_dplugins);
-    cfg.enabled_dplugins = NULL;
-
     current_output_plugin = output_load_selected ();
 
     if (current_output_plugin == NULL)
         current_output_plugin = output_probe ();
+
+    general_init ();
 }
 
 void plugin_system_cleanup(void)
 {
-    EffectPlugin *ep;
-    GeneralPlugin *gp;
-    GList *node;
     mowgli_node_t *hlist_node;
 
     g_message("Shutting down plugin system");
@@ -453,43 +434,9 @@ void plugin_system_cleanup(void)
         current_output_plugin = NULL;
     }
 
+    general_cleanup ();
+
     plugin_registry_save ();
-
-    for (node = get_effect_list(); node; node = g_list_next(node))
-    {
-        ep = EFFECT_PLUGIN(node->data);
-        if (ep)
-        {
-            if (ep->cleanup)
-                ep->cleanup();
-
-            g_free (ep->filename);
-        }
-    }
-
-    if (ep_data.effect_list != NULL)
-    {
-        g_list_free(ep_data.effect_list);
-        ep_data.effect_list = NULL;
-    }
-
-    for (node = get_general_enabled_list (); node; node = g_list_next (node))
-    {
-        gp = GENERAL_PLUGIN(node->data);
-        if (gp)
-        {
-            if (gp->cleanup)
-                gp->cleanup();
-
-            g_free (gp->filename);
-        }
-    }
-
-    if (gp_data.general_list != NULL)
-    {
-        g_list_free(gp_data.general_list);
-        gp_data.general_list = NULL;
-    }
 
     /* XXX: vfs will crash otherwise. -nenolod */
     if (vfs_transports != NULL)

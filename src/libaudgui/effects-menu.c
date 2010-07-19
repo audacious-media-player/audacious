@@ -22,57 +22,57 @@
 #include "config.h"
 
 #include <audacious/i18n.h>
-#include <audacious/misc.h>
 #include <audacious/plugin.h>
+#include <audacious/plugins.h>
 
 #include "libaudgui-gtk.h"
 
-static void effect_item_toggled (GtkCheckMenuItem * item, void * data)
+static void enable_cb (GtkCheckMenuItem * item, PluginHandle * plugin)
 {
-    aud_enable_effect (data, gtk_check_menu_item_get_active (item));
+    aud_effect_plugin_enable (plugin, gtk_check_menu_item_get_active (item));
+
+    GtkWidget * settings = g_object_get_data ((GObject *) item, "settings");
+    if (settings != NULL)
+        gtk_widget_set_sensitive (settings, gtk_check_menu_item_get_active (item));
 }
 
-static GtkWidget * create_effect_item (EffectPlugin * effect)
+static void settings_cb (GtkMenuItem * settings, PluginHandle * plugin)
 {
-    GtkWidget * item = gtk_check_menu_item_new_with_label (effect->description);
+    if (! aud_plugin_get_enabled (plugin))
+        return;
 
-    gtk_check_menu_item_set_active ((GtkCheckMenuItem *) item, effect->enabled);
+    EffectPlugin * header = aud_plugin_get_header (plugin);
+    g_return_if_fail (header != NULL);
+    header->configure ();
+}
+
+static gboolean add_item_cb (PluginHandle * plugin, GtkWidget * menu)
+{
+    GtkWidget * item = gtk_check_menu_item_new_with_label (aud_plugin_get_name
+     (plugin));
+    gtk_check_menu_item_set_active ((GtkCheckMenuItem *) item,
+     aud_plugin_get_enabled (plugin));
+    gtk_menu_shell_append ((GtkMenuShell *) menu, item);
+    g_signal_connect (item, "toggled", (GCallback) enable_cb, plugin);
     gtk_widget_show (item);
-    g_signal_connect (item, "toggled", (GCallback) effect_item_toggled, effect);
-    return item;
-}
 
-static void settings_item_activate (GtkCheckMenuItem * item, void * data)
-{
-    ((EffectPlugin *) data)->configure ();
-}
+    if (aud_plugin_has_configure (plugin))
+    {
+        GtkWidget * settings = gtk_menu_item_new_with_label (_("settings ..."));
+        gtk_widget_set_sensitive (settings, aud_plugin_get_enabled (plugin));
+        g_object_set_data ((GObject *) item, "settings", settings);
+        gtk_menu_shell_append ((GtkMenuShell *) menu, settings);
+        g_signal_connect (settings, "activate", (GCallback) settings_cb, plugin);
+        gtk_widget_show (settings);
+    }
 
-static GtkWidget * create_settings_item (EffectPlugin * effect)
-{
-    GtkWidget * item = gtk_menu_item_new_with_label (_("settings ..."));
-
-    gtk_widget_show (item);
-    g_signal_connect (item, "activate", (GCallback) settings_item_activate,
-     effect);
-    return item;
+    return TRUE;
 }
 
 GtkWidget * audgui_create_effects_menu (void)
 {
     GtkWidget * menu = gtk_menu_new ();
-    GList * list = aud_get_effect_list ();
-    GList * node;
-
-    for (node = list; node != NULL; node = node->next)
-    {
-        EffectPlugin * effect = node->data;
-
-        gtk_menu_shell_append ((GtkMenuShell *) menu, create_effect_item (effect));
-
-        if (effect->configure != NULL)
-            gtk_menu_shell_append ((GtkMenuShell *) menu, create_settings_item
-             (effect));
-    }
-
+    aud_plugin_for_each (PLUGIN_TYPE_EFFECT, (PluginForEachFunc) add_item_cb,
+     menu);
     return menu;
 }

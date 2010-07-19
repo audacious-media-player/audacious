@@ -325,13 +325,13 @@ plugin_toggle(GtkCellRendererToggle * cell,
         plugin_set_enabled (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_GENERAL:
-        enable_general ((GeneralPlugin *) plugin, enabled);
+        general_plugin_enable (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_VIS:
-        vis_enable_plugin (plugin_by_header (plugin), enabled);
+        vis_plugin_enable (plugin_by_header (plugin), enabled);
         break;
     case PLUGIN_VIEW_TYPE_EFFECT:
-        enable_effect ((EffectPlugin *) plugin, enabled);
+        effect_plugin_enable (plugin_by_header (plugin), enabled);
         break;
     }
 
@@ -450,21 +450,7 @@ on_plugin_view_realize(GtkTreeView * treeview,
     MOWGLI_ITER_FOREACH(ilist, list)
     {
         Plugin *plugin = PLUGIN(ilist->data);
-        gboolean enabled = FALSE;
-
-        switch (plugin_type)
-        {
-        case PLUGIN_VIEW_TYPE_INPUT:
-        case PLUGIN_VIEW_TYPE_VIS:
-            enabled = plugin_get_enabled (plugin_by_header (plugin));
-            break;
-        case PLUGIN_VIEW_TYPE_GENERAL:
-            enabled = ((GeneralPlugin *) plugin)->enabled;
-            break;
-        case PLUGIN_VIEW_TYPE_EFFECT:
-            enabled = ((EffectPlugin *) plugin)->enabled;
-            break;
-        }
+        gboolean enabled = plugin_get_enabled (plugin_by_header (plugin));
 
         description[0] = g_strdup(plugin->description);
         description[1] = g_strdup(plugin->filename);
@@ -495,14 +481,16 @@ static void
 on_effect_plugin_view_realize(GtkTreeView * treeview,
                               gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), ep_data.effect_list, PLUGIN_VIEW_TYPE_EFFECT);
+    on_plugin_view_realize (treeview, (GCallback) plugin_toggle, plugin_get_list
+     (PLUGIN_TYPE_EFFECT), PLUGIN_VIEW_TYPE_EFFECT);
 }
 
 static void
 on_general_plugin_view_realize(GtkTreeView * treeview,
                                gpointer data)
 {
-    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), gp_data.general_list, PLUGIN_VIEW_TYPE_GENERAL);
+    on_plugin_view_realize (treeview, (GCallback) plugin_toggle, plugin_get_list
+     (PLUGIN_TYPE_GENERAL), PLUGIN_VIEW_TYPE_GENERAL);
 }
 
 static void
@@ -2349,7 +2337,7 @@ create_plugin_category(void)
     gtk_box_pack_start (GTK_BOX (vbox25), alignment58, FALSE, FALSE, 4);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment58), 0, 6, 0, 0);
 
-    label64 = gtk_label_new (_("Effect plugins (for 16-bit output only):"));
+    label64 = gtk_label_new (_("Effect plugins:"));
     gtk_container_add (GTK_CONTAINER (alignment58), label64);
     gtk_misc_set_alignment (GTK_MISC (label64), 0, 0.5);
 
@@ -2511,9 +2499,9 @@ static void
 destroy_plugin_pages(void)
 {
     destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_INPUT));
-    destroy_plugin_page(get_general_enabled_list());
+    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_GENERAL));
     destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_VIS));
-    destroy_plugin_page(get_effect_enabled_list());
+    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_EFFECT));
 }
 
 static gboolean
@@ -2546,9 +2534,9 @@ static void
 create_plugin_pages(void)
 {
     create_plugin_page(plugin_get_list(PLUGIN_TYPE_INPUT));
-    create_plugin_page(get_general_enabled_list());
+    create_plugin_page(plugin_get_list(PLUGIN_TYPE_GENERAL));
     create_plugin_page(plugin_get_list(PLUGIN_TYPE_VIS));
-    create_plugin_page(get_effect_enabled_list());
+    create_plugin_page(plugin_get_list(PLUGIN_TYPE_EFFECT));
 }
 
 /* GtkWidget * * create_prefs_window (void) */

@@ -59,9 +59,6 @@ AudConfig aud_default_config = {
     .equalizer_bands = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
     .filesel_path = NULL,
     .playlist_path = NULL,
-    .enabled_gplugins = NULL,          /* enabled general plugins */
-    .enabled_eplugins = NULL,          /* enabled effect plugins */
-    .enabled_dplugins = NULL,          /* enabled discovery plugins */
     .eqpreset_default_file = NULL,
     .eqpreset_extension = NULL,
     .url_history = NULL,
@@ -178,8 +175,6 @@ static gint ncfgient = G_N_ELEMENTS(aud_numents);
 static aud_cfg_strent aud_strents[] = {
     {"eqpreset_default_file", &cfg.eqpreset_default_file, TRUE},
     {"eqpreset_extension", &cfg.eqpreset_extension, TRUE},
-    {"enabled_gplugins", &cfg.enabled_gplugins, FALSE},
-    {"enabled_eplugins", &cfg.enabled_eplugins, FALSE},
     {"filesel_path", &cfg.filesel_path, FALSE},
     {"playlist_path", &cfg.playlist_path, FALSE},
     {"generic_title_format", &cfg.gentitle_format, TRUE},
@@ -346,22 +341,6 @@ aud_config_save(void)
         cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
         g_free(str);
     }
-
-    str = general_stringify_enabled_list();
-    if (str) {
-        cfg_db_set_string(db, NULL, "enabled_gplugins", str);
-        g_free(str);
-    }
-    else
-        cfg_db_unset_key(db, NULL, "enabled_gplugins");
-
-    str = effect_stringify_enabled_list();
-    if (str) {
-        cfg_db_set_string(db, NULL, "enabled_eplugins", str);
-        g_free(str);
-    }
-    else
-        cfg_db_unset_key(db, NULL, "enabled_eplugins");
 
     if (cfg.filesel_path)
         cfg_db_set_string(db, NULL, "filesel_path", cfg.filesel_path);

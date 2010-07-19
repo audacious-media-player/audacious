@@ -27,7 +27,6 @@
 #include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
-#include "flow.h"
 #include "output.h"
 #include "playback.h"
 #include "plugins.h"
@@ -162,7 +161,7 @@ static gboolean output_open_audio (gint format, gint rate, gint channels)
 
     effect_channels = channels;
     effect_rate = rate;
-    new_effect_start (& effect_channels, & effect_rate);
+    effect_start (& effect_channels, & effect_rate);
     eq_set_format (effect_channels, effect_rate);
 
     if (output_leave_open && COP->set_written_time != NULL && effect_channels ==
@@ -207,7 +206,7 @@ static void output_close_audio (void)
 
     if (! output_leave_open)
     {
-        new_effect_flush ();
+        effect_flush ();
         real_close ();
     }
 
@@ -222,8 +221,8 @@ static void output_flush (gint time)
     output_aborted = FALSE;
 
     vis_runner_flush ();
-    new_effect_flush ();
-    COP->flush (new_effect_decoder_to_output_time (time));
+    effect_flush ();
+    COP->flush (effect_decoder_to_output_time (time));
 
     UNLOCK;
 }
@@ -264,19 +263,6 @@ static gboolean output_buffer_playing (void)
 
     UNLOCK;
     return FALSE;
-}
-
-static Flow * get_legacy_flow (void)
-{
-    static Flow * flow = NULL;
-
-    if (flow == NULL)
-    {
-        flow = flow_new ();
-        flow_link_element (flow, effect_flow);
-    }
-
-    return flow;
 }
 
 static void output_set_replaygain_info (ReplayGainInfo * info)
@@ -376,18 +362,6 @@ static void do_write (void * data, gint samples)
         allocated = new;
     }
 
-    if (output_format == FMT_S16_NE)
-    {
-        samples = flow_execute (get_legacy_flow (), 0, & data, 2 * samples,
-         output_format, output_rate, output_channels) / 2;
-
-        if (data != allocated)
-        {
-            g_free (allocated);
-            allocated = NULL;
-        }
-    }
-
     while (1)
     {
         gint ready;
@@ -445,7 +419,7 @@ static void output_write_audio (void * data, gint size)
     }
 
     apply_replay_gain (data, samples);
-    new_effect_process ((gfloat * *) & data, & samples);
+    effect_process ((gfloat * *) & data, & samples);
 
     if (data != allocated)
     {
@@ -462,7 +436,7 @@ static void write_buffers (void)
     gfloat * data = NULL;
     gint samples = 0;
 
-    new_effect_finish (& data, & samples);
+    effect_finish (& data, & samples);
     do_write (data, samples);
 }
 
@@ -508,7 +482,7 @@ gint get_output_time (void)
 
     if (output_opened)
     {
-        time = new_effect_output_to_decoder_time (COP->output_time ());
+        time = effect_output_to_decoder_time (COP->output_time ());
         time = MAX (0, time);
     }
 

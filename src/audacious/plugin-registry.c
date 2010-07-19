@@ -67,10 +67,10 @@ static const gchar * plugin_type_names[] = {
  [PLUGIN_TYPE_BASIC] = NULL,
  [PLUGIN_TYPE_INPUT] = "input",
  [PLUGIN_TYPE_OUTPUT] = "output",
- [PLUGIN_TYPE_EFFECT] = NULL,
+ [PLUGIN_TYPE_EFFECT] = "effect",
  [PLUGIN_TYPE_VIS] = "vis",
  [PLUGIN_TYPE_IFACE] = NULL,
- [PLUGIN_TYPE_GENERAL] = NULL};
+ [PLUGIN_TYPE_GENERAL] = "general"};
 static const gchar * input_key_names[] = {
  [INPUT_KEY_SCHEME] = "scheme",
  [INPUT_KEY_EXTENSION] = "ext",
@@ -366,7 +366,7 @@ static void module_prune (ModuleData * module)
         g_list_foreach (module->plugin_list, (GFunc) plugin_prune, module);
 }
 
-static gint plugin_compare (PluginHandle * a, PluginHandle * b)
+gint plugin_compare (PluginHandle * a, PluginHandle * b)
 {
     if (a->type < b->type)
         return -1;
@@ -377,18 +377,18 @@ static gint plugin_compare (PluginHandle * a, PluginHandle * b)
     if (a->priority > b->priority)
         return 1;
 
-    if (a->name != NULL)
-    {
-        if (b->name != NULL)
-            return string_compare (a->name, b->name);
+    gint diff;
+    if ((diff = string_compare (a->name, b->name)))
+        return diff;
+    if ((diff = string_compare (a->module->path, b->module->path)))
+        return diff;
 
+    if (a->number < b->number)
         return -1;
-    }
-
-    if (b->name != NULL)
+    if (a->number > b->number)
         return 1;
 
-    return string_compare (a->module->path, b->module->path);
+    return 0;
 }
 
 void plugin_registry_prune (void)
@@ -503,12 +503,27 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
         plugin->has_about = (op->about != NULL);
         plugin->has_configure = (op->configure != NULL);
     }
+    else if (type == PLUGIN_TYPE_EFFECT)
+    {
+        EffectPlugin * ep = header;
+        plugin->name = g_strdup (ep->description);
+        plugin->priority = ep->order;
+        plugin->has_about = (ep->about != NULL);
+        plugin->has_configure = (ep->configure != NULL);
+    }
     else if (type == PLUGIN_TYPE_VIS)
     {
         VisPlugin * vp = header;
         plugin->name = g_strdup (vp->description);
         plugin->has_about = (vp->about != NULL);
         plugin->has_configure = (vp->configure != NULL);
+    }
+    else if (type == PLUGIN_TYPE_GENERAL)
+    {
+        GeneralPlugin * gp = header;
+        plugin->name = g_strdup (gp->description);
+        plugin->has_about = (gp->about != NULL);
+        plugin->has_configure = (gp->configure != NULL);
     }
 }
 

@@ -23,6 +23,12 @@
 
 /* CAUTION: These functions are not thread safe. */
 
+/* effect.c */
+AUD_FUNC2 (void, effect_plugin_enable, PluginHandle *, plugin, gboolean, enable)
+
+/* general.c */
+AUD_FUNC2 (void, general_plugin_enable, PluginHandle *, plugin, gboolean, enable)
+
 /* plugin-registry.c */
 AUD_FUNC4 (void, plugin_get_path, PluginHandle *, plugin, const gchar * *, path,
  gint *, type, gint *, number)
@@ -30,6 +36,7 @@ AUD_FUNC3 (PluginHandle *, plugin_by_path, const gchar *, path, gint, type,
  gint, number)
 AUD_FUNC1 (void *, plugin_get_header, PluginHandle *, plugin)
 AUD_FUNC1 (PluginHandle *, plugin_by_header, void *, header)
+AUD_FUNC2 (gint, plugin_compare, PluginHandle *, a, PluginHandle *, b)
 AUD_FUNC3 (void, plugin_for_each, gint, type, PluginForEachFunc, func, void *,
  data)
 AUD_FUNC1 (const gchar *, plugin_get_name, PluginHandle *, plugin)
@@ -39,3 +46,6 @@ AUD_FUNC1 (gboolean, plugin_get_enabled, PluginHandle *, plugin)
 AUD_FUNC2 (void, plugin_set_enabled, PluginHandle *, plugin, gboolean, enabled)
 AUD_FUNC3 (void, plugin_for_enabled, gint, type, PluginForEachFunc, func,
  void *, data)
+
+/* visualization.c */
+AUD_FUNC2 (void, vis_plugin_enable, PluginHandle *, plugin, gboolean, enable)

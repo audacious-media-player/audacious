@@ -1,38 +1,28 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2010  Audacious development team
+/*
+ * visualization.h
+ * Copyright 2010 John Lindgren
  *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team
+ * This file is part of Audacious.
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
- *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
+
 #ifndef AUDACIOUS_VISUALIZATION_H
 #define AUDACIOUS_VISUALIZATION_H
 
-#include <glib.h>
-
-#include "plugins.h"
-#include "types.h"
-
 void vis_init (void);
 void vis_cleanup (void);
-void vis_enable_plugin(PluginHandle *vp, gboolean enable);
-void vis_disable_plugin(VisPlugin *vp);
 
-#endif /* AUDACIOUS_VISUALIZATION_H */
+#endif

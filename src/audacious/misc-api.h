@@ -27,10 +27,6 @@
 AUD_FUNC3 (void, get_audacious_credits, const gchar * *, brief,
  const gchar * * *, credits, const gchar * * *, translators)
 
-/* effect.c */
-AUD_FUNC0 (GList *, get_effect_list)
-AUD_FUNC2 (void, enable_effect, EffectPlugin *, effect, gboolean, enable)
-
 /* equalizer_preset.c */
 AUD_FUNC1 (GList *, equalizer_read_presets, const gchar *, basename)
 AUD_FUNC2 (void, equalizer_write_preset_file, GList *, list, const gchar *,
@@ -39,9 +35,6 @@ AUD_FUNC1 (EqualizerPreset *, load_preset_file, const gchar *, filename)
 AUD_FUNC2 (void, save_preset_file, EqualizerPreset *, preset, const gchar *,
  filename)
 AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
-
-/* general.c */
-AUD_FUNC2 (void, enable_general, GeneralPlugin *, gp, gboolean, enable)
 
 /* playlist_container.c */
 AUD_FUNC1 (void, playlist_container_register, PlaylistContainer *, container)

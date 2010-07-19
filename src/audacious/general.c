@@ -1,124 +1,88 @@
-/*  BMP - Cross-platform multimedia player
- *  Copyright (C) 2003-2004  BMP development team.
+/*
+ * general.c
+ * Copyright 2010 John Lindgren
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team.
+ * This file is part of Audacious.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
 
 #include <glib.h>
-#include <string.h>
 
-#include "misc.h"
-#include "plugin.h"
-#include "pluginenum.h"
+#include "debug.h"
 #include "general.h"
+#include "plugin.h"
+#include "plugins.h"
 
-GeneralPluginData gp_data = {
-    NULL,
-    NULL
-};
+static GList * loaded_general_plugins = NULL;
 
-GList *
-get_general_list(void)
+static void general_load (PluginHandle * plugin)
 {
-    return gp_data.general_list;
-}
-
-GList *
-get_general_enabled_list(void)
-{
-    return gp_data.enabled_list;
-}
-
-void enable_general (GeneralPlugin * plugin, gboolean enable)
-{
-    g_return_if_fail(plugin != NULL);
-
-    if (enable && !plugin->enabled) {
-        gp_data.enabled_list = g_list_append(gp_data.enabled_list, plugin);
-        if (plugin->init)
-            plugin->init();
-    }
-    else if (!enable && plugin->enabled) {
-        gp_data.enabled_list = g_list_remove(gp_data.enabled_list, plugin);
-        if (plugin->cleanup)
-            plugin->cleanup();
-    }
-
-    plugin->enabled = enable;
-}
-
-gchar *
-general_stringify_enabled_list(void)
-{
-    GString *enable_str;
-    gchar *name;
-    GList *node = get_general_enabled_list();
-
-    if (!node)
-        return NULL;
-
-    name = g_path_get_basename(GENERAL_PLUGIN(node->data)->filename);
-    enable_str = g_string_new(name);
-    g_free(name);
-
-    for (node = g_list_next(node); node; node = g_list_next(node)) {
-        name = g_path_get_basename(GENERAL_PLUGIN(node->data)->filename);
-        g_string_append_c(enable_str, ',');
-        g_string_append(enable_str, name);
-        g_free(name);
-    }
-
-    return g_string_free(enable_str, FALSE);
-}
-
-void
-general_enable_from_stringified_list(const gchar * list_str)
-{
-    gchar **list, **str;
-    GeneralPlugin *plugin;
-
-    if (!list_str || !strcmp(list_str, ""))
+    GList * node = g_list_find (loaded_general_plugins, plugin);
+    if (node != NULL)
         return;
 
-    list = g_strsplit(list_str, ",", 0);
+    AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
+    GeneralPlugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header != NULL);
 
-    for (str = list; *str; str++) {
-        GList *node;
+    if (header->init != NULL)
+        header->init ();
 
-        for (node = get_general_list(); node; node = g_list_next(node)) {
-            gchar *base;
+    loaded_general_plugins = g_list_prepend (loaded_general_plugins, plugin);
+}
 
-            base = g_path_get_basename(GENERAL_PLUGIN(node->data)->filename);
+static void general_unload (PluginHandle * plugin)
+{
+    GList * node = g_list_find (loaded_general_plugins, plugin);
+    if (node == NULL)
+        return;
 
-            if (!strcmp(*str, base)) {
-                plugin = GENERAL_PLUGIN(node->data);
-                plugin->enabled = TRUE;
+    AUDDBG ("Unloading %s.\n", plugin_get_name (plugin));
+    GeneralPlugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header != NULL);
 
-                gp_data.enabled_list = g_list_append(gp_data.enabled_list,
-                                                      plugin);
-                if (plugin->init)
-                    plugin->init();
-            }
+    loaded_general_plugins = g_list_delete_link (loaded_general_plugins, node);
 
-            g_free(base);
-        }
-    }
+    if (header->cleanup != NULL)
+        header->cleanup ();
+}
 
-    g_strfreev(list);
+static gboolean general_init_cb (PluginHandle * plugin)
+{
+    general_load (plugin);
+    return TRUE;
+}
+
+void general_init (void)
+{
+    plugin_for_enabled (PLUGIN_TYPE_GENERAL, (PluginForEachFunc)
+     general_init_cb, NULL);
+}
+
+void general_cleanup (void)
+{
+    g_list_foreach (loaded_general_plugins, (GFunc) general_unload, NULL);
+}
+
+void general_plugin_enable (PluginHandle * plugin, gboolean enable)
+{
+    plugin_set_enabled (plugin, enable);
+
+    if (enable)
+        general_load (plugin);
+    else
+        general_unload (plugin);
 }

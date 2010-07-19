@@ -33,12 +33,10 @@
 #include "debug.h"
 #include "fft.h"
 #include "interface.h"
-#include "main.h"
 #include "misc.h"
 #include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
-#include "vis_runner.h"
 #include "visualization.h"
 
 typedef struct {
@@ -283,15 +281,20 @@ void vis_init (void)
     hook_associate ("playback stop", (HookFunction) vis_stop_all, NULL);
 }
 
+static void vis_cleanup_cb (LoadedVis * vis)
+{
+    vis_unload (vis->plugin);
+}
+
 void vis_cleanup (void)
 {
     hook_dissociate ("playback begin", (HookFunction) vis_start_all);
     hook_dissociate ("playback stop", (HookFunction) vis_stop_all);
 
-    g_list_foreach (loaded_vis_plugins, (GFunc) vis_unload, NULL);
+    g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
 }
 
-void vis_enable_plugin (PluginHandle * plugin, gboolean enable)
+void vis_plugin_enable (PluginHandle * plugin, gboolean enable)
 {
     plugin_set_enabled (plugin, enable);
 
@@ -299,9 +302,4 @@ void vis_enable_plugin (PluginHandle * plugin, gboolean enable)
         vis_load (plugin);
     else
         vis_unload (plugin);
-}
-
-void vis_disable_plugin (VisPlugin * header)
-{
-    vis_enable_plugin (plugin_by_header (header), FALSE);
 }

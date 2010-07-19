@@ -154,7 +154,6 @@ struct _OutputPlugin {
     void (*about) (void);
     void (*configure) (void);
 
-    gboolean enabled;
     gint probe_priority;
 
     void (*get_volume) (gint * l, gint * r);
@@ -179,14 +178,6 @@ struct _OutputPlugin {
 
 struct _EffectPlugin {
     PLUGIN_COMMON_FIELDS
-
-    gboolean enabled;
-
-    /* old API */
-    gint (*mod_samples) (gpointer * data, gint length, gint fmt, gint srate, gint nch);
-    void (*query_format) (gint * fmt, gint * rate, gint * nch);
-
-    /* new API */
 
     /* All processing is done in floating point.  If the effect plugin wants to
      * change the channel count or sample rate, it can change the parameters
@@ -215,6 +206,10 @@ struct _EffectPlugin {
 
     /* Effects with lowest order (0 to 9) are applied first. */
     gint order;
+
+    /* If the effect does not change the number of channels or the sampling
+     * rate, it can be enabled and disabled more smoothly. */
+    gboolean preserves_format;
 };
 
 struct OutputAPI
@@ -388,14 +383,11 @@ struct _InputPlugin {
 
 struct _GeneralPlugin {
     PLUGIN_COMMON_FIELDS
-
-    gboolean enabled;
 };
 
 struct _VisPlugin {
     PLUGIN_COMMON_FIELDS
 
-    gboolean enabled;
     gint num_pcm_chs_wanted;
     gint num_freq_chs_wanted;
 

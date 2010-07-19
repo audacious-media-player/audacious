@@ -12,7 +12,6 @@ SRCS = audconfig.c								\
        equalizer.c								\
        equalizer_preset.c						\
        fft.c									\
-       flow.c									\
        folder-add.c \
        general.c								\
        interface.c								\
