@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2010-07-19 16:42-0500\n"
-"PO-Revision-Date: 2010-06-27 17:28+0300\n"
+"PO-Revision-Date: 2010-07-20 02:24+0300\n"
 "Last-Translator: Eugene Paskevich <eugene@raptor.kiev.ua>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
@@ -24,8 +24,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "X-Generator: Lokalize 1.0\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Basepath: /home/asphyx/ahinea/audacious\n"
 
@@ -271,9 +271,8 @@ msgid "Display Jump to File dialog"
 msgstr "Показать диалог перехода к файлу"
 
 #: src/audacious/main.c:160
-#, fuzzy
 msgid "Add files to the playlist"
-msgstr "Добавляет файлы в список воспроизведения."
+msgstr "Добавить файлы в список воспроизведения."
 
 #: src/audacious/main.c:161
 msgid "Add new files to a temporary playlist"
@@ -526,9 +525,8 @@ msgid "Polish"
 msgstr "Польский"
 
 #: src/audacious/ui_preferences.c:162
-#, fuzzy
 msgid "Baltic"
-msgstr "Celtic"
+msgstr "Балтийские языки"
 
 #: src/audacious/ui_preferences.c:163
 msgid "Universal"
@@ -892,9 +890,8 @@ msgid "<b>Visualization</b>"
 msgstr "<b>Визуализация</b>"
 
 #: src/audacious/ui_preferences.c:2340
-#, fuzzy
 msgid "Effect plugins:"
-msgstr "Список модулей _эффектов:"
+msgstr "Список модулей эффектов:"
 
 #: src/audacious/ui_preferences.c:2369
 msgid "<b>Effects</b>"
@@ -1755,11 +1752,11 @@ msgstr "_Закрыть окно при выборе списка"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Open URL"
-msgstr ""
+msgstr "Открыть URL"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Add URL"
-msgstr ""
+msgstr "Добавить URL"
 
 #: src/libeggsmclient/eggdesktopfile.c:138
 msgid "File is not a valid .desktop file"
