@@ -1,6 +1,6 @@
 /*
  * ui_plugin_menu.c
- * Copyright 2009 John Lindgren
+ * Copyright 2009-2010 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -24,37 +24,9 @@
 
 #include "misc.h"
 
-/* A StaticMenu is simply a GtkMenu that is created with a (normal, not
- * floating) reference count of 1 and resists the "destroy" signal. Thus, it can
- * be added into an interface and remain after the interface is destroyed. */
-
-typedef struct
+static void destroy_warning (void)
 {
-    GtkMenuClass parent;
-}
-StaticMenuClass;
-
-typedef struct
-{
-    GtkMenu parent;
-}
-StaticMenu;
-
-G_DEFINE_TYPE (StaticMenu, static_menu, GTK_TYPE_MENU)
-
-static void static_menu_destroy (GtkObject * object)
-{
-    /* Do NOT chain to the parent class! */
-}
-
-static void static_menu_class_init (StaticMenuClass * class)
-{
-    ((GtkObjectClass *) class)->destroy = static_menu_destroy;
-}
-
-static void static_menu_init (StaticMenu * menu)
-{
-    g_object_ref (menu);
+    fprintf (stderr, "Interface destroyed a plugin services menu!\n");
 }
 
 /* GtkWidget * get_plugin_menu (gint id) */
@@ -65,17 +37,15 @@ void * get_plugin_menu (gint id)
 
     if (! initted)
     {
-        gint count;
-
-        for (count = 0; count < TOTAL_PLUGIN_MENUS; count ++)
-            menus[count] = NULL;
-
+        memset (menus, 0, sizeof menus);
         initted = TRUE;
     }
 
     if (menus[id] == NULL)
     {
-        menus[id] = g_object_new (static_menu_get_type (), NULL);
+        menus[id] = gtk_menu_new ();
+        g_signal_connect (menus[id], "destroy", (GCallback) destroy_warning,
+         NULL);
         gtk_widget_show (menus[id]);
     }
 
