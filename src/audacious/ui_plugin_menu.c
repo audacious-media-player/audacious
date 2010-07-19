@@ -44,6 +44,7 @@ void * get_plugin_menu (gint id)
     if (menus[id] == NULL)
     {
         menus[id] = gtk_menu_new ();
+        g_object_ref ((GObject *) menus[id]);
         g_signal_connect (menus[id], "destroy", (GCallback) destroy_warning,
          NULL);
         gtk_widget_show (menus[id]);
