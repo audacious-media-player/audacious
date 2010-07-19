@@ -10,6 +10,7 @@ src/audacious/main.c
 src/audacious/playback.c
 src/audacious/playlist-new.c
 src/audacious/pluginenum.c
+src/audacious/ui_headless.c
 src/audacious/ui_misc.c
 src/audacious/ui_preferences.c
 src/audacious/util.c

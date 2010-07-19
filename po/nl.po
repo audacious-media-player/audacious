@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-20 00:05+0300\n"
+"POT-Creation-Date: 2010-07-18 23:08+0300\n"
 "PO-Revision-Date: 2006-11-16 20:02+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
@@ -235,110 +235,121 @@ msgstr[1] ""
 msgid "Unable to create log file (%s)!\n"
 msgstr "Kon logbestand niet aanmaken (%s)!\n"
 
-#: src/audacious/main.c:69
+#: src/audacious/main.c:70
 msgid "Audacious"
 msgstr "Audacious"
 
 #  -r, --rew switch
-#: src/audacious/main.c:153
+#: src/audacious/main.c:155
 msgid "Skip backwards in playlist"
 msgstr "Ga terug in de speellijst"
 
 #  -p, --play switch
-#: src/audacious/main.c:154
+#: src/audacious/main.c:156
 msgid "Start playing current playlist"
 msgstr "Begin de huidige speellijst af te spelen"
 
 #  -u, --pause switch
-#: src/audacious/main.c:155
+#: src/audacious/main.c:157
 msgid "Pause current song"
 msgstr "Pauzeer huidig nummer"
 
 #  -s, --stop switch
-#: src/audacious/main.c:156
+#: src/audacious/main.c:158
 msgid "Stop current song"
 msgstr "Stop huidig nummer"
 
 #  -t, --play-pause switch
-#: src/audacious/main.c:157
+#: src/audacious/main.c:159
 msgid "Pause if playing, play otherwise"
 msgstr "Pauzeer tijdens spelen, anders afspelen"
 
 #  -f, --fwd switch
-#: src/audacious/main.c:158
+#: src/audacious/main.c:160
 msgid "Skip forward in playlist"
 msgstr "Ga vooruit in de speellijst"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:161
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Spring-naar-bestand dialoog weergeven"
 
 #  -e, --enqueue switch
-#: src/audacious/main.c:160
+#: src/audacious/main.c:162
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Speellijst niet wissen"
 
 #  -e, --enqueue switch
-#: src/audacious/main.c:161
+#: src/audacious/main.c:163
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Speellijst niet wissen"
 
 #  -m, --show-main-window switch
-#: src/audacious/main.c:162
+#: src/audacious/main.c:164
 #, fuzzy
 msgid "Display the main window"
 msgstr "Geef het hoofdvenster weer"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:165
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:166
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:167
 #, fuzzy
 msgid "Show version"
 msgstr "Sp/eler weergeven"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:168
+msgid "Interface to use (use -i list to view available interfaces)"
+msgstr ""
+
+#: src/audacious/main.c:170
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:172
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:186
+#: src/audacious/main.c:189
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:197
+#: src/audacious/main.c:200
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:434
+#: src/audacious/main.c:424
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:473
+#: src/audacious/main.c:463
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious: Kan het venster niet openen, het programma sluit nu af.\n"
 
-#: src/audacious/playback.c:476
+#: src/audacious/main.c:494
+#, fuzzy
+msgid ""
+"Available interfaces:\n"
+"\n"
+msgstr "Beschikbare _Opgeslagen instellingen:"
+
+#: src/audacious/playback.c:464
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:588
 msgid "Buffering ..."
 msgstr ""
 
@@ -347,8 +358,17 @@ msgstr ""
 msgid "Untitled Playlist"
 msgstr "Afspeellijst opslaan"
 
-#: src/audacious/pluginenum.c:371
+#: src/audacious/pluginenum.c:377
 msgid "Module loading not supported! Plugins will not be loaded.\n"
+msgstr ""
+
+#: src/audacious/ui_headless.c:134
+#, fuzzy, c-format
+msgid "Available Plugin Preferences:\n"
+msgstr "Beschikbare _Opgeslagen instellingen:"
+
+#: src/audacious/ui_headless.c:152
+msgid "Headless Interface"
 msgstr ""
 
 #: src/audacious/ui_misc.c:50
@@ -607,7 +627,7 @@ msgstr "Titel"
 msgid "Album gain/peak"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1289
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1301
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Diversen</b>"
@@ -718,20 +738,20 @@ msgstr "Actief"
 msgid "Description"
 msgstr "Beschrijving"
 
-#: src/audacious/ui_preferences.c:901
+#: src/audacious/ui_preferences.c:913
 msgid "Category"
 msgstr "Categorie"
 
-#: src/audacious/ui_preferences.c:1208
+#: src/audacious/ui_preferences.c:1220
 msgid "Popup Information Settings"
 msgstr "Instellingen van popup-informatie"
 
-#: src/audacious/ui_preferences.c:1217
+#: src/audacious/ui_preferences.c:1229
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Formaat-detectie</b>"
 
-#: src/audacious/ui_preferences.c:1222
+#: src/audacious/ui_preferences.c:1234
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -741,92 +761,92 @@ msgstr ""
 "bestandsnaam gekeken. Deze woorden kunnen hier worden opgegeven, gescheiden "
 "door komma's."
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1251
 msgid "Exclude:"
 msgstr "Uitsluiten:"
 
-#: src/audacious/ui_preferences.c:1246
+#: src/audacious/ui_preferences.c:1258
 msgid "Include:"
 msgstr "Zoeken naar:"
 
-#: src/audacious/ui_preferences.c:1263
+#: src/audacious/ui_preferences.c:1275
 msgid "Recursively search for cover"
 msgstr "Recursief zoeken naar covers"
 
-#: src/audacious/ui_preferences.c:1273
+#: src/audacious/ui_preferences.c:1285
 msgid "Search depth: "
 msgstr "Zoekdiepte: "
 
-#: src/audacious/ui_preferences.c:1286
+#: src/audacious/ui_preferences.c:1298
 msgid "Use per-file cover"
 msgstr "Cover per bestand"
 
-#: src/audacious/ui_preferences.c:1298
+#: src/audacious/ui_preferences.c:1310
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1308
+#: src/audacious/ui_preferences.c:1320
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1853
+#: src/audacious/ui_preferences.c:1865
 msgid "<b>Song Display</b>"
 msgstr "<b>Nummer weergave</b>"
 
-#: src/audacious/ui_preferences.c:1862
+#: src/audacious/ui_preferences.c:1874
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1883
+#: src/audacious/ui_preferences.c:1895
 msgid "Show information about titlestring format"
 msgstr "Geef informatie over het titelformaat"
 
-#: src/audacious/ui_preferences.c:1894
+#: src/audacious/ui_preferences.c:1906
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1907
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1896
+#: src/audacious/ui_preferences.c:1908
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1897
+#: src/audacious/ui_preferences.c:1909
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1898
+#: src/audacious/ui_preferences.c:1910
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1899
+#: src/audacious/ui_preferences.c:1911
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1900
+#: src/audacious/ui_preferences.c:1912
 #, fuzzy
 msgid "Custom"
 msgstr "Handmatige instelling:"
 
-#: src/audacious/ui_preferences.c:1907
+#: src/audacious/ui_preferences.c:1919
 msgid "Custom string:"
 msgstr "Handmatige instelling:"
 
-#: src/audacious/ui_preferences.c:1914
+#: src/audacious/ui_preferences.c:1926
 msgid "Title format:"
 msgstr "Titelformaat:"
 
-#: src/audacious/ui_preferences.c:1925
+#: src/audacious/ui_preferences.c:1937
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup-informatie</b>"
 
-#: src/audacious/ui_preferences.c:1940
+#: src/audacious/ui_preferences.c:1952
 msgid "Show popup information for playlist entries"
 msgstr "Popup-informatie tonen voor items in afspeellijst"
 
-#: src/audacious/ui_preferences.c:1942
+#: src/audacious/ui_preferences.c:1954
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -837,64 +857,63 @@ msgstr ""
 "het album, het genre, het jaar van publicatie, tracknummer en eventuele "
 "cover art."
 
-#: src/audacious/ui_preferences.c:1947
+#: src/audacious/ui_preferences.c:1959
 msgid "Edit settings for popup information"
 msgstr "Instellingen aanpassen voor popup-informatie"
 
-#: src/audacious/ui_preferences.c:2027
+#: src/audacious/ui_preferences.c:2039
 msgid "<b>Audio System</b>"
 msgstr "<b>Geluidssysteem</b>"
 
-#: src/audacious/ui_preferences.c:2044
+#: src/audacious/ui_preferences.c:2056
 msgid "Buffer size:"
 msgstr "Bufferomvang:"
 
-#: src/audacious/ui_preferences.c:2062
+#: src/audacious/ui_preferences.c:2074
 msgid "Current output plugin:"
 msgstr "Huidige uitvoer-plugin:"
 
-#: src/audacious/ui_preferences.c:2091
+#: src/audacious/ui_preferences.c:2103
 msgid "Output Plugin Preferences"
 msgstr "Instellingen uitvoer-plugin"
 
-#: src/audacious/ui_preferences.c:2108
+#: src/audacious/ui_preferences.c:2120
 msgid "Output Plugin Information"
 msgstr "Informatie over uitvoer-plugin"
 
-#: src/audacious/ui_preferences.c:2213
+#: src/audacious/ui_preferences.c:2225
 msgid "_Decoder list:"
 msgstr "_Decoder-lijst:"
 
-#: src/audacious/ui_preferences.c:2243
+#: src/audacious/ui_preferences.c:2255
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Decoders</b></span>"
 
-#: src/audacious/ui_preferences.c:2256
+#: src/audacious/ui_preferences.c:2268
 msgid "_General plugin list:"
 msgstr "_Algemene plugin-lijst:"
 
-#: src/audacious/ui_preferences.c:2286
+#: src/audacious/ui_preferences.c:2298
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Algemeen</b></span>"
 
-#: src/audacious/ui_preferences.c:2298
+#: src/audacious/ui_preferences.c:2310
 msgid "_Visualization plugin list:"
 msgstr "_Visualisatie plugin-lijst:"
 
-#: src/audacious/ui_preferences.c:2328
+#: src/audacious/ui_preferences.c:2340
 msgid "<b>Visualization</b>"
 msgstr "<b>Visualisatie</b>"
 
-#: src/audacious/ui_preferences.c:2340
-#, fuzzy
-msgid "Effect plugins:"
-msgstr "_Effect plugin-lijst:"
+#: src/audacious/ui_preferences.c:2352
+msgid "Effect plugins (for 16-bit output only):"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:2369
+#: src/audacious/ui_preferences.c:2381
 msgid "<b>Effects</b>"
 msgstr "<b>Effecten</b>"
 
-#: src/audacious/ui_preferences.c:2564
+#: src/audacious/ui_preferences.c:2576
 msgid "Audacious Preferences"
 msgstr "Audacious voorkeuren"
 
@@ -927,7 +946,7 @@ msgstr ""
 msgid "_Don't show this message again"
 msgstr "Deze waarschuwing niet meer weergeven"
 
-#: src/libaudgui/effects-menu.c:61
+#: src/libaudgui/effects-menu.c:52
 msgid "settings ..."
 msgstr ""
 
@@ -1857,16 +1876,6 @@ msgstr ""
 msgid "Show Session Management options"
 msgstr "Toon vensterdecoraties"
 
-#, fuzzy
-#~ msgid ""
-#~ "Available interfaces:\n"
-#~ "\n"
-#~ msgstr "Beschikbare _Opgeslagen instellingen:"
-
-#, fuzzy
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "Beschikbare _Opgeslagen instellingen:"
-
 #  -e, --enqueue switch
 #~ msgid "Don't clear the playlist"
 #~ msgstr "Speellijst niet wissen"
@@ -1937,6 +1946,9 @@ msgstr "Toon vensterdecoraties"
 
 #~ msgid "Load metadata (tag information) from music files."
 #~ msgstr "Metadata (tag-informatie) van muziekbestanden laden"
+
+#~ msgid "_Effect plugin list:"
+#~ msgstr "_Effect plugin-lijst:"
 
 #~ msgid "Jump to Time"
 #~ msgstr "Ga naar tijd"
