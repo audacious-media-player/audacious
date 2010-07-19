@@ -27,7 +27,6 @@ SRCS = audconfig.c								\
        probe.c \
        probe-buffer.c \
        signals.c								\
-       ui_headless.c							\
        ui_plugin_menu.c \
        ui_preferences.c							\
        util.c									\

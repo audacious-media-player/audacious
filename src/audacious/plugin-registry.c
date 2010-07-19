@@ -27,6 +27,7 @@
 #include <libaudcore/audstrings.h>
 
 #include "debug.h"
+#include "interface.h"
 #include "main.h"
 #include "misc.h"
 #include "plugin.h"
@@ -69,7 +70,7 @@ static const gchar * plugin_type_names[] = {
  [PLUGIN_TYPE_OUTPUT] = "output",
  [PLUGIN_TYPE_EFFECT] = "effect",
  [PLUGIN_TYPE_VIS] = "vis",
- [PLUGIN_TYPE_IFACE] = NULL,
+ [PLUGIN_TYPE_IFACE] = "iface",
  [PLUGIN_TYPE_GENERAL] = "general"};
 static const gchar * input_key_names[] = {
  [INPUT_KEY_SCHEME] = "scheme",
@@ -116,6 +117,8 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
         plugin->enabled = TRUE;
         memset (plugin->u.i.keys, 0, sizeof plugin->u.i.keys);
     }
+    else if (type == PLUGIN_TYPE_IFACE)
+        plugin->enabled = TRUE;
 
     plugin_list = g_list_prepend (plugin_list, plugin);
     module->plugin_list = g_list_prepend (module->plugin_list, plugin);
@@ -517,6 +520,11 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
         plugin->name = g_strdup (vp->description);
         plugin->has_about = (vp->about != NULL);
         plugin->has_configure = (vp->configure != NULL);
+    }
+    else if (type == PLUGIN_TYPE_IFACE)
+    {
+        Interface * i = header;
+        plugin->name = g_strdup (i->desc);
     }
     else if (type == PLUGIN_TYPE_GENERAL)
     {

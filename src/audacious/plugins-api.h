@@ -29,6 +29,10 @@ AUD_FUNC2 (void, effect_plugin_enable, PluginHandle *, plugin, gboolean, enable)
 /* general.c */
 AUD_FUNC2 (void, general_plugin_enable, PluginHandle *, plugin, gboolean, enable)
 
+/* main.c */
+AUD_FUNC0 (PluginHandle *, iface_plugin_get_active)
+AUD_FUNC1 (void, iface_plugin_set_active, PluginHandle *, plugin)
+
 /* plugin-registry.c */
 AUD_FUNC4 (void, plugin_get_path, PluginHandle *, plugin, const gchar * *, path,
  gint *, type, gint *, number)

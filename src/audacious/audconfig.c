@@ -92,6 +92,8 @@ AudConfig aud_default_config = {
     .clear_playlist = TRUE,
     .output_path = NULL,
     .output_number = -1,
+    .iface_path = NULL,
+    .iface_number = -1,
 
     /* libaudgui stuff */
     .no_confirm_playlist_delete = FALSE,
@@ -164,6 +166,7 @@ static aud_cfg_nument aud_numents[] = {
     {"sw_volume_left", & cfg.sw_volume_left, TRUE},
     {"sw_volume_right", & cfg.sw_volume_right, TRUE},
     {"output_number", & cfg.output_number, TRUE},
+    {"iface_number", & cfg.iface_number, TRUE},
     {"playlist_manager_x", & cfg.playlist_manager_x, TRUE},
     {"playlist_manager_y", & cfg.playlist_manager_y, TRUE},
     {"playlist_manager_width", & cfg.playlist_manager_width, TRUE},
@@ -183,6 +186,7 @@ static aud_cfg_strent aud_strents[] = {
     {"cover_name_include", &cfg.cover_name_include, TRUE},
     {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
     {"output_path", & cfg.output_path, TRUE},
+    {"iface_path", & cfg.iface_path, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);

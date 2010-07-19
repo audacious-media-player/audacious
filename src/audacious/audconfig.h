@@ -79,6 +79,8 @@ struct _AudConfig {
     gboolean clear_playlist;
     gchar * output_path;
     gint output_number;
+    gchar * iface_path;
+    gint iface_number;
 
     /* libaudgui stuff */
     gboolean no_confirm_playlist_delete;

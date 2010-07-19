@@ -24,7 +24,11 @@
 
 #include <gtk/gtk.h>
 
+/* effects-menu.c */
 GtkWidget * audgui_create_effects_menu (void);
+
+/* iface-menu.c */
+GtkWidget * audgui_create_iface_menu (void);
 
 void audgui_playlist_manager_update(void);
 void audgui_playlist_manager_ui_show(GtkWidget *mainwin);

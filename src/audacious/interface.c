@@ -24,14 +24,13 @@
 
 #include <libaudcore/hook.h>
 
+#include "audconfig.h"
 #include "config.h"
+#include "debug.h"
 #include "i18n.h"
 #include "interface.h"
-#include "playback.h"
 #include "ui_preferences.h"
 
-/* interface abstraction layer */
-static mowgli_dictionary_t *interface_dict_ = NULL;
 static Interface *current_interface = NULL;
 
 static InterfaceOps interface_ops = {
@@ -44,59 +43,62 @@ static InterfaceOps interface_ops = {
 
 static InterfaceCbs interface_cbs = { NULL };
 
-void
-interface_register(Interface *i)
+static gboolean interface_search_cb (PluginHandle * plugin, PluginHandle * *
+ pluginp)
 {
-    if (interface_dict_ == NULL)
-        interface_dict_ = mowgli_dictionary_create(g_ascii_strcasecmp);
-
-    mowgli_dictionary_add(interface_dict_, i->id, i);
+    * pluginp = plugin;
+    return FALSE;
 }
 
-void
-interface_deregister(Interface *i)
+PluginHandle * interface_get_default (void)
 {
-    g_return_if_fail(interface_dict_ != NULL);
+    PluginHandle * plugin;
 
-    mowgli_dictionary_delete(interface_dict_, i->id);
+    if (cfg.iface_path == NULL || (plugin = plugin_by_path (cfg.iface_path,
+     PLUGIN_TYPE_IFACE, cfg.iface_number)) == NULL || ! plugin_get_enabled
+     (plugin))
+    {
+        AUDDBG ("Searching for an interface.\n");
+        plugin_for_enabled (PLUGIN_TYPE_IFACE, (PluginForEachFunc)
+         interface_search_cb, & plugin);
+        if (plugin == NULL)
+            return NULL;
+
+        interface_set_default (plugin);
+    }
+
+    return plugin;
 }
 
-gboolean interface_init (Interface * i)
+void interface_set_default (PluginHandle * plugin)
 {
+    const gchar * path;
+    gint type;
+
+    g_free (cfg.iface_path);
+    plugin_get_path (plugin, & path, & type, & cfg.iface_number);
+    cfg.iface_path = g_strdup (path);
+}
+
+gboolean interface_load (PluginHandle * plugin)
+{
+    Interface * i = plugin_get_header (plugin);
+    g_return_val_if_fail (i != NULL, FALSE);
+
     current_interface = i;
     i->ops = & interface_ops;
     return i->init (& interface_cbs);
 }
 
-void
-interface_destroy(Interface *i)
+void interface_unload (void)
 {
-    if (i->fini != NULL)
-        i->fini();
-}
+    g_return_if_fail (current_interface != NULL);
 
-Interface *
-interface_get(gchar *id)
-{
-    if (interface_dict_ == NULL)
-        return NULL;
+    if (current_interface->fini != NULL)
+        current_interface->fini ();
 
-    return mowgli_dictionary_retrieve(interface_dict_, id);
-}
-
-void
-interface_foreach(int (*foreach_cb)(mowgli_dictionary_elem_t *delem, void *privdata), void *privdata)
-{
-    if (interface_dict_ == NULL)
-        return;
-
-    mowgli_dictionary_foreach(interface_dict_, foreach_cb, privdata);
-}
-
-const Interface *
-interface_get_current(void)
-{
-    return current_interface;
+    current_interface = NULL;
+    memset (& interface_cbs, 0, sizeof interface_cbs);
 }
 
 void

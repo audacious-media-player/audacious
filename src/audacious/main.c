@@ -62,7 +62,6 @@
 #include "util.h"
 #include "visualization.h"
 
-#include "ui_headless.h"
 #include "ui_misc.h"
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
@@ -79,7 +78,6 @@ struct _AudCmdLineOpt
     gboolean enqueue_to_temp;
     gboolean version;
     gchar *previous_session_id;
-    gchar *interface;
     gboolean macpack;
 };
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
@@ -165,7 +163,6 @@ static GOptionEntry cmd_entries[] = {
     {"activate", 'a', 0, G_OPTION_ARG_NONE, &options.activate, N_("Display all open Audacious windows"), NULL},
     {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
-    {"interface", 'i', 0, G_OPTION_ARG_STRING, &options.interface, N_("Interface to use (use -i list to view available interfaces)"), NULL},
 #ifdef GDK_WINDOWING_QUARTZ
     {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL},   /* Make this hidden */
 #endif
@@ -304,15 +301,6 @@ static void handle_cmd_line_options_first(void)
         exit(EXIT_SUCCESS);
     }
 #endif
-
-    if (options.interface == NULL)
-    {
-        mcs_handle_t *db = cfg_db_open();
-        cfg_db_get_string(db, NULL, "interface", &options.interface);
-        if (options.interface == NULL)
-            options.interface = g_strdup("gtkui");
-        cfg_db_close(db);
-    }
 }
 
 static void handle_cmd_line_options(void)
@@ -351,7 +339,7 @@ void aud_quit (void)
     gtk_main_quit ();
 }
 
-static void shut_down (Interface * i)
+static void shut_down (void)
 {
     g_message("Saving configuration");
     aud_config_save();
@@ -361,7 +349,7 @@ static void shut_down (Interface * i)
         playback_stop ();
 
     g_message("Shutting down user interface subsystem");
-    interface_destroy(i);
+    interface_unload ();
 
     output_cleanup ();
 
@@ -372,13 +360,6 @@ static void shut_down (Interface * i)
 
     g_message("Playlist cleanup");
     playlist_end();
-}
-
-static int print_interface_info(mowgli_dictionary_elem_t * delem, void *privdata)
-{
-    Interface *i = (Interface *) delem->data;
-    g_print("  %-15s - %s\n", i->id, i->desc);
-    return 0;
 }
 
 #ifdef USE_DBUS
@@ -412,6 +393,35 @@ static gboolean autosave_cb (void * unused)
     cfg_db_flush ();
     save_playlists ();
     return TRUE;
+}
+
+static PluginHandle * current_iface = NULL;
+
+PluginHandle * iface_plugin_get_active (void)
+{
+    return current_iface;
+}
+
+void iface_plugin_set_active (PluginHandle * plugin)
+{
+    g_message ("Unloading visualizers.");
+    vis_cleanup ();
+
+    g_message ("Unloading %s.", plugin_get_name (current_iface));
+    interface_unload ();
+
+    g_message ("Starting %s.\n", plugin_get_name (plugin));
+    if (! interface_load (plugin))
+    {
+        fprintf (stderr, "%s failed to start.\n", plugin_get_name (plugin));
+        exit (EXIT_FAILURE);
+    }
+
+    current_iface = plugin;
+    interface_set_default (plugin);
+
+    g_message ("Loading visualizers.");
+    vis_init ();
 }
 
 gint main(gint argc, gchar ** argv)
@@ -485,19 +495,6 @@ gint main(gint argc, gchar ** argv)
     g_message("Initializing plugin subsystems...");
     plugin_system_init();
 
-    g_message("Populating included interfaces");
-    ui_populate_headless_interface();
-
-    /* Check if user wants to list available interfaces */
-    if (!g_ascii_strcasecmp(options.interface, "list"))
-    {
-        g_print(_("Available interfaces:\n\n"));
-        interface_foreach(print_interface_info, NULL);
-        g_print("\n");
-        plugin_system_cleanup();
-        exit(EXIT_SUCCESS);
-    }
-
     playlist_init ();
     load_playlists ();
     eq_init ();
@@ -515,19 +512,16 @@ gint main(gint argc, gchar ** argv)
 
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, autosave_cb, NULL);
 
-    g_message("Selecting interface %s", options.interface);
-    Interface * i = interface_get (options.interface);
-    if (i == NULL)
+    if ((current_iface = interface_get_default ()) == NULL)
     {
-        fprintf (stderr, "Cannot find interface %s.\n", options.interface);
+        fprintf (stderr, "No interface plugin found.\n");
         return EXIT_FAILURE;
     }
 
-    g_message ("Initializing interface %s.", options.interface);
-    if (! interface_init (i))
+    g_message ("Starting %s.", plugin_get_name (current_iface));
+    if (! interface_load (current_iface))
     {
-        fprintf (stderr, "Interface %s failed to initialize.\n",
-         options.interface);
+        fprintf (stderr, "%s failed to start.\n", plugin_get_name (current_iface));
         return EXIT_FAILURE;
     }
 
@@ -541,6 +535,6 @@ gint main(gint argc, gchar ** argv)
     vis_cleanup ();
 
     g_message ("Shutting down.");
-    shut_down (i);
+    shut_down ();
     return EXIT_SUCCESS;
 }

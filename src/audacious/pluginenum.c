@@ -207,10 +207,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     }
 
     if (header->interface)
-    {
         plugin_register (filename, PLUGIN_TYPE_IFACE, 0, header->interface);
-        interface_register(header->interface);
-    }
 }
 
 void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
@@ -258,9 +255,6 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
         for (gint i = 0; header->gp_list[i] != NULL; i ++)
             g_free (header->gp_list[i]->filename);
     }
-
-    if (header->interface)
-        interface_deregister(header->interface);
 
     module = header->priv_assoc->handle;
 
@@ -422,9 +416,6 @@ void plugin_system_cleanup(void)
     mowgli_node_t *hlist_node;
 
     g_message("Shutting down plugin system");
-
-    if (playback_get_playing ())
-        playback_stop ();
 
     if (current_output_plugin != NULL)
     {
