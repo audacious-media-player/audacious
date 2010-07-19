@@ -464,46 +464,42 @@ void string_cut_extension(gchar *string)
         *period = 0;
 }
 
-/* Like strcmp, but orders numbers correctly: "2" before "10" */
+/* Like strcasecmp, but orders numbers correctly (2 before 10). */
+/* Also handles NULL gracefully. */
 
 gint string_compare (const gchar * a, const gchar * b)
 {
+    if (a == NULL)
+        return (b == NULL) ? 0 : -1;
+    else if (b == NULL)
+        return 1;
+
     while (* a || * b)
     {
-        if (* a >= '0' && * a <= '9' && * b >= '0' && * b <= '9')
+        if (isdigit (* a) && isdigit (* b))
         {
-            gint x = 0, y = 0;
+            gint x = (* a ++) - '0';
+            gint y = (* b ++) - '0';
 
-            while (* a >= '0' && * a <= '9')
-            {
-                x = x * 10 + * a - '0';
-                a ++;
-            }
-
-            while (* b >= '0' && * b <= '9')
-            {
-                y = y * 10 + * b - '0';
-                b ++;
-            }
+            while (isdigit (* a))
+                x = 10 * x + ((* a ++) - '0');
+            while (isdigit (* b));
+                y = 10 * y + ((* b ++) - '0');
 
             if (x > y)
                 return 1;
-
             if (x < y)
                 return -1;
         }
         else
         {
-            gchar la = tolower (* a), lb = tolower (* b);
+            gchar la = tolower (* a ++);
+            gchar lb = tolower (* b ++);
 
             if (la > lb)
                 return 1;
-
             if (la < lb)
                 return -1;
-
-            a ++;
-            b ++;
         }
     }
 
