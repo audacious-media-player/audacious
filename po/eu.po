@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious_2.0_eu\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-18 23:08+0300\n"
+"POT-Creation-Date: 2010-07-20 00:05+0300\n"
 "PO-Revision-Date: 2009-04-02 22:22+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -233,80 +233,76 @@ msgstr[1] ""
 msgid "Unable to create log file (%s)!\n"
 msgstr "Ezin da egunkari-fitxategia sortu (%s).\n"
 
-#: src/audacious/main.c:70
+#: src/audacious/main.c:69
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:153
 msgid "Skip backwards in playlist"
 msgstr "Erreprodukzio-zerrendan atzerantz egiten du"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:154
 msgid "Start playing current playlist"
 msgstr "Uneko zerrenda erreproduzitzen hasten da"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:155
 msgid "Pause current song"
 msgstr "Uneko kanta pausarazten du"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:156
 msgid "Stop current song"
 msgstr "Uneko kanta geldiarazten du"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:157
 msgid "Pause if playing, play otherwise"
 msgstr "Erreproduzitzen ari bada pausarazi, bestela erreproduzitu"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:158
 msgid "Skip forward in playlist"
 msgstr "Erreprodukzio-zerrendan aurrerantz egiten du"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:159
 msgid "Display Jump to File dialog"
 msgstr "Bistaratu 'Saltatu fitxategira' elkarrizketa-koadroa"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:160
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Fitxategiak gehitzen dizkio zerrendari."
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:161
 msgid "Add new files to a temporary playlist"
 msgstr "Gehitu fitxategi berriak aldi baterako erreprodukzio-zerrendari"
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:162
 msgid "Display the main window"
 msgstr "Bistaratu nagusia leihoa"
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:163
 msgid "Display all open Audacious windows"
 msgstr "Bistaratu Audacious-en irekitako leiho guztiak"
 
-#: src/audacious/main.c:166
+#: src/audacious/main.c:164
 msgid "Print all errors and warnings to stdout"
 msgstr "Erakutsi errore eta abisu guztiak irteera estandarrean"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:165
 msgid "Show version"
 msgstr "Erakutsi bertsioa"
 
-#: src/audacious/main.c:168
-msgid "Interface to use (use -i list to view available interfaces)"
-msgstr ""
-
-#: src/audacious/main.c:170
+#: src/audacious/main.c:167
 msgid "Used in macpacking"
 msgstr "'Macpac'-en erabilita"
 
-#: src/audacious/main.c:172
+#: src/audacious/main.c:169
 msgid "FILE..."
 msgstr "FITXATEGIA..."
 
-#: src/audacious/main.c:189
+#: src/audacious/main.c:186
 msgid "- play multimedia files"
 msgstr "- erreproduzitu multimedia fitxategiak"
 
-#: src/audacious/main.c:200
+#: src/audacious/main.c:197
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -315,27 +311,21 @@ msgstr ""
 "%s: %s\n"
 "Exekutatu '%s --help' informazio gehiagorako.\n"
 
-#: src/audacious/main.c:424
+#: src/audacious/main.c:434
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr "Plataforma honetan hariak ez daude onartuta.\n"
 
-#: src/audacious/main.c:463
+#: src/audacious/main.c:473
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: ezin da pantaila ireki. Irtetzen.\n"
 
-#: src/audacious/main.c:494
-msgid ""
-"Available interfaces:\n"
-"\n"
-msgstr ""
-
-#: src/audacious/playback.c:464
+#: src/audacious/playback.c:476
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:588
+#: src/audacious/playback.c:600
 msgid "Buffering ..."
 msgstr ""
 
@@ -344,19 +334,10 @@ msgstr ""
 msgid "Untitled Playlist"
 msgstr "Erreprodukzio-zerrenda berria"
 
-#: src/audacious/pluginenum.c:377
+#: src/audacious/pluginenum.c:371
 msgid "Module loading not supported! Plugins will not be loaded.\n"
 msgstr ""
 "Modulua kargatzea ez dago onartuta. Pluginak ezin izango dira kargatu.\n"
-
-#: src/audacious/ui_headless.c:134
-#, fuzzy, c-format
-msgid "Available Plugin Preferences:\n"
-msgstr "Irteerako pluginaren hobespenak"
-
-#: src/audacious/ui_headless.c:152
-msgid "Headless Interface"
-msgstr ""
 
 #: src/audacious/ui_misc.c:50
 #, fuzzy
@@ -610,7 +591,7 @@ msgstr "Pistaren irabazpena/tontorra"
 msgid "Album gain/peak"
 msgstr "Albumaren irabazpena/tontorra"
 
-#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1301
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1289
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Hainbat</b>"
 
@@ -720,19 +701,19 @@ msgstr "Gaituta"
 msgid "Description"
 msgstr "Azalpena"
 
-#: src/audacious/ui_preferences.c:913
+#: src/audacious/ui_preferences.c:901
 msgid "Category"
 msgstr "Kategoria"
 
-#: src/audacious/ui_preferences.c:1220
+#: src/audacious/ui_preferences.c:1208
 msgid "Popup Information Settings"
 msgstr "Laster-leihoen ezarpenak"
 
-#: src/audacious/ui_preferences.c:1229
+#: src/audacious/ui_preferences.c:1217
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Eskuratu azaleko irudia</b>"
 
-#: src/audacious/ui_preferences.c:1234
+#: src/audacious/ui_preferences.c:1222
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -742,92 +723,92 @@ msgstr ""
 "fitxategi-izenean. Hitz horiek azpiko zerrendan zehatz ditzakezu, komaz "
 "bereiztuta."
 
-#: src/audacious/ui_preferences.c:1251
+#: src/audacious/ui_preferences.c:1239
 msgid "Exclude:"
 msgstr "Baztertu:"
 
-#: src/audacious/ui_preferences.c:1258
+#: src/audacious/ui_preferences.c:1246
 msgid "Include:"
 msgstr "Sartu:"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1263
 msgid "Recursively search for cover"
 msgstr "Bilatu azala errekurtsiboki"
 
-#: src/audacious/ui_preferences.c:1285
+#: src/audacious/ui_preferences.c:1273
 msgid "Search depth: "
 msgstr "Sakonera:"
 
-#: src/audacious/ui_preferences.c:1298
+#: src/audacious/ui_preferences.c:1286
 msgid "Use per-file cover"
 msgstr "Erabili azala fitxategiko"
 
-#: src/audacious/ui_preferences.c:1310
+#: src/audacious/ui_preferences.c:1298
 msgid "Show Progress bar for the current track"
 msgstr "Erakutsi uneko kantaren progresio-barra"
 
-#: src/audacious/ui_preferences.c:1320
+#: src/audacious/ui_preferences.c:1308
 msgid "Delay until filepopup comes up: "
 msgstr "Atzerapena laster-leihoa agertzeko: "
 
-#: src/audacious/ui_preferences.c:1865
+#: src/audacious/ui_preferences.c:1853
 msgid "<b>Song Display</b>"
 msgstr "<b>Kanten ikuspegia</b>"
 
-#: src/audacious/ui_preferences.c:1874
+#: src/audacious/ui_preferences.c:1862
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1883
 msgid "Show information about titlestring format"
 msgstr "Erakutsi titulu-formatuari buruzko informazioa"
 
-#: src/audacious/ui_preferences.c:1906
+#: src/audacious/ui_preferences.c:1894
 msgid "TITLE"
 msgstr "TITULUA"
 
-#: src/audacious/ui_preferences.c:1907
+#: src/audacious/ui_preferences.c:1895
 msgid "ARTIST - TITLE"
 msgstr "ARTISTA - TITULUA"
 
-#: src/audacious/ui_preferences.c:1908
+#: src/audacious/ui_preferences.c:1896
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTA - ALBUMA - TITULUA"
 
-#: src/audacious/ui_preferences.c:1909
+#: src/audacious/ui_preferences.c:1897
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTA - ALBUMA - PISTA. TITULUA"
 
-#: src/audacious/ui_preferences.c:1910
+#: src/audacious/ui_preferences.c:1898
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTA - [ALBUMA] - PISTA. TITULUA"
 
-#: src/audacious/ui_preferences.c:1911
+#: src/audacious/ui_preferences.c:1899
 msgid "ALBUM - TITLE"
 msgstr "ALBUMA - TITULUA"
 
-#: src/audacious/ui_preferences.c:1912
+#: src/audacious/ui_preferences.c:1900
 msgid "Custom"
 msgstr "Pertsonalizatua"
 
-#: src/audacious/ui_preferences.c:1919
+#: src/audacious/ui_preferences.c:1907
 msgid "Custom string:"
 msgstr "Kate pertsonalizatua:"
 
-#: src/audacious/ui_preferences.c:1926
+#: src/audacious/ui_preferences.c:1914
 msgid "Title format:"
 msgstr "Tituluaren formatua:"
 
-#: src/audacious/ui_preferences.c:1937
+#: src/audacious/ui_preferences.c:1925
 msgid "<b>Popup Information</b>"
 msgstr "<b>Laster-leihoa</b>"
 
-#: src/audacious/ui_preferences.c:1952
+#: src/audacious/ui_preferences.c:1940
 msgid "Show popup information for playlist entries"
 msgstr ""
 "Erakutsi erreprodukzio-zerrendako sarreren informazioaren laster-leihoa"
 
-#: src/audacious/ui_preferences.c:1954
+#: src/audacious/ui_preferences.c:1942
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -838,63 +819,64 @@ msgstr ""
 "titulua, albumaren izena, generoa, argitalpen urtea, pista-zenbakia, "
 "pistaren iraupena eta irudiak erakutsiko ditu."
 
-#: src/audacious/ui_preferences.c:1959
+#: src/audacious/ui_preferences.c:1947
 msgid "Edit settings for popup information"
 msgstr "Editatu laster-leihoaren ezarpenak"
 
-#: src/audacious/ui_preferences.c:2039
+#: src/audacious/ui_preferences.c:2027
 msgid "<b>Audio System</b>"
 msgstr "<b>Audio-sistema</b>"
 
-#: src/audacious/ui_preferences.c:2056
+#: src/audacious/ui_preferences.c:2044
 msgid "Buffer size:"
 msgstr "Bufferraren tamaina:"
 
-#: src/audacious/ui_preferences.c:2074
+#: src/audacious/ui_preferences.c:2062
 msgid "Current output plugin:"
 msgstr "Uneko irteerako plugina:"
 
-#: src/audacious/ui_preferences.c:2103
+#: src/audacious/ui_preferences.c:2091
 msgid "Output Plugin Preferences"
 msgstr "Irteerako pluginaren hobespenak"
 
-#: src/audacious/ui_preferences.c:2120
+#: src/audacious/ui_preferences.c:2108
 msgid "Output Plugin Information"
 msgstr "Irteerako pluginaren informazioa"
 
-#: src/audacious/ui_preferences.c:2225
+#: src/audacious/ui_preferences.c:2213
 msgid "_Decoder list:"
 msgstr "_Deskodetzaile-zerrenda:"
 
-#: src/audacious/ui_preferences.c:2255
+#: src/audacious/ui_preferences.c:2243
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Deskodetzaileak</b></span>"
 
-#: src/audacious/ui_preferences.c:2268
+#: src/audacious/ui_preferences.c:2256
 msgid "_General plugin list:"
 msgstr "Plugin _orokorrak:"
 
-#: src/audacious/ui_preferences.c:2298
+#: src/audacious/ui_preferences.c:2286
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Orokorra</b></span>"
 
-#: src/audacious/ui_preferences.c:2310
+#: src/audacious/ui_preferences.c:2298
 msgid "_Visualization plugin list:"
 msgstr "_Bistaratzeko pluginak:"
 
-#: src/audacious/ui_preferences.c:2340
+#: src/audacious/ui_preferences.c:2328
 msgid "<b>Visualization</b>"
 msgstr "<b>Bistaratzea</b>"
 
-#: src/audacious/ui_preferences.c:2352
-msgid "Effect plugins (for 16-bit output only):"
-msgstr ""
+#: src/audacious/ui_preferences.c:2340
+#, fuzzy
+msgid "Effect plugins:"
+msgstr "_Efektuen pluginak:"
 
-#: src/audacious/ui_preferences.c:2381
+#: src/audacious/ui_preferences.c:2369
 msgid "<b>Effects</b>"
 msgstr "<b>Efektuak</b>"
 
-#: src/audacious/ui_preferences.c:2576
+#: src/audacious/ui_preferences.c:2564
 msgid "Audacious Preferences"
 msgstr "Audacious-en hobespenak"
 
@@ -927,7 +909,7 @@ msgstr ""
 msgid "_Don't show this message again"
 msgstr "Ez erakutsi mezu hau aurrerantzean"
 
-#: src/libaudgui/effects-menu.c:52
+#: src/libaudgui/effects-menu.c:61
 msgid "settings ..."
 msgstr ""
 
@@ -1819,6 +1801,10 @@ msgstr "Saio-kudeaketaren aukerak"
 msgid "Show Session Management options"
 msgstr "Erakutsi saio-kudeaketaren aukerak"
 
+#, fuzzy
+#~ msgid "Available Plugin Preferences:\n"
+#~ msgstr "Irteerako pluginaren hobespenak"
+
 #~ msgid "Don't clear the playlist"
 #~ msgstr "Ez garbitu erreprodukzio-zerrenda"
 
@@ -2005,9 +1991,6 @@ msgstr "Erakutsi saio-kudeaketaren aukerak"
 
 #~ msgid "Load metadata (tag information) from music files."
 #~ msgstr "Kargatu metadatuak (etiketa-informazioa) musika-fitxategietatik."
-
-#~ msgid "_Effect plugin list:"
-#~ msgstr "_Efektuen pluginak:"
 
 #~ msgid "Can't jump to time when no track is being played.\n"
 #~ msgstr "Ezin da denborara saltatu pista erreproduzitzen hasi gabe.\n"

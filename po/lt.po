@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-18 23:08+0300\n"
+"POT-Creation-Date: 2010-07-20 00:05+0300\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -240,112 +240,101 @@ msgstr[1] ""
 msgid "Unable to create log file (%s)!\n"
 msgstr "Nepavyko sukurti žurnalo bylos (%s)!\n"
 
-#: src/audacious/main.c:70
+#: src/audacious/main.c:69
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:153
 msgid "Skip backwards in playlist"
 msgstr "Šoktelti atgal grojaraštyje"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:154
 msgid "Start playing current playlist"
 msgstr "Pradėti groti esamą grojaraštį"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:155
 msgid "Pause current song"
 msgstr "Pristabdyti grojamą dainą"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:156
 msgid "Stop current song"
 msgstr "Sustabdyti grojamą dainą"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:157
 msgid "Pause if playing, play otherwise"
 msgstr "Pristabdyti, jei grojama, kitu atveju groti"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:158
 msgid "Skip forward in playlist"
 msgstr "Šoktelti pirmyn grojaraštyje"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:159
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Šokti į bylą"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:160
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Neišvalyti grojaraščio"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:161
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Neišvalyti grojaraščio"
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:162
 #, fuzzy
 msgid "Display the main window"
 msgstr "Parodyti pagrindinį langą"
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:163
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:166
+#: src/audacious/main.c:164
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Show version"
 msgstr "/Parodyti grojaraščio redaktorių"
 
-#: src/audacious/main.c:168
-msgid "Interface to use (use -i list to view available interfaces)"
-msgstr ""
-
-#: src/audacious/main.c:170
+#: src/audacious/main.c:167
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:172
+#: src/audacious/main.c:169
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:189
+#: src/audacious/main.c:186
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:200
+#: src/audacious/main.c:197
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:424
+#: src/audacious/main.c:434
 msgid "Sorry, threads aren't supported on your platform.\n"
 msgstr ""
 
-#: src/audacious/main.c:463
+#: src/audacious/main.c:473
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
 
-#: src/audacious/main.c:494
-#, fuzzy
-msgid ""
-"Available interfaces:\n"
-"\n"
-msgstr "_Galimi šablonai:"
-
-#: src/audacious/playback.c:464
+#: src/audacious/playback.c:476
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:588
+#: src/audacious/playback.c:600
 #, fuzzy
 msgid "Buffering ..."
 msgstr "Buferiavimas"
@@ -355,17 +344,8 @@ msgstr "Buferiavimas"
 msgid "Untitled Playlist"
 msgstr "Išsaugoti grojaraštį"
 
-#: src/audacious/pluginenum.c:377
+#: src/audacious/pluginenum.c:371
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
-
-#: src/audacious/ui_headless.c:134
-#, fuzzy, c-format
-msgid "Available Plugin Preferences:\n"
-msgstr "_Galimi šablonai:"
-
-#: src/audacious/ui_headless.c:152
-msgid "Headless Interface"
 msgstr ""
 
 #: src/audacious/ui_misc.c:50
@@ -632,7 +612,7 @@ msgstr "Takelio pavadinimas"
 msgid "Album gain/peak"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1301
+#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1289
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Kita</b>"
@@ -739,186 +719,187 @@ msgstr "Įjungtas"
 msgid "Description"
 msgstr "Aprašymas"
 
-#: src/audacious/ui_preferences.c:913
+#: src/audacious/ui_preferences.c:901
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:1220
+#: src/audacious/ui_preferences.c:1208
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "MPEG garso įskiepio konfigūravimas"
 
-#: src/audacious/ui_preferences.c:1229
+#: src/audacious/ui_preferences.c:1217
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "Automatinis parinkimas"
 
-#: src/audacious/ui_preferences.c:1234
+#: src/audacious/ui_preferences.c:1222
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1251
+#: src/audacious/ui_preferences.c:1239
 msgid "Exclude:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1258
+#: src/audacious/ui_preferences.c:1246
 #, fuzzy
 msgid "Include:"
 msgstr "Indie"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1263
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1285
+#: src/audacious/ui_preferences.c:1273
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1298
+#: src/audacious/ui_preferences.c:1286
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1310
+#: src/audacious/ui_preferences.c:1298
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1320
+#: src/audacious/ui_preferences.c:1308
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1865
+#: src/audacious/ui_preferences.c:1853
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
 
-#: src/audacious/ui_preferences.c:1874
+#: src/audacious/ui_preferences.c:1862
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1883
 msgid "Show information about titlestring format"
 msgstr "Parodyti informaciją apie pavadinimo formatą"
 
-#: src/audacious/ui_preferences.c:1906
+#: src/audacious/ui_preferences.c:1894
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1907
+#: src/audacious/ui_preferences.c:1895
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1908
+#: src/audacious/ui_preferences.c:1896
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1909
+#: src/audacious/ui_preferences.c:1897
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1910
+#: src/audacious/ui_preferences.c:1898
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1911
+#: src/audacious/ui_preferences.c:1899
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1912
+#: src/audacious/ui_preferences.c:1900
 #, fuzzy
 msgid "Custom"
 msgstr "Derinta eilutė:"
 
-#: src/audacious/ui_preferences.c:1919
+#: src/audacious/ui_preferences.c:1907
 msgid "Custom string:"
 msgstr "Derinta eilutė:"
 
-#: src/audacious/ui_preferences.c:1926
+#: src/audacious/ui_preferences.c:1914
 msgid "Title format:"
 msgstr "Pavadinimo formatas:"
 
-#: src/audacious/ui_preferences.c:1937
+#: src/audacious/ui_preferences.c:1925
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "MPEG garso įskiepio konfigūravimas"
 
-#: src/audacious/ui_preferences.c:1952
+#: src/audacious/ui_preferences.c:1940
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1954
+#: src/audacious/ui_preferences.c:1942
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1959
+#: src/audacious/ui_preferences.c:1947
 msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:2039
+#: src/audacious/ui_preferences.c:2027
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>Šablonai</b>"
 
-#: src/audacious/ui_preferences.c:2056
+#: src/audacious/ui_preferences.c:2044
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Buferio dydis (kb):"
 
-#: src/audacious/ui_preferences.c:2074
+#: src/audacious/ui_preferences.c:2062
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "_Pasirinktas išvesties įskiepies:"
 
-#: src/audacious/ui_preferences.c:2103
+#: src/audacious/ui_preferences.c:2091
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS išvesties įskiepis"
 
-#: src/audacious/ui_preferences.c:2120
+#: src/audacious/ui_preferences.c:2108
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD išvesties įskiepio konfigūravimas"
 
-#: src/audacious/ui_preferences.c:2225
+#: src/audacious/ui_preferences.c:2213
 #, fuzzy
 msgid "_Decoder list:"
 msgstr "Dekoderis"
 
-#: src/audacious/ui_preferences.c:2255
+#: src/audacious/ui_preferences.c:2243
 #, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/audacious/ui_preferences.c:2268
+#: src/audacious/ui_preferences.c:2256
 msgid "_General plugin list:"
 msgstr "_Bendrinių įskiepių sąrašas"
 
-#: src/audacious/ui_preferences.c:2298
+#: src/audacious/ui_preferences.c:2286
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/audacious/ui_preferences.c:2310
+#: src/audacious/ui_preferences.c:2298
 msgid "_Visualization plugin list:"
 msgstr "_Vizualizacijos įskiepių sąrašas:"
 
-#: src/audacious/ui_preferences.c:2340
+#: src/audacious/ui_preferences.c:2328
 msgid "<b>Visualization</b>"
 msgstr "<b>Vizualizacija</b>"
 
-#: src/audacious/ui_preferences.c:2352
-msgid "Effect plugins (for 16-bit output only):"
-msgstr ""
+#: src/audacious/ui_preferences.c:2340
+#, fuzzy
+msgid "Effect plugins:"
+msgstr "_Efektų įskiepių sąrašas:"
 
-#: src/audacious/ui_preferences.c:2381
+#: src/audacious/ui_preferences.c:2369
 msgid "<b>Effects</b>"
 msgstr "<b>Efektai</b>"
 
-#: src/audacious/ui_preferences.c:2576
+#: src/audacious/ui_preferences.c:2564
 #, fuzzy
 msgid "Audacious Preferences"
 msgstr "BMP nustatymai"
@@ -952,7 +933,7 @@ msgstr ""
 msgid "_Don't show this message again"
 msgstr "Daugiau neberodyti šio pranešimo"
 
-#: src/libaudgui/effects-menu.c:52
+#: src/libaudgui/effects-menu.c:61
 #, fuzzy
 msgid "settings ..."
 msgstr "Mikserio nustatymai:"
@@ -1888,6 +1869,16 @@ msgstr ""
 msgid "Show Session Management options"
 msgstr ""
 
+#, fuzzy
+#~ msgid ""
+#~ "Available interfaces:\n"
+#~ "\n"
+#~ msgstr "_Galimi šablonai:"
+
+#, fuzzy
+#~ msgid "Available Plugin Preferences:\n"
+#~ msgstr "_Galimi šablonai:"
+
 #~ msgid "Don't clear the playlist"
 #~ msgstr "Neišvalyti grojaraščio"
 
@@ -1952,9 +1943,6 @@ msgstr ""
 
 #~ msgid "Load metadata (tag information) from music files."
 #~ msgstr "Įkelti aprašus, esančius garso bylose"
-
-#~ msgid "_Effect plugin list:"
-#~ msgstr "_Efektų įskiepių sąrašas:"
 
 #~ msgid "Jump to Time"
 #~ msgstr "Šokti į laiką"
