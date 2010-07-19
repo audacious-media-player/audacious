@@ -356,6 +356,18 @@ static void * playback_monitor_thread (void * data)
         current_playback->plugin->play_file (current_playback);
     }
 
+    g_mutex_lock (current_playback->pb_ready_mutex);
+    current_playback->pb_ready_val = TRUE;
+
+    if (ready_source != 0)
+    {
+        g_source_remove (ready_source);
+        ready_source = 0;
+    }
+
+    g_cond_signal (current_playback->pb_ready_cond);
+    g_mutex_unlock (current_playback->pb_ready_mutex);
+
     if (! stopping)
         g_timeout_add (0, playback_ended, NULL);
 
