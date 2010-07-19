@@ -410,7 +410,7 @@ void iface_plugin_set_active (PluginHandle * plugin)
     g_message ("Unloading %s.", plugin_get_name (current_iface));
     interface_unload ();
 
-    g_message ("Starting %s.\n", plugin_get_name (plugin));
+    g_message ("Starting %s.", plugin_get_name (plugin));
     if (! interface_load (plugin))
     {
         fprintf (stderr, "%s failed to start.\n", plugin_get_name (plugin));
