@@ -30,7 +30,7 @@
 
 void audgui_register_stock_icons(void);
 
-void audgui_show_add_url_window(void);
+void audgui_show_add_url_window(gboolean open);
 
 void audgui_jump_to_track(void);
 void audgui_jump_to_track_hide(void);
