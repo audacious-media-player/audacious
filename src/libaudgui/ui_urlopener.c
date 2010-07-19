@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2010  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -35,6 +35,9 @@
 #include <audacious/drct.h>
 #include <audacious/misc.h>
 
+#include "libaudgui.h"
+#include "libaudgui-gtk.h"
+
 static void
 urlopener_add_url_callback(GtkWidget * widget,
                       GtkEntry * entry)
@@ -45,16 +48,13 @@ urlopener_add_url_callback(GtkWidget * widget,
     aud_util_add_url_history_entry(text);
 }
 
-GtkWidget *
-urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
-                        GCallback enqueue_func)
+GtkWidget * urlopener_add_url_dialog_new (GCallback func, gboolean open)
 {
-    GtkWidget *win, *vbox, *bbox, *cancel, *enqueue, *ok, *combo, *entry,
-              *label;
+    GtkWidget * win, * vbox, * bbox, * cancel, * ok, * combo, * entry;
     GList *url;
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(win), _("Add/Open URL Dialog"));
+    gtk_window_set_title ((GtkWindow *) win, open ? _("Open URL") : _("Add URL"));
     gtk_window_set_type_hint(GTK_WINDOW(win), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(win), 400, -1);
@@ -62,10 +62,6 @@ urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
     vbox = gtk_vbox_new(FALSE, 10);
     gtk_container_add(GTK_CONTAINER(win), vbox);
-
-    label = gtk_label_new(caption);
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
     combo = gtk_combo_box_entry_new_text();
     gtk_box_pack_start(GTK_BOX(vbox), combo, FALSE, FALSE, 0);
@@ -81,9 +77,7 @@ urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     g_signal_connect(entry, "activate",
                      G_CALLBACK(urlopener_add_url_callback),
                      entry);
-    g_signal_connect(entry, "activate",
-                     G_CALLBACK(ok_func),
-                     entry);
+    g_signal_connect (entry, "activate", func, entry);
     g_signal_connect_swapped(entry, "activate",
                              G_CALLBACK(gtk_widget_destroy),
                              win);
@@ -101,24 +95,10 @@ urlopener_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                              G_CALLBACK(gtk_widget_destroy),
                              win);
 
-    enqueue = gtk_button_new_from_stock(GTK_STOCK_ADD);
-    gtk_box_pack_start(GTK_BOX(bbox), enqueue, FALSE, FALSE, 0);
-
-    g_signal_connect(enqueue, "clicked",
-                     G_CALLBACK(urlopener_add_url_callback),
-                     entry);
-    g_signal_connect(enqueue, "clicked",
-                     G_CALLBACK(enqueue_func),
-                     entry);
-    g_signal_connect_swapped(enqueue, "clicked",
-                             G_CALLBACK(gtk_widget_destroy),
-                             win);
-
-    ok = gtk_button_new_from_stock(GTK_STOCK_OPEN);
+    ok = gtk_button_new_from_stock (open ? GTK_STOCK_OPEN : GTK_STOCK_ADD);
     g_signal_connect(ok, "clicked",
                      G_CALLBACK(urlopener_add_url_callback), entry);
-    g_signal_connect(ok, "clicked",
-                     G_CALLBACK(ok_func), entry);
+    g_signal_connect (ok, "clicked", func, entry);
     g_signal_connect_swapped(ok, "clicked",
                              G_CALLBACK(gtk_widget_destroy),
                              win);
@@ -149,17 +129,15 @@ on_add_url_ok_clicked(GtkWidget * widget,
         aud_drct_pl_open (text);
 }
 
-void
-audgui_show_add_url_window(void)
+void audgui_show_add_url_window (gboolean open)
 {
     static GtkWidget *url_window = NULL;
 
     if (!url_window) {
-        url_window =
-            urlopener_add_url_dialog_new(_("Enter location to play:"),
-                                         G_CALLBACK(on_add_url_ok_clicked),
-                                         G_CALLBACK(on_add_url_add_clicked));
+        url_window = urlopener_add_url_dialog_new (open ? (GCallback)
+         on_add_url_ok_clicked : (GCallback) on_add_url_add_clicked, open);
 
+        audgui_destroy_on_escape (url_window);
         g_signal_connect(url_window, "destroy",
                          G_CALLBACK(gtk_widget_destroyed),
                          &url_window);
