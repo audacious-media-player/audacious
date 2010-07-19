@@ -483,7 +483,7 @@ gint string_compare (const gchar * a, const gchar * b)
 
             while (isdigit (* a))
                 x = 10 * x + ((* a ++) - '0');
-            while (isdigit (* b));
+            while (isdigit (* b))
                 y = 10 * y + ((* b ++) - '0');
 
             if (x > y)
