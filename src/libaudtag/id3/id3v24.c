@@ -109,13 +109,6 @@ GenericFrame;
 #define ID3_FRAME_SYNCSAFE    0x0002
 #define ID3_FRAME_HAS_LENGTH  0x0001
 
-#define TAG_SIZE 1
-
-static mowgli_dictionary_t * frames = NULL;
-static mowgli_list_t * frameIDs = NULL;
-
-#define write_syncsafe_int32(x) vfs_fput_be32 (syncsafe32 (x))
-
 static gboolean skip_extended_header_3 (VFSFile * handle, gint * _size)
 {
     guint32 size;
@@ -378,7 +371,7 @@ static void free_generic_frame (GenericFrame * frame)
 }
 
 static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
- gint data_size)
+ gint data_size, mowgli_dictionary_t * dict)
 {
     gint pos;
 
@@ -393,21 +386,29 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
          & frame_size, key, & data, & size))
             break;
 
+        pos += frame_size;
+
+        if (mowgli_dictionary_retrieve (dict, key) != NULL)
+        {
+            AUDDBG ("Discarding duplicate frame %s.\n", key);
+            g_free (data);
+            continue;
+        }
+
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, key);
         frame->data = data;
         frame->size = size;
 
-        mowgli_dictionary_add (frames, frame->key, frame);
-        mowgli_node_add (frame->key, mowgli_node_create (), frameIDs);
-
-        pos += frame_size;
+        mowgli_dictionary_add (dict, key, frame);
     }
 }
 
 static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
  frame_size)
 {
+    AUDDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
+
     ID3v2FrameHeader header;
 
     memcpy (header.key, frame->key, 4);
@@ -426,24 +427,28 @@ static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
     return TRUE;
 }
 
-static guint32 writeAllFramesToFile (VFSFile * fd)
+typedef struct {
+    VFSFile * file;
+    gint written_size;
+} WriteState;
+
+static gint write_frame_cb (mowgli_dictionary_elem_t * elem, void * user)
 {
-    guint32 size = 0;
-    mowgli_node_t *n, *tn;
-    MOWGLI_LIST_FOREACH_SAFE(n, tn, frameIDs->head)
-    {
-        GenericFrame *frame = (GenericFrame *) mowgli_dictionary_retrieve(frames, (gchar *) (n->data));
-        if (frame)
-        {
-            gint frame_size;
+    WriteState * state = user;
+    gint size;
+    if (! write_frame (state->file, elem->data, & size))
+        return -1;
+    state->written_size += size;
+    return 0;
+}
 
-            if (! write_frame (fd, frame, & frame_size))
-                break;
+static gint writeAllFramesToFile (VFSFile * fd, mowgli_dictionary_t * dict)
+{
+    WriteState state = {fd, 0};
+    mowgli_dictionary_foreach (dict, write_frame_cb, & state);
 
-            size += frame_size;
-        }
-    }
-    return size;
+    AUDDBG ("Total frame bytes written = %d.\n", state.written_size);
+    return state.written_size;
 }
 
 static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
@@ -722,16 +727,16 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
     return;
 }
 
-static GenericFrame * add_generic_frame (gint id, gint size)
+static GenericFrame * add_generic_frame (gint id, gint size,
+ mowgli_dictionary_t * dict)
 {
-    GenericFrame * frame = mowgli_dictionary_retrieve (frames, id3_frames[id]);
+    GenericFrame * frame = mowgli_dictionary_retrieve (dict, id3_frames[id]);
 
     if (frame == NULL)
     {
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, id3_frames[id]);
-        mowgli_dictionary_add (frames, frame->key, frame);
-        mowgli_node_add (frame->key, mowgli_node_create (), frameIDs);
+        mowgli_dictionary_add (dict, frame->key, frame);
     }
     else
         g_free (frame->data);
@@ -741,36 +746,69 @@ static GenericFrame * add_generic_frame (gint id, gint size)
     return frame;
 }
 
-static void add_text_frame (gint id, const gchar * text)
+static void remove_frame (gint id, mowgli_dictionary_t * dict)
 {
-    gint length = strlen (text);
-    GenericFrame * frame = add_generic_frame (id, length + 1);
+    GenericFrame * frame = mowgli_dictionary_retrieve (dict, id3_frames[id]);
+    if (frame == NULL)
+        return;
 
+    AUDDBG ("Deleting frame %s.\n", id3_frames[id]);
+    mowgli_dictionary_delete (dict, id3_frames[id]);
+    free_generic_frame (frame);
+}
+
+static void add_text_frame (gint id, const gchar * text, mowgli_dictionary_t *
+ dict)
+{
+    if (text == NULL)
+    {
+        remove_frame (id, dict);
+        return;
+    }
+
+    AUDDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
+    gint length = strlen (text);
+
+    GenericFrame * frame = add_generic_frame (id, length + 1, dict);
     frame->data[0] = 3; /* UTF-8 encoding */
     memcpy (frame->data + 1, text, length);
 }
 
-static void add_comment_frame (const gchar * text)
+static void add_comment_frame (const gchar * text, mowgli_dictionary_t * dict)
 {
+    if (text == NULL)
+    {
+        remove_frame (ID3_COMMENT, dict);
+        return;
+    }
+
+    AUDDBG ("Adding comment frame = %s.\n", text);
     gint length = strlen (text);
-    GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5);
+    GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5, dict);
 
     frame->data[0] = 3; /* UTF-8 encoding */
     strcpy ((gchar *) frame->data + 1, "eng"); /* well, it *might* be English */
     memcpy (frame->data + 5, text, length);
 }
 
-static void add_frameFromTupleStr (const Tuple * tuple, int field, int id3_field)
+static void add_frameFromTupleStr (const Tuple * tuple, gint field, gint
+ id3_field, mowgli_dictionary_t * dict)
 {
-    add_text_frame (id3_field, tuple_get_string (tuple, field, NULL));
+    add_text_frame (id3_field, tuple_get_string (tuple, field, NULL), dict);
 }
 
-static void add_frameFromTupleInt (const Tuple * tuple, int field, int id3_field)
+static void add_frameFromTupleInt (const Tuple * tuple, gint field, gint
+ id3_field, mowgli_dictionary_t * dict)
 {
-    gchar scratch[16];
+    if (tuple_get_value_type (tuple, field, NULL) != TUPLE_INT)
+    {
+        remove_frame (id3_field, dict);
+        return;
+    }
 
+    gchar scratch[16];
     snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field, NULL));
-    add_text_frame (id3_field, scratch);
+    add_text_frame (id3_field, scratch, dict);
 }
 
 static gboolean id3v24_can_handle_file (VFSFile * handle)
@@ -944,12 +982,6 @@ static void free_frame_cb (mowgli_dictionary_elem_t * element, void * unused)
     free_generic_frame (element->data);
 }
 
-static void free_frame_dictionary (void)
-{
-    mowgli_dictionary_destroy (frames, free_frame_cb, NULL);
-    frames = NULL;
-}
-
 static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 {
     gint version, header_size, data_size, footer_size;
@@ -960,70 +992,50 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
      & data_size, & footer_size))
         return FALSE;
 
-    if (frameIDs != NULL)
-    {
-        mowgli_node_t *n, *tn;
-        MOWGLI_LIST_FOREACH_SAFE(n, tn, frameIDs->head)
-        {
-            mowgli_node_delete(n, frameIDs);
-        }
-    }
-    frameIDs = mowgli_list_create();
-
     //read all frames into generic frames;
-    frames = mowgli_dictionary_create(strcasecmp);
-    read_all_frames (f, version, syncsafe, data_size);
+    mowgli_dictionary_t * dict = mowgli_dictionary_create (strcasecmp);
+    read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
-    if (tuple_get_string(tuple, FIELD_ARTIST, NULL))
-        add_frameFromTupleStr(tuple, FIELD_ARTIST, ID3_ARTIST);
-
-    if (tuple_get_string(tuple, FIELD_TITLE, NULL))
-        add_frameFromTupleStr(tuple, FIELD_TITLE, ID3_TITLE);
-
-    if (tuple_get_string(tuple, FIELD_ALBUM, NULL))
-        add_frameFromTupleStr(tuple, FIELD_ALBUM, ID3_ALBUM);
-
-    if (tuple_get_string (tuple, FIELD_COMMENT, NULL) != NULL)
-        add_comment_frame (tuple_get_string (tuple, FIELD_COMMENT, NULL));
-
-    if (tuple_get_string(tuple, FIELD_GENRE, NULL))
-        add_frameFromTupleStr(tuple, FIELD_GENRE, ID3_GENRE);
-
-    if (tuple_get_int(tuple, FIELD_YEAR, NULL) != 0)
-        add_frameFromTupleInt(tuple, FIELD_YEAR, ID3_YEAR);
-
-    if (tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL) != 0)
-        add_frameFromTupleInt(tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR);
+    add_frameFromTupleStr (tuple, FIELD_TITLE, ID3_TITLE, dict);
+    add_frameFromTupleStr (tuple, FIELD_ARTIST, ID3_ARTIST, dict);
+    add_frameFromTupleStr (tuple, FIELD_ALBUM, ID3_ALBUM, dict);
+    add_frameFromTupleInt (tuple, FIELD_YEAR, ID3_YEAR, dict);
+    add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
+    add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
+    add_comment_frame (tuple_get_string (tuple, FIELD_COMMENT, NULL), dict);
 
     if (! offset)
     {
         if (! cut_beginning_tag (f, header_size + data_size + footer_size))
-            return FALSE;
+            goto ERROR;
     }
     else
     {
         if (offset + header_size + data_size + footer_size != vfs_fsize (f))
-            return FALSE;
-
+            goto ERROR;
         if (vfs_ftruncate (f, offset))
-            return FALSE;
+            goto ERROR;
     }
 
     offset = vfs_fsize (f);
 
     if (offset < 0 || vfs_fseek (f, offset, SEEK_SET) || ! write_header (f, 0,
      FALSE))
-        return FALSE;
+        goto ERROR;
 
-    data_size = writeAllFramesToFile (f);
-    free_frame_dictionary ();
+    data_size = writeAllFramesToFile (f, dict);
 
     if (! write_header (f, data_size, TRUE) || vfs_fseek (f, offset, SEEK_SET)
      || ! write_header (f, data_size, FALSE))
-        return FALSE;
+        goto ERROR;
 
+    mowgli_dictionary_destroy (dict, free_frame_cb, NULL);
     return TRUE;
+
+ERROR:
+    mowgli_dictionary_destroy (dict, free_frame_cb, NULL);
+    return FALSE;
 }
 
 tag_module_t id3v24 =
