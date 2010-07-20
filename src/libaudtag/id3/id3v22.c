@@ -96,7 +96,7 @@ static gboolean validate_header (ID3v2Header * header)
     if ((header->version != 2))
         return FALSE;
 
-    header->size = GUINT32_FROM_BE (header->size);
+    header->size = unsyncsafe32(GUINT32_FROM_BE(header->size));
 
     AUDDBG ("Found ID3v2 header:\n");
     AUDDBG (" magic = %.3s\n", header->magic);
