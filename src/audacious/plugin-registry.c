@@ -106,7 +106,7 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
     plugin->number = number;
     plugin->confirmed = confirmed;
     plugin->header = header;
-    plugin->name = 0;
+    plugin->name = NULL;
     plugin->priority = 0;
     plugin->has_about = FALSE;
     plugin->has_configure = FALSE;
@@ -478,6 +478,7 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     if (type == PLUGIN_TYPE_INPUT)
     {
         InputPlugin * ip = header;
+        g_free (plugin->name);
         plugin->name = g_strdup (ip->description);
         plugin->priority = ip->priority;
         plugin->has_about = (ip->about != NULL);
@@ -501,6 +502,7 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     else if (type == PLUGIN_TYPE_OUTPUT)
     {
         OutputPlugin * op = header;
+        g_free (plugin->name);
         plugin->name = g_strdup (op->description);
         plugin->priority = 10 - op->probe_priority;
         plugin->has_about = (op->about != NULL);
@@ -509,6 +511,7 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     else if (type == PLUGIN_TYPE_EFFECT)
     {
         EffectPlugin * ep = header;
+        g_free (plugin->name);
         plugin->name = g_strdup (ep->description);
         plugin->priority = ep->order;
         plugin->has_about = (ep->about != NULL);
@@ -517,6 +520,7 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     else if (type == PLUGIN_TYPE_VIS)
     {
         VisPlugin * vp = header;
+        g_free (plugin->name);
         plugin->name = g_strdup (vp->description);
         plugin->has_about = (vp->about != NULL);
         plugin->has_configure = (vp->configure != NULL);
@@ -524,11 +528,13 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     else if (type == PLUGIN_TYPE_IFACE)
     {
         Interface * i = header;
+        g_free (plugin->name);
         plugin->name = g_strdup (i->desc);
     }
     else if (type == PLUGIN_TYPE_GENERAL)
     {
         GeneralPlugin * gp = header;
+        g_free (plugin->name);
         plugin->name = g_strdup (gp->description);
         plugin->has_about = (gp->about != NULL);
         plugin->has_configure = (gp->configure != NULL);

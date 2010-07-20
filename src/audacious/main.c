@@ -123,9 +123,13 @@ static void aud_init_paths()
     gchar *xdg_data_home;
     gchar *xdg_cache_home;
 
-    xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".config", NULL) : g_strdup(getenv("XDG_CONFIG_HOME")));
-    xdg_data_home = (getenv("XDG_DATA_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".local", "share", NULL) : g_strdup(getenv("XDG_DATA_HOME")));
-    xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".cache", NULL) : g_strdup(getenv("XDG_CACHE_HOME")));
+    xdg_config_home = (getenv ("XDG_CONFIG_HOME") == NULL) ? g_build_filename
+     (getenv ("HOME"), ".config", NULL) : g_strdup (getenv ("XDG_CONFIG_HOME"));
+    xdg_data_home = (getenv ("XDG_DATA_HOME") == NULL) ? g_build_filename
+     (getenv ("HOME"), ".local", "share", NULL) : g_strdup (getenv
+     ("XDG_DATA_HOME"));
+    xdg_cache_home = (getenv ("XDG_CACHE_HOME") == NULL) ? g_build_filename
+     (getenv ("HOME"), ".cache", NULL) : g_strdup (getenv ("XDG_CACHE_HOME"));
 
     aud_paths[BMP_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
     aud_paths[BMP_PATH_USER_SKIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
