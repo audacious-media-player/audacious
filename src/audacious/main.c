@@ -410,15 +410,15 @@ void iface_plugin_set_active (PluginHandle * plugin)
     g_message ("Unloading %s.", plugin_get_name (current_iface));
     interface_unload ();
 
+    current_iface = plugin;
+    interface_set_default (plugin);
+
     g_message ("Starting %s.", plugin_get_name (plugin));
     if (! interface_load (plugin))
     {
         fprintf (stderr, "%s failed to start.\n", plugin_get_name (plugin));
         exit (EXIT_FAILURE);
     }
-
-    current_iface = plugin;
-    interface_set_default (plugin);
 
     g_message ("Loading visualizers.");
     vis_init ();
