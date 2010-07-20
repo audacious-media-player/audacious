@@ -292,6 +292,7 @@ static void save_output_path (void)
         plugin_get_path (plugin_by_header (current_output_plugin), & path,
          & type, & number);
 
+    g_free (cfg.output_path);
     cfg.output_path = (path != NULL) ? g_strdup (path) : NULL;
     cfg.output_number = number;
 }
