@@ -545,7 +545,7 @@ static gboolean parse_pic (const guchar * data, gint size, gchar * * mime,
 static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
  image_size)
 {
-    gint version, header_size, data_size, parsed, i;
+    gint version, header_size, data_size, parsed;
     gboolean syncsafe;
     gsize offset;
     gboolean found = FALSE;
