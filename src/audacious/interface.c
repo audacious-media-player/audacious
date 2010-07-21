@@ -19,7 +19,7 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#include <glib.h>
+#include <string.h>
 #include <gtk/gtk.h>
 
 #include <libaudcore/hook.h>
@@ -29,6 +29,7 @@
 #include "debug.h"
 #include "i18n.h"
 #include "interface.h"
+#include "plugins.h"
 #include "ui_preferences.h"
 
 static Interface *current_interface = NULL;
@@ -185,39 +186,33 @@ interface_show_about_window(gboolean show)
     }
 }
 
-/* void interface_run_gtk_plugin (GtkWidget * parent, const gchar * name) */
-void interface_run_gtk_plugin (void * parent, const gchar * name)
+static gboolean delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
+ plugin)
+{
+    vis_plugin_enable (plugin, FALSE);
+    return TRUE;
+}
+
+void interface_add_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
 {
     if (interface_cbs.run_gtk_plugin != NULL)
-        interface_cbs.run_gtk_plugin(parent, name);
-    else {
-        GtkWidget *win;
-
-        g_return_if_fail(parent != NULL);
-        g_return_if_fail(name != NULL);
-
-        win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_title(GTK_WINDOW(win), _(name));
-        gtk_container_add(GTK_CONTAINER(win), parent);
-        gtk_widget_show_all(win);
-
-        g_object_set_data(G_OBJECT(parent), "parentwin", win);
+        interface_cbs.run_gtk_plugin (widget, plugin_get_name (plugin));
+    else
+    {
+        GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_title ((GtkWindow *) window, plugin_get_name (plugin));
+        gtk_container_add ((GtkContainer *) window, widget);
+        g_signal_connect (window, "delete-event", (GCallback) delete_cb, plugin);
+        gtk_widget_show_all (window);
     }
 }
 
-/* void interface_stop_gtk_plugin (GtkWidget * parent) */
-void interface_stop_gtk_plugin (void * parent)
+void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
 {
     if (interface_cbs.stop_gtk_plugin != NULL)
-        interface_cbs.stop_gtk_plugin(parent);
-    else {
-        GtkWidget *win;
-
-        g_return_if_fail(parent != NULL);
-
-        win = g_object_get_data(G_OBJECT(parent), "parentwin");
-        gtk_widget_destroy(win);
-    }
+        interface_cbs.stop_gtk_plugin (widget);
+    else
+        gtk_widget_destroy (gtk_widget_get_parent (widget));
 }
 
 void

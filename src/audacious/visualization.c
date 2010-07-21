@@ -228,7 +228,7 @@ static void vis_load (PluginHandle * plugin)
         AUDDBG ("Adding %s to interface.\n", plugin_get_name (plugin));
         g_signal_connect (vis->widget, "destroy", (GCallback)
          gtk_widget_destroyed, & vis->widget);
-        interface_run_gtk_plugin (vis->widget, plugin_get_name (plugin));
+        interface_add_plugin_widget (plugin, vis->widget);
     }
 
     if (playback_get_playing ())
@@ -257,7 +257,7 @@ static void vis_unload (PluginHandle * plugin)
     if (vis->widget != NULL)
     {
         AUDDBG ("Removing %s from interface.\n", plugin_get_name (plugin));
-        interface_stop_gtk_plugin (vis->widget);
+        interface_remove_plugin_widget (plugin, vis->widget);
         g_return_if_fail (vis->widget == NULL); /* not destroyed? */
     }
 

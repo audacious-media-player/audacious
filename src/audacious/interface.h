@@ -30,9 +30,6 @@
 #define __AUDACIOUS2_INTERFACE_H__
 
 #include <glib.h>
-#include <mowgli.h>
-
-#include <audacious/plugins.h>
 #include <audacious/types.h>
 
 typedef struct {
@@ -74,6 +71,11 @@ struct _Interface {
     InterfaceOps *ops;
 };
 
+#ifdef _AUDACIOUS_CORE
+
+#include <gtk/gtk.h>
+#include <audacious/plugins.h>
+
 PluginHandle * interface_get_default (void);
 void interface_set_default (PluginHandle * plugin);
 gboolean interface_load (PluginHandle * plugin);
@@ -87,13 +89,13 @@ void interface_hide_filebrowser(void);
 void interface_toggle_visibility(void);
 void interface_show_error_message(const gchar * markup);
 void interface_show_jump_to_track(void);
-/* void interface_run_gtk_plugin (GtkWidget * parent, const gchar * name); */
-void interface_run_gtk_plugin (void * parent, const gchar * name);
-/* void interface_stop_gtk_plugin (GtkWidget * parent); */
+void interface_add_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
+void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
 void interface_stop_gtk_plugin (void * parent);
 void interface_toggle_shuffle(void);
 void interface_toggle_repeat(void);
 
 void register_interface_hooks(void);
 
+#endif
 #endif
