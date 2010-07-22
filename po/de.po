@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2010-07-19 16:42-0500\n"
-"PO-Revision-Date: 2010-07-01 23:33+0100\n"
+"PO-Revision-Date: 2010-07-21 21:53+0100\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: german <psic4t@netbands.de>\n"
 "MIME-Version: 1.0\n"
@@ -640,7 +640,7 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">Das Ändern dieser Einstellungen benötigt einen Neustart "
+"<span size=\"small\">Das Ändern dieser Einstellungen erfordert einen Neustart "
 "von Audacious.</span>"
 
 #: src/audacious/ui_preferences.c:234
@@ -698,7 +698,7 @@ msgstr "<b>Metadaten</b>"
 
 #: src/audacious/ui_preferences.c:408
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Aktiv"
 
 #: src/audacious/ui_preferences.c:424
 msgid "Description"
@@ -855,7 +855,7 @@ msgstr "<span size=\"medium\"><b>Dekoder</b></span>"
 
 #: src/audacious/ui_preferences.c:2256
 msgid "_General plugin list:"
-msgstr "_Allgemeine-Plugin-Liste:"
+msgstr "_Allgemeine Plugin-Liste:"
 
 #: src/audacious/ui_preferences.c:2286
 msgid "<span size=\"medium\"><b>General</b></span>"
@@ -870,9 +870,8 @@ msgid "<b>Visualization</b>"
 msgstr "<b>Visualisierungsmodus</b>"
 
 #: src/audacious/ui_preferences.c:2340
-#, fuzzy
 msgid "Effect plugins:"
-msgstr "_Effekt-Plugin-Liste:"
+msgstr "Effekte-Plugins:"
 
 #: src/audacious/ui_preferences.c:2369
 msgid "<b>Effects</b>"
@@ -906,7 +905,7 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Wollen Sie wirklich %s löschen?  Alle seit der letzten Speicherung "
+"Wollen Sie wirklich '%s' löschen?  Alle seit der letzten Speicherung "
 "geänderten Einträge gehen dadurch verloren."
 
 #  -m, --show-main-window switch
@@ -1739,11 +1738,11 @@ msgstr "Dialog beim Öffnen einer Liste schließen"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Open URL"
-msgstr ""
+msgstr "URL öffnen"
 
 #: src/libaudgui/ui_urlopener.c:57
 msgid "Add URL"
-msgstr ""
+msgstr "URL hinzufügen"
 
 #: src/libeggsmclient/eggdesktopfile.c:138
 msgid "File is not a valid .desktop file"
