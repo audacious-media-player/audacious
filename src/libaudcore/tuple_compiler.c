@@ -118,9 +118,7 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
       tuple_evalctx_free_function(ctx->functions[i]);
 
   g_free(ctx->functions);
-
-  /* Zero context */
-  memset(ctx, 0, sizeof(TupleEvalContext));
+  g_free(ctx);
 }
 
 
