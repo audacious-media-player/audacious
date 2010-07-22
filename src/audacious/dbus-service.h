@@ -90,9 +90,15 @@ enum {
     LAST_SIG
 };
 
+enum {
+    TRACKLIST_CHANGE_SIG,
+    LAST_TRACKLIST_SIG
+};
+
 gboolean mpris_emit_track_change(MprisPlayer *obj);
 gboolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status);
 gboolean mpris_emit_caps_change(MprisPlayer *obj);
+gboolean mpris_emit_tracklist_change(MprisTrackList *obj, gint playlist);
 
 // MPRIS /TrackList
 gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,

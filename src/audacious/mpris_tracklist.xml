@@ -43,5 +43,9 @@
         <method name="Random">
             <arg type="b" direction="in" />
         </method>
+
+        <signal name="TrackListChange">
+            <arg type="i" />
+        </signal>
     </interface>
 </node>

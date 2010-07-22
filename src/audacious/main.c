@@ -88,6 +88,7 @@ gchar * aud_paths[BMP_PATH_COUNT];
 
 #ifdef USE_DBUS
 MprisPlayer *mpris;
+MprisTrackList *mpris_tracklist;
 #endif
 
 static void print_version(void)

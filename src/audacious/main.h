@@ -52,6 +52,7 @@ extern gchar *aud_paths[];
 
 #ifdef USE_DBUS
 extern MprisPlayer *mpris;
+extern MprisTrackList *mpris_tracklist;
 #endif
 
 void aud_quit(void);

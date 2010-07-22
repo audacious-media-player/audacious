@@ -87,6 +87,7 @@ struct MprisMetadataRequest
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
+static guint tracklist_signals[LAST_TRACKLIST_SIG] = { 0 };
 
 static GThread *main_thread;
 static GMutex *info_mutex;
@@ -98,6 +99,8 @@ G_DEFINE_TYPE (MprisPlayer, mpris_player, G_TYPE_OBJECT)
 G_DEFINE_TYPE (MprisTrackList, mpris_tracklist, G_TYPE_OBJECT)
 
 #define DBUS_TYPE_G_STRING_VALUE_HASHTABLE (dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE))
+
+static void mpris_playlist_update_hook(gpointer unused, MprisTrackList *obj);
 
 void audacious_rc_class_init(RemoteObjectClass * klass)
 {
@@ -119,6 +122,8 @@ void mpris_player_class_init(MprisPlayerClass * klass)
 
 void mpris_tracklist_class_init(MprisTrackListClass * klass)
 {
+    tracklist_signals[TRACKLIST_CHANGE_SIG] = g_signal_new("track_list_change", G_OBJECT_CLASS_TYPE(klass),
+	G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 void audacious_rc_init(RemoteObject * object)
@@ -191,6 +196,20 @@ void mpris_tracklist_init(MprisTrackList * object)
 
     // Register DBUS path
     dbus_g_connection_register_g_object(dbus_conn, AUDACIOUS_DBUS_PATH_MPRIS_TRACKLIST, G_OBJECT(object));
+
+    // Add signals
+    DBusGProxy *proxy = object->proxy;
+    if (proxy != NULL)
+    {
+        dbus_g_proxy_add_signal(proxy, "TrackListChange", G_TYPE_INT, G_TYPE_INVALID);
+    }
+    else
+    {
+        /* XXX / FIXME: Why does this happen? -- ccr */
+        g_warning("in mpris_tracklist_init object->proxy == NULL, not adding some signals.");
+    }
+
+    hook_associate("playlist update", (HookFunction) mpris_playlist_update_hook, object);
 }
 
 void init_dbus()
@@ -850,6 +869,18 @@ gboolean mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)
 }
 
 // MPRIS /TrackList
+gboolean mpris_emit_tracklist_change(MprisTrackList * obj, gint playlist)
+{
+    g_signal_emit(obj, tracklist_signals[TRACKLIST_CHANGE_SIG], 0, playlist_entry_count(playlist));
+    return TRUE;
+}
+
+static void mpris_playlist_update_hook(gpointer unused, MprisTrackList * obj)
+{
+    gint playlist = playlist_get_active();
+
+    mpris_emit_tracklist_change(obj, playlist);
+}
 
 gboolean mpris_tracklist_get_metadata(MprisTrackList * obj, gint pos, GHashTable * *metadata, GError * *error)
 {
