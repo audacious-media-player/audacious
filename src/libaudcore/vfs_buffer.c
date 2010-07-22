@@ -190,7 +190,7 @@ buffer_vfs_fsize_impl(VFSFile * file)
 
     handle = (VFSBuffer *) file->handle;
 
-    return (off_t)handle->end;
+    return (off_t) (handle->end - handle->data);
 }
 
 static VFSConstructor buffer_const = {
