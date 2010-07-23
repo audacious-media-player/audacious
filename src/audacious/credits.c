@@ -103,6 +103,7 @@ static const gchar *credit_text[] = {
     "Juho Heikkinen",
     "Joseph Jezak",
     "Henrik Johansson",
+    "Mikael Magnusson",
     "Rodrigo Martins de Matos Ventura",
     "Diego Pettenò",
     "Mike Ryan",
