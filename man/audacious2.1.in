@@ -79,17 +79,6 @@ Go to the next song in the playlist.
 Show the installed version of Audacious.
 
 .TP
-.I -i, --interface gtkui | skinned | headless
-Start Audacious with the given interface. "gtkui" is the native GTK+ interface.
-"skinned" is an interface which uses Winamp Classic skins. (Skins can be placed
-in \fI@datarootdir@/audacious/Skins\fP, \fI~/.local/share/audacious/Skins\fP,
-and the folder specified by the environment variable \fISKINSDIR\fP. They can be
-unarchived or in the following archive formats: \fI.zip\fP, \fI.wsz\fP,
-\fI.tgz\fP, \fI.tar.gz\fP, and \fI.tar.bz2\fP.) In "headless" mode, Audacious
-starts without a user interface. In this mode, it can only be controlled from
-the command line or by a compatible client program.
-
-.TP
 .I -m, --show-main-window
 Show the Audacious window if it is hidden and bring it to the top.
 
