@@ -8,7 +8,7 @@ GenericName=Music Player
 GenericName[be]=Музычны плэер
 GenericName[da]=Lydafspiller
 GenericName[de]=Musikspieler
-GenericName[es]=Reproductor de Música
+GenericName[es]=Reproductor de música
 GenericName[fr]=Lecteur de Musique
 GenericName[it]=Lettore di Musica
 GenericName[lt]=Muzikos grotuvas
@@ -27,6 +27,7 @@ Comment[it]=Ascoltare musica
 Comment[lt]=Klausyti muzikos
 Comment[nl]=Muziek luisteren
 Comment[ru]=Слушайте музыку
+Comment[es]=Escucha música
 Icon=audacious
 
 Categories=AudioVideo;Audio;Player;GTK;
