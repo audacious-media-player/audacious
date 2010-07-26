@@ -1002,7 +1002,7 @@ gboolean audacious_rc_show_playlist(RemoteObject * obj, gboolean show, GError **
 
 gboolean audacious_rc_get_tuple_fields(RemoteObject * obj, gchar *** fields, GError ** error)
 {
-    gchar **res = g_new0(gchar *, FIELD_LAST);
+    gchar **res = g_new0(gchar *, FIELD_LAST + 1);
     gint i;
     for (i = 0; i < FIELD_LAST; i++)
     {
