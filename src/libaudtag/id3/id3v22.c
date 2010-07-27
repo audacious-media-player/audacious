@@ -21,7 +21,6 @@
  * using our public API to be a derived work.
  */
 
-#define DEBUG
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
