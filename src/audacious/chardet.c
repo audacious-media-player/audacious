@@ -100,6 +100,9 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
 
 #ifdef USE_CHARDET
     if (libguess_validate_utf8(str, len))
+#else
+    if (g_utf8_validate(str, len, NULL))
+#endif
     {
         if (len < 0)
             len = strlen (str);
@@ -115,7 +118,7 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
 
         return ret;
     }
-
+#ifdef USE_CHARDET
     if (cfg.chardet_detector)
         det = cfg.chardet_detector;
 
