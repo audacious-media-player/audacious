@@ -1287,7 +1287,7 @@ gboolean audacious_rc_clear(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_auto_advance(RemoteObject * obj, gboolean * is_advance, GError ** error)
 {
-    *is_advance = cfg.no_playlist_advance;
+    *is_advance = !cfg.no_playlist_advance;
     return TRUE;
 }
 
