@@ -137,9 +137,9 @@ static GtkWidget * create_slider (const gchar * name, gfloat * setting)
 
 static GtkWidget * create_window (void)
 {
-    static const gchar * names[AUD_EQUALIZER_NBANDS] = {N_("60 Hz"),
-     N_("170 Hz"), N_("310 Hz"), N_("600 Hz"), N_("1 kHz"), N_("3 kHz"),
-     N_("6 kHz"), N_("12 kHz"), N_("14 kHz"), N_("16 kHz")};
+    const gchar * const names[AUD_EQUALIZER_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
+     N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
+     N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
     GtkWidget * window, * vbox, * hbox;
     gint i;
 

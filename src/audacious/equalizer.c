@@ -28,8 +28,11 @@
 #define Q 1.2247449
 
 /* Center frequencies for band-pass filters (Hz) */
-static const gfloat CF[EQ_BANDS] = {60, 170, 310, 600, 1000, 3000, 6000, 12000,
- 14000, 16000};
+/* These are not the historical WinAmp frequencies, because the IIR filters used
+ * here are designed for each frequency to be twice the previous.  Using WinAmp
+ * frequencies leads to too much gain in some bands and too little in others. */
+static const gfloat CF[EQ_BANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
+ 4000, 8000, 16000};
 
 static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
 static gboolean active;
