@@ -327,6 +327,7 @@ static void activate_temp (void)
 
     playlist_insert (playlists);
     playlist_set_title (playlists, title);
+    playlist_set_active (playlists);
 }
 
 void drct_pl_open_temp (const gchar * filename)
