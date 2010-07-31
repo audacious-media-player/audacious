@@ -235,6 +235,12 @@ static void entry_set_tuple (struct playlist * playlist, struct entry * entry,
     }
 }
 
+static void entry_set_failed (struct playlist * playlist, struct entry * entry)
+{
+    entry_set_tuple (playlist, entry, tuple_new_from_filename (entry->filename));
+    entry->failed = TRUE;
+}
+
 static struct entry *entry_new(gchar * filename, InputPlugin * decoder, Tuple * tuple)
 {
     struct entry *entry = g_malloc(sizeof(struct entry));
@@ -266,15 +272,15 @@ static void entry_free(struct entry *entry)
     g_free(entry);
 }
 
-static void entry_check_has_decoder (struct entry * entry)
+static void entry_check_has_decoder (struct playlist * playlist, struct entry *
+ entry)
 {
     if (entry->decoder != NULL || entry->failed)
         return;
 
     entry->decoder = file_find_decoder (entry->filename, FALSE);
-
-    if (entry->decoder == NULL)
-        entry->failed = TRUE;
+    if (! entry->decoder)
+        entry_set_failed (playlist, entry);
 }
 
 static struct playlist *playlist_new(void)
@@ -380,10 +386,11 @@ void scan_receive (void)
 
         SCAN_DEBUG ("receive (#%d): %d\n", i, scan_positions[i]);
         entry = index_get (active_playlist->entries, scan_positions[i]);
-        entry_set_tuple (active_playlist, entry, scan_tuples[i]);
 
-        if (! scan_tuples[i])
-            entry->failed = TRUE;
+        if (scan_tuples[i])
+            entry_set_tuple (active_playlist, entry, scan_tuples[i]);
+        else
+            entry_set_failed (active_playlist, entry);
 
         scan_filenames[i] = NULL;
         scan_tuples[i] = NULL;
@@ -422,8 +429,7 @@ static gboolean scan_next (void * unused)
             if (entry->tuple)
                 continue;
 
-            entry_check_has_decoder (entry);
-
+            entry_check_has_decoder (active_playlist, entry);
             if (entry->failed)
                 continue;
 
@@ -544,7 +550,7 @@ static gboolean scan_threaded (struct playlist * playlist, struct entry * entry)
 
     scan_next (NULL);
 
-    if (entry->tuple != NULL || entry->failed)
+    if (entry->tuple)
         return TRUE;
 
     for (i = 0; i < SCAN_THREADS; i ++)
@@ -574,17 +580,19 @@ FOUND:
 
 static void check_scanned (struct playlist * playlist, struct entry * entry)
 {
-    if (entry->tuple != NULL || entry->failed)
+    if (entry->tuple)
         return;
     if (scan_threaded (playlist, entry))
         return;
 
-    entry_check_has_decoder (entry);
+    entry_check_has_decoder (playlist, entry);
+    if (entry->failed)
+        return;
+
     entry_set_tuple (playlist, entry, file_read_tuple (entry->filename,
      entry->decoder));
-
     if (! entry->tuple)
-        entry->failed = TRUE;
+        entry_set_failed (playlist, entry);
 
     queue_update (PLAYLIST_UPDATE_METADATA);
 }
@@ -1019,7 +1027,7 @@ InputPlugin *playlist_entry_get_decoder(gint playlist_num, gint entry_num)
 
     LOOKUP_PLAYLIST_ENTRY_RET (NULL);
 
-    entry_check_has_decoder (entry);
+    entry_check_has_decoder (playlist, entry);
 
     return entry->decoder;
 }
