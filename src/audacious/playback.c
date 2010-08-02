@@ -533,11 +533,10 @@ void playback_seek (gint time)
 
     if (current_playback->plugin->mseek != NULL)
         current_playback->plugin->mseek (current_playback, time);
-    else
+    else if (current_playback->plugin->seek != NULL)
     {
         fprintf (stderr, "%s should be updated to provide mseek().\n",
          current_playback->plugin->description);
-        g_return_if_fail (current_playback->plugin->seek != NULL);
         current_playback->plugin->seek (current_playback, time / 1000);
     }
 
