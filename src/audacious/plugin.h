@@ -334,51 +334,114 @@ struct _InputPlayback {
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
-    gboolean have_subtune;      /**< Plugin supports/uses subtunes. */
-    gchar **vfs_extensions;     /**< Filename extension to be associated to this plugin. */
-    gint priority; /* 0 = first, 10 = last */
-
-    gint (*is_our_file_from_vfs) (const gchar *filename, VFSFile *fd);
-    Tuple *(*get_song_tuple) (const gchar * filename);
-    Tuple *(*probe_for_tuple) (const gchar *uri, VFSFile *fd);
-
-    /**
-     * Plugin can provide this function for file metadata (aka tag)
-     * writing functionality when there is no reason to provide its
-     * own custom file info dialog.
+    /* Nonzero if the files handled by the plugin may contain more than one
+     * song.  When reading the tuple for such a file, the plugin should set the
+     * FIELD_SUBSONG_NUM field to the number of songs in the file.  For all
+     * other files, the field should be left unset.
      *
-     * - In current Audacious version, if plugin provides file_info_box(), the latter will be used in any case.
-     * - Each field in tuple means operation on one and only one tag field:
-     *   - Set this field to appropriate value, if non-empty string or positive number provided.
-     *   - Set this field to blank (or just delete, at plugins`s discretion), if empty string or negative number provided.
-     *
-     * @param[in] tuple Tuple with the desired metadata.
-     * @param[in] fd VFS file descriptor pointing to file to modify.
+     * Example:
+     * 1. User adds a file named "somefile.xxx" to the playlist.  Having
+     * determined that this plugin can handle the file, Audacious opens the file
+     * and calls probe_for_tuple().  probe_for_tuple() sees that there are 3
+     * songs in the file and sets FIELD_SUBSONG_NUM to 3.
+     * 2. For each song in the file, Audacious opens the file and calls
+     * probe_for_tuple() -- this time, however, a question mark and song number
+     * are appended to the file name passed: "somefile.sid?2" refers to the
+     * second song in the file "somefile.sid".
+     * 3. When one of the songs is played, Audacious opens the file and calls
+     * play() with a file name modified in this way.
      */
-    gboolean (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
-    void (*file_info_box) (const gchar * filename);
+    gboolean have_subtune;
 
-    /* Warning: Check for file == NULL. */
+    /* Pointer to an array (terminated with NULL) of file extensions associated
+     * with file types the plugin can handle. */
+    const gchar * const * vfs_extensions;
+
+    /* How quickly the plugin should be tried in searching for a plugin to
+     * handle a file which could not be identified from its extension.  Plugins
+     * with priority 0 are tried first, 10 last. */
+    gint priority;
+
+    /* Must return nonzero if the plugin can handle this file.  If the file
+     * could not be opened, "file" will be NULL.  (This is normal in the case of
+     * special URI schemes like cdda:// that do not represent actual files.) */
+    /* Bug: The return value should be a gboolean, not a gint. */
+    gint (* is_our_file_from_vfs) (const gchar * filename, VFSFile * file);
+
+    /* Deprecated. */
+    Tuple * (* get_song_tuple) (const gchar * filename); /* Use probe_for_tuple. */
+
+    /* Must return a tuple containing metadata for this file, or NULL if no
+     * metadata could be read.  If the file could not be opened, "file" will be
+     * NULL.  Audacious takes over one reference to the tuple returned. */
+    Tuple * (* probe_for_tuple) (const gchar * filename, VFSFile * file);
+
+    /* Optional.  Must write metadata from a tuple to this file.  Must return
+     * nonzero on success or zero on failure.  "file" will never be NULL. */
+    /* Bug: This function does not support special URI schemes like cdda://,
+     * since no file name is passed. */
+    gboolean (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
+
+    /* Optional, and not recommended.  Must show a window with information about
+     * this file.  If this function is provided, update_song_tuple should not be. */
+    /* Bug: Implementing this function duplicates user interface code and code
+     * to open the file in each and every plugin. */
+    void (* file_info_box) (const gchar * filename);
+
+    /* Optional.  Must try to read an "album art" image embedded in this file.
+     * Must return nonzero on success or zero on failure.  If the file could not
+     * be opened, "file" will be NULL.  On success, must fill "data" with a
+     * pointer to a block of data allocated with g_malloc and "size" with the
+     * size in bytes of that block.  The data may be in any format supported by
+     * GTK.  Audacious will free the data when it is no longer needed. */
     gboolean (* get_song_image) (const gchar * filename, VFSFile * file,
      void * * data, gint * size);
 
-    /* Warning: Check for file == NULL. */
+    /* Must try to play this file.  "playback" is a structure containing output-
+     * related functions which the plugin may make use of.  It also contains a
+     * "data" pointer which the plugin may use to refer private data associated
+     * with the playback state.  This pointer can then be used from pause,
+     * mseek, and stop. If the file could not be opened, "file" will be NULL.
+     * "start_time" is the position in milliseconds at which to start from, or
+     * -1 to start from the beginning of the file.  "stop_time" is the position
+     * in milliseconds at which to end playback, or -1 to play to the end of the
+     * file.  "paused" specifies whether playback should immediately be paused.
+     * Must return nonzero if some of the file was successfully played or zero
+     * on failure. */
     gboolean (* play) (InputPlayback * playback, const gchar * filename,
      VFSFile * file, gint start_time, gint stop_time, gboolean pause);
 
-    void (*pause) (InputPlayback * playback, gshort paused);
-    void (*mseek) (InputPlayback * playback, gulong millisecond);
-    void (*stop) (InputPlayback * playback);
+    /* Must pause or unpause a file currently being played.  This function will
+     * be called from a different thread than play, but it will not be called
+     * before the plugin calls set_pb_ready or after stop is called. */
+    /* Bug: paused should be a gboolean, not a gshort. */
+    /* Bug: There is no way to indicate success or failure. */
+    void (* pause) (InputPlayback * playback, gshort paused);
 
-    /* advanced: for plugins that do not use Audacious's output system */
-    gint (*get_time) (InputPlayback * playback);
-    gint (*get_volume) (gint * l, gint * r);
-    gint (*set_volume) (gint l, gint r);
+    /* Optional.  Must seek to the given position in milliseconds within a file
+     * currently being played.  This function will be called from a different
+     * thread than play, but it will not be called before the plugin calls
+     * set_pb_ready or after stop is called. */
+    /* Bug: time should be a gint, not a gulong. */
+    /* Bug: There is no way to indicate success or failure. */
+    void (* mseek) (InputPlayback * playback, gulong time);
 
-    /* deprecated */
-    gint (*is_our_file) (const gchar * filename);
-    void (*play_file) (InputPlayback * playback);
-    void (*seek) (InputPlayback * playback, gint time);
+    /* Must signal a currently playing song to stop and cause play to return.
+     * This function will be called from a different thread than play.  It will
+     * only be called once. It should not join the thread from which play is
+     * called. */
+    void (* stop) (InputPlayback * playback);
+
+    /* Advanced, for plugins that do not use Audacious's output system.  Use at
+     * your own risk. */
+    gint (* get_time) (InputPlayback * playback);
+    gint (* get_volume) (gint * l, gint * r);
+    gint (* set_volume) (gint l, gint r);
+
+    /* Deprecated. */
+    gint (* is_our_file) (const gchar * filename); /* Use is_our_file_from_vfs. */
+    void (* play_file) (InputPlayback * playback); /* Use play. */
+    void (* seek) (InputPlayback * playback, gint time); /* Use mseek. */
 };
 
 struct _GeneralPlugin {
