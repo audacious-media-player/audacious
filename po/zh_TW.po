@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious VERSION\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-19 16:42-0500\n"
+"POT-Creation-Date: 2010-08-03 17:50-0400\n"
 "PO-Revision-Date: 2007-01-31 00:46+0800\n"
 "Last-Translator: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
 "Language-Team: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: Pootle 0.10.1\n"
 "X-Poedit-Language: Chinese\n"
 "X-Poedit-Country: TAIWAN\n"
@@ -52,161 +52,166 @@ msgstr "插件開發："
 msgid "Patch authors:"
 msgstr "修正檔作者："
 
-#: src/audacious/credits.c:123
+#: src/audacious/credits.c:124
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x 開發人員："
 
-#: src/audacious/credits.c:145
+#: src/audacious/credits.c:146
 msgid "BMP Developers:"
 msgstr "BMP 開發人員："
 
-#: src/audacious/credits.c:177
+#: src/audacious/credits.c:178
 #, fuzzy
 msgid "Belarusian:"
 msgstr "保加利亞語："
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙語："
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:188
 msgid "Breton:"
 msgstr "布列塔尼語："
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Bulgarian:"
 msgstr "保加利亞語："
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 #, fuzzy
 msgid "Catalan:"
 msgstr "義大利語："
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
+#, fuzzy
+msgid "Chinese:"
+msgstr "中文："
+
+#: src/audacious/credits.c:200
 #, fuzzy
 msgid "Croatian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:203
 msgid "Czech:"
 msgstr "捷克語："
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Dutch:"
 msgstr "荷蘭語："
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:210
 #, fuzzy
 msgid "Estonian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:213
 msgid "Finnish:"
 msgstr "芬蘭語："
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:217
 msgid "French:"
 msgstr "法語："
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "German:"
 msgstr "德語："
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:229
 msgid "Georgian:"
 msgstr "喬治亞語："
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:232
 msgid "Greek:"
 msgstr "希臘語："
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:237
 msgid "Hindi:"
 msgstr "北印度語："
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Hungarian:"
 msgstr "匈牙利語："
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Italian:"
 msgstr "義大利語："
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Japanese:"
 msgstr "日語："
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:250
 msgid "Korean:"
 msgstr "韓語："
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:253
 msgid "Lithuanian:"
 msgstr "立陶宛語："
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Macedonian:"
 msgstr "馬其頓語："
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Polish:"
 msgstr "波蘭語："
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 #, fuzzy
 msgid "Portugese:"
 msgstr "巴西葡萄牙語："
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Romanian:"
 msgstr "羅馬尼亞語："
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:270
 msgid "Russian:"
 msgstr "俄語："
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 msgid "Serbian (Latin):"
 msgstr "塞爾維亞 (拉丁語)："
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 msgid "Serbian (Cyrillic):"
 msgstr "塞爾維亞 (斯拉夫語)："
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
 msgid "Simplified Chinese:"
 msgstr "簡體中文："
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:283
 msgid "Slovak:"
 msgstr "斯洛伐克語："
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:286
 msgid "Spanish:"
 msgstr "西班牙語："
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:292
 msgid "Swedish:"
 msgstr "瑞典語："
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:295
 msgid "Traditional Chinese:"
 msgstr "正體中文："
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:300
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:304
 msgid "Ukrainian:"
 msgstr "烏克蘭語："
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:307
 msgid "Welsh:"
 msgstr "威爾斯語："
 
@@ -240,68 +245,68 @@ msgstr "無法建立紀錄檔 (%s)！\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:153
+#: src/audacious/main.c:158
 msgid "Skip backwards in playlist"
 msgstr "跳至播放清單開頭"
 
-#: src/audacious/main.c:154
+#: src/audacious/main.c:159
 msgid "Start playing current playlist"
 msgstr "開始播放目前的播放清單"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:160
 msgid "Pause current song"
 msgstr "暫停目前的歌曲"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:161
 msgid "Stop current song"
 msgstr "停止目前的歌曲"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:162
 msgid "Pause if playing, play otherwise"
 msgstr "播放/暫停"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:163
 msgid "Skip forward in playlist"
 msgstr "跳至播放清單結尾"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:164
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "顯示跳至檔案對話框"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "加入檔案至播放清單。"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:166
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "加入檔案至播放清單。"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:167
 #, fuzzy
 msgid "Display the main window"
 msgstr "顯示主視窗"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:168
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:170
 #, fuzzy
 msgid "Show version"
 msgstr "顯示播放器"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:172
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:174
 msgid "FILE..."
 msgstr ""
 
@@ -330,11 +335,11 @@ msgstr "audacious：無法顯示，正在結束。\n"
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:599
 msgid "Buffering ..."
 msgstr ""
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:292
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "新增播放清單"
@@ -927,23 +932,25 @@ msgid "_Enable"
 msgstr "已啟用"
 
 #: src/libaudgui/equalizer.c:140
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "125 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "60 Hz"
+msgid "250 Hz"
 msgstr "1:1 (44 kHz)"
 
 #: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "170 Hz"
-msgstr "1:1 (44 kHz)"
-
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
-msgid "310 Hz"
-msgstr "1:1 (44 kHz)"
-
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
-msgid "600 Hz"
+msgid "500 Hz"
 msgstr "1:1 (44 kHz)"
 
 #: src/libaudgui/equalizer.c:141
@@ -953,22 +960,17 @@ msgstr "1:1 (44 kHz)"
 
 #: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "3 kHz"
-msgstr "1:1 (44 kHz)"
-
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
-msgid "6 kHz"
-msgstr "1:1 (44 kHz)"
-
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
-msgid "12 kHz"
+msgid "2 kHz"
 msgstr "1:2 (22 kHz)"
 
 #: src/libaudgui/equalizer.c:142
 #, fuzzy
-msgid "14 kHz"
+msgid "4 kHz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "8 kHz"
 msgstr "1:1 (44 kHz)"
 
 #: src/libaudgui/equalizer.c:142
@@ -1880,6 +1882,22 @@ msgstr ""
 #, fuzzy
 msgid "Show Session Management options"
 msgstr "顯示視窗管理員裝飾"
+
+#, fuzzy
+#~ msgid "170 Hz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "310 Hz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "3 kHz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "6 kHz"
+#~ msgstr "1:1 (44 kHz)"
 
 #, fuzzy
 #~ msgid ""
@@ -3640,8 +3658,8 @@ msgstr "顯示視窗管理員裝飾"
 
 #, fuzzy
 #~ msgid ""
-#~ "File Info - %sErrorLOOKING UP %sCouldn't look up host %sCONNECTING TO %s:%"
-#~ "dCouldn't connect to host %sCONNECTED: WAITING FOR REPLYCouldn't connect "
+#~ "File Info - %sErrorLOOKING UP %sCouldn't look up host %sCONNECTING TO %s:"
+#~ "%dCouldn't connect to host %sCONNECTED: WAITING FOR REPLYCouldn't connect "
 #~ "to host %s\n"
 #~ "Server reported: %sPRE-BUFFERING: %dKB/%dKB"
 #~ msgstr ""
@@ -3867,8 +3885,8 @@ msgstr "顯示視窗管理員裝飾"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA.Default (%s)DefaultOSS Driver configurationAudio device:Use alternate "
 #~ "device:Mixer device:DevicesBuffer size (ms):BufferingMixer Settings:"
 #~ "Volume controls Master not PCMMixerAbout ALSA Driver"
@@ -3908,8 +3926,8 @@ msgstr "顯示視窗管理員裝飾"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA.\n"
 #~ "Author: Matthieu Sozeau (mattam@altern.org)ALSA %s output pluginUnknown "
 #~ "soundcardDefault PCM device (%s)ALSA Driver configurationMixer:Use "
@@ -3966,8 +3984,8 @@ msgstr "顯示視窗管理員裝飾"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA.Host:Use remote hostVolume controls OSS mixerPort:ServereSound Output "
 #~ "Plugin"
 #~ msgstr ""

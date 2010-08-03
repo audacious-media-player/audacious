@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.4.0\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-19 16:42-0500\n"
+"POT-Creation-Date: 2010-08-03 17:50-0400\n"
 "PO-Revision-Date: 2007-08-26 03:55+0300\n"
 "Last-Translator: Cristi Măgherușan <majeru@atheme.org>\n"
 "Language-Team: Romanian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 
 #: src/audacious/credits.c:31
 #, fuzzy, c-format
@@ -51,159 +51,164 @@ msgstr "Dezvoltatori de plugin-uri:"
 msgid "Patch authors:"
 msgstr "Autori de patch-uri:"
 
-#: src/audacious/credits.c:123
+#: src/audacious/credits.c:124
 #, fuzzy
 msgid "1.x developers:"
 msgstr "Dezvoltatorii versiunii 0.1.x:"
 
-#: src/audacious/credits.c:145
+#: src/audacious/credits.c:146
 msgid "BMP Developers:"
 msgstr "Dezvoltatorii BMP:"
 
-#: src/audacious/credits.c:177
+#: src/audacious/credits.c:178
 #, fuzzy
 msgid "Belarusian:"
 msgstr "Bulgară:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Brazilian Portuguese:"
 msgstr "Portugheză braziliană:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:188
 msgid "Breton:"
 msgstr "Bretonă:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Bulgarian:"
 msgstr "Bulgară:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Catalan:"
 msgstr "Catalană:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
+#, fuzzy
+msgid "Chinese:"
+msgstr "Chineza"
+
+#: src/audacious/credits.c:200
 msgid "Croatian:"
 msgstr "Croată:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:203
 msgid "Czech:"
 msgstr "Cehă:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Dutch:"
 msgstr "Olandeză:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:210
 #, fuzzy
 msgid "Estonian:"
 msgstr "Română:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:213
 msgid "Finnish:"
 msgstr "Finlandeză:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:217
 msgid "French:"
 msgstr "Franceză:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "German:"
 msgstr "Germană:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:229
 msgid "Georgian:"
 msgstr "Georgiană:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:232
 msgid "Greek:"
 msgstr "Greacă:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:237
 msgid "Hindi:"
 msgstr "Hindusă:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Hungarian:"
 msgstr "Maghiară:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Italian:"
 msgstr "Italiană:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Japanese:"
 msgstr "Japoneză:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:250
 msgid "Korean:"
 msgstr "Coreeană:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:253
 msgid "Lithuanian:"
 msgstr "Lituaniană:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Macedonian:"
 msgstr "Macedoneană:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Polish:"
 msgstr "Poloneză:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 #, fuzzy
 msgid "Portugese:"
 msgstr "Portugheză braziliană:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Romanian:"
 msgstr "Română:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:270
 msgid "Russian:"
 msgstr "Rusă:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 msgid "Serbian (Latin):"
 msgstr "Sârbă (cu caractere latine):"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 msgid "Serbian (Cyrillic):"
 msgstr "Sârbă·(caractere·chirilice):"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
 msgid "Simplified Chinese:"
 msgstr "Chineză simplificată:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:283
 msgid "Slovak:"
 msgstr "Slovacă:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:286
 msgid "Spanish:"
 msgstr "Spaniolă:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:292
 msgid "Swedish:"
 msgstr "Suedeză:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:295
 msgid "Traditional Chinese:"
 msgstr "Chineză·tradițională:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:300
 msgid "Turkish:"
 msgstr "Turcă:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:304
 msgid "Ukrainian:"
 msgstr "Ucrainiană:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:307
 msgid "Welsh:"
 msgstr "Galeză:"
 
@@ -237,65 +242,65 @@ msgstr "Nu s-a putut crea fișierul de loguri (%s)!\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:153
+#: src/audacious/main.c:158
 msgid "Skip backwards in playlist"
 msgstr "Sări înapoi în playlist"
 
-#: src/audacious/main.c:154
+#: src/audacious/main.c:159
 msgid "Start playing current playlist"
 msgstr "Începe redarea playlist-ului curent"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:160
 msgid "Pause current song"
 msgstr "Pauză"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:161
 msgid "Stop current song"
 msgstr "Oprește melodia curentă"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:162
 msgid "Pause if playing, play otherwise"
 msgstr "Pauză daca se redă, redare altfel"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:163
 msgid "Skip forward in playlist"
 msgstr "Sări înainte în playlist"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:164
 msgid "Display Jump to File dialog"
 msgstr "Afișează dialogul de salt la fișier"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Adaugă fișiere la playlist"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:166
 msgid "Add new files to a temporary playlist"
 msgstr "Adaugă fișiere noi la un playlist temporar"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:167
 msgid "Display the main window"
 msgstr "Arată fereastra principală"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:168
 msgid "Display all open Audacious windows"
 msgstr "Afișează ferestrele Audacious deschise"
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
 msgstr "Trimite erorile și avertismentele în stdout"
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:170
 #, fuzzy
 msgid "Show version"
 msgstr "Arată player-ul"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:172
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:174
 msgid "FILE..."
 msgstr "Fișier..."
 
@@ -326,11 +331,11 @@ msgstr "%s: Nu s-a putut deschide display-ul, ieșire din program.\n"
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:599
 msgid "Buffering ..."
 msgstr ""
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:292
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Playlist Nou"
@@ -925,19 +930,23 @@ msgid "_Enable"
 msgstr "Activat"
 
 #: src/libaudgui/equalizer.c:140
-msgid "60 Hz"
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "170 Hz"
+msgid "125 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "310 Hz"
+msgid "250 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "600 Hz"
+msgid "500 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
@@ -945,19 +954,15 @@ msgid "1 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "3 kHz"
+msgid "2 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:142
-msgid "6 kHz"
+msgid "4 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:142
-msgid "12 kHz"
-msgstr ""
-
-#: src/libaudgui/equalizer.c:142
-msgid "14 kHz"
+msgid "8 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:142

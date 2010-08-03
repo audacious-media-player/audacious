@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-19 16:42-0500\n"
+"POT-Creation-Date: 2010-08-03 17:50-0400\n"
 "PO-Revision-Date: 2008-07-19 11:57+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: src/audacious/credits.c:31
 #, fuzzy, c-format
@@ -52,158 +52,163 @@ msgstr "Развој додатака:"
 msgid "Patch authors:"
 msgstr "Аутори закрпа:"
 
-#: src/audacious/credits.c:123
+#: src/audacious/credits.c:124
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x ствараоци:"
 
-#: src/audacious/credits.c:145
+#: src/audacious/credits.c:146
 msgid "BMP Developers:"
 msgstr "BMP ствараоци:"
 
-#: src/audacious/credits.c:177
+#: src/audacious/credits.c:178
 #, fuzzy
 msgid "Belarusian:"
 msgstr "Бугарски:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Brazilian Portuguese:"
 msgstr "Бразилско Португалски:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:188
 msgid "Breton:"
 msgstr "Бретонски:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Bulgarian:"
 msgstr "Бугарски:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Catalan:"
 msgstr "Каталонски:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
+#, fuzzy
+msgid "Chinese:"
+msgstr "Кинески"
+
+#: src/audacious/credits.c:200
 msgid "Croatian:"
 msgstr "Хрватски:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:203
 msgid "Czech:"
 msgstr "Чешки:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Dutch:"
 msgstr "Холандски:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:210
 msgid "Estonian:"
 msgstr "Естонски:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:213
 msgid "Finnish:"
 msgstr "Фински:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:217
 msgid "French:"
 msgstr "Француски:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "German:"
 msgstr "Немачки:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:229
 msgid "Georgian:"
 msgstr "Арменски:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:232
 msgid "Greek:"
 msgstr "Грчки:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:237
 msgid "Hindi:"
 msgstr "Индијски:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Hungarian:"
 msgstr "Мађарски:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Italian:"
 msgstr "Италијански:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Japanese:"
 msgstr "Јапански:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:250
 msgid "Korean:"
 msgstr "Кореански:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:253
 msgid "Lithuanian:"
 msgstr "Литвански:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Macedonian:"
 msgstr "Македонски:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Polish:"
 msgstr "Пољски:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 #, fuzzy
 msgid "Portugese:"
 msgstr "Бразилско Португалски:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Romanian:"
 msgstr "Румунски:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:270
 msgid "Russian:"
 msgstr "Руски:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 msgid "Serbian (Latin):"
 msgstr "Српски (Латиница):"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 msgid "Serbian (Cyrillic):"
 msgstr "Српски (Ћирилица):"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
 msgid "Simplified Chinese:"
 msgstr "Упроштен Кинески:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:283
 msgid "Slovak:"
 msgstr "Словеначки:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:286
 msgid "Spanish:"
 msgstr "Шпански:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:292
 msgid "Swedish:"
 msgstr "Шведски:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:295
 msgid "Traditional Chinese:"
 msgstr "Традиционални Кинески:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:300
 msgid "Turkish:"
 msgstr "Турски:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:304
 msgid "Ukrainian:"
 msgstr "Украински:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:307
 msgid "Welsh:"
 msgstr "Велшански:"
 
@@ -238,64 +243,64 @@ msgstr "Није могуће направити датотеку евиденц
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:153
+#: src/audacious/main.c:158
 msgid "Skip backwards in playlist"
 msgstr "Скочи уназад у листи нумера"
 
-#: src/audacious/main.c:154
+#: src/audacious/main.c:159
 msgid "Start playing current playlist"
 msgstr "Пусти текућу листу нумера"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:160
 msgid "Pause current song"
 msgstr "Паузирај текућу песму"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:161
 msgid "Stop current song"
 msgstr "Заустави текућу песму"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:162
 msgid "Pause if playing, play otherwise"
 msgstr "Паузирај ако свира, иначе пусти"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:163
 msgid "Skip forward in playlist"
 msgstr "Скочи унапред у листи нумера"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:164
 msgid "Display Jump to File dialog"
 msgstr "Прикажи Пређи на датотеку оквир"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Додаје датотеке у листу нумера."
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:166
 msgid "Add new files to a temporary playlist"
 msgstr "Додаје нове датотеке у привремену листу нумера"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:167
 msgid "Display the main window"
 msgstr "Прикажи главни прозор"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:168
 msgid "Display all open Audacious windows"
 msgstr "Прикажи све отворене Audacious прозоре"
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
 msgstr "Штампај све грешке и упозорења у stdout"
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:170
 msgid "Show version"
 msgstr "Прикажи верзију"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:172
 msgid "Used in macpacking"
 msgstr "Користи се за макпаковање"
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:174
 msgid "FILE..."
 msgstr "ДАТОТЕКА..."
 
@@ -326,11 +331,11 @@ msgstr "%s: Није могуће отворити приказ, излазим.
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:599
 msgid "Buffering ..."
 msgstr ""
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:292
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Нова листа нумера"
@@ -914,19 +919,23 @@ msgid "_Enable"
 msgstr "Укључен"
 
 #: src/libaudgui/equalizer.c:140
-msgid "60 Hz"
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "170 Hz"
+msgid "125 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "310 Hz"
+msgid "250 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "600 Hz"
+msgid "500 Hz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
@@ -934,19 +943,15 @@ msgid "1 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:141
-msgid "3 kHz"
+msgid "2 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:142
-msgid "6 kHz"
+msgid "4 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:142
-msgid "12 kHz"
-msgstr ""
-
-#: src/libaudgui/equalizer.c:142
-msgid "14 kHz"
+msgid "8 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:142

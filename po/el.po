@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.1.0\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-19 16:42-0500\n"
+"POT-Creation-Date: 2010-08-03 17:50-0400\n"
 "PO-Revision-Date: 2006-07-18 20:56+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg2002@freemail.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,1,-1\n"
 
@@ -52,165 +52,170 @@ msgstr "Ανάπτυξη πρόσθετων:"
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/credits.c:123
+#: src/audacious/credits.c:124
 #, fuzzy
 msgid "1.x developers:"
 msgstr "Δημιουργοί για το 0.1.x:"
 
-#: src/audacious/credits.c:145
+#: src/audacious/credits.c:146
 msgid "BMP Developers:"
 msgstr "Δημιουργοί BMP:"
 
-#: src/audacious/credits.c:177
+#: src/audacious/credits.c:178
 #, fuzzy
 msgid "Belarusian:"
 msgstr "Ουγγρική:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Brazilian Portuguese:"
 msgstr "Πορτογαλικά Βραζιλίας:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:188
 msgid "Breton:"
 msgstr "Breton:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Ουγγρική:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 #, fuzzy
 msgid "Catalan:"
 msgstr "Ιταλικά:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
+#, fuzzy
+msgid "Chinese:"
+msgstr "Κινέζικα:"
+
+#: src/audacious/credits.c:200
 #, fuzzy
 msgid "Croatian:"
 msgstr "Τοποθεσία:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:203
 msgid "Czech:"
 msgstr "Τσέχικα:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Dutch:"
 msgstr "Ολλανδική:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:210
 #, fuzzy
 msgid "Estonian:"
 msgstr "Ρουμανικά:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:213
 msgid "Finnish:"
 msgstr "Φινλανδικά:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:217
 msgid "French:"
 msgstr "Γαλλικά:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "German:"
 msgstr "Γερμανικά:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:229
 #, fuzzy
 msgid "Georgian:"
 msgstr "Γεωργιανά:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:232
 msgid "Greek:"
 msgstr "Ελληνικά:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:237
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Hungarian:"
 msgstr "Ουγγρική:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Italian:"
 msgstr "Ιταλικά:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Japanese:"
 msgstr "Ιαπωνικά:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:250
 msgid "Korean:"
 msgstr "Κορεάτικα:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:253
 msgid "Lithuanian:"
 msgstr "Λιθουανικά:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Macedonian:"
 msgstr "Σλαβομακεδονική:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Polish:"
 msgstr "Πολωνική:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 #, fuzzy
 msgid "Portugese:"
 msgstr "Port:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Romanian:"
 msgstr "Ρουμανικά:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:270
 msgid "Russian:"
 msgstr "Ρώσικα:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 #, fuzzy
 msgid "Serbian (Latin):"
 msgstr "Κυριλλική (MacCyrillic)"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 #, fuzzy
 msgid "Serbian (Cyrillic):"
 msgstr "Κυριλλική (MacCyrillic)"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:283
 msgid "Slovak:"
 msgstr "Σλοβακική:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:286
 msgid "Spanish:"
 msgstr "Ισπανικά:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:292
 msgid "Swedish:"
 msgstr "Σουηδικά:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:295
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:300
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:304
 msgid "Ukrainian:"
 msgstr "Ουκρανικά:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:307
 msgid "Welsh:"
 msgstr "Ουαλλική:"
 
@@ -244,68 +249,68 @@ msgstr "Δεν είναι δυνατή η δημιουργία του αρχεί
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:153
+#: src/audacious/main.c:158
 msgid "Skip backwards in playlist"
 msgstr "Μετάβαση πίσω στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:154
+#: src/audacious/main.c:159
 msgid "Start playing current playlist"
 msgstr "Έναρξη αναπαραγωγής της τρέχουσας λίστας"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:160
 msgid "Pause current song"
 msgstr "Παύση τρέχοντος κομματιού"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:161
 msgid "Stop current song"
 msgstr "Σταμάτημα τρέχοντος κομματιού"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:162
 msgid "Pause if playing, play otherwise"
 msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:163
 msgid "Skip forward in playlist"
 msgstr "Μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:164
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Μετάβαση σε αρχείο"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:166
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:167
 #, fuzzy
 msgid "Display the main window"
 msgstr "Εμφάνιση του κυρίως παραθύρου"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:168
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:170
 #, fuzzy
 msgid "Show version"
 msgstr "/Εμφάνιση λίστας αναπαραγωγής"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:172
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:174
 msgid "FILE..."
 msgstr ""
 
@@ -334,12 +339,12 @@ msgstr "audacious: Αδύνατο το άνοιγμα της οθόνης, έξ�
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:599
 #, fuzzy
 msgid "Buffering ..."
 msgstr "Φόρτωση"
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:292
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Αποθήκευση λίστας αναπαραγωγής"
@@ -938,23 +943,25 @@ msgid "_Enable"
 msgstr "Ενεργοποίηση"
 
 #: src/libaudgui/equalizer.c:140
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "125 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "60 Hz"
+msgid "250 Hz"
 msgstr "11000 Hz"
 
 #: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "170 Hz"
-msgstr "11000 Hz"
-
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
-msgid "310 Hz"
-msgstr "11000 Hz"
-
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
-msgid "600 Hz"
+msgid "500 Hz"
 msgstr "11000 Hz"
 
 #: src/libaudgui/equalizer.c:141
@@ -964,23 +971,18 @@ msgstr "11 kHz"
 
 #: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "3 kHz"
-msgstr "48 kHz"
-
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
-msgid "6 kHz"
-msgstr "48 kHz"
-
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
-msgid "12 kHz"
+msgid "2 kHz"
 msgstr "22 kHz"
 
 #: src/libaudgui/equalizer.c:142
 #, fuzzy
-msgid "14 kHz"
+msgid "4 kHz"
 msgstr "44 kHz"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "8 kHz"
+msgstr "11 kHz"
 
 #: src/libaudgui/equalizer.c:142
 #, fuzzy
@@ -1856,6 +1858,22 @@ msgstr ""
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr ""
+
+#, fuzzy
+#~ msgid "170 Hz"
+#~ msgstr "11000 Hz"
+
+#, fuzzy
+#~ msgid "310 Hz"
+#~ msgstr "11000 Hz"
+
+#, fuzzy
+#~ msgid "3 kHz"
+#~ msgstr "48 kHz"
+
+#, fuzzy
+#~ msgid "6 kHz"
+#~ msgstr "48 kHz"
 
 #, fuzzy
 #~ msgid ""
@@ -4660,8 +4678,8 @@ msgstr ""
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA."
 #~ msgstr ""
 #~ "Οδηγός OSS για το Audacious\n"
@@ -4730,8 +4748,8 @@ msgstr ""
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA.\n"
 #~ "Author: Matthieu Sozeau (mattam@altern.org)"
 #~ msgstr ""
@@ -4817,8 +4835,8 @@ msgstr ""
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA."
 #~ msgstr ""
 #~ "Πρόσθετο ESounD του Audacious\n"

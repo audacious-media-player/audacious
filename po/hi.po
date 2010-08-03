@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-19 16:42-0500\n"
+"POT-Creation-Date: 2010-08-03 17:50-0400\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: KBabel 1.10\n"
 
 #: src/audacious/credits.c:31
@@ -50,167 +50,172 @@ msgstr ""
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/credits.c:123
+#: src/audacious/credits.c:124
 #, fuzzy
 msgid "1.x developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: src/audacious/credits.c:145
+#: src/audacious/credits.c:146
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: src/audacious/credits.c:177
+#: src/audacious/credits.c:178
 #, fuzzy
 msgid "Belarusian:"
 msgstr "हंगारियन:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Brazilian Portuguese:"
 msgstr "पुर्तगाली ब्राजील:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:188
 msgid "Breton:"
 msgstr "Breton:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "हंगारियन:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 #, fuzzy
 msgid "Catalan:"
 msgstr "इटैलियन:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
+#, fuzzy
+msgid "Chinese:"
+msgstr "चीनी:"
+
+#: src/audacious/credits.c:200
 #, fuzzy
 msgid "Croatian:"
 msgstr "स्थान:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:203
 msgid "Czech:"
 msgstr "चेक:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Dutch:"
 msgstr "डच:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:210
 #, fuzzy
 msgid "Estonian:"
 msgstr "रोमानियन:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:213
 #, fuzzy
 msgid "Finnish:"
 msgstr "स्पैनिस:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:217
 msgid "French:"
 msgstr "फ़्रेंच:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "German:"
 msgstr "जर्मन:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:229
 #, fuzzy
 msgid "Georgian:"
 msgstr "जर्मन:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:232
 msgid "Greek:"
 msgstr "ग्रीक:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:237
 msgid "Hindi:"
 msgstr ""
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Hungarian:"
 msgstr "हंगारियन:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Italian:"
 msgstr "इटैलियन:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Japanese:"
 msgstr "जापानी:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:250
 msgid "Korean:"
 msgstr "कोरियन:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:253
 msgid "Lithuanian:"
 msgstr "लिथूनियन:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Macedonian:"
 msgstr "Macedonian:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Polish:"
 msgstr "पोलिश:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 #, fuzzy
 msgid "Portugese:"
 msgstr "पोर्ट"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Romanian:"
 msgstr "रोमानियन:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:270
 msgid "Russian:"
 msgstr "रूसी:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:283
 msgid "Slovak:"
 msgstr "स्लोवाक:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:286
 msgid "Spanish:"
 msgstr "स्पैनिस:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:292
 msgid "Swedish:"
 msgstr "स्वीडिस:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:295
 #, fuzzy
 msgid "Traditional Chinese:"
 msgstr "निम्न की अतिरिक्त सहायता द्वारा:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:300
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:304
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "रोमानियन:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:307
 msgid "Welsh:"
 msgstr "वाल्श:"
 
@@ -244,68 +249,68 @@ msgstr "लॉग संचिका को निर्मित करने �
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/main.c:153
+#: src/audacious/main.c:158
 msgid "Skip backwards in playlist"
 msgstr "प्लेसूची में पीछे जाना"
 
-#: src/audacious/main.c:154
+#: src/audacious/main.c:159
 msgid "Start playing current playlist"
 msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:160
 msgid "Pause current song"
 msgstr "वर्तमान गीत को ठहरना"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:161
 msgid "Stop current song"
 msgstr "वर्तमान गीत को रोकना"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:162
 msgid "Pause if playing, play otherwise"
 msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:163
 msgid "Skip forward in playlist"
 msgstr "प्लेसूची में आगे जाना"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:164
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/संचिका पर जाएँ"
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "प्लेसूची को साफ़ नहीं करना"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:166
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "प्लेसूची को साफ़ नहीं करना"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:167
 #, fuzzy
 msgid "Display the main window"
 msgstr "मुख्य खिड़की को दिखाना"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:168
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:170
 #, fuzzy
 msgid "Show version"
 msgstr "/प्लेसूची संपादक दिखाएँ"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:172
 msgid "Used in macpacking"
 msgstr ""
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:174
 msgid "FILE..."
 msgstr ""
 
@@ -334,12 +339,12 @@ msgstr "BMP: डिसप्ले को खोलने में असमर
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:599
 #, fuzzy
 msgid "Buffering ..."
 msgstr "बफ़रिंग"
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:292
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "प्लेसूची को सुरक्षित करना"
@@ -944,23 +949,25 @@ msgid "_Enable"
 msgstr "सक्रिय किया गया"
 
 #: src/libaudgui/equalizer.c:140
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "125 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "60 Hz"
+msgid "250 Hz"
 msgstr "१:१ (४४ किलोहर्टज)"
 
 #: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "170 Hz"
-msgstr "१:१ (४४ किलोहर्टज)"
-
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
-msgid "310 Hz"
-msgstr "१:१ (४४ किलोहर्टज)"
-
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
-msgid "600 Hz"
+msgid "500 Hz"
 msgstr "१:१ (४४ किलोहर्टज)"
 
 #: src/libaudgui/equalizer.c:141
@@ -970,22 +977,17 @@ msgstr "१:१ (४४ किलोहर्टज)"
 
 #: src/libaudgui/equalizer.c:141
 #, fuzzy
-msgid "3 kHz"
-msgstr "१:१ (४४ किलोहर्टज)"
-
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
-msgid "6 kHz"
-msgstr "१:१ (४४ किलोहर्टज)"
-
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
-msgid "12 kHz"
+msgid "2 kHz"
 msgstr "१:२ (२२ किलोहर्टज)"
 
 #: src/libaudgui/equalizer.c:142
 #, fuzzy
-msgid "14 kHz"
+msgid "4 kHz"
+msgstr "१:१ (४४ किलोहर्टज)"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "8 kHz"
 msgstr "१:१ (४४ किलोहर्टज)"
 
 #: src/libaudgui/equalizer.c:142
@@ -1865,6 +1867,22 @@ msgstr ""
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr ""
+
+#, fuzzy
+#~ msgid "170 Hz"
+#~ msgstr "१:१ (४४ किलोहर्टज)"
+
+#, fuzzy
+#~ msgid "310 Hz"
+#~ msgstr "१:१ (४४ किलोहर्टज)"
+
+#, fuzzy
+#~ msgid "3 kHz"
+#~ msgstr "१:१ (४४ किलोहर्टज)"
+
+#, fuzzy
+#~ msgid "6 kHz"
+#~ msgstr "१:१ (४४ किलोहर्टज)"
 
 #, fuzzy
 #~ msgid ""
@@ -4139,8 +4157,8 @@ msgstr ""
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA."
 #~ msgstr ""
 #~ "XMMS ओएसएस चालक\n"
@@ -4209,8 +4227,8 @@ msgstr ""
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA.\n"
 #~ "Author: Matthieu Sozeau (mattam@altern.org)"
 #~ msgstr ""
@@ -4298,8 +4316,8 @@ msgstr ""
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License\n"
 #~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
+#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+#~ "02110-1301,\n"
 #~ "USA."
 #~ msgstr ""
 #~ "XMMS ईसाउण्ड प्लग-इन\n"

@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious-2.4-alpha2\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-07-19 16:42-0500\n"
+"POT-Creation-Date: 2010-08-03 17:50-0400\n"
 "PO-Revision-Date: 2010-06-22 01:22+0200\n"
 "Last-Translator: Andrej Herceg <herceg.andrej@zoznam.sk>\n"
 "Language-Team: Slovak <Slovak <sk-i18n@lists.linux.sk>>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -51,155 +51,160 @@ msgstr "Vývoj zásuvných modulov:"
 msgid "Patch authors:"
 msgstr "Autori záplat:"
 
-#: src/audacious/credits.c:123
+#: src/audacious/credits.c:124
 msgid "1.x developers:"
 msgstr "Vývojári verzie 1.x:"
 
-#: src/audacious/credits.c:145
+#: src/audacious/credits.c:146
 msgid "BMP Developers:"
 msgstr "Vývojári BMP:"
 
-#: src/audacious/credits.c:177
+#: src/audacious/credits.c:178
 msgid "Belarusian:"
 msgstr "Bieloruština:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:181
 msgid "Basque:"
 msgstr "Baskičtina:"
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:184
 msgid "Brazilian Portuguese:"
 msgstr "Brazílska portugalčina:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:188
 msgid "Breton:"
 msgstr "Bretónčina:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Bulgarian:"
 msgstr "Bulharčina:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Catalan:"
 msgstr "Katalánčina:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
+#, fuzzy
+msgid "Chinese:"
+msgstr "Čínština"
+
+#: src/audacious/credits.c:200
 msgid "Croatian:"
 msgstr "Chorvátčina:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:203
 msgid "Czech:"
 msgstr "Čeština:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Dutch:"
 msgstr "Holandčina:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:210
 msgid "Estonian:"
 msgstr "Estónčina:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:213
 msgid "Finnish:"
 msgstr "Fínčina:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:217
 msgid "French:"
 msgstr "Francúzščina:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "German:"
 msgstr "Nemčina:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:229
 msgid "Georgian:"
 msgstr "Gruzínčina:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:232
 msgid "Greek:"
 msgstr "Gréčtina:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:237
 msgid "Hindi:"
 msgstr "Hindčina:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Hungarian:"
 msgstr "Maďarčina:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Italian:"
 msgstr "Taliančina:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Japanese:"
 msgstr "Japončina:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:250
 msgid "Korean:"
 msgstr "Kórejčina:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:253
 msgid "Lithuanian:"
 msgstr "Litovčina:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Macedonian:"
 msgstr "Macedónčina:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Polish:"
 msgstr "Poľština:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 msgid "Portugese:"
 msgstr "Portugalčina:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Romanian:"
 msgstr "Rumunčina:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:270
 msgid "Russian:"
 msgstr "Ruština:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 msgid "Serbian (Latin):"
 msgstr "Srbščina (latinka):"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 msgid "Serbian (Cyrillic):"
 msgstr "Srbščina (cyrilika):"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
 msgid "Simplified Chinese:"
 msgstr "Zjednodušená čínština:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:283
 msgid "Slovak:"
 msgstr "Slovenčina:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:286
 msgid "Spanish:"
 msgstr "Španielčina:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:292
 msgid "Swedish:"
 msgstr "Švédčina:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:295
 msgid "Traditional Chinese:"
 msgstr "Tradičná čínština:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:300
 msgid "Turkish:"
 msgstr "Turečtina:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:304
 msgid "Ukrainian:"
 msgstr "Ukrajinčina:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:307
 msgid "Welsh:"
 msgstr "Welsčina:"
 
@@ -233,64 +238,64 @@ msgstr "Nepodarilo sa vytvoriť súbor so záznamom (%s)!\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:153
+#: src/audacious/main.c:158
 msgid "Skip backwards in playlist"
 msgstr "Vrátiť sa na predchádzajúcu skladbu"
 
-#: src/audacious/main.c:154
+#: src/audacious/main.c:159
 msgid "Start playing current playlist"
 msgstr "Začať prehrávať aktuálny zoznam skladieb"
 
-#: src/audacious/main.c:155
+#: src/audacious/main.c:160
 msgid "Pause current song"
 msgstr "Pozastaviť prehrávanú skladbu"
 
-#: src/audacious/main.c:156
+#: src/audacious/main.c:161
 msgid "Stop current song"
 msgstr "Zastaviť prehrávanú skladbu"
 
-#: src/audacious/main.c:157
+#: src/audacious/main.c:162
 msgid "Pause if playing, play otherwise"
 msgstr "Pri prehrávaní pozastaviť, inak prehrať"
 
-#: src/audacious/main.c:158
+#: src/audacious/main.c:163
 msgid "Skip forward in playlist"
 msgstr "Prejsť na nasledujúcu skladbu"
 
-#: src/audacious/main.c:159
+#: src/audacious/main.c:164
 msgid "Display Jump to File dialog"
 msgstr "Zobraziť okno \"Presun na súbor\""
 
-#: src/audacious/main.c:160
+#: src/audacious/main.c:165
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Pridať súbory do dočasného zoznamu skladieb"
 
-#: src/audacious/main.c:161
+#: src/audacious/main.c:166
 msgid "Add new files to a temporary playlist"
 msgstr "Pridať súbory do dočasného zoznamu skladieb"
 
-#: src/audacious/main.c:162
+#: src/audacious/main.c:167
 msgid "Display the main window"
 msgstr "Zobraziť hlavné okno"
 
-#: src/audacious/main.c:163
+#: src/audacious/main.c:168
 msgid "Display all open Audacious windows"
 msgstr "Zobraziť všetky otvorené okná Audacious"
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
 msgstr "Všetky chyby a upozornenia posielať na štandardný výstup"
 
-#: src/audacious/main.c:165
+#: src/audacious/main.c:170
 msgid "Show version"
 msgstr "Zobraziť verziu"
 
-#: src/audacious/main.c:167
+#: src/audacious/main.c:172
 msgid "Used in macpacking"
 msgstr "Pre interné použitie v OS X"
 
-#: src/audacious/main.c:169
+#: src/audacious/main.c:174
 msgid "FILE..."
 msgstr "SÚBOR..."
 
@@ -321,11 +326,11 @@ msgstr "%s: Nepodarilo sa otvoriť displej, ukončujem sa.\n"
 msgid "No decoder found for %s."
 msgstr "Pre %s nebol nájdený žiadny dekodér."
 
-#: src/audacious/playback.c:600
+#: src/audacious/playback.c:599
 msgid "Buffering ..."
 msgstr "Napĺňanie vyrovnávacej pamäte …"
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:292
 msgid "Untitled Playlist"
 msgstr "Nepomenovaný zoznam skladieb"
 
@@ -928,19 +933,25 @@ msgid "_Enable"
 msgstr "_Povoliť"
 
 #: src/libaudgui/equalizer.c:140
-msgid "60 Hz"
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "125 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "250 Hz"
 msgstr "60 Hz"
 
 #: src/libaudgui/equalizer.c:141
-msgid "170 Hz"
-msgstr "170 Hz"
-
-#: src/libaudgui/equalizer.c:141
-msgid "310 Hz"
-msgstr "310 Hz"
-
-#: src/libaudgui/equalizer.c:141
-msgid "600 Hz"
+#, fuzzy
+msgid "500 Hz"
 msgstr "600 Hz"
 
 #: src/libaudgui/equalizer.c:141
@@ -948,20 +959,19 @@ msgid "1 kHz"
 msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:141
-msgid "3 kHz"
-msgstr "3 kHz"
-
-#: src/libaudgui/equalizer.c:142
-msgid "6 kHz"
-msgstr "6 kHz"
-
-#: src/libaudgui/equalizer.c:142
-msgid "12 kHz"
+#, fuzzy
+msgid "2 kHz"
 msgstr "12 kHz"
 
 #: src/libaudgui/equalizer.c:142
-msgid "14 kHz"
+#, fuzzy
+msgid "4 kHz"
 msgstr "14 kHz"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "8 kHz"
+msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:142
 msgid "16 kHz"
@@ -1805,6 +1815,18 @@ msgstr "Možnosti správy relácie"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Zobraziť možnosti správy relácie"
+
+#~ msgid "170 Hz"
+#~ msgstr "170 Hz"
+
+#~ msgid "310 Hz"
+#~ msgstr "310 Hz"
+
+#~ msgid "3 kHz"
+#~ msgstr "3 kHz"
+
+#~ msgid "6 kHz"
+#~ msgstr "6 kHz"
 
 #~ msgid "Interface to use (use -i list to view available interfaces)"
 #~ msgstr ""
