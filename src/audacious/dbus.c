@@ -528,6 +528,9 @@ static gboolean add_cb(void *data)
     struct AddRequest *request = data;
     gint playlist = playlist_get_active();
 
+    if (request->position < 0)
+        request->position = playlist_entry_count (playlist);
+
     drct_pl_add (request->filename, request->position);
 
     if (request->play)
