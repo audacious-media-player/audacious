@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2010-08-03 17:50-0400\n"
-"PO-Revision-Date: 2010-07-21 21:53+0100\n"
+"PO-Revision-Date: 2010-08-04 11:44+0100\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: german <psic4t@netbands.de>\n"
 "Language: \n"
@@ -78,9 +78,8 @@ msgid "Catalan:"
 msgstr "Katalanisch:"
 
 #: src/audacious/credits.c:197
-#, fuzzy
 msgid "Chinese:"
-msgstr "Chinesisch"
+msgstr "Chinesisch:"
 
 #: src/audacious/credits.c:200
 msgid "Croatian:"
@@ -267,7 +266,6 @@ msgstr "«Springe zu Datei»-Fenster anzeigen"
 
 #  -e, --enqueue switch
 #: src/audacious/main.c:165
-#, fuzzy
 msgid "Add files to the playlist"
 msgstr "Dateien zur Wiedergabeliste hinzufügen"
 
@@ -505,14 +503,12 @@ msgid "Arabic"
 msgstr "Arabisch"
 
 #: src/audacious/ui_preferences.c:161
-#, fuzzy
 msgid "Polish"
-msgstr "Polnisch:"
+msgstr "Polnisch"
 
 #: src/audacious/ui_preferences.c:162
-#, fuzzy
 msgid "Baltic"
-msgstr "Celtic"
+msgstr "Baltisch"
 
 #: src/audacious/ui_preferences.c:163
 msgid "Universal"
@@ -896,9 +892,8 @@ msgid "Position not found."
 msgstr "Position nicht gefunden."
 
 #: src/audtool/handlers_vitals.c:64
-#, fuzzy
 msgid "No song playing."
-msgstr "Kein Titel."
+msgstr "Kein Titel wird wiedergegeben."
 
 #: src/libaudcore/audstrings.c:157
 msgid "  (invalid UTF-8)"
@@ -920,9 +915,8 @@ msgid "_Don't show this message again"
 msgstr "Diese Warnung nicht mehr anzeigen"
 
 #: src/libaudgui/effects-menu.c:61
-#, fuzzy
 msgid "settings ..."
-msgstr "Suche ..."
+msgstr "Einstellungen ..."
 
 #: src/libaudgui/equalizer.c:68
 msgid "_Enable"
@@ -969,9 +963,8 @@ msgid "16 kHz"
 msgstr ""
 
 #: src/libaudgui/equalizer.c:147
-#, fuzzy
 msgid "Equalizer"
-msgstr "Equalizer zeigen"
+msgstr "Equalizer"
 
 #: src/libaudgui/equalizer.c:163
 #, fuzzy
