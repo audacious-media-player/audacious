@@ -63,11 +63,8 @@ static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
     const gchar * string_a = tuple_get_string (a, field, NULL);
     const gchar * string_b = tuple_get_string (b, field, NULL);
 
-    /* This is technically inconsistent if both string_a == NULL and string_b ==
-     * NULL, but for the sake of removing duplicates we do not want blank fields
-     * to compare as equal. */
     if (string_a == NULL)
-        return -1;
+        return (string_b == NULL) ? 0 : -1;
     if (string_b == NULL)
         return 1;
 
@@ -76,10 +73,10 @@ static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
 
 static gint tuple_compare_int (const Tuple * a, const Tuple * b, gint field)
 {
-    /* technically inconsistent again */
-    if (tuple_get_value_type (a, field, NULL) != TUPLE_INT &&
-     tuple_get_value_type (b, field, NULL) != TUPLE_INT)
-        return -1;
+    if (tuple_get_value_type (a, field, NULL) != TUPLE_INT)
+        return (tuple_get_value_type (b, field, NULL) != TUPLE_INT) ? 0 : -1;
+    if (tuple_get_value_type (b, field, NULL) != TUPLE_INT)
+        return 1;
 
     gint int_a = tuple_get_int (a, field, NULL);
     gint int_b = tuple_get_int (b, field, NULL);
@@ -156,6 +153,7 @@ void playlist_sort_selected_by_scheme (gint playlist, gint scheme)
         playlist_sort_selected_by_tuple (playlist, tuple_comparisons[scheme]);
 }
 
+/* Fix me:  This considers empty fields as duplicates. */
 void playlist_remove_duplicates_by_scheme (gint playlist, gint scheme)
 {
     gint entries = playlist_entry_count (playlist);
