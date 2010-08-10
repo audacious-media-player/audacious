@@ -552,7 +552,7 @@ on_titlestring_help_button_clicked(GtkButton * button,
 {
     GtkMenu *menu;
     MenuPos *pos = g_newa(MenuPos, 1);
-    GdkWindow *parent;
+    GdkWindow *parent, *window;
 
     gint x_ro, y_ro;
     gint x_widget, y_widget;
@@ -562,10 +562,11 @@ on_titlestring_help_button_clicked(GtkButton * button,
     g_return_if_fail (GTK_IS_MENU (data));
 
     parent = gtk_widget_get_parent_window(GTK_WIDGET(button));
+    window = gtk_widget_get_window(GTK_WIDGET(button));
 
     gdk_drawable_get_size(parent, &x_size, &y_size);
-    gdk_window_get_root_origin(GTK_WIDGET(button)->window, &x_ro, &y_ro);
-    gdk_window_get_position(GTK_WIDGET(button)->window, &x_widget, &y_widget);
+    gdk_window_get_root_origin(window, &x_ro, &y_ro);
+    gdk_window_get_position(window, &x_widget, &y_widget);
 
     pos->x = x_size + x_ro;
     pos->y = y_size + y_ro - 100;
@@ -701,8 +702,7 @@ create_plugin_preferences(PluginPreferences *settings)
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(window), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title(GTK_WINDOW(window), _(settings->title));
-    gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
-    gtk_container_border_width(GTK_CONTAINER(window), 10);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(plugin_preferences_destroy), settings);
@@ -713,7 +713,7 @@ create_plugin_preferences(PluginPreferences *settings)
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
+    gtk_box_set_spacing(GTK_BOX(bbox), 5);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
 
     ok = gtk_button_new_from_stock(GTK_STOCK_OK);
@@ -1325,7 +1325,7 @@ create_filepopup_settings(void)
 
     btn_ok = gtk_button_new_from_stock("gtk-ok");
     gtk_container_add(GTK_CONTAINER(hbuttonbox), btn_ok);
-    GTK_WIDGET_SET_FLAGS(btn_ok, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(btn_ok, TRUE);
 
     g_signal_connect(G_OBJECT(filepopup_settings), "delete_event",
                      G_CALLBACK(gtk_widget_hide_on_delete),
@@ -1879,7 +1879,8 @@ create_playlist_category(void)
     gtk_table_attach (GTK_TABLE (table6), titlestring_help_button, 2, 3, 1, 2,
                       (GtkAttachOptions) (0),
                       (GtkAttachOptions) (0), 0, 0);
-    GTK_WIDGET_UNSET_FLAGS (titlestring_help_button, GTK_CAN_FOCUS);
+
+    gtk_widget_set_can_focus (titlestring_help_button, FALSE);
     gtk_widget_set_tooltip_text (titlestring_help_button, _("Show information about titlestring format"));
     gtk_button_set_relief (GTK_BUTTON (titlestring_help_button), GTK_RELIEF_HALF);
     gtk_button_set_focus_on_click (GTK_BUTTON (titlestring_help_button), FALSE);
@@ -1943,7 +1944,8 @@ create_playlist_category(void)
 
     filepopup_for_tuple_settings_button = gtk_button_new ();
     gtk_box_pack_start (GTK_BOX (hbox9), filepopup_for_tuple_settings_button, FALSE, FALSE, 0);
-    GTK_WIDGET_UNSET_FLAGS (filepopup_for_tuple_settings_button, GTK_CAN_FOCUS);
+
+    gtk_widget_set_can_focus (filepopup_for_tuple_settings_button, FALSE);
     gtk_widget_set_tooltip_text (filepopup_for_tuple_settings_button, _("Edit settings for popup information"));
     gtk_button_set_relief (GTK_BUTTON (filepopup_for_tuple_settings_button), GTK_RELIEF_HALF);
 
@@ -2077,7 +2079,7 @@ create_audio_category(void)
     output_plugin_prefs = gtk_button_new ();
     gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_prefs);
     gtk_widget_set_sensitive (output_plugin_prefs, FALSE);
-    GTK_WIDGET_SET_FLAGS (output_plugin_prefs, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(output_plugin_prefs, TRUE);
 
     alignment76 = gtk_alignment_new (0.5, 0.5, 0, 0);
     gtk_container_add (GTK_CONTAINER (output_plugin_prefs), alignment76);
@@ -2094,7 +2096,7 @@ create_audio_category(void)
     output_plugin_info = gtk_button_new ();
     gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_info);
     gtk_widget_set_sensitive (output_plugin_info, FALSE);
-    GTK_WIDGET_SET_FLAGS (output_plugin_info, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(output_plugin_info, TRUE);
 
     alignment77 = gtk_alignment_new (0.5, 0.5, 0, 0);
     gtk_container_add (GTK_CONTAINER (output_plugin_info), alignment77);
@@ -2233,12 +2235,12 @@ create_plugin_category(void)
     input_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
     gtk_container_add (GTK_CONTAINER (input_plugin_button_box), input_plugin_prefs);
     gtk_widget_set_sensitive (input_plugin_prefs, FALSE);
-    GTK_WIDGET_SET_FLAGS (input_plugin_prefs, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(input_plugin_prefs, TRUE);
 
     input_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
     gtk_container_add (GTK_CONTAINER (input_plugin_button_box), input_plugin_info);
     gtk_widget_set_sensitive (input_plugin_info, FALSE);
-    GTK_WIDGET_SET_FLAGS (input_plugin_info, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(input_plugin_info, TRUE);
 
     plugin_input_label = gtk_label_new (_("<span size=\"medium\"><b>Decoders</b></span>"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 0), plugin_input_label);
@@ -2276,12 +2278,12 @@ create_plugin_category(void)
     general_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
     gtk_container_add (GTK_CONTAINER (general_plugin_button_box), general_plugin_prefs);
     gtk_widget_set_sensitive (general_plugin_prefs, FALSE);
-    GTK_WIDGET_SET_FLAGS (general_plugin_prefs, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(general_plugin_prefs, TRUE);
 
     general_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
     gtk_container_add (GTK_CONTAINER (general_plugin_button_box), general_plugin_info);
     gtk_widget_set_sensitive (general_plugin_info, FALSE);
-    GTK_WIDGET_SET_FLAGS (general_plugin_info, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(general_plugin_info, TRUE);
 
     plugin_general_label = gtk_label_new (_("<span size=\"medium\"><b>General</b></span>"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 1), plugin_general_label);
@@ -2318,12 +2320,12 @@ create_plugin_category(void)
     vis_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
     gtk_container_add (GTK_CONTAINER (hbuttonbox6), vis_plugin_prefs);
     gtk_widget_set_sensitive (vis_plugin_prefs, FALSE);
-    GTK_WIDGET_SET_FLAGS (vis_plugin_prefs, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(vis_plugin_prefs, TRUE);
 
     vis_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
     gtk_container_add (GTK_CONTAINER (hbuttonbox6), vis_plugin_info);
     gtk_widget_set_sensitive (vis_plugin_info, FALSE);
-    GTK_WIDGET_SET_FLAGS (vis_plugin_info, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(vis_plugin_info, TRUE);
 
     vis_label = gtk_label_new (_("<b>Visualization</b>"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 2), vis_label);
@@ -2359,12 +2361,12 @@ create_plugin_category(void)
     effect_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
     gtk_container_add (GTK_CONTAINER (hbuttonbox9), effect_plugin_prefs);
     gtk_widget_set_sensitive (effect_plugin_prefs, FALSE);
-    GTK_WIDGET_SET_FLAGS (effect_plugin_prefs, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(effect_plugin_prefs, TRUE);
 
     effect_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
     gtk_container_add (GTK_CONTAINER (hbuttonbox9), effect_plugin_info);
     gtk_widget_set_sensitive (effect_plugin_info, FALSE);
-    GTK_WIDGET_SET_FLAGS (effect_plugin_info, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(effect_plugin_info, TRUE);
 
     effects_label = gtk_label_new (_("<b>Effects</b>"));
     gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 3), effects_label);
@@ -2583,7 +2585,8 @@ void * * create_prefs_window (void)
 
     category_notebook = gtk_notebook_new ();
     gtk_box_pack_start (GTK_BOX (hbox1), category_notebook, TRUE, TRUE, 0);
-    GTK_WIDGET_UNSET_FLAGS (category_notebook, GTK_CAN_FOCUS);
+
+    gtk_widget_set_can_focus (category_notebook, FALSE);
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (category_notebook), FALSE);
     gtk_notebook_set_show_border (GTK_NOTEBOOK (category_notebook), FALSE);
     gtk_notebook_set_scrollable (GTK_NOTEBOOK (category_notebook), TRUE);
@@ -2620,7 +2623,7 @@ void * * create_prefs_window (void)
 
     close = gtk_button_new_from_stock ("gtk-close");
     gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
-    GTK_WIDGET_SET_FLAGS (close, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(close, TRUE);
     gtk_widget_add_accelerator (close, "clicked", accel_group,
                                 GDK_Escape, (GdkModifierType) 0,
                                 GTK_ACCEL_VISIBLE);
