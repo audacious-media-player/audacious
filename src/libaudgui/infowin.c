@@ -679,7 +679,6 @@ void create_infowin (void)
 
     btn_close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
     gtk_container_add ((GtkContainer *) bbox_close, btn_close);
-    GTK_WIDGET_SET_FLAGS (btn_close, GTK_CAN_DEFAULT);
     g_signal_connect_swapped (btn_close, "clicked", (GCallback) gtk_widget_hide,
      infowin);
 

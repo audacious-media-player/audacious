@@ -194,7 +194,8 @@ audgui_show_credits_window(void)
     close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     g_signal_connect_swapped(close_btn, "clicked",
                              G_CALLBACK(gtk_widget_destroy), about_window);
-    GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
+
+    gtk_widget_set_can_default(close_btn, TRUE);
     gtk_box_pack_start(GTK_BOX(bbox), close_btn, TRUE, TRUE, 0);
     gtk_widget_grab_default(close_btn);
 
