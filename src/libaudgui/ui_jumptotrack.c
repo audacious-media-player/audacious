@@ -202,13 +202,8 @@ ui_jump_to_track_edit_keypress_cb(GtkWidget * object,
 {
     switch (event->keyval) {
     case GDK_Return:
-        if (gtk_im_context_filter_keypress (GTK_ENTRY (object)->im_context, event)) {
-            GTK_ENTRY (object)->need_im_reset = TRUE;
-            return TRUE;
-        } else {
-            ui_jump_to_track_jump(GTK_TREE_VIEW(data));
-            return TRUE;
-        }
+        ui_jump_to_track_jump(GTK_TREE_VIEW(data));
+        return TRUE;
     default:
         return FALSE;
     }
@@ -497,7 +492,7 @@ audgui_jump_to_track(void)
 
     g_signal_connect (rescan, "clicked", (GCallback) clear_cb, storage);
 
-    GTK_WIDGET_SET_FLAGS(rescan, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(rescan, TRUE);
     gtk_widget_grab_default(rescan);
 
     scrollwin = gtk_scrolled_window_new(NULL, NULL);
@@ -529,7 +524,8 @@ audgui_jump_to_track(void)
     gtk_button_set_image(GTK_BUTTON(queue),
                      gtk_image_new_from_stock(AUD_STOCK_QUEUETOGGLE, GTK_ICON_SIZE_BUTTON));
     gtk_box_pack_start(GTK_BOX(bbox), queue, FALSE, FALSE, 0);
-    GTK_WIDGET_SET_FLAGS(queue, GTK_CAN_DEFAULT);
+
+    gtk_widget_set_can_default(queue, TRUE);
     g_signal_connect(queue, "clicked",
                      G_CALLBACK(ui_jump_to_track_queue_cb),
                      treeview);
@@ -544,14 +540,14 @@ audgui_jump_to_track(void)
                              G_CALLBACK(ui_jump_to_track_jump_cb),
                              treeview);
 
-    GTK_WIDGET_SET_FLAGS(jump, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(jump, TRUE);
     gtk_widget_grab_default(jump);
 
     close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
     g_signal_connect (close, "clicked", (GCallback) audgui_jump_to_track_hide,
      NULL);
-    GTK_WIDGET_SET_FLAGS(close, GTK_CAN_DEFAULT);
+    gtk_widget_set_can_default(close, TRUE);
 
     g_timeout_add(100, (GSourceFunc)ui_jump_to_track_fill, treeview);
 
