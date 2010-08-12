@@ -55,6 +55,8 @@
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
+#include "audacious/compatibility.h"
+
 #include "icons-stock.h"
 #include "ui_jumptotrack_cache.h"
 
