@@ -25,6 +25,9 @@
 #include <glib.h>
 #include <mowgli.h>
 
+#include <audacious/i18n.h>
+
+#include "config.h"
 #include "tuple.h"
 #include "audstrings.h"
 #include "stringpool.h"
@@ -655,4 +658,15 @@ gint tuple_get_int (const Tuple * tuple, gint cnfield, const gchar * field)
         TUPLE_UNLOCK_READ();
         return 0;
     }
+}
+
+void tuple_set_format (Tuple * t, const gchar * format, gint chans, gint rate,
+ gint brate)
+{
+    tuple_associate_string (t, FIELD_CODEC, NULL, format);
+    gchar s[32];
+    snprintf (s, sizeof s, "%s, %d Hz", (chans == 2) ? _("Stereo") : (chans > 2)
+     ? _("Surround") : _("Mono"), rate);
+    tuple_associate_string (t, FIELD_QUALITY, NULL, s);
+    tuple_associate_int (t, FIELD_BITRATE, NULL, brate);
 }
