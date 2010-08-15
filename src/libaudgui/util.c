@@ -19,12 +19,13 @@
  * using our public API to be a derived work.
  */
 
-#define DEBUG
 #include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 
 #include <audacious/debug.h>
+#include <audacious/plugin.h>
+#include <audacious/misc.h>
 
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -102,6 +103,33 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
 
     gdk_pixbuf_loader_close (loader, NULL);
     return pixbuf;
+}
+
+GdkPixbuf * audgui_pixbuf_for_file (const gchar * name)
+{
+    InputPlugin * decoder = aud_file_find_decoder (name, FALSE);
+
+    if (! decoder)
+        return NULL;
+
+    void * data;
+    gint size;
+
+    if (aud_file_read_image (name, decoder, & data, & size))
+    {
+        GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
+        g_free (data);
+        return p;
+    }
+
+    gchar * assoc = aud_get_associated_image_file (name);
+
+    if (! assoc)
+        return NULL;
+
+    GdkPixbuf * p = gdk_pixbuf_new_from_file (assoc, NULL);
+    g_free (assoc);
+    return p;
 }
 
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size)
