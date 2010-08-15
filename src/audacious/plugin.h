@@ -50,7 +50,7 @@
 
 //@{
 /** Preprocessor defines for different API features */
-#define __AUDACIOUS_PLUGIN_API__ 16         /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
+#define __AUDACIOUS_PLUGIN_API__ 17 /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
 //@}
 
 typedef enum {
