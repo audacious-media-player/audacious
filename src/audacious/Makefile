@@ -65,6 +65,7 @@ INCLUDES = api.h \
            types.h
 
 DATA = images/about-logo.png				\
+       images/album.png \
        images/appearance.png				\
        images/audacious_eq.xpm				\
        images/audacious_player.xpm			\
