@@ -300,7 +300,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
      (GUINT32_FROM_BE (header.size));
     header.flags = GUINT16_FROM_BE (header.flags);
 
-    if (header.size > max_size)
+    if (header.size > max_size || header.size == 0)
         return FALSE;
 
     AUDDBG ("Found frame:\n");
