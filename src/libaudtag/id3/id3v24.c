@@ -322,7 +322,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (header.flags & ID3_FRAME_HAS_LENGTH)
         skip += 4;
 
-    if (skip > 0 && vfs_fseek (handle, skip, SEEK_CUR))
+    if ((skip > 0 && vfs_fseek (handle, skip, SEEK_CUR)) || skip >= header.size)
         return FALSE;
 
     * size = header.size - skip;
