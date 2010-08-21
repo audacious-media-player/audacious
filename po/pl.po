@@ -1,5 +1,6 @@
 # Polish translation for audacious
 # Copyright (C) 2006, Wojciech Myrda <vojcek@tlen.pl>
+# Copyright (C) 2010, Michał Kiedrowicz <esqualante@o2.pl>
 # This file is distributed under the same license as the audacious package.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #
