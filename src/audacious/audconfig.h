@@ -39,7 +39,8 @@ struct _AudConfig {
     gboolean equalizer_autoload, equalizer_active;
     gboolean playlist_visible, equalizer_visible, player_visible;
     gboolean show_numbers_in_pl;
-    gboolean no_playlist_advance;
+    gboolean no_playlist_advance, advance_on_delete, clear_playlist,
+     open_to_temporary;
     gboolean stopaftersong;
     gboolean close_dialog_open;
     gfloat equalizer_preamp, equalizer_bands[AUD_EQUALIZER_NBANDS];
@@ -76,7 +77,6 @@ struct _AudConfig {
     gfloat replay_gain_preamp;
     gfloat default_gain;
     gint sw_volume_left, sw_volume_right;
-    gboolean clear_playlist;
     gchar * output_path;
     gint output_number;
     gchar * iface_path;

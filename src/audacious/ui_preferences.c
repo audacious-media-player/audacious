@@ -236,8 +236,12 @@ static PreferencesWidget playback_page_widgets[] = {
         N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
         N_("When finished playing a song, don't automatically advance to the next."), FALSE},
-    {WIDGET_CHK_BTN, N_("Clear current playlist when opening new files"),
+    {WIDGET_CHK_BTN, N_("Advance when the current song is deleted"),
+     & cfg.advance_on_delete, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Clear the playlist when opening files"),
      & cfg.clear_playlist, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
+     & cfg.open_to_temporary, NULL, NULL, FALSE},
 };
 
 static PreferencesWidget chardet_elements[] = {
