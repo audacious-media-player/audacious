@@ -1133,7 +1133,10 @@ on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
     gint position = 0;
 
     position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-    *((gchar **)widget->cfg) = (gchar *)widget->data.combo.elements[position].value;
+    
+    g_free(*((gchar **)widget->cfg));
+    
+    *((gchar **)widget->cfg) = g_strdup(widget->data.combo.elements[position].value);
 }
 
 static void
