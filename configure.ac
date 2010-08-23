@@ -15,10 +15,6 @@ AC_GNU_SOURCE
 AC_CONFIG_HEADERS([config.h])
 PKG_PROG_PKG_CONFIG
 
-dnl Build flags
-dnl ===========
-LDFLAGS="$LDFLAGS -z defs"
-
 dnl buildsystem bootstrap
 dnl =====================
 dnl XXX kludge for FreeBSD
