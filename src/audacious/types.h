@@ -27,6 +27,8 @@
 #define AUD_EQUALIZER_NBANDS 10
 #define EQUALIZER_MAX_GAIN 12
 
+typedef struct PluginHandle PluginHandle;
+
 typedef struct _Plugin Plugin;
 typedef struct _InputPlugin InputPlugin;
 typedef struct _OutputPlugin OutputPlugin;

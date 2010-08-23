@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team.
+ *  Copyright (C) 2005-2010  Audacious development team.
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -57,12 +57,10 @@
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
-#include "pluginenum.h"
+#include "plugins.h"
 #include "signals.h"
-#include "util.h"
-#include "visualization.h"
-
 #include "ui_misc.h"
+#include "util.h"
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
@@ -339,29 +337,6 @@ void aud_quit (void)
     gtk_main_quit ();
 }
 
-static void shut_down (void)
-{
-    g_message("Saving configuration");
-    aud_config_save();
-    save_playlists ();
-
-    if (playback_get_playing ())
-        playback_stop ();
-
-    g_message("Shutting down user interface subsystem");
-    interface_unload ();
-
-    output_cleanup ();
-
-    g_message("Plugin subsystem shutdown");
-    plugin_system_cleanup();
-
-    cfg_db_flush (); /* must be after plugin cleanup */
-
-    g_message("Playlist cleanup");
-    playlist_end();
-}
-
 #ifdef USE_DBUS
 static void mpris_status_cb1(gpointer hook_data, gpointer user_data)
 {
@@ -393,35 +368,6 @@ static gboolean autosave_cb (void * unused)
     cfg_db_flush ();
     save_playlists ();
     return TRUE;
-}
-
-static PluginHandle * current_iface = NULL;
-
-PluginHandle * iface_plugin_get_active (void)
-{
-    return current_iface;
-}
-
-void iface_plugin_set_active (PluginHandle * plugin)
-{
-    g_message ("Unloading visualizers.");
-    vis_cleanup ();
-
-    g_message ("Unloading %s.", plugin_get_name (current_iface));
-    interface_unload ();
-
-    current_iface = plugin;
-    interface_set_default (plugin);
-
-    g_message ("Starting %s.", plugin_get_name (plugin));
-    if (! interface_load (plugin))
-    {
-        fprintf (stderr, "%s failed to start.\n", plugin_get_name (plugin));
-        exit (EXIT_FAILURE);
-    }
-
-    g_message ("Loading visualizers.");
-    vis_init ();
 }
 
 gint main(gint argc, gchar ** argv)
@@ -484,7 +430,16 @@ gint main(gint argc, gchar ** argv)
     g_message("Handling commandline options, part #1");
     handle_cmd_line_options_first();
 
+    g_message ("Initializing core ...");
+    playlist_init ();
     output_init ();
+    eq_init ();
+
+    g_message ("Loading plugins, stage one ...");
+    start_plugins_one ();
+
+    g_message ("Loading saved state ...");
+    load_playlists ();
 
 #ifdef USE_DBUS
     g_message("Initializing D-Bus");
@@ -492,49 +447,41 @@ gint main(gint argc, gchar ** argv)
     init_playback_hooks();
 #endif
 
-    g_message("Initializing plugin subsystems...");
-    plugin_system_init();
-
-    playlist_init ();
-    load_playlists ();
-    eq_init ();
-
     g_message("Handling commandline options, part #2");
     handle_cmd_line_options();
 
     g_message("Registering interface hooks");
     register_interface_hooks();
 
+    g_message ("Loading plugins, stage two ...");
+    start_plugins_two ();
+
 #ifndef NOT_ALPHA_RELEASE
     g_message("Displaying unsupported version warning.");
     ui_display_unsupported_version_warning();
 #endif
 
+    g_message ("Startup complete.");
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, autosave_cb, NULL);
-
-    if ((current_iface = interface_get_default ()) == NULL)
-    {
-        fprintf (stderr, "No interface plugin found.\n");
-        return EXIT_FAILURE;
-    }
-
-    g_message ("Starting %s.", plugin_get_name (current_iface));
-    if (! interface_load (current_iface))
-    {
-        fprintf (stderr, "%s failed to start.\n", plugin_get_name (current_iface));
-        return EXIT_FAILURE;
-    }
-
-    g_message ("Loading visualizers.");
-    vis_init ();
-
-    g_message ("Starting main loop.");
     gtk_main ();
 
-    g_message ("Unloading visualizers.");
-    vis_cleanup ();
+    g_message ("Capturing state ...");
+    aud_config_save ();
+    save_playlists ();
 
-    g_message ("Shutting down.");
-    shut_down ();
+    g_message ("Stopping playback ...");
+    if (playback_get_playing ())
+        playback_stop ();
+
+    g_message ("Unloading plugins ...");
+    stop_plugins ();
+
+    g_message ("Saving configuration ...");
+    cfg_db_flush ();
+
+    g_message ("Shutting down core ...");
+    output_cleanup ();
+    playlist_end ();
+
     return EXIT_SUCCESS;
 }

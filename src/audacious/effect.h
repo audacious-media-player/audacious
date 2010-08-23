@@ -25,11 +25,16 @@
 
 #include <glib.h>
 
+#include "types.h"
+
 void effect_start (gint * channels, gint * rate);
 void effect_process (gfloat * * data, gint * samples);
 void effect_flush (void);
 void effect_finish (gfloat * * data, gint * samples);
 gint effect_decoder_to_output_time (gint time);
 gint effect_output_to_decoder_time (gint time);
+
+gboolean effect_plugin_start (PluginHandle * plugin);
+void effect_plugin_stop (PluginHandle * plugin);
 
 #endif

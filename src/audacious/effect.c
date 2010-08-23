@@ -23,7 +23,6 @@
 
 #include "debug.h"
 #include "effect.h"
-#include "output.h"
 #include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -77,8 +76,7 @@ void effect_start (gint * channels, gint * rate)
     running_effects = g_list_reverse (running_effects);
 }
 
-typedef struct
-{
+typedef struct {
     gfloat * * data;
     gint * samples;
 } EffectProcessState;
@@ -193,26 +191,48 @@ static void effect_remove (PluginHandle * plugin)
     ((RunningEffect *) node->data)->remove_flag = TRUE;
 }
 
-void effect_plugin_enable (PluginHandle * plugin, gboolean enable)
+static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, gboolean
+ enable)
 {
-    plugin_set_enabled (plugin, enable);
+    if (ep->preserves_format)
+    {
+        if (enable)
+            effect_insert (plugin, ep);
+        else
+            effect_remove (plugin);
+    }
+    else
+    {
+        AUDDBG ("Reset to add/remove %s.\n", plugin_get_name (plugin));
+        gint time = playback_get_time ();
+        gboolean paused = playback_get_paused ();
+        playback_stop ();
+        playback_play (time, paused);
+    }
+}
+
+gboolean effect_plugin_start (PluginHandle * plugin)
+{
+    EffectPlugin * ep = plugin_get_header (plugin);
+    g_return_val_if_fail (ep != NULL, FALSE);
+
+    if (ep->init != NULL)
+        ep->init ();
 
     if (playback_get_playing ())
-    {
-        EffectPlugin * header = plugin_get_header (plugin);
-        g_return_if_fail (header != NULL);
+        effect_enable (plugin, ep, TRUE);
 
-        if (header->preserves_format)
-        {
-            if (enable)
-                effect_insert (plugin, header);
-            else
-                effect_remove (plugin);
-        }
-        else
-        {
-            AUDDBG ("Reset to add/remove %s.\n", plugin_get_name (plugin));
-            set_current_output_plugin (current_output_plugin);
-        }
-    }
+    return TRUE;
+}
+
+void effect_plugin_stop (PluginHandle * plugin)
+{
+    EffectPlugin * ep = plugin_get_header (plugin);
+    g_return_if_fail (ep != NULL);
+
+    if (playback_get_playing ())
+        effect_enable (plugin, ep, FALSE);
+
+    if (ep->cleanup != NULL)
+        ep->cleanup ();
 }

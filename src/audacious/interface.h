@@ -76,8 +76,6 @@ struct _Interface {
 #include <gtk/gtk.h>
 #include <audacious/plugins.h>
 
-PluginHandle * interface_get_default (void);
-void interface_set_default (PluginHandle * plugin);
 gboolean interface_load (PluginHandle * plugin);
 void interface_unload (void);
 
@@ -96,6 +94,10 @@ void interface_toggle_shuffle(void);
 void interface_toggle_repeat(void);
 
 void register_interface_hooks(void);
+
+PluginHandle * iface_plugin_probe (void);
+PluginHandle * iface_plugin_get_current (void);
+gboolean iface_plugin_set_current (PluginHandle * plugin);
 
 #endif
 #endif

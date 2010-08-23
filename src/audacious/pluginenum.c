@@ -23,35 +23,24 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
+#include <assert.h>
+
+#include <glib.h>
+#include <gmodule.h>
+
+#include <libaudcore/audstrings.h>
+#include <libaudgui/init.h>
+
+#include "config.h"
 
 #ifndef SHARED_SUFFIX
 # define SHARED_SUFFIX G_MODULE_SUFFIX
 #endif
 
-#include <glib.h>
-#include <gmodule.h>
-#include <gtk/gtk.h>
-#include <string.h>
-
-#include <libaudcore/audstrings.h>
-#include <libaudgui/init.h>
-
-#include "pluginenum.h"
-#include "plugins.h"
-
 #include "audconfig.h"
-#include "effect.h"
-#include "general.h"
-#include "i18n.h"
-#include "interface.h"
 #include "main.h"
-#include "output.h"
-#include "playback.h"
+#include "plugin.h"
 #include "util.h"
-#include "visualization.h"
 
 #define AUD_API_DECLARE
 #include "configdb.h"
@@ -61,10 +50,7 @@
 #include "plugins.h"
 #undef AUD_API_DECLARE
 
-const gchar *plugin_dir_list[] = {
-    PLUGINSUBS,
-    NULL
-};
+static const gchar * plugin_dir_list[] = {PLUGINSUBS, NULL};
 
 static AudAPITable api_table = {
  .configdb_api = & configdb_api,
@@ -76,32 +62,6 @@ static AudAPITable api_table = {
 
 extern GList *vfs_transports;
 static mowgli_list_t *headers_list = NULL;
-
-static void input_plugin_init(Plugin * plugin)
-{
-    InputPlugin *p = INPUT_PLUGIN(plugin);
-
-    if (p->init != NULL)
-        p->init ();
-}
-
-static void effect_plugin_init(Plugin * plugin)
-{
-    EffectPlugin *p = EFFECT_PLUGIN(plugin);
-
-    if (p->init != NULL)
-        p->init ();
-}
-
-static void vis_plugin_disable_by_header (VisPlugin * header)
-{
-    vis_plugin_enable (plugin_by_header (header), FALSE);
-}
-
-static void vis_plugin_init(Plugin * plugin)
-{
-    ((VisPlugin *) plugin)->disable_plugin = vis_plugin_disable_by_header;
-}
 
 /*******************************************************************/
 
@@ -120,9 +80,13 @@ static void plugin2_dispose(GModule * module, const gchar * str, ...)
     g_module_close(module);
 }
 
+static void vis_plugin_disable_by_header (VisPlugin * header)
+{
+    plugin_enable (plugin_by_header (header), FALSE);
+}
+
 void plugin2_process(PluginHeader * header, GModule * module, const gchar * filename)
 {
-    gint i, n;
     mowgli_node_t *hlist_node;
 
     if (header->magic != PLUGIN_MAGIC)
@@ -143,71 +107,72 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     hlist_node = mowgli_node_create();
     mowgli_node_add(header, hlist_node, headers_list);
 
-    if (header->init)
-    {
-        plugin_register (filename, PLUGIN_TYPE_BASIC, 0, NULL);
-        header->init();
-    }
-
     header->priv_assoc = g_new0(Plugin, 1);
     header->priv_assoc->handle = module;
     header->priv_assoc->filename = g_strdup(filename);
 
-    n = 0;
-
-    if (header->ip_list)
+    if (header->init != NULL)
     {
-        for (i = 0; (header->ip_list)[i] != NULL; i++, n++)
+        plugin_register (PLUGIN_TYPE_LOWLEVEL, filename, 0, NULL);
+        header->init ();
+    }
+
+    if (header->ip_list != NULL)
+    {
+        InputPlugin * ip;
+        for (gint i = 0; (ip = header->ip_list[i]) != NULL; i ++)
         {
-            plugin_register (filename, PLUGIN_TYPE_INPUT, i, header->ip_list[i]);
-            PLUGIN((header->ip_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
-            input_plugin_init(PLUGIN((header->ip_list)[i]));
+            ip->filename = g_strdup_printf ("%s (#%d)", filename, i);
+            plugin_register (PLUGIN_TYPE_INPUT, filename, i, ip);
+
+            if (ip->init != NULL)
+                ip->init ();
         }
     }
 
-    if (header->op_list)
+    if (header->ep_list != NULL)
     {
-        for (i = 0; (header->op_list)[i] != NULL; i++, n++)
+        EffectPlugin * ep;
+        for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
         {
-            OutputPlugin * plugin = header->op_list[i];
-
-            plugin->filename = g_strdup_printf ("%s (#%d)", filename, n);
-            plugin_register (filename, PLUGIN_TYPE_OUTPUT, i, plugin);
+            ep->filename = g_strdup_printf ("%s (#%d)", filename, i);
+            plugin_register (PLUGIN_TYPE_EFFECT, filename, i, ep);
         }
     }
 
-    if (header->ep_list)
+    if (header->op_list != NULL)
     {
-        for (i = 0; (header->ep_list)[i] != NULL; i++, n++)
+        OutputPlugin * op;
+        for (gint i = 0; (op = header->op_list[i]) != NULL; i ++)
         {
-            plugin_register (filename, PLUGIN_TYPE_EFFECT, i, header->ep_list[i]);
-            PLUGIN((header->ep_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
-            effect_plugin_init(PLUGIN((header->ep_list)[i]));
+            op->filename = g_strdup_printf ("%s (#%d)", filename, i);
+            plugin_register (PLUGIN_TYPE_OUTPUT, filename, i, op);
         }
     }
 
-
-    if (header->gp_list)
+    if (header->vp_list != NULL)
     {
-        for (i = 0; (header->gp_list)[i] != NULL; i++, n++)
+        VisPlugin * vp;
+        for (gint i = 0; (vp = header->vp_list[i]) != NULL; i ++)
         {
-            plugin_register (filename, PLUGIN_TYPE_GENERAL, i, header->gp_list[i]);
-            PLUGIN((header->gp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
+            vp->filename = g_strdup_printf ("%s (#%d)", filename, i);
+            vp->disable_plugin = vis_plugin_disable_by_header;
+            plugin_register (PLUGIN_TYPE_VIS, filename, i, vp);
         }
     }
 
-    if (header->vp_list)
+    if (header->gp_list != NULL)
     {
-        for (i = 0; (header->vp_list)[i] != NULL; i++, n++)
+        GeneralPlugin * gp;
+        for (gint i = 0; (gp = header->gp_list[i]) != NULL; i ++)
         {
-            plugin_register (filename, PLUGIN_TYPE_VIS, i, header->vp_list[i]);
-            PLUGIN((header->vp_list)[i])->filename = g_strdup_printf("%s (#%d)", filename, n);
-            vis_plugin_init(PLUGIN((header->vp_list)[i]));
+            gp->filename = g_strdup_printf ("%s (#%d)", filename, i);
+            plugin_register (PLUGIN_TYPE_GENERAL, filename, i, gp);
         }
     }
 
-    if (header->interface)
-        plugin_register (filename, PLUGIN_TYPE_IFACE, 0, header->interface);
+    if (header->interface != NULL)
+        plugin_register (PLUGIN_TYPE_IFACE, filename, 0, header->interface);
 }
 
 void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
@@ -218,30 +183,26 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 
     if (header->ip_list != NULL)
     {
-        for (gint i = 0; header->ip_list[i] != NULL; i ++)
+        InputPlugin * ip;
+        for (gint i = 0; (ip = header->ip_list[i]) != NULL; i ++)
         {
-            if (header->ip_list[i]->cleanup != NULL)
-                header->ip_list[i]->cleanup ();
+            g_free (ip->filename);
 
-            g_free (header->ip_list[i]->filename);
+            if (ip->cleanup != NULL)
+                ip->cleanup ();
         }
+    }
+
+    if (header->ep_list != NULL)
+    {
+        for (gint i = 0; header->ep_list[i] != NULL; i ++)
+            g_free (header->ep_list[i]->filename);
     }
 
     if (header->op_list != NULL)
     {
         for (gint i = 0; header->op_list[i] != NULL; i ++)
             g_free (header->op_list[i]->filename);
-    }
-
-    if (header->ep_list != NULL)
-    {
-        for (gint i = 0; header->ep_list[i] != NULL; i ++)
-        {
-            if (header->ep_list[i]->cleanup != NULL)
-                header->ep_list[i]->cleanup ();
-
-            g_free (header->ep_list[i]->filename);
-        }
     }
 
     if (header->vp_list != NULL)
@@ -256,13 +217,13 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
             g_free (header->gp_list[i]->filename);
     }
 
+    if (header->fini != NULL)
+        header->fini ();
+
     module = header->priv_assoc->handle;
 
     g_free(header->priv_assoc->filename);
     g_free(header->priv_assoc);
-
-    if (header->fini)
-        header->fini();
 
     mowgli_node_delete(hlist_node, headers_list);
     mowgli_node_free(hlist_node);
@@ -316,63 +277,14 @@ static void scan_plugins(const gchar * path)
     dir_foreach(path, scan_plugin_func, NULL, NULL);
 }
 
-static OutputPlugin * output_load_selected (void)
-{
-    if (cfg.output_path == NULL)
-        return NULL;
-
-    PluginHandle * handle = plugin_by_path (cfg.output_path, PLUGIN_TYPE_OUTPUT,
-     cfg.output_number);
-    if (handle == NULL)
-        return NULL;
-
-    OutputPlugin * plugin = plugin_get_header (handle);
-    if (plugin == NULL || plugin->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-        return NULL;
-
-    return plugin;
-}
-
-static gboolean output_probe_func (PluginHandle * handle, OutputPlugin * * result)
-{
-    g_message ("Probing output plugin %s", plugin_get_name (handle));
-    OutputPlugin * plugin = plugin_get_header (handle);
-
-    if (plugin == NULL || plugin->init == NULL || plugin->init () !=
-     OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-        return TRUE;
-
-    * result = plugin;
-    return FALSE;
-}
-
-static OutputPlugin * output_probe (void)
-{
-    OutputPlugin * plugin = NULL;
-    plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) output_probe_func,
-     & plugin);
-
-    if (plugin == NULL)
-        fprintf (stderr, "ALL OUTPUT PLUGINS FAILED TO INITIALIZE.\n");
-
-    return plugin;
-}
-
 void plugin_system_init(void)
 {
+    assert (g_module_supported ());
+
     gchar *dir;
-    GtkWidget *dialog;
     gint dirsel = 0;
 
     audgui_init (& api_table);
-
-    if (!g_module_supported())
-    {
-        dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("Module loading not supported! Plugins will not be loaded.\n"));
-        gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-        return;
-    }
 
     plugin_registry_load ();
 
@@ -402,30 +314,11 @@ void plugin_system_init(void)
     }
 
     plugin_registry_prune ();
-
-    current_output_plugin = output_load_selected ();
-
-    if (current_output_plugin == NULL)
-        current_output_plugin = output_probe ();
-
-    general_init ();
 }
 
 void plugin_system_cleanup(void)
 {
     mowgli_node_t *hlist_node;
-
-    g_message("Shutting down plugin system");
-
-    if (current_output_plugin != NULL)
-    {
-        if (current_output_plugin->cleanup != NULL)
-            current_output_plugin->cleanup ();
-
-        current_output_plugin = NULL;
-    }
-
-    general_cleanup ();
 
     plugin_registry_save ();
 

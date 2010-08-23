@@ -2,6 +2,7 @@
  * Audacious2
  * Copyright (c) 2008 William Pitcock <nenolod@dereferenced.org>
  * Copyright (c) 2008-2009 Tomasz Moń <desowin@gmail.com>
+ * Copyright (c) 2010 John Lindgren <john.lindgren@tds.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +32,7 @@
 #include "interface.h"
 #include "plugins.h"
 #include "ui_preferences.h"
+#include "visualization.h"
 
 static Interface *current_interface = NULL;
 
@@ -43,43 +45,6 @@ static InterfaceOps interface_ops = {
 };
 
 static InterfaceCbs interface_cbs = { NULL };
-
-static gboolean interface_search_cb (PluginHandle * plugin, PluginHandle * *
- pluginp)
-{
-    * pluginp = plugin;
-    return FALSE;
-}
-
-PluginHandle * interface_get_default (void)
-{
-    PluginHandle * plugin;
-
-    if (cfg.iface_path == NULL || (plugin = plugin_by_path (cfg.iface_path,
-     PLUGIN_TYPE_IFACE, cfg.iface_number)) == NULL || ! plugin_get_enabled
-     (plugin))
-    {
-        AUDDBG ("Searching for an interface.\n");
-        plugin_for_enabled (PLUGIN_TYPE_IFACE, (PluginForEachFunc)
-         interface_search_cb, & plugin);
-        if (plugin == NULL)
-            return NULL;
-
-        interface_set_default (plugin);
-    }
-
-    return plugin;
-}
-
-void interface_set_default (PluginHandle * plugin)
-{
-    const gchar * path;
-    gint type;
-
-    g_free (cfg.iface_path);
-    plugin_get_path (plugin, & path, & type, & cfg.iface_number);
-    cfg.iface_path = g_strdup (path);
-}
 
 gboolean interface_load (PluginHandle * plugin)
 {
@@ -189,7 +154,7 @@ interface_show_about_window(gboolean show)
 static gboolean delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
  plugin)
 {
-    vis_plugin_enable (plugin, FALSE);
+    plugin_enable (plugin, FALSE);
     return TRUE;
 }
 
@@ -314,3 +279,51 @@ register_interface_hooks(void)
 
 }
 
+static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
+{
+    * pp = p;
+    return FALSE;
+}
+
+PluginHandle * iface_plugin_probe (void)
+{
+    PluginHandle * p;
+    plugin_for_each (PLUGIN_TYPE_IFACE, (PluginForEachFunc) probe_cb, & p);
+    return p;
+}
+
+static PluginHandle * current_plugin = NULL;
+
+PluginHandle * iface_plugin_get_current (void)
+{
+    return current_plugin;
+}
+
+gboolean iface_plugin_set_current (PluginHandle * plugin)
+{
+    if (current_plugin != NULL)
+    {
+        g_message ("Unloading visualizers ...");
+        vis_cleanup ();
+
+        g_message ("Unloading %s ...", plugin_get_name (current_plugin));
+        interface_unload ();
+
+        current_plugin = NULL;
+    }
+
+    if (plugin != NULL)
+    {
+        g_message ("Loading %s ...", plugin_get_name (plugin));
+
+        if (! interface_load (plugin))
+            return FALSE;
+
+        current_plugin = plugin;
+
+        g_message ("Loading visualizers ...");
+        vis_init ();
+    }
+
+    return TRUE;
+}

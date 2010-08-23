@@ -51,7 +51,6 @@ struct _AudConfig {
     gint titlestring_preset;
     gchar *gentitle_format;
     gboolean resume_playback_on_startup;
-    gint unused, unused2; /* for compatibility with v2.3 binary API */
     gint resume_state;
     gint resume_playback_on_startup_time;
     gchar *chardet_detector;
@@ -77,10 +76,6 @@ struct _AudConfig {
     gfloat replay_gain_preamp;
     gfloat default_gain;
     gint sw_volume_left, sw_volume_right;
-    gchar * output_path;
-    gint output_number;
-    gchar * iface_path;
-    gint iface_number;
 
     /* libaudgui stuff */
     gboolean no_confirm_playlist_delete;

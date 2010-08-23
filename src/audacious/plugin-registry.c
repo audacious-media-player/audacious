@@ -31,7 +31,6 @@
 #include "main.h"
 #include "misc.h"
 #include "plugin.h"
-#include "pluginenum.h"
 #include "plugins.h"
 #include "util.h"
 
@@ -65,13 +64,13 @@ struct PluginHandle {
 };
 
 static const gchar * plugin_type_names[] = {
- [PLUGIN_TYPE_BASIC] = NULL,
+ [PLUGIN_TYPE_LOWLEVEL] = NULL,
  [PLUGIN_TYPE_INPUT] = "input",
- [PLUGIN_TYPE_OUTPUT] = "output",
  [PLUGIN_TYPE_EFFECT] = "effect",
+ [PLUGIN_TYPE_OUTPUT] = "output",
  [PLUGIN_TYPE_VIS] = "vis",
- [PLUGIN_TYPE_IFACE] = "iface",
- [PLUGIN_TYPE_GENERAL] = "general"};
+ [PLUGIN_TYPE_GENERAL] = "general",
+ [PLUGIN_TYPE_IFACE] = "iface"};
 static const gchar * input_key_names[] = {
  [INPUT_KEY_SCHEME] = "scheme",
  [INPUT_KEY_EXTENSION] = "ext",
@@ -117,8 +116,6 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
         plugin->enabled = TRUE;
         memset (plugin->u.i.keys, 0, sizeof plugin->u.i.keys);
     }
-    else if (type == PLUGIN_TYPE_IFACE)
-        plugin->enabled = TRUE;
 
     plugin_list = g_list_prepend (plugin_list, plugin);
     module->plugin_list = g_list_prepend (module->plugin_list, plugin);
@@ -450,7 +447,8 @@ static gint plugin_lookup_cb (PluginHandle * plugin, PluginLookupState * state)
      : -1;
 }
 
-static PluginHandle * plugin_lookup (ModuleData * module, gint type, gint number)
+static PluginHandle * plugin_lookup_real (ModuleData * module, gint type, gint
+ number)
 {
     PluginLookupState state = {type, number};
     GList * node = g_list_find_custom (module->plugin_list, & state,
@@ -458,12 +456,12 @@ static PluginHandle * plugin_lookup (ModuleData * module, gint type, gint number
     return (node != NULL) ? node->data : NULL;
 }
 
-void plugin_register (const gchar * path, gint type, gint number, void * header)
+void plugin_register (gint type, const gchar * path, gint number, void * header)
 {
     ModuleData * module = module_lookup (path);
     g_return_if_fail (module != NULL);
 
-    PluginHandle * plugin = plugin_lookup (module, type, number);
+    PluginHandle * plugin = plugin_lookup_real (module, type, number);
     if (plugin == NULL)
     {
         AUDDBG ("New plugin: %s %d:%d\n", path, type, number);
@@ -541,21 +539,28 @@ void plugin_register (const gchar * path, gint type, gint number, void * header)
     }
 }
 
-void plugin_get_path (PluginHandle * plugin, const gchar * * path, gint * type,
- gint * number)
+gint plugin_get_type (PluginHandle * plugin)
 {
-    * path = plugin->module->path;
-    * type = plugin->type;
-    * number = plugin->number;
+    return plugin->type;
 }
 
-PluginHandle * plugin_by_path (const gchar * path, gint type, gint number)
+const gchar * plugin_get_filename (PluginHandle * plugin)
+{
+    return plugin->module->path;
+}
+
+gint plugin_get_number (PluginHandle * plugin)
+{
+    return plugin->number;
+}
+
+PluginHandle * plugin_lookup (gint type, const gchar * path, gint number)
 {
     ModuleData * module = module_lookup (path);
     if (module == NULL)
         return NULL;
 
-    return plugin_lookup (module, type, number);
+    return plugin_lookup_real (module, type, number);
 }
 
 void * plugin_get_header (PluginHandle * plugin)
