@@ -484,7 +484,7 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
 {
     gchar * text = decode_text_frame (data, size);
 
-    if (text == NULL)
+    if (text == NULL || ! text[0])
         return;
 
     if (customfield != NULL)
@@ -501,7 +501,7 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
 {
     gchar * text = decode_text_frame (data, size);
 
-    if (text == NULL)
+    if (text == NULL || ! text[0])
         return;
 
     if (customfield != NULL)
