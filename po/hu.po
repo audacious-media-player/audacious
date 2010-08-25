@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2010-08-03 18:01-0400\n"
-"PO-Revision-Date: 2010-08-01 21:21+0100\n"
+"PO-Revision-Date: 2010-08-21 11:09+0100\n"
 "Last-Translator: Peter Polonkai <polesz@nedudu.hu>\n"
 "Language-Team: Hungarian <dvornik@gnome.hu>\n"
 "Language: hu\n"
@@ -81,9 +81,8 @@ msgid "Catalan:"
 msgstr "Katalán"
 
 #: src/audacious/credits.c:197
-#, fuzzy
 msgid "Chinese:"
-msgstr "Kínai"
+msgstr "Kínai:"
 
 #: src/audacious/credits.c:200
 msgid "Croatian:"
@@ -219,11 +218,9 @@ msgid "Searching ..."
 msgstr "Keresés ..."
 
 #: src/audacious/folder-add.c:79
-#, fuzzy, c-format
+#, c-format
 msgid "%d file found"
-msgid_plural "%d files found"
-msgstr[0] "%d files found"
-msgstr[1] "%d files found"
+msgstr "%d fájlt találtam"
 
 #: src/audacious/logger.c:125
 #, c-format
@@ -280,8 +277,7 @@ msgstr "Minden Audacious ablak megnyitása"
 
 #: src/audacious/main.c:169
 msgid "Print all errors and warnings to stdout"
-msgstr ""
-"Minden hiba és figyelmeztetés megjelenítése a kimeneti eszközön (stdout)"
+msgstr "Minden hiba és figyelmeztetés megjelenítése a kimeneti eszközön (stdout)"
 
 #: src/audacious/main.c:170
 msgid "Show version"
@@ -332,8 +328,7 @@ msgstr "Névtelen lejátszólista"
 
 #: src/audacious/pluginenum.c:371
 msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
-"Bővítmény betöltés nem támogatott! A bővítmények nem lettek betöltve.\n"
+msgstr "Bővítmény betöltés nem támogatott! A bővítmények nem lettek betöltve.\n"
 
 #: src/audacious/ui_misc.c:50
 msgid "Audacious - Unsupported Version Warning"
@@ -344,64 +339,45 @@ msgid "<big><b>Audacious2 is not ready yet!</b></big>"
 msgstr "<big><b>Audacious2 még nincs kész!</b></big>"
 
 #: src/audacious/ui_misc.c:63
-msgid ""
-"<b>Please don't file bugs at this point unless they represent major problems."
-"</b>"
-msgstr ""
-"<b>Kérem ne küldjön hibás fájlokat, ha nem jelentős problémába ütközött.</b>"
+msgid "<b>Please don't file bugs at this point unless they represent major problems.</b>"
+msgstr "<b>Kérem ne küldjön hibás fájlokat, ha nem jelentős problémába ütközött.</b>"
 
 #: src/audacious/ui_misc.c:66
 msgid ""
-"This is an <i>alpha</i> build of Audacious2. It is still fairly incomplete "
-"and unpolished.\n"
-"We suspect that most minor bugs reported during this time will be resolved "
-"once more things\n"
-"stablize. However, if there is a major bug, such as a crash on playing a "
-"specific file, we\n"
+"This is an <i>alpha</i> build of Audacious2. It is still fairly incomplete and unpolished.\n"
+"We suspect that most minor bugs reported during this time will be resolved once more things\n"
+"stablize. However, if there is a major bug, such as a crash on playing a specific file, we\n"
 "need to know about it.\n"
 "\n"
-"However, we ask you to be aware that dealing with trivial bugs is "
-"distracting at this point,\n"
+"However, we ask you to be aware that dealing with trivial bugs is distracting at this point,\n"
 "and to please refrain from doing so. Thanks in advance!"
 msgstr ""
-"Ez az Audacious2 egy <i>alpha</i> kiadása. Ez még mindig meglehetősen "
-"hiányos és csiszolatlan.\n"
-"Úgy gondoljuk hogy a legtöbb kisebb hibát amit jelentettek hamarosan "
-"megoldjuk és tovább stabilizáljuk.\n"
-"Azonban, ha egy jelentős hibát tapasztal, mint például a program leállása "
-"egy adott fájl lejátszásakor,\n"
+"Ez az Audacious2 egy <i>alpha</i> kiadása. Ez még mindig meglehetősen hiányos és csiszolatlan.\n"
+"Úgy gondoljuk hogy a legtöbb kisebb hibát amit jelentettek hamarosan megoldjuk és tovább stabilizáljuk.\n"
+"Azonban, ha egy jelentős hibát tapasztal, mint például a program leállása egy adott fájl lejátszásakor,\n"
 "akkor nekünk tudnunk kell erről.\n"
 "\n"
-"Megkérjük, hogy legyen elnéző a viszonylag jelentéktelen hibákkal szemben "
-"ezen a ponton,\n"
+"Megkérjük, hogy legyen elnéző a viszonylag jelentéktelen hibákkal szemben ezen a ponton,\n"
 "és nem fontos hogy jelentse nekünk. Előre is köszönjük!"
 
 #: src/audacious/ui_misc.c:76
 msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-msgstr ""
-"<b>Megjegyzéseket írni (bloggolni) a megtalálható hibákról szintén nem "
-"szerencsés.</b>"
+msgstr "<b>Megjegyzéseket írni (bloggolni) a megtalálható hibákról szintén nem szerencsés.</b>"
 
 #: src/audacious/ui_misc.c:79
 msgid ""
-"Likewise, we're developers. We don't read blogs on a regular basis. If there "
-"is a major bug,\n"
-"we ask you to bring it to our attention via our bugtracking instance at "
-"http://jira.atheme.org/,\n"
+"Likewise, we're developers. We don't read blogs on a regular basis. If there is a major bug,\n"
+"we ask you to bring it to our attention via our bugtracking instance at http://jira.atheme.org/,\n"
 "or via the forums that are on the website.\n"
 "\n"
-"This will help us find out more information about your concerns, which we "
-"would likely\n"
+"This will help us find out more information about your concerns, which we would likely\n"
 "not know about otherwise."
 msgstr ""
-"Ugyanígy vagyunk mi a fejlesztők is. Nem olvasunk blogokat rendszeresen. Ha "
-"van egy nagyobb hiba,\n"
-"kérjük, hogy azt a jelezze a mi hibakövető rendszerünkben például a http://"
-"jira.atheme.org/,\n"
+"Ugyanígy vagyunk mi a fejlesztők is. Nem olvasunk blogokat rendszeresen. Ha van egy nagyobb hiba,\n"
+"kérjük, hogy azt a jelezze a mi hibakövető rendszerünkben például a http://jira.atheme.org/,\n"
 "vagy azon a fórumokon, amelyek a honlapon megtalálhatóak.\n"
 "\n"
-"Ez segít nekünk megtalálni a további információkat a problémára, amit "
-"valószínűleg\n"
+"Ez segít nekünk megtalálni a további információkat a problémára, amit valószínűleg\n"
 "nem tudnánk meg másképpen."
 
 #: src/audacious/ui_preferences.c:124
@@ -420,7 +396,8 @@ msgstr "Hálózat"
 msgid "Playback"
 msgstr "Lejátszás"
 
-#: src/audacious/ui_preferences.c:128 src/libaudgui/ui_playlist_manager.c:198
+#: src/audacious/ui_preferences.c:128
+#: src/libaudgui/ui_playlist_manager.c:198
 msgid "Playlist"
 msgstr "Lejátszólista"
 
@@ -428,15 +405,18 @@ msgstr "Lejátszólista"
 msgid "Plugins"
 msgstr "Bővítmények"
 
-#: src/audacious/ui_preferences.c:135 src/libaudgui/infopopup.c:231
+#: src/audacious/ui_preferences.c:135
+#: src/libaudgui/infopopup.c:231
 msgid "Artist"
 msgstr "Előadó"
 
-#: src/audacious/ui_preferences.c:136 src/libaudgui/infopopup.c:233
+#: src/audacious/ui_preferences.c:136
+#: src/libaudgui/infopopup.c:233
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:137 src/libaudgui/infopopup.c:229
+#: src/audacious/ui_preferences.c:137
+#: src/libaudgui/infopopup.c:229
 msgid "Title"
 msgstr "Cím"
 
@@ -444,11 +424,13 @@ msgstr "Cím"
 msgid "Tracknumber"
 msgstr "Szám sorszáma"
 
-#: src/audacious/ui_preferences.c:139 src/libaudgui/infopopup.c:235
+#: src/audacious/ui_preferences.c:139
+#: src/libaudgui/infopopup.c:235
 msgid "Genre"
 msgstr "Műfaj"
 
-#: src/audacious/ui_preferences.c:140 src/audacious/ui_preferences.c:438
+#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:438
 msgid "Filename"
 msgstr "Fájlnév"
 
@@ -460,7 +442,8 @@ msgstr "Fájlútvonal"
 msgid "Date"
 msgstr "Dátum"
 
-#: src/audacious/ui_preferences.c:143 src/libaudgui/infopopup.c:237
+#: src/audacious/ui_preferences.c:143
+#: src/libaudgui/infopopup.c:237
 msgid "Year"
 msgstr "Év"
 
@@ -555,19 +538,15 @@ msgid "Use software volume control"
 msgstr "Szoftveres hangerőszabályzó használata"
 
 #: src/audacious/ui_preferences.c:191
-msgid ""
-"Use software volume control. This may be useful for situations where your "
-"audio system does not support controlling the playback volume."
-msgstr ""
-"Szoftveres hangerő-szabályozás használata. Ez hasznos lehet olyan "
-"helyzetekben, ahol az audio-rendszer nem támogatja a lejátszás hangerejének "
-"a szabályozását."
+msgid "Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."
+msgstr "Szoftveres hangerő-szabályozás használata. Ez hasznos lehet olyan helyzetekben, ahol az audio-rendszer nem támogatja a lejátszás hangerejének a szabályozását."
 
 #: src/audacious/ui_preferences.c:195
 msgid "Preamp:"
 msgstr "Preamp:"
 
-#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:196
 msgid "dB"
 msgstr "dB"
 
@@ -577,17 +556,11 @@ msgstr "Alapértelmezett nyereség:"
 
 #: src/audacious/ui_preferences.c:196
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-"Ez az erősítési érték lesz használva ha a fájl nem tartalmaz lejátszási "
-"erősítési metaadatot."
+msgstr "Ez az erősítési érték lesz használva ha a fájl nem tartalmaz lejátszási erősítési metaadatot."
 
 #: src/audacious/ui_preferences.c:197
-msgid ""
-"<span size=\"small\">Please remember that the most efficient way to prevent "
-"signal clipping is not to use positive values above.</span>"
-msgstr ""
-"<span size=\"small\">Kérjük vegy figyelembe hogy a leghatékonyabb módja a "
-"jel vágásának ha nem ad meg pozitív értékeket.</span>"
+msgid "<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use positive values above.</span>"
+msgstr "<span size=\"small\">Kérjük vegy figyelembe hogy a leghatékonyabb módja a jel vágásának ha nem ad meg pozitív értékeket.</span>"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Replay Gain configuration</b>"
@@ -609,7 +582,8 @@ msgstr "Szám erősítés/csúcsérték"
 msgid "Album gain/peak"
 msgstr "Album erősítés/csúcsérték"
 
-#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1289
+#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:1289
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Egyéb</b>"
 
@@ -619,9 +593,7 @@ msgstr "Engedélyezi a csúcs információ túllépés megelőzését"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr ""
-"Használja a csúcs értéket a lejátszási csúcs információ túllépésének "
-"megelőzéséhez"
+msgstr "Használja a csúcs értéket a lejátszási csúcs információ túllépésének megelőzéséhez"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Proxy hostname:"
@@ -652,12 +624,8 @@ msgid "Use authentication with proxy"
 msgstr "Hitelesítés használata proxyval"
 
 #: src/audacious/ui_preferences.c:230
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Ezen beállítások megváltoztatásához újra kell indítani "
-"az Audacioust.</span>"
+msgid "<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"
+msgstr "<span size=\"small\">Ezen beállítások megváltoztatásához újra kell indítani az Audacioust.</span>"
 
 #: src/audacious/ui_preferences.c:234
 msgid "<b>Playback</b>"
@@ -668,12 +636,8 @@ msgid "Continue playback on startup"
 msgstr "Lejátszás folytatása induláskor"
 
 #: src/audacious/ui_preferences.c:236
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-"Az Audacious indulásakor automatikusan arról a pontról folytatja a "
-"lejátszást, ahol korábban meg lett állítva."
+msgid "When Audacious starts, automatically begin playing from the point where we stopped before."
+msgstr "Az Audacious indulásakor automatikusan arról a pontról folytatja a lejátszást, ahol korábban meg lett állítva."
 
 #: src/audacious/ui_preferences.c:237
 msgid "Don't advance in the playlist"
@@ -681,8 +645,7 @@ msgstr "Ne legyen léptetés a lejátszólistában"
 
 #: src/audacious/ui_preferences.c:238
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
-"Egy szám lejátszásának befejezése után automatikusan ne lépjen a következőre."
+msgstr "Egy szám lejátszásának befejezése után automatikusan ne lépjen a következőre."
 
 #: src/audacious/ui_preferences.c:239
 msgid "Clear current playlist when opening new files"
@@ -697,17 +660,8 @@ msgid "Fallback character encodings:"
 msgstr "Tartalék karakterkódolások:"
 
 #: src/audacious/ui_preferences.c:252
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"A metaadat tartalék átalakításához használt karakterkódolások listája. Ha az "
-"automatikus karakterkódolás felismerés sikertelen vagy ki lett kapcsolva, az "
-"ezen listán szereplő kódolások kerülnek feldolgozásra a metaadat kódolásának "
-"jelöltjeiként, és a tartalék átalakítás UTF-8-ba ezekből a kódolásokból lesz "
-"megkísérelve."
+msgid "List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr "A metaadat tartalék átalakításához használt karakterkódolások listája. Ha az automatikus karakterkódolás felismerés sikertelen vagy ki lett kapcsolva, az ezen listán szereplő kódolások kerülnek feldolgozásra a metaadat kódolásának jelöltjeiként, és a tartalék átalakítás UTF-8-ba ezekből a kódolásokból lesz megkísérelve."
 
 #: src/audacious/ui_preferences.c:256
 msgid "<b>Metadata</b>"
@@ -734,14 +688,8 @@ msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Borítókép letöltése</b>"
 
 #: src/audacious/ui_preferences.c:1222
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-"Albumborító keresése közben az Audacious bizonyos szavakat keres a "
-"fájlnévben. Megadhatja ezeket a szavakat az alábbi listában, vesszővel "
-"elválasztva."
+msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
+msgstr "Albumborító keresése közben az Audacious bizonyos szavakat keres a fájlnévben. Megadhatja ezeket a szavakat az alábbi listában, vesszővel elválasztva."
 
 #: src/audacious/ui_preferences.c:1239
 msgid "Exclude:"
@@ -828,15 +776,8 @@ msgid "Show popup information for playlist entries"
 msgstr "Felbukkanó információ megjelenítése a lejátszólista bejegyzéseknél"
 
 #: src/audacious/ui_preferences.c:1942
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-"Megjelenjen-e a lejátszólistában a kiválasztott bejegyzésnél egy felbukkanó "
-"információs ablak. Az ablak megjeleníti a szám címét, az album nevét, a "
-"műfaját, a megjelenés évét, a szám sorszámát, a szám hosszát és az "
-"albumborítót."
+msgid "Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."
+msgstr "Megjelenjen-e a lejátszólistában a kiválasztott bejegyzésnél egy felbukkanó információs ablak. Az ablak megjeleníti a szám címét, az album nevét, a műfaját, a megjelenés évét, a szám sorszámát, a szám hosszát és az albumborítót."
 
 #: src/audacious/ui_preferences.c:1947
 msgid "Edit settings for popup information"
@@ -917,12 +858,8 @@ msgstr "  (érvénytelen UTF-8)"
 
 #: src/libaudgui/confirm.c:62
 #, c-format
-msgid ""
-"Are you sure you want to close %s?  If you do, any changes made since the "
-"playlist was exported will be lost."
-msgstr ""
-"Valóban be akarja zárni ezt a fájlt %s? Ha igen, akkor bármilyen változás "
-"történt a lejátszólistán az el fog veszni."
+msgid "Are you sure you want to close %s?  If you do, any changes made since the playlist was exported will be lost."
+msgstr "Valóban be akarja zárni ezt a fájlt %s? Ha igen, akkor bármilyen változás történt a lejátszólistán az el fog veszni."
 
 #: src/libaudgui/confirm.c:74
 msgid "_Don't show this message again"
@@ -938,44 +875,39 @@ msgstr "_Engedélyezve"
 
 #: src/libaudgui/equalizer.c:140
 msgid "31 Hz"
-msgstr ""
+msgstr "31 Hz"
 
 #: src/libaudgui/equalizer.c:140
 msgid "63 Hz"
-msgstr ""
+msgstr "63 Hz"
 
 #: src/libaudgui/equalizer.c:141
 msgid "125 Hz"
-msgstr ""
+msgstr "125 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "250 Hz"
-msgstr "60 Hz"
+msgstr "250 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "500 Hz"
-msgstr "600 Hz"
+msgstr "500 Hz"
 
 #: src/libaudgui/equalizer.c:141
 msgid "1 kHz"
 msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "2 kHz"
-msgstr "12 kHz"
+msgstr "2 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "4 kHz"
-msgstr "14 kHz"
+msgstr "4 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "8 kHz"
-msgstr "1 kHz"
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.c:142
 msgid "16 kHz"
@@ -1589,8 +1521,10 @@ msgstr "JPop"
 msgid "Synthpop"
 msgstr "Synthpop"
 
-#: src/libaudgui/infowin.c:179 src/libaudgui/infowin.c:474
-#: src/libaudgui/infowin.c:477 src/libaudgui/infowin.c:480
+#: src/libaudgui/infowin.c:179
+#: src/libaudgui/infowin.c:474
+#: src/libaudgui/infowin.c:477
+#: src/libaudgui/infowin.c:480
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
@@ -1676,11 +1610,13 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr "Nincs ehhez információ %s.\n"
 
-#: src/libaudgui/ui_about.c:129 src/libaudgui/ui_credits.c:140
+#: src/libaudgui/ui_about.c:129
+#: src/libaudgui/ui_credits.c:140
 msgid "About Audacious"
 msgstr "Audacious névjegye"
 
-#: src/libaudgui/ui_about.c:178 src/libaudgui/ui_credits.c:183
+#: src/libaudgui/ui_about.c:178
+#: src/libaudgui/ui_credits.c:183
 msgid "Credits"
 msgstr "Köszönet"
 
@@ -1708,7 +1644,8 @@ msgstr "Párbeszédablak bezárása hozzáadás után"
 msgid "Un_queue"
 msgstr "_Kiszedés a sorból"
 
-#: src/libaudgui/ui_jumptotrack.c:146 src/libaudgui/ui_jumptotrack.c:528
+#: src/libaudgui/ui_jumptotrack.c:146
+#: src/libaudgui/ui_jumptotrack.c:528
 msgid "_Queue"
 msgstr "_Sorba állítás"
 

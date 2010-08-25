@@ -123,9 +123,6 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
 	if (cfg.recurse_for_cover && depth > cfg.recurse_for_cover_depth)
 		return NULL;
 
-	if (str_has_prefix_nocase(path, "file://"))
-		path += 7;
-
 	d = g_dir_open(path, 0, NULL);
 
 	if (d) {
@@ -194,10 +191,15 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
 
 gchar * get_associated_image_file (const gchar * filename)
 {
-    gchar * path = g_path_get_dirname (filename);
-    gchar * base = g_path_get_basename (filename);
+    gchar * unesc = g_filename_from_uri (filename, NULL, NULL);
+    if (! unesc)
+		return NULL;
+
+    gchar * path = g_path_get_dirname (unesc);
+    gchar * base = g_path_get_basename (unesc);
     gchar * image_file = fileinfo_recursive_get_image (path, base, 0);
 
+    g_free (unesc);
     g_free (path);
     g_free (base);
     return image_file;

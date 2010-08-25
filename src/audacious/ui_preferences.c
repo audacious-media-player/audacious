@@ -720,6 +720,7 @@ create_plugin_preferences(PluginPreferences *settings)
     g_signal_connect(G_OBJECT(ok), "clicked",
                      G_CALLBACK(plugin_preferences_ok), settings);
     gtk_box_pack_start(GTK_BOX(bbox), ok, TRUE, TRUE, 0);
+    gtk_widget_set_can_default (ok, TRUE);
     gtk_widget_grab_default(ok);
 
     apply = gtk_button_new_from_stock(GTK_STOCK_APPLY);
@@ -1133,7 +1134,10 @@ on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
     gint position = 0;
 
     position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-    *((gchar **)widget->cfg) = (gchar *)widget->data.combo.elements[position].value;
+    
+    g_free(*((gchar **)widget->cfg));
+    
+    *((gchar **)widget->cfg) = g_strdup(widget->data.combo.elements[position].value);
 }
 
 static void

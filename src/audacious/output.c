@@ -442,10 +442,9 @@ static void write_buffers (void)
 
 static void abort_write (void)
 {
-    COP->flush (0); /* signal wait to return immediately */
-
     LOCK;
     output_aborted = TRUE;
+    COP->flush (COP->output_time ()); /* signal wait to return immediately */
     UNLOCK;
 }
 

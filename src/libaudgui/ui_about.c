@@ -37,6 +37,8 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 
+#include "audacious/compatibility.h"
+
 #include "ui_credits.h"
 
 static GtkWidget *about_window = NULL;

@@ -1324,6 +1324,7 @@ void playlist_delete_selected(gint playlist_num)
     playlist->entries = others;
 
     number_entries(playlist, 0, index_count(playlist->entries));
+    playlist->selected_count = 0;
     playlist->selected_length = 0;
 
     if (stop && playback_get_playing ())

@@ -138,7 +138,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
  gboolean syncsafe, gint * frame_size, gchar * key, guchar * * data, gint * size)
 {
     ID3v2FrameHeader header;
-    gint skip = 0, i;
+    gint i;
     guint32 hdrsz = 0;
 
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
@@ -168,10 +168,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
     sprintf (key, "%.3s", header.key);
 
-    if (skip > 0 && vfs_fseek (handle, skip, SEEK_CUR))
-        return FALSE;
-
-    * size = hdrsz - skip;
+    * size = hdrsz;
     * data = g_malloc (* size);
 
     if (vfs_fread (* data, 1, * size, handle) != * size)

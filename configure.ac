@@ -6,7 +6,7 @@ dnl Require autoconf 2.59 or later
 AC_PREREQ([2.59])
 
 dnl Initialize
-AC_INIT([audacious], [2.4-rc1], [bugs+audacious@atheme.org])
+AC_INIT([audacious], [2.4-rc3], [bugs+audacious@atheme.org])
 AC_COPYRIGHT([(C) 2005-2010 Audacious Development Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -14,10 +14,6 @@ AC_GNU_SOURCE
 
 AC_CONFIG_HEADERS([config.h])
 PKG_PROG_PKG_CONFIG
-
-dnl Build flags
-dnl ===========
-LDFLAGS="$LDFLAGS -z defs"
 
 dnl buildsystem bootstrap
 dnl =====================
