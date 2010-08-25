@@ -75,6 +75,7 @@ AUD_FUNC1 (void, drct_pl_open_temp, const gchar *, filename)
 AUD_FUNC1 (void, drct_pl_open_temp_list, GList *, list)
 
 AUD_FUNC1 (void, drct_pl_delete, gint, entry)
+AUD_FUNC0 (void, drct_pl_delete_selected)
 AUD_FUNC0 (void, drct_pl_clear)
 
 /* --- PLAYLIST QUEUE CONTROL --- */

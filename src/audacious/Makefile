@@ -13,7 +13,6 @@ SRCS = audconfig.c								\
        equalizer_preset.c						\
        fft.c									\
        folder-add.c \
-       general.c								\
        interface.c								\
        logger.c									\
        main.c									\
@@ -24,6 +23,7 @@ SRCS = audconfig.c								\
        playlist-utils.c \
        pluginenum.c								\
        plugin-registry.c \
+       plugin-init.c \
        probe.c \
        probe-buffer.c \
        signals.c								\
@@ -65,6 +65,7 @@ INCLUDES = api.h \
            types.h
 
 DATA = images/about-logo.png				\
+       images/album.png \
        images/appearance.png				\
        images/audacious_eq.xpm				\
        images/audacious_player.xpm			\

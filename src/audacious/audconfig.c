@@ -26,20 +26,9 @@
 #include <glib.h>
 #include <libaudcore/hook.h>
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include "audconfig.h"
 #include "configdb.h"
-#include "effect.h"
-#include "general.h"
-#include "output.h"
 #include "playback.h"
-#include "pluginenum.h"
-#include "plugins.h"
-#include "util.h"
-#include "visualization.h"
 
 AudConfig cfg;
 
@@ -53,6 +42,9 @@ AudConfig aud_default_config = {
     .player_visible = TRUE,
     .show_numbers_in_pl = TRUE,
     .no_playlist_advance = FALSE,
+    .advance_on_delete = FALSE,
+    .clear_playlist = TRUE,
+    .open_to_temporary = FALSE,
     .stopaftersong = FALSE,
     .close_dialog_open = TRUE,
     .equalizer_preamp = 0.0,
@@ -89,11 +81,6 @@ AudConfig aud_default_config = {
     .replay_gain_preamp = 0,
     .default_gain = 0,
     .sw_volume_left = 100, .sw_volume_right = 100,
-    .clear_playlist = TRUE,
-    .output_path = NULL,
-    .output_number = -1,
-    .iface_path = NULL,
-    .iface_number = -1,
 
     /* libaudgui stuff */
     .no_confirm_playlist_delete = FALSE,
@@ -125,6 +112,9 @@ typedef struct aud_cfg_strent_t {
 static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
     {"no_playlist_advance", &cfg.no_playlist_advance, TRUE},
+    {"advance_on_delete", & cfg.advance_on_delete, TRUE},
+    {"clear_playlist", & cfg.clear_playlist, TRUE},
+    {"open_to_temporary", & cfg.open_to_temporary, TRUE},
     {"player_visible", &cfg.player_visible, TRUE},
     {"shuffle", &cfg.shuffle, TRUE},
     {"repeat", &cfg.repeat, TRUE},
@@ -146,7 +136,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
-    {"clear_playlist", &cfg.clear_playlist, TRUE},
     {"no_confirm_playlist_delete", &cfg.no_confirm_playlist_delete, TRUE},
     {"playlist_manager_close_on_activate",
      & cfg.playlist_manager_close_on_activate, TRUE},
@@ -165,8 +154,6 @@ static aud_cfg_nument aud_numents[] = {
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
     {"sw_volume_left", & cfg.sw_volume_left, TRUE},
     {"sw_volume_right", & cfg.sw_volume_right, TRUE},
-    {"output_number", & cfg.output_number, TRUE},
-    {"iface_number", & cfg.iface_number, TRUE},
     {"playlist_manager_x", & cfg.playlist_manager_x, TRUE},
     {"playlist_manager_y", & cfg.playlist_manager_y, TRUE},
     {"playlist_manager_width", & cfg.playlist_manager_width, TRUE},
@@ -185,8 +172,6 @@ static aud_cfg_strent aud_strents[] = {
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
     {"cover_name_include", &cfg.cover_name_include, TRUE},
     {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
-    {"output_path", & cfg.output_path, TRUE},
-    {"iface_path", & cfg.iface_path, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);
@@ -283,20 +268,6 @@ aud_config_load(void)
         cfg.cover_name_exclude = g_strdup("back");
 }
 
-static void save_output_path (void)
-{
-    const gchar * path = NULL;
-    gint type, number = -1;
-
-    if (current_output_plugin != NULL)
-        plugin_get_path (plugin_by_header (current_output_plugin), & path,
-         & type, & number);
-
-    g_free (cfg.output_path);
-    cfg.output_path = (path != NULL) ? g_strdup (path) : NULL;
-    cfg.output_number = number;
-}
-
 void
 aud_config_save(void)
 {
@@ -311,8 +282,6 @@ aud_config_save(void)
      1) : 0;
     cfg.resume_playback_on_startup_time = playback_get_playing () ?
      playback_get_time () : 0;
-
-    save_output_path ();
 
     db = cfg_db_open();
 

@@ -1,9 +1,5 @@
 Long-term "TODO"
 ================
-- add generic debugging code in plugin/playback handling to see what
-  plugin gets to handle the given file.
-
-
 - improve error handling:
   * plugin init() should be able to return error codes.
   * InputPlugin play_file also should return error codes (not only through
@@ -16,8 +12,6 @@ Long-term "TODO"
 - output plugins should have some kind of (optional) "query available formats"
   function, so that the core could determine what should be used. perhaps
   offer users this info?
-
-- remove the idiotic XMMS compatibility output plugin hack.
 
 - maybe all audio plugins (input, output, effect) could be made completely
   re-entrant. this probably means severely breaking the API. not very
@@ -37,7 +31,7 @@ Long-term "TODO"
 
 - mime-types support:
   * there is already code for mime support, but I think it may not be
-    sufficient as it is designed for input plugins only -- 
+    sufficient as it is designed for input plugins only --
     also playlist containers etc. need this (IMHO)
 
   * might be nicer to have the type registrations in plugin struct
@@ -45,15 +39,6 @@ Long-term "TODO"
 
 
 - document the different APIs via Doxygen
-
-
-- audacious VFS is not 64-bit offset safe, breakage will most likely occur,
-  if files larger than 2^31 are used (rather unlikely, tho, but still...)
-
-  * nenolod says: current vfs sucks, it needs a "rewrite":
-    - buffering support
-    - non-blocking I/O support
-    - better error handling (e.g. unified error codes, etc.)
 
 
 - {core,plugins}/configure.ac need some cleanup loving.
@@ -64,6 +49,4 @@ Long-term "TODO"
 
 
 - plugin rewrites:
-  * madplug
   * modplug (in progress by ccr)
-  * scrobbler (in progress by ccr)

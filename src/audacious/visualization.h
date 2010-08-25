@@ -25,4 +25,7 @@
 void vis_init (void);
 void vis_cleanup (void);
 
+gboolean vis_plugin_start (PluginHandle * plugin);
+void vis_plugin_stop (PluginHandle * plugin);
+
 #endif

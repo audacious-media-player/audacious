@@ -128,13 +128,6 @@ void output_init (void)
 
 void output_cleanup (void)
 {
-    LOCK;
-
-    if (output_leave_open)
-        real_close ();
-
-    UNLOCK;
-
     g_mutex_free (output_mutex);
 }
 
@@ -505,45 +498,54 @@ void output_drain (void)
     UNLOCK;
 }
 
-void set_current_output_plugin (OutputPlugin * plugin)
+static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
-    OutputPlugin * old = COP;
-    gboolean playing = playback_get_playing ();
-    gboolean paused = FALSE;
-    gint time = 0;
+    OutputPlugin * op = plugin_get_header (p);
+    g_return_val_if_fail (op != NULL && op->init != NULL, TRUE);
 
-    if (playing)
-    {
-        paused = playback_get_paused ();
-        time = playback_get_time ();
-        playback_stop ();
-    }
+    if (op->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+        return TRUE;
 
-    /* This function is also used to restart playback (for example, when
-     resampling is switched on or off), in which case we don't need to do an
-     init cycle. -jlindgren */
-    if (plugin != COP)
+    op->cleanup ();
+    * pp = p;
+    return FALSE;
+}
+
+PluginHandle * output_plugin_probe (void)
+{
+    PluginHandle * p = NULL;
+    plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) probe_cb, & p);
+    return p;
+}
+
+PluginHandle * output_plugin_get_current (void)
+{
+    return (COP != NULL) ? plugin_by_header (COP) : NULL;
+}
+
+gboolean output_plugin_set_current (PluginHandle * plugin)
+{
+    if (COP != NULL)
     {
+        if (playback_get_playing ())
+            playback_stop ();
+
+        if (COP->cleanup != NULL)
+            COP->cleanup ();
+
         COP = NULL;
-
-        if (old != NULL && old->cleanup != NULL)
-            old->cleanup ();
-
-        if (plugin->init () == OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-            COP = plugin;
-        else
-        {
-            fprintf (stderr, "Output plugin failed to load: %s\n",
-             plugin->description);
-
-            if (old == NULL || old->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
-                return;
-
-            fprintf (stderr, "Falling back to: %s\n", old->description);
-            COP = old;
-        }
     }
 
-    if (playing)
-        playback_play (time, paused);
+    if (plugin != NULL)
+    {
+        OutputPlugin * op = plugin_get_header (plugin);
+        g_return_val_if_fail (op != NULL && op->init != NULL, FALSE);
+
+        if (op->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
+            return FALSE;
+
+        COP = op;
+    }
+
+    return TRUE;
 }

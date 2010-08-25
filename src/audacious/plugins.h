@@ -23,19 +23,20 @@
 #define AUDACIOUS_PLUGINS_H
 
 #include <glib.h>
+
 #include <audacious/api.h>
+#include <audacious/types.h>
 
 enum {
- PLUGIN_TYPE_BASIC,
+ PLUGIN_TYPE_LOWLEVEL,
  PLUGIN_TYPE_INPUT,
- PLUGIN_TYPE_OUTPUT,
  PLUGIN_TYPE_EFFECT,
+ PLUGIN_TYPE_OUTPUT,
  PLUGIN_TYPE_VIS,
- PLUGIN_TYPE_IFACE,
  PLUGIN_TYPE_GENERAL,
+ PLUGIN_TYPE_IFACE,
  PLUGIN_TYPES};
 
-typedef struct PluginHandle PluginHandle;
 typedef gboolean (* PluginForEachFunc) (PluginHandle * plugin, void * data);
 
 #define AUD_API_NAME PluginsAPI
@@ -53,15 +54,27 @@ enum {
  INPUT_KEY_MIME,
  INPUT_KEYS};
 
+/* plugin-init.c */
+void start_plugins_one (void);
+void start_plugins_two (void);
+void stop_plugins (void);
+
+/* plugin-registry.c */
 void plugin_registry_load (void);
 void plugin_registry_prune (void);
 void plugin_registry_save (void);
 
 void module_register (const gchar * path);
-void plugin_register (const gchar * path, gint type, gint number, void * header);
+void plugin_register (gint type, const gchar * path, gint number, void * header);
 
+void plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
 void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
  func, void * data);
+
+/* pluginenum.c */
+void plugin_system_init (void);
+void plugin_system_cleanup (void);
+void module_load (const gchar * path);
 
 #else
 

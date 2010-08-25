@@ -38,7 +38,11 @@ AUD_FUNC1 (void, playlist_insert, gint, at)
 AUD_FUNC3 (void, playlist_reorder, gint, from, gint, to, gint, count)
 
 /* Closes a playlist.  CAUTION: The playlist is not saved, and no confirmation
- * is presented to the user. */
+ * is presented to the user.  If <playlist> is the only playlist, a new playlist
+ * is added.  If <playlist> is the active playlist, another playlist is marked
+ * active.  If <playlist> is the one from which the last song played was taken,
+ * playback is stopped.  In this case, calls to playlist_get_playing() will
+ * return -1, and the behavior of drct_play() is unspecified. */
 AUD_FUNC1 (void, playlist_delete, gint, playlist)
 
 /* Sets the filename associated with a playlist.  (Audacious currently makes no
@@ -96,7 +100,9 @@ AUD_FUNC4 (void, playlist_entry_insert_batch, gint, playlist, gint, at,
  struct index *, filenames, struct index *, tuples)
 
 /* Removes a contiguous block of <number> entries starting from the one numbered
- * <at> from a playlist. */
+ * <at> from a playlist.  If the last song played is in this block, playback is
+ * stopped.  In this case, calls to playlist_get_position() will return -1, and
+ * the behavior of drct_play() is unspecified. */
 AUD_FUNC3 (void, playlist_entry_delete, gint, playlist, gint, at, gint, number)
 
 /* Returns the filename of an entry.  The returned string is valid until another
@@ -154,7 +160,10 @@ AUD_FUNC2 (void, playlist_select_all, gint, playlist, gboolean, selected)
  * may be less (in absolute value) than the requested offset. */
 AUD_FUNC3 (gint, playlist_shift, gint, playlist, gint, position, gint, distance)
 
-/* Removes the selected entries from a playlist. */
+/* Removes the selected entries from a playlist.  If the last song played is one
+ * of these entries, playback is stopped.  In this case, calls to
+ * playlist_get_position() will return -1, and the behavior of drct_play() is
+ * unspecified. */
 AUD_FUNC1 (void, playlist_delete_selected, gint, playlist)
 
 /* Sorts the entries in a playlist based on filename.  The callback function
@@ -227,6 +236,16 @@ AUD_FUNC1 (void, playlist_queue_delete_selected, gint, playlist)
 /* Returns nonzero if any playlist has been changed since the last call of the
  * "playlist update" hook.  If called from within the hook, returns nonzero. */
 AUD_FUNC0 (gboolean, playlist_update_pending)
+
+/* May be called within the "playlist update" hook to determine what range of
+ * entries must be updated.  If all entries in all playlists must be updated,
+ * returns zero.  If a limited range in a single playlist must be updated,
+ * returns nonzero.  In this case, stores the number of that playlist at
+ * <playlist>, the number of the first entry to be updated at <at>, and the
+ * number of contiguous entries to be updated at <count>.  Note that entries may
+ * have been added or removed within this range. */
+AUD_FUNC3 (gboolean, playlist_update_range, gint *, playlist, gint *, at,
+ gint *, count)
 
 /* --- PLAYLIST UTILITY API --- */
 

@@ -51,14 +51,11 @@ static GtkWidget * entry_genre;
 
 static GtkWidget * image_artwork;
 
-static GtkWidget * image_fileicon;
 static GtkWidget * label_format_name;
 static GtkWidget * label_quality;
 static GtkWidget * label_bitrate;
 static GtkWidget * btn_apply;
 static GtkWidget * label_mini_status;
-static GtkWidget * arrow_rawdata;
-static GtkWidget * treeview_rawdata;
 
 enum
 {
@@ -181,18 +178,19 @@ static void infowin_label_set_text (GtkWidget * widget, const gchar * text)
     gtk_label_set_use_markup ((GtkLabel *) widget, TRUE);
 }
 
-static void infowin_entry_set_image (GtkWidget * widget, const char * text)
+static void infowin_entry_set_image (GtkWidget * widget, const char * name)
 {
-    GdkPixbuf * pixbuf;
+    GdkPixbuf * p = name ? audgui_pixbuf_for_file (name) : NULL;
 
-    pixbuf = gdk_pixbuf_new_from_file (text, NULL);
-    g_return_if_fail (pixbuf != NULL);
+    if (! p)
+    {
+        p = gdk_pixbuf_new_from_file (DATA_DIR "/images/album.png", NULL);
+        g_return_if_fail (p);
+    }
 
-    if (strcmp (DATA_DIR "/images/audio.png", text))
-        audgui_pixbuf_scale_within (& pixbuf, aud_cfg->filepopup_pixelsize);
-
-    gtk_image_set_from_pixbuf ((GtkImage *) widget, pixbuf);
-    g_object_unref (pixbuf);
+    audgui_pixbuf_scale_within (& p, aud_cfg->filepopup_pixelsize);
+    gtk_image_set_from_pixbuf ((GtkImage *) widget, p);
+    g_object_unref ((GObject *) p);
 }
 
 static void clear_infowin (void)
@@ -222,7 +220,7 @@ static void clear_infowin (void)
     can_write = FALSE;
     gtk_widget_set_sensitive (btn_apply, FALSE);
 
-    infowin_entry_set_image (image_artwork, DATA_DIR "/images/audio.png");
+    infowin_entry_set_image (image_artwork, NULL);
 }
 
 static void entry_changed (GtkEditable * editable, void * unused)
@@ -281,80 +279,6 @@ static void infowin_update_tuple (void * unused)
     mowgli_object_unref (tuple);
 }
 
-/**
- * Looks up an icon from a NULL-terminated list of icon names.
- *
- * size: the requested size
- * name: the default name
- * ... : a NULL-terminated list of alternates
- */
-static GdkPixbuf * themed_icon_lookup (gint size, const gchar * name, ...)
-{
-    GtkIconTheme * icon_theme;
-    GdkPixbuf * pixbuf;
-    const gchar * n;
-    va_list par;
-
-    icon_theme = gtk_icon_theme_get_default ();
-    pixbuf = gtk_icon_theme_load_icon (icon_theme, name, size, 0, NULL);
-
-    if (pixbuf != NULL)
-        return pixbuf;
-
-    /* fallback */
-    va_start (par, name);
-
-    while ((n = va_arg (par, const gchar *)) != NULL)
-    {
-        pixbuf = gtk_icon_theme_load_icon (icon_theme, n, size, 0, NULL);
-
-        if (pixbuf)
-        {
-            va_end (par);
-            return pixbuf;
-        }
-    }
-
-    va_end (par);
-    return NULL;
-}
-
-/**
- * Intelligently looks up an icon for a mimetype. Supports
- * HIDEOUSLY BROKEN gnome icon naming scheme too.
- *
- * size     : the requested size
- * mime_type: the mime type.
- */
-static GdkPixbuf * mime_icon_lookup (gint size, const gchar * mime_type)
-{
-    gchar * mime_as_is;         /* audio-x-mp3 */
-    gchar * mime_gnome;         /* gnome-mime-audio-x-mp3 */
-    gchar * mime_generic;       /* audio-x-generic */
-    gchar * mime_gnome_generic; /* gnome-mime-audio */
-    GdkPixbuf * icon = NULL;
-    gchar * * s = g_strsplit (mime_type, "/", 2);
-
-    if (s[1] != NULL)
-    {
-        mime_as_is = g_strdup_printf ("%s-%s", s[0], s[1]);
-        mime_gnome = g_strdup_printf ("gnome-mime-%s-%s", s[0], s[1]);
-        mime_generic = g_strdup_printf ("%s-x-generic", s[0]);
-        mime_gnome_generic = g_strdup_printf ("gnome-mime-%s", s[0]);
-
-        icon = themed_icon_lookup (size, mime_as_is, mime_gnome, mime_generic,
-         mime_gnome_generic, s[0], NULL); /* s[0] is category */
-
-        g_free (mime_gnome_generic);
-        g_free (mime_generic);
-        g_free (mime_gnome);
-        g_free (mime_as_is);
-    }
-
-    g_strfreev (s);
-    return icon;
-}
-
 gboolean genre_fill (GtkWidget * combo)
 {
     GList * list = NULL;
@@ -378,9 +302,7 @@ void create_infowin (void)
     GtkWidget * hbox;
     GtkWidget * hbox_status_and_bbox;
     GtkWidget * vbox0;
-    GtkWidget * vbox1;
     GtkWidget * vbox2;
-    GtkWidget * vbox3;
     GtkWidget * label_title;
     GtkWidget * label_artist;
     GtkWidget * label_album;
@@ -388,8 +310,6 @@ void create_infowin (void)
     GtkWidget * label_genre;
     GtkWidget * label_year;
     GtkWidget * label_track;
-    GtkWidget * label_location;
-    GtkWidget * label_general;
     GtkWidget * label_format;
     GtkWidget * label_quality_label;
     GtkWidget * label_bitrate_label;
@@ -399,10 +319,6 @@ void create_infowin (void)
     GtkWidget * bbox_close;
     GtkWidget * btn_close;
     GtkWidget * alignment;
-    GtkWidget * separator;
-    GtkWidget * scrolledwindow;
-    GtkTreeViewColumn * column;
-    GtkCellRenderer * renderer;
 
     infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
@@ -416,47 +332,27 @@ void create_infowin (void)
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox0, hbox, TRUE, TRUE, 0);
 
+    vbox2 = gtk_vbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
+
     image_artwork = gtk_image_new ();
-    gtk_box_pack_start ((GtkBox *) hbox, image_artwork, FALSE, FALSE, 0);
-    gtk_misc_set_alignment ((GtkMisc *) image_artwork, 0.5, 0);
-    gtk_image_set_from_file ((GtkImage *) image_artwork, DATA_DIR
-     "/images/audio.png");
-    separator = gtk_vseparator_new ();
-    gtk_box_pack_start ((GtkBox *) hbox, separator, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox2, image_artwork, FALSE, FALSE, 0);
 
-    vbox1 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start ((GtkBox *) hbox, vbox1, TRUE, TRUE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox1, alignment, TRUE, TRUE, 0);
-
-    vbox2 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add ((GtkContainer *) alignment, vbox2);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox1, alignment, TRUE, TRUE, 0);
-
-    vbox3 = gtk_vbox_new(FALSE, 0);
-    gtk_container_add ((GtkContainer *) alignment, vbox3);
-
-    label_general = gtk_label_new (_("<span size=\"small\">General</span>"));
-    gtk_box_pack_start ((GtkBox *) vbox2, label_general, FALSE, FALSE, 0);
-    gtk_label_set_use_markup ((GtkLabel *) label_general, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label_general, 0, 0.5);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 6, 0, 0);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
+    location_text = gtk_label_new ("");
+    gtk_widget_set_size_request (location_text, 200, -1);
+    gtk_label_set_line_wrap ((GtkLabel *) location_text, TRUE);
+#if GTK_CHECK_VERSION (2, 10, 0)
+    gtk_label_set_line_wrap_mode ((GtkLabel *) location_text,
+     PANGO_WRAP_WORD_CHAR);
+#endif
+    gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
+    gtk_box_pack_start ((GtkBox *) vbox2, location_text, FALSE, FALSE, 0);
 
     codec_hbox = gtk_hbox_new (FALSE, 6);
-    gtk_container_add ((GtkContainer *) alignment, codec_hbox);
-
-    image_fileicon = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE,
-     GTK_ICON_SIZE_DIALOG);
-    gtk_box_pack_start ((GtkBox *) codec_hbox, image_fileicon, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox2, codec_hbox, FALSE, FALSE, 0);
 
     codec_table = gtk_table_new(3, 2, FALSE);
-    gtk_table_set_row_spacings ((GtkTable *) codec_table, 6);
+    gtk_table_set_row_spacings ((GtkTable *) codec_table, 3);
     gtk_table_set_col_spacings ((GtkTable *) codec_table, 12);
     gtk_box_pack_start ((GtkBox *) codec_hbox, codec_table, FALSE, FALSE, 0);
 
@@ -493,6 +389,9 @@ void create_infowin (void)
      GTK_EXPAND | GTK_FILL, 0, 0, 0);
     gtk_table_attach ((GtkTable *) codec_table, label_bitrate, 1, 2, 2, 3,
      GTK_EXPAND | GTK_FILL, 0, 0, 0);
+
+    vbox2 = gtk_vbox_new (FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
 
     label_title = gtk_label_new (_("<span size=\"small\">Title</span>"));
     gtk_box_pack_start ((GtkBox *) vbox2, label_title, FALSE, FALSE, 0);
@@ -585,77 +484,6 @@ void create_infowin (void)
      GTK_FILL, 0, 0, 0);
     g_signal_connect (entry_track, "changed", (GCallback) entry_changed, NULL);
 
-    label_location = gtk_label_new (_("<span size=\"small\">Location</span>"));
-    gtk_box_pack_start ((GtkBox *) vbox2, label_location, FALSE, FALSE, 0);
-    gtk_label_set_use_markup ((GtkLabel *) label_location, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label_location, 0, 0.5);
-
-    alignment = gtk_alignment_new (0, 0, 0, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 3, 6, 25, 0);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-
-    location_text = gtk_label_new ("");
-    gtk_widget_set_size_request (location_text, 375, -1);
-    gtk_label_set_line_wrap ((GtkLabel *) location_text, TRUE);
-#if GTK_CHECK_VERSION (2, 10, 0)
-    gtk_label_set_line_wrap_mode ((GtkLabel *) location_text,
-     PANGO_WRAP_WORD_CHAR);
-#endif
-    gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
-    gtk_container_add ((GtkContainer *) alignment, location_text);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_container_add ((GtkContainer *) alignment, hbox);
-    gtk_box_pack_start ((GtkBox *) vbox3, alignment, TRUE, TRUE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_alignment_set_padding ((GtkAlignment *) (alignment), 0, 6, 0, 0);
-    arrow_rawdata = gtk_expander_new
-     (_("<span size=\"small\">Raw Metadata</span>"));
-    gtk_expander_set_use_markup ((GtkExpander *) arrow_rawdata, TRUE);
-    gtk_container_add ((GtkContainer *) alignment, arrow_rawdata);
-    gtk_box_pack_start ((GtkBox *) hbox, alignment, TRUE, TRUE, 0);
-
-    scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolledwindow,
-     GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolledwindow,
-     GTK_SHADOW_IN);
-    gtk_container_add ((GtkContainer *) arrow_rawdata, scrolledwindow);
-
-    treeview_rawdata = gtk_tree_view_new ();
-    gtk_container_add ((GtkContainer *) scrolledwindow, treeview_rawdata);
-    gtk_tree_view_set_rules_hint ((GtkTreeView *) treeview_rawdata, TRUE);
-    gtk_tree_view_set_reorderable ((GtkTreeView *) treeview_rawdata, TRUE);
-    gtk_widget_set_size_request (treeview_rawdata, -1, 130);
-
-    column = gtk_tree_view_column_new ();
-    gtk_tree_view_column_set_title (column, _("Key"));
-    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-    gtk_tree_view_column_set_spacing (column, 4);
-    gtk_tree_view_column_set_resizable (column, FALSE);
-    gtk_tree_view_column_set_fixed_width (column, 50);
-
-    renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (column, renderer, "text", RAWDATA_KEY,
-     NULL);
-    gtk_tree_view_append_column ((GtkTreeView *) treeview_rawdata, column);
-
-    column = gtk_tree_view_column_new ();
-    gtk_tree_view_column_set_title (column, _("Value"));
-    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-    gtk_tree_view_column_set_spacing (column, 4);
-    gtk_tree_view_column_set_resizable (column, FALSE);
-    gtk_tree_view_column_set_fixed_width (column, 50);
-
-    renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (column, renderer, "text",
-     RAWDATA_VALUE, NULL);
-    gtk_tree_view_append_column ((GtkTreeView *) treeview_rawdata, column);
-
     hbox_status_and_bbox = gtk_hbox_new (FALSE, 0);
     gtk_box_pack_start ((GtkBox *) vbox0, hbox_status_and_bbox, FALSE, FALSE, 0);
 
@@ -686,6 +514,7 @@ void create_infowin (void)
     audgui_hide_on_escape (infowin);
 
     gtk_widget_show_all (vbox0);
+    gtk_widget_grab_focus (entry_title);
 }
 
 /*  Converts filenames (in place) for easy reading, thus:
@@ -720,39 +549,10 @@ static gchar * easy_read_filename (gchar * file)
     return file + 6;
 }
 
-static gboolean set_image_from_album_art (const gchar * filename, InputPlugin *
- decoder)
-{
-    GdkPixbuf * pixbuf = NULL;
-    void * data;
-    gint size;
-
-    if (aud_file_read_image (filename, decoder, & data, & size))
-    {
-        pixbuf = audgui_pixbuf_from_data (data, size);
-        g_free (data);
-    }
-
-    if (pixbuf == NULL)
-        return FALSE;
-
-    audgui_pixbuf_scale_within (& pixbuf, aud_cfg->filepopup_pixelsize);
-    gtk_image_set_from_pixbuf ((GtkImage *) image_artwork, pixbuf);
-    g_object_unref (pixbuf);
-    return TRUE;
-}
-
 static void infowin_show (const gchar * filename, const Tuple * tuple,
  InputPlugin * decoder, gboolean updating_enabled)
 {
-    const gchar * string;
     gchar * tmp;
-    GdkPixbuf * icon;
-    GtkTreeIter iter;
-    GtkListStore * store;
-    mowgli_dictionary_iteration_state_t state;
-    TupleValue * tvalue;
-    gint i;
 
     if (infowin == NULL)
         create_infowin ();
@@ -796,69 +596,7 @@ static void infowin_show (const gchar * filename, const Tuple * tuple,
     else
         infowin_label_set_text (label_bitrate, NULL);
 
-    string = tuple_get_string (tuple, FIELD_MIMETYPE, NULL);
-    icon = mime_icon_lookup (48, string != NULL ? string : "audio/x-generic");
-
-    if (icon != NULL)
-    {
-        gtk_image_set_from_pixbuf ((GtkImage *) image_fileicon, icon);
-        g_object_unref (icon);
-    }
-
-    if (! set_image_from_album_art (filename, decoder))
-    {
-        tmp = aud_get_associated_image_file (filename);
-
-        if (tmp != NULL)
-        {
-            infowin_entry_set_image (image_artwork, tmp);
-            g_free (tmp);
-        }
-    }
-
-    store = gtk_list_store_new (RAWDATA_N_COLS, G_TYPE_STRING, G_TYPE_STRING);
-
-    for (i = 0; i < FIELD_LAST; i ++)
-    {
-        gchar * value;
-
-        if (tuple->values[i] == NULL)
-            continue;
-
-        if (tuple->values[i]->type == TUPLE_INT)
-            value = g_strdup_printf ("%d", tuple->values[i]->value.integer);
-        else if (tuple->values[i]->value.string != NULL)
-            value = g_strdup (tuple->values[i]->value.string);
-        else
-            continue;
-
-        gtk_list_store_append (store, & iter);
-        gtk_list_store_set (store, & iter, RAWDATA_KEY, tuple_fields[i].name,
-         RAWDATA_VALUE, value, -1);
-        g_free (value);
-    }
-
-    /* non-standard values are stored in a dictionary. */
-    MOWGLI_DICTIONARY_FOREACH (tvalue, & state, tuple->dict)
-    {
-        gchar * value;
-
-        if (tvalue->type == TUPLE_INT)
-            value = g_strdup_printf ("%d", tvalue->value.integer);
-        else if (tvalue->value.string != NULL)
-            value = g_strdup (tvalue->value.string);
-        else
-            continue;
-
-        gtk_list_store_append (store, & iter);
-        gtk_list_store_set (store, & iter, RAWDATA_KEY, state.cur->key,
-         RAWDATA_VALUE, value, -1);
-        g_free (value);
-    }
-
-    gtk_tree_view_set_model ((GtkTreeView *) treeview_rawdata, (GtkTreeModel *)
-     store);
-    g_object_unref (store);
+    infowin_entry_set_image (image_artwork, filename);
 
     gtk_window_present ((GtkWindow *) infowin);
 }

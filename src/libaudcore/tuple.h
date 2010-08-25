@@ -140,6 +140,15 @@ const gchar * tuple_get_string (const Tuple * tuple, gint nfield, const gchar *
 gint tuple_get_int (const Tuple * tuple, gint nfield, const gchar * field);
 #define tuple_free(x) mowgli_object_unref(x);
 
+/* Fills in format-related fields (specifically FIELD_CODEC, FIELD_QUALITY, and
+ * FIELD_BITRATE.  Plugins should use this function instead of setting these
+ * fields individually so that the style is consistent across file formats.
+ * <format> should be a brief description such as "Microsoft WAV", "MPEG-1 layer
+ * 3", "Audio CD", and so on.  <samplerate> is in Hertz.  <bitrate> is in 1000
+ * bits per second. */
+void tuple_set_format (Tuple * tuple, const gchar * format, gint channels, gint
+ samplerate, gint bitrate);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_TUPLE_H */

@@ -46,6 +46,7 @@ typedef struct {
     gboolean started;
 } LoadedVis;
 
+gint running = FALSE;
 static GList * loaded_vis_plugins = NULL;
 
 void calc_stereo_pcm (VisPCMData dest, const VisPCMData src, gint nch)
@@ -211,9 +212,6 @@ static void vis_load (PluginHandle * plugin)
     VisPlugin * header = plugin_get_header (plugin);
     g_return_if_fail (header != NULL);
 
-    if (header->init != NULL)
-        header->init ();
-
     LoadedVis * vis = g_slice_new (LoadedVis);
     vis->plugin = plugin;
     vis->header = header;
@@ -261,9 +259,6 @@ static void vis_unload (PluginHandle * plugin)
         g_return_if_fail (vis->widget == NULL); /* not destroyed? */
     }
 
-    if (vis->header->cleanup != NULL)
-        vis->header->cleanup ();
-
     g_slice_free (LoadedVis, vis);
 }
 
@@ -275,6 +270,9 @@ static gboolean vis_init_cb (PluginHandle * plugin)
 
 void vis_init (void)
 {
+    g_return_if_fail (! running);
+    running = TRUE;
+
     plugin_for_enabled (PLUGIN_TYPE_VIS, (PluginForEachFunc) vis_init_cb, NULL);
 
     hook_associate ("playback begin", (HookFunction) vis_start_all, NULL);
@@ -288,18 +286,37 @@ static void vis_cleanup_cb (LoadedVis * vis)
 
 void vis_cleanup (void)
 {
+    g_return_if_fail (running);
+    running = FALSE;
+
     hook_dissociate ("playback begin", (HookFunction) vis_start_all);
     hook_dissociate ("playback stop", (HookFunction) vis_stop_all);
 
     g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
 }
 
-void vis_plugin_enable (PluginHandle * plugin, gboolean enable)
+gboolean vis_plugin_start (PluginHandle * plugin)
 {
-    plugin_set_enabled (plugin, enable);
+    VisPlugin * vp = plugin_get_header (plugin);
+    g_return_val_if_fail (vp != NULL, FALSE);
 
-    if (enable)
+    if (vp->init != NULL)
+        vp->init ();
+
+    if (running)
         vis_load (plugin);
-    else
+
+    return TRUE;
+}
+
+void vis_plugin_stop (PluginHandle * plugin)
+{
+    VisPlugin * vp = plugin_get_header (plugin);
+    g_return_if_fail (vp != NULL);
+
+    if (running)
         vis_unload (plugin);
+
+    if (vp->cleanup != NULL)
+        vp->cleanup ();
 }

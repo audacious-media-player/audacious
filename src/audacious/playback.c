@@ -47,6 +47,7 @@ static void playback_free (InputPlayback * playback);
 static gboolean playback_play_file (gint playlist, gint entry, gint seek_time,
  gboolean pause);
 
+static gint current_position;
 InputPlayback * current_playback = NULL;
 
 static gint time_offset;
@@ -157,10 +158,11 @@ static void update_cb (void * hook_data, void * user_data)
 
     length = playlist_entry_get_length (playlist, entry, FALSE);
 
-    if (! strcmp (title, current_playback->title) && length ==
-     current_playback->length)
+    if (entry == current_position && ! strcmp (title, current_playback->title)
+     && length == current_playback->length)
         return;
 
+    current_position = entry;
     g_free (current_playback->title);
     current_playback->title = g_strdup (title);
     current_playback->length = length;
@@ -482,6 +484,7 @@ static gboolean playback_play_file (gint playlist, gint entry, gint seek_time,
 
     read_gain_from_tuple (tuple); /* even if tuple == NULL */
 
+    current_position = entry;
     current_playback = playback_new ();
     current_playback->plugin = decoder;
     current_playback->filename = g_strdup (filename);

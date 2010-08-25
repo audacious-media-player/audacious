@@ -38,24 +38,19 @@
 
 #include "audconfig.h"
 #include "compatibility.h"
+#include "configdb.h"
 #include "debug.h"
 #include "i18n.h"
 #include "misc.h"
-#include "playback.h"
-#include "plugin.h"
-#include "pluginenum.h"
-#include "plugins.h"
-#include "effect.h"
-#include "general.h"
 #include "output.h"
+#include "playback.h"
 #include "playlist.h"
 #include "playlist-utils.h"
-#include "visualization.h"
-#include "util.h"
-#include "configdb.h"
+#include "plugin.h"
+#include "plugins.h"
 #include "preferences.h"
-
 #include "ui_preferences.h"
+#include "util.h"
 
 #define TITLESTRING_UPDATE_TIMEOUT 3
 
@@ -236,8 +231,12 @@ static PreferencesWidget playback_page_widgets[] = {
         N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
     {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
         N_("When finished playing a song, don't automatically advance to the next."), FALSE},
-    {WIDGET_CHK_BTN, N_("Clear current playlist when opening new files"),
+    {WIDGET_CHK_BTN, N_("Advance when the current song is deleted"),
+     & cfg.advance_on_delete, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Clear the playlist when opening files"),
      & cfg.clear_playlist, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
+     & cfg.open_to_temporary, NULL, NULL, FALSE},
 };
 
 static PreferencesWidget chardet_elements[] = {
@@ -309,7 +308,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
     GtkTreeIter iter;
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     Plugin *plugin = NULL;
-    gint plugin_type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(data), "plugin_type"));
     gboolean enabled;
 
     /* get toggled iter */
@@ -319,21 +317,7 @@ plugin_toggle(GtkCellRendererToggle * cell,
      PLUGIN_VIEW_COL_PLUGIN_PTR, & plugin, -1);
     enabled = ! enabled;
 
-    switch (plugin_type)
-    {
-    case PLUGIN_VIEW_TYPE_INPUT:
-        plugin_set_enabled (plugin_by_header (plugin), enabled);
-        break;
-    case PLUGIN_VIEW_TYPE_GENERAL:
-        general_plugin_enable (plugin_by_header (plugin), enabled);
-        break;
-    case PLUGIN_VIEW_TYPE_VIS:
-        vis_plugin_enable (plugin_by_header (plugin), enabled);
-        break;
-    case PLUGIN_VIEW_TYPE_EFFECT:
-        effect_plugin_enable (plugin_by_header (plugin), enabled);
-        break;
-    }
+    plugin_enable (plugin_by_header (plugin), enabled);
 
     gtk_list_store_set ((GtkListStore *) model, & iter, PLUGIN_VIEW_COL_ACTIVE,
      enabled, -1);
@@ -350,8 +334,8 @@ plugin_toggle(GtkCellRendererToggle * cell,
 
 static void on_output_plugin_cbox_changed (GtkComboBox * combo, void * unused)
 {
-    set_current_output_plugin (g_list_nth_data (get_output_list (),
-     gtk_combo_box_get_active (combo)));
+    plugin_enable (plugin_by_header (g_list_nth_data (get_output_list (),
+     gtk_combo_box_get_active (combo))), TRUE);
 }
 
 static void
@@ -402,7 +386,6 @@ on_plugin_view_realize(GtkTreeView * treeview,
     store = gtk_list_store_new(PLUGIN_VIEW_N_COLS,
                                G_TYPE_BOOLEAN, G_TYPE_STRING,
                                G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER);
-    g_object_set_data(G_OBJECT(store), "plugin_type" , GINT_TO_POINTER(plugin_type));
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Enabled"));
@@ -2401,7 +2384,6 @@ create_plugin_category(void)
 
 
     /* plugin->input page */
-    g_object_set_data(G_OBJECT(input_plugin_view), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_INPUT));
     g_signal_connect(G_OBJECT(input_plugin_view), "row-activated",
                      G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
@@ -2423,7 +2405,6 @@ create_plugin_category(void)
 
     /* plugin->general page */
 
-    g_object_set_data(G_OBJECT(general_plugin_view), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_GENERAL));
     g_signal_connect(G_OBJECT(general_plugin_view), "row-activated",
                      G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
@@ -2446,7 +2427,6 @@ create_plugin_category(void)
 
     /* plugin->vis page */
 
-    g_object_set_data(G_OBJECT(vis_plugin_view), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_VIS));
     g_signal_connect(G_OBJECT(vis_plugin_view), "row-activated",
                      G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);
@@ -2465,7 +2445,6 @@ create_plugin_category(void)
 
     /* plugin->effects page */
 
-    g_object_set_data(G_OBJECT(effect_plugin_view), "plugin_type" , GINT_TO_POINTER(PLUGIN_VIEW_TYPE_EFFECT));
     g_signal_connect(G_OBJECT(effect_plugin_view), "row-activated",
                      G_CALLBACK(plugin_treeview_open_prefs),
                      NULL);

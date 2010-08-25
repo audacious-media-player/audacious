@@ -29,7 +29,7 @@
 
 static void enable_cb (GtkCheckMenuItem * item, PluginHandle * plugin)
 {
-    aud_effect_plugin_enable (plugin, gtk_check_menu_item_get_active (item));
+    aud_plugin_enable (plugin, gtk_check_menu_item_get_active (item));
 
     GtkWidget * settings = g_object_get_data ((GObject *) item, "settings");
     if (settings != NULL)
