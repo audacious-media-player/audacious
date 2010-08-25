@@ -506,7 +506,9 @@ static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
     if (op->init () != OUTPUT_PLUGIN_INIT_FOUND_DEVICES)
         return TRUE;
 
-    op->cleanup ();
+    if (op->cleanup != NULL)
+        op->cleanup ();
+
     * pp = p;
     return FALSE;
 }
