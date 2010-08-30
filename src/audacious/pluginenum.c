@@ -137,6 +137,9 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         {
             ep->filename = g_strdup_printf ("%s (#%d)", filename, i);
             plugin_register (PLUGIN_TYPE_EFFECT, filename, i, ep);
+
+            if (ep->init != NULL)
+                ep->init ();
         }
     }
 
@@ -195,8 +198,14 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 
     if (header->ep_list != NULL)
     {
-        for (gint i = 0; header->ep_list[i] != NULL; i ++)
-            g_free (header->ep_list[i]->filename);
+        EffectPlugin * ep;
+        for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
+        {
+            g_free (ep->filename);
+
+            if (ep->cleanup != NULL)
+                ep->cleanup ();
+        }
     }
 
     if (header->op_list != NULL)

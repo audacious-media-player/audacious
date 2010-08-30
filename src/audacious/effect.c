@@ -216,9 +216,6 @@ gboolean effect_plugin_start (PluginHandle * plugin)
     EffectPlugin * ep = plugin_get_header (plugin);
     g_return_val_if_fail (ep != NULL, FALSE);
 
-    if (ep->init != NULL)
-        ep->init ();
-
     if (playback_get_playing ())
         effect_enable (plugin, ep, TRUE);
 
@@ -232,7 +229,4 @@ void effect_plugin_stop (PluginHandle * plugin)
 
     if (playback_get_playing ())
         effect_enable (plugin, ep, FALSE);
-
-    if (ep->cleanup != NULL)
-        ep->cleanup ();
 }
