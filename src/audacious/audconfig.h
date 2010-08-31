@@ -38,7 +38,7 @@ struct _AudConfig {
     gboolean shuffle, repeat;
     gboolean equalizer_autoload, equalizer_active;
     gboolean playlist_visible, equalizer_visible, player_visible;
-    gboolean show_numbers_in_pl;
+    gboolean show_numbers_in_pl, leading_zero;
     gboolean no_playlist_advance, advance_on_delete, clear_playlist,
      open_to_temporary;
     gboolean stopaftersong;

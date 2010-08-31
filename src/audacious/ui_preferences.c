@@ -1117,9 +1117,9 @@ on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
     gint position = 0;
 
     position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-    
+
     g_free(*((gchar **)widget->cfg));
-    
+
     *((gchar **)widget->cfg) = g_strdup(widget->data.combo.elements[position].value);
 }
 
@@ -1797,8 +1797,24 @@ static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
     cfg.show_numbers_in_pl = gtk_toggle_button_get_active (numbers);
 
-    hook_call ("playlist update", NULL);
     hook_call ("title change", NULL);
+
+    /* trigger playlist update */
+    gchar * t = g_strdup (playlist_get_title (playlist_get_active ()));
+    playlist_set_title (playlist_get_active (), t);
+    g_free (t);
+}
+
+static void leading_zero_cb (GtkToggleButton * leading)
+{
+    cfg.leading_zero = gtk_toggle_button_get_active (leading);
+
+    hook_call ("title change", NULL);
+
+    /* trigger playlist update */
+    gchar * t = g_strdup (playlist_get_title (playlist_get_active ()));
+    playlist_set_title (playlist_get_active (), t);
+    g_free (t);
 }
 
 static void
@@ -1851,6 +1867,17 @@ create_playlist_category(void)
      cfg.show_numbers_in_pl);
     g_signal_connect ((GObject *) numbers, "toggled", (GCallback)
      show_numbers_cb, 0);
+    gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
+
+    numbers_alignment = gtk_alignment_new (0, 0, 0, 0);
+    gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
+    gtk_box_pack_start ((GtkBox *) vbox5, numbers_alignment, 0, 0, 3);
+
+    numbers = gtk_check_button_new_with_label (_("Show leading zeroes (02:00 "
+     "instead of 2:00)"));
+    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, cfg.leading_zero);
+    g_signal_connect ((GObject *) numbers, "toggled", (GCallback)
+     leading_zero_cb, 0);
     gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
 
     alignment56 = gtk_alignment_new (0.5, 0.5, 1, 1);

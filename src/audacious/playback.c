@@ -594,26 +594,36 @@ static void set_gain_from_playlist (InputPlayback * playback)
 
 gchar * playback_get_title (void)
 {
-    gchar * suffix, * title;
+    gchar * title;
 
     g_return_val_if_fail (current_playback != NULL, NULL);
 
     if (! playback_is_ready ())
         return g_strdup (_("Buffering ..."));
 
-    suffix = (current_playback->length > 0) ? g_strdup_printf (" (%d:%02d)",
-     current_playback->length / 60000, current_playback->length / 1000 % 60) :
-     NULL;
+    gint len = current_playback->length;
+    gchar s[128];
+
+    if (len)
+    {
+        len /= 1000;
+
+        if (len < 3600)
+            snprintf (s, sizeof s, cfg.leading_zero ? " (%02d:%02d)" :
+             " (%d:%02d)", len / 60, len % 60);
+        else
+            snprintf (s, sizeof s, " (%d:%02d:%02d)", len / 3600, (len / 60) %
+             60, len % 60);
+    }
+    else
+        s[0] = 0;
 
     if (cfg.show_numbers_in_pl)
         title = g_strdup_printf ("%d. %s%s", 1 + playlist_get_position
-         (playlist_get_playing ()), current_playback->title, (suffix != NULL) ?
-         suffix : "");
+         (playlist_get_playing ()), current_playback->title, s);
     else
-        title = g_strdup_printf ("%s%s", current_playback->title, (suffix !=
-         NULL) ? suffix : "");
+        title = g_strdup_printf ("%s%s", current_playback->title, s);
 
-    g_free (suffix);
     return title;
 }
 
