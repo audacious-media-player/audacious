@@ -29,7 +29,7 @@ typedef struct
 {
     const gchar * filename, * decoder;
     VFSFile * file;
-    guchar buffer[65536];
+    guchar buffer[16384];
     gint filled, at;
     const gchar * read_warned, * seek_warned;
 }
@@ -44,6 +44,8 @@ static gint probe_buffer_fclose (VFSFile * file)
 
 static void increase_buffer (ProbeBuffer * p, gint64 size)
 {
+    size = (size + 0xFF) & ~0xFF;
+
     if (size > sizeof p->buffer)
     {
         if (p->read_warned != p->decoder)
@@ -56,7 +58,8 @@ static void increase_buffer (ProbeBuffer * p, gint64 size)
         size = sizeof p->buffer;
     }
 
-    p->filled += vfs_fread (p->buffer + p->at, 1, size - p->filled, p->file);
+    if (p->filled < size)
+        p->filled += vfs_fread (p->buffer + p->at, 1, size - p->filled, p->file);
 }
 
 static gint64 probe_buffer_fread (void * buffer, gint64 size, gint64 count,
