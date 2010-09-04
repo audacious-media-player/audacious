@@ -107,6 +107,10 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
 
 GdkPixbuf * audgui_pixbuf_for_file (const gchar * name)
 {
+    /* MMS is slow.  Skip it. */
+    if (! strncmp (name, "mms://", 6))
+        return NULL;
+
     InputPlugin * decoder = aud_file_find_decoder (name, FALSE);
 
     if (! decoder)
