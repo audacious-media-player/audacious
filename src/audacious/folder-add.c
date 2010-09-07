@@ -204,7 +204,7 @@ void playlist_insert_folder (gint playlist, gint at, const gchar * folder,
 
     add_playlist = playlist;
     add_at = at;
-    add_play = play;
+    add_play |= play;
 
     if (unix_name == NULL)
         return;
