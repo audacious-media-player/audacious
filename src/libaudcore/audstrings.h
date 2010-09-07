@@ -71,6 +71,8 @@ gint string_compare (const gchar * a, const gchar * b);
 const void * memfind (const void * mem, gint size, const void * token, gint
  length);
 
+gchar *str_replace_fragment(gchar *s, gint size, const gchar *old, const gchar *new);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_STRINGS_H */

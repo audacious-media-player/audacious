@@ -530,3 +530,37 @@ const void * memfind (const void * mem, gint size, const void * token, gint
 
     return NULL;
 }
+
+gchar *
+str_replace_fragment(gchar *s, gint size, const gchar *old, const gchar *new)
+{
+    gchar *ptr = s;
+    gint left = strlen(s);
+    gint avail = size - (left + 1);
+    gint oldlen = strlen(old);
+    gint newlen = strlen(new);
+    gint diff = newlen - oldlen;
+
+    while (left >= oldlen)
+    {
+        if (strncmp(ptr, old, oldlen))
+        {
+            left--;
+            ptr++;
+            continue;
+        }
+
+        if (diff > avail)
+            break;
+
+        if (diff != 0)
+            memmove(ptr + oldlen + diff, ptr + oldlen, left + 1 - oldlen);
+
+        memcpy(ptr, new, newlen);
+        ptr += newlen;
+        left -= oldlen;
+    }
+
+    return s;
+}
+
