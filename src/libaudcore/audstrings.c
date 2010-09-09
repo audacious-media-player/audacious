@@ -369,39 +369,41 @@ void string_replace_char (gchar * string, gchar old_str, gchar new_str)
         * string = new_str;
 }
 
-static gchar get_hex_digit(gchar **get)
+static inline gchar get_hex_digit (const gchar * * get)
 {
-    gchar c = **get;
+    gchar c = * * get;
 
     if (! c)
         return 0;
 
-    (*get)++;
+    (* get) ++;
 
-    if (c >= 'a')
-        return c - 'a' + 10;
-    if (c >= 'A')
+    if (c < 'A')
+        return c - '0';
+    if (c < 'a')
         return c - 'A' + 10;
 
-    return c - '0';
+    return c - 'a' + 10;
 }
 
-/* modifies string in place */
-void string_decode_percent(gchar *string)
+/* Requires that the destination be large enough to hold the decoded string.
+ * The source and destination may be the same string.  USE EXTREME CAUTION. */
+
+static void string_decode_percent_2 (const gchar * from, gchar * to)
 {
-    gchar *get = string;
-    gchar *set = string;
     gchar c;
+    while ((c = * from ++))
+        * to ++ = (c != '%') ? c : ((get_hex_digit (& from) << 4) | get_hex_digit
+         (& from));
 
-    while ((c = *get++))
-    {
-        if (c == '%')
-            *set++ = (get_hex_digit(&get) << 4) | get_hex_digit(&get);
-        else
-            *set++ = c;
-    }
+    * to = 0;
+}
 
-    *set = 0;
+/* Decodes a percent-encoded string in-place. */
+
+void string_decode_percent (gchar * s)
+{
+    string_decode_percent_2 (s, s);
 }
 
 /* we encode any character except the "unreserved" characters of RFC 3986 and
@@ -465,40 +467,44 @@ void string_cut_extension(gchar *string)
 }
 
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */
-/* Also handles NULL gracefully. */
+/* Non-ASCII characters are treated exactly as is. */
+/* Handles NULL gracefully. */
 
-gint string_compare (const gchar * a, const gchar * b)
+gint string_compare (const gchar * ap, const gchar * bp)
 {
-    if (a == NULL)
-        return (b == NULL) ? 0 : -1;
-    else if (b == NULL)
+    if (ap == NULL)
+        return (bp == NULL) ? 0 : -1;
+    if (bp == NULL)
         return 1;
 
-    while (* a || * b)
+    guchar a = * ap ++, b = * bp ++;
+    for (; a || b; a = * ap ++, b = * bp ++)
     {
-        if (isdigit (* a) && isdigit (* b))
+        if (a > '9' || b > '9' || a < '0' || b < '0')
         {
-            gint x = (* a ++) - '0';
-            gint y = (* b ++) - '0';
+            if (a <= 'Z' && a >= 'A')
+                a += 'a' - 'A';
+            if (b <= 'Z' && b >= 'A')
+                b += 'a' - 'A';
 
-            while (isdigit (* a))
-                x = 10 * x + ((* a ++) - '0');
-            while (isdigit (* b))
-                y = 10 * y + ((* b ++) - '0');
-
-            if (x > y)
+            if (a > b)
                 return 1;
-            if (x < y)
+            if (a < b)
                 return -1;
         }
         else
         {
-            gchar la = tolower (* a ++);
-            gchar lb = tolower (* b ++);
+            gint x = a - '0';
+            for (; (a = * ap) <= '9' && a >= '0'; ap ++)
+                x = 10 * x + (a - '0');
 
-            if (la > lb)
+            gint y = b - '0';
+            for (; (b = * bp) >= '0' && b <= '9'; bp ++)
+                y = 10 * y + (b - '0');
+
+            if (x > y)
                 return 1;
-            if (la < lb)
+            if (x < y)
                 return -1;
         }
     }
@@ -506,29 +512,53 @@ gint string_compare (const gchar * a, const gchar * b)
     return 0;
 }
 
-const void * memfind (const void * mem, gint size, const void * token, gint
- length)
+/* Decodes percent-encoded strings, then compares then with string_compare. */
+
+gint string_compare_encoded (const gchar * ap, const gchar * bp)
 {
-    if (! length)
-        return mem;
+    if (ap == NULL)
+        return (bp == NULL) ? 0 : -1;
+    if (bp == NULL)
+        return 1;
 
-    size -= length - 1;
-
-    while (size > 0)
+    guchar a = * ap ++, b = * bp ++;
+    for (; a || b; a = * ap ++, b = * bp ++)
     {
-        const void * maybe = memchr (mem, * (guchar *) token, size);
+        if (a == '%')
+            a = (get_hex_digit (& ap) << 4) | get_hex_digit (& ap);
+        if (b == '%')
+            b = (get_hex_digit (& bp) << 4) | get_hex_digit (& bp);
 
-        if (maybe == NULL)
-            return NULL;
+        if (a > '9' || b > '9' || a < '0' || b < '0')
+        {
+            if (a <= 'Z' && a >= 'A')
+                a += 'a' - 'A';
+            if (b <= 'Z' && b >= 'A')
+                b += 'a' - 'A';
 
-        if (! memcmp (maybe, token, length))
-            return maybe;
+            if (a > b)
+                return 1;
+            if (a < b)
+                return -1;
+        }
+        else
+        {
+            gint x = a - '0';
+            for (; (a = * ap) <= '9' && a >= '0'; ap ++)
+                x = 10 * x + (a - '0');
 
-        size -= (guchar *) maybe + 1 - (guchar *) mem;
-        mem = (guchar *) maybe + 1;
+            gint y = b - '0';
+            for (; (b = * bp) >= '0' && b <= '9'; bp ++)
+                y = 10 * y + (b - '0');
+
+            if (x > y)
+                return 1;
+            if (x < y)
+                return -1;
+        }
     }
 
-    return NULL;
+    return 0;
 }
 
 gchar *

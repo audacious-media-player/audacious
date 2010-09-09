@@ -55,7 +55,7 @@ static const gchar * get_basename (const gchar * filename)
 
 static gint filename_compare_basename (const gchar * a, const gchar * b)
 {
-    return string_compare (get_basename (a), get_basename (b));
+    return string_compare_encoded (get_basename (a), get_basename (b));
 }
 
 static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
@@ -110,7 +110,7 @@ static gint tuple_compare_track (const Tuple * a, const Tuple * b)
 }
 
 static const PlaylistFilenameCompareFunc filename_comparisons[] = {
- [PLAYLIST_SORT_PATH] = string_compare,
+ [PLAYLIST_SORT_PATH] = string_compare_encoded,
  [PLAYLIST_SORT_FILENAME] = filename_compare_basename,
  [PLAYLIST_SORT_TITLE] = NULL,
  [PLAYLIST_SORT_ALBUM] = NULL,

@@ -159,7 +159,7 @@ static gboolean add_cb (void * unused)
     if (stack == NULL)
     {
         index_sort (index, (gint (*) (const void *, const void *))
-         string_compare);
+         string_compare_encoded);
 
         count = playlist_count ();
 

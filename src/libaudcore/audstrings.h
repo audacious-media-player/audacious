@@ -67,6 +67,7 @@ void string_decode_percent (gchar * string);
 gchar * string_encode_percent (const gchar * string, gboolean is_filename);
 void string_cut_extension(gchar *string);
 gint string_compare (const gchar * a, const gchar * b);
+gint string_compare_encoded (const gchar * a, const gchar * b);
 
 const void * memfind (const void * mem, gint size, const void * token, gint
  length);
