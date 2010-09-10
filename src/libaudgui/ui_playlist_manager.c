@@ -179,6 +179,7 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 
     g_signal_connect ((GObject *) playman_win, "delete-event", (GCallback)
      hide_cb, NULL);
+    audgui_hide_on_escape (playman_win);
 
     playman_vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add( GTK_CONTAINER(playman_win) , playman_vbox );
