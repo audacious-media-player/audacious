@@ -35,7 +35,6 @@
 #endif
 
 enum {
-    BMP_PATH_LOG_FILE,
     BMP_PATH_USER_DIR,
     BMP_PATH_USER_PLUGIN_DIR,
     BMP_PATH_USER_SKIN_DIR,

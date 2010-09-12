@@ -45,11 +45,6 @@ dnl Large file support
 dnl ==================
 CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
 
-dnl Debug support
-dnl ========================
-AUD_ARG_ENABLE([debug], [no], [additional debugging output],
- [CPPFLAGS="$CPPFLAGS -DDEBUG"])
-
 dnl Plugin stuff
 dnl ========================
 SHARED_SUFFIX="$PLUGIN_SUFFIX"
@@ -336,7 +331,6 @@ fi
 
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
-echo "  Additional debugging output:            $enable_debug"
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  D-Bus support:                          $enable_dbus"
 echo "  Session management (eggsm)              $enable_sm"

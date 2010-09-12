@@ -14,7 +14,6 @@ SRCS = audconfig.c								\
        fft.c									\
        folder-add.c \
        interface.c								\
-       logger.c									\
        main.c									\
        output.c									\
        playback.c								\
@@ -32,8 +31,7 @@ SRCS = audconfig.c								\
        util.c									\
        vis_runner.c \
        visualization.c							\
-       ui_albumart.c						\
-       ui_misc.c
+       ui_albumart.c
 
 ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c

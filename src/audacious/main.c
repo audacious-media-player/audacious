@@ -49,17 +49,16 @@
 #include "audconfig.h"
 #include "chardet.h"
 #include "configdb.h"
+#include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
 #include "i18n.h"
 #include "interface.h"
-#include "logger.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
 #include "signals.h"
-#include "ui_misc.h"
 #include "util.h"
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
@@ -72,11 +71,9 @@ struct _AudCmdLineOpt
     gint session;
     gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
     gboolean enqueue, mainwin, remote, activate;
-    gboolean no_log;
     gboolean enqueue_to_temp;
     gboolean version;
     gchar *previous_session_id;
-    gboolean macpack;
 };
 typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
@@ -141,7 +138,6 @@ static void aud_init_paths()
     aud_paths[BMP_PATH_CONFIG_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "config", NULL);
     aud_paths[BMP_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlist.xspf", NULL);
     aud_paths[BMP_PATH_ACCEL_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "accels", NULL);
-    aud_paths[BMP_PATH_LOG_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "log", NULL);
 
     aud_paths[BMP_PATH_GTKRC_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
 
@@ -164,11 +160,8 @@ static GOptionEntry cmd_entries[] = {
     {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, N_("Add new files to a temporary playlist"), NULL},
     {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
     {"activate", 'a', 0, G_OPTION_ARG_NONE, &options.activate, N_("Display all open Audacious windows"), NULL},
-    {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, N_("Print all errors and warnings to stdout"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
-#ifdef GDK_WINDOWING_QUARTZ
-    {"macpack", 'n', 0, G_OPTION_ARG_NONE, &options.macpack, N_("Used in macpacking"), NULL},   /* Make this hidden */
-#endif
+    {"verbose", 'V', 0, G_OPTION_ARG_NONE, &cfg.verbose, N_("Print debugging messages"), NULL},
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
     {NULL},
 };
@@ -323,17 +316,9 @@ static void handle_cmd_line_options(void)
         interface_toggle_visibility ();
 }
 
-static void aud_setup_logger(void)
-{
-    if (!aud_logger_start(aud_paths[BMP_PATH_LOG_FILE]))
-        return;
-
-    g_atexit(aud_logger_stop);
-}
-
 void aud_quit (void)
 {
-    g_message ("Ending main loop.");
+    AUDDBG ("Ending main loop.\n");
     gtk_main_quit ();
 }
 
@@ -363,7 +348,7 @@ void init_playback_hooks(void)
 
 static gboolean autosave_cb (void * unused)
 {
-    g_message ("Saving configuration.");
+    AUDDBG ("Saving configuration.\n");
     aud_config_save ();
     cfg_db_flush ();
     save_playlists ();
@@ -407,10 +392,6 @@ gint main(gint argc, gchar ** argv)
 
     parse_cmd_line_options(&argc, &argv);
 
-    if (options.no_log == FALSE)
-        aud_setup_logger();
-
-    g_message("Initializing Gtk+");
     if (!gtk_init_check(&argc, &argv))
     {                           /* XXX */
         /* GTK check failed, and no arguments passed to indicate
@@ -420,66 +401,56 @@ gint main(gint argc, gchar ** argv)
         exit(EXIT_FAILURE);
     }
 
-    g_message("Loading configuration");
+    AUDDBG ("Loading configuration.\n");
     aud_config_load();
     atexit (aud_config_free);
 
-    g_message("Initializing signal handlers");
     signal_handlers_init();
-
-    g_message("Handling commandline options, part #1");
     handle_cmd_line_options_first();
 
-    g_message ("Initializing core ...");
+    AUDDBG ("Initializing core.\n");
     playlist_init ();
     output_init ();
     eq_init ();
 
-    g_message ("Loading plugins, stage one ...");
+    AUDDBG ("Loading plugins, stage one.\n");
     start_plugins_one ();
 
-    g_message ("Loading saved state ...");
+    AUDDBG ("Loading saved state.\n");
     load_playlists ();
 
 #ifdef USE_DBUS
-    g_message("Initializing D-Bus");
+    AUDDBG ("Initializing D-Bus.\n");
     init_dbus();
     init_playback_hooks();
 #endif
 
-    g_message("Handling commandline options, part #2");
     handle_cmd_line_options();
-
-    g_message("Registering interface hooks");
     register_interface_hooks();
 
-    g_message ("Loading plugins, stage two ...");
+    AUDDBG ("Loading plugins, stage two.\n");
     start_plugins_two ();
 
-#ifndef NOT_ALPHA_RELEASE
-    g_message("Displaying unsupported version warning.");
-    ui_display_unsupported_version_warning();
-#endif
+    AUDDBG ("Startup complete.\n");
 
-    g_message ("Startup complete.");
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, autosave_cb, NULL);
     gtk_main ();
 
-    g_message ("Capturing state ...");
+    AUDDBG ("Capturing state.\n");
     aud_config_save ();
     save_playlists ();
 
-    g_message ("Stopping playback ...");
+    AUDDBG ("Stopping playback.\n");
     if (playback_get_playing ())
         playback_stop ();
 
-    g_message ("Unloading plugins ...");
+    AUDDBG ("Unloading plugins.\n");
     stop_plugins ();
 
-    g_message ("Saving configuration ...");
+    AUDDBG ("Saving configuration.\n");
     cfg_db_flush ();
 
-    g_message ("Shutting down core ...");
+    AUDDBG ("Shutting down core.\n");
     output_cleanup ();
     playlist_end ();
 

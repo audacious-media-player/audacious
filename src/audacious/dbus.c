@@ -34,6 +34,7 @@
 #include <libaudcore/eventqueue.h>
 
 #include "audconfig.h"
+#include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
 #include "main.h"
@@ -132,7 +133,7 @@ void audacious_rc_init(RemoteObject * object)
     DBusGProxy *driver_proxy;
     guint request_ret;
 
-    g_message("Registering remote D-Bus interfaces");
+    AUDDBG ("Registering remote D-Bus interfaces.\n");
 
     dbus_g_object_type_install_info(audacious_rc_get_type(), &dbus_glib_audacious_rc_object_info);
 
@@ -186,7 +187,7 @@ void mpris_player_init(MprisPlayer * object)
     else
     {
         /* XXX / FIXME: Why does this happen? -- ccr */
-        g_warning("in mpris_player_init object->proxy == NULL, not adding some signals.");
+        AUDDBG ("object->proxy == NULL; not adding some signals.\n");
     }
 }
 
@@ -206,7 +207,7 @@ void mpris_tracklist_init(MprisTrackList * object)
     else
     {
         /* XXX / FIXME: Why does this happen? -- ccr */
-        g_warning("in mpris_tracklist_init object->proxy == NULL, not adding some signals.");
+        AUDDBG ("object->proxy == NULL, not adding some signals.\n");
     }
 
     hook_associate("playlist update", (HookFunction) mpris_playlist_update_hook, object);
@@ -221,8 +222,7 @@ void init_dbus()
     info_mutex = g_mutex_new();
     info_cond = g_cond_new();
 
-    // Initialize the DBus connection
-    g_message("Trying to initialize D-Bus");
+    AUDDBG ("Trying to initialize D-Bus.\n");
     dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     if (dbus_conn == NULL)
     {
@@ -232,16 +232,10 @@ void init_dbus()
     }
 
     g_type_init();
-    g_message("D-Bus RC");
     g_object_new(audacious_rc_get_type(), NULL);
-    g_message("D-Bus MPRIS root");
     g_object_new(mpris_root_get_type(), NULL);
-    g_message("D-Bus MPRIS player");
     mpris = g_object_new(mpris_player_get_type(), NULL);
-    g_message("result=%p", (void *) mpris);
-    g_message("D-Bus MPRIS tracklist");
     g_object_new(mpris_tracklist_get_type(), NULL);
-    g_message("D-Bus support has been activated");
 
     local_conn = dbus_g_connection_get_connection(dbus_conn);
     dbus_connection_set_exit_on_disconnect(local_conn, FALSE);
@@ -729,7 +723,7 @@ gboolean mpris_player_play(MprisPlayer * obj, GError * *error)
 
 gboolean mpris_player_repeat(MprisPlayer * obj, gboolean rpt, GError ** error)
 {
-    g_message("implement me");
+    fprintf (stderr, "implement me\n");
     return TRUE;
 }
 
@@ -1363,7 +1357,7 @@ gboolean audacious_rc_play_pause(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_activate(RemoteObject * obj, GError ** error)
 {
-    g_message("implement me");
+    fprintf (stderr, "implement me\n");
     return TRUE;
 }
 

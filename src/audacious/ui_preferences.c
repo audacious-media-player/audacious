@@ -623,11 +623,11 @@ on_font_btn_realize(GtkFontButton * button, gchar **cfg)
 }
 
 static void
-on_font_btn_font_set(GtkFontButton * button, gchar **cfg)
+on_font_btn_font_set(GtkFontButton * button, gchar **config)
 {
-    g_free(*cfg);
-    *cfg = g_strdup(gtk_font_button_get_font_name(button));
-    AUDDBG("Returned font name: \"%s\"\n", *cfg);
+    g_free(*config);
+    *config = g_strdup(gtk_font_button_get_font_name(button));
+    AUDDBG("Returned font name: \"%s\"\n", *config);
     void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
     if (callback != NULL) callback();
 }

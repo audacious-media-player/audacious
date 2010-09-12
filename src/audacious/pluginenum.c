@@ -38,6 +38,7 @@
 #endif
 
 #include "audconfig.h"
+#include "debug.h"
 #include "main.h"
 #include "plugin.h"
 #include "util.h"
@@ -74,7 +75,7 @@ static void plugin2_dispose(GModule * module, const gchar * str, ...)
     buf = g_strdup_vprintf(str, va);
     va_end(va);
 
-    g_message("*** %s\n", buf);
+    AUDDBG ("*** %s\n", buf);
     g_free(buf);
 
     g_module_close(module);
@@ -247,7 +248,7 @@ void module_load (const gchar * filename)
     GModule *module;
     PluginHeader * (* func) (AudAPITable * table);
 
-    g_message("Loaded plugin (%s)", filename);
+    AUDDBG ("Loading plugin: %s.\n", filename);
 
     if (!(module = g_module_open(filename, G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL)))
     {

@@ -73,7 +73,7 @@ interface_show_prefs_window(gboolean show)
     if (interface_cbs.show_prefs_window != NULL)
         interface_cbs.show_prefs_window(show);
     else
-        g_message("Interface didn't register show_prefs_window function");
+        AUDDBG ("Interface didn't register show_prefs_window function.\n");
 }
 
 /*
@@ -87,7 +87,7 @@ interface_run_filebrowser(gboolean play_button)
     if (interface_cbs.run_filebrowser != NULL)
         interface_cbs.run_filebrowser(play_button);
     else
-        g_message("Interface didn't register run_filebrowser function");
+        AUDDBG ("Interface didn't register run_filebrowser function.\n");
 }
 
 void
@@ -96,7 +96,7 @@ interface_hide_filebrowser(void)
     if (interface_cbs.hide_filebrowser != NULL)
         interface_cbs.hide_filebrowser();
     else
-        g_message("Interface didn't register hide_filebrowser function");
+        AUDDBG ("Interface didn't register hide_filebrowser function.\n");
 }
 
 void
@@ -105,7 +105,7 @@ interface_toggle_visibility(void)
     if (interface_cbs.toggle_visibility != NULL)
         interface_cbs.toggle_visibility();
     else
-        g_message("Interface didn't register toggle_visibility function");
+        AUDDBG ("Interface didn't register toggle_visibility function.\n");
 }
 
 void
@@ -114,7 +114,7 @@ interface_show_error_message(const gchar * markup)
     if (interface_cbs.show_error != NULL)
         interface_cbs.show_error(markup);
     else
-        g_message("Interface didn't register show_error function");
+        AUDDBG ("Interface didn't register show_error function.\n");
 }
 
 void
@@ -123,7 +123,7 @@ interface_show_jump_to_track(void)
     if (interface_cbs.show_jump_to_track != NULL)
         interface_cbs.show_jump_to_track();
     else
-        g_message("Interface didn't register show_jump_to_track function");
+        AUDDBG ("Interface didn't register show_jump_to_track function.\n");
 }
 
 void
@@ -132,7 +132,7 @@ interface_hide_jump_to_track(void)
     if (interface_cbs.hide_jump_to_track != NULL)
         interface_cbs.hide_jump_to_track();
     else
-        g_message("Interface didn't register hide_jump_to_track function");
+        AUDDBG ("Interface didn't register hide_jump_to_track function.\n");
 }
 
 void
@@ -142,12 +142,12 @@ interface_show_about_window(gboolean show)
         if (interface_cbs.hide_about_window != NULL)
             interface_cbs.hide_about_window();
         else
-            g_message("Interface didn't register hide_about_window function");
+            AUDDBG ("Interface didn't register hide_about_window function.\n");
     } else {
         if (interface_cbs.show_about_window != NULL)
             interface_cbs.show_about_window();
         else
-            g_message("Interface didn't register show_about_window function");
+            AUDDBG ("Interface didn't register show_about_window function.\n");
     }
 }
 
@@ -186,7 +186,7 @@ interface_toggle_shuffle(void)
     if (interface_cbs.toggle_shuffle != NULL)
         interface_cbs.toggle_shuffle();
     else
-        g_message("Interface didn't register toggle_shuffle function");
+        AUDDBG ("Interface didn't register toggle_shuffle function.\n");
 }
 
 void
@@ -195,7 +195,7 @@ interface_toggle_repeat(void)
     if (interface_cbs.toggle_repeat != NULL)
         interface_cbs.toggle_repeat();
     else
-        g_message("Interface didn't register toggle_repeat function");
+        AUDDBG ("Interface didn't register toggle_repeat function.\n");
 }
 
 typedef enum {
@@ -303,10 +303,10 @@ gboolean iface_plugin_set_current (PluginHandle * plugin)
 {
     if (current_plugin != NULL)
     {
-        g_message ("Unloading visualizers ...");
+        AUDDBG ("Unloading visualizers.\n");
         vis_cleanup ();
 
-        g_message ("Unloading %s ...", plugin_get_name (current_plugin));
+        AUDDBG ("Unloading %s.\n", plugin_get_name (current_plugin));
         interface_unload ();
 
         current_plugin = NULL;
@@ -314,14 +314,14 @@ gboolean iface_plugin_set_current (PluginHandle * plugin)
 
     if (plugin != NULL)
     {
-        g_message ("Loading %s ...", plugin_get_name (plugin));
+        AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
 
         if (! interface_load (plugin))
             return FALSE;
 
         current_plugin = plugin;
 
-        g_message ("Loading visualizers ...");
+        AUDDBG ("Loading visualizers.\n");
         vis_init ();
     }
 
