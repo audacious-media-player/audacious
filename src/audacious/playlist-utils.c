@@ -109,14 +109,15 @@ static gint tuple_compare_track (const Tuple * a, const Tuple * b)
     return tuple_compare_int (a, b, FIELD_TRACK_NUMBER);
 }
 
-static const PlaylistFilenameCompareFunc filename_comparisons[] = {
+static const PlaylistStringCompareFunc filename_comparisons[] = {
  [PLAYLIST_SORT_PATH] = string_compare_encoded,
  [PLAYLIST_SORT_FILENAME] = filename_compare_basename,
  [PLAYLIST_SORT_TITLE] = NULL,
  [PLAYLIST_SORT_ALBUM] = NULL,
  [PLAYLIST_SORT_ARTIST] = NULL,
  [PLAYLIST_SORT_DATE] = NULL,
- [PLAYLIST_SORT_TRACK] = NULL};
+ [PLAYLIST_SORT_TRACK] = NULL,
+ [PLAYLIST_SORT_FORMATTED_TITLE] = NULL};
 
 static const PlaylistTupleCompareFunc tuple_comparisons[] = {
  [PLAYLIST_SORT_PATH] = NULL,
@@ -125,7 +126,18 @@ static const PlaylistTupleCompareFunc tuple_comparisons[] = {
  [PLAYLIST_SORT_ALBUM] = tuple_compare_album,
  [PLAYLIST_SORT_ARTIST] = tuple_compare_artist,
  [PLAYLIST_SORT_DATE] = tuple_compare_date,
- [PLAYLIST_SORT_TRACK] = tuple_compare_track};
+ [PLAYLIST_SORT_TRACK] = tuple_compare_track,
+ [PLAYLIST_SORT_FORMATTED_TITLE] = NULL};
+
+static const PlaylistStringCompareFunc title_comparisons[] = {
+ [PLAYLIST_SORT_PATH] = NULL,
+ [PLAYLIST_SORT_FILENAME] = NULL,
+ [PLAYLIST_SORT_TITLE] = NULL,
+ [PLAYLIST_SORT_ALBUM] = NULL,
+ [PLAYLIST_SORT_ARTIST] = NULL,
+ [PLAYLIST_SORT_DATE] = NULL,
+ [PLAYLIST_SORT_TRACK] = NULL,
+ [PLAYLIST_SORT_FORMATTED_TITLE] = string_compare};
 
 const gchar * get_gentitle_format (void)
 {
@@ -142,6 +154,8 @@ void playlist_sort_by_scheme (gint playlist, gint scheme)
         playlist_sort_by_filename (playlist, filename_comparisons[scheme]);
     else if (tuple_comparisons[scheme] != NULL)
         playlist_sort_by_tuple (playlist, tuple_comparisons[scheme]);
+    else if (title_comparisons[scheme] != NULL)
+        playlist_sort_by_title (playlist, title_comparisons[scheme]);
 }
 
 void playlist_sort_selected_by_scheme (gint playlist, gint scheme)
@@ -151,6 +165,8 @@ void playlist_sort_selected_by_scheme (gint playlist, gint scheme)
          filename_comparisons[scheme]);
     else if (tuple_comparisons[scheme] != NULL)
         playlist_sort_selected_by_tuple (playlist, tuple_comparisons[scheme]);
+    else if (title_comparisons[scheme] != NULL)
+        playlist_sort_selected_by_title (playlist, title_comparisons[scheme]);
 }
 
 /* Fix me:  This considers empty fields as duplicates. */

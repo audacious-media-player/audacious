@@ -170,19 +170,27 @@ AUD_FUNC1 (void, playlist_delete_selected, gint, playlist)
  * should return negative if the first filename comes before the second,
  * positive if it comes after, or zero if the two are indistinguishable. */
 AUD_FUNC2 (void, playlist_sort_by_filename, gint, playlist,
- PlaylistFilenameCompareFunc, compare)
+ PlaylistStringCompareFunc, compare)
 
 /* Sorts the entries in a playlist based on tuple. */
 AUD_FUNC2 (void, playlist_sort_by_tuple, gint, playlist,
  PlaylistTupleCompareFunc, compare)
 
+/* Sorts the entries in a playlist based on formatted title string. */
+AUD_FUNC2 (void, playlist_sort_by_title, gint, playlist,
+ PlaylistStringCompareFunc, compare)
+
 /* Sorts only the selected entries in a playlist based on filename. */
 AUD_FUNC2 (void, playlist_sort_selected_by_filename, gint, playlist,
- PlaylistFilenameCompareFunc, compare)
+ PlaylistStringCompareFunc, compare)
 
 /* Sorts only the selected entries in a playlist based on tuple. */
 AUD_FUNC2 (void, playlist_sort_selected_by_tuple, gint, playlist,
  PlaylistTupleCompareFunc, compare)
+
+/* Sorts only the selected entries in a playlist based on formatted title string. */
+AUD_FUNC2 (void, playlist_sort_selected_by_title, gint, playlist,
+ PlaylistStringCompareFunc, compare)
 
 /* Reverses the order of the entries in a playlist. */
 AUD_FUNC1 (void, playlist_reverse, gint, playlist)

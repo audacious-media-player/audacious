@@ -56,9 +56,11 @@ enum {
  PLAYLIST_SORT_ARTIST,
  PLAYLIST_SORT_DATE,
  PLAYLIST_SORT_TRACK,
+ PLAYLIST_SORT_FORMATTED_TITLE,
  PLAYLIST_SORT_SCHEMES};
 
-typedef gint (* PlaylistFilenameCompareFunc) (const gchar * a, const gchar * b);
+#define PlaylistFilenameCompareFunc PlaylistStringCompareFunc /* deprecated */
+typedef gint (* PlaylistStringCompareFunc) (const gchar * a, const gchar * b);
 typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 
 #define AUD_API_NAME PlaylistAPI
