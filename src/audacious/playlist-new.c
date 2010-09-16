@@ -1332,6 +1332,27 @@ void playlist_reverse(gint playlist_num)
     PLAYLIST_HAS_CHANGED (playlist, 0, entries);
 }
 
+void playlist_randomize (gint playlist_num)
+{
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+    PLAYLIST_WILL_CHANGE;
+
+    gint entries = index_count (playlist->entries);
+
+    for (gint i = 0; i < entries; i ++)
+    {
+        gint j = i + random () % (entries - i);
+
+        struct entry * entry = index_get (playlist->entries, j);
+        index_set (playlist->entries, j, index_get (playlist->entries, i));
+        index_set (playlist->entries, i, entry);
+    }
+
+    number_entries (playlist, 0, entries);
+    PLAYLIST_HAS_CHANGED (playlist, 0, entries);
+}
+
 static gint filename_compare (const void * _a, const void * _b, void * _compare)
 {
     const Entry * a = _a, * b = _b;

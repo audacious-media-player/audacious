@@ -187,6 +187,9 @@ AUD_FUNC2 (void, playlist_sort_selected_by_tuple, gint, playlist,
 /* Reverses the order of the entries in a playlist. */
 AUD_FUNC1 (void, playlist_reverse, gint, playlist)
 
+/* Reorders the entries in a playlist randomly. */
+AUD_FUNC1 (void, playlist_randomize, gint, playlist)
+
 /* Discards the metadata stored for all the entries in a playlist and starts
  * reading it afresh from the song files in the background. */
 AUD_FUNC1 (void, playlist_rescan, gint, playlist)
