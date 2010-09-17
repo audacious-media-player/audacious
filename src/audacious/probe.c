@@ -147,6 +147,11 @@ static void probe_by_extension (ProbeState * state)
 
     AUDDBG ("Probing by extension.\n");
     s = g_ascii_strdown (s + 1, -1);
+
+    gchar * q = strrchr (s, '?');
+    if (q != NULL)
+        * q = 0;
+
     input_plugin_for_key (INPUT_KEY_EXTENSION, s, (PluginForEachFunc)
      probe_func_fast, state);
     g_free (s);

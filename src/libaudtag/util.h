@@ -23,6 +23,7 @@
 #define TAGUTIL_H
 
 #include <glib.h>
+#include <audacious/debug.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
@@ -202,12 +203,5 @@ gchar *convert_numericgenre_to_text(gint numericgenre);
 
 guint32 unsyncsafe32 (guint32 x);
 guint32 syncsafe32 (guint32 x);
-
-/* macro for debug print */
-#ifdef DEBUG
-#  define AUDDBG(...) do { g_print("%s:%d %s(): ", __FILE__, (int)__LINE__, __FUNCTION__); g_print(__VA_ARGS__); } while (0)
-#else
-#  define AUDDBG(...) do { } while (0)
-#endif
 
 #endif

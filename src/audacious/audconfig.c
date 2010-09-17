@@ -30,9 +30,7 @@
 #include "configdb.h"
 #include "playback.h"
 
-AudConfig cfg;
-
-AudConfig aud_default_config = {
+AudConfig cfg = {
     .shuffle = FALSE,
     .repeat = FALSE,
     .equalizer_autoload = FALSE,
@@ -90,6 +88,9 @@ AudConfig aud_default_config = {
     .playlist_manager_width = 0,
     .playlist_manager_height = 0,
     .playlist_manager_close_on_activate = FALSE,
+
+    /* not saved */
+    .verbose = FALSE,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -204,8 +205,6 @@ aud_config_load(void)
 {
     mcs_handle_t *db;
     gint i, length;
-
-    memcpy(&cfg, &aud_default_config, sizeof(AudConfig));
 
     db = cfg_db_open();
     for (i = 0; i < ncfgbent; ++i) {

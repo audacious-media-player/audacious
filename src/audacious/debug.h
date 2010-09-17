@@ -24,10 +24,12 @@
 
 #include <stdio.h>
 
-#ifdef DEBUG
-#define AUDDBG(...) do {printf ("%s:%d %s(): ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);} while (0)
+#include <audacious/audconfig.h>
+
+#ifdef _AUDACIOUS_CORE
+#define AUDDBG(...) do {if (cfg.verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 #else
-#define AUDDBG(...) do {} while(0)
+#define AUDDBG(...) do {if (aud_cfg->verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 #endif
 
 #endif

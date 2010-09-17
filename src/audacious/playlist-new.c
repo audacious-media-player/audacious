@@ -1332,6 +1332,27 @@ void playlist_reverse(gint playlist_num)
     PLAYLIST_HAS_CHANGED (playlist, 0, entries);
 }
 
+void playlist_randomize (gint playlist_num)
+{
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+    PLAYLIST_WILL_CHANGE;
+
+    gint entries = index_count (playlist->entries);
+
+    for (gint i = 0; i < entries; i ++)
+    {
+        gint j = i + random () % (entries - i);
+
+        struct entry * entry = index_get (playlist->entries, j);
+        index_set (playlist->entries, j, index_get (playlist->entries, i));
+        index_set (playlist->entries, i, entry);
+    }
+
+    number_entries (playlist, 0, entries);
+    PLAYLIST_HAS_CHANGED (playlist, 0, entries);
+}
+
 static gint filename_compare (const void * _a, const void * _b, void * _compare)
 {
     const Entry * a = _a, * b = _b;
@@ -1351,6 +1372,14 @@ static gint tuple_compare (const void * _a, const void * _b, void * _compare)
         return 1;
 
     return compare (a->tuple, b->tuple);
+}
+
+static gint title_compare (const void * _a, const void * _b, void * _compare)
+{
+    const Entry * a = _a, * b = _b;
+    gint (* compare) (const gchar * a, const gchar * b) = _compare;
+    return compare (a->title ? a->title : a->filename, b->title ? b->title :
+     b->filename);
 }
 
 static void sort (Playlist * playlist, gint (* compare) (const void * a,
@@ -1418,6 +1447,15 @@ void playlist_sort_by_tuple (gint playlist_num, gint (* compare)
     sort (playlist, tuple_compare, compare);
 }
 
+void playlist_sort_by_title (gint playlist_num, gint (* compare) (const gchar *
+ a, const gchar * b))
+{
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+    check_all_scanned (playlist);
+    sort (playlist, title_compare, compare);
+}
+
 void playlist_sort_selected_by_filename (gint playlist_num, gint (* compare)
  (const gchar * a, const gchar * b))
 {
@@ -1435,6 +1473,15 @@ void playlist_sort_selected_by_tuple (gint playlist_num, gint (* compare)
     LOOKUP_PLAYLIST;
     check_selected_scanned (playlist);
     sort_selected (playlist, tuple_compare, compare);
+}
+
+void playlist_sort_selected_by_title (gint playlist_num, gint (* compare)
+ (const gchar * a, const gchar * b))
+{
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+    check_selected_scanned (playlist);
+    sort (playlist, title_compare, compare);
 }
 
 void playlist_reformat_titles (void)

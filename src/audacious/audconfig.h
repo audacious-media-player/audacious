@@ -82,6 +82,9 @@ struct _AudConfig {
     gint playlist_manager_x, playlist_manager_y, playlist_manager_width,
      playlist_manager_height;
     gboolean playlist_manager_close_on_activate;
+
+    /* not saved */
+    gboolean verbose;
 };
 
 typedef struct _AudConfig AudConfig;
