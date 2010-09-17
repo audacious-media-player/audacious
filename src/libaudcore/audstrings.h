@@ -74,6 +74,8 @@ const void * memfind (const void * mem, gint size, const void * token, gint
 
 gchar *str_replace_fragment(gchar *s, gint size, const gchar *old_str, const gchar *new_str);
 
+void string_canonize_case(gchar *string);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_STRINGS_H */

@@ -74,12 +74,7 @@ strcasecanon(gchar *str)
 static void
 strcasecanon(gchar *str)
 {
-    while (*str)
-    {
-        /* toupper() should ignore utf8 data.  if not, make XXX_UTF8_CANON work. */
-        *str = g_ascii_toupper(*str);
-        str++;
-    }
+    string_canonize_case(str);
 }
 
 #endif

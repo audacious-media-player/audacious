@@ -618,3 +618,13 @@ str_replace_fragment(gchar *s, gint size, const gchar *old, const gchar *new)
 
     return s;
 }
+
+void
+string_canonize_case(gchar *str)
+{
+    while (*str)
+    {
+        *str = g_ascii_toupper(*str);
+        str++;
+    }
+}

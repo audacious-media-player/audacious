@@ -580,7 +580,7 @@ static TupleValue * tf_get_fieldref (TupleEvalVar * var, const Tuple * tuple)
 {
   if (var->type == TUPLE_VAR_FIELD && var->fieldref == NULL) {
     if (var->fieldidx < 0)
-      var->fieldref = mowgli_dictionary_retrieve(tuple->dict, var->name);
+      var->fieldref = mowgli_patricia_retrieve(tuple->dict, var->name);
     else
       var->fieldref = tuple->values[var->fieldidx];
   }

@@ -99,7 +99,10 @@ typedef struct {
 
 extern const TupleBasicType tuple_fields[FIELD_LAST];
 
+#define TUPLE_NAME_MAX	20
+
 typedef struct {
+    gchar name[TUPLE_NAME_MAX];
     TupleValueType type;
     union {
         gchar *string;
@@ -113,7 +116,7 @@ typedef struct {
  */
 typedef struct _Tuple {
     mowgli_object_t parent;
-    mowgli_dictionary_t *dict;      /**< Mowgli dictionary for holding other than basic values. */
+    mowgli_patricia_t *dict;        /**< Mowgli dictionary for holding other than basic values. */
     TupleValue *values[FIELD_LAST]; /**< Basic #Tuple values, entry is NULL if not set. */
     gint nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
                                          mean that there are subtunes and #subtunes array
