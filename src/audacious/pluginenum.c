@@ -41,6 +41,7 @@
 #include "debug.h"
 #include "main.h"
 #include "plugin.h"
+#include "ui_preferences.h"
 #include "util.h"
 
 #define AUD_API_DECLARE
@@ -108,9 +109,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     hlist_node = mowgli_node_create();
     mowgli_node_add(header, hlist_node, headers_list);
 
-    header->priv_assoc = g_new0(Plugin, 1);
-    header->priv_assoc->handle = module;
-    header->priv_assoc->filename = g_strdup(filename);
+    header->priv = module;
 
     if (header->init != NULL)
     {
@@ -123,7 +122,6 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         InputPlugin * ip;
         for (gint i = 0; (ip = header->ip_list[i]) != NULL; i ++)
         {
-            ip->filename = g_strdup_printf ("%s (#%d)", filename, i);
             plugin_register (PLUGIN_TYPE_INPUT, filename, i, ip);
 
             if (ip->init != NULL)
@@ -136,7 +134,6 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         EffectPlugin * ep;
         for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
         {
-            ep->filename = g_strdup_printf ("%s (#%d)", filename, i);
             plugin_register (PLUGIN_TYPE_EFFECT, filename, i, ep);
 
             if (ep->init != NULL)
@@ -148,10 +145,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         OutputPlugin * op;
         for (gint i = 0; (op = header->op_list[i]) != NULL; i ++)
-        {
-            op->filename = g_strdup_printf ("%s (#%d)", filename, i);
             plugin_register (PLUGIN_TYPE_OUTPUT, filename, i, op);
-        }
     }
 
     if (header->vp_list != NULL)
@@ -159,7 +153,6 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         VisPlugin * vp;
         for (gint i = 0; (vp = header->vp_list[i]) != NULL; i ++)
         {
-            vp->filename = g_strdup_printf ("%s (#%d)", filename, i);
             vp->disable_plugin = vis_plugin_disable_by_header;
             plugin_register (PLUGIN_TYPE_VIS, filename, i, vp);
         }
@@ -169,10 +162,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         GeneralPlugin * gp;
         for (gint i = 0; (gp = header->gp_list[i]) != NULL; i ++)
-        {
-            gp->filename = g_strdup_printf ("%s (#%d)", filename, i);
             plugin_register (PLUGIN_TYPE_GENERAL, filename, i, gp);
-        }
     }
 
     if (header->interface != NULL)
@@ -181,17 +171,13 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
 
 void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 {
-    GModule *module;
-
-    g_return_if_fail(header->priv_assoc != NULL);
-
     if (header->ip_list != NULL)
     {
         InputPlugin * ip;
         for (gint i = 0; (ip = header->ip_list[i]) != NULL; i ++)
         {
-            g_free (ip->filename);
-
+            if (ip->settings != NULL)
+                plugin_preferences_cleanup (ip->settings);
             if (ip->cleanup != NULL)
                 ip->cleanup ();
         }
@@ -202,43 +188,20 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
         EffectPlugin * ep;
         for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
         {
-            g_free (ep->filename);
-
+            if (ep->settings != NULL)
+                plugin_preferences_cleanup (ep->settings);
             if (ep->cleanup != NULL)
                 ep->cleanup ();
         }
     }
 
-    if (header->op_list != NULL)
-    {
-        for (gint i = 0; header->op_list[i] != NULL; i ++)
-            g_free (header->op_list[i]->filename);
-    }
-
-    if (header->vp_list != NULL)
-    {
-        for (gint i = 0; header->vp_list[i] != NULL; i ++)
-            g_free (header->vp_list[i]->filename);
-    }
-
-    if (header->gp_list != NULL)
-    {
-        for (gint i = 0; header->gp_list[i] != NULL; i ++)
-            g_free (header->gp_list[i]->filename);
-    }
-
     if (header->fini != NULL)
         header->fini ();
-
-    module = header->priv_assoc->handle;
-
-    g_free(header->priv_assoc->filename);
-    g_free(header->priv_assoc);
 
     mowgli_node_delete(hlist_node, headers_list);
     mowgli_node_free(hlist_node);
 
-    g_module_close(module);
+    g_module_close (header->priv);
 }
 
 /******************************************************************/

@@ -35,7 +35,7 @@
 #include "util.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 2
+#define FORMAT 3
 
 typedef struct {
     gchar * path;
@@ -490,7 +490,7 @@ void plugin_register (gint type, const gchar * path, gint number, void * header)
         plugin->name = g_strdup (ip->description);
         plugin->priority = ip->priority;
         plugin->has_about = (ip->about != NULL);
-        plugin->has_configure = (ip->configure != NULL);
+        plugin->has_configure = (ip->configure != NULL || ip->settings != NULL);
 
         for (gint key = 0; key < INPUT_KEYS; key ++)
         {
@@ -523,7 +523,7 @@ void plugin_register (gint type, const gchar * path, gint number, void * header)
         plugin->name = g_strdup (ep->description);
         plugin->priority = ep->order;
         plugin->has_about = (ep->about != NULL);
-        plugin->has_configure = (ep->configure != NULL);
+        plugin->has_configure = (ep->configure != NULL || ep->settings != NULL);
     }
     else if (type == PLUGIN_TYPE_VIS)
     {
@@ -531,7 +531,7 @@ void plugin_register (gint type, const gchar * path, gint number, void * header)
         g_free (plugin->name);
         plugin->name = g_strdup (vp->description);
         plugin->has_about = (vp->about != NULL);
-        plugin->has_configure = (vp->configure != NULL);
+        plugin->has_configure = (vp->configure != NULL || vp->settings != NULL);
     }
     else if (type == PLUGIN_TYPE_IFACE)
     {
@@ -545,7 +545,7 @@ void plugin_register (gint type, const gchar * path, gint number, void * header)
         g_free (plugin->name);
         plugin->name = g_strdup (gp->description);
         plugin->has_about = (gp->about != NULL);
-        plugin->has_configure = (gp->configure != NULL);
+        plugin->has_configure = (gp->configure != NULL || gp->settings != NULL);
     }
 }
 

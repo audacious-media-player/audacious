@@ -67,16 +67,8 @@ enum PluginViewCols {
     PLUGIN_VIEW_COL_ACTIVE,
     PLUGIN_VIEW_COL_DESC,
     PLUGIN_VIEW_COL_FILENAME,
-    PLUGIN_VIEW_COL_ID,
-    PLUGIN_VIEW_COL_PLUGIN_PTR,
+    PLUGIN_VIEW_COL_HANDLE,
     PLUGIN_VIEW_N_COLS
-};
-
-enum PluginViewType {
-    PLUGIN_VIEW_TYPE_INPUT,
-    PLUGIN_VIEW_TYPE_GENERAL,
-    PLUGIN_VIEW_TYPE_VIS,
-    PLUGIN_VIEW_TYPE_EFFECT
 };
 
 typedef struct {
@@ -257,8 +249,6 @@ static PreferencesWidget playlist_page_widgets[] = {
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
-void create_plugin_preferences_page(PluginPreferences *settings);
-void destroy_plugin_preferences_page(PluginPreferences *settings);
 
 static void output_about (OutputPlugin * plugin)
 {
@@ -307,27 +297,20 @@ plugin_toggle(GtkCellRendererToggle * cell,
     GtkTreeModel *model = GTK_TREE_MODEL(data);
     GtkTreeIter iter;
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-    Plugin *plugin = NULL;
+    PluginHandle * plugin = NULL;
     gboolean enabled;
 
     /* get toggled iter */
     gtk_tree_model_get_iter(model, &iter, path);
 
     gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_ACTIVE, & enabled,
-     PLUGIN_VIEW_COL_PLUGIN_PTR, & plugin, -1);
+     PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
     enabled = ! enabled;
-
-    plugin_enable (plugin_by_header (plugin), enabled);
+    plugin_enable (plugin, enabled);
 
     gtk_list_store_set ((GtkListStore *) model, & iter, PLUGIN_VIEW_COL_ACTIVE,
      enabled, -1);
 
-    if (plugin && plugin->settings && plugin->settings->type == PREFERENCES_PAGE) {
-        if (enabled)
-            create_plugin_preferences_page(plugin->settings);
-        else
-            destroy_plugin_preferences_page(plugin->settings);
-    }
     /* clean up */
     gtk_tree_path_free(path);
 }
@@ -365,38 +348,31 @@ on_output_plugin_cbox_realize(GtkComboBox * cbox,
                      G_CALLBACK(on_output_plugin_cbox_changed), NULL);
 }
 
-static void
-on_plugin_view_realize(GtkTreeView * treeview,
-                       GCallback callback,
-                       gpointer data,
-                       gint plugin_type)
+static gboolean plugin_enum_cb (PluginHandle * plugin, GtkListStore * store)
 {
-    GtkListStore *store;
     GtkTreeIter iter;
+    gtk_list_store_append (store, & iter);
+    gtk_list_store_set (store, & iter, PLUGIN_VIEW_COL_ACTIVE,
+     plugin_get_enabled (plugin), PLUGIN_VIEW_COL_DESC, plugin_get_name
+     (plugin), PLUGIN_VIEW_COL_FILENAME, plugin_get_filename (plugin),
+     PLUGIN_VIEW_COL_HANDLE, plugin, -1);
+    return TRUE;
+}
 
-    GtkCellRenderer *renderer;
-    GtkTreeViewColumn *column;
+static void on_plugin_view_realize (GtkTreeView * treeview, void * type)
+{
+    GtkListStore * store = gtk_list_store_new (PLUGIN_VIEW_N_COLS,
+     G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
 
-    GList *ilist;
-    gchar *description[2];
-    gint id = 0;
-
-    GList *list = (GList *) data;
-
-    store = gtk_list_store_new(PLUGIN_VIEW_N_COLS,
-                               G_TYPE_BOOLEAN, G_TYPE_STRING,
-                               G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER);
-
-    column = gtk_tree_view_column_new();
+    GtkTreeViewColumn * column = gtk_tree_view_column_new ();
     gtk_tree_view_column_set_title(column, _("Enabled"));
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_spacing(column, 4);
     gtk_tree_view_column_set_resizable(column, FALSE);
     gtk_tree_view_column_set_fixed_width(column, 50);
 
-    renderer = gtk_cell_renderer_toggle_new();
-    g_signal_connect(renderer, "toggled",
-                     G_CALLBACK(callback), store);
+    GtkCellRenderer * renderer = gtk_cell_renderer_toggle_new ();
+    g_signal_connect (renderer, "toggled", (GCallback) plugin_toggle, store);
     gtk_tree_view_column_pack_start(column, renderer, TRUE);
     gtk_tree_view_column_set_attributes(column, renderer, "active",
                                         PLUGIN_VIEW_COL_ACTIVE, NULL);
@@ -430,57 +406,10 @@ on_plugin_view_realize(GtkTreeView * treeview,
 
     gtk_tree_view_append_column(treeview, column);
 
-    MOWGLI_ITER_FOREACH(ilist, list)
-    {
-        Plugin *plugin = PLUGIN(ilist->data);
-        gboolean enabled = plugin_get_enabled (plugin_by_header (plugin));
-
-        description[0] = g_strdup(plugin->description);
-        description[1] = g_strdup(plugin->filename);
-
-        gtk_list_store_append(store, &iter);
-        gtk_list_store_set(store, &iter,
-                           PLUGIN_VIEW_COL_ACTIVE, enabled,
-                           PLUGIN_VIEW_COL_DESC, description[0],
-                           PLUGIN_VIEW_COL_FILENAME, description[1],
-                           PLUGIN_VIEW_COL_ID, id++,
-                           PLUGIN_VIEW_COL_PLUGIN_PTR, plugin, -1);
-
-        g_free(description[1]);
-        g_free(description[0]);
-    }
+    plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) plugin_enum_cb,
+     store);
 
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
-}
-
-static void
-on_input_plugin_view_realize(GtkTreeView * treeview,
-                             gpointer data)
-{
-    on_plugin_view_realize (treeview, (GCallback) plugin_toggle, plugin_get_list(PLUGIN_TYPE_INPUT), PLUGIN_VIEW_TYPE_INPUT);
-}
-
-static void
-on_effect_plugin_view_realize(GtkTreeView * treeview,
-                              gpointer data)
-{
-    on_plugin_view_realize (treeview, (GCallback) plugin_toggle, plugin_get_list
-     (PLUGIN_TYPE_EFFECT), PLUGIN_VIEW_TYPE_EFFECT);
-}
-
-static void
-on_general_plugin_view_realize(GtkTreeView * treeview,
-                               gpointer data)
-{
-    on_plugin_view_realize (treeview, (GCallback) plugin_toggle, plugin_get_list
-     (PLUGIN_TYPE_GENERAL), PLUGIN_VIEW_TYPE_GENERAL);
-}
-
-static void
-on_vis_plugin_view_realize(GtkTreeView * treeview,
-                           gpointer data)
-{
-    on_plugin_view_realize(treeview, G_CALLBACK(plugin_toggle), plugin_get_list(PLUGIN_TYPE_VIS), PLUGIN_VIEW_TYPE_VIS);
 }
 
 static void
@@ -657,8 +586,7 @@ plugin_preferences_cancel(GtkWidget *widget, PluginPreferences *settings)
     gtk_widget_destroy(GTK_WIDGET(settings->data));
 }
 
-static void
-plugin_preferences_destroy(GtkWidget *widget, PluginPreferences *settings)
+static void plugin_preferences_destroy(GtkWidget *widget, PluginPreferences *settings)
 {
     gtk_widget_destroy(widget);
 
@@ -721,27 +649,38 @@ create_plugin_preferences(PluginPreferences *settings)
     settings->data = (gpointer)window;
 }
 
+void plugin_preferences_cleanup (PluginPreferences * p)
+{
+    if (p->data != NULL)
+    {
+        gtk_widget_destroy (p->data);
+        p->data = NULL;
+    }
+}
+
 static void
 plugin_treeview_open_prefs(GtkTreeView *treeview)
 {
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    Plugin *plugin = NULL;
+    PluginHandle * plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
+    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
 
-    g_return_if_fail(plugin != NULL);
-    g_return_if_fail((plugin->configure != NULL) ||
-                     ((plugin->settings != NULL) && (plugin->settings->type == PREFERENCES_WINDOW)));
+    if (! plugin_get_enabled (plugin))
+        return;
 
-    if (plugin->configure != NULL)
-        plugin->configure();
-    else
-        create_plugin_preferences(plugin->settings);
+    Plugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header != NULL);
+
+    if (header->configure != NULL)
+        header->configure ();
+    if (header->settings != NULL)
+        create_plugin_preferences (header->settings);
 }
 
 static void
@@ -750,15 +689,21 @@ plugin_treeview_open_info(GtkTreeView *treeview)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    Plugin *plugin = NULL;
+    PluginHandle * plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
+    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
 
-    g_return_if_fail(plugin != NULL);
-    plugin->about();
+    if (! plugin_get_enabled (plugin))
+        return;
+
+    Plugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header != NULL);
+
+    if (header->about != NULL)
+        header->about ();
 }
 
 static void
@@ -767,19 +712,14 @@ plugin_treeview_enable_prefs(GtkTreeView * treeview, GtkButton * button)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    Plugin *plugin = NULL;
+    PluginHandle * plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
-
-    g_return_if_fail(plugin != NULL);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             ((plugin->configure != NULL) ||
-                             (plugin->settings ? (plugin->settings->type == PREFERENCES_WINDOW) : FALSE)));
+    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
+    gtk_widget_set_sensitive ((GtkWidget *) button, plugin_has_configure (plugin));
 }
 
 static void
@@ -788,17 +728,14 @@ plugin_treeview_enable_info(GtkTreeView * treeview, GtkButton * button)
     GtkTreeSelection *selection;
     GtkTreeModel *model;
     GtkTreeIter iter;
-    Plugin *plugin = NULL;
+    PluginHandle * plugin = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, PLUGIN_VIEW_COL_PLUGIN_PTR, &plugin, -1);
-
-    g_return_if_fail(plugin != NULL);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button), plugin->about != NULL);
+    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
+    gtk_widget_set_sensitive ((GtkWidget *) button, plugin_has_about (plugin));
 }
 
 
@@ -2169,386 +2106,77 @@ create_connectivity_category(void)
     create_widgets(GTK_BOX(vbox29), connectivity_page_widgets, G_N_ELEMENTS(connectivity_page_widgets));
 }
 
-static void
-create_plugin_category(void)
+static GtkWidget * create_plugin_tree (gint type)
 {
-    GtkWidget *plugin_page_vbox;
-    GtkWidget *plugin_notebook;
-    GtkWidget *plugin_input_vbox;
-    GtkWidget *alignment43;
-    GtkWidget *input_plugin_list_label;
-    GtkWidget *scrolledwindow3;
-    GtkWidget *input_plugin_view;
-    GtkWidget *input_plugin_button_box;
-    GtkWidget *input_plugin_prefs;
-    GtkWidget *input_plugin_info;
-    GtkWidget *plugin_input_label;
-    GtkWidget *plugin_general_vbox;
-    GtkWidget *alignment45;
-    GtkWidget *label11;
-    GtkWidget *scrolledwindow5;
-    GtkWidget *general_plugin_view;
-    GtkWidget *general_plugin_button_box;
-    GtkWidget *general_plugin_prefs;
-    GtkWidget *general_plugin_info;
-    GtkWidget *plugin_general_label;
-    GtkWidget *vbox21;
-    GtkWidget *alignment46;
-    GtkWidget *label53;
-    GtkWidget *scrolledwindow7;
-    GtkWidget *vis_plugin_view;
-    GtkWidget *hbuttonbox6;
-    GtkWidget *vis_plugin_prefs;
-    GtkWidget *vis_plugin_info;
-    GtkWidget *vis_label;
-    GtkWidget *vbox25;
-    GtkWidget *alignment58;
-    GtkWidget *label64;
-    GtkWidget *scrolledwindow9;
-    GtkWidget *effect_plugin_view;
-    GtkWidget *hbuttonbox9;
-    GtkWidget *effect_plugin_prefs;
-    GtkWidget *effect_plugin_info;
-    GtkWidget *effects_label;
-
-    plugin_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), plugin_page_vbox);
-
-    plugin_notebook = gtk_notebook_new ();
-    gtk_box_pack_start (GTK_BOX (plugin_page_vbox), plugin_notebook, TRUE, TRUE, 0);
-    gtk_notebook_set_show_border (GTK_NOTEBOOK (plugin_notebook), FALSE);
-
-    plugin_input_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (plugin_notebook), plugin_input_vbox);
-    gtk_container_set_border_width (GTK_CONTAINER (plugin_input_vbox), 12);
-
-    alignment43 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (plugin_input_vbox), alignment43, FALSE, FALSE, 4);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment43), 0, 6, 0, 0);
-
-    input_plugin_list_label = gtk_label_new_with_mnemonic (_("_Decoder list:"));
-    gtk_container_add (GTK_CONTAINER (alignment43), input_plugin_list_label);
-    gtk_label_set_use_markup (GTK_LABEL (input_plugin_list_label), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (input_plugin_list_label), 0, 0.5);
-
-    scrolledwindow3 = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start (GTK_BOX (plugin_input_vbox), scrolledwindow3, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow3), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow3), GTK_SHADOW_IN);
-
-    input_plugin_view = gtk_tree_view_new ();
-    gtk_container_add (GTK_CONTAINER (scrolledwindow3), input_plugin_view);
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (input_plugin_view), TRUE);
-    gtk_tree_view_set_reorderable (GTK_TREE_VIEW (input_plugin_view), TRUE);
-
-    input_plugin_button_box = gtk_hbutton_box_new ();
-    gtk_box_pack_start (GTK_BOX (plugin_input_vbox), input_plugin_button_box, FALSE, FALSE, 8);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (input_plugin_button_box), GTK_BUTTONBOX_START);
-    gtk_box_set_spacing (GTK_BOX (input_plugin_button_box), 8);
-
-    input_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
-    gtk_container_add (GTK_CONTAINER (input_plugin_button_box), input_plugin_prefs);
-    gtk_widget_set_sensitive (input_plugin_prefs, FALSE);
-    gtk_widget_set_can_default(input_plugin_prefs, TRUE);
-
-    input_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
-    gtk_container_add (GTK_CONTAINER (input_plugin_button_box), input_plugin_info);
-    gtk_widget_set_sensitive (input_plugin_info, FALSE);
-    gtk_widget_set_can_default(input_plugin_info, TRUE);
-
-    plugin_input_label = gtk_label_new (_("<span size=\"medium\"><b>Decoders</b></span>"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 0), plugin_input_label);
-    gtk_label_set_use_markup (GTK_LABEL (plugin_input_label), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (plugin_input_label), 0, 0);
-
-    plugin_general_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (plugin_notebook), plugin_general_vbox);
-    gtk_container_set_border_width (GTK_CONTAINER (plugin_general_vbox), 12);
-
-    alignment45 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (plugin_general_vbox), alignment45, FALSE, FALSE, 4);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment45), 0, 6, 0, 0);
-
-    label11 = gtk_label_new_with_mnemonic (_("_General plugin list:"));
-    gtk_container_add (GTK_CONTAINER (alignment45), label11);
-    gtk_label_set_use_markup (GTK_LABEL (label11), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label11), 0, 0.5);
-
-    scrolledwindow5 = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start (GTK_BOX (plugin_general_vbox), scrolledwindow5, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow5), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow5), GTK_SHADOW_IN);
-
-    general_plugin_view = gtk_tree_view_new ();
-    gtk_container_add (GTK_CONTAINER (scrolledwindow5), general_plugin_view);
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (general_plugin_view), TRUE);
-    gtk_tree_view_set_reorderable (GTK_TREE_VIEW (general_plugin_view), TRUE);
-
-    general_plugin_button_box = gtk_hbutton_box_new ();
-    gtk_box_pack_start (GTK_BOX (plugin_general_vbox), general_plugin_button_box, FALSE, FALSE, 8);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (general_plugin_button_box), GTK_BUTTONBOX_START);
-    gtk_box_set_spacing (GTK_BOX (general_plugin_button_box), 8);
-
-    general_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
-    gtk_container_add (GTK_CONTAINER (general_plugin_button_box), general_plugin_prefs);
-    gtk_widget_set_sensitive (general_plugin_prefs, FALSE);
-    gtk_widget_set_can_default(general_plugin_prefs, TRUE);
-
-    general_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
-    gtk_container_add (GTK_CONTAINER (general_plugin_button_box), general_plugin_info);
-    gtk_widget_set_sensitive (general_plugin_info, FALSE);
-    gtk_widget_set_can_default(general_plugin_info, TRUE);
-
-    plugin_general_label = gtk_label_new (_("<span size=\"medium\"><b>General</b></span>"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 1), plugin_general_label);
-    gtk_label_set_use_markup (GTK_LABEL (plugin_general_label), TRUE);
-
-    vbox21 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (plugin_notebook), vbox21);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox21), 12);
-
-    alignment46 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox21), alignment46, FALSE, FALSE, 4);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment46), 0, 6, 0, 0);
-
-    label53 = gtk_label_new_with_mnemonic (_("_Visualization plugin list:"));
-    gtk_container_add (GTK_CONTAINER (alignment46), label53);
-    gtk_label_set_use_markup (GTK_LABEL (label53), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label53), 0, 0.5);
-
-    scrolledwindow7 = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start (GTK_BOX (vbox21), scrolledwindow7, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow7), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow7), GTK_SHADOW_IN);
-
-    vis_plugin_view = gtk_tree_view_new ();
-    gtk_container_add (GTK_CONTAINER (scrolledwindow7), vis_plugin_view);
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (vis_plugin_view), TRUE);
-    gtk_tree_view_set_reorderable (GTK_TREE_VIEW (vis_plugin_view), TRUE);
-
-    hbuttonbox6 = gtk_hbutton_box_new ();
-    gtk_box_pack_start (GTK_BOX (vbox21), hbuttonbox6, FALSE, FALSE, 8);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox6), GTK_BUTTONBOX_START);
-    gtk_box_set_spacing (GTK_BOX (hbuttonbox6), 8);
-
-    vis_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
-    gtk_container_add (GTK_CONTAINER (hbuttonbox6), vis_plugin_prefs);
-    gtk_widget_set_sensitive (vis_plugin_prefs, FALSE);
-    gtk_widget_set_can_default(vis_plugin_prefs, TRUE);
-
-    vis_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
-    gtk_container_add (GTK_CONTAINER (hbuttonbox6), vis_plugin_info);
-    gtk_widget_set_sensitive (vis_plugin_info, FALSE);
-    gtk_widget_set_can_default(vis_plugin_info, TRUE);
-
-    vis_label = gtk_label_new (_("<b>Visualization</b>"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 2), vis_label);
-    gtk_label_set_use_markup (GTK_LABEL (vis_label), TRUE);
-
-    vbox25 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (plugin_notebook), vbox25);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox25), 12);
-
-    alignment58 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox25), alignment58, FALSE, FALSE, 4);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment58), 0, 6, 0, 0);
-
-    label64 = gtk_label_new (_("Effect plugins:"));
-    gtk_container_add (GTK_CONTAINER (alignment58), label64);
-    gtk_misc_set_alignment (GTK_MISC (label64), 0, 0.5);
-
-    scrolledwindow9 = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start (GTK_BOX (vbox25), scrolledwindow9, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow9), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow9), GTK_SHADOW_IN);
-
-    effect_plugin_view = gtk_tree_view_new ();
-    gtk_container_add (GTK_CONTAINER (scrolledwindow9), effect_plugin_view);
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (effect_plugin_view), TRUE);
-    gtk_tree_view_set_reorderable (GTK_TREE_VIEW (effect_plugin_view), TRUE);
-
-    hbuttonbox9 = gtk_hbutton_box_new ();
-    gtk_box_pack_start (GTK_BOX (vbox25), hbuttonbox9, FALSE, FALSE, 8);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox9), GTK_BUTTONBOX_START);
-    gtk_box_set_spacing (GTK_BOX (hbuttonbox9), 8);
-
-    effect_plugin_prefs = gtk_button_new_from_stock ("gtk-preferences");
-    gtk_container_add (GTK_CONTAINER (hbuttonbox9), effect_plugin_prefs);
-    gtk_widget_set_sensitive (effect_plugin_prefs, FALSE);
-    gtk_widget_set_can_default(effect_plugin_prefs, TRUE);
-
-    effect_plugin_info = gtk_button_new_from_stock ("gtk-dialog-info");
-    gtk_container_add (GTK_CONTAINER (hbuttonbox9), effect_plugin_info);
-    gtk_widget_set_sensitive (effect_plugin_info, FALSE);
-    gtk_widget_set_can_default(effect_plugin_info, TRUE);
-
-    effects_label = gtk_label_new (_("<b>Effects</b>"));
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (plugin_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (plugin_notebook), 3), effects_label);
-    gtk_label_set_use_markup (GTK_LABEL (effects_label), TRUE);
-
-
-
-    gtk_label_set_mnemonic_widget (GTK_LABEL (input_plugin_list_label), category_notebook);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label11), category_notebook);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label53), category_notebook);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label64), category_notebook);
-
-
-
-    g_signal_connect_after(G_OBJECT(input_plugin_view), "realize",
-                           G_CALLBACK(on_input_plugin_view_realize),
-                           NULL);
-    g_signal_connect_after(G_OBJECT(general_plugin_view), "realize",
-                           G_CALLBACK(on_general_plugin_view_realize),
-                           NULL);
-    g_signal_connect_after(G_OBJECT(vis_plugin_view), "realize",
-                           G_CALLBACK(on_vis_plugin_view_realize),
-                           NULL);
-    g_signal_connect_after(G_OBJECT(effect_plugin_view), "realize",
-                           G_CALLBACK(on_effect_plugin_view_realize),
-                           NULL);
-
-
-
-    /* plugin->input page */
-    g_signal_connect(G_OBJECT(input_plugin_view), "row-activated",
-                     G_CALLBACK(plugin_treeview_open_prefs),
-                     NULL);
-    g_signal_connect(G_OBJECT(input_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_prefs),
-                     input_plugin_prefs);
-
-    g_signal_connect_swapped(G_OBJECT(input_plugin_prefs), "clicked",
-                             G_CALLBACK(plugin_treeview_open_prefs),
-                             input_plugin_view);
-
-    g_signal_connect(G_OBJECT(input_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_info),
-                     input_plugin_info);
-    g_signal_connect_swapped(G_OBJECT(input_plugin_info), "clicked",
-                             G_CALLBACK(plugin_treeview_open_info),
-                             input_plugin_view);
-
-
-    /* plugin->general page */
-
-    g_signal_connect(G_OBJECT(general_plugin_view), "row-activated",
-                     G_CALLBACK(plugin_treeview_open_prefs),
-                     NULL);
-
-    g_signal_connect(G_OBJECT(general_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_prefs),
-                     general_plugin_prefs);
-
-    g_signal_connect_swapped(G_OBJECT(general_plugin_prefs), "clicked",
-                             G_CALLBACK(plugin_treeview_open_prefs),
-                             general_plugin_view);
-
-    g_signal_connect(G_OBJECT(general_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_info),
-                     general_plugin_info);
-    g_signal_connect_swapped(G_OBJECT(general_plugin_info), "clicked",
-                             G_CALLBACK(plugin_treeview_open_info),
-                             general_plugin_view);
-
-
-    /* plugin->vis page */
-
-    g_signal_connect(G_OBJECT(vis_plugin_view), "row-activated",
-                     G_CALLBACK(plugin_treeview_open_prefs),
-                     NULL);
-    g_signal_connect_swapped(G_OBJECT(vis_plugin_prefs), "clicked",
-                             G_CALLBACK(plugin_treeview_open_prefs),
-                             vis_plugin_view);
-    g_signal_connect(G_OBJECT(vis_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_prefs), vis_plugin_prefs);
-
-    g_signal_connect(G_OBJECT(vis_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_info), vis_plugin_info);
-    g_signal_connect_swapped(G_OBJECT(vis_plugin_info), "clicked",
-                             G_CALLBACK(plugin_treeview_open_info),
-                             vis_plugin_view);
-
-
-    /* plugin->effects page */
-
-    g_signal_connect(G_OBJECT(effect_plugin_view), "row-activated",
-                     G_CALLBACK(plugin_treeview_open_prefs),
-                     NULL);
-    g_signal_connect_swapped(G_OBJECT(effect_plugin_prefs), "clicked",
-                             G_CALLBACK(plugin_treeview_open_prefs),
-                             effect_plugin_view);
-    g_signal_connect(G_OBJECT(effect_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_prefs), effect_plugin_prefs);
-
-    g_signal_connect(G_OBJECT(effect_plugin_view), "cursor-changed",
-                     G_CALLBACK(plugin_treeview_enable_info), effect_plugin_info);
-    g_signal_connect_swapped(G_OBJECT(effect_plugin_info), "clicked",
-                             G_CALLBACK(plugin_treeview_open_info),
-                             effect_plugin_view);
-
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    gtk_container_set_border_width ((GtkContainer *) vbox, 6);
+
+    GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
+    gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
+     GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled,
+     GTK_SHADOW_IN);
+
+    GtkWidget * tree = gtk_tree_view_new ();
+    gtk_container_add ((GtkContainer *) scrolled, tree);
+    gtk_tree_view_set_rules_hint ((GtkTreeView *) tree, TRUE);
+
+    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
+
+    GtkWidget * config = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
+    gtk_box_pack_start ((GtkBox *) hbox, config, FALSE, FALSE, 0);
+    gtk_widget_set_sensitive (config, FALSE);
+    gtk_widget_set_can_default (config, TRUE);
+
+    GtkWidget * info = gtk_button_new_from_stock (GTK_STOCK_INFO);
+    gtk_box_pack_start ((GtkBox *) hbox, info, FALSE, FALSE, 0);
+    gtk_widget_set_sensitive (info, FALSE);
+    gtk_widget_set_can_default (info, TRUE);
+
+    g_signal_connect_after (tree, "realize", (GCallback)
+     on_plugin_view_realize, GINT_TO_POINTER (type));
+
+    g_signal_connect (tree, "cursor-changed", (GCallback)
+     plugin_treeview_enable_prefs, config);
+    g_signal_connect (tree, "row-activated", (GCallback)
+     plugin_treeview_open_prefs, NULL);
+    g_signal_connect_swapped (config, "clicked", (GCallback)
+     plugin_treeview_open_prefs, tree);
+
+    g_signal_connect (tree, "cursor-changed", (GCallback)
+     plugin_treeview_enable_info, info);
+    g_signal_connect_swapped (info, "clicked", (GCallback)
+     plugin_treeview_open_info, tree);
+
+    return vbox;
 }
 
-static void
-destroy_plugin_page(GList *list)
+static void create_plugin_category (void)
 {
-    GList *iter;
+    GtkWidget * notebook = gtk_notebook_new ();
+    gtk_container_add ((GtkContainer *) category_notebook, notebook);
 
-    MOWGLI_ITER_FOREACH(iter, list)
-    {
-        Plugin *plugin = PLUGIN(iter->data);
-        if (plugin->settings && plugin->settings->data) {
-            plugin->settings->data = NULL;
-            if (plugin->settings->apply)
-                plugin->settings->apply();
-            if (plugin->settings->cleanup)
-                plugin->settings->cleanup();
-        }
-    }
-}
+    gint types[] = {PLUGIN_TYPE_INPUT, PLUGIN_TYPE_EFFECT, PLUGIN_TYPE_VIS,
+     PLUGIN_TYPE_GENERAL};
+    const gchar * names[] = {N_("Input"), N_("Effect"), N_("Visualization"),
+     N_("General")};
 
-static void
-destroy_plugin_pages(void)
-{
-    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_INPUT));
-    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_GENERAL));
-    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_VIS));
-    destroy_plugin_page(plugin_get_list(PLUGIN_TYPE_EFFECT));
+    for (gint i = 0; i < G_N_ELEMENTS (types); i ++)
+        gtk_notebook_append_page ((GtkNotebook *) notebook, create_plugin_tree
+         (types[i]), gtk_label_new (_(names[i])));
 }
 
 static gboolean
 prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
 {
-    destroy_plugin_pages();
     prefswin = NULL;
     category_notebook = NULL;
     gtk_widget_destroy(filepopup_settings);
     filepopup_settings = NULL;
     gtk_widget_destroy(window);
     return TRUE;
-}
-
-static void
-create_plugin_page(GList *list)
-{
-    GList *iter;
-
-    MOWGLI_ITER_FOREACH(iter, list)
-    {
-        Plugin *plugin = PLUGIN(iter->data);
-        if (plugin->settings && plugin->settings->type == PREFERENCES_PAGE) {
-            create_plugin_preferences_page(plugin->settings);
-        }
-    }
-}
-
-static void
-create_plugin_pages(void)
-{
-    create_plugin_page(plugin_get_list(PLUGIN_TYPE_INPUT));
-    create_plugin_page(plugin_get_list(PLUGIN_TYPE_GENERAL));
-    create_plugin_page(plugin_get_list(PLUGIN_TYPE_VIS));
-    create_plugin_page(plugin_get_list(PLUGIN_TYPE_EFFECT));
 }
 
 /* GtkWidget * * create_prefs_window (void) */
@@ -2609,7 +2237,6 @@ void * * create_prefs_window (void)
     create_playback_category();
     create_playlist_category();
     create_plugin_category();
-    create_plugin_pages();
 
     hseparator1 = gtk_hseparator_new ();
     gtk_box_pack_start (GTK_BOX (vbox), hseparator1, FALSE, FALSE, 6);
@@ -2670,42 +2297,6 @@ void
 destroy_prefs_window(void)
 {
     prefswin_destroy(prefswin, NULL, NULL);
-}
-
-void
-create_plugin_preferences_page(PluginPreferences *settings)
-{
-    g_return_if_fail(settings->type == PREFERENCES_PAGE);
-
-    if (settings->data != NULL)
-        return;
-
-    if (settings->init)
-        settings->init();
-
-    GtkWidget *vbox;
-    vbox = gtk_vbox_new(FALSE, 5);
-
-    create_widgets(GTK_BOX(vbox), settings->prefs, settings->n_prefs);
-    gtk_widget_show_all(vbox);
-    prefswin_page_new(vbox, settings->title, settings->imgurl);
-
-    settings->data = (gpointer) vbox;
-}
-
-void
-destroy_plugin_preferences_page(PluginPreferences *settings)
-{
-    if (settings->data) {
-        if (settings->apply)
-            settings->apply();
-
-        prefswin_page_destroy(GTK_WIDGET(settings->data));
-        settings->data = NULL;
-
-        if (settings->cleanup)
-            settings->cleanup();
-    }
 }
 
 void

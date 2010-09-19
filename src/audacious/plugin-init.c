@@ -30,6 +30,7 @@
 #include "output.h"
 #include "plugin.h"
 #include "plugins.h"
+#include "ui_preferences.h"
 #include "visualization.h"
 
 static gboolean input_plugin_start (PluginHandle * p)
@@ -57,6 +58,8 @@ static void general_plugin_stop (PluginHandle * p)
     InputPlugin * gp = plugin_get_header (p);
     g_return_if_fail (gp != NULL);
 
+    if (gp->settings != NULL)
+        plugin_preferences_cleanup (gp->settings);
     if (gp->cleanup != NULL)
         gp->cleanup ();
 }

@@ -125,7 +125,6 @@ typedef struct _NotebookTab {
 
 typedef enum {
     PREFERENCES_WINDOW,  /* displayed in seperate window */
-    PREFERENCES_PAGE,    /* added as new page in main preferences window */
 } PreferencesType;
 
 struct _PluginPreferences {

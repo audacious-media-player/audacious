@@ -21,6 +21,9 @@
 #define AUDACIOUS_UI_PREFERENCES_H
 
 #include <glib.h>
+#include <gtk/gtk.h>
+
+#include "preferences.h"
 
 /* GtkWidget * * create_prefs_window (void); */
 void * * create_prefs_window (void);
@@ -33,5 +36,7 @@ void hide_prefs_window(void);
 gint prefswin_page_new (void * container, const gchar * name, const gchar *
  imgurl);
 void prefswin_page_destroy(GtkWidget *container);
+
+void plugin_preferences_cleanup (PluginPreferences * p);
 
 #endif /* AUDACIOUS_UI_PREFERENCES_H */

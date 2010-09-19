@@ -80,21 +80,21 @@ typedef struct {
     gchar *name;            /**< Module name */
     void (* init) (void);
     void (* fini) (void);
-    Plugin *priv_assoc;
     InputPlugin **ip_list;  /**< List of InputPlugin(s) in this module */
     OutputPlugin **op_list;
     EffectPlugin **ep_list;
     GeneralPlugin **gp_list;
     VisPlugin **vp_list;
     Interface *interface;
+    void * priv;
 } PluginHeader;
 
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
     G_BEGIN_DECLS \
-    static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
-        (gchar *)#name, init, fini, NULL, __VA_ARGS__ }; \
+    static PluginHeader _pluginInfo = {PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
+     #name, init, fini, __VA_ARGS__}; \
     AudAPITable * _aud_api_table = NULL; \
     G_MODULE_EXPORT PluginHeader * get_plugin_info (AudAPITable * table) { \
         _aud_api_table = table; \
@@ -123,7 +123,6 @@ typedef struct {
 
 #define PLUGIN_COMMON_FIELDS        \
     gpointer handle;            \
-    gchar *filename;            \
     gchar *description;            \
     void (*init) (void);        \
     void (*cleanup) (void);        \

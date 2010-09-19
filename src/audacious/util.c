@@ -253,25 +253,3 @@ util_add_url_history_entry(const gchar * url)
         cfg.url_history = g_list_delete_link(cfg.url_history, node);
     }
 }
-
-static gboolean plugin_list_func (PluginHandle * plugin, GList * * list)
-{
-    gpointer p_hdr = plugin_get_header(plugin);
-    g_return_val_if_fail(p_hdr != NULL, TRUE);
-    *list = g_list_prepend (*list, p_hdr);
-    return TRUE;
-}
-
-/* Deprecated: This loads all the plugins at once, causing a major slowdown. */
-GList * plugin_get_list (gint type)
-{
-    static GList *list[PLUGIN_TYPES] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
-
-    if (list[type] == NULL)
-    {
-        plugin_for_each (type, (PluginForEachFunc) plugin_list_func, & list[type]);
-        list[type] = g_list_reverse (list[type]);
-    }
-
-    return list[type];
-}

@@ -37,6 +37,7 @@
 #include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
+#include "ui_preferences.h"
 #include "visualization.h"
 
 typedef struct {
@@ -317,6 +318,8 @@ void vis_plugin_stop (PluginHandle * plugin)
     if (running)
         vis_unload (plugin);
 
+    if (vp->settings != NULL)
+        plugin_preferences_cleanup (vp->settings);
     if (vp->cleanup != NULL)
         vp->cleanup ();
 }
