@@ -27,13 +27,26 @@
 
 #include "libaudgui-gtk.h"
 
-static void enable_cb (GtkCheckMenuItem * item, PluginHandle * plugin)
+static gboolean watch_cb (PluginHandle * plugin, GtkCheckMenuItem * item)
 {
-    aud_plugin_enable (plugin, gtk_check_menu_item_get_active (item));
+    gboolean enabled = aud_plugin_get_enabled (plugin);
+    gtk_check_menu_item_set_active (item, enabled);
 
     GtkWidget * settings = g_object_get_data ((GObject *) item, "settings");
     if (settings != NULL)
-        gtk_widget_set_sensitive (settings, gtk_check_menu_item_get_active (item));
+        gtk_widget_set_sensitive (settings, enabled);
+
+    return TRUE;
+}
+
+static void enable_cb (GtkCheckMenuItem * item, PluginHandle * plugin)
+{
+    aud_plugin_enable (plugin, gtk_check_menu_item_get_active (item));
+}
+
+static void destroy_cb (GtkCheckMenuItem * item, PluginHandle * plugin)
+{
+    aud_plugin_remove_watch (plugin, (PluginForEachFunc) watch_cb, item);
 }
 
 static void settings_cb (GtkMenuItem * settings, PluginHandle * plugin)
@@ -53,7 +66,9 @@ static gboolean add_item_cb (PluginHandle * plugin, GtkWidget * menu)
     gtk_check_menu_item_set_active ((GtkCheckMenuItem *) item,
      aud_plugin_get_enabled (plugin));
     gtk_menu_shell_append ((GtkMenuShell *) menu, item);
+    aud_plugin_add_watch (plugin, (PluginForEachFunc) watch_cb, item);
     g_signal_connect (item, "toggled", (GCallback) enable_cb, plugin);
+    g_signal_connect (item, "destroy", (GCallback) destroy_cb, plugin);
     gtk_widget_show (item);
 
     if (aud_plugin_has_configure (plugin))

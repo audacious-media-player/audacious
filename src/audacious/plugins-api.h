@@ -48,3 +48,8 @@ AUD_FUNC3 (void, plugin_for_enabled, gint, type, PluginForEachFunc, func,
 AUD_FUNC1 (const gchar *, plugin_get_name, PluginHandle *, plugin)
 AUD_FUNC1 (gboolean, plugin_has_about, PluginHandle *, plugin)
 AUD_FUNC1 (gboolean, plugin_has_configure, PluginHandle *, plugin)
+
+AUD_FUNC3 (void, plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
+ func, void *, data)
+AUD_FUNC3 (void, plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
+ func, void *, data)
