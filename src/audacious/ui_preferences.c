@@ -250,18 +250,6 @@ static PreferencesWidget playlist_page_widgets[] = {
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 
-static void output_about (OutputPlugin * plugin)
-{
-    if (plugin->about != NULL)
-        plugin->about ();
-}
-
-static void output_configure (OutputPlugin * plugin)
-{
-    if (plugin->configure != NULL)
-        plugin->configure ();
-}
-
 static void
 change_category(GtkNotebook * notebook,
                 GtkTreeSelection * selection)
@@ -275,18 +263,6 @@ change_category(GtkNotebook * notebook,
 
     gtk_tree_model_get(model, &iter, CATEGORY_VIEW_COL_ID, &index, -1);
     gtk_notebook_set_current_page(notebook, index);
-}
-
-static void output_plugin_open_prefs (GtkComboBox * combo, void * unused)
-{
-    output_configure (g_list_nth_data (get_output_list (),
-     gtk_combo_box_get_active (combo)));
-}
-
-static void output_plugin_open_info (GtkComboBox * combo, void * unused)
-{
-    output_about (g_list_nth_data (get_output_list (), gtk_combo_box_get_active
-     (combo)));
 }
 
 static void
@@ -313,39 +289,6 @@ plugin_toggle(GtkCellRendererToggle * cell,
 
     /* clean up */
     gtk_tree_path_free(path);
-}
-
-static void on_output_plugin_cbox_changed (GtkComboBox * combo, void * unused)
-{
-    plugin_enable (plugin_by_header (g_list_nth_data (get_output_list (),
-     gtk_combo_box_get_active (combo))), TRUE);
-}
-
-static void
-on_output_plugin_cbox_realize(GtkComboBox * cbox,
-                              gpointer data)
-{
-    GList *olist = get_output_list();
-    OutputPlugin * op;
-    gint i = 0, selected = 0;
-
-    if (olist == NULL) {
-        gtk_widget_set_sensitive(GTK_WIDGET(cbox), FALSE);
-        return;
-    }
-
-    for (i = 0; olist != NULL; i++, olist = g_list_next(olist)) {
-        op = OUTPUT_PLUGIN(olist->data);
-
-        if (olist->data == current_output_plugin)
-            selected = i;
-
-        gtk_combo_box_append_text(cbox, op->description);
-    }
-
-    gtk_combo_box_set_active(cbox, selected);
-    g_signal_connect(cbox, "changed",
-                     G_CALLBACK(on_output_plugin_cbox_changed), NULL);
 }
 
 static gboolean plugin_enum_cb (PluginHandle * plugin, GtkListStore * store)
@@ -736,34 +679,6 @@ plugin_treeview_enable_info(GtkTreeView * treeview, GtkButton * button)
 
     gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
     gtk_widget_set_sensitive ((GtkWidget *) button, plugin_has_about (plugin));
-}
-
-
-static void
-output_plugin_enable_info(GtkComboBox * cbox, GtkButton * button)
-{
-    GList *plist;
-
-    gint id = gtk_combo_box_get_active(cbox);
-
-    plist = get_output_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             OUTPUT_PLUGIN(plist->data)->about != NULL);
-}
-
-static void
-output_plugin_enable_prefs(GtkComboBox * cbox, GtkButton * button)
-{
-    GList *plist;
-    gint id = gtk_combo_box_get_active(cbox);
-
-    plist = get_output_list();
-    plist = g_list_nth(plist, id);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button),
-                             OUTPUT_PLUGIN(plist->data)->configure != NULL);
 }
 
 static void
@@ -1942,6 +1857,65 @@ create_playlist_category(void)
     create_filepopup_settings();
 }
 
+static GtkWidget * output_config_button, * output_about_button;
+
+static gboolean output_enum_cb (PluginHandle * plugin, GList * * list)
+{
+    * list = g_list_prepend (* list, plugin);
+    return TRUE;
+}
+
+static GList * output_get_list (void)
+{
+    static GList * list = NULL;
+
+    if (list == NULL)
+    {
+        plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) output_enum_cb,
+         & list);
+        list = g_list_reverse (list);
+    }
+
+    return list;
+}
+
+static void output_combo_update (GtkComboBox * combo)
+{
+    PluginHandle * plugin = plugin_get_current (PLUGIN_TYPE_OUTPUT);
+    gtk_combo_box_set_active (combo, g_list_index (output_get_list (), plugin));
+    gtk_widget_set_sensitive (output_config_button, plugin_has_configure (plugin));
+    gtk_widget_set_sensitive (output_about_button, plugin_has_about (plugin));
+}
+
+static void output_combo_changed (GtkComboBox * combo)
+{
+    PluginHandle * plugin = g_list_nth_data (output_get_list (),
+     gtk_combo_box_get_active (combo));
+    g_return_if_fail (plugin != NULL);
+
+    plugin_enable (plugin, TRUE);
+    output_combo_update (combo);
+}
+
+static void output_combo_fill (GtkComboBox * combo)
+{
+    for (GList * node = output_get_list (); node != NULL; node = node->next)
+        gtk_combo_box_append_text (combo, plugin_get_name (node->data));
+}
+
+static void output_do_config (void)
+{
+    g_return_if_fail (current_output_plugin != NULL);
+    if (current_output_plugin->configure != NULL)
+        current_output_plugin->configure ();
+}
+
+static void output_do_about (void)
+{
+    g_return_if_fail (current_output_plugin != NULL);
+    if (current_output_plugin->about != NULL)
+        current_output_plugin->about ();
+}
 
 static void
 create_audio_category(void)
@@ -1957,18 +1931,6 @@ create_audio_category(void)
     GtkWidget *output_plugin_bufsize;
     GtkWidget *output_plugin_cbox;
     GtkWidget *label78;
-    GtkWidget *alignment82;
-    GtkWidget *output_plugin_button_box;
-    GtkWidget *output_plugin_prefs;
-    GtkWidget *alignment76;
-    GtkWidget *hbox7;
-    GtkWidget *image5;
-    GtkWidget *label80;
-    GtkWidget *output_plugin_info;
-    GtkWidget *alignment77;
-    GtkWidget *hbox8;
-    GtkWidget *image6;
-    GtkWidget *label81;
 
     audio_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), audio_page_vbox);
@@ -2018,50 +1980,25 @@ create_audio_category(void)
                       (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment (GTK_MISC (label78), 0, 0.5);
 
-    alignment82 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment82, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment82), 0, 0, 12, 0);
+    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) audio_page_vbox, hbox, FALSE, FALSE, 0);
 
-    output_plugin_button_box = gtk_hbutton_box_new ();
-    gtk_container_add (GTK_CONTAINER (alignment82), output_plugin_button_box);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (output_plugin_button_box), GTK_BUTTONBOX_START);
-    gtk_box_set_spacing (GTK_BOX (output_plugin_button_box), 8);
+    output_config_button = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
+    output_about_button = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
 
-    output_plugin_prefs = gtk_button_new ();
-    gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_prefs);
-    gtk_widget_set_sensitive (output_plugin_prefs, FALSE);
-    gtk_widget_set_can_default(output_plugin_prefs, TRUE);
-
-    alignment76 = gtk_alignment_new (0.5, 0.5, 0, 0);
-    gtk_container_add (GTK_CONTAINER (output_plugin_prefs), alignment76);
-
-    hbox7 = gtk_hbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (alignment76), hbox7);
-
-    image5 = gtk_image_new_from_stock ("gtk-preferences", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox7), image5, FALSE, FALSE, 0);
-
-    label80 = gtk_label_new_with_mnemonic (_("Output Plugin Preferences"));
-    gtk_box_pack_start (GTK_BOX (hbox7), label80, FALSE, FALSE, 0);
-
-    output_plugin_info = gtk_button_new ();
-    gtk_container_add (GTK_CONTAINER (output_plugin_button_box), output_plugin_info);
-    gtk_widget_set_sensitive (output_plugin_info, FALSE);
-    gtk_widget_set_can_default(output_plugin_info, TRUE);
-
-    alignment77 = gtk_alignment_new (0.5, 0.5, 0, 0);
-    gtk_container_add (GTK_CONTAINER (output_plugin_info), alignment77);
-
-    hbox8 = gtk_hbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (alignment77), hbox8);
-
-    image6 = gtk_image_new_from_stock ("gtk-about", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox8), image6, FALSE, FALSE, 0);
-
-    label81 = gtk_label_new_with_mnemonic (_("Output Plugin Information"));
-    gtk_box_pack_start (GTK_BOX (hbox8), label81, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) hbox, output_about_button, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) hbox, output_config_button, FALSE, FALSE, 0);
 
     create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
+
+    output_combo_fill ((GtkComboBox *) output_plugin_cbox);
+    output_combo_update ((GtkComboBox *) output_plugin_cbox);
+    g_signal_connect (output_plugin_cbox, "changed", (GCallback)
+     output_combo_changed, NULL);
+    g_signal_connect (output_config_button, "clicked", (GCallback)
+     output_do_config, NULL);
+    g_signal_connect (output_about_button, "clicked", (GCallback)
+     output_do_about, NULL);
 
     g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
                      G_CALLBACK(on_output_plugin_bufsize_value_changed),
@@ -2069,26 +2006,6 @@ create_audio_category(void)
     g_signal_connect_after(G_OBJECT(output_plugin_bufsize), "realize",
                            G_CALLBACK(on_output_plugin_bufsize_realize),
                            NULL);
-    g_signal_connect_after(G_OBJECT(output_plugin_cbox), "realize",
-                           G_CALLBACK(on_output_plugin_cbox_realize),
-                           NULL);
-
-    /* plugin->output page */
-
-    g_signal_connect(G_OBJECT(output_plugin_cbox), "changed",
-                     G_CALLBACK(output_plugin_enable_prefs),
-                     output_plugin_prefs);
-    g_signal_connect_swapped(G_OBJECT(output_plugin_prefs), "clicked",
-                             G_CALLBACK(output_plugin_open_prefs),
-                             output_plugin_cbox);
-
-    g_signal_connect(G_OBJECT(output_plugin_cbox), "changed",
-                     G_CALLBACK(output_plugin_enable_info),
-                     output_plugin_info);
-    g_signal_connect_swapped(G_OBJECT(output_plugin_info), "clicked",
-                             G_CALLBACK(output_plugin_open_info),
-                             output_plugin_cbox);
-
 }
 
 static void
@@ -2130,7 +2047,7 @@ static GtkWidget * create_plugin_tree (gint type)
     gtk_widget_set_sensitive (config, FALSE);
     gtk_widget_set_can_default (config, TRUE);
 
-    GtkWidget * info = gtk_button_new_from_stock (GTK_STOCK_INFO);
+    GtkWidget * info = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
     gtk_box_pack_start ((GtkBox *) hbox, info, FALSE, FALSE, 0);
     gtk_widget_set_sensitive (info, FALSE);
     gtk_widget_set_can_default (info, TRUE);

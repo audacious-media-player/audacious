@@ -33,7 +33,6 @@
 extern struct OutputAPI output_api;
 extern OutputPlugin * current_output_plugin;
 
-GList *get_output_list(void);
 void output_get_volume(gint * l, gint * r);
 void output_set_volume(gint l, gint r);
 
