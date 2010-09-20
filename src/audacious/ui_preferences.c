@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team.
+ *  Copyright (C) 2005-2010  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,27 +17,16 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#include <glib.h>
+#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <string.h>
-#include <stddef.h>
 #include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <gdk/gdkkeysyms.h>
 
 #include <libaudcore/hook.h>
 
 #include "audconfig.h"
 #include "compatibility.h"
+#include "config.h"
 #include "configdb.h"
 #include "debug.h"
 #include "i18n.h"
@@ -50,7 +39,6 @@
 #include "plugins.h"
 #include "preferences.h"
 #include "ui_preferences.h"
-#include "util.h"
 
 #define TITLESTRING_UPDATE_TIMEOUT 3
 
@@ -61,14 +49,6 @@ enum CategoryViewCols {
     CATEGORY_VIEW_COL_NAME,
     CATEGORY_VIEW_COL_ID,
     CATEGORY_VIEW_N_COLS
-};
-
-enum PluginViewCols {
-    PLUGIN_VIEW_COL_ACTIVE,
-    PLUGIN_VIEW_COL_DESC,
-    PLUGIN_VIEW_COL_FILENAME,
-    PLUGIN_VIEW_COL_HANDLE,
-    PLUGIN_VIEW_N_COLS
 };
 
 typedef struct {
@@ -266,96 +246,6 @@ change_category(GtkNotebook * notebook,
 }
 
 static void
-plugin_toggle(GtkCellRendererToggle * cell,
-              const gchar * path_str,
-              gpointer data)
-{
-    GtkTreeModel *model = GTK_TREE_MODEL(data);
-    GtkTreeIter iter;
-    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-    PluginHandle * plugin = NULL;
-    gboolean enabled;
-
-    /* get toggled iter */
-    gtk_tree_model_get_iter(model, &iter, path);
-
-    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_ACTIVE, & enabled,
-     PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
-    enabled = ! enabled;
-    plugin_enable (plugin, enabled);
-
-    gtk_list_store_set ((GtkListStore *) model, & iter, PLUGIN_VIEW_COL_ACTIVE,
-     enabled, -1);
-
-    /* clean up */
-    gtk_tree_path_free(path);
-}
-
-static gboolean plugin_enum_cb (PluginHandle * plugin, GtkListStore * store)
-{
-    GtkTreeIter iter;
-    gtk_list_store_append (store, & iter);
-    gtk_list_store_set (store, & iter, PLUGIN_VIEW_COL_ACTIVE,
-     plugin_get_enabled (plugin), PLUGIN_VIEW_COL_DESC, plugin_get_name
-     (plugin), PLUGIN_VIEW_COL_FILENAME, plugin_get_filename (plugin),
-     PLUGIN_VIEW_COL_HANDLE, plugin, -1);
-    return TRUE;
-}
-
-static void on_plugin_view_realize (GtkTreeView * treeview, void * type)
-{
-    GtkListStore * store = gtk_list_store_new (PLUGIN_VIEW_N_COLS,
-     G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
-
-    GtkTreeViewColumn * column = gtk_tree_view_column_new ();
-    gtk_tree_view_column_set_title(column, _("Enabled"));
-    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_column_set_spacing(column, 4);
-    gtk_tree_view_column_set_resizable(column, FALSE);
-    gtk_tree_view_column_set_fixed_width(column, 50);
-
-    GtkCellRenderer * renderer = gtk_cell_renderer_toggle_new ();
-    g_signal_connect (renderer, "toggled", (GCallback) plugin_toggle, store);
-    gtk_tree_view_column_pack_start(column, renderer, TRUE);
-    gtk_tree_view_column_set_attributes(column, renderer, "active",
-                                        PLUGIN_VIEW_COL_ACTIVE, NULL);
-
-    gtk_tree_view_append_column(treeview, column);
-
-    column = gtk_tree_view_column_new();
-    gtk_tree_view_column_set_title(column, _("Description"));
-    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-    gtk_tree_view_column_set_spacing(column, 4);
-    gtk_tree_view_column_set_resizable(column, TRUE);
-
-
-    renderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_column_pack_start(column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes(column, renderer,
-                                        "text", PLUGIN_VIEW_COL_DESC, NULL);
-    gtk_tree_view_append_column(treeview, column);
-
-    column = gtk_tree_view_column_new();
-
-    gtk_tree_view_column_set_title(column, _("Filename"));
-    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-    gtk_tree_view_column_set_spacing(column, 4);
-    gtk_tree_view_column_set_resizable(column, TRUE);
-
-    renderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_column_pack_start(column, renderer, TRUE);
-    gtk_tree_view_column_set_attributes(column, renderer, "text",
-                                        PLUGIN_VIEW_COL_FILENAME, NULL);
-
-    gtk_tree_view_append_column(treeview, column);
-
-    plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) plugin_enum_cb,
-     store);
-
-    gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
-}
-
-static void
 editable_insert_text(GtkEditable * editable,
                      const gchar * text,
                      gint * pos)
@@ -539,8 +429,7 @@ static void plugin_preferences_destroy(GtkWidget *widget, PluginPreferences *set
     settings->data = NULL;
 }
 
-static void
-create_plugin_preferences(PluginPreferences *settings)
+void plugin_preferences_show (PluginPreferences * settings)
 {
     GtkWidget *window;
     GtkWidget *vbox, *bbox, *ok, *apply, *cancel;
@@ -599,86 +488,6 @@ void plugin_preferences_cleanup (PluginPreferences * p)
         gtk_widget_destroy (p->data);
         p->data = NULL;
     }
-}
-
-static void
-plugin_treeview_open_prefs(GtkTreeView *treeview)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    PluginHandle * plugin = NULL;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
-
-    if (! plugin_get_enabled (plugin))
-        return;
-
-    Plugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header != NULL);
-
-    if (header->configure != NULL)
-        header->configure ();
-    if (header->settings != NULL)
-        create_plugin_preferences (header->settings);
-}
-
-static void
-plugin_treeview_open_info(GtkTreeView *treeview)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    PluginHandle * plugin = NULL;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
-
-    if (! plugin_get_enabled (plugin))
-        return;
-
-    Plugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header != NULL);
-
-    if (header->about != NULL)
-        header->about ();
-}
-
-static void
-plugin_treeview_enable_prefs(GtkTreeView * treeview, GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    PluginHandle * plugin = NULL;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
-    gtk_widget_set_sensitive ((GtkWidget *) button, plugin_has_configure (plugin));
-}
-
-static void
-plugin_treeview_enable_info(GtkTreeView * treeview, GtkButton * button)
-{
-    GtkTreeSelection *selection;
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    PluginHandle * plugin = NULL;
-
-    selection = gtk_tree_view_get_selection(treeview);
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get (model, & iter, PLUGIN_VIEW_COL_HANDLE, & plugin, -1);
-    gtk_widget_set_sensitive ((GtkWidget *) button, plugin_has_about (plugin));
 }
 
 static void
@@ -2023,53 +1832,6 @@ create_connectivity_category(void)
     create_widgets(GTK_BOX(vbox29), connectivity_page_widgets, G_N_ELEMENTS(connectivity_page_widgets));
 }
 
-static GtkWidget * create_plugin_tree (gint type)
-{
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
-    gtk_container_set_border_width ((GtkContainer *) vbox, 6);
-
-    GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
-     GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled,
-     GTK_SHADOW_IN);
-
-    GtkWidget * tree = gtk_tree_view_new ();
-    gtk_container_add ((GtkContainer *) scrolled, tree);
-    gtk_tree_view_set_rules_hint ((GtkTreeView *) tree, TRUE);
-
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
-
-    GtkWidget * config = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
-    gtk_box_pack_start ((GtkBox *) hbox, config, FALSE, FALSE, 0);
-    gtk_widget_set_sensitive (config, FALSE);
-    gtk_widget_set_can_default (config, TRUE);
-
-    GtkWidget * info = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
-    gtk_box_pack_start ((GtkBox *) hbox, info, FALSE, FALSE, 0);
-    gtk_widget_set_sensitive (info, FALSE);
-    gtk_widget_set_can_default (info, TRUE);
-
-    g_signal_connect_after (tree, "realize", (GCallback)
-     on_plugin_view_realize, GINT_TO_POINTER (type));
-
-    g_signal_connect (tree, "cursor-changed", (GCallback)
-     plugin_treeview_enable_prefs, config);
-    g_signal_connect (tree, "row-activated", (GCallback)
-     plugin_treeview_open_prefs, NULL);
-    g_signal_connect_swapped (config, "clicked", (GCallback)
-     plugin_treeview_open_prefs, tree);
-
-    g_signal_connect (tree, "cursor-changed", (GCallback)
-     plugin_treeview_enable_info, info);
-    g_signal_connect_swapped (info, "clicked", (GCallback)
-     plugin_treeview_open_info, tree);
-
-    return vbox;
-}
-
 static void create_plugin_category (void)
 {
     GtkWidget * notebook = gtk_notebook_new ();
@@ -2081,7 +1843,7 @@ static void create_plugin_category (void)
      N_("General")};
 
     for (gint i = 0; i < G_N_ELEMENTS (types); i ++)
-        gtk_notebook_append_page ((GtkNotebook *) notebook, create_plugin_tree
+        gtk_notebook_append_page ((GtkNotebook *) notebook, plugin_view_new
          (types[i]), gtk_label_new (_(names[i])));
 }
 

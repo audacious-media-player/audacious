@@ -23,6 +23,7 @@ SRCS = audconfig.c								\
        pluginenum.c								\
        plugin-registry.c \
        plugin-init.c \
+       plugin-view.c \
        probe.c \
        probe-buffer.c \
        signals.c								\

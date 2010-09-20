@@ -37,6 +37,10 @@ gint prefswin_page_new (void * container, const gchar * name, const gchar *
  imgurl);
 void prefswin_page_destroy(GtkWidget *container);
 
+void plugin_preferences_show (PluginPreferences * p);
 void plugin_preferences_cleanup (PluginPreferences * p);
+
+/* plugin-view.c */
+GtkWidget * plugin_view_new (gint type);
 
 #endif /* AUDACIOUS_UI_PREFERENCES_H */
