@@ -135,15 +135,15 @@ static void plugin_view_fill (GtkTreeView * tree, void * type)
 
 static gboolean config_watcher (PluginHandle * p, GtkWidget * config)
 {
-    if (plugin_has_configure (p))
-        gtk_widget_set_sensitive (config, plugin_get_enabled (p));
+    gtk_widget_set_sensitive (config, plugin_has_configure (p) &&
+     plugin_get_enabled (p));
     return TRUE;
 }
 
 static gboolean about_watcher (PluginHandle * p, GtkWidget * about)
 {
-    if (plugin_has_about (p))
-        gtk_widget_set_sensitive (about, plugin_get_enabled (p));
+    gtk_widget_set_sensitive (about, plugin_has_about (p) && plugin_get_enabled
+     (p));
     return TRUE;
 }
 
