@@ -42,17 +42,27 @@ void drct_quit (void)
 
 void drct_play (void)
 {
-    playback_play (0, FALSE);
+    if (playback_get_playing ())
+    {
+        if (playback_get_paused ())
+            playback_pause ();
+        else
+            playback_seek (0);
+    }
+    else
+        playback_play (0, FALSE);
 }
 
 void drct_pause (void)
 {
-    playback_pause ();
+    if (playback_get_playing ())
+        playback_pause ();
 }
 
 void drct_stop (void)
 {
-    playback_stop ();
+    if (playback_get_playing ())
+        playback_stop ();
 }
 
 gboolean drct_get_playing (void)
