@@ -194,6 +194,7 @@ error:
     return NULL;
 }
 
+/* This should not return void, as that makes reporting errors impossible. */
 void
 save_preset_file(EqualizerPreset *preset, const gchar * filename)
 {
@@ -214,9 +215,15 @@ save_preset_file(EqualizerPreset *preset, const gchar * filename)
     }
 
     data = g_key_file_to_data(rcfile, &len, &error);
-    g_file_set_contents(filename, data, len, &error);
-    g_free(data);
 
+    VFSFile * file = vfs_fopen (filename, "w");
+    if (file == NULL)
+        goto DONE;
+    vfs_fwrite (data, 1, strlen (data), file);
+    vfs_fclose (file);
+
+DONE:
+    g_free(data);
     g_key_file_free(rcfile);
 }
 
