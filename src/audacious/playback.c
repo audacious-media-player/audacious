@@ -316,6 +316,7 @@ static gboolean playback_ended (void * unused)
         if (! play)
         {
             complete_stop ();
+            hook_call ("playlist end reached", NULL);
             break;
         }
 
