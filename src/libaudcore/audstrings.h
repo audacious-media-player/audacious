@@ -31,8 +31,6 @@
 
 G_BEGIN_DECLS
 
-gchar *escape_shell_chars(const gchar * string);
-
 gchar *str_append(gchar * str, const gchar * add_str);
 gchar *str_replace(gchar * str, gchar * new_str);
 void str_replace_in(gchar ** str, gchar * new_str);
