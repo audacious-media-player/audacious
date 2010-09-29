@@ -123,9 +123,8 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         for (gint i = 0; (ip = header->ip_list[i]) != NULL; i ++)
         {
             plugin_register (PLUGIN_TYPE_INPUT, filename, i, ip);
-
             if (ip->init != NULL)
-                ip->init ();
+                ip->init (); /* FIXME: Pay attention to the return value. */
         }
     }
 
@@ -135,9 +134,8 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
         {
             plugin_register (PLUGIN_TYPE_EFFECT, filename, i, ep);
-
             if (ep->init != NULL)
-                ep->init ();
+                ep->init (); /* FIXME: Pay attention to the return value. */
         }
     }
 

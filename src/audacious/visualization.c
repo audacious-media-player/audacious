@@ -301,8 +301,8 @@ gboolean vis_plugin_start (PluginHandle * plugin)
     VisPlugin * vp = plugin_get_header (plugin);
     g_return_val_if_fail (vp != NULL, FALSE);
 
-    if (vp->init != NULL)
-        vp->init ();
+    if (vp->init != NULL && ! vp->init ())
+        return FALSE;
 
     if (running)
         vis_load (plugin);

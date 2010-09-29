@@ -46,11 +46,7 @@ static gboolean general_plugin_start (PluginHandle * p)
 {
     GeneralPlugin * gp = plugin_get_header (p);
     g_return_val_if_fail (gp != NULL, FALSE);
-
-    if (gp->init != NULL)
-        gp->init ();
-
-    return TRUE;
+    return (gp->init == NULL || gp->init ());
 }
 
 static void general_plugin_stop (PluginHandle * p)

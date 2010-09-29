@@ -1714,16 +1714,18 @@ static void output_combo_fill (GtkComboBox * combo)
 
 static void output_do_config (void)
 {
-    g_return_if_fail (current_output_plugin != NULL);
-    if (current_output_plugin->configure != NULL)
-        current_output_plugin->configure ();
+    OutputPlugin * op = plugin_get_header (output_plugin_get_current ());
+    g_return_if_fail (op != NULL);
+    if (op->configure != NULL)
+        op->configure ();
 }
 
 static void output_do_about (void)
 {
-    g_return_if_fail (current_output_plugin != NULL);
-    if (current_output_plugin->about != NULL)
-        current_output_plugin->about ();
+    OutputPlugin * op = plugin_get_header (output_plugin_get_current ());
+    g_return_if_fail (op != NULL);
+    if (op->about != NULL)
+        op->about ();
 }
 
 static void

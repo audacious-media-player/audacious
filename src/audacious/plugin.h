@@ -53,12 +53,6 @@
 #define __AUDACIOUS_PLUGIN_API__ 18 /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
 //@}
 
-typedef enum {
-    PLUGIN_MESSAGE_ERROR = 0,
-    PLUGIN_MESSAGE_OK = 1,
-    PLUGIN_MESSAGE_DEFERRED = 2
-} PluginMessageResponse;
-
 typedef struct _InputPlayback InputPlayback;
 
 /** ReplayGain information structure */
@@ -92,15 +86,13 @@ typedef struct {
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
 #define DECLARE_PLUGIN(name, init, fini, ...) \
-    G_BEGIN_DECLS \
     static PluginHeader _pluginInfo = {PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
      #name, init, fini, __VA_ARGS__}; \
     AudAPITable * _aud_api_table = NULL; \
     G_MODULE_EXPORT PluginHeader * get_plugin_info (AudAPITable * table) { \
         _aud_api_table = table; \
         return &_pluginInfo; \
-    } \
-    G_END_DECLS
+    }
 
 #define SIMPLE_INPUT_PLUGIN(name, ip_list) \
     DECLARE_PLUGIN(name, NULL, NULL, ip_list)
@@ -122,14 +114,12 @@ typedef struct {
 
 
 #define PLUGIN_COMMON_FIELDS        \
-    gpointer handle;            \
     gchar *description;            \
-    void (*init) (void);        \
+    gboolean (* init) (void); \
     void (*cleanup) (void);        \
     void (*about) (void);        \
     void (*configure) (void);        \
-    PluginPreferences *settings;     \
-    PluginMessageResponse (*sendmsg)(gint msgtype, gpointer msgdata);
+    PluginPreferences *settings;
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
@@ -137,42 +127,62 @@ struct _Plugin {
     PLUGIN_COMMON_FIELDS
 };
 
-typedef enum {
-    OUTPUT_PLUGIN_INIT_FAIL,
-    OUTPUT_PLUGIN_INIT_NO_DEVICES,
-    OUTPUT_PLUGIN_INIT_FOUND_DEVICES,
-} OutputPluginInitStatus;
-
 struct _OutputPlugin {
-    gpointer handle;
-    gchar *filename;
-    gchar *description;
+    PLUGIN_COMMON_FIELDS
 
-    OutputPluginInitStatus (*init) (void);
-    void (*cleanup) (void);
-    void (*about) (void);
-    void (*configure) (void);
-
+    /* During probing, plugins with higher priority (10 to 0) are tried first. */
     gint probe_priority;
 
-    void (*get_volume) (gint * l, gint * r);
-    void (*set_volume) (gint l, gint r);
+    /* Returns current volume for left and right channels (0 to 100). */
+    void (* get_volume) (gint * l, gint * r);
 
-    gint (*open_audio) (gint fmt, gint rate, gint nch);
-    void (*write_audio) (gpointer ptr, gint length);
-    void (*close_audio) (void);
+    /* Changes volume for left and right channels (0 to 100). */
+    void (* set_volume) (gint l, gint r);
 
-    void (* set_written_time) (gint time);
-    void (*flush) (gint time);
-    void (*pause) (gshort paused);
+    /* Begins playback of a PCM stream.  <format> is one of the FMT_*
+     * enumeration values defined in libaudcore/audio.h.  Returns nonzero on
+     * success. */
+    gboolean (* open_audio) (gint format, gint rate, gint chans);
+
+    /* Ends playback.  Any buffered audio data is discarded. */
+    void (* close_audio) (void);
+
+    /* Returns how many bytes of data may be passed to a following write_audio()
+     * call.  NULL if the plugin supports only blocking writes (not recommended). */
     gint (* buffer_free) (void);
-    gint (*buffer_playing) (void); /* obsolete */
-    gint (*output_time) (void);
-    gint (*written_time) (void);
 
-    void (*tell_audio) (gint * fmt, gint * rate, gint * nch); /* obsolete */
-    void (* drain) (void);
+    /* Waits until buffer_free() will return a size greater than zero.
+     * output_time(), pause(), and flush() may be called meanwhile; if flush()
+     * is called, period_wait() should return immediately.  NULL if the plugin
+     * supports only blocking writes (not recommended). */
     void (* period_wait) (void);
+
+    /* Buffers <size> bytes of data, in the format given to open_audio(). */
+    void (* write_audio) (void * data, gint size);
+
+    /* Waits until all buffered data has been heard by the user. */
+    void (* drain) (void);
+
+    /* Returns time count (in milliseconds) of how much data has been written. */
+    gint (* written_time) (void);
+
+    /* Returns time count (in milliseconds) of how much data has been heard by
+     * the user. */
+    gint (* output_time) (void);
+
+    /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
+     * write_audio() will not be called while the stream is paused. */
+    void (* pause) (gboolean p);
+
+    /* Discards any buffered audio data and sets the time counter (in
+     * milliseconds) of data written. */
+    void (* flush) (gint time);
+
+    /* Sets the time counter (in milliseconds) of data written without
+     * discarding any buffered audio data.  If <time> is less than the amount of
+     * buffered data, following calls to output_time() will return negative
+     * values. */
+    void (* set_written_time) (gint time);
 };
 
 struct _EffectPlugin {
@@ -287,7 +297,7 @@ struct _InputPlayback {
     gboolean eof;       /**< TRUE if end of file has been reached- */
 
     InputPlugin *plugin;
-    struct OutputAPI * output;
+    const struct OutputAPI * output;
     GThread *thread;
 
     GMutex *pb_ready_mutex;

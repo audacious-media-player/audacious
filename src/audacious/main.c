@@ -54,7 +54,6 @@
 #include "equalizer.h"
 #include "i18n.h"
 #include "interface.h"
-#include "output.h"
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
@@ -410,7 +409,6 @@ gint main(gint argc, gchar ** argv)
 
     AUDDBG ("Initializing core.\n");
     playlist_init ();
-    output_init ();
     eq_init ();
 
     AUDDBG ("Loading plugins, stage one.\n");
@@ -451,7 +449,6 @@ gint main(gint argc, gchar ** argv)
     cfg_db_flush ();
 
     AUDDBG ("Shutting down core.\n");
-    output_cleanup ();
     playlist_end ();
 
     return EXIT_SUCCESS;

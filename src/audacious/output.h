@@ -30,15 +30,13 @@
 
 #include "plugin.h"
 
-extern struct OutputAPI output_api;
-extern OutputPlugin * current_output_plugin;
+extern const struct OutputAPI output_api;
 
 void output_get_volume(gint * l, gint * r);
 void output_set_volume(gint l, gint r);
 
-void output_init (void);
-void output_cleanup (void);
 gint get_output_time (void);
+gint get_raw_output_time (void);
 void output_drain (void);
 
 PluginHandle * output_plugin_probe (void);

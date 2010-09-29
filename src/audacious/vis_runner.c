@@ -50,8 +50,7 @@ static gboolean send_audio (void * unused)
         return FALSE;
     }
 
-    /* We need raw time, not changed for effects and gapless playback. */
-    gint outputted = current_output_plugin->output_time ();
+    gint outputted = get_raw_output_time ();
 
     VisNode * vis_node = NULL;
     VisNode * next;
@@ -94,7 +93,26 @@ static gboolean send_clear (void * unused)
     return FALSE;
 }
 
-static void flush_locked (void)
+static gboolean locked = FALSE;
+
+void vis_runner_lock (void)
+{
+    G_LOCK (mutex);
+    locked = TRUE;
+}
+
+void vis_runner_unlock (void)
+{
+    locked = FALSE;
+    G_UNLOCK (mutex);
+}
+
+gboolean vis_runner_locked (void)
+{
+    return locked;
+}
+
+void vis_runner_flush (void)
 {
     g_free (current_node);
     current_node = NULL;
@@ -106,8 +124,6 @@ static void flush_locked (void)
 
 void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
 {
-    G_LOCK (mutex);
-
     playing = new_playing;
     paused = new_paused;
     active = playing && hooks;
@@ -125,20 +141,16 @@ void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
     }
 
     if (! active)
-        flush_locked ();
+        vis_runner_flush ();
     else if (! paused)
         send_source = g_timeout_add (INTERVAL, send_audio, NULL);
-
-    G_UNLOCK (mutex);
 }
 
 void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
  channels, gint rate)
 {
-    G_LOCK (mutex);
-
     if (! active)
-        goto UNLOCK;
+        return;
 
     if (current_node && current_node->nch != MIN (channels, 2))
     {
@@ -195,9 +207,6 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
         g_queue_push_tail (& vis_list, current_node);
         current_node = NULL;
     }
-
-UNLOCK:
-    G_UNLOCK (mutex);
 }
 
 static void time_offset_cb (VisNode * vis_node, void * offset)
@@ -207,21 +216,10 @@ static void time_offset_cb (VisNode * vis_node, void * offset)
 
 void vis_runner_time_offset (gint offset)
 {
-    G_LOCK (mutex);
-
     if (current_node)
         current_node->time += offset;
 
     g_queue_foreach (& vis_list, (GFunc) time_offset_cb, GINT_TO_POINTER (offset));
-
-    G_UNLOCK (mutex);
-}
-
-void vis_runner_flush (void)
-{
-    G_LOCK (mutex);
-    flush_locked ();
-    G_UNLOCK (mutex);
 }
 
 void vis_runner_add_hook (VisHookFunc func, void * user)
@@ -233,8 +231,8 @@ void vis_runner_add_hook (VisHookFunc func, void * user)
     item->user = user;
     hooks = g_list_prepend (hooks, item);
 
-    G_UNLOCK (mutex);
     vis_runner_start_stop (playing, paused);
+    G_UNLOCK (mutex);
 }
 
 void vis_runner_remove_hook (VisHookFunc func)
@@ -251,6 +249,6 @@ void vis_runner_remove_hook (VisHookFunc func)
         }
     }
 
-    G_UNLOCK (mutex);
     vis_runner_start_stop (playing, paused);
+    G_UNLOCK (mutex);
 }
