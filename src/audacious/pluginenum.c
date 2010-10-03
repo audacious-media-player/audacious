@@ -63,7 +63,7 @@ static AudAPITable api_table = {
  .cfg = & cfg};
 
 extern GList *vfs_transports;
-static mowgli_list_t *headers_list = NULL;
+static GList * header_list = NULL;
 
 /*******************************************************************/
 
@@ -89,8 +89,6 @@ static void vis_plugin_disable_by_header (VisPlugin * header)
 
 void plugin2_process(PluginHeader * header, GModule * module, const gchar * filename)
 {
-    mowgli_node_t *hlist_node;
-
     if (header->magic != PLUGIN_MAGIC)
     {
         plugin2_dispose (module, "plugin <%s> discarded, invalid module magic",
@@ -106,9 +104,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         return;
     }
 
-    hlist_node = mowgli_node_create();
-    mowgli_node_add(header, hlist_node, headers_list);
-
+    header_list = g_list_prepend (header_list, header);
     header->priv = module;
 
     if (header->init != NULL)
@@ -167,7 +163,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         plugin_register (PLUGIN_TYPE_IFACE, filename, 0, header->interface);
 }
 
-void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
+void plugin2_unload (PluginHeader * header)
 {
     if (header->ip_list != NULL)
     {
@@ -195,9 +191,6 @@ void plugin2_unload(PluginHeader * header, mowgli_node_t * hlist_node)
 
     if (header->fini != NULL)
         header->fini ();
-
-    mowgli_node_delete(hlist_node, headers_list);
-    mowgli_node_free(hlist_node);
 
     g_module_close (header->priv);
 }
@@ -259,8 +252,6 @@ void plugin_system_init(void)
 
     plugin_registry_load ();
 
-    headers_list = mowgli_list_create();
-
 #ifndef DISABLE_USER_PLUGIN_DIR
     scan_plugins(aud_paths[BMP_PATH_USER_PLUGIN_DIR]);
     /*
@@ -289,8 +280,6 @@ void plugin_system_init(void)
 
 void plugin_system_cleanup(void)
 {
-    mowgli_node_t *hlist_node;
-
     plugin_registry_save ();
 
     /* XXX: vfs will crash otherwise. -nenolod */
@@ -300,7 +289,9 @@ void plugin_system_cleanup(void)
         vfs_transports = NULL;
     }
 
-    MOWGLI_LIST_FOREACH(hlist_node, headers_list->head) plugin2_unload(hlist_node->data, hlist_node);
+    for (GList * node = header_list; node != NULL; node = node->next)
+        plugin2_unload (node->data);
 
-    mowgli_list_free(headers_list);
+    g_list_free (header_list);
+    header_list = NULL;
 }
