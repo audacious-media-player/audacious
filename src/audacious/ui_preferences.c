@@ -2131,7 +2131,7 @@ static void sw_volume_toggled (void)
         vol[1] = cfg.sw_volume_right;
     }
     else
-        input_get_volume (& vol[0], & vol[1]);
+        playback_get_volume (& vol[0], & vol[1]);
 
     hook_call ("volume set", vol);
 }

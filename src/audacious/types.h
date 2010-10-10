@@ -29,22 +29,25 @@
 
 typedef struct PluginHandle PluginHandle;
 
-typedef struct _Plugin Plugin;
-typedef struct _InputPlugin InputPlugin;
-typedef struct _OutputPlugin OutputPlugin;
-typedef struct _EffectPlugin EffectPlugin;
-typedef struct _GeneralPlugin GeneralPlugin;
-typedef struct _VisPlugin VisPlugin;
+#ifdef _AUDACIOUS_CORE
+typedef const struct _Plugin Plugin;
+#endif
 
-#define PLUGIN(x) ((Plugin *) (x))
-#define INPUT_PLUGIN(x) ((InputPlugin *) (x))
-#define OUTPUT_PLUGIN(x) ((OutputPlugin *) (x))
-#define EFFECT_PLUGIN(x) ((EffectPlugin *) (x))
-#define GENERAL_PLUGIN(x) ((GeneralPlugin *) (x))
-#define VIS_PLUGIN(x) ((VisPlugin *) (x))
+typedef const struct _InputPlugin InputPlugin;
+typedef const struct _OutputPlugin OutputPlugin;
+typedef const struct _EffectPlugin EffectPlugin;
+typedef const struct _GeneralPlugin GeneralPlugin;
+typedef const struct _VisPlugin VisPlugin;
 
 typedef struct _Interface Interface;
 typedef struct _PluginPreferences PluginPreferences;
 typedef struct _PreferencesWidget PreferencesWidget;
+
+typedef struct {
+    gfloat track_gain; /* dB */
+    gfloat track_peak; /* 0-1 */
+    gfloat album_gain; /* dB */
+    gfloat album_peak; /* 0-1 */
+} ReplayGainInfo;
 
 #endif

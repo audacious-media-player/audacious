@@ -63,10 +63,6 @@ vfs_get_constructor(const gchar *path)
         }
     }
 
-    /* No transport vtable has been registered, bail. */
-    if (vtable == NULL)
-        g_warning("Could not open '%s', no transport plugin available.", path);
-
     return vtable;
 }
 

@@ -82,14 +82,6 @@ static gboolean probe_func (PluginHandle * plugin, ProbeState * state)
         if (vfs_fseek (state->handle, 0, SEEK_SET) < 0)
             return FALSE;
     }
-    else if (decoder->is_our_file != NULL)
-    {
-        if (decoder->is_our_file (state->filename))
-        {
-            state->plugin = plugin;
-            return FALSE;
-        }
-    }
 
     return TRUE;
 }
@@ -216,23 +208,13 @@ DONE:
 
 Tuple * file_read_tuple (const gchar * filename, InputPlugin * decoder)
 {
-    if (decoder->get_song_tuple != NULL)
-        return decoder->get_song_tuple (filename);
+    if (decoder->probe_for_tuple == NULL)
+        return NULL;
 
-    if (decoder->probe_for_tuple != NULL)
-    {
-        VFSFile * handle = vfs_fopen (filename, "r");
-        Tuple * tuple;
-
-        if (handle == NULL)
-            return NULL;
-
-        tuple = decoder->probe_for_tuple (filename, handle);
-        vfs_fclose (handle);
-        return tuple;
-    }
-
-    return NULL;
+    VFSFile * handle = vfs_fopen (filename, "r");
+    Tuple * tuple = decoder->probe_for_tuple (filename, handle);
+    vfs_fclose (handle);
+    return tuple;
 }
 
 gboolean file_read_image (const gchar * filename, InputPlugin * decoder,

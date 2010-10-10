@@ -63,7 +63,13 @@ static AudAPITable api_table = {
  .cfg = & cfg};
 
 extern GList *vfs_transports;
-static GList * header_list = NULL;
+
+typedef struct {
+    PluginHeader * header;
+    GModule * module;
+} LoadedModule;
+
+static GList * loaded_modules = NULL;
 
 /*******************************************************************/
 
@@ -82,30 +88,19 @@ static void plugin2_dispose(GModule * module, const gchar * str, ...)
     g_module_close(module);
 }
 
-static void vis_plugin_disable_by_header (VisPlugin * header)
-{
-    plugin_enable (plugin_by_header (header), FALSE);
-}
-
 void plugin2_process(PluginHeader * header, GModule * module, const gchar * filename)
 {
-    if (header->magic != PLUGIN_MAGIC)
+    if (header->magic != _AUD_PLUGIN_MAGIC || header->version !=
+     _AUD_PLUGIN_VERSION)
     {
-        plugin2_dispose (module, "plugin <%s> discarded, invalid module magic",
-         filename);
+        plugin2_dispose (module, "%s has invalid header signature.");
         return;
     }
 
-    if (header->api_version != __AUDACIOUS_PLUGIN_API__)
-    {
-        plugin2_dispose (module, "plugin <%s> discarded, wanting API version "
-         "%d, we implement API version %d", filename, header->api_version,
-         __AUDACIOUS_PLUGIN_API__);
-        return;
-    }
-
-    header_list = g_list_prepend (header_list, header);
-    header->priv = module;
+    LoadedModule * loaded = g_slice_new (LoadedModule);
+    loaded->header = header;
+    loaded->module = module;
+    loaded_modules = g_list_prepend (loaded_modules, loaded);
 
     if (header->init != NULL)
     {
@@ -146,10 +141,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         VisPlugin * vp;
         for (gint i = 0; (vp = header->vp_list[i]) != NULL; i ++)
-        {
-            vp->disable_plugin = vis_plugin_disable_by_header;
             plugin_register (PLUGIN_TYPE_VIS, filename, i, vp);
-        }
     }
 
     if (header->gp_list != NULL)
@@ -163,8 +155,10 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         plugin_register (PLUGIN_TYPE_IFACE, filename, 0, header->interface);
 }
 
-void plugin2_unload (PluginHeader * header)
+void plugin2_unload (LoadedModule * loaded)
 {
+    PluginHeader * header = loaded->header;
+
     if (header->ip_list != NULL)
     {
         InputPlugin * ip;
@@ -192,7 +186,8 @@ void plugin2_unload (PluginHeader * header)
     if (header->fini != NULL)
         header->fini ();
 
-    g_module_close (header->priv);
+    g_module_close (loaded->module);
+    g_slice_free (LoadedModule, loaded);
 }
 
 /******************************************************************/
@@ -289,9 +284,9 @@ void plugin_system_cleanup(void)
         vfs_transports = NULL;
     }
 
-    for (GList * node = header_list; node != NULL; node = node->next)
+    for (GList * node = loaded_modules; node != NULL; node = node->next)
         plugin2_unload (node->data);
 
-    g_list_free (header_list);
-    header_list = NULL;
+    g_list_free (loaded_modules);
+    loaded_modules = NULL;
 }

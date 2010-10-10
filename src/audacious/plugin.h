@@ -1,41 +1,24 @@
-/*  Audacious
- *  Copyright (C) 2005-2010  Audacious team.
+/*
+ * plugin.h
+ * Copyright 2005-2010 Audacious Development Team
  *
- *  BMP - Cross-platform multimedia player
- *  Copyright (C) 2003-2004  BMP development team.
+ * This file is part of Audacious.
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2000  Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front Technologies
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
-/**
- * @file plugin.h
- * @brief Main Audacious plugin API header file.
- *
- */
+
 #ifndef AUDACIOUS_PLUGIN_H
 #define AUDACIOUS_PLUGIN_H
 
@@ -48,51 +31,42 @@
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
-//@{
-/** Preprocessor defines for different API features */
-#define __AUDACIOUS_PLUGIN_API__ 18 /**< Current generic plugin API/ABI version, exact match is required for plugin to be loaded. */
-//@}
+/* "Magic" bytes identifying an Audacious plugin header. */
+#define _AUD_PLUGIN_MAGIC 0x8EAC8DE2
 
-typedef struct _InputPlayback InputPlayback;
-
-/** ReplayGain information structure */
-typedef struct {
-    gfloat track_gain;  /**< Track gain in decibels (dB) */
-    gfloat track_peak;
-    gfloat album_gain;
-    gfloat album_peak;
-} ReplayGainInfo;
+/* API version.  Plugins compiled with incompatible versions of Audacious will
+ * not be loaded. */
+#define _AUD_PLUGIN_VERSION 18
 
 /**
  * The plugin module header. Each module can contain several plugins,
  * of any supported type.
  */
-typedef struct {
-    gint magic;             /**< Audacious plugin module magic ID */
-    gint api_version;       /**< API version plugin has been compiled for,
-                                 this is checked against __AUDACIOUS_PLUGIN_API__ */
-    gchar *name;            /**< Module name */
+typedef const struct {
+    gint magic; /* checked against _AUD_PLUGIN_MAGIC */
+    gint version; /* checked against _AUD_PLUGIN_VERSION */
+    const gchar * name;
     void (* init) (void);
     void (* fini) (void);
-    InputPlugin **ip_list;  /**< List of InputPlugin(s) in this module */
+
+    /* These are arrays of pointers, ending with NULL: */
+    InputPlugin * * ip_list;
     OutputPlugin **op_list;
     EffectPlugin **ep_list;
     GeneralPlugin **gp_list;
     VisPlugin **vp_list;
+
     Interface *interface;
-    void * priv;
 } PluginHeader;
 
-#define PLUGIN_MAGIC 0x8EAC8DE2
-
 #define DECLARE_PLUGIN(name, init, fini, ...) \
-    static PluginHeader _pluginInfo = {PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
-     #name, init, fini, __VA_ARGS__}; \
-    AudAPITable * _aud_api_table = NULL; \
-    G_MODULE_EXPORT PluginHeader * get_plugin_info (AudAPITable * table) { \
-        _aud_api_table = table; \
-        return &_pluginInfo; \
-    }
+ AudAPITable * _aud_api_table = NULL; \
+ G_MODULE_EXPORT PluginHeader * get_plugin_info (AudAPITable * table) { \
+    static PluginHeader h = {_AUD_PLUGIN_MAGIC, _AUD_PLUGIN_VERSION, #name, \
+     init, fini, __VA_ARGS__}; \
+    _aud_api_table = table; \
+    return & h; \
+ }
 
 #define SIMPLE_INPUT_PLUGIN(name, ip_list) \
     DECLARE_PLUGIN(name, NULL, NULL, ip_list)
@@ -112,7 +86,6 @@ typedef struct {
 #define SIMPLE_INTERFACE_PLUGIN(name, interface) \
     DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
 
-
 #define PLUGIN_COMMON_FIELDS        \
     gchar *description;            \
     gboolean (* init) (void); \
@@ -121,8 +94,6 @@ typedef struct {
     void (*configure) (void);        \
     PluginPreferences *settings;
 
-/* Sadly, this is the most we can generalize out of the disparate
-   plugin structs usable with typecasts - descender */
 struct _Plugin {
     PLUGIN_COMMON_FIELDS
 };
@@ -288,36 +259,26 @@ struct OutputAPI
     void (* abort_write) (void);
 };
 
+typedef const struct _InputPlayback InputPlayback;
+
 struct _InputPlayback {
-    gchar *filename;    /**< Filename URI */
-    void *data;
-
-    gint playing;       /**< 1 = Playing, 0 = Stopped. */
-    gboolean error;     /**< TRUE if there has been an error. */
-    gboolean eof;       /**< TRUE if end of file has been reached- */
-
-    InputPlugin *plugin;
+    /* Pointer to the output API functions. */
     const struct OutputAPI * output;
-    GThread *thread;
 
-    GMutex *pb_ready_mutex;
-    GCond *pb_ready_cond;
-    gint pb_ready_val;
-    gint (*set_pb_ready) (InputPlayback*);
+    /* Allows the plugin to associate data with a playback instance. */
+    void (* set_data) (InputPlayback * p, void * data);
 
-    gint nch;           /**< */
-    gint rate;          /**< */
-    gint freq;          /**< */
-    gint length;
-    gchar *title;
+    /* Returns the pointer passed to set_data. */
+    void * (* get_data) (InputPlayback * p);
 
-    /**
-     * Set playback parameters. Title should be NULL and length should be 0.
-     * @deprecated Use of this function to set title or length is deprecated,
-     * please use #set_tuple() for information other than bitrate/samplerate/channels.
-     */
-    void (*set_params) (InputPlayback * playback, const gchar * title, gint
-     length, gint bitrate, gint samplerate, gint channels);
+    /* Signifies that the plugin has started playback is ready to accept mseek,
+     * pause, and stop calls. */
+    void (* set_pb_ready) (InputPlayback * p);
+
+    /* Updates attributes of the stream.  "bitrate" is in bits per second.
+     * "samplerate" is in hertz. */
+    void (* set_params) (InputPlayback * p, gint bitrate, gint samplerate,
+     gint channels);
 
     /**
      * Sets / updates playback entry #Tuple.
@@ -331,15 +292,8 @@ struct _InputPlayback {
      * those settings.  If the settings are changed in a call to set_tuple, this
      * function must be called again to apply the updated settings. */
     void (* set_gain_from_playlist) (InputPlayback * playback);
-
-    /* deprecated */
-    void (*pass_audio) (InputPlayback *, gint, gint, gint, gpointer, gint *);
-    void (*set_replaygain_info) (InputPlayback *, ReplayGainInfo *);
 };
 
-/**
- * Input plugin structure.
- */
 struct _InputPlugin {
     PLUGIN_COMMON_FIELDS
 
@@ -374,11 +328,7 @@ struct _InputPlugin {
     /* Must return nonzero if the plugin can handle this file.  If the file
      * could not be opened, "file" will be NULL.  (This is normal in the case of
      * special URI schemes like cdda:// that do not represent actual files.) */
-    /* Bug: The return value should be a gboolean, not a gint. */
-    gint (* is_our_file_from_vfs) (const gchar * filename, VFSFile * file);
-
-    /* Deprecated. */
-    Tuple * (* get_song_tuple) (const gchar * filename); /* Use probe_for_tuple. */
+    gboolean (* is_our_file_from_vfs) (const gchar * filename, VFSFile * file);
 
     /* Must return a tuple containing metadata for this file, or NULL if no
      * metadata could be read.  If the file could not be opened, "file" will be
@@ -423,17 +373,13 @@ struct _InputPlugin {
     /* Must pause or unpause a file currently being played.  This function will
      * be called from a different thread than play, but it will not be called
      * before the plugin calls set_pb_ready or after stop is called. */
-    /* Bug: paused should be a gboolean, not a gshort. */
-    /* Bug: There is no way to indicate success or failure. */
-    void (* pause) (InputPlayback * playback, gshort paused);
+    void (* pause) (InputPlayback * playback, gboolean paused);
 
     /* Optional.  Must seek to the given position in milliseconds within a file
      * currently being played.  This function will be called from a different
      * thread than play, but it will not be called before the plugin calls
      * set_pb_ready or after stop is called. */
-    /* Bug: time should be a gint, not a gulong. */
-    /* Bug: There is no way to indicate success or failure. */
-    void (* mseek) (InputPlayback * playback, gulong time);
+    void (* mseek) (InputPlayback * playback, gint time);
 
     /* Must signal a currently playing song to stop and cause play to return.
      * This function will be called from a different thread than play.  It will
@@ -446,11 +392,6 @@ struct _InputPlugin {
     gint (* get_time) (InputPlayback * playback);
     gint (* get_volume) (gint * l, gint * r);
     gint (* set_volume) (gint l, gint r);
-
-    /* Deprecated. */
-    gint (* is_our_file) (const gchar * filename); /* Use is_our_file_from_vfs. */
-    void (* play_file) (InputPlayback * playback); /* Use play. */
-    void (* seek) (InputPlayback * playback, gint time); /* Use mseek. */
 };
 
 struct _GeneralPlugin {
@@ -463,7 +404,6 @@ struct _VisPlugin {
     gint num_pcm_chs_wanted;
     gint num_freq_chs_wanted;
 
-    void (*disable_plugin) (struct _VisPlugin *);
     void (*playback_start) (void);
     void (*playback_stop) (void);
     void (*render_pcm) (gint16 pcm_data[2][512]);
@@ -480,7 +420,6 @@ struct _VisPlugin {
     void * (* get_widget) (void);
 };
 
-/* undefine the macro -- struct Plugin should be used instead. */
 #undef PLUGIN_COMMON_FIELDS
 
 #endif /* AUDACIOUS_PLUGIN_H */

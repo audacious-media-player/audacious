@@ -772,38 +772,13 @@ gboolean mpris_player_get_caps(MprisPlayer * obj, gint * capabilities, GError **
 
 gboolean mpris_player_volume_set(MprisPlayer * obj, gint vol, GError ** error)
 {
-    gint vl, vr, v;
-
-    // get the current volume so we can maintain the balance
-    input_get_volume(&vl, &vr);
-
-    // sanity check
-    vl = CLAMP(vl, 0, 100);
-    vr = CLAMP(vr, 0, 100);
-    v = CLAMP(vol, 0, 100);
-
-    if (vl > vr)
-    {
-        input_set_volume(v, (gint) rint(((gdouble) vr / vl) * v));
-    }
-    else if (vl < vr)
-    {
-        input_set_volume((gint) rint(((gdouble) vl / vr) * v), v);
-    }
-    else
-    {
-        input_set_volume(v, v);
-    }
+    drct_set_volume_main (vol);
     return TRUE;
 }
 
 gboolean mpris_player_volume_get(MprisPlayer * obj, gint * vol, GError ** error)
 {
-    gint vl, vr;
-    input_get_volume(&vl, &vr);
-    // vl and vr may be different depending on the balance; the true volume is
-    // the maximum of vl or vr.
-    *vol = MAX(vl, vr);
+    drct_get_volume_main (vol);
     return TRUE;
 }
 
@@ -1095,32 +1070,19 @@ gboolean audacious_rc_seek(RemoteObject * obj, guint pos, GError * *error)
 
 gboolean audacious_rc_volume(RemoteObject * obj, gint * vl, gint * vr, GError ** error)
 {
-    input_get_volume(vl, vr);
+    drct_get_volume (vl, vr);
     return TRUE;
 }
 
 gboolean audacious_rc_set_volume(RemoteObject * obj, gint vl, gint vr, GError ** error)
 {
-    if (vl > 100)
-        vl = 100;
-    if (vr > 100)
-        vr = 100;
-    input_set_volume(vl, vr);
+    drct_set_volume (vl, vr);
     return TRUE;
 }
 
 gboolean audacious_rc_balance(RemoteObject * obj, gint * balance, GError ** error)
 {
-    gint vl, vr;
-    input_get_volume(&vl, &vr);
-    if (vl < 0 || vr < 0)
-        *balance = 0;
-    else if (vl > vr)
-        *balance = -100 + ((vr * 100) / vl);
-    else if (vr > vl)
-        *balance = 100 - ((vl * 100) / vr);
-    else
-        *balance = 0;
+    drct_get_volume_balance (balance);
     return TRUE;
 }
 

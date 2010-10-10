@@ -104,14 +104,14 @@ void drct_seek (gint time)
 
 void drct_get_volume (gint * left, gint * right)
 {
-    input_get_volume (left, right);
+    playback_get_volume (left, right);
     * left = CLAMP (* left, 0, 100);
     * right = CLAMP (* right, 0, 100);
 }
 
 void drct_set_volume (gint left, gint right)
 {
-    input_set_volume (CLAMP (left, 0, 100), CLAMP (right, 0, 100));
+    playback_set_volume (CLAMP (left, 0, 100), CLAMP (right, 0, 100));
 }
 
 void drct_get_volume_main (gint * volume)

@@ -65,7 +65,8 @@ void plugin_registry_prune (void);
 void plugin_registry_save (void);
 
 void module_register (const gchar * path);
-void plugin_register (gint type, const gchar * path, gint number, void * header);
+void plugin_register (gint type, const gchar * path, gint number, const void *
+ header);
 
 void plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
 void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc

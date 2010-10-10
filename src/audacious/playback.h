@@ -37,7 +37,7 @@ gchar * playback_get_title (void);
 gint playback_get_length (void);
 void playback_get_info (gint * bitrate, gint * samplerate, gint * channels);
 
-void input_get_volume(gint * l, gint * r);
-void input_set_volume(gint l, gint r);
+void playback_get_volume (gint * l, gint * r);
+void playback_set_volume (gint l, gint r);
 
 #endif /* AUDACIOUS_PLAYBACK_H */

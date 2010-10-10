@@ -53,7 +53,7 @@ struct PluginHandle {
     ModuleData * module;
     gint type, number;
     gboolean confirmed;
-    void * header;
+    const void * header;
     gchar * name;
     gint priority;
     gboolean has_about, has_configure, enabled;
@@ -102,7 +102,7 @@ static ModuleData * module_new (gchar * path, gboolean confirmed, gint
 }
 
 static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
- gboolean confirmed, void * header)
+ gboolean confirmed, const void * header)
 {
     PluginHandle * plugin = g_malloc (sizeof (PluginHandle));
 
@@ -466,7 +466,8 @@ static PluginHandle * plugin_lookup_real (ModuleData * module, gint type, gint
     return (node != NULL) ? node->data : NULL;
 }
 
-void plugin_register (gint type, const gchar * path, gint number, void * header)
+void plugin_register (gint type, const gchar * path, gint number, const void *
+ header)
 {
     ModuleData * module = module_lookup (path);
     g_return_if_fail (module != NULL);
@@ -535,7 +536,7 @@ void plugin_register (gint type, const gchar * path, gint number, void * header)
     }
     else if (type == PLUGIN_TYPE_IFACE)
     {
-        Interface * i = header;
+        Interface * i = (void *) header;
         g_free (plugin->name);
         plugin->name = g_strdup (i->desc);
     }
@@ -573,7 +574,7 @@ PluginHandle * plugin_lookup (gint type, const gchar * path, gint number)
     return plugin_lookup_real (module, type, number);
 }
 
-void * plugin_get_header (PluginHandle * plugin)
+const void * plugin_get_header (PluginHandle * plugin)
 {
     if (! plugin->module->loaded)
     {
@@ -584,12 +585,12 @@ void * plugin_get_header (PluginHandle * plugin)
     return plugin->header;
 }
 
-static gint plugin_by_header_cb (PluginHandle * plugin, void * header)
+static gint plugin_by_header_cb (PluginHandle * plugin, const void * header)
 {
     return (plugin->header == header) ? 0 : -1;
 }
 
-PluginHandle * plugin_by_header (void * header)
+PluginHandle * plugin_by_header (const void * header)
 {
     GList * node = g_list_find_custom (plugin_list, header, (GCompareFunc)
      plugin_by_header_cb);

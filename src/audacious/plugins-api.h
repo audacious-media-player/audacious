@@ -34,8 +34,8 @@ AUD_FUNC1 (gint, plugin_get_number, PluginHandle *, plugin)
 AUD_FUNC3 (PluginHandle *, plugin_lookup, gint, type, const gchar *, filename,
  gint, number)
 
-AUD_FUNC1 (void *, plugin_get_header, PluginHandle *, plugin)
-AUD_FUNC1 (PluginHandle *, plugin_by_header, void *, header)
+AUD_FUNC1 (const void *, plugin_get_header, PluginHandle *, plugin)
+AUD_FUNC1 (PluginHandle *, plugin_by_header, const void *, header)
 
 AUD_FUNC2 (gint, plugin_compare, PluginHandle *, a, PluginHandle *, b)
 AUD_FUNC3 (void, plugin_for_each, gint, type, PluginForEachFunc, func, void *,

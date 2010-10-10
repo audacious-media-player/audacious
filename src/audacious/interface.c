@@ -48,7 +48,7 @@ static InterfaceCbs interface_cbs = { NULL };
 
 gboolean interface_load (PluginHandle * plugin)
 {
-    Interface * i = plugin_get_header (plugin);
+    Interface * i = (Interface *) plugin_get_header (plugin);
     g_return_val_if_fail (i != NULL, FALSE);
 
     current_interface = i;
