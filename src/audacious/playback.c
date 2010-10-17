@@ -395,7 +395,7 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
 
     playing = TRUE;
     playback_error = FALSE;
-    paused = paused;
+    paused = pause;
     ready_flag = FALSE;
 
     pthread_create (& playback_thread_handle, NULL, playback_thread, NULL);
