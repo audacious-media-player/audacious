@@ -421,7 +421,9 @@ void playback_seek (gint time)
     g_return_if_fail (playing);
     wait_until_ready ();
 
-    g_return_if_fail (current_decoder->mseek != NULL);
+    if (current_decoder->mseek == NULL)
+        return;
+
     current_decoder->mseek (& playback_api, time_offset + CLAMP (time, 0,
      current_length));
 
