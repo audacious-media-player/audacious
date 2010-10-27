@@ -74,18 +74,16 @@ void audgui_connect_check_box (GtkWidget * box, gboolean * setting)
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const gchar * title, const gchar * text)
 {
-    if (* widget == NULL)
-    {
-        * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s",
-         text);
-        gtk_window_set_title ((GtkWindow *) * widget, title);
+    if (* widget != NULL)
+        gtk_widget_destroy (* widget);
 
-        g_signal_connect (* widget, "response", (GCallback) gtk_widget_destroy,
-         NULL);
-        audgui_destroy_on_escape (* widget);
-        g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed,
-         widget);
-    }
+    * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s", text);
+    gtk_window_set_title ((GtkWindow *) * widget, title);
+
+    g_signal_connect (* widget, "response", (GCallback) gtk_widget_destroy, NULL);
+    audgui_destroy_on_escape (* widget);
+    g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed,
+     widget);
 
     gtk_window_present ((GtkWindow *) * widget);
 }
