@@ -91,7 +91,6 @@ static Category categories[] = {
     {DATA_DIR "/images/audio.png",        N_("Audio")},
     {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
     {DATA_DIR "/images/connectivity.png", N_("Network")},
-    {DATA_DIR "/images/playback.png",     N_("Playback")},
     {DATA_DIR "/images/playlist.png",     N_("Playlist")},
     {DATA_DIR "/images/plugins.png",      N_("Plugins")},
 };
@@ -197,20 +196,6 @@ static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning"}}},
 };
 
-static PreferencesWidget playback_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Playback</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Continue playback on startup"), &cfg.resume_playback_on_startup, NULL,
-        N_("When Audacious starts, automatically begin playing from the point where we stopped before."), FALSE},
-    {WIDGET_CHK_BTN, N_("Don't advance in the playlist"), &cfg.no_playlist_advance, NULL,
-        N_("When finished playing a song, don't automatically advance to the next."), FALSE},
-    {WIDGET_CHK_BTN, N_("Advance when the current song is deleted"),
-     & cfg.advance_on_delete, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Clear the playlist when opening files"),
-     & cfg.clear_playlist, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
-     & cfg.open_to_temporary, NULL, NULL, FALSE},
-};
-
 static PreferencesWidget chardet_elements[] = {
     {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"), &cfg.chardet_detector, NULL, NULL, TRUE,
         {.combo = {chardet_detector_presets, G_N_ELEMENTS(chardet_detector_presets),
@@ -224,6 +209,15 @@ static PreferencesWidget chardet_elements[] = {
 };
 
 static PreferencesWidget playlist_page_widgets[] = {
+    {WIDGET_LABEL, N_("<b>Behavior</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Continue playback on startup"),
+     & cfg.resume_playback_on_startup, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Advance when the current song is deleted"),
+     & cfg.advance_on_delete, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Clear the playlist when opening files"),
+     & cfg.clear_playlist, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
+     & cfg.open_to_temporary, NULL, NULL, FALSE},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
 };
@@ -1427,20 +1421,6 @@ create_titlestring_tag_menu(void)
 }
 
 static void
-create_playback_category(void)
-{
-    GtkWidget *playback_page_vbox;
-    GtkWidget *widgets_vbox;
-
-    playback_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), playback_page_vbox);
-
-    widgets_vbox = gtk_vbox_new (FALSE, 0);
-    create_widgets(GTK_BOX(widgets_vbox), playback_page_widgets, G_N_ELEMENTS(playback_page_widgets));
-    gtk_box_pack_start (GTK_BOX (playback_page_vbox), widgets_vbox, TRUE, TRUE, 0);
-}
-
-static void
 create_replay_gain_category(void)
 {
     GtkWidget *rg_page_vbox;
@@ -1481,7 +1461,6 @@ static void leading_zero_cb (GtkToggleButton * leading)
 static void
 create_playlist_category(void)
 {
-    GtkWidget *playlist_page_vbox;
     GtkWidget *vbox5;
     GtkWidget *alignment55;
     GtkWidget *label60;
@@ -1502,11 +1481,8 @@ create_playlist_category(void)
     GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
     GtkWidget * numbers_alignment, * numbers;
 
-    playlist_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), playlist_page_vbox);
-
     vbox5 = gtk_vbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (playlist_page_vbox), vbox5, TRUE, TRUE, 0);
+    gtk_container_add ((GtkContainer *) category_notebook, vbox5);
 
     create_widgets(GTK_BOX(vbox5), playlist_page_widgets, G_N_ELEMENTS(playlist_page_widgets));
 
@@ -1915,7 +1891,6 @@ void * * create_prefs_window (void)
     create_audio_category();
     create_replay_gain_category();
     create_connectivity_category();
-    create_playback_category();
     create_playlist_category();
     create_plugin_category();
 
