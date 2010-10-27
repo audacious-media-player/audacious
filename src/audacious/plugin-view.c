@@ -26,24 +26,30 @@
 #include "ui_preferences.h"
 
 enum {
- PVIEW_COL_HANDLE,
+ PVIEW_COL_NODE,
  PVIEW_COL_ENABLED,
  PVIEW_COL_NAME,
  PVIEW_COL_PATH,
  PVIEW_COLS
 };
 
+typedef struct {
+    PluginHandle * p;
+    GtkTreeModel * model;
+    GtkTreePath * path;
+} Node;
+
 static PluginHandle * get_selected_plugin (GtkTreeView * tree)
 {
-    PluginHandle * p = NULL;
+    Node * n = NULL;
 
     GtkTreeSelection * sel = gtk_tree_view_get_selection (tree);
     GtkTreeModel * model;
     GtkTreeIter iter;
     if (gtk_tree_selection_get_selected (sel, & model, & iter))
-        gtk_tree_model_get (model, & iter, PVIEW_COL_HANDLE, & p, -1);
+        gtk_tree_model_get (model, & iter, PVIEW_COL_NODE, & n, -1);
 
-    return p;
+    return n == NULL ? NULL : n->p;
 }
 
 static Plugin * get_selected_header (GtkTreeView * tree)
@@ -55,57 +61,55 @@ static Plugin * get_selected_header (GtkTreeView * tree)
 }
 
 static void do_enable (GtkCellRendererToggle * cell, const gchar * path_str,
- GtkListStore * store)
+ GtkTreeModel * model)
 {
     GtkTreePath * path = gtk_tree_path_new_from_string (path_str);
     GtkTreeIter iter;
-    gtk_tree_model_get_iter ((GtkTreeModel *) store, & iter, path);
+    gtk_tree_model_get_iter (model, & iter, path);
     gtk_tree_path_free (path);
 
-    PluginHandle * p = NULL;
+    Node * n = NULL;
     gboolean enabled;
-    gtk_tree_model_get ((GtkTreeModel *) store, & iter, PVIEW_COL_HANDLE, & p,
+    gtk_tree_model_get (model, & iter, PVIEW_COL_NODE, & n,
      PVIEW_COL_ENABLED, & enabled, -1);
-    g_return_if_fail (p != NULL);
+    g_return_if_fail (n != NULL);
 
-    plugin_enable (p, ! enabled);
+    plugin_enable (n->p, ! enabled);
 }
 
-typedef struct {
-    GtkListStore * store;
-    GtkTreePath * path;
-} WatchData;
-
-static gboolean watcher (PluginHandle * p, WatchData * w)
+static gboolean list_watcher (PluginHandle * p, Node * n)
 {
     GtkTreeIter iter;
-    gtk_tree_model_get_iter ((GtkTreeModel *) w->store, & iter, w->path);
-    gtk_list_store_set (w->store, & iter, PVIEW_COL_ENABLED, plugin_get_enabled
-     (p), -1);
+    gtk_tree_model_get_iter (n->model, & iter, n->path);
+    gtk_list_store_set ((GtkListStore *) n->model, & iter, PVIEW_COL_ENABLED,
+     plugin_get_enabled (n->p), -1);
     return TRUE;
 }
 
-static gboolean fill_cb (PluginHandle * p, GtkListStore * store)
+static gboolean fill_cb (PluginHandle * p, GtkTreeModel * model)
 {
-    GtkTreeIter iter;
-    gtk_list_store_append (store, & iter);
-    gtk_list_store_set (store, & iter, PVIEW_COL_HANDLE, p, PVIEW_COL_ENABLED,
-     plugin_get_enabled (p), PVIEW_COL_NAME, plugin_get_name (p),
-     PVIEW_COL_PATH, plugin_get_filename (p), -1);
+    Node * n = g_slice_new (Node);
 
-    WatchData * w = g_slice_new (WatchData);
-    w->store = store;
-    w->path = gtk_tree_model_get_path ((GtkTreeModel *) store, & iter);
-    plugin_add_watch (p, (PluginForEachFunc) watcher, w);
+    GtkTreeIter iter;
+    gtk_list_store_append ((GtkListStore *) model, & iter);
+    gtk_list_store_set ((GtkListStore *) model, & iter, PVIEW_COL_NODE, n,
+     PVIEW_COL_ENABLED, plugin_get_enabled (p), PVIEW_COL_NAME, plugin_get_name
+     (p), PVIEW_COL_PATH, plugin_get_filename (p), -1);
+
+    n->p = p;
+    n->model = model;
+    n->path = gtk_tree_model_get_path (model, & iter);
+
+    plugin_add_watch (p, (PluginForEachFunc) list_watcher, n);
 
     return TRUE;
 }
 
-static void plugin_view_fill (GtkTreeView * tree, void * type)
+static void list_fill (GtkTreeView * tree, void * type)
 {
-    GtkListStore * store = gtk_list_store_new (PVIEW_COLS, G_TYPE_POINTER,
-     G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
-    gtk_tree_view_set_model (tree, (GtkTreeModel *) store);
+    GtkTreeModel * model = (GtkTreeModel *) gtk_list_store_new (PVIEW_COLS,
+     G_TYPE_POINTER, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
+    gtk_tree_view_set_model (tree, model);
 
     GtkTreeViewColumn * col = gtk_tree_view_column_new ();
     gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
@@ -113,7 +117,7 @@ static void plugin_view_fill (GtkTreeView * tree, void * type)
     gtk_tree_view_append_column (tree, col);
 
     GtkCellRenderer * rend = gtk_cell_renderer_toggle_new ();
-    g_signal_connect (rend, "toggled", (GCallback) do_enable, store);
+    g_signal_connect (rend, "toggled", (GCallback) do_enable, model);
     gtk_tree_view_column_pack_start (col, rend, FALSE);
     gtk_tree_view_column_set_attributes (col, rend, "active", PVIEW_COL_ENABLED,
      NULL);
@@ -130,7 +134,32 @@ static void plugin_view_fill (GtkTreeView * tree, void * type)
         gtk_tree_view_column_set_attributes (col, rend, "text", i, NULL);
     }
 
-    plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) fill_cb, store);
+    plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) fill_cb, model);
+}
+
+static void list_destroy (GtkTreeView * tree)
+{
+    GtkTreeModel * model = gtk_tree_view_get_model (tree);
+    if (model == NULL)
+        return;
+
+    GtkTreeIter iter;
+    if (gtk_tree_model_get_iter_first (model, & iter))
+    {
+        do
+        {
+            Node * n = NULL;
+            gtk_tree_model_get (model, & iter, PVIEW_COL_NODE, & n, -1);
+            g_return_if_fail (n != NULL);
+
+            plugin_remove_watch (n->p, (PluginForEachFunc) list_watcher, n);
+            gtk_tree_path_free (n->path);
+            g_slice_free (Node, n);
+        }
+        while (gtk_tree_model_iter_next (model, & iter));
+    }
+
+    g_object_unref ((GObject *) model);
 }
 
 static gboolean config_watcher (PluginHandle * p, GtkWidget * config)
@@ -187,6 +216,16 @@ static void do_about (GtkTreeView * tree)
         header->about ();
 }
 
+static void button_destroy (GtkWidget * b)
+{
+    PluginForEachFunc watcher = g_object_get_data ((GObject *) b, "watcher");
+    g_return_if_fail (watcher != NULL);
+
+    PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
+    if (p != NULL)
+        plugin_remove_watch (p, watcher, b);
+}
+
 GtkWidget * plugin_view_new (gint type)
 {
     GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
@@ -202,8 +241,9 @@ GtkWidget * plugin_view_new (gint type)
     GtkWidget * tree = gtk_tree_view_new ();
     gtk_container_add ((GtkContainer *) scrolled, tree);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) tree, FALSE);
-    g_signal_connect (tree, "realize", (GCallback) plugin_view_fill,
-     GINT_TO_POINTER (type));
+    g_signal_connect (tree, "realize", (GCallback) list_fill, GINT_TO_POINTER
+     (type));
+    g_signal_connect (tree, "destroy", (GCallback) list_destroy, NULL);
 
     GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
@@ -215,6 +255,7 @@ GtkWidget * plugin_view_new (gint type)
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, config);
     g_signal_connect_swapped (config, "clicked", (GCallback)
      do_config, tree);
+    g_signal_connect (config, "destroy", (GCallback) button_destroy, NULL);
 
     GtkWidget * about = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
     gtk_box_pack_start ((GtkBox *) hbox, about, FALSE, FALSE, 0);
@@ -222,6 +263,7 @@ GtkWidget * plugin_view_new (gint type)
     g_object_set_data ((GObject *) about, "watcher", about_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, about);
     g_signal_connect_swapped (about, "clicked", (GCallback) do_about, tree);
+    g_signal_connect (about, "destroy", (GCallback) button_destroy, NULL);
 
     return vbox;
 }
