@@ -180,13 +180,8 @@ static void infowin_label_set_text (GtkWidget * widget, const gchar * text)
 
 static void infowin_entry_set_image (GtkWidget * widget, gint list, gint entry)
 {
-    GdkPixbuf * p = (list >= 0) ? audgui_pixbuf_for_entry (list, entry) : NULL;
-
-    if (! p)
-    {
-        p = gdk_pixbuf_new_from_file (DATA_DIR "/images/album.png", NULL);
-        g_return_if_fail (p);
-    }
+    GdkPixbuf * p = audgui_pixbuf_for_entry (list, entry);
+    g_return_if_fail (p);
 
     audgui_pixbuf_scale_within (& p, aud_cfg->filepopup_pixelsize);
     gtk_image_set_from_pixbuf ((GtkImage *) widget, p);
@@ -219,8 +214,7 @@ static void clear_infowin (void)
     something_changed = FALSE;
     can_write = FALSE;
     gtk_widget_set_sensitive (btn_apply, FALSE);
-
-    infowin_entry_set_image (image_artwork, -1, -1);
+    gtk_image_clear ((GtkImage *) image_artwork);
 }
 
 static void entry_changed (GtkEditable * editable, void * unused)
@@ -336,7 +330,7 @@ void create_infowin (void)
     gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
 
     image_artwork = gtk_image_new ();
-    gtk_box_pack_start ((GtkBox *) vbox2, image_artwork, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox2, image_artwork, TRUE, TRUE, 0);
 
     location_text = gtk_label_new ("");
     gtk_widget_set_size_request (location_text, 200, -1);

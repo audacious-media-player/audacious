@@ -113,11 +113,11 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
     /* Don't get album art for network files -- too slow. */
     if (! strncmp (name, "http://", 7) || ! strncmp (name, "https://", 8) ||
      ! strncmp (name, "mms://", 6))
-        return NULL;
+        goto FALLBACK;
 
     PluginHandle * decoder = aud_playlist_entry_get_decoder (list, entry, FALSE);
     if (! decoder)
-        return NULL;
+        goto FALLBACK;
 
     void * data;
     gint size;
@@ -126,17 +126,27 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
     {
         GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
         g_free (data);
-        return p;
+        if (p)
+            return p;
     }
 
     gchar * assoc = aud_get_associated_image_file (name);
 
-    if (! assoc)
-        return NULL;
+    if (assoc)
+    {
+        GdkPixbuf * p = gdk_pixbuf_new_from_file (assoc, NULL);
+        g_free (assoc);
+        if (p)
+            return p;
+    }
 
-    GdkPixbuf * p = gdk_pixbuf_new_from_file (assoc, NULL);
-    g_free (assoc);
-    return p;
+FALLBACK:;
+    static GdkPixbuf * fallback = NULL;
+    if (! fallback)
+        fallback = gdk_pixbuf_new_from_file (DATA_DIR "/images/album.png", NULL);
+    if (fallback)
+        g_object_ref ((GObject *) fallback);
+    return fallback;
 }
 
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size)
