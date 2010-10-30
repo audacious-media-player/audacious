@@ -27,6 +27,7 @@
 #include <audacious/playlist.h>
 #include <audacious/plugin.h>
 #include <audacious/misc.h>
+#include <libaudcore/audstrings.h>
 
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -164,4 +165,135 @@ void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size)
      GDK_INTERP_BILINEAR);
     g_object_unref (* pixbuf);
     * pixbuf = pixbuf2;
+}
+
+gchar * skip_top_folders (gchar * name)
+{
+    const gchar * home = getenv ("HOME");
+    if (! home)
+        return name;
+
+    gint len = strlen (home);
+    if (len > 0 && home[len - 1] == '/')
+        len --;
+
+    if (! strncmp (name, home, len) && name[len] == '/')
+        return name + len + 1;
+    if (name[0] == '/')
+        return name + 1;
+
+    return name;
+}
+
+void split_filename (gchar * name, gchar * * base, gchar * * first, gchar * *
+ second)
+{
+    * first = * second = 0;
+
+    gchar * c;
+
+    if ((c = strrchr (name, '/')))
+    {
+        * base = c + 1;
+        * c = 0;
+    }
+    else
+    {
+        * base = name;
+        goto DONE;
+    }
+
+    if ((c = strrchr (name, '/')))
+    {
+        * first = c + 1;
+        * c = 0;
+    }
+    else
+    {
+        * first = name;
+        goto DONE;
+    }
+
+    if ((c = strrchr (name, '/')))
+        * second = c + 1;
+    else
+        * second = name;
+
+DONE:
+    if ((c = strrchr (* base, '.')))
+        * c = 0;
+}
+
+gchar * stream_name (const gchar * name)
+{
+    if (! strncmp (name, "http://", 7))
+        name += 7;
+    else if (! strncmp (name, "https://", 8))
+        name += 8;
+    else if (! strncmp (name, "mms://", 6))
+        name += 6;
+    else
+        return NULL;
+
+    gchar * s = g_strdup (name);
+    gchar * c;
+
+    if ((c = strchr (s, '/')))
+        * c = 0;
+    if ((c = strchr (s, ':')))
+        * c = 0;
+    if ((c = strchr (s, '?')))
+        * c = 0;
+
+    return s;
+}
+
+void audgui_three_strings (gint list, gint entry, gchar * * title, gchar * *
+ artist, gchar * * album)
+{
+    * title = * artist = * album = NULL;
+
+    const gchar * name = aud_playlist_entry_get_filename (list, entry);
+    const Tuple * tuple = aud_playlist_entry_get_tuple (list, entry, FALSE);
+    g_return_if_fail (name && tuple);
+
+    const gchar * _title = tuple_get_string (tuple, FIELD_TITLE, NULL);
+    const gchar * _artist = tuple_get_string (tuple, FIELD_ARTIST, NULL);
+    const gchar * _album = tuple_get_string (tuple, FIELD_ALBUM, NULL);
+
+    * title = (_title && _title[0]) ? g_strdup (_title) : NULL;
+    * artist = (_artist && _artist[0]) ? g_strdup (_artist) : NULL;
+    * album = (_album && _album[0]) ? g_strdup (_album) : NULL;
+
+    if (! strncmp (name, "file://", 7))
+    {
+        gchar buf[strlen (name + 7) + 1];
+        strcpy (buf, name + 7);
+        string_decode_percent (buf);
+
+        gchar * base, * first, * second;
+        split_filename (skip_top_folders (buf), & base, & first, & second);
+
+        if (! * title)
+            * title = g_strdup (base);
+
+        if (! * album)
+        {
+            * album = g_strdup (first);
+
+            if (! * artist)
+                * artist = g_strdup (second);
+        }
+        else if (! * artist)
+            * artist = g_strdup (first);
+    }
+    else
+    {
+        if (! * title)
+            * title = stream_name (name);
+        else if (! * artist)
+            * artist = stream_name (name);
+        else if (! * album)
+            * album = stream_name (name);
+    }
 }
