@@ -277,15 +277,18 @@ void audgui_three_strings (gint list, gint entry, gchar * * title, gchar * *
         if (! * title)
             * title = g_strdup (base);
 
-        if (! * album)
+        if (first)
         {
-            * album = g_strdup (first);
-
-            if (! * artist)
+            if (second && ! * artist && ! * album)
+            {
                 * artist = g_strdup (second);
+                * album = g_strdup (first);
+            }
+            else if (! * artist)
+                * artist = g_strdup (first);
+            else if (! * album)
+                * album = g_strdup (first);
         }
-        else if (! * artist)
-            * artist = g_strdup (first);
     }
     else
     {
