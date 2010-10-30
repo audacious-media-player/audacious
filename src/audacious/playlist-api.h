@@ -110,6 +110,12 @@ AUD_FUNC3 (void, playlist_entry_delete, gint, playlist, gint, at, gint, number)
 AUD_FUNC2 (const gchar *, playlist_entry_get_filename, gint, playlist, gint,
  entry)
 
+/* Returns a handle to the decoder plugin associated with an entry, or NULL if
+ * none can be found.  If <fast> is nonzero, returns NULL if no decoder plugin
+ * has yet been found. */
+AUD_FUNC3 (PluginHandle *, playlist_entry_get_decoder, gint, playlist, gint,
+ entry, gboolean, fast)
+
 /* Returns the tuple associated with an entry, or NULL if one is not available.
  * The returned tuple is read-only and valid until another playlist function is
  * called or control returns to the program's main loop.  If <fast> is nonzero,

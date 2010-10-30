@@ -35,7 +35,7 @@
 #include "util.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 3
+#define FORMAT 4
 
 typedef struct {
     gchar * path;
@@ -47,6 +47,7 @@ typedef struct {
 
 typedef struct {
     GList * keys[INPUT_KEYS];
+    gboolean has_images, has_subtunes, can_write_tuple, has_infowin;
 } InputPluginData;
 
 struct PluginHandle {
@@ -122,6 +123,10 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
     {
         plugin->enabled = TRUE;
         memset (plugin->u.i.keys, 0, sizeof plugin->u.i.keys);
+        plugin->u.i.has_images = FALSE;
+        plugin->u.i.has_subtunes = FALSE;
+        plugin->u.i.can_write_tuple = FALSE;
+        plugin->u.i.has_infowin = FALSE;
     }
 
     plugin_list = g_list_prepend (plugin_list, plugin);
@@ -177,6 +182,11 @@ static void input_plugin_save (PluginHandle * plugin, FILE * handle)
             fprintf (handle, "%s %s\n", input_key_names[key], (const gchar *)
              node->data);
     }
+
+    fprintf (handle, "images %d\n", plugin->u.i.has_images);
+    fprintf (handle, "subtunes %d\n", plugin->u.i.has_subtunes);
+    fprintf (handle, "writes %d\n", plugin->u.i.can_write_tuple);
+    fprintf (handle, "infowin %d\n", plugin->u.i.has_infowin);
 }
 
 static void plugin_save (PluginHandle * plugin, FILE * handle)
@@ -271,6 +281,15 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
             parse_next (handle);
         }
     }
+
+    if (parse_integer ("images", & plugin->u.i.has_images))
+        parse_next (handle);
+    if (parse_integer ("subtunes", & plugin->u.i.has_subtunes))
+        parse_next (handle);
+    if (parse_integer ("writes", & plugin->u.i.can_write_tuple))
+        parse_next (handle);
+    if (parse_integer ("infowin", & plugin->u.i.has_infowin))
+        parse_next (handle);
 }
 
 static gboolean plugin_parse (ModuleData * module, FILE * handle)
@@ -484,14 +503,19 @@ void plugin_register (gint type, const gchar * path, gint number, const void *
     plugin->confirmed = TRUE;
     plugin->header = header;
 
+    if (type != PLUGIN_TYPE_LOWLEVEL && type != PLUGIN_TYPE_IFACE)
+    {
+        Plugin * gp = header;
+        g_free (plugin->name);
+        plugin->name = g_strdup (gp->description);
+        plugin->has_about = (gp->about != NULL);
+        plugin->has_configure = (gp->configure != NULL || gp->settings != NULL);
+    }
+
     if (type == PLUGIN_TYPE_INPUT)
     {
         InputPlugin * ip = header;
-        g_free (plugin->name);
-        plugin->name = g_strdup (ip->description);
         plugin->priority = ip->priority;
-        plugin->has_about = (ip->about != NULL);
-        plugin->has_configure = (ip->configure != NULL || ip->settings != NULL);
 
         for (gint key = 0; key < INPUT_KEYS; key ++)
         {
@@ -507,46 +531,27 @@ void plugin_register (gint type, const gchar * path, gint number, const void *
                  (plugin->u.i.keys[INPUT_KEY_EXTENSION], g_strdup
                  (ip->vfs_extensions[i]));
         }
+
+        plugin->u.i.has_images = (ip->get_song_image != NULL);
+        plugin->u.i.has_subtunes = ip->have_subtune;
+        plugin->u.i.can_write_tuple = (ip->update_song_tuple != NULL);
+        plugin->u.i.has_infowin = (ip->file_info_box != NULL);
     }
     else if (type == PLUGIN_TYPE_OUTPUT)
     {
         OutputPlugin * op = header;
-        g_free (plugin->name);
-        plugin->name = g_strdup (op->description);
         plugin->priority = 10 - op->probe_priority;
-        plugin->has_about = (op->about != NULL);
-        plugin->has_configure = (op->configure != NULL);
     }
     else if (type == PLUGIN_TYPE_EFFECT)
     {
         EffectPlugin * ep = header;
-        g_free (plugin->name);
-        plugin->name = g_strdup (ep->description);
         plugin->priority = ep->order;
-        plugin->has_about = (ep->about != NULL);
-        plugin->has_configure = (ep->configure != NULL || ep->settings != NULL);
-    }
-    else if (type == PLUGIN_TYPE_VIS)
-    {
-        VisPlugin * vp = header;
-        g_free (plugin->name);
-        plugin->name = g_strdup (vp->description);
-        plugin->has_about = (vp->about != NULL);
-        plugin->has_configure = (vp->configure != NULL || vp->settings != NULL);
     }
     else if (type == PLUGIN_TYPE_IFACE)
     {
         Interface * i = (void *) header;
         g_free (plugin->name);
         plugin->name = g_strdup (i->desc);
-    }
-    else if (type == PLUGIN_TYPE_GENERAL)
-    {
-        GeneralPlugin * gp = header;
-        g_free (plugin->name);
-        plugin->name = g_strdup (gp->description);
-        plugin->has_about = (gp->about != NULL);
-        plugin->has_configure = (gp->configure != NULL || gp->settings != NULL);
     }
 }
 
@@ -739,4 +744,28 @@ void uri_set_plugin (const gchar * scheme, InputPlugin * header)
 void mime_set_plugin (const gchar * mime, InputPlugin * header)
 {
     input_plugin_add_key (header, INPUT_KEY_MIME, mime);
+}
+
+gboolean input_plugin_has_images (PluginHandle * plugin)
+{
+    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
+    return plugin->u.i.has_images;
+}
+
+gboolean input_plugin_has_subtunes (PluginHandle * plugin)
+{
+    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
+    return plugin->u.i.has_subtunes;
+}
+
+gboolean input_plugin_can_write_tuple (PluginHandle * plugin)
+{
+    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
+    return plugin->u.i.can_write_tuple;
+}
+
+gboolean input_plugin_has_infowin (PluginHandle * plugin)
+{
+    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
+    return plugin->u.i.has_infowin;
 }

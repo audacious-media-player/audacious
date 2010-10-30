@@ -38,7 +38,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "playlist-utils.h"
-#include "plugin.h"
+#include "plugins.h"
 
 #define SCAN_THREADS 4
 #define STATE_FILE "playlist-state"
@@ -94,7 +94,7 @@
 typedef struct {
     gint number;
     gchar *filename;
-    InputPlugin *decoder;
+    PluginHandle * decoder;
     Tuple *tuple;
     gchar *title;
     gint length;
@@ -132,7 +132,7 @@ static gint scan_source;
 static GMutex * scan_mutex;
 static GCond * scan_conds[SCAN_THREADS];
 static const gchar * scan_filenames[SCAN_THREADS];
-static InputPlugin * scan_decoders[SCAN_THREADS];
+static PluginHandle * scan_decoders[SCAN_THREADS];
 static Tuple * scan_tuples[SCAN_THREADS];
 static gboolean scan_quit;
 static GThread * scan_threads[SCAN_THREADS];
@@ -219,7 +219,8 @@ static void entry_set_failed (Playlist * playlist, Entry * entry)
     entry->failed = TRUE;
 }
 
-static Entry * entry_new (gchar * filename, InputPlugin * decoder, Tuple * tuple)
+static Entry * entry_new (gchar * filename, PluginHandle * decoder, Tuple *
+ tuple)
 {
     Entry * entry = g_malloc (sizeof (Entry));
 
@@ -857,14 +858,14 @@ gint playlist_entry_count(gint playlist_num)
     return index_count(playlist->entries);
 }
 
-static void make_entries (gchar * filename, InputPlugin * decoder, Tuple *
+static void make_entries (gchar * filename, PluginHandle * decoder, Tuple *
  tuple, struct index * list)
 {
-    if (tuple == NULL && decoder == NULL)
+    if (! tuple && ! decoder)
         decoder = file_find_decoder (filename, TRUE);
 
-    if (tuple == NULL && decoder != NULL && decoder->have_subtune && strchr
-     (filename, '?') == NULL)
+    if (! tuple && decoder && input_plugin_has_subtunes (decoder) && ! strchr
+     (filename, '?'))
         tuple = file_read_tuple (filename, decoder);
 
     if (tuple != NULL && tuple->nsubtunes > 0)
@@ -892,33 +893,42 @@ void playlist_entry_insert(gint playlist_num, gint at, gchar * filename, Tuple *
     index_append(filenames, filename);
     index_append(tuples, tuple);
 
-    playlist_entry_insert_batch(playlist_num, at, filenames, tuples);
+    playlist_entry_insert_batch_with_decoders (playlist_num, at, filenames,
+     NULL, tuples);
 }
 
-void playlist_entry_insert_batch(gint playlist_num, gint at, struct index *filenames, struct index *tuples)
+void playlist_entry_insert_batch (gint playlist_num, gint at,
+ struct index * filenames, struct index * tuples)
+{
+    playlist_entry_insert_batch_with_decoders (playlist_num, at, filenames,
+     NULL, tuples);
+}
+
+void playlist_entry_insert_batch_with_decoders (gint playlist_num, gint at,
+ struct index * filenames, struct index * decoders, struct index * tuples)
 {
     DECLARE_PLAYLIST;
-    gint entries, number, count;
-    struct index *add;
-
     LOOKUP_PLAYLIST;
     PLAYLIST_WILL_CHANGE;
 
-    entries = index_count (playlist->entries);
+    gint entries = index_count (playlist->entries);
 
     if (at < 0 || at > entries)
         at = entries;
 
-    number = index_count(filenames);
-    add = index_new();
+    gint number = index_count (filenames);
+    struct index * add = index_new ();
 
-    for (count = 0; count < number; count++)
-        make_entries(index_get(filenames, count), NULL, (tuples == NULL) ? NULL : index_get(tuples, count), add);
+    for (gint count = 0; count < number; count ++)
+        make_entries (index_get (filenames, count), decoders ? index_get
+         (decoders, count) : NULL, tuples ? index_get (tuples, count) : NULL,
+         add);
 
-    index_free(filenames);
-
-    if (tuples != NULL)
-        index_free(tuples);
+    index_free (filenames);
+    if (decoders)
+        index_free (decoders);
+    if (tuples)
+        index_free (tuples);
 
     number = index_count (add);
     index_merge_insert (playlist->entries, at, add);
@@ -926,7 +936,7 @@ void playlist_entry_insert_batch(gint playlist_num, gint at, struct index *filen
 
     number_entries(playlist, at, entries + number - at);
 
-    for (count = 0; count < number; count++)
+    for (gint count = 0; count < number; count ++)
     {
         Entry * entry = index_get (playlist->entries, at + count);
         playlist->total_length += entry->length;
@@ -993,13 +1003,14 @@ const gchar *playlist_entry_get_filename(gint playlist_num, gint entry_num)
     return entry->filename;
 }
 
-InputPlugin *playlist_entry_get_decoder(gint playlist_num, gint entry_num)
+PluginHandle * playlist_entry_get_decoder (gint playlist_num, gint entry_num,
+ gboolean fast)
 {
     DECLARE_PLAYLIST_ENTRY;
-
     LOOKUP_PLAYLIST_ENTRY_RET (NULL);
 
-    entry_check_has_decoder (playlist, entry);
+    if (! fast)
+        entry_check_has_decoder (playlist, entry);
 
     return entry->decoder;
 }

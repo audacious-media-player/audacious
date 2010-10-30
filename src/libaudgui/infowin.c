@@ -65,7 +65,7 @@ enum
 };
 
 static gchar * current_file = NULL;
-static InputPlugin * current_decoder = NULL;
+static PluginHandle * current_decoder = NULL;
 static gboolean can_write = FALSE, something_changed = FALSE;
 
 static const gchar * genre_table[] =
@@ -178,9 +178,9 @@ static void infowin_label_set_text (GtkWidget * widget, const gchar * text)
     gtk_label_set_use_markup ((GtkLabel *) widget, TRUE);
 }
 
-static void infowin_entry_set_image (GtkWidget * widget, const char * name)
+static void infowin_entry_set_image (GtkWidget * widget, gint list, gint entry)
 {
-    GdkPixbuf * p = name ? audgui_pixbuf_for_file (name) : NULL;
+    GdkPixbuf * p = (list >= 0) ? audgui_pixbuf_for_entry (list, entry) : NULL;
 
     if (! p)
     {
@@ -220,7 +220,7 @@ static void clear_infowin (void)
     can_write = FALSE;
     gtk_widget_set_sensitive (btn_apply, FALSE);
 
-    infowin_entry_set_image (image_artwork, NULL);
+    infowin_entry_set_image (image_artwork, -1, -1);
 }
 
 static void entry_changed (GtkEditable * editable, void * unused)
@@ -549,8 +549,8 @@ static gchar * easy_read_filename (gchar * file)
     return file + 6;
 }
 
-static void infowin_show (const gchar * filename, const Tuple * tuple,
- InputPlugin * decoder, gboolean updating_enabled)
+static void infowin_show (gint list, gint entry, const gchar * filename,
+ const Tuple * tuple, PluginHandle * decoder, gboolean updating_enabled)
 {
     gchar * tmp;
 
@@ -596,7 +596,7 @@ static void infowin_show (const gchar * filename, const Tuple * tuple,
     else
         infowin_label_set_text (label_bitrate, NULL);
 
-    infowin_entry_set_image (image_artwork, filename);
+    infowin_entry_set_image (image_artwork, list, entry);
 
     gtk_window_present ((GtkWindow *) infowin);
 }
@@ -606,7 +606,8 @@ void audgui_infowin_show (gint playlist, gint entry)
     const gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != NULL);
 
-    InputPlugin * decoder = aud_file_find_decoder (filename, FALSE);
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
+     FALSE);
     if (decoder == NULL)
         return;
 
@@ -624,8 +625,8 @@ void audgui_infowin_show (gint playlist, gint entry)
         return;
     }
 
-    infowin_show (filename, tuple, decoder, aud_file_can_write_tuple (filename,
-     decoder));
+    infowin_show (playlist, entry, filename, tuple, decoder,
+     aud_file_can_write_tuple (filename, decoder));
 }
 
 void audgui_infowin_show_current (void)

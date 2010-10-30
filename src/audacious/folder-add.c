@@ -86,34 +86,47 @@ static void show_done (void)
     gtk_widget_destroy (add_window);
 }
 
+typedef struct {
+    gchar * filename;
+    PluginHandle * decoder;
+} AddPair;
+
+static gint pair_compare (const AddPair * a, const AddPair * b)
+{
+    return string_compare_encoded (a->filename, b->filename);
+}
+
 static gboolean add_cb (void * unused)
 {
     static GList * stack = NULL;
-    static struct index * index;
-    gint count;
+    static GList * list = NULL;
 
-    if (stack == NULL)
-    {
-        stack = g_list_prepend (stack, add_queue->data);
-        index = index_new ();
-    }
+    if (! stack)
+        stack = g_list_prepend (NULL, add_queue->data);
 
-    show_progress ((gchar *) stack->data, index_count (index));
+    show_progress ((gchar *) stack->data, g_list_length (list));
 
-    for (count = 0; count < 30; count ++)
+    for (gint count = 0; count < 30; count ++)
     {
         struct stat info;
-        struct dirent * entry;
 
-        if (stat (stack->data, & info) == 0)
+        /* top of stack is a filename */
+
+        if (! stat (stack->data, & info))
         {
             if (S_ISREG (info.st_mode))
             {
                 gchar * filename = g_filename_to_uri (stack->data, NULL, NULL);
+                PluginHandle * decoder = (filename == NULL) ? NULL :
+                 file_find_decoder (filename, TRUE);
 
-                if (filename != NULL && file_find_decoder (filename, TRUE) !=
-                 NULL)
-                    index_append (index, filename);
+                if (decoder)
+                {
+                    AddPair * pair = g_slice_new (AddPair);
+                    pair->filename = filename;
+                    pair->decoder = decoder;
+                    list = g_list_prepend (list, pair);
+                }
                 else
                     g_free (filename);
             }
@@ -121,7 +134,7 @@ static gboolean add_cb (void * unused)
             {
                 DIR * folder = opendir (stack->data);
 
-                if (folder != NULL)
+                if (folder)
                 {
                     stack = g_list_prepend (stack, folder);
                     goto READ;
@@ -133,12 +146,14 @@ static gboolean add_cb (void * unused)
         stack = g_list_delete_link (stack, stack);
 
     READ:
-        if (stack == NULL)
+        if (! stack)
             break;
 
-        entry = readdir (stack->data);
+        /* top of stack is a (DIR *) */
 
-        if (entry != NULL)
+        struct dirent * entry = readdir (stack->data);
+
+        if (entry)
         {
             if (entry->d_name[0] == '.')
                 goto READ;
@@ -156,22 +171,34 @@ static gboolean add_cb (void * unused)
         }
     }
 
-    if (stack == NULL)
+    if (! stack)
     {
-        index_sort (index, (gint (*) (const void *, const void *))
-         string_compare_encoded);
+        list = g_list_sort (list, (GCompareFunc) pair_compare);
 
-        count = playlist_count ();
+        struct index * filenames = index_new ();
+        struct index * decoders = index_new ();
 
-        if (add_playlist > count - 1)
-            add_playlist = count - 1;
+        for (GList * node = list; node; node = node->next)
+        {
+            AddPair * pair = node->data;
+            index_append (filenames, pair->filename);
+            index_append (decoders, pair->decoder);
+            g_slice_free (AddPair, pair);
+        }
 
-        count = playlist_entry_count (add_playlist);
+        g_list_free (list);
+        list = NULL;
+
+        if (add_playlist > playlist_count () - 1)
+            add_playlist = playlist_count () - 1;
+
+        gint count = playlist_entry_count (add_playlist);
 
         if (add_at < 0 || add_at > count)
             add_at = count;
 
-        playlist_entry_insert_batch (add_playlist, add_at, index, NULL);
+        playlist_entry_insert_batch_with_decoders (add_playlist, add_at,
+         filenames, decoders, NULL);
 
         if (add_play && playlist_entry_count (add_playlist) > count)
         {

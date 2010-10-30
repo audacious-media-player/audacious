@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include <audacious/debug.h>
+#include <audacious/playlist.h>
 #include <audacious/plugin.h>
 #include <audacious/misc.h>
 
@@ -103,14 +104,17 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
     return pixbuf;
 }
 
-GdkPixbuf * audgui_pixbuf_for_file (const gchar * name)
+GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
 {
-    /* MMS is slow.  Skip it. */
-    if (! strncmp (name, "mms://", 6))
+    const gchar * name = aud_playlist_entry_get_filename (list, entry);
+    g_return_val_if_fail (name, NULL);
+
+    /* Don't get album art for network files -- too slow. */
+    if (! strncmp (name, "http://", 7) || ! strncmp (name, "https://", 8) ||
+     ! strncmp (name, "mms://", 6))
         return NULL;
 
-    InputPlugin * decoder = aud_file_find_decoder (name, FALSE);
-
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (list, entry, FALSE);
     if (! decoder)
         return NULL;
 

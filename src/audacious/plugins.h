@@ -71,6 +71,10 @@ void plugin_register (gint type, const gchar * path, gint number, const void *
 void plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
 void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
  func, void * data);
+gboolean input_plugin_has_images (PluginHandle * plugin);
+gboolean input_plugin_has_subtunes (PluginHandle * plugin);
+gboolean input_plugin_can_write_tuple (PluginHandle * plugin);
+gboolean input_plugin_has_infowin (PluginHandle * plugin);
 
 /* pluginenum.c */
 void plugin_system_init (void);

@@ -80,7 +80,8 @@ void playlist_save_state (void);
 
 void playlist_reformat_titles (void);
 
-InputPlugin * playlist_entry_get_decoder (gint playlist, gint entry);
+void playlist_entry_insert_batch_with_decoders (gint playlist, gint at,
+ struct index * filenames, struct index * decoders, struct index * tuples);
 void playlist_entry_set_tuple (gint playlist, gint entry, Tuple * tuple);
 
 gboolean playlist_entry_is_segmented (gint playlist, gint entry);

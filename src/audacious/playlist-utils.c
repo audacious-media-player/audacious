@@ -232,8 +232,7 @@ void playlist_remove_failed (gint playlist)
 
     for (count = 0; count < entries; count ++)
     {
-        if (playlist_entry_get_decoder (playlist, count) == NULL ||
-         playlist_entry_get_tuple (playlist, count, FALSE) == NULL)
+        if (! playlist_entry_get_decoder (playlist, count, FALSE))
             playlist_entry_set_selected (playlist, count, TRUE);
     }
 
