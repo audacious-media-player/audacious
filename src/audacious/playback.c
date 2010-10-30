@@ -157,7 +157,7 @@ static void update_cb (void * hook_data, void * user_data)
 {
     g_return_if_fail (playing);
 
-    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! is_ready ())
+    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA)
         return;
 
     gint playlist = playlist_get_playing ();
@@ -178,7 +178,8 @@ static void update_cb (void * hook_data, void * user_data)
     current_title = g_strdup (title);
     current_length = length;
 
-    hook_call ("title change", NULL);
+    if (is_ready ())
+        hook_call ("title change", NULL);
 }
 
 gint playback_get_time (void)
