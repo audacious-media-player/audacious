@@ -55,6 +55,7 @@ void audgui_connect_check_box (GtkWidget * box, gboolean * setting);
 
 GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size);
 GdkPixbuf * audgui_pixbuf_for_entry (gint playlist, gint entry);
+GdkPixbuf * audgui_pixbuf_for_current (void);
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size);
 
 #endif

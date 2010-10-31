@@ -28,6 +28,7 @@
 #include <audacious/plugin.h>
 #include <audacious/misc.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -115,6 +116,7 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
      ! strncmp (name, "mms://", 6))
         goto FALLBACK;
 
+    AUDDBG ("Trying to load pixbuf for %s.\n", name);
     PluginHandle * decoder = aud_playlist_entry_get_decoder (list, entry, FALSE);
     if (! decoder)
         goto FALLBACK;
@@ -141,12 +143,47 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
     }
 
 FALLBACK:;
+    AUDDBG ("Using fallback pixbuf.\n");
     static GdkPixbuf * fallback = NULL;
     if (! fallback)
         fallback = gdk_pixbuf_new_from_file (DATA_DIR "/images/album.png", NULL);
     if (fallback)
         g_object_ref ((GObject *) fallback);
     return fallback;
+}
+
+
+static void clear_cached_pixbuf (void * list, GdkPixbuf * * pixbuf)
+{
+    if (GPOINTER_TO_INT (list) != aud_playlist_get_playing () || ! * pixbuf)
+        return;
+
+    AUDDBG ("Clearing cached pixbuf.\n");
+    g_object_unref ((GObject *) * pixbuf);
+    * pixbuf = NULL;
+}
+
+GdkPixbuf * audgui_pixbuf_for_current (void)
+{
+    static GdkPixbuf * pixbuf = NULL;
+    static gboolean hooked = FALSE;
+
+    if (! hooked)
+    {
+        hook_associate ("playlist position", (HookFunction) clear_cached_pixbuf,
+         & pixbuf);
+        hooked = TRUE;
+    }
+
+    if (! pixbuf)
+    {
+        gint list = aud_playlist_get_playing ();
+        pixbuf = audgui_pixbuf_for_entry (list, aud_playlist_get_position (list));
+    }
+
+    if (pixbuf)
+        g_object_ref ((GObject *) pixbuf);
+    return pixbuf;
 }
 
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size)
