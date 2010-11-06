@@ -139,6 +139,9 @@ gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
  */
 void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 * size)
 {
+    * buf = NULL;
+    * size = 0;
+
     VFSFile *fd;
     gsize filled_size = 0, buf_size = 4096;
     guchar * ptr;
