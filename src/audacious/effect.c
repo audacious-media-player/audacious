@@ -19,6 +19,11 @@
  * using our public API to be a derived work.
  */
 
+/* Effect plugins are not loaded immediately when enabled, but only when they
+ * are needed.  Also, because of the complexity of unloading them during
+ * playback without causing skipping, they are kept loaded until the program
+ * exits. */
+
 #include <glib.h>
 
 #include "debug.h"
@@ -34,18 +39,38 @@ typedef struct {
     gboolean remove_flag;
 } RunningEffect;
 
-static GList * running_effects = NULL;
+static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static GList * loaded_effects = NULL; /* (EffectPlugin *) */
+static GList * running_effects = NULL; /* (RunningEffect *) */
 static gint input_channels, input_rate;
 
 typedef struct {
     gint * channels, * rate;
 } EffectStartState;
 
+static EffectPlugin * check_loaded (PluginHandle * plugin)
+{
+    EffectPlugin * ep = plugin_get_header (plugin);
+    if (ep && ! g_list_find (loaded_effects, ep))
+    {
+        AUDDBG ("Initting effect %s.\n", ep->description);
+        if (ep->init && ! ep->init ())
+        {
+            fprintf (stderr, "Failed to init %s.\n", ep->description);
+            return NULL;
+        }
+
+        loaded_effects = g_list_prepend (loaded_effects, (void *) ep);
+    }
+
+    return ep;
+}
+
 static gboolean effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
     AUDDBG ("Starting %s at %d channels, %d Hz.\n", plugin_get_name (plugin),
      * state->channels, * state->rate);
-    EffectPlugin * header = plugin_get_header (plugin);
+    EffectPlugin * header = check_loaded (plugin);
     g_return_val_if_fail (header != NULL, TRUE);
     header->start (state->channels, state->rate);
 
@@ -62,6 +87,8 @@ static gboolean effect_start_cb (PluginHandle * plugin, EffectStartState * state
 
 void effect_start (gint * channels, gint * rate)
 {
+    g_static_mutex_lock (& mutex);
+
     AUDDBG ("Starting effects.\n");
     g_list_foreach (running_effects, (GFunc) g_free, NULL);
     g_list_free (running_effects);
@@ -74,6 +101,8 @@ void effect_start (gint * channels, gint * rate)
     plugin_for_enabled (PLUGIN_TYPE_EFFECT, (PluginForEachFunc) effect_start_cb,
      & state);
     running_effects = g_list_reverse (running_effects);
+
+    g_static_mutex_unlock (& mutex);
 }
 
 typedef struct {
@@ -98,36 +127,56 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
 
 void effect_process (gfloat * * data, gint * samples)
 {
+    g_static_mutex_lock (& mutex);
+
     EffectProcessState state = {data, samples};
     g_list_foreach (running_effects, (GFunc) effect_process_cb, & state);
+
+    g_static_mutex_unlock (& mutex);
 }
 
 void effect_flush (void)
 {
+    g_static_mutex_lock (& mutex);
+
     for (GList * node = running_effects; node != NULL; node = node->next)
         ((RunningEffect *) node->data)->header->flush ();
+
+    g_static_mutex_unlock (& mutex);
 }
 
 void effect_finish (gfloat * * data, gint * samples)
 {
+    g_static_mutex_lock (& mutex);
+
     for (GList * node = running_effects; node != NULL; node = node->next)
         ((RunningEffect *) node->data)->header->finish (data, samples);
+
+    g_static_mutex_unlock (& mutex);
 }
 
 gint effect_decoder_to_output_time (gint time)
 {
+    g_static_mutex_lock (& mutex);
+
     for (GList * node = running_effects; node != NULL; node = node->next)
         time = ((RunningEffect *) node->data)->header->decoder_to_output_time
          (time);
+
+    g_static_mutex_unlock (& mutex);
     return time;
 }
 
 gint effect_output_to_decoder_time (gint time)
 {
+    g_static_mutex_lock (& mutex);
+
     for (GList * node = g_list_last (running_effects); node != NULL; node =
      node->prev)
         time = ((RunningEffect *) node->data)->header->output_to_decoder_time
          (time);
+
+    g_static_mutex_unlock (& mutex);
     return time;
 }
 
@@ -196,10 +245,14 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, gboolean
 {
     if (ep->preserves_format)
     {
+        g_static_mutex_lock (& mutex);
+
         if (enable)
             effect_insert (plugin, ep);
         else
             effect_remove (plugin);
+
+        g_static_mutex_unlock (& mutex);
     }
     else
     {
@@ -213,20 +266,33 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, gboolean
 
 gboolean effect_plugin_start (PluginHandle * plugin)
 {
-    EffectPlugin * ep = plugin_get_header (plugin);
-    g_return_val_if_fail (ep != NULL, FALSE);
-
     if (playback_get_playing ())
+    {
+        EffectPlugin * ep = plugin_get_header (plugin);
+        g_return_val_if_fail (ep != NULL, FALSE);
         effect_enable (plugin, ep, TRUE);
+    }
 
     return TRUE;
 }
 
 void effect_plugin_stop (PluginHandle * plugin)
 {
-    EffectPlugin * ep = plugin_get_header (plugin);
-    g_return_if_fail (ep != NULL);
-
     if (playback_get_playing ())
+    {
+        EffectPlugin * ep = plugin_get_header (plugin);
+        g_return_if_fail (ep != NULL);
         effect_enable (plugin, ep, FALSE);
+    }
+}
+
+void effect_plugin_cleanup (void)
+{
+    for (GList * node = loaded_effects; node; node = node->next)
+    {
+        EffectPlugin * ep = node->data;
+        AUDDBG ("Uninitting effect %s.\n", ep->description);
+        if (ep->cleanup)
+            ep->cleanup ();
+    }
 }

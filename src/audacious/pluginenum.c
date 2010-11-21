@@ -39,6 +39,7 @@
 
 #include "audconfig.h"
 #include "debug.h"
+#include "effect.h"
 #include "main.h"
 #include "plugin.h"
 #include "ui_preferences.h"
@@ -123,11 +124,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         EffectPlugin * ep;
         for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
-        {
             plugin_register (PLUGIN_TYPE_EFFECT, filename, i, ep);
-            if (ep->init != NULL)
-                ep->init (); /* FIXME: Pay attention to the return value. */
-        }
     }
 
     if (header->op_list != NULL)
@@ -168,18 +165,6 @@ void plugin2_unload (LoadedModule * loaded)
                 plugin_preferences_cleanup (ip->settings);
             if (ip->cleanup != NULL)
                 ip->cleanup ();
-        }
-    }
-
-    if (header->ep_list != NULL)
-    {
-        EffectPlugin * ep;
-        for (gint i = 0; (ep = header->ep_list[i]) != NULL; i ++)
-        {
-            if (ep->settings != NULL)
-                plugin_preferences_cleanup (ep->settings);
-            if (ep->cleanup != NULL)
-                ep->cleanup ();
         }
     }
 
@@ -276,6 +261,7 @@ void plugin_system_init(void)
 void plugin_system_cleanup(void)
 {
     plugin_registry_save ();
+    effect_plugin_cleanup ();
 
     /* XXX: vfs will crash otherwise. -nenolod */
     if (vfs_transports != NULL)
