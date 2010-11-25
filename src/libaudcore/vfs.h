@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 /** @struct VFSFile */
 typedef struct _VFSFile VFSFile;
 /** @struct VFSConstructor */
-typedef struct _VFSConstructor VFSConstructor;
+typedef const struct _VFSConstructor VFSConstructor;
 
 /**
  * @struct _VFSFile
@@ -57,9 +57,6 @@ struct _VFSFile {
  * nature. VFS base vtables are registered via vfs_register_transport().
  */
 struct _VFSConstructor {
-    /** The URI identifier, e.g. "file" would handle "file://" streams. */
-    gchar * uri_id;
-
     /** A function pointer which points to a fopen implementation. */
     VFSFile * (* vfs_fopen_impl) (const gchar * filename, const gchar * mode);
     /** A function pointer which points to a fclose implementation. */
@@ -146,7 +143,7 @@ gboolean vfs_is_remote (const gchar * path) WARN_RETURN;
 void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 *
  size);
 
-void vfs_register_transport (VFSConstructor * vtable);
+void vfs_set_lookup_func (VFSConstructor * (* func) (const gchar * scheme));
 
 #undef WARN_RETURN
 

@@ -38,6 +38,8 @@ typedef const struct _OutputPlugin OutputPlugin;
 typedef const struct _EffectPlugin EffectPlugin;
 typedef const struct _GeneralPlugin GeneralPlugin;
 typedef const struct _VisPlugin VisPlugin;
+typedef const struct _TransportPlugin TransportPlugin;
+typedef const struct _PlaylistPlugin PlaylistPlugin;
 
 typedef struct _Interface Interface;
 typedef struct _PluginPreferences PluginPreferences;

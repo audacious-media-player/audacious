@@ -1815,10 +1815,10 @@ static void create_plugin_category (void)
     GtkWidget * notebook = gtk_notebook_new ();
     gtk_container_add ((GtkContainer *) category_notebook, notebook);
 
-    gint types[] = {PLUGIN_TYPE_INPUT, PLUGIN_TYPE_EFFECT, PLUGIN_TYPE_VIS,
-     PLUGIN_TYPE_GENERAL};
-    const gchar * names[] = {N_("Input"), N_("Effect"), N_("Visualization"),
-     N_("General")};
+    gint types[] = {PLUGIN_TYPE_TRANSPORT, PLUGIN_TYPE_PLAYLIST,
+     PLUGIN_TYPE_INPUT, PLUGIN_TYPE_EFFECT, PLUGIN_TYPE_VIS, PLUGIN_TYPE_GENERAL};
+    const gchar * names[] = {N_("Transport"), N_("Playlist"), N_("Input"),
+     N_("Effect"), N_("Visualization"), N_("General")};
 
     for (gint i = 0; i < G_N_ELEMENTS (types); i ++)
         gtk_notebook_append_page ((GtkNotebook *) notebook, plugin_view_new

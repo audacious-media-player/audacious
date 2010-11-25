@@ -197,7 +197,6 @@ buffered_file_vfs_metadata_impl(VFSFile * file, const gchar * field)
 }
 
 VFSConstructor buffered_file_const = {
-	NULL,			// not a normal VFS class
 	buffered_file_vfs_fopen_impl,
 	buffered_file_vfs_fclose_impl,
 	buffered_file_vfs_fread_impl,

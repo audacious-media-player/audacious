@@ -43,12 +43,6 @@ typedef struct {
     gfloat preamp, bands[10];
 } EqualizerPreset;
 
-typedef struct {
-	const gchar * name, * ext;
-	void (* plc_read) (const gchar * filename, gint at);
-	void (* plc_write) (const gchar * filename, gint at);
-} PlaylistContainer;
-
 typedef gint16 VisFreqData[2][256];
 typedef gint16 VisPCMData[2][512];
 

@@ -29,7 +29,6 @@
 #include "main.h"
 #include "misc.h"
 #include "playlist.h"
-#include "playlist_container.h"
 #include "playlist-utils.h"
 
 static const gchar * aud_titlestring_presets[] =
@@ -288,57 +287,6 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
 
         regfree (& regex);
     }
-}
-
-gboolean filename_is_playlist (const gchar * filename)
-{
-	const gchar * period = strrchr (filename, '.');
-
-    return (period != NULL && playlist_container_find ((gchar *) period + 1) !=
-     NULL);
-}
-
-gboolean playlist_insert_playlist (gint playlist, gint at, const gchar *
- filename)
-{
-    const gchar * period = strrchr (filename, '.');
-    PlaylistContainer * container;
-    gint last;
-
-    if (period == NULL)
-        return FALSE;
-
-    container = playlist_container_find ((gchar *) period + 1);
-
-    if (container == NULL || container->plc_read == NULL)
-        return FALSE;
-
-    last = playlist_get_active ();
-    playlist_set_active (playlist);
-    container->plc_read (filename, at);
-    playlist_set_active (last);
-    return TRUE;
-}
-
-gboolean playlist_save (gint playlist, const gchar * filename)
-{
-    const gchar * period = strrchr (filename, '.');
-    PlaylistContainer * container;
-    gint last;
-
-    if (period == NULL)
-        return FALSE;
-
-    container = playlist_container_find ((gchar *) period + 1);
-
-    if (container == NULL || container->plc_write == NULL)
-        return FALSE;
-
-    last = playlist_get_active ();
-    playlist_set_active (playlist);
-    container->plc_write (filename, 0);
-    playlist_set_active (last);
-    return TRUE;
 }
 
 /* The algorithm is a bit quirky for historical reasons. -jlindgren */

@@ -35,7 +35,7 @@
 #include "util.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 4
+#define FORMAT 5
 
 typedef struct {
     gchar * path;
@@ -44,6 +44,14 @@ typedef struct {
     gboolean loaded;
     GList * plugin_list;
 } ModuleData;
+
+typedef struct {
+    GList * schemes;
+} TransportPluginData;
+
+typedef struct {
+    GList * exts;
+} PlaylistPluginData;
 
 typedef struct {
     GList * keys[INPUT_KEYS];
@@ -61,6 +69,8 @@ struct PluginHandle {
     GList * watches;
 
     union {
+        TransportPluginData t;
+        PlaylistPluginData p;
         InputPluginData i;
     } u;
 };
@@ -72,6 +82,8 @@ typedef struct {
 
 static const gchar * plugin_type_names[] = {
  [PLUGIN_TYPE_LOWLEVEL] = NULL,
+ [PLUGIN_TYPE_TRANSPORT] = "transport",
+ [PLUGIN_TYPE_PLAYLIST] = "playlist",
  [PLUGIN_TYPE_INPUT] = "input",
  [PLUGIN_TYPE_EFFECT] = "effect",
  [PLUGIN_TYPE_OUTPUT] = "output",
@@ -119,7 +131,17 @@ static PluginHandle * plugin_new (ModuleData * module, gint type, gint number,
     plugin->enabled = FALSE;
     plugin->watches = NULL;
 
-    if (type == PLUGIN_TYPE_INPUT)
+    if (type == PLUGIN_TYPE_TRANSPORT)
+    {
+        plugin->enabled = TRUE;
+        plugin->u.t.schemes = NULL;
+    }
+    else if (type == PLUGIN_TYPE_PLAYLIST)
+    {
+        plugin->enabled = TRUE;
+        plugin->u.p.exts = NULL;
+    }
+    else if (type == PLUGIN_TYPE_INPUT)
     {
         plugin->enabled = TRUE;
         memset (plugin->u.i.keys, 0, sizeof plugin->u.i.keys);
@@ -143,7 +165,17 @@ static void plugin_free (PluginHandle * plugin, ModuleData * module)
     g_list_foreach (plugin->watches, (GFunc) g_free, NULL);
     g_list_free (plugin->watches);
 
-    if (plugin->type == PLUGIN_TYPE_INPUT)
+    if (plugin->type == PLUGIN_TYPE_TRANSPORT)
+    {
+        g_list_foreach (plugin->u.t.schemes, (GFunc) g_free, NULL);
+        g_list_free (plugin->u.t.schemes);
+    }
+    else if (plugin->type == PLUGIN_TYPE_PLAYLIST)
+    {
+        g_list_foreach (plugin->u.p.exts, (GFunc) g_free, NULL);
+        g_list_free (plugin->u.p.exts);
+    }
+    else if (plugin->type == PLUGIN_TYPE_INPUT)
     {
         for (gint key = 0; key < INPUT_KEYS; key ++)
         {
@@ -173,6 +205,18 @@ static FILE * open_registry_file (const gchar * mode)
     return fopen (path, mode);
 }
 
+static void transport_plugin_save (PluginHandle * plugin, FILE * handle)
+{
+    for (GList * node = plugin->u.t.schemes; node; node = node->next)
+        fprintf (handle, "scheme %s\n", (const gchar *) node->data);
+}
+
+static void playlist_plugin_save (PluginHandle * plugin, FILE * handle)
+{
+    for (GList * node = plugin->u.p.exts; node; node = node->next)
+        fprintf (handle, "ext %s\n", (const gchar *) node->data);
+}
+
 static void input_plugin_save (PluginHandle * plugin, FILE * handle)
 {
     for (gint key = 0; key < INPUT_KEYS; key ++)
@@ -198,7 +242,11 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
     fprintf (handle, "config %d\n", plugin->has_configure);
     fprintf (handle, "enabled %d\n", plugin->enabled);
 
-    if (plugin->type == PLUGIN_TYPE_INPUT)
+    if (plugin->type == PLUGIN_TYPE_TRANSPORT)
+        transport_plugin_save (plugin, handle);
+    else if (plugin->type == PLUGIN_TYPE_PLAYLIST)
+        playlist_plugin_save (plugin, handle);
+    else if (plugin->type == PLUGIN_TYPE_INPUT)
         input_plugin_save (plugin, handle);
 }
 
@@ -269,6 +317,26 @@ static gchar * parse_string (const gchar * key)
      (parse_value) : NULL;
 }
 
+static void transport_plugin_parse (PluginHandle * plugin, FILE * handle)
+{
+    gchar * value;
+    while ((value = parse_string ("scheme")))
+    {
+        plugin->u.t.schemes = g_list_prepend (plugin->u.t.schemes, value);
+        parse_next (handle);
+    }
+}
+
+static void playlist_plugin_parse (PluginHandle * plugin, FILE * handle)
+{
+    gchar * value;
+    while ((value = parse_string ("ext")))
+    {
+        plugin->u.p.exts = g_list_prepend (plugin->u.p.exts, value);
+        parse_next (handle);
+    }
+}
+
 static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
 {
     for (gint key = 0; key < INPUT_KEYS; key ++)
@@ -319,7 +387,11 @@ FOUND:;
     if (parse_integer ("enabled", & plugin->enabled))
         parse_next (handle);
 
-    if (type == PLUGIN_TYPE_INPUT)
+    if (type == PLUGIN_TYPE_TRANSPORT)
+        transport_plugin_parse (plugin, handle);
+    else if (type == PLUGIN_TYPE_PLAYLIST)
+        playlist_plugin_parse (plugin, handle);
+    else if (type == PLUGIN_TYPE_INPUT)
         input_plugin_parse (plugin, handle);
 
     return TRUE;
@@ -512,7 +584,21 @@ void plugin_register (gint type, const gchar * path, gint number, const void *
         plugin->has_configure = (gp->configure != NULL || gp->settings != NULL);
     }
 
-    if (type == PLUGIN_TYPE_INPUT)
+    if (type == PLUGIN_TYPE_TRANSPORT)
+    {
+        TransportPlugin * tp = header;
+        for (gint i = 0; tp->schemes[i]; i ++)
+            plugin->u.t.schemes = g_list_prepend (plugin->u.t.schemes, g_strdup
+             (tp->schemes[i]));
+    }
+    else if (type == PLUGIN_TYPE_PLAYLIST)
+    {
+        PlaylistPlugin * pp = header;
+        for (gint i = 0; pp->extensions[i]; i ++)
+            plugin->u.p.exts = g_list_prepend (plugin->u.p.exts, g_strdup
+             (pp->extensions[i]));
+    }
+    else if (type == PLUGIN_TYPE_INPUT)
     {
         InputPlugin * ip = header;
         plugin->priority = ip->priority;
@@ -700,6 +786,55 @@ void plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void *
 
         node = next;
     }
+}
+
+
+typedef struct {
+    const gchar * scheme;
+    PluginHandle * plugin;
+} TransportPluginForSchemeState;
+
+static gboolean transport_plugin_for_scheme_cb (PluginHandle * plugin,
+ TransportPluginForSchemeState * state)
+{
+    if (! g_list_find_custom (plugin->u.t.schemes, state->scheme, (GCompareFunc)
+     strcasecmp))
+        return TRUE;
+
+    state->plugin = plugin;
+    return FALSE;
+}
+
+PluginHandle * transport_plugin_for_scheme (const gchar * scheme)
+{
+    TransportPluginForSchemeState state = {scheme, NULL};
+    plugin_for_enabled (PLUGIN_TYPE_TRANSPORT, (PluginForEachFunc)
+     transport_plugin_for_scheme_cb, & state);
+    return state.plugin;
+}
+
+typedef struct {
+    const gchar * ext;
+    PluginHandle * plugin;
+} PlaylistPluginForExtState;
+
+static gboolean playlist_plugin_for_ext_cb (PluginHandle * plugin,
+ PlaylistPluginForExtState * state)
+{
+    if (! g_list_find_custom (plugin->u.p.exts, state->ext, (GCompareFunc)
+     strcasecmp))
+        return TRUE;
+
+    state->plugin = plugin;
+    return FALSE;
+}
+
+PluginHandle * playlist_plugin_for_extension (const gchar * extension)
+{
+    PlaylistPluginForExtState state = {extension, NULL};
+    plugin_for_enabled (PLUGIN_TYPE_PLAYLIST, (PluginForEachFunc)
+     playlist_plugin_for_ext_cb, & state);
+    return state.plugin;
 }
 
 typedef struct {

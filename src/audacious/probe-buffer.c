@@ -156,7 +156,6 @@ static gchar * probe_buffer_get_metadata (VFSFile * file, const gchar * field)
 
 static VFSConstructor probe_buffer_table =
 {
-	.uri_id = NULL,
 	.vfs_fopen_impl = NULL,
 	.vfs_fclose_impl = probe_buffer_fclose,
 	.vfs_fread_impl = probe_buffer_fread,

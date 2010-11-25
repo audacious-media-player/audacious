@@ -33,12 +33,12 @@
 #include "ui_preferences.h"
 #include "visualization.h"
 
-static gboolean input_plugin_start (PluginHandle * p)
+static gboolean dummy_plugin_start (PluginHandle * p)
 {
     return TRUE;
 }
 
-static void input_plugin_stop (PluginHandle * p)
+static void dummy_plugin_stop (PluginHandle * p)
 {
 }
 
@@ -78,8 +78,12 @@ static const struct {
     } u;
 } table[PLUGIN_TYPES] = {
  [PLUGIN_TYPE_LOWLEVEL] = {"lowlevel", FALSE},
- [PLUGIN_TYPE_INPUT] = {"input", TRUE, FALSE, .u.m = {input_plugin_start,
-  input_plugin_stop}},
+ [PLUGIN_TYPE_TRANSPORT] = {"transport",  TRUE, FALSE, .u.m =
+  {dummy_plugin_start, dummy_plugin_stop}},
+ [PLUGIN_TYPE_PLAYLIST] = {"playlist",  TRUE, FALSE, .u.m = {dummy_plugin_start,
+  dummy_plugin_stop}},
+ [PLUGIN_TYPE_INPUT] = {"input", TRUE, FALSE, .u.m = {dummy_plugin_start,
+  dummy_plugin_stop}},
  [PLUGIN_TYPE_EFFECT] = {"effect", TRUE, FALSE, .u.m = {effect_plugin_start,
   effect_plugin_stop}},
  [PLUGIN_TYPE_OUTPUT] = {"output", TRUE, TRUE, .u.s = {output_plugin_probe,
@@ -164,9 +168,20 @@ static void start_plugins (gint type)
          GINT_TO_POINTER (type));
 }
 
+static VFSConstructor * lookup_transport (const gchar * scheme)
+{
+    PluginHandle * plugin = transport_plugin_for_scheme (scheme);
+    if (! plugin)
+        return NULL;
+
+    TransportPlugin * tp = plugin_get_header (plugin);
+    return tp->vtable;
+}
+
 void start_plugins_one (void)
 {
     plugin_system_init ();
+    vfs_set_lookup_func (lookup_transport);
 
     for (gint i = 0; i < PLUGIN_TYPE_GENERAL; i ++)
         start_plugins (i);
@@ -187,7 +202,7 @@ static gboolean stop_multi_cb (PluginHandle * p, void * type)
 
 void stop_plugins (void)
 {
-    for (gint i = 0; i < PLUGIN_TYPES; i ++)
+    for (gint i = PLUGIN_TYPES; i --; )
     {
         if (! table[i].is_managed)
             continue;
@@ -203,6 +218,7 @@ void stop_plugins (void)
              GINT_TO_POINTER (i));
     }
 
+    vfs_set_lookup_func (NULL);
     plugin_system_cleanup ();
 }
 

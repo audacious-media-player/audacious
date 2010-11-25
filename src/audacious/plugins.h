@@ -29,6 +29,8 @@
 
 enum {
  PLUGIN_TYPE_LOWLEVEL,
+ PLUGIN_TYPE_TRANSPORT,
+ PLUGIN_TYPE_PLAYLIST,
  PLUGIN_TYPE_INPUT,
  PLUGIN_TYPE_EFFECT,
  PLUGIN_TYPE_OUTPUT,
@@ -69,6 +71,9 @@ void plugin_register (gint type, const gchar * path, gint number, const void *
  header);
 
 void plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
+
+PluginHandle * transport_plugin_for_scheme (const gchar * scheme);
+PluginHandle * playlist_plugin_for_extension (const gchar * extension);
 void input_plugin_for_key (gint key, const gchar * value, PluginForEachFunc
  func, void * data);
 gboolean input_plugin_has_images (PluginHandle * plugin);

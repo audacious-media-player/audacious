@@ -17,7 +17,7 @@ SRCS = audconfig.c								\
        main.c									\
        output.c									\
        playback.c								\
-       playlist_container.c						\
+       playlist-files.c \
        playlist-new.c \
        playlist-utils.c \
        pluginenum.c								\

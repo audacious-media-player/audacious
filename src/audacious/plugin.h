@@ -50,41 +50,36 @@ typedef const struct {
     void (* fini) (void);
 
     /* These are arrays of pointers, ending with NULL: */
-    InputPlugin * * ip_list;
-    OutputPlugin **op_list;
-    EffectPlugin **ep_list;
-    GeneralPlugin **gp_list;
-    VisPlugin **vp_list;
+    InputPlugin * const * ip_list;
+    OutputPlugin * const * op_list;
+    EffectPlugin * const * ep_list;
+    GeneralPlugin * const * gp_list;
+    VisPlugin * const * vp_list;
+    TransportPlugin * const * tp_list;
+    PlaylistPlugin * const * pp_list;
 
     Interface *interface;
 } PluginHeader;
 
-#define DECLARE_PLUGIN(name, init, fini, ...) \
+#define DECLARE_PLUGIN(name, ...) \
  AudAPITable * _aud_api_table = NULL; \
  G_MODULE_EXPORT PluginHeader * get_plugin_info (AudAPITable * table) { \
     static PluginHeader h = {_AUD_PLUGIN_MAGIC, _AUD_PLUGIN_VERSION, #name, \
-     init, fini, __VA_ARGS__}; \
+     __VA_ARGS__}; \
     _aud_api_table = table; \
     return & h; \
  }
 
-#define SIMPLE_INPUT_PLUGIN(name, ip_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, ip_list)
+#define SIMPLE_TRANSPORT_PLUGIN(name, t) DECLARE_PLUGIN(name, .tp_list = t)
+#define SIMPLE_PLAYLIST_PLUGIN(name, p) DECLARE_PLUGIN(name, .pp_list = p)
+#define SIMPLE_INPUT_PLUGIN(name, i) DECLARE_PLUGIN (name, .ip_list = i)
+#define SIMPLE_EFFECT_PLUGIN(name, e) DECLARE_PLUGIN (name, .ep_list = e)
+#define SIMPLE_OUTPUT_PLUGIN(name, o) DECLARE_PLUGIN (name, .op_list = o)
+#define SIMPLE_VIS_PLUGIN(name, v) DECLARE_PLUGIN(name, .vp_list = v)
+#define SIMPLE_GENERAL_PLUGIN(name, g) DECLARE_PLUGIN (name, .gp_list = g)
+#define SIMPLE_INTERFACE_PLUGIN(name, i) DECLARE_PLUGIN(name, .interface = i)
 
-#define SIMPLE_OUTPUT_PLUGIN(name, op_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, op_list)
-
-#define SIMPLE_EFFECT_PLUGIN(name, ep_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, ep_list)
-
-#define SIMPLE_GENERAL_PLUGIN(name, gp_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, gp_list)
-
-#define SIMPLE_VISUAL_PLUGIN(name, vp_list) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, vp_list)
-
-#define SIMPLE_INTERFACE_PLUGIN(name, interface) \
-    DECLARE_PLUGIN(name, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interface)
+#define SIMPLE_VISUAL_PLUGIN SIMPLE_VIS_PLUGIN /* deprecated */
 
 #define PLUGIN_COMMON_FIELDS        \
     gchar *description;            \
@@ -96,6 +91,19 @@ typedef const struct {
 
 struct _Plugin {
     PLUGIN_COMMON_FIELDS
+};
+
+struct _TransportPlugin {
+    PLUGIN_COMMON_FIELDS
+    const gchar * const * schemes; /* array ending with NULL */
+    const VFSConstructor * vtable;
+};
+
+struct _PlaylistPlugin {
+    PLUGIN_COMMON_FIELDS
+	const gchar * const * extensions; /* array ending with NULL */
+	gboolean (* load) (const gchar * filename, gint list, gint at);
+	gboolean (* save) (const gchar * filename, gint list);
 };
 
 struct _OutputPlugin {

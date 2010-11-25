@@ -62,8 +62,6 @@ static AudAPITable api_table = {
  .plugins_api = & plugins_api,
  .cfg = & cfg};
 
-extern GList *vfs_transports;
-
 typedef struct {
     PluginHeader * header;
     GModule * module;
@@ -106,6 +104,28 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
     {
         plugin_register (PLUGIN_TYPE_LOWLEVEL, filename, 0, NULL);
         header->init ();
+    }
+
+    if (header->tp_list)
+    {
+        TransportPlugin * tp;
+        for (gint i = 0; (tp = header->tp_list[i]); i ++)
+        {
+            plugin_register (PLUGIN_TYPE_TRANSPORT, filename, i, tp);
+            if (tp->init != NULL)
+                tp->init (); /* FIXME: Pay attention to the return value. */
+        }
+    }
+
+    if (header->pp_list)
+    {
+        PlaylistPlugin * pp;
+        for (gint i = 0; (pp = header->pp_list[i]); i ++)
+        {
+            plugin_register (PLUGIN_TYPE_PLAYLIST, filename, i, pp);
+            if (pp->init != NULL)
+                pp->init (); /* FIXME: Pay attention to the return value. */
+        }
     }
 
     if (header->ip_list != NULL)
@@ -180,6 +200,30 @@ void plugin2_unload (LoadedModule * loaded)
                 plugin_preferences_cleanup (ep->settings);
             if (ep->cleanup != NULL)
                 ep->cleanup ();
+        }
+    }
+
+    if (header->pp_list != NULL)
+    {
+        PlaylistPlugin * pp;
+        for (gint i = 0; (pp = header->pp_list[i]) != NULL; i ++)
+        {
+            if (pp->settings != NULL)
+                plugin_preferences_cleanup (pp->settings);
+            if (pp->cleanup != NULL)
+                pp->cleanup ();
+        }
+    }
+
+    if (header->tp_list != NULL)
+    {
+        TransportPlugin * tp;
+        for (gint i = 0; (tp = header->tp_list[i]) != NULL; i ++)
+        {
+            if (tp->settings != NULL)
+                plugin_preferences_cleanup (tp->settings);
+            if (tp->cleanup != NULL)
+                tp->cleanup ();
         }
     }
 
@@ -276,13 +320,6 @@ void plugin_system_init(void)
 void plugin_system_cleanup(void)
 {
     plugin_registry_save ();
-
-    /* XXX: vfs will crash otherwise. -nenolod */
-    if (vfs_transports != NULL)
-    {
-        g_list_free(vfs_transports);
-        vfs_transports = NULL;
-    }
 
     for (GList * node = loaded_modules; node != NULL; node = node->next)
         plugin2_unload (node->data);

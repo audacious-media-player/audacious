@@ -25,45 +25,11 @@
 #include <sys/types.h>
 #include <string.h>
 
+static VFSConstructor * (* lookup_func) (const gchar * scheme) = NULL;
 
-/**
- * GList of #VFSConstructor objects holding all the registered
- * VFS transports.
- */
-GList *vfs_transports = NULL; /* temporary. -nenolod */
-
-
-/**
- * Registers a #VFSConstructor vtable with the VFS system.
- *
- * @param vtable The #VFSConstructor vtable to register.
- */
-void vfs_register_transport (VFSConstructor * vtable)
+void vfs_set_lookup_func (VFSConstructor * (* func) (const gchar * scheme))
 {
-    vfs_transports = g_list_append (vfs_transports, vtable);
-}
-
-static VFSConstructor *
-vfs_get_constructor(const gchar *path)
-{
-    VFSConstructor *vtable = NULL;
-    GList *node;
-
-    if (path == NULL)
-        return NULL;
-
-    for (node = vfs_transports; node != NULL; node = g_list_next(node))
-    {
-        VFSConstructor *vtptr = (VFSConstructor *) node->data;
-
-        if (!strncasecmp(path, vtptr->uri_id, strlen(vtptr->uri_id)))
-        {
-            vtable = vtptr;
-            break;
-        }
-    }
-
-    return vtable;
+    lookup_func = func;
 }
 
 /**
@@ -78,11 +44,22 @@ VFSFile *
 vfs_fopen(const gchar * path,
           const gchar * mode)
 {
+    g_return_val_if_fail (lookup_func, NULL);
+
     VFSFile *file;
     VFSConstructor *vtable = NULL;
 
-    if (path == NULL || mode == NULL || (vtable = vfs_get_constructor(path)) == NULL)
+    const gchar * s = strstr (path, "://");
+    g_return_val_if_fail (s, NULL);
+    gchar scheme[s - path + 1];
+    strncpy (scheme, path, s - path);
+    scheme[s - path] = 0;
+
+    if (! (vtable = lookup_func (scheme)))
+    {
+        fprintf (stderr, "No transport plugin found for %s.\n", path);
         return NULL;
+    }
 
     file = vtable->vfs_fopen_impl(path, mode);
 
@@ -376,16 +353,7 @@ vfs_dup(VFSFile *in)
 gboolean
 vfs_is_remote(const gchar * path)
 {
-    VFSConstructor *vtable = NULL;
-
-    if (path == NULL || (vtable = vfs_get_constructor(path)) == NULL)
-        return FALSE;
-
-    /* check if vtable->uri_id is file:// or not, for now. */
-    if (!strncasecmp("file://", vtable->uri_id, strlen(vtable->uri_id)))
-        return FALSE;
-    else
-        return TRUE;
+    return strncasecmp (path, "file://", 7) ? TRUE : FALSE;
 }
 
 /**
