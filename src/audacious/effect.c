@@ -19,11 +19,6 @@
  * using our public API to be a derived work.
  */
 
-/* Effect plugins are not loaded immediately when enabled, but only when they
- * are needed.  Also, because of the complexity of unloading them during
- * playback without causing skipping, they are kept loaded until the program
- * exits. */
-
 #include <glib.h>
 
 #include "debug.h"
@@ -40,7 +35,6 @@ typedef struct {
 } RunningEffect;
 
 static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
-static GList * loaded_effects = NULL; /* (EffectPlugin *) */
 static GList * running_effects = NULL; /* (RunningEffect *) */
 static gint input_channels, input_rate;
 
@@ -48,29 +42,11 @@ typedef struct {
     gint * channels, * rate;
 } EffectStartState;
 
-static EffectPlugin * check_loaded (PluginHandle * plugin)
-{
-    EffectPlugin * ep = plugin_get_header (plugin);
-    if (ep && ! g_list_find (loaded_effects, ep))
-    {
-        AUDDBG ("Initting effect %s.\n", ep->description);
-        if (ep->init && ! ep->init ())
-        {
-            fprintf (stderr, "Failed to init %s.\n", ep->description);
-            return NULL;
-        }
-
-        loaded_effects = g_list_prepend (loaded_effects, (void *) ep);
-    }
-
-    return ep;
-}
-
 static gboolean effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
     AUDDBG ("Starting %s at %d channels, %d Hz.\n", plugin_get_name (plugin),
      * state->channels, * state->rate);
-    EffectPlugin * header = check_loaded (plugin);
+    EffectPlugin * header = plugin_get_header (plugin);
     g_return_val_if_fail (header != NULL, TRUE);
     header->start (state->channels, state->rate);
 
@@ -283,16 +259,5 @@ void effect_plugin_stop (PluginHandle * plugin)
         EffectPlugin * ep = plugin_get_header (plugin);
         g_return_if_fail (ep != NULL);
         effect_enable (plugin, ep, FALSE);
-    }
-}
-
-void effect_plugin_cleanup (void)
-{
-    for (GList * node = loaded_effects; node; node = node->next)
-    {
-        EffectPlugin * ep = node->data;
-        AUDDBG ("Uninitting effect %s.\n", ep->description);
-        if (ep->cleanup)
-            ep->cleanup ();
     }
 }

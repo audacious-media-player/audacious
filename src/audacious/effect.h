@@ -36,6 +36,5 @@ gint effect_output_to_decoder_time (gint time);
 
 gboolean effect_plugin_start (PluginHandle * plugin);
 void effect_plugin_stop (PluginHandle * plugin);
-void effect_plugin_cleanup (void);
 
 #endif
