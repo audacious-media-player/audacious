@@ -295,6 +295,8 @@ static gboolean end_cb (void * unused)
 {
     g_return_val_if_fail (playing, FALSE);
 
+    hook_call ("playback end", NULL);
+
     if (playback_error)
         failed_entries ++;
     else
