@@ -114,17 +114,13 @@ static void aud_free_paths(void)
 
 static void aud_init_paths()
 {
-    gchar *xdg_config_home;
-    gchar *xdg_data_home;
-    gchar *xdg_cache_home;
+    const gchar *xdg_config_home;
+    const gchar *xdg_data_home;
+    const gchar *xdg_cache_home;
 
-    xdg_config_home = (getenv ("XDG_CONFIG_HOME") == NULL) ? g_build_filename
-     (getenv ("HOME"), ".config", NULL) : g_strdup (getenv ("XDG_CONFIG_HOME"));
-    xdg_data_home = (getenv ("XDG_DATA_HOME") == NULL) ? g_build_filename
-     (getenv ("HOME"), ".local", "share", NULL) : g_strdup (getenv
-     ("XDG_DATA_HOME"));
-    xdg_cache_home = (getenv ("XDG_CACHE_HOME") == NULL) ? g_build_filename
-     (getenv ("HOME"), ".cache", NULL) : g_strdup (getenv ("XDG_CACHE_HOME"));
+    xdg_config_home = g_get_user_config_dir();
+    xdg_data_home   = g_get_user_data_dir();
+    xdg_cache_home  = g_get_user_cache_dir();
 
     aud_paths[BMP_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
     aud_paths[BMP_PATH_USER_SKIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
@@ -139,10 +135,6 @@ static void aud_init_paths()
     aud_paths[BMP_PATH_ACCEL_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "accels", NULL);
 
     aud_paths[BMP_PATH_GTKRC_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
-
-    g_free(xdg_config_home);
-    g_free(xdg_data_home);
-    g_free(xdg_cache_home);
 
     g_atexit(aud_free_paths);
 }
