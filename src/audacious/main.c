@@ -198,17 +198,27 @@ static void handle_cmd_line_filenames(gboolean is_running)
     working = g_get_current_dir();
     for (i = 0; filenames[i] != NULL; i++)
     {
+        gchar * utf8 = g_locale_to_utf8 (filenames[i], -1, NULL, NULL, NULL);
+        if (! utf8)
+            utf8 = g_strdup (filenames[i]);
+
         gchar *uri;
-        if (strstr(filenames[i], "://"))
-            uri = g_strdup(filenames[i]);
-        else if (g_path_is_absolute(filenames[i]))
-            uri = g_filename_to_uri(filenames[i], NULL, NULL);
+
+        if (strstr (utf8, "://"))
+        {
+            uri = utf8;
+            utf8 = NULL;
+        }
+        else if (g_path_is_absolute (utf8))
+            uri = g_filename_to_uri (utf8, NULL, NULL);
         else
         {
-            gchar *absolute = g_build_filename(working, filenames[i], NULL);
+            gchar * absolute = g_build_filename (working, utf8, NULL);
             uri = g_filename_to_uri(absolute, NULL, NULL);
             g_free(absolute);
         }
+        
+        g_free (utf8);
         fns = g_list_prepend(fns, uri);
     }
     fns = g_list_reverse(fns);
