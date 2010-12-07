@@ -28,18 +28,11 @@
 #  include "sys/types.h"
 #endif
 
-#if defined(USE_REGEX_ONIGURUMA)
-  #include <onigposix.h>
-#elif defined(USE_REGEX_PCRE)
-  #include <pcreposix.h>
-#else
-  #include <regex.h>
-#endif
-
 #include <audacious/debug.h>
 #include <audacious/playlist.h>
 
 #include "ui_jumptotrack_cache.h"
+#include "ui_regex.h"
 
 // Struct to keep information about matches from searches.
 typedef struct

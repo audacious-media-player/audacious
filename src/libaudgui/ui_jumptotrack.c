@@ -41,14 +41,6 @@
 
 #include <sys/types.h>
 
-#if defined(USE_REGEX_ONIGURUMA)
-  #include <onigposix.h>
-#elif defined(USE_REGEX_PCRE)
-  #include <pcreposix.h>
-#else
-  #include <regex.h>
-#endif
-
 #include <audacious/audconfig.h>
 #include <audacious/drct.h>
 #include <audacious/i18n.h>
@@ -59,6 +51,7 @@
 
 #include "icons-stock.h"
 #include "ui_jumptotrack_cache.h"
+#include "ui_regex.h"
 
 static void watchdog (void * hook_data, void * user_data);
 

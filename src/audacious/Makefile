@@ -107,6 +107,7 @@ CPPFLAGS += -std=gnu99 \
 		${ARCH_DEFINES}			\
 		${DBUS_CFLAGS}			\
 		${REGEX_CFLAGS}			\
+		${PTHREAD_CFLAGS}		\
 		${LIBMCS_CFLAGS}		\
 		${SIMD_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
@@ -129,6 +130,7 @@ LIBS += ${LDADD}						\
 		${MOWGLI_LIBS}					\
 		${LIBMCS_LIBS}					\
 		${REGEX_LIBS}					\
+		${PTHREAD_LIBS}					\
 		${LIBGUESS_LIBS}
 
 LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
