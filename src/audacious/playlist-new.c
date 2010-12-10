@@ -602,7 +602,7 @@ static void check_all_scanned (Playlist * playlist)
 
 void playlist_init (void)
 {
-    srandom (time (NULL));
+    srand (time (NULL));
 
     playlists = index_new ();
     Playlist * playlist = playlist_new ();
@@ -1353,7 +1353,7 @@ void playlist_randomize (gint playlist_num)
 
     for (gint i = 0; i < entries; i ++)
     {
-        gint j = i + random () % (entries - i);
+        gint j = i + rand () % (entries - i);
 
         struct entry * entry = index_get (playlist->entries, j);
         index_set (playlist->entries, j, index_get (playlist->entries, i));
@@ -1818,7 +1818,7 @@ static gboolean shuffle_next (Playlist * playlist)
     if (! choice)
         return FALSE;
 
-    choice = random () % choice;
+    choice = rand () % choice;
 
     for (count = 0; ; count ++)
     {
