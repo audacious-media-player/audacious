@@ -252,7 +252,7 @@ gboolean file_write_tuple (const gchar * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip, FALSE);
     g_return_val_if_fail (ip->update_song_tuple, FALSE);
 
-    VFSFile * handle = vfs_fopen (filename, "r");
+    VFSFile * handle = vfs_fopen (filename, "r+");
     if (! handle)
         return FALSE;
 
