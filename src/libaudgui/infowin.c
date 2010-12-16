@@ -36,7 +36,7 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-#define STATUS_TIMEOUT 3000
+#define AUDGUI_STATUS_TIMEOUT 3000
 
 static GtkWidget * infowin = NULL;
 
@@ -244,7 +244,7 @@ static void ministatus_display_message (const gchar * text)
     gtk_label_set_use_markup ((GtkLabel *) label_mini_status, TRUE);
     g_free (tmp);
 
-    g_timeout_add (STATUS_TIMEOUT, (GSourceFunc) ministatus_timeout_proc,
+    g_timeout_add (AUDGUI_STATUS_TIMEOUT, (GSourceFunc) ministatus_timeout_proc,
      label_mini_status);
 }
 
