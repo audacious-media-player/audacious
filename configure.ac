@@ -69,6 +69,11 @@ dnl ===========
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.14.0])
 
+if test "$MSGFMT" = ":" ; then
+    AC_MSG_ERROR([msgfmt was not found!  You may need to install gettext.])
+fi
+
+
 dnl Checks common for core and plugins
 dnl ==================================
 AUD_COMMON_PROGS
@@ -181,9 +186,9 @@ case $regex_selected in
 
     AC_CHECK_LIB(c, regcomp, REGEX_LIBS="-lc",
       [AC_CHECK_LIB(regex, regcomp, REGEX_LIBS="-lregex",
-	    [AC_CHECK_LIB(rx, regcomp, REGEX_LIBS="-lrx",
+        [AC_CHECK_LIB(rx, regcomp, REGEX_LIBS="-lrx",
           AC_MSG_ERROR([Cannot find GNU regex library.])
-		)]
+        )]
       )]
     )
     ;;
@@ -204,7 +209,7 @@ PTHREAD_CFLAGS=
 
 AC_CHECK_LIB(pthread, pthread_create, PTHREAD_LIBS="-lpthread",
   [AC_CHECK_LIB(pthreads, pthread_create, PTHREAD_LIBS="-lpthreads",
-	[AC_CHECK_LIB(pthreadGC2, pthread_create, PTHREAD_LIBS="-lpthreadGC2")]
+    [AC_CHECK_LIB(pthreadGC2, pthread_create, PTHREAD_LIBS="-lpthreadGC2")]
   )]
 )
 
@@ -322,7 +327,7 @@ if test "x$prefix" = "xNONE"; then
 fi
 
 if test -z "$datadir"; then
-	datadir="${prefix}/share"
+    datadir="${prefix}/share"
 fi
 
 localedir="$datadir/locale"
