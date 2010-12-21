@@ -861,6 +861,8 @@ gint playlist_entry_count(gint playlist_num)
 static void make_entries (gchar * filename, PluginHandle * decoder, Tuple *
  tuple, struct index * list)
 {
+    uri_check_utf8 (& filename, TRUE);
+
     if (! tuple && ! decoder)
         decoder = file_find_decoder (filename, TRUE);
 
@@ -1545,6 +1547,10 @@ void playlist_rescan_file (const gchar * filename)
 
     METADATA_WILL_CHANGE;
 
+    gchar * copy = NULL;
+    if (! uri_is_utf8 (filename, TRUE))
+        filename = copy = uri_to_utf8 (filename);
+
     for (playlist_num = 0; playlist_num < num_playlists; playlist_num ++)
     {
         Playlist * playlist = index_get (playlists, playlist_num);
@@ -1562,6 +1568,8 @@ void playlist_rescan_file (const gchar * filename)
             }
         }
     }
+
+    g_free (copy);
 
     METADATA_HAS_CHANGED (NULL, 0, 0);
 }

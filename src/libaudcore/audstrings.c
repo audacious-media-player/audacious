@@ -226,25 +226,25 @@ str_assert_utf8(const gchar * str)
     /* already UTF-8? */
     if (!g_utf8_validate(str, -1, NULL)) {
 #ifdef HAVE_EXECINFO
-		gint i, nsymbols;
-		const gint nsymmax = 50;
-		void *addrbuf[nsymmax];
-		gchar **symbols;
-		nsymbols = backtrace(addrbuf, nsymmax);
-		symbols = backtrace_symbols(addrbuf, nsymbols);
+        gint i, nsymbols;
+        const gint nsymmax = 50;
+        void *addrbuf[nsymmax];
+        gchar **symbols;
+        nsymbols = backtrace(addrbuf, nsymmax);
+        symbols = backtrace_symbols(addrbuf, nsymbols);
 
-		fprintf(stderr, "String '%s' was not UTF-8! Backtrace (%d):\n", str, nsymbols);
+        fprintf(stderr, "String '%s' was not UTF-8! Backtrace (%d):\n", str, nsymbols);
 
-		for (i = 0; i < nsymbols; i++)
-			fprintf(stderr, "  #%d: %s\n", i, symbols[i]);
+        for (i = 0; i < nsymbols; i++)
+            fprintf(stderr, "  #%d: %s\n", i, symbols[i]);
 
-		free(symbols);
+        free(symbols);
 #else
-		g_warning("String '%s' was not UTF-8!", str);
+        g_warning("String '%s' was not UTF-8!", str);
 #endif
-		return str_to_utf8(str);
+        return str_to_utf8(str);
     } else
-    	return g_strdup(str);
+        return g_strdup(str);
 }
 
 
@@ -423,6 +423,78 @@ gchar * string_encode_percent (const gchar * string, gboolean is_filename)
 
     * set = 0;
     return new;
+}
+
+/* Determines whether a URI is valid UTF-8.  If not and <warn> is nonzero,
+ * prints a warning to stderr. */
+
+gboolean uri_is_utf8 (const gchar * uri, gboolean warn)
+{
+    gchar buf[strlen (uri) + 1];
+    string_decode_percent_2 (uri, buf);
+
+    if (g_utf8_validate (buf, -1, NULL))
+        return TRUE;
+
+    if (warn)
+        fprintf (stderr, "URI is not UTF-8: %s (%s).\n", uri, buf);
+
+    return FALSE;
+}
+
+/* Converts a URI to UTF-8 encoding.  The returned URI must be freed with g_free. */
+
+gchar * uri_to_utf8 (const gchar * uri)
+{
+    const gchar * const res = ":/?#[]@!$&'()*+,;=";
+    GString * accum = g_string_new ("");
+
+    while (1)
+    {
+        const gchar * scan = uri;
+
+        while (! strchr (res, * scan)) /* (! TRUE) if (* scan == 0) */
+            scan ++;
+
+        if (scan > uri)
+        {
+            gchar buf[scan - uri + 1];
+            memcpy (buf, uri, scan - uri);
+            buf[scan - uri] = 0;
+
+            string_decode_percent (buf);
+            gchar * utf8 = str_to_utf8 (buf);
+            gchar * enc = string_encode_percent (utf8, FALSE);
+            g_free (utf8);
+            g_string_append (accum, enc);
+            g_free (enc);
+
+            uri = scan;
+        }
+
+        if (* uri)
+            g_string_append_c (accum, * uri ++);
+        else
+            break;
+    }
+
+    gchar * s = accum->str;
+    g_string_free (accum, FALSE);
+    return s;
+}
+
+/* Check that a URI is valid UTF-8.  If not, prints a warning to stderr if
+ * <warn> is nonzero, frees the old URI with g_free, and sets <uri> to the
+ * converted URI, which must be freed with g_free when no longer needed. */
+
+void uri_check_utf8 (gchar * * uri, gboolean warn)
+{
+    if (uri_is_utf8 (* uri, warn))
+        return;
+
+    gchar * copy = uri_to_utf8 (* uri);
+    g_free (* uri);
+    * uri = copy;
 }
 
 void string_cut_extension(gchar *string)
