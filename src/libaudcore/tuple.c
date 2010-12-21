@@ -74,7 +74,7 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "gain-gain-unit", TUPLE_INT },
     { "gain-peak-unit", TUPLE_INT },
 
-    { "composer",	TUPLE_STRING },
+    { "composer",       TUPLE_STRING },
 };
 
 
@@ -429,8 +429,15 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
 
     if (string == NULL)
         value->value.string = NULL;
+    else if (g_utf8_validate (string, -1, NULL))
+        value->value.string = stringpool_get (string);
     else
-        value->value.string = stringpool_get(string);
+    {
+        fprintf (stderr, "Invalid UTF-8: %s.\n", string);
+        gchar * copy = str_to_utf8 (string);
+        value->value.string = stringpool_get (copy);
+        g_free (copy);
+    }
 
     TUPLE_UNLOCK_WRITE();
     return TRUE;
@@ -450,25 +457,13 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
  * @param[in] string String to be associated to given field in Tuple.
  * @return TRUE if operation was succesful, FALSE if not.
  */
-gboolean
-tuple_associate_string_rel(Tuple *tuple, const gint nfield, const gchar *field, gchar *string)
+
+gboolean tuple_associate_string_rel (Tuple * tuple, const gint nfield,
+ const gchar * field, gchar * string)
 {
-    TupleValue *value;
-
-    TUPLE_LOCK_WRITE();
-    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
-        return FALSE;
-
-    if (string == NULL)
-        value->value.string = NULL;
-    else
-    {
-        value->value.string = stringpool_get(string);
-        g_free(string);
-    }
-
-    TUPLE_UNLOCK_WRITE();
-    return TRUE;
+    gboolean ret = tuple_associate_string (tuple, nfield, field, string);
+    g_free (string);
+    return ret;
 }
 
 /**
