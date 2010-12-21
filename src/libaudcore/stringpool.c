@@ -18,67 +18,36 @@
  * Audacious or using our public API to be a derived work.
  */
 
+/*
+ * Note: This code used to do some normalization of strings: conversion to
+ * UTF-8, conversion of the empty string to NULL, and (optionally) conversion
+ * to uppercase.  However, because such conversions can change the length of the
+ * string, they can lead to a double-free.
+ *
+ * Consider:
+ *
+ * stringpool_get is called twice with the same 99-character ISO-8859-1 string.
+ * The string is short enough to be cached, so stringpool_get returns a cached,
+ * 101-character UTF-8 string.  stringpool_unref is then called twice
+ * with the cached string.  Now that it has been converted, it is too long to be
+ * cached, so stringpool_unref simply frees it, twice.
+ *
+ * Therefore, it is essential for stringpool_get to return a string that is
+ * exactly the same as the one passed it.
+ *
+ * --jlindgren
+ */
+
 #include <glib.h>
 #include <mowgli.h>
 
 #include "audstrings.h"
-
-/*
- * Canonization mode:
- *
- * CASE_INSENSITIVE_CANON:  Store pooled strings in the tree in normalized case.
- *                          This is slightly slower than without, but has a few benefits.
- *                          Specifically, case is normalized in the tuples, and memory usage is
- *                          reduced further (due to more dupes being killed).
- *
- * NO_CANON:                Use fast binary-exact lookups.  Performance is slightly faster, but
- *                          less dupe reduction is done.
- *
- * TODO:                    make this runtime configurable.
- */
-#define NO_CANON
-#undef CASE_INSENSITIVE_CANON
-
-#ifdef NO_CANON
 
 static void
 noopcanon(gchar *str)
 {
     return;
 }
-
-#else
-
-#ifdef XXX_UTF8_CANON
-
-static void
-strcasecanon(gchar *str)
-{
-    gchar *c, *up;
-
-    c = g_utf8_casefold(str, -1);
-    up = c;
-
-    /* we have to ensure we don't overflow str. *grumble* */
-    while (*str && *up)
-        *str++ = *up++;
-
-    if (*str && !*up)
-        *str = '\0';
-
-    g_free(c);
-}
-
-#else
-
-static void
-strcasecanon(gchar *str)
-{
-    string_canonize_case(str);
-}
-
-#endif
-#endif
 
 /** Structure to handle string refcounting. */
 typedef struct {
@@ -92,7 +61,7 @@ static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 static gboolean
 stringpool_should_cache(const gchar *string, gsize maxlen)
 {
-    const gchar *end = memchr(string, '\0', maxlen);
+    const gchar *end = memchr(string, '\0', maxlen + 1);
     return end != NULL ? TRUE : FALSE;
 }
 
@@ -103,22 +72,13 @@ stringpool_get(const gchar *str)
 
     g_return_val_if_fail(str != NULL, NULL);
 
-    if (!*str)
-        return NULL;
-
     if (!stringpool_should_cache(str, 100))
-        return str_assert_utf8(str);
+        return g_strdup(str);
 
     g_static_mutex_lock(&stringpool_mutex);
 
     if (stringpool_tree == NULL)
-    {
-#ifdef NO_CANON
         stringpool_tree = mowgli_patricia_create(noopcanon);
-#else
-        stringpool_tree = mowgli_patricia_create(strcasecanon);
-#endif
-    }
 
     if ((ps = mowgli_patricia_retrieve(stringpool_tree, str)) != NULL)
     {
@@ -130,7 +90,7 @@ stringpool_get(const gchar *str)
 
     ps = g_slice_new0(PooledString);
     ps->refcount++;
-    ps->str = str_assert_utf8(str);
+    ps->str = g_strdup(str);
     mowgli_patricia_add(stringpool_tree, str, ps);
 
     g_static_mutex_unlock(&stringpool_mutex);
@@ -142,16 +102,15 @@ stringpool_unref(gchar *str)
 {
     PooledString *ps;
 
-    g_return_if_fail(stringpool_tree != NULL);
-
-    if (str == NULL)
-        return;
+    g_return_if_fail(str != NULL);
 
     if (!stringpool_should_cache(str, 100))
     {
-        g_free (str);
+        g_free(str);
         return;
     }
+
+    g_return_if_fail(stringpool_tree != NULL);
 
     g_static_mutex_lock(&stringpool_mutex);
 
