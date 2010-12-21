@@ -74,10 +74,6 @@ cd_str_to_utf8(const gchar * str)
     if ((out_str = cd_chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)) != NULL)
         return out_str;
 
-    /* assume encoding associated with locale */
-    if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)) != NULL)
-        return out_str;
-
     /* all else fails, we mask off character codes >= 128, replace with '?' */
     return str_to_utf8_fallback(str);
 }
@@ -86,6 +82,9 @@ gchar *
 cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
                    gsize * arg_bytes_write, GError ** error)
 {
+    if (error)
+        * error = NULL;
+
 #ifdef USE_CHARDET
     gchar *det = NULL, *encoding = NULL;
 #endif
@@ -124,13 +123,14 @@ cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
 
     if (det)
     {
-	AUDDBG("guess encoding (%s) %s\n", det, str);
+        AUDDBG("guess encoding (%s) %s\n", det, str);
         encoding = (gchar *) libguess_determine_encoding(str, len, det);
         AUDDBG("encoding = %s\n", encoding);
         if (encoding == NULL)
             goto fallback;
 
-        ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
+        ret = g_convert (str, len, "UTF-8", encoding, bytes_read, bytes_write,
+         (error && * error) ? NULL : error);
     }
 
 fallback:
@@ -142,7 +142,8 @@ fallback:
         gchar **enc;
         for (enc = cfg.chardet_fallback_s; *enc != NULL; enc++)
         {
-            ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
+            ret = g_convert (str, len, "UTF-8", * enc, bytes_read, bytes_write,
+             (error && * error) ? NULL : error);
             if (len == *bytes_read)
                 break;
             else {
@@ -152,9 +153,15 @@ fallback:
         }
     }
 
+    /* First fallback: locale (duh!) */
+    if (ret == NULL)
+        ret = g_locale_to_utf8 (str, len, bytes_read, bytes_write,
+         (error && * error) ? NULL : error);
+
     /* The final fallback is ISO-8859-1, if no other is specified or conversions fail */
     if (ret == NULL)
-        ret = g_convert(str, len, "UTF-8", "ISO-8859-1", bytes_read, bytes_write, error);
+        ret = g_convert (str, len, "UTF-8", "ISO-8859-1", bytes_read,
+         bytes_write, (error && * error) ? NULL : error);
 
     if (ret != NULL)
     {
