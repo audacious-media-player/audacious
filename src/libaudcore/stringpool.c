@@ -43,6 +43,8 @@
 
 #include "audstrings.h"
 
+#define MAXLEN 100
+
 static void
 noopcanon(gchar *str)
 {
@@ -58,10 +60,9 @@ typedef struct {
 static mowgli_patricia_t *stringpool_tree = NULL;
 static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
-static gboolean
-stringpool_should_cache(const gchar *string, gsize maxlen)
+static inline gboolean stringpool_should_cache(const gchar *string)
 {
-    const gchar *end = memchr(string, '\0', maxlen + 1);
+    const gchar *end = memchr(string, '\0', MAXLEN + 1);
     return end != NULL ? TRUE : FALSE;
 }
 
@@ -72,7 +73,7 @@ stringpool_get(const gchar *str)
 
     g_return_val_if_fail(str != NULL, NULL);
 
-    if (!stringpool_should_cache(str, 100))
+    if (!stringpool_should_cache(str))
         return g_strdup(str);
 
     g_static_mutex_lock(&stringpool_mutex);
@@ -104,7 +105,7 @@ stringpool_unref(gchar *str)
 
     g_return_if_fail(str != NULL);
 
-    if (!stringpool_should_cache(str, 100))
+    if (!stringpool_should_cache(str))
     {
         g_free(str);
         return;
