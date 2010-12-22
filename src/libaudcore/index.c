@@ -36,7 +36,7 @@ struct index
 
 struct index * index_new (void)
 {
-    struct index * index = g_malloc (sizeof (struct index));
+    struct index * index = g_slice_new (struct index);
 
     index->data = NULL;
     index->count = 0;
@@ -50,7 +50,7 @@ struct index * index_new (void)
 void index_free (struct index * index)
 {
     g_free (index->data);
-    g_free (index);
+    g_slice_free (struct index, index);
 }
 
 gint index_count (struct index * index)
@@ -70,25 +70,26 @@ void * index_get (struct index * index, gint at)
 
 static void resize_to (struct index * index, gint size)
 {
-    if (size < 100)
-        size = (size + 9) / 10 * 10;
-    else if (size < 1000)
-        size = (size + 99) / 100 * 100;
-    else
-        size = (size + 999) / 1000 * 1000;
+    if (size <= index->size)
+        return;
 
-    if (index->size < size)
-    {
-        index->data = g_realloc (index->data, sizeof (void *) * size);
-        index->size = size;
-    }
+    if (! index->size)
+        index->size = 64;
+
+    while (size > index->size)
+        index->size <<= 1;
+
+    index->data = g_realloc (index->data, sizeof (void *) * index->size);
 }
 
 static void make_room (struct index * index, gint at, gint count)
 {
     resize_to (index, index->count + count);
-    memmove (index->data + at + count, index->data + at, sizeof (void *) *
-     (index->count - at));
+
+    if (at < index->count)
+        memmove (index->data + at + count, index->data + at, sizeof (void *) *
+         (index->count - at));
+
     index->count += count;
 }
 
