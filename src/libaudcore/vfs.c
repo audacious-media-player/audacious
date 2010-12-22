@@ -290,15 +290,12 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
 gboolean
 vfs_file_test(const gchar * path, GFileTest test)
 {
-    gchar *path2;
-    gboolean ret;
-
-    path2 = g_filename_from_uri(path, NULL, NULL);
+    gchar * path2 = uri_to_filename (path);
 
     if (path2 == NULL)
         path2 = g_strdup(path);
 
-    ret = g_file_test(path2, test);
+    gboolean ret = g_file_test (path2, test);
 
     g_free(path2);
 
@@ -315,7 +312,7 @@ gboolean
 vfs_is_writeable(const gchar * path)
 {
     struct stat info;
-    gchar *realfn = g_filename_from_uri(path, NULL, NULL);
+    gchar * realfn = uri_to_filename (path);
 
     if (stat(realfn, &info) == -1)
         return FALSE;

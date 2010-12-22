@@ -24,6 +24,7 @@
 
 #include <audacious/drct.h>
 #include <audacious/playlist.h>
+#include <libaudcore/audstrings.h>
 #include <libaudcore/vfs.h>
 
 #include "libaudgui.h"
@@ -41,7 +42,7 @@ static gchar * check_uri (gchar * name)
 {
     gchar * new;
 
-    if (strstr (name, "://") || ! (new = g_filename_to_uri (name, NULL, NULL)))
+    if (strstr (name, "://") || ! (new = filename_to_uri (name)))
         return name;
 
     g_free (name);

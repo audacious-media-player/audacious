@@ -310,7 +310,7 @@ void load_playlists (void)
 
         if (g_file_test (path, G_FILE_TEST_EXISTS))
         {
-            gchar * uri = g_filename_to_uri (path, NULL, NULL);
+            gchar * uri = filename_to_uri (path);
 
             if (count)
                 playlist_insert (count);
@@ -339,7 +339,7 @@ void save_playlists (void)
 
         if (count < playlists)
         {
-            gchar * uri = g_filename_to_uri (path, NULL, NULL);
+            gchar * uri = filename_to_uri (path);
 
             playlist_save (count, uri);
             g_free (uri);

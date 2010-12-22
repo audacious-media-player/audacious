@@ -152,7 +152,6 @@ import_winamp_eqf(VFSFile * file)
     EqualizerPreset *preset = NULL;
     GList *list = NULL;
     gchar *markup;
-    gchar *realfn;
     gchar preset_name[0xb4];
 
     vfs_fread(header, 1, 31, file);
@@ -183,14 +182,11 @@ import_winamp_eqf(VFSFile * file)
     return list;
 
 error:
-    realfn = g_filename_from_uri(file->uri, NULL, NULL);
-    markup = g_strdup_printf(_("Error importing Winamp EQF file '%s'"),
-                             realfn);
-
+    markup = g_strdup_printf (_("Error importing Winamp EQF file '%s'"),
+     file->uri);
     interface_show_error_message(markup);
 
     g_free(markup);
-    g_free(realfn);
     return NULL;
 }
 

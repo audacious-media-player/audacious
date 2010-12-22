@@ -201,6 +201,14 @@ tuple_set_filename(Tuple *tuple, const gchar *filename)
 
     string_decode_percent(local);
 
+    /* Convert invalid UTF-8 URI's quietly. */
+    if (! g_utf8_validate (local, -1, NULL))
+    {
+        gchar * utf8 = str_to_utf8 (local);
+        g_free (local);
+        local = utf8;
+    }
+
     slash = strrchr(local, '/');
     period = strrchr(local, '.');
     question = strrchr(local, '?');

@@ -312,14 +312,21 @@ void audgui_three_strings (gint list, gint entry, gchar * * title, gchar * *
     * artist = (_artist && _artist[0]) ? g_strdup (_artist) : NULL;
     * album = (_album && _album[0]) ? g_strdup (_album) : NULL;
 
+
     if (! strncmp (name, "file://", 7))
     {
         gchar buf[strlen (name + 7) + 1];
         strcpy (buf, name + 7);
         string_decode_percent (buf);
 
+        /* Convert invalid UTF-8 quietly. */
+        gchar * copy = g_utf8_validate (buf, -1, NULL) ? NULL : str_to_utf8 (buf);
+
         gchar * base, * first, * second;
-        split_filename (skip_top_folders (buf), & base, & first, & second);
+        split_filename (skip_top_folders (copy ? copy : buf), & base, & first,
+         & second);
+
+        g_free (copy);
 
         if (! * title)
             * title = g_strdup (base);

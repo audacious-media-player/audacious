@@ -191,7 +191,7 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
 
 gchar * get_associated_image_file (const gchar * filename)
 {
-    gchar * unesc = g_filename_from_uri (filename, NULL, NULL);
+    gchar * unesc = uri_to_filename (filename);
     if (! unesc)
         return NULL;
 

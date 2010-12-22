@@ -116,7 +116,7 @@ static gboolean add_cb (void * unused)
         {
             if (S_ISREG (info.st_mode))
             {
-                gchar * filename = g_filename_to_uri (stack->data, NULL, NULL);
+                gchar * filename = filename_to_uri (stack->data);
                 PluginHandle * decoder = (filename == NULL) ? NULL :
                  file_find_decoder (filename, TRUE);
 
@@ -227,7 +227,7 @@ static gboolean add_cb (void * unused)
 void playlist_insert_folder (gint playlist, gint at, const gchar * folder,
  gboolean play)
 {
-    gchar * unix_name = g_filename_from_uri (folder, NULL, NULL);
+    gchar * unix_name = uri_to_filename (folder);
 
     add_playlist = playlist;
     add_at = at;
