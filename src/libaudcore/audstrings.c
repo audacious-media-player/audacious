@@ -139,64 +139,6 @@ gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
                        gsize *arg_bytes_read, gsize *arg_bytes_write,
                        GError **arg_error) = NULL;
 
-/**
- * Convert name of absolute path in local file system encoding
- * into UTF-8 string.
- *
- * @param filename Local filename/path to convert.
- * @return Filename converted to UTF-8 encoding.
- */
-gchar *
-filename_to_utf8(const gchar * filename)
-{
-    gchar *out_str;
-
-    /* NULL in NULL out */
-    if (filename == NULL)
-        return NULL;
-
-    if ((out_str = g_filename_to_utf8(filename, -1, NULL, NULL, NULL)))
-        return out_str;
-
-    return str_to_utf8_fallback(filename);
-}
-
-/* derives basename from uri. basename is in utf8 */
-gchar *
-uri_to_display_basename(const gchar * uri)
-{
-    gchar *realfn, *utf8fn, *basename;
-
-    g_return_val_if_fail(uri, NULL);
-
-    realfn = g_filename_from_uri(uri, NULL, NULL);
-    utf8fn = g_filename_display_name(realfn ? realfn : uri); // guaranteed to be non-NULL
-    basename = g_path_get_basename(utf8fn);
-
-    g_free(realfn);
-    g_free(utf8fn);
-
-    return basename;
-}
-
-/* derives dirname from uri. dirname is in utf8 */
-gchar *
-uri_to_display_dirname(const gchar * uri)
-{
-    gchar *realfn, *utf8fn, *dirname;
-
-    g_return_val_if_fail(uri, NULL);
-
-    realfn = g_filename_from_uri(uri, NULL, NULL);
-    utf8fn = g_filename_display_name(realfn ? realfn : uri);  // guaranteed to be non-NULL
-    dirname = g_path_get_dirname(utf8fn);
-
-    g_free(realfn);
-    g_free(utf8fn);
-
-    return dirname;
-}
-
 #if defined(__GLIBC__) && (__GLIBC__ >= 2)
 #define HAVE_EXECINFO 1
 #include <execinfo.h>

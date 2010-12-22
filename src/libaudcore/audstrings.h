@@ -45,10 +45,6 @@ gchar *str_to_utf8_fallback(const gchar * str);
 extern gchar * (* chardet_to_utf8) (const gchar * string, gssize length, gsize *
  bytes_read, gsize * bytes_written, GError * * error);
 
-gchar *filename_to_utf8(const gchar * filename);
-gchar *uri_to_display_basename(const gchar * uri);
-gchar *uri_to_display_dirname(const gchar * uri);
-
 const gchar *str_skip_chars(const gchar * str, const gchar * chars);
 
 gchar *convert_dos_path(gchar * text);
