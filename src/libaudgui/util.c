@@ -218,7 +218,7 @@ gchar * skip_top_folders (gchar * name)
 {
     const gchar * home = getenv ("HOME");
     if (! home)
-        return name;
+        goto NO_HOME;
 
     gint len = strlen (home);
     if (len > 0 && home[len - 1] == '/')
@@ -226,16 +226,15 @@ gchar * skip_top_folders (gchar * name)
 
     if (! strncmp (name, home, len) && name[len] == '/')
         return name + len + 1;
-    if (name[0] == '/')
-        return name + 1;
 
-    return name;
+NO_HOME:
+    return name[0] == '/' ? name + 1 : name;
 }
 
 void split_filename (gchar * name, gchar * * base, gchar * * first, gchar * *
  second)
 {
-    * first = * second = 0;
+    * first = * second = NULL;
 
     gchar * c;
 
@@ -312,21 +311,13 @@ void audgui_three_strings (gint list, gint entry, gchar * * title, gchar * *
     * artist = (_artist && _artist[0]) ? g_strdup (_artist) : NULL;
     * album = (_album && _album[0]) ? g_strdup (_album) : NULL;
 
+    gchar * copy = uri_to_display (name);
 
-    if (! strncmp (name, "file://", 7))
+    if (copy[0] == '/')
     {
-        gchar buf[strlen (name + 7) + 1];
-        strcpy (buf, name + 7);
-        string_decode_percent (buf);
-
-        /* Convert invalid UTF-8 quietly. */
-        gchar * copy = g_utf8_validate (buf, -1, NULL) ? NULL : str_to_utf8 (buf);
-
         gchar * base, * first, * second;
-        split_filename (skip_top_folders (copy ? copy : buf), & base, & first,
+        split_filename (skip_top_folders (copy), & base, & first,
          & second);
-
-        g_free (copy);
 
         if (! * title)
             * title = g_strdup (base);
@@ -347,10 +338,12 @@ void audgui_three_strings (gint list, gint entry, gchar * * title, gchar * *
     else
     {
         if (! * title)
-            * title = stream_name (name);
+            * title = stream_name (copy);
         else if (! * artist)
-            * artist = stream_name (name);
+            * artist = stream_name (copy);
         else if (! * album)
-            * album = stream_name (name);
+            * album = stream_name (copy);
     }
+
+    g_free (copy);
 }

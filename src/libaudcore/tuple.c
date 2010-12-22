@@ -196,18 +196,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 void
 tuple_set_filename(Tuple *tuple, const gchar *filename)
 {
-    gchar *local = g_strdup(filename);
+    gchar *local = uri_to_display(filename);
     gchar *slash, *period, *question;
-
-    string_decode_percent(local);
-
-    /* Convert invalid UTF-8 URI's quietly. */
-    if (! g_utf8_validate (local, -1, NULL))
-    {
-        gchar * utf8 = str_to_utf8 (local);
-        g_free (local);
-        local = utf8;
-    }
 
     slash = strrchr(local, '/');
     period = strrchr(local, '.');

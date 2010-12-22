@@ -457,6 +457,20 @@ gchar * uri_to_filename (const gchar * uri)
     return name ? name : g_strdup (buf);
 }
 
+/* Formats a URI for human-readable display.  Percent-decodes, aggressively
+ * converts to UTF-8, and strips of leading file://. */
+gchar * uri_to_display (const gchar * uri)
+{
+    gchar buf[strlen (uri) + 1];
+
+    if (! strncmp (uri, "file://", 7))
+        string_decode_percent_2 (uri + 7, buf);
+    else
+        string_decode_percent_2 (uri, buf);
+
+    return str_to_utf8 (buf);
+}
+
 void string_cut_extension(gchar *string)
 {
     gchar *period = strrchr(string, '.');

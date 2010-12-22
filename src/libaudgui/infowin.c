@@ -511,38 +511,6 @@ void create_infowin (void)
     gtk_widget_grab_focus (entry_title);
 }
 
-/*  Converts filenames (in place) for easy reading, thus:
- *
- *  file:///home/me/Music/My song.ogg  ->  Music
- *                                         My song.ogg
- *
- *  file:///media/disk/My song.ogg  ->  /
- *                                      media
- *                                      disk
- *                                      My song.ogg
- */
-static gchar * easy_read_filename (gchar * file)
-{
-    const gchar * home;
-    gint len;
-
-    if (strncmp (file, "file:///", 8))
-        return file;
-
-    home = getenv ("HOME");
-    len = (home == NULL) ? 0 : strlen (home);
-    len = (len > 0 && home[len - 1] == '/') ? len - 1 : len;
-
-    if (len > 0 && ! strncmp (file + 7, home, len) && file[len + 7] == '/')
-    {
-        string_replace_char (file + len + 8, '/', '\n');
-        return file + len + 8;
-    }
-
-    string_replace_char (file + 7, '/', '\n');
-    return file + 6;
-}
-
 static void infowin_show (gint list, gint entry, const gchar * filename,
  const Tuple * tuple, PluginHandle * decoder, gboolean updating_enabled)
 {
@@ -566,18 +534,8 @@ static void infowin_show (gint list, gint entry, const gchar * filename,
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) entry_genre), tuple,
      FIELD_GENRE, updating_enabled);
 
-    tmp = g_strdup (filename);
-    string_decode_percent (tmp);
-
-    /* Convert invalid UTF-8 URI's quietly. */
-    if (! g_utf8_validate (tmp, -1, NULL))
-    {
-        gchar * copy = str_to_utf8 (tmp);
-        g_free (tmp);
-        tmp = copy;
-    }
-
-    gtk_label_set_text ((GtkLabel *) location_text, easy_read_filename (tmp));
+    tmp = uri_to_display (filename);
+    gtk_label_set_text ((GtkLabel *) location_text, tmp);
     g_free (tmp);
 
     set_entry_int_from_field (entry_year, tuple, FIELD_YEAR, updating_enabled);

@@ -65,6 +65,7 @@ gchar * uri_to_utf8 (const gchar * uri);
 void uri_check_utf8 (gchar * * uri, gboolean warn);
 gchar * filename_to_uri (const gchar * filename);
 gchar * uri_to_filename (const gchar * uri);
+gchar * uri_to_display (const gchar * uri);
 
 void string_cut_extension(gchar *string);
 gint string_compare (const gchar * a, const gchar * b);
