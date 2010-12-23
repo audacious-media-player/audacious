@@ -171,8 +171,8 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
             plugin_register (PLUGIN_TYPE_GENERAL, filename, i, gp);
     }
 
-    if (header->interface != NULL)
-        plugin_register (PLUGIN_TYPE_IFACE, filename, 0, header->interface);
+    if (header->iface != NULL)
+        plugin_register (PLUGIN_TYPE_IFACE, filename, 0, header->iface);
 }
 
 void plugin2_unload (LoadedModule * loaded)

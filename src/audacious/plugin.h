@@ -58,7 +58,7 @@ typedef const struct {
     TransportPlugin * const * tp_list;
     PlaylistPlugin * const * pp_list;
 
-    Interface *interface;
+    Iface * iface;
 } PluginHeader;
 
 #define DECLARE_PLUGIN(name, ...) \
@@ -77,7 +77,7 @@ typedef const struct {
 #define SIMPLE_OUTPUT_PLUGIN(name, o) DECLARE_PLUGIN (name, .op_list = o)
 #define SIMPLE_VIS_PLUGIN(name, v) DECLARE_PLUGIN(name, .vp_list = v)
 #define SIMPLE_GENERAL_PLUGIN(name, g) DECLARE_PLUGIN (name, .gp_list = g)
-#define SIMPLE_INTERFACE_PLUGIN(name, i) DECLARE_PLUGIN(name, .interface = i)
+#define SIMPLE_IFACE_PLUGIN(name, i) DECLARE_PLUGIN(name, .iface = i)
 
 #define SIMPLE_VISUAL_PLUGIN SIMPLE_VIS_PLUGIN /* deprecated */
 

@@ -34,9 +34,9 @@
 #include "ui_preferences.h"
 #include "visualization.h"
 
-static Interface *current_interface = NULL;
+static Iface *current_interface = NULL;
 
-static InterfaceOps interface_ops = {
+static IfaceOps interface_ops = {
     .create_prefs_window = create_prefs_window,
     .show_prefs_window = show_prefs_window,
     .hide_prefs_window = hide_prefs_window,
@@ -44,11 +44,11 @@ static InterfaceOps interface_ops = {
     .prefswin_page_new = prefswin_page_new,
 };
 
-static InterfaceCbs interface_cbs = { NULL };
+static IfaceCbs interface_cbs = { NULL };
 
 gboolean interface_load (PluginHandle * plugin)
 {
-    Interface * i = (Interface *) plugin_get_header (plugin);
+    Iface * i = (Iface *) plugin_get_header (plugin);
     g_return_val_if_fail (i != NULL, FALSE);
 
     current_interface = i;
@@ -209,7 +209,7 @@ typedef enum {
     HOOK_ABOUTWIN_SHOW,
     HOOK_TOGGLE_SHUFFLE,
     HOOK_TOGGLE_REPEAT,
-} InterfaceHookID;
+} IfaceHookID;
 
 void
 interface_hook_handler(gpointer hook_data, gpointer user_data)
@@ -252,10 +252,10 @@ interface_hook_handler(gpointer hook_data, gpointer user_data)
 
 typedef struct {
     const gchar *name;
-    InterfaceHookID id;
-} InterfaceHooks;
+    IfaceHookID id;
+} IfaceHooks;
 
-static InterfaceHooks hooks[] = {
+static IfaceHooks hooks[] = {
     {"prefswin show", HOOK_PREFSWIN_SHOW},
     {"filebrowser show", HOOK_FILEBROWSER_SHOW},
     {"filebrowser hide", HOOK_FILEBROWSER_HIDE},

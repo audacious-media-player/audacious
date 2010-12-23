@@ -42,7 +42,7 @@ typedef struct {
      const gchar * imgurl); */
     gint (* prefswin_page_new) (void * container, const gchar * name,
      const gchar * imgurl);
-} InterfaceOps;
+} IfaceOps;
 
 typedef struct {
     void (*show_prefs_window)(gboolean show);
@@ -60,15 +60,15 @@ typedef struct {
     void * (* run_gtk_plugin) (void * parent, const gchar * name);
     /* GtkWidget * (* stop_gtk_plugin) (GtkWidget * parent); */
     void * (* stop_gtk_plugin) (void * parent);
-} InterfaceCbs;
+} IfaceCbs;
 
-struct _Interface {
+struct _Iface {
     gchar *id;                           /* simple ID like 'skinned' */
     gchar *desc;                         /* description like 'Skinned Interface' */
-    gboolean (*init)(InterfaceCbs *cbs); /* init UI */
+    gboolean (*init)(IfaceCbs *cbs); /* init UI */
     gboolean (*fini)(void);              /* shutdown UI */
 
-    InterfaceOps *ops;
+    IfaceOps *ops;
 };
 
 #ifdef _AUDACIOUS_CORE

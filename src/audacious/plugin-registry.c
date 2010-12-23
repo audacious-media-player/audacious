@@ -635,7 +635,7 @@ void plugin_register (gint type, const gchar * path, gint number, const void *
     }
     else if (type == PLUGIN_TYPE_IFACE)
     {
-        Interface * i = (void *) header;
+        Iface * i = (void *) header;
         g_free (plugin->name);
         plugin->name = g_strdup (i->desc);
     }
