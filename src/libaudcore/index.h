@@ -27,6 +27,7 @@ struct index;
 struct index * index_new (void);
 void index_free (struct index * index);
 gint index_count (struct index * index);
+void index_allocate (struct index * index, gint size);
 void index_set (struct index * index, gint at, void * value);
 void * index_get (struct index * index, gint at);
 void index_insert (struct index * index, gint at, void * value);

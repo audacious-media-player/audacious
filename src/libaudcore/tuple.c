@@ -32,6 +32,9 @@
 #include "audstrings.h"
 #include "stringpool.h"
 
+static gboolean set_string (Tuple * tuple, const gint nfield,
+ const gchar * field, gchar * string, gboolean take);
+
 /** Ordered table of basic #Tuple field names and their #TupleValueType.
  */
 const TupleBasicType tuple_fields[FIELD_LAST] = {
@@ -85,32 +88,33 @@ static mowgli_heap_t *tuple_heap = NULL;
 static mowgli_heap_t *tuple_value_heap = NULL;
 static mowgli_object_class_t tuple_klass;
 
-/** Global R/W lock for preserve data consistency of heaps */
-static GStaticRWLock tuple_rwlock = G_STATIC_RW_LOCK_INIT;
+/** Global lock to preserve data consistency of heaps */
+static GStaticMutex tuple_mutex = G_STATIC_MUTEX_INIT;
 
 //@{
 /**
- * Convenience macro for read/write locking of the globally
+ * Convenience macros to lock the globally
  * used internal Tuple system structures.
  */
-#define TUPLE_LOCK_WRITE(X)     g_static_rw_lock_writer_lock(&tuple_rwlock)
-#define TUPLE_UNLOCK_WRITE(X)   g_static_rw_lock_writer_unlock(&tuple_rwlock)
-#define TUPLE_LOCK_READ(X)      g_static_rw_lock_reader_lock(&tuple_rwlock)
-#define TUPLE_UNLOCK_READ(X)    g_static_rw_lock_reader_unlock(&tuple_rwlock)
+#define TUPLE_LOCK_WRITE(X)     g_static_mutex_lock (& tuple_mutex)
+#define TUPLE_UNLOCK_WRITE(X)   g_static_mutex_unlock (& tuple_mutex)
+#define TUPLE_LOCK_READ(X)      g_static_mutex_lock (& tuple_mutex)
+#define TUPLE_UNLOCK_READ(X)    g_static_mutex_unlock (& tuple_mutex)
 //@}
 
-/* iterative destructor of tuple values. */
-static void
-tuple_value_destroy(const gchar *key, gpointer data, gpointer privdata)
+static void tuple_value_destroy (TupleValue * value)
 {
-    TupleValue *value = (TupleValue *) data;
+    if (value->type == TUPLE_STRING)
+        stringpool_unref (value->value.string);
 
-    if (value->type == TUPLE_STRING) {
-        stringpool_unref(value->value.string);
-        value->value.string = NULL;
-    }
+    memset (value, 0, sizeof (TupleValue));
+    mowgli_heap_free (tuple_value_heap, value);
+}
 
-    mowgli_heap_free(tuple_value_heap, value);
+/* iterative destructor of tuple values. */
+static void tuple_value_destroy_cb (const gchar * key, void * data, void * priv)
+{
+    tuple_value_destroy (data);
 }
 
 static void
@@ -120,22 +124,17 @@ tuple_destroy(gpointer data)
     gint i;
 
     TUPLE_LOCK_WRITE();
-    mowgli_patricia_destroy(tuple->dict, tuple_value_destroy, NULL);
+    mowgli_patricia_destroy(tuple->dict, tuple_value_destroy_cb, NULL);
 
     for (i = 0; i < FIELD_LAST; i++)
-        if (tuple->values[i]) {
-            TupleValue *value = tuple->values[i];
-
-            if (value->type == TUPLE_STRING) {
-                stringpool_unref(value->value.string);
-                value->value.string = NULL;
-            }
-
-            mowgli_heap_free(tuple_value_heap, value);
-        }
+    {
+        if (tuple->values[i])
+            tuple_value_destroy (tuple->values[i]);
+    }
 
     g_free(tuple->subtunes);
 
+    memset (tuple, 0, sizeof (Tuple));
     mowgli_heap_free(tuple_heap, tuple);
     TUPLE_UNLOCK_WRITE();
 }
@@ -193,40 +192,38 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
  * @param[in] filename Filename URI.
  * @param[in,out] tuple Tuple structure to manipulate.
  */
-void
-tuple_set_filename(Tuple *tuple, const gchar *filename)
+void tuple_set_filename (Tuple * tuple, const gchar * name)
 {
-    gchar *local = uri_to_display(filename);
-    gchar *slash, *period, *question;
-
-    slash = strrchr(local, '/');
-    period = strrchr(local, '.');
-    question = strrchr(local, '?');
-
-    if (slash != NULL)
+    const gchar * slash;
+    if ((slash = strrchr (name, '/')))
     {
-        gchar temp = *(slash + 1);
+        gchar path[slash - name + 2];
+        memcpy (path, name, slash - name + 1);
+        path[slash - name + 1] = 0;
 
-        *(slash + 1) = 0;
-        tuple_associate_string(tuple, FIELD_FILE_PATH, NULL, local);
-        *(slash + 1) = temp;
-        tuple_associate_string(tuple, FIELD_FILE_NAME, NULL, slash + 1);
+        set_string (tuple, FIELD_FILE_PATH, NULL, uri_to_display (path), TRUE);
+        name = slash + 1;
     }
 
-    if (question != NULL)
+    gchar buf[strlen (name) + 1];
+    strcpy (buf, name);
+
+    gchar * c;
+    if ((c = strrchr (buf, '?')))
     {
-        gint subtune;
+        gint sub;
+        if (sscanf (c + 1, "%d", & sub) == 1)
+            tuple_associate_int (tuple, FIELD_SUBSONG_ID, NULL, sub);
 
-        *question = 0;
-
-        if (sscanf(question + 1, "%d", &subtune) == 1)
-            tuple_associate_int(tuple, FIELD_SUBSONG_ID, NULL, subtune);
+        * c = 0;
     }
 
-    if (period != NULL)
-        tuple_associate_string(tuple, FIELD_FILE_EXT, NULL, period + 1);
+    gchar * base = uri_to_display (buf);
 
-    g_free(local);
+    if ((c = strrchr (base, '.')))
+        set_string (tuple, FIELD_FILE_EXT, NULL, c + 1, FALSE);
+
+    set_string (tuple, FIELD_FILE_NAME, NULL, base, TRUE);
 }
 
 /**
@@ -249,7 +246,7 @@ tuple_copy_value(TupleValue *src)
 
     switch (src->type) {
     case TUPLE_STRING:
-        res->value.string = stringpool_get(src->value.string);
+        res->value.string = stringpool_get (src->value.string, FALSE);
         break;
     case TUPLE_INT:
         res->value.integer = src->value.integer;
@@ -392,15 +389,44 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     } else {
         /* Allocate a new value */
         value = mowgli_heap_alloc(tuple_value_heap);
-        g_strlcpy(value->name, tfield, TUPLE_NAME_MAX);
         value->type = ftype;
+
         if (nfield >= 0)
+        {
+            value->name[0] = 0;
             tuple->values[nfield] = value;
+        }
         else
+        {
+            g_strlcpy (value->name, tfield, TUPLE_NAME_MAX);
             mowgli_patricia_add(tuple->dict, tfield, value);
+        }
     }
 
     return value;
+}
+
+static gboolean set_string (Tuple * tuple, const gint nfield,
+ const gchar * field, gchar * string, gboolean take)
+{
+    TUPLE_LOCK_WRITE ();
+
+    TupleValue * value = tuple_associate_data (tuple, nfield, field,
+     TUPLE_STRING);
+    if (! value)
+    {
+        if (take)
+            g_free (string);
+        return FALSE;
+    }
+
+    if (! string)
+        value->value.string = NULL;
+    else
+        value->value.string = stringpool_get (string, take);
+
+    TUPLE_UNLOCK_WRITE ();
+    return TRUE;
 }
 
 /**
@@ -416,29 +442,18 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
  * @param[in] string String to be associated to given field in Tuple.
  * @return TRUE if operation was succesful, FALSE if not.
  */
-gboolean
-tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string)
+
+gboolean tuple_associate_string (Tuple * tuple, const gint nfield,
+ const gchar * field, const gchar * string)
 {
-    TupleValue *value;
-
-    TUPLE_LOCK_WRITE();
-    if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_STRING)) == NULL)
-        return FALSE;
-
-    if (string == NULL)
-        value->value.string = NULL;
-    else if (g_utf8_validate (string, -1, NULL))
-        value->value.string = stringpool_get (string);
-    else
+    if (string && ! g_utf8_validate (string, -1, NULL))
     {
         fprintf (stderr, "Invalid UTF-8: %s.\n", string);
-        gchar * copy = str_to_utf8 (string);
-        value->value.string = stringpool_get (copy);
-        g_free (copy);
+        return set_string (tuple, nfield, field, str_to_utf8 (string), TRUE);
     }
 
-    TUPLE_UNLOCK_WRITE();
-    return TRUE;
+    gboolean ret = set_string (tuple, nfield, field, (gchar *) string, FALSE);
+    return ret;
 }
 
 /**
@@ -459,9 +474,15 @@ tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, cons
 gboolean tuple_associate_string_rel (Tuple * tuple, const gint nfield,
  const gchar * field, gchar * string)
 {
-    gboolean ret = tuple_associate_string (tuple, nfield, field, string);
-    g_free (string);
-    return ret;
+    if (string && ! g_utf8_validate (string, -1, NULL))
+    {
+        fprintf (stderr, "Invalid UTF-8: %s.\n", string);
+        gchar * copy = str_to_utf8 (string);
+        g_free (string);
+        string = copy;
+    }
+
+    return set_string (tuple, nfield, field, string, TRUE);
 }
 
 /**
@@ -522,18 +543,9 @@ tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
         tuple->values[nfield] = NULL;
     }
 
-    if (value == NULL) {
-        TUPLE_UNLOCK_WRITE();
-        return;
-    }
+    if (value)
+        tuple_value_destroy (value);
 
-    /* Free associated data */
-    if (value->type == TUPLE_STRING) {
-        stringpool_unref(value->value.string);
-        value->value.string = NULL;
-    }
-
-    mowgli_heap_free(tuple_value_heap, value);
     TUPLE_UNLOCK_WRITE();
 }
 

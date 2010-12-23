@@ -58,17 +58,7 @@ gint index_count (struct index * index)
     return index->count;
 }
 
-void index_set (struct index * index, gint at, void * value)
-{
-    index->data[at] = value;
-}
-
-void * index_get (struct index * index, gint at)
-{
-    return index->data[at];
-}
-
-static void resize_to (struct index * index, gint size)
+void index_allocate (struct index * index, gint size)
 {
     if (size <= index->size)
         return;
@@ -82,9 +72,19 @@ static void resize_to (struct index * index, gint size)
     index->data = g_realloc (index->data, sizeof (void *) * index->size);
 }
 
+void index_set (struct index * index, gint at, void * value)
+{
+    index->data[at] = value;
+}
+
+void * index_get (struct index * index, gint at)
+{
+    return index->data[at];
+}
+
 static void make_room (struct index * index, gint at, gint count)
 {
-    resize_to (index, index->count + count);
+    index_allocate (index, index->count + count);
 
     if (at < index->count)
         memmove (index->data + at + count, index->data + at, sizeof (void *) *

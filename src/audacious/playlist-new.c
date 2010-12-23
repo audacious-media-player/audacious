@@ -921,6 +921,10 @@ void playlist_entry_insert_batch_with_decoders (gint playlist_num, gint at,
     gint number = index_count (filenames);
     struct index * add = index_new ();
 
+    /* Preallocate space to avoid reallocs.  (The actual number of entries may
+     * turn out to be greater due to subtunes.) */
+    index_allocate (add, number);
+
     for (gint count = 0; count < number; count ++)
         make_entries (index_get (filenames, count), decoders ? index_get
          (decoders, count) : NULL, tuples ? index_get (tuples, count) : NULL,

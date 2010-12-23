@@ -42,7 +42,7 @@
 
 #ifdef TUPLE_USE_COMPILER
 # include "tuple_compiler.h"
-static GStaticRWLock tuplec_rwlock = G_STATIC_RW_LOCK_INIT;
+static GStaticMutex tuplec_mutex = G_STATIC_MUTEX_INIT;
 #endif
 
 #ifdef _DEBUG
@@ -544,7 +544,8 @@ gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar * strin
     }
 
 #ifdef TUPLE_USE_COMPILER
-    g_static_rw_lock_writer_lock(&tuplec_rwlock);
+    g_static_mutex_lock (& tuplec_mutex);
+
     if (last_string == NULL ||
         (last_string != NULL && strcmp(last_string, string)))
     {
@@ -576,14 +577,13 @@ gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar * strin
 #endif
 
     tuple_evalctx_reset(last_ctx);
-    g_static_rw_lock_writer_unlock(&tuplec_rwlock);
 
-    g_static_rw_lock_reader_lock(&tuplec_rwlock);
     result = tuple_formatter_eval(last_ctx, last_ev, tuple);
     if (last_ctx->iserror) {
         g_warning("[TuplezEV]: %s", last_ctx->errmsg);
     }
-    g_static_rw_lock_reader_unlock(&tuplec_rwlock);
+
+    g_static_mutex_unlock (& tuplec_mutex);
 
     return result;
 #else

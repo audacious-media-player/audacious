@@ -80,7 +80,7 @@ enum {
     FIELD_GAIN_GAIN_UNIT,
     FIELD_GAIN_PEAK_UNIT,
 
-    FIELD_COMPOSER,	/**< Composer of song, if different than artist. */
+    FIELD_COMPOSER,     /**< Composer of song, if different than artist. */
 
     /* Special field, must always be last */
     FIELD_LAST
@@ -99,10 +99,10 @@ typedef struct {
 
 extern const TupleBasicType tuple_fields[FIELD_LAST];
 
-#define TUPLE_NAME_MAX	20
+#define TUPLE_NAME_MAX 20
 
 typedef struct {
-    gchar name[TUPLE_NAME_MAX];
+    gchar name[TUPLE_NAME_MAX]; /* for standard fields, the empty string */
     TupleValueType type;
     union {
         gchar *string;

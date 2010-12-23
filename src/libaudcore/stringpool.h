@@ -32,10 +32,12 @@
  * Otherwise, a new string is created in the pool with one reference.
  *
  * @param[in] str String to be poolified.
+ * @param[in] take Nonzero if the caller no longer needs str; in this case, the
+ * pool will eventually call g_free(str).
  * @return Reference to the pooled string, or NULL if the given
  * string was NULL or an error occured.
  */
-gchar *stringpool_get(const gchar *str);
+gchar *stringpool_get(gchar *str, gboolean take);
 
 /**
  * Unreference a pooled string. When there are no references left,

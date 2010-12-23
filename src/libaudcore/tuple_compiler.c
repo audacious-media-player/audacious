@@ -819,7 +819,7 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
 gchar * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
  const Tuple * tuple)
 {
-  gchar *res = g_strdup("");
+  gchar *res = NULL;
   gssize resmax = 0, reslen = 0;
   assert(ctx != NULL);
   assert(tuple != NULL);
