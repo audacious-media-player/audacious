@@ -93,7 +93,11 @@ static void print_version(void)
 
 static void aud_make_user_dir(void)
 {
+#ifdef S_IRGRP
     const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
+#else
+    const mode_t mode755 = S_IRWXU;
+#endif
 
     make_directory(aud_paths[BMP_PATH_USER_DIR], mode755);
     make_directory(aud_paths[BMP_PATH_USER_PLUGIN_DIR], mode755);
