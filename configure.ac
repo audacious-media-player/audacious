@@ -66,8 +66,7 @@ esac
 
 dnl GNU gettext
 dnl ===========
-AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([0.14.0])
+AM_GNU_GETTEXT([external])
 
 if test "$MSGFMT" = ":" ; then
     AC_MSG_ERROR([msgfmt was not found!  You may need to install gettext.])

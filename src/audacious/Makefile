@@ -1,7 +1,5 @@
 include ../../extra.mk
 
-SUBDIRS = ${INTL_OBJECTIVE}
-
 PROG = audacious2${PROG_SUFFIX}
 SRCS = audconfig.c								\
        chardet.c								\
@@ -113,8 +111,7 @@ CPPFLAGS += -std=gnu99 \
 		-D_AUDACIOUS_CORE		\
 		${EGGSM_CFLAGS}			\
 		${LIBGUESS_CFLAGS}		\
-		-I.. -I../..			\
-		-I./intl
+		-I.. -I../..
 
 LIBS += ${LDADD}						\
         -lm \
