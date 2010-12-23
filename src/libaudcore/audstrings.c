@@ -107,24 +107,15 @@ str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes)
     return FALSE;
 }
 
-gchar *
-str_to_utf8_fallback(const gchar * str)
+static gchar * (* str_to_utf8_impl) (const gchar *) = NULL;
+static gchar * (* str_to_utf8_full_impl) (const gchar *, gssize, gsize *,
+ gsize *, GError * *) = NULL;
+
+void str_set_utf8_impl (gchar * (* stu_impl) (const gchar *),
+ gchar * (* stuf_impl) (const gchar *, gssize, gsize *, gsize *, GError * *))
 {
-    gchar *out_str, *convert_str, *chr;
-
-    if (!str)
-        return NULL;
-
-    convert_str = g_strdup(str);
-    for (chr = convert_str; *chr; chr++) {
-        if (*chr & 0x80)
-            *chr = '?';
-    }
-
-    out_str = g_strconcat(convert_str, _("  (invalid UTF-8)"), NULL);
-    g_free(convert_str);
-
-    return out_str;
+    str_to_utf8_impl = stu_impl;
+    str_to_utf8_full_impl = stuf_impl;
 }
 
 /**
@@ -133,11 +124,19 @@ str_to_utf8_fallback(const gchar * str)
  * @param str Local filename/path to convert.
  * @return String in UTF-8 encoding. Must be freed with g_free().
  */
-gchar *(*str_to_utf8)(const gchar * str) = str_to_utf8_fallback;
 
-gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
-                       gsize *arg_bytes_read, gsize *arg_bytes_write,
-                       GError **arg_error) = NULL;
+gchar * str_to_utf8 (const gchar * str)
+{
+    g_return_val_if_fail (str_to_utf8_impl, NULL);
+    return str_to_utf8_impl (str);
+}
+
+gchar * str_to_utf8_full (const gchar * str, gssize len, gsize * bytes_read,
+ gsize * bytes_written, GError * * err)
+{
+    g_return_val_if_fail (str_to_utf8_full_impl, NULL);
+    return str_to_utf8_full_impl (str, len, bytes_read, bytes_written, err);
+}
 
 #if defined(__GLIBC__) && (__GLIBC__ >= 2)
 #define HAVE_EXECINFO 1

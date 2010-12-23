@@ -40,18 +40,16 @@ gboolean str_has_suffix_nocase(const gchar * str, const gchar * suffix);
 gboolean str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes);
 
 gchar *str_assert_utf8(const gchar *str);
-extern gchar *(*str_to_utf8)(const gchar * str);
-gchar *str_to_utf8_fallback(const gchar * str);
-extern gchar * (* chardet_to_utf8) (const gchar * string, gssize length, gsize *
- bytes_read, gsize * bytes_written, GError * * error);
+
+void str_set_utf8_impl (gchar * (* stu_impl) (const gchar *),
+ gchar * (* stuf_impl) (const gchar *, gssize, gsize *, gsize *, GError * *));
+gchar * str_to_utf8 (const gchar * str);
+gchar * str_to_utf8_full (const gchar * str, gssize len, gsize * bytes_read,
+ gsize * bytes_written, GError * * err);
 
 const gchar *str_skip_chars(const gchar * str, const gchar * chars);
 
 gchar *convert_dos_path(gchar * text);
-
-extern gchar *(*chardet_to_utf8)(const gchar *str, gssize len,
-                       gsize *arg_bytes_read, gsize *arg_bytes_write,
-                       GError **arg_error);
 
 gchar *filename_get_subtune(const gchar * filename, gint * track);
 gchar *filename_split_subtune(const gchar * filename, gint * track);

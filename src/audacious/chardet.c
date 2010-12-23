@@ -31,8 +31,23 @@
 #  include <libguess.h>
 #endif
 
-gchar *
-cd_str_to_utf8(const gchar * str)
+static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
+ gsize * arg_bytes_read, gsize * arg_bytes_write, GError ** error);
+
+static gchar * str_to_utf8_fallback (const gchar * str)
+{
+    gchar * out = g_strconcat (str, _("  (invalid UTF-8)"), NULL);
+
+    for (gchar * c = out; * c; c ++)
+    {
+        if (* c & 0x80)
+            * c = '?';
+    }
+
+    return out;
+}
+
+static gchar * cd_str_to_utf8 (const gchar * str)
 {
     gchar *out_str;
 
@@ -78,9 +93,8 @@ cd_str_to_utf8(const gchar * str)
     return str_to_utf8_fallback(str);
 }
 
-gchar *
-cd_chardet_to_utf8(const gchar * str, gssize len, gsize * arg_bytes_read,
-                   gsize * arg_bytes_write, GError ** error)
+static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
+ gsize * arg_bytes_read, gsize * arg_bytes_write, GError ** error)
 {
     if (error)
         * error = NULL;
@@ -178,9 +192,7 @@ fallback:
     return NULL; /* If we have no idea, return NULL. */
 }
 
-
-void chardet_init(void)
+void chardet_init (void)
 {
-    str_to_utf8 = cd_str_to_utf8;
-    chardet_to_utf8 = cd_chardet_to_utf8;
+    str_set_utf8_impl (cd_str_to_utf8, cd_chardet_to_utf8);
 }
