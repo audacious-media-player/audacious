@@ -35,8 +35,6 @@
 #include "eggsmclient.h"
 #endif
 
-static sigset_t signal_set;
-
 #ifdef USE_EGGSM
 static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)
@@ -67,6 +65,9 @@ signal_session_save_cb(EggSMClient *client, GKeyFile *state_file, gpointer user_
 }
 #endif
 
+#ifdef HAVE_SIGWAIT
+static sigset_t signal_set;
+
 static void * signal_thread (void * data)
 {
     gint signal;
@@ -76,6 +77,7 @@ static void * signal_thread (void * data)
 
     return NULL;
 }
+#endif
 
 /* Must be called before any threads are created. */
 void signal_handlers_init (void)
@@ -95,6 +97,7 @@ void signal_handlers_init (void)
     }
 #endif
 
+#ifdef HAVE_SIGWAIT
     sigemptyset (& signal_set);
     sigaddset (& signal_set, SIGHUP);
     sigaddset (& signal_set, SIGINT);
@@ -103,4 +106,5 @@ void signal_handlers_init (void)
 
     sigprocmask (SIG_BLOCK, & signal_set, NULL);
     g_thread_create (signal_thread, NULL, FALSE, NULL);
+#endif
 }
