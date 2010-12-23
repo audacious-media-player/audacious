@@ -170,25 +170,25 @@ static gboolean library_store_iter_parent (GtkTreeModel * model, GtkTreeIter *
     return FALSE;
 }
 
-static void interface_init (GtkTreeModelIface * interface)
+static void iface_init (GtkTreeModelIface * iface)
 {
-    interface->get_flags = library_store_get_flags;
-    interface->get_n_columns = library_store_get_n_columns;
-    interface->get_column_type = library_store_get_column_type;
-    interface->get_iter = library_store_get_iter;
-    interface->get_path = library_store_get_path;
-    interface->get_value = library_store_get_value;
-    interface->iter_next = library_store_iter_next;
-    interface->iter_children = library_store_iter_children;
-    interface->iter_has_child = library_store_iter_has_child;
-    interface->iter_n_children = library_store_iter_n_children;
-    interface->iter_nth_child = library_store_iter_nth_child;
-    interface->iter_parent = library_store_iter_parent;
+    iface->get_flags = library_store_get_flags;
+    iface->get_n_columns = library_store_get_n_columns;
+    iface->get_column_type = library_store_get_column_type;
+    iface->get_iter = library_store_get_iter;
+    iface->get_path = library_store_get_path;
+    iface->get_value = library_store_get_value;
+    iface->iter_next = library_store_iter_next;
+    iface->iter_children = library_store_iter_children;
+    iface->iter_has_child = library_store_iter_has_child;
+    iface->iter_n_children = library_store_iter_n_children;
+    iface->iter_nth_child = library_store_iter_nth_child;
+    iface->iter_parent = library_store_iter_parent;
 }
 
-static const GInterfaceInfo interface_info =
+static const GInterfaceInfo iface_info =
 {
-    .interface_init = (GInterfaceInitFunc) interface_init,
+    .interface_init = (GInterfaceInitFunc) iface_init,
     .interface_finalize = NULL,
     .interface_data = NULL,
 };
@@ -205,10 +205,10 @@ static gboolean library_store_drag_data_delete (GtkTreeDragSource * source,
     return TRUE;
 }
 
-static void source_init (GtkTreeDragSourceIface * interface)
+static void source_init (GtkTreeDragSourceIface * iface)
 {
-    interface->drag_data_get = library_store_drag_data_get;
-    interface->drag_data_delete = library_store_drag_data_delete;
+    iface->drag_data_get = library_store_drag_data_get;
+    iface->drag_data_delete = library_store_drag_data_delete;
 }
 
 static const GInterfaceInfo source_info =
@@ -275,10 +275,10 @@ gboolean library_store_row_drop_possible (GtkTreeDragDest * dest,
     return (before >= 0 && before <= store->rows);
 }
 
-static void dest_init (GtkTreeDragDestIface * interface)
+static void dest_init (GtkTreeDragDestIface * iface)
 {
-    interface->drag_data_received = library_store_drag_data_received;
-    interface->row_drop_possible = library_store_row_drop_possible;
+    iface->drag_data_received = library_store_drag_data_received;
+    iface->row_drop_possible = library_store_row_drop_possible;
 }
 
 static const GInterfaceInfo dest_info =
@@ -297,7 +297,7 @@ static GType library_store_get_type (void)
         type = g_type_register_static_simple (G_TYPE_OBJECT, "LibraryStore",
          sizeof (LibraryStoreClass), NULL, sizeof (LibraryStore),
          (GInstanceInitFunc) library_store_init, 0);
-        g_type_add_interface_static (type, GTK_TYPE_TREE_MODEL, & interface_info);
+        g_type_add_interface_static (type, GTK_TYPE_TREE_MODEL, & iface_info);
         g_type_add_interface_static (type, GTK_TYPE_TREE_DRAG_SOURCE,
          & source_info);
         g_type_add_interface_static (type, GTK_TYPE_TREE_DRAG_DEST, & dest_info);
