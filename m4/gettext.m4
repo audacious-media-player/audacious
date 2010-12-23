@@ -97,8 +97,8 @@ AC_DEFUN([AM_GNU_GETTEXT],
     AC_REQUIRE([AM_ICONV_LINKFLAGS_BODY])
   ])
 
-  dnl Sometimes, on MacOS X, libintl requires linking with CoreFoundation.
-  gt_INTL_MACOSX
+#  dnl Sometimes, on MacOS X, libintl requires linking with CoreFoundation.
+#  gt_INTL_MACOSX
 
   dnl Set USE_NLS.
   AC_REQUIRE([AM_NLS])
