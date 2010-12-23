@@ -431,14 +431,14 @@ void plugin_registry_load (void)
 
     gint format;
     if (! parse_integer ("format", & format) || format != FORMAT)
-        goto ERROR;
+        goto ERR;
 
     parse_next (handle);
 
     while (module_parse (handle))
         ;
 
-ERROR:
+ERR:
     fclose (handle);
 UNLOCK:
     registry_locked = FALSE;
