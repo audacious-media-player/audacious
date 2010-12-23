@@ -30,16 +30,16 @@ typedef struct _guid {
     guint16 le16_1;
     guint16 le16_2;
     guint64 be64;
-}GUID;
+}GUID_t;
 
 
-GUID *guid_read_from_file(VFSFile *);
+GUID_t *guid_read_from_file(VFSFile *);
 gboolean guid_write_to_file(VFSFile *, int);
 
-GUID *guid_convert_from_string(const gchar *);
-gchar *guid_convert_to_string(const GUID*);
-gboolean guid_equal(GUID *, GUID *);
-int get_guid_type(GUID *);
+GUID_t *guid_convert_from_string(const gchar *);
+gchar *guid_convert_to_string(const GUID_t*);
+gboolean guid_equal(GUID_t *, GUID_t *);
+int get_guid_type(GUID_t *);
 const gchar *wma_guid_map(int);
 
 #endif /* _GUID_H */

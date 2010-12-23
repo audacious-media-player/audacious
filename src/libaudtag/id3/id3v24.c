@@ -1008,32 +1008,32 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     if (! offset)
     {
         if (! cut_beginning_tag (f, header_size + data_size + footer_size))
-            goto ERROR;
+            goto ERR;
     }
     else
     {
         if (offset + header_size + data_size + footer_size != vfs_fsize (f))
-            goto ERROR;
+            goto ERR;
         if (vfs_ftruncate (f, offset))
-            goto ERROR;
+            goto ERR;
     }
 
     offset = vfs_fsize (f);
 
     if (offset < 0 || vfs_fseek (f, offset, SEEK_SET) || ! write_header (f, 0,
      FALSE))
-        goto ERROR;
+        goto ERR;
 
     data_size = writeAllFramesToFile (f, dict);
 
     if (! write_header (f, data_size, TRUE) || vfs_fseek (f, offset, SEEK_SET)
      || ! write_header (f, data_size, FALSE))
-        goto ERROR;
+        goto ERR;
 
     mowgli_dictionary_destroy (dict, free_frame_cb, NULL);
     return TRUE;
 
-ERROR:
+ERR:
     mowgli_dictionary_destroy (dict, free_frame_cb, NULL);
     return FALSE;
 }

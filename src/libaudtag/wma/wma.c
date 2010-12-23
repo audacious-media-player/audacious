@@ -212,7 +212,7 @@ void free_ext_content_descr_obj(ExtContentDescrObj * ecdo)
 }
 
 /* returns the offset of the object in the file */
-static long ftell_object_by_guid(VFSFile * f, GUID * g)
+static long ftell_object_by_guid(VFSFile * f, GUID_t * g)
 {
     AUDDBG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
     HeaderObj *h = read_top_header_object(f);
@@ -249,7 +249,7 @@ VFSFile *make_temp_file()
 
 long ftell_object_by_str(VFSFile * f, gchar * s)
 {
-    GUID *g = guid_convert_from_string(s);
+    GUID_t *g = guid_convert_from_string(s);
     long res = ftell_object_by_guid(f, g);
     g_free(g);
     return res;
@@ -321,8 +321,8 @@ static gboolean write_top_header_object(VFSFile * f, HeaderObj * header)
 /* interface functions */
 gboolean wma_can_handle_file(VFSFile * f)
 {
-    GUID *guid1 = guid_read_from_file(f);
-    GUID *guid2 = guid_convert_from_string(ASF_HEADER_OBJECT_GUID);
+    GUID_t *guid1 = guid_read_from_file(f);
+    GUID_t *guid2 = guid_convert_from_string(ASF_HEADER_OBJECT_GUID);
     gboolean equal = ((guid1 != NULL) && guid_equal(guid1, guid2));
 
     g_free(guid1);
@@ -365,7 +365,7 @@ gboolean wma_write_tag (Tuple * tuple, VFSFile * f)
     HeaderObj *top_ho = read_top_header_object(f);
     VFSFile *tmpfile = make_temp_file();
     gint i, cdo_pos, ecdo_pos;
-    GUID *g;
+    GUID_t *g;
     /*read all the headers and write them to the new file */
     /*the headers that contain tuple data will be overwritten */
     AUDDBG("Header Object size: %" PRId64 "\n", top_ho->size);

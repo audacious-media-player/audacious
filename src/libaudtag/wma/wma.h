@@ -26,26 +26,6 @@
 #include "libaudcore/vfs.h"
 #include "wma_fmt.h"
 
-#ifndef TAG_WMA_MODULE_H
-/* static functions */
-
-/* reads the whole structure, containing the data */
-static GenericHeader *read_generic_header(VFSFile *f, gboolean read_data);
-
-static HeaderObj *read_top_header_object(VFSFile *f);
-
-static gboolean write_top_header_object(VFSFile *f, HeaderObj *h);
-
-static ContentDescriptor **read_descriptors(VFSFile *f, guint count, Tuple*t, gboolean populate_tuple);
-
-static ContentDescrObj *read_content_descr_obj(VFSFile *f);
-
-static ExtContentDescrObj *read_ext_content_descr_obj(VFSFile * f, Tuple *t, gboolean populate_tuple);
-
-static long ftell_object_by_guid(VFSFile *f, GUID *g);
-static long ftell_object_by_str(VFSFile *f, gchar *s);
-#endif
-
 /* TAG plugin API */
 gboolean wma_can_handle_file(VFSFile *f);
 gboolean wma_read_tag (Tuple * tuple, VFSFile * handle);

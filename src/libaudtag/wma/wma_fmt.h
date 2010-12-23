@@ -81,13 +81,13 @@ typedef enum {
  * but the size is needed so that we can skip it
  */
 typedef struct _generic_header {
-    GUID *guid;
+    GUID_t *guid;
     guint64 size;
     gchar *data;
 } GenericHeader;
 
 typedef struct _header_object {
-    GUID *guid;
+    GUID_t *guid;
     guint64 size;
     guint32 objectsNr;
     guint8 res1;
@@ -98,7 +98,7 @@ typedef struct _header_object {
  * this is special, its size does not include the size of the ext_data
  */
 typedef struct _header_extension_object {
-    GUID *guid;
+    GUID_t *guid;
     guint64 size;
     guint32 objects_count;
     guint8 res1;
@@ -108,7 +108,7 @@ typedef struct _header_extension_object {
 } HeaderExtensionObject;
 
 typedef struct _file_properties_header {
-    GUID *guid;
+    GUID_t *guid;
     guint64 size;
     gchar dontcare1[16];
     guint64 duration; //expressed as the count of 100ns intervals
@@ -116,7 +116,7 @@ typedef struct _file_properties_header {
 } FilePropertiesHeader;
 
 typedef struct _content_description_object {
-    GUID *guid;
+    GUID_t *guid;
     guint64 size;
     guint16 title_length;
     guint16 author_length;
@@ -148,7 +148,7 @@ typedef struct _content_descriptor {
 } ContentDescriptor;
 
 typedef struct _extended_content_description_object {
-    GUID *guid;
+    GUID_t *guid;
     guint64 size;
     guint16 content_desc_count;
     ContentDescriptor **descriptors;

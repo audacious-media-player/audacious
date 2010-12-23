@@ -434,23 +434,23 @@ static gboolean ape_write_tag (const Tuple * tuple, VFSFile * handle)
         if (start + length != vfs_fsize (handle))
         {
             AUDDBG ("Writing tags is only supported at end of file.\n");
-            goto ERROR;
+            goto ERR;
         }
 
         if (vfs_ftruncate (handle, start))
-            goto ERROR;
+            goto ERR;
     }
     else
     {
         start = vfs_fsize (handle);
 
         if (start < 0)
-            goto ERROR;
+            goto ERR;
     }
 
     if (vfs_fseek (handle, start, SEEK_SET) || ! write_header (0, 0, TRUE,
      handle))
-        goto ERROR;
+        goto ERR;
 
     length = 0;
     items = 0;
@@ -463,7 +463,7 @@ static gboolean ape_write_tag (const Tuple * tuple, VFSFile * handle)
      FIELD_GENRE, handle, "Genre", & length, & items) || ! write_integer_item
      (tuple, FIELD_TRACK_NUMBER, handle, "Track", & length, & items) ||
      ! write_integer_item (tuple, FIELD_YEAR, handle, "Year", & length, & items))
-        goto ERROR;
+        goto ERR;
 
     for (node = list; node != NULL; node = node->next)
     {
@@ -476,7 +476,7 @@ static gboolean ape_write_tag (const Tuple * tuple, VFSFile * handle)
             continue;
 
         if (! ape_write_item (handle, key, value, & length))
-            goto ERROR;
+            goto ERR;
 
         items ++;
     }
@@ -485,12 +485,12 @@ static gboolean ape_write_tag (const Tuple * tuple, VFSFile * handle)
 
     if (! write_header (length, items, FALSE, handle) || vfs_fseek (handle,
      start, SEEK_SET) || ! write_header (length, items, TRUE, handle))
-        goto ERROR;
+        goto ERR;
 
     free_tag_list (list);
     return TRUE;
 
-ERROR:
+ERR:
     free_tag_list (list);
     return FALSE;
 }
