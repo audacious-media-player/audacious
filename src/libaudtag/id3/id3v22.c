@@ -97,12 +97,12 @@ static gboolean validate_header (ID3v2Header * header)
 
     header->size = unsyncsafe32(GUINT32_FROM_BE(header->size));
 
-    AUDDBG ("Found ID3v2 header:\n");
-    AUDDBG (" magic = %.3s\n", header->magic);
-    AUDDBG (" version = %d\n", (gint) header->version);
-    AUDDBG (" revision = %d\n", (gint) header->revision);
-    AUDDBG (" flags = %x\n", (gint) header->flags);
-    AUDDBG (" size = %d\n", (gint) header->size);
+    TAGDBG ("Found ID3v2 header:\n");
+    TAGDBG (" magic = %.3s\n", header->magic);
+    TAGDBG (" version = %d\n", (gint) header->version);
+    TAGDBG (" revision = %d\n", (gint) header->revision);
+    TAGDBG (" flags = %x\n", (gint) header->flags);
+    TAGDBG (" size = %d\n", (gint) header->size);
     return TRUE;
 }
 
@@ -128,7 +128,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
 
     * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
 
-    AUDDBG ("Offset = %d, header size = %d, data size = %d\n",
+    TAGDBG ("Offset = %d, header size = %d, data size = %d\n",
      (gint) * offset, * header_size, * data_size);
 
     return TRUE;
@@ -154,16 +154,16 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     for (i = 0; i < 3; i++)
     {
         hdrsz |= (guint32) header.size[i] << ((2 - i) * 8);
-        AUDDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
+        TAGDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
     }
 
 //    hdrsz = GUINT32_TO_BE(hdrsz);
     if (hdrsz > max_size || hdrsz == 0)
         return FALSE;
 
-    AUDDBG ("Found frame:\n");
-    AUDDBG (" key = %.3s\n", header.key);
-    AUDDBG (" size = %d\n", (gint) hdrsz);
+    TAGDBG ("Found frame:\n");
+    TAGDBG (" key = %.3s\n", header.key);
+    TAGDBG (" size = %d\n", (gint) hdrsz);
 
     * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
     sprintf (key, "%.3s", header.key);
@@ -174,7 +174,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (vfs_fread (* data, 1, * size, handle) != * size)
         return FALSE;
 
-    AUDDBG ("Data size = %d.\n", * size);
+    TAGDBG ("Data size = %d.\n", * size);
     return TRUE;
 }
 
@@ -226,9 +226,9 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
         return;
 
     if (customfield != NULL)
-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
+        TAGDBG ("Custom field %s = %s.\n", customfield, text);
     else
-        AUDDBG ("Field %i = %s.\n", field, text);
+        TAGDBG ("Field %i = %s.\n", field, text);
 
     tuple_associate_string (tuple, field, customfield, text);
     g_free (text);
@@ -243,9 +243,9 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
         return;
 
     if (customfield != NULL)
-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
+        TAGDBG ("Custom field %s = %s.\n", customfield, text);
     else
-        AUDDBG ("Field %i = %s.\n", field, text);
+        TAGDBG ("Field %i = %s.\n", field, text);
 
     tuple_associate_int (tuple, field, customfield, atoi (text));
     g_free (text);
@@ -258,7 +258,7 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     if (! decode_comment_frame (data, size, & lang, & type, & value))
         return;
 
-    AUDDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
+    TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
         tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
@@ -281,7 +281,7 @@ static void decode_txx (Tuple * tuple, const guchar * data, gint size)
         return;
 
     gchar * value = separator + 1;
-    AUDDBG ("TXX: %s = %s.\n", text, value);
+    TAGDBG ("TXX: %s = %s.\n", text, value);
     tuple_associate_string (tuple, -1, text, value);
 
     g_free (text);
@@ -307,7 +307,7 @@ static gboolean decode_rva_block (const guchar * * _data, gint * _size, gint *
     data += 4;
     size -= 4;
 
-    AUDDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+    TAGDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
      * channel, * adjustment, * adjustment_unit, peak_bits);
 
     if (peak_bits > 0 && peak_bits < sizeof (gint) * 8)
@@ -327,7 +327,7 @@ static gboolean decode_rva_block (const guchar * * _data, gint * _size, gint *
         data += bytes;
         size -= count;
 
-        AUDDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
+        TAGDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
     }
     else
     {
@@ -350,7 +350,7 @@ static void decode_rva (Tuple * tuple, const guchar * data, gint size)
 
     domain = (const gchar *) data;
 
-    AUDDBG ("RVA domain: %s\n", domain);
+    TAGDBG ("RVA domain: %s\n", domain);
 
     size -= strlen (domain) + 1;
     data += strlen (domain) + 1;
@@ -444,7 +444,7 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
      & data_size))
         return FALSE;
 
-    AUDDBG("Reading tags from %i bytes of ID3 data in %s\n", data_size, handle->uri);
+    TAGDBG("Reading tags from %i bytes of ID3 data in %s\n", data_size, handle->uri);
 
     for (pos = 0; pos < data_size; )
     {
@@ -455,7 +455,7 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
         if (! read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
 	{
-	    AUDDBG("read_frame failed at pos %i\n", pos);
+	    TAGDBG("read_frame failed at pos %i\n", pos);
             break;
 	}
 
@@ -507,7 +507,7 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
             decode_rva (tuple, data, size);
             break;
           default:
-            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+            TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
             break;
         }
 
@@ -533,7 +533,7 @@ static gboolean parse_pic (const guchar * data, gint size, gchar * * mime,
     * image_data = g_memdup (after, data + size - after);
     * image_size = data + size - after;
 
-    AUDDBG ("PIC: mime = %s, type = %d, size = %d.\n", * mime,
+    TAGDBG ("PIC: mime = %s, type = %d, size = %d.\n", * mime,
      * type, * image_size);
     return TRUE;
 }

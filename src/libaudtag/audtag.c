@@ -23,9 +23,16 @@
 #include "tag_module.h"
 #include "util.h"
 
+gboolean tag_verbose = FALSE;
+
 void tag_init(void)
 {
     init_tag_modules();
+}
+
+void tag_set_verbose (gboolean verbose)
+{
+    tag_verbose = verbose;
 }
 
 /* The tuple's file-related attributes are already set */

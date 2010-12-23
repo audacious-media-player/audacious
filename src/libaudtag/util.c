@@ -61,66 +61,66 @@ const gchar *get_complete_filepath(Tuple * tuple)
     dir = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
     file = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
     filepath = g_strdup_printf("%s/%s", dir, file);
-    AUDDBG("file path = %s\n", filepath);
+    TAGDBG("file path = %s\n", filepath);
     return filepath;
 }
 
 void print_tuple(Tuple * tuple)
 {
 #if WMA_DEBUG
-    AUDDBG("--------------TUPLE PRINT --------------------\n");
+    TAGDBG("--------------TUPLE PRINT --------------------\n");
     const gchar *title = tuple_get_string(tuple, FIELD_TITLE, NULL);
-    AUDDBG("title = %s\n", title);
+    TAGDBG("title = %s\n", title);
     /* artist */
     const gchar *artist = tuple_get_string(tuple, FIELD_ARTIST, NULL);
-    AUDDBG("artist = %s\n", artist);
+    TAGDBG("artist = %s\n", artist);
 
     /* copyright */
     const gchar *copyright = tuple_get_string(tuple, FIELD_COPYRIGHT, NULL);
-    AUDDBG("copyright = %s\n", copyright);
+    TAGDBG("copyright = %s\n", copyright);
 
     /* comment / description */
 
     const gchar *comment = tuple_get_string(tuple, FIELD_COMMENT, NULL);
-    AUDDBG("comment = %s\n", comment);
+    TAGDBG("comment = %s\n", comment);
 
     /* codec name */
     const gchar *codec_name = tuple_get_string(tuple, FIELD_CODEC, NULL);
-    AUDDBG("codec = %s\n", codec_name);
+    TAGDBG("codec = %s\n", codec_name);
 
     /* album */
     const gchar *album = tuple_get_string(tuple, FIELD_ALBUM, NULL);
-    AUDDBG("Album = %s\n", album);
+    TAGDBG("Album = %s\n", album);
 
     /*track number */
     gint track_nr = tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL);
-    AUDDBG("Track nr = %d\n", track_nr);
+    TAGDBG("Track nr = %d\n", track_nr);
 
     /* genre */
     const gchar *genre = tuple_get_string(tuple, FIELD_GENRE, NULL);
-    AUDDBG("Genre = %s \n", genre);
+    TAGDBG("Genre = %s \n", genre);
 
     /* length */
     gint length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
-    AUDDBG("Length = %d\n", length);
+    TAGDBG("Length = %d\n", length);
 
     /* year */
     gint year = tuple_get_int(tuple, FIELD_YEAR, NULL);
-    AUDDBG("Year = %d\n", year);
+    TAGDBG("Year = %d\n", year);
 
     /* quality */
     const gchar *quality = tuple_get_string(tuple, FIELD_QUALITY, NULL);
-    AUDDBG("quality = %s\n", quality);
+    TAGDBG("quality = %s\n", quality);
 
     /* path */
     const gchar *path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
-    AUDDBG("path = %s\n", path);
+    TAGDBG("path = %s\n", path);
 
     /* filename */
     const gchar *filename = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
-    AUDDBG("filename = %s\n", filename);
+    TAGDBG("filename = %s\n", filename);
 
-    AUDDBG("-----------------END---------------------\n");
+    TAGDBG("-----------------END---------------------\n");
 #endif
 }
 
@@ -151,7 +151,7 @@ gunichar2 *fread_utf16(VFSFile * f, guint64 size)
         p = NULL;
     }
     gchar *s = utf8(p);
-    AUDDBG("Converted to UTF8: '%s'\n", s);
+    TAGDBG("Converted to UTF8: '%s'\n", s);
     g_free(s);
     return p;
 }

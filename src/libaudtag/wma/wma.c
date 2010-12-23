@@ -31,7 +31,7 @@
 /* static functions */
 static GenericHeader *read_generic_header(VFSFile * f, gboolean read_data)
 {
-    AUDDBG("read top-level header object\n");
+    TAGDBG("read top-level header object\n");
     g_return_val_if_fail((f != NULL), NULL);
     GenericHeader *header = g_new0(GenericHeader, 1);
     header->guid = guid_read_from_file(f);
@@ -42,7 +42,7 @@ static GenericHeader *read_generic_header(VFSFile * f, gboolean read_data)
         header->data = NULL;
 
     gchar *s = guid_convert_to_string(header->guid);
-    AUDDBG("read GUID: %s\n", s);
+    TAGDBG("read GUID: %s\n", s);
     g_free(s);
 
     return header;
@@ -50,7 +50,7 @@ static GenericHeader *read_generic_header(VFSFile * f, gboolean read_data)
 
 static HeaderObj *read_top_header_object(VFSFile * f)
 {
-    AUDDBG("read top-level header object\n");
+    TAGDBG("read top-level header object\n");
     g_return_val_if_fail((f != NULL), NULL);
     HeaderObj *header = g_new0(HeaderObj, 1);
 
@@ -59,7 +59,7 @@ static HeaderObj *read_top_header_object(VFSFile * f)
 
     header->size = read_LEuint64(f);
     header->objectsNr = read_LEuint32(f);
-    AUDDBG("Number of child objects: %d\n", header->objectsNr);
+    TAGDBG("Number of child objects: %d\n", header->objectsNr);
 
     header->res1 = read_uint8(f);
     header->res2 = read_uint8(f);
@@ -102,14 +102,14 @@ static ExtContentDescrObj *read_ext_content_descr_obj(VFSFile * f, Tuple * t, gb
 
 static guint find_descriptor_id(gchar * s)
 {
-    AUDDBG("finding descriptor id for '%s'\n", s);
+    TAGDBG("finding descriptor id for '%s'\n", s);
     g_return_val_if_fail(s != NULL, -1);
     gchar *l[DESC_LAST] = { DESC_ALBUM_STR, DESC_YEAR_STR, DESC_GENRE_STR, DESC_TRACK_STR };
     guint i;
     for (i = 0; i < DESC_LAST; i++)
         if (!strcmp(l[i], s))
         {
-            AUDDBG("found descriptor %s\n", s);
+            TAGDBG("found descriptor %s\n", s);
             return i;
         }
     return -1;
@@ -121,20 +121,20 @@ static ContentDescriptor *read_descriptor(VFSFile * f, Tuple * t, gboolean popul
     gchar *val = NULL, *name = NULL;
     guint32 intval = -1;
     gint dtype;
-    AUDDBG("reading name_len\n");
+    TAGDBG("reading name_len\n");
     cd->name_len = read_LEuint16(f);
-    AUDDBG("reading name\n");
+    TAGDBG("reading name\n");
     cd->name = fread_utf16(f, cd->name_len);
-    AUDDBG("reading val_type\n");
+    TAGDBG("reading val_type\n");
     cd->val_type = read_LEuint16(f);
-    AUDDBG("reading val_len\n");
+    TAGDBG("reading val_len\n");
     cd->val_len = read_LEuint16(f);
 
     name = utf8(cd->name);
     dtype = find_descriptor_id(name);
     g_free(name);
 
-    AUDDBG("reading val\n");
+    TAGDBG("reading val\n");
 
     if (populate_tuple)
     {
@@ -143,7 +143,7 @@ static ContentDescriptor *read_descriptor(VFSFile * f, Tuple * t, gboolean popul
         {                       /*UTF16 */
             cd->val = read_char_data(f, cd->val_len);
             val = utf8((gunichar2 *) cd->val);
-            AUDDBG("val: '%s' dtype: %d\n", val, dtype);
+            TAGDBG("val: '%s' dtype: %d\n", val, dtype);
             if (dtype == DESC_ALBUM)
                 tuple_associate_string(t, FIELD_ALBUM, NULL, val);
             if (dtype == DESC_GENRE)
@@ -158,7 +158,7 @@ static ContentDescriptor *read_descriptor(VFSFile * f, Tuple * t, gboolean popul
             if (cd->val_type == 3)
             {
                 intval = read_LEuint32(f);
-                AUDDBG("intval: %d, dtype: %d\n", intval, dtype);
+                TAGDBG("intval: %d, dtype: %d\n", intval, dtype);
                 if (dtype == DESC_TRACK)
                     tuple_associate_int(t, FIELD_TRACK_NUMBER, NULL, intval);
             }
@@ -168,8 +168,8 @@ static ContentDescriptor *read_descriptor(VFSFile * f, Tuple * t, gboolean popul
     }
     else
         cd->val = read_char_data(f, cd->val_len);
-    AUDDBG("read str_val: '%s', intval: %d\n", val, intval);
-    AUDDBG("exiting read_descriptor \n\n");
+    TAGDBG("read str_val: '%s', intval: %d\n", val, intval);
+    TAGDBG("exiting read_descriptor \n\n");
     return cd;
 }
 
@@ -214,7 +214,7 @@ void free_ext_content_descr_obj(ExtContentDescrObj * ecdo)
 /* returns the offset of the object in the file */
 static long ftell_object_by_guid(VFSFile * f, GUID_t * g)
 {
-    AUDDBG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
+    TAGDBG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
     HeaderObj *h = read_top_header_object(f);
     g_return_val_if_fail((f != NULL) && (g != NULL) && (h != NULL), -1);
 
@@ -222,19 +222,19 @@ static long ftell_object_by_guid(VFSFile * f, GUID_t * g)
     while (i < h->objectsNr)
     {
         GenericHeader *gen_hdr = read_generic_header(f, FALSE);
-        AUDDBG("encountered GUID %s, with ID %d\n", guid_convert_to_string(gen_hdr->guid), get_guid_type(gen_hdr->guid));
+        TAGDBG("encountered GUID %s, with ID %d\n", guid_convert_to_string(gen_hdr->guid), get_guid_type(gen_hdr->guid));
         if (guid_equal(gen_hdr->guid, g))
         {
             g_free(h);
             g_free(gen_hdr);
             guint64 ret = vfs_ftell(f) - 24;
-            AUDDBG("at offset %" PRIx64 "\n", ret);
+            TAGDBG("at offset %" PRIx64 "\n", ret);
             return ret;
         }
         vfs_fseek(f, gen_hdr->size - 24, SEEK_CUR);     //most headers have a size as their second field"
         i++;
     }
-    AUDDBG("The object was not found\n");
+    TAGDBG("The object was not found\n");
 
     return -1;
 }
@@ -298,7 +298,7 @@ static void write_ext_content_descr_obj_from_tuple(VFSFile * f, ExtContentDescrO
 
 static gboolean write_generic_header(VFSFile * f, GenericHeader * gh)
 {
-    AUDDBG("Writing generic header\n");
+    TAGDBG("Writing generic header\n");
     guid_write_to_file(f, get_guid_type(gh->guid));
     return write_char_data(f, gh->data, gh->size);
 }
@@ -312,7 +312,7 @@ static void free_generic_header(GenericHeader * gh)
 
 static gboolean write_top_header_object(VFSFile * f, HeaderObj * header)
 {
-    AUDDBG("write header object\n");
+    TAGDBG("write header object\n");
     vfs_fseek(f, 0, SEEK_SET);
     return (guid_write_to_file(f, ASF_HEADER_OBJECT) && write_LEuint64(f, header->size) && write_LEuint32(f, header->objectsNr) && write_uint8(f, header->res1) &&      /* the reserved fields */
             write_uint8(f, header->res2));
@@ -368,7 +368,7 @@ gboolean wma_write_tag (Tuple * tuple, VFSFile * f)
     GUID_t *g;
     /*read all the headers and write them to the new file */
     /*the headers that contain tuple data will be overwritten */
-    AUDDBG("Header Object size: %" PRId64 "\n", top_ho->size);
+    TAGDBG("Header Object size: %" PRId64 "\n", top_ho->size);
     //vfs_fseek(tmpfile, )
     for (i = 0; i < top_ho->objectsNr; i++)
     {
@@ -413,11 +413,11 @@ gboolean wma_write_tag (Tuple * tuple, VFSFile * f)
     /*
        if (g_rename(f1, f2) == 0)
        {
-       AUDDBG("the tag was updated successfully\n");
+       TAGDBG("the tag was updated successfully\n");
        }
        else
        {
-       AUDDBG("an error has occured\n");
+       TAGDBG("an error has occured\n");
        }
      */
     g_free(f1);

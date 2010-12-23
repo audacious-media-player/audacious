@@ -34,7 +34,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
     gchar * buffer = NULL;
     gsize converted = 0;
 
-    AUDDBG ("length = %d, encoding = %d, nulled = %d\n", length, encoding,
+    TAGDBG ("length = %d, encoding = %d, nulled = %d\n", length, encoding,
      nulled);
 
     if (nulled)
@@ -50,7 +50,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
                 return NULL;
 
             length = null - text;
-            AUDDBG ("length before null = %d\n", length);
+            TAGDBG ("length before null = %d\n", length);
 
             if (after != NULL)
                 * after = null + 1;
@@ -62,7 +62,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
                 return NULL;
 
             length = null - text;
-            AUDDBG ("length before null = %d\n", length);
+            TAGDBG ("length before null = %d\n", length);
 
             if (after != NULL)
                 * after = null + 2;
@@ -92,8 +92,8 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
         break;
     }
 
-    AUDDBG ("length converted: %d\n", (gint) converted);
-    AUDDBG ("string: %s\n", buffer);
+    TAGDBG ("length converted: %d\n", (gint) converted);
+    TAGDBG ("string: %s\n", buffer);
 
     if (_converted != NULL)
         * _converted = converted;

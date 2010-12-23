@@ -71,18 +71,18 @@ gchar *guid_convert_to_string(const GUID_t * g)
 gboolean guid_equal(GUID_t * g1, GUID_t * g2)
 {
     /*
-       AUDDBG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
-       AUDDBG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
+       TAGDBG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
+       TAGDBG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
      */
 
     g_return_val_if_fail((g1 != NULL) && (g2 != NULL), FALSE);
     if (!memcmp(g1, g2, 16))
     {
-        //        AUDDBG("equal\n");
+        //        TAGDBG("equal\n");
 
         return TRUE;
     }
-    /* AUDDBG("not equal\n"); */
+    /* TAGDBG("not equal\n"); */
     return FALSE;
 }
 

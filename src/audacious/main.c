@@ -385,6 +385,7 @@ gint main(gint argc, gchar ** argv)
     gtk_rc_add_default_file(aud_paths[BMP_PATH_GTKRC_FILE]);
 
     parse_cmd_line_options(&argc, &argv);
+    tag_set_verbose (cfg.verbose);
 
     if (!gtk_init_check(&argc, &argv))
     {                           /* XXX */

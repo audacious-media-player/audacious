@@ -23,7 +23,7 @@
 #define TAGUTIL_H
 
 #include <glib.h>
-#include <audacious/debug.h>
+
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
@@ -156,6 +156,10 @@ enum {
     GENRE_A_CAPELLA,
     GENRE_EURO_HOUSE
 };
+
+extern gboolean tag_verbose;
+
+#define TAGDBG(...) do {if (tag_verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 
 time_t unix_time(guint64 win_time);
 

@@ -118,7 +118,7 @@ static gboolean skip_extended_header_3 (VFSFile * handle, gint * _size)
 
     size = GUINT32_FROM_BE (size);
 
-    AUDDBG ("Found v2.3 extended header, size = %d.\n", (gint) size);
+    TAGDBG ("Found v2.3 extended header, size = %d.\n", (gint) size);
 
     if (vfs_fseek (handle, size, SEEK_CUR))
         return FALSE;
@@ -136,7 +136,7 @@ static gboolean skip_extended_header_4 (VFSFile * handle, gint * _size)
 
     size = unsyncsafe32 (GUINT32_FROM_BE (size));
 
-    AUDDBG ("Found v2.4 extended header, size = %d.\n", (gint) size);
+    TAGDBG ("Found v2.4 extended header, size = %d.\n", (gint) size);
 
     if (vfs_fseek (handle, size - 4, SEEK_CUR))
         return FALSE;
@@ -155,12 +155,12 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
 
     header->size = unsyncsafe32 (GUINT32_FROM_BE (header->size));
 
-    AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
-    AUDDBG (" magic = %.3s\n", header->magic);
-    AUDDBG (" version = %d\n", (gint) header->version);
-    AUDDBG (" revision = %d\n", (gint) header->revision);
-    AUDDBG (" flags = %x\n", (gint) header->flags);
-    AUDDBG (" size = %d\n", (gint) header->size);
+    TAGDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
+    TAGDBG (" magic = %.3s\n", header->magic);
+    TAGDBG (" version = %d\n", (gint) header->version);
+    TAGDBG (" revision = %d\n", (gint) header->revision);
+    TAGDBG (" flags = %x\n", (gint) header->flags);
+    TAGDBG (" size = %d\n", (gint) header->size);
     return TRUE;
 }
 
@@ -256,7 +256,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
         * data_size -= extended_size;
     }
 
-    AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
+    TAGDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
      "%d.\n", (gint) * offset, * header_size, * data_size, * footer_size);
 
     return TRUE;
@@ -303,17 +303,17 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (header.size > max_size || header.size == 0)
         return FALSE;
 
-    AUDDBG ("Found frame:\n");
-    AUDDBG (" key = %.4s\n", header.key);
-    AUDDBG (" size = %d\n", (gint) header.size);
-    AUDDBG (" flags = %x\n", (gint) header.flags);
+    TAGDBG ("Found frame:\n");
+    TAGDBG (" key = %.4s\n", header.key);
+    TAGDBG (" size = %d\n", (gint) header.size);
+    TAGDBG (" flags = %x\n", (gint) header.flags);
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
     sprintf (key, "%.4s", header.key);
 
     if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
     {
-        AUDDBG ("Hit compressed/encrypted frame %s.\n", key);
+        TAGDBG ("Hit compressed/encrypted frame %s.\n", key);
         return FALSE;
     }
 
@@ -334,7 +334,7 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     if (syncsafe || (header.flags & ID3_FRAME_SYNCSAFE))
         * size = unsyncsafe (* data, * size);
 
-    AUDDBG ("Data size = %d.\n", * size);
+    TAGDBG ("Data size = %d.\n", * size);
     return TRUE;
 }
 
@@ -390,7 +390,7 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
 
         if (mowgli_dictionary_retrieve (dict, key) != NULL)
         {
-            AUDDBG ("Discarding duplicate frame %s.\n", key);
+            TAGDBG ("Discarding duplicate frame %s.\n", key);
             g_free (data);
             continue;
         }
@@ -407,7 +407,7 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
 static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
  frame_size)
 {
-    AUDDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
+    TAGDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
 
     ID3v2FrameHeader header;
 
@@ -447,7 +447,7 @@ static gint writeAllFramesToFile (VFSFile * fd, mowgli_dictionary_t * dict)
     WriteState state = {fd, 0};
     mowgli_dictionary_foreach (dict, write_frame_cb, & state);
 
-    AUDDBG ("Total frame bytes written = %d.\n", state.written_size);
+    TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
 }
 
@@ -488,9 +488,9 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
         return;
 
     if (customfield != NULL)
-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
+        TAGDBG ("Custom field %s = %s.\n", customfield, text);
     else
-        AUDDBG ("Field %i = %s.\n", field, text);
+        TAGDBG ("Field %i = %s.\n", field, text);
 
     tuple_associate_string (tuple, field, customfield, text);
     g_free (text);
@@ -505,9 +505,9 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
         return;
 
     if (customfield != NULL)
-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
+        TAGDBG ("Custom field %s = %s.\n", customfield, text);
     else
-        AUDDBG ("Field %i = %s.\n", field, text);
+        TAGDBG ("Field %i = %s.\n", field, text);
 
     tuple_associate_int (tuple, field, customfield, atoi (text));
     g_free (text);
@@ -545,10 +545,10 @@ static void decode_private_info (Tuple * tuple, const guchar * data, gint size)
             if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
                 tuple_associate_string (tuple, -1, "media-class", "Game Soundtrack");
         } else {
-            AUDDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
+            TAGDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
         }
     } else {
-        AUDDBG("Unable to decode private data, skipping: %s\n", text);
+        TAGDBG("Unable to decode private data, skipping: %s\n", text);
     }
 
 DONE:
@@ -562,7 +562,7 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     if (! decode_comment_frame (data, size, & lang, & type, & value))
         return;
 
-    AUDDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
+    TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
         tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
@@ -585,7 +585,7 @@ static void decode_txxx (Tuple * tuple, const guchar * data, gint size)
         return;
 
     gchar * value = separator + 1;
-    AUDDBG ("TXXX: %s = %s.\n", text, value);
+    TAGDBG ("TXXX: %s = %s.\n", text, value);
     tuple_associate_string (tuple, -1, text, value);
 
     g_free (text);
@@ -611,7 +611,7 @@ static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
     data += 4;
     size -= 4;
 
-    AUDDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+    TAGDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
      * channel, * adjustment, * adjustment_unit, peak_bits);
 
     if (peak_bits > 0 && peak_bits < sizeof (gint) * 8)
@@ -631,7 +631,7 @@ static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
         data += bytes;
         size -= count;
 
-        AUDDBG ("RVA2 block: peak = %d/%d\n", * peak, * peak_unit);
+        TAGDBG ("RVA2 block: peak = %d/%d\n", * peak, * peak_unit);
     }
     else
     {
@@ -654,7 +654,7 @@ static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
 
     domain = (const gchar *) data;
 
-    AUDDBG ("RVA2 domain: %s\n", domain);
+    TAGDBG ("RVA2 domain: %s\n", domain);
 
     size -= strlen (domain) + 1;
     data += strlen (domain) + 1;
@@ -752,7 +752,7 @@ static void remove_frame (gint id, mowgli_dictionary_t * dict)
     if (frame == NULL)
         return;
 
-    AUDDBG ("Deleting frame %s.\n", id3_frames[id]);
+    TAGDBG ("Deleting frame %s.\n", id3_frames[id]);
     mowgli_dictionary_delete (dict, id3_frames[id]);
     free_generic_frame (frame);
 }
@@ -766,7 +766,7 @@ static void add_text_frame (gint id, const gchar * text, mowgli_dictionary_t *
         return;
     }
 
-    AUDDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
+    TAGDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
     gint length = strlen (text);
 
     GenericFrame * frame = add_generic_frame (id, length + 1, dict);
@@ -782,7 +782,7 @@ static void add_comment_frame (const gchar * text, mowgli_dictionary_t * dict)
         return;
     }
 
-    AUDDBG ("Adding comment frame = %s.\n", text);
+    TAGDBG ("Adding comment frame = %s.\n", text);
     gint length = strlen (text);
     GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5, dict);
 
@@ -896,7 +896,7 @@ static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
             decode_rva2 (tuple, data, size);
             break;
           default:
-            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+            TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
             break;
         }
 
@@ -925,7 +925,7 @@ static gboolean parse_apic (const guchar * data, gint size, gchar * * mime,
     * image_data = g_memdup (after, data + size - after);
     * image_size = data + size - after;
 
-    AUDDBG ("APIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
+    TAGDBG ("APIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
      * type, * desc, * image_size);
     return TRUE;
 }

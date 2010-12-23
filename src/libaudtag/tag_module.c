@@ -47,13 +47,13 @@ tag_module_t * find_tag_module (VFSFile * fd, gint new_type)
     {
         if (vfs_fseek(fd, 0, SEEK_SET))
         {
-            AUDDBG("not a seekable file\n");
+            TAGDBG("not a seekable file\n");
             return NULL;
         }
 
         if (((tag_module_t *) mod->data)->can_handle_file (fd))
         {
-            AUDDBG ("Module %s accepted file.\n", ((tag_module_t *)
+            TAGDBG ("Module %s accepted file.\n", ((tag_module_t *)
              mod->data)->name);
             return mod->data;
         }
@@ -69,6 +69,6 @@ tag_module_t * find_tag_module (VFSFile * fd, gint new_type)
         }
     }
 
-    AUDDBG("no module found\n");
+    TAGDBG("no module found\n");
     return NULL;
 }

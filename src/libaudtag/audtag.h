@@ -37,8 +37,8 @@ enum
     TAG_TYPE_APE,
 };
 
-void tag_init(void);
-void tag_terminate(void);
+void tag_init (void);
+void tag_set_verbose (gboolean verbose);
 
 gboolean tag_tuple_read (Tuple * tuple, VFSFile *fd);
 gboolean tag_image_read (VFSFile * handle, void * * data, gint * size);
