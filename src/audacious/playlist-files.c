@@ -25,57 +25,57 @@
 
 static const gchar * get_extension (const gchar * filename, gboolean quiet)
 {
-	const gchar * s = strrchr (filename, '/');
-	if (! s)
-		goto FAIL;
+    const gchar * s = strrchr (filename, '/');
+    if (! s)
+        goto FAIL;
 
-	const gchar * p = strrchr (s + 1, '.');
-	if (! p)
-		goto FAIL;
+    const gchar * p = strrchr (s + 1, '.');
+    if (! p)
+        goto FAIL;
 
-	return p + 1;
+    return p + 1;
 
 FAIL:
-	if (! quiet)
-		fprintf (stderr, "Failed to parse playlist filename %s.\n", filename);
-	return NULL;
+    if (! quiet)
+        fprintf (stderr, "Failed to parse playlist filename %s.\n", filename);
+    return NULL;
 }
 
 gboolean filename_is_playlist (const gchar * filename)
 {
-	const gchar * ext = get_extension (filename, TRUE);
-	if (! ext)
-		return FALSE;
+    const gchar * ext = get_extension (filename, TRUE);
+    if (! ext)
+        return FALSE;
 
-	return playlist_plugin_for_extension (ext) ? TRUE : FALSE;
+    return playlist_plugin_for_extension (ext) ? TRUE : FALSE;
 }
 
 static PlaylistPlugin * get_plugin (const gchar * filename)
 {
-	const gchar * ext = get_extension (filename, FALSE);
-	if (! ext)
-		return NULL;
+    const gchar * ext = get_extension (filename, FALSE);
+    if (! ext)
+        return NULL;
 
-	PluginHandle * plugin = playlist_plugin_for_extension (ext);
-	if (! plugin)
-	{
-		fprintf (stderr, "Unrecognized playlist file type \"%s\".\n", ext);
-		return NULL;
-	}
+    PluginHandle * plugin = playlist_plugin_for_extension (ext);
+    if (! plugin)
+    {
+        fprintf (stderr, "Unrecognized playlist file type \"%s\".\n", ext);
+        return NULL;
+    }
 
-	return plugin_get_header (plugin);
+    return plugin_get_header (plugin);
 }
 
 gboolean playlist_insert_playlist (gint list, gint at, const gchar * filename)
 {
-	PlaylistPlugin * pp = get_plugin (filename);
-	g_return_val_if_fail (pp && pp->load, FALSE);
-	return pp->load (filename, list, at);
+    PlaylistPlugin * pp = get_plugin (filename);
+    g_return_val_if_fail (pp && pp->load, FALSE);
+    return pp->load (filename, list, at);
 }
 
 gboolean playlist_save (gint list, const gchar * filename)
 {
-	PlaylistPlugin * pp = get_plugin (filename);
-	g_return_val_if_fail (pp && pp->save, FALSE);
-	return pp->save (filename, list);
+    PlaylistPlugin * pp = get_plugin (filename);
+    g_return_val_if_fail (pp && pp->save, FALSE);
+    return pp->save (filename, list);
 }
