@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include "debug.h"
 #include "playlist.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -68,6 +69,7 @@ static PlaylistPlugin * get_plugin (const gchar * filename)
 
 gboolean playlist_insert_playlist (gint list, gint at, const gchar * filename)
 {
+    AUDDBG ("Loading playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && pp->load, FALSE);
     return pp->load (filename, list, at);
@@ -75,6 +77,7 @@ gboolean playlist_insert_playlist (gint list, gint at, const gchar * filename)
 
 gboolean playlist_save (gint list, const gchar * filename)
 {
+    AUDDBG ("Saving playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && pp->save, FALSE);
     return pp->save (filename, list);
