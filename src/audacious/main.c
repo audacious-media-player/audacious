@@ -119,13 +119,18 @@ static void aud_free_paths(void)
 
 static void aud_init_paths()
 {
-    const gchar *xdg_config_home;
-    const gchar *xdg_data_home;
-    const gchar *xdg_cache_home;
+    const gchar * xdg_config_home = g_get_user_config_dir ();
+    const gchar * xdg_data_home = g_get_user_data_dir ();
+    const gchar * xdg_cache_home = g_get_user_cache_dir ();
 
-    xdg_config_home = g_get_user_config_dir();
-    xdg_data_home   = g_get_user_data_dir();
-    xdg_cache_home  = g_get_user_cache_dir();
+#ifdef _WIN32
+    /* Some libraries (libmcs) and plugins (filewriter) use these variables,
+     * which are generally not set on Windows. */
+    g_setenv ("HOME", g_get_home_dir (), TRUE);
+    g_setenv ("XDG_CONFIG_HOME", xdg_config_home, TRUE);
+    g_setenv ("XDG_DATA_HOME", xdg_data_home, TRUE);
+    g_setenv ("XDG_CACHE_HOME", xdg_cache_home, TRUE);
+#endif
 
     aud_paths[BMP_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
     aud_paths[BMP_PATH_USER_SKIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
