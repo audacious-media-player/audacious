@@ -143,9 +143,7 @@ sm_client_win32_end_session (EggSMClient         *client,
 static gboolean
 emit_quit_requested (gpointer smclient)
 {
-  gdk_threads_enter ();
   egg_sm_client_quit_requested (smclient);
-  gdk_threads_leave ();
 
   return FALSE;
 }
@@ -155,9 +153,7 @@ emit_quit (gpointer smclient)
 {
   EggSMClientWin32 *win32 = smclient;
 
-  gdk_threads_enter ();
   egg_sm_client_quit (smclient);
-  gdk_threads_leave ();
 
   g_async_queue_push (win32->msg_queue, GINT_TO_POINTER (1));
   return FALSE;
@@ -168,9 +164,7 @@ emit_quit_cancelled (gpointer smclient)
 {
   EggSMClientWin32 *win32 = smclient;
 
-  gdk_threads_enter ();
   egg_sm_client_quit_cancelled (smclient);
-  gdk_threads_leave ();
 
   g_async_queue_push (win32->msg_queue, GINT_TO_POINTER (1));
   return FALSE;
@@ -227,7 +221,7 @@ static gpointer
 sm_client_thread (gpointer smclient)
 {
   HINSTANCE instance;
-  WNDCLASSEXW wcl; 
+  WNDCLASSEXW wcl;
   ATOM klass;
   HWND window;
   MSG msg;
