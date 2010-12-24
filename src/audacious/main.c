@@ -355,16 +355,10 @@ static gboolean autosave_cb (void * unused)
 
 gint main(gint argc, gchar ** argv)
 {
-    /* glib-2.13.0 requires g_thread_init() to be called before all
-       other GLib functions */
-    g_thread_init(NULL);
-    if (!g_thread_supported())
-    {
-        g_printerr(_("Sorry, threads aren't supported on your platform.\n"));
-        exit(EXIT_FAILURE);
-    }
+    g_thread_init (NULL);
+    gdk_threads_init ();
+    gdk_threads_enter ();
 
-    gdk_threads_init();
     mowgli_init();
     chardet_init();
     tag_init();
@@ -451,5 +445,6 @@ gint main(gint argc, gchar ** argv)
     AUDDBG ("Shutting down core.\n");
     playlist_end ();
 
+    gdk_threads_leave ();
     return EXIT_SUCCESS;
 }
