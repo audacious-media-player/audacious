@@ -1924,7 +1924,7 @@ void playlist_save_state (void)
     gint playlist_num;
 
     snprintf (scratch, sizeof scratch, "%s/" STATE_FILE,
-     aud_paths[BMP_PATH_USER_DIR]);
+     aud_paths[AUD_PATH_USER_DIR]);
     handle = fopen (scratch, "w");
 
     if (handle == NULL)
@@ -1992,7 +1992,7 @@ void playlist_load_state (void)
     gint playlist_num;
 
     snprintf (scratch, sizeof scratch, "%s/" STATE_FILE,
-     aud_paths[BMP_PATH_USER_DIR]);
+     aud_paths[AUD_PATH_USER_DIR]);
     handle = fopen (scratch, "r");
 
     if (handle == NULL)

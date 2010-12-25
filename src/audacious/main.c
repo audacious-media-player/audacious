@@ -79,7 +79,7 @@ typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
 static AudCmdLineOpt options;
 
-gchar * aud_paths[BMP_PATH_COUNT];
+gchar * aud_paths[AUD_PATH_COUNT];
 
 #ifdef USE_DBUS
 MprisPlayer *mpris;
@@ -99,18 +99,16 @@ static void aud_make_user_dir(void)
     const mode_t mode755 = S_IRWXU;
 #endif
 
-    make_directory(aud_paths[BMP_PATH_USER_DIR], mode755);
-    make_directory(aud_paths[BMP_PATH_USER_PLUGIN_DIR], mode755);
-    make_directory(aud_paths[BMP_PATH_USER_SKIN_DIR], mode755);
-    make_directory(aud_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
-    make_directory(aud_paths[BMP_PATH_PLAYLISTS_DIR], mode755);
+    make_directory(aud_paths[AUD_PATH_USER_DIR], mode755);
+    make_directory(aud_paths[AUD_PATH_USER_PLUGIN_DIR], mode755);
+    make_directory(aud_paths[AUD_PATH_PLAYLISTS_DIR], mode755);
 }
 
 static void aud_free_paths(void)
 {
     gint i;
 
-    for (i = 0; i < BMP_PATH_COUNT; i++)
+    for (i = 0; i < AUD_PATH_COUNT; i++)
     {
         g_free(aud_paths[i]);
         aud_paths[i] = 0;
@@ -121,7 +119,6 @@ static void aud_init_paths()
 {
     const gchar * xdg_config_home = g_get_user_config_dir ();
     const gchar * xdg_data_home = g_get_user_data_dir ();
-    const gchar * xdg_cache_home = g_get_user_cache_dir ();
 
 #ifdef _WIN32
     /* Some libraries (libmcs) and plugins (filewriter) use these variables,
@@ -129,22 +126,14 @@ static void aud_init_paths()
     g_setenv ("HOME", g_get_home_dir (), TRUE);
     g_setenv ("XDG_CONFIG_HOME", xdg_config_home, TRUE);
     g_setenv ("XDG_DATA_HOME", xdg_data_home, TRUE);
-    g_setenv ("XDG_CACHE_HOME", xdg_cache_home, TRUE);
+    g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), TRUE);
 #endif
 
-    aud_paths[BMP_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
-    aud_paths[BMP_PATH_USER_SKIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
-    aud_paths[BMP_PATH_USER_PLUGIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
-
-    aud_paths[BMP_PATH_SKIN_THUMB_DIR] = g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
-
-    aud_paths[BMP_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlists", NULL);
-
-    aud_paths[BMP_PATH_CONFIG_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "config", NULL);
-    aud_paths[BMP_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "playlist.xspf", NULL);
-    aud_paths[BMP_PATH_ACCEL_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "accels", NULL);
-
-    aud_paths[BMP_PATH_GTKRC_FILE] = g_build_filename(aud_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
+    aud_paths[AUD_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
+    aud_paths[AUD_PATH_USER_PLUGIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
+    aud_paths[AUD_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlists", NULL);
+    aud_paths[AUD_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlist.xspf", NULL);
+    aud_paths[AUD_PATH_GTKRC_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "gtkrc", NULL);
 
     g_atexit(aud_free_paths);
 }
@@ -385,7 +374,7 @@ gint main(gint argc, gchar ** argv)
     aud_init_paths();
     aud_make_user_dir();
 
-    gtk_rc_add_default_file(aud_paths[BMP_PATH_GTKRC_FILE]);
+    gtk_rc_add_default_file(aud_paths[AUD_PATH_GTKRC_FILE]);
 
     parse_cmd_line_options(&argc, &argv);
     tag_set_verbose (cfg.verbose);
