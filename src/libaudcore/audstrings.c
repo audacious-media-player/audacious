@@ -314,12 +314,18 @@ void string_decode_percent (gchar * s)
     string_decode_percent_2 (s, s);
 }
 
-/* we encode any character except the "unreserved" characters of RFC 3986 and
- * (optionally) the forward slash */
+/* We encode any character except the "unreserved" characters of RFC 3986 and
+ * (optionally) the forward slash.  On Windows, we also (optionally) do not
+ * encode the colon. */
 static gboolean is_legal_char (gchar c, gboolean is_filename)
 {
     return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <=
-     '9') || (strchr ("-_.~", c) != NULL) || (is_filename && c == '/');
+     '9') || (strchr ("-_.~", c) != NULL) ||
+#ifdef _WIN32
+     (is_filename && strchr ("/:", c) != NULL);
+#else
+     (is_filename && c == '/');
+#endif
 }
 
 static gchar make_hex_digit (gint i)
@@ -432,26 +438,44 @@ void uri_check_utf8 (gchar * * uri, gboolean warn)
 }
 
 /* Like g_filename_to_uri, but converts the filename from the system locale to
- * UTF-8 before percent-encoding. */
+ * UTF-8 before percent-encoding.  On Windows, replaces '\' with '/' and adds a
+ * leading '/'. */
 
 gchar * filename_to_uri (const gchar * name)
 {
     gchar * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
+#ifdef _WIN32
+    string_replace_char (utf8, '\\', '/');
+#endif
     gchar * enc = string_encode_percent (utf8 ? utf8 : name, TRUE);
     g_free (utf8);
+#ifdef _WIN32
+    gchar * uri = g_strdup_printf ("file:///%s", enc);
+#else
     gchar * uri = g_strdup_printf ("file://%s", enc);
+#endif
     g_free (enc);
     return uri;
 }
 
 /* Like g_filename_from_uri, but converts the filename from UTF-8 to the system
- * locale after percent-decoding. */
+ * locale after percent-decoding.  On Windows, strips the leading '/' and
+ * replaces '/' with '\'. */
 
 gchar * uri_to_filename (const gchar * uri)
 {
+#ifdef _WIN32
+    g_return_val_if_fail (! strncmp (uri, "file:///", 8), NULL);
+    gchar buf[strlen (uri + 8) + 1];
+    string_decode_percent_2 (uri + 8, buf);
+#else
     g_return_val_if_fail (! strncmp (uri, "file://", 7), NULL);
     gchar buf[strlen (uri + 7) + 1];
     string_decode_percent_2 (uri + 7, buf);
+#endif
+#ifdef _WIN32
+    string_replace_char (buf, '/', '\\');
+#endif
     gchar * name = g_locale_from_utf8 (buf, -1, NULL, NULL, NULL);
     return name ? name : g_strdup (buf);
 }
