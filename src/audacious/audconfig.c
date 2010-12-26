@@ -206,7 +206,9 @@ aud_config_load(void)
     mcs_handle_t *db;
     gint i, length;
 
-    db = cfg_db_open();
+    if (! (db = cfg_db_open ()))
+        return;
+
     for (i = 0; i < ncfgbent; ++i) {
         cfg_db_get_bool(db, NULL,
                             aud_boolents[i].be_vname,
