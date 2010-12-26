@@ -36,6 +36,9 @@ AUD_FUNC2 (void, save_preset_file, EqualizerPreset *, preset, const gchar *,
  filename)
 AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
 
+/* main.c */
+AUD_FUNC1 (const gchar *, get_path, gint, path)
+
 /* playlist-utils.c */
 AUD_FUNC0 (const gchar *, get_gentitle_format)
 AUD_FUNC0 (void, save_playlists)

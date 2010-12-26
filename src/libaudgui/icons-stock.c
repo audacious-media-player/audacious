@@ -23,21 +23,25 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
+#include <audacious/misc.h>
 
-static void
-load_stock_icon(gchar *id, gchar *filename, GtkIconFactory *iconfactory)
+static void load_stock_icon (gchar * id, gchar * filename,
+ GtkIconFactory * iconfactory)
 {
-    GtkIconSet *iconset;
-    GdkPixbuf *pixbuf;
+    gchar * path = g_strdup_printf ("%s/images/%s",
+     aud_get_path (AUD_PATH_DATA_DIR), filename);
 
-    pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_file (path, NULL);
     if (pixbuf == NULL)
-        return;
+        goto ERR;
 
-    iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
+    GtkIconSet * iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
     g_object_unref(pixbuf);
 
     gtk_icon_factory_add(iconfactory, id, iconset);
+
+ERR:
+    g_free (path);
 }
 
 void
@@ -46,14 +50,13 @@ audgui_register_stock_icons(void)
     GtkIconFactory *iconfactory = gtk_icon_factory_new();
 
     load_stock_icon(AUD_STOCK_PLAYLIST,
-                    DATA_DIR "/images/menu_playlist.png", iconfactory);
+                    "menu_playlist.png", iconfactory);
     load_stock_icon(AUD_STOCK_PLUGIN,
-                    DATA_DIR "/images/menu_plugin.png", iconfactory);
+                    "menu_plugin.png", iconfactory);
     load_stock_icon(AUD_STOCK_QUEUETOGGLE,
-                    DATA_DIR "/images/menu_queue_toggle.png", iconfactory);
+                    "menu_queue_toggle.png", iconfactory);
     load_stock_icon(AUD_STOCK_RANDOMIZEPL,
-                    DATA_DIR "/images/menu_randomize_playlist.png", iconfactory);
-    
+                    "menu_randomize_playlist.png", iconfactory);
 
     gtk_icon_factory_add_default( iconfactory );
     g_object_unref( iconfactory );

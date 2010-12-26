@@ -23,10 +23,16 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <limits.h>
+#include <unistd.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
-
 
 #include <glib.h>
 #include <stdlib.h>
@@ -162,6 +168,28 @@ make_directory(const gchar * path, mode_t mode)
 
     g_printerr(_("Could not create directory (%s): %s\n"), path,
                g_strerror(errno));
+}
+
+gchar * get_path_to_self (void)
+{
+    gchar buf[PATH_MAX];
+    gint len;
+
+#ifdef _WIN32
+    if (! (len = GetModuleFileName (NULL, buf, sizeof buf)) || len == sizeof buf)
+    {
+        fprintf (stderr, "GetModuleFileName failed.\n");
+        return NULL;
+    }
+#else
+    if ((len = readlink ("/proc/self/exe", buf, sizeof buf)) < 0)
+    {
+        fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
+        return NULL;
+    }
+#endif
+
+    return g_strndup (buf, len);
 }
 
 #define URL_HISTORY_MAX_SIZE 30

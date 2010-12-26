@@ -1,12 +1,12 @@
-.TH AUDTOOL2 "1" "April 2009" "Version @VERSION@"
+.TH AUDTOOL "1" "April 2009" "Version @VERSION@"
 .SH NAME
-.B audtool2
+.B audtool
 - a small tool to modify behavior of a running audacious2 instance.
 .SH SYNOPSIS
-.B audtool2
+.B audtool
 [\-\-[[handler [parameters]] [...]
 .SH DESCRIPTION
-.B audtool2
+.B audtool
 is designed to send commands to a running audacious.
 .PP
 It can handle various things like jumping to the next track in playlist
@@ -259,15 +259,15 @@ Shows handlers list.
 .PP
 Handlers may be prefixed with `\-\-' (GNU\-style long\-options) or not, your choice.
 .SH BUGS
-There are no known bugs in audtool2 at this time; if you find any please
+There are no known bugs in audtool at this time; if you find any please
 report them on www.atheme.org in the Audacious issue tracker.
 .SH AUTHORS
-.B audtool2
-was written by George Averill <nhjm@nhjm.net> and William 
+.B audtool
+was written by George Averill <nhjm@nhjm.net> and William
 Pitcock <nenolod@atheme.org>.
 .PP
-This manual page was written by Adam Cecile <gandalf@le-vert.net> and 
-Kiyoshi Aman <kiyoshi@atheme.org>. Some additional tweaks were done by 
+This manual page was written by Adam Cecile <gandalf@le-vert.net> and
+Kiyoshi Aman <kiyoshi@atheme.org>. Some additional tweaks were done by
 William Pitcock <nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.
 .PP
 Permission is granted to copy, distribute and/or modify this document
@@ -275,10 +275,10 @@ under the terms of the GNU General Public License, Version 2 or any
 later version published by the Free Software Foundation.
 .PP
 The complete text of the GNU General Public License is available in the
-sourcecode of Audacious, and is typically included with binary packages 
+sourcecode of Audacious, and is typically included with binary packages
 as well.
 .PP
-If installed with an operating system, see your Operating System's 
+If installed with an operating system, see your Operating System's
 documentation for licensing details.
 
 .SH "SEE ALSO"

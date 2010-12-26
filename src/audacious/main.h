@@ -34,17 +34,6 @@
 #include "dbus-service.h"
 #endif
 
-enum {
-    AUD_PATH_USER_DIR,
-    AUD_PATH_USER_PLUGIN_DIR,
-    AUD_PATH_PLAYLISTS_DIR,
-    AUD_PATH_PLAYLIST_FILE,
-    AUD_PATH_GTKRC_FILE,
-    AUD_PATH_COUNT
-};
-
-extern gchar *aud_paths[];
-
 #ifdef USE_DBUS
 extern MprisPlayer *mpris;
 extern MprisTrackList *mpris_tracklist;

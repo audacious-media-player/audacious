@@ -146,7 +146,12 @@ FALLBACK:;
     AUDDBG ("Using fallback pixbuf.\n");
     static GdkPixbuf * fallback = NULL;
     if (! fallback)
-        fallback = gdk_pixbuf_new_from_file (DATA_DIR "/images/album.png", NULL);
+    {
+        gchar * path = g_strdup_printf ("%s/images/album.png",
+         aud_get_path (AUD_PATH_DATA_DIR));
+        fallback = gdk_pixbuf_new_from_file (path, NULL);
+        g_free (path);
+    }
     if (fallback)
         g_object_ref ((GObject *) fallback);
     return fallback;

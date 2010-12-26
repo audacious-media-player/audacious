@@ -103,7 +103,6 @@ audgui_show_about_window(void)
     GtkWidget *close_button;
     GtkWidget *credits_button , *credits_button_hbox, *credits_button_image, *credits_button_label;
     GtkWidget *brief_label;
-    gchar *filename = DATA_DIR G_DIR_SEPARATOR_S "images" G_DIR_SEPARATOR_S "about-logo.png";
     gchar *text;
     PangoAttrList *brief_label_attrs;
     PangoAttribute *brief_label_foreground;
@@ -124,7 +123,10 @@ audgui_show_about_window(void)
 
     gtk_widget_realize(about_window);
 
+    gchar * filename = g_strdup_printf ("%s/images/about-logo.png",
+     aud_get_path (AUD_PATH_DATA_DIR));
     about_pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+    g_free (filename);
 
     gtk_widget_set_size_request(GTK_WIDGET (about_window),
                    gdk_pixbuf_get_width (about_pixbuf),

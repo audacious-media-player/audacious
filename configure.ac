@@ -218,8 +218,6 @@ AC_SUBST([PTHREAD_CFLAGS])
 ### ---------------------------------------------------------------------------
 dnl Session management support
 dnl ==========================
-AS_AC_EXPAND([desktop_file], "${datadir}/applications/audacious2.desktop")
-AC_DEFINE_UNQUOTED([AUDACIOUS_DESKTOP_FILE], "${desktop_file}", [Location of the desktop file])
 
 AUD_ARG_ENABLE([sm], [yes],
 [session management],
@@ -332,7 +330,12 @@ fi
 localedir="$datadir/locale"
 AC_SUBST([localedir])
 
-AUDACIOUS_DEFINES="$CFLAGS -DDATA_DIR=\\\"$datadir/audacious\\\" -DPLUGIN_DIR=\\\"$plugindir\\\" -DPLUGINSUBS=$pluginsubs -DLOCALEDIR=\\\"$localedir\\\""
+AUDACIOUS_DEFINES="-DPLUGINSUBS=$pluginsubs"
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_BINDIR=\\\"$bindir\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DATADIR=\\\"$datadir/audacious\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_PLUGINDIR=\\\"$plugindir\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_LOCALEDIR=\\\"$localedir\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DESKTOPFILE=\\\"${datadir}/applications/audacious.desktop\\\""
 AC_SUBST([AUDACIOUS_DEFINES])
 
 
@@ -344,8 +347,8 @@ AC_CONFIG_FILES([
     audclient.pc
     buildsys.mk
     extra.mk
-    man/audtool2.1
-    man/audacious2.1
+    man/audtool.1
+    man/audacious.1
 ])
 
 BUILDSYS_TOUCH_DEPS

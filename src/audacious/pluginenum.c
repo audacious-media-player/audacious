@@ -292,7 +292,7 @@ void plugin_system_init(void)
     plugin_registry_load ();
 
 #ifndef DISABLE_USER_PLUGIN_DIR
-    scan_plugins(aud_paths[AUD_PATH_USER_PLUGIN_DIR]);
+    scan_plugins (get_path (AUD_PATH_USER_PLUGIN_DIR));
     /*
      * This is in a separate loop so if the user puts them in the
      * wrong dir we'll still get them in the right order (home dir
@@ -300,7 +300,8 @@ void plugin_system_init(void)
      */
     while (plugin_dir_list[dirsel])
     {
-        dir = g_build_filename(aud_paths[AUD_PATH_USER_PLUGIN_DIR], plugin_dir_list[dirsel++], NULL);
+        dir = g_build_filename (get_path (AUD_PATH_USER_PLUGIN_DIR),
+         plugin_dir_list[dirsel ++], NULL);
         scan_plugins(dir);
         g_free(dir);
     }
@@ -309,7 +310,8 @@ void plugin_system_init(void)
 
     while (plugin_dir_list[dirsel])
     {
-        dir = g_build_filename(PLUGIN_DIR, plugin_dir_list[dirsel++], NULL);
+        dir = g_build_filename (get_path (AUD_PATH_PLUGIN_DIR),
+         plugin_dir_list[dirsel ++], NULL);
         scan_plugins(dir);
         g_free(dir);
     }

@@ -10,8 +10,8 @@ syntax: regexp
 ^config\.status
 ^configure
 ^extra\.mk
-^man/audacious2\.1
-^man/audtool2\.1
+^man/audacious\.1
+^man/audtool\.1
 ^mk/rules\.mk
 ^po/Makefile
 ^po/Makefile\.in

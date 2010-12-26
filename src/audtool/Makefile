@@ -1,4 +1,4 @@
-PROG = audtool2
+PROG = audtool
 SRCS = main.c				\
        handlers_general.c	\
        handlers_playback.c	\
@@ -25,11 +25,3 @@ LIBS += ${DBUS_LIBS}				\
 	${GTK_LIBS}						\
 	${MOWGLI_LIBS}					\
 	${LIBMCS_LIBS}
-
-install-extra:
-	if test -h "${DESTDIR}${bindir}/audtool" ; then ${RM} "${DESTDIR}${bindir}/audtool" ; fi
-	mkdir -p "${DESTDIR}${bindir}"
-	${LN_S} audtool2 "${DESTDIR}${bindir}/audtool"
-
-uninstall-extra:
-	if test -h "${DESTDIR}${bindir}/audtool" ; then ${RM} "${DESTDIR}${bindir}/audtool" ; fi

@@ -55,6 +55,7 @@
 #include "equalizer.h"
 #include "i18n.h"
 #include "interface.h"
+#include "misc.h"
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
@@ -79,7 +80,7 @@ typedef struct _AudCmdLineOpt AudCmdLineOpt;
 
 static AudCmdLineOpt options;
 
-gchar * aud_paths[AUD_PATH_COUNT];
+static gchar * aud_paths[AUD_PATH_COUNT];
 
 #ifdef USE_DBUS
 MprisPlayer *mpris;
@@ -115,8 +116,113 @@ static void aud_free_paths(void)
     }
 }
 
-static void aud_init_paths()
+static void normalize_path (gchar * path)
 {
+#ifdef _WIN32
+    string_replace_char (path, '/', '\\');
+#endif
+    gint len = strlen (path);
+    if (len > 1 && path[len - 1] == G_DIR_SEPARATOR)
+        path[len - 1] = 0;
+}
+
+static gchar * last_path_element (gchar * path)
+{
+    gchar * slash = strrchr (path, G_DIR_SEPARATOR);
+    return (slash && slash[1]) ? slash + 1 : NULL;
+}
+
+static void strip_path_element (gchar * path, gchar * elem)
+{
+#ifdef _WIN32
+    if (elem > path + 3)
+#else
+    if (elem > path + 1)
+#endif
+        elem[-1] = 0; /* overwrite slash */
+    else
+        elem[0] = 0; /* leave [drive letter and] leading slash */
+}
+
+static void relocate_path (gchar * * pathp, const gchar * old, const gchar * new)
+{
+    gchar * path = * pathp;
+    gint len = strlen (old);
+
+#ifdef _WIN32
+    if (strncasecmp (path, old, len))
+#else
+    if (strncmp (path, old, len))
+#endif
+    {
+        fprintf (stderr, "Failed to relocate a data path.  Falling back to "
+         "compile-time path: %s\n", path);
+        return;
+    }
+
+    * pathp = g_strconcat (new, path + len, NULL);
+    g_free (path);
+}
+
+static void find_data_paths (void)
+{
+    /* Start with the paths hard coded at compile time. */
+    aud_paths[AUD_PATH_BIN_DIR] = g_strdup (HARDCODE_BINDIR);
+    aud_paths[AUD_PATH_DATA_DIR] = g_strdup (HARDCODE_DATADIR);
+    aud_paths[AUD_PATH_PLUGIN_DIR] = g_strdup (HARDCODE_PLUGINDIR);
+    aud_paths[AUD_PATH_LOCALE_DIR] = g_strdup (HARDCODE_LOCALEDIR);
+    aud_paths[AUD_PATH_DESKTOP_FILE] = g_strdup (HARDCODE_DESKTOPFILE);
+    normalize_path (aud_paths[AUD_PATH_BIN_DIR]);
+    normalize_path (aud_paths[AUD_PATH_DATA_DIR]);
+    normalize_path (aud_paths[AUD_PATH_PLUGIN_DIR]);
+    normalize_path (aud_paths[AUD_PATH_LOCALE_DIR]);
+    normalize_path (aud_paths[AUD_PATH_DESKTOP_FILE]);
+
+    /* Compare the compile-time path to the executable and the actual path to
+     * see if we have been moved. */
+    gchar * old = g_strdup (aud_paths[AUD_PATH_BIN_DIR]);
+    gchar * new = get_path_to_self ();
+    if (! new)
+    {
+ERR:
+        g_free (old);
+        g_free (new);
+        return;
+    }
+    normalize_path (new);
+
+    /* Strip the name of the executable file, leaving the path. */
+    gchar * base = last_path_element (new);
+    if (! base)
+        goto ERR;
+    strip_path_element (new, base);
+
+    /* Strip innermost folder names from both paths as long as they match.  This
+     * leaves a compile-time prefix and a run-time one to replace it with. */
+    gchar * a, * b;
+    while ((a = last_path_element (old)) && (b = last_path_element (new)) &&
+#ifdef _WIN32
+     ! strcasecmp (a, b))
+#else
+     ! strcmp (a, b))
+#endif
+    {
+        strip_path_element (old, a);
+        strip_path_element (new, b);
+    }
+
+    /* Do the replacements. */
+    relocate_path (& aud_paths[AUD_PATH_BIN_DIR], old, new);
+    relocate_path (& aud_paths[AUD_PATH_DATA_DIR], old, new);
+    relocate_path (& aud_paths[AUD_PATH_PLUGIN_DIR], old, new);
+    relocate_path (& aud_paths[AUD_PATH_LOCALE_DIR], old, new);
+    relocate_path (& aud_paths[AUD_PATH_DESKTOP_FILE], old, new);
+}
+
+static void aud_init_paths (void)
+{
+    find_data_paths ();
+
     const gchar * xdg_config_home = g_get_user_config_dir ();
     const gchar * xdg_data_home = g_get_user_data_dir ();
 
@@ -135,7 +241,16 @@ static void aud_init_paths()
     aud_paths[AUD_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlist.xspf", NULL);
     aud_paths[AUD_PATH_GTKRC_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "gtkrc", NULL);
 
+    for (gint i = 0; i < AUD_PATH_COUNT; i ++)
+        AUDDBG ("Data path: %s\n", i, aud_paths[i]);
+
     g_atexit(aud_free_paths);
+}
+
+const gchar * get_path (gint id)
+{
+    g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
+    return aud_paths[id];
 }
 
 static GOptionEntry cmd_entries[] = {
@@ -353,6 +468,9 @@ gint main(gint argc, gchar ** argv)
     gdk_threads_init ();
     gdk_threads_enter ();
 
+    aud_init_paths ();
+    aud_make_user_dir ();
+
     mowgli_init();
     chardet_init();
     tag_init();
@@ -362,17 +480,15 @@ gint main(gint argc, gchar ** argv)
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
-    bindtextdomain(PACKAGE_NAME, LOCALEDIR);
+    bindtextdomain (PACKAGE_NAME, aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset(PACKAGE_NAME, "UTF-8");
-    bindtextdomain(PACKAGE_NAME "-plugins", LOCALEDIR);
+    bindtextdomain (PACKAGE_NAME "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset(PACKAGE_NAME "-plugins", "UTF-8");
     textdomain(PACKAGE_NAME);
 
 #if !defined(_WIN32) && defined(USE_EGGSM)
-    egg_set_desktop_file(AUDACIOUS_DESKTOP_FILE);
+    egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
 #endif
-    aud_init_paths();
-    aud_make_user_dir();
 
     gtk_rc_add_default_file(aud_paths[AUD_PATH_GTKRC_FILE]);
 

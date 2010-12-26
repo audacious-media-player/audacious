@@ -293,10 +293,10 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
 static gchar * make_playlist_path (gint playlist)
 {
     if (! playlist)
-        return g_strdup (aud_paths[AUD_PATH_PLAYLIST_FILE]);
+        return g_strdup (get_path (AUD_PATH_PLAYLIST_FILE));
 
     return g_strdup_printf ("%s/playlist_%02d.xspf",
-     aud_paths[AUD_PATH_PLAYLISTS_DIR], 1 + playlist);
+     get_path (AUD_PATH_PLAYLISTS_DIR), 1 + playlist);
 }
 
 void load_playlists (void)

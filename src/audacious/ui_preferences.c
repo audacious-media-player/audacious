@@ -88,11 +88,11 @@ GtkWidget *filepopup_for_tuple_settings_button;
 static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
-    {DATA_DIR "/images/audio.png",        N_("Audio")},
-    {DATA_DIR "/images/replay_gain.png",  N_("Replay Gain")},
-    {DATA_DIR "/images/connectivity.png", N_("Network")},
-    {DATA_DIR "/images/playlist.png",     N_("Playlist")},
-    {DATA_DIR "/images/plugins.png",      N_("Plugins")},
+ {"audio.png", N_("Audio")},
+ {"replay_gain.png", N_("Replay Gain")},
+ {"connectivity.png", N_("Network")},
+ {"playlist.png", N_("Playlist")},
+ {"plugins.png", N_("Plugins")},
 };
 
 static gint n_categories = G_N_ELEMENTS(categories);
@@ -558,8 +558,13 @@ on_category_treeview_realize(GtkTreeView * treeview,
                                GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
 
-    for (i = 0; i < n_categories; i++) {
-        img = gdk_pixbuf_new_from_file(categories[i].icon_path, NULL);
+    for (i = 0; i < n_categories; i ++)
+    {
+        gchar * path = g_strdup_printf ("%s/images/%s",
+         get_path (AUD_PATH_DATA_DIR), categories[i].icon_path);
+        img = gdk_pixbuf_new_from_file (path, NULL);
+        g_free (path);
+
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter,
                            CATEGORY_VIEW_COL_ICON, img,

@@ -1,10 +1,10 @@
-.TH AUDACIOUS2 "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious"
+.TH AUDACIOUS "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
-audacious2 \- an advanced audio player.
+audacious \- an advanced audio player.
 
 .SH SYNOPSIS
-.B audacious2
+.B audacious
 [OPTION] ... [FILE] ...
 
 .SH DESCRIPTION
@@ -232,7 +232,7 @@ unpacking gzip and bzip2 compressed skins.  Default is \fItar\fP.
 Command for decompressing zip files (skins).  Default is \fIunzip\fP.
 
 .SH "SEE ALSO"
-.BR audtool2 (1)
+.BR audtool (1)
 
 .SH WEBSITE
 .I http://audacious-media-player.org

@@ -1,6 +1,6 @@
 include ../../extra.mk
 
-PROG = audacious2${PROG_SUFFIX}
+PROG = audacious${PROG_SUFFIX}
 SRCS = audconfig.c								\
        chardet.c								\
        configdb.c								\
@@ -150,9 +150,6 @@ dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
 
 install-extra:
-	if test -h "${DESTDIR}${bindir}/audacious" ; then ${RM} "${DESTDIR}${bindir}/audacious" ; fi
-	${LN_S} audacious2 "${DESTDIR}${bindir}/audacious"
-
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \
@@ -166,8 +163,6 @@ install-extra:
 	fi
 
 uninstall-extra:
-	if test -h "${DESTDIR}${bindir}/audacious" ; then ${RM} "${DESTDIR}${bindir}/audacious" ; fi
-
 	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
 		for i in ${PROG}; do \
 			i="lib$$i.a"; \

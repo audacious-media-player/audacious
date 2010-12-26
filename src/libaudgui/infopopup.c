@@ -34,7 +34,16 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-#define DEFAULT_ARTWORK DATA_DIR "/images/audio.png"
+static const gchar * get_default_artwork (void)
+{
+    static gchar * path = NULL;
+    if (! path)
+        path = g_strdup_printf ("%s/images/audio.png",
+         aud_get_path (AUD_PATH_DATA_DIR));
+    return path;
+}
+
+#define DEFAULT_ARTWORK (get_default_artwork ())
 
 static GtkWidget * infopopup = NULL;
 

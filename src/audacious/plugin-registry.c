@@ -201,7 +201,7 @@ static void module_free (ModuleData * module)
 static FILE * open_registry_file (const gchar * mode)
 {
     gchar path[PATH_MAX];
-    snprintf (path, sizeof path, "%s/" FILENAME, aud_paths[AUD_PATH_USER_DIR]);
+    snprintf (path, sizeof path, "%s/" FILENAME, get_path (AUD_PATH_USER_DIR));
     return fopen (path, mode);
 }
 
