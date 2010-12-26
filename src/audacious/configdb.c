@@ -15,6 +15,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <assert.h>
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -46,7 +48,10 @@ cfg_db_open()
     }
 
     if (! config_handle)
+    {
         config_handle = mcs_new (RCFILE_DEFAULT_SECTION_NAME);
+        assert (config_handle);
+    }
 
     config_refcount ++;
     return config_handle;
