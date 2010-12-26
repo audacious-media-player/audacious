@@ -122,7 +122,11 @@ static void normalize_path (gchar * path)
     string_replace_char (path, '/', '\\');
 #endif
     gint len = strlen (path);
-    if (len > 1 && path[len - 1] == G_DIR_SEPARATOR)
+#ifdef _WIN32
+    if (len > 3 && path[len - 1] == '\\') /* leave "C:\" */
+#else
+    if (len > 1 && path[len - 1] == '/') /* leave leading "/" */
+#endif
         path[len - 1] = 0;
 }
 
