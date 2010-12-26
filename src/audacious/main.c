@@ -242,7 +242,7 @@ static void aud_init_paths (void)
     aud_paths[AUD_PATH_GTKRC_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "gtkrc", NULL);
 
     for (gint i = 0; i < AUD_PATH_COUNT; i ++)
-        AUDDBG ("Data path: %s\n", i, aud_paths[i]);
+        AUDDBG ("Data path: %s\n", aud_paths[i]);
 
     g_atexit(aud_free_paths);
 }
