@@ -287,7 +287,7 @@ static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
 
 PluginHandle * iface_plugin_probe (void)
 {
-    PluginHandle * p;
+    PluginHandle * p = NULL;
     plugin_for_each (PLUGIN_TYPE_IFACE, (PluginForEachFunc) probe_cb, & p);
     return p;
 }
