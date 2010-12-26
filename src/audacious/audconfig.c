@@ -286,7 +286,8 @@ aud_config_save(void)
     cfg.resume_playback_on_startup_time = playback_get_playing () ?
      playback_get_time () : 0;
 
-    db = cfg_db_open();
+    if (! (db = cfg_db_open ()))
+        return;
 
     for (i = 0; i < ncfgbent; ++i)
         if (aud_boolents[i].be_wrt)
