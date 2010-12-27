@@ -23,6 +23,9 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <errno.h>
+#include <limits.h>
+ 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -304,6 +307,38 @@ static void parse_cmd_line_options(gint * argc, gchar *** argv)
     g_option_context_free (context);
 }
 
+#ifndef USE_DBUS
+static void set_lock_file (gboolean lock)
+{
+    gchar path[PATH_MAX];
+    snprintf (path, sizeof path, "%s" G_DIR_SEPARATOR_S "lock",
+     aud_paths[AUD_PATH_USER_DIR]);
+     
+    if (lock)
+    {
+        int handle = open (path, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
+        if (handle < 0 && errno == EEXIST)
+        {
+            GtkWidget * win = gtk_message_dialog_new (NULL, 0,
+             GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+             _("Running multiple instances of Audacious can lead to corrupted "
+             "configuration files.  If Audacious is not already running, or if "
+             "you want to run another instance anyway, please delete the file "
+             "%s and run Audacious again.  Audacious will now close."), path);
+            g_signal_connect (win, "response", (GCallback) gtk_widget_destroy,
+             NULL);
+            g_signal_connect (win, "destroy", (GCallback) gtk_main_quit, NULL);
+            gtk_widget_show (win);
+            gtk_main ();
+            exit (EXIT_FAILURE);
+        }
+        close (handle);
+    }
+    else
+        unlink (path);
+}
+#endif
+
 static void handle_cmd_line_filenames(gboolean is_running)
 {
     gint i;
@@ -511,6 +546,11 @@ gint main(gint argc, gchar ** argv)
         exit(EXIT_FAILURE);
     }
 
+#ifndef USE_DBUS
+    AUDDBG ("Locking configuration folder.\n");
+    set_lock_file (TRUE);
+#endif
+
     AUDDBG ("Loading configuration.\n");
     aud_config_load();
     atexit (aud_config_free);
@@ -561,6 +601,11 @@ gint main(gint argc, gchar ** argv)
 
     AUDDBG ("Shutting down core.\n");
     playlist_end ();
+
+#ifndef USE_DBUS
+    AUDDBG ("Unlocking configuration folder.\n");
+    set_lock_file (FALSE);
+#endif
 
     gdk_threads_leave ();
     return EXIT_SUCCESS;
