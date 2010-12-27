@@ -480,14 +480,24 @@ gchar * uri_to_filename (const gchar * uri)
     return name ? name : g_strdup (buf);
 }
 
-/* Formats a URI for human-readable display.  Percent-decodes, aggressively
- * converts to UTF-8, and strips of leading file://. */
+/* Formats a URI for human-readable display.  Percent-decodes and converts to
+ * UTF-8 (more aggressively than uri_to_utf8).  For file:// URI's, converts to
+ * filename format (but in UTF-8). */
+
 gchar * uri_to_display (const gchar * uri)
 {
     gchar buf[strlen (uri) + 1];
 
+#ifdef _WIN32
+    if (! strncmp (uri, "file:///", 8))
+    {
+        string_decode_percent_2 (uri + 8, buf);
+        string_replace_char (buf, '/', '\\');
+    }
+#else
     if (! strncmp (uri, "file://", 7))
         string_decode_percent_2 (uri + 7, buf);
+#endif
     else
         string_decode_percent_2 (uri, buf);
 

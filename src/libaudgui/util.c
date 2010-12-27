@@ -226,14 +226,22 @@ gchar * skip_top_folders (gchar * name)
         goto NO_HOME;
 
     gint len = strlen (home);
-    if (len > 0 && home[len - 1] == '/')
+    if (len > 0 && home[len - 1] == G_DIR_SEPARATOR)
         len --;
 
+#ifdef _WIN32
+    if (! strncasecmp (name, home, len) && name[len] == '\\')
+#else
     if (! strncmp (name, home, len) && name[len] == '/')
+#endif
         return name + len + 1;
 
 NO_HOME:
-    return name[0] == '/' ? name + 1 : name;
+#ifdef _WIN32
+    return (name[0] && name[1] == ':' && name[2] == '\\') ? name + 3 : name;
+#else
+    return (name[0] == '/') ? name + 1 : name;
+#endif
 }
 
 void split_filename (gchar * name, gchar * * base, gchar * * first, gchar * *
@@ -243,7 +251,7 @@ void split_filename (gchar * name, gchar * * base, gchar * * first, gchar * *
 
     gchar * c;
 
-    if ((c = strrchr (name, '/')))
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
     {
         * base = c + 1;
         * c = 0;
@@ -254,7 +262,7 @@ void split_filename (gchar * name, gchar * * base, gchar * * first, gchar * *
         goto DONE;
     }
 
-    if ((c = strrchr (name, '/')))
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
     {
         * first = c + 1;
         * c = 0;
@@ -265,7 +273,7 @@ void split_filename (gchar * name, gchar * * base, gchar * * first, gchar * *
         goto DONE;
     }
 
-    if ((c = strrchr (name, '/')))
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
         * second = c + 1;
     else
         * second = name;
@@ -318,7 +326,7 @@ void audgui_three_strings (gint list, gint entry, gchar * * title, gchar * *
 
     gchar * copy = uri_to_display (name);
 
-    if (copy[0] == '/')
+    if (! strncmp (name, "file://", 7))
     {
         gchar * base, * first, * second;
         split_filename (skip_top_folders (copy), & base, & first,
