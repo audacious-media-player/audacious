@@ -52,17 +52,20 @@ AC_SUBST([SHARED_SUFFIX])
 AC_DEFINE_UNQUOTED([SHARED_SUFFIX], "${SHARED_SUFFIX}",
     [Define the shared module suffix extension on your platform.])
 
-AC_MSG_CHECKING([if you are running Apple-GCC])
+AC_MSG_CHECKING([for Windows or Macintosh])
 case "$target" in
-    *-apple-*)
-        AC_MSG_RESULT([yes, sorry you poor bastard])
+    *mingw*)
+        AC_MSG_RESULT([Windows])
+        LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
+        ;;
+    *apple*)
+        AC_MSG_RESULT([Macintosh])
         LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices -framework Carbon"
         ;;
     *)
         AC_MSG_RESULT([no])
         ;;
 esac
-
 
 dnl GNU gettext
 dnl ===========
