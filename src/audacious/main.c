@@ -176,11 +176,13 @@ static void find_data_paths (void)
     aud_paths[AUD_PATH_PLUGIN_DIR] = g_strdup (HARDCODE_PLUGINDIR);
     aud_paths[AUD_PATH_LOCALE_DIR] = g_strdup (HARDCODE_LOCALEDIR);
     aud_paths[AUD_PATH_DESKTOP_FILE] = g_strdup (HARDCODE_DESKTOPFILE);
+    aud_paths[AUD_PATH_ICON_FILE] = g_strdup (HARDCODE_ICONFILE);
     normalize_path (aud_paths[AUD_PATH_BIN_DIR]);
     normalize_path (aud_paths[AUD_PATH_DATA_DIR]);
     normalize_path (aud_paths[AUD_PATH_PLUGIN_DIR]);
     normalize_path (aud_paths[AUD_PATH_LOCALE_DIR]);
     normalize_path (aud_paths[AUD_PATH_DESKTOP_FILE]);
+    normalize_path (aud_paths[AUD_PATH_ICON_FILE]);
 
     /* Compare the compile-time path to the executable and the actual path to
      * see if we have been moved. */
@@ -221,6 +223,7 @@ ERR:
     relocate_path (& aud_paths[AUD_PATH_PLUGIN_DIR], old, new);
     relocate_path (& aud_paths[AUD_PATH_LOCALE_DIR], old, new);
     relocate_path (& aud_paths[AUD_PATH_DESKTOP_FILE], old, new);
+    relocate_path (& aud_paths[AUD_PATH_ICON_FILE], old, new);
 }
 
 static void aud_init_paths (void)
