@@ -290,6 +290,9 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
 gboolean
 vfs_file_test(const gchar * path, GFileTest test)
 {
+    if (strncmp (path, "file://", 7))
+        return FALSE; /* only local files are handled */
+
     gchar * path2 = uri_to_filename (path);
 
     if (path2 == NULL)
