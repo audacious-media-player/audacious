@@ -57,7 +57,8 @@ vfs_fopen(const gchar * path,
 
     if (! (vtable = lookup_func (scheme)))
     {
-        fprintf (stderr, "No transport plugin found for %s.\n", path);
+        /* This is normal for custom URI schemes.
+        fprintf (stderr, "No transport plugin found for %s.\n", path); */
         return NULL;
     }
 
