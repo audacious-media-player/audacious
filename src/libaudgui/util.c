@@ -78,7 +78,7 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const gchar * title, const gchar * text)
 {
     if (* widget != NULL)
-        gtk_widget_destroy (* widget);
+        goto CREATED;
 
     * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s", text);
     gtk_window_set_title ((GtkWindow *) * widget, title);
@@ -88,6 +88,7 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
     g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed,
      widget);
 
+CREATED:
     gtk_window_present ((GtkWindow *) * widget);
 }
 
