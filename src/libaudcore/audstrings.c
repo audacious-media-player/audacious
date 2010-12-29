@@ -138,9 +138,8 @@ gchar * str_to_utf8_full (const gchar * str, gssize len, gsize * bytes_read,
     return str_to_utf8_full_impl (str, len, bytes_read, bytes_written, err);
 }
 
-#if defined(__GLIBC__) && (__GLIBC__ >= 2)
-#define HAVE_EXECINFO 1
-#include <execinfo.h>
+#ifdef HAVE_EXECINFO_H
+# include <execinfo.h>
 #endif
 
 /**
@@ -166,7 +165,7 @@ str_assert_utf8(const gchar * str)
 
     /* already UTF-8? */
     if (!g_utf8_validate(str, -1, NULL)) {
-#ifdef HAVE_EXECINFO
+#ifdef HAVE_EXECINFO_H
         gint i, nsymbols;
         const gint nsymmax = 50;
         void *addrbuf[nsymmax];
