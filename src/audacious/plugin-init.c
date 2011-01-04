@@ -44,15 +44,40 @@ static void dummy_plugin_stop (PluginHandle * p)
 
 static gboolean general_plugin_start (PluginHandle * p)
 {
+    gboolean ret = TRUE;
     GeneralPlugin * gp = plugin_get_header (p);
+
     g_return_val_if_fail (gp != NULL, FALSE);
-    return (gp->init == NULL || gp->init ());
+
+    if (gp->init)
+        ret = gp->init();
+
+    if (gp->get_widget)
+    {
+        AUDDBG ("Adding %s to interface.\n", plugin_get_name (p));
+
+        GtkWidget *widget = gp->get_widget();
+
+        g_signal_connect(widget, "destroy", (GCallback) gtk_widget_destroyed, &widget);
+
+        interface_add_plugin_widget(p, widget);
+    }
+
+    return ret;
 }
 
 static void general_plugin_stop (PluginHandle * p)
 {
-    InputPlugin * gp = plugin_get_header (p);
+    GeneralPlugin * gp = plugin_get_header (p);
     g_return_if_fail (gp != NULL);
+
+    if (gp->get_widget)
+    {
+        AUDDBG ("Removing %s from interface.\n", plugin_get_name (p));
+
+        GtkWidget *widget = gp->get_widget();
+        interface_remove_plugin_widget(p, widget);
+    }
 
     if (gp->settings != NULL)
         plugin_preferences_cleanup (gp->settings);
