@@ -404,6 +404,9 @@ struct _InputPlugin {
 
 struct _GeneralPlugin {
     PLUGIN_COMMON_FIELDS
+
+    /* GtkWidget * (* get_widget) (void); */
+    void * (* get_widget) (void);
 };
 
 struct _VisPlugin {
