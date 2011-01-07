@@ -24,8 +24,6 @@
 
 #include <gtk/gtk.h>
 
-#define AUDGUI_LIST_FIRST_COLUMN 1
-
 typedef struct {
     void (* get_value) (void * user, gint row, gint column, GValue * value);
 

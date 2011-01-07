@@ -21,7 +21,7 @@
 
 #include "list.h"
 
-#define HIGHLIGHT_COLUMN 0
+enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
 #define PATH_IS_SELECTED(w, p) ((p) && gtk_tree_selection_path_is_selected \
  (gtk_tree_view_get_selection ((GtkTreeView *) (w)), (p)))
@@ -60,7 +60,7 @@ static GType list_model_get_column_type (GtkTreeModel * _model, gint column)
         return PANGO_TYPE_WEIGHT;
 
     return GPOINTER_TO_INT (g_list_nth_data (model->column_types, column -
-     AUDGUI_LIST_FIRST_COLUMN));
+     RESERVED_COLUMNS));
 }
 
 static gboolean list_model_get_iter (GtkTreeModel * model, GtkTreeIter * iter,
@@ -98,8 +98,8 @@ static void list_model_get_value (GtkTreeModel * _model, GtkTreeIter * iter,
     }
 
     g_value_init (value, GPOINTER_TO_INT (g_list_nth_data (model->column_types,
-     column - AUDGUI_LIST_FIRST_COLUMN)));
-    model->cbs->get_value (model->user, row, column, value);
+     column - RESERVED_COLUMNS)));
+    model->cbs->get_value (model->user, row, column - RESERVED_COLUMNS, value);
 }
 
 static gboolean list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
@@ -497,7 +497,7 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     model->user = user;
     model->rows = rows;
     model->highlight = -1;
-    model->columns = AUDGUI_LIST_FIRST_COLUMN;
+    model->columns = RESERVED_COLUMNS;
     model->column_types = NULL;
     model->frozen = FALSE;
     model->blocked = FALSE;
@@ -570,7 +570,7 @@ void audgui_list_add_column (GtkWidget * list, const gchar * title,
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
-    g_return_if_fail (column == model->columns);
+    g_return_if_fail (RESERVED_COLUMNS + column == model->columns);
 
     model->columns ++;
     model->column_types = g_list_append (model->column_types, GINT_TO_POINTER
@@ -578,7 +578,8 @@ void audgui_list_add_column (GtkWidget * list, const gchar * title,
 
     GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
     GtkTreeViewColumn * tree_column = gtk_tree_view_column_new_with_attributes
-     (title, renderer, "text", column, "weight", HIGHLIGHT_COLUMN, NULL);
+     (title, renderer, "text", RESERVED_COLUMNS + column, "weight",
+     HIGHLIGHT_COLUMN, NULL);
 
     if (expand)
     {
