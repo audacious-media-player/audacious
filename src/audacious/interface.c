@@ -28,6 +28,7 @@
 #include "audconfig.h"
 #include "config.h"
 #include "debug.h"
+#include "general.h"
 #include "i18n.h"
 #include "interface.h"
 #include "plugins.h"
@@ -303,6 +304,9 @@ gboolean iface_plugin_set_current (PluginHandle * plugin)
 {
     if (current_plugin != NULL)
     {
+        AUDDBG ("Unloading plugin widgets.\n");
+        general_cleanup ();
+
         AUDDBG ("Unloading visualizers.\n");
         vis_cleanup ();
 
@@ -323,6 +327,9 @@ gboolean iface_plugin_set_current (PluginHandle * plugin)
 
         AUDDBG ("Loading visualizers.\n");
         vis_init ();
+
+        AUDDBG ("Loading plugin widgets.\n");
+        general_init ();
     }
 
     return TRUE;

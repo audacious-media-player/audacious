@@ -47,7 +47,7 @@ typedef struct {
     gboolean started;
 } LoadedVis;
 
-gint running = FALSE;
+static gint running = FALSE;
 static GList * loaded_vis_plugins = NULL;
 
 void calc_stereo_pcm (VisPCMData dest, const VisPCMData src, gint nch)

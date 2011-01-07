@@ -1,6 +1,6 @@
 /*
- * visualization.h
- * Copyright 2010 John Lindgren
+ * general.h
+ * Copyright 2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -19,17 +19,17 @@
  * using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_VISUALIZATION_H
-#define AUDACIOUS_VISUALIZATION_H
+#ifndef AUDACIOUS_GENERAL_H
+#define AUDACIOUS_GENERAL_H
 
 #include <glib.h>
 
 #include "plugins.h"
 
-void vis_init (void);
-void vis_cleanup (void);
+void general_init (void);
+void general_cleanup (void);
 
-gboolean vis_plugin_start (PluginHandle * plugin);
-void vis_plugin_stop (PluginHandle * plugin);
+gboolean general_plugin_start (PluginHandle * plugin);
+void general_plugin_stop (PluginHandle * plugin);
 
 #endif
