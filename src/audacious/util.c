@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2008  Audacious development team
+ *  Copyright (C) 2005-2011  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -207,4 +207,143 @@ util_add_url_history_entry(const gchar * url)
         g_free(node->data);
         cfg.url_history = g_list_delete_link(cfg.url_history, node);
     }
+}
+
+static gchar * skip_top_folders (gchar * name)
+{
+    const gchar * home = getenv ("HOME");
+    if (! home)
+        goto NO_HOME;
+
+    gint len = strlen (home);
+    if (len > 0 && home[len - 1] == G_DIR_SEPARATOR)
+        len --;
+
+#ifdef _WIN32
+    if (! strncasecmp (name, home, len) && name[len] == '\\')
+#else
+    if (! strncmp (name, home, len) && name[len] == '/')
+#endif
+        return name + len + 1;
+
+NO_HOME:
+#ifdef _WIN32
+    return (name[0] && name[1] == ':' && name[2] == '\\') ? name + 3 : name;
+#else
+    return (name[0] == '/') ? name + 1 : name;
+#endif
+}
+
+static void split_filename (gchar * name, gchar * * base, gchar * * first,
+ gchar * * second)
+{
+    * first = * second = NULL;
+
+    gchar * c;
+
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    {
+        * base = c + 1;
+        * c = 0;
+    }
+    else
+    {
+        * base = name;
+        goto DONE;
+    }
+
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    {
+        * first = c + 1;
+        * c = 0;
+    }
+    else
+    {
+        * first = name;
+        goto DONE;
+    }
+
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+        * second = c + 1;
+    else
+        * second = name;
+
+DONE:
+    if ((c = strrchr (* base, '.')))
+        * c = 0;
+}
+
+static gchar * stream_name (const gchar * name)
+{
+    if (! strncmp (name, "http://", 7))
+        name += 7;
+    else if (! strncmp (name, "https://", 8))
+        name += 8;
+    else if (! strncmp (name, "mms://", 6))
+        name += 6;
+    else
+        return NULL;
+
+    gchar * s = g_strdup (name);
+    gchar * c;
+
+    if ((c = strchr (s, '/')))
+        * c = 0;
+    if ((c = strchr (s, ':')))
+        * c = 0;
+    if ((c = strchr (s, '?')))
+        * c = 0;
+
+    return s;
+}
+
+void describe_song (const gchar * name, const Tuple * tuple, gchar * * title,
+ gchar * * artist, gchar * * album)
+{
+    const gchar * _title = tuple_get_string (tuple, FIELD_TITLE, NULL);
+    const gchar * _artist = tuple_get_string (tuple, FIELD_ARTIST, NULL);
+    const gchar * _album = tuple_get_string (tuple, FIELD_ALBUM, NULL);
+
+    * title = (_title && _title[0]) ? g_strdup (_title) : NULL;
+    * artist = (_artist && _artist[0]) ? g_strdup (_artist) : NULL;
+    * album = (_album && _album[0]) ? g_strdup (_album) : NULL;
+
+    if (* title && * artist && * album)
+        return;
+
+    gchar * copy = uri_to_display (name);
+
+    if (! strncmp (name, "file://", 7))
+    {
+        gchar * base, * first, * second;
+        split_filename (skip_top_folders (copy), & base, & first,
+         & second);
+
+        if (! * title)
+            * title = g_strdup (base);
+
+        if (first)
+        {
+            if (second && ! * artist && ! * album)
+            {
+                * artist = g_strdup (second);
+                * album = g_strdup (first);
+            }
+            else if (! * artist)
+                * artist = g_strdup (first);
+            else if (! * album)
+                * album = g_strdup (first);
+        }
+    }
+    else
+    {
+        if (! * title)
+            * title = stream_name (copy);
+        else if (! * artist)
+            * artist = stream_name (copy);
+        else if (! * album)
+            * album = stream_name (copy);
+    }
+
+    g_free (copy);
 }

@@ -64,8 +64,4 @@ void audgui_urilist_open (const gchar * list);
 void audgui_urilist_insert (gint playlist, gint position, const gchar * list);
 gchar * audgui_urilist_create_from_selected (gint playlist);
 
-/* util.c */
-void audgui_three_strings (gint playlist, gint entry, gchar * * title, gchar * *
- artist, gchar * * album);
-
 #endif /* LIBAUDGUI_H */

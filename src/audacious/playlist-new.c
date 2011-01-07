@@ -1,6 +1,6 @@
 /*
  * playlist-new.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -39,6 +39,7 @@
 #include "playlist.h"
 #include "playlist-utils.h"
 #include "plugins.h"
+#include "util.h"
 
 #define SCAN_THREADS 4
 #define STATE_FILE "playlist-state"
@@ -96,7 +97,7 @@ typedef struct {
     gchar *filename;
     PluginHandle * decoder;
     Tuple *tuple;
-    gchar *title;
+    gchar * formatted, * title, * artist, * album;
     gint length;
     gboolean failed;
     gboolean selected;
@@ -159,20 +160,28 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
 
     if (entry->tuple != NULL)
         tuple_free (entry->tuple);
-
-    g_free (entry->title);
     entry->tuple = tuple;
+
+    g_free (entry->formatted);
+    g_free (entry->title);
+    g_free (entry->artist);
+    g_free (entry->album);
 
     if (tuple == NULL)
     {
+        entry->formatted = NULL;
         entry->title = NULL;
+        entry->artist = NULL;
+        entry->album = NULL;
         entry->length = 0;
         entry->segmented = FALSE;
         entry->start = entry->end = -1;
     }
     else
     {
-        entry->title = title_from_tuple (tuple);
+        entry->formatted = title_from_tuple (tuple);
+        describe_song (entry->filename, tuple, & entry->title, & entry->artist,
+         & entry->album);
         entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
         entry->length = MAX (entry->length, 0);
 
@@ -227,7 +236,10 @@ static Entry * entry_new (gchar * filename, PluginHandle * decoder, Tuple *
     entry->filename = filename;
     entry->decoder = decoder;
     entry->tuple = NULL;
+    entry->formatted = NULL;
     entry->title = NULL;
+    entry->artist = NULL;
+    entry->album = NULL;
     entry->failed = FALSE;
     entry->number = -1;
     entry->selected = FALSE;
@@ -247,8 +259,11 @@ static void entry_free (Entry * entry)
     if (entry->tuple != NULL)
         tuple_free(entry->tuple);
 
-    g_free(entry->title);
-    g_free(entry);
+    g_free (entry->formatted);
+    g_free (entry->title);
+    g_free (entry->artist);
+    g_free (entry->album);
+    g_free (entry);
 }
 
 static void entry_check_has_decoder (Playlist * playlist, Entry * entry)
@@ -1054,7 +1069,28 @@ const gchar * playlist_entry_get_title (gint playlist_num, gint entry_num,
     if (! fast)
         check_scanned (playlist, entry);
 
-    return (entry->title == NULL) ? entry->filename : entry->title;
+    return (entry->formatted == NULL) ? entry->filename : entry->formatted;
+}
+
+void playlist_entry_describe (gint playlist_num, gint entry_num,
+ const gchar * * title, const gchar * * artist, const gchar * * album,
+ gboolean fast)
+{
+    * title = * artist = * album = NULL;
+    DECLARE_PLAYLIST_ENTRY;
+    LOOKUP_PLAYLIST_ENTRY;
+
+    if (! fast)
+        check_scanned (playlist, entry);
+
+    if (entry->title)
+    {
+        * title = entry->title;
+        * artist = entry->artist;
+        * album = entry->album;
+    }
+    else
+        * title = entry->filename;
 }
 
 gint playlist_entry_get_length (gint playlist_num, gint entry_num, gboolean fast)
@@ -1395,7 +1431,7 @@ static gint title_compare (const void * _a, const void * _b, void * _compare)
 {
     const Entry * a = _a, * b = _b;
     gint (* compare) (const gchar * a, const gchar * b) = _compare;
-    return compare (a->title ? a->title : a->filename, b->title ? b->title :
+    return compare (a->formatted ? a->formatted : a->filename, b->formatted ? b->formatted :
      b->filename);
 }
 
@@ -1516,8 +1552,8 @@ void playlist_reformat_titles (void)
         for (count = 0; count < entries; count++)
         {
             Entry * entry = index_get (playlist->entries, count);
-            g_free(entry->title);
-            entry->title = (entry->tuple == NULL) ? NULL : title_from_tuple(entry->tuple);
+            g_free(entry->formatted);
+            entry->formatted = (entry->tuple == NULL) ? NULL : title_from_tuple(entry->tuple);
         }
     }
 

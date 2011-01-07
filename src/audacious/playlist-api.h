@@ -1,6 +1,6 @@
 /*
  * playlist-api.h
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -127,8 +127,18 @@ AUD_FUNC3 (const Tuple *, playlist_entry_get_tuple, gint, playlist, gint, entry,
 /* Returns a formatted title string for an entry.  This may include information
  * such as the filename, song title, and/or artist.  The returned string is
  * valid until another playlist function is called or control returns to the
- * program's main loop.  <fast> is as in playlist_entry_get_tuple(). */
+ * program's main loop.  If <fast> is nonzero, returns the entry's filename if
+ * metadata for the entry has not yet been read. */
 AUD_FUNC3 (const gchar *, playlist_entry_get_title, gint, playlist, gint, entry,
+ gboolean, fast)
+
+/* Returns three strings (title, artist, and album) describing an entry.  The
+ * returned strings are valid until another playlist function is called or
+ * control returns to the program's main loop.  If <fast> is nonzero, return's
+ * the entry's filename for <title> and NULL for <artist> and <album> if
+ * metadata for the entry has not yet been read. */
+AUD_FUNC6 (void, playlist_entry_describe, gint, playlist, gint, entry,
+ const gchar * *, title, const gchar * *, artist, const gchar * *, album,
  gboolean, fast)
 
 /* Returns the length in milliseconds of an entry, or -1 if the length is not
