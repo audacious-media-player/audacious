@@ -102,11 +102,11 @@ static void list_model_get_value (GtkTreeModel * _model, GtkTreeIter * iter,
     model->cbs->get_value (model->user, row, column, value);
 }
 
-static gboolean list_model_iter_next (GtkTreeModel * model, GtkTreeIter * iter)
+static gboolean list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
 {
     ListModel * model = (ListModel *) _model;
     gint row = GPOINTER_TO_INT (iter->user_data);
-    g_return_val_if_fail (row >= 0 && row < model->rows, NULL);
+    g_return_val_if_fail (row >= 0 && row < model->rows, FALSE);
     if (row + 1 >= model->rows)
         return FALSE;
     iter->user_data = GINT_TO_POINTER (row + 1);
