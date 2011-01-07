@@ -10,6 +10,7 @@ SRCS = confirm.c \
        infowin.c \
        init.c \
        library-store.c \
+       list.c \
        ui_gtk.c \
        ui_fileopener.c \
        ui_urlopener.c \
@@ -23,7 +24,8 @@ SRCS = confirm.c \
        util.c
 
 INCLUDES = libaudgui.h \
-           libaudgui-gtk.h
+           libaudgui-gtk.h \
+           list.h
 
 include ../../buildsys.mk
 include ../../extra.mk
