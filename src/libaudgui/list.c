@@ -386,6 +386,13 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
      * not to clear it. */
     model->frozen = FALSE;
 
+    if (model->dragging && model->cbs->shift_rows) /* dragging within same list */
+        gdk_drag_status (context, GDK_ACTION_MOVE, time);
+    else if (model->cbs->data_type) /* cross-widget dragging */
+        gdk_drag_status (context, GDK_ACTION_COPY, time);
+    else
+        return FALSE;
+
     if (model->rows > 0)
     {
         gint row = calc_drop_row (model, widget, x, y);
@@ -404,13 +411,6 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
             gtk_tree_path_free (path);
         }
     }
-
-    if (model->dragging && model->cbs->shift_rows) /* dragging within same list */
-        gdk_drag_status (context, GDK_ACTION_MOVE, time);
-    else if (model->cbs->data_type) /* cross-widget dragging */
-        gdk_drag_status (context, GDK_ACTION_COPY, time);
-    else
-        return FALSE;
 
     gint height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
