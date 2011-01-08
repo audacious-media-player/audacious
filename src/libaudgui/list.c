@@ -23,7 +23,7 @@
 
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
-#define PATH_IS_SELECTED(w, p) ((p) && gtk_tree_selection_path_is_selected \
+#define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
  (gtk_tree_view_get_selection ((GtkTreeView *) (w)), (p)))
 
 typedef struct {
@@ -228,10 +228,13 @@ static gboolean button_press_cb (GtkWidget * widget, GdkEventButton * event,
     {
         /* Only allow GTK to select this row if it is not already selected.  We
          * don't want to clear a multiple selection. */
-        if (PATH_IS_SELECTED (widget, path))
-            model->frozen = TRUE;
-        gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, NULL, FALSE);
-        model->frozen = FALSE;
+        if (path)
+        {
+            if (PATH_IS_SELECTED (widget, path))
+                model->frozen = TRUE;
+            gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, NULL, FALSE);
+            model->frozen = FALSE;
+        }
 
         model->cbs->right_click (model->user, event);
 
@@ -245,7 +248,8 @@ static gboolean button_press_cb (GtkWidget * widget, GdkEventButton * event,
      * If this is just a simple click, we will clear the multiple selection in
      * button_release_cb. */
     if (event->type == GDK_BUTTON_PRESS && event->button == 1 && ! (event->state
-     & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) && PATH_IS_SELECTED (widget, path))
+     & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) && path && PATH_IS_SELECTED (widget,
+     path))
         model->frozen = TRUE;
 
     if (path)
