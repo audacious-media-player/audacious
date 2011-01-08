@@ -474,8 +474,11 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, gi
 
     g_return_if_fail (model->receive_row >= 0 && model->receive_row <=
      model->rows);
-    model->cbs->receive_data (model->user, model->receive_row, sel->data,
-     sel->length);
+
+    if (sel->data && sel->length)
+        model->cbs->receive_data (model->user, model->receive_row, sel->data,
+         sel->length);
+
     model->receive_row = -1;
 }
 
