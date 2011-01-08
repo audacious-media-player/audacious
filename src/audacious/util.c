@@ -300,6 +300,9 @@ static gchar * stream_name (const gchar * name)
 void describe_song (const gchar * name, const Tuple * tuple, gchar * * title,
  gchar * * artist, gchar * * album)
 {
+    /* Common folder names to skip; make it configurable? */
+    static const gchar * const skip[] = {"music"};
+
     const gchar * _title = tuple_get_string (tuple, FIELD_TITLE, NULL);
     const gchar * _artist = tuple_get_string (tuple, FIELD_ARTIST, NULL);
     const gchar * _album = tuple_get_string (tuple, FIELD_ALBUM, NULL);
@@ -321,6 +324,14 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * title,
 
         if (! * title)
             * title = g_strdup (base);
+
+        for (gint i = 0; i < G_N_ELEMENTS (skip); i ++)
+        {
+            if (first && ! strcasecmp (first, skip[i]))
+                first = NULL;
+            if (second && ! strcasecmp (second, skip[i]))
+                second = NULL;
+        }
 
         if (first)
         {
