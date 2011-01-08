@@ -487,6 +487,24 @@ static void destroy_cb (ListModel * model)
     g_object_unref (model);
 }
 
+static void update_selection (GtkWidget * list, ListModel * model, gint at,
+ gint rows)
+{
+    model->blocked = TRUE;
+    GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) list);
+
+    for (gint i = at; i < at + rows; i ++)
+    {
+        GtkTreeIter iter = {.user_data = GINT_TO_POINTER (i)};
+        if (model->cbs->get_selected (model->user, i))
+            gtk_tree_selection_select_iter (sel, & iter);
+        else
+            gtk_tree_selection_unselect_iter (sel, & iter);
+    }
+
+    model->blocked = FALSE;
+}
+
 GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
  gint rows)
 {
@@ -521,6 +539,8 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
         gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
         gtk_tree_selection_set_select_function (sel, select_allow_cb, NULL, NULL);
         g_signal_connect (sel, "changed", (GCallback) select_cb, model);
+
+        update_selection (list, model, 0, rows);
     }
 
     if (cbs->activate_row)
@@ -620,10 +640,12 @@ void audgui_list_insert_rows (GtkWidget * list, gint at, gint rows)
     GtkTreeIter iter = {.user_data = GINT_TO_POINTER (at)};
     GtkTreePath * path = gtk_tree_path_new_from_indices (at, -1);
 
-    while (rows --)
+    for (gint i = rows; i --; )
         gtk_tree_model_row_inserted ((GtkTreeModel *) model, path, & iter);
 
     gtk_tree_path_free (path);
+
+    update_selection (list, model, at, rows);
 }
 
 void audgui_list_update_rows (GtkWidget * list, gint at, gint rows)
@@ -673,20 +695,7 @@ void audgui_list_update_selection (GtkWidget * list, gint at, gint rows)
      ((GtkTreeView *) list);
     g_return_if_fail (model->cbs->get_selected);
     g_return_if_fail (at >= 0 && rows >= 0 && at + rows <= model->rows);
-
-    model->blocked = TRUE;
-    GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) list);
-
-    for (gint i = at; i < at + rows; i ++)
-    {
-        GtkTreeIter iter = {.user_data = GINT_TO_POINTER (i)};
-        if (model->cbs->get_selected (model->user, i))
-            gtk_tree_selection_select_iter (sel, & iter);
-        else
-            gtk_tree_selection_unselect_iter (sel, & iter);
-    }
-
-    model->blocked = FALSE;
+    update_selection (list, model, at, rows);
 }
 
 void audgui_list_set_highlight (GtkWidget * list, gint row)
