@@ -105,6 +105,7 @@ static const gchar *credit_text[] = {
     "Alex Maclean",
     "Mikael Magnusson",
     "Rodrigo Martins de Matos Ventura",
+    "Mihai Maruseac",
     "Diego Pettenò",
     "Mike Ryan",
     "Michael Schwendt",
