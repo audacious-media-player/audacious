@@ -1909,14 +1909,14 @@ gboolean playlist_next_song(gint playlist_num, gboolean repeat)
     if (entries == 0)
         return FALSE;
 
-    if (playlist->position != NULL && playlist->position->queued)
+    /* If we have a song in queue, jump to it, _then_ remove it from queue */
+    if (playlist->queued != NULL)
     {
+        set_position (playlist, playlist->queued->data);
+
         playlist->queued = g_list_remove(playlist->queued, playlist->position);
         playlist->position->queued = FALSE;
     }
-
-    if (playlist->queued != NULL)
-        set_position (playlist, playlist->queued->data);
     else if (cfg.shuffle)
     {
         if (! shuffle_next (playlist))
