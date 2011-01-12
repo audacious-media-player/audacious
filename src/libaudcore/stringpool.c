@@ -48,6 +48,9 @@ stringpool_get(gchar *str, gboolean take)
     if (str == NULL)
         return NULL;
 
+    if (strlen(str) > MAXLEN)
+        return take ? str : g_strdup(str);
+
     g_static_mutex_lock(&stringpool_mutex);
 
     if (stringpool_heap == NULL)
@@ -58,9 +61,6 @@ stringpool_get(gchar *str, gboolean take)
 #else
         stringpool_tree = mowgli_patricia_create(noopcanon);
 #endif
-
-    if (strlen(str) > MAXLEN)
-        return take ? str : g_strdup(str);
 
     PooledString *ps;
 
