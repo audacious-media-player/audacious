@@ -96,8 +96,7 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
         gchar *tmp_artist = g_strconcat(artist, convert_to_utf8(read_char_data(f, 60)), NULL);
         gchar *tmp_album = g_strconcat(album, convert_to_utf8(read_char_data(f, 60)), NULL);
         vfs_fseek(f, -170, SEEK_END);
-        gchar *tmp_genre = g_new0(gchar, 30);
-        tmp_genre = convert_to_utf8(read_char_data(f, 30));
+        gchar *tmp_genre = convert_to_utf8(read_char_data(f, 30));
         g_free(title);
         g_free(artist);
         g_free(album);
@@ -105,13 +104,12 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
         artist = tmp_artist;
         album = tmp_album;
 
-        if (g_strcmp0(tmp_genre, NULL) == 1)
+        if (tmp_genre != NULL)
         {
             tuple_associate_string(tuple, FIELD_GENRE, NULL, tmp_genre);
             genre_set = TRUE;
+            g_free(tmp_genre);
         }
-
-        g_free(tmp_genre);
     }
 
     tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
