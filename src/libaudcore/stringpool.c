@@ -40,6 +40,8 @@ static mowgli_heap_t *stringpool_heap = NULL;
 static mowgli_patricia_t *stringpool_tree = NULL;
 static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
+#define MAXLEN 100
+
 gchar *
 stringpool_get(gchar *str, gboolean take)
 {
@@ -56,6 +58,9 @@ stringpool_get(gchar *str, gboolean take)
 #else
         stringpool_tree = mowgli_patricia_create(noopcanon);
 #endif
+
+    if (strlen(str) > MAXLEN)
+        return take ? str : g_strdup(str);
 
     PooledString *ps;
 
@@ -83,6 +88,9 @@ stringpool_unref(gchar *str)
 {
     if (str == NULL)
         return;
+
+    if (strlen(str) > MAXLEN)
+        return g_free(str);
 
     g_return_if_fail(stringpool_heap != NULL);
     g_return_if_fail(stringpool_tree != NULL);
