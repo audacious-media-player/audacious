@@ -28,6 +28,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/stringpool.h>
 #include <libaudcore/tuple_formatter.h>
 
 #include "audconfig.h"
@@ -163,9 +164,9 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     entry->tuple = tuple;
 
     g_free (entry->formatted);
-    g_free (entry->title);
-    g_free (entry->artist);
-    g_free (entry->album);
+    stringpool_unref (entry->title);
+    stringpool_unref (entry->artist);
+    stringpool_unref (entry->album);
 
     if (tuple == NULL)
     {
@@ -260,9 +261,9 @@ static void entry_free (Entry * entry)
         tuple_free(entry->tuple);
 
     g_free (entry->formatted);
-    g_free (entry->title);
-    g_free (entry->artist);
-    g_free (entry->album);
+    stringpool_unref (entry->title);
+    stringpool_unref (entry->artist);
+    stringpool_unref (entry->album);
     g_free (entry);
 }
 
