@@ -19,24 +19,10 @@
  * Audacious or using our public API to be a derived work.
  */
 
+#include <assert.h>
 #include <glib.h>
 #include <mowgli.h>
 
-#ifndef MOWGLI_PATRICIA_ALLOWS_NULL_CANONIZE
-static void
-noopcanon(gchar *str)
-{
-    return;
-}
-#endif
-
-/** Structure to handle string refcounting. */
-typedef struct {
-    gint refcount;
-    gchar *str;
-} PooledString;
-
-static mowgli_heap_t *stringpool_heap = NULL;
 static mowgli_patricia_t *stringpool_tree = NULL;
 static GStaticMutex stringpool_mutex = G_STATIC_MUTEX_INIT;
 
@@ -53,34 +39,28 @@ stringpool_get(gchar *str, gboolean take)
 
     g_static_mutex_lock(&stringpool_mutex);
 
-    if (stringpool_heap == NULL)
-        stringpool_heap = mowgli_heap_create(sizeof(PooledString), 1024, 0);
     if (stringpool_tree == NULL)
-#ifdef MOWGLI_PATRICIA_ALLOWS_NULL_CANONIZE
         stringpool_tree = mowgli_patricia_create(NULL);
-#else
-        stringpool_tree = mowgli_patricia_create(noopcanon);
-#endif
 
-    PooledString *ps;
-
-    if ((ps = mowgli_patricia_retrieve(stringpool_tree, str)) != NULL)
+    mowgli_patricia_elem_t *elem = mowgli_patricia_elem_find(stringpool_tree, str);
+    if (elem != NULL)
     {
-        ps->refcount++;
-
-        if (take)
-            g_free(str);
+        gint refcount = GPOINTER_TO_INT(mowgli_patricia_elem_get_data(elem));
+        mowgli_patricia_elem_set_data(elem, GINT_TO_POINTER(refcount + 1));
     }
     else
     {
-        ps = mowgli_heap_alloc(stringpool_heap);
-        ps->refcount = 1;
-        ps->str = take ? str : g_strdup(str);
-        mowgli_patricia_add(stringpool_tree, str, ps);
+        elem = mowgli_patricia_elem_add(stringpool_tree, str, GINT_TO_POINTER(1));
+        assert(elem != NULL);
     }
 
+    if (take)
+        g_free(str);
+    str = (gchar *)mowgli_patricia_elem_get_key(elem);
+
     g_static_mutex_unlock(&stringpool_mutex);
-    return ps->str;
+
+    return str;
 }
 
 void
@@ -92,19 +72,18 @@ stringpool_unref(gchar *str)
     if (strlen(str) > MAXLEN)
         return g_free(str);
 
-    g_return_if_fail(stringpool_heap != NULL);
     g_return_if_fail(stringpool_tree != NULL);
 
     g_static_mutex_lock(&stringpool_mutex);
 
-    PooledString *ps;
-    ps = mowgli_patricia_retrieve(stringpool_tree, str);
-    if (ps != NULL && --ps->refcount <= 0)
-    {
-        mowgli_patricia_delete(stringpool_tree, str);
-        g_free(ps->str);
-        mowgli_heap_free(stringpool_heap, ps);
-    }
+    mowgli_patricia_elem_t *elem = mowgli_patricia_elem_find(stringpool_tree, str);
+    assert(elem != NULL);
+
+    gint refcount = GPOINTER_TO_INT(mowgli_patricia_elem_get_data(elem));
+    if (refcount == 1)
+        mowgli_patricia_elem_delete(stringpool_tree, elem);
+    else
+        mowgli_patricia_elem_set_data(elem, GINT_TO_POINTER(refcount - 1));
 
     g_static_mutex_unlock(&stringpool_mutex);
 }
