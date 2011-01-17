@@ -45,6 +45,14 @@ dnl Large file support
 dnl ==================
 CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
 
+dnl Activation of text console (MS-Windows ONLY)
+dnl ============================================
+AC_ARG_ENABLE([text-console],
+[AS_HELP_STRING([--enable-text-console],[Enable text console for MS-Windows hosts])],
+[use_text_console=$withval],
+[use_text_console=no]
+)
+
 dnl Plugin stuff
 dnl ========================
 SHARED_SUFFIX="$PLUGIN_SUFFIX"
@@ -56,7 +64,9 @@ AC_MSG_CHECKING([for Windows or Macintosh])
 case "$target" in
     *mingw*)
         AC_MSG_RESULT([Windows])
-        LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
+        if test "x$use_text_console" = "xno"; then
+            LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
+        fi
         ;;
     *apple*)
         AC_MSG_RESULT([Macintosh])
