@@ -184,7 +184,7 @@ AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.2.4], [Cairo])
 
 dnl Check for libmowgli
 dnl ===================
-AUD_CHECK_MODULE([MOWGLI], [libmowgli], [>= 0.7.0], [libmowgli],
+AUD_CHECK_MODULE([MOWGLI], [libmowgli], [>= 0.9], [libmowgli],
     [http://www.atheme.org/projects/mowgli.shtml])
 
 
