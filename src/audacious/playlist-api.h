@@ -218,6 +218,9 @@ AUD_FUNC1 (void, playlist_randomize, gint, playlist)
  * reading it afresh from the song files in the background. */
 AUD_FUNC1 (void, playlist_rescan, gint, playlist)
 
+/* Like playlist_rescan, but applies only to the selected entries in a playlist. */
+AUD_FUNC1 (void, playlist_rescan_selected, gint, playlist)
+
 /* Discards the metadata stored for all the entries that refer to a particular
  * song file, in whatever playlist they appear, and starts reading it afresh
  * from that file in the background. */

@@ -1561,7 +1561,7 @@ void playlist_reformat_titles (void)
     METADATA_HAS_CHANGED (NULL, 0, 0);
 }
 
-void playlist_rescan(gint playlist_num)
+void playlist_rescan_real (gint playlist_num, gboolean onlyselected)
 {
     DECLARE_PLAYLIST;
     gint entries, count;
@@ -1574,11 +1574,24 @@ void playlist_rescan(gint playlist_num)
     for (count = 0; count < entries; count++)
     {
         Entry * entry = index_get (playlist->entries, count);
-        entry_set_tuple (playlist, entry, NULL);
-        entry->failed = FALSE;
+        if (! onlyselected || entry->selected)
+        {
+            entry_set_tuple (playlist, entry, NULL);
+            entry->failed = FALSE;
+        }
     }
 
     METADATA_HAS_CHANGED (playlist, 0, entries);
+}
+
+void playlist_rescan (gint playlist_num)
+{
+    playlist_rescan_real (playlist_num, FALSE);
+}
+
+void playlist_rescan_selected (gint playlist_num)
+{
+    playlist_rescan_real (playlist_num, TRUE);
 }
 
 void playlist_rescan_file (const gchar * filename)
