@@ -119,6 +119,7 @@ static const gchar *credit_text[] = {
     "Bret Towe",
     "Peter Wagner",
     "John Wehle",
+    "Ben Wolfson",
     "Tim Yamin",
     "Ivan N. Zlatev",
     NULL,
