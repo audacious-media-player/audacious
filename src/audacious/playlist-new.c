@@ -1412,7 +1412,12 @@ static gint filename_compare (const void * _a, const void * _b, void * _compare)
     const Entry * a = _a, * b = _b;
     gint (* compare) (const gchar * a, const gchar * b) = _compare;
 
-    return compare (a->filename, b->filename);
+    gint diff = compare (a->filename, b->filename);
+    if (diff)
+        return diff;
+
+    /* preserve order of "equal" entries */
+    return a->number - b->number;
 }
 
 static gint tuple_compare (const void * _a, const void * _b, void * _compare)
@@ -1425,15 +1430,26 @@ static gint tuple_compare (const void * _a, const void * _b, void * _compare)
     if (b->tuple == NULL)
         return 1;
 
-    return compare (a->tuple, b->tuple);
+    gint diff = compare (a->tuple, b->tuple);
+    if (diff)
+        return diff;
+
+    /* preserve order of "equal" entries */
+    return a->number - b->number;
 }
 
 static gint title_compare (const void * _a, const void * _b, void * _compare)
 {
     const Entry * a = _a, * b = _b;
     gint (* compare) (const gchar * a, const gchar * b) = _compare;
-    return compare (a->formatted ? a->formatted : a->filename, b->formatted ? b->formatted :
-     b->filename);
+
+    gint diff = compare (a->formatted ? a->formatted : a->filename, b->formatted
+     ? b->formatted : b->filename);
+    if (diff)
+        return diff;
+
+    /* preserve order of "equal" entries */
+    return a->number - b->number;
 }
 
 static void sort (Playlist * playlist, gint (* compare) (const void * a,
