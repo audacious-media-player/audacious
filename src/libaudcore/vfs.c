@@ -25,11 +25,87 @@
 #include <sys/types.h>
 #include <string.h>
 
+#include <libmowgli/mowgli_stdinc.h>
+#include <libmowgli/mowgli_patricia.h>
+
+/* Audacious core provides us with a function that looks up a VFS transport for
+ * a given URI scheme.  Since this function will load plugins as needed, it can
+ * only be called from the main thread.  When VFS is used from parallel threads,
+ * vfs_prepare must be called from the main thread to look up any needed
+ * transports beforehand. */
+
+typedef struct {
+    VFSConstructor * transport;
+    gboolean prepared;
+} LookupNode;
+
+static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static GThread * lookup_thread = NULL;
 static VFSConstructor * (* lookup_func) (const gchar * scheme) = NULL;
+static mowgli_patricia_t * lookup_table = NULL;
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const gchar * scheme))
 {
+    g_static_mutex_lock (& mutex);
+
+    lookup_thread = g_thread_self ();
     lookup_func = func;
+
+    if (! lookup_table)
+        lookup_table = mowgli_patricia_create (NULL);
+
+    g_static_mutex_unlock (& mutex);
+}
+
+static VFSConstructor * do_lookup (const gchar * scheme, gboolean prepare)
+{
+    g_return_val_if_fail (lookup_thread && lookup_func && lookup_table, NULL);
+
+    LookupNode * node = mowgli_patricia_retrieve (lookup_table, scheme);
+    if (! node)
+    {
+        node = g_slice_new (LookupNode);
+        node->transport = NULL;
+        node->prepared = FALSE;
+        mowgli_patricia_add (lookup_table, scheme, node);
+    }
+
+    if (prepare)
+        node->prepared = TRUE;
+
+    /* vfs_prepare can only be called from the main thread.  vfs_fopen can only
+     * be called from the main thread unless vfs_prepare has been called. */
+    if (prepare || ! node->prepared)
+        g_return_val_if_fail (g_thread_self () == lookup_thread, NULL);
+
+    /* do the actual lookup if needed, but only in the main thread */
+    if (! node->transport && g_thread_self () == lookup_thread)
+    {
+        node->transport = lookup_func (scheme);
+        /* This is normal for custom URI schemes.
+        if (! node->transport)
+            fprintf (stderr, "No transport plugin found for URI scheme \"%s\".\n", scheme); */
+    }
+
+    return node->transport;
+}
+
+void vfs_prepare (const gchar * scheme)
+{
+    g_static_mutex_lock (& mutex);
+    do_lookup (scheme, TRUE);
+    g_static_mutex_unlock (& mutex);
+}
+
+void vfs_prepare_filename (const gchar * path)
+{
+    const gchar * s = strstr (path, "://");
+    g_return_if_fail (s);
+    gchar scheme[s - path + 1];
+    strncpy (scheme, path, s - path);
+    scheme[s - path] = 0;
+
+    vfs_prepare (scheme);
 }
 
 /**
@@ -55,12 +131,12 @@ vfs_fopen(const gchar * path,
     strncpy (scheme, path, s - path);
     scheme[s - path] = 0;
 
-    if (! (vtable = lookup_func (scheme)))
-    {
-        /* This is normal for custom URI schemes.
-        fprintf (stderr, "No transport plugin found for %s.\n", path); */
+    g_static_mutex_lock (& mutex);
+    vtable = do_lookup (scheme, FALSE);
+    g_static_mutex_unlock (& mutex);
+
+    if (! vtable)
         return NULL;
-    }
 
     file = vtable->vfs_fopen_impl(path, mode);
 

@@ -362,6 +362,8 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
     current_entry = entry;
     current_filename = playlist_entry_get_filename (playlist, entry);
 
+    vfs_prepare_filename (current_filename);
+
     PluginHandle * p = playlist_entry_get_decoder (playlist, entry, FALSE);
     current_decoder = p ? plugin_get_header (p) : NULL;
 

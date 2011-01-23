@@ -459,6 +459,8 @@ static gboolean scan_next (void * unused)
             if (entry->failed)
                 continue;
 
+            vfs_prepare_filename (entry->filename);
+
             scan_positions[i] = search;
             scan_filenames[i] = entry->filename;
             scan_decoders[i] = entry->decoder;
