@@ -21,6 +21,10 @@
 
 #include "list.h"
 
+#if GTK_CHECK_VERSION (2, 12, 0)
+#define HAVE_AUTOSCROLL
+#endif
+
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
 #define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
@@ -36,7 +40,9 @@ typedef struct {
     gboolean frozen, blocked;
     gboolean dragging;
     gboolean clicked_row, receive_row;
+#if HAVE_AUTOSCROLL
     gint scroll_source, scroll_speed;
+#endif
 } ListModel;
 
 /* ==== MODEL ==== */
@@ -334,6 +340,7 @@ static gint calc_drop_row (ListModel * model, GtkWidget * widget, gint x, gint y
     return row;
 }
 
+#if HAVE_AUTOSCROLL
 static void stop_autoscroll (ListModel * model)
 {
     if (! model->scroll_source)
@@ -376,6 +383,7 @@ static void start_autoscroll (ListModel * model, GtkWidget * widget, gint speed)
     model->scroll_source = g_timeout_add (50, (GSourceFunc) autoscroll, widget);
     model->scroll_speed = speed;
 }
+#endif
 
 static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
  gint x, gint y, guint time, ListModel * model)
@@ -412,6 +420,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
         }
     }
 
+#if HAVE_AUTOSCROLL
     gint height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
      widget), NULL, NULL, NULL, & height, NULL);
@@ -424,6 +433,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
         start_autoscroll (model, widget, 2);
     else
         stop_autoscroll (model);
+#endif
 
     return TRUE;
 }
@@ -434,7 +444,9 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, 0);
+#if HAVE_AUTOSCROLL
     stop_autoscroll (model);
+#endif
 }
 
 static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, gint x,
@@ -463,7 +475,9 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, gint x,
 
     gtk_drag_finish (context, success, FALSE, time);
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, 0);
+#if HAVE_AUTOSCROLL
     stop_autoscroll (model);
+#endif
     return TRUE;
 }
 
@@ -486,7 +500,9 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, gi
 
 static void destroy_cb (ListModel * model)
 {
+#if HAVE_AUTOSCROLL
     stop_autoscroll (model);
+#endif
     g_object_unref (model);
 }
 
@@ -529,8 +545,10 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     model->dragging = FALSE;
     model->clicked_row = -1;
     model->receive_row = -1;
+#if HAVE_AUTOSCROLL
     model->scroll_source = 0;
     model->scroll_speed = 0;
+#endif
 
     GtkWidget * list = gtk_tree_view_new_with_model ((GtkTreeModel *) model);
     g_signal_connect_swapped (list, "destroy", (GCallback) destroy_cb, model);

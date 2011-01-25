@@ -52,6 +52,7 @@
 
 #include "audconfig.h"
 #include "chardet.h"
+#include "compatibility.h"
 #include "configdb.h"
 #include "debug.h"
 #include "drct.h"
