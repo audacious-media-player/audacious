@@ -56,6 +56,8 @@ vfs_async_file_get_contents_worker(gpointer data)
 void
 vfs_async_file_get_contents(const gchar *filename, VFSConsumer cons_f, gpointer userdata)
 {
+    vfs_prepare_filename (filename);
+
     VFSAsyncTrampoline *tr;
 
     tr = g_slice_new0(VFSAsyncTrampoline);
