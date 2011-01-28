@@ -56,7 +56,7 @@ static inline void gtk_widget_set_can_focus (GtkWidget * w, gboolean b)
 	GTK_WIDGET_UNSET_FLAGS (w, GTK_CAN_FOCUS);
 }
 
-#define gtk_widget_get_allocation(w, a) memcpy ((a), (w)->allocation, sizeof GtkAllocation)
+#define gtk_widget_get_allocation(w, a) memcpy ((a), & (w)->allocation, sizeof (GtkAllocation))
 #define gtk_widget_get_visible GTK_WIDGET_VISIBLE
 #endif
 
