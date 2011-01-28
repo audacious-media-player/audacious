@@ -17,7 +17,10 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <gtk/gtk.h>
+
 #include <audacious/audconfig.h>
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>

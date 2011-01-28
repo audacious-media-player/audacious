@@ -29,6 +29,7 @@
 #include "config.h"
 #include "configdb.h"
 #include "debug.h"
+#include "glib-compat.h"
 #include "gtk-compat.h"
 #include "i18n.h"
 #include "misc.h"
