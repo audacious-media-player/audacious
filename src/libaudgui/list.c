@@ -33,10 +33,10 @@ static void gtk_tree_view_convert_widget_to_bin_window_coords
 #endif
 
 #if ! GTK_CHECK_VERSION (2, 14, 0)
-#define gtk_adjustment_get_page_size (a) ((a)->page_size)
-#define gtk_adjustment_get_upper (a) ((a)->upper)
-#define gtk_selection_data_get_data (s) ((s)->data)
-#define gtk_selection_data_get_length (s) ((s)->length)
+#define gtk_adjustment_get_page_size(a) ((a)->page_size)
+#define gtk_adjustment_get_upper(a) ((a)->upper)
+#define gtk_selection_data_get_data(s) ((s)->data)
+#define gtk_selection_data_get_length(s) ((s)->length)
 #endif
 
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
