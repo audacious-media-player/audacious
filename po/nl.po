@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2010-08-03 17:50-0400\n"
+"POT-Creation-Date: 2011-01-29 15:00-0500\n"
 "PO-Revision-Date: 2006-11-16 20:02+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
@@ -15,6 +15,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/audacious/chardet.c:39
+msgid "  (invalid UTF-8)"
+msgstr "  (ongeldige UTF-8)"
 
 #: src/audacious/credits.c:31
 #, fuzzy, c-format
@@ -49,177 +53,177 @@ msgstr "Plugin-ontwikkeling:"
 msgid "Patch authors:"
 msgstr "Patches aangeleverd door:"
 
-#: src/audacious/credits.c:124
+#: src/audacious/credits.c:127
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x ontwikkelaars:"
 
-#: src/audacious/credits.c:146
+#: src/audacious/credits.c:149
 msgid "BMP Developers:"
 msgstr "BMP ontwikkelaars:"
 
-#: src/audacious/credits.c:178
+#: src/audacious/credits.c:181
 #, fuzzy
 msgid "Belarusian:"
 msgstr "Hongaars:"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:184
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:187
 msgid "Brazilian Portuguese:"
 msgstr "Braziliaans Portugees:"
 
-#: src/audacious/credits.c:188
+#: src/audacious/credits.c:191
 msgid "Breton:"
 msgstr "Bretons:"
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:194
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Hongaars:"
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:197
 #, fuzzy
 msgid "Catalan:"
 msgstr "Italiaans:"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:200
 #, fuzzy
 msgid "Chinese:"
 msgstr "Chinees:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:203
 #, fuzzy
 msgid "Croatian:"
 msgstr "Roemeens:"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "Tjechisch:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:209
 msgid "Dutch:"
 msgstr "Nederlands:"
 
-#: src/audacious/credits.c:210
+#: src/audacious/credits.c:213
 #, fuzzy
 msgid "Estonian:"
 msgstr "Roemeens:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:216
 msgid "Finnish:"
 msgstr "Fins:"
 
-#: src/audacious/credits.c:217
+#: src/audacious/credits.c:220
 msgid "French:"
 msgstr "Frans:"
 
-#: src/audacious/credits.c:222
+#: src/audacious/credits.c:225
 msgid "German:"
 msgstr "Duits:"
 
-#: src/audacious/credits.c:229
+#: src/audacious/credits.c:232
 #, fuzzy
 msgid "Georgian:"
 msgstr "Georgisch:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:235
 msgid "Greek:"
 msgstr "Grieks:"
 
-#: src/audacious/credits.c:237
+#: src/audacious/credits.c:240
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:243
 msgid "Hungarian:"
 msgstr "Hongaars:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:247
 msgid "Italian:"
 msgstr "Italiaans:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:251
 msgid "Japanese:"
 msgstr "Japans:"
 
-#: src/audacious/credits.c:250
+#: src/audacious/credits.c:254
 msgid "Korean:"
 msgstr "Koreaans:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:257
 msgid "Lithuanian:"
 msgstr "Lets:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:261
 msgid "Macedonian:"
 msgstr "Macedonisch:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:264
 msgid "Polish:"
 msgstr "Pools:"
 
-#: src/audacious/credits.c:263
+#: src/audacious/credits.c:269
 #, fuzzy
-msgid "Portugese:"
+msgid "Portuguese:"
 msgstr "Braziliaans Portugees:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:272
 msgid "Romanian:"
 msgstr "Roemeens:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:276
 msgid "Russian:"
 msgstr "Russisch:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:280
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:283
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:286
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:289
 msgid "Slovak:"
 msgstr "Slowaaks:"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:292
 msgid "Spanish:"
 msgstr "Spaans:"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:298
 msgid "Swedish:"
 msgstr "Zweeds:"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:301
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:306
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:310
 msgid "Ukrainian:"
 msgstr "Ukrainees:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:313
 msgid "Welsh:"
 msgstr "Welsh:"
 
-#: src/audacious/drct.c:317
+#: src/audacious/drct.c:249
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Afspeellijst laden"
 
-#: src/audacious/equalizer_preset.c:187
+#: src/audacious/equalizer_preset.c:185
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
@@ -235,425 +239,367 @@ msgid_plural "%d files found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/audacious/logger.c:125
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr "Kon logbestand niet aanmaken (%s)!\n"
-
-#: src/audacious/main.c:69
+#: src/audacious/main.c:70
 msgid "Audacious"
 msgstr "Audacious"
 
 #  -r, --rew switch
-#: src/audacious/main.c:158
+#: src/audacious/main.c:267
 msgid "Skip backwards in playlist"
 msgstr "Ga terug in de speellijst"
 
 #  -p, --play switch
-#: src/audacious/main.c:159
+#: src/audacious/main.c:268
 msgid "Start playing current playlist"
 msgstr "Begin de huidige speellijst af te spelen"
 
 #  -u, --pause switch
-#: src/audacious/main.c:160
+#: src/audacious/main.c:269
 msgid "Pause current song"
 msgstr "Pauzeer huidig nummer"
 
 #  -s, --stop switch
-#: src/audacious/main.c:161
+#: src/audacious/main.c:270
 msgid "Stop current song"
 msgstr "Stop huidig nummer"
 
 #  -t, --play-pause switch
-#: src/audacious/main.c:162
+#: src/audacious/main.c:271
 msgid "Pause if playing, play otherwise"
 msgstr "Pauzeer tijdens spelen, anders afspelen"
 
 #  -f, --fwd switch
-#: src/audacious/main.c:163
+#: src/audacious/main.c:272
 msgid "Skip forward in playlist"
 msgstr "Ga vooruit in de speellijst"
 
-#: src/audacious/main.c:164
+#: src/audacious/main.c:273
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Spring-naar-bestand dialoog weergeven"
 
 #  -e, --enqueue switch
-#: src/audacious/main.c:165
+#: src/audacious/main.c:274
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Speellijst niet wissen"
 
 #  -e, --enqueue switch
-#: src/audacious/main.c:166
+#: src/audacious/main.c:275
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Speellijst niet wissen"
 
 #  -m, --show-main-window switch
-#: src/audacious/main.c:167
+#: src/audacious/main.c:276
 #, fuzzy
 msgid "Display the main window"
 msgstr "Geef het hoofdvenster weer"
 
-#: src/audacious/main.c:168
+#: src/audacious/main.c:277
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:169
-msgid "Print all errors and warnings to stdout"
-msgstr ""
-
-#: src/audacious/main.c:170
+#: src/audacious/main.c:278
 #, fuzzy
 msgid "Show version"
 msgstr "Sp/eler weergeven"
 
-#: src/audacious/main.c:172
-msgid "Used in macpacking"
+#: src/audacious/main.c:279
+msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:174
+#: src/audacious/main.c:280
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:186
+#: src/audacious/main.c:292
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:197
+#: src/audacious/main.c:303
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:434
-msgid "Sorry, threads aren't supported on your platform.\n"
+#: src/audacious/main.c:324
+#, c-format
+msgid ""
+"Running multiple instances of Audacious can lead to corrupted configuration "
+"files.  If Audacious is not already running, or if you want to run another "
+"instance anyway, please delete the file %s and run Audacious again.  "
+"Audacious will now close."
 msgstr ""
 
-#: src/audacious/main.c:473
+#: src/audacious/main.c:545
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious: Kan het venster niet openen, het programma sluit nu af.\n"
 
-#: src/audacious/playback.c:476
+#: src/audacious/playback.c:372
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:599
+#: src/audacious/playback.c:513
 msgid "Buffering ..."
 msgstr ""
 
-#: src/audacious/playlist-new.c:292
+#: src/audacious/playlist-new.c:286
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Afspeellijst opslaan"
 
-#: src/audacious/pluginenum.c:371
-msgid "Module loading not supported! Plugins will not be loaded.\n"
-msgstr ""
-
-#: src/audacious/ui_misc.c:50
-msgid "Audacious - Unsupported Version Warning"
-msgstr ""
-
-#: src/audacious/ui_misc.c:57
-msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-msgstr ""
-
-#: src/audacious/ui_misc.c:63
-msgid ""
-"<b>Please don't file bugs at this point unless they represent major problems."
-"</b>"
-msgstr ""
-
-#: src/audacious/ui_misc.c:66
-msgid ""
-"This is an <i>alpha</i> build of Audacious2. It is still fairly incomplete "
-"and unpolished.\n"
-"We suspect that most minor bugs reported during this time will be resolved "
-"once more things\n"
-"stablize. However, if there is a major bug, such as a crash on playing a "
-"specific file, we\n"
-"need to know about it.\n"
-"\n"
-"However, we ask you to be aware that dealing with trivial bugs is "
-"distracting at this point,\n"
-"and to please refrain from doing so. Thanks in advance!"
-msgstr ""
-
-#: src/audacious/ui_misc.c:76
-msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-msgstr ""
-
-#: src/audacious/ui_misc.c:79
-msgid ""
-"Likewise, we're developers. We don't read blogs on a regular basis. If there "
-"is a major bug,\n"
-"we ask you to bring it to our attention via our bugtracking instance at "
-"http://jira.atheme.org/,\n"
-"or via the forums that are on the website.\n"
-"\n"
-"This will help us find out more information about your concerns, which we "
-"would likely\n"
-"not know about otherwise."
-msgstr ""
-
-#: src/audacious/ui_preferences.c:124
+#: src/audacious/ui_preferences.c:91
 msgid "Audio"
 msgstr "Geluid"
 
-#: src/audacious/ui_preferences.c:125
+#: src/audacious/ui_preferences.c:92
 msgid "Replay Gain"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:126
+#: src/audacious/ui_preferences.c:93
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:127
-#, fuzzy
-msgid "Playback"
-msgstr "/A_fspelen"
-
-#: src/audacious/ui_preferences.c:128 src/libaudgui/ui_playlist_manager.c:198
+#: src/audacious/ui_preferences.c:94 src/audacious/ui_preferences.c:1825
+#: src/libaudgui/ui_playlist_manager.c:199
 msgid "Playlist"
 msgstr "Speellijst"
 
-#: src/audacious/ui_preferences.c:129
+#: src/audacious/ui_preferences.c:95
 msgid "Plugins"
 msgstr "Plugins"
 
-#: src/audacious/ui_preferences.c:135 src/libaudgui/infopopup.c:231
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:240
 msgid "Artist"
 msgstr "Artiest"
 
-#: src/audacious/ui_preferences.c:136 src/libaudgui/infopopup.c:233
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:242
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:137 src/libaudgui/infopopup.c:229
+#: src/audacious/ui_preferences.c:103 src/libaudgui/infopopup.c:238
 msgid "Title"
 msgstr "Titel"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:104
 msgid "Tracknumber"
 msgstr "Nummer"
 
-#: src/audacious/ui_preferences.c:139 src/libaudgui/infopopup.c:235
+#: src/audacious/ui_preferences.c:105 src/libaudgui/infopopup.c:244
 msgid "Genre"
 msgstr "Genre"
 
-#: src/audacious/ui_preferences.c:140 src/audacious/ui_preferences.c:438
+#: src/audacious/ui_preferences.c:106
 msgid "Filename"
 msgstr "Bestandsnaam"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:107
 msgid "Filepath"
 msgstr "Bestandslocatie"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:108
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:143 src/libaudgui/infopopup.c:237
+#: src/audacious/ui_preferences.c:109 src/libaudgui/infopopup.c:246
 msgid "Year"
 msgstr "Jaar"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:110
 msgid "Comment"
 msgstr "Opmerking"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:111
 msgid "Codec"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:112
 #, fuzzy
 msgid "Quality"
 msgstr "/_Afsluiten"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:117
 msgid "None"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:118
 #, fuzzy
 msgid "Japanese"
 msgstr "Japans:"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:119
 #, fuzzy
 msgid "Taiwanese"
 msgstr "Japans:"
 
-#: src/audacious/ui_preferences.c:154
+#: src/audacious/ui_preferences.c:120
 #, fuzzy
 msgid "Chinese"
 msgstr "Chinees:"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:121
 #, fuzzy
 msgid "Korean"
 msgstr "Koreaans:"
 
-#: src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:122
 #, fuzzy
 msgid "Russian"
 msgstr "Russisch:"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:123
 #, fuzzy
 msgid "Greek"
 msgstr "Grieks:"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:124
 msgid "Hebrew"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:125
 msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:126
 msgid "Arabic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:127
 #, fuzzy
 msgid "Polish"
 msgstr "Pools:"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:128
 msgid "Baltic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:129
 msgid "Universal"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:183
+#: src/audacious/ui_preferences.c:149
 #, fuzzy
 msgid "<b>Bit Depth</b>"
 msgstr "<i>Titel</i>"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:150
 msgid "Output bit depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:151
 msgid ""
 "All streams will be converted to this bit depth.\n"
 "This should be the max supported bit depth of\n"
 "the sound card or output plugin."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:154
 #, fuzzy
 msgid "<b>Volume Control</b>"
 msgstr "<b>Muiswiel</b>"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:155
 msgid "Use software volume control"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:157
 msgid ""
 "Use software volume control. This may be useful for situations where your "
 "audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:161
 msgid "Preamp:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:161 src/audacious/ui_preferences.c:162
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Default gain:"
 msgstr "Standaard skin:"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:162
 msgid "This gain will be used if file doesn't contain Replay Gain metadata."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:163
 msgid ""
 "<span size=\"small\">Please remember that the most efficient way to prevent "
 "signal clipping is not to use positive values above.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:167
 #, fuzzy
 msgid "<b>Replay Gain configuration</b>"
 msgstr "<b>Proxy-configuratie</b>"
 
-#: src/audacious/ui_preferences.c:202
+#: src/audacious/ui_preferences.c:168
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "Proxy gebruiken"
 
-#: src/audacious/ui_preferences.c:203
+#: src/audacious/ui_preferences.c:169
 msgid "<b>Replay Gain mode</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:204
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "Track gain/peak"
 msgstr "Titel"
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:171
 msgid "Album gain/peak"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206 src/audacious/ui_preferences.c:1289
+#: src/audacious/ui_preferences.c:172 src/audacious/ui_preferences.c:936
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Diversen</b>"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:173
 msgid "Enable peak info clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:174
 msgid "Use peak value from Replay Gain info for clipping prevention"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:179
 msgid "Proxy hostname:"
 msgstr "Proxy-hostnaam:"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy port:"
 msgstr "Proxy-poort:"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:184
 msgid "Proxy username:"
 msgstr "Proxy-gebruikersnaam:"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:185
 msgid "Proxy password:"
 msgstr "Proxy-wachtwoord:"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:189
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy-configuratie</b>"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:190
 msgid "Enable proxy usage"
 msgstr "Proxy gebruiken"
 
-#: src/audacious/ui_preferences.c:227
+#: src/audacious/ui_preferences.c:193
 msgid "Use authentication with proxy"
 msgstr "Gebruik authenticatie voor proxy"
 
-#: src/audacious/ui_preferences.c:230
+#: src/audacious/ui_preferences.c:196
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -661,46 +607,15 @@ msgstr ""
 "<span size=\"small\">Het aanpassen van deze instellingen vereist een "
 "herstart van Audacious.</span>"
 
-#: src/audacious/ui_preferences.c:234
-msgid "<b>Playback</b>"
-msgstr "<b>Afspelen</b>"
-
-#: src/audacious/ui_preferences.c:235
-msgid "Continue playback on startup"
-msgstr "Afspeelpositie onthouden"
-
-#: src/audacious/ui_preferences.c:236
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-"Wanneer Audacious gestart wordt zal afspelen hervatten van dezelfde positie "
-"als waar het bij het afsluiten stopte."
-
-#  -e, --enqueue switch
-#: src/audacious/ui_preferences.c:237
-msgid "Don't advance in the playlist"
-msgstr "Niet vooruitlopen in de speellijst"
-
-#: src/audacious/ui_preferences.c:238
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
-"Ga niet automatisch naar het volgende nummer, wanneer het huidige nummer is "
-"afgelopen."
-
-#: src/audacious/ui_preferences.c:239
-msgid "Clear current playlist when opening new files"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:200
 msgid "Auto character encoding detector for:"
 msgstr "Automatische karakter-encoding detector ingeschakeld voor:"
 
-#: src/audacious/ui_preferences.c:252
+#: src/audacious/ui_preferences.c:208
 msgid "Fallback character encodings:"
 msgstr "Terugvallen op karakter-encodings:"
 
-#: src/audacious/ui_preferences.c:252
+#: src/audacious/ui_preferences.c:208
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -711,32 +626,48 @@ msgstr ""
 "gebruikt (hier wordt op teruggevallen als automatische detectie faalt of is "
 "uitgeschakeld)."
 
-#: src/audacious/ui_preferences.c:256
+#: src/audacious/ui_preferences.c:212
+#, fuzzy
+msgid "<b>Behavior</b>"
+msgstr "<i>Titel</i>"
+
+#: src/audacious/ui_preferences.c:213
+msgid "Continue playback on startup"
+msgstr "Afspeelpositie onthouden"
+
+#: src/audacious/ui_preferences.c:215
+msgid "Advance when the current song is deleted"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:217
+#, fuzzy
+msgid "Clear the playlist when opening files"
+msgstr "/Lijst sorteren/Op volgorde afspeellijst"
+
+#  -e, --enqueue switch
+#: src/audacious/ui_preferences.c:219
+#, fuzzy
+msgid "Open files in a temporary playlist"
+msgstr "Speellijst niet wissen"
+
+#: src/audacious/ui_preferences.c:221
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadata</b>"
 
-#: src/audacious/ui_preferences.c:408
-msgid "Enabled"
-msgstr "Actief"
-
-#: src/audacious/ui_preferences.c:424
-msgid "Description"
-msgstr "Beschrijving"
-
-#: src/audacious/ui_preferences.c:901
+#: src/audacious/ui_preferences.c:540
 msgid "Category"
 msgstr "Categorie"
 
-#: src/audacious/ui_preferences.c:1208
+#: src/audacious/ui_preferences.c:855
 msgid "Popup Information Settings"
 msgstr "Instellingen van popup-informatie"
 
-#: src/audacious/ui_preferences.c:1217
+#: src/audacious/ui_preferences.c:864
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Formaat-detectie</b>"
 
-#: src/audacious/ui_preferences.c:1222
+#: src/audacious/ui_preferences.c:869
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -746,92 +677,96 @@ msgstr ""
 "bestandsnaam gekeken. Deze woorden kunnen hier worden opgegeven, gescheiden "
 "door komma's."
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:886
 msgid "Exclude:"
 msgstr "Uitsluiten:"
 
-#: src/audacious/ui_preferences.c:1246
+#: src/audacious/ui_preferences.c:893
 msgid "Include:"
 msgstr "Zoeken naar:"
 
-#: src/audacious/ui_preferences.c:1263
+#: src/audacious/ui_preferences.c:910
 msgid "Recursively search for cover"
 msgstr "Recursief zoeken naar covers"
 
-#: src/audacious/ui_preferences.c:1273
+#: src/audacious/ui_preferences.c:920
 msgid "Search depth: "
 msgstr "Zoekdiepte: "
 
-#: src/audacious/ui_preferences.c:1286
+#: src/audacious/ui_preferences.c:933
 msgid "Use per-file cover"
 msgstr "Cover per bestand"
 
-#: src/audacious/ui_preferences.c:1298
+#: src/audacious/ui_preferences.c:945
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1308
+#: src/audacious/ui_preferences.c:955
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1853
+#: src/audacious/ui_preferences.c:1498
 msgid "<b>Song Display</b>"
 msgstr "<b>Nummer weergave</b>"
 
-#: src/audacious/ui_preferences.c:1862
+#: src/audacious/ui_preferences.c:1507
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1883
+#: src/audacious/ui_preferences.c:1518
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1540
 msgid "Show information about titlestring format"
 msgstr "Geef informatie over het titelformaat"
 
-#: src/audacious/ui_preferences.c:1894
+#: src/audacious/ui_preferences.c:1551
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1895
+#: src/audacious/ui_preferences.c:1552
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1896
+#: src/audacious/ui_preferences.c:1553
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1897
+#: src/audacious/ui_preferences.c:1554
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1898
+#: src/audacious/ui_preferences.c:1555
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1899
+#: src/audacious/ui_preferences.c:1556
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1900
+#: src/audacious/ui_preferences.c:1557
 #, fuzzy
 msgid "Custom"
 msgstr "Handmatige instelling:"
 
-#: src/audacious/ui_preferences.c:1907
+#: src/audacious/ui_preferences.c:1564
 msgid "Custom string:"
 msgstr "Handmatige instelling:"
 
-#: src/audacious/ui_preferences.c:1914
+#: src/audacious/ui_preferences.c:1571
 msgid "Title format:"
 msgstr "Titelformaat:"
 
-#: src/audacious/ui_preferences.c:1925
+#: src/audacious/ui_preferences.c:1582
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup-informatie</b>"
 
-#: src/audacious/ui_preferences.c:1940
+#: src/audacious/ui_preferences.c:1597
 msgid "Show popup information for playlist entries"
 msgstr "Popup-informatie tonen voor items in afspeellijst"
 
-#: src/audacious/ui_preferences.c:1942
+#: src/audacious/ui_preferences.c:1599
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -842,68 +777,50 @@ msgstr ""
 "het album, het genre, het jaar van publicatie, tracknummer en eventuele "
 "cover art."
 
-#: src/audacious/ui_preferences.c:1947
+#: src/audacious/ui_preferences.c:1605
 msgid "Edit settings for popup information"
 msgstr "Instellingen aanpassen voor popup-informatie"
 
-#: src/audacious/ui_preferences.c:2027
+#: src/audacious/ui_preferences.c:1734
 msgid "<b>Audio System</b>"
 msgstr "<b>Geluidssysteem</b>"
 
-#: src/audacious/ui_preferences.c:2044
+#: src/audacious/ui_preferences.c:1751
 msgid "Buffer size:"
 msgstr "Bufferomvang:"
 
-#: src/audacious/ui_preferences.c:2062
+#: src/audacious/ui_preferences.c:1769
 msgid "Current output plugin:"
 msgstr "Huidige uitvoer-plugin:"
 
-#: src/audacious/ui_preferences.c:2091
-msgid "Output Plugin Preferences"
-msgstr "Instellingen uitvoer-plugin"
-
-#: src/audacious/ui_preferences.c:2108
-msgid "Output Plugin Information"
-msgstr "Informatie over uitvoer-plugin"
-
-#: src/audacious/ui_preferences.c:2213
-msgid "_Decoder list:"
-msgstr "_Decoder-lijst:"
-
-#: src/audacious/ui_preferences.c:2243
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Decoders</b></span>"
-
-#: src/audacious/ui_preferences.c:2256
-msgid "_General plugin list:"
-msgstr "_Algemene plugin-lijst:"
-
-#: src/audacious/ui_preferences.c:2286
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>Algemeen</b></span>"
-
-#: src/audacious/ui_preferences.c:2298
-msgid "_Visualization plugin list:"
-msgstr "_Visualisatie plugin-lijst:"
-
-#: src/audacious/ui_preferences.c:2328
-msgid "<b>Visualization</b>"
-msgstr "<b>Visualisatie</b>"
-
-#: src/audacious/ui_preferences.c:2340
+#: src/audacious/ui_preferences.c:1825
 #, fuzzy
-msgid "Effect plugins:"
-msgstr "_Effect plugin-lijst:"
+msgid "Transport"
+msgstr "Vertalers"
 
-#: src/audacious/ui_preferences.c:2369
-msgid "<b>Effects</b>"
+#: src/audacious/ui_preferences.c:1825
+msgid "Input"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1826
+#, fuzzy
+msgid "Effect"
 msgstr "<b>Effecten</b>"
 
-#: src/audacious/ui_preferences.c:2564
+#: src/audacious/ui_preferences.c:1826
+#, fuzzy
+msgid "Visualization"
+msgstr "/Visualisatie"
+
+#: src/audacious/ui_preferences.c:1826
+msgid "General"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1866
 msgid "Audacious Preferences"
 msgstr "Audacious voorkeuren"
 
-#: src/audacious/util.c:236
+#: src/audacious/util.c:170
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kon de map (%s) niet aanmaken: %s"
@@ -916,9 +833,18 @@ msgstr ""
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/audstrings.c:157
-msgid "  (invalid UTF-8)"
-msgstr "  (ongeldige UTF-8)"
+#: src/libaudcore/tuple.c:675
+#, fuzzy
+msgid "Stereo"
+msgstr "stereo"
+
+#: src/libaudcore/tuple.c:676
+msgid "Surround"
+msgstr ""
+
+#: src/libaudcore/tuple.c:676
+msgid "Mono"
+msgstr ""
 
 #: src/libaudgui/confirm.c:62
 #, c-format
@@ -932,7 +858,7 @@ msgstr ""
 msgid "_Don't show this message again"
 msgstr "Deze waarschuwing niet meer weergeven"
 
-#: src/libaudgui/effects-menu.c:61
+#: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
 msgstr ""
 
@@ -989,737 +915,714 @@ msgstr "Equalizer"
 msgid "Preamp"
 msgstr ""
 
-#: src/libaudgui/infopopup.c:239
+#: src/libaudgui/infopopup.c:248
 #, fuzzy
 msgid "Track Number"
 msgstr "Nummer"
 
-#: src/libaudgui/infopopup.c:241
+#: src/libaudgui/infopopup.c:250
 #, fuzzy
 msgid "Track Length"
 msgstr "Duur:"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:73
 #, fuzzy
 msgid "Blues"
 msgstr "regels"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:73
 msgid "Classic Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:73
 msgid "Country"
 msgstr ""
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:73
 #, fuzzy
 msgid "Dance"
 msgstr "Datum"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:74
 msgid "Disco"
 msgstr ""
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:74
 msgid "Funk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:74
 msgid "Grunge"
 msgstr ""
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:74
 msgid "Hip-Hop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:75
 msgid "Jazz"
 msgstr ""
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:75
 msgid "Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:75
 msgid "New Age"
 msgstr ""
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:75
 #, fuzzy
 msgid "Oldies"
 msgstr "regels"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:76
 msgid "Other"
 msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:76
 msgid "Pop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:76
 msgid "R&B"
 msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:76
 msgid "Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:76
 #, fuzzy
 msgid "Reggae"
 msgstr "Bestandsnaam"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:77
 msgid "Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:77
 msgid "Techno"
 msgstr ""
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:77
 msgid "Industrial"
 msgstr ""
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:77
 msgid "Alternative"
 msgstr ""
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:78
 msgid "Ska"
 msgstr ""
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:78
 msgid "Death Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:78
 #, fuzzy
 msgid "Pranks"
 msgstr "/Pause"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:78
 msgid "Soundtrack"
 msgstr ""
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:79
 msgid "Euro-Techno"
 msgstr ""
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:79
 msgid "Ambient"
 msgstr ""
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:79
 msgid "Trip-Hop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:79
 msgid "Vocal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:80
 msgid "Jazz+Funk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:80
 #, fuzzy
 msgid "Fusion"
 msgstr "Russisch:"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:80
 #, fuzzy
 msgid "Trance"
 msgstr "Uiterlijk"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:80
 msgid "Classical"
 msgstr ""
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:81
 msgid "Instrumental"
 msgstr ""
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:81
 msgid "Acid"
 msgstr ""
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:81
 #, fuzzy
 msgid "House"
 msgstr "Muis"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:81
 msgid "Game"
 msgstr ""
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:82
 msgid "Sound Clip"
 msgstr ""
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:82
 msgid "Gospel"
 msgstr ""
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:82
 #, fuzzy
 msgid "Noise"
 msgstr "Muis"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:82
 msgid "AlternRock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:83
 msgid "Bass"
 msgstr ""
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:83
 msgid "Soul"
 msgstr ""
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:83
 msgid "Punk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:83
 #, fuzzy
 msgid "Space"
 msgstr "/Opslaan"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:84
 msgid "Meditative"
 msgstr ""
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:84
 msgid "Instrumental Pop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:85
 msgid "Instrumental Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:85
 msgid "Ethnic"
 msgstr ""
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:85
 msgid "Gothic"
 msgstr ""
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:86
 msgid "Darkwave"
 msgstr ""
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:86
 msgid "Techno-Industrial"
 msgstr ""
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:86
 msgid "Electronic"
 msgstr ""
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:87
 msgid "Pop-Folk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:87
 msgid "Eurodance"
 msgstr ""
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:87
 msgid "Dream"
 msgstr ""
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:88
 msgid "Southern Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:88
 #, fuzzy
 msgid "Comedy"
 msgstr "Opmerking"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:88
 #, fuzzy
 msgid "Cult"
 msgstr "Handmatige instelling:"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:89
 msgid "Gangsta Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:89
 msgid "Top 40"
 msgstr ""
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:89
 msgid "Christian Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:90
 msgid "Pop/Funk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:90
 msgid "Jungle"
 msgstr ""
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:90
 msgid "Native American"
 msgstr ""
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:91
 msgid "Cabaret"
 msgstr ""
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:91
 msgid "New Wave"
 msgstr ""
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:91
 msgid "Psychedelic"
 msgstr ""
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:91
 #, fuzzy
 msgid "Rave"
 msgstr "/Opslaan"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:92
 msgid "Showtunes"
 msgstr ""
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:92
 #, fuzzy
 msgid "Trailer"
 msgstr "Titel"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:92
 msgid "Lo-Fi"
 msgstr ""
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:92
 msgid "Tribal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:93
 msgid "Acid Punk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:93
 msgid "Acid Jazz"
 msgstr ""
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:93
 #, fuzzy
 msgid "Polka"
 msgstr "/Afspelen"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:93
 #, fuzzy
 msgid "Retro"
 msgstr "stereo"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:94
 msgid "Musical"
 msgstr ""
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:94
 msgid "Rock & Roll"
 msgstr ""
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:94
 msgid "Hard Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:94
 msgid "Folk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:95
 msgid "Folk/Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:95
 msgid "National Folk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:95
 msgid "Swing"
 msgstr ""
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:96
 msgid "Fast-Fusion"
 msgstr ""
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:96
 msgid "Bebob"
 msgstr ""
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:96
 #, fuzzy
 msgid "Latin"
 msgstr "Italiaans:"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:96
 msgid "Revival"
 msgstr ""
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:97
 msgid "Celtic"
 msgstr ""
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:97
 msgid "Bluegrass"
 msgstr ""
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:97
 msgid "Avantgarde"
 msgstr ""
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:98
 msgid "Gothic Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:98
 msgid "Progressive Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:99
 msgid "Psychedelic Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:99
 msgid "Symphonic Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:99
 msgid "Slow Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:100
 msgid "Big Band"
 msgstr ""
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:100
 msgid "Chorus"
 msgstr ""
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:100
 msgid "Easy Listening"
 msgstr ""
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:101
 msgid "Acoustic"
 msgstr ""
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:101
 msgid "Humour"
 msgstr ""
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:101
 msgid "Speech"
 msgstr ""
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:101
 msgid "Chanson"
 msgstr ""
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:102
 msgid "Opera"
 msgstr ""
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:102
 msgid "Chamber Music"
 msgstr ""
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:102
 msgid "Sonata"
 msgstr ""
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:102
 msgid "Symphony"
 msgstr ""
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:103
 msgid "Booty Bass"
 msgstr ""
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:103
 #, fuzzy
 msgid "Primus"
 msgstr "/Vorige"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:103
 msgid "Porn Groove"
 msgstr ""
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:104
 #, fuzzy
 msgid "Satire"
 msgstr "/Opslaan"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:104
 msgid "Slow Jam"
 msgstr ""
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:104
 msgid "Club"
 msgstr ""
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:104
 msgid "Tango"
 msgstr ""
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:105
 msgid "Samba"
 msgstr ""
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:105
 msgid "Folklore"
 msgstr ""
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:105
 msgid "Ballad"
 msgstr ""
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:105
 msgid "Power Ballad"
 msgstr ""
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:106
 msgid "Rhythmic Soul"
 msgstr ""
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:106
 msgid "Freestyle"
 msgstr ""
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:106
 #, fuzzy
 msgid "Duet"
 msgstr "Nederlands:"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:107
 msgid "Punk Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:107
 msgid "Drum Solo"
 msgstr ""
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:107
 msgid "A Cappella"
 msgstr ""
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:108
 msgid "Euro-House"
 msgstr ""
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:108
 msgid "Dance Hall"
 msgstr ""
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:108
 msgid "Goa"
 msgstr ""
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:109
 msgid "Drum & Bass"
 msgstr ""
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:109
 #, fuzzy
 msgid "Club-House"
 msgstr "Muis"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:109
 msgid "Hardcore"
 msgstr ""
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:110
 #, fuzzy
 msgid "Terror"
 msgstr "stereo"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:110
 #, fuzzy
 msgid "Indie"
 msgstr "Zoeken naar:"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:110
 #, fuzzy
 msgid "BritPop"
 msgstr "Artiest Popup"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:110
 msgid "Negerpunk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:111
 msgid "Polsk Punk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:111
 #, fuzzy
 msgid "Beat"
 msgstr "/Herhalen"
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:111
 msgid "Christian Gangsta Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:115
+#: src/libaudgui/infowin.c:112
 msgid "Heavy Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:115
+#: src/libaudgui/infowin.c:112
 msgid "Black Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:115
+#: src/libaudgui/infowin.c:112
 msgid "Crossover"
 msgstr ""
 
-#: src/libaudgui/infowin.c:116
+#: src/libaudgui/infowin.c:113
 msgid "Contemporary Christian"
 msgstr ""
 
-#: src/libaudgui/infowin.c:116
+#: src/libaudgui/infowin.c:113
 msgid "Christian Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:117
+#: src/libaudgui/infowin.c:114
 msgid "Merengue"
 msgstr ""
 
-#: src/libaudgui/infowin.c:117
+#: src/libaudgui/infowin.c:114
 msgid "Salsa"
 msgstr ""
 
-#: src/libaudgui/infowin.c:117
+#: src/libaudgui/infowin.c:114
 msgid "Thrash Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:118
+#: src/libaudgui/infowin.c:115
 msgid "Anime"
 msgstr ""
 
-#: src/libaudgui/infowin.c:118
+#: src/libaudgui/infowin.c:115
 msgid "JPop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:118
+#: src/libaudgui/infowin.c:115
 #, fuzzy
 msgid "Synthpop"
 msgstr "/Stop"
 
-#: src/libaudgui/infowin.c:179 src/libaudgui/infowin.c:474
-#: src/libaudgui/infowin.c:477 src/libaudgui/infowin.c:480
+#: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:364
+#: src/libaudgui/infowin.c:367 src/libaudgui/infowin.c:370
 #, fuzzy
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">Jaar</span>"
 
-#: src/libaudgui/infowin.c:274
+#: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
 msgstr ""
 
-#: src/libaudgui/infowin.c:279
+#: src/libaudgui/infowin.c:271
 msgid "Metadata updating failed"
 msgstr ""
 
-#: src/libaudgui/infowin.c:409
+#: src/libaudgui/infowin.c:319
 msgid "Track Information"
 msgstr "Nummer-informatie:"
 
-#: src/libaudgui/infowin.c:442
-#, fuzzy
-msgid "<span size=\"small\">General</span>"
-msgstr "<span size=\"small\">Genre</span>"
-
-#: src/libaudgui/infowin.c:463
+#: src/libaudgui/infowin.c:353
 #, fuzzy
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Commentaar</span>"
 
-#: src/libaudgui/infowin.c:467
+#: src/libaudgui/infowin.c:357
 #, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Titel</span>"
 
-#: src/libaudgui/infowin.c:470
+#: src/libaudgui/infowin.c:360
 #, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Commentaar</span>"
 
-#: src/libaudgui/infowin.c:497
+#: src/libaudgui/infowin.c:390
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Titel</span>"
 
-#: src/libaudgui/infowin.c:509
+#: src/libaudgui/infowin.c:402
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Artiest</span>"
 
-#: src/libaudgui/infowin.c:521
+#: src/libaudgui/infowin.c:414
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:533
+#: src/libaudgui/infowin.c:426
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Commentaar</span>"
 
-#: src/libaudgui/infowin.c:545
+#: src/libaudgui/infowin.c:438
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Genre</span>"
 
-#: src/libaudgui/infowin.c:566
+#: src/libaudgui/infowin.c:459
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Jaar</span>"
 
-#: src/libaudgui/infowin.c:577
+#: src/libaudgui/infowin.c:470
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Nummer</span>"
 
-#: src/libaudgui/infowin.c:588
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"small\">Locatie</span>"
-
-#: src/libaudgui/infowin.c:615
-#, fuzzy
-msgid "<span size=\"small\">Raw Metadata</span>"
-msgstr "<span size=\"small\">Jaar</span>"
-
-#: src/libaudgui/infowin.c:634
-msgid "Key"
-msgstr ""
-
-#: src/libaudgui/infowin.c:647
-#, fuzzy
-msgid "Value"
-msgstr "/Pause"
-
-#: src/libaudgui/infowin.c:792
+#: src/libaudgui/infowin.c:552
 #, c-format
 msgid "%d kb/s"
 msgstr ""
 
-#: src/libaudgui/infowin.c:883
+#: src/libaudgui/infowin.c:582
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:129 src/libaudgui/ui_credits.c:140
+#: src/libaudgui/ui_about.c:136 src/libaudgui/ui_credits.c:142
 msgid "About Audacious"
 msgstr "Over Audacious"
 
-#: src/libaudgui/ui_about.c:178 src/libaudgui/ui_credits.c:183
+#: src/libaudgui/ui_about.c:185 src/libaudgui/ui_credits.c:185
 msgid "Credits"
 msgstr "Met dank aan"
 
-#: src/libaudgui/ui_credits.c:187
+#: src/libaudgui/ui_credits.c:189
 msgid "Translators"
 msgstr "Vertalers"
 
@@ -1739,37 +1642,37 @@ msgstr "Sluit venster bij openen"
 msgid "Close dialog on Add"
 msgstr "Sluit venster bij toevoegen"
 
-#: src/libaudgui/ui_jumptotrack.c:144
+#: src/libaudgui/ui_jumptotrack.c:139
 msgid "Un_queue"
 msgstr "_Uit wachtrij verwijderen"
 
-#: src/libaudgui/ui_jumptotrack.c:146 src/libaudgui/ui_jumptotrack.c:528
+#: src/libaudgui/ui_jumptotrack.c:141 src/libaudgui/ui_jumptotrack.c:518
 msgid "_Queue"
 msgstr "_In wachtrij plaatsen"
 
-#: src/libaudgui/ui_jumptotrack.c:415
+#: src/libaudgui/ui_jumptotrack.c:405
 msgid "Jump to Track"
 msgstr "Ga naar nummer"
 
-#: src/libaudgui/ui_jumptotrack.c:458
+#: src/libaudgui/ui_jumptotrack.c:448
 msgid "Filter: "
 msgstr "Filter: "
 
-#: src/libaudgui/ui_jumptotrack.c:459
+#: src/libaudgui/ui_jumptotrack.c:449
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filter: "
 
-#: src/libaudgui/ui_jumptotrack.c:477
+#: src/libaudgui/ui_jumptotrack.c:467
 msgid "Remember"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:486
+#: src/libaudgui/ui_jumptotrack.c:476
 #, fuzzy
 msgid "Clea_r"
 msgstr "A-B /wissen"
 
-#: src/libaudgui/ui_jumptotrack.c:520
+#: src/libaudgui/ui_jumptotrack.c:510
 #, fuzzy
 msgid "Close on Jump"
 msgstr "Sluit venster bij openen"
@@ -1779,16 +1682,16 @@ msgstr "Sluit venster bij openen"
 msgid "Playlist Manager"
 msgstr "/Niet vooruitlopen in de speellijst"
 
-#: src/libaudgui/ui_playlist_manager.c:205
+#: src/libaudgui/ui_playlist_manager.c:206
 msgid "Entries"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:225
 #, fuzzy
 msgid "_Rename"
 msgstr "Bestandsnaam"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:253
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Sluit venster bij openen"
@@ -1860,6 +1763,82 @@ msgstr ""
 #, fuzzy
 msgid "Show Session Management options"
 msgstr "Toon vensterdecoraties"
+
+#~ msgid "Unable to create log file (%s)!\n"
+#~ msgstr "Kon logbestand niet aanmaken (%s)!\n"
+
+#, fuzzy
+#~ msgid "Playback"
+#~ msgstr "/A_fspelen"
+
+#~ msgid "<b>Playback</b>"
+#~ msgstr "<b>Afspelen</b>"
+
+#~ msgid ""
+#~ "When Audacious starts, automatically begin playing from the point where "
+#~ "we stopped before."
+#~ msgstr ""
+#~ "Wanneer Audacious gestart wordt zal afspelen hervatten van dezelfde "
+#~ "positie als waar het bij het afsluiten stopte."
+
+#  -e, --enqueue switch
+#~ msgid "Don't advance in the playlist"
+#~ msgstr "Niet vooruitlopen in de speellijst"
+
+#~ msgid ""
+#~ "When finished playing a song, don't automatically advance to the next."
+#~ msgstr ""
+#~ "Ga niet automatisch naar het volgende nummer, wanneer het huidige nummer "
+#~ "is afgelopen."
+
+#~ msgid "Enabled"
+#~ msgstr "Actief"
+
+#~ msgid "Description"
+#~ msgstr "Beschrijving"
+
+#~ msgid "Output Plugin Preferences"
+#~ msgstr "Instellingen uitvoer-plugin"
+
+#~ msgid "Output Plugin Information"
+#~ msgstr "Informatie over uitvoer-plugin"
+
+#~ msgid "_Decoder list:"
+#~ msgstr "_Decoder-lijst:"
+
+#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Decoders</b></span>"
+
+#~ msgid "_General plugin list:"
+#~ msgstr "_Algemene plugin-lijst:"
+
+#~ msgid "<span size=\"medium\"><b>General</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Algemeen</b></span>"
+
+#~ msgid "_Visualization plugin list:"
+#~ msgstr "_Visualisatie plugin-lijst:"
+
+#~ msgid "<b>Visualization</b>"
+#~ msgstr "<b>Visualisatie</b>"
+
+#, fuzzy
+#~ msgid "Effect plugins:"
+#~ msgstr "_Effect plugin-lijst:"
+
+#, fuzzy
+#~ msgid "<span size=\"small\">General</span>"
+#~ msgstr "<span size=\"small\">Genre</span>"
+
+#~ msgid "<span size=\"small\">Location</span>"
+#~ msgstr "<span size=\"small\">Locatie</span>"
+
+#, fuzzy
+#~ msgid "<span size=\"small\">Raw Metadata</span>"
+#~ msgstr "<span size=\"small\">Jaar</span>"
+
+#, fuzzy
+#~ msgid "Value"
+#~ msgstr "/Pause"
 
 #, fuzzy
 #~ msgid ""
@@ -2078,10 +2057,6 @@ msgstr "Toon vensterdecoraties"
 #~ msgstr "/Volgende"
 
 #, fuzzy
-#~ msgid "Visualization"
-#~ msgstr "/Visualisatie"
-
-#, fuzzy
 #~ msgid "Visualization Mode"
 #~ msgstr "/Visualisatie type"
 
@@ -2197,10 +2172,6 @@ msgstr "Toon vensterdecoraties"
 
 #~ msgid "Select All"
 #~ msgstr "Selecteer alles"
-
-#, fuzzy
-#~ msgid "Selects all of the playlist entries."
-#~ msgstr "/Lijst sorteren/Op volgorde afspeellijst"
 
 #, fuzzy
 #~ msgid "Select None"
@@ -2575,9 +2546,6 @@ msgstr "Toon vensterdecoraties"
 
 #~ msgid "VBR"
 #~ msgstr "VBR"
-
-#~ msgid "stereo"
-#~ msgstr "stereo"
 
 #~ msgid "mono"
 #~ msgstr "mono"
