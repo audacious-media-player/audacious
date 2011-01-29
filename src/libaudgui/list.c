@@ -40,7 +40,7 @@ typedef struct {
     gboolean frozen, blocked;
     gboolean dragging;
     gboolean clicked_row, receive_row;
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
     gint scroll_source, scroll_speed;
 #endif
 } ListModel;
@@ -340,7 +340,7 @@ static gint calc_drop_row (ListModel * model, GtkWidget * widget, gint x, gint y
     return row;
 }
 
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
 static void stop_autoscroll (ListModel * model)
 {
     if (! model->scroll_source)
@@ -420,7 +420,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
         }
     }
 
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
     gint height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
      widget), NULL, NULL, NULL, & height, NULL);
@@ -444,7 +444,7 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, 0);
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
     stop_autoscroll (model);
 #endif
 }
@@ -475,7 +475,7 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, gint x,
 
     gtk_drag_finish (context, success, FALSE, time);
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, 0);
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
     stop_autoscroll (model);
 #endif
     return TRUE;
@@ -500,7 +500,7 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, gi
 
 static void destroy_cb (ListModel * model)
 {
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
     stop_autoscroll (model);
 #endif
     g_object_unref (model);
@@ -545,7 +545,7 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     model->dragging = FALSE;
     model->clicked_row = -1;
     model->receive_row = -1;
-#if HAVE_AUTOSCROLL
+#ifdef HAVE_AUTOSCROLL
     model->scroll_source = 0;
     model->scroll_speed = 0;
 #endif
