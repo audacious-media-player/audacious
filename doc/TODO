@@ -1,13 +1,5 @@
 Long-term "TODO"
 ================
-- improve error handling:
-  * plugin init() should be able to return error codes.
-  * InputPlugin play_file also should return error codes (not only through
-  InputPlayback->error) .. or maybe just change pb->error to more versatile
-  enum instead of just signifying audio output problems.
-  * OutputPlugin ?
-
-  * Transport plugins?
 
 - output plugins should have some kind of (optional) "query available formats"
   function, so that the core could determine what should be used. perhaps
