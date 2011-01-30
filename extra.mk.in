@@ -79,7 +79,6 @@ EXEEXT ?= @EXEEXT@
 MV ?= @MV@
 GLIB_LIBS ?= @GLIB_LIBS@
 GMSGFMT ?= @GMSGFMT@
-LIB_CPPFLAGS ?= @LIB_CPPFLAGS@
 target_os ?= @target_os@
 AR ?= @AR@
 host ?= @host@

@@ -20,13 +20,51 @@ dnl ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 dnl POSSIBILITY OF SUCH DAMAGE.
 dnl
 
-AC_DEFUN([BUILDSYS_LIB], [
-	AC_ARG_ENABLE(shared,
-		AS_HELP_STRING([--disable-shared], [don't build shared libraries]))
+AC_DEFUN([BUILDSYS_INIT], [
+	AC_PATH_PROG(TPUT, tput)
 
-	AS_IF([test x"$enable_shared" = x"no"],
-		[BUILDSYS_STATIC_LIB_ONLY],
-		[BUILDSYS_SHARED_LIB])
+	AS_IF([test x"$TPUT" != x""], [
+		if x=$($TPUT el 2>/dev/null); then
+			AC_SUBST(TERM_EL, "$x")
+		else
+			AC_SUBST(TERM_EL, "$($TPUT ce 2>/dev/null)")
+		fi
+
+		if x=$($TPUT sgr0 2>/dev/null); then
+			AC_SUBST(TERM_SGR0, "$x")
+		else
+			AC_SUBST(TERM_SGR0, "$($TPUT me 2>/dev/null)")
+		fi
+
+		if x=$($TPUT bold 2>/dev/null); then
+			AC_SUBST(TERM_BOLD, "$x")
+		else
+			AC_SUBST(TERM_BOLD, "$($TPUT md 2>/dev/null)")
+		fi
+
+		if x=$($TPUT setaf 1 2>/dev/null); then
+			AC_SUBST(TERM_SETAF1, "$x")
+			AC_SUBST(TERM_SETAF2, "$($TPUT setaf 2 2>/dev/null)")
+			AC_SUBST(TERM_SETAF3, "$($TPUT setaf 3 2>/dev/null)")
+			AC_SUBST(TERM_SETAF4, "$($TPUT setaf 4 2>/dev/null)")
+			AC_SUBST(TERM_SETAF6, "$($TPUT setaf 6 2>/dev/null)")
+		else
+			AC_SUBST(TERM_SETAF1, "$($TPUT AF 1 2>/dev/null)")
+			AC_SUBST(TERM_SETAF2, "$($TPUT AF 2 2>/dev/null)")
+			AC_SUBST(TERM_SETAF3, "$($TPUT AF 3 2>/dev/null)")
+			AC_SUBST(TERM_SETAF4, "$($TPUT AF 4 2>/dev/null)")
+			AC_SUBST(TERM_SETAF6, "$($TPUT AF 6 2>/dev/null)")
+		fi
+	], [
+		AC_SUBST(TERM_EL, '\033\133K')
+		AC_SUBST(TERM_SGR0, '\033\133m')
+		AC_SUBST(TERM_BOLD, '\033\1331m')
+		AC_SUBST(TERM_SETAF1, '\033\13331m')
+		AC_SUBST(TERM_SETAF2, '\033\13332m')
+		AC_SUBST(TERM_SETAF3, '\033\13333m')
+		AC_SUBST(TERM_SETAF4, '\033\13334m')
+		AC_SUBST(TERM_SETAF6, '\033\13336m')
+	])
 ])
 
 AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
@@ -55,15 +93,13 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	case "$host_os" in
 		darwin*)
 			AC_MSG_RESULT(Darwin)
-			LIB_CPPFLAGS='-DPIC'
-			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-dynamiclib -flat_namespace'
+			LIB_CFLAGS='-fPIC -DPIC'
+			LIB_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			PLUGIN_CPPFLAGS='-DPIC'
-			PLUGIN_CFLAGS='-fPIC'
-			PLUGIN_LDFLAGS='-bundle -flat_namespace -undefined suppress'
+			PLUGIN_CFLAGS='-fPIC -DPIC'
+			PLUGIN_LDFLAGS='-bundle -undefined dynamic_lookup'
 			PLUGIN_SUFFIX='.impl'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib'
@@ -71,15 +107,13 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			;;
 		solaris*)
 			AC_MSG_RESULT(Solaris)
-			LIB_CPPFLAGS='-DPIC'
-			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-shared -fPIC -Wl,-soname=${LIB}.${LIB_MAJOR}.${LIB_MINOR}'
+			LIB_CFLAGS='-fPIC -DPIC'
+			LIB_LDFLAGS='-shared -Wl,-soname=${LIB}.${LIB_MAJOR}.${LIB_MINOR}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			PLUGIN_CPPFLAGS='-DPIC'
-			PLUGIN_CFLAGS='-fPIC'
-			PLUGIN_LDFLAGS='-shared -fPIC'
+			PLUGIN_CFLAGS='-fPIC -DPIC'
+			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR} && rm -f ${DESTDIR}${libdir}/$$i && ${LN_S} $$i.${LIB_MAJOR}.${LIB_MINOR} ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}'
@@ -87,15 +121,13 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			;;
 		openbsd* | mirbsd*)
 			AC_MSG_RESULT(OpenBSD)
-			LIB_CPPFLAGS='-DPIC'
-			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-shared -fPIC'
+			LIB_CFLAGS='-fPIC -DPIC'
+			LIB_LDFLAGS='-shared'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so.${LIB_MAJOR}.${LIB_MINOR}'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			PLUGIN_CPPFLAGS='-DPIC'
-			PLUGIN_CFLAGS='-fPIC'
-			PLUGIN_LDFLAGS='-shared -fPIC'
+			PLUGIN_CFLAGS='-fPIC -DPIC'
+			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i'
@@ -103,13 +135,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			;;
 		cygwin* | mingw*)
 			AC_MSG_RESULT(Win32)
-			LIB_CPPFLAGS='-DPIC'
 			LIB_CFLAGS=''
 			LIB_LDFLAGS='-shared -Wl,--out-implib,${LIB}.a'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dll'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			PLUGIN_CPPFLAGS=''
 			PLUGIN_CFLAGS=''
 			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.dll'
@@ -119,15 +149,13 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			;;
 		*)
 			AC_MSG_RESULT(GNU)
-			LIB_CPPFLAGS='-DPIC'
-			LIB_CFLAGS='-fPIC'
-			LIB_LDFLAGS='-shared -fPIC -Wl,-soname=${LIB}.${LIB_MAJOR}'
+			LIB_CFLAGS='-fPIC -DPIC'
+			LIB_LDFLAGS='-shared -Wl,-soname=${LIB}.${LIB_MAJOR}'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			PLUGIN_CPPFLAGS='-DPIC'
-			PLUGIN_CFLAGS='-fPIC'
-			PLUGIN_LDFLAGS='-shared -fPIC'
+			PLUGIN_CFLAGS='-fPIC -DPIC'
+			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
 			INSTALL_LIB='${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
@@ -135,13 +163,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			;;
 	esac
 
-	AC_SUBST(LIB_CPPFLAGS)
 	AC_SUBST(LIB_CFLAGS)
 	AC_SUBST(LIB_LDFLAGS)
 	AC_SUBST(LIB_PREFIX)
 	AC_SUBST(LIB_SUFFIX)
 	AC_SUBST(LDFLAGS_RPATH)
-	AC_SUBST(PLUGIN_CPPFLAGS)
 	AC_SUBST(PLUGIN_CFLAGS)
 	AC_SUBST(PLUGIN_LDFLAGS)
 	AC_SUBST(PLUGIN_SUFFIX)
@@ -150,33 +176,8 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	AC_SUBST(CLEAN_LIB)
 ])
 
-AC_DEFUN([BUILDSYS_STATIC_LIB_ONLY], [
-	AC_REQUIRE([AC_PROG_RANLIB])
-	AC_PATH_TOOL(AR, ar)
-
-	LIB_CPPFLAGS=''
-	LIB_CFLAGS=''
-	LIB_LDFLAGS=''
-	LIB_PREFIX='lib'
-	LIB_SUFFIX='.a'
-	LDFLAGS_RPATH=''
-	INSTALL_LIB='${INSTALL} -m 644 $$i ${DESTDIR}${libdir}/$$i'
-	UNINSTALL_LIB='rm -f ${DESTDIR}${libdir}/$$i'
-	CLEAN_LIB=''
-
-	AC_SUBST(LIB_CPPFLAGS)
-	AC_SUBST(LIB_CFLAGS)
-	AC_SUBST(LIB_LDFLAGS)
-	AC_SUBST(LIB_PREFIX)
-	AC_SUBST(LIB_SUFFIX)
-	AC_SUBST(LDFLAGS_RPATH)
-	AC_SUBST(INSTALL_LIB)
-	AC_SUBST(UNINSTALL_LIB)
-	AC_SUBST(CLEAN_LIB)
-])
-
 AC_DEFUN([BUILDSYS_TOUCH_DEPS], [
-	${as_echo:="echo"} "${as_me:="configure"}: touching .deps files"
+	${as_echo:="echo"} ${as_me:="configure"}": touching .deps files"
 	for i in $(find . -name Makefile); do
 		DEPSFILE="$(dirname $i)/.deps"
 		test -f "$DEPSFILE" && rm "$DEPSFILE"

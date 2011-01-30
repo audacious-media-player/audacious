@@ -12,7 +12,7 @@ include ../../extra.mk
 pre-depend:
 	cd ../audacious; ${MAKE} ${MFLAGS} dbus-client-bindings.h
 
-CPPFLAGS = ${LIB_CPPFLAGS} ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
+CPPFLAGS = ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
 CFLAGS += ${LIB_CFLAGS}		\
 	  ${GLIB_CFLAGS}	\
 	  ${MOWGLI_CFLAGS}	\
