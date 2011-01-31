@@ -182,6 +182,24 @@ void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
 }
 
 void
+interface_install_toolbar(GtkWidget *widget)
+{
+    if (interface_cbs.install_toolbar != NULL)
+        interface_cbs.install_toolbar(widget);
+    else
+        AUDDBG ("Interface didn't register install_toolbar function.\n");
+}
+
+void
+interface_uninstall_toolbar(GtkWidget *widget)
+{
+    if (interface_cbs.uninstall_toolbar != NULL)
+        interface_cbs.uninstall_toolbar(widget);
+    else
+        AUDDBG ("Interface didn't register uninstall_toolbar function.\n");
+}
+
+void
 interface_toggle_shuffle(void)
 {
     if (interface_cbs.toggle_shuffle != NULL)

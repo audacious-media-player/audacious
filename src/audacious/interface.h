@@ -60,6 +60,9 @@ typedef struct {
     void * (* run_gtk_plugin) (void * parent, const gchar * name);
     /* GtkWidget * (* stop_gtk_plugin) (GtkWidget * parent); */
     void * (* stop_gtk_plugin) (void * parent);
+
+    void (*install_toolbar)(void * button);
+    void (*uninstall_toolbar)(void * button);
 } IfaceCbs;
 
 struct _Iface {
@@ -92,6 +95,9 @@ void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
 void interface_stop_gtk_plugin (void * parent);
 void interface_toggle_shuffle(void);
 void interface_toggle_repeat(void);
+
+void interface_install_toolbar(GtkWidget * button);
+void interface_uninstall_toolbar(GtkWidget * button);
 
 void register_interface_hooks(void);
 
