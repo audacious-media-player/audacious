@@ -387,7 +387,7 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
     current_length = playlist_entry_get_length (playlist, entry, FALSE);
     read_gain_from_tuple (playlist_entry_get_tuple (playlist, entry, FALSE));
 
-    if (playlist_entry_is_segmented (playlist, entry))
+    if (current_length > 0 && playlist_entry_is_segmented (playlist, entry))
     {
         time_offset = playlist_entry_get_start_time (playlist, entry);
         stop_time = playlist_entry_get_end_time (playlist, entry);
@@ -398,7 +398,10 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
         stop_time = -1;
     }
 
-    start_time = time_offset + seek_time;
+    if (current_length > 0)
+        start_time = time_offset + seek_time;
+    else
+        start_time = 0;
 
     playing = TRUE;
     playback_error = FALSE;
