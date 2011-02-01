@@ -96,8 +96,8 @@ void interface_stop_gtk_plugin (void * parent);
 void interface_toggle_shuffle(void);
 void interface_toggle_repeat(void);
 
-void interface_install_toolbar(GtkWidget * button);
-void interface_uninstall_toolbar(GtkWidget * button);
+void interface_install_toolbar(void *button);
+void interface_uninstall_toolbar(void *button);
 
 void register_interface_hooks(void);
 

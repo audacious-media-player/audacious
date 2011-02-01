@@ -182,7 +182,7 @@ void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
 }
 
 void
-interface_install_toolbar(GtkWidget *widget)
+interface_install_toolbar(void *widget)
 {
     if (interface_cbs.install_toolbar != NULL)
         interface_cbs.install_toolbar(widget);
@@ -191,7 +191,7 @@ interface_install_toolbar(GtkWidget *widget)
 }
 
 void
-interface_uninstall_toolbar(GtkWidget *widget)
+interface_uninstall_toolbar(void *widget)
 {
     if (interface_cbs.uninstall_toolbar != NULL)
         interface_cbs.uninstall_toolbar(widget);

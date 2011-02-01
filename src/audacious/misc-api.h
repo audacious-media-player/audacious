@@ -91,3 +91,7 @@ AUD_FUNC3 (void, calc_mono_pcm, VisPCMData, buffer, const VisPCMData, data,
  gint, channels)
 AUD_FUNC3 (void, calc_stereo_pcm, VisPCMData, buffer, const VisPCMData, data,
  gint, channels)
+
+/* interface.c */
+AUD_FUNC1 (void, interface_install_toolbar, void *, button)
+AUD_FUNC1 (void, interface_uninstall_toolbar, void *, button)
