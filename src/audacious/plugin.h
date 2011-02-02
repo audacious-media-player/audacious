@@ -36,7 +36,7 @@
 
 /* API version.  Plugins compiled with incompatible versions of Audacious will
  * not be loaded. */
-#define _AUD_PLUGIN_VERSION 18
+#define _AUD_PLUGIN_VERSION 19
 
 /**
  * The plugin module header. Each module can contain several plugins,
