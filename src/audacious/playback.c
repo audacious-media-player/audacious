@@ -1,6 +1,6 @@
 /*
  * playback.c
- * Copyright 2005-2010 Audacious Development Team
+ * Copyright 2005-2011 Audacious Development Team
  *
  * This file is part of Audacious.
  *
@@ -116,12 +116,13 @@ static gboolean ready_cb (void * unused)
 {
     g_return_val_if_fail (playing, FALSE);
 
+    hook_call ("playback ready", NULL);
     hook_call ("title change", NULL);
     ready_source = 0;
     return FALSE;
 }
 
-static gboolean is_ready (void)
+gboolean playback_get_ready (void)
 {
     g_return_val_if_fail (playing, FALSE);
     pthread_mutex_lock (& ready_mutex);
@@ -178,7 +179,7 @@ static void update_cb (void * hook_data, void * user_data)
     current_title = g_strdup (title);
     current_length = length;
 
-    if (is_ready ())
+    if (playback_get_ready ())
         hook_call ("title change", NULL);
 }
 
@@ -186,7 +187,7 @@ gint playback_get_time (void)
 {
     g_return_val_if_fail (playing, 0);
 
-    if (! is_ready ())
+    if (! playback_get_ready ())
         return 0;
 
     gint time = -1;
@@ -512,7 +513,7 @@ gchar * playback_get_title (void)
 {
     g_return_val_if_fail (playing, NULL);
 
-    if (! is_ready ())
+    if (! playback_get_ready ())
         return g_strdup (_("Buffering ..."));
 
     gchar s[128];

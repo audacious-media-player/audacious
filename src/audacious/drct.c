@@ -1,6 +1,6 @@
 /*
  * drct.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -69,6 +69,11 @@ void drct_stop (void)
 gboolean drct_get_playing (void)
 {
     return playback_get_playing ();
+}
+
+gboolean drct_get_ready (void)
+{
+    return playback_get_ready ();
 }
 
 gboolean drct_get_paused (void)
