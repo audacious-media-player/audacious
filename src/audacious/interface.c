@@ -31,6 +31,7 @@
 #include "general.h"
 #include "i18n.h"
 #include "interface.h"
+#include "misc.h"
 #include "plugins.h"
 #include "ui_preferences.h"
 #include "visualization.h"

@@ -250,8 +250,6 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
         input_plugin_save (plugin, handle);
 }
 
-/* If the module contains any plugins that we do not handle, we do not save it,
- * thereby forcing it to be loaded on next startup. */
 static gint plugin_not_handled_cb (PluginHandle * plugin)
 {
     return (plugin_type_names[plugin->type] == NULL) ? 0 : -1;
@@ -259,8 +257,12 @@ static gint plugin_not_handled_cb (PluginHandle * plugin)
 
 static void module_save (ModuleData * module, FILE * handle)
 {
-    if (g_list_find_custom (module->plugin_list, NULL, (GCompareFunc)
-     plugin_not_handled_cb) != NULL)
+    /* If the module contains any plugins that we do not handle, we do not save
+     * it, thereby forcing it to be loaded on next startup.  If the module
+     * appears to contain no plugins at all, we can assume that it failed to
+     * load, in which case we also want to try to load it again. */
+    if (! module->plugin_list || g_list_find_custom (module->plugin_list, NULL,
+     (GCompareFunc) plugin_not_handled_cb) != NULL)
         return;
 
     fprintf (handle, "module %s\n", module->path);

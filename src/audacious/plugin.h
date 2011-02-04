@@ -34,9 +34,21 @@
 /* "Magic" bytes identifying an Audacious plugin header. */
 #define _AUD_PLUGIN_MAGIC 0x8EAC8DE2
 
-/* API version.  Plugins compiled with incompatible versions of Audacious will
- * not be loaded. */
-#define _AUD_PLUGIN_VERSION 19
+/* API version.  Plugins are marked with this number at compile time.
+ *
+ * _AUD_PLUGIN_VERSION is the current version; _AUD_PLUGIN_VERSION_MIN is
+ * the oldest one we are backward compatible with.  Plugins marked older than
+ * _AUD_PLUGIN_VERSION_MIN or newer than _AUD_PLUGIN_VERSION are not loaded.
+ *
+ * Before releases that add new pointers to the end of the API tables, increment
+ * _AUD_PLUGIN_VERSION but leave _AUD_PLUGIN_VERSION_MIN the same.
+ *
+ * Before releases that break backward compatibility (e.g. remove pointers from
+ * the API tables), increment _AUD_PLUGIN_VERSION *and* set
+ * _AUD_PLUGIN_VERSION_MIN to the same value. */
+
+#define _AUD_PLUGIN_VERSION_MIN 18 /* 2.5-alpha1 */
+#define _AUD_PLUGIN_VERSION     19
 
 /**
  * The plugin module header. Each module can contain several plugins,

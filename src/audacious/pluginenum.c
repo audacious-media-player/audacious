@@ -69,29 +69,19 @@ typedef struct {
 
 static GList * loaded_modules = NULL;
 
-/*******************************************************************/
-
-static void plugin2_dispose(GModule * module, const gchar * str, ...)
+static void plugin2_process (PluginHeader * header, GModule * module, const gchar * filename)
 {
-    gchar *buf;
-    va_list va;
-
-    va_start(va, str);
-    buf = g_strdup_vprintf(str, va);
-    va_end(va);
-
-    AUDDBG ("*** %s\n", buf);
-    g_free(buf);
-
-    g_module_close(module);
-}
-
-void plugin2_process(PluginHeader * header, GModule * module, const gchar * filename)
-{
-    if (header->magic != _AUD_PLUGIN_MAGIC || header->version !=
-     _AUD_PLUGIN_VERSION)
+    if (header->magic != _AUD_PLUGIN_MAGIC)
     {
-        plugin2_dispose (module, "%s has invalid header signature.");
+        fprintf (stderr, " *** ERROR: %s is not a valid Audacious plugin.\n", filename);
+        g_module_close (module);
+        return;
+    }
+
+    if (header->version < _AUD_PLUGIN_VERSION_MIN || header->version > _AUD_PLUGIN_VERSION)
+    {
+        fprintf (stderr, " *** ERROR: %s is not compatible with this version of Audacious.\n", filename);
+        g_module_close (module);
         return;
     }
 
@@ -175,7 +165,7 @@ void plugin2_process(PluginHeader * header, GModule * module, const gchar * file
         plugin_register (PLUGIN_TYPE_IFACE, filename, 0, header->iface);
 }
 
-void plugin2_unload (LoadedModule * loaded)
+static void plugin2_unload (LoadedModule * loaded)
 {
     PluginHeader * header = loaded->header;
 

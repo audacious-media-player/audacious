@@ -33,7 +33,6 @@ AUD_FUNC0 (void, drct_play)
 AUD_FUNC0 (void, drct_pause)
 AUD_FUNC0 (void, drct_stop)
 AUD_FUNC0 (gboolean, drct_get_playing)
-AUD_FUNC0 (gboolean, drct_get_ready)
 AUD_FUNC0 (gboolean, drct_get_paused)
 AUD_FUNC0 (gchar *, drct_get_title)
 AUD_FUNC3 (void, drct_get_info, gint *, bitrate, gint *, samplerate, gint *,
@@ -88,3 +87,6 @@ AUD_FUNC1 (gint, drct_pq_get_queue_position, gint, entry)
 AUD_FUNC1 (void, drct_pq_add, gint, entry)
 AUD_FUNC1 (void, drct_pq_remove, gint, entry)
 AUD_FUNC0 (void, drct_pq_clear)
+
+/* New in 2.5-alpha2 */
+AUD_FUNC0 (gboolean, drct_get_ready)
