@@ -100,7 +100,7 @@ static gint tuple_compare_artist (const Tuple * a, const Tuple * b)
 
 static gint tuple_compare_date (const Tuple * a, const Tuple * b)
 {
-    return tuple_compare_int (a, b, FIELD_MTIME);
+    return tuple_compare_int (a, b, FIELD_YEAR);
 }
 
 static gint tuple_compare_track (const Tuple * a, const Tuple * b)
