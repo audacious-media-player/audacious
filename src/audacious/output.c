@@ -385,11 +385,25 @@ static void flush (gint time)
     LOCKED_VIS;
     g_return_if_fail (opened);
 
-    frames_written = time * (gint64) decoder_rate / 1000;
     aborted = FALSE;
-    vis_runner_flush ();
-    effect_flush ();
-    cop->flush (effect_decoder_to_output_time (time));
+
+    /* When playback is started from the middle of a song, flush() is called
+     * before any audio is actually written in order to set the time counter.
+     * In this case, we do not want to cut off the end of the previous song, so
+     * we do not actually flush. */
+    if (! frames_written)
+    {
+        g_return_if_fail (cop->set_written_time != NULL);
+        cop->set_written_time (time);
+    }
+    else
+    {
+        vis_runner_flush ();
+        effect_flush ();
+        cop->flush (effect_decoder_to_output_time (time));
+    }
+
+    frames_written = time * (gint64) decoder_rate / 1000;
 }
 
 static void output_flush (gint time)
