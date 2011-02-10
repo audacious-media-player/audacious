@@ -416,15 +416,16 @@ install: ${LIB} ${STATIC_LIB} ${PLUGIN} ${PROG} install-extra
 		fi \
 	done
 
-	for i in ${MO_FILES}; do \
-		${INSTALL_STATUS}; \
-		if ${MKDIR_P} ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES && ${INSTALL} -m 644 $$i ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES/${localename}.mo; then \
-			${INSTALL_OK}; \
-		else \
-			${INSTALL_FAILED}; \
-		fi \
-	done
-
+	if test x"${USE_NLS}" = x"yes"; then \
+		for i in ${MO_FILES}; do \
+			${INSTALL_STATUS}; \
+			if ${MKDIR_P} ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES && ${INSTALL} -m 644 $$i ${DESTDIR}${localedir}/$${i%.mo}/LC_MESSAGES/${localename}.mo; then \
+				${INSTALL_OK}; \
+			else \
+				${INSTALL_FAILED}; \
+			fi \
+		done \
+	fi
 	for i in ${MAN}; do \
 		${INSTALL_STATUS}; \
 		if ${MKDIR_P} ${DESTDIR}${mandir}/${mansubdir} && ${INSTALL} -m 644 $$i ${DESTDIR}${mandir}/${mansubdir}/$$i; then \
