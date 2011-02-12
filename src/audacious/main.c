@@ -228,6 +228,9 @@ ERR:
     relocate_path (& aud_paths[AUD_PATH_LOCALE_DIR], old, new);
     relocate_path (& aud_paths[AUD_PATH_DESKTOP_FILE], old, new);
     relocate_path (& aud_paths[AUD_PATH_ICON_FILE], old, new);
+    
+    g_free (old);
+    g_free (new);
 }
 
 static void aud_init_paths (void)
