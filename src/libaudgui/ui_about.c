@@ -24,6 +24,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <limits.h>
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -32,7 +34,12 @@
 #include <gtk/gtk.h>
 
 #include <gdk/gdk.h>
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#else
 #include <gdk/gdkkeysyms.h>
+#endif
 
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
@@ -42,26 +49,6 @@
 #include "ui_credits.h"
 
 static GtkWidget *about_window = NULL;
-static GdkPixbuf *about_pixbuf = NULL;
-static GdkPixmap *mask_pixmap_window1 = NULL,
-        *mask_pixmap_window2 = NULL;
-static GdkBitmap *mask_bitmap_window1 = NULL,
-        *mask_bitmap_window2 = NULL;
-
-static gboolean
-on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
-{
-	GdkWindow *window;
-
-	g_return_val_if_fail(widget != NULL, FALSE);
-	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
-
-	window = gtk_widget_get_window(widget);
-	gdk_window_set_back_pixmap(window, mask_pixmap_window2, 0);
-	gdk_window_clear(window);
-
-	return FALSE;
-}
 
 static gboolean
 on_about_window_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
@@ -99,13 +86,10 @@ on_credits_button_clicked (GtkWidget *widget, gpointer data)
 void
 audgui_show_about_window(void)
 {
-    GtkWidget *about_fixedbox;
     GtkWidget *close_button;
-    GtkWidget *credits_button , *credits_button_hbox, *credits_button_image, *credits_button_label;
+    GtkWidget *credits_button;
     GtkWidget *brief_label;
     gchar *text;
-    PangoAttrList *brief_label_attrs;
-    PangoAttribute *brief_label_foreground;
     static const gchar *audacious_brief;
 
     if (about_window != NULL)
@@ -121,98 +105,55 @@ audgui_show_about_window(void)
     g_signal_connect(about_window, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &about_window);
 
-    gtk_widget_realize(about_window);
-
-    gchar * filename = g_strdup_printf ("%s/images/about-logo.png",
-     aud_get_path (AUD_PATH_DATA_DIR));
-    about_pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-    g_free (filename);
-
-    gtk_widget_set_size_request(GTK_WIDGET (about_window),
-                   gdk_pixbuf_get_width (about_pixbuf),
-                   gdk_pixbuf_get_height (about_pixbuf));
-
-    gtk_widget_set_app_paintable(about_window, TRUE);
     gtk_window_set_title(GTK_WINDOW(about_window), _("About Audacious"));
-    gtk_window_set_position(GTK_WINDOW(about_window), GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(about_window), FALSE);
-    gtk_window_set_decorated(GTK_WINDOW(about_window), FALSE);
-
-    gdk_pixbuf_render_pixmap_and_mask(about_pixbuf,
-                     &mask_pixmap_window1,
-                     &mask_bitmap_window1,
-                     0);
-
-    gdk_pixbuf_render_pixmap_and_mask(about_pixbuf,
-                     &mask_pixmap_window2,
-                     &mask_bitmap_window2,
-                     128);
-
-    gtk_widget_add_events(about_window, GDK_ALL_EVENTS_MASK);
-
-    g_signal_connect(about_window, "expose-event",
-	G_CALLBACK(on_about_window_expose), &about_window);
 
     g_signal_connect(about_window, "key-press-event",
 	G_CALLBACK(on_about_window_key_press), &about_window);
 
-    gtk_widget_shape_combine_mask(GTK_WIDGET(about_window), mask_bitmap_window2, 0, 0);
+    GtkWidget * vbox = gtk_vbox_new (0, 0);
+    gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    /* GtkFixed hasn't got its GdkWindow, this means that it can be used to
-       display widgets while the logo below will be displayed anyway;
-       however fixed positions are not that great, cause the button sizes may (will)
-       vary depending on the gtk style used, so it's not possible to center
-       them unless a fixed width and heigth is forced (and this may bring to cutted
-       text if someone, i.e., uses a big font for gtk widgets);
-       other types of container most likely have their GdkWindow, this simply
-       means that the logo must be drawn on the container widget, instead of the
-       window; otherwise, it won't be displayed correctly */
-    about_fixedbox = gtk_fixed_new();
-    gtk_container_add( GTK_CONTAINER(about_window) , about_fixedbox );
+    gchar name[PATH_MAX];
+    snprintf (name, sizeof name, "%s/images/about-logo.png", aud_get_path
+     (AUD_PATH_DATA_DIR));
+    GtkWidget * image = gtk_image_new_from_file (name);
+    gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
 
-    close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-
-    g_signal_connect(close_button, "clicked",
-	G_CALLBACK(on_close_button_clicked), NULL);
-
-    gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 375 , 220 );
-    gtk_widget_set_size_request( close_button , 100 , -1 );
-
-    credits_button = gtk_button_new();
-    credits_button_hbox = gtk_hbox_new( FALSE , 0 );
-    credits_button_image = gtk_image_new_from_stock( GTK_STOCK_DIALOG_INFO , GTK_ICON_SIZE_BUTTON );
-    gtk_misc_set_alignment( GTK_MISC(credits_button_image) , 1 , 0.5 );
-    credits_button_label = gtk_label_new( _("Credits") );
-    gtk_misc_set_alignment( GTK_MISC(credits_button_label) , 0 , 0.5 );
-    gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_image ,
-                        TRUE , TRUE , 2 );
-    gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_label ,
-                        TRUE , TRUE , 2 );
-    gtk_container_add( GTK_CONTAINER(credits_button) , credits_button_hbox );
-
-    g_signal_connect(credits_button, "clicked",
-	G_CALLBACK(on_credits_button_clicked), NULL);
-
-    gtk_fixed_put( GTK_FIXED(about_fixedbox) , credits_button , 25 , 220 );
-    gtk_widget_set_size_request( credits_button , 100 , -1 );
+    GtkWidget * align = gtk_alignment_new (0, 0, 1, 1);
+    gtk_alignment_set_padding ((GtkAlignment *) align, 6, 6, 6, 6);
+    gtk_container_add ((GtkContainer *) vbox, align);
+    
+    GtkWidget * vbox2 = gtk_vbox_new (0, 6);
+    gtk_container_add ((GtkContainer *) align, vbox2);
 
     brief_label = gtk_label_new(NULL);
     text = g_strdup_printf(_(audacious_brief), VERSION);
 
-    brief_label_foreground = pango_attr_foreground_new(0, 0, 0);
-    brief_label_attrs = pango_attr_list_new();
-    pango_attr_list_insert(brief_label_attrs, brief_label_foreground);
-
     gtk_label_set_markup(GTK_LABEL(brief_label), text);
     gtk_label_set_justify(GTK_LABEL(brief_label), GTK_JUSTIFY_CENTER);
-    gtk_label_set_attributes(GTK_LABEL(brief_label), brief_label_attrs);
     g_free(text);
+    
+    gtk_box_pack_start ((GtkBox *) vbox2, brief_label, FALSE, FALSE, 0);
 
-    gtk_fixed_put(GTK_FIXED(about_fixedbox), brief_label, 20, 145);
-    gtk_widget_set_size_request( brief_label , 460 , -1 );
+    GtkWidget * hbox = gtk_hbox_new (0, 6);
+    gtk_box_pack_start ((GtkBox *) vbox2, hbox, FALSE, FALSE, 0);
+
+    close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+    gtk_box_pack_end ((GtkBox *) hbox, close_button, FALSE, FALSE, 0);
+
+    g_signal_connect(close_button, "clicked",
+	G_CALLBACK(on_close_button_clicked), NULL);
+
+    credits_button = gtk_button_new_with_mnemonic (_("Credits"));
+    gtk_button_set_image ((GtkButton *) credits_button, gtk_image_new_from_stock
+     (GTK_STOCK_ABOUT, GTK_ICON_SIZE_BUTTON));
+    gtk_box_pack_start ((GtkBox *) hbox, credits_button, FALSE, FALSE, 0);
+
+    g_signal_connect(credits_button, "clicked",
+	G_CALLBACK(on_credits_button_clicked), NULL);
 
     gtk_widget_show_all(about_window);
-    gtk_window_present(GTK_WINDOW(about_window));
 }
 
 void

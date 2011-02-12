@@ -19,9 +19,14 @@
  * using our public API to be a derived work.
  */
 
-#include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#else
+#include <gdk/gdkkeysyms.h>
+#endif
 
 #include <audacious/debug.h>
 #include <audacious/playlist.h>

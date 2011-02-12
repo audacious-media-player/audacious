@@ -525,7 +525,6 @@ gint main(gint argc, gchar ** argv)
     hook_associate ("quit", (HookFunction) gtk_main_quit, NULL);
 
     /* Setup l10n early so we can print localized error messages */
-    gtk_set_locale();
     bindtextdomain (PACKAGE_NAME, aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset(PACKAGE_NAME, "UTF-8");
     bindtextdomain (PACKAGE_NAME "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);

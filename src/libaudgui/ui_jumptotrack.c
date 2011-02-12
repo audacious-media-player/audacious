@@ -33,7 +33,12 @@
 #include <gtk/gtk.h>
 
 #include <gdk/gdk.h>
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#else
 #include <gdk/gdkkeysyms.h>
+#endif
 
 #include <math.h>
 #include <stdlib.h>

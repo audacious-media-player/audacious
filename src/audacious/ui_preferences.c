@@ -17,10 +17,15 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stdio.h>
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#else
+#include <gdk/gdkkeysyms.h>
+#endif
 
 #include <libaudcore/hook.h>
 
@@ -60,11 +65,6 @@ typedef struct {
     const gchar *name;
     const gchar *tag;
 } TitleFieldTag;
-
-typedef struct {
-    gint x;
-    gint y;
-} MenuPos;
 
 static GtkWidget *prefswin = NULL;
 static GtkWidget *filepopup_settings = NULL;
@@ -268,51 +268,11 @@ titlestring_tag_menu_callback(GtkMenuItem * menuitem,
 }
 
 static void
-util_menu_position(GtkMenu * menu, gint * x, gint * y,
-                   gboolean * push_in, gpointer data)
-{
-    GtkRequisition requisition;
-    gint screen_width;
-    gint screen_height;
-    MenuPos *pos = data;
-
-    gtk_widget_size_request(GTK_WIDGET(menu), &requisition);
-
-    screen_width = gdk_screen_width();
-    screen_height = gdk_screen_height();
-
-    *x = CLAMP(pos->x - 2, 0, MAX(0, screen_width - requisition.width));
-    *y = CLAMP(pos->y - 2, 0, MAX(0, screen_height - requisition.height));
-}
-
-static void
 on_titlestring_help_button_clicked(GtkButton * button,
                                    gpointer data)
 {
-    GtkMenu *menu;
-    MenuPos *pos = g_newa(MenuPos, 1);
-    GdkWindow *parent, *window;
-
-    gint x_ro, y_ro;
-    gint x_widget, y_widget;
-    gint x_size, y_size;
-
-    g_return_if_fail (button != NULL);
-    g_return_if_fail (GTK_IS_MENU (data));
-
-    parent = gtk_widget_get_parent_window(GTK_WIDGET(button));
-    window = gtk_widget_get_window(GTK_WIDGET(button));
-
-    gdk_drawable_get_size(parent, &x_size, &y_size);
-    gdk_window_get_root_origin(window, &x_ro, &y_ro);
-    gdk_window_get_position(window, &x_widget, &y_widget);
-
-    pos->x = x_size + x_ro;
-    pos->y = y_size + y_ro - 100;
-
-    menu = GTK_MENU(data);
-    gtk_menu_popup (menu, NULL, NULL, util_menu_position, pos,
-                    0, GDK_CURRENT_TIME);
+    GtkMenu * menu = data;
+    gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
 }
 
 
@@ -783,14 +743,18 @@ on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
     *((gchar **)widget->cfg) = g_strdup(widget->data.combo.elements[position].value);
 }
 
-static void
-on_cbox_realize(GtkComboBox *combobox, PreferencesWidget * widget)
+static void on_cbox_realize (GtkWidget * combobox, PreferencesWidget * widget)
 {
     guint i=0,index=0;
 
-    for(i=0; i<widget->data.combo.n_elements; i++) {
-        gtk_combo_box_append_text(combobox, _(widget->data.combo.elements[i].label));
-    }
+    for (i = 0; i < widget->data.combo.n_elements; i ++)
+#if GTK_CHECK_VERSION (3, 0, 0)    
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
+         _(widget->data.combo.elements[i].label));
+#else
+        gtk_combo_box_append_text ((GtkComboBox *) combobox,
+         _(widget->data.combo.elements[i].label));
+#endif
 
     if (widget->data.combo.enabled) {
         switch (widget->cfg_type) {
@@ -841,8 +805,8 @@ create_filepopup_settings(void)
     GtkWidget *label_misc;
     GtkWidget *label_delay;
 
-    GtkObject *recurse_for_cover_depth_adj;
-    GtkObject *delay_adj;
+    GtkAdjustment *recurse_for_cover_depth_adj;
+    GtkAdjustment *delay_adj;
     GtkWidget *alignment;
 
     GtkWidget *hbox;
@@ -1125,7 +1089,11 @@ static void create_label (PreferencesWidget * widget, GtkWidget * * label,
 static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * combobox, const gchar * domain)
 {
-    *combobox = gtk_combo_box_new_text();
+#if GTK_CHECK_VERSION (3, 0, 0)
+    * combobox = gtk_combo_box_text_new ();
+#else
+    * combobox = gtk_combo_box_new_text ();
+#endif
 
     if (widget->label) {
         * label = gtk_label_new (dgettext (domain, widget->label));
@@ -1544,10 +1512,25 @@ create_playlist_category(void)
     image1 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_BUTTON);
     gtk_container_add (GTK_CONTAINER (titlestring_help_button), image1);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+    titlestring_cbox = gtk_combo_box_text_new ();
+#else
     titlestring_cbox = gtk_combo_box_new_text ();
+#endif
+
     gtk_table_attach (GTK_TABLE (table6), titlestring_cbox, 1, 3, 0, 1,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("TITLE"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST - TITLE"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST - ALBUM - TITLE"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST - ALBUM - TRACK. TITLE"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST [ ALBUM ] - TRACK. TITLE"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ALBUM - TITLE"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("Custom"));
+#else
     gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("TITLE"));
     gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST - TITLE"));
     gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST - ALBUM - TITLE"));
@@ -1555,6 +1538,7 @@ create_playlist_category(void)
     gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST [ ALBUM ] - TRACK. TITLE"));
     gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ALBUM - TITLE"));
     gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("Custom"));
+#endif
 
     titlestring_entry = gtk_entry_new ();
     gtk_table_attach (GTK_TABLE (table6), titlestring_entry, 1, 2, 1, 2,
@@ -1690,7 +1674,12 @@ static void output_combo_changed (GtkComboBox * combo)
 static void output_combo_fill (GtkComboBox * combo)
 {
     for (GList * node = output_get_list (); node != NULL; node = node->next)
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo,
+         plugin_get_name (node->data));
+#else
         gtk_combo_box_append_text (combo, plugin_get_name (node->data));
+#endif
 }
 
 static void output_do_config (void)
@@ -1719,7 +1708,7 @@ create_audio_category(void)
     GtkWidget *vbox33;
     GtkWidget *table11;
     GtkWidget *label79;
-    GtkObject *output_plugin_bufsize_adj;
+    GtkAdjustment * output_plugin_bufsize_adj;
     GtkWidget *output_plugin_bufsize;
     GtkWidget *output_plugin_cbox;
     GtkWidget *label78;
@@ -1761,7 +1750,12 @@ create_audio_category(void)
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+    output_plugin_cbox = gtk_combo_box_text_new ();
+#else
     output_plugin_cbox = gtk_combo_box_new_text ();
+#endif
+
     gtk_table_attach (GTK_TABLE (table11), output_plugin_cbox, 1, 2, 0, 1,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
@@ -1935,7 +1929,7 @@ void * * create_prefs_window (void)
                      NULL);
     g_signal_connect_swapped(G_OBJECT(close), "clicked",
                              G_CALLBACK(prefswin_destroy),
-                             GTK_OBJECT (prefswin));
+                             prefswin);
 
     /* create category view */
     on_category_treeview_realize ((GtkTreeView *) category_treeview,
