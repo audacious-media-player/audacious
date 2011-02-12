@@ -89,6 +89,11 @@ fi
 
 dnl Checks common for core and plugins
 dnl ==================================
+
+AC_ARG_ENABLE([gtk3],
+ [AS_HELP_STRING([--enable-gtk3], [Use GTK3 instead of GTK2])],
+ [use_gtk3=yes], [use_gtk3=no])
+
 AUD_COMMON_PROGS
 
 

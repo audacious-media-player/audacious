@@ -20,7 +20,7 @@
 #ifndef __EGG_SM_CLIENT_PRIVATE_H__
 #define __EGG_SM_CLIENT_PRIVATE_H__
 
-#include <gdkconfig.h>
+#include <gdk/gdk.h>
 #include "eggsmclient.h"
 
 G_BEGIN_DECLS

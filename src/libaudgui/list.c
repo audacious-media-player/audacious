@@ -32,6 +32,13 @@ static void gtk_tree_view_convert_widget_to_bin_window_coords
 }
 #endif
 
+#if ! GTK_CHECK_VERSION (2, 14, 0)
+#define gtk_adjustment_get_page_size (a) ((a)->page_size)
+#define gtk_adjustment_get_upper (a) ((a)->upper)
+#define gtk_selection_data_get_data (s) ((s)->data)
+#define gtk_selection_data_get_length (s) ((s)->length)
+#endif
+
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
 #define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
@@ -366,8 +373,9 @@ static gboolean autoscroll (GtkWidget * widget)
     if (! adj)
         return FALSE;
 
-    gint new = adj->value + model->scroll_speed;
-    gint clamped = CLAMP (new, 0, adj->upper - adj->page_size);
+    gint new = gtk_adjustment_get_value (adj) + model->scroll_speed;
+    gint clamped = CLAMP (new, 0, gtk_adjustment_get_upper (adj) -
+     gtk_adjustment_get_page_size (adj));
     gtk_adjustment_set_value (adj, clamped);
 
     if (clamped != new) /* reached top or bottom? */
@@ -427,7 +435,11 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
 
     gint height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
-     widget), NULL, NULL, NULL, & height, NULL);
+     widget), NULL, NULL, NULL, & height
+#if ! GTK_CHECK_VERSION (3, 0, 0)
+     , NULL
+#endif
+     );
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
@@ -488,9 +500,11 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, gi
     g_return_if_fail (model->receive_row >= 0 && model->receive_row <=
      model->rows);
 
-    if (sel->data && sel->length)
-        model->cbs->receive_data (model->user, model->receive_row, sel->data,
-         sel->length);
+    const guchar * data = gtk_selection_data_get_data (sel);
+    gint length = gtk_selection_data_get_length (sel);
+
+    if (data && length)
+        model->cbs->receive_data (model->user, model->receive_row, data, length);
 
     model->receive_row = -1;
 }

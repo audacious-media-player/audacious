@@ -285,7 +285,11 @@ gboolean genre_fill (GtkWidget * combo)
     list = g_list_sort (list, (GCompareFunc) strcmp);
 
     for (node = list; node != NULL; node = node->next)
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, node->data);
+#else
         gtk_combo_box_append_text ((GtkComboBox *) combo, node->data);
+#endif
 
     g_list_free (list);
     return FALSE;
@@ -443,7 +447,12 @@ void create_infowin (void)
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+    entry_genre = gtk_combo_box_text_new_with_entry ();
+#else
     entry_genre = gtk_combo_box_entry_new_text ();
+#endif
 
     gtk_container_add ((GtkContainer *) alignment, entry_genre);
     g_signal_connect (entry_genre, "changed", (GCallback) entry_changed, NULL);
