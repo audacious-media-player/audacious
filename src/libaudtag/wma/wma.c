@@ -236,6 +236,7 @@ static long ftell_object_by_guid(VFSFile * f, GUID_t * g)
     }
     TAGDBG("The object was not found\n");
 
+    g_free(h);
     return -1;
 }
 
