@@ -25,8 +25,7 @@
 #include <sys/types.h>
 #include <string.h>
 
-#include <libmowgli/mowgli_stdinc.h>
-#include <libmowgli/mowgli_patricia.h>
+#include <mowgli.h>
 
 /* Audacious core provides us with a function that looks up a VFS transport for
  * a given URI scheme.  Since this function will load plugins as needed, it can
