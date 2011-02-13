@@ -21,23 +21,7 @@
 
 #include "list.h"
 
-#if ! GTK_CHECK_VERSION (2, 12, 0)
-static void gtk_tree_view_convert_widget_to_bin_window_coords
- (GtkTreeView * tree, gint wx, gint wy, gint * bx, gint * by)
-{
-    gint bx0, by0;
-    gdk_window_get_position (gtk_tree_view_get_bin_window (tree), & bx0, & by0);
-    * bx = wx - bx0;
-    * by = wy - by0;
-}
-#endif
-
-#if ! GTK_CHECK_VERSION (2, 14, 0)
-#define gtk_adjustment_get_page_size(a) ((a)->page_size)
-#define gtk_adjustment_get_upper(a) ((a)->upper)
-#define gtk_selection_data_get_data(s) ((s)->data)
-#define gtk_selection_data_get_length(s) ((s)->length)
-#endif
+#include <audacious/gtk-compat.h>
 
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
@@ -435,11 +419,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
 
     gint height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
-     widget), NULL, NULL, NULL, & height
-#if ! GTK_CHECK_VERSION (3, 0, 0)
-     , NULL
-#endif
-     );
+     widget), NULL, NULL, NULL, & height);
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 

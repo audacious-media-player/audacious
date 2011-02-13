@@ -25,8 +25,8 @@
 #include <string.h>
 
 #include <audacious/audconfig.h>
-#include <audacious/compatibility.h>
 #include <audacious/drct.h>
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>

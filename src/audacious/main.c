@@ -52,11 +52,11 @@
 
 #include "audconfig.h"
 #include "chardet.h"
-#include "compatibility.h"
 #include "configdb.h"
 #include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
+#include "glib-compat.h"
 #include "i18n.h"
 #include "interface.h"
 #include "misc.h"

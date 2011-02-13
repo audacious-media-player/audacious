@@ -22,7 +22,7 @@
 #include <glib.h>
 #include <libaudcore/hook.h>
 
-#include "compatibility.h"
+#include "glib-compat.h"
 #include "misc.h"
 #include "output.h"
 #include "vis_runner.h"

@@ -17,23 +17,19 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <gtk/gtk.h>
 #include <string.h>
 #include <stdio.h>
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
-#else
 #include <gdk/gdkkeysyms.h>
-#endif
+#include <gtk/gtk.h>
 
 #include <libaudcore/hook.h>
 
 #include "audconfig.h"
-#include "compatibility.h"
 #include "config.h"
 #include "configdb.h"
 #include "debug.h"
+#include "gtk-compat.h"
 #include "i18n.h"
 #include "misc.h"
 #include "output.h"
@@ -748,13 +744,8 @@ static void on_cbox_realize (GtkWidget * combobox, PreferencesWidget * widget)
     guint i=0,index=0;
 
     for (i = 0; i < widget->data.combo.n_elements; i ++)
-#if GTK_CHECK_VERSION (3, 0, 0)    
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
          _(widget->data.combo.elements[i].label));
-#else
-        gtk_combo_box_append_text ((GtkComboBox *) combobox,
-         _(widget->data.combo.elements[i].label));
-#endif
 
     if (widget->data.combo.enabled) {
         switch (widget->cfg_type) {
@@ -1090,11 +1081,7 @@ static void create_label (PreferencesWidget * widget, GtkWidget * * label,
 static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * combobox, const gchar * domain)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
     * combobox = gtk_combo_box_text_new ();
-#else
-    * combobox = gtk_combo_box_new_text ();
-#endif
 
     if (widget->label) {
         * label = gtk_label_new (dgettext (domain, widget->label));
@@ -1513,33 +1500,19 @@ create_playlist_category(void)
     image1 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_BUTTON);
     gtk_container_add (GTK_CONTAINER (titlestring_help_button), image1);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
     titlestring_cbox = gtk_combo_box_text_new ();
-#else
-    titlestring_cbox = gtk_combo_box_new_text ();
-#endif
 
     gtk_table_attach (GTK_TABLE (table6), titlestring_cbox, 1, 3, 0, 1,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("TITLE"));
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST - TITLE"));
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST - ALBUM - TITLE"));
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST - ALBUM - TRACK. TITLE"));
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ARTIST [ ALBUM ] - TRACK. TITLE"));
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("ALBUM - TITLE"));
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (titlestring_cbox), _("Custom"));
-#else
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("TITLE"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST - TITLE"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST - ALBUM - TITLE"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST - ALBUM - TRACK. TITLE"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ARTIST [ ALBUM ] - TRACK. TITLE"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("ALBUM - TITLE"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (titlestring_cbox), _("Custom"));
-#endif
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("TITLE"));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST - TITLE"));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST - ALBUM - TITLE"));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST - ALBUM - TRACK. TITLE"));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST [ ALBUM ] - TRACK. TITLE"));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ALBUM - TITLE"));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("Custom"));
 
     titlestring_entry = gtk_entry_new ();
     gtk_table_attach (GTK_TABLE (table6), titlestring_entry, 1, 2, 1, 2,
@@ -1675,12 +1648,8 @@ static void output_combo_changed (GtkComboBox * combo)
 static void output_combo_fill (GtkComboBox * combo)
 {
     for (GList * node = output_get_list (); node != NULL; node = node->next)
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo,
          plugin_get_name (node->data));
-#else
-        gtk_combo_box_append_text (combo, plugin_get_name (node->data));
-#endif
 }
 
 static void output_do_config (void)
@@ -1751,11 +1720,7 @@ create_audio_category(void)
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
     output_plugin_cbox = gtk_combo_box_text_new ();
-#else
-    output_plugin_cbox = gtk_combo_box_new_text ();
-#endif
 
     gtk_table_attach (GTK_TABLE (table11), output_plugin_cbox, 1, 2, 0, 1,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),

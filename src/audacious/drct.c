@@ -24,9 +24,9 @@
 #include <libaudcore/vfs.h>
 
 #include "audconfig.h"
-#include "compatibility.h"
 #include "config.h"
 #include "drct.h"
+#include "glib-compat.h"
 #include "i18n.h"
 #include "main.h"
 #include "playback.h"

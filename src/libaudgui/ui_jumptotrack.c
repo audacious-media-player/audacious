@@ -27,32 +27,21 @@
 #  include "config.h"
 #endif
 
-
-#include <glib.h>
-#include <glib/gprintf.h>
-#include <gtk/gtk.h>
-
-#include <gdk/gdk.h>
-
-#if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
-#else
-#include <gdk/gdkkeysyms.h>
-#endif
-
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <sys/types.h>
 
+#include <gdk/gdkkeysyms.h>
+#include <gtk/gtk.h>
+
 #include <audacious/audconfig.h>
 #include <audacious/drct.h>
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
-
-#include "audacious/compatibility.h"
 
 #include "icons-stock.h"
 #include "ui_jumptotrack_cache.h"

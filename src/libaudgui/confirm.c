@@ -19,7 +19,10 @@
  * using our public API to be a derived work.
  */
 
+#include <gtk/gtk.h>
+
 #include <audacious/audconfig.h>
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
 
@@ -86,9 +89,7 @@ void audgui_confirm_playlist_delete (gint playlist)
 
     button = gtk_button_new_from_stock (GTK_STOCK_YES);
     gtk_box_pack_end ((GtkBox *) hbox, button, FALSE, FALSE, 0);
-#if GTK_CHECK_VERSION (2, 18, 0)
     gtk_widget_set_can_default (button, TRUE);
-#endif
     gtk_widget_grab_default (button);
     gtk_widget_grab_focus (button);
     g_signal_connect ((GObject *) button, "clicked", (GCallback)

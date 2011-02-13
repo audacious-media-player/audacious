@@ -50,6 +50,8 @@ INCLUDES = api.h \
            debug.h \
            drct.h \
            drct-api.h \
+           glib-compat.h \
+           gtk-compat.h \
            i18n.h				\
            interface.h			\
            misc.h \

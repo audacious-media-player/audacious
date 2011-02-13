@@ -131,11 +131,7 @@ playlist_manager_cb_lv_name_edited ( GtkCellRendererText *cell , gchar *path_str
 
 static void save_config_cb (void * hook_data, void * user_data)
 {
-#if GTK_CHECK_VERSION (2, 18, 0)
     if (gtk_widget_get_visible ((GtkWidget *) user_data))
-#else
-    if (GTK_WIDGET_VISIBLE ((GtkWidget *) user_data))
-#endif
         save_position ((GtkWidget *) user_data);
 }
 

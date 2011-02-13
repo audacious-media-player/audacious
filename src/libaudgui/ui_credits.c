@@ -30,10 +30,9 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
-
-#include "audacious/compatibility.h"
 
 #include "ui_credits.h"
 #include "audacious_logo.xpm"

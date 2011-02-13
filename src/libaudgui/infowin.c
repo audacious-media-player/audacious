@@ -26,6 +26,7 @@
 #include <stdarg.h>
 
 #include <audacious/audconfig.h>
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
@@ -285,11 +286,7 @@ gboolean genre_fill (GtkWidget * combo)
     list = g_list_sort (list, (GCompareFunc) strcmp);
 
     for (node = list; node != NULL; node = node->next)
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, node->data);
-#else
-        gtk_combo_box_append_text ((GtkComboBox *) combo, node->data);
-#endif
 
     g_list_free (list);
     return FALSE;
@@ -339,10 +336,8 @@ void create_infowin (void)
     location_text = gtk_label_new ("");
     gtk_widget_set_size_request (location_text, 200, -1);
     gtk_label_set_line_wrap ((GtkLabel *) location_text, TRUE);
-#if GTK_CHECK_VERSION (2, 10, 0)
     gtk_label_set_line_wrap_mode ((GtkLabel *) location_text,
      PANGO_WRAP_WORD_CHAR);
-#endif
     gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
     gtk_box_pack_start ((GtkBox *) vbox2, location_text, FALSE, FALSE, 0);
 
@@ -448,12 +443,7 @@ void create_infowin (void)
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
     entry_genre = gtk_combo_box_text_new_with_entry ();
-#else
-    entry_genre = gtk_combo_box_entry_new_text ();
-#endif
-
     gtk_container_add ((GtkContainer *) alignment, entry_genre);
     g_signal_connect (entry_genre, "changed", (GCallback) entry_changed, NULL);
     g_idle_add ((GSourceFunc) genre_fill, entry_genre);
