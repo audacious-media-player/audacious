@@ -294,6 +294,7 @@ static const gchar *translators_text[] = {
     "Jeki Sinneo Leinos",
     "Francisco Javier F. Serrador",
     "Gustavo D. Vranjes",
+    "Jorge Andrés",
     NULL,
     N_("Swedish:"),
     "Martin Persenius",
