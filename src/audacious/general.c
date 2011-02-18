@@ -148,3 +148,17 @@ void general_plugin_stop (PluginHandle * plugin)
     if (gp->cleanup != NULL)
         gp->cleanup ();
 }
+
+PluginHandle * general_plugin_by_widget (/* GtkWidget * */ void * widget)
+{
+    g_return_val_if_fail (widget, NULL);
+
+    for (GList * node = loaded_general_plugins; node; node = node->next)
+    {
+        LoadedGeneral * general = node->data;
+        if (general->widget == widget)
+            return general->plugin;
+    }
+    
+    return NULL;
+}

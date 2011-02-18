@@ -323,3 +323,17 @@ void vis_plugin_stop (PluginHandle * plugin)
     if (vp->cleanup != NULL)
         vp->cleanup ();
 }
+
+PluginHandle * vis_plugin_by_widget (/* GtkWidget * */ void * widget)
+{
+    g_return_val_if_fail (widget, NULL);
+
+    for (GList * node = loaded_vis_plugins; node; node = node->next)
+    {
+        LoadedVis * vis = node->data;
+        if (vis->widget == widget)
+            return vis->plugin;
+    }
+    
+    return NULL;
+}

@@ -276,3 +276,14 @@ gboolean plugin_enable (PluginHandle * plugin, gboolean enable)
 
     return enable_multi (type, plugin, enable);
 }
+
+/* This doesn't really belong here, but it's a bit of an oddball. */
+PluginHandle * plugin_by_widget (/* GtkWidget * */ void * widget)
+{
+    PluginHandle * p;
+    if ((p = vis_plugin_by_widget (widget)))
+        return p;
+    if ((p = general_plugin_by_widget (widget)))
+        return p;
+    return NULL;
+}

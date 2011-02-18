@@ -32,4 +32,6 @@ void vis_cleanup (void);
 gboolean vis_plugin_start (PluginHandle * plugin);
 void vis_plugin_stop (PluginHandle * plugin);
 
+PluginHandle * vis_plugin_by_widget (/* GtkWidget * */ void * widget);
+
 #endif

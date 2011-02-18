@@ -53,3 +53,6 @@ AUD_FUNC3 (void, plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
 AUD_FUNC3 (void, plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
+
+/* New in 2.5-alpha2 */
+AUD_FUNC1 (PluginHandle *, plugin_by_widget, /* GtkWidget * */ void *, widget)
