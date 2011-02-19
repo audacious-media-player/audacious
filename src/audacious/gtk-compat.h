@@ -57,11 +57,13 @@ static inline void gtk_widget_set_can_focus (GtkWidget * w, gboolean b)
 }
 
 #define gtk_widget_get_allocation(w, a) memcpy ((a), & (w)->allocation, sizeof (GtkAllocation))
+#define gtk_widget_get_sensitive GTK_WIDGET_SENSITIVE
 #define gtk_widget_get_visible GTK_WIDGET_VISIBLE
+#define gtk_widget_is_toplevel GTK_WIDGET_TOPLEVEL
 #endif
 
 #if ! GTK_CHECK_VERSION (2, 20, 0)
-#define gtk_widget_is_drawable(w) GTK_WIDGET_DRAWABLE (w)
+#define gtk_widget_is_drawable GTK_WIDGET_DRAWABLE
 #endif
 
 #if ! GTK_CHECK_VERSION (3, 0, 0)
