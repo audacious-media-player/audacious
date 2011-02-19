@@ -907,20 +907,20 @@ static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
     return TRUE;
 }
 
-static gboolean parse_apic (const guchar * data, gint size, gchar * * mime,
+static gboolean parse_apic (const guchar * _data, gint size, gchar * * mime,
  gint * type, gchar * * desc, void * * image_data, gint * image_size)
 {
-    const guchar * sep;
-    const guchar * after;
+    const gchar * data = (const gchar *) _data;
+    const gchar * sep, * after;
 
     if (size < 2 || (sep = memchr (data + 1, 0, size - 2)) == NULL)
         return FALSE;
 
-    if ((* desc = convert_text ((const gchar *) sep + 2, data + size - sep - 2,
-     data[0], TRUE, NULL, (const gchar * *) & after)) == NULL)
+    if ((* desc = convert_text (sep + 2, data + size - sep - 2, data[0], TRUE,
+     NULL, & after)) == NULL)
         return FALSE;
 
-    * mime = g_strdup ((const gchar *) data + 1);
+    * mime = g_strdup (data + 1);
     * type = sep[1];
     * image_data = g_memdup (after, data + size - after);
     * image_size = data + size - after;
