@@ -32,6 +32,7 @@ static inline void gtk_tree_view_convert_widget_to_bin_window_coords
 #if ! GTK_CHECK_VERSION (2, 14, 0)
 #define gtk_adjustment_get_page_size(a) ((a)->page_size)
 #define gtk_adjustment_get_upper(a) ((a)->upper)
+#define gtk_dialog_get_action_area(d) ((d)->action_area)
 #define gtk_dialog_get_content_area(d) ((d)->vbox)
 #define gtk_selection_data_get_data(s) ((s)->data)
 #define gtk_selection_data_get_length(s) ((s)->length)
