@@ -62,7 +62,8 @@ gint64 buffered_file_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
 	(vfs_ftell(handle->buffer)) + (size * nmemb) >
 	((VFSBuffer *) handle->buffer->handle)->size)
     {
-        vfs_fseek(handle->fd, vfs_ftell(handle->buffer), SEEK_SET);
+        if (vfs_fseek (handle->fd, vfs_ftell (handle->buffer), SEEK_SET))
+            return 0;
         handle->which = TRUE;
     }
 
@@ -88,7 +89,8 @@ buffered_file_vfs_getc_impl(VFSFile *stream)
     if ((vfs_ftell(handle->buffer)) + 1 >
 	((VFSBuffer *) handle->buffer->handle)->size)
     {
-        vfs_fseek(handle->fd, vfs_ftell(handle->buffer), SEEK_SET);
+        if (vfs_fseek (handle->fd, vfs_ftell (handle->buffer), SEEK_SET))
+            return EOF;
         handle->which = TRUE;
     }
 
@@ -108,19 +110,19 @@ buffered_file_vfs_fseek_impl(VFSFile * file,
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
-    vfs_fseek(handle->buffer, offset, whence);
+    if (vfs_fseek (handle->buffer, offset, whence))
+        return -1;
 
     switch(whence)
     {
         case SEEK_END:
             handle->which = TRUE;
-            vfs_fseek(handle->fd, offset, whence);
-            break;
+            return vfs_fseek (handle->fd, offset, whence);
         case SEEK_CUR:
             if (vfs_ftell(handle->buffer) + offset >= ((VFSBuffer *) handle->buffer->handle)->size)
             {
                 handle->which = TRUE;
-                vfs_fseek(handle->fd, offset, whence);
+                return vfs_fseek (handle->fd, offset, whence);
             }
             else
             {
@@ -128,7 +130,7 @@ buffered_file_vfs_fseek_impl(VFSFile * file,
 
                 handle->which = FALSE;
                 noff = ((VFSBuffer *) handle->buffer->handle)->size - (vfs_ftell(handle->buffer) + offset);
-                vfs_fseek(handle->buffer, noff, whence);
+                return vfs_fseek (handle->buffer, noff, whence);
             }
             break;
         case SEEK_SET:
@@ -136,12 +138,12 @@ buffered_file_vfs_fseek_impl(VFSFile * file,
             if (offset > ((VFSBuffer *) handle->buffer->handle)->size)
             {
                 handle->which = TRUE;
-                vfs_fseek(handle->fd, offset, whence);
+                return vfs_fseek (handle->fd, offset, whence);
             }
             else
             {
                 handle->which = FALSE;
-                vfs_fseek(handle->buffer, offset, whence);
+                return vfs_fseek (handle->buffer, offset, whence);
             }
             break;
     }

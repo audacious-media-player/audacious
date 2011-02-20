@@ -29,10 +29,10 @@ AUD_FUNC3 (void, get_audacious_credits, const gchar * *, brief,
 
 /* equalizer_preset.c */
 AUD_FUNC1 (GList *, equalizer_read_presets, const gchar *, basename)
-AUD_FUNC2 (void, equalizer_write_preset_file, GList *, list, const gchar *,
+AUD_FUNC2 (gboolean, equalizer_write_preset_file, GList *, list, const gchar *,
  basename)
 AUD_FUNC1 (EqualizerPreset *, load_preset_file, const gchar *, filename)
-AUD_FUNC2 (void, save_preset_file, EqualizerPreset *, preset, const gchar *,
+AUD_FUNC2 (gboolean, save_preset_file, EqualizerPreset *, preset, const gchar *,
  filename)
 AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
 

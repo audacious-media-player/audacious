@@ -124,10 +124,15 @@ void print_tuple(Tuple * tuple)
 #endif
 }
 
-gchar *read_char_data(VFSFile * fd, int size)
+gchar * read_char_data (VFSFile * file, int size)
 {
-    gchar *value = g_new0(gchar, size + 1);
-    vfs_fread(value, size, 1, fd);
+    gchar * value = g_malloc (size + 1);
+    if (vfs_fread (value, 1, size, file) < size)
+    {
+        g_free (value);
+        return NULL;
+    }
+    value[size] = 0;
     return value;
 }
 
@@ -252,37 +257,6 @@ gboolean write_LEuint64(VFSFile * fd, guint64 val)
 {
     guint64 le_val = GUINT64_TO_LE(val);
     return (vfs_fwrite(&le_val, 8, 1, fd) == 8);
-}
-
-void copyAudioToFile(VFSFile * from, VFSFile * to, guint32 pos)
-{
-    vfs_fseek(from, pos, SEEK_SET);
-    while (vfs_feof(from) == 0)
-    {
-        gchar buf[4096];
-        gint n = vfs_fread(buf, 1, 4096, from);
-        vfs_fwrite(buf, n, 1, to);
-    }
-}
-
-void copyAudioData(VFSFile * from, VFSFile * to, guint32 pos_from, guint32 pos_to)
-{
-    vfs_fseek(from, pos_from, SEEK_SET);
-    int bytes_read = pos_from;
-    while (bytes_read < pos_to - 4096)
-    {
-        gchar buf[4096];
-        guint32 n = vfs_fread(buf, 1, 4096, from);
-        vfs_fwrite(buf, n, 1, to);
-        bytes_read += n;
-    }
-    if (bytes_read < pos_to)
-    {
-        guint32 buf_size = pos_to - bytes_read;
-        gchar buf2[buf_size];
-        int nn = vfs_fread(buf2, 1, buf_size, from);
-        vfs_fwrite(buf2, nn, 1, to);
-    }
 }
 
 gboolean cut_beginning_tag (VFSFile * handle, gsize tag_size)

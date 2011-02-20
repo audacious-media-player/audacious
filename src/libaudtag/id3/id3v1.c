@@ -95,7 +95,9 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
 
     if (has_id3v1_ext)
     {
-        vfs_fseek(f, -351, SEEK_END);
+        if (vfs_fseek (f, -351, SEEK_END))
+            goto ERR;
+
         gchar *ext_title = convert_to_utf8(read_char_data(f, 60));
         gchar *ext_artist = convert_to_utf8(read_char_data(f, 60));
         gchar *ext_album = convert_to_utf8(read_char_data(f, 60));
@@ -112,7 +114,9 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
         artist = tmp_artist;
         album = tmp_album;
 
-        vfs_fseek(f, -170, SEEK_END);
+        if (vfs_fseek (f, -170, SEEK_END))
+            goto ERR;
+
         gchar *ext_genre = convert_to_utf8(read_char_data(f, 30));
 
         if (ext_genre != NULL)
@@ -141,6 +145,15 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
     g_free(genre);
 
     return TRUE;
+
+ERR:
+    g_free (title);
+    g_free (artist);
+    g_free (album);
+    g_free (year);
+    g_free (comment);
+    g_free (genre);
+    return FALSE;
 }
 
 static gboolean id3v1_write_tag (const Tuple * tuple, VFSFile * handle)

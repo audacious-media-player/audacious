@@ -99,8 +99,7 @@ equalizer_read_presets(const gchar *basename)
     return list;
 }
 
-void
-equalizer_write_preset_file(GList * list, const gchar * basename)
+gboolean equalizer_write_preset_file (GList * list, const gchar * basename)
 {
     gchar *filename, *tmp;
     gint i, p;
@@ -136,11 +135,12 @@ equalizer_write_preset_file(GList * list, const gchar * basename)
     filename = g_build_filename (get_path (AUD_PATH_USER_DIR), basename, NULL);
 
     data = g_key_file_to_data(rcfile, &len, &error);
-    g_file_set_contents(filename, data, len, &error);
+    gboolean success = g_file_set_contents (filename, data, len, & error);
     g_free(data);
 
     g_key_file_free(rcfile);
     g_free(filename);
+    return success;
 }
 
 GList *
@@ -154,8 +154,9 @@ import_winamp_eqf(VFSFile * file)
     gchar *markup;
     gchar preset_name[0xb4];
 
-    vfs_fread(header, 1, 31, file);
-    if (strncmp(header, "Winamp EQ library file v1.1", 27)) goto error;
+    if (vfs_fread (header, 1, sizeof header, file) != sizeof header || strncmp
+     (header, "Winamp EQ library file v1.1", 27))
+        goto error;
 
     AUDDBG("The EQF header is OK\n");
 
@@ -163,7 +164,8 @@ import_winamp_eqf(VFSFile * file)
 
     while (vfs_fread(preset_name, 1, 0xb4, file) == 0xb4) {
         AUDDBG("The preset name is '%s'\n", preset_name);
-        vfs_fseek(file, 0x4d, SEEK_CUR); /* unknown crap --asphyx */
+        if (vfs_fseek (file, 0x4d, SEEK_CUR)) /* unknown crap --asphyx */
+            break;
         if (vfs_fread(bands, 1, 11, file) != 11) break;
 
         preset = equalizer_preset_new(preset_name);
@@ -190,9 +192,7 @@ error:
     return NULL;
 }
 
-/* This should not return void, as that makes reporting errors impossible. */
-void
-save_preset_file(EqualizerPreset *preset, const gchar * filename)
+gboolean save_preset_file (EqualizerPreset * preset, const gchar * filename)
 {
     GKeyFile *rcfile;
     gint i;
@@ -212,15 +212,19 @@ save_preset_file(EqualizerPreset *preset, const gchar * filename)
 
     data = g_key_file_to_data(rcfile, &len, &error);
 
+    gboolean success = FALSE;
+
     VFSFile * file = vfs_fopen (filename, "w");
     if (file == NULL)
         goto DONE;
-    vfs_fwrite (data, 1, strlen (data), file);
+    if (vfs_fwrite (data, 1, strlen (data), file) == strlen (data))
+        success = TRUE;
     vfs_fclose (file);
 
 DONE:
     g_free(data);
     g_key_file_free(rcfile);
+    return success;
 }
 
 static EqualizerPreset * equalizer_read_aud_preset (const gchar * filename)

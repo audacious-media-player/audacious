@@ -199,8 +199,6 @@ gboolean write_BEuint64(VFSFile *fd, guint64 val);
 gboolean write_LEuint64(VFSFile *fd, guint64 val);
 
 guint64 read_LEint64(VFSFile *fd);
-void copyAudioToFile(VFSFile *from, VFSFile *to, guint32 pos);
-void copyAudioData(VFSFile* from, VFSFile *to, guint32 pos_from, guint32 pos_to);
 gboolean cut_beginning_tag (VFSFile * handle, gsize tag_size);
 
 gchar *convert_numericgenre_to_text(gint numericgenre);
