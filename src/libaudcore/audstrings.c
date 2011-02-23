@@ -86,10 +86,10 @@ str_has_prefix_nocase(const gchar * str, const gchar * prefix)
     return (str != NULL && (strncasecmp(str, prefix, strlen(prefix)) == 0));
 }
 
-gboolean
-str_has_suffix_nocase(const gchar * str, const gchar * suffix)
+gboolean str_has_suffix_nocase (const gchar * str, const gchar * suffix)
 {
-    return (str != NULL && strcasecmp(str + strlen(str) - strlen(suffix), suffix) == 0);
+    return (str && strlen (str) >= strlen (suffix) && ! strcasecmp (str + strlen
+     (str) - strlen (suffix), suffix));
 }
 
 gboolean
