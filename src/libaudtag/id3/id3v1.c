@@ -158,6 +158,7 @@ ERR:
 
 static gboolean id3v1_write_tag (const Tuple * tuple, VFSFile * handle)
 {
+    fprintf (stderr, "Writing ID3v1 tags is not implemented yet, sorry.\n");
     return FALSE;
 }
 

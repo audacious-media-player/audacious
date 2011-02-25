@@ -589,6 +589,7 @@ static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
 
 static gboolean id3v22_write_tag (const Tuple * tuple, VFSFile * f)
 {
+    fprintf (stderr, "Writing ID3v2.2 tags is not implemented yet, sorry.\n");
     return FALSE;
 }
 
