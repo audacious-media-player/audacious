@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-02-21 21:27-0500\n"
+"POT-Creation-Date: 2011-03-02 23:28-0500\n"
 "PO-Revision-Date: 2010-08-18 13:40+0100\n"
 "Last-Translator: StrassBoy <StrassBoy@gmail.com>\n"
 "Language-Team: \n"
@@ -150,67 +150,72 @@ msgid "Korean:"
 msgstr "Koréenn :"
 
 #: src/audacious/credits.c:257
+#, fuzzy
+msgid "Latvian:"
+msgstr "Croate :"
+
+#: src/audacious/credits.c:260
 msgid "Lithuanian:"
 msgstr "Lituanien :"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:264
 msgid "Macedonian:"
 msgstr "Macédonien :"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:267
 msgid "Polish:"
 msgstr "Polonais :"
 
-#: src/audacious/credits.c:269
+#: src/audacious/credits.c:272
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Portugais :"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:275
 msgid "Romanian:"
 msgstr "Roumain :"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:279
 msgid "Russian:"
 msgstr "Russe :"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:283
 msgid "Serbian (Latin):"
 msgstr "Serbe (latin) :"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:286
 msgid "Serbian (Cyrillic):"
 msgstr "Serbe (cyrillique) :"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:289
 msgid "Simplified Chinese:"
 msgstr "Chinois simplifié :"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:292
 msgid "Slovak:"
 msgstr "Slovaque :"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:295
 msgid "Spanish:"
 msgstr "Espagnol :"
 
-#: src/audacious/credits.c:299
+#: src/audacious/credits.c:302
 msgid "Swedish:"
 msgstr "Suédois :"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:305
 msgid "Traditional Chinese:"
 msgstr "Chinois traditionnel :"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:310
 msgid "Turkish:"
 msgstr "Turc :"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:314
 msgid "Ukrainian:"
 msgstr "Ukrainien :"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:317
 msgid "Welsh:"
 msgstr "Gallois :"
 

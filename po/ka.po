@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.35\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-02-21 21:27-0500\n"
+"POT-Creation-Date: 2011-03-02 23:28-0500\n"
 "PO-Revision-Date: 2005-10-14 13:54+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <giomac@gmail.com>\n"
@@ -159,69 +159,74 @@ msgid "Korean:"
 msgstr "კორეული:"
 
 #: src/audacious/credits.c:257
+#, fuzzy
+msgid "Latvian:"
+msgstr "მდებარეობა:"
+
+#: src/audacious/credits.c:260
 msgid "Lithuanian:"
 msgstr "ლიტვური:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:264
 msgid "Macedonian:"
 msgstr "მაკედონიური:"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:267
 msgid "Polish:"
 msgstr "პოლონური:"
 
-#: src/audacious/credits.c:269
+#: src/audacious/credits.c:272
 #, fuzzy
 msgid "Portuguese:"
 msgstr "პორტი:"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:275
 msgid "Romanian:"
 msgstr "რუმინული:"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:279
 msgid "Russian:"
 msgstr "რუსული:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:283
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:286
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:289
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:292
 msgid "Slovak:"
 msgstr "სლოვაკური:"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:295
 msgid "Spanish:"
 msgstr "ესპანური:"
 
-#: src/audacious/credits.c:299
+#: src/audacious/credits.c:302
 msgid "Swedish:"
 msgstr "შვედური:"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:305
 #, fuzzy
 msgid "Traditional Chinese:"
 msgstr "დამატებითი დახმარება:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:310
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:314
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "რუმინული:"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:317
 msgid "Welsh:"
 msgstr "უელსური:"
 
