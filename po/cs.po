@@ -2,14 +2,14 @@
 # Copyright (C) 2004 Jan Nárovec <finn@sendmail.cz>
 # This file is distributed under the same license as the Audacious package.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
-# Petr Písař <petr.pisar@atlas.cz>, 2007, 2008, 2009, 2010.
+# Petr Písař <petr.pisar@atlas.cz>, 2007, 2008, 2009, 2010, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious d03442a08622\n"
+"Project-Id-Version: audacious 968ceb9a5ad6\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-02 23:28-0500\n"
-"PO-Revision-Date: 2010-11-14 21:43+0100\n"
+"POT-Creation-Date: 2011-03-02 23:29-0500\n"
+"PO-Revision-Date: 2011-03-01 21:09+0100\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -23,7 +23,7 @@ msgid "  (invalid UTF-8)"
 msgstr "  (neplatné UTF8)"
 
 #: src/audacious/credits.c:31
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "An audio player for many platforms.\n"
@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Přehrávač zvuku pro mnoho platforem.\n"
-"Copyright © 2005–2010 vývojový tým Audacious"
+"Copyright © 2005–2011 vývojový tým Audacious"
 
 #: src/audacious/credits.c:36
 msgid "Core developers:"
@@ -316,6 +316,10 @@ msgid ""
 "instance anyway, please delete the file %s and run Audacious again.  "
 "Audacious will now close."
 msgstr ""
+"Provozování více instancí Audacious může vést k poškození konfiguračních "
+"souborů. Jestliže Audacious ještě neběží nebo chcete-li přesto spustit další "
+"instanci, prosím, smažte soubor %s a spusťte Audacious znovu. Audacious bude "
+"nyní ukončen."
 
 #: src/audacious/main.c:548
 #, c-format
@@ -621,7 +625,7 @@ msgstr "Přejít dál, když současná skladba je smazána"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Clear the playlist when opening files"
-msgstr "Při otevření souborů vyprázdnit seznam skladeb"
+msgstr "Při otvírání souborů vyprázdnit seznam skladeb"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Open files in a temporary playlist"
@@ -767,9 +771,8 @@ msgid "Current output plugin:"
 msgstr "Aktuální výstupní modul:"
 
 #: src/audacious/ui_preferences.c:1786
-#, fuzzy
 msgid "Transport"
-msgstr "Překladatelé"
+msgstr "Přenos"
 
 #: src/audacious/ui_preferences.c:1786
 msgid "Input"
@@ -1698,78 +1701,8 @@ msgstr "Zobrazí volby správy relace"
 #~ msgid "Sorry, threads aren't supported on your platform.\n"
 #~ msgstr "Je nám líto, ale vlákna nejsou na vaší platformě podporována.\n"
 
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Nepodařilo se vytvořit protokolovací soubor (%s)!\n"
-
-#~ msgid "Print all errors and warnings to stdout"
-#~ msgstr "Všechny chyby a varování tisknout na standardní výstup"
-
-#~ msgid "Used in macpacking"
-#~ msgstr "Použito v macpackingu"
-
 #~ msgid "Module loading not supported! Plugins will not be loaded.\n"
 #~ msgstr "Nahrávání modulu není podporováno! Moduly nebudou nahrány.\n"
-
-#~ msgid "Audacious - Unsupported Version Warning"
-#~ msgstr "Audacious – varování před nepodporovanou verzí"
-
-#~ msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-#~ msgstr "<big><b>Audacious2 ještě není hotový!</b></big>"
-
-#~ msgid ""
-#~ "<b>Please don't file bugs at this point unless they represent major "
-#~ "problems.</b>"
-#~ msgstr ""
-#~ "<b>Prosíme, abyste v ŧento okamžik nehlásili chyby, pokud nepředstavují "
-#~ "závažný problém.</b>"
-
-#~ msgid ""
-#~ "This is an <i>alpha</i> build of Audacious2. It is still fairly "
-#~ "incomplete and unpolished.\n"
-#~ "We suspect that most minor bugs reported during this time will be "
-#~ "resolved once more things\n"
-#~ "stablize. However, if there is a major bug, such as a crash on playing a "
-#~ "specific file, we\n"
-#~ "need to know about it.\n"
-#~ "\n"
-#~ "However, we ask you to be aware that dealing with trivial bugs is "
-#~ "distracting at this point,\n"
-#~ "and to please refrain from doing so. Thanks in advance!"
-#~ msgstr ""
-#~ "Toto je <i>alfa</i> sestavení Audacious2. Stále je poměrně nedokončené a "
-#~ "neutříděné.\n"
-#~ "Očekáváme, že většina drobných chyb nahlášených v této době bude "
-#~ "vyřešena, jakmile se více\n"
-#~ "věcí stabilizuje. Avšak, je-li zde zásadní chyba, jako je pád při "
-#~ "přehrávání určitého souboru,\n"
-#~ "potřebujeme o ní vědět.\n"
-#~ "\n"
-#~ "Žádáme vás, abyste chápali, že zaobírání se triviálními chybami "
-#~ "je v tento okamžik rozptylující,\n"
-#~ "a abyste se zdrželi takového chování. Děkujeme za pochopení!"
-
-#~ msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-#~ msgstr "<b>Blogování o takových chybách také nepomůže.</b>"
-
-#~ msgid ""
-#~ "Likewise, we're developers. We don't read blogs on a regular basis. If "
-#~ "there is a major bug,\n"
-#~ "we ask you to bring it to our attention via our bugtracking instance at "
-#~ "http://jira.atheme.org/,\n"
-#~ "or via the forums that are on the website.\n"
-#~ "\n"
-#~ "This will help us find out more information about your concerns, which we "
-#~ "would likely\n"
-#~ "not know about otherwise."
-#~ msgstr ""
-#~ "My jsme vývojáři a blogy nečteme pravidelně. Existuje-li závažná chyba,\n"
-#~ "žádáme vás, abyste si naši pozornost získali prostřednictvím systému na\n"
-#~ "sledování chyb na adrese http://jira.atheme.org/ nebo prostřednictvím "
-#~ "fór,\n"
-#~ "které se nacházejí na našem webu.\n"
-#~ "\n"
-#~ "Toto nám pomůže zjistit více informací o vašich problémech, které bychom\n"
-#~ "pravděpodobně jinak nezjistili."
 
 # FIXME: This requires context. "Přehrávání" In preferences, "Přehrát" in
 # manager. Still?
@@ -1842,6 +1775,76 @@ msgstr "Zobrazí volby správy relace"
 
 #~ msgid "Value"
 #~ msgstr "Hodnota"
+
+#~ msgid "Unable to create log file (%s)!\n"
+#~ msgstr "Nepodařilo se vytvořit protokolovací soubor (%s)!\n"
+
+#~ msgid "Print all errors and warnings to stdout"
+#~ msgstr "Všechny chyby a varování tisknout na standardní výstup"
+
+#~ msgid "Used in macpacking"
+#~ msgstr "Použito v macpackingu"
+
+#~ msgid "Audacious - Unsupported Version Warning"
+#~ msgstr "Audacious – varování před nepodporovanou verzí"
+
+#~ msgid "<big><b>Audacious2 is not ready yet!</b></big>"
+#~ msgstr "<big><b>Audacious2 ještě není hotový!</b></big>"
+
+#~ msgid ""
+#~ "<b>Please don't file bugs at this point unless they represent major "
+#~ "problems.</b>"
+#~ msgstr ""
+#~ "<b>Prosíme, abyste v ŧento okamžik nehlásili chyby, pokud nepředstavují "
+#~ "závažný problém.</b>"
+
+#~ msgid ""
+#~ "This is an <i>alpha</i> build of Audacious2. It is still fairly "
+#~ "incomplete and unpolished.\n"
+#~ "We suspect that most minor bugs reported during this time will be "
+#~ "resolved once more things\n"
+#~ "stablize. However, if there is a major bug, such as a crash on playing a "
+#~ "specific file, we\n"
+#~ "need to know about it.\n"
+#~ "\n"
+#~ "However, we ask you to be aware that dealing with trivial bugs is "
+#~ "distracting at this point,\n"
+#~ "and to please refrain from doing so. Thanks in advance!"
+#~ msgstr ""
+#~ "Toto je <i>alfa</i> sestavení Audacious2. Stále je poměrně nedokončené a "
+#~ "neutříděné.\n"
+#~ "Očekáváme, že většina drobných chyb nahlášených v této době bude "
+#~ "vyřešena, jakmile se více\n"
+#~ "věcí stabilizuje. Avšak, je-li zde zásadní chyba, jako je pád při "
+#~ "přehrávání určitého souboru,\n"
+#~ "potřebujeme o ní vědět.\n"
+#~ "\n"
+#~ "Žádáme vás, abyste chápali, že zaobírání se triviálními chybami "
+#~ "je v tento okamžik rozptylující,\n"
+#~ "a abyste se zdrželi takového chování. Děkujeme za pochopení!"
+
+#~ msgid "<b>Blogging about bugs in it is also not helpful.</b>"
+#~ msgstr "<b>Blogování o takových chybách také nepomůže.</b>"
+
+#~ msgid ""
+#~ "Likewise, we're developers. We don't read blogs on a regular basis. If "
+#~ "there is a major bug,\n"
+#~ "we ask you to bring it to our attention via our bugtracking instance at "
+#~ "http://jira.atheme.org/,\n"
+#~ "or via the forums that are on the website.\n"
+#~ "\n"
+#~ "This will help us find out more information about your concerns, which we "
+#~ "would likely\n"
+#~ "not know about otherwise."
+#~ msgstr ""
+#~ "My jsme vývojáři a blogy nečteme pravidelně. Existuje-li závažná chyba,\n"
+#~ "žádáme vás, abyste si naši pozornost získali prostřednictvím systému na\n"
+#~ "sledování chyb na adrese http://jira.atheme.org/ nebo prostřednictvím "
+#~ "fór,\n"
+#~ "které se nacházejí na našem webu.\n"
+#~ "\n"
+#~ "Toto nám pomůže zjistit více informací o vašich problémech, které bychom\n"
+#~ "pravděpodobně jinak nezjistili."
 
 #~ msgid "Interface to use (use -i list to view available interfaces)"
 #~ msgstr "Použít dané rozhraní (možná rozhraní lze vypsat pomocí „-i list“)"
