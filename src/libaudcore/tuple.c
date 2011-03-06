@@ -667,13 +667,37 @@ gint tuple_get_int (const Tuple * tuple, gint cnfield, const gchar * field)
     }
 }
 
+#define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), \
+ __VA_ARGS__)
+
 void tuple_set_format (Tuple * t, const gchar * format, gint chans, gint rate,
  gint brate)
 {
-    tuple_associate_string (t, FIELD_CODEC, NULL, format);
-    gchar s[32];
-    snprintf (s, sizeof s, "%s, %d Hz", (chans == 2) ? _("Stereo") : (chans > 2)
-     ? _("Surround") : _("Mono"), rate);
-    tuple_associate_string (t, FIELD_QUALITY, NULL, s);
-    tuple_associate_int (t, FIELD_BITRATE, NULL, brate);
+    if (format)
+        tuple_associate_string (t, FIELD_CODEC, NULL, format);
+
+    gchar buf[32];
+    buf[0] = 0;
+
+    if (chans > 0)
+    {
+        if (chans == 1)
+            APPEND (buf, _("Mono"));
+        else if (chans == 2)
+            APPEND (buf, _("Stereo"));
+        else
+            APPEND (buf, _("%d channels"), chans);
+
+        if (rate > 0)
+            APPEND (buf, ", ");
+    }
+
+    if (rate > 0)
+        APPEND (buf, "%d kHz", rate / 1000);
+
+    if (buf[0])
+        tuple_associate_string (t, FIELD_QUALITY, NULL, buf);
+    
+    if (brate > 0)
+        tuple_associate_int (t, FIELD_BITRATE, NULL, brate);
 }
