@@ -22,8 +22,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
  ***
 
-The file src/audacious/images/album.png is taken from the icon theme of Gnome
-2.30.3 and is distributed under the following terms:
+The files src/audacious/images/{album appearance audio connectivity playlist
+plugins replay_gain}.png are taken from the icon theme of Gnome 2.30.3 and are
+distributed under the following terms:
 
 Copyright (C) Ulisse Perusin, Riccardo Buzzotta, Josef Vybíral, Hylke Bons,
  Ricardo González, Lapo Calamandrei, Rodney Dawes, Luca Ferretti, Tuomas
