@@ -34,9 +34,6 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 
-#include "ui_credits.h"
-#include "audacious_logo.xpm"
-
 enum {
     COL_LEFT,
     COL_RIGHT,
@@ -103,81 +100,22 @@ generate_credit_list(const gchar * text[], gboolean sec_space)
                                    GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
     gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollwin), GTK_SHADOW_IN);
     gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
-    gtk_container_set_border_width(GTK_CONTAINER(scrollwin), 10);
-
-    gtk_widget_show_all(scrollwin);
+    gtk_container_set_border_width ((GtkContainer *) scrollwin, 4);
 
     return scrollwin;
 }
 
-void
-audgui_show_credits_window(void)
+GtkWidget * audgui_get_credits_widget (void)
 {
-    static GtkWidget *about_window = NULL;
-
-    GdkPixbuf *logo_pixbuf;
-    GtkWidget *about_vbox;
-    GtkWidget *about_credits_logo_box, *about_credits_logo_frame;
-    GtkWidget *about_credits_logo;
     GtkWidget *about_notebook;
     GtkWidget *list;
-    GtkWidget *bbox, *close_btn;
-    GtkWidget *label;
-    gchar *text;
-    static const gchar *audacious_brief;
-    static const gchar **credit_text;
-    static const gchar **translators;
+    const gchar **credit_text;
+    const gchar **translators;
 
-    if (about_window)
-        return;
-
-    aud_get_audacious_credits(&audacious_brief, &credit_text, &translators);
-
-    about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_type_hint(GTK_WINDOW(about_window),
-                             GDK_WINDOW_TYPE_HINT_DIALOG);
-
-    gtk_window_set_default_size(GTK_WINDOW(about_window), -1, 512);
-    gtk_window_set_title(GTK_WINDOW(about_window), _("About Audacious"));
-    gtk_window_set_position(GTK_WINDOW(about_window), GTK_WIN_POS_CENTER);
-    gtk_window_set_resizable(GTK_WINDOW(about_window), TRUE);
-    gtk_container_set_border_width(GTK_CONTAINER(about_window), 10);
-
-    g_signal_connect(about_window, "destroy",
-                     G_CALLBACK(gtk_widget_destroyed), &about_window);
-
-    gtk_widget_realize(about_window);
-
-    about_vbox = gtk_vbox_new(FALSE, 5);
-    gtk_container_add(GTK_CONTAINER(about_window), about_vbox);
-
-    logo_pixbuf = gdk_pixbuf_new_from_xpm_data((const char **)audacious_logo_xpm);
-
-    about_credits_logo_box = gtk_hbox_new(TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(about_vbox), about_credits_logo_box,
-                       FALSE, FALSE, 0);
-
-    about_credits_logo_frame = gtk_frame_new(NULL);
-    gtk_frame_set_shadow_type(GTK_FRAME(about_credits_logo_frame),
-                              GTK_SHADOW_ETCHED_OUT);
-    gtk_box_pack_start(GTK_BOX(about_credits_logo_box),
-                       about_credits_logo_frame, FALSE, FALSE, 0);
-
-    about_credits_logo = gtk_image_new_from_pixbuf(logo_pixbuf);
-    gtk_container_add(GTK_CONTAINER(about_credits_logo_frame),
-                      about_credits_logo);
-    g_object_unref(logo_pixbuf);
-
-    label = gtk_label_new(NULL);
-    text = g_strdup_printf(_(audacious_brief), VERSION);
-    gtk_label_set_markup(GTK_LABEL(label), text);
-    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
-    g_free(text);
-
-    gtk_box_pack_start(GTK_BOX(about_vbox), label, FALSE, FALSE, 0);
+    aud_get_audacious_credits (NULL, &credit_text, &translators);
 
     about_notebook = gtk_notebook_new();
-    gtk_box_pack_start(GTK_BOX(about_vbox), about_notebook, TRUE, TRUE, 0);
+    gtk_widget_set_size_request (about_notebook, -1, 250);
 
     list = generate_credit_list(credit_text, TRUE);
     gtk_notebook_append_page(GTK_NOTEBOOK(about_notebook), list,
@@ -187,18 +125,5 @@ audgui_show_credits_window(void)
     gtk_notebook_append_page(GTK_NOTEBOOK(about_notebook), list,
                              gtk_label_new(_("Translators")));
 
-    bbox = gtk_hbutton_box_new();
-    gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing(GTK_BOX(bbox), 5);
-    gtk_box_pack_start(GTK_BOX(about_vbox), bbox, FALSE, FALSE, 0);
-
-    close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-    g_signal_connect_swapped(close_btn, "clicked",
-                             G_CALLBACK(gtk_widget_destroy), about_window);
-
-    gtk_widget_set_can_default(close_btn, TRUE);
-    gtk_box_pack_start(GTK_BOX(bbox), close_btn, TRUE, TRUE, 0);
-    gtk_widget_grab_default(close_btn);
-
-    gtk_widget_show_all(about_window);
+    return about_notebook;
 }
