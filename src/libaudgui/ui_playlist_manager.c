@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2010  Audacious development team.
+ *  Copyright (C) 2005-2011  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,6 +45,11 @@ static gboolean hide_cb (GtkWidget * window)
     save_position (window);
     gtk_widget_hide (window);
     return TRUE;
+}
+
+static void rename_cb (void)
+{
+    audgui_show_playlist_rename (aud_playlist_get_active ());
 }
 
 static void new_cb (GtkButton * button, void * unused)
@@ -233,10 +238,8 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 
     gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_bbar_hbbox , FALSE , FALSE , 0 );
 
-#if 0
     g_signal_connect ((GObject *) rename_button, "clicked", (GCallback)
      rename_cb, playman_pl_lv);
-#endif
     g_signal_connect ((GObject *) new_button, "clicked", (GCallback) new_cb,
      playman_pl_lv);
     g_signal_connect ((GObject *) delete_button, "clicked", (GCallback)
