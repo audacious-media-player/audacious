@@ -28,38 +28,9 @@
 #include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
+#include "list.h"
 
-static gint iter_to_row (GtkTreeModel * model, GtkTreeIter * iter)
-{
-    GtkTreePath * path = gtk_tree_model_get_path (model, iter);
-    gint row = gtk_tree_path_get_indices (path)[0];
-
-    gtk_tree_path_free (path);
-    return row;
-}
-
-static gint get_selected_row (GtkWidget * list)
-{
-    GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *)
-     list);
-    GtkTreeModel * model;
-    GtkTreeIter iter;
-
-    if (! gtk_tree_selection_get_selected (selection, & model, & iter))
-        return -1;
-
-    return iter_to_row (model, & iter);
-}
-
-static void set_selected_row (GtkWidget * list, gint row)
-{
-    GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *)
-     list);
-    GtkTreePath * path = gtk_tree_path_new_from_indices (row, -1);
-
-    gtk_tree_selection_select_path (selection, path);
-    gtk_tree_path_free (path);
-}
+static GtkWidget * playman_win = NULL;
 
 static void save_position (GtkWidget * window)
 {
@@ -76,15 +47,6 @@ static gboolean hide_cb (GtkWidget * window)
     return TRUE;
 }
 
-static void activate_cb (GtkTreeView * list, GtkTreePath * path,
- GtkTreeViewColumn * column, GtkWidget * window)
-{
-    aud_playlist_set_active (gtk_tree_path_get_indices (path)[0]);
-
-    if (aud_cfg->playlist_manager_close_on_activate)
-        hide_cb (window);
-}
-
 static void new_cb (GtkButton * button, void * unused)
 {
     aud_playlist_insert (-1);
@@ -92,44 +54,7 @@ static void new_cb (GtkButton * button, void * unused)
 
 static void delete_cb (GtkButton * button, GtkWidget * list)
 {
-    gint playlist = get_selected_row (list);
-
-    if (playlist != -1)
-        audgui_confirm_playlist_delete (playlist);
-}
-
-static void rename_cb (GtkButton * button, GtkWidget * lv)
-{
-    GtkTreeSelection *listsel = gtk_tree_view_get_selection( GTK_TREE_VIEW(lv) );
-    GtkTreeModel *store;
-    GtkTreeIter iter;
-
-    if ( gtk_tree_selection_get_selected( listsel , &store , &iter ) == TRUE )
-    {
-        GtkTreePath *path = gtk_tree_model_get_path( GTK_TREE_MODEL(store) , &iter );
-        GtkCellRenderer *rndrname = g_object_get_data( G_OBJECT(lv) , "rn" );
-        /* set the name renderer to editable and start editing */
-        g_object_set( G_OBJECT(rndrname) , "editable" , TRUE , NULL );
-        gtk_tree_view_set_cursor_on_cell ((GtkTreeView *) lv, path,
-         gtk_tree_view_get_column ((GtkTreeView *) lv,
-         AUDGUI_LIBRARY_STORE_TITLE), rndrname, TRUE);
-        gtk_tree_path_free( path );
-    }
-}
-
-static void
-playlist_manager_cb_lv_name_edited ( GtkCellRendererText *cell , gchar *path_string ,
-                                     gchar *new_text , gpointer listview )
-{
-    /* this is currently used to change playlist names */
-    GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(listview) );
-    GtkTreeIter iter;
-
-    if ( gtk_tree_model_get_iter_from_string( store , &iter , path_string ) == TRUE )
-        aud_playlist_set_title (iter_to_row (store, & iter), new_text);
-
-    /* set the renderer uneditable again */
-    g_object_set( G_OBJECT(cell) , "editable" , FALSE , NULL );
+    audgui_confirm_playlist_delete (aud_playlist_get_active ());
 }
 
 static void save_config_cb (void * hook_data, void * user_data)
@@ -138,15 +63,106 @@ static void save_config_cb (void * hook_data, void * user_data)
         save_position ((GtkWidget *) user_data);
 }
 
-static GtkWidget * playman_win = NULL;
+static void get_value (void * user, gint row, gint column, GValue * value)
+{
+    switch (column)
+    {
+    case 0:
+        g_value_set_string (value, aud_playlist_get_title (row));
+        break;
+    case 1:
+        g_value_set_int (value, aud_playlist_entry_count (row));
+        break;
+    }
+}
+
+static gboolean get_selected (void * user, gint row)
+{
+    return (row == aud_playlist_get_active ());
+}
+
+static void set_selected (void * user, gint row, gboolean selected)
+{
+    if (selected)
+        aud_playlist_set_active (row);
+}
+
+static void select_all (void * user, gboolean selected)
+{
+}
+
+static void activate_row (void * user, gint row)
+{
+    aud_playlist_set_active (row);
+
+    if (aud_cfg->playlist_manager_close_on_activate)
+        hide_cb (playman_win);
+}
+
+static void shift_rows (void * user, gint row, gint before)
+{
+    if (before < row)
+        aud_playlist_reorder (row, before, 1);
+    else if (before - 1 > row)
+        aud_playlist_reorder (row, before - 1, 1);
+}
+
+static const AudguiListCallbacks callbacks = {
+ .get_value = get_value,
+ .get_selected = get_selected,
+ .set_selected = set_selected,
+ .select_all = select_all,
+ .activate_row = activate_row,
+ .right_click = NULL,
+ .shift_rows = shift_rows,
+ .data_type = NULL,
+ .get_data = NULL,
+ .receive_data = NULL};
+
+static gboolean position_changed = FALSE;
+
+static void update_hook (void * data, void * list)
+{
+    if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_STRUCTURE)
+    {
+        gint old_rows = audgui_list_row_count (list);
+        gint rows = aud_playlist_count ();
+
+        if (rows < old_rows)
+        {
+            audgui_list_delete_rows (list, rows, old_rows - rows);
+            old_rows = rows;
+        }
+
+        audgui_list_update_rows (list, 0, old_rows);
+        audgui_list_update_selection (list, 0, old_rows);
+
+        if (rows > old_rows)
+            audgui_list_insert_rows (list, old_rows, rows - old_rows);
+
+        audgui_list_set_focus (list, aud_playlist_get_active ());
+    }
+    
+    if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_STRUCTURE || position_changed)
+    {
+        audgui_list_set_highlight (list, aud_playlist_get_playing ());
+        position_changed = FALSE;
+    }
+}
+
+static void position_hook (void * data, void * list)
+{
+    if (aud_playlist_update_pending ())
+        position_changed = TRUE;
+    else
+        audgui_list_set_highlight (list, aud_playlist_get_playing ());
+}
 
 void
 audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 {
     GtkWidget *playman_vbox;
     GtkWidget * playman_pl_lv, * playman_pl_lv_sw;
-    GtkCellRenderer *playman_pl_lv_textrndr_name, *playman_pl_lv_textrndr_entriesnum;
-    GtkTreeViewColumn *playman_pl_lv_col_name, *playman_pl_lv_col_entriesnum;
     GtkWidget *playman_bbar_hbbox;
     GtkWidget * rename_button, * new_button, * delete_button;
     GtkWidget * hbox, * button;
@@ -183,30 +199,12 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     playman_vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add( GTK_CONTAINER(playman_win) , playman_vbox );
 
-    playman_pl_lv = gtk_tree_view_new_with_model (audgui_get_library_store ());
-    gtk_tree_view_set_reorderable ((GtkTreeView *) playman_pl_lv, TRUE);
-
-    playman_pl_lv_textrndr_entriesnum = gtk_cell_renderer_text_new(); /* uneditable */
-    playman_pl_lv_textrndr_name = gtk_cell_renderer_text_new(); /* can become editable */
-    g_object_set( G_OBJECT(playman_pl_lv_textrndr_entriesnum) , "weight-set" , TRUE , NULL );
-    g_object_set( G_OBJECT(playman_pl_lv_textrndr_name) , "weight-set" , TRUE , NULL );
-    g_signal_connect( G_OBJECT(playman_pl_lv_textrndr_name) , "edited" ,
-                      G_CALLBACK(playlist_manager_cb_lv_name_edited) , playman_pl_lv );
-    g_object_set_data( G_OBJECT(playman_pl_lv) , "rn" , playman_pl_lv_textrndr_name );
-
-    playman_pl_lv_col_name = gtk_tree_view_column_new_with_attributes
-     (_("Playlist"), playman_pl_lv_textrndr_name, "text",
-     AUDGUI_LIBRARY_STORE_TITLE, "weight", AUDGUI_LIBRARY_STORE_FONT_WEIGHT,
-     NULL);
-    gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(playman_pl_lv_col_name) , TRUE );
-    gtk_tree_view_append_column( GTK_TREE_VIEW(playman_pl_lv), playman_pl_lv_col_name );
-
-    playman_pl_lv_col_entriesnum = gtk_tree_view_column_new_with_attributes
-     (_("Entries"), playman_pl_lv_textrndr_entriesnum, "text",
-     AUDGUI_LIBRARY_STORE_ENTRY_COUNT, "weight",
-     AUDGUI_LIBRARY_STORE_FONT_WEIGHT, NULL);
-    gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(playman_pl_lv_col_entriesnum) , FALSE );
-    gtk_tree_view_append_column( GTK_TREE_VIEW(playman_pl_lv), playman_pl_lv_col_entriesnum );
+    playman_pl_lv = audgui_list_new (& callbacks, NULL, aud_playlist_count ());
+    audgui_list_add_column (playman_pl_lv, _("Title"), 0, G_TYPE_STRING, TRUE);
+    audgui_list_add_column (playman_pl_lv, _("Entries"), 1, G_TYPE_INT, FALSE);
+    audgui_list_set_highlight (playman_pl_lv, aud_playlist_get_playing ());
+    hook_associate ("playlist update", update_hook, playman_pl_lv);
+    hook_associate ("playlist position", position_hook, playman_pl_lv);
 
     playman_pl_lv_sw = gtk_scrolled_window_new( NULL , NULL );
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) playman_pl_lv_sw,
@@ -235,16 +233,14 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 
     gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_bbar_hbbox , FALSE , FALSE , 0 );
 
-    g_signal_connect ((GObject *) playman_pl_lv, "row-activated", (GCallback)
-     activate_cb, playman_win);
+#if 0
     g_signal_connect ((GObject *) rename_button, "clicked", (GCallback)
      rename_cb, playman_pl_lv);
+#endif
     g_signal_connect ((GObject *) new_button, "clicked", (GCallback) new_cb,
      playman_pl_lv);
     g_signal_connect ((GObject *) delete_button, "clicked", (GCallback)
      delete_cb, playman_pl_lv);
-
-    set_selected_row (playman_pl_lv, aud_playlist_get_active ());
 
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) playman_vbox, hbox, FALSE, FALSE, 0);

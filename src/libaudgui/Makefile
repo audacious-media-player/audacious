@@ -9,7 +9,6 @@ SRCS = confirm.c \
        infopopup.c \
        infowin.c \
        init.c \
-       library-store.c \
        list.c \
        ui_gtk.c \
        ui_fileopener.c \

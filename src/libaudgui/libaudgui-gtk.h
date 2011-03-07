@@ -34,17 +34,6 @@ void audgui_playlist_manager_update(void);
 void audgui_playlist_manager_ui_show(GtkWidget *mainwin);
 void audgui_playlist_manager_destroy(void);
 
-/* library-store.c */
-enum
-{
-    AUDGUI_LIBRARY_STORE_TITLE, /* G_TYPE_STRING */
-    AUDGUI_LIBRARY_STORE_FONT_WEIGHT, /* PANGO_TYPE_WEIGHT */
-    AUDGUI_LIBRARY_STORE_ENTRY_COUNT, /* G_TYPE_INT */
-    AUDGUI_LIBRARY_STORE_COLUMNS
-};
-
-GtkTreeModel * audgui_get_library_store (void);
-
 /* util.c */
 void audgui_hide_on_delete (GtkWidget * widget);
 void audgui_hide_on_escape (GtkWidget * widget);

@@ -56,5 +56,6 @@ void audgui_list_delete_rows (GtkWidget * list, gint at, gint rows);
 void audgui_list_update_selection (GtkWidget * list, gint at, gint rows);
 void audgui_list_set_highlight (GtkWidget * list, gint row);
 void audgui_list_set_focus (GtkWidget * list, gint row);
+gint audgui_list_row_at_point (GtkWidget * list, gint x, gint y);
 
 #endif

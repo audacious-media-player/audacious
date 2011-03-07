@@ -316,25 +316,9 @@ static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
 
 static gint calc_drop_row (ListModel * model, GtkWidget * widget, gint x, gint y)
 {
-    GtkTreePath * path = NULL;
-    gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
-     x, y, & x, & y);
-    gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, x, y, & path, NULL,
-     NULL, NULL);
-
-    if (! path)
-        return model->rows;
-
-    gint row = gtk_tree_path_get_indices (path)[0];
-    g_return_val_if_fail (row >= 0 && row < model->rows, -1);
-
-    GdkRectangle rect;
-    gtk_tree_view_get_background_area ((GtkTreeView *) widget, path, NULL,
-     & rect);
-    if (y > rect.y + rect.height / 2)
-        row ++;
-
-    gtk_tree_path_free (path);
+    gint row = audgui_list_row_at_point (widget, x, y);
+    if (row < 0)
+        row = model->rows;
     return row;
 }
 
@@ -744,4 +728,31 @@ void audgui_list_set_focus (GtkWidget * list, gint row)
     gtk_tree_view_scroll_to_cell ((GtkTreeView *) list, path, NULL, FALSE, 0, 0);
     gtk_tree_path_free (path);
     model->frozen = FALSE;
+}
+
+gint audgui_list_row_at_point (GtkWidget * list, gint x, gint y)
+{
+    ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *)
+     list);
+
+    GtkTreePath * path = NULL;
+    gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x,
+     y, & x, & y);
+    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, NULL,
+     NULL, NULL);
+
+    if (! path)
+        return -1;
+
+    gint row = gtk_tree_path_get_indices (path)[0];
+    g_return_val_if_fail (row >= 0 && row < model->rows, -1);
+
+    GdkRectangle rect;
+    gtk_tree_view_get_background_area ((GtkTreeView *) list, path, NULL,
+     & rect);
+    if (y > rect.y + rect.height / 2)
+        row ++;
+
+    gtk_tree_path_free (path);
+    return row;
 }
