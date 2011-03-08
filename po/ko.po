@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.4.6\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-02 23:28-0500\n"
+"POT-Creation-Date: 2011-03-08 11:03-0500\n"
 "PO-Revision-Date: 2008-02-14 22:00+0900\n"
 "Last-Translator: ChoSeongWoo <syn333@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -24,201 +24,189 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr " (유효하지 않은 UTF-8)"
 
-#: src/audacious/credits.c:31
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"An audio player for many platforms.\n"
-"Copyright (C) 2005-2011 Audacious Development Team"
-msgstr ""
-"<big><b>Audacious %s</b></big>\n"
-"많은 플랫폼으로 변환된 멀티미디어 재생기\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious 개발 팀\n"
-
-#: src/audacious/credits.c:36
+#: src/audacious/credits.c:35
 #, fuzzy
 msgid "Core developers:"
 msgstr "0.1.x 개발자들:"
 
-#: src/audacious/credits.c:50
+#: src/audacious/credits.c:49
 msgid "Graphics:"
 msgstr "그래픽:"
 
-#: src/audacious/credits.c:55
+#: src/audacious/credits.c:54
 msgid "Default skin:"
 msgstr "기본 스킨:"
 
-#: src/audacious/credits.c:61
+#: src/audacious/credits.c:60
 msgid "Plugin development:"
 msgstr "플러그인 개발:"
 
-#: src/audacious/credits.c:84
+#: src/audacious/credits.c:83
 msgid "Patch authors:"
 msgstr "패치 제작자들:"
 
-#: src/audacious/credits.c:127
+#: src/audacious/credits.c:126
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x 개발자들:"
 
-#: src/audacious/credits.c:149
+#: src/audacious/credits.c:148
 msgid "BMP Developers:"
 msgstr "BMP 개발자들:"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:180
 #, fuzzy
 msgid "Belarusian:"
 msgstr "불가리아어:"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:183
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
 msgstr "포르투갈어 (브라질):"
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:190
 msgid "Breton:"
 msgstr "브르타뉴어:"
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:193
 msgid "Bulgarian:"
 msgstr "불가리아어:"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:196
 msgid "Catalan:"
 msgstr "카탈로니아어:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:199
 #, fuzzy
 msgid "Chinese:"
 msgstr "줄"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:202
 msgid "Croatian:"
 msgstr "크로아티아어:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:205
 msgid "Czech:"
 msgstr "체코어:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:208
 msgid "Dutch:"
 msgstr "네덜란드어:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:212
 msgid "Estonian:"
 msgstr "에스토니아어:"
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:215
 msgid "Finnish:"
 msgstr "핀란드어:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:219
 msgid "French:"
 msgstr "프랑스어:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:224
 msgid "German:"
 msgstr "독일어:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:231
 msgid "Georgian:"
 msgstr "그루지야어:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:234
 msgid "Greek:"
 msgstr "그리스어:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:239
 msgid "Hindi:"
 msgstr "힌디어:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:242
 msgid "Hungarian:"
 msgstr "헝가리어:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:246
 msgid "Italian:"
 msgstr "이탈리아어:"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:250
 msgid "Japanese:"
 msgstr "일본어:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:253
 msgid "Korean:"
 msgstr "한국어:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:256
 #, fuzzy
 msgid "Latvian:"
 msgstr "크로아티아어:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:259
 msgid "Lithuanian:"
 msgstr "리투아니아어:"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:263
 msgid "Macedonian:"
 msgstr "마케도니아어:"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:266
 msgid "Polish:"
 msgstr "폴란드어:"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:271
 #, fuzzy
 msgid "Portuguese:"
 msgstr "포르투갈어 (브라질):"
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:274
 msgid "Romanian:"
 msgstr "루마니아어:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:278
 msgid "Russian:"
 msgstr "러시아어:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:282
 msgid "Serbian (Latin):"
 msgstr "세르비아어 (라틴):"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:285
 msgid "Serbian (Cyrillic):"
 msgstr "세르비아어 (키릴):"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:288
 msgid "Simplified Chinese:"
 msgstr "중국어 (간자체):"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:291
 msgid "Slovak:"
 msgstr "슬로바키아어:"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:294
 msgid "Spanish:"
 msgstr "스페인어:"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:301
 msgid "Swedish:"
 msgstr "스웨덴어:"
 
-#: src/audacious/credits.c:305
+#: src/audacious/credits.c:304
 msgid "Traditional Chinese:"
 msgstr "중국어 (번자체):"
 
-#: src/audacious/credits.c:310
+#: src/audacious/credits.c:309
 msgid "Turkish:"
 msgstr "터키어:"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:313
 msgid "Ukrainian:"
 msgstr "우크라이나어:"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:316
 msgid "Welsh:"
 msgstr "웨일스어:"
 
@@ -359,7 +347,6 @@ msgid "Network"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
-#: src/libaudgui/ui_playlist_manager.c:198
 msgid "Playlist"
 msgstr "연주 목록"
 
@@ -376,6 +363,7 @@ msgid "Album"
 msgstr "음반"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:239
+#: src/libaudgui/ui_playlist_manager.c:208
 msgid "Title"
 msgstr "제목"
 
@@ -823,17 +811,18 @@ msgstr ""
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/tuple.c:675
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr ""
+
+#: src/libaudcore/tuple.c:687
 #, fuzzy
 msgid "Stereo"
 msgstr "스테레오"
 
-#: src/libaudcore/tuple.c:676
-msgid "Surround"
-msgstr ""
-
-#: src/libaudcore/tuple.c:676
-msgid "Mono"
+#: src/libaudcore/tuple.c:689
+#, c-format
+msgid "%d channels"
 msgstr ""
 
 #: src/libaudgui/confirm.c:65
@@ -847,6 +836,11 @@ msgstr ""
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "이 경고를 다시 표시하지 않음"
+
+#: src/libaudgui/confirm.c:115
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "연주 목록 저장"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -1604,15 +1598,15 @@ msgstr ""
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:102 src/libaudgui/ui_credits.c:141
+#: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Audacious 소개"
 
-#: src/libaudgui/ui_about.c:142 src/libaudgui/ui_credits.c:184
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "공헌"
 
-#: src/libaudgui/ui_credits.c:188
+#: src/libaudgui/ui_credits.c:126
 msgid "Translators"
 msgstr "번역자들"
 
@@ -1665,19 +1659,19 @@ msgstr "구간 비움"
 msgid "Close on Jump"
 msgstr "이동하면 닫기"
 
-#: src/libaudgui/ui_playlist_manager.c:164
+#: src/libaudgui/ui_playlist_manager.c:185
 msgid "Playlist Manager"
 msgstr "연주 목록 관리자"
 
-#: src/libaudgui/ui_playlist_manager.c:205
+#: src/libaudgui/ui_playlist_manager.c:209
 msgid "Entries"
 msgstr "항목"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:227
 msgid "_Rename"
 msgstr "이름 바꾸기(_R)"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:251
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "선택해서 열면 창 닫기"
@@ -1750,6 +1744,17 @@ msgstr ""
 #, fuzzy
 msgid "Show Session Management options"
 msgstr "윈도우 관리자 꾸밈 보기"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "많은 플랫폼으로 변환된 멀티미디어 재생기\n"
+#~ "\n"
+#~ "Copyright (C) 2005-2007 Audacious 개발 팀\n"
 
 #~ msgid "Unable to create log file (%s)!\n"
 #~ msgstr "(%s) 로그 파일을 만들 수 없습니다!\n"
@@ -2018,9 +2023,6 @@ msgstr "윈도우 관리자 꾸밈 보기"
 #~ "<b><big>연주 목록을 저장할 수 없습니다.</big></b>\n"
 #~ "\n"
 #~ "'%s' 파일 형식을 알 수 없습니다.\n"
-
-#~ msgid "Save Playlist"
-#~ msgstr "연주 목록 저장"
 
 #~ msgid "Presets"
 #~ msgstr "프리셋"

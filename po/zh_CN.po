@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-02 23:28-0500\n"
+"POT-Creation-Date: 2011-03-08 11:03-0500\n"
 "PO-Revision-Date: 2008-04-05 21:45+0800\n"
 "Last-Translator: sylecn <sylecn@yahoo.com.cn>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -15,201 +15,189 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的 UTF-8 字符)"
 
-#: src/audacious/credits.c:31
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"An audio player for many platforms.\n"
-"Copyright (C) 2005-2011 Audacious Development Team"
-msgstr ""
-"<big><b>Audacious %s</b></big>\n"
-"一个多平台可更换皮肤的媒体播放器。\n"
-"\n"
-"Copyright (C) 2005-2008 Audacious 开发小组\n"
-
-#: src/audacious/credits.c:36
+#: src/audacious/credits.c:35
 #, fuzzy
 msgid "Core developers:"
 msgstr "0.1.x 开发者："
 
-#: src/audacious/credits.c:50
+#: src/audacious/credits.c:49
 msgid "Graphics:"
 msgstr "图像："
 
-#: src/audacious/credits.c:55
+#: src/audacious/credits.c:54
 msgid "Default skin:"
 msgstr "默认皮肤："
 
-#: src/audacious/credits.c:61
+#: src/audacious/credits.c:60
 msgid "Plugin development:"
 msgstr "插件开发："
 
-#: src/audacious/credits.c:84
+#: src/audacious/credits.c:83
 msgid "Patch authors:"
 msgstr "补丁作者："
 
-#: src/audacious/credits.c:127
+#: src/audacious/credits.c:126
 #, fuzzy
 msgid "1.x developers:"
 msgstr "0.1.x 开发者："
 
-#: src/audacious/credits.c:149
+#: src/audacious/credits.c:148
 msgid "BMP Developers:"
 msgstr "BMP 开发者："
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:180
 #, fuzzy
 msgid "Belarusian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:183
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙语："
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:190
 msgid "Breton:"
 msgstr "布列塔尼语："
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:193
 msgid "Bulgarian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:196
 msgid "Catalan:"
 msgstr "加泰罗尼亚语："
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:199
 #, fuzzy
 msgid "Chinese:"
 msgstr "简体中文"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:202
 msgid "Croatian:"
 msgstr "罗马尼亚语："
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:205
 msgid "Czech:"
 msgstr "捷克语："
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:208
 msgid "Dutch:"
 msgstr "荷兰语："
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:212
 msgid "Estonian:"
 msgstr "爱沙尼亚语："
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:215
 msgid "Finnish:"
 msgstr "芬兰语："
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:219
 msgid "French:"
 msgstr "法语："
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:224
 msgid "German:"
 msgstr "德语："
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:231
 msgid "Georgian:"
 msgstr "乔治亚语："
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:234
 msgid "Greek:"
 msgstr "希腊语："
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:239
 msgid "Hindi:"
 msgstr "北印度语:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:242
 msgid "Hungarian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:246
 msgid "Italian:"
 msgstr "意大利语："
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:250
 msgid "Japanese:"
 msgstr "日语："
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:253
 msgid "Korean:"
 msgstr "朝语："
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:256
 #, fuzzy
 msgid "Latvian:"
 msgstr "罗马尼亚语："
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:259
 msgid "Lithuanian:"
 msgstr "立陶宛语："
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:263
 msgid "Macedonian:"
 msgstr "马其顿语："
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:266
 msgid "Polish:"
 msgstr "波兰语："
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:271
 #, fuzzy
 msgid "Portuguese:"
 msgstr "巴西葡萄牙语："
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:274
 msgid "Romanian:"
 msgstr "罗马尼亚语："
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:278
 msgid "Russian:"
 msgstr "俄语："
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:282
 msgid "Serbian (Latin):"
 msgstr "塞尔维亚语(拉丁文)"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:285
 msgid "Serbian (Cyrillic):"
 msgstr "塞尔维亚语(斯拉夫文)"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:288
 msgid "Simplified Chinese:"
 msgstr "简体中文："
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:291
 msgid "Slovak:"
 msgstr "斯洛伐克语："
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:294
 msgid "Spanish:"
 msgstr "西班牙语："
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:301
 msgid "Swedish:"
 msgstr "瑞典语："
 
-#: src/audacious/credits.c:305
+#: src/audacious/credits.c:304
 msgid "Traditional Chinese:"
 msgstr "繁体中文："
 
-#: src/audacious/credits.c:310
+#: src/audacious/credits.c:309
 msgid "Turkish:"
 msgstr "土耳其语："
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:313
 msgid "Ukrainian:"
 msgstr "乌克兰语："
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:316
 msgid "Welsh:"
 msgstr "威尔斯语："
 
@@ -350,7 +338,6 @@ msgid "Network"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
-#: src/libaudgui/ui_playlist_manager.c:198
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -367,6 +354,7 @@ msgid "Album"
 msgstr "专辑"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:239
+#: src/libaudgui/ui_playlist_manager.c:208
 msgid "Title"
 msgstr "标题"
 
@@ -799,17 +787,18 @@ msgstr ""
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/tuple.c:675
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr ""
+
+#: src/libaudcore/tuple.c:687
 #, fuzzy
 msgid "Stereo"
 msgstr "立体声"
 
-#: src/libaudcore/tuple.c:676
-msgid "Surround"
-msgstr ""
-
-#: src/libaudcore/tuple.c:676
-msgid "Mono"
+#: src/libaudcore/tuple.c:689
+#, c-format
+msgid "%d channels"
 msgstr ""
 
 #: src/libaudgui/confirm.c:65
@@ -823,6 +812,11 @@ msgstr ""
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "以后不要显示这个警告"
+
+#: src/libaudgui/confirm.c:115
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "保存播放列表"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -1549,15 +1543,15 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:102 src/libaudgui/ui_credits.c:141
+#: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "关于Audacious"
 
-#: src/libaudgui/ui_about.c:142 src/libaudgui/ui_credits.c:184
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "致谢"
 
-#: src/libaudgui/ui_credits.c:188
+#: src/libaudgui/ui_credits.c:126
 msgid "Translators"
 msgstr "翻译者"
 
@@ -1610,19 +1604,19 @@ msgstr "清除 A-B"
 msgid "Close on Jump"
 msgstr "跳转后关闭对话框"
 
-#: src/libaudgui/ui_playlist_manager.c:164
+#: src/libaudgui/ui_playlist_manager.c:185
 msgid "Playlist Manager"
 msgstr "列表管理器"
 
-#: src/libaudgui/ui_playlist_manager.c:205
+#: src/libaudgui/ui_playlist_manager.c:209
 msgid "Entries"
 msgstr "条目"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:227
 msgid "_Rename"
 msgstr "重命名(_R)"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:251
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "打开后关闭对话框"
@@ -1693,6 +1687,17 @@ msgstr "会话管理选项"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "显示会话管理器选项"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "一个多平台可更换皮肤的媒体播放器。\n"
+#~ "\n"
+#~ "Copyright (C) 2005-2008 Audacious 开发小组\n"
 
 #~ msgid "Unable to create log file (%s)!\n"
 #~ msgstr "无法创建日志文件 (%s)！\n"
@@ -1996,9 +2001,6 @@ msgstr "显示会话管理器选项"
 #~ msgstr ""
 #~ "<b><big>无法保存播放列表！</big></b>\n"
 #~ "未知文件类型 %s\n"
-
-#~ msgid "Save Playlist"
-#~ msgstr "保存播放列表"
 
 #~ msgid "Presets"
 #~ msgstr "预设"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-02 23:28-0500\n"
+"POT-Creation-Date: 2011-03-08 11:03-0500\n"
 "PO-Revision-Date: 2008-04-15 04:17-0600\n"
 "Last-Translator: William Pitcock <nenolod+i18n@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
@@ -29,201 +29,189 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 annilys)"
 
-#: src/audacious/credits.c:31
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"An audio player for many platforms.\n"
-"Copyright (C) 2005-2011 Audacious Development Team"
-msgstr ""
-"<big><b>Audacious %s</b></big>\n"
-"Y amlgyfrwng chwarae am lot platfformau.\n"
-"\n"
-"Hawlfraint (C) 2005-2007 Audacious Development Team\n"
-
-#: src/audacious/credits.c:36
+#: src/audacious/credits.c:35
 #, fuzzy
 msgid "Core developers:"
 msgstr "Diolchiadau 0.1.x:"
 
-#: src/audacious/credits.c:50
+#: src/audacious/credits.c:49
 msgid "Graphics:"
 msgstr "Diolchiadau graphi:"
 
-#: src/audacious/credits.c:55
+#: src/audacious/credits.c:54
 msgid "Default skin:"
 msgstr "Croen rhagosodedig:"
 
-#: src/audacious/credits.c:61
+#: src/audacious/credits.c:60
 msgid "Plugin development:"
 msgstr "Diolchiadau ategynnau:"
 
-#: src/audacious/credits.c:84
+#: src/audacious/credits.c:83
 msgid "Patch authors:"
 msgstr "Diolchiadau patch:"
 
-#: src/audacious/credits.c:127
+#: src/audacious/credits.c:126
 #, fuzzy
 msgid "1.x developers:"
 msgstr "Diolchiadau 0.1.x:"
 
-#: src/audacious/credits.c:149
+#: src/audacious/credits.c:148
 msgid "BMP Developers:"
 msgstr "Diolchiadau BMP:"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:180
 #, fuzzy
 msgid "Belarusian:"
 msgstr "Bwlgareg:"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:183
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
 msgstr "Portiwgaleg Brasilaidd:"
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:190
 msgid "Breton:"
 msgstr "Bretwig:"
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:193
 msgid "Bulgarian:"
 msgstr "Bwlgareg:"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:196
 msgid "Catalan:"
 msgstr "Catalaneg:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:199
 #, fuzzy
 msgid "Chinese:"
 msgstr "Llinellau"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:202
 msgid "Croatian:"
 msgstr "Croataidd:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:205
 msgid "Czech:"
 msgstr "Tsiec:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:208
 msgid "Dutch:"
 msgstr "Isalmaeneg:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:212
 msgid "Estonian:"
 msgstr "Estonieg:"
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:215
 msgid "Finnish:"
 msgstr "Ffineg:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:219
 msgid "French:"
 msgstr "Ffrangeg:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:224
 msgid "German:"
 msgstr "Almaeneg:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:231
 msgid "Georgian:"
 msgstr "Georgieg:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:234
 msgid "Greek:"
 msgstr "Groeg:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:239
 msgid "Hindi:"
 msgstr "Hyndig:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:242
 msgid "Hungarian:"
 msgstr "Hwngareg:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:246
 msgid "Italian:"
 msgstr "Eidaleg:"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:250
 msgid "Japanese:"
 msgstr "Siapanëeg:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:253
 msgid "Korean:"
 msgstr "Corëeg:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:256
 #, fuzzy
 msgid "Latvian:"
 msgstr "Croataidd:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:259
 msgid "Lithuanian:"
 msgstr "Lithueneg:"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:263
 msgid "Macedonian:"
 msgstr "Macedonieg:"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:266
 msgid "Polish:"
 msgstr "Pwyleg:"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:271
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Portiwgaleg Brasilaidd:"
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:274
 msgid "Romanian:"
 msgstr "Romaneg:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:278
 msgid "Russian:"
 msgstr "Rwsieg:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:282
 msgid "Serbian (Latin):"
 msgstr "Serbeg (Lladin):"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:285
 msgid "Serbian (Cyrillic):"
 msgstr "Serbeg (Cwyrileg):"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:288
 msgid "Simplified Chinese:"
 msgstr "Tsieineaidd Seml:"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:291
 msgid "Slovak:"
 msgstr "Slofaceg:"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:294
 msgid "Spanish:"
 msgstr "Spaeneg:"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:301
 msgid "Swedish:"
 msgstr "Swedeg:"
 
-#: src/audacious/credits.c:305
+#: src/audacious/credits.c:304
 msgid "Traditional Chinese:"
 msgstr "Tsieineaidd Traddodiadol:"
 
-#: src/audacious/credits.c:310
+#: src/audacious/credits.c:309
 msgid "Turkish:"
 msgstr "Twrceg:"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:313
 msgid "Ukrainian:"
 msgstr "Wcraneg:"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:316
 msgid "Welsh:"
 msgstr "Cymraeg:"
 
@@ -364,7 +352,6 @@ msgid "Network"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
-#: src/libaudgui/ui_playlist_manager.c:198
 msgid "Playlist"
 msgstr "Chwarae"
 
@@ -381,6 +368,7 @@ msgid "Album"
 msgstr "Albwm"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:239
+#: src/libaudgui/ui_playlist_manager.c:208
 msgid "Title"
 msgstr "Teitl"
 
@@ -808,17 +796,18 @@ msgstr ""
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/tuple.c:675
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr ""
+
+#: src/libaudcore/tuple.c:687
 #, fuzzy
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:676
-msgid "Surround"
-msgstr ""
-
-#: src/libaudcore/tuple.c:676
-msgid "Mono"
+#: src/libaudcore/tuple.c:689
+#, c-format
+msgid "%d channels"
 msgstr ""
 
 #: src/libaudgui/confirm.c:65
@@ -832,6 +821,11 @@ msgstr ""
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Peidio â dangos y r rhybydd yma eto."
+
+#: src/libaudgui/confirm.c:115
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "Cadw'r Rhestr Chwarae"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -1587,15 +1581,15 @@ msgstr ""
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:102 src/libaudgui/ui_credits.c:141
+#: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Ynghylch Audacious"
 
-#: src/libaudgui/ui_about.c:142 src/libaudgui/ui_credits.c:184
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "Diolchiadau"
 
-#: src/libaudgui/ui_credits.c:188
+#: src/libaudgui/ui_credits.c:126
 msgid "Translators"
 msgstr "Cyfieithwyr"
 
@@ -1648,19 +1642,19 @@ msgstr "Clirio A-B"
 msgid "Close on Jump"
 msgstr "Closio am Naid"
 
-#: src/libaudgui/ui_playlist_manager.c:164
+#: src/libaudgui/ui_playlist_manager.c:185
 msgid "Playlist Manager"
 msgstr "Rheolwyr am y Rhestr Chwarae"
 
-#: src/libaudgui/ui_playlist_manager.c:205
+#: src/libaudgui/ui_playlist_manager.c:209
 msgid "Entries"
 msgstr "Llyfrifiadau"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:227
 msgid "_Rename"
 msgstr "_Cyfnewid"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:251
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Closio am Tocio"
@@ -1731,6 +1725,17 @@ msgstr "Dewis Sesiwn Goruchwyliaeth"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Dangos dewis sesiwn goruchwyliaeth"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "Y amlgyfrwng chwarae am lot platfformau.\n"
+#~ "\n"
+#~ "Hawlfraint (C) 2005-2007 Audacious Development Team\n"
 
 #~ msgid "Unable to create log file (%s)!\n"
 #~ msgstr "Methu creu'r ffeil gofnod (%s)!\n"
@@ -1934,9 +1939,6 @@ msgstr "Dangos dewis sesiwn goruchwyliaeth"
 #~ "<b><big>Methu cadw'r rhestr chwarae</big></b>\n"
 #~ "\n"
 #~ "Anhysbys ffeil trefniad ceisio am '%s'.\n"
-
-#~ msgid "Save Playlist"
-#~ msgstr "Cadw'r Rhestr Chwarae"
 
 #~ msgid "Presets"
 #~ msgstr "Rhagosodau"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-02 23:28-0500\n"
+"POT-Creation-Date: 2011-03-08 11:03-0500\n"
 "PO-Revision-Date: 2010-08-18 13:40+0100\n"
 "Last-Translator: StrassBoy <StrassBoy@gmail.com>\n"
 "Language-Team: \n"
@@ -25,197 +25,185 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr "  (format UTF-8 invalide)"
 
-#: src/audacious/credits.c:31
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"An audio player for many platforms.\n"
-"Copyright (C) 2005-2011 Audacious Development Team"
-msgstr ""
-"<big><b>Audacious %s</b></big>\n"
-"Un lecteur audio pour de nombreuses plates-formes.\n"
-"\n"
-"Droits d'utilisation : Équipe de Développement Audacious (2005-2010)"
-
-#: src/audacious/credits.c:36
+#: src/audacious/credits.c:35
 msgid "Core developers:"
 msgstr "Développeurs du noyau :"
 
-#: src/audacious/credits.c:50
+#: src/audacious/credits.c:49
 msgid "Graphics:"
 msgstr "Graphismes :"
 
-#: src/audacious/credits.c:55
+#: src/audacious/credits.c:54
 msgid "Default skin:"
 msgstr "Thème par défaut :"
 
-#: src/audacious/credits.c:61
+#: src/audacious/credits.c:60
 msgid "Plugin development:"
 msgstr "Développeurs des modules :"
 
-#: src/audacious/credits.c:84
+#: src/audacious/credits.c:83
 msgid "Patch authors:"
 msgstr "Auteurs des modifications/correctifs :"
 
-#: src/audacious/credits.c:127
+#: src/audacious/credits.c:126
 msgid "1.x developers:"
 msgstr "Développeurs de la branche 1.x :"
 
-#: src/audacious/credits.c:149
+#: src/audacious/credits.c:148
 msgid "BMP Developers:"
 msgstr "Développeurs de BMP :"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:180
 msgid "Belarusian:"
 msgstr "Biélorusse :"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:183
 msgid "Basque:"
 msgstr "Basque :"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
 msgstr "Brésilien portugais :"
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:190
 msgid "Breton:"
 msgstr "Breton :"
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:193
 msgid "Bulgarian:"
 msgstr "Bulgare :"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:196
 msgid "Catalan:"
 msgstr "Catalan :"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:199
 msgid "Chinese:"
 msgstr "Chinois :"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:202
 msgid "Croatian:"
 msgstr "Croate :"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:205
 msgid "Czech:"
 msgstr "Tchèque :"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:208
 msgid "Dutch:"
 msgstr "Néerlandais :"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:212
 msgid "Estonian:"
 msgstr "Estonien :"
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:215
 msgid "Finnish:"
 msgstr "Finlandais :"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:219
 msgid "French:"
 msgstr "Français :"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:224
 msgid "German:"
 msgstr "Allemand :"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:231
 msgid "Georgian:"
 msgstr "Géorgien :"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:234
 msgid "Greek:"
 msgstr "Grec :"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:239
 msgid "Hindi:"
 msgstr "Hindi :"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:242
 msgid "Hungarian:"
 msgstr "Hongrois :"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:246
 msgid "Italian:"
 msgstr "Italien :"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:250
 msgid "Japanese:"
 msgstr "Japonais :"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:253
 msgid "Korean:"
 msgstr "Koréenn :"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:256
 #, fuzzy
 msgid "Latvian:"
 msgstr "Croate :"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:259
 msgid "Lithuanian:"
 msgstr "Lituanien :"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:263
 msgid "Macedonian:"
 msgstr "Macédonien :"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:266
 msgid "Polish:"
 msgstr "Polonais :"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:271
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Portugais :"
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:274
 msgid "Romanian:"
 msgstr "Roumain :"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:278
 msgid "Russian:"
 msgstr "Russe :"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:282
 msgid "Serbian (Latin):"
 msgstr "Serbe (latin) :"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:285
 msgid "Serbian (Cyrillic):"
 msgstr "Serbe (cyrillique) :"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:288
 msgid "Simplified Chinese:"
 msgstr "Chinois simplifié :"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:291
 msgid "Slovak:"
 msgstr "Slovaque :"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:294
 msgid "Spanish:"
 msgstr "Espagnol :"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:301
 msgid "Swedish:"
 msgstr "Suédois :"
 
-#: src/audacious/credits.c:305
+#: src/audacious/credits.c:304
 msgid "Traditional Chinese:"
 msgstr "Chinois traditionnel :"
 
-#: src/audacious/credits.c:310
+#: src/audacious/credits.c:309
 msgid "Turkish:"
 msgstr "Turc :"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:313
 msgid "Ukrainian:"
 msgstr "Ukrainien :"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:316
 msgid "Welsh:"
 msgstr "Gallois :"
 
@@ -354,7 +342,6 @@ msgid "Network"
 msgstr "Réseau"
 
 #: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
-#: src/libaudgui/ui_playlist_manager.c:198
 msgid "Playlist"
 msgstr "Liste de lecture"
 
@@ -371,6 +358,7 @@ msgid "Album"
 msgstr "Album"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:239
+#: src/libaudgui/ui_playlist_manager.c:208
 msgid "Title"
 msgstr "Titre"
 
@@ -823,16 +811,17 @@ msgstr "Position non trouvée."
 msgid "No song playing."
 msgstr "Aucun titre en cours de lecture."
 
-#: src/libaudcore/tuple.c:675
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr ""
+
+#: src/libaudcore/tuple.c:687
 msgid "Stereo"
 msgstr ""
 
-#: src/libaudcore/tuple.c:676
-msgid "Surround"
-msgstr ""
-
-#: src/libaudcore/tuple.c:676
-msgid "Mono"
+#: src/libaudcore/tuple.c:689
+#, c-format
+msgid "%d channels"
 msgstr ""
 
 #: src/libaudgui/confirm.c:65
@@ -847,6 +836,11 @@ msgstr ""
 #: src/libaudgui/confirm.c:77
 msgid "_Don't show this message again"
 msgstr "_Ne plus afficher ce message"
+
+#: src/libaudgui/confirm.c:115
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "Liste de lecture"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -1571,15 +1565,15 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr "Aucune information disponible pour %s.\n"
 
-#: src/libaudgui/ui_about.c:102 src/libaudgui/ui_credits.c:141
+#: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "À propos d'Audacious"
 
-#: src/libaudgui/ui_about.c:142 src/libaudgui/ui_credits.c:184
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "Crédits"
 
-#: src/libaudgui/ui_credits.c:188
+#: src/libaudgui/ui_credits.c:126
 msgid "Translators"
 msgstr "Traducteurs"
 
@@ -1635,19 +1629,19 @@ msgstr ""
 "Fermer la fenêtre\n"
 "après la sélection"
 
-#: src/libaudgui/ui_playlist_manager.c:164
+#: src/libaudgui/ui_playlist_manager.c:185
 msgid "Playlist Manager"
 msgstr "Gestionnaire de listes de lecture"
 
-#: src/libaudgui/ui_playlist_manager.c:205
+#: src/libaudgui/ui_playlist_manager.c:209
 msgid "Entries"
 msgstr "Entrées"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:227
 msgid "_Rename"
 msgstr "_Renommer"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:251
 msgid "_Close dialog on activating playlist"
 msgstr "_Fermer la fenêtre après l'activation de la liste de lecture"
 
@@ -1719,6 +1713,17 @@ msgstr "Options du gestionnaire de sessions"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Afficher les options du gestionnaire de sessions"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "Un lecteur audio pour de nombreuses plates-formes.\n"
+#~ "\n"
+#~ "Droits d'utilisation : Équipe de Développement Audacious (2005-2010)"
 
 #~ msgid "Module loading not supported! Plugins will not be loaded.\n"
 #~ msgstr ""

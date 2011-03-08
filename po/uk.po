@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-02 23:28-0500\n"
+"POT-Creation-Date: 2011-03-08 11:03-0500\n"
 "PO-Revision-Date: 2005-12-17 11:01+0400\n"
 "Last-Translator: Mykola Lynnyk<pydefiner@gmail.com>\n"
 "Language-Team: Ukrainian <linux@linux.org.ua>\n"
@@ -21,209 +21,197 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr "  (недопустима послідовність Юнікод)"
 
-#: src/audacious/credits.c:31
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"An audio player for many platforms.\n"
-"Copyright (C) 2005-2011 Audacious Development Team"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"Мультимедійний програвач на основі  BMP та XMMS\n"
-"\n"
-"Copyright (C) 2005 Команда розробників Audacious\n"
-
-#: src/audacious/credits.c:36
+#: src/audacious/credits.c:35
 #, fuzzy
 msgid "Core developers:"
 msgstr "Разробники:"
 
-#: src/audacious/credits.c:50
+#: src/audacious/credits.c:49
 msgid "Graphics:"
 msgstr ""
 
-#: src/audacious/credits.c:55
+#: src/audacious/credits.c:54
 #, fuzzy
 msgid "Default skin:"
 msgstr "Основний (%s)"
 
-#: src/audacious/credits.c:61
+#: src/audacious/credits.c:60
 msgid "Plugin development:"
 msgstr ""
 
-#: src/audacious/credits.c:84
+#: src/audacious/credits.c:83
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/credits.c:127
+#: src/audacious/credits.c:126
 #, fuzzy
 msgid "1.x developers:"
 msgstr "Разробники:"
 
-#: src/audacious/credits.c:149
+#: src/audacious/credits.c:148
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "Разробники:"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:180
 #, fuzzy
 msgid "Belarusian:"
 msgstr "Угорський"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:183
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
 msgstr ""
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:190
 msgid "Breton:"
 msgstr ""
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:193
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Угорський"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:196
 #, fuzzy
 msgid "Catalan:"
 msgstr "Італійський:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:199
 #, fuzzy
 msgid "Chinese:"
 msgstr "Китайський:"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:202
 #, fuzzy
 msgid "Croatian:"
 msgstr "Знаходження:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:205
 msgid "Czech:"
 msgstr "Чеський:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:208
 msgid "Dutch:"
 msgstr "Голладський:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:212
 #, fuzzy
 msgid "Estonian:"
 msgstr "Румунський:"
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:215
 #, fuzzy
 msgid "Finnish:"
 msgstr "Іспанський:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:219
 msgid "French:"
 msgstr "Французький:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:224
 msgid "German:"
 msgstr "Німецький:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:231
 #, fuzzy
 msgid "Georgian:"
 msgstr "Німецький:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:234
 msgid "Greek:"
 msgstr "Грецький:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:239
 msgid "Hindi:"
 msgstr ""
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:242
 msgid "Hungarian:"
 msgstr "Угорський"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:246
 msgid "Italian:"
 msgstr "Італійський:"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:250
 msgid "Japanese:"
 msgstr "Японський:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:253
 msgid "Korean:"
 msgstr "Корейський:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:256
 #, fuzzy
 msgid "Latvian:"
 msgstr "Знаходження:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:259
 msgid "Lithuanian:"
 msgstr "Литовський:"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:263
 msgid "Macedonian:"
 msgstr "Македонський"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:266
 msgid "Polish:"
 msgstr "Польский:"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:271
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Порт:"
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:274
 msgid "Romanian:"
 msgstr "Румунський:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:278
 msgid "Russian:"
 msgstr "Російський:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:282
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:285
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:288
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:291
 msgid "Slovak:"
 msgstr "Словацький"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:294
 msgid "Spanish:"
 msgstr "Іспанський:"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:301
 msgid "Swedish:"
 msgstr "Шведський:"
 
-#: src/audacious/credits.c:305
+#: src/audacious/credits.c:304
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/credits.c:310
+#: src/audacious/credits.c:309
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:313
 msgid "Ukrainian:"
 msgstr "Український:"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:316
 msgid "Welsh:"
 msgstr "Валлійський:"
 
@@ -368,7 +356,6 @@ msgid "Network"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
-#: src/libaudgui/ui_playlist_manager.c:198
 msgid "Playlist"
 msgstr "Список програвання"
 
@@ -385,6 +372,7 @@ msgid "Album"
 msgstr "Альбом"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:239
+#: src/libaudgui/ui_playlist_manager.c:208
 msgid "Title"
 msgstr "Заголовок"
 
@@ -840,18 +828,19 @@ msgstr ""
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/tuple.c:675
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr "Моно"
+
+#: src/libaudcore/tuple.c:687
 #, fuzzy
 msgid "Stereo"
 msgstr "Стерео"
 
-#: src/libaudcore/tuple.c:676
-msgid "Surround"
-msgstr ""
-
-#: src/libaudcore/tuple.c:676
-msgid "Mono"
-msgstr "Моно"
+#: src/libaudcore/tuple.c:689
+#, fuzzy, c-format
+msgid "%d channels"
+msgstr "Канали:"
 
 #: src/libaudgui/confirm.c:65
 #, c-format
@@ -864,6 +853,11 @@ msgstr ""
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Більше не показувати це попередження"
+
+#: src/libaudgui/confirm.c:115
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "Зберегти список програвання"
 
 #: src/libaudgui/effects-menu.c:76
 #, fuzzy
@@ -1616,15 +1610,15 @@ msgstr "%d кБіт/с"
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:102 src/libaudgui/ui_credits.c:141
+#: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Про Audacious"
 
-#: src/libaudgui/ui_about.c:142 src/libaudgui/ui_credits.c:184
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "Автори"
 
-#: src/libaudgui/ui_credits.c:188
+#: src/libaudgui/ui_credits.c:126
 msgid "Translators"
 msgstr "Перекладачі"
 
@@ -1679,21 +1673,21 @@ msgstr "/Очистити чергу"
 msgid "Close on Jump"
 msgstr "Закрити вікно після відкриття"
 
-#: src/libaudgui/ui_playlist_manager.c:164
+#: src/libaudgui/ui_playlist_manager.c:185
 #, fuzzy
 msgid "Playlist Manager"
 msgstr "/Не просуватись у списку пісень"
 
-#: src/libaudgui/ui_playlist_manager.c:205
+#: src/libaudgui/ui_playlist_manager.c:209
 msgid "Entries"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:227
 #, fuzzy
 msgid "_Rename"
 msgstr "Ім'я файлу"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:251
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Закрити вікно після відкриття"
@@ -1764,6 +1758,17 @@ msgstr ""
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Beep Media Player %s</b></big>\n"
+#~ "Мультимедійний програвач на основі  BMP та XMMS\n"
+#~ "\n"
+#~ "Copyright (C) 2005 Команда розробників Audacious\n"
 
 #~ msgid "Unable to create log file (%s)!\n"
 #~ msgstr "Не можу створити файл журналу (%s)!\n"
@@ -1953,9 +1958,6 @@ msgstr ""
 #~ msgstr ""
 #~ "<b><big>Не можу зберегти список програвання.</big></b>\n"
 #~ "\n"
-
-#~ msgid "Save Playlist"
-#~ msgstr "Зберегти список програвання"
 
 #~ msgid "Presets"
 #~ msgstr "Попередні установки"
@@ -3731,10 +3733,6 @@ msgstr ""
 
 #~ msgid "8 bit"
 #~ msgstr "8 біт"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Канали:"
 
 #, fuzzy
 #~ msgid "Resampling"
