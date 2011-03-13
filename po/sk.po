@@ -1,19 +1,19 @@
 # translation of sk.po to Slovak
 # Slovak translation for Audacious
-# Copyright (C) 2007, 2009, 2010 Andrej Herceg <herceg.andrej@zoznam.sk>
+# Copyright (C) 2007, 2009, 2010, 2011 Andrej Herceg <herceg.andrej@zoznam.sk>
 # This file is distributed under the same license as the Audacious package.
 #
 #
-# Andrej Herceg <herceg.andrej@zoznam.sk>, 2007, 2009, 2010.
+# Andrej Herceg <herceg.andrej@zoznam.sk>, 2007, 2009, 2010, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious-2.4-alpha2\n"
+"Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 18:51-0400\n"
-"PO-Revision-Date: 2010-06-22 01:22+0200\n"
+"POT-Creation-Date: 2011-03-13 18:52-0400\n"
+"PO-Revision-Date: 2011-03-13 20:31+0100\n"
 "Last-Translator: Andrej Herceg <herceg.andrej@zoznam.sk>\n"
 "Language-Team: Slovak <Slovak <sk-i18n@lists.linux.sk>>\n"
-"Language: \n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +34,7 @@ msgstr "Grafika:"
 
 #: src/audacious/credits.c:54
 msgid "Default skin:"
-msgstr "Predvolený vzhľad:"
+msgstr "Štandardný vzhľad:"
 
 #: src/audacious/credits.c:60
 msgid "Plugin development:"
@@ -77,9 +77,8 @@ msgid "Catalan:"
 msgstr "Katalánčina:"
 
 #: src/audacious/credits.c:199
-#, fuzzy
 msgid "Chinese:"
-msgstr "Čínština"
+msgstr "Čínština:"
 
 #: src/audacious/credits.c:202
 msgid "Croatian:"
@@ -138,9 +137,8 @@ msgid "Korean:"
 msgstr "Kórejčina:"
 
 #: src/audacious/credits.c:256
-#, fuzzy
 msgid "Latvian:"
-msgstr "Chorvátčina:"
+msgstr "Lotyština:"
 
 #: src/audacious/credits.c:259
 msgid "Lithuanian:"
@@ -155,7 +153,6 @@ msgid "Polish:"
 msgstr "Poľština:"
 
 #: src/audacious/credits.c:271
-#, fuzzy
 msgid "Portuguese:"
 msgstr "Portugalčina:"
 
@@ -234,56 +231,55 @@ msgstr "Audacious"
 
 #: src/audacious/main.c:271
 msgid "Skip backwards in playlist"
-msgstr "Vrátiť sa na predchádzajúcu skladbu"
+msgstr "Preskočí na predchádzajúcu skladbu"
 
 #: src/audacious/main.c:272
 msgid "Start playing current playlist"
-msgstr "Začať prehrávať aktuálny zoznam skladieb"
+msgstr "Začne prehrávať aktuálny zoznam skladieb"
 
 #: src/audacious/main.c:273
 msgid "Pause current song"
-msgstr "Pozastaviť prehrávanú skladbu"
+msgstr "Pozastaví prehrávanú skladbu"
 
 #: src/audacious/main.c:274
 msgid "Stop current song"
-msgstr "Zastaviť prehrávanú skladbu"
+msgstr "Zastaví prehrávanú skladbu"
 
 #: src/audacious/main.c:275
 msgid "Pause if playing, play otherwise"
-msgstr "Pri prehrávaní pozastaviť, inak prehrať"
+msgstr "Pri prehrávaní pozastaví, inak začne prehrávať"
 
 #: src/audacious/main.c:276
 msgid "Skip forward in playlist"
-msgstr "Prejsť na nasledujúcu skladbu"
+msgstr "Preskočí na nasledujúcu skladbu"
 
 #: src/audacious/main.c:277
 msgid "Display Jump to File dialog"
-msgstr "Zobraziť okno \"Presun na súbor\""
+msgstr "Zobrazí okno \"Presun na súbor\""
 
 #: src/audacious/main.c:278
-#, fuzzy
 msgid "Add files to the playlist"
-msgstr "Pridať súbory do dočasného zoznamu skladieb"
+msgstr "Pridá súbory do zoznamu skladieb"
 
 #: src/audacious/main.c:279
 msgid "Add new files to a temporary playlist"
-msgstr "Pridať súbory do dočasného zoznamu skladieb"
+msgstr "Pridá súbory do dočasného zoznamu skladieb"
 
 #: src/audacious/main.c:280
 msgid "Display the main window"
-msgstr "Zobraziť hlavné okno"
+msgstr "Zobrazí hlavné okno"
 
 #: src/audacious/main.c:281
 msgid "Display all open Audacious windows"
-msgstr "Zobraziť všetky otvorené okná Audacious"
+msgstr "Zobrazí všetky otvorené okná Audacious"
 
 #: src/audacious/main.c:282
 msgid "Show version"
-msgstr "Zobraziť verziu"
+msgstr "Zobrazí verziu"
 
 #: src/audacious/main.c:283
 msgid "Print debugging messages"
-msgstr ""
+msgstr "Vypisuje ladiace hlásenia"
 
 #: src/audacious/main.c:284
 msgid "FILE..."
@@ -310,6 +306,10 @@ msgid ""
 "instance anyway, please delete the file %s and run Audacious again.  "
 "Audacious will now close."
 msgstr ""
+"Spúšťanie viacerých inštancií Audacious môže viesť k poškodeniu "
+"konfiguračných súborov. Ak Audacious ešte nie je spustený, alebo chcete aj "
+"tak spustiť ďalšiu inštanciu, prosím, vymažte súbor %s a spuste Audacious "
+"znova. Audacious sa teraz ukončí."
 
 #: src/audacious/main.c:549
 #, c-format
@@ -443,9 +443,8 @@ msgid "Polish"
 msgstr "Poľština"
 
 #: src/audacious/ui_preferences.c:125
-#, fuzzy
 msgid "Baltic"
-msgstr "Keltská"
+msgstr "Baltské jazyky"
 
 #: src/audacious/ui_preferences.c:126
 msgid "Universal"
@@ -602,9 +601,8 @@ msgstr ""
 "použité na konverziu metadát do UTF-8."
 
 #: src/audacious/ui_preferences.c:209
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "<b>Bitová hĺbka</b>"
+msgstr "<b>Správanie</b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Continue playback on startup"
@@ -612,17 +610,15 @@ msgstr "Po spustení pokračovať v prehrávaní"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Prejsť na nasledujúcu skladbu ak je aktuálna skladba vymazaná"
 
 #: src/audacious/ui_preferences.c:214
-#, fuzzy
 msgid "Clear the playlist when opening files"
-msgstr "Pri otvorení nových súborov vyprázdniť aktuálny zoznam skladieb"
+msgstr "Pri otvorení súborov vyprázdniť zoznam skladieb"
 
 #: src/audacious/ui_preferences.c:216
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "Pridať súbory do dočasného zoznamu skladieb"
+msgstr "Otvoriť súbory do dočasného zoznamu skladieb"
 
 #: src/audacious/ui_preferences.c:218
 msgid "<b>Metadata</b>"
@@ -687,7 +683,7 @@ msgstr "Zobraziť čísla skladieb"
 
 #: src/audacious/ui_preferences.c:1475
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
+msgstr "Zobrazovať úvodné nuly (02:00 namiesto 2:00)"
 
 #: src/audacious/ui_preferences.c:1497
 msgid "Show information about titlestring format"
@@ -764,27 +760,24 @@ msgid "Current output plugin:"
 msgstr "Aktuálny výstupný modul:"
 
 #: src/audacious/ui_preferences.c:1786
-#, fuzzy
 msgid "Transport"
-msgstr "Prekladatelia"
+msgstr "Prenos"
 
 #: src/audacious/ui_preferences.c:1786
 msgid "Input"
-msgstr ""
+msgstr "Vstup"
 
 #: src/audacious/ui_preferences.c:1787
-#, fuzzy
 msgid "Effect"
-msgstr "<b>Efekty</b>"
+msgstr "Efekt"
 
 #: src/audacious/ui_preferences.c:1787
-#, fuzzy
 msgid "Visualization"
-msgstr "<b>Vizualizácia</b>"
+msgstr "Vizualizácia"
 
 #: src/audacious/ui_preferences.c:1787
 msgid "General"
-msgstr ""
+msgstr "Všeobecné"
 
 #: src/audacious/ui_preferences.c:1827
 msgid "Audacious Preferences"
@@ -805,16 +798,16 @@ msgstr "Nehrá žiadna skladba."
 
 #: src/libaudcore/tuple.c:685
 msgid "Mono"
-msgstr ""
+msgstr "Mono"
 
 #: src/libaudcore/tuple.c:687
 msgid "Stereo"
-msgstr ""
+msgstr "Stereo"
 
 #: src/libaudcore/tuple.c:689
 #, c-format
 msgid "%d channels"
-msgstr ""
+msgstr "%d kanálov"
 
 #: src/libaudgui/confirm.c:65
 #, c-format
@@ -830,9 +823,8 @@ msgid "_Don't show this message again"
 msgstr "_Túto správu už nezobrazovať"
 
 #: src/libaudgui/confirm.c:115
-#, fuzzy
 msgid "Rename Playlist"
-msgstr "Zoznam skladieb"
+msgstr "Premenovať zoznam skladieb"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -844,44 +836,39 @@ msgstr "_Povoliť"
 
 #: src/libaudgui/equalizer.c:140
 msgid "31 Hz"
-msgstr ""
+msgstr "31 Hz"
 
 #: src/libaudgui/equalizer.c:140
 msgid "63 Hz"
-msgstr ""
+msgstr "63 Hz"
 
 #: src/libaudgui/equalizer.c:141
 msgid "125 Hz"
-msgstr ""
+msgstr "125 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "250 Hz"
-msgstr "60 Hz"
+msgstr "250 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "500 Hz"
-msgstr "600 Hz"
+msgstr "500 Hz"
 
 #: src/libaudgui/equalizer.c:141
 msgid "1 kHz"
 msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "2 kHz"
-msgstr "12 kHz"
+msgstr "2 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "4 kHz"
-msgstr "14 kHz"
+msgstr "4 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "8 kHz"
-msgstr "1 kHz"
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.c:142
 msgid "16 kHz"
@@ -1640,11 +1627,11 @@ msgstr "_Zatvoriť okno po aktivácii zoznamu skladieb"
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Open URL"
-msgstr ""
+msgstr "Otvoriť URL"
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
-msgstr ""
+msgstr "Pridať URL"
 
 #: src/libeggsmclient/eggdesktopfile.c:138
 msgid "File is not a valid .desktop file"
@@ -1705,192 +1692,3 @@ msgstr "Možnosti správy relácie"
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Show Session Management options"
 msgstr "Zobraziť možnosti správy relácie"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Prehrávač zvuku pre rôzne platformy.\n"
-#~ "Copyright (C) 2005-2010 vývojový tím Audacious"
-
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Nepodarilo sa vytvoriť súbor so záznamom (%s)!\n"
-
-#~ msgid "Print all errors and warnings to stdout"
-#~ msgstr "Všetky chyby a upozornenia posielať na štandardný výstup"
-
-#~ msgid "Used in macpacking"
-#~ msgstr "Pre interné použitie v OS X"
-
-#~ msgid "Sorry, threads aren't supported on your platform.\n"
-#~ msgstr "Prepáčte, ale vlákna nie sú na vašej platforme podporované.\n"
-
-#~ msgid "Module loading not supported! Plugins will not be loaded.\n"
-#~ msgstr ""
-#~ "Načítanie modulov nie je podporované. Zásuvné moduly nebudú načítané.\n"
-
-#~ msgid "Audacious - Unsupported Version Warning"
-#~ msgstr "Audacious - Upozornenie na nepodporovanú verziu"
-
-#~ msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-#~ msgstr "<big><b>Prehrávač Audacious2 ešte nie je dokončený!</b></big>"
-
-#~ msgid ""
-#~ "<b>Please don't file bugs at this point unless they represent major "
-#~ "problems.</b>"
-#~ msgstr "<b>Prosím, neoznamujte chyby ak nepredstavujú závažný problém.</b>"
-
-#~ msgid ""
-#~ "This is an <i>alpha</i> build of Audacious2. It is still fairly "
-#~ "incomplete and unpolished.\n"
-#~ "We suspect that most minor bugs reported during this time will be "
-#~ "resolved once more things\n"
-#~ "stablize. However, if there is a major bug, such as a crash on playing a "
-#~ "specific file, we\n"
-#~ "need to know about it.\n"
-#~ "\n"
-#~ "However, we ask you to be aware that dealing with trivial bugs is "
-#~ "distracting at this point,\n"
-#~ "and to please refrain from doing so. Thanks in advance!"
-#~ msgstr ""
-#~ "Toto je <i>alfa</i> verzia Audacious2 a ešte stále je dosť nekompletná a  "
-#~ "nedoladená.\n"
-#~ "Predpokladáme, že väčšina menších chýb nahlásených v tomto období bude "
-#~ "vyriešená,\n"
-#~ "keď sa veci viac stabilizujú. Ak ale ide o dôležitú chybu, ako je pád pri "
-#~ "prehrávaní\n"
-#~ " konkrétneho súboru, potrebujeme o nej vedieť.\n"
-#~ "\n"
-#~ "Žiadame vás, aby ste chápali, že zaoberanie sa jednoduchými vecami je v "
-#~ "tomto okamihu\n"
-#~ "rozptyľujúce a aby ste sa vyhli takémuto konaniu. Ďakujeme za pochopenie."
-
-#~ msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-#~ msgstr "<b>Blogovanie o chybách taktiež nepomôže.</b>"
-
-#~ msgid ""
-#~ "Likewise, we're developers. We don't read blogs on a regular basis. If "
-#~ "there is a major bug,\n"
-#~ "we ask you to bring it to our attention via our bugtracking instance at "
-#~ "http://jira.atheme.org/,\n"
-#~ "or via the forums that are on the website.\n"
-#~ "\n"
-#~ "This will help us find out more information about your concerns, which we "
-#~ "would likely\n"
-#~ "not know about otherwise."
-#~ msgstr ""
-#~ "Okrem toho sme vývojári a nečítame blogy pravidelne. Ak existuje závažná "
-#~ "chyba\n"
-#~ "žiadame vás, aby ste nás o nej informovali cez náš systém na sledovanie "
-#~ "chýb\n"
-#~ "na adrese http://jira.atheme.org/ alebo prostredníctvom fór na našej "
-#~ "webovej stránke.\n"
-#~ "\n"
-#~ "Toto nám pomôže zistiť viac informácií o vašich problémoch, o ktorých by "
-#~ "sme sa\n"
-#~ "pravdepodobne inak nedozvedeli."
-
-#~ msgid "Playback"
-#~ msgstr "Prehrávanie"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Prehrávanie</b>"
-
-#~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr "Po spustení začne Audacious hrať tam, kde pred tým skončil."
-
-#~ msgid "Don't advance in the playlist"
-#~ msgstr "Nepokračovať v prehrávaní podľa zoznamu skladieb"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr "Keď skončí prehrávanie skladby, nepokračovať automaticky ďalšou."
-
-#~ msgid "Enabled"
-#~ msgstr "Povolené"
-
-#~ msgid "Description"
-#~ msgstr "Popis"
-
-#~ msgid "Output Plugin Preferences"
-#~ msgstr "Nastavenia výstupného modulu"
-
-#~ msgid "Output Plugin Information"
-#~ msgstr "Informácie o výstupnom module"
-
-#~ msgid "_Decoder list:"
-#~ msgstr "Zoznam _dekódovacích modulov:"
-
-#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Dekodéry</b></span>"
-
-#~ msgid "_General plugin list:"
-#~ msgstr "_Zoznam všeobecných modulov:"
-
-#~ msgid "<span size=\"medium\"><b>General</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Všeobecné</b></span>"
-
-#~ msgid "_Visualization plugin list:"
-#~ msgstr "_Zoznam vizualizačných modulov:"
-
-#~ msgid "<span size=\"small\">General</span>"
-#~ msgstr "<span size=\"small\">Všeobecné</span>"
-
-#~ msgid "<span size=\"small\">Location</span>"
-#~ msgstr "<span size=\"small\">Umiestnenie</span>"
-
-#~ msgid "<span size=\"small\">Raw Metadata</span>"
-#~ msgstr "<span size=\"small\">Nespracované metadáta</span>"
-
-#~ msgid "Key"
-#~ msgstr "Kľúč"
-
-#~ msgid "Value"
-#~ msgstr "Hodnota"
-
-#~ msgid "170 Hz"
-#~ msgstr "170 Hz"
-
-#~ msgid "310 Hz"
-#~ msgstr "310 Hz"
-
-#~ msgid "3 kHz"
-#~ msgstr "3 kHz"
-
-#~ msgid "6 kHz"
-#~ msgstr "6 kHz"
-
-#~ msgid "Interface to use (use -i list to view available interfaces)"
-#~ msgstr ""
-#~ "Rozhranie, ktoré použiť (zoznam dostupných rozhraní môžete vypísať "
-#~ "pomocou \"-i list\")"
-
-#~ msgid ""
-#~ "Available interfaces:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Dostupné rozhrania:\n"
-#~ "\n"
-
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "Predvoľby dostupných modulov:\n"
-
-#~ msgid "Headless Interface"
-#~ msgstr "Rozhranie serverového režimu"
-
-#~ msgid "Effect plugins (for 16-bit output only):"
-#~ msgstr "Moduly s efektmi (len pre 16 bitový výstup):"
-
-#~ msgid "Add/Open URL Dialog"
-#~ msgstr "Pridať/otvoriť URL"
-
-#~ msgid "Enter location to play:"
-#~ msgstr "Zadajte adresu, z ktorej sa má prehrávať:"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Nevyprázdniť zoznam skladieb"
