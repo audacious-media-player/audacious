@@ -113,7 +113,6 @@ util_get_localdir(void)
 gchar * construct_uri (const gchar * string, const gchar * playlist_name)
 {
     gchar *filename = g_strdup(string);
-    gchar *tmp, *path;
     gchar *uri = NULL;
 
     /* try to translate dos path */
@@ -125,28 +124,20 @@ gchar * construct_uri (const gchar * string, const gchar * playlist_name)
         uri = g_filename_to_uri(filename, NULL, NULL);
         if(!uri)
             uri = g_strdup(filename);
-        g_free(filename);
     }
-    // case 2: filename is not raw full path nor uri, playlist path is full path
-    // make full path by replacing last part of playlist path with filename. (using g_build_filename)
-    else if (playlist_name[0] == '/' || strstr(playlist_name, "://")) {
-        path = g_filename_from_uri(playlist_name, NULL, NULL);
-        if (!path)
-            path = g_strdup(playlist_name);
-        tmp = strrchr(path, '/'); *tmp = '\0';
-        tmp = g_build_filename(path, filename, NULL);
-        g_free(path); g_free(filename);
-        uri = g_filename_to_uri(tmp, NULL, NULL);
-        g_free(tmp);
-    }
-    // case 3: filename is not raw full path nor uri, playlist path is not full path
-    // just abort.
-    else {
-        g_free(filename);
-        uri = NULL;
+    // case 2: filename is not raw full path nor uri
+    // make full path by replacing last part of playlist path with filename.
+    else
+    {
+        const gchar * fslash = strrchr (filename, '/');
+        const gchar * pslash = strrchr (playlist_name, '/');
+
+        if (pslash)
+            uri = g_strdup_printf ("%.*s/%s", (gint) (pslash - playlist_name),
+             playlist_name, fslash ? fslash + 1 : filename);
     }
 
-    AUDDBG("uri=%s\n", uri);
+    g_free (filename);
     return uri;
 }
 
