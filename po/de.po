@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
-"PO-Revision-Date: 2010-08-04 11:44+0100\n"
+"POT-Creation-Date: 2011-03-13 17:05-0400\n"
+"PO-Revision-Date: 2011-03-10 14:43+0100\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: german <psic4t@netbands.de>\n"
 "Language: \n"
@@ -131,13 +131,12 @@ msgid "Korean:"
 msgstr "Koreanisch:"
 
 #: src/audacious/credits.c:256
-#, fuzzy
 msgid "Latvian:"
-msgstr "Kroatisch:"
+msgstr "Lettisch:"
 
 #: src/audacious/credits.c:259
 msgid "Lithuanian:"
-msgstr "Lettisch:"
+msgstr "Litauisch:"
 
 #: src/audacious/credits.c:263
 msgid "Macedonian:"
@@ -148,7 +147,6 @@ msgid "Polish:"
 msgstr "Polnisch:"
 
 #: src/audacious/credits.c:271
-#, fuzzy
 msgid "Portuguese:"
 msgstr "Portugiesisch:"
 
@@ -266,7 +264,7 @@ msgstr "Dateien zur Wiedergabeliste hinzufügen"
 #  -e, --enqueue switch
 #: src/audacious/main.c:279
 msgid "Add new files to a temporary playlist"
-msgstr "Dateien zur Wiedergabeliste hinzufügen"
+msgstr "Dateien zu temporärer Wiedergabeliste hinzufügen"
 
 #  -m, --show-main-window switch
 #  -m, --show-main-window switch
@@ -284,7 +282,7 @@ msgstr "Zeige Version"
 
 #: src/audacious/main.c:283
 msgid "Print debugging messages"
-msgstr ""
+msgstr "Debug-Meldungen anzeigen"
 
 #: src/audacious/main.c:284
 msgid "FILE..."
@@ -311,6 +309,11 @@ msgid ""
 "instance anyway, please delete the file %s and run Audacious again.  "
 "Audacious will now close."
 msgstr ""
+"Das Ausführen mehrerer Audacious Instanzen kann beschädigte "
+"Konfigurationsdateien verursachen. Falls Audacious noch nicht gestartet ist "
+"oder Sie trotzdem eine zusätzliche Instanz ausführen möchten, löschen Sie "
+"bitte die Datei %s und starten Sie Audacious neu.  Audacious wird jetzt "
+"beendet."
 
 #: src/audacious/main.c:549
 #, c-format
@@ -604,9 +607,8 @@ msgstr ""
 "noch einmal probiert, von diesen Zeichensätzen nach UTF-8 zu dekodieren."
 
 #: src/audacious/ui_preferences.c:209
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "<b>Abtastfrequenz</b>"
+msgstr "<b>Verhalten</b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Continue playback on startup"
@@ -614,18 +616,16 @@ msgstr "Wiedergabe beim Starten fortführen"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Fortschreiten falls aktueller Titel gelöscht wird"
 
 #: src/audacious/ui_preferences.c:214
-#, fuzzy
 msgid "Clear the playlist when opening files"
 msgstr "Wiedergabeliste beim Öffnen neuer Dateien leeren"
 
 #  -e, --enqueue switch
 #: src/audacious/ui_preferences.c:216
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "Dateien zur Wiedergabeliste hinzufügen"
+msgstr "Dateien in temporärer Wiedergabeliste öffnen"
 
 #: src/audacious/ui_preferences.c:218
 msgid "<b>Metadata</b>"
@@ -650,8 +650,8 @@ msgid ""
 "using commas."
 msgstr ""
 "Wenn Audacious das Titelbild sucht, sucht es nach bestimmten Worten im "
-"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch "
-"Beistriche getrennt."
+"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch Kommas "
+"getrennt."
 
 #: src/audacious/ui_preferences.c:842
 msgid "Exclude:"
@@ -691,7 +691,7 @@ msgstr "Zeige Titelnummern"
 
 #: src/audacious/ui_preferences.c:1475
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
+msgstr "Führende Nullen anzeigen (02:00 anstatt 2:00)"
 
 #: src/audacious/ui_preferences.c:1497
 msgid "Show information about titlestring format"
@@ -769,18 +769,16 @@ msgid "Current output plugin:"
 msgstr "Aktives Ausgabe-Plugin:"
 
 #: src/audacious/ui_preferences.c:1786
-#, fuzzy
 msgid "Transport"
-msgstr "Übersetzer"
+msgstr "Transport"
 
 #: src/audacious/ui_preferences.c:1786
 msgid "Input"
-msgstr ""
+msgstr "Eingabe"
 
 #: src/audacious/ui_preferences.c:1787
-#, fuzzy
 msgid "Effect"
-msgstr "<b>Effekte</b>"
+msgstr "Effekte"
 
 #: src/audacious/ui_preferences.c:1787
 msgid "Visualization"
@@ -788,7 +786,7 @@ msgstr "Visualisierung"
 
 #: src/audacious/ui_preferences.c:1787
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: src/audacious/ui_preferences.c:1827
 msgid "Audacious Preferences"
@@ -809,17 +807,16 @@ msgstr "Kein Titel wird wiedergegeben."
 
 #: src/libaudcore/tuple.c:685
 msgid "Mono"
-msgstr ""
+msgstr "Mono"
 
 #: src/libaudcore/tuple.c:687
-#, fuzzy
 msgid "Stereo"
-msgstr "stereo"
+msgstr "Stereo"
 
 #: src/libaudcore/tuple.c:689
 #, c-format
 msgid "%d channels"
-msgstr ""
+msgstr "%d Kanäle"
 
 #: src/libaudgui/confirm.c:65
 #, c-format
@@ -837,9 +834,8 @@ msgid "_Don't show this message again"
 msgstr "Diese Warnung nicht mehr anzeigen"
 
 #: src/libaudgui/confirm.c:115
-#, fuzzy
 msgid "Rename Playlist"
-msgstr "Wiedergabeliste speichern"
+msgstr "Wiedergabeliste umbenennen"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -894,9 +890,8 @@ msgid "Equalizer"
 msgstr "Equalizer"
 
 #: src/libaudgui/equalizer.c:163
-#, fuzzy
 msgid "Preamp"
-msgstr "Vorverstärkung:"
+msgstr "Vorverstärkung"
 
 #: src/libaudgui/infopopup.c:249
 msgid "Track Number"
@@ -904,7 +899,7 @@ msgstr "Titelnummer"
 
 #: src/libaudgui/infopopup.c:251
 msgid "Track Length"
-msgstr "Titellänge:"
+msgstr "Titellänge"
 
 #: src/libaudgui/infowin.c:74
 msgid "Blues"
@@ -1517,11 +1512,11 @@ msgstr "Titel-Information"
 
 #: src/libaudgui/infowin.c:352
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Format</span>"
+msgstr "<span size=\"small\">Format:</span>"
 
 #: src/libaudgui/infowin.c:356
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Qualität</span>"
+msgstr "<span size=\"small\">Qualität:</span>"
 
 #: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Bitrate:</span>"
@@ -1563,7 +1558,7 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:581
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "Keine Information verfügbar für %s.\n"
 
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
