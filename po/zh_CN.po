@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-08 11:03-0500\n"
+"POT-Creation-Date: 2011-03-13 17:04-0400\n"
 "PO-Revision-Date: 2008-04-05 21:45+0800\n"
 "Last-Translator: sylecn <sylecn@yahoo.com.cn>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -306,7 +306,7 @@ msgid ""
 "Audacious will now close."
 msgstr ""
 
-#: src/audacious/main.c:548
+#: src/audacious/main.c:549
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s： 无法使用显示器设备，正在退出。\n"

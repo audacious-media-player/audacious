@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-08 11:03-0500\n"
+"POT-Creation-Date: 2011-03-13 17:04-0400\n"
 "PO-Revision-Date: 2007-04-29 22:25+0200\n"
 "Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
@@ -315,7 +315,7 @@ msgid ""
 "Audacious will now close."
 msgstr ""
 
-#: src/audacious/main.c:548
+#: src/audacious/main.c:549
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Не можам да го отворам приказот, напуштам.\n"

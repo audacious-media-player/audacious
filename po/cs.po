@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 968ceb9a5ad6\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-08 11:03-0500\n"
+"POT-Creation-Date: 2011-03-13 17:04-0400\n"
 "PO-Revision-Date: 2011-03-01 21:09+0100\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
@@ -310,7 +310,7 @@ msgstr ""
 "instanci, prosím, smažte soubor %s a spusťte Audacious znovu. Audacious bude "
 "nyní ukončen."
 
-#: src/audacious/main.c:548
+#: src/audacious/main.c:549
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Nepodařilo se otevřít displej, končím.\n"

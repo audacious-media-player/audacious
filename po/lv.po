@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious2_25062009\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-08 11:03-0500\n"
+"POT-Creation-Date: 2011-03-13 17:04-0400\n"
 "PO-Revision-Date: 2011-03-03 01:48+0200\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -310,7 +310,7 @@ msgstr ""
 "palaist vēl vienu instanci, lūdzu, izdzēsiet failu %s un palaidiet Audacious "
 "vēlreiz. Audacious tagad aizvērsies."
 
-#: src/audacious/main.c:548
+#: src/audacious/main.c:549
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: neizdevās atvērt displeju, iziet.\n"

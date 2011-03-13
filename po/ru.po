@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-08 11:03-0500\n"
+"POT-Creation-Date: 2011-03-13 17:04-0400\n"
 "PO-Revision-Date: 2010-08-22 22:15+0400\n"
 "Last-Translator: Sergey V. Mironov <sergo@bk.ru>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -319,7 +319,7 @@ msgid ""
 "Audacious will now close."
 msgstr ""
 
-#: src/audacious/main.c:548
+#: src/audacious/main.c:549
 #, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: Невозможно открыть экран, выход.\n"
