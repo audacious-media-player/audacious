@@ -168,7 +168,7 @@ static void probe_by_mime (ProbeState * state)
 static void probe_by_content (ProbeState * state)
 {
     AUDDBG ("Probing by content.\n");
-    plugin_for_each (PLUGIN_TYPE_INPUT, (PluginForEachFunc) probe_func, state);
+    plugin_for_enabled (PLUGIN_TYPE_INPUT, (PluginForEachFunc) probe_func, state);
 }
 
 PluginHandle * file_find_decoder (const gchar * filename, gboolean fast)
