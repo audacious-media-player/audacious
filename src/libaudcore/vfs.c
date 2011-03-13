@@ -404,13 +404,16 @@ gint vfs_ftruncate (VFSFile * file, gint64 length)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the size of the file in bytes. Otherwise, -1.
  */
-gint64
-vfs_fsize(VFSFile * file)
+gint64 vfs_fsize (VFSFile * file)
 {
-    if (file == NULL)
-        return -1;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    return file->base->vfs_fsize_impl(file);
+    gint64 size = file->base->vfs_fsize_impl (file);
+
+    if (verbose)
+        logger ("VFS: <%p> size = %"PRId64"\n", file, size);
+
+    return size;
 }
 
 /**
