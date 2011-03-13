@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.4.0\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
+"POT-Creation-Date: 2011-03-13 18:51-0400\n"
 "PO-Revision-Date: 2007-08-26 03:55+0300\n"
 "Last-Translator: Cristi Măgherușan <majeru@atheme.org>\n"
 "Language-Team: Romanian\n"
@@ -802,7 +802,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Preferințe Audacious"
 
-#: src/audacious/util.c:170
+#: src/audacious/util.c:161
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nu s-a putut crea directorul (%s): %s\n"

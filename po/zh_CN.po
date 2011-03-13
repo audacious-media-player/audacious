@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
+"POT-Creation-Date: 2011-03-13 18:51-0400\n"
 "PO-Revision-Date: 2008-04-05 21:45+0800\n"
 "Last-Translator: sylecn <sylecn@yahoo.com.cn>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -774,7 +774,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Audacious 首选项"
 
-#: src/audacious/util.c:170
+#: src/audacious/util.c:161
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "新建目录 %s 失败，错误：%s\n"

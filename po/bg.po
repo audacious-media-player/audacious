@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
+"POT-Creation-Date: 2011-03-13 18:51-0400\n"
 "PO-Revision-Date: 2007-01-13 12:01+0200\n"
 "Last-Translator: Andrew Ivanov <aa.ivanov@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -804,7 +804,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Настройки на Audacious"
 
-#: src/audacious/util.c:170
+#: src/audacious/util.c:161
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Не може да бъде създадена директория (%s): %s"

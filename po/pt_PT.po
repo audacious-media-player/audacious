@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_PT\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
+"POT-Creation-Date: 2011-03-13 18:51-0400\n"
 "PO-Revision-Date: 2010-02-14 01:34+0000\n"
 "Last-Translator: Luís Picciochi <Pitxyoki@gmail.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -788,7 +788,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Preferências do Audacious"
 
-#: src/audacious/util.c:170
+#: src/audacious/util.c:161
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Não foi possível criar directoria (%s): %s\n"

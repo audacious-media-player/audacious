@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
+"POT-Creation-Date: 2011-03-13 18:51-0400\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -819,7 +819,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "BMP की वरीयतायें"
 
-#: src/audacious/util.c:170
+#: src/audacious/util.c:161
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"

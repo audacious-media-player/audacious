@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.6\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 17:04-0400\n"
+"POT-Creation-Date: 2011-03-13 18:51-0400\n"
 "PO-Revision-Date: 2007-01-31 16:16+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: Brezhoneg <LL@li.org>\n"
@@ -794,7 +794,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Dibaboù Audacious"
 
-#: src/audacious/util.c:170
+#: src/audacious/util.c:161
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "N'hell ket bet krouet ar renkell (%s) : %s\n"
