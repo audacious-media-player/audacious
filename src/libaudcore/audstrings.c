@@ -503,6 +503,25 @@ gchar * uri_to_display (const gchar * uri)
     return str_to_utf8 (buf);
 }
 
+gchar * uri_get_extension (const gchar * uri)
+{
+    const gchar * slash = strrchr (uri, '/');
+    if (! slash)
+        return NULL;
+    
+    gchar * lower = g_ascii_strdown (slash + 1, -1);
+
+    gchar * qmark = strchr (lower, '?');
+    if (qmark)
+        * qmark = 0;
+
+    gchar * dot = strrchr (lower, '.');
+    gchar * ext = dot ? g_strdup (dot + 1) : NULL;
+    
+    g_free (lower);
+    return ext;
+}
+
 void string_cut_extension(gchar *string)
 {
     gchar *period = strrchr(string, '.');

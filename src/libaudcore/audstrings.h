@@ -65,6 +65,8 @@ gchar * filename_to_uri (const gchar * filename);
 gchar * uri_to_filename (const gchar * uri);
 gchar * uri_to_display (const gchar * uri);
 
+gchar * uri_get_extension (const gchar * uri);
+
 void string_cut_extension(gchar *string);
 gint string_compare (const gchar * a, const gchar * b);
 gint string_compare_encoded (const gchar * a, const gchar * b);
