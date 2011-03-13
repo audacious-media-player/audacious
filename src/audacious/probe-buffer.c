@@ -59,7 +59,8 @@ static void increase_buffer (ProbeBuffer * p, gint64 size)
     }
 
     if (p->filled < size)
-        p->filled += vfs_fread (p->buffer + p->at, 1, size - p->filled, p->file);
+        p->filled += vfs_fread (p->buffer + p->filled, 1, size - p->filled,
+         p->file);
 }
 
 static gint64 probe_buffer_fread (void * buffer, gint64 size, gint64 count,
