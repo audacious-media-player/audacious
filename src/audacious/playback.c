@@ -372,8 +372,8 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
     {
         gchar * error = g_strdup_printf (_("No decoder found for %s."),
          current_filename);
-        interface_show_error_message (error);
-        g_free (error);
+        /* The interface may not be up yet at this point. --jlindgren */
+        event_queue_with_data_free ("interface show error", error);
         return FALSE;
     }
 
