@@ -17,6 +17,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <inttypes.h>
+
 #include "vfs.h"
 #include "audstrings.h"
 #include <stdio.h>
@@ -107,6 +109,40 @@ void vfs_prepare_filename (const gchar * path)
     vfs_prepare (scheme);
 }
 
+static gboolean verbose = FALSE;
+
+void vfs_set_verbose (gboolean set)
+{
+    verbose = set;
+}
+
+static void logger (const gchar * format, ...)
+{
+    static gchar last[256] = "";
+    static gint repeated = 0;
+
+    gchar buf[256];
+
+    va_list args;
+    va_start (args, format);
+    vsnprintf (buf, sizeof buf, format, args);
+    va_end (args);
+
+    if (! strcmp (buf, last))
+        repeated ++;
+    else
+    {
+        if (repeated)
+        {
+            printf ("VFS: (last message repeated %d times)\n", repeated);
+            repeated = 0;
+        }
+        
+        fputs (buf, stdout);
+        strcpy (last, buf);
+    }
+}
+
 /**
  * Opens a stream from a VFS transport using one of the registered
  * #VFSConstructor handlers.
@@ -119,6 +155,7 @@ VFSFile *
 vfs_fopen(const gchar * path,
           const gchar * mode)
 {
+    g_return_val_if_fail (path && mode, NULL);
     g_return_val_if_fail (lookup_func, NULL);
 
     VFSFile *file;
@@ -139,12 +176,16 @@ vfs_fopen(const gchar * path,
 
     file = vtable->vfs_fopen_impl(path, mode);
 
+    if (verbose)
+        logger ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
+
     if (file == NULL)
         return NULL;
 
     file->uri = g_strdup(path);
     file->base = vtable;
     file->ref = 1;
+    file->sig = VFS_SIG;
 
     return file;
 }
@@ -158,10 +199,12 @@ vfs_fopen(const gchar * path,
 gint
 vfs_fclose(VFSFile * file)
 {
-    gint ret = 0;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (file == NULL)
-        return -1;
+    if (verbose)
+        printf ("VFS: <%p> close\n", file);
+
+    gint ret = 0;
 
     if (--file->ref > 0)
         return -1;
@@ -170,7 +213,9 @@ vfs_fclose(VFSFile * file)
         ret = -1;
 
     g_free(file->uri);
-    g_free(file);
+
+    memset (file, 0, sizeof (VFSFile));
+    g_free (file);
 
     return ret;
 }
@@ -186,10 +231,15 @@ vfs_fclose(VFSFile * file)
  */
 gint64 vfs_fread (void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
 {
-    if (file == NULL)
-        return 0;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
 
-    return file->base->vfs_fread_impl(ptr, size, nmemb, file);
+    gint64 readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
+    
+    if (verbose)
+        logger ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
+         "%"PRId64"\n", file, nmemb, size, readed);
+
+    return readed;
 }
 
 /**
@@ -203,23 +253,30 @@ gint64 vfs_fread (void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
  */
 gint64 vfs_fwrite (const void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
 {
-    if (file == NULL)
-        return 0;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
 
-    return file->base->vfs_fwrite_impl(ptr, size, nmemb, file);
+    gint64 written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
+
+    if (verbose)
+        logger ("VFS: <%p> write %"PRId64" elements of size %"PRId64" = "
+         "%"PRId64"\n", file, nmemb, size, written);
+
+    return written;
 }
 
 /**
  * Reads a character from a VFS stream.
  *
  * @param file #VFSFile object that represents the VFS stream.
- * @return On success, a character. Otherwise, -1.
+ * @return On success, a character. Otherwise, EOF.
  */
 gint
 vfs_getc(VFSFile *file)
 {
-    if (file == NULL)
-        return -1;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
+
+    if (verbose)
+        logger ("VFS: <%p> getc\n", file);
 
     return file->base->vfs_getc_impl(file);
 }
@@ -229,13 +286,15 @@ vfs_getc(VFSFile *file)
  *
  * @param c The character to push back.
  * @param file #VFSFile object that represents the VFS stream.
- * @return On success, 0. Otherwise, -1.
+ * @return On success, 0. Otherwise, EOF.
  */
 gint
 vfs_ungetc(gint c, VFSFile *file)
 {
-    if (file == NULL)
-        return -1;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
+
+    if (verbose)
+        logger ("VFS: <%p> ungetc\n", file);
 
     return file->base->vfs_ungetc_impl(c, file);
 }
@@ -258,8 +317,12 @@ vfs_fseek(VFSFile * file,
           gint64 offset,
           gint whence)
 {
-    if (file == NULL)
-        return 0;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
+
+    if (verbose)
+        logger ("VFS: <%p> seek to %"PRId64" from %s\n", file, offset, whence ==
+         SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" : whence ==
+         SEEK_END ? "end" : "invalid");
 
     return file->base->vfs_fseek_impl(file, offset, whence);
 }
@@ -272,8 +335,10 @@ vfs_fseek(VFSFile * file,
 void
 vfs_rewind(VFSFile * file)
 {
-    if (file == NULL)
-        return;
+    g_return_if_fail (file && file->sig == VFS_SIG);
+
+    if (verbose)
+        logger ("VFS: <%p> rewind\n", file);
 
     file->base->vfs_rewind_impl(file);
 }
@@ -284,13 +349,17 @@ vfs_rewind(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the current position. Otherwise, -1.
  */
-glong
+gint64
 vfs_ftell(VFSFile * file)
 {
-    if (file == NULL)
-        return -1;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    return file->base->vfs_ftell_impl(file);
+    gint64 told = file->base->vfs_ftell_impl (file);
+
+    if (verbose)
+        logger ("VFS: <%p> tell = %"PRId64"\n", file, told);
+
+    return told;
 }
 
 /**
@@ -302,10 +371,14 @@ vfs_ftell(VFSFile * file)
 gboolean
 vfs_feof(VFSFile * file)
 {
-    if (file == NULL)
-        return FALSE;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, TRUE);
 
-    return (gboolean) file->base->vfs_feof_impl(file);
+    gboolean eof = file->base->vfs_feof_impl (file);
+
+    if (verbose)
+        logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
+
+    return eof;
 }
 
 /**
@@ -317,8 +390,10 @@ vfs_feof(VFSFile * file)
  */
 gint vfs_ftruncate (VFSFile * file, gint64 length)
 {
-    if (file == NULL)
-        return -1;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
+
+    if (verbose)
+        logger ("VFS: <%p> truncate to %"PRId64"\n", file, length);
 
     return file->base->vfs_ftruncate_impl(file, length);
 }

@@ -192,6 +192,7 @@ VFSFile * probe_buffer_new (const gchar * filename)
     file2->handle = p;
     file2->uri = g_strdup (filename);
     file2->ref = 1;
+    file2->sig = VFS_SIG;
 
     return file2;
 }

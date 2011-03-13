@@ -38,6 +38,8 @@ typedef struct _VFSFile VFSFile;
 /** @struct VFSConstructor */
 typedef const struct _VFSConstructor VFSConstructor;
 
+#define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
+
 /**
  * @struct _VFSFile
  * #VFSFile objects describe an opened VFS stream, basically being
@@ -48,6 +50,7 @@ struct _VFSFile {
     gpointer handle;        /**< Opaque data used by the transport plugins */
     VFSConstructor *base;   /**< The base vtable used for VFS functions */
     gint ref;               /**< The amount of references that the VFSFile object has */
+    gint sig;               /**< Used to detect invalid or twice-closed objects */
 };
 
 /**
@@ -146,6 +149,8 @@ void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 *
 void vfs_set_lookup_func (VFSConstructor * (* func) (const gchar * scheme));
 void vfs_prepare (const gchar * scheme);
 void vfs_prepare_filename (const gchar * filename);
+
+void vfs_set_verbose (gboolean verbose);
 
 #undef WARN_RETURN
 
