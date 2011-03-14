@@ -118,7 +118,7 @@ gint vfs_fprintf (VFSFile * stream, gchar const * format, ...) __attribute__
 
 gint vfs_fseek (VFSFile * file, gint64 offset, gint whence) WARN_RETURN;
 void vfs_rewind (VFSFile * file);
-glong vfs_ftell (VFSFile * file) WARN_RETURN;
+gint64 vfs_ftell (VFSFile * file) WARN_RETURN;
 gint64 vfs_fsize (VFSFile * file) WARN_RETURN;
 gint vfs_ftruncate (VFSFile * file, gint64 length) WARN_RETURN;
 
