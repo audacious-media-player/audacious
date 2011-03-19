@@ -485,7 +485,10 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
     gchar * text = decode_text_frame (data, size);
 
     if (text == NULL || ! text[0])
+    {
+        g_free (text);
         return;
+    }
 
     if (customfield != NULL)
         TAGDBG ("Custom field %s = %s.\n", customfield, text);
@@ -718,11 +721,11 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-    {
-        tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
-        return;
-    }
-    tuple_associate_string(tuple, FIELD_GENRE, NULL, text);
+        tuple_associate_string (tuple, FIELD_GENRE, NULL,
+         convert_numericgenre_to_text (numericgenre));
+    else
+        tuple_associate_string (tuple, FIELD_GENRE, NULL, text);
+
     g_free (text);
     return;
 }
