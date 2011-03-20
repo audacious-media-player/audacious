@@ -78,8 +78,24 @@ void audgui_connect_check_box (GtkWidget * box, gboolean * setting)
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const gchar * title, const gchar * text)
 {
+    AUDDBG ("%s\n", text);
+
     if (* widget != NULL)
+    {
+#if GTK_CHECK_VERSION (2, 10, 0)
+        const gchar * old = NULL;
+        g_object_get ((GObject *) * widget, "text", & old, NULL);
+        g_return_if_fail (old);
+
+        if (! strcmp (old, text))
+            goto CREATED;
+
+        gchar both[strlen (old) + strlen (text) + 2];
+        snprintf (both, sizeof both, "%s\n%s", old, text);
+        g_object_set ((GObject *) * widget, "text", both, NULL);
+#endif
         goto CREATED;
+    }
 
     * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s", text);
     gtk_window_set_title ((GtkWindow *) * widget, title);
