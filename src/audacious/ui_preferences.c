@@ -154,23 +154,27 @@ static PreferencesWidget audio_page_widgets[] = {
                      N_("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), FALSE},
 };
 
-static PreferencesWidget rg_params_elements[] = {
-    {WIDGET_SPIN_BTN, N_("Preamp:"), &cfg.replay_gain_preamp, NULL, NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
-    {WIDGET_SPIN_BTN, N_("Default gain:"), &cfg.default_gain, NULL, N_("This gain will be used if file doesn't contain Replay Gain metadata."), FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
-    {WIDGET_LABEL, N_("<span size=\"small\">Please remember that the most efficient way to prevent signal clipping is not to use positive values above.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-info"}}},
-};
+static PreferencesWidget rg_params_elements[] =
+{{WIDGET_SPIN_BTN, N_("Amplify all files:"), & cfg.replay_gain_preamp, NULL,
+ NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
+{WIDGET_SPIN_BTN, N_("Amplify untagged files:"), & cfg.default_gain, NULL,
+ NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT}};
 
-static PreferencesWidget replay_gain_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Replay Gain configuration</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL, NULL, FALSE},
-    {WIDGET_LABEL, N_("<b>Replay Gain mode</b>"), NULL, NULL, NULL, TRUE},
-    {WIDGET_RADIO_BTN, N_("Track gain/peak"), &cfg.replay_gain_track, NULL, NULL, TRUE},
-    {WIDGET_RADIO_BTN, N_("Album gain/peak"), &cfg.replay_gain_album, NULL, NULL, TRUE},
-    {WIDGET_LABEL, N_("<b>Miscellaneous</b>"), NULL, NULL, NULL, TRUE},
-    {WIDGET_CHK_BTN, N_("Enable peak info clipping prevention"), &cfg.enable_clipping_prevention, NULL,
-                     N_("Use peak value from Replay Gain info for clipping prevention"), TRUE},
-    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {rg_params_elements, G_N_ELEMENTS(rg_params_elements)}}},
-};
+static PreferencesWidget replay_gain_page_widgets[] =
+ {{WIDGET_LABEL, N_("<b>Replay Gain</b>"), NULL, NULL, NULL, FALSE},
+ {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL,
+  NULL, FALSE},
+ {WIDGET_LABEL, N_("<b>Mode</b>"), NULL, NULL, NULL, TRUE},
+ {WIDGET_RADIO_BTN, N_("Single track mode"), &cfg.replay_gain_track, NULL,
+  NULL, TRUE},
+ {WIDGET_RADIO_BTN, N_("Album mode"), &cfg.replay_gain_album, NULL, NULL,
+  TRUE},
+ {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), NULL, NULL, NULL, TRUE},
+ {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {rg_params_elements,
+  G_N_ELEMENTS (rg_params_elements)}}},
+ {WIDGET_LABEL, N_("<b>Clipping Prevention</b>"), NULL, NULL, NULL, TRUE},
+ {WIDGET_CHK_BTN, N_("Enable clipping prevention"),
+  & cfg.enable_clipping_prevention, NULL, NULL, TRUE}};
 
 static PreferencesWidget proxy_host_port_elements[] = {
     {WIDGET_ENTRY, N_("Proxy hostname:"), "proxy_host", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
