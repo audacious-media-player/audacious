@@ -1,5 +1,6 @@
 #
-#  Copyright (c) 2007 - 2009, Jonathan Schleifer <js@webkeks.org>
+#  Copyright (c) 2007, 2008, 2009, 2010, 2011
+#  Jonathan Schleifer <js@webkeks.org>
 #
 #  https://webkeks.org/hg/buildsys/
 #
@@ -99,9 +100,9 @@ MO_FILES = ${LOCALES:.po=.mo}
 .PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean locales
 
 all:
-	${MAKE} ${MFLAGS} subdirs || exit 1
-	${MAKE} ${MFLAGS} depend || exit 1
-	${MAKE} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST} locales || exit 1
+	${MAKE} ${MFLAGS} subdirs
+	${MAKE} ${MFLAGS} depend
+	${MAKE} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST} locales
 
 subdirs:
 	for i in ${SUBDIRS}; do \
@@ -174,12 +175,40 @@ ${PLUGIN} ${PLUGIN_NOINST}: ${EXT_DEPS} ${PLUGIN_OBJS}
 
 ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 	${LINK_STATUS}
-	if ${AR} cr $@ ${OBJS} && ${RANLIB} $@; then \
+	rm -f $@
+	objs=""; \
+	ars=""; \
+	for i in ${OBJS}; do \
+		case $$i in \
+			*.a) \
+				ars="$$ars $$i" \
+				;; \
+			*.o) \
+				objs="$$objs $$i" \
+				;; \
+		esac \
+	done; \
+	for i in $$ars; do \
+		dir=".$$(echo $$i | sed 's/\//_/g').objs"; \
+		rm -fr $$dir; \
+		mkdir -p $$dir; \
+		cd $$dir; \
+		ar x ../$$i; \
+		for j in *.o; do \
+			objs="$$objs $$dir/$$j"; \
+		done; \
+		cd ..; \
+	done; \
+	if ${AR} cr $@ $$objs && ${RANLIB} $@; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
 		rm -f $@; \
-	fi
+	fi; \
+	for i in $$ars; do \
+		dir=".$$(echo $$i | sed 's/\//_/g').objs"; \
+		rm -fr $$dir; \
+	done
 
 locales: ${MO_FILES}
 
