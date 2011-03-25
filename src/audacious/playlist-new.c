@@ -1244,74 +1244,79 @@ void playlist_select_all (gint playlist_num, gboolean selected)
 gint playlist_shift (gint playlist_num, gint entry_num, gint distance)
 {
     DECLARE_PLAYLIST_ENTRY;
-    gint entries, first, last, shift, count;
-    struct index *move, *others;
-
     LOOKUP_PLAYLIST_ENTRY_RET (0);
 
-    if (! entry->selected)
+    if (! entry->selected || ! distance)
         return 0;
 
     PLAYLIST_WILL_CHANGE;
 
-    entries = index_count(playlist->entries);
-    shift = 0;
+    gint entries = index_count (playlist->entries);
+    gint shift = 0, center, top, bottom;
 
-    for (first = entry_num; first > 0; first--)
+    if (distance < 0)
     {
-        entry = index_get(playlist->entries, first - 1);
-
-        if (!entry->selected)
+        for (center = entry_num; center > 0 && shift > distance; )
         {
-            if (shift <= distance)
-                break;
-
-            shift--;
+            entry = index_get (playlist->entries, -- center);
+            if (! entry->selected)
+                shift --;
         }
-    }
-
-    for (last = entry_num; last < entries - 1; last++)
-    {
-        entry = index_get(playlist->entries, last + 1);
-
-        if (!entry->selected)
-        {
-            if (shift >= distance)
-                break;
-
-            shift++;
-        }
-    }
-
-    move = index_new();
-    others = index_new();
-
-    for (count = first; count <= last; count++)
-    {
-        entry = index_get(playlist->entries, count);
-        index_append(entry->selected ? move : others, entry);
-    }
-
-    if (shift < 0)
-    {
-        index_merge_append(move, others);
-        index_free(others);
     }
     else
     {
-        index_merge_append(others, move);
-        index_free(move);
-        move = others;
+        for (center = entry_num + 1; center < entries && shift < distance; )
+        {
+            entry = index_get (playlist->entries, center ++);
+            if (! entry->selected)
+                shift ++;
+        }
+    }
+        
+    top = bottom = center;
+
+    for (gint i = 0; i < top; i ++)
+    {
+        entry = index_get (playlist->entries, i);
+        if (entry->selected)
+            top = i;
+    }
+        
+    for (gint i = entries; i > bottom; i --)
+    {
+        entry = index_get (playlist->entries, i - 1);
+        if (entry->selected)
+            bottom = i;
     }
 
-    for (count = first; count <= last; count++)
-        index_set(playlist->entries, count, index_get(move, count - first));
+    struct index * temp = index_new ();
 
-    index_free(move);
+    for (gint i = top; i < center; i ++)
+    {
+        entry = index_get (playlist->entries, i);
+        if (! entry->selected)
+            index_append (temp, entry);
+    }
 
-    number_entries(playlist, first, 1 + last - first);
+    for (gint i = top; i < bottom; i ++)
+    {
+        entry = index_get (playlist->entries, i);
+        if (entry->selected)
+            index_append (temp, entry);
+    }
 
-    PLAYLIST_HAS_CHANGED (playlist, first, 1 + last - first);
+    for (gint i = center; i < bottom; i ++)
+    {
+        entry = index_get (playlist->entries, i);
+        if (! entry->selected)
+            index_append (temp, entry);
+    }
+
+    index_copy_set (temp, 0, playlist->entries, top, bottom - top);
+
+    number_entries (playlist, top, bottom - top);
+    PLAYLIST_HAS_CHANGED (playlist, top, bottom - top);
+
     return shift;
 }
 

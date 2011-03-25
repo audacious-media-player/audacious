@@ -170,10 +170,10 @@ AUD_FUNC1 (gint, playlist_selected_count, gint, playlist)
 /* Selects all (or none) of the entries in a playlist. */
 AUD_FUNC2 (void, playlist_select_all, gint, playlist, gboolean, selected)
 
-/* Moves an entry, along with selected entries near it, within a playlist, by an
- * offset of <distance> entries.  For an exact definition of "near it", read the
- * source code.  Returns the offset by which the entry was actually moved, which
- * may be less (in absolute value) than the requested offset. */
+/* Moves a selected entry within a playlist by an offset of <distance> entries.
+ * Other selected entries are gathered around it.  Returns the offset by which
+ * the entry was actually moved, which may be less in absolute value than the
+ * requested offset. */
 AUD_FUNC3 (gint, playlist_shift, gint, playlist, gint, position, gint, distance)
 
 /* Removes the selected entries from a playlist.  If the last song played is one
