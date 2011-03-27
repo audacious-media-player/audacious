@@ -35,8 +35,8 @@
 #include <unistd.h>
 #include <X11/SM/SMlib.h>
 
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
-#include <gtk/gtk.h>
 
 #define EGG_TYPE_SM_CLIENT_XSMP            (egg_sm_client_xsmp_get_type ())
 #define EGG_SM_CLIENT_XSMP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), EGG_TYPE_SM_CLIENT_XSMP, EggSMClientXSMP))
@@ -63,11 +63,10 @@ typedef enum
   XSMP_STATE_INTERACT,
   XSMP_STATE_SAVE_YOURSELF_DONE,
   XSMP_STATE_SHUTDOWN_CANCELLED,
-  XSMP_STATE_CONNECTION_CLOSED,
+  XSMP_STATE_CONNECTION_CLOSED
 } EggSMClientXSMPState;
 
 static const char *state_names[] = {
-  "start",
   "idle",
   "save-yourself",
   "interact-request",
@@ -222,19 +221,14 @@ sm_client_xsmp_set_initial_properties (gpointer user_data)
   desktop_file = egg_get_desktop_file ();
   if (desktop_file)
     {
-      GKeyFile *key_file;
       GError *err = NULL;
       char *cmdline, **argv;
       int argc;
 
-      key_file = egg_desktop_file_get_key_file (desktop_file);
-
       if (xsmp->restart_style == SmRestartIfRunning)
 	{
-	  if (g_key_file_has_key (key_file, EGG_DESKTOP_FILE_GROUP,
-				  "X-GNOME-AutoRestart", NULL) &&
-	      g_key_file_get_boolean (key_file, EGG_DESKTOP_FILE_GROUP,
-				      "X-GNOME-AutoRestart", NULL))
+	  if (egg_desktop_file_get_boolean (desktop_file, 
+					    "X-GNOME-AutoRestart", NULL))
 	    xsmp->restart_style = SmRestartImmediately;
 	}
 
@@ -253,6 +247,7 @@ sm_client_xsmp_set_initial_properties (gpointer user_data)
 			 err->message);
 	      g_error_free (err);
 	    }
+	  g_free (cmdline);
 	}
     }
 
@@ -372,11 +367,13 @@ sm_client_xsmp_startup (EggSMClient *client,
       xsmp->client_id = g_strdup (ret_client_id);
       free (ret_client_id);
 
-#if GTK_CHECK_VERSION (2, 24, 0)
-      gdk_x11_set_sm_client_id (xsmp->client_id);
-#else
+      gdk_threads_enter ();
+#if !GTK_CHECK_VERSION(2,91,7) && !GTK_CHECK_VERSION(3,0,0)
       gdk_set_sm_client_id (xsmp->client_id);
+#else
+      gdk_x11_set_sm_client_id (xsmp->client_id);
 #endif
+      gdk_threads_leave ();
 
       g_debug ("Got client ID \"%s\"", xsmp->client_id);
     }
@@ -544,6 +541,8 @@ idle_do_pending_events (gpointer data)
   EggSMClientXSMP *xsmp = data;
   EggSMClient *client = data;
 
+  gdk_threads_enter ();
+
   xsmp->idle = 0;
 
   if (xsmp->waiting_to_emit_quit)
@@ -567,6 +566,7 @@ idle_do_pending_events (gpointer data)
     }
 
  out:
+  gdk_threads_leave ();
   return FALSE;
 }
 
@@ -771,30 +771,6 @@ do_save_yourself (EggSMClientXSMP *xsmp)
 }
 
 static void
-merge_keyfiles (GKeyFile *dest, GKeyFile *source)
-{
-  int g, k;
-  char **groups, **keys, *value;
-
-  groups = g_key_file_get_groups (source, NULL);
-  for (g = 0; groups[g]; g++)
-    {
-      keys = g_key_file_get_keys (source, groups[g], NULL, NULL);
-      for (k = 0; keys[k]; k++)
-	{
-	  value = g_key_file_get_value (source, groups[g], keys[k], NULL);
-	  if (value)
-	    {
-	      g_key_file_set_value (dest, groups[g], keys[k], value);
-	      g_free (value);
-	    }
-	}
-      g_strfreev (keys);
-    }
-  g_strfreev (groups);
-}
-
-static void
 save_state (EggSMClientXSMP *xsmp)
 {
   GKeyFile *state_file;
@@ -824,30 +800,61 @@ save_state (EggSMClientXSMP *xsmp)
   if (desktop_file)
     {
       GKeyFile *merged_file;
-      char *exec;
-      int i;
+      char *desktop_file_path;
 
       merged_file = g_key_file_new ();
-      merge_keyfiles (merged_file, egg_desktop_file_get_key_file (desktop_file));
-      merge_keyfiles (merged_file, state_file);
+      desktop_file_path =
+	g_filename_from_uri (egg_desktop_file_get_source (desktop_file),
+			     NULL, NULL);
+      if (desktop_file_path &&
+	  g_key_file_load_from_file (merged_file, desktop_file_path,
+				     G_KEY_FILE_KEEP_COMMENTS |
+				     G_KEY_FILE_KEEP_TRANSLATIONS, NULL))
+	{
+	  guint g, k, i;
+	  char **groups, **keys, *value, *exec;
 
-      g_key_file_free (state_file);
-      state_file = merged_file;
+	  groups = g_key_file_get_groups (state_file, NULL);
+	  for (g = 0; groups[g]; g++)
+	    {
+	      keys = g_key_file_get_keys (state_file, groups[g], NULL, NULL);
+	      for (k = 0; keys[k]; k++)
+		{
+		  value = g_key_file_get_value (state_file, groups[g],
+						keys[k], NULL);
+		  if (value)
+		    {
+		      g_key_file_set_value (merged_file, groups[g],
+					    keys[k], value);
+		      g_free (value);
+		    }
+		}
+	      g_strfreev (keys);
+	    }
+	  g_strfreev (groups);
 
-      /* Update Exec key using "--sm-client-state-file %k" */
-      restart = generate_command (xsmp->restart_command,
-				  NULL, "%k");
-      for (i = 0; i < restart->len; i++)
-	restart->pdata[i] = g_shell_quote (restart->pdata[i]);
-      g_ptr_array_add (restart, NULL);
-      exec = g_strjoinv (" ", (char **)restart->pdata);
-      g_strfreev ((char **)restart->pdata);
-      g_ptr_array_free (restart, FALSE);
+	  g_key_file_free (state_file);
+	  state_file = merged_file;
 
-      g_key_file_set_string (state_file, EGG_DESKTOP_FILE_GROUP,
-			     EGG_DESKTOP_FILE_KEY_EXEC,
-			     exec);
-      g_free (exec);
+	  /* Update Exec key using "--sm-client-state-file %k" */
+	  restart = generate_command (xsmp->restart_command,
+				      NULL, "%k");
+	  for (i = 0; i < restart->len; i++)
+	    restart->pdata[i] = g_shell_quote (restart->pdata[i]);
+	  g_ptr_array_add (restart, NULL);
+	  exec = g_strjoinv (" ", (char **)restart->pdata);
+	  g_strfreev ((char **)restart->pdata);
+	  g_ptr_array_free (restart, FALSE);
+
+	  g_key_file_set_string (state_file, EGG_DESKTOP_FILE_GROUP,
+				 EGG_DESKTOP_FILE_KEY_EXEC,
+				 exec);
+	  g_free (exec);
+	}
+      else
+	desktop_file = NULL;
+
+      g_free (desktop_file_path);
     }
 
   /* Now write state_file to disk. (We can't use mktemp(), because
@@ -1050,13 +1057,13 @@ generate_command (char **restart_command, const char *client_id,
 
   if (client_id)
     {
-      g_ptr_array_add (cmd, "--sm-client-id");
+      g_ptr_array_add (cmd, (char *)"--sm-client-id");
       g_ptr_array_add (cmd, (char *)client_id);
     }
 
   if (state_file)
     {
-      g_ptr_array_add (cmd, "--sm-client-state-file");
+      g_ptr_array_add (cmd, (char *)"--sm-client-state-file");
       g_ptr_array_add (cmd, (char *)state_file);
     }
 
@@ -1076,7 +1083,7 @@ set_properties (EggSMClientXSMP *xsmp, ...)
   GPtrArray *props;
   SmProp *prop;
   va_list ap;
-  int i;
+  guint i;
 
   props = g_ptr_array_new ();
 
@@ -1129,7 +1136,7 @@ delete_properties (EggSMClientXSMP *xsmp, ...)
  * until you're done with the SmProp.
  */
 static SmProp *
-array_prop (const char *name, ...)
+array_prop (const char *name, ...) 
 {
   SmProp *prop;
   SmPropValue pv;
@@ -1139,7 +1146,7 @@ array_prop (const char *name, ...)
 
   prop = g_new (SmProp, 1);
   prop->name = (char *)name;
-  prop->type = SmLISTofARRAY8;
+  prop->type = (char *)SmLISTofARRAY8;
 
   vals = g_array_new (FALSE, FALSE, sizeof (SmPropValue));
 
@@ -1169,11 +1176,11 @@ ptrarray_prop (const char *name, GPtrArray *values)
   SmProp *prop;
   SmPropValue pv;
   GArray *vals;
-  int i;
+  guint i;
 
   prop = g_new (SmProp, 1);
   prop->name = (char *)name;
-  prop->type = SmLISTofARRAY8;
+  prop->type = (char *)SmLISTofARRAY8;
 
   vals = g_array_new (FALSE, FALSE, sizeof (SmPropValue));
 
@@ -1203,7 +1210,7 @@ string_prop (const char *name, const char *value)
 
   prop = g_new (SmProp, 1);
   prop->name = (char *)name;
-  prop->type = SmARRAY8;
+  prop->type = (char *)SmARRAY8;
 
   prop->num_vals = 1;
   prop->vals = g_new (SmPropValue, 1);
@@ -1228,7 +1235,7 @@ card8_prop (const char *name, unsigned char value)
 
   prop = g_new (SmProp, 1);
   prop->name = (char *)name;
-  prop->type = SmCARD8;
+  prop->type = (char *)SmCARD8;
 
   prop->num_vals = 1;
   prop->vals = g_new (SmPropValue, 2);
@@ -1280,7 +1287,9 @@ process_ice_messages (IceConn ice_conn)
 {
   IceProcessMessagesStatus status;
 
+  gdk_threads_enter ();
   status = IceProcessMessages (ice_conn, NULL, NULL);
+  gdk_threads_leave ();
 
   switch (status)
     {
@@ -1345,13 +1354,13 @@ ice_error_handler (IceConn       ice_conn,
 		   IcePointer    values)
 {
   /* Do nothing */
-}
+} 
 
 static void
 ice_io_error_handler (IceConn ice_conn)
 {
   /* Do nothing */
-}
+} 
 
 static void
 smc_error_handler (SmcConn       smc_conn,

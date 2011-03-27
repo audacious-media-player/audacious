@@ -20,7 +20,13 @@
 #ifndef __EGG_SM_CLIENT_PRIVATE_H__
 #define __EGG_SM_CLIENT_PRIVATE_H__
 
-#include <gdk/gdk.h>
+#include <gtk/gtk.h>
+
+#if !GTK_CHECK_VERSION(2,91,7) && !GTK_CHECK_VERSION(3,0,0)
+/* GTK+ 3 includes this automatically */
+#include <gdkconfig.h>
+#endif
+
 #include "eggsmclient.h"
 
 G_BEGIN_DECLS

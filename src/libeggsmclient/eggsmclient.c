@@ -17,6 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <string.h>
 #include <glib/gi18n.h>
 
@@ -36,7 +38,7 @@ enum {
   LAST_SIGNAL
 };
 
-static guint signals[LAST_SIGNAL] = { 0 };
+static guint signals[LAST_SIGNAL];
 
 struct _EggSMClientPrivate {
   GKeyFile *state_file;
@@ -176,19 +178,7 @@ egg_sm_client_class_init (EggSMClientClass *klass)
 static gboolean sm_client_disable = FALSE;
 static char *sm_client_state_file = NULL;
 static char *sm_client_id = NULL;
-
-static GOptionEntry entries[] = {
-  { "sm-client-disable", 0, 0,
-    G_OPTION_ARG_NONE, &sm_client_disable,
-    N_("Disable connection to session manager"), NULL },
-  { "sm-client-state-file", 0, 0,
-    G_OPTION_ARG_STRING, &sm_client_state_file,
-    N_("Specify file containing saved configuration"), N_("FILE") },
-  { "sm-client-id", 0, 0,
-    G_OPTION_ARG_STRING, &sm_client_id,
-    N_("Specify session management ID"), N_("ID") },
-  { NULL }
-};
+static char *sm_config_prefix = NULL;
 
 static gboolean
 sm_client_post_parse_func (GOptionContext  *context,
@@ -198,7 +188,22 @@ sm_client_post_parse_func (GOptionContext  *context,
 {
   EggSMClient *client = egg_sm_client_get ();
 
-  if (EGG_SM_CLIENT_GET_CLASS (client)->startup)
+  if (sm_client_id == NULL)
+    {
+      const gchar *desktop_autostart_id;
+
+      desktop_autostart_id = g_getenv ("DESKTOP_AUTOSTART_ID");
+
+      if (desktop_autostart_id != NULL)
+        sm_client_id = g_strdup (desktop_autostart_id);
+    }
+
+  /* Unset DESKTOP_AUTOSTART_ID in order to avoid child processes to
+   * use the same client id. */
+  g_unsetenv ("DESKTOP_AUTOSTART_ID");
+
+  if (global_client_mode != EGG_SM_CLIENT_MODE_DISABLED &&
+      EGG_SM_CLIENT_GET_CLASS (client)->startup)
     EGG_SM_CLIENT_GET_CLASS (client)->startup (client, sm_client_id);
   return TRUE;
 }
@@ -215,6 +220,29 @@ sm_client_post_parse_func (GOptionContext  *context,
 GOptionGroup *
 egg_sm_client_get_option_group (void)
 {
+  const GOptionEntry entries[] = {
+    { "sm-client-disable", 0, 0,
+      G_OPTION_ARG_NONE, &sm_client_disable,
+      N_("Disable connection to session manager"), NULL },
+    { "sm-client-state-file", 0, 0,
+      G_OPTION_ARG_FILENAME, &sm_client_state_file,
+      N_("Specify file containing saved configuration"), N_("FILE") },
+    { "sm-client-id", 0, 0,
+      G_OPTION_ARG_STRING, &sm_client_id,
+      N_("Specify session management ID"), N_("ID") },
+    /* GnomeClient compatibility option */
+    { "sm-disable", 0, G_OPTION_FLAG_HIDDEN,
+      G_OPTION_ARG_NONE, &sm_client_disable,
+      NULL, NULL },
+    /* GnomeClient compatibility option. This is a dummy option that only
+     * exists so that sessions saved by apps with GnomeClient can be restored
+     * later when they've switched to EggSMClient. See bug #575308.
+     */
+    { "sm-config-prefix", 0, G_OPTION_FLAG_HIDDEN,
+      G_OPTION_ARG_STRING, &sm_config_prefix,
+      NULL, NULL },
+    { NULL }
+  };
   GOptionGroup *group;
 
   /* Use our own debug handler for the "EggSMClient" domain. */
@@ -222,8 +250,8 @@ egg_sm_client_get_option_group (void)
 		     egg_sm_client_debug_handler, NULL);
 
   group = g_option_group_new ("sm-client",
-			      _("Session Management Options"),
-			      _("Show Session Management options"),
+			      _("Session management options:"),
+			      _("Show session management options"),
 			      NULL, NULL);
   g_option_group_add_entries (group, entries);
   g_option_group_set_parse_hooks (group, NULL, sm_client_post_parse_func);
@@ -238,9 +266,9 @@ egg_sm_client_get_option_group (void)
  * Sets the "mode" of #EggSMClient as follows:
  *
  *    %EGG_SM_CLIENT_MODE_DISABLED: Session management is completely
- *    disabled. The application will not even connect to the session
- *    manager. (egg_sm_client_get() will still return an #EggSMClient,
- *    but it will just be a dummy object.)
+ *    disabled, until the mode is changed again. The application will
+ *    not even connect to the session manager. (egg_sm_client_get()
+ *    will still return an #EggSMClient object.)
  *
  *    %EGG_SM_CLIENT_MODE_NO_RESTART: The application will connect to
  *    the session manager (and thus will receive notification when the
@@ -250,12 +278,27 @@ egg_sm_client_get_option_group (void)
  *    %EGG_SM_CLIENT_MODE_NORMAL: The default. #EggSMCLient will
  *    function normally.
  *
- * This must be called before the application's main loop begins.
+ * This must be called before the application's main loop begins and
+ * before any call to egg_sm_client_get(), unless the mode was set
+ * earlier to %EGG_SM_CLIENT_MODE_DISABLED and this call enables
+ * session management. Note that option parsing will call
+ * egg_sm_client_get().
  **/
 void
 egg_sm_client_set_mode (EggSMClientMode mode)
 {
+  EggSMClientMode old_mode = global_client_mode;
+
+  g_return_if_fail (global_client == NULL || global_client_mode == EGG_SM_CLIENT_MODE_DISABLED);
+  g_return_if_fail (!(global_client != NULL && mode == EGG_SM_CLIENT_MODE_DISABLED));
+
   global_client_mode = mode;
+
+  if (global_client != NULL && old_mode == EGG_SM_CLIENT_MODE_DISABLED)
+    {
+      if (EGG_SM_CLIENT_GET_CLASS (global_client)->startup)
+        EGG_SM_CLIENT_GET_CLASS (global_client)->startup (global_client, sm_client_id);
+    }
 }
 
 /**
@@ -290,24 +333,23 @@ egg_sm_client_get (void)
 {
   if (!global_client)
     {
-      if (global_client_mode != EGG_SM_CLIENT_MODE_DISABLED &&
-	  !sm_client_disable)
+      if (!sm_client_disable)
 	{
 #if defined (GDK_WINDOWING_WIN32)
 	  global_client = egg_sm_client_win32_new ();
 #elif defined (GDK_WINDOWING_QUARTZ)
 	  global_client = egg_sm_client_osx_new ();
 #else
-	  /* If both D-Bus and XSMP are compiled in, try D-Bus first
-	   * and fall back to XSMP if D-Bus session management isn't
-	   * available.
+	  /* If both D-Bus and XSMP are compiled in, try XSMP first
+	   * (since it supports state saving) and fall back to D-Bus
+	   * if XSMP isn't available.
 	   */
-# ifdef EGG_SM_CLIENT_BACKEND_DBUS
-	  global_client = egg_sm_client_dbus_new ();
-# endif
 # ifdef EGG_SM_CLIENT_BACKEND_XSMP
+	  global_client = egg_sm_client_xsmp_new ();
+# endif
+# ifdef EGG_SM_CLIENT_BACKEND_DBUS
 	  if (!global_client)
-	    global_client = egg_sm_client_xsmp_new ();
+	    global_client = egg_sm_client_dbus_new ();
 # endif
 #endif
 	}

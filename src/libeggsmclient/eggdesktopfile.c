@@ -31,7 +31,7 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
-#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
 struct EggDesktopFile {
@@ -55,7 +55,6 @@ struct EggDesktopFile {
 EggDesktopFile *
 egg_desktop_file_new (const char *desktop_file_path, GError **error)
 {
-  EggDesktopFile *desktop_file;
   GKeyFile *key_file;
 
   key_file = g_key_file_new ();
@@ -65,13 +64,8 @@ egg_desktop_file_new (const char *desktop_file_path, GError **error)
       return NULL;
     }
 
-  desktop_file = egg_desktop_file_new_from_key_file (key_file,
-						     desktop_file_path,
-						     error);
-  if (!desktop_file)
-    g_key_file_free (key_file);
-
-  return desktop_file;
+  return egg_desktop_file_new_from_key_file (key_file, desktop_file_path,
+					     error);
 }
 
 /**
@@ -105,9 +99,42 @@ egg_desktop_file_new_from_data_dirs (const char  *desktop_file_path,
 						     full_path,
 						     error);
   g_free (full_path);
-  if (!desktop_file)
-    g_key_file_free (key_file);
+  return desktop_file;
+}
 
+/**
+ * egg_desktop_file_new_from_dirs:
+ * @desktop_file_path: relative path to a Freedesktop-style Desktop file
+ * @search_dirs: NULL-terminated array of directories to search
+ * @error: error pointer
+ *
+ * Looks for @desktop_file_path in the paths returned from
+ * g_get_user_data_dir() and g_get_system_data_dirs(), and creates
+ * a new #EggDesktopFile from it.
+ *
+ * Return value: the new #EggDesktopFile, or %NULL on error.
+ **/
+EggDesktopFile *
+egg_desktop_file_new_from_dirs (const char  *desktop_file_path,
+				const char **search_dirs,
+				GError     **error)
+{
+  EggDesktopFile *desktop_file;
+  GKeyFile *key_file;
+  char *full_path;
+
+  key_file = g_key_file_new ();
+  if (!g_key_file_load_from_dirs (key_file, desktop_file_path, search_dirs,
+				  &full_path, 0, error))
+    {
+      g_key_file_free (key_file);
+      return NULL;
+    }
+
+  desktop_file = egg_desktop_file_new_from_key_file (key_file,
+						     full_path,
+						     error);
+  g_free (full_path);
   return desktop_file;
 }
 
@@ -118,8 +145,8 @@ egg_desktop_file_new_from_data_dirs (const char  *desktop_file_path,
  * @error: error pointer
  *
  * Creates a new #EggDesktopFile for @key_file. Assumes ownership of
- * @key_file on success (meaning it will be freed when the desktop_file
- * is freed).
+ * @key_file (on success or failure); you should consider @key_file to
+ * be freed after calling this function.
  *
  * Return value: the new #EggDesktopFile, or %NULL on error.
  **/
@@ -136,6 +163,7 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
       g_set_error (error, EGG_DESKTOP_FILE_ERROR,
 		   EGG_DESKTOP_FILE_ERROR_INVALID,
 		   _("File is not a valid .desktop file"));
+      g_key_file_free (key_file);
       return NULL;
     }
 
@@ -159,13 +187,14 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
 		       EGG_DESKTOP_FILE_ERROR_INVALID,
 		       _("Unrecognized desktop file Version '%s'"), version);
 	  g_free (version);
+	  g_key_file_free (key_file);
 	  return NULL;
 	}
-      else 
       g_free (version);
     }
 
   desktop_file = g_new0 (EggDesktopFile, 1);
+  desktop_file->key_file = key_file;
 
   if (g_path_is_absolute (source))
     desktop_file->source = g_filename_to_uri (source, NULL, NULL);
@@ -201,7 +230,7 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
       if (!exec)
 	{
 	  egg_desktop_file_free (desktop_file);
-	  g_free(type);
+	  g_free (type);
 	  return NULL;
 	}
 
@@ -234,7 +263,7 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
       if (!url)
 	{
 	  egg_desktop_file_free (desktop_file);
-	  g_free(type);
+	  g_free (type);
 	  return NULL;
 	}
       g_free (url);
@@ -244,7 +273,7 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
   else
     desktop_file->type = EGG_DESKTOP_FILE_TYPE_UNRECOGNIZED;
 
-  g_free(type);
+  g_free (type);
 
   /* Check the Icon key */
   desktop_file->icon = g_key_file_get_string (key_file,
@@ -269,7 +298,6 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
 	}
     }
 
-  desktop_file->key_file = key_file;
   return desktop_file;
 }
 
@@ -287,22 +315,6 @@ egg_desktop_file_free (EggDesktopFile *desktop_file)
   g_free (desktop_file->name);
   g_free (desktop_file->icon);
   g_free (desktop_file);
-}
-
-/**
- * egg_desktop_file_get_key_file:
- * @desktop_file: an #EggDesktopFile
- *
- * Gets the #GKeyFile associated with @desktop_file. You must not free
- * this value, and changes made to it will not be reflected by
- * @desktop_file.
- *
- * Return value: the #GKeyFile associated with @desktop_file.
- **/
-GKeyFile *
-egg_desktop_file_get_key_file (EggDesktopFile *desktop_file)
-{
-  return desktop_file->key_file;
 }
 
 /**
@@ -366,6 +378,91 @@ const char *
 egg_desktop_file_get_icon (EggDesktopFile *desktop_file)
 {
   return desktop_file->icon;
+}
+
+gboolean
+egg_desktop_file_has_key (EggDesktopFile  *desktop_file,
+			  const char      *key,
+			  GError         **error)
+{
+  return g_key_file_has_key (desktop_file->key_file,
+			     EGG_DESKTOP_FILE_GROUP, key,
+			     error);
+}
+
+char *
+egg_desktop_file_get_string (EggDesktopFile  *desktop_file,
+			     const char      *key,
+			     GError         **error)
+{
+  return g_key_file_get_string (desktop_file->key_file,
+				EGG_DESKTOP_FILE_GROUP, key,
+				error);
+}
+
+char *
+egg_desktop_file_get_locale_string (EggDesktopFile  *desktop_file,
+				    const char      *key,
+				    const char      *locale,
+				    GError         **error)
+{
+  return g_key_file_get_locale_string (desktop_file->key_file,
+				       EGG_DESKTOP_FILE_GROUP, key, locale,
+				       error);
+}
+
+gboolean
+egg_desktop_file_get_boolean (EggDesktopFile  *desktop_file,
+			      const char      *key,
+			      GError         **error)
+{
+  return g_key_file_get_boolean (desktop_file->key_file,
+				 EGG_DESKTOP_FILE_GROUP, key,
+				 error);
+}
+
+double
+egg_desktop_file_get_numeric (EggDesktopFile  *desktop_file,
+			      const char      *key,
+			      GError         **error)
+{
+  return g_key_file_get_double (desktop_file->key_file,
+				EGG_DESKTOP_FILE_GROUP, key,
+				error);
+}
+
+int
+egg_desktop_file_get_integer (EggDesktopFile *desktop_file,
+			      const char     *key,
+    			      GError	    **error)
+{
+  return g_key_file_get_integer (desktop_file->key_file,
+				 EGG_DESKTOP_FILE_GROUP, key,
+				 error);
+}
+
+char **
+egg_desktop_file_get_string_list (EggDesktopFile  *desktop_file,
+				  const char      *key,
+				  gsize           *length,
+				  GError         **error)
+{
+  return g_key_file_get_string_list (desktop_file->key_file,
+				     EGG_DESKTOP_FILE_GROUP, key, length,
+				     error);
+}
+
+char **
+egg_desktop_file_get_locale_string_list (EggDesktopFile  *desktop_file,
+					 const char      *key,
+					 const char      *locale,
+					 gsize           *length,
+					 GError         **error)
+{
+  return g_key_file_get_locale_string_list (desktop_file->key_file,
+					    EGG_DESKTOP_FILE_GROUP, key,
+					    locale, length,
+					    error);
 }
 
 /**
@@ -822,7 +919,7 @@ parse_link (EggDesktopFile  *desktop_file,
   return TRUE;
 }
 
-#ifdef HAVE_GDK_X11_DISPLAY_BROADCAST_STARTUP_MESSAGE
+#if GTK_CHECK_VERSION (2, 12, 0)
 static char *
 start_startup_notification (GdkDisplay     *display,
 			    EggDesktopFile *desktop_file,
@@ -900,7 +997,7 @@ end_startup_notification (GdkDisplay *display,
 					     NULL);
 }
 
-#define EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH (30 /* seconds */ * 1000)
+#define EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH (30 /* seconds */)
 
 typedef struct {
   GdkDisplay *display;
@@ -930,24 +1027,32 @@ set_startup_notification_timeout (GdkDisplay *display,
   sn_data->display = g_object_ref (display);
   sn_data->startup_id = g_strdup (startup_id);
 
-  g_timeout_add (EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH,
-		 startup_notification_timeout, sn_data);
+  g_timeout_add_seconds (EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH,
+			 startup_notification_timeout, sn_data);
 }
-#endif /* HAVE_GDK_X11_DISPLAY_BROADCAST_STARTUP_MESSAGE */
-
-extern char **environ;
+#endif /* GTK 2.12 */
 
 static GPtrArray *
 array_putenv (GPtrArray *env, char *variable)
 {
-  int i, keylen;
+  guint i, keylen;
 
   if (!env)
     {
+      char **envp;
+
       env = g_ptr_array_new ();
 
-      for (i = 0; environ[i]; i++)
-	g_ptr_array_add (env, g_strdup (environ[i]));
+      envp = g_listenv ();
+      for (i = 0; envp[i]; i++)
+        {
+          const char *value;
+
+          value = g_getenv (envp[i]);
+          g_ptr_array_add (env, g_strdup_printf ("%s=%s", envp[i],
+                                                 value ? value : ""));
+        }
+      g_strfreev (envp);
     }
 
   keylen = strcspn (variable, "=");
@@ -977,7 +1082,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 			  GError **error)
 {
   EggDesktopFileLaunchOption option;
-  GSList *translated_documents, *docs;
+  GSList *translated_documents = NULL, *docs = NULL;
   char *command, **argv;
   int argc, i, screen_num;
   gboolean success, current_success;
@@ -993,8 +1098,6 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
   GSpawnFlags  flags = G_SPAWN_SEARCH_PATH;
   GSpawnChildSetupFunc setup_func = NULL;
   gpointer     setup_data = NULL;
-  docs = NULL;
-  translated_documents = NULL;
 
   GPid        *ret_pid = NULL;
   int         *ret_stdin = NULL, *ret_stdout = NULL, *ret_stderr = NULL;
@@ -1114,7 +1217,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	}
       g_free (command);
 
-#ifdef HAVE_GDK_X11_DISPLAY_BROADCAST_STARTUP_MESSAGE
+#if GTK_CHECK_VERSION (2, 12, 0)
       startup_id = start_startup_notification (display, desktop_file,
 					       argv[0], screen_num,
 					       workspace, launch_time);
@@ -1127,7 +1230,10 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	}
 #else
       startup_id = NULL;
-#endif /* HAVE_GDK_X11_DISPLAY_BROADCAST_STARTUP_MESSAGE */
+#endif /* GTK 2.12 */
+
+      if (env != NULL)
+	g_ptr_array_add (env, NULL);
 
       current_success =
 	g_spawn_async_with_pipes (directory,
@@ -1142,7 +1248,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 
       if (startup_id)
 	{
-#ifdef HAVE_GDK_X11_DISPLAY_BROADCAST_STARTUP_MESSAGE
+#if GTK_CHECK_VERSION (2, 12, 0)
 	  if (current_success)
 	    {
 	      set_startup_notification_timeout (display, startup_id);
@@ -1153,7 +1259,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 		g_free (startup_id);
 	    }
 	  else
-#endif /* HAVE_GDK_X11_DISPLAY_BROADCAST_STARTUP_MESSAGE */
+#endif /* GTK 2.12 */
 	    g_free (startup_id);
 	}
       else if (ret_startup_id)
@@ -1178,8 +1284,8 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
  out:
   if (env)
     {
-      g_strfreev ((char **)env->pdata);
-      g_ptr_array_free (env, FALSE);
+      g_ptr_array_foreach (env, (GFunc)g_free, NULL);
+      g_ptr_array_free (env, TRUE);
     }
   free_document_list (translated_documents);
 
@@ -1290,6 +1396,8 @@ egg_desktop_file_launch (EggDesktopFile *desktop_file,
       free_document_list (documents);
       break;
 
+    case EGG_DESKTOP_FILE_TYPE_UNRECOGNIZED:
+    case EGG_DESKTOP_FILE_TYPE_DIRECTORY:
     default:
       g_set_error (error, EGG_DESKTOP_FILE_ERROR,
 		   EGG_DESKTOP_FILE_ERROR_NOT_LAUNCHABLE,
@@ -1312,6 +1420,40 @@ egg_desktop_file_error_quark (void)
 G_LOCK_DEFINE_STATIC (egg_desktop_file);
 static EggDesktopFile *egg_desktop_file;
 
+static void
+egg_set_desktop_file_internal (const char *desktop_file_path,
+                               gboolean set_defaults)
+{
+  GError *error = NULL;
+
+  G_LOCK (egg_desktop_file);
+  if (egg_desktop_file)
+    egg_desktop_file_free (egg_desktop_file);
+
+  egg_desktop_file = egg_desktop_file_new (desktop_file_path, &error);
+  if (error)
+    {
+      g_warning ("Could not load desktop file '%s': %s",
+		 desktop_file_path, error->message);
+      g_error_free (error);
+    }
+
+  if (set_defaults && egg_desktop_file != NULL) {
+    /* Set localized application name and default window icon */
+    if (egg_desktop_file->name)
+      g_set_application_name (egg_desktop_file->name);
+    if (egg_desktop_file->icon)
+      {
+        if (g_path_is_absolute (egg_desktop_file->icon))
+          gtk_window_set_default_icon_from_file (egg_desktop_file->icon, NULL);
+        else
+          gtk_window_set_default_icon_name (egg_desktop_file->icon);
+      }
+  }
+
+  G_UNLOCK (egg_desktop_file);
+}
+
 /**
  * egg_set_desktop_file:
  * @desktop_file_path: path to the application's desktop file
@@ -1323,42 +1465,38 @@ static EggDesktopFile *egg_desktop_file;
  * gtk_window_set_default_icon_from_file() with the application's
  * icon. Other code may use additional information from the desktop
  * file.
+ * See egg_set_desktop_file_without_defaults() for a variant of this
+ * function that does not set the application name and default window
+ * icon.
  *
  * Note that for thread safety reasons, this function can only
- * be called once.
+ * be called once, and is mutually exclusive with calling
+ * egg_set_desktop_file_without_defaults().
  **/
 void
 egg_set_desktop_file (const char *desktop_file_path)
 {
-  GError *error = NULL;
+  egg_set_desktop_file_internal (desktop_file_path, TRUE);
+}
 
-  G_LOCK (egg_desktop_file);
-  if (egg_desktop_file)
-    egg_desktop_file_free (egg_desktop_file);
-
-  egg_desktop_file = egg_desktop_file_new (desktop_file_path, &error);
-  if (error)
-    {
-      g_warning ("Could not load desktop file '%s': %s"
-      " - Session management may not work now.",
-		 desktop_file_path, error->message);
-      g_error_free (error);
-      G_UNLOCK (egg_desktop_file);
-      return;
-    }
-
-  /* Set localized application name and default window icon */
-  if (egg_desktop_file->name)
-    g_set_application_name (egg_desktop_file->name);
-  if (egg_desktop_file->icon)
-    {
-      if (g_path_is_absolute (egg_desktop_file->icon))
-	gtk_window_set_default_icon_from_file (egg_desktop_file->icon, NULL);
-      else
-	gtk_window_set_default_icon_name (egg_desktop_file->icon);
-    }
-
-  G_UNLOCK (egg_desktop_file);
+/**
+ * egg_set_desktop_file_without_defaults:
+ * @desktop_file_path: path to the application's desktop file
+ *
+ * Creates an #EggDesktopFile for the application from the data at
+ * @desktop_file_path.
+ * See egg_set_desktop_file() for a variant of this function that
+ * sets the application name and default window icon from the information
+ * in the desktop file.
+ *
+ * Note that for thread safety reasons, this function can only
+ * be called once, and is mutually exclusive with calling
+ * egg_set_desktop_file().
+ **/
+void
+egg_set_desktop_file_without_defaults (const char *desktop_file_path)
+{
+  egg_set_desktop_file_internal (desktop_file_path, FALSE);
 }
 
 /**
