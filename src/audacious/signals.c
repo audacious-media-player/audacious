@@ -88,7 +88,6 @@ void signal_handlers_init (void)
     client = egg_sm_client_get ();
     if (client != NULL)
     {
-        egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
         g_signal_connect (client, "quit",
                           G_CALLBACK (signal_session_quit_cb), NULL);
         g_signal_connect (client, "save-state",

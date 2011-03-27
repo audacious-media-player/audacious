@@ -25,7 +25,7 @@
 
 #include <errno.h>
 #include <limits.h>
- 
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -228,7 +228,7 @@ ERR:
     relocate_path (& aud_paths[AUD_PATH_LOCALE_DIR], old, new);
     relocate_path (& aud_paths[AUD_PATH_DESKTOP_FILE], old, new);
     relocate_path (& aud_paths[AUD_PATH_ICON_FILE], old, new);
-    
+
     g_free (old);
     g_free (new);
 }
@@ -317,7 +317,7 @@ static void set_lock_file (gboolean lock)
     gchar path[PATH_MAX];
     snprintf (path, sizeof path, "%s" G_DIR_SEPARATOR_S "lock",
      aud_paths[AUD_PATH_USER_DIR]);
-     
+
     if (lock)
     {
         int handle = open (path, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
@@ -531,6 +531,7 @@ gint main(gint argc, gchar ** argv)
     bind_textdomain_codeset(PACKAGE_NAME "-plugins", "UTF-8");
     textdomain(PACKAGE_NAME);
 
+    egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
 #if !defined(_WIN32) && defined(USE_EGGSM)
     egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
 #endif
