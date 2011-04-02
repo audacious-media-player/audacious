@@ -242,7 +242,6 @@ AUD_ARG_ENABLE([sm], [yes],
 [session management],
 [
     PKG_CHECK_MODULES([SM], [sm >= 1.0], [
-        AC_DEFINE([USE_EGGSM], 1, [Define if session management should be used.])
         enable_sm="yes"
     ],[
         enable_sm="no"
@@ -257,8 +256,14 @@ AUD_ARG_ENABLE([sm], [yes],
 
     AC_SUBST([ICE_CFLAGS])
     AC_SUBST([ICE_LIBS])
+
+    PKG_CHECK_MODULES(GLIB214, glib-2.0 >= 2.14, enable_sm=$enable_sm,
+     enable_sm=no)
+
+    if test $enable_sm = yes ; then
+        AC_DEFINE(USE_EGGSM, 1, Define if session management should be used)
+    fi
 ])
-AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
 
 ### ---------------------------------------------------------------------------
 dnl Ugly system checks
