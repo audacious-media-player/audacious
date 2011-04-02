@@ -531,8 +531,8 @@ gint main(gint argc, gchar ** argv)
     bind_textdomain_codeset(PACKAGE_NAME "-plugins", "UTF-8");
     textdomain(PACKAGE_NAME);
 
+#ifdef USE_EGGSM
     egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
-#if !defined(_WIN32) && defined(USE_EGGSM)
     egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
 #endif
 
