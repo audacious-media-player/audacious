@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 18:51-0400\n"
+"POT-Creation-Date: 2011-04-03 18:02-0400\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/audacious/chardet.c:39
+#: src/audacious/chardet.c:37
 msgid "  (invalid UTF-8)"
 msgstr "  (blogas UTF-8)"
 
@@ -216,128 +216,122 @@ msgstr "Į rumunų k.:"
 msgid "Welsh:"
 msgstr "Į velsiečių k.:"
 
-#: src/audacious/drct.c:255
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Įkrauti grojaraštį"
 
-#: src/audacious/equalizer_preset.c:187
+#: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
 
-#: src/audacious/folder-add.c:55
+#: src/audacious/folder-add.c:63
 msgid "Searching ..."
 msgstr ""
 
-#: src/audacious/folder-add.c:79
+#: src/audacious/folder-add.c:89
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/audacious/main.c:71
-msgid "Audacious"
-msgstr ""
-
-#: src/audacious/main.c:271
+#: src/audacious/main.c:247
 msgid "Skip backwards in playlist"
 msgstr "Šoktelti atgal grojaraštyje"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:248
 msgid "Start playing current playlist"
 msgstr "Pradėti groti esamą grojaraštį"
 
-#: src/audacious/main.c:273
+#: src/audacious/main.c:249
 msgid "Pause current song"
 msgstr "Pristabdyti grojamą dainą"
 
-#: src/audacious/main.c:274
+#: src/audacious/main.c:250
 msgid "Stop current song"
 msgstr "Sustabdyti grojamą dainą"
 
-#: src/audacious/main.c:275
+#: src/audacious/main.c:251
 msgid "Pause if playing, play otherwise"
 msgstr "Pristabdyti, jei grojama, kitu atveju groti"
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:252
 msgid "Skip forward in playlist"
 msgstr "Šoktelti pirmyn grojaraštyje"
 
-#: src/audacious/main.c:277
+#: src/audacious/main.c:253
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "/Šokti į bylą"
 
-#: src/audacious/main.c:278
+#: src/audacious/main.c:254
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Neišvalyti grojaraščio"
 
-#: src/audacious/main.c:279
+#: src/audacious/main.c:255
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Neišvalyti grojaraščio"
 
-#: src/audacious/main.c:280
+#: src/audacious/main.c:256
 #, fuzzy
 msgid "Display the main window"
 msgstr "Parodyti pagrindinį langą"
 
-#: src/audacious/main.c:281
+#: src/audacious/main.c:257
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:282
+#: src/audacious/main.c:258
 #, fuzzy
 msgid "Show version"
 msgstr "/Parodyti grojaraščio redaktorių"
 
-#: src/audacious/main.c:283
+#: src/audacious/main.c:259
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:284
+#: src/audacious/main.c:260
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:296
+#: src/audacious/main.c:272
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:307
+#: src/audacious/main.c:282
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:328
-#, c-format
+#: src/audacious/main.c:395
 msgid ""
-"Running multiple instances of Audacious can lead to corrupted configuration "
-"files.  If Audacious is not already running, or if you want to run another "
-"instance anyway, please delete the file %s and run Audacious again.  "
-"Audacious will now close."
+"Audacious seems to be already running but is not responding.  You can start "
+"another instance of the program, but please be warned that this can cause "
+"data loss.  If Audacious is not running, you can safely ignore this "
+"message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:549
-#, fuzzy, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
+#: src/audacious/main.c:558
+msgid "Audacious"
+msgstr ""
 
-#: src/audacious/playback.c:373
+#: src/audacious/playback.c:372
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:517
+#: src/audacious/playback.c:516
 #, fuzzy
 msgid "Buffering ..."
 msgstr "Buferiavimas"
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:288
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "Išsaugoti grojaraštį"
@@ -355,7 +349,7 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
 msgid "Playlist"
 msgstr "Grojaraštis"
 
@@ -509,115 +503,105 @@ msgid ""
 msgstr ""
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
-msgid "Preamp:"
-msgstr "Dream"
+msgid "Amplify all files:"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:158 src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:159 src/audacious/ui_preferences.c:161
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:159
-#, fuzzy
-msgid "Default gain:"
-msgstr "Įprastasis rūbas:"
-
-#: src/audacious/ui_preferences.c:159
-msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr ""
-
 #: src/audacious/ui_preferences.c:160
-msgid ""
-"<span size=\"small\">Please remember that the most efficient way to prevent "
-"signal clipping is not to use positive values above.</span>"
+msgid "Amplify untagged files:"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:164
 #, fuzzy
-msgid "<b>Replay Gain configuration</b>"
-msgstr "MPEG garso įskiepio konfigūravimas"
+msgid "<b>Replay Gain</b>"
+msgstr "<b>Bylos vardas</b>"
 
 #: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "/Visada viršuje"
 
-#: src/audacious/ui_preferences.c:166
-#, fuzzy
-msgid "<b>Replay Gain mode</b>"
-msgstr "<b>Bylos vardas</b>"
-
 #: src/audacious/ui_preferences.c:167
 #, fuzzy
-msgid "Track gain/peak"
-msgstr "Takelio pavadinimas"
+msgid "<b>Mode</b>"
+msgstr "<b>Bylos vardas</b>"
 
 #: src/audacious/ui_preferences.c:168
-msgid "Album gain/peak"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:893
 #, fuzzy
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Kita</b>"
+msgid "Single track mode"
+msgstr "/Takelio informacija"
 
 #: src/audacious/ui_preferences.c:170
 #, fuzzy
-msgid "Enable peak info clipping prevention"
-msgstr "Aktyvuoti apkarpymo prevenciją"
+msgid "Album mode"
+msgstr "Albumas"
 
-#: src/audacious/ui_preferences.c:171
-msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr ""
+#: src/audacious/ui_preferences.c:172
+#, fuzzy
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>Pelės ratukas</b>"
+
+#: src/audacious/ui_preferences.c:175
+#, fuzzy
+msgid "<b>Clipping Prevention</b>"
+msgstr "MPEG garso įskiepio konfigūravimas"
 
 #: src/audacious/ui_preferences.c:176
+#, fuzzy
+msgid "Enable clipping prevention"
+msgstr "Aktyvuoti apkarpymo prevenciją"
+
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy hostname:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:177
+#: src/audacious/ui_preferences.c:181
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Tarpinė stotis:"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:185
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Vartotojas:"
 
-#: src/audacious/ui_preferences.c:182
+#: src/audacious/ui_preferences.c:186
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Slaptažodis:"
 
-#: src/audacious/ui_preferences.c:186
+#: src/audacious/ui_preferences.c:190
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "MPEG garso įskiepio konfigūravimas"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:191
 msgid "Enable proxy usage"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:194
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Autentikuotis"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:197
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:201
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:209
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:209
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -625,196 +609,201 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
 msgid "<b>Behavior</b>"
 msgstr "Nominalus bitų sekos greitis:"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:214
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:216
 msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:218
 #, fuzzy
 msgid "Clear the playlist when opening files"
 msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:220
 #, fuzzy
 msgid "Open files in a temporary playlist"
 msgstr "Neišvalyti grojaraščio"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:222
 msgid "<b>Metadata</b>"
 msgstr "<b>Aprašai</b>"
 
-#: src/audacious/ui_preferences.c:497
+#: src/audacious/ui_preferences.c:501
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:811
+#: src/audacious/ui_preferences.c:815
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "MPEG garso įskiepio konfigūravimas"
 
-#: src/audacious/ui_preferences.c:820
+#: src/audacious/ui_preferences.c:824
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "Automatinis parinkimas"
 
-#: src/audacious/ui_preferences.c:825
+#: src/audacious/ui_preferences.c:829
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:842
+#: src/audacious/ui_preferences.c:846
 msgid "Exclude:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:849
+#: src/audacious/ui_preferences.c:853
 #, fuzzy
 msgid "Include:"
 msgstr "Indie"
 
-#: src/audacious/ui_preferences.c:866
+#: src/audacious/ui_preferences.c:870
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:876
+#: src/audacious/ui_preferences.c:880
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:890
+#: src/audacious/ui_preferences.c:894
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:902
+#: src/audacious/ui_preferences.c:897
+#, fuzzy
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>_Kita</b>"
+
+#: src/audacious/ui_preferences.c:906
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:912
+#: src/audacious/ui_preferences.c:916
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1455
+#: src/audacious/ui_preferences.c:1459
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
 
-#: src/audacious/ui_preferences.c:1464
+#: src/audacious/ui_preferences.c:1468
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1475
+#: src/audacious/ui_preferences.c:1479
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1497
+#: src/audacious/ui_preferences.c:1501
 msgid "Show information about titlestring format"
 msgstr "Parodyti informaciją apie pavadinimo formatą"
 
-#: src/audacious/ui_preferences.c:1510
+#: src/audacious/ui_preferences.c:1514
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1511
+#: src/audacious/ui_preferences.c:1515
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1512
+#: src/audacious/ui_preferences.c:1516
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1513
+#: src/audacious/ui_preferences.c:1517
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1514
+#: src/audacious/ui_preferences.c:1518
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1519
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1516
+#: src/audacious/ui_preferences.c:1520
 #, fuzzy
 msgid "Custom"
 msgstr "Derinta eilutė:"
 
-#: src/audacious/ui_preferences.c:1523
+#: src/audacious/ui_preferences.c:1527
 msgid "Custom string:"
 msgstr "Derinta eilutė:"
 
-#: src/audacious/ui_preferences.c:1530
+#: src/audacious/ui_preferences.c:1534
 msgid "Title format:"
 msgstr "Pavadinimo formatas:"
 
-#: src/audacious/ui_preferences.c:1541
+#: src/audacious/ui_preferences.c:1545
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "MPEG garso įskiepio konfigūravimas"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1560
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1558
+#: src/audacious/ui_preferences.c:1562
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1564
+#: src/audacious/ui_preferences.c:1568
 msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1694
+#: src/audacious/ui_preferences.c:1698
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>Šablonai</b>"
 
-#: src/audacious/ui_preferences.c:1711
+#: src/audacious/ui_preferences.c:1715
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Buferio dydis (kb):"
 
-#: src/audacious/ui_preferences.c:1730
+#: src/audacious/ui_preferences.c:1734
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "_Pasirinktas išvesties įskiepies:"
 
-#: src/audacious/ui_preferences.c:1786
+#: src/audacious/ui_preferences.c:1790
 #, fuzzy
 msgid "Transport"
 msgstr "Vertėjai"
 
-#: src/audacious/ui_preferences.c:1786
+#: src/audacious/ui_preferences.c:1790
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1791
 #, fuzzy
 msgid "Effect"
 msgstr "<b>Efektai</b>"
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1791
 #, fuzzy
 msgid "Visualization"
 msgstr "Vizualizacijos tipas"
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1791
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1827
+#: src/audacious/ui_preferences.c:1831
 #, fuzzy
 msgid "Audacious Preferences"
 msgstr "BMP nustatymai"
@@ -939,680 +928,243 @@ msgstr "Takelio numeris"
 msgid "Track Length"
 msgstr "Takelio trukmė:"
 
-#: src/libaudgui/infowin.c:74
+#: src/libaudgui/infowin.c:77
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: src/libaudgui/infowin.c:78
 #, fuzzy
-msgid "Blues"
-msgstr "Blues"
-
-#: src/libaudgui/infowin.c:74
-msgid "Classic Rock"
-msgstr "Classic Rock"
-
-#: src/libaudgui/infowin.c:74
-msgid "Country"
-msgstr "Country"
-
-#: src/libaudgui/infowin.c:74
-msgid "Dance"
-msgstr "Dance"
-
-#: src/libaudgui/infowin.c:75
-msgid "Disco"
-msgstr "Disco"
-
-#: src/libaudgui/infowin.c:75
-msgid "Funk"
-msgstr "Funk"
-
-#: src/libaudgui/infowin.c:75
-msgid "Grunge"
-msgstr "cGrunge"
-
-#: src/libaudgui/infowin.c:75
-msgid "Hip-Hop"
-msgstr "Hip-Hop"
-
-#: src/libaudgui/infowin.c:76
-msgid "Jazz"
-msgstr "Jazz"
-
-#: src/libaudgui/infowin.c:76
-msgid "Metal"
-msgstr "Metal"
-
-#: src/libaudgui/infowin.c:76
-msgid "New Age"
-msgstr "New Age"
-
-#: src/libaudgui/infowin.c:76
-msgid "Oldies"
-msgstr "Oldies"
-
-#: src/libaudgui/infowin.c:77
-msgid "Other"
-msgstr "Other"
-
-#: src/libaudgui/infowin.c:77
-msgid "Pop"
-msgstr "cPopsas"
-
-#: src/libaudgui/infowin.c:77
-msgid "R&B"
-msgstr "R&B"
-
-#: src/libaudgui/infowin.c:77
-msgid "Rap"
-msgstr "Rap"
-
-#: src/libaudgui/infowin.c:77
-msgid "Reggae"
-msgstr "cRegis"
-
-#: src/libaudgui/infowin.c:78
-msgid "Rock"
-msgstr "Rock"
-
-#: src/libaudgui/infowin.c:78
-msgid "Techno"
-msgstr "Techno"
-
-#: src/libaudgui/infowin.c:78
-msgid "Industrial"
-msgstr "Industrial"
-
-#: src/libaudgui/infowin.c:78
-msgid "Alternative"
-msgstr "Alternative"
+msgid "Acid Rock"
+msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:79
-msgid "Ska"
-msgstr "Ska"
-
-#: src/libaudgui/infowin.c:79
-msgid "Death Metal"
-msgstr "Death Metal"
-
-#: src/libaudgui/infowin.c:79
-#, fuzzy
-msgid "Pranks"
-msgstr "Pranks"
-
-#: src/libaudgui/infowin.c:79
-msgid "Soundtrack"
-msgstr "Soundtrack"
-
-#: src/libaudgui/infowin.c:80
-msgid "Euro-Techno"
-msgstr "Euro-Techno"
-
-#: src/libaudgui/infowin.c:80
 msgid "Ambient"
 msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:80
-msgid "Trip-Hop"
-msgstr "Trip-Hop"
-
-#: src/libaudgui/infowin.c:80
-msgid "Vocal"
-msgstr "Vocal"
+#, fuzzy
+msgid "Bebop"
+msgstr "Bebob"
 
 #: src/libaudgui/infowin.c:81
-msgid "Jazz+Funk"
-msgstr "Jazz+Funk"
+msgid "Bluegrass"
+msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:81
-msgid "Fusion"
-msgstr "Fusion"
+#: src/libaudgui/infowin.c:82
+#, fuzzy
+msgid "Blues"
+msgstr "Blues"
 
-#: src/libaudgui/infowin.c:81
-msgid "Trance"
-msgstr "Trance"
+#: src/libaudgui/infowin.c:83
+msgid "Chamber Music"
+msgstr "c"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:84
 msgid "Classical"
 msgstr "Classical"
 
-#: src/libaudgui/infowin.c:82
-msgid "Instrumental"
-msgstr "Instrumental"
-
-#: src/libaudgui/infowin.c:82
-msgid "Acid"
-msgstr "Acid"
-
-#: src/libaudgui/infowin.c:82
-msgid "House"
-msgstr "House"
-
-#: src/libaudgui/infowin.c:82
-msgid "Game"
-msgstr "Game"
-
-#: src/libaudgui/infowin.c:83
-msgid "Sound Clip"
-msgstr "Sound Clip"
-
-#: src/libaudgui/infowin.c:83
-msgid "Gospel"
-msgstr "Gospel"
-
-#: src/libaudgui/infowin.c:83
-msgid "Noise"
-msgstr "Noise"
-
-#: src/libaudgui/infowin.c:83
-msgid "AlternRock"
-msgstr "AlternRock"
-
-#: src/libaudgui/infowin.c:84
-#, fuzzy
-msgid "Bass"
-msgstr "Bass"
-
-#: src/libaudgui/infowin.c:84
-msgid "Soul"
-msgstr "Soul"
-
-#: src/libaudgui/infowin.c:84
-msgid "Punk"
-msgstr "Punk"
-
-#: src/libaudgui/infowin.c:84
-msgid "Space"
-msgstr "Space"
-
 #: src/libaudgui/infowin.c:85
-msgid "Meditative"
-msgstr "Meditative"
-
-#: src/libaudgui/infowin.c:85
-msgid "Instrumental Pop"
-msgstr "Instrumental Pop"
+msgid "Country"
+msgstr "Country"
 
 #: src/libaudgui/infowin.c:86
-msgid "Instrumental Rock"
-msgstr "Instrumental Rock"
-
-#: src/libaudgui/infowin.c:86
-msgid "Ethnic"
-msgstr "Ethnic"
-
-#: src/libaudgui/infowin.c:86
-msgid "Gothic"
-msgstr "Gothic"
+msgid "Death Metal"
+msgstr "Death Metal"
 
 #: src/libaudgui/infowin.c:87
-msgid "Darkwave"
-msgstr "Darkwave"
-
-#: src/libaudgui/infowin.c:87
-msgid "Techno-Industrial"
-msgstr "Techno-Industrial"
-
-#: src/libaudgui/infowin.c:87
-msgid "Electronic"
-msgstr "Electronic"
+msgid "Disco"
+msgstr "Disco"
 
 #: src/libaudgui/infowin.c:88
-msgid "Pop-Folk"
-msgstr "Pop-Folk"
-
-#: src/libaudgui/infowin.c:88
-msgid "Eurodance"
-msgstr "Eurodance"
-
-#: src/libaudgui/infowin.c:88
-msgid "Dream"
-msgstr "Dream"
+msgid "Easy Listening"
+msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.c:89
-msgid "Southern Rock"
-msgstr "Southern Rock"
-
-#: src/libaudgui/infowin.c:89
-msgid "Comedy"
-msgstr "Comedy"
-
-#: src/libaudgui/infowin.c:89
-msgid "Cult"
-msgstr "Cult"
+msgid "Folk"
+msgstr "Folk"
 
 #: src/libaudgui/infowin.c:90
+msgid "Funk"
+msgstr "Funk"
+
+#: src/libaudgui/infowin.c:91
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:90
-msgid "Top 40"
-msgstr "Top 40"
-
-#: src/libaudgui/infowin.c:90
-msgid "Christian Rap"
-msgstr "Christian Rap"
-
-#: src/libaudgui/infowin.c:91
-msgid "Pop/Funk"
-msgstr "Pop/Funk"
-
-#: src/libaudgui/infowin.c:91
-msgid "Jungle"
-msgstr "Jungle"
-
-#: src/libaudgui/infowin.c:91
-msgid "Native American"
-msgstr "Native American"
-
 #: src/libaudgui/infowin.c:92
-msgid "Cabaret"
-msgstr "Cabaret"
-
-#: src/libaudgui/infowin.c:92
-msgid "New Wave"
-msgstr "New Wave"
-
-#: src/libaudgui/infowin.c:92
-msgid "Psychedelic"
-msgstr "Psychedelic"
-
-#: src/libaudgui/infowin.c:92
-msgid "Rave"
-msgstr "Rave"
+msgid "Gospel"
+msgstr "Gospel"
 
 #: src/libaudgui/infowin.c:93
-#, fuzzy
-msgid "Showtunes"
-msgstr "Showtunes"
-
-#: src/libaudgui/infowin.c:93
-msgid "Trailer"
-msgstr "Trailer"
-
-#: src/libaudgui/infowin.c:93
-msgid "Lo-Fi"
-msgstr "Lo-Fi"
-
-#: src/libaudgui/infowin.c:93
-msgid "Tribal"
-msgstr "Tribal"
+msgid "Grunge"
+msgstr "cGrunge"
 
 #: src/libaudgui/infowin.c:94
-msgid "Acid Punk"
-msgstr "Acid Punk"
-
-#: src/libaudgui/infowin.c:94
-msgid "Acid Jazz"
-msgstr "Acid Jazz"
-
-#: src/libaudgui/infowin.c:94
-msgid "Polka"
-msgstr "Polka"
-
-#: src/libaudgui/infowin.c:94
-#, fuzzy
-msgid "Retro"
-msgstr "Retro"
-
-#: src/libaudgui/infowin.c:95
-msgid "Musical"
-msgstr "Musical"
-
-#: src/libaudgui/infowin.c:95
-msgid "Rock & Roll"
-msgstr "Rock & Roll"
-
-#: src/libaudgui/infowin.c:95
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:95
-msgid "Folk"
-msgstr "Folk"
-
-#: src/libaudgui/infowin.c:96
-msgid "Folk/Rock"
-msgstr "Folk/Rock"
-
-#: src/libaudgui/infowin.c:96
-msgid "National Folk"
-msgstr "National Folk"
-
-#: src/libaudgui/infowin.c:96
-msgid "Swing"
-msgstr "Swing"
-
-#: src/libaudgui/infowin.c:97
-msgid "Fast-Fusion"
-msgstr "c"
-
-#: src/libaudgui/infowin.c:97
-msgid "Bebob"
-msgstr "Bebob"
-
-#: src/libaudgui/infowin.c:97
-msgid "Latin"
-msgstr "Latin"
-
-#: src/libaudgui/infowin.c:97
-msgid "Revival"
-msgstr "Revival"
-
-#: src/libaudgui/infowin.c:98
-msgid "Celtic"
-msgstr "Celtic"
-
-#: src/libaudgui/infowin.c:98
-msgid "Bluegrass"
-msgstr "Bluegrass"
-
-#: src/libaudgui/infowin.c:98
-msgid "Avantgarde"
-msgstr "Avantgarde"
-
-#: src/libaudgui/infowin.c:99
-msgid "Gothic Rock"
-msgstr "Gothic Rock"
-
-#: src/libaudgui/infowin.c:99
-msgid "Progressive Rock"
-msgstr "Progressive Rock"
-
-#: src/libaudgui/infowin.c:100
-msgid "Psychedelic Rock"
-msgstr "Psychedelic Rock"
-
-#: src/libaudgui/infowin.c:100
-msgid "Symphonic Rock"
-msgstr "Symphonic Rock"
-
-#: src/libaudgui/infowin.c:100
-msgid "Slow Rock"
-msgstr "Slow Rock"
-
-#: src/libaudgui/infowin.c:101
-msgid "Big Band"
-msgstr "Big Band"
-
-#: src/libaudgui/infowin.c:101
-msgid "Chorus"
-msgstr "Chorus"
-
-#: src/libaudgui/infowin.c:101
-msgid "Easy Listening"
-msgstr "Easy Listening"
-
-#: src/libaudgui/infowin.c:102
-msgid "Acoustic"
-msgstr "Acoustic"
-
-#: src/libaudgui/infowin.c:102
-msgid "Humour"
-msgstr "Humour"
-
-#: src/libaudgui/infowin.c:102
-msgid "Speech"
-msgstr "Speech"
-
-#: src/libaudgui/infowin.c:102
-msgid "Chanson"
-msgstr "Chanson"
-
-#: src/libaudgui/infowin.c:103
-msgid "Opera"
-msgstr "Opera"
-
-#: src/libaudgui/infowin.c:103
-msgid "Chamber Music"
-msgstr "c"
-
-#: src/libaudgui/infowin.c:103
-msgid "Sonata"
-msgstr "Sonata"
-
-#: src/libaudgui/infowin.c:103
-msgid "Symphony"
-msgstr "Symphony"
-
-#: src/libaudgui/infowin.c:104
-msgid "Booty Bass"
-msgstr "Booty Bass"
-
-#: src/libaudgui/infowin.c:104
-msgid "Primus"
-msgstr "Primus"
-
-#: src/libaudgui/infowin.c:104
-msgid "Porn Groove"
-msgstr "Porn Groove"
-
-#: src/libaudgui/infowin.c:105
-#, fuzzy
-msgid "Satire"
-msgstr "Stereo"
-
-#: src/libaudgui/infowin.c:105
-#, fuzzy
-msgid "Slow Jam"
-msgstr "Slow Jam"
-
-#: src/libaudgui/infowin.c:105
-msgid "Club"
-msgstr "Club"
-
-#: src/libaudgui/infowin.c:105
-msgid "Tango"
-msgstr "Tango"
-
-#: src/libaudgui/infowin.c:106
-msgid "Samba"
-msgstr "Samba"
-
-#: src/libaudgui/infowin.c:106
-msgid "Folklore"
-msgstr "Folklore"
-
-#: src/libaudgui/infowin.c:106
-msgid "Ballad"
-msgstr "Ballad"
-
-#: src/libaudgui/infowin.c:106
-msgid "Power Ballad"
-msgstr "Power Ballad"
-
-#: src/libaudgui/infowin.c:107
-msgid "Rhythmic Soul"
-msgstr "c"
-
-#: src/libaudgui/infowin.c:107
-msgid "Freestyle"
-msgstr "Freestyle"
-
-#: src/libaudgui/infowin.c:107
-msgid "Duet"
-msgstr "Duet"
-
-#: src/libaudgui/infowin.c:108
-msgid "Punk Rock"
-msgstr "Punk Rock"
-
-#: src/libaudgui/infowin.c:108
-msgid "Drum Solo"
-msgstr "Drum Solo"
-
-#: src/libaudgui/infowin.c:108
-msgid "A Cappella"
-msgstr "A Cappella"
-
-#: src/libaudgui/infowin.c:109
-msgid "Euro-House"
-msgstr "c"
-
-#: src/libaudgui/infowin.c:109
-msgid "Dance Hall"
-msgstr "Dance Hall"
-
-#: src/libaudgui/infowin.c:109
-msgid "Goa"
-msgstr "Goa"
-
-#: src/libaudgui/infowin.c:110
-msgid "Drum & Bass"
-msgstr "Drum & Bass"
-
-#: src/libaudgui/infowin.c:110
-msgid "Club-House"
-msgstr "Club-House"
-
-#: src/libaudgui/infowin.c:110
-msgid "Hardcore"
-msgstr "Hardcore"
-
-#: src/libaudgui/infowin.c:111
-msgid "Terror"
-msgstr "Terror"
-
-#: src/libaudgui/infowin.c:111
-msgid "Indie"
-msgstr "Indie"
-
-#: src/libaudgui/infowin.c:111
-msgid "BritPop"
-msgstr "BritPop"
-
-#: src/libaudgui/infowin.c:111
-msgid "Negerpunk"
-msgstr "Negerpunk"
-
-#: src/libaudgui/infowin.c:112
-msgid "Polsk Punk"
-msgstr "Polsk Punk"
-
-#: src/libaudgui/infowin.c:112
-msgid "Beat"
-msgstr "Beat"
-
-#: src/libaudgui/infowin.c:112
-msgid "Christian Gangsta Rap"
-msgstr "Christian Gangsta Rap"
-
-#: src/libaudgui/infowin.c:113
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.c:113
-msgid "Black Metal"
-msgstr "Black Metal"
+#: src/libaudgui/infowin.c:96
+#, fuzzy
+msgid "Hip-hop"
+msgstr "Hip-Hop"
+
+#: src/libaudgui/infowin.c:97
+msgid "House"
+msgstr "House"
+
+#: src/libaudgui/infowin.c:98
+msgid "Jazz"
+msgstr "Jazz"
+
+#: src/libaudgui/infowin.c:99
+msgid "Jungle"
+msgstr "Jungle"
+
+#: src/libaudgui/infowin.c:100
+msgid "Metal"
+msgstr "Metal"
+
+#: src/libaudgui/infowin.c:101
+msgid "New Age"
+msgstr "New Age"
+
+#: src/libaudgui/infowin.c:102
+msgid "New Wave"
+msgstr "New Wave"
+
+#: src/libaudgui/infowin.c:103
+msgid "Noise"
+msgstr "Noise"
+
+#: src/libaudgui/infowin.c:104
+msgid "Pop"
+msgstr "cPopsas"
+
+#: src/libaudgui/infowin.c:105
+msgid "Punk Rock"
+msgstr "Punk Rock"
+
+#: src/libaudgui/infowin.c:106
+msgid "Rap"
+msgstr "Rap"
+
+#: src/libaudgui/infowin.c:107
+msgid "Reggae"
+msgstr "cRegis"
+
+#: src/libaudgui/infowin.c:108
+msgid "Rock"
+msgstr "Rock"
+
+#: src/libaudgui/infowin.c:109
+#, fuzzy
+msgid "Rock and Roll"
+msgstr "Rock & Roll"
+
+#: src/libaudgui/infowin.c:110
+msgid "Rhythm and Blues"
+msgstr ""
+
+#: src/libaudgui/infowin.c:111
+msgid "Ska"
+msgstr "Ska"
+
+#: src/libaudgui/infowin.c:112
+msgid "Soul"
+msgstr "Soul"
 
 #: src/libaudgui/infowin.c:113
-msgid "Crossover"
-msgstr "c"
+msgid "Swing"
+msgstr "Swing"
 
 #: src/libaudgui/infowin.c:114
-msgid "Contemporary Christian"
-msgstr "Contemporary Christian"
-
-#: src/libaudgui/infowin.c:114
-msgid "Christian Rock"
-msgstr "c"
+msgid "Techno"
+msgstr "Techno"
 
 #: src/libaudgui/infowin.c:115
-msgid "Merengue"
-msgstr "Merengue"
+#, fuzzy
+msgid "Trip-hop"
+msgstr "Trip-Hop"
 
-#: src/libaudgui/infowin.c:115
-msgid "Salsa"
-msgstr "c"
-
-#: src/libaudgui/infowin.c:115
-msgid "Thrash Metal"
-msgstr "Thrash Metal"
-
-#: src/libaudgui/infowin.c:116
-msgid "Anime"
-msgstr "Anime"
-
-#: src/libaudgui/infowin.c:116
-msgid "JPop"
-msgstr "JPop"
-
-#: src/libaudgui/infowin.c:116
-msgid "Synthpop"
-msgstr "Synthpop"
-
-#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:363
-#: src/libaudgui/infowin.c:366 src/libaudgui/infowin.c:369
+#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
+#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
 #, fuzzy
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"medium\"><b>Media</b></span>"
 
-#: src/libaudgui/infowin.c:267
+#: src/libaudgui/infowin.c:265
 msgid "Metadata updated successfully"
 msgstr ""
 
-#: src/libaudgui/infowin.c:272
+#: src/libaudgui/infowin.c:270
 msgid "Metadata updating failed"
 msgstr ""
 
-#: src/libaudgui/infowin.c:320
+#: src/libaudgui/infowin.c:318
 #, fuzzy
 msgid "Track Information"
 msgstr "CD Audio grotuvo konfigūravimas"
 
-#: src/libaudgui/infowin.c:352
+#: src/libaudgui/infowin.c:350
 #, fuzzy
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/libaudgui/infowin.c:356
+#: src/libaudgui/infowin.c:354
 #, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"medium\"><b>Media</b></span>"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.c:357
 #, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/libaudgui/infowin.c:389
+#: src/libaudgui/infowin.c:387
 #, fuzzy
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"medium\"><b>Media</b></span>"
 
-#: src/libaudgui/infowin.c:401
+#: src/libaudgui/infowin.c:399
 #, fuzzy
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"medium\"><b>Išvestis</b></span>"
 
-#: src/libaudgui/infowin.c:413
+#: src/libaudgui/infowin.c:411
 #, fuzzy
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"medium\"><b>Išvestis</b></span>"
 
-#: src/libaudgui/infowin.c:425
+#: src/libaudgui/infowin.c:423
 #, fuzzy
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/libaudgui/infowin.c:437
+#: src/libaudgui/infowin.c:435
 #, fuzzy
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/libaudgui/infowin.c:458
+#: src/libaudgui/infowin.c:456
 #, fuzzy
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"medium\"><b>Media</b></span>"
 
-#: src/libaudgui/infowin.c:469
+#: src/libaudgui/infowin.c:467
 #, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
 
-#: src/libaudgui/infowin.c:551
+#: src/libaudgui/infowin.c:549
 #, fuzzy, c-format
 msgid "%d kb/s"
 msgstr "%d KBit/s"
 
-#: src/libaudgui/infowin.c:581
+#: src/libaudgui/infowin.c:579
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
@@ -1712,64 +1264,423 @@ msgstr ""
 msgid "Add URL"
 msgstr "Pridėti URL"
 
-#: src/libeggsmclient/eggdesktopfile.c:138
+#: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:160
+#: src/libeggsmclient/eggdesktopfile.c:188
 #, fuzzy, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "%s: neatpažintas raktas „--%s“\n"
 
-#: src/libeggsmclient/eggdesktopfile.c:871
+#: src/libeggsmclient/eggdesktopfile.c:968
 #, fuzzy, c-format
 msgid "Starting %s"
 msgstr "Į italų k.:"
 
-#: src/libeggsmclient/eggdesktopfile.c:1007
+#: src/libeggsmclient/eggdesktopfile.c:1110
 msgid "Application does not accept documents on command line"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:1075
+#: src/libeggsmclient/eggdesktopfile.c:1178
 #, fuzzy, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "%s: neatpažintas raktas „--%s“\n"
 
-#: src/libeggsmclient/eggdesktopfile.c:1277
+#: src/libeggsmclient/eggdesktopfile.c:1383
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:1296
+#: src/libeggsmclient/eggdesktopfile.c:1404
 msgid "Not a launchable item"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:183
+#: src/libeggsmclient/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:186
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:186
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "FILE"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:189
+#: src/libeggsmclient/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:189
+#: src/libeggsmclient/eggsmclient.c:232
 msgid "ID"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:225
-msgid "Session Management Options"
+#: src/libeggsmclient/eggsmclient.c:253
+msgid "Session management options:"
 msgstr ""
 
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "Show Session Management options"
+#: src/libeggsmclient/eggsmclient.c:254
+msgid "Show session management options"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s: Unable to open display, exiting.\n"
+#~ msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
+
+#, fuzzy
+#~ msgid "Preamp:"
+#~ msgstr "Dream"
+
+#, fuzzy
+#~ msgid "Default gain:"
+#~ msgstr "Įprastasis rūbas:"
+
+#, fuzzy
+#~ msgid "<b>Replay Gain configuration</b>"
+#~ msgstr "MPEG garso įskiepio konfigūravimas"
+
+#, fuzzy
+#~ msgid "Track gain/peak"
+#~ msgstr "Takelio pavadinimas"
+
+#~ msgid "Classic Rock"
+#~ msgstr "Classic Rock"
+
+#~ msgid "Dance"
+#~ msgstr "Dance"
+
+#~ msgid "Oldies"
+#~ msgstr "Oldies"
+
+#~ msgid "Other"
+#~ msgstr "Other"
+
+#~ msgid "R&B"
+#~ msgstr "R&B"
+
+#~ msgid "Industrial"
+#~ msgstr "Industrial"
+
+#~ msgid "Alternative"
+#~ msgstr "Alternative"
+
+#, fuzzy
+#~ msgid "Pranks"
+#~ msgstr "Pranks"
+
+#~ msgid "Soundtrack"
+#~ msgstr "Soundtrack"
+
+#~ msgid "Euro-Techno"
+#~ msgstr "Euro-Techno"
+
+#~ msgid "Vocal"
+#~ msgstr "Vocal"
+
+#~ msgid "Jazz+Funk"
+#~ msgstr "Jazz+Funk"
+
+#~ msgid "Fusion"
+#~ msgstr "Fusion"
+
+#~ msgid "Trance"
+#~ msgstr "Trance"
+
+#~ msgid "Instrumental"
+#~ msgstr "Instrumental"
+
+#~ msgid "Acid"
+#~ msgstr "Acid"
+
+#~ msgid "Game"
+#~ msgstr "Game"
+
+#~ msgid "Sound Clip"
+#~ msgstr "Sound Clip"
+
+#~ msgid "AlternRock"
+#~ msgstr "AlternRock"
+
+#, fuzzy
+#~ msgid "Bass"
+#~ msgstr "Bass"
+
+#~ msgid "Punk"
+#~ msgstr "Punk"
+
+#~ msgid "Space"
+#~ msgstr "Space"
+
+#~ msgid "Meditative"
+#~ msgstr "Meditative"
+
+#~ msgid "Instrumental Pop"
+#~ msgstr "Instrumental Pop"
+
+#~ msgid "Instrumental Rock"
+#~ msgstr "Instrumental Rock"
+
+#~ msgid "Ethnic"
+#~ msgstr "Ethnic"
+
+#~ msgid "Gothic"
+#~ msgstr "Gothic"
+
+#~ msgid "Darkwave"
+#~ msgstr "Darkwave"
+
+#~ msgid "Techno-Industrial"
+#~ msgstr "Techno-Industrial"
+
+#~ msgid "Electronic"
+#~ msgstr "Electronic"
+
+#~ msgid "Pop-Folk"
+#~ msgstr "Pop-Folk"
+
+#~ msgid "Eurodance"
+#~ msgstr "Eurodance"
+
+#~ msgid "Dream"
+#~ msgstr "Dream"
+
+#~ msgid "Southern Rock"
+#~ msgstr "Southern Rock"
+
+#~ msgid "Comedy"
+#~ msgstr "Comedy"
+
+#~ msgid "Cult"
+#~ msgstr "Cult"
+
+#~ msgid "Top 40"
+#~ msgstr "Top 40"
+
+#~ msgid "Christian Rap"
+#~ msgstr "Christian Rap"
+
+#~ msgid "Pop/Funk"
+#~ msgstr "Pop/Funk"
+
+#~ msgid "Native American"
+#~ msgstr "Native American"
+
+#~ msgid "Cabaret"
+#~ msgstr "Cabaret"
+
+#~ msgid "Psychedelic"
+#~ msgstr "Psychedelic"
+
+#~ msgid "Rave"
+#~ msgstr "Rave"
+
+#, fuzzy
+#~ msgid "Showtunes"
+#~ msgstr "Showtunes"
+
+#~ msgid "Trailer"
+#~ msgstr "Trailer"
+
+#~ msgid "Lo-Fi"
+#~ msgstr "Lo-Fi"
+
+#~ msgid "Tribal"
+#~ msgstr "Tribal"
+
+#~ msgid "Acid Punk"
+#~ msgstr "Acid Punk"
+
+#~ msgid "Polka"
+#~ msgstr "Polka"
+
+#, fuzzy
+#~ msgid "Retro"
+#~ msgstr "Retro"
+
+#~ msgid "Musical"
+#~ msgstr "Musical"
+
+#~ msgid "Folk/Rock"
+#~ msgstr "Folk/Rock"
+
+#~ msgid "National Folk"
+#~ msgstr "National Folk"
+
+#~ msgid "Fast-Fusion"
+#~ msgstr "c"
+
+#~ msgid "Latin"
+#~ msgstr "Latin"
+
+#~ msgid "Revival"
+#~ msgstr "Revival"
+
+#~ msgid "Celtic"
+#~ msgstr "Celtic"
+
+#~ msgid "Avantgarde"
+#~ msgstr "Avantgarde"
+
+#~ msgid "Gothic Rock"
+#~ msgstr "Gothic Rock"
+
+#~ msgid "Progressive Rock"
+#~ msgstr "Progressive Rock"
+
+#~ msgid "Psychedelic Rock"
+#~ msgstr "Psychedelic Rock"
+
+#~ msgid "Symphonic Rock"
+#~ msgstr "Symphonic Rock"
+
+#~ msgid "Slow Rock"
+#~ msgstr "Slow Rock"
+
+#~ msgid "Big Band"
+#~ msgstr "Big Band"
+
+#~ msgid "Chorus"
+#~ msgstr "Chorus"
+
+#~ msgid "Acoustic"
+#~ msgstr "Acoustic"
+
+#~ msgid "Humour"
+#~ msgstr "Humour"
+
+#~ msgid "Speech"
+#~ msgstr "Speech"
+
+#~ msgid "Chanson"
+#~ msgstr "Chanson"
+
+#~ msgid "Opera"
+#~ msgstr "Opera"
+
+#~ msgid "Sonata"
+#~ msgstr "Sonata"
+
+#~ msgid "Symphony"
+#~ msgstr "Symphony"
+
+#~ msgid "Booty Bass"
+#~ msgstr "Booty Bass"
+
+#~ msgid "Primus"
+#~ msgstr "Primus"
+
+#~ msgid "Porn Groove"
+#~ msgstr "Porn Groove"
+
+#, fuzzy
+#~ msgid "Satire"
+#~ msgstr "Stereo"
+
+#, fuzzy
+#~ msgid "Slow Jam"
+#~ msgstr "Slow Jam"
+
+#~ msgid "Club"
+#~ msgstr "Club"
+
+#~ msgid "Tango"
+#~ msgstr "Tango"
+
+#~ msgid "Samba"
+#~ msgstr "Samba"
+
+#~ msgid "Folklore"
+#~ msgstr "Folklore"
+
+#~ msgid "Ballad"
+#~ msgstr "Ballad"
+
+#~ msgid "Power Ballad"
+#~ msgstr "Power Ballad"
+
+#~ msgid "Rhythmic Soul"
+#~ msgstr "c"
+
+#~ msgid "Freestyle"
+#~ msgstr "Freestyle"
+
+#~ msgid "Duet"
+#~ msgstr "Duet"
+
+#~ msgid "Drum Solo"
+#~ msgstr "Drum Solo"
+
+#~ msgid "A Cappella"
+#~ msgstr "A Cappella"
+
+#~ msgid "Euro-House"
+#~ msgstr "c"
+
+#~ msgid "Dance Hall"
+#~ msgstr "Dance Hall"
+
+#~ msgid "Goa"
+#~ msgstr "Goa"
+
+#~ msgid "Drum & Bass"
+#~ msgstr "Drum & Bass"
+
+#~ msgid "Club-House"
+#~ msgstr "Club-House"
+
+#~ msgid "Hardcore"
+#~ msgstr "Hardcore"
+
+#~ msgid "Terror"
+#~ msgstr "Terror"
+
+#~ msgid "Indie"
+#~ msgstr "Indie"
+
+#~ msgid "BritPop"
+#~ msgstr "BritPop"
+
+#~ msgid "Negerpunk"
+#~ msgstr "Negerpunk"
+
+#~ msgid "Polsk Punk"
+#~ msgstr "Polsk Punk"
+
+#~ msgid "Beat"
+#~ msgstr "Beat"
+
+#~ msgid "Christian Gangsta Rap"
+#~ msgstr "Christian Gangsta Rap"
+
+#~ msgid "Black Metal"
+#~ msgstr "Black Metal"
+
+#~ msgid "Crossover"
+#~ msgstr "c"
+
+#~ msgid "Contemporary Christian"
+#~ msgstr "Contemporary Christian"
+
+#~ msgid "Christian Rock"
+#~ msgstr "c"
+
+#~ msgid "Merengue"
+#~ msgstr "Merengue"
+
+#~ msgid "Salsa"
+#~ msgstr "c"
+
+#~ msgid "Thrash Metal"
+#~ msgstr "Thrash Metal"
+
+#~ msgid "Anime"
+#~ msgstr "Anime"
+
+#~ msgid "JPop"
+#~ msgstr "JPop"
+
+#~ msgid "Synthpop"
+#~ msgstr "Synthpop"
 
 #, fuzzy
 #~ msgid ""
@@ -2018,9 +1929,6 @@ msgstr ""
 
 #~ msgid "lines"
 #~ msgstr "eilučių"
-
-#~ msgid "<b>Mouse wheel</b>"
-#~ msgstr "<b>Pelės ratukas</b>"
 
 #, fuzzy
 #~ msgid "Stop after Current Song"
@@ -2341,10 +2249,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "View Track Details"
-#~ msgstr "/Takelio informacija"
-
-#, fuzzy
-#~ msgid "View track details"
 #~ msgstr "/Takelio informacija"
 
 #, fuzzy
@@ -3010,10 +2914,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Track name: "
 #~ msgstr "Takelių pavadinimai:"
-
-#, fuzzy
-#~ msgid "Album name: "
-#~ msgstr "Albumas"
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
@@ -4352,10 +4252,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Vorbis encoding:"
 #~ msgstr "ID3 aprašų koduotė:"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Bylos vardas</b>"
 
 #, fuzzy
 #~ msgid "<b>WMA Version:</b>"

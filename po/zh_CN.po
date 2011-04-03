@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-03-13 18:51-0400\n"
+"POT-Creation-Date: 2011-04-03 18:02-0400\n"
 "PO-Revision-Date: 2008-04-05 21:45+0800\n"
 "Last-Translator: sylecn <sylecn@yahoo.com.cn>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/audacious/chardet.c:39
+#: src/audacious/chardet.c:37
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的 UTF-8 字符)"
 
@@ -201,94 +201,90 @@ msgstr "乌克兰语："
 msgid "Welsh:"
 msgstr "威尔斯语："
 
-#: src/audacious/drct.c:255
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "载入播放列表"
 
-#: src/audacious/equalizer_preset.c:187
+#: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "导入Winamp EQF文件时发生错误 '%s'"
 
-#: src/audacious/folder-add.c:55
+#: src/audacious/folder-add.c:63
 msgid "Searching ..."
 msgstr ""
 
-#: src/audacious/folder-add.c:79
+#: src/audacious/folder-add.c:89
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/audacious/main.c:71
-msgid "Audacious"
-msgstr "Audacious"
-
-#: src/audacious/main.c:271
+#: src/audacious/main.c:247
 msgid "Skip backwards in playlist"
 msgstr "播放上一首"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:248
 msgid "Start playing current playlist"
 msgstr "播放当前列表"
 
-#: src/audacious/main.c:273
+#: src/audacious/main.c:249
 msgid "Pause current song"
 msgstr "暂停播放"
 
-#: src/audacious/main.c:274
+#: src/audacious/main.c:250
 msgid "Stop current song"
 msgstr "停止播放"
 
-#: src/audacious/main.c:275
+#: src/audacious/main.c:251
 msgid "Pause if playing, play otherwise"
 msgstr "如正播放则暂停，否则播放"
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:252
 msgid "Skip forward in playlist"
 msgstr "播放下一首"
 
-#: src/audacious/main.c:277
+#: src/audacious/main.c:253
 msgid "Display Jump to File dialog"
 msgstr "显示 “跳到文件” 对话框"
 
-#: src/audacious/main.c:278
+#: src/audacious/main.c:254
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "添加文件到列表"
 
-#: src/audacious/main.c:279
+#: src/audacious/main.c:255
 msgid "Add new files to a temporary playlist"
 msgstr "添加新文件到临时列表"
 
-#: src/audacious/main.c:280
+#: src/audacious/main.c:256
 msgid "Display the main window"
 msgstr "显示主窗口"
 
-#: src/audacious/main.c:281
+#: src/audacious/main.c:257
 msgid "Display all open Audacious windows"
 msgstr "显示全部开打的 Audacious 窗口"
 
-#: src/audacious/main.c:282
+#: src/audacious/main.c:258
 #, fuzzy
 msgid "Show version"
 msgstr "显示播放器"
 
-#: src/audacious/main.c:283
+#: src/audacious/main.c:259
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:284
+#: src/audacious/main.c:260
 msgid "FILE..."
 msgstr "文件..."
 
-#: src/audacious/main.c:296
+#: src/audacious/main.c:272
 msgid "- play multimedia files"
 msgstr "- 播放多媒体文件"
 
-#: src/audacious/main.c:307
+#: src/audacious/main.c:282
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -297,30 +293,28 @@ msgstr ""
 "%s: %s\n"
 "尝试 `%s --help' 来获得更多信息.\n"
 
-#: src/audacious/main.c:328
-#, c-format
+#: src/audacious/main.c:395
 msgid ""
-"Running multiple instances of Audacious can lead to corrupted configuration "
-"files.  If Audacious is not already running, or if you want to run another "
-"instance anyway, please delete the file %s and run Audacious again.  "
-"Audacious will now close."
+"Audacious seems to be already running but is not responding.  You can start "
+"another instance of the program, but please be warned that this can cause "
+"data loss.  If Audacious is not running, you can safely ignore this "
+"message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:549
-#, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr "%s： 无法使用显示器设备，正在退出。\n"
+#: src/audacious/main.c:558
+msgid "Audacious"
+msgstr "Audacious"
 
-#: src/audacious/playback.c:373
+#: src/audacious/playback.c:372
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:517
+#: src/audacious/playback.c:516
 msgid "Buffering ..."
 msgstr ""
 
-#: src/audacious/playlist-new.c:286
+#: src/audacious/playlist-new.c:288
 #, fuzzy
 msgid "Untitled Playlist"
 msgstr "新播放列表"
@@ -337,7 +331,7 @@ msgstr "播放增益"
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1786
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -480,104 +474,100 @@ msgid ""
 msgstr "使用软音量控制。在你的回放系统不支持音量调节时可以使用这个设置。"
 
 #: src/audacious/ui_preferences.c:158
-msgid "Preamp:"
-msgstr "前置放大器："
+msgid "Amplify all files:"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:158 src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:159 src/audacious/ui_preferences.c:161
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:159
-msgid "Default gain:"
-msgstr "默认增益："
-
-#: src/audacious/ui_preferences.c:159
-msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-msgstr "如果文件不包含回放增益数据则使用这个增益。"
-
 #: src/audacious/ui_preferences.c:160
-msgid ""
-"<span size=\"small\">Please remember that the most efficient way to prevent "
-"signal clipping is not to use positive values above.</span>"
-msgstr ""
-"<span size=\"small\">请注意避免声音信号削波的最有效率的办法是上面这个参数不设"
-"为正值。</span>"
+#, fuzzy
+msgid "Amplify untagged files:"
+msgstr "- 播放多媒体文件"
 
 #: src/audacious/ui_preferences.c:164
-msgid "<b>Replay Gain configuration</b>"
-msgstr "<b>回放增益配置</b>"
+#, fuzzy
+msgid "<b>Replay Gain</b>"
+msgstr "<b>回放增益模式</b>"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Enable Replay Gain"
 msgstr "启用回放增益"
 
-#: src/audacious/ui_preferences.c:166
-msgid "<b>Replay Gain mode</b>"
-msgstr "<b>回放增益模式</b>"
-
 #: src/audacious/ui_preferences.c:167
-msgid "Track gain/peak"
-msgstr "音轨增益/峰值"
+#, fuzzy
+msgid "<b>Mode</b>"
+msgstr "<b>歌曲信息</b>"
 
 #: src/audacious/ui_preferences.c:168
-msgid "Album gain/peak"
-msgstr "专辑增益/峰值"
-
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:893
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>杂项</b>"
+#, fuzzy
+msgid "Single track mode"
+msgstr "查看音轨详细信息"
 
 #: src/audacious/ui_preferences.c:170
-msgid "Enable peak info clipping prevention"
-msgstr "启用峰值信息避免削波"
+#, fuzzy
+msgid "Album mode"
+msgstr "专辑名称："
 
-#: src/audacious/ui_preferences.c:171
-msgid "Use peak value from Replay Gain info for clipping prevention"
-msgstr "使用回复增益的峰值信息避免削波"
+#: src/audacious/ui_preferences.c:172
+#, fuzzy
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>鼠标滚轮</b>"
+
+#: src/audacious/ui_preferences.c:175
+#, fuzzy
+msgid "<b>Clipping Prevention</b>"
+msgstr "<b>弹出信息</b>"
 
 #: src/audacious/ui_preferences.c:176
+#, fuzzy
+msgid "Enable clipping prevention"
+msgstr "启用峰值信息避免削波"
+
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy hostname:"
 msgstr "代理主机名："
 
-#: src/audacious/ui_preferences.c:177
+#: src/audacious/ui_preferences.c:181
 msgid "Proxy port:"
 msgstr "代理端口："
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:185
 msgid "Proxy username:"
 msgstr "代理用户名："
 
-#: src/audacious/ui_preferences.c:182
+#: src/audacious/ui_preferences.c:186
 msgid "Proxy password:"
 msgstr "代理密码："
 
-#: src/audacious/ui_preferences.c:186
+#: src/audacious/ui_preferences.c:190
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理服务器配置</b>"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:191
 msgid "Enable proxy usage"
 msgstr "启用代理服务器"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:194
 msgid "Use authentication with proxy"
 msgstr "使用代理身份验证"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:197
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr "<span size=\"small\">这些设置将在重启 Audacious 后生效。</span>"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:201
 msgid "Auto character encoding detector for:"
 msgstr "使用自动编码检测器检测这些编码："
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:209
 msgid "Fallback character encodings:"
 msgstr "备用字符编码："
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:209
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -587,46 +577,46 @@ msgstr ""
 "元数据转换使用的备用字符编码列表。如果自动编码转换检测器失败或被禁用，列表中"
 "的编码将被作为元数据编码的候选，并将试图由此转换到 UTF-8。"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
 msgid "<b>Behavior</b>"
 msgstr "<b>位深(Bit Depth)</b>"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:214
 msgid "Continue playback on startup"
 msgstr "在启动时恢复播放"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:216
 msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:218
 #, fuzzy
 msgid "Clear the playlist when opening files"
 msgstr "将搜索结果建立为新的播放列表"
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:220
 #, fuzzy
 msgid "Open files in a temporary playlist"
 msgstr "添加新文件到临时列表"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:222
 msgid "<b>Metadata</b>"
 msgstr "<b>歌曲信息</b>"
 
-#: src/audacious/ui_preferences.c:497
+#: src/audacious/ui_preferences.c:501
 msgid "Category"
 msgstr "种类"
 
-#: src/audacious/ui_preferences.c:811
+#: src/audacious/ui_preferences.c:815
 msgid "Popup Information Settings"
 msgstr "弹出信息设置"
 
-#: src/audacious/ui_preferences.c:820
+#: src/audacious/ui_preferences.c:824
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>专辑封面检索</b>"
 
-#: src/audacious/ui_preferences.c:825
+#: src/audacious/ui_preferences.c:829
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -635,95 +625,99 @@ msgstr ""
 "当搜索专辑封面时，Audacious 搜索文件名中的关键字。您可以在下面列表中指定它"
 "们，用逗号隔开。"
 
-#: src/audacious/ui_preferences.c:842
+#: src/audacious/ui_preferences.c:846
 msgid "Exclude:"
 msgstr "排除："
 
-#: src/audacious/ui_preferences.c:849
+#: src/audacious/ui_preferences.c:853
 msgid "Include:"
 msgstr "包括："
 
-#: src/audacious/ui_preferences.c:866
+#: src/audacious/ui_preferences.c:870
 msgid "Recursively search for cover"
 msgstr "递归搜索封面"
 
-#: src/audacious/ui_preferences.c:876
+#: src/audacious/ui_preferences.c:880
 msgid "Search depth: "
 msgstr "搜索深度："
 
-#: src/audacious/ui_preferences.c:890
+#: src/audacious/ui_preferences.c:894
 msgid "Use per-file cover"
 msgstr "为每个文件使用单独封面"
 
-#: src/audacious/ui_preferences.c:902
+#: src/audacious/ui_preferences.c:897
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>杂项</b>"
+
+#: src/audacious/ui_preferences.c:906
 msgid "Show Progress bar for the current track"
 msgstr "为当前音轨显示进度条"
 
-#: src/audacious/ui_preferences.c:912
+#: src/audacious/ui_preferences.c:916
 msgid "Delay until filepopup comes up: "
 msgstr "显示歌曲信息延时："
 
-#: src/audacious/ui_preferences.c:1455
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Song Display</b>"
 msgstr "<b> 歌曲显示</b>"
 
-#: src/audacious/ui_preferences.c:1464
+#: src/audacious/ui_preferences.c:1468
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1475
+#: src/audacious/ui_preferences.c:1479
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1497
+#: src/audacious/ui_preferences.c:1501
 msgid "Show information about titlestring format"
 msgstr "显示标题格式信息"
 
-#: src/audacious/ui_preferences.c:1510
+#: src/audacious/ui_preferences.c:1514
 msgid "TITLE"
 msgstr "标题"
 
-#: src/audacious/ui_preferences.c:1511
+#: src/audacious/ui_preferences.c:1515
 msgid "ARTIST - TITLE"
 msgstr "艺术家 - 标题"
 
-#: src/audacious/ui_preferences.c:1512
+#: src/audacious/ui_preferences.c:1516
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "艺术家 - 专辑 - 标题"
 
-#: src/audacious/ui_preferences.c:1513
+#: src/audacious/ui_preferences.c:1517
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "艺术家 - 专辑 - 曲目号. 标题"
 
-#: src/audacious/ui_preferences.c:1514
+#: src/audacious/ui_preferences.c:1518
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "艺术家 [专辑] - 曲目号. 标题"
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1519
 msgid "ALBUM - TITLE"
 msgstr "专辑 - 标题"
 
-#: src/audacious/ui_preferences.c:1516
+#: src/audacious/ui_preferences.c:1520
 msgid "Custom"
 msgstr "自定义"
 
-#: src/audacious/ui_preferences.c:1523
+#: src/audacious/ui_preferences.c:1527
 msgid "Custom string:"
 msgstr "自定义字符串："
 
-#: src/audacious/ui_preferences.c:1530
+#: src/audacious/ui_preferences.c:1534
 msgid "Title format:"
 msgstr "标题格式："
 
-#: src/audacious/ui_preferences.c:1541
+#: src/audacious/ui_preferences.c:1545
 msgid "<b>Popup Information</b>"
 msgstr "<b>弹出信息</b>"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1560
 msgid "Show popup information for playlist entries"
 msgstr "显示播放列表项弹出信息"
 
-#: src/audacious/ui_preferences.c:1558
+#: src/audacious/ui_preferences.c:1562
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -732,45 +726,45 @@ msgstr ""
 "切换播放列表中鼠标指向的项的弹出信息窗口。该窗口显示歌曲标题、专辑名、流派信"
 "息、发布年份，音轨编号，音轨长度和艺术品(专辑封面)。"
 
-#: src/audacious/ui_preferences.c:1564
+#: src/audacious/ui_preferences.c:1568
 msgid "Edit settings for popup information"
 msgstr "编辑弹出信息的设置"
 
-#: src/audacious/ui_preferences.c:1694
+#: src/audacious/ui_preferences.c:1698
 msgid "<b>Audio System</b>"
 msgstr "<b>音频系统</b>"
 
-#: src/audacious/ui_preferences.c:1711
+#: src/audacious/ui_preferences.c:1715
 msgid "Buffer size:"
 msgstr "缓冲区大小："
 
-#: src/audacious/ui_preferences.c:1730
+#: src/audacious/ui_preferences.c:1734
 msgid "Current output plugin:"
 msgstr "当前输出插件："
 
-#: src/audacious/ui_preferences.c:1786
+#: src/audacious/ui_preferences.c:1790
 #, fuzzy
 msgid "Transport"
 msgstr "翻译者"
 
-#: src/audacious/ui_preferences.c:1786
+#: src/audacious/ui_preferences.c:1790
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1791
 #, fuzzy
 msgid "Effect"
 msgstr "<b>效果</b>"
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1791
 msgid "Visualization"
 msgstr "视觉化"
 
-#: src/audacious/ui_preferences.c:1787
+#: src/audacious/ui_preferences.c:1791
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1827
+#: src/audacious/ui_preferences.c:1831
 msgid "Audacious Preferences"
 msgstr "Audacious 首选项"
 
@@ -884,661 +878,230 @@ msgstr "音轨编号"
 msgid "Track Length"
 msgstr "音轨长度"
 
-#: src/libaudgui/infowin.c:74
-msgid "Blues"
-msgstr "Blues"
-
-#: src/libaudgui/infowin.c:74
-msgid "Classic Rock"
-msgstr "Classic Rock"
-
-#: src/libaudgui/infowin.c:74
-msgid "Country"
-msgstr "Country"
-
-#: src/libaudgui/infowin.c:74
-msgid "Dance"
-msgstr "Dance"
-
-#: src/libaudgui/infowin.c:75
-msgid "Disco"
-msgstr "Disco"
-
-#: src/libaudgui/infowin.c:75
-msgid "Funk"
-msgstr "Funk"
-
-#: src/libaudgui/infowin.c:75
-msgid "Grunge"
-msgstr "Grunge"
-
-#: src/libaudgui/infowin.c:75
-msgid "Hip-Hop"
-msgstr "Hip-Hop"
-
-#: src/libaudgui/infowin.c:76
-msgid "Jazz"
-msgstr "Jazz"
-
-#: src/libaudgui/infowin.c:76
-msgid "Metal"
-msgstr "Metal"
-
-#: src/libaudgui/infowin.c:76
-msgid "New Age"
-msgstr "New Age"
-
-#: src/libaudgui/infowin.c:76
-msgid "Oldies"
-msgstr "Oldies"
-
 #: src/libaudgui/infowin.c:77
-msgid "Other"
-msgstr "Other"
-
-#: src/libaudgui/infowin.c:77
-msgid "Pop"
-msgstr "Pop"
-
-#: src/libaudgui/infowin.c:77
-msgid "R&B"
-msgstr "R&B"
-
-#: src/libaudgui/infowin.c:77
-msgid "Rap"
-msgstr "Rap"
-
-#: src/libaudgui/infowin.c:77
-msgid "Reggae"
-msgstr "Reggae"
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:78
-msgid "Rock"
-msgstr "Rock"
-
-#: src/libaudgui/infowin.c:78
-msgid "Techno"
-msgstr "Techno"
-
-#: src/libaudgui/infowin.c:78
-msgid "Industrial"
-msgstr "Industrial"
-
-#: src/libaudgui/infowin.c:78
-msgid "Alternative"
-msgstr "Alternative"
+#, fuzzy
+msgid "Acid Rock"
+msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:79
-msgid "Ska"
-msgstr "Ska"
-
-#: src/libaudgui/infowin.c:79
-msgid "Death Metal"
-msgstr "Death Metal"
-
-#: src/libaudgui/infowin.c:79
-msgid "Pranks"
-msgstr "Pranks"
-
-#: src/libaudgui/infowin.c:79
-msgid "Soundtrack"
-msgstr "Soundtrack"
-
-#: src/libaudgui/infowin.c:80
-msgid "Euro-Techno"
-msgstr "Euro-Techno"
-
-#: src/libaudgui/infowin.c:80
 msgid "Ambient"
 msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:80
-msgid "Trip-Hop"
-msgstr "Trip-Hop"
-
-#: src/libaudgui/infowin.c:80
-msgid "Vocal"
-msgstr "Vocal"
+#, fuzzy
+msgid "Bebop"
+msgstr "Bebob"
 
 #: src/libaudgui/infowin.c:81
-msgid "Jazz+Funk"
-msgstr "Jazz+Funk"
+msgid "Bluegrass"
+msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:81
-msgid "Fusion"
-msgstr "Fusion"
+#: src/libaudgui/infowin.c:82
+msgid "Blues"
+msgstr "Blues"
 
-#: src/libaudgui/infowin.c:81
-msgid "Trance"
-msgstr "Trance"
+#: src/libaudgui/infowin.c:83
+msgid "Chamber Music"
+msgstr "Chamber Music"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:84
 msgid "Classical"
 msgstr "Classical"
 
-#: src/libaudgui/infowin.c:82
-msgid "Instrumental"
-msgstr "Instrumental"
-
-#: src/libaudgui/infowin.c:82
-msgid "Acid"
-msgstr "Acid"
-
-#: src/libaudgui/infowin.c:82
-msgid "House"
-msgstr "House"
-
-#: src/libaudgui/infowin.c:82
-msgid "Game"
-msgstr "Game"
-
-#: src/libaudgui/infowin.c:83
-msgid "Sound Clip"
-msgstr "Sound Clip"
-
-#: src/libaudgui/infowin.c:83
-msgid "Gospel"
-msgstr "Gospel"
-
-#: src/libaudgui/infowin.c:83
-msgid "Noise"
-msgstr "Noise"
-
-#: src/libaudgui/infowin.c:83
-msgid "AlternRock"
-msgstr "AlternRock"
-
-#: src/libaudgui/infowin.c:84
-msgid "Bass"
-msgstr "Bass"
-
-#: src/libaudgui/infowin.c:84
-msgid "Soul"
-msgstr "Soul"
-
-#: src/libaudgui/infowin.c:84
-msgid "Punk"
-msgstr "Punk"
-
-#: src/libaudgui/infowin.c:84
-msgid "Space"
-msgstr "Space"
-
 #: src/libaudgui/infowin.c:85
-msgid "Meditative"
-msgstr "Meditative"
-
-#: src/libaudgui/infowin.c:85
-msgid "Instrumental Pop"
-msgstr "Instrumental Pop"
+msgid "Country"
+msgstr "Country"
 
 #: src/libaudgui/infowin.c:86
-msgid "Instrumental Rock"
-msgstr "Instrumental Rock"
-
-#: src/libaudgui/infowin.c:86
-msgid "Ethnic"
-msgstr "Ethnic"
-
-#: src/libaudgui/infowin.c:86
-msgid "Gothic"
-msgstr "Gothic"
+msgid "Death Metal"
+msgstr "Death Metal"
 
 #: src/libaudgui/infowin.c:87
-msgid "Darkwave"
-msgstr "Darkwave"
-
-#: src/libaudgui/infowin.c:87
-msgid "Techno-Industrial"
-msgstr "Techno-Industrial"
-
-#: src/libaudgui/infowin.c:87
-msgid "Electronic"
-msgstr "Electronic"
+msgid "Disco"
+msgstr "Disco"
 
 #: src/libaudgui/infowin.c:88
-msgid "Pop-Folk"
-msgstr "Pop-Folk"
-
-#: src/libaudgui/infowin.c:88
-msgid "Eurodance"
-msgstr "Eurodance"
-
-#: src/libaudgui/infowin.c:88
-msgid "Dream"
-msgstr "Dream"
+msgid "Easy Listening"
+msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.c:89
-msgid "Southern Rock"
-msgstr "Southern Rock"
-
-#: src/libaudgui/infowin.c:89
-msgid "Comedy"
-msgstr "Comedy"
-
-#: src/libaudgui/infowin.c:89
-msgid "Cult"
-msgstr "Cult"
+msgid "Folk"
+msgstr "Folk"
 
 #: src/libaudgui/infowin.c:90
+msgid "Funk"
+msgstr "Funk"
+
+#: src/libaudgui/infowin.c:91
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:90
-msgid "Top 40"
-msgstr "Top 40"
-
-#: src/libaudgui/infowin.c:90
-msgid "Christian Rap"
-msgstr "Christian Rap"
-
-#: src/libaudgui/infowin.c:91
-msgid "Pop/Funk"
-msgstr "Pop/Funk"
-
-#: src/libaudgui/infowin.c:91
-msgid "Jungle"
-msgstr "Jungle"
-
-#: src/libaudgui/infowin.c:91
-msgid "Native American"
-msgstr "Native American"
-
 #: src/libaudgui/infowin.c:92
-msgid "Cabaret"
-msgstr "Cabaret"
-
-#: src/libaudgui/infowin.c:92
-msgid "New Wave"
-msgstr "New Wave"
-
-#: src/libaudgui/infowin.c:92
-msgid "Psychedelic"
-msgstr "Psychedelic"
-
-#: src/libaudgui/infowin.c:92
-msgid "Rave"
-msgstr "Rave"
+msgid "Gospel"
+msgstr "Gospel"
 
 #: src/libaudgui/infowin.c:93
-msgid "Showtunes"
-msgstr "Showtunes"
-
-#: src/libaudgui/infowin.c:93
-msgid "Trailer"
-msgstr "Trailer"
-
-#: src/libaudgui/infowin.c:93
-msgid "Lo-Fi"
-msgstr "Lo-Fi"
-
-#: src/libaudgui/infowin.c:93
-msgid "Tribal"
-msgstr "Tribal"
+msgid "Grunge"
+msgstr "Grunge"
 
 #: src/libaudgui/infowin.c:94
-msgid "Acid Punk"
-msgstr "Acid Punk"
-
-#: src/libaudgui/infowin.c:94
-msgid "Acid Jazz"
-msgstr "Acid Jazz"
-
-#: src/libaudgui/infowin.c:94
-msgid "Polka"
-msgstr "Polka"
-
-#: src/libaudgui/infowin.c:94
-msgid "Retro"
-msgstr "Retro"
-
-#: src/libaudgui/infowin.c:95
-msgid "Musical"
-msgstr "Musical"
-
-#: src/libaudgui/infowin.c:95
-msgid "Rock & Roll"
-msgstr "Rock & Roll"
-
-#: src/libaudgui/infowin.c:95
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:95
-msgid "Folk"
-msgstr "Folk"
-
-#: src/libaudgui/infowin.c:96
-msgid "Folk/Rock"
-msgstr "Folk/Rock"
-
-#: src/libaudgui/infowin.c:96
-msgid "National Folk"
-msgstr "National Folk"
-
-#: src/libaudgui/infowin.c:96
-msgid "Swing"
-msgstr "Swing"
-
-#: src/libaudgui/infowin.c:97
-msgid "Fast-Fusion"
-msgstr "Fast-Fusion"
-
-#: src/libaudgui/infowin.c:97
-msgid "Bebob"
-msgstr "Bebob"
-
-#: src/libaudgui/infowin.c:97
-msgid "Latin"
-msgstr "Latin"
-
-#: src/libaudgui/infowin.c:97
-msgid "Revival"
-msgstr "Revival"
-
-#: src/libaudgui/infowin.c:98
-msgid "Celtic"
-msgstr "Celtic"
-
-#: src/libaudgui/infowin.c:98
-msgid "Bluegrass"
-msgstr "Bluegrass"
-
-#: src/libaudgui/infowin.c:98
-msgid "Avantgarde"
-msgstr "Avantgarde"
-
-#: src/libaudgui/infowin.c:99
-msgid "Gothic Rock"
-msgstr "Gothic Rock"
-
-#: src/libaudgui/infowin.c:99
-msgid "Progressive Rock"
-msgstr "Progressive Rock"
-
-#: src/libaudgui/infowin.c:100
-msgid "Psychedelic Rock"
-msgstr "Psychedelic Rock"
-
-#: src/libaudgui/infowin.c:100
-msgid "Symphonic Rock"
-msgstr "Symphonic Rock"
-
-#: src/libaudgui/infowin.c:100
-msgid "Slow Rock"
-msgstr "Slow Rock"
-
-#: src/libaudgui/infowin.c:101
-msgid "Big Band"
-msgstr "Big Band"
-
-#: src/libaudgui/infowin.c:101
-msgid "Chorus"
-msgstr "Chorus"
-
-#: src/libaudgui/infowin.c:101
-msgid "Easy Listening"
-msgstr "Easy Listening"
-
-#: src/libaudgui/infowin.c:102
-msgid "Acoustic"
-msgstr "Acoustic"
-
-#: src/libaudgui/infowin.c:102
-msgid "Humour"
-msgstr "Humour"
-
-#: src/libaudgui/infowin.c:102
-msgid "Speech"
-msgstr "Speech"
-
-#: src/libaudgui/infowin.c:102
-msgid "Chanson"
-msgstr "Chanson"
-
-#: src/libaudgui/infowin.c:103
-msgid "Opera"
-msgstr "Opera"
-
-#: src/libaudgui/infowin.c:103
-msgid "Chamber Music"
-msgstr "Chamber Music"
-
-#: src/libaudgui/infowin.c:103
-msgid "Sonata"
-msgstr "Sonata"
-
-#: src/libaudgui/infowin.c:103
-msgid "Symphony"
-msgstr "Symphony"
-
-#: src/libaudgui/infowin.c:104
-msgid "Booty Bass"
-msgstr "Booty Bass"
-
-#: src/libaudgui/infowin.c:104
-msgid "Primus"
-msgstr "Primus"
-
-#: src/libaudgui/infowin.c:104
-msgid "Porn Groove"
-msgstr "Porn Groove"
-
-#: src/libaudgui/infowin.c:105
-msgid "Satire"
-msgstr "Satire"
-
-#: src/libaudgui/infowin.c:105
-msgid "Slow Jam"
-msgstr "Slow Jam"
-
-#: src/libaudgui/infowin.c:105
-msgid "Club"
-msgstr "Club"
-
-#: src/libaudgui/infowin.c:105
-msgid "Tango"
-msgstr "Tango"
-
-#: src/libaudgui/infowin.c:106
-msgid "Samba"
-msgstr "Samba"
-
-#: src/libaudgui/infowin.c:106
-msgid "Folklore"
-msgstr "Folklore"
-
-#: src/libaudgui/infowin.c:106
-msgid "Ballad"
-msgstr "Ballad"
-
-#: src/libaudgui/infowin.c:106
-msgid "Power Ballad"
-msgstr "Power Ballad"
-
-#: src/libaudgui/infowin.c:107
-msgid "Rhythmic Soul"
-msgstr "Rhythmic Soul"
-
-#: src/libaudgui/infowin.c:107
-msgid "Freestyle"
-msgstr "Freestyle"
-
-#: src/libaudgui/infowin.c:107
-msgid "Duet"
-msgstr "Duet"
-
-#: src/libaudgui/infowin.c:108
-msgid "Punk Rock"
-msgstr "Punk Rock"
-
-#: src/libaudgui/infowin.c:108
-msgid "Drum Solo"
-msgstr "Drum Solo"
-
-#: src/libaudgui/infowin.c:108
-msgid "A Cappella"
-msgstr "A Cappella"
-
-#: src/libaudgui/infowin.c:109
-msgid "Euro-House"
-msgstr "Euro-House"
-
-#: src/libaudgui/infowin.c:109
-msgid "Dance Hall"
-msgstr "Dance Hall"
-
-#: src/libaudgui/infowin.c:109
-msgid "Goa"
-msgstr "Goa"
-
-#: src/libaudgui/infowin.c:110
-msgid "Drum & Bass"
-msgstr "Drum & Bass"
-
-#: src/libaudgui/infowin.c:110
-msgid "Club-House"
-msgstr "Club-House"
-
-#: src/libaudgui/infowin.c:110
-msgid "Hardcore"
-msgstr "Hardcore"
-
-#: src/libaudgui/infowin.c:111
-msgid "Terror"
-msgstr "Terror"
-
-#: src/libaudgui/infowin.c:111
-msgid "Indie"
-msgstr "Indie"
-
-#: src/libaudgui/infowin.c:111
-msgid "BritPop"
-msgstr "BritPop"
-
-#: src/libaudgui/infowin.c:111
-msgid "Negerpunk"
-msgstr "Negerpunk"
-
-#: src/libaudgui/infowin.c:112
-msgid "Polsk Punk"
-msgstr "Polsk Punk"
-
-#: src/libaudgui/infowin.c:112
-msgid "Beat"
-msgstr "Beat"
-
-#: src/libaudgui/infowin.c:112
-msgid "Christian Gangsta Rap"
-msgstr "Christian Gangsta Rap"
-
-#: src/libaudgui/infowin.c:113
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.c:113
-msgid "Black Metal"
-msgstr "Black Metal"
+#: src/libaudgui/infowin.c:96
+#, fuzzy
+msgid "Hip-hop"
+msgstr "Hip-Hop"
+
+#: src/libaudgui/infowin.c:97
+msgid "House"
+msgstr "House"
+
+#: src/libaudgui/infowin.c:98
+msgid "Jazz"
+msgstr "Jazz"
+
+#: src/libaudgui/infowin.c:99
+msgid "Jungle"
+msgstr "Jungle"
+
+#: src/libaudgui/infowin.c:100
+msgid "Metal"
+msgstr "Metal"
+
+#: src/libaudgui/infowin.c:101
+msgid "New Age"
+msgstr "New Age"
+
+#: src/libaudgui/infowin.c:102
+msgid "New Wave"
+msgstr "New Wave"
+
+#: src/libaudgui/infowin.c:103
+msgid "Noise"
+msgstr "Noise"
+
+#: src/libaudgui/infowin.c:104
+msgid "Pop"
+msgstr "Pop"
+
+#: src/libaudgui/infowin.c:105
+msgid "Punk Rock"
+msgstr "Punk Rock"
+
+#: src/libaudgui/infowin.c:106
+msgid "Rap"
+msgstr "Rap"
+
+#: src/libaudgui/infowin.c:107
+msgid "Reggae"
+msgstr "Reggae"
+
+#: src/libaudgui/infowin.c:108
+msgid "Rock"
+msgstr "Rock"
+
+#: src/libaudgui/infowin.c:109
+#, fuzzy
+msgid "Rock and Roll"
+msgstr "Rock & Roll"
+
+#: src/libaudgui/infowin.c:110
+msgid "Rhythm and Blues"
+msgstr ""
+
+#: src/libaudgui/infowin.c:111
+msgid "Ska"
+msgstr "Ska"
+
+#: src/libaudgui/infowin.c:112
+msgid "Soul"
+msgstr "Soul"
 
 #: src/libaudgui/infowin.c:113
-msgid "Crossover"
-msgstr "Crossover"
+msgid "Swing"
+msgstr "Swing"
 
 #: src/libaudgui/infowin.c:114
-msgid "Contemporary Christian"
-msgstr "Contemporary Christian"
-
-#: src/libaudgui/infowin.c:114
-msgid "Christian Rock"
-msgstr "Christian Rock"
+msgid "Techno"
+msgstr "Techno"
 
 #: src/libaudgui/infowin.c:115
-msgid "Merengue"
-msgstr "Merengue"
+#, fuzzy
+msgid "Trip-hop"
+msgstr "Trip-Hop"
 
-#: src/libaudgui/infowin.c:115
-msgid "Salsa"
-msgstr "Salsa"
-
-#: src/libaudgui/infowin.c:115
-msgid "Thrash Metal"
-msgstr "Thrash Metal"
-
-#: src/libaudgui/infowin.c:116
-msgid "Anime"
-msgstr "Anime"
-
-#: src/libaudgui/infowin.c:116
-msgid "JPop"
-msgstr "JPop"
-
-#: src/libaudgui/infowin.c:116
-msgid "Synthpop"
-msgstr "Synthpop"
-
-#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:363
-#: src/libaudgui/infowin.c:366 src/libaudgui/infowin.c:369
+#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
+#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">未知</span>"
 
-#: src/libaudgui/infowin.c:267
+#: src/libaudgui/infowin.c:265
 msgid "Metadata updated successfully"
 msgstr "歌曲信息(Metadata)更新成功"
 
-#: src/libaudgui/infowin.c:272
+#: src/libaudgui/infowin.c:270
 msgid "Metadata updating failed"
 msgstr "歌曲信息(Metadata)更新失败"
 
-#: src/libaudgui/infowin.c:320
+#: src/libaudgui/infowin.c:318
 msgid "Track Information"
 msgstr "音轨信息"
 
-#: src/libaudgui/infowin.c:352
+#: src/libaudgui/infowin.c:350
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">注释：</span>"
 
-#: src/libaudgui/infowin.c:356
+#: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">音质：</span>"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.c:357
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">比特率：</span>"
 
-#: src/libaudgui/infowin.c:389
+#: src/libaudgui/infowin.c:387
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">标题</span>"
 
-#: src/libaudgui/infowin.c:401
+#: src/libaudgui/infowin.c:399
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">艺术家</span>"
 
-#: src/libaudgui/infowin.c:413
+#: src/libaudgui/infowin.c:411
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">唱片</span>"
 
-#: src/libaudgui/infowin.c:425
+#: src/libaudgui/infowin.c:423
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">注释</span>"
 
-#: src/libaudgui/infowin.c:437
+#: src/libaudgui/infowin.c:435
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">流派</span>"
 
-#: src/libaudgui/infowin.c:458
+#: src/libaudgui/infowin.c:456
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">年份</span>"
 
-#: src/libaudgui/infowin.c:469
+#: src/libaudgui/infowin.c:467
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">音轨序号</span>"
 
-#: src/libaudgui/infowin.c:551
+#: src/libaudgui/infowin.c:549
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:581
+#: src/libaudgui/infowin.c:579
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
@@ -1629,64 +1192,430 @@ msgstr ""
 msgid "Add URL"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:138
+#: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
 msgstr "不是一个合法的.desktop文件"
 
-#: src/libeggsmclient/eggdesktopfile.c:160
+#: src/libeggsmclient/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "无法识别的.desktop文件版本'%s'"
 
-#: src/libeggsmclient/eggdesktopfile.c:871
+#: src/libeggsmclient/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "启动 %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:1007
+#: src/libeggsmclient/eggdesktopfile.c:1110
 msgid "Application does not accept documents on command line"
 msgstr "应用程序不支持从命令行获取文档"
 
-#: src/libeggsmclient/eggdesktopfile.c:1075
+#: src/libeggsmclient/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "无法辨识的启动选项：%d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1277
+#: src/libeggsmclient/eggdesktopfile.c:1383
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "无法通过Type=Link desktop entry传递文档URL"
 
-#: src/libeggsmclient/eggdesktopfile.c:1296
+#: src/libeggsmclient/eggdesktopfile.c:1404
 msgid "Not a launchable item"
 msgstr "不是一个可启动项目"
 
-#: src/libeggsmclient/eggsmclient.c:183
+#: src/libeggsmclient/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "不与会话管理器取得连接"
 
-#: src/libeggsmclient/eggsmclient.c:186
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "指定保存配置信息的文件"
 
-#: src/libeggsmclient/eggsmclient.c:186
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "FILE"
 msgstr "文件"
 
-#: src/libeggsmclient/eggsmclient.c:189
+#: src/libeggsmclient/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "指定会话管理ID"
 
-#: src/libeggsmclient/eggsmclient.c:189
+#: src/libeggsmclient/eggsmclient.c:232
 msgid "ID"
 msgstr "ID"
 
-#: src/libeggsmclient/eggsmclient.c:225
-msgid "Session Management Options"
+#: src/libeggsmclient/eggsmclient.c:253
+#, fuzzy
+msgid "Session management options:"
 msgstr "会话管理选项"
 
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "Show Session Management options"
+#: src/libeggsmclient/eggsmclient.c:254
+#, fuzzy
+msgid "Show session management options"
 msgstr "显示会话管理器选项"
+
+#~ msgid "%s: Unable to open display, exiting.\n"
+#~ msgstr "%s： 无法使用显示器设备，正在退出。\n"
+
+#~ msgid "Preamp:"
+#~ msgstr "前置放大器："
+
+#~ msgid "Default gain:"
+#~ msgstr "默认增益："
+
+#~ msgid "This gain will be used if file doesn't contain Replay Gain metadata."
+#~ msgstr "如果文件不包含回放增益数据则使用这个增益。"
+
+#~ msgid ""
+#~ "<span size=\"small\">Please remember that the most efficient way to "
+#~ "prevent signal clipping is not to use positive values above.</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">请注意避免声音信号削波的最有效率的办法是上面这个参数"
+#~ "不设为正值。</span>"
+
+#~ msgid "<b>Replay Gain configuration</b>"
+#~ msgstr "<b>回放增益配置</b>"
+
+#~ msgid "Track gain/peak"
+#~ msgstr "音轨增益/峰值"
+
+#~ msgid "Album gain/peak"
+#~ msgstr "专辑增益/峰值"
+
+#~ msgid "Use peak value from Replay Gain info for clipping prevention"
+#~ msgstr "使用回复增益的峰值信息避免削波"
+
+#~ msgid "Classic Rock"
+#~ msgstr "Classic Rock"
+
+#~ msgid "Dance"
+#~ msgstr "Dance"
+
+#~ msgid "Oldies"
+#~ msgstr "Oldies"
+
+#~ msgid "Other"
+#~ msgstr "Other"
+
+#~ msgid "R&B"
+#~ msgstr "R&B"
+
+#~ msgid "Industrial"
+#~ msgstr "Industrial"
+
+#~ msgid "Alternative"
+#~ msgstr "Alternative"
+
+#~ msgid "Pranks"
+#~ msgstr "Pranks"
+
+#~ msgid "Soundtrack"
+#~ msgstr "Soundtrack"
+
+#~ msgid "Euro-Techno"
+#~ msgstr "Euro-Techno"
+
+#~ msgid "Vocal"
+#~ msgstr "Vocal"
+
+#~ msgid "Jazz+Funk"
+#~ msgstr "Jazz+Funk"
+
+#~ msgid "Fusion"
+#~ msgstr "Fusion"
+
+#~ msgid "Trance"
+#~ msgstr "Trance"
+
+#~ msgid "Instrumental"
+#~ msgstr "Instrumental"
+
+#~ msgid "Acid"
+#~ msgstr "Acid"
+
+#~ msgid "Game"
+#~ msgstr "Game"
+
+#~ msgid "Sound Clip"
+#~ msgstr "Sound Clip"
+
+#~ msgid "AlternRock"
+#~ msgstr "AlternRock"
+
+#~ msgid "Bass"
+#~ msgstr "Bass"
+
+#~ msgid "Punk"
+#~ msgstr "Punk"
+
+#~ msgid "Space"
+#~ msgstr "Space"
+
+#~ msgid "Meditative"
+#~ msgstr "Meditative"
+
+#~ msgid "Instrumental Pop"
+#~ msgstr "Instrumental Pop"
+
+#~ msgid "Instrumental Rock"
+#~ msgstr "Instrumental Rock"
+
+#~ msgid "Ethnic"
+#~ msgstr "Ethnic"
+
+#~ msgid "Gothic"
+#~ msgstr "Gothic"
+
+#~ msgid "Darkwave"
+#~ msgstr "Darkwave"
+
+#~ msgid "Techno-Industrial"
+#~ msgstr "Techno-Industrial"
+
+#~ msgid "Electronic"
+#~ msgstr "Electronic"
+
+#~ msgid "Pop-Folk"
+#~ msgstr "Pop-Folk"
+
+#~ msgid "Eurodance"
+#~ msgstr "Eurodance"
+
+#~ msgid "Dream"
+#~ msgstr "Dream"
+
+#~ msgid "Southern Rock"
+#~ msgstr "Southern Rock"
+
+#~ msgid "Comedy"
+#~ msgstr "Comedy"
+
+#~ msgid "Cult"
+#~ msgstr "Cult"
+
+#~ msgid "Top 40"
+#~ msgstr "Top 40"
+
+#~ msgid "Christian Rap"
+#~ msgstr "Christian Rap"
+
+#~ msgid "Pop/Funk"
+#~ msgstr "Pop/Funk"
+
+#~ msgid "Native American"
+#~ msgstr "Native American"
+
+#~ msgid "Cabaret"
+#~ msgstr "Cabaret"
+
+#~ msgid "Psychedelic"
+#~ msgstr "Psychedelic"
+
+#~ msgid "Rave"
+#~ msgstr "Rave"
+
+#~ msgid "Showtunes"
+#~ msgstr "Showtunes"
+
+#~ msgid "Trailer"
+#~ msgstr "Trailer"
+
+#~ msgid "Lo-Fi"
+#~ msgstr "Lo-Fi"
+
+#~ msgid "Tribal"
+#~ msgstr "Tribal"
+
+#~ msgid "Acid Punk"
+#~ msgstr "Acid Punk"
+
+#~ msgid "Polka"
+#~ msgstr "Polka"
+
+#~ msgid "Retro"
+#~ msgstr "Retro"
+
+#~ msgid "Musical"
+#~ msgstr "Musical"
+
+#~ msgid "Folk/Rock"
+#~ msgstr "Folk/Rock"
+
+#~ msgid "National Folk"
+#~ msgstr "National Folk"
+
+#~ msgid "Fast-Fusion"
+#~ msgstr "Fast-Fusion"
+
+#~ msgid "Latin"
+#~ msgstr "Latin"
+
+#~ msgid "Revival"
+#~ msgstr "Revival"
+
+#~ msgid "Celtic"
+#~ msgstr "Celtic"
+
+#~ msgid "Avantgarde"
+#~ msgstr "Avantgarde"
+
+#~ msgid "Gothic Rock"
+#~ msgstr "Gothic Rock"
+
+#~ msgid "Progressive Rock"
+#~ msgstr "Progressive Rock"
+
+#~ msgid "Psychedelic Rock"
+#~ msgstr "Psychedelic Rock"
+
+#~ msgid "Symphonic Rock"
+#~ msgstr "Symphonic Rock"
+
+#~ msgid "Slow Rock"
+#~ msgstr "Slow Rock"
+
+#~ msgid "Big Band"
+#~ msgstr "Big Band"
+
+#~ msgid "Chorus"
+#~ msgstr "Chorus"
+
+#~ msgid "Acoustic"
+#~ msgstr "Acoustic"
+
+#~ msgid "Humour"
+#~ msgstr "Humour"
+
+#~ msgid "Speech"
+#~ msgstr "Speech"
+
+#~ msgid "Chanson"
+#~ msgstr "Chanson"
+
+#~ msgid "Opera"
+#~ msgstr "Opera"
+
+#~ msgid "Sonata"
+#~ msgstr "Sonata"
+
+#~ msgid "Symphony"
+#~ msgstr "Symphony"
+
+#~ msgid "Booty Bass"
+#~ msgstr "Booty Bass"
+
+#~ msgid "Primus"
+#~ msgstr "Primus"
+
+#~ msgid "Porn Groove"
+#~ msgstr "Porn Groove"
+
+#~ msgid "Satire"
+#~ msgstr "Satire"
+
+#~ msgid "Slow Jam"
+#~ msgstr "Slow Jam"
+
+#~ msgid "Club"
+#~ msgstr "Club"
+
+#~ msgid "Tango"
+#~ msgstr "Tango"
+
+#~ msgid "Samba"
+#~ msgstr "Samba"
+
+#~ msgid "Folklore"
+#~ msgstr "Folklore"
+
+#~ msgid "Ballad"
+#~ msgstr "Ballad"
+
+#~ msgid "Power Ballad"
+#~ msgstr "Power Ballad"
+
+#~ msgid "Rhythmic Soul"
+#~ msgstr "Rhythmic Soul"
+
+#~ msgid "Freestyle"
+#~ msgstr "Freestyle"
+
+#~ msgid "Duet"
+#~ msgstr "Duet"
+
+#~ msgid "Drum Solo"
+#~ msgstr "Drum Solo"
+
+#~ msgid "A Cappella"
+#~ msgstr "A Cappella"
+
+#~ msgid "Euro-House"
+#~ msgstr "Euro-House"
+
+#~ msgid "Dance Hall"
+#~ msgstr "Dance Hall"
+
+#~ msgid "Goa"
+#~ msgstr "Goa"
+
+#~ msgid "Drum & Bass"
+#~ msgstr "Drum & Bass"
+
+#~ msgid "Club-House"
+#~ msgstr "Club-House"
+
+#~ msgid "Hardcore"
+#~ msgstr "Hardcore"
+
+#~ msgid "Terror"
+#~ msgstr "Terror"
+
+#~ msgid "Indie"
+#~ msgstr "Indie"
+
+#~ msgid "BritPop"
+#~ msgstr "BritPop"
+
+#~ msgid "Negerpunk"
+#~ msgstr "Negerpunk"
+
+#~ msgid "Polsk Punk"
+#~ msgstr "Polsk Punk"
+
+#~ msgid "Beat"
+#~ msgstr "Beat"
+
+#~ msgid "Christian Gangsta Rap"
+#~ msgstr "Christian Gangsta Rap"
+
+#~ msgid "Black Metal"
+#~ msgstr "Black Metal"
+
+#~ msgid "Crossover"
+#~ msgstr "Crossover"
+
+#~ msgid "Contemporary Christian"
+#~ msgstr "Contemporary Christian"
+
+#~ msgid "Christian Rock"
+#~ msgstr "Christian Rock"
+
+#~ msgid "Merengue"
+#~ msgstr "Merengue"
+
+#~ msgid "Salsa"
+#~ msgstr "Salsa"
+
+#~ msgid "Thrash Metal"
+#~ msgstr "Thrash Metal"
+
+#~ msgid "Anime"
+#~ msgstr "Anime"
+
+#~ msgid "JPop"
+#~ msgstr "JPop"
+
+#~ msgid "Synthpop"
+#~ msgstr "Synthpop"
 
 #, fuzzy
 #~ msgid ""
@@ -2054,9 +1983,6 @@ msgstr "显示会话管理器选项"
 #~ msgid "lines"
 #~ msgstr "行"
 
-#~ msgid "<b>Mouse wheel</b>"
-#~ msgstr "<b>鼠标滚轮</b>"
-
 #~ msgid "Stop after Current Song"
 #~ msgstr "当前歌曲播完后停止"
 
@@ -2312,9 +2238,6 @@ msgstr "显示会话管理器选项"
 #~ msgstr "备注"
 
 #~ msgid "View Track Details"
-#~ msgstr "查看音轨详细信息"
-
-#~ msgid "View track details"
 #~ msgstr "查看音轨详细信息"
 
 #~ msgid "Play File"
@@ -3094,9 +3017,6 @@ msgstr "显示会话管理器选项"
 
 #~ msgid "Track name: "
 #~ msgstr "音轨名称："
-
-#~ msgid "Album name: "
-#~ msgstr "专辑名称："
 
 #~ msgid ""
 #~ "<b><big>Unable to play files.</big></b>\n"
