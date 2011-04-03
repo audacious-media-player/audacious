@@ -380,22 +380,22 @@ void drct_pl_delete_selected (void)
     gint list = playlist_get_active ();
     gint pos = playlist_get_position (list);
 
-    if (cfg.no_playlist_advance || ! cfg.advance_on_delete || pos < 0 ||
-     ! playlist_entry_get_selected (list, pos))
+    if (cfg.advance_on_delete && ! cfg.no_playlist_advance
+     && playback_get_playing () && list == playlist_get_playing ()
+     && pos >= 0 && playlist_entry_get_selected (list, pos))
     {
+        playlist_entry_set_selected (list, pos, FALSE);
         playlist_delete_selected (list);
-        return;
+        pos = playlist_get_position (list); /* it may have moved */
+
+        if (playlist_next_song (list, cfg.repeat)
+         && playlist_get_position (list) != pos)
+            playback_play (0, FALSE);
+
+        playlist_entry_delete (list, pos, 1);
     }
-
-    playlist_entry_set_selected (list, pos, FALSE);
-    playlist_delete_selected (list);
-    pos = playlist_get_position (list); /* it may have moved */
-
-    gboolean play = (list == playlist_get_playing () && playback_get_playing ());
-    if (playlist_next_song (list, cfg.repeat) && play)
-        playback_play (0, FALSE);
-
-    playlist_entry_delete (list, pos, 1);
+    else
+        playlist_delete_selected (list);
 }
 
 void drct_pl_clear (void)
