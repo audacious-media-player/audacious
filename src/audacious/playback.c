@@ -29,7 +29,6 @@
 #include "config.h"
 #include "i18n.h"
 #include "interface.h"
-#include "main.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"

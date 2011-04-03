@@ -26,7 +26,6 @@
 #include <libaudcore/audstrings.h>
 
 #include "audconfig.h"
-#include "main.h"
 #include "misc.h"
 #include "playlist.h"
 #include "playlist-utils.h"

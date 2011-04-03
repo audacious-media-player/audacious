@@ -28,7 +28,6 @@
 #include "drct.h"
 #include "glib-compat.h"
 #include "i18n.h"
-#include "main.h"
 #include "playback.h"
 #include "playlist.h"
 
@@ -36,7 +35,7 @@
 
 void drct_quit (void)
 {
-    aud_quit ();
+    hook_call ("quit", NULL);
 }
 
 /* --- PLAYBACK CONTROL --- */

@@ -39,7 +39,6 @@
 
 #include "audconfig.h"
 #include "debug.h"
-#include "main.h"
 #include "plugin.h"
 #include "ui_preferences.h"
 #include "util.h"

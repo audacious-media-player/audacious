@@ -59,6 +59,8 @@ typedef enum {
 	MPRIS_STATUS_STOP
 } PlaybackStatus;
 
+extern MprisPlayer * mpris;
+
 // MPRIS /
 gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
                              GError **error);

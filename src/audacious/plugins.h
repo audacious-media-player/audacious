@@ -59,7 +59,8 @@ enum {
 /* plugin-init.c */
 void start_plugins_one (void);
 void start_plugins_two (void);
-void stop_plugins (void);
+void stop_plugins_two (void);
+void stop_plugins_one (void);
 
 /* plugin-registry.c */
 void plugin_registry_load (void);

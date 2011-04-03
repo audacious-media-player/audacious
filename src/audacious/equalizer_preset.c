@@ -23,7 +23,6 @@
 #include "debug.h"
 #include "i18n.h"
 #include "interface.h"
-#include "main.h"
 #include "misc.h"
 
 static EqualizerPreset * equalizer_preset_new (const gchar * name)

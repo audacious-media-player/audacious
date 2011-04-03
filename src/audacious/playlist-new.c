@@ -34,7 +34,6 @@
 #include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
-#include "main.h"
 #include "misc.h"
 #include "playback.h"
 #include "playlist.h"
@@ -122,9 +121,9 @@ typedef struct {
     gint64 selected_length;
 } Playlist;
 
-static struct index *playlists;
-static Playlist * active_playlist;
-static Playlist * playing_playlist;
+static struct index * playlists = NULL;
+static Playlist * active_playlist = NULL;
+static Playlist * playing_playlist = NULL;
 
 static gint update_source, update_level;
 static Playlist * update_playlist;
@@ -323,6 +322,10 @@ static void number_playlists(gint at, gint length)
 
 static Playlist * lookup_playlist (gint playlist_num)
 {
+    /* Not initted or already shut down */
+    if (! playlists)
+        return NULL;
+
     if (playlist_num < 0 || playlist_num >= index_count(playlists))
         return NULL;
 
@@ -678,6 +681,9 @@ void playlist_end(void)
         playlist_free(index_get(playlists, count));
 
     index_free(playlists);
+    playlists = NULL;
+    active_playlist = NULL;
+    playing_playlist = NULL;
 }
 
 gint playlist_count(void)
@@ -1272,7 +1278,7 @@ gint playlist_shift (gint playlist_num, gint entry_num, gint distance)
                 shift ++;
         }
     }
-        
+
     top = bottom = center;
 
     for (gint i = 0; i < top; i ++)
@@ -1281,7 +1287,7 @@ gint playlist_shift (gint playlist_num, gint entry_num, gint distance)
         if (entry->selected)
             top = i;
     }
-        
+
     for (gint i = entries; i > bottom; i --)
     {
         entry = index_get (playlist->entries, i - 1);

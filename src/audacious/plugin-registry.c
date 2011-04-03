@@ -28,7 +28,6 @@
 
 #include "debug.h"
 #include "interface.h"
-#include "main.h"
 #include "misc.h"
 #include "plugin.h"
 #include "plugins.h"

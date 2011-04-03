@@ -21,10 +21,8 @@
 #include <libaudcore/audstrings.h>
 
 #include "audconfig.h"
-#include "chardet.h"
 #include "config.h"
 #include "i18n.h"
-#include "main.h"
 #include "debug.h"
 
 #ifdef USE_CHARDET

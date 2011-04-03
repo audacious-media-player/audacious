@@ -14,6 +14,7 @@ SRCS = audconfig.c								\
        general.c \
        interface.c								\
        main.c									\
+       mpris-signals.c \
        output.c									\
        playback.c								\
        playlist-files.c \
@@ -26,6 +27,7 @@ SRCS = audconfig.c								\
        probe.c \
        probe-buffer.c \
        signals.c								\
+       smclient.c \
        ui_plugin_menu.c \
        ui_preferences.c							\
        util.c									\

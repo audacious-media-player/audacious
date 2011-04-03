@@ -92,7 +92,6 @@ typedef struct _AudConfig AudConfig;
 extern AudConfig cfg;
 extern AudConfig aud_default_config;
 
-void aud_config_free(void);
 void aud_config_load(void);
 void aud_config_save(void);
 

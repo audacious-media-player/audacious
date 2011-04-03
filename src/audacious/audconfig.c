@@ -179,19 +179,6 @@ static aud_cfg_strent aud_strents[] = {
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);
 
-void
-aud_config_free(void)
-{
-  gint i;
-  for (i = 0; i < ncfgsent; ++i) {
-    if ( *(aud_strents[i].se_vloc) != NULL )
-    {
-      g_free( *(aud_strents[i].se_vloc) );
-      *(aud_strents[i].se_vloc) = NULL;
-    }
-  }
-}
-
 void aud_config_chardet_update(void)
 {
     if (cfg.chardet_fallback_s != NULL)

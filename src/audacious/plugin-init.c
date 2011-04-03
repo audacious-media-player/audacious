@@ -183,23 +183,32 @@ static gboolean stop_multi_cb (PluginHandle * p, void * type)
     return TRUE;
 }
 
-void stop_plugins (void)
+static void stop_plugins (gint type)
 {
-    for (gint i = PLUGIN_TYPES; i --; )
-    {
-        if (! table[i].is_managed)
-            continue;
+    if (! table[type].is_managed)
+        return;
 
-        if (table[i].is_single)
-        {
-            AUDDBG ("Shutting down %s.\n", plugin_get_name
-             (table[i].u.s.get_current ()));
-            table[i].u.s.set_current (NULL);
-        }
-        else
-            plugin_for_enabled (i, (PluginForEachFunc) stop_multi_cb,
-             GINT_TO_POINTER (i));
+    if (table[type].is_single)
+    {
+        AUDDBG ("Shutting down %s.\n", plugin_get_name
+         (table[type].u.s.get_current ()));
+        table[type].u.s.set_current (NULL);
     }
+    else
+        plugin_for_enabled (type, (PluginForEachFunc) stop_multi_cb,
+         GINT_TO_POINTER (type));
+}
+
+void stop_plugins_two (void)
+{
+    for (gint i = PLUGIN_TYPES - 1; i >= PLUGIN_TYPE_GENERAL; i --)
+        stop_plugins (i);
+}
+
+void stop_plugins_one (void)
+{
+    for (gint i = PLUGIN_TYPE_GENERAL - 1; i >= 0; i --)
+        stop_plugins (i);
 
     vfs_set_lookup_func (NULL);
     plugin_system_cleanup ();

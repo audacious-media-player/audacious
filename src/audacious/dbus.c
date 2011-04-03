@@ -37,7 +37,6 @@
 #include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
-#include "main.h"
 #include "playback.h"
 #include "playlist.h"
 #include "interface.h"
@@ -89,6 +88,8 @@ struct MprisMetadataRequest
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
 static guint tracklist_signals[LAST_TRACKLIST_SIG] = { 0 };
+
+MprisPlayer * mpris = NULL;
 
 static GThread *main_thread;
 static GMutex *info_mutex;
