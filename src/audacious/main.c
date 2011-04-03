@@ -521,20 +521,20 @@ static void shut_down (void)
     aud_config_save ();
     save_playlists ();
 
-    AUDDBG ("Stopping playback.\n");
-    if (playback_get_playing ())
-        playback_stop ();
-
     AUDDBG ("Unloading highlevel plugins.\n");
     stop_plugins_two ();
 
-    AUDDBG ("Saving configuration.\n");
-    cfg_db_flush ();
+    AUDDBG ("Stopping playback.\n");
+    if (playback_get_playing ())
+        playback_stop ();
 
     playlist_end ();
 
     AUDDBG ("Unloading lowlevel plugins.\n");
     stop_plugins_one ();
+
+    AUDDBG ("Saving configuration.\n");
+    cfg_db_flush ();
 
     gdk_threads_leave ();
 }
