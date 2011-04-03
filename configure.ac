@@ -265,6 +265,8 @@ AUD_ARG_ENABLE([sm], [yes],
     fi
 ])
 
+AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
+
 ### ---------------------------------------------------------------------------
 dnl Ugly system checks
 dnl ==================
