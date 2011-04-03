@@ -20,7 +20,6 @@
  */
 
 #include <assert.h>
-#include <inttypes.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -110,6 +109,7 @@ typedef struct {
 
 typedef struct {
     gint number;
+    gint unique_id;
     gchar *filename;
     gchar *title;
     struct index *entries;
@@ -120,6 +120,8 @@ typedef struct {
     gint64 total_length;
     gint64 selected_length;
 } Playlist;
+
+static gint next_unique_id = 1000;
 
 static struct index * playlists = NULL;
 static Playlist * active_playlist = NULL;
@@ -281,6 +283,7 @@ static Playlist * playlist_new (void)
     Playlist * playlist = g_malloc (sizeof (Playlist));
 
     playlist->number = -1;
+    playlist->unique_id = next_unique_id ++;
     playlist->filename = NULL;
     playlist->title = g_strdup(_("Untitled Playlist"));
     playlist->entries = index_new();
@@ -771,6 +774,28 @@ void playlist_delete (gint playlist_num)
          (playlists) - 1));
 
     PLAYLIST_HAS_CHANGED (NULL, 0, 0);
+}
+
+gint playlist_get_unique_id (gint playlist_num)
+{
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST_RET (-1);
+    return playlist->unique_id;
+}
+
+gint playlist_by_unique_id (gint id)
+{
+    g_return_val_if_fail (playlists, -1);
+    gint n = index_count (playlists);
+
+    for (gint i = 0; i < n; i ++)
+    {
+        Playlist * p = index_get (playlists, i);
+        if (p->unique_id == id)
+            return p->number;
+    }
+
+    return -1;
 }
 
 void playlist_set_filename(gint playlist_num, const gchar * filename)

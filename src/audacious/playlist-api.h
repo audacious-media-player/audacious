@@ -323,3 +323,15 @@ AUD_FUNC2 (gboolean, playlist_save, gint, playlist, const gchar *, filename)
  * unexpected results. */
 AUD_FUNC4 (void, playlist_insert_folder, gint, playlist, gint, at,
  const gchar *, folder, gboolean, play)
+
+/* --- ADDED IN AUDACIOUS 2.5-BETA2 --- */
+
+/* Returns a unique non-negative integer which can be used to identify a given
+ * playlist even if its numbering changes (as when playlists are reordered).
+ * On error, returns -1. */
+AUD_FUNC1 (gint, playlist_get_unique_id, gint, playlist)
+
+/* Returns the number of the playlist identified by a given integer ID as
+ * returned by playlist_get_unique_id().  If the playlist no longer exists,
+ * returns -1. */
+AUD_FUNC1 (gint, playlist_by_unique_id, gint, id)

@@ -48,7 +48,7 @@
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
 #define _AUD_PLUGIN_VERSION_MIN 18 /* 2.5-alpha1 */
-#define _AUD_PLUGIN_VERSION     19
+#define _AUD_PLUGIN_VERSION     20 /* 2.5-beta2 */
 
 /**
  * The plugin module header. Each module can contain several plugins,
