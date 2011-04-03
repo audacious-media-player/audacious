@@ -44,7 +44,7 @@
 #include "eggsmclient.h"
 #endif
 
-#include "audconfig."
+#include "audconfig.h"
 #include "configdb.h"
 #include "debug.h"
 #include "drct.h"
