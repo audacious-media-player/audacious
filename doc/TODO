@@ -1,3 +1,32 @@
+"TODO" for 2.6/3.0
+==================
+
+Plugin loading cleanups:
+ - enforce one "plugin" per .so file
+ - kill off hidden "lowlevel" plugins
+ - PLUGIN_COMMON_FIELDS in interface plugin headers
+ - size field in plugin headers to allow future expansion
+ - custom URIs and MIME types in input plugin headers
+ - flag to enable general plugins by default
+
+Make more of the core thread-safe:
+ - thread-safe plugin registry
+ - thread-safe transport and input plugins (including init())
+ - kill off vfs_prepare() hack
+ - thread-safe file_find_decoder()
+ - thread-safe playlist
+
+Move various operations to separate threads:
+ - move folder and playlist loading to separate thread
+ - move remaining parts of metadata scanning to separate threads
+ - metadata scanning in all playlists, not just active
+ - manipulate playlist without interrupting metadata scanning
+
+Miscellaneous:
+ - common widget to select output and interface plugins
+ - switch interface from preferences window
+
+
 Long-term "TODO"
 ================
 
@@ -14,31 +43,25 @@ Long-term "TODO"
   * question: issues with plugins that use non-re-entrant library backends
     etc?
 
-
 - URIs with "?" are stripped (the subtune support uses that), which is bad,
   because some (a lot) of real-world URLs use 'GET' arguments. this breaks
   probing, but current input probing is confusing (and possibly broken anyway)
   and should be refactored.
-
+  * As of 2.5, is this still a problem?
 
 - mime-types support:
   * there is already code for mime support, but I think it may not be
     sufficient as it is designed for input plugins only --
     also playlist containers etc. need this (IMHO)
-
   * might be nicer to have the type registrations in plugin struct
     instead of a separate function, a'la vfs_extensions.
 
-
 - document the different APIs via Doxygen
 
-
 - {core,plugins}/configure.ac need some cleanup loving.
-  * make session management (SM) optional. (done)
   * build system cleanups .. extra.mk.in? wtf? (done in core, progressing
   for plugins)
   --- this is in progress, worked on by ccr
-
 
 - plugin rewrites:
   * modplug (in progress by ccr)
