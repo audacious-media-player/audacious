@@ -452,6 +452,7 @@ static void do_commands (void)
 static void init_one (gint * p_argc, gchar * * * p_argv)
 {
     init_paths ();
+    make_dirs ();
 
     bindtextdomain (PACKAGE_NAME, aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset (PACKAGE_NAME, "UTF-8");
@@ -480,7 +481,6 @@ static void init_two (void)
     hook_init ();
     tag_init ();
 
-    make_dirs ();
     aud_config_load ();
     tag_set_verbose (cfg.verbose);
     vfs_set_verbose (cfg.verbose);
