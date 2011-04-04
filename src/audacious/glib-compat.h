@@ -6,6 +6,12 @@
 
 #if ! GLIB_CHECK_VERSION (2, 14, 0)
 
+static inline void g_queue_init (GQueue * q)
+{
+	q->head = q->tail = NULL;
+	q->length = 0;
+}
+
 static inline void g_queue_clear (GQueue * q)
 {
 	g_list_free (q->head);
