@@ -22,6 +22,7 @@
 #include <glib.h>
 #include <pthread.h>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 
@@ -339,7 +340,9 @@ static gboolean end_cb (void * unused)
 
 static void * playback_thread (void * unused)
 {
-    VFSFile * file = vfs_fopen (current_filename, "r");
+    gchar * real = filename_split_subtune (current_filename, NULL);
+    VFSFile * file = vfs_fopen (real, "r");
+    g_free (real);
 
     playback_error = ! current_decoder->play (& playback_api, current_filename,
      file, start_time, stop_time, paused);

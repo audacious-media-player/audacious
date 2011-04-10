@@ -212,7 +212,10 @@ Tuple * file_read_tuple (const gchar * filename, PluginHandle * decoder)
     g_return_val_if_fail (ip, NULL);
     g_return_val_if_fail (ip->probe_for_tuple, NULL);
 
-    VFSFile * handle = vfs_fopen (filename, "r");
+    gchar * real = filename_split_subtune (filename, NULL);
+    VFSFile * handle = vfs_fopen (real, "r");
+    g_free (real);
+
     Tuple * tuple = ip->probe_for_tuple (filename, handle);
 
     if (handle)
@@ -231,7 +234,10 @@ gboolean file_read_image (const gchar * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip, FALSE);
     g_return_val_if_fail (ip->get_song_image, FALSE);
 
-    VFSFile * handle = vfs_fopen (filename, "r");
+    gchar * real = filename_split_subtune (filename, NULL);
+    VFSFile * handle = vfs_fopen (real, "r");
+    g_free (real);
+
     gboolean success = ip->get_song_image (filename, handle, data, size);
 
     if (handle)
@@ -252,7 +258,10 @@ gboolean file_write_tuple (const gchar * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip, FALSE);
     g_return_val_if_fail (ip->update_song_tuple, FALSE);
 
-    VFSFile * handle = vfs_fopen (filename, "r+");
+    gchar * real = filename_split_subtune (filename, NULL);
+    VFSFile * handle = vfs_fopen (real, "r+");
+    g_free (real);
+
     if (! handle)
         return FALSE;
 
