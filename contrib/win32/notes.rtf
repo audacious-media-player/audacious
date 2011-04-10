@@ -1,0 +1,274 @@
+{\rtf1\ansi\fs24
+{\b Notes for Building Audacious on Windows}
+\par
+\par {John Lindgren}
+\par {April 5, 2011}
+\par
+\par {This is not intended to be a complete set of instructions, but merely an outline.  Use at your own risk, etc., etc.}
+\par
+\par {Several patch files should accompany this document.}
+\par
+\par {\ul Install MinGW}
+\par
+\par {Download and run:}
+\par {\fs20 https://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/mingw-get-inst/mingw-get-inst-20110316/mingw-get-inst-20110316.exe/download}
+\par
+\par {When prompted, use these options:}
+\par {\fs20 Use pre-packaged repository catalogues}
+\par {\fs20 C++ compiler}
+\par {\fs20 MinGW Developer Toolkit}
+\par
+\par {Copy }{\fs20 C:\\MinGW\\lib\\libiconv.*}{ to }{\fs20 C:\\MinGW\\msys\\1.0\\lib}{.}
+\par {Apply the patch }{\fs20 libintl.h.diff}{ to }{\fs20 C:\\MinGW\\include\\libintl.h}{.}
+\par
+\par {\ul Install GTK+}
+\par
+\par {Download and unzip to }{\fs20 C:\\GTK}{:}
+\par {\fs20 http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/gtk+-bundle_2.16.5-20090731_win32.zip}
+\par
+\par {This is the last version to support Windows 2000.  If you only care about XP or later, you can use a newer version.}
+\par
+\par {Copy }{\fs20 C:\\GTK\\share\\themes\\MS-Windows\\gtk-2.0\\gtkrc}{ to }{\fs20 C:\\GTK\\etc\\gtk-2.0}{.  Apply the patch }{\fs20 gtkrc.diff}{.}
+\par {Copy }{\fs20 C:\\GTK\\share\\aclocal\\pkg.m4}{ to }{\fs20 C:\\MinGW\\share\\aclocal}{.}
+\par
+\par {\ul Install SDL}
+\par
+\par {Download and unzip to }{\fs20 C:\\SDL}{:}
+\par {\fs20 http://www.libsdl.org/release/SDL-1.2.14-win32.zip}
+\par {\fs20 http://www.libsdl.org/release/SDL-devel-1.2.14-mingw32.tar.gz}
+\par
+\par {Apply the patch }{\fs20 sdl-config.diff}{ to }{\fs20 C:\\SDL\\bin\\sdl-config}{.}
+\par {Copy }{\fs20 C:\\SDL\\share\\aclocal\\sdl.m4}{ to }{\fs20 C:\\MinGW\\share\\aclocal}{.}
+\par
+\par {\ul Set up system paths}
+\par
+\par {Under }{\fs20 My Computer -> Properties -> Advanced -> Environment Variables}{, set:}
+\par {\fs20 PATH=C:\\MinGW\\bin;C:\\MinGW\\msys\\1.0\\bin;C:\\GTK\\bin;C:\\SDL\\bin;C:\\aud\\bin}
+\par {\fs20 PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/aud/lib/pkgconfig}
+\par {\fs20 C_INCLUDE_PATH=/C/GTK/include:/C/aud/include}
+\par {\fs20 CPLUS_INCLUDE_PATH=/C/GTK/include:/C/aud/include}
+\par {\fs20 LIBRARY_PATH=/C/GTK/lib:/C/aud/lib}
+\par
+\par {\ul Install libxml}
+\par
+\par {Download and unzip to C:\\aud:}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/MSYS/libxml2/libxml2-2.7.6-1/libxml2-2.7.6-1-msys-1.0.13-dev.tar.lzma/download}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/MSYS/libxml2/libxml2-2.7.6-1/libxml2-2.7.6-1-msys-1.0.13-dll-2.tar.lzma/download}
+\par
+\par {Apply the patch }{\fs20 xml2-config.diff}{ to }{\fs20 C:\\aud\\bin\\xml2-config}{.}
+\par
+\par {\ul Install regex}
+\par
+\par {Download and unzip to }{\fs20 C:\\aud}{:}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-dev.tar.gz/download}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-bin.tar.gz/download}
+\par
+\par {\ul Install libmowgli}
+\par
+\par {Download and unzip to }{\fs20 C:\\libmowgli}{:}
+\par {\fs20 http://distfiles.atheme.org/libmowgli-0.9.50.tar.bz2}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libmowgli}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libmcs}
+\par
+\par {Download and unzip to }{\fs20 C:\\libmcs}{:}
+\par {\fs20 http://hg.atheme.org/libmcs/libmcs/archive/tip.tar.bz2}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libmcs}
+\par {\fs20 ./autogen.sh}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libfaad}
+\par
+\par {Download and unzip to }{\fs20 C:\\libfaad}{:}
+\par {\fs20 http://sourceforge.net/projects/faac/files/faad2-src/faad2-2.7/faad2-2.7.tar.bz2/download}
+\par
+\par {Apply the patch }{\fs20 libfaad-main.c.diff}{ to }{\fs20 C:\\libfaad\\frontend\\main.c}{.}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libfaad}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libsndfile}
+\par
+\par {Download and unzip to }{\fs20 C:\\libsndfile}{:}
+\par {\fs20 http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.24.tar.gz}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libsndfile}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libbs2b}
+\par
+\par {Download and unzip to }{\fs20 C:\\libbs2b}{:}
+\par {\fs20 https://sourceforge.net/projects/bs2b/files/libbs2b/3.1.0/libbs2b-3.1.0.tar.bz2/download}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libbs2b}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libcdio}
+\par
+\par {Download and unzip to }{\fs20 C:\\libcdio}{:}
+\par {\fs20 http://ftp.gnu.org/gnu/libcdio/libcdio-0.82.tar.bz2}
+\par
+\par {Apply the patch }{\fs20 iso9660.c.diff}{ to }{\fs20 C:\\libcdio\\lib\\iso9660\\iso9660.c}{.}
+\par {Apply the patch }{\fs20 libcdio-util.c.diff}{ to }{\fs20 C:\\libcdio\\src\\util.c}{.}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libcdio}
+\par {\fs20 ./configure --prefix=/C/aud --disable-rock}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libcddb}
+\par
+\par {Download and unzip to }{\fs20 C:\\libcddb}{:}
+\par {\fs20 https://sourceforge.net/projects/libcddb/files/libcddb/1.3.2/libcddb-1.3.2.tar.bz2/download}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libcddb}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libcue}
+\par
+\par {Download and unzip to }{\fs20 C:\\libcue}{:}
+\par {\fs20 https://sourceforge.net/projects/libcue/files/libcue/1.4.0/libcue-1.4.0.tar.bz2/download}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libcue}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install LAME}
+\par
+\par {Download and unzip to }{\fs20 C:\\lame}{:}
+\par {\fs20 https://sourceforge.net/projects/lame/files/lame/3.98.4/lame-3.98.4.tar.gz/download}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/lame}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libflac}
+\par
+\par {Download and unzip to }{\fs20 C:\\libflac}{:}
+\par {\fs20 http://downloads.xiph.org/releases/flac/flac-1.2.1.tar.gz}
+\par
+\par {Apply the patch }{\fs20 libflac-alloc.h.diff}{ to }{\fs20 C:\\libflac\\include\\share\\alloc.h}{.}
+\par {Apply the patch }{\fs20 libflac-main.cpp.diff}{ to }{\fs20 C:\\libflac\\examples\\cpp\\encode\\file\\main.cpp}{.}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libflac}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {Apply the patch }{\fs20 flac.pc.diff}{ to }{\fs20 C:\\aud\\lib\\pkgconfig\\flac.pc}{.}
+\par
+\par {\ul Install libogg}
+\par
+\par {Download and unzip to }{\fs20 C:\\libogg}{:}
+\par {\fs20 http://downloads.xiph.org/releases/ogg/libogg-1.2.2.tar.gz}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libogg}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libvorbis}
+\par
+\par {Download and unzip to }{\fs20 C:\\libvorbis}{:}
+\par {\fs20 http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.2.tar.bz2}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libvorbis}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libneon}
+\par
+\par {Download and unzip to }{\fs20 C:\\libneon}{:}
+\par {\fs20 http://www.webdav.org/neon/neon-0.29.5.tar.gz}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libneon}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {Apply the patch }{\fs20 neon.pc.diff}{ to }{\fs20 C:\\aud\\lib\\pkgconfig\\neon.pc}{.}
+\par
+\par {\ul Install libsamplerate}
+\par
+\par {Download and unzip to }{\fs20 C:\\libsamplerate}{:}
+\par {\fs20 http://www.mega-nerd.com/SRC/libsamplerate-0.1.7.tar.gz}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libsamplerate}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libwavpack}
+\par
+\par {Download and unzip to }{\fs20 C:\\libwavpack}{:}
+\par {\fs20 http://www.wavpack.com/wavpack-4.60.1.tar.bz2}
+\par
+\par {Apply the patch }{\fs20 libwavpack-utils.c.diff}{ to }{\fs20 C:\\libwavpack\\cli\\utils.c}{.}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libwavpack}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install Audacious}
+\par
+\par {Download and unzip to }{\fs20 C:\\audacious}{:}
+\par {\fs20 http://hg.atheme.org/audacious/audacious/archive/tip.tar.bz2}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/audacious}
+\par {\fs20 ./autogen.sh}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install Audacious plugins}
+\par
+\par {Download and unzip to }{\fs20 C:\\audacious-plugins}{:}
+\par {\fs20 http://hg.atheme.org/audacious-plugins/audacious-plugins/archive/tip.tar.bz2}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/audacious-plugins}
+\par {\fs20 ./autogen.sh}
+\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Tweaks}
+\par
+\par {Use GIMP to create an .ico file, and embed it in audacious.exe using this software:}
+\par {\fs20 http://www.wilsonc.demon.co.uk/d10resourceeditor.htm}
+}

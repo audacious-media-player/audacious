@@ -1,0 +1,10 @@
+--- main.c.0	2008-09-22 13:55:09 -0400
++++ main.c	2011-04-01 19:00:33 -0500
+@@ -31,7 +31,6 @@
+ #ifdef _WIN32
+ #define WIN32_LEAN_AND_MEAN
+ #include <windows.h>
+-#define off_t __int64
+ #else
+ #include <time.h>
+ #endif

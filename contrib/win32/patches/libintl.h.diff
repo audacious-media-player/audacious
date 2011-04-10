@@ -1,0 +1,11 @@
+--- libintl.h.0	2009-07-25 21:18:24 -0400
++++ libintl.h	2011-04-02 00:31:51 -0500
+@@ -308,7 +308,7 @@
+    or gettext() but for which the format string could be the return value
+    of _() or gettext() need to add this #include.  Oh well.  */
+ 
+-#if !0
++#if 0
+ 
+ #include <stdio.h>
+ #include <stddef.h>

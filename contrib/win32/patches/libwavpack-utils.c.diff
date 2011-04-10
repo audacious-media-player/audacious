@@ -1,0 +1,11 @@
+--- utils.c.0	2009-11-30 23:24:52 -0500
++++ utils.c	2011-04-01 23:38:52 -0500
+@@ -657,7 +657,7 @@
+     return !ferror (hFile);
+ }
+ 
+-#ifdef WIN32
++#if 0
+ 
+ int64_t DoGetFileSize (FILE *hFile)
+ {

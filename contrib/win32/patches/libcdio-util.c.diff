@@ -1,0 +1,21 @@
+--- util.c.0	2009-07-12 19:21:30 -0400
++++ util.c	2011-04-01 20:22:00 -0500
+@@ -503,6 +503,7 @@
+ 	     (unsigned int) p_statbuf->size );
+   }
+ 
++#ifdef HAVE_ROCK
+   if (yep == p_statbuf->rr.b3_rock && b_rock) {
+     struct tm tm;
+ 
+@@ -524,7 +525,9 @@
+       report(stdout, " -> %s", p_statbuf->rr.psz_symlink);
+     }
+ 
+-  } else {
++  } else
++#endif
++  {
+     strftime(date_str, sizeof(date_str), "%b %d %Y %H:%M:%S ", &p_statbuf->tm);
+     report (stdout," %s %s", date_str, psz_name_translated);
+   }
