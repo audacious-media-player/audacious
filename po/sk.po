@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-03 18:02-0400\n"
+"POT-Creation-Date: 2011-04-10 00:51-0400\n"
 "PO-Revision-Date: 2011-03-13 20:31+0100\n"
 "Last-Translator: Andrej Herceg <herceg.andrej@zoznam.sk>\n"
 "Language-Team: Slovak <Slovak <sk-i18n@lists.linux.sk>>\n"
@@ -1114,19 +1114,19 @@ msgstr "Zásluhy"
 msgid "Translators"
 msgstr "Prekladatelia"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "Otvoriť súbory"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "Pridať súbory"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "Zatvoriť okno po otvorení"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "Zatvoriť okno po pridaní"
 

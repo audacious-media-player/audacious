@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audi-temel\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-03 18:02-0400\n"
+"POT-Creation-Date: 2011-04-10 00:51-0400\n"
 "PO-Revision-Date: 2007-12-23 00:26+0200\n"
 "Last-Translator: Murat Senel <muratasenel@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -1139,19 +1139,19 @@ msgstr "Yazarlar"
 msgid "Translators"
 msgstr "Çevirmenler"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "Dosyaları Aç"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "Dosyaları Ekle"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "Açtıktan sonra pencereyi kapat"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "Ekledikten sonra pencereyi kapat"
 

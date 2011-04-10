@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-03 18:02-0400\n"
+"POT-Creation-Date: 2011-04-10 00:51-0400\n"
 "PO-Revision-Date: 2008-07-19 11:57+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -1135,19 +1135,19 @@ msgstr "Заслуге"
 msgid "Translators"
 msgstr "Преводиоци"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "Отвори датотеке"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "Додај датотеке"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "Затвори оквир кликом на Отвори"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "Затвори оквир кликом на Додај"
 

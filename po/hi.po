@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-03 18:02-0400\n"
+"POT-Creation-Date: 2011-04-10 00:51-0400\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -1181,19 +1181,19 @@ msgstr "आभार"
 msgid "Translators"
 msgstr "सभी अनुवादक"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "संचिकाओं को खोलें"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "संचिकाओं को जोड़ें"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "खोलने पर बन्द संवाद"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "जोड़ने पर बन्द संवाद"
 
