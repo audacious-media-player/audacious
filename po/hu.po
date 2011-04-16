@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-10 00:51-0400\n"
+"POT-Creation-Date: 2011-04-16 01:36-0400\n"
 "PO-Revision-Date: 2010-08-21 11:09+0100\n"
 "Last-Translator: Peter Polonkai <polesz@nedudu.hu>\n"
 "Language-Team: Hungarian <dvornik@gnome.hu>\n"
@@ -304,12 +304,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:372
+#: src/audacious/playback.c:375
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Dekóder nem található ehhez %s."
 
-#: src/audacious/playback.c:516
+#: src/audacious/playback.c:519
 msgid "Buffering ..."
 msgstr "Pufferelés ..."
 

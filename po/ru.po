@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-10 00:51-0400\n"
+"POT-Creation-Date: 2011-04-16 01:36-0400\n"
 "PO-Revision-Date: 2010-08-22 22:15+0400\n"
 "Last-Translator: Sergey V. Mironov <sergo@bk.ru>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -318,12 +318,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:372
+#: src/audacious/playback.c:375
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Не найден декодер для %s."
 
-#: src/audacious/playback.c:516
+#: src/audacious/playback.c:519
 msgid "Buffering ..."
 msgstr "Буферизация..."
 

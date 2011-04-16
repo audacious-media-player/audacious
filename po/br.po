@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.6\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-10 00:51-0400\n"
+"POT-Creation-Date: 2011-04-16 01:36-0400\n"
 "PO-Revision-Date: 2007-01-31 16:16+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: Brezhoneg <LL@li.org>\n"
@@ -311,12 +311,12 @@ msgstr ""
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/playback.c:372
+#: src/audacious/playback.c:375
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:516
+#: src/audacious/playback.c:519
 #, fuzzy
 msgid "Buffering ..."
 msgstr "Krubuilh"
