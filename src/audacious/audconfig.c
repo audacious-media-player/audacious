@@ -252,7 +252,7 @@ aud_config_load(void)
     aud_config_chardet_update();
 
     if (!cfg.cover_name_include)
-        cfg.cover_name_include = g_strdup("");
+        cfg.cover_name_include = g_strdup("album,folder");
 
     if (!cfg.cover_name_exclude)
         cfg.cover_name_exclude = g_strdup("back");
