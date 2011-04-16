@@ -84,7 +84,7 @@ struct commandhandler handlers[] = {
 	{"playqueue-add", playqueue_add, "adds a song to the playqueue", 1},
 	{"playqueue-remove", playqueue_remove, "removes a song from the playqueue", 1},
 	{"playqueue-is-queued", playqueue_is_queued, "returns OK if a song is queued", 1},
-	{"playqueue-get-queue-position", playqueue_get_queue_position, "returns the playqueue position of a song in the given poition in the playlist", 1},
+	{"playqueue-get-queue-position", playqueue_get_queue_position, "returns the playqueue position of a song in the given position in the playlist", 1},
 	{"playqueue-get-list-position", playqueue_get_list_position, "returns the playlist position of a song in the given position in the playqueue", 1},
 	{"playqueue-length", playqueue_length, "returns the length of the playqueue", 0},
 	{"playqueue-display", playqueue_display, "returns a list of currently-queued songs", 0},
