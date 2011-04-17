@@ -197,7 +197,7 @@ static const gchar *translators_text[] = {
     "Ernest Adrogué",
     NULL,
     N_("Chinese:"),
-    "Chi Chiu Tsu",
+    "Tse Chih Chiu",
     NULL,
     N_("Croatian:"),
     "Marin Glibic",
