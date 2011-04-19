@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious 968ceb9a5ad6\n"
+"Project-Id-Version: audacious 9220064cb615\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2011-04-16 01:36-0400\n"
-"PO-Revision-Date: 2011-03-01 21:09+0100\n"
+"PO-Revision-Date: 2011-04-18 21:29+0200\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -135,9 +135,8 @@ msgid "Korean:"
 msgstr "Korejština:"
 
 #: src/audacious/credits.c:256
-#, fuzzy
 msgid "Latvian:"
-msgstr "Chorvatština:"
+msgstr "Lotyština:"
 
 #: src/audacious/credits.c:259
 msgid "Lithuanian:"
@@ -210,7 +209,7 @@ msgstr "Dočasný seznam skladeb"
 #: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Chyba při importu winampovského EQF souboru „%s“"
+msgstr "Chyba při importu winampovského EQF souboru „%s“"
 
 #: src/audacious/folder-add.c:63
 msgid "Searching ..."
@@ -300,6 +299,10 @@ msgid ""
 "data loss.  If Audacious is not running, you can safely ignore this "
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
+"Vypadá to, že Audacious již běží, ale neodpovídá. Můžete spustit další "
+"instanci programu, ale mějte na paměti, že tak můžete ztratit data. "
+"Pokud Audacious neběží, můžete tuto zprávu bezpečně ignorovat. Tlačítkem "
+"Budiž Audacious spustíte, tlačítkem Zrušit ukončíte."
 
 #: src/audacious/main.c:558
 msgid "Audacious"
@@ -471,59 +474,51 @@ msgid ""
 "audio system does not support controlling the playback volume."
 msgstr ""
 "Použije softwarové ovládání hlasitosti. Toto je užitečné, nepodporuje-li "
-"váš zvukový systém změnu hlasitosti přehrávání."
+"váš zvukový systém změnu hlasitosti přehrávání."
 
 #: src/audacious/ui_preferences.c:158
 msgid "Amplify all files:"
-msgstr ""
+msgstr "Zesílit všechny soubory:"
 
 #: src/audacious/ui_preferences.c:159 src/audacious/ui_preferences.c:161
 msgid "dB"
 msgstr "dB"
 
 #: src/audacious/ui_preferences.c:160
-#, fuzzy
 msgid "Amplify untagged files:"
-msgstr "– přehrávat multimediální soubory"
+msgstr "Zesílit soubory bez metadat:"
 
 #: src/audacious/ui_preferences.c:164
-#, fuzzy
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Typ zesílení při přehrávání</b>"
+msgstr "<b>Zesílení při přehrávání</b>"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Enable Replay Gain"
 msgstr "Zapnout zesílení při přehrávání"
 
 #: src/audacious/ui_preferences.c:167
-#, fuzzy
 msgid "<b>Mode</b>"
-msgstr "<b>Metadata</b>"
+msgstr "<b>Režim</b>"
 
 #: src/audacious/ui_preferences.c:168
-#, fuzzy
 msgid "Single track mode"
-msgstr "Zobrazit informace o skladbě"
+msgstr "Režim samostatné skladby"
 
 #: src/audacious/ui_preferences.c:170
-#, fuzzy
 msgid "Album mode"
-msgstr "Název alba: "
+msgstr "Režim alba"
 
 #: src/audacious/ui_preferences.c:172
-#, fuzzy
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Kolečko myši</b>"
+msgstr "<b>Míra úpravy</b>"
 
 #: src/audacious/ui_preferences.c:175
-#, fuzzy
 msgid "<b>Clipping Prevention</b>"
-msgstr "<b>Vyskakovací okno s podrobnostmi</b>"
+msgstr "<b>Ochrana před ořezem</b>"
 
 #: src/audacious/ui_preferences.c:176
-#, fuzzy
 msgid "Enable clipping prevention"
-msgstr "Povolit ochranu před ořezem pomocí informací o vrcholu"
+msgstr "Zapnout ochranu před ořezem"
 
 #: src/audacious/ui_preferences.c:180
 msgid "Proxy hostname:"
@@ -790,10 +785,11 @@ msgstr "Mono"
 msgid "Stereo"
 msgstr "Stereo"
 
+# FIXME: plurals
 #: src/libaudcore/tuple.c:689
-#, fuzzy, c-format
+#, c-format
 msgid "%d channels"
-msgstr "Kanálů"
+msgstr "%d kanálů"
 
 #: src/libaudgui/confirm.c:65
 #, c-format
@@ -809,9 +805,8 @@ msgid "_Don't show this message again"
 msgstr "_Příště již toto zprávu nezobrazovat"
 
 #: src/libaudgui/confirm.c:115
-#, fuzzy
 msgid "Rename Playlist"
-msgstr "Uložit seznam skladeb"
+msgstr "Přejmenovat seznam skladeb"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
@@ -882,16 +877,14 @@ msgid "Acid Jazz"
 msgstr "Acid jazz"
 
 #: src/libaudgui/infowin.c:78
-#, fuzzy
 msgid "Acid Rock"
-msgstr "Hard rock"
+msgstr "Acid rock"
 
 #: src/libaudgui/infowin.c:79
 msgid "Ambient"
 msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:80
-#, fuzzy
 msgid "Bebop"
 msgstr "Bebob"
 
@@ -956,9 +949,8 @@ msgid "Heavy Metal"
 msgstr "Heavy metal"
 
 #: src/libaudgui/infowin.c:96
-#, fuzzy
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "Hip hop"
 
 #: src/libaudgui/infowin.c:97
 msgid "House"
@@ -1009,13 +1001,12 @@ msgid "Rock"
 msgstr "Rock"
 
 #: src/libaudgui/infowin.c:109
-#, fuzzy
 msgid "Rock and Roll"
-msgstr "Rock'n roll"
+msgstr "Rock and roll"
 
 #: src/libaudgui/infowin.c:110
 msgid "Rhythm and Blues"
-msgstr ""
+msgstr "R&B"
 
 #: src/libaudgui/infowin.c:111
 msgid "Ska"
@@ -1034,9 +1025,8 @@ msgid "Techno"
 msgstr "Techno"
 
 #: src/libaudgui/infowin.c:115
-#, fuzzy
 msgid "Trip-hop"
-msgstr "Trip-Hop"
+msgstr "Trip hop"
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
 #: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
@@ -1241,14 +1231,21 @@ msgid "ID"
 msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
-#, fuzzy
 msgid "Session management options:"
-msgstr "Přepínače správy relace"
+msgstr "Přepínače správy relace:"
 
 #: src/libeggsmclient/eggsmclient.c:254
-#, fuzzy
 msgid "Show session management options"
-msgstr "Zobrazí volby správy relace"
+msgstr "Zobrazí přepínače správy relace"
+
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "Přehrávač zvuku pro mnoho platforem.\n"
+#~ "Copyright © 2005–2011 vývojový tým Audacious"
 
 #~ msgid ""
 #~ "Running multiple instances of Audacious can lead to corrupted "
@@ -1295,6 +1292,9 @@ msgstr "Zobrazí volby správy relace"
 #~ msgstr ""
 #~ "Použije hodnotu vrcholu z informací o zesílení pro přehrávání na ochranu "
 #~ "proti ořezu."
+
+#~ msgid "Surround"
+#~ msgstr "Prostorový zvuk"
 
 #~ msgid "Classic Rock"
 #~ msgstr "Klasický rock"
@@ -1628,18 +1628,6 @@ msgstr "Zobrazí volby správy relace"
 
 #~ msgid "Synthpop"
 #~ msgstr "Synthpop"
-
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Přehrávač zvuku pro mnoho platforem.\n"
-#~ "Copyright © 2005–2011 vývojový tým Audacious"
-
-#~ msgid "Surround"
-#~ msgstr "Prostorový zvuk"
 
 #~ msgid "Sorry, threads aren't supported on your platform.\n"
 #~ msgstr "Je nám líto, ale vlákna nejsou na vaší platformě podporována.\n"
