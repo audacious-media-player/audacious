@@ -220,6 +220,7 @@ static const gchar *translators_text[] = {
     "Adam Cecile",
     "Stanislas Zeller",
     "Stany Henry",
+    "Jean-Alexandre Anglès d'Auriac",
     NULL,
     N_("German:"),
     "Matthias Debus",
