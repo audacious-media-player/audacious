@@ -32,5 +32,5 @@ extern AudAPITable * _aud_api_table;
 #define AUD_FUNC2(t,n,t1,n1,t2,n2) static inline t aud_##n(t1 n1, t2 n2) {return _aud_api_table->AUD_API_SYMBOL->n(n1,n2);}
 #define AUD_FUNC3(t,n,t1,n1,t2,n2,t3,n3) static inline t aud_##n(t1 n1, t2 n2, t3 n3) {return _aud_api_table->AUD_API_SYMBOL->n(n1,n2,n3);}
 #define AUD_FUNC4(t,n,t1,n1,t2,n2,t3,n3,t4,n4) static inline t aud_##n(t1 n1, t2 n2, t3 n3, t4 n4) {return _aud_api_table->AUD_API_SYMBOL->n(n1,n2,n3,n4);}
-#define AUD_FUNC5(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5) static inline t aud_##n(t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6) {return _aud_api_table->AUD_API_SYMBOL->n(n1,n2,n3,n4,n5);}
+#define AUD_FUNC5(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5) static inline t aud_##n(t1 n1, t2 n2, t3 n3, t4 n4, t5 n5) {return _aud_api_table->AUD_API_SYMBOL->n(n1,n2,n3,n4,n5);}
 #define AUD_FUNC6(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6) static inline t aud_##n(t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6) {return _aud_api_table->AUD_API_SYMBOL->n(n1,n2,n3,n4,n5,n6);}
