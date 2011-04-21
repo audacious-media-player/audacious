@@ -28,6 +28,7 @@
 #include <audacious/api.h>
 #include <audacious/types.h>
 #include <libaudcore/audio.h>
+#include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
@@ -47,78 +48,72 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 18 /* 2.5-alpha1 */
-#define _AUD_PLUGIN_VERSION     20 /* 2.5-beta2 */
+#define _AUD_PLUGIN_VERSION_MIN 30 /* 2.6-devel */
+#define _AUD_PLUGIN_VERSION     30 /* 2.6-devel */
 
-/**
- * The plugin module header. Each module can contain several plugins,
- * of any supported type.
- */
-typedef const struct {
-    gint magic; /* checked against _AUD_PLUGIN_MAGIC */
-    gint version; /* checked against _AUD_PLUGIN_VERSION */
-    const gchar * name;
-    void (* init) (void);
-    void (* fini) (void);
+/* A NOTE ON THREADS
+ *
+ * How thread-safe a plugin must be depends on the type of plugin.  Note that
+ * some parts of the Audacious API are *not* thread-safe and therefore cannot be
+ * used in some parts of some plugins; for example, input plugins cannot use
+ * GUI-related calls or access the playlist except in about() and configure().
+ *
+ * Thread-safe plugins: transport, playlist, input, effect, and output.  These
+ * must be mostly thread-safe.  init() and cleanup() may be called from
+ * secondary threads; however, no other functions provided by the plugin will be
+ * called at the same time.  about() and configure() will be called only from
+ * the main thread.  All other functions provided by the plugin may be called
+ * from any thread and from multiple threads simultaneously.
+ *
+ * Exceptions:
+ * - Because many existing input plugins are not coded to handle simultaneous
+ *   calls to play(), play() will only be called from one thread at a time.  New
+ *   plugins should not rely on this exception, though.
+ * - Some combinations of calls, especially for output and effect plugins, make
+ *   no sense; for example, flush() in an output plugin will only be called
+ *   after open_audio() and before close_audio().
+ *
+ * Single-thread plugins: visualization, general, and interface.  Functions
+ * provided by these plugins will only be called from the main thread. */
 
-    /* These are arrays of pointers, ending with NULL: */
-    InputPlugin * const * ip_list;
-    OutputPlugin * const * op_list;
-    EffectPlugin * const * ep_list;
-    GeneralPlugin * const * gp_list;
-    VisPlugin * const * vp_list;
-    TransportPlugin * const * tp_list;
-    PlaylistPlugin * const * pp_list;
-
-    Iface * iface;
-} PluginHeader;
-
-#define DECLARE_PLUGIN(name, ...) \
- AudAPITable * _aud_api_table = NULL; \
- G_MODULE_EXPORT PluginHeader * get_plugin_info (AudAPITable * table) { \
-    static PluginHeader h = {_AUD_PLUGIN_MAGIC, _AUD_PLUGIN_VERSION, #name, \
-     __VA_ARGS__}; \
-    _aud_api_table = table; \
-    return & h; \
- }
-
-#define SIMPLE_TRANSPORT_PLUGIN(name, t) DECLARE_PLUGIN(name, .tp_list = t)
-#define SIMPLE_PLAYLIST_PLUGIN(name, p) DECLARE_PLUGIN(name, .pp_list = p)
-#define SIMPLE_INPUT_PLUGIN(name, i) DECLARE_PLUGIN (name, .ip_list = i)
-#define SIMPLE_EFFECT_PLUGIN(name, e) DECLARE_PLUGIN (name, .ep_list = e)
-#define SIMPLE_OUTPUT_PLUGIN(name, o) DECLARE_PLUGIN (name, .op_list = o)
-#define SIMPLE_VIS_PLUGIN(name, v) DECLARE_PLUGIN(name, .vp_list = v)
-#define SIMPLE_GENERAL_PLUGIN(name, g) DECLARE_PLUGIN (name, .gp_list = g)
-#define SIMPLE_IFACE_PLUGIN(name, i) DECLARE_PLUGIN(name, .iface = i)
-
-#define SIMPLE_VISUAL_PLUGIN SIMPLE_VIS_PLUGIN /* deprecated */
-
-#define PLUGIN_COMMON_FIELDS        \
-    gchar *description;            \
+#define PLUGIN_COMMON_FIELDS \
+    gint magic; /* checked against _AUD_PLUGIN_MAGIC */ \
+    gint version; /* checked against _AUD_PLUGIN_VERSION */ \
+    gint type; /* PLUGIN_TYPE_XXX */ \
+    gint size; /* size in bytes of the struct */ \
+    const gchar * name; \
     gboolean (* init) (void); \
-    void (*cleanup) (void);        \
-    void (*about) (void);        \
-    void (*configure) (void);        \
-    PluginPreferences *settings;
+    void (* cleanup) (void); \
+    void (* about) (void); \
+    void (* configure) (void); \
+    PluginPreferences * settings;
 
-struct _Plugin {
+struct _Plugin
+{
     PLUGIN_COMMON_FIELDS
 };
 
-struct _TransportPlugin {
+struct _TransportPlugin
+{
     PLUGIN_COMMON_FIELDS
     const gchar * const * schemes; /* array ending with NULL */
     const VFSConstructor * vtable;
 };
 
-struct _PlaylistPlugin {
+struct _PlaylistPlugin
+{
     PLUGIN_COMMON_FIELDS
 	const gchar * const * extensions; /* array ending with NULL */
-	gboolean (* load) (const gchar * filename, gint list, gint at);
-	gboolean (* save) (const gchar * filename, gint list);
+	gboolean (* load) (const gchar * filename,
+     struct index * filenames, /* of (gchar *) */
+     struct index * tuples); /* of (Tuple *) */
+	gboolean (* save) (const gchar * filename,
+     struct index * filenames, /* of (gchar *) */
+     struct index * tuples); /* of (Tuple *) */
 };
 
-struct _OutputPlugin {
+struct _OutputPlugin
+{
     PLUGIN_COMMON_FIELDS
 
     /* During probing, plugins with higher priority (10 to 0) are tried first. */
@@ -176,7 +171,8 @@ struct _OutputPlugin {
     void (* set_written_time) (gint time);
 };
 
-struct _EffectPlugin {
+struct _EffectPlugin
+{
     PLUGIN_COMMON_FIELDS
 
     /* All processing is done in floating point.  If the effect plugin wants to
@@ -281,7 +277,8 @@ struct OutputAPI
 
 typedef const struct _InputPlayback InputPlayback;
 
-struct _InputPlayback {
+struct _InputPlayback
+{
     /* Pointer to the output API functions. */
     const struct OutputAPI * output;
 
@@ -300,12 +297,9 @@ struct _InputPlayback {
     void (* set_params) (InputPlayback * p, gint bitrate, gint samplerate,
      gint channels);
 
-    /**
-     * Sets / updates playback entry #Tuple.
-     * @attention Caller gives up ownership of one reference to the tuple.
-     * @since Added in Audacious 2.2.
-     */
-    void (*set_tuple) (InputPlayback * playback, Tuple * tuple);
+    /* Updates metadata for the stream.  Caller gives up ownership of one
+     * reference to the tuple. */
+    void (* set_tuple) (InputPlayback * playback, Tuple * tuple);
 
     /* If replay gain settings are stored in the tuple associated with the
      * current song, this function can be called (after opening audio) to apply
@@ -314,7 +308,8 @@ struct _InputPlayback {
     void (* set_gain_from_playlist) (InputPlayback * playback);
 };
 
-struct _InputPlugin {
+struct _InputPlugin
+{
     PLUGIN_COMMON_FIELDS
 
     /* Nonzero if the files handled by the plugin may contain more than one
@@ -338,7 +333,13 @@ struct _InputPlugin {
 
     /* Pointer to an array (terminated with NULL) of file extensions associated
      * with file types the plugin can handle. */
-    const gchar * const * vfs_extensions;
+    const gchar * const * extensions;
+    /* Pointer to an array (terminated with NULL) of MIME types the plugin can
+     * handle. */
+    const gchar * const * mimes;
+    /* Pointer to an array (terminated with NULL) of custom URI schemes the
+     * plugin can handle. */
+    const gchar * const * schemes;
 
     /* How quickly the plugin should be tried in searching for a plugin to
      * handle a file which could not be identified from its extension.  Plugins
@@ -414,14 +415,18 @@ struct _InputPlugin {
     gint (* set_volume) (gint l, gint r);
 };
 
-struct _GeneralPlugin {
+struct _GeneralPlugin
+{
     PLUGIN_COMMON_FIELDS
+
+    gboolean enabled_by_default;
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);
 };
 
-struct _VisPlugin {
+struct _VisPlugin
+{
     PLUGIN_COMMON_FIELDS
 
     gint num_pcm_chs_wanted;
@@ -443,6 +448,50 @@ struct _VisPlugin {
     void * (* get_widget) (void);
 };
 
+struct _IfacePlugin
+{
+    PLUGIN_COMMON_FIELDS
+
+    void (* show) (gboolean show);
+    gboolean (* is_shown) (void);
+
+    void (* show_error) (const gchar * markup);
+    void (* show_filebrowser) (gboolean play_button);
+    void (* show_jump_to_track) (void);
+
+    void /* GtkWidget */ * (* run_gtk_plugin) (void /* GtkWidget */ * widget,
+     const gchar * name);
+    void * (* stop_gtk_plugin) (void /* GtkWidget */ * widget);
+
+    void (* install_toolbar) (void /* GtkWidget */ * button);
+    void (* uninstall_toolbar) (void /* GtkWidget */ * button);
+};
+
 #undef PLUGIN_COMMON_FIELDS
+
+#define AUD_PLUGIN(stype, itype, ...) \
+AudAPITable * _aud_api_table = NULL; \
+stype _aud_plugin_self = { \
+ .magic = _AUD_PLUGIN_MAGIC, \
+ .version = _AUD_PLUGIN_VERSION, \
+ .type = itype, \
+ .size = sizeof (stype), \
+ __VA_ARGS__}; \
+G_MODULE_EXPORT stype * get_plugin_info (AudAPITable * table) { \
+    _aud_api_table = table; \
+    return & _aud_plugin_self; \
+}
+
+#define AUD_TRANSPORT_PLUGIN(...) AUD_PLUGIN (TransportPlugin, PLUGIN_TYPE_TRANSPORT, __VA_ARGS__)
+#define AUD_PLAYLIST_PLUGIN(...) AUD_PLUGIN (PlaylistPlugin, PLUGIN_TYPE_PLAYLIST, __VA_ARGS__)
+#define AUD_INPUT_PLUGIN(...) AUD_PLUGIN (InputPlugin, PLUGIN_TYPE_INPUT, __VA_ARGS__)
+#define AUD_EFFECT_PLUGIN(...) AUD_PLUGIN (EffectPlugin, PLUGIN_TYPE_EFFECT, __VA_ARGS__)
+#define AUD_OUTPUT_PLUGIN(...) AUD_PLUGIN (OutputPlugin, PLUGIN_TYPE_OUTPUT, __VA_ARGS__)
+#define AUD_VIS_PLUGIN(...) AUD_PLUGIN (VisPlugin, PLUGIN_TYPE_VIS, __VA_ARGS__)
+#define AUD_GENERAL_PLUGIN(...) AUD_PLUGIN (GeneralPlugin, PLUGIN_TYPE_GENERAL, __VA_ARGS__)
+#define AUD_IFACE_PLUGIN(...) AUD_PLUGIN (IfacePlugin, PLUGIN_TYPE_IFACE, __VA_ARGS__)
+
+#define PLUGIN_HAS_FUNC(p, func) \
+ ((p)->size > (void *) & (p)->func - (void *) (p) && (p)->func)
 
 #endif /* AUDACIOUS_PLUGIN_H */

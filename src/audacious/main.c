@@ -445,8 +445,8 @@ static void do_commands (void)
 
     if (options.show_jump_box)
         interface_show_jump_to_track ();
-    if (options.mainwin)
-        interface_toggle_visibility ();
+    if (options.mainwin || options.activate)
+        interface_show (TRUE);
 }
 
 static void init_one (gint * p_argc, gchar * * * p_argv)

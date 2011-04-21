@@ -43,10 +43,6 @@ AUD_FUNC1 (const gchar *, get_path, gint, path)
 AUD_FUNC0 (const gchar *, get_gentitle_format)
 AUD_FUNC0 (void, save_playlists)
 
-/* plugin-registry.c */
-AUD_FUNC2 (void, uri_set_plugin, const gchar *, scheme, InputPlugin *, ip)
-AUD_FUNC2 (void, mime_set_plugin, const gchar *, mimetype, InputPlugin *, ip)
-
 /* probe.c */
 AUD_FUNC2 (PluginHandle *, file_find_decoder, const gchar *, filename, gboolean,
  fast)
@@ -74,6 +70,7 @@ AUD_FUNC2 (gint, menu_plugin_item_remove, gint, menu, /* GtkWidget * */ void *,
 /* ui_preferences.c */
 AUD_FUNC4 (void, create_widgets_with_domain, /* GtkWidget * */ void *, box,
  PreferencesWidget *, widgets, gint, count, const gchar *, domain)
+AUD_FUNC0 (void, show_prefs_window)
 
 /* util.c */
 AUD_FUNC0 (gchar *, util_get_localdir)

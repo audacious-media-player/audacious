@@ -55,7 +55,6 @@ INCLUDES = api.h \
            glib-compat.h \
            gtk-compat.h \
            i18n.h				\
-           interface.h			\
            misc.h \
            misc-api.h \
            playlist.h \

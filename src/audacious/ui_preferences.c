@@ -1925,10 +1925,12 @@ destroy_prefs_window(void)
     prefswin_destroy(prefswin, NULL, NULL);
 }
 
-void
-show_prefs_window(void)
+void show_prefs_window (void)
 {
-    gtk_window_present(GTK_WINDOW(prefswin)); /* show or raise prefs window */
+    if (! prefswin)
+        create_prefs_window ();
+
+    gtk_window_present ((GtkWindow *) prefswin);
 }
 
 void

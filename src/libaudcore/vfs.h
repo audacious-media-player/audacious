@@ -147,9 +147,6 @@ void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 *
  size);
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const gchar * scheme));
-void vfs_prepare (const gchar * scheme);
-void vfs_prepare_filename (const gchar * filename);
-
 void vfs_set_verbose (gboolean verbose);
 
 #undef WARN_RETURN

@@ -465,8 +465,6 @@ static gboolean scan_next (void * unused)
             if (entry->failed)
                 continue;
 
-            vfs_prepare_filename (entry->filename);
-
             scan_positions[i] = search;
             scan_filenames[i] = entry->filename;
             scan_decoders[i] = entry->decoder;
@@ -2044,6 +2042,12 @@ void playlist_save_state (void)
         gint entries = index_count (playlist->entries), count;
 
         fprintf (handle, "playlist %d\n", playlist_num);
+
+        if (playlist->title)
+            fprintf (handle, "title %s\n", playlist->title);
+        if (playlist->filename)
+            fprintf (handle, "filename %s\n", playlist->filename);
+
         fprintf (handle, "position %d\n", playlist_get_position (playlist_num));
         fprintf (handle, "last-shuffled %d\n", playlist->last_shuffle_num);
 
@@ -2057,36 +2061,38 @@ void playlist_save_state (void)
     fclose (handle);
 }
 
-static gchar parse_key[32];
+static gchar parse_key[512];
 static gchar * parse_value;
 
 static void parse_next (FILE * handle)
 {
-    gchar * found;
-
     parse_value = NULL;
 
-    if (fgets (parse_key, sizeof parse_key, handle) == NULL)
+    if (! fgets (parse_key, sizeof parse_key, handle))
         return;
 
-    found = strchr (parse_key, ' ');
-
-    if (found == NULL)
+    gchar * space = strchr (parse_key, ' ');
+    if (! space)
         return;
 
-    * found = 0;
-    parse_value = found + 1;
+    * space = 0;
+    parse_value = space + 1;
 
-    found = strchr (parse_value, '\n');
-
-    if (found != NULL)
-        * found = 0;
+    gchar * newline = strchr (parse_value, '\n');
+    if (newline)
+        * newline = 0;
 }
 
 static gboolean parse_integer (const gchar * key, gint * value)
 {
-    return (parse_value != NULL && ! strcmp (parse_key, key) && sscanf
-     (parse_value, "%d", value) == 1);
+    return (parse_value && ! strcmp (parse_key, key) && sscanf (parse_value,
+     "%d", value) == 1);
+}
+
+static gchar * parse_string (const gchar * key)
+{
+    return (parse_value && ! strcmp (parse_key, key)) ? g_strdup (parse_value) :
+     NULL;
 }
 
 void playlist_load_state (void)
@@ -2094,6 +2100,7 @@ void playlist_load_state (void)
     gchar scratch[512];
     FILE * handle;
     gint playlist_num;
+    const gchar * s;
 
     snprintf (scratch, sizeof scratch, "%s/" STATE_FILE,
      get_path (AUD_PATH_USER_DIR));
@@ -2124,20 +2131,28 @@ void playlist_load_state (void)
 
         parse_next (handle);
 
+        if ((s = parse_string ("title")))
+        {
+            g_free (playlist->title);
+            playlist->title = g_strdup (s);
+            parse_next (handle);
+        }
+
+        if ((s = parse_string ("filename")))
+        {
+            g_free (playlist->filename);
+            playlist->filename = g_strdup (s);
+            parse_next (handle);
+        }
+
         if (parse_integer ("position", & position))
             parse_next (handle);
 
         if (position >= 0 && position < entries)
             playlist->position = index_get (playlist->entries, position);
 
-        gint obsolete = 0;
-        if (parse_integer ("shuffled", & obsolete)) /* compatibility with 2.3 */
-            parse_next (handle);
-
         if (parse_integer ("last-shuffled", & playlist->last_shuffle_num))
             parse_next (handle);
-        else /* compatibility with 2.3 beta */
-            playlist->last_shuffle_num = obsolete;
 
         for (count = 0; count < entries; count ++)
         {

@@ -929,7 +929,7 @@ gboolean audacious_rc_quit(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_eject(RemoteObject * obj, GError ** error)
 {
-    interface_run_filebrowser (TRUE);
+    interface_show_filebrowser (TRUE);
     return TRUE;
 }
 
@@ -941,7 +941,7 @@ gboolean audacious_rc_main_win_visible(RemoteObject * obj, gboolean * is_main_wi
 
 gboolean audacious_rc_show_main_win(RemoteObject * obj, gboolean show, GError ** error)
 {
-    interface_toggle_visibility ();
+    interface_show (show);
     return TRUE;
 }
 

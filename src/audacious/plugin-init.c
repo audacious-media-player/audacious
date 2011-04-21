@@ -60,7 +60,6 @@ static const struct {
         } s;
     } u;
 } table[PLUGIN_TYPES] = {
- [PLUGIN_TYPE_LOWLEVEL] = {"lowlevel", FALSE},
  [PLUGIN_TYPE_TRANSPORT] = {"transport",  TRUE, FALSE, .u.m =
   {dummy_plugin_start, dummy_plugin_stop}},
  [PLUGIN_TYPE_PLAYLIST] = {"playlist",  TRUE, FALSE, .u.m = {dummy_plugin_start,

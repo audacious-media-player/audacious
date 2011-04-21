@@ -117,17 +117,15 @@ static gboolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
 static void probe_by_scheme (ProbeState * state)
 {
     gchar * s = strstr (state->filename, "://");
-    gchar c;
 
     if (s == NULL)
         return;
 
     AUDDBG ("Probing by scheme.\n");
-    c = s[3];
-    s[3] = 0;
+    * s = 0;
     input_plugin_for_key (INPUT_KEY_SCHEME, state->filename, (PluginForEachFunc)
      probe_func_fast, state);
-    s[3] = c;
+    * s = ':';
 }
 
 static void probe_by_extension (ProbeState * state)

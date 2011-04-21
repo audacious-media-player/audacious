@@ -1,6 +1,6 @@
 /*
  * playlist-files.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -71,14 +71,44 @@ gboolean playlist_insert_playlist (gint list, gint at, const gchar * filename)
 {
     AUDDBG ("Loading playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
-    g_return_val_if_fail (pp && pp->load, FALSE);
-    return pp->load (filename, list, at);
+    g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, load), FALSE);
+
+    struct index * filenames = index_new ();
+    struct index * tuples = index_new ();
+
+    if (! pp->load (filename, filenames, tuples))
+    {
+        index_free (filenames);
+        index_free (tuples);
+        return FALSE;
+    }
+
+    playlist_entry_insert_batch (list, at, filenames, tuples);
+    return TRUE;
 }
 
 gboolean playlist_save (gint list, const gchar * filename)
 {
     AUDDBG ("Saving playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
-    g_return_val_if_fail (pp && pp->save, FALSE);
-    return pp->save (filename, list);
+    g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, save), FALSE);
+
+    gint entries = playlist_entry_count (list);
+    struct index * filenames = index_new ();
+    index_allocate (filenames, entries);
+    struct index * tuples = index_new ();
+    index_allocate (tuples, entries);
+
+    for (gint i = 0; i < entries; i ++)
+    {
+        index_append (filenames, (void *) playlist_entry_get_filename (list, i));
+        index_append (tuples, (void *) playlist_entry_get_tuple (list, i, FALSE));
+    }
+
+    gboolean success = pp->save (filename, filenames, tuples);
+
+    index_free (filenames);
+    index_free (tuples);
+
+    return success;
 }

@@ -1,21 +1,6 @@
 "TODO" for 2.6/3.0
 ==================
 
-Plugin loading cleanups:
- - enforce one "plugin" per .so file
- - kill off hidden "lowlevel" plugins
- - PLUGIN_COMMON_FIELDS in interface plugin headers
- - size field in plugin headers to allow future expansion
- - custom URIs and MIME types in input plugin headers
- - flag to enable general plugins by default
-
-Make more of the core thread-safe:
- - thread-safe plugin registry
- - thread-safe transport and input plugins (including init())
- - kill off vfs_prepare() hack
- - thread-safe file_find_decoder()
- - thread-safe playlist
-
 Move various operations to separate threads:
  - move folder and playlist loading to separate thread
  - move remaining parts of metadata scanning to separate threads

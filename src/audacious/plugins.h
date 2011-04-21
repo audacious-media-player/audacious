@@ -27,18 +27,6 @@
 #include <audacious/api.h>
 #include <audacious/types.h>
 
-enum {
- PLUGIN_TYPE_LOWLEVEL,
- PLUGIN_TYPE_TRANSPORT,
- PLUGIN_TYPE_PLAYLIST,
- PLUGIN_TYPE_INPUT,
- PLUGIN_TYPE_EFFECT,
- PLUGIN_TYPE_OUTPUT,
- PLUGIN_TYPE_VIS,
- PLUGIN_TYPE_GENERAL,
- PLUGIN_TYPE_IFACE,
- PLUGIN_TYPES};
-
 typedef gboolean (* PluginForEachFunc) (PluginHandle * plugin, void * data);
 
 #define AUD_API_NAME PluginsAPI
@@ -67,9 +55,8 @@ void plugin_registry_load (void);
 void plugin_registry_prune (void);
 void plugin_registry_save (void);
 
-void module_register (const gchar * path);
-void plugin_register (gint type, const gchar * path, gint number, const void *
- header);
+void plugin_register (const gchar * path);
+void plugin_register_loaded (const gchar * path, Plugin * header);
 
 void plugin_set_enabled (PluginHandle * plugin, gboolean enabled);
 
@@ -85,7 +72,7 @@ gboolean input_plugin_has_infowin (PluginHandle * plugin);
 /* pluginenum.c */
 void plugin_system_init (void);
 void plugin_system_cleanup (void);
-void module_load (const gchar * path);
+void plugin_load (const gchar * path);
 
 #else
 

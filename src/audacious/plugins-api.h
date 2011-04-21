@@ -26,13 +26,12 @@
 /* plugin-init.c */
 AUD_FUNC1 (PluginHandle *, plugin_get_current, gint, type)
 AUD_FUNC2 (gboolean, plugin_enable, PluginHandle *, plugin, gboolean, enable)
+AUD_FUNC1 (PluginHandle *, plugin_by_widget, void /* GtkWidget */ *, widget)
 
 /* plugin-registry.c */
 AUD_FUNC1 (gint, plugin_get_type, PluginHandle *, plugin)
 AUD_FUNC1 (const gchar *, plugin_get_filename, PluginHandle *, plugin)
-AUD_FUNC1 (gint, plugin_get_number, PluginHandle *, plugin)
-AUD_FUNC3 (PluginHandle *, plugin_lookup, gint, type, const gchar *, filename,
- gint, number)
+AUD_FUNC1 (PluginHandle *, plugin_lookup, const gchar *, filename)
 
 AUD_FUNC1 (const void *, plugin_get_header, PluginHandle *, plugin)
 AUD_FUNC1 (PluginHandle *, plugin_by_header, const void *, header)
@@ -53,6 +52,3 @@ AUD_FUNC3 (void, plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
 AUD_FUNC3 (void, plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
-
-/* New in 2.5-alpha2 */
-AUD_FUNC1 (PluginHandle *, plugin_by_widget, /* GtkWidget * */ void *, widget)
