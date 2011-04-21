@@ -1,7 +1,8 @@
 include ../../extra.mk
 
 PROG = audacious${PROG_SUFFIX}
-SRCS = audconfig.c								\
+SRCS = adder.c \
+       audconfig.c \
        chardet.c								\
        configdb.c								\
        credits.c							\
@@ -10,7 +11,6 @@ SRCS = audconfig.c								\
        equalizer.c								\
        equalizer_preset.c						\
        fft.c									\
-       folder-add.c \
        general.c \
        interface.c								\
        main.c									\

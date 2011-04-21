@@ -314,7 +314,7 @@ void load_playlists (void)
             if (count)
                 playlist_insert (count);
 
-            playlist_insert_playlist (count, 0, uri);
+            playlist_insert_playlist_raw (count, 0, uri);
             g_free (uri);
         }
         else

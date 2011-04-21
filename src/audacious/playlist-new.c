@@ -230,8 +230,8 @@ static void entry_set_failed (Playlist * playlist, Entry * entry)
     entry->failed = TRUE;
 }
 
-static Entry * entry_new (gchar * filename, PluginHandle * decoder, Tuple *
- tuple)
+static Entry * entry_new (gchar * filename, Tuple * tuple,
+ PluginHandle * decoder)
 {
     Entry * entry = g_malloc (sizeof (Entry));
 
@@ -905,56 +905,8 @@ gint playlist_entry_count(gint playlist_num)
     return index_count(playlist->entries);
 }
 
-static void make_entries (gchar * filename, PluginHandle * decoder, Tuple *
- tuple, struct index * list)
-{
-    uri_check_utf8 (& filename, TRUE);
-
-    if (! tuple && ! decoder)
-        decoder = file_find_decoder (filename, TRUE);
-
-    if (! tuple && decoder && input_plugin_has_subtunes (decoder) && ! strchr
-     (filename, '?'))
-        tuple = file_read_tuple (filename, decoder);
-
-    if (tuple != NULL && tuple->nsubtunes > 0)
-    {
-        gint subtune;
-
-        for (subtune = 0; subtune < tuple->nsubtunes; subtune++)
-        {
-            gchar *name = g_strdup_printf("%s?%d", filename, (tuple->subtunes == NULL) ? 1 + subtune : tuple->subtunes[subtune]);
-            make_entries(name, decoder, NULL, list);
-        }
-
-        g_free(filename);
-        tuple_free(tuple);
-    }
-    else
-        index_append(list, entry_new(filename, decoder, tuple));
-}
-
-void playlist_entry_insert(gint playlist_num, gint at, gchar * filename, Tuple * tuple)
-{
-    struct index *filenames = index_new();
-    struct index *tuples = index_new();
-
-    index_append(filenames, filename);
-    index_append(tuples, tuple);
-
-    playlist_entry_insert_batch_with_decoders (playlist_num, at, filenames,
-     NULL, tuples);
-}
-
-void playlist_entry_insert_batch (gint playlist_num, gint at,
- struct index * filenames, struct index * tuples)
-{
-    playlist_entry_insert_batch_with_decoders (playlist_num, at, filenames,
-     NULL, tuples);
-}
-
-void playlist_entry_insert_batch_with_decoders (gint playlist_num, gint at,
- struct index * filenames, struct index * decoders, struct index * tuples)
+void playlist_entry_insert_batch_raw (gint playlist_num, gint at,
+ struct index * filenames, struct index * tuples, struct index * decoders)
 {
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
@@ -968,14 +920,17 @@ void playlist_entry_insert_batch_with_decoders (gint playlist_num, gint at,
     gint number = index_count (filenames);
     struct index * add = index_new ();
 
-    /* Preallocate space to avoid reallocs.  (The actual number of entries may
-     * turn out to be greater due to subtunes.) */
+    /* Preallocate space to avoid reallocs. */
     index_allocate (add, number);
 
-    for (gint count = 0; count < number; count ++)
-        make_entries (index_get (filenames, count), decoders ? index_get
-         (decoders, count) : NULL, tuples ? index_get (tuples, count) : NULL,
-         add);
+    for (gint i = 0; i < number; i ++)
+    {
+        gchar * filename = index_get (filenames, i);
+        uri_check_utf8 (& filename, TRUE);
+        Tuple * tuple = tuples ? index_get (tuples, i) : NULL;
+        PluginHandle * decoder = decoders ? index_get (decoders, i) : NULL;
+        index_append (add, entry_new (filename, tuple, decoder));
+    }
 
     index_free (filenames);
     if (decoders)

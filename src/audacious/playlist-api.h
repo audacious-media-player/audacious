@@ -45,6 +45,16 @@ AUD_FUNC3 (void, playlist_reorder, gint, from, gint, to, gint, count)
  * return -1, and the behavior of drct_play() is unspecified. */
 AUD_FUNC1 (void, playlist_delete, gint, playlist)
 
+/* Returns a unique non-negative integer which can be used to identify a given
+ * playlist even if its numbering changes (as when playlists are reordered).
+ * On error, returns -1. */
+AUD_FUNC1 (gint, playlist_get_unique_id, gint, playlist)
+
+/* Returns the number of the playlist identified by a given integer ID as
+ * returned by playlist_get_unique_id().  If the playlist no longer exists,
+ * returns -1. */
+AUD_FUNC1 (gint, playlist_by_unique_id, gint, id)
+
 /* Sets the filename associated with a playlist.  (Audacious currently makes no
  * use of the filename.) */
 AUD_FUNC2 (void, playlist_set_filename, gint, playlist, const gchar *, filename)
@@ -80,24 +90,27 @@ AUD_FUNC0 (gint, playlist_get_playing)
  * starting from zero. */
 AUD_FUNC1 (gint, playlist_entry_count, gint, playlist)
 
-/* Adds a song file to a playlist before the entry numbered <at>.  If <at> is
- * negative or equal to the number of entries, the song is added after the last
- * entry.  <tuple> may be NULL, in which case Audacious will attempt to read
- * metadata from the song file.  Audacious will free the memory used by the
- * filename and the tuple when they are no longer needed.  NOTE: This function
- * cannot be used to insert playlist files or entire folders.  To do that, see
- * playlist_insert_playlist or playlist_insert_folder. */
-AUD_FUNC4 (void, playlist_entry_insert, gint, playlist, gint, at, gchar *,
- filename, Tuple *, tuple)
+/* Adds a song file, playlist file, or folder to a playlist before the entry
+ * numbered <at>.  If <at> is negative or equal to the number of entries, the
+ * item is added after the last entry.  <tuple> may be NULL, in which case
+ * Audacious will attempt to read metadata from the song file.  Audacious will
+ * free the memory used by the filename and the tuple when they are no longer
+ * needed.  Adding items to the playlist can be a slow process, and this
+ * function may return before the process is complete.  Hence, the caller must
+ * not assume that there will be new entries in the playlist immediately after
+ * this function is called.  If <play> is nonzero, Audacious will begin playback
+ * of the items once they have been added. */
+AUD_FUNC5 (void, playlist_entry_insert, gint, playlist, gint, at, gchar *,
+ filename, Tuple *, tuple, gboolean, play)
 
-/* Similar to playlist_entry_insert, adds multiple song files to a playlist.
- * The filenames are stored as (gchar *) in an index (see libaudcore/index.h).
- * Tuples are likewise stored as (Tuple *) in an index of the same length.
- * <tuples> may be NULL, or individual pointers within it may be NULL.
- * Audacious will free both indexes, the filenames, and the tuples when they are
- * no longer needed. */
-AUD_FUNC4 (void, playlist_entry_insert_batch, gint, playlist, gint, at,
- struct index *, filenames, struct index *, tuples)
+/* Similar to playlist_entry_insert, adds multiple song files, playlist files,
+ * or folders to a playlist.  The filenames are stored as (gchar *) in an index
+ * (see libaudcore/index.h).  Tuples are likewise stored as (Tuple *) in an
+ * index of the same length.  <tuples> may be NULL, or individual pointers
+ * within it may be NULL.  Audacious will free both indexes, the filenames, and
+ * the tuples when they are no longer needed. */
+AUD_FUNC5 (void, playlist_entry_insert_batch, gint, playlist, gint, at,
+ struct index *, filenames, struct index *, tuples, gboolean, play)
 
 /* Removes a contiguous block of <number> entries starting from the one numbered
  * <at> from a playlist.  If the last song played is in this block, playback is
@@ -306,32 +319,6 @@ AUD_FUNC2 (void, playlist_select_by_patterns, gint, playlist, const Tuple *,
 /* Returns nonzero if <filename> refers to a playlist file. */
 AUD_FUNC1 (gboolean, filename_is_playlist, const gchar *, filename)
 
-/* Reads entries from a playlist file and add them to a playlist.  <at> is as in
- * playlist_entry_insert().  Returns nonzero on success. */
-AUD_FUNC3 (gboolean, playlist_insert_playlist, gint, playlist, gint, at,
- const gchar *, filename)
-
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns nonzero on success. */
 AUD_FUNC2 (gboolean, playlist_save, gint, playlist, const gchar *, filename)
-
-/* Begins searching a folder recursively for supported files (including playlist
- * files) and adding them to a playlist.  The search continues in the
- * background.  If <play> is nonzero, begins playback of the first entry added
- * (or a random entry if shuffle is enabled) once the search is complete.
- * CAUTION: Editing the playlist while the search is in progress may lead to
- * unexpected results. */
-AUD_FUNC4 (void, playlist_insert_folder, gint, playlist, gint, at,
- const gchar *, folder, gboolean, play)
-
-/* --- ADDED IN AUDACIOUS 2.5-BETA2 --- */
-
-/* Returns a unique non-negative integer which can be used to identify a given
- * playlist even if its numbering changes (as when playlists are reordered).
- * On error, returns -1. */
-AUD_FUNC1 (gint, playlist_get_unique_id, gint, playlist)
-
-/* Returns the number of the playlist identified by a given integer ID as
- * returned by playlist_get_unique_id().  If the playlist no longer exists,
- * returns -1. */
-AUD_FUNC1 (gint, playlist_by_unique_id, gint, id)

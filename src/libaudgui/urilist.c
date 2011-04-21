@@ -87,19 +87,7 @@ void audgui_urilist_open (const gchar * list)
 
 static void add_full (gchar * name, AddState * state)
 {
-    if (vfs_file_test (name, G_FILE_TEST_IS_DIR))
-    {
-        aud_playlist_insert_folder (state->playlist, state->at, name, FALSE);
-        g_free (name);
-    }
-    else if (aud_filename_is_playlist (name))
-    {
-        gint entries = aud_playlist_entry_count (state->playlist);
-        aud_playlist_insert_playlist (state->playlist, state->at, name);
-        state->at += aud_playlist_entry_count (state->playlist) - entries;
-    }
-    else
-        index_append (state->index, name);
+    index_append (state->index, name);
 }
 
 void audgui_urilist_insert (gint playlist, gint at, const gchar * list)
@@ -107,7 +95,8 @@ void audgui_urilist_insert (gint playlist, gint at, const gchar * list)
     AddState state = {playlist, at, index_new ()};
 
     urilist_for_each (list, (ForEachFunc) add_full, & state);
-    aud_playlist_entry_insert_batch (playlist, state.at, state.index, NULL);
+    aud_playlist_entry_insert_batch (playlist, state.at, state.index, NULL,
+     FALSE);
 }
 
 gchar * audgui_urilist_create_from_selected (gint playlist)

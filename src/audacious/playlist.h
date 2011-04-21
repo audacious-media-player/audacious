@@ -72,6 +72,12 @@ typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 #include "playlist-api.h"
 #include "api-local-end.h"
 
+/* playlist-files.c */
+gboolean playlist_load (const gchar * filename, struct index * * filenames,
+ struct index * * tuples);
+gboolean playlist_insert_playlist_raw (gint list, gint at,
+ const gchar * filename);
+
 /* playlist-new.c */
 void playlist_init (void);
 void playlist_end (void);
@@ -80,8 +86,8 @@ void playlist_save_state (void);
 
 void playlist_reformat_titles (void);
 
-void playlist_entry_insert_batch_with_decoders (gint playlist, gint at,
- struct index * filenames, struct index * decoders, struct index * tuples);
+void playlist_entry_insert_batch_raw (gint playlist, gint at,
+ struct index * filenames, struct index * tuples, struct index * decoders);
 void playlist_entry_set_tuple (gint playlist, gint entry, Tuple * tuple);
 
 gboolean playlist_entry_is_segmented (gint playlist, gint entry);

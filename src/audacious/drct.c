@@ -287,46 +287,11 @@ static void add_list (GList * list, gint at, gboolean to_temp, gboolean play)
             playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
     }
 
-    gint entries = playlist_entry_count (playlist);
-    if (at < 0)
-        at = entries;
-
-    gint added = 0;
-    GQueue folders = G_QUEUE_INIT;
     struct index * filenames = index_new ();
-
     for (; list != NULL; list = list->next)
-    {
-        if (filename_is_playlist (list->data))
-        {
-            playlist_insert_playlist (playlist, at + added, list->data);
-            added += playlist_entry_count (playlist) - entries;
-            entries = playlist_entry_count (playlist);
-        }
-        else if (vfs_file_test (list->data, G_FILE_TEST_IS_DIR))
-            g_queue_push_tail (& folders, list->data);
-        else
-            index_append (filenames, g_strdup (list->data));
-    }
+        index_append (filenames, g_strdup (list->data));
 
-    playlist_entry_insert_batch (playlist, at + added, filenames, NULL);
-    added += playlist_entry_count (playlist) - entries;
-
-    if (added && play)
-    {
-        playlist_set_playing (playlist);
-        if (! cfg.shuffle)
-            playlist_set_position (playlist, at);
-        playback_play (0, FALSE);
-        play = FALSE;
-    }
-
-    const gchar * folder;
-    while ((folder = g_queue_pop_head (& folders)) != NULL)
-    {
-        playlist_insert_folder (playlist, at + added, folder, play);
-        play = FALSE;
-    }
+    playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
 }
 
 void drct_pl_add (const gchar * filename, gint at)

@@ -67,7 +67,8 @@ static PlaylistPlugin * get_plugin (const gchar * filename)
     return plugin_get_header (plugin);
 }
 
-gboolean playlist_insert_playlist (gint list, gint at, const gchar * filename)
+gboolean playlist_load (const gchar * filename, struct index * * filenames_p,
+ struct index * * tuples_p)
 {
     AUDDBG ("Loading playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
@@ -83,7 +84,26 @@ gboolean playlist_insert_playlist (gint list, gint at, const gchar * filename)
         return FALSE;
     }
 
-    playlist_entry_insert_batch (list, at, filenames, tuples);
+    if (index_count (tuples))
+        g_return_val_if_fail (index_count (tuples) == index_count (filenames),
+         FALSE);
+    else
+    {
+        index_free (tuples);
+        tuples = NULL;
+    }
+
+    * filenames_p = filenames;
+    * tuples_p = tuples;
+    return TRUE;
+}
+
+gboolean playlist_insert_playlist_raw (gint list, gint at,
+ const gchar * filename)
+{
+    struct index * filenames, * tuples;
+    if (playlist_load (filename, & filenames, & tuples))
+        playlist_entry_insert_batch_raw (list, at, filenames, tuples, NULL);
     return TRUE;
 }
 

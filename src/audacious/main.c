@@ -58,6 +58,10 @@
 #include "plugins.h"
 #include "util.h"
 
+/* adder.c */
+void adder_init (void);
+void adder_cleanup (void);
+
 /* chardet.c */
 void chardet_init (void);
 
@@ -499,6 +503,7 @@ static void init_two (void)
     start_plugins_one ();
 
     playlist_init ();
+    adder_init ();
     load_playlists ();
 
 #ifdef USE_DBUS
@@ -528,6 +533,7 @@ static void shut_down (void)
     if (playback_get_playing ())
         playback_stop ();
 
+    adder_cleanup ();
     playlist_end ();
 
     AUDDBG ("Unloading lowlevel plugins.\n");
