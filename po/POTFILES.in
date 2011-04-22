@@ -1,9 +1,9 @@
 # Please don't update this file manually - use ./update-potfiles.sh instead!
+src/audacious/adder.c
 src/audacious/chardet.c
 src/audacious/credits.c
 src/audacious/drct.c
 src/audacious/equalizer_preset.c
-src/audacious/folder-add.c
 src/audacious/main.c
 src/audacious/playback.c
 src/audacious/playlist-new.c

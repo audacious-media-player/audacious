@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-16 01:36-0400\n"
+"POT-Creation-Date: 2011-04-22 11:35-0400\n"
 "PO-Revision-Date: 2011-02-14 20:28-0500\n"
 "Last-Translator: Jorge Andrés <winninglero@gmail.com>\n"
 "Language-Team: \n"
@@ -24,6 +24,17 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/audacious/adder.c:71
+msgid "Searching ..."
+msgstr "Buscando ..."
+
+#: src/audacious/adder.c:99
+#, c-format
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] "%d archivo encontrado"
+msgstr[1] "%d archivos encontrados"
 
 #: src/audacious/chardet.c:37
 msgid "  (invalid UTF-8)"
@@ -109,109 +120,109 @@ msgstr "Finlandeses:"
 msgid "French:"
 msgstr "Francés:"
 
-#: src/audacious/credits.c:224
+#: src/audacious/credits.c:225
 msgid "German:"
 msgstr "Alemán:"
 
-#: src/audacious/credits.c:231
+#: src/audacious/credits.c:232
 msgid "Georgian:"
 msgstr "Georgiano:"
 
-#: src/audacious/credits.c:234
+#: src/audacious/credits.c:235
 msgid "Greek:"
 msgstr "Griego:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:240
 msgid "Hindi:"
 msgstr "Hindúes:"
 
-#: src/audacious/credits.c:242
+#: src/audacious/credits.c:243
 msgid "Hungarian:"
 msgstr "Húngaro:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:247
 msgid "Italian:"
 msgstr "Italiano:"
 
-#: src/audacious/credits.c:250
+#: src/audacious/credits.c:251
 msgid "Japanese:"
 msgstr "Japonés:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:254
 msgid "Korean:"
 msgstr "Coreano:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:257
 #, fuzzy
 msgid "Latvian:"
 msgstr "Croato:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:260
 msgid "Lithuanian:"
 msgstr "Lituano:"
 
-#: src/audacious/credits.c:263
+#: src/audacious/credits.c:264
 msgid "Macedonian:"
 msgstr "Macedonio:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:267
 msgid "Polish:"
 msgstr "Polaco:"
 
-#: src/audacious/credits.c:271
+#: src/audacious/credits.c:272
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Portugués:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:275
 msgid "Romanian:"
 msgstr "Rumano:"
 
-#: src/audacious/credits.c:278
+#: src/audacious/credits.c:279
 msgid "Russian:"
 msgstr "Ruso:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:283
 msgid "Serbian (Latin):"
 msgstr "Serbio (Latin):"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:286
 msgid "Serbian (Cyrillic):"
 msgstr "Serbio (Cyrillic):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:289
 msgid "Simplified Chinese:"
 msgstr "Chino simplificado:"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:292
 msgid "Slovak:"
 msgstr "Eslovaco:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:295
 msgid "Spanish:"
 msgstr "Español:"
 
-#: src/audacious/credits.c:301
+#: src/audacious/credits.c:302
 msgid "Swedish:"
 msgstr "Sueco:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:305
 msgid "Traditional Chinese:"
 msgstr "Chino tradicional:"
 
-#: src/audacious/credits.c:309
+#: src/audacious/credits.c:310
 msgid "Turkish:"
 msgstr "Turco:"
 
-#: src/audacious/credits.c:313
+#: src/audacious/credits.c:314
 msgid "Ukrainian:"
 msgstr "Ucraniano:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:317
 msgid "Welsh:"
 msgstr "Galés:"
 
-#: src/audacious/drct.c:254
+#: src/audacious/drct.c:250
 msgid "Temporary Playlist"
 msgstr "Lista de reproducción temporal"
 
@@ -220,78 +231,67 @@ msgstr "Lista de reproducción temporal"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Error importando archivo Winamp EQF  '%s'"
 
-#: src/audacious/folder-add.c:63
-msgid "Searching ..."
-msgstr "Buscando ..."
-
-#: src/audacious/folder-add.c:89
-#, c-format
-msgid "%d file found"
-msgid_plural "%d files found"
-msgstr[0] "%d archivo encontrado"
-msgstr[1] "%d archivos encontrados"
-
-#: src/audacious/main.c:247
+#: src/audacious/main.c:251
 msgid "Skip backwards in playlist"
 msgstr "Saltar hacia atrás en la lista de reproducción"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:252
 msgid "Start playing current playlist"
 msgstr "Empezar la reproducción de la lista de reproducción actual"
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:253
 msgid "Pause current song"
 msgstr "Pausar la canción actual"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:254
 msgid "Stop current song"
 msgstr "Parar la canción actual"
 
-#: src/audacious/main.c:251
+#: src/audacious/main.c:255
 msgid "Pause if playing, play otherwise"
 msgstr "Pausar si se está reproduciendo, o reproducir"
 
-#: src/audacious/main.c:252
+#: src/audacious/main.c:256
 msgid "Skip forward in playlist"
 msgstr "Saltar hacia adelante en la lista de reproducción"
 
-#: src/audacious/main.c:253
+#: src/audacious/main.c:257
 msgid "Display Jump to File dialog"
 msgstr "Mostrar diálogo de Salto al archivo"
 
-#: src/audacious/main.c:254
+#: src/audacious/main.c:258
 msgid "Add files to the playlist"
 msgstr "Añadir archivos a la lista de reproducción"
 
-#: src/audacious/main.c:255
+#: src/audacious/main.c:259
 msgid "Add new files to a temporary playlist"
 msgstr "Añdir nuevos archvios a una lista de reproducción temporal"
 
-#: src/audacious/main.c:256
+#: src/audacious/main.c:260
 msgid "Display the main window"
 msgstr "Mostrar la ventana principal"
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:261
 msgid "Display all open Audacious windows"
 msgstr "Mostrar todas las ventanas de Audacious abiertas"
 
-#: src/audacious/main.c:258
+#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Mostrar versión"
 
-#: src/audacious/main.c:259
+#: src/audacious/main.c:263
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:260
+#: src/audacious/main.c:264
 msgid "FILE..."
 msgstr "ARCHIVO..."
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:276
 msgid "- play multimedia files"
 msgstr "- reproducir archivos multimedia"
 
-#: src/audacious/main.c:282
+#: src/audacious/main.c:286
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -300,7 +300,7 @@ msgstr ""
 "%s: %s\n"
 "Prueba `%s --help' para más información.\n"
 
-#: src/audacious/main.c:395
+#: src/audacious/main.c:399
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -308,20 +308,20 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:558
+#: src/audacious/main.c:564
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:375
+#: src/audacious/playback.c:381
 #, c-format
 msgid "No decoder found for %s."
 msgstr "No se encontró decodificador para %s."
 
-#: src/audacious/playback.c:519
+#: src/audacious/playback.c:531
 msgid "Buffering ..."
 msgstr "Almacenando ..."
 
-#: src/audacious/playlist-new.c:288
+#: src/audacious/playlist-new.c:303
 msgid "Untitled Playlist"
 msgstr "Lista de reproducción sin título"
 
@@ -345,16 +345,16 @@ msgstr "Lista de reproducción"
 msgid "Plugins"
 msgstr "Complementos"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:241
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
 msgid "Artist"
 msgstr "Artista"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
 msgid "Album"
 msgstr "Álbum"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:239
-#: src/libaudgui/ui_playlist_manager.c:208
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
+#: src/libaudgui/ui_playlist_manager.c:247
 msgid "Title"
 msgstr "Título"
 
@@ -362,7 +362,7 @@ msgstr "Título"
 msgid "Tracknumber"
 msgstr "Número de pista"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
 msgid "Genre"
 msgstr "Género"
 
@@ -378,7 +378,7 @@ msgstr "Ruta hasta el archivo"
 msgid "Date"
 msgstr "Fecha"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
 msgid "Year"
 msgstr "Año"
 
@@ -807,10 +807,12 @@ msgstr ""
 
 #: src/libaudcore/tuple.c:689
 #, c-format
-msgid "%d channels"
-msgstr ""
+msgid "%d channel"
+msgid_plural "%d channels"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/libaudgui/confirm.c:65
+#: src/libaudgui/confirm.c:66
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -819,11 +821,11 @@ msgstr ""
 "¿Estas seguro de querer cerrar %s? Si lo haces, se perderá cualquier cambio "
 "realizado desde que fue exportada la lista de reproducción."
 
-#: src/libaudgui/confirm.c:77
+#: src/libaudgui/confirm.c:79
 msgid "_Don't show this message again"
 msgstr "No mostrar este mensaje de nuevo"
 
-#: src/libaudgui/confirm.c:115
+#: src/libaudgui/confirm.c:117
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Lista de reproducción"
@@ -884,11 +886,11 @@ msgstr "Ecualizador"
 msgid "Preamp"
 msgstr "Preamplificación"
 
-#: src/libaudgui/infopopup.c:249
+#: src/libaudgui/infopopup.c:251
 msgid "Track Number"
 msgstr "Número de pista"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:253
 msgid "Track Length"
 msgstr "Duración de la pista:"
 
@@ -1180,19 +1182,19 @@ msgstr "Limpia_r"
 msgid "Close on Jump"
 msgstr "Cerrar al Saltar"
 
-#: src/libaudgui/ui_playlist_manager.c:185
+#: src/libaudgui/ui_playlist_manager.c:224
 msgid "Playlist Manager"
 msgstr "Administrador de la lista de reproducción"
 
-#: src/libaudgui/ui_playlist_manager.c:209
+#: src/libaudgui/ui_playlist_manager.c:248
 msgid "Entries"
 msgstr "Entradas"
 
-#: src/libaudgui/ui_playlist_manager.c:227
+#: src/libaudgui/ui_playlist_manager.c:268
 msgid "_Rename"
 msgstr "Renombrar"
 
-#: src/libaudgui/ui_playlist_manager.c:251
+#: src/libaudgui/ui_playlist_manager.c:292
 msgid "_Close dialog on activating playlist"
 msgstr "_Cerrar diálogo al activar la lista de reproducción"
 
