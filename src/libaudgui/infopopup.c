@@ -35,17 +35,6 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-static const gchar * get_default_artwork (void)
-{
-    static gchar * path = NULL;
-    if (! path)
-        path = g_strdup_printf ("%s/images/audio.png",
-         aud_get_path (AUD_PATH_DATA_DIR));
-    return path;
-}
-
-#define DEFAULT_ARTWORK (get_default_artwork ())
-
 static GtkWidget * infopopup = NULL;
 
 static void infopopup_entry_set_text (const gchar * entry_name, const gchar *
@@ -57,45 +46,21 @@ static void infopopup_entry_set_text (const gchar * entry_name, const gchar *
     gtk_label_set_text ((GtkLabel *) widget, text);
 }
 
-static void infopopup_entry_set_image (const gchar * entry_name, const gchar *
- text)
+static void infopopup_entry_set_image (void)
 {
-    GtkWidget * widget = g_object_get_data ((GObject *) infopopup, entry_name);
-    GdkPixbuf * pixbuf;
-    gint width, height;
-    gfloat aspect;
+    GtkWidget * widget = g_object_get_data ((GObject *) infopopup, "image");
+    g_return_if_fail (widget);
 
-    pixbuf = gdk_pixbuf_new_from_file (text, NULL);
-    g_return_if_fail (pixbuf != NULL);
+    GdkPixbuf * pixbuf = audgui_pixbuf_for_current ();
 
-    width = gdk_pixbuf_get_width (pixbuf);
-    height = gdk_pixbuf_get_height (pixbuf);
-
-    if (strcmp (DEFAULT_ARTWORK, text))
+    if (pixbuf)
     {
-        GdkPixbuf * pixbuf2;
-
-        aspect = height / (gfloat) width;
-
-        if (aspect > 1)
-        {
-            height = aud_cfg->filepopup_pixelsize * aspect;
-            width = aud_cfg->filepopup_pixelsize;
-        }
-        else
-        {
-            height = aud_cfg->filepopup_pixelsize;
-            width = aud_cfg->filepopup_pixelsize / aspect;
-        }
-
-        pixbuf2 = gdk_pixbuf_scale_simple (pixbuf, width, height,
-         GDK_INTERP_BILINEAR);
+        audgui_pixbuf_scale_within (& pixbuf, 96);
+        gtk_image_set_from_pixbuf ((GtkImage *) widget, pixbuf);
         g_object_unref (pixbuf);
-        pixbuf = pixbuf2;
     }
-
-    gtk_image_set_from_pixbuf ((GtkImage *) widget, pixbuf);
-    g_object_unref (pixbuf);
+    else
+        gtk_image_clear ((GtkImage *) widget);
 }
 
 static gboolean infopopup_progress_cb (void * unused)
@@ -221,11 +186,7 @@ static void infopopup_create (void)
 
     infopopup_data_image = gtk_image_new ();
     gtk_misc_set_alignment ((GtkMisc *) infopopup_data_image, 0.5, 0);
-    gtk_image_set_from_file ((GtkImage *) infopopup_data_image, DEFAULT_ARTWORK);
-
-    g_object_set_data ((GObject *) infopopup, "image_artwork",
-     infopopup_data_image);
-    g_object_set_data ((GObject *) infopopup, "last_artwork", NULL);
+    g_object_set_data ((GObject *) infopopup, "image", infopopup_data_image);
     gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_image, FALSE,
      FALSE, 0);
 
@@ -273,7 +234,6 @@ static void infopopup_create (void)
 static void infopopup_destroy (void)
 {
     infopopup_progress_stop (infopopup);
-    g_free (g_object_get_data ((GObject *) infopopup, "last_artwork"));
     gtk_widget_destroy (infopopup);
 }
 #endif
@@ -317,7 +277,6 @@ static void infopopup_show (const gchar * filename, const Tuple * tuple,
  const gchar * title)
 {
     gint x, y, h, w;
-    gchar * last_artwork;
     gint length, value;
     gchar * tmp;
     const gchar * title2;
@@ -360,20 +319,7 @@ static void infopopup_show (const gchar * filename, const Tuple * tuple,
     infopopup_update_data (tmp, "label_tracknum", "header_tracknum");
     g_free (tmp);
 
-    last_artwork = g_object_get_data ((GObject *) infopopup, "last_artwork");
-    tmp = aud_get_associated_image_file (filename);
-
-    if (tmp == NULL)
-        tmp = g_strdup (DEFAULT_ARTWORK);
-
-    if (last_artwork == NULL || strcmp (tmp, last_artwork))
-    {
-        infopopup_entry_set_image ("image_artwork", tmp);
-        g_free (last_artwork);
-        g_object_set_data ((GObject *) infopopup, "last_artwork", tmp);
-    }
-    else
-        g_free (tmp);
+    infopopup_entry_set_image ();
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
