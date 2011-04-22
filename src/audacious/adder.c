@@ -27,6 +27,8 @@
 #include <libaudcore/audstrings.h>
 
 #include "audconfig.h"
+#include "config.h"
+#include "i18n.h"
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
@@ -53,9 +55,78 @@ static gboolean add_quit;
 static GThread * add_thread;
 static gint add_source = 0;
 
+static gint status_source = 0;
+static gchar status_path[512];
+static gint status_count;
+static GtkWidget * status_window = NULL, * status_path_label,
+ * status_count_label;
+
+static gboolean status_cb (void * unused)
+{
+    if (! status_window)
+    {
+        status_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_type_hint ((GtkWindow *) status_window,
+         GDK_WINDOW_TYPE_HINT_DIALOG);
+        gtk_window_set_title ((GtkWindow *) status_window, _("Searching ..."));
+        gtk_window_set_resizable ((GtkWindow *) status_window, FALSE);
+        gtk_container_set_border_width ((GtkContainer *) status_window, 6);
+
+        GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+        gtk_container_add ((GtkContainer *) status_window, vbox);
+
+        status_path_label = gtk_label_new (NULL);
+        gtk_widget_set_size_request (status_path_label, 320, -1);
+        gtk_label_set_ellipsize ((GtkLabel *) status_path_label,
+         PANGO_ELLIPSIZE_MIDDLE);
+        gtk_box_pack_start ((GtkBox *) vbox, status_path_label, FALSE, FALSE, 0);
+
+        status_count_label = gtk_label_new (NULL);
+        gtk_widget_set_size_request (status_count_label, 320, -1);
+        gtk_box_pack_start ((GtkBox *) vbox, status_count_label, FALSE, FALSE, 0);
+
+        gtk_widget_show_all (status_window);
+
+        g_signal_connect (status_window, "destroy", (GCallback)
+         gtk_widget_destroyed, & status_window);
+    }
+
+    g_mutex_lock (mutex);
+
+    gtk_label_set_text ((GtkLabel *) status_path_label, status_path);
+
+    gchar scratch[128];
+    snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
+     "%d files found", status_count), status_count);
+    gtk_label_set_text ((GtkLabel *) status_count_label, scratch);
+
+    g_mutex_unlock (mutex);
+    return TRUE;
+}
+
 static void status_update (const gchar * filename, gint found)
 {
-    printf ("(%d found) %s\n", found, filename); /* temporary */
+    g_mutex_lock (mutex);
+
+    snprintf (status_path, sizeof status_path, "%s", filename);
+    status_count = found;
+
+    if (! status_source)
+        status_source = g_timeout_add (250, status_cb, NULL);
+
+    g_mutex_unlock (mutex);
+}
+
+static void status_done_locked (void)
+{
+    if (status_source)
+    {
+        g_source_remove (status_source);
+        status_source = 0;
+    }
+
+    if (status_window)
+        gtk_widget_destroy (status_window);
 }
 
 static void index_free_filenames (struct index * filenames)
@@ -298,6 +369,9 @@ static gboolean add_finish (void * unused)
         add_source = 0;
     }
 
+    if (! add_tasks)
+        status_done_locked ();
+
     g_mutex_unlock (mutex);
     return FALSE;
 }
@@ -376,6 +450,8 @@ void adder_cleanup (void)
         g_source_remove (add_source);
         add_source = 0;
     }
+
+    status_done_locked ();
 }
 
 void playlist_entry_insert (gint playlist, gint at, gchar * filename,
