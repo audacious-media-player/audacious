@@ -186,6 +186,8 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
         describe_song (entry->filename, tuple, & entry->title, & entry->artist,
          & entry->album);
         entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
+        if (entry->length < 0)
+            entry->length = 0;
 
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
         {
