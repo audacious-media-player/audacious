@@ -993,8 +993,14 @@ PluginHandle * playlist_entry_get_decoder (gint playlist_num, gint entry_num,
     DECLARE_PLAYLIST_ENTRY;
     LOOKUP_PLAYLIST_ENTRY_RET (NULL);
 
-    if (! fast)
-        check_scanned (playlist, entry);
+    if (! entry->decoder && ! fast)
+    {
+        while (entry_scan_in_progress (entry))
+            g_cond_wait (cond, mutex);
+
+        if (! entry->decoder)
+            entry->decoder = file_find_decoder (entry->filename, FALSE);
+    }
 
     PluginHandle * decoder = entry->decoder;
 
@@ -2123,7 +2129,7 @@ void playlist_load_state (void)
     {
         Playlist * playlist = index_get (playlists, playlist_num);
         gint entries = index_count (playlist->entries), position, count;
-        const gchar * s;
+        gchar * s;
 
         parse_next (handle);
 
