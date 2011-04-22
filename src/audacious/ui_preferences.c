@@ -1407,7 +1407,7 @@ static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
     hook_call ("title change", NULL);
 
     /* trigger playlist update */
-    gchar * t = g_strdup (playlist_get_title (playlist_get_active ()));
+    gchar * t = playlist_get_title (playlist_get_active ());
     playlist_set_title (playlist_get_active (), t);
     g_free (t);
 }
@@ -1419,7 +1419,7 @@ static void leading_zero_cb (GtkToggleButton * leading)
     hook_call ("title change", NULL);
 
     /* trigger playlist update */
-    gchar * t = g_strdup (playlist_get_title (playlist_get_active ()));
+    gchar * t = playlist_get_title (playlist_get_active ());
     playlist_set_title (playlist_get_active (), t);
     g_free (t);
 }

@@ -400,19 +400,17 @@ static void get_position(struct PositionRequest *request)
 static gboolean get_info_cb(void *data)
 {
     struct InfoRequest *request = data;
-    const gchar *filename, *title, *pltitle;
 
     g_mutex_lock(info_mutex);
 
     real_position(&request->playlist, &request->entry);
-    filename = playlist_entry_get_filename(request->playlist, request->entry);
-    request->filename = (filename == NULL) ? NULL : g_strdup(filename);
-    title = playlist_entry_get_title (request->playlist, request->entry, FALSE);
-    request->title = (title == NULL) ? NULL : g_strdup(title);
+    request->filename = playlist_entry_get_filename (request->playlist,
+     request->entry);
+    request->title = playlist_entry_get_title (request->playlist,
+     request->entry, FALSE);
     request->length = playlist_entry_get_length (request->playlist,
      request->entry, FALSE);
-    pltitle = playlist_get_title(request->playlist);
-    request->pltitle = (pltitle == NULL) ? NULL : g_strdup(pltitle);
+    request->pltitle = playlist_get_title (request->playlist);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -435,13 +433,14 @@ static void get_info(struct InfoRequest *request)
 static gboolean get_field_cb(void *data)
 {
     struct FieldRequest *request = data;
-    const Tuple *tuple;
 
     g_mutex_lock(info_mutex);
 
     real_position(&request->playlist, &request->entry);
-    tuple = playlist_entry_get_tuple (request->playlist, request->entry, FALSE);
+    Tuple * tuple = playlist_entry_get_tuple (request->playlist, request->entry, FALSE);
     request->value = (tuple == NULL) ? NULL : tuple_value_to_gvalue(tuple, request->field);
+    if (tuple)
+        tuple_free (tuple)
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -631,18 +630,23 @@ gboolean add_to_new_playlist_cb(void *data)
 static gboolean get_mpris_metadata_cb(void *data)
 {
     struct MprisMetadataRequest *request = data;
-    const gchar *filename;
 
     g_mutex_lock(info_mutex);
 
     real_position(&request->playlist, &request->entry);
-    filename = playlist_entry_get_filename(request->playlist, request->entry);
+    gchar * filename = playlist_entry_get_filename (request->playlist,
+     request->entry);
+    Tuple * tuple = playlist_entry_get_tuple (request->playlist, request->entry,
+     FALSE);
 
-    if (filename == NULL)
-        request->metadata = NULL;
+    if (filename && tuple)
+        request->metadata = make_mpris_metadata (filename, tuple);
     else
-        request->metadata = make_mpris_metadata (filename,
-         playlist_entry_get_tuple (request->playlist, request->entry, FALSE));
+        request->metadata = NULL;
+
+    g_free (filename);
+    if (tuple)
+        g_free (tuple);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -808,22 +812,25 @@ gboolean mpris_emit_caps_change(MprisPlayer * obj)
 gboolean mpris_emit_track_change(MprisPlayer * obj)
 {
     gint playlist, entry;
-    const gchar *filename;
     GHashTable *metadata;
 
     playlist = playlist_get_playing();
     entry = playlist_get_position(playlist);
-    filename = playlist_entry_get_filename(playlist, entry);
+    gchar * filename = playlist_entry_get_filename (playlist, entry);
+    Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
 
-    if (filename == NULL)
-        return FALSE;
+    if (filename && tuple)
+    {
+        metadata = make_mpris_metadata (filename, tuple);
+        g_signal_emit (obj, signals[TRACK_CHANGE_SIG], 0, metadata);
+        g_hash_table_destroy (metadata);
+    }
 
-    metadata = make_mpris_metadata (filename, playlist_entry_get_tuple
-     (playlist, entry, FALSE));
+    g_free (filename);
+    if (tuple)
+        tuple_free (tuple);
 
-    g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, metadata);
-    g_hash_table_destroy(metadata);
-    return TRUE;
+    return (filename && tuple);
 }
 
 gboolean mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)

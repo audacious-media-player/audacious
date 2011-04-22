@@ -21,8 +21,6 @@
 
 /* Do not include this file directly; use playlist.h instead. */
 
-/* CAUTION: These functions are not thread safe. */
-
 /* --- PLAYLIST CORE API --- */
 
 /* Returns the number of playlists currently open.  There will always be at
@@ -59,14 +57,16 @@ AUD_FUNC1 (gint, playlist_by_unique_id, gint, id)
  * use of the filename.) */
 AUD_FUNC2 (void, playlist_set_filename, gint, playlist, const gchar *, filename)
 
-/* Returns the filename associated with a playlist. */
-AUD_FUNC1 (const gchar *, playlist_get_filename, gint, playlist)
+/* Returns the filename associated with a playlist.  The filename should be
+ * freed when no longer needed. */
+AUD_FUNC1 (gchar *, playlist_get_filename, gint, playlist)
 
 /* Sets the title associated with a playlist. */
 AUD_FUNC2 (void, playlist_set_title, gint, playlist, const gchar *, title)
 
-/* Returns the title associated with a playlist. */
-AUD_FUNC1 (const gchar *, playlist_get_title, gint, playlist)
+/* Returns the title associated with a playlist.  The title should be freed when
+ * no longer needed. */
+AUD_FUNC1 (gchar *, playlist_get_title, gint, playlist)
 
 /* Marks a playlist as active.  This is the playlist which the user will see and
  * on which most DRCT functions will take effect. */
@@ -118,10 +118,9 @@ AUD_FUNC5 (void, playlist_entry_insert_batch, gint, playlist, gint, at,
  * the behavior of drct_play() is unspecified. */
 AUD_FUNC3 (void, playlist_entry_delete, gint, playlist, gint, at, gint, number)
 
-/* Returns the filename of an entry.  The returned string is valid until another
- * playlist function is called or control returns to the program's main loop. */
-AUD_FUNC2 (const gchar *, playlist_entry_get_filename, gint, playlist, gint,
- entry)
+/* Returns the filename of an entry.  The filename should be freed when no
+ * longer needed. */
+AUD_FUNC2 (gchar *, playlist_entry_get_filename, gint, playlist, gint, entry)
 
 /* Returns a handle to the decoder plugin associated with an entry, or NULL if
  * none can be found.  If <fast> is nonzero, returns NULL if no decoder plugin
@@ -130,29 +129,25 @@ AUD_FUNC3 (PluginHandle *, playlist_entry_get_decoder, gint, playlist, gint,
  entry, gboolean, fast)
 
 /* Returns the tuple associated with an entry, or NULL if one is not available.
- * The returned tuple is read-only and valid until another playlist function is
- * called or control returns to the program's main loop.  If <fast> is nonzero,
+ * The reference count of the tuple is incremented.  If <fast> is nonzero,
  * returns NULL if metadata for the entry has not yet been read from the song
  * file. */
-AUD_FUNC3 (const Tuple *, playlist_entry_get_tuple, gint, playlist, gint, entry,
+AUD_FUNC3 (Tuple *, playlist_entry_get_tuple, gint, playlist, gint, entry,
  gboolean, fast)
 
 /* Returns a formatted title string for an entry.  This may include information
- * such as the filename, song title, and/or artist.  The returned string is
- * valid until another playlist function is called or control returns to the
- * program's main loop.  If <fast> is nonzero, returns the entry's filename if
+ * such as the filename, song title, and/or artist.  The string should be freed
+ * when no longer needed.  If <fast> is nonzero, returns the entry's filename if
  * metadata for the entry has not yet been read. */
-AUD_FUNC3 (const gchar *, playlist_entry_get_title, gint, playlist, gint, entry,
+AUD_FUNC3 (gchar *, playlist_entry_get_title, gint, playlist, gint, entry,
  gboolean, fast)
 
 /* Returns three strings (title, artist, and album) describing an entry.  The
- * returned strings are valid until another playlist function is called or
- * control returns to the program's main loop.  If <fast> is nonzero, return's
+ * strings should be freed when no longer needed.  If <fast> is nonzero, returns
  * the entry's filename for <title> and NULL for <artist> and <album> if
  * metadata for the entry has not yet been read. */
 AUD_FUNC6 (void, playlist_entry_describe, gint, playlist, gint, entry,
- const gchar * *, title, const gchar * *, artist, const gchar * *, album,
- gboolean, fast)
+ gchar * *, title, gchar * *, artist, gchar * *, album, gboolean, fast)
 
 /* Returns the length in milliseconds of an entry, or -1 if the length is not
  * known.  <fast> is as in playlist_entry_get_tuple(). */

@@ -561,18 +561,18 @@ static void infowin_show (gint list, gint entry, const gchar * filename,
 
 void audgui_infowin_show (gint playlist, gint entry)
 {
-    const gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
+    gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != NULL);
 
     PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
      FALSE);
     if (decoder == NULL)
-        return;
+        goto FREE;
 
     if (aud_custom_infowin (filename, decoder))
-        return;
+        goto FREE;
 
-    const Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+    Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
     if (tuple == NULL)
     {
@@ -580,11 +580,15 @@ void audgui_infowin_show (gint playlist, gint entry)
          filename);
         hook_call ("interface show error", message);
         g_free (message);
-        return;
+        goto FREE;
     }
 
     infowin_show (playlist, entry, filename, tuple, decoder,
      aud_file_can_write_tuple (filename, decoder));
+    tuple_free (tuple);
+
+FREE:
+    g_free (filename);
 }
 
 void audgui_infowin_show_current (void)

@@ -250,14 +250,13 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     for (i = 0; i < search_matches->len; i++)
     {
         gint entry = g_array_index (search_matches, gint, i);
-        const gchar * title = aud_playlist_entry_get_title (playlist, entry,
-         TRUE);
-
-        if (title == NULL)
+        gchar * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
+        if (! title)
             continue;
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set (store, & iter, 0, 1 + entry, 1, title, -1);
+        g_free (title);
     }
 
     /* attach the model again to the treeview */
@@ -287,10 +286,11 @@ ui_jump_to_track_fill(gpointer treeview)
 
     for (entry = 0; entry < entries; entry ++)
     {
+        gchar * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
-         0, 1 + entry, 1, aud_playlist_entry_get_title (playlist, entry, TRUE),
-          -1);
+         0, 1 + entry, 1, title, -1);
+        g_free (title);
     }
 
     /* attach liststore to treeview */

@@ -126,7 +126,7 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
 
 GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
 {
-    const gchar * name = aud_playlist_entry_get_filename (list, entry);
+    gchar * name = aud_playlist_entry_get_filename (list, entry);
     g_return_val_if_fail (name, NULL);
 
     /* Don't get album art for network files -- too slow. */
@@ -147,7 +147,10 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
         GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
         g_free (data);
         if (p)
+        {
+            g_free (name);
             return p;
+        }
     }
 
     gchar * assoc = aud_get_associated_image_file (name);
@@ -157,8 +160,13 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
         GdkPixbuf * p = gdk_pixbuf_new_from_file (assoc, NULL);
         g_free (assoc);
         if (p)
+        {
+            g_free (name);
             return p;
+        }
     }
+
+    g_free (name);
 
 FALLBACK:;
     AUDDBG ("Using fallback pixbuf.\n");

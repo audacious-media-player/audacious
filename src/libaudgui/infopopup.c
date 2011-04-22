@@ -106,7 +106,6 @@ static gboolean infopopup_progress_cb (void * unused)
     gint length = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
      "length"));
     gint playlist, entry, time;
-    const gchar * filename;
     gchar * progress_time;
 
     g_return_val_if_fail (tooltip_file != NULL, FALSE);
@@ -125,10 +124,13 @@ static gboolean infopopup_progress_cb (void * unused)
     if (entry == -1)
         goto HIDE;
 
-    filename = aud_playlist_entry_get_filename (playlist, entry);
-
+    gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
     if (strcmp (filename, tooltip_file))
+    {
+        g_free (filename);
         goto HIDE;
+    }
+    g_free (filename);
 
     time = aud_drct_get_time ();
     gtk_progress_bar_set_fraction ((GtkProgressBar *) progressbar, time /
@@ -404,16 +406,17 @@ static void infopopup_show (const gchar * filename, const Tuple * tuple,
 
 void audgui_infopopup_show (gint playlist, gint entry)
 {
-    const gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
-    const Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+    gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
+    gchar * title = aud_playlist_entry_get_title (playlist, entry, FALSE);
+    Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
-    g_return_if_fail (filename != NULL);
+    if (filename && title && tuple)
+        infopopup_show (filename, tuple, title);
 
-    if (tuple == NULL) /* FIXME: show an error popup if this happens */
-        return;
-
-    infopopup_show (filename, tuple, aud_playlist_entry_get_title (playlist,
-     entry, FALSE));
+    g_free (filename);
+    g_free (title);
+    if (tuple)
+        tuple_free (tuple);
 }
 
 void audgui_infopopup_show_current (void)

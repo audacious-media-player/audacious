@@ -73,7 +73,7 @@ static void get_value (void * user, gint row, gint column, GValue * value)
     switch (column)
     {
     case 0:
-        g_value_set_string (value, aud_playlist_get_title (row));
+        g_value_take_string (value, aud_playlist_get_title (row));
         break;
     case 1:
         g_value_set_int (value, aud_playlist_entry_count (row));
@@ -147,7 +147,7 @@ static void update_hook (void * data, void * list)
 
         audgui_list_set_focus (list, aud_playlist_get_active ());
     }
-    
+
     if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_STRUCTURE || position_changed)
     {
         audgui_list_set_highlight (list, aud_playlist_get_playing ());

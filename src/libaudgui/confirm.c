@@ -62,9 +62,11 @@ void audgui_confirm_playlist_delete (gint playlist)
     gtk_box_pack_start ((GtkBox *) hbox, gtk_image_new_from_stock
      (GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG), FALSE, FALSE, 0);
 
+    gchar * title = aud_playlist_get_title (playlist);
     message = g_strdup_printf (_("Are you sure you want to close %s?  If you "
      "do, any changes made since the playlist was exported will be lost."),
-     aud_playlist_get_title (playlist));
+     title);
+    g_free (title);
     label = gtk_label_new (message);
     g_free (message);
     gtk_label_set_line_wrap ((GtkLabel *) label, TRUE);
@@ -102,7 +104,7 @@ void audgui_confirm_playlist_delete (gint playlist)
 
 static void rename_cb (GtkDialog * dialog, gint resp, void * list)
 {
-    if (resp == GTK_RESPONSE_ACCEPT && GPOINTER_TO_INT (list) < 
+    if (resp == GTK_RESPONSE_ACCEPT && GPOINTER_TO_INT (list) <
      aud_playlist_count ())
         aud_playlist_set_title (GPOINTER_TO_INT (list), gtk_entry_get_text
          ((GtkEntry *) g_object_get_data ((GObject *) dialog, "entry")));
@@ -118,7 +120,9 @@ void audgui_show_playlist_rename (gint playlist)
     gtk_dialog_set_default_response ((GtkDialog *) dialog, GTK_RESPONSE_ACCEPT);
 
     GtkWidget * entry = gtk_entry_new ();
-    gtk_entry_set_text ((GtkEntry *) entry, aud_playlist_get_title (playlist));
+    gchar * title = aud_playlist_get_title (playlist);
+    gtk_entry_set_text ((GtkEntry *) entry, title);
+    g_free (title);
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
     gtk_box_pack_start ((GtkBox *) gtk_dialog_get_content_area ((GtkDialog *)
      dialog), entry, FALSE, FALSE, 0);

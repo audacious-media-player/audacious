@@ -104,7 +104,7 @@ gchar * audgui_urilist_create_from_selected (gint playlist)
     gint entries = aud_playlist_entry_count (playlist);
     gint space = 0;
     gint count, length;
-    const gchar * name;
+    gchar * name;
     gchar * buffer, * set;
 
     for (count = 0; count < entries; count ++)
@@ -115,6 +115,7 @@ gchar * audgui_urilist_create_from_selected (gint playlist)
         name = aud_playlist_entry_get_filename (playlist, count);
         g_return_val_if_fail (name != NULL, NULL);
         space += strlen (name) + 1;
+        g_free (name);
     }
 
     if (! space)
@@ -136,6 +137,7 @@ gchar * audgui_urilist_create_from_selected (gint playlist)
         set += length;
         * set ++ = '\n';
         space -= length + 1;
+        g_free (name);
     }
 
     * -- set = 0; /* last newline replaced with null */

@@ -274,8 +274,9 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 
         for (entry = 0; entry < entries; entry ++)
         {
-            gchar * title = normalize_search_string (aud_playlist_entry_get_title
-             (playlist, entry, TRUE));
+            gchar * title0 = aud_playlist_entry_get_title (playlist, entry, TRUE);
+            gchar * title = normalize_search_string (title0);
+            g_free (title0);
 
             g_array_append_val (track_entries, entry);
             g_array_append_val (normalized_titles, title);

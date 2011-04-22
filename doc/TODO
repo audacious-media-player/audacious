@@ -1,12 +1,6 @@
 "TODO" for 2.6/3.0
 ==================
 
-Move various operations to separate threads:
- - move folder and playlist loading to separate thread
- - move remaining parts of metadata scanning to separate threads
- - metadata scanning in all playlists, not just active
- - manipulate playlist without interrupting metadata scanning
-
 Miscellaneous:
  - common widget to select output and interface plugins
  - switch interface from preferences window

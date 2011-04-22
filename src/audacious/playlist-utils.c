@@ -182,39 +182,45 @@ void playlist_remove_duplicates_by_scheme (gint playlist, gint scheme)
     {
         gint (* compare) (const gchar * a, const gchar * b) =
          filename_comparisons[scheme];
-        const gchar * last, * current;
 
         playlist_sort_by_filename (playlist, compare);
-        last = playlist_entry_get_filename (playlist, 0);
+        gchar * last = playlist_entry_get_filename (playlist, 0);
 
         for (count = 1; count < entries; count ++)
         {
-            current = playlist_entry_get_filename (playlist, count);
+            gchar * current = playlist_entry_get_filename (playlist, count);
 
             if (compare (last, current) == 0)
                 playlist_entry_set_selected (playlist, count, TRUE);
 
+            g_free (last);
             last = current;
         }
+
+        g_free (last);
     }
     else if (tuple_comparisons[scheme] != NULL)
     {
         gint (* compare) (const Tuple * a, const Tuple * b) =
          tuple_comparisons[scheme];
-        const Tuple * last, * current;
 
         playlist_sort_by_tuple (playlist, compare);
-        last = playlist_entry_get_tuple (playlist, 0, FALSE);
+        Tuple * last = playlist_entry_get_tuple (playlist, 0, FALSE);
 
         for (count = 1; count < entries; count ++)
         {
-            current = playlist_entry_get_tuple (playlist, count, FALSE);
+            Tuple * current = playlist_entry_get_tuple (playlist, count, FALSE);
 
             if (last != NULL && current != NULL && compare (last, current) == 0)
                 playlist_entry_set_selected (playlist, count, TRUE);
 
+            if (last)
+                tuple_free (last);
             last = current;
         }
+
+        if (last)
+            tuple_free (last);
     }
 
     playlist_delete_selected (playlist);
@@ -261,27 +267,29 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
 
         for (entry = 0; entry < entries; entry ++)
         {
-            const Tuple * tuple;
             const gchar * string;
 
             if (! playlist_entry_get_selected (playlist, entry))
                 continue;
 
-            tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
-
-            if (tuple == NULL)
+            Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
+            if (! tuple)
                 goto NO_MATCH;
 
-            string = tuple_get_string ((Tuple *) tuple, fields[field], NULL);
-
-            if (string == NULL)
+            string = tuple_get_string (tuple, fields[field], NULL);
+            if (! string)
                 goto NO_MATCH;
 
             if (regexec (& regex, string, 0, NULL, 0) == 0)
+            {
+                tuple_free (tuple);
                 continue;
+            }
 
         NO_MATCH:
             playlist_entry_set_selected (playlist, entry, FALSE);
+            if (tuple)
+                tuple_free (tuple);
         }
 
         regfree (& regex);

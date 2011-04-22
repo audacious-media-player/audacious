@@ -44,7 +44,7 @@ static gboolean playback_error;
 static gint failed_entries;
 
 static gint current_entry;
-static const gchar * current_filename;
+static gchar * current_filename;
 static InputPlugin * current_decoder;
 static void * current_data;
 static gint current_bitrate, current_samplerate, current_channels;
@@ -163,20 +163,23 @@ static void update_cb (void * hook_data, void * user_data)
 
     gint playlist = playlist_get_playing ();
     gint entry = playlist_get_position (playlist);
-    const gchar * title = playlist_entry_get_title (playlist, entry, FALSE);
 
-    if (title == NULL)
+    gchar * title = playlist_entry_get_title (playlist, entry, FALSE);
+    if (! title)
         title = playlist_entry_get_filename (playlist, entry);
 
     gint length = playlist_entry_get_length (playlist, entry, FALSE);
 
     if (entry == current_entry && ! strcmp (title, current_title) && length ==
      current_length)
+    {
+        g_free (title);
         return;
+    }
 
     current_entry = entry;
     g_free (current_title);
-    current_title = g_strdup (title);
+    current_title = title;
     current_length = length;
 
     if (playback_get_ready ())
@@ -252,7 +255,10 @@ static void playback_cleanup (void)
     playing = FALSE;
     playback_error = FALSE;
 
+    g_free (current_filename);
+    current_filename = NULL;
     g_free (current_title);
+    current_title = NULL;
 
     if (ready_source)
     {
@@ -363,6 +369,8 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
     g_return_val_if_fail (! playing, FALSE);
 
     current_entry = entry;
+
+    g_free (current_filename);
     current_filename = playlist_entry_get_filename (playlist, entry);
 
     PluginHandle * p = playlist_entry_get_decoder (playlist, entry, FALSE);
@@ -382,11 +390,17 @@ static gboolean playback_start (gint playlist, gint entry, gint seek_time,
     current_samplerate = 0;
     current_channels = 0;
 
-    const gchar * title = playlist_entry_get_title (playlist, entry, FALSE);
-    current_title = g_strdup ((title != NULL) ? title : current_filename);
+    g_free (current_title);
+    current_title = playlist_entry_get_title (playlist, entry, FALSE);
+    if (! current_title)
+        current_title = g_strdup (current_filename);
 
     current_length = playlist_entry_get_length (playlist, entry, FALSE);
-    read_gain_from_tuple (playlist_entry_get_tuple (playlist, entry, FALSE));
+
+    Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
+    read_gain_from_tuple (tuple);
+    if (tuple)
+        tuple_free (tuple);
 
     if (current_length > 0 && playlist_entry_is_segmented (playlist, entry))
     {

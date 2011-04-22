@@ -231,16 +231,12 @@ void drct_pl_shuffle_toggle (void)
 
 gchar * drct_pl_get_file (gint entry)
 {
-    const gchar * filename = playlist_entry_get_filename
-     (playlist_get_active (), entry);
-    return (filename == NULL) ? NULL : g_strdup (filename);
+    return playlist_entry_get_filename (playlist_get_active (), entry);
 }
 
 gchar * drct_pl_get_title (gint entry)
 {
-    const gchar * title = playlist_entry_get_title (playlist_get_active (),
-     entry, FALSE);
-    return (title == NULL) ? NULL : g_strdup (title);
+    return playlist_entry_get_title (playlist_get_active (), entry, FALSE);
 }
 
 gint drct_pl_get_time (gint pos)
@@ -255,11 +251,14 @@ static void activate_temp (void)
 
     for (gint playlist = 0; playlist < playlists; playlist ++)
     {
-        if (! strcmp (playlist_get_title (playlist), title))
+        gchar * title2 = playlist_get_title (playlist);
+        if (! strcmp (title2, title))
         {
             playlist_set_active (playlist);
+            g_free (title2);
             return;
         }
+        g_free (title2);
     }
 
     if (! playlist_entry_count (playlist_get_active ()))

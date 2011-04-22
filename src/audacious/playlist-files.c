@@ -127,6 +127,12 @@ gboolean playlist_save (gint list, const gchar * filename)
 
     gboolean success = pp->save (filename, filenames, tuples);
 
+    for (gint i = 0; i < entries; i ++)
+    {
+        g_free (index_get (filenames, i));
+        tuple_free (index_get (tuples, i));
+    }
+
     index_free (filenames);
     index_free (tuples);
 
