@@ -686,7 +686,8 @@ void tuple_set_format (Tuple * t, const gchar * format, gint chans, gint rate,
         else if (chans == 2)
             APPEND (buf, _("Stereo"));
         else
-            APPEND (buf, _("%d channels"), chans);
+            APPEND (buf, dngettext (PACKAGE, "%d channel", "%d channels",
+             chans), chans);
 
         if (rate > 0)
             APPEND (buf, ", ");
@@ -697,7 +698,7 @@ void tuple_set_format (Tuple * t, const gchar * format, gint chans, gint rate,
 
     if (buf[0])
         tuple_associate_string (t, FIELD_QUALITY, NULL, buf);
-    
+
     if (brate > 0)
         tuple_associate_int (t, FIELD_BITRATE, NULL, brate);
 }
