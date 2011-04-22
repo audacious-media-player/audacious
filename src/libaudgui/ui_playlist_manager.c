@@ -124,6 +124,45 @@ static const AudguiListCallbacks callbacks = {
  .get_data = NULL,
  .receive_data = NULL};
 
+static gboolean search_cb (GtkTreeModel * model, gint column, const gchar * key,
+ GtkTreeIter * iter, void * user)
+{
+    GtkTreePath * path = gtk_tree_model_get_path (model, iter);
+    g_return_val_if_fail (path, TRUE);
+    gint row = gtk_tree_path_get_indices (path)[0];
+    gtk_tree_path_free (path);
+
+    gchar * temp = aud_playlist_get_title (row);
+    g_return_val_if_fail (temp, TRUE);
+    gchar * title = g_utf8_strdown (temp, -1);
+    g_free (temp);
+
+    temp = g_utf8_strdown (key, -1);
+    gchar * * keys = g_strsplit (temp, " ", 0);
+    g_free (temp);
+
+    gboolean match = FALSE;
+
+    for (gint i = 0; keys[i]; i ++)
+    {
+        if (! keys[i][0])
+            continue;
+
+        if (strstr (title, keys[i]))
+            match = TRUE;
+        else
+        {
+            match = FALSE;
+            break;
+        }
+    }
+
+    g_free (title);
+    g_strfreev (keys);
+
+    return ! match; /* TRUE == not matched, FALSE == matched */
+}
+
 static gboolean position_changed = FALSE;
 
 static void update_hook (void * data, void * list)
@@ -208,6 +247,8 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     audgui_list_add_column (playman_pl_lv, _("Title"), 0, G_TYPE_STRING, TRUE);
     audgui_list_add_column (playman_pl_lv, _("Entries"), 1, G_TYPE_INT, FALSE);
     audgui_list_set_highlight (playman_pl_lv, aud_playlist_get_playing ());
+    gtk_tree_view_set_search_equal_func ((GtkTreeView *) playman_pl_lv,
+     search_cb, NULL, NULL);
     hook_associate ("playlist update", update_hook, playman_pl_lv);
     hook_associate ("playlist position", position_hook, playman_pl_lv);
 
