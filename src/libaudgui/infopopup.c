@@ -1,8 +1,8 @@
 /*
  * libaudgui/infopopup.c
  * Copyright 2006 William Pitcock, Tony Vroon, George Averill, Giacomo Lozito,
- *  Derek Pomery and Yoshiki Yazawa.
- * Copyright 2010 John Lindgren
+ *  Derek Pomery, and Yoshiki Yazawa
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -46,12 +46,12 @@ static void infopopup_entry_set_text (const gchar * entry_name, const gchar *
     gtk_label_set_text ((GtkLabel *) widget, text);
 }
 
-static void infopopup_entry_set_image (void)
+static void infopopup_entry_set_image (gint playlist, gint entry)
 {
     GtkWidget * widget = g_object_get_data ((GObject *) infopopup, "image");
     g_return_if_fail (widget);
 
-    GdkPixbuf * pixbuf = audgui_pixbuf_for_current ();
+    GdkPixbuf * pixbuf = audgui_pixbuf_for_entry (playlist, entry);
 
     if (pixbuf)
     {
@@ -230,14 +230,6 @@ static void infopopup_create (void)
     gtk_widget_show_all (infopopup_hbox);
 }
 
-#if 0
-static void infopopup_destroy (void)
-{
-    infopopup_progress_stop (infopopup);
-    gtk_widget_destroy (infopopup);
-}
-#endif
-
 static void infopopup_update_data (const gchar * text, const gchar * label_data,
  const gchar * header_data)
 {
@@ -273,8 +265,8 @@ static void infopopup_clear (void)
     gtk_window_resize ((GtkWindow *) infopopup, 1, 1);
 }
 
-static void infopopup_show (const gchar * filename, const Tuple * tuple,
- const gchar * title)
+static void infopopup_show (gint playlist, gint entry, const gchar * filename,
+ const Tuple * tuple, const gchar * title)
 {
     gint x, y, h, w;
     gint length, value;
@@ -319,7 +311,7 @@ static void infopopup_show (const gchar * filename, const Tuple * tuple,
     infopopup_update_data (tmp, "label_tracknum", "header_tracknum");
     g_free (tmp);
 
-    infopopup_entry_set_image ();
+    infopopup_entry_set_image (playlist, entry);
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
@@ -357,7 +349,7 @@ void audgui_infopopup_show (gint playlist, gint entry)
     Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
     if (filename && title && tuple)
-        infopopup_show (filename, tuple, title);
+        infopopup_show (playlist, entry, filename, tuple, title);
 
     g_free (filename);
     g_free (title);
