@@ -156,6 +156,7 @@ void interface_uninstall_toolbar (void * widget)
 
 typedef enum {
     HOOK_SHOW,
+    HOOK_SHOW_TOGGLE,
     HOOK_SHOW_ERROR,
     HOOK_SHOW_JUMPTOTRACK,
     HOOK_SHOW_FILEBROWSER,
@@ -167,6 +168,9 @@ void interface_hook_handler (void * hook_data, void * user_data)
     {
     case HOOK_SHOW:
         interface_show (GPOINTER_TO_INT (hook_data));
+        break;
+    case HOOK_SHOW_TOGGLE:
+        interface_show (! interface_is_shown ());
         break;
     case HOOK_SHOW_ERROR:
         interface_show_error (hook_data);
@@ -187,6 +191,7 @@ typedef struct {
 
 static IfaceHooks hooks[] = {
     {"interface show", HOOK_SHOW},
+    {"interface toggle visibility", HOOK_SHOW_TOGGLE},
     {"interface show error", HOOK_SHOW_ERROR},
     {"interface show filebrowser", HOOK_SHOW_FILEBROWSER},
     {"interface show jump to track", HOOK_SHOW_JUMPTOTRACK},
