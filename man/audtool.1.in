@@ -219,12 +219,6 @@ Sets the equalizer value in specified band.
 .I --mainwin-show <on/off>
 Shows/hides the main window.
 .TP
-.I --playlist-show <on/off>
-Shows/hides the playlist window.
-.TP
-.I --equalizer-show <on/off>
-Shows/hides the equalizer window.
-.TP
 .I --filebrowser-show <on/off>
 Shows/hides the filebrowser.
 .TP
@@ -236,9 +230,6 @@ Shows/hides the preferences window.
 .TP
 .I --about-show <on/off>
 Shows/hides the about window.
-.TP
-.I --activate
-Activates and raises audacious.
 .TP
 .I --always-on-top <on/off>
 Enables/disables always on top setting.

@@ -121,15 +121,11 @@ struct commandhandler handlers[] = {
 
 	{"<sep>", NULL, "Miscellaneous", 0},
 	{"mainwin-show", mainwin_show, "shows/hides the main window", 1},
-	{"playlist-show", playlist_show, "shows/hides the playlist window", 1},
-	{"equalizer-show", equalizer_show, "shows/hides the equalizer window", 1},
-
 	{"filebrowser-show", show_filebrowser, "shows/hides the filebrowser", 1},
 	{"jumptofile-show", show_jtf_window, "shows/hides the jump to file window", 1},
 	{"preferences-show", show_preferences_window, "shows/hides the preferences window", 1},
 	{"about-show", show_about_window, "shows/hides the about window", 1},
 
-	{"activate", activate, "activates and raises audacious", 0},
 	{"always-on-top", toggle_aot, "on/off always on top", 1},
     {"version", get_version, "shows audaciuos version", 0},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},

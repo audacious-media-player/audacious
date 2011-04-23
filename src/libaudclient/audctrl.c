@@ -87,10 +87,10 @@ void audacious_remote_playlist_add (DBusGProxy * proxy, GList * list)
 {
     const gchar * filenames[g_list_length (list) + 1];
     int count;
-    
+
     for (count = 0; list != NULL; count ++, list = list->next)
         filenames[count] = list->data;
-    
+
     filenames[count] = NULL;
 
     org_atheme_audacious_add_list (proxy, filenames, & error);
@@ -107,10 +107,10 @@ void audacious_remote_playlist_open_list (DBusGProxy * proxy, GList * list)
 {
     const gchar * filenames[g_list_length (list) + 1];
     int count;
-    
+
     for (count = 0; list != NULL; count ++, list = list->next)
         filenames[count] = list->data;
-    
+
     filenames[count] = NULL;
 
     org_atheme_audacious_open_list (proxy, filenames, & error);
@@ -129,10 +129,10 @@ void audacious_remote_playlist_open_list_to_temp (DBusGProxy * proxy, GList *
 {
     const gchar * filenames[g_list_length (list) + 1];
     int count;
-    
+
     for (count = 0; list != NULL; count ++, list = list->next)
         filenames[count] = list->data;
-    
+
     filenames[count] = NULL;
 
     org_atheme_audacious_open_list_to_temp (proxy, filenames, & error);
@@ -457,28 +457,6 @@ void audacious_remote_main_win_toggle(DBusGProxy *proxy, gboolean show) {
 }
 
 /**
- * Toggles the playlist window's visibility.
- *
- * @param[in] proxy DBus proxy for audacious
- * @param[in] show Whether or not to show the playlist window.
- **/
-void audacious_remote_pl_win_toggle(DBusGProxy *proxy, gboolean show) {
-    org_atheme_audacious_show_playlist(proxy, show, &error);
-    g_clear_error(&error);
-}
-
-/**
- * Toggles the equalizer window's visibility.
- *
- * @param[in] proxy DBus proxy for audacious
- * @param[in] show Whether or not to show the equalizer window.
- **/
-void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show) {
-    org_atheme_audacious_show_equalizer(proxy, show, &error);
-    g_clear_error(&error);
-}
-
-/**
  * Queries Audacious about the main window's visibility.
  *
  * @param[in] proxy DBus proxy for audacious
@@ -487,32 +465,6 @@ void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show) {
 gboolean audacious_remote_is_main_win(DBusGProxy *proxy) {
     gboolean visible = TRUE;
     org_atheme_audacious_main_win_visible(proxy, &visible, &error);
-    g_clear_error(&error);
-    return visible;
-}
-
-/**
- * Queries Audacious about the playlist window's visibility.
- *
- * @param[in] proxy DBus proxy for audacious
- * @return TRUE if visible, FALSE otherwise.
- **/
-gboolean audacious_remote_is_pl_win(DBusGProxy *proxy) {
-    gboolean visible = TRUE;
-    org_atheme_audacious_playlist_visible(proxy, &visible, &error);
-    g_clear_error(&error);
-    return visible;
-}
-
-/**
- * Queries Audacious about the equalizer window's visibility.
- *
- * @param[in] proxy DBus proxy for audacious
- * @return TRUE if visible, FALSE otherwise.
- **/
-gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
-    gboolean visible = FALSE;
-    org_atheme_audacious_equalizer_visible(proxy, &visible, &error);
     g_clear_error(&error);
     return visible;
 }
@@ -845,16 +797,6 @@ gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
     org_atheme_audacious_auto_advance(proxy, &is_advance, &error);
     g_clear_error(&error);
     return is_advance;
-}
-
-/**
- * Tells audacious to display the main window and become the selected window.
- *
- * @param[in] proxy DBus proxy for audacious
- **/
-void audacious_remote_activate(DBusGProxy *proxy) {
-    org_atheme_audacious_activate(proxy, &error);
-    g_clear_error(&error);
 }
 
 /**

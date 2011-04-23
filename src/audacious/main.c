@@ -81,7 +81,7 @@ static struct {
     gchar **filenames;
     gint session;
     gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
-    gboolean enqueue, mainwin, remote, activate;
+    gboolean enqueue, mainwin, remote;
     gboolean enqueue_to_temp;
     gboolean version;
     gchar *previous_session_id;
@@ -258,7 +258,6 @@ static GOptionEntry cmd_entries[] = {
     {"enqueue", 'e', 0, G_OPTION_ARG_NONE, &options.enqueue, N_("Add files to the playlist"), NULL},
     {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, N_("Add new files to a temporary playlist"), NULL},
     {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
-    {"activate", 'a', 0, G_OPTION_ARG_NONE, &options.activate, N_("Display all open Audacious windows"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
     {"verbose", 'V', 0, G_OPTION_ARG_NONE, &cfg.verbose, N_("Print debugging messages"), NULL},
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
@@ -359,6 +358,12 @@ static void do_remote (void)
     {
         GList * list = convert_filenames ();
 
+        /* if no command line options, then present running instance */
+        if (! (list || options.play || options.pause || options.play_pause ||
+         options.stop || options.rew || options.fwd || options.show_jump_box ||
+         options.mainwin))
+            options.mainwin = TRUE;
+
         if (list)
         {
             if (options.enqueue_to_temp)
@@ -386,8 +391,6 @@ static void do_remote (void)
             audacious_remote_playlist_next (session);
         if (options.show_jump_box)
             audacious_remote_show_jtf_box (session);
-        if (options.activate)
-            audacious_remote_activate (session);
         if (options.mainwin)
             audacious_remote_main_win_toggle (session, TRUE);
 
@@ -449,7 +452,7 @@ static void do_commands (void)
 
     if (options.show_jump_box)
         interface_show_jump_to_track ();
-    if (options.mainwin || options.activate)
+    if (options.mainwin)
         interface_show (TRUE);
 }
 

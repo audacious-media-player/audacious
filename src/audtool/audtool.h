@@ -43,7 +43,7 @@ struct commandhandler {
 	void (*handler)(gint argc, gchar **argv);
 	gchar *desc;
 	gint args;
-}; 
+};
 
 extern struct commandhandler handlers[];
 
@@ -92,7 +92,6 @@ extern void playlist_repeat_toggle(gint, gchar **);
 extern void playlist_shuffle_status(gint, gchar **);
 extern void playlist_shuffle_toggle(gint, gchar **);
 extern void playlist_tuple_field_data(gint, gchar **argv);
-extern void playlist_show(gint, gchar **);
 extern void playlist_enqueue_to_temp(gint argc, gchar **argv);
 extern void playlist_ins_url_string(gint argc, gchar **argv);
 extern void playlist_title(gint, gchar **);
@@ -124,7 +123,6 @@ extern void show_filebrowser(gint, gchar **);
 extern void shutdown_audacious_server(gint, gchar **);
 extern void show_about_window(gint, gchar **);
 
-extern void activate(gint argc, gchar **argv);
 extern void toggle_aot(gint argc, gchar **argv);
 extern void get_skin(gint argc, gchar **argv);
 extern void set_skin(gint argc, gchar **argv);
@@ -137,7 +135,6 @@ extern void equalizer_set_eq(gint argc, gchar **argv);
 extern void equalizer_set_eq_preamp(gint argc, gchar **argv);
 extern void equalizer_set_eq_band(gint argc, gchar **argv);
 extern void equalizer_active(gint argc, gchar **argv);
-extern void equalizer_show(gint, gchar **);
 
 extern gint check_args_playlist_pos(gint argc, gchar **argv);
 

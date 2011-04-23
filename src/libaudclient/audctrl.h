@@ -55,11 +55,7 @@ gint audacious_remote_get_playlist_time(DBusGProxy *proxy, guint pos);
 void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,
                                gint *nch);
 void audacious_remote_main_win_toggle(DBusGProxy *proxy, gboolean show);
-void audacious_remote_pl_win_toggle(DBusGProxy *proxy, gboolean show);
-void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show);
 gboolean audacious_remote_is_main_win(DBusGProxy *proxy);
-gboolean audacious_remote_is_pl_win(DBusGProxy *proxy);
-gboolean audacious_remote_is_eq_win(DBusGProxy *proxy);
 void audacious_remote_show_prefs_box(DBusGProxy *proxy);
 void audacious_remote_toggle_aot(DBusGProxy *proxy, gboolean ontop);
 void audacious_remote_eject(DBusGProxy *proxy);
@@ -96,9 +92,6 @@ void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos);
 gint audacious_remote_get_playqueue_length(DBusGProxy *proxy);
 void audacious_remote_toggle_advance(DBusGProxy *proxy);
 gboolean audacious_remote_is_advance(DBusGProxy *proxy);
-
-/* Added in BMP 0.9.7 */
-void audacious_remote_activate(DBusGProxy *proxy);
 
 /* Added in Audacious 1.1 */
 void audacious_remote_show_jtf_box(DBusGProxy *proxy);

@@ -940,43 +940,17 @@ gboolean audacious_rc_eject(RemoteObject * obj, GError ** error)
     return TRUE;
 }
 
-gboolean audacious_rc_main_win_visible(RemoteObject * obj, gboolean * is_main_win, GError ** error)
+gboolean audacious_rc_main_win_visible (RemoteObject * obj,
+ gboolean * visible, GError ** error)
 {
-    *is_main_win = cfg.player_visible;
+    * visible = interface_is_shown ();
     return TRUE;
 }
 
-gboolean audacious_rc_show_main_win(RemoteObject * obj, gboolean show, GError ** error)
+gboolean audacious_rc_show_main_win (RemoteObject * obj, gboolean show,
+ GError * * error)
 {
     interface_show (show);
-    return TRUE;
-}
-
-gboolean audacious_rc_equalizer_visible(RemoteObject * obj, gboolean * is_eq_win, GError ** error)
-{
-    *is_eq_win = cfg.equalizer_visible;
-    return TRUE;
-}
-
-gboolean audacious_rc_show_equalizer(RemoteObject * obj, gboolean show, GError ** error)
-{
-#if 0
-    drct_eq_win_toggle(show);
-#endif
-    return TRUE;
-}
-
-gboolean audacious_rc_playlist_visible(RemoteObject * obj, gboolean * is_pl_win, GError ** error)
-{
-    *is_pl_win = cfg.playlist_visible;
-    return TRUE;
-}
-
-gboolean audacious_rc_show_playlist(RemoteObject * obj, gboolean show, GError ** error)
-{
-#if 0
-    drct_pl_win_toggle(show);
-#endif
     return TRUE;
 }
 
@@ -1322,12 +1296,6 @@ gboolean audacious_rc_show_filebrowser(RemoteObject * obj, gboolean show, GError
 gboolean audacious_rc_play_pause(RemoteObject * obj, GError * *error)
 {
     g_timeout_add(0, play_pause_cb, NULL);
-    return TRUE;
-}
-
-gboolean audacious_rc_activate(RemoteObject * obj, GError ** error)
-{
-    fprintf (stderr, "implement me\n");
     return TRUE;
 }
 

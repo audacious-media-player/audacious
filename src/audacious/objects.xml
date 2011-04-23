@@ -120,28 +120,6 @@
             <arg type="b" name="show"/>
         </method>
 
-        <!-- Equalizer visibility -->
-        <method name="EqualizerVisible">
-            <arg type="b" direction="out" name="is_eq_win"/>
-        </method>
-
-        <!-- Toggle equalizer visibility -->
-        <method name="ShowEqualizer">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-            <arg type="b" name="show"/>
-        </method>
-
-        <!-- Playlist visibility -->
-        <method name="PlaylistVisible">
-            <arg type="b" direction="out" name="is_pl_win"/>
-        </method>
-
-        <!-- Toggle playlist visibility -->
-        <method name="ShowPlaylist">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-            <arg type="b" name="show"/>
-        </method>
-
         <!-- Get names of available 'standard' tuple fields -->
         <method name="GetTupleFields">
             <!-- Return array of tuple field names -->
@@ -324,7 +302,7 @@
             <!-- URL to add -->
             <arg type="s" name="url"/>
         </method>
-        
+
         <!-- Add a list of files -->
         <method name="AddList">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
@@ -414,11 +392,6 @@
 
         <!-- Either play or pause -->
         <method name="PlayPause">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
-
-        <!-- Activate -->
-        <method name="Activate">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
 
