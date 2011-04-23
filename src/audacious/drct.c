@@ -177,6 +177,8 @@ gint drct_pl_get_length (void)
 void drct_pl_next (void)
 {
     gboolean play = playback_get_playing ();
+    if (playlist_get_playing () < 0)
+        playlist_set_playing (playlist_get_active ());
     if (playlist_next_song (playlist_get_playing (), cfg.repeat) && play)
         playback_play (0, FALSE);
 }
@@ -184,6 +186,8 @@ void drct_pl_next (void)
 void drct_pl_prev (void)
 {
     gboolean play = playback_get_playing ();
+    if (playlist_get_playing () < 0)
+        playlist_set_playing (playlist_get_active ());
     if (playlist_prev_song (playlist_get_playing ()) && play)
         playback_play (0, FALSE);
 }
