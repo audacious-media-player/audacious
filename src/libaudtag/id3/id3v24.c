@@ -203,7 +203,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
     }
     else
     {
-        gsize end = vfs_fsize (handle);
+        gint64 end = vfs_fsize (handle);
 
         if (end < 0)
             return FALSE;
