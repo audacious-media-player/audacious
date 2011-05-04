@@ -158,8 +158,8 @@ AC_ISC_POSIX
 AC_C_BIGENDIAN
 
 if test "x$GCC" = "xyes"; then
-    CFLAGS="$CFLAGS -Wall -pipe"
-    CXXFLAGS="$CXXFLAGS -pipe -Wall"
+    CFLAGS="$CFLAGS -Wall -Wtype-limits -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -Wall -Wtype-limits"
 fi
 
 dnl Checks for various programs
