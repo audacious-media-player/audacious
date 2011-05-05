@@ -165,7 +165,7 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
 }
 
 static gboolean read_header (VFSFile * handle, gint * version, gboolean *
- syncsafe, gsize * offset, gint * header_size, gint * data_size, gint *
+ syncsafe, gint64 * offset, gint * header_size, gint * data_size, gint *
  footer_size)
 {
     ID3v2Header header, footer;
@@ -818,7 +818,7 @@ static gboolean id3v24_can_handle_file (VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
-    gsize offset;
+    gint64 offset;
 
     return read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size);
@@ -828,7 +828,7 @@ static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
-    gsize offset;
+    gint64 offset;
     gint pos;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
@@ -938,7 +938,7 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
 {
     gint version, header_size, data_size, footer_size, parsed;
     gboolean syncsafe;
-    gsize offset;
+    gint64 offset;
     gboolean found = FALSE;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
@@ -989,7 +989,7 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 {
     gint version, header_size, data_size, footer_size;
     gboolean syncsafe;
-    gsize offset;
+    gint64 offset;
 
     if (! read_header (f, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))

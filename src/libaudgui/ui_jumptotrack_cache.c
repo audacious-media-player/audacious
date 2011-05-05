@@ -350,7 +350,7 @@ const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
     gchar* normalized_keyword = normalize_search_string(keyword);
     GString* keyword_string = g_string_new(normalized_keyword);
     GString* match_string = g_string_new(normalized_keyword);
-    gsize match_string_length = keyword_string->len;
+    gint match_string_length = keyword_string->len;
 
     while (match_string_length >= 0)
     {

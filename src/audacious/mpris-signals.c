@@ -27,45 +27,43 @@
 
 #include "dbus-service.h"
 
-static void mpris_status_cb1 (void * hook_data, void * user_data)
+static void mpris_status_cb (void * hook_data, void * user_data)
 {
     mpris_emit_status_change (mpris, GPOINTER_TO_INT (user_data));
-}
-
-static void mpris_status_cb2 (void * hook_data, void * user_data)
-{
-    mpris_emit_status_change (mpris, -1);
 }
 #endif
 
 void mpris_signals_init (void)
 {
 #ifdef USE_DBUS
-    hook_associate ("playback begin", mpris_status_cb1, GINT_TO_POINTER
+    hook_associate ("playback begin", mpris_status_cb, GINT_TO_POINTER
      (MPRIS_STATUS_PLAY));
-    hook_associate ("playback pause", mpris_status_cb1, GINT_TO_POINTER
+    hook_associate ("playback pause", mpris_status_cb, GINT_TO_POINTER
      (MPRIS_STATUS_PAUSE));
-    hook_associate ("playback unpause", mpris_status_cb1, GINT_TO_POINTER
+    hook_associate ("playback unpause", mpris_status_cb, GINT_TO_POINTER
      (MPRIS_STATUS_PLAY));
-    hook_associate ("playback stop", mpris_status_cb1, GINT_TO_POINTER
+    hook_associate ("playback stop", mpris_status_cb, GINT_TO_POINTER
      (MPRIS_STATUS_STOP));
 
-    hook_associate ("toggle shuffle", mpris_status_cb2, NULL);
-    hook_associate ("toggle repeat", mpris_status_cb2, NULL);
-/*    hook_associate ("toggle no playlist advance", mpris_status_cb2, NULL); */
+    hook_associate ("toggle shuffle", mpris_status_cb, GINT_TO_POINTER
+     (MPRIS_STATUS_INVALID));
+    hook_associate ("toggle repeat", mpris_status_cb, GINT_TO_POINTER
+     (MPRIS_STATUS_INVALID));
+/*    hook_associate ("toggle no playlist advance", mpris_status_cb,
+     GINT_TO_POINTER (MPRIS_STATUS_INVALID)); */
 #endif
 }
 
 void mpris_signals_cleanup (void)
 {
 #ifdef USE_DBUS
-    hook_dissociate ("playback begin", mpris_status_cb1);
-    hook_dissociate ("playback pause", mpris_status_cb1);
-    hook_dissociate ("playback unpause", mpris_status_cb1);
-    hook_dissociate ("playback stop", mpris_status_cb1);
+    hook_dissociate ("playback begin", mpris_status_cb);
+    hook_dissociate ("playback pause", mpris_status_cb);
+    hook_dissociate ("playback unpause", mpris_status_cb);
+    hook_dissociate ("playback stop", mpris_status_cb);
 
-    hook_dissociate ("toggle shuffle", mpris_status_cb2, NULL);
-    hook_dissociate ("toggle repeat", mpris_status_cb2, NULL);
-/*    hook_dissociate ("toggle no playlist advance", mpris_status_cb2, NULL); */
+    hook_dissociate ("toggle shuffle", mpris_status_cb);
+    hook_dissociate ("toggle repeat", mpris_status_cb);
+/*    hook_dissociate ("toggle no playlist advance", mpris_status_cb); */
 #endif
 }

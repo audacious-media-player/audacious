@@ -837,7 +837,9 @@ gboolean mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)
 {
     GValueArray *ar = g_value_array_new(4);
 
-    if (status < 0) status = get_playback_status();
+    if (status == MPRIS_STATUS_INVALID)
+        status = get_playback_status ();
+
     append_int_value(ar, (gint) status);
     append_int_value(ar, (gint) cfg.shuffle);
     append_int_value(ar, (gint) cfg.no_playlist_advance);

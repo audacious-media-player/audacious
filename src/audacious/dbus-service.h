@@ -54,9 +54,10 @@ enum {
 
 // Status
 typedef enum {
-	MPRIS_STATUS_PLAY = 0,
-	MPRIS_STATUS_PAUSE,
-	MPRIS_STATUS_STOP
+    MPRIS_STATUS_INVALID = -1,
+    MPRIS_STATUS_PLAY = 0,
+    MPRIS_STATUS_PAUSE = 1,
+    MPRIS_STATUS_STOP = 2,
 } PlaybackStatus;
 
 extern MprisPlayer * mpris;
