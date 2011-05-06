@@ -129,12 +129,10 @@ gchar * construct_uri (const gchar * string, const gchar * playlist_name)
     // make full path by replacing last part of playlist path with filename.
     else
     {
-        const gchar * fslash = strrchr (filename, '/');
-        const gchar * pslash = strrchr (playlist_name, '/');
-
-        if (pslash)
-            uri = g_strdup_printf ("%.*s/%s", (gint) (pslash - playlist_name),
-             playlist_name, fslash ? fslash + 1 : filename);
+        const gchar * slash = strrchr (playlist_name, '/');
+        if (slash)
+            uri = g_strdup_printf ("%.*s/%s", (gint) (slash - playlist_name),
+             playlist_name, filename);
     }
 
     g_free (filename);
