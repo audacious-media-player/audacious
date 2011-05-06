@@ -115,7 +115,7 @@ static gboolean ape_find_header (VFSFile * handle, APEHeader * header, gint *
         return TRUE;
     }
 
-    if (vfs_fseek (handle, -sizeof (APEHeader), SEEK_END))
+    if (vfs_fseek (handle, -(gint) sizeof (APEHeader), SEEK_END))
         return FALSE;
 
     if (ape_read_header (handle, header))
