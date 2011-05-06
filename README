@@ -1,7 +1,7 @@
 Audacious
 A relatively powerful media player
 
-Copyright (c) 2005-2007 Audacious Development Team (see AUTHORS)
+Copyright (c) 2005-2008 Audacious Development Team (see AUTHORS)
 
 Based on:
   BMP - Beep Media Player (c)2002-2005
@@ -14,8 +14,8 @@ Which was based on:
   Peter Alm, Thomas Nilsson, Olle Hallnas, Håvard Kvålen
 
 
-NOTE: This document is hardly maintained. Please check the Users' Guide on
-the Audacious website.
+NOTE: This document is hardly maintained. Please check the Users' Guide
+on the Audacious website.
 
 
 TABLE OF CONTENTS
@@ -23,33 +23,26 @@ TABLE OF CONTENTS
 
 1. Disclaimer
 2. Installation
-   2.1 Basic Installation
-   2.2 Border less Installation
-   2.3 Skin Installation
+   2.1. Basic Installation
+   2.2. Borderless Installation
+   2.3. Skin Installation
 3. Documentation
-   3.1 Controlling Audacious
-       3.1.1 Key bindings
-   3.2 Playlist Editor
-   3.3 Equalizer
-   3.4 Menu
-   3.5 Preferences
-      3.5.1 Audio I/O Plugins
-      3.5.2 Effect/General Plugins
-      3.5.3 Visualization Plugins
-      3.5.4 Options
-      3.5.5 Fonts
-      3.5.6 Title
-   3.6 Plugins
-   3.7 Playlist Manager
-4. Command Line Options
-5. Features
-   5.1 Supported Features
-6. Obtaining Audacious
-7. Misc
-   7.1 Shoutcast support
-   7.2 Tips and tricks
-8. Bugs
-9. Contact Email
+   3.1. Controlling Audacious
+        3.1.1. Key bindings
+   3.2. Playlist editor
+   3.3. Equalizer
+   3.4. Menu
+   3.5. Preferences
+        3.5.1. Appearance
+        3.5.2. Playlist
+        3.5.3. Plugins
+        3.5.4. Audio
+   3.6. Plugins
+   3.7. Playlist Manager
+4. Obtaining Audacious
+   4.1. Obtaining Skins
+5. Bugs
+6. Contact
 
 
 
@@ -59,9 +52,11 @@ TABLE OF CONTENTS
 
 We are not liable for any damage caused by the use of this program.
 
-Audacious is NOT a port of Winamp (http://www.Winamp.com). Audacious is a fork of
-XMMS (http://xmms.org) and BMP (http://beep-media-player.org) which borrowed the
-Winamp GUI.
+Audacious is NOT a port of WinAmp (http://www.winamp.com). Audacious is
+a fork of XMMS (http://xmms.org) and BMP which borrowed the WinAmp GUI.
+
+However, Audacious is neither XMMS, or BMP, but takes a direction of
+its own.
 
 
 2. Installation
@@ -70,22 +65,21 @@ Winamp GUI.
 Audacious requires the following libraries and their development
 packages installed:
 
-  Glib 2.6
-  (http://www.gtk.org/download/)
+  Glib 2, GTK+ 2, Pango, Cairo, libmcs, libmowgli
 
-  GTK+ 2.6
-  (http://www.gtk.org/download/)
+The 'configure' script detects the presence of the required and
+optional depencies and their versions. Additional external libraries
+are required for much of Audacious functionality and plugins.
 
-  libglade >= 2.4
-  (http://ftp.gnome.org/pub/GNOME/sources/libglade/2.4/)
+You should always carefully check the output of 'configure' script
+to see if the options you wish to have become enabled, and see what
+requiremenst you may be missing if they are not.
 
-  mcs >= 0.1
-  (http://sacredspiral.co.uk/~nenolod/mcs)
 
-If you compile Audacious from a fresh CVS checkout, you will also need
-the following tools:
+For building, GNU Make 3.80 or later is required. If you compile
+Audacious from a fresh Mercurial checkout, you will also need the
+following tools:
 
-  automake >= 1.9
   autoconf >= 2.59
 
 Note that these tools and libraries are bundled with major Linux
@@ -94,8 +88,8 @@ those packages are not sufficiently new, you may need to search
 third-party repositories for them.
 
 
-2.1 Basic Installation
-----------------------
+2.1. Basic Installation
+-----------------------
 
 cd audacious-VERSION
 ./configure
@@ -105,12 +99,12 @@ make install
 This will put the binary in /usr/local/bin and plugins in
 /usr/local/lib/audacious/
 
-If you want to use the automatic character detection system, then you should
-use --enable-chardet.
+If you want to use the automatic character detection system, then you
+should use --enable-chardet.
 
 
-2.2 Borderless Installation
----------------------------
+2.2. Borderless Installation
+----------------------------
 
 As far as I know most WM's accepts GTK decoration hints so it will
 not have borders.  But some WM's can't handle this so you have to
@@ -141,18 +135,19 @@ NoBorder {
     "xmms"
 }
 
-2.3 Skin Installation
----------------------
 
-Audacious will create a directory called ~/.local/share/audacious/Skins. You can unarchive
-the skins the same way as you do for Winamp.
+2.3. Skin Installation
+----------------------
+
+Audacious will create a directory called ~/.local/share/audacious/Skins.
+You can unarchive the skins the same way as you do for Winamp.
 
 However, you don't need to as Audacious supports archived skins. Audacious
 currently reads the following formats: zip, wsz, tar, tar.gz and
 tar.bz2
 
-Just copy the archive to one of the skin paths and Audacious will take care
-of the rest.
+Just copy the archive to one of the skin paths and Audacious will take
+care of the rest.
 
 In order to support zipped skins you will need to have unzip. Unzip
 is bundled with most Linux distributions.
@@ -172,19 +167,19 @@ For BASH:
 For C Shell:
   setenv SKINSDIR /path/to/Skins:/more/paths/to/other/locations/of/Skins
 
-You should note that skins designed specifically for Audacious are not compatible
-with Winamp. Likewise, we do not support Winamp "modern" skins as there is a lot of
-Winamp-specifics that would have to be reverse-engineered or emulated to properly
-support those skins.
+You should note that skins designed specifically for Audacious are not
+compatible with Winamp. Likewise, we do not support Winamp "modern" skins as
+there is a lot of Winamp-specifics that would have to be reverse-engineered
+or emulated to properly support those skins.
 
 3. Documentation
 ----------------
 
-This file or http://audacious-media-player.org
+This file and / or http://audacious-media-player.org/
 
 
-3.1 Controlling Audacious
---------------------
+3.1. Controlling Audacious
+--------------------------
 
 When you start up Audacious, you will get a console very similar to that of
 Winamp.
@@ -201,15 +196,14 @@ Winamp.
      bring up the Visualization menu. Left mouse button will change the
      analyzer to an oscilloscope and/or none.
 
-- To the right of the Spectrum analyzer is the title of the file being played.
-  This also contains the length of the song being played, as well as its
-  position in the [unsorted] playlist. Right clicking in this window will bring
-  up a new menu with some more options that are self explaining.
+- To the right of the Spectrum analyzer is the title of the file being
+  played. This also contains the length of the song being played, as well
+  as its position in the [unsorted] playlist. Right clicking in this window
+  will bring up a new menu with some more options that are self explaining.
 
-- In the left part of the Spectrum analyzer you'll have letters (at least if
-  you use the default skin) O A I D V. This is known as the
-  "clutterbar'. Left-clicking on these will open up menus or perform the
-  listed actions.
+- In the left part of the Spectrum analyzer you'll have letters (at least
+  if you use the default skin) O A I D V. This is known as the "clutterbar'.
+  Left-clicking on these will open up menus or perform the listed actions.
   O : Options menu
   A : Always on top
   I : File info box
@@ -226,26 +220,26 @@ Winamp.
    - The second slider controls the balance between speakers
    - The button marked "EQ" loads up the graphic equalizer
    - The button marked "PL" loads up the playlist editor
-   - The LARGE slide bar moves from left to right as the song plays. You can
-     drag this to jump to another location in the current file.
+   - The LARGE slide bar moves from left to right as the song plays. You
+     can drag this to jump to another location in the current file.
 
-- On the bottom of the console are the standard buttons you would see on a CD
-  player: Previous track, Play, Pause, Stop, Next track, eject, shuffle
-  and repeat.
+- On the bottom of the console are the standard buttons you would see on
+  a CD player: Previous track, Play, Pause, Stop, Next track, eject,
+  shuffle and repeat.
 
    - The eject button doesn't REALLY eject, of course. :) It opens up the
      file requester. The File Requester builds a playlist for the current
-     Audacious session. You can use it to load files, add files to the list, or
-     load all mp3s in a directory.
+     Audacious session. You can use it to load files, add files to the list,
+     or load all mp3s in a directory.
 
    - The shuffle button randomizes the sequence of the playlist.
 
-   - The repeat button when enabled makes the playlist loop when it reaches the
+   - The repeat button when enabled makes the playlist loop when it reaches
      end of the playlist.
 
 
-3.1.1 Key bindings
-------------------
+3.1.1. Key bindings
+-------------------
 
 Global: (Main, Equalizer and Playlist window)
 
@@ -305,8 +299,8 @@ Equalizer shade mode:
   Arrow key left  = Balance 4% to left
 
 
-3.2 Playlist editor
--------------------
+3.2. Playlist editor
+--------------------
 
 To access the Playlist editor, select the button labeled "PL" on the right
 side of the Audacious console.
@@ -333,7 +327,8 @@ inv sel   : invert you selection
 
 misc opts : held down you'll have 2 extra options
 fileinfo  : opens the file info dialog.
-sort      : release button on this will bring up another menu with sort options
+sort      : release button on this will bring up another menu with sort
+            options
 
 load list : will let you pick a playlist to load, held down you'll have
             2 extra options
@@ -342,23 +337,25 @@ new       : will empty the playlist and let you create a new playlist
 
 If you want to select/deselect files in the filrequester/playlist editor use
 CTRL for files and SHIFT key for blocks of files. You can also browse the PL
-using the cursor keys and enter to select song. Pressing the delete button will
-remove the song from the playlist. If your mouse is equipped with a mouse
-wheel, you can use this to scroll up and down.
+using the cursor keys and enter to select song. Pressing the delete button
+will remove the song from the playlist. If your mouse is equipped with a
+mouse wheel, you can use this to scroll up and down.
+
 
 3.3. Equalizer
 --------------
 
-To access the Equalizer, select the button labeled "EQ" on the right
-side of the Audacious console.
+To access the Equalizer, select the button labeled "EQ" on the right side
+of the Audacious console.
 
-That will bring up the Equalizer window. It looks like an equalizer on a stereo
-and behaves like one as well. Press the button labeled ON to enable the use of
-the equalizer, once you turned it on you use it as a normal equalizer.
+That will bring up the Equalizer window. It looks like an equalizer on a
+stereo and behaves like one as well. Press the button labeled ON to enable
+the use of the equalizer, once you turned it on you use it as a normal
+equalizer.
 
-EQ presets will be saved in ~/.audacious/config when you close Audacious. You can also
-have your own presets for different song using the "Preset" button, Audacious can
-also import/export from Winamp's preset files.
+EQ presets will be saved in ~/.audacious/config when you close Audacious. You
+can also have your own presets for different song using the "Preset" button,
+Audacious can also import/export from Winamp's preset files.
 
 If 'Auto' is enabled, Audacious will try to load equalizer presets like this:
 
@@ -401,10 +398,11 @@ Configure Equalizer     : Change the default names of directory based
 3.4. Menu
 ---------
 
-There are several menu hot spots on the Audacious window. One place is at the left
-hand side of the visual window described in sections 3.1 If you click the right
-mouse button in the main window, the menus will also pop up (same as clicking
-the button on the top left corner).
+There are several menu hot spots on the Audacious window. One place is at the
+left hand side of the visual window described in sections 3.1 If you click
+the right mouse button in the main window, the menus will also pop up (same
+as clicking the button on the top left corner).
+
 
 3.5. Preferences
 ----------------
@@ -412,30 +410,26 @@ the button on the top left corner).
 Use the menu to open Options / Preferences or press CTRL-P to bring the
 preferences dialog up.
 
+
 3.5.1. Appearance
 -----------------
 
 Skins
-In the skinlist you can choose a skin. How to install skins is described above.
-Click on a skin in the list to change to it.
+In the skinlist you can choose a skin. How to install skins is described
+above. Click on a skin in the list to change to it.
 
 Fonts
-You can set the font in the main window by setting the 'Player' font. You can
-change the playlist font by setting the 'Playlist' font.
+You can set the font in the main window by setting the 'Player' font. You
+can change the playlist font by setting the 'Playlist' font.
 
 Miscellaneous
-Show track numbers in playlist - Enable/disable displaying of track numbers in
-                                 the playlist.
-Use custom cursors             - Enable/disable custom cursors set by the skin.
+Show track numbers in playlist - Enable/disable displaying of track numbers
+                                 in the playlist.
+Use custom cursors             - Enable/disable custom cursors set by the
+                                 skin.
 
 
-3.5.2. Mouse
-------------
-
-Mouse wheel
-Change how Audacious handles scroll behaviours.
-
-3.5.3. Playlist
+3.5.2. Playlist
 ---------------
 
 Filename
@@ -449,8 +443,8 @@ Load metadata from playlists and files - Loads metadata from files and
                                          playlists (e.g. ID3 tags).
 
 Playback
-Don't advance in playlist - Don't advance to the next song in the playlist when
-                            the current song ends.
+Don't advance in playlist - Don't advance to the next song in the playlist
+                            when the current song ends.
 Pause between songs       - Set the time (in secons) to pause on songchange
 
 Song display
@@ -458,7 +452,7 @@ Title format  - Choose the format to display the song names in the playlist.
 Custom string - When the above option is set to 'Custom' insert a string of
                 substitutes here.
 
-3.5.6. Plugins
+3.5.3. Plugins
 --------------
 
 Enable/disable and configure plugins in this section.
@@ -469,14 +463,14 @@ Choose a tab to list one of the types of plugins:
   - Visualization (visualization plugins)
   - Effects (effect plugins)
 
-3.5.7. Audio
+3.5.4. Audio
 ------------
 
 The settings in this section are related to the audio system.
 
 
-3.6 Plugins
------------
+3.6. Plugins
+------------
 
 Plugins are what makes Audacious work, by moving most of the code out of
 Audacious and into a plugin architecture it's possible to change almost
@@ -486,174 +480,69 @@ However to promote maximum flexibility of the platform itself, we no longer
 include any plugins with the Audacious core.
 
 You will need to download and install our plugin pack for Audacious if you
-expect it to do anything useful (or install someone else's plugin pack if one
-should exist).
-
-Additionally, you can find a list of plugins at:
-  http://audacious-media-player.org/Plugins
+expect it to do anything useful (like actually play any files).
 
 You should note that third-party plugins are not supported by the Audacious
-development team, and that you should report any issues with them on our forums,
-but NEVER on our bugtracker.
+development team, and that you should report any issues with them on our
+forums, but NEVER on our bugtracker.
 
-3.7 Playlist Manager
---------------------
 
-Audacious supports multiple playlists (think foobar2000). For the manipulation of
-playlists, we have included a playlist manager tool.
+3.7. Playlist Manager
+---------------------
+
+Audacious supports multiple playlists (think foobar2000). For the manipulation
+of playlists, we have included a playlist manager tool.
 
 It is accessible from the Playlist menu.
 
 
-4. Command Line Options
------------------------
-
-audacious --help will produce:
-
-Usage: audacious [options] [files] ...
-
-Options:
---------
-
--h, --help              Display this text and exit.
--n, --session           Select Audacious/XMMS session (Default: 0)
--r, --rew               Skip backwards in playlist
--p, --play              Start playing current playlist
--u, --pause             Pause current song
--s, --stop              Stop current song
--t, --play-pause        Pause if playing, play otherwise
--f, --fwd               Skip forward in playlist
--e, --enqueue           Don't clear the playlist
--m, --show-main-window  Show the main window
--v, --version           Print version number and exit.
--H, --headless          Headless operation
--E, --enqueue-to-temp   Enqueues to a temporary playlist.
-
-You can specify files on the command line, e.g:
-
-  audacious file1.mp3 file2.mp3 file3.mp3
-  audacious *.mp3
-  audacious playlist.m3u playlist.pls playlist.xspf
-
-If you do this while Audacious is running, the current playlist
-will be cleared and the files/playlist specified on the command
-line will be used instead.
-
-To keep the current playlist intact use the -E option, which will
-create a new temporary playlist with the requested media, or the
--e option, which will append to your currently selected playlist.
-
-
-5. Features
------------
-
-5.1 Supported Features
+4. Obtaining Audacious
 ----------------------
-
-Seeking in files
-Volume/Balance
-Shuffle play
-Repeat play
-Playlist editor
-Spectrum Analyzer
-One Line mode al'a WinShade in Winamp
-Oscilloscope
-Timer Elapsed/Timer Remaining
-Plug-in system Output/Input/Effect/General/Visualization
-Equalizer
-Double Size option
-Winamp 2.0 skin support (can use wsz files)
-GTK Requesters (with theme support)
-Streaming/Shoutcast(1.0/1.1)/Icecast support
-Auto remove borders if the WM has support for it
-Fast jump in playlist
-Scroll wheel support
-Saves HTTP streams to HD
-HTTP authentication
-Plays MPEG layer 1/2/3, WAV, Ogg Vorbis
-Compiles and works on other Unixes
-Proxy authentication support
-
-
-6. Obtaining Audacious
--------------------
 
 Currently, we only provide source tarballs at:
 
-   http://audacious-media-player.org/Downloads
+   http://audacious-media-player.org/downloads
 
-The Subversion snapshots listed are not regularly updated. We
-encourage you to download Audacious straight from our SVN repository:
+Audacious source is managed and also available via Atheme.org
+Mercurial repository, refer to following web-page for information:
 
-   svn co http://svn.atheme.org/audacious/trunk audacious-devel
- 
+   http://audacious-media-player.org/developers
 
-6.1 Obtaining Skins
--------------------
-
-You can find Audacious/XMMS skins made by Audacious/XMMS users at:
-
-   http://www.xmms.org/skins.html
-   http://themes.org/skins/xmms
-
-You can find more places on our website, at:
-
-   http://audacious-media-player.org/Skins
+You may also want to read file "Mercurial-Access".
 
 
-7. Misc
--------
+4.1. Obtaining Skins
+--------------------
 
-7.1. Tips and Tricks
--------------------
+You can find skins for Audacious by Googling for WinAmp 2.x skins
+or XMMS skins. You may be also able to find Audacious specific skins.
 
-If you have a windows partition with Winamp installed, a good idea would be to
-set the SKINSDIR variable to that dir.
-
-Audacious features some command line options like next/previous songs, those
-things can be binded to a key. I use AfterStep and the useless window keys
-for this. Here is an example from my .steprc:
-
-Key     Meta_R  A       N       Exec "Audacious" audacious -r
-Key     Menu    A       N       Exec "Audacious" audacious -f
-
-If you want all your mp3's in one playlist an easy way is:
-locate .mp3 > /path/to/playlistname
-
-(considering you have a fairly recent updatedb, don't blame us if locate don't
-find the file you downloaded 3 minutes ago)
-
-
-8. Bugs
+5. Bugs
 -------
 
 Audacious is under heavy development and as such, has quite a number of
 bugs. Our bug tracker page is maintained at:
 
-  http://bugs-meta.atheme.org/
+  http://jira.atheme.org/
 
 It will continue to have bugs as we fix and introduce new ones through
 rewriting and enhancement. Help us along by reporting new bugs, and
 verifying existing ones.
 
 
-9. Contact Emails
------------------
+6. Contact
+----------
 
-Project Admins:
+We do not currently have any official forum or other method of end-user
+related communication. Primarily any end-user type questions should be
+directed to your distribution-related forums.
+
+
+There exists an IRC channel at irc.atheme.org #audacious. You should note
+that this IRC presence is mainly for development issues and internal project
+use. It is not meant for end-user support or questions.
+
+Project admins:
 
   William Pitcock       email: nenolod at sacredspiral.co.uk
   Tony Vroon            email: chainsaw at gentoo.org
-
-Alternatively, you can try the mailing list at audacious@atheme.org.
-Subscription information is available at:
-
-  http://mail.atheme.org/mailman/listinfo/audacious
-
-If a mailing list is not interesting to you, you can try our forums:
-
-  http://boards.nenolod.net
-
-There is also an IRC channel at irc.atheme.org #audacious. You should
-note that this IRC presence is mainly for internal project use, but
-that doesn't stop 50-someodd people from visiting there.

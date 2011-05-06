@@ -1,44 +1,35 @@
-#ifndef DEBUG_H
-#define DEBUG_H
+/*
+ * debug.h
+ * Copyright 2010 John Lindgren
+ *
+ * This file is part of Audacious.
+ *
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
+ *
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
+ */
 
-#include <glib.h>
+#ifndef AUDACIOUS_DEBUG_H
+#define AUDACIOUS_DEBUG_H
 
-#ifdef NDEBUG
+#include <stdio.h>
 
-/* void REQUIRE_LOCK(GMutex *m); */
-#  define REQUIRE_LOCK(m)
+#include <audacious/audconfig.h>
 
-/* void REQUIRE_STR_UTF8(const gchar *str); */
-#  define REQUIRE_STR_UTF8(str)
-
-/* void REQUIRE_STATIC_LOCK(GStaticMutex *m); */
-#  define REQUIRE_STATIC_LOCK(m)
-
-#else                           /* !NDEBUG */
-
-/* void REQUIRE_LOCK(GMutex *m); */
-#  define REQUIRE_LOCK(m) G_STMT_START { \
-       if (g_mutex_trylock(m)) { \
-           g_critical(G_STRLOC ": Mutex not locked!"); \
-           g_mutex_unlock(m); \
-       } \
-   } G_STMT_END
-
-/* void REQUIRE_STATIC_LOCK(GStaticMutex *m); */
-#  define REQUIRE_STATIC_LOCK(m) G_STMT_START { \
-       if (G_TRYLOCK(m)) { \
-           g_critical(G_STRLOC ": Mutex not locked!"); \
-           G_UNLOCK(m); \
-       } \
-   } G_STMT_END
-
-/* void REQUIRE_STR_UTF8(const gchar *str); */
-#  define REQUIRE_STR_UTF8(str) G_STMT_START { \
-       if (!g_utf_validate(str, -1, NULL)) \
-            g_warning(G_STRLOC ": String is not UTF-8!"); \
-   } G_STMT_END
-
-#endif                          /* NDEBUG */
-
+#ifdef _AUDACIOUS_CORE
+#define AUDDBG(...) do {if (cfg.verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
+#else
+#define AUDDBG(...) do {if (aud_cfg->verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
+#endif
 
 #endif

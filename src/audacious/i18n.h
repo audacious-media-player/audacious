@@ -3,7 +3,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 2 of the License.
+ *  the Free Software Foundation; under version 3 of the License.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -11,15 +11,16 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- *  02110-1301, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses>.
+ *
+ *  The Audacious team does not consider modular code linking to
+ *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef __AUDACIOUS_I18N_H__
-#define __AUDACIOUS_I18N_H__
+#ifndef AUDACIOUS_I18N_H
+#define AUDACIOUS_I18N_H
 
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include <libintl.h>
 
 #define _(String) dgettext (PACKAGE, String)
@@ -30,4 +31,4 @@
 #define N_(String) (String)
 #endif
 
-#endif
+#endif /* AUDACIOUS_I18N_H */

@@ -1,559 +1,594 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious team
+/*
+ * output.c
+ * Copyright 2009-2010 John Lindgren
  *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team.
+ * This file is part of Audacious.
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team.
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 2 of the License.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#include "output.h"
-#include "iir.h"
-#include "main.h"
-#include "input.h"
-#include "playback.h"
-
-#include "playlist.h"
-#include "configdb.h"
-
-#include "effect.h"
-
 #include <math.h>
+#include <libaudcore/audio.h>
 
-#ifdef USE_SRC
-#include <samplerate.h>
-#endif
+#include "audconfig.h"
+#include "debug.h"
+#include "effect.h"
+#include "equalizer.h"
+#include "output.h"
+#include "playback.h"
+#include "plugins.h"
+#include "vis_runner.h"
 
-OutputPluginData op_data = {
-    NULL,
-    NULL
-};
+#define SW_VOLUME_RANGE 40 /* decibels */
 
-OutputPluginState op_state = {
-    0,
-    0,
-    0
-};
+static OutputPlugin * cop = NULL;
 
-OutputPlugin psuedo_output_plugin = {
-    NULL,
-    NULL,
-    "XMMS reverse compatibility output plugin",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    output_get_volume,
-    output_set_volume,
-    output_open_audio,
-    output_write_audio,
-    output_close_audio,
-
-    output_flush,
-    output_pause,
-    output_buffer_free,
-    output_buffer_playing,
-    get_output_time,
-    get_written_time,
-    NULL
-};
-
-OutputPlugin *
-get_current_output_plugin(void)
+void output_get_volume (gint * l, gint * r)
 {
-    return op_data.current_output_plugin;
+    if (cfg.software_volume_control)
+    {
+        * l = cfg.sw_volume_left;
+        * r = cfg.sw_volume_right;
+    }
+    else if (cop != NULL && cop->get_volume != NULL)
+        cop->get_volume (l, r);
+    else
+    {
+        * l = 0;
+        * r = 0;
+    }
 }
 
-void
-set_current_output_plugin(gint i)
+void output_set_volume (gint l, gint r)
 {
-    gboolean playing;
-    OutputPlugin *op = get_current_output_plugin();
-
-    GList *node = g_list_nth(op_data.output_list, i);
-    if (!node) {
-        op_data.current_output_plugin = NULL;
-        return;
-    }
-
-    op_data.current_output_plugin = node->data;
-
-    playing = playback_get_playing();
-
-    if (playing == TRUE)
+    if (cfg.software_volume_control)
     {
-        guint time, pos;
-        PlaylistEntry *entry;
+        cfg.sw_volume_left = l;
+        cfg.sw_volume_right = r;
+    }
+    else if (cop != NULL && cop->set_volume != NULL)
+        cop->set_volume (l, r);
+}
 
-        /* don't stop yet, get the seek time and playlist position first */
-        pos = playlist_get_position(playlist_get_active());
-        time = op->output_time();
+static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static gboolean locked = FALSE;
 
-        /* reset the audio system */
-        mainwin_stop_pushed();
-        op->close_audio();
+#define LOCK do {g_static_mutex_lock (& mutex); locked = TRUE;} while (0)
+#define UNLOCK do {locked = FALSE; g_static_mutex_unlock (& mutex);} while (0)
+#define LOCKED g_return_if_fail (locked)
+#define LOCKED_RET(a) g_return_val_if_fail (locked, a)
+#define LOCK_VIS do {vis_runner_lock (); LOCK;} while (0)
+#define UNLOCK_VIS do {UNLOCK; vis_runner_unlock ();} while (0)
+#define LOCKED_VIS g_return_if_fail (locked && vis_runner_locked ())
+#define LOCKED_VIS_RET(a) g_return_val_if_fail (locked && vis_runner_locked (), a)
 
-        g_usleep(300000);
+static gboolean opened = FALSE;
+static gboolean leave_open = FALSE;
 
-        /* wait for the playback thread to come online */
-        while (playback_get_playing())
-            g_message("waiting for audio system shutdown...");
+static gboolean waiting, aborted, paused;
+static gint decoder_format, decoder_channels, decoder_rate, effect_channels,
+ effect_rate, output_format, output_channels, output_rate;
+static gint64 frames_written;
+static gboolean have_replay_gain;
+static ReplayGainInfo replay_gain_info;
 
-        /* wait for the playback thread to come online */
-        playlist_set_position(playlist_get_active(), pos);
-        entry = playlist_get_entry_to_play(playlist_get_active());
-        playback_play_file(entry);
+static void reset_time (void)
+{
+    LOCKED_VIS;
+    g_return_if_fail (cop->set_written_time != NULL);
+    vis_runner_time_offset (- cop->written_time ());
+    cop->set_written_time (0);
+}
 
-        while (!playback_get_playing())
+static void drain (void)
+{
+    LOCKED;
+    g_return_if_fail (cop->drain != NULL);
+    cop->drain ();
+}
+
+static void real_close (void)
+{
+    LOCKED_VIS;
+    vis_runner_start_stop (FALSE, FALSE);
+    cop->close_audio ();
+    opened = FALSE;
+    leave_open = FALSE;
+}
+
+static gboolean open_audio (gint format, gint rate, gint channels)
+{
+    LOCKED_VIS_RET (FALSE);
+    g_return_val_if_fail (! opened, FALSE);
+
+    decoder_format = format;
+    decoder_channels = channels;
+    decoder_rate = rate;
+    effect_channels = channels;
+    effect_rate = rate;
+    effect_start (& effect_channels, & effect_rate);
+    eq_set_format (effect_channels, effect_rate);
+
+    if (leave_open && effect_channels == output_channels && effect_rate ==
+     output_rate)
+    {
+        reset_time ();
+        opened = TRUE;
+    }
+    else
+    {
+        if (leave_open)
         {
-            gtk_main_iteration();
-                g_message("waiting for audio system startup...");
+            drain ();
+            real_close ();
         }
 
-        /* and signal a reseek */
-        if (playlist_get_current_length(playlist_get_active()) > -1 &&
-            time <= (playlist_get_current_length(playlist_get_active())))
-            playback_seek(time / 1000);
+        output_format = cfg.output_bit_depth == 32 ? FMT_S32_NE :
+         cfg.output_bit_depth == 24 ? FMT_S24_NE : cfg.output_bit_depth == 16 ?
+         FMT_S16_NE : FMT_FLOAT;
+        output_channels = effect_channels;
+        output_rate = effect_rate;
+
+        if (cop->open_audio (output_format, output_rate, output_channels))
+        {
+            vis_runner_start_stop (TRUE, FALSE);
+            opened = TRUE;
+        }
     }
+
+    leave_open = FALSE;
+    waiting = FALSE;
+    aborted = FALSE;
+    paused = FALSE;
+    frames_written = 0;
+    have_replay_gain = FALSE;
+
+    return opened;
 }
 
-GList *
-get_output_list(void)
+static gboolean output_open_audio (gint format, gint rate, gint channels)
 {
-    return op_data.output_list;
+    g_return_val_if_fail (cop != NULL, FALSE);
+    LOCK_VIS;
+    gboolean success = open_audio (format, rate, channels);
+    UNLOCK_VIS;
+    return success;
 }
 
-void
-output_about(gint i)
+static void set_gain (ReplayGainInfo * info)
 {
-    OutputPlugin *out = g_list_nth(op_data.output_list, i)->data;
-    if (out && out->about)
-        out->about();
+    LOCKED;
+    g_return_if_fail (opened && ! waiting);
+
+    AUDDBG ("Replay Gain info:\n");
+    AUDDBG (" album gain: %f dB\n", info->album_gain);
+    AUDDBG (" album peak: %f\n", info->album_peak);
+    AUDDBG (" track gain: %f dB\n", info->track_gain);
+    AUDDBG (" track peak: %f\n", info->track_peak);
+
+    have_replay_gain = TRUE;
+    memcpy (& replay_gain_info, info, sizeof (ReplayGainInfo));
 }
 
-void
-output_configure(gint i)
+static void output_set_replaygain_info (ReplayGainInfo * info)
 {
-    OutputPlugin *out = g_list_nth(op_data.output_list, i)->data;
-    if (out && out->configure)
-        out->configure();
+    g_return_if_fail (cop != NULL);
+    LOCK;
+    set_gain (info);
+    UNLOCK;
 }
 
-void
-output_get_volume(gint * l, gint * r)
+static void apply_replay_gain (gfloat * data, gint samples)
 {
-    *l = *r = -1;
+    gfloat factor = powf (10, (gfloat) cfg.replay_gain_preamp / 20);
 
-    if (!op_data.current_output_plugin)
+    if (! cfg.enable_replay_gain)
         return;
 
-    if (!op_data.current_output_plugin->get_volume)
-        return;
-
-    op_data.current_output_plugin->get_volume(l, r);
-}
-
-void
-output_set_volume(gint l, gint r)
-{
-    if (!op_data.current_output_plugin)
-        return;
-
-    if (!op_data.current_output_plugin->set_volume)
-        return;
-
-    op_data.current_output_plugin->set_volume(l, r);
-}
-
-void
-output_set_eq(gboolean active, gfloat pre, gfloat * bands)
-{
-    int i;
-    preamp[0] = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
-    preamp[1] = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
-
-    for (i = 0; i < 10; ++i)
+    if (have_replay_gain)
     {
-        set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
-        set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
-    }
-}
+        if (cfg.replay_gain_album)
+        {
+            factor *= powf (10, replay_gain_info.album_gain / 20);
 
-/* this should be in BYTES, NOT gint16s */
-static void
-byteswap(size_t size,
-         gint16 * buf)
-{
-    gint16 *it;
-    size &= ~1;                  /* must be multiple of 2  */
-    for (it = buf; it < buf + size / 2; ++it)
-        *(guint16 *) it = GUINT16_SWAP_LE_BE(*(guint16 *) it);
-}
-
-/* called by input plugin to peek at the output plugin's write progress */
-gint
-get_written_time(void)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    return op->written_time();
-}
-
-/* called by input plugin to peek at the output plugin's output progress */
-gint
-get_output_time(void)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    return op->output_time();
-}
-
-#ifdef USE_SRC
-
-static SRC_STATE *src_state;
-static SRC_DATA src_data;
-static int overSamplingFs = 96000;
-static int converter_type = SRC_SINC_BEST_QUALITY;
-static int srcError = 0;
-
-static float *srcIn = NULL, *srcOut = NULL;
-static short int *wOut = NULL;
-static int lengthOfSrcIn = 0;
-static int lengthOfSrcOut = 0;
-
-static void freeSRC()
-{
-  if(src_state != NULL)
-    src_state = src_delete(src_state);
-  free(srcIn);
-  free(srcOut);
-  free(wOut);
-  srcIn = NULL;
-  srcOut = NULL;
-  wOut = NULL;
-  lengthOfSrcIn = 0;
-  lengthOfSrcOut = 0;
-}
-
-#endif
-
-gint
-output_open_audio(AFormat fmt, gint rate, gint nch)
-{
-    gint ret;
-    OutputPlugin *op;
-    
-#ifdef USE_SRC
-    ConfigDb *db;
-    gboolean src_enabled;
-    gint src_rate, src_type;
-    db = bmp_cfg_db_open();
-    
-    if (bmp_cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
-      src_enabled = FALSE;
-
-    if (bmp_cfg_db_get_int(db, NULL, "src_rate", &src_rate) == FALSE)
-      overSamplingFs = 48000;
-    else
-      overSamplingFs = src_rate;
-
-    /* don't resample if sampling rates are the same --nenolod */
-    if (rate == overSamplingFs)
-      src_enabled = FALSE;
-
-    if (bmp_cfg_db_get_int(db, NULL, "src_type", &src_type) == FALSE)
-      converter_type = SRC_SINC_BEST_QUALITY;
-    else
-      converter_type = src_type;
-    
-    bmp_cfg_db_close(db);
-    
-    freeSRC();
-    
-    if(src_enabled&&
-       (fmt == FMT_S16_NE||(fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN)||
-	(fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)))
-      {
-	src_state = src_new(converter_type, nch, &srcError);
-	if (src_state != NULL)
-	  {
-	    src_data.src_ratio = (float)overSamplingFs/(float)rate;
-	    rate = overSamplingFs;
-	  }
-	else
-	  fprintf(stderr, "src_new(): %s\n\n", src_strerror(srcError));
-      }
-#endif
-    
-    op = get_current_output_plugin();
-
-    if (op == NULL)
-        return -1;
-
-    /* Is our output port already open? */
-    if ((op_state.rate != 0 && op_state.nch != 0) &&
-        (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
-    {
-        /* Yes, and it's the correct sampling rate. Reset the counter and go. */
-        op->flush(0);
-        return 1;
-    }
-    else if (op_state.rate != 0 && op_state.nch != 0)
-        op->close_audio();
-
-    ret = op->open_audio(fmt, rate, nch);
-
-    if (ret == 1)            /* Success? */
-    {
-        op_state.fmt = fmt;
-        op_state.rate = rate;
-        op_state.nch = nch;
-    }
-
-    return ret;
-}
-
-void
-output_write_audio(gpointer ptr, gint length)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    /* Sanity check. */
-    if (op == NULL)
-        return;
-
-    op->write_audio(ptr, length);
-}
-
-void
-output_close_audio(void)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-#ifdef USE_SRC
-    freeSRC();
-#endif
-
-    /* Do not close if there are still songs to play and the user has 
-     * not requested a stop.  --nenolod
-     */
-    if (ip_data.stop == FALSE && 
-       (playlist_get_position_nolock(playlist_get_active()) < 
-        playlist_get_length(playlist_get_active()) - 1))
-        return;
-
-    /* Sanity check. */
-    if (op == NULL)
-        return;
-
-    op->close_audio();
-
-    /* Reset the op_state. */
-    op_state.fmt = op_state.rate = op_state.nch = 0;
-}
-
-void
-output_flush(gint time)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    if (op == NULL)
-        return;
-
-    op->flush(time);
-}
-
-void
-output_pause(gshort paused)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    if (op == NULL)
-        return;
-
-    op->pause(paused);
-}
-
-gint
-output_buffer_free(void)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    if (op == NULL)
-        return 0;
-
-    return op->buffer_free();
-}
-
-gint
-output_buffer_playing(void)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    if (op == NULL)
-        return 0;
-
-    return op->buffer_playing();
-}
-
-/* called by input plugin when data is ready */
-void
-produce_audio(gint time,        /* position             */
-              AFormat fmt,      /* output format        */
-              gint nch,         /* channels             */
-              gint length,      /* length of sample     */
-              gpointer ptr,     /* data                 */
-              int *going        /* 0 when time to stop  */
-              )
-{
-    static int init = 0;
-    int swapped = 0;
-    guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
-    int caneq = (fmt == FMT_S16_NE || fmt == myorder);
-    OutputPlugin *op = get_current_output_plugin();
-    EffectPlugin *ep = get_current_effect_plugin();
-    int writeoffs;
-    AFormat new_format;
-    gint new_rate;
-    gint new_nch;
-
-#ifdef USE_SRC
-    if(src_state != NULL&&length > 0)
-      {
-        int lrLength = length/2;
-        int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
-	if(lengthOfSrcIn < lrLength)
-	  {
-	    lengthOfSrcIn = lrLength;
-	    free(srcIn);
-	    srcIn = (float*)malloc(sizeof(float)*lrLength);
-	  }
-	if(lengthOfSrcOut < overLrLength)
-	  {
-	    lengthOfSrcOut = overLrLength;
-	    free(srcOut);
-	    free(wOut);
-	    srcOut = (float*)malloc(sizeof(float)*overLrLength);
-	    wOut = (short int*)malloc(sizeof(short int)*overLrLength);
-	  }
-        src_short_to_float_array((short int*)ptr, srcIn, lrLength);
-        src_data.data_in = srcIn;
-        src_data.data_out = srcOut;
-        src_data.end_of_input = 0;
-        src_data.input_frames = lrLength/2;
-        src_data.output_frames = overLrLength/2;
-        if ((srcError = src_process(src_state, &src_data)) > 0)
-          {
-            fprintf(stderr, "src_process(): %s\n", src_strerror(srcError));
-          }
+            if (cfg.enable_clipping_prevention &&
+             replay_gain_info.album_peak * factor > 1)
+                factor = 1 / replay_gain_info.album_peak;
+        }
         else
-          {
-            src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);
-            ptr = wOut;
-            length = src_data.output_frames_gen*4;
-          }
-      }
-#endif
+        {
+            factor *= powf (10, replay_gain_info.track_gain / 20);
 
-    if (!caneq && cfg.equalizer_active) {    /* wrong byte order */
-        byteswap(length, ptr);               /* so convert */
-        ++swapped;
-        ++caneq;
-    }                                        /* can eq now, mark swapd */
-    else if (caneq && !cfg.equalizer_active) /* right order but no eq */
-        caneq = 0;                           /* so don't eq */
-
-    if (caneq) {                /* if eq enab */
-        if (!init) {            /* if first run */
-            init_iir();         /* then init eq */
-            ++init;
-        }
-
-        iir(&ptr, length, nch);
-
-        if (swapped)               /* if was swapped */
-            byteswap(length, ptr); /* swap back for output */
-    }                           
-
-    /* do vis plugin(s) */
-    input_add_vis_pcm(time, fmt, nch, length, ptr);
-
-    /* do effect plugin(s) */
-    if (effects_enabled() && ep && ep->query_format) {
-        new_format = op_state.fmt;
-        new_rate = op_state.rate;
-        new_nch = op_state.nch;
-
-        ep->query_format(&new_format, &new_rate, &new_nch);
-
-        if (new_format != op_state.fmt ||
-            new_rate != op_state.rate ||
-            new_nch != op_state.nch) {
-            /*
-             * The effect plugin changes the stream format. Reopen the
-             * audio device.
-             */
-            if (0 == output_open_audio(new_format, new_rate, new_nch)) {
-                /*
-                 * Fatal error.
-                 */
-                return;
-            }
+            if (cfg.enable_clipping_prevention &&
+             replay_gain_info.track_peak * factor > 1)
+                factor = 1 / replay_gain_info.track_peak;
         }
     }
+    else
+        factor *= powf (10, (gfloat) cfg.default_gain / 20);
 
-    if (effects_enabled() && ep && ep->mod_samples)
-        length = ep->mod_samples(&ptr, length, op_state.fmt,
-                op_state.rate, op_state.nch);
+    if (factor < 0.99 || factor > 1.01)
+        audio_amplify (data, 1, samples, & factor);
+}
 
-    writeoffs = 0;
-    while (writeoffs < length)
+static void apply_software_volume (gfloat * data, gint channels, gint frames)
+{
+    gfloat left_factor, right_factor;
+    gfloat factors[channels];
+    gint channel;
+
+    if (! cfg.software_volume_control || (cfg.sw_volume_left == 100 &&
+     cfg.sw_volume_right == 100))
+        return;
+
+    left_factor = (cfg.sw_volume_left == 0) ? 0 : powf (10, (gfloat)
+     SW_VOLUME_RANGE * (cfg.sw_volume_left - 100) / 100 / 20);
+    right_factor = (cfg.sw_volume_right == 0) ? 0 : powf (10, (gfloat)
+     SW_VOLUME_RANGE * (cfg.sw_volume_right - 100) / 100 / 20);
+
+    if (channels == 2)
     {
-        int writable = length - writeoffs;
-
-        if (writable > 2048)
-            writable = 2048;
-
-        if (writable == 0)
-            return;
-
-        while (op->buffer_free() < writable) { /* wait output buf */
-            if (going && !*going)              /* thread stopped? */
-                return;                        /* so finish */
-
-                if (ip_data.stop)              /* has a stop been requested? */
-                return;                        /* yes, so finish */
-
-                g_usleep(10000);               /* else sleep for retry */
-        }
-
-        if (ip_data.stop)
-            return;
-
-        if (going && !*going)                  /* thread stopped? */
-            return;                            /* so finish */
-
-        /* do output */
-        op->write_audio(((guint8 *) ptr) + writeoffs, writable);
-
-        writeoffs += writable;
+        factors[0] = left_factor;
+        factors[1] = right_factor;
     }
+    else
+    {
+        for (channel = 0; channel < channels; channel ++)
+            factors[channel] = MAX (left_factor, right_factor);
+    }
+
+    audio_amplify (data, channels, frames, factors);
+}
+
+static void write_processed (void * data, gint samples)
+{
+    LOCKED_VIS;
+
+    if (! samples)
+        return;
+
+    vis_runner_pass_audio (cop->written_time (), data, samples, output_channels,
+     output_rate);
+    eq_filter (data, samples);
+    apply_software_volume (data, output_channels, samples / output_channels);
+
+    void * allocated = NULL;
+
+    if (output_format != FMT_FLOAT)
+    {
+        void * new = g_malloc (FMT_SIZEOF (output_format) * samples);
+        audio_to_int (data, new, output_format, samples);
+        data = new;
+        g_free (allocated);
+        allocated = new;
+    }
+
+    while (! aborted)
+    {
+        gint ready = (cop->buffer_free != NULL) ? cop->buffer_free () /
+         FMT_SIZEOF (output_format) : output_channels * (output_rate / 50);
+        ready = MIN (ready, samples);
+        cop->write_audio (data, FMT_SIZEOF (output_format) * ready);
+        data = (char *) data + FMT_SIZEOF (output_format) * ready;
+        samples -= ready;
+
+        if (! samples)
+            break;
+
+        waiting = TRUE;
+        UNLOCK_VIS;
+
+        if (cop->period_wait != NULL)
+            cop->period_wait ();
+        else if (cop->buffer_free != NULL)
+            g_usleep (20000);
+
+        LOCK_VIS;
+        waiting = FALSE;
+    }
+
+    g_free (allocated);
+}
+
+static void write_audio (void * data, gint size)
+{
+    LOCKED;
+    g_return_if_fail (opened && ! waiting);
+
+    gint samples = size / FMT_SIZEOF (decoder_format);
+    frames_written += samples / decoder_channels;
+
+    void * allocated = NULL;
+
+    if (decoder_format != FMT_FLOAT)
+    {
+        gfloat * new = g_malloc (sizeof (gfloat) * samples);
+        audio_from_int (data, decoder_format, new, samples);
+        data = new;
+        g_free (allocated);
+        allocated = new;
+    }
+
+    apply_replay_gain (data, samples);
+    gfloat * fdata = data;
+    effect_process (& fdata, & samples);
+    data = fdata;
+
+    if (data != allocated)
+    {
+        g_free (allocated);
+        allocated = NULL;
+    }
+
+    write_processed (data, samples);
+    g_free (allocated);
+}
+
+static void output_write_audio (void * data, gint size)
+{
+    g_return_if_fail (cop != NULL);
+    LOCK_VIS;
+    write_audio (data, size);
+    UNLOCK_VIS;
+}
+
+static void close_audio (void)
+{
+    LOCKED;
+    g_return_if_fail (opened && ! waiting);
+    opened = FALSE;
+
+    if (! leave_open)
+    {
+        effect_flush ();
+        real_close ();
+    }
+}
+
+static void output_close_audio (void)
+{
+    g_return_if_fail (cop != NULL);
+    LOCK_VIS;
+    close_audio ();
+    UNLOCK_VIS;
+}
+
+static void do_pause (gboolean p)
+{
+    LOCKED_VIS;
+    g_return_if_fail (opened);
+    cop->pause (p);
+    vis_runner_start_stop (TRUE, p);
+    paused = p;
+}
+
+static void output_pause (gboolean p)
+{
+    g_return_if_fail (cop != NULL);
+    LOCK_VIS;
+    do_pause (p);
+    UNLOCK_VIS;
+}
+
+static void flush (gint time)
+{
+    LOCKED_VIS;
+    g_return_if_fail (opened);
+
+    aborted = FALSE;
+
+    /* When playback is started from the middle of a song, flush() is called
+     * before any audio is actually written in order to set the time counter.
+     * In this case, we do not want to cut off the end of the previous song, so
+     * we do not actually flush. */
+    if (! frames_written)
+    {
+        g_return_if_fail (cop->set_written_time != NULL);
+        cop->set_written_time (time);
+    }
+    else
+    {
+        vis_runner_flush ();
+        effect_flush ();
+        cop->flush (effect_decoder_to_output_time (time));
+    }
+
+    frames_written = time * (gint64) decoder_rate / 1000;
+}
+
+static void output_flush (gint time)
+{
+    g_return_if_fail (cop != NULL);
+    LOCK_VIS;
+    flush (time);
+    UNLOCK_VIS;
+}
+
+static gint written_time (void)
+{
+    LOCKED_RET (0);
+    g_return_val_if_fail (opened && ! waiting, 0);
+    return frames_written * (gint64) 1000 / decoder_rate;
+}
+
+static gint output_written_time (void)
+{
+    g_return_val_if_fail (cop != NULL, 0);
+    LOCK;
+    gint time = written_time ();
+    UNLOCK;
+    return time;
+}
+
+static void write_buffers (void)
+{
+    LOCKED;
+    gfloat * data = NULL;
+    gint samples = 0;
+    effect_finish (& data, & samples);
+    write_processed (data, samples);
+}
+
+static void set_leave_open (void)
+{
+    LOCKED;
+    g_return_if_fail (opened && ! waiting);
+
+    if (! paused)
+    {
+        write_buffers ();
+        leave_open = TRUE;
+    }
+}
+
+static gboolean output_buffer_playing (void)
+{
+    g_return_val_if_fail (cop != NULL, FALSE);
+    LOCK_VIS;
+    set_leave_open ();
+    UNLOCK_VIS;
+    return FALSE;
+}
+
+static void abort_write (void)
+{
+    LOCKED;
+    g_return_if_fail (opened);
+    aborted = TRUE;
+    cop->flush (cop->output_time ());
+}
+
+static void output_abort_write (void)
+{
+    g_return_if_fail (cop != NULL);
+    LOCK;
+    abort_write ();
+    UNLOCK;
+}
+
+const struct OutputAPI output_api =
+{
+    .open_audio = output_open_audio,
+    .set_replaygain_info = output_set_replaygain_info,
+    .write_audio = output_write_audio,
+    .close_audio = output_close_audio,
+
+    .pause = output_pause,
+    .flush = output_flush,
+    .written_time = output_written_time,
+    .buffer_playing = output_buffer_playing,
+    .abort_write = output_abort_write,
+};
+
+static gint output_time (void)
+{
+    LOCKED_RET (0);
+    g_return_val_if_fail (opened || leave_open, 0);
+    return cop->output_time ();
+}
+
+gint get_output_time (void)
+{
+    g_return_val_if_fail (cop != NULL, 0);
+    LOCK;
+
+    gint time = 0;
+    if (opened)
+    {
+        time = effect_output_to_decoder_time (output_time ());
+        time = MAX (0, time);
+    }
+
+    UNLOCK;
+    return time;
+}
+
+gint get_raw_output_time (void)
+{
+    g_return_val_if_fail (cop != NULL, 0);
+    LOCK;
+    gint time = output_time ();
+    UNLOCK;
+    return time;
+}
+
+void output_drain (void)
+{
+    g_return_if_fail (cop != NULL);
+    LOCK_VIS;
+
+    if (leave_open)
+    {
+        write_buffers ();
+        drain ();
+        real_close ();
+    }
+
+    UNLOCK_VIS;
+}
+
+static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
+{
+    OutputPlugin * op = plugin_get_header (p);
+    g_return_val_if_fail (op != NULL && op->init != NULL, TRUE);
+
+    if (! op->init ())
+        return TRUE;
+
+    if (op->cleanup != NULL)
+        op->cleanup ();
+
+    * pp = p;
+    return FALSE;
+}
+
+PluginHandle * output_plugin_probe (void)
+{
+    PluginHandle * p = NULL;
+    plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) probe_cb, & p);
+    return p;
+}
+
+PluginHandle * output_plugin_get_current (void)
+{
+    return (cop != NULL) ? plugin_by_header (cop) : NULL;
+}
+
+gboolean output_plugin_set_current (PluginHandle * plugin)
+{
+    if (cop != NULL)
+    {
+        if (playback_get_playing ())
+            playback_stop ();
+
+        if (cop->cleanup != NULL)
+            cop->cleanup ();
+
+        cop = NULL;
+    }
+
+    if (plugin != NULL)
+    {
+        OutputPlugin * op = plugin_get_header (plugin);
+        g_return_val_if_fail (op != NULL && op->init != NULL, FALSE);
+
+        if (! op->init ())
+            return FALSE;
+
+        cop = op;
+    }
+
+    return TRUE;
 }

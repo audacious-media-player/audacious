@@ -4,1724 +4,585 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.6\n"
-"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-04-14 15:19-0500\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
+"POT-Creation-Date: 2011-04-22 11:35-0400\n"
 "PO-Revision-Date: 2007-01-31 16:16+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: Brezhoneg <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/audacious/glade.c:43
+#: src/audacious/adder.c:71
+msgid "Searching ..."
+msgstr ""
+
+#: src/audacious/adder.c:99
 #, c-format
-msgid ""
-"<b><big>Unable to create %s.</big></b>\n"
-"\n"
-"Could not open glade file (%s). Please check your installation.\n"
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/audacious/chardet.c:37
+msgid "  (invalid UTF-8)"
+msgstr "  (n'eo ket mat UTF-8)"
+
+#: src/audacious/credits.c:35
+#, fuzzy
+msgid "Core developers:"
+msgstr "Diorroerien 0.1.x :"
+
+#: src/audacious/credits.c:49
+msgid "Graphics:"
+msgstr "Grafikoù :"
+
+#: src/audacious/credits.c:54
+msgid "Default skin:"
+msgstr "Default skin:"
+
+#: src/audacious/credits.c:60
+msgid "Plugin development:"
 msgstr ""
 
-#: src/audacious/input.c:539
+#: src/audacious/credits.c:83
+msgid "Patch authors:"
+msgstr ""
+
+#: src/audacious/credits.c:126
+#, fuzzy
+msgid "1.x developers:"
+msgstr "Diorroerien 0.1.x :"
+
+#: src/audacious/credits.c:148
+msgid "BMP Developers:"
+msgstr "Diorroerien BMP :"
+
+#: src/audacious/credits.c:180
+#, fuzzy
+msgid "Belarusian:"
+msgstr "Bulgarek :"
+
+#: src/audacious/credits.c:183
+msgid "Basque:"
+msgstr ""
+
+#: src/audacious/credits.c:186
+msgid "Brazilian Portuguese:"
+msgstr "Portugaleg Brazil :"
+
+#: src/audacious/credits.c:190
+msgid "Breton:"
+msgstr "Brezhoneg :"
+
+#: src/audacious/credits.c:193
+msgid "Bulgarian:"
+msgstr "Bulgarek :"
+
+#: src/audacious/credits.c:196
+#, fuzzy
+msgid "Catalan:"
+msgstr "Italianeg :"
+
+#: src/audacious/credits.c:199
+#, fuzzy
+msgid "Chinese:"
+msgstr "Sineg :"
+
+#: src/audacious/credits.c:202
+#, fuzzy
+msgid "Croatian:"
+msgstr "Lec'hiadur :"
+
+#: src/audacious/credits.c:205
+msgid "Czech:"
+msgstr "Tchekek :"
+
+#: src/audacious/credits.c:208
+msgid "Dutch:"
+msgstr "Nederlandeg :"
+
+#: src/audacious/credits.c:212
+#, fuzzy
+msgid "Estonian:"
+msgstr "Roumanek :"
+
+#: src/audacious/credits.c:215
+msgid "Finnish:"
+msgstr "Finnek :"
+
+#: src/audacious/credits.c:219
+msgid "French:"
+msgstr "Galleg :"
+
+#: src/audacious/credits.c:225
+msgid "German:"
+msgstr "Alamaned :"
+
+#: src/audacious/credits.c:232
+msgid "Georgian:"
+msgstr "Jeorjiek :"
+
+#: src/audacious/credits.c:235
+msgid "Greek:"
+msgstr "Gresian :"
+
+#: src/audacious/credits.c:240
+msgid "Hindi:"
+msgstr "Hindi :"
+
+#: src/audacious/credits.c:243
+msgid "Hungarian:"
+msgstr "Hungarek :"
+
+#: src/audacious/credits.c:247
+msgid "Italian:"
+msgstr "Italianeg :"
+
+#: src/audacious/credits.c:251
+msgid "Japanese:"
+msgstr "Japaneg :"
+
+#: src/audacious/credits.c:254
+msgid "Korean:"
+msgstr "Koreeg :"
+
+#: src/audacious/credits.c:257
+#, fuzzy
+msgid "Latvian:"
+msgstr "Lec'hiadur :"
+
+#: src/audacious/credits.c:260
+msgid "Lithuanian:"
+msgstr "Lituaneg :"
+
+#: src/audacious/credits.c:264
+msgid "Macedonian:"
+msgstr "Makedonek :"
+
+#: src/audacious/credits.c:267
+msgid "Polish:"
+msgstr "Poloneg :"
+
+#: src/audacious/credits.c:272
+#, fuzzy
+msgid "Portuguese:"
+msgstr "Porzh :"
+
+#: src/audacious/credits.c:275
+msgid "Romanian:"
+msgstr "Roumanek :"
+
+#: src/audacious/credits.c:279
+msgid "Russian:"
+msgstr "Rusianeg :"
+
+#: src/audacious/credits.c:283
+msgid "Serbian (Latin):"
+msgstr "Serbiek (latin) :"
+
+#: src/audacious/credits.c:286
+msgid "Serbian (Cyrillic):"
+msgstr "Serbiek (lizherenneg ar ruseg) :"
+
+#: src/audacious/credits.c:289
+msgid "Simplified Chinese:"
+msgstr ""
+
+#: src/audacious/credits.c:292
+msgid "Slovak:"
+msgstr "Slovek :"
+
+#: src/audacious/credits.c:295
+msgid "Spanish:"
+msgstr "Spagnoleg :"
+
+#: src/audacious/credits.c:302
+msgid "Swedish:"
+msgstr "Svedeg :"
+
+#: src/audacious/credits.c:305
+msgid "Traditional Chinese:"
+msgstr ""
+
+#: src/audacious/credits.c:310
+msgid "Turkish:"
+msgstr ""
+
+#: src/audacious/credits.c:314
+msgid "Ukrainian:"
+msgstr "Ukrainiek :"
+
+#: src/audacious/credits.c:317
+msgid "Welsh:"
+msgstr "Kembraeg :"
+
+#: src/audacious/drct.c:250
+#, fuzzy
+msgid "Temporary Playlist"
+msgstr "Kargañ ar roll tonioù"
+
+#: src/audacious/equalizer_preset.c:186
 #, c-format
-msgid "audacious: %s"
+msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
 
-#: src/audacious/input.c:555
-msgid "Filename:"
-msgstr "Anv ar restr :"
-
-#: src/audacious/input.c:573
-msgid "No input plugin recognized this file"
-msgstr ""
-
-#: src/audacious/input.c:575
-#, c-format
-msgid "Input plugin: %s"
-msgstr "Lugent engas : %s"
-
-#: src/audacious/logger.c:122
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr ""
-
-#: src/audacious/main.c:84 src/audacious/main.c:86 src/audacious/ui_main.c:628
-#: src/audacious/ui_main.c:2948
-msgid "Audacious"
-msgstr ""
-
-#: src/audacious/main.c:461
-#, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "N'hell ket bet krouet ar renkell (%s) : %s\n"
-
-#: src/audacious/main.c:860
-msgid "Select which Audacious session ID to use"
-msgstr ""
-
-#: src/audacious/main.c:861
+#: src/audacious/main.c:251
 msgid "Skip backwards in playlist"
 msgstr ""
 
-#: src/audacious/main.c:862
+#: src/audacious/main.c:252
 msgid "Start playing current playlist"
 msgstr ""
 
-#: src/audacious/main.c:863
+#: src/audacious/main.c:253
 msgid "Pause current song"
 msgstr ""
 
-#: src/audacious/main.c:864
+#: src/audacious/main.c:254
 msgid "Stop current song"
 msgstr ""
 
-#: src/audacious/main.c:865
+#: src/audacious/main.c:255
 msgid "Pause if playing, play otherwise"
 msgstr ""
 
-#: src/audacious/main.c:866
+#: src/audacious/main.c:256
 msgid "Skip forward in playlist"
 msgstr ""
 
-#: src/audacious/main.c:867
+#: src/audacious/main.c:257
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Lammat d'ar restr"
 
-#: src/audacious/main.c:868
-msgid "Don't clear the playlist"
-msgstr "Ne c'houllonderit ket ar roll tonioù"
+#: src/audacious/main.c:258
+#, fuzzy
+msgid "Add files to the playlist"
+msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
 
-#: src/audacious/main.c:869
+#: src/audacious/main.c:259
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
 
-#: src/audacious/main.c:870
+#: src/audacious/main.c:260
 msgid "Display the main window"
 msgstr ""
 
-#: src/audacious/main.c:871
+#: src/audacious/main.c:261
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:872
-msgid "Enable headless operation"
+#: src/audacious/main.c:262
+#, fuzzy
+msgid "Show version"
+msgstr "Diskouez ar soner"
+
+#: src/audacious/main.c:263
+msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:873
-msgid "Print all errors and warnings to stdout"
-msgstr ""
-
-#: src/audacious/main.c:874
-msgid "Show version and builtin features"
-msgstr ""
-
-#: src/audacious/main.c:875
+#: src/audacious/main.c:264
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:1001
-#, c-format
-msgid ""
-"<b><big>Unable to load skin.</big></b>\n"
-"\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
-msgstr ""
-
-#: src/audacious/main.c:1052
-msgid ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-msgstr ""
-
-#: src/audacious/main.c:1074
-#, c-format
-msgid ""
-"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-"Please use GTK+ %s or newer.\n"
-msgstr ""
-
-#: src/audacious/main.c:1093
+#: src/audacious/main.c:276
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1100
+#: src/audacious/main.c:286
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1109
-#, fuzzy, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr ""
-"%s\n"
-"Ne m'eus ket digeriñ ar restr : %s"
-
-#: src/audacious/signals.c:48
+#: src/audacious/main.c:399
 msgid ""
-"\n"
-"Audacious has caught signal 11 (SIGSEGV).\n"
-"\n"
-"We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal "
-"circumstances.\n"
-"Your current configuration has been saved and should not be damaged.\n"
-"\n"
-"You can help improve the quality of Audacious by filing a bug at http://bugs-"
-"meta.atheme.org\n"
-"Please include the entire text of this message and a description of what you "
-"were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug "
-"report:\n"
-"\n"
+"Audacious seems to be already running but is not responding.  You can start "
+"another instance of the program, but please be warned that this can cause "
+"data loss.  If Audacious is not running, you can safely ignore this "
+"message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/signals.c:79
-msgid ""
-"\n"
-"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
-"product.\n"
+#: src/audacious/main.c:564
+msgid "Audacious"
 msgstr ""
 
-#: src/audacious/signals.c:265
-msgid ""
-"Your signaling implementation is broken.\n"
-"Expect unusable crash reports.\n"
-msgstr ""
-
-#: src/audacious/strings.c:170
-msgid "  (invalid UTF-8)"
-msgstr "  (n'eo ket mat UTF-8)"
-
-#: src/audacious/ui_about.c:44
+#: src/audacious/playback.c:381
 #, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team"
-msgstr ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Copyright (C) 2005-2007 Skipailh Audacious "
-
-#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:345
-#: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
-msgid "About Audacious"
-msgstr "Diwar-benn Audacious"
-
-#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:390
-msgid "Credits"
-msgstr "Garedon"
-
-#: src/audacious/ui_credits.c:45
-#, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"The future of UNIX multimedia.\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team\n"
+msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/ui_credits.c:51
+#: src/audacious/playback.c:531
 #, fuzzy
-msgid "Audacious core developers:"
-msgstr "/Dibaboù"
+msgid "Buffering ..."
+msgstr "Krubuilh"
 
-#: src/audacious/ui_credits.c:66
-msgid "Graphics:"
-msgstr "Grafikoù :"
-
-#: src/audacious/ui_credits.c:71
-msgid "Default skin:"
-msgstr "Default skin:"
-
-#: src/audacious/ui_credits.c:76
-msgid "Plugin development:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:89
-msgid "Patch authors:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:109
-msgid "0.1.x developers:"
-msgstr "Diorroerien 0.1.x :"
-
-#: src/audacious/ui_credits.c:115
-msgid "BMP Developers:"
-msgstr "Diorroerien BMP :"
-
-#: src/audacious/ui_credits.c:147
-msgid "Brazilian Portuguese:"
-msgstr "Portugaleg Brazil :"
-
-#: src/audacious/ui_credits.c:150
-msgid "Breton:"
-msgstr "Brezhoneg :"
-
-#: src/audacious/ui_credits.c:153
-msgid "Bulgarian:"
-msgstr "Bulgarek :"
-
-#: src/audacious/ui_credits.c:156
+#: src/audacious/playlist-new.c:303
 #, fuzzy
-msgid "Catalan:"
-msgstr "Italianeg :"
-
-#: src/audacious/ui_credits.c:159
-#, fuzzy
-msgid "Croatian:"
-msgstr "Lec'hiadur :"
-
-#: src/audacious/ui_credits.c:162
-msgid "Czech:"
-msgstr "Tchekek :"
-
-#: src/audacious/ui_credits.c:165
-msgid "Dutch:"
-msgstr "Nederlandeg :"
-
-#: src/audacious/ui_credits.c:169
-msgid "Finnish:"
-msgstr "Finnek :"
-
-#: src/audacious/ui_credits.c:172
-msgid "French:"
-msgstr "Galleg :"
-
-#: src/audacious/ui_credits.c:175
-msgid "German:"
-msgstr "Alamaned :"
-
-#: src/audacious/ui_credits.c:179
-msgid "Georgian:"
-msgstr "Jeorjiek :"
-
-#: src/audacious/ui_credits.c:182
-msgid "Greek:"
-msgstr "Gresian :"
-
-#: src/audacious/ui_credits.c:187
-msgid "Hindi:"
-msgstr "Hindi :"
-
-#: src/audacious/ui_credits.c:190
-msgid "Hungarian:"
-msgstr "Hungarek :"
-
-#: src/audacious/ui_credits.c:193
-msgid "Italian:"
-msgstr "Italianeg :"
-
-#: src/audacious/ui_credits.c:197
-msgid "Japanese:"
-msgstr "Japaneg :"
-
-#: src/audacious/ui_credits.c:200
-msgid "Korean:"
-msgstr "Koreeg :"
-
-#: src/audacious/ui_credits.c:203
-msgid "Lithuanian:"
-msgstr "Lituaneg :"
-
-#: src/audacious/ui_credits.c:206
-msgid "Macedonian:"
-msgstr "Makedonek :"
-
-#: src/audacious/ui_credits.c:209
-msgid "Polish:"
-msgstr "Poloneg :"
-
-#: src/audacious/ui_credits.c:212
-msgid "Romanian:"
-msgstr "Roumanek :"
-
-#: src/audacious/ui_credits.c:215
-msgid "Russian:"
-msgstr "Rusianeg :"
-
-#: src/audacious/ui_credits.c:218
-msgid "Serbian (Latin):"
-msgstr "Serbiek (latin) :"
-
-#: src/audacious/ui_credits.c:221
-msgid "Serbian (Cyrillic):"
-msgstr "Serbiek (lizherenneg ar ruseg) :"
-
-#: src/audacious/ui_credits.c:224
-msgid "Simplified Chinese:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:227
-msgid "Slovak:"
-msgstr "Slovek :"
-
-#: src/audacious/ui_credits.c:230
-msgid "Spanish:"
-msgstr "Spagnoleg :"
-
-#: src/audacious/ui_credits.c:233
-msgid "Swedish:"
-msgstr "Svedeg :"
-
-#: src/audacious/ui_credits.c:236
-msgid "Traditional Chinese:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:239
-msgid "Turkish:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:243
-msgid "Ukrainian:"
-msgstr "Ukrainiek :"
-
-#: src/audacious/ui_credits.c:246
-msgid "Welsh:"
-msgstr "Kembraeg :"
-
-#: src/audacious/ui_credits.c:394
-msgid "Translators"
-msgstr "Trelatourion "
-
-#: src/audacious/ui_equalizer.c:743
-msgid "Audacious Equalizer"
-msgstr ""
-
-#: src/audacious/ui_equalizer.c:1391
-msgid "Presets"
-msgstr ""
-
-#: src/audacious/ui_main.c:626
-#, c-format
-msgid "%s - Audacious"
-msgstr ""
-
-#: src/audacious/ui_main.c:851
-msgid "VBR"
-msgstr "VBR"
-
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
-msgid "stereo"
-msgstr "divouezh"
-
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
-msgid "mono"
-msgstr "unvouezh"
-
-#: src/audacious/ui_main.c:1328 src/audacious/ui_manager.c:414
-#: src/audacious/ui_manager.c:415
-msgid "Jump to Time"
-msgstr ""
-
-#: src/audacious/ui_main.c:1349
-msgid "minutes:seconds"
-msgstr ""
-
-#: src/audacious/ui_main.c:1359
-msgid "Track length:"
-msgstr "Hirder ar roudenn :"
-
-#: src/audacious/ui_main.c:1520
-msgid "Audacious - visibility warning"
-msgstr ""
-
-#: src/audacious/ui_main.c:1522
-#, fuzzy
-msgid "Show main player window"
-msgstr "Dibabit nodrezh prenestr kentañ ar soner :"
-
-#: src/audacious/ui_main.c:1523
-#, fuzzy
-msgid "Ignore"
-msgstr "hini ebet"
-
-#: src/audacious/ui_main.c:1527
-msgid ""
-"Audacious has been started with all of its windows hidden.\n"
-"You may want to show the player window again to control Audacious; "
-"otherwise, you'll have to control it remotely via audtool or enabled plugins "
-"(such as the statusicon plugin)."
-msgstr ""
-
-#: src/audacious/ui_main.c:1533
-msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
-
-#: src/audacious/ui_main.c:1551
-msgid "Enter location to play:"
-msgstr ""
-
-#: src/audacious/ui_main.c:1761
-#, c-format
-msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr ""
-
-#: src/audacious/ui_main.c:1793 src/audacious/ui_main.c:2418
-#, c-format
-msgid "VOLUME: %d%%"
-msgstr "NERZH : %d%%"
-
-#: src/audacious/ui_main.c:1824 src/audacious/ui_main.c:2421
-#, c-format
-msgid "BALANCE: %d%% LEFT"
-msgstr ""
-
-#: src/audacious/ui_main.c:1828 src/audacious/ui_main.c:2424
-msgid "BALANCE: CENTER"
-msgstr ""
-
-#: src/audacious/ui_main.c:1832 src/audacious/ui_main.c:2426
-#, c-format
-msgid "BALANCE: %d%% RIGHT"
-msgstr ""
-
-#: src/audacious/ui_main.c:2188
-msgid "OPTIONS MENU"
-msgstr ""
-
-#: src/audacious/ui_main.c:2192
-msgid "DISABLE ALWAYS ON TOP"
-msgstr ""
-
-#: src/audacious/ui_main.c:2194
-msgid "ENABLE ALWAYS ON TOP"
-msgstr ""
-
-#: src/audacious/ui_main.c:2197
-msgid "FILE INFO BOX"
-msgstr ""
-
-#: src/audacious/ui_main.c:2201
-msgid "DISABLE DOUBLESIZE"
-msgstr ""
-
-#: src/audacious/ui_main.c:2203
-msgid "ENABLE DOUBLESIZE"
-msgstr ""
-
-#: src/audacious/ui_main.c:2206
-msgid "VISUALIZATION MENU"
-msgstr ""
-
-#: src/audacious/ui_main.c:2252
-msgid ""
-"<b><big>No playable CD found.</big></b>\n"
-"\n"
-"No CD inserted, or inserted CD is not an audio CD.\n"
-msgstr ""
-
-#: src/audacious/ui_main.c:2269
-msgid ""
-"<b><big>Couldn't open audio.</big></b>\n"
-"\n"
-"Please check that:\n"
-"1. You have the correct output plugin selected.\n"
-"2. No other programs is blocking the soundcard.\n"
-"3. Your soundcard is configured properly.\n"
-msgstr ""
-
-#: src/audacious/ui_main.c:2876
-msgid "Error in Audacious."
-msgstr "Fazi e Audacious."
-
-#: src/audacious/ui_manager.c:43 src/audacious/ui_manager.c:44
-msgid "Autoscroll Songname"
-msgstr ""
-
-#: src/audacious/ui_manager.c:46 src/audacious/ui_manager.c:47
-msgid "Stop after Current Song"
-msgstr ""
-
-#: src/audacious/ui_manager.c:49 src/audacious/ui_manager.c:50
-#, fuzzy
-msgid "Peaks"
-msgstr "/Ehan"
-
-#: src/audacious/ui_manager.c:52 src/audacious/ui_manager.c:53
-msgid "Repeat"
-msgstr "Adseniñ"
-
-#: src/audacious/ui_manager.c:55 src/audacious/ui_manager.c:56
-msgid "Shuffle"
-msgstr "En dizurzh"
-
-#: src/audacious/ui_manager.c:58 src/audacious/ui_manager.c:59
-#, fuzzy
-msgid "No Playlist Advance"
-msgstr "/Roll tonioù"
-
-#: src/audacious/ui_manager.c:61 src/audacious/ui_manager.c:62
-msgid "Show Player"
-msgstr "Diskouez ar soner"
-
-#: src/audacious/ui_manager.c:64 src/audacious/ui_manager.c:65
-msgid "Show Playlist Editor"
-msgstr "Diskouez aozer ar roll tonioù"
-
-#: src/audacious/ui_manager.c:67 src/audacious/ui_manager.c:68
-#, fuzzy
-msgid "Show Equalizer"
-msgstr "_C'hoarier :"
-
-#: src/audacious/ui_manager.c:70 src/audacious/ui_manager.c:71
-msgid "Always on Top"
-msgstr ""
-
-#: src/audacious/ui_manager.c:73 src/audacious/ui_manager.c:74
-msgid "Put on All Workspaces"
-msgstr ""
-
-#: src/audacious/ui_manager.c:76 src/audacious/ui_manager.c:77
-#, fuzzy
-msgid "Roll up Player"
-msgstr "_C'hoarier :"
-
-#: src/audacious/ui_manager.c:79 src/audacious/ui_manager.c:80
-#, fuzzy
-msgid "Roll up Playlist Editor"
-msgstr "Aozer ar roll tonioù BMP"
-
-#: src/audacious/ui_manager.c:82 src/audacious/ui_manager.c:83
-msgid "Roll up Equalizer"
-msgstr ""
-
-#: src/audacious/ui_manager.c:85 src/audacious/ui_manager.c:86
-msgid "DoubleSize"
-msgstr ""
-
-#: src/audacious/ui_manager.c:88 src/audacious/ui_manager.c:89
-msgid "Easy Move"
-msgstr ""
-
-#: src/audacious/ui_manager.c:97
-msgid "Analyzer"
-msgstr "Arnoder"
-
-#: src/audacious/ui_manager.c:98
-#, fuzzy
-msgid "Scope"
-msgstr "/Plaenaozañ"
-
-#: src/audacious/ui_manager.c:99
-msgid "Voiceprint"
-msgstr "Voiceprint"
-
-#: src/audacious/ui_manager.c:100
-msgid "Off"
-msgstr "Lazhet"
-
-#: src/audacious/ui_manager.c:104 src/audacious/ui_manager.c:121
-#: src/audacious/ui_manager.c:127
-msgid "Normal"
-msgstr "Boas"
-
-#: src/audacious/ui_manager.c:105 src/audacious/ui_manager.c:122
-msgid "Fire"
-msgstr "Tan"
-
-#: src/audacious/ui_manager.c:106
-msgid "Vertical Lines"
-msgstr "Linennoù a-serzh"
-
-#: src/audacious/ui_manager.c:110
-msgid "Lines"
-msgstr "Linennoù"
-
-#: src/audacious/ui_manager.c:111
-msgid "Bars"
-msgstr "Barrennoù"
-
-#: src/audacious/ui_manager.c:115
-msgid "Dot Scope"
-msgstr ""
-
-#: src/audacious/ui_manager.c:116
-msgid "Line Scope"
-msgstr ""
-
-#: src/audacious/ui_manager.c:117
-msgid "Solid Scope"
-msgstr ""
-
-#: src/audacious/ui_manager.c:123
-msgid "Ice"
-msgstr ""
-
-#: src/audacious/ui_manager.c:128
-msgid "Smooth"
-msgstr "Flourañ"
-
-#: src/audacious/ui_manager.c:132
-msgid "Full (~50 fps)"
-msgstr ""
-
-#: src/audacious/ui_manager.c:133
-msgid "Half (~25 fps)"
-msgstr ""
-
-#: src/audacious/ui_manager.c:134
-msgid "Quarter (~13 fps)"
-msgstr ""
-
-#: src/audacious/ui_manager.c:135
-msgid "Eighth (~6 fps)"
-msgstr ""
-
-#: src/audacious/ui_manager.c:139 src/audacious/ui_manager.c:147
-msgid "Slowest"
-msgstr ""
-
-#: src/audacious/ui_manager.c:140 src/audacious/ui_manager.c:148
-msgid "Slow"
-msgstr "Gorrek"
-
-#: src/audacious/ui_manager.c:141 src/audacious/ui_manager.c:149
-msgid "Medium"
-msgstr "Krenn"
-
-#: src/audacious/ui_manager.c:142 src/audacious/ui_manager.c:150
-msgid "Fast"
-msgstr "Buan"
-
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
-msgid "Fastest"
-msgstr ""
-
-#: src/audacious/ui_manager.c:155
-msgid "Time Elapsed"
-msgstr ""
-
-#: src/audacious/ui_manager.c:156
-msgid "Time Remaining"
-msgstr ""
-
-#: src/audacious/ui_manager.c:165
-#, fuzzy
-msgid "Playback"
-msgstr "/Seniñ"
-
-#: src/audacious/ui_manager.c:167 src/audacious/ui_manager.c:168
-msgid "Play CD"
-msgstr "Seniñ ar CD"
-
-#: src/audacious/ui_manager.c:170 src/audacious/ui_manager.c:171
-msgid "Play"
-msgstr "Seniñ"
-
-#: src/audacious/ui_manager.c:173 src/audacious/ui_manager.c:174
-msgid "Pause"
-msgstr "Ehan"
-
-#: src/audacious/ui_manager.c:176 src/audacious/ui_manager.c:177
-msgid "Stop"
-msgstr "Paouez"
-
-#: src/audacious/ui_manager.c:179 src/audacious/ui_manager.c:180
-msgid "Previous"
-msgstr "Kent"
-
-#: src/audacious/ui_manager.c:182 src/audacious/ui_manager.c:183
-msgid "Next"
-msgstr "A heul"
-
-#: src/audacious/ui_manager.c:188
-#, fuzzy
-msgid "Visualization"
-msgstr "Aozadur :"
-
-#: src/audacious/ui_manager.c:189
-msgid "Visualization Mode"
-msgstr ""
-
-#: src/audacious/ui_manager.c:190
-msgid "Analyzer Mode"
-msgstr "Mod arnodiñ"
-
-#: src/audacious/ui_manager.c:191
-#, fuzzy
-msgid "Scope Mode"
-msgstr "/Plaenaozañ"
-
-#: src/audacious/ui_manager.c:192
-msgid "Voiceprint Mode"
-msgstr ""
-
-#: src/audacious/ui_manager.c:193
-msgid "WindowShade VU Mode"
-msgstr ""
-
-#: src/audacious/ui_manager.c:194
-msgid "Refresh Rate"
-msgstr "Feur freskaat"
-
-#: src/audacious/ui_manager.c:195
-msgid "Analyzer Falloff"
-msgstr ""
-
-#: src/audacious/ui_manager.c:196
-msgid "Peaks Falloff"
-msgstr ""
-
-#: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:106
-#: src/audacious/ui_playlist_manager.c:288
-#: src/audacious/glade/prefswin.glade:2494
-msgid "Playlist"
-msgstr "Roll tonioù"
-
-#: src/audacious/ui_manager.c:203 src/audacious/ui_manager.c:204
-msgid "New Playlist"
+msgid "Untitled Playlist"
 msgstr "Roll tonioù nevez"
 
-#: src/audacious/ui_manager.c:206 src/audacious/ui_manager.c:207
-msgid "Select Next Playlist"
-msgstr "Dibabit roll tonioù a-raok"
-
-#: src/audacious/ui_manager.c:209 src/audacious/ui_manager.c:210
-msgid "Select Previous Playlist"
-msgstr "Dibabit roll tonioù a-heul"
-
-#: src/audacious/ui_manager.c:212 src/audacious/ui_manager.c:213
-msgid "Delete Playlist"
-msgstr "Lemel ar roll tonioù :"
-
-#: src/audacious/ui_manager.c:215
-msgid "Load List"
-msgstr "Kargañ ar roll"
-
-#: src/audacious/ui_manager.c:216
-msgid "Loads a playlist file into the selected playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:218
-msgid "Save List"
-msgstr "Enrollañ ar roll"
-
-#: src/audacious/ui_manager.c:219
-msgid "Saves the selected playlist."
-msgstr "Enrollañ ar roll tonioù dibabet."
-
-#: src/audacious/ui_manager.c:221
-msgid "Save Default List"
-msgstr "Enrollañ ar roll dre ziouer"
-
-#: src/audacious/ui_manager.c:222
-msgid "Saves the selected playlist to the default location."
-msgstr ""
-
-#: src/audacious/ui_manager.c:225
-msgid "Refresh List"
-msgstr "Adtresañ ar roll"
-
-#: src/audacious/ui_manager.c:226
-msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
-
-#: src/audacious/ui_manager.c:229
-msgid "List Manager"
-msgstr "Merour rolloù"
-
-#: src/audacious/ui_manager.c:230
-msgid "Opens the playlist manager."
-msgstr "Digeriñ ar merour rolloù"
-
-#: src/audacious/ui_manager.c:236
-msgid "View"
-msgstr "Gwel"
-
-#: src/audacious/ui_manager.c:240
-msgid "Add CD..."
-msgstr "Ouzhpennañ ur CD ..."
-
-#: src/audacious/ui_manager.c:241
-msgid "Adds a CD to the playlist."
-msgstr "Ouzhpennañ a ra ur CD d'ar roll tonioù."
-
-#: src/audacious/ui_manager.c:244
-msgid "Add Internet Address..."
-msgstr "Ouzhpennañ uk lec'hiadur genrouedad ..."
-
-#: src/audacious/ui_manager.c:245
-msgid "Adds a remote track to the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:248
-msgid "Add Files..."
-msgstr "Ouzhpennañ ar restroù ..."
-
-#: src/audacious/ui_manager.c:249
-msgid "Adds files to the playlist."
-msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
-
-#: src/audacious/ui_manager.c:254
-msgid "Search and Select"
-msgstr "Klask ha dibab"
-
-#: src/audacious/ui_manager.c:255
-msgid ""
-"Searches the playlist and selects playlist entries based on specific "
-"criteria."
-msgstr ""
-
-#: src/audacious/ui_manager.c:258
-msgid "Invert Selection"
-msgstr "Eilpennañ an diuz"
-
-#: src/audacious/ui_manager.c:259
-msgid "Inverts the selected and unselected entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:262
-msgid "Select All"
-msgstr "Diuz an Holl"
-
-#: src/audacious/ui_manager.c:263
-msgid "Selects all of the playlist entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:266
-msgid "Select None"
-msgstr "Dibabit netra"
-
-#: src/audacious/ui_manager.c:267
-msgid "Deselects all of the playlist entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:272
-msgid "Clear Queue"
-msgstr "Goullonderiñ al lost"
-
-#: src/audacious/ui_manager.c:273
-msgid "Clears the queue associated with this playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:276
-msgid "Remove Unavailable Files"
-msgstr ""
-
-#: src/audacious/ui_manager.c:277
-msgid "Removes unavailable files from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:280
-msgid "Remove Duplicates"
-msgstr ""
-
-#: src/audacious/ui_manager.c:282 src/audacious/ui_manager.c:318
-#: src/audacious/ui_manager.c:348
-msgid "By Title"
-msgstr "Dre titl"
-
-#: src/audacious/ui_manager.c:283
-msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
-
-#: src/audacious/ui_manager.c:286 src/audacious/ui_manager.c:326
-#: src/audacious/ui_manager.c:356
-msgid "By Filename"
-msgstr "Dre anv"
-
-#: src/audacious/ui_manager.c:287
-msgid "Removes duplicate entries from the playlist by filename."
-msgstr ""
-
-#: src/audacious/ui_manager.c:290 src/audacious/ui_manager.c:330
-#: src/audacious/ui_manager.c:360
-msgid "By Path + Filename"
-msgstr "Dre anv hag hent"
-
-#: src/audacious/ui_manager.c:291
-msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
-
-#: src/audacious/ui_manager.c:294
-msgid "Remove All"
-msgstr "Lemel an holl re"
-
-#: src/audacious/ui_manager.c:295
-msgid "Removes all entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:298
-msgid "Remove Unselected"
-msgstr ""
-
-#: src/audacious/ui_manager.c:299
-msgid "Remove unselected entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:302
-msgid "Remove Selected"
-msgstr "Lemel an hini dibabet"
-
-#: src/audacious/ui_manager.c:303
-msgid "Remove selected entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:308
-msgid "Randomize List"
-msgstr ""
-
-#: src/audacious/ui_manager.c:309
-#, fuzzy
-msgid "Randomizes the playlist."
-msgstr "Ne c'houllonderit ket ar roll tonioù"
-
-#: src/audacious/ui_manager.c:312
-msgid "Reverse List"
-msgstr "Eilpennañ ar roll"
-
-#: src/audacious/ui_manager.c:313
-msgid "Reverses the playlist."
-msgstr "Eilpennañ ar roll tonioù"
-
-#: src/audacious/ui_manager.c:316
-#, fuzzy
-msgid "Sort List"
-msgstr "Arzour"
-
-#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
-msgid "Sorts the list by title."
-msgstr ""
-
-#: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
-msgid "By Artist"
-msgstr "Dre arzour"
-
-#: src/audacious/ui_manager.c:323 src/audacious/ui_manager.c:353
-#, fuzzy
-msgid "Sorts the list by artist."
-msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
-
-#: src/audacious/ui_manager.c:327 src/audacious/ui_manager.c:357
-msgid "Sorts the list by filename."
-msgstr ""
-
-#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
-msgid "Sorts the list by full pathname."
-msgstr ""
-
-#: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
-msgid "By Date"
-msgstr "Evit Deiziad"
-
-#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
-msgid "Sorts the list by modification time."
-msgstr ""
-
-#: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
-msgid "By Track Number"
-msgstr "Dre niverenn roudenn"
-
-#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
-#, fuzzy
-msgid "Sorts the list by track number."
-msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
-
-#: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
-#, fuzzy
-msgid "By Playlist Entry"
-msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
-
-#: src/audacious/ui_manager.c:343 src/audacious/ui_manager.c:373
-#, fuzzy
-msgid "Sorts the list by playlist entry."
-msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
-
-#: src/audacious/ui_manager.c:346
-#, fuzzy
-msgid "Sort Selected"
-msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
-
-#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
-#, fuzzy
-msgid "View Track Details"
-msgstr "/Sellout ouzh titouroù war ar roudenn"
-
-#: src/audacious/ui_manager.c:382 src/audacious/ui_manager.c:385
-#, fuzzy
-msgid "View track details"
-msgstr "/Sellout ouzh titouroù war ar roudenn"
-
-#: src/audacious/ui_manager.c:390
-msgid "Play File"
-msgstr "Seniñ ur restr"
-
-#: src/audacious/ui_manager.c:391
-#, fuzzy
-msgid "Load and play a file"
-msgstr "/Kargañ/Eus ar restr"
-
-#: src/audacious/ui_manager.c:393
-msgid "Play Location"
-msgstr "Seniñ al lec'hiadur"
-
-#: src/audacious/ui_manager.c:394
-msgid "Play media from the selected location"
-msgstr ""
-
-#: src/audacious/ui_manager.c:396
-msgid "Preferences"
-msgstr "Dibaboù"
-
-#: src/audacious/ui_manager.c:397
-msgid "Open preferences window"
-msgstr "Prenestr dibaboù digeriñ"
-
-#: src/audacious/ui_manager.c:399
-msgid "_Quit"
-msgstr "_Kuitaat"
-
-#: src/audacious/ui_manager.c:400
-msgid "Quit Audacious"
-msgstr "Kuitaat Audacious"
-
-#: src/audacious/ui_manager.c:402 src/audacious/ui_manager.c:403
-msgid "Set A-B"
-msgstr "Lakaat A-B"
-
-#: src/audacious/ui_manager.c:405 src/audacious/ui_manager.c:406
-msgid "Clear A-B"
-msgstr "Goullonderiñ A-B"
-
-#: src/audacious/ui_manager.c:408 src/audacious/ui_manager.c:409
-msgid "Jump to Playlist Start"
-msgstr "Lamat da zeroù ar roll tonioù"
-
-#: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
-msgid "Jump to File"
-msgstr "Lammat d'ar restr"
-
-#: src/audacious/ui_manager.c:417
-msgid "Queue Toggle"
-msgstr ""
-
-#: src/audacious/ui_manager.c:418
-msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
-
-#: src/audacious/ui_manager.c:425
-msgid "Load"
-msgstr "Kargañ"
-
-#: src/audacious/ui_manager.c:426
-msgid "Import"
-msgstr "Enporzh"
-
-#: src/audacious/ui_manager.c:427
-msgid "Save"
-msgstr "Enrollañ"
-
-#: src/audacious/ui_manager.c:428
-msgid "Delete"
-msgstr "Dilemel"
-
-#: src/audacious/ui_manager.c:430 src/audacious/ui_manager.c:451
-#: src/audacious/ui_manager.c:466
-msgid "Preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:431
-msgid "Load preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:433 src/audacious/ui_manager.c:454
-#: src/audacious/ui_manager.c:469
-msgid "Auto-load preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:434
-msgid "Load auto-load preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
-msgid "Default"
-msgstr "Dre ziouer"
-
-#: src/audacious/ui_manager.c:437
-msgid "Load default preset into equalizer"
-msgstr ""
-
-#: src/audacious/ui_manager.c:439
-msgid "Zero"
-msgstr "Mann"
-
-#: src/audacious/ui_manager.c:440
-msgid "Set equalizer preset levels to zero"
-msgstr ""
-
-#: src/audacious/ui_manager.c:442
-msgid "From file"
-msgstr "Eus ar restr"
-
-#: src/audacious/ui_manager.c:443
-#, fuzzy
-msgid "Load preset from file"
-msgstr "/Kargañ/Eus ar restr"
-
-#: src/audacious/ui_manager.c:445
-msgid "From WinAMP EQF file"
-msgstr "Eus ar restr WinAMP EQF"
-
-#: src/audacious/ui_manager.c:446
-#, fuzzy
-msgid "Load preset from WinAMP EQF file"
-msgstr "/Kargañ/Eus ar restr WinAMP EQF"
-
-#: src/audacious/ui_manager.c:448
-msgid "WinAMP Presets"
-msgstr ""
-
-#: src/audacious/ui_manager.c:449
-msgid "Import WinAMP presets"
-msgstr ""
-
-#: src/audacious/ui_manager.c:452
-msgid "Save preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:455
-msgid "Save auto-load preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:458
-#, fuzzy
-msgid "Save default preset"
-msgstr "/Enrollañ/Dre ziouer"
-
-#: src/audacious/ui_manager.c:460
-msgid "To file"
-msgstr "D'ar restr"
-
-#: src/audacious/ui_manager.c:461
-#, fuzzy
-msgid "Save preset to file"
-msgstr "Enrollañ al lanv d'ar bladenn"
-
-#: src/audacious/ui_manager.c:463
-msgid "To WinAMP EQF file"
-msgstr "D'ar restr WinAMP EQF"
-
-#: src/audacious/ui_manager.c:464
-#, fuzzy
-msgid "Save preset to WinAMP EQF file"
-msgstr "/Enrollañ/D'ar restr WinAMP EQF"
-
-#: src/audacious/ui_manager.c:467
-msgid "Delete preset"
-msgstr ""
-
-#: src/audacious/ui_manager.c:470
-msgid "Delete auto-load preset"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1363
-msgid "Appearance"
-msgstr "Neuziadur"
-
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:88
 msgid "Audio"
 msgstr "Son"
 
-#: src/audacious/ui_preferences.c:103
-msgid "Connectivity"
+#: src/audacious/ui_preferences.c:89
+msgid "Replay Gain"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:104 src/audacious/glade/prefswin.glade:2862
-msgid "Equalizer"
-msgstr "Kehidañ"
+#: src/audacious/ui_preferences.c:90
+msgid "Network"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:105 src/audacious/glade/prefswin.glade:1642
-msgid "Mouse"
-msgstr "Logodenn"
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
+msgid "Playlist"
+msgstr "Roll tonioù"
 
-#: src/audacious/ui_preferences.c:107 src/audacious/glade/prefswin.glade:693
+#: src/audacious/ui_preferences.c:92
 msgid "Plugins"
 msgstr "Lugentoù"
 
-#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:254
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
 msgid "Artist"
 msgstr "Arzour"
 
-#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:257
-#: src/audacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
 msgid "Album"
 msgstr "Albom"
 
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:251
-#: src/audacious/ui_fileinfopopup.c:361
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
+#: src/libaudgui/ui_playlist_manager.c:247
 msgid "Title"
 msgstr "Titl"
 
-#: src/audacious/ui_preferences.c:116
+#: src/audacious/ui_preferences.c:101
 msgid "Tracknumber"
 msgstr "Niverennroudenn"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:260
-#: src/audacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
 msgid "Genre"
 msgstr "Rumm"
 
-#: src/audacious/ui_preferences.c:118 src/audacious/ui_preferences.c:486
-#: src/audacious/ui_preferences.c:574 src/audacious/ui_preferences.c:663
-#: src/audacious/ui_preferences.c:759 src/audacious/ui_fileinfopopup.c:370
+#: src/audacious/ui_preferences.c:103
 msgid "Filename"
 msgstr "Anv ar restr"
 
-#: src/audacious/ui_preferences.c:119
+#: src/audacious/ui_preferences.c:104
 msgid "Filepath"
 msgstr "Hent ar restr"
 
-#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:387
+#: src/audacious/ui_preferences.c:105
 msgid "Date"
 msgstr "Deiziad"
 
-#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:263
-#: src/audacious/titlestring.c:388
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
 msgid "Year"
 msgstr "Bloavezh"
 
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:389
+#: src/audacious/ui_preferences.c:107
 msgid "Comment"
 msgstr "Askelenn"
 
-#: src/audacious/ui_preferences.c:143
-msgid "localhost"
-msgstr "localhost"
+#: src/audacious/ui_preferences.c:108
+#, fuzzy
+msgid "Codec"
+msgstr "/Serriñ"
 
-#: src/audacious/ui_preferences.c:456 src/audacious/ui_preferences.c:543
-#: src/audacious/ui_preferences.c:632 src/audacious/ui_preferences.c:728
-msgid "Enabled"
-msgstr "Bev"
+#: src/audacious/ui_preferences.c:109
+#, fuzzy
+msgid "Quality"
+msgstr "/_Kuitaat"
 
-#: src/audacious/ui_preferences.c:472 src/audacious/ui_preferences.c:559
-#: src/audacious/ui_preferences.c:648 src/audacious/ui_preferences.c:744
-msgid "Description"
-msgstr "Deskrivadur"
+#: src/audacious/ui_preferences.c:114
+msgid "None"
+msgstr "Hini ebet"
 
-#: src/audacious/ui_preferences.c:1878
-msgid "Category"
+#: src/audacious/ui_preferences.c:115
+#, fuzzy
+msgid "Japanese"
+msgstr "Japaneg :"
+
+#: src/audacious/ui_preferences.c:116
+#, fuzzy
+msgid "Taiwanese"
+msgstr "Japaneg :"
+
+#: src/audacious/ui_preferences.c:117
+#, fuzzy
+msgid "Chinese"
+msgstr "Sineg :"
+
+#: src/audacious/ui_preferences.c:118
+#, fuzzy
+msgid "Korean"
+msgstr "Koreeg :"
+
+#: src/audacious/ui_preferences.c:119
+#, fuzzy
+msgid "Russian"
+msgstr "Rusianeg :"
+
+#: src/audacious/ui_preferences.c:120
+#, fuzzy
+msgid "Greek"
+msgstr "Gresian :"
+
+#: src/audacious/ui_preferences.c:121
+msgid "Hebrew"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:122
+msgid "Turkish"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:123
+msgid "Arabic"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:124
+#, fuzzy
+msgid "Polish"
+msgstr "Poloneg :"
+
+#: src/audacious/ui_preferences.c:125
+#, fuzzy
+msgid "Baltic"
+msgstr "Keltiek"
+
+#: src/audacious/ui_preferences.c:126
+#, fuzzy
+msgid "Universal"
 msgstr "Rumm"
 
-#: src/audacious/ui_preferences.c:2462
-msgid "Preferences Window"
-msgstr "Prenestr ar gefluniadur"
-
-#: src/audacious/ui_skinselector.c:176
-msgid "Archived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_skinselector.c:181
-msgid "Unarchived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_fileinfo.c:160
-msgid "Track Information Window"
-msgstr ""
-
-#: src/audacious/ui_fileinfopopup.c:266
+#: src/audacious/ui_preferences.c:146
 #, fuzzy
-msgid "Track Number"
-msgstr "Niverenn ar roudenn"
-
-#: src/audacious/ui_fileinfopopup.c:270
-#, fuzzy
-msgid "Track Length"
-msgstr "Hirder ar roudenn :"
-
-#: src/audacious/ui_fileopener.c:129
-msgid "Open Files"
-msgstr "Restroù digor"
-
-#: src/audacious/ui_fileopener.c:129
-msgid "Add Files"
-msgstr "Ouzhpennañ Restroù"
-
-#: src/audacious/ui_fileopener.c:131
-msgid "Close dialog on Open"
-msgstr ""
-
-#: src/audacious/ui_fileopener.c:131
-msgid "Close dialog on Add"
-msgstr ""
-
-#: src/audacious/ui_fileopener.c:356
-msgid "Play files"
-msgstr "Seniñ Restroù"
-
-#: src/audacious/ui_fileopener.c:358
-#, fuzzy
-msgid "Load files"
-msgstr "/Kargañ/Eus ar restr"
-
-#: src/audacious/ui_playlist.c:483
-#, fuzzy
-msgid "Search entries in active playlist"
-msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
-
-#: src/audacious/ui_playlist.c:489
-msgid ""
-"Select entries in playlist by filling one or more fields. Fields use regular "
-"expressions syntax, case-insensitive. If you don't know how regular "
-"expressions work, simply insert a literal portion of what you're searching "
-"for."
-msgstr ""
-
-#: src/audacious/ui_playlist.c:496
-msgid "Track name: "
-msgstr "Anv ar roudenn : "
-
-#: src/audacious/ui_playlist.c:502
-msgid "Album name: "
-msgstr "Anv an albom :"
-
-#: src/audacious/ui_playlist.c:508
-msgid "Artist: "
-msgstr "Arzour : "
-
-#: src/audacious/ui_playlist.c:514
-msgid "Filename: "
-msgstr "Anv ar restr : "
-
-#: src/audacious/ui_playlist.c:521
-msgid "Clear previous selection before searching"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:524
-msgid "Automatically toggle queue for matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:527
-msgid "Create a new playlist with matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:777
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "Fazi en ur skrivañ ar roll tonioù « %s » : %s"
-
-#: src/audacious/ui_playlist.c:799
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:814
-#, c-format
-msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:966
-msgid "Load Playlist"
-msgstr "Kargañ ar roll tonioù"
-
-#: src/audacious/ui_playlist.c:979
-msgid "Save Playlist"
-msgstr "Enrollañ ar roll tonioù"
-
-#: src/audacious/ui_playlist.c:1690
-msgid "Audacious Playlist Editor"
-msgstr "Aozer ar roll tonioù Audacious"
-
-#: src/audacious/ui_urlopener.c:90
-msgid "Add/Open URL Dialog"
-msgstr "Prenestr Ouzhpennañ/Digeriñ URL"
-
-#: src/audacious/ui_playlist_manager.c:253
-#, fuzzy
-msgid "Playlist Manager"
-msgstr "/Roll tonioù"
-
-#: src/audacious/ui_playlist_manager.c:292
-msgid "Entries"
-msgstr "Bouetaduroù"
-
-#: src/audacious/ui_playlist_manager.c:306
-msgid "_Rename"
-msgstr "_Adenvel"
-
-#: src/audacious/ui_jumptotrack.c:134
-msgid "Un_queue"
-msgstr "Di_lost"
-
-#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:573
-msgid "_Queue"
-msgstr "_Lost"
-
-#: src/audacious/ui_jumptotrack.c:498
-msgid "Jump to Track"
-msgstr "Lammat d'ar roudenn"
-
-#: src/audacious/ui_jumptotrack.c:539
-msgid "Filter: "
-msgstr "Sil : "
-
-#: src/audacious/ui_jumptotrack.c:540
-msgid "_Filter:"
-msgstr "_Sil : "
-
-#: src/audacious/playback.c:171
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
-msgstr ""
-
-#: src/audacious/titlestring.c:379
-msgid "Performer/Artist"
-msgstr "Arzour"
-
-#: src/audacious/titlestring.c:382
-msgid "File name"
-msgstr "Anv ar restr"
-
-#: src/audacious/titlestring.c:383
-msgid "File path"
-msgstr "Hent ar restr"
-
-#: src/audacious/titlestring.c:384
-msgid "File extension"
-msgstr "Astenn ar restr"
-
-#: src/audacious/titlestring.c:385
-msgid "Track name"
-msgstr "Anv ar roudenn"
-
-#: src/audacious/titlestring.c:386
-msgid "Track number"
-msgstr "Niverenn ar roudenn"
-
-#: src/audacious/titlestring.c:449
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr ""
-
-#: src/audacious/glade/fileinfo.glade:8
-msgid "Track Information"
-msgstr "Titouroù diwar-benn ar roudenn"
-
-#: src/audacious/glade/fileinfo.glade:81
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Titl</span>"
-
-#: src/audacious/glade/fileinfo.glade:139
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Arzour</span>"
-
-#: src/audacious/glade/fileinfo.glade:197
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Albom</span>"
-
-#: src/audacious/glade/fileinfo.glade:255
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Askelenn</span>"
-
-#: src/audacious/glade/fileinfo.glade:313
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Rumm</span>"
-
-#: src/audacious/glade/fileinfo.glade:392
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Bloaz</span>"
-
-#: src/audacious/glade/fileinfo.glade:441
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Niver ar roudenn</span>"
-
-#: src/audacious/glade/fileinfo.glade:499
-#, fuzzy
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"xx-large\"><b>Logodenn</b></span>"
-
-#: src/audacious/glade/prefswin.glade:8
-msgid "Audacious Preferences"
-msgstr "Dibaboù Audacious"
-
-#: src/audacious/glade/prefswin.glade:115
-msgid "_Decoder list:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:219
-#, fuzzy
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"xx-large\"><b>Logodenn</b></span>"
-
-#: src/audacious/glade/prefswin.glade:261
-msgid "_General plugin list:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:365
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:407
-msgid "_Visualization plugin list:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:511
-msgid "<b>Visualization</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:553
-msgid "_Effect plugin list:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:657
-msgid "<b>Effects</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:746
-msgid "<b>_Skin</b>"
-msgstr "<b>_Kroc'hen</b>"
-
-#: src/audacious/glade/prefswin.glade:799
-msgid "Refresh skin list"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:893
-msgid "<b>_Fonts</b>"
-msgstr "<b>_Nodrezhoù</b>"
-
-#: src/audacious/glade/prefswin.glade:948
-msgid "_Player:"
-msgstr "_C'hoarier :"
-
-#: src/audacious/glade/prefswin.glade:991
-msgid "_Playlist:"
-msgstr "_Roll tonioù :"
-
-#: src/audacious/glade/prefswin.glade:1023
-msgid "Select main player window font:"
-msgstr "Dibabit nodrezh prenestr kentañ ar soner :"
-
-#: src/audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1093
-msgid "Use Bitmap fonts if available"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1127
-msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_A bep seurt</b>"
-
-#: src/audacious/glade/prefswin.glade:1175
-msgid "Show track numbers in playlist"
-msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
-
-#: src/audacious/glade/prefswin.glade:1210
-#, fuzzy
-msgid "Show separators in playlist"
-msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
-
-#: src/audacious/glade/prefswin.glade:1245
-msgid "Use custom cursors"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1279
-#: src/audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1281
-msgid "Show window manager decoration"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1289
-msgid "Show window manager decorations"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1321
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1410
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>Rodell al logodenn</b>"
-
-#: src/audacious/glade/prefswin.glade:1458
-msgid "Changes volume by"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1486
-msgid "percent"
-msgstr "dre gant"
-
-#: src/audacious/glade/prefswin.glade:1514
-#, fuzzy
-msgid "Scrolls playlist by"
-msgstr "Kargañ ar roll tonioù"
-
-#: src/audacious/glade/prefswin.glade:1567
-msgid "lines"
-msgstr "linennoù"
-
-#: src/audacious/glade/prefswin.glade:1689
-msgid "<b>Filename</b>"
+msgid "<b>Bit Depth</b>"
 msgstr "<b>Anv ar restr</b>"
 
-#: src/audacious/glade/prefswin.glade:1729
-msgid "Convert underscores to blanks"
+#: src/audacious/ui_preferences.c:147
+msgid "Output bit depth:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1764
-msgid "Convert %20 to blanks"
+#: src/audacious/ui_preferences.c:148
+msgid ""
+"All streams will be converted to this bit depth.\n"
+"This should be the max supported bit depth of\n"
+"the sound card or output plugin."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1799
-msgid "Convert backslash '\\' to forward slash '/'"
+#: src/audacious/ui_preferences.c:151
+#, fuzzy
+msgid "<b>Volume Control</b>"
+msgstr "<b>_Nodrezhoù</b>"
+
+#: src/audacious/ui_preferences.c:152
+msgid "Use software volume control"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1833
-msgid "<b>Metadata</b>"
+#: src/audacious/ui_preferences.c:154
+msgid ""
+"Use software volume control. This may be useful for situations where your "
+"audio system does not support controlling the playback volume."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:158
+msgid "Amplify all files:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:159 src/audacious/ui_preferences.c:161
+msgid "dB"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:160
+msgid "Amplify untagged files:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:164
+#, fuzzy
+msgid "<b>Replay Gain</b>"
+msgstr "<b>Anv ar restr</b>"
+
+#: src/audacious/ui_preferences.c:165
+msgid "Enable Replay Gain"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:167
+#, fuzzy
+msgid "<b>Mode</b>"
 msgstr "<b>Meta-roadoù</b>"
 
-#: src/audacious/glade/prefswin.glade:1872
-msgid "Load metadata (tag information) from music files."
+#: src/audacious/ui_preferences.c:168
+#, fuzzy
+msgid "Single track mode"
+msgstr "/Sellout ouzh titouroù war ar roudenn"
+
+#: src/audacious/ui_preferences.c:170
+#, fuzzy
+msgid "Album mode"
+msgstr "Anv an albom :"
+
+#: src/audacious/ui_preferences.c:172
+#, fuzzy
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>Rodell al logodenn</b>"
+
+#: src/audacious/ui_preferences.c:175
+#, fuzzy
+msgid "<b>Clipping Prevention</b>"
+msgstr "Kefluniadur al lugent MPEG son"
+
+#: src/audacious/ui_preferences.c:176
+msgid "Enable clipping prevention"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1874
-msgid "Load metadata from playlists and files"
+#: src/audacious/ui_preferences.c:180
+msgid "Proxy hostname:"
+msgstr "Anv ostiz ar proksi :"
+
+#: src/audacious/ui_preferences.c:181
+msgid "Proxy port:"
+msgstr "Porzh ar proksi :"
+
+#: src/audacious/ui_preferences.c:185
+msgid "Proxy username:"
+msgstr "Anv arveriad ar proksi :"
+
+#: src/audacious/ui_preferences.c:186
+msgid "Proxy password:"
+msgstr "Tremenger ar proksi :"
+
+#: src/audacious/ui_preferences.c:190
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Kefluniadur ar proksi</b>"
+
+#: src/audacious/ui_preferences.c:191
+msgid "Enable proxy usage"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1912
-msgid "Load metadata when adding the file to the playlist or opening it"
+#: src/audacious/ui_preferences.c:194
+#, fuzzy
+msgid "Use authentication with proxy"
+msgstr "Implijit dilesadur"
+
+#: src/audacious/ui_preferences.c:197
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1914
-msgid "On load"
+#: src/audacious/ui_preferences.c:201
+msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1934
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1936
-msgid "On display"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1966
+#: src/audacious/ui_preferences.c:209
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1994
+#: src/audacious/ui_preferences.c:209
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1729,369 +590,1790 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:2035
-msgid "Auto character encoding detector for:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2091
-msgid "<b>File Dialog</b>"
-msgstr "<b>Prenestr restr</b>"
-
-#: src/audacious/glade/prefswin.glade:2130
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2132
-msgid "Always refresh directory when opening file dialog"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2166
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
-msgid "<b>Song Display</b>"
-msgstr "<b>_Nodrezhoù</b>"
+msgid "<b>Behavior</b>"
+msgstr "<b>Anv ar restr</b>"
 
-#: src/audacious/glade/prefswin.glade:2214
-msgid "Title format:"
-msgstr "Furmad an titl :"
-
-#: src/audacious/glade/prefswin.glade:2242
-msgid "Custom string:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2293
-#, fuzzy
-msgid ""
-"TITLE\n"
-"ARTIST - TITLE\n"
-"ARTIST - ALBUM - TITLE\n"
-"ARTIST - ALBUM - TRACK. TITLE\n"
-"ARTIST [ ALBUM ] - TRACK. TITLE\n"
-"ALBUM - TITLE\n"
-"Custom"
-msgstr ""
-"TITL\n"
-"ARZOUR - TITL\n"
-"ARZOUR - ALBOM - TITL\n"
-"ALBOM - TITL\n"
-"Diouzhoc'h"
-
-#: src/audacious/glade/prefswin.glade:2315
-msgid "Show information about titlestring format"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2365
-#, fuzzy
-msgid "<b>Popup Information</b>"
-msgstr "Kefluniadur al lugent MPEG son"
-
-#: src/audacious/glade/prefswin.glade:2416
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2418
-msgid "Show popup information for playlist entries"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2445
-msgid "Edit settings for popup information"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2553
-msgid "<b>Presets</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2653
-msgid "Directory preset file:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2681
-msgid "File preset extension:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2729
-msgid "Available _Presets:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2909
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Kefluniadur ar proksi</b>"
-
-#: src/audacious/glade/prefswin.glade:2967
-msgid "Enable proxy usage"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2998
-msgid "Proxy hostname:"
-msgstr "Anv ostiz ar proksi :"
-
-#: src/audacious/glade/prefswin.glade:3026
-msgid "Proxy port:"
-msgstr "Porzh ar proksi :"
-
-#: src/audacious/glade/prefswin.glade:3120
-#, fuzzy
-msgid "Use authentication with proxy"
-msgstr "Implijit dilesadur"
-
-#: src/audacious/glade/prefswin.glade:3151
-msgid "Proxy username:"
-msgstr "Anv arveriad ar proksi :"
-
-#: src/audacious/glade/prefswin.glade:3179
-msgid "Proxy password:"
-msgstr "Tremenger ar proksi :"
-
-#: src/audacious/glade/prefswin.glade:3295
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3419
-msgid "<b>Audio System</b>"
-msgstr "<b>Reiziad klevet</b>"
-
-#: src/audacious/glade/prefswin.glade:3473
-msgid "Current output plugin:"
-msgstr "Lugent ezkas red :"
-
-#: src/audacious/glade/prefswin.glade:3541
-msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping. \n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3571
-msgid "Buffer size:"
-msgstr "Ment ar skurzer :"
-
-#: src/audacious/glade/prefswin.glade:3695
-msgid "Output Plugin Preferences"
-msgstr "Dibaboù al lugent ezkas"
-
-#: src/audacious/glade/prefswin.glade:3770
-msgid "Output Plugin Information"
-msgstr "Titouroù war al lugent ezkas"
-
-#: src/audacious/glade/prefswin.glade:3822
-msgid "<b>Format Detection</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3861
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3863
-msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3897
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3899
-msgid "Detect file formats by extension."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3933
-msgid "<b>Playback</b>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3972
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3974
+#: src/audacious/ui_preferences.c:214
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4008
-msgid "When finished playing a song, don't automatically advance to the next."
+#: src/audacious/ui_preferences.c:216
+msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4010
-msgid "Don't advance in the playlist"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4045
-msgid "Pause between songs"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4083
-msgid "Pause for"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4129
-msgid "seconds"
-msgstr "eilennoù"
-
-#: src/audacious/glade/prefswin.glade:4175
+#: src/audacious/ui_preferences.c:218
 #, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "<b>Anv ar restr</b>"
+msgid "Clear the playlist when opening files"
+msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
 
-#: src/audacious/glade/prefswin.glade:4215
-msgid "Enable Sampling Rate Converter"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4264
-msgid "Sampling Rate [Hz]:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4334
-msgid ""
-"<span size=\"small\">All stream will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4392
-msgid ""
-"SRC_SINC_BEST_QUALITY\n"
-"SRC_SINC_MEDIUM_QUALITY\n"
-"SRC_SINC_FASTEST\n"
-"SRC_ZERO_ORDER_HOLD\n"
-"SRC_LINEAR"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4593
+#: src/audacious/ui_preferences.c:220
 #, fuzzy
-msgid "Reload Plugins"
-msgstr "Lugentoù"
+msgid "Open files in a temporary playlist"
+msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
 
-#: src/audacious/glade/prefswin.glade:4654
+#: src/audacious/ui_preferences.c:222
+msgid "<b>Metadata</b>"
+msgstr "<b>Meta-roadoù</b>"
+
+#: src/audacious/ui_preferences.c:501
+msgid "Category"
+msgstr "Rumm"
+
+#: src/audacious/ui_preferences.c:815
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "Kefluniadur al lugent MPEG son"
 
-#: src/audacious/glade/prefswin.glade:4678
+#: src/audacious/ui_preferences.c:824
 msgid "<b>Cover image retrieve</b>"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4703
+#: src/audacious/ui_preferences.c:829
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4758
-msgid "Include:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4786
+#: src/audacious/ui_preferences.c:846
 msgid "Exclude:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4855
+#: src/audacious/ui_preferences.c:853
+msgid "Include:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:870
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4893
+#: src/audacious/ui_preferences.c:880
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4959
+#: src/audacious/ui_preferences.c:894
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4979
+#: src/audacious/ui_preferences.c:897
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_A bep seurt</b>"
 
-#: src/audacious/glade/prefswin.glade:5017
+#: src/audacious/ui_preferences.c:906
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5055
+#: src/audacious/ui_preferences.c:916
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5149
-msgid "Color Adjustment"
+#: src/audacious/ui_preferences.c:1459
+#, fuzzy
+msgid "<b>Song Display</b>"
+msgstr "<b>_Nodrezhoù</b>"
+
+#: src/audacious/ui_preferences.c:1468
+msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5172
+#: src/audacious/ui_preferences.c:1479
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1501
+msgid "Show information about titlestring format"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1514
+msgid "TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1515
+msgid "ARTIST - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1516
+msgid "ARTIST - ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1517
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1518
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1519
+msgid "ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1520
+msgid "Custom"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1527
+msgid "Custom string:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1534
+msgid "Title format:"
+msgstr "Furmad an titl :"
+
+#: src/audacious/ui_preferences.c:1545
+#, fuzzy
+msgid "<b>Popup Information</b>"
+msgstr "Kefluniadur al lugent MPEG son"
+
+#: src/audacious/ui_preferences.c:1560
+msgid "Show popup information for playlist entries"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1562
 msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5268
-msgid "Red"
-msgstr "Ar re ruz"
+#: src/audacious/ui_preferences.c:1568
+msgid "Edit settings for popup information"
+msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5296
-msgid "Green"
-msgstr "Gwer"
+#: src/audacious/ui_preferences.c:1698
+msgid "<b>Audio System</b>"
+msgstr "<b>Reiziad klevet</b>"
 
-#: src/audacious/glade/prefswin.glade:5324
-msgid "Blue"
+#: src/audacious/ui_preferences.c:1715
+msgid "Buffer size:"
+msgstr "Ment ar skurzer :"
+
+#: src/audacious/ui_preferences.c:1734
+msgid "Current output plugin:"
+msgstr "Lugent ezkas red :"
+
+#: src/audacious/ui_preferences.c:1790
+#, fuzzy
+msgid "Transport"
+msgstr "Trelatourion "
+
+#: src/audacious/ui_preferences.c:1790
+msgid "Input"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1791
+msgid "Effect"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1791
+#, fuzzy
+msgid "Visualization"
+msgstr "Aozadur :"
+
+#: src/audacious/ui_preferences.c:1791
+msgid "General"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1831
+msgid "Audacious Preferences"
+msgstr "Dibaboù Audacious"
+
+#: src/audacious/util.c:161
+#, c-format
+msgid "Could not create directory (%s): %s\n"
+msgstr "N'hell ket bet krouet ar renkell (%s) : %s\n"
+
+#: src/audtool/handlers_playlist.c:248
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
+
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr "Unvouezh"
+
+#: src/libaudcore/tuple.c:687
+#, fuzzy
+msgid "Stereo"
+msgstr "divouezh"
+
+#: src/libaudcore/tuple.c:689
+#, fuzzy, c-format
+msgid "%d channel"
+msgid_plural "%d channels"
+msgstr[0] "Kanolioù :"
+msgstr[1] "Kanolioù :"
+
+#: src/libaudgui/confirm.c:66
+#, c-format
+msgid ""
+"Are you sure you want to close %s?  If you do, any changes made since the "
+"playlist was exported will be lost."
+msgstr ""
+
+#: src/libaudgui/confirm.c:79
+msgid "_Don't show this message again"
+msgstr ""
+
+#: src/libaudgui/confirm.c:117
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "Enrollañ ar roll tonioù"
+
+#: src/libaudgui/effects-menu.c:76
+#, fuzzy
+msgid "settings ..."
+msgstr "Dibaboù ar Mesker :"
+
+#: src/libaudgui/equalizer.c:68
+#, fuzzy
+msgid "_Enable"
+msgstr "Bev"
+
+#: src/libaudgui/equalizer.c:140
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "125 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "250 Hz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "500 Hz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "1 kHz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:141
+#, fuzzy
+msgid "2 kHz"
+msgstr "1:2 (22 kHz)"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "4 kHz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "8 kHz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:142
+#, fuzzy
+msgid "16 kHz"
+msgstr "1:1 (44 kHz)"
+
+#: src/libaudgui/equalizer.c:147
+msgid "Equalizer"
+msgstr "Kehidañ"
+
+#: src/libaudgui/equalizer.c:163
+#, fuzzy
+msgid "Preamp"
+msgstr "Hunvre"
+
+#: src/libaudgui/infopopup.c:251
+#, fuzzy
+msgid "Track Number"
+msgstr "Niverenn ar roudenn"
+
+#: src/libaudgui/infopopup.c:253
+#, fuzzy
+msgid "Track Length"
+msgstr "Hirder ar roudenn :"
+
+#: src/libaudgui/infowin.c:77
+#, fuzzy
+msgid "Acid Jazz"
+msgstr "Jazz"
+
+#: src/libaudgui/infowin.c:78
+#, fuzzy
+msgid "Acid Rock"
+msgstr "Hard Rok"
+
+#: src/libaudgui/infowin.c:79
+#, fuzzy
+msgid "Ambient"
+msgstr "A-brepoz BMP"
+
+#: src/libaudgui/infowin.c:80
+msgid "Bebop"
+msgstr ""
+
+#: src/libaudgui/infowin.c:81
+#, fuzzy
+msgid "Bluegrass"
 msgstr "Glas"
 
-#: src/audacious/widgets/eq_slider.c:93
-msgid "PREAMP"
-msgstr "PREAMP"
+#: src/libaudgui/infowin.c:82
+#, fuzzy
+msgid "Blues"
+msgstr "Glas"
 
-#: src/audacious/widgets/eq_slider.c:93
-msgid "60HZ"
-msgstr "60 Hz"
+#: src/libaudgui/infowin.c:83
+msgid "Chamber Music"
+msgstr ""
 
-#: src/audacious/widgets/eq_slider.c:93
-msgid "170HZ"
-msgstr "170 HZ"
+#: src/libaudgui/infowin.c:84
+#, fuzzy
+msgid "Classical"
+msgstr "Rok da gustum"
 
-#: src/audacious/widgets/eq_slider.c:94
-msgid "310HZ"
-msgstr "310 Hz"
+#: src/libaudgui/infowin.c:85
+msgid "Country"
+msgstr "Bro"
 
-#: src/audacious/widgets/eq_slider.c:94
-msgid "600HZ"
-msgstr "600 Hz"
+#: src/libaudgui/infowin.c:86
+#, fuzzy
+msgid "Death Metal"
+msgstr "Heavy Metal"
 
-#: src/audacious/widgets/eq_slider.c:94
-msgid "1KHZ"
-msgstr "1 KHz"
+#: src/libaudgui/infowin.c:87
+msgid "Disco"
+msgstr "Disko"
 
-#: src/audacious/widgets/eq_slider.c:95
-msgid "3KHZ"
-msgstr "3 kHz"
+#: src/libaudgui/infowin.c:88
+msgid "Easy Listening"
+msgstr ""
 
-#: src/audacious/widgets/eq_slider.c:95
-msgid "6KHZ"
-msgstr "6 kHz"
+#: src/libaudgui/infowin.c:89
+msgid "Folk"
+msgstr "Folk"
 
-#: src/audacious/widgets/eq_slider.c:95
-msgid "12KHZ"
-msgstr "12 kHz"
+#: src/libaudgui/infowin.c:90
+msgid "Funk"
+msgstr "Funk"
 
-#: src/audacious/widgets/eq_slider.c:96
-msgid "14KHZ"
-msgstr "14 kHz"
+#: src/libaudgui/infowin.c:91
+msgid "Gangsta Rap"
+msgstr "Gangsta Rap"
 
-#: src/audacious/widgets/eq_slider.c:96
-msgid "16KHZ"
-msgstr "16 kHz"
+#: src/libaudgui/infowin.c:92
+msgid "Gospel"
+msgstr "Fospeol"
+
+#: src/libaudgui/infowin.c:93
+msgid "Grunge"
+msgstr "Gruñj"
+
+#: src/libaudgui/infowin.c:94
+msgid "Hard Rock"
+msgstr "Hard Rok"
+
+#: src/libaudgui/infowin.c:95
+msgid "Heavy Metal"
+msgstr "Heavy Metal"
+
+#: src/libaudgui/infowin.c:96
+#, fuzzy
+msgid "Hip-hop"
+msgstr "Hip-Hop"
+
+#: src/libaudgui/infowin.c:97
+msgid "House"
+msgstr "Ti"
+
+#: src/libaudgui/infowin.c:98
+msgid "Jazz"
+msgstr "Jazz"
+
+#: src/libaudgui/infowin.c:99
+#, fuzzy
+msgid "Jungle"
+msgstr "Gruñj"
+
+#: src/libaudgui/infowin.c:100
+msgid "Metal"
+msgstr "Metal"
+
+#: src/libaudgui/infowin.c:101
+msgid "New Age"
+msgstr "New Age"
+
+#: src/libaudgui/infowin.c:102
+msgid "New Wave"
+msgstr "Gwag nevez"
+
+#: src/libaudgui/infowin.c:103
+msgid "Noise"
+msgstr "Trouz"
+
+#: src/libaudgui/infowin.c:104
+msgid "Pop"
+msgstr "Pop"
+
+#: src/libaudgui/infowin.c:105
+msgid "Punk Rock"
+msgstr "Punk Rock"
+
+#: src/libaudgui/infowin.c:106
+msgid "Rap"
+msgstr "Rap"
+
+#: src/libaudgui/infowin.c:107
+msgid "Reggae"
+msgstr "Rege"
+
+#: src/libaudgui/infowin.c:108
+msgid "Rock"
+msgstr "Steredigoù"
+
+#: src/libaudgui/infowin.c:109
+#, fuzzy
+msgid "Rock and Roll"
+msgstr "Rock & Roll"
+
+#: src/libaudgui/infowin.c:110
+msgid "Rhythm and Blues"
+msgstr ""
+
+#: src/libaudgui/infowin.c:111
+msgid "Ska"
+msgstr "Ska"
+
+#: src/libaudgui/infowin.c:112
+msgid "Soul"
+msgstr ""
+
+#: src/libaudgui/infowin.c:113
+msgid "Swing"
+msgstr ""
+
+#: src/libaudgui/infowin.c:114
+msgid "Techno"
+msgstr "Tekno"
+
+#: src/libaudgui/infowin.c:115
+#, fuzzy
+msgid "Trip-hop"
+msgstr "Hip-Hop"
+
+#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
+#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
+#, fuzzy
+msgid "<span size=\"small\">n/a</span>"
+msgstr "<span size=\"small\">Bloaz</span>"
+
+#: src/libaudgui/infowin.c:265
+msgid "Metadata updated successfully"
+msgstr ""
+
+#: src/libaudgui/infowin.c:270
+msgid "Metadata updating failed"
+msgstr ""
+
+#: src/libaudgui/infowin.c:318
+msgid "Track Information"
+msgstr "Titouroù diwar-benn ar roudenn"
+
+#: src/libaudgui/infowin.c:350
+#, fuzzy
+msgid "<span size=\"small\">Format:</span>"
+msgstr "<span size=\"small\">Askelenn</span>"
+
+#: src/libaudgui/infowin.c:354
+#, fuzzy
+msgid "<span size=\"small\">Quality:</span>"
+msgstr "<span size=\"small\">Titl</span>"
+
+#: src/libaudgui/infowin.c:357
+#, fuzzy
+msgid "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Askelenn</span>"
+
+#: src/libaudgui/infowin.c:387
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">Titl</span>"
+
+#: src/libaudgui/infowin.c:399
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">Arzour</span>"
+
+#: src/libaudgui/infowin.c:411
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">Albom</span>"
+
+#: src/libaudgui/infowin.c:423
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">Askelenn</span>"
+
+#: src/libaudgui/infowin.c:435
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">Rumm</span>"
+
+#: src/libaudgui/infowin.c:456
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">Bloaz</span>"
+
+#: src/libaudgui/infowin.c:467
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">Niver ar roudenn</span>"
+
+#: src/libaudgui/infowin.c:549
+#, c-format
+msgid "%d kb/s"
+msgstr ""
+
+#: src/libaudgui/infowin.c:579
+#, c-format
+msgid "No info available for %s.\n"
+msgstr ""
+
+#: src/libaudgui/ui_about.c:71
+msgid "About Audacious"
+msgstr "Diwar-benn Audacious"
+
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
+msgid "Credits"
+msgstr "Garedon"
+
+#: src/libaudgui/ui_credits.c:126
+msgid "Translators"
+msgstr "Trelatourion "
+
+#: src/libaudgui/ui_fileopener.c:108
+msgid "Open Files"
+msgstr "Restroù digor"
+
+#: src/libaudgui/ui_fileopener.c:108
+msgid "Add Files"
+msgstr "Ouzhpennañ Restroù"
+
+#: src/libaudgui/ui_fileopener.c:110
+#, fuzzy
+msgid "Close dialog on Open"
+msgstr "/Serriñ"
+
+#: src/libaudgui/ui_fileopener.c:110
+msgid "Close dialog on Add"
+msgstr ""
+
+#: src/libaudgui/ui_jumptotrack.c:133
+msgid "Un_queue"
+msgstr "Di_lost"
+
+#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
+msgid "_Queue"
+msgstr "_Lost"
+
+#: src/libaudgui/ui_jumptotrack.c:399
+msgid "Jump to Track"
+msgstr "Lammat d'ar roudenn"
+
+#: src/libaudgui/ui_jumptotrack.c:442
+msgid "Filter: "
+msgstr "Sil : "
+
+#: src/libaudgui/ui_jumptotrack.c:443
+msgid "_Filter:"
+msgstr "_Sil : "
+
+#: src/libaudgui/ui_jumptotrack.c:461
+msgid "Remember"
+msgstr ""
+
+#: src/libaudgui/ui_jumptotrack.c:470
+#, fuzzy
+msgid "Clea_r"
+msgstr "Goullonderiñ A-B"
+
+#: src/libaudgui/ui_jumptotrack.c:504
+#, fuzzy
+msgid "Close on Jump"
+msgstr "/Serriñ"
+
+#: src/libaudgui/ui_playlist_manager.c:224
+#, fuzzy
+msgid "Playlist Manager"
+msgstr "/Roll tonioù"
+
+#: src/libaudgui/ui_playlist_manager.c:248
+msgid "Entries"
+msgstr "Bouetaduroù"
+
+#: src/libaudgui/ui_playlist_manager.c:268
+msgid "_Rename"
+msgstr "_Adenvel"
+
+#: src/libaudgui/ui_playlist_manager.c:292
+#, fuzzy
+msgid "_Close dialog on activating playlist"
+msgstr "/Serriñ"
+
+#: src/libaudgui/ui_urlopener.c:58
+msgid "Open URL"
+msgstr ""
+
+#: src/libaudgui/ui_urlopener.c:58
+msgid "Add URL"
+msgstr "Ouzhpennañ un URL"
+
+#: src/libeggsmclient/eggdesktopfile.c:165
+msgid "File is not a valid .desktop file"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:968
+#, fuzzy, c-format
+msgid "Starting %s"
+msgstr "Italianeg :"
+
+#: src/libeggsmclient/eggdesktopfile.c:1110
+msgid "Application does not accept documents on command line"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1178
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1383
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1404
+msgid "Not a launchable item"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:229
+msgid "FILE"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:232
+msgid "ID"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:253
+msgid "Session management options:"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:254
+msgid "Show session management options"
+msgstr ""
+
+#, fuzzy
+#~ msgid "%s: Unable to open display, exiting.\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "Ne m'eus ket digeriñ ar restr : %s"
+
+#, fuzzy
+#~ msgid "Preamp:"
+#~ msgstr "Hunvre"
+
+#, fuzzy
+#~ msgid "Default gain:"
+#~ msgstr "Default skin:"
+
+#, fuzzy
+#~ msgid "<b>Replay Gain configuration</b>"
+#~ msgstr "<b>Kefluniadur ar proksi</b>"
+
+#, fuzzy
+#~ msgid "Track gain/peak"
+#~ msgstr "Anv ar roudenn"
+
+#~ msgid "Classic Rock"
+#~ msgstr "Rok da gustum"
+
+#~ msgid "Dance"
+#~ msgstr "Dañs"
+
+#, fuzzy
+#~ msgid "Oldies"
+#~ msgstr "linennoù"
+
+#~ msgid "Other"
+#~ msgstr "All"
+
+#~ msgid "R&B"
+#~ msgstr "R&B"
+
+#, fuzzy
+#~ msgid "Pranks"
+#~ msgstr "/Ehan"
+
+#~ msgid "Soundtrack"
+#~ msgstr "Roudenn son"
+
+#, fuzzy
+#~ msgid "Euro-Techno"
+#~ msgstr "Tekno"
+
+#~ msgid "Jazz+Funk"
+#~ msgstr "Jazz+Funk"
+
+#, fuzzy
+#~ msgid "Fusion"
+#~ msgstr "Rusianeg :"
+
+#, fuzzy
+#~ msgid "Trance"
+#~ msgstr "Dañs"
+
+#~ msgid "Game"
+#~ msgstr "C'hoari"
+
+#, fuzzy
+#~ msgid "Bass"
+#~ msgstr "Barrennoù"
+
+#~ msgid "Punk"
+#~ msgstr "Punk"
+
+#~ msgid "Space"
+#~ msgstr "Egor"
+
+#, fuzzy
+#~ msgid "Ethnic"
+#~ msgstr "Gotek"
+
+#~ msgid "Gothic"
+#~ msgstr "Gotek"
+
+#~ msgid "Electronic"
+#~ msgstr "Elektronek"
+
+#, fuzzy
+#~ msgid "Pop-Folk"
+#~ msgstr "Folk"
+
+#~ msgid "Dream"
+#~ msgstr "Hunvre"
+
+#, fuzzy
+#~ msgid "Southern Rock"
+#~ msgstr "Punk Rock"
+
+#, fuzzy
+#~ msgid "Comedy"
+#~ msgstr "Askelenn"
+
+#, fuzzy
+#~ msgid "Cult"
+#~ msgstr "Keltiek"
+
+#~ msgid "Christian Rap"
+#~ msgstr "Rap kristen"
+
+#~ msgid "Pop/Funk"
+#~ msgstr "Pop/Funk"
+
+#, fuzzy
+#~ msgid "Rave"
+#~ msgstr "Enrollañ"
+
+#, fuzzy
+#~ msgid "Showtunes"
+#~ msgstr "Gorrek"
+
+#, fuzzy
+#~ msgid "Trailer"
+#~ msgstr "Titl"
+
+#, fuzzy
+#~ msgid "Acid Punk"
+#~ msgstr "Punk"
+
+#~ msgid "Polka"
+#~ msgstr "Polka"
+
+#, fuzzy
+#~ msgid "Retro"
+#~ msgstr "Mann"
+
+#~ msgid "Folk/Rock"
+#~ msgstr "Folk/Rok"
+
+#~ msgid "Latin"
+#~ msgstr "Latin"
+
+#~ msgid "Celtic"
+#~ msgstr "Keltiek"
+
+#, fuzzy
+#~ msgid "Gothic Rock"
+#~ msgstr "Gotek"
+
+#, fuzzy
+#~ msgid "Slow Rock"
+#~ msgstr "Gorrek"
+
+#~ msgid "Chorus"
+#~ msgstr "Laz-Kanañ"
+
+#~ msgid "Speech"
+#~ msgstr "Komzet"
+
+#~ msgid "Chanson"
+#~ msgstr "Kan"
+
+#~ msgid "Opera"
+#~ msgstr "Opera"
+
+#, fuzzy
+#~ msgid "Sonata"
+#~ msgstr "Roudenn son"
+
+#, fuzzy
+#~ msgid "Primus"
+#~ msgstr "Kent"
+
+#, fuzzy
+#~ msgid "Satire"
+#~ msgstr "Divouezh"
+
+#, fuzzy
+#~ msgid "Slow Jam"
+#~ msgstr "Gorrek"
+
+#~ msgid "Tango"
+#~ msgstr "Tango"
+
+#~ msgid "Samba"
+#~ msgstr "Samba"
+
+#~ msgid "Folklore"
+#~ msgstr "Folklore"
+
+#~ msgid "Ballad"
+#~ msgstr "Troiad"
+
+#, fuzzy
+#~ msgid "Power Ballad"
+#~ msgstr "Troiad"
+
+#, fuzzy
+#~ msgid "Duet"
+#~ msgstr "Hent ar restr"
+
+#~ msgid "A Cappella"
+#~ msgstr "A Cappella"
+
+#, fuzzy
+#~ msgid "Euro-House"
+#~ msgstr "Ti"
+
+#, fuzzy
+#~ msgid "Dance Hall"
+#~ msgstr "Dañs"
+
+#~ msgid "Goa"
+#~ msgstr "Goa"
+
+#, fuzzy
+#~ msgid "Club-House"
+#~ msgstr "/Serriñ"
+
+#~ msgid "Terror"
+#~ msgstr "Spont"
+
+#, fuzzy
+#~ msgid "BritPop"
+#~ msgstr "Pop"
+
+#, fuzzy
+#~ msgid "Beat"
+#~ msgstr "Adseniñ"
+
+#~ msgid "Christian Gangsta Rap"
+#~ msgstr "Gangsta Rap kristen"
+
+#, fuzzy
+#~ msgid "Black Metal"
+#~ msgstr "Heavy Metal"
+
+#~ msgid "Christian Rock"
+#~ msgstr "Rok kristen"
+
+#~ msgid "Salsa"
+#~ msgstr "Salsa"
+
+#, fuzzy
+#~ msgid "Thrash Metal"
+#~ msgstr "Heavy Metal"
+
+#~ msgid "JPop"
+#~ msgstr "JPop"
+
+#, fuzzy
+#~ msgid "Synthpop"
+#~ msgstr "Paouez"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "\n"
+#~ "Copyright (C) 2005-2007 Skipailh Audacious "
+
+#, fuzzy
+#~ msgid "Unable to create log file (%s)!\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "Ne m'eus ket skrivañ ar restr : %s"
+
+#, fuzzy
+#~ msgid "Playback"
+#~ msgstr "/Seniñ"
+
+#~ msgid "Enabled"
+#~ msgstr "Bev"
+
+#~ msgid "Description"
+#~ msgstr "Deskrivadur"
+
+#~ msgid "Output Plugin Preferences"
+#~ msgstr "Dibaboù al lugent ezkas"
+
+#~ msgid "Output Plugin Information"
+#~ msgstr "Titouroù war al lugent ezkas"
+
+#, fuzzy
+#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Logodenn</b></span>"
+
+#, fuzzy
+#~ msgid "Effect plugins:"
+#~ msgstr "Lugentoù"
+
+#, fuzzy
+#~ msgid "<span size=\"small\">General</span>"
+#~ msgstr "<span size=\"small\">Rumm</span>"
+
+#, fuzzy
+#~ msgid "<span size=\"small\">Location</span>"
+#~ msgstr "<span size=\"xx-large\"><b>Logodenn</b></span>"
+
+#, fuzzy
+#~ msgid "<span size=\"small\">Raw Metadata</span>"
+#~ msgstr "<span size=\"small\">Bloaz</span>"
+
+#, fuzzy
+#~ msgid "Value"
+#~ msgstr "Glas"
+
+#, fuzzy
+#~ msgid "170 Hz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "310 Hz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "3 kHz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "6 kHz"
+#~ msgstr "1:1 (44 kHz)"
+
+#, fuzzy
+#~ msgid "Available Plugin Preferences:\n"
+#~ msgstr "Dibaboù al lugent ezkas"
+
+#~ msgid "Add/Open URL Dialog"
+#~ msgstr "Prenestr Ouzhpennañ/Digeriñ URL"
+
+#~ msgid "Don't clear the playlist"
+#~ msgstr "Ne c'houllonderit ket ar roll tonioù"
+
+#~ msgid "Filename:"
+#~ msgstr "Anv ar restr :"
+
+#~ msgid "Input plugin: %s"
+#~ msgstr "Lugent engas : %s"
+
+#, fuzzy
+#~ msgid "ZOH Interpolation"
+#~ msgstr "Implijit dilesadur"
+
+#, fuzzy
+#~ msgid "Linear Interpolation"
+#~ msgstr "Implijit dilesadur"
+
+#, fuzzy
+#~ msgid "Interpolation Engine:"
+#~ msgstr "Implijit dilesadur"
+
+#, fuzzy
+#~ msgid "<b>Sampling Rate Converter</b>"
+#~ msgstr "<b>Anv ar restr</b>"
+
+#, fuzzy
+#~ msgid "<b>Advanced</b>"
+#~ msgstr "Kefluniadur barek"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "\n"
+#~ "Copyright (C) 2005-2009 Audacious Development Team"
+#~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "\n"
+#~ "Copyright (C) 2005-2007 Skipailh Audacious "
+
+#~ msgid "Track length:"
+#~ msgstr "Hirder ar roudenn :"
+
+#, fuzzy
+#~ msgid "Save as Static Playlist"
+#~ msgstr "Enrollañ ar roll tonioù"
+
+#~ msgid "Error writing playlist \"%s\": %s"
+#~ msgstr "Fazi en ur skrivañ ar roll tonioù « %s » : %s"
+
+#~ msgid "Mouse"
+#~ msgstr "Logodenn"
+
+#~ msgid "seconds"
+#~ msgstr "eilennoù"
+
+#~ msgid "<b>Filename</b>"
+#~ msgstr "<b>Anv ar restr</b>"
+
+#~ msgid "<b>File Dialog</b>"
+#~ msgstr "<b>Prenestr restr</b>"
+
+#~ msgid "percent"
+#~ msgstr "dre gant"
+
+#, fuzzy
+#~ msgid "Scrolls playlist by"
+#~ msgstr "Kargañ ar roll tonioù"
+
+#~ msgid "lines"
+#~ msgstr "linennoù"
+
+#, fuzzy
+#~ msgid "Peaks"
+#~ msgstr "/Ehan"
+
+#~ msgid "Repeat"
+#~ msgstr "Adseniñ"
+
+#~ msgid "Shuffle"
+#~ msgstr "En dizurzh"
+
+#, fuzzy
+#~ msgid "No Playlist Advance"
+#~ msgstr "/Roll tonioù"
+
+#~ msgid "Play"
+#~ msgstr "Seniñ"
+
+#~ msgid "Pause"
+#~ msgstr "Ehan"
+
+#~ msgid "Stop"
+#~ msgstr "Paouez"
+
+#~ msgid "Previous"
+#~ msgstr "Kent"
+
+#~ msgid "Next"
+#~ msgstr "A heul"
+
+#, fuzzy
+#~ msgid "Visualization Mode"
+#~ msgstr "Aozadur :"
+
+#~ msgid "Analyzer Mode"
+#~ msgstr "Mod arnodiñ"
+
+#, fuzzy
+#~ msgid "Scope Mode"
+#~ msgstr "/Plaenaozañ"
+
+#, fuzzy
+#~ msgid "Voiceprint Mode"
+#~ msgstr "Voiceprint"
+
+#~ msgid "Refresh Rate"
+#~ msgstr "Feur freskaat"
+
+#, fuzzy
+#~ msgid "Analyzer Falloff"
+#~ msgstr "Mod arnodiñ"
+
+#~ msgid "New Playlist"
+#~ msgstr "Roll tonioù nevez"
+
+#~ msgid "Select Next Playlist"
+#~ msgstr "Dibabit roll tonioù a-raok"
+
+#~ msgid "Select Previous Playlist"
+#~ msgstr "Dibabit roll tonioù a-heul"
+
+#~ msgid "Delete Playlist"
+#~ msgstr "Lemel ar roll tonioù :"
+
+#~ msgid "Load List"
+#~ msgstr "Kargañ ar roll"
+
+#, fuzzy
+#~ msgid "Loads a playlist file into the selected playlist."
+#~ msgstr "Enrollañ ar roll tonioù dibabet."
+
+#~ msgid "Save List"
+#~ msgstr "Enrollañ ar roll"
+
+#~ msgid "Saves the selected playlist."
+#~ msgstr "Enrollañ ar roll tonioù dibabet."
+
+#~ msgid "Save Default List"
+#~ msgstr "Enrollañ ar roll dre ziouer"
+
+#, fuzzy
+#~ msgid "Saves the selected playlist to the default location."
+#~ msgstr "Enrollañ ar roll tonioù dibabet."
+
+#~ msgid "Refresh List"
+#~ msgstr "Adtresañ ar roll"
+
+#~ msgid "List Manager"
+#~ msgstr "Merour rolloù"
+
+#~ msgid "Opens the playlist manager."
+#~ msgstr "Digeriñ ar merour rolloù"
+
+#~ msgid "View"
+#~ msgstr "Gwel"
+
+#~ msgid "Add Internet Address..."
+#~ msgstr "Ouzhpennañ uk lec'hiadur genrouedad ..."
+
+#, fuzzy
+#~ msgid "Adds a remote track to the playlist."
+#~ msgstr "Ouzhpennañ a ra ur CD d'ar roll tonioù."
+
+#~ msgid "Add Files..."
+#~ msgstr "Ouzhpennañ ar restroù ..."
+
+#~ msgid "Search and Select"
+#~ msgstr "Klask ha dibab"
+
+#~ msgid "Invert Selection"
+#~ msgstr "Eilpennañ an diuz"
+
+#, fuzzy
+#~ msgid "Inverts the selected and unselected entries."
+#~ msgstr "Enrollañ ar roll tonioù dibabet."
+
+#~ msgid "Select All"
+#~ msgstr "Diuz an Holl"
+
+#~ msgid "Select None"
+#~ msgstr "Dibabit netra"
+
+#, fuzzy
+#~ msgid "Deselects all of the playlist entries."
+#~ msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
+
+#~ msgid "Remove All"
+#~ msgstr "Lemel an holl re"
+
+#, fuzzy
+#~ msgid "Removes all entries from the playlist."
+#~ msgstr "Eilpennañ ar roll tonioù"
+
+#~ msgid "Clear Queue"
+#~ msgstr "Goullonderiñ al lost"
+
+#, fuzzy
+#~ msgid "Clears the queue associated with this playlist."
+#~ msgstr "Enrollañ ar roll tonioù dibabet."
+
+#, fuzzy
+#~ msgid "Removes unavailable files from the playlist."
+#~ msgstr "Ouzhpennañ a ra ar restroù d'ar roll tonioù."
+
+#, fuzzy
+#~ msgid "Remove Duplicates"
+#~ msgstr "Lemel an hini dibabet"
+
+#~ msgid "By Title"
+#~ msgstr "Dre titl"
+
+#~ msgid "By Filename"
+#~ msgstr "Dre anv"
+
+#~ msgid "By Path + Filename"
+#~ msgstr "Dre anv hag hent"
+
+#, fuzzy
+#~ msgid "Remove Unselected"
+#~ msgstr "Lemel an hini dibabet"
+
+#, fuzzy
+#~ msgid "Remove unselected entries from the playlist."
+#~ msgstr "Eilpennañ ar roll tonioù"
+
+#~ msgid "Remove Selected"
+#~ msgstr "Lemel an hini dibabet"
+
+#, fuzzy
+#~ msgid "Remove selected entries from the playlist."
+#~ msgstr "Eilpennañ ar roll tonioù"
+
+#, fuzzy
+#~ msgid "Randomize List"
+#~ msgstr "Ne c'houllonderit ket ar roll tonioù"
+
+#, fuzzy
+#~ msgid "Randomizes the playlist."
+#~ msgstr "Ne c'houllonderit ket ar roll tonioù"
+
+#~ msgid "Reverse List"
+#~ msgstr "Eilpennañ ar roll"
+
+#~ msgid "Reverses the playlist."
+#~ msgstr "Eilpennañ ar roll tonioù"
+
+#, fuzzy
+#~ msgid "Sort List"
+#~ msgstr "Arzour"
+
+#, fuzzy
+#~ msgid "Sorts the list by title."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "By Album"
+#~ msgstr "Albom"
+
+#, fuzzy
+#~ msgid "Sorts the list by album."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#~ msgid "By Artist"
+#~ msgstr "Dre arzour"
+
+#, fuzzy
+#~ msgid "Sorts the list by artist."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "Sorts the list by filename."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "Sorts the list by full pathname."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#~ msgid "By Date"
+#~ msgstr "Evit Deiziad"
+
+#, fuzzy
+#~ msgid "Sorts the list by modification time."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#~ msgid "By Track Number"
+#~ msgstr "Dre niverenn roudenn"
+
+#, fuzzy
+#~ msgid "Sorts the list by track number."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "By Playlist Entry"
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "Sorts the list by playlist entry."
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "Sort Selected"
+#~ msgstr "/Ouzhpennañ/Lec'hiadur war ar genrouedad ..."
+
+#, fuzzy
+#~ msgid "File"
+#~ msgstr "Tan"
+
+#, fuzzy
+#~ msgid "Components"
+#~ msgstr "Askelenn"
+
+#, fuzzy
+#~ msgid "View Track Details"
+#~ msgstr "/Sellout ouzh titouroù war ar roudenn"
+
+#~ msgid "Play File"
+#~ msgstr "Seniñ ur restr"
+
+#, fuzzy
+#~ msgid "Load and play a file"
+#~ msgstr "/Kargañ/Eus ar restr"
+
+#~ msgid "Play Location"
+#~ msgstr "Seniñ al lec'hiadur"
+
+#, fuzzy
+#~ msgid "Plugin services"
+#~ msgstr "Lugentoù"
+
+#~ msgid "Preferences"
+#~ msgstr "Dibaboù"
+
+#~ msgid "Open preferences window"
+#~ msgstr "Prenestr dibaboù digeriñ"
+
+#~ msgid "_Quit"
+#~ msgstr "_Kuitaat"
+
+#~ msgid "Quit Audacious"
+#~ msgstr "Kuitaat Audacious"
+
+#~ msgid "Set A-B"
+#~ msgstr "Lakaat A-B"
+
+#~ msgid "Clear A-B"
+#~ msgstr "Goullonderiñ A-B"
+
+#~ msgid "Jump to Playlist Start"
+#~ msgstr "Lamat da zeroù ar roll tonioù"
+
+#~ msgid "Jump to File"
+#~ msgstr "Lammat d'ar restr"
+
+#~ msgid "Load"
+#~ msgstr "Kargañ"
+
+#~ msgid "Import"
+#~ msgstr "Enporzh"
+
+#~ msgid "Save"
+#~ msgstr "Enrollañ"
+
+#~ msgid "Delete"
+#~ msgstr "Dilemel"
+
+#, fuzzy
+#~ msgid "Preset"
+#~ msgstr "Porzh :"
+
+#, fuzzy
+#~ msgid "Load preset"
+#~ msgstr "Kargañ ar roll"
+
+#, fuzzy
+#~ msgid "Load auto-load preset"
+#~ msgstr "/Enrollañ/Dre ziouer"
+
+#~ msgid "Default"
+#~ msgstr "Dre ziouer"
+
+#, fuzzy
+#~ msgid "Load default preset into equalizer"
+#~ msgstr "/Enrollañ/Dre ziouer"
+
+#~ msgid "Zero"
+#~ msgstr "Mann"
+
+#~ msgid "From file"
+#~ msgstr "Eus ar restr"
+
+#, fuzzy
+#~ msgid "Load preset from file"
+#~ msgstr "/Kargañ/Eus ar restr"
+
+#~ msgid "From WinAMP EQF file"
+#~ msgstr "Eus ar restr WinAMP EQF"
+
+#, fuzzy
+#~ msgid "Load preset from WinAMP EQF file"
+#~ msgstr "/Kargañ/Eus ar restr WinAMP EQF"
+
+#, fuzzy
+#~ msgid "Save preset"
+#~ msgstr "/Enrollañ/Dre ziouer"
+
+#, fuzzy
+#~ msgid "Save auto-load preset"
+#~ msgstr "/Enrollañ/Dre ziouer"
+
+#, fuzzy
+#~ msgid "Save default preset"
+#~ msgstr "/Enrollañ/Dre ziouer"
+
+#~ msgid "To file"
+#~ msgstr "D'ar restr"
+
+#, fuzzy
+#~ msgid "Save preset to file"
+#~ msgstr "Enrollañ al lanv d'ar bladenn"
+
+#~ msgid "To WinAMP EQF file"
+#~ msgstr "D'ar restr WinAMP EQF"
+
+#, fuzzy
+#~ msgid "Save preset to WinAMP EQF file"
+#~ msgstr "/Enrollañ/D'ar restr WinAMP EQF"
+
+#, fuzzy
+#~ msgid "Delete preset"
+#~ msgstr "Lemel ar roll tonioù :"
+
+#, fuzzy
+#~ msgid "Audacious core developers:"
+#~ msgstr "/Dibaboù"
+
+#, fuzzy
+#~ msgid "Audacious Equalizer"
+#~ msgstr "_C'hoarier :"
+
+#~ msgid "Play files"
+#~ msgstr "Seniñ Restroù"
+
+#, fuzzy
+#~ msgid "Load files"
+#~ msgstr "/Kargañ/Eus ar restr"
+
+#~ msgid "VBR"
+#~ msgstr "VBR"
+
+#~ msgid "mono"
+#~ msgstr "unvouezh"
+
+#, fuzzy
+#~ msgid "Show main player window"
+#~ msgstr "Dibabit nodrezh prenestr kentañ ar soner :"
+
+#, fuzzy
+#~ msgid "Ignore"
+#~ msgstr "hini ebet"
+
+#, fuzzy
+#~ msgid "Options Menu"
+#~ msgstr "Dibarzhoù"
+
+#, fuzzy
+#~ msgid "File Info Box"
+#~ msgstr "Titouroù war ar restr"
+
+#, fuzzy
+#~ msgid "Visualization Menu"
+#~ msgstr "Aozadur :"
+
+#~ msgid "Show Player"
+#~ msgstr "Diskouez ar soner"
+
+#~ msgid "Show Playlist Editor"
+#~ msgstr "Diskouez aozer ar roll tonioù"
+
+#, fuzzy
+#~ msgid "Show Equalizer"
+#~ msgstr "Kehidañ"
+
+#, fuzzy
+#~ msgid "Roll up Player"
+#~ msgstr "_C'hoarier :"
+
+#, fuzzy
+#~ msgid "Roll up Playlist Editor"
+#~ msgstr "Aozer ar roll tonioù BMP"
+
+#, fuzzy
+#~ msgid "Roll up Equalizer"
+#~ msgstr "_C'hoarier :"
+
+#, fuzzy
+#~ msgid "Scale"
+#~ msgstr "Enrollañ"
+
+#~ msgid "Analyzer"
+#~ msgstr "Arnoder"
+
+#, fuzzy
+#~ msgid "Scope"
+#~ msgstr "/Plaenaozañ"
+
+#~ msgid "Voiceprint"
+#~ msgstr "Voiceprint"
+
+#~ msgid "Off"
+#~ msgstr "Lazhet"
+
+#~ msgid "Normal"
+#~ msgstr "Boas"
+
+#~ msgid "Fire"
+#~ msgstr "Tan"
+
+#~ msgid "Vertical Lines"
+#~ msgstr "Linennoù a-serzh"
+
+#~ msgid "Lines"
+#~ msgstr "Linennoù"
+
+#~ msgid "Bars"
+#~ msgstr "Barrennoù"
+
+#, fuzzy
+#~ msgid "Dot Scope"
+#~ msgstr "/Plaenaozañ"
+
+#, fuzzy
+#~ msgid "Line Scope"
+#~ msgstr "/Plaenaozañ"
+
+#, fuzzy
+#~ msgid "Solid Scope"
+#~ msgstr "/Plaenaozañ"
+
+#~ msgid "Smooth"
+#~ msgstr "Flourañ"
+
+#, fuzzy
+#~ msgid "Slowest"
+#~ msgstr "Gorrek"
+
+#~ msgid "Slow"
+#~ msgstr "Gorrek"
+
+#~ msgid "Medium"
+#~ msgstr "Krenn"
+
+#~ msgid "Fast"
+#~ msgstr "Buan"
+
+#, fuzzy
+#~ msgid "Fastest"
+#~ msgstr "Buan"
+
+#, fuzzy
+#~ msgid "Plugin Services"
+#~ msgstr "Lugentoù"
+
+#, fuzzy
+#~ msgid "Search entries in active playlist"
+#~ msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
+
+#, fuzzy
+#~ msgid "Title: "
+#~ msgstr "Titl :"
+
+#, fuzzy
+#~ msgid "Album: "
+#~ msgstr "Albom :"
+
+#~ msgid "Artist: "
+#~ msgstr "Arzour : "
+
+#~ msgid "Filename: "
+#~ msgstr "Anv ar restr : "
+
+#~ msgid "Audacious Playlist Editor"
+#~ msgstr "Aozer ar roll tonioù Audacious"
+
+#~ msgid "Appearance"
+#~ msgstr "Neuziadur"
+
+#~ msgid "<b>_Fonts</b>"
+#~ msgstr "<b>_Nodrezhoù</b>"
+
+#~ msgid "_Player:"
+#~ msgstr "_C'hoarier :"
+
+#~ msgid "Select main player window font:"
+#~ msgstr "Dibabit nodrezh prenestr kentañ ar soner :"
+
+#~ msgid "_Playlist:"
+#~ msgstr "_Roll tonioù :"
+
+#, fuzzy
+#~ msgid "Select playlist font:"
+#~ msgstr "Dibabit nodrezh prenestr kentañ ar soner :"
+
+#~ msgid "<b>_Miscellaneous</b>"
+#~ msgstr "<b>_A bep seurt</b>"
+
+#~ msgid "Show track numbers in playlist"
+#~ msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
+
+#, fuzzy
+#~ msgid "Show separators in playlist"
+#~ msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
+
+#~ msgid "Blue"
+#~ msgstr "Glas"
+
+#~ msgid "Green"
+#~ msgstr "Gwer"
+
+#~ msgid "Red"
+#~ msgstr "Ar re ruz"
+
+#~ msgid "<b>_Skin</b>"
+#~ msgstr "<b>_Kroc'hen</b>"
+
+#~ msgid "PREAMP"
+#~ msgstr "PREAMP"
+
+#~ msgid "60HZ"
+#~ msgstr "60 Hz"
+
+#~ msgid "170HZ"
+#~ msgstr "170 HZ"
+
+#~ msgid "310HZ"
+#~ msgstr "310 Hz"
+
+#~ msgid "600HZ"
+#~ msgstr "600 Hz"
+
+#~ msgid "1KHZ"
+#~ msgstr "1 KHz"
+
+#~ msgid "3KHZ"
+#~ msgstr "3 kHz"
+
+#~ msgid "6KHZ"
+#~ msgstr "6 kHz"
+
+#~ msgid "12KHZ"
+#~ msgstr "12 kHz"
+
+#~ msgid "14KHZ"
+#~ msgstr "14 kHz"
+
+#~ msgid "16KHZ"
+#~ msgstr "16 kHz"
+
+#, fuzzy
+#~ msgid "Reload Plugins"
+#~ msgstr "Lugentoù"
+
+#~ msgid "Error in Audacious."
+#~ msgstr "Fazi e Audacious."
+
+#~ msgid "localhost"
+#~ msgstr "localhost"
+
+#, fuzzy
+#~ msgid ""
+#~ "TITLE\n"
+#~ "ARTIST - TITLE\n"
+#~ "ARTIST - ALBUM - TITLE\n"
+#~ "ARTIST - ALBUM - TRACK. TITLE\n"
+#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
+#~ "ALBUM - TITLE\n"
+#~ "Custom"
+#~ msgstr ""
+#~ "TITL\n"
+#~ "ARZOUR - TITL\n"
+#~ "ARZOUR - ALBOM - TITL\n"
+#~ "ALBOM - TITL\n"
+#~ "Diouzhoc'h"
+
+#, fuzzy
+#~ msgid "Track Information Window"
+#~ msgstr "Titouroù diwar-benn ar roudenn"
+
+#~ msgid "Preferences Window"
+#~ msgstr "Prenestr ar gefluniadur"
+
+#, fuzzy
+#~ msgid "<b>Artist:</b> %s"
+#~ msgstr "Arzour : "
+
+#, fuzzy
+#~ msgid "<b>Title:</b> %s"
+#~ msgstr "<b>Anv ar restr</b>"
+
+#, fuzzy
+#~ msgid "<b>Album:</b> %s"
+#~ msgstr "<b>Anv ar restr</b>"
+
+#, fuzzy
+#~ msgid "Audacious last.fm radio tuner"
+#~ msgstr "Aozer ar roll tonioù Audacious"
+
+#, fuzzy
+#~ msgid "<b>Artist:</b>"
+#~ msgstr "<b>Anv ar restr</b>"
+
+#, fuzzy
+#~ msgid "<b>Album:</b>"
+#~ msgstr "<b>Anv ar restr</b>"
+
+#~ msgid "VOLUME: %d%%"
+#~ msgstr "NERZH : %d%%"
+
+#, fuzzy
+#~ msgid "Last.fm radio"
+#~ msgstr "Seniñ al lec'hiadur"
+
+#, fuzzy
+#~ msgid "Play Last.fm radio"
+#~ msgstr "Seniñ al lec'hiadur"
+
+#~ msgid "Add CD..."
+#~ msgstr "Ouzhpennañ ur CD ..."
+
+#~ msgid "Play CD"
+#~ msgstr "Seniñ ar CD"
+
+#~ msgid "Performer/Artist"
+#~ msgstr "Arzour"
+
+#~ msgid "File name"
+#~ msgstr "Anv ar restr"
+
+#~ msgid "File path"
+#~ msgstr "Hent ar restr"
+
+#~ msgid "File extension"
+#~ msgstr "Astenn ar restr"
+
+#~ msgid "Track number"
+#~ msgstr "Niverenn ar roudenn"
+
+#~ msgid "Track name: "
+#~ msgstr "Anv ar roudenn : "
 
 #~ msgid "Show more _details"
 #~ msgstr "Diskouez titouroù muioc'h"
@@ -2113,9 +2395,6 @@ msgstr "16 kHz"
 
 #~ msgid "/-"
 #~ msgstr "/-"
-
-#~ msgid "Chinese:"
-#~ msgstr "Sineg :"
 
 #~ msgid "/Load"
 #~ msgstr "/Kargañ"
@@ -2171,10 +2450,6 @@ msgstr "16 kHz"
 #, fuzzy
 #~ msgid "LIRC Plugin "
 #~ msgstr "Lugentoù"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "/Serriñ"
 
 #, fuzzy
 #~ msgid "LIRC Plugin"
@@ -2322,177 +2597,6 @@ msgstr "16 kHz"
 #~ msgid "About Flac Plugin"
 #~ msgstr "Diwar-benn al lugent ESounD"
 
-#~ msgid "Classic Rock"
-#~ msgstr "Rok da gustum"
-
-#~ msgid "Country"
-#~ msgstr "Bro"
-
-#~ msgid "Dance"
-#~ msgstr "Dañs"
-
-#~ msgid "Disco"
-#~ msgstr "Disko"
-
-#~ msgid "Funk"
-#~ msgstr "Funk"
-
-#~ msgid "Grunge"
-#~ msgstr "Gruñj"
-
-#~ msgid "Hip-Hop"
-#~ msgstr "Hip-Hop"
-
-#~ msgid "Jazz"
-#~ msgstr "Jazz"
-
-#~ msgid "Metal"
-#~ msgstr "Metal"
-
-#~ msgid "New Age"
-#~ msgstr "New Age"
-
-#~ msgid "Other"
-#~ msgstr "All"
-
-#~ msgid "Pop"
-#~ msgstr "Pop"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Rap"
-#~ msgstr "Rap"
-
-#~ msgid "Reggae"
-#~ msgstr "Rege"
-
-#~ msgid "Rock"
-#~ msgstr "Steredigoù"
-
-#~ msgid "Techno"
-#~ msgstr "Tekno"
-
-#~ msgid "Ska"
-#~ msgstr "Ska"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Roudenn son"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk"
-
-#~ msgid "House"
-#~ msgstr "Ti"
-
-#~ msgid "Game"
-#~ msgstr "C'hoari"
-
-#~ msgid "Gospel"
-#~ msgstr "Fospeol"
-
-#~ msgid "Noise"
-#~ msgstr "Trouz"
-
-#~ msgid "Punk"
-#~ msgstr "Punk"
-
-#~ msgid "Space"
-#~ msgstr "Egor"
-
-#~ msgid "Gothic"
-#~ msgstr "Gotek"
-
-#~ msgid "Electronic"
-#~ msgstr "Elektronek"
-
-#~ msgid "Dream"
-#~ msgstr "Hunvre"
-
-#~ msgid "Gangsta Rap"
-#~ msgstr "Gangsta Rap"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Rap kristen"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk"
-
-#~ msgid "New Wave"
-#~ msgstr "Gwag nevez"
-
-#~ msgid "Polka"
-#~ msgstr "Polka"
-
-#~ msgid "Rock & Roll"
-#~ msgstr "Rock & Roll"
-
-#~ msgid "Hard Rock"
-#~ msgstr "Hard Rok"
-
-#~ msgid "Folk"
-#~ msgstr "Folk"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rok"
-
-#~ msgid "Latin"
-#~ msgstr "Latin"
-
-#~ msgid "Celtic"
-#~ msgstr "Keltiek"
-
-#~ msgid "Chorus"
-#~ msgstr "Laz-Kanañ"
-
-#~ msgid "Speech"
-#~ msgstr "Komzet"
-
-#~ msgid "Chanson"
-#~ msgstr "Kan"
-
-#~ msgid "Opera"
-#~ msgstr "Opera"
-
-#~ msgid "Tango"
-#~ msgstr "Tango"
-
-#~ msgid "Samba"
-#~ msgstr "Samba"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklore"
-
-#~ msgid "Ballad"
-#~ msgstr "Troiad"
-
-#~ msgid "Punk Rock"
-#~ msgstr "Punk Rock"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Goa"
-#~ msgstr "Goa"
-
-#~ msgid "Terror"
-#~ msgstr "Spont"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Gangsta Rap kristen"
-
-#~ msgid "Heavy Metal"
-#~ msgstr "Heavy Metal"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Rok kristen"
-
-#~ msgid "Salsa"
-#~ msgstr "Salsa"
-
-#~ msgid "JPop"
-#~ msgstr "JPop"
-
 #, fuzzy
 #~ msgid "Channels: %d"
 #~ msgstr "Kanolioù :"
@@ -2512,12 +2616,6 @@ msgstr "16 kHz"
 #, fuzzy
 #~ msgid "Tag:"
 #~ msgstr "Tango"
-
-#~ msgid "Title:"
-#~ msgstr "Titl :"
-
-#~ msgid "Album:"
-#~ msgstr "Albom :"
 
 #~ msgid "Comment:"
 #~ msgstr "Askelenn :"
@@ -2563,39 +2661,8 @@ msgstr "16 kHz"
 #~ msgstr "8 bit"
 
 #, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Kanolioù :"
-
-#~ msgid "Stereo"
-#~ msgstr "Divouezh"
-
-#, fuzzy
-#~ msgid "48 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "44 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22 kHz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "11 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
 #~ msgid "Resampling"
 #~ msgstr "Lanv"
-
-#, fuzzy
-#~ msgid "Quality"
-#~ msgstr "/_Kuitaat"
-
-#, fuzzy
-#~ msgid "General"
-#~ msgstr "Rumm"
 
 #, fuzzy
 #~ msgid "Fast Playlist Info"
@@ -2604,22 +2671,6 @@ msgstr "16 kHz"
 #, fuzzy
 #~ msgid "Reverb"
 #~ msgstr "Servijer"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "Bev"
-
-#, fuzzy
-#~ msgid "Depth"
-#~ msgstr "Hent ar restr"
-
-#, fuzzy
-#~ msgid "Amount"
-#~ msgstr "A-brepoz BMP"
-
-#, fuzzy
-#~ msgid "Preamp"
-#~ msgstr "Hunvre"
 
 #, fuzzy
 #~ msgid "MOD Info"
@@ -2642,9 +2693,6 @@ msgstr "16 kHz"
 #~ msgid "Channels:"
 #~ msgstr "Kanolioù :"
 
-#~ msgid "Mono"
-#~ msgstr "Unvouezh"
-
 #~ msgid "1:1 (44 kHz)"
 #~ msgstr "1:1 (44 kHz)"
 
@@ -2662,9 +2710,6 @@ msgstr "16 kHz"
 
 #~ msgid "%ld Hz"
 #~ msgstr "%ld Hz"
-
-#~ msgid "None"
-#~ msgstr "Hini ebet"
 
 #~ msgid "50/15 ms"
 #~ msgstr "50/15 ms"
@@ -2719,10 +2764,6 @@ msgstr "16 kHz"
 #, fuzzy
 #~ msgid "TiMidity Configuration"
 #~ msgstr "Kefluniadur al lugent MPEG son"
-
-#, fuzzy
-#~ msgid "11000 Hz"
-#~ msgstr "1:1 (44 kHz)"
 
 #, fuzzy
 #~ msgid "22000 Hz"
@@ -2802,10 +2843,6 @@ msgstr "16 kHz"
 #~ msgid "About %s"
 #~ msgstr "A-brepoz BMP"
 
-#, fuzzy
-#~ msgid " Close "
-#~ msgstr "/Serriñ"
-
 #~ msgid "About OSS Driver"
 #~ msgstr "A-brepoz ar sturier OSS"
 
@@ -2829,9 +2866,6 @@ msgstr "16 kHz"
 
 #~ msgid "Buffer size (ms):"
 #~ msgstr "Ment ar grubuilh (ms) :"
-
-#~ msgid "Buffering"
-#~ msgstr "Krubuilh"
 
 #~ msgid "Mixer Settings:"
 #~ msgstr "Dibaboù ar Mesker :"
@@ -2887,9 +2921,6 @@ msgstr "16 kHz"
 #~ msgid "Use remote host"
 #~ msgstr "Implijit an ostiz a-bell"
 
-#~ msgid "Port:"
-#~ msgstr "Porzh :"
-
 #~ msgid "Server"
 #~ msgstr "Servijer"
 
@@ -2915,9 +2946,6 @@ msgstr "16 kHz"
 #~ msgid "/Toggle Decorations"
 #~ msgstr "/Diskouez-Kuzhat ar glinkadur"
 
-#~ msgid "/Close"
-#~ msgstr "/Serriñ"
-
 #~ msgid "Options:"
 #~ msgstr "Dibarzhoù :"
 
@@ -2934,10 +2962,6 @@ msgstr "16 kHz"
 #~ msgstr "Kefluniadur ar sturier OSS"
 
 #, fuzzy
-#~ msgid "Port"
-#~ msgstr "Porzh :"
-
-#, fuzzy
 #~ msgid "Client name"
 #~ msgstr "Anv ar restr"
 
@@ -2949,10 +2973,6 @@ msgstr "16 kHz"
 #~ msgid "ALSA output ports"
 #~ msgstr "Lugent ezkas ALSA %s"
 
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "Dibaboù ar Mesker :"
-
 #~ msgid "ID3 encoding:"
 #~ msgstr "Kodadur ID3 :"
 
@@ -2961,20 +2981,8 @@ msgstr "16 kHz"
 #~ msgstr "Kodadur ID3 :"
 
 #, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Anv ar restr</b>"
-
-#, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "<b>Anv ar restr</b>"
-
-#, fuzzy
 #~ msgid "<b>Channels:</b>"
 #~ msgstr "Kanolioù :"
-
-#, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>Anv ar restr</b>"
 
 #, fuzzy
 #~ msgid "<b>Filesize:</b>"
@@ -2982,10 +2990,6 @@ msgstr "16 kHz"
 
 #~ msgid "WMA Info"
 #~ msgstr "Titouroù WMA"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>_Nodrezhoù</b>"
 
 #, fuzzy
 #~ msgid "<b>Track:</b>"
@@ -3007,18 +3011,8 @@ msgstr "16 kHz"
 #~ msgid "Francisco Javier F. Serrador"
 #~ msgstr "Francisco Javier F. Serrador"
 
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Ne m'eus ket skrivañ ar restr : %s"
-
 #~ msgid "Couldn't write tag!"
 #~ msgstr "Ne m'eus ket skrivañ al liketenn !"
-
-#~ msgid "File Info"
-#~ msgstr "Titouroù war ar restr"
 
 #~ msgid "Couldn't remove tag!"
 #~ msgstr "Ne m'eus ket lemel al liketenn !"
@@ -3035,9 +3029,6 @@ msgstr "16 kHz"
 #~ msgid "TiMidity Plugin"
 #~ msgstr "Lugent TiMidity"
 
-#~ msgid "Options"
-#~ msgstr "Dibarzhoù"
-
 #~ msgid "Content"
 #~ msgstr "Endalc'had"
 
@@ -3048,10 +3039,6 @@ msgstr "16 kHz"
 #, fuzzy
 #~ msgid "About XMMS Crossfade Plugin"
 #~ msgstr "Diwar-benn al lugent ESounD"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Kefluniadur barek"
 
 #, fuzzy
 #~ msgid "Advanced XF"
@@ -3086,16 +3073,8 @@ msgstr "16 kHz"
 #~ msgstr "/Adseniñ"
 
 #, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Lugentoù"
-
-#, fuzzy
 #~ msgid "same file"
 #~ msgstr "Eus ar restr"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Implijit dilesadur"
 
 #~ msgid "Mmap mode"
 #~ msgstr "Mode mmap"
@@ -3126,9 +3105,6 @@ msgstr "16 kHz"
 
 #~ msgid "/_Options"
 #~ msgstr "/_Dibarzhoù"
-
-#~ msgid "Add URL"
-#~ msgstr "Ouzhpennañ un URL"
 
 #~ msgid "/Close Window"
 #~ msgstr "/Serriñ ar prenestr"

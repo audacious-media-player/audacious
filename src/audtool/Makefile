@@ -1,31 +1,27 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-include ../../mk/objective.mk
+PROG = audtool
+SRCS = main.c				\
+       handlers_general.c	\
+       handlers_playback.c	\
+       handlers_playlist.c	\
+       handlers_playqueue.c	\
+       handlers_vitals.c	\
+       handlers_equalizer.c	\
+       report.c
 
-OBJECTIVE_BINS = audtool
+include ../../buildsys.mk
+include ../../extra.mk
 
-LDFLAGS += $(AUDLDFLAGS)
-LDADD = \
-	$(DBUS_LIBS) \
-	-L../libaudclient -laudclient \
-	$(GTK_LIBS)      \
-	$(MOWGLI_LIBS)	 \
-	$(LIBGLADE_LIBS)
+CPPFLAGS += ${CFLAGS} -I.. -I../.. -I../intl
+CFLAGS += ${GTK_CFLAGS}			\
+		  ${DBUS_CFLAGS}		\
+		  ${AUDACIOUS_DEFINES}	\
+		  ${ARCH_DEFINES}		\
+		  ${MOWGLI_CFLAGS}
 
-CFLAGS += \
-	$(GTK_CFLAGS)      \
-	$(DBUS_CFLAGS)     \
-	$(LIBGLADE_CFLAGS) \
-	$(BEEP_DEFINES)    \
-	$(ARCH_DEFINES)    \
-	$(MOWGLI_CFLAGS)   \
-	-I.. -I../..   \
-	-I../intl
+LDFLAGS += ${AUDLDFLAGS}
 
-SOURCES = audtool.c handlers.c
-
-OBJECTS = ${SOURCES:.c=.o}
-
-audtool: $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
-	@printf "%10s     %-20s\n" LINK $@
+LIBS += ${DBUS_LIBS}				\
+	-L../libaudclient -laudclient	\
+	${GTK_LIBS}						\
+	${MOWGLI_LIBS}					\
+	${LIBMCS_LIBS}

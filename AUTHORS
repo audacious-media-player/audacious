@@ -1,15 +1,20 @@
-Audacious (C) GPL 2005-2007
+Audacious (C) GPL 2005-2009
 
 Authors listed alphabetically, by last name:
 --------------------------------------------
 
 George Averill <nhjm449@gmail.com>
+Kieran Clancy <clancy.kieran+audacious@gmail.com>
+Michael Färber <0102@gmx.at>
+Matti Hämäläinen <ccr@tnsp.org>
 Giacomo Lozito <james@develia.org>
+Tomasz Moń <desowin@gmail.com>
 William Pitcock <nenolod@sacredspiral.co.uk>
 Derek Pomery <nemo@m8y.org>
 Mohammed Sameer <msameer@foolab.org>
-Jonathan Schleifer <js@h3c.de>
+Jonathan Schleifer <js-audacious@webkeks.org>
 Stephen Sokolow <deitarion@gmail.com>
+Ben Tucker <ben@tucker.org>
 Tony Vroon <chainsaw@gentoo.org>
 Yoshiki Yazawa <yaz@cc.or.rim.jp>
 
@@ -23,8 +28,10 @@ German             - Michael Hanselmann
 Greek              - Kouzinopoulos Haris
                      Stavros Giannouris
                      Stathis Kamperis
-Italian		   - Diego Petteno
+Italian            - Diego Petteno
 Japanese           - Dai
+Finnish            - Pauli Virtanen
+                     Matti Hämäläinen
 
 -
 
@@ -90,7 +97,7 @@ Italian              - Alessio D'Ascanio <otaku@fastwebnet.it>
 Japanese             - Takeshi Aihana <aihana@gnome.gr.jp>
 Korean               - DongCheon Park <dcpark@kaist.ac.kr>
 Lithuanian           - Rimas Kudelis <rq@akl.lt>
-Macedonian 	     - Arangel Angov <ufo@linux.net.mk>
+Macedonian           - Arangel Angov <ufo@linux.net.mk>
 Polish               - Jacek Wolszczak <shutdownrunner@o2.pl>
 Romanian             - Liviu Danicel <liviu.danicel@spymac.com>
 Russian              - Pavlo Bohmat <bohm@ukr.net>

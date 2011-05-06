@@ -1,19 +1,13 @@
-.SILENT:
+SUBDIRS = libaudcore libaudgui libaudtag audacious
 
-include ../mk/rules.mk
-include ../mk/init.mk
+include ../extra.mk
 
-SUBDIRS = $(INTL_OBJECTIVE) $(SUBDIR_GUESS)
-
-ifdef USE_DBUS
-SUBDIRS += libaudclient audtool
+ifeq ($(USE_EGGSM),yes)
+SUBDIRS := libeggsmclient ${SUBDIRS}
 endif
 
-SUBDIRS += audacious libid3tag
-
-include ../mk/objective.mk
-
-ifdef USE_DBUS
-depend-prehook:
-	@cd audacious; $(MAKE) $@ || exit; cd ..;
+ifeq ($(USE_DBUS),yes)
+SUBDIRS := libaudclient audtool ${SUBDIRS}
 endif
+
+include ../buildsys.mk

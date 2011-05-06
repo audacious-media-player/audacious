@@ -1,328 +1,277 @@
-dnl Process this file with autoconf to produce a configure script.
-AC_INIT([audacious], [1.4.0], [bugs+audacious@atheme.org])
+dnl ***
+dnl *** Process this file with autoconf to produce a configure script.
+dnl ***
+
+dnl Require autoconf 2.59 or later
 AC_PREREQ([2.59])
 
+dnl Initialize
+AC_INIT([audacious], [2.6-devel])
+AC_COPYRIGHT([(C) 2005-2011 Audacious Team])
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
+AC_GNU_SOURCE
 
 AC_CONFIG_HEADERS([config.h])
+PKG_PROG_PKG_CONFIG
 
-dnl libbeep
-LIBBEEP_MAJOR_VERSION=2
-LIBBEEP_MINOR_VERSION=0
-LIBBEEP_MICRO_VERSION=0
-LIBBEEP_VERSION=$LIBBEEP_MAJOR_VERSION.$LIBBEEP_MINOR_VERSION.$LIBBEEP_MICRO_VERSION
-AC_SUBST(LIBBEEP_MAJOR_VERSION)
-AC_SUBST(LIBBEEP_MINOR_VERSION)
-AC_SUBST(LIBBEEP_MICRO_VERSION)
-
+dnl buildsystem bootstrap
+dnl =====================
 dnl XXX kludge for FreeBSD
 if test -d "/usr/X11R6/include"; then
-	CPPFLAGS="$CPPFLAGS -I/usr/X11R6/include"
+    CPPFLAGS="$CPPFLAGS -I/usr/X11R6/include"
 fi
 
-dnl OMK bootstrap
 AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])
 AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
+AC_DEFINE_UNQUOTED([PACKAGE], "$PACKAGE", [Name of package])
+AC_DEFINE_UNQUOTED([VERSION], "$VERSION", [Version number of package])
 
-AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version number of package])
+BUILDSYS_INIT
+BUILDSYS_PROG_IMPLIB
+BUILDSYS_SHARED_LIB
+IMPLIB_LIBS=""
+AC_SUBST([IMPLIB_LIBS])
+
+
+dnl Build stamp
+dnl ===========
+AC_ARG_WITH([buildstamp],
+ AS_HELP_STRING([--with-buildstamp=XXX], [Set build stamp to XXX]),
+ AC_DEFINE_UNQUOTED([BUILDSTAMP], "$withval", [Build stamp]),
+ AC_DEFINE_UNQUOTED([BUILDSTAMP], "UNSUPPORTED VERSION", [Build stamp]))
+
+
+dnl Large file support
+dnl ==================
+CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
+
+dnl Activation of text console (MS-Windows ONLY)
+dnl ============================================
+AC_ARG_ENABLE([text-console],
+[AS_HELP_STRING([--enable-text-console],[Enable text console for MS-Windows hosts])],
+[use_text_console=$withval],
+[use_text_console=no]
+)
+
+dnl Plugin stuff
+dnl ========================
+SHARED_SUFFIX="$PLUGIN_SUFFIX"
+AC_SUBST([SHARED_SUFFIX])
+AC_DEFINE_UNQUOTED([SHARED_SUFFIX], "${SHARED_SUFFIX}",
+    [Define the shared module suffix extension on your platform.])
+
+AC_MSG_CHECKING([for Windows or Macintosh])
+case "$target" in
+    *mingw*)
+        AC_MSG_RESULT([Windows])
+        if test "x$use_text_console" = "xno"; then
+            LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
+        fi
+        ;;
+    *apple*)
+        AC_MSG_RESULT([Macintosh])
+        LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices -framework Carbon"
+        ;;
+    *)
+        AC_MSG_RESULT([no])
+        ;;
+esac
 
 dnl GNU gettext
+dnl ===========
+AM_GNU_GETTEXT([external])
 
-AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([0.12.1])
+if test "$MSGFMT" = ":" ; then
+    AC_MSG_ERROR([msgfmt was not found!  You may need to install gettext.])
+fi
 
-dnl Check for C compiler
 
-AC_PROG_CC
-AC_PROG_CXX
-AC_ISC_POSIX
-AC_C_BIGENDIAN
+dnl Checks common for core and plugins
+dnl ==================================
 
-test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -Wall -pipe"
+AC_ARG_ENABLE([gtk3],
+ [AS_HELP_STRING([--enable-gtk3], [Use GTK3 instead of GTK2])],
+ [use_gtk3=yes], [use_gtk3=no])
 
-dnl Check for assembler
+AUD_COMMON_PROGS
 
-AM_PROG_AS
 
-dnl Checks for various programs
+dnl Check for headers and functions
+dnl ===============================
+AC_CHECK_HEADERS([unistd.h fcntl.h limits.h fts.h execinfo.h sys/errno.h regex.h rxposix.h rx/rxposix.h])
+AC_CHECK_FUNCS([sigwait])
 
-AC_PROG_INSTALL
-AC_PROG_LN_S
-AC_PROG_MAKE_SET
 
-AC_PATH_PROG(RM, rm)
-AC_PATH_PROG(MV, mv)
-AC_PATH_PROG(CP, cp)
-AC_PATH_PROG(AR, ar)
-AC_PATH_PROG(RANLIB, ranlib)
-
+### ---------------------------------------------------------------------------
 dnl Path settings
+dnl =============
+AC_PATH_PROG([AUDACIOUS_PATH], [audacious], [no])
 
-AC_PATH_PROG(BEEP_PATH, audacious, no)
+AUD_ARG_ENABLE([user-plugin-dir], [yes],
+[per-user plugin dir])
 
-AC_ARG_WITH(rc-path,
-    [  --with-rc-path=path                 Resource and configuration path for audacious relative to $HOME. (deprecated, use XDG)],
-    [rc_path=$withval],
-    [rc_path=.audacious]
-)
-AC_DEFINE_UNQUOTED(BMP_RCPATH, "$rc_path",
-    [Resource and configuration path for audacious relative to $HOME.]
-)
-AC_DEFINE(DOTAUDACIOUS_COMPAT, 1, [Enable compatibility for $HOME/.audacious])
-AC_SUBST(BMP_RCPATH)
-
-AC_ARG_ENABLE(one-plugin-dir,
-    [  --enable-one-plugin-dir            Use a single plugin dir [default=no]],
-    [enable_one_plugin_dir=$enableval],
-    [enable_one_plugin_dir=no]
-)
-
-AC_ARG_ENABLE(user-plugin-dir,
-    [  --disable-user-plugin-dir          disable per-user plugin dir],
-    [enable_user_plugin_dir=$enableval],
-    [enable_user_plugin_dir=yes]
-)
-
-dnl Check for GTK/GLib/GThread/Pango
-
-PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.6.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0, gtk+-2.0 >= 2.6.0])],
-    [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
-)
-
-dnl Check for GLib.
-
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.6.0],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0])],
-    [AC_MSG_ERROR([Cannot find glib2])]
-)
-
-dnl Check for libmowgli.
-
-PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.1],
-    [ADD_PC_REQUIRES([libmowgli >= 0.1])],
-    [AC_MSG_ERROR([Cannot find libmowgli: try http://sacredspiral.co.uk/~nenolod/mowgli])]
-)
-
-dnl Check for libglade
-
-PKG_CHECK_MODULES(LIBGLADE, [libglade-2.0 >= 2.3.1],
-    [],
-    [AC_MSG_ERROR([Cannot find libglade])]
-)
-
-# Check if socklen_t is defined
-
-AC_CACHE_CHECK(for socklen_t, beep_cv_type_socklen_t,
-    [AC_TRY_COMPILE(
-         [#include <sys/types.h>
-          #include <sys/socket.h>],
-         [socklen_t s;],
-         [beep_cv_type_socklen_t=yes],
-         [beep_cv_type_socklen_t=no]
-     )
-    ]
-)
-
-if test "$beep_cv_type_socklen_t" = "no"; then
-    AC_DEFINE(socklen_t, int, [Define to int if the socklen_t type is missing])
+if test "x$enable_user_plugin_dir" = "xno"; then
+    AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
 fi
 
-dnl IPv6 support
-dnl ========================
-AC_ARG_ENABLE(ipv6,
-	[  --enable-ipv6		  enable IPv6 support (default=no)],
-			enable_ipv6=$enableval, enable_ipv6=no)
-if test "x$enable_ipv6" = xyes; then
-    AC_DEFINE(USE_IPV6,, [Define if building with IPv6 support] )
-fi
-AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = xyes)
-AC_SUBST(USE_IPV6)
+AUD_ARG_ENABLE([rpath], [yes], [disable rpath])
 
-dnl rpath stuff
-dnl ========================
-AC_ARG_ENABLE(rpath,
-	[  --disable-rpath                disable hardcoded rpath (default=enabled)],
-			enable_rpath=$enableval, enable_rpath=yes)
-
-if test "x$enable_rpath" = xyes; then
-    RPATH_VAL="-Wl,-rpath=\${libdir}"
+if test "x$enable_rpath" = "xyes"; then
+    AUDLDFLAGS="-Wl,-rpath,${libdir}"
 fi
 
-dnl plugin stuff
-dnl ========================
+AC_SUBST([AUDLDFLAGS])
 
-dnl Ok, first we find out what flags we need to use.
-AC_MSG_CHECKING([for what extension and flags to use for plugin compilation])
-case "$target" in
-	*-apple-*)
-		AC_MSG_RESULT([Mac OS X: -fPIC -bundle -fno-common -flat_namespace -undefined suppress, .dylib])
-		PICFLAGS="-fPIC -DPIC"
-		PICLDFLAGS="-fPIC -DPIC -bundle -fno-common -flat_namespace -undefined suppress"
-		LIBLDFLAGS="-dynamiclib"
-		AUDLDFLAGS=""
-		SHARED_SUFFIX=".dylib"
-		;;
-	*)
-		AC_MSG_RESULT([libdl-compatible: -fPIC -DPIC -shared, .so])
-		PICFLAGS="-fPIC -DPIC"
-		PICLDFLAGS="-fPIC -DPIC -shared"
-		LIBLDFLAGS="-fPIC -DPIC -shared"
-		AUDLDFLAGS="-Wl,-export-dynamic $RPATH_VAL"
-		SHARED_SUFFIX=".so"
-		;;
-esac
-AC_SUBST(PICFLAGS)
-AC_SUBST(PICLDFLAGS)
-AC_SUBST(LIBLDFLAGS)
-AC_SUBST(AUDLDFLAGS)
-AC_SUBST(SHARED_SUFFIX)
-AC_DEFINE_UNQUOTED(SHARED_SUFFIX, "${SHARED_SUFFIX}",
-	[Define the shared module suffix extension on your platform.])
+### ---------------------------------------------------------------------------
+dnl Chardet support
+dnl ===============
+AUD_ARG_ENABLE([chardet], [yes],
+[charset detection support],
+[
+    PKG_CHECK_MODULES([LIBGUESS], [libguess], [enable_chardet=yes], [enable_chardet=no])
 
-AC_MSG_CHECKING([if you are running Apple-GCC])
-case "$target" in
-	*-apple-*)
-		AC_MSG_RESULT([yes, sorry you poor bastard])
-		LDFLAGS="$LDFLAGS -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,CoreServices"
-		;;
-	*)
-		AC_MSG_RESULT([no])
-		;;
-esac
+    if test "x$enable_chardet" = "xyes"; then
+        AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
+    fi
+])
+AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
 
-dnl libguess always compiled in
-dnl ========================
-SUBDIR_GUESS="libguess librcd"
-CHARDET_LIBS="../libguess/libguess.a ../librcd/librcd.a"
 
-dnl chardet support
-dnl ========================
-AC_ARG_ENABLE(chardet,
-	[  --enable-chardet	  enable character set detection support (default=yes)],
-			enable_chardet=$enableval, enable_chardet=yes)
-if test "x$enable_chardet" = xyes; then
-    AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled] )
-    AC_CHECK_LIB(udet_c, detectCharset, [AC_DEFINE(HAVE_UDET, 1,[Define if the system has Mozilla universal character detector library]) CHARDET_LIBS=["$CHARDET_LIBS -ludet -ludet_c"]])
-fi
-AM_CONDITIONAL(USE_CHARDET,test "x$enable_chardet" = xyes)
-AC_SUBST(USE_CHARDET)
-AC_SUBST(CHARDET_LIBS)
-AC_SUBST(SUBDIR_GUESS)
-
+### ---------------------------------------------------------------------------
 dnl D-Bus support
-dnl ========================
-AC_ARG_ENABLE(dbus,
-    [  --enable-dbus    enable D-Bus support (default=yes)],
-    [enable_dbus=$enableval],
-    [enable_dbus="yes"]
-)
+dnl =============
+AUD_ARG_ENABLE([dbus], [yes],
+[D-Bus support],
+[
+    PKG_CHECK_MODULES([DBUS], [dbus-1 >= 0.60 dbus-glib-1 >= 0.60 gthread-2.0],
+        [enable_dbus=yes],
+        [enable_dbus=no])
 
-AM_CONDITIONAL(USE_DBUS, test "x$enable_dbus" = "xyes")
-if test "x$enable_dbus" = "xyes"; then
-	PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.60 dbus-glib-1 >= 0.60 gthread-2.0],
-										enable_dbus="yes", [
-		AC_MSG_RESULT(no)
-		enable_dbus="no"
-	])
-	AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
-	AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal, no)
-	if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
-		enable_dbus="no"
-	else
-		AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
-		AC_DEFINE(DBUS_SERVICES_DIR, "$datadir/dbus-1/services",
-			[Location of D-Bus services directory])
-		USE_DBUS=1
-		LIBAUDCLIENT_LDFLAGS="-laudclient"
-		AC_SUBST(USE_DBUS)
-		AC_SUBST(DBUS_CFLAGS)
-		AC_SUBST(DBUS_LIBS)
-		AC_SUBST(DBUS_SERVICES_DIR)
-		AC_SUBST(DBUS_BINDING_TOOL)
-		AC_SUBST(LIBAUDCLIENT_LDFLAGS)
-	fi
-fi
+    AC_PATH_PROG([DBUS_BINDING_TOOL], [dbus-binding-tool], [no])
+    AC_PATH_PROG([GLIB_GENMARSHAL], [glib-genmarshal], [no])
+    if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
+        enable_dbus="no"
+    else
+        ADD_PC_REQUIRES([dbus-1 >= 0.60])
+        ADD_PC_REQUIRES([dbus-glib-1 >= 0.60])
+        AC_DEFINE([USE_DBUS], 1, [Define if D-Bus support enabled])
+        AC_DEFINE([DBUS_SERVICES_DIR], "$datadir/dbus-1/services",
+            [Location of D-Bus services directory])
+        LIBAUDCLIENT_LDFLAGS="$AUDLDFLAGS -laudclient"
+        AC_SUBST([DBUS_CFLAGS])
+        AC_SUBST([DBUS_LIBS])
+        AC_SUBST([DBUS_SERVICES_DIR])
+        AC_SUBST([DBUS_BINDING_TOOL])
+        AC_SUBST([LIBAUDCLIENT_LDFLAGS])
+    fi
+])
+AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
 
-dnl libsamplerate support
-dnl ========================
-AC_ARG_ENABLE(samplerate,
-  [  --enable-samplerate          enable libsamplerate support (default=no)],
-  [enable_samplerate=$enableval], [enable_samplerate=no])
-if test "x$enable_samplerate" = "xyes"; then
-   AC_DEFINE(USE_SRC, 1, [Define if libsamplerate enabled] )
-   PKG_CHECK_MODULES(samplerate, samplerate)
-   AC_SUBST(USE_SRC)
-   AC_SUBST(samplerate_CFLAGS)
-   AC_SUBST(samplerate_LIBS)
-   AC_CHECK_LIB(samplerate, src_process,,AC_MSG_ERROR([*** Unable to find libsamplerate library!]))
-fi
 
+### ---------------------------------------------------------------------------
 dnl regex support (gnu/oniguruma/pcre)
-dnl ========================
+dnl ==================================
 REGEX_LIBS=
 REGEX_CFLAGS=
-AC_ARG_WITH(regexlib,
-[
-  --with-regexlib[[=gnu/oniguruma/pcre]]   use the chosen regex library (default: gnu)
-],
-[case "${withval}" in
-  gnu)
-    AC_DEFINE(USE_REGEX_GNU,[1],[If this macro is defined, use GNU regex library.])
-    ;;
-  pcre)
-    PKG_CHECK_MODULES(LIBPCRE, [libpcre >= 6.7],
-        [
-          AC_DEFINE(USE_REGEX_PCRE,[1],[If this macro is defined, use PCRE regex library.])
-          REGEX_LIBS="-lpcreposix $LIBPCRE_LIBS"
-          REGEX_CFLAGS=$LIBPCRE_CFLAGS
-        ],
-        [AC_MSG_ERROR([Cannot find PCRE])]
-    )
-    ;;
-  oniguruma)
-    AC_CHECK_LIB( onig , onig_new ,
-        [
-          AC_DEFINE(USE_REGEX_ONIGURUMA,[1],[If this macro is defined, use Oniguruma regex library.])
-          REGEX_LIBS=['-lonig']
-        ],
-        [AC_MSG_ERROR([Cannot find Oniguruma])]
-    )
-    ;;
-  *)
-    AC_DEFINE(USE_REGEX_GNU,[1],[If this macro is defined, use GNU regex library.])
-    ;;
-esac],AC_DEFINE(USE_REGEX_GNU,[1],[If this macro is defined, use GNU regex library.]))
 
-AC_SUBST(REGEX_LIBS)
-AC_SUBST(REGEX_CFLAGS)
+regex_selected=
 
-
-dnl GConf support
-
-PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
-   [
-      AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
-      ADD_PC_REQUIRES([libmcs >= 0.1])
-   ],
-   [AC_MSG_ERROR([Cannot find libmcs])]
+AC_ARG_WITH([regexlib],
+[AS_HELP_STRING([--with-regexlib[=gnu/oniguruma/pcre]],[Use the chosen regex library (def: gnu)])],
+[regex_selected=$withval],
+[regex_selected=gnu]
 )
 
-AC_CHECK_HEADERS(unistd.h)
-AC_CHECK_HEADERS(fcntl.h)
-AC_CHECK_HEADERS(sys/ioctl.h)
-AC_CHECK_HEADERS(fnmatch.h)
-AC_CHECK_HEADERS(limits.h)
-AC_CHECK_HEADERS(wchar.h)
-AC_CHECK_HEADERS(fts.h)
-AC_CHECK_HEADERS(execinfo.h)
+case $regex_selected in
+  pcre)
+    AUD_CHECK_MODULE([LIBPCRE], [libpcre], [>= 6.7], [PCRE])
+    AC_DEFINE([USE_REGEX_PCRE], 1, [If this macro is defined, use PCRE regex library.])
+    REGEX_LIBS="-lpcreposix $LIBPCRE_LIBS"
+    REGEX_CFLAGS="$LIBPCRE_CFLAGS"
+    ;;
+  oniguruma)
+    AC_CHECK_LIB([onig], [onig_new],
+    [
+        AC_DEFINE([USE_REGEX_ONIGURUMA], 1, [If this macro is defined, use Oniguruma regex library.])
+        REGEX_LIBS="-lonig"
+    ],[
+        AC_MSG_ERROR([Cannot find Oniguruma regex library.])
+    ])
+    ;;
+  *)
+    AC_DEFINE([USE_REGEX_GNU], 1, [If this macro is defined, use GNU regex library.])
 
-AC_CHECK_FUNCS([mkdtemp getmntinfo statvfs strtoul lrintf])
+    AC_CHECK_LIB(c, regcomp, REGEX_LIBS="-lc",
+      [AC_CHECK_LIB(regex, regcomp, REGEX_LIBS="-lregex",
+        [AC_CHECK_LIB(rx, regcomp, REGEX_LIBS="-lrx",
+          AC_MSG_ERROR([Cannot find GNU regex library.])
+        )]
+      )]
+    )
+    ;;
+esac
 
-AC_MSG_CHECKING(if __ELF__ is defined)
-AC_EGREP_CPP(yes,
+AC_MSG_CHECKING([regex library type])
+AC_MSG_RESULT($regex_selected)
+
+AC_SUBST([REGEX_LIBS])
+AC_SUBST([REGEX_CFLAGS])
+
+
+### ---------------------------------------------------------------------------
+dnl Pthread support
+dnl ===============
+PTHREAD_LIBS=
+PTHREAD_CFLAGS=
+
+AC_CHECK_LIB(pthread, pthread_create, PTHREAD_LIBS="-lpthread",
+  [AC_CHECK_LIB(pthreads, pthread_create, PTHREAD_LIBS="-lpthreads",
+    [AC_CHECK_LIB(pthreadGC2, pthread_create, PTHREAD_LIBS="-lpthreadGC2")]
+  )]
+)
+
+AC_SUBST([PTHREAD_LIBS])
+AC_SUBST([PTHREAD_CFLAGS])
+
+### ---------------------------------------------------------------------------
+dnl Session management support
+dnl ==========================
+
+AUD_ARG_ENABLE([sm], [yes],
+[session management],
+[
+    PKG_CHECK_MODULES([SM], [sm >= 1.0], [
+        enable_sm="yes"
+    ],[
+        enable_sm="no"
+    ])
+
+    AC_SUBST([SM_CFLAGS])
+    AC_SUBST([SM_LIBS])
+
+    PKG_CHECK_MODULES([ICE], [ice >= 1.0],
+     [enable_sm="${enable_sm}"],
+     [enable_sm="no"])
+
+    AC_SUBST([ICE_CFLAGS])
+    AC_SUBST([ICE_LIBS])
+
+    PKG_CHECK_MODULES(GLIB214, glib-2.0 >= 2.14, enable_sm=$enable_sm,
+     enable_sm=no)
+
+    if test $enable_sm = yes ; then
+        AC_DEFINE(USE_EGGSM, 1, Define if session management should be used)
+    fi
+])
+
+AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
+
+### ---------------------------------------------------------------------------
+dnl Ugly system checks
+dnl ==================
+AC_MSG_CHECKING([if __ELF__ is defined])
+AC_EGREP_CPP([yes],
     [#ifdef __ELF__
         yes
      #endif
@@ -330,21 +279,20 @@ AC_EGREP_CPP(yes,
     [is_elf=yes],
     [is_elf=no]
 )
-AC_MSG_RESULT([${is_elf}])
+AC_MSG_RESULT([$is_elf])
 
 have_solaris=no
 have_sun=no
 ARCH_DEFINES=""
-case "$host" in
+case $host in
     *-*-openbsd* | *-*-netbsd* | *-*-mirbsd*)
         have_sun=yes
-        if test "${is_elf}" = "no"
-        then
-            AC_DEFINE(SYMBOL_PREFIX, "_", [Define to symbol prefix, if any])
+        if test "x${is_elf}" = "xno"; then
+            AC_DEFINE([SYMBOL_PREFIX], "_", [Define to symbol prefix, if any])
         fi
     ;;
     *-*-darwin*)
-        AC_DEFINE(SYMBOL_PREFIX, "_", [Define to symbol prefix, if any])
+        AC_DEFINE([SYMBOL_PREFIX], "_", [Define to symbol prefix, if any])
     ;;
     *-hpux-*)
         ARCH_DEFINES="-DHPUX"
@@ -356,10 +304,10 @@ esac
 
 arch_type=other
 x86_asm=no
-case "$host" in
+case $host in
     i386-*-* | i486-*-* | i586-*-* | i686-*-* | i86pc-*-*)
         arch_type=ix86
-        case "$host" in
+        case $host in
             *-*-netbsd* | *-*openbsd*)
             ;;
             *)
@@ -370,129 +318,108 @@ case "$host" in
     ;;
 esac
 
-AC_SUBST(ARCH_DEFINES)
+AC_SUBST([ARCH_DEFINES])
 
 dnl XXX delete ASAP -nenolod
-AM_CONDITIONAL(ARCH_X86, test "x$arch_type" = "xix86")
-AM_CONDITIONAL(USE_X86ASM, test "x$x86_asm" = xyes)
-AM_CONDITIONAL(HAVE_SOLARIS, test "x$have_solaris" = xyes)
-AM_CONDITIONAL(HAVE_SUN, test "x$have_sun" = xyes)
+AUD_CONDITIONAL([ARCH_X86], [arch_type], [ix86])
+AUD_CONDITIONAL([USE_X86ASM], [x86_asm])
+AUD_CONDITIONAL([HAVE_SOLARIS], [have_solaris])
+AUD_CONDITIONAL([HAVE_SUN], [have_sun])
 
+### ---------------------------------------------------------------------------
+dnl Define plugin directories
+dnl =========================
 plugindir="$libdir/audacious"
-AC_SUBST(plugindir)
+AC_SUBST([plugindir])
+AC_SUBST([pluginsubs])
 
-if test "x$enable_one_plugin_dir" = "xyes"; then
-    pluginsubs="\\\"Plugins\\\""
-    INPUT_PLUGIN_DIR=Plugins
-    OUTPUT_PLUGIN_DIR=Plugins
-    EFFECT_PLUGIN_DIR=Plugins
-    GENERAL_PLUGIN_DIR=Plugins
-    VISUALIZATION_PLUGIN_DIR=Plugins
-    CONTAINER_PLUGIN_DIR=Plugins
-    TRANSPORTR_PLUGIN_DIR=Plugins
-else
-    pluginsubs="\\\"Output\\\",\\\"Input\\\",\\\"Effect\\\",\\\"General\\\",\\\"Visualization\\\",\\\"Container\\\",\\\"Transport\\\""
-    INPUT_PLUGIN_DIR=Input
-    OUTPUT_PLUGIN_DIR=Output
-    EFFECT_PLUGIN_DIR=Effect
-    GENERAL_PLUGIN_DIR=General
-    VISUALIZATION_PLUGIN_DIR=Visualization
-    CONTAINER_PLUGIN_DIR=Container
-    TRANSPORT_PLUGIN_DIR=Transport
-fi
+AUD_DEFINE_PLUGIN_DIR([Transport])
+AUD_DEFINE_PLUGIN_DIR([Input])
+AUD_DEFINE_PLUGIN_DIR([Output])
+AUD_DEFINE_PLUGIN_DIR([Effect])
+AUD_DEFINE_PLUGIN_DIR([General])
+AUD_DEFINE_PLUGIN_DIR([Visualization])
+AUD_DEFINE_PLUGIN_DIR([Container])
+AUD_DEFINE_PLUGIN_DIR([Discovery])
 
-AC_SUBST(INPUT_PLUGIN_DIR)
-AC_SUBST(OUTPUT_PLUGIN_DIR)
-AC_SUBST(EFFECT_PLUGIN_DIR)
-AC_SUBST(GENERAL_PLUGIN_DIR)
-AC_SUBST(VISUALIZATION_PLUGIN_DIR)
-AC_SUBST(CONTAINER_PLUGIN_DIR)
-AC_SUBST(TRANSPORT_PLUGIN_DIR)
-AC_SUBST(pluginsubs)
 
+### ---------------------------------------------------------------------------
 dnl XXX Work around some autoconf bugs.
-if test "$prefix" = "NONE"; then
+if test "x$prefix" = "xNONE"; then
         prefix="${ac_default_prefix}"
 fi
 
 if test -z "$datadir"; then
-	datadir="${prefix}/share"
+    datadir="${prefix}/share"
 fi
 
 localedir="$datadir/locale"
-AC_SUBST(localedir)
+AC_SUBST([localedir])
 
-BEEP_DEFINES="$CFLAGS -DDATA_DIR=\\\"$datadir/audacious\\\" -DPLUGIN_DIR=\\\"$plugindir\\\" -DPLUGINSUBS=$pluginsubs -DLOCALEDIR=\\\"$localedir\\\""
-CFLAGS="$CFLAGS $EXTRA_CFLAGS"
+AUDACIOUS_DEFINES="-DPLUGINSUBS=$pluginsubs"
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_BINDIR=\\\"$bindir\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DATADIR=\\\"$datadir/audacious\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_PLUGINDIR=\\\"$plugindir\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_LOCALEDIR=\\\"$localedir\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DESKTOPFILE=\\\"${datadir}/applications/audacious.desktop\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_ICONFILE=\\\"${datadir}/pixmaps/audacious.png\\\""
+AC_SUBST([AUDACIOUS_DEFINES])
 
-if test "$enable_user_plugin_dir" = "no"; then
-    AC_DEFINE(DISABLE_USER_PLUGIN_DIR,, [Define to disable per user plugin directory])
-fi
 
-AC_SUBST(BEEP_DEFINES)
-
-AC_ARG_ENABLE(xspf,
-[  --disable-xspf          disable XSPF support. (default=enabled)],
-[have_xspf=$enableval], [have_xspf=yes])
-
-AM_PATH_XML2(2.0.0, , [
-       AC_MSG_WARN([*** libxml2 is not installed. Paranormal nor XSPF support will not be built. ***])
-       have_xspf="no"
-])
-
-if test "$have_xspf" = "yes"; then
-       AC_DEFINE(HAVE_XSPF_PLAYLIST, 1, [Define if XSPF playlists are available.])
-fi
-
-AC_SUBST(beepdir)
-AC_SUBST(plugindir)
-
+### ---------------------------------------------------------------------------
+dnl Output configuration files
+dnl ==========================
 AC_CONFIG_FILES([
-	audacious.pc
-	mk/rules.mk
-	man/audtool.1
-	man/audacious.1
-	src/audacious/audacious.desktop
-	po/Makefile.in
+    audacious.pc
+    audclient.pc
+    buildsys.mk
+    extra.mk
+    man/audtool.1
+    man/audacious.1
 ])
 
+BUILDSYS_TOUCH_DEPS
 AC_OUTPUT
 
-
-echo
+### ---------------------------------------------------------------------------
+dnl Print out the results
+dnl =====================
+echo ""
 echo "Configuration:"
-echo
-echo "  Install path:                           ${prefix}"
+echo ""
+echo "  Install path:                           $prefix"
 
-if test "$BEEP_PATH" != "no"; then
-    echo "  Current Audacious executable:           $BEEP_PATH"
+if test "x$AUDACIOUS_PATH" != "xno"; then
+echo "  Current Audacious executable:           $AUDACIOUS_PATH"
 fi
 
-echo "  Legacy configuration path:              \$HOME/$rc_path"
-echo
-echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
-echo 
+echo ""
 echo "  Automatic character code detection:     $enable_chardet"
-echo "  Sample rate upconversion:               $enable_samplerate"
 echo "  D-Bus support:                          $enable_dbus"
-echo
+echo "  Session management (eggsm)              $enable_sm"
+echo ""
+echo "  SSE2:                                   $enable_sse2"
+echo "  AltiVec:                                $enable_altivec"
+echo ""
 
-if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
-    echo "Note: You need to have thread-safe xlibs to use Audacious."
-    echo "If you are using libc5 thread aware Xlibs just skip this."
-    echo ""
-    echo "If you don't have those libs and you are on a libc5 system get them at:"
-    echo "ftp://ftp.dent.med.uni-muenchen.de/pub/wmglo/"
+if test "x$AUDACIOUS_PATH" != "xno" && test "x$prefix/bin/audacious" != "x$AUDACIOUS_PATH"; then
+    audlocation=`dirname $AUDACIOUS_PATH`
+    echo "**"
+    echo "** NOTICE! Configure has discovered that you already have Audacious installed"
+    echo "** and it does not match with the given --prefix. You have Audacious installed"
+    echo "** in ${audlocation} and you chose ${prefix}/bin."
+    echo "**"
+    echo "** If you don't want two copies of Audacious installed, rerun configure with"
+    echo "** the --prefix option set to the location of the old Audacious, or uninstall"
+    echo "** the old Audacious."
+    echo "**"
 fi
 
-if test "$BEEP_PATH" != "no" && test "$prefix/bin/audacious" != "$BEEP_PATH" ; then
-    echo ""
-    echo "Note: Configure has discovered that you already have Audacious installed"
-    echo "and it does not match with the given --prefix. You have Audacious installed "
-    echo "in $(dirname $BEEP_PATH) and you chose $prefix/bin."
-    echo
-    echo "If you don't want two copies of Audacious installed, rerun configure with"
-    echo "the --prefix option set to the location of the old Audacious, or uninstall"
-    echo "the old Audacious."
+if test "x$enable_dbus" != "xyes"; then
+    echo "**"
+    echo "** WARNING! DBUS support is disabled. This means that various features"
+    echo "** the user might expect (such as remotely adding files to session via"
+    echo "** commandline) will not work!"
+    echo "**"
 fi

@@ -1,53 +1,37 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+/*
+ * visualization.h
+ * Copyright 2010 John Lindgren
  *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team
+ * This file is part of Audacious.
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 2 of the License.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
-#ifndef VISUALIZATION_H
-#define VISUALIZATION_H
+
+#ifndef AUDACIOUS_VISUALIZATION_H
+#define AUDACIOUS_VISUALIZATION_H
 
 #include <glib.h>
 
-#include "plugin.h"
+#include "plugins.h"
 
-typedef struct _VisPluginData VisPluginData;
+void vis_init (void);
+void vis_cleanup (void);
 
-struct _VisPluginData {
-    GList *vis_list;
-    GList *enabled_list;
-    gboolean playback_started;
-};
+gboolean vis_plugin_start (PluginHandle * plugin);
+void vis_plugin_stop (PluginHandle * plugin);
 
-GList *get_vis_list(void);
-GList *get_vis_enabled_list(void);
-void enable_vis_plugin(gint i, gboolean enable);
-void vis_disable_plugin(VisPlugin * vp);
-void vis_about(gint i);
-void vis_configure(gint i);
-void vis_playback_start(void);
-void vis_playback_stop(void);
-gboolean vis_enabled(gint i);
-gchar *vis_stringify_enabled_list(void);
-void vis_enable_from_stringified_list(gchar * list);
-void vis_send_data(gint16 pcm_data[2][512], gint nch, gint length);
-
-extern VisPluginData vp_data;
+PluginHandle * vis_plugin_by_widget (/* GtkWidget * */ void * widget);
 
 #endif

@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+ *  Copyright (C) 2005-2011  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -9,7 +9,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 2 of the License.
+ *  the Free Software Foundation; under version 3 of the License.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,734 +17,45 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses>.
+ *
+ *  The Audacious team does not consider modular code linking to
+ *  Audacious or using our public API to be a derived work.
  */
+
+#include <limits.h>
+#include <unistd.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
 
-#define NEED_GLADE
-#include "util.h"
-
 #include <glib.h>
-#include <glib/gi18n.h>
-#include <glade/glade.h>
-#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-#include "platform/smartinclude.h"
 #include <errno.h>
 
 #ifdef HAVE_FTS_H
+#  include <sys/types.h>
+#  include <sys/stat.h>
 #  include <fts.h>
 #endif
 
-#include "glade.h"
-#include "input.h"
-#include "main.h"
-#include "playback.h"
-#include "strings.h"
-#include "ui_playlist.h"
-
-#ifdef USE_CHARDET
-    #include "../librcd/librcd.h"
-#ifdef HAVE_UDET
-    #include <libudet_c.h>
-#endif
-#endif
-
-/*
- * find <file> in directory <dirname> or subdirectories.  return
- * pointer to complete filename which has to be freed by calling
- * "g_free()" after use. Returns NULL if file could not be found.
- */
-
-typedef struct {
-    const gchar *to_match;
-    gchar *match;
-    gboolean found;
-} FindFileContext;
-
-static gboolean
-find_file_func(const gchar * path, const gchar * basename, gpointer data)
-{
-    FindFileContext *context = data;
-
-    if (strlen(path) > FILENAME_MAX) {
-        g_warning("Ignoring path: name too long (%s)", path);
-        return TRUE;
-    }
-
-    if (g_file_test(path, G_FILE_TEST_IS_REGULAR)) {
-        if (!strcasecmp(basename, context->to_match)) {
-            context->match = g_strdup(path);
-            context->found = TRUE;
-            return TRUE;
-        }
-    }
-    else if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
-        dir_foreach(path, find_file_func, context, NULL);
-        if (context->found)
-            return TRUE;
-    }
-
-    return FALSE;
-}
-
-gchar *
-find_file_recursively(const gchar * path, const gchar * filename)
-{
-    FindFileContext context;
-
-    context.to_match = filename;
-    context.match = NULL;
-    context.found = FALSE;
-
-    dir_foreach(path, find_file_func, &context, NULL);
-    return context.match;
-}
-
-
-typedef enum {
-    ARCHIVE_UNKNOWN = 0,
-    ARCHIVE_DIR,
-    ARCHIVE_TAR,
-    ARCHIVE_TGZ,
-    ARCHIVE_ZIP,
-    ARCHIVE_TBZ2
-} ArchiveType;
-
-typedef gchar *(*ArchiveExtractFunc) (const gchar *, const gchar *);
-
-typedef struct {
-    ArchiveType type;
-    const gchar *ext;
-} ArchiveExtensionType;
-
-static ArchiveExtensionType archive_extensions[] = {
-    {ARCHIVE_TAR, ".tar"},
-    {ARCHIVE_ZIP, ".wsz"},
-    {ARCHIVE_ZIP, ".zip"},
-    {ARCHIVE_TGZ, ".tar.gz"},
-    {ARCHIVE_TGZ, ".tgz"},
-    {ARCHIVE_TBZ2, ".tar.bz2"},
-    {ARCHIVE_TBZ2, ".bz2"},
-    {ARCHIVE_UNKNOWN, NULL}
-};
-
-static gchar *archive_extract_tar(const gchar * archive, const gchar * dest);
-static gchar *archive_extract_zip(const gchar * archive, const gchar * dest);
-static gchar *archive_extract_tgz(const gchar * archive, const gchar * dest);
-static gchar *archive_extract_tbz2(const gchar * archive, const gchar * dest);
-
-static ArchiveExtractFunc archive_extract_funcs[] = {
-    NULL,
-    NULL,
-    archive_extract_tar,
-    archive_extract_tgz,
-    archive_extract_zip,
-    archive_extract_tbz2
-};
-
-
-/* FIXME: these functions can be generalised into a function using a
- * command lookup table */
-
-static const gchar *
-get_tar_command(void)
-{
-    static const gchar *command = NULL;
-
-    if (!command) {
-        if (!(command = getenv("TARCMD")))
-            command = "tar";
-    }
-
-    return command;
-}
-
-static const gchar *
-get_unzip_command(void)
-{
-    static const gchar *command = NULL;
-
-    if (!command) {
-        if (!(command = getenv("UNZIPCMD")))
-            command = "unzip";
-    }
-
-    return command;
-}
-
-
-static gchar *
-archive_extract_tar(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("%s >/dev/null xf \"%s\" -C %s",
-                           get_tar_command(), archive, dest);
-}
-
-static gchar *
-archive_extract_zip(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("%s >/dev/null -o -j \"%s\" -d %s",
-                           get_unzip_command(), archive, dest);
-}
-
-static gchar *
-archive_extract_tgz(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("%s >/dev/null xzf \"%s\" -C %s",
-                           get_tar_command(), archive, dest);
-}
-
-static gchar *
-archive_extract_tbz2(const gchar * archive, const gchar * dest)
-{
-    return g_strdup_printf("bzip2 -dc \"%s\" | %s >/dev/null xf - -C %s",
-                           archive, get_tar_command(), dest);
-}
-
-
-ArchiveType
-archive_get_type(const gchar * filename)
-{
-    gint i = 0;
-
-    if (g_file_test(filename, G_FILE_TEST_IS_DIR))
-        return ARCHIVE_DIR;
-
-    while (archive_extensions[i].ext) {
-        if (g_str_has_suffix(filename, archive_extensions[i].ext)) {
-            return archive_extensions[i].type;
-        }
-        i++;
-    }
-
-    return ARCHIVE_UNKNOWN;
-}
-
-gboolean
-file_is_archive(const gchar * filename)
-{
-    return (archive_get_type(filename) > ARCHIVE_DIR);
-}
-
-gchar *
-archive_basename(const gchar * str)
-{
-    gint i = 0;
-
-    while (archive_extensions[i].ext) {
-        if (str_has_suffix_nocase(str, archive_extensions[i].ext)) {
-            const gchar *end = g_strrstr(str, archive_extensions[i].ext);
-            if (end) {
-                return g_strndup(str, end - str);
-            }
-            break;
-        }
-        i++;
-    }
-
-    return NULL;
-}
-
-/*
-   decompress_archive
-
-   Decompresses the archive "filename" to a temporary directory,
-   returns the path to the temp dir, or NULL if failed,
-   watch out tho, doesn't actually check if the system command succeeds :-|
-*/
-
-gchar *
-archive_decompress(const gchar * filename)
-{
-    gchar *tmpdir, *cmd, *escaped_filename;
-    ArchiveType type;
-#ifndef HAVE_MKDTEMP
-    mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
-#endif
-
-    if ((type = archive_get_type(filename)) <= ARCHIVE_DIR)
-        return NULL;
-
-#ifdef HAVE_MKDTEMP
-    tmpdir = g_build_filename(g_get_tmp_dir(), "audacious.XXXXXXXX", NULL);
-    if (!mkdtemp(tmpdir)) {
-        g_free(tmpdir);
-        g_message("Unable to load skin: Failed to create temporary "
-                  "directory: %s", g_strerror(errno));
-        return NULL;
-    }
-#else
-    tmpdir = g_strdup_printf("%s/audacious.%ld", g_get_tmp_dir(), rand());
-    make_directory(tmpdir, mode755);
-#endif
-
-    escaped_filename = escape_shell_chars(filename);
-    cmd = archive_extract_funcs[type] (escaped_filename, tmpdir);
-    g_free(escaped_filename);
-
-    if (!cmd) {
-        g_message("extraction function is NULL!");
-        g_free(tmpdir);
-        return NULL;
-    }
-
-    if(system(cmd) == -1)
-    {
-        g_message("could not execute cmd %s",cmd);
-        g_free(cmd);
-        return NULL;
-    }
-    g_free(cmd);
-
-    return tmpdir;
-}
-
-
-#ifdef HAVE_FTS_H
-
-void
-del_directory(const gchar * dirname)
-{
-    gchar *const argv[2] = { (gchar *) dirname, NULL };
-    FTS *fts;
-    FTSENT *p;
-
-    fts = fts_open(argv, FTS_PHYSICAL, (gint(*)())NULL);
-    while ((p = fts_read(fts))) {
-        switch (p->fts_info) {
-        case FTS_D:
-            break;
-        case FTS_DNR:
-        case FTS_ERR:
-            break;
-        case FTS_DP:
-            rmdir(p->fts_accpath);
-            break;
-        default:
-            unlink(p->fts_accpath);
-            break;
-        }
-    }
-    fts_close(fts);
-}
-
-#else                           /* !HAVE_FTS */
-
-gboolean
-del_directory_func(const gchar * path, const gchar * basename,
-                   gpointer params)
-{
-    if (!strcmp(basename, ".") || !strcmp(path, ".."))
-        return FALSE;
-
-    if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
-        dir_foreach(path, del_directory_func, NULL, NULL);
-        rmdir(path);
-        return FALSE;
-    }
-
-    unlink(path);
-
-    return FALSE;
-}
-
-void
-del_directory(const gchar * path)
-{
-    dir_foreach(path, del_directory_func, NULL, NULL);
-    rmdir(path);
-}
-
-#endif                          /* ifdef HAVE_FTS */
-
-static void
-strip_string(GString *string)
-{
-    while (string->len > 0 && string->str[0] == ' ')
-        g_string_erase(string, 0, 1);
-
-    while (string->len > 0 && string->str[string->len - 1] == ' ')
-        g_string_erase(string, string->len - 1, 1);
-}
-
-static void
-strip_lower_string(GString *string)
-{
-    gchar *lower;
-    strip_string(string);
-
-    lower = g_ascii_strdown(string->str, -1);
-    g_free(string->str);
-    string->str = lower;
-}
-
-INIFile *
-open_ini_file(const gchar *filename)
-{
-    GHashTable *ini_file = g_hash_table_new(NULL, NULL);
-    GHashTable *section = g_hash_table_new(NULL, NULL);
-    GString *section_name, *key_name, *value;
-    gpointer section_hash, key_hash;
-    gchar *buffer = NULL;
-    gsize off = 0;
-    gsize filesize = 0;
-
-    unsigned char x[] = { 0xff, 0xfe, 0x00 };
-
-
-    g_return_val_if_fail(filename, NULL);
-
-    section_name = g_string_new("");
-    key_name = g_string_new(NULL);
-    value = g_string_new(NULL);
-
-    /* make a nameless section which should store all entries that are not
-     * embedded in a section */
-    section_hash = GINT_TO_POINTER(g_string_hash(section_name));
-    g_hash_table_insert(ini_file, section_hash, section);
-
-    vfs_file_get_contents(filename, &buffer, &filesize);
-    if (buffer == NULL)
-        return NULL;
-
-
-    /*
-     * Convert UTF-16 into something useful. Original implementation
-     * by incomp@#audacious. Cleanups \nenolod
-     * FIXME: can't we use a GLib function for that? -- 01mf02
-     */
-    if (filesize > 2 && !memcmp(&buffer[0],&x,2))
-    {
-        gchar *outbuf = g_malloc (filesize);   /* it's safe to waste memory. */
-        guint counter;
-
-        for (counter = 2; counter < filesize; counter += 2)
-        {
-            if (!memcmp(&buffer[counter+1], &x[2], 1))
-                outbuf[(counter-2)/2] = buffer[counter];
-            else
-                return NULL;
-        }
-
-        outbuf[(counter-2)/2] = '\0';
-
-        if ((filesize - 2) / 2 == (counter - 2) / 2)
-        {
-            g_free(buffer);
-            buffer = outbuf;
-        }
-        else
-        {
-            g_free(outbuf);
-            return NULL;    /* XXX wrong encoding */
-        }
-    }
-
-    while (off < filesize)
-    {
-        /* ignore the following characters */
-        if (buffer[off] == '\r' || buffer[off] == '\n' ||
-            buffer[off] == ' '  || buffer[off] == '\t')
-        {
-            if (buffer[off] == '\n')
-            {
-                g_string_free(key_name, TRUE);
-                g_string_free(value, FALSE);
-                key_name = g_string_new(NULL);
-                value = g_string_new(NULL);
-            }
-
-            off++;
-            continue;
-        }
-
-        /* if we encounter a possible section statement */
-        if (buffer[off] == '[')
-        {
-            g_string_free(section_name, TRUE);
-            section_name = g_string_new(NULL);
-            off++;
-
-            if (off >= filesize)
-                goto return_sequence;
-
-            while (buffer[off] != ']')
-            {
-                /* if the section statement has not been closed before a
-                 * linebreak */
-                if (buffer[off] == '\n')
-                    break;
-
-                g_string_append_c(section_name, buffer[off]);
-                off++;
-                if (off >= filesize)
-                    goto return_sequence;
-            }
-            if (buffer[off] == '\n')
-                continue;
-            if (buffer[off] == ']')
-            {
-                off++;
-                if (off >= filesize)
-                    goto return_sequence;
-
-                strip_lower_string(section_name);
-                section_hash = GINT_TO_POINTER(g_string_hash(section_name));
-
-                /* if this section already exists, we don't make a new one,
-                 * but reuse the old one */
-                if (g_hash_table_lookup(ini_file, section_hash) != NULL)
-                    section = g_hash_table_lookup(ini_file, section_hash);
-                else
-                {
-                    section = g_hash_table_new(NULL, NULL);
-                    g_hash_table_insert(ini_file, section_hash, section);
-                }
-
-                continue;
-            }
-        }
-
-        if (buffer[off] == '=')
-        {
-            off++;
-            if (off >= filesize)
-                goto return_sequence;
-
-            while (buffer[off] != '\n' && buffer[off] != '\r')
-            {
-                g_string_append_c(value, buffer[off]);
-                off++;
-                if (off >= filesize)
-                    break;
-            }
-
-            strip_lower_string(key_name);
-            key_hash = GINT_TO_POINTER(g_string_hash(key_name));
-            strip_string(value);
-
-            if (key_name->len > 0 && value->len > 0)
-                g_hash_table_insert(section, key_hash, g_strdup(value->str));
-        }
-        else
-        {
-            g_string_append_c(key_name, buffer[off]);
-            off++;
-            if (off >= filesize)
-                goto return_sequence;
-        }
-    }
-
-return_sequence:
-    g_string_free(section_name, TRUE);
-    g_string_free(key_name, TRUE);
-    g_string_free(value, TRUE);
-    g_free(buffer);
-    return ini_file;
-}
-
-void
-close_ini_file(INIFile *inifile)
-{
-    g_return_if_fail(inifile);
-
-    /* we don't have to destroy anything in the hash table manually, as the
-     * keys are represented as integers and the string values may be used in
-     * functions which have read the strings from the hash table
-     */
-    g_hash_table_destroy(inifile);
-}
-
-gchar *
-read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
-{
-    GString *section_string;
-    GString *key_string;
-    gchar *value = NULL;
-    gpointer section_hash, key_hash;
-    GHashTable *section_table;
-    
-    g_return_val_if_fail(inifile, NULL);
-
-    section_string = g_string_new(section);
-    key_string = g_string_new(key);
-    value = NULL;
-
-    strip_lower_string(section_string);
-    strip_lower_string(key_string);
-    section_hash = GINT_TO_POINTER(g_string_hash(section_string));
-    key_hash = GINT_TO_POINTER(g_string_hash(key_string));
-    g_string_free(section_string, FALSE);
-    g_string_free(key_string, FALSE);
-
-    section_table = g_hash_table_lookup(inifile, section_hash);
-    g_return_val_if_fail(section_table, NULL);
-
-    value = g_hash_table_lookup(section_table, GINT_TO_POINTER(key_hash));
-    return value;
-}
-
-GArray *
-read_ini_array(INIFile *inifile, const gchar *section, const gchar *key)
-{
-    gchar *temp;
-    GArray *a;
-
-    g_return_val_if_fail((temp = read_ini_string(inifile, section, key)), NULL);
-
-    a = string_to_garray(temp);
-    g_free(temp);
-    return a;
-}
-
-GArray *
-string_to_garray(const gchar * str)
-{
-    GArray *array;
-    gint temp;
-    const gchar *ptr = str;
-    gchar *endptr;
-
-    array = g_array_new(FALSE, TRUE, sizeof(gint));
-    for (;;) {
-        temp = strtol(ptr, &endptr, 10);
-        if (ptr == endptr)
-            break;
-        g_array_append_val(array, temp);
-        ptr = endptr;
-        while (!isdigit((int) *ptr) && (*ptr) != '\0')
-            ptr++;
-        if (*ptr == '\0')
-            break;
-    }
-    return (array);
-}
-
-void
-glist_movedown(GList * list)
-{
-    gpointer temp;
-
-    if (g_list_next(list)) {
-        temp = list->data;
-        list->data = list->next->data;
-        list->next->data = temp;
-    }
-}
-
-void
-glist_moveup(GList * list)
-{
-    gpointer temp;
-
-    if (g_list_previous(list)) {
-        temp = list->data;
-        list->data = list->prev->data;
-        list->prev->data = temp;
-    }
-}
-
-
-void
-util_menu_position(GtkMenu * menu, gint * x, gint * y,
-                   gboolean * push_in, gpointer data)
-{
-    GtkRequisition requisition;
-    gint screen_width;
-    gint screen_height;
-    MenuPos *pos = data;
-
-    gtk_widget_size_request(GTK_WIDGET(menu), &requisition);
-
-    screen_width = gdk_screen_width();
-    screen_height = gdk_screen_height();
-
-    *x = CLAMP(pos->x - 2, 0, MAX(0, screen_width - requisition.width));
-    *y = CLAMP(pos->y - 2, 0, MAX(0, screen_height - requisition.height));
-}
-
-GdkFont *
-util_font_load(const gchar * name)
-{
-    GdkFont *font;
-    PangoFontDescription *desc;
-
-    desc = pango_font_description_from_string(name);
-    font = gdk_font_from_description(desc);
-
-    return font;
-}
-
-/* text_get_extents() taken from The GIMP (C) Spencer Kimball, Peter
- * Mattis et al */
-gboolean
-text_get_extents(const gchar * fontname,
-                 const gchar * text,
-                 gint * width, gint * height, gint * ascent, gint * descent)
-{
-    PangoFontDescription *font_desc;
-    PangoLayout *layout;
-    PangoRectangle rect;
-
-    g_return_val_if_fail(fontname != NULL, FALSE);
-    g_return_val_if_fail(text != NULL, FALSE);
-
-    /* FIXME: resolution */
-    layout = gtk_widget_create_pango_layout(GTK_WIDGET(mainwin), text);
-
-    font_desc = pango_font_description_from_string(fontname);
-    pango_layout_set_font_description(layout, font_desc);
-    pango_font_description_free(font_desc);
-    pango_layout_get_pixel_extents(layout, NULL, &rect);
-
-    if (width)
-        *width = rect.width;
-    if (height)
-        *height = rect.height;
-
-    if (ascent || descent) {
-        PangoLayoutIter *iter;
-        PangoLayoutLine *line;
-
-        iter = pango_layout_get_iter(layout);
-        line = pango_layout_iter_get_line(iter);
-        pango_layout_iter_free(iter);
-
-        pango_layout_line_get_pixel_extents(line, NULL, &rect);
-
-        if (ascent)
-            *ascent = PANGO_ASCENT(rect);
-        if (descent)
-            *descent = -PANGO_DESCENT(rect);
-    }
-
-    g_object_unref(layout);
-
-    return TRUE;
-}
-
-/* counts number of digits in a gint */
-guint
-gint_count_digits(gint n)
-{
-    guint count = 0;
-
-    n = ABS(n);
-    do {
-        count++;
-        n /= 10;
-    } while (n > 0);
-
-    return count;
-}
+#include <libaudcore/audstrings.h>
+#include <libaudcore/stringpool.h>
+
+#include "audconfig.h"
+#include "debug.h"
+#include "i18n.h"
+#include "misc.h"
+#include "plugins.h"
+#include "util.h"
 
 gboolean
 dir_foreach(const gchar * path, DirForeachFunc function,
@@ -776,283 +87,8 @@ dir_foreach(const gchar * path, DirForeachFunc function,
     return TRUE;
 }
 
-GtkWidget *
-make_filebrowser(const gchar *title, gboolean save)
-{
-    GtkWidget *dialog;
-    GtkWidget *button;
-
-    g_return_val_if_fail(title != NULL, NULL);
-
-    dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                         save ?
-                                         GTK_FILE_CHOOSER_ACTION_SAVE :
-                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         NULL, NULL);
-
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                   GTK_RESPONSE_REJECT);
-
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), save ?
-                                   GTK_STOCK_SAVE : GTK_STOCK_OPEN,
-                                   GTK_RESPONSE_ACCEPT);
-
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
-
-    return dialog;
-}
-
-/*
- * Resizes a GDK pixmap.
- */
-GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in, gint width, gint height)
-{
-    GdkPixmap *out;
-    gint owidth, oheight;
-
-    g_return_val_if_fail(src != NULL, NULL);
-    g_return_val_if_fail(src_gc != NULL, NULL);
-    g_return_val_if_fail(in != NULL, NULL);
-    g_return_val_if_fail(width > 0 && height > 0, NULL);
-
-    gdk_drawable_get_size(in, &owidth, &oheight);
-
-    if (oheight == height && owidth == width)
-        return NULL;
-
-    out = gdk_pixmap_new(src, width, height, -1);
-
-    gdk_draw_rectangle(out, src_gc, TRUE, 0, 0, width, height);
-
-    gdk_window_copy_area(out, src_gc, 0, 0, in, 0, 0, owidth, oheight);
-    g_object_unref(src);
-
-    return out;
-}
-
-GdkImage *create_dblsize_image(GdkImage * img)
-{
-    GdkImage *dblimg;
-    register guint x, y;
-
-    /*
-     * This needs to be optimized
-     */
-
-    dblimg =
-    gdk_image_new(GDK_IMAGE_NORMAL, gdk_visual_get_system(),
-              img->width << 1, img->height << 1);
-    if (dblimg->bpp == 1) {
-    register guint8 *srcptr, *ptr, *ptr2, pix;
-
-    srcptr = GDK_IMAGE(img)->mem;
-    ptr = GDK_IMAGE(dblimg)->mem;
-    ptr2 = ptr + dblimg->bpl;
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix = *srcptr++;
-        *ptr++ = pix;
-        *ptr++ = pix;
-        *ptr2++ = pix;
-        *ptr2++ = pix;
-        }
-        srcptr += img->bpl - img->width;
-        ptr += (dblimg->bpl << 1) - dblimg->width;
-        ptr2 += (dblimg->bpl << 1) - dblimg->width;
-    }
-    }
-    if (dblimg->bpp == 2) {
-    guint16 *srcptr, *ptr, *ptr2, pix;
-
-    srcptr = (guint16 *) GDK_IMAGE_XIMAGE(img)->data;
-    ptr = (guint16 *) GDK_IMAGE_XIMAGE(dblimg)->data;
-    ptr2 = ptr + (dblimg->bpl >> 1);
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix = *srcptr++;
-        *ptr++ = pix;
-        *ptr++ = pix;
-        *ptr2++ = pix;
-        *ptr2++ = pix;
-        }
-        srcptr += (img->bpl >> 1) - img->width;
-        ptr += (dblimg->bpl) - dblimg->width;
-        ptr2 += (dblimg->bpl) - dblimg->width;
-    }
-    }
-    if (dblimg->bpp == 3) {
-    register guint8 *srcptr, *ptr, *ptr2, pix1, pix2, pix3;
-
-    srcptr = GDK_IMAGE(img)->mem;
-    ptr = GDK_IMAGE(dblimg)->mem;
-    ptr2 = ptr + dblimg->bpl;
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix1 = *srcptr++;
-        pix2 = *srcptr++;
-        pix3 = *srcptr++;
-        *ptr++ = pix1;
-        *ptr++ = pix2;
-        *ptr++ = pix3;
-        *ptr++ = pix1;
-        *ptr++ = pix2;
-        *ptr++ = pix3;
-        *ptr2++ = pix1;
-        *ptr2++ = pix2;
-        *ptr2++ = pix3;
-        *ptr2++ = pix1;
-        *ptr2++ = pix2;
-        *ptr2++ = pix3;
-
-        }
-        srcptr += img->bpl - (img->width * 3);
-        ptr += (dblimg->bpl << 1) - (dblimg->width * 3);
-        ptr2 += (dblimg->bpl << 1) - (dblimg->width * 3);
-    }
-    }
-    if (dblimg->bpp == 4) {
-    register guint32 *srcptr, *ptr, *ptr2, pix;
-
-    srcptr = (guint32 *) GDK_IMAGE(img)->mem;
-    ptr = (guint32 *) GDK_IMAGE(dblimg)->mem;
-    ptr2 = ptr + (dblimg->bpl >> 2);
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix = *srcptr++;
-        *ptr++ = pix;
-        *ptr++ = pix;
-        *ptr2++ = pix;
-        *ptr2++ = pix;
-        }
-        srcptr += (img->bpl >> 2) - img->width;
-        ptr += (dblimg->bpl >> 1) - dblimg->width;
-        ptr2 += (dblimg->bpl >> 1) - dblimg->width;
-    }
-    }
-    return dblimg;
-}
-
-/* URL-decode a file: URL path, return NULL if it's not what we expect */
-gchar *
-xmms_urldecode_path(const gchar * encoded_path)
-{
-    const gchar *cur, *ext;
-    gchar *path, *tmp;
-    gint realchar;
-
-    if (!encoded_path)
-        return NULL;
-
-    if (!str_has_prefix_nocase(encoded_path, "file:"))
-        return NULL;
-
-    cur = encoded_path + 5;
-
-    if (str_has_prefix_nocase(cur, "//localhost"))
-        cur += 11;
-
-    if (*cur == '/')
-        while (cur[1] == '/')
-            cur++;
-
-    tmp = g_malloc0(strlen(cur) + 1);
-
-    while ((ext = strchr(cur, '%')) != NULL) {
-        strncat(tmp, cur, ext - cur);
-        ext++;
-        cur = ext + 2;
-        if (!sscanf(ext, "%2x", &realchar)) {
-            /* Assume it is a literal '%'.  Several file
-             * managers send unencoded file: urls on drag
-             * and drop. */
-            realchar = '%';
-            cur -= 2;
-        }
-        tmp[strlen(tmp)] = realchar;
-    }
-
-    path = g_strconcat(tmp, cur, NULL);
-    g_free(tmp);
-    return path;
-}
-
 /**
- * xmms_show_message:
- * @title: The title of the message to show.
- * @text: The text of the message to show.
- * @button_text: The text of the button which will close the messagebox.
- * @modal: Whether or not the messagebox should be modal.
- * @button_action: Code to execute on when the messagebox is closed, or %NULL.
- * @action_data: Optional opaque data to pass to @button_action.
- *
- * Displays a message box.
- *
- * Return value: A GTK widget handle for the message box.
- **/
-GtkWidget *
-xmms_show_message(const gchar * title, const gchar * text,
-                  const gchar * button_text, gboolean modal,
-                  GtkSignalFunc button_action, gpointer action_data)
-{
-  GtkWidget *dialog;
-  GtkWidget *dialog_vbox, *dialog_hbox, *dialog_bbox;
-  GtkWidget *dialog_bbox_b1;
-  GtkWidget *dialog_textlabel;
-  GtkWidget *dialog_icon;
-
-  dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_type_hint( GTK_WINDOW(dialog) , GDK_WINDOW_TYPE_HINT_DIALOG );
-  gtk_window_set_modal( GTK_WINDOW(dialog) , modal );
-  gtk_window_set_title( GTK_WINDOW(dialog) , title );
-  gtk_container_set_border_width( GTK_CONTAINER(dialog) , 10 );
-
-  dialog_vbox = gtk_vbox_new( FALSE , 0 );
-  dialog_hbox = gtk_hbox_new( FALSE , 0 );
-
-  /* icon */
-  dialog_icon = gtk_image_new_from_stock( GTK_STOCK_DIALOG_INFO , GTK_ICON_SIZE_DIALOG );
-  gtk_box_pack_start( GTK_BOX(dialog_hbox) , dialog_icon , FALSE , FALSE , 2 );
-
-  /* label */
-  dialog_textlabel = gtk_label_new( text );
-  /* gtk_label_set_selectable( GTK_LABEL(dialog_textlabel) , TRUE ); */
-  gtk_box_pack_start( GTK_BOX(dialog_hbox) , dialog_textlabel , TRUE , TRUE , 2 );
-
-  gtk_box_pack_start( GTK_BOX(dialog_vbox) , dialog_hbox , FALSE , FALSE , 2 );
-  gtk_box_pack_start( GTK_BOX(dialog_vbox) , gtk_hseparator_new() , FALSE , FALSE , 4 );
-
-  dialog_bbox = gtk_hbutton_box_new();
-  gtk_button_box_set_layout( GTK_BUTTON_BOX(dialog_bbox) , GTK_BUTTONBOX_END );
-  dialog_bbox_b1 = gtk_button_new_with_label( button_text );
-  g_signal_connect_swapped( G_OBJECT(dialog_bbox_b1) , "clicked" ,
-                            G_CALLBACK(gtk_widget_destroy) , dialog );
-  if ( button_action )
-    g_signal_connect( G_OBJECT(dialog_bbox_b1) , "clicked" ,
-                      button_action , action_data );
-  GTK_WIDGET_SET_FLAGS( dialog_bbox_b1 , GTK_CAN_DEFAULT);
-  gtk_widget_grab_default( dialog_bbox_b1 );
-
-  gtk_container_add( GTK_CONTAINER(dialog_bbox) , dialog_bbox_b1 );
-  gtk_box_pack_start( GTK_BOX(dialog_vbox) , dialog_bbox , FALSE , FALSE , 0 );
-
-  gtk_container_add( GTK_CONTAINER(dialog) , dialog_vbox );
-  gtk_widget_show_all(dialog);
-
-  return dialog;
-}
-
-
-/**
- * audacious_get_localdir:
+ * util_get_localdir:
  *
  * Returns a string with the full path of Audacious local datadir (where config files are placed).
  * It's useful in order to put in the right place custom config files for audacious plugins.
@@ -1060,7 +96,7 @@ xmms_show_message(const gchar * title, const gchar * text,
  * Return value: a string with full path of Audacious local datadir (should be freed after use)
  **/
 gchar*
-audacious_get_localdir(void)
+util_get_localdir(void)
 {
   gchar *datadir;
   gchar *tmp;
@@ -1074,27 +110,275 @@ audacious_get_localdir(void)
 }
 
 
-/**
- * xmms_check_realtime_priority:
- *
- * Legacy function included for compatibility with XMMS.
- *
- * Return value: FALSE
- **/
-gboolean
-xmms_check_realtime_priority(void)
+gchar * construct_uri (const gchar * string, const gchar * playlist_name)
 {
-    return FALSE;
+    gchar *filename = g_strdup(string);
+    gchar *uri = NULL;
+
+    /* try to translate dos path */
+    convert_dos_path(filename); /* in place replacement */
+
+    // make full path uri here
+    // case 1: filename is raw full path or uri
+    if (filename[0] == '/' || strstr(filename, "://")) {
+        uri = g_filename_to_uri(filename, NULL, NULL);
+        if(!uri)
+            uri = g_strdup(filename);
+    }
+    // case 2: filename is not raw full path nor uri
+    // make full path by replacing last part of playlist path with filename.
+    else
+    {
+        const gchar * slash = strrchr (playlist_name, '/');
+        if (slash)
+            uri = g_strdup_printf ("%.*s/%s", (gint) (slash - playlist_name),
+             playlist_name, filename);
+    }
+
+    g_free (filename);
+    return uri;
 }
 
-/**
- * xmms_usleep:
- * @usec: The amount of microseconds to sleep.
- *
- * Legacy function included for compatibility with XMMS.
- **/
-void
-xmms_usleep(gint usec)
+/* local files -- not URI's */
+gint file_get_mtime (const gchar * filename)
 {
-    g_usleep(usec);
+    struct stat info;
+
+    if (stat (filename, & info))
+        return -1;
+
+    return info.st_mtime;
+}
+
+void
+make_directory(const gchar * path, mode_t mode)
+{
+    if (g_mkdir_with_parents(path, mode) == 0)
+        return;
+
+    g_printerr(_("Could not create directory (%s): %s\n"), path,
+               g_strerror(errno));
+}
+
+gchar * get_path_to_self (void)
+{
+    gchar buf[PATH_MAX];
+    gint len;
+
+#ifdef _WIN32
+    if (! (len = GetModuleFileName (NULL, buf, sizeof buf)) || len == sizeof buf)
+    {
+        fprintf (stderr, "GetModuleFileName failed.\n");
+        return NULL;
+    }
+#else
+    if ((len = readlink ("/proc/self/exe", buf, sizeof buf)) < 0)
+    {
+        fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
+        return NULL;
+    }
+#endif
+
+    return g_strndup (buf, len);
+}
+
+#define URL_HISTORY_MAX_SIZE 30
+
+void
+util_add_url_history_entry(const gchar * url)
+{
+    if (g_list_find_custom(cfg.url_history, url, (GCompareFunc) strcasecmp))
+        return;
+
+    cfg.url_history = g_list_prepend(cfg.url_history, g_strdup(url));
+
+    while (g_list_length(cfg.url_history) > URL_HISTORY_MAX_SIZE) {
+        GList *node = g_list_last(cfg.url_history);
+        g_free(node->data);
+        cfg.url_history = g_list_delete_link(cfg.url_history, node);
+    }
+}
+
+/* Strips various common top-level folders from a file name (not URI).  The
+ * string passed will not be modified, but the string returned will share the
+ * same memory.  Examples:
+ *     "/home/john/folder/file.mp3"    -> "folder/file.mp3"
+ *     "/folder/file.mp3"              -> "folder/file.mp3"
+ *     "C:\Users\John\folder\file.mp3" -> "folder\file.mp3"
+ *     "E:\folder\file.mp3"            -> "folder\file.mp3" */
+
+static gchar * skip_top_folders (gchar * name)
+{
+    const gchar * home = getenv ("HOME");
+    if (! home)
+        goto NO_HOME;
+
+    gint len = strlen (home);
+    if (len > 0 && home[len - 1] == G_DIR_SEPARATOR)
+        len --;
+
+#ifdef _WIN32
+    if (! strncasecmp (name, home, len) && name[len] == '\\')
+#else
+    if (! strncmp (name, home, len) && name[len] == '/')
+#endif
+        return name + len + 1;
+
+NO_HOME:
+#ifdef _WIN32
+    return (name[0] && name[1] == ':' && name[2] == '\\') ? name + 3 : name;
+#else
+    return (name[0] == '/') ? name + 1 : name;
+#endif
+}
+
+/* Divides a file name (not URI) into the base name, the lowest folder, and the
+ * second lowest folder.  The string passed will be modified, and the strings
+ * returned will use the same memory.  May return NULL for <first> and <second>.
+ * Examples:
+ *     "a/b/c/d/e.mp3" -> "e", "d",  "c"
+ *     "d/e.mp3"       -> "e", "d",  NULL
+ *     "e.mp3"         -> "e", NULL, NULL */
+
+static void split_filename (gchar * name, gchar * * base, gchar * * first,
+ gchar * * second)
+{
+    * first = * second = NULL;
+
+    gchar * c;
+
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    {
+        * base = c + 1;
+        * c = 0;
+    }
+    else
+    {
+        * base = name;
+        goto DONE;
+    }
+
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    {
+        * first = c + 1;
+        * c = 0;
+    }
+    else
+    {
+        * first = name;
+        goto DONE;
+    }
+
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+        * second = c + 1;
+    else
+        * second = name;
+
+DONE:
+    if ((c = strrchr (* base, '.')))
+        * c = 0;
+}
+
+/* Separates the domain name from an internet URI.  The string passed will be
+ * modified, and the string returned will share the same memory.  May return
+ * NULL.  Examples:
+ *     "http://some.domain.org/folder/file.mp3" -> "some.domain.org"
+ *     "http://some.stream.fm:8000"             -> "some.stream.fm" */
+
+static gchar * stream_name (gchar * name)
+{
+    if (! strncmp (name, "http://", 7))
+        name += 7;
+    else if (! strncmp (name, "https://", 8))
+        name += 8;
+    else if (! strncmp (name, "mms://", 6))
+        name += 6;
+    else
+        return NULL;
+
+    gchar * c;
+
+    if ((c = strchr (name, '/')))
+        * c = 0;
+    if ((c = strchr (name, ':')))
+        * c = 0;
+    if ((c = strchr (name, '?')))
+        * c = 0;
+
+    return name;
+}
+
+/* Derives best guesses of title, artist, and album from a file name (URI) and
+ * tuple.  The returned strings are stringpooled or NULL. */
+
+void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
+ gchar * * _artist, gchar * * _album)
+{
+    /* Common folder names to skip */
+    static const gchar * const skip[] = {"music"};
+
+    const gchar * title = tuple_get_string (tuple, FIELD_TITLE, NULL);
+    const gchar * artist = tuple_get_string (tuple, FIELD_ARTIST, NULL);
+    const gchar * album = tuple_get_string (tuple, FIELD_ALBUM, NULL);
+
+    if (title && ! title[0])
+        title = NULL;
+    if (artist && ! artist[0])
+        artist = NULL;
+    if (album && ! album[0])
+        album = NULL;
+
+    gchar * copy = NULL;
+
+    if (title && artist && album)
+        goto DONE;
+
+    copy = uri_to_display (name);
+
+    if (! strncmp (name, "file://", 7))
+    {
+        gchar * base, * first, * second;
+        split_filename (skip_top_folders (copy), & base, & first,
+         & second);
+
+        if (! title)
+            title = base;
+
+        for (gint i = 0; i < G_N_ELEMENTS (skip); i ++)
+        {
+            if (first && ! strcasecmp (first, skip[i]))
+                first = NULL;
+            if (second && ! strcasecmp (second, skip[i]))
+                second = NULL;
+        }
+
+        if (first)
+        {
+            if (second && ! artist && ! album)
+            {
+                artist = second;
+                album = first;
+            }
+            else if (! artist)
+                artist = first;
+            else if (! album)
+                album = first;
+        }
+    }
+    else
+    {
+        if (! title)
+            title = stream_name (copy);
+        else if (! artist)
+            artist = stream_name (copy);
+        else if (! album)
+            album = stream_name (copy);
+    }
+
+DONE:
+    * _title = title ? stringpool_get ((gchar *) title, FALSE) : NULL;
+    * _artist = artist ? stringpool_get ((gchar *) artist, FALSE) : NULL;
+    * _album = album ? stringpool_get ((gchar *) album, FALSE) : NULL;
+
+    g_free (copy);
 }

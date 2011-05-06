@@ -64,4 +64,62 @@ xchat.hook_command("STOP",  makeVoidCommand('Stop'),    help="Stops playback.")
 xchat.hook_command("PLAY",  makeVoidCommand('Play'),    help="Begins playback.")
 xchat.hook_command("SENDTRACK", command_send, help="Syntax: /SENDTRACK <nick>\nSends the currently playing track to a user.")
 
+# IRC+PP support section
+
+# XChat is lame and does not give us a server list.
+def get_servers():
+	chanlist = xchat.get_list("channels")
+	servlist = []
+
+	for i in chanlist:
+		if i.server not in servlist:
+			servlist.append(i.server)
+
+	return servlist
+
+ignore_services = 0;
+def ignore_service_errors_cb(word, word_eol, userdata):
+	global ignore_services
+
+	if ignore_services == 1:
+		return xchat.EAT_ALL
+
+	return xchat.EAT_NONE
+
+#xchat.hook_print("Notice", ignore_service_errors_cb)
+
+def unset_ignore_services(userdata=None):
+	global ignore_services
+
+	ignore_services = 0
+	return 1
+
+last_title = None
+
+def presence_notification_dispatch(userdata=None):
+	global ignore_services, last_title
+
+	aud = get_aud()
+
+	ignore_services = 1
+	if aud:
+		pos = aud.Position()
+
+		title = aud.SongTitle(pos).encode("utf8")
+
+		if title != last_title:
+			slist = get_servers()
+			for i in slist:
+				ctx = xchat.find_context(i)
+
+				ctx.command("nickserv set qproperty np %s" % (title))
+
+			last_title = title
+
+	return 1
+
+#presence_notification_dispatch()
+#xchat.hook_timer(3000, presence_notification_dispatch)
+#xchat.hook_timer(500, unset_ignore_services)
+
 print "xchat-audacious $Id: xchat-audacious.py 4574 2007-05-16 07:46:17Z deitarion $ loaded"

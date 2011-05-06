@@ -1,1905 +1,582 @@
 # fi Finnish translation
-# Beep Media Player Finnish translation
-# Copyright (C) 2004 Free Software Foundation, Inc.
-# This file is distributed under the same license as Beep Media Player.
+# Audacious Media Player Finnish translation
+# Copyright (C) 2008 Free Software Foundation, Inc.
+# This file is distributed under the same license as Audacious Media Player.
 # Pauli Virtanen <pauli.virtanen@hut.fi>, 2004.
-#
+# Matti Hämäläinen, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: fi\n"
-"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-04-14 15:19-0500\n"
-"PO-Revision-Date: 2005-03-13 21:31+0200\n"
-"Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
-"Language-Team: Finnish <lokalisointi-laatu@linux-aktivaattori.org>\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
+"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"PO-Revision-Date: 2008-04-09 12:12+0300\n"
+"Last-Translator: Matti Hämäläinen <ccr@tnsp.org>\n"
+"Language-Team: Finnish <fi@li.org>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/glade.c:43
-#, c-format
-msgid ""
-"<b><big>Unable to create %s.</big></b>\n"
-"\n"
-"Could not open glade file (%s). Please check your installation.\n"
+#: src/audacious/adder.c:71
+msgid "Searching ..."
 msgstr ""
 
-#: src/audacious/input.c:539
+#: src/audacious/adder.c:99
 #, c-format
-msgid "audacious: %s"
-msgstr ""
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/audacious/input.c:555
-msgid "Filename:"
-msgstr "Tiedostonimi:"
+#: src/audacious/chardet.c:37
+msgid "  (invalid UTF-8)"
+msgstr "  (virheellistä UTF-8:aa)"
 
-#: src/audacious/input.c:573
-msgid "No input plugin recognized this file"
-msgstr "Yksikään liitännäinen ei tunnistanut tätä tiedostoa"
-
-#: src/audacious/input.c:575
-#, c-format
-msgid "Input plugin: %s"
-msgstr "Syöteliitännäinen: %s"
-
-#: src/audacious/logger.c:122
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr "Lokitiedoston (%s) luominen ei onnistu.\n"
-
-#: src/audacious/main.c:84 src/audacious/main.c:86 src/audacious/ui_main.c:628
-#: src/audacious/ui_main.c:2948
-msgid "Audacious"
-msgstr ""
-
-#: src/audacious/main.c:461
-#, fuzzy, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "Kansion (%s) luominen epäonnistui: %s"
-
-#: src/audacious/main.c:860
+#: src/audacious/credits.c:35
 #, fuzzy
-msgid "Select which Audacious session ID to use"
-msgstr "Valitse BMP:n tai XMMS:n istuntonumero (oletus: 0)"
+msgid "Core developers:"
+msgstr "0.1.x:n kehittäjät:"
 
-#: src/audacious/main.c:861
+#: src/audacious/credits.c:49
+msgid "Graphics:"
+msgstr "Grafiikat:"
+
+#: src/audacious/credits.c:54
+msgid "Default skin:"
+msgstr "Oletusteema:"
+
+#: src/audacious/credits.c:60
+msgid "Plugin development:"
+msgstr "Liitännäisten kehitys:"
+
+#: src/audacious/credits.c:83
+msgid "Patch authors:"
+msgstr "Paikkojen tekijät:"
+
+#: src/audacious/credits.c:126
+#, fuzzy
+msgid "1.x developers:"
+msgstr "0.1.x:n kehittäjät:"
+
+#: src/audacious/credits.c:148
+msgid "BMP Developers:"
+msgstr "BMP:n kehittäjät:"
+
+#: src/audacious/credits.c:180
+#, fuzzy
+msgid "Belarusian:"
+msgstr "bulgaria:"
+
+#: src/audacious/credits.c:183
+msgid "Basque:"
+msgstr ""
+
+#: src/audacious/credits.c:186
+msgid "Brazilian Portuguese:"
+msgstr "portugali (Brasilia):"
+
+#: src/audacious/credits.c:190
+msgid "Breton:"
+msgstr "bretoni:"
+
+#: src/audacious/credits.c:193
+msgid "Bulgarian:"
+msgstr "bulgaria:"
+
+#: src/audacious/credits.c:196
+msgid "Catalan:"
+msgstr ""
+
+#: src/audacious/credits.c:199
+#, fuzzy
+msgid "Chinese:"
+msgstr "Kiina"
+
+#: src/audacious/credits.c:202
+msgid "Croatian:"
+msgstr "kroatia:"
+
+#: src/audacious/credits.c:205
+msgid "Czech:"
+msgstr "tshekki:"
+
+#: src/audacious/credits.c:208
+msgid "Dutch:"
+msgstr "hollanti:"
+
+#: src/audacious/credits.c:212
+msgid "Estonian:"
+msgstr "eesti:"
+
+#: src/audacious/credits.c:215
+msgid "Finnish:"
+msgstr "suomi:"
+
+#: src/audacious/credits.c:219
+msgid "French:"
+msgstr "ranska:"
+
+#: src/audacious/credits.c:225
+msgid "German:"
+msgstr "saksa:"
+
+#: src/audacious/credits.c:232
+msgid "Georgian:"
+msgstr ""
+
+#: src/audacious/credits.c:235
+msgid "Greek:"
+msgstr "kreikka:"
+
+#: src/audacious/credits.c:240
+msgid "Hindi:"
+msgstr "hindi:"
+
+#: src/audacious/credits.c:243
+msgid "Hungarian:"
+msgstr "unkari:"
+
+#: src/audacious/credits.c:247
+msgid "Italian:"
+msgstr "italia:"
+
+#: src/audacious/credits.c:251
+msgid "Japanese:"
+msgstr "japani:"
+
+#: src/audacious/credits.c:254
+msgid "Korean:"
+msgstr "korea:"
+
+#: src/audacious/credits.c:257
+#, fuzzy
+msgid "Latvian:"
+msgstr "kroatia:"
+
+#: src/audacious/credits.c:260
+msgid "Lithuanian:"
+msgstr "liettua:"
+
+#: src/audacious/credits.c:264
+msgid "Macedonian:"
+msgstr "makedonia:"
+
+#: src/audacious/credits.c:267
+msgid "Polish:"
+msgstr "puola:"
+
+#: src/audacious/credits.c:272
+#, fuzzy
+msgid "Portuguese:"
+msgstr "portugali (Brasilia):"
+
+#: src/audacious/credits.c:275
+msgid "Romanian:"
+msgstr "romania:"
+
+#: src/audacious/credits.c:279
+msgid "Russian:"
+msgstr "venäjä:"
+
+#: src/audacious/credits.c:283
+msgid "Serbian (Latin):"
+msgstr "serbia (latin):"
+
+#: src/audacious/credits.c:286
+msgid "Serbian (Cyrillic):"
+msgstr "serbia (kyrillinen):"
+
+#: src/audacious/credits.c:289
+msgid "Simplified Chinese:"
+msgstr "yksinkertaistettu kiina:"
+
+#: src/audacious/credits.c:292
+msgid "Slovak:"
+msgstr "slovakki:"
+
+#: src/audacious/credits.c:295
+msgid "Spanish:"
+msgstr "espanja:"
+
+#: src/audacious/credits.c:302
+msgid "Swedish:"
+msgstr "ruotsi:"
+
+#: src/audacious/credits.c:305
+msgid "Traditional Chinese:"
+msgstr "perinteinen kiina:"
+
+#: src/audacious/credits.c:310
+msgid "Turkish:"
+msgstr "turkki:"
+
+#: src/audacious/credits.c:314
+msgid "Ukrainian:"
+msgstr "ukraina:"
+
+#: src/audacious/credits.c:317
+msgid "Welsh:"
+msgstr "kymri:"
+
+#: src/audacious/drct.c:250
+#, fuzzy
+msgid "Temporary Playlist"
+msgstr "Avaa soittolista"
+
+#: src/audacious/equalizer_preset.c:186
+#, c-format
+msgid "Error importing Winamp EQF file '%s'"
+msgstr "Virhe luettaessa WinAmp EQF tiedostoa '%s'"
+
+#: src/audacious/main.c:251
 msgid "Skip backwards in playlist"
 msgstr "Siirry taaksepäin soittolistassa"
 
-#: src/audacious/main.c:862
+#: src/audacious/main.c:252
 msgid "Start playing current playlist"
 msgstr "Soita nykyistä soittolistaa"
 
-#: src/audacious/main.c:863
+#: src/audacious/main.c:253
 msgid "Pause current song"
-msgstr "Aloita tauko nykyisessä kappaleessa"
+msgstr "Tauota nykyinen kappale"
 
-#: src/audacious/main.c:864
+#: src/audacious/main.c:254
 msgid "Stop current song"
 msgstr "Pysäytä nykyisen kappaleen soittaminen"
 
-#: src/audacious/main.c:865
+#: src/audacious/main.c:255
 msgid "Pause if playing, play otherwise"
 msgstr "Pidä tauko jos kappale soi, muuten aloita soittaminen"
 
-#: src/audacious/main.c:866
+#: src/audacious/main.c:256
 msgid "Skip forward in playlist"
 msgstr "Siirry eteenpäin soittolistassa"
 
-#: src/audacious/main.c:867
-#, fuzzy
+#: src/audacious/main.c:257
 msgid "Display Jump to File dialog"
-msgstr "/Siirry tiedoston kohdalle"
+msgstr "Näytä tiedostoon hyppäämisdialogi"
 
-#: src/audacious/main.c:868
-msgid "Don't clear the playlist"
-msgstr "Älä tyhjennä soittolistaa"
-
-#: src/audacious/main.c:869
+#: src/audacious/main.c:258
 #, fuzzy
+msgid "Add files to the playlist"
+msgstr "Lisää tiedostot soittolistaan."
+
+#: src/audacious/main.c:259
 msgid "Add new files to a temporary playlist"
-msgstr "Älä tyhjennä soittolistaa"
+msgstr "Lisää uudet tiedostot väliaikaiseen soittolistaan"
 
-#: src/audacious/main.c:870
-#, fuzzy
+#: src/audacious/main.c:260
 msgid "Display the main window"
 msgstr "Näytä pääikkuna"
 
-#: src/audacious/main.c:871
+#: src/audacious/main.c:261
 msgid "Display all open Audacious windows"
+msgstr "Näytä kaikki avoimet Audacious -ikkunat"
+
+#: src/audacious/main.c:262
+msgid "Show version"
+msgstr "Näytä versio"
+
+#: src/audacious/main.c:263
+msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:872
-msgid "Enable headless operation"
-msgstr ""
-
-#: src/audacious/main.c:873
-msgid "Print all errors and warnings to stdout"
-msgstr ""
-
-#: src/audacious/main.c:874
-msgid "Show version and builtin features"
-msgstr ""
-
-#: src/audacious/main.c:875
+#: src/audacious/main.c:264
 msgid "FILE..."
-msgstr ""
+msgstr "TIEDOSTO..."
 
-#: src/audacious/main.c:1001
-#, c-format
-msgid ""
-"<b><big>Unable to load skin.</big></b>\n"
-"\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
-msgstr ""
-"<b><big>Teeman lataaminen ei onnistunut.</big></b>\n"
-"\n"
-"Tarkista että teema \"%s\" on käytettävissä, ja että oletusarvoinen teema on "
-"asennettu kunnolla kansioon \"%s\"\n"
-
-#: src/audacious/main.c:1052
-msgid ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-msgstr ""
-"Järjestelmäsi ei tue säikeitä.\n"
-"\n"
-"Jos käytät libc5-pohjaista Linux-järjestelmää ja asensit Glibin ja GTK+:n "
-"ennen\n"
-"LinuxThreadsia, niin Glib ja GTK+ täytyy kääntää uudestaan.\n"
-
-#: src/audacious/main.c:1074
-#, fuzzy, c-format
-msgid ""
-"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-"Please use GTK+ %s or newer.\n"
-msgstr ""
-"Tietokoneellesi asennettu GTK+:n versio (%d.%d.%d) ei ole yhteensopiva BMP:n "
-"kanssa.\n"
-"Käytä GTK+:n versiota %s tai uudempaa.\n"
-
-#: src/audacious/main.c:1093
+#: src/audacious/main.c:276
 msgid "- play multimedia files"
-msgstr ""
+msgstr "- soita multimediatiedostoja"
 
-#: src/audacious/main.c:1100
+#: src/audacious/main.c:286
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"Kokeile `%s --help' saadaksesi lisätietoja.\n"
 
-#: src/audacious/main.c:1109
-#, fuzzy, c-format
-msgid "%s: Unable to open display, exiting.\n"
-msgstr "BMP: näytön avaaminen ei onnistu, sulkeutuu."
-
-#: src/audacious/signals.c:48
+#: src/audacious/main.c:399
 msgid ""
-"\n"
-"Audacious has caught signal 11 (SIGSEGV).\n"
-"\n"
-"We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal "
-"circumstances.\n"
-"Your current configuration has been saved and should not be damaged.\n"
-"\n"
-"You can help improve the quality of Audacious by filing a bug at http://bugs-"
-"meta.atheme.org\n"
-"Please include the entire text of this message and a description of what you "
-"were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug "
-"report:\n"
-"\n"
+"Audacious seems to be already running but is not responding.  You can start "
+"another instance of the program, but please be warned that this can cause "
+"data loss.  If Audacious is not running, you can safely ignore this "
+"message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/signals.c:79
-msgid ""
-"\n"
-"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
-"product.\n"
-msgstr ""
+#: src/audacious/main.c:564
+msgid "Audacious"
+msgstr "Audacious"
 
-#: src/audacious/signals.c:265
-msgid ""
-"Your signaling implementation is broken.\n"
-"Expect unusable crash reports.\n"
-msgstr ""
-
-#: src/audacious/strings.c:170
-msgid "  (invalid UTF-8)"
-msgstr "  (virheellistä UTF-8:aa)"
-
-#: src/audacious/ui_about.c:44
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"XMMS:än perustuva musiikkisoitin\n"
-"\n"
-"Copyright (C) 2003-2004 BMP-kehittäjäryhmä\n"
-
-#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:345
-#: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
-#, fuzzy
-msgid "About Audacious"
-msgstr "MPEG-ääniliitännäisestä"
-
-#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:390
-msgid "Credits"
-msgstr "Tekijät"
-
-#: src/audacious/ui_credits.c:45
-#, fuzzy, c-format
-msgid ""
-"<big><b>Audacious %s</b></big>\n"
-"The future of UNIX multimedia.\n"
-"\n"
-"Copyright (C) 2005-2007 Audacious Development Team\n"
-msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"XMMS:än perustuva musiikkisoitin\n"
-"\n"
-"Copyright (C) 2003-2004 BMP-kehittäjäryhmä\n"
-
-#: src/audacious/ui_credits.c:51
-#, fuzzy
-msgid "Audacious core developers:"
-msgstr "BMP:n asetukset"
-
-#: src/audacious/ui_credits.c:66
-msgid "Graphics:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:71
-msgid "Default skin:"
-msgstr "Oletusteema:"
-
-#: src/audacious/ui_credits.c:76
-msgid "Plugin development:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:89
-msgid "Patch authors:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:109
-#, fuzzy
-msgid "0.1.x developers:"
-msgstr "Kehittäjät:"
-
-#: src/audacious/ui_credits.c:115
-#, fuzzy
-msgid "BMP Developers:"
-msgstr "Kehittäjät:"
-
-#: src/audacious/ui_credits.c:147
-msgid "Brazilian Portuguese:"
-msgstr "portugali (Brasilia):"
-
-#: src/audacious/ui_credits.c:150
-msgid "Breton:"
-msgstr "bretoni:"
-
-#: src/audacious/ui_credits.c:153
-#, fuzzy
-msgid "Bulgarian:"
-msgstr "unkari:"
-
-#: src/audacious/ui_credits.c:156
-#, fuzzy
-msgid "Catalan:"
-msgstr "italia:"
-
-#: src/audacious/ui_credits.c:159
-#, fuzzy
-msgid "Croatian:"
-msgstr "Sijainti:"
-
-#: src/audacious/ui_credits.c:162
-msgid "Czech:"
-msgstr "tšekki:"
-
-#: src/audacious/ui_credits.c:165
-msgid "Dutch:"
-msgstr "hollanti:"
-
-#: src/audacious/ui_credits.c:169
-#, fuzzy
-msgid "Finnish:"
-msgstr "espanja:"
-
-#: src/audacious/ui_credits.c:172
-msgid "French:"
-msgstr "ranska:"
-
-#: src/audacious/ui_credits.c:175
-msgid "German:"
-msgstr "saksa:"
-
-#: src/audacious/ui_credits.c:179
-#, fuzzy
-msgid "Georgian:"
-msgstr "saksa:"
-
-#: src/audacious/ui_credits.c:182
-msgid "Greek:"
-msgstr "kreikka:"
-
-#: src/audacious/ui_credits.c:187
-msgid "Hindi:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:190
-msgid "Hungarian:"
-msgstr "unkari:"
-
-#: src/audacious/ui_credits.c:193
-msgid "Italian:"
-msgstr "italia:"
-
-#: src/audacious/ui_credits.c:197
-msgid "Japanese:"
-msgstr "japani:"
-
-#: src/audacious/ui_credits.c:200
-msgid "Korean:"
-msgstr "korea:"
-
-#: src/audacious/ui_credits.c:203
-msgid "Lithuanian:"
-msgstr "liettua:"
-
-#: src/audacious/ui_credits.c:206
-msgid "Macedonian:"
-msgstr "makedonia:"
-
-#: src/audacious/ui_credits.c:209
-msgid "Polish:"
-msgstr "puola:"
-
-#: src/audacious/ui_credits.c:212
-msgid "Romanian:"
-msgstr "romania:"
-
-#: src/audacious/ui_credits.c:215
-msgid "Russian:"
-msgstr "venäjä:"
-
-#: src/audacious/ui_credits.c:218
-msgid "Serbian (Latin):"
-msgstr ""
-
-#: src/audacious/ui_credits.c:221
-msgid "Serbian (Cyrillic):"
-msgstr ""
-
-#: src/audacious/ui_credits.c:224
-msgid "Simplified Chinese:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:227
-msgid "Slovak:"
-msgstr "slovakki:"
-
-#: src/audacious/ui_credits.c:230
-msgid "Spanish:"
-msgstr "espanja:"
-
-#: src/audacious/ui_credits.c:233
-msgid "Swedish:"
-msgstr "ruotsi:"
-
-#: src/audacious/ui_credits.c:236
-#, fuzzy
-msgid "Traditional Chinese:"
-msgstr "Avustajat:"
-
-#: src/audacious/ui_credits.c:239
-msgid "Turkish:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:243
-#, fuzzy
-msgid "Ukrainian:"
-msgstr "romania:"
-
-#: src/audacious/ui_credits.c:246
-msgid "Welsh:"
-msgstr "kymri:"
-
-#: src/audacious/ui_credits.c:394
-msgid "Translators"
-msgstr "Kääntäjät"
-
-#: src/audacious/ui_equalizer.c:743
-#, fuzzy
-msgid "Audacious Equalizer"
-msgstr "/Rullaa taajuuskorjainikkuna"
-
-#: src/audacious/ui_equalizer.c:1391
-msgid "Presets"
-msgstr "Asetukset"
-
-#: src/audacious/ui_main.c:626
+#: src/audacious/playback.c:381
 #, c-format
-msgid "%s - Audacious"
+msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/ui_main.c:851
-msgid "VBR"
-msgstr "VBR"
-
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
-#, fuzzy
-msgid "stereo"
-msgstr "Stereo"
-
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
-#, fuzzy
-msgid "mono"
-msgstr "Mono"
-
-#: src/audacious/ui_main.c:1328 src/audacious/ui_manager.c:414
-#: src/audacious/ui_manager.c:415
-msgid "Jump to Time"
-msgstr "Siirry hetkeen"
-
-#: src/audacious/ui_main.c:1349
-msgid "minutes:seconds"
-msgstr "minuutti:sekunti"
-
-#: src/audacious/ui_main.c:1359
-msgid "Track length:"
-msgstr "Kappaleen kesto:"
-
-#: src/audacious/ui_main.c:1520
-msgid "Audacious - visibility warning"
+#: src/audacious/playback.c:531
+msgid "Buffering ..."
 msgstr ""
 
-#: src/audacious/ui_main.c:1522
+#: src/audacious/playlist-new.c:303
 #, fuzzy
-msgid "Show main player window"
-msgstr "Valitse pääikkunan kirjasinlaji:"
-
-#: src/audacious/ui_main.c:1523
-#, fuzzy
-msgid "Ignore"
-msgstr "Ei mikään"
-
-#: src/audacious/ui_main.c:1527
-msgid ""
-"Audacious has been started with all of its windows hidden.\n"
-"You may want to show the player window again to control Audacious; "
-"otherwise, you'll have to control it remotely via audtool or enabled plugins "
-"(such as the statusicon plugin)."
-msgstr ""
-
-#: src/audacious/ui_main.c:1533
-msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
-
-#: src/audacious/ui_main.c:1551
-msgid "Enter location to play:"
-msgstr ""
-
-#: src/audacious/ui_main.c:1761
-#, c-format
-msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr "SIIRRY: %d:%-2.2d/%d:%-2.2d (%d%%)"
-
-#: src/audacious/ui_main.c:1793 src/audacious/ui_main.c:2418
-#, c-format
-msgid "VOLUME: %d%%"
-msgstr "ÄÄNENVOIMAKKUUS: %d%%"
-
-#: src/audacious/ui_main.c:1824 src/audacious/ui_main.c:2421
-#, c-format
-msgid "BALANCE: %d%% LEFT"
-msgstr "TASAPAINO: %d%% VASEN"
-
-#: src/audacious/ui_main.c:1828 src/audacious/ui_main.c:2424
-msgid "BALANCE: CENTER"
-msgstr "TASAPAINO: KESKELLÄ"
-
-#: src/audacious/ui_main.c:1832 src/audacious/ui_main.c:2426
-#, c-format
-msgid "BALANCE: %d%% RIGHT"
-msgstr "TASAPAINO: %d%% OIKEA"
-
-#: src/audacious/ui_main.c:2188
-msgid "OPTIONS MENU"
-msgstr "ASETUSVALIKKO"
-
-#: src/audacious/ui_main.c:2192
-msgid "DISABLE ALWAYS ON TOP"
-msgstr "ÄLÄ PIDÄ AINA PÄÄLLIMMÄISENÄ"
-
-#: src/audacious/ui_main.c:2194
-msgid "ENABLE ALWAYS ON TOP"
-msgstr "PIDÄ AINA PÄÄLLIMMÄISENÄ"
-
-#: src/audacious/ui_main.c:2197
-msgid "FILE INFO BOX"
-msgstr "TIEDOSTOTIEDOT"
-
-#: src/audacious/ui_main.c:2201
-msgid "DISABLE DOUBLESIZE"
-msgstr ""
-
-#: src/audacious/ui_main.c:2203
-msgid "ENABLE DOUBLESIZE"
-msgstr ""
-
-#: src/audacious/ui_main.c:2206
-msgid "VISUALIZATION MENU"
-msgstr "VISUALISOINTIVALIKKO"
-
-#: src/audacious/ui_main.c:2252
-msgid ""
-"<b><big>No playable CD found.</big></b>\n"
-"\n"
-"No CD inserted, or inserted CD is not an audio CD.\n"
-msgstr ""
-"<b><big>Soitettavaa CD:tä ei löydy.</big></b>\n"
-"\n"
-"CD:tä ei joko ole asemassa, tai asemassa oleva CD ei sisällä ääntä.\n"
-
-#: src/audacious/ui_main.c:2269
-msgid ""
-"<b><big>Couldn't open audio.</big></b>\n"
-"\n"
-"Please check that:\n"
-"1. You have the correct output plugin selected.\n"
-"2. No other programs is blocking the soundcard.\n"
-"3. Your soundcard is configured properly.\n"
-msgstr ""
-"<b><big>Äänilaitteen avaaminen epäonnistui.</big></b>\n"
-"\n"
-"Tarkista että:\n"
-"1. Oikea ulostuloliitännäinen on valittu.\n"
-"2. Muut ohjelmat eivät käytä juuri nyt äänikorttia.\n"
-"3. Äänikortin asetukset ovat oikein.\n"
-
-#: src/audacious/ui_main.c:2876
-#, fuzzy
-msgid "Error in Audacious."
-msgstr "MPEG-ääniliitännäisestä"
-
-#: src/audacious/ui_manager.c:43 src/audacious/ui_manager.c:44
-#, fuzzy
-msgid "Autoscroll Songname"
-msgstr "/Vieritä kappaleen nimeä"
-
-#: src/audacious/ui_manager.c:46 src/audacious/ui_manager.c:47
-#, fuzzy
-msgid "Stop after Current Song"
-msgstr "Pysäytä nykyisen kappaleen soittaminen"
-
-#: src/audacious/ui_manager.c:49 src/audacious/ui_manager.c:50
-#, fuzzy
-msgid "Peaks"
-msgstr "Pilat"
-
-#: src/audacious/ui_manager.c:52 src/audacious/ui_manager.c:53
-#, fuzzy
-msgid "Repeat"
-msgstr "/Toisto"
-
-#: src/audacious/ui_manager.c:55 src/audacious/ui_manager.c:56
-#, fuzzy
-msgid "Shuffle"
-msgstr "/Sekaisin"
-
-#: src/audacious/ui_manager.c:58 src/audacious/ui_manager.c:59
-#, fuzzy
-msgid "No Playlist Advance"
-msgstr "/Älä etene soittolistassa"
-
-#: src/audacious/ui_manager.c:61 src/audacious/ui_manager.c:62
-#, fuzzy
-msgid "Show Player"
-msgstr "/Näytä soittolistan muokkain"
-
-#: src/audacious/ui_manager.c:64 src/audacious/ui_manager.c:65
-#, fuzzy
-msgid "Show Playlist Editor"
-msgstr "/Näytä soittolistan muokkain"
-
-#: src/audacious/ui_manager.c:67 src/audacious/ui_manager.c:68
-#, fuzzy
-msgid "Show Equalizer"
-msgstr "/Näytä taajuuskorjain"
-
-#: src/audacious/ui_manager.c:70 src/audacious/ui_manager.c:71
-#, fuzzy
-msgid "Always on Top"
-msgstr "/Aina päällimmäisenä"
-
-#: src/audacious/ui_manager.c:73 src/audacious/ui_manager.c:74
-#, fuzzy
-msgid "Put on All Workspaces"
-msgstr "/Näkyy kaikissa työtiloissa"
-
-#: src/audacious/ui_manager.c:76 src/audacious/ui_manager.c:77
-#, fuzzy
-msgid "Roll up Player"
-msgstr "/Rullaa soittoikkuna"
-
-#: src/audacious/ui_manager.c:79 src/audacious/ui_manager.c:80
-#, fuzzy
-msgid "Roll up Playlist Editor"
-msgstr "/Rullaa soittolistan muokkausikkuna"
-
-#: src/audacious/ui_manager.c:82 src/audacious/ui_manager.c:83
-#, fuzzy
-msgid "Roll up Equalizer"
-msgstr "/Rullaa taajuuskorjainikkuna"
-
-#: src/audacious/ui_manager.c:85 src/audacious/ui_manager.c:86
-msgid "DoubleSize"
-msgstr ""
-
-#: src/audacious/ui_manager.c:88 src/audacious/ui_manager.c:89
-msgid "Easy Move"
-msgstr ""
-
-#: src/audacious/ui_manager.c:97
-#, fuzzy
-msgid "Analyzer"
-msgstr "/Taajuusspektri"
-
-#: src/audacious/ui_manager.c:98
-#, fuzzy
-msgid "Scope"
-msgstr "/Oskilloskooppi"
-
-#: src/audacious/ui_manager.c:99
-#, fuzzy
-msgid "Voiceprint"
-msgstr "/Taajuusspektri/Tuli"
-
-#: src/audacious/ui_manager.c:100
-msgid "Off"
-msgstr ""
-
-#: src/audacious/ui_manager.c:104 src/audacious/ui_manager.c:121
-#: src/audacious/ui_manager.c:127
-#, fuzzy
-msgid "Normal"
-msgstr "ID3-muoto:"
-
-#: src/audacious/ui_manager.c:105 src/audacious/ui_manager.c:122
-#, fuzzy
-msgid "Fire"
-msgstr "Satiiri"
-
-#: src/audacious/ui_manager.c:106
-#, fuzzy
-msgid "Vertical Lines"
-msgstr "/Taajuusspektri/Pystyviivat"
-
-#: src/audacious/ui_manager.c:110
-#, fuzzy
-msgid "Lines"
-msgstr "riviä"
-
-#: src/audacious/ui_manager.c:111
-#, fuzzy
-msgid "Bars"
-msgstr "Basso"
-
-#: src/audacious/ui_manager.c:115
-#, fuzzy
-msgid "Dot Scope"
-msgstr "/Oskilloskooppi/Pisteet"
-
-#: src/audacious/ui_manager.c:116
-#, fuzzy
-msgid "Line Scope"
-msgstr "/Oskilloskooppi/Viiva"
-
-#: src/audacious/ui_manager.c:117
-#, fuzzy
-msgid "Solid Scope"
-msgstr "/Oskilloskooppi/Yhtenäinen"
-
-#: src/audacious/ui_manager.c:123
-msgid "Ice"
-msgstr ""
-
-#: src/audacious/ui_manager.c:128
-#, fuzzy
-msgid "Smooth"
-msgstr "Mono"
-
-#: src/audacious/ui_manager.c:132
-#, fuzzy
-msgid "Full (~50 fps)"
-msgstr "/Päivitystaajuus/Täysi (~50 Hz)"
-
-#: src/audacious/ui_manager.c:133
-#, fuzzy
-msgid "Half (~25 fps)"
-msgstr "/Päivitystaajuus/Puolet (~25 Hz)"
-
-#: src/audacious/ui_manager.c:134
-#, fuzzy
-msgid "Quarter (~13 fps)"
-msgstr "/Päivitystaajuus/Neljäsosa (~13 Hz)"
-
-#: src/audacious/ui_manager.c:135
-#, fuzzy
-msgid "Eighth (~6 fps)"
-msgstr "/Päivitystaajuus/Kahdeksasosa (~6 Hz)"
-
-#: src/audacious/ui_manager.c:139 src/audacious/ui_manager.c:147
-#, fuzzy
-msgid "Slowest"
-msgstr "Showmusiikki"
-
-#: src/audacious/ui_manager.c:140 src/audacious/ui_manager.c:148
-#, fuzzy
-msgid "Slow"
-msgstr "Hidas jam"
-
-#: src/audacious/ui_manager.c:141 src/audacious/ui_manager.c:149
-msgid "Medium"
-msgstr ""
-
-#: src/audacious/ui_manager.c:142 src/audacious/ui_manager.c:150
-msgid "Fast"
-msgstr ""
-
-#: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
-msgid "Fastest"
-msgstr ""
-
-#: src/audacious/ui_manager.c:155
-#, fuzzy
-msgid "Time Elapsed"
-msgstr "/Kulunut aika"
-
-#: src/audacious/ui_manager.c:156
-#, fuzzy
-msgid "Time Remaining"
-msgstr "/Aikaa jäljellä"
-
-#: src/audacious/ui_manager.c:165
-#, fuzzy
-msgid "Playback"
-msgstr "/Soita"
-
-#: src/audacious/ui_manager.c:167 src/audacious/ui_manager.c:168
-#, fuzzy
-msgid "Play CD"
-msgstr "/Soita"
-
-#: src/audacious/ui_manager.c:170 src/audacious/ui_manager.c:171
-#, fuzzy
-msgid "Play"
-msgstr "/Soita"
-
-#: src/audacious/ui_manager.c:173 src/audacious/ui_manager.c:174
-#, fuzzy
-msgid "Pause"
-msgstr "/Tauko"
-
-#: src/audacious/ui_manager.c:176 src/audacious/ui_manager.c:177
-#, fuzzy
-msgid "Stop"
-msgstr "/Pysäytä"
-
-#: src/audacious/ui_manager.c:179 src/audacious/ui_manager.c:180
-#, fuzzy
-msgid "Previous"
-msgstr "/Edellinen"
-
-#: src/audacious/ui_manager.c:182 src/audacious/ui_manager.c:183
-#, fuzzy
-msgid "Next"
-msgstr "/Seuraava"
-
-#: src/audacious/ui_manager.c:188
-#, fuzzy
-msgid "Visualization"
-msgstr "/Visualisointitapa"
-
-#: src/audacious/ui_manager.c:189
-#, fuzzy
-msgid "Visualization Mode"
-msgstr "/Visualisointitapa"
-
-#: src/audacious/ui_manager.c:190
-#, fuzzy
-msgid "Analyzer Mode"
-msgstr "/Taajuusspektri/Tuli"
-
-#: src/audacious/ui_manager.c:191
-#, fuzzy
-msgid "Scope Mode"
-msgstr "/Oskilloskooppi"
-
-#: src/audacious/ui_manager.c:192
-#, fuzzy
-msgid "Voiceprint Mode"
-msgstr "/Taajuusspektri/Tuli"
-
-#: src/audacious/ui_manager.c:193
-#, fuzzy
-msgid "WindowShade VU Mode"
-msgstr "/Rullattu ikkuna"
-
-#: src/audacious/ui_manager.c:194
-#, fuzzy
-msgid "Refresh Rate"
-msgstr "/Päivitystaajuus"
-
-#: src/audacious/ui_manager.c:195
-#, fuzzy
-msgid "Analyzer Falloff"
-msgstr "/Taajuusspektrin nopeus"
-
-#: src/audacious/ui_manager.c:196
-#, fuzzy
-msgid "Peaks Falloff"
-msgstr "/Huippujen nopeus"
-
-#: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:106
-#: src/audacious/ui_playlist_manager.c:288
-#: src/audacious/glade/prefswin.glade:2494
-msgid "Playlist"
-msgstr "Soittolista"
-
-#: src/audacious/ui_manager.c:203 src/audacious/ui_manager.c:204
-#, fuzzy
-msgid "New Playlist"
+msgid "Untitled Playlist"
 msgstr "Uusi soittolista"
 
-#: src/audacious/ui_manager.c:206 src/audacious/ui_manager.c:207
-#, fuzzy
-msgid "Select Next Playlist"
-msgstr "Valitse soittolistan kirjasinlaji:"
-
-#: src/audacious/ui_manager.c:209 src/audacious/ui_manager.c:210
-#, fuzzy
-msgid "Select Previous Playlist"
-msgstr "/Järjestä valittu osa/Nimien mukaan"
-
-#: src/audacious/ui_manager.c:212 src/audacious/ui_manager.c:213
-#, fuzzy
-msgid "Delete Playlist"
-msgstr "Valitse soittolistan kirjasinlaji:"
-
-#: src/audacious/ui_manager.c:215
-#, fuzzy
-msgid "Load List"
-msgstr "/Avaa lista"
-
-#: src/audacious/ui_manager.c:216
-#, fuzzy
-msgid "Loads a playlist file into the selected playlist."
-msgstr "Lataa metatiedot, kun tiedosto näytetään soittolistassa"
-
-#: src/audacious/ui_manager.c:218
-#, fuzzy
-msgid "Save List"
-msgstr "/Tallenna lista"
-
-#: src/audacious/ui_manager.c:219
-#, fuzzy
-msgid "Saves the selected playlist."
-msgstr "Tallenna soittolista"
-
-#: src/audacious/ui_manager.c:221
-#, fuzzy
-msgid "Save Default List"
-msgstr "/Tallenna/Oletus"
-
-#: src/audacious/ui_manager.c:222
-msgid "Saves the selected playlist to the default location."
-msgstr ""
-
-#: src/audacious/ui_manager.c:225
-#, fuzzy
-msgid "Refresh List"
-msgstr "Päivitä soittolista"
-
-#: src/audacious/ui_manager.c:226
-msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
-
-#: src/audacious/ui_manager.c:229
-msgid "List Manager"
-msgstr ""
-
-#: src/audacious/ui_manager.c:230
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "Päivitä soittolista"
-
-#: src/audacious/ui_manager.c:236
-#, fuzzy
-msgid "View"
-msgstr "/_Näytä"
-
-#: src/audacious/ui_manager.c:240
-#, fuzzy
-msgid "Add CD..."
-msgstr "/Lisää CD..."
-
-#: src/audacious/ui_manager.c:241
-#, fuzzy
-msgid "Adds a CD to the playlist."
-msgstr "Älä tyhjennä soittolistaa"
-
-#: src/audacious/ui_manager.c:244
-#, fuzzy
-msgid "Add Internet Address..."
-msgstr "/Lisää internet-osoite..."
-
-#: src/audacious/ui_manager.c:245
-msgid "Adds a remote track to the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:248
-#, fuzzy
-msgid "Add Files..."
-msgstr "/Lisää tiedostoja..."
-
-#: src/audacious/ui_manager.c:249
-#, fuzzy
-msgid "Adds files to the playlist."
-msgstr "Älä tyhjennä soittolistaa"
-
-#: src/audacious/ui_manager.c:254
-#, fuzzy
-msgid "Search and Select"
-msgstr "/Järjestä valittu osa"
-
-#: src/audacious/ui_manager.c:255
-msgid ""
-"Searches the playlist and selects playlist entries based on specific "
-"criteria."
-msgstr ""
-
-#: src/audacious/ui_manager.c:258
-#, fuzzy
-msgid "Invert Selection"
-msgstr "/Käänteinen valinta"
-
-#: src/audacious/ui_manager.c:259
-msgid "Inverts the selected and unselected entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:262
-msgid "Select All"
-msgstr "Valitse kaikki"
-
-#: src/audacious/ui_manager.c:263
-msgid "Selects all of the playlist entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:266
-#, fuzzy
-msgid "Select None"
-msgstr "/Tyhjä valinta"
-
-#: src/audacious/ui_manager.c:267
-msgid "Deselects all of the playlist entries."
-msgstr ""
-
-#: src/audacious/ui_manager.c:272
-#, fuzzy
-msgid "Clear Queue"
-msgstr "/Tyhjennä jono"
-
-#: src/audacious/ui_manager.c:273
-msgid "Clears the queue associated with this playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:276
-#, fuzzy
-msgid "Remove Unavailable Files"
-msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
-
-#: src/audacious/ui_manager.c:277
-#, fuzzy
-msgid "Removes unavailable files from the playlist."
-msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
-
-#: src/audacious/ui_manager.c:280
-#, fuzzy
-msgid "Remove Duplicates"
-msgstr "/Poista valitut"
-
-#: src/audacious/ui_manager.c:282 src/audacious/ui_manager.c:318
-#: src/audacious/ui_manager.c:348
-msgid "By Title"
-msgstr "Nimen mukaan"
-
-#: src/audacious/ui_manager.c:283
-msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
-
-#: src/audacious/ui_manager.c:286 src/audacious/ui_manager.c:326
-#: src/audacious/ui_manager.c:356
-msgid "By Filename"
-msgstr "Tiedostonimen mukaan"
-
-#: src/audacious/ui_manager.c:287
-#, fuzzy
-msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
-
-#: src/audacious/ui_manager.c:290 src/audacious/ui_manager.c:330
-#: src/audacious/ui_manager.c:360
-#, fuzzy
-msgid "By Path + Filename"
-msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
-
-#: src/audacious/ui_manager.c:291
-msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
-
-#: src/audacious/ui_manager.c:294
-#, fuzzy
-msgid "Remove All"
-msgstr "/Poista kaikki"
-
-#: src/audacious/ui_manager.c:295
-msgid "Removes all entries from the playlist."
-msgstr ""
-
-#: src/audacious/ui_manager.c:298
-#, fuzzy
-msgid "Remove Unselected"
-msgstr "/Poista valitsemattomat"
-
-#: src/audacious/ui_manager.c:299
-#, fuzzy
-msgid "Remove unselected entries from the playlist."
-msgstr "Poista valitut kappaleet"
-
-#: src/audacious/ui_manager.c:302
-#, fuzzy
-msgid "Remove Selected"
-msgstr "/Poista valitut"
-
-#: src/audacious/ui_manager.c:303
-#, fuzzy
-msgid "Remove selected entries from the playlist."
-msgstr "Poista valitut kappaleet"
-
-#: src/audacious/ui_manager.c:308
-#, fuzzy
-msgid "Randomize List"
-msgstr "/Sekoita lista"
-
-#: src/audacious/ui_manager.c:309
-#, fuzzy
-msgid "Randomizes the playlist."
-msgstr "/Sekoita lista"
-
-#: src/audacious/ui_manager.c:312
-#, fuzzy
-msgid "Reverse List"
-msgstr "/Käänteinen järjestys"
-
-#: src/audacious/ui_manager.c:313
-#, fuzzy
-msgid "Reverses the playlist."
-msgstr "Päivitä soittolista"
-
-#: src/audacious/ui_manager.c:316
-#, fuzzy
-msgid "Sort List"
-msgstr "/Järjestä lista"
-
-#: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
-#, fuzzy
-msgid "Sorts the list by title."
-msgstr "Järjestä kaikki nimen mukaan"
-
-#: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
-#, fuzzy
-msgid "By Artist"
-msgstr "Esittäjä"
-
-#: src/audacious/ui_manager.c:323 src/audacious/ui_manager.c:353
-#, fuzzy
-msgid "Sorts the list by artist."
-msgstr "/Järjestä lista/Nimen mukaan"
-
-#: src/audacious/ui_manager.c:327 src/audacious/ui_manager.c:357
-#, fuzzy
-msgid "Sorts the list by filename."
-msgstr "Järjestä kaikki tiedostonimen mukaan"
-
-#: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
-#, fuzzy
-msgid "Sorts the list by full pathname."
-msgstr "Järjestä kappaleet täydellisen tiedostonimen mukaan"
-
-#: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
-msgid "By Date"
-msgstr "Päiväyksen mukaan"
-
-#: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
-msgid "Sorts the list by modification time."
-msgstr ""
-
-#: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
-#, fuzzy
-msgid "By Track Number"
-msgstr "Kappaleen numero"
-
-#: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
-#, fuzzy
-msgid "Sorts the list by track number."
-msgstr "/Järjestä lista/Päiväyksen mukaan"
-
-#: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
-#, fuzzy
-msgid "By Playlist Entry"
-msgstr "BMP:n soittolistan muokkain"
-
-#: src/audacious/ui_manager.c:343 src/audacious/ui_manager.c:373
-#, fuzzy
-msgid "Sorts the list by playlist entry."
-msgstr "/Järjestä lista/Nimen mukaan"
-
-#: src/audacious/ui_manager.c:346
-#, fuzzy
-msgid "Sort Selected"
-msgstr "/Järjestä valittu osa"
-
-#: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
-#, fuzzy
-msgid "View Track Details"
-msgstr "/Näytä kappaleen tiedot"
-
-#: src/audacious/ui_manager.c:382 src/audacious/ui_manager.c:385
-#, fuzzy
-msgid "View track details"
-msgstr "/Näytä kappaleen tiedot"
-
-#: src/audacious/ui_manager.c:390
-#, fuzzy
-msgid "Play File"
-msgstr "/Soita"
-
-#: src/audacious/ui_manager.c:391
-#, fuzzy
-msgid "Load and play a file"
-msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
-
-#: src/audacious/ui_manager.c:393
-#, fuzzy
-msgid "Play Location"
-msgstr "Sijainti:"
-
-#: src/audacious/ui_manager.c:394
-msgid "Play media from the selected location"
-msgstr ""
-
-#: src/audacious/ui_manager.c:396
-#, fuzzy
-msgid "Preferences"
-msgstr "/Asetukset"
-
-#: src/audacious/ui_manager.c:397
-#, fuzzy
-msgid "Open preferences window"
-msgstr "Avaa asetusikkuna"
-
-#: src/audacious/ui_manager.c:399
-#, fuzzy
-msgid "_Quit"
-msgstr "/_Lopeta"
-
-#: src/audacious/ui_manager.c:400
-#, fuzzy
-msgid "Quit Audacious"
-msgstr "MPEG-ääniliitännäisestä"
-
-#: src/audacious/ui_manager.c:402 src/audacious/ui_manager.c:403
-#, fuzzy
-msgid "Set A-B"
-msgstr "/Valitse kaikki"
-
-#: src/audacious/ui_manager.c:405 src/audacious/ui_manager.c:406
-#, fuzzy
-msgid "Clear A-B"
-msgstr "/Tyhjennä jono"
-
-#: src/audacious/ui_manager.c:408 src/audacious/ui_manager.c:409
-#, fuzzy
-msgid "Jump to Playlist Start"
-msgstr "/Siirry soittolistan alkuun"
-
-#: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
-#, fuzzy
-msgid "Jump to File"
-msgstr "/Siirry tiedoston kohdalle"
-
-#: src/audacious/ui_manager.c:417
-#, fuzzy
-msgid "Queue Toggle"
-msgstr "/Muuta soittojonoa"
-
-#: src/audacious/ui_manager.c:418
-msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
-
-#: src/audacious/ui_manager.c:425
-#, fuzzy
-msgid "Load"
-msgstr "/Lataa"
-
-#: src/audacious/ui_manager.c:426
-#, fuzzy
-msgid "Import"
-msgstr "/Tuo"
-
-#: src/audacious/ui_manager.c:427
-#, fuzzy
-msgid "Save"
-msgstr "/Tallenna"
-
-#: src/audacious/ui_manager.c:428
-#, fuzzy
-msgid "Delete"
-msgstr "/Poista"
-
-#: src/audacious/ui_manager.c:430 src/audacious/ui_manager.c:451
-#: src/audacious/ui_manager.c:466
-msgid "Preset"
-msgstr "Asetus"
-
-#: src/audacious/ui_manager.c:431
-msgid "Load preset"
-msgstr "Lataa asetus"
-
-#: src/audacious/ui_manager.c:433 src/audacious/ui_manager.c:454
-#: src/audacious/ui_manager.c:469
-#, fuzzy
-msgid "Auto-load preset"
-msgstr "/Lataa/Automaattinen asetus"
-
-#: src/audacious/ui_manager.c:434
-#, fuzzy
-msgid "Load auto-load preset"
-msgstr "/Lataa/Automaattinen asetus"
-
-#: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
-msgid "Default"
-msgstr "Oletus"
-
-#: src/audacious/ui_manager.c:437
-msgid "Load default preset into equalizer"
-msgstr ""
-
-#: src/audacious/ui_manager.c:439
-#, fuzzy
-msgid "Zero"
-msgstr "Retro"
-
-#: src/audacious/ui_manager.c:440
-#, fuzzy
-msgid "Set equalizer preset levels to zero"
-msgstr "Tallenna taajuuskorjaimen asetus"
-
-#: src/audacious/ui_manager.c:442
-#, fuzzy
-msgid "From file"
-msgstr "/Lataa/Tiedosto"
-
-#: src/audacious/ui_manager.c:443
-#, fuzzy
-msgid "Load preset from file"
-msgstr "Lataa asetus"
-
-#: src/audacious/ui_manager.c:445
-#, fuzzy
-msgid "From WinAMP EQF file"
-msgstr "/Lataa/Winampin EQF-tiedosto"
-
-#: src/audacious/ui_manager.c:446
-#, fuzzy
-msgid "Load preset from WinAMP EQF file"
-msgstr "/Lataa/Winampin EQF-tiedosto"
-
-#: src/audacious/ui_manager.c:448
-#, fuzzy
-msgid "WinAMP Presets"
-msgstr "/Tuo/Winampin asetukset"
-
-#: src/audacious/ui_manager.c:449
-#, fuzzy
-msgid "Import WinAMP presets"
-msgstr "/Tuo/Winampin asetukset"
-
-#: src/audacious/ui_manager.c:452
-msgid "Save preset"
-msgstr "Tallenna asetus"
-
-#: src/audacious/ui_manager.c:455
-#, fuzzy
-msgid "Save auto-load preset"
-msgstr "/Tallenna/Automaattinen asetus"
-
-#: src/audacious/ui_manager.c:458
-#, fuzzy
-msgid "Save default preset"
-msgstr "Tallenna automaattinen asetus"
-
-#: src/audacious/ui_manager.c:460
-#, fuzzy
-msgid "To file"
-msgstr "/Lataa/Tiedosto"
-
-#: src/audacious/ui_manager.c:461
-#, fuzzy
-msgid "Save preset to file"
-msgstr "Tallenna asetus"
-
-#: src/audacious/ui_manager.c:463
-#, fuzzy
-msgid "To WinAMP EQF file"
-msgstr "/Tallenna/Winampin EQF-tiedosto"
-
-#: src/audacious/ui_manager.c:464
-#, fuzzy
-msgid "Save preset to WinAMP EQF file"
-msgstr "/Tallenna/Winampin EQF-tiedosto"
-
-#: src/audacious/ui_manager.c:467
-msgid "Delete preset"
-msgstr "Poista asetus"
-
-#: src/audacious/ui_manager.c:470
-#, fuzzy
-msgid "Delete auto-load preset"
-msgstr "/Poista/Automaattinen asetus"
-
-#: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1363
-msgid "Appearance"
-msgstr "Ulkonäkö"
-
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:88
 #, fuzzy
 msgid "Audio"
 msgstr "MPEG-ääniliitännäisestä"
 
-#: src/audacious/ui_preferences.c:103
-msgid "Connectivity"
+#: src/audacious/ui_preferences.c:89
+#, fuzzy
+msgid "Replay Gain"
+msgstr "ReplayGain"
+
+#: src/audacious/ui_preferences.c:90
+msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:104 src/audacious/glade/prefswin.glade:2862
-msgid "Equalizer"
-msgstr "Taajuuskorjain"
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
+msgid "Playlist"
+msgstr "Soittolista"
 
-#: src/audacious/ui_preferences.c:105 src/audacious/glade/prefswin.glade:1642
-msgid "Mouse"
-msgstr "Hiiri"
-
-#: src/audacious/ui_preferences.c:107 src/audacious/glade/prefswin.glade:693
+#: src/audacious/ui_preferences.c:92
 msgid "Plugins"
 msgstr "Liitännäiset"
 
-#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:254
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
 msgid "Artist"
 msgstr "Esittäjä"
 
-#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:257
-#: src/audacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
 msgid "Album"
-msgstr "Levy"
+msgstr "Albumi"
 
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:251
-#: src/audacious/ui_fileinfopopup.c:361
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
+#: src/libaudgui/ui_playlist_manager.c:247
 msgid "Title"
 msgstr "Nimi"
 
-#: src/audacious/ui_preferences.c:116
+#: src/audacious/ui_preferences.c:101
 msgid "Tracknumber"
 msgstr "Kappalenumero"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:260
-#: src/audacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
 msgid "Genre"
 msgstr "Tyylilaji"
 
-#: src/audacious/ui_preferences.c:118 src/audacious/ui_preferences.c:486
-#: src/audacious/ui_preferences.c:574 src/audacious/ui_preferences.c:663
-#: src/audacious/ui_preferences.c:759 src/audacious/ui_fileinfopopup.c:370
+#: src/audacious/ui_preferences.c:103
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: src/audacious/ui_preferences.c:119
+#: src/audacious/ui_preferences.c:104
 msgid "Filepath"
 msgstr "Tiedostopolku"
 
-#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:387
+#: src/audacious/ui_preferences.c:105
 msgid "Date"
 msgstr "Päiväys"
 
-#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:263
-#: src/audacious/titlestring.c:388
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
 msgid "Year"
 msgstr "Vuosi"
 
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:389
+#: src/audacious/ui_preferences.c:107
 msgid "Comment"
 msgstr "Kommentti"
 
-#: src/audacious/ui_preferences.c:143
-msgid "localhost"
+#: src/audacious/ui_preferences.c:108
+msgid "Codec"
+msgstr "Kodekki"
+
+#: src/audacious/ui_preferences.c:109
+msgid "Quality"
+msgstr "Laatu"
+
+#: src/audacious/ui_preferences.c:114
+msgid "None"
+msgstr "Ei mikään"
+
+#: src/audacious/ui_preferences.c:115
+msgid "Japanese"
+msgstr "Japani"
+
+#: src/audacious/ui_preferences.c:116
+msgid "Taiwanese"
+msgstr "Taiwan"
+
+#: src/audacious/ui_preferences.c:117
+msgid "Chinese"
+msgstr "Kiina"
+
+#: src/audacious/ui_preferences.c:118
+msgid "Korean"
+msgstr "Korea"
+
+#: src/audacious/ui_preferences.c:119
+msgid "Russian"
+msgstr "Venäjä"
+
+#: src/audacious/ui_preferences.c:120
+msgid "Greek"
+msgstr "Kreikka"
+
+#: src/audacious/ui_preferences.c:121
+msgid "Hebrew"
+msgstr "Heprea"
+
+#: src/audacious/ui_preferences.c:122
+msgid "Turkish"
+msgstr "Turkki"
+
+#: src/audacious/ui_preferences.c:123
+msgid "Arabic"
+msgstr "Arabia"
+
+#: src/audacious/ui_preferences.c:124
+#, fuzzy
+msgid "Polish"
+msgstr "puola:"
+
+#: src/audacious/ui_preferences.c:125
+#, fuzzy
+msgid "Baltic"
+msgstr "Kelttiläinen"
+
+#: src/audacious/ui_preferences.c:126
+msgid "Universal"
+msgstr "Yleismaailmallinen"
+
+#: src/audacious/ui_preferences.c:146
+msgid "<b>Bit Depth</b>"
+msgstr "<b>Bittisyvyys</b>"
+
+#: src/audacious/ui_preferences.c:147
+msgid "Output bit depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:456 src/audacious/ui_preferences.c:543
-#: src/audacious/ui_preferences.c:632 src/audacious/ui_preferences.c:728
-msgid "Enabled"
-msgstr "Käytössä"
-
-#: src/audacious/ui_preferences.c:472 src/audacious/ui_preferences.c:559
-#: src/audacious/ui_preferences.c:648 src/audacious/ui_preferences.c:744
-msgid "Description"
-msgstr "Kuvaus"
-
-#: src/audacious/ui_preferences.c:1878
-msgid "Category"
-msgstr "Luokka"
-
-#: src/audacious/ui_preferences.c:2462
-msgid "Preferences Window"
-msgstr "Asetusikkuna"
-
-#: src/audacious/ui_skinselector.c:176
-msgid "Archived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_skinselector.c:181
-msgid "Unarchived Winamp 2.x skin"
-msgstr ""
-
-#: src/audacious/ui_fileinfo.c:160
-#, fuzzy
-msgid "Track Information Window"
-msgstr "Näytä kappaleen tiedot"
-
-#: src/audacious/ui_fileinfopopup.c:266
-#, fuzzy
-msgid "Track Number"
-msgstr "Kappaleen numero"
-
-#: src/audacious/ui_fileinfopopup.c:270
-#, fuzzy
-msgid "Track Length"
-msgstr "Kappaleen kesto:"
-
-#: src/audacious/ui_fileopener.c:129
-msgid "Open Files"
-msgstr "Avaa tiedostoja"
-
-#: src/audacious/ui_fileopener.c:129
-msgid "Add Files"
-msgstr "Lisää tiedostoja"
-
-#: src/audacious/ui_fileopener.c:131
-msgid "Close dialog on Open"
-msgstr "Sulje ikkuna kun tiedostot avattu"
-
-#: src/audacious/ui_fileopener.c:131
-msgid "Close dialog on Add"
-msgstr "Sulje ikkuna kun tiedostot lisätty"
-
-#: src/audacious/ui_fileopener.c:356
-#, fuzzy
-msgid "Play files"
-msgstr "/Soita"
-
-#: src/audacious/ui_fileopener.c:358
-#, fuzzy
-msgid "Load files"
-msgstr "/Lataa/Tiedosto"
-
-#: src/audacious/ui_playlist.c:483
-#, fuzzy
-msgid "Search entries in active playlist"
-msgstr "Näytä kappaleiden numerot soittolistassa"
-
-#: src/audacious/ui_playlist.c:489
+#: src/audacious/ui_preferences.c:148
 msgid ""
-"Select entries in playlist by filling one or more fields. Fields use regular "
-"expressions syntax, case-insensitive. If you don't know how regular "
-"expressions work, simply insert a literal portion of what you're searching "
-"for."
+"All streams will be converted to this bit depth.\n"
+"This should be the max supported bit depth of\n"
+"the sound card or output plugin."
 msgstr ""
 
-#: src/audacious/ui_playlist.c:496
-#, fuzzy
-msgid "Track name: "
-msgstr "Kappaleiden nimet:"
+#: src/audacious/ui_preferences.c:151
+msgid "<b>Volume Control</b>"
+msgstr "<b>Äänenvoimakkuuden säädöt</b>"
 
-#: src/audacious/ui_playlist.c:502
-#, fuzzy
-msgid "Album name: "
-msgstr "Levy"
+#: src/audacious/ui_preferences.c:152
+msgid "Use software volume control"
+msgstr "Käytä ohjelmistopohjaista äänenvoimakkuussäätöä"
 
-#: src/audacious/ui_playlist.c:508
-#, fuzzy
-msgid "Artist: "
-msgstr "Esittäjä:"
-
-#: src/audacious/ui_playlist.c:514
-#, fuzzy
-msgid "Filename: "
-msgstr "Tiedostonimi:"
-
-#: src/audacious/ui_playlist.c:521
-msgid "Clear previous selection before searching"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:524
-msgid "Automatically toggle queue for matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:527
-msgid "Create a new playlist with matching entries"
-msgstr ""
-
-#: src/audacious/ui_playlist.c:777
-#, c-format
-msgid "Error writing playlist \"%s\": %s"
-msgstr "Virhe soittolistan \"%s\" kirjoittamisessa: %s"
-
-#: src/audacious/ui_playlist.c:799
-#, c-format
-msgid "%s already exist. Continue?"
-msgstr "%s on jo olemassa. Jatketaanko?"
-
-#: src/audacious/ui_playlist.c:814
-#, fuzzy, c-format
+#: src/audacious/ui_preferences.c:154
 msgid ""
-"<b><big>Unable to save playlist.</big></b>\n"
-"\n"
-"Unknown file type for '%s'.\n"
-msgstr ""
-"Soittolistan tallentaminen epäonnistui. Tuntematon tiedoston \"%s\" tyyppi."
-
-#: src/audacious/ui_playlist.c:966
-#, fuzzy
-msgid "Load Playlist"
-msgstr "Avaa soittolista"
-
-#: src/audacious/ui_playlist.c:979
-msgid "Save Playlist"
-msgstr "Tallenna soittolista"
-
-#: src/audacious/ui_playlist.c:1690
-#, fuzzy
-msgid "Audacious Playlist Editor"
-msgstr "/Näytä soittolistan muokkain"
-
-#: src/audacious/ui_urlopener.c:90
-#, fuzzy
-msgid "Add/Open URL Dialog"
-msgstr "Lisää/avaa tiedostoja -ikkuna"
-
-#: src/audacious/ui_playlist_manager.c:253
-#, fuzzy
-msgid "Playlist Manager"
-msgstr "/Älä etene soittolistassa"
-
-#: src/audacious/ui_playlist_manager.c:292
-msgid "Entries"
+"Use software volume control. This may be useful for situations where your "
+"audio system does not support controlling the playback volume."
 msgstr ""
 
-#: src/audacious/ui_playlist_manager.c:306
-#, fuzzy
-msgid "_Rename"
-msgstr "Tiedostonimi"
-
-#: src/audacious/ui_jumptotrack.c:134
-msgid "Un_queue"
-msgstr "_Poista jonosta"
-
-#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:573
-#, fuzzy
-msgid "_Queue"
-msgstr "Lisää jonoon"
-
-#: src/audacious/ui_jumptotrack.c:498
-msgid "Jump to Track"
-msgstr "Siirry kappaleeseen"
-
-#: src/audacious/ui_jumptotrack.c:539
-msgid "Filter: "
-msgstr "Suodatin:"
-
-#: src/audacious/ui_jumptotrack.c:540
-#, fuzzy
-msgid "_Filter:"
-msgstr "Suodatin:"
-
-#: src/audacious/playback.c:171
-msgid ""
-"<b><big>No output plugin selected.</big></b>\n"
-"You have not selected an output plugin."
+#: src/audacious/ui_preferences.c:158
+msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/titlestring.c:379
-msgid "Performer/Artist"
-msgstr "Tekijä/Esittäjä"
+#: src/audacious/ui_preferences.c:159 src/audacious/ui_preferences.c:161
+msgid "dB"
+msgstr "dB"
 
-#: src/audacious/titlestring.c:382
-msgid "File name"
-msgstr "Tiedostonimi"
-
-#: src/audacious/titlestring.c:383
-msgid "File path"
-msgstr "Tiedoston polku"
-
-#: src/audacious/titlestring.c:384
-msgid "File extension"
-msgstr "Tiedostopääte"
-
-#: src/audacious/titlestring.c:385
-msgid "Track name"
-msgstr "Kappaleen nimi"
-
-#: src/audacious/titlestring.c:386
-msgid "Track number"
-msgstr "Kappaleen numero"
-
-#: src/audacious/titlestring.c:449
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
-
-#: src/audacious/glade/fileinfo.glade:8
+#: src/audacious/ui_preferences.c:160
 #, fuzzy
-msgid "Track Information"
-msgstr "Näytä kappaleen tiedot"
+msgid "Amplify untagged files:"
+msgstr "- soita multimediatiedostoja"
 
-#: src/audacious/glade/fileinfo.glade:81
+#: src/audacious/ui_preferences.c:164
 #, fuzzy
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>Tallenteet</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:139
-#, fuzzy
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>Ulostulo</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:197
-#, fuzzy
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>Ulostulo</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:255
-#, fuzzy
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>Yleinen</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:313
-#, fuzzy
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>Yleinen</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:392
-#, fuzzy
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Tallenteet</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:441
-#, fuzzy
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Yleinen</b></span>"
-
-#: src/audacious/glade/fileinfo.glade:499
-#, fuzzy
-msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"xx-large\"><b>Hiiri</b></span>"
-
-#: src/audacious/glade/prefswin.glade:8
-#, fuzzy
-msgid "Audacious Preferences"
-msgstr "BMP:n asetukset"
-
-#: src/audacious/glade/prefswin.glade:115
-#, fuzzy
-msgid "_Decoder list:"
-msgstr "Dekooderi"
-
-#: src/audacious/glade/prefswin.glade:219
-#, fuzzy
-msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Yleinen</b></span>"
-
-#: src/audacious/glade/prefswin.glade:261
-msgid "_General plugin list:"
-msgstr "_Yleisten liitännäisten luettelo:"
-
-#: src/audacious/glade/prefswin.glade:365
-msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr "<span size=\"medium\"><b>Yleinen</b></span>"
-
-#: src/audacious/glade/prefswin.glade:407
-msgid "_Visualization plugin list:"
-msgstr "_Visualisointiliitännäisten luettelo:"
-
-#: src/audacious/glade/prefswin.glade:511
-msgid "<b>Visualization</b>"
-msgstr "<b>Visualisointi</b>"
-
-#: src/audacious/glade/prefswin.glade:553
-msgid "_Effect plugin list:"
-msgstr "_Efektiliitännäisten luettelo:"
-
-#: src/audacious/glade/prefswin.glade:657
-msgid "<b>Effects</b>"
-msgstr "<b>Tehosteet</b>"
-
-#: src/audacious/glade/prefswin.glade:746
-msgid "<b>_Skin</b>"
-msgstr "<b>_Teema</b>"
-
-#: src/audacious/glade/prefswin.glade:799
-#, fuzzy
-msgid "Refresh skin list"
-msgstr "Päivitä lista"
-
-#: src/audacious/glade/prefswin.glade:893
-msgid "<b>_Fonts</b>"
-msgstr "<b>_Kirjasimet</b>"
-
-#: src/audacious/glade/prefswin.glade:948
-msgid "_Player:"
-msgstr "_Soitin:"
-
-#: src/audacious/glade/prefswin.glade:991
-msgid "_Playlist:"
-msgstr "_Soittolista:"
-
-#: src/audacious/glade/prefswin.glade:1023
-msgid "Select main player window font:"
-msgstr "Valitse pääikkunan kirjasinlaji:"
-
-#: src/audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1093
-#, fuzzy
-msgid "Use Bitmap fonts if available"
-msgstr "Stereo (jos saatavilla)"
-
-#: src/audacious/glade/prefswin.glade:1127
-msgid "<b>_Miscellaneous</b>"
-msgstr "<b>_Sekalaista</b>"
-
-#: src/audacious/glade/prefswin.glade:1175
-msgid "Show track numbers in playlist"
-msgstr "Näytä kappaleiden numerot soittolistassa"
-
-#: src/audacious/glade/prefswin.glade:1210
-#, fuzzy
-msgid "Show separators in playlist"
-msgstr "Näytä kappaleiden numerot soittolistassa"
-
-#: src/audacious/glade/prefswin.glade:1245
-msgid "Use custom cursors"
-msgstr "Käytä muita osoittimia"
-
-#: src/audacious/glade/prefswin.glade:1279
-#: src/audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1281
-msgid "Show window manager decoration"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1289
-msgid "Show window manager decorations"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1321
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1410
-msgid "<b>Mouse wheel</b>"
-msgstr "<b>Hiiren rulla</b>"
-
-#: src/audacious/glade/prefswin.glade:1458
-#, fuzzy
-msgid "Changes volume by"
-msgstr "Hiiren rulla muuttaa äänenvoimakkuutta määrällä"
-
-#: src/audacious/glade/prefswin.glade:1486
-msgid "percent"
-msgstr "prosenttia"
-
-#: src/audacious/glade/prefswin.glade:1514
-#, fuzzy
-msgid "Scrolls playlist by"
-msgstr "Hiiren rulla vierittää soittolistaa (rivejä)"
-
-#: src/audacious/glade/prefswin.glade:1567
-msgid "lines"
-msgstr "riviä"
-
-#: src/audacious/glade/prefswin.glade:1689
-msgid "<b>Filename</b>"
+msgid "<b>Replay Gain</b>"
 msgstr "<b>Tiedostonimi</b>"
 
-#: src/audacious/glade/prefswin.glade:1729
-msgid "Convert underscores to blanks"
-msgstr "Muunna alaviivat väleiksi"
+#: src/audacious/ui_preferences.c:165
+#, fuzzy
+msgid "Enable Replay Gain"
+msgstr "Käytä ReplayGainia"
 
-#: src/audacious/glade/prefswin.glade:1764
-msgid "Convert %20 to blanks"
-msgstr "Muunna %20 väleiksi"
-
-#: src/audacious/glade/prefswin.glade:1799
-msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:1833
-msgid "<b>Metadata</b>"
+#: src/audacious/ui_preferences.c:167
+#, fuzzy
+msgid "<b>Mode</b>"
 msgstr "<b>Metatiedot</b>"
 
-#: src/audacious/glade/prefswin.glade:1872
-msgid "Load metadata (tag information) from music files."
-msgstr "Lataa metatiedot (lisätiedot) musiikkitiedostoista."
-
-#: src/audacious/glade/prefswin.glade:1874
-msgid "Load metadata from playlists and files"
-msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
-
-#: src/audacious/glade/prefswin.glade:1912
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr "Lataa metatiedot kun tiedosto lisätään soittolistaan tai avataan"
-
-#: src/audacious/glade/prefswin.glade:1914
-msgid "On load"
-msgstr "Avattaessa"
-
-#: src/audacious/glade/prefswin.glade:1934
+#: src/audacious/ui_preferences.c:168
 #, fuzzy
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Lataa metatiedot kun tiedosto lisätään soittolistaan tai avataan"
+msgid "Single track mode"
+msgstr "/Näytä kappaleen tiedot"
 
-#: src/audacious/glade/prefswin.glade:1936
-msgid "On display"
-msgstr "Näytettäessä"
+#: src/audacious/ui_preferences.c:170
+#, fuzzy
+msgid "Album mode"
+msgstr "Albumi: "
 
-#: src/audacious/glade/prefswin.glade:1966
+#: src/audacious/ui_preferences.c:172
+#, fuzzy
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>Hiiren rulla</b>"
+
+#: src/audacious/ui_preferences.c:175
+#, fuzzy
+msgid "<b>Clipping Prevention</b>"
+msgstr "MPEG-ääniliitännäisen asetukset"
+
+#: src/audacious/ui_preferences.c:176
+#, fuzzy
+msgid "Enable clipping prevention"
+msgstr "Estä huippujen leikkautuminen"
+
+#: src/audacious/ui_preferences.c:180
+msgid "Proxy hostname:"
+msgstr "Välityspalvelimen osoite:"
+
+#: src/audacious/ui_preferences.c:181
+msgid "Proxy port:"
+msgstr "Välityspalvelimen portti:"
+
+#: src/audacious/ui_preferences.c:185
+msgid "Proxy username:"
+msgstr "Välityspalvelimen käyttäjätunnus:"
+
+#: src/audacious/ui_preferences.c:186
+msgid "Proxy password:"
+msgstr "Välityspalvelimen salasana:"
+
+#: src/audacious/ui_preferences.c:190
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Välityspalvelinasetukset</b>"
+
+#: src/audacious/ui_preferences.c:191
+msgid "Enable proxy usage"
+msgstr "Käytä välityspalvelinta"
+
+#: src/audacious/ui_preferences.c:194
+msgid "Use authentication with proxy"
+msgstr "Käytä autentikointia"
+
+#: src/audacious/ui_preferences.c:197
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">Näiden asetusten muuttaminen vaatii ohjelman "
+"uudelleenkäynnistyksen.</span>"
+
+#: src/audacious/ui_preferences.c:201
+msgid "Auto character encoding detector for:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:209
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:1994
+#: src/audacious/ui_preferences.c:209
 msgid ""
 "List of character encodings used for fall back conversion of metadata. If "
 "automatic character encoding detector failed or has been disabled, encodings "
@@ -1907,1088 +584,711 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:2035
-msgid "Auto character encoding detector for:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2091
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
-msgid "<b>File Dialog</b>"
-msgstr "<b>Tiedostonimi</b>"
+msgid "<b>Behavior</b>"
+msgstr "<b>Bittisyvyys</b>"
 
-#: src/audacious/glade/prefswin.glade:2130
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2132
-msgid "Always refresh directory when opening file dialog"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2166
-#, fuzzy
-msgid "<b>Song Display</b>"
-msgstr "<b>Kappaleen näyttö</b>"
-
-#: src/audacious/glade/prefswin.glade:2214
-msgid "Title format:"
-msgstr "Nimikkeen muoto:"
-
-#: src/audacious/glade/prefswin.glade:2242
-msgid "Custom string:"
-msgstr "Muu merkkijono:"
-
-#: src/audacious/glade/prefswin.glade:2293
-#, fuzzy
-msgid ""
-"TITLE\n"
-"ARTIST - TITLE\n"
-"ARTIST - ALBUM - TITLE\n"
-"ARTIST - ALBUM - TRACK. TITLE\n"
-"ARTIST [ ALBUM ] - TRACK. TITLE\n"
-"ALBUM - TITLE\n"
-"Custom"
-msgstr ""
-"NIMI\n"
-"ESITTÄJÄ - NIMI\n"
-"ESITTÄJÄ - ALBUMI - NIMI\n"
-"ALBUMI - NIMI\n"
-"Muu"
-
-#: src/audacious/glade/prefswin.glade:2315
-msgid "Show information about titlestring format"
-msgstr "Näytä tietoja kappaleiden nimiketekstin muodosta"
-
-#: src/audacious/glade/prefswin.glade:2365
-#, fuzzy
-msgid "<b>Popup Information</b>"
-msgstr "MPEG-ääniliitännäisen asetukset"
-
-#: src/audacious/glade/prefswin.glade:2416
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2418
-msgid "Show popup information for playlist entries"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2445
-msgid "Edit settings for popup information"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2553
-msgid "<b>Presets</b>"
-msgstr "<b>Asetukset</b>"
-
-#: src/audacious/glade/prefswin.glade:2653
-msgid "Directory preset file:"
-msgstr "Asetushakemistotiedosto:"
-
-#: src/audacious/glade/prefswin.glade:2681
-msgid "File preset extension:"
-msgstr "Asetustiedostojen pääte:"
-
-#: src/audacious/glade/prefswin.glade:2729
-msgid "Available _Presets:"
-msgstr "Mahdolliset _asetukset:"
-
-#: src/audacious/glade/prefswin.glade:2909
-#, fuzzy
-msgid "<b>Proxy Configuration</b>"
-msgstr "MPEG-ääniliitännäisen asetukset"
-
-#: src/audacious/glade/prefswin.glade:2967
-msgid "Enable proxy usage"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:2998
-msgid "Proxy hostname:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3026
-#, fuzzy
-msgid "Proxy port:"
-msgstr "Välityspalvelin:"
-
-#: src/audacious/glade/prefswin.glade:3120
-#, fuzzy
-msgid "Use authentication with proxy"
-msgstr "Käytä todennusta"
-
-#: src/audacious/glade/prefswin.glade:3151
-#, fuzzy
-msgid "Proxy username:"
-msgstr "Käyttäjänimi:"
-
-#: src/audacious/glade/prefswin.glade:3179
-#, fuzzy
-msgid "Proxy password:"
-msgstr "Salasana:"
-
-#: src/audacious/glade/prefswin.glade:3295
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3419
-#, fuzzy
-msgid "<b>Audio System</b>"
-msgstr "<b>Asetukset</b>"
-
-#: src/audacious/glade/prefswin.glade:3473
-#, fuzzy
-msgid "Current output plugin:"
-msgstr "_Nykyinen ulostuloliitännäinen:"
-
-#: src/audacious/glade/prefswin.glade:3541
-msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping. \n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3571
-#, fuzzy
-msgid "Buffer size:"
-msgstr "Puskurin koko (kt):"
-
-#: src/audacious/glade/prefswin.glade:3695
-#, fuzzy
-msgid "Output Plugin Preferences"
-msgstr "OSS-ulostuloliitännäinen"
-
-#: src/audacious/glade/prefswin.glade:3770
-#, fuzzy
-msgid "Output Plugin Information"
-msgstr "ESD-ulostuloliitännäisen asetukset"
-
-#: src/audacious/glade/prefswin.glade:3822
-#, fuzzy
-msgid "<b>Format Detection</b>"
-msgstr "Automaattinen tunnistus"
-
-#: src/audacious/glade/prefswin.glade:3861
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3863
-msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3897
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3899
-msgid "Detect file formats by extension."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3933
-msgid "<b>Playback</b>"
-msgstr "<b>Soitto</b>"
-
-#: src/audacious/glade/prefswin.glade:3972
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:3974
+#: src/audacious/ui_preferences.c:214
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4008
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "Kun kappale on soinut, älä soita seuraavaa itsestään."
-
-#: src/audacious/glade/prefswin.glade:4010
-msgid "Don't advance in the playlist"
-msgstr "Älä siirry eteenpäin soittolistassa"
-
-#: src/audacious/glade/prefswin.glade:4045
-msgid "Pause between songs"
-msgstr "Kappaleiden välinen tauko"
-
-#: src/audacious/glade/prefswin.glade:4083
-msgid "Pause for"
-msgstr "Tauotus"
-
-#: src/audacious/glade/prefswin.glade:4129
-msgid "seconds"
-msgstr "sekuntia"
-
-#: src/audacious/glade/prefswin.glade:4175
-#, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "Näytetaajuus:"
-
-#: src/audacious/glade/prefswin.glade:4215
-#, fuzzy
-msgid "Enable Sampling Rate Converter"
-msgstr "Näytetaajuus:"
-
-#: src/audacious/glade/prefswin.glade:4264
-#, fuzzy
-msgid "Sampling Rate [Hz]:"
-msgstr "Näytetaajuus:"
-
-#: src/audacious/glade/prefswin.glade:4334
-msgid ""
-"<span size=\"small\">All stream will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
+#: src/audacious/ui_preferences.c:216
+msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4392
-msgid ""
-"SRC_SINC_BEST_QUALITY\n"
-"SRC_SINC_MEDIUM_QUALITY\n"
-"SRC_SINC_FASTEST\n"
-"SRC_ZERO_ORDER_HOLD\n"
-"SRC_LINEAR"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4593
+#: src/audacious/ui_preferences.c:218
 #, fuzzy
-msgid "Reload Plugins"
-msgstr "Liitännäiset"
+msgid "Clear the playlist when opening files"
+msgstr "Valitsee kaikki soittolistan kappaleet."
 
-#: src/audacious/glade/prefswin.glade:4654
+#: src/audacious/ui_preferences.c:220
+#, fuzzy
+msgid "Open files in a temporary playlist"
+msgstr "Lisää uudet tiedostot väliaikaiseen soittolistaan"
+
+#: src/audacious/ui_preferences.c:222
+msgid "<b>Metadata</b>"
+msgstr "<b>Metatiedot</b>"
+
+#: src/audacious/ui_preferences.c:501
+msgid "Category"
+msgstr "Luokka"
+
+#: src/audacious/ui_preferences.c:815
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "MPEG-ääniliitännäisen asetukset"
 
-#: src/audacious/glade/prefswin.glade:4678
+#: src/audacious/ui_preferences.c:824
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "Automaattinen tunnistus"
 
-#: src/audacious/glade/prefswin.glade:4703
+#: src/audacious/ui_preferences.c:829
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4758
+#: src/audacious/ui_preferences.c:846
+msgid "Exclude:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:853
 #, fuzzy
 msgid "Include:"
 msgstr "Riippumaton"
 
-#: src/audacious/glade/prefswin.glade:4786
-msgid "Exclude:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4855
+#: src/audacious/ui_preferences.c:870
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4893
+#: src/audacious/ui_preferences.c:880
 msgid "Search depth: "
-msgstr ""
+msgstr "Haun syvyys: "
 
-#: src/audacious/glade/prefswin.glade:4959
+#: src/audacious/ui_preferences.c:894
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4979
+#: src/audacious/ui_preferences.c:897
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Sekalaista</b>"
 
-#: src/audacious/glade/prefswin.glade:5017
+#: src/audacious/ui_preferences.c:906
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5055
+#: src/audacious/ui_preferences.c:916
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5149
-msgid "Color Adjustment"
+#: src/audacious/ui_preferences.c:1459
+msgid "<b>Song Display</b>"
+msgstr "<b>Kappaleen näyttö</b>"
+
+#: src/audacious/ui_preferences.c:1468
+msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5172
+#: src/audacious/ui_preferences.c:1479
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1501
+msgid "Show information about titlestring format"
+msgstr "Näytä tietoja kappaleiden nimiketekstin muodosta"
+
+#: src/audacious/ui_preferences.c:1514
+msgid "TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1515
+msgid "ARTIST - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1516
+msgid "ARTIST - ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1517
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1518
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1519
+msgid "ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1520
+msgid "Custom"
+msgstr "Muu ..."
+
+#: src/audacious/ui_preferences.c:1527
+msgid "Custom string:"
+msgstr "Muu merkkijono:"
+
+#: src/audacious/ui_preferences.c:1534
+msgid "Title format:"
+msgstr "Nimikkeen muoto:"
+
+#: src/audacious/ui_preferences.c:1545
+#, fuzzy
+msgid "<b>Popup Information</b>"
+msgstr "MPEG-ääniliitännäisen asetukset"
+
+#: src/audacious/ui_preferences.c:1560
+msgid "Show popup information for playlist entries"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1562
 msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5268
-msgid "Red"
+#: src/audacious/ui_preferences.c:1568
+msgid "Edit settings for popup information"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:5296
-#, fuzzy
-msgid "Green"
-msgstr "kreikka:"
+#: src/audacious/ui_preferences.c:1698
+msgid "<b>Audio System</b>"
+msgstr "<b>Äänijärjestelmä</b>"
 
-#: src/audacious/glade/prefswin.glade:5324
+#: src/audacious/ui_preferences.c:1715
+msgid "Buffer size:"
+msgstr "Puskurin koko:"
+
+#: src/audacious/ui_preferences.c:1734
+msgid "Current output plugin:"
+msgstr "Nykyinen ulostuloliitännäinen:"
+
+#: src/audacious/ui_preferences.c:1790
 #, fuzzy
-msgid "Blue"
+msgid "Transport"
+msgstr "Kääntäjät"
+
+#: src/audacious/ui_preferences.c:1790
+msgid "Input"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1791
+#, fuzzy
+msgid "Effect"
+msgstr "<b>Tehosteet</b>"
+
+#: src/audacious/ui_preferences.c:1791
+msgid "Visualization"
+msgstr "Visualisointi"
+
+#: src/audacious/ui_preferences.c:1791
+msgid "General"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1831
+msgid "Audacious Preferences"
+msgstr "Audaciouksen asetukset"
+
+#: src/audacious/util.c:161
+#, c-format
+msgid "Could not create directory (%s): %s\n"
+msgstr "Kansion (%s) luominen epäonnistui: %s\n"
+
+#: src/audtool/handlers_playlist.c:248
+msgid "Position not found."
+msgstr ""
+
+#: src/audtool/handlers_vitals.c:64
+msgid "No song playing."
+msgstr ""
+
+#: src/libaudcore/tuple.c:685
+msgid "Mono"
+msgstr ""
+
+#: src/libaudcore/tuple.c:687
+#, fuzzy
+msgid "Stereo"
+msgstr "stereo"
+
+#: src/libaudcore/tuple.c:689
+#, c-format
+msgid "%d channel"
+msgid_plural "%d channels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/libaudgui/confirm.c:66
+#, c-format
+msgid ""
+"Are you sure you want to close %s?  If you do, any changes made since the "
+"playlist was exported will be lost."
+msgstr ""
+
+#: src/libaudgui/confirm.c:79
+#, fuzzy
+msgid "_Don't show this message again"
+msgstr "Älä näytä tätä varoitusta enää"
+
+#: src/libaudgui/confirm.c:117
+#, fuzzy
+msgid "Rename Playlist"
+msgstr "Tallenna soittolista"
+
+#: src/libaudgui/effects-menu.c:76
+msgid "settings ..."
+msgstr ""
+
+#: src/libaudgui/equalizer.c:68
+#, fuzzy
+msgid "_Enable"
+msgstr "Käytössä"
+
+#: src/libaudgui/equalizer.c:140
+msgid "31 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:140
+msgid "63 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "125 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "250 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "500 Hz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "1 kHz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:141
+msgid "2 kHz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:142
+msgid "4 kHz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:142
+msgid "8 kHz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:142
+msgid "16 kHz"
+msgstr ""
+
+#: src/libaudgui/equalizer.c:147
+#, fuzzy
+msgid "Equalizer"
+msgstr "Näytä taajuuskorjain"
+
+#: src/libaudgui/equalizer.c:163
+#, fuzzy
+msgid "Preamp"
+msgstr "Esivahvistus:"
+
+#: src/libaudgui/infopopup.c:251
+msgid "Track Number"
+msgstr "Kappaleen numero"
+
+#: src/libaudgui/infopopup.c:253
+msgid "Track Length"
+msgstr "Kappaleen kesto:"
+
+#: src/libaudgui/infowin.c:77
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: src/libaudgui/infowin.c:78
+#, fuzzy
+msgid "Acid Rock"
+msgstr "Hard Rock"
+
+#: src/libaudgui/infowin.c:79
+msgid "Ambient"
+msgstr "Ambient"
+
+#: src/libaudgui/infowin.c:80
+#, fuzzy
+msgid "Bebop"
+msgstr "Bebob"
+
+#: src/libaudgui/infowin.c:81
+msgid "Bluegrass"
+msgstr "Bluegrass"
+
+#: src/libaudgui/infowin.c:82
+msgid "Blues"
 msgstr "Blues"
 
-#: src/audacious/widgets/eq_slider.c:93
-msgid "PREAMP"
-msgstr "ESIVAHVISTUS"
+#: src/libaudgui/infowin.c:83
+msgid "Chamber Music"
+msgstr "Kamarimusiikki"
 
-#: src/audacious/widgets/eq_slider.c:93
-msgid "60HZ"
-msgstr "60 Hz"
+#: src/libaudgui/infowin.c:84
+msgid "Classical"
+msgstr "Klassinen"
 
-#: src/audacious/widgets/eq_slider.c:93
-msgid "170HZ"
-msgstr "170 Hz"
+#: src/libaudgui/infowin.c:85
+msgid "Country"
+msgstr "Kantri"
 
-#: src/audacious/widgets/eq_slider.c:94
-msgid "310HZ"
-msgstr "310 Hz"
+#: src/libaudgui/infowin.c:86
+msgid "Death Metal"
+msgstr "Death Metal"
 
-#: src/audacious/widgets/eq_slider.c:94
-msgid "600HZ"
-msgstr "600 Hz"
+#: src/libaudgui/infowin.c:87
+msgid "Disco"
+msgstr "Disko"
 
-#: src/audacious/widgets/eq_slider.c:94
-msgid "1KHZ"
-msgstr "1 kHz"
+#: src/libaudgui/infowin.c:88
+msgid "Easy Listening"
+msgstr "Kevyt kuunneltava"
 
-#: src/audacious/widgets/eq_slider.c:95
-msgid "3KHZ"
-msgstr "30 kHz"
+#: src/libaudgui/infowin.c:89
+msgid "Folk"
+msgstr "Folk"
 
-#: src/audacious/widgets/eq_slider.c:95
-msgid "6KHZ"
-msgstr "6 kHz"
+#: src/libaudgui/infowin.c:90
+msgid "Funk"
+msgstr "Funk"
 
-#: src/audacious/widgets/eq_slider.c:95
-msgid "12KHZ"
-msgstr "12 kHz"
+#: src/libaudgui/infowin.c:91
+msgid "Gangsta Rap"
+msgstr "Gangsta-rap"
 
-#: src/audacious/widgets/eq_slider.c:96
-msgid "14KHZ"
-msgstr "14 kHz"
+#: src/libaudgui/infowin.c:92
+msgid "Gospel"
+msgstr "Gospel"
 
-#: src/audacious/widgets/eq_slider.c:96
-msgid "16KHZ"
-msgstr "16 kHz"
+#: src/libaudgui/infowin.c:93
+msgid "Grunge"
+msgstr "Grunge"
 
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Tiedostojen soittaminen ei onnistu.</big></b>\n"
-#~ "\n"
-#~ "Seuraavien tiedostojen soittaminen ei onnistunut. Tarkista että:\n"
-#~ "1. Tiedostoja voi käyttää.\n"
-#~ "2. Tarpeelliset liitännäiset ovat käytössä."
+#: src/libaudgui/infowin.c:94
+msgid "Hard Rock"
+msgstr "Hard Rock"
 
-#~ msgid "Don't show this warning anymore"
-#~ msgstr "Älä näytä tätä varoitusta enää"
+#: src/libaudgui/infowin.c:95
+msgid "Heavy Metal"
+msgstr "Hevi"
 
-#~ msgid "Show more _details"
-#~ msgstr "Näytä _lisätietoja"
-
+#: src/libaudgui/infowin.c:96
 #, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Signaali SIGSEGV vastaanotettu\n"
-#~ "\n"
-#~ "Tämä voi merkitä ohjelmistovirhettä BMP:ssä. Jos et tiedä miksi tämä "
-#~ "tapahtui, ota yhteyttä kehittäjiin sähköpostiosoitteessa beepmp-"
-#~ "devel@lists.sourceforge.net\n"
-#~ "\n"
+msgid "Hip-hop"
+msgstr "Hip-Hop"
 
+#: src/libaudgui/infowin.c:97
+msgid "House"
+msgstr "House"
+
+#: src/libaudgui/infowin.c:98
+msgid "Jazz"
+msgstr "Jazz"
+
+#: src/libaudgui/infowin.c:99
+msgid "Jungle"
+msgstr "Jungle"
+
+#: src/libaudgui/infowin.c:100
+msgid "Metal"
+msgstr "Metalli"
+
+#: src/libaudgui/infowin.c:101
+msgid "New Age"
+msgstr "New Age"
+
+#: src/libaudgui/infowin.c:102
+msgid "New Wave"
+msgstr "New Wave"
+
+#: src/libaudgui/infowin.c:103
+msgid "Noise"
+msgstr "Melu"
+
+#: src/libaudgui/infowin.c:104
+msgid "Pop"
+msgstr "Pop"
+
+#: src/libaudgui/infowin.c:105
+msgid "Punk Rock"
+msgstr "Punk rock"
+
+#: src/libaudgui/infowin.c:106
+msgid "Rap"
+msgstr "Rap"
+
+#: src/libaudgui/infowin.c:107
+msgid "Reggae"
+msgstr "Reggae"
+
+#: src/libaudgui/infowin.c:108
+msgid "Rock"
+msgstr "Rock"
+
+#: src/libaudgui/infowin.c:109
 #, fuzzy
-#~ msgid "Enable playlist transparency"
-#~ msgstr "Käytä ReplayGainia"
+msgid "Rock and Roll"
+msgstr "Rock'n'Roll"
 
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: valitsin `%s' ei ole yksiselitteinen\n"
+#: src/libaudgui/infowin.c:110
+msgid "Rhythm and Blues"
+msgstr ""
 
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: valitsin `--%s' ei tarvitse parametria\n"
+#: src/libaudgui/infowin.c:111
+msgid "Ska"
+msgstr "Ska"
 
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: valitsin `%c%s' ei tarvitse parametria\n"
+#: src/libaudgui/infowin.c:112
+msgid "Soul"
+msgstr "Soul"
 
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: valitsin `%s' vaatii parametrin\n"
+#: src/libaudgui/infowin.c:113
+msgid "Swing"
+msgstr "Swing"
 
-#~ msgid "%s: unrecognized option `--%s'\n"
-#~ msgstr "%s: tuntematon valitsin `--%s'\n"
+#: src/libaudgui/infowin.c:114
+msgid "Techno"
+msgstr "Tekno"
 
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: tuntematon valitsin `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: ei-sallittu valitsin -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: virheellinen valitsin -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: valitsin tarvitsee parametrin -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: valitsin `-W %s' ei ole yksiselitteinen\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: valitsin `-W %s' ei tarvitse parametria\n"
-
+#: src/libaudgui/infowin.c:115
 #, fuzzy
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Käyttö: beep-media-player [valitsimet] [tiedostot] ...\n"
-#~ "\n"
-#~ "Valitsimet:\n"
-#~ "-----------\n"
+msgid "Trip-hop"
+msgstr "Trip-Hop"
 
-#~ msgid "Display this text and exit"
-#~ msgstr "Näytä tämä teksti ja lopeta"
+#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
+#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
+msgid "<span size=\"small\">n/a</span>"
+msgstr "<span size=\"small\">ei saatavilla</span>"
 
+#: src/libaudgui/infowin.c:265
+msgid "Metadata updated successfully"
+msgstr "Tiedot päivitetty onnistuneesti"
+
+#: src/libaudgui/infowin.c:270
+msgid "Metadata updating failed"
+msgstr "Tietojen päivitys epäonnistui"
+
+#: src/libaudgui/infowin.c:318
+msgid "Track Information"
+msgstr "Kappaleen tiedot"
+
+#: src/libaudgui/infowin.c:350
+msgid "<span size=\"small\">Format:</span>"
+msgstr "<span size=\"small\">Muoto:</span>"
+
+#: src/libaudgui/infowin.c:354
+msgid "<span size=\"small\">Quality:</span>"
+msgstr "<span size=\"small\">Laatu:</span>"
+
+#: src/libaudgui/infowin.c:357
+msgid "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Bittinopeus:</span>"
+
+#: src/libaudgui/infowin.c:387
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">Nimi</span>"
+
+#: src/libaudgui/infowin.c:399
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">Esittäjä</span>"
+
+#: src/libaudgui/infowin.c:411
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">Levy</span>"
+
+#: src/libaudgui/infowin.c:423
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">Kommentti</span>"
+
+#: src/libaudgui/infowin.c:435
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">Tyylilaji</span>"
+
+#: src/libaudgui/infowin.c:456
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">Vuosi</span>"
+
+#: src/libaudgui/infowin.c:467
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">Kappaleen numero</span>"
+
+#: src/libaudgui/infowin.c:549
+#, c-format
+msgid "%d kb/s"
+msgstr "%d kb/s"
+
+#: src/libaudgui/infowin.c:579
+#, c-format
+msgid "No info available for %s.\n"
+msgstr ""
+
+#: src/libaudgui/ui_about.c:71
+msgid "About Audacious"
+msgstr "Tietoja Audaciouksesta"
+
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
+msgid "Credits"
+msgstr "Tekijät"
+
+#: src/libaudgui/ui_credits.c:126
+msgid "Translators"
+msgstr "Kääntäjät"
+
+#: src/libaudgui/ui_fileopener.c:108
+msgid "Open Files"
+msgstr "Avaa tiedostoja"
+
+#: src/libaudgui/ui_fileopener.c:108
+msgid "Add Files"
+msgstr "Lisää tiedostoja"
+
+#: src/libaudgui/ui_fileopener.c:110
+msgid "Close dialog on Open"
+msgstr "Sulje ikkuna kun tiedostot avattu"
+
+#: src/libaudgui/ui_fileopener.c:110
+msgid "Close dialog on Add"
+msgstr "Sulje ikkuna kun tiedostot lisätty"
+
+#: src/libaudgui/ui_jumptotrack.c:133
+msgid "Un_queue"
+msgstr "_Poista jonosta"
+
+#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
+msgid "_Queue"
+msgstr "_Lisää jonoon"
+
+#: src/libaudgui/ui_jumptotrack.c:399
+msgid "Jump to Track"
+msgstr "Siirry kappaleeseen"
+
+#: src/libaudgui/ui_jumptotrack.c:442
+msgid "Filter: "
+msgstr "Suodatin: "
+
+#: src/libaudgui/ui_jumptotrack.c:443
+msgid "_Filter:"
+msgstr "_Suodatin:"
+
+#: src/libaudgui/ui_jumptotrack.c:461
+msgid "Remember"
+msgstr "Muista"
+
+#: src/libaudgui/ui_jumptotrack.c:470
 #, fuzzy
-#~ msgid "Activate Audacious"
-#~ msgstr "Aktivoi BMP"
+msgid "Clea_r"
+msgstr "Tyhjennä A-B"
 
-#~ msgid "Previous session ID"
-#~ msgstr "Edellisen istunnon tunniste"
+#: src/libaudgui/ui_jumptotrack.c:504
+msgid "Close on Jump"
+msgstr "Sulje ikkuna hypätessä"
 
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Tulosta versionumero ja lopeta\n"
+#: src/libaudgui/ui_playlist_manager.c:224
+msgid "Playlist Manager"
+msgstr "Soittolistojen hallinta"
 
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Lisää/avaa tiedostoja -ikkuna"
+#: src/libaudgui/ui_playlist_manager.c:248
+msgid "Entries"
+msgstr ""
 
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Sulje ikkuna kun lisätty"
+#: src/libaudgui/ui_playlist_manager.c:268
+msgid "_Rename"
+msgstr "_Uudelleennimeä"
 
-#~ msgid "Deselect All"
-#~ msgstr "Poista valinta"
-
+#: src/libaudgui/ui_playlist_manager.c:292
 #, fuzzy
-#~ msgid "Track Information Popup"
-#~ msgstr "Näytä kappaleen tiedot"
+msgid "_Close dialog on activating playlist"
+msgstr "Sulje ikkuna kun tiedostot avattu"
+
+#: src/libaudgui/ui_urlopener.c:58
+msgid "Open URL"
+msgstr ""
+
+#: src/libaudgui/ui_urlopener.c:58
+msgid "Add URL"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:165
+msgid "File is not a valid .desktop file"
+msgstr "Tiedosto ei ole validi .desktop-tiedosto"
+
+#: src/libeggsmclient/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Tuntematon desktop-tiedoston versio '%s'"
+
+#: src/libeggsmclient/eggdesktopfile.c:968
+#, c-format
+msgid "Starting %s"
+msgstr "Käynnistetään %s"
+
+#: src/libeggsmclient/eggdesktopfile.c:1110
+msgid "Application does not accept documents on command line"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1178
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Tunnistamaton käynnistysoptio: %d"
+
+#: src/libeggsmclient/eggdesktopfile.c:1383
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+
+#: src/libeggsmclient/eggdesktopfile.c:1404
+msgid "Not a launchable item"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:229
+msgid "FILE"
+msgstr "TIEDOSTO"
+
+#: src/libeggsmclient/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: src/libeggsmclient/eggsmclient.c:253
+msgid "Session management options:"
+msgstr ""
+
+#: src/libeggsmclient/eggsmclient.c:254
+msgid "Show session management options"
+msgstr ""
+
+#~ msgid "%s: Unable to open display, exiting.\n"
+#~ msgstr "%s: Näytön avaaminen ei onnistu, ohjelma lopetetaan.\n"
 
-#, fuzzy
-#~ msgid "Artist Popup"
-#~ msgstr "Esittäjä"
-
-#, fuzzy
-#~ msgid "<i>Title</i>"
-#~ msgstr "<b>Tiedostonimi</b>"
-
-#, fuzzy
-#~ msgid "<i>Artist</i>"
-#~ msgstr "Esittäjä"
-
-#, fuzzy
-#~ msgid "<i>Album</i>"
-#~ msgstr "<b>Tiedostonimi</b>"
-
-#, fuzzy
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<b>Tiedostonimi</b>"
-
-#, fuzzy
-#~ msgid "<i>Year</i>"
-#~ msgstr "<b>Tiedostonimi</b>"
-
-#, fuzzy
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "Kappaleen numero"
-
-#, fuzzy
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "Kappaleen kesto:"
-
-#~ msgid "/View Track Details"
-#~ msgstr "/Näytä kappaleen tiedot"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Visualisointitapa/Taajuusspektri"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Visualisointitapa/Oskilloskooppi"
-
-#, fuzzy
-#~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "/Visualisointitapa/Oskilloskooppi"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Visualisointitapa/Ei käytössä"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Taajuusspektri/Tavallinen"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Taajuusspektri/Viivat"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Taajuusspektri/Palkit"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Taajuusspektri/Huiput"
-
-#, fuzzy
-#~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Taajuusspektri/Tavallinen"
-
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/Rullattu ikkuna/Tavallinen"
-
-#~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/Rullattu ikkuna/Pehmeä"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Taajuusspektrin nopeus/Hitain"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Taajuusspektrin nopeus/Hidas"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Taajuusspektrin nopeus/Keskinopea"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Taajuusspektrin nopeus/Nopea"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Taajuusspektrin nopeus/Nopein"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Huippujen nopeus/Hitain"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Huippujen nopeus/Hidas"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Huippujen nopeus/Keskinopea"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Huippujen nopeus/Nopea"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Huippujen nopeus/Nopein"
-
-#~ msgid "/Pause"
-#~ msgstr "/Tauko"
-
-#~ msgid "/-"
-#~ msgstr "/-"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "/Siirrä ajanhetkeä"
-
-#, fuzzy
-#~ msgid "/About Audacious"
-#~ msgstr "MPEG-ääniliitännäisestä"
-
-#~ msgid "/Files..."
-#~ msgstr "/Tiedostot..."
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Internet-osoite..."
-
-#, fuzzy
-#~ msgid "New List"
-#~ msgstr "/Uusi lista"
-
-#, fuzzy
-#~ msgid "Creates a new playlist."
-#~ msgstr "Päivitä soittolista"
-
-#, fuzzy
-#~ msgid "Displays track information."
-#~ msgstr "Näytä kappaleen tiedot"
-
-#~ msgid "Chinese:"
-#~ msgstr "kiina:"
-
-#~ msgid "/Load"
-#~ msgstr "/Lataa"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Lataa/Asetus"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Lataa/Oletus"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Lataa/Nolla"
-
-#~ msgid "/Save"
-#~ msgstr "/Tallenna"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Tallenna/Asetus"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Tallenna/Oletus"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Tallenna/Tiedosto"
-
-#~ msgid "/Delete"
-#~ msgstr "/Poista"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Poista/Asetus"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Lataa automaattinen asetus"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Lataa taajuuskorjaimen asetus"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Poista automaattinen asetus"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Järjestä lista/Nimen mukaan"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Järjestä lista/Tiedostonimen mukaan"
-
-#~ msgid "/Update View"
-#~ msgstr "/Päivitä näkymä"
-
-#~ msgid "/Select All"
-#~ msgstr "/Valitse kaikki"
-
-#~ msgid "/Sort List/By Title"
-#~ msgstr "/Järjestä lista/Nimen mukaan"
-
-#~ msgid "/Sort List/By Filename"
-#~ msgstr "/Järjestä lista/Tiedostonimen mukaan"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Järjestä lista/Päiväyksen mukaan"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Järjestä valittu osa/Nimien mukaan"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Järjestä valittu osa/Nimien mukaan"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Järjestä valittu osa/Tiedostonimien mukaan"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Järjestä valittu osa/Täydellisten tiedostonimien mukaan"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Järjestä valittu osa/Päiväyksen mukaan"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Järjestä valittu osa/Päiväyksen mukaan"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Järjestä valittu osa/Nimien mukaan"
-
-#, fuzzy
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Sekalaista</b>"
-
-#, fuzzy
-#~ msgid "About AudioCompress"
-#~ msgstr "MPEG-ääniliitännäisestä"
-
-#~ msgid "Ok"
-#~ msgstr "OK"
-
-#, fuzzy
-#~ msgid "About Extra Stereo Plugin"
-#~ msgstr "Tietoja Esound-liitännäisestä"
-
-#, fuzzy
-#~ msgid "Effect intensity:"
-#~ msgstr "_Efektiliitännäisten luettelo:"
-
-#, fuzzy
-#~ msgid "Cancel"
-#~ msgstr "Tanssi"
-
-#, fuzzy
-#~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "Tietoja Esound-liitännäisestä"
-
-#, fuzzy
-#~ msgid "LIRC Plugin "
-#~ msgstr "Liitännäiset"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "/Sulje"
-
-#, fuzzy
-#~ msgid "LIRC Plugin"
-#~ msgstr "Liitännäiset"
-
-#~ msgid "Username:"
-#~ msgstr "Käyttäjänimi:"
-
-#~ msgid "Password:"
-#~ msgstr "Salasana:"
-
-#, fuzzy
-#~ msgid "About Scrobbler Plugin"
-#~ msgstr "Tietoja Esound-liitännäisestä"
-
-#, fuzzy
-#~ msgid "Scrobbler Plugin"
-#~ msgstr "Liitännäiset"
-
-#, fuzzy
-#~ msgid "Commands"
-#~ msgstr "Kommentti"
-
-#, fuzzy
-#~ msgid "Command:"
-#~ msgstr "Kommentti:"
-
-#, fuzzy
-#~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr "Lataa metatiedot, kun tiedosto näytetään soittolistassa"
-
-#, fuzzy
-#~ msgid "About "
-#~ msgstr "BMP:stä"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - warning"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - select file"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#~ msgid "Name:"
-#~ msgstr "Nimi:"
-
-#, fuzzy
-#~ msgid " MIDI Info "
-#~ msgstr "CD-tiedot"
-
-#, fuzzy
-#~ msgid "Length (msec):"
-#~ msgstr "Kesto:"
-
-#, fuzzy
-#~ msgid "Num of Tracks:"
-#~ msgstr "Siirry kappaleeseen"
-
-#~ msgid "CD Audio Plugin"
-#~ msgstr "CD-soitinliitännäinen"
-
-#~ msgid "CD Audio Track %02u"
-#~ msgstr "CD:n ääniraita %02u"
-
-#~ msgid "(unknown)"
-#~ msgstr "(tuntematon)"
-
-#~ msgid "Drive %d"
-#~ msgstr "Asema %d"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Laitteen %s avaaminen epäonnistui.\n"
-#~ "Virhe: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Levyn \"sisällysluettelon\" luku epäonnistui.\n"
-#~ "Ehkäpä asemassa ei ole levyä?\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "Laite %s on kunnossa.\n"
-#~ "Levyllä on %d raitaa"
-
-#~ msgid " (%d data tracks)"
-#~ msgstr " (%d dataraitaa)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Kokonaispituus: %d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr ""
-#~ "Digitaalista äänen lukua ei yritetty koska levyllä ei ole ääniraitoja\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Digitaalisen äänen lukutesti: kunnossa\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Digitaalisen äänen lukutesti epäonnistui: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "Kansion %s tarkistus epäonnistui.\n"
-#~ "Virhe: %s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Virhe: %s on olemassa, mutta ei ole kansio."
-
-#~ msgid "Directory %s OK."
-#~ msgstr "Kansio %s on kunnossa."
-
-#~ msgid "Device:"
-#~ msgstr "Laite:"
-
-#~ msgid "_Device:"
-#~ msgstr "_Laite:"
-
-#~ msgid "Dir_ectory:"
-#~ msgstr "_Kansio:"
-
-#~ msgid "Play mode:"
-#~ msgstr "Soittotapa:"
-
-#~ msgid "Analog"
-#~ msgstr "Analoginen"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "Digitaalinen äänen luku"
-
-#~ msgid "Volume control:"
-#~ msgstr "Äänenvoimakkuus:"
-
-#~ msgid "No mixer"
-#~ msgstr "Ei mikseriä"
-
-#~ msgid "CDROM drive"
-#~ msgstr "CD-asema"
-
-#~ msgid "OSS mixer"
-#~ msgstr "OSS:n mikseri"
-
-#~ msgid "Check drive..."
-#~ msgstr "Tarkista asema..."
-
-#~ msgid "Remove drive"
-#~ msgstr "Poista asema"
-
-#~ msgid "CD Audio Player Configuration"
-#~ msgstr "CD-soittimen asetukset"
-
-#~ msgid "Add drive"
-#~ msgstr "Lisää asema"
-
-#~ msgid "Device"
-#~ msgstr "Laite"
-
-#~ msgid "CDDB:"
-#~ msgstr "CDDB:"
-
-#~ msgid "Use CDDB"
-#~ msgstr "Käytä CDDB:tä"
-
-#~ msgid "Get server list"
-#~ msgstr "Hae palvelinluettelo"
-
-#~ msgid "Show network window"
-#~ msgstr "Näytä verkkoikkuna"
-
-#~ msgid "CDDB server:"
-#~ msgstr "CDDB-palvelin:"
-
-#~ msgid "CD Index:"
-#~ msgstr "CD-hakemisto:"
-
-#~ msgid "Use CD Index"
-#~ msgstr "Käytä CD-hakemistoa"
-
-#~ msgid "CD Index server:"
-#~ msgstr "CD-hakemistopalvelin:"
-
-#~ msgid "Override generic titles"
-#~ msgstr "Sivuuta yleisnimitykset"
-
-#~ msgid "Name format:"
-#~ msgstr "Nimien muoto:"
-
-#~ msgid "CD Info"
-#~ msgstr "CD-tiedot"
-
-#, fuzzy
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "japani:"
-
-#, fuzzy
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "  (virheellistä UTF-8:aa)"
-
-#, fuzzy
-#~ msgid "Korean (UHC)"
-#~ msgstr "korea:"
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Valitse hakemisto, johon haluat tallentaa MPEG-virrat:"
-
-#, fuzzy
-#~ msgid "Flac Configuration"
-#~ msgstr "CD-soittimen asetukset"
-
-#~ msgid "ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable ReplayGain processing"
-#~ msgstr "Käytä ReplayGainia"
-
-#, fuzzy
 #~ msgid "Preamp:"
-#~ msgstr "Uni"
+#~ msgstr "Esivahvistus:"
 
 #, fuzzy
-#~ msgid "6dB hard limiting"
-#~ msgstr "Ota 6:n dB:n vahvistus ja vahva rajoitus käyttöön"
+#~ msgid "Default gain:"
+#~ msgstr "Oletusteema:"
 
 #, fuzzy
-#~ msgid "Resolution"
-#~ msgstr "Tarkkuus:"
+#~ msgid "<b>Replay Gain configuration</b>"
+#~ msgstr "MPEG-ääniliitännäisen asetukset"
 
 #, fuzzy
-#~ msgid "Without ReplayGain"
-#~ msgstr "ReplayGain"
+#~ msgid "Track gain/peak"
+#~ msgstr "Kappaleen vahvistus:"
 
 #, fuzzy
-#~ msgid "With ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable dithering"
-#~ msgstr "Käytössä"
-
-#, fuzzy
-#~ msgid "16 bps"
-#~ msgstr "16 bittiä"
-
-#~ msgid "Buffering:"
-#~ msgstr "Puskurointi:"
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "Puskurin koko (kt):"
-
-#~ msgid "Pre-buffer (percent):"
-#~ msgstr "Esipuskurointi (%):"
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "Tallenna virta levylle:"
-
-#~ msgid "Save stream to disk"
-#~ msgstr "Tallenna virta levylle"
-
-#~ msgid "Path:"
-#~ msgstr "Polku:"
-
-#~ msgid "Browse"
-#~ msgstr "Selaa"
-
-#~ msgid "SHOUT/Icecast:"
-#~ msgstr "SHOUT/Icecast:"
-
-#~ msgid "Enable Icecast Metadata UDP Channel"
-#~ msgstr "Käytä Icecastin UDP-metatietokanavaa"
-
-#~ msgid "Streaming"
-#~ msgstr "Virrat"
-
-#, fuzzy
-#~ msgid "About Flac Plugin"
-#~ msgstr "Tietoja Esound-liitännäisestä"
+#~ msgid "Album gain/peak"
+#~ msgstr "Albumin vahvistus:"
 
 #~ msgid "Classic Rock"
 #~ msgstr "Klassinen rock"
 
-#~ msgid "Country"
-#~ msgstr "Kantri"
-
 #~ msgid "Dance"
 #~ msgstr "Tanssi"
-
-#~ msgid "Disco"
-#~ msgstr "Disko"
-
-#~ msgid "Funk"
-#~ msgstr "Funk"
-
-#~ msgid "Grunge"
-#~ msgstr "Grunge"
-
-#~ msgid "Hip-Hop"
-#~ msgstr "Hip-Hop"
-
-#~ msgid "Jazz"
-#~ msgstr "Jazz"
-
-#~ msgid "Metal"
-#~ msgstr "Metalli"
-
-#~ msgid "New Age"
-#~ msgstr "New Age"
 
 #~ msgid "Oldies"
 #~ msgstr "Klassikot"
@@ -2996,23 +1296,8 @@ msgstr "16 kHz"
 #~ msgid "Other"
 #~ msgstr "Muu"
 
-#~ msgid "Pop"
-#~ msgstr "Pop"
-
 #~ msgid "R&B"
 #~ msgstr "R&B"
-
-#~ msgid "Rap"
-#~ msgstr "Rap"
-
-#~ msgid "Reggae"
-#~ msgstr "Reggae"
-
-#~ msgid "Rock"
-#~ msgstr "Rock"
-
-#~ msgid "Techno"
-#~ msgstr "Tekno"
 
 #~ msgid "Industrial"
 #~ msgstr "Industrial"
@@ -3020,23 +1305,14 @@ msgstr "16 kHz"
 #~ msgid "Alternative"
 #~ msgstr "Vaihtoehtoinen"
 
-#~ msgid "Ska"
-#~ msgstr "Ska"
-
-#~ msgid "Death Metal"
-#~ msgstr "Death Metal"
+#~ msgid "Pranks"
+#~ msgstr "Pilat"
 
 #~ msgid "Soundtrack"
 #~ msgstr "Ääniraita"
 
 #~ msgid "Euro-Techno"
 #~ msgstr "Euro-tekno"
-
-#~ msgid "Ambient"
-#~ msgstr "Ambient"
-
-#~ msgid "Trip-Hop"
-#~ msgstr "Trip-Hop"
 
 #~ msgid "Vocal"
 #~ msgstr "Laulu"
@@ -3050,17 +1326,11 @@ msgstr "16 kHz"
 #~ msgid "Trance"
 #~ msgstr "Trance"
 
-#~ msgid "Classical"
-#~ msgstr "Klassinen"
-
 #~ msgid "Instrumental"
 #~ msgstr "Instrumentaali"
 
 #~ msgid "Acid"
 #~ msgstr "Acid"
-
-#~ msgid "House"
-#~ msgstr "House"
 
 #~ msgid "Game"
 #~ msgstr "Peli"
@@ -3068,14 +1338,11 @@ msgstr "16 kHz"
 #~ msgid "Sound Clip"
 #~ msgstr "Äänileike"
 
-#~ msgid "Gospel"
-#~ msgstr "Gospel"
+#~ msgid "AlternRock"
+#~ msgstr "Vaihtoehtorock"
 
-#~ msgid "Noise"
-#~ msgstr "Melu"
-
-#~ msgid "Soul"
-#~ msgstr "Soul"
+#~ msgid "Bass"
+#~ msgstr "Basso"
 
 #~ msgid "Punk"
 #~ msgstr "Punk"
@@ -3125,9 +1392,6 @@ msgstr "16 kHz"
 #~ msgid "Cult"
 #~ msgstr "Kultti"
 
-#~ msgid "Gangsta Rap"
-#~ msgstr "Gangsta-rap"
-
 #~ msgid "Top 40"
 #~ msgstr "Top 40"
 
@@ -3137,23 +1401,20 @@ msgstr "16 kHz"
 #~ msgid "Pop/Funk"
 #~ msgstr "Pop/Funk"
 
-#~ msgid "Jungle"
-#~ msgstr "Jungle"
-
 #~ msgid "Native American"
 #~ msgstr "Alkuperäisamerikkalainen"
 
 #~ msgid "Cabaret"
 #~ msgstr "Kabaree"
 
-#~ msgid "New Wave"
-#~ msgstr "New Wave"
-
 #~ msgid "Psychedelic"
 #~ msgstr "Psykedeelinen"
 
 #~ msgid "Rave"
 #~ msgstr "Rave"
+
+#~ msgid "Showtunes"
+#~ msgstr "Showmusiikki"
 
 #~ msgid "Trailer"
 #~ msgstr "Esittely"
@@ -3167,23 +1428,14 @@ msgstr "16 kHz"
 #~ msgid "Acid Punk"
 #~ msgstr "Acid Punk"
 
-#~ msgid "Acid Jazz"
-#~ msgstr "Acid Jazz"
-
 #~ msgid "Polka"
 #~ msgstr "Polkka"
 
+#~ msgid "Retro"
+#~ msgstr "Retro"
+
 #~ msgid "Musical"
 #~ msgstr "Muusikaali"
-
-#~ msgid "Rock & Roll"
-#~ msgstr "Rock'n'Roll"
-
-#~ msgid "Hard Rock"
-#~ msgstr "Hard Rock"
-
-#~ msgid "Folk"
-#~ msgstr "Folk"
 
 #~ msgid "Folk/Rock"
 #~ msgstr "Folk/Rock"
@@ -3191,14 +1443,8 @@ msgstr "16 kHz"
 #~ msgid "National Folk"
 #~ msgstr "Kansallinen folk"
 
-#~ msgid "Swing"
-#~ msgstr "Swing"
-
 #~ msgid "Fast-Fusion"
 #~ msgstr "Nopea fuusio"
-
-#~ msgid "Bebob"
-#~ msgstr "Bebob"
 
 #~ msgid "Latin"
 #~ msgstr "Latinalainen"
@@ -3208,9 +1454,6 @@ msgstr "16 kHz"
 
 #~ msgid "Celtic"
 #~ msgstr "Kelttiläinen"
-
-#~ msgid "Bluegrass"
-#~ msgstr "Bluegrass"
 
 #~ msgid "Avantgarde"
 #~ msgstr "Avantgarde"
@@ -3236,9 +1479,6 @@ msgstr "16 kHz"
 #~ msgid "Chorus"
 #~ msgstr "Kuoro"
 
-#~ msgid "Easy Listening"
-#~ msgstr "Kevyt kuunneltava"
-
 #~ msgid "Acoustic"
 #~ msgstr "Akustinen"
 
@@ -3254,9 +1494,6 @@ msgstr "16 kHz"
 #~ msgid "Opera"
 #~ msgstr "Ooppera"
 
-#~ msgid "Chamber Music"
-#~ msgstr "Kamarimusiikki"
-
 #~ msgid "Sonata"
 #~ msgstr "Sonetti"
 
@@ -3271,6 +1508,12 @@ msgstr "16 kHz"
 
 #~ msgid "Porn Groove"
 #~ msgstr "Pornogroove"
+
+#~ msgid "Satire"
+#~ msgstr "Satiiri"
+
+#~ msgid "Slow Jam"
+#~ msgstr "Hidas jam"
 
 #~ msgid "Club"
 #~ msgstr "Klubi"
@@ -3298,9 +1541,6 @@ msgstr "16 kHz"
 
 #~ msgid "Duet"
 #~ msgstr "Duetto"
-
-#~ msgid "Punk Rock"
-#~ msgstr "Punk rock"
 
 #~ msgid "Drum Solo"
 #~ msgstr "Rumpusoolo"
@@ -3330,7 +1570,7 @@ msgstr "16 kHz"
 #~ msgstr "Kauhu"
 
 #~ msgid "Indie"
-#~ msgstr "Riippumaton"
+#~ msgstr "Indie"
 
 #~ msgid "BritPop"
 #~ msgstr "Brittipop"
@@ -3346,9 +1586,6 @@ msgstr "16 kHz"
 
 #~ msgid "Christian Gangsta Rap"
 #~ msgstr "Kristinllinen gangsta-rap"
-
-#~ msgid "Heavy Metal"
-#~ msgstr "Hevi"
 
 #~ msgid "Black Metal"
 #~ msgstr "Black Metal"
@@ -3381,1478 +1618,962 @@ msgstr "16 kHz"
 #~ msgstr "Synthpop"
 
 #, fuzzy
-#~ msgid "Samplerate: %d Hz"
-#~ msgstr "Näytetaajuus:"
-
-#, fuzzy
-#~ msgid "Channels: %d"
-#~ msgstr "Kanavia:"
-
-#, fuzzy
 #~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
+#~ "<big><b>Audacious %s</b></big>\n"
+#~ "An audio player for many platforms.\n"
+#~ "Copyright (C) 2005-2011 Audacious Development Team"
 #~ msgstr ""
+#~ "<big><b>Audacious %s</b></big>\n"
 #~ "\n"
-#~ "Kokonaispituus: %d:%d\n"
+#~ "Copyright (C) 2005-2008 Audacious-kehittäjäryhmä\n"
 
-#, fuzzy
-#~ msgid "Filesize: %ld B"
-#~ msgstr "Tiedostokoko:"
+#~ msgid "Unable to create log file (%s)!\n"
+#~ msgstr "Lokitiedoston (%s) luominen ei onnistu.\n"
 
-#, fuzzy
-#~ msgid "Tag:"
-#~ msgstr "Tango"
+#~ msgid "Print all errors and warnings to stdout"
+#~ msgstr "Tulosta kaikki virheet ja varoitukset stdoutiin"
 
-#~ msgid "Title:"
-#~ msgstr "Nimi:"
+#~ msgid "Sorry, threads aren't supported on your platform.\n"
+#~ msgstr "Tämä järjestelmä/alusta ei tue säikeitä.\n"
 
-#~ msgid "Album:"
-#~ msgstr "Levy:"
+#~ msgid "Module loading not supported! Plugins will not be loaded.\n"
+#~ msgstr "Moduulien lataus ei ole tuettu! Liitännäisiä ei voida ladata.\n"
 
-#~ msgid "Comment:"
-#~ msgstr "Kommentti:"
+#~ msgid "Playback"
+#~ msgstr "Soitto"
 
-#~ msgid "Date:"
-#~ msgstr "Päiväys:"
-
-#~ msgid "Track number:"
-#~ msgstr "Kappalenumero:"
-
-#~ msgid "Genre:"
-#~ msgstr "Tyylilaji:"
-
-#, fuzzy
-#~ msgid "Remove Tag"
-#~ msgstr "/Poista kaikki"
-
-#, fuzzy
-#~ msgid "FLAC Info:"
-#~ msgstr "CD-tiedot"
-
-#, fuzzy
-#~ msgid "File Info - %s"
-#~ msgstr "Tiedoston tiedot"
-
-#~ msgid "Error"
-#~ msgstr "Virhe"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "HAETAAN %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "Konenimen %s haku epäonnistui"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "YHDISTETÄÄN OSOITTEESEEN %s:%d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "Koneeseen %s yhdistäminen epäonnistui-"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "YHDISTETTY: ODOTTAA VASTAUSTA"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "Koneeseen %s yhdistäminen epäonnistui\n"
-#~ "Palvelimen ilmoitus: %s"
-
-#~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "ESIPUSKUROINTI: %d/%d kt"
-
-#, fuzzy
-#~ msgid "FLAC Audio Plugin"
-#~ msgstr "CD-soitinliitännäinen"
-
-#, fuzzy
-#~ msgid "ModPlug Configuration"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#~ msgid "16 bit"
-#~ msgstr "16 bittiä"
-
-#~ msgid "8 bit"
-#~ msgstr "8 bittiä"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Kanavia:"
-
-#~ msgid "Stereo"
-#~ msgstr "Stereo"
-
-#, fuzzy
-#~ msgid "48 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "44 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22 kHz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "11 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Resampling"
-#~ msgstr "Virrat"
-
-#, fuzzy
-#~ msgid "Quality"
-#~ msgstr "/_Lopeta"
-
-#, fuzzy
-#~ msgid "General"
-#~ msgstr "Tyylilaji"
-
-#, fuzzy
-#~ msgid "Fast Playlist Info"
-#~ msgstr "Avaa soittolista"
-
-#, fuzzy
-#~ msgid "Reverb"
-#~ msgstr "Palvelin"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "Käytössä"
-
-#, fuzzy
-#~ msgid "Depth"
-#~ msgstr "Duetto"
-
-#, fuzzy
-#~ msgid "Amount"
-#~ msgstr "BMP:stä"
-
-#, fuzzy
-#~ msgid "Range"
-#~ msgstr "Rave"
-
-#, fuzzy
-#~ msgid "Preamp"
-#~ msgstr "Uni"
-
-#, fuzzy
-#~ msgid "Effects"
-#~ msgstr "<b>Tehosteet</b>"
-
-#, fuzzy
-#~ msgid "MOD Info"
-#~ msgstr "CD-tiedot"
-
-#, fuzzy
-#~ msgid "Samples"
-#~ msgstr "Salsa"
-
-#, fuzzy
-#~ msgid "Instruments"
-#~ msgstr "Instrumentaali"
-
-#, fuzzy
-#~ msgid "About Modplug"
-#~ msgstr "Tietoja Esound-liitännäisestä"
-
-#~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#~ msgid "Resolution:"
-#~ msgstr "Tarkkuus:"
-
-#~ msgid "Channels:"
-#~ msgstr "Kanavia:"
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "Stereo (jos saatavilla)"
-
-#~ msgid "Mono"
-#~ msgstr "Mono"
-
-#~ msgid "Down sample:"
-#~ msgstr "Alinäytteistys:"
-
-#~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
-#~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
-#~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
-#~ msgid "Decoder"
-#~ msgstr "Dekooderi"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "ID3-tiedot:"
-
-#~ msgid "Disable ID3V2 tags"
-#~ msgstr "Poista ID3v2-tiedot käytöstä"
-
-#~ msgid "ID3 format:"
-#~ msgstr "ID3-muoto:"
-
-#~ msgid "Joint stereo"
-#~ msgstr "Yhdistetty stereo"
-
-#~ msgid "Dual channel"
-#~ msgstr "Kaksikanavainen"
-
-#~ msgid "Single channel"
-#~ msgstr "Yksikanavainen"
-
-#~ msgid "%d KBit/s"
-#~ msgstr "%d kbit/s"
-
-#~ msgid "%ld Hz"
-#~ msgstr "%ld Hz"
-
-#~ msgid "None"
-#~ msgstr "Ei mikään"
-
-#~ msgid "50/15 ms"
-#~ msgstr "50/15 ms"
-
-#~ msgid "CCIT J.17"
-#~ msgstr "CCIT J.17"
-
-#~ msgid "No"
-#~ msgstr "Ei"
-
-#~ msgid "Yes"
-#~ msgstr "Kyllä"
-
-#~ msgid " MPEG Info "
-#~ msgstr " MPEG-tietoja "
-
-#~ msgid "MPEG Level:"
-#~ msgstr "MPEG-taso:"
-
-#~ msgid "Bit rate:"
-#~ msgstr "Bittinopeus:"
-
-#~ msgid "Sample rate:"
-#~ msgstr "Näytetaajuus:"
-
-#~ msgid "File size:"
-#~ msgstr "Tiedostokoko:"
-
-#, fuzzy
-#~ msgid "Mode:"
-#~ msgstr "Dekooderi:"
-
-#~ msgid "Error Protection:"
-#~ msgstr "Virheenesto:"
-
-#~ msgid "Copyright:"
-#~ msgstr "Tekijänoikeus:"
-
-#~ msgid "Original:"
-#~ msgstr "Alkuperäinen:"
-
-#~ msgid "Emphasis:"
-#~ msgstr "Korostus:"
-
-#~ msgid " ID3 Tag "
-#~ msgstr " ID3-tieto "
-
-#~ msgid "Year:"
-#~ msgstr "Vuosi:"
-
-#~ msgid "N/A"
-#~ msgstr "ei"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%lu Bytes"
-#~ msgstr "%lu tavua"
-
-#, fuzzy
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Koneeseen %s yhdistäminen epäonnistui-"
-
-#, fuzzy
-#~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "ESIPUSKUROINTI: %d/%d kt"
-
-#~ msgid "AlternRock"
-#~ msgstr "Vaihtoehtorock"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "MPEG-ääniliitännäisestä"
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "MPEG-ääniliitännäinen"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#, fuzzy
-#~ msgid "11000 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22000 Hz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "44100 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Sample Width"
-#~ msgstr "Näytetaajuus:"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration File"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin %s"
-#~ msgstr "Syöteliitännäinen: %s"
-
-#, fuzzy
-#~ msgid "Couldn't load MIDI file"
-#~ msgstr "Konenimen %s haku epäonnistui"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr "Valitse hakemisto, johon Ogg Vorbis -virrat tallentuvat:"
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Ogg Vorbis -ääniliitännäisen asetukset"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Ogg Vorbis -tiedot:"
-
-#~ msgid "ReplayGain Settings:"
-#~ msgstr "ReplayGain-asetukset:"
-
-#~ msgid "Enable Clipping Prevention"
-#~ msgstr "Estä huippujen leikkautuminen"
-
-#~ msgid "Enable ReplayGain"
-#~ msgstr "Käytä ReplayGainia"
-
-#~ msgid "ReplayGain Type:"
-#~ msgstr "ReplayGainin tyyppi:"
-
-#~ msgid "use Track Gain/Peak"
-#~ msgstr "Käytä kappaleen vahvistusta ja huippuarvoa"
-
-#~ msgid "use Album Gain/Peak"
-#~ msgstr "Käytä levyn vahvistusta ja huippuarvoa"
-
-#~ msgid "Enable 6dB Boost + Hard Limiting"
-#~ msgstr "Ota 6:n dB:n vahvistus ja vahva rajoitus käyttöön"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Virhe tapahtui:\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "Virhe!"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "Tietojen muokkaus (avaus) epäonnistui"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "Tietojen muokkaus (sulkeminen) epäonnistui"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "Tietojen muokkaus epäonnistui"
-
-#~ msgid " Ogg Vorbis Tag "
-#~ msgstr " Ogg Vorbis -tiedot"
-
-#~ msgid "Description:"
-#~ msgstr "Kuvaus:"
-
-#~ msgid "Version:"
-#~ msgstr "Versio:"
-
-#~ msgid "ISRC number:"
-#~ msgstr "ISRC-numero:"
-
-#~ msgid "Organization:"
-#~ msgstr "Organisaatio:"
-
-#~ msgid " Ogg Vorbis ReplayGain "
-#~ msgstr " Ogg Vorbis -ReplayGain "
-
-#~ msgid "Track gain:"
-#~ msgstr "Kappaleen vahvistus:"
-
-#~ msgid "Track peak:"
-#~ msgstr "Kappaleen huippuarvo:"
-
-#~ msgid "Album gain:"
-#~ msgstr "Levyn vahvistus:"
-
-#~ msgid "Album peak:"
-#~ msgstr "Levyn huippuarvo:"
-
-#~ msgid " Ogg Vorbis Info "
-#~ msgstr " Ogg Vorbis -tietoja"
-
-#~ msgid "Length:"
-#~ msgstr "Kesto:"
-
-#~ msgid "%d KBit/s (nominal)"
-#~ msgstr "%d kbit/s (nimellinen)"
-
-#~ msgid "%d Hz"
-#~ msgstr "%d Hz"
-
-#~ msgid "%d"
-#~ msgstr "%d"
-
-#~ msgid "%d:%.2d"
-#~ msgstr "%d:%.2d"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d tavua"
-
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Ogg Vorbis -ääniliitännäinen"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "Ogg Vorbis -ääniliitännäisestä"
-
-#~ msgid ""
-#~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
-#~ "\n"
-#~ "Original code by\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contributions from\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
-#~ msgstr ""
-#~ "Xiph.org-säätiön Ogg Vorbis -liitännäinen:\n"
-#~ "\n"
-#~ "Alkuperäisen ohjelman tekijät:\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Avustuksia seuraavilta:\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Håvard Kvålen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Vieraile Xiph.org-säätiön sivuilla osoitteessa http://www.xiph.org/\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the xmms_sndfile plugin which is:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "51 Franklin Street, Fifth Floor, \n"
-#~ "Boston, MA  02110-1301  USA"
-#~ msgstr ""
-#~ "XMMS:n Esound-liitännäinen\n"
-#~ "\n"
-#~ "Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
-#~ "Software Foundationin julkaiseman GNU General Public License\n"
-#~ "-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
-#~ "mukaisesti.\n"
-#~ "\n"
-#~ "Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
-#~ "ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
-#~ "SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
-#~ "Licence -lisenssissä.\n"
-#~ "\n"
-#~ "GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
-#~ "tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
-#~ "Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
-#~ "USA."
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "WAV-ääniliitännäinen"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "BMP:stä"
-
-#, fuzzy
-#~ msgid " Close "
-#~ msgstr "/Sulje"
-
-#~ msgid "OSS Output Plugin"
-#~ msgstr "OSS-ulostuloliitännäinen"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "OSS-liitännäisestä"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS:n OSS-liitännäinen\n"
-#~ "\n"
-#~ "Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
-#~ "Software Foundationin julkaiseman GNU General Public License\n"
-#~ "-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
-#~ "mukaisesti.\n"
-#~ "\n"
-#~ "Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
-#~ "ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
-#~ "SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
-#~ "Licence -lisenssissä.\n"
-#~ "\n"
-#~ "GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
-#~ "tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
-#~ "Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
-#~ "USA."
-
-#~ msgid "Default (%s)"
-#~ msgstr "Oletus (%s)"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "OSS-liitännäisen asetukset"
-
-#~ msgid "Audio device:"
-#~ msgstr "Äänilaite:"
-
-#~ msgid "Use alternate device:"
-#~ msgstr "Käytä vaihtoehtoista äänilaitetta:"
-
-#~ msgid "Mixer device:"
-#~ msgstr "Mikserilaite:"
-
-#~ msgid "Devices"
-#~ msgstr "Laitteet"
-
-#~ msgid "Buffer size (ms):"
-#~ msgstr "Puskurin koko (ms):"
-
-#~ msgid "Buffering"
-#~ msgstr "Puskurointi"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "Mikserin asetukset:"
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "Äänenvoimakkuuden säädin muuttaa pää-, eikä PCM-äänenvoimakkuutta"
-
-#~ msgid "Mixer"
-#~ msgstr "Mikseri"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "Alsa-liitännäisestä"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ALSA Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-#~ msgstr ""
-#~ "XMMS:n Alsa-liitännäinen\n"
-#~ "Tekijä: Matthieu Sozeau (mattam@altern.org)\n"
-#~ "\n"
-#~ "Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
-#~ "Software Foundationin julkaiseman GNU General Public License\n"
-#~ "-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
-#~ "mukaisesti.\n"
-#~ "\n"
-#~ "Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
-#~ "ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
-#~ "SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
-#~ "Licence -lisenssissä.\n"
-#~ "\n"
-#~ "GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
-#~ "tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
-#~ "Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
-#~ "USA."
-
-#~ msgid "ALSA %s output plugin"
-#~ msgstr "ALSA %s -ulostuloliitännäinen"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "Tuntematon äänikortti"
-
-#~ msgid "Default PCM device (%s)"
-#~ msgstr "Oletusarvoinen PCM-laite (%s)"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "Alsa-liitännäisen asetukset"
-
-#~ msgid "Mixer:"
-#~ msgstr "Mikseri:"
-
-#~ msgid "Use software volume control"
-#~ msgstr "Käytä ohjelmiston äänenvoimakkuussäätöä"
-
-#~ msgid "Mixer card:"
-#~ msgstr "Mikserikortti:"
-
-#~ msgid "Device settings"
-#~ msgstr "Laitteen asetukset"
-
-#, fuzzy
-#~ msgid "Soundcard:"
-#~ msgstr "Ääniraita"
-
-#~ msgid "Buffer time (ms):"
-#~ msgstr "Puskuri ms:"
-
-#~ msgid "Period time (ms):"
-#~ msgstr "Jakson aika (ms):"
-
-#~ msgid "Advanced settings"
-#~ msgstr "Lisäasetukset"
-
-#, fuzzy
-#~ msgid "aRts Driver configuration"
-#~ msgstr "OSS-liitännäisen asetukset"
-
-#, fuzzy
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Valitse hakemisto, johon haluat tallentaa MPEG-virrat:"
-
-#, fuzzy
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "OSS-liitännäisen asetukset"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "Tietoja Esound-liitännäisestä"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS:n Esound-liitännäinen\n"
-#~ "\n"
-#~ "Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
-#~ "Software Foundationin julkaiseman GNU General Public License\n"
-#~ "-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
-#~ "mukaisesti.\n"
-#~ "\n"
-#~ "Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
-#~ "ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
-#~ "SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
-#~ "Licence -lisenssissä.\n"
-#~ "\n"
-#~ "GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
-#~ "tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
-#~ "Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
-#~ "USA."
-
-#~ msgid "Host:"
-#~ msgstr "Konenimi:"
-
-#~ msgid "Use remote host"
-#~ msgstr "Käytä etäkonetta"
-
-#~ msgid "Volume controls OSS mixer"
-#~ msgstr "Äänenvoimakkuus säätää pää-äänenvoimakkuutta"
-
-#~ msgid "Port:"
-#~ msgstr "Portti:"
-
-#~ msgid "Server"
-#~ msgstr "Palvelin"
-
-#~ msgid "eSound Output Plugin"
-#~ msgstr "Esound-ulostuloliitännäinen"
-
-#, fuzzy
-#~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "Esound-ulostuloliitännäinen"
-
-#, fuzzy
-#~ msgid "About the Sun Driver"
-#~ msgstr "OSS-liitännäisestä"
-
-#, fuzzy
-#~ msgid "Audio control device:"
-#~ msgstr "Äänilaite:"
-
-#, fuzzy
-#~ msgid "Volume controls device:"
-#~ msgstr "Äänenvoimakkuus:"
-
-#, fuzzy
-#~ msgid "Sun driver configuration"
-#~ msgstr "OSS-liitännäisen asetukset"
-
-#~ msgid "/Toggle Decorations"
-#~ msgstr "/Ikkunareunukset käyttöön tai pois"
-
-#~ msgid "/Close"
-#~ msgstr "/Sulje"
-
-#~ msgid "Blur scope"
-#~ msgstr "Sumea oskilloskooppi"
-
-#~ msgid "Blur Scope: Color selection"
-#~ msgstr "Sumean oskilloskoopin väri"
-
-#~ msgid "Options:"
-#~ msgstr "Asetukset:"
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "** KOKO ON NYT YKSINKERTAINEN **"
-
-#, fuzzy
-#~ msgid "<b>_Transparency</b>"
+#~ msgid "<b>Playback</b>"
 #~ msgstr "<b>Soitto</b>"
 
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "MPEG-ääniliitännäisen asetukset"
+#~ msgid "Don't advance in the playlist"
+#~ msgstr "Älä siirry eteenpäin soittolistassa"
 
-#, fuzzy
-#~ msgid "Song Change Configuration"
-#~ msgstr "CD-soittimen asetukset"
+#~ msgid ""
+#~ "When finished playing a song, don't automatically advance to the next."
+#~ msgstr "Kun kappale on soinut, älä soita seuraavaa itsestään."
 
-#, fuzzy
-#~ msgid "Song Metadata"
-#~ msgstr "Sonetti"
+#~ msgid "Enabled"
+#~ msgstr "Käytössä"
 
-#, fuzzy
-#~ msgid "Port"
-#~ msgstr "Portti:"
+#~ msgid "Description"
+#~ msgstr "Kuvaus"
 
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "Tiedostonimi"
+#~ msgid "Output Plugin Preferences"
+#~ msgstr "Ulostuloliitännäisen asetukset"
 
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "Kappaleen nimi"
+#~ msgid "Output Plugin Information"
+#~ msgstr "Ulostuloliitännäisen tiedot"
 
-#, fuzzy
-#~ msgid "ALSA output ports"
-#~ msgstr "ALSA %s -ulostuloliitännäinen"
+#~ msgid "_Decoder list:"
+#~ msgstr "Dekooderiliitännäisten luettelo:"
 
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "Mikserin asetukset:"
+#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Dekooderit</b></span>"
 
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Muunna ID3-tietojen merkistö UTF-8:ksi jos muussa muodossa"
+#~ msgid "_General plugin list:"
+#~ msgstr "_Yleisten liitännäisten luettelo:"
 
-#~ msgid "ID3 encoding:"
-#~ msgstr "ID3-merkistö:"
+#~ msgid "<span size=\"medium\"><b>General</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Yleiset</b></span>"
 
-#, fuzzy
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Muunna ID3-tietojen merkistö UTF-8:ksi jos muussa muodossa"
+#~ msgid "_Visualization plugin list:"
+#~ msgstr "_Visualisointiliitännäisten luettelo:"
 
-#, fuzzy
-#~ msgid "Vorbis encoding:"
-#~ msgstr "ID3-merkistö:"
-
-#, fuzzy
-#~ msgid "%d Kb/s"
-#~ msgstr "%d kbit/s"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Tiedostonimi</b>"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
+#~ msgid "<b>Visualization</b>"
 #~ msgstr "<b>Visualisointi</b>"
 
 #, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "Bittinopeus:"
+#~ msgid "Effect plugins:"
+#~ msgstr "_Tehosteliitännäisten luettelo:"
+
+#~ msgid "<span size=\"small\">General</span>"
+#~ msgstr "<span size=\"small\">Yleinen</span>"
+
+#~ msgid "<span size=\"small\">Location</span>"
+#~ msgstr "<span size=\"small\">Sijainti</span>"
+
+#~ msgid "<span size=\"small\">Raw Metadata</span>"
+#~ msgstr "<span size=\"small\">Raaka metatieto</span>"
+
+#~ msgid "Key"
+#~ msgstr "Avain"
+
+#~ msgid "Value"
+#~ msgstr "Arvo"
 
 #, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "Kanavia:"
+#~ msgid "Available Plugin Preferences:\n"
+#~ msgstr "Ulostuloliitännäisen asetukset"
+
+#~ msgid "Add/Open URL Dialog"
+#~ msgstr "Lisää/avaa URL -ikkuna"
+
+#~ msgid "Enter location to play:"
+#~ msgstr "Syötä soitettava verkko-osoite:"
+
+#~ msgid "Don't clear the playlist"
+#~ msgstr "Älä tyhjennä soittolistaa"
+
+#~ msgid "audacious: %s"
+#~ msgstr "audacious: %s"
+
+#~ msgid "Filename:"
+#~ msgstr "Tiedostonimi:"
+
+#~ msgid "No input plugin recognized this file"
+#~ msgstr "Yksikään liitännäinen ei tunnistanut tätä tiedostoa"
+
+#~ msgid "Input plugin: %s"
+#~ msgstr "Syöteliitännäinen: %s"
+
+#~ msgid "Connectivity"
+#~ msgstr "Yhteydet"
+
+#~ msgid "Best Sinc Interpolation"
+#~ msgstr "Paras Sinc-interpolointi"
+
+#~ msgid "Medium Sinc Interpolation"
+#~ msgstr "Keskiverto Sinc-interpolointi"
+
+#~ msgid "Fastest Sinc Interpolation"
+#~ msgstr "Nopein Sinc-interpolointi"
+
+#~ msgid "ZOH Interpolation"
+#~ msgstr "ZOH interpolointi"
+
+#~ msgid "Linear Interpolation"
+#~ msgstr "Lineaarinen interpolaatio"
+
+#~ msgid "Sampling Rate [Hz]:"
+#~ msgstr "Näytetaajuus [Hz]:"
+
+#~ msgid "Interpolation Engine:"
+#~ msgstr "Interpolointimoottori:"
 
 #, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>Tiedostonimi</b>"
+#~ msgid "<b>Format Detection</b>"
+#~ msgstr "Automaattinen tunnistus"
 
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Tiedostonimi</b>"
+#~ msgid "<b>Sampling Rate Converter</b>"
+#~ msgstr "<b>Näytetaajuuden muunnin</b>"
 
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "CD-tiedot"
+#~ msgid "Enable Sampling Rate Converter"
+#~ msgstr "Käytä näytetaajuuden muunninta"
 
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>_Kirjasimet</b>"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Soitto</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "Tango"
-
-#~ msgid "Artem Baguinski"
-#~ msgstr "Artem Baguinski"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Andrei Badea"
-#~ msgstr "Andrei Badea"
-
-#~ msgid "Peter Behroozi"
-#~ msgstr "Peter Behroozi"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Liviu Danicel"
-#~ msgstr "Liviu Danicel"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "Dan Korostelev"
-
-#~ msgid "Jolan Luff"
-#~ msgstr "Jolan Luff"
-
-#~ msgid "Michael Marineau"
-#~ msgstr "Michael Marineau"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Julien Portalier"
-#~ msgstr "Julien Portalier"
-
-#~ msgid "Andrew Ruder"
-#~ msgstr "Andrew Ruder"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Philipi Pinto"
-#~ msgstr "Philipi Pinto"
-
-#~ msgid "Thierry Vignaud"
-#~ msgstr "Thierry Vignaud"
-
-#~ msgid "Chao-Hsiung Liao"
-#~ msgstr "Chao-Hsiung Liao"
-
-#~ msgid "Jan Narovec"
-#~ msgstr "Jan Narovec"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "Kouzinopoulos Haris"
-#~ msgstr "Kouzinopoulos Haris"
-
-#~ msgid "Laszlo Dvornik"
-#~ msgstr "Laszlo Dvornik"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "Alessio D'Ascanio"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Arangel Angov"
-#~ msgstr "Arangel Angov"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Pavel Kanzelsberger"
-#~ msgstr "Pavel Kanzelsberger"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Liitännäiset</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Tallenneliitännäisten luettelo:"
+#~ msgid "<b>Advanced</b>"
+#~ msgstr "<b>Lisäasetukset</b>"
 
 #, fuzzy
 #~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
+#~ "<big><b>Audacious %s</b></big>\n"
 #~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
+#~ "Copyright (C) 2005-2009 Audacious Development Team"
 #~ msgstr ""
-#~ "Muutos on tallentunut BMP:n asetuksiin, mutta tulee voimaan vasta kun "
-#~ "seuraava kappale alkaa soida.\n"
+#~ "<big><b>Audacious %s</b></big>\n"
 #~ "\n"
-#~ "Asetukset saa voimaan myös pysäyttämällä ja jatkamalla kappaleen "
-#~ "soittamista."
+#~ "Copyright (C) 2005-2008 Audacious-kehittäjäryhmä"
 
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Ulkonäkö</b></span>"
+#~ msgid "Load metadata from playlists and files"
+#~ msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
 
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Hiiri</b></span>"
+#~ msgid "Load metadata (tag information) from music files."
+#~ msgstr "Lataa metatiedot (lisätiedot) musiikkitiedostoista."
 
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Soittolista</b></span>"
+#~ msgid "Can't jump to time when no track is being played.\n"
+#~ msgstr "Ei voida hypätä hetkeen kun kappaleita ei ole soimassa.\n"
 
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Taajuuskorjain</b></span>"
+#~ msgid "Jump to Time"
+#~ msgstr "Siirry hetkeen"
 
-#~ msgid "Use proxy"
-#~ msgstr "Käytä välityspalvelinta"
+#~ msgid "minutes:seconds"
+#~ msgstr "minuutti:sekunti"
 
-#~ msgid "Frames:"
-#~ msgstr "Kehyksiä:"
+#~ msgid "Track length:"
+#~ msgstr "Kappaleen kesto:"
 
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Vaihteleva,\n"
-#~ "keskimäärin %d kbit/s"
+#~ msgid "Save as Static Playlist"
+#~ msgstr "Tallenna staattisena soittolistana"
 
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
+#~ msgid "Use Relative Path"
+#~ msgstr "Käytä suhteellista polkua"
 
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Tiedostoon ei voi kirjoittaa: %s"
+#~ msgid "Error writing playlist \"%s\": %s"
+#~ msgstr "Virhe soittolistan \"%s\" kirjoittamisessa: %s"
 
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Tietojen kirjoittaminen epäonnistui!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Tiedostoa ei voi avata: %s"
-
-#~ msgid "File Info"
-#~ msgstr "Tiedoston tiedot"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Tiedostoa ei voi typistää: %s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Tietoa ei voi poistaa!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Poistettavaa tietoa ei ole!"
-
-#~ msgid "Copy album tags"
-#~ msgstr "Kopioi levyn tiedot"
-
-#~ msgid "Paste album tags"
-#~ msgstr "Liitä levyn tiedot"
+#~ msgid "%s already exist. Continue?"
+#~ msgstr "%s on jo olemassa. Jatketaanko?"
 
 #, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "MPEG-ääniliitännäisestä"
+#~ msgid ""
+#~ "<b><big>Unable to save playlist.</big></b>\n"
+#~ "\n"
+#~ "Unknown file type for '%s'.\n"
+#~ msgstr ""
+#~ "<b><big>Soittolistan tallentaminen epäonnistui.</big></b>\n"
+#~ "\n"
+#~ "Tiedoston '%s' tyyppi on tuntematon.\n"
 
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "MPEG-ääniliitännäinen"
-
-#~ msgid "Options"
+#~ msgid "Presets"
 #~ msgstr "Asetukset"
 
-#~ msgid "Content"
-#~ msgstr "Sisältö"
+#~ msgid "Mouse"
+#~ msgstr "Hiiri"
 
-#~ msgid "Extension"
-#~ msgstr "Pääte"
+#~ msgid "Pause between songs"
+#~ msgstr "Kappaleiden välinen tauko"
 
-#~ msgid "Extension and content"
-#~ msgstr "Pääte ja sisältö"
+#~ msgid "Pause for"
+#~ msgstr "Tauotus"
 
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS:n Esound-liitännäinen\n"
-#~ "\n"
-#~ "Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
-#~ "Software Foundationin julkaiseman GNU General Public License\n"
-#~ "-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
-#~ "mukaisesti.\n"
-#~ "\n"
-#~ "Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
-#~ "ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
-#~ "SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
-#~ "Licence -lisenssissä.\n"
-#~ "\n"
-#~ "GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
-#~ "tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
-#~ "Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
-#~ "USA."
+#~ msgid "seconds"
+#~ msgstr "sekuntia"
+
+#~ msgid "<b>Filename</b>"
+#~ msgstr "<b>Tiedostonimi</b>"
+
+#~ msgid "Convert underscores to blanks"
+#~ msgstr "Muunna alaviivat väleiksi"
+
+#~ msgid "Convert %20 to blanks"
+#~ msgstr "Muunna %20 väleiksi"
 
 #, fuzzy
-#~ msgid " Enable"
-#~ msgstr "Käytössä"
+#~ msgid "<b>File Dialog</b>"
+#~ msgstr "<b>Tiedostonimi</b>"
+
+#~ msgid "Changes volume by"
+#~ msgstr "Muuttaa äänenvoimakkuutta"
+
+#~ msgid "percent"
+#~ msgstr "prosenttia"
+
+#~ msgid "Scrolls playlist by"
+#~ msgstr "Vierittää soittolistaa"
+
+#~ msgid "lines"
+#~ msgstr "riviä"
+
+#~ msgid "Stop after Current Song"
+#~ msgstr "Lopeta soitto nykyisen kappaleen jälkeen"
+
+#~ msgid "Peaks"
+#~ msgstr "Huiput"
+
+#~ msgid "Repeat"
+#~ msgstr "Toista"
+
+#~ msgid "Shuffle"
+#~ msgstr "Sekoita"
+
+#~ msgid "No Playlist Advance"
+#~ msgstr "Älä etene soittolistassa"
+
+#~ msgid "Play"
+#~ msgstr "Soita"
+
+#~ msgid "Pause"
+#~ msgstr "Tauota"
+
+#~ msgid "Stop"
+#~ msgstr "Pysäytä"
+
+#~ msgid "Previous"
+#~ msgstr "Edellinen"
+
+#~ msgid "Next"
+#~ msgstr "Seuraava"
+
+#~ msgid "Visualization Mode"
+#~ msgstr "Visualisointitapa"
+
+#~ msgid "Analyzer Mode"
+#~ msgstr "Taajuusspektri-moodi"
+
+#~ msgid "Scope Mode"
+#~ msgstr "Oskilloskooppi-moodi"
 
 #, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "Tietoja Esound-liitännäisestä"
+#~ msgid "Voiceprint Mode"
+#~ msgstr "/Taajuusspektri/Tuli"
 
 #, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Lisäasetukset"
+#~ msgid "WindowShade VU Mode"
+#~ msgstr "/Rullattu ikkuna"
 
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Lisäasetukset"
+#~ msgid "Refresh Rate"
+#~ msgstr "Päivitystaajuus"
 
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Lisäasetukset"
+#~ msgid "Analyzer Falloff"
+#~ msgstr "Taajuusspektrin nopeus"
 
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "Sekoitus"
+#~ msgid "Peaks Falloff"
+#~ msgstr "Huippujen nopeus"
 
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "Sekoitus"
+#~ msgid "New Playlist"
+#~ msgstr "Uusi soittolista"
 
-#, fuzzy
-#~ msgid "Custom (ms):"
-#~ msgstr "Muu merkkijono:"
+#~ msgid "Select Next Playlist"
+#~ msgstr "Valitse seuraava soittolista"
 
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Äänenvoimakkuus:"
+#~ msgid "Select Previous Playlist"
+#~ msgstr "Valitse edellinen soittolista"
 
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "Puskurin koko (ms):"
+#~ msgid "Delete Playlist"
+#~ msgstr "Poista soittolista"
 
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Puskurin koko (ms):"
+#~ msgid "Load List"
+#~ msgstr "Avaa lista"
 
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Kuvaus:"
+#~ msgid "Loads a playlist file into the selected playlist."
+#~ msgstr "Lisä soittolistatiedoston valittuun soittolistaan."
 
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Lopeta"
+#~ msgid "Save List"
+#~ msgstr "Tallenna lista"
 
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Päiväys:"
+#~ msgid "Saves the selected playlist."
+#~ msgstr "Tallentaa valitun soittolistan."
 
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Toisto"
+#~ msgid "Save Default List"
+#~ msgstr "Tallenna oletuslista"
 
-#, fuzzy
-#~ msgid "Reverse balance"
-#~ msgstr "Järjestä kappaleet käänteiseen järjestykseen"
+#~ msgid "Saves the selected playlist to the default location."
+#~ msgstr "Tallentaa valitun soittolistan oletussijaintiin."
 
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Liitännäiset"
+#~ msgid "Refresh List"
+#~ msgstr "Päivitä lista"
 
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Äänenvoimakkuus:"
+#~ msgid "Refreshes metadata associated with a playlist entry."
+#~ msgstr "Päivittää listan metatiedot."
 
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Äänenvoimakkuus:"
+#~ msgid "List Manager"
+#~ msgstr "Soittolistojen hallinta"
 
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "/Tallenna/Tiedosto"
+#~ msgid "Opens the playlist manager."
+#~ msgstr "Avaa soittolistojen hallintaikkunan."
 
-#, fuzzy
-#~ msgid "successive tracks"
-#~ msgstr "Pidä tauko"
+#~ msgid "View"
+#~ msgstr "Näytä"
 
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "_Visualisointiliitännäisten luettelo:"
+#~ msgid "Add Internet Address..."
+#~ msgstr "Lisää URL-osoite..."
 
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "_Visualisointiliitännäisten luettelo:"
+#~ msgid "Adds a remote track to the playlist."
+#~ msgstr "Lisää URL-osoitteen soittolistaan."
 
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "Liitännäiset"
+#~ msgid "Add Files..."
+#~ msgstr "Lisää tiedostoja..."
 
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "Käytössä"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Versio:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Kauhu"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "CD-soitinliitännäinen"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Gnome-vfs:n käynnistys ei onnistunut.\n"
-
-#~ msgid "Developers:"
-#~ msgstr "Kehittäjät:"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ÄLÄ PIDÄ AINA PÄÄLLIMMÄISENÄ (N/A)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "PIDÄ AINA PÄÄLLIMMÄISENÄ (N/A)"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "Alinäytteistys:"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Käytä todennusta"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "_Kansio:"
-
-#~ msgid "Add Folders"
-#~ msgstr "Lisää kansioita"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Lisää tiedostoja..."
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "3DNow!-optimoitu purku"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "MMX-optimoitu purku"
-
-#~ msgid "FPU decoder"
-#~ msgstr "FPU-purku"
+#~ msgid "Search and Select"
+#~ msgstr "Etsi ja valitse"
 
 #~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
+#~ "Searches the playlist and selects playlist entries based on specific "
+#~ "criteria."
 #~ msgstr ""
-#~ "mpg123 purkaja, tehnyt: Michael Hipp <mh@mpg123.de>\n"
-#~ "Liitännäisen tekijä: XMMS-ryhmä."
+#~ "Etsii ja valitsee soittolistasta kappaleita halutin kriterian mukaan."
 
-#~ msgid "Advanced settings:"
-#~ msgstr "Lisäasetukset:"
-
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "Säikeen puskuriaika (ms):"
-
-#~ msgid "Multi-thread mode"
-#~ msgstr "Monisäikeinen tila"
-
-#~ msgid "Mmap mode"
-#~ msgstr "MMap-tila"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Kotisivu ja grafiikka:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "BMP:n taajuuskorjain"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Beep-mediasoitin"
-
-#~ msgid "/About BMP"
-#~ msgstr "/BMP:stä"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Add Internet Address"
-#~ msgstr "Lisää internet-osoite"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Vlad Gerasimov"
-
-#~ msgid "/By extension"
-#~ msgstr "/Tiedostopäätteen mukaan"
-
-#~ msgid "Toggle repeat mode"
-#~ msgstr "Soitetaanko soittolista uudelleen"
-
-#~ msgid "Toggle shuffle mode"
-#~ msgstr "Soitetaanko kappaleet satunnaisessa järjestyksessä"
-
-#~ msgid "Toggle playlist editor window"
-#~ msgstr "Näytä tai piilota soittolistan muokkausikkuna"
-
-#~ msgid "Toggle equalizer window"
-#~ msgstr "Näytä tai piilota taajuuskorjain"
-
-#~ msgid "Keep BMP windows above all others"
-#~ msgstr "Pidä BMP-ikkunat muiden ikkunoiden päällä"
-
-#~ msgid "Show BMP windows on all workspaces"
-#~ msgstr "Näytä BMP-ikkunat kaikissa työtiloissa"
-
-#~ msgid "Roll up player window"
-#~ msgstr "Rullaa soittoikkuna"
-
-#~ msgid "Roll up playlist editor window"
-#~ msgstr "Rullaa soittolistan muokkausikkuna"
-
-#~ msgid "Roll up equalizer window"
-#~ msgstr "Rullaa taajuuskorjainikkuna"
-
-#~ msgid "Autoscroll track tittle"
-#~ msgstr "Vieritä kappaleen nimeä"
-
-#~ msgid "Display time from beginning of track"
-#~ msgstr "Näytä kappaleen alusta kulunut aika"
-
-#~ msgid "Display time to end of track"
-#~ msgstr "Näytä kappaleen loppuun saakka jäljellä oleva aika"
-
-#~ msgid "Start playing"
-#~ msgstr "Aloita soittaminen"
-
-#~ msgid "Stop playing"
-#~ msgstr "Pysäytä soittaminen"
-
-#~ msgid "Play previous track"
-#~ msgstr "Soita edellinen kappale"
-
-#~ msgid "Play next track"
-#~ msgstr "Soita seuraava kappale"
-
-#~ msgid "Play first track in list"
-#~ msgstr "Soita soittolistan ensimmäinen kappale"
-
-#~ msgid "Jump to Track..."
-#~ msgstr "Siirry kappaleeseen..."
-
-#~ msgid "Jump to another track"
-#~ msgstr "Siirry toiseen kappaleeseen"
-
-#~ msgid "Jump to Time..."
-#~ msgstr "Siirry hetkeen..."
-
-#~ msgid "Jump to time"
-#~ msgstr "Siirry ajanhetkeen"
-
-#~ msgid "View BMP project information"
-#~ msgstr "Näytä BMP-projektin tietoja"
-
-#~ msgid "Exit BMP"
-#~ msgstr "Lopeta BMP"
-
-#~ msgid "Add CD tracks"
-#~ msgstr "Lisää kappaleita CD-levyltä"
-
-#~ msgid "Add Remote Track"
-#~ msgstr "Lisää verkossa oleva kappale"
-
-#~ msgid "Add Local Tracks"
-#~ msgstr "Lisää paikallisissa tiedostoissa olevia kappaleita"
-
-#~ msgid "Remove tracks that are not selected"
-#~ msgstr "Poista valitsemattomat kappaleet"
-
-#~ msgid "Remove all tracks"
-#~ msgstr "Poista kaikki kappaleet"
-
-#~ msgid "Remove tracks that are not longer accessible"
-#~ msgstr "Poista kappaleet, jotka eivät enää ole saatavilla"
-
-#~ msgid "Queue/unqueue selected track"
-#~ msgstr "Lisää tai poista valittu kappale soittojonosta"
-
-#~ msgid "Randomize track order"
-#~ msgstr "Sekoita kappaleiden järjestys"
-
-#~ msgid "Sort selected by date"
-#~ msgstr "Järjestä valittu osa päiväyksen mukaan"
-
-#~ msgid "Clear queued tracks"
-#~ msgstr "Tyhjennä kappaleet jonosta"
-
-#~ msgid "Invert selection"
+#~ msgid "Invert Selection"
 #~ msgstr "Käänteinen valinta"
 
-#~ msgid "Cancel selection"
-#~ msgstr "Peru valinta"
+#~ msgid "Inverts the selected and unselected entries."
+#~ msgstr "Käänteistää valitut ja valitsemattomat kappaleet."
 
-#~ msgid "Select all"
+#~ msgid "Select All"
 #~ msgstr "Valitse kaikki"
+
+#~ msgid "Select None"
+#~ msgstr "Tyhjä valinta"
+
+#~ msgid "Deselects all of the playlist entries."
+#~ msgstr "Tyhjentää soittolistan valinnan."
+
+#~ msgid "Remove All"
+#~ msgstr "Poista kaikki"
+
+#~ msgid "Removes all entries from the playlist."
+#~ msgstr "Poistaa kaikki kappaleet soittolistasta."
+
+#~ msgid "Clear Queue"
+#~ msgstr "Tyhjennä jono"
+
+#~ msgid "Clears the queue associated with this playlist."
+#~ msgstr "Tyhjentää tähän soittolistaan liittyvän jonon."
+
+#~ msgid "Remove Unavailable Files"
+#~ msgstr "Poista tiedostot, jotka eivät ole saatavilla"
+
+#~ msgid "Removes unavailable files from the playlist."
+#~ msgstr "Poistaa soittolistasta tiedostot, jotka eivät ole saatavilla."
+
+#~ msgid "Remove Duplicates"
+#~ msgstr "Poista kaksoiskappaleet"
+
+#~ msgid "By Title"
+#~ msgstr "Nimen mukaan"
+
+#~ msgid "Removes duplicate entries from the playlist by title."
+#~ msgstr "Poistaa soittolistasta saman nimiset kappaleet."
+
+#~ msgid "By Filename"
+#~ msgstr "Tiedostonimen mukaan"
+
+#~ msgid "Removes duplicate entries from the playlist by filename."
+#~ msgstr "Poistaa soittolistasta saman tiedostonimen omaavat kappaleet."
+
+#~ msgid "By Path + Filename"
+#~ msgstr "Polun ja tiedostonimen mukaan"
+
+#~ msgid "Removes duplicate entries from the playlist by their full path."
+#~ msgstr ""
+#~ "Poistaa soittolistasta saman polun ja tiedostonimen omaavat kappaleet."
+
+#~ msgid "Remove Unselected"
+#~ msgstr "Poista valitsemattomat"
+
+#~ msgid "Remove unselected entries from the playlist."
+#~ msgstr "Poistaa valitsemattomat kappaleet soittolistasta."
+
+#~ msgid "Remove Selected"
+#~ msgstr "Poista valitut"
+
+#~ msgid "Remove selected entries from the playlist."
+#~ msgstr "Poistaa valitut kappaleet soittolistasta."
+
+#~ msgid "Randomize List"
+#~ msgstr "Sekoita lista"
+
+#~ msgid "Randomizes the playlist."
+#~ msgstr "Sekoittaa soittolistan."
+
+#~ msgid "Reverse List"
+#~ msgstr "Käänteinen järjestys"
+
+#~ msgid "Reverses the playlist."
+#~ msgstr "Järjestää soittolistan käänteiseen järjestykseen."
+
+#~ msgid "Sort List"
+#~ msgstr "Järjestä lista"
+
+#~ msgid "Sorts the list by title."
+#~ msgstr "Järjestää listan kappaleen nimen mukaan"
+
+#, fuzzy
+#~ msgid "By Album"
+#~ msgstr "Albumi"
+
+#, fuzzy
+#~ msgid "Sorts the list by album."
+#~ msgstr "Järjestää listan kappaleen nimen mukaan"
+
+#~ msgid "By Artist"
+#~ msgstr "Esittäjän mukaan"
+
+#~ msgid "Sorts the list by artist."
+#~ msgstr "Järjestää listan kappaleen esittäjän nimen mukaan."
+
+#~ msgid "Sorts the list by filename."
+#~ msgstr "Järjestää listan tiedostonimen mukaan."
+
+#~ msgid "Sorts the list by full pathname."
+#~ msgstr "Järjestää listan täydellisen tiedostonimen mukaan."
+
+#~ msgid "By Date"
+#~ msgstr "Päiväyksen mukaan"
+
+#, fuzzy
+#~ msgid "Sorts the list by modification time."
+#~ msgstr "Järjestä kaikki nimen mukaan"
+
+#~ msgid "By Track Number"
+#~ msgstr "Kappaleen numeron mukaan"
+
+#, fuzzy
+#~ msgid "Sorts the list by track number."
+#~ msgstr "/Järjestä lista/Päiväyksen mukaan"
+
+#, fuzzy
+#~ msgid "By Playlist Entry"
+#~ msgstr "BMP:n soittolistan muokkain"
+
+#, fuzzy
+#~ msgid "Sorts the list by playlist entry."
+#~ msgstr "/Järjestä lista/Nimen mukaan"
+
+#~ msgid "Sort Selected"
+#~ msgstr "Järjestä valitut"
+
+#~ msgid "File"
+#~ msgstr "Tiedosto"
+
+#~ msgid "Help"
+#~ msgstr "Apua"
+
+#, fuzzy
+#~ msgid "Components"
+#~ msgstr "Kommentti"
+
+#, fuzzy
+#~ msgid "View Track Details"
+#~ msgstr "/Näytä kappaleen tiedot"
+
+#, fuzzy
+#~ msgid "Play File"
+#~ msgstr "/Soita"
+
+#, fuzzy
+#~ msgid "Load and play a file"
+#~ msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
+
+#~ msgid "Play Location"
+#~ msgstr "Soita sijainti"
+
+#~ msgid "Plugin services"
+#~ msgstr "Liitännäispalvelut"
+
+#~ msgid "Preferences"
+#~ msgstr "Asetukset"
+
+#~ msgid "Open preferences window"
+#~ msgstr "Avaa asetusikkunan"
+
+#~ msgid "_Quit"
+#~ msgstr "/_Lopeta"
+
+#~ msgid "Quit Audacious"
+#~ msgstr "Lopeta Audacious"
+
+#~ msgid "Set A-B"
+#~ msgstr "Aseta A-B"
+
+#~ msgid "Clear A-B"
+#~ msgstr "Tyhjennä A-B"
+
+#~ msgid "Jump to Playlist Start"
+#~ msgstr "Siirry soittolistan alkuun"
+
+#~ msgid "Jump to File"
+#~ msgstr "Siirry tiedoston kohdalle"
+
+#, fuzzy
+#~ msgid "Queue Toggle"
+#~ msgstr "/Muuta soittojonoa"
+
+#~ msgid "Load"
+#~ msgstr "Lataa"
+
+#~ msgid "Import"
+#~ msgstr "Tuo"
+
+#~ msgid "Save"
+#~ msgstr "Tallenna"
+
+#~ msgid "Delete"
+#~ msgstr "Poista"
+
+#~ msgid "Preset"
+#~ msgstr "Asetus"
+
+#~ msgid "Load preset"
+#~ msgstr "Lataa asetus"
+
+#, fuzzy
+#~ msgid "Auto-load preset"
+#~ msgstr "/Lataa/Automaattinen asetus"
+
+#, fuzzy
+#~ msgid "Load auto-load preset"
+#~ msgstr "/Lataa/Automaattinen asetus"
+
+#~ msgid "Default"
+#~ msgstr "Oletus"
+
+#, fuzzy
+#~ msgid "Load default preset into equalizer"
+#~ msgstr "Tallenna automaattinen asetus"
+
+#~ msgid "Zero"
+#~ msgstr "Nolla"
+
+#, fuzzy
+#~ msgid "Set equalizer preset levels to zero"
+#~ msgstr "Tallenna taajuuskorjaimen asetus"
+
+#~ msgid "From file"
+#~ msgstr "Tiedostosta"
+
+#~ msgid "Load preset from file"
+#~ msgstr "Lataa asetus tiedostosta"
+
+#~ msgid "From WinAMP EQF file"
+#~ msgstr "WinAMP EQF-tiedostosta"
+
+#~ msgid "Load preset from WinAMP EQF file"
+#~ msgstr "Lataa asetus WinAMP EQF-tiedostosta"
+
+#~ msgid "WinAMP Presets"
+#~ msgstr "WinAMPin asetukset"
+
+#~ msgid "Import WinAMP presets"
+#~ msgstr "Tuo WinAMPin asetukset"
+
+#~ msgid "Save preset"
+#~ msgstr "Tallenna asetus"
+
+#, fuzzy
+#~ msgid "Save auto-load preset"
+#~ msgstr "/Tallenna/Automaattinen asetus"
+
+#, fuzzy
+#~ msgid "Save default preset"
+#~ msgstr "Tallenna automaattinen asetus"
+
+#~ msgid "To file"
+#~ msgstr "Tiedostoon"
+
+#, fuzzy
+#~ msgid "Save preset to file"
+#~ msgstr "Tallenna asetus"
+
+#~ msgid "To WinAMP EQF file"
+#~ msgstr "WinAMPin EQF-tiedostoon"
+
+#, fuzzy
+#~ msgid "Save preset to WinAMP EQF file"
+#~ msgstr "/Tallenna/Winampin EQF-tiedosto"
+
+#~ msgid "Delete preset"
+#~ msgstr "Poista asetus"
+
+#, fuzzy
+#~ msgid "Delete auto-load preset"
+#~ msgstr "/Poista/Automaattinen asetus"
+
+#~ msgid ""
+#~ "<b><big>Unable to load skin.</big></b>\n"
+#~ "\n"
+#~ "Check that skin at '%s' is usable and default skin is properly installed "
+#~ "at '%s'\n"
+#~ msgstr ""
+#~ "<b><big>Teeman lataaminen ei onnistunut.</big></b>\n"
+#~ "\n"
+#~ "Tarkista että teema \"%s\" on käytettävissä, ja että oletusarvoinen teema "
+#~ "on asennettu kunnolla kansioon \"%s\"\n"
+
+#~ msgid "Audacious core developers:"
+#~ msgstr "Audaciouksen pääkehittäjät:"
+
+#~ msgid "Audacious Equalizer"
+#~ msgstr "Audacious Taajuuskorjain"
+
+#~ msgid "Play files"
+#~ msgstr "Soita tiedostoja"
+
+#~ msgid "Load files"
+#~ msgstr "Lataa tiedostoja"
+
+#~ msgid "%s - Audacious"
+#~ msgstr "%s - Audacious"
+
+#~ msgid "VBR"
+#~ msgstr "VBR"
+
+#~ msgid "mono"
+#~ msgstr "mono"
+
+#~ msgid "Show main player window"
+#~ msgstr "Näytä pääikkuna"
+
+#~ msgid "Ignore"
+#~ msgstr "Jätä huomiotta"
+
+#~ msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
+#~ msgstr "Siirry: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#~ msgid "Volume: %d%%"
+#~ msgstr "Voimakkuus: %d%%"
+
+#~ msgid "Balance: %d%% left"
+#~ msgstr "Tasapaino: %d%% vasemmalla"
+
+#~ msgid "Balance: center"
+#~ msgstr "Tasapaino: keskellä"
+
+#~ msgid "Balance: %d%% right"
+#~ msgstr "Tasapaino %d%% oikealla"
+
+#~ msgid "Options Menu"
+#~ msgstr "Asetusvalikko"
+
+#~ msgid "Disable 'Always On Top'"
+#~ msgstr "Poista 'aina päällimmäisenä' käytöstä"
+
+#~ msgid "Enable 'Always On Top'"
+#~ msgstr "Ota 'aina päällimmäisenä' käyttöön"
+
+#~ msgid "File Info Box"
+#~ msgstr "Tiedoston tiedot"
+
+#~ msgid "Disable 'GUI Scaling'"
+#~ msgstr "Poista käyttöliittymän skaalaus käytöstä"
+
+#~ msgid "Enable 'GUI Scaling'"
+#~ msgstr "Ota käyttöliittymän skaalaus käyttöön"
+
+#~ msgid "Visualization Menu"
+#~ msgstr "Visualisointivalikko"
+
+#~ msgid ""
+#~ "<b><big>Couldn't open audio.</big></b>\n"
+#~ "\n"
+#~ "Please check that:\n"
+#~ "1. You have the correct output plugin selected.\n"
+#~ "2. No other programs is blocking the soundcard.\n"
+#~ "3. Your soundcard is configured properly.\n"
+#~ msgstr ""
+#~ "<b><big>Äänilaitteen avaaminen epäonnistui.</big></b>\n"
+#~ "\n"
+#~ "Tarkista että:\n"
+#~ "1. Oikea ulostuloliitännäinen on valittu.\n"
+#~ "2. Muut ohjelmat eivät käytä juuri nyt äänikorttia.\n"
+#~ "3. Äänikortin asetukset ovat oikein.\n"
+
+#~ msgid "Autoscroll Songname"
+#~ msgstr "Vieritä kappaleen nimeä"
+
+#~ msgid "Show Player"
+#~ msgstr "Näytä soitin"
+
+#~ msgid "Show Playlist Editor"
+#~ msgstr "Näytä soittolistan muokkain"
+
+#~ msgid "Always on Top"
+#~ msgstr "Aina päällimmäisenä"
+
+#~ msgid "Put on All Workspaces"
+#~ msgstr "Näkyy kaikissa työtiloissa"
+
+#~ msgid "Roll up Player"
+#~ msgstr "Rullaa soittoikkuna"
+
+#~ msgid "Roll up Playlist Editor"
+#~ msgstr "Rullaa soittolistan muokkausikkuna"
+
+#~ msgid "Roll up Equalizer"
+#~ msgstr "Rullaa taajuuskorjainikkuna"
+
+#~ msgid "Scale"
+#~ msgstr "Skaalaa"
+
+#~ msgid "DoubleSize"
+#~ msgstr "Kaksinkertainen koko"
+
+#~ msgid "Easy Move"
+#~ msgstr "Helppo siirtely"
+
+#~ msgid "Analyzer"
+#~ msgstr "Taajuusspektri"
+
+#~ msgid "Scope"
+#~ msgstr "Oskilloskooppi"
+
+#, fuzzy
+#~ msgid "Voiceprint"
+#~ msgstr "/Taajuusspektri/Tuli"
+
+#~ msgid "Off"
+#~ msgstr "Pois päältä"
+
+#~ msgid "Normal"
+#~ msgstr "Normaali"
+
+#~ msgid "Fire"
+#~ msgstr "Tuli"
+
+#~ msgid "Vertical Lines"
+#~ msgstr "Pystyviivat"
+
+#~ msgid "Lines"
+#~ msgstr "Viivat"
+
+#~ msgid "Bars"
+#~ msgstr "Palkit"
+
+#~ msgid "Dot Scope"
+#~ msgstr "Pisteskooppi"
+
+#~ msgid "Line Scope"
+#~ msgstr "Viivaskooppi"
+
+#~ msgid "Solid Scope"
+#~ msgstr "Yhtenäinen skooppi"
+
+#~ msgid "Ice"
+#~ msgstr "Jää"
+
+#~ msgid "Smooth"
+#~ msgstr "Pehmeä"
+
+#~ msgid "Full (~50 fps)"
+#~ msgstr "Täysi (~50 fps)"
+
+#~ msgid "Half (~25 fps)"
+#~ msgstr "Puolet (~25 fps)"
+
+#~ msgid "Quarter (~13 fps)"
+#~ msgstr "Neljäsosa (~13 fps)"
+
+#~ msgid "Eighth (~6 fps)"
+#~ msgstr "Kahdeksasosa (~6 fps)"
+
+#~ msgid "Slowest"
+#~ msgstr "Hitain"
+
+#~ msgid "Slow"
+#~ msgstr "Hidas"
+
+#~ msgid "Medium"
+#~ msgstr "Keskinkertainen"
+
+#~ msgid "Fast"
+#~ msgstr "Nopea"
+
+#~ msgid "Fastest"
+#~ msgstr "Nopein"
+
+#~ msgid "Time Elapsed"
+#~ msgstr "Kulunut aika"
+
+#~ msgid "Time Remaining"
+#~ msgstr "Aikaa jäljellä"
+
+#~ msgid "Plugin Services"
+#~ msgstr "Liitännäispalvelut"
+
+#, fuzzy
+#~ msgid "Search entries in active playlist"
+#~ msgstr "Näytä kappaleiden numerot soittolistassa"
+
+#~ msgid "Title: "
+#~ msgstr "Nimi: "
+
+#~ msgid "Artist: "
+#~ msgstr "Esittäjä: "
+
+#~ msgid "Filename: "
+#~ msgstr "Tiedostonimi: "
+
+#~ msgid "Audacious Playlist Editor"
+#~ msgstr "Audaciouksen soittolistamuokkain"
+
+#~ msgid "Appearance"
+#~ msgstr "Ulkonäkö"
+
+#~ msgid "<b>_Fonts</b>"
+#~ msgstr "<b>_Kirjasimet</b>"
+
+#~ msgid "_Player:"
+#~ msgstr "_Soitin:"
+
+#~ msgid "Select main player window font:"
+#~ msgstr "Valitse pääikkunan kirjasinlaji:"
+
+#~ msgid "_Playlist:"
+#~ msgstr "_Soittolista:"
+
+#~ msgid "Select playlist font:"
+#~ msgstr "Valitse soittolistan kirjasinlaji:"
+
+#~ msgid "Use Bitmap fonts if available"
+#~ msgstr "Käytä bittikarttakirjasimia, jos saatavilla"
+
+#~ msgid "<b>_Miscellaneous</b>"
+#~ msgstr "<b>_Sekalaiset</b>"
+
+#~ msgid "Show track numbers in playlist"
+#~ msgstr "Näytä kappaleiden numerot soittolistassa"
+
+#, fuzzy
+#~ msgid "Show separators in playlist"
+#~ msgstr "Näytä kappaleiden numerot soittolistassa"
+
+#~ msgid "Use two-way text scroller"
+#~ msgstr "Käytä kaksisuuntaista tekstin vieritystä"
+
+#~ msgid "Allow loading incomplete skins"
+#~ msgstr "Salli rikkinäisten teemojen lataaminen"
+
+#~ msgid "On load"
+#~ msgstr "Avattaessa"
+
+#~ msgid "Load metadata when adding the file to the playlist or opening it"
+#~ msgstr "Lataa metatiedot kun tiedosto lisätään soittolistaan tai avataan"
+
+#~ msgid "On display"
+#~ msgstr "Näytettäessä"
+
+#, fuzzy
+#~ msgid ""
+#~ "Load metadata on demand when displaying the file in the playlist. You may "
+#~ "need to set \"Detect file formats on demand\" in Audio page for full "
+#~ "benefit."
+#~ msgstr "Lataa metatiedot kun tiedosto lisätään soittolistaan tai avataan"
+
+#~ msgid "Color Adjustment"
+#~ msgstr "Värisäädöt"
+
+#~ msgid "Blue"
+#~ msgstr "Sininen"
+
+#~ msgid "Green"
+#~ msgstr "Vihreä"
+
+#~ msgid "Red"
+#~ msgstr "Punainen"
+
+#~ msgid "<b>_Skin</b>"
+#~ msgstr "<b>_Teema</b>"
+
+#~ msgid "Refresh skin list"
+#~ msgstr "Päivitä lista"
+
+#~ msgid "PREAMP"
+#~ msgstr "ESIVAHVISTUS"
+
+#~ msgid "60HZ"
+#~ msgstr "60HZ"
+
+#~ msgid "170HZ"
+#~ msgstr "170HZ"
+
+#~ msgid "310HZ"
+#~ msgstr "310HZ"
+
+#~ msgid "600HZ"
+#~ msgstr "600HZ"
+
+#~ msgid "1KHZ"
+#~ msgstr "1KHZ"
+
+#~ msgid "3KHZ"
+#~ msgstr "30KHZ"
+
+#~ msgid "6KHZ"
+#~ msgstr "6KHZ"
+
+#~ msgid "12KHZ"
+#~ msgstr "12KHZ"
+
+#~ msgid "14KHZ"
+#~ msgstr "14KHZ"
+
+#~ msgid "16KHZ"
+#~ msgstr "16KHZ"
+
+#~ msgid "Archived Winamp 2.x skin"
+#~ msgstr "Pakattu WinAmp 2.x -teema"
+
+#~ msgid "Unarchived Winamp 2.x skin"
+#~ msgstr "Pakkaamaton WinAmp 2.x -teema"
+
+#~ msgid "Reload Plugins"
+#~ msgstr "Lataa liitännäiset"

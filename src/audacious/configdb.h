@@ -1,198 +1,73 @@
-#ifndef CONFIGDB_H
-#define CONFIGDB_H
+/*
+ * configdb.h
+ * Copyright 2010 John Lindgren
+ *
+ * This file is part of Audacious.
+ *
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
+ *
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
+ */
+
+#ifndef AUDACIOUS_CONFIGDB_H
+#define AUDACIOUS_CONFIGDB_H
 
 #include <glib.h>
+#include <libmcs/mcs.h>
+#include <audacious/api.h>
 
-/**
- * ConfigDb:
- *
- * A configuration database handle, opened with bmp_cfg_db_open().
- **/
-typedef struct _ConfigDb ConfigDb;
+#define AUD_API_NAME ConfigDBAPI
+#define AUD_API_SYMBOL configdb_api
 
+#ifdef _AUDACIOUS_CORE
 
-G_BEGIN_DECLS
+#include "api-local-begin.h"
+#include "configdb-api.h"
+#include "api-local-end.h"
 
-    /**
-     * bmp_cfg_db_open:
-     *
-     * Opens the configuration database.
-     *
-     * Return value: A configuration database handle.
-     **/
-    ConfigDb *bmp_cfg_db_open();
+void cfg_db_flush (void);
 
-    /**
-     * bmp_cfg_db_close:
-     * @db: A configuration database handle.
-     *
-     * Closes the configuration database.
-     **/
-    void bmp_cfg_db_close(ConfigDb *db);
+#else
 
-    /**
-     * bmp_cfg_db_get_string:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to look up.
-     * @value: Pointer to a buffer to put the data in.
-     *
-     * Searches the configuration database for a value.
-     *
-     * Return value: TRUE if successful, FALSE otherwise.
-     **/
-    gboolean bmp_cfg_db_get_string(ConfigDb *db,
-                                   const gchar *section,
-                                   const gchar *key,
-                                   gchar **value);
+#include <audacious/api-define-begin.h>
+#include <audacious/configdb-api.h>
+#include <audacious/api-define-end.h>
 
-    /**
-     * bmp_cfg_db_get_int:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to look up.
-     * @value: Pointer to an integer to put the data in.
-     *
-     * Searches the configuration database for a value.
-     *
-     * Return value: TRUE if successful, FALSE otherwise.
-     **/
-    gboolean bmp_cfg_db_get_int(ConfigDb *db,
-                                const gchar *section,
-                                const gchar *key,
-                                gint *value);
+#include <audacious/api-alias-begin.h>
+#include <audacious/configdb-api.h>
+#include <audacious/api-alias-end.h>
 
-    /**
-     * bmp_cfg_db_get_bool:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to look up.
-     * @value: Pointer to a boolean to put the data in.
-     *
-     * Searches the configuration database for a value.
-     *
-     * Return value: TRUE if successful, FALSE otherwise.
-     **/
-    gboolean bmp_cfg_db_get_bool(ConfigDb *db,
-                                 const gchar *section,
-                                 const gchar *key,
-                                 gboolean *value);
+#endif
 
-    /**
-     * bmp_cfg_db_get_float:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to look up.
-     * @value: Pointer to a floating point integer to put the data in.
-     *
-     * Searches the configuration database for a value.
-     *
-     * Return value: TRUE if successful, FALSE otherwise.
-     **/
-    gboolean bmp_cfg_db_get_float(ConfigDb *db,
-                                  const gchar *section,
-                                  const gchar *key,
-                                  gfloat *value);
+#undef AUD_API_NAME
+#undef AUD_API_SYMBOL
 
-    /**
-     * bmp_cfg_db_get_double:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to look up.
-     * @value: Pointer to a double-precision floating point integer to put the data in.
-     *
-     * Searches the configuration database for a value.
-     *
-     * Return value: TRUE if successful, FALSE otherwise.
-     **/
-    gboolean bmp_cfg_db_get_double(ConfigDb *db,
-                                   const gchar *section,
-                                   const gchar *key,
-                                   gdouble *value);
+#endif
 
-    /**
-     * bmp_cfg_db_set_string:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to set.
-     * @value: Pointer to a buffer containing the data.
-     *
-     * Sets a value in the configuration database.
-     **/
-    void bmp_cfg_db_set_string(ConfigDb *db,
-                               const gchar *section,
-                               const gchar *key,
-                               const gchar *value);
+#ifdef AUD_API_DECLARE
 
-    /**
-     * bmp_cfg_db_set_int:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to set.
-     * @value: Pointer to an integer containing the data.
-     *
-     * Sets a value in the configuration database.
-     **/
-    void bmp_cfg_db_set_int(ConfigDb *db,
-                            const gchar *section,
-                            const gchar *key,
-                            gint value);
+#define AUD_API_NAME ConfigDBAPI
+#define AUD_API_SYMBOL configdb_api
 
-    /**
-     * bmp_cfg_db_set_bool:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to set.
-     * @value: Pointer to a boolean containing the data.
-     *
-     * Sets a value in the configuration database.
-     **/
-    void bmp_cfg_db_set_bool(ConfigDb *db,
-                             const gchar *section,
-                             const gchar *key,
-                             gboolean value);
+#include "api-define-begin.h"
+#include "configdb-api.h"
+#include "api-define-end.h"
 
-    /**
-     * bmp_cfg_db_set_float:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to set.
-     * @value: Pointer to a floating point integer containing the data.
-     *
-     * Sets a value in the configuration database.
-     **/
-    void bmp_cfg_db_set_float(ConfigDb *db,
-                              const gchar *section,
-                              const gchar *key,
-                              gfloat value);
+#include "api-declare-begin.h"
+#include "configdb-api.h"
+#include "api-declare-end.h"
 
-    /**
-     * bmp_cfg_db_set_double:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to set.
-     * @value: Pointer to a double precision floating point integer containing the data.
-     *
-     * Sets a value in the configuration database.
-     **/
-    void bmp_cfg_db_set_double(ConfigDb *db,
-                               const gchar *section,
-                               const gchar *key,
-                               gdouble value);
+#undef AUD_API_NAME
+#undef AUD_API_SYMBOL
 
-    /**
-     * bmp_cfg_db_unset_key:
-     * @db: A configuration database handle.
-     * @section: The section of the configuration database to search.
-     * @key: The name of the field in the configuration database to set.
-     *
-     * Removes a value from the configuration database.
-     **/
-    void bmp_cfg_db_unset_key(ConfigDb *db,
-                              const gchar *section,
-                              const gchar *key);
-
-G_END_DECLS
-
-#endif /* CONFIGDB_H */
-
+#endif

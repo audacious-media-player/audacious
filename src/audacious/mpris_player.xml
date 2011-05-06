@@ -3,10 +3,11 @@
 <!--
  - Audacious: A cross-platform multimedia player
  - Copyright (c) 2007 William Pitcock
+ - Copyright (c) 2007 Ben Tucker
  -
  - This program is free software; you can redistribute it and/or modify
  - it under the terms of the GNU General Public License as published by
- - the Free Software Foundation; under version 2 of the License.
+ - the Free Software Foundation; under version 3 of the License.
  -
  - This program is distributed in the hope that it will be useful,
  - but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,9 +15,7 @@
  - GNU General Public License for more details.
  -
  - You should have received a copy of the GNU General Public License
- - along with this program; if not, write to the Free Software
- - Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- - 02110-1301, USA.
+ - along with this program.  If not, see <http://www.gnu.org/licenses>.
  -->
 
 <node name="/Player">
@@ -36,50 +35,41 @@
         <method name="Play">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
-        <method name="Quit">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
-
         <method name="Repeat">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" />
         </method>
-
         <method name="GetStatus">
-            <arg type="i" direction="out" />
+            <arg type="(iiii)" direction="out" />
         </method>
-
+        <method name="GetMetadata">
+            <arg type="a{sv}" direction="out" />
+        </method>
         <method name="GetCaps">
             <arg type="i" direction="out" />
         </method>
-
         <method name="VolumeSet">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" />
         </method>
-
         <method name="VolumeGet">
             <arg type="i" direction="out" />
         </method>
-
         <method name="PositionSet">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" />
         </method>
-
         <method name="PositionGet">
             <arg type="i" direction="out" />
         </method>
 
-        <signal name="CapsChange">
-            <arg type="i" />
-        </signal>
-
         <signal name="TrackChange">
             <arg type="a{sv}" />
         </signal>
-
         <signal name="StatusChange">
+            <arg type="(iiii)" />
+        </signal>
+        <signal name="CapsChange">
             <arg type="i" />
         </signal>
     </interface>

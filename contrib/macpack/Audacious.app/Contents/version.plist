@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildVersion</key>
+	<string>12</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.4</string>
+	<key>CFBundleVersion</key>
+	<string>220</string>
+	<key>ProjectName</key>
+	<string>Audacious</string>
+	<key>SourceVersion</key>
+	<string>1337</string>
+</dict>
+</plist>

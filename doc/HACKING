@@ -1,0 +1,127 @@
+Hacking / coding guide for Audacious and Audacious-plugins
+==========================================================
+(C) Copyright 2008 Audacious Development Team
+
+
+Preamble
+========
+
+This document describes the guidelines for people who wish to work on
+improving or cleaning up Audacious media player, or any of the plugins
+we distribute in the plugins package.
+
+It is probably obvious to anyone who has taken a look into the depths
+of Audacious source, that many of these guidelines are not actually
+followed currently in all places, if at all.
+
+In fact, the purpose of this document is to act as a target to aim at,
+when noticing and cleaning up uncompliant code.. or writing new code.
+
+
+Coding guidelines
+=================
+- Public functions in Audacious core SHOULD be documented via Doxygen
+  comments! In this case "public" means any functions that span modules
+  OR are available to plugins.
+
+  Of course, most functions currently lack documentation. If you have
+  spare time, improve the situation.
+
+
+- We use Glib for portability. This means that we have sized integer types
+  such as gint{16,32,64}, etc. and shorthand types like guint and guchar
+  provided, so please do use them.
+
+  Arguably C99 provides inttypes.h with similar types, but C99 support
+  may not be complete on all platforms, it is both safer and more uniform
+  to use glib types.
+
+
+- Use other glib functionality, especially string handling like:
+  * g_snprintf(), g_strdup_printf(), g_strdup() ...
+
+
+- However, avoid following Glib things:
+  * GString - Useless in most cases compared to normal 'C' string functions
+    and introduces conversions back and forth.
+
+  * GList   - GList is slow, either use GQueue or libmowgli lists.
+
+
+- Be sure to know when you are handling UTF-8 or something else! Glib offers
+  special g_ascii_*() functions for certain operations that you might need
+  when handling non-unicode strings.
+
+
+- When reading data from files, it's usually a BIG mistake to read structs
+  directly from the stream! This is not portable, as C does not guarantee
+  a struct not to have alignment padding (unless the struct is "packed",
+  but see below.) In effect sizeof(struct), unless packed, on some platform
+  may not be equal to some other platform.
+
+  Making struct "packed" via the C packed qualifier or "#pragma pack()" is
+  a solution, but this must be used with care. Unaligned memory access
+  causes performance penalties, and may cause other, more serious problems
+  in some cases. For example, code written in assembler may not know about
+  the un-alignment, and may thus fail with 'bus errors' on platforms that
+  strictly required aligned data.
+
+  The 100% safe way is to read individual members of the struct one by one
+  from the stream. This may be bothersome, but by doing so, your code
+  will be portable for sure.
+
+
+- Always use Glib sized types for reading integer data from file streams.
+  Using plain C types (like 'long int' for example) is not wise, because
+  they may be of different size on different platforms depending on the
+  platform ABI. For example, on some 64-bit platforms, 'long int' is
+  64 bits, while on 32-bit platforms it is 32 bits.
+
+
+- Audacious core provides some helper functions for reading endian-dependant
+  integers from VFS streams (aud_vfs_fget_{le,be}{16,32,64}), see vfs.h and
+  documentation for more information.
+
+
+- Avoid reinventing wheels, avoid code duplication. If same thing is done
+  in two places, it should be in a library, or possibly in Audacious core.
+  Discuss about it with fellow developers.
+
+
+- In the core, DO NOT WRITE CODE THAT IS DEPENDENT ON A SPECIFIC UI OR
+  INTERFACE. The core should NEVER care what interface is in use.
+
+
+Additional style guidelines
+===========================
+
+- Indentation: Use the same indentation style (also spaces vs. tabs)
+  as the file you are editing. In new files/code, use indentation of
+  4 spaces (no tabs). When moving functions to new files, PLEASE
+  reindent the code.
+
+- Whitespace usage in code:
+
+  a = 1;
+
+  if (b == d && !strcmp(a, c)) ...
+
+  gchar *foo, *bar;
+
+  void hello(const gchar *baz);
+
+- Blocks:
+
+  while (...)
+  {
+      do_something(...);
+  }
+
+  if (...)
+  {
+      do_stuff();
+  }
+  else
+  {
+      do_other_stuff();
+  }

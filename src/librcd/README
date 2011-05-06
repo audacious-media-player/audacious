@@ -1,4 +1,0 @@
-librcd.c, librcd.h and russian_table.h were taken from librcd 0.1.8 (http://rusxmms.sourceforge.net)
-Librcd is written by Suren A. Chilingaryan <csa@dside.dyndns.org> and distributed under GNU GPL.
-
-Audacious integration bits are (c) 2006 Valentine Sinitsyn <e_val@inbox.ru>

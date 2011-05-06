@@ -1,0 +1,39 @@
+[Desktop Entry]
+Version=1.0
+
+Type=Application
+
+Name=Audacious
+GenericName=Music Player
+GenericName[be]=Музычны плэер
+GenericName[da]=Lydafspiller
+GenericName[de]=Musikspieler
+GenericName[es]=Reproductor de música
+GenericName[fr]=Lecteur de Musique
+GenericName[it]=Lettore di Musica
+GenericName[lt]=Muzikos grotuvas
+GenericName[nl]=Muziekspeler
+GenericName[nb]=Lydavspiller
+GenericName[pt]=Leitor de Música
+GenericName[ro]=Lector de Muzică
+GenericName[ru]=Аудиоплеер
+GenericName[se]=Ljudspelare
+Comment=Listen to music
+Comment[be]=Слухайце музыку
+Comment[de]=Musik hören
+Comment[fr]=Écouter de la musique
+Comment[hu]=Hallgasson zenét
+Comment[it]=Ascoltare musica
+Comment[lt]=Klausyti muzikos
+Comment[nb]=Lytt til musikk
+Comment[nl]=Muziek luisteren
+Comment[ru]=Слушайте музыку
+Comment[es]=Escucha música
+Icon=audacious
+
+Categories=AudioVideo;Audio;Player;GTK;
+
+Exec=audacious %U
+TryExec=audacious
+Terminal=false
+MimeType=application/ogg;application/x-cue;application/x-ogg;application/xspf+xml;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-vorbis+ogg;audio/x-wav;audio/x-xm;x-content/audio-cdda;
