@@ -31,8 +31,13 @@
 
 static void confirm_delete_cb (GtkButton * button, void * data)
 {
-    if (GPOINTER_TO_INT (data) < aud_playlist_count ())
-        aud_playlist_delete (GPOINTER_TO_INT (data));
+    gint list = aud_playlist_by_unique_id (GPOINTER_TO_INT (data));
+    if (list < 0)
+        return;
+
+    aud_playlist_delete (list);
+    if (list > 0)
+        aud_playlist_set_active (list - 1);
 }
 
 void audgui_confirm_playlist_delete (gint playlist)
@@ -43,6 +48,8 @@ void audgui_confirm_playlist_delete (gint playlist)
     if (aud_cfg->no_confirm_playlist_delete)
     {
         aud_playlist_delete (playlist);
+        if (playlist > 0)
+            aud_playlist_set_active (playlist - 1);
         return;
     }
 
@@ -95,7 +102,7 @@ void audgui_confirm_playlist_delete (gint playlist)
     gtk_widget_grab_default (button);
     gtk_widget_grab_focus (button);
     g_signal_connect ((GObject *) button, "clicked", (GCallback)
-     confirm_delete_cb, GINT_TO_POINTER (playlist));
+     confirm_delete_cb, GINT_TO_POINTER (aud_playlist_get_unique_id (playlist)));
     g_signal_connect_swapped ((GObject *) button, "clicked", (GCallback)
      gtk_widget_destroy, window);
 
