@@ -1,6 +1,6 @@
 /*
  * misc.h
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -29,16 +29,6 @@
 #include <libaudcore/tuple.h>
 
 enum {
- AUDACIOUS_MENU_MAIN,
- AUDACIOUS_MENU_PLAYLIST,
- AUDACIOUS_MENU_PLAYLIST_RCLICK,
- AUDACIOUS_MENU_PLAYLIST_ADD,
- AUDACIOUS_MENU_PLAYLIST_REMOVE,
- AUDACIOUS_MENU_PLAYLIST_SELECT,
- AUDACIOUS_MENU_PLAYLIST_MISC,
- TOTAL_PLUGIN_MENUS};
-
-enum {
  AUD_PATH_BIN_DIR,
  AUD_PATH_DATA_DIR,
  AUD_PATH_PLUGIN_DIR,
@@ -57,6 +47,18 @@ typedef struct {
     gchar * name;
     gfloat preamp, bands[10];
 } EqualizerPreset;
+
+enum {
+ AUD_MENU_MAIN,
+ AUD_MENU_PLAYLIST,
+ AUD_MENU_PLAYLIST_RCLICK,
+ AUD_MENU_PLAYLIST_ADD,
+ AUD_MENU_PLAYLIST_REMOVE,
+ AUD_MENU_PLAYLIST_SELECT,
+ AUD_MENU_PLAYLIST_MISC,
+ AUD_MENU_COUNT};
+
+typedef void (* MenuFunc) (void);
 
 typedef gint16 VisFreqData[2][256];
 typedef gint16 VisPCMData[2][512];

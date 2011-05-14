@@ -1,12 +1,12 @@
 /*
  * ui_plugin_menu.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
  * Audacious is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
- * Foundation, version 3 of the License.
+ * Foundation, version 2 or version 3 of the License.
  *
  * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
@@ -24,45 +24,80 @@
 
 #include "misc.h"
 
-static void destroy_warning (void)
+struct Item {
+    MenuFunc func;
+    const gchar * name;
+    const gchar * icon;
+};
+
+static GList * items[AUD_MENU_COUNT];
+static GtkWidget * menus[AUD_MENU_COUNT];
+
+static void add_to_menu (GtkWidget * menu, struct Item * item)
 {
-    fprintf (stderr, "Interface destroyed a plugin services menu!\n");
+    GtkWidget * widget = gtk_image_menu_item_new_with_mnemonic (item->name);
+    g_object_set_data ((GObject *) widget, "func", item->func);
+    g_signal_connect (widget, "activate", item->func, NULL);
+
+    if (item->icon)
+        gtk_image_menu_item_set_image ((GtkImageMenuItem *) widget,
+         gtk_image_new_from_stock (item->icon, GTK_ICON_SIZE_MENU));
+
+    gtk_widget_show (widget);
+    gtk_menu_shell_append ((GtkMenuShell *) menu, widget);
 }
 
 /* GtkWidget * get_plugin_menu (gint id) */
 void * get_plugin_menu (gint id)
 {
-    static gboolean initted = FALSE;
-    static GtkWidget * menus[TOTAL_PLUGIN_MENUS];
-
-    if (! initted)
-    {
-        memset (menus, 0, sizeof menus);
-        initted = TRUE;
-    }
-
-    if (menus[id] == NULL)
+    if (! menus[id])
     {
         menus[id] = gtk_menu_new ();
-        g_object_ref ((GObject *) menus[id]);
-        g_signal_connect (menus[id], "destroy", (GCallback) destroy_warning,
-         NULL);
-        gtk_widget_show (menus[id]);
+        g_signal_connect (menus[id], "destroy", (GCallback)
+         gtk_widget_destroyed, & menus[id]);
+
+        for (GList * node = items[id]; node; node = node->next)
+            add_to_menu (menus[id], node->data);
     }
 
     return menus[id];
 }
 
-/* gint menu_plugin_item_add (gint id, GtkWidget * item) */
-gint menu_plugin_item_add (gint id, void * item)
+void plugin_menu_add (gint id, MenuFunc func, const gchar * name,
+ const gchar * icon)
 {
-    gtk_menu_shell_append ((GtkMenuShell *) get_plugin_menu (id), item);
-    return 0;
+    struct Item * item = g_slice_new (struct Item);
+    item->name = name;
+    item->icon = icon;
+    item->func = func;
+
+    items[id] = g_list_append (items[id], item);
+
+    if (menus[id])
+        add_to_menu (menus[id], item);
 }
 
-/* gint menu_plugin_item_remove (gint id, GtkWidget * item) */
-gint menu_plugin_item_remove (gint id, void * item)
+static void remove_cb (GtkWidget * widget, MenuFunc func)
 {
-    gtk_container_remove ((GtkContainer *) get_plugin_menu (id), item);
-    return 0;
+    if (g_object_get_data ((GObject *) widget, "func") == func)
+        gtk_widget_destroy (widget);
+}
+
+void plugin_menu_remove (gint id, MenuFunc func)
+{
+    if (menus[id])
+        gtk_container_foreach ((GtkContainer *) menus[id], (GtkCallback)
+         remove_cb, func);
+
+    GList * next;
+    for (GList * node = items[id]; node; node = next)
+    {
+        next = node->next;
+
+        if (((struct Item *) node->data)->func == func)
+        {
+            g_slice_free (struct Item, node->data);
+            items[id] = g_list_delete_link (items[id], node);
+        }
+    }
 }

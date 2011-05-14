@@ -1,6 +1,6 @@
 /*
  * misc-api.h
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -62,10 +62,9 @@ AUD_FUNC1 (gchar *, get_associated_image_file, const gchar *, filename)
 
 /* ui_plugin_menu.c */
 AUD_FUNC1 (/* GtkWidget * */ void *, get_plugin_menu, gint, id)
-AUD_FUNC2 (gint, menu_plugin_item_add, gint, menu, /* GtkWidget * */ void *,
- item)
-AUD_FUNC2 (gint, menu_plugin_item_remove, gint, menu, /* GtkWidget * */ void *,
- item)
+AUD_FUNC4 (void, plugin_menu_add, gint, id, MenuFunc, func, const gchar *, name,
+ const gchar *, icon)
+AUD_FUNC2 (void, plugin_menu_remove, gint, id, MenuFunc, func)
 
 /* ui_preferences.c */
 AUD_FUNC4 (void, create_widgets_with_domain, /* GtkWidget * */ void *, box,
