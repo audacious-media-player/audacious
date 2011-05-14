@@ -202,8 +202,7 @@ static void position_hook (void * data, void * list)
         audgui_list_set_highlight (list, aud_playlist_get_playing ());
 }
 
-void
-audgui_playlist_manager_ui_show (GtkWidget *mainwin)
+void audgui_playlist_manager (void)
 {
     GtkWidget *playman_vbox;
     GtkWidget * playman_pl_lv, * playman_pl_lv_sw;
@@ -220,7 +219,6 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
 
     playman_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
     gtk_window_set_type_hint( GTK_WINDOW(playman_win), GDK_WINDOW_TYPE_HINT_DIALOG );
-    gtk_window_set_transient_for( GTK_WINDOW(playman_win) , GTK_WINDOW(mainwin) );
     gtk_window_set_title( GTK_WINDOW(playman_win), _("Playlist Manager") );
     gtk_container_set_border_width ((GtkContainer *) playman_win, 6);
     playman_win_hints.min_width = 400;
@@ -297,10 +295,4 @@ audgui_playlist_manager_ui_show (GtkWidget *mainwin)
     gtk_widget_show_all( playman_win );
 
     hook_associate ("config save", save_config_cb, playman_win);
-}
-
-void audgui_playlist_manager_destroy(void)
-{
-    if (playman_win)
-        hide_cb (playman_win);
 }

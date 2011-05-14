@@ -60,6 +60,16 @@ void audgui_infopopup_hide (void);
 void audgui_infowin_show (gint playlist, gint entry);
 void audgui_infowin_show_current (void);
 
+/* jump-to-time.c */
+void audgui_jump_to_time (void);
+
+/* playlists.c */
+void audgui_import_playlist (void);
+void audgui_export_playlist (void);
+
+/* ui_playlist_manager.c */
+void audgui_playlist_manager (void);
+
 /* urilist.c */
 void audgui_urilist_open (const gchar * list);
 void audgui_urilist_insert (gint playlist, gint position, const gchar * list);

@@ -30,10 +30,6 @@ GtkWidget * audgui_create_effects_menu (void);
 /* iface-menu.c */
 GtkWidget * audgui_create_iface_menu (void);
 
-void audgui_playlist_manager_update(void);
-void audgui_playlist_manager_ui_show(GtkWidget *mainwin);
-void audgui_playlist_manager_destroy(void);
-
 /* util.c */
 void audgui_hide_on_delete (GtkWidget * widget);
 void audgui_hide_on_escape (GtkWidget * widget);
