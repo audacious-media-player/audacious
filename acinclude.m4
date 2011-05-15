@@ -142,6 +142,23 @@ define([aud_get_plugin_dirs_defined],[1])dnl
 ])dnl
 
 
+dnl Add $1 to CFLAGS and CXXFLAGS if supported
+dnl ------------------------------------------
+
+AC_DEFUN([AUD_CHECK_CFLAGS],[
+    AC_MSG_CHECKING([whether the C/C++ compiler supports $1])
+    OLDCFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS $1 -Werror"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[return 0;])],[
+        AC_MSG_RESULT(yes)
+        CFLAGS="$OLDCFLAGS $1"
+        CXXFLAGS="$CXXFLAGS $1"
+    ],[
+        AC_MSG_RESULT(no)
+        CFLAGS="$OLDCFLAGS"
+    ])
+])
+
 
 dnl **
 dnl ** Common checks
@@ -158,8 +175,9 @@ AC_ISC_POSIX
 AC_C_BIGENDIAN
 
 if test "x$GCC" = "xyes"; then
-    CFLAGS="$CFLAGS -Wall -Wtype-limits -pipe"
-    CXXFLAGS="$CXXFLAGS -pipe -Wall -Wtype-limits"
+    CFLAGS="$CFLAGS -Wall -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -Wall"
+    AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
 
 dnl Checks for various programs
