@@ -33,8 +33,7 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,
                                    gpointer user_data);
 
-gboolean dir_foreach(const gchar * path, DirForeachFunc function,
-                     gpointer user_data, GError ** error);
+gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user_data);
 
 gint file_get_mtime (const gchar * filename);
 void make_directory(const gchar * path, mode_t mode);

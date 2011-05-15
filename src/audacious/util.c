@@ -23,6 +23,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <dirent.h>
 #include <limits.h>
 #include <unistd.h>
 
@@ -57,33 +58,28 @@
 #include "plugins.h"
 #include "util.h"
 
-gboolean
-dir_foreach(const gchar * path, DirForeachFunc function,
-            gpointer user_data, GError ** error)
+gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user)
 {
-    GError *error_out = NULL;
-    GDir *dir;
-    const gchar *entry;
-    gchar *entry_fullpath;
-
-    if (!(dir = g_dir_open(path, 0, &error_out))) {
-        g_propagate_error(error, error_out);
+    DIR * dir = opendir (path);
+    if (! dir)
         return FALSE;
-    }
+    
+    gchar full[PATH_MAX];
+    gint len = snprintf (full, sizeof full, "%s" G_DIR_SEPARATOR_S, path);
+    
+    struct dirent * entry;
+    while ((entry = readdir (dir)))
+    {
+        if (entry->d_name[0] == '.')
+            continue;
+        
+        snprintf (full + len, sizeof full - len, "%s", entry->d_name);
 
-    while ((entry = g_dir_read_name(dir))) {
-        entry_fullpath = g_build_filename(path, entry, NULL);
-
-        if ((*function) (entry_fullpath, entry, user_data)) {
-            g_free(entry_fullpath);
+        if (func (full, entry->d_name, user))
             break;
-        }
-
-        g_free(entry_fullpath);
     }
 
-    g_dir_close(dir);
-
+    closedir (dir);
     return TRUE;
 }
 

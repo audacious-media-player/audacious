@@ -176,7 +176,7 @@ static gboolean scan_plugin_func(const gchar * path, const gchar * basename, gpo
 
 static void scan_plugins(const gchar * path)
 {
-    dir_foreach(path, scan_plugin_func, NULL, NULL);
+    dir_foreach (path, scan_plugin_func, NULL);
 }
 
 void plugin_system_init(void)
