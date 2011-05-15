@@ -27,6 +27,7 @@
 #include <gtk/gtk.h>
 
 #include <audacious/drct.h>
+#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 
 #include "config.h"
