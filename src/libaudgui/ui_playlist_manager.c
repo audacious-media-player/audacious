@@ -54,7 +54,8 @@ static void rename_cb (void)
 
 static void new_cb (GtkButton * button, void * unused)
 {
-    aud_playlist_insert (-1);
+    aud_playlist_insert (aud_playlist_get_active () + 1);
+    aud_playlist_set_active (aud_playlist_get_active () + 1);
 }
 
 static void delete_cb (GtkButton * button, GtkWidget * list)
@@ -164,33 +165,50 @@ static gboolean search_cb (GtkTreeModel * model, gint column, const gchar * key,
 }
 
 static gboolean position_changed = FALSE;
+static gboolean playlist_activated = FALSE;
 
 static void update_hook (void * data, void * list)
 {
-    if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_STRUCTURE)
+    gint rows = aud_playlist_count ();
+
+    if (GPOINTER_TO_INT (data) == PLAYLIST_UPDATE_STRUCTURE)
     {
         gint old_rows = audgui_list_row_count (list);
-        gint rows = aud_playlist_count ();
 
         if (rows < old_rows)
-        {
             audgui_list_delete_rows (list, rows, old_rows - rows);
-            old_rows = rows;
-        }
-
-        audgui_list_update_rows (list, 0, old_rows);
-        audgui_list_update_selection (list, 0, old_rows);
-
-        if (rows > old_rows)
+        else if (rows > old_rows)
             audgui_list_insert_rows (list, old_rows, rows - old_rows);
 
-        audgui_list_set_focus (list, aud_playlist_get_active ());
+        position_changed = TRUE;
+        playlist_activated = TRUE;
     }
 
-    if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_STRUCTURE || position_changed)
+    if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_METADATA)
+        audgui_list_update_rows (list, 0, rows);
+
+    if (playlist_activated)
+    {
+        audgui_list_set_focus (list, aud_playlist_get_active ());
+        audgui_list_update_selection (list, 0, rows);
+        playlist_activated = FALSE;
+    }
+
+    if (position_changed)
     {
         audgui_list_set_highlight (list, aud_playlist_get_playing ());
         position_changed = FALSE;
+    }
+}
+
+static void activate_hook (void * data, void * list)
+{
+    if (aud_playlist_update_pending ())
+        playlist_activated = TRUE;
+    else
+    {
+        audgui_list_set_focus (list, aud_playlist_get_active ());
+        audgui_list_update_selection (list, 0, aud_playlist_count ());
     }
 }
 
@@ -248,6 +266,7 @@ void audgui_playlist_manager (void)
     gtk_tree_view_set_search_equal_func ((GtkTreeView *) playman_pl_lv,
      search_cb, NULL, NULL);
     hook_associate ("playlist update", update_hook, playman_pl_lv);
+    hook_associate ("playlist activate", activate_hook, playman_pl_lv);
     hook_associate ("playlist position", position_hook, playman_pl_lv);
 
     playman_pl_lv_sw = gtk_scrolled_window_new( NULL , NULL );
