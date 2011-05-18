@@ -692,6 +692,13 @@ void audgui_list_update_selection (GtkWidget * list, gint at, gint rows)
     update_selection (list, model, at, rows);
 }
 
+gint audgui_list_get_highlight (GtkWidget * list)
+{
+    ListModel * model = (ListModel *) gtk_tree_view_get_model
+     ((GtkTreeView *) list);
+    return model->highlight;
+}
+
 void audgui_list_set_highlight (GtkWidget * list, gint row)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
@@ -707,6 +714,20 @@ void audgui_list_set_highlight (GtkWidget * list, gint row)
         audgui_list_update_rows (list, old, 1);
     if (row >= 0)
         audgui_list_update_rows (list, row, 1);
+}
+
+gint audgui_list_get_focus (GtkWidget * list)
+{
+    GtkTreePath * path = NULL;
+    gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, NULL);
+
+    if (! path)
+        return -1;
+
+    gint row = gtk_tree_path_get_indices (path)[0];
+
+    gtk_tree_path_free (path);
+    return row;
 }
 
 void audgui_list_set_focus (GtkWidget * list, gint row)
