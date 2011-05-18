@@ -25,12 +25,14 @@
 
 #include <audacious/debug.h>
 #include <audacious/gtk-compat.h>
+#include <audacious/i18n.h>
 #include <audacious/playlist.h>
 #include <audacious/plugin.h>
 #include <audacious/misc.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
+#include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
@@ -87,18 +89,29 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         g_object_get ((GObject *) * widget, "text", & old, NULL);
         g_return_if_fail (old);
 
-        if (! strcmp (old, text))
-            goto CREATED;
+        gint messages = GPOINTER_TO_INT (g_object_get_data ((GObject *)
+         * widget, "messages"));
 
+        if (messages > 10)
+            text = _("\n(Further messages have been hidden.)");
+
+        if (strstr (old, text))
+            goto CREATED;
+        
         gchar both[strlen (old) + strlen (text) + 2];
         snprintf (both, sizeof both, "%s\n%s", old, text);
         g_object_set ((GObject *) * widget, "text", both, NULL);
+
+        g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER
+         (messages + 1));
 #endif
         goto CREATED;
     }
 
     * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s", text);
     gtk_window_set_title ((GtkWindow *) * widget, title);
+    
+    g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
 
     g_signal_connect (* widget, "response", (GCallback) gtk_widget_destroy, NULL);
     audgui_destroy_on_escape (* widget);
