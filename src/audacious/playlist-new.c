@@ -1345,6 +1345,9 @@ void playlist_delete_selected (gint playlist_num)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
+    if (! playlist->selected_count)
+        LEAVE_RET_VOID;
+
     gint entries = index_count (playlist->entries);
 
     struct index * others = index_new ();
@@ -1352,6 +1355,9 @@ void playlist_delete_selected (gint playlist_num)
 
     if (playlist->position && playlist->position->selected)
         set_position (playlist, NULL);
+
+    gint before = 0, after = 0;
+    gboolean found = FALSE;
 
     for (gint count = 0; count < entries; count++)
     {
@@ -1364,9 +1370,19 @@ void playlist_delete_selected (gint playlist_num)
 
             playlist->total_length -= entry->length;
             entry_free (entry);
+            
+            found = TRUE;
+            after = 0;
         }
         else
+        {
             index_append (others, entry);
+            
+            if (found)
+                after ++;
+            else
+                before ++;
+        }
     }
 
     index_free (playlist->entries);
@@ -1375,8 +1391,9 @@ void playlist_delete_selected (gint playlist_num)
     playlist->selected_count = 0;
     playlist->selected_length = 0;
 
-    number_entries (playlist, 0, index_count (playlist->entries));
-    PLAYLIST_HAS_CHANGED (playlist->number, 0, index_count (playlist->entries));
+    number_entries (playlist, before, index_count (playlist->entries) - before);
+    PLAYLIST_HAS_CHANGED (playlist->number, before, index_count
+     (playlist->entries) - after - before);
     LEAVE;
 }
 
