@@ -30,12 +30,12 @@
 
 /* The values which can be passed (packed into a pointer) to the "playlist
  * update" hook.  PLAYLIST_UPDATE_SELECTION means that entries have been
- * selected or unselected, entries have been added or removed from the queue,
- * or that the current song has changed.  PLAYLIST_UPDATE_METADATA means that
- * new metadata has been read for some entries, and implies
- * PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any change not
- * listed under the other types, and implies both PLAYLIST_UPDATE_SELECTION and
- * PLAYLIST_UPDATE_METADATA. */
+ * selected or unselected, or that entries have been added to or removed from
+ * the queue.  PLAYLIST_UPDATE_METADATA means that new metadata has been read
+ * for some entries, or that the title or filename of a playlist has changed,
+ * and implies PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any
+ * change not listed under the other types, and implies both
+ * PLAYLIST_UPDATE_SELECTION and PLAYLIST_UPDATE_METADATA. */
 enum {
  PLAYLIST_UPDATE_SELECTION,
  PLAYLIST_UPDATE_METADATA,

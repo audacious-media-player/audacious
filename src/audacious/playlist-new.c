@@ -621,7 +621,7 @@ void playlist_init (void)
     LEAVE;
 }
 
-void playlist_end(void)
+void playlist_end (void)
 {
     ENTER;
 
@@ -770,7 +770,7 @@ void playlist_set_filename (gint playlist_num, const gchar * filename)
     g_free (playlist->filename);
     playlist->filename = g_strdup (filename);
 
-    PLAYLIST_HAS_CHANGED (-1, 0, 0);
+    METADATA_HAS_CHANGED (playlist_num, 0, 0);
     LEAVE;
 }
 
@@ -794,7 +794,7 @@ void playlist_set_title (gint playlist_num, const gchar * title)
     g_free (playlist->title);
     playlist->title = g_strdup (title);
 
-    PLAYLIST_HAS_CHANGED (-1, 0, 0);
+    METADATA_HAS_CHANGED (playlist_num, 0, 0);
     LEAVE;
 }
 
@@ -815,10 +815,18 @@ void playlist_set_active (gint playlist_num)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    active_playlist = playlist;
+    gboolean changed = FALSE;
 
-    PLAYLIST_HAS_CHANGED (-1, 0, 0);
+    if (playlist != active_playlist)
+    {
+        changed = TRUE;
+        active_playlist = playlist;
+    }
+
     LEAVE;
+
+    if (changed)
+        hook_call ("playlist activate", NULL);
 }
 
 gint playlist_get_active (void)
