@@ -73,8 +73,8 @@ typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 #include "api-local-end.h"
 
 /* playlist-files.c */
-gboolean playlist_load (const gchar * filename, struct index * * filenames,
- struct index * * tuples);
+gboolean playlist_load (const gchar * filename, gchar * * title,
+ struct index * * filenames, struct index * * tuples);
 gboolean playlist_insert_playlist_raw (gint list, gint at,
  const gchar * filename);
 

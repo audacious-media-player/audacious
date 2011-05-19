@@ -298,8 +298,9 @@ static void add_playlist (gchar * filename, AddResult * result)
     g_return_if_fail (filename);
     status_update (filename, index_count (result->filenames));
 
+    gchar * title = NULL;
     struct index * filenames, * tuples;
-    if (! playlist_load (filename, & filenames, & tuples))
+    if (! playlist_load (filename, & title, & filenames, & tuples))
         return;
 
     gint count = index_count (filenames);
@@ -307,6 +308,7 @@ static void add_playlist (gchar * filename, AddResult * result)
         add_file (index_get (filenames, i), tuples ? index_get (tuples, i) :
          NULL, NULL, result, FALSE);
 
+    g_free (title);
     index_free (filenames);
     if (tuples)
         index_free (tuples);

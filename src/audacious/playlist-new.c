@@ -1370,14 +1370,14 @@ void playlist_delete_selected (gint playlist_num)
 
             playlist->total_length -= entry->length;
             entry_free (entry);
-            
+
             found = TRUE;
             after = 0;
         }
         else
         {
             index_append (others, entry);
-            
+
             if (found)
                 after ++;
             else
@@ -2069,8 +2069,6 @@ void playlist_save_state (void)
 
         fprintf (handle, "playlist %d\n", playlist_num);
 
-        if (playlist->title)
-            fprintf (handle, "title %s\n", playlist->title);
         if (playlist->filename)
             fprintf (handle, "filename %s\n", playlist->filename);
 
@@ -2159,13 +2157,6 @@ void playlist_load_state (void)
         gchar * s;
 
         parse_next (handle);
-
-        if ((s = parse_string ("title")))
-        {
-            g_free (playlist->title);
-            playlist->title = s;
-            parse_next (handle);
-        }
 
         if ((s = parse_string ("filename")))
         {

@@ -67,8 +67,8 @@ static PlaylistPlugin * get_plugin (const gchar * filename)
     return plugin_get_header (plugin);
 }
 
-gboolean playlist_load (const gchar * filename, struct index * * filenames_p,
- struct index * * tuples_p)
+gboolean playlist_load (const gchar * filename, gchar * * title,
+ struct index * * filenames_p, struct index * * tuples_p)
 {
     AUDDBG ("Loading playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
@@ -77,7 +77,7 @@ gboolean playlist_load (const gchar * filename, struct index * * filenames_p,
     struct index * filenames = index_new ();
     struct index * tuples = index_new ();
 
-    if (! pp->load (filename, filenames, tuples))
+    if (! pp->load (filename, title, filenames, tuples))
     {
         index_free (filenames);
         index_free (tuples);
@@ -101,9 +101,18 @@ gboolean playlist_load (const gchar * filename, struct index * * filenames_p,
 gboolean playlist_insert_playlist_raw (gint list, gint at,
  const gchar * filename)
 {
+    gchar * title = NULL;
     struct index * filenames, * tuples;
-    if (playlist_load (filename, & filenames, & tuples))
-        playlist_entry_insert_batch_raw (list, at, filenames, tuples, NULL);
+
+    if (! playlist_load (filename, & title, & filenames, & tuples))
+        return FALSE;
+
+    if (title && ! playlist_entry_count (list))
+        playlist_set_title (list, title);
+
+    playlist_entry_insert_batch_raw (list, at, filenames, tuples, NULL);
+
+    g_free (title);
     return TRUE;
 }
 
@@ -112,6 +121,8 @@ gboolean playlist_save (gint list, const gchar * filename)
     AUDDBG ("Saving playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, save), FALSE);
+
+    gchar * title = playlist_get_title (list);
 
     gint entries = playlist_entry_count (list);
     struct index * filenames = index_new ();
@@ -125,7 +136,9 @@ gboolean playlist_save (gint list, const gchar * filename)
         index_append (tuples, (void *) playlist_entry_get_tuple (list, i, FALSE));
     }
 
-    gboolean success = pp->save (filename, filenames, tuples);
+    gboolean success = pp->save (filename, title, filenames, tuples);
+
+    g_free (title);
 
     for (gint i = 0; i < entries; i ++)
     {
