@@ -1,7 +1,7 @@
 #!/bin/sh
 # mkrelease.sh: Creates a release suitable for distfiles.atheme.org.
 #
-# Copyright (c) 2007 atheme.org
+# Copyright (c) 2007, 2011 atheme.org
 #
 # Permission to use, copy, modify, and/or distribute this software for
 # any purpose with or without fee is hereby granted, provided that the above
@@ -23,14 +23,20 @@ if [ "x$1" = "x" ]; then
 	echo "usage: $0 releasename [--automatic]"
 	exit
 else
+	PROGRAM=`pwd | sed "s:/scripts::" | awk -F/ '{print $NF}'`
 	RELEASENAME="$1"
+fi
+
+if [[ $1 != $PROGRAM* ]]; then
+	echo "example: $0 $PROGRAM-1.2.3"
+	exit
 fi
 
 if [ "x$2" = "x--automatic" ]; then
 	AUTOMATIC="yes"
 fi
 
-TIP=`hg tip --template "{rev}:{node|short}"`
+TIP=`git log -1 --pretty=oneline | cut -d" " -f1`
 
 WRKDIR=`pwd`
 
@@ -43,9 +49,9 @@ echo "Making release named $RELEASENAME (tip $TIP)"
 
 echo
 echo "Building root: $RELEASENAME/"
-hg archive $RELEASENAME
+git archive $RELEASENAME
 cd $RELEASENAME
-rm -rf .hg_archival.txt .hgignore .hgtags
+rm -rf .gitignore
 rm -rf .indent.pro scripts src/libaudacious++ src/tests
 sh autogen.sh
 rm -rf autogen.sh autom4te.cache
@@ -92,6 +98,6 @@ fi
 
 echo
 echo "Done. If you have any bugs to report, report them against"
-echo "the distfiles.atheme.org component at http://bugzilla.atheme.org"
+echo "the distfiles.atheme.org component at http://jira.atheme.org"
 echo "Thanks!"
 echo
