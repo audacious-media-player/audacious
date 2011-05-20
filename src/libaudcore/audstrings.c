@@ -165,7 +165,7 @@ str_assert_utf8(const gchar * str)
 
     /* already UTF-8? */
     if (!g_utf8_validate(str, -1, NULL)) {
-#ifdef HAVE_EXECINFO_H
+#if defined(HAVE_EXECINFO_H) && defined(HAVE_BACKTRACE)
         gint i, nsymbols;
         const gint nsymmax = 50;
         void *addrbuf[nsymmax];
