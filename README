@@ -503,12 +503,12 @@ Currently, we only provide source tarballs at:
 
    http://audacious-media-player.org/downloads
 
-Audacious source is managed and also available via Atheme.org
-Mercurial repository, refer to following web-page for information:
+Audacious source is managed and also available via the Atheme.org
+GIT repository, refer to following web-page for information:
 
    http://audacious-media-player.org/developers
 
-You may also want to read file "Mercurial-Access".
+You may also want to read file "GIT-Access".
 
 
 4.1. Obtaining Skins
