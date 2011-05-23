@@ -74,10 +74,17 @@ gboolean playlist_load (const gchar * filename, gchar * * title,
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, load), FALSE);
 
+    VFSFile * file = vfs_fopen (filename, "r");
+    if (! file)
+        return FALSE;
+
     struct index * filenames = index_new ();
     struct index * tuples = index_new ();
+    gboolean success = pp->load (filename, file, title, filenames, tuples);
 
-    if (! pp->load (filename, title, filenames, tuples))
+    vfs_fclose (file);
+
+    if (! success)
     {
         index_free (filenames);
         index_free (tuples);
@@ -122,6 +129,10 @@ gboolean playlist_save (gint list, const gchar * filename)
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, save), FALSE);
 
+    VFSFile * file = vfs_fopen (filename, "w");
+    if (! file)
+        return FALSE;
+
     gchar * title = playlist_get_title (list);
 
     gint entries = playlist_entry_count (list);
@@ -136,8 +147,9 @@ gboolean playlist_save (gint list, const gchar * filename)
         index_append (tuples, (void *) playlist_entry_get_tuple (list, i, FALSE));
     }
 
-    gboolean success = pp->save (filename, title, filenames, tuples);
+    gboolean success = pp->save (filename, file, title, filenames, tuples);
 
+    vfs_fclose (file);
     g_free (title);
 
     for (gint i = 0; i < entries; i ++)

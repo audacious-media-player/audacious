@@ -104,10 +104,10 @@ struct _PlaylistPlugin
 {
     PLUGIN_COMMON_FIELDS
 	const gchar * const * extensions; /* array ending with NULL */
-	gboolean (* load) (const gchar * filename, gchar * * title,
+	gboolean (* load) (const gchar * path, VFSFile * file, gchar * * title,
      struct index * filenames, /* of (gchar *) */
      struct index * tuples); /* of (Tuple *) */
-	gboolean (* save) (const gchar * filename, const gchar * title,
+	gboolean (* save) (const gchar * path, VFSFile * file, const gchar * title,
      struct index * filenames, /* of (gchar *) */
      struct index * tuples); /* of (Tuple *) */
 };
