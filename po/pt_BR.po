@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-05-24 13:01-0400\n"
+"POT-Creation-Date: 2011-05-24 13:32-0400\n"
 "PO-Revision-Date: 2008-02-07 17:45-0000\n"
 "Last-Translator: Thadeu Knychala Tucci <havacci@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <havacci@gmail.com>\n"
@@ -163,56 +163,56 @@ msgstr "Macedônio:"
 msgid "Polish:"
 msgstr "Polonês:"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:273
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Português do Brasil:"
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:276
 msgid "Romanian:"
 msgstr "Romeno:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:280
 msgid "Russian:"
 msgstr "Russo:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:284
 msgid "Serbian (Latin):"
 msgstr "Sérvio (Latino):"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:287
 msgid "Serbian (Cyrillic):"
 msgstr "Sérvio (Cyrillic):"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:290
 msgid "Simplified Chinese:"
 msgstr "Chinês Simplificado:"
 
-#: src/audacious/credits.c:292
+#: src/audacious/credits.c:293
 msgid "Slovak:"
 msgstr "Eslovaco:"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:296
 msgid "Spanish:"
 msgstr "Espanhol:"
 
-#: src/audacious/credits.c:302
+#: src/audacious/credits.c:303
 msgid "Swedish:"
 msgstr "Sueco:"
 
-#: src/audacious/credits.c:305
+#: src/audacious/credits.c:306
 msgid "Traditional Chinese:"
 msgstr "Chinês Tradicional:"
 
-#: src/audacious/credits.c:310
+#: src/audacious/credits.c:311
 msgid "Turkish:"
 msgstr "Turco:"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:315
 msgid "Ukrainian:"
 msgstr "Ucraniano:"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:318
 msgid "Welsh:"
 msgstr "Galês:"
 
