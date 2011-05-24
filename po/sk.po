@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2011-03-13 20:31+0100\n"
 "Last-Translator: Andrej Herceg <herceg.andrej@zoznam.sk>\n"
 "Language-Team: Slovak <Slovak <sk-i18n@lists.linux.sk>>\n"
@@ -216,7 +216,7 @@ msgstr "Ukrajinčina:"
 msgid "Welsh:"
 msgstr "Welsčina:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 msgid "Temporary Playlist"
 msgstr "Dočasný zoznam skladieb"
 
@@ -266,26 +266,22 @@ msgid "Display the main window"
 msgstr "Zobrazí hlavné okno"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Zobrazí všetky otvorené okná Audacious"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Zobrazí verziu"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr "Vypisuje ladiace hlásenia"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "SÚBOR..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- prehrať multimediálne súbory"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -294,7 +290,7 @@ msgstr ""
 "%s: %s\n"
 "Ak chcete viac informácií vyskúšajte \"%s --help\".\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -302,7 +298,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -339,16 +335,16 @@ msgstr "Zoznam skladieb"
 msgid "Plugins"
 msgstr "Moduly"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Umelec"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Názov"
 
@@ -356,7 +352,7 @@ msgstr "Názov"
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Žáner"
 
@@ -372,7 +368,7 @@ msgstr "Cesta k súboru"
 msgid "Date"
 msgstr "Dátum"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Rok"
 
@@ -767,7 +763,7 @@ msgstr "Všeobecné"
 msgid "Audacious Preferences"
 msgstr "Nastavenia programu"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodarilo sa vytvoriť adresár (%s): %s\n"
@@ -796,7 +792,7 @@ msgstr[0] "%d kanálov"
 msgstr[1] "%d kanálov"
 msgstr[2] "%d kanálov"
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -805,11 +801,11 @@ msgstr ""
 "Ste si istý, že chcete zatvoriť %s? Ak tak urobíte, akékoľvek zmeny urobené "
 "od posledného exportu budú stratené."
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 msgid "_Don't show this message again"
 msgstr "_Túto správu už nezobrazovať"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 msgid "Rename Playlist"
 msgstr "Premenovať zoznam skladieb"
 
@@ -869,11 +865,11 @@ msgstr "Ekvalizér"
 msgid "Preamp"
 msgstr "Predzosilnenie"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Číslo stopy"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Dĺžka stopy"
 
@@ -1105,6 +1101,30 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr "Pre %s nie sú dostupné žiadne informácie.\n"
 
+#: src/libaudgui/jump-to-time.c:75
+#, fuzzy
+msgid "Jump to Time"
+msgstr "Skok na stopu"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Dočasný zoznam skladieb"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Dočasný zoznam skladieb"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "O Audacious"
@@ -1165,19 +1185,19 @@ msgstr "Vyči_stiť"
 msgid "Close on Jump"
 msgstr "Zatvoriť po skoku"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Správca zoznamu skladieb"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Položky"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "P_remenovať"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 msgid "_Close dialog on activating playlist"
 msgstr "_Zatvoriť okno po aktivácii zoznamu skladieb"
 
@@ -1188,6 +1208,12 @@ msgstr "Otvoriť URL"
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
 msgstr "Pridať URL"
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1250,6 +1276,9 @@ msgstr "Možnosti správy relácie"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Zobraziť možnosti správy relácie"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Zobrazí všetky otvorené okná Audacious"
 
 #~ msgid ""
 #~ "Running multiple instances of Audacious can lead to corrupted "

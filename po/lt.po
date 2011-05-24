@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -227,7 +227,7 @@ msgstr "Į rumunų k.:"
 msgid "Welsh:"
 msgstr "Į velsiečių k.:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Įkrauti grojaraštį"
@@ -282,34 +282,30 @@ msgid "Display the main window"
 msgstr "Parodyti pagrindinį langą"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr ""
-
-#: src/audacious/main.c:262
 #, fuzzy
 msgid "Show version"
 msgstr "/Parodyti grojaraščio redaktorių"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -317,7 +313,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr ""
 
@@ -357,16 +353,16 @@ msgstr "Grojaraštis"
 msgid "Plugins"
 msgstr "Įskiepiai"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Albumas"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Pavadinimas"
 
@@ -374,7 +370,7 @@ msgstr "Pavadinimas"
 msgid "Tracknumber"
 msgstr "Takelio numeris"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Žanras"
 
@@ -392,7 +388,7 @@ msgstr "Bylos kelias"
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Metai"
 
@@ -808,7 +804,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "BMP nustatymai"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepavyko sukurti aplanko (%s): %s"
@@ -837,19 +833,19 @@ msgid_plural "%d channels"
 msgstr[0] "Kanalai:"
 msgstr[1] "Kanalai:"
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Daugiau neberodyti šio pranešimo"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Išsaugoti grojaraštį"
@@ -920,12 +916,12 @@ msgstr "Ekvalaizeris"
 msgid "Preamp"
 msgstr "Dream"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 #, fuzzy
 msgid "Track Number"
 msgstr "Takelio numeris"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 #, fuzzy
 msgid "Track Length"
 msgstr "Takelio trukmė:"
@@ -1171,6 +1167,29 @@ msgstr "%d KBit/s"
 msgid "No info available for %s.\n"
 msgstr ""
 
+#: src/libaudgui/jump-to-time.c:75
+msgid "Jump to Time"
+msgstr "Šokti į laiką"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Įkrauti grojaraštį"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Įkrauti grojaraštį"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 #, fuzzy
 msgid "About Audacious"
@@ -1237,23 +1256,23 @@ msgstr "/Išvalyti eilę"
 msgid "Close on Jump"
 msgstr "Atvėrus, užverti dialogą"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 #, fuzzy
 msgid "Playlist Manager"
 msgstr "/Nesislinkti grojaraščiu"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr ""
 
 # msgstr[0] "Įtrauktas %d elementas."
 # msgstr[1] "Įtraukti %d elementai."
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 #, fuzzy
 msgid "_Rename"
 msgstr "Bylos vardas"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Atvėrus, užverti dialogą"
@@ -1265,6 +1284,12 @@ msgstr ""
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
 msgstr "Pridėti URL"
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1863,9 +1888,6 @@ msgstr ""
 
 #~ msgid "Load metadata (tag information) from music files."
 #~ msgstr "Įkelti aprašus, esančius garso bylose"
-
-#~ msgid "Jump to Time"
-#~ msgstr "Šokti į laiką"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minučių:sekundžių"

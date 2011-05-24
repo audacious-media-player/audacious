@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2008-02-07 17:45-0000\n"
 "Last-Translator: Thadeu Knychala Tucci <havacci@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <havacci@gmail.com>\n"
@@ -216,7 +216,7 @@ msgstr "Ucraniano:"
 msgid "Welsh:"
 msgstr "Galês:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Abrir Lista de Reprodução"
@@ -268,27 +268,23 @@ msgid "Display the main window"
 msgstr "Mostrar janela principal"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Mostrar janelas abertas do Audacious"
-
-#: src/audacious/main.c:262
 #, fuzzy
 msgid "Show version"
 msgstr "Mostrar Reprodutor"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "ARQUIVO..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- reproduzir arquivos multimídia"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -297,7 +293,7 @@ msgstr ""
 "%s: %s\n"
 "Tente `%s --help' para mais informações.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -305,7 +301,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -343,16 +339,16 @@ msgstr "Lista de Reprodução"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Artista"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Álbum"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Título"
 
@@ -360,7 +356,7 @@ msgstr "Título"
 msgid "Tracknumber"
 msgstr "Número do arquivo"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Gênero"
 
@@ -376,7 +372,7 @@ msgstr "Localização"
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Ano"
 
@@ -783,7 +779,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Preferências do Audacious"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Erro ao criar o diretório (%s): %s\n"
@@ -812,19 +808,19 @@ msgid_plural "%d channels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Não mostrar mais este aviso"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Salvar Lista de Reprodução"
@@ -888,11 +884,11 @@ msgstr "Mostrar Equalizador"
 msgid "Preamp"
 msgstr "Preamplificación:"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Número do Arquivo"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Duração do arquivo"
 
@@ -1124,6 +1120,29 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr ""
 
+#: src/libaudgui/jump-to-time.c:75
+msgid "Jump to Time"
+msgstr "Avançar Tempo até"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Abrir Lista de Reprodução"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Abrir Lista de Reprodução"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Sobre o Audacious"
@@ -1185,19 +1204,19 @@ msgstr "Limpar tudo"
 msgid "Close on Jump"
 msgstr "Fechar janela ao abrir"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Editor de Lista de Reprodução"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Arquivos"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "_Renomear"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Fechar janela ao abrir"
@@ -1208,6 +1227,12 @@ msgstr ""
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
+msgstr ""
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
 msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
@@ -1271,6 +1296,9 @@ msgstr "Mostrar decoração de janelas do gerenciador de janelas"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Mostrar decoração de janelas do gerenciador de janelas"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Mostrar janelas abertas do Audacious"
 
 #~ msgid "%s: Unable to open display, exiting.\n"
 #~ msgstr "%s: Erro ao abrir exibidor, abortando.\n"
@@ -1892,9 +1920,6 @@ msgstr "Mostrar decoração de janelas do gerenciador de janelas"
 
 #~ msgid "Load metadata (tag information) from music files."
 #~ msgstr "Carregar TAGs dos arquivos."
-
-#~ msgid "Jump to Time"
-#~ msgstr "Avançar Tempo até"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minutos:segundos"

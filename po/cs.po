@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 9220064cb615\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2011-04-18 21:29+0200\n"
 "Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
@@ -214,7 +214,7 @@ msgstr "Ukrajinština:"
 msgid "Welsh:"
 msgstr "Welština:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 msgid "Temporary Playlist"
 msgstr "Dočasný seznam skladeb"
 
@@ -264,26 +264,22 @@ msgid "Display the main window"
 msgstr "Zobrazí hlavní okno"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Zobrazí všechna okna Audacious"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Zobrazí verzi"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr "Vypisuje ladicí hlášky"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "SOUBOR…"
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "– přehrávat multimediální soubory"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -292,7 +288,7 @@ msgstr ""
 "%s: %s\n"
 "Pro více informací zkuste „%s --help“.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -304,7 +300,7 @@ msgstr ""
 "Audacious neběží, můžete tuto zprávu bezpečně ignorovat. Tlačítkem Budiž "
 "Audacious spustíte, tlačítkem Zrušit ukončíte."
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -341,16 +337,16 @@ msgstr "Seznam skladeb"
 msgid "Plugins"
 msgstr "Moduly"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Umělec"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Název"
 
@@ -358,7 +354,7 @@ msgstr "Název"
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Žánr"
 
@@ -374,7 +370,7 @@ msgstr "Cesta k souboru"
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Rok"
 
@@ -764,7 +760,7 @@ msgstr "Obecné"
 msgid "Audacious Preferences"
 msgstr "Nastavení programu"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s\n"
@@ -794,7 +790,7 @@ msgstr[0] "%d kanálů"
 msgstr[1] "%d kanálů"
 msgstr[2] "%d kanálů"
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -803,11 +799,11 @@ msgstr ""
 "Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny "
 "provedené od posledního exportu budou ztraceny."
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 msgid "_Don't show this message again"
 msgstr "_Příště již toto zprávu nezobrazovat"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 msgid "Rename Playlist"
 msgstr "Přejmenovat seznam skladeb"
 
@@ -867,11 +863,11 @@ msgstr "Ekvalizér"
 msgid "Preamp"
 msgstr "Předzesílení"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Číslo stopy"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Délka stopy"
 
@@ -1098,6 +1094,29 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr "Pro %s nejsou dostupné žádné údaje.\n"
 
+#: src/libaudgui/jump-to-time.c:75
+msgid "Jump to Time"
+msgstr "Přejít na čas"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Dočasný seznam skladeb"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Dočasný seznam skladeb"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "O Audacious"
@@ -1158,19 +1177,19 @@ msgstr "Vyp_rázdnit"
 msgid "Close on Jump"
 msgstr "Zavřít při skoku"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Správce seznamů skladeb"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Položky"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "_Přejmenovat"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 msgid "_Close dialog on activating playlist"
 msgstr "Při aktiva_ci seznamu skladeb zavřít dialog"
 
@@ -1181,6 +1200,12 @@ msgstr "Otevřít URL"
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
 msgstr "Přidat URL"
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1240,6 +1265,9 @@ msgstr "Přepínače správy relace:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Zobrazí přepínače správy relace"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Zobrazí všechna okna Audacious"
 
 #~ msgid ""
 #~ "<big><b>Audacious %s</b></big>\n"
@@ -1996,9 +2024,6 @@ msgstr "Zobrazí přepínače správy relace"
 
 #~ msgid "Can't jump to time when no track is being played.\n"
 #~ msgstr "Nelze přejít na čas, když žádná skladba nehraje.\n"
-
-#~ msgid "Jump to Time"
-#~ msgstr "Přejít na čas"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minuty:sekundy"

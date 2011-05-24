@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious_2.0_eu\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2009-04-02 22:22+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -220,7 +220,7 @@ msgstr "Ukrainera:"
 msgid "Welsh:"
 msgstr "Galesa:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Kargatu erreprodukzio-zerrenda"
@@ -272,26 +272,22 @@ msgid "Display the main window"
 msgstr "Bistaratu nagusia leihoa"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Bistaratu Audacious-en irekitako leiho guztiak"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Erakutsi bertsioa"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "FITXATEGIA..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- erreproduzitu multimedia fitxategiak"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -300,7 +296,7 @@ msgstr ""
 "%s: %s\n"
 "Exekutatu '%s --help' informazio gehiagorako.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -308,7 +304,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -346,16 +342,16 @@ msgstr "Erreprodukzio-zerrenda"
 msgid "Plugins"
 msgstr "Pluginak"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Artista"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Albuma"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Titulua"
 
@@ -363,7 +359,7 @@ msgstr "Titulua"
 msgid "Tracknumber"
 msgstr "Pista-zenbakia"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Generoa"
 
@@ -379,7 +375,7 @@ msgstr "Fitxategiaren bide-izena"
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Urtea"
 
@@ -786,7 +782,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Audacious-en hobespenak"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Ezin izan da %s direktorioa sortu: %s\n"
@@ -815,19 +811,19 @@ msgid_plural "%d channels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Ez erakutsi mezu hau aurrerantzean"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Gorde erreprodukzio-zerrenda"
@@ -891,11 +887,11 @@ msgstr "Erakutsi ekualizadorea"
 msgid "Preamp"
 msgstr "Aurre-anp:"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Pista-zenbakia"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Pistaren luzera"
 
@@ -1127,6 +1123,29 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr ""
 
+#: src/libaudgui/jump-to-time.c:75
+msgid "Jump to Time"
+msgstr "Saltatu denborara"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Kargatu erreprodukzio-zerrenda"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Kargatu erreprodukzio-zerrenda"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Audacious-i buruz"
@@ -1188,19 +1207,19 @@ msgstr "Garbitu A-B"
 msgid "Close on Jump"
 msgstr "Itxi saltatzean"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Erreprodukzio-zerrendaren kudeatzailea"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Sarrerak"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "_Izena aldatu"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Itxi elkarrizketa-koadroa fitxategia ireki ondoren"
@@ -1211,6 +1230,12 @@ msgstr ""
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
+msgstr ""
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
 msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
@@ -1274,6 +1299,9 @@ msgstr "Saio-kudeaketaren aukerak"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Erakutsi saio-kudeaketaren aukerak"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Bistaratu Audacious-en irekitako leiho guztiak"
 
 #~ msgid "%s: Unable to open display, exiting.\n"
 #~ msgstr "%s: ezin da pantaila ireki. Irtetzen.\n"
@@ -1941,9 +1969,6 @@ msgstr "Erakutsi saio-kudeaketaren aukerak"
 
 #~ msgid "Can't jump to time when no track is being played.\n"
 #~ msgstr "Ezin da denborara saltatu pista erreproduzitzen hasi gabe.\n"
-
-#~ msgid "Jump to Time"
-#~ msgstr "Saltatu denborara"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minutu:segundo"

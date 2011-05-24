@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2008-07-19 11:56+0200\n"
 "Last-Translator: Strahinja Kustudic <kustudic@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
@@ -221,7 +221,7 @@ msgstr "Ukrainski:"
 msgid "Welsh:"
 msgstr "Velšanski:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Učitaj listu numera"
@@ -273,26 +273,22 @@ msgid "Display the main window"
 msgstr "Prikaži glavni prozor"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Prikaži sve otvorene Audacious prozore"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Prikaži verziju"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "DATOTEKA..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- pusti multimedijalne datoteke"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -301,7 +297,7 @@ msgstr ""
 "%s: %s\n"
 "Probajte `%s --help' za više informacija.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -309,7 +305,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -347,16 +343,16 @@ msgstr "Lista numera"
 msgid "Plugins"
 msgstr "Dodaci"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Izvođač"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Naslov"
 
@@ -364,7 +360,7 @@ msgstr "Naslov"
 msgid "Tracknumber"
 msgstr "Broj numere"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Žanr"
 
@@ -380,7 +376,7 @@ msgstr "Putanja datoteke"
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Godina"
 
@@ -784,7 +780,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Audacious podešavanja"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nije moguće napraviti direktorijum (%s): %s\n"
@@ -814,19 +810,19 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Ne prikazuj ovo upozorenje"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Sačuvaj listu numera"
@@ -890,11 +886,11 @@ msgstr "Prikaži ekvilajzer"
 msgid "Preamp"
 msgstr "Predpojačalo:"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Broj numere"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Dužina numere"
 
@@ -1126,6 +1122,29 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr ""
 
+#: src/libaudgui/jump-to-time.c:75
+msgid "Jump to Time"
+msgstr "Pređi na vreme"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Učitaj listu numera"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Učitaj listu numera"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "O Audacious-u"
@@ -1187,19 +1206,19 @@ msgstr "Obriši A-B"
 msgid "Close on Jump"
 msgstr "Zatvori posle skoka"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Menadžer liste numera"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Stavke"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "_Preimenuj"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Zatvori okvir klikom na Otvori"
@@ -1210,6 +1229,12 @@ msgstr ""
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
+msgstr ""
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
 msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
@@ -1273,6 +1298,9 @@ msgstr "Opcije upravljanja sesije"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Prikaži opcije upravljanja sesije"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Prikaži sve otvorene Audacious prozore"
 
 #~ msgid "%s: Unable to open display, exiting.\n"
 #~ msgstr "%s: Nije moguće otvoriti prikaz, izlazim.\n"
@@ -1934,9 +1962,6 @@ msgstr "Prikaži opcije upravljanja sesije"
 
 #~ msgid "Can't jump to time when no track is being played.\n"
 #~ msgstr "Ne mogu da skočim na vreme kad nijedna numera nije puštena.\n"
-
-#~ msgid "Jump to Time"
-#~ msgstr "Pređi na vreme"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minuti:sekunde"

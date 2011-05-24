@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious2_25062009\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2011-03-03 01:48+0200\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -215,7 +215,7 @@ msgstr "Ukraiņu:"
 msgid "Welsh:"
 msgstr "Velsiešu:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 msgid "Temporary Playlist"
 msgstr "Pagaidu repertuārs"
 
@@ -265,26 +265,22 @@ msgid "Display the main window"
 msgstr "Rādīt galveno logu"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Rādīt visus atvērtos Audacious logus"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Parādīt versiju"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr "Drukāt atkļūdošanas ziņojumus"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "FAILS..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- atskaņot multivides failus"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -293,7 +289,7 @@ msgstr ""
 "%s: %s\n"
 "Mēģiniet `%s --help', lai iegūtu vairāk informācijas.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -301,7 +297,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -338,16 +334,16 @@ msgstr "Repertuārs"
 msgid "Plugins"
 msgstr "Spraudņi"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Izpildītājs"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Albums"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Nosaukums"
 
@@ -355,7 +351,7 @@ msgstr "Nosaukums"
 msgid "Tracknumber"
 msgstr "Celiņa numurs"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Žanrs"
 
@@ -371,7 +367,7 @@ msgstr "Faila ceļš"
 msgid "Date"
 msgstr "Datums"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Gads"
 
@@ -769,7 +765,7 @@ msgstr "Vispārīgi"
 msgid "Audacious Preferences"
 msgstr "Audacious iestatījumi"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Neizdevās izveidot mapi (%s): %s\n"
@@ -798,7 +794,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -807,11 +803,11 @@ msgstr ""
 "Vai tiešām vēlaties aizvērt %s? Ja to izdarīsiet, visas izmaiņas, kas "
 "veiktas kopš repertuāra eksportēšanas, tiks zaudētas."
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 msgid "_Don't show this message again"
 msgstr "_Vairs nerādīt šo ziņojumu"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Saglabāt repertuāru"
@@ -872,11 +868,11 @@ msgstr "Equalizer"
 msgid "Preamp"
 msgstr "Priekšpastiprinājums"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Celiņa numurs"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Celiņa garums"
 
@@ -1108,6 +1104,29 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr "Informācija priekš %s nav pieejama.\n"
 
+#: src/libaudgui/jump-to-time.c:75
+msgid "Jump to Time"
+msgstr "Pāriet uz laiku"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Pagaidu repertuārs"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Pagaidu repertuārs"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Par Audacious"
@@ -1168,19 +1187,19 @@ msgstr "Notī_rīt"
 msgid "Close on Jump"
 msgstr "Aizvērt pārejot"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Repertuāru pārvaldnieks"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Ieraksti"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "Pā_rdēvēt"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 msgid "_Close dialog on activating playlist"
 msgstr "_Aizvērt dialoglogu, aktivizējot repertuāru"
 
@@ -1191,6 +1210,12 @@ msgstr "Atvērt URL"
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
 msgstr "Pievienot URL"
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1252,6 +1277,9 @@ msgstr "Sesiju pārvaldīšanas opcijas"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Parādīt sesiju pārvaldīšanas opcijas"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Rādīt visus atvērtos Audacious logus"
 
 #~ msgid ""
 #~ "Running multiple instances of Audacious can lead to corrupted "
@@ -2009,9 +2037,6 @@ msgstr "Parādīt sesiju pārvaldīšanas opcijas"
 
 #~ msgid "Can't jump to time when no track is being played.\n"
 #~ msgstr "Nevar pāriet uz noteiktu laiku, ja nekas netiek atskaņots.\n"
-
-#~ msgid "Jump to Time"
-#~ msgstr "Pāriet uz laiku"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minūtes:sekundes"

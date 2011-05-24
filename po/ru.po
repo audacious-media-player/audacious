@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2010-08-22 22:15+0400\n"
 "Last-Translator: Sergey V. Mironov <sergo@bk.ru>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -228,7 +228,7 @@ msgstr "Украинский:"
 msgid "Welsh:"
 msgstr "Уэльский:"
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 msgid "Temporary Playlist"
 msgstr "Временный список воспроизведения"
 
@@ -278,26 +278,22 @@ msgid "Display the main window"
 msgstr "Показать главное окно"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "Показать все открытые окна Audacious"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "Показать версию"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "ФАЙЛ..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- проиграть мультимедийные файлы"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -306,7 +302,7 @@ msgstr ""
 "%s: %s\n"
 "Попробуйте `%s --help' для получения подробного описания.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -314,7 +310,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -351,16 +347,16 @@ msgstr "Список воспроизведения"
 msgid "Plugins"
 msgstr "Модули"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Альбом"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Название"
 
@@ -368,7 +364,7 @@ msgstr "Название"
 msgid "Tracknumber"
 msgstr "Номер дорожки"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Жанр"
 
@@ -384,7 +380,7 @@ msgstr "Путь к файлу"
 msgid "Date"
 msgstr "Дата"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Год"
 
@@ -788,7 +784,7 @@ msgstr ""
 msgid "Audacious Preferences"
 msgstr "Параметры Audacious"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Невозможно создать каталог (%s): %s\n"
@@ -817,7 +813,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -826,11 +822,11 @@ msgstr ""
 "Вы уверены, что хотите закрыть %s?  В этом случае все изменения с момента "
 "экспорта списка воспроизведения будут утеряны."
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 msgid "_Don't show this message again"
 msgstr "Больше не показывать это предупреждение"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Список воспроизведения"
@@ -891,11 +887,11 @@ msgstr "Эквалайзер"
 msgid "Preamp"
 msgstr "Пред. усиление"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "Номер дорожки"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "Длительность"
 
@@ -1127,6 +1123,30 @@ msgstr "%d кб/с"
 msgid "No info available for %s.\n"
 msgstr "Нет информации для %s.\n"
 
+#: src/libaudgui/jump-to-time.c:75
+#, fuzzy
+msgid "Jump to Time"
+msgstr "Перейти к дорожке"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Временный список воспроизведения"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Временный список воспроизведения"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "Об Audacious"
@@ -1187,19 +1207,19 @@ msgstr "Очистить"
 msgid "Close on Jump"
 msgstr "Закрыть после перехода"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "Менеджер списков"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "Элементов"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "Переименовать"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 msgid "_Close dialog on activating playlist"
 msgstr "Закрыть окно при выборе списка"
 
@@ -1210,6 +1230,12 @@ msgstr "Открыть адрес"
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
 msgstr "Добавить адрес"
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1273,6 +1299,9 @@ msgstr "Параметры управления сессиями"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Показать параметры управления сессиями"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "Показать все открытые окна Audacious"
 
 #~ msgid "%s: Unable to open display, exiting.\n"
 #~ msgstr "%s: Невозможно открыть экран, выход.\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2011-04-11 21:12+0800\n"
 "Last-Translator: Chasye <chasye@gmail.com>\n"
 "Language-Team: Chinese (simplified)\n"
@@ -212,7 +212,7 @@ msgstr "乌克兰语："
 msgid "Welsh:"
 msgstr "威尔斯语："
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 msgid "Temporary Playlist"
 msgstr "临时播放列表"
 
@@ -262,26 +262,22 @@ msgid "Display the main window"
 msgstr "显示主界面"
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr "显示所有已打开的Audacious窗口"
-
-#: src/audacious/main.c:262
 msgid "Show version"
 msgstr "显示版本信息"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr "输出调试信息"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr "文件..."
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr "- 播放多媒体文件"
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -290,7 +286,7 @@ msgstr ""
 "%s: %s\n"
 "用 `%s --help' 以获取更多信息.\n"
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -301,7 +297,7 @@ msgstr ""
 "数据丢失。如果Audacious未启动，你完全可以忽略此信息。要启动Audacious点击\"确"
 "定\"，否则点击\"取消\""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr ""
 
@@ -338,16 +334,16 @@ msgstr "播放列表"
 msgid "Plugins"
 msgstr "插件"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "艺术家"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "专辑"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "标题"
 
@@ -355,7 +351,7 @@ msgstr "标题"
 msgid "Tracknumber"
 msgstr "音轨序号"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "风格"
 
@@ -371,7 +367,7 @@ msgstr "路径"
 msgid "Date"
 msgstr "时间"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "年份"
 
@@ -752,7 +748,7 @@ msgstr "一般"
 msgid "Audacious Preferences"
 msgstr "Audacious首选项"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "无法创建目录(%s): %s\n"
@@ -779,18 +775,18 @@ msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d声道"
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr "关闭”%s“将会使所有已改变的设置丢失，要继续吗？"
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 msgid "_Don't show this message again"
 msgstr "不要再提示(_D)"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 msgid "Rename Playlist"
 msgstr "重命名播放列表"
 
@@ -850,11 +846,11 @@ msgstr "均衡器"
 msgid "Preamp"
 msgstr "前置放大器"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 msgid "Track Number"
 msgstr "音轨序号"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 msgid "Track Length"
 msgstr "音轨长度"
 
@@ -1081,6 +1077,30 @@ msgstr "%d kb/s"
 msgid "No info available for %s.\n"
 msgstr "未找到与‘%s’相关信息。\n"
 
+#: src/libaudgui/jump-to-time.c:75
+#, fuzzy
+msgid "Jump to Time"
+msgstr "跳到"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "临时播放列表"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "临时播放列表"
+
+#: src/libaudgui/playlists.c:71
+#, c-format
+msgid "Overwrite %s?"
+msgstr ""
+
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
 msgstr "关于Audacious"
@@ -1141,19 +1161,19 @@ msgstr "清空(_r)"
 msgid "Close on Jump"
 msgstr "跳转时关闭"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 msgid "Playlist Manager"
 msgstr "播放列表管理器"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr "条目"
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 msgid "_Rename"
 msgstr "重命名(_R)"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 msgid "_Close dialog on activating playlist"
 msgstr "激活播放列表时关闭对话框(_C)"
 
@@ -1164,6 +1184,12 @@ msgstr "打开URL"
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
 msgstr "添加URL"
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1223,3 +1249,6 @@ msgstr "会话管理器选项："
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "显示会话管理器选项"
+
+#~ msgid "Display all open Audacious windows"
+#~ msgstr "显示所有已打开的Audacious窗口"

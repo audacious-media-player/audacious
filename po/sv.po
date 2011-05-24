@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-04-22 11:35-0400\n"
+"POT-Creation-Date: 2011-05-24 13:01-0400\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -238,7 +238,7 @@ msgstr "Organisation:"
 msgid "Welsh:"
 msgstr ""
 
-#: src/audacious/drct.c:250
+#: src/audacious/drct.c:254
 #, fuzzy
 msgid "Temporary Playlist"
 msgstr "Ladda spellista"
@@ -293,34 +293,30 @@ msgid "Display the main window"
 msgstr "Visa huvudfönstret."
 
 #: src/audacious/main.c:261
-msgid "Display all open Audacious windows"
-msgstr ""
-
-#: src/audacious/main.c:262
 #, fuzzy
 msgid "Show version"
 msgstr "/Visa spellistredigeraren"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:262
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:263
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:276
+#: src/audacious/main.c:275
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:286
+#: src/audacious/main.c:285
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:399
+#: src/audacious/main.c:402
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
 "another instance of the program, but please be warned that this can cause "
@@ -328,7 +324,7 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:567
 msgid "Audacious"
 msgstr ""
 
@@ -371,17 +367,17 @@ msgstr "/Spellista"
 msgid "Plugins"
 msgstr "Insticksmoduler"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:243
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:204
 #, fuzzy
 msgid "Artist"
 msgstr "Artist:"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:245
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:241
-#: src/libaudgui/ui_playlist_manager.c:247
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:202
+#: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Titel"
 
@@ -390,7 +386,7 @@ msgstr "Titel"
 msgid "Tracknumber"
 msgstr "Spårnummer"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:247
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Genre"
 
@@ -407,7 +403,7 @@ msgstr "Sökväg"
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:249
+#: src/audacious/ui_preferences.c:106 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "År"
 
@@ -822,7 +818,7 @@ msgstr "Generella insticksmoduler"
 msgid "Audacious Preferences"
 msgstr "/Inställningar"
 
-#: src/audacious/util.c:161
+#: src/audacious/util.c:155
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kunde ej skapa mapp (%s): %s"
@@ -851,19 +847,19 @@ msgid_plural "%d channels"
 msgstr[0] "Kanaler:"
 msgstr[1] "Kanaler:"
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:79
+#: src/libaudgui/confirm.c:86
 #, fuzzy
 msgid "_Don't show this message again"
 msgstr "Vissa inte denna varning igen"
 
-#: src/libaudgui/confirm.c:117
+#: src/libaudgui/confirm.c:124
 #, fuzzy
 msgid "Rename Playlist"
 msgstr "Spara spellista"
@@ -935,12 +931,12 @@ msgstr "BMP Equalizer"
 msgid "Preamp"
 msgstr "Dream"
 
-#: src/libaudgui/infopopup.c:251
+#: src/libaudgui/infopopup.c:212
 #, fuzzy
 msgid "Track Number"
 msgstr "Spårnummer"
 
-#: src/libaudgui/infopopup.c:253
+#: src/libaudgui/infopopup.c:214
 #, fuzzy
 msgid "Track Length"
 msgstr "Spårlängd:"
@@ -1175,6 +1171,30 @@ msgstr "%d kbit/s"
 msgid "No info available for %s.\n"
 msgstr ""
 
+#: src/libaudgui/jump-to-time.c:75
+#, fuzzy
+msgid "Jump to Time"
+msgstr "/Hoppa till tiden"
+
+#: src/libaudgui/jump-to-time.c:90
+msgid "mm:ss"
+msgstr ""
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Export Playlist"
+msgstr "Ladda spellista"
+
+#: src/libaudgui/playlists.c:39
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Ladda spellista"
+
+#: src/libaudgui/playlists.c:71
+#, fuzzy, c-format
+msgid "Overwrite %s?"
+msgstr "Skriv över"
+
 #: src/libaudgui/ui_about.c:71
 #, fuzzy
 msgid "About Audacious"
@@ -1245,21 +1265,21 @@ msgstr "/Rensa kön"
 msgid "Close on Jump"
 msgstr "Stäng"
 
-#: src/libaudgui/ui_playlist_manager.c:224
+#: src/libaudgui/ui_playlist_manager.c:240
 #, fuzzy
 msgid "Playlist Manager"
 msgstr "/Fortsätt ej i spellista"
 
-#: src/libaudgui/ui_playlist_manager.c:248
+#: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:268
+#: src/libaudgui/ui_playlist_manager.c:285
 #, fuzzy
 msgid "_Rename"
 msgstr "/Byt namn"
 
-#: src/libaudgui/ui_playlist_manager.c:292
+#: src/libaudgui/ui_playlist_manager.c:309
 #, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Stäng"
@@ -1272,6 +1292,12 @@ msgstr ""
 #, fuzzy
 msgid "Add URL"
 msgstr "Lägg till URL..."
+
+#: src/libaudgui/util.c:96
+msgid ""
+"\n"
+"(Further messages have been hidden.)"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1839,10 +1865,6 @@ msgstr "Visa fönsterhanterarens dekorationer"
 #, fuzzy
 #~ msgid "_Effect plugin list:"
 #~ msgstr "Effektinsticksmoduler"
-
-#, fuzzy
-#~ msgid "Jump to Time"
-#~ msgstr "/Hoppa till tiden"
 
 #~ msgid "minutes:seconds"
 #~ msgstr "minuter:sekunder"
@@ -4816,9 +4838,6 @@ msgstr "Visa fönsterhanterarens dekorationer"
 
 #~ msgid "bmp: Error: File exists!"
 #~ msgstr "bmp: Fel: Filen finns redan!"
-
-#~ msgid "Overwrite"
-#~ msgstr "Skriv över"
 
 #~ msgid "Unknown filetype for %s"
 #~ msgstr "%s är av okänd filtyp"
