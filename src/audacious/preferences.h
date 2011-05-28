@@ -128,8 +128,9 @@ typedef enum {
 } PreferencesType;
 
 struct _PluginPreferences {
-    gchar *title;
-    gchar *imgurl;        /* Optional */
+    const gchar * domain;
+    const gchar * title;
+    const gchar * imgurl;
 
     PreferencesWidget *prefs;
     gint n_prefs;

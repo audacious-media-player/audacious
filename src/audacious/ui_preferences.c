@@ -397,16 +397,28 @@ void plugin_preferences_show (PluginPreferences * settings)
     if (settings->init)
         settings->init();
 
+    const gchar * d = settings->domain;
+    if (! d)
+    {
+        printf ("WARNING: PluginPreferences window with title \"%s\" did not "
+         "declare its gettext domain.  Text may not be translated correctly.\n",
+         settings->title);
+        d = "audacious-plugins";
+    }
+
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(window), GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_title(GTK_WINDOW(window), _(settings->title));
-    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
+    if (settings->title)
+        gtk_window_set_title ((GtkWindow *) window, dgettext (d, settings->title));
+
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(plugin_preferences_destroy), settings);
 
     vbox = gtk_vbox_new(FALSE, 10);
-    create_widgets(GTK_BOX(vbox), settings->prefs, settings->n_prefs);
+    create_widgets_with_domain ((GtkBox *) vbox, settings->prefs,
+     settings->n_prefs, d);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     bbox = gtk_hbutton_box_new();
@@ -1317,7 +1329,8 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                     widget = gtk_vbox_new(FALSE, 0);
                 }
 
-                create_widgets(GTK_BOX(widget), widgets[x].data.box.elem, widgets[x].data.box.n_elem);
+                create_widgets_with_domain ((GtkBox *) widget,
+                 widgets[x].data.box.elem, widgets[x].data.box.n_elem, domain);
 
                 if (widgets[x].data.box.frame) {
                     GtkWidget *tmp;
@@ -1336,7 +1349,9 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 for (i = 0; i<widgets[x].data.notebook.n_tabs; i++) {
                     GtkWidget *vbox;
                     vbox = gtk_vbox_new(FALSE, 5);
-                    create_widgets(GTK_BOX(vbox), widgets[x].data.notebook.tabs[i].settings, widgets[x].data.notebook.tabs[i].n_settings);
+                    create_widgets_with_domain ((GtkBox *) vbox,
+                     widgets[x].data.notebook.tabs[i].settings,
+                     widgets[x].data.notebook.tabs[i].n_settings, domain);
 
                     gtk_notebook_append_page (GTK_NOTEBOOK (widget), vbox,
                      gtk_label_new (dgettext (domain,
