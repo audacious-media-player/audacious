@@ -58,6 +58,8 @@ struct commandhandler handlers[] = {
 
 	{"<sep>", NULL, "Playlist manipulation", 0},
 	{"playlist-advance", playlist_advance, "go to the next song in the playlist", 0},
+	{"playlist-auto-advance-status", playlist_auto_advance_status, "returns the status of playlist auto-advance", 0},
+	{"playlist-auto-advance-toggle", playlist_auto_advance_toggle, "toggles playlist auto-advance", 0},
 	{"playlist-reverse", playlist_reverse, "go to the previous song in the playlist", 0},
 	{"playlist-addurl", playlist_add_url_string, "adds a url to the playlist", 1},
     {"playlist-insurl", playlist_ins_url_string, "inserts a url at specified position in the playlist", 2},

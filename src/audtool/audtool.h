@@ -74,6 +74,8 @@ extern void set_volume(gint, gchar **);
 
 extern void playlist_position(gint, gchar **);
 extern void playlist_advance(gint, gchar **);
+extern void playlist_auto_advance_status(gint, gchar **);
+extern void playlist_auto_advance_toggle(gint, gchar **);
 extern void playlist_reverse(gint, gchar **);
 extern void playlist_length(gint, gchar **);
 extern void playlist_song(gint, gchar **);

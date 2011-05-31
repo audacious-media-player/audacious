@@ -666,6 +666,13 @@ static void get_mpris_metadata(struct MprisMetadataRequest *request)
     }
 }
 
+static gboolean set_no_playlist_advance_cb (void * no_advance)
+{
+    cfg.no_playlist_advance = GPOINTER_TO_INT (no_advance);
+    event_queue ("toggle no playlist advance", NULL);
+    return FALSE;
+}
+
 static gboolean set_shuffle_cb (void * shuffle)
 {
     cfg.shuffle = GPOINTER_TO_INT (shuffle);
@@ -1236,7 +1243,8 @@ gboolean audacious_rc_auto_advance(RemoteObject * obj, gboolean * is_advance, GE
 
 gboolean audacious_rc_toggle_auto_advance(RemoteObject * obj, GError ** error)
 {
-    cfg.no_playlist_advance = !cfg.no_playlist_advance;
+    g_timeout_add (0, set_no_playlist_advance_cb,
+            GINT_TO_POINTER (! cfg.no_playlist_advance));
     return TRUE;
 }
 
