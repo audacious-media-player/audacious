@@ -231,13 +231,18 @@ void playlist_remove_failed (gint playlist)
     gint entries = playlist_entry_count (playlist);
     gint count;
 
-    playlist_rescan (playlist);
     playlist_select_all (playlist, FALSE);
 
     for (count = 0; count < entries; count ++)
     {
-        if (! playlist_entry_get_decoder (playlist, count, FALSE))
+        gchar * filename = playlist_entry_get_filename (playlist, count);
+
+        /* vfs_file_test() only works for file:// URIs currently */
+        if (! strncmp (filename, "file://", 7) && ! vfs_file_test (filename,
+         G_FILE_TEST_EXISTS))
             playlist_entry_set_selected (playlist, count, TRUE);
+
+        g_free (filename);
     }
 
     playlist_delete_selected (playlist);

@@ -300,8 +300,9 @@ AUD_FUNC2 (void, playlist_sort_selected_by_scheme, gint, playlist, gint, scheme)
 AUD_FUNC2 (void, playlist_remove_duplicates_by_scheme, gint, playlist, gint,
  scheme)
 
-/* Removes from a playlist entries of files that do not exists or were not
- * recognized. */
+/* Removes all entries referring to unavailable files in a playlist.  ("Remove
+ * failed" is something of a misnomer for the current behavior.)  As currently
+ * implemented, only works for file:// URIs. */
 AUD_FUNC1 (void, playlist_remove_failed, gint, playlist)
 
 /* Selects all the entries in a playlist that match regular expressions stored
