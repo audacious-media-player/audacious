@@ -91,8 +91,20 @@ dnl Checks common for core and plugins
 dnl ==================================
 
 AC_ARG_ENABLE([gtk3],
- [AS_HELP_STRING([--enable-gtk3], [Use GTK3 instead of GTK2])],
- [use_gtk3=yes], [use_gtk3=no])
+ [AS_HELP_STRING([--disable-gtk3], [Use GTK2 even if GTK3 is present])],
+ [use_gtk3=$enableval], [use_gtk3=yes])
+
+if test $use_gtk3 = yes ; then
+    PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= 3.0.0], [use_gtk3=yes], [use_gtk3=no])
+fi
+
+if test $use_gtk3 = no ; then
+    PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.8.0], [use_gtk3=yes],
+     AC_MSG_ERROR([Cannot find GTK headers.  Aborting ...]))
+fi
+
+AC_SUBST([GTK_LIBS])
+AC_SUBST([GTK_CFLAGS])
 
 AUD_COMMON_PROGS
 
