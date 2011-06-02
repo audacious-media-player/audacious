@@ -103,8 +103,15 @@ if test $use_gtk3 = no ; then
      AC_MSG_ERROR([Cannot find GTK headers.  Aborting ...]))
 fi
 
+if test $use_gtk3 = yes ; then
+    ADD_PC_REQUIRES([gtk+-3.0 >= 3.0.0])
+else
+    ADD_PC_REQUIRES([gtk+-2.0 >= 2.8.0])
+fi
+
 AC_SUBST([GTK_LIBS])
 AC_SUBST([GTK_CFLAGS])
+
 
 AUD_COMMON_PROGS
 
