@@ -99,7 +99,7 @@ if test $use_gtk3 = yes ; then
 fi
 
 if test $use_gtk3 = no ; then
-    PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.8.0], [use_gtk3=yes],
+    PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.8.0], [use_gtk3=no],
      AC_MSG_ERROR([Cannot find GTK headers.  Aborting ...]))
 fi
 
