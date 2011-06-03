@@ -43,7 +43,10 @@ echo "Making release named $RELEASENAME (tip $TIP)"
 
 echo
 echo "Building root: $RELEASENAME/"
-git archive $RELEASENAME
+cd ..
+git archive --format=tar --prefix=$RELEASENAME/ HEAD | gzip >scripts/$RELEASENAME-working.tar.gz
+cd $WRKDIR
+tar -xzvf $RELEASENAME-working.tar.gz
 cd $RELEASENAME
 rm -rf .gitignore
 rm -rf .indent.pro scripts src/libaudacious++ src/tests
@@ -62,6 +65,8 @@ tar zcf $RELEASENAME.tgz $RELEASENAME/
 
 echo "Building $RELEASENAME.tbz2 from $RELEASENAME/"
 tar jcf $RELEASENAME.tbz2 $RELEASENAME/
+
+rm $RELEASENAME-working.tar.gz
 
 PUBLISH="yes"
 
