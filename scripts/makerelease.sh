@@ -23,13 +23,7 @@ if [ "x$1" = "x" ]; then
 	echo "usage: $0 releasename [--automatic]"
 	exit
 else
-	PROGRAM=`pwd | sed "s:/scripts::" | awk -F/ '{print $NF}'`
 	RELEASENAME="$1"
-fi
-
-if [[ $1 != $PROGRAM* ]]; then
-	echo "example: $0 $PROGRAM-1.2.3"
-	exit
 fi
 
 if [ "x$2" = "x--automatic" ]; then
