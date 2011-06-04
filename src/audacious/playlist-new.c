@@ -1177,7 +1177,7 @@ void playlist_entry_set_selected (gint playlist_num, gint entry_num,
     LOOKUP_PLAYLIST_ENTRY;
 
     if (entry->selected == selected)
-        LEAVE;
+        LEAVE_RET_VOID;
 
     entry->selected = selected;
 
