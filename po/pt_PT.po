@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_PT\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-05-24 13:32-0400\n"
+"POT-Creation-Date: 2011-06-10 18:27+0200\n"
 "PO-Revision-Date: 2010-02-14 01:34+0000\n"
 "Last-Translator: Luís Picciochi <Pitxyoki@gmail.com>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -109,109 +109,109 @@ msgstr "Estónio:"
 msgid "Finnish:"
 msgstr "Finlandês:"
 
-#: src/audacious/credits.c:219
+#: src/audacious/credits.c:220
 msgid "French:"
 msgstr "Francês:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:226
 msgid "German:"
 msgstr "Alemão:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:233
 msgid "Georgian:"
 msgstr "Georgiano:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:236
 msgid "Greek:"
 msgstr "Grego:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:241
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:244
 msgid "Hungarian:"
 msgstr "Húngaro:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:248
 msgid "Italian:"
 msgstr "Italiano:"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:252
 msgid "Japanese:"
 msgstr "Japonês:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:255
 msgid "Korean:"
 msgstr "Coreano:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:258
 #, fuzzy
 msgid "Latvian:"
 msgstr "Croata:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:261
 msgid "Lithuanian:"
 msgstr "Lituano:"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:265
 msgid "Macedonian:"
 msgstr "Macedónio:"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:268
 msgid "Polish:"
 msgstr "Polaco:"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:274
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Português do Brasil:"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:277
 msgid "Romanian:"
 msgstr "Romeno:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:281
 msgid "Russian:"
 msgstr "Russo:"
 
-#: src/audacious/credits.c:284
+#: src/audacious/credits.c:285
 msgid "Serbian (Latin):"
 msgstr "Sérvio (Latino):"
 
-#: src/audacious/credits.c:287
+#: src/audacious/credits.c:288
 msgid "Serbian (Cyrillic):"
 msgstr "Sérvio (Cirílico):"
 
-#: src/audacious/credits.c:290
+#: src/audacious/credits.c:291
 msgid "Simplified Chinese:"
 msgstr "Chinês Simplificado:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:294
 msgid "Slovak:"
 msgstr "Eslovaco:"
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:297
 msgid "Spanish:"
 msgstr "Espanhol:"
 
-#: src/audacious/credits.c:303
+#: src/audacious/credits.c:304
 msgid "Swedish:"
 msgstr "Sueco:"
 
-#: src/audacious/credits.c:306
+#: src/audacious/credits.c:307
 msgid "Traditional Chinese:"
 msgstr "Chinês Tradicional:"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:312
 msgid "Turkish:"
 msgstr "Turco:"
 
-#: src/audacious/credits.c:315
+#: src/audacious/credits.c:316
 msgid "Ukrainian:"
 msgstr "Ucraniano:"
 
-#: src/audacious/credits.c:318
+#: src/audacious/credits.c:319
 msgid "Welsh:"
 msgstr "Galês:"
 
@@ -328,7 +328,7 @@ msgstr "Replay Gain"
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1805
 msgid "Playlist"
 msgstr "Lista de Reprodução"
 
@@ -607,19 +607,19 @@ msgstr "Adicionar novos ficheiros a uma lista de reprodução temporária"
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadados</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:513
 msgid "Category"
 msgstr "Categoria"
 
-#: src/audacious/ui_preferences.c:815
+#: src/audacious/ui_preferences.c:827
 msgid "Popup Information Settings"
 msgstr "Definições de Dicas de Informação"
 
-#: src/audacious/ui_preferences.c:824
+#: src/audacious/ui_preferences.c:836
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Obtenção de imagem da capa</b>"
 
-#: src/audacious/ui_preferences.c:829
+#: src/audacious/ui_preferences.c:841
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -629,99 +629,99 @@ msgstr ""
 "nomes dos ficheiros. Pode especificar estas palavras na lista abaixo, "
 "separadas por vírgulas."
 
-#: src/audacious/ui_preferences.c:846
+#: src/audacious/ui_preferences.c:858
 msgid "Exclude:"
 msgstr "Excluir:"
 
-#: src/audacious/ui_preferences.c:853
+#: src/audacious/ui_preferences.c:865
 msgid "Include:"
 msgstr "Incluir:"
 
-#: src/audacious/ui_preferences.c:870
+#: src/audacious/ui_preferences.c:882
 msgid "Recursively search for cover"
 msgstr "Pesquisar capa recursivamente"
 
-#: src/audacious/ui_preferences.c:880
+#: src/audacious/ui_preferences.c:892
 msgid "Search depth: "
 msgstr "Profundidade da pesquisa: "
 
-#: src/audacious/ui_preferences.c:894
+#: src/audacious/ui_preferences.c:906
 msgid "Use per-file cover"
 msgstr "Utilizar capa por ficheiro"
 
-#: src/audacious/ui_preferences.c:897
+#: src/audacious/ui_preferences.c:909
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Miscelânea</b>"
 
-#: src/audacious/ui_preferences.c:906
+#: src/audacious/ui_preferences.c:918
 msgid "Show Progress bar for the current track"
 msgstr "Mostrar barra de progresso para a faixa actual"
 
-#: src/audacious/ui_preferences.c:916
+#: src/audacious/ui_preferences.c:928
 msgid "Delay until filepopup comes up: "
 msgstr "Atraso para o aparecimento da informação do ficheiro: "
 
-#: src/audacious/ui_preferences.c:1459
+#: src/audacious/ui_preferences.c:1474
 msgid "<b>Song Display</b>"
 msgstr "<b>Apresentação de Faixas</b>"
 
-#: src/audacious/ui_preferences.c:1468
+#: src/audacious/ui_preferences.c:1483
 msgid "Show song numbers"
 msgstr "Mostrar números das faixas"
 
-#: src/audacious/ui_preferences.c:1479
+#: src/audacious/ui_preferences.c:1494
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1501
+#: src/audacious/ui_preferences.c:1516
 msgid "Show information about titlestring format"
 msgstr "Mostrar informação acerca do formato do título"
 
-#: src/audacious/ui_preferences.c:1514
+#: src/audacious/ui_preferences.c:1529
 msgid "TITLE"
 msgstr "TÍTULO"
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1530
 msgid "ARTIST - TITLE"
 msgstr "ARTISTA - TÍTULO"
 
-#: src/audacious/ui_preferences.c:1516
+#: src/audacious/ui_preferences.c:1531
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTA - ÁLBUM - TÍTULO"
 
-#: src/audacious/ui_preferences.c:1517
+#: src/audacious/ui_preferences.c:1532
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTA - ÁLBUM - FAIXA - TÍTULO"
 
-#: src/audacious/ui_preferences.c:1518
+#: src/audacious/ui_preferences.c:1533
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTA [ ÁLBUM ] - FAIXA. TÍTULO"
 
-#: src/audacious/ui_preferences.c:1519
+#: src/audacious/ui_preferences.c:1534
 msgid "ALBUM - TITLE"
 msgstr "ÁLBUM - TÍTULO"
 
-#: src/audacious/ui_preferences.c:1520
+#: src/audacious/ui_preferences.c:1535
 msgid "Custom"
 msgstr "Personalizado"
 
-#: src/audacious/ui_preferences.c:1527
+#: src/audacious/ui_preferences.c:1542
 msgid "Custom string:"
 msgstr "String de Personalização:"
 
-#: src/audacious/ui_preferences.c:1534
+#: src/audacious/ui_preferences.c:1549
 msgid "Title format:"
 msgstr "Formato do título:"
 
-#: src/audacious/ui_preferences.c:1545
+#: src/audacious/ui_preferences.c:1560
 msgid "<b>Popup Information</b>"
 msgstr "<b>Informação das Dicas</b>"
 
-#: src/audacious/ui_preferences.c:1560
+#: src/audacious/ui_preferences.c:1575
 msgid "Show popup information for playlist entries"
 msgstr "Mostrar dicas com informação nas entradas da lista de reprodução"
 
-#: src/audacious/ui_preferences.c:1562
+#: src/audacious/ui_preferences.c:1577
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -731,46 +731,46 @@ msgstr ""
 "reprodução. A janela mostra o título da faixa, o nome do álbum, género, ano "
 "de publicação, número da faixa, tamanho da faixa e a capa."
 
-#: src/audacious/ui_preferences.c:1568
+#: src/audacious/ui_preferences.c:1583
 msgid "Edit settings for popup information"
 msgstr "Editar definições para dica de informação"
 
-#: src/audacious/ui_preferences.c:1698
+#: src/audacious/ui_preferences.c:1713
 msgid "<b>Audio System</b>"
 msgstr "<b>Sistema de Som</b>"
 
-#: src/audacious/ui_preferences.c:1715
+#: src/audacious/ui_preferences.c:1730
 msgid "Buffer size:"
 msgstr "Tamanho do buffer:"
 
-#: src/audacious/ui_preferences.c:1734
+#: src/audacious/ui_preferences.c:1749
 msgid "Current output plugin:"
 msgstr "Plugin de saída actual:"
 
-#: src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:1805
 #, fuzzy
 msgid "Transport"
 msgstr "Tradutores"
 
-#: src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:1805
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 #, fuzzy
 msgid "Effect"
 msgstr "<b>Efeitos</b>"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 #, fuzzy
 msgid "Visualization"
 msgstr "<b>Visualização</b>"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1831
+#: src/audacious/ui_preferences.c:1846
 msgid "Audacious Preferences"
 msgstr "Preferências do Audacious"
 
@@ -779,7 +779,7 @@ msgstr "Preferências do Audacious"
 msgid "Could not create directory (%s): %s\n"
 msgstr "Não foi possível criar directoria (%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:248
+#: src/audtool/handlers_playlist.c:264
 msgid "Position not found."
 msgstr "Posição não encontrada."
 

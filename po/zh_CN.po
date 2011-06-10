@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-05-24 13:32-0400\n"
+"POT-Creation-Date: 2011-06-10 18:27+0200\n"
 "PO-Revision-Date: 2011-04-11 21:12+0800\n"
 "Last-Translator: Chasye <chasye@gmail.com>\n"
 "Language-Team: Chinese (simplified)\n"
@@ -108,107 +108,107 @@ msgstr "爱沙尼亚语："
 msgid "Finnish:"
 msgstr "芬兰语："
 
-#: src/audacious/credits.c:219
+#: src/audacious/credits.c:220
 msgid "French:"
 msgstr "法语："
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:226
 msgid "German:"
 msgstr "德语："
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:233
 msgid "Georgian:"
 msgstr "乔治亚语："
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:236
 msgid "Greek:"
 msgstr "希腊语："
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:241
 msgid "Hindi:"
 msgstr "印地语:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:244
 msgid "Hungarian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:248
 msgid "Italian:"
 msgstr "意大利语："
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:252
 msgid "Japanese:"
 msgstr "日语："
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:255
 msgid "Korean:"
 msgstr "韩语："
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:258
 msgid "Latvian:"
 msgstr "拉脱维亚语："
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:261
 msgid "Lithuanian:"
 msgstr "立陶宛语："
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:265
 msgid "Macedonian:"
 msgstr "马其顿语："
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:268
 msgid "Polish:"
 msgstr "波兰语："
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:274
 msgid "Portuguese:"
 msgstr "葡萄牙语："
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:277
 msgid "Romanian:"
 msgstr "罗马尼亚语："
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:281
 msgid "Russian:"
 msgstr "俄语："
 
-#: src/audacious/credits.c:284
+#: src/audacious/credits.c:285
 msgid "Serbian (Latin):"
 msgstr "塞尔维亚语(拉丁文)"
 
-#: src/audacious/credits.c:287
+#: src/audacious/credits.c:288
 msgid "Serbian (Cyrillic):"
 msgstr "塞尔维亚语(斯拉夫文)"
 
-#: src/audacious/credits.c:290
+#: src/audacious/credits.c:291
 msgid "Simplified Chinese:"
 msgstr "简体中文："
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:294
 msgid "Slovak:"
 msgstr "斯洛伐克语："
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:297
 msgid "Spanish:"
 msgstr "西班牙语："
 
-#: src/audacious/credits.c:303
+#: src/audacious/credits.c:304
 msgid "Swedish:"
 msgstr "瑞典语："
 
-#: src/audacious/credits.c:306
+#: src/audacious/credits.c:307
 msgid "Traditional Chinese:"
 msgstr "繁体中文："
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:312
 msgid "Turkish:"
 msgstr "土耳其语："
 
-#: src/audacious/credits.c:315
+#: src/audacious/credits.c:316
 msgid "Ukrainian:"
 msgstr "乌克兰语："
 
-#: src/audacious/credits.c:318
+#: src/audacious/credits.c:319
 msgid "Welsh:"
 msgstr "威尔斯语："
 
@@ -326,7 +326,7 @@ msgstr "回放增益"
 msgid "Network"
 msgstr "网络"
 
-#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1805
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -586,19 +586,19 @@ msgstr "在临时播放列表打开文件"
 msgid "<b>Metadata</b>"
 msgstr "<b>元数据</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:513
 msgid "Category"
 msgstr "分类"
 
-#: src/audacious/ui_preferences.c:815
+#: src/audacious/ui_preferences.c:827
 msgid "Popup Information Settings"
 msgstr "弹出信息设置"
 
-#: src/audacious/ui_preferences.c:824
+#: src/audacious/ui_preferences.c:836
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>专辑封面检索</b>"
 
-#: src/audacious/ui_preferences.c:829
+#: src/audacious/ui_preferences.c:841
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -607,99 +607,99 @@ msgstr ""
 "当搜索专辑封面时，Audacious从文件名中找出关键字。您可以在下面列表中指定它们，"
 "用逗号分隔。"
 
-#: src/audacious/ui_preferences.c:846
+#: src/audacious/ui_preferences.c:858
 msgid "Exclude:"
 msgstr "排除："
 
-#: src/audacious/ui_preferences.c:853
+#: src/audacious/ui_preferences.c:865
 msgid "Include:"
 msgstr "包含："
 
-#: src/audacious/ui_preferences.c:870
+#: src/audacious/ui_preferences.c:882
 msgid "Recursively search for cover"
 msgstr "递归搜索封面"
 
-#: src/audacious/ui_preferences.c:880
+#: src/audacious/ui_preferences.c:892
 msgid "Search depth: "
 msgstr "搜索深度："
 
-#: src/audacious/ui_preferences.c:894
+#: src/audacious/ui_preferences.c:906
 msgid "Use per-file cover"
 msgstr "为每个文件使用单独封面"
 
-#: src/audacious/ui_preferences.c:897
+#: src/audacious/ui_preferences.c:909
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>杂项</b>"
 
-#: src/audacious/ui_preferences.c:906
+#: src/audacious/ui_preferences.c:918
 msgid "Show Progress bar for the current track"
 msgstr "显示当前音轨的进度"
 
-#: src/audacious/ui_preferences.c:916
+#: src/audacious/ui_preferences.c:928
 msgid "Delay until filepopup comes up: "
 msgstr "延迟到文件弹出窗口出现："
 
-#: src/audacious/ui_preferences.c:1459
+#: src/audacious/ui_preferences.c:1474
 msgid "<b>Song Display</b>"
 msgstr "<b>歌曲显示</b>"
 
-#: src/audacious/ui_preferences.c:1468
+#: src/audacious/ui_preferences.c:1483
 msgid "Show song numbers"
 msgstr "显示歌曲序号"
 
-#: src/audacious/ui_preferences.c:1479
+#: src/audacious/ui_preferences.c:1494
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "显示时间前的0（如:显示2:00为02:00）"
 
-#: src/audacious/ui_preferences.c:1501
+#: src/audacious/ui_preferences.c:1516
 msgid "Show information about titlestring format"
 msgstr "标题显示格式"
 
-#: src/audacious/ui_preferences.c:1514
+#: src/audacious/ui_preferences.c:1529
 msgid "TITLE"
 msgstr "标题"
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1530
 msgid "ARTIST - TITLE"
 msgstr "艺术家 - 标题"
 
-#: src/audacious/ui_preferences.c:1516
+#: src/audacious/ui_preferences.c:1531
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "艺术家 - 专辑 - 标题"
 
-#: src/audacious/ui_preferences.c:1517
+#: src/audacious/ui_preferences.c:1532
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "艺术家 - 专辑 - 曲目号. 标题"
 
-#: src/audacious/ui_preferences.c:1518
+#: src/audacious/ui_preferences.c:1533
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "艺术家 [专辑] - 曲目号. 标题"
 
-#: src/audacious/ui_preferences.c:1519
+#: src/audacious/ui_preferences.c:1534
 msgid "ALBUM - TITLE"
 msgstr "专辑 - 标题"
 
-#: src/audacious/ui_preferences.c:1520
+#: src/audacious/ui_preferences.c:1535
 msgid "Custom"
 msgstr "自定义"
 
-#: src/audacious/ui_preferences.c:1527
+#: src/audacious/ui_preferences.c:1542
 msgid "Custom string:"
 msgstr "定制字符："
 
-#: src/audacious/ui_preferences.c:1534
+#: src/audacious/ui_preferences.c:1549
 msgid "Title format:"
 msgstr "标题样式："
 
-#: src/audacious/ui_preferences.c:1545
+#: src/audacious/ui_preferences.c:1560
 msgid "<b>Popup Information</b>"
 msgstr "<b>弹出信息</b>"
 
-#: src/audacious/ui_preferences.c:1560
+#: src/audacious/ui_preferences.c:1575
 msgid "Show popup information for playlist entries"
 msgstr "为播放列表显示弹出信息"
 
-#: src/audacious/ui_preferences.c:1562
+#: src/audacious/ui_preferences.c:1577
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -708,43 +708,43 @@ msgstr ""
 "切换播放列表中指向项目的弹出信息窗口。该窗口显示歌曲标题、专辑、流派、年份，"
 "音轨编号，长度和插图等。"
 
-#: src/audacious/ui_preferences.c:1568
+#: src/audacious/ui_preferences.c:1583
 msgid "Edit settings for popup information"
 msgstr "修改弹出信息的设置"
 
-#: src/audacious/ui_preferences.c:1698
+#: src/audacious/ui_preferences.c:1713
 msgid "<b>Audio System</b>"
 msgstr "<b>音频系统</b>"
 
-#: src/audacious/ui_preferences.c:1715
+#: src/audacious/ui_preferences.c:1730
 msgid "Buffer size:"
 msgstr "缓冲大小："
 
-#: src/audacious/ui_preferences.c:1734
+#: src/audacious/ui_preferences.c:1749
 msgid "Current output plugin:"
 msgstr "当前输出插件："
 
-#: src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:1805
 msgid "Transport"
 msgstr "传输"
 
-#: src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:1805
 msgid "Input"
 msgstr "输入"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "Effect"
 msgstr "音效"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "Visualization"
 msgstr "虚拟效果"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1831
+#: src/audacious/ui_preferences.c:1846
 msgid "Audacious Preferences"
 msgstr "Audacious首选项"
 
@@ -753,7 +753,7 @@ msgstr "Audacious首选项"
 msgid "Could not create directory (%s): %s\n"
 msgstr "无法创建目录(%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:248
+#: src/audtool/handlers_playlist.c:264
 msgid "Position not found."
 msgstr "位置不存在"
 

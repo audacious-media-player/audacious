@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious2_25062009\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-05-24 13:32-0400\n"
+"POT-Creation-Date: 2011-06-10 18:27+0200\n"
 "PO-Revision-Date: 2011-03-03 01:48+0200\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -110,108 +110,108 @@ msgstr "Igauņu:"
 msgid "Finnish:"
 msgstr "Somu:"
 
-#: src/audacious/credits.c:219
+#: src/audacious/credits.c:220
 msgid "French:"
 msgstr "Franču:"
 
-#: src/audacious/credits.c:225
+#: src/audacious/credits.c:226
 msgid "German:"
 msgstr "Vācu:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:233
 msgid "Georgian:"
 msgstr "Gruzīnu:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:236
 msgid "Greek:"
 msgstr "Grieķu:"
 
-#: src/audacious/credits.c:240
+#: src/audacious/credits.c:241
 msgid "Hindi:"
 msgstr "Hindu:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:244
 msgid "Hungarian:"
 msgstr "Ungāru:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:248
 msgid "Italian:"
 msgstr "Itāļu:"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:252
 msgid "Japanese:"
 msgstr "Japāņu:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:255
 msgid "Korean:"
 msgstr "Korejiešu:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:258
 #, fuzzy
 msgid "Latvian:"
 msgstr "Horvātu:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:261
 msgid "Lithuanian:"
 msgstr "Lietuviešu:"
 
-#: src/audacious/credits.c:264
+#: src/audacious/credits.c:265
 msgid "Macedonian:"
 msgstr "Maķedoniešu:"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:268
 msgid "Polish:"
 msgstr "Poļu:"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:274
 msgid "Portuguese:"
 msgstr "Portugāļu:"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:277
 msgid "Romanian:"
 msgstr "Rumāņu:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:281
 msgid "Russian:"
 msgstr "Krievu:"
 
-#: src/audacious/credits.c:284
+#: src/audacious/credits.c:285
 msgid "Serbian (Latin):"
 msgstr "Serbu (latīņu):"
 
-#: src/audacious/credits.c:287
+#: src/audacious/credits.c:288
 msgid "Serbian (Cyrillic):"
 msgstr "Serbu (kirilica):"
 
-#: src/audacious/credits.c:290
+#: src/audacious/credits.c:291
 msgid "Simplified Chinese:"
 msgstr "Vienkāršotā ķīniešu:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:294
 msgid "Slovak:"
 msgstr "Slovāku:"
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:297
 msgid "Spanish:"
 msgstr "Spāņu:"
 
-#: src/audacious/credits.c:303
+#: src/audacious/credits.c:304
 msgid "Swedish:"
 msgstr "Zviedru:"
 
-#: src/audacious/credits.c:306
+#: src/audacious/credits.c:307
 msgid "Traditional Chinese:"
 msgstr "Tradiciionālā ķīniešu:"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:312
 msgid "Turkish:"
 msgstr "Turku:"
 
-#: src/audacious/credits.c:315
+#: src/audacious/credits.c:316
 msgid "Ukrainian:"
 msgstr "Ukraiņu:"
 
-#: src/audacious/credits.c:318
+#: src/audacious/credits.c:319
 msgid "Welsh:"
 msgstr "Velsiešu:"
 
@@ -326,7 +326,7 @@ msgstr "Normalizēšana"
 msgid "Network"
 msgstr "Tīkls"
 
-#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:91 src/audacious/ui_preferences.c:1805
 msgid "Playlist"
 msgstr "Repertuārs"
 
@@ -601,19 +601,19 @@ msgstr "Atvērt failus pagaidu repertuārā"
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadati</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:513
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:815
+#: src/audacious/ui_preferences.c:827
 msgid "Popup Information Settings"
 msgstr "Uzlecošās informācijas iestatījumi"
 
-#: src/audacious/ui_preferences.c:824
+#: src/audacious/ui_preferences.c:836
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Vāka attēla meklēšana</b>"
 
-#: src/audacious/ui_preferences.c:829
+#: src/audacious/ui_preferences.c:841
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -623,99 +623,99 @@ msgstr ""
 "nosaukumos. Jūs varat norādīt šos vārdus lejā esošajos sarakstos, atdalot "
 "atsevišķus vārdus ar komatiem."
 
-#: src/audacious/ui_preferences.c:846
+#: src/audacious/ui_preferences.c:858
 msgid "Exclude:"
 msgstr "Izslēgt:"
 
-#: src/audacious/ui_preferences.c:853
+#: src/audacious/ui_preferences.c:865
 msgid "Include:"
 msgstr "Iekļaut:"
 
-#: src/audacious/ui_preferences.c:870
+#: src/audacious/ui_preferences.c:882
 msgid "Recursively search for cover"
 msgstr "Meklēt vāku rekursīvi"
 
-#: src/audacious/ui_preferences.c:880
+#: src/audacious/ui_preferences.c:892
 msgid "Search depth: "
 msgstr "Meklēšanas dziļums: "
 
-#: src/audacious/ui_preferences.c:894
+#: src/audacious/ui_preferences.c:906
 msgid "Use per-file cover"
 msgstr "Izmantot vienu vāku katram failam"
 
-#: src/audacious/ui_preferences.c:897
+#: src/audacious/ui_preferences.c:909
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Dažādi</b>"
 
-#: src/audacious/ui_preferences.c:906
+#: src/audacious/ui_preferences.c:918
 msgid "Show Progress bar for the current track"
 msgstr "Rādīt progresa indikatoru pašreizējajam celiņam"
 
-#: src/audacious/ui_preferences.c:916
+#: src/audacious/ui_preferences.c:928
 msgid "Delay until filepopup comes up: "
 msgstr "Aizture pirms faila informācijas parādīšanās:"
 
-#: src/audacious/ui_preferences.c:1459
+#: src/audacious/ui_preferences.c:1474
 msgid "<b>Song Display</b>"
 msgstr "<b>Dziesmu attēlojums</b>"
 
-#: src/audacious/ui_preferences.c:1468
+#: src/audacious/ui_preferences.c:1483
 msgid "Show song numbers"
 msgstr "Rādīt dziesmu numurus"
 
-#: src/audacious/ui_preferences.c:1479
+#: src/audacious/ui_preferences.c:1494
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Rādīt ievadošās nulles (02:00 nevis 2:00)"
 
-#: src/audacious/ui_preferences.c:1501
+#: src/audacious/ui_preferences.c:1516
 msgid "Show information about titlestring format"
 msgstr "Rādīt informāciju par nosaukuma formātu"
 
-#: src/audacious/ui_preferences.c:1514
+#: src/audacious/ui_preferences.c:1529
 msgid "TITLE"
 msgstr "NOSAUKUMS"
 
-#: src/audacious/ui_preferences.c:1515
+#: src/audacious/ui_preferences.c:1530
 msgid "ARTIST - TITLE"
 msgstr "IZPILDĪTĀJS - NOSAUKUMS"
 
-#: src/audacious/ui_preferences.c:1516
+#: src/audacious/ui_preferences.c:1531
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "IZPILDĪTĀJS - ALBUMS - NOSAUKUMS"
 
-#: src/audacious/ui_preferences.c:1517
+#: src/audacious/ui_preferences.c:1532
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "IZPILDĪTĀJS - ALBUMS - CELIŅŠ. NOSAUKUMS"
 
-#: src/audacious/ui_preferences.c:1518
+#: src/audacious/ui_preferences.c:1533
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "IZPILDĪTĀJS [ ALBUMS ] - CELIŅŠ. NOSAUKUMS"
 
-#: src/audacious/ui_preferences.c:1519
+#: src/audacious/ui_preferences.c:1534
 msgid "ALBUM - TITLE"
 msgstr "ALBUMS - NOSAUKUMS"
 
-#: src/audacious/ui_preferences.c:1520
+#: src/audacious/ui_preferences.c:1535
 msgid "Custom"
 msgstr "Pielāgots"
 
-#: src/audacious/ui_preferences.c:1527
+#: src/audacious/ui_preferences.c:1542
 msgid "Custom string:"
 msgstr "Pielāgota virkne:"
 
-#: src/audacious/ui_preferences.c:1534
+#: src/audacious/ui_preferences.c:1549
 msgid "Title format:"
 msgstr "Nosaukuma formāts:"
 
-#: src/audacious/ui_preferences.c:1545
+#: src/audacious/ui_preferences.c:1560
 msgid "<b>Popup Information</b>"
 msgstr "<b>Uzlecošā informācija</b>"
 
-#: src/audacious/ui_preferences.c:1560
+#: src/audacious/ui_preferences.c:1575
 msgid "Show popup information for playlist entries"
 msgstr "Rādīt uzlecošo informāciju repertuāra ierakstiem"
 
-#: src/audacious/ui_preferences.c:1562
+#: src/audacious/ui_preferences.c:1577
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -725,43 +725,43 @@ msgstr ""
 "repertuāra ierakstam. Logs rāda dziesmas nosaukumu, albuma nosaukumu, žanru, "
 "publicēšanas gadu, celiņa numuru, celiņa garumu un albuma vāka attēlu."
 
-#: src/audacious/ui_preferences.c:1568
+#: src/audacious/ui_preferences.c:1583
 msgid "Edit settings for popup information"
 msgstr "Rediģēt iestatījumus uzlecošajai informācijai"
 
-#: src/audacious/ui_preferences.c:1698
+#: src/audacious/ui_preferences.c:1713
 msgid "<b>Audio System</b>"
 msgstr "<b>Skaņas sistēma</b>"
 
-#: src/audacious/ui_preferences.c:1715
+#: src/audacious/ui_preferences.c:1730
 msgid "Buffer size:"
 msgstr "Bufera izmērs:"
 
-#: src/audacious/ui_preferences.c:1734
+#: src/audacious/ui_preferences.c:1749
 msgid "Current output plugin:"
 msgstr "Pašreizējais izvades spraudnis:"
 
-#: src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:1805
 msgid "Transport"
 msgstr "Transports"
 
-#: src/audacious/ui_preferences.c:1790
+#: src/audacious/ui_preferences.c:1805
 msgid "Input"
 msgstr "Ievade"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "Effect"
 msgstr "Efekti"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "Visualization"
 msgstr "Vizualizēšana"
 
-#: src/audacious/ui_preferences.c:1791
+#: src/audacious/ui_preferences.c:1806
 msgid "General"
 msgstr "Vispārīgi"
 
-#: src/audacious/ui_preferences.c:1831
+#: src/audacious/ui_preferences.c:1846
 msgid "Audacious Preferences"
 msgstr "Audacious iestatījumi"
 
@@ -770,7 +770,7 @@ msgstr "Audacious iestatījumi"
 msgid "Could not create directory (%s): %s\n"
 msgstr "Neizdevās izveidot mapi (%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:248
+#: src/audtool/handlers_playlist.c:264
 msgid "Position not found."
 msgstr "Pozīcija nav atrasta."
 
