@@ -93,7 +93,7 @@
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/mpg123}
-\par {\fs20 ./configure --prefix=/C/aud}
+\par {\fs20 CFLAGS="-D_FILE_OFFSET_BITS=64" ./configure --prefix=/C/aud --disable-lfs-alias}
 \par {\fs20 make}
 \par {\fs20 make install}
 \par
