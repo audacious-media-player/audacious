@@ -1211,8 +1211,8 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
-+"\n"
-+"(Weitere Meldungen wurden nicht angezeigt.)"
+"\n"
+"(Weitere Meldungen wurden nicht angezeigt.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
