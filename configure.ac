@@ -44,7 +44,7 @@ AC_ARG_WITH([buildstamp],
 
 dnl Large file support
 dnl ==================
-CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
+AC_SYS_LARGEFILE
 
 dnl Activation of text console (MS-Windows ONLY)
 dnl ============================================
