@@ -27,9 +27,8 @@ G_BEGIN_DECLS
 
 #include <glib.h>
 #include <mowgli.h>
-#include "libaudcore/tuple.h"
-#include "libaudcore/vfs.h"
-#include "config.h"
+#include <libaudcore/tuple.h>
+#include <libaudcore/vfs.h>
 
 enum
 {
