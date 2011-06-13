@@ -31,6 +31,7 @@ if [ "x$2" = "x--automatic" ]; then
 fi
 
 TIP=`git log -1 --pretty=oneline | cut -d" " -f1`
+GITDIR=`git rev-parse --show-toplevel`
 
 WRKDIR=`pwd`
 
@@ -43,19 +44,19 @@ echo "Making release named $RELEASENAME (tip $TIP)"
 
 echo
 echo "Building root: $RELEASENAME/"
-cd ..
-git archive --format=tar --prefix=$RELEASENAME/ HEAD | gzip >scripts/$RELEASENAME-working.tar.gz
-cd $WRKDIR
-tar -xzvf $RELEASENAME-working.tar.gz
-cd $RELEASENAME
+cd $GITDIR || exit 1
+git archive --format=tar --prefix=$RELEASENAME/ HEAD | gzip >$WRKDIR/$RELEASENAME-working.tar.gz || exit 1
+cd $WRKDIR || exit 1
+tar -xzvf $RELEASENAME-working.tar.gz || exit 1
+cd $RELEASENAME || exit 1
 rm -rf .gitignore
 rm -rf .indent.pro scripts src/libaudacious++ src/tests
 sh autogen.sh
 rm -rf autogen.sh autom4te.cache
 
 # Run application specific instructions here.
-if [ -x "$WRKDIR/application.sh" ]; then
-	source $WRKDIR/application.sh
+if [ -x "$GITDIR/scripts/application.sh" ]; then
+	source $GITDIR/scripts/application.sh
 fi
 
 cd ..
