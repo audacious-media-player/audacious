@@ -919,7 +919,6 @@ parse_link (EggDesktopFile  *desktop_file,
   return TRUE;
 }
 
-#if GTK_CHECK_VERSION (2, 12, 0)
 static char *
 start_startup_notification (GdkDisplay     *display,
 			    EggDesktopFile *desktop_file,
@@ -1030,7 +1029,6 @@ set_startup_notification_timeout (GdkDisplay *display,
   g_timeout_add_seconds (EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH,
 			 startup_notification_timeout, sn_data);
 }
-#endif /* GTK 2.12 */
 
 static GPtrArray *
 array_putenv (GPtrArray *env, char *variable)
@@ -1217,7 +1215,6 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	}
       g_free (command);
 
-#if GTK_CHECK_VERSION (2, 12, 0)
       startup_id = start_startup_notification (display, desktop_file,
 					       argv[0], screen_num,
 					       workspace, launch_time);
@@ -1228,9 +1225,6 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	  env = array_putenv (env, startup_id_env);
 	  g_free (startup_id_env);
 	}
-#else
-      startup_id = NULL;
-#endif /* GTK 2.12 */
 
       if (env != NULL)
 	g_ptr_array_add (env, NULL);
@@ -1248,7 +1242,6 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 
       if (startup_id)
 	{
-#if GTK_CHECK_VERSION (2, 12, 0)
 	  if (current_success)
 	    {
 	      set_startup_notification_timeout (display, startup_id);
@@ -1259,7 +1252,6 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 		g_free (startup_id);
 	    }
 	  else
-#endif /* GTK 2.12 */
 	    g_free (startup_id);
 	}
       else if (ret_startup_id)
@@ -1382,7 +1374,7 @@ egg_desktop_file_launch (EggDesktopFile *desktop_file,
 		       EGG_DESKTOP_FILE_ERROR_NOT_LAUNCHABLE,
 		       _("Can't pass document URIs to a 'Type=Link' desktop entry"));
 	  return FALSE;
-	}	  
+	}
 
       if (!parse_link (desktop_file, &app_desktop_file, &documents, error))
 	return FALSE;
@@ -1501,10 +1493,10 @@ egg_set_desktop_file_without_defaults (const char *desktop_file_path)
 
 /**
  * egg_get_desktop_file:
- * 
+ *
  * Gets the application's #EggDesktopFile, as set by
  * egg_set_desktop_file().
- * 
+ *
  * Return value: the #EggDesktopFile, or %NULL if it hasn't been set.
  **/
 EggDesktopFile *

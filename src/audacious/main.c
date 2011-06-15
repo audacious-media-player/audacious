@@ -49,7 +49,6 @@
 #include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
-#include "glib-compat.h"
 #include "i18n.h"
 #include "interface.h"
 #include "misc.h"

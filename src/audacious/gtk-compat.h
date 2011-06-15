@@ -10,25 +10,6 @@
 #include <gdk/gdkkeysyms-compat.h>
 #endif
 
-#if ! GTK_CHECK_VERSION (2, 10, 0)
-#define GDK_WINDOW_TYPE_HINT_TOOLTIP GDK_WINDOW_TYPE_HINT_MENU
-#define gtk_label_set_line_wrap_mode(...)
-#endif
-
-#if ! GTK_CHECK_VERSION (2, 12, 0)
-
-static inline void gtk_tree_view_convert_widget_to_bin_window_coords
- (GtkTreeView * tree, gint wx, gint wy, gint * bx, gint * by)
-{
-    gint bx0, by0;
-    gdk_window_get_position (gtk_tree_view_get_bin_window (tree), & bx0, & by0);
-    * bx = wx - bx0;
-    * by = wy - by0;
-}
-
-#define gtk_widget_set_tooltip_text(...)
-#endif
-
 #if ! GTK_CHECK_VERSION (2, 14, 0)
 #define gtk_adjustment_get_page_size(a) ((a)->page_size)
 #define gtk_adjustment_get_upper(a) ((a)->upper)

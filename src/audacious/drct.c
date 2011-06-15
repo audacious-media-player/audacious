@@ -26,7 +26,6 @@
 #include "audconfig.h"
 #include "config.h"
 #include "drct.h"
-#include "glib-compat.h"
 #include "i18n.h"
 #include "playback.h"
 #include "playlist.h"
