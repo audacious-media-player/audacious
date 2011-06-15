@@ -193,10 +193,9 @@ AC_PATH_PROG([RANLIB], [ranlib])
 
 dnl Check for Gtk+/GLib and pals
 dnl ============================
-AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.12.0], [Glib2])
-AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.12.0], [gthread-2.0])
-AUD_CHECK_MODULE([PANGO], [pango], [>= 1.8.0], [Pango])
-AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.2.4], [Cairo])
+AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.16], [Glib2])
+AUD_CHECK_MODULE([PANGO], [pango], [>= 1.20], [Pango])
+AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.6], [Cairo])
 
 
 dnl Check for libmowgli
