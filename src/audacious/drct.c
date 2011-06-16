@@ -49,7 +49,10 @@ void drct_play (void)
             playback_seek (0);
     }
     else
+    {
+        playlist_set_playing (playlist_get_active ());
         playback_play (0, FALSE);
+    }
 }
 
 void drct_pause (void)
