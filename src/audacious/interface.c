@@ -230,6 +230,8 @@ PluginHandle * iface_plugin_get_current (void)
 
 gboolean iface_plugin_set_current (PluginHandle * plugin)
 {
+    hook_call ("config save", NULL); /* tell interface to save layout */
+
     if (current_plugin != NULL)
     {
         AUDDBG ("Unloading plugin widgets.\n");
