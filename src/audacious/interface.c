@@ -72,6 +72,15 @@ gboolean interface_is_shown (void)
     return TRUE;
 }
 
+gboolean interface_is_focused (void)
+{
+    g_return_val_if_fail (current_interface, FALSE);
+
+    if (PLUGIN_HAS_FUNC (current_interface, is_focused))
+        return current_interface->is_focused ();
+    return TRUE;
+}
+
 void interface_show_error (const gchar * markup)
 {
     g_return_if_fail (current_interface);
@@ -170,7 +179,7 @@ void interface_hook_handler (void * hook_data, void * user_data)
         interface_show (GPOINTER_TO_INT (hook_data));
         break;
     case HOOK_SHOW_TOGGLE:
-        interface_show (! interface_is_shown ());
+        interface_show (! (interface_is_shown () && interface_is_focused ()));
         break;
     case HOOK_SHOW_ERROR:
         interface_show_error (hook_data);

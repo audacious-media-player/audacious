@@ -34,6 +34,7 @@ void interface_unload (void);
 
 void interface_show (gboolean show);
 gboolean interface_is_shown (void);
+gboolean interface_is_focused (void);
 
 void interface_show_error (const gchar * markup);
 void interface_show_filebrowser (gboolean play_button);

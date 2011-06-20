@@ -48,8 +48,8 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 30 /* 2.6-devel */
-#define _AUD_PLUGIN_VERSION     30 /* 2.6-devel */
+#define _AUD_PLUGIN_VERSION_MIN 30 /* 3.0-alpha1 */
+#define _AUD_PLUGIN_VERSION     31
 
 /* A NOTE ON THREADS
  *
@@ -452,6 +452,12 @@ struct _IfacePlugin
 {
     PLUGIN_COMMON_FIELDS
 
+    /* is_shown() may return nonzero even if the interface is not actually
+     * visible; for example, if it is obscured by other windows or minimized.
+     * is_focused() only returns nonzero if the interface is actually visible;
+     * in X11, this should be determined by whether the interface has the
+     * toplevel focus.  show() should show and raise the interface, so that both
+     * is_shown() and is_focused() will return nonzero. */
     void (* show) (gboolean show);
     gboolean (* is_shown) (void);
 
@@ -465,6 +471,9 @@ struct _IfacePlugin
 
     void (* install_toolbar) (void /* GtkWidget */ * button);
     void (* uninstall_toolbar) (void /* GtkWidget */ * button);
+
+    /* added after 3.0-alpha1 */
+    gboolean (* is_focused) (void);
 };
 
 #undef PLUGIN_COMMON_FIELDS
