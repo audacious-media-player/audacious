@@ -39,7 +39,7 @@ dnl ===========
 AC_ARG_WITH([buildstamp],
  AS_HELP_STRING([--with-buildstamp=XXX], [Set build stamp to XXX]),
  AC_DEFINE_UNQUOTED([BUILDSTAMP], "$withval", [Build stamp]),
- AC_DEFINE_UNQUOTED([BUILDSTAMP], "UNSUPPORTED VERSION", [Build stamp]))
+ AC_DEFINE_UNQUOTED([BUILDSTAMP], "unknown build", [Build stamp]))
 
 
 dnl Large file support
