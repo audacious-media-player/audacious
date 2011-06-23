@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2010  Audacious development team.
+ *  Copyright (C) 2005-2011  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,7 +85,6 @@ static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
  {"audio.png", N_("Audio")},
- {"replay_gain.png", N_("Replay Gain")},
  {"connectivity.png", N_("Network")},
  {"playlist.png", N_("Playlist")},
  {"plugins.png", N_("Plugins")},
@@ -141,39 +140,38 @@ typedef struct {
 
 CategoryQueueEntry *category_queue = NULL;
 
+static void * create_output_plugin_box (void);
+
+static PreferencesWidget rg_mode_widgets[] = {
+ {WIDGET_RADIO_BTN, N_("Single track mode"),
+  .cfg = & cfg.replay_gain_track},
+ {WIDGET_RADIO_BTN, N_("Album mode"),
+  .cfg = & cfg.replay_gain_album}};
+
 static PreferencesWidget audio_page_widgets[] = {
-    {WIDGET_LABEL, N_("<b>Bit Depth</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_COMBO_BOX, N_("Output bit depth:"), &cfg.output_bit_depth, NULL,
-                       N_("All streams will be converted to this bit depth.\n"
-                          "This should be the max supported bit depth of\nthe sound card or output plugin."), FALSE,
-                       {.combo = {bitdepth_elements, G_N_ELEMENTS(bitdepth_elements), TRUE}}, VALUE_INT},
-    {WIDGET_LABEL, N_("<b>Volume Control</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Use software volume control"),
-     & cfg.software_volume_control, sw_volume_toggled,
-                     N_("Use software volume control. This may be useful for situations where your audio system does not support controlling the playback volume."), FALSE},
-};
-
-static PreferencesWidget rg_params_elements[] =
-{{WIDGET_SPIN_BTN, N_("Amplify all files:"), & cfg.replay_gain_preamp, NULL,
- NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT},
-{WIDGET_SPIN_BTN, N_("Amplify untagged files:"), & cfg.default_gain, NULL,
- NULL, FALSE, {.spin_btn = {-15, 15, 0.01, N_("dB")}}, VALUE_FLOAT}};
-
-static PreferencesWidget replay_gain_page_widgets[] =
- {{WIDGET_LABEL, N_("<b>Replay Gain</b>"), NULL, NULL, NULL, FALSE},
- {WIDGET_CHK_BTN, N_("Enable Replay Gain"), &cfg.enable_replay_gain, NULL,
-  NULL, FALSE},
- {WIDGET_LABEL, N_("<b>Mode</b>"), NULL, NULL, NULL, TRUE},
- {WIDGET_RADIO_BTN, N_("Single track mode"), &cfg.replay_gain_track, NULL,
-  NULL, TRUE},
- {WIDGET_RADIO_BTN, N_("Album mode"), &cfg.replay_gain_album, NULL, NULL,
-  TRUE},
- {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), NULL, NULL, NULL, TRUE},
- {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {rg_params_elements,
-  G_N_ELEMENTS (rg_params_elements)}}},
- {WIDGET_LABEL, N_("<b>Clipping Prevention</b>"), NULL, NULL, NULL, TRUE},
- {WIDGET_CHK_BTN, N_("Enable clipping prevention"),
-  & cfg.enable_clipping_prevention, NULL, NULL, TRUE}};
+ {WIDGET_LABEL, N_("<b>Output Settings</b>")},
+ {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
+ {WIDGET_COMBO_BOX, N_("Bit depth:"),
+  .cfg_type = VALUE_INT, .cfg = & cfg.output_bit_depth,
+  .data = {.combo = {bitdepth_elements, G_N_ELEMENTS (bitdepth_elements), TRUE}}},
+ {WIDGET_SPIN_BTN, N_("Buffer size:"),
+  .cfg_type = VALUE_INT, .cfg = & cfg.output_buffer_size,
+  .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
+ {WIDGET_CHK_BTN, N_("Use software volume control (not recommended)"),
+  .cfg = & cfg.software_volume_control, .callback = sw_volume_toggled},
+ {WIDGET_LABEL, N_("<b>Replay Gain</b>")},
+ {WIDGET_CHK_BTN, N_("Enable Replay Gain"),
+  .cfg = & cfg.enable_replay_gain},
+ {WIDGET_BOX, .child = TRUE, .data = {.box = {rg_mode_widgets, G_N_ELEMENTS (rg_mode_widgets), TRUE}}},
+ {WIDGET_CHK_BTN, N_("Prevent clipping (recommended)"), .child = TRUE,
+  .cfg = & cfg.enable_clipping_prevention},
+ {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), .child = TRUE},
+ {WIDGET_SPIN_BTN, N_("Amplify all files:"), .child = TRUE,
+  .cfg_type = VALUE_FLOAT, .cfg = & cfg.replay_gain_preamp,
+  .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}},
+ {WIDGET_SPIN_BTN, N_("Amplify untagged files:"), .child = TRUE,
+  .cfg_type = VALUE_FLOAT, .cfg = & cfg.default_gain,
+  .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}}};
 
 static PreferencesWidget proxy_host_port_elements[] = {
     {WIDGET_ENTRY, N_("Proxy hostname:"), "proxy_host", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
@@ -275,14 +273,6 @@ on_titlestring_help_button_clicked(GtkButton * button,
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
 }
 
-
-static void
-on_titlestring_entry_realize(GtkWidget * entry,
-                             gpointer data)
-{
-    gtk_entry_set_text(GTK_ENTRY(entry), cfg.gentitle_format);
-}
-
 static gboolean
 titlestring_timeout_proc (gpointer data)
 {
@@ -312,15 +302,6 @@ on_titlestring_entry_changed(GtkWidget * entry,
 }
 
 static void
-on_titlestring_cbox_realize(GtkWidget * cbox,
-                            gpointer data)
-{
-    gtk_combo_box_set_active(GTK_COMBO_BOX(cbox), cfg.titlestring_preset);
-    gtk_widget_set_sensitive(GTK_WIDGET(data),
-                             (cfg.titlestring_preset == (gint)n_titlestring_presets));
-}
-
-static void
 on_titlestring_cbox_changed(GtkWidget * cbox,
                             gpointer data)
 {
@@ -330,12 +311,6 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
     gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
 
     playlist_reformat_titles ();
-}
-
-static void
-on_font_btn_realize(GtkFontButton * button, gchar **cfg)
-{
-    gtk_font_button_set_font_name(button, *cfg);
 }
 
 static void
@@ -457,35 +432,9 @@ void plugin_preferences_cleanup (PluginPreferences * p)
 }
 
 static void
-on_output_plugin_bufsize_realize(GtkSpinButton *button,
-                                 gpointer data)
-{
-    gtk_spin_button_set_value(button, cfg.output_buffer_size);
-}
-
-static void
-on_output_plugin_bufsize_value_changed(GtkSpinButton *button,
-                                       gpointer data)
-{
-    cfg.output_buffer_size = gtk_spin_button_get_value_as_int(button);
-}
-
-static void
-on_spin_btn_realize_gint(GtkSpinButton *button, gint *cfg)
-{
-    gtk_spin_button_set_value(button, *cfg);
-}
-
-static void
 on_spin_btn_changed_gint(GtkSpinButton *button, gint *cfg)
 {
     *cfg = gtk_spin_button_get_value_as_int(button);
-}
-
-static void
-on_spin_btn_realize_gfloat(GtkSpinButton *button, gfloat *cfg)
-{
-     gtk_spin_button_set_value(button, (gdouble) *cfg);
 }
 
 static void
@@ -970,8 +919,6 @@ static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
      g_return_if_fail(widget->type == WIDGET_SPIN_BTN);
 
      * label_pre = gtk_label_new (dgettext (domain, widget->label));
-     gtk_misc_set_alignment(GTK_MISC(*label_pre), 0, 0.5);
-     gtk_misc_set_padding(GTK_MISC(*label_pre), 4, 0);
 
      *spin_btn = gtk_spin_button_new_with_range(widget->data.spin_btn.min,
                                                 widget->data.spin_btn.max,
@@ -985,25 +932,19 @@ static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
      if (widget->data.spin_btn.right_label) {
          * label_past = gtk_label_new (dgettext (domain,
           widget->data.spin_btn.right_label));
-         gtk_misc_set_alignment(GTK_MISC(*label_past), 0, 0.5);
-         gtk_misc_set_padding(GTK_MISC(*label_past), 4, 0);
      }
 
      switch (widget->cfg_type) {
          case VALUE_INT:
+             gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, * (gint *) widget->cfg);
              g_signal_connect(G_OBJECT(*spin_btn), "value_changed",
                               G_CALLBACK(on_spin_btn_changed_gint),
                               widget->cfg);
-             g_signal_connect(G_OBJECT(*spin_btn), "realize",
-                              G_CALLBACK(on_spin_btn_realize_gint),
-                              widget->cfg);
              break;
          case VALUE_FLOAT:
+             gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, * (gfloat *) widget->cfg);
              g_signal_connect(G_OBJECT(*spin_btn), "value_changed",
                               G_CALLBACK(on_spin_btn_changed_gfloat),
-                              widget->cfg);
-             g_signal_connect(G_OBJECT(*spin_btn), "realize",
-                              G_CALLBACK(on_spin_btn_realize_gfloat),
                               widget->cfg);
              break;
          case VALUE_NULL:
@@ -1031,14 +972,13 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title (GTK_FONT_BUTTON (* font_btn),
          dgettext (domain, widget->data.font_btn.title));
 
+    gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, * (gchar * *) widget->cfg);
+
     g_object_set_data ((GObject *) (* font_btn), "callback", (void *)
      widget->callback);
 
     g_signal_connect(G_OBJECT(*font_btn), "font_set",
                      G_CALLBACK(on_font_btn_font_set),
-                     (gchar**)widget->cfg);
-    g_signal_connect(G_OBJECT(*font_btn), "realize",
-                     G_CALLBACK(on_font_btn_realize),
                      (gchar**)widget->cfg);
 }
 
@@ -1101,7 +1041,6 @@ static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
 
     if (widget->label) {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment(GTK_MISC(*label), 1, 0.5);
     }
 
     g_signal_connect_after(G_OBJECT(*combobox), "realize",
@@ -1182,13 +1121,14 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 g_object_set_data(G_OBJECT(widget), "child", child_box);
                 alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
                 gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 24, 0);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
                 gtk_container_add (GTK_CONTAINER (alignment), child_box);
             }
         } else
             child_box = NULL;
 
         alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+        gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 0, 12, 0);
         gtk_box_pack_start(child_box ? GTK_BOX(child_box) : box, alignment, FALSE, FALSE, 0);
 
         if (radio_btn_group && widgets[x].type != WIDGET_RADIO_BTN)
@@ -1196,7 +1136,6 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
 
         switch(widgets[x].type) {
             case WIDGET_CHK_BTN:
-                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
                 widget = gtk_check_button_new_with_mnemonic (dgettext (domain,
                  widgets[x].label));
                 g_object_set_data ((GObject *) widget, "callback",
@@ -1223,7 +1162,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 }
                 break;
             case WIDGET_LABEL:
-                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 6, 0, 0);
+                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 0, 0, 0);
 
                 GtkWidget *label = NULL, *icon = NULL;
                 create_label (& widgets[x], & label, & icon, domain);
@@ -1237,7 +1176,6 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 }
                 break;
             case WIDGET_RADIO_BTN:
-                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
                  dgettext (domain, widgets[x].label));
                 radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
@@ -1249,8 +1187,6 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                                  widgets[x].cfg);
                 break;
             case WIDGET_SPIN_BTN:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 12, 0);
-
                 widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *label_pre = NULL, *spin_btn = NULL, *label_past = NULL;
@@ -1273,8 +1209,6 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
 
                 break;
             case WIDGET_FONT_BTN:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
-
                 widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *font_btn = NULL;
@@ -1286,16 +1220,12 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                     gtk_box_pack_start(GTK_BOX(widget), font_btn, FALSE, FALSE, 0);
                 break;
             case WIDGET_TABLE:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
-
                 widget = gtk_table_new(widgets[x].data.table.rows, 3, FALSE);
                 fill_table (widget, widgets[x].data.table.elem,
                  widgets[x].data.table.rows, domain);
                 gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
                 break;
             case WIDGET_ENTRY:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 6, 12);
-
                 widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *entry = NULL;
@@ -1307,9 +1237,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                     gtk_box_pack_start(GTK_BOX(widget), entry, TRUE, TRUE, 0);
                 break;
             case WIDGET_COMBO_BOX:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
-
-                widget = gtk_hbox_new(FALSE, 10);
+                widget = gtk_hbox_new(FALSE, 6);
 
                 GtkWidget *combo = NULL;
                 create_cbox (& widgets[x], & label, & combo, domain);
@@ -1320,7 +1248,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                     gtk_box_pack_start(GTK_BOX(widget), combo, FALSE, FALSE, 0);
                 break;
             case WIDGET_BOX:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 3, 0);
+                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 0, 0);
 
                 if (widgets[x].data.box.horizontal) {
                     widget = gtk_hbox_new(FALSE, 0);
@@ -1340,7 +1268,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 }
                 break;
             case WIDGET_NOTEBOOK:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 3, 0);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 0, 0);
 
                 widget = gtk_notebook_new();
 
@@ -1367,9 +1295,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 }
                 break;
             default:
-                /* shouldn't ever happen - expect things to break */
-                g_error("This shouldn't ever happen - expect things to break.");
-                continue;
+                break;
         }
 
         if (widget && !gtk_widget_get_parent(widget))
@@ -1398,20 +1324,6 @@ create_titlestring_tag_menu(void)
     gtk_widget_show_all(titlestring_tag_menu);
 
     return titlestring_tag_menu;
-}
-
-static void
-create_replay_gain_category(void)
-{
-    GtkWidget *rg_page_vbox;
-    GtkWidget *widgets_vbox;
-
-    rg_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), rg_page_vbox);
-
-    widgets_vbox = gtk_vbox_new (FALSE, 0);
-    create_widgets(GTK_BOX(widgets_vbox), replay_gain_page_widgets, G_N_ELEMENTS(replay_gain_page_widgets));
-    gtk_box_pack_start (GTK_BOX (rg_page_vbox), widgets_vbox, TRUE, TRUE, 0);
 }
 
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
@@ -1520,6 +1432,7 @@ create_playlist_category(void)
     gtk_container_add (GTK_CONTAINER (titlestring_help_button), image1);
 
     titlestring_cbox = gtk_combo_box_text_new ();
+    gtk_combo_box_set_active ((GtkComboBox *) titlestring_cbox, cfg.titlestring_preset);
 
     gtk_table_attach (GTK_TABLE (table6), titlestring_cbox, 1, 3, 0, 1,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -1534,6 +1447,8 @@ create_playlist_category(void)
     gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("Custom"));
 
     titlestring_entry = gtk_entry_new ();
+    gtk_entry_set_text ((GtkEntry *) titlestring_entry, cfg.gentitle_format);
+    gtk_widget_set_sensitive (titlestring_entry, cfg.titlestring_preset == n_titlestring_presets);
     gtk_table_attach (GTK_TABLE (table6), titlestring_entry, 1, 2, 1, 2,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
@@ -1597,9 +1512,6 @@ create_playlist_category(void)
                      G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
                      NULL);
 
-    g_signal_connect(titlestring_cbox, "realize",
-                     G_CALLBACK(on_titlestring_cbox_realize),
-                     titlestring_entry);
     g_signal_connect(titlestring_cbox, "changed",
                      G_CALLBACK(on_titlestring_cbox_changed),
                      titlestring_entry);
@@ -1614,11 +1526,6 @@ create_playlist_category(void)
     g_signal_connect(G_OBJECT(titlestring_entry), "changed",
                      G_CALLBACK(on_titlestring_entry_changed),
                      NULL);
-    g_signal_connect_after(G_OBJECT(titlestring_entry), "realize",
-                           G_CALLBACK(on_titlestring_entry_realize),
-                           NULL);
-
-
 
     /* Create window for filepopup settings */
     create_filepopup_settings();
@@ -1687,96 +1594,44 @@ static void output_do_about (void)
         op->about ();
 }
 
-static void
-create_audio_category(void)
+static void * create_output_plugin_box (void)
 {
-    GtkWidget *audio_page_vbox;
-    GtkWidget *alignment74;
-    GtkWidget *label77;
-    GtkWidget *alignment73;
-    GtkWidget *vbox33;
-    GtkWidget *table11;
-    GtkWidget *label79;
-    GtkAdjustment * output_plugin_bufsize_adj;
-    GtkWidget *output_plugin_bufsize;
-    GtkWidget *output_plugin_cbox;
-    GtkWidget *label78;
+    GtkWidget * hbox1 = gtk_hbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) hbox1, gtk_label_new (_("Output plugin:")), FALSE, FALSE, 0);
 
-    audio_page_vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (category_notebook), audio_page_vbox);
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) hbox1, vbox, FALSE, FALSE, 0);
 
-    alignment74 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment74, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment74), 0, 12, 0, 0);
+    GtkWidget * hbox2 = gtk_hbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox2, FALSE, FALSE, 0);
 
-    label77 = gtk_label_new (_("<b>Audio System</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment74), label77);
-    gtk_label_set_use_markup (GTK_LABEL (label77), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label77), 0, 0.5);
+    GtkWidget * output_plugin_cbox = gtk_combo_box_text_new ();
+    gtk_box_pack_start ((GtkBox *) hbox2, output_plugin_cbox, FALSE, FALSE, 0);
 
-    alignment73 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (audio_page_vbox), alignment73, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment73), 0, 6, 12, 0);
-
-    vbox33 = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (alignment73), vbox33);
-
-    table11 = gtk_table_new (3, 2, FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox33), table11, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (table11), 6);
-    gtk_table_set_col_spacings (GTK_TABLE (table11), 6);
-
-    label79 = gtk_label_new (_("Buffer size:"));
-    gtk_table_attach (GTK_TABLE (table11), label79, 0, 1, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label79), 1, 0.5);
-
-    output_plugin_bufsize_adj = (GtkAdjustment *) gtk_adjustment_new (0, 100,
-     10000, 100, 1000, 0);
-    output_plugin_bufsize = gtk_spin_button_new (GTK_ADJUSTMENT (output_plugin_bufsize_adj), 100, 0);
-    gtk_table_attach (GTK_TABLE (table11), output_plugin_bufsize, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    output_plugin_cbox = gtk_combo_box_text_new ();
-
-    gtk_table_attach (GTK_TABLE (table11), output_plugin_cbox, 1, 2, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-
-    label78 = gtk_label_new (_("Current output plugin:"));
-    gtk_table_attach (GTK_TABLE (table11), label78, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (label78), 0, 0.5);
-
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start ((GtkBox *) audio_page_vbox, hbox, FALSE, FALSE, 0);
+    GtkWidget * hbox3 = gtk_hbox_new (FALSE, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox3, FALSE, FALSE, 0);
 
     output_config_button = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
+    gtk_box_pack_start ((GtkBox *) hbox3, output_config_button, FALSE, FALSE, 0);
+
     output_about_button = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
-
-    gtk_box_pack_end ((GtkBox *) hbox, output_about_button, FALSE, FALSE, 0);
-    gtk_box_pack_end ((GtkBox *) hbox, output_config_button, FALSE, FALSE, 0);
-
-    create_widgets(GTK_BOX(audio_page_vbox), audio_page_widgets, G_N_ELEMENTS(audio_page_widgets));
+    gtk_box_pack_start ((GtkBox *) hbox3, output_about_button, FALSE, FALSE, 0);
 
     output_combo_fill ((GtkComboBox *) output_plugin_cbox);
     output_combo_update ((GtkComboBox *) output_plugin_cbox);
-    g_signal_connect (output_plugin_cbox, "changed", (GCallback)
-     output_combo_changed, NULL);
-    g_signal_connect (output_config_button, "clicked", (GCallback)
-     output_do_config, NULL);
-    g_signal_connect (output_about_button, "clicked", (GCallback)
-     output_do_about, NULL);
 
-    g_signal_connect(G_OBJECT(output_plugin_bufsize), "value_changed",
-                     G_CALLBACK(on_output_plugin_bufsize_value_changed),
-                     NULL);
-    g_signal_connect_after(G_OBJECT(output_plugin_bufsize), "realize",
-                           G_CALLBACK(on_output_plugin_bufsize_realize),
-                           NULL);
+    g_signal_connect (output_plugin_cbox, "changed", (GCallback) output_combo_changed, NULL);
+    g_signal_connect (output_config_button, "clicked", (GCallback) output_do_config, NULL);
+    g_signal_connect (output_about_button, "clicked", (GCallback) output_do_about, NULL);
+
+    return hbox1;
+}
+
+static void create_audio_category (void)
+{
+    GtkWidget * audio_page_vbox = gtk_vbox_new (FALSE, 0);
+    create_widgets ((GtkBox *) audio_page_vbox, audio_page_widgets, G_N_ELEMENTS (audio_page_widgets));
+    gtk_container_add ((GtkContainer *) category_notebook, audio_page_vbox);
 }
 
 static void
@@ -1870,10 +1725,7 @@ void * * create_prefs_window (void)
     gtk_notebook_set_show_border (GTK_NOTEBOOK (category_notebook), FALSE);
     gtk_notebook_set_scrollable (GTK_NOTEBOOK (category_notebook), TRUE);
 
-
-
     create_audio_category();
-    create_replay_gain_category();
     create_connectivity_category();
     create_playlist_category();
     create_plugin_category();
