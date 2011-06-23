@@ -134,8 +134,9 @@ static aud_cfg_boolent aud_boolents[] = {
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
     {"no_confirm_playlist_delete", &cfg.no_confirm_playlist_delete, TRUE},
-    {"playlist_manager_close_on_activate",
-     & cfg.playlist_manager_close_on_activate, TRUE},
+    {"playlist_manager_close_on_activate", & cfg.playlist_manager_close_on_activate, TRUE},
+    {"use_proxy", & cfg.use_proxy, TRUE},
+    {"use_proxy_auth", & cfg.use_proxy_auth, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
@@ -169,6 +170,10 @@ static aud_cfg_strent aud_strents[] = {
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
     {"cover_name_include", &cfg.cover_name_include, TRUE},
     {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
+    {"proxy_host", & cfg.proxy_host, TRUE},
+    {"proxy_port", & cfg.proxy_port, TRUE},
+    {"proxy_user", & cfg.proxy_user, TRUE},
+    {"proxy_pass", & cfg.proxy_pass, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);

@@ -143,10 +143,8 @@ CategoryQueueEntry *category_queue = NULL;
 static void * create_output_plugin_box (void);
 
 static PreferencesWidget rg_mode_widgets[] = {
- {WIDGET_RADIO_BTN, N_("Single track mode"),
-  .cfg = & cfg.replay_gain_track},
- {WIDGET_RADIO_BTN, N_("Album mode"),
-  .cfg = & cfg.replay_gain_album}};
+ {WIDGET_RADIO_BTN, N_("Single track mode"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.replay_gain_track},
+ {WIDGET_RADIO_BTN, N_("Album mode"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.replay_gain_album}};
 
 static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Output Settings</b>")},
@@ -158,13 +156,13 @@ static PreferencesWidget audio_page_widgets[] = {
   .cfg_type = VALUE_INT, .cfg = & cfg.output_buffer_size,
   .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
  {WIDGET_CHK_BTN, N_("Use software volume control (not recommended)"),
-  .cfg = & cfg.software_volume_control, .callback = sw_volume_toggled},
+  .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.software_volume_control, .callback = sw_volume_toggled},
  {WIDGET_LABEL, N_("<b>Replay Gain</b>")},
  {WIDGET_CHK_BTN, N_("Enable Replay Gain"),
-  .cfg = & cfg.enable_replay_gain},
+  .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.enable_replay_gain},
  {WIDGET_BOX, .child = TRUE, .data = {.box = {rg_mode_widgets, G_N_ELEMENTS (rg_mode_widgets), TRUE}}},
  {WIDGET_CHK_BTN, N_("Prevent clipping (recommended)"), .child = TRUE,
-  .cfg = & cfg.enable_clipping_prevention},
+  .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.enable_clipping_prevention},
  {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), .child = TRUE},
  {WIDGET_SPIN_BTN, N_("Amplify all files:"), .child = TRUE,
   .cfg_type = VALUE_FLOAT, .cfg = & cfg.replay_gain_preamp,
@@ -174,22 +172,19 @@ static PreferencesWidget audio_page_widgets[] = {
   .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}}};
 
 static PreferencesWidget proxy_host_port_elements[] = {
-    {WIDGET_ENTRY, N_("Proxy hostname:"), "proxy_host", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
-    {WIDGET_ENTRY, N_("Proxy port:"), "proxy_port", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
-};
+ {WIDGET_ENTRY, N_("Proxy hostname:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_host},
+ {WIDGET_ENTRY, N_("Proxy port:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_port}};
 
 static PreferencesWidget proxy_auth_elements[] = {
-    {WIDGET_ENTRY, N_("Proxy username:"), "proxy_user", NULL, NULL, FALSE, {.entry = {FALSE}}, VALUE_CFG_STRING},
-    {WIDGET_ENTRY, N_("Proxy password:"), "proxy_pass", NULL, NULL, FALSE, {.entry = {TRUE}}, VALUE_CFG_STRING},
-};
+ {WIDGET_ENTRY, N_("Proxy username:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_user},
+ {WIDGET_ENTRY, N_("Proxy password:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_user,
+  .data = {.entry = {.password = TRUE}}}};
 
 static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Enable proxy usage"), "use_proxy", NULL, NULL, FALSE,
-     .cfg_type = VALUE_CFG_BOOLEAN},
+    {WIDGET_CHK_BTN, N_("Enable proxy usage"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.use_proxy},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_host_port_elements, G_N_ELEMENTS(proxy_host_port_elements)}}},
-    {WIDGET_CHK_BTN, N_("Use authentication with proxy"), "proxy_use_auth",
-     NULL, NULL, FALSE, .cfg_type = VALUE_CFG_BOOLEAN},
+    {WIDGET_CHK_BTN, N_("Use authentication with proxy"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.use_proxy_auth},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_auth_elements, G_N_ELEMENTS(proxy_auth_elements)}}},
     {WIDGET_LABEL, N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning"}}},
 };
@@ -209,13 +204,13 @@ static PreferencesWidget chardet_elements[] = {
 static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Behavior</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Continue playback on startup"),
-     & cfg.resume_playback_on_startup, NULL, NULL, FALSE},
+     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.resume_playback_on_startup},
     {WIDGET_CHK_BTN, N_("Advance when the current song is deleted"),
-     & cfg.advance_on_delete, NULL, NULL, FALSE},
+     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.advance_on_delete},
     {WIDGET_CHK_BTN, N_("Clear the playlist when opening files"),
-     & cfg.clear_playlist, NULL, NULL, FALSE},
+     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.clear_playlist},
     {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
-     & cfg.open_to_temporary, NULL, NULL, FALSE},
+     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.open_to_temporary},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
 };
@@ -444,9 +439,7 @@ on_spin_btn_changed_gfloat(GtkSpinButton *button, gfloat *cfg)
 }
 
 
-static void
-on_category_treeview_realize(GtkTreeView * treeview,
-                             GtkNotebook * notebook)
+static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 {
     GtkListStore *store;
     GtkCellRenderer *renderer;
@@ -514,15 +507,6 @@ on_category_treeview_realize(GtkTreeView * treeview,
 }
 
 static void
-on_show_filepopup_for_tuple_realize(GtkToggleButton * button, gpointer data)
-{
-    gtk_toggle_button_set_active(button, cfg.show_filepopup_for_tuple);
-    filepopupbutton = GTK_WIDGET(button);
-
-    gtk_widget_set_sensitive(filepopup_for_tuple_settings_button, cfg.show_filepopup_for_tuple);
-}
-
-static void
 on_show_filepopup_for_tuple_toggled(GtkToggleButton * button, gpointer data)
 {
     cfg.show_filepopup_for_tuple = gtk_toggle_button_get_active(button);
@@ -587,52 +571,6 @@ on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
 }
 
 static void
-on_toggle_button_realize(GtkToggleButton * button, gboolean *cfg)
-{
-    gtk_toggle_button_set_active(button, cfg ? *cfg : FALSE);
-    GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
-    if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), cfg ? *cfg : FALSE);
-}
-
-static void
-on_toggle_button_cfg_toggled(GtkToggleButton *button, gchar *cfg)
-{
-    g_return_if_fail(cfg != NULL);
-
-    mcs_handle_t *db;
-    gboolean ret = gtk_toggle_button_get_active(button);
-
-    db = cfg_db_open();
-    cfg_db_set_bool(db, NULL, cfg, ret);
-    cfg_db_close(db);
-}
-
-static void
-on_toggle_button_cfg_realize(GtkToggleButton *button, gchar *cfg)
-{
-    mcs_handle_t *db;
-    gboolean ret;
-
-    g_return_if_fail(cfg != NULL);
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_bool(db, NULL, cfg, &ret) != FALSE)
-        gtk_toggle_button_set_active(button, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_entry_realize(GtkEntry *entry, gchar **cfg)
-{
-    g_return_if_fail(cfg != NULL);
-
-    if (*cfg)
-        gtk_entry_set_text(entry, *cfg);
-}
-
-static void
 on_entry_changed(GtkEntry *entry, gchar **cfg)
 {
     void (*callback) (void) = g_object_get_data(G_OBJECT(entry), "callback");
@@ -650,37 +588,6 @@ on_entry_changed(GtkEntry *entry, gchar **cfg)
         *cfg = g_strdup(ret);
 
     if (callback != NULL) callback();
-}
-
-static void
-on_entry_cfg_realize(GtkEntry *entry, gchar *cfg)
-{
-    mcs_handle_t *db;
-    gchar *ret;
-
-    g_return_if_fail(cfg != NULL);
-
-    db = cfg_db_open();
-
-    if (cfg_db_get_string(db, NULL, cfg, &ret) != FALSE)
-        gtk_entry_set_text(entry, ret);
-
-    cfg_db_close(db);
-}
-
-static void
-on_entry_cfg_changed(GtkEntry *entry, gchar *cfg)
-{
-    mcs_handle_t *db;
-    gchar *ret = g_strdup(gtk_entry_get_text(entry));
-
-    g_return_if_fail(cfg != NULL);
-
-    db = cfg_db_open();
-    cfg_db_set_string(db, NULL, cfg, ret);
-    cfg_db_close(db);
-
-    g_free(ret);
 }
 
 static void
@@ -704,7 +611,7 @@ on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
     *((gchar **)widget->cfg) = g_strdup(widget->data.combo.elements[position].value);
 }
 
-static void on_cbox_realize (GtkWidget * combobox, PreferencesWidget * widget)
+static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
 {
     guint i=0,index=0;
 
@@ -997,25 +904,17 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
     g_object_set_data ((GObject *) (* entry), "callback", (void *)
      widget->callback);
 
-    switch (widget->cfg_type) {
-        case VALUE_STRING:
-            g_signal_connect(G_OBJECT(*entry), "realize",
-                             G_CALLBACK(on_entry_realize),
-                             widget->cfg);
-            g_signal_connect(G_OBJECT(*entry), "changed",
-                             G_CALLBACK(on_entry_changed),
-                             widget->cfg);
-            break;
-        case VALUE_CFG_STRING:
-            g_signal_connect(G_OBJECT(*entry), "realize",
-                             G_CALLBACK(on_entry_cfg_realize),
-                             widget->cfg);
-            g_signal_connect(G_OBJECT(*entry), "changed",
-                             G_CALLBACK(on_entry_cfg_changed),
-                             widget->cfg);
-            break;
-        default:
-            g_warning("Unhandled entry value type %d", widget->cfg_type);
+    if (widget->cfg)
+    {
+        if (widget->cfg_type == VALUE_STRING)
+        {
+            if (* (gchar * *) widget->cfg)
+                gtk_entry_set_text ((GtkEntry *) * entry, * (gchar * *) widget->cfg);
+
+            g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, widget->cfg);
+        }
+        else
+            printf ("WARNING: Invalid PreferencesWidget config type.\n");
     }
 }
 
@@ -1043,9 +942,7 @@ static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
         * label = gtk_label_new (dgettext (domain, widget->label));
     }
 
-    g_signal_connect_after(G_OBJECT(*combobox), "realize",
-                           G_CALLBACK(on_cbox_realize),
-                           widget);
+    fill_cbox (* combobox, widget);
 }
 
 static void fill_table (GtkWidget * table, PreferencesWidget * elements, gint
@@ -1115,7 +1012,8 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
     GSList *radio_btn_group = NULL;
 
     for (x = 0; x < amt; ++x) {
-        if (widgets[x].child) { /* perhaps this logic can be better */
+        if (widget && widgets[x].child)
+        {
             if (!child_box) {
                 child_box = gtk_vbox_new(FALSE, 0);
                 g_object_set_data(G_OBJECT(widget), "child", child_box);
@@ -1123,6 +1021,9 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 0, 12, 0);
                 gtk_container_add (GTK_CONTAINER (alignment), child_box);
+
+                if (GTK_IS_TOGGLE_BUTTON (widget))
+                    gtk_widget_set_sensitive (child_box, gtk_toggle_button_get_active ((GtkToggleButton *) widget));
             }
         } else
             child_box = NULL;
@@ -1141,25 +1042,17 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 g_object_set_data ((GObject *) widget, "callback",
                  (void *) widgets[x].callback);
 
-                if (widgets[x].cfg_type == VALUE_CFG_BOOLEAN) {
-                    g_signal_connect(G_OBJECT(widget), "toggled",
-                                     G_CALLBACK(on_toggle_button_cfg_toggled),
-                                     widgets[x].cfg);
-                    g_signal_connect(G_OBJECT(widget), "realize",
-                                     G_CALLBACK(on_toggle_button_cfg_realize),
-                                     widgets[x].cfg);
-                } else {
-                    if (widgets[x].cfg) {
-                        g_signal_connect(G_OBJECT(widget), "toggled",
-                                         G_CALLBACK(on_toggle_button_toggled),
-                                         widgets[x].cfg);
-                    } else {
-                        gtk_widget_set_sensitive(widget, FALSE);
+                if (widgets[x].cfg)
+                {
+                    if (widgets[x].cfg_type == VALUE_BOOLEAN)
+                    {
+                        gtk_toggle_button_set_active ((GtkToggleButton *) widget, * (gboolean *) widgets[x].cfg);
+                        g_signal_connect (widget, "toggled", (GCallback) on_toggle_button_toggled, widgets[x].cfg);
                     }
-                    g_signal_connect(G_OBJECT(widget), "realize",
-                                     G_CALLBACK(on_toggle_button_realize),
-                                     widgets[x].cfg);
+                    else
+                        printf ("WARNING: Invalid PreferencesWidget config type.\n");
                 }
+
                 break;
             case WIDGET_LABEL:
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 0, 0, 0);
@@ -1179,12 +1072,18 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
                  dgettext (domain, widgets[x].label));
                 radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
-                g_signal_connect(G_OBJECT(widget), "toggled",
-                                 G_CALLBACK(on_toggle_button_toggled),
-                                 widgets[x].cfg);
-                g_signal_connect(G_OBJECT(widget), "realize",
-                                 G_CALLBACK(on_toggle_button_realize),
-                                 widgets[x].cfg);
+
+                if (widgets[x].cfg)
+                {
+                    if (widgets[x].cfg_type == VALUE_BOOLEAN)
+                    {
+                        gtk_toggle_button_set_active ((GtkToggleButton *) widget, * (gboolean *) widgets[x].cfg);
+                        g_signal_connect (widget, "toggled", (GCallback) on_toggle_button_toggled, widgets[x].cfg);
+                    }
+                    else
+                        printf ("WARNING: Invalid PreferencesWidget config type.\n");
+                }
+
                 break;
             case WIDGET_SPIN_BTN:
                 widget = gtk_hbox_new(FALSE, 6);
@@ -1368,7 +1267,6 @@ create_playlist_category(void)
     GtkWidget *alignment86;
     GtkWidget *hbox9;
     GtkWidget *vbox34;
-    GtkWidget *checkbutton10;
     GtkWidget *image8;
     GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
     GtkWidget * numbers_alignment, * numbers;
@@ -1486,11 +1384,13 @@ create_playlist_category(void)
     vbox34 = gtk_vbox_new (FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox9), vbox34, TRUE, TRUE, 0);
 
-    checkbutton10 = gtk_check_button_new_with_mnemonic (_("Show popup information for playlist entries"));
-    gtk_box_pack_start (GTK_BOX (vbox34), checkbutton10, TRUE, FALSE, 0);
-    gtk_widget_set_tooltip_text (checkbutton10, _("Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."));
+    filepopupbutton = gtk_check_button_new_with_mnemonic (_("Show popup information for playlist entries"));
+    gtk_widget_set_tooltip_text (filepopupbutton, _("Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."));
+    gtk_toggle_button_set_active ((GtkToggleButton *) filepopupbutton, cfg.show_filepopup_for_tuple);
+    gtk_box_pack_start ((GtkBox *) vbox34, filepopupbutton, TRUE, FALSE, 0);
 
     filepopup_for_tuple_settings_button = gtk_button_new ();
+    gtk_widget_set_sensitive (filepopup_for_tuple_settings_button, cfg.show_filepopup_for_tuple);
     gtk_box_pack_start (GTK_BOX (hbox9), filepopup_for_tuple_settings_button, FALSE, FALSE, 0);
 
     gtk_widget_set_can_focus (filepopup_for_tuple_settings_button, FALSE);
@@ -1502,12 +1402,9 @@ create_playlist_category(void)
 
 
 
-    g_signal_connect(G_OBJECT(checkbutton10), "toggled",
+    g_signal_connect (filepopupbutton, "toggled",
                      G_CALLBACK(on_show_filepopup_for_tuple_toggled),
                      NULL);
-    g_signal_connect_after(G_OBJECT(checkbutton10), "realize",
-                           G_CALLBACK(on_show_filepopup_for_tuple_realize),
-                           NULL);
     g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
                      G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
                      NULL);
@@ -1769,8 +1666,7 @@ void * * create_prefs_window (void)
                              prefswin);
 
     /* create category view */
-    on_category_treeview_realize ((GtkTreeView *) category_treeview,
-     (GtkNotebook *) category_notebook);
+    fill_category_list ((GtkTreeView *) category_treeview, (GtkNotebook *) category_notebook);
 
     /* audacious version label */
 

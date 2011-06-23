@@ -84,6 +84,12 @@ struct _AudConfig {
 
     /* not saved */
     gboolean verbose;
+
+    /* proxy stuff */
+    gboolean use_proxy;
+    gchar * proxy_host, * proxy_port;
+    gboolean use_proxy_auth;
+    gchar * proxy_user, * proxy_pass;
 };
 
 typedef struct _AudConfig AudConfig;
