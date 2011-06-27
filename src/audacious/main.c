@@ -138,6 +138,10 @@ static void relocate_path (gchar * * pathp, const gchar * old, const gchar * new
     gchar * path = * pathp;
     gint len = strlen (old);
 
+    /* Special case: keep trailing slash when relocating root folder ("/") to non-root ("/home"). */
+    if (g_str_has_suffix (old, G_DIR_SEPARATOR_S) && ! g_str_has_suffix (new, G_DIR_SEPARATOR_S))
+        len --;
+
 #ifdef _WIN32
     if (strncasecmp (path, old, len))
 #else
