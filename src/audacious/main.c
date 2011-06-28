@@ -136,16 +136,18 @@ static void strip_path_element (gchar * path, gchar * elem)
 static void relocate_path (gchar * * pathp, const gchar * old, const gchar * new)
 {
     gchar * path = * pathp;
-    gint len = strlen (old);
+    gint oldlen = strlen (old);
+    gint newlen = strlen (new);
 
-    /* Special case: keep trailing slash when relocating root folder ("/") to non-root ("/home"). */
-    if (g_str_has_suffix (old, G_DIR_SEPARATOR_S) && ! g_str_has_suffix (new, G_DIR_SEPARATOR_S))
-        len --;
+    if (oldlen && old[oldlen - 1] == G_DIR_SEPARATOR)
+        oldlen --;
+    if (newlen && new[newlen - 1] == G_DIR_SEPARATOR)
+        newlen --;
 
 #ifdef _WIN32
-    if (strncasecmp (path, old, len))
+    if (strncasecmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #else
-    if (strncmp (path, old, len))
+    if (strncmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #endif
     {
         fprintf (stderr, "Failed to relocate a data path.  Falling back to "
@@ -153,7 +155,7 @@ static void relocate_path (gchar * * pathp, const gchar * old, const gchar * new
         return;
     }
 
-    * pathp = g_strconcat (new, path + len, NULL);
+    * pathp = g_strdup_printf ("%.*s%s", newlen, new, path + oldlen);
     g_free (path);
 }
 
