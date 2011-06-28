@@ -77,8 +77,7 @@ DATA = images/about-logo.png				\
        images/menu_plugin.png				\
        images/menu_queue_toggle.png			\
        images/playlist.png					\
-       images/plugins.png					\
-       images/replay_gain.png
+       images/plugins.png
 
 CLEAN = build_stamp.c dbus-client-bindings.h dbus-server-bindings.h
 

@@ -23,9 +23,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
  ***
 
 The files src/audacious/images/{album appearance audio connectivity
-menu_playlist menu_plugin menu_queue_toggle playlist plugins replay_gain}.png
-are taken from the icon theme of Gnome 2.30.3 and are distributed under the
-following terms:
+menu_playlist menu_plugin menu_queue_toggle playlist plugins}.png are taken from
+the icon theme of Gnome 2.30.3 and are distributed under the following terms:
 
 Copyright (C) Ulisse Perusin, Riccardo Buzzotta, Josef Vybíral, Hylke Bons,
  Ricardo González, Lapo Calamandrei, Rodney Dawes, Luca Ferretti, Tuomas
