@@ -504,8 +504,11 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
 {
     gchar * text = decode_text_frame (data, size);
 
-    if (text == NULL || ! text[0])
+    if (text == NULL || atoi (text) < 1)
+    {
+        g_free (text);
         return;
+    }
 
     if (customfield != NULL)
         TAGDBG ("Custom field %s = %s.\n", customfield, text);

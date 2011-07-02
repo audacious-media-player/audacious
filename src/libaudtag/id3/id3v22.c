@@ -222,8 +222,11 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
 {
     gchar * text = decode_text_frame (data, size);
 
-    if (text == NULL)
+    if (text == NULL || ! text[0])
+    {
+        g_free (text);
         return;
+    }
 
     if (customfield != NULL)
         TAGDBG ("Custom field %s = %s.\n", customfield, text);
@@ -239,8 +242,11 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
 {
     gchar * text = decode_text_frame (data, size);
 
-    if (text == NULL)
+    if (text == NULL || atoi (text) < 1)
+    {
+        g_free (text);
         return;
+    }
 
     if (customfield != NULL)
         TAGDBG ("Custom field %s = %s.\n", customfield, text);
