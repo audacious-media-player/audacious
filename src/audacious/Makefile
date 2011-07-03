@@ -101,6 +101,7 @@ CPPFLAGS += -std=gnu99 \
             -DHAVE_CONFIG_H \
 		${MOWGLI_CFLAGS}		\
 		${GLIB_CFLAGS}			\
+		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
 		${AUDACIOUS_DEFINES}	\
 		${ARCH_DEFINES}			\
@@ -122,6 +123,7 @@ LIBS += ${LDADD}						\
 		${LIBINTL}						\
 		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\
+		${GTHREAD_LIBS} \
 		${GTK_LIBS}						\
 		${DBUS_LIBS}					\
 		${MOWGLI_LIBS}					\
