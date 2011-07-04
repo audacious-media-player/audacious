@@ -37,11 +37,34 @@
 // Struct to keep information about matches from searches.
 typedef struct
 {
-    GArray* track_entries; // JumpToTrackEntry*
-    GArray* normalized_titles; // gchar*
+    GArray * entries; // gint
+    GArray * titles, * artists, * albums, * paths, * filenames; // gchar *
 } KeywordMatches;
 
 static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
+
+static KeywordMatches * keyword_matches_new (void)
+{
+    KeywordMatches * k = g_malloc (sizeof (KeywordMatches));
+    k->entries = g_array_new (FALSE, FALSE, sizeof (gint));
+    k->titles = g_array_new (FALSE, FALSE, sizeof (gchar *));
+    k->artists = g_array_new (FALSE, FALSE, sizeof (gchar *));
+    k->albums = g_array_new (FALSE, FALSE, sizeof (gchar *));
+    k->paths = g_array_new (FALSE, FALSE, sizeof (gchar *));
+    k->filenames = g_array_new (FALSE, FALSE, sizeof (gchar *));
+    return k;
+}
+
+static void keyword_matches_free (KeywordMatches * k)
+{
+    g_array_free (k->entries, TRUE);
+    g_array_free (k->titles, TRUE);
+    g_array_free (k->artists, TRUE);
+    g_array_free (k->albums, TRUE);
+    g_array_free (k->paths, TRUE);
+    g_array_free (k->filenames, TRUE);
+    g_free (k);
+}
 
 /**
  * Creates an regular expression list usable in searches from search keyword.
@@ -140,37 +163,41 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
                                      const GString* keyword)
 {
     GSList* regex_list = ui_jump_to_track_cache_regex_list_create(keyword);
-    GArray * track_entries = g_array_new (FALSE, FALSE, sizeof (gint));
-    GArray* normalized_titles = g_array_new(FALSE, FALSE, sizeof(gchar*));
-    gboolean match = FALSE;
-    int i = 0;
 
-    for (i = 0; i < search_space->normalized_titles->len; i++)
+    KeywordMatches * k = keyword_matches_new ();
+
+    for (gint i = 0; i < search_space->entries->len; i ++)
     {
-        gchar* title = g_array_index(search_space->normalized_titles, gchar*, i);
+        gchar * title = g_array_index (search_space->titles, gchar *, i);
+        gchar * artist = g_array_index (search_space->artists, gchar *, i);
+        gchar * album = g_array_index (search_space->albums, gchar *, i);
+        gchar * path = g_array_index (search_space->paths, gchar *, i);
+        gchar * filename = g_array_index (search_space->filenames, gchar *, i);
+        gboolean match;
 
         if (regex_list != NULL)
-            match = ui_jump_to_track_match(title, regex_list);
+            match = ui_jump_to_track_match (title, regex_list)
+             || ui_jump_to_track_match (artist, regex_list)
+             || ui_jump_to_track_match (album, regex_list)
+             || ui_jump_to_track_match (path, regex_list)
+             || ui_jump_to_track_match (filename, regex_list);
         else
             match = TRUE;
 
         if (match) {
-            g_array_append_val (track_entries, g_array_index
-             (search_space->track_entries, gint, i));
-            g_array_append_val(normalized_titles, title);
+            g_array_append_val (k->entries, g_array_index (search_space->entries, gint, i));
+            g_array_append_val (k->titles, title);
+            g_array_append_val (k->artists, artist);
+            g_array_append_val (k->albums, album);
+            g_array_append_val (k->paths, path);
+            g_array_append_val (k->filenames, filename);
         }
     }
 
-    KeywordMatches* keyword_matches = g_new(KeywordMatches, 1);
-    keyword_matches->track_entries = track_entries;
-    keyword_matches->normalized_titles = normalized_titles;
-
-    g_hash_table_insert(cache->keywords,
-                        GINT_TO_POINTER(g_string_hash(keyword)),
-                        keyword_matches);
+    g_hash_table_insert (cache->keywords, GINT_TO_POINTER (g_string_hash (keyword)), k);
 
     ui_jump_to_track_cache_regex_list_free(regex_list);
-    return track_entries;
+    return k->entries;
 }
 
 /**
@@ -185,6 +212,9 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
 static gchar *
 normalize_search_string(const gchar* string)
 {
+    if (! string)
+        return NULL;
+
     gchar* normalized_string = g_utf8_normalize(string, -1, G_NORMALIZE_NFKD);
     gchar* folded_string = g_utf8_casefold(normalized_string, -1);
     g_free(normalized_string);
@@ -197,21 +227,14 @@ normalize_search_string(const gchar* string)
 static void
 ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
 {
-    int i = 0;
-    assert(match_entry->normalized_titles->len == match_entry->track_entries->len);
-    for (i = 0; i < match_entry->normalized_titles->len; i++)
-        g_free(g_array_index(match_entry->normalized_titles, gchar*, i));
-}
-
-/**
- * Frees the memory reserved for an search result.
- */
-static void
-ui_jump_to_track_cache_free_cache_entry(gpointer entry)
-{
-    KeywordMatches* match_entry = (KeywordMatches*)entry;
-    g_array_free(match_entry->track_entries, TRUE);
-    g_array_free(match_entry->normalized_titles, TRUE);
+    for (gint i = 0; i < match_entry->entries->len; i ++)
+    {
+        g_free (g_array_index (match_entry->titles, gchar *, i));
+        g_free (g_array_index (match_entry->artists, gchar *, i));
+        g_free (g_array_index (match_entry->albums, gchar *, i));
+        g_free (g_array_index (match_entry->paths, gchar *, i));
+        g_free (g_array_index (match_entry->filenames, gchar *, i));
+    }
 }
 
 /**
@@ -224,8 +247,7 @@ ui_jump_to_track_cache_new()
 {
     JumpToTrackCache* cache = g_new(JumpToTrackCache, 1);
 
-    cache->keywords = g_hash_table_new_full(NULL, NULL, NULL,
-                                            ui_jump_to_track_cache_free_cache_entry);
+    cache->keywords = g_hash_table_new_full (NULL, NULL, NULL, (GDestroyNotify) keyword_matches_free);
     ui_jump_to_track_cache_init (cache);
     return cache;
 }
@@ -260,38 +282,39 @@ ui_jump_to_track_cache_clear(JumpToTrackCache* cache)
  */
 static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 {
-        gint playlist, entries, entry;
-        GArray * track_entries = g_array_new (FALSE, FALSE, sizeof (gint));
-        GArray* normalized_titles = g_array_new(FALSE, FALSE, sizeof(gchar*));
-        GString* empty_keyword = g_string_new("");
+    // Reset cache state
+    ui_jump_to_track_cache_clear(cache);
 
-        // Reset cache state
-        ui_jump_to_track_cache_clear(cache);
+    // Initialize cache with playlist data
+    gint playlist = aud_playlist_get_active ();
+    gint entries = aud_playlist_entry_count (playlist);
 
-        // Initialize cache with playlist data
-        playlist = aud_playlist_get_active ();
-        entries = aud_playlist_entry_count (playlist);
+    KeywordMatches * k = keyword_matches_new ();
 
-        for (entry = 0; entry < entries; entry ++)
-        {
-            gchar * title0 = aud_playlist_entry_get_title (playlist, entry, TRUE);
-            gchar * title = normalize_search_string (title0);
-            g_free (title0);
+    for (gint entry = 0; entry < entries; entry ++)
+    {
+        Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, TRUE);
+        gchar * title = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_TITLE, NULL) : NULL);
+        gchar * artist = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_ARTIST, NULL) : NULL);
+        gchar * album = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_ALBUM, NULL) : NULL);
+        gchar * path = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_FILE_PATH, NULL) : NULL);
+        gchar * filename = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_FILE_NAME, NULL) : NULL);
+        if (tuple)
+            tuple_free (tuple);
 
-            g_array_append_val (track_entries, entry);
-            g_array_append_val (normalized_titles, title);
-        }
+        g_array_append_val (k->entries, entry);
+        g_array_append_val (k->titles, title);
+        g_array_append_val (k->artists, artist);
+        g_array_append_val (k->albums, album);
+        g_array_append_val (k->paths, path);
+        g_array_append_val (k->filenames, filename);
+    }
 
-        // Finally insert all titles into cache into an empty key "" so that
-        // the matchable data has specified place to be.
-        KeywordMatches* keyword_data = g_new(KeywordMatches, 1);
-        keyword_data->track_entries = track_entries;
-        keyword_data->normalized_titles = normalized_titles;
-        g_hash_table_insert(cache->keywords,
-                            GINT_TO_POINTER(g_string_hash(empty_keyword)),
-                            keyword_data);
-        g_string_free(empty_keyword,
-                      TRUE);
+    // Finally insert all titles into cache into an empty key "" so that
+    // the matchable data has specified place to be.
+    GString * empty_keyword = g_string_new ("");
+    g_hash_table_insert (cache->keywords, GINT_TO_POINTER (g_string_hash (empty_keyword)), k);
+    g_string_free (empty_keyword, TRUE);
 }
 
 /**
@@ -366,7 +389,7 @@ const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
                 g_string_free(keyword_string, TRUE);
                 g_string_free(match_string, TRUE);
                 g_free(normalized_keyword);
-                return matched_entries->track_entries;
+                return matched_entries->entries;
             }
 
             // Do normal search by using the result of previous search
@@ -386,8 +409,7 @@ const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
     // the empty string to match against.
     AUDDBG("One should never get to this point. Something is really wrong with \
 cache->keywords hash table.");
-    assert(FALSE);
-    g_return_val_if_fail(FALSE, (GArray*)-1);
+    abort ();
 }
 
 void ui_jump_to_track_cache_free (JumpToTrackCache * cache)
