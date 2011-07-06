@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2011-06-10 21:36+0100\n"
+"PO-Revision-Date: 2011-07-05 23:18+0100\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -451,12 +451,11 @@ msgstr "Album-Modus"
 
 #: src/audacious/ui_preferences.c:150
 msgid "<b>Output Settings</b>"
-msgstr ""
+msgstr "<b>Ausgabe-Einstellungen</b>"
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
 msgid "Bit depth:"
-msgstr "Ausgabe-Abtastfrequenz:"
+msgstr "Bit-Tiefe:"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Buffer size:"
@@ -464,12 +463,11 @@ msgstr "Puffergröße:"
 
 #: src/audacious/ui_preferences.c:157
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Use software volume control (not recommended)"
-msgstr "Softwareseitige Lautstärkeregelung benutzen"
+msgstr "Softwareseitige Lautstärkeregelung benutzen (nicht empfohlen)"
 
 #: src/audacious/ui_preferences.c:160
 msgid "<b>Replay Gain</b>"
@@ -481,7 +479,7 @@ msgstr "Wiedergabe-Verstärkung aktivieren"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Übersteuern verhindern (empfohlen)"
 
 #: src/audacious/ui_preferences.c:166
 msgid "<b>Adjust Levels</b>"
@@ -710,9 +708,8 @@ msgid "Edit settings for popup information"
 msgstr "Einstellungen für Popup-Informationen bearbeiten"
 
 #: src/audacious/ui_preferences.c:1497
-#, fuzzy
 msgid "Output plugin:"
-msgstr "Aktives Ausgabe-Plugin:"
+msgstr "Ausgabe-Plugin:"
 
 #: src/audacious/ui_preferences.c:1556
 msgid "Transport"
@@ -1243,41 +1240,3 @@ msgstr "Session-Management-Optionen:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Zeige Session-Management-Optionen"
-
-#~ msgid "Replay Gain"
-#~ msgstr "Wiedergabe-Verstärkung"
-
-#~ msgid "<b>Bit Depth</b>"
-#~ msgstr "<b>Abtastfrequenz</b>"
-
-#~ msgid ""
-#~ "All streams will be converted to this bit depth.\n"
-#~ "This should be the max supported bit depth of\n"
-#~ "the sound card or output plugin."
-#~ msgstr ""
-#~ "Alle Streams werden in diese Abtastfrequenz umgewandelt.\n"
-#~ "Sie sollte die maximal unterstützte Abtastfrequenz der\n"
-#~ "Soundkarte oder des Ausgabe-Plugins sein."
-
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "<b>Lautstärkeregelung</b>"
-
-#~ msgid ""
-#~ "Use software volume control. This may be useful for situations where your "
-#~ "audio system does not support controlling the playback volume."
-#~ msgstr ""
-#~ "Benutze Software-Lautstärkeregelung. Das kann nützlich sein für den Fall, "
-#~ "dass das Audio-System die Kontrolle der Wiedergabelautstärke nicht "
-#~ "unterstützt."
-
-#~ msgid "<b>Mode</b>"
-#~ msgstr "<b>Modus</b>"
-
-#~ msgid "<b>Clipping Prevention</b>"
-#~ msgstr "<b>Clipping-Verhinderung</b>"
-
-#~ msgid "Enable clipping prevention"
-#~ msgstr "Clipping-Verhinderung aktivieren"
-
-#~ msgid "<b>Audio System</b>"
-#~ msgstr "<b>Audio-System</b>"
