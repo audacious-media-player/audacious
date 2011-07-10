@@ -42,7 +42,7 @@ enum {
 
     FIELD_TRACK,
     FIELD_TRACK_NUMBER,
-    FIELD_LENGTH,       /**< Track length in seconds */
+    FIELD_LENGTH,       /**< Track length in milliseconds */
     FIELD_YEAR,         /**< Year of production/performance/etc */
     FIELD_QUALITY,      /**< String representing quality, such as
                              "lossy", "lossless", "sequenced"  */
