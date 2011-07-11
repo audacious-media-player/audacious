@@ -375,6 +375,9 @@ void audgui_infopopup_show_current (void)
 
 void audgui_infopopup_hide (void)
 {
+    if (! infopopup)
+        return;
+
     infopopup_progress_stop ();
     gtk_widget_hide (infopopup);
 }
