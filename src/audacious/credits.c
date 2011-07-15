@@ -314,6 +314,7 @@ static const gchar *translators_text[] = {
     "Eren Turkay",
     NULL,
     N_("Ukrainian:"),
+    "Kostyantyn Fedenko",
     "Mykola Lynnyk",
     NULL,
     N_("Welsh:"),
