@@ -463,9 +463,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
     gtk_tree_view_column_set_attributes(column, renderer, "text", 1, NULL);
 
-    gint width, height;
-    gtk_widget_get_size_request(GTK_WIDGET(treeview), &width, &height);
-    g_object_set(G_OBJECT(renderer), "wrap-width", width - 64 - 24, "wrap-mode",
+    g_object_set ((GObject *) renderer, "wrap-width", 96, "wrap-mode",
      PANGO_WRAP_WORD_CHAR, NULL);
 
     store = gtk_list_store_new(CATEGORY_VIEW_N_COLS,
@@ -1605,13 +1603,13 @@ void * * create_prefs_window (void)
     gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 
     scrolledwindow6 = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow6, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow6, FALSE, FALSE, 0);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_SHADOW_IN);
 
     category_treeview = gtk_tree_view_new ();
     gtk_container_add (GTK_CONTAINER (scrolledwindow6), category_treeview);
-    gtk_widget_set_size_request (category_treeview, 172, -1);
+    gtk_widget_set_size_request (scrolledwindow6, 168, -1);
     gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (category_treeview), FALSE);
 
     category_notebook = gtk_notebook_new ();
