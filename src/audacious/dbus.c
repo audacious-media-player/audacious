@@ -646,7 +646,7 @@ static gboolean get_mpris_metadata_cb(void *data)
 
     g_free (filename);
     if (tuple)
-        g_free (tuple);
+        tuple_free (tuple);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
