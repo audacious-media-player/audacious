@@ -195,8 +195,8 @@ struct _EffectPlugin
      * at the end of the last song in the playlist. */
     void (* finish) (gfloat * * data, gint * samples);
 
-    /* For effects that change the length of the song, these functions allow the
-     * correct time to be displayed. */
+    /* Optional.  For effects that change the length of the song, these
+     * functions allow the correct time to be displayed. */
     gint (* decoder_to_output_time) (gint time);
     gint (* output_to_decoder_time) (gint time);
 

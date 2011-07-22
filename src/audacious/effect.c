@@ -136,8 +136,10 @@ gint effect_decoder_to_output_time (gint time)
     g_static_mutex_lock (& mutex);
 
     for (GList * node = running_effects; node != NULL; node = node->next)
-        time = ((RunningEffect *) node->data)->header->decoder_to_output_time
-         (time);
+    {
+        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, decoder_to_output_time))
+            time = ((RunningEffect *) node->data)->header->decoder_to_output_time (time);
+    }
 
     g_static_mutex_unlock (& mutex);
     return time;
@@ -147,10 +149,11 @@ gint effect_output_to_decoder_time (gint time)
 {
     g_static_mutex_lock (& mutex);
 
-    for (GList * node = g_list_last (running_effects); node != NULL; node =
-     node->prev)
-        time = ((RunningEffect *) node->data)->header->output_to_decoder_time
-         (time);
+    for (GList * node = g_list_last (running_effects); node != NULL; node = node->prev)
+    {
+        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, output_to_decoder_time))
+            time = ((RunningEffect *) node->data)->header->output_to_decoder_time (time);
+    }
 
     g_static_mutex_unlock (& mutex);
     return time;
