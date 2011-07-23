@@ -12,6 +12,7 @@ SRCS = confirm.c \
        jump-to-time.c \
        list.c \
        playlists.c \
+       queue-manager.c \
        ui_gtk.c \
        ui_fileopener.c \
        ui_urlopener.c \

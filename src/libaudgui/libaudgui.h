@@ -67,6 +67,9 @@ void audgui_jump_to_time (void);
 void audgui_import_playlist (void);
 void audgui_export_playlist (void);
 
+/* queue-manager.c */
+void audgui_queue_manager_show (void);
+
 /* ui_playlist_manager.c */
 void audgui_playlist_manager (void);
 
