@@ -1867,6 +1867,7 @@ void playlist_queue_delete_selected (gint playlist_num)
 
         if (entry->selected)
         {
+            entry->queued = FALSE;
             playlist->queued = g_list_delete_link (playlist->queued, node);
             first = MIN (first, entry->number);
             last = entry->number;
