@@ -65,6 +65,16 @@ void playlist_auto_advance_toggle(gint argc, gchar **argv)
 	audacious_remote_toggle_advance(dbus_proxy);
 }
 
+void playlist_stop_after_status (gint argc, gchar * * argv)
+{
+    audtool_report (audacious_remote_is_stop_after (dbus_proxy) ? "on" : "off");
+}
+
+void playlist_stop_after_toggle (gint argc, gchar * * argv)
+{
+    audacious_remote_toggle_stop_after (dbus_proxy);
+}
+
 gint check_args_playlist_pos(gint argc, gchar **argv)
 {
 	gint playpos;

@@ -119,6 +119,12 @@ Returns the status of playlist shuffle.
 .I --playlist-shuffle-toggle
 Toggles playlist shuffle.
 .TP
+.I --playlist-stop-after-status
+Queries whether the "stop after current song" option is set.
+.TP
+.I --playlist-stop-after-toggle
+Toggles the "stop after current song" option.
+.TP
 .I --playlist-tuple-data <fieldname> <position>
 Returns the value of a tuple field for a song in the playlist.
 .PP

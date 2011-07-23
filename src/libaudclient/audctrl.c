@@ -601,6 +601,12 @@ void audacious_remote_toggle_shuffle(DBusGProxy *proxy) {
     g_clear_error(&error);
 }
 
+void audacious_remote_toggle_stop_after (DBusGProxy * proxy)
+{
+    org_atheme_audacious_toggle_stop_after (proxy, & error);
+    g_clear_error (& error);
+}
+
 /**
  * Queries audacious about whether or not the repeat feature is active.
  *
@@ -625,6 +631,14 @@ gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
     org_atheme_audacious_shuffle(proxy, &is_shuffle, &error);
     g_clear_error(&error);
     return is_shuffle;
+}
+
+gboolean audacious_remote_is_stop_after (DBusGProxy * proxy)
+{
+    gboolean is_stop_after;
+    org_atheme_audacious_stop_after (proxy, & is_stop_after, & error);
+    g_clear_error (& error);
+    return is_stop_after;
 }
 
 /**

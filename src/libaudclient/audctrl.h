@@ -66,8 +66,11 @@ void audacious_remote_playlist_add_url_string(DBusGProxy *proxy,
 gboolean audacious_remote_is_running(DBusGProxy *proxy);
 void audacious_remote_toggle_repeat(DBusGProxy *proxy);
 void audacious_remote_toggle_shuffle(DBusGProxy *proxy);
+void audacious_remote_toggle_stop_after (DBusGProxy * proxy);
 gboolean audacious_remote_is_repeat(DBusGProxy *proxy);
 gboolean audacious_remote_is_shuffle(DBusGProxy *proxy);
+gboolean audacious_remote_is_stop_after (DBusGProxy * proxy);
+
 void audacious_remote_get_eq(DBusGProxy *proxy, gdouble *preamp,
                              GArray **bands);
 gdouble audacious_remote_get_eq_preamp(DBusGProxy *proxy);

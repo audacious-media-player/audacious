@@ -1272,6 +1272,19 @@ gboolean audacious_rc_toggle_shuffle (RemoteObject * obj, GError * * error)
     return TRUE;
 }
 
+gboolean audacious_rc_stop_after (RemoteObject * obj, gboolean * is_stopping, GError * * error)
+{
+    * is_stopping = cfg.stopaftersong;
+    return TRUE;
+}
+
+gboolean audacious_rc_toggle_stop_after (RemoteObject * obj, GError * * error)
+{
+    cfg.stopaftersong = ! cfg.stopaftersong;
+    hook_call ("toggle stop after song", NULL);
+    return TRUE;
+}
+
 /* New on Oct 5 */
 gboolean audacious_rc_show_prefs_box(RemoteObject * obj, gboolean show, GError ** error)
 {

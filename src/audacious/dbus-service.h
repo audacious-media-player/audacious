@@ -233,4 +233,8 @@ gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GEr
 /* new in 2.4 */
 gboolean audacious_rc_get_active_playlist_name(RemoteObject *obj, gchar **title, GError **error);
 
+/* new in 3.1 */
+gboolean audacious_rc_stop_after (RemoteObject * obj, gboolean * is_stopping, GError * * error);
+gboolean audacious_rc_toggle_stop_after (RemoteObject * obj, GError * * error);
+
 #endif /* AUDACIOUS_DBUS_SERVICE_H */

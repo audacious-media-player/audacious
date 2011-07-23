@@ -93,6 +93,8 @@ extern void playlist_repeat_status(gint, gchar **);
 extern void playlist_repeat_toggle(gint, gchar **);
 extern void playlist_shuffle_status(gint, gchar **);
 extern void playlist_shuffle_toggle(gint, gchar **);
+void playlist_stop_after_status (gint argc, gchar * * argv);
+void playlist_stop_after_toggle (gint argc, gchar * * argv);
 extern void playlist_tuple_field_data(gint, gchar **argv);
 extern void playlist_enqueue_to_temp(gint argc, gchar **argv);
 extern void playlist_ins_url_string(gint argc, gchar **argv);

@@ -366,6 +366,16 @@
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
 
+        <!-- Query stop-after-song status -->
+        <method name="StopAfter">
+            <arg type="b" direction="out" name="is_stopping"/>
+        </method>
+
+        <!-- Toggle stop-after-song -->
+        <method name="ToggleStopAfter">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
         <!-- Show preferences window -->
         <method name="ShowPrefsBox">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
