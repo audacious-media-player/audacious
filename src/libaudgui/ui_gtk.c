@@ -23,10 +23,7 @@
 
 void audgui_set_default_icon (void)
 {
-#ifdef _WIN32
-    gtk_window_set_default_icon_from_file (aud_get_path (AUD_PATH_ICON_FILE),
-     NULL);
-#else
+#ifndef _WIN32
     gtk_window_set_default_icon_name ("audacious");
 #endif
 }
