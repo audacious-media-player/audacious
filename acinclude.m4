@@ -190,6 +190,7 @@ AC_PATH_PROG([CP], [cp])
 AC_PATH_PROG([AR], [ar])
 AC_PATH_PROG([TR], [tr])
 AC_PATH_PROG([RANLIB], [ranlib])
+AC_PATH_PROG([WINDRES], [windres])
 
 dnl Check for Gtk+/GLib and pals
 dnl ============================

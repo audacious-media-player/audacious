@@ -301,6 +301,7 @@ AC_MSG_RESULT([$is_elf])
 
 have_solaris=no
 have_sun=no
+have_mswindows=no
 ARCH_DEFINES=""
 case $host in
     *-*-openbsd* | *-*-netbsd* | *-*-mirbsd*)
@@ -317,6 +318,9 @@ case $host in
     ;;
     *-*-solaris* | *-*-sunos*)
         have_solaris=yes
+    ;;
+    *-*-mingw*)
+        have_mswindows=yes
     ;;
 esac
 
@@ -343,6 +347,7 @@ AUD_CONDITIONAL([ARCH_X86], [arch_type], [ix86])
 AUD_CONDITIONAL([USE_X86ASM], [x86_asm])
 AUD_CONDITIONAL([HAVE_SOLARIS], [have_solaris])
 AUD_CONDITIONAL([HAVE_SUN], [have_sun])
+AUD_CONDITIONAL([HAVE_MSWINDOWS], [have_mswindows])
 
 ### ---------------------------------------------------------------------------
 dnl Define plugin directories

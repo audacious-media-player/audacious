@@ -39,6 +39,10 @@ ifeq ($(USE_DBUS),yes)
 SRCS += dbus.c
 endif
 
+ifeq ($(HAVE_MSWINDOWS),yes)
+SRCS += audacious.rc
+endif
+
 INCLUDES = api.h \
            api-alias-begin.h \
            api-alias-end.h \
