@@ -1,0 +1,7 @@
+#include <windows.h>
+
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+
+#define IDI_ICON_AUDACIOUS 102
+
+IDI_ICON_AUDACIOUS ICON "../../pixmaps/audacious.ico"
