@@ -2,75 +2,65 @@
 # Copyright (C) 2004 Rimas Kudelis <rq@akl.lt>
 # This file is distributed under the same license as the BMP package.
 # Rimas Kudelis <rq@akl.lt>, 2004.
-#
+# Gymka <gymka@mail.ru>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: BMP\n"
+"Project-Id-Version: Audacious 3.0\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2004-12-06 19:02+0200\n"
-"Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
-"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"PO-Revision-Date: 2011-07-23 16:47+0300\n"
+"Last-Translator: gymka <gymka@mail.ru>\n"
+"Language-Team: Lietuvių <>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bits\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: src/audacious/adder.c:71
 msgid "Searching ..."
-msgstr ""
-
-#: src/audacious/adder.c:99
-#, c-format
-msgid "%d file found"
-msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr "Ieškoma ..."
 
 #: src/audacious/chardet.c:37
 msgid "  (invalid UTF-8)"
 msgstr "  (blogas UTF-8)"
 
 #: src/audacious/credits.c:35
-#, fuzzy
 msgid "Core developers:"
-msgstr "Kūrėjai:"
+msgstr "Autoriai:"
 
 #: src/audacious/credits.c:49
 msgid "Graphics:"
-msgstr ""
+msgstr "Grafika:"
 
 #: src/audacious/credits.c:54
 msgid "Default skin:"
-msgstr "Įprastasis rūbas:"
+msgstr "Numatytoji išvaizda:"
 
 #: src/audacious/credits.c:60
 msgid "Plugin development:"
-msgstr ""
+msgstr "Įskiepių kūrėjai:"
 
 #: src/audacious/credits.c:83
 msgid "Patch authors:"
-msgstr ""
+msgstr "Pataisymų kūrėjai:"
 
 #: src/audacious/credits.c:126
-#, fuzzy
 msgid "1.x developers:"
 msgstr "Kūrėjai:"
 
 #: src/audacious/credits.c:148
-#, fuzzy
 msgid "BMP Developers:"
 msgstr "Kūrėjai:"
 
 #: src/audacious/credits.c:180
-#, fuzzy
 msgid "Belarusian:"
-msgstr "Į vengrų k.:"
+msgstr "Į baltarusių k.:"
 
 #: src/audacious/credits.c:183
 msgid "Basque:"
-msgstr ""
+msgstr "Į Baskų k.:"
 
 #: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
@@ -78,27 +68,23 @@ msgstr "Į brazilų k. (portugalų dialektą):"
 
 #: src/audacious/credits.c:190
 msgid "Breton:"
-msgstr "į bretonų k.:"
+msgstr "Į bretonų k.:"
 
 #: src/audacious/credits.c:193
-#, fuzzy
 msgid "Bulgarian:"
-msgstr "Į vengrų k.:"
+msgstr "Į bulgarų k.:"
 
 #: src/audacious/credits.c:196
-#, fuzzy
 msgid "Catalan:"
-msgstr "Į italų k.:"
+msgstr "Į katalonų k.:"
 
 #: src/audacious/credits.c:199
-#, fuzzy
 msgid "Chinese:"
 msgstr "Į kinų k.:"
 
 #: src/audacious/credits.c:202
-#, fuzzy
 msgid "Croatian:"
-msgstr "Vieta:"
+msgstr "Į kroatų k.:"
 
 #: src/audacious/credits.c:205
 msgid "Czech:"
@@ -109,14 +95,12 @@ msgid "Dutch:"
 msgstr "Į olandų k.:"
 
 #: src/audacious/credits.c:212
-#, fuzzy
 msgid "Estonian:"
-msgstr "Į rumunų k.:"
+msgstr "Į estų k.:"
 
 #: src/audacious/credits.c:215
-#, fuzzy
 msgid "Finnish:"
-msgstr "Į ispanų k.:"
+msgstr "Į suomių k.:"
 
 #: src/audacious/credits.c:220
 msgid "French:"
@@ -127,7 +111,6 @@ msgid "German:"
 msgstr "Į vokiečių k.:"
 
 #: src/audacious/credits.c:233
-#, fuzzy
 msgid "Georgian:"
 msgstr "Į vokiečių k.:"
 
@@ -137,7 +120,7 @@ msgstr "Į graikų k.:"
 
 #: src/audacious/credits.c:241
 msgid "Hindi:"
-msgstr ""
+msgstr "Į hindi"
 
 #: src/audacious/credits.c:244
 msgid "Hungarian:"
@@ -156,9 +139,8 @@ msgid "Korean:"
 msgstr "Į korėjiečių k.:"
 
 #: src/audacious/credits.c:258
-#, fuzzy
 msgid "Latvian:"
-msgstr "Vieta:"
+msgstr "Į latvių k.:"
 
 #: src/audacious/credits.c:261
 msgid "Lithuanian:"
@@ -173,9 +155,8 @@ msgid "Polish:"
 msgstr "Į lenkų k.:"
 
 #: src/audacious/credits.c:274
-#, fuzzy
 msgid "Portuguese:"
-msgstr "Portas:"
+msgstr "Į portugalų k.:"
 
 #: src/audacious/credits.c:277
 msgid "Romanian:"
@@ -187,15 +168,15 @@ msgstr "Į rusų k.:"
 
 #: src/audacious/credits.c:285
 msgid "Serbian (Latin):"
-msgstr ""
+msgstr "Į serbų (lotynų) k."
 
 #: src/audacious/credits.c:288
 msgid "Serbian (Cyrillic):"
-msgstr ""
+msgstr "Į serbų (Kirilica) k.:"
 
 #: src/audacious/credits.c:291
 msgid "Simplified Chinese:"
-msgstr ""
+msgstr "Supaprastinta kinų k."
 
 #: src/audacious/credits.c:294
 msgid "Slovak:"
@@ -210,32 +191,29 @@ msgid "Swedish:"
 msgstr "Į švedų k.:"
 
 #: src/audacious/credits.c:307
-#, fuzzy
 msgid "Traditional Chinese:"
-msgstr "Taip pat prisidėjo:"
+msgstr "Tradicinė kinų:"
 
 #: src/audacious/credits.c:312
 msgid "Turkish:"
-msgstr ""
+msgstr "Turkų:"
 
 #: src/audacious/credits.c:316
-#, fuzzy
 msgid "Ukrainian:"
-msgstr "Į rumunų k.:"
+msgstr "Į ukrainiečių k.:"
 
 #: src/audacious/credits.c:319
 msgid "Welsh:"
 msgstr "Į velsiečių k.:"
 
 #: src/audacious/drct.c:256
-#, fuzzy
 msgid "Temporary Playlist"
-msgstr "Įkrauti grojaraštį"
+msgstr "Laikinas grojaraštis"
 
 #: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "Klaida įkelinat Winamp EQF failą '%s'"
 
 #: src/audacious/main.c:256
 msgid "Skip backwards in playlist"
@@ -262,41 +240,36 @@ msgid "Skip forward in playlist"
 msgstr "Šoktelti pirmyn grojaraštyje"
 
 #: src/audacious/main.c:262
-#, fuzzy
 msgid "Display Jump to File dialog"
-msgstr "/Šokti į bylą"
+msgstr "Rodyti šokti į bylą langą"
 
 #: src/audacious/main.c:263
-#, fuzzy
 msgid "Add files to the playlist"
-msgstr "Neišvalyti grojaraščio"
+msgstr "Pridėti failus į grojaraštį"
 
 #: src/audacious/main.c:264
-#, fuzzy
 msgid "Add new files to a temporary playlist"
-msgstr "Neišvalyti grojaraščio"
+msgstr "Pridėti naujus failus į laikiną grojaraštį"
 
 #: src/audacious/main.c:265
-#, fuzzy
 msgid "Display the main window"
 msgstr "Parodyti pagrindinį langą"
 
 #: src/audacious/main.c:266
-#, fuzzy
 msgid "Show version"
-msgstr "/Parodyti grojaraščio redaktorių"
+msgstr "Rodyti versiją"
 
 #: src/audacious/main.c:267
 msgid "Print debugging messages"
-msgstr ""
+msgstr "Rodyti derinimo pranešimus"
 
 #: src/audacious/main.c:268
 msgid "FILE..."
-msgstr ""
+msgstr "FAILAS..."
 
 #: src/audacious/main.c:280
 msgid "- play multimedia files"
-msgstr ""
+msgstr "- groti daugialypės terpės failus"
 
 #: src/audacious/main.c:290
 #, c-format
@@ -304,6 +277,8 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"Bandyk `%s --help' išsamesniai informacijai.\n"
 
 #: src/audacious/main.c:407
 msgid ""
@@ -312,34 +287,35 @@ msgid ""
 "data loss.  If Audacious is not running, you can safely ignore this "
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
+"Atrodo Audacious jau įjungtas, bet neatsako.  Gali paleisti dar vieną "
+"programos kopiją, bet gali prarasti duomenis. Jei visdėlto "
+"Audacious neįjungtas, gali nekreipt dėmesio į šį pranešimą. Spausk "
+"Gerai norėdamas paleisti Audacious arba Atšaukti norėdamas baigti."
 
 #: src/audacious/main.c:572
 msgid "Audacious"
-msgstr ""
+msgstr "Audacious"
 
 #: src/audacious/playback.c:381
 #, c-format
 msgid "No decoder found for %s."
-msgstr ""
+msgstr "Nerastas dekoderis failui %s."
 
 #: src/audacious/playback.c:531
-#, fuzzy
 msgid "Buffering ..."
 msgstr "Buferiavimas"
 
 #: src/audacious/playlist-new.c:303
-#, fuzzy
 msgid "Untitled Playlist"
-msgstr "Išsaugoti grojaraštį"
+msgstr "Nepavadintas grojaraštis"
 
 #: src/audacious/ui_preferences.c:87
-#, fuzzy
 msgid "Audio"
-msgstr "Apie MPEG audio įskiepį"
+msgstr "Garsas"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Network"
-msgstr ""
+msgstr "Tinklas"
 
 #: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
 msgid "Playlist"
@@ -393,187 +369,164 @@ msgid "Comment"
 msgstr "Komentaras"
 
 #: src/audacious/ui_preferences.c:106
-#, fuzzy
 msgid "Codec"
-msgstr "/Užverti"
+msgstr "Kodekas"
 
 #: src/audacious/ui_preferences.c:107
-#, fuzzy
 msgid "Quality"
-msgstr "/_Išeiti"
+msgstr "Kokybė"
 
 #: src/audacious/ui_preferences.c:112
 msgid "None"
 msgstr "Joks"
 
 #: src/audacious/ui_preferences.c:113
-#, fuzzy
 msgid "Japanese"
-msgstr "Į japonų k.:"
+msgstr "Japonų"
 
 #: src/audacious/ui_preferences.c:114
-#, fuzzy
 msgid "Taiwanese"
-msgstr "Į japonų k.:"
+msgstr "Taivaniečių"
 
 #: src/audacious/ui_preferences.c:115
-#, fuzzy
 msgid "Chinese"
-msgstr "Į kinų k.:"
+msgstr "Kinų"
 
 #: src/audacious/ui_preferences.c:116
-#, fuzzy
 msgid "Korean"
-msgstr "Į korėjiečių k.:"
+msgstr "Korėjiečių"
 
 #: src/audacious/ui_preferences.c:117
-#, fuzzy
 msgid "Russian"
-msgstr "Į rusų k.:"
+msgstr "Rusų"
 
 #: src/audacious/ui_preferences.c:118
-#, fuzzy
 msgid "Greek"
-msgstr "Į graikų k.:"
+msgstr "Graikų"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrajų"
 
 #: src/audacious/ui_preferences.c:120
 msgid "Turkish"
-msgstr ""
+msgstr "Turkų"
 
 #: src/audacious/ui_preferences.c:121
 msgid "Arabic"
-msgstr ""
+msgstr "Arabų"
 
 #: src/audacious/ui_preferences.c:122
-#, fuzzy
 msgid "Polish"
-msgstr "Į lenkų k.:"
+msgstr "Lenkų"
 
 #: src/audacious/ui_preferences.c:123
-#, fuzzy
 msgid "Baltic"
-msgstr "Celtic"
+msgstr "Baltijos"
 
 #: src/audacious/ui_preferences.c:124
-#, fuzzy
 msgid "Universal"
-msgstr "Žanras"
+msgstr "Universalus"
 
 #: src/audacious/ui_preferences.c:146
-#, fuzzy
 msgid "Single track mode"
-msgstr "/Takelio informacija"
+msgstr "Vieno takelio režimas"
 
 #: src/audacious/ui_preferences.c:147
-#, fuzzy
 msgid "Album mode"
-msgstr "Albumas"
+msgstr "Albumo režimas"
 
 #: src/audacious/ui_preferences.c:150
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "Automatinis parinkimas"
+msgstr "<b>Išvesties nustatymai</b>"
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
 msgid "Bit depth:"
 msgstr "Nominalus bitų sekos greitis:"
 
 #: src/audacious/ui_preferences.c:155
-#, fuzzy
 msgid "Buffer size:"
 msgstr "Buferio dydis (kb):"
 
 #: src/audacious/ui_preferences.c:157
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Use software volume control (not recommended)"
 msgstr "Naudoti programinį garso valdymą"
 
 #: src/audacious/ui_preferences.c:160
-#, fuzzy
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Bylos vardas</b>"
+msgstr "<b>Replay Gain</b>"
 
 #: src/audacious/ui_preferences.c:161
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "/Visada viršuje"
+msgstr "Įjungt Replay Gain"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Uždrausti apkarpymą"
 
 #: src/audacious/ui_preferences.c:166
-#, fuzzy
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Pelės ratukas</b>"
+msgstr "<b>Nustatyti lygius</b>"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify all files:"
-msgstr ""
+msgstr "Pagarsinti visus failus:"
 
 #: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
 msgid "dB"
-msgstr ""
+msgstr "dB"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "Pagarsinti nepažymėtus failus:"
 
 #: src/audacious/ui_preferences.c:175
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Tarpinis serveris:"
 
 #: src/audacious/ui_preferences.c:176
-#, fuzzy
 msgid "Proxy port:"
-msgstr "Tarpinė stotis:"
+msgstr "Tarpinio serverio prievadas:"
 
 #: src/audacious/ui_preferences.c:179
-#, fuzzy
 msgid "Proxy username:"
 msgstr "Vartotojas:"
 
 #: src/audacious/ui_preferences.c:180
-#, fuzzy
 msgid "Proxy password:"
 msgstr "Slaptažodis:"
 
 #: src/audacious/ui_preferences.c:184
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "MPEG garso įskiepio konfigūravimas"
+msgstr "<b>Tarpinio serverio nustatymai</b>"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Leisti naudoti tarpinį serverį"
 
 #: src/audacious/ui_preferences.c:187
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Autentikuotis"
+msgstr "Autentifikuotis"
 
 #: src/audacious/ui_preferences.c:189
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Pakeitus šias pasirinktis reikės išnaujo paleisti "
+"Audacious.</span>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Automatinis koduotės nustatymas:"
 
 #: src/audacious/ui_preferences.c:201
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Atsarginis kodavimas:"
 
 #: src/audacious/ui_preferences.c:201
 msgid ""
@@ -582,47 +535,46 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
+"Atsarginių kodavimų sąrašas naudojamas metaduomenim konvertuot. Jei "
+"automatinis kodavimo atpažinimas nesugebėjo atpažint arba buvo išjungtas bus "
+"naudojamos koduotės iš šio sąrašo ir bus bandoma paversti simbolius iš šių "
+"koduočių į UTF-8."
 
 #: src/audacious/ui_preferences.c:205
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "Nominalus bitų sekos greitis:"
+msgstr "<b>Elgsena</b>"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Pradėti groti paleidžiant"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Žengti į priekį kai pasirinkta daina ištrinama"
 
 #: src/audacious/ui_preferences.c:210
-#, fuzzy
 msgid "Clear the playlist when opening files"
-msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
+msgstr "Išvalyti grojaraštį kai atidaromas failas"
 
 #: src/audacious/ui_preferences.c:212
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "Neišvalyti grojaraščio"
+msgstr "Atidaryti failus laikiname grojaraštyje"
 
 #: src/audacious/ui_preferences.c:214
 msgid "<b>Metadata</b>"
-msgstr "<b>Aprašai</b>"
+msgstr "<b>Metaduomenys</b>"
 
 #: src/audacious/ui_preferences.c:454
 msgid "Category"
 msgstr "Kategorija"
 
 #: src/audacious/ui_preferences.c:682
-#, fuzzy
 msgid "Popup Information Settings"
-msgstr "MPEG garso įskiepio konfigūravimas"
+msgstr "Iššokančio lango nustatymai"
 
 #: src/audacious/ui_preferences.c:691
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "Automatinis parinkimas"
+msgstr "<b>Albumo viršelio gavimas</b>"
 
 #: src/audacious/ui_preferences.c:696
 msgid ""
@@ -630,53 +582,52 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde.Tu "
+"gali įrašyt paieškos žodžius langelyje apačioj, atskiriant kableliais."
 
 #: src/audacious/ui_preferences.c:713
 msgid "Exclude:"
-msgstr ""
+msgstr "Išimtis:"
 
 #: src/audacious/ui_preferences.c:720
-#, fuzzy
 msgid "Include:"
-msgstr "Indie"
+msgstr "Įterpti:"
 
 #: src/audacious/ui_preferences.c:737
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Rekursyviai ieškoti viršelio"
 
 #: src/audacious/ui_preferences.c:747
 msgid "Search depth: "
-msgstr ""
+msgstr "Paieškos gylis:"
 
 #: src/audacious/ui_preferences.c:761
 msgid "Use per-file cover"
-msgstr ""
+msgstr "Kiekvienam failui atskiras viršelis"
 
 #: src/audacious/ui_preferences.c:764
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Kita</b>"
+msgstr "<b>Kita</b>"
 
 #: src/audacious/ui_preferences.c:773
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "Rodyti pažangos juostą esamam takeliui"
 
 #: src/audacious/ui_preferences.c:783
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "Palaukti kol pasirodys failo iššokantis langas: "
 
 #: src/audacious/ui_preferences.c:1283
-#, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
 
 #: src/audacious/ui_preferences.c:1292
 msgid "Show song numbers"
-msgstr ""
+msgstr "Rodyti dainos numerį"
 
 #: src/audacious/ui_preferences.c:1303
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
+msgstr "Rodyti nulius priekyje (02:00 vietoj 2:00)"
 
 #: src/audacious/ui_preferences.c:1325
 msgid "Show information about titlestring format"
@@ -684,30 +635,29 @@ msgstr "Parodyti informaciją apie pavadinimo formatą"
 
 #: src/audacious/ui_preferences.c:1339
 msgid "TITLE"
-msgstr ""
+msgstr "PAVADINIMAS"
 
 #: src/audacious/ui_preferences.c:1340
 msgid "ARTIST - TITLE"
-msgstr ""
+msgstr "ATLIKĖJAS - PAVADINIMAS"
 
 #: src/audacious/ui_preferences.c:1341
 msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
+msgstr "ATLIKĖJAS - ALBUMAS - PAVADINIMAS"
 
 #: src/audacious/ui_preferences.c:1342
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
+msgstr "ATLIKĖJAS - ALBUMAS - TAKELIS. PAVADINIMAS"
 
 #: src/audacious/ui_preferences.c:1343
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
+msgstr "ATLIKĖJAS [ ALBUMAS ] - TAKELIS. PAVADINIMAS"
 
 #: src/audacious/ui_preferences.c:1344
 msgid "ALBUM - TITLE"
-msgstr ""
+msgstr "ALBUMAS - PAVADINIMAS"
 
 #: src/audacious/ui_preferences.c:1345
-#, fuzzy
 msgid "Custom"
 msgstr "Derinta eilutė:"
 
@@ -720,13 +670,12 @@ msgid "Title format:"
 msgstr "Pavadinimo formatas:"
 
 #: src/audacious/ui_preferences.c:1372
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "MPEG garso įskiepio konfigūravimas"
+msgstr "<b>Iššokančio lango informacija</b>"
 
 #: src/audacious/ui_preferences.c:1387
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Rodyti iššokantį langą grojaraščio elementam"
 
 #: src/audacious/ui_preferences.c:1388
 msgid ""
@@ -734,72 +683,69 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
 
 #: src/audacious/ui_preferences.c:1397
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Keisti iššokančio lango nustatymus"
 
 #: src/audacious/ui_preferences.c:1497
-#, fuzzy
 msgid "Output plugin:"
-msgstr "OSS išvesties įskiepis"
+msgstr "Išvesties įskiepis:"
 
 #: src/audacious/ui_preferences.c:1556
-#, fuzzy
 msgid "Transport"
-msgstr "Vertėjai"
+msgstr "Transportas"
 
 #: src/audacious/ui_preferences.c:1556
 msgid "Input"
-msgstr ""
+msgstr "Įvestis"
 
 #: src/audacious/ui_preferences.c:1557
-#, fuzzy
 msgid "Effect"
-msgstr "<b>Efektai</b>"
+msgstr "Efektai"
 
 #: src/audacious/ui_preferences.c:1557
-#, fuzzy
 msgid "Visualization"
 msgstr "Vizualizacijos tipas"
 
 #: src/audacious/ui_preferences.c:1557
 msgid "General"
-msgstr ""
+msgstr "Pagrindiniai"
 
 #: src/audacious/ui_preferences.c:1597
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "BMP nustatymai"
+msgstr "Audacious nustatymai"
 
 #: src/audacious/util.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Nepavyko sukurti aplanko (%s): %s"
+msgstr "Nepavyko sukurti aplanko (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:264
 msgid "Position not found."
-msgstr ""
+msgstr "Vieta nerasta"
 
 #: src/audtool/handlers_vitals.c:64
 msgid "No song playing."
-msgstr ""
+msgstr "Negroja jokio daina."
 
 #: src/libaudcore/tuple.c:685
 msgid "Mono"
 msgstr "Mono"
 
 #: src/libaudcore/tuple.c:687
-#, fuzzy
 msgid "Stereo"
 msgstr "Stereo"
 
 #: src/libaudcore/tuple.c:689
-#, fuzzy, c-format
+#, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "Kanalai:"
-msgstr[1] "Kanalai:"
+msgstr[0] "%d kanalas"
+msgstr[1] "%d kanalai"
 
 #: src/libaudgui/confirm.c:73
 #, c-format
@@ -807,108 +753,94 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
+"Ar tu tikrai nori uždaryti <b>%s</b>?  Jei taip, visi pakeitimai padaryti po "
+"grojaraščio eksportavimo bus prarasti."
 
 #: src/libaudgui/confirm.c:86
-#, fuzzy
 msgid "_Don't show this message again"
-msgstr "Daugiau neberodyti šio pranešimo"
+msgstr "_Daugiau neberodyti šio pranešimo"
 
 #: src/libaudgui/confirm.c:124
-#, fuzzy
 msgid "Rename Playlist"
-msgstr "Išsaugoti grojaraštį"
+msgstr "Pervadinti grojaraštį"
 
 #: src/libaudgui/effects-menu.c:76
-#, fuzzy
 msgid "settings ..."
-msgstr "Mikserio nustatymai:"
+msgstr "nustatymai..."
 
 #: src/libaudgui/equalizer.c:68
-#, fuzzy
 msgid "_Enable"
-msgstr "Įjungtas"
+msgstr "_Įjungtas"
 
 #: src/libaudgui/equalizer.c:140
 msgid "31 Hz"
-msgstr ""
+msgstr "31 Hz"
 
 #: src/libaudgui/equalizer.c:140
 msgid "63 Hz"
-msgstr ""
+msgstr "63 Hz"
 
 #: src/libaudgui/equalizer.c:141
 msgid "125 Hz"
-msgstr ""
+msgstr "125 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "250 Hz"
-msgstr "1:1 (44 kHz)"
+msgstr "250 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "500 Hz"
-msgstr "1:1 (44 kHz)"
+msgstr "500 Hz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "1 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:141
-#, fuzzy
 msgid "2 kHz"
-msgstr "1:2 (22 kHz)"
+msgstr "2 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "4 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "4 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "8 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.c:142
-#, fuzzy
 msgid "16 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Equalizer"
 msgstr "Ekvalaizeris"
 
 #: src/libaudgui/equalizer.c:163
-#, fuzzy
 msgid "Preamp"
-msgstr "Dream"
+msgstr "Preamp"
 
 #: src/libaudgui/infopopup.c:212
-#, fuzzy
 msgid "Track Number"
 msgstr "Takelio numeris"
 
 #: src/libaudgui/infopopup.c:214
-#, fuzzy
 msgid "Track Length"
-msgstr "Takelio trukmė:"
+msgstr "Takelio trukmė"
 
 #: src/libaudgui/infowin.c:77
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:78
-#, fuzzy
 msgid "Acid Rock"
-msgstr "Hard Rock"
+msgstr "Acid Rock"
 
 #: src/libaudgui/infowin.c:79
 msgid "Ambient"
 msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:80
-#, fuzzy
 msgid "Bebop"
 msgstr "Bebob"
 
@@ -917,13 +849,12 @@ msgid "Bluegrass"
 msgstr "Bluegrass"
 
 #: src/libaudgui/infowin.c:82
-#, fuzzy
 msgid "Blues"
 msgstr "Blues"
 
 #: src/libaudgui/infowin.c:83
 msgid "Chamber Music"
-msgstr "c"
+msgstr "Chamber Music"
 
 #: src/libaudgui/infowin.c:84
 msgid "Classical"
@@ -963,7 +894,7 @@ msgstr "Gospel"
 
 #: src/libaudgui/infowin.c:93
 msgid "Grunge"
-msgstr "cGrunge"
+msgstr "Grunge"
 
 #: src/libaudgui/infowin.c:94
 msgid "Hard Rock"
@@ -974,7 +905,6 @@ msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:96
-#, fuzzy
 msgid "Hip-hop"
 msgstr "Hip-Hop"
 
@@ -1008,7 +938,7 @@ msgstr "Noise"
 
 #: src/libaudgui/infowin.c:104
 msgid "Pop"
-msgstr "cPopsas"
+msgstr "Pop"
 
 #: src/libaudgui/infowin.c:105
 msgid "Punk Rock"
@@ -1020,20 +950,19 @@ msgstr "Rap"
 
 #: src/libaudgui/infowin.c:107
 msgid "Reggae"
-msgstr "cRegis"
+msgstr "Reggae"
 
 #: src/libaudgui/infowin.c:108
 msgid "Rock"
 msgstr "Rock"
 
 #: src/libaudgui/infowin.c:109
-#, fuzzy
 msgid "Rock and Roll"
-msgstr "Rock & Roll"
+msgstr "Rock and Roll"
 
 #: src/libaudgui/infowin.c:110
 msgid "Rhythm and Blues"
-msgstr ""
+msgstr "Rhythm and Blues"
 
 #: src/libaudgui/infowin.c:111
 msgid "Ska"
@@ -1052,88 +981,75 @@ msgid "Techno"
 msgstr "Techno"
 
 #: src/libaudgui/infowin.c:115
-#, fuzzy
 msgid "Trip-hop"
 msgstr "Trip-Hop"
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
 #: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"small\">n/a</span>"
 
 #: src/libaudgui/infowin.c:265
 msgid "Metadata updated successfully"
-msgstr ""
+msgstr "Metaduomenys atnaujintas sėkmingai"
 
 #: src/libaudgui/infowin.c:270
 msgid "Metadata updating failed"
-msgstr ""
+msgstr "Metaduomenų atnaujinti nepavyko"
 
 #: src/libaudgui/infowin.c:318
-#, fuzzy
 msgid "Track Information"
-msgstr "CD Audio grotuvo konfigūravimas"
+msgstr "Takelio informacija"
 
 #: src/libaudgui/infowin.c:350
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
+msgstr "<span size=\"small\">Formatas:</span>"
 
 #: src/libaudgui/infowin.c:354
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"small\">Kokybė:</span>"
 
 #: src/libaudgui/infowin.c:357
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
+msgstr "<span size=\"small\">Bitai per sekundę:</span>"
 
 #: src/libaudgui/infowin.c:387
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"small\">Pavadinimas</span>"
 
 #: src/libaudgui/infowin.c:399
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>Išvestis</b></span>"
+msgstr "<span size=\"small\">Atlikėjas</span>"
 
 #: src/libaudgui/infowin.c:411
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>Išvestis</b></span>"
+msgstr "<span size=\"small\">Albumas</span>"
 
 #: src/libaudgui/infowin.c:423
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
+msgstr "<span size=\"small\">Komentaras</span>"
 
 #: src/libaudgui/infowin.c:435
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
+msgstr "<span size=\"small\">Žanras</span>"
 
 #: src/libaudgui/infowin.c:456
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"small\">Metai</span>"
 
 #: src/libaudgui/infowin.c:467
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
+msgstr "<span size=\"small\">Takelio numeris</span>"
 
 #: src/libaudgui/infowin.c:549
-#, fuzzy, c-format
+#, c-format
 msgid "%d kb/s"
-msgstr "%d KBit/s"
+msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:579
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "Nėra informacijos apie %s.\n"
 
 #: src/libaudgui/jump-to-time.c:75
 msgid "Jump to Time"
@@ -1141,31 +1057,28 @@ msgstr "Šokti į laiką"
 
 #: src/libaudgui/jump-to-time.c:90
 msgid "mm:ss"
-msgstr ""
+msgstr "mm:ss"
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Export Playlist"
-msgstr "Įkrauti grojaraštį"
+msgstr "Eksportuoti grojaraštį"
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Import Playlist"
 msgstr "Įkrauti grojaraštį"
 
 #: src/libaudgui/playlists.c:71
 #, c-format
 msgid "Overwrite %s?"
-msgstr ""
+msgstr "Perrašyt %s?"
 
 #: src/libaudgui/ui_about.c:71
-#, fuzzy
 msgid "About Audacious"
-msgstr "Apie MPEG audio įskiepį"
+msgstr "Apie Audacious"
 
 #: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
-msgstr "Credits"
+msgstr "Padėkos"
 
 #: src/libaudgui/ui_credits.c:126
 msgid "Translators"
@@ -1188,12 +1101,16 @@ msgid "Close dialog on Add"
 msgstr "Pridėjus, užverti dialogą"
 
 #: src/libaudgui/ui_jumptotrack.c:133
-#, fuzzy
 msgid "Un_queue"
 msgstr "Eilė"
 
-#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
-#, fuzzy
+msgid "%d file found"
+msgid_plural "%d file found"
+msgstr[0] "%d failas rastas"
+msgstr[1] "%d failai rasti"
+
+#: src/audacious/adder.c:99 src/libaudgui/ui_jumptotrack.c:135
+#: src/libaudgui/ui_jumptotrack.c:512
 msgid "_Queue"
 msgstr "Eilė"
 
@@ -1206,48 +1123,42 @@ msgid "Filter: "
 msgstr "Filtruoti:"
 
 #: src/libaudgui/ui_jumptotrack.c:443
-#, fuzzy
 msgid "_Filter:"
-msgstr "Filtruoti:"
+msgstr "_Filtruoti:"
 
 #: src/libaudgui/ui_jumptotrack.c:461
 msgid "Remember"
-msgstr ""
+msgstr "Prisiminti"
 
 #: src/libaudgui/ui_jumptotrack.c:470
-#, fuzzy
 msgid "Clea_r"
-msgstr "/Išvalyti eilę"
+msgstr "Išvalyti eilę"
 
 #: src/libaudgui/ui_jumptotrack.c:504
-#, fuzzy
 msgid "Close on Jump"
 msgstr "Atvėrus, užverti dialogą"
 
 #: src/libaudgui/ui_playlist_manager.c:240
-#, fuzzy
 msgid "Playlist Manager"
-msgstr "/Nesislinkti grojaraščiu"
+msgstr "Grojaraščio redaktorius"
 
 #: src/libaudgui/ui_playlist_manager.c:264
 msgid "Entries"
-msgstr ""
+msgstr "Elementai"
 
 # msgstr[0] "Įtrauktas %d elementas."
 # msgstr[1] "Įtraukti %d elementai."
 #: src/libaudgui/ui_playlist_manager.c:285
-#, fuzzy
 msgid "_Rename"
-msgstr "Bylos vardas"
+msgstr "_Pervadinti"
 
 #: src/libaudgui/ui_playlist_manager.c:309
-#, fuzzy
 msgid "_Close dialog on activating playlist"
 msgstr "Atvėrus, užverti dialogą"
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Open URL"
-msgstr ""
+msgstr "Atverti URL"
 
 #: src/libaudgui/ui_urlopener.c:58
 msgid "Add URL"
@@ -1258,3491 +1169,65 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(Sekantys pranešimai paslėpti.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Failas nėra geras .desktop failas"
 
 #: src/libeggsmclient/eggdesktopfile.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "%s: neatpažintas raktas „--%s“\n"
+msgstr "Neatpažinta desktop failo versija '%s'"
 
 #: src/libeggsmclient/eggdesktopfile.c:967
-#, fuzzy, c-format
+#, c-format
 msgid "Starting %s"
-msgstr "Į italų k.:"
+msgstr "Pradedama %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:1108
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Programa nepriema dokumentų iš komandinės eilutės"
 
 #: src/libeggsmclient/eggdesktopfile.c:1176
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "%s: neatpažintas raktas „--%s“\n"
+msgstr "Neatpažinta paleisties pasirinktis: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1375
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Negaliu susidorot su 'Type=Link' elementu"
 
 #: src/libeggsmclient/eggdesktopfile.c:1396
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Nepaleistinas elementas"
 
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Uždrausti prisijungimą prie sesijos valdymo"
 
 #: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Nurodyk failą kuriame išsaugoti nustatymai"
 
 #: src/libeggsmclient/eggsmclient.c:229
 msgid "FILE"
-msgstr ""
+msgstr "FAILAS"
 
 #: src/libeggsmclient/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Nurodyk sesijos valdymo ID"
 
 #: src/libeggsmclient/eggsmclient.c:232
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
 msgid "Session management options:"
-msgstr ""
+msgstr "Sesijos valdymo pasirinktys:"
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "Rodyti sesijos valdymo pasirinktis"
 
-#, fuzzy
-#~ msgid "<b>Bit Depth</b>"
-#~ msgstr "Nominalus bitų sekos greitis:"
-
-#, fuzzy
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "Garso valdymas:"
-
-#, fuzzy
-#~ msgid "<b>Mode</b>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "<b>Clipping Prevention</b>"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "Enable clipping prevention"
-#~ msgstr "Aktyvuoti apkarpymo prevenciją"
-
-#, fuzzy
-#~ msgid "<b>Audio System</b>"
-#~ msgstr "<b>Šablonai</b>"
-
-#, fuzzy
-#~ msgid "Current output plugin:"
-#~ msgstr "_Pasirinktas išvesties įskiepies:"
-
-#, fuzzy
-#~ msgid "%s: Unable to open display, exiting.\n"
-#~ msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
-
-#, fuzzy
-#~ msgid "Preamp:"
-#~ msgstr "Dream"
-
-#, fuzzy
-#~ msgid "Default gain:"
-#~ msgstr "Įprastasis rūbas:"
-
-#, fuzzy
-#~ msgid "<b>Replay Gain configuration</b>"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "Track gain/peak"
-#~ msgstr "Takelio pavadinimas"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Classic Rock"
-
-#~ msgid "Dance"
-#~ msgstr "Dance"
-
-#~ msgid "Oldies"
-#~ msgstr "Oldies"
-
-#~ msgid "Other"
-#~ msgstr "Other"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Industrial"
-#~ msgstr "Industrial"
-
-#~ msgid "Alternative"
-#~ msgstr "Alternative"
-
-#, fuzzy
-#~ msgid "Pranks"
-#~ msgstr "Pranks"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Soundtrack"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro-Techno"
-
-#~ msgid "Vocal"
-#~ msgstr "Vocal"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk"
-
-#~ msgid "Fusion"
-#~ msgstr "Fusion"
-
-#~ msgid "Trance"
-#~ msgstr "Trance"
-
-#~ msgid "Instrumental"
-#~ msgstr "Instrumental"
-
-#~ msgid "Acid"
-#~ msgstr "Acid"
-
-#~ msgid "Game"
-#~ msgstr "Game"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Sound Clip"
-
-#~ msgid "AlternRock"
-#~ msgstr "AlternRock"
-
-#, fuzzy
-#~ msgid "Bass"
-#~ msgstr "Bass"
-
-#~ msgid "Punk"
-#~ msgstr "Punk"
-
-#~ msgid "Space"
-#~ msgstr "Space"
-
-#~ msgid "Meditative"
-#~ msgstr "Meditative"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Instrumental Pop"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Instrumental Rock"
-
-#~ msgid "Ethnic"
-#~ msgstr "Ethnic"
-
-#~ msgid "Gothic"
-#~ msgstr "Gothic"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Industrial"
-
-#~ msgid "Electronic"
-#~ msgstr "Electronic"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance"
-
-#~ msgid "Dream"
-#~ msgstr "Dream"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Southern Rock"
-
-#~ msgid "Comedy"
-#~ msgstr "Comedy"
-
-#~ msgid "Cult"
-#~ msgstr "Cult"
-
-#~ msgid "Top 40"
-#~ msgstr "Top 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Christian Rap"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk"
-
-#~ msgid "Native American"
-#~ msgstr "Native American"
-
-#~ msgid "Cabaret"
-#~ msgstr "Cabaret"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Psychedelic"
-
-#~ msgid "Rave"
-#~ msgstr "Rave"
-
-#, fuzzy
-#~ msgid "Showtunes"
-#~ msgstr "Showtunes"
-
-#~ msgid "Trailer"
-#~ msgstr "Trailer"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi"
-
-#~ msgid "Tribal"
-#~ msgstr "Tribal"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Acid Punk"
-
-#~ msgid "Polka"
-#~ msgstr "Polka"
-
-#, fuzzy
-#~ msgid "Retro"
-#~ msgstr "Retro"
-
-#~ msgid "Musical"
-#~ msgstr "Musical"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock"
-
-#~ msgid "National Folk"
-#~ msgstr "National Folk"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "c"
-
-#~ msgid "Latin"
-#~ msgstr "Latin"
-
-#~ msgid "Revival"
-#~ msgstr "Revival"
-
-#~ msgid "Celtic"
-#~ msgstr "Celtic"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Avantgarde"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Gothic Rock"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Progressive Rock"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Psychedelic Rock"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Symphonic Rock"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Slow Rock"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band"
-
-#~ msgid "Chorus"
-#~ msgstr "Chorus"
-
-#~ msgid "Acoustic"
-#~ msgstr "Acoustic"
-
-#~ msgid "Humour"
-#~ msgstr "Humour"
-
-#~ msgid "Speech"
-#~ msgstr "Speech"
-
-#~ msgid "Chanson"
-#~ msgstr "Chanson"
-
-#~ msgid "Opera"
-#~ msgstr "Opera"
-
-#~ msgid "Sonata"
-#~ msgstr "Sonata"
-
-#~ msgid "Symphony"
-#~ msgstr "Symphony"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#, fuzzy
-#~ msgid "Satire"
-#~ msgstr "Stereo"
-
-#, fuzzy
-#~ msgid "Slow Jam"
-#~ msgstr "Slow Jam"
-
-#~ msgid "Club"
-#~ msgstr "Club"
-
-#~ msgid "Tango"
-#~ msgstr "Tango"
-
-#~ msgid "Samba"
-#~ msgstr "Samba"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklore"
-
-#~ msgid "Ballad"
-#~ msgstr "Ballad"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Power Ballad"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "c"
-
-#~ msgid "Freestyle"
-#~ msgstr "Freestyle"
-
-#~ msgid "Duet"
-#~ msgstr "Duet"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Drum Solo"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Euro-House"
-#~ msgstr "c"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall"
-
-#~ msgid "Goa"
-#~ msgstr "Goa"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
-#~ msgid "Club-House"
-#~ msgstr "Club-House"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore"
-
-#~ msgid "Terror"
-#~ msgstr "Terror"
-
-#~ msgid "Indie"
-#~ msgstr "Indie"
-
-#~ msgid "BritPop"
-#~ msgstr "BritPop"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Polsk Punk"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Christian Gangsta Rap"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black Metal"
-
-#~ msgid "Crossover"
-#~ msgstr "c"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Contemporary Christian"
-
-#~ msgid "Christian Rock"
-#~ msgstr "c"
-
-#~ msgid "Merengue"
-#~ msgstr "Merengue"
-
-#~ msgid "Salsa"
-#~ msgstr "c"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Thrash Metal"
-
-#~ msgid "Anime"
-#~ msgstr "Anime"
-
-#~ msgid "JPop"
-#~ msgstr "JPop"
-
-#~ msgid "Synthpop"
-#~ msgstr "Synthpop"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Beep Media Player %s</b></big>\n"
-#~ "Media grotuvas, XMMS pagrindu\n"
-#~ "\n"
-#~ "© 2003-2004 BMP Development Team\n"
-
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Nepavyko sukurti žurnalo bylos (%s)!\n"
-
-#, fuzzy
-#~ msgid "Playback"
-#~ msgstr "/Groti"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Grojimas</b>"
-
-#~ msgid "Don't advance in the playlist"
-#~ msgstr "Nesislinkti grojaraščiu"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr "Baigus groti kūrinį, į kitą automatiškai neperšokti."
-
-#~ msgid "Enabled"
-#~ msgstr "Įjungtas"
-
-#~ msgid "Description"
-#~ msgstr "Aprašymas"
-
-#, fuzzy
-#~ msgid "Output Plugin Preferences"
-#~ msgstr "OSS išvesties įskiepis"
-
-#, fuzzy
-#~ msgid "Output Plugin Information"
-#~ msgstr "ESD išvesties įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "_Decoder list:"
-#~ msgstr "Dekoderis"
-
-#, fuzzy
-#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
-
-#~ msgid "_General plugin list:"
-#~ msgstr "_Bendrinių įskiepių sąrašas"
-
-#~ msgid "<span size=\"medium\"><b>General</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
-
-#~ msgid "_Visualization plugin list:"
-#~ msgstr "_Vizualizacijos įskiepių sąrašas:"
-
-#~ msgid "<b>Visualization</b>"
-#~ msgstr "<b>Vizualizacija</b>"
-
-#, fuzzy
-#~ msgid "Effect plugins:"
-#~ msgstr "_Efektų įskiepių sąrašas:"
-
-#~ msgid "<b>Effects</b>"
-#~ msgstr "<b>Efektai</b>"
-
-#, fuzzy
-#~ msgid "<span size=\"small\">General</span>"
-#~ msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"small\">Location</span>"
-#~ msgstr "<span size=\"xx-large\"><b>Pelė</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"small\">Raw Metadata</span>"
-#~ msgstr "<span size=\"medium\"><b>Media</b></span>"
-
-#, fuzzy
-#~ msgid "Value"
-#~ msgstr "Blues"
-
-#, fuzzy
-#~ msgid "170 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "310 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "3 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "6 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Available interfaces:\n"
-#~ "\n"
-#~ msgstr "_Galimi šablonai:"
-
-#, fuzzy
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "_Galimi šablonai:"
-
-#, fuzzy
-#~ msgid "Add/Open URL Dialog"
-#~ msgstr "Pridėti/atverti bylas"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Neišvalyti grojaraščio"
-
-#, fuzzy
-#~ msgid "audacious: %s"
-#~ msgstr "CD audio įskiepis"
-
-#~ msgid "Filename:"
-#~ msgstr "Bylos vardas:"
-
-#~ msgid "No input plugin recognized this file"
-#~ msgstr "Šiai bylai nerasta įvesties įskiepio"
-
-#~ msgid "Input plugin: %s"
-#~ msgstr "įvesties įskiepis: %s"
-
-#, fuzzy
-#~ msgid "ZOH Interpolation"
-#~ msgstr "Autentikuotis"
-
-#, fuzzy
-#~ msgid "Linear Interpolation"
-#~ msgstr "Autentikuotis"
-
-#, fuzzy
-#~ msgid "Sampling Rate [Hz]:"
-#~ msgstr "Semplų dažnis:"
-
-#, fuzzy
-#~ msgid "Interpolation Engine:"
-#~ msgstr "Autentikuotis"
-
-#, fuzzy
-#~ msgid "<b>Sampling Rate Converter</b>"
-#~ msgstr "Semplų dažnis:"
-
-#, fuzzy
-#~ msgid "Enable Sampling Rate Converter"
-#~ msgstr "Semplų dažnis:"
-
-#, fuzzy
-#~ msgid "<b>Advanced</b>"
-#~ msgstr "Papildomi nustatymai"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright (C) 2005-2009 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Beep Media Player %s</b></big>\n"
-#~ "Media grotuvas, XMMS pagrindu\n"
-#~ "\n"
-#~ "© 2003-2004 BMP Development Team\n"
-
-#~ msgid "Load metadata from playlists and files"
-#~ msgstr "Įkelti aprašus iš grojaraščių bei bylų"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "Įkelti aprašus, esančius garso bylose"
-
-#~ msgid "minutes:seconds"
-#~ msgstr "minučių:sekundžių"
-
-#~ msgid "Track length:"
-#~ msgstr "Takelio trukmė:"
-
-#, fuzzy
-#~ msgid "Save as Static Playlist"
-#~ msgstr "Išsaugoti grojaraštį"
-
-#~ msgid "Error writing playlist \"%s\": %s"
-#~ msgstr "Klaida įrašant grojaraštį „%s“: %s"
-
-#~ msgid "%s already exist. Continue?"
-#~ msgstr "%s jau egzistuoja. Tęsti?"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b><big>Unable to save playlist.</big></b>\n"
-#~ "\n"
-#~ "Unknown file type for '%s'.\n"
-#~ msgstr "Nepavyko išsaugoti grojaraščio! Nežinomas bylos %s tipas"
-
-#~ msgid "Presets"
-#~ msgstr "Šablonai"
-
-#~ msgid "Mouse"
-#~ msgstr "Pelė"
-
-#~ msgid "Pause between songs"
-#~ msgstr "Pauzė tarp dainų"
-
-#~ msgid "Pause for"
-#~ msgstr "Pristabdyti"
-
-#~ msgid "seconds"
-#~ msgstr "sekundėms"
-
-#~ msgid "<b>Filename</b>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#~ msgid "Convert underscores to blanks"
-#~ msgstr "Keisti pabraukimus tarpais"
-
-#~ msgid "Convert %20 to blanks"
-#~ msgstr "Keisti %20 tarpais"
-
-#, fuzzy
-#~ msgid "<b>File Dialog</b>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "Changes volume by"
-#~ msgstr "Pelės ratukas keičia garsumą"
-
-#~ msgid "percent"
-#~ msgstr "procentų"
-
-#, fuzzy
-#~ msgid "Scrolls playlist by"
-#~ msgstr "Pelės ratukas peršoka grojaraščiu"
-
-#~ msgid "lines"
-#~ msgstr "eilučių"
-
-#, fuzzy
-#~ msgid "Stop after Current Song"
-#~ msgstr "Sustabdyti grojamą dainą"
-
-#, fuzzy
-#~ msgid "Peaks"
-#~ msgstr "Pranks"
-
-#, fuzzy
-#~ msgid "Repeat"
-#~ msgstr "/Kartoti"
-
-#, fuzzy
-#~ msgid "Shuffle"
-#~ msgstr "/Atsitiktine tvarka"
-
-#, fuzzy
-#~ msgid "No Playlist Advance"
-#~ msgstr "/Nesislinkti grojaraščiu"
-
-#, fuzzy
-#~ msgid "Play"
-#~ msgstr "/Groti"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Pristabdyti"
-
-#, fuzzy
-#~ msgid "Stop"
-#~ msgstr "/Sustabdyti"
-
-#, fuzzy
-#~ msgid "Previous"
-#~ msgstr "/Šokti atgal"
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "/Šokti pirmyn"
-
-#, fuzzy
-#~ msgid "Visualization Mode"
-#~ msgstr "Vizualizacijos tipas"
-
-#, fuzzy
-#~ msgid "Analyzer Mode"
-#~ msgstr "/Analizės būdas/Ugnis"
-
-#, fuzzy
-#~ msgid "Scope Mode"
-#~ msgstr "/Akiračio būdas"
-
-#, fuzzy
-#~ msgid "Voiceprint Mode"
-#~ msgstr "/Analizės būdas/Ugnis"
-
-#, fuzzy
-#~ msgid "WindowShade VU Mode"
-#~ msgstr "s"
-
-#, fuzzy
-#~ msgid "Refresh Rate"
-#~ msgstr "/Atnaujinimo dažnis"
-
-#, fuzzy
-#~ msgid "Analyzer Falloff"
-#~ msgstr "/Analizės atkritimas"
-
-#, fuzzy
-#~ msgid "Peaks Falloff"
-#~ msgstr "/Pikų atkritimas"
-
-#, fuzzy
-#~ msgid "New Playlist"
-#~ msgstr "Išsaugoti grojaraštį"
-
-#, fuzzy
-#~ msgid "Select Next Playlist"
-#~ msgstr "Pasirinkite grojaraščio šriftą:"
-
-#, fuzzy
-#~ msgid "Select Previous Playlist"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "Delete Playlist"
-#~ msgstr "Pasirinkite grojaraščio šriftą:"
-
-#, fuzzy
-#~ msgid "Load List"
-#~ msgstr "/Įkelti grojaraštį"
-
-#, fuzzy
-#~ msgid "Loads a playlist file into the selected playlist."
-#~ msgstr "Aprašus įkelti tik rodant bylą grojaraštyje"
-
-#, fuzzy
-#~ msgid "Save List"
-#~ msgstr "/Išsaugoti grojaraštį"
-
-#, fuzzy
-#~ msgid "Saves the selected playlist."
-#~ msgstr "Pasirinkite grojaraščio šriftą:"
-
-#, fuzzy
-#~ msgid "Save Default List"
-#~ msgstr "/Išsaugoti/Įprastąjį"
-
-#, fuzzy
-#~ msgid "Saves the selected playlist to the default location."
-#~ msgstr "Pasirinkite grojaraščio šriftą:"
-
-#, fuzzy
-#~ msgid "Refresh List"
-#~ msgstr "/Atnaujinimo dažnis"
-
-#, fuzzy
-#~ msgid "List Manager"
-#~ msgstr "/Nesislinkti grojaraščiu"
-
-#, fuzzy
-#~ msgid "Opens the playlist manager."
-#~ msgstr "Neišvalyti grojaraščio"
-
-#, fuzzy
-#~ msgid "View"
-#~ msgstr "/_Rodinys"
-
-#, fuzzy
-#~ msgid "Add Internet Address..."
-#~ msgstr "/Pridėti adresą internete…"
-
-#, fuzzy
-#~ msgid "Adds a remote track to the playlist."
-#~ msgstr "Neišvalyti grojaraščio"
-
-#, fuzzy
-#~ msgid "Add Files..."
-#~ msgstr "/Pridėti bylas…"
-
-#, fuzzy
-#~ msgid "Search and Select"
-#~ msgstr "/Rūšiuoti pasirinktus"
-
-#, fuzzy
-#~ msgid "Invert Selection"
-#~ msgstr "/Žymėti priešingai"
-
-#, fuzzy
-#~ msgid "Inverts the selected and unselected entries."
-#~ msgstr "Pasirinkite grojaraščio šriftą:"
-
-#~ msgid "Select All"
-#~ msgstr "Žymėti visus"
-
-#, fuzzy
-#~ msgid "Select None"
-#~ msgstr "/Panaikinti žymėjimą"
-
-#, fuzzy
-#~ msgid "Deselects all of the playlist entries."
-#~ msgstr "Neišvalyti grojaraščio"
-
-#, fuzzy
-#~ msgid "Remove All"
-#~ msgstr "/Pašalinti visus"
-
-#, fuzzy
-#~ msgid "Removes all entries from the playlist."
-#~ msgstr "/Pašalinti nepasiekiamas bylas"
-
-#, fuzzy
-#~ msgid "Clear Queue"
-#~ msgstr "/Išvalyti eilę"
-
-#, fuzzy
-#~ msgid "Clears the queue associated with this playlist."
-#~ msgstr "Pasirinkite grojaraščio šriftą:"
-
-#, fuzzy
-#~ msgid "Remove Unavailable Files"
-#~ msgstr "/Pašalinti nepasiekiamas bylas"
-
-#, fuzzy
-#~ msgid "Removes unavailable files from the playlist."
-#~ msgstr "/Pašalinti nepasiekiamas bylas"
-
-#, fuzzy
-#~ msgid "Remove Duplicates"
-#~ msgstr "/Pašalinti pažymėtus"
-
-#, fuzzy
-#~ msgid "By Title"
-#~ msgstr "Pavadinimas"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by title."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-# msgstr[0] "Įtrauktas %d elementas."
-# msgstr[1] "Įtraukti %d elementai."
-#, fuzzy
-#~ msgid "By Filename"
-#~ msgstr "Bylos vardas"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by filename."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-#, fuzzy
-#~ msgid "By Path + Filename"
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by their full path."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-#, fuzzy
-#~ msgid "Remove Unselected"
-#~ msgstr "/Pašalinti nepažymėtus"
-
-#, fuzzy
-#~ msgid "Remove unselected entries from the playlist."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-#, fuzzy
-#~ msgid "Remove Selected"
-#~ msgstr "/Pašalinti pažymėtus"
-
-#, fuzzy
-#~ msgid "Remove selected entries from the playlist."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-#, fuzzy
-#~ msgid "Randomize List"
-#~ msgstr "/Sumaišyti grojaraštį"
-
-#, fuzzy
-#~ msgid "Randomizes the playlist."
-#~ msgstr "/Sumaišyti grojaraštį"
-
-#, fuzzy
-#~ msgid "Reverse List"
-#~ msgstr "/Apversti grojaraštį"
-
-#, fuzzy
-#~ msgid "Reverses the playlist."
-#~ msgstr "Neišvalyti grojaraščio"
-
-#, fuzzy
-#~ msgid "Sort List"
-#~ msgstr "/Rūšiuoti grojaraštį"
-
-#, fuzzy
-#~ msgid "Sorts the list by title."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "By Album"
-#~ msgstr "Albumas"
-
-#, fuzzy
-#~ msgid "Sorts the list by album."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "By Artist"
-#~ msgstr "Atlikėjas"
-
-#, fuzzy
-#~ msgid "Sorts the list by artist."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "Sorts the list by filename."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
-
-#, fuzzy
-#~ msgid "Sorts the list by full pathname."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
-
-#, fuzzy
-#~ msgid "By Date"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Sorts the list by modification time."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "By Track Number"
-#~ msgstr "Takelio numeris"
-
-#, fuzzy
-#~ msgid "Sorts the list by track number."
-#~ msgstr "/Rūšiuoti grojaraštį/pagal datą"
-
-#, fuzzy
-#~ msgid "By Playlist Entry"
-#~ msgstr "BMP grojaraščio redaktorius"
-
-#, fuzzy
-#~ msgid "Sorts the list by playlist entry."
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "Sort Selected"
-#~ msgstr "/Rūšiuoti pasirinktus"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Satire"
-
-#, fuzzy
-#~ msgid "Components"
-#~ msgstr "Komentaras"
-
-#, fuzzy
-#~ msgid "View Track Details"
-#~ msgstr "/Takelio informacija"
-
-#, fuzzy
-#~ msgid "Play File"
-#~ msgstr "/Groti"
-
-#, fuzzy
-#~ msgid "Load and play a file"
-#~ msgstr "Įkelti aprašus iš grojaraščių bei bylų"
-
-#, fuzzy
-#~ msgid "Play Location"
-#~ msgstr "Vieta:"
-
-#, fuzzy
-#~ msgid "Plugin services"
-#~ msgstr "Įskiepiai"
-
-#, fuzzy
-#~ msgid "Preferences"
-#~ msgstr "/Nustatymai"
-
-#, fuzzy
-#~ msgid "Open preferences window"
-#~ msgstr "Nustatymų langas"
-
-#, fuzzy
-#~ msgid "_Quit"
-#~ msgstr "/_Išeiti"
-
-#, fuzzy
-#~ msgid "Quit Audacious"
-#~ msgstr "Apie MPEG audio įskiepį"
-
-#, fuzzy
-#~ msgid "Set A-B"
-#~ msgstr "/Žymėti visus"
-
-#, fuzzy
-#~ msgid "Clear A-B"
-#~ msgstr "/Išvalyti eilę"
-
-#, fuzzy
-#~ msgid "Jump to Playlist Start"
-#~ msgstr "/Šokti į grojaraščio pradžią"
-
-#, fuzzy
-#~ msgid "Jump to File"
-#~ msgstr "/Šokti į bylą"
-
-#, fuzzy
-#~ msgid "Queue Toggle"
-#~ msgstr "/Perjungti eilės rodomumą"
-
-#, fuzzy
-#~ msgid "Load"
-#~ msgstr "/Įkelti"
-
-#, fuzzy
-#~ msgid "Import"
-#~ msgstr "/Importuoti"
-
-#, fuzzy
-#~ msgid "Save"
-#~ msgstr "/Išsaugoti"
-
-#, fuzzy
-#~ msgid "Delete"
-#~ msgstr "/Šalinti"
-
-#~ msgid "Preset"
-#~ msgstr "Šablonas"
-
-#~ msgid "Load preset"
-#~ msgstr "Įkelti šabloną"
-
-#, fuzzy
-#~ msgid "Auto-load preset"
-#~ msgstr "/Įkelti/Automatiškai įsikeliantį šabloną"
-
-#, fuzzy
-#~ msgid "Load auto-load preset"
-#~ msgstr "/Įkelti/Automatiškai įsikeliantį šabloną"
-
-#~ msgid "Default"
-#~ msgstr "Įprastasis"
-
-#, fuzzy
-#~ msgid "Load default preset into equalizer"
-#~ msgstr "Išsaugoti automatiškai įsikeliantį šabloną"
-
-#, fuzzy
-#~ msgid "Zero"
-#~ msgstr "Retro"
-
-#, fuzzy
-#~ msgid "Set equalizer preset levels to zero"
-#~ msgstr "Išsaugoti ekvalaizerio šabloną"
-
-#, fuzzy
-#~ msgid "From file"
-#~ msgstr "/Įkelti/Iš bylos"
-
-#, fuzzy
-#~ msgid "Load preset from file"
-#~ msgstr "Įkelti šabloną"
-
-#, fuzzy
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "/Įkelti/Iš WinAMP EQF bylos"
-
-#, fuzzy
-#~ msgid "Load preset from WinAMP EQF file"
-#~ msgstr "/Įkelti/Iš WinAMP EQF bylos"
-
-#, fuzzy
-#~ msgid "WinAMP Presets"
-#~ msgstr "/Įmportuoti/WinAMP šablonus"
-
-#, fuzzy
-#~ msgid "Import WinAMP presets"
-#~ msgstr "/Įmportuoti/WinAMP šablonus"
-
-#~ msgid "Save preset"
-#~ msgstr "Išsaugoti šabloną"
-
-#, fuzzy
-#~ msgid "Save auto-load preset"
-#~ msgstr "/Išsaugoti/Automatiškai įsikeliantį šabloną"
-
-#, fuzzy
-#~ msgid "Save default preset"
-#~ msgstr "Išsaugoti automatiškai įsikeliantį šabloną"
-
-#, fuzzy
-#~ msgid "To file"
-#~ msgstr "/Įkelti/Iš bylos"
-
-#, fuzzy
-#~ msgid "Save preset to file"
-#~ msgstr "Išsaugoti šabloną"
-
-#, fuzzy
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "/Išsaugoti/WinAMP EQF bylon"
-
-#, fuzzy
-#~ msgid "Save preset to WinAMP EQF file"
-#~ msgstr "/Išsaugoti/WinAMP EQF bylon"
-
-#~ msgid "Delete preset"
-#~ msgstr "Pašalinti šabloną"
-
-#, fuzzy
-#~ msgid "Delete auto-load preset"
-#~ msgstr "/Šalinti/Automatiškai įsikeliantį šabloną"
-
-#~ msgid ""
-#~ "<b><big>Unable to load skin.</big></b>\n"
-#~ "\n"
-#~ "Check that skin at '%s' is usable and default skin is properly installed "
-#~ "at '%s'\n"
-#~ msgstr ""
-#~ "<b><big>Nepavyko įkelti rūbo.</big></b>\n"
-#~ "\n"
-#~ "Įsitikinkite, jog įmanoma naudoti rūbą, esantį „%s“ ir kad tvarkingai "
-#~ "įdiegtas numatytasis rūbas, esantis „%s“.\n"
-
-#, fuzzy
-#~ msgid "Audacious core developers:"
-#~ msgstr "BMP nustatymai"
-
-#, fuzzy
-#~ msgid "Audacious Equalizer"
-#~ msgstr "/Sutraukti ekvalaizerį"
-
-#, fuzzy
-#~ msgid "Play files"
-#~ msgstr "/Groti"
-
-#, fuzzy
-#~ msgid "Load files"
-#~ msgstr "/Įkelti/Iš bylos"
-
-#~ msgid "VBR"
-#~ msgstr "VBR"
-
-#, fuzzy
-#~ msgid "mono"
-#~ msgstr "Mono"
-
-#, fuzzy
-#~ msgid "Show main player window"
-#~ msgstr "Pasirinkite pagrindinio grotuvo lango šriftą:"
-
-#, fuzzy
-#~ msgid "Ignore"
-#~ msgstr "Joks"
-
-#, fuzzy
-#~ msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-#~ msgstr "PERŠOKTI Į: %d:%-2.2d/%d:%-2.2d (%d%%)"
-
-#, fuzzy
-#~ msgid "Options Menu"
-#~ msgstr "Nustatymai"
-
-#, fuzzy
-#~ msgid "Disable 'Always On Top'"
-#~ msgstr "/Visada viršuje"
-
-#, fuzzy
-#~ msgid "Enable 'Always On Top'"
-#~ msgstr "/Visada viršuje"
-
-#, fuzzy
-#~ msgid "File Info Box"
-#~ msgstr "Apie bylą"
-
-#, fuzzy
-#~ msgid "Disable 'GUI Scaling'"
-#~ msgstr "Ignoruoti ID3v2 žymas"
-
-#, fuzzy
-#~ msgid "Visualization Menu"
-#~ msgstr "Vizualizacijos tipas"
-
-#~ msgid ""
-#~ "<b><big>Couldn't open audio.</big></b>\n"
-#~ "\n"
-#~ "Please check that:\n"
-#~ "1. You have the correct output plugin selected.\n"
-#~ "2. No other programs is blocking the soundcard.\n"
-#~ "3. Your soundcard is configured properly.\n"
-#~ msgstr ""
-#~ "<b><big>Nepavyko atverti garso įrenginio.</big></b>\n"
-#~ "\n"
-#~ "Prašome įsitikinti, kad:\n"
-#~ "\n"
-#~ "1. Jūs išsirinkote tinkamą išvesties įskiepį.\n"
-#~ "2. Kitos programos neblokuoja garso įrenginio.\n"
-#~ "3. Jūsų garso įrenginys sukonfigūruotas teisingai.\n"
-
-#, fuzzy
-#~ msgid "Autoscroll Songname"
-#~ msgstr "/Automatiškai slinkti pavadinimą"
-
-#, fuzzy
-#~ msgid "Show Player"
-#~ msgstr "/Parodyti grojaraščio redaktorių"
-
-#, fuzzy
-#~ msgid "Show Playlist Editor"
-#~ msgstr "/Parodyti grojaraščio redaktorių"
-
-#, fuzzy
-#~ msgid "Show Equalizer"
-#~ msgstr "/Rodyti ekvalaizerį"
-
-#, fuzzy
-#~ msgid "Always on Top"
-#~ msgstr "/Visada viršuje"
-
-#, fuzzy
-#~ msgid "Put on All Workspaces"
-#~ msgstr "/Rodyti visuose darbalaukiuose"
-
-#, fuzzy
-#~ msgid "Roll up Player"
-#~ msgstr "/Sutraukti grotuvą"
-
-#, fuzzy
-#~ msgid "Roll up Playlist Editor"
-#~ msgstr "/Sutraukti grojaraščio redaktorių"
-
-#, fuzzy
-#~ msgid "Roll up Equalizer"
-#~ msgstr "/Sutraukti ekvalaizerį"
-
-#, fuzzy
-#~ msgid "Scale"
-#~ msgstr "/Išsaugoti"
-
-#, fuzzy
-#~ msgid "Analyzer"
-#~ msgstr "/Analizės būdas"
-
-#, fuzzy
-#~ msgid "Scope"
-#~ msgstr "/Akiračio būdas"
-
-#, fuzzy
-#~ msgid "Voiceprint"
-#~ msgstr "/Analizės būdas/Ugnis"
-
-#, fuzzy
-#~ msgid "Normal"
-#~ msgstr "Pavadinimo formatas:"
-
-#, fuzzy
-#~ msgid "Fire"
-#~ msgstr "Satire"
-
-#, fuzzy
-#~ msgid "Vertical Lines"
-#~ msgstr "/Analizės būdas/Gulsčios linijos"
-
-#, fuzzy
-#~ msgid "Lines"
-#~ msgstr "eilučių"
-
-#, fuzzy
-#~ msgid "Bars"
-#~ msgstr "Bass"
-
-#, fuzzy
-#~ msgid "Dot Scope"
-#~ msgstr "/Akiračio būdas/Taškinis akiratis"
-
-#, fuzzy
-#~ msgid "Line Scope"
-#~ msgstr "/Akiračio būdas/Linijinis akiratis"
-
-#, fuzzy
-#~ msgid "Solid Scope"
-#~ msgstr "/Akiračio būdas/Vientisas akiratis"
-
-#, fuzzy
-#~ msgid "Smooth"
-#~ msgstr "Mono"
-
-#, fuzzy
-#~ msgid "Full (~50 fps)"
-#~ msgstr "/Atnaujinimo dažnis/Pilnas (~50 fps)"
-
-#, fuzzy
-#~ msgid "Half (~25 fps)"
-#~ msgstr "/Atnaujinimo dažnis/Pusinis (~25 fps)"
-
-#, fuzzy
-#~ msgid "Quarter (~13 fps)"
-#~ msgstr "/Atnaujinimo dažnis/Ketvirtinis (~13fps)"
-
-#, fuzzy
-#~ msgid "Eighth (~6 fps)"
-#~ msgstr "/Atnaujinimo dažnis/Aštuntinis (~6fps)"
-
-#, fuzzy
-#~ msgid "Slowest"
-#~ msgstr "Showtunes"
-
-#, fuzzy
-#~ msgid "Slow"
-#~ msgstr "Slow Jam"
-
-#, fuzzy
-#~ msgid "Time Elapsed"
-#~ msgstr "/Praėjęs laikas"
-
-#, fuzzy
-#~ msgid "Time Remaining"
-#~ msgstr "/Likęs laikas"
-
-#, fuzzy
-#~ msgid "Plugin Services"
-#~ msgstr "Įskiepiai"
-
-#, fuzzy
-#~ msgid "Search entries in active playlist"
-#~ msgstr "Grojaraštyje rodyti takelio numerį"
-
-#, fuzzy
-#~ msgid "Title: "
-#~ msgstr "Pavadinimas:"
-
-#, fuzzy
-#~ msgid "Album: "
-#~ msgstr "Albumas:"
-
-#, fuzzy
-#~ msgid "Artist: "
-#~ msgstr "Atlikėjas:"
-
-#, fuzzy
-#~ msgid "Filename: "
-#~ msgstr "Bylos vardas:"
-
-#, fuzzy
-#~ msgid "Audacious Playlist Editor"
-#~ msgstr "/Parodyti grojaraščio redaktorių"
-
-#~ msgid "Appearance"
-#~ msgstr "Išvaizda"
-
-#~ msgid "<b>_Fonts</b>"
-#~ msgstr "<b>_Šriftai:</b>"
-
-#~ msgid "_Player:"
-#~ msgstr "_Grotuvas:"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Pasirinkite pagrindinio grotuvo lango šriftą:"
-
-#~ msgid "_Playlist:"
-#~ msgstr "_Grojaraštis:"
-
-#, fuzzy
-#~ msgid "Select playlist font:"
-#~ msgstr "Pasirinkite pagrindinio grotuvo lango šriftą:"
-
-#, fuzzy
-#~ msgid "Use Bitmap fonts if available"
-#~ msgstr "Stereo (jei įmanoma)"
-
-#~ msgid "<b>_Miscellaneous</b>"
-#~ msgstr "<b>_Kita</b>"
-
-#~ msgid "Show track numbers in playlist"
-#~ msgstr "Grojaraštyje rodyti takelio numerį"
-
-#, fuzzy
-#~ msgid "Show separators in playlist"
-#~ msgstr "Grojaraštyje rodyti takelio numerį"
-
-#~ msgid "On load"
-#~ msgstr "Įkraunant"
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr "Aprašus įkelti, pridedant bylą į grojaraštį ar jį atveriant"
-
-#~ msgid "On display"
-#~ msgstr "Rodant"
-
-#, fuzzy
-#~ msgid ""
-#~ "Load metadata on demand when displaying the file in the playlist. You may "
-#~ "need to set \"Detect file formats on demand\" in Audio page for full "
-#~ "benefit."
-#~ msgstr "Aprašus įkelti, pridedant bylą į grojaraštį ar jį atveriant"
-
-#, fuzzy
-#~ msgid "Blue"
-#~ msgstr "Blues"
-
-#, fuzzy
-#~ msgid "Green"
-#~ msgstr "Į graikų k.:"
-
-#~ msgid "<b>_Skin</b>"
-#~ msgstr "<b>_Rūbas:</b>"
-
-#, fuzzy
-#~ msgid "Refresh skin list"
-#~ msgstr "/Atnaujinimo dažnis"
-
-#~ msgid "PREAMP"
-#~ msgstr "Stiprinimas"
-
-#~ msgid "60HZ"
-#~ msgstr "60HZ"
-
-#~ msgid "170HZ"
-#~ msgstr "170HZ"
-
-#~ msgid "310HZ"
-#~ msgstr "310HZ"
-
-#~ msgid "600HZ"
-#~ msgstr "600HZ"
-
-#~ msgid "1KHZ"
-#~ msgstr "1KHZ"
-
-#~ msgid "3KHZ"
-#~ msgstr "3KHZ"
-
-#~ msgid "6KHZ"
-#~ msgstr "6KHZ"
-
-#~ msgid "12KHZ"
-#~ msgstr "12KHZ"
-
-#~ msgid "14KHZ"
-#~ msgstr "14KHZ"
-
-#~ msgid "16KHZ"
-#~ msgstr "16KHZ"
-
-#~ msgid "Use custom cursors"
-#~ msgstr "Naudoti derintus kursorius"
-
-#, fuzzy
-#~ msgid "Reload Plugins"
-#~ msgstr "Įskiepiai"
-
-#~ msgid ""
-#~ "Sorry, threads isn't supported on your platform.\n"
-#~ "\n"
-#~ "If you're on a libc5 based linux system and installed Glib & GTK+ before "
-#~ "you\n"
-#~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
-#~ msgstr ""
-#~ "Atsiprašome, jūsų platformoje nepalaikomos gijos.\n"
-#~ "\n"
-#~ "Jei jūs naudojate libc5 pagrindo linux sistemą ir įsidiegėte Glib bei GTK"
-#~ "+ prieš\n"
-#~ "įsidiegdami LinuxThreads, jums reikia perkompiliuoti Glib ir GTK+.\n"
-
-#, fuzzy
-#~ msgid "Error in Audacious."
-#~ msgstr "Apie MPEG audio įskiepį"
-
-#, fuzzy
-#~ msgid "Enable 6 dB hard limiter"
-#~ msgstr "Įjungtas"
-
-#, fuzzy
-#~ msgid "Select which Audacious session ID to use"
-#~ msgstr "Pasirinkti BMP/XMMS sesiją (Nutylimai: 0)"
-
-#~ msgid "<b>Presets</b>"
-#~ msgstr "<b>Šablonai</b>"
-
-#~ msgid "File preset extension:"
-#~ msgstr "Bylos ekvalaizerio šablono plėtinys:"
-
-#~ msgid "Directory preset file:"
-#~ msgstr "Aplanko ekvalaizerio šablono byla:"
-
-#, fuzzy
-#~ msgid ""
-#~ "TITLE\n"
-#~ "ARTIST - TITLE\n"
-#~ "ARTIST - ALBUM - TITLE\n"
-#~ "ARTIST - ALBUM - TRACK. TITLE\n"
-#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
-#~ "ALBUM - TITLE\n"
-#~ "Custom"
-#~ msgstr ""
-#~ "PAVADINIMAS\n"
-#~ "ATLIKĖJAS - PAVADINIMAS\n"
-#~ "ATLIKĖJAS - ALBUMAS - PAVADINIMAS\n"
-#~ "ALBUMAS - PAVADINIMAS\n"
-#~ "Derinta"
-
-#, fuzzy
-#~ msgid "Track Information Window"
-#~ msgstr "CD Audio grotuvo konfigūravimas"
-
-#~ msgid "Preferences Window"
-#~ msgstr "Nustatymų langas"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "/Užverti"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b> %s"
-#~ msgstr "Atlikėjas"
-
-#, fuzzy
-#~ msgid "<b>Title:</b> %s"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b> %s"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "Audacious last.fm radio tuner"
-#~ msgstr "/Parodyti grojaraščio redaktorių"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b>"
-#~ msgstr "Atlikėjas"
-
-#, fuzzy
-#~ msgid "<b>Title:</b>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#~ msgid "VOLUME: %d%%"
-#~ msgstr "GARSUMAS: %d%%"
-
-#~ msgid "BALANCE: %d%% LEFT"
-#~ msgstr "BALANSAS: %d%% KAIRĖJE"
-
-#~ msgid "BALANCE: CENTER"
-#~ msgstr "BALANSAS: VIDURYS"
-
-#~ msgid "BALANCE: %d%% RIGHT"
-#~ msgstr "BALANSAS: %d%% DEŠINĖJE"
-
-#, fuzzy
-#~ msgid "Last.fm radio"
-#~ msgstr "Vieta:"
-
-#, fuzzy
-#~ msgid "Play Last.fm radio"
-#~ msgstr "Vieta:"
-
-#~ msgid ""
-#~ "<b><big>No playable CD found.</big></b>\n"
-#~ "\n"
-#~ "No CD inserted, or inserted CD is not an audio CD.\n"
-#~ msgstr ""
-#~ "<b><big>Neradau CD, kurį galėčiau groti.</big></b>\n"
-#~ "\n"
-#~ "CD įrenginyje nėra disko, arba įdėtas ne AudioCD diskas.\n"
-
-#, fuzzy
-#~ msgid "Add CD..."
-#~ msgstr "/Pridėti CD…"
-
-#, fuzzy
-#~ msgid "Play CD"
-#~ msgstr "/Groti"
-
-#~ msgid "Performer/Artist"
-#~ msgstr "Atlikėjas"
-
-#~ msgid "File name"
-#~ msgstr "Bylos pavadinimas"
-
-#~ msgid "File path"
-#~ msgstr "Bylos kelias"
-
-#~ msgid "File extension"
-#~ msgstr "Bylos plėtinys"
-
-#~ msgid "Track number"
-#~ msgstr "Takelio numeris"
-
-#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
-#~ msgstr "%{n:...%}: Rodyti „…“ tik jei rastas elementas %n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-#~ "Please use GTK+ %s or newer.\n"
-#~ msgstr ""
-#~ "Atsiprašome, tačiau jūsų GTK+ versija (%d.%d.%d) neveiks su BMP.\n"
-#~ "Prašome naudoti GTK+ %s ar naujesnę versiją.\n"
-
-#~ msgid "OPTIONS MENU"
-#~ msgstr "NUSTATYMŲ MENIU"
-
-#~ msgid "DISABLE ALWAYS ON TOP"
-#~ msgstr "ATJUNGTI „VISADA VIRŠUJE“"
-
-#~ msgid "ENABLE ALWAYS ON TOP"
-#~ msgstr "ĮJUNGTI „VISADA VIRŠUJE“"
-
-#~ msgid "FILE INFO BOX"
-#~ msgstr "DIALOGAS „APIE BYLĄ“"
-
-#~ msgid "VISUALIZATION MENU"
-#~ msgstr "VIZUALIZACIJOS MENIU"
-
-#, fuzzy
-#~ msgid "Track name: "
-#~ msgstr "Takelių pavadinimai:"
-
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Nepavyko groti bylų.</big></b>\n"
-#~ "\n"
-#~ "Šios bylos negalėjo būti pagrotos. Prašome patikrinti, ar:\n"
-#~ "1. jos prieinamos.\n"
-#~ "2. įjungtas joms reikalingas media įskiepis."
-
-#~ msgid "Show more _details"
-#~ msgstr "Rodyti _detaliau"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Gautas SIGSEGV signalas\n"
-#~ "\n"
-#~ "Tai gali būti BMP riktas. Jei nežinote, kodėl tai nutiko, prašome "
-#~ "nusiųsti laišką adresu beepmp-devel@lists.sourceforge.net\n"
-#~ "\n"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: raktas „%s“ netinkama\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: raktas „--%s“ nepriima argumento\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: raktas „%c%s“ nepriima argumento\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: raktas „%s“ reikalauja argumento\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: neatpažintas raktas „%c%s“\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: netinkamas raktas -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: netinkamas raktas -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: raktas reikalauja argumento -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: raktas „-W %s“ yra netinkamas\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: raktas „-W %s“ nepriima argumento\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Naudojimas: beep-media-player [raktai] [bylos] …\n"
-#~ "\n"
-#~ "Raktai:\n"
-#~ "--------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Parodyti šią žinutę ir baigti darbą"
-
-#, fuzzy
-#~ msgid "Activate Audacious"
-#~ msgstr "Aktyvinti BMP"
-
-#~ msgid "Previous session ID"
-#~ msgstr "Praėjusios sesijos ID"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Parodyti versijos numerį ir baigti darbą\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Pridėti/atverti bylas"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Pridėjus, užverti dialogą2"
-
-#~ msgid "Deselect All"
-#~ msgstr "Atžymėti visus"
-
-#, fuzzy
-#~ msgid "Artist Popup"
-#~ msgstr "Atlikėjas"
-
-#, fuzzy
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "<i>Year</i>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "Takelio numeris"
-
-#, fuzzy
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "Takelio trukmė:"
-
-#~ msgid "/View Track Details"
-#~ msgstr "/Takelio informacija"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Vizualizacijos tipas/Analizė"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "Vizualizacijos tipas/Akiratis"
-
-#, fuzzy
-#~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "Vizualizacijos tipas/Akiratis"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Vizualizacijos tipas/Išjungta"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Analizės būdas/Normali"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Analizės būdas/Linijos"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Analizės būdas/Stulpeliai"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Analizės režimas/Pikai"
-
-#, fuzzy
-#~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Analizės būdas/Normali"
-
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/Suvynioto lango VU būdas/Normalus"
-
-#~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/Suvynioto lango VU būdas/Glodus"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Analizės atkiritimas/Lėčiausias"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Analizės atkritimas/Lėtas"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Analizės atkritimas/Vidutinis"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Analizės atkritimas/Greitas"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Analizės atkritimas/Greičiausias"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Pikų atkritimas/Lėčiausias"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Pikų atkritimas/Lėtas"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Pikų atkritimas/Vidutinis"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Pikų atkritimas/Greitas"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Pikų atkritimas/Greičiausias"
-
-#~ msgid "/Pause"
-#~ msgstr "/Pristabdyti"
-
-#~ msgid "/-"
-#~ msgstr "/-"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "/Šokti į laiką"
-
-#, fuzzy
-#~ msgid "/About Audacious"
-#~ msgstr "Apie MPEG audio įskiepį"
-
-#~ msgid "/Files..."
-#~ msgstr "/Bylas…"
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Adresą internete…"
-
-#, fuzzy
-#~ msgid "New List"
-#~ msgstr "/Naujas grojaraštis"
-
-#, fuzzy
-#~ msgid "Creates a new playlist."
-#~ msgstr "Grojaraštyje rodyti takelio numerį"
-
-#, fuzzy
-#~ msgid "Displays track information."
-#~ msgstr "CD Audio grotuvo konfigūravimas"
-
-#~ msgid "/Load"
-#~ msgstr "/Įkelti"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Įkelti/Šabloną"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Įkelti/Įprastąjį"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Įkelti/Nulius"
-
-#~ msgid "/Save"
-#~ msgstr "/Išsaugoti"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Išsaugoti/Šabloną"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Išsaugoti/Įprastąjį"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Išsaugoti/Į bylą"
-
-#~ msgid "/Delete"
-#~ msgstr "/Šalinti"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Šalinti/Šabloną"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Įkelti automatinį šabloną"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Įkelti ekvalaizerio šabloną"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Pašalinti automatiškai įsikeliantį šabloną"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
-
-#~ msgid "/Update View"
-#~ msgstr "/Atnaujinti vaizdą"
-
-#~ msgid "/Select All"
-#~ msgstr "/Žymėti visus"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Rūšiuoti grojaraštį/pagal datą"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal bylos vardą"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal kelią ir bylą"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal datą"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal datą"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
-
-#, fuzzy
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Kita</b>"
-
-#, fuzzy
-#~ msgid "About AudioCompress"
-#~ msgstr "Apie MPEG audio įskiepį"
-
-#~ msgid "Ok"
-#~ msgstr "Gerai"
-
-#, fuzzy
-#~ msgid "About Extra Stereo Plugin"
-#~ msgstr "Apie ESounD įskiepį"
-
-#, fuzzy
-#~ msgid "Effect intensity:"
-#~ msgstr "_Efektų įskiepių sąrašas:"
-
-#, fuzzy
-#~ msgid "Cancel"
-#~ msgstr "Dance"
-
-#, fuzzy
-#~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "Apie ESounD įskiepį"
-
-#, fuzzy
-#~ msgid "LIRC Plugin "
-#~ msgstr "Įskiepiai"
-
-#, fuzzy
-#~ msgid "LIRC Plugin"
-#~ msgstr "Įskiepiai"
-
-#~ msgid "Username:"
-#~ msgstr "Vartotojas:"
-
-#~ msgid "Password:"
-#~ msgstr "Slaptažodis:"
-
-#, fuzzy
-#~ msgid "About Scrobbler Plugin"
-#~ msgstr "Apie ESounD įskiepį"
-
-#, fuzzy
-#~ msgid "Scrobbler Plugin"
-#~ msgstr "Įskiepiai"
-
-#, fuzzy
-#~ msgid "Commands"
-#~ msgstr "Komentaras"
-
-#, fuzzy
-#~ msgid "Command:"
-#~ msgstr "Komentaras:"
-
-#, fuzzy
-#~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr "Aprašus įkelti tik rodant bylą grojaraštyje"
-
-#, fuzzy
-#~ msgid "About "
-#~ msgstr "Apie BMP"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - warning"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - select file"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#~ msgid "Name:"
-#~ msgstr "Pavadinimas:"
-
-#, fuzzy
-#~ msgid " MIDI Info "
-#~ msgstr "Apie CD"
-
-#, fuzzy
-#~ msgid "Length (msec):"
-#~ msgstr "Trukmė:"
-
-#, fuzzy
-#~ msgid "Num of Tracks:"
-#~ msgstr "Šokti į takelį"
-
-#~ msgid "CD Audio Plugin"
-#~ msgstr "CD audio įskiepis"
-
-#~ msgid "CD Audio Track %02u"
-#~ msgstr "CD audio takelis %02u"
-
-#~ msgid "(unknown)"
-#~ msgstr "(nežinomas)"
-
-#~ msgid "Drive %d"
-#~ msgstr "Įrenginys %d"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nepavyko atverti įrenginio %s\n"
-#~ "Klaida: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nepavyko nuskaityti disko turinio\n"
-#~ "Gal diskų įrenginyje nėra disko?\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "Įrenginys %s OK.\n"
-#~ "Diske yra %d takeliai"
-
-# msgstr[0] ""
-# "Įrenginys %s OK.\n"
-# "Diske yra %d takelis"
-# msgstr[2] ""
-# "Įrenginys %s OK.\n"
-# "Diske yra %d takelių"
-#~ msgid " (%d data tracks)"
-#~ msgstr " (%d duomenų takeliai)"
-
-# msgstr[0] " (%d duomenų takelis)"
-# msgstr[2] " (%d duomenų takelių)"
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Bendra trukmė: %d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr ""
-#~ "Skaitmeninio garso nuskaitymas neišbandytas, nes diske nėra garso "
-#~ "takelių\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Skaitmeninio garso nuskaitymo testas: OK\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Skaitmeninio garso nuskaitymo testas nepavyko: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "Nepavyko ištrinti aplanko %s\n"
-#~ "Klaida: %s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Klaida: %s egzistuoja, tačiau tai nėra segtuvas"
-
-#~ msgid "Directory %s OK."
-#~ msgstr "Aplankas %s OK."
-
-#~ msgid "Device:"
-#~ msgstr "įrenginys:"
-
-#~ msgid "_Device:"
-#~ msgstr "Į_renginys:"
-
-#~ msgid "Dir_ectory:"
-#~ msgstr "_Aplankas:"
-
-#~ msgid "Play mode:"
-#~ msgstr "Grojimo režimas:"
-
-#~ msgid "Analog"
-#~ msgstr "Analoginis"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "Skaitmeninis garso nuskaitymas"
-
-#~ msgid "No mixer"
-#~ msgstr "Jokio mikserio"
-
-#~ msgid "CDROM drive"
-#~ msgstr "CDROM įrenginys"
-
-#~ msgid "OSS mixer"
-#~ msgstr "OSS mikseris"
-
-#~ msgid "Check drive..."
-#~ msgstr "Patikrinti įrenginį…"
-
-#~ msgid "Remove drive"
-#~ msgstr "Pašalinti įrenginį"
-
-#~ msgid "CD Audio Player Configuration"
-#~ msgstr "CD Audio grotuvo konfigūravimas"
-
-#~ msgid "Add drive"
-#~ msgstr "Pridėti įrenginį"
-
-#~ msgid "Device"
-#~ msgstr "įrenginys"
-
-#~ msgid "CDDB:"
-#~ msgstr "CDDB:"
-
-#~ msgid "Use CDDB"
-#~ msgstr "Naudoti CDDB"
-
-#~ msgid "Get server list"
-#~ msgstr "Parsisiųsti serverių sąrašą"
-
-#~ msgid "Show network window"
-#~ msgstr "Parodyti tinklo langą"
-
-#~ msgid "CDDB server:"
-#~ msgstr "CDDB serveris:"
-
-#~ msgid "CD Index:"
-#~ msgstr "CD rodyklė:"
-
-#~ msgid "Use CD Index"
-#~ msgstr "Naudoti CD rodyklę"
-
-#~ msgid "CD Index server:"
-#~ msgstr "CD rodyklės serveris:"
-
-#~ msgid "Override generic titles"
-#~ msgstr "Nepaisyti bendro pavadinimų formato"
-
-#~ msgid "Name format:"
-#~ msgstr "Pavadinimo formatas:"
-
-#~ msgid "CD Info"
-#~ msgstr "Apie CD"
-
-#, fuzzy
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Į japonų k.:"
-
-#, fuzzy
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "  (blogas UTF-8)"
-
-#, fuzzy
-#~ msgid "Korean (UHC)"
-#~ msgstr "Į korėjiečių k.:"
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Išrinkite aplanką, kuriame saugosite MPEG srautus:"
-
-#, fuzzy
-#~ msgid "Resolution"
-#~ msgstr "Raiška:"
-
-#, fuzzy
-#~ msgid "16 bps"
-#~ msgstr "16 bitų"
-
-#~ msgid "Buffering:"
-#~ msgstr "Buferiavimas:"
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "Buferio dydis (kb):"
-
-#~ msgid "Pre-buffer (percent):"
-#~ msgstr "Išankstinis buferiavimas (procentais):"
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "Išsaugoti srautą diske:"
-
-#~ msgid "Save stream to disk"
-#~ msgstr "Išsaugoti srautą diske"
-
-#~ msgid "Path:"
-#~ msgstr "Kelias:"
-
-#~ msgid "Browse"
-#~ msgstr "naršyti"
-
-#~ msgid "SHOUT/Icecast:"
-#~ msgstr "SHOUT/Icecast:"
-
-#~ msgid "Enable Icecast Metadata UDP Channel"
-#~ msgstr "Aktyvuoti Icecast metainformacijos UDP kanalą"
-
-#~ msgid "Streaming"
-#~ msgstr "Srautai"
-
-#, fuzzy
-#~ msgid "About Flac Plugin"
-#~ msgstr "Apie ESounD įskiepį"
-
-#, fuzzy
-#~ msgid "Samplerate: %d Hz"
-#~ msgstr "Semplų dažnis:"
-
-#, fuzzy
-#~ msgid "Channels: %d"
-#~ msgstr "Kanalai:"
-
-# msgstr[0] " (%d duomenų takelis)"
-# msgstr[2] " (%d duomenų takelių)"
-#, fuzzy
-#~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
-#~ msgstr ""
-#~ "\n"
-#~ "Bendra trukmė: %d:%d\n"
-
-#, fuzzy
-#~ msgid "Filesize: %ld B"
-#~ msgstr "Bylos dydis:"
-
-#, fuzzy
-#~ msgid "Tag:"
-#~ msgstr "Tango"
-
-#~ msgid "Comment:"
-#~ msgstr "Komentaras:"
-
-#~ msgid "Date:"
-#~ msgstr "Data:"
-
-#~ msgid "Track number:"
-#~ msgstr "Takelio numeris:"
-
-#~ msgid "Genre:"
-#~ msgstr "Žanras:"
-
-#, fuzzy
-#~ msgid "Remove Tag"
-#~ msgstr "/Pašalinti visus"
-
-#, fuzzy
-#~ msgid "FLAC Info:"
-#~ msgstr "Apie CD"
-
-#, fuzzy
-#~ msgid "File Info - %s"
-#~ msgstr "Apie bylą"
-
-# msgstr[0] "%lu Baitas"
-# msgstr[1] "%lu Baitai"
-#~ msgid "Error"
-#~ msgstr "Klaida"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "IEŠKAU %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "Nepavyko rasti hosto %s"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "JUNGIUOSI PRIE %s:%d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "Nepavyko prisijungti prie hosto %s"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "PRISIJUNGIAU. LAUKIU ATSAKYMO"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "Nepavyko prisijungti prie hosto %s\n"
-#~ "Serveris pranešė: %s"
-
-#~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "BUFERIUOJU: %dKB/%dKB"
-
-#, fuzzy
-#~ msgid "FLAC Audio Plugin"
-#~ msgstr "CD audio įskiepis"
-
-#, fuzzy
-#~ msgid "ModPlug Configuration"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#~ msgid "16 bit"
-#~ msgstr "16 bitų"
-
-#~ msgid "8 bit"
-#~ msgstr "8 bitai"
-
-#, fuzzy
-#~ msgid "Resampling"
-#~ msgstr "Srautai"
-
-#, fuzzy
-#~ msgid "Fast Playlist Info"
-#~ msgstr "Įkrauti grojaraštį"
-
-#, fuzzy
-#~ msgid "Reverb"
-#~ msgstr "Serveris"
-
-#, fuzzy
-#~ msgid "Depth"
-#~ msgstr "Duet"
-
-#, fuzzy
-#~ msgid "Amount"
-#~ msgstr "Apie BMP"
-
-#, fuzzy
-#~ msgid "Range"
-#~ msgstr "Rave"
-
-#, fuzzy
-#~ msgid "MOD Info"
-#~ msgstr "Apie CD"
-
-#, fuzzy
-#~ msgid "Samples"
-#~ msgstr "c"
-
-#, fuzzy
-#~ msgid "Instruments"
-#~ msgstr "Instrumental"
-
-#, fuzzy
-#~ msgid "About Modplug"
-#~ msgstr "Apie ESounD įskiepį"
-
-#~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#~ msgid "Resolution:"
-#~ msgstr "Raiška:"
-
-#~ msgid "Channels:"
-#~ msgstr "Kanalai:"
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "Stereo (jei įmanoma)"
-
-#~ msgid "Down sample:"
-#~ msgstr "Kokybės santykis:"
-
-#~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
-#~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
-#~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
-#~ msgid "Decoder"
-#~ msgstr "Dekoderis"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "ID3 žymos:"
-
-#~ msgid "ID3 format:"
-#~ msgstr "Pavadinimo formatas:"
-
-#~ msgid "Joint stereo"
-#~ msgstr "Jungtinis stereo"
-
-#~ msgid "Dual channel"
-#~ msgstr "Du kanalai"
-
-#~ msgid "Single channel"
-#~ msgstr "Vienas kanalas"
-
-#~ msgid "%d KBit/s"
-#~ msgstr "%d KBit/s"
-
-#~ msgid "%ld Hz"
-#~ msgstr "%ld Hz"
-
-#~ msgid "50/15 ms"
-#~ msgstr "50/15 ms"
-
-#~ msgid "CCIT J.17"
-#~ msgstr "CCIT J.17"
-
-#~ msgid "No"
-#~ msgstr "Ne"
-
-#~ msgid "Yes"
-#~ msgstr "Taip"
-
-#~ msgid " MPEG Info "
-#~ msgstr "MPEG informacija"
-
-#~ msgid "MPEG Level:"
-#~ msgstr "MPEG lygis:"
-
-#~ msgid "Sample rate:"
-#~ msgstr "Semplų dažnis:"
-
-#~ msgid "File size:"
-#~ msgstr "Bylos dydis:"
-
-#, fuzzy
-#~ msgid "Mode:"
-#~ msgstr "Dekoderis:"
-
-#~ msgid "Error Protection:"
-#~ msgstr "Apsauga nuo klaidų:"
-
-#~ msgid "Copyright:"
-#~ msgstr "Apsaugota autorinėmis teisėmis:"
-
-#~ msgid "Original:"
-#~ msgstr "Originalas:"
-
-#~ msgid "Emphasis:"
-#~ msgstr "Pabrėžimas:"
-
-#~ msgid " ID3 Tag "
-#~ msgstr " ID3 žyma"
-
-#~ msgid "Year:"
-#~ msgstr "Metai:"
-
-#~ msgid "N/A"
-#~ msgstr "Neprieinama"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%lu Bytes"
-#~ msgstr "%lu Baitų"
-
-#, fuzzy
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Nepavyko prisijungti prie hosto %s"
-
-#, fuzzy
-#~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "BUFERIUOJU: %dKB/%dKB"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "Apie MPEG audio įskiepį"
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "MPEG audio įskiepis"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "22000 Hz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "44100 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Sample Width"
-#~ msgstr "Semplų dažnis:"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration File"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin %s"
-#~ msgstr "įvesties įskiepis: %s"
-
-#, fuzzy
-#~ msgid "Couldn't load MIDI file"
-#~ msgstr "Nepavyko rasti hosto %s"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr "Išrinkite aplanką, kuriame saugosite Ogg Vorbis srautus:"
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Ogg Vorbis garso įskiepio kofigūravimas"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Ogg Vorbis žymos:"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Įvyko klaida:\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "Klaida!"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "Nepavyko pakeisti (atverti) žymos"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "Nepavyko pakeisti (užverti) žymos"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "Nepavyko pakeisti žymos"
-
-#~ msgid " Ogg Vorbis Tag "
-#~ msgstr " Ogg Vorbis žyma"
-
-#~ msgid "Description:"
-#~ msgstr "Aprašymas:"
-
-#~ msgid "Version:"
-#~ msgstr "Versija:"
-
-#~ msgid "ISRC number:"
-#~ msgstr "ISRC numeris:"
-
-#~ msgid "Organization:"
-#~ msgstr "Organizacija:"
-
-#~ msgid " Ogg Vorbis Info "
-#~ msgstr " Ogg Vorbis informacija"
-
-#~ msgid "Length:"
-#~ msgstr "Trukmė:"
-
-#~ msgid "%d KBit/s (nominal)"
-#~ msgstr "%d KBit/s (nominaliai)"
-
-#~ msgid "%d Hz"
-#~ msgstr "%d Hz"
-
-#~ msgid "%d"
-#~ msgstr "%d"
-
-#~ msgid "%d:%.2d"
-#~ msgstr "%d:%.2d"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d Baitų"
-
-# msgstr[0] "%d Baitas"
-# msgstr[1] "%d Baitai"
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Ogg Vorbis audio įskiepis"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "Apie Ogg Vorbis audio įskiepį"
-
-#~ msgid ""
-#~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
-#~ "\n"
-#~ "Original code by\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contributions from\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
-#~ msgstr ""
-#~ "Ogg Vorbis įskiepio autoriai - Xiph.org Foundation\n"
-#~ "\n"
-#~ "Pradinis kodas:\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Papildymai:nChris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Aplankykite Xiph.org Foundation adresu http://www.xiph.org/\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the xmms_sndfile plugin which is:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "51 Franklin Street, Fifth Floor, \n"
-#~ "Boston, MA  02110-1301  USA"
-#~ msgstr ""
-#~ "XMMS ESounD įskiepis\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "WAV audio įskiepis"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "Apie BMP"
-
-#, fuzzy
-#~ msgid " Close "
-#~ msgstr "/Užverti"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "Apie OSS įskiepį"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS OSS tvarkyklė\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Default (%s)"
-#~ msgstr "Įprastasis (%s)"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "OSS tvarkyklės konfigūravimas"
-
-#~ msgid "Audio device:"
-#~ msgstr "Garso įrenginys:"
-
-#~ msgid "Use alternate device:"
-#~ msgstr "Naudoti alternatyvų įrenginį:"
-
-#~ msgid "Mixer device:"
-#~ msgstr "Mikserio įrenginys:"
-
-#~ msgid "Devices"
-#~ msgstr "įrenginiai"
-
-#~ msgid "Buffer size (ms):"
-#~ msgstr "Buferio dydis (ms):"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "Mikserio nustatymai:"
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "Garsas reguliuoja pagrindinį, o ne PCM kanalą"
-
-#~ msgid "Mixer"
-#~ msgstr "Mikseris"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "Apie ALSAįskiepį"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ALSA Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-#~ msgstr ""
-#~ "XMMS ALSA tvarkyklė\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA.\n"
-#~ "Autorius: Matthieu Sozeau (mattam@altern.org)"
-
-#~ msgid "ALSA %s output plugin"
-#~ msgstr "ALSA %s išvesties įskiepis"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "Nežinoma garso plokštė"
-
-#~ msgid "Default PCM device (%s)"
-#~ msgstr "Įprastasis PCM įrenginys (%s)"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "ALSA tvarkyklės konfigūravimas"
-
-#~ msgid "Mixer:"
-#~ msgstr "Mikseris:"
-
-#~ msgid "Mixer card:"
-#~ msgstr "Mikserio korta:"
-
-#~ msgid "Device settings"
-#~ msgstr "Įrenginio nustatymai:"
-
-#, fuzzy
-#~ msgid "Soundcard:"
-#~ msgstr "Soundtrack"
-
-#~ msgid "Buffer time (ms):"
-#~ msgstr "Buferio dydis (ms):"
-
-#~ msgid "Period time (ms):"
-#~ msgstr "Periodas (ms):"
-
-#~ msgid "Advanced settings"
-#~ msgstr "Papildomi nustatymai"
-
-#, fuzzy
-#~ msgid "aRts Driver configuration"
-#~ msgstr "OSS tvarkyklės konfigūravimas"
-
-#, fuzzy
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Išrinkite aplanką, kuriame saugosite MPEG srautus:"
-
-#, fuzzy
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "OSS tvarkyklės konfigūravimas"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "Apie ESounD įskiepį"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD įskiepis\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Host:"
-#~ msgstr "Hostas:"
-
-#~ msgid "Use remote host"
-#~ msgstr "Naudoti nutolusį hostą"
-
-#~ msgid "Volume controls OSS mixer"
-#~ msgstr "Garsas reguliuoja OSS mikserį"
-
-#~ msgid "Server"
-#~ msgstr "Serveris"
-
-#~ msgid "eSound Output Plugin"
-#~ msgstr "eSound išvesties įskiepis"
-
-#, fuzzy
-#~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "eSound išvesties įskiepis"
-
-#, fuzzy
-#~ msgid "About the Sun Driver"
-#~ msgstr "Apie OSS įskiepį"
-
-#, fuzzy
-#~ msgid "Audio control device:"
-#~ msgstr "Garso įrenginys:"
-
-#, fuzzy
-#~ msgid "Volume controls device:"
-#~ msgstr "Garso valdymas:"
-
-#, fuzzy
-#~ msgid "Sun driver configuration"
-#~ msgstr "OSS tvarkyklės konfigūravimas"
-
-#~ msgid "/Toggle Decorations"
-#~ msgstr "/Perjungti dekoracijų vaizdavimą"
-
-#~ msgid "Blur scope"
-#~ msgstr "Akiratis"
-
-#~ msgid "Blur Scope: Color selection"
-#~ msgstr "Akiratis: spalvos pasirinkimas"
-
-#~ msgid "Options:"
-#~ msgstr "Nustatymai:"
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "** DVIGUBAS DYDIS PAŠALINTAS IŠ PROGRAMOS **"
-
-#, fuzzy
-#~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>Grojimas</b>"
-
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "MPEG garso įskiepio konfigūravimas"
-
-#, fuzzy
-#~ msgid "Song Change Configuration"
-#~ msgstr "CD Audio grotuvo konfigūravimas"
-
-#, fuzzy
-#~ msgid "Song Metadata"
-#~ msgstr "Sonata"
-
-#, fuzzy
-#~ msgid "Port"
-#~ msgstr "Portas:"
-
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "Bylos pavadinimas"
-
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "Takelio pavadinimas"
-
-#, fuzzy
-#~ msgid "ALSA output ports"
-#~ msgstr "ALSA %s išvesties įskiepis"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Konvertuoti ID3 aprašus į UTF-8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "ID3 aprašų koduotė:"
-
-#, fuzzy
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Konvertuoti ID3 aprašus į UTF-8"
-
-#, fuzzy
-#~ msgid "Vorbis encoding:"
-#~ msgstr "ID3 aprašų koduotė:"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>Vizualizacija</b>"
-
-#, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "Kanalai:"
-
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Bylos vardas</b>"
-
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "Apie CD"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>_Šriftai:</b>"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Grojimas</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "Tango"
-
-#~ msgid "Artem Baguinski"
-#~ msgstr "Artem Baguinski"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Andrei Badea"
-#~ msgstr "Andrei Badea"
-
-#~ msgid "Peter Behroozi"
-#~ msgstr "Peter Behroozi"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Liviu Danicel"
-#~ msgstr "Liviu Danicel"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "Dan Korostelev"
-
-#~ msgid "Jolan Luff"
-#~ msgstr "Jolan Luff"
-
-#~ msgid "Michael Marineau"
-#~ msgstr "Michael Marineau"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Julien Portalier"
-#~ msgstr "Julien Portalier"
-
-#~ msgid "Andrew Ruder"
-#~ msgstr "Andrew Ruder"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Philipi Pinto"
-#~ msgstr "Philipi Pinto"
-
-#~ msgid "Thierry Vignaud"
-#~ msgstr "Thierry Vignaud"
-
-#~ msgid "Jan Narovec"
-#~ msgstr "Jan Narovec"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "Kouzinopoulos Haris"
-#~ msgstr "Kouzinopoulos Haris"
-
-#~ msgid "Laszlo Dvornik"
-#~ msgstr "Laszlo Dvornik"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "Alessio D'Ascanio"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Arangel Angov"
-#~ msgstr "Arangel Angov"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Pavel Kanzelsberger"
-#~ msgstr "Pavel Kanzelsberger"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Įskiepiai</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Media įskiepių sąrašas"
-
-#, fuzzy
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "Pakeitimas išsaugotas BMP nustatymų duomenų bazėje, tačiau jis įsigalios "
-#~ "tik pradėjus groti kitą dainą!\n"
-#~ "\n"
-#~ "Jei norite, galite sustabdyti ir perleisti esamą dainą, kad pakeitimai "
-#~ "įsigaliotų nedelsiant."
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Išvaizda</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Pelė</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Grojaraštis</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Ekvalaizeris</b></span>"
-
-#~ msgid "Use proxy"
-#~ msgstr "Naudoti tarpinę stotį"
-
-#~ msgid "Frames:"
-#~ msgstr "Kadrai:"
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Kintamas,\n"
-#~ "vid. greitis:·%d·KBit/s"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nepavyksta įrašyti bylos: %s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Nepavyko įrašyti žymos!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nepavyksta atverti bylos: %s"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nepavyksta apkapoti bylos: %s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Nepavyko pašalinti žymos!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Šalinama žyma neegzistuoja!"
-
-#~ msgid "Copy album tags"
-#~ msgstr "Kopijuoti albumo duomenis"
-
-#~ msgid "Paste album tags"
-#~ msgstr "Įdėti albumo duomenis"
-
-#, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "Apie MPEG audio įskiepį"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "MPEG audio įskiepis"
-
-#~ msgid "Content"
-#~ msgstr "Turinys"
-
-#~ msgid "Extension"
-#~ msgstr "Plėtinys"
-
-#~ msgid "Extension and content"
-#~ msgstr "Turinys ir plėtinys"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD įskiepis\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid " Enable"
-#~ msgstr "Įjungtas"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "Apie ESounD įskiepį"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Papildomi nustatymai"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Papildomi nustatymai"
-
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "c"
-
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "c"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Garso valdymas:"
-
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "Buferio dydis (ms):"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Buferio dydis (ms):"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Aprašymas:"
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Išeiti"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Data:"
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Kartoti"
-
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Įskiepiai"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Garso valdymas:"
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Garso valdymas:"
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "/Išsaugoti/Į bylą"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "_Vizualizacijos įskiepių sąrašas:"
-
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "_Vizualizacijos įskiepių sąrašas:"
-
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "Įskiepiai"
-
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "Įjungtas"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Versija:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Terror"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Nepavyko inicializuoti gnome-vfs.\n"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ATJUNGTI „VISADA VIRŠUJE“ (N/A)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ĮJUNGTI „VISADA VIRŠUJE“ (N/A)"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "Kokybės santykis:"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "_Aplankas:"
-
-#~ msgid "Add Folders"
-#~ msgstr "Pridėti aplankus"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Pridėti bylas…"
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "3DNow! optimizuotas dekoderis"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "MMX optimizuotas dekoderis"
-
-#~ msgid "FPU decoder"
-#~ msgstr "FPU dekoderis"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "mpg123 dekodavimo variklio autorius Michael Hipp <mh@mpg123.de>\n"
-#~ "Įskiepį parašė XMMS komanda"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Papildomi nustatymai:"
-
-#, fuzzy
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "Buferio dydis (ms):"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Mmap režimas"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Interneto svetainė ir grafika:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "BMP ekvalaizeris"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Multimedijos grotuvas „Beep“"
-
-#~ msgid "/About BMP"
-#~ msgstr "/Apie BMP"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Add Internet Address"
-#~ msgstr "Pridėti adresą internete…"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Vlad Gerasimov"
-
-#~ msgid "/By extension"
-#~ msgstr "/Pagal plėtinį"
-
-#~ msgid "Add Folders - BMP"
-#~ msgstr "Pridėti aplankus – BMP"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "?Rūšiuoti pagal pavadinimą"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "/Rūšiuoti pagal bylos vardą"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/Rūšiuoti pagal datą"
