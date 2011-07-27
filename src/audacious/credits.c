@@ -261,6 +261,7 @@ static const gchar *translators_text[] = {
     N_("Lithuanian:"),
     "Paul Daukas",
     "Rimas Kudelis",
+    "Algimantas Margevičius",
     NULL,
     N_("Macedonian:"),
     "Arangel Angov",
