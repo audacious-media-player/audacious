@@ -2056,7 +2056,7 @@ void playlist_save_state (void)
 
     FILE * handle = fopen (scratch, "w");
     if (! handle)
-        return;
+        LEAVE_RET_VOID;
 
     fprintf (handle, "active %d\n", active_playlist->number);
     fprintf (handle, "playing %d\n", playing_playlist ? playing_playlist->number
