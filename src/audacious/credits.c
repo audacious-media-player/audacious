@@ -308,6 +308,7 @@ static const gchar *translators_text[] = {
     N_("Traditional Chinese:"),
     "Cheng-Wei Chien",
     "Sylecn Song",
+    "Ruei-Yuan Lu",
     "Yang Zhang",
     NULL,
     N_("Turkish:"),
