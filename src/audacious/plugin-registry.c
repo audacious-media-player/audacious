@@ -27,7 +27,6 @@
  * loaded and while loading it. */
 
 #include <glib.h>
-#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -172,9 +171,10 @@ static void plugin_free (PluginHandle * plugin)
 
 static FILE * open_registry_file (const gchar * mode)
 {
-    gchar path[PATH_MAX];
-    snprintf (path, sizeof path, "%s/" FILENAME, get_path (AUD_PATH_USER_DIR));
-    return fopen (path, mode);
+    gchar * path = g_strdup_printf ("%s/" FILENAME, get_path (AUD_PATH_USER_DIR));
+    FILE * file = fopen (path, mode);
+    g_free (path);
+    return file;
 }
 
 static void transport_plugin_save (PluginHandle * plugin, FILE * handle)

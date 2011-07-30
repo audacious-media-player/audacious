@@ -118,7 +118,7 @@ AUD_COMMON_PROGS
 
 dnl Check for headers and functions
 dnl ===============================
-AC_CHECK_HEADERS([unistd.h fcntl.h limits.h fts.h execinfo.h sys/errno.h regex.h rxposix.h rx/rxposix.h])
+AC_CHECK_HEADERS([unistd.h fcntl.h fts.h execinfo.h sys/errno.h regex.h rxposix.h rx/rxposix.h])
 AC_CHECK_FUNCS([sigwait backtrace])
 
 ### ---------------------------------------------------------------------------

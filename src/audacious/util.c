@@ -24,7 +24,6 @@
  */
 
 #include <dirent.h>
-#include <limits.h>
 #include <unistd.h>
 
 #ifdef _WIN32
@@ -63,19 +62,18 @@ gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user)
     DIR * dir = opendir (path);
     if (! dir)
         return FALSE;
-    
-    gchar full[PATH_MAX];
-    gint len = snprintf (full, sizeof full, "%s" G_DIR_SEPARATOR_S, path);
-    
+
     struct dirent * entry;
     while ((entry = readdir (dir)))
     {
         if (entry->d_name[0] == '.')
             continue;
-        
-        snprintf (full + len, sizeof full - len, "%s", entry->d_name);
 
-        if (func (full, entry->d_name, user))
+        gchar * full = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s", path, entry->d_name);
+        gboolean stop = func (full, entry->d_name, user);
+        g_free (full);
+
+        if (stop)
             break;
     }
 
@@ -158,24 +156,35 @@ make_directory(const gchar * path, mode_t mode)
 
 gchar * get_path_to_self (void)
 {
-    gchar buf[PATH_MAX];
-    gint len;
+    gint size = 256;
+    gchar * buf = g_malloc (size);
+
+    while (1)
+    {
+        gint len;
 
 #ifdef _WIN32
-    if (! (len = GetModuleFileName (NULL, buf, sizeof buf)) || len == sizeof buf)
-    {
-        fprintf (stderr, "GetModuleFileName failed.\n");
-        return NULL;
-    }
+        if (! (len = GetModuleFileName (NULL, buf, size)))
+        {
+            fprintf (stderr, "GetModuleFileName failed.\n");
+            g_free (buf);
+            return NULL;
+        }
 #else
-    if ((len = readlink ("/proc/self/exe", buf, sizeof buf)) < 0)
-    {
-        fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
-        return NULL;
-    }
+        if ((len = readlink ("/proc/self/exe", buf, size)) < 0)
+        {
+            fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
+            g_free (buf);
+            return NULL;
+        }
 #endif
 
-    return g_strndup (buf, len);
+        if (len < size)
+            return buf;
+
+        size += size;
+        buf = g_realloc (buf, size);
+    }
 }
 
 #define URL_HISTORY_MAX_SIZE 30

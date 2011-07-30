@@ -19,7 +19,6 @@
  * using our public API to be a derived work.
  */
 
-#include <limits.h>
 #include <time.h>
 
 #include <glib.h>
@@ -2050,11 +2049,9 @@ void playlist_save_state (void)
 {
     ENTER;
 
-    gchar scratch[PATH_MAX];
-    snprintf (scratch, sizeof scratch, "%s/" STATE_FILE,
-     get_path (AUD_PATH_USER_DIR));
-
-    FILE * handle = fopen (scratch, "w");
+    gchar * path = g_strdup_printf ("%s/" STATE_FILE, get_path (AUD_PATH_USER_DIR));
+    FILE * handle = fopen (path, "w");
+    g_free (path);
     if (! handle)
         LEAVE_RET_VOID;
 
@@ -2127,11 +2124,9 @@ void playlist_load_state (void)
     ENTER;
     gint playlist_num;
 
-    gchar scratch[PATH_MAX];
-    snprintf (scratch, sizeof scratch, "%s/" STATE_FILE,
-     get_path (AUD_PATH_USER_DIR));
-
-    FILE * handle = fopen (scratch, "r");
+    gchar * path = g_strdup_printf ("%s/" STATE_FILE, get_path (AUD_PATH_USER_DIR));
+    FILE * handle = fopen (path, "r");
+    g_free (path);
     if (! handle)
         LEAVE_RET_VOID;
 

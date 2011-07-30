@@ -24,7 +24,6 @@
  */
 
 #include <errno.h>
-#include <limits.h>
 
 #include <gtk/gtk.h>
 
@@ -297,30 +296,28 @@ static void parse_options (gint * argc, gchar *** argv)
 
 static gboolean get_lock (void)
 {
-    gchar path[PATH_MAX];
-    snprintf (path, sizeof path, "%s" G_DIR_SEPARATOR_S "lock",
-     aud_paths[AUD_PATH_USER_DIR]);
-
+    gchar * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
     int handle = open (path, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 
     if (handle < 0)
     {
         if (errno != EEXIST)
             fprintf (stderr, "Cannot create %s: %s.\n", path, strerror (errno));
+
+        g_free (path);
         return FALSE;
     }
 
     close (handle);
+    g_free (path);
     return TRUE;
 }
 
 static void release_lock (void)
 {
-    gchar path[PATH_MAX];
-    snprintf (path, sizeof path, "%s" G_DIR_SEPARATOR_S "lock",
-     aud_paths[AUD_PATH_USER_DIR]);
-
+    gchar * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
     unlink (path);
+    g_free (path);
 }
 
 static GList * convert_filenames (void)

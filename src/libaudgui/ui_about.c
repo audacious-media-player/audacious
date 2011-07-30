@@ -24,8 +24,6 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <limits.h>
-
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -75,11 +73,10 @@ audgui_show_about_window(void)
     GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    gchar name[PATH_MAX];
-    snprintf (name, sizeof name, "%s/images/about-logo.png", aud_get_path
-     (AUD_PATH_DATA_DIR));
+    gchar * name = g_strdup_printf ("%s/images/about-logo.png", aud_get_path (AUD_PATH_DATA_DIR));
     GtkWidget * image = gtk_image_new_from_file (name);
     gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
+    g_free (name);
 
     brief_label = gtk_label_new(NULL);
     text = g_strdup_printf(_(audacious_brief), VERSION);
@@ -87,7 +84,7 @@ audgui_show_about_window(void)
     gtk_label_set_markup(GTK_LABEL(brief_label), text);
     gtk_label_set_justify(GTK_LABEL(brief_label), GTK_JUSTIFY_CENTER);
     g_free(text);
-    
+
     gtk_box_pack_start ((GtkBox *) vbox, brief_label, FALSE, FALSE, 0);
 
     GtkWidget * exp = gtk_expander_new (_("Credits"));
