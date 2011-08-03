@@ -185,6 +185,7 @@ static const gchar *translators_text[] = {
     NULL,
     N_("Brazilian Portuguese:"),
     "Fábio Antunes",
+    "Karen Eliot",
     "Philipi Pinto",
     NULL,
     N_("Breton:"),
