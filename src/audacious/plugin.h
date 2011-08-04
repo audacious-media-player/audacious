@@ -49,7 +49,7 @@
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
 #define _AUD_PLUGIN_VERSION_MIN 31 /* 3.0-alpha2 */
-#define _AUD_PLUGIN_VERSION     31
+#define _AUD_PLUGIN_VERSION     32
 
 /* A NOTE ON THREADS
  *
