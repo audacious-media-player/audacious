@@ -420,10 +420,7 @@ static gboolean set_string (Tuple * tuple, const gint nfield,
         return FALSE;
     }
 
-    if (! string)
-        value->value.string = NULL;
-    else
-        value->value.string = stringpool_get (string, take);
+    value->value.string = stringpool_get (string, take);
 
     TUPLE_UNLOCK_WRITE ();
     return TRUE;
@@ -446,14 +443,15 @@ static gboolean set_string (Tuple * tuple, const gint nfield,
 gboolean tuple_associate_string (Tuple * tuple, const gint nfield,
  const gchar * field, const gchar * string)
 {
-    if (string && ! g_utf8_validate (string, -1, NULL))
+    g_return_val_if_fail (string, FALSE);
+
+    if (! g_utf8_validate (string, -1, NULL))
     {
         fprintf (stderr, "Invalid UTF-8: %s.\n", string);
         return set_string (tuple, nfield, field, str_to_utf8 (string), TRUE);
     }
 
-    gboolean ret = set_string (tuple, nfield, field, (gchar *) string, FALSE);
-    return ret;
+    return set_string (tuple, nfield, field, (gchar *) string, FALSE);
 }
 
 /**
@@ -474,7 +472,9 @@ gboolean tuple_associate_string (Tuple * tuple, const gint nfield,
 gboolean tuple_associate_string_rel (Tuple * tuple, const gint nfield,
  const gchar * field, gchar * string)
 {
-    if (string && ! g_utf8_validate (string, -1, NULL))
+    g_return_val_if_fail (string, FALSE);
+
+    if (g_utf8_validate (string, -1, NULL))
     {
         fprintf (stderr, "Invalid UTF-8: %s.\n", string);
         gchar * copy = str_to_utf8 (string);
