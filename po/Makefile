@@ -43,6 +43,7 @@ LOCALES = ast.po \
 	  sv.po \
 	  tr.po \
 	  uk.po \
+	  vi.po \
 	  zh_CN.po \
 	  zh_TW.po
 
