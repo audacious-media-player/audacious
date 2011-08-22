@@ -27,6 +27,8 @@
 
 #include "misc.h"
 
+gboolean xxx_config_is_set (const gchar * section, const gchar * name);
+
 /**
  * Opens the configuration database.
  *
@@ -61,7 +63,11 @@ cfg_db_get_string(mcs_handle_t * db,
                   const gchar * key,
                   gchar ** value)
 {
-    return get_string (section, key, value);
+    if (! xxx_config_is_set (section, key))
+        return FALSE;
+
+    * value = get_string (section, key);
+    return TRUE;
 }
 
 /**
@@ -77,7 +83,11 @@ gboolean
 cfg_db_get_int(mcs_handle_t * db,
                const gchar * section, const gchar * key, gint * value)
 {
-    return get_int (section, key, value);
+    if (! xxx_config_is_set (section, key))
+        return FALSE;
+
+    * value = get_int (section, key);
+    return TRUE;
 }
 
 /**
@@ -95,7 +105,11 @@ cfg_db_get_bool(mcs_handle_t * db,
                     const gchar * key,
                     gboolean * value)
 {
-    return get_bool (section, key, value);
+    if (! xxx_config_is_set (section, key))
+        return FALSE;
+
+    * value = get_bool (section, key);
+    return TRUE;
 }
 
 /**
@@ -114,12 +128,10 @@ cfg_db_get_float(mcs_handle_t * db,
                      const gchar * key,
                      gfloat * value)
 {
-    gdouble d;
-
-    if (! get_double (section, key, & d))
+    if (! xxx_config_is_set (section, key))
         return FALSE;
 
-    * value = d;
+    * value = get_double (section, key);
     return TRUE;
 }
 
@@ -139,7 +151,11 @@ cfg_db_get_double(mcs_handle_t * db,
                       const gchar * key,
                       gdouble * value)
 {
-    return get_double (section, key, value);
+    if (! xxx_config_is_set (section, key))
+        return FALSE;
+
+    * value = get_double (section, key);
+    return TRUE;
 }
 
 /**
@@ -157,7 +173,7 @@ cfg_db_set_string(mcs_handle_t * db,
                       const gchar * key,
                       const gchar * value)
 {
-    return set_string (section, key, value ? value : "");
+    set_string (section, key, value ? value : "");
 }
 
 /**
@@ -175,7 +191,7 @@ cfg_db_set_int(mcs_handle_t * db,
                    const gchar * key,
                    gint value)
 {
-    return set_int (section, key, value);
+    set_int (section, key, value);
 }
 
 /**
@@ -193,7 +209,7 @@ cfg_db_set_bool(mcs_handle_t * db,
                     const gchar * key,
                     gboolean value)
 {
-    return set_bool (section, key, value);
+    set_bool (section, key, value);
 }
 
 /**
@@ -211,7 +227,7 @@ cfg_db_set_float(mcs_handle_t * db,
                      const gchar * key,
                      gfloat value)
 {
-    return set_double (section, key, value);
+    set_double (section, key, value);
 }
 
 /**
@@ -229,7 +245,7 @@ cfg_db_set_double(mcs_handle_t * db,
                       const gchar * key,
                       gdouble value)
 {
-    return set_double (section, key, value);
+    set_double (section, key, value);
 }
 
 /**

@@ -25,14 +25,17 @@
 
 /* config.c */
 
+AUD_FUNC1 (void, config_clear_section, const gchar *, section)
+AUD_FUNC2 (void, config_set_defaults, const gchar *, section, const gchar * const *, entries)
+
 AUD_FUNC3 (void, set_string, const gchar *, section, const gchar *, name, const gchar *, value)
-AUD_FUNC3 (gboolean, get_string, const gchar *, section, const gchar *, name, gchar * *, addr)
+AUD_FUNC2 (gchar *, get_string, const gchar *, section, const gchar *, name)
 AUD_FUNC3 (void, set_bool, const gchar *, section, const gchar *, name, gboolean, value)
-AUD_FUNC3 (gboolean, get_bool, const gchar *, section, const gchar *, name, gboolean *, addr)
+AUD_FUNC2 (gboolean, get_bool, const gchar *, section, const gchar *, name)
 AUD_FUNC3 (void, set_int, const gchar *, section, const gchar *, name, gint, value)
-AUD_FUNC3 (gboolean, get_int, const gchar *, section, const gchar *, name, gint *, addr)
+AUD_FUNC2 (gint, get_int, const gchar *, section, const gchar *, name)
 AUD_FUNC3 (void, set_double, const gchar *, section, const gchar *, name, gdouble, value)
-AUD_FUNC3 (gboolean, get_double, const gchar *, section, const gchar *, name, gdouble *, addr)
+AUD_FUNC2 (gdouble, get_double, const gchar *, section, const gchar *, name)
 
 /* credits.c */
 AUD_FUNC3 (void, get_audacious_credits, const gchar * *, brief,
