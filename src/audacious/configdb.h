@@ -1,3 +1,5 @@
+/* THIS FILE IS DEPRECATED.  Use the new aud_set/get functions instead. */
+
 /*
  * configdb.h
  * Copyright 2010 John Lindgren
@@ -23,8 +25,9 @@
 #define AUDACIOUS_CONFIGDB_H
 
 #include <glib.h>
-#include <libmcs/mcs.h>
 #include <audacious/api.h>
+
+#define mcs_handle_t void
 
 #define AUD_API_NAME ConfigDBAPI
 #define AUD_API_SYMBOL configdb_api
@@ -34,8 +37,6 @@
 #include "api-local-begin.h"
 #include "configdb-api.h"
 #include "api-local-end.h"
-
-void cfg_db_flush (void);
 
 #else
 

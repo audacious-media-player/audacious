@@ -4,6 +4,7 @@ PROG = audacious${PROG_SUFFIX}
 SRCS = adder.c \
        audconfig.c \
        chardet.c								\
+       config.c \
        configdb.c								\
        credits.c							\
        drct.c \
@@ -112,7 +113,6 @@ CPPFLAGS += -std=gnu99 \
 		${DBUS_CFLAGS}			\
 		${REGEX_CFLAGS}			\
 		${PTHREAD_CFLAGS}		\
-		${LIBMCS_CFLAGS}		\
 		${SIMD_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
 		${EGGSM_CFLAGS}			\
@@ -131,7 +131,6 @@ LIBS += ${LDADD}						\
 		${GTK_LIBS}						\
 		${DBUS_LIBS}					\
 		${MOWGLI_LIBS}					\
-		${LIBMCS_LIBS}					\
 		${REGEX_LIBS}					\
 		${PTHREAD_LIBS}					\
 		${LIBGUESS_LIBS}

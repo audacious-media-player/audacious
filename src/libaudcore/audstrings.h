@@ -78,6 +78,11 @@ gchar *str_replace_fragment(gchar *s, gint size, const gchar *old_str, const gch
 
 void string_canonize_case(gchar *string);
 
+gboolean string_to_int (const gchar * string, gint * addr);
+gboolean string_to_double (const gchar * string, gdouble * addr);
+gchar * int_to_string (gint val);
+gchar * double_to_string (gdouble val);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_STRINGS_H */

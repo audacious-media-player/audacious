@@ -29,6 +29,7 @@
 
 #include "audstrings.h"
 
+#include <math.h>
 #include <stdio.h>
 #include <glib.h>
 #include <audacious/i18n.h>
@@ -508,7 +509,7 @@ gchar * uri_get_extension (const gchar * uri)
     const gchar * slash = strrchr (uri, '/');
     if (! slash)
         return NULL;
-    
+
     gchar * lower = g_ascii_strdown (slash + 1, -1);
 
     gchar * qmark = strchr (lower, '?');
@@ -517,7 +518,7 @@ gchar * uri_get_extension (const gchar * uri)
 
     gchar * dot = strrchr (lower, '.');
     gchar * ext = dot ? g_strdup (dot + 1) : NULL;
-    
+
     g_free (lower);
     return ext;
 }
@@ -691,4 +692,135 @@ string_canonize_case(gchar *str)
         *str = g_ascii_toupper(*str);
         str++;
     }
+}
+
+/*
+ * Routines to convert numbers between string and binary representations.
+ *
+ * Goals:
+ *
+ *  - Accuracy, meaning that we can convert back and forth between string and
+ *    binary without the number changing slightly each time.
+ *  - Consistency, meaning that we get the same results no matter what
+ *    architecture or locale we have to deal with.
+ *  - Readability, meaning that the number one is rendered "1", not "1.000".
+ *
+ * Values are limited between -1,000,000,000 and 1,000,000,000 (inclusive) and
+ * have an accuracy of 6 decimal places.
+ */
+
+gboolean string_to_int (const gchar * string, gint * addr)
+{
+    gboolean neg = (string[0] == '-');
+    if (neg)
+        string ++;
+
+    gint val = 0;
+    gchar c;
+
+    while ((c = * string ++))
+    {
+        if (c < '0' || c > '9' || val > 100000000)
+            goto ERR;
+
+        val = val * 10 + (c - '0');
+    }
+
+    if (val > 1000000000)
+        goto ERR;
+
+    * addr = neg ? -val : val;
+    return TRUE;
+
+ERR:
+    return FALSE;
+}
+
+gboolean string_to_double (const gchar * string, gdouble * addr)
+{
+    gboolean neg = (string[0] == '-');
+    if (neg)
+        string ++;
+
+    const gchar * p = strchr (string, '.');
+    gint i, f;
+
+    if (p)
+    {
+        gchar buf[11];
+        gint len;
+
+        len = p - string;
+        if (len > 10)
+            goto ERR;
+
+        memcpy (buf, string, len);
+        buf[len] = 0;
+
+        if (! string_to_int (buf, & i))
+            goto ERR;
+
+        len = strlen (p + 1);
+        if (len > 6)
+            goto ERR;
+
+        memcpy (buf, p + 1, len);
+        memset (buf + len, '0', 6 - len);
+        buf[6] = 0;
+
+        if (! string_to_int (buf, & f))
+            goto ERR;
+    }
+    else
+    {
+        if (! string_to_int (string, & i))
+            goto ERR;
+
+        f = 0;
+    }
+
+    gdouble val = i + (gdouble) f / 1000000;
+    if (val > 1000000000)
+        goto ERR;
+
+    * addr = neg ? -val : val;
+    return TRUE;
+
+ERR:
+    return FALSE;
+}
+
+gchar * int_to_string (gint val)
+{
+    g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
+    return g_strdup_printf ("%d", val);
+}
+
+gchar * double_to_string (gdouble val)
+{
+    g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
+
+    gboolean neg = (val < 0);
+    if (neg)
+        val = -val;
+
+    gint i = floor (val);
+    gint f = round ((val - i) * 1000000);
+
+    if (f == 1000000)
+    {
+        i ++;
+        f = 0;
+    }
+
+    gchar * s = neg ? g_strdup_printf ("-%d.%06d", i, f) : g_strdup_printf ("%d.%06d", i, f);
+
+    gchar * c = s + strlen (s);
+    while (* (c - 1) == '0')
+        c --;
+    if (* (c - 1) == '.')
+        c --;
+    * c = 0;
+
+    return s;
 }

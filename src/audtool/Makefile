@@ -23,5 +23,4 @@ LDFLAGS += ${AUDLDFLAGS}
 LIBS += ${DBUS_LIBS}				\
 	-L../libaudclient -laudclient	\
 	${GTK_LIBS}						\
-	${MOWGLI_LIBS}					\
-	${LIBMCS_LIBS}
+	${MOWGLI_LIBS}

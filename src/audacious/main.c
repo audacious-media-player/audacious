@@ -63,6 +63,11 @@ void adder_cleanup (void);
 /* chardet.c */
 void chardet_init (void);
 
+/* config.c */
+void config_load (void);
+void config_save (void);
+void config_cleanup (void);
+
 /* mpris-signals.c */
 void mpris_signals_init (void);
 void mpris_signals_cleanup (void);
@@ -490,7 +495,8 @@ static void init_two (void)
     hook_init ();
     tag_init ();
 
-    aud_config_load ();
+    config_load ();
+    aud_config_load (); /* deprecated, must be after config_load */
     tag_set_verbose (cfg.verbose);
     vfs_set_verbose (cfg.verbose);
 
@@ -528,7 +534,7 @@ static void shut_down (void)
     mpris_signals_cleanup ();
 
     AUDDBG ("Capturing state.\n");
-    aud_config_save ();
+    aud_config_save (); /* deprecated, must be before config_save */
     save_playlists ();
 
     AUDDBG ("Unloading highlevel plugins.\n");
@@ -545,7 +551,8 @@ static void shut_down (void)
     stop_plugins_one ();
 
     AUDDBG ("Saving configuration.\n");
-    cfg_db_flush ();
+    config_save ();
+    config_cleanup ();
 
     gdk_threads_leave ();
 }
@@ -553,9 +560,9 @@ static void shut_down (void)
 static gboolean autosave_cb (void * unused)
 {
     AUDDBG ("Saving configuration.\n");
-    aud_config_save ();
-    cfg_db_flush ();
+    aud_config_save (); /* deprecated, must be before config_save */
     save_playlists ();
+    config_save ();
     return TRUE;
 }
 

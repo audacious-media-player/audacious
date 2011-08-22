@@ -206,12 +206,6 @@ AUD_CHECK_MODULE([MOWGLI], [libmowgli], [>= 0.9], [libmowgli],
     [http://www.atheme.org/projects/mowgli.shtml])
 
 
-dnl Check for libmcs
-dnl ================
-AUD_CHECK_MODULE([LIBMCS], [libmcs], [>= 0.7], [libmcs],
-    [http://www.atheme.org/projects/mcs.shtml])
-
-
 dnl SSE2 support
 dnl ============
 AUD_ARG_ENABLE([sse2], [yes], [SSE2 support],

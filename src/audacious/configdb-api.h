@@ -1,3 +1,5 @@
+/* THIS FILE IS DEPRECATED.  Use the new aud_set/get functions instead. */
+
 /*
  * playlist-api.h
  * Copyright 2010 John Lindgren
