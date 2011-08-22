@@ -83,6 +83,9 @@ gboolean string_to_double (const gchar * string, gdouble * addr);
 gchar * int_to_string (gint val);
 gchar * double_to_string (gdouble val);
 
+gboolean string_to_double_array (const gchar * string, gdouble * array, gint count);
+gchar * double_array_to_string (const gdouble * array, gint count);
+
 G_END_DECLS
 
 #endif /* AUDACIOUS_STRINGS_H */

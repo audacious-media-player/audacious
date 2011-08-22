@@ -1,7 +1,7 @@
 /*
  * Audacious: A cross-platform multimedia player
  * Copyright (c) 2007 Ben Tucker
- * Copyright 2009-2010 Audacious development team
+ * Copyright 2009-2011 Audacious development team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,8 @@
 #include <math.h>
 #include <libaudcore/eventqueue.h>
 
-#include "audconfig.h"
 #include "debug.h"
 #include "drct.h"
-#include "equalizer.h"
 #include "playback.h"
 #include "playlist.h"
 #include "interface.h"
@@ -1388,60 +1386,48 @@ gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject * obj, gchar * url, 
 /* New on Nov 7: Equalizer */
 gboolean audacious_rc_get_eq(RemoteObject * obj, gdouble * preamp, GArray ** bands, GError ** error)
 {
-    int i;
-
-    * preamp = cfg.equalizer_preamp;
-    *bands = g_array_sized_new(FALSE, FALSE, sizeof(gdouble), AUD_EQUALIZER_NBANDS);
-
-    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++)
-        g_array_append_val (* bands, cfg.equalizer_bands[i]);
+    * preamp = get_double (NULL, "equalizer_preamp");
+    * bands = g_array_new (FALSE, FALSE, sizeof (gdouble));
+    g_array_set_size (* bands, AUD_EQUALIZER_NBANDS);
+    eq_get_bands ((gdouble *) (* bands)->data);
 
     return TRUE;
 }
 
 gboolean audacious_rc_get_eq_preamp(RemoteObject * obj, gdouble * preamp, GError ** error)
 {
-    * preamp = cfg.equalizer_preamp;
+    * preamp = get_double (NULL, "equalizer_preamp");
     return TRUE;
 }
 
 gboolean audacious_rc_get_eq_band(RemoteObject * obj, gint band, gdouble * value, GError ** error)
 {
-    * value = cfg.equalizer_bands[band];
+    * value = eq_get_band (band);
     return TRUE;
 }
 
 gboolean audacious_rc_set_eq(RemoteObject * obj, gdouble preamp, GArray * bands, GError ** error)
 {
-    int i;
-
-    cfg.equalizer_preamp = preamp;
-
-    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++)
-        cfg.equalizer_bands[i] = g_array_index (bands, gdouble, i);
-
-    hook_call ("equalizer changed", NULL);
+    set_double (NULL, "equalizer_preamp", preamp);
+    eq_set_bands ((gdouble *) bands->data);
     return TRUE;
 }
 
 gboolean audacious_rc_set_eq_preamp(RemoteObject * obj, gdouble preamp, GError ** error)
 {
-    cfg.equalizer_preamp = preamp;
-    hook_call ("equalizer changed", NULL);
+    set_double (NULL, "equalizer_preamp", preamp);
     return TRUE;
 }
 
 gboolean audacious_rc_set_eq_band(RemoteObject * obj, gint band, gdouble value, GError ** error)
 {
-    cfg.equalizer_bands[band] = value;
-    hook_call ("equalizer changed", NULL);
+    eq_set_band (band, value);
     return TRUE;
 }
 
 gboolean audacious_rc_equalizer_activate(RemoteObject * obj, gboolean active, GError ** error)
 {
-    cfg.equalizer_active = active;
-    hook_call ("equalizer changed", NULL);
+    set_bool (NULL, "equalizer_active", active);
     return TRUE;
 }
 

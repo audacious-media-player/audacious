@@ -824,3 +824,43 @@ gchar * double_to_string (gdouble val)
 
     return s;
 }
+
+gboolean string_to_double_array (const gchar * string, gdouble * array, gint count)
+{
+    gchar * * split = g_strsplit (string, ",", -1);
+    if (g_strv_length (split) != count)
+        goto ERR;
+
+    for (gint i = 0; i < count; i ++)
+    {
+        if (! string_to_double (split[i], & array[i]))
+            goto ERR;
+    }
+
+    g_strfreev (split);
+    return TRUE;
+
+ERR:
+    g_strfreev (split);
+    return FALSE;
+}
+
+gchar * double_array_to_string (const gdouble * array, gint count)
+{
+    gchar * * split = g_malloc0 (sizeof (gchar *) * (count + 1));
+
+    for (gint i = 0; i < count; i ++)
+    {
+        split[i] = double_to_string (array[i]);
+        if (! split[i])
+            goto ERR;
+    }
+
+    gchar * string = g_strjoinv (",", split);
+    g_strfreev (split);
+    return string;
+
+ERR:
+    g_strfreev (split);
+    return NULL;
+}

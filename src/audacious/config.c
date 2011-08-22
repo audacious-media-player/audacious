@@ -31,10 +31,21 @@
 #define DEFAULT_SECTION "audacious"
 
 static const gchar * core_defaults[] = {
+
+ /* equalizer */
+ "eqpreset_default_file", "",
+ "eqpreset_extension", "",
+ "equalizer_active", "FALSE",
+ "equalizer_autoload", "FALSE",
+ "equalizer_bands", "0,0,0,0,0,0,0,0,0,0",
+ "equalizer_preamp", "0",
+
+ /* playback */
  "no_playlist_advance", "FALSE",
  "repeat", "FALSE",
  "shuffle", "FALSE",
  "stop_after_current_song", "FALSE",
+
  NULL};
 
 static GStaticMutex mutex = G_STATIC_MUTEX_INIT;

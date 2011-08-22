@@ -8,17 +8,18 @@
  *
  *  Copyright 2001 Anders Johansson <ajh@atri.curtin.edu.au>
  *
- *  Adapted for Audacious by John Lindgren, 2010
+ *  Adapted for Audacious by John Lindgren, 2010-2011
  */
 
 #include <glib.h>
 #include <math.h>
 #include <string.h>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
-#include "audconfig.h"
 #include "equalizer.h"
+#include "misc.h"
 
 #define EQ_BANDS AUD_EQUALIZER_NBANDS
 #define MAX_CHANNELS 10
@@ -80,24 +81,15 @@ void eq_set_format (gint new_channels, gint new_rate)
     g_static_mutex_unlock (& mutex);
 }
 
-static void eq_set_channel_bands (gint channel, gfloat * bands)
+static void eq_set_bands_real (gdouble preamp, gdouble * values)
 {
-    gint k;
+    gfloat adj[EQ_BANDS];
+    for (gint i = 0; i < EQ_BANDS; i ++)
+        adj[i] = preamp + values[i];
 
-    for (k = 0; k < EQ_BANDS; k ++)
-        gv[channel][k] = pow (10, bands[k] / 20) - 1;
-}
-
-static void eq_set_bands (gfloat preamp, gfloat * bands)
-{
-    gfloat adjusted[EQ_BANDS];
-    gint i;
-
-    for (i = 0; i < EQ_BANDS; i ++)
-        adjusted[i] = preamp + bands[i];
-
-    for (i = 0; i < MAX_CHANNELS; i ++)
-        eq_set_channel_bands (i, adjusted);
+    for (gint c = 0; c < MAX_CHANNELS; c ++)
+    for (gint i = 0; i < EQ_BANDS; i ++)
+        gv[c][i] = pow (10, adj[i] / 20) - 1;
 }
 
 void eq_filter (gfloat * data, gint samples)
@@ -146,12 +138,15 @@ void eq_filter (gfloat * data, gint samples)
     g_static_mutex_unlock (& mutex);
 }
 
-static void eq_update (void * data, void * user_data)
+static void eq_update (void * data, void * user)
 {
     g_static_mutex_lock (& mutex);
 
-    active = cfg.equalizer_active;
-    eq_set_bands (cfg.equalizer_preamp, cfg.equalizer_bands);
+    active = get_bool (NULL, "equalizer_active");
+
+    gdouble values[EQ_BANDS];
+    eq_get_bands (values);
+    eq_set_bands_real (get_double (NULL, "equalizer_preamp"), values);
 
     g_static_mutex_unlock (& mutex);
 }
@@ -159,5 +154,40 @@ static void eq_update (void * data, void * user_data)
 void eq_init (void)
 {
     eq_update (NULL, NULL);
-    hook_associate ("equalizer changed", eq_update, NULL);
+    hook_associate ("set equalizer_active", eq_update, NULL);
+    hook_associate ("set equalizer_preamp", eq_update, NULL);
+    hook_associate ("set equalizer_bands", eq_update, NULL);
+}
+
+void eq_set_bands (const gdouble * values)
+{
+    gchar * string = double_array_to_string (values, EQ_BANDS);
+    g_return_if_fail (string);
+    set_string (NULL, "equalizer_bands", string);
+    g_free (string);
+}
+
+void eq_get_bands (gdouble * values)
+{
+    memset (values, 0, sizeof (gdouble) * EQ_BANDS);
+    gchar * string = get_string (NULL, "equalizer_bands");
+    string_to_double_array (string, values, EQ_BANDS);
+    g_free (string);
+}
+
+void eq_set_band (gint band, gdouble value)
+{
+    g_return_if_fail (band >= 0 && band < EQ_BANDS);
+    gdouble values[EQ_BANDS];
+    eq_get_bands (values);
+    values[band] = value;
+    eq_set_bands (values);
+}
+
+gdouble eq_get_band (gint band)
+{
+    g_return_val_if_fail (band >= 0 && band < EQ_BANDS, 0);
+    gdouble values[EQ_BANDS];
+    eq_get_bands (values);
+    return values[band];
 }

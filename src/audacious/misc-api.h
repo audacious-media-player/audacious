@@ -41,6 +41,12 @@ AUD_FUNC2 (gdouble, get_double, const gchar *, section, const gchar *, name)
 AUD_FUNC3 (void, get_audacious_credits, const gchar * *, brief,
  const gchar * * *, credits, const gchar * * *, translators)
 
+/* equalizer.c */
+AUD_FUNC1 (void, eq_set_bands, const gdouble *, values)
+AUD_FUNC1 (void, eq_get_bands, gdouble *, values)
+AUD_FUNC2 (void, eq_set_band, gint, band, gdouble, value)
+AUD_FUNC1 (gdouble, eq_get_band, gint, band)
+
 /* equalizer_preset.c */
 AUD_FUNC1 (GList *, equalizer_read_presets, const gchar *, basename)
 AUD_FUNC2 (gboolean, equalizer_write_preset_file, GList *, list, const gchar *,

@@ -37,14 +37,11 @@
 #endif
 
 struct _AudConfig {
-    gboolean equalizer_autoload, equalizer_active;
     gboolean show_numbers_in_pl, leading_zero;
     gboolean advance_on_delete, clear_playlist, open_to_temporary;
     gboolean close_dialog_open;
-    gfloat equalizer_preamp, equalizer_bands[AUD_EQUALIZER_NBANDS];
     gchar *filesel_path;
     gchar *playlist_path;
-    gchar *eqpreset_default_file, *eqpreset_extension;
     GList *url_history;
     gint titlestring_preset;
     gchar *gentitle_format;

@@ -31,20 +31,14 @@
 #include "playback.h"
 
 AudConfig cfg = {
-    .equalizer_autoload = FALSE,
-    .equalizer_active = FALSE,
     .show_numbers_in_pl = TRUE,
     .leading_zero = TRUE,
     .advance_on_delete = FALSE,
     .clear_playlist = TRUE,
     .open_to_temporary = FALSE,
     .close_dialog_open = TRUE,
-    .equalizer_preamp = 0.0,
-    .equalizer_bands = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
     .filesel_path = NULL,
     .playlist_path = NULL,
-    .eqpreset_default_file = NULL,
-    .eqpreset_extension = NULL,
     .url_history = NULL,
     .resume_playback_on_startup = FALSE,
     .resume_state = 0,
@@ -107,8 +101,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"advance_on_delete", & cfg.advance_on_delete, TRUE},
     {"clear_playlist", & cfg.clear_playlist, TRUE},
     {"open_to_temporary", & cfg.open_to_temporary, TRUE},
-    {"equalizer_active", &cfg.equalizer_active, TRUE},
-    {"equalizer_autoload", &cfg.equalizer_autoload, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
     {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
@@ -150,8 +142,6 @@ static aud_cfg_nument aud_numents[] = {
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
 
 static aud_cfg_strent aud_strents[] = {
-    {"eqpreset_default_file", &cfg.eqpreset_default_file, TRUE},
-    {"eqpreset_extension", &cfg.eqpreset_extension, TRUE},
     {"filesel_path", &cfg.filesel_path, FALSE},
     {"playlist_path", &cfg.playlist_path, FALSE},
     {"generic_title_format", &cfg.gentitle_format, TRUE},
@@ -200,15 +190,6 @@ aud_config_load(void)
         cfg_db_get_string(db, NULL,
                               aud_strents[i].se_vname,
                               aud_strents[i].se_vloc);
-    }
-
-    /* Preset */
-    cfg_db_get_float(db, NULL, "equalizer_preamp", &cfg.equalizer_preamp);
-    for (i = 0; i < AUD_EQUALIZER_NBANDS; i++) {
-        gchar eqtext[32];
-
-        g_snprintf(eqtext, sizeof(eqtext), "equalizer_band%d", i);
-        cfg_db_get_float(db, NULL, eqtext, &cfg.equalizer_bands[i]);
     }
 
     /* History */
@@ -283,17 +264,9 @@ aud_config_save(void)
                                   *aud_strents[i].se_vloc);
     }
 
-    cfg_db_set_float(db, NULL, "equalizer_preamp", cfg.equalizer_preamp);
-
     /* RG settings */
     cfg_db_set_float(db, NULL, "replay_gain_preamp", cfg.replay_gain_preamp);
     cfg_db_set_float(db, NULL, "default_gain",       cfg.default_gain);
-
-    for (i = 0; i < 10; i++) {
-        str = g_strdup_printf("equalizer_band%d", i);
-        cfg_db_set_float(db, NULL, str, cfg.equalizer_bands[i]);
-        g_free(str);
-    }
 
     if (cfg.filesel_path)
         cfg_db_set_string(db, NULL, "filesel_path", cfg.filesel_path);
