@@ -53,13 +53,16 @@
 
 static const gchar * plugin_dir_list[] = {PLUGINSUBS, NULL};
 
-static AudAPITable api_table = {
+gchar verbose = 0;
+
+AudAPITable api_table = {
  .configdb_api = & configdb_api,
  .drct_api = & drct_api,
  .misc_api = & misc_api,
  .playlist_api = & playlist_api,
  .plugins_api = & plugins_api,
- .cfg = & cfg};
+ .cfg = & cfg,
+ .verbose = & verbose};
 
 typedef struct {
     Plugin * header;

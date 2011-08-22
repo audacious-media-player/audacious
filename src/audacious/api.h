@@ -29,9 +29,12 @@ typedef const struct {
     const struct PlaylistAPI * playlist_api;
     const struct PluginsAPI * plugins_api;
     struct _AudConfig * cfg;
+    char * verbose;
 } AudAPITable;
 
-#ifndef _AUDACIOUS_CORE
+#ifdef _AUDACIOUS_CORE
+extern char verbose;
+#else
 extern AudAPITable * _aud_api_table;
 #endif
 

@@ -85,9 +85,6 @@ AudConfig cfg = {
     .playlist_manager_width = 0,
     .playlist_manager_height = 0,
     .playlist_manager_close_on_activate = FALSE,
-
-    /* not saved */
-    .verbose = FALSE,
 };
 
 typedef struct aud_cfg_boolent_t {

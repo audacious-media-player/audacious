@@ -26,6 +26,8 @@
 #ifndef AUDACIOUS_AUDCONFIG_H
 #define AUDACIOUS_AUDCONFIG_H
 
+#warning audconfig.h is deprecated.  Please use the new aud_set/get API instead.
+
 #include <glib.h>
 #include <audacious/types.h>
 
@@ -81,9 +83,6 @@ struct _AudConfig {
     gint playlist_manager_x, playlist_manager_y, playlist_manager_width,
      playlist_manager_height;
     gboolean playlist_manager_close_on_activate;
-
-    /* not saved */
-    gboolean verbose;
 
     /* proxy stuff */
     gboolean use_proxy;

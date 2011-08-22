@@ -87,6 +87,7 @@ static struct {
     gboolean enqueue, mainwin, remote;
     gboolean enqueue_to_temp;
     gboolean version;
+    gboolean verbose;
     gchar *previous_session_id;
 } options;
 
@@ -268,7 +269,7 @@ static GOptionEntry cmd_entries[] = {
     {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, N_("Add new files to a temporary playlist"), NULL},
     {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
-    {"verbose", 'V', 0, G_OPTION_ARG_NONE, &cfg.verbose, N_("Print debugging messages"), NULL},
+    {"verbose", 'V', 0, G_OPTION_ARG_NONE, &options.verbose, N_("Print debugging messages"), NULL},
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
     {NULL},
 };
@@ -297,6 +298,8 @@ static void parse_options (gint * argc, gchar *** argv)
     }
 
     g_option_context_free (context);
+
+    verbose = options.verbose;
 }
 
 static gboolean get_lock (void)
@@ -497,8 +500,8 @@ static void init_two (void)
 
     config_load ();
     aud_config_load (); /* deprecated, must be after config_load */
-    tag_set_verbose (cfg.verbose);
-    vfs_set_verbose (cfg.verbose);
+    tag_set_verbose (verbose);
+    vfs_set_verbose (verbose);
 
     eq_init ();
     register_interface_hooks ();
