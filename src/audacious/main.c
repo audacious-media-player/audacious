@@ -448,7 +448,7 @@ static void do_commands (void)
         g_list_free (list);
     }
 
-    if (cfg.resume_playback_on_startup && cfg.resume_state > 0)
+    if (get_bool (NULL, "resume_playback_on_startup") && cfg.resume_state > 0)
         playback_play (cfg.resume_playback_on_startup_time, cfg.resume_state ==
          2);
 

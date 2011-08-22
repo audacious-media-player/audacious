@@ -61,6 +61,10 @@ struct _PreferencesWidget {
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip, can be NULL */
     gboolean child;
+    ValueType cfg_type;      /* connected value type */
+    const gchar * csect;     /* config file section */
+    const gchar * cname;     /* config file key name */
+
     union {
         struct {
             gdouble min, max, step;
@@ -112,7 +116,6 @@ struct _PreferencesWidget {
         /* GtkWidget * (* populate) (void); */
         void * (* populate) (void);
     } data;
-    ValueType cfg_type;      /* connected value type */
 };
 
 typedef struct _NotebookTab {

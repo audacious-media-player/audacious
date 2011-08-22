@@ -38,14 +38,12 @@
 
 struct _AudConfig {
     gboolean show_numbers_in_pl, leading_zero;
-    gboolean advance_on_delete, clear_playlist, open_to_temporary;
     gboolean close_dialog_open;
     gchar *filesel_path;
     gchar *playlist_path;
     GList *url_history;
     gint titlestring_preset;
     gchar *gentitle_format;
-    gboolean resume_playback_on_startup;
     gint resume_state;
     gint resume_playback_on_startup_time;
     gchar *chardet_detector;

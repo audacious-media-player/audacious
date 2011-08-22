@@ -183,36 +183,37 @@ static PreferencesWidget proxy_auth_elements[] = {
 static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable proxy usage"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.use_proxy},
-    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_host_port_elements, G_N_ELEMENTS(proxy_host_port_elements)}}},
+    {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_host_port_elements,
+     G_N_ELEMENTS (proxy_host_port_elements)}}},
     {WIDGET_CHK_BTN, N_("Use authentication with proxy"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.use_proxy_auth},
-    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {proxy_auth_elements, G_N_ELEMENTS(proxy_auth_elements)}}},
-    {WIDGET_LABEL, N_("<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"), NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning"}}},
+    {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_auth_elements,
+     G_N_ELEMENTS (proxy_auth_elements)}}}
 };
 
 static PreferencesWidget chardet_elements[] = {
-    {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"), &cfg.chardet_detector, NULL, NULL, TRUE,
-        {.combo = {chardet_detector_presets, G_N_ELEMENTS(chardet_detector_presets),
-                   #ifdef USE_CHARDET
-                   TRUE
-                   #else
-                   FALSE
-                   #endif
-                   }}, VALUE_STRING},
-    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, aud_config_chardet_update, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
-};
+#ifdef USE_CHARDET
+ {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
+  .cfg_type = VALUE_STRING, .cfg = & cfg.chardet_detector, .child = TRUE,
+  .data = {.combo = {chardet_detector_presets,
+  G_N_ELEMENTS (chardet_detector_presets), TRUE}}},
+#endif
+ {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
+  .cfg = & cfg.chardet_fallback, .callback = aud_config_chardet_update,
+  .child = TRUE}};
 
 static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Behavior</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Continue playback on startup"),
-     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.resume_playback_on_startup},
+     .cfg_type = VALUE_BOOLEAN, .cname = "resume_playback_on_startup"},
     {WIDGET_CHK_BTN, N_("Advance when the current song is deleted"),
-     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.advance_on_delete},
+     .cfg_type = VALUE_BOOLEAN, .cname = "advance_on_delete"},
     {WIDGET_CHK_BTN, N_("Clear the playlist when opening files"),
-     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.clear_playlist},
+     .cfg_type = VALUE_BOOLEAN, .cname = "clear_playlist"},
     {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
-     .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.open_to_temporary},
+     .cfg_type = VALUE_BOOLEAN, .cname = "open_to_temporary"},
     {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_TABLE, NULL, NULL, NULL, NULL, TRUE, {.table = {chardet_elements, G_N_ELEMENTS(chardet_elements)}}},
+    {WIDGET_TABLE, .child = TRUE, .data = {.table = {chardet_elements,
+     G_N_ELEMENTS (chardet_elements)}}}
 };
 
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
@@ -558,14 +559,36 @@ on_filepopup_settings_cancel_clicked(GtkButton *button, gpointer data)
     gtk_widget_hide(filepopup_settings);
 }
 
-static void
-on_toggle_button_toggled(GtkToggleButton * button, gboolean *cfg)
+static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidget * widget)
 {
-    *cfg = gtk_toggle_button_get_active(button);
-    void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
-    if (callback != NULL) callback();
-    GtkWidget *child = g_object_get_data(G_OBJECT(button), "child");
-    if (child) gtk_widget_set_sensitive(GTK_WIDGET(child), *cfg);
+    gboolean active = gtk_toggle_button_get_active (button);
+
+    if (widget->cfg)
+        * (gboolean *) widget->cfg = active;
+    else if (widget->cname)
+        set_bool (widget->csect, widget->cname, active);
+
+    if (widget->callback)
+        widget->callback ();
+
+    GtkWidget * child = g_object_get_data ((GObject *) button, "child");
+    if (child)
+        gtk_widget_set_sensitive (child, active);
+}
+
+static void init_toggle_button (GtkWidget * button, PreferencesWidget * widget)
+{
+    if (widget->cfg_type != VALUE_BOOLEAN)
+        return;
+
+    gboolean active = FALSE;
+    if (widget->cfg)
+        active = * (gboolean *) widget->cfg;
+    else if (widget->cname)
+        active = get_bool (widget->csect, widget->cname);
+
+    gtk_toggle_button_set_active ((GtkToggleButton *) button, active);
+    g_signal_connect (button, "toggled", (GCallback) on_toggle_button_toggled, widget);
 }
 
 static void
@@ -1035,22 +1058,8 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
 
         switch(widgets[x].type) {
             case WIDGET_CHK_BTN:
-                widget = gtk_check_button_new_with_mnemonic (dgettext (domain,
-                 widgets[x].label));
-                g_object_set_data ((GObject *) widget, "callback",
-                 (void *) widgets[x].callback);
-
-                if (widgets[x].cfg)
-                {
-                    if (widgets[x].cfg_type == VALUE_BOOLEAN)
-                    {
-                        gtk_toggle_button_set_active ((GtkToggleButton *) widget, * (gboolean *) widgets[x].cfg);
-                        g_signal_connect (widget, "toggled", (GCallback) on_toggle_button_toggled, widgets[x].cfg);
-                    }
-                    else
-                        printf ("WARNING: Invalid PreferencesWidget config type.\n");
-                }
-
+                widget = gtk_check_button_new_with_mnemonic (dgettext (domain, widgets[x].label));
+                init_toggle_button (widget, & widgets[x]);
                 break;
             case WIDGET_LABEL:
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 0, 0, 0);
@@ -1069,19 +1078,8 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
             case WIDGET_RADIO_BTN:
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
                  dgettext (domain, widgets[x].label));
-                radio_btn_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
-
-                if (widgets[x].cfg)
-                {
-                    if (widgets[x].cfg_type == VALUE_BOOLEAN)
-                    {
-                        gtk_toggle_button_set_active ((GtkToggleButton *) widget, * (gboolean *) widgets[x].cfg);
-                        g_signal_connect (widget, "toggled", (GCallback) on_toggle_button_toggled, widgets[x].cfg);
-                    }
-                    else
-                        printf ("WARNING: Invalid PreferencesWidget config type.\n");
-                }
-
+                radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
+                init_toggle_button (widget, & widgets[x]);
                 break;
             case WIDGET_SPIN_BTN:
                 widget = gtk_hbox_new(FALSE, 6);

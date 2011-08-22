@@ -265,7 +265,7 @@ static void add_list (GList * list, gint at, gboolean to_temp, gboolean play)
 
     if (play)
     {
-        if (cfg.clear_playlist)
+        if (get_bool (NULL, "clear_playlist"))
             playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
         else
             playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
@@ -293,13 +293,13 @@ void drct_pl_add_list (GList * list, gint at)
 void drct_pl_open (const gchar * filename)
 {
     GList * list = g_list_prepend (NULL, (void *) filename);
-    add_list (list, -1, cfg.open_to_temporary, TRUE);
+    add_list (list, -1, get_bool (NULL, "open_to_temporary"), TRUE);
     g_list_free (list);
 }
 
 void drct_pl_open_list (GList * list)
 {
-    add_list (list, -1, cfg.open_to_temporary, TRUE);
+    add_list (list, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
 void drct_pl_open_temp (const gchar * filename)
@@ -329,7 +329,8 @@ void drct_pl_delete_selected (void)
     gint list = playlist_get_active ();
     gint pos = playlist_get_position (list);
 
-    if (cfg.advance_on_delete && ! get_bool (NULL, "no_playlist_advance")
+    if (get_bool (NULL, "advance_on_delete")
+     && ! get_bool (NULL, "no_playlist_advance")
      && playback_get_playing () && list == playlist_get_playing ()
      && pos >= 0 && playlist_entry_get_selected (list, pos))
     {

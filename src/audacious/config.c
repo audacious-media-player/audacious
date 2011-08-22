@@ -32,6 +32,12 @@
 
 static const gchar * core_defaults[] = {
 
+ /* general */
+ "advance_on_delete", "FALSE",
+ "clear_playlist", "TRUE",
+ "open_to_temporary", "FALSE",
+ "resume_playback_on_startup", "FALSE",
+
  /* equalizer */
  "eqpreset_default_file", "",
  "eqpreset_extension", "",
