@@ -31,17 +31,13 @@
 #include "playback.h"
 
 AudConfig cfg = {
-    .shuffle = FALSE,
-    .repeat = FALSE,
     .equalizer_autoload = FALSE,
     .equalizer_active = FALSE,
     .show_numbers_in_pl = TRUE,
     .leading_zero = TRUE,
-    .no_playlist_advance = FALSE,
     .advance_on_delete = FALSE,
     .clear_playlist = TRUE,
     .open_to_temporary = FALSE,
-    .stopaftersong = FALSE,
     .close_dialog_open = TRUE,
     .equalizer_preamp = 0.0,
     .equalizer_bands = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
@@ -108,13 +104,9 @@ typedef struct aud_cfg_strent_t {
 static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
     {"leading_zero", & cfg.leading_zero, TRUE},
-    {"no_playlist_advance", &cfg.no_playlist_advance, TRUE},
     {"advance_on_delete", & cfg.advance_on_delete, TRUE},
     {"clear_playlist", & cfg.clear_playlist, TRUE},
     {"open_to_temporary", & cfg.open_to_temporary, TRUE},
-    {"shuffle", &cfg.shuffle, TRUE},
-    {"repeat", &cfg.repeat, TRUE},
-    {"stop_after_current_song", &cfg.stopaftersong, TRUE},
     {"equalizer_active", &cfg.equalizer_active, TRUE},
     {"equalizer_autoload", &cfg.equalizer_autoload, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},

@@ -30,6 +30,7 @@
 #include "config.h"
 #include "i18n.h"
 #include "interface.h"
+#include "misc.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
@@ -274,12 +275,7 @@ static void complete_stop (void)
 {
     output_drain ();
     hook_call ("playback stop", NULL);
-
-    if (cfg.stopaftersong)
-    {
-        cfg.stopaftersong = FALSE;
-        hook_call ("toggle stop after song", NULL);
-    }
+    set_bool (NULL, "stop_after_current_song", FALSE);
 }
 
 void playback_stop (void)
@@ -317,14 +313,14 @@ static gboolean end_cb (void * unused)
     {
         gboolean play;
 
-        if (cfg.no_playlist_advance)
-            play = cfg.repeat && ! failed_entries;
-        else if (! (play = playlist_next_song (playlist, cfg.repeat)))
+        if (get_bool (NULL, "no_playlist_advance"))
+            play = get_bool (NULL, "repeat") && ! failed_entries;
+        else if (! (play = playlist_next_song (playlist, get_bool (NULL, "repeat"))))
             playlist_set_position (playlist, -1);
         else if (failed_entries >= 10)
             play = FALSE;
 
-        if (cfg.stopaftersong)
+        if (get_bool (NULL, "stop_after_current_song"))
             play = FALSE;
 
         if (! play)

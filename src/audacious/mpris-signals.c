@@ -45,12 +45,10 @@ void mpris_signals_init (void)
     hook_associate ("playback stop", mpris_status_cb, GINT_TO_POINTER
      (MPRIS_STATUS_STOP));
 
-    hook_associate ("toggle shuffle", mpris_status_cb, GINT_TO_POINTER
+    hook_associate ("set shuffle", mpris_status_cb, GINT_TO_POINTER (MPRIS_STATUS_INVALID));
+    hook_associate ("set repeat", mpris_status_cb, GINT_TO_POINTER (MPRIS_STATUS_INVALID));
+    hook_associate ("set no_playlist_advance", mpris_status_cb, GINT_TO_POINTER
      (MPRIS_STATUS_INVALID));
-    hook_associate ("toggle repeat", mpris_status_cb, GINT_TO_POINTER
-     (MPRIS_STATUS_INVALID));
-/*    hook_associate ("toggle no playlist advance", mpris_status_cb,
-     GINT_TO_POINTER (MPRIS_STATUS_INVALID)); */
 #endif
 }
 
@@ -62,8 +60,8 @@ void mpris_signals_cleanup (void)
     hook_dissociate ("playback unpause", mpris_status_cb);
     hook_dissociate ("playback stop", mpris_status_cb);
 
-    hook_dissociate ("toggle shuffle", mpris_status_cb);
-    hook_dissociate ("toggle repeat", mpris_status_cb);
-/*    hook_dissociate ("toggle no playlist advance", mpris_status_cb); */
+    hook_dissociate ("set shuffle", mpris_status_cb);
+    hook_dissociate ("set repeat", mpris_status_cb);
+    hook_dissociate ("set no_playlist_advance", mpris_status_cb);
 #endif
 }

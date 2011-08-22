@@ -26,7 +26,6 @@
 
 #include <libaudcore/audstrings.h>
 
-#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
 #include "playback.h"
@@ -355,7 +354,7 @@ static gboolean add_finish (void * unused)
         if (result->play && playlist_entry_count (playlist) > count)
         {
             playlist_set_playing (playlist);
-            if (! cfg.shuffle)
+            if (! get_bool (NULL, "shuffle"))
                 playlist_set_position (playlist, result->at);
 
             playback_play (0, FALSE);

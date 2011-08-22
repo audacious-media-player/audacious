@@ -40,6 +40,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "interface.h"
+#include "misc.h"
 
 struct StatusRequest
 {
@@ -666,27 +667,6 @@ static void get_mpris_metadata(struct MprisMetadataRequest *request)
     }
 }
 
-static gboolean set_no_playlist_advance_cb (void * no_advance)
-{
-    cfg.no_playlist_advance = GPOINTER_TO_INT (no_advance);
-    event_queue ("toggle no playlist advance", NULL);
-    return FALSE;
-}
-
-static gboolean set_shuffle_cb (void * shuffle)
-{
-    cfg.shuffle = GPOINTER_TO_INT (shuffle);
-    event_queue ("toggle shuffle", NULL);
-    return FALSE;
-}
-
-static gboolean set_repeat_cb (void * repeat)
-{
-    cfg.repeat = GPOINTER_TO_INT (repeat);
-    event_queue ("toggle repeat", NULL);
-    return FALSE;
-}
-
 /* MPRIS API */
 // MPRIS /
 gboolean mpris_root_identity(MprisRoot * obj, gchar ** identity, GError ** error)
@@ -761,9 +741,9 @@ gboolean mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GErro
     *status = g_value_array_new(4);
 
     append_int_value(*status, (gint) get_playback_status());
-    append_int_value(*status, (gint) cfg.shuffle);
-    append_int_value(*status, (gint) cfg.no_playlist_advance);
-    append_int_value(*status, (gint) cfg.repeat);
+    append_int_value (* status, get_bool (NULL, "shuffle"));
+    append_int_value (* status, get_bool (NULL, "no_playlist_advance"));
+    append_int_value (* status, get_bool (NULL, "repeat"));
     return TRUE;
 }
 
@@ -848,9 +828,9 @@ gboolean mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)
         status = get_playback_status ();
 
     append_int_value(ar, (gint) status);
-    append_int_value(ar, (gint) cfg.shuffle);
-    append_int_value(ar, (gint) cfg.no_playlist_advance);
-    append_int_value(ar, (gint) cfg.repeat);
+    append_int_value (ar, get_bool (NULL, "shuffle"));
+    append_int_value (ar, get_bool (NULL, "no_playlist_advance"));
+    append_int_value (ar, get_bool (NULL, "repeat"));
 
     g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, ar);
     g_value_array_free(ar);
@@ -919,14 +899,14 @@ gboolean mpris_tracklist_del_track(MprisTrackList * obj, gint pos, GError * *err
 gboolean mpris_tracklist_loop (MprisTrackList * obj, gboolean loop, GError * *
  error)
 {
-    g_timeout_add (0, set_repeat_cb, GINT_TO_POINTER (loop));
+    set_bool (NULL, "repeat", loop);
     return TRUE;
 }
 
 gboolean mpris_tracklist_random (MprisTrackList * obj, gboolean random,
  GError * * error)
 {
-    g_timeout_add (0, set_shuffle_cb, GINT_TO_POINTER (random));
+    set_bool (NULL, "shuffle", random);
     return TRUE;
 }
 
@@ -1237,51 +1217,49 @@ gboolean audacious_rc_clear(RemoteObject * obj, GError * *error)
 
 gboolean audacious_rc_auto_advance(RemoteObject * obj, gboolean * is_advance, GError ** error)
 {
-    *is_advance = !cfg.no_playlist_advance;
+    * is_advance = ! get_bool (NULL, "no_playlist_advance");
     return TRUE;
 }
 
 gboolean audacious_rc_toggle_auto_advance(RemoteObject * obj, GError ** error)
 {
-    g_timeout_add (0, set_no_playlist_advance_cb,
-            GINT_TO_POINTER (! cfg.no_playlist_advance));
+    set_bool (NULL, "no_playlist_advance", ! get_bool (NULL, "no_playlist_advance"));
     return TRUE;
 }
 
 gboolean audacious_rc_repeat(RemoteObject * obj, gboolean * is_repeating, GError ** error)
 {
-    *is_repeating = cfg.repeat;
+    *is_repeating = get_bool (NULL, "repeat");
     return TRUE;
 }
 
 gboolean audacious_rc_toggle_repeat (RemoteObject * obj, GError * * error)
 {
-    g_timeout_add (0, set_repeat_cb, GINT_TO_POINTER (! cfg.repeat));
+    set_bool (NULL, "repeat", ! get_bool (NULL, "repeat"));
     return TRUE;
 }
 
 gboolean audacious_rc_shuffle(RemoteObject * obj, gboolean * is_shuffling, GError ** error)
 {
-    *is_shuffling = cfg.shuffle;
+    *is_shuffling = get_bool (NULL, "shuffle");
     return TRUE;
 }
 
 gboolean audacious_rc_toggle_shuffle (RemoteObject * obj, GError * * error)
 {
-    g_timeout_add (0, set_shuffle_cb, GINT_TO_POINTER (! cfg.shuffle));
+    set_bool (NULL, "shuffle", ! get_bool (NULL, "shuffle"));
     return TRUE;
 }
 
 gboolean audacious_rc_stop_after (RemoteObject * obj, gboolean * is_stopping, GError * * error)
 {
-    * is_stopping = cfg.stopaftersong;
+    * is_stopping = get_bool (NULL, "stop_after_current_song");
     return TRUE;
 }
 
 gboolean audacious_rc_toggle_stop_after (RemoteObject * obj, GError * * error)
 {
-    cfg.stopaftersong = ! cfg.stopaftersong;
-    hook_call ("toggle stop after song", NULL);
+    set_bool (NULL, "stop_after_current_song", ! get_bool (NULL, "stop_after_current_song"));
     return TRUE;
 }
 

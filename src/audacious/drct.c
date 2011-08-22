@@ -27,6 +27,7 @@
 #include "config.h"
 #include "drct.h"
 #include "i18n.h"
+#include "misc.h"
 #include "playback.h"
 #include "playlist.h"
 
@@ -181,7 +182,7 @@ void drct_pl_next (void)
     gboolean play = playback_get_playing ();
     if (playlist_get_playing () < 0)
         playlist_set_playing (playlist_get_active ());
-    if (playlist_next_song (playlist_get_playing (), cfg.repeat) && play)
+    if (playlist_next_song (playlist_get_playing (), get_bool (NULL, "repeat")) && play)
         playback_play (0, FALSE);
 }
 
@@ -211,28 +212,6 @@ void drct_pl_set_pos (gint pos)
         playlist_set_playing (playlist);
         playback_play (0, FALSE);
     }
-}
-
-gboolean drct_pl_repeat_is_enabled (void)
-{
-    return cfg.repeat;
-}
-
-void drct_pl_repeat_toggle (void)
-{
-    cfg.repeat = ! cfg.repeat;
-    hook_call ("toggle repeat", NULL);
-}
-
-gboolean drct_pl_shuffle_is_enabled (void)
-{
-    return cfg.shuffle;
-}
-
-void drct_pl_shuffle_toggle (void)
-{
-    cfg.shuffle = ! cfg.shuffle;
-    hook_call ("toggle shuffle", NULL);
 }
 
 gchar * drct_pl_get_file (gint entry)
@@ -350,7 +329,7 @@ void drct_pl_delete_selected (void)
     gint list = playlist_get_active ();
     gint pos = playlist_get_position (list);
 
-    if (cfg.advance_on_delete && ! cfg.no_playlist_advance
+    if (cfg.advance_on_delete && ! get_bool (NULL, "no_playlist_advance")
      && playback_get_playing () && list == playlist_get_playing ()
      && pos >= 0 && playlist_entry_get_selected (list, pos))
     {
@@ -358,7 +337,7 @@ void drct_pl_delete_selected (void)
         playlist_delete_selected (list);
         pos = playlist_get_position (list); /* it may have moved */
 
-        if (playlist_next_song (list, cfg.repeat)
+        if (playlist_next_song (list, get_bool (NULL, "repeat"))
          && playlist_get_position (list) != pos)
             playback_play (0, FALSE);
 

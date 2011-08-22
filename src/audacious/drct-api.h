@@ -58,11 +58,6 @@ AUD_FUNC0 (void, drct_pl_prev)
 AUD_FUNC0 (gint, drct_pl_get_pos)
 AUD_FUNC1 (void, drct_pl_set_pos, gint, pos)
 
-AUD_FUNC0 (gboolean, drct_pl_repeat_is_enabled)
-AUD_FUNC0 (void, drct_pl_repeat_toggle)
-AUD_FUNC0 (gboolean, drct_pl_shuffle_is_enabled)
-AUD_FUNC0 (void, drct_pl_shuffle_toggle)
-
 AUD_FUNC1 (gchar *, drct_pl_get_file, gint, entry)
 AUD_FUNC1 (gchar *, drct_pl_get_title, gint, entry)
 AUD_FUNC1 (gint, drct_pl_get_time, gint, entry)

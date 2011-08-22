@@ -28,7 +28,6 @@
 #include <libaudcore/stringpool.h>
 #include <libaudcore/tuple_formatter.h>
 
-#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
 #include "misc.h"
@@ -1912,7 +1911,7 @@ gboolean playlist_prev_song (gint playlist_num)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST_RET (FALSE);
 
-    if (cfg.shuffle)
+    if (get_bool (NULL, "shuffle"))
     {
         if (! shuffle_prev (playlist))
             LEAVE_RET (FALSE);
@@ -2010,7 +2009,7 @@ gboolean playlist_next_song (gint playlist_num, gboolean repeat)
         playlist->queued = g_list_remove (playlist->queued, playlist->position);
         playlist->position->queued = FALSE;
     }
-    else if (cfg.shuffle)
+    else if (get_bool (NULL, "shuffle"))
     {
         if (! shuffle_next (playlist))
         {
