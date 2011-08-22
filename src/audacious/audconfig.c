@@ -67,14 +67,6 @@ AudConfig cfg = {
     .replay_gain_preamp = 0,
     .default_gain = 0,
     .sw_volume_left = 100, .sw_volume_right = 100,
-
-    /* libaudgui stuff */
-    .no_confirm_playlist_delete = FALSE,
-    .playlist_manager_x = 0,
-    .playlist_manager_y = 0,
-    .playlist_manager_width = 0,
-    .playlist_manager_height = 0,
-    .playlist_manager_close_on_activate = FALSE,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -114,8 +106,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
     {"replay_gain_track", &cfg.replay_gain_track, TRUE},
     {"replay_gain_album", &cfg.replay_gain_album, TRUE},
-    {"no_confirm_playlist_delete", &cfg.no_confirm_playlist_delete, TRUE},
-    {"playlist_manager_close_on_activate", & cfg.playlist_manager_close_on_activate, TRUE},
     {"use_proxy", & cfg.use_proxy, TRUE},
     {"use_proxy_auth", & cfg.use_proxy_auth, TRUE},
 };
@@ -133,10 +123,6 @@ static aud_cfg_nument aud_numents[] = {
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
     {"sw_volume_left", & cfg.sw_volume_left, TRUE},
     {"sw_volume_right", & cfg.sw_volume_right, TRUE},
-    {"playlist_manager_x", & cfg.playlist_manager_x, TRUE},
-    {"playlist_manager_y", & cfg.playlist_manager_y, TRUE},
-    {"playlist_manager_width", & cfg.playlist_manager_width, TRUE},
-    {"playlist_manager_height", & cfg.playlist_manager_height, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);

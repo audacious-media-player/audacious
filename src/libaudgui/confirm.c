@@ -21,13 +21,18 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
+#include <audacious/misc.h>
 #include <audacious/playlist.h>
 
 #include "config.h"
 #include "libaudgui-gtk.h"
+
+static void no_confirm_cb (GtkToggleButton * toggle)
+{
+    aud_set_bool ("audgui", "no_confirm_playlist_delete", gtk_toggle_button_get_active (toggle));
+}
 
 static void confirm_delete_cb (GtkButton * button, void * data)
 {
@@ -45,7 +50,7 @@ void audgui_confirm_playlist_delete (gint playlist)
     GtkWidget * window, * vbox, * hbox, * label, * button;
     gchar * message;
 
-    if (aud_cfg->no_confirm_playlist_delete)
+    if (aud_get_bool ("audgui", "no_confirm_playlist_delete"))
     {
         aud_playlist_delete (playlist);
         if (playlist > 0)
@@ -83,10 +88,9 @@ void audgui_confirm_playlist_delete (gint playlist)
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
-    button = gtk_check_button_new_with_mnemonic (_("_Don't show this message "
-     "again"));
+    button = gtk_check_button_new_with_mnemonic (_("_Don't show this message again"));
     gtk_box_pack_start ((GtkBox *) hbox, button, FALSE, FALSE, 0);
-    audgui_connect_check_box (button, & aud_cfg->no_confirm_playlist_delete);
+    g_signal_connect (button, "toggled", (GCallback) no_confirm_cb, NULL);
 
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);

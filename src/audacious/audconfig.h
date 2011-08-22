@@ -72,12 +72,6 @@ struct _AudConfig {
     gfloat default_gain;
     gint sw_volume_left, sw_volume_right;
 
-    /* libaudgui stuff */
-    gboolean no_confirm_playlist_delete;
-    gint playlist_manager_x, playlist_manager_y, playlist_manager_width,
-     playlist_manager_height;
-    gboolean playlist_manager_close_on_activate;
-
     /* proxy stuff */
     gboolean use_proxy;
     gchar * proxy_host, * proxy_port;

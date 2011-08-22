@@ -19,9 +19,9 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
+#include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
@@ -34,10 +34,14 @@ static GtkWidget * playman_win = NULL;
 
 static void save_position (GtkWidget * window)
 {
-    gtk_window_get_position ((GtkWindow *) window,
-     & aud_cfg->playlist_manager_x, & aud_cfg->playlist_manager_y);
-    gtk_window_get_size ((GtkWindow *) window,
-     & aud_cfg->playlist_manager_width, & aud_cfg->playlist_manager_height);
+    gint x, y, w, h;
+    gtk_window_get_position ((GtkWindow *) window, & x, & y);
+    gtk_window_get_size ((GtkWindow *) window, & w, & h);
+
+    aud_set_int ("audgui", "playlist_manager_x", x);
+    aud_set_int ("audgui", "playlist_manager_y", y);
+    aud_set_int ("audgui", "playlist_manager_w", w);
+    aud_set_int ("audgui", "playlist_manager_h", h);
 }
 
 static gboolean hide_cb (GtkWidget * window)
@@ -101,7 +105,7 @@ static void activate_row (void * user, gint row)
 {
     aud_playlist_set_active (row);
 
-    if (aud_cfg->playlist_manager_close_on_activate)
+    if (aud_get_bool ("audgui", "playlist_manager_close_on_activate"))
         hide_cb (playman_win);
 }
 
@@ -220,6 +224,12 @@ static void position_hook (void * data, void * list)
         audgui_list_set_highlight (list, aud_playlist_get_playing ());
 }
 
+static void close_on_activate_cb (GtkToggleButton * toggle)
+{
+    aud_set_bool ("audgui", "playlist_manager_close_on_activate",
+     gtk_toggle_button_get_active (toggle));
+}
+
 void audgui_playlist_manager (void)
 {
     GtkWidget *playman_vbox;
@@ -244,12 +254,15 @@ void audgui_playlist_manager (void)
     gtk_window_set_geometry_hints( GTK_WINDOW(playman_win) , GTK_WIDGET(playman_win) ,
                                    &playman_win_hints , GDK_HINT_MIN_SIZE );
 
-    if (aud_cfg->playlist_manager_width)
+    gint x = aud_get_int ("audgui", "playlist_manager_x");
+    gint y = aud_get_int ("audgui", "playlist_manager_y");
+    gint w = aud_get_int ("audgui", "playlist_manager_w");
+    gint h = aud_get_int ("audgui", "playlist_manager_h");
+
+    if (w && h)
     {
-        gtk_window_move ((GtkWindow *) playman_win, aud_cfg->playlist_manager_x,
-         aud_cfg->playlist_manager_y);
-        gtk_window_set_default_size ((GtkWindow *) playman_win,
-         aud_cfg->playlist_manager_width, aud_cfg->playlist_manager_height);
+        gtk_window_move ((GtkWindow *) playman_win, x, y);
+        gtk_window_set_default_size ((GtkWindow *) playman_win, w, h);
     }
 
     g_signal_connect ((GObject *) playman_win, "delete-event", (GCallback)
@@ -308,8 +321,9 @@ void audgui_playlist_manager (void)
     button = gtk_check_button_new_with_mnemonic
      (_("_Close dialog on activating playlist"));
     gtk_box_pack_start ((GtkBox *) hbox, button, FALSE, FALSE, 0);
-    audgui_connect_check_box (button,
-     & aud_cfg->playlist_manager_close_on_activate);
+    gtk_toggle_button_set_active ((GtkToggleButton *) button, aud_get_bool
+     ("audgui", "playlist_manager_close_on_activate"));
+    g_signal_connect (button, "toggled", (GCallback) close_on_activate_cb, NULL);
 
     gtk_widget_show_all( playman_win );
 
