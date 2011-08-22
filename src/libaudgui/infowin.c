@@ -25,7 +25,6 @@
 #include <gtk/gtk.h>
 #include <stdarg.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
@@ -38,6 +37,7 @@
 #include "libaudgui-gtk.h"
 
 #define AUDGUI_STATUS_TIMEOUT 3000
+#define IMAGE_SIZE 150
 
 static GtkWidget * infowin = NULL;
 
@@ -182,7 +182,7 @@ static void infowin_entry_set_image (GtkWidget * widget, gint list, gint entry)
     GdkPixbuf * p = audgui_pixbuf_for_entry (list, entry);
     g_return_if_fail (p);
 
-    audgui_pixbuf_scale_within (& p, aud_cfg->filepopup_pixelsize);
+    audgui_pixbuf_scale_within (& p, IMAGE_SIZE);
     gtk_image_set_from_pixbuf ((GtkImage *) widget, p);
     g_object_unref ((GObject *) p);
 }

@@ -50,14 +50,6 @@ struct _AudConfig {
     gchar *chardet_fallback;
     gchar **chardet_fallback_s;
     gint output_buffer_size;
-    gboolean show_filepopup_for_tuple;
-    gchar *cover_name_include, *cover_name_exclude;
-    gboolean recurse_for_cover;
-    gint recurse_for_cover_depth;
-    gint filepopup_pixelsize;
-    gint filepopup_delay;
-    gboolean use_file_cover;
-    gboolean filepopup_showprogressbar;
     gboolean close_jtf_dialog;
     gboolean software_volume_control;
     gboolean remember_jtf_entry;

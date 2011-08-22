@@ -24,7 +24,6 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/drct.h>
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
@@ -76,7 +75,7 @@ static gboolean infopopup_progress_cb (void * unused)
     g_return_val_if_fail (tooltip_file != NULL, FALSE);
     g_return_val_if_fail (length > 0, FALSE);
 
-    if (! aud_cfg->filepopup_showprogressbar || ! aud_drct_get_playing ())
+    if (! aud_get_bool (NULL, "filepopup_showprogressbar") || ! aud_drct_get_playing ())
         goto HIDE;
 
     playlist = aud_playlist_get_playing ();

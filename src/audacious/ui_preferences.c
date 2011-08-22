@@ -69,18 +69,18 @@ static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
 
 /* filepopup settings widgets */
-GtkWidget *filepopup_settings_cover_name_include;
-GtkWidget *filepopup_settings_cover_name_exclude;
-GtkWidget *filepopup_settings_recurse_for_cover;
-GtkWidget *filepopup_settings_recurse_for_cover_depth;
-GtkWidget *filepopup_settings_recurse_for_cover_depth_box;
-GtkWidget *filepopup_settings_use_file_cover;
-GtkWidget *filepopup_settings_showprogressbar;
-GtkWidget *filepopup_settings_delay;
+GtkWidget *filepopup_cover_name_include;
+GtkWidget *filepopup_cover_name_exclude;
+GtkWidget *filepopup_recurse;
+GtkWidget *filepopup_recurse_depth;
+GtkWidget *filepopup_recurse_depth_box;
+GtkWidget *filepopup_use_file_cover;
+GtkWidget *filepopup_showprogressbar;
+GtkWidget *filepopup_delay;
 
 /* prefswin widgets */
 GtkWidget *titlestring_entry;
-GtkWidget *filepopup_for_tuple_settings_button;
+GtkWidget *filepopup_settings_button;
 static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
@@ -505,56 +505,62 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     }
 }
 
-static void
-on_show_filepopup_for_tuple_toggled(GtkToggleButton * button, gpointer data)
+static void on_show_filepopup_toggled (GtkToggleButton * button)
 {
-    cfg.show_filepopup_for_tuple = gtk_toggle_button_get_active(button);
+    gboolean active = gtk_toggle_button_get_active (button);
+    set_bool (NULL, "show_filepopup_for_tuple", active);
+    gtk_widget_set_sensitive (filepopup_settings_button, active);
+}
 
-    gtk_widget_set_sensitive(filepopup_for_tuple_settings_button, cfg.show_filepopup_for_tuple);
+static void on_filepopup_settings_clicked (void)
+{
+    gchar * string = get_string (NULL, "cover_name_include");
+    gtk_entry_set_text ((GtkEntry *) filepopup_cover_name_include, string);
+    g_free (string);
+
+    string = get_string (NULL, "cover_name_exclude");
+    gtk_entry_set_text ((GtkEntry *) filepopup_cover_name_exclude, string);
+    g_free (string);
+
+    gtk_toggle_button_set_active ((GtkToggleButton *) filepopup_recurse,
+     get_bool (NULL, "recurse_for_cover"));
+    gtk_spin_button_set_value ((GtkSpinButton *) filepopup_recurse_depth,
+     get_int (NULL, "recurse_for_cover_depth"));
+    gtk_toggle_button_set_active ((GtkToggleButton *) filepopup_use_file_cover,
+     get_bool (NULL, "use_file_cover"));
+
+    gtk_toggle_button_set_active ((GtkToggleButton *) filepopup_showprogressbar,
+     get_bool (NULL, "filepopup_showprogressbar"));
+    gtk_spin_button_set_value ((GtkSpinButton *) filepopup_delay,
+     get_int (NULL, "filepopup_delay"));
+
+    gtk_widget_show (filepopup_settings);
+}
+
+static void on_filepopup_ok_clicked (void)
+{
+    set_string (NULL, "cover_name_include",
+     gtk_entry_get_text ((GtkEntry *) filepopup_cover_name_include));
+    set_string (NULL, "cover_name_exclude",
+     gtk_entry_get_text ((GtkEntry *) filepopup_cover_name_exclude));
+
+    set_bool (NULL, "recurse_for_cover",
+     gtk_toggle_button_get_active ((GtkToggleButton *) filepopup_recurse));
+    set_int (NULL, "recurse_for_cover_depth",
+     gtk_spin_button_get_value_as_int ((GtkSpinButton *) filepopup_recurse_depth));
+    set_bool (NULL, "use_file_cover",
+     gtk_toggle_button_get_active ((GtkToggleButton *) filepopup_use_file_cover));
+
+    set_bool (NULL, "filepopup_showprogressbar",
+     gtk_toggle_button_get_active ((GtkToggleButton *) filepopup_showprogressbar));
+    set_int (NULL, "filepopup_delay",
+     gtk_spin_button_get_value_as_int ((GtkSpinButton *) filepopup_delay));
+
+    gtk_widget_hide (filepopup_settings);
 }
 
 static void
-on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
-{
-    gtk_widget_set_sensitive(GTK_WIDGET(data),
-                             gtk_toggle_button_get_active(button));
-}
-
-static void
-on_filepopup_for_tuple_settings_clicked(GtkButton *button, gpointer data)
-{
-    gtk_entry_set_text(GTK_ENTRY(filepopup_settings_cover_name_include), cfg.cover_name_include);
-    gtk_entry_set_text(GTK_ENTRY(filepopup_settings_cover_name_exclude), cfg.cover_name_exclude);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(filepopup_settings_recurse_for_cover), cfg.recurse_for_cover);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(filepopup_settings_recurse_for_cover_depth), cfg.recurse_for_cover_depth);
-    on_recurse_for_cover_toggled(GTK_TOGGLE_BUTTON(filepopup_settings_recurse_for_cover), filepopup_settings_recurse_for_cover_depth_box);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(filepopup_settings_use_file_cover), cfg.use_file_cover);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(filepopup_settings_showprogressbar), cfg.filepopup_showprogressbar);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(filepopup_settings_delay), cfg.filepopup_delay);
-
-    gtk_widget_show(filepopup_settings);
-}
-
-static void
-on_filepopup_settings_ok_clicked(GtkButton *button, gpointer data)
-{
-    g_free(cfg.cover_name_include);
-    cfg.cover_name_include = g_strdup(gtk_entry_get_text(GTK_ENTRY(filepopup_settings_cover_name_include)));
-
-    g_free(cfg.cover_name_exclude);
-    cfg.cover_name_exclude = g_strdup(gtk_entry_get_text(GTK_ENTRY(filepopup_settings_cover_name_exclude)));
-
-    cfg.recurse_for_cover = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(filepopup_settings_recurse_for_cover));
-    cfg.recurse_for_cover_depth = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(filepopup_settings_recurse_for_cover_depth));
-    cfg.use_file_cover = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(filepopup_settings_use_file_cover));
-    cfg.filepopup_showprogressbar = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(filepopup_settings_showprogressbar));
-    cfg.filepopup_delay = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(filepopup_settings_delay));
-
-    gtk_widget_hide(filepopup_settings);
-}
-
-static void
-on_filepopup_settings_cancel_clicked(GtkButton *button, gpointer data)
+on_filepopup_cancel_clicked(GtkButton *button, gpointer data)
 {
     gtk_widget_hide(filepopup_settings);
 }
@@ -725,11 +731,11 @@ create_filepopup_settings(void)
     gtk_table_set_row_spacings(GTK_TABLE(table), 4);
     gtk_table_set_col_spacings(GTK_TABLE(table), 4);
 
-    filepopup_settings_cover_name_include = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), filepopup_settings_cover_name_include, 1, 2, 0, 1,
+    filepopup_cover_name_include = gtk_entry_new();
+    gtk_table_attach(GTK_TABLE(table), filepopup_cover_name_include, 1, 2, 0, 1,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
-    gtk_entry_set_activates_default(GTK_ENTRY(filepopup_settings_cover_name_include), TRUE);
+    gtk_entry_set_activates_default(GTK_ENTRY(filepopup_cover_name_include), TRUE);
 
     label_exclude = gtk_label_new(_("Exclude:"));
     gtk_table_attach(GTK_TABLE(table), label_exclude, 0, 1, 1, 2,
@@ -745,42 +751,42 @@ create_filepopup_settings(void)
     gtk_misc_set_alignment(GTK_MISC(label_include), 0, 0.5);
     gtk_misc_set_padding(GTK_MISC(label_include), 12, 0);
 
-    filepopup_settings_cover_name_exclude = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), filepopup_settings_cover_name_exclude, 1, 2, 1, 2,
+    filepopup_cover_name_exclude = gtk_entry_new();
+    gtk_table_attach(GTK_TABLE(table), filepopup_cover_name_exclude, 1, 2, 1, 2,
                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                      (GtkAttachOptions) (0), 0, 0);
-    gtk_entry_set_activates_default(GTK_ENTRY(filepopup_settings_cover_name_exclude), TRUE);
+    gtk_entry_set_activates_default(GTK_ENTRY(filepopup_cover_name_exclude), TRUE);
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
 
-    filepopup_settings_recurse_for_cover = gtk_check_button_new_with_mnemonic(_("Recursively search for cover"));
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_settings_recurse_for_cover);
+    filepopup_recurse = gtk_check_button_new_with_mnemonic(_("Recursively search for cover"));
+    gtk_container_add(GTK_CONTAINER(alignment), filepopup_recurse);
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 45, 0);
 
-    filepopup_settings_recurse_for_cover_depth_box = gtk_hbox_new(FALSE, 0);
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_settings_recurse_for_cover_depth_box);
+    filepopup_recurse_depth_box = gtk_hbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(alignment), filepopup_recurse_depth_box);
 
     label_search_depth = gtk_label_new(_("Search depth: "));
-    gtk_box_pack_start(GTK_BOX(filepopup_settings_recurse_for_cover_depth_box), label_search_depth, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(filepopup_recurse_depth_box), label_search_depth, TRUE, TRUE, 0);
     gtk_misc_set_padding(GTK_MISC(label_search_depth), 4, 0);
 
     recurse_for_cover_depth_adj = (GtkAdjustment *) gtk_adjustment_new (0, 0,
      100, 1, 10, 0);
-    filepopup_settings_recurse_for_cover_depth = gtk_spin_button_new(GTK_ADJUSTMENT(recurse_for_cover_depth_adj), 1, 0);
-    gtk_box_pack_start(GTK_BOX(filepopup_settings_recurse_for_cover_depth_box), filepopup_settings_recurse_for_cover_depth, TRUE, TRUE, 0);
-    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_settings_recurse_for_cover_depth), TRUE);
+    filepopup_recurse_depth = gtk_spin_button_new(GTK_ADJUSTMENT(recurse_for_cover_depth_adj), 1, 0);
+    gtk_box_pack_start(GTK_BOX(filepopup_recurse_depth_box), filepopup_recurse_depth, TRUE, TRUE, 0);
+    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_recurse_depth), TRUE);
 
     alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
 
-    filepopup_settings_use_file_cover = gtk_check_button_new_with_mnemonic(_("Use per-file cover"));
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_settings_use_file_cover);
+    filepopup_use_file_cover = gtk_check_button_new_with_mnemonic(_("Use per-file cover"));
+    gtk_container_add(GTK_CONTAINER(alignment), filepopup_use_file_cover);
 
     label_misc = gtk_label_new(_("<b>Miscellaneous</b>"));
     gtk_box_pack_start(GTK_BOX(vbox), label_misc, FALSE, FALSE, 0);
@@ -791,8 +797,8 @@ create_filepopup_settings(void)
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
 
-    filepopup_settings_showprogressbar = gtk_check_button_new_with_mnemonic(_("Show Progress bar for the current track"));
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_settings_showprogressbar);
+    filepopup_showprogressbar = gtk_check_button_new_with_mnemonic(_("Show Progress bar for the current track"));
+    gtk_container_add(GTK_CONTAINER(alignment), filepopup_showprogressbar);
 
     alignment = gtk_alignment_new(0, 0.5, 1, 1);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
@@ -807,9 +813,9 @@ create_filepopup_settings(void)
     gtk_misc_set_padding(GTK_MISC(label_delay), 12, 0);
 
     delay_adj = (GtkAdjustment *) gtk_adjustment_new (0, 0, 100, 1, 10, 0);
-    filepopup_settings_delay = gtk_spin_button_new(GTK_ADJUSTMENT(delay_adj), 1, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), filepopup_settings_delay, TRUE, TRUE, 0);
-    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_settings_delay), TRUE);
+    filepopup_delay = gtk_spin_button_new(GTK_ADJUSTMENT(delay_adj), 1, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), filepopup_delay, TRUE, TRUE, 0);
+    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_delay), TRUE);
 
     hbuttonbox = gtk_hbutton_box_new();
     gtk_box_pack_start(GTK_BOX(vbox), hbuttonbox, FALSE, FALSE, 0);
@@ -827,14 +833,11 @@ create_filepopup_settings(void)
                      G_CALLBACK(gtk_widget_hide_on_delete),
                      NULL);
     g_signal_connect(G_OBJECT(btn_cancel), "clicked",
-                     G_CALLBACK(on_filepopup_settings_cancel_clicked),
+                     G_CALLBACK(on_filepopup_cancel_clicked),
                      NULL);
     g_signal_connect(G_OBJECT(btn_ok), "clicked",
-                     G_CALLBACK(on_filepopup_settings_ok_clicked),
+                     G_CALLBACK(on_filepopup_ok_clicked),
                      NULL);
-    g_signal_connect(G_OBJECT(filepopup_settings_recurse_for_cover), "toggled",
-                     G_CALLBACK(on_recurse_for_cover_toggled),
-                     filepopup_settings_recurse_for_cover_depth_box);
 
     gtk_widget_grab_default(btn_ok);
     gtk_widget_show_all(vbox);
@@ -1382,27 +1385,29 @@ create_playlist_category(void)
 
     filepopupbutton = gtk_check_button_new_with_mnemonic (_("Show popup information for playlist entries"));
     gtk_widget_set_tooltip_text (filepopupbutton, _("Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."));
-    gtk_toggle_button_set_active ((GtkToggleButton *) filepopupbutton, cfg.show_filepopup_for_tuple);
+    gtk_toggle_button_set_active ((GtkToggleButton *) filepopupbutton,
+     get_bool (NULL, "show_filepopup_for_tuple"));
     gtk_box_pack_start ((GtkBox *) vbox34, filepopupbutton, TRUE, FALSE, 0);
 
-    filepopup_for_tuple_settings_button = gtk_button_new ();
-    gtk_widget_set_sensitive (filepopup_for_tuple_settings_button, cfg.show_filepopup_for_tuple);
-    gtk_box_pack_start (GTK_BOX (hbox9), filepopup_for_tuple_settings_button, FALSE, FALSE, 0);
+    filepopup_settings_button = gtk_button_new ();
+    gtk_widget_set_sensitive (filepopup_settings_button,
+     get_bool (NULL, "show_filepopup_for_tuple"));
+    gtk_box_pack_start (GTK_BOX (hbox9), filepopup_settings_button, FALSE, FALSE, 0);
 
-    gtk_widget_set_can_focus (filepopup_for_tuple_settings_button, FALSE);
-    gtk_widget_set_tooltip_text (filepopup_for_tuple_settings_button, _("Edit settings for popup information"));
-    gtk_button_set_relief (GTK_BUTTON (filepopup_for_tuple_settings_button), GTK_RELIEF_HALF);
+    gtk_widget_set_can_focus (filepopup_settings_button, FALSE);
+    gtk_widget_set_tooltip_text (filepopup_settings_button, _("Edit settings for popup information"));
+    gtk_button_set_relief (GTK_BUTTON (filepopup_settings_button), GTK_RELIEF_HALF);
 
     image8 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_BUTTON);
-    gtk_container_add (GTK_CONTAINER (filepopup_for_tuple_settings_button), image8);
+    gtk_container_add (GTK_CONTAINER (filepopup_settings_button), image8);
 
 
 
     g_signal_connect (filepopupbutton, "toggled",
-                     G_CALLBACK(on_show_filepopup_for_tuple_toggled),
+                     G_CALLBACK(on_show_filepopup_toggled),
                      NULL);
-    g_signal_connect(G_OBJECT(filepopup_for_tuple_settings_button), "clicked",
-                     G_CALLBACK(on_filepopup_for_tuple_settings_clicked),
+    g_signal_connect(G_OBJECT(filepopup_settings_button), "clicked",
+                     G_CALLBACK(on_filepopup_settings_clicked),
                      NULL);
 
     g_signal_connect(titlestring_cbox, "changed",

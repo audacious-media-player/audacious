@@ -23,7 +23,6 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/vfs.h>
 
-#include "audconfig.h"
 #include "config.h"
 #include "drct.h"
 #include "i18n.h"

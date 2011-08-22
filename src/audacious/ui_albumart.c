@@ -25,7 +25,6 @@
 
 #include <libaudcore/audstrings.h>
 
-#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
 #include "misc.h"
@@ -80,11 +79,15 @@ cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_
 }
 
 /* Check wether it's an image we want */
-static gboolean
-is_front_cover_image(const gchar *imgfile)
+static gboolean is_front_cover_image (const gchar * file)
 {
-    return cover_name_filter(imgfile, cfg.cover_name_include, TRUE) &&
-           !cover_name_filter(imgfile, cfg.cover_name_exclude, FALSE);
+    gchar * include = get_string (NULL, "cover_name_include");
+    gchar * exclude = get_string (NULL, "cover_name_include");
+    gboolean accept = cover_name_filter (file, include, TRUE) &&
+     ! cover_name_filter (file, exclude, FALSE);
+    g_free (include);
+    g_free (exclude);
+    return accept;
 }
 
 static gboolean
@@ -120,7 +123,7 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
 {
     GDir *d;
 
-    if (cfg.recurse_for_cover && depth > cfg.recurse_for_cover_depth)
+    if (get_bool (NULL, "recurse_for_cover") && depth > get_int (NULL, "recurse_for_cover_depth"))
         return NULL;
 
     d = g_dir_open(path, 0, NULL);
@@ -128,7 +131,8 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
     if (d) {
         const gchar *f;
 
-        if (cfg.use_file_cover && file_name) {
+        if (get_bool (NULL, "use_file_cover") && file_name)
+        {
             /* Look for images matching file name */
             while((f = g_dir_read_name(d))) {
                 gchar *newpath = g_strconcat(path, "/", f, NULL);
@@ -161,7 +165,8 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
         g_dir_rewind(d);
 
         /* checks whether recursive or not. */
-        if (!cfg.recurse_for_cover) {
+        if (! get_bool (NULL, "recurse_for_cover"))
+        {
             g_dir_close(d);
             return NULL;
         }

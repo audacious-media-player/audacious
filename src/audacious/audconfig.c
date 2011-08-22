@@ -43,15 +43,6 @@ AudConfig cfg = {
     .chardet_fallback = NULL,
     .chardet_fallback_s = NULL,
     .output_buffer_size = 500,
-    .show_filepopup_for_tuple = TRUE,
-    .cover_name_include = NULL,        /* words identifying covers */
-    .cover_name_exclude = NULL,        /* words that might not show up in cover names */
-    .recurse_for_cover = FALSE,
-    .recurse_for_cover_depth = 0,
-    .filepopup_pixelsize = 150,        /* short side length of the picture in the filepopup */
-    .filepopup_delay = 5,              /* delay until the filepopup comes up (1/10 seconds) */
-    .use_file_cover = FALSE,           /* use filename.jpg for coverart */
-    .filepopup_showprogressbar = TRUE,
     .close_jtf_dialog = TRUE,          /* close jtf dialog on jump */
     .software_volume_control = FALSE,
     .remember_jtf_entry = TRUE,
@@ -87,10 +78,6 @@ static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
     {"leading_zero", & cfg.leading_zero, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
-    {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
-    {"recurse_for_cover", &cfg.recurse_for_cover, TRUE},
-    {"use_file_cover", &cfg.use_file_cover, TRUE},
-    {"filepopup_showprogressbar", &cfg.filepopup_showprogressbar, TRUE},
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
     {"software_volume_control", &cfg.software_volume_control, TRUE},
     {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
@@ -109,9 +96,6 @@ static aud_cfg_nument aud_numents[] = {
     {"resume_state", & cfg.resume_state, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
     {"output_buffer_size", &cfg.output_buffer_size, TRUE},
-    {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE},
-    {"filepopup_pixelsize", &cfg.filepopup_pixelsize, TRUE},
-    {"filepopup_delay", &cfg.filepopup_delay, TRUE},
     {"output_bit_depth", &cfg.output_bit_depth, TRUE},
     {"sw_volume_left", & cfg.sw_volume_left, TRUE},
     {"sw_volume_right", & cfg.sw_volume_right, TRUE},
@@ -125,8 +109,6 @@ static aud_cfg_strent aud_strents[] = {
     {"generic_title_format", &cfg.gentitle_format, TRUE},
     {"chardet_detector", &cfg.chardet_detector, TRUE},
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
-    {"cover_name_include", &cfg.cover_name_include, TRUE},
-    {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
     {"proxy_host", & cfg.proxy_host, TRUE},
     {"proxy_port", & cfg.proxy_port, TRUE},
     {"proxy_user", & cfg.proxy_user, TRUE},
@@ -197,12 +179,6 @@ aud_config_load(void)
         cfg.chardet_fallback = g_strdup("");
 
     aud_config_chardet_update();
-
-    if (!cfg.cover_name_include)
-        cfg.cover_name_include = g_strdup("album,folder");
-
-    if (!cfg.cover_name_exclude)
-        cfg.cover_name_exclude = g_strdup("back");
 }
 
 void

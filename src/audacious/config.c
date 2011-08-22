@@ -46,6 +46,16 @@ static const gchar * core_defaults[] = {
  "equalizer_bands", "0,0,0,0,0,0,0,0,0,0",
  "equalizer_preamp", "0",
 
+ /* info popup / info window */
+ "cover_name_exclude", "back",
+ "cover_name_include", "album,folder",
+ "filepopup_delay", "5",
+ "filepopup_showprogressbar", "TRUE",
+ "recurse_for_cover", "FALSE",
+ "recurse_for_cover_depth", "0",
+ "show_filepopup_for_tuple", "TRUE",
+ "use_file_cover", "FALSE",
+
  /* playback */
  "no_playlist_advance", "FALSE",
  "repeat", "FALSE",
