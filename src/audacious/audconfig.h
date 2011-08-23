@@ -37,9 +37,6 @@
 #endif
 
 struct _AudConfig {
-    gboolean show_numbers_in_pl, leading_zero;
-    gint titlestring_preset;
-    gchar *gentitle_format;
     gint resume_state;
     gint resume_playback_on_startup_time;
     gchar *chardet_detector;
@@ -50,7 +47,6 @@ struct _AudConfig {
 typedef struct _AudConfig AudConfig;
 
 extern AudConfig cfg;
-extern AudConfig aud_default_config;
 
 void aud_config_load(void);
 void aud_config_save(void);

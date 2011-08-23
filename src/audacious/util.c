@@ -50,7 +50,6 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/stringpool.h>
 
-#include "audconfig.h"
 #include "debug.h"
 #include "i18n.h"
 #include "misc.h"

@@ -78,6 +78,11 @@ static const gchar * const core_defaults[] = {
  "shuffle", "FALSE",
  "stop_after_current_song", "FALSE",
 
+ /* playlist */
+ "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
+ "leading_zero", "TRUE",
+ "show_numbers_in_pl", "TRUE",
+
  NULL};
 
 static GStaticMutex mutex = G_STATIC_MUTEX_INIT;

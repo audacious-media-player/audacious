@@ -35,7 +35,6 @@
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
-#include "playlist-utils.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "preferences.h"
@@ -216,6 +215,24 @@ static PreferencesWidget playlist_page_widgets[] = {
      G_N_ELEMENTS (chardet_elements)}}}
 };
 
+#define TITLESTRING_NPRESETS 6
+
+static const gchar * const titlestring_presets[TITLESTRING_NPRESETS] = {
+ "${title}",
+ "${?artist:${artist} - }${title}",
+ "${?artist:${artist} - }${?album:${album} - }${title}",
+ "${?artist:${artist} - }${?album:${album} - }${?track-number:${track-number}. }${title}",
+ "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }${?track-number:${track-number}. }${title}",
+ "${?album:${album} - }${title}"};
+
+static const gchar * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
+ N_("TITLE"),
+ N_("ARTIST - TITLE"),
+ N_("ARTIST - ALBUM - TITLE"),
+ N_("ARTIST - ALBUM - TRACK. TITLE"),
+ N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
+ N_("ALBUM - TITLE")};
+
 static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 
 static void
@@ -283,30 +300,36 @@ titlestring_timeout_proc (gpointer data)
     }
 }
 
-static void
-on_titlestring_entry_changed(GtkWidget * entry,
-                             gpointer data)
+static void update_titlestring_cbox (GtkComboBox * cbox, const gchar * format)
 {
-    g_free(cfg.gentitle_format);
-    cfg.gentitle_format = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
-
-    if(titlestring_timeout_counter == 0) {
-        g_timeout_add_seconds (1, (GSourceFunc) titlestring_timeout_proc, NULL);
+    gint preset;
+    for (preset = 0; preset < TITLESTRING_NPRESETS; preset ++)
+    {
+        if (! strcmp (titlestring_presets[preset], format))
+            break;
     }
+
+    if (gtk_combo_box_get_active (cbox) != preset)
+        gtk_combo_box_set_active (cbox, preset);
+}
+
+static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
+{
+    const gchar * format = gtk_entry_get_text (entry);
+    set_string (NULL, "generic_title_format", format);
+    update_titlestring_cbox (cbox, format);
+
+    if (titlestring_timeout_counter == 0)
+        g_timeout_add_seconds (1, (GSourceFunc) titlestring_timeout_proc, NULL);
 
     titlestring_timeout_counter = TITLESTRING_UPDATE_TIMEOUT;
 }
 
-static void
-on_titlestring_cbox_changed(GtkWidget * cbox,
-                            gpointer data)
+static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
 {
-    gint position = gtk_combo_box_get_active(GTK_COMBO_BOX(cbox));
-
-    cfg.titlestring_preset = position;
-    gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
-
-    playlist_reformat_titles ();
+    gint preset = gtk_combo_box_get_active (cbox);
+    if (preset < TITLESTRING_NPRESETS)
+        gtk_entry_set_text (entry, titlestring_presets[preset]);
 }
 
 static void widget_set_bool (PreferencesWidget * widget, gboolean value)
@@ -1283,7 +1306,7 @@ create_titlestring_tag_menu(void)
 
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
-    cfg.show_numbers_in_pl = gtk_toggle_button_get_active (numbers);
+    set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
 
     hook_call ("title change", NULL);
 
@@ -1295,7 +1318,7 @@ static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 
 static void leading_zero_cb (GtkToggleButton * leading)
 {
-    cfg.leading_zero = gtk_toggle_button_get_active (leading);
+    set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
 
     hook_call ("title change", NULL);
 
@@ -1303,6 +1326,24 @@ static void leading_zero_cb (GtkToggleButton * leading)
     gchar * t = playlist_get_title (playlist_get_active ());
     playlist_set_title (playlist_get_active (), t);
     g_free (t);
+}
+
+static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
+{
+    * cbox = gtk_combo_box_text_new ();
+    for (gint i = 0; i < TITLESTRING_NPRESETS; i ++)
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) * cbox, _(titlestring_preset_names[i]));
+    gtk_combo_box_text_append_text ((GtkComboBoxText *) * cbox, _("Custom"));
+
+    * entry = gtk_entry_new ();
+
+    gchar * format = get_string (NULL, "generic_title_format");
+    update_titlestring_cbox ((GtkComboBox *) * cbox, format);
+    gtk_entry_set_text ((GtkEntry *) * entry, format);
+    g_free (format);
+
+    g_signal_connect (* cbox, "changed", (GCallback) on_titlestring_cbox_changed, * entry);
+    g_signal_connect (* entry, "changed", (GCallback) on_titlestring_entry_changed, * cbox);
 }
 
 static void
@@ -1315,7 +1356,6 @@ create_playlist_category(void)
     GtkWidget *table6;
     GtkWidget *titlestring_help_button;
     GtkWidget *image1;
-    GtkWidget *titlestring_cbox;
     GtkWidget *label62;
     GtkWidget *label61;
     GtkWidget *alignment85;
@@ -1347,7 +1387,7 @@ create_playlist_category(void)
 
     numbers = gtk_check_button_new_with_label (_("Show song numbers"));
     gtk_toggle_button_set_active ((GtkToggleButton *) numbers,
-     cfg.show_numbers_in_pl);
+     get_bool (NULL, "show_numbers_in_pl"));
     g_signal_connect ((GObject *) numbers, "toggled", (GCallback)
      show_numbers_cb, 0);
     gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
@@ -1358,7 +1398,7 @@ create_playlist_category(void)
 
     numbers = gtk_check_button_new_with_label (_("Show leading zeroes (02:00 "
      "instead of 2:00)"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, cfg.leading_zero);
+    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, get_bool (NULL, "leading_zero"));
     g_signal_connect ((GObject *) numbers, "toggled", (GCallback)
      leading_zero_cb, 0);
     gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
@@ -1385,24 +1425,11 @@ create_playlist_category(void)
     image1 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_BUTTON);
     gtk_container_add (GTK_CONTAINER (titlestring_help_button), image1);
 
-    titlestring_cbox = gtk_combo_box_text_new ();
-    gtk_combo_box_set_active ((GtkComboBox *) titlestring_cbox, cfg.titlestring_preset);
-
+    GtkWidget * titlestring_cbox;
+    create_titlestring_widgets (& titlestring_cbox, & titlestring_entry);
     gtk_table_attach (GTK_TABLE (table6), titlestring_cbox, 1, 3, 0, 1,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
-
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("TITLE"));
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST - TITLE"));
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST - ALBUM - TITLE"));
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST - ALBUM - TRACK. TITLE"));
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ARTIST [ ALBUM ] - TRACK. TITLE"));
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("ALBUM - TITLE"));
-    gtk_combo_box_text_append_text ((GtkComboBoxText *) titlestring_cbox, _("Custom"));
-
-    titlestring_entry = gtk_entry_new ();
-    gtk_entry_set_text ((GtkEntry *) titlestring_entry, cfg.gentitle_format);
-    gtk_widget_set_sensitive (titlestring_entry, cfg.titlestring_preset == n_titlestring_presets);
     gtk_table_attach (GTK_TABLE (table6), titlestring_entry, 1, 2, 1, 2,
                       (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                       (GtkAttachOptions) (0), 0, 0);
@@ -1467,20 +1494,9 @@ create_playlist_category(void)
                      G_CALLBACK(on_filepopup_settings_clicked),
                      NULL);
 
-    g_signal_connect(titlestring_cbox, "changed",
-                     G_CALLBACK(on_titlestring_cbox_changed),
-                     titlestring_entry);
-
-    g_signal_connect(titlestring_cbox, "changed",
-                     G_CALLBACK(on_titlestring_cbox_changed),
-                     titlestring_help_button);
     g_signal_connect(titlestring_help_button, "clicked",
                      G_CALLBACK(on_titlestring_help_button_clicked),
                      titlestring_tag_menu);
-
-    g_signal_connect(G_OBJECT(titlestring_entry), "changed",
-                     G_CALLBACK(on_titlestring_entry_changed),
-                     NULL);
 
     /* Create window for filepopup settings */
     create_filepopup_settings();

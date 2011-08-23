@@ -26,7 +26,6 @@
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 
-#include "audconfig.h"
 #include "config.h"
 #include "i18n.h"
 #include "interface.h"
@@ -533,8 +532,8 @@ gchar * playback_get_title (void)
         gint len = current_length / 1000;
 
         if (len < 3600)
-            snprintf (s, sizeof s, cfg.leading_zero ? " (%02d:%02d)" :
-             " (%d:%02d)", len / 60, len % 60);
+            snprintf (s, sizeof s, get_bool (NULL, "leading_zero") ?
+             " (%02d:%02d)" : " (%d:%02d)", len / 60, len % 60);
         else
             snprintf (s, sizeof s, " (%d:%02d:%02d)", len / 3600, (len / 60) %
              60, len % 60);
@@ -542,7 +541,7 @@ gchar * playback_get_title (void)
     else
         s[0] = 0;
 
-    if (cfg.show_numbers_in_pl)
+    if (get_bool (NULL, "show_numbers_in_pl"))
         return g_strdup_printf ("%d. %s%s", 1 + playlist_get_position
          (playlist_get_playing ()), current_title, s);
 

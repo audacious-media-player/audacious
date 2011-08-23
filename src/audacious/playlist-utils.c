@@ -25,24 +25,8 @@
 
 #include <libaudcore/audstrings.h>
 
-#include "audconfig.h"
 #include "misc.h"
 #include "playlist.h"
-#include "playlist-utils.h"
-
-static const gchar * aud_titlestring_presets[] =
-{
-    "${title}",
-    "${?artist:${artist} - }${title}",
-    "${?artist:${artist} - }${?album:${album} - }${title}",
-    "${?artist:${artist} - }${?album:${album} - }"
-     "${?track-number:${track-number}. }${title}",
-    "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }"
-     "${?track-number:${track-number}. }${title}",
-    "${?album:${album} - }${title}",
-};
-
-const gint n_titlestring_presets = G_N_ELEMENTS (aud_titlestring_presets);
 
 static const gchar * get_basename (const gchar * filename)
 {
@@ -136,15 +120,6 @@ static const PlaylistStringCompareFunc title_comparisons[] = {
  [PLAYLIST_SORT_DATE] = NULL,
  [PLAYLIST_SORT_TRACK] = NULL,
  [PLAYLIST_SORT_FORMATTED_TITLE] = string_compare};
-
-const gchar * get_gentitle_format (void)
-{
-    if (cfg.titlestring_preset >= 0 && cfg.titlestring_preset <
-     n_titlestring_presets)
-        return aud_titlestring_presets[cfg.titlestring_preset];
-
-    return cfg.gentitle_format;
-}
 
 void playlist_sort_by_scheme (gint playlist, gint scheme)
 {

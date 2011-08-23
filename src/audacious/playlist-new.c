@@ -33,7 +33,6 @@
 #include "misc.h"
 #include "playback.h"
 #include "playlist.h"
-#include "playlist-utils.h"
 #include "plugins.h"
 #include "util.h"
 
@@ -147,11 +146,14 @@ static void * scanner (void * unused);
 
 static gchar * title_from_tuple (Tuple * tuple)
 {
-    const gchar * format = tuple_get_string (tuple, FIELD_FORMATTER, NULL);
-    if (! format)
-        format = get_gentitle_format ();
+    const gchar * custom = tuple_get_string (tuple, FIELD_FORMATTER, NULL);
+    if (custom)
+        return tuple_formatter_make_title_string (tuple, custom);
 
-    return tuple_formatter_make_title_string (tuple, format);
+    gchar * generic = get_string (NULL, "generic_title_format");
+    gchar * title = tuple_formatter_make_title_string (tuple, generic);
+    g_free (generic);
+    return title;
 }
 
 static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
