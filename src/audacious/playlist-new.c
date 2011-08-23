@@ -36,6 +36,8 @@
 #include "plugins.h"
 #include "util.h"
 
+enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
+
 #define SCAN_THREADS 4
 #define STATE_FILE "playlist-state"
 
@@ -135,6 +137,8 @@ struct {
     gboolean pending;
     gint level, playlist, before, after;
 } next_update, last_update;
+
+static gint resume_state, resume_time;
 
 static GThread * scan_threads[SCAN_THREADS];
 static gboolean scan_quit;
@@ -2056,6 +2060,13 @@ void playlist_save_state (void)
     if (! handle)
         LEAVE_RET_VOID;
 
+    resume_state = playback_get_playing () ? (playback_get_paused () ?
+     RESUME_PAUSE : RESUME_PLAY) : RESUME_STOP;
+    resume_time = playback_get_playing () ? playback_get_time () : 0;
+
+    fprintf (handle, "resume-state %d\n", resume_state);
+    fprintf (handle, "resume-time %d\n", resume_time);
+
     fprintf (handle, "active %d\n", active_playlist->number);
     fprintf (handle, "playing %d\n", playing_playlist ? playing_playlist->number
      : -1);
@@ -2133,6 +2144,11 @@ void playlist_load_state (void)
 
     parse_next (handle);
 
+    if (parse_integer ("resume-state", & resume_state))
+        parse_next (handle);
+    if (parse_integer ("resume-time", & resume_time))
+        parse_next (handle);
+
     if (parse_integer ("active", & playlist_num))
     {
         if (! (active_playlist = lookup_playlist (playlist_num)))
@@ -2181,4 +2197,10 @@ void playlist_load_state (void)
 
     fclose (handle);
     LEAVE;
+}
+
+void playlist_resume (void)
+{
+    if (resume_state == RESUME_PLAY || resume_state == RESUME_PAUSE)
+        playback_play (resume_time, resume_state == RESUME_PAUSE);
 }

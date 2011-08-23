@@ -427,30 +427,30 @@ static void do_remote (void)
 
 static void do_commands (void)
 {
-    GList * list = convert_filenames ();
+    gboolean resume = get_bool (NULL, "resume_playback_on_startup");
 
+    GList * list = convert_filenames ();
     if (list)
     {
         if (options.enqueue_to_temp)
         {
             drct_pl_open_temp_list (list);
-            cfg.resume_state = 0;
+            resume = FALSE;
         }
         else if (options.enqueue)
             drct_pl_add_list (list, -1);
         else
         {
             drct_pl_open_list (list);
-            cfg.resume_state = 0;
+            resume = FALSE;
         }
 
         g_list_foreach (list, (GFunc) g_free, NULL);
         g_list_free (list);
     }
 
-    if (get_bool (NULL, "resume_playback_on_startup") && cfg.resume_state > 0)
-        playback_play (cfg.resume_playback_on_startup_time, cfg.resume_state ==
-         2);
+    if (resume)
+        playlist_resume ();
 
     if (options.play || options.play_pause)
     {

@@ -83,6 +83,7 @@ void playlist_init (void);
 void playlist_end (void);
 void playlist_load_state (void);
 void playlist_save_state (void);
+void playlist_resume (void);
 
 void playlist_reformat_titles (void);
 

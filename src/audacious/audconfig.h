@@ -37,8 +37,6 @@
 #endif
 
 struct _AudConfig {
-    gint resume_state;
-    gint resume_playback_on_startup_time;
     gchar *chardet_detector;
     gchar *chardet_fallback;
     gchar **chardet_fallback_s;

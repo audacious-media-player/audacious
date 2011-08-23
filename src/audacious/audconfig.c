@@ -31,31 +31,16 @@
 #include "playback.h"
 
 AudConfig cfg = {
-    .resume_state = 0,
-    .resume_playback_on_startup_time = 0,
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
     .chardet_fallback_s = NULL,
 };
-
-typedef struct aud_cfg_nument_t {
-    char const *ie_vname;
-    gint *ie_vloc;
-    gboolean ie_wrt;
-} aud_cfg_nument;
 
 typedef struct aud_cfg_strent_t {
     char const *se_vname;
     char **se_vloc;
     gboolean se_wrt;
 } aud_cfg_strent;
-
-static aud_cfg_nument aud_numents[] = {
-    {"resume_state", & cfg.resume_state, TRUE},
-    {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
-};
-
-static gint ncfgient = G_N_ELEMENTS(aud_numents);
 
 static aud_cfg_strent aud_strents[] = {
     {"chardet_detector", &cfg.chardet_detector, TRUE},
@@ -80,12 +65,6 @@ aud_config_load(void)
 
     if (! (db = cfg_db_open ()))
         return;
-
-    for (i = 0; i < ncfgient; ++i) {
-        cfg_db_get_int(db, NULL,
-                           aud_numents[i].ie_vname,
-                           aud_numents[i].ie_vloc);
-    }
 
     for (i = 0; i < ncfgsent; ++i) {
         cfg_db_get_string(db, NULL,
@@ -112,19 +91,8 @@ aud_config_save(void)
 
     hook_call ("config save", NULL);
 
-    cfg.resume_state = playback_get_playing () ? (playback_get_paused () ? 2 :
-     1) : 0;
-    cfg.resume_playback_on_startup_time = playback_get_playing () ?
-     playback_get_time () : 0;
-
     if (! (db = cfg_db_open ()))
         return;
-
-    for (i = 0; i < ncfgient; ++i)
-        if (aud_numents[i].ie_wrt)
-            cfg_db_set_int(db, NULL,
-                               aud_numents[i].ie_vname,
-                               *aud_numents[i].ie_vloc);
 
     for (i = 0; i < ncfgsent; ++i) {
         if (aud_strents[i].se_wrt)
