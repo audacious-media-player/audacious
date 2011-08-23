@@ -43,7 +43,6 @@
 #include "eggsmclient.h"
 #endif
 
-#include "configdb.h"
 #include "debug.h"
 #include "drct.h"
 #include "equalizer.h"

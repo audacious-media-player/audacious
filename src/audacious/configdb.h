@@ -1,5 +1,3 @@
-/* THIS FILE IS DEPRECATED.  Use the new aud_set/get functions instead. */
-
 /*
  * configdb.h
  * Copyright 2010 John Lindgren
@@ -23,6 +21,8 @@
 
 #ifndef AUDACIOUS_CONFIGDB_H
 #define AUDACIOUS_CONFIGDB_H
+
+#warning configdb.h is deprecated.  Use aud_{get,set}_xxx instead.
 
 #include <glib.h>
 #include <audacious/api.h>
