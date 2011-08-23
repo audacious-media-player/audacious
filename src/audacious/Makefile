@@ -70,12 +70,10 @@ INCLUDES = api.h \
 
 DATA = images/about-logo.png				\
        images/album.png \
-       images/appearance.png				\
        images/audacious_eq.xpm				\
        images/audacious_player.xpm			\
        images/audacious_playlist.xpm		\
        images/audio.png						\
-       images/blue.png						\
        images/connectivity.png				\
        images/menu_playlist.png				\
        images/menu_plugin.png				\
